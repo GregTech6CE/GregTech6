@@ -1,0 +1,1522 @@
+{
+  "date": "2026-10-22",
+  "batch": 124,
+  "baseline": "26f7ca7b95c16d4c16b2dac963e235689d6989c0",
+  "previous_goal_turn": {
+    "classification": "progress",
+    "commit": "26f7ca7b9",
+    "evidence": "Shared gearbox material properties and expanded battery catalog/stack scope committed."
+  },
+  "provenance": {
+    "authors": "GregTech-6 Team / Gregorius Techneticies",
+    "original_tree_read_only": true,
+    "license": "Original LGPL notices retained. Official Forge and Mojang evidence read only; no native/official combat implementation imported."
+  },
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/a/Loader_Tools.java",
+      "raw_sha256": "e791f2cd6972bfa10767663f78557d2722cac2b7c80f29595815b4a520577b6e",
+      "lines": 579,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/ItemArmorBase.java",
+      "raw_sha256": "947898c5516d022533ec0437c8cfa22d897b6179aa55b772e9259152f2d3a82d",
+      "lines": 170,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "raw_sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "lines": 2345,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java",
+      "raw_sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+      "lines": 3476,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/RadiationSuitItem.java",
+      "raw_sha256": "037f5940d28ac16739b4fea29df38ac1822b752502880316692476c2afe57597",
+      "lines": 102
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTRadiationProtection.java",
+      "raw_sha256": "36c0821a3e656f543e7242a82201a0731dee6837fdc2ad3485a5cb6a4a0ba515",
+      "lines": 52
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/hazard/HazmatSuitCatalog.java",
+      "raw_sha256": "8dc256a3da93e23ac066304adf85d5f1bc86be0f6bc95eb8224e6a6c212875ad",
+      "lines": 22,
+      "notice_sha256": "273713b61689c22290cd538bef28ac3cad99068bbff177afffb405f7557fd83b"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/damage/GTHazmat.java",
+      "raw_sha256": "6cb07f6dbf0daeae91a14852405ac5638aaf5b981ea5b1a8ab9f4628a365b70b",
+      "lines": 141
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTFuelRods.java",
+      "raw_sha256": "227c17b61310611e591877dacfc467047adb66f8593682ca01ca6a3865e94f27",
+      "lines": 91
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/GTToolTooltips.java",
+      "raw_sha256": "1d318743eb2666886b4a15ca44887342f6d3df64d56f00a630c1e0425ab74854",
+      "lines": 117
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/MaterialTooltipHandler.java",
+      "raw_sha256": "d114eed8c74ed1baf43e338fbab1efab1aa2667e623a4874ba819e7faca20d3c",
+      "lines": 46
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/MaterialTooltips.java",
+      "raw_sha256": "8d760cc655af21650befb747940e5e9a65550f22b138d194a943dfa087f14e6b",
+      "lines": 384
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "raw_sha256": "ce185e389023571915282f6ee52793a18e9f0e2ee33cce1085b857274010a044",
+      "lines": 336
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java",
+      "raw_sha256": "597867a457c5e291bb1179bbb31b90737f807d95adb65670fc01c8be17c8daff",
+      "lines": 611
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/bootstrap/registration/CreativeTabBootstrap.java",
+      "raw_sha256": "9e330371c7b0402a9318a50cdd707fa65f6f239fd0805c83fadaab0f35a7ad64",
+      "lines": 518
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/content/ItemBootstrap.java",
+      "raw_sha256": "6ea7d0c95c79f12a8640baf65d16e3bbb68dadd675ea1ca83bf70d6ee6c15fff",
+      "lines": 65
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "raw_sha256": "a83787a7e2ca56b3b695b41f221cff2ee046880b09354fdf78b35bd2cc070a02",
+      "lines": 191
+    }
+  ],
+  "scope": "Listed suit identities, metadata, protection memberships, texture references and damage/tooltip contracts; not full compatibility or survival acceptance.",
+  "excerpts": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/a/Loader_Tools.java",
+      "start_line": 67,
+      "end_line": 115,
+      "excerpt_sha256": "8636d524697053d9c105a1775bb1d6721b702c035114e6b7504148657b783887",
+      "text": "\t\t// TODO Fix Temp Hazmat Recipes!\n\t\tArmorsGT.HAZMATS_INSECTS    .add(ArmorsGT.HAZMAT_INSECTS    [0] = new ItemArmorBase(MD.GT.mID, \"gt.armor.hazmat.insect.head\"     , \"Bumblehead\"                       , \"Full Set protects against any Insects\"         , \"hazard_insects\"   , 0, new int[] {1, 1, 1, 1}, 128, 8, 0, F, T, \"RRR\", \"RGR\", \"q l\", 'R', foil.dat(ANY.Rubber), 'G', ST.make(Blocks.stained_glass_pane, 1, 15-DYE_INDEX_Black)));\n\t\tArmorsGT.HAZMATS_INSECTS    .add(ArmorsGT.HAZMAT_INSECTS    [1] = new ItemArmorBase(MD.GT.mID, \"gt.armor.hazmat.insect.chest\"    , \"Bumbleshirt\"                      , \"Full Set protects against any Insects\"         , \"hazard_insects\"   , 1, new int[] {1, 1, 1, 1}, 128, 8, 0, F, T, \"RqR\", \"RRR\", \"RRR\", 'R', foil.dat(ANY.Rubber)));\n\t\tArmorsGT.HAZMATS_INSECTS    .add(ArmorsGT.HAZMAT_INSECTS    [2] = new ItemArmorBase(MD.GT.mID, \"gt.armor.hazmat.insect.legs\"     , \"Bumblepants\"                      , \"Full Set protects against any Insects\"         , \"hazard_insects\"   , 2, new int[] {1, 1, 1, 1}, 128, 8, 0, F, T, \"RRR\", \"RqR\", \"RlR\", 'R', foil.dat(ANY.Rubber)));\n\t\tArmorsGT.HAZMATS_INSECTS    .add(ArmorsGT.HAZMAT_INSECTS    [3] = new ItemArmorBase(MD.GT.mID, \"gt.armor.hazmat.insect.boots\"    , \"Bumbleboots\"                      , \"Full Set protects against any Insects\"         , \"hazard_insects\"   , 3, new int[] {1, 1, 1, 1}, 128, 8, 0, F, T, \"RlR\", \"RqR\"       , 'R', foil.dat(ANY.Rubber)));\n\t\t\n\t\tArmorsGT.HAZMATS_FROST      .add(ArmorsGT.HAZMAT_FROST      [0] = new ItemArmorBase(MD.GT.mID, \"gt.armor.hazmat.frost.head\"      , \"Frost Protection Suit Mask\"       , \"Full Set protects against Cold\"                , \"hazard_frost\"     , 0, new int[] {1, 1, 1, 1}, 128, 8, 0, F, F, \"AAA\", \"AGA\", \"q l\", 'A', plate.dat(MT.Asbestos), 'G', ST.make(Blocks.stained_glass_pane, 1, 15-DYE_INDEX_Black)));\n\t\tArmorsGT.HAZMATS_FROST      .add(ArmorsGT.HAZMAT_FROST      [1] = new ItemArmorBase(MD.GT.mID, \"gt.armor.hazmat.frost.chest\"     , \"Frost Protection Suit Shirt\"      , \"Full Set protects against Cold\"                , \"hazard_frost\"     , 1, new int[] {1, 1, 1, 1}, 128, 8, 0, F, F, \"AqA\", \"AAA\", \"AAA\", 'A', plate.dat(MT.Asbestos)));\n\t\tArmorsGT.HAZMATS_FROST      .add(ArmorsGT.HAZMAT_FROST      [2] = new ItemArmorBase(MD.GT.mID, \"gt.armor.hazmat.frost.legs\"      , \"Frost Protection Suit Pants\"      , \"Full Set protects against Cold\"                , \"hazard_frost\"     , 2, new int[] {1, 1, 1, 1}, 128, 8, 0, F, F, \"AAA\", \"AqA\", \"AlA\", 'A', plate.dat(MT.Asbestos)));\n\t\tArmorsGT.HAZMATS_FROST      .add(ArmorsGT.HAZMAT_FROST      [3] = new ItemArmorBase(MD.GT.mID, \"gt.armor.hazmat.frost.boots\"     , \"Frost Protection Suit Boots\"      , \"Full Set protects against Cold\"                , \"hazard_frost\"     , 3, new int[] {1, 1, 1, 1}, 128, 8, 0, F, F, \"AlA\", \"AqA\"       , 'A', plate.dat(MT.Asbestos)));\n\t\t\n\t\tArmorsGT.HAZMATS_HEAT       .add(ArmorsGT.HAZMAT_HEAT       [0] = new ItemArmorBase(MD.GT.mID, \"gt.armor.hazmat.heat.head\"       , \"Heat Protection Suit Mask\"        , \"Full Set protects against Heat\"                , \"hazard_heat\"      , 0, new int[] {1, 1, 1, 1}, 128, 8, 0, T, F, \"FFF\", \"FGF\", \"x l\", 'F', foil.dat(MT.Al), 'G', ST.make(Blocks.stained_glass_pane, 1, 15-DYE_INDEX_Black)));\n\t\tArmorsGT.HAZMATS_HEAT       .add(ArmorsGT.HAZMAT_HEAT       [1] = new ItemArmorBase(MD.GT.mID, \"gt.armor.hazmat.heat.chest\"      , \"Heat Protection Suit Shirt\"       , \"Full Set protects against Heat\"                , \"hazard_heat\"      , 1, new int[] {1, 1, 1, 1}, 128, 8, 0, T, F, \"FxF\", \"FFF\", \"FFF\", 'F', foil.dat(MT.Al)));\n\t\tArmorsGT.HAZMATS_HEAT       .add(ArmorsGT.HAZMAT_HEAT       [2] = new ItemArmorBase(MD.GT.mID, \"gt.armor.hazmat.heat.legs\"       , \"Heat Protection Suit Pants\"       , \"Full Set protects against Heat\"                , \"hazard_heat\"      , 2, new int[] {1, 1, 1, 1}, 128, 8, 0, T, F, \"FFF\", \"FxF\", \"FlF\", 'F', foil.dat(MT.Al)));\n\t\tArmorsGT.HAZMATS_HEAT       .add(ArmorsGT.HAZMAT_HEAT       [3] = new ItemArmorBase(MD.GT.mID, \"gt.armor.hazmat.heat.boots\"      , \"Heat Protection Suit Boots\"       , \"Full Set protects against Heat\"                , \"hazard_heat\"      , 3, new int[] {1, 1, 1, 1}, 128, 8, 0, T, F, \"FlF\", \"FxF\"       , 'F', foil.dat(MT.Al)));\n\t\t\n\t\tArmorsGT.HAZMATS_RADIOACTIVE.add(ArmorsGT.HAZMAT_RADIOACTIVE[0] = new ItemArmorBase(MD.GT.mID, \"gt.armor.hazmat.radiation.head\"  , \"Radiation Hazard Suit Mask\"       , \"Full Set protects against Radiation\"           , \"hazard_radiation\" , 0, new int[] {1, 1, 1, 1}, 128, 8, 0, F, F, \"LLL\", \"LGL\", \"x l\", 'L', plate.dat(MT.Pb), 'G', Blocks.glass_pane));\n\t\tArmorsGT.HAZMATS_RADIOACTIVE.add(ArmorsGT.HAZMAT_RADIOACTIVE[1] = new ItemArmorBase(MD.GT.mID, \"gt.armor.hazmat.radiation.chest\" , \"Radiation Hazard Suit Shirt\"      , \"Full Set protects against Radiation\"           , \"hazard_radiation\" , 1, new int[] {1, 1, 1, 1}, 128, 8, 0, F, F, \"LxL\", \"LLL\", \"LLL\", 'L', plate.dat(MT.Pb)));\n\t\tArmorsGT.HAZMATS_RADIOACTIVE.add(ArmorsGT.HAZMAT_RADIOACTIVE[2] = new ItemArmorBase(MD.GT.mID, \"gt.armor.hazmat.radiation.legs\"  , \"Radiation Hazard Suit Pants\"      , \"Full Set protects against Radiation\"           , \"hazard_radiation\" , 2, new int[] {1, 1, 1, 1}, 128, 8, 0, F, F, \"LLL\", \"LxL\", \"LlL\", 'L', plate.dat(MT.Pb)));\n\t\tArmorsGT.HAZMATS_RADIOACTIVE.add(ArmorsGT.HAZMAT_RADIOACTIVE[3] = new ItemArmorBase(MD.GT.mID, \"gt.armor.hazmat.radiation.boots\" , \"Radiation Hazard Suit Boots\"      , \"Full Set protects against Radiation\"           , \"hazard_radiation\" , 3, new int[] {1, 1, 1, 1}, 128, 8, 0, F, F, \"LlL\", \"LxL\"       , 'L', plate.dat(MT.Pb)));\n\t\t\n\t\t\t\t\t\t\t\t\t\t ArmorsGT.HAZMAT_BIOCHEMGAS [0] = new ItemArmorBase(MD.GT.mID, \"gt.armor.hazmat.biochemgas.head\" , \"Biochemical Gas Hazard Suit Mask\" , \"Full Set protects against Chemicals and Gases\" , \"hazard_biochemgas\", 0, new int[] {1, 1, 1, 1}, 128, 8, 0, F, F, \"RRR\", \"RGR\", \"q l\", 'R', plate.dat(ANY.Rubber), 'G', Blocks.glass_pane);\n\t\t\t\t\t\t\t\t\t\t ArmorsGT.HAZMAT_BIOCHEMGAS [1] = new ItemArmorBase(MD.GT.mID, \"gt.armor.hazmat.biochemgas.chest\", \"Biochemical Gas Hazard Suit Shirt\", \"Full Set protects against Chemicals and Gases\" , \"hazard_biochemgas\", 1, new int[] {1, 1, 1, 1}, 128, 8, 0, F, F, \"RqR\", \"RRR\", \"RRR\", 'R', plate.dat(ANY.Rubber));\n\t\t\t\t\t\t\t\t\t\t ArmorsGT.HAZMAT_BIOCHEMGAS [2] = new ItemArmorBase(MD.GT.mID, \"gt.armor.hazmat.biochemgas.legs\" , \"Biochemical Gas Hazard Suit Pants\", \"Full Set protects against Chemicals and Gases\" , \"hazard_biochemgas\", 2, new int[] {1, 1, 1, 1}, 128, 8, 0, F, F, \"RRR\", \"RqR\", \"RlR\", 'R', plate.dat(ANY.Rubber));\n\t\t\t\t\t\t\t\t\t\t ArmorsGT.HAZMAT_BIOCHEMGAS [3] = new ItemArmorBase(MD.GT.mID, \"gt.armor.hazmat.biochemgas.boots\", \"Biochemical Gas Hazard Suit Boots\", \"Full Set protects against Chemicals and Gases\" , \"hazard_biochemgas\", 3, new int[] {1, 1, 1, 1}, 128, 8, 0, F, F, \"RlR\", \"RqR\"       , 'R', plate.dat(ANY.Rubber));\n\t\t\n\t\t\t\t\t\t\t\t\t\t ArmorsGT.HAZMAT_UNIVERSAL  [0] = new ItemArmorBase(MD.GT.mID, \"gt.armor.hazmat.universal.head\"  , \"Universal Hazard Suit Mask\"       , \"Full Set protects against Hazards\"             , \"hazard_universal\" , 0, new int[] {1, 1, 1, 1}, 128, 8, 0, T, T, \"AlB\", \"CqD\", \"ExF\", 'A', ST.make(ArmorsGT.HAZMAT_BIOCHEMGAS[0], 1, 0), 'B', ST.make(ArmorsGT.HAZMAT_INSECTS[0], 1, 0), 'C', ST.make(ArmorsGT.HAZMAT_FROST[0], 1, 0), 'D', ST.make(ArmorsGT.HAZMAT_HEAT[0], 1, 0), 'E', ST.make(ArmorsGT.HAZMAT_RADIOACTIVE[0], 1, 0), 'F', ST.make(Items.chainmail_helmet    , 1, 0));\n\t\t\t\t\t\t\t\t\t\t ArmorsGT.HAZMAT_UNIVERSAL  [1] = new ItemArmorBase(MD.GT.mID, \"gt.armor.hazmat.universal.chest\" , \"Universal Hazard Suit Shirt\"      , \"Full Set protects against Hazards\"             , \"hazard_universal\" , 1, new int[] {1, 1, 1, 1}, 128, 8, 0, T, T, \"AlB\", \"CqD\", \"ExF\", 'A', ST.make(ArmorsGT.HAZMAT_BIOCHEMGAS[1], 1, 0), 'B', ST.make(ArmorsGT.HAZMAT_INSECTS[1], 1, 0), 'C', ST.make(ArmorsGT.HAZMAT_FROST[1], 1, 0), 'D', ST.make(ArmorsGT.HAZMAT_HEAT[1], 1, 0), 'E', ST.make(ArmorsGT.HAZMAT_RADIOACTIVE[1], 1, 0), 'F', ST.make(Items.chainmail_chestplate, 1, 0));\n\t\t\t\t\t\t\t\t\t\t ArmorsGT.HAZMAT_UNIVERSAL  [2] = new ItemArmorBase(MD.GT.mID, \"gt.armor.hazmat.universal.legs\"  , \"Universal Hazard Suit Pants\"      , \"Full Set protects against Hazards\"             , \"hazard_universal\" , 2, new int[] {1, 1, 1, 1}, 128, 8, 0, T, T, \"AlB\", \"CqD\", \"ExF\", 'A', ST.make(ArmorsGT.HAZMAT_BIOCHEMGAS[2], 1, 0), 'B', ST.make(ArmorsGT.HAZMAT_INSECTS[2], 1, 0), 'C', ST.make(ArmorsGT.HAZMAT_FROST[2], 1, 0), 'D', ST.make(ArmorsGT.HAZMAT_HEAT[2], 1, 0), 'E', ST.make(ArmorsGT.HAZMAT_RADIOACTIVE[2], 1, 0), 'F', ST.make(Items.chainmail_leggings  , 1, 0));\n\t\t\t\t\t\t\t\t\t\t ArmorsGT.HAZMAT_UNIVERSAL  [3] = new ItemArmorBase(MD.GT.mID, \"gt.armor.hazmat.universal.boots\" , \"Universal Hazard Suit Boots\"      , \"Full Set protects against Hazards\"             , \"hazard_universal\" , 3, new int[] {1, 1, 1, 1}, 128, 8, 0, T, T, \"AlB\", \"CqD\", \"ExF\", 'A', ST.make(ArmorsGT.HAZMAT_BIOCHEMGAS[3], 1, 0), 'B', ST.make(ArmorsGT.HAZMAT_INSECTS[3], 1, 0), 'C', ST.make(ArmorsGT.HAZMAT_FROST[3], 1, 0), 'D', ST.make(ArmorsGT.HAZMAT_HEAT[3], 1, 0), 'E', ST.make(ArmorsGT.HAZMAT_RADIOACTIVE[3], 1, 0), 'F', ST.make(Items.chainmail_boots     , 1, 0));\n\t\t\n\t\tfor (ItemArmorBase tArmor : ArmorsGT.HAZMAT_UNIVERSAL) {\n\t\tArmorsGT.HAZMATS_GAS        .add(tArmor);\n\t\tArmorsGT.HAZMATS_BIO        .add(tArmor);\n\t\tArmorsGT.HAZMATS_CHEM       .add(tArmor);\n\t\tArmorsGT.HAZMATS_INSECTS    .add(tArmor);\n\t\tArmorsGT.HAZMATS_FROST      .add(tArmor);\n\t\tArmorsGT.HAZMATS_HEAT       .add(tArmor);\n\t\tArmorsGT.HAZMATS_RADIOACTIVE.add(tArmor);\n\t\tArmorsGT.HAZMATS_LIGHTNING  .add(tArmor);\n\t\t}\n\t\tfor (ItemArmorBase tArmor : ArmorsGT.HAZMAT_BIOCHEMGAS) {\n\t\tArmorsGT.HAZMATS_GAS        .add(tArmor);\n\t\tArmorsGT.HAZMATS_BIO        .add(tArmor);\n\t\tArmorsGT.HAZMATS_CHEM       .add(tArmor);\n\t\t}\n\t\t\n\t\tToolsGT.sMetaTool = new MultiItemToolWithCompat(MD.GT.mID, \"gt.metatool.01\");\n\t\t"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/ItemArmorBase.java",
+      "start_line": 81,
+      "end_line": 104,
+      "excerpt_sha256": "94d8b951a63a2357c161e79400a369f73584200ada7b18ee010e58d04c6d023b",
+      "text": "\tpublic ItemArmorBase(String aModID, String aUnlocalized, String aEnglish, String aEnglishTooltip, String aArmorName, int aSlot, int[] aShields, int aDurability, int aDamageReduction, int aEnchantability, boolean aMetalArmor, boolean aBeeArmor, Object... aRecipe) {\n\t\tsuper(EnumHelper.addArmorMaterial(\"armor.\"+aUnlocalized, aDurability, aShields, aEnchantability), GT_API.api_proxy.addArmor(TEX_DIR_ARMOR+aArmorName), aSlot);\n\t\tif (GAPI.mStartedInit) throw new IllegalStateException(\"Items can only be initialised within preInit!\");\n\t\tmName = aUnlocalized;\n\t\tmModID = aModID;\n\t\tmArmorTexture = mModID+\":\"+TEX_DIR_ARMOR+aArmorName+\"/\"+armorType+\".png\";\n\t\tmArmorName = aArmorName;\n\t\tmEnchantability = aEnchantability;\n\t\tmMetalArmor = aMetalArmor;\n\t\tmBeeArmor = aBeeArmor;\n\t\tLH.add(mName, aEnglish);\n\t\tsetMaxDamage(aDurability);\n\t\tsetCreativeTab(CreativeTabs.tabCombat);\n\t\tif (UT.Code.stringValid(aEnglishTooltip)) LH.add(mTooltip = mName + \".tooltip_main\", aEnglishTooltip); else mTooltip = null;\n\t\tST.register(this, mName);\n\t\tif (aRecipe != null && aRecipe.length > 0) {\n\t\t\tCR.shaped(ST.make(this, 1, 0), CR.DEF_REV_NCC, aRecipe);\n\t\t\tOreDictItemData tData = OM.data(ST.make(this, 1, 0));\n\t\t\tif (tData != null) tData.setUseVanillaDamage();\n\t\t}\n\t}\n\t\n\t@Override\n\t@SuppressWarnings(\"unchecked\")"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/ItemArmorBase.java",
+      "start_line": 105,
+      "end_line": 112,
+      "excerpt_sha256": "21e5af061d131266e47b5edf9a2be9b832c070f524fbd7231b50a7d4492cca34",
+      "text": "\tpublic void addInformation(ItemStack aStack, EntityPlayer aPlayer, @SuppressWarnings(\"rawtypes\") List aList, boolean aF3_H) {\n\t\tif (getMaxDamage() > 0 && !getHasSubtypes()) aList.add((aStack.getMaxDamage() - getDamage(aStack)) + \" / \" + aStack.getMaxDamage());\n\t\tif (mTooltip != null) aList.add(LanguageHandler.translate(mTooltip, mTooltip));\n\t\taddAdditionalToolTips(aList, aStack, aF3_H);\n\t\twhile (aList.remove(null));\n\t}\n\t\n\tprotected void addAdditionalToolTips(List<String> aList, ItemStack aStack, boolean aF3_H) {"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/ItemArmorBase.java",
+      "start_line": 137,
+      "end_line": 139,
+      "excerpt_sha256": "f3972405a01daebebebff61f71742c6b960834faef80f2395ef679379b4b9a47",
+      "text": "\t@Override public ArmorProperties getProperties(EntityLivingBase aPlayer, ItemStack aStack, DamageSource aSource, double aDamage, int aSlot) {return aSource.isUnblockable() ? new ArmorProperties(0, 0, 0) : new ArmorProperties(0, damageReduceAmount / 25.0, getMaxDamage() + 1 - aStack.getItemDamage());}\n\t@Override public int getArmorDisplay(EntityPlayer aPlayer, ItemStack aStack, int aSlot) {return getArmorMaterial().getDamageReductionAmount(aSlot);}\n\t@Override public void damageArmor(EntityLivingBase aEntity, ItemStack aStack, DamageSource aSource, int aDamage, int aSlot) {aStack.damageItem(aDamage, aEntity);}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "start_line": 1710,
+      "end_line": 1727,
+      "excerpt_sha256": "67d7172654f03109ea2ba8234eaf589e4f0fdc99d7fe1652622c081bb6420f79",
+      "text": "\tpublic static class ArmorsGT {\n\t\t/** The List of Hazmat Armors */\n\t\tpublic static final ItemStackSet<ItemStackContainer>\n\t\t  HAZMATS_GAS = ST.hashset()\n\t\t, HAZMATS_BIO = ST.hashset()\n\t\t, HAZMATS_CHEM = ST.hashset()\n\t\t, HAZMATS_INSECTS = ST.hashset()\n\t\t, HAZMATS_FROST = ST.hashset()\n\t\t, HAZMATS_HEAT = ST.hashset()\n\t\t, HAZMATS_RADIOACTIVE = ST.hashset()\n\t\t, HAZMATS_LIGHTNING = ST.hashset()\n\t\t;\n\n\t\tpublic static ItemArmorBase[]\n\t\t  HAZMAT_BIOCHEMGAS = new ItemArmorBase[4]\n\t\t, HAZMAT_INSECTS = new ItemArmorBase[4]\n\t\t, HAZMAT_FROST = new ItemArmorBase[4]\n\t\t, HAZMAT_HEAT = new ItemArmorBase[4]"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java",
+      "start_line": 2868,
+      "end_line": 2873,
+      "excerpt_sha256": "c910c443941bc864f7b400c3dc1e083e72a52d94ec4aa1b1e72231f184bf3aae",
+      "text": "\t\tpublic static boolean isWearingFullFrostHazmat(EntityLivingBase aEntity) {\n\t\t\tif (isCreative(aEntity)) return T;\n\t\t\tfor (byte i = 1; i < 5; i++) if (!ArmorsGT.HAZMATS_FROST.contains(aEntity.getEquipmentInSlot(i), T)) return F;\n\t\t\treturn T;\n\t\t}\n\t\t"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/RadiationSuitItem.java",
+      "start_line": 24,
+      "end_line": 35,
+      "excerpt_sha256": "a14491be282dfb7a12b82ec42271e2b6eaf836d96d51532bc1a473cdfd0035cb",
+      "text": "    public RadiationSuitItem(Type type, String family) {\n//? if >=1.21.1 {\n        /*super(com.gregtech.gregtech.registry.GTRadiationProtection.MATERIAL, type, new Properties().durability(128));\n*///?} else {\n        super(SuitMaterial.INSTANCE, type, new Properties());\n//?}\n        com.gregtech.gregtech.content.hazard.HazmatSuitCatalog.texture(family);\n        this.family = family;\n    }\n//? if >=1.21.1 {\n    /*@Override\n    public net.minecraft.resources.ResourceLocation getArmorTexture(ItemStack stack, net.minecraft.world.entity.Entity entity,"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/RadiationSuitItem.java",
+      "start_line": 56,
+      "end_line": 90,
+      "excerpt_sha256": "38136fbf2d462e058eef46097371197e01128d714445b19c32924082ac87f1b6",
+      "text": "    private enum SuitMaterial implements ArmorMaterial {\n        INSTANCE;\n\n        public int getDurabilityForType(Type type) {\n            return 128;\n        }\n\n        public int getDefenseForType(Type type) {\n            return 1;\n        }\n\n        public int getEnchantmentValue() {\n            return 0;\n        }\n\n        public SoundEvent getEquipSound() {\n            return SoundEvents.ARMOR_EQUIP_LEATHER;\n        }\n\n        public Ingredient getRepairIngredient() {\n            return Ingredient.EMPTY;\n        }\n\n        public String getName() {\n            return \"gt6ce:radiation_suit\";\n        }\n\n        public float getToughness() {\n            return 0;\n        }\n\n        public float getKnockbackResistance() {\n            return 0;\n        }\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/RadiationSuitItem.java",
+      "start_line": 93,
+      "end_line": 102,
+      "excerpt_sha256": "c5c1b66ed544fd10a1fa045295d9cae0212c8dea52b24c59d28a36446b581c21",
+      "text": "    private String texturePath(net.minecraft.world.entity.EquipmentSlot slot) {\n        int index = switch (slot) {\n            case HEAD -> 0;\n            case CHEST -> 1;\n            case LEGS -> 2;\n            default -> 3;\n        };\n        return \"textures/armor/\" + com.gregtech.gregtech.content.hazard.HazmatSuitCatalog.texture(family) + \"/\" + index + \".png\";\n    }\n}"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTRadiationProtection.java",
+      "start_line": 21,
+      "end_line": 32,
+      "excerpt_sha256": "323c18b769d0869a3381fd25e2fecb2e132878f758b167f0671e9aaf952cd774",
+      "text": "    static {\n        for (String family : com.gregtech.gregtech.content.hazard.HazmatSuitCatalog.FAMILIES)\n            for (var armorType : new ArmorItem.Type[]{\n                    ArmorItem.Type.HELMET, ArmorItem.Type.CHESTPLATE, ArmorItem.Type.LEGGINGS, ArmorItem.Type.BOOTS\n            }) {\n                String itemId = family + \"_suit_\" + armorType.getName();\n                var item = GTItems.ITEMS.register(itemId, () -> new RadiationSuitItem(armorType, family));\n                ALL.put(itemId, item);\n                if (family.equals(\"radiation\")) SUIT.put(armorType, item);\n            }\n    }\n"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTRadiationProtection.java",
+      "start_line": 41,
+      "end_line": 50,
+      "excerpt_sha256": "4958d9d98d4820c591a7e16038d9838161cac00de320f0f78202536d2acf121a",
+      "text": "            net.minecraft.world.item.ArmorMaterial> MATERIAL = MATERIALS.register(\"radiation_suit\",\n            () -> new net.minecraft.world.item.ArmorMaterial(java.util.Map.of(\n                    ArmorItem.Type.HELMET, 1,\n                    ArmorItem.Type.CHESTPLATE, 1,\n                    ArmorItem.Type.LEGGINGS, 1,\n                    ArmorItem.Type.BOOTS, 1), 0, net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_LEATHER,\n            () -> net.minecraft.world.item.crafting.Ingredient.EMPTY,\n            java.util.List.of(new net.minecraft.world.item.ArmorMaterial.Layer(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(\"gt6ce\",\n            \"radiation_suit\"))), 0, 0));\n*///?} else {"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTFuelRods.java",
+      "start_line": 88,
+      "end_line": 89,
+      "excerpt_sha256": "e49a8b1587a23f41daf4d96c5a466b22d7e0707662843c1415bbe60e920f41b9",
+      "text": "        GTRadiationProtection.registerAll();\n        // static init triggers the field initializers above"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/damage/GTHazmat.java",
+      "start_line": 78,
+      "end_line": 87,
+      "excerpt_sha256": "7d6ad9ec00f15ac046c34935d198c76ee1a81d7e358789e4749d53c7f0338141",
+      "text": "    public static boolean isWearingFull(LivingEntity entity, TagKey<Item> set) {\n        for (EquipmentSlot slot : ARMOR_SLOTS) {\n            ItemStack stack = entity.getItemBySlot(slot);\n            if (stack.isEmpty() || !stack.is(set)) {\n                return false;\n            }\n        }\n        return true;\n    }\n"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/GTToolTooltips.java",
+      "start_line": 24,
+      "end_line": 29,
+      "excerpt_sha256": "5bba31fe65d4bcf6de918ee2b5114be4bbd212596d10e242bc4fcb6a409c83d9",
+      "text": "    public static void append(ItemStack stack, List<Component> tooltip, TooltipFlag flag) {\n        if (!GTToolHelper.isTool(stack)) {\n            return;\n        }\n        GTToolType type = GTToolHelper.getType(stack);\n        GTToolType statsType = stack.getItem() instanceof com.gregtech.gregtech.item.PocketToolItem pocket ? pocket.toolType() : type;"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "start_line": 328,
+      "end_line": 329,
+      "excerpt_sha256": "e0fb0d22a8cf076ac368960563548422ed05b460f45d0ac85405860d6a7c25a9",
+      "text": "            GTToolTooltips.append(stack, tooltip, flag);\n        }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/content/ItemBootstrap.java",
+      "start_line": 60,
+      "end_line": 61,
+      "excerpt_sha256": "507df6194305a6db87643d8e4f754b9677588986dd115de5edfa074052830ec6",
+      "text": "        com.gregtech.gregtech.registry.GTFuelRods.registerAll();\n        LOGGER.info(\"Queued {} fuel rod items for registration\","
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "start_line": 51,
+      "end_line": 51,
+      "excerpt_sha256": "90a5635605a83b8c29108cecda2ca2e4c180b463359d36ec0ae4aafaa594b954",
+      "text": "        com.gregtech.gregtech.registry.GTRadiationProtection.MATERIALS.register(modEventBus);"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/RadiationSuitItem.java",
+      "start_line": 52,
+      "end_line": 56,
+      "excerpt_sha256": "ae8359c294c3fdde2815271596e6fd5e21625821ec4e1e4e813d08fcab128608",
+      "text": "    public void appendHoverText(ItemStack stack, net.minecraft.world.level.Level level,\n            java.util.List<net.minecraft.network.chat.Component> lines, TooltipFlag flags) {\n        lines.add(net.minecraft.network.chat.Component.translatable(com.gregtech.gregtech.content.hazard.HazmatSuitCatalog.tooltip(family)));\n    }\n    private enum SuitMaterial implements ArmorMaterial {"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/RadiationSuitItem.java",
+      "start_line": 41,
+      "end_line": 44,
+      "excerpt_sha256": "2a7b7d9c15d6c6d9db91f7931df4d39127744f554710fb443fd08faa13872216",
+      "text": "    public void appendHoverText(ItemStack stack, Item.TooltipContext context, java.util.List<net.minecraft.network.chat.Component> lines,\n            TooltipFlag flags) {\n        lines.add(net.minecraft.network.chat.Component.translatable(com.gregtech.gregtech.content.hazard.HazmatSuitCatalog.tooltip(family)));\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/hazmat-suit-audit-20261022/old-ItemArmor.javap.txt",
+      "start_line": 23,
+      "end_line": 50,
+      "excerpt_sha256": "6ee5aacfd9b7c0766b4b0987e1185840a769313c5dba533999613897d7b11d36",
+      "text": "  public abb(abd, int, int);\n    Code:\n       0: aload_0\n       1: invokespecial #57                 // Method adb.\"<init>\":()V\n       4: aload_0\n       5: aload_1\n       6: putfield      #38                 // Field p:Labd;\n       9: aload_0\n      10: iload_3\n      11: putfield      #31                 // Field b:I\n      14: aload_0\n      15: iload_2\n      16: putfield      #33                 // Field d:I\n      19: aload_0\n      20: aload_1\n      21: iload_3\n      22: invokevirtual #56                 // Method abd.b:(I)I\n      25: putfield      #32                 // Field c:I\n      28: aload_0\n      29: aload_1\n      30: iload_3\n      31: invokevirtual #54                 // Method abd.a:(I)I\n      34: invokevirtual #51                 // Method f:(I)Ladb;\n      37: pop\n      38: aload_0\n      39: iconst_1\n      40: putfield      #34                 // Field h:I\n      43: aload_0"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/hazmat-suit-audit-20261022/old-ArmorMaterial.javap.txt",
+      "start_line": 63,
+      "end_line": 70,
+      "excerpt_sha256": "ab3ae5ad85ee79af1301f10895fea4d9dfd8253d5e7368c2c3dce50c303eddb1",
+      "text": "  public int b(int);\n    Code:\n       0: aload_0\n       1: getfield      #17                 // Field g:[I\n       4: iload_1\n       5: iaload\n       6: ireturn\n"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/hazmat-suit-audit-20261022/forge-CombatRules.javap.txt",
+      "start_line": 19,
+      "end_line": 51,
+      "excerpt_sha256": "898b451d396b146939be3f20f8e6ec166b51e7f7253c1b1b56b91a705ddc7c15",
+      "text": "  public static float getDamageAfterAbsorb(float, float, float);\n    Code:\n       0: fconst_2\n       1: fload_2\n       2: ldc           #26                 // float 4.0f\n       4: fdiv\n       5: fadd\n       6: fstore_3\n       7: fload_1\n       8: fload_0\n       9: fload_3\n      10: fdiv\n      11: fsub\n      12: fload_1\n      13: ldc           #14                 // float 0.2f\n      15: fmul\n      16: ldc           #8                  // float 20.0f\n      18: invokestatic  #31                 // Method net/minecraft/util/Mth.clamp:(FFF)F\n      21: fstore        4\n      23: fload_0\n      24: fconst_1\n      25: fload         4\n      27: ldc           #10                 // float 25.0f\n      29: fdiv\n      30: fsub\n      31: fmul\n      32: freturn\n\n  public static float getDamageAfterMagicAbsorb(float, float);\n    Code:\n       0: fload_1\n       1: fconst_0\n       2: ldc           #8                  // float 20.0f"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/hazmat-suit-audit-20261022/forge-LivingEntity.javap.txt",
+      "start_line": 4105,
+      "end_line": 4129,
+      "excerpt_sha256": "3c302c90d01b043bfd6da33e8e45e970111986ce8050aedeeeb7768e356b3654",
+      "text": "  protected float getDamageAfterArmorAbsorb(net.minecraft.world.damagesource.DamageSource, float);\n    Code:\n       0: aload_1\n       1: getstatic     #2736               // Field net/minecraft/tags/DamageTypeTags.BYPASSES_ARMOR:Lnet/minecraft/tags/TagKey;\n       4: invokevirtual #1913               // Method net/minecraft/world/damagesource/DamageSource.is:(Lnet/minecraft/tags/TagKey;)Z\n       7: ifne          34\n      10: aload_0\n      11: aload_1\n      12: fload_2\n      13: invokevirtual #2738               // Method hurtArmor:(Lnet/minecraft/world/damagesource/DamageSource;F)V\n      16: fload_2\n      17: aload_0\n      18: invokevirtual #2740               // Method getArmorValue:()I\n      21: i2f\n      22: aload_0\n      23: getstatic     #558                // Field net/minecraft/world/entity/ai/attributes/Attributes.ARMOR_TOUGHNESS:Lnet/minecraft/world/entity/ai/attributes/Attribute;\n      26: invokevirtual #2542               // Method getAttributeValue:(Lnet/minecraft/world/entity/ai/attributes/Attribute;)D\n      29: d2f\n      30: invokestatic  #2745               // Method net/minecraft/world/damagesource/CombatRules.getDamageAfterAbsorb:(FFF)F\n      33: fstore_2\n      34: fload_2\n      35: freturn\n\n  protected float getDamageAfterMagicAbsorb(net.minecraft.world.damagesource.DamageSource, float);\n    Code:"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/hazmat-suit-audit-20261022/forge-ArmorItem.javap.txt",
+      "start_line": 80,
+      "end_line": 109,
+      "excerpt_sha256": "83aeba35702f02dab202f64142c97f578948f5bc4319d0dd2a88921004aed623",
+      "text": "  public net.minecraft.world.item.ArmorItem(net.minecraft.world.item.ArmorMaterial, net.minecraft.world.item.ArmorItem$Type, net.minecraft.world.item.Item$Properties);\n    Code:\n       0: aload_0\n       1: aload_3\n       2: aload_1\n       3: aload_2\n       4: invokeinterface #172,  2          // InterfaceMethod net/minecraft/world/item/ArmorMaterial.getDurabilityForType:(Lnet/minecraft/world/item/ArmorItem$Type;)I\n       9: invokevirtual #176                // Method net/minecraft/world/item/Item$Properties.defaultDurability:(I)Lnet/minecraft/world/item/Item$Properties;\n      12: invokespecial #179                // Method net/minecraft/world/item/Item.\"<init>\":(Lnet/minecraft/world/item/Item$Properties;)V\n      15: aload_0\n      16: aload_1\n      17: putfield      #181                // Field material:Lnet/minecraft/world/item/ArmorMaterial;\n      20: aload_0\n      21: aload_2\n      22: putfield      #183                // Field type:Lnet/minecraft/world/item/ArmorItem$Type;\n      25: aload_0\n      26: aload_1\n      27: aload_2\n      28: invokeinterface #186,  2          // InterfaceMethod net/minecraft/world/item/ArmorMaterial.getDefenseForType:(Lnet/minecraft/world/item/ArmorItem$Type;)I\n      33: putfield      #188                // Field defense:I\n      36: aload_0\n      37: aload_1\n      38: invokeinterface #192,  1          // InterfaceMethod net/minecraft/world/item/ArmorMaterial.getToughness:()F\n      43: putfield      #194                // Field toughness:F\n      46: aload_0\n      47: aload_1\n      48: invokeinterface #197,  1          // InterfaceMethod net/minecraft/world/item/ArmorMaterial.getKnockbackResistance:()F\n      53: putfield      #199                // Field knockbackResistance:F\n      56: aload_0\n      57: getstatic     #201                // Field DISPENSE_ITEM_BEHAVIOR:Lnet/minecraft/core/dispenser/DispenseItemBehavior;"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/hazmat-suit-audit-20261022/forge-ItemStack.javap.txt",
+      "start_line": 1835,
+      "end_line": 1855,
+      "excerpt_sha256": "b81a44e3e78a5586afa9d680b847aeba4e5a71f2b117cfbed91b28cd6b93ea06",
+      "text": "    1227: pop\n    1228: iinc          7, 1\n    1231: goto          1201\n    1234: aload_2\n    1235: invokeinterface #979,  1          // InterfaceMethod net/minecraft/world/item/TooltipFlag.isAdvanced:()Z\n    1240: ifeq          1371\n    1243: aload_0\n    1244: invokevirtual #611                // Method isDamaged:()Z\n    1247: ifeq          1292\n    1250: aload_3\n    1251: ldc_w         #1264               // String item.durability\n    1254: iconst_2\n    1255: anewarray     #1042               // class java/lang/Object\n    1258: dup\n    1259: iconst_0\n    1260: aload_0\n    1261: invokevirtual #665                // Method getMaxDamage:()I\n    1264: aload_0\n    1265: invokevirtual #247                // Method getDamageValue:()I\n    1268: isub\n    1269: invokestatic  #1059               // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/hazmat-suit-audit-20261022/neo-CombatRules.java",
+      "start_line": 16,
+      "end_line": 35,
+      "excerpt_sha256": "42708ccbbf9d82bf6c287364e14f0ea063b13aadfae54fae709c2c7ffd34fe93",
+      "text": "    public static float getDamageAfterAbsorb(LivingEntity p_345376_, float p_19273_, DamageSource p_338892_, float p_19274_, float p_19275_) {\n        float f = 2.0F + p_19275_ / 4.0F;\n        float f1 = Mth.clamp(p_19274_ - p_19273_ / f, p_19274_ * 0.2F, 20.0F);\n        float f2 = f1 / 25.0F;\n        ItemStack itemstack = p_338892_.getWeaponItem();\n        float f3;\n        if (itemstack != null && p_345376_.level() instanceof ServerLevel serverlevel) {\n            f3 = Mth.clamp(EnchantmentHelper.modifyArmorEffectiveness(serverlevel, itemstack, p_345376_, p_338892_, f2), 0.0F, 1.0F);\n        } else {\n            f3 = f2;\n        }\n\n        float f4 = 1.0F - f3;\n        return p_19273_ * f4;\n    }\n\n    public static float getDamageAfterMagicAbsorb(float p_19270_, float p_19271_) {\n        float f = Mth.clamp(p_19271_, 0.0F, 20.0F);\n        return p_19270_ * (1.0F - f / 25.0F);\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/hazmat-suit-audit-20261022/neo-LivingEntity.java",
+      "start_line": 1685,
+      "end_line": 1695,
+      "excerpt_sha256": "2fd0cc6f99c40242900883d72016e91fa397a15930c37cc314daa13f8f956c0a",
+      "text": "    protected float getDamageAfterArmorAbsorb(DamageSource p_21162_, float p_21163_) {\n        if (!p_21162_.is(DamageTypeTags.BYPASSES_ARMOR)) {\n            this.hurtArmor(p_21162_, p_21163_);\n            p_21163_ = CombatRules.getDamageAfterAbsorb(\n                this, p_21163_, p_21162_, (float)this.getArmorValue(), (float)this.getAttributeValue(Attributes.ARMOR_TOUGHNESS)\n            );\n        }\n\n        return p_21163_;\n    }\n"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/hazmat-suit-audit-20261022/neo-ArmorItem.java",
+      "start_line": 65,
+      "end_line": 84,
+      "excerpt_sha256": "20f837399c8cacad76ef433cca35f9285eb2a9185ddbd9c429ad47854bf1dafe",
+      "text": "    public ArmorItem(Holder<ArmorMaterial> p_323783_, ArmorItem.Type p_266831_, Item.Properties p_40388_) {\n        super(p_40388_);\n        this.material = p_323783_;\n        this.type = p_266831_;\n        DispenserBlock.registerBehavior(this, DISPENSE_ITEM_BEHAVIOR);\n        this.defaultModifiers = Suppliers.memoize(\n            () -> {\n                int i = p_323783_.value().getDefense(p_266831_);\n                float f = p_323783_.value().toughness();\n                ItemAttributeModifiers.Builder itemattributemodifiers$builder = ItemAttributeModifiers.builder();\n                EquipmentSlotGroup equipmentslotgroup = EquipmentSlotGroup.bySlot(p_266831_.getSlot());\n                ResourceLocation resourcelocation = ResourceLocation.withDefaultNamespace(\"armor.\" + p_266831_.getName());\n                itemattributemodifiers$builder.add(\n                    Attributes.ARMOR, new AttributeModifier(resourcelocation, (double)i, AttributeModifier.Operation.ADD_VALUE), equipmentslotgroup\n                );\n                itemattributemodifiers$builder.add(\n                    Attributes.ARMOR_TOUGHNESS, new AttributeModifier(resourcelocation, (double)f, AttributeModifier.Operation.ADD_VALUE), equipmentslotgroup\n                );\n                float f1 = p_323783_.value().knockbackResistance();\n                if (f1 > 0.0F) {"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/hazmat-suit-audit-20261022/neo-ItemStack.java",
+      "start_line": 797,
+      "end_line": 803,
+      "excerpt_sha256": "5aeb87e009536549ef29a8f961584621147ffd222ae813e23d98f1dc012bfe7b",
+      "text": "            if (p_41653_.isAdvanced()) {\n                if (this.isDamaged()) {\n                    list.add(Component.translatable(\"item.durability\", this.getMaxDamage() - this.getDamageValue(), this.getMaxDamage()));\n                }\n\n                list.add(Component.literal(BuiltInRegistries.ITEM.getKey(this.getItem()).toString()).withStyle(ChatFormatting.DARK_GRAY));\n                int i = this.components.size();"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/hazmat-suit-audit-20261022/forge1710-ISpecialArmor.java",
+      "start_line": 93,
+      "end_line": 174,
+      "excerpt_sha256": "19b77cd434d4b9a3465c6f4d1fe9ede98a1ed640ac59d6a8155eece6cf2a6db4",
+      "scope": "Official source span identity only; full text retained locally in ignored work."
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/hazmat-suit-audit-20261022/forge1710-ISpecialArmor.java",
+      "start_line": 183,
+      "end_line": 284,
+      "excerpt_sha256": "47c074ba01f98d4644132a608fd88dce07e5275e462b67c03adb7bdd8d361b8f",
+      "scope": "Official source span identity only; full text retained locally in ignored work."
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/hazmat-suit-audit-20261022/forge1710-EntityPlayer.patch",
+      "start_line": 320,
+      "end_line": 324,
+      "excerpt_sha256": "2e2d693b5a4a40bdf591989a25287e5fb824135187e80de3fc3c72dbc91b0c82",
+      "scope": "Official source span identity only; full text retained locally in ignored work."
+    }
+  ],
+  "native_evidence": {
+    "entries": [
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+        "entry": "net/minecraft/world/damagesource/CombatRules.class",
+        "entry_sha256": "334b11e6c5213dbaedfd86870dfa9b39d9f1c7f64dbfdcf928388c2e7681f96c",
+        "javap_output": "work/hazmat-suit-audit-20261022/forge-CombatRules.javap.txt",
+        "javap_sha256": "a880c49541fa5c7dd4a98e90934c08882dcfebde90025134bd73ba7a844fee6a"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+        "entry": "net/minecraft/world/damagesource/CombatRules.java",
+        "entry_sha256": "b929e8991e6c7124b57f39b31177104216be90836f2fefe8e5f6eee4ff11b15d",
+        "extracted_path": "work/hazmat-suit-audit-20261022/neo-CombatRules.java"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+        "entry": "net/minecraft/world/item/ItemStack.class",
+        "entry_sha256": "152f7ece5f721ca26d54e4e5d4f93f0d821003ac3ebd4e86e56568a341e6bcd4",
+        "javap_output": "work/hazmat-suit-audit-20261022/forge-ItemStack.javap.txt",
+        "javap_sha256": "e01d9e30d9cb4ab0bfc070ae24ee7c948e09e6150042a695526577c8bcb4e48e"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+        "entry": "net/minecraft/world/item/ItemStack.java",
+        "entry_sha256": "b35770a757f0c62a88276a38c36763d26e204d1a6210ea3fcac71a53526bc389",
+        "extracted_path": "work/hazmat-suit-audit-20261022/neo-ItemStack.java"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+        "entry": "net/minecraft/world/item/ArmorItem.class",
+        "entry_sha256": "22c9082e93f48f9b3bff7e82b5db149097581be769f19cd690f3399ee3141f21",
+        "javap_output": "work/hazmat-suit-audit-20261022/forge-ArmorItem.javap.txt",
+        "javap_sha256": "e275c952cc5b59ecec556c7b0224af0239d60c8f81f8c8eb52ade049d8aac98f"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+        "entry": "net/minecraft/world/item/ArmorItem.java",
+        "entry_sha256": "4d31a0d531bba9604a6ce4dca13135c393136d23387fc87481fc09d0dec2ab16",
+        "extracted_path": "work/hazmat-suit-audit-20261022/neo-ArmorItem.java"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+        "entry": "net/minecraft/world/entity/LivingEntity.class",
+        "entry_sha256": "4d5d832b434153c4bbaed608b6d742730c0864830f283424f153bcb0ee5b4cab",
+        "javap_output": "work/hazmat-suit-audit-20261022/forge-LivingEntity.javap.txt",
+        "javap_sha256": "4b002318fb5fa46243dac4468b58d58e505eea2d25befd9eb4721363533dbf1e"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+        "entry": "net/minecraft/world/entity/LivingEntity.java",
+        "entry_sha256": "1bbe1b37d6f73eadefdcdfe6f5822106e410fbc80d20c163a4eb5feefb317731",
+        "extracted_path": "work/hazmat-suit-audit-20261022/neo-LivingEntity.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/work/center-biomes-audit-20261022/minecraft-1.7.10-client.jar",
+        "artifact_sha256": "a4fc2284657544e0f4bcc964f927c2fda3e3a205178ed1d5d58883aaf9780cce",
+        "entry": "abb.class",
+        "entry_sha256": "88a65e0354b5caa9b04a6de47b586b6c17411029e5443a61ff60e912b0cfce44",
+        "javap_output": "work/hazmat-suit-audit-20261022/old-ItemArmor.javap.txt",
+        "javap_sha256": "6f69c31e4278c258ce3f2b9f07b8d9d73e86c83f5a0081d7a2a18cd037f1588d",
+        "mapped_class": "net/minecraft/item/ItemArmor"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/work/center-biomes-audit-20261022/minecraft-1.7.10-client.jar",
+        "artifact_sha256": "a4fc2284657544e0f4bcc964f927c2fda3e3a205178ed1d5d58883aaf9780cce",
+        "entry": "abd.class",
+        "entry_sha256": "7f50b452d7b530606e137a55d2a89dbc2773db702fdac8cceaf4ca12f584548f",
+        "javap_output": "work/hazmat-suit-audit-20261022/old-ArmorMaterial.javap.txt",
+        "javap_sha256": "4bf0da721502bf14802fca738733939daa76f2ca5cae5202ca1c06a4acdfa17d",
+        "mapped_class": "net/minecraft/item/ItemArmor$ArmorMaterial"
+      }
+    ],
+    "old_name_mapping_inputs": [
+      {
+        "path": "work/center-biomes-audit-20261022/joined.srg",
+        "raw_sha256": "43d4376110b2638213d3096f80f8395c076eb05b58d6c0dbd22c0d999b37a357"
+      },
+      {
+        "path": "work/center-biomes-audit-20261022/fields.csv",
+        "raw_sha256": "1d0d123cd80df147d613dc32c265e19daa594608ced33aa3b485162b2e5f6ade"
+      },
+      {
+        "path": "work/center-biomes-audit-20261022/methods.csv",
+        "raw_sha256": "63de115ead3e848e529de81e81ada9dff694e50fb5c6d92ec1e9037fe50ca191"
+      }
+    ],
+    "mapping_facts": {
+      "ItemArmor": "abb",
+      "ArmorMaterial": "abd",
+      "damageReduceAmount": "field_77879_b -> c",
+      "getDamageReductionAmount": "func_78044_b -> b(I)I"
+    },
+    "scope": "Native class/source reads only; no game launch or armor/tooltip method execution."
+  },
+  "official_forge_source": [
+    {
+      "url": "https://raw.githubusercontent.com/MinecraftForge/MinecraftForge/1.7.10/src/main/java/net/minecraftforge/common/ISpecialArmor.java",
+      "saved_path": "work/hazmat-suit-audit-20261022/forge1710-ISpecialArmor.java",
+      "raw_sha256": "9a8a3200f9ae8022f78046f0b123020cd46a3f13f800007c34996edce609045b",
+      "bytes": 12782,
+      "scope": "Official Forge 1.7.10 branch source only, not installed original-game execution; no code imported into production."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/MinecraftForge/MinecraftForge/1.7.10/patches/minecraft/net/minecraft/entity/player/EntityPlayer.java.patch",
+      "saved_path": "work/hazmat-suit-audit-20261022/forge1710-EntityPlayer.patch",
+      "raw_sha256": "631d4945a71f4c0aeb3cd764d9dab9a0166b56cd19da018d1f6825bb5c153bdd",
+      "bytes": 28353,
+      "scope": "Official Forge 1.7.10 branch source only, not installed original-game execution; no code imported into production."
+    }
+  ],
+  "observations": {
+    "suit_matrix": [
+      {
+        "original_key": "gt.armor.hazmat.insect.head",
+        "current_id": "gt6ce:insect_suit_helmet",
+        "family": "insect",
+        "piece": "helmet",
+        "texture_slot": 0,
+        "original_body_texture": "C:/Dev/gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/armor/hazard_insects/0.png",
+        "body_texture_sha256": "249173e1ccf72d2be3a66256b3d1a4aa3880c0d60d88934babedfedc707c0d08",
+        "body_dimensions": [
+          64,
+          32
+        ],
+        "original_english": "Bumblehead",
+        "source_tooltip": "Full Set protects against any Insects"
+      },
+      {
+        "original_key": "gt.armor.hazmat.insect.chest",
+        "current_id": "gt6ce:insect_suit_chestplate",
+        "family": "insect",
+        "piece": "chestplate",
+        "texture_slot": 1,
+        "original_body_texture": "C:/Dev/gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/armor/hazard_insects/1.png",
+        "body_texture_sha256": "2e06101f09cf27c462f7847370e8d4bc20aa1cb71123eb0e86179c1939951856",
+        "body_dimensions": [
+          64,
+          32
+        ],
+        "original_english": "Bumbleshirt",
+        "source_tooltip": "Full Set protects against any Insects"
+      },
+      {
+        "original_key": "gt.armor.hazmat.insect.legs",
+        "current_id": "gt6ce:insect_suit_leggings",
+        "family": "insect",
+        "piece": "leggings",
+        "texture_slot": 2,
+        "original_body_texture": "C:/Dev/gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/armor/hazard_insects/2.png",
+        "body_texture_sha256": "2105c99664d52e642107cce83e9758bbf526c1c74473a84bc026e3a267281668",
+        "body_dimensions": [
+          64,
+          32
+        ],
+        "original_english": "Bumblepants",
+        "source_tooltip": "Full Set protects against any Insects"
+      },
+      {
+        "original_key": "gt.armor.hazmat.insect.boots",
+        "current_id": "gt6ce:insect_suit_boots",
+        "family": "insect",
+        "piece": "boots",
+        "texture_slot": 3,
+        "original_body_texture": "C:/Dev/gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/armor/hazard_insects/3.png",
+        "body_texture_sha256": "40498aa4635f616a6f71fa2d9fda78a08b19c9a58536121a1a66fa61f93b0eb1",
+        "body_dimensions": [
+          64,
+          32
+        ],
+        "original_english": "Bumbleboots",
+        "source_tooltip": "Full Set protects against any Insects"
+      },
+      {
+        "original_key": "gt.armor.hazmat.frost.head",
+        "current_id": "gt6ce:frost_suit_helmet",
+        "family": "frost",
+        "piece": "helmet",
+        "texture_slot": 0,
+        "original_body_texture": "C:/Dev/gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/armor/hazard_frost/0.png",
+        "body_texture_sha256": "db7761eae2768a567f4edc3ee0008a09f98114f501c7feffda9a42331516f306",
+        "body_dimensions": [
+          64,
+          32
+        ],
+        "original_english": "Frost Protection Suit Mask",
+        "source_tooltip": "Full Set protects against Cold"
+      },
+      {
+        "original_key": "gt.armor.hazmat.frost.chest",
+        "current_id": "gt6ce:frost_suit_chestplate",
+        "family": "frost",
+        "piece": "chestplate",
+        "texture_slot": 1,
+        "original_body_texture": "C:/Dev/gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/armor/hazard_frost/1.png",
+        "body_texture_sha256": "948f5c492580a3424a917fc035571480ff8c6ba299303993f04f039f43282306",
+        "body_dimensions": [
+          64,
+          32
+        ],
+        "original_english": "Frost Protection Suit Shirt",
+        "source_tooltip": "Full Set protects against Cold"
+      },
+      {
+        "original_key": "gt.armor.hazmat.frost.legs",
+        "current_id": "gt6ce:frost_suit_leggings",
+        "family": "frost",
+        "piece": "leggings",
+        "texture_slot": 2,
+        "original_body_texture": "C:/Dev/gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/armor/hazard_frost/2.png",
+        "body_texture_sha256": "18ee253ae0b7327e3aca12dec41c8f5fe97f58e129d0ac6dbe548c7018dba1a1",
+        "body_dimensions": [
+          64,
+          32
+        ],
+        "original_english": "Frost Protection Suit Pants",
+        "source_tooltip": "Full Set protects against Cold"
+      },
+      {
+        "original_key": "gt.armor.hazmat.frost.boots",
+        "current_id": "gt6ce:frost_suit_boots",
+        "family": "frost",
+        "piece": "boots",
+        "texture_slot": 3,
+        "original_body_texture": "C:/Dev/gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/armor/hazard_frost/3.png",
+        "body_texture_sha256": "67d15bae24aeb91861a2c1835c8d8aa6d5ca67ba4ad4e4a7d2d49858c8fa4de0",
+        "body_dimensions": [
+          64,
+          32
+        ],
+        "original_english": "Frost Protection Suit Boots",
+        "source_tooltip": "Full Set protects against Cold"
+      },
+      {
+        "original_key": "gt.armor.hazmat.heat.head",
+        "current_id": "gt6ce:heat_suit_helmet",
+        "family": "heat",
+        "piece": "helmet",
+        "texture_slot": 0,
+        "original_body_texture": "C:/Dev/gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/armor/hazard_heat/0.png",
+        "body_texture_sha256": "80c0ed52ef98ff97a1ff0c93ec5c5d7a55de8a30f40c6f012dc73606a7b7c703",
+        "body_dimensions": [
+          64,
+          32
+        ],
+        "original_english": "Heat Protection Suit Mask",
+        "source_tooltip": "Full Set protects against Heat"
+      },
+      {
+        "original_key": "gt.armor.hazmat.heat.chest",
+        "current_id": "gt6ce:heat_suit_chestplate",
+        "family": "heat",
+        "piece": "chestplate",
+        "texture_slot": 1,
+        "original_body_texture": "C:/Dev/gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/armor/hazard_heat/1.png",
+        "body_texture_sha256": "203bd2e92a51d6625c4996b963efeecfc0df1132eaed08174eba1064cce10945",
+        "body_dimensions": [
+          64,
+          32
+        ],
+        "original_english": "Heat Protection Suit Shirt",
+        "source_tooltip": "Full Set protects against Heat"
+      },
+      {
+        "original_key": "gt.armor.hazmat.heat.legs",
+        "current_id": "gt6ce:heat_suit_leggings",
+        "family": "heat",
+        "piece": "leggings",
+        "texture_slot": 2,
+        "original_body_texture": "C:/Dev/gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/armor/hazard_heat/2.png",
+        "body_texture_sha256": "c19c7ff02f30179c2f5c292bd88a0c2e6abed51273c5efe69613c4dbe628eb8d",
+        "body_dimensions": [
+          64,
+          32
+        ],
+        "original_english": "Heat Protection Suit Pants",
+        "source_tooltip": "Full Set protects against Heat"
+      },
+      {
+        "original_key": "gt.armor.hazmat.heat.boots",
+        "current_id": "gt6ce:heat_suit_boots",
+        "family": "heat",
+        "piece": "boots",
+        "texture_slot": 3,
+        "original_body_texture": "C:/Dev/gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/armor/hazard_heat/3.png",
+        "body_texture_sha256": "3abd7eb34abaddd147bdea99d82e5905e7f6405759d730981749bb3fbddfe9bd",
+        "body_dimensions": [
+          64,
+          32
+        ],
+        "original_english": "Heat Protection Suit Boots",
+        "source_tooltip": "Full Set protects against Heat"
+      },
+      {
+        "original_key": "gt.armor.hazmat.radiation.head",
+        "current_id": "gt6ce:radiation_suit_helmet",
+        "family": "radiation",
+        "piece": "helmet",
+        "texture_slot": 0,
+        "original_body_texture": "C:/Dev/gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/armor/hazard_radiation/0.png",
+        "body_texture_sha256": "5b9575c7e6d8a7eb057eee29e03a18631bbc8470b2dcb75796e94f16b5f903eb",
+        "body_dimensions": [
+          64,
+          32
+        ],
+        "original_english": "Radiation Hazard Suit Mask",
+        "source_tooltip": "Full Set protects against Radiation"
+      },
+      {
+        "original_key": "gt.armor.hazmat.radiation.chest",
+        "current_id": "gt6ce:radiation_suit_chestplate",
+        "family": "radiation",
+        "piece": "chestplate",
+        "texture_slot": 1,
+        "original_body_texture": "C:/Dev/gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/armor/hazard_radiation/1.png",
+        "body_texture_sha256": "d74001cc7901c139a4b7442fd91753fa593b42a24a8f1889f1af1e4939d66d38",
+        "body_dimensions": [
+          64,
+          32
+        ],
+        "original_english": "Radiation Hazard Suit Shirt",
+        "source_tooltip": "Full Set protects against Radiation"
+      },
+      {
+        "original_key": "gt.armor.hazmat.radiation.legs",
+        "current_id": "gt6ce:radiation_suit_leggings",
+        "family": "radiation",
+        "piece": "leggings",
+        "texture_slot": 2,
+        "original_body_texture": "C:/Dev/gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/armor/hazard_radiation/2.png",
+        "body_texture_sha256": "6832bd55d31eea3b1b4b0c4e2caa6c99761b4bf94fc06233c193efa7071ce22b",
+        "body_dimensions": [
+          64,
+          32
+        ],
+        "original_english": "Radiation Hazard Suit Pants",
+        "source_tooltip": "Full Set protects against Radiation"
+      },
+      {
+        "original_key": "gt.armor.hazmat.radiation.boots",
+        "current_id": "gt6ce:radiation_suit_boots",
+        "family": "radiation",
+        "piece": "boots",
+        "texture_slot": 3,
+        "original_body_texture": "C:/Dev/gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/armor/hazard_radiation/3.png",
+        "body_texture_sha256": "c4187193f409ecfee75ba4f1a0f4b67e8c0eba81d815433a996d96700f90438a",
+        "body_dimensions": [
+          64,
+          32
+        ],
+        "original_english": "Radiation Hazard Suit Boots",
+        "source_tooltip": "Full Set protects against Radiation"
+      },
+      {
+        "original_key": "gt.armor.hazmat.biochemgas.head",
+        "current_id": "gt6ce:biochemgas_suit_helmet",
+        "family": "biochemgas",
+        "piece": "helmet",
+        "texture_slot": 0,
+        "original_body_texture": "C:/Dev/gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/armor/hazard_biochemgas/0.png",
+        "body_texture_sha256": "f6d8af1e50198ce0bdcb61826d9a48a6a8987792e87fa3a1d559817f93e9ba17",
+        "body_dimensions": [
+          64,
+          32
+        ],
+        "original_english": "Biochemical Gas Hazard Suit Mask",
+        "source_tooltip": "Full Set protects against Chemicals and Gases"
+      },
+      {
+        "original_key": "gt.armor.hazmat.biochemgas.chest",
+        "current_id": "gt6ce:biochemgas_suit_chestplate",
+        "family": "biochemgas",
+        "piece": "chestplate",
+        "texture_slot": 1,
+        "original_body_texture": "C:/Dev/gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/armor/hazard_biochemgas/1.png",
+        "body_texture_sha256": "1bd13667611434a9bcbbe020cc82ef1a7ddbc789d14a27598670c6c40ac1a404",
+        "body_dimensions": [
+          64,
+          32
+        ],
+        "original_english": "Biochemical Gas Hazard Suit Shirt",
+        "source_tooltip": "Full Set protects against Chemicals and Gases"
+      },
+      {
+        "original_key": "gt.armor.hazmat.biochemgas.legs",
+        "current_id": "gt6ce:biochemgas_suit_leggings",
+        "family": "biochemgas",
+        "piece": "leggings",
+        "texture_slot": 2,
+        "original_body_texture": "C:/Dev/gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/armor/hazard_biochemgas/2.png",
+        "body_texture_sha256": "3896ae66c2fdfeda3043dfd29ff369e07daffa6e4870c36a9af5731df9fac877",
+        "body_dimensions": [
+          64,
+          32
+        ],
+        "original_english": "Biochemical Gas Hazard Suit Pants",
+        "source_tooltip": "Full Set protects against Chemicals and Gases"
+      },
+      {
+        "original_key": "gt.armor.hazmat.biochemgas.boots",
+        "current_id": "gt6ce:biochemgas_suit_boots",
+        "family": "biochemgas",
+        "piece": "boots",
+        "texture_slot": 3,
+        "original_body_texture": "C:/Dev/gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/armor/hazard_biochemgas/3.png",
+        "body_texture_sha256": "be9c0c2caf39e27e2fb4d7b5c7c82aa7e51c41ae624a9c1c1a44912b30122838",
+        "body_dimensions": [
+          64,
+          32
+        ],
+        "original_english": "Biochemical Gas Hazard Suit Boots",
+        "source_tooltip": "Full Set protects against Chemicals and Gases"
+      },
+      {
+        "original_key": "gt.armor.hazmat.universal.head",
+        "current_id": "gt6ce:universal_suit_helmet",
+        "family": "universal",
+        "piece": "helmet",
+        "texture_slot": 0,
+        "original_body_texture": "C:/Dev/gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/armor/hazard_universal/0.png",
+        "body_texture_sha256": "45ffdf2f88608d1c16d02bfef3a8f187abddda7a37b9fb0e5d42cedc12cf1650",
+        "body_dimensions": [
+          64,
+          32
+        ],
+        "original_english": "Universal Hazard Suit Mask",
+        "source_tooltip": "Full Set protects against Hazards"
+      },
+      {
+        "original_key": "gt.armor.hazmat.universal.chest",
+        "current_id": "gt6ce:universal_suit_chestplate",
+        "family": "universal",
+        "piece": "chestplate",
+        "texture_slot": 1,
+        "original_body_texture": "C:/Dev/gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/armor/hazard_universal/1.png",
+        "body_texture_sha256": "948f5c492580a3424a917fc035571480ff8c6ba299303993f04f039f43282306",
+        "body_dimensions": [
+          64,
+          32
+        ],
+        "original_english": "Universal Hazard Suit Shirt",
+        "source_tooltip": "Full Set protects against Hazards"
+      },
+      {
+        "original_key": "gt.armor.hazmat.universal.legs",
+        "current_id": "gt6ce:universal_suit_leggings",
+        "family": "universal",
+        "piece": "leggings",
+        "texture_slot": 2,
+        "original_body_texture": "C:/Dev/gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/armor/hazard_universal/2.png",
+        "body_texture_sha256": "18ee253ae0b7327e3aca12dec41c8f5fe97f58e129d0ac6dbe548c7018dba1a1",
+        "body_dimensions": [
+          64,
+          32
+        ],
+        "original_english": "Universal Hazard Suit Pants",
+        "source_tooltip": "Full Set protects against Hazards"
+      },
+      {
+        "original_key": "gt.armor.hazmat.universal.boots",
+        "current_id": "gt6ce:universal_suit_boots",
+        "family": "universal",
+        "piece": "boots",
+        "texture_slot": 3,
+        "original_body_texture": "C:/Dev/gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/armor/hazard_universal/3.png",
+        "body_texture_sha256": "984bdeb30238eaa153f4d819e6b0a411175a1c4969a51644a3c3482483a6c9c1",
+        "body_dimensions": [
+          64,
+          32
+        ],
+        "original_english": "Universal Hazard Suit Boots",
+        "source_tooltip": "Full Set protects against Hazards"
+      }
+    ],
+    "assets": [
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/armor/hazard_insects/0.png",
+        "raw_sha256": "249173e1ccf72d2be3a66256b3d1a4aa3880c0d60d88934babedfedc707c0d08"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/insect_suit_helmet.json",
+        "raw_sha256": "908dc9f934e1dce5954ff87797a46dfb2bdbafa517a09897f2080074018c5c12"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/items/armor/hazard_insects/0.png",
+        "raw_sha256": "4701ffbfd697b0a50b034b05dc816e29a16c5b3f28a914128103db7543c0d123"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/recipes/hazmat/insect_suit_helmet.json",
+        "raw_sha256": "6f7f9728518e2eb2aa04e26438a2a83cb5f193a8c2f3b96555e2cd4c3b7319e5"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/armor/hazard_insects/1.png",
+        "raw_sha256": "2e06101f09cf27c462f7847370e8d4bc20aa1cb71123eb0e86179c1939951856"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/insect_suit_chestplate.json",
+        "raw_sha256": "8be9f9c43fccfcabf8e46570c1e5f2f5cc51aa970fe0427d250414d4c6c6ea7f"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/items/armor/hazard_insects/1.png",
+        "raw_sha256": "10899f7c1453d63366da53cbd09cdcec7547fab340b3a0d5107f0cfa5516aa1c"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/recipes/hazmat/insect_suit_chestplate.json",
+        "raw_sha256": "69268420b8eafaa6457e9754372fe719036539c6cd201ff352e980dce5c6375f"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/armor/hazard_insects/2.png",
+        "raw_sha256": "2105c99664d52e642107cce83e9758bbf526c1c74473a84bc026e3a267281668"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/insect_suit_leggings.json",
+        "raw_sha256": "d0826261151fd07a8dacdac68a16d7d3ad0220003464f142190c7a6a46bb04fe"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/items/armor/hazard_insects/2.png",
+        "raw_sha256": "b30894c6b373f0324c9d29e88f65cabea61eb125cdbbf77736b366d11808fc5f"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/recipes/hazmat/insect_suit_leggings.json",
+        "raw_sha256": "01cfd542015d6ca5bae1a03fb67f012e871e310e7d310f3921c318e3044b0323"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/armor/hazard_insects/3.png",
+        "raw_sha256": "40498aa4635f616a6f71fa2d9fda78a08b19c9a58536121a1a66fa61f93b0eb1"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/insect_suit_boots.json",
+        "raw_sha256": "f3d0b0a02f29ffa55cca3bfca6c981813264b02c4712915bf616a0d00251b9aa"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/items/armor/hazard_insects/3.png",
+        "raw_sha256": "f879e9e0dbe7c844f18627ab6e23c11a17df80e0994b5e85f1a0991a709a9747"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/recipes/hazmat/insect_suit_boots.json",
+        "raw_sha256": "75d5039c3ad501fe6ed169d1c7088e78e596f7a7ee07042791580fd120aea054"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/armor/hazard_frost/0.png",
+        "raw_sha256": "db7761eae2768a567f4edc3ee0008a09f98114f501c7feffda9a42331516f306"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/frost_suit_helmet.json",
+        "raw_sha256": "6ca4a03d14ef3d242a815d1e7e3a48aaa56dd47bd712a4418548b26aad32448b"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/items/armor/hazard_frost/0.png",
+        "raw_sha256": "868baee9800a5cd88794625bb73512313fb74101cd5d1cd35896f600e105b5ce"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/recipes/hazmat/frost_suit_helmet.json",
+        "raw_sha256": "364f5cc36f7b122c24800a3186ac8823bbee3a5b32b345d421a2bd39832d2b72"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/armor/hazard_frost/1.png",
+        "raw_sha256": "948f5c492580a3424a917fc035571480ff8c6ba299303993f04f039f43282306"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/frost_suit_chestplate.json",
+        "raw_sha256": "b68a857a3fca4d508ed1b48df8891fa436c802c86cf7e9b4b69a0c78b9273fc3"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/items/armor/hazard_frost/1.png",
+        "raw_sha256": "de5d62c7cd6a661adf7fc30cc7bc468c4bbe532bac69fa4e3b288520b13a22a1"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/recipes/hazmat/frost_suit_chestplate.json",
+        "raw_sha256": "d47d5a92285d27de9c3d7d7eecbae4542d4f37614bfb73e62d7b8604c1fb48f7"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/armor/hazard_frost/2.png",
+        "raw_sha256": "18ee253ae0b7327e3aca12dec41c8f5fe97f58e129d0ac6dbe548c7018dba1a1"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/frost_suit_leggings.json",
+        "raw_sha256": "d001fed51a5b9eb5da25a88e6a84726ca557c53ced0386a4bde667e1a622bf98"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/items/armor/hazard_frost/2.png",
+        "raw_sha256": "5e9f8b0b3f5afda1ebd80aca480509c2dbe6fb810cae2ebe39460296eb7ddd21"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/recipes/hazmat/frost_suit_leggings.json",
+        "raw_sha256": "9aaa691542a7d2bd85c8d703e9627e547ab8690b35d53bba3fc984ec1401aac5"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/armor/hazard_frost/3.png",
+        "raw_sha256": "67d15bae24aeb91861a2c1835c8d8aa6d5ca67ba4ad4e4a7d2d49858c8fa4de0"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/frost_suit_boots.json",
+        "raw_sha256": "dd759b440aa3951526969bec587896048a6a62af8ec700e05dadd87bd1350c40"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/items/armor/hazard_frost/3.png",
+        "raw_sha256": "ea698b262968be47cefcfdf25fc8ccd1745c502243aa9303892db4768f81a88f"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/recipes/hazmat/frost_suit_boots.json",
+        "raw_sha256": "2440f376a8e3446e57ef0ef4420ee136732c285ff3fc5eaaeee45f8ff7d76879"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/armor/hazard_heat/0.png",
+        "raw_sha256": "80c0ed52ef98ff97a1ff0c93ec5c5d7a55de8a30f40c6f012dc73606a7b7c703"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/heat_suit_helmet.json",
+        "raw_sha256": "0188a9325284027264031ebca151f1a7ef4de9403a8fbc59f4178b4b9b6829b7"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/items/armor/hazard_heat/0.png",
+        "raw_sha256": "8698cd7fbb77e8c48744a82af0f355554c6a6bed35f7797cc6198cb7427f94d7"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/recipes/hazmat/heat_suit_helmet.json",
+        "raw_sha256": "55c1a7966ceec4f3d7024abc5db6f1adf4462f8f18f84b5bd391e676ac76ebc2"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/armor/hazard_heat/1.png",
+        "raw_sha256": "203bd2e92a51d6625c4996b963efeecfc0df1132eaed08174eba1064cce10945"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/heat_suit_chestplate.json",
+        "raw_sha256": "549989703298ef94bce05ee0f12676532094814800dda077739933696bc73bec"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/items/armor/hazard_heat/1.png",
+        "raw_sha256": "191b792f6712b9937b622239ad6504a1819b54746dec4fbdb908ebcef5ba78d0"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/recipes/hazmat/heat_suit_chestplate.json",
+        "raw_sha256": "e3436e8b608c743dc10a0d4654c38994cab37c945fc1a872dd09e1bfd0070b73"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/armor/hazard_heat/2.png",
+        "raw_sha256": "c19c7ff02f30179c2f5c292bd88a0c2e6abed51273c5efe69613c4dbe628eb8d"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/heat_suit_leggings.json",
+        "raw_sha256": "522302a8c9aa9e9e61174c500fcb841c6d06bc02c83fd301f7a43aa090a97855"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/items/armor/hazard_heat/2.png",
+        "raw_sha256": "2b60332415ad2ea2cabe1a27f488c37541c0a1336a9d9cb0a586904a8c8e6f55"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/recipes/hazmat/heat_suit_leggings.json",
+        "raw_sha256": "26cfa0fd4ea10a0f6eefc5e2320012637baa6d5c5922ba27a11a91da8e8106ed"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/armor/hazard_heat/3.png",
+        "raw_sha256": "3abd7eb34abaddd147bdea99d82e5905e7f6405759d730981749bb3fbddfe9bd"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/heat_suit_boots.json",
+        "raw_sha256": "2ae2af956cdf93e02208ed852cec8dfca87f3fcd9ec8774943271dd8be5ac84b"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/items/armor/hazard_heat/3.png",
+        "raw_sha256": "0363b5952edbc7f5a45ba48cef65a3105bb86afe1179d51fc17db98eb1fbc28b"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/recipes/hazmat/heat_suit_boots.json",
+        "raw_sha256": "ea2c320185b008031046c47d235c409a40c5e90cdcc14ad848e7a8af3b94c2bc"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/armor/hazard_radiation/0.png",
+        "raw_sha256": "5b9575c7e6d8a7eb057eee29e03a18631bbc8470b2dcb75796e94f16b5f903eb"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/radiation_suit_helmet.json",
+        "raw_sha256": "cdcecaf3a4a182f21f9a11c4cf783f3669f98eaf74b8fce3f2435f6ac9d96d8b"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/items/armor/hazard_radiation/0.png",
+        "raw_sha256": "b3d232a6722b58177bb350ef7450365a56050c4f1308b13f5fb25dfeb16948d2"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/recipes/nuclear/radiation_suit_helmet.json",
+        "raw_sha256": "d6b1a1cd908b62a7b102031af26e14bcfc932c6701605e8a06e18afde68e868b"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/armor/hazard_radiation/1.png",
+        "raw_sha256": "d74001cc7901c139a4b7442fd91753fa593b42a24a8f1889f1af1e4939d66d38"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/radiation_suit_chestplate.json",
+        "raw_sha256": "d97dd4df024e35c9abedfc985e78e29178d9b10105870afad8f86808b0473481"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/items/armor/hazard_radiation/1.png",
+        "raw_sha256": "edfbccf0d8ddcfe42e6f4aad82eeb1d24fab379779abbe6d0433f70c326ebef4"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/recipes/nuclear/radiation_suit_chestplate.json",
+        "raw_sha256": "e9e8ffb4d8421d5ee22061b38ff49fce54dad3ae0935671285d8087843ac263d"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/armor/hazard_radiation/2.png",
+        "raw_sha256": "6832bd55d31eea3b1b4b0c4e2caa6c99761b4bf94fc06233c193efa7071ce22b"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/radiation_suit_leggings.json",
+        "raw_sha256": "4fa719c0d6d0f1ad5dd75ee2d81a1d30aefd2ed6e6770092e3e02bd5449902b4"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/items/armor/hazard_radiation/2.png",
+        "raw_sha256": "9ca714952ecd02852d14283c7afc82272d485d46814c18396890cb95782d21d5"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/recipes/nuclear/radiation_suit_leggings.json",
+        "raw_sha256": "95a0cb71523b63602cb9fc3ac1ccfdec6ff7711d1e1594d75a4ff12d618803b3"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/armor/hazard_radiation/3.png",
+        "raw_sha256": "c4187193f409ecfee75ba4f1a0f4b67e8c0eba81d815433a996d96700f90438a"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/radiation_suit_boots.json",
+        "raw_sha256": "a5f82a17c3c532b6a4bccad86ec5f85c4f226bcc39210c3902768c546330f350"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/items/armor/hazard_radiation/3.png",
+        "raw_sha256": "3ab5a7e388f71bc0e2a98051ede2582f21d90260dd42b01d48e2b92caf38ce53"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/recipes/nuclear/radiation_suit_boots.json",
+        "raw_sha256": "206001e4a9d48ca7c08d636ce4d55748c505d839a1b9b519854faee4c32a27ca"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/armor/hazard_biochemgas/0.png",
+        "raw_sha256": "f6d8af1e50198ce0bdcb61826d9a48a6a8987792e87fa3a1d559817f93e9ba17"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/biochemgas_suit_helmet.json",
+        "raw_sha256": "633a7eee7166a77d2031d8ae5542b70d6c2d12b1e58a795d37706fadd517e89c"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/items/armor/hazard_biochemgas/0.png",
+        "raw_sha256": "a2944ae808226d22aae1da081e7f0996ec2990944888567fbfed65ca61354d40"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/recipes/hazmat/biochemgas_suit_helmet.json",
+        "raw_sha256": "5e01341c90e7d894d9806047da95fc50ee31688b9970c765596b05a3c1f16a71"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/armor/hazard_biochemgas/1.png",
+        "raw_sha256": "1bd13667611434a9bcbbe020cc82ef1a7ddbc789d14a27598670c6c40ac1a404"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/biochemgas_suit_chestplate.json",
+        "raw_sha256": "3d22da4b0328af486dd8a783cffc073e7fd35afc795061768bb4634633fc45e7"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/items/armor/hazard_biochemgas/1.png",
+        "raw_sha256": "b01afe80d5944eb95d0cf9c50ae9b4bf61ae7d4adcf5a67e3a6425e219321a46"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/recipes/hazmat/biochemgas_suit_chestplate.json",
+        "raw_sha256": "54c82751a86933b08fbdc8ed970f803ab498052069bad3fbe26563095d20d60e"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/armor/hazard_biochemgas/2.png",
+        "raw_sha256": "3896ae66c2fdfeda3043dfd29ff369e07daffa6e4870c36a9af5731df9fac877"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/biochemgas_suit_leggings.json",
+        "raw_sha256": "358d8c6276655c7864b8a0c4f80d17a0df3442581fd862cb284ce917e65ada1e"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/items/armor/hazard_biochemgas/2.png",
+        "raw_sha256": "f81454b0dda8c3f9a066d97702f8639c4da90102c8cef4ff12f6f516f7151016"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/recipes/hazmat/biochemgas_suit_leggings.json",
+        "raw_sha256": "04c870eb01ca1e4864d5f664391eb7141176208562f3d6a438bca8e2d167a330"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/armor/hazard_biochemgas/3.png",
+        "raw_sha256": "be9c0c2caf39e27e2fb4d7b5c7c82aa7e51c41ae624a9c1c1a44912b30122838"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/biochemgas_suit_boots.json",
+        "raw_sha256": "69cf1cbba15a02dbb6b506ddc6e2ae60456990e626de6cb7fdd14275ae0e55a4"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/items/armor/hazard_biochemgas/3.png",
+        "raw_sha256": "1f8a5d65a0c391c68bca83fb36fa71e433e2fa9d8594e04d67ef98d8a43b530f"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/recipes/hazmat/biochemgas_suit_boots.json",
+        "raw_sha256": "96514fdd2d5332b75ad24235e06ba3f9ac7183e500793132526f910b474282ef"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/armor/hazard_universal/0.png",
+        "raw_sha256": "45ffdf2f88608d1c16d02bfef3a8f187abddda7a37b9fb0e5d42cedc12cf1650"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/universal_suit_helmet.json",
+        "raw_sha256": "b0cf07ca2ca928a6f124bfde2da7a53272f693a597fc433f70292d13facb7cb2"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/items/armor/hazard_universal/0.png",
+        "raw_sha256": "88916f606c401b79cdd53bb7b75f227a19f09e649904f229581888af92bd33b2"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/recipes/hazmat/universal_suit_helmet.json",
+        "raw_sha256": "2c9dde26c35153ff287254d8771b5eac60613c38bbb6b736c1d89ec0e6d97056"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/armor/hazard_universal/1.png",
+        "raw_sha256": "948f5c492580a3424a917fc035571480ff8c6ba299303993f04f039f43282306"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/universal_suit_chestplate.json",
+        "raw_sha256": "c1ec8a0ff87673fc389a59bb0e248e36266376a40b4ecf327b999f5008eee855"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/items/armor/hazard_universal/1.png",
+        "raw_sha256": "de5d62c7cd6a661adf7fc30cc7bc468c4bbe532bac69fa4e3b288520b13a22a1"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/recipes/hazmat/universal_suit_chestplate.json",
+        "raw_sha256": "672ea4812eae032dfd425a814196b070aed9614fec9b7b1f59123b2676ca29f9"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/armor/hazard_universal/2.png",
+        "raw_sha256": "18ee253ae0b7327e3aca12dec41c8f5fe97f58e129d0ac6dbe548c7018dba1a1"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/universal_suit_leggings.json",
+        "raw_sha256": "4884ba0418afd5d554e3c67849d19ab79c962ebc50232f554ef8e063fef166d3"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/items/armor/hazard_universal/2.png",
+        "raw_sha256": "5e9f8b0b3f5afda1ebd80aca480509c2dbe6fb810cae2ebe39460296eb7ddd21"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/recipes/hazmat/universal_suit_leggings.json",
+        "raw_sha256": "41d5eb3c101b8b1e3dd920ae58a61c027d57d85dfd6da7fa047ce186805b2c76"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/armor/hazard_universal/3.png",
+        "raw_sha256": "984bdeb30238eaa153f4d819e6b0a411175a1c4969a51644a3c3482483a6c9c1"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/universal_suit_boots.json",
+        "raw_sha256": "cd1cda6b1ddac04c1eca8877c6163b8cfc46fb83c252f4941999bfdce8956d5b"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/items/armor/hazard_universal/3.png",
+        "raw_sha256": "ea698b262968be47cefcfdf25fc8ccd1745c502243aa9303892db4768f81a88f"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/recipes/hazmat/universal_suit_boots.json",
+        "raw_sha256": "e4fa934baeab62ad6d43955db856f00f5a8ba451242d2824beb7cc554013e90c"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/tags/items/hazmat_chem.json",
+        "raw_sha256": "de923ac094c8eea304d165896924254696fc17c7e52240501aecdf6b0d3d509a"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/tags/items/hazmat_gas.json",
+        "raw_sha256": "de923ac094c8eea304d165896924254696fc17c7e52240501aecdf6b0d3d509a"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/tags/items/hazmat_bio.json",
+        "raw_sha256": "de923ac094c8eea304d165896924254696fc17c7e52240501aecdf6b0d3d509a"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/tags/items/hazmat_electric.json",
+        "raw_sha256": "754781de81c90a25e0f5fbc598d410dbed9700d4d36badc6d7ea4d923d565cdd"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/tags/items/hazmat_heat.json",
+        "raw_sha256": "f54201c4f0a24a31bc6073306e7d362f73633eae9a01fef2eb05e2588b1ab94b"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/tags/items/hazmat_frost.json",
+        "raw_sha256": "1036ee507c1bf6deee135d2a119fa59103d0282f7f4eb048650ef87efe1fdfa7"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/tags/items/hazmat_insect.json",
+        "raw_sha256": "6bd9d075a36c9f88c819ba7846ad147cebb5d186b5fbd28db8acb4e64a4499c2"
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/tags/items/radiation_protection.json",
+        "raw_sha256": "1b37d1ff9e89fa0e6277aca39f48a7113bddb1ac676c0d5589412d67f7a62c48"
+      }
+    ],
+    "tag_membership": [
+      {
+        "tag": "hazmat_chem",
+        "own_items": [
+          "gt6ce:biochemgas_suit_boots",
+          "gt6ce:biochemgas_suit_chestplate",
+          "gt6ce:biochemgas_suit_helmet",
+          "gt6ce:biochemgas_suit_leggings",
+          "gt6ce:universal_suit_boots",
+          "gt6ce:universal_suit_chestplate",
+          "gt6ce:universal_suit_helmet",
+          "gt6ce:universal_suit_leggings"
+        ]
+      },
+      {
+        "tag": "hazmat_gas",
+        "own_items": [
+          "gt6ce:biochemgas_suit_boots",
+          "gt6ce:biochemgas_suit_chestplate",
+          "gt6ce:biochemgas_suit_helmet",
+          "gt6ce:biochemgas_suit_leggings",
+          "gt6ce:universal_suit_boots",
+          "gt6ce:universal_suit_chestplate",
+          "gt6ce:universal_suit_helmet",
+          "gt6ce:universal_suit_leggings"
+        ]
+      },
+      {
+        "tag": "hazmat_bio",
+        "own_items": [
+          "gt6ce:biochemgas_suit_boots",
+          "gt6ce:biochemgas_suit_chestplate",
+          "gt6ce:biochemgas_suit_helmet",
+          "gt6ce:biochemgas_suit_leggings",
+          "gt6ce:universal_suit_boots",
+          "gt6ce:universal_suit_chestplate",
+          "gt6ce:universal_suit_helmet",
+          "gt6ce:universal_suit_leggings"
+        ]
+      },
+      {
+        "tag": "hazmat_electric",
+        "own_items": [
+          "gt6ce:universal_suit_boots",
+          "gt6ce:universal_suit_chestplate",
+          "gt6ce:universal_suit_helmet",
+          "gt6ce:universal_suit_leggings"
+        ]
+      },
+      {
+        "tag": "hazmat_heat",
+        "own_items": [
+          "gt6ce:heat_suit_boots",
+          "gt6ce:heat_suit_chestplate",
+          "gt6ce:heat_suit_helmet",
+          "gt6ce:heat_suit_leggings",
+          "gt6ce:universal_suit_boots",
+          "gt6ce:universal_suit_chestplate",
+          "gt6ce:universal_suit_helmet",
+          "gt6ce:universal_suit_leggings"
+        ]
+      },
+      {
+        "tag": "hazmat_frost",
+        "own_items": [
+          "gt6ce:frost_suit_boots",
+          "gt6ce:frost_suit_chestplate",
+          "gt6ce:frost_suit_helmet",
+          "gt6ce:frost_suit_leggings",
+          "gt6ce:universal_suit_boots",
+          "gt6ce:universal_suit_chestplate",
+          "gt6ce:universal_suit_helmet",
+          "gt6ce:universal_suit_leggings"
+        ]
+      },
+      {
+        "tag": "hazmat_insect",
+        "own_items": [
+          "gt6ce:insect_suit_boots",
+          "gt6ce:insect_suit_chestplate",
+          "gt6ce:insect_suit_helmet",
+          "gt6ce:insect_suit_leggings",
+          "gt6ce:universal_suit_boots",
+          "gt6ce:universal_suit_chestplate",
+          "gt6ce:universal_suit_helmet",
+          "gt6ce:universal_suit_leggings"
+        ]
+      },
+      {
+        "tag": "radiation_protection",
+        "own_items": [
+          "gt6ce:radiation_suit_boots",
+          "gt6ce:radiation_suit_chestplate",
+          "gt6ce:radiation_suit_helmet",
+          "gt6ce:radiation_suit_leggings",
+          "gt6ce:universal_suit_boots",
+          "gt6ce:universal_suit_chestplate",
+          "gt6ce:universal_suit_helmet",
+          "gt6ce:universal_suit_leggings"
+        ]
+      }
+    ],
+    "tag_cells": 192,
+    "source_witness": {
+      "method": "Finite algebraic source derivation; no damage or tooltip method executed.",
+      "conditions": "Player wearing four undamaged suits, no enchantments/effects, ordinary armor-blockable 10HP hit, no weapon armor-effectiveness modification; at armor stage only.",
+      "armor_points": 4,
+      "toughness": 0,
+      "original_per_piece_ratio": 0.04,
+      "original_total_ratio": 0.16,
+      "original_remaining_hp": 8.4,
+      "modern_effective_armor": 0.8,
+      "modern_total_ratio": 0.032,
+      "modern_remaining_hp_approximately": 9.68,
+      "not_claimed": "No client HUD, full health-loss chain, multiplayer or original installed runtime result."
+    },
+    "excluded_false_positive": "Original constructor parameter aDamageReduction=8 is unused; material armor points are 1 each, not 8.",
+    "asset_limits": "24 armor body PNGs byte-identical to original source; inventory icon references and recipe output IDs exist, not a complete crafting or visual runtime acceptance."
+  },
+  "formal_findings_added": [
+    420,
+    421
+  ],
+  "findings": {
+    "420": "Armor points remain one each, but modern CombatRules differ from original Forge special-armor ratios. Bounded 10HP player armor-stage source witness: old8.4 vs modern~9.68; preserving modern policy pending explicit alignment choice.",
+    "421": "Original armor adds remaining/max durability on ordinary hover, including pristine128/128. Current suit callback adds only hazard text; native durability text is advanced-only and damaged-only. No claim that durability mechanics or bars are absent."
+  },
+  "refactoring": {
+    "baseline": "26f7ca7b95c16d4c16b2dac963e235689d6989c0",
+    "files": {
+      "multiversion/src/main/java/com/gregtech/gregtech/item/RadiationSuitItem.java": {
+        "before_raw_sha256": "1434879ca7c02f391183e7b919c2467e5932f66133e11edcdf4bec8e63a3bd89",
+        "after_raw_sha256": "037f5940d28ac16739b4fea29df38ac1822b752502880316692476c2afe57597",
+        "before_lines": 53,
+        "after_lines": 102,
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 352,
+            "sha256": "5e915e1396d39c10591d9f3b8c20a8202bd72e6ec357b79a2e4bc8535c7401ca"
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 247,
+            "sha256": "c6be06af0771d40a677e8825794d958a53d25a280799f99711acb53c07cb1777"
+          }
+        ],
+        "controlled_local_names": {}
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/registry/GTRadiationProtection.java": {
+        "before_raw_sha256": "9e9aa0c9c059f6b354b14751841f78d037f4f053e5c7d07cdb793af09de28c3e",
+        "after_raw_sha256": "36c0821a3e656f543e7242a82201a0731dee6837fdc2ad3485a5cb6a4a0ba515",
+        "before_lines": 37,
+        "after_lines": 52,
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 240,
+            "sha256": "286d8551d884b05dd0d1be51454be8e33073046617454ab18a8f78d89bedc125"
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 475,
+            "sha256": "b7d53e4c0ed9a74146b3ce0b6d0713895850859f649f6c04380d67818331d89f"
+          }
+        ],
+        "controlled_local_names": {
+          "type": 4,
+          "id": 3
+        }
+      },
+      "core/src/main/java/com/gregtech/gregtech/content/hazard/HazmatSuitCatalog.java": {
+        "before_raw_sha256": "beb6fb4be644faa8240e5b2c418fa03c4622b5253a54f6464031f2ffea048b96",
+        "after_raw_sha256": "8dc256a3da93e23ac066304adf85d5f1bc86be0f6bc95eb8224e6a6c212875ad",
+        "before_lines": 16,
+        "after_lines": 22,
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 116,
+            "sha256": "001f31f5a1e99d58c411630d017f6381e85ff7647a32ac4789db0386871f1c16"
+          }
+        ],
+        "controlled_local_names": {}
+      }
+    },
+    "scope": "Whole remaining native/core views after exact texture-path extraction and registry local names; public APIs and values retained.",
+    "texture_extraction": {
+      "old_bodies_compared": 2,
+      "native_wrappers_checked": 2,
+      "constant_prefix_normalization": "Forge gt6ce: prefix remains in its wrapper; Neo namespace stays in ResourceLocation construction.",
+      "slot_mapping": "HEAD0/CHEST1/LEGS2/default3 unchanged, including unsupported-slot fallback.",
+      "validation": "Constructor family validation and tooltip/armor behavior retained."
+    }
+  },
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "compile": {
+    "result": "core and both compileJava passed",
+    "duration_reported": "1m 20s",
+    "log": "work/hazmat-suit-audit-20261022/compile.log",
+    "log_sha256": "86ed250ea210d2edceb909237f33ce04ff673adc1048069c161734bf4dc25e3e",
+    "temporary_adapter_path": "work/storage-inserter-audit-20261022/cached-api-classpath.gradle",
+    "temporary_adapter_sha256": "51a1ed5becc4b14c87f6eeef31d2c8fc984e02735ee630b3c292496c2798cdbe",
+    "cached_forge_artifacts": [
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/mezz/jei/jei-1.20.1-common-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-common-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/mezz/jei/jei-1.20.1-common-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-common-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "sha256": "7786d88e4ffd38f62d057b86eb56aa6a116037f2a4dbccb0aa77877b7dc8f4fd",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/mezz/jei/jei-1.20.1-forge-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-forge-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/mezz/jei/jei-1.20.1-forge-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-forge-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "sha256": "b50a6a64c629e51346deec045495ba932be2bcab4ffb5a46fe483df1e06c832a",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1-api.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1-api.jar",
+        "sha256": "268f4572a6297bcd38c176e9361ee245364bb255e1a74e0fec96a973ef1379c0",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1.jar",
+        "sha256": "a2df46e253e208d39576808509eb384b42d992ba77d1c3aec31b97611be6e64b",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/maven/modrinth/jade/11.13.2+forge_mapped_official_1.20.1/jade-11.13.2+forge_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/maven/modrinth/jade/11.13.2+forge_mapped_official_1.20.1/jade-11.13.2+forge_mapped_official_1.20.1.jar",
+        "sha256": "15030cb00590540a5a37bd6bd509df4c01116406dd7c1a760b55e81f83f2bd62",
+        "action": "copied existing exact-coordinate jar"
+      }
+    ],
+    "cached_neo_emi_api": {
+      "path": "C:/Dev/GregTech6/work/emi-maven/dev/emi/emi-neoforge/1.1.24+1.21.1/emi-neoforge-1.1.24+1.21.1-api.jar",
+      "sha256": "b3a8e23c5e59813f184423b94e37bb635867ddc9be2b68b3502fad7b9134779b"
+    },
+    "limits": "Unchanged same-version local API adapter; production build config unchanged, no default offline/CI recovery claim."
+  },
+  "preparation_notes": [
+    "The regular LGPL header was initially reindented by preview formatting; exact text restored before production writes.",
+    "Incomplete registration search initially omitted shared GTFuelRods; its explicit class-init trigger was then traced, avoiding a false Forge missing-registration claim.",
+    "Aneutronic power cells were found already covered by ALIGN-064, so not duplicated as new findings.",
+    "ArmorsGT is a nested CS class, not a separate Java path; source inventory and declaration search corrected the record input."
+  ],
+  "verification_limits": {
+    "arithmetic_game_execution": false,
+    "GameTest": false,
+    "game": false,
+    "original_installed_forge_runtime": false,
+    "complete_recipe_alignment": false,
+    "complete_optional_mod_compatibility": false,
+    "world_restart": false,
+    "build": false,
+    "push": false,
+    "github_writes": false,
+    "whole_goal_complete": false
+  },
+  "old_download_provenance_receipt": {
+    "path": "docs/integration/verification/center-biomes-audit-20261022.json",
+    "raw_sha256": "9a99a12f4bf64e90523d82a35cc26e9e190e32ffc22ffd7d2d3246fe3187a921",
+    "scope": "Prior official Mojang client/MCP download identities rechecked by native.py; not an installed old Forge game."
+  },
+  "root_revalidation": {
+    "source_hashes_and_32_spans": "match",
+    "native_entries_and_mapping_inputs": "all ten entries match",
+    "official_branch_sources": "two saved files match hashes; no runtime acceptance implied",
+    "refactoring": "five full flows and both old path bodies match controlled normalization",
+    "suit_identity_and_resources": "24 identities/104 paths/24 original body PNGs match",
+    "protection_membership": "192 own-item cells source-checked; not other-mod membership or game loading",
+    "compile_and_exact_api_inputs": "match 80s pass",
+    "protected_materials": "unchanged",
+    "historical_docs": "old lines preserved; new insertions only",
+    "formal_ids": {
+      "contiguous": true,
+      "count": 421
+    },
+    "new_links": "resolve",
+    "production_build_configuration": "unchanged",
+    "whole_goal_complete": false
+  }
+}

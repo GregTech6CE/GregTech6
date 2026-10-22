@@ -1,5 +1,7 @@
 # 当前源码导航与命名约定
 
+2026-10-22：core HazmatSuitCatalog定义六套；GTRadiationProtection注册24件，Forge经GTFuelRods触发初始化，Neo经材料注册触发。RadiationSuitItem.texturePath共用槽位／路径，原生返回类型留薄入口；GTHazmat读取八组物品标签，护甲计算仍由原生ArmorItem处理。路径共用、减伤／提示差异和证据见[防护服核查](HAZMAT_SUIT_AUDIT.md)。
+
 2026-10-22：GTGearboxes.machineProperties共用木／金属物性，仅gearbox调用者追加noOcclusion；两个物品入口仍明确stack16。core BatteryBoxDefinitions给20盒身份／四或十六槽，BatteryBoxBlock只给0..2指示状态和面板红石；运行仍由BatteryBoxEnergy／BatteryBoxState负责。四源整理、堆叠扩围和双版编译见[核查](BATTERY_GEAR_REGISTRATION_AUDIT.md)。
 
 2026-10-22：共享 `registry/GTEnergyNodes.java` 的createBlock／itemProperties／registerSpecifications统一两版创建策略；各自ALL、注册类型／订阅、能力和反应堆时机保留。core `content/energy/EnergyNodeDefinitions.java`只定义规格，局部档位字段改为inputRate／outputRate／material，固定值表保留。三完整流、39项堆叠扩围和双版编译见[注册核查](ENERGY_NODE_REGISTRATION_AUDIT.md)。
