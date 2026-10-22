@@ -19,26 +19,42 @@ import java.util.*;
 /** GT6 source IDs 27000/27006, 27050/27056, 27500/27506. These carry redstone, never EU. */
 public final class GTSignalWires {
 //? if >=1.21.1 {
-    /*private static final List<DeferredHolder<Block,SignalWireBlock>> ALL = new ArrayList<>();
-    public static final DeferredRegister<Block> BLOCKS=DeferredRegister.create(Registries.BLOCK,"gt6ce");
-    public static final DeferredRegister<Item> ITEMS=DeferredRegister.create(Registries.ITEM,"gt6ce");
-    public static final DeferredRegister<BlockEntityType<?>> ENTITIES=DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE,"gt6ce");
-    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.energy.SignalWireBlockEntity>> SIGNAL_WIRE=ENTITIES.register("signal_wire",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.energy.SignalWireBlockEntity::new,all().stream().map(DeferredHolder::get).toArray(Block[]::new)).build(null));
+    /*private static final List<DeferredHolder<Block, SignalWireBlock>> ALL = new ArrayList<>();
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, "gt6ce");
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, "gt6ce");
+    public static final DeferredRegister<BlockEntityType<?>> ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, "gt6ce");
+    public static final DeferredHolder<BlockEntityType<?>,
+            BlockEntityType<com.gregtech.gregtech.blockentity.energy.SignalWireBlockEntity>> SIGNAL_WIRE = ENTITIES.register("signal_wire",
+            () -> BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.energy.SignalWireBlockEntity::new,
+            all().stream().map(DeferredHolder::get).toArray(Block[]::new)).build(null));
 *///?} else {
     private static final List<RegistryObject<SignalWireBlock>> ALL = new ArrayList<>();
 //?}
-    private GTSignalWires() {}
+    private GTSignalWires() {
+    }
 //? if >=1.21.1 {
-    /*public static void register(IEventBus bus){if(!ALL.isEmpty())throw new IllegalStateException("Signal wires registered twice");register();BLOCKS.register(bus);ITEMS.register(bus);ENTITIES.register(bus);}
+    /*public static void register(IEventBus bus) {
+        if (!ALL.isEmpty()) throw new IllegalStateException("Signal wires registered twice");
+        register();
+        BLOCKS.register(bus);
+        ITEMS.register(bus);
+        ENTITIES.register(bus);
+    }
 
-    public static List<DeferredHolder<Block,SignalWireBlock>> all() { return Collections.unmodifiableList(ALL); }
+    public static List<DeferredHolder<Block, SignalWireBlock>> all() {
+        return Collections.unmodifiableList(ALL);
+    }
 *///?} else {
-    public static List<RegistryObject<SignalWireBlock>> all() { return Collections.unmodifiableList(ALL); }
+    public static List<RegistryObject<SignalWireBlock>> all() {
+        return Collections.unmodifiableList(ALL);
+    }
 //?}
     public static void register() {
-        for(var def:com.gregtech.gregtech.content.energy.SignalWireCatalog.families())family(def.name(),def.material(),def.range(),def.luminous());
+        for (var familySpec : com.gregtech.gregtech.content.energy.SignalWireCatalog.families())
+            registerFamily(familySpec.name(), familySpec.material(), familySpec.range(), familySpec.luminous());
     }
-    private static void family(String name, GTMaterial material, int range, boolean luminous) {
+
+    private static void registerFamily(String name, GTMaterial material, int range, boolean luminous) {
         for (boolean insulated : new boolean[]{false, true}) {
             String id = (insulated ? "cable_01_" : "wire_01_") + name;
 //? if >=1.21.1 {
