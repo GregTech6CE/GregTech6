@@ -63,6 +63,7 @@ public final class GTBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.tool.PortableContainerBlockEntity>> PORTABLE_CONTAINER=BLOCK_ENTITIES.register("portable_container",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.tool.PortableContainerBlockEntity::new,GTToolBlocks.PORTABLE.stream().map(DeferredHolder::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity>> MULTIBLOCK_PORT=BLOCK_ENTITIES.register("multiblock_port",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity::new,GTMultiblocks.portBlocks()).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.machine.AddonEnergyPartBlockEntity>> ADDON_ENERGY_PART=BLOCK_ENTITIES.register("addon_energy_part",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.machine.AddonEnergyPartBlockEntity::new,GTMultiblocks.energyPartBlocks()).build(null));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.machine.AddonFunctionalPartBlockEntity>> ADDON_FUNCTIONAL_PART=BLOCK_ENTITIES.register("addon_functional_part",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.machine.AddonFunctionalPartBlockEntity::new,GTMultiblocks.functionalPartBlocks()).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.machine.CokeOvenControllerBlockEntity>> COKE_OVEN=BLOCK_ENTITIES.register("coke_oven",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.machine.CokeOvenControllerBlockEntity::new,GTMultiblocks.COKE_OVEN_MAIN.get()).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.machine.CryoDistillationControllerBlockEntity>> CRYO_DISTILLATION=BLOCK_ENTITIES.register("cryo_distillation",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.machine.CryoDistillationControllerBlockEntity::new,GTMultiblocks.CRYO_DISTILLATION_MAIN.get()).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.machine.MultiblockTankControllerBlockEntity>> MULTIBLOCK_TANK=BLOCK_ENTITIES.register("multiblock_tank",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.machine.MultiblockTankControllerBlockEntity::new,GTMultiblocks.tanks().stream().map(com.gregtech.gregtech.registry.RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
@@ -307,6 +308,11 @@ public final class GTBlockEntities {
             BLOCK_ENTITY_TYPES.register("addon_energy_part", () -> BlockEntityType.Builder.of(
                     com.gregtech.gregtech.blockentity.machine.AddonEnergyPartBlockEntity::new,
                     GTMultiblocks.energyPartBlocks()).build(null));
+
+    public static final RegistryObject<BlockEntityType<com.gregtech.gregtech.blockentity.machine.AddonFunctionalPartBlockEntity>> ADDON_FUNCTIONAL_PART =
+            BLOCK_ENTITY_TYPES.register("addon_functional_part", () -> BlockEntityType.Builder.of(
+                    com.gregtech.gregtech.blockentity.machine.AddonFunctionalPartBlockEntity::new,
+                    GTMultiblocks.functionalPartBlocks()).build(null));
 
     public static final RegistryObject<BlockEntityType<com.gregtech.gregtech.blockentity.machine.VonDaGraaggControllerBlockEntity>> VON_DA_GRAAGG =
             BLOCK_ENTITY_TYPES.register("von_da_graagg", () -> BlockEntityType.Builder.of(

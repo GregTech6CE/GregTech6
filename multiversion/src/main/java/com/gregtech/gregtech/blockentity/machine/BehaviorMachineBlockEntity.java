@@ -12,7 +12,10 @@ import com.gregtech.gregtech.api.addon.platform.BehaviorState;
 /*import com.gregtech.gregtech.api.addon.platform.EnergyBlock;
 *///?} else {
 //?}
+import com.gregtech.gregtech.api.addon.platform.BoundPart;
 import com.gregtech.gregtech.api.addon.platform.EnergyPart;
+import com.gregtech.gregtech.api.addon.platform.PartBehavior;
+import com.gregtech.gregtech.api.addon.platform.PartContext;
 import com.gregtech.gregtech.api.addon.platform.MachineBehavior;
 import com.gregtech.gregtech.api.addon.platform.MachineBehaviorContext;
 import com.gregtech.gregtech.api.multiblock.MultiblockLayout;
@@ -118,6 +121,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     private final PartBindings<BlockPos, MultiblockLayout.Role> structureBindings = new PartBindings<>();
     private boolean formed;
     private List<EnergyPart> energyParts = List.of();
+    private List<BoundPart> boundParts = List.of();
     private int breaksLeft;
     private int itemsLeft;
     @Nullable private UUID placerId;
@@ -163,6 +167,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     /** Gauge maximum: the storage cap, or the rated input when the machine does not store. */
     public long energyBarMax() { return bufferCapacity(); }
     public boolean onUse(Player player, InteractionHand hand) { return behavior.onUse(context, player, hand); }
+    public MachineBehavior behavior() { return behavior; }
     public boolean toggle(int index) { return context.toggle(index); }
 //? if >=1.21.1 {
 /*
@@ -833,6 +838,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         @Override public void working(boolean value) { working = value; }
         @Override public boolean structureFormed() { return formed; }
         @Override public List<EnergyPart> energyParts() { return formed ? energyParts : List.of(); }
+        @Override public List<BoundPart> parts() { return formed ? boundParts : List.of(); }
         @Override public boolean conditionsMet() {
             for (EnergyPart part : energyParts()) if (part.condition() && !part.satisfied()) return false;
             return true;
@@ -854,10 +860,14 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         if (layout == null) {
             formed = true;
             energyParts = List.of();
+            boundParts = List.of();
             return;
         }
         formed = claimStructure(layout);
-        if (!formed) energyParts = List.of();
+        if (!formed) {
+            energyParts = List.of();
+            boundParts = List.of();
+        }
     }
 
     private boolean claimStructure(List<LargeMachineLayouts.Cell> layout) {
@@ -899,11 +909,18 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
                 this::releaseStructure);
         if (!claimed) return false;
         var found = new ArrayList<EnergyPart>();
+        var bound = new ArrayList<BoundPart>();
         for (BlockPos cellPos : parts.keySet()) {
-            if (level.getBlockEntity(cellPos) instanceof AddonEnergyPartBlockEntity energy)
+            var occupant = level.getBlockEntity(cellPos);
+            if (occupant instanceof AddonEnergyPartBlockEntity energy) {
                 found.add(new EnergyPartView(energy));
+                bound.add(new BoundView(energy));
+            } else if (occupant instanceof AddonFunctionalPartBlockEntity functional) {
+                bound.add(new BoundView(functional));
+            }
         }
         energyParts = List.copyOf(found);
+        boundParts = List.copyOf(bound);
         return true;
     }
 
@@ -915,6 +932,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     @Override public void setRemoved() {
         structureBindings.clear(this::releaseStructure);
         energyParts = List.of();
+        boundParts = List.of();
         formed = false;
         super.setRemoved();
     }
@@ -939,6 +957,45 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         }
         @Override public boolean condition() { return part.condition(); }
         @Override public boolean satisfied() { return part.satisfied(); }
+    }
+
+    private final class BoundView implements BoundPart {
+        private final MultiblockPortBlockEntity port;
+        @Nullable private final AddonEnergyPartBlockEntity energy;
+        @Nullable private final FunctionalPartRuntime function;
+
+        private BoundView(AddonEnergyPartBlockEntity energy) {
+            this.port = energy;
+            this.energy = energy;
+            this.function = energy.function();
+        }
+
+        private BoundView(AddonFunctionalPartBlockEntity functional) {
+            this.port = functional;
+            this.energy = null;
+            this.function = functional.function();
+        }
+
+        private boolean live() { return !port.isRemoved() && port.isBoundTo(worldPosition); }
+
+        @Override public BlockPos pos() { return port.getBlockPos(); }
+
+        @Override public String name() {
+            if (energy != null) return energy.path();
+            return port instanceof AddonFunctionalPartBlockEntity functional ? functional.name() : "";
+        }
+
+        @Override public EnergyPart energy() { return energy != null && live() ? new EnergyPartView(energy) : null; }
+
+        @Override public PartBehavior behavior() { return live() && function != null ? function.behavior() : null; }
+
+        @Override public PartContext context() { return behavior() == null ? null : function.context(); }
+
+        @Override public int slots() { return live() && function != null ? function.slotCount() : 0; }
+
+        @Override public ItemStack item(int slot) {
+            return live() && function != null ? function.item(slot) : ItemStack.EMPTY;
+        }
     }
 
     private final class PipeItems implements IItemHandler {

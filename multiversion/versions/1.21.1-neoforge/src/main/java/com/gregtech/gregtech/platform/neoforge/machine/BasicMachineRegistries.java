@@ -80,6 +80,8 @@ public final class BasicMachineRegistries {
   event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,com.gregtech.gregtech.registry.GTBlockEntities.MULTIBLOCK_PORT.get(),com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity::fluidCapability);
   event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,com.gregtech.gregtech.registry.GTBlockEntities.ADDON_ENERGY_PART.get(),com.gregtech.gregtech.blockentity.machine.AddonEnergyPartBlockEntity::itemCapability);
   event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,com.gregtech.gregtech.registry.GTBlockEntities.ADDON_ENERGY_PART.get(),com.gregtech.gregtech.blockentity.machine.AddonEnergyPartBlockEntity::fluidCapability);
+  event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,com.gregtech.gregtech.registry.GTBlockEntities.ADDON_FUNCTIONAL_PART.get(),com.gregtech.gregtech.blockentity.machine.AddonFunctionalPartBlockEntity::itemCapability);
+  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,com.gregtech.gregtech.registry.GTBlockEntities.ADDON_FUNCTIONAL_PART.get(),com.gregtech.gregtech.blockentity.machine.AddonFunctionalPartBlockEntity::fluidCapability);
   for(var type:TYPES){event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,type.get(),BasicMachineBlockEntity::itemCapability);event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,type.get(),BasicMachineBlockEntity::fluidCapability);}
  }
  public static void registerCompositions(){

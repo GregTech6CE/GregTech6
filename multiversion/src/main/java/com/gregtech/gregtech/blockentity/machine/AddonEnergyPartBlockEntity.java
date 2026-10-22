@@ -3,8 +3,10 @@ package com.gregtech.gregtech.blockentity.machine;
 import com.gregtech.gregtech.api.addon.BehaviorEnergyRules;
 import com.gregtech.gregtech.api.addon.EnergyInput;
 import com.gregtech.gregtech.api.addon.EnergyOutput;
+import com.gregtech.gregtech.api.addon.LayoutPart;
 import com.gregtech.gregtech.api.addon.MachineFace;
 import com.gregtech.gregtech.api.addon.PartEnergyRules;
+import com.gregtech.gregtech.api.addon.platform.PartClientView;
 import com.gregtech.gregtech.api.energy.EnergyTransfer;
 import com.gregtech.gregtech.api.machine.BasicMachineEnergy;
 import com.gregtech.gregtech.api.multiblock.MultiblockLayout;
@@ -14,6 +16,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -26,7 +29,9 @@ import java.util.List;
  * cell's role is {@link MultiblockLayout.Role#ENERGY_OUTPUT} and {@link #setOutput} has armed it.
  * An input part keeps a separate buffer, drains its condition each tick, and does not emit.
  */
-public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity {
+public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity
+        implements FunctionalPartRuntime.Host, PartClientView {
+    @javax.annotation.Nullable private final FunctionalPartRuntime function;
     private long stored;
     private long inputStored;
     private boolean satisfied;
@@ -36,13 +41,45 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity {
     private GregTechTags.Tag outputTag;
     private GregTechTags.Tag inputTag;
 
+//? if >=1.21.1 {
+//?} else {
+    private final java.util.EnumMap<Direction, net.minecraftforge.common.util.LazyOptional<net.minecraftforge.items.IItemHandler>> itemCaps =
+            new java.util.EnumMap<>(Direction.class);
+    private net.minecraftforge.common.util.LazyOptional<net.minecraftforge.items.IItemHandler> unsided =
+            net.minecraftforge.common.util.LazyOptional.empty();
+//?}
+
     public AddonEnergyPartBlockEntity(BlockPos pos, BlockState state) {
         super(com.gregtech.gregtech.registry.GTBlockEntities.ADDON_ENERGY_PART.get(), pos, state);
+        this.function = block().functional() ? new FunctionalPartRuntime(this) : null;
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, AddonEnergyPartBlockEntity part) {
         part.serverTick();
     }
+
+    @Override public FunctionalPartRuntime function() { return function; }
+    @Override public Level level() { return level; }
+    @Override public BlockPos pos() { return worldPosition; }
+    @Override public BlockState blockState() { return getBlockState(); }
+    @Override public String addonId() { return block().addonId(); }
+    @Override public LayoutPart declaration() { return block().declaration(); }
+    @Override public boolean removed() { return isRemoved(); }
+    @Override public BlockPos controllerPos() { return super.controllerPos(); }
+    @Override public boolean boundTo(BlockPos owner) { return owner != null && isBoundTo(owner); }
+    @Override public void markChanged() { setChanged(); }
+    @Override public void syncToClient() {
+        if (level != null && !level.isClientSide && function != null)
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+    }
+    @Override public String name() { return path(); }
+    @Override public int slots() { return function == null ? 0 : function.slotCount(); }
+    @Override public ItemStack item(int slot) { return function == null ? ItemStack.EMPTY : function.item(slot); }
+    @Override public boolean occupied(int slot) { return !item(slot).isEmpty(); }
+    @Override public int getInt(String key) { return function == null ? 0 : function.context().state().getInt(key); }
+    @Override public long getLong(String key) { return function == null ? 0L : function.context().state().getLong(key); }
+    @Override public boolean getBoolean(String key) { return function != null && function.context().state().getBoolean(key); }
+    @Override public String getString(String key) { return function == null ? "" : function.context().state().getString(key); }
 
     /** Output buffer, or the input buffer when this part accepts energy. */
     public long stored() { return input() != null ? inputStored : stored; }
@@ -108,6 +145,7 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity {
         if (level == null || level.isClientSide) return;
         drainCondition();
         emitTick();
+        if (function != null) function.tick();
     }
 
     private boolean satisfiedStateSynced;
@@ -320,6 +358,22 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity {
         }
     }
 
+//? if >=1.21.1 {
+/*    private void saveFunction(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        if (function != null) function.save(tag, lookup);
+    }
+    private void loadFunction(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        if (function != null) function.load(tag, lookup);
+    }
+*///?} else {
+    private void saveFunction(CompoundTag tag) {
+        if (function != null) function.save(tag);
+    }
+    private void loadFunction(CompoundTag tag) {
+        if (function != null) function.load(tag);
+    }
+//?}
+
     private void loadEnergy(CompoundTag tag) {
         stored = Math.max(0, tag.getLong("gt.part_energy"));
         if (energy() != null && stored > block().capacity()) stored = block().capacity();
@@ -338,19 +392,68 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity {
     /*@Override protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         super.saveAdditional(tag, lookup);
         saveEnergy(tag);
+        saveFunction(tag, lookup);
     }
     @Override protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         super.loadAdditional(tag, lookup);
         loadEnergy(tag);
+        loadFunction(tag, lookup);
+    }
+    @Override public net.neoforged.neoforge.items.IItemHandler itemCapability(Direction side) {
+        if (isRemoved()) return null;
+        if (function != null) {
+            var own = function.items(side);
+            if (own != null) return own;
+        }
+        return super.itemCapability(side);
+    }
+    @Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return function == null ? null : net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
+    }
+    @Override public void onDataPacket(net.minecraft.network.Connection net,
+            net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,
+            net.minecraft.core.HolderLookup.Provider lookup) {
+        if (packet.getTag() != null) loadAdditional(packet.getTag(), lookup);
     }
 *///?} else {
     @Override protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
         saveEnergy(tag);
+        saveFunction(tag);
     }
     @Override public void load(CompoundTag tag) {
         super.load(tag);
         loadEnergy(tag);
+        loadFunction(tag);
+    }
+    @Override public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(
+            net.minecraftforge.common.capabilities.Capability<T> cap, @javax.annotation.Nullable Direction side) {
+        if (function != null && cap == net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER
+                && !isRemoved() && function.items(side) != null) {
+            if (side == null) {
+                if (!unsided.isPresent()) unsided = net.minecraftforge.common.util.LazyOptional.of(() -> function.items(null));
+                return unsided.cast();
+            }
+            return itemCaps.computeIfAbsent(side, found -> net.minecraftforge.common.util.LazyOptional.of(() -> function.items(found))).cast();
+        }
+        return super.getCapability(cap, side);
+    }
+    @Override public void invalidateCaps() {
+        super.invalidateCaps();
+        unsided.invalidate();
+        itemCaps.values().forEach(net.minecraftforge.common.util.LazyOptional::invalidate);
+        itemCaps.clear();
+    }
+    @Override public void reviveCaps() {
+        super.reviveCaps();
+        unsided = net.minecraftforge.common.util.LazyOptional.empty();
+    }
+    @Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return function == null ? null : net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
+    }
+    @Override public void onDataPacket(net.minecraft.network.Connection net,
+            net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet) {
+        if (packet.getTag() != null) load(packet.getTag());
     }
 //?}
 }

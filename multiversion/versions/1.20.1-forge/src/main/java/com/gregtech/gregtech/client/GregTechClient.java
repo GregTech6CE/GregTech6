@@ -689,6 +689,9 @@ public final class GregTechClient {
         event.registerBlockEntityRenderer(GTBlockEntities.COIN_PILE.get(), CoinPileRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.COIN_MOLD.get(), CoinMoldRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.SANDWICH_BLOCK.get(), SandwichRenderer::new);
+        LayoutPartClients.collect();
+        event.registerBlockEntityRenderer(GTBlockEntities.ADDON_FUNCTIONAL_PART.get(), FunctionalPartRenderer::new);
+        event.registerBlockEntityRenderer(GTBlockEntities.ADDON_ENERGY_PART.get(), FunctionalPartRenderer::new);
         MaterialFluidVisuals.bootstrap();
         MaterialFluidVisuals.linkAllMoltenMaterials();
         event.registerBlockEntityRenderer(GTBlockEntities.SMELTING_CRUCIBLE.get(), SmeltingCrucibleRenderer::new);
