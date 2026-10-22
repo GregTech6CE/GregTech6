@@ -24,9 +24,9 @@ public final class AddonApiVersionContracts {
     private static final Set<String> MODIFIERS = Set.of(
             "public", "protected", "private", "static", "final", "abstract", "default",
             "synchronized", "native", "strictfp", "transient", "volatile", "sealed");
-    private static final String EN_HEADING = "## Deprecation and removal";
+    private static final String EN_HEADING = "### Deprecation and removal";
     private static final String EN_HEADER = "| Entry | Deprecated | Replacement | Remove at |";
-    private static final String ZH_HEADING = "## 弃用与移除";
+    private static final String ZH_HEADING = "### 弃用与移除";
     private static final String ZH_HEADER = "| 入口 | 弃用版本 | 替代 | 计划移除 |";
     private static int assertions;
 
@@ -326,7 +326,7 @@ public final class AddonApiVersionContracts {
         int headerAt = -1;
         for (int i = section + 1; i < lines.length; i++) {
             String line = lines[i].trim();
-            if (line.startsWith("## ")) break;
+            if (line.startsWith("#")) break;
             if (line.equals(header)) {
                 headerAt = i;
                 break;
