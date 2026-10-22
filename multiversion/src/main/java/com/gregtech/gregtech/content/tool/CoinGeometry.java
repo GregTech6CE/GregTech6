@@ -17,9 +17,12 @@ import java.util.Map;
 public final class CoinGeometry {
     public static final String NBT_SHAPE = "gt.coin.shape.";
     private static final MintPattern DEFAULT_PATTERN = loadDefault();
+
     /** Identical custom dies share boxes across piles, without retaining arbitrary player NBT forever. */
     private static final Map<String, MintPattern> CUSTOM_PATTERNS = new LinkedHashMap<>(32, .75F, true) {
-        @Override protected boolean removeEldestEntry(Map.Entry<String, MintPattern> eldest) {
+
+        @Override
+        protected boolean removeEldestEntry(Map.Entry<String, MintPattern> eldest) {
             return size() > 32;
         }
     };
@@ -32,21 +35,26 @@ public final class CoinGeometry {
                 throw new IllegalStateException("Invalid GT6 coin shape");
             short[][] rows = new short[2][16];
             for (int plane = 0; plane < 2; plane++)
-                for (int row = 0; row < 16; row++) rows[plane][row] = (short) data[plane][row];
+                for (int row = 0; row < 16; row++)
+                    rows[plane][row] = (short) data[plane][row];
             return new MintPattern(rows);
         } catch (java.io.IOException error) {
             throw new ExceptionInInitializerError(error);
         }
     }
-    private CoinGeometry() {}
 
-    public static MintPattern defaultPattern() { return DEFAULT_PATTERN; }
+    private CoinGeometry() {
+    }
+
+    public static MintPattern defaultPattern() {
+        return DEFAULT_PATTERN;
+    }
 
     /** True only when the stack carries at least one GT6 die row; other coin NBT keeps the default mint. */
     public static boolean hasCustomPattern(ItemStack coin) {
 //? if >=1.21.1 {
-        /*var data=coin.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
-        CompoundTag tag=data==null?null:data.copyTag();
+        /*var data = coin.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
+        CompoundTag tag = data == null ? null : data.copyTag();
 *///?} else {
         CompoundTag tag = coin.getTag();
 //?}
@@ -60,8 +68,8 @@ public final class CoinGeometry {
     /** An untagged registered coin uses GT6's default; a die-struck coin uses its NBT bit planes. */
     public static MintPattern pattern(ItemStack coin) {
 //? if >=1.21.1 {
-        /*var data=coin.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
-        CompoundTag tag=data==null?null:data.copyTag();
+        /*var data = coin.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
+        CompoundTag tag = data == null ? null : data.copyTag();
 *///?} else {
         CompoundTag tag = coin.getTag();
 //?}
@@ -80,14 +88,21 @@ public final class CoinGeometry {
         if (!hasPattern) return DEFAULT_PATTERN;
         StringBuilder bits = new StringBuilder(32);
         for (int plane = 0; plane < 2; plane++)
-            for (int row = 0; row < 16; row++) bits.append((char) (rows[plane][row] & 0xFFFF));
+            for (int row = 0; row < 16; row++)
+                bits.append((char) (rows[plane][row] & 0xFFFF));
         synchronized (CUSTOM_PATTERNS) {
             return CUSTOM_PATTERNS.computeIfAbsent(bits.toString(), ignored -> new MintPattern(rows));
         }
     }
 
-    public static int depth(int x, int z) { return DEFAULT_PATTERN.pixelDepth(x, z); }
-    public static List<AABB> pixels(int count) { return DEFAULT_PATTERN.pixelBoxes(count); }
+    public static int depth(int x, int z) {
+        return DEFAULT_PATTERN.pixelDepth(x, z);
+    }
+
+    public static List<AABB> pixels(int count) {
+        return DEFAULT_PATTERN.pixelBoxes(count);
+    }
+
     public static boolean exposedSide(int x, int z, Direction side) {
         return DEFAULT_PATTERN.isExposedSide(x, z, side);
     }
@@ -106,7 +121,7 @@ public final class CoinGeometry {
         }
 
         public int pixelDepth(int x, int z) {
-            return com.gregtech.gregtech.block.CoinPileRules.pixelDepth(rows,x,z);
+            return com.gregtech.gregtech.block.CoinPileRules.pixelDepth(rows, x, z);
         }
 
         public synchronized List<AABB> pixelBoxes(int count) {
@@ -115,7 +130,8 @@ public final class CoinGeometry {
             var boxes = new ArrayList<AABB>();
             for (int x = 0; x < 16; x++) for (int z = 0; z < 16; z++) {
                 int depth = pixelDepth(x, z);
-                if (depth == 3) continue; // GT6 suppresses fully cut-away pixels.
+                // GT6 suppresses fully cut-away pixels.
+                if (depth == 3) continue;
                 boxes.add(new AABB(x / 64.0, depth / 64.0, z / 64.0,
                         (x + 1) / 64.0, height / 16.0 - depth / 64.0, (z + 1) / 64.0));
             }
@@ -144,8 +160,8 @@ public final class CoinGeometry {
     }
 
     public static AABB cell(int face, int count) {
-        var b=com.gregtech.gregtech.block.CoinPileRules.cell(face,count);
-        return new AABB(b.x0(),b.y0(),b.z0(),b.x1(),b.y1(),b.z1());
+        var bounds = com.gregtech.gregtech.block.CoinPileRules.cell(face, count);
+        return new AABB(bounds.x0(), bounds.y0(), bounds.z0(), bounds.x1(), bounds.y1(), bounds.z1());
     }
 
     /**

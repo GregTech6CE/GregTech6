@@ -26,7 +26,7 @@ public final class CoinItemRenderer extends BlockEntityWithoutLevelRenderer {
 
     @Override
     public void renderByItem(ItemStack stack, ItemDisplayContext context, PoseStack pose,
-                             MultiBufferSource buffers, int light, int overlay) {
+            MultiBufferSource buffers, int light, int overlay) {
         if (!(stack.getItem() instanceof CoinItem coin)) return;
         CoinGeometry.MintPattern pattern = CoinGeometry.pattern(stack);
         var boxes = pattern.inventoryPixelBoxes();

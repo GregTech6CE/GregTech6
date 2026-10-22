@@ -1,5 +1,7 @@
 # 当前源码导航与命名约定
 
+2026-10-22：硬币几何缓存、保存实体、物品模型／绘制器和Neo客户端注册六源855→936行；b／e／v改明确局部名称，22出现位置列明，11完整平台代码视图保持。原始注释与取币回调实际合同分别处理，见[生命周期专题](COIN_LIFECYCLE_AUDIT.md)及[回执](verification/coin-lifecycle-audit-20261022.json)。玩法、注册、资源与API类型未改，其余标准化继续。
+
 铸币：core `CoinStampPattern`保存两面16行及unique，原生`CoinMoldBlockEntity`接单格库存／配置与输出，`CoinMoldBlock`接手动点击；`CoinMoldRenderer`用`CoinMoldGeometry.CONTENT`。世界币／物品币分别走`CoinPileRenderer`与`CoinItemBakedModel`／`CoinItemRenderer`，`CoinGeometry`处理默认及实际tag位图。自动锤另走`PoweredToolTarget`，模具手动strike存在不代表自动接通，见[铸币核查](COIN_MINTING_AUDIT.md)。
 
 可放置材料堆：core `MaterialPileRules`给64上限、层高和27消失偏移，`CoinPileRules`给4×4币格／重排数学；共享`GTMaterialPiles`／`GTCoinPiles`实际登记，两版调用同一注册。普通`PileBlockEntity`存单物品，硬币实体存16格与实际币型；两个ExpireHandler共用`PilePlacementChecks`的当前原生谓词。手动放置、材料合并、掉落查询和渲染模型是不同入口，见[材料堆](MATERIAL_PILES_AUDIT.md)。

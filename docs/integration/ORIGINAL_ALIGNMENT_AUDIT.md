@@ -1,5 +1,7 @@
 # 原版对齐与源码结构审计
 
+2026-10-22 第一百一十五批：硬币新增387光照3→0、388普通选取裸堆，004扩两项3D配置。9原／23当前Java、4资源、12原生条目／14引用；保存、默认接收与两端客户端分派已有，见[专题](COIN_LIFECYCLE_AUDIT.md)。六源855→936行、22局部标识位置归一后11完整视图保持；约0.48秒4112重排条件对应原函数，不是原生世界验收。388不是待修数，全面goal继续。
+
 2026-10-22 第一百一十四批：铸币新增384自动锤绑定、385全零世界币平面分支、386Unique提示，扩132／139。9原／32当前Java、19资源、21引用；六源477→590行和11完整视图保持。默认32行／192物品盒、模具两层六盒与2097152位行转换见[专题](COIN_MINTING_AUDIT.md)。未把冗余准入、手持无限预算或原未完成GUI误报为缺项；386不是未修数，全面goal继续。
 
 2026-10-22 第一百一十三批：材料／硬币堆新增377–383并扩132，13原／19当前Java、17引用和201资源留痕；192模型、195引用与27偏移对应，六原图缺失不计字节通过。七旧540→646行加20行共用谓词，12旧平台视图与两新正文受控保持，见[专题](MATERIAL_PILES_AUDIT.md)。未改玩法／编译／游戏，383不是未修数，全面goal继续。
@@ -49,7 +51,7 @@
 | ALIGN-001 | 确认缺少小坩埚碰撞致死后的材料回收。现有烫伤不等于原版完整碰撞处理。 | `gregtech/tileentity/tools/MultiTileEntitySmeltery.java:622`：温度伤害致死后按实体种类加入肉、骨、铁、雪、火药等，带相应初始温度。 | 共享 `block/machine/SmeltingCrucibleBlock.entityInside` 两版本分支均只调用温度伤害；需另核查大坩埚对应规则，不能直接复用所有小坩埚数量。 |
 | ALIGN-002 | 材料箭仅保留了部分行为，命中过程未对齐。 | `gregtech/entities/projectiles/EntityArrow_Material.java:171–241`：读取箭的材料及附魔，处理魔法伤害、火焰、击退、抢夺、特殊生物与命中回调。 | 共享 `entity/MaterialArrowEntity` 目前只接材料基础伤害、塑料速度、寿命、拾取和保存，命中沿用现代 `AbstractArrow`；`MaterialArrowRules` 无原版命中规则。现代弓自身附魔不能证明箭材料附魔等价，需逐条查物品赋魔和事件路径。 |
 | ALIGN-003 | 确认存在未进入语言系统的提示。 | 原版提示／扫描来源需按具体行继续比对汉化补丁。 | `item/FuelRodItem:183–211` 直接拼接 Remaining、Self、Fuel、Tier、Durability 等；`item/behavior/BehaviorScanner:170–183` 拼接 Input、Output、Stored。单块热交换器放大镜也直接拼Input／Output，见[热交换器](HEAT_EXCHANGER_AUDIT.md)。语言文件格式自检不证明这些提示已汉化。大型换热器专用放大镜Input／Output／Empty与流体句子也直接拼接，见[大型换热器](LARGE_HEAT_EXCHANGER_AUDIT.md)。17997右键Structure Incomplete／Logic等也直接拼接，字段缺项另列254，见[物流状态](LOGISTICS_CORE_STATE_AUDIT.md)。 |
-| ALIGN-004 | 配置覆盖仍不完整；cfg收尾安排保留。当前三个声明中两个过载选项有效，日志选项无消费者。 | 原Config真实load/save与代表链包括石层／维度、生物掉落、材料工具／处理倍率；不是仅静态常量。 | 两版COMMON注册及原生加载／保存／缓存刷新已接通，MachineOverload实际读取两个默认false选项；logMaterials未读。代表族缺配置入口，133概率沿旧项，Nexus全开是用户政策；见[配置核查](CONFIGURATION_CONTRACT_AUDIT.md)，完整矩阵／磁盘／多人仍待核。  泉／床岩生成的Enabled、Probability、逐维度、Ore／指示物、无限油气开关也缺完整消费者，见[生成调度](SPRING_BEDROCK_DISPATCH_AUDIT.md)。 |
+| ALIGN-004 | 配置覆盖仍不完整；cfg收尾安排保留。当前三个声明中两个过载选项有效，日志选项无消费者。 | 原Config真实load/save与代表链包括石层／维度、生物掉落、材料工具／处理倍率；不是仅静态常量。 | 两版COMMON注册及原生加载／保存／缓存刷新已接通，MachineOverload实际读取两个默认false选项；logMaterials未读。代表族缺配置入口，133概率沿旧项，Nexus全开是用户政策；见[配置核查](CONFIGURATION_CONTRACT_AUDIT.md)，完整矩阵／磁盘／多人仍待核。  泉／床岩生成的Enabled、Probability、逐维度、Ore／指示物、无限油气开关也缺完整消费者，见[生成调度](SPRING_BEDROCK_DISPATCH_AUDIT.md)。 硬币原use3DCoins／use3DCoinsInv两个客户端开关也缺对应消费者，默认3D已有，见[生命周期](COIN_LIFECYCLE_AUDIT.md)。 |
 | ALIGN-005 | **结构问题已修复**，原先不是游戏缺标签。 | 前轮恢复的起火器配方集合应能被两版本消费。 | `EquipmentCraftingCatalog.TAGS` 已纳入起火器标签，NeoForge 由已有适配器读取共享内容，删除逐字节相同的版本资源副本。98 项目录由生成器重建并核对，源策略检查通过。 |
 | ALIGN-006 | 确认缺少 BURNING 材料属性对应的点火加成。 | `Behavior_FlintAndTinder:51,88` 判断 `FLAMMABLE` 或 `BURNING`；`MT:1275` 的 Blaze 带 `BURNING`。 | `BehaviorFlintAndTinder.useOn` 只读取 `FLAMMABLE`；当前材料属性没有 BURNING 路径。范围是材料点火概率，不是所有打火机失效。 |
 | ALIGN-007 | 确认工具的材料自动收集分支缺失。 | `MultiItemTool.canCollectDropsDirectly:217` 同时考虑工具种类、主材料和副材料 `AUTO_COLLECTING`；`MT:1272` 的 Basalz 有该属性。 | `GTToolHelper.canCollectMachineDrop` 只检查 `type.canCollect()` 和耐久；材料表未携带该属性。现有扳手直接收集能力仍然存在，不能判整类收集缺失。 |
@@ -435,6 +437,8 @@
 | ALIGN-384 | 确认自动锤未接铸币模具目标。 | 原经TOOL_hammer传有限预算，模具顶面2000可铸币。 | 当前模具无PoweredToolTarget绑定，存在实体也跳过挖块，最后清工作量；源条件见证非KU世界复现，见[铸币](COIN_MINTING_AUDIT.md)。 |
 | ALIGN-385 | 确认全零世界币缺原平面渲染分支。 | 原每占用格一个盒，专用COIN_TOP／BOTTOM。 | 当前256像素盒及通用coin横面；专用纹理当前像素不同，非全部币／物品栏坏掉，见[铸币](COIN_MINTING_AUDIT.md)。 |
 | ALIGN-386 | 确认硬币提示漏Unique后缀。 | 原按mIsUnique附加材料行标识。 | 铸币仍保存标志，但物品及已核事件入口未显示；不是丢字段，见[铸币](COIN_MINTING_AUDIT.md)。 |
+| ALIGN-387 | 确认硬币堆遮光3变0。 | 原世界块委托实体LIGHT_OPACITY_WATER=3。 | 当前动态非遮蔽、固定非完整选框与空流体经两端原生规则得0；未光照实测，见[生命周期](COIN_LIFECYCLE_AUDIT.md)。 |
+| ALIGN-388 | 确认硬币堆普通选取返回裸堆物品。 | 原世界块经Base04写材料／币模／unique后构造硬币。 | 当前Block默认clone构造coin_pile BlockItem，未读取堆内硬币；两端接口默认委托已核，限普通后备链，见[生命周期](COIN_LIFECYCLE_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 
