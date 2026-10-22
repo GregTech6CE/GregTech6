@@ -2,6 +2,7 @@ package com.gregtech.gregtech.api.recipe;
 
 import java.util.*;
 import net.minecraft.world.item.ItemStack;
+import com.gregtech.gregtech.api.addon.RecipeKeptInputs;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
 *///?} else {
@@ -49,20 +50,31 @@ public final class RecipeInputs {
             remainder.setCount(remainingItems.get(slot).getCount() + retained[slot]);
             remainingItems.set(slot, remainder);
         }
-        for (var required : recipe.mFluidInputs) {
+        int[] retainedFluids = new int[remainingFluids.size()];
+        for (int inputIndex = 0; inputIndex < recipe.mFluidInputs.length; inputIndex++) {
+            var required = recipe.mFluidInputs[inputIndex];
             if (required == null || required.isEmpty()) continue;
-            long needed = (long)required.getAmount() * parallel;
-            for (var available : remainingFluids) {
+            boolean catalyst = recipe.isCatalystFluidInput(inputIndex);
+            long needed = RecipeKeptInputs.fluidDemand(catalyst, required.getAmount(), parallel);
+            for (int tank = 0; tank < remainingFluids.size(); tank++) {
+                var available = remainingFluids.get(tank);
 //? if >=1.21.1 {
                 /*if (!FluidStack.isSameFluidSameComponents(available,required)) continue;
 *///?} else {
                 if (!available.isFluidEqual(required)) continue;
 //?}
                 int take = (int)Math.min(needed, available.getAmount());
-                available.shrink(take); needed -= take;
+                available.shrink(take);
+                if (catalyst) retainedFluids[tank] += take;
+                needed -= take;
                 if (needed == 0) break;
             }
             if (needed != 0) return null;
+        }
+        for (int tank = 0; tank < retainedFluids.length; tank++) if (retainedFluids[tank] > 0) {
+            var remainder = fluids.get(tank).copy();
+            remainder.setAmount(remainingFluids.get(tank).getAmount() + retainedFluids[tank]);
+            remainingFluids.set(tank, remainder);
         }
         return new Remaining(remainingItems, remainingFluids);
     }

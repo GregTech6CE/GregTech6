@@ -4,7 +4,7 @@ import com.gregtech.gregtech.api.addon.RecipeKeptInputs;
 import com.gregtech.gregtech.api.addon.SelectorTags;
 import com.gregtech.gregtech.api.recipe.RecipeCatalystInputs;
 
-/** Kept item inputs and programmed-circuit numbers. No Minecraft types. */
+/** Kept item and fluid inputs, and programmed-circuit numbers. No Minecraft types. */
 public final class AddonRecipeLineContracts {
     private static int assertions;
 
@@ -15,6 +15,7 @@ public final class AddonRecipeLineContracts {
         unmarked();
         marks();
         rejected();
+        fluids();
         selector();
         System.out.println("addon recipe line contracts passed: " + assertions);
     }
@@ -53,6 +54,24 @@ public final class AddonRecipeLineContracts {
         expectThrows(() -> RecipeKeptInputs.normalize(new int[]{1, 0, 1}, 2), "Duplicate");
         expectThrows(() -> RecipeKeptInputs.requirePositiveCount(0, 1), "keptInputs");
         expectThrows(() -> RecipeKeptInputs.requirePositiveCount(-2, 0), "keptInputs");
+    }
+
+    private static void fluids() {
+        check(RecipeKeptInputs.normalizeFluids(null, 2).length == 0, "an omitted fluid mark list is empty");
+        int[] source = {1, 0};
+        int[] kept = RecipeKeptInputs.normalizeFluids(source, 3);
+        source[0] = 9;
+        check(kept.length == 2 && kept[0] == 1 && kept[1] == 0, "fluid marks keep caller order and are copied");
+        check(RecipeKeptInputs.settle(true, 100, 4, 100) == 100, "a kept fluid stays when the tank holds the declared amount");
+        check(RecipeKeptInputs.settle(true, 100, 4, 250) == 250, "a kept fluid is not drained");
+        check(RecipeKeptInputs.settle(true, 100, 1, 99) == -1, "a short kept fluid does not match");
+        check(RecipeKeptInputs.settle(false, 100, 2, 200) == 0, "an ordinary fluid is drained for the batch");
+        check(RecipeKeptInputs.fluidDemand(true, 100, 4) == 100, "a kept fluid is checked once");
+        check(RecipeKeptInputs.fluidDemand(false, 100, 4) == 400, "an ordinary fluid scales with the batch");
+        expectThrows(() -> RecipeKeptInputs.normalizeFluids(new int[]{3}, 3), "outside");
+        expectThrows(() -> RecipeKeptInputs.normalizeFluids(new int[]{0, 0}, 1), "Duplicate");
+        expectThrows(() -> RecipeKeptInputs.requirePositiveFluid(0, 2), "keptFluidInputs");
+        expectThrows(() -> RecipeKeptInputs.requirePositiveFluid(-4, 0), "keptFluidInputs");
     }
 
     private static void selector() {
