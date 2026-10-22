@@ -121,18 +121,20 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
             if (budget <= 0) return;
             BlockPos neighbor = worldPosition.relative(side);
             if (!level.hasChunkAt(neighbor)) continue;
-            if (!(level.getBlockEntity(neighbor) instanceof CompressedGasTankBlockEntity drum)) continue;
-            FluidStack preview = drum.drain(budget, IFluidHandler.FluidAction.SIMULATE);
+            if (!(level.getBlockEntity(neighbor) instanceof com.gregtech.gregtech.api.fluid.CompressedGasReceiver receiver))
+                continue;
+            Direction face = side.getOpposite();
+            FluidStack preview = receiver.extractCompressedGas(face, budget, false);
             if (preview.isEmpty() || !fuel.isFluidValid(preview)) continue;
             int room = fuel.fill(preview, IFluidHandler.FluidAction.SIMULATE);
             if (room <= 0) continue;
-            FluidStack taken = drum.drain(room, IFluidHandler.FluidAction.EXECUTE);
+            FluidStack taken = receiver.extractCompressedGas(face, room, true);
             if (taken.isEmpty()) continue;
             int storedAmount = fuel.fill(taken, IFluidHandler.FluidAction.EXECUTE);
             if (storedAmount < taken.getAmount()) {
                 FluidStack leftover = taken.copy();
                 leftover.setAmount(taken.getAmount() - storedAmount);
-                drum.fillCompressed(leftover);
+                receiver.receiveCompressedGas(face, leftover);
             }
             budget -= storedAmount;
         }

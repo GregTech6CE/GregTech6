@@ -93,7 +93,8 @@ import java.util.Map;
 import java.util.UUID;
 
 /** Shell block entity. The addon behavior never sees this class. */
-public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlock, MenuProvider {
+public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlock, MenuProvider,
+        com.gregtech.gregtech.api.fluid.CompressedGasReceiver {
     private final BehaviorMachine declaration;
     private final AddonMachines.AcceptedBehavior accepted;
     private final MachineBehavior behavior;
@@ -971,9 +972,48 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             if (face == null || stack == null || stack.isEmpty() || level == null) return 0;
             BlockPos target = worldPosition.relative(face);
             if (!level.hasChunkAt(target)) return 0;
-            if (!(level.getBlockEntity(target) instanceof CompressedGasTankBlockEntity drum)) return 0;
-            return drum.fillCompressed(stack);
+            if (!(level.getBlockEntity(target) instanceof com.gregtech.gregtech.api.fluid.CompressedGasReceiver receiver))
+                return 0;
+            return receiver.receiveCompressedGas(face.getOpposite(), stack);
         }
+    }
+
+    @Override public int receiveCompressedGas(Direction side, FluidStack stack) {
+        if (!valveFace(side) || stack == null || stack.isEmpty()
+                || !com.gregtech.gregtech.api.fluid.FluidHazards.isGas(stack.getFluid())) return 0;
+        FluidStack remaining = stack.copy();
+        int stored = 0;
+        for (Tank tank : tanks) {
+            if (remaining.isEmpty()) break;
+            int taken = tank.fill(remaining, true);
+            if (taken <= 0) continue;
+            tank.fill(remaining, false);
+            stored += taken;
+            remaining.setAmount(remaining.getAmount() - taken);
+        }
+        if (stored > 0) setChanged();
+        return stored;
+    }
+
+    @Override public FluidStack extractCompressedGas(Direction side, int amount, boolean execute) {
+        if (!valveFace(side) || amount <= 0) return FluidStack.EMPTY;
+        for (Tank tank : tanks) {
+            FluidStack preview = tank.drain(amount, true);
+            if (preview.isEmpty() || !com.gregtech.gregtech.api.fluid.FluidHazards.isGas(preview.getFluid())) continue;
+            if (!execute) return preview;
+            FluidStack taken = tank.drain(amount, false);
+            if (!taken.isEmpty()) setChanged();
+            return taken;
+        }
+        return FluidStack.EMPTY;
+    }
+
+    private boolean valveFace(Direction side) {
+        MachineFace valve = declaration.gasValve();
+        if (valve == null || side == null) return false;
+        Direction facing = getBlockState().hasProperty(HorizontalDirectionalBlock.FACING)
+                ? getBlockState().getValue(HorizontalDirectionalBlock.FACING) : Direction.NORTH;
+        return PartFaces.relative(facing, side) == valve;
     }
 
     private void refreshStructure() {
@@ -1029,6 +1069,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
                 (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
                 this::releaseStructure);
         if (!claimed) return false;
+        com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front, layout);
         var found = new ArrayList<EnergyPart>();
         var bound = new ArrayList<BoundPart>();
         for (BlockPos cellPos : parts.keySet()) {

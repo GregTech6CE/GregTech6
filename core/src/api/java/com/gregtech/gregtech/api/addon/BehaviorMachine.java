@@ -60,11 +60,12 @@ public final class BehaviorMachine implements AddonMachine {
     private final int maxRange;
     private final List<String> recipeMaps;
     private final MachineIo io;
+    private final MachineFace gasValve;
 
     private BehaviorMachine(MachineCasing casing, EnergyInput energy, EnergyInput auxiliary, EnergyOutput output,
                             String blockEntityId, int guiWidth, int guiHeight, String gui, int energyX, int energyY,
                             List<ItemSlot> items, List<FluidSlot> fluids, List<Toggle> toggles, Progress progress,
-                            int maxRange, List<String> recipeMaps, MachineIo io) {
+                            int maxRange, List<String> recipeMaps, MachineIo io, MachineFace gasValve) {
         this.casing = casing;
         this.energy = energy;
         this.auxiliary = auxiliary;
@@ -82,6 +83,7 @@ public final class BehaviorMachine implements AddonMachine {
         this.maxRange = maxRange;
         this.recipeMaps = recipeMaps;
         this.io = io;
+        this.gasValve = gasValve;
     }
 
     @Override public MachineCasing casing() { return casing; }
@@ -105,6 +107,12 @@ public final class BehaviorMachine implements AddonMachine {
     public List<String> recipeMaps() { return List.copyOf(recipeMaps); }
     /** Null when every item and fluid face stays open and no automatic face was declared. */
     public MachineIo io() { return io; }
+
+    /**
+     * The face that accepts and supplies compressed gas, relative to the horizontal facing.
+     * Null when this machine is not a compressed-gas valve. Pipes still use {@link #io()}.
+     */
+    public MachineFace gasValve() { return gasValve; }
 
     /** Registry path. An empty block entity id becomes {@code be_<id>}. */
     public String blockEntityPath() {
@@ -173,12 +181,12 @@ public final class BehaviorMachine implements AddonMachine {
                 && blockEntityId.equals(that.blockEntityId) && gui.equals(that.gui)
                 && items.equals(that.items) && fluids.equals(that.fluids) && toggles.equals(that.toggles)
                 && progress.equals(that.progress) && recipeMaps.equals(that.recipeMaps)
-                && Objects.equals(io, that.io);
+                && Objects.equals(io, that.io) && gasValve == that.gasValve;
     }
 
     @Override public int hashCode() {
         return Objects.hash(casing, energy, auxiliary, output, blockEntityId, guiWidth, guiHeight, gui, energyX, energyY,
-                items, fluids, toggles, progress, maxRange, recipeMaps, io);
+                items, fluids, toggles, progress, maxRange, recipeMaps, io, gasValve);
     }
 
     public static Builder builder(MachineCasing casing) { return new Builder(casing); }
@@ -202,6 +210,7 @@ public final class BehaviorMachine implements AddonMachine {
         private Progress progress = new Progress(80, 35);
         private int maxRange;
         private final List<String> recipeMaps = new ArrayList<>();
+        private MachineFace gasValve;
 
         private Builder(MachineCasing casing) { this.casing = casing; }
 
@@ -234,6 +243,13 @@ public final class BehaviorMachine implements AddonMachine {
         public Builder maxRange(int value) { maxRange = value; return this; }
         public Builder recipeMaps(String... names) {
             if (names != null) for (String name : names) recipeMaps.add(name);
+            return this;
+        }
+
+        /** One face accepts compressed gas from {@code pushCompressedGas} and can supply it. Pipes stay closed to that path. */
+        public Builder gasValve(MachineFace face) {
+            if (face == null) throw new IllegalArgumentException("Missing compressed gas valve");
+            gasValve = face;
             return this;
         }
 
@@ -324,7 +340,7 @@ public final class BehaviorMachine implements AddonMachine {
             return new BehaviorMachine(casing.resolve(machineType, true, tier), storedEnergy, storedAuxiliary, output,
                     blockEntity,
                     guiWidth, guiHeight, gui, energyX, energyY, List.copyOf(items), List.copyOf(fluids),
-                    List.copyOf(toggles), progress, maxRange, List.copyOf(mapNames), io);
+                    List.copyOf(toggles), progress, maxRange, List.copyOf(mapNames), io, gasValve);
         }
     }
 

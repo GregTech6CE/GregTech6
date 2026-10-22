@@ -824,21 +824,36 @@ public final class AddonMachines {
             var role = StructureGrid.Role.valueOf(cell.role().name());
             CellMatch match = cell.match();
             if (match instanceof CellMatch.Block block) {
+                rejectDesign(source, layout.name(), cell, block.id());
                 cells.add(new SharedLargeMachineLayouts.Cell(cell.right(), cell.up(), cell.back(), 0,
-                        role, block.id()));
+                        role, block.id(), cell.design()));
             } else if (match instanceof CellMatch.Tag tag) {
+                rejectDesign(source, layout.name(), cell, "#" + tag.id());
                 cells.add(new SharedLargeMachineLayouts.Cell(cell.right(), cell.up(), cell.back(), 0,
-                        role, "#" + tag.id()));
+                        role, "#" + tag.id(), cell.design()));
             } else {
                 String name = match instanceof CellMatch.Air ? "air" : ((CellMatch.Part) match).name();
                 int part = SharedLargeMachineParts.idForName(name);
                 if (part < 0)
                     throw new IllegalStateException(source + " layout '" + layout.name()
                             + "' uses unknown part '" + name + "'");
-                cells.add(new SharedLargeMachineLayouts.Cell(cell.right(), cell.up(), cell.back(), part, role));
+                if (cell.design() >= 0) {
+                    int max = com.gregtech.gregtech.content.multiblock.PartDesigns.max(name);
+                    if (max < 0 || cell.design() > max)
+                        throw new IllegalStateException(source + " layout '" + layout.name()
+                                + "' cell '" + name + "' does not support design " + cell.design());
+                }
+                cells.add(new SharedLargeMachineLayouts.Cell(cell.right(), cell.up(), cell.back(), part, role,
+                        null, cell.design()));
             }
         }
         return List.copyOf(cells);
+    }
+
+    private static void rejectDesign(String source, String layout, LayoutCell cell, String block) {
+        if (cell.design() < 0) return;
+        throw new IllegalStateException(source + " layout '" + layout + "' cell '" + block
+                + "' does not support design " + cell.design());
     }
 
     private static String safeId(GregTechMachineContributor contributor) {

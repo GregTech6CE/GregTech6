@@ -8,7 +8,7 @@ import java.util.Objects;
  * One addon structure part. With no energy and no function it is a casing.
  * {@code energyOutput} makes it an output part. {@code energyInput} plus {@code condition}
  * makes it a condition input. One part cannot both accept and emit.
- * Slots, tick, use and named fields combine with either energy role.
+ * Slots, tanks, a menu, tick, use and named fields combine with either energy role.
  */
 public final class LayoutPart {
     public static final int MAX_FIELDS = 16;
@@ -26,13 +26,16 @@ public final class LayoutPart {
     private final EnergyInput energyInput;
     private final long conditionPerTick;
     private final PartSlots slots;
+    private final PartTanks tanks;
+    private final String gui;
     private final boolean ticks;
     private final boolean handlesUse;
     private final java.util.List<String> fields;
 
     private LayoutPart(String name, String material, String texture, float hardness,
                        EnergyOutput energy, long energyCapacity, EnergyInput energyInput, long conditionPerTick,
-                       PartSlots slots, boolean ticks, boolean handlesUse, java.util.List<String> fields) {
+                       PartSlots slots, PartTanks tanks, String gui, boolean ticks, boolean handlesUse,
+                       java.util.List<String> fields) {
         this.name = name;
         this.material = material;
         this.texture = texture;
@@ -42,6 +45,8 @@ public final class LayoutPart {
         this.energyInput = energyInput;
         this.conditionPerTick = conditionPerTick;
         this.slots = slots;
+        this.tanks = tanks;
+        this.gui = gui;
         this.ticks = ticks;
         this.handlesUse = handlesUse;
         this.fields = fields;
@@ -69,6 +74,12 @@ public final class LayoutPart {
     /** Null when this part has no item slots. */
     public PartSlots slots() { return slots; }
 
+    /** Null when this part has no fluid tanks. */
+    public PartTanks tanks() { return tanks; }
+
+    /** Null when a right click does not open this part's menu. A path in {@code namespace:path.png} form. */
+    public String gui() { return gui; }
+
     /** The placed part receives a server tick. */
     public boolean ticks() { return ticks; }
 
@@ -78,8 +89,10 @@ public final class LayoutPart {
     /** Named values GregTech stores for this part. Empty when the part has none. */
     public java.util.List<String> fields() { return fields; }
 
-    /** Slots, a tick, a click handler, or a named field. A casing and an energy-only part are false. */
-    public boolean functional() { return slots != null || ticks || handlesUse || !fields.isEmpty(); }
+    /** Slots, tanks, a menu, a tick, a click handler, or a named field. A casing and an energy-only part are false. */
+    public boolean functional() {
+        return slots != null || tanks != null || gui != null || ticks || handlesUse || !fields.isEmpty();
+    }
 
     @Override public boolean equals(Object other) {
         if (this == other) return true;
@@ -88,12 +101,13 @@ public final class LayoutPart {
                 && conditionPerTick == that.conditionPerTick && ticks == that.ticks && handlesUse == that.handlesUse
                 && name.equals(that.name) && material.equals(that.material) && texture.equals(that.texture)
                 && Objects.equals(energy, that.energy) && Objects.equals(energyInput, that.energyInput)
-                && Objects.equals(slots, that.slots) && fields.equals(that.fields);
+                && Objects.equals(slots, that.slots) && Objects.equals(tanks, that.tanks)
+                && Objects.equals(gui, that.gui) && fields.equals(that.fields);
     }
 
     @Override public int hashCode() {
         return Objects.hash(name, material, texture, hardness, energy, energyCapacity, energyInput, conditionPerTick,
-                slots, ticks, handlesUse, fields);
+                slots, tanks, gui, ticks, handlesUse, fields);
     }
 
     public static Builder builder(String name, String material) { return new Builder(name, material); }
@@ -109,6 +123,8 @@ public final class LayoutPart {
         private EnergyInput energyInput;
         private long conditionPerTick;
         private PartSlots slots;
+        private PartTanks tanks;
+        private String gui;
         private boolean ticks;
         private boolean handlesUse;
         private final java.util.List<String> fields = new java.util.ArrayList<>();
@@ -149,6 +165,24 @@ public final class LayoutPart {
         public Builder slots(PartSlots value) {
             if (value == null) throw new IllegalArgumentException("Missing part slots");
             slots = value;
+            return this;
+        }
+
+        /** This part keeps its own fluid tanks. Pipes use the faces on {@code tanks}. */
+        public Builder tanks(PartTanks value) {
+            if (value == null) throw new IllegalArgumentException("Missing part tanks");
+            tanks = value;
+            return this;
+        }
+
+        /**
+         * Right click opens a menu of this part's slots, tanks and fields.
+         * {@code texture} is {@code namespace:path.png}. {@code onUse} returning true consumes the click first.
+         */
+        public Builder gui(String texture) {
+            if (texture == null || !texture.matches("[a-z0-9_.-]+:[a-z0-9_./-]+\\.png"))
+                throw new IllegalArgumentException("Invalid part gui texture: " + texture);
+            gui = texture;
             return this;
         }
 
@@ -197,7 +231,7 @@ public final class LayoutPart {
             if (energyInput != null) validateInput(name, energyInput, conditionPerTick);
             return new LayoutPart(name, material, path, hardness, energy, energy == null ? 0 : energyCapacity,
                     energyInput, energyInput == null ? 0 : conditionPerTick,
-                    slots, ticks, handlesUse, java.util.List.copyOf(fields));
+                    slots, tanks, gui, ticks, handlesUse, java.util.List.copyOf(fields));
         }
 
         private static void validateInput(String name, EnergyInput input, long conditionPerTick) {

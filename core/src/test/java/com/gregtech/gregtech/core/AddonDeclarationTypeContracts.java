@@ -16,6 +16,11 @@ import com.gregtech.gregtech.api.addon.MachineIo;
 import com.gregtech.gregtech.api.addon.PartEnergyRules;
 import com.gregtech.gregtech.api.addon.PartSlotRules;
 import com.gregtech.gregtech.api.addon.PartSlots;
+import com.gregtech.gregtech.api.addon.PartTankRules;
+import com.gregtech.gregtech.api.addon.PartTanks;
+import com.gregtech.gregtech.api.addon.AddonMachines;
+import com.gregtech.gregtech.api.kubejs.StructureLayoutDocuments;
+import com.gregtech.gregtech.content.multiblock.PartDesigns;
 import com.gregtech.gregtech.api.addon.RecipeMachine;
 import com.gregtech.gregtech.api.addon.RecipeTable;
 import com.gregtech.gregtech.api.addon.StructureLayout;
@@ -39,6 +44,7 @@ public final class AddonDeclarationTypeContracts {
         secondEnergy();
         mainEnergy();
         functionalParts();
+        partAdditions();
         System.out.println("passed " + assertions);
     }
 
@@ -456,6 +462,55 @@ public final class AddonDeclarationTypeContracts {
         model.stop();
         check(!model.running() && model.extract(0).equals("redstone") && model.power() == 4, "stop releases the items");
         check(model.item(1).equals("diamond"), "the other slot stays");
+    }
+
+    private static void partAdditions() {
+        var tanks = PartTanks.builder(2).capacity(8_000).insert(MachineFace.TOP).extract(MachineFace.BOTTOM).build();
+        var part = LayoutPart.builder("sample_tank", "Steel").hardness(6.0F)
+                .tanks(tanks).gui("aa_sample:textures/gui/part.png").build();
+        check(part.functional() && part.tanks().count() == 2 && part.tanks().capacity() == 8_000
+                        && part.gui().equals("aa_sample:textures/gui/part.png"),
+                "tanks and a menu make a part functional");
+        check(PartTankRules.inserts(tanks, MachineFace.TOP) && !PartTankRules.inserts(tanks, MachineFace.BOTTOM)
+                        && !PartTankRules.extracts(tanks, null) && !PartTankRules.inserts(null, MachineFace.TOP),
+                "tank faces follow the declared lists");
+        fails(() -> PartTanks.builder(0).capacity(1).build(), "1 to");
+        fails(() -> PartTanks.builder(9).capacity(1).build(), "1 to");
+        fails(() -> PartTanks.builder(1).build(), "capacity");
+        fails(() -> PartTanks.builder(1).capacity(0).build(), "capacity");
+        fails(() -> PartTanks.builder(1).capacity(PartTanks.MAX_CAPACITY + 1).build(), "capacity");
+        fails(() -> LayoutPart.builder("sample_tank", "Steel").hardness(6.0F).tanks(null).build(), "Missing");
+        fails(() -> LayoutPart.builder("sample_tank", "Steel").hardness(6.0F).gui("textures/gui/part.png").build(),
+                "gui");
+
+        var valve = BehaviorMachine.builder(casing("press")).energy(eu(32)).gui(GUI).gasValve(MachineFace.BACK).build();
+        var closed = BehaviorMachine.builder(casing("press")).energy(eu(32)).gui(GUI).build();
+        check(valve.gasValve() == MachineFace.BACK && closed.gasValve() == null && !valve.equals(closed),
+                "a behavior machine can name one compressed-gas valve");
+        fails(() -> BehaviorMachine.builder(casing("press")).energy(eu(32)).gui(GUI).gasValve(null).build(), "valve");
+
+        check(PartDesigns.max("steel_wall") == 7 && PartDesigns.max("wood_wall") == -1
+                        && PartDesigns.folder("centrifuge_part").equals("centrifugeparts"),
+                "design support follows the original part table");
+        var designed = StructureLayout.builder("samplepress")
+                .cell(1, 0, 0, CellMatch.parse("steel_wall"), StructureRole.CASING, 7).build();
+        check(designed.cells().get(0).design() == 7, "a cell can name a design");
+        var json = StructureLayoutDocuments.canonical(designed);
+        check(json.contains("\"design\":7") && StructureLayoutDocuments.parse("samplepress", json).equals(designed),
+                "a layout document keeps the design");
+        var shared = AddonMachines.sharedCells("test", designed);
+        check(shared.size() == 1 && shared.get(0).design() == 7, "install keeps a supported design");
+        fails(() -> AddonMachines.sharedCells("test", StructureLayout.builder("samplepress")
+                .cell(1, 0, 0, CellMatch.parse("steel_wall"), StructureRole.CASING, 8).build()),
+                IllegalStateException.class, "does not support");
+        fails(() -> AddonMachines.sharedCells("test", StructureLayout.builder("samplepress")
+                .cell(1, 0, 0, CellMatch.parse("wood_wall"), StructureRole.CASING, 1).build()),
+                IllegalStateException.class, "does not support");
+        fails(() -> AddonMachines.sharedCells("test", StructureLayout.builder("samplepress")
+                .cell(1, 0, 0, CellMatch.parse("minecraft:iron_block"), StructureRole.CASING, 1).build()),
+                IllegalStateException.class, "does not support");
+        fails(() -> LayoutCell.at(1, 0, 0, CellMatch.parse("steel_wall"), StructureRole.CASING).withDesign(-1),
+                "0 to 255");
     }
 
     /** The sample compute part, without a block entity: four stack-1 slots, redstone 1, diamond 4. */
