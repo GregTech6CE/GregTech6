@@ -184,12 +184,8 @@ case "radaway" -> new com.gregtech.gregtech.item.RadawayItem();case "empty_wax_p
             }));
         }
 //?}
-        for (var band : com.gregtech.gregtech.content.tool.WoodenBucketCatalog.BANDS)
-            for (var content : com.gregtech.gregtech.content.tool.WoodenBucketCatalog.CONTENTS) {
-                String id = com.gregtech.gregtech.content.tool.WoodenBucketCatalog.itemId(band, content);
-                BY_ID.put(id, ITEMS.register(id, () -> new com.gregtech.gregtech.item.WoodenBucketItem(band, content)));
-            }
-        for(var dye:com.gregtech.gregtech.content.tool.PaintingRules.DYES){BY_ID.put(dye.fullId(),ITEMS.register(dye.fullId(),()->new com.gregtech.gregtech.item.PaintSprayItem(dye,new Item.Properties().stacksTo(1))));BY_ID.put(dye.usedId(),ITEMS.register(dye.usedId(),()->new com.gregtech.gregtech.item.PaintSprayItem(dye,new Item.Properties().stacksTo(1))));}
+        registerWoodenBuckets();
+        registerPaintSprays();
 //? if >=1.21.1 {
   /*BY_ID.put("dusty_guide_book",ITEMS.register("dusty_guide_book",()->new com.gregtech.gregtech.content.loot.LootBagItem(new Item.Properties().stacksTo(64),"gt.books")));
   BY_ID.put("dusty_material_dictionary",ITEMS.register("dusty_material_dictionary",()->new com.gregtech.gregtech.content.loot.LootBagItem(new Item.Properties().stacksTo(64),"gt.matdicts")));
@@ -221,4 +217,21 @@ case "radaway" -> new com.gregtech.gregtech.item.RadawayItem();case "empty_wax_p
         ITEMS.register(bus);
     }
 //?}
+
+    private static void registerWoodenBuckets() {
+        for (var band : com.gregtech.gregtech.content.tool.WoodenBucketCatalog.BANDS)
+            for (var content : com.gregtech.gregtech.content.tool.WoodenBucketCatalog.CONTENTS) {
+                String id = com.gregtech.gregtech.content.tool.WoodenBucketCatalog.itemId(band, content);
+                BY_ID.put(id, ITEMS.register(id, () -> new com.gregtech.gregtech.item.WoodenBucketItem(band, content)));
+            }
+    }
+
+    private static void registerPaintSprays() {
+        for (var dye : com.gregtech.gregtech.content.tool.PaintingRules.DYES) {
+            BY_ID.put(dye.fullId(), ITEMS.register(dye.fullId(), () -> new com.gregtech.gregtech.item.PaintSprayItem(dye,
+                    new Item.Properties().stacksTo(1))));
+            BY_ID.put(dye.usedId(), ITEMS.register(dye.usedId(), () -> new com.gregtech.gregtech.item.PaintSprayItem(dye,
+                    new Item.Properties().stacksTo(1))));
+        }
+    }
 }
