@@ -38,10 +38,13 @@ public final class GTTrackBlocks {
 
     /** GT6's three rail registrations per material. */
     public enum Family {
+
         /** {@code gt.block.rail.<material>} — "Aluminium Track". */
         STRAIGHT,
+
         /** {@code gt.block.rail.booster.<material>} — the powered rail. */
         BOOSTER,
+
         /** {@code gt.block.rail.detector.<material>} — the detector rail. */
         DETECTOR
     }
@@ -49,9 +52,9 @@ public final class GTTrackBlocks {
     /** One registered track: port id, GT6 parameters and the block. */
     public record Track(String id, Family family, String material, float speed, float resistance,
 //? if >=1.21.1 {
-                        /*DeferredHolder<Block,Block> block) {
+            /*DeferredHolder<Block, Block> block) {
 *///?} else {
-                        RegistryObject<Block> block) {
+            RegistryObject<Block> block) {
 //?}
         /** GT6's "Aluminium Booster Track". */
         public String displayName() {
@@ -66,19 +69,24 @@ public final class GTTrackBlocks {
 
     /**
      * GT6 {@code Loader_Rails:41-72}: material, top speed, explosion resistance and the rail material
-     * the booster recipe uses as its "G" ingredient. Order is GT6's registration order.
+     * the booster recipe uses as its "G" ingredient. This port registers the three families per material.
      */
     private static final List<Track> TRACKS = new ArrayList<>();
     private static final Map<String, Track> BY_ID = new LinkedHashMap<>();
     private static boolean registered;
 
-    private GTTrackBlocks() {}
+    private GTTrackBlocks() {
+    }
 
-    /** Everything GT6 registers, in GT6's order. */
-    public static List<Track> all() { return List.copyOf(TRACKS); }
+    /** The thirty material tracks in this port's registration order. */
+    public static List<Track> all() {
+        return List.copyOf(TRACKS);
+    }
 
     /** One track by port id, or null. */
-    public static Track get(String id) { return BY_ID.get(id); }
+    public static Track get(String id) {
+        return BY_ID.get(id);
+    }
 
     /** GT6's material name for a port slug, e.g. {@code tungstensteel}. */
     public static String materialName(String slug) {
@@ -99,19 +107,19 @@ public final class GTTrackBlocks {
             float speed = row.speed();
             float resistance = row.resistance();
             String slug = material.toLowerCase(Locale.ROOT);
-            add("track_" + slug, Family.STRAIGHT, material, speed, resistance);
-            add("track_booster_" + slug, Family.BOOSTER, material, speed, resistance);
-            add("track_detector_" + slug, Family.DETECTOR, material, speed, resistance);
+            registerTrack("track_" + slug, Family.STRAIGHT, material, speed, resistance);
+            registerTrack("track_booster_" + slug, Family.BOOSTER, material, speed, resistance);
+            registerTrack("track_detector_" + slug, Family.DETECTOR, material, speed, resistance);
         }
     }
 
-    private static void add(String id, Family family, String material, float speed, float resistance) {
+    private static void registerTrack(String id, Family family, String material, float speed, float resistance) {
         BlockBehaviour.Properties properties = BlockBehaviour.Properties.of().mapColor(MapColor.METAL)
                 .noCollission()
                 // GT6 keeps the vanilla rail hardness and uses the material's explosion resistance.
                 .strength(0.7F, resistance).sound(SoundType.METAL);
 //? if >=1.21.1 {
-        /*DeferredHolder<Block,Block> block = GTBlocks.BLOCKS.register(id, () -> switch (family) {
+        /*DeferredHolder<Block, Block> block = GTBlocks.BLOCKS.register(id, () -> switch (family) {
 *///?} else {
         RegistryObject<Block> block = GTBlocks.BLOCKS.register(id, () -> switch (family) {
 //?}
