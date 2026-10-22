@@ -1,5 +1,9 @@
 # 实现选择记录
 
+## 2026-10-22 / 坩埚只读视图
+
+读数挂在控制器侧。`MachineBehavior` 增加 `getCrucibleMaterial(context)`，返回熔融材料名或空串；现有的 `getCrucibleTemperature` 和 `getCrucibleContentAmount` 不变。绑定零件通过 `PartContext.crucible()` 读取三者合成的 `CrucibleContent` 快照（材料名、GT 单位数量、开尔文温度、`present()`）。不放在 `MachineBehaviorContext` 上，因为零件拿不到控制器那一侧的上下文；由控制器的方块实体在每次调用时现取行为结果，结构拆开、控制器方块实体被移除或没有绑定后返回空视图，不保留方块实体。材料用名字而不是 `GTMaterial`，附属用 `GregTechMaterials.find` 解析，避免把内部材料类型带进 SDK。读取只读，不扣除材料；取材料仍走 `fillMoldAtSide`。只覆盖行为机器控制器，因为附属零件只绑在行为机器上。
+
 ## 2026-10-22 / 双向结构零件与控制器内部送能
 
 `LayoutPart` 允许同时声明 `energyOutput` 和 `energyInput`；双向时输入只表示控制器通道，不带 `faces`、不带 `condition`，缓冲复用输出缓冲。`MachineBehaviorContext.pushToPart` 只把能量充进零件、不扣控制器储能，`emit(part, size, amount)` 从控制器储能扣并转入零件；零件在自己的 tick 从 `energyOutput.faces()` 送出。`AddonEnergyPartBlockEntity` 的输出零件 `charge` 进入输出缓冲，空 `faces` 的内部输入不再暴露给外部能量能力（包括无面查询）。这样不扩充 `MachineFace` 的六面模型，环路由“内部通道不是外部面、双向零件没有外部输入面”避免，和 GT6 `SIDE_INSIDE` 的语义一致。

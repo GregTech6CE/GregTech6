@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.blockentity.machine;
 
+import com.gregtech.gregtech.api.addon.CrucibleContent;
 import com.gregtech.gregtech.api.addon.LayoutPart;
 import com.gregtech.gregtech.api.addon.PartSlotRules;
 import com.gregtech.gregtech.api.addon.PartSlots;
@@ -504,6 +505,15 @@ public final class FunctionalPartRuntime {
             if (!(level.getBlockEntity(owner) instanceof BehaviorMachineBlockEntity machine)) return null;
             if (!machine.structureFormed() || !host.boundTo(owner)) return null;
             return machine.behavior();
+        }
+
+        @Override public CrucibleContent crucible() {
+            BlockPos owner = controllerPos();
+            Level level = host.level();
+            if (owner == null || level == null) return CrucibleContent.EMPTY;
+            if (!(level.getBlockEntity(owner) instanceof BehaviorMachineBlockEntity machine)) return CrucibleContent.EMPTY;
+            if (!machine.structureFormed() || machine.isRemoved() || !host.boundTo(owner)) return CrucibleContent.EMPTY;
+            return machine.crucibleContent();
         }
 
         @Override public BehaviorState state() { return state; }
