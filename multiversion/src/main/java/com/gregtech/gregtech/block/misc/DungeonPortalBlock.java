@@ -33,10 +33,12 @@ public class DungeonPortalBlock extends Block implements EntityBlock {
     /** GT6's {@code mActive} as a block state, so the model can follow it. */
     public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
 
-    /** The two dimensions GT6's own mini portals serve (see the subclasses of {@code MultiTileEntityMiniPortal}). */
+    /** The two dimension pairs currently supported by this port. */
     public enum Target {
+
         /** {@code MultiTileEntityMiniPortalNether}: overworld to Nether, distance factor 8, margin 128. */
         NETHER(Level.NETHER, 8, 128),
+
         /** {@code MultiTileEntityMiniPortalEnd}: overworld to End, distance factor 128, margin 512. */
         END(Level.END, 128, 512);
 
@@ -53,9 +55,26 @@ public class DungeonPortalBlock extends Block implements EntityBlock {
     private final Target target;
 
 //? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<? extends Block> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-    @Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return switch(interact(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME,CONSUME_PARTIAL->net.minecraft.world.ItemInteractionResult.CONSUME;case FAIL->net.minecraft.world.ItemInteractionResult.FAIL;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
-    @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return interact(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
+    /*@Override
+    public com.mojang.serialization.MapCodec<? extends Block> codec() {
+        return com.mojang.serialization.MapCodec.unit(this);
+    }
+
+    @Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        return switch (interact(state, level, pos, player, hand, hit)) {
+            case SUCCESS -> net.minecraft.world.ItemInteractionResult.SUCCESS;
+            case CONSUME, CONSUME_PARTIAL -> net.minecraft.world.ItemInteractionResult.CONSUME;
+            case FAIL -> net.minecraft.world.ItemInteractionResult.FAIL;
+            default -> net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        };
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return interact(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
 //?}
     public DungeonPortalBlock(Target target, Properties properties) {
@@ -104,7 +123,8 @@ public class DungeonPortalBlock extends Block implements EntityBlock {
     }
 
     @Override
-    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) { }
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+    }
 
 //? if >=1.21.1 {
     /*public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
@@ -112,7 +132,7 @@ public class DungeonPortalBlock extends Block implements EntityBlock {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
 //?}
-                                 InteractionHand hand, BlockHitResult hit) {
+            InteractionHand hand, BlockHitResult hit) {
         ItemStack held = player.getItemInHand(hand);
         boolean igniter = target == Target.NETHER && held.is(Items.FLINT_AND_STEEL);
         boolean eye = target == Target.END && held.is(Items.ENDER_EYE);
@@ -122,7 +142,9 @@ public class DungeonPortalBlock extends Block implements EntityBlock {
         if (igniter) {
             portal.onIgnite(level, pos, hit.getDirection(), player, held, player.isShiftKeyDown(), 0.5F, 0.5F, 0.5F);
 //? if >=1.21.1 {
-            /*if (!player.isCreative()) held.hurtAndBreak(1, player, hand == InteractionHand.MAIN_HAND ? net.minecraft.world.entity.EquipmentSlot.MAINHAND : net.minecraft.world.entity.EquipmentSlot.OFFHAND);
+            /*if (!player.isCreative()) held.hurtAndBreak(1, player,
+                    hand == InteractionHand.MAIN_HAND ? net.minecraft.world.entity.EquipmentSlot.MAINHAND
+                    : net.minecraft.world.entity.EquipmentSlot.OFFHAND);
 *///?} else {
             if (!player.isCreative()) held.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(hand));
 //?}
@@ -139,39 +161,51 @@ public class DungeonPortalBlock extends Block implements EntityBlock {
     /** GT6's portal tooltips ({@code MultiTileEntityMiniPortalNether:49-59}, {@code ...End:49-60}). */
     @Override
 //? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,List<Component> tooltip,
+    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip,
 *///?} else {
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip,
 //?}
-                                TooltipFlag flag) {
+            TooltipFlag flag) {
         if (target == Target.NETHER) {
             tooltip.add(Component.translatable("tooltip.gt6ce.portal.nether.range")
-                    .withStyle(ChatFormatting.AQUA));
+            .withStyle(ChatFormatting.AQUA));
             tooltip.add(Component.translatable("tooltip.gt6ce.portal.nether.margin")
-                    .withStyle(ChatFormatting.AQUA));
+            .withStyle(ChatFormatting.AQUA));
         } else {
             tooltip.add(Component.translatable("tooltip.gt6ce.portal.end.range")
-                    .withStyle(ChatFormatting.AQUA));
+            .withStyle(ChatFormatting.AQUA));
             tooltip.add(Component.translatable("tooltip.gt6ce.portal.end.margin")
-                    .withStyle(ChatFormatting.AQUA));
+            .withStyle(ChatFormatting.AQUA));
         }
         tooltip.add(Component.translatable("tooltip.gt6ce.portal.relay").withStyle(ChatFormatting.AQUA));
         tooltip.add(Component.translatable(target == Target.NETHER ? "tooltip.gt6ce.portal.ignite" : "tooltip.gt6ce.portal.eye")
-                .withStyle(ChatFormatting.DARK_GRAY));
+        .withStyle(ChatFormatting.DARK_GRAY));
     }
 
     @Override
     public <T extends BlockEntity> net.minecraft.world.level.block.entity.BlockEntityTicker<T> getTicker(
             Level level, BlockState state, net.minecraft.world.level.block.entity.BlockEntityType<T> type) {
         return level.isClientSide || type != com.gregtech.gregtech.registry.GTBlockEntities.DUNGEON_PORTAL.get()
-                ? null : (world, pos, blockState, entity) -> ((DungeonPortalBlockEntity)entity).tickRelay();
+        ? null : (world, pos, blockState, entity) -> ((DungeonPortalBlockEntity) entity).tickRelay();
     }
-    @Override public boolean isSignalSource(BlockState state) { return true; }
-    @Override public int getSignal(BlockState state, BlockGetter level, BlockPos pos, net.minecraft.core.Direction side) {
+
+    @Override
+    public boolean isSignalSource(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getSignal(BlockState state, BlockGetter level, BlockPos pos, net.minecraft.core.Direction side) {
         return level.getBlockEntity(pos) instanceof DungeonPortalBlockEntity portal ? portal.signal(side) : 0;
     }
-    @Override public boolean hasAnalogOutputSignal(BlockState state) { return true; }
-    @Override public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+
+    @Override
+    public boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
         return level.getBlockEntity(pos) instanceof DungeonPortalBlockEntity portal ? portal.comparator(null) : 0;
     }
 
