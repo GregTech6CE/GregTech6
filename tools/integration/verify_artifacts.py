@@ -31,6 +31,22 @@ PLATFORMS = {
     'neoforge': {'metadata': 'META-INF/neoforge.mods.toml', 'minecraft': '1.21.1', 'loader': 'neoforge'},
 }
 
+
+def required_forge_mixin_mappings(config):
+    # Exact known API-only injections use remap=false. Everything else must retain
+    # compiler-generated named-to-SRG mappings, including future mixins.
+    # GasImmersionMixin injects only setFluidTypeHeight, which Forge adds to Entity;
+    # it is not a Mojang-obfuscated method. Do not exempt Entity injections generally.
+    api_mixins = {
+        'WaterContainerMixin', 'ComponentCoverCapabilitiesMixin',
+        'ReliableEmiNamespaceMixin', 'ReliableEmiGearboxIconMixin',
+        'GasImmersionMixin',
+    }
+    package = config['package'].replace('.', '/')
+    return {package + '/' + name
+            for name in config['mixins'] + config.get('client', [])
+            if package != 'com/gregtech/gregtech/mixin' or name not in api_mixins}
+
 # Both production platforms must retain the restored gameplay implementations.
 # Shared-core agreement alone also accepts a material-only NeoForge skeleton.
 GAMEPLAY_CLASSES = (
@@ -291,13 +307,7 @@ def inspect(path, platform, required_core, properties, forbidden_tests):
             mappings = refmap.get('mappings', {})
             if not mappings or mappings != refmap.get('data', {}).get('searge'):
                 raise ValueError(f'{path}: incomplete named-to-SRG Mixin mappings')
-            # These mixins target Forge/GT/optional REMI API methods with remap=false.
-            # ComponentCoverCapabilitiesMixin targets getCapability on GT classes;
-            # neither those classes nor Forge capability method names are obfuscated.
-            api_mixins = {"WaterContainerMixin", "ComponentCoverCapabilitiesMixin", "ReliableEmiNamespaceMixin", "ReliableEmiGearboxIconMixin"}
-            required_mappings = {config['package'].replace('.', '/') + '/' + name
-                                 for name in config['mixins'] + config.get('client', [])
-                                 if name not in api_mixins}
+            required_mappings = required_forge_mixin_mappings(config)
             if not required_mappings.issubset(mappings):
                 raise ValueError(f'{path}: missing complete Mixin mappings: {sorted(required_mappings - mappings.keys())}')
             target = 'spawnAtLocation(Lnet/minecraft/world/level/ItemLike;)Lnet/minecraft/world/entity/item/ItemEntity;'

@@ -109,6 +109,9 @@ public final class OpenIssueRegressionTests {
     /** Issues #80/#81: the host state, not an ore tag, controls embedded charges. */
     @GameTest(template="test_empty")
     public static void gtOreHostsAdmitSmallOreAndRejectBedrockWithoutConsumption(GameTestHelper h) {
+        // The current LV drill catalog charges 200 EU per use (not the old fixture's 100 EU).
+        h.assertTrue(com.gregtech.gregtech.content.tool.ElectricToolCatalog.get("electric_drill").energyPerUse() == 200,
+                "LV drill contract is exactly 200 EU per use");
         for (String prefix : java.util.List.of("ore_iron", "ore_small_iron")) {
             var id = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", prefix);
             var block = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(id);
@@ -123,9 +126,14 @@ public final class OpenIssueRegressionTests {
                 h.assertTrue(DynamiteSubstrates.canDrill(h.getLevel(), h.absolutePos(SUPPORT)) == allowed,
                         id + " admission for " + host);
                 h.assertTrue(place(h, player, Direction.UP) == allowed, id + " placement for " + host);
-                h.assertTrue(player.getInventory().items.get(35).getCount() == (allowed ? 2 : 3)
-                        && player.getMainHandItem().getTag().getLong("gt.charge") == (allowed ? 900 : 1000),
-                        "only successful GT ore placement consumes charge and energy");
+                int remainingCharges = player.getInventory().items.get(35).getCount();
+                long remainingEnergy = player.getMainHandItem().getTag().getLong("gt.charge");
+                h.assertTrue(remainingCharges == (allowed ? 2 : 3),
+                        id + " / " + host + ": expected dynamite count " + (allowed ? 2 : 3)
+                                + ", actual " + remainingCharges);
+                h.assertTrue(remainingEnergy == (allowed ? 800 : 1000),
+                        id + " / " + host + ": expected EU " + (allowed ? 800 : 1000)
+                                + ", actual " + remainingEnergy);
                 if (allowed) {
                     var target = h.absolutePos(SUPPORT.above());
                     var state = h.getLevel().getBlockState(target);
