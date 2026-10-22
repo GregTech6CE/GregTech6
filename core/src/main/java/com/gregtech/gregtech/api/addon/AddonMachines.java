@@ -72,7 +72,8 @@ public final class AddonMachines {
                              boolean energyRangeSpecified, long energyInMin, long energyInMax) {}
     private record FuelSignature(String fuelMap, int efficiency, String energy, long outputPerTick, int tankCapacity,
                                  FuelOutput output, boolean multi) {}
-    private record BehaviorSignature(String energy, String energyOut, List<BehaviorMachine.SlotRole> items,
+    private record BehaviorSignature(String energy, String auxiliary, String energyOut,
+                                     List<BehaviorMachine.SlotRole> items,
                                      List<BehaviorMachine.SlotRole> fluids, List<String> toggleKeys) {}
     private record PreparedLayout(String addonId, String machineName, List<SharedLargeMachineLayouts.Cell> cells) {}
 
@@ -603,6 +604,14 @@ public final class AddonMachines {
                                 + "' uses unknown energy type '" + declaration.energy().type() + "'", failure);
                     }
                 }
+                if (declaration.energyInput() != null) {
+                    try {
+                        energy(declaration.energyInput().type());
+                    } catch (IllegalArgumentException failure) {
+                        throw new IllegalStateException("Addon '" + submission.addonId + "' structure part '" + name
+                                + "' uses unknown energy type '" + declaration.energyInput().type() + "'", failure);
+                    }
+                }
                 if (nextPartId < 0)
                     throw new IllegalStateException("Addon structure part ids overflowed");
                 var part = new StructurePart(submission.addonId, nextPartId, declaration);
@@ -858,6 +867,14 @@ public final class AddonMachines {
                     throw new IllegalStateException("Addon '" + submission.addonId + "' machine '"
                             + id + "' uses unknown energy type '" + declaration.energy().type() + "'", failure);
                 }
+                if (declaration.auxiliary() != null) {
+                    try {
+                        energy(declaration.auxiliary().type());
+                    } catch (IllegalArgumentException failure) {
+                        throw new IllegalStateException("Addon '" + submission.addonId + "' machine '"
+                                + id + "' uses unknown energy type '" + declaration.auxiliary().type() + "'", failure);
+                    }
+                }
                 if (declaration.emitsEnergy()) {
                     try {
                         energy(declaration.output().type());
@@ -891,6 +908,7 @@ public final class AddonMachines {
                     throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName
                             + "' disagrees with an earlier definition of that machine");
                 var signature = new BehaviorSignature(declaration.energy().type(),
+                        declaration.auxiliary() == null ? "" : declaration.auxiliary().type(),
                         declaration.output() == null ? "" : declaration.output().type(),
                         declaration.items().stream().map(BehaviorMachine.ItemSlot::role).toList(),
                         declaration.fluids().stream().map(BehaviorMachine.FluidSlot::role).toList(),

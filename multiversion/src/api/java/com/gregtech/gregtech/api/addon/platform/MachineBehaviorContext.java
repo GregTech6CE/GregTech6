@@ -94,6 +94,24 @@ public interface MachineBehaviorContext {
     /** Energy parts bound by the formed layout. Empty when {@link #structureFormed()} is false. */
     List<EnergyPart> energyParts();
 
+    /**
+     * True when no bound part is a condition, or every bound condition part is satisfied.
+     * An unformed structure has no bound parts, so this is true. The behavior tick still runs.
+     */
+    boolean conditionsMet();
+
+    /**
+     * Auxiliary buffer for {@code type}, in that energy's unit.
+     * This is not {@link #energy()}. An unknown type, or a machine with no auxiliary input, is 0.
+     */
+    long energy(String type);
+
+    /**
+     * Removes {@code amount} from the auxiliary buffer of {@code type}.
+     * Returns false when the type is not the auxiliary type or the buffer is short.
+     */
+    boolean consume(String type, long amount);
+
     BehaviorState state();
 
     /**

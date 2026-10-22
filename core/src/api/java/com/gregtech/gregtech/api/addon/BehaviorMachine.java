@@ -11,7 +11,8 @@ import java.util.Objects;
  * One addon behavior machine. GregTech builds the block, inventory, tanks, menu and screen.
  * The machine type replaces {@code /} in the id with {@code _}. Tier is 1 to 255.
  * Energy input defaults to every face except the front. Capacity 0 keeps the rated-input drain.
- * An accepted range cannot be declared.
+ * An accepted range cannot be declared on the main input. {@code auxiliaryEnergy} is a second
+ * buffer the behavior reads by type. Its faces cannot overlap the main input.
  */
 public final class BehaviorMachine implements AddonMachine {
     public static final int SLOT = 18;
@@ -40,6 +41,7 @@ public final class BehaviorMachine implements AddonMachine {
 
     private final MachineCasing casing;
     private final EnergyInput energy;
+    private final EnergyInput auxiliary;
     private final EnergyOutput output;
     private final String blockEntityId;
     private final int guiWidth;
@@ -54,12 +56,13 @@ public final class BehaviorMachine implements AddonMachine {
     private final int maxRange;
     private final List<String> recipeMaps;
 
-    private BehaviorMachine(MachineCasing casing, EnergyInput energy, EnergyOutput output, String blockEntityId,
-                            int guiWidth, int guiHeight, String gui, int energyX, int energyY,
+    private BehaviorMachine(MachineCasing casing, EnergyInput energy, EnergyInput auxiliary, EnergyOutput output,
+                            String blockEntityId, int guiWidth, int guiHeight, String gui, int energyX, int energyY,
                             List<ItemSlot> items, List<FluidSlot> fluids, List<Toggle> toggles, Progress progress,
                             int maxRange, List<String> recipeMaps) {
         this.casing = casing;
         this.energy = energy;
+        this.auxiliary = auxiliary;
         this.output = output;
         this.blockEntityId = blockEntityId;
         this.guiWidth = guiWidth;
@@ -77,6 +80,8 @@ public final class BehaviorMachine implements AddonMachine {
 
     @Override public MachineCasing casing() { return casing; }
     public EnergyInput energy() { return energy; }
+    /** Null when the machine has no second energy input. */
+    public EnergyInput auxiliary() { return auxiliary; }
     /** Null when the machine does not emit energy. */
     public EnergyOutput output() { return output; }
     public String blockEntityId() { return blockEntityId; }
@@ -102,6 +107,12 @@ public final class BehaviorMachine implements AddonMachine {
     public int energyMask() {
         int mask = 0;
         for (MachineFace face : energy.faces()) mask |= face.bit();
+        return mask;
+    }
+
+    public int auxiliaryMask() {
+        int mask = 0;
+        if (auxiliary != null) for (MachineFace face : auxiliary.faces()) mask |= face.bit();
         return mask;
     }
 
@@ -131,14 +142,15 @@ public final class BehaviorMachine implements AddonMachine {
         if (!(other instanceof BehaviorMachine that)) return false;
         return guiWidth == that.guiWidth && guiHeight == that.guiHeight && energyX == that.energyX
                 && energyY == that.energyY && maxRange == that.maxRange && casing.equals(that.casing)
-                && energy.equals(that.energy) && Objects.equals(output, that.output)
+                && energy.equals(that.energy) && Objects.equals(auxiliary, that.auxiliary)
+                && Objects.equals(output, that.output)
                 && blockEntityId.equals(that.blockEntityId) && gui.equals(that.gui)
                 && items.equals(that.items) && fluids.equals(that.fluids) && toggles.equals(that.toggles)
                 && progress.equals(that.progress) && recipeMaps.equals(that.recipeMaps);
     }
 
     @Override public int hashCode() {
-        return Objects.hash(casing, energy, output, blockEntityId, guiWidth, guiHeight, gui, energyX, energyY,
+        return Objects.hash(casing, energy, auxiliary, output, blockEntityId, guiWidth, guiHeight, gui, energyX, energyY,
                 items, fluids, toggles, progress, maxRange, recipeMaps);
     }
 
@@ -147,6 +159,7 @@ public final class BehaviorMachine implements AddonMachine {
     public static final class Builder {
         private final MachineCasing casing;
         private EnergyInput energy;
+        private EnergyInput auxiliary;
         private EnergyOutput output;
         private FuelOutput fuelOutput;
         private MachineIo io;
@@ -166,6 +179,14 @@ public final class BehaviorMachine implements AddonMachine {
         private Builder(MachineCasing casing) { this.casing = casing; }
 
         public Builder energy(EnergyInput value) { energy = value; return this; }
+
+        /** Second input. Its buffer is separate from {@link #energy}. Faces cannot overlap that input. */
+        public Builder auxiliaryEnergy(EnergyInput value) {
+            if (value == null) throw new IllegalArgumentException("Missing auxiliary energy");
+            auxiliary = value;
+            return this;
+        }
+
         public Builder energyOutput(EnergyOutput value) { output = value; return this; }
         public Builder output(FuelOutput value) { fuelOutput = value; return this; }
         public Builder io(MachineIo value) { io = value; return this; }
@@ -205,12 +226,15 @@ public final class BehaviorMachine implements AddonMachine {
             if (energy == null) throw new IllegalArgumentException("Missing energy type for " + id);
             if (energy.rangeSpecified())
                 throw new IllegalArgumentException("Behavior machine '" + id + "' cannot declare an energy range");
+            if (energy.anyPacket())
+                throw new IllegalArgumentException("Behavior machine '" + id + "' cannot ignore packet size");
             if (energy.perTick() < 1 || energy.perTick() > 1_000_000_000_000L)
                 throw new IllegalArgumentException("Invalid energy per tick for " + id + ": " + energy.perTick());
             var faces = energy.facesSpecified() ? energy.faces() : MachineFace.exceptFront();
             if (faces.isEmpty())
                 throw new IllegalArgumentException("Behavior machine '" + id + "' accepts energy on no face");
             var storedEnergy = energy.withFaces(faces).collapseDefaultCapacity();
+            var storedAuxiliary = auxiliaryInput(id, auxiliary, faces);
             var blockEntity = blockEntityId == null ? "" : blockEntityId;
             if (!blockEntity.isEmpty() && !blockEntity.matches("[a-z0-9_./-]{1,64}"))
                 throw new IllegalArgumentException("Invalid block entity id for " + id + ": " + blockEntity);
@@ -272,10 +296,35 @@ public final class BehaviorMachine implements AddonMachine {
                                 + widgets.get(i).name() + " and " + widgets.get(j).name());
                 }
             }
-            return new BehaviorMachine(casing.resolve(machineType, true, tier), storedEnergy, output, blockEntity,
+            return new BehaviorMachine(casing.resolve(machineType, true, tier), storedEnergy, storedAuxiliary, output,
+                    blockEntity,
                     guiWidth, guiHeight, gui, energyX, energyY, List.copyOf(items), List.copyOf(fluids),
                     List.copyOf(toggles), progress, maxRange, List.copyOf(mapNames));
         }
+    }
+
+    private static EnergyInput auxiliaryInput(String id, EnergyInput auxiliary, List<MachineFace> mainFaces) {
+        if (auxiliary == null) return null;
+        if (!auxiliary.anyPacket() && !auxiliary.rangeSpecified())
+            throw new IllegalArgumentException("Behavior machine '" + id
+                    + "' auxiliary energy needs a packet range or anyPacket");
+        if (auxiliary.perTick() < 1 || auxiliary.perTick() > 1_000_000_000_000L)
+            throw new IllegalArgumentException("Invalid auxiliary energy per tick for " + id + ": " + auxiliary.perTick());
+        if (!auxiliary.capacitySpecified() || auxiliary.capacity() < 1)
+            throw new IllegalArgumentException("Behavior machine '" + id + "' auxiliary energy capacity must be positive");
+        var auxFaces = auxiliary.facesSpecified() ? auxiliary.faces() : List.<MachineFace>of();
+        if (!auxiliary.facesSpecified() || auxFaces.isEmpty())
+            throw new IllegalArgumentException("Behavior machine '" + id + "' auxiliary energy needs a face");
+        for (MachineFace face : auxFaces) {
+            if (mainFaces.contains(face))
+                throw new IllegalArgumentException("Behavior machine '" + id
+                        + "' auxiliary energy overlaps an input face");
+        }
+        if (auxiliary.rangeSpecified()
+                && (auxiliary.perTick() < auxiliary.rangeMin() || auxiliary.perTick() > auxiliary.rangeMax()))
+            throw new IllegalArgumentException("Behavior machine '" + id
+                    + "' auxiliary energy per tick must sit inside the packet range");
+        return auxiliary.withFaces(auxFaces);
     }
 
     private record Widget(String name, int x, int y, int width, int height) {

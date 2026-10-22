@@ -1,35 +1,59 @@
 package com.gregtech.gregtech.block.machine;
 
+import com.gregtech.gregtech.api.addon.EnergyInput;
 import com.gregtech.gregtech.api.addon.EnergyOutput;
 import com.gregtech.gregtech.blockentity.machine.AddonEnergyPartBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
 import javax.annotation.Nullable;
 
-/** Addon energy part. Output faces are relative to {@link #FACING}. Casings do not use this block. */
+/**
+ * Addon energy part. Faces are relative to {@link #FACING}.
+ * {@link #SATISFIED} is written by the server when a condition input was paid this tick.
+ * Casings do not use this block. One part either emits or accepts.
+ */
 public class AddonEnergyPartBlock extends HorizontalDirectionalBlock implements EntityBlock {
-    private final EnergyOutput energy;
-    private final long capacity;
+    public static final BooleanProperty SATISFIED = BooleanProperty.create("satisfied");
 
-    public AddonEnergyPartBlock(Properties properties, EnergyOutput energy, long capacity) {
+    @Nullable private final EnergyOutput energy;
+    private final long capacity;
+    @Nullable private final EnergyInput input;
+    private final long conditionPerTick;
+
+    public AddonEnergyPartBlock(Properties properties, @Nullable EnergyOutput energy, long capacity,
+                                 @Nullable EnergyInput input, long conditionPerTick) {
         super(properties);
         this.energy = energy;
         this.capacity = capacity;
-        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
+        this.input = input;
+        this.conditionPerTick = conditionPerTick;
+        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(SATISFIED, false));
     }
 
-    public EnergyOutput energy() { return energy; }
+    /** Null when this part does not emit. */
+    @Nullable public EnergyOutput energy() { return energy; }
 
+    /** Output buffer cap. Zero when this part does not emit. */
     public long capacity() { return capacity; }
+
+    /** Null when this part does not accept energy. */
+    @Nullable public EnergyInput input() { return input; }
+
+    public long conditionPerTick() { return conditionPerTick; }
+
+    public boolean condition() { return input != null && conditionPerTick > 0; }
 
 //? if >=1.21.1 {
     /*@Override public com.mojang.serialization.MapCodec<AddonEnergyPartBlock> codec() {
@@ -37,6 +61,10 @@ public class AddonEnergyPartBlock extends HorizontalDirectionalBlock implements 
     }
 *///?} else {
 //?}
+
+    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING, SATISFIED);
+    }
 
     @Override public BlockState getStateForPlacement(BlockPlaceContext context) {
         return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
