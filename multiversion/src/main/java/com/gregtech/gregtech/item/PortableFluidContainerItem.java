@@ -30,32 +30,51 @@ import java.util.List;
 /** Finite, persistent fluid storage. Both machine interaction and automation use the same handler. */
 public final class PortableFluidContainerItem extends BlockItem implements com.gregtech.gregtech.api.inventory.ContainerShapeLike {
     private final PortableFluidContainerSpec spec;
+
     public PortableFluidContainerItem(net.minecraft.world.level.block.Block block, PortableFluidContainerSpec spec, Properties properties) {
         super(block, properties);
         this.spec = spec;
     }
-    public PortableFluidContainerSpec spec() { return spec; }
-    @Override public String shapeId() { return spec.shapeId(); }
+
+    public PortableFluidContainerSpec spec() {
+        return spec;
+    }
+
+    @Override
+    public String shapeId() {
+        return spec.shapeId();
+    }
 //? if >=1.21.1 {
     /*public IFluidHandlerItem handler(ItemStack stack) {
-        return new FluidHandlerItemStack(com.gregtech.gregtech.registry.GTFluidComponents.VESSEL_CONTENTS,stack, spec.capacity()) {
+        return new FluidHandlerItemStack(com.gregtech.gregtech.registry.GTFluidComponents.VESSEL_CONTENTS, stack, spec.capacity()) {
 *///?} else {
-    @Override public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
+    @Override
+    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
         return new FluidHandlerItemStack(stack, spec.capacity()) {
 //?}
-            @Override public boolean canFillFluidType(FluidStack fluid) { return accepts(fluid); }
-            @Override public int getTankCapacity(int tank) { return com.gregtech.gregtech.content.tool.PortableContainerLimits.capacity(stack,spec); }
-            @Override public int fill(FluidStack fluid,FluidAction action) {
-                int room=Math.max(0,getTankCapacity(0)-getFluid().getAmount());
-                if(room==0||fluid.isEmpty())return 0;
+            @Override
+            public boolean canFillFluidType(FluidStack fluid) {
+                return accepts(fluid);
+            }
+
+            @Override
+            public int getTankCapacity(int tank) {
+                return com.gregtech.gregtech.content.tool.PortableContainerLimits.capacity(stack, spec);
+            }
+
+            @Override
+            public int fill(FluidStack fluid, FluidAction action) {
+                int availableCapacity = Math.max(0, getTankCapacity(0) - getFluid().getAmount());
+                if (availableCapacity == 0 || fluid.isEmpty()) return 0;
 //? if >=1.21.1 {
-                /*return super.fill(fluid.copyWithAmount(Math.min(room,fluid.getAmount())),action);
+                /*return super.fill(fluid.copyWithAmount(Math.min(availableCapacity, fluid.getAmount())), action);
 *///?} else {
-                return super.fill(new FluidStack(fluid,Math.min(room,fluid.getAmount())),action);
+                return super.fill(new FluidStack(fluid, Math.min(availableCapacity, fluid.getAmount())), action);
 //?}
             }
         };
     }
+
     public boolean accepts(FluidStack fluid) {
         if (fluid.isEmpty()) return false;
         var type = fluid.getFluid().getFluidType();
@@ -65,7 +84,7 @@ public final class PortableFluidContainerItem extends BlockItem implements com.g
         boolean gas = type.isLighterThanAir();
         boolean acid = false, magic = false, plasma = false;
         if (entry != null) {
-            if(entry.hasFlag(RegisteredFluids.FluidFlags.POWER_CONDUCTING))return false;
+            if (entry.hasFlag(RegisteredFluids.FluidFlags.POWER_CONDUCTING)) return false;
             gas |= entry.gas();
             magic = entry.hasFlag(RegisteredFluids.FluidFlags.MAGIC);
             plasma = entry.hasFlag(RegisteredFluids.FluidFlags.PLASMA);
@@ -77,7 +96,9 @@ public final class PortableFluidContainerItem extends BlockItem implements com.g
         }
         return spec.accepts(type.getTemperature(fluid), gas, acid, magic, plasma);
     }
-    @Override public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
+
+    @Override
+    public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
         var player = context.getPlayer();
         if (player == null || !context.getLevel().mayInteract(player, context.getClickedPos())
                 || !player.mayUseItemAt(context.getClickedPos(), context.getClickedFace(), stack)) return InteractionResult.PASS;
@@ -86,15 +107,17 @@ public final class PortableFluidContainerItem extends BlockItem implements com.g
                 context.getClickedPos(), context.getClickedFace()) ? InteractionResult.SUCCESS : InteractionResult.PASS;
     }
 //? if >=1.21.1 {
-    /*@Override public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+    /*@Override
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
 *///?} else {
-    @Override public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
 //?}
         var fluid = FluidUtil.getFluidContained(stack).orElse(FluidStack.EMPTY);
         tooltip.add(Component.translatable("tooltip.gt6ce.portable_fluid.contents",
                 fluid.isEmpty() ? Component.translatable("tooltip.gt6ce.portable_fluid.empty") : fluid.getDisplayName(),
-                fluid.getAmount(), com.gregtech.gregtech.content.tool.PortableContainerLimits.capacity(stack,spec)));
-        if(com.gregtech.gregtech.content.tool.PortableContainerLimits.adjustable(spec))
+                fluid.getAmount(), com.gregtech.gregtech.content.tool.PortableContainerLimits.capacity(stack, spec)));
+        if (com.gregtech.gregtech.content.tool.PortableContainerLimits.adjustable(spec))
             tooltip.add(Component.translatable("tooltip.gt6ce.portable_fluid.limit_use"));
         tooltip.add(Component.translatable("tooltip.gt6ce.portable_fluid.temperature", spec.maxTemperature()));
         tooltip.add(Component.translatable("tooltip.gt6ce.portable_fluid.use"));
