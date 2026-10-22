@@ -152,6 +152,9 @@ neoForge {
             sourceSet = sourceSets.bootstrapGameTest
             gameDirectory = project.file(rootProject.findProperty('neoforgeGameTestDirectory') ?: 'build/bootstrap-gametest-run')
             systemProperty 'neoforge.enabledGameTestNamespaces', (rootProject.findProperty('gameTestNamespaces') ?: 'gregtech_bootstrap').toString()
+            if (rootProject.findProperty('gameTestReport')) {
+                systemProperty 'gregtech.integration.gameTestReport', project.file(rootProject.property('gameTestReport')).absolutePath
+            }
             jvmArgument '-Xmx' + (rootProject.findProperty('gameTestHeap') ?: '1536m').toString()
         }
         configureEach {
