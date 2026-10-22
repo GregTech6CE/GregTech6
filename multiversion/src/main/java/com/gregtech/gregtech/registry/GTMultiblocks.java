@@ -74,11 +74,17 @@ public final class GTMultiblocks {
         for (var part : com.gregtech.gregtech.api.addon.AddonMachines.structureParts()) {
             var declaration = part.declaration();
             float hardness = declaration.hardness();
+            boolean energyPart = declaration.energy() != null || declaration.energyInput() != null;
             var properties = BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(hardness, hardness)
                     .requiresCorrectToolForDrops();
-            var block = declaration.energy() == null
-                    ? registerAddon(part.addonId(), declaration.name(), () -> new MultiblockPortBlock(properties))
-                    : registerAddon(part.addonId(), declaration.name(), () -> new AddonEnergyPartBlock(properties, declaration.energy(), declaration.energyCapacity()));
+            if (energyPart) properties = properties.lightLevel(state ->
+                    state.hasProperty(AddonEnergyPartBlock.SATISFIED) && state.getValue(AddonEnergyPartBlock.SATISFIED) ? 12 : 0);
+            var partProperties = properties;
+            var block = !energyPart
+                    ? registerAddon(part.addonId(), declaration.name(), () -> new MultiblockPortBlock(partProperties))
+                    : registerAddon(part.addonId(), declaration.name(), () -> new AddonEnergyPartBlock(partProperties,
+                            declaration.energy(), declaration.energyCapacity(), declaration.energyInput(),
+                            declaration.conditionPerTick()));
             if (NAMED.put(part.id(), block) != null)
                 throw new IllegalStateException("Addon structure part id already used: " + part.id());
             ADDON_PARTS.add(new AddonPart(block, declaration.material(), declaration.texture()));

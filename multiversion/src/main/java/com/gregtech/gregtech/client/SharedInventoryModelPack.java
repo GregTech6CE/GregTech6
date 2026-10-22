@@ -192,8 +192,16 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
 
     private static String facingBlockstate(String model) {
         String variant = "{\"model\":\"" + model + "\"}";
-        return "{\"variants\":{\"facing=north\":" + variant + ",\"facing=south\":" + variant
-                + ",\"facing=west\":" + variant + ",\"facing=east\":" + variant + "}}";
+        var json = new StringBuilder("{\"variants\":{");
+        boolean first = true;
+        for (String facing : new String[] {"north", "south", "west", "east"}) {
+            for (String satisfied : new String[] {"false", "true"}) {
+                if (!first) json.append(',');
+                first = false;
+                json.append("\"facing=").append(facing).append(",satisfied=").append(satisfied).append("\":").append(variant);
+            }
+        }
+        return json.append("}}").toString();
     }
 
     /** Iron cube so a drum has a model before an addon ships its own. */
