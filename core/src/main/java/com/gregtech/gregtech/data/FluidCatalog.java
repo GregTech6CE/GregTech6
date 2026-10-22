@@ -214,7 +214,7 @@ public class FluidCatalog {
         String name = material.getName();
         FluidEntry entry = register("GenMolten_" + name,
                 new FluidEntry("molten." + name.toLowerCase(Locale.ROOT), FluidTextureMode.GENERIC_MOLTEN,
-                        name, 0, true, false, false, 3000, 6000, 0,
+                        name, 0, true, false, false, 0, 0, 0,
                         (int) material.getMeltingPoint(), FluidFlags.LIQUID));
         // GT6's molten fluids know their material too (FL.createMolten stores it); without the binding a
         // material's tag would miss its own fluid container items.
@@ -243,8 +243,8 @@ public class FluidCatalog {
     public static final FluidEntry
             Error = fluid("Error", "error").withFlags(FluidFlags.HIDDEN),
             UUM = fluid("UUM", "ic2uumatter").withGlint(),
-            MatterNeutral = fluid("MatterNeutral", "neutralmatter").withGlint(),
-            MatterCharged = fluid("MatterCharged", "chargedmatter").withGlint(),
+            MatterNeutral = fluid("MatterNeutral", "neutralmatter").withGlint().withDensity(-5000).withLuminosity(15),
+            MatterCharged = fluid("MatterCharged", "chargedmatter").withGlint().withDensity(-5000).withLuminosity(15),
             UUAmplifier = fluid("UUAmplifier", "uuamplifier"),
             NitroFuel = fluid("NitroFuel", "nitrofuel"),
             XP = fluid("XP", "xpjuice").withGlint().withFlags(FluidFlags.MAGIC | FluidFlags.VOID_OVERFLOW),
@@ -627,7 +627,7 @@ public class FluidCatalog {
             Oil_Whale = fluid("Oil_Whale", "whaleoil").withFlags(FluidFlags.FOOD | FluidFlags.COOKING_OIL | FluidFlags.BATH),
             Oil_Canola = fluid("Oil_Canola", "canolaoil"),
             Oil_Creosote = fluid("Oil_Creosote", "creosote").withFlags(FluidFlags.BATH),
-            Oil_Soulsand = fluid("Oil_Soulsand", "soulsandoil"),
+            Oil_Soulsand = fluid("Oil_Soulsand", "soulsandoil").withDensity(650),
             Oil_Light2 = fluid("Oil_Light2", "lightoil").withDensity(600),
             Oil_Light = fluid("Oil_Light", "liquid_light_oil").withDensity(600),
             Oil_Normal = fluid("Oil_Normal", "oil"),
@@ -709,7 +709,7 @@ public class FluidCatalog {
             Pyrotheum = fluid("Pyrotheum", "pyrotheum").withGlint().withDensity(2000).withViscosity(1200).withLuminosity(15).withTemperature(4000),
             Cryotheum = fluid("Cryotheum", "cryotheum").withGlint().withDensity(4000).withViscosity(3000).withTemperature(50),
             Petrotheum = fluid("Petrotheum", "petrotheum").withGlint().withDensity(4000).withViscosity(1500).withTemperature(400),
-            Aerotheum = fluid("Aerotheum", "aerotheum").withGlint().withDensity(-800).withViscosity(100).withTemperature(300),
+            Aerotheum = fluid("Aerotheum", "aerotheum").withGlint().withGas().withDensity(-800).withViscosity(100).withTemperature(300),
             Mana_TE = fluid("Mana_TE", "mana").withGlint(),
             Ender = fluidMolten("Ender", "molten.enderpearl", "EnderPearl").withGlint().withTemperature(2723).withLuminosity(5),
             Ender_TE = fluid("Ender_TE", "ender"),
@@ -912,7 +912,7 @@ public class FluidCatalog {
     private static FluidEntry createMolten(String materialName) {
         return register("GenMolten_" + materialName,
                 new FluidEntry("molten." + materialName.toLowerCase(Locale.ROOT), FluidTextureMode.GENERIC_MOLTEN,
-                        materialName, 0, true, false, false, 3000, 6000, 0, DEF_ENV_TEMP, FluidFlags.LIQUID));
+                        materialName, 0, true, false, false, 0, 0, 0, DEF_ENV_TEMP, FluidFlags.LIQUID));
     }
 
     // =======================================================================
@@ -943,7 +943,7 @@ public class FluidCatalog {
             int temp = (int) material.getMeltingPoint();
             register("GenMolten_" + material.getName(),
                     new FluidEntry(registryName, FluidTextureMode.GENERIC_MOLTEN,
-                            material.getName(), tint, true, false, false, 3000, 6000, 0, temp, FluidFlags.LIQUID));
+                            material.getName(), tint, true, false, false, 0, 0, 0, temp, FluidFlags.LIQUID));
         }
     }
 
@@ -982,7 +982,7 @@ public class FluidCatalog {
             String field = gas ? "GenGas_" + material.getName() : "GenLiquid_" + material.getName();
             if (REGISTRY.containsKey(field)) continue;
             register(field, new FluidEntry(lower, FluidTextureMode.DEDICATED, material.getName(), 0, true, false,
-                    gas, gas ? -100 : 1000, gas ? 200 : 1000, 0, DEF_ENV_TEMP,
+                    gas, 0, 0, 0, DEF_ENV_TEMP,
                     gas ? FluidFlags.GAS_FLAG : FluidFlags.LIQUID));
             // GT6 keeps one fluid object for both states, so the other generated key aliases it.
             GENERATED_ALIASES.put((gas ? "GenLiquid_" : "GenGas_") + material.getName(), field);
