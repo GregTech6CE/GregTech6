@@ -73,7 +73,8 @@ public final class AddonMachines {
                                  FuelOutput output, boolean multi) {}
     private record BehaviorSignature(String energy, String auxiliary, String energyOut,
                                      List<BehaviorMachine.SlotRole> items,
-                                     List<BehaviorMachine.SlotRole> fluids, List<String> toggleKeys) {}
+                                     List<BehaviorMachine.SlotRole> fluids, List<String> toggleKeys,
+                                     int itemIn, int itemOut, int fluidIn, int fluidOut) {}
     private record PreparedLayout(String addonId, String machineName, List<SharedLargeMachineLayouts.Cell> cells) {}
 
     public static void collectContributors() {
@@ -776,7 +777,9 @@ public final class AddonMachines {
                         declaration.output() == null ? "" : declaration.output().type(),
                         declaration.items().stream().map(BehaviorMachine.ItemSlot::role).toList(),
                         declaration.fluids().stream().map(BehaviorMachine.FluidSlot::role).toList(),
-                        declaration.toggles().stream().map(BehaviorMachine.Toggle::translationKey).toList());
+                        declaration.toggles().stream().map(BehaviorMachine.Toggle::translationKey).toList(),
+                        declaration.itemInputMask(), declaration.itemOutputMask(),
+                        declaration.fluidInputMask(), declaration.fluidOutputMask());
                 BehaviorSignature existing = signatures.putIfAbsent(machineName, signature);
                 if (existing != null && !existing.equals(signature))
                     throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName

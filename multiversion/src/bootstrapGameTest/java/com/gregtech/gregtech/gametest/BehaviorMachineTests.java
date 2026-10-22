@@ -32,6 +32,7 @@ import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 import net.neoforged.neoforge.items.IItemHandler;
 *///?} else {
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.gametest.GameTestHolder;
@@ -228,6 +229,35 @@ public final class BehaviorMachineTests {
         helper.assertTrue(machine.state().getBoolean("armed"), "wrench does not toggle");
         helper.getLevel().removeBlock(pos, false);
         helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 100)
+    public static void topFaceFillsAndARefusalLeavesTheBuffer(GameTestHelper helper) {
+        var pos = helper.absolutePos(new BlockPos(2, 0, 2)).atY(250);
+        var machine = place(helper, pos, "addon_sample:sample_inlet");
+        helper.assertTrue(fluidCap(helper, pos, Direction.EAST) == null, "east fluid face is closed");
+        helper.assertTrue(fluidCap(helper, pos, Direction.DOWN) == null, "bottom fluid face is closed");
+        IFluidHandler top = fluidCap(helper, pos, Direction.UP);
+        helper.assertTrue(top != null, "top fluid face is open");
+        helper.assertTrue(top.fill(new FluidStack(Fluids.WATER, 250), IFluidHandler.FluidAction.EXECUTE) == 250,
+                "top accepts water");
+        helper.assertTrue(machine.doInject("EU", Direction.UP, 32, 1, true) == 1, "up stores one packet");
+        helper.assertTrue(machine.storedEnergy() == 32, "buffer grew");
+        machine.state().setBoolean("shut", true);
+        helper.assertTrue(machine.doInject("EU", Direction.UP, 32, 1, true) == 0, "callback refuses the packet");
+        helper.assertTrue(machine.storedEnergy() == 32, "a refused packet is not stored");
+        helper.getLevel().removeBlock(pos, false);
+        helper.succeed();
+    }
+
+    private static IFluidHandler fluidCap(GameTestHelper helper, BlockPos pos, Direction side) {
+//? if >=1.21.1 {
+/*        return helper.getLevel().getCapability(Capabilities.FluidHandler.BLOCK, pos, side);
+*///?} else {
+        var entity = helper.getLevel().getBlockEntity(pos);
+        if (!(entity instanceof BehaviorMachineBlockEntity machine)) return null;
+        return machine.getCapability(ForgeCapabilities.FLUID_HANDLER, side).orElse(null);
+//?}
     }
 
     private static Player survival(GameTestHelper helper) {
