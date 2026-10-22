@@ -19,6 +19,12 @@ import com.gregtech.gregtech.api.addon.AddonMachineLayout;
 import com.gregtech.gregtech.api.addon.AddonMachines;
 import com.gregtech.gregtech.api.addon.StructurePartDeclaration;
 import com.gregtech.gregtech.api.addon.BehaviorMachineFactories;
+import com.gregtech.gregtech.api.addon.LayoutPart;
+import com.gregtech.gregtech.api.addon.LayoutPartFactories;
+import com.gregtech.gregtech.api.addon.PartSlots;
+import com.gregtech.gregtech.api.addon.LayoutPart;
+import com.gregtech.gregtech.api.addon.LayoutPartFactories;
+import com.gregtech.gregtech.api.addon.PartSlots;
 import com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration;
 import com.gregtech.gregtech.api.addon.IoTarget;
 import com.gregtech.gregtech.api.addon.MachineFace;
@@ -61,6 +67,8 @@ public final class AddonMachineContracts {
             case "duplicate" -> duplicate();
             case "part" -> unknownPart();
             case "partok" -> partOk();
+            case "partfn" -> partFunctional();
+            case "partmiss" -> partMissingFactory();
             case "partname" -> partName();
             case "partmat" -> partMaterial();
             case "partdup" -> partDuplicate();
@@ -234,6 +242,31 @@ public final class AddonMachineContracts {
         check(SharedLargeMachineParts.builtinId("sample_wall") < 0, "addon name is not built in");
         var cells = SharedLargeMachineLayouts.cells("largesamplepress");
         check(cells != null && cells.size() == 1 && cells.get(0).part() == 1_000_000, "layout stored the runtime id");
+    }
+
+    private static void partMissingFactory() {
+        prepare();
+        GTMaterialRegistry.init();
+        AddonMachines.acceptLayoutParts("aa_part", List.of(computePart()));
+        expectInstall("aa_part", "sample_compute", "no part factory");
+    }
+
+    private static void partFunctional() {
+        prepare();
+        GTMaterialRegistry.init();
+        LayoutPartFactories.collect(Map.of("aa_part", Set.of("sample_compute")));
+        var declared = computePart();
+        AddonMachines.acceptLayoutParts("aa_part", List.of(declared));
+        AddonMachines.install(Set.of("centrifuge"), AddonMachines.builtInRecipeMapNames());
+        var stored = AddonMachines.structureParts();
+        check(stored.size() == 1 && stored.get(0).declaration().equals(declared) && stored.get(0).declaration().functional(),
+                "a functional part installs through its factory");
+    }
+
+    private static LayoutPart computePart() {
+        return LayoutPart.builder("sample_compute", "Steel").hardness(6.0F)
+                .slots(PartSlots.builder(4).stackLimit(1).drops(true).build())
+                .tick().use().field("power").field("running").build();
     }
 
     private static void partName() {

@@ -5,6 +5,7 @@ import com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration;
 import com.gregtech.gregtech.api.addon.CompressedGasTankDeclaration;
 import com.gregtech.gregtech.api.addon.FluidPipeDeclaration;
 import com.gregtech.gregtech.api.addon.ItemPipeDeclaration;
+import com.gregtech.gregtech.api.addon.LayoutPart;
 import com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration;
 import com.gregtech.gregtech.api.addon.FuelMapDeclaration;
 import com.gregtech.gregtech.api.addon.MachineDeclaration;
@@ -86,6 +87,10 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
                                 List.of(BehaviorMachineDeclaration.Face.FRONT), 32, 4)));
     }
 
+    @Override public List<LayoutPart> layoutParts() {
+        return List.of(AddonSampleParts.PART);
+    }
+
     @Override public List<FluidPipeDeclaration> fluidPipes() {
         return List.of(new FluidPipeDeclaration("teflon", "Teflon", 125, true, true, false, false, 600, 0));
     }
@@ -119,7 +124,9 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
                 new MachineLayout("sample_turbine", List.of(
                         new MachineLayout.Cell(0, 0, 1, "tank_wall", StructureRole.FLUID_INPUT))),
                 new MachineLayout("sample_transformer", List.of(
-                        new MachineLayout.Cell(0, 0, 1, "sample_emitter", StructureRole.ENERGY_OUTPUT))));
+                        new MachineLayout.Cell(0, 0, 1, "sample_emitter", StructureRole.ENERGY_OUTPUT))),
+                new MachineLayout("sample_cluster", List.of(
+                        new MachineLayout.Cell(0, 0, 1, "sample_compute", StructureRole.CASING))));
     }
 
     @Override public List<FuelMapDeclaration> fuelMaps() {
@@ -142,12 +149,12 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
     }
 
     @Override public List<BehaviorMachineDeclaration> behaviorMachines() {
-        return List.of(IRRIGATOR, MINER, VOID_HOPPER, ROTATION_BUFFER, HAND_CRANK, TRANSFORMER, SOLID_BOILER, COMPRESSOR);
+        return List.of(IRRIGATOR, MINER, VOID_HOPPER, ROTATION_BUFFER, HAND_CRANK, TRANSFORMER, CLUSTER, SOLID_BOILER, COMPRESSOR);
     }
 
     @Override public Set<String> machineTypes() {
         return Set.of("irrigator", "sampleminer", "samplehopper", "ru_buffer", "hand_crank",
-                "sample_transformer", "sampleboiler", "samplecompressor");
+                "sample_transformer", "sample_cluster", "sampleboiler", "samplecompressor");
     }
 
     @Override public MachineBehavior create(String machineType) {
@@ -158,6 +165,7 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
             case "ru_buffer" -> new RotationBuffer();
             case "hand_crank" -> new HandCrank();
             case "sample_transformer" -> new Transformer();
+            case "sample_cluster" -> new Cluster();
             case "sampleboiler" -> new SolidBoiler();
             case "samplecompressor" -> new Compressor();
             default -> throw new IllegalArgumentException(machineType);
@@ -219,6 +227,13 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
                     BehaviorMachineDeclaration.Face.RIGHT, BehaviorMachineDeclaration.Face.TOP,
                     BehaviorMachineDeclaration.Face.BOTTOM))
             .energyCapacity(32_000)
+            .build();
+
+    /** Starts the compute part behind this block while the switch is on. */
+    private static final BehaviorMachineDeclaration CLUSTER = BehaviorMachineDeclaration.builder("sample_cluster", "Steel")
+            .machineType("sample_cluster").energy("EU", 32).tier(1)
+            .gui("addon_sample:textures/gui/machine.png")
+            .toggle("addon_sample.cluster.run", 44, 64, false)
             .build();
 
     /** A click stores one RU packet and pushes it out the front. */
@@ -398,6 +413,22 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
                 long move = Math.min(context.energy(), Math.max(0, room));
                 if (move > 0 && context.consume(move)) part.charge(move);
                 if (part.stored() > 0) part.setOutput(32, 1);
+            }
+        }
+    }
+
+    /** Turns the compute part behind this block on while the switch is on. */
+    private static final class Cluster implements MachineBehavior {
+        @Override public boolean canInsert(MachineBehaviorContext context, int slot, ItemStack stack) { return false; }
+        @Override public boolean canFill(MachineBehaviorContext context, int tank, FluidStack stack) { return false; }
+
+        @Override public void tick(MachineBehaviorContext context) {
+            if (!context.structureFormed()) return;
+            boolean run = context.toggle(0);
+            for (var part : context.parts()) {
+                if (!(part.behavior() instanceof AddonSampleParts.ComputePart compute) || part.context() == null) continue;
+                if (run) compute.tryStart(part.context(), 1);
+                else compute.stop(part.context());
             }
         }
     }

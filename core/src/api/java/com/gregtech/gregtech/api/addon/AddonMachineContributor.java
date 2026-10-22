@@ -57,7 +57,10 @@ public interface AddonMachineContributor {
     @AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.AddonMachineContributor#parts", removeAt = "0.2")
     default List<StructurePartDeclaration> parts() { return List.of(); }
 
-    /** Casings and energy parts. Names are checked together with {@link #parts()}. */
+    /**
+     * Casings, energy parts and functional parts. Names are checked together with {@link #parts()}.
+     * A functional part also needs a {@code LayoutPartContributor} for its name.
+     */
     default List<LayoutPart> layoutParts() { return List.of(); }
 
     /**
