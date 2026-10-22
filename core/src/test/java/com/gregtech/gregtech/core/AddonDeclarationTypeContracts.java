@@ -1,8 +1,6 @@
 package com.gregtech.gregtech.core;
 
-import com.gregtech.gregtech.api.addon.AddonMachines;
 import com.gregtech.gregtech.api.addon.BehaviorMachine;
-import com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration;
 import com.gregtech.gregtech.api.addon.CellMatch;
 import com.gregtech.gregtech.api.addon.EnergyInput;
 import com.gregtech.gregtech.api.addon.EnergyOutput;
@@ -20,8 +18,6 @@ import com.gregtech.gregtech.api.addon.PartSlots;
 import com.gregtech.gregtech.api.addon.RecipeMachine;
 import com.gregtech.gregtech.api.addon.RecipeTable;
 import com.gregtech.gregtech.api.addon.StructureLayout;
-import com.gregtech.gregtech.api.addon.StructurePartDeclaration;
-import com.gregtech.gregtech.api.addon.StructurePartEnergy;
 import com.gregtech.gregtech.api.addon.StructureRole;
 
 import java.util.List;
@@ -332,14 +328,9 @@ public final class AddonDeclarationTypeContracts {
         var wall = LayoutPart.builder("sample_wall", "Steel").hardness(6.0F).build();
         check(!wall.functional() && wall.slots() == null && !wall.ticks() && !wall.handlesUse() && wall.fields().isEmpty(),
                 "a casing has no functional capability");
-        check(AddonMachines.layoutPart(new StructurePartDeclaration("sample_wall", "Steel", "", 6.0F)).equals(wall),
-                "an old casing equals the layout part");
 
         var emitter = LayoutPart.builder("sample_emitter", "Steel").hardness(6.0F).texture("block/sample_emitter")
                 .energyOutput(EnergyOutput.builder("RU", 32, 1).faces(MachineFace.FRONT).build(), 1_000).build();
-        var oldEmitter = new StructurePartDeclaration("sample_emitter", "Steel", "block/sample_emitter", 6.0F,
-                new StructurePartEnergy("RU", 1_000, List.of(BehaviorMachineDeclaration.Face.FRONT), 32, 1));
-        check(AddonMachines.layoutPart(oldEmitter).equals(emitter), "an old energy part equals the layout part");
         check(!emitter.functional(), "an energy-only part is not functional");
 
         var compute = LayoutPart.builder("sample_compute", "Steel").hardness(6.0F)
