@@ -514,15 +514,19 @@ StructureLayout.builder("mypress")
         .build()
 ```
 
-`LayoutCell.at(right, up, back, match, role)` 是一格。原点在 `LayoutCell.at` 失败。重复位置在 `StructureLayout` 的 `build()` 失败。`CellMatch` 是 `part(name)`、`air()`、`block(id)` 或 `tag(id)`。`part` 点 GT 结构零件、结构壳，或 `layoutParts()` 里的名字。这三者已经是同一个名字空间，附属零件不能占内置名。`block` 是带命名空间的方块 id。`tag` 是方块标签，不带开头的 `#`。`block` 和 `tag` 必须配 `StructureRole.CASING`，`LayoutCell.at` 会检查。`CellMatch.parse(String)` 按字符串读：`air`、`#` 开头是标签、含 `:` 是方块 id，其余是零件名。
+`LayoutCell.at(right, up, back, match, role)` 是一格。原点在 `LayoutCell.at` 失败。重复位置在 `StructureLayout` 的 `build()` 失败。`CellMatch` 是 `part(name)`、`air()`、`block(id)`、`tag(id)`、`anyFluid()`、`anyFluid(fluidTag)` 或 `anyOpaque()`。`part` 点 GT 结构零件、结构壳，或 `layoutParts()` 里的名字。这三者已经是同一个名字空间，附属零件不能占内置名。`block` 是带命名空间的方块 id。`tag` 是方块标签，不带开头的 `#`。`block`、`tag`、`anyFluid` 和 `anyOpaque` 必须配 `StructureRole.CASING`，`LayoutCell.at` 会检查。`CellMatch.parse(String)` 按字符串读：`air`、`anyfluid`、`anyfluid#<流体标签>`、`anyopaque`、`#` 开头是方块标签、含 `:` 是方块 id，其余是零件名。
 
 方块 id 或标签是资源位置：小写命名空间、一个冒号、路径字符集 `[a-z0-9/._-]`。写法不对就失败。这种格子只比较方块。不要求方块实体，不绑定，不运送物品、流体或能量。方块 id 在 common setup 检查，那时其他模组的方块已经注册。未知 id 启动失败，并写出附属和布局。标签在成形检查时读取。空标签永远不能成形，并记一条警告。结构预览显示这个方块。标签显示注册名排在最前的那个成员；标签还是空的时候显示屏障。拆掉这块方块，下一次结构检查就失败。
+
+`anyFluid` 匹配任何流体状态非空的方块；`anyFluid(fluidTag)` 还要求该流体带这个标签。`anyOpaque` 匹配 `isSolidRender` 为真的方块。两者都是普通方块格，规则和 `block`、`tag` 相同。预览里 `anyfluid` 显示水，`anyopaque` 显示石头。
 
 `StructureRole` 是 `AIR`、`CASING`、`LOGISTICS`、`HEAT_INPUT`、`CRUCIBLE`、`FLUID_INPUT`、`FLUID_OUTPUT`、`FLUID_IO`、`ITEM_IO`、`ITEM_FLUID_IO`、`ITEM_FLUID_INPUT`、`ITEM_FLUID_OUTPUT`、`ENERGY_INPUT`、`ITEM_FLUID_ENERGY_INPUT`、`ITEM_FLUID_ENERGY` 和 `ENERGY_OUTPUT`。它不是行为槽的角色。
 
 要不要布局、什么时候算成形，按模板分开。大型配方机器必须有一张同机器类型的布局。没有布局就启动失败。结构检查不通过就不能开工。多方块燃料机必须有一张同机器类型的布局。单方块燃料机不能挂布局，一开始就是成形的。行为机器的布局可选。没有布局时，第一次服务端 tick 把成形设为真，这一 tick 之前是假。有布局才逐格检查。三种检查匹配格子的方式相同。
 
 不是方块 id、也不是标签的零件名，用 `SharedLargeMachineParts` 的名字、`air`、`tank_wall`、`tank_wall_dense`、`centrifuge_part`、`heat_transmitter`、`distillation_tower_part`、`electrolyzer_part`，或 `layoutParts()` 返回的名字。空布局、重复坐标、未知零件、没有控制器的布局、没有布局的大型配方机器，都会在启动时报错并写出附属。
+
+重复段用 `LayoutRepeat.builder(key, up, min, max)` 声明一组层，`step(-1)` 让它向下重复（用于打到基岩的钻杆），默认向上；`StructureLayout.Builder.repeat(...)` 把它加进布局。段内格子的 `up` 是相对锚点的距离。`max` 为 `-1` 表示一直重复到某层匹配失败，检查最多走 64 份。成形检查先查固定格，再逐份查重复段：一整份全部匹配才算一份，第一份失败就停，少于 `min` 份不成形，多出来的层不检查。`MachineBehaviorContext.structureRepeats(key)` 返回这一 tick 匹配到的份数，未成形或未知 key 为 0。
 
 ### 结构布局数据包
 
@@ -537,11 +541,29 @@ StructureLayout.builder("mypress")
 }
 ```
 
-`match` 用 `CellMatch.parse`：`air`、`#` 开头是标签、含 `:` 是方块 id，其余是零件名。`role` 是 `StructureRole` 的名字，不区分大小写。方块和标签必须是 `casing`。原点、重复格子、空列表和未知字段拒绝这一份文件。同一个机器有多份文件时，按资源 id 排序，后面的覆盖前面的。顶层以 `_` 开头的字段会被忽略。
+`match` 用 `CellMatch.parse`：`air`、`anyfluid`、`anyfluid#<流体标签>`、`anyopaque`、`#` 开头是方块标签、含 `:` 是方块 id，其余是零件名。`role` 是 `StructureRole` 的名字，不区分大小写。普通方块格必须是 `casing`。原点、重复格子、空列表和未知字段拒绝这一份文件。同一个机器有多份文件时，按资源 id 排序，后面的覆盖前面的。顶层以 `_` 开头的字段会被忽略。
+
+顶层还可以写 `repeats`，每段是一组重复层：
+
+```json
+{
+  "cells": [
+    { "right": 1, "up": 0, "back": 0, "match": "press_casing", "role": "casing" }
+  ],
+  "repeats": [
+    { "key": "absorber", "up": 1, "min": 1, "max": 16,
+      "cells": [
+        { "right": 2, "up": 0, "back": 0, "match": "anyfluid", "role": "casing" }
+      ] }
+  ]
+}
+```
+
+`up` 是这一段第一份的锚点层，段内格子的 `up` 相对锚点。`step` 省略为 `1`（向上），`-1` 向下。`max` 为 `-1` 时重复到某层失败为止。没有 `cells` 的布局必须至少有 `repeats`。预览按 `min` 份显示，并在层数提示上方标出可重复的段。
 
 `/reload` 先恢复启动时的布局，再应用当前数据包。已经成形的机器在下一次结构检查里按新布局判断。不再属于布局的零件会解除绑定。服务端把这份覆盖同步给客户端。结构预览、JEI 的多方块页和提示文字按新格子重画。EMI 会跟着重载；读不到它的重载入口时只记一次失败，不影响布局本身。
 
-KubeJS 写出同一份 JSON。1.20.1 用 `ServerEvents.highPriorityData`。1.21.1 用 `ServerEvents.generateData('after_mods', ...)`。`GT6CE.layout(event, machine, cells)` 的格子参数相同，文件落在 `data/kubejs/gt6ce_layouts/<machine>.json`。格子可以再写 `design`，也就是结构成形时写进该 GT 零件 `gt.design` 的序号，拆开时还原。只有原版贴图序号包含这个值的零件才接受。普通方块、标签、空气、附属零件，或没有外观号的零件，会在安装布局时失败，并写出布局名。
+KubeJS 写出同一份 JSON。1.20.1 用 `ServerEvents.highPriorityData`。1.21.1 用 `ServerEvents.generateData('after_mods', ...)`。`GT6CE.layout(event, machine, cells)` 的格子参数相同，文件落在 `data/kubejs/gt6ce_layouts/<machine>.json`。也可以传一个对象 `{cells: [...], repeats: [...]}`，`repeats` 的字段和数据包相同。格子可以再写 `design`，也就是结构成形时写进该 GT 零件 `gt.design` 的序号，拆开时还原。只有原版贴图序号包含这个值的零件才接受。普通方块、标签、空气、附属零件，或没有外观号的零件，会在安装布局时失败，并写出布局名。
 
 ```js
 ServerEvents.highPriorityData(event => {
@@ -564,7 +586,7 @@ public List<LayoutPart> layoutParts() {
 }
 ```
 
-名字匹配 `[a-z][a-z0-9_]{0,63}`：字母开头，最长 64，不能有 `/`。不能占用内置零件名。贴图是附属命名空间里的路径，或空。空则用 GT 金属墙，按材料颜色着色。路径是一块不着色的立方体，不能带命名空间。硬度是正的 float。爆炸抗性是同一个数。三种机器模板都没有硬度字段。方块 id 是 `<附属 id>:<名字>`。GT 在内置多方块零件之后注册它，走 GT 的总线，进附属的命名空间，并生成方块状态和物品模型。名字是全局的。GT 零件名，包括 `tank_wall`，或另一个附属的名字，启动失败并写出两边。运行时 id 从 1000000 起，先按附属 id，再按声明顺序。结构存的是方块注册名。成形比较世界里的方块。这个数字不是存档数据。没有能量角色、也没有功能能力的零件是外壳：没有储罐，没有能量，没有物品槽，也不 tick。`energyOutput` 和 `energyInput` 一起写，`build()` 失败。
+名字匹配 `[a-z][a-z0-9_]{0,63}`：字母开头，最长 64，不能有 `/`。不能占用内置零件名。贴图是附属命名空间里的路径，或空。空则用 GT 金属墙，按材料颜色着色。路径是一块不着色的立方体，不能带命名空间。硬度是正的 float。爆炸抗性是同一个数。三种机器模板都没有硬度字段。方块 id 是 `<附属 id>:<名字>`。GT 在内置多方块零件之后注册它，走 GT 的总线，进附属的命名空间，并生成方块状态和物品模型。名字是全局的。GT 零件名，包括 `tank_wall`，或另一个附属的名字，启动失败并写出两边。运行时 id 从 1000000 起，先按附属 id，再按声明顺序。结构存的是方块注册名。成形比较世界里的方块。这个数字不是存档数据。没有能量角色、也没有功能能力的零件是外壳：没有储罐，没有能量，没有物品槽，也不 tick。一个零件可以同时写 `energyOutput` 和 `energyInput`，但它因此是双向零件：`energyInput` 只表示控制器到零件的内部通道，必须不带 `faces`、不带 `condition`，缓冲就是输出缓冲；零件只从 `energyOutput.faces()` 向外送，并要放在 `ENERGY_OUTPUT` 格里。双向声明带 `faces` 或 `condition` 时 `build()` 失败。
 
 `energyOutput(EnergyOutput, capacity)` 把它变成只出的能量零件。`capacity` 至少是 1。EU 和 RU 只差类型字符串。未知短名在启动时失败，并写出附属和零件。方块 id 仍是 `<附属 id>:<名字>`。它有水平朝向、自己的 tick，方块实体是 `gt6ce:addon_energy_part`。输出面相对这个朝向，前后左右的算法和行为机器一样。输出缓存、已设定的包和停机标记存成 `gt.part_energy`、`gt.part_output`、`gt.part_amount` 和 `gt.part_stopped`。外壳仍用 `gt6ce:multiblock_port`。
 
@@ -643,7 +665,7 @@ JEI 催化剂和多方块预览跟着已注册的机器列表。有布局的大�
 
 每个 `BehaviorMachine` 从 `addonMachines()` 返回。另外在 `META-INF/services/com.gregtech.gregtech.api.addon.platform.BehaviorMachineContributor` 里列出 `BehaviorMachineContributor`。这个接口在加载器 API 里，因为 Forge 和 NeoForge 的 `FluidStack` 不同。`machineTypes()` 必须盖住这个附属声明的每一种行为机器类型。每放下一台方块实体，GT 调用一次 `create`。缺少工厂时启动失败，并写出附属和机器类型。
 
-行为不继承 GT 的类。`MachineBehavior` 有三个必须实现的方法——`tick(context)`、`canInsert(context, slot, stack)` 和 `canFill(context, tank, stack)`——并为流体接受、能量接受、开关、拆除、工具、右键和坩埚访问提供可选的默认方法。坩埚方法是 `getCrucibleTemperature(context)`、`getCrucibleContentAmount(context)` 和 `fillMoldAtSide(context, mold, crucibleSide, moldSide)`。默认值是零并拒绝浇铸，所以现有行为不用改。`CrucibleMold` 是 SDK 对 GT6CE 内部模具接口的安全视图；调用 `fillMold(material, amount, temperature, moldSide)`，并从行为自己的熔融材料存储里扣掉返回的数量。行为机器方块实体会把这个回调桥接到普通 GT 模具、坩埚盆或龙头，因此附属不用继承方块实体就能接入原有浇铸交互。`canInsert` 和 `canFill` 另有带面的重载，缺省转到不带面的方法，所以现有行为不用改。管子调用带面的重载。面是 null 表示菜单或不分面的处理器。`MachineBehaviorContext` 读写物品、储罐、能量、开关、进度和世界。`BehaviorState` 按键存 int、long、boolean、字符串和物品。GT 把这张表写进 NBT。行为不接触 `CompoundTag`。没有这个键时读到 0、false、空字符串或空物品。键匹配 `[a-z0-9_.]{1,64}`。字符串最长 256。方块被拆掉时，GT 在 `beforeBreak` 之后丢掉库存物品和状态里的物品。
+行为不继承 GT 的类。`MachineBehavior` 有三个必须实现的方法——`tick(context)`、`canInsert(context, slot, stack)` 和 `canFill(context, tank, stack)`——并为流体接受、能量接受、开关、拆除、工具、右键和坩埚访问提供可选的默认方法。控制器可以用 `pushToPart(part, type, size, amount)` 往双向零件的内部通道充电（不扣控制器储能），或用 `emit(part, size, amount)` 从控制器储能转入该零件；真正的对外发送发生在零件自己的 tick，未指定零件时 `emit(size, amount)` 仍只走控制器声明的面。坩埚方法是 `getCrucibleTemperature(context)`、`getCrucibleContentAmount(context)` 和 `fillMoldAtSide(context, mold, crucibleSide, moldSide)`。默认值是零并拒绝浇铸，所以现有行为不用改。`CrucibleMold` 是 SDK 对 GT6CE 内部模具接口的安全视图；调用 `fillMold(material, amount, temperature, moldSide)`，并从行为自己的熔融材料存储里扣掉返回的数量。行为机器方块实体会把这个回调桥接到普通 GT 模具、坩埚盆或龙头，因此附属不用继承方块实体就能接入原有浇铸交互。`canInsert` 和 `canFill` 另有带面的重载，缺省转到不带面的方法，所以现有行为不用改。管子调用带面的重载。面是 null 表示菜单或不分面的处理器。`MachineBehaviorContext` 读写物品、储罐、能量、开关、进度和世界。`BehaviorState` 按键存 int、long、boolean、字符串和物品。GT 把这张表写进 NBT。行为不接触 `CompoundTag`。没有这个键时读到 0、false、空字符串或空物品。键匹配 `[a-z0-9_.]{1,64}`。字符串最长 256。方块被拆掉时，GT 在 `beforeBreak` 之后丢掉库存物品和状态里的物品。
 
 ```java
 public List<AddonMachine> addonMachines() {

@@ -14,19 +14,30 @@ import java.util.Set;
 
 /** Reads and writes {@code data/<namespace>/gt6ce_layouts/<machineType>.json}. */
 public final class StructureLayoutDocuments {
-    private static final Set<String> ROOT = Set.of("cells");
+    private static final Set<String> ROOT = Set.of("cells", "repeats");
     private static final Set<String> CELL = Set.of("right", "up", "back", "match", "role", "design");
+    private static final Set<String> REPEAT = Set.of("key", "up", "min", "max", "step", "cells");
 
     private StructureLayoutDocuments() {}
 
     /** One cell before it is checked against {@link StructureLayout}. */
     public record CellSpec(int right, int up, int back, String match, String role, int design) {}
 
+    /** One repeat group. Its cells use {@code up} relative to the anchor. */
+    public record RepeatSpec(String key, int up, int min, int max, int step, List<CellSpec> cells) {}
+
     public static StructureLayout parse(String machine, String json) {
-        return layout(machine, cells(JsonMaps.object(json)));
+        var root = JsonMaps.object(json);
+        for (var key : root.keySet())
+            if (!key.startsWith("_") && !ROOT.contains(key)) throw new IllegalArgumentException("Unknown field " + key);
+        return layout(machine, cells(root), repeats(root));
     }
 
     public static StructureLayout layout(String machine, List<CellSpec> cells) {
+        return layout(machine, cells, List.of());
+    }
+
+    public static StructureLayout layout(String machine, List<CellSpec> cells, List<RepeatSpec> repeats) {
         var builder = StructureLayout.builder(machine);
         for (CellSpec cell : cells) {
             var match = CellMatch.parse(cell.match());
@@ -34,12 +45,47 @@ public final class StructureLayoutDocuments {
             if (cell.design() < 0) builder.cell(cell.right(), cell.up(), cell.back(), match, part);
             else builder.cell(cell.right(), cell.up(), cell.back(), match, part, cell.design());
         }
+        for (RepeatSpec repeat : repeats) {
+            var group = com.gregtech.gregtech.api.addon.LayoutRepeat.builder(
+                    repeat.key(), repeat.up(), repeat.min(), repeat.max());
+            if (repeat.step() != 1) group.step(repeat.step());
+            for (CellSpec cell : repeat.cells()) {
+                var match = CellMatch.parse(cell.match());
+                var part = role(cell.role());
+                if (cell.design() < 0) group.cell(cell.right(), cell.up(), cell.back(), match, part);
+                else group.cell(cell.right(), cell.up(), cell.back(), match, part, cell.design());
+            }
+            builder.repeat(group.build());
+        }
         return builder.build();
     }
 
     public static String canonical(StructureLayout layout) {
         var json = new StringBuilder().append("{\"cells\":[");
-        var cells = layout.cells();
+        cells(json, layout.cells());
+        json.append(']');
+        var repeats = layout.repeats();
+        if (!repeats.isEmpty()) {
+            json.append(",\"repeats\":[");
+            for (int i = 0; i < repeats.size(); i++) {
+                if (i > 0) json.append(',');
+                var repeat = repeats.get(i);
+                json.append("{\"key\":");
+                string(json, repeat.key());
+                json.append(",\"up\":").append(repeat.up())
+                        .append(",\"min\":").append(repeat.min())
+                        .append(",\"max\":").append(repeat.max());
+                if (repeat.step() != 1) json.append(",\"step\":").append(repeat.step());
+                json.append(",\"cells\":[");
+                cells(json, repeat.cells());
+                json.append("]}");
+            }
+            json.append(']');
+        }
+        return json.append('}').toString();
+    }
+
+    private static void cells(StringBuilder json, List<com.gregtech.gregtech.api.addon.LayoutCell> cells) {
         for (int i = 0; i < cells.size(); i++) {
             if (i > 0) json.append(',');
             var cell = cells.get(i);
@@ -53,28 +99,63 @@ public final class StructureLayoutDocuments {
             if (cell.design() >= 0) json.append(",\"design\":").append(cell.design());
             json.append('}');
         }
-        return json.append("]}").toString();
     }
 
     private static List<CellSpec> cells(Map<String, Object> json) {
-        for (var key : json.keySet())
-            if (!key.startsWith("_") && !ROOT.contains(key)) throw new IllegalArgumentException("Unknown field " + key);
         var value = json.get("cells");
-        if (!(value instanceof List<?> list) || list.isEmpty()) throw new IllegalArgumentException("cells");
+        if (value == null) {
+            if (json.containsKey("repeats")) return List.of();
+            throw new IllegalArgumentException("cells");
+        }
+        if (value instanceof List<?> list && list.isEmpty() && json.containsKey("repeats")) return List.of();
+        return cellList(value, "cells");
+    }
+
+    private static List<RepeatSpec> repeats(Map<String, Object> json) {
+        var value = json.get("repeats");
+        if (value == null) return List.of();
+        if (!(value instanceof List<?> list) || list.isEmpty()) throw new IllegalArgumentException("repeats");
+        var out = new ArrayList<RepeatSpec>();
+        for (var element : list) {
+            var repeat = object(element, "repeats");
+            for (var key : repeat.keySet())
+                if (!REPEAT.contains(key)) throw new IllegalArgumentException("Unknown field " + key);
+            var cellsValue = repeat.get("cells");
+            if (cellsValue == null) throw new IllegalArgumentException("cells is required");
+            out.add(new RepeatSpec(required(repeat, "key"), integer(repeat, "up"), integer(repeat, "min"),
+                    integer(repeat, "max"), step(repeat), cellList(cellsValue, "repeats.cells")));
+        }
+        return out;
+    }
+
+    private static List<CellSpec> cellList(Object value, String field) {
+        if (!(value instanceof List<?> list) || list.isEmpty()) throw new IllegalArgumentException(field);
         var out = new ArrayList<CellSpec>();
         for (var element : list) {
-            if (!(element instanceof Map<?, ?> raw)) throw new IllegalArgumentException("cells entries must be objects");
-            var cell = new LinkedHashMap<String, Object>();
-            for (var entry : raw.entrySet()) {
-                if (!(entry.getKey() instanceof String name)) throw new IllegalArgumentException("cells key");
-                cell.put(name, entry.getValue());
-            }
+            var cell = object(element, field + " entries must be objects");
             for (var key : cell.keySet())
                 if (!CELL.contains(key)) throw new IllegalArgumentException("Unknown field " + key);
             out.add(new CellSpec(integer(cell, "right"), integer(cell, "up"), integer(cell, "back"),
                     required(cell, "match"), required(cell, "role"), design(cell)));
         }
         return out;
+    }
+
+    private static Map<String, Object> object(Object value, String message) {
+        if (!(value instanceof Map<?, ?> raw)) throw new IllegalArgumentException(message);
+        var out = new LinkedHashMap<String, Object>();
+        for (var entry : raw.entrySet()) {
+            if (!(entry.getKey() instanceof String name)) throw new IllegalArgumentException(message);
+            out.put(name, entry.getValue());
+        }
+        return out;
+    }
+
+    private static int step(Map<String, Object> json) {
+        if (!json.containsKey("step")) return 1;
+        int value = integer(json, "step");
+        if (value != 1 && value != -1) throw new IllegalArgumentException("step");
+        return value;
     }
 
     private static StructureRole role(String text) {

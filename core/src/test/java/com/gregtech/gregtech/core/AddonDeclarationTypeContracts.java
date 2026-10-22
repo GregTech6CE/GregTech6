@@ -283,6 +283,15 @@ public final class AddonDeclarationTypeContracts {
                 "a condition part stores its input");
         fails(() -> LayoutPart.builder("sample_condition", "Steel").hardness(6.0F)
                 .energyOutput(emitted(), 1_000).energyInput(input).condition(192).build(), "both");
+        var internal = EnergyInput.builder("EU", 128).range(64, 256).capacity(10_000).build();
+        var twoWay = LayoutPart.builder("sample_two_way", "Steel").hardness(6.0F)
+                .energyOutput(emitted(), 1_000).energyInput(internal).build();
+        check(twoWay.energy() != null && twoWay.energyInput() != null && !twoWay.condition(),
+                "a two-way part keeps both roles");
+        fails(() -> LayoutPart.builder("sample_two_way", "Steel").hardness(6.0F)
+                .energyOutput(emitted(), 1_000).energyInput(input).build(), "both");
+        fails(() -> LayoutPart.builder("sample_two_way", "Steel").hardness(6.0F)
+                .energyOutput(emitted(), 1_000).energyInput(internal).condition(64).build(), "both");
         fails(() -> LayoutPart.builder("sample_condition", "Steel").hardness(6.0F).condition(192).build(), "condition");
         fails(() -> LayoutPart.builder("sample_condition", "Steel").hardness(6.0F).energyInput(input).build(), "condition");
         fails(() -> LayoutPart.builder("sample_condition", "Steel").hardness(6.0F)
