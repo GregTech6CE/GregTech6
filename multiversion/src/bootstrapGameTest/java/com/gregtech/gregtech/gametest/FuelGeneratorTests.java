@@ -111,6 +111,23 @@ public final class FuelGeneratorTests {
     }
 
     @GameTest(template = "test_empty", timeoutTicks = 200)
+    public static void fourAmpereMotorSendsFourPackets(GameTestHelper helper) {
+        var origin = helper.absolutePos(new BlockPos(2, 0, 2)).atY(250);
+        var motor = place(helper, "addon_sample:sample_motor", origin);
+        helper.assertTrue(motor.fill(new FluidStack(Fluids.LAVA, 100), IFluidHandler.FluidAction.EXECUTE) == 100, "motor accepts lava");
+        motor.tick();
+        helper.assertTrue(motor.storedEnergy() == 320, "the charge is stored before a receiver exists");
+        var front = origin.relative(Direction.NORTH);
+        var receiver = receiver(helper, front, 32, 256);
+        motor.tick();
+        helper.assertTrue(receiver.getEnergyTick() == 128, "four 32 RU packets leave in one tick");
+        helper.assertTrue(motor.storedEnergy() == 192, "the buffer spends all four packets");
+        helper.getLevel().removeBlock(origin, false);
+        helper.getLevel().removeBlock(front, false);
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 200)
     public static void turbineWaitsForStructureAndFeedsFourBehind(GameTestHelper helper) {
         var origin = helper.absolutePos(new BlockPos(2, 0, 2)).atY(250);
         var turbine = (FuelTurbineBlockEntity) place(helper, "addon_sample:sample_turbine", origin);
@@ -206,6 +223,10 @@ public final class FuelGeneratorTests {
     }
 
     private static BasicMachineBlockEntity receiver(GameTestHelper helper, BlockPos pos, long packet) {
+        return receiver(helper, pos, packet, 0);
+    }
+
+    private static BasicMachineBlockEntity receiver(GameTestHelper helper, BlockPos pos, long packet, long maximum) {
 //? if >=1.21.1 {
 /*        var block = BasicMachineRegistries.all().iterator().next().get();
 *///?} else {
@@ -213,9 +234,11 @@ public final class FuelGeneratorTests {
 //?}
         helper.getLevel().setBlockAndUpdate(pos, block.defaultBlockState());
         var machine = (BasicMachineBlockEntity) helper.getLevel().getBlockEntity(pos);
-        machine.setSpec(BasicMachineSpec.builder("fuel_receiver", block.basicSpec().material())
+        var spec = BasicMachineSpec.builder("fuel_receiver", block.basicSpec().material())
                 .machineType("test").energy(GregTechTags.Energy.RU, packet).recipes(block.basicSpec().recipeMap())
-                .faces(FaceConfig.ALL_SIDES).build());
+                .faces(FaceConfig.ALL_SIDES);
+        if (maximum > 0) spec.energyRange(1, maximum);
+        machine.setSpec(spec.build());
         return machine;
     }
 

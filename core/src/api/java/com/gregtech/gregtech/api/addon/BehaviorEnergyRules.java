@@ -48,12 +48,31 @@ public final class BehaviorEnergyRules {
         return saved;
     }
 
-    /** Rejects an emit that the declaration did not allow. Does not clamp. */
+    /** Rejects an emit that the declaration did not allow. The minimum is 1 and the sign is rejected. */
     public static void requireEmit(long size, long amount, long maxSize, long maxAmount) {
+        requireEmit(size, amount, 1, maxSize, maxAmount, false);
+    }
+
+    /**
+     * Rejects an emit outside {@code minSize}..{@code maxSize}. Does not clamp.
+     * When {@code allowNegative} is set, the size is checked by its absolute value.
+     * {@link Long#MIN_VALUE} is rejected because it has no absolute value.
+     */
+    public static void requireEmit(long size, long amount, long minSize, long maxSize, long maxAmount,
+                                   boolean allowNegative) {
         if (maxSize < 1 || maxAmount < 1)
             throw new IllegalStateException("This machine declares no energy output");
-        if (size < 1 || amount < 1 || size > maxSize || amount > maxAmount)
+        if (minSize < 1 || minSize > maxSize)
+            throw new IllegalStateException("Energy output minimum is outside its maximum");
+        long magnitude = size;
+        if (allowNegative) {
+            if (size == Long.MIN_VALUE)
+                throw new IllegalArgumentException("Energy output " + size + " x " + amount
+                        + " exceeds " + minSize + ".." + maxSize + " x " + maxAmount);
+            magnitude = Math.abs(size);
+        }
+        if (magnitude < minSize || magnitude > maxSize || amount < 1 || amount > maxAmount)
             throw new IllegalArgumentException("Energy output " + size + " x " + amount
-                    + " exceeds " + maxSize + " x " + maxAmount);
+                    + " exceeds " + minSize + ".." + maxSize + " x " + maxAmount);
     }
 }

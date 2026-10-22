@@ -167,26 +167,27 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
 
     private void emit() {
         long packet = declaration().output().perTick();
-        if (stored < packet || energyType() == null) return;
+        if (packet < 1 || stored < packet || energyType() == null) return;
+        long packets = Math.min(declaration().amperes(), stored / packet);
         FuelOutput output = declaration().output();
-        long sent = output.behind() > 0 ? injectBehind(packet)
+        long sent = output.behind() > 0 ? injectBehind(packet, packets)
                 : output.front()
-                ? EnergyTransfer.emitEnergyToSide(energyType(), front(), packet, 1, this)
-                : EnergyTransfer.emitEnergyToSide(energyType(), front().getOpposite(), packet, 1, this);
+                ? EnergyTransfer.emitEnergyToSide(energyType(), front(), packet, packets, this)
+                : EnergyTransfer.emitEnergyToSide(energyType(), front().getOpposite(), packet, packets, this);
         if (sent > 0) {
-            stored -= packet;
+            stored -= packet * sent;
             emitted = true;
             setChanged();
         }
     }
 
-    private long injectBehind(long packet) {
+    private long injectBehind(long packet, long packets) {
         Direction back = front().getOpposite();
         BlockPos target = worldPosition.relative(back, declaration().output().behind());
         if (level == null || !level.hasChunkAt(target)) return 0;
         IEnergyBlock receiver = EnergyBlockViews.view(level.getBlockEntity(target));
         if (receiver == null) return 0;
-        return receiver.doEnergyInjection(energyType(), back.getOpposite(), packet, 1, true);
+        return receiver.doEnergyInjection(energyType(), back.getOpposite(), packet, packets, true);
     }
 
     private void updateAppearance() {

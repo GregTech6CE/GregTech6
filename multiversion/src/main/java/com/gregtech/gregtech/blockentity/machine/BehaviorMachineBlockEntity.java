@@ -2,6 +2,7 @@ package com.gregtech.gregtech.blockentity.machine;
 
 import com.gregtech.gregtech.api.addon.AddonMachines;
 import com.gregtech.gregtech.api.addon.BehaviorEnergyRules;
+import com.gregtech.gregtech.api.addon.EnergyOutput;
 import com.gregtech.gregtech.api.addon.BehaviorMachine;
 import com.gregtech.gregtech.api.addon.MachineFace;
 import com.gregtech.gregtech.api.addon.PartEnergyRules;
@@ -364,12 +365,19 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     }
 
     private long emit(long size, long amount) {
-        BehaviorEnergyRules.requireEmit(size, amount, energyOutSize(), energyOutAmount());
+        EnergyOutput output = declaration.output();
+        if (output == null) {
+            BehaviorEnergyRules.requireEmit(size, amount, 0, 0);
+            return 0;
+        }
+        BehaviorEnergyRules.requireEmit(size, amount, output.minSize(), output.maxSize(), output.maxAmount(),
+                output.allowNegative());
         if (energyOutTag == null || level == null) return 0;
-        long affordable = stored / size;
+        long magnitude = output.allowNegative() ? Math.abs(size) : size;
+        long affordable = stored / magnitude;
         long left = Math.min(amount, Math.max(0, affordable));
         long sent = 0;
-        for (MachineFace face : declaration.output() == null ? List.<MachineFace>of() : declaration.output().faces()) {
+        for (MachineFace face : output.faces()) {
             if (left <= 0) break;
             long used = com.gregtech.gregtech.api.energy.EnergyTransfer.emitEnergyToSide(
                     energyOutTag, world(face), size, left, this);
@@ -377,7 +385,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             left -= used;
         }
         if (sent > 0) {
-            stored -= Math.multiplyExact(size, sent);
+            stored -= Math.multiplyExact(magnitude, sent);
             setChanged();
         }
         return sent;
