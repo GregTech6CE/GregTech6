@@ -441,9 +441,7 @@ public final class MyMachines implements AddonMachineContributor {
 
 面是 `MachineFace`：`BOTTOM`、`TOP`、`RIGHT`、`FRONT`、`LEFT`、`BACK`。`index()` 和 `bit()` 是掩码位置。新声明上的面列表拒绝重复的面。
 
-`EnergyInput.faces` 不跟着 `MachineIo` 走，两种模板的缺省也不一样。配方机器不写面就是六面。可以写空表，表示没有收能量的面。行为机器不写面就是除正面外的每个面。空表失败。写了 `MachineIo` 也不改变这些面。
-
-旧的配方入口调用过任一面方法、又没写 `energyInputs` 时，转换成 `faces()` 空表。新的 `EnergyInput` 不调用 `faces()` 仍是六面，就算这台机器同时写了 `MachineIo` 也一样。这是旧入口和新入口唯一的缺省差别。
+`EnergyInput.faces` 不跟着 `MachineIo` 走，两种模板的缺省也不一样。配方机器不写面就是六面，就算同时写了 `MachineIo` 也一样。可以写空表，表示没有收能量的面。行为机器不写面就是除正面外的每个面。空表失败。写了 `MachineIo` 也不改变这些面。
 
 `EnergyInput.capacity` 是已存能量的上限。行为机器的主输入上，它至少是 0，缺省是 0，包括调用 `capacity(0)`。0 表示缓冲等于标称抽取：行为返回后 GT 抽走这个量，没用掉的能量不留到下一 tick。容量大于 0 时留下剩余，上限是这个容量。配方机器调用 `capacity` 会失败。只出的零件不用这个字段。它的容量是 `LayoutPart.energyOutput` 的第二个参数，必须至少是 1。条件零件和附加输入都要求容量为正。GT 不用主输入那条规则抽这两份缓存。
 
@@ -795,7 +793,7 @@ API **0** 是 GT6CE 的开发基线，包含下表全部能力。下列 1–7 �
 
 ### 弃用与移除
 
-旧入口的弃用起点统一记为 CE 基线 `0.0`。材料数字入口的最早移除期限仍为 `0.9`。四个旧贡献者和布局入口留到 `0.10`。机器声明上的旧类型，以及贡献者上的七个旧方法，保留到 `0.1`，在 `0.2` 移除。当前版本归零不提前移除任何入口。
+旧入口的弃用起点统一记为 CE 基线 `0.0`。材料数字入口的最早移除期限仍为 `0.9`。四个旧贡献者和布局入口留到 `0.10`。当前版本归零不提前移除任何入口。
 
 | 入口 | 弃用版本 | 替代 | 计划移除 |
 | --- | --- | --- | --- |
@@ -806,36 +804,6 @@ API **0** 是 GT6CE 的开发基线，包含下表全部能力。下列 1–7 �
 | com.gregtech.gregtech.api.addon.MaterialDeclaration#builder | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
 | com.gregtech.gregtech.api.addon.AddonMaterials#ADDON_ID_MIN | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
 | com.gregtech.gregtech.api.addon.AddonMaterials#ADDON_ID_MAX | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
-| com.gregtech.gregtech.api.addon.MachineDeclaration | 0.0 | RecipeMachine | 0.2 |
-| com.gregtech.gregtech.api.addon.MachineDeclaration.Builder | 0.0 | RecipeMachine.builder | 0.2 |
-| com.gregtech.gregtech.api.addon.MachineDeclaration.Kind | 0.0 | RecipeMachine.basic() / largeRecipe() | 0.2 |
-| com.gregtech.gregtech.api.addon.MachineDeclaration.Target | 0.0 | IoTarget | 0.2 |
-| com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration | 0.0 | BehaviorMachine | 0.2 |
-| com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.Builder | 0.0 | BehaviorMachine.builder | 0.2 |
-| com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.Face | 0.0 | MachineFace | 0.2 |
-| com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.SlotRole | 0.0 | BehaviorMachine.SlotRole | 0.2 |
-| com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.ItemSlot | 0.0 | BehaviorMachine.ItemSlot | 0.2 |
-| com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.FluidSlot | 0.0 | BehaviorMachine.FluidSlot | 0.2 |
-| com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.Toggle | 0.0 | BehaviorMachine.Toggle | 0.2 |
-| com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.Progress | 0.0 | BehaviorMachine.Progress | 0.2 |
-| com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration | 0.0 | FuelGenerator | 0.2 |
-| com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration.Builder | 0.0 | FuelGenerator.builder | 0.2 |
-| com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration.Kind | 0.0 | FuelGenerator.single() / multi() | 0.2 |
-| com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration.Output | 0.0 | FuelOutput | 0.2 |
-| com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration.Output.Side | 0.0 | FuelOutput 的 front、back、behind | 0.2 |
-| com.gregtech.gregtech.api.addon.MachineLayout | 0.0 | StructureLayout | 0.2 |
-| com.gregtech.gregtech.api.addon.MachineLayout.Cell | 0.0 | LayoutCell | 0.2 |
-| com.gregtech.gregtech.api.addon.StructurePartDeclaration | 0.0 | LayoutPart | 0.2 |
-| com.gregtech.gregtech.api.addon.StructurePartEnergy | 0.0 | LayoutPart.energyOutput(EnergyOutput, capacity) | 0.2 |
-| com.gregtech.gregtech.api.addon.RecipeMapDeclaration | 0.0 | RecipeTable.machine(name) | 0.2 |
-| com.gregtech.gregtech.api.addon.FuelMapDeclaration | 0.0 | RecipeTable.fuel(name) | 0.2 |
-| com.gregtech.gregtech.api.addon.AddonMachineContributor#machines | 0.0 | addonMachines() | 0.2 |
-| com.gregtech.gregtech.api.addon.AddonMachineContributor#behaviorMachines | 0.0 | addonMachines() | 0.2 |
-| com.gregtech.gregtech.api.addon.AddonMachineContributor#fuelGenerators | 0.0 | addonMachines() | 0.2 |
-| com.gregtech.gregtech.api.addon.AddonMachineContributor#layouts | 0.0 | structureLayouts() | 0.2 |
-| com.gregtech.gregtech.api.addon.AddonMachineContributor#parts | 0.0 | layoutParts() | 0.2 |
-| com.gregtech.gregtech.api.addon.AddonMachineContributor#recipeMaps | 0.0 | recipeTables() | 0.2 |
-| com.gregtech.gregtech.api.addon.AddonMachineContributor#fuelMaps | 0.0 | recipeTables() | 0.2 |
 
 ## 许可
 

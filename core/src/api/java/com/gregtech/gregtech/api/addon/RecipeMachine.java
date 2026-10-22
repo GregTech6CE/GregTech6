@@ -6,7 +6,7 @@ import java.util.Objects;
 /** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
- * One addon recipe machine. Defaults match {@link MachineDeclaration}: basic kind, parallel 1,
+ * One addon recipe machine. Defaults: basic kind, parallel 1,
  * efficiency 10000, constant energy on, cheap overclock unset and off, no light gate.
  * The machine type is the id unchanged. A slash in that id is still invalid.
  */
