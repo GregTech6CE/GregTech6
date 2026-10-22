@@ -97,6 +97,30 @@ public class Recipe {
         return indices;
     }
 
+    private final java.util.BitSet catalystFluidInputs = new java.util.BitSet();
+
+    /** Mark fluid inputs that are checked at their declared amount and not drained. */
+    public Recipe withCatalystFluidInputs(int... indices) {
+        for (int index : indices) {
+            if (index < 0 || index >= mFluidInputs.length) throw new IllegalArgumentException("Catalyst fluid input " + index);
+            catalystFluidInputs.set(index);
+        }
+        return this;
+    }
+
+    public boolean isCatalystFluidInput(int index) {
+        return index >= 0 && index < mFluidInputs.length && catalystFluidInputs.get(index);
+    }
+
+    /** Indexes passed to {@link #withCatalystFluidInputs(int...)}, in ascending order. */
+    public int[] explicitCatalystFluidInputs() {
+        int[] indices = new int[catalystFluidInputs.cardinality()];
+        int cursor = 0;
+        for (int bit = catalystFluidInputs.nextSetBit(0); bit >= 0; bit = catalystFluidInputs.nextSetBit(bit + 1))
+            indices[cursor++] = bit;
+        return indices;
+    }
+
     // ── Output helpers ───────────────────────────────────────────────────
 
     public int getOutputChance(int idx) {
