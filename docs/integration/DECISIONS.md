@@ -1,5 +1,13 @@
 # 实现选择记录
 
+## 2026-10-22 / 双向结构零件与控制器内部送能
+
+`LayoutPart` 允许同时声明 `energyOutput` 和 `energyInput`；双向时输入只表示控制器通道，不带 `faces`、不带 `condition`，缓冲复用输出缓冲。`MachineBehaviorContext.pushToPart` 只把能量充进零件、不扣控制器储能，`emit(part, size, amount)` 从控制器储能扣并转入零件；零件在自己的 tick 从 `energyOutput.faces()` 送出。`AddonEnergyPartBlockEntity` 的输出零件 `charge` 进入输出缓冲，空 `faces` 的内部输入不再暴露给外部能量能力（包括无面查询）。这样不扩充 `MachineFace` 的六面模型，环路由“内部通道不是外部面、双向零件没有外部输入面”避免，和 GT6 `SIDE_INSIDE` 的语义一致。
+
+## 2026-10-22 / 结构布局重复段与方块谓词
+
+`StructureLayout` 增加 `LayoutRepeat` 组：一组层按 `min`–`max` 重复，`step` 为 -1 时向下（基岩钻），`max` 为 -1 时以首层匹配失败为界，检查封顶 64 份。声明用独立的顶层 `repeats` 数组，JSON 与 KubeJS 对象形式一致；预览按 `min` 份显示。`CellMatch` 的封闭集合增加 `AnyFluid`（可限定流体标签）和 `AnyOpaque`；两者仍是普通方块格，只允许 `CASING`，不绑定也不运送物品、流体或能量。运行时 `SharedLargeMachineLayouts.cells` 给预览展开到 `min`，结构检查读 `layout`，行为机器上下文用 `structureRepeats(key)` 读取实际份数。选择独立段而不是逐格 `repeat` 键，因为一组层必须整组出现；选择封闭谓词而不是任意 lambda，因为预览和 KubeJS 要能序列化。
+
 ## 2026-10-22 / BehaviorMachine 坩埚桥接
 
 `BehaviorMachineBlockEntity` 实现内部 `ITileEntityCrucible`，把温度、熔融材料总量和浇铸动作交给 `MachineBehavior` 的默认回调。附属 API 不暴露内部 `GTMaterial` 或 `ITileEntityMold`，而是用 `CrucibleMold` 和 `GregTechMaterials.Material`；GT 在边界处按已解析材料名转换并复用现有模具、坩埚盆和龙头校验。未实现这些回调的旧行为保持零温度、零内容量并拒绝浇铸。行为自己扣除 `CrucibleMold.fillMold` 返回的实际消耗量，避免壳层复制或保存附属库存。

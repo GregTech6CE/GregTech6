@@ -20,4 +20,14 @@ public final class StructureDesigns {
                 part.applyStructureDesign(cell.design());
         }
     }
+
+    /** Writes designs on repeat copies that the structure check already resolved. */
+    public static void apply(Level level, List<LargeMachineLayouts.Placed> placed) {
+        if (level == null || placed == null) return;
+        for (LargeMachineLayouts.Placed cell : placed) {
+            if (cell.cell().design() < 0 || cell.cell().plainBlock()) continue;
+            if (level.getBlockEntity(cell.pos()) instanceof MultiblockPortBlockEntity part)
+                part.applyStructureDesign(cell.cell().design());
+        }
+    }
 }

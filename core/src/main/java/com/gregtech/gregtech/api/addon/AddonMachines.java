@@ -76,7 +76,7 @@ public final class AddonMachines {
                                      List<BehaviorMachine.SlotRole> fluids, List<String> toggleKeys,
                                      int itemIn, int itemOut, int fluidIn, int fluidOut,
                                      long outMin, boolean outNegative) {}
-    private record PreparedLayout(String addonId, String machineName, List<SharedLargeMachineLayouts.Cell> cells) {}
+    private record PreparedLayout(String addonId, String machineName, SharedLargeMachineLayouts.Layout layout) {}
 
     public static void collectContributors() {
         collectContributors(GregTechMachineContributor.class.getClassLoader());
@@ -562,7 +562,7 @@ public final class AddonMachines {
         var acceptedBehavior = behavior(machineOwner, machineSignature, idOwner, reservedMachineNames, generatorNames,
                 mapOwner, fuelOwner);
         for (PreparedLayout layout : preparedLayouts)
-            SharedLargeMachineLayouts.add(layout.machineName, layout.cells);
+            SharedLargeMachineLayouts.add(layout.machineName, layout.layout);
         SharedLargeMachineLayouts.freeze();
         recipeMaps = List.copyOf(acceptedMaps);
         fuelMaps = List.copyOf(acceptedFuelMaps);
@@ -805,49 +805,63 @@ public final class AddonMachines {
         return accepted;
     }
 
-    private static List<SharedLargeMachineLayouts.Cell> cells(String addonId, StructureLayout layout) {
-        for (LayoutCell cell : layout.cells()) {
-            CellMatch match = cell.match();
-            if (match instanceof CellMatch.Block block)
-                PLAIN_BLOCKS.add(new PlainBlock(addonId, layout.name(), block.id()));
-            else if (match instanceof CellMatch.Tag tag)
-                PLAIN_BLOCKS.add(new PlainBlock(addonId, layout.name(), "#" + tag.id()));
-        }
-        return sharedCells("Addon '" + addonId + "'", layout);
+    private static SharedLargeMachineLayouts.Layout cells(String addonId, StructureLayout layout) {
+        for (LayoutCell cell : layout.cells()) plain(addonId, layout.name(), cell);
+        for (LayoutRepeat repeat : layout.repeats())
+            for (LayoutCell cell : repeat.cells()) plain(addonId, layout.name(), cell);
+        return sharedLayout("Addon '" + addonId + "'", layout);
+    }
+
+    private static void plain(String addonId, String layout, LayoutCell cell) {
+        CellMatch match = cell.match();
+        if (match instanceof CellMatch.Block block)
+            PLAIN_BLOCKS.add(new PlainBlock(addonId, layout, block.id()));
+        else if (match instanceof CellMatch.Tag tag)
+            PLAIN_BLOCKS.add(new PlainBlock(addonId, layout, "#" + tag.id()));
     }
 
     /** Converts a layout without recording plain blocks. {@code source} is the error prefix. */
-    public static List<SharedLargeMachineLayouts.Cell> sharedCells(String source, StructureLayout layout) {
+    public static SharedLargeMachineLayouts.Layout sharedLayout(String source, StructureLayout layout) {
         Objects.requireNonNull(layout, "layout");
         var cells = new ArrayList<SharedLargeMachineLayouts.Cell>();
-        for (LayoutCell cell : layout.cells()) {
-            var role = StructureGrid.Role.valueOf(cell.role().name());
-            CellMatch match = cell.match();
-            if (match instanceof CellMatch.Block block) {
-                rejectDesign(source, layout.name(), cell, block.id());
-                cells.add(new SharedLargeMachineLayouts.Cell(cell.right(), cell.up(), cell.back(), 0,
-                        role, block.id(), cell.design()));
-            } else if (match instanceof CellMatch.Tag tag) {
-                rejectDesign(source, layout.name(), cell, "#" + tag.id());
-                cells.add(new SharedLargeMachineLayouts.Cell(cell.right(), cell.up(), cell.back(), 0,
-                        role, "#" + tag.id(), cell.design()));
-            } else {
-                String name = match instanceof CellMatch.Air ? "air" : ((CellMatch.Part) match).name();
-                int part = SharedLargeMachineParts.idForName(name);
-                if (part < 0)
-                    throw new IllegalStateException(source + " layout '" + layout.name()
-                            + "' uses unknown part '" + name + "'");
-                if (cell.design() >= 0) {
-                    int max = com.gregtech.gregtech.content.multiblock.PartDesigns.max(name);
-                    if (max < 0 || cell.design() > max)
-                        throw new IllegalStateException(source + " layout '" + layout.name()
-                                + "' cell '" + name + "' does not support design " + cell.design());
-                }
-                cells.add(new SharedLargeMachineLayouts.Cell(cell.right(), cell.up(), cell.back(), part, role,
-                        null, cell.design()));
-            }
+        for (LayoutCell cell : layout.cells()) cells.add(sharedCell(source, layout.name(), cell));
+        var repeats = new ArrayList<SharedLargeMachineLayouts.Repeat>();
+        for (LayoutRepeat repeat : layout.repeats()) {
+            var group = new ArrayList<SharedLargeMachineLayouts.Cell>();
+            for (LayoutCell cell : repeat.cells()) group.add(sharedCell(source, layout.name(), cell));
+            repeats.add(new SharedLargeMachineLayouts.Repeat(repeat.key(), repeat.up(), repeat.min(),
+                    repeat.max(), repeat.step(), repeat.height(), group));
         }
-        return List.copyOf(cells);
+        return new SharedLargeMachineLayouts.Layout(List.copyOf(cells), List.copyOf(repeats));
+    }
+
+    /** Fixed cells only. Use {@link #sharedLayout} when the layout may repeat. */
+    public static List<SharedLargeMachineLayouts.Cell> sharedCells(String source, StructureLayout layout) {
+        return sharedLayout(source, layout).cells();
+    }
+
+    private static SharedLargeMachineLayouts.Cell sharedCell(String source, String layoutName, LayoutCell cell) {
+        var role = StructureGrid.Role.valueOf(cell.role().name());
+        CellMatch match = cell.match();
+        if (LayoutCell.isPlainBlock(match)) {
+            String plain = match.toString();
+            rejectDesign(source, layoutName, cell, plain);
+            return new SharedLargeMachineLayouts.Cell(cell.right(), cell.up(), cell.back(), 0,
+                    role, plain, cell.design());
+        }
+        String name = match instanceof CellMatch.Air ? "air" : ((CellMatch.Part) match).name();
+        int part = SharedLargeMachineParts.idForName(name);
+        if (part < 0)
+            throw new IllegalStateException(source + " layout '" + layoutName
+                    + "' uses unknown part '" + name + "'");
+        if (cell.design() >= 0) {
+            int max = com.gregtech.gregtech.content.multiblock.PartDesigns.max(name);
+            if (max < 0 || cell.design() > max)
+                throw new IllegalStateException(source + " layout '" + layoutName
+                        + "' cell '" + name + "' does not support design " + cell.design());
+        }
+        return new SharedLargeMachineLayouts.Cell(cell.right(), cell.up(), cell.back(), part, role,
+                null, cell.design());
     }
 
     private static void rejectDesign(String source, String layout, LayoutCell cell, String block) {

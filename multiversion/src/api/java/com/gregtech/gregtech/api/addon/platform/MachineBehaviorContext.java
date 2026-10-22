@@ -77,6 +77,25 @@ public interface MachineBehaviorContext {
      */
     long emit(long size, long amount);
 
+    /**
+     * Charges a bound two-way part from the controller channel and arms {@code amount}
+     * packets of {@code size}. The part emits them from its own faces on its next server tick.
+     * Returns the amount the part stored. This does not spend {@link #energy()}; the behavior
+     * keeps its own accounting. Returns 0 when the part is missing, is not a two-way part,
+     * or its output type differs from {@code type}. A request the part's output declaration
+     * rejects throws.
+     */
+    long pushToPart(String part, String type, long size, long amount);
+
+    /**
+     * Moves up to {@code amount} packets of {@code size} from this machine's stored energy
+     * into the named bound part and arms it. The part emits on its own tick. Returns the amount
+     * moved out of this machine. This does not require the machine to declare output faces,
+     * but a machine whose stored energy has a declared type only feeds a matching part.
+     * A request the part's output declaration rejects throws.
+     */
+    long emit(String part, long size, long amount);
+
     boolean toggle(int index);
 
     void setToggle(int index, boolean on);
@@ -97,6 +116,12 @@ public interface MachineBehaviorContext {
 
     /** Energy parts bound by the formed layout. Empty when {@link #structureFormed()} is false. */
     List<EnergyPart> energyParts();
+
+    /**
+     * How many copies of the repeat group {@code key} matched this tick.
+     * Zero when the structure is not formed, the key is unknown, or the layout has no such group.
+     */
+    int structureRepeats(String key);
 
     /**
      * Addon parts bound by the formed layout, energy parts and functional parts together.

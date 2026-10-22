@@ -7,7 +7,8 @@ import java.util.Objects;
 /**
  * One addon structure part. With no energy and no function it is a casing.
  * {@code energyOutput} makes it an output part. {@code energyInput} plus {@code condition}
- * makes it a condition input. One part cannot both accept and emit.
+ * makes it a condition input. A part may declare both: the input is then internal only,
+ * it names no faces and no condition, and the controller fills the output buffer.
  * Slots, tanks, a menu, tick, use and named fields combine with either energy role.
  */
 public final class LayoutPart {
@@ -218,8 +219,10 @@ public final class LayoutPart {
                         "Structure part '" + name + "' texture must be a path in the addon namespace: " + path);
             if (!hardnessSpecified || Float.isNaN(hardness) || hardness <= 0.0F)
                 throw new IllegalArgumentException("Structure part '" + name + "' hardness must be positive");
-            if (energy != null && energyInput != null)
-                throw new IllegalArgumentException("Structure part '" + name + "' cannot both accept and emit");
+            if (energy != null && energyInput != null
+                    && (conditionPerTick != 0 || (energyInput.facesSpecified() && !energyInput.faces().isEmpty())))
+                throw new IllegalArgumentException("Structure part '" + name
+                        + "' cannot both accept external energy and emit");
             if (conditionPerTick != 0 && energyInput == null)
                 throw new IllegalArgumentException("Structure part '" + name + "' condition requires an energy input");
             if (energy != null) {
@@ -228,10 +231,24 @@ public final class LayoutPart {
                 if (energyCapacity < 1)
                     throw new IllegalArgumentException("Energy part capacity must be positive: " + energyCapacity);
             }
-            if (energyInput != null) validateInput(name, energyInput, conditionPerTick);
+            if (energyInput != null) {
+                if (energy != null) validateInternalInput(name, energyInput);
+                else validateInput(name, energyInput, conditionPerTick);
+            }
             return new LayoutPart(name, material, path, hardness, energy, energy == null ? 0 : energyCapacity,
                     energyInput, energyInput == null ? 0 : conditionPerTick,
                     slots, tanks, gui, ticks, handlesUse, java.util.List.copyOf(fields));
+        }
+
+        /** A two-way part's input is only the controller-to-part channel. */
+        private static void validateInternalInput(String name, EnergyInput input) {
+            if (!ENERGY_TYPE.matcher(input.type()).matches())
+                throw new IllegalArgumentException("Energy part type is invalid: " + input.type());
+            if (input.facesSpecified() && !input.faces().isEmpty())
+                throw new IllegalArgumentException("Structure part '" + name
+                        + "' cannot both accept external faces and emit");
+            if (input.capacitySpecified() && input.capacity() < 0)
+                throw new IllegalArgumentException("Energy part capacity must be positive: " + input.capacity());
         }
 
         private static void validateInput(String name, EnergyInput input, long conditionPerTick) {
