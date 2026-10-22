@@ -36,7 +36,11 @@ def check(path, platform='forge'):
         classname = case.get('classname', '').lower()
         for identity in expected:
             test_class, method = identity.split('.', 1)
-            if name == method and classname.endswith(test_class):
+            # Mojang's JUnit reporter uses the template resource as classname,
+            # and PrefixGameTestTemplate(false) leaves a bare method name.
+            if name == method and classname == 'gregtech_issue_audit:test_empty':
+                found.add(identity)
+            elif name == method and classname.endswith(test_class):
                 found.add(identity)
             elif name.endswith(identity):
                 found.add(identity)
