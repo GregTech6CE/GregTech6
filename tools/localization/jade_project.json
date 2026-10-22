@@ -199,6 +199,30 @@
       "english": "Approaching meltdown!",
       "value": "即将熔毁！"
     },
+    "jade.gt6ce.direction.down": {
+      "english": "Down",
+      "value": "下"
+    },
+    "jade.gt6ce.direction.east": {
+      "english": "East",
+      "value": "东"
+    },
+    "jade.gt6ce.direction.north": {
+      "english": "North",
+      "value": "北"
+    },
+    "jade.gt6ce.direction.south": {
+      "english": "South",
+      "value": "南"
+    },
+    "jade.gt6ce.direction.up": {
+      "english": "Up",
+      "value": "上"
+    },
+    "jade.gt6ce.direction.west": {
+      "english": "West",
+      "value": "西"
+    },
     "jade.gt6ce.dust_funnel.fraction": {
       "english": "Stored: %1$s/72 dust of %2$s",
       "value": "暂存：%1$s/72 堆%2$s粉"
@@ -267,6 +291,10 @@
       "english": "IN: %1$s %2$s/t",
       "value": "输入：%1$s %2$s/t"
     },
+    "jade.gt6ce.engine.input.steam": {
+      "english": "Steam",
+      "value": "蒸汽"
+    },
     "jade.gt6ce.engine.out": {
       "english": "KU: %1$s/t | Stored: %2$s/%3$s (%4$s%%)",
       "value": "KU：%1$s/t | 储量：%2$s/%3$s（%4$s%%）"
@@ -326,6 +354,10 @@
     "jade.gt6ce.mold.output": {
       "english": "Mold output: %s",
       "value": "模具产物：%s"
+    },
+    "jade.gt6ce.mold.shape.billet": {
+      "english": "Billet",
+      "value": "方坯"
     },
     "jade.gt6ce.mold.solid_output": {
       "english": "Solid output: %1$s x%2$s",
