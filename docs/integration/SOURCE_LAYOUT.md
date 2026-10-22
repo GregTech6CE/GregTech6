@@ -1,5 +1,7 @@
 # 当前源码导航与命名约定
 
+2026-10-22：GarbageStorageRules、GarbageData和两类垃圾实体四源509→621行，存取／保留／平台能力逐操作展开；70处e／f／t／c／i等改明确名称，包含Stonecutter非活动代码，并防止新名称捕获。原本保存能力、相同标签合并及首屏淘汰政策说明更正，七完整视图保持，见[专题](GARBAGE_POOL_AUDIT.md)／[回执](verification/garbage-pool-audit-20261022.json)。没有改变存储策略或菜单行为，其余职责拆分与全系统继续。
+
 2026-10-22：FluidAttachmentSpec集中acceptsGas／fillsTarget角色查询，平台附件三处复用；FluidToolTarget中继逐操作展开并明确handler，保留重新取目标语义。四源326→376行、26局部标识出现位置、五调用及三个helper与七剩余代码视图受控证明见[专题](FLUID_ATTACHMENTS_AUDIT.md)／[回执](verification/fluid-attachments-audit-20261022.json)。旧公开类型／签名保留，新增只读查询，不改变物性、传输、配方或ID。
 
 2026-10-22：硬币几何缓存、保存实体、物品模型／绘制器和Neo客户端注册六源855→936行；b／e／v改明确局部名称，22出现位置列明，11完整平台代码视图保持。原始注释与取币回调实际合同分别处理，见[生命周期专题](COIN_LIFECYCLE_AUDIT.md)及[回执](verification/coin-lifecycle-audit-20261022.json)。玩法、注册、资源与API类型未改，其余标准化继续。

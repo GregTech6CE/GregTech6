@@ -1,5 +1,7 @@
 # 原版对齐与源码结构审计
 
+2026-10-22 第一百一十七批：共享垃圾池新增396–406并扩139，14原／18当前、43引用、九原生条目／十二引用；原保存与相同标签合并已有，容量／数值政策不借整理更改。四源509→621行、70局部名及七完整代码视图保持，见[专题](GARBAGE_POOL_AUDIT.md)。快捷栏复制为源码与原生调用链见证，非游戏实测；406不是待修数，全面goal继续。
+
 2026-10-22 第一百一十六批：附件新增389–395排空、三明治、剂量、抗爆、经验、碰撞及裸ID分裂，扩132。16原／22当前、34引用、五原生条目／八引用；24材质／防酸对应，四源326→376行、七完整剩余视图及三新helper受控保持，见[专题](FLUID_ATTACHMENTS_AUDIT.md)。约0.51秒core元数据探针与6004源算术不是世界，395不是待修数，全面goal继续。
 
 2026-10-22 第一百一十五批：硬币新增387光照3→0、388普通选取裸堆，004扩两项3D配置。9原／23当前Java、4资源、12原生条目／14引用；保存、默认接收与两端客户端分派已有，见[专题](COIN_LIFECYCLE_AUDIT.md)。六源855→936行、22局部标识位置归一后11完整视图保持；约0.48秒4112重排条件对应原函数，不是原生世界验收。388不是待修数，全面goal继续。
@@ -191,7 +193,7 @@
 | ALIGN-136 | 确认大容量存储缺少钳子取物与软锤清空入口。 | 原版分别处理背包转移／分批正面掉落及余料。 | 两版方块／实体及工具入口未补齐，提示仍列出这些操作；按钮和外部抽取不是替代，见[报告](MASS_STORAGE_CONTROL_AUDIT.md)。 |
 | ALIGN-137 | 2026-10-20 玩家反馈修复：自动下送／溢出执行已补齐。 | 位 1／4 切换、ticker、容量 +256、超额下送、底面输入门控及封装时模式切换已接入。 | NeoForge 定向运行验证真实活动扳手、下方箱子输出和溢出；其他存储工具／覆盖板问题另列，见[修复记录](verification/storage-direction-colors-20261020.md)。 |
 | ALIGN-138 | 确认大容量存储遗漏正面覆盖板门控。 | 原版任何正面覆盖板阻止普通取放，不透明板另隐藏显示。 | 普通装饰板的事件链仍 PASS 到按钮；渲染也缺可见性判断，未客户端验收，见[报告](STORAGE_COVER_BOUNDARY_AUDIT.md)。 |
-| ALIGN-139 | 确认部分宿主的覆盖板范围不同。 | 抽屉／保险箱禁正面，书架禁正背，瓶框禁所有面、大型涡轮禁正面，普通箱原本无 Coverable。 | 当前通用安装或箱子本体允许原禁用范围；不能混同大容量存储的“允许贴板后阻挡”。见[抽屉](STORAGE_COVER_BOUNDARY_AUDIT.md)、[保险箱](SAFE_LOCKER_AUDIT.md)、[书架／瓶框](BOTTLE_BOOKSHELF_AUDIT.md)和[箱子](CHEST_LOOT_AUDIT.md)。大型涡轮正面禁贴也未由后备host保留，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。 采集袋／树洞原全侧禁贴，当前后备host对普通板仍准入，见[采集袋](SAP_BAG_AUDIT.md)。 高级按钮原全侧禁贴，当前后备宿主仍准入普通板；无实体曲柄不在此缺口内，见[按钮曲柄](BUTTON_CRANK_AUDIT.md)。  灯笼原全侧允许、当前无实体而没有宿主，属于反向缺口；花盆原禁贴则已有对应，见[花盆灯笼](PLANT_LANTERN_AUDIT.md)。  液体泉原04无覆盖宿主，当前后备宿主准入普通板，见[液体泉](FLUID_SPRING_AUDIT.md)。 铸币模具原全侧禁贴，当前后备宿主仍准入普通材料板，见[铸币](COIN_MINTING_AUDIT.md)。 |
+| ALIGN-139 | 确认部分宿主的覆盖板范围不同。 | 抽屉／保险箱禁正面，书架禁正背，瓶框禁所有面、大型涡轮禁正面，普通箱原本无 Coverable。 | 当前通用安装或箱子本体允许原禁用范围；不能混同大容量存储的“允许贴板后阻挡”。见[抽屉](STORAGE_COVER_BOUNDARY_AUDIT.md)、[保险箱](SAFE_LOCKER_AUDIT.md)、[书架／瓶框](BOTTLE_BOOKSHELF_AUDIT.md)和[箱子](CHEST_LOOT_AUDIT.md)。大型涡轮正面禁贴也未由后备host保留，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。 采集袋／树洞原全侧禁贴，当前后备host对普通板仍准入，见[采集袋](SAP_BAG_AUDIT.md)。 高级按钮原全侧禁贴，当前后备宿主仍准入普通板；无实体曲柄不在此缺口内，见[按钮曲柄](BUTTON_CRANK_AUDIT.md)。  灯笼原全侧允许、当前无实体而没有宿主，属于反向缺口；花盆原禁贴则已有对应，见[花盆灯笼](PLANT_LANTERN_AUDIT.md)。  液体泉原04无覆盖宿主，当前后备宿主准入普通板，见[液体泉](FLUID_SPRING_AUDIT.md)。 铸币模具原全侧禁贴，当前后备宿主仍准入普通材料板，见[铸币](COIN_MINTING_AUDIT.md)。 末影垃圾桶原全侧禁贴，当前后备宿主没有对应排除；不套给回收器，见[垃圾池](GARBAGE_POOL_AUDIT.md)。 |
 | ALIGN-140 | 确认保险箱覆盖板操作遗漏宿主锁权限。 | 原版普通／工具覆盖板入口先调用 allowInteraction，检查认主或开锁。 | 当前事件提前消费，只有世界建造权限，没有 Safe 的锁门控；不等于世界保护失效或外部能力盗取内容，见[报告](SAFE_LOCKER_AUDIT.md)。 |
 | ALIGN-141 | 确认机械箱首次非正面普通右键不认主。 | 原版先 allowRightclick／allowInteraction 认主，随后限制 GUI 正面。 | 当前先非正面 PASS；现有背面不认主测试固定了不同合同，不作为对齐证据，见[报告](SAFE_LOCKER_AUDIT.md)。 |
 | ALIGN-142 | 确认保险箱和普通箱遗漏点击面邻块阻挡查询。 | 原版 Base04 普通入口查询 WD.obstructed；保险箱工具路径也查询。 | 当前锁／工具和普通箱顶面开盖条件不能补该查询；下半砖示例未运行，不推定所有方块缺失，见[保险箱](SAFE_LOCKER_AUDIT.md)和[箱子](CHEST_LOOT_AUDIT.md)。 |
@@ -448,6 +450,17 @@
 | ALIGN-393 | 确认龙头缺经验流体取经验分支。 | 原XP／Mob有无OpenBlocks时的默认换算。 | 当前空手只向下方注液；要求实际存在可排相应流体，未执行经验实体。见[附件](FLUID_ATTACHMENTS_AUDIT.md)。 |
 | ALIGN-394 | 确认附件新增原本没有的实体碰撞。 | 原Attachment返回null，世界块转发此接口。 | 当前默认hasCollision使用非空选框，覆盖板后备不消除；未行走实测。见[附件](FLUID_ATTACHMENTS_AUDIT.md)。 |
 | ALIGN-395 | 确认四个裸附件ID仍独立重复登记。 | 原相关四class共24项材质登记。 | 当前24材质之外另有4个裸Block／BlockItem构造，并非注册别名；可见／配方／迁移另核。见[附件](FLUID_ATTACHMENTS_AUDIT.md)。 |
+| ALIGN-396 | 确认垃圾桶缺原方块更新／本地时钟触发。 | 原实体timer模100为50或mBlockUpdated清空。 | 当前仅世界gameTime模100为50；仍受红石暂停。见[垃圾池](GARBAGE_POOL_AUDIT.md)。 |
+| ALIGN-397 | 确认红石暂停扩为拒绝自动物品输入。 | 原无覆盖板时canInsertItem2恒true。 | 当前insertOnly有信号退回；不泛化到菜单或流体。见[垃圾池](GARBAGE_POOL_AUDIT.md)。 |
+| ALIGN-398 | 确认回收器首项阻塞后续可接收资源。 | 原扫描所有可访问物品及流体池。 | 当前自动只提第0物品／首液；条件源码见证。见[垃圾池](GARBAGE_POOL_AUDIT.md)。 |
+| ALIGN-399 | 确认回收器自动输出节拍／液量变化。 | 原每tick尝试，流体迭代预算Long.MAX_VALUE受单次API和目标限制。 | 当前每10刻、一组物品及首液16000L；未测产线。见[垃圾池](GARBAGE_POOL_AUDIT.md)。 |
+| ALIGN-400 | 确认回收器被动物品／流体／龙头入口未接。 | 原虚拟库存、IFluidHandler和tap／nozzle直接查询池。 | 当前公共view只接菜单，默认与相关注册器不发布此能力；自身自动输出已有。见[垃圾池](GARBAGE_POOL_AUDIT.md)。 |
+| ALIGN-401 | 确认垃圾池新增有限保留和固定窗口政策。 | 原无不同条目数量上限。 | 当前两池各256，新增淘汰最旧、超限读取保留最早，物品GUI54槽；保护策略保留。见[垃圾池](GARBAGE_POOL_AUDIT.md)。 |
+| ALIGN-402 | 确认垃圾池物品／流体数量域不同。 | 原物品bind31饱和、流体long容量。 | 当前物品long、流体int饱和；政策差异未改。见[垃圾池](GARBAGE_POOL_AUDIT.md)。 |
+| ALIGN-403 | 确认回收器菜单有快捷栏交换复制路径。 | 真实池扣减须在所有取出路径提交。 | 显示副本经原生SWAP进空快捷栏，空setter未扣池；64＋64源见证，高优先级待游戏复现。见[垃圾池](GARBAGE_POOL_AUDIT.md)。 |
+| ALIGN-404 | 确认垃圾桶拆除主动散落缓冲。 | 原canDrop=false且keepSlot=false。 | 当前移除调用BlockContents.drop；限仍有内容路径，未全loot／爆炸实测。见[垃圾池](GARBAGE_POOL_AUDIT.md)。 |
+| ALIGN-405 | 确认垃圾池漏原内置回收器黑名单。 | 原32710明确加BLACKLIST且trash先拒绝。 | 当前非空即接收，没有对应内部成员过滤。见[垃圾池](GARBAGE_POOL_AUDIT.md)。 |
+| ALIGN-406 | 确认回收器缺向下方空气丢物路径。 | 原ST.move启用eject，ST.put向无碰撞空气放实体并扣物。 | 当前下方无BE提前返回；普通Y64条件源见证，非实体执行。见[垃圾池](GARBAGE_POOL_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 

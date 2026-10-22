@@ -1,5 +1,7 @@
 # 活动源码结构与可读性盘点
 
+2026-10-22 第一百一十七批：共享垃圾池与两类实体、core标量规则四源509→621行；逐操作展开，70名称出现受控替换，非活动Stonecutter体与活动体一并整理。防名称冲突后七完整平台代码视图保持，五组说明纠错，见[专题](GARBAGE_POOL_AUDIT.md)和[回执](verification/garbage-pool-audit-20261022.json)。运行策略／数据键未改，标准化继续。
+
 2026-10-22 第一百一十六批：四份流体附件源326→376行，重复角色判断下沉core，FluidToolTarget中继逐操作展开，t／funnel改明确局部名；三个helper、五调用、七完整剩余平台视图有受控证明。见[专题](FLUID_ATTACHMENTS_AUDIT.md)及[回执](verification/fluid-attachments-audit-20261022.json)。不是重新引入旧loader命名，也没有借整理修复玩法；其余大职责／重复和全系统继续。
 
 2026-10-22 第一百零六批：五份矿物core／目录、床岩feature／维度边界及矿石解析器502→581行；删除两个仅剩声明的私有包装，保留已对齐表格，展开核心循环及平台回调。四源六视图完整相同，另两视图在显式去除私有段后剩余相同，删除源码、引用范围与限制随[回执](verification/spring-bedrock-dispatch-audit-20261022.json)归档。不是所有原token原封不动，也不改变生成策略，见[专题](SPRING_BEDROCK_DISPATCH_AUDIT.md)。
