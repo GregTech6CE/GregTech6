@@ -78,6 +78,17 @@ public interface MachineBehaviorContext {
     long emit(long size, long amount);
 
     /**
+     * Sends {@code amount} packets of {@code size} to the block entity at {@code target},
+     * entering it through {@code side}. It uses the declared output type and packet limits,
+     * spends this machine's stored energy for each packet the target accepts, and returns how
+     * many packets left. The declared output faces are not used. A null {@code side} means no
+     * side. A request above the declared maximum throws, as {@link #emit(long, long)} does.
+     * A target in an unloaded chunk, without a block entity, or with no energy receiver accepts
+     * nothing. The target is looked up for this call only and is not kept.
+     */
+    long emitTo(BlockPos target, Direction side, long size, long amount);
+
+    /**
      * Charges a bound two-way part from the controller channel and arms {@code amount}
      * packets of {@code size}. The part emits them from its own faces on its next server tick.
      * Returns the amount the part stored. This does not spend {@link #energy()}; the behavior
