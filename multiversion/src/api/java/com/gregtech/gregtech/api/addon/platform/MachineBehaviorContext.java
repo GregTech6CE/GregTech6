@@ -95,6 +95,13 @@ public interface MachineBehaviorContext {
     List<EnergyPart> energyParts();
 
     /**
+     * Addon parts bound by the formed layout, energy parts and functional parts together.
+     * A casing is not included. Empty when {@link #structureFormed()} is false.
+     * {@link #energyParts()} is the energy view of this same binding.
+     */
+    List<BoundPart> parts();
+
+    /**
      * True when no bound part is a condition, or every bound condition part is satisfied.
      * An unformed structure has no bound parts, so this is true. The behavior tick still runs.
      */

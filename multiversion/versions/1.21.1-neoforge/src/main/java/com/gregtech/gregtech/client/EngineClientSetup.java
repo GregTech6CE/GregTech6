@@ -75,6 +75,11 @@ public final class EngineClientSetup {
     public static void renderers(EntityRenderersEvent.RegisterRenderers e) {
         e.registerBlockEntityRenderer(GTBlockEntities.STEAM_BOILER.get(), BoilerBarometerRenderer::new);
         e.registerBlockEntityRenderer(GTBlockEntities.SANDWICH_BLOCK.get(), SandwichRenderer::new);
+        com.gregtech.gregtech.client.LayoutPartClients.collect();
+        e.registerBlockEntityRenderer(GTBlockEntities.ADDON_FUNCTIONAL_PART.get(),
+                com.gregtech.gregtech.client.FunctionalPartRenderer::new);
+        e.registerBlockEntityRenderer(GTBlockEntities.ADDON_ENERGY_PART.get(),
+                com.gregtech.gregtech.client.FunctionalPartRenderer::new);
         for (var h : GTEngines.all())
             if (h.get().engineType() == EngineType.STEAM)
                 e.registerBlockEntityRenderer(

@@ -471,6 +471,12 @@ public final class AddonMachines {
                 convertedParts, fluidPipes, itemPipes, tanks);
     }
 
+    /** Direct queue for {@link LayoutPart}, including parts that declare slots, a tick, a click or a field. */
+    public static synchronized void acceptLayoutParts(String addonId, List<LayoutPart> parts) {
+        enqueue(addonId, List.of(), List.of(), List.of(), List.of(), List.of(), List.of(),
+                List.copyOf(Objects.requireNonNull(parts, "parts")), List.of(), List.of(), List.of());
+    }
+
     private static synchronized void enqueue(String addonId, List<RecipeMapSpec> recipeMaps,
                                              List<AddonMachineDefinition> machines, List<StructureLayout> layouts,
                                              List<BehaviorMachine> behavior, List<RecipeMapSpec> fuelMaps,
@@ -612,6 +618,10 @@ public final class AddonMachines {
                                 + "' uses unknown energy type '" + declaration.energyInput().type() + "'", failure);
                     }
                 }
+                if (declaration.functional() && (!LayoutPartFactories.ready()
+                        || !LayoutPartFactories.names(submission.addonId).contains(name)))
+                    throw new IllegalStateException("Addon '" + submission.addonId + "' structure part '" + name
+                            + "' has no part factory");
                 if (nextPartId < 0)
                     throw new IllegalStateException("Addon structure part ids overflowed");
                 var part = new StructurePart(submission.addonId, nextPartId, declaration);

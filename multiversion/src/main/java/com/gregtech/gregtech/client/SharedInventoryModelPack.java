@@ -173,6 +173,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             ResourceLocation id = part.block().getId();
             String texture = part.texture() == null ? "" : part.texture();
             boolean energy = part.block().get() instanceof com.gregtech.gregtech.block.machine.AddonEnergyPartBlock;
+            boolean functional = part.block().get() instanceof com.gregtech.gregtech.block.machine.AddonFunctionalPartBlock;
             String model = texture.isEmpty()
                     ? "gt6ce:block/machine/multiblock/steel_wall"
                     : id.getNamespace() + ":block/" + id.getPath();
@@ -183,6 +184,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             }
             String blockstate = energy
                     ? facingBlockstate(model)
+                    : functional ? facingOnlyBlockstate(model)
                     : "{\"variants\":{\"\":{\"model\":\"" + model + "\"}}}";
             result.put(named(id.getNamespace(), "blockstates/" + id.getPath() + ".json"), blockstate.getBytes(StandardCharsets.UTF_8));
             result.put(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"),
@@ -202,6 +204,16 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             }
         }
         return json.append("}}").toString();
+    }
+
+    private static String facingOnlyBlockstate(String model) {
+        String variant = "{\"model\":\"" + model + "\"}";
+        return "{\"variants\":{"
+                + "\"facing=north\":" + variant + ","
+                + "\"facing=south\":" + variant + ","
+                + "\"facing=west\":" + variant + ","
+                + "\"facing=east\":" + variant
+                + "}}";
     }
 
     /** Iron cube so a drum has a model before an addon ships its own. */
