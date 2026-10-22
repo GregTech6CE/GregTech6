@@ -1,5 +1,7 @@
 # 当前源码导航与命名约定
 
+2026-10-22：FluidAttachmentSpec集中acceptsGas／fillsTarget角色查询，平台附件三处复用；FluidToolTarget中继逐操作展开并明确handler，保留重新取目标语义。四源326→376行、26局部标识出现位置、五调用及三个helper与七剩余代码视图受控证明见[专题](FLUID_ATTACHMENTS_AUDIT.md)／[回执](verification/fluid-attachments-audit-20261022.json)。旧公开类型／签名保留，新增只读查询，不改变物性、传输、配方或ID。
+
 2026-10-22：硬币几何缓存、保存实体、物品模型／绘制器和Neo客户端注册六源855→936行；b／e／v改明确局部名称，22出现位置列明，11完整平台代码视图保持。原始注释与取币回调实际合同分别处理，见[生命周期专题](COIN_LIFECYCLE_AUDIT.md)及[回执](verification/coin-lifecycle-audit-20261022.json)。玩法、注册、资源与API类型未改，其余标准化继续。
 
 铸币：core `CoinStampPattern`保存两面16行及unique，原生`CoinMoldBlockEntity`接单格库存／配置与输出，`CoinMoldBlock`接手动点击；`CoinMoldRenderer`用`CoinMoldGeometry.CONTENT`。世界币／物品币分别走`CoinPileRenderer`与`CoinItemBakedModel`／`CoinItemRenderer`，`CoinGeometry`处理默认及实际tag位图。自动锤另走`PoweredToolTarget`，模具手动strike存在不代表自动接通，见[铸币核查](COIN_MINTING_AUDIT.md)。

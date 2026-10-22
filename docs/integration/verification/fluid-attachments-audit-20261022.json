@@ -1,0 +1,1814 @@
+{
+  "date": "2026-10-22",
+  "batch": 116,
+  "baseline": "16c55f19fceaf37fca03baf2f327348bf45d100a",
+  "previous_goal_turn": {
+    "classification": "progress",
+    "commit": "16c55f19f"
+  },
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityFluidTap.java",
+      "raw_sha256": "ff88e9dd2e8d8d98d8f8a919feee268769408250dfba454635b4bc0eff861b6f",
+      "lines": 248,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityFluidFunnel.java",
+      "raw_sha256": "17bdef3e48e49f10448ebb10231d115cf0a7aa19cbf96a60021251a0bde8ed28",
+      "lines": 172,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityFluidNozzle.java",
+      "raw_sha256": "f081e3ca88a30f4ee4c8d0771ef07571c8f9853f1097441716d611758cfaf09e",
+      "lines": 194,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityFluidCapNozzle.java",
+      "raw_sha256": "61580b99c8d1a8bcaf4b2302221e89c0369d741aaec54222974b7fc319ab5ee0",
+      "lines": 158,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase10Attachment.java",
+      "raw_sha256": "1f4b0a65f5e6650bcfa79c3f50fef3eb5cb42b659ab377c49d8347f114ab0e10",
+      "lines": 52,
+      "notice_sha256": "63c517dd35b913cfc46d1f7881d524c83334db090a72278eefbb881a3ef42a1b"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase11AttachmentSmall.java",
+      "raw_sha256": "c8609b9656bc53510b44bd14bb6e8eef63580b9ff6ec94203892a7c034da7c9a",
+      "lines": 31,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "raw_sha256": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+      "lines": 117,
+      "notice_sha256": "c635bd8e84f1d5b02a1299180479660a636e876419d763c9cd0714b9487e28b7"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java",
+      "raw_sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+      "lines": 1011,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "raw_sha256": "78ef2ca64595500bb841faec8304dee0f3e276e14b54c62f494c3116c29ce0b7",
+      "lines": 307,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "raw_sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "lines": 2243,
+      "notice_sha256": "6855675ee4a01a21169dd2a3ed5df729ac3198a4b2e3b869f91e1a45c79e6aca"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/FL.java",
+      "raw_sha256": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3",
+      "lines": 1144,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/oredict/OreDictMaterial.java",
+      "raw_sha256": "768707d5eeeb6b60f0c5d0a24b39ab50f6f173a29a40f0fa3365308cf0688371",
+      "lines": 1512,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/a/Loader_Fluids.java",
+      "raw_sha256": "fdc9a697adc7822159cb8ea82389cc83e6494fc9723551f2983607ed46505fcb",
+      "lines": 753,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/food/MultiTileEntitySandwich.java",
+      "raw_sha256": "576e938dfe6c7aca1f388d5885e864e3136a9e65cbe638c67730b126bbc725e9",
+      "lines": 390,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/ITileEntityTapFillable.java",
+      "raw_sha256": "2126b56d63aa22e6213492e484a9a81dba8935a537d761d20b597aadfd22be1d",
+      "lines": 29,
+      "notice_sha256": "accc18a4bf87847b3134c2814611b821dcb8c3083277f78c0f8f2cf8e6f05caf"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java",
+      "raw_sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+      "lines": 3476,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/tool/FluidAttachmentSpec.java",
+      "raw_sha256": "dea88738ac7119e8b3ac8a4a730865d491ec8dd985c8fdf63b3c218a93ac0b04",
+      "lines": 35
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/FluidAttachmentBlock.java",
+      "raw_sha256": "89bb500f79f5133be859a37044242576aa263b64bb567a1a5450caa823aa5870",
+      "lines": 263
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidToolTarget.java",
+      "raw_sha256": "34b5175d19f6acfd9f33c133e56537c966cd79166b7902fc5063f7894a6272c7",
+      "lines": 60,
+      "notice_sha256": "7a512c32efbe2a8dff22b1c45e7379935aad3db1e9a26f4338c0d64e8de85d7e"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/TapBlock.java",
+      "raw_sha256": "e0d5fe6bc3c063f097e4ae2054d2a0c4c309d9fe6d37182809197317ae0e5d5a",
+      "lines": 18
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/data/FluidCatalog.java",
+      "raw_sha256": "d11781f19478450c1caa326380a462143dbcba6a6726a150607b0f1423a474fb",
+      "lines": 1057
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/tool/OriginalToolShapes.java",
+      "raw_sha256": "12b33c6bf1c32b524672248511ad5e26b546c5b2f110a32e4debc6c21d867eb3",
+      "lines": 29
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/tool/PortableCraftingCatalog.java",
+      "raw_sha256": "06c18c19383cf53f57db8b7ed798e70fcf613226c4255c070cc96400c29ec9eb",
+      "lines": 3
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/creative/SourceCreativeCatalog.java",
+      "raw_sha256": "82c04e294915c49937e383b940b6800a623301dc1de7779506df9b73aac88987",
+      "lines": 2659,
+      "notice_sha256": "6855675ee4a01a21169dd2a3ed5df729ac3198a4b2e3b869f91e1a45c79e6aca"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/data/RegisteredFluids.java",
+      "raw_sha256": "da63aa130e2cf43af65660260d0cb43ba2a60aacf6e4d9f7aae0267748bb5af9",
+      "lines": 11
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluids.java",
+      "raw_sha256": "b4fda5afd9b60c63fff6c540084858b2c8c3adc6039e74180d3d86ce92b481f2",
+      "lines": 350
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTWorldWaterFluid.java",
+      "raw_sha256": "9365506a34416799515ae69ac370f7286f190fe4de233e12fbdd4e86e0dd43cf",
+      "lines": 276
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTToolBlocks.java",
+      "raw_sha256": "834d9a9a40a679a598ad11e97318652c85d23209964352a83094e5dd0bac6dba",
+      "lines": 366
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTexturePolicy.java",
+      "raw_sha256": "5f6a765a9cc01a88431e52d5624172135edfed5f3dbb39d2676a87b825150821",
+      "lines": 33
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/misc/SandwichBlockEntity.java",
+      "raw_sha256": "5f8a490b89d67dc0c8e9966f6f9a6f0f84cba3f464da9f0030aaacd926a8f243",
+      "lines": 329
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/SandwichBlock.java",
+      "raw_sha256": "8c61b124f9975d8cadaab8af530b3440d27135f9d73bea4fa87d03e5bff83c99",
+      "lines": 149
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/ProcessingToolBlockEntity.java",
+      "raw_sha256": "9bd50c42d6dd52f65a8068b3be79d6a1415642baa447c1509d7d02ec4e47fdc4",
+      "lines": 491
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverCollisionMixin.java",
+      "raw_sha256": "d5fa7bd7ad4f2ad12ee7a5d960d50620bba41d9c85f01162b3464ad8d09b1b46",
+      "lines": 35
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverWorldInteraction.java",
+      "raw_sha256": "5d929adfc96f42c71d26c040e6609b9333ffc1ef762d088045a55af3a5327aca",
+      "lines": 35
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTStorage.java",
+      "raw_sha256": "4eefb889c50fd513b84e4751774a47ead8870d379c1f2bb295e7abfe96a4ae94",
+      "lines": 206
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTStorageContainers.java",
+      "raw_sha256": "a587a6138eaee75e03dc20ba09b54a99e14cbbfbc85eebac29903f1bc2b992b9",
+      "lines": 40
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/fluid/FluidCapabilities.java",
+      "raw_sha256": "a2f5eb5fa0c1267133583859f8857f21768dc0b429a83eef4195481e45a7f1d1",
+      "lines": 37
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageContainerCapabilities.java",
+      "raw_sha256": "d6e62e69491d69f904307d82523a6e3e9c49f7fcccdda7ae0f6c1a040c4a74e0",
+      "lines": 72
+    }
+  ],
+  "source_scope": "Selected attachment role/catalog, interaction, transfer volume, normal resistance, physical collision and helper/provider consumers. Full-file hashes are provenance, not whole-file behavioral certification or all recipe/resource coverage.",
+  "provenance": {
+    "authors": "GregTech-6 Team / Gregorius Techneticies",
+    "original_notice": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */",
+    "handling": "Read-only original tree, original notices retained. Production changes centralize identical role predicates and improve names/layout; no original gameplay gap fixed in this batch."
+  },
+  "excerpts": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityFluidTap.java",
+      "first_line": 82,
+      "last_line": 86,
+      "text": "\t\t\t\tif (ItemsGT.VOIDING_ITEMS.contains(aStack, F)) {\n\t\t\t\t\tUT.Sounds.send(SFX.IC_SPRAY, 1.0F, 2.0F, this, F);\n\t\t\t\t\tGarbageGT.trash(((ITileEntityTapAccessible)tDelegator.mTileEntity).tapDrain(tDelegator.mSideOfTileEntity, Integer.MAX_VALUE, T));\n\t\t\t\t\treturn T;\n\t\t\t\t}",
+      "sha256": "41722dc259637a85f724f572a2f57dea20d6e75a2c19c2594775f96f912e6072",
+      "purpose": "Original tap held-void-item path drains directly before phase/acid filtering."
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityFluidNozzle.java",
+      "first_line": 76,
+      "last_line": 80,
+      "text": "\t\t\t\tif (ItemsGT.VOIDING_ITEMS.contains(aStack, F)) {\n\t\t\t\t\tUT.Sounds.send(SFX.MC_FIZZ, 1.0F, 2.0F, this, F);\n\t\t\t\t\tGarbageGT.trash(((ITileEntityTapAccessible)tDelegator.mTileEntity).nozzleDrain(tDelegator.mSideOfTileEntity, Integer.MAX_VALUE, T));\n\t\t\t\t\treturn T;\n\t\t\t\t}",
+      "sha256": "94cf9e0f90bd17f14906de7f2eef8d64640dbabdbeaef5d288bc01d416c9e11c",
+      "purpose": "Original gas nozzle also has held-void-item path."
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "first_line": 2232,
+      "last_line": 2232,
+      "text": "\t\taMat = ANY.Steel;           aRegistry.add(\"Ender Garbage Bin\"                                   , \"Misc Tool Blocks\"                    , 32709, 32720, MultiTileEntityEnderGarbageBin.class                    ,                 0, 16, aUtilStone     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   6.0F), \"OOO\", \"OXO\", \"PPP\", 'O', OP.plate.dat(MT.Obsidian), 'P', OP.plate.dat(ANY.Iron), 'X', OP.gem.dat(MT.EnderEye)); ItemsGT.VOIDING_ITEMS.add(aRegistry.getItem());",
+      "sha256": "08173253fc46deecf9f9a6916a0fda8a08d1165075fa056a0f04cb04b35f553e",
+      "purpose": "Original built-in Ender Garbage Bin is an actual voiding command item."
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/tool/FluidAttachmentBlock.java",
+      "first_line": 188,
+      "last_line": 188,
+      "text": "        return FluidUtil.interactWithFluidHandler(player, hand, access(handler)) ? InteractionResult.CONSUME : InteractionResult.PASS;",
+      "sha256": "6a2b44607eef5fcf9ca4924ea80ed78c31138706221d9e43d884fc86b5ddce04",
+      "purpose": "Current held interaction has no void command branch."
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityFluidTap.java",
+      "first_line": 119,
+      "last_line": 130,
+      "text": "\t\t\t\t\t\t} else if (tDelegator2.mTileEntity instanceof MultiTileEntitySandwich) {\n\t\t\t\t\t\t\tItemStack tStack = FL.fill(aFluid, IL.Bottle_Empty.get(1), F, F);\n\t\t\t\t\t\t\tif (ST.valid(tStack)) {\n\t\t\t\t\t\t\t\tFluidStack tFluid = FL.mul(FL.getFluid(tStack, T), ((MultiTileEntitySandwich)tDelegator2.mTileEntity).getIngredientCount(), 4, T);\n\t\t\t\t\t\t\t\tif (tFluid != null && tFluid.amount <= aFluid.amount && ((MultiTileEntitySandwich)tDelegator2.mTileEntity).addIngredient(tStack) > 0) {\n\t\t\t\t\t\t\t\t\t((ITileEntityTapAccessible)tDelegator.mTileEntity).tapDrain(tDelegator.mSideOfTileEntity, tFluid.amount, T);\n\t\t\t\t\t\t\t\t\tUT.Sounds.send(SFX.IC_SPRAY, 1.0F, 2.0F, this, F);\n\t\t\t\t\t\t\t\t\treturn T;\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\treturn T;\n\t\t\t\t\t\t}",
+      "sha256": "d918f752d9650fc0815471bcdd38bb9a1cdafc5313bee8277a2f2efe6c54b8aa",
+      "purpose": "Old tap recognizes the sandwich and adds a bottle ingredient, draining by servings."
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/tool/FluidAttachmentBlock.java",
+      "first_line": 252,
+      "last_line": 254,
+      "text": "        var sink = target.getCapability(ForgeCapabilities.FLUID_HANDLER, Direction.UP).orElse(null);\n        if (sink == null) return false;\n//?}",
+      "sha256": "96b612047ede8416f49219fc9504cbc60f46b56f15dc3d7090cc5c3d2c5d68ed",
+      "purpose": "Current below target goes through ordinary fluid capability only."
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/misc/SandwichBlockEntity.java",
+      "first_line": 38,
+      "last_line": 42,
+      "text": "public final class SandwichBlockEntity extends BlockEntity {\n    public static final int SLOTS = com.gregtech.gregtech.content.food.SandwichRules.SLOTS;\n    private final ItemStack[] ingredients = new ItemStack[SLOTS];\n    private boolean redstone;\n    private boolean dropped;",
+      "sha256": "0f06535958ff761a8024534b0fba3153ccca7cac20fc46d9de3b8ebde3a5c48c",
+      "purpose": "Current sandwich has no native fluid-handler binding in this class."
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/misc/SandwichBlockEntity.java",
+      "first_line": 126,
+      "last_line": 133,
+      "text": "    public int addIngredient(ItemStack stack) {\n        if (stack == null || stack.isEmpty()) return 0;\n        var top = topIngredient();\n//? if >=1.21.1 {\n        /*if (!top.isEmpty() && ItemStack.isSameItemSameComponents(top, stack)) return 0;\n*///?} else {\n        if (!top.isEmpty() && ItemStack.isSameItemSameTags(top, stack)) return 0;\n//?}",
+      "sha256": "28f11e466dc0894a42c17e71b4baeed7194eac584f5c7996a5f5a3cea93fc797",
+      "purpose": "Direct item-ingredient entry exists; this is not missing all sandwich functionality."
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityFluidTap.java",
+      "first_line": 113,
+      "last_line": 113,
+      "text": "\t\t\t\t\t\t\taFluid.amount = Math.min(aFluid.amount, FL.lava(aFluid) ? 1000 : !FL.water(aFluid) && tMaterial != null && tMaterial.mAmount > 0 ? UT.Code.bindInt(tMaterial.mAmount) : 250);",
+      "sha256": "096c54e163cce840103dd78f27960e97841f1fcf5858026ecf07bcb8322d0357",
+      "purpose": "Old mapped non-water liquid uses FLUID_MAP amount per unit, not a blanket 250."
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/a/Loader_Fluids.java",
+      "first_line": 624,
+      "last_line": 624,
+      "text": "\t\tnew FoodStatDrink(FL.create(\"milk\"                                       , \"Milk\"                                    , MT.Milk               , 1, 1000, 300, ST.make(Items.milk_bucket,1,0), ST.make(Items.bucket,1,0), 1000)                        , \"Got Milk?\"                                                       ,  0, 0.0F  ,  20, C+37,  0.75F,  0,  0,  0,  0, 10, EnumAction.drink, T, F, F).setMilk();",
+      "sha256": "cd9bee22020cade08e9d71f97d4a8cb4b43b2ce9e0a21079f3a3e15f714604dc",
+      "purpose": "Original milk has a 1000 L material unit."
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/FL.java",
+      "first_line": 1123,
+      "last_line": 1125,
+      "text": "\t\t\tcase STATE_LIQUID : aMaterial.liquid(make(rFluid, UT.Code.bindInt(aAmountPerUnit))); break;\n\t\t\tcase STATE_GASEOUS: aMaterial.gas   (make(rFluid, UT.Code.bindInt(aAmountPerUnit))); break;\n\t\t\tcase STATE_PLASMA : aMaterial.plasma(make(rFluid, UT.Code.bindInt(aAmountPerUnit))); break;",
+      "sha256": "9ce6a08d7a238752023724882f95fd7a5fe01340149f96762d6111b5c61b3611",
+      "purpose": "Fluid creator binds configured liquid amount to the material."
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/oredict/OreDictMaterial.java",
+      "first_line": 313,
+      "last_line": 313,
+      "text": "\tpublic long mLiquidUnit = U, mGasUnit = U, mPlasmaUnit = U;",
+      "sha256": "12e32d1bc1567a4e56f70019aa4f4007eff27c9716dc4a60cb86f3dfb8aa6d00",
+      "purpose": "Default material liquid unit is U."
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/oredict/OreDictMaterial.java",
+      "first_line": 1249,
+      "last_line": 1255,
+      "text": "\tpublic OreDictMaterial liquid(FluidStack aFluidStack, long aUnit) {\n\t\tif (aFluidStack != null) {\n\t\t\tmLiquid = aFluidStack.copy();\n\t\t\tmLiquidUnit = aUnit;\n\t\t\tFLUID_MAP.put(aFluidStack.getFluid().getName(), OM.stack(this, UT.Code.units(aFluidStack.amount, aUnit, U, T)));\n\t\t}\n\t\treturn this;",
+      "sha256": "93a7bf55d78bec158a92400e767be85078db3793f13e0fe355a7b5e2a2d68aba",
+      "purpose": "FLUID_MAP retains volume per material unit."
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/tool/FluidAttachmentBlock.java",
+      "first_line": 255,
+      "last_line": 262,
+      "text": "        int limit = fluid.getFluid().isSame(net.minecraft.world.level.material.Fluids.LAVA) ? 1000 : 250;\n        // entryForFluid, not the FluidType key: GT6's three world waters report vanilla water's\n        // FluidType (see GTWorldWaterFluid), so the type key would resolve them to minecraft:water.\n        var entry = GTFluids.entryForFluid(fluid.getFluid());\n        if (!water && entry != null && com.gregtech.gregtech.api.fluid.FluidTexturePolicy.kind(\n                entry) == com.gregtech.gregtech.api.fluid.FluidTexturePolicy.Kind.MOLTEN) limit = 144;\n        return !FluidUtil.tryFluidTransfer(sink, source, limit, true).isEmpty();\n    }",
+      "sha256": "59189a306b34cd956e1700af20bbb15abfb8d9e67f72e08c84c8e8069c4ea95e",
+      "purpose": "Current default liquid limit is 250; only molten texture mode selects 144."
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "first_line": 2108,
+      "last_line": 2108,
+      "text": "\t\taMat = MT.Ceramic;          aRegistry.add(\"Ceramic Tap\"                                         , \"Misc Tool Blocks\"                    , 32728, 32720, MultiTileEntityFluidTap.class                           ,                 0, 64, aUtilStone     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   5.0F, NBT_ACIDPROOF, F, NBT_MAGICPROOF, F)); IL.Ceramic_Tap.set(aRegistry.getItem(), new OreDictItemData(MT.Ceramic, U*3)); RM.add_smelting(IL.Ceramic_Tap_Raw.get(1), IL.Ceramic_Tap.get(1), F, F, T);",
+      "sha256": "5c57d303a01c00b066234e3e92a076a79941fe98cad828194ee88b1c1a32dded",
+      "purpose": "Original base tap has hardness .5 and resistance 5, not all current legacy values."
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "first_line": 2113,
+      "last_line": 2113,
+      "text": "\t\taMat = MT.Ad;               aRegistry.add(\"Adamantium Tap\"                                      , \"Misc Tool Blocks\"                    , 32732, 32720, MultiTileEntityFluidTap.class                           ,                 0, 64, aUtilMetal     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE, 100.0F, NBT_ACIDPROOF, T, NBT_MAGICPROOF, T), \"  h\", \"PP \", \"oP \", 'P', OP.plateCurved.dat(aMat));",
+      "sha256": "6ad919aedc3a41ff8450e7bc5ea91bc9d4b66b6a9001d1c0e33c8d045f09adbc",
+      "purpose": "Original acid-proof Adamantium tap has resistance 100."
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTToolBlocks.java",
+      "first_line": 302,
+      "last_line": 302,
+      "text": "                    BlockBehaviour.Properties.of().strength(0.5f, 6).noOcclusion()));",
+      "sha256": "5b0cd17412732d1c255233feafeeb7456ab9c70e2b96b766b033fee15c9fbb08",
+      "purpose": "Forge all 24 material variants use .5/6."
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTToolBlocks.java",
+      "first_line": 62,
+      "last_line": 62,
+      "text": "        return p.strength(.5f, 6);",
+      "sha256": "23518a624d97b9b70898132ef0931b15bc011712a43463e0eb5aad7c0221ce6f",
+      "purpose": "Neo suffixed material IDs fall through to .5/6."
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "first_line": 60,
+      "last_line": 60,
+      "text": "\t\tif (aNBT.hasKey(NBT_RESISTANCE)) mResistance = aNBT.getFloat(NBT_RESISTANCE);",
+      "sha256": "4265325ad34ec0c818b6a1befd4962dd432eef4e79daa2265e5e542148ca5f61",
+      "purpose": "Original paintable reads the configured resistance."
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "first_line": 110,
+      "last_line": 110,
+      "text": "\t@Override public float getExplosionResistance2() {return mResistance;}",
+      "sha256": "5947a380099159fe74fda6f29d2a59e85393b6abde722eb648b52541e1f05708",
+      "purpose": "Original ordinary resistance accessor consumes that stored value."
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityFluidTap.java",
+      "first_line": 132,
+      "last_line": 157,
+      "text": "\t\t\t\t\t\tif (FL.XP.is(aFluid)) {\n\t\t\t\t\t\t\tif (MD.OB.mLoaded) {\n\t\t\t\t\t\t\t\ttry {\n\t\t\t\t\t\t\t\t\tint tXP = Math.min(LiquidXpUtils.liquidToXpRatio(aFluid.amount), Math.max(10, UT.Code.roundUp(EnchantmentUtils.getExperienceForLevel(aPlayer.experienceLevel+1) - (EnchantmentUtils.getExperienceForLevel(aPlayer.experienceLevel) + (aPlayer.experience * aPlayer.xpBarCap())))));\n\t\t\t\t\t\t\t\t\tint tDrain = LiquidXpUtils.xpToLiquidRatio(tXP);\n\t\t\t\t\t\t\t\t\tif (tDrain > 0 && tXP > 0) {\n\t\t\t\t\t\t\t\t\t\t((ITileEntityTapAccessible)tDelegator.mTileEntity).tapDrain(tDelegator.mSideOfTileEntity, tDrain, T);\n\t\t\t\t\t\t\t\t\t\tworldObj.spawnEntityInWorld(new EntityXPOrb(worldObj, xCoord+0.5, yCoord+0.2, zCoord+0.5, tXP));\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t} catch(Throwable e) {e.printStackTrace(ERR);}\n\t\t\t\t\t\t\t\treturn T;\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t// Even if OpenBlocks is not installed, in case Liquid XP exists somewhere, just turn it into regular XP at the default Rate, with one bucket of XP per click.\n\t\t\t\t\t\t\tint tXP = Math.min(50, aFluid.amount/20);\n\t\t\t\t\t\t\tif (tXP > 0) {\n\t\t\t\t\t\t\t\t((ITileEntityTapAccessible)tDelegator.mTileEntity).tapDrain(tDelegator.mSideOfTileEntity, tXP*20, T);\n\t\t\t\t\t\t\t\tworldObj.spawnEntityInWorld(new EntityXPOrb(worldObj, xCoord+0.5, yCoord+0.2, zCoord+0.5, tXP));\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\treturn T;\n\t\t\t\t\t\t}\n\t\t\t\t\t\t// Act like Liquid XP too.\n\t\t\t\t\t\tif (FL.Mob.is(aFluid)) {\n\t\t\t\t\t\t\tint tXP = Math.min(50, (aFluid.amount*3)/200);\n\t\t\t\t\t\t\tif (tXP > 0) {\n\t\t\t\t\t\t\t\t((ITileEntityTapAccessible)tDelegator.mTileEntity).tapDrain(tDelegator.mSideOfTileEntity, (tXP*200)/3, T);\n\t\t\t\t\t\t\t\tworldObj.spawnEntityInWorld(new EntityXPOrb(worldObj, xCoord+0.5, yCoord+0.2, zCoord+0.5, tXP));",
+      "sha256": "9a02e7a5e3c2539b9d67411f61011f153d6a02c94ed7c256169a3a21b9e441c7",
+      "purpose": "Original tap has default XP conversion plus optional OpenBlocks conversion."
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityFluidTap.java",
+      "first_line": 153,
+      "last_line": 161,
+      "text": "\t\t\t\t\t\tif (FL.Mob.is(aFluid)) {\n\t\t\t\t\t\t\tint tXP = Math.min(50, (aFluid.amount*3)/200);\n\t\t\t\t\t\t\tif (tXP > 0) {\n\t\t\t\t\t\t\t\t((ITileEntityTapAccessible)tDelegator.mTileEntity).tapDrain(tDelegator.mSideOfTileEntity, (tXP*200)/3, T);\n\t\t\t\t\t\t\t\tworldObj.spawnEntityInWorld(new EntityXPOrb(worldObj, xCoord+0.5, yCoord+0.2, zCoord+0.5, tXP));\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\treturn T;\n\t\t\t\t\t\t}\n\t\t\t\t\t\t// Nothing left to check for empty Hands",
+      "sha256": "c76d044ac6b6fb98392b395493754718b45556c5868446069efc128dc5e1de2d",
+      "purpose": "Original tap also turns mob essence into XP."
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/FluidCatalog.java",
+      "first_line": 250,
+      "last_line": 252,
+      "text": "            XP = fluid(\"XP\", \"xpjuice\").withGlint().withFlags(FluidFlags.MAGIC | FluidFlags.VOID_OVERFLOW),\n            XP_Molten = fluid(\"XP_Molten\", \"xp\").withGlint().withFlags(FluidFlags.MAGIC | FluidFlags.VOID_OVERFLOW),\n            Mob = fluid(\"Mob\", \"mobessence\").withFlags(FluidFlags.MAGIC | FluidFlags.VOID_OVERFLOW),",
+      "sha256": "5ff0b9fecdb810983d7633dfa7ded926d04f554177c8afad7f5a6596e7e71658",
+      "purpose": "Current catalog still declares XP, molten XP and mob essence fluid identities."
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase10Attachment.java",
+      "first_line": 35,
+      "last_line": 35,
+      "text": "\t@Override public AxisAlignedBB getCollisionBoundingBoxFromPool() {return null;}",
+      "sha256": "5278398ad835a9b6301c94fd6e6dd22fde36f9f9d50d26b76cdc2b46b11d18db",
+      "purpose": "Old attachment base explicitly has no collision box."
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "first_line": 192,
+      "last_line": 192,
+      "text": "\t@Override public final AxisAlignedBB getCollisionBoundingBoxFromPool(World aWorld, int aX, int aY, int aZ) {TileEntity aTileEntity = aWorld.getTileEntity(aX, aY, aZ); return aTileEntity instanceof IMTE_GetCollisionBoundingBoxFromPool ? ((IMTE_GetCollisionBoundingBoxFromPool)aTileEntity).getCollisionBoundingBoxFromPool() : aTileEntity == null ? null : AxisAlignedBB.getBoundingBox(aX, aY, aZ, aX+1, aY+1, aZ+1);}",
+      "sha256": "4f0a879bbf14ed91a3d2374f2629ad49e9a511a96766b2ec7b9a692576e2f03e",
+      "purpose": "Actual original world block forwards to that empty-box callback."
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/tool/FluidAttachmentBlock.java",
+      "first_line": 65,
+      "last_line": 65,
+      "text": "        return shapes.get(state.getValue(FACING));",
+      "sha256": "f52ae9c348b8b91161cb0da19b01b8d992f3ef2daff762f76a79ea9527c55517",
+      "purpose": "Current default native collision reuses this nonempty outline."
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverWorldInteraction.java",
+      "first_line": 22,
+      "last_line": 24,
+      "text": "    public static VoxelShape collision(BlockGetter level,BlockPos pos,VoxelShape shape){\n        if(!(level.getBlockEntity(pos) instanceof PanelCoverHost host)||!ComponentCoverFallback.ownClass(host.coverOwner()))return shape;\n        for(var side:Direction.values()){",
+      "sha256": "2db258d3a277c20cda8787216b09816c2515cc054449e05d7237d5a28e001b24",
+      "purpose": "No block entity on these attachments means cover collision does not remove the native shape."
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTToolBlocks.java",
+      "first_line": 73,
+      "last_line": 80,
+      "text": "        var attachments = new java.util.ArrayList<>(com.gregtech.gregtech.content.tool.FluidAttachmentSpec.all());\n        for (String id : java.util.List.of(\"tap\", \"nozzle\", \"fluid_funnel\",\n                \"cap_nozzle\")) attachments.add(new com.gregtech.gregtech.content.tool.FluidAttachmentSpec(id, id, java.util.Set.of(\"cap_nozzle\",\n                \"nozzle\").contains(id) ? Materials.Steel : Materials.Ceramic, false));\n        for (var spec : attachments) {\n            var block = BLOCKS.register(spec.id(), () -> new com.gregtech.gregtech.block.tool.FluidAttachmentBlock(spec,\n                    attachmentProperties(spec.id())));\n            ITEMS.register(spec.id(), () -> new BlockItem(block.get(), new Item.Properties().stacksTo(64)));",
+      "sha256": "1f348454b0466d79ff1f7804d996287c644a269e29cdc69b4a9c9944ceedda40",
+      "purpose": "Neo registers the 24 material rows plus four extra base IDs as separate factories."
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTToolBlocks.java",
+      "first_line": 235,
+      "last_line": 244,
+      "text": "        TAP = GTBlocks.BLOCKS.register(\"tap\", () -> new com.gregtech.gregtech.block.tool.TapBlock(false,\n                BlockBehaviour.Properties.of().mapColor(MapColor.METAL)\n                        .strength(1.5f, 6.0f).sound(SoundType.METAL).noOcclusion()));\n        GTBlocks.BLOCK_ITEMS.register(\"tap\", () -> new BlockItem(TAP.get(), new Item.Properties().stacksTo(64)));\n        // GT6 taps: 64\n        NOZZLE = GTBlocks.BLOCKS.register(\"nozzle\", () -> new com.gregtech.gregtech.block.tool.TapBlock(true,\n                BlockBehaviour.Properties.of().mapColor(MapColor.METAL)\n                        .strength(1.5f, 6.0f).sound(SoundType.METAL).noOcclusion()));\n        GTBlocks.BLOCK_ITEMS.register(\"nozzle\", () -> new BlockItem(NOZZLE.get(), new Item.Properties().stacksTo(64)));\n        // GT6 nozzles: 64",
+      "sha256": "35997cf42634aae0e572246a27b13bc50c6dfc032471ef7bf232b1b3f55b1cd5",
+      "purpose": "Forge separately registers bare tap/nozzle wrappers."
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTToolBlocks.java",
+      "first_line": 300,
+      "last_line": 306,
+      "text": "        for (var spec : com.gregtech.gregtech.content.tool.FluidAttachmentSpec.all()) {\n            var block = GTBlocks.BLOCKS.register(spec.id(), () -> new com.gregtech.gregtech.block.tool.FluidAttachmentBlock(spec,\n                    BlockBehaviour.Properties.of().strength(0.5f, 6).noOcclusion()));\n            ALL_SIMPLE.add((RegistryObject) block);\n            GTBlocks.BLOCK_ITEMS.register(spec.id(), () -> new BlockItem(block.get(), new Item.Properties().stacksTo(64)));\n            // Original taps, funnels and gas nozzles: 64\n        }",
+      "sha256": "e41f77b5f355933096b2008e39a19fe4ee04b10cd8b22de181260bda78cbc766",
+      "purpose": "Forge material variants register in addition to bare IDs."
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/tool/FluidAttachmentBlock.java",
+      "first_line": 186,
+      "last_line": 188,
+      "text": "        if (player.getItemInHand(hand).isEmpty() && spec.shape().equals(\"tap\"))\n            return pourBelow(level, pos, access(handler)) ? InteractionResult.CONSUME : InteractionResult.PASS;\n        return FluidUtil.interactWithFluidHandler(player, hand, access(handler)) ? InteractionResult.CONSUME : InteractionResult.PASS;",
+      "sha256": "d511983be903ae3711160a8c86d7121617532ed3ab87693a39c00fd4744b1333",
+      "purpose": "Current empty-hand tap only tries below pour; no XP fallback."
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTWorldWaterFluid.java",
+      "first_line": 181,
+      "last_line": 188,
+      "text": "    public static boolean isWaterFamily(Fluid fluid) {\n        // Rendering invokes this through the vanilla WaterFluid Mixin while chunks are built.\n        // The six fluids we own must still merge with vanilla water if a client has not received\n        // (or a datapack has replaced) the water tag yet; keep the tag for other mods' waters.\n        if (fluid == Fluids.WATER || fluid == Fluids.FLOWING_WATER\n                || fluid instanceof Source || fluid instanceof Flowing) return true;\n        return fluid.is(FluidTags.WATER);\n    }",
+      "sha256": "f8d7e15ff3a7ff04876ee96627fe78853e1ca4cd39fb4d1378201e915b68e93c",
+      "purpose": "GT water isSame includes water family; do not falsely report river water cauldron rejection."
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTWorldWaterFluid.java",
+      "first_line": 214,
+      "last_line": 216,
+      "text": "        public boolean isSame(Fluid fluid) {\n            return isWaterFamily(fluid);\n        }",
+      "sha256": "4c6dd5f4b04b3400473c185bc0ad0a1bbe45571d3d7bbffb2d326a8a33266a08",
+      "purpose": "Source water actually delegates identity to water family."
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTWorldWaterFluid.java",
+      "first_line": 255,
+      "last_line": 257,
+      "text": "        public boolean isSame(Fluid fluid) {\n            return isWaterFamily(fluid);\n        }",
+      "sha256": "4c6dd5f4b04b3400473c185bc0ad0a1bbe45571d3d7bbffb2d326a8a33266a08",
+      "purpose": "Flowing water also delegates identity to water family."
+    }
+  ],
+  "native_evidence": [
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-sources.jar",
+      "artifact_sha256": "de56d18d759d17d780416e47fb01b72c38633bdd2e2d071cdedfe486eab35d7b",
+      "entry": "net/minecraftforge/fluids/FluidUtil.java",
+      "entry_sha256": "6b5bfcff017fca36ce4644bd83acc07bb681241c62f604acce53a1b162647fd7",
+      "extracted_path": "work/fluid-attachments-audit-20261022/forge-FluidUtil.java"
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/neoforged/neoforge/fluids/FluidUtil.java",
+      "entry_sha256": "95a467946c80d71f57ac8caecc005d65b726ac3256c2763033d1bcd225d553b4",
+      "extracted_path": "work/fluid-attachments-audit-20261022/neo-FluidUtil.java"
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour.class",
+      "entry_sha256": "33a73cccc684a0d41bb0f075c13b2cad5721b3d9e6402c85f3e965d83890a288",
+      "javap_output": "work/coin-lifecycle-audit-20261022/forge-BlockBehaviour.javap.txt",
+      "javap_sha256": "4f7a519524136790967ca9923c140ed4e36fef2481fa1c309e26ba277bbdece7"
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour.java",
+      "entry_sha256": "410ae028d36585b6c210e853720ea3fb973154a4d7800a082d541293cf355014",
+      "extracted_path": "work/coin-lifecycle-audit-20261022/neo-BlockBehaviour.java"
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour$Properties.class",
+      "entry_sha256": "7b379ccb00fa99762c6961f9e94d2258c994c12c59a46aa4789ee5851ed3eb52",
+      "javap_output": "work/mini-portal-audit-20261022/forge-BlockBehaviour$Properties.javap.txt",
+      "javap_sha256": "7ac86268ff86932e5c8cb6737878da61b2fe46dc71bd3c8a222b82d468171cc4"
+    }
+  ],
+  "native_excerpts": [
+    {
+      "path": "C:/Dev/GregTech6/work/fluid-attachments-audit-20261022/forge-FluidUtil.java",
+      "first_line": 83,
+      "last_line": 110,
+      "text": "    public static boolean interactWithFluidHandler(@NotNull Player player, @NotNull InteractionHand hand, @NotNull IFluidHandler handler)\n    {\n        Preconditions.checkNotNull(player);\n        Preconditions.checkNotNull(hand);\n        Preconditions.checkNotNull(handler);\n\n        ItemStack heldItem = player.m_21120_(hand);\n        if (!heldItem.m_41619_())\n        {\n            return player.getCapability(ForgeCapabilities.ITEM_HANDLER)\n                .map(playerInventory -> {\n\n                    FluidActionResult fluidActionResult = tryFillContainerAndStow(heldItem, handler, playerInventory, Integer.MAX_VALUE, player, true);\n                    if (!fluidActionResult.isSuccess())\n                    {\n                        fluidActionResult = tryEmptyContainerAndStow(heldItem, handler, playerInventory, Integer.MAX_VALUE, player, true);\n                    }\n\n                    if (fluidActionResult.isSuccess())\n                    {\n                        player.m_21008_(hand, fluidActionResult.getResult());\n                        return true;\n                    }\n                    return false;\n                })\n                .orElse(false);\n        }\n        return false;",
+      "sha256": "f55b8d3380273208aa548887187808d8169071cc8df44da3364aab6b09d5e75d",
+      "purpose": "Current native container helper does not implement a held-block void command or XP empty-hand action."
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/fluid-attachments-audit-20261022/forge-FluidUtil.java",
+      "first_line": 396,
+      "last_line": 420,
+      "text": "    private static FluidStack tryFluidTransfer_Internal(IFluidHandler fluidDestination, IFluidHandler fluidSource, FluidStack drainable, boolean doTransfer)\n    {\n        int fillableAmount = fluidDestination.fill(drainable, IFluidHandler.FluidAction.SIMULATE);\n        if (fillableAmount > 0)\n        {\n            drainable.setAmount(fillableAmount);\n            if (doTransfer)\n            {\n                FluidStack drained = fluidSource.drain(drainable, IFluidHandler.FluidAction.EXECUTE);\n                if (!drained.isEmpty())\n                {\n                    drained.setAmount(fluidDestination.fill(drained, IFluidHandler.FluidAction.EXECUTE));\n                    return drained;\n                }\n            }\n            else\n            {\n                return drainable;\n            }\n        }\n        return FluidStack.EMPTY;\n    }\n\n    /**\n     * Helper method to get an {@link IFluidHandlerItem} for an itemStack.",
+      "sha256": "e66ab4325e6e913318132d6ecf65206e36328750bc1406b5e129f492376c389e",
+      "purpose": "Native below transfer only simulates/commits fluid movement; no original spray/water sounds."
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/fluid-attachments-audit-20261022/neo-FluidUtil.java",
+      "first_line": 74,
+      "last_line": 101,
+      "text": "    public static boolean interactWithFluidHandler(Player player, InteractionHand hand, IFluidHandler handler) {\n        Preconditions.checkNotNull(player);\n        Preconditions.checkNotNull(hand);\n        Preconditions.checkNotNull(handler);\n\n        ItemStack heldItem = player.getItemInHand(hand);\n        if (heldItem.isEmpty()) {\n            return false;\n        }\n\n        var playerInventory = player.getCapability(Capabilities.ItemHandler.ENTITY);\n        Objects.requireNonNull(playerInventory, \"Player item handler is null\");\n\n        FluidActionResult fluidActionResult = tryFillContainerAndStow(heldItem, handler, playerInventory, Integer.MAX_VALUE, player, true);\n        if (!fluidActionResult.isSuccess()) {\n            fluidActionResult = tryEmptyContainerAndStow(heldItem, handler, playerInventory, Integer.MAX_VALUE, player, true);\n        }\n\n        if (fluidActionResult.isSuccess()) {\n            player.setItemInHand(hand, fluidActionResult.getResult());\n            return true;\n        } else {\n            return false;\n        }\n    }\n\n    /**\n     * Fill a container from the given fluidSource.",
+      "sha256": "89c72b3b570b62e927f873560121e6c4eb3ab44a0d2936a7b7f4273d989d07d3",
+      "purpose": "Current native container helper does not implement a held-block void command or XP empty-hand action."
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/fluid-attachments-audit-20261022/neo-FluidUtil.java",
+      "first_line": 339,
+      "last_line": 363,
+      "text": "    private static FluidStack tryFluidTransfer_Internal(IFluidHandler fluidDestination, IFluidHandler fluidSource, FluidStack drainable, boolean doTransfer) {\n        int fillableAmount = fluidDestination.fill(drainable, IFluidHandler.FluidAction.SIMULATE);\n        if (fillableAmount > 0) {\n            drainable.setAmount(fillableAmount);\n            if (doTransfer) {\n                FluidStack drained = fluidSource.drain(drainable, IFluidHandler.FluidAction.EXECUTE);\n                if (!drained.isEmpty()) {\n                    drained.setAmount(fluidDestination.fill(drained, IFluidHandler.FluidAction.EXECUTE));\n                    return drained;\n                }\n            } else {\n                return drainable;\n            }\n        }\n        return FluidStack.EMPTY;\n    }\n\n    /**\n     * Helper method to get an {@link IFluidHandlerItem} for an itemStack.\n     *\n     * The itemStack passed in here WILL be modified, the {@link IFluidHandlerItem} acts on it directly.\n     * Some {@link IFluidHandlerItem} will change the item entirely, always use {@link IFluidHandlerItem#getContainer()}\n     * after using the fluid handler to get the resulting item back.\n     *\n     * Note that the itemStack MUST have a stackSize of 1 if you want to fill or drain it.",
+      "sha256": "0ab148caab54c02d9a79a433aa301ca9691c508c9ca29f8a3d6e7fedf7f9edad",
+      "purpose": "Native below transfer only simulates/commits fluid movement; no original spray/water sounds."
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/neo-BlockBehaviour.java",
+      "first_line": 321,
+      "last_line": 323,
+      "text": "    protected VoxelShape getCollisionShape(BlockState p_60572_, BlockGetter p_60573_, BlockPos p_60574_, CollisionContext p_60575_) {\n        return this.hasCollision ? p_60572_.getShape(p_60573_, p_60574_) : Shapes.empty();\n    }",
+      "sha256": "1a96479146d1e0e83425b58d0a71d014cc282180baab8b0deb420684811e4d56",
+      "purpose": "Neo uses outline unless hasCollision disabled."
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/neo-BlockBehaviour.java",
+      "first_line": 969,
+      "last_line": 969,
+      "text": "        boolean hasCollision = true;",
+      "sha256": "eb83f57f4316065cc55cb66fa20a94aff3c8f426cc1da71b7e44908b9c072f7a",
+      "purpose": "Neo collision property defaults true."
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/forge-BlockBehaviour.javap.txt",
+      "first_line": 392,
+      "last_line": 406,
+      "text": "  public net.minecraft.world.phys.shapes.VoxelShape getCollisionShape(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.phys.shapes.CollisionContext);\n    Code:\n       0: aload_0\n       1: getfield      #71                 // Field hasCollision:Z\n       4: ifeq          16\n       7: aload_1\n       8: aload_2\n       9: aload_3\n      10: invokevirtual #439                // Method net/minecraft/world/level/block/state/BlockState.getShape:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/shapes/VoxelShape;\n      13: goto          19\n      16: invokestatic  #462                // Method net/minecraft/world/phys/shapes/Shapes.empty:()Lnet/minecraft/world/phys/shapes/VoxelShape;\n      19: areturn\n\n  public boolean isCollisionShapeFullBlock(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos);\n    Code:",
+      "sha256": "cacdd208c0e70fa75256d11a943e02d8b554af6181af8750261ee204d20d6cf2",
+      "purpose": "Forge default collision also uses outline."
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/mini-portal-audit-20261022/forge-BlockBehaviour$Properties.javap.txt",
+      "first_line": 67,
+      "last_line": 78,
+      "text": "  private net.minecraft.world.level.block.state.BlockBehaviour$Properties();\n    Code:\n         0: aload_0\n         1: invokespecial #87                 // Method java/lang/Object.\"<init>\":()V\n         4: aload_0\n         5: invokedynamic #106,  0            // InvokeDynamic #0:apply:()Ljava/util/function/Function;\n        10: putfield      #108                // Field mapColor:Ljava/util/function/Function;\n        13: aload_0\n        14: iconst_1\n        15: putfield      #110                // Field hasCollision:Z\n        18: aload_0\n        19: getstatic     #115                // Field net/minecraft/world/level/block/SoundType.STONE:Lnet/minecraft/world/level/block/SoundType;",
+      "sha256": "e27ab2b86c0d6c807038998f254007e2d6f88a06cbff7f157e03941811424581",
+      "purpose": "Forge collision property constructor defaults true."
+    }
+  ],
+  "resource_scope": "No model/texture edits or new resource validation; OriginalToolShapes only used as a nonempty outline witness, not pixel/geometry parity proof.",
+  "original_catalog_rows": [
+    {
+      "original_id": 32728,
+      "label": "Ceramic Tap",
+      "kind": "tap",
+      "material_source": "MT.Ceramic",
+      "material_constant": "Ceramic",
+      "acid_proof": false,
+      "hardness": 0.5,
+      "resistance": 5.0,
+      "source_line": 2108,
+      "source_text": "\t\taMat = MT.Ceramic;          aRegistry.add(\"Ceramic Tap\"                                         , \"Misc Tool Blocks\"                    , 32728, 32720, MultiTileEntityFluidTap.class                           ,                 0, 64, aUtilStone     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   5.0F, NBT_ACIDPROOF, F, NBT_MAGICPROOF, F)); IL.Ceramic_Tap.set(aRegistry.getItem(), new OreDictItemData(MT.Ceramic, U*3)); RM.add_smelting(IL.Ceramic_Tap_Raw.get(1), IL.Ceramic_Tap.get(1), F, F, T);",
+      "source_sha256": "5c57d303a01c00b066234e3e92a076a79941fe98cad828194ee88b1c1a32dded"
+    },
+    {
+      "original_id": 32729,
+      "label": "Plastic Tap",
+      "kind": "tap",
+      "material_source": "MT.Plastic",
+      "material_constant": "Plastic",
+      "acid_proof": false,
+      "hardness": 0.5,
+      "resistance": 3.0,
+      "source_line": 2109,
+      "source_text": "\t\taMat = MT.Plastic;          aRegistry.add(\"Plastic Tap\"                                         , \"Misc Tool Blocks\"                    , 32729, 32720, MultiTileEntityFluidTap.class                           ,                 0, 64, aUtilWood      , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   3.0F, NBT_ACIDPROOF, F, NBT_MAGICPROOF, F), \"  s\", \"PP \", \"xP \", 'P', OP.plateCurved.dat(aMat));",
+      "source_sha256": "ca3e548312dd8990c853c50ed4f9c485148fe47ac556694b851cc9b35536fae8"
+    },
+    {
+      "original_id": 32730,
+      "label": "Stainless Tap",
+      "kind": "tap",
+      "material_source": "MT.StainlessSteel",
+      "material_constant": "StainlessSteel",
+      "acid_proof": true,
+      "hardness": 0.5,
+      "resistance": 6.0,
+      "source_line": 2110,
+      "source_text": "\t\taMat = MT.StainlessSteel;   aRegistry.add(\"Stainless Tap\"                                       , \"Misc Tool Blocks\"                    , 32730, 32720, MultiTileEntityFluidTap.class                           ,                 0, 64, aUtilMetal     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   6.0F, NBT_ACIDPROOF, T, NBT_MAGICPROOF, F), \"  h\", \"PP \", \"oP \", 'P', OP.plateCurved.dat(aMat));",
+      "source_sha256": "38047eaba03953e74e3534870794ec789dff4518f8dea5863fa8b9b753d78f4c"
+    },
+    {
+      "original_id": 32731,
+      "label": "Tungsten Tap",
+      "kind": "tap",
+      "material_source": "ANY.W",
+      "material_constant": "Tungsten",
+      "acid_proof": true,
+      "hardness": 0.5,
+      "resistance": 10.0,
+      "source_line": 2111,
+      "source_text": "\t\taMat = ANY.W;               aRegistry.add(\"Tungsten Tap\"                                        , \"Misc Tool Blocks\"                    , 32731, 32720, MultiTileEntityFluidTap.class                           ,                 0, 64, aUtilMetal     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,  10.0F, NBT_ACIDPROOF, T, NBT_MAGICPROOF, T), \"  h\", \"PP \", \"oP \", 'P', OP.plateCurved.dat(aMat));",
+      "source_sha256": "0e06e48fc5814fb8e301ae1d016c83e26b22b26427a3ac3e473fa36ec1ecb874"
+    },
+    {
+      "original_id": 32080,
+      "label": "Tantalum Hafnium Carbide Tap",
+      "kind": "tap",
+      "material_source": "MT.Ta4HfC5",
+      "material_constant": "TantalumHafniumCarbide",
+      "acid_proof": false,
+      "hardness": 0.5,
+      "resistance": 10.0,
+      "source_line": 2112,
+      "source_text": "\t\taMat = MT.Ta4HfC5;          aRegistry.add(\"Tantalum Hafnium Carbide Tap\"                        , \"Misc Tool Blocks\"                    , 32080, 32720, MultiTileEntityFluidTap.class                           ,                 0, 64, aUtilMetal     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,  10.0F, NBT_ACIDPROOF, F, NBT_MAGICPROOF, T), \"  h\", \"PP \", \"oP \", 'P', OP.plateCurved.dat(aMat));",
+      "source_sha256": "b5a7bcfda4007668eff9536f3e8210691b961ef1c64096e2d25d3283e6c5ff2c"
+    },
+    {
+      "original_id": 32732,
+      "label": "Adamantium Tap",
+      "kind": "tap",
+      "material_source": "MT.Ad",
+      "material_constant": "Adamantium",
+      "acid_proof": true,
+      "hardness": 0.5,
+      "resistance": 100.0,
+      "source_line": 2113,
+      "source_text": "\t\taMat = MT.Ad;               aRegistry.add(\"Adamantium Tap\"                                      , \"Misc Tool Blocks\"                    , 32732, 32720, MultiTileEntityFluidTap.class                           ,                 0, 64, aUtilMetal     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE, 100.0F, NBT_ACIDPROOF, T, NBT_MAGICPROOF, T), \"  h\", \"PP \", \"oP \", 'P', OP.plateCurved.dat(aMat));",
+      "source_sha256": "6ad919aedc3a41ff8450e7bc5ea91bc9d4b66b6a9001d1c0e33c8d045f09adbc"
+    },
+    {
+      "original_id": 32723,
+      "label": "Ceramic Funnel",
+      "kind": "fluid_funnel",
+      "material_source": "MT.Ceramic",
+      "material_constant": "Ceramic",
+      "acid_proof": false,
+      "hardness": 0.5,
+      "resistance": 5.0,
+      "source_line": 2115,
+      "source_text": "\t\taMat = MT.Ceramic;          aRegistry.add(\"Ceramic Funnel\"                                      , \"Misc Tool Blocks\"                    , 32723, 32720, MultiTileEntityFluidFunnel.class                        ,                 0, 64, aUtilStone     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   5.0F, NBT_ACIDPROOF, F, NBT_MAGICPROOF, F)); IL.Ceramic_Funnel.set(aRegistry.getItem(), new OreDictItemData(MT.Ceramic, U*3)); RM.add_smelting(IL.Ceramic_Funnel_Raw.get(1), IL.Ceramic_Funnel.get(1), F, F, T);",
+      "source_sha256": "29afae8751657a5f3d2687d2fc9b7a0f054832dd29d8c22b21d64e8e244fa97c"
+    },
+    {
+      "original_id": 32724,
+      "label": "Plastic Funnel",
+      "kind": "fluid_funnel",
+      "material_source": "MT.Plastic",
+      "material_constant": "Plastic",
+      "acid_proof": false,
+      "hardness": 0.5,
+      "resistance": 3.0,
+      "source_line": 2116,
+      "source_text": "\t\taMat = MT.Plastic;          aRegistry.add(\"Plastic Funnel\"                                      , \"Misc Tool Blocks\"                    , 32724, 32720, MultiTileEntityFluidFunnel.class                        ,                 0, 64, aUtilWood      , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   3.0F, NBT_ACIDPROOF, F, NBT_MAGICPROOF, F), \" s \", \"PxP\", \" P \", 'P', OP.plateCurved.dat(aMat));",
+      "source_sha256": "7fce247ecb71e29b31761d8e67b2d6c96905aba996f24e17a37f761a989da868"
+    },
+    {
+      "original_id": 32725,
+      "label": "Stainless Funnel",
+      "kind": "fluid_funnel",
+      "material_source": "MT.StainlessSteel",
+      "material_constant": "StainlessSteel",
+      "acid_proof": true,
+      "hardness": 0.5,
+      "resistance": 6.0,
+      "source_line": 2117,
+      "source_text": "\t\taMat = MT.StainlessSteel;   aRegistry.add(\"Stainless Funnel\"                                    , \"Misc Tool Blocks\"                    , 32725, 32720, MultiTileEntityFluidFunnel.class                        ,                 0, 64, aUtilMetal     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   6.0F, NBT_ACIDPROOF, T, NBT_MAGICPROOF, F), \" h \", \"PoP\", \" P \", 'P', OP.plateCurved.dat(aMat));",
+      "source_sha256": "8d2c9da09570e7bfb9ef98ebbaa3b459647ea24a0e5f40ad28dc32adcd1b5408"
+    },
+    {
+      "original_id": 32726,
+      "label": "Tungsten Funnel",
+      "kind": "fluid_funnel",
+      "material_source": "ANY.W",
+      "material_constant": "Tungsten",
+      "acid_proof": true,
+      "hardness": 0.5,
+      "resistance": 10.0,
+      "source_line": 2118,
+      "source_text": "\t\taMat = ANY.W;               aRegistry.add(\"Tungsten Funnel\"                                     , \"Misc Tool Blocks\"                    , 32726, 32720, MultiTileEntityFluidFunnel.class                        ,                 0, 64, aUtilMetal     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,  10.0F, NBT_ACIDPROOF, T, NBT_MAGICPROOF, T), \" h \", \"PoP\", \" P \", 'P', OP.plateCurved.dat(aMat));",
+      "source_sha256": "218b3a4faacc4af330c6cd8ad033c7685dd7e239df17af7a7fbb7c1779e74e64"
+    },
+    {
+      "original_id": 32081,
+      "label": "Tantalum Hafnium Carbide Funnel",
+      "kind": "fluid_funnel",
+      "material_source": "MT.Ta4HfC5",
+      "material_constant": "TantalumHafniumCarbide",
+      "acid_proof": false,
+      "hardness": 0.5,
+      "resistance": 10.0,
+      "source_line": 2119,
+      "source_text": "\t\taMat = MT.Ta4HfC5;          aRegistry.add(\"Tantalum Hafnium Carbide Funnel\"                     , \"Misc Tool Blocks\"                    , 32081, 32720, MultiTileEntityFluidFunnel.class                        ,                 0, 64, aUtilMetal     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,  10.0F, NBT_ACIDPROOF, F, NBT_MAGICPROOF, T), \" h \", \"PoP\", \" P \", 'P', OP.plateCurved.dat(aMat));",
+      "source_sha256": "ff2804df744ba0388e524b93d3f73de14618393884e89d7b17fa7644708c60dc"
+    },
+    {
+      "original_id": 32727,
+      "label": "Adamantium Funnel",
+      "kind": "fluid_funnel",
+      "material_source": "MT.Ad",
+      "material_constant": "Adamantium",
+      "acid_proof": true,
+      "hardness": 0.5,
+      "resistance": 100.0,
+      "source_line": 2120,
+      "source_text": "\t\taMat = MT.Ad;               aRegistry.add(\"Adamantium Funnel\"                                   , \"Misc Tool Blocks\"                    , 32727, 32720, MultiTileEntityFluidFunnel.class                        ,                 0, 64, aUtilMetal     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE, 100.0F, NBT_ACIDPROOF, T, NBT_MAGICPROOF, T), \" h \", \"PoP\", \" P \", 'P', OP.plateCurved.dat(aMat));",
+      "source_sha256": "e355c92f7dcc30d480033150b7a426940f28cad5947ac4d23d9dc6cd120e93c4"
+    },
+    {
+      "original_id": 32747,
+      "label": "Plastic Nozzle",
+      "kind": "nozzle",
+      "material_source": "MT.Plastic",
+      "material_constant": "Plastic",
+      "acid_proof": false,
+      "hardness": 0.5,
+      "resistance": 3.0,
+      "source_line": 2122,
+      "source_text": "\t\taMat = MT.Plastic;          aRegistry.add(\"Plastic Nozzle\"                                      , \"Misc Tool Blocks\"                    , 32747, 32720, MultiTileEntityFluidNozzle.class                        ,                 0, 64, aUtilWood      , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   3.0F, NBT_ACIDPROOF, F, NBT_MAGICPROOF, F), \"  s\", \"PRP\", \"x  \", 'R', OP.ring.dat(ANY.Rubber), 'P', OP.plateCurved.dat(aMat));",
+      "source_sha256": "6334db6aefffa790dc79ca7306d27a4be1b3564272951d256b09f7cf13321044"
+    },
+    {
+      "original_id": 32746,
+      "label": "Steel Nozzle",
+      "kind": "nozzle",
+      "material_source": "ANY.Steel",
+      "material_constant": "Steel",
+      "acid_proof": false,
+      "hardness": 0.5,
+      "resistance": 5.0,
+      "source_line": 2123,
+      "source_text": "\t\taMat = ANY.Steel;           aRegistry.add(\"Steel Nozzle\"                                        , \"Misc Tool Blocks\"                    , 32746, 32720, MultiTileEntityFluidNozzle.class                        ,                 0, 64, aUtilMetal     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   5.0F, NBT_ACIDPROOF, F, NBT_MAGICPROOF, F), \"  h\", \"PRP\", \"o  \", 'R', OP.ring.dat(ANY.Rubber), 'P', OP.plateCurved.dat(aMat));",
+      "source_sha256": "20393a1197f77178e05af6474c9ca9a9b9460ab5e1ea4d8745d8521fb8303bb7"
+    },
+    {
+      "original_id": 32748,
+      "label": "Stainless Nozzle",
+      "kind": "nozzle",
+      "material_source": "MT.StainlessSteel",
+      "material_constant": "StainlessSteel",
+      "acid_proof": true,
+      "hardness": 0.5,
+      "resistance": 6.0,
+      "source_line": 2124,
+      "source_text": "\t\taMat = MT.StainlessSteel;   aRegistry.add(\"Stainless Nozzle\"                                    , \"Misc Tool Blocks\"                    , 32748, 32720, MultiTileEntityFluidNozzle.class                        ,                 0, 64, aUtilMetal     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   6.0F, NBT_ACIDPROOF, T, NBT_MAGICPROOF, F), \"  h\", \"PRP\", \"o  \", 'R', OP.ring.dat(ANY.Rubber), 'P', OP.plateCurved.dat(aMat));",
+      "source_sha256": "ae0d024bccf700e0e12440b36a80bb540da3227941214f655d4cd26ecb6108c2"
+    },
+    {
+      "original_id": 32749,
+      "label": "Tungsten Nozzle",
+      "kind": "nozzle",
+      "material_source": "ANY.W",
+      "material_constant": "Tungsten",
+      "acid_proof": true,
+      "hardness": 0.5,
+      "resistance": 10.0,
+      "source_line": 2125,
+      "source_text": "\t\taMat = ANY.W;               aRegistry.add(\"Tungsten Nozzle\"                                     , \"Misc Tool Blocks\"                    , 32749, 32720, MultiTileEntityFluidNozzle.class                        ,                 0, 64, aUtilMetal     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,  10.0F, NBT_ACIDPROOF, T, NBT_MAGICPROOF, T), \"  h\", \"PRP\", \"o  \", 'R', OP.ring.dat(aMat), 'P', OP.plateCurved.dat(aMat));",
+      "source_sha256": "7e43e54515da34133e9f5d97635ba68e581662f0e8c9653d9d20ec96927a65cb"
+    },
+    {
+      "original_id": 32079,
+      "label": "Tantalum Hafnium Carbide Nozzle",
+      "kind": "nozzle",
+      "material_source": "MT.Ta4HfC5",
+      "material_constant": "TantalumHafniumCarbide",
+      "acid_proof": false,
+      "hardness": 0.5,
+      "resistance": 10.0,
+      "source_line": 2126,
+      "source_text": "\t\taMat = MT.Ta4HfC5;          aRegistry.add(\"Tantalum Hafnium Carbide Nozzle\"                     , \"Misc Tool Blocks\"                    , 32079, 32720, MultiTileEntityFluidNozzle.class                        ,                 0, 64, aUtilMetal     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,  10.0F, NBT_ACIDPROOF, F, NBT_MAGICPROOF, T), \"  h\", \"PRP\", \"o  \", 'R', OP.ring.dat(aMat), 'P', OP.plateCurved.dat(aMat));",
+      "source_sha256": "b4e5f82ec8e6f67cc332e919b74251b82af533ffe078525d744ab09a33bbddec"
+    },
+    {
+      "original_id": 32750,
+      "label": "Adamantium Nozzle",
+      "kind": "nozzle",
+      "material_source": "MT.Ad",
+      "material_constant": "Adamantium",
+      "acid_proof": true,
+      "hardness": 0.5,
+      "resistance": 100.0,
+      "source_line": 2127,
+      "source_text": "\t\taMat = MT.Ad;               aRegistry.add(\"Adamantium Nozzle\"                                   , \"Misc Tool Blocks\"                    , 32750, 32720, MultiTileEntityFluidNozzle.class                        ,                 0, 64, aUtilMetal     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE, 100.0F, NBT_ACIDPROOF, T, NBT_MAGICPROOF, T), \"  h\", \"PRP\", \"o  \", 'R', OP.ring.dat(aMat), 'P', OP.plateCurved.dat(aMat));",
+      "source_sha256": "26d7edaea5956af8ef82cf756a7ef60711e36a21f5f0391f4db8035f729bc73a"
+    },
+    {
+      "original_id": 32059,
+      "label": "Plastic Cap Nozzle",
+      "kind": "cap_nozzle",
+      "material_source": "MT.Plastic",
+      "material_constant": "Plastic",
+      "acid_proof": false,
+      "hardness": 0.5,
+      "resistance": 3.0,
+      "source_line": 2129,
+      "source_text": "\t\taMat = MT.Plastic;          aRegistry.add(\"Plastic Cap Nozzle\"                                  , \"Misc Tool Blocks\"                    , 32059, 32720, MultiTileEntityFluidCapNozzle.class                     ,                 0, 64, aUtilWood      , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   3.0F, NBT_ACIDPROOF, F, NBT_MAGICPROOF, F), \"Rw\", \"BT\", \"Nd\", 'N', aRegistry.getItem(32747), 'R', OP.ring.dat(ANY.Rubber), 'B', OP.round.dat(aMat), 'T', OP.screw.dat(aMat));",
+      "source_sha256": "37b9594221accf78f9911b71463d07f91dc799cca9521b23d20d897f4e41d6ce"
+    },
+    {
+      "original_id": 32058,
+      "label": "Steel Cap Nozzle",
+      "kind": "cap_nozzle",
+      "material_source": "ANY.Steel",
+      "material_constant": "Steel",
+      "acid_proof": false,
+      "hardness": 0.5,
+      "resistance": 5.0,
+      "source_line": 2130,
+      "source_text": "\t\taMat = ANY.Steel;           aRegistry.add(\"Steel Cap Nozzle\"                                    , \"Misc Tool Blocks\"                    , 32058, 32720, MultiTileEntityFluidCapNozzle.class                     ,                 0, 64, aUtilMetal     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   5.0F, NBT_ACIDPROOF, F, NBT_MAGICPROOF, F), \"Rw\", \"BT\", \"Nd\", 'N', aRegistry.getItem(32746), 'R', OP.ring.dat(ANY.Rubber), 'B', OP.round.dat(aMat), 'T', OP.screw.dat(aMat));",
+      "source_sha256": "23f7d4446c61c1ca48c951d875d8bdb8e9530112ff515a3a4ea533658ac73c4b"
+    },
+    {
+      "original_id": 32060,
+      "label": "Stainless Cap Nozzle",
+      "kind": "cap_nozzle",
+      "material_source": "MT.StainlessSteel",
+      "material_constant": "StainlessSteel",
+      "acid_proof": true,
+      "hardness": 0.5,
+      "resistance": 6.0,
+      "source_line": 2131,
+      "source_text": "\t\taMat = MT.StainlessSteel;   aRegistry.add(\"Stainless Cap Nozzle\"                                , \"Misc Tool Blocks\"                    , 32060, 32720, MultiTileEntityFluidCapNozzle.class                     ,                 0, 64, aUtilMetal     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   6.0F, NBT_ACIDPROOF, T, NBT_MAGICPROOF, F), \"Rw\", \"BT\", \"Nd\", 'N', aRegistry.getItem(32748), 'R', OP.ring.dat(ANY.Rubber), 'B', OP.round.dat(aMat), 'T', OP.screw.dat(aMat));",
+      "source_sha256": "95ab99be4edace6b29b4795db1d5cf0b8665c82b7901f101ad04e548ea6e4991"
+    },
+    {
+      "original_id": 32061,
+      "label": "Tungsten Cap Nozzle",
+      "kind": "cap_nozzle",
+      "material_source": "ANY.W",
+      "material_constant": "Tungsten",
+      "acid_proof": true,
+      "hardness": 0.5,
+      "resistance": 10.0,
+      "source_line": 2132,
+      "source_text": "\t\taMat = ANY.W;               aRegistry.add(\"Tungsten Cap Nozzle\"                                 , \"Misc Tool Blocks\"                    , 32061, 32720, MultiTileEntityFluidCapNozzle.class                     ,                 0, 64, aUtilMetal     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,  10.0F, NBT_ACIDPROOF, T, NBT_MAGICPROOF, T), \"Rw\", \"BT\", \"Nd\", 'N', aRegistry.getItem(32749), 'R', OP.ring.dat(aMat), 'B', OP.round.dat(aMat), 'T', OP.screw.dat(aMat));",
+      "source_sha256": "3f631d33e4007d9ff1fb045b0b7e849e112c5a3ab89f196317367eb3f0881459"
+    },
+    {
+      "original_id": 32082,
+      "label": "Tantalum Hafnium Carbide Cap Nozzle",
+      "kind": "cap_nozzle",
+      "material_source": "MT.Ta4HfC5",
+      "material_constant": "TantalumHafniumCarbide",
+      "acid_proof": false,
+      "hardness": 0.5,
+      "resistance": 10.0,
+      "source_line": 2133,
+      "source_text": "\t\taMat = MT.Ta4HfC5;          aRegistry.add(\"Tantalum Hafnium Carbide Cap Nozzle\"                 , \"Misc Tool Blocks\"                    , 32082, 32720, MultiTileEntityFluidCapNozzle.class                     ,                 0, 64, aUtilMetal     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,  10.0F, NBT_ACIDPROOF, F, NBT_MAGICPROOF, T), \"Rw\", \"BT\", \"Nd\", 'N', aRegistry.getItem(32749), 'R', OP.ring.dat(aMat), 'B', OP.round.dat(aMat), 'T', OP.screw.dat(aMat));",
+      "source_sha256": "1adea1c35133666e8d015ef4baa7141d431b6969ed0ec8f76d291d532c3c9eea"
+    },
+    {
+      "original_id": 32062,
+      "label": "Adamantium Cap Nozzle",
+      "kind": "cap_nozzle",
+      "material_source": "MT.Ad",
+      "material_constant": "Adamantium",
+      "acid_proof": true,
+      "hardness": 0.5,
+      "resistance": 100.0,
+      "source_line": 2134,
+      "source_text": "\t\taMat = MT.Ad;               aRegistry.add(\"Adamantium Cap Nozzle\"                               , \"Misc Tool Blocks\"                    , 32062, 32720, MultiTileEntityFluidCapNozzle.class                     ,                 0, 64, aUtilMetal     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE, 100.0F, NBT_ACIDPROOF, T, NBT_MAGICPROOF, T), \"Rw\", \"BT\", \"Nd\", 'N', aRegistry.getItem(32750), 'R', OP.ring.dat(aMat), 'B', OP.round.dat(aMat), 'T', OP.screw.dat(aMat));",
+      "source_sha256": "07e469467314c9b6cd4290cc85d2ea62d214e71671f07c7687cdcca5e0bb660f"
+    }
+  ],
+  "catalog_comparison": [
+    {
+      "id": "tap_ceramic",
+      "shape": "tap",
+      "material_constant": "Ceramic",
+      "acid_proof": false,
+      "original_id": 32728,
+      "original_hardness": 0.5,
+      "original_resistance": 5.0,
+      "current_declared_hardness_both_platforms": 0.5,
+      "current_declared_resistance_both_platforms": 6,
+      "resistance_differs": true
+    },
+    {
+      "id": "tap_plastic",
+      "shape": "tap",
+      "material_constant": "Plastic",
+      "acid_proof": false,
+      "original_id": 32729,
+      "original_hardness": 0.5,
+      "original_resistance": 3.0,
+      "current_declared_hardness_both_platforms": 0.5,
+      "current_declared_resistance_both_platforms": 6,
+      "resistance_differs": true
+    },
+    {
+      "id": "tap_stainless_steel",
+      "shape": "tap",
+      "material_constant": "StainlessSteel",
+      "acid_proof": true,
+      "original_id": 32730,
+      "original_hardness": 0.5,
+      "original_resistance": 6.0,
+      "current_declared_hardness_both_platforms": 0.5,
+      "current_declared_resistance_both_platforms": 6,
+      "resistance_differs": false
+    },
+    {
+      "id": "tap_tungsten",
+      "shape": "tap",
+      "material_constant": "Tungsten",
+      "acid_proof": true,
+      "original_id": 32731,
+      "original_hardness": 0.5,
+      "original_resistance": 10.0,
+      "current_declared_hardness_both_platforms": 0.5,
+      "current_declared_resistance_both_platforms": 6,
+      "resistance_differs": true
+    },
+    {
+      "id": "tap_tantalum_hafnium_carbide",
+      "shape": "tap",
+      "material_constant": "TantalumHafniumCarbide",
+      "acid_proof": false,
+      "original_id": 32080,
+      "original_hardness": 0.5,
+      "original_resistance": 10.0,
+      "current_declared_hardness_both_platforms": 0.5,
+      "current_declared_resistance_both_platforms": 6,
+      "resistance_differs": true
+    },
+    {
+      "id": "tap_adamantium",
+      "shape": "tap",
+      "material_constant": "Adamantium",
+      "acid_proof": true,
+      "original_id": 32732,
+      "original_hardness": 0.5,
+      "original_resistance": 100.0,
+      "current_declared_hardness_both_platforms": 0.5,
+      "current_declared_resistance_both_platforms": 6,
+      "resistance_differs": true
+    },
+    {
+      "id": "fluid_funnel_ceramic",
+      "shape": "fluid_funnel",
+      "material_constant": "Ceramic",
+      "acid_proof": false,
+      "original_id": 32723,
+      "original_hardness": 0.5,
+      "original_resistance": 5.0,
+      "current_declared_hardness_both_platforms": 0.5,
+      "current_declared_resistance_both_platforms": 6,
+      "resistance_differs": true
+    },
+    {
+      "id": "fluid_funnel_plastic",
+      "shape": "fluid_funnel",
+      "material_constant": "Plastic",
+      "acid_proof": false,
+      "original_id": 32724,
+      "original_hardness": 0.5,
+      "original_resistance": 3.0,
+      "current_declared_hardness_both_platforms": 0.5,
+      "current_declared_resistance_both_platforms": 6,
+      "resistance_differs": true
+    },
+    {
+      "id": "fluid_funnel_stainless_steel",
+      "shape": "fluid_funnel",
+      "material_constant": "StainlessSteel",
+      "acid_proof": true,
+      "original_id": 32725,
+      "original_hardness": 0.5,
+      "original_resistance": 6.0,
+      "current_declared_hardness_both_platforms": 0.5,
+      "current_declared_resistance_both_platforms": 6,
+      "resistance_differs": false
+    },
+    {
+      "id": "fluid_funnel_tungsten",
+      "shape": "fluid_funnel",
+      "material_constant": "Tungsten",
+      "acid_proof": true,
+      "original_id": 32726,
+      "original_hardness": 0.5,
+      "original_resistance": 10.0,
+      "current_declared_hardness_both_platforms": 0.5,
+      "current_declared_resistance_both_platforms": 6,
+      "resistance_differs": true
+    },
+    {
+      "id": "fluid_funnel_tantalum_hafnium_carbide",
+      "shape": "fluid_funnel",
+      "material_constant": "TantalumHafniumCarbide",
+      "acid_proof": false,
+      "original_id": 32081,
+      "original_hardness": 0.5,
+      "original_resistance": 10.0,
+      "current_declared_hardness_both_platforms": 0.5,
+      "current_declared_resistance_both_platforms": 6,
+      "resistance_differs": true
+    },
+    {
+      "id": "fluid_funnel_adamantium",
+      "shape": "fluid_funnel",
+      "material_constant": "Adamantium",
+      "acid_proof": true,
+      "original_id": 32727,
+      "original_hardness": 0.5,
+      "original_resistance": 100.0,
+      "current_declared_hardness_both_platforms": 0.5,
+      "current_declared_resistance_both_platforms": 6,
+      "resistance_differs": true
+    },
+    {
+      "id": "cap_nozzle_steel",
+      "shape": "cap_nozzle",
+      "material_constant": "Steel",
+      "acid_proof": false,
+      "original_id": 32058,
+      "original_hardness": 0.5,
+      "original_resistance": 5.0,
+      "current_declared_hardness_both_platforms": 0.5,
+      "current_declared_resistance_both_platforms": 6,
+      "resistance_differs": true
+    },
+    {
+      "id": "cap_nozzle_plastic",
+      "shape": "cap_nozzle",
+      "material_constant": "Plastic",
+      "acid_proof": false,
+      "original_id": 32059,
+      "original_hardness": 0.5,
+      "original_resistance": 3.0,
+      "current_declared_hardness_both_platforms": 0.5,
+      "current_declared_resistance_both_platforms": 6,
+      "resistance_differs": true
+    },
+    {
+      "id": "cap_nozzle_stainless_steel",
+      "shape": "cap_nozzle",
+      "material_constant": "StainlessSteel",
+      "acid_proof": true,
+      "original_id": 32060,
+      "original_hardness": 0.5,
+      "original_resistance": 6.0,
+      "current_declared_hardness_both_platforms": 0.5,
+      "current_declared_resistance_both_platforms": 6,
+      "resistance_differs": false
+    },
+    {
+      "id": "cap_nozzle_tungsten",
+      "shape": "cap_nozzle",
+      "material_constant": "Tungsten",
+      "acid_proof": true,
+      "original_id": 32061,
+      "original_hardness": 0.5,
+      "original_resistance": 10.0,
+      "current_declared_hardness_both_platforms": 0.5,
+      "current_declared_resistance_both_platforms": 6,
+      "resistance_differs": true
+    },
+    {
+      "id": "cap_nozzle_tantalum_hafnium_carbide",
+      "shape": "cap_nozzle",
+      "material_constant": "TantalumHafniumCarbide",
+      "acid_proof": false,
+      "original_id": 32082,
+      "original_hardness": 0.5,
+      "original_resistance": 10.0,
+      "current_declared_hardness_both_platforms": 0.5,
+      "current_declared_resistance_both_platforms": 6,
+      "resistance_differs": true
+    },
+    {
+      "id": "cap_nozzle_adamantium",
+      "shape": "cap_nozzle",
+      "material_constant": "Adamantium",
+      "acid_proof": true,
+      "original_id": 32062,
+      "original_hardness": 0.5,
+      "original_resistance": 100.0,
+      "current_declared_hardness_both_platforms": 0.5,
+      "current_declared_resistance_both_platforms": 6,
+      "resistance_differs": true
+    },
+    {
+      "id": "nozzle_steel",
+      "shape": "nozzle",
+      "material_constant": "Steel",
+      "acid_proof": false,
+      "original_id": 32746,
+      "original_hardness": 0.5,
+      "original_resistance": 5.0,
+      "current_declared_hardness_both_platforms": 0.5,
+      "current_declared_resistance_both_platforms": 6,
+      "resistance_differs": true
+    },
+    {
+      "id": "nozzle_plastic",
+      "shape": "nozzle",
+      "material_constant": "Plastic",
+      "acid_proof": false,
+      "original_id": 32747,
+      "original_hardness": 0.5,
+      "original_resistance": 3.0,
+      "current_declared_hardness_both_platforms": 0.5,
+      "current_declared_resistance_both_platforms": 6,
+      "resistance_differs": true
+    },
+    {
+      "id": "nozzle_stainless_steel",
+      "shape": "nozzle",
+      "material_constant": "StainlessSteel",
+      "acid_proof": true,
+      "original_id": 32748,
+      "original_hardness": 0.5,
+      "original_resistance": 6.0,
+      "current_declared_hardness_both_platforms": 0.5,
+      "current_declared_resistance_both_platforms": 6,
+      "resistance_differs": false
+    },
+    {
+      "id": "nozzle_tungsten",
+      "shape": "nozzle",
+      "material_constant": "Tungsten",
+      "acid_proof": true,
+      "original_id": 32749,
+      "original_hardness": 0.5,
+      "original_resistance": 10.0,
+      "current_declared_hardness_both_platforms": 0.5,
+      "current_declared_resistance_both_platforms": 6,
+      "resistance_differs": true
+    },
+    {
+      "id": "nozzle_tantalum_hafnium_carbide",
+      "shape": "nozzle",
+      "material_constant": "TantalumHafniumCarbide",
+      "acid_proof": false,
+      "original_id": 32079,
+      "original_hardness": 0.5,
+      "original_resistance": 10.0,
+      "current_declared_hardness_both_platforms": 0.5,
+      "current_declared_resistance_both_platforms": 6,
+      "resistance_differs": true
+    },
+    {
+      "id": "nozzle_adamantium",
+      "shape": "nozzle",
+      "material_constant": "Adamantium",
+      "acid_proof": true,
+      "original_id": 32750,
+      "original_hardness": 0.5,
+      "original_resistance": 100.0,
+      "current_declared_hardness_both_platforms": 0.5,
+      "current_declared_resistance_both_platforms": 6,
+      "resistance_differs": true
+    }
+  ],
+  "catalog_comparison_scope": "Material constants compare explicit representative mapping (ANY.Steel→Steel, ANY.W→Tungsten). This does not prove group ingredient recipes or resolved live material registry membership.",
+  "source_arithmetic": {
+    "cauldron_level_amount_cases": 6004,
+    "cauldron_amount_and_level_changes_match": true,
+    "limit": "Finite source arithmetic, not native world state or callback return equivalence.",
+    "mapped_milk_witness": {
+      "preconditions": "Source contains at least 1000 L milk; lower target accepts the full offer; no source/target race. Source decision witness only.",
+      "original_offer": 1000,
+      "current_offer": 250
+    },
+    "experience_witness": {
+      "preconditions": "No OpenBlocks override; empty hand; accessible source permits the named fluid; no below recipient. Source branch only.",
+      "xpjuice": {
+        "source_amount": 1000,
+        "original_xp": 50,
+        "original_drain": 1000,
+        "current_xp": 0
+      },
+      "mobessence": {
+        "source_amount": 1000,
+        "original_xp": 15,
+        "original_drain": 1000,
+        "current_xp": 0
+      }
+    }
+  },
+  "readability": {
+    "baseline": "16c55f19fceaf37fca03baf2f327348bf45d100a",
+    "files": {
+      "core/src/main/java/com/gregtech/gregtech/content/tool/FluidAttachmentSpec.java": {
+        "before_raw_sha256": "ef2f315a5db2410a432072b3d01a7a9f30a7e8d5ebada0f3bd77643c4714a0cb",
+        "after_raw_sha256": "dea88738ac7119e8b3ac8a4a730865d491ec8dd985c8fdf63b3c218a93ac0b04",
+        "before_lines": 19,
+        "after_lines": 35,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 280,
+            "execution_sha256": "a05768684e1620e7d050b09ac81990baffc075c7c339fa5170312f6b7eeaec2d",
+            "literal_positions_sha256": "c379f970320e757cf0ba7ae1ee020da7b3c06b87781e498aeeb37a8848ca8bfb",
+            "literal_count": 16
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/tool/FluidAttachmentBlock.java": {
+        "before_raw_sha256": "4ca1ed1c365436bb51003ab26480849485d4b798e8213b02568ec641fd96b3cf",
+        "after_raw_sha256": "89bb500f79f5133be859a37044242576aa263b64bb567a1a5450caa823aa5870",
+        "before_lines": 263,
+        "after_lines": 263,
+        "comment_corrections": [
+          [
+            "GT6 tap click: 250 L water/ordinary liquid, 1000 L lava, one material unit of molten metal.",
+            "Downward transfer currently uses 250 L by default, 1000 L lava or 144 L molten entries."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 2368,
+            "execution_sha256": "e91f3c665bbd1cfe3822cf1f31ba17e881040fd9f28a4b481e9b9b44ffa791b4",
+            "literal_positions_sha256": "0d2b006add33b77c8d3b93d77fb816b2399b1f082b4985a4420da92ece93e5b1",
+            "literal_count": 52
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 2614,
+            "execution_sha256": "4c318f8a7603a67d74689c8286380e061542eb90223f9e3113c84bc5e19669e7",
+            "literal_positions_sha256": "3936f5d72f181a4f544eb0312e8efe1b2bd28dce365c1785dafbf761cd42d1ad",
+            "literal_count": 52
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidToolTarget.java": {
+        "before_raw_sha256": "3d729db3a67c2559e2486f77fca4440ded142aabbc4e5299745dcf4033b81671",
+        "after_raw_sha256": "34b5175d19f6acfd9f33c133e56537c966cd79166b7902fc5063f7894a6272c7",
+        "before_lines": 31,
+        "after_lines": 60,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 333,
+            "execution_sha256": "44ce482c5145a4957a50efc9ab7aed959c15ea6d5fc4f0ce3264cd67c5b34951",
+            "literal_positions_sha256": "a7ec5d8657162107442f102edde2b8f14e0dd0f82694688a6c562998ec242abe",
+            "literal_count": 3
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 337,
+            "execution_sha256": "a082440c7c659a80ac8daf045a77ef9561a2ddaff25ba2b68833325f982f1818",
+            "literal_positions_sha256": "20d483b10045624949b0cb305c9ec5e39d1a73241d35a33076d518e7f909086a",
+            "literal_count": 3
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/tool/TapBlock.java": {
+        "before_raw_sha256": "0b040069254ead363ce2233ec64d83ec14aa736a9d74160c8cb9e6d02d2d8f0a",
+        "after_raw_sha256": "e0d5fe6bc3c063f097e4ae2054d2a0c4c309d9fe6d37182809197317ae0e5d5a",
+        "before_lines": 13,
+        "after_lines": 18,
+        "comment_corrections": [
+          [
+            "Existing IDs remain aliases of the original ceramic tap and steel nozzle.",
+            "Legacy tap/nozzle wrappers; material variants use FluidAttachmentBlock directly."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 88,
+            "execution_sha256": "7cb6d7dcc38efa4affd50a4347c8a8b7bd37787d7783fdd349dc185dbc81893f",
+            "literal_positions_sha256": "562832615b36d17bc5b1ed724bbce0b44469724134035e3eb7ea439f18f508b8",
+            "literal_count": 4
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 88,
+            "execution_sha256": "436e26b5da18be92f33e54e189225b002357988efe915a475f02774dcd1d9ba7",
+            "literal_positions_sha256": "3338dc1ee942cf0752e3f456dd801f589bc2a0f91b5503729ec705a55cfcd2c2",
+            "literal_count": 4
+          }
+        ]
+      }
+    },
+    "controlled_local_identifier_renames": {
+      "multiversion/src/main/java/com/gregtech/gregtech/block/tool/FluidAttachmentBlock.java": {
+        "mapping": {
+          "funnel": "fillingTarget"
+        },
+        "exact_identifier_token_counts": {
+          "funnel": 5
+        },
+        "original_source_positions": [
+          {
+            "before": "funnel",
+            "after": "fillingTarget",
+            "before_line": 129,
+            "before_column": 17
+          },
+          {
+            "before": "funnel",
+            "after": "fillingTarget",
+            "before_line": 145,
+            "before_column": 24
+          },
+          {
+            "before": "funnel",
+            "after": "fillingTarget",
+            "before_line": 149,
+            "before_column": 24
+          },
+          {
+            "before": "funnel",
+            "after": "fillingTarget",
+            "before_line": 153,
+            "before_column": 25
+          },
+          {
+            "before": "funnel",
+            "after": "fillingTarget",
+            "before_line": 157,
+            "before_column": 21
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidToolTarget.java": {
+        "mapping": {
+          "t": "handler"
+        },
+        "exact_identifier_token_counts": {
+          "t": 21
+        },
+        "original_source_positions": [
+          {
+            "before": "t",
+            "after": "handler",
+            "before_line": 22,
+            "before_column": 41
+          },
+          {
+            "before": "t",
+            "after": "handler",
+            "before_line": 22,
+            "before_column": 64
+          },
+          {
+            "before": "t",
+            "after": "handler",
+            "before_line": 22,
+            "before_column": 74
+          },
+          {
+            "before": "t",
+            "after": "handler",
+            "before_line": 23,
+            "before_column": 62
+          },
+          {
+            "before": "t",
+            "after": "handler",
+            "before_line": 23,
+            "before_column": 85
+          },
+          {
+            "before": "t",
+            "after": "handler",
+            "before_line": 23,
+            "before_column": 110
+          },
+          {
+            "before": "t",
+            "after": "handler",
+            "before_line": 24,
+            "before_column": 56
+          },
+          {
+            "before": "t",
+            "after": "handler",
+            "before_line": 24,
+            "before_column": 79
+          },
+          {
+            "before": "t",
+            "after": "handler",
+            "before_line": 24,
+            "before_column": 89
+          },
+          {
+            "before": "t",
+            "after": "handler",
+            "before_line": 25,
+            "before_column": 74
+          },
+          {
+            "before": "t",
+            "after": "handler",
+            "before_line": 25,
+            "before_column": 97
+          },
+          {
+            "before": "t",
+            "after": "handler",
+            "before_line": 25,
+            "before_column": 106
+          },
+          {
+            "before": "t",
+            "after": "handler",
+            "before_line": 26,
+            "before_column": 72
+          },
+          {
+            "before": "t",
+            "after": "handler",
+            "before_line": 26,
+            "before_column": 95
+          },
+          {
+            "before": "t",
+            "after": "handler",
+            "before_line": 26,
+            "before_column": 105
+          },
+          {
+            "before": "t",
+            "after": "handler",
+            "before_line": 27,
+            "before_column": 80
+          },
+          {
+            "before": "t",
+            "after": "handler",
+            "before_line": 27,
+            "before_column": 103
+          },
+          {
+            "before": "t",
+            "after": "handler",
+            "before_line": 27,
+            "before_column": 128
+          },
+          {
+            "before": "t",
+            "after": "handler",
+            "before_line": 28,
+            "before_column": 74
+          },
+          {
+            "before": "t",
+            "after": "handler",
+            "before_line": 28,
+            "before_column": 97
+          },
+          {
+            "before": "t",
+            "after": "handler",
+            "before_line": 28,
+            "before_column": 122
+          }
+        ]
+      }
+    },
+    "new_core_helpers": [
+      {
+        "signature": "public boolean acceptsGas()",
+        "source": "public boolean acceptsGas() {\n        return gasShape(shape);\n    }",
+        "body_sha256": "e69aa8f63fefc657221729de4a45bb68f360c227f5822a6105f9a4477d6d309c",
+        "original_predicate_tokens_verified": true
+      },
+      {
+        "signature": "public boolean fillsTarget()",
+        "source": "public boolean fillsTarget() {\n        return shape.equals(\"fluid_funnel\") || shape.equals(\"cap_nozzle\");\n    }",
+        "body_sha256": "15cf2911db8d8dc239b7a004dcd4228500411dab52bf400b1e791e2ac0a4742b",
+        "original_predicate_tokens_verified": true
+      },
+      {
+        "signature": "private static boolean gasShape(String shape)",
+        "source": "private static boolean gasShape(String shape) {\n        return shape.equals(\"cap_nozzle\") || shape.equals(\"nozzle\");\n    }",
+        "body_sha256": "821808b263178189cf2e3fe92fbf9d8c61e8466ae7188b33dad0ee9728e4a73f",
+        "original_predicate_tokens_verified": true
+      }
+    ],
+    "normalization": "Remove only the three verified new helper methods; expand two core and three native call sites back to their exact prior predicates. Normalize recorded local identifier changes before full remaining code/literal/comment/directive comparison."
+  },
+  "core_probe": {
+    "scope": "Actual core definition and pre-edit class-name-only clone; native materials replaced by shared identity-only metadata stubs. Role oracle copied from the old native predicates. Not actual material bootstrap, sided IFluidHandler, native transactions, gameplay or whole mod compilation.",
+    "seconds": 0.51,
+    "result": {
+      "catalog_rows": 24,
+      "role_rows": 30,
+      "null_failure_comparisons": 2
+    },
+    "emitted_catalog": [
+      {
+        "id": "tap_ceramic",
+        "shape": "tap",
+        "material_constant": "Ceramic",
+        "acid_proof": false
+      },
+      {
+        "id": "tap_plastic",
+        "shape": "tap",
+        "material_constant": "Plastic",
+        "acid_proof": false
+      },
+      {
+        "id": "tap_stainless_steel",
+        "shape": "tap",
+        "material_constant": "StainlessSteel",
+        "acid_proof": true
+      },
+      {
+        "id": "tap_tungsten",
+        "shape": "tap",
+        "material_constant": "Tungsten",
+        "acid_proof": true
+      },
+      {
+        "id": "tap_tantalum_hafnium_carbide",
+        "shape": "tap",
+        "material_constant": "TantalumHafniumCarbide",
+        "acid_proof": false
+      },
+      {
+        "id": "tap_adamantium",
+        "shape": "tap",
+        "material_constant": "Adamantium",
+        "acid_proof": true
+      },
+      {
+        "id": "fluid_funnel_ceramic",
+        "shape": "fluid_funnel",
+        "material_constant": "Ceramic",
+        "acid_proof": false
+      },
+      {
+        "id": "fluid_funnel_plastic",
+        "shape": "fluid_funnel",
+        "material_constant": "Plastic",
+        "acid_proof": false
+      },
+      {
+        "id": "fluid_funnel_stainless_steel",
+        "shape": "fluid_funnel",
+        "material_constant": "StainlessSteel",
+        "acid_proof": true
+      },
+      {
+        "id": "fluid_funnel_tungsten",
+        "shape": "fluid_funnel",
+        "material_constant": "Tungsten",
+        "acid_proof": true
+      },
+      {
+        "id": "fluid_funnel_tantalum_hafnium_carbide",
+        "shape": "fluid_funnel",
+        "material_constant": "TantalumHafniumCarbide",
+        "acid_proof": false
+      },
+      {
+        "id": "fluid_funnel_adamantium",
+        "shape": "fluid_funnel",
+        "material_constant": "Adamantium",
+        "acid_proof": true
+      },
+      {
+        "id": "cap_nozzle_steel",
+        "shape": "cap_nozzle",
+        "material_constant": "Steel",
+        "acid_proof": false
+      },
+      {
+        "id": "cap_nozzle_plastic",
+        "shape": "cap_nozzle",
+        "material_constant": "Plastic",
+        "acid_proof": false
+      },
+      {
+        "id": "cap_nozzle_stainless_steel",
+        "shape": "cap_nozzle",
+        "material_constant": "StainlessSteel",
+        "acid_proof": true
+      },
+      {
+        "id": "cap_nozzle_tungsten",
+        "shape": "cap_nozzle",
+        "material_constant": "Tungsten",
+        "acid_proof": true
+      },
+      {
+        "id": "cap_nozzle_tantalum_hafnium_carbide",
+        "shape": "cap_nozzle",
+        "material_constant": "TantalumHafniumCarbide",
+        "acid_proof": false
+      },
+      {
+        "id": "cap_nozzle_adamantium",
+        "shape": "cap_nozzle",
+        "material_constant": "Adamantium",
+        "acid_proof": true
+      },
+      {
+        "id": "nozzle_steel",
+        "shape": "nozzle",
+        "material_constant": "Steel",
+        "acid_proof": false
+      },
+      {
+        "id": "nozzle_plastic",
+        "shape": "nozzle",
+        "material_constant": "Plastic",
+        "acid_proof": false
+      },
+      {
+        "id": "nozzle_stainless_steel",
+        "shape": "nozzle",
+        "material_constant": "StainlessSteel",
+        "acid_proof": true
+      },
+      {
+        "id": "nozzle_tungsten",
+        "shape": "nozzle",
+        "material_constant": "Tungsten",
+        "acid_proof": true
+      },
+      {
+        "id": "nozzle_tantalum_hafnium_carbide",
+        "shape": "nozzle",
+        "material_constant": "TantalumHafniumCarbide",
+        "acid_proof": false
+      },
+      {
+        "id": "nozzle_adamantium",
+        "shape": "nozzle",
+        "material_constant": "Adamantium",
+        "acid_proof": true
+      }
+    ],
+    "baseline_class_identifier_rewrites": {
+      "FluidAttachmentSpec": 9
+    },
+    "old_fill_predicate": "spec.shape().equals(\"fluid_funnel\") || spec.shape().equals(\"cap_nozzle\")",
+    "old_gas_predicate": "(spec.shape().equals(\"cap_nozzle\") || spec.shape().equals(\"nozzle\"))",
+    "inputs": [
+      {
+        "path": "core/src/main/java/com/gregtech/gregtech/content/tool/FluidAttachmentSpec.java",
+        "sha256": "dea88738ac7119e8b3ac8a4a730865d491ec8dd985c8fdf63b3c218a93ac0b04"
+      },
+      {
+        "path": "work/fluid-attachments-audit-20261022/BaselineFluidAttachmentSpec.java",
+        "sha256": "61dcf47e1d6ef8491191421748b9c8163b18f67e25f598ba466ad92a78366855"
+      },
+      {
+        "path": "work/fluid-attachments-audit-20261022/GTMaterial.java",
+        "sha256": "f67bed3792d50a68a81ae4c8a6ae01f49cf6110ba1cc0e589bdd830dd949503a"
+      },
+      {
+        "path": "work/fluid-attachments-audit-20261022/Materials.java",
+        "sha256": "9aba9bf00b08c7bd54d6de1437bacea9bdecd32927caeb01f830b7ae3e115f4d"
+      },
+      {
+        "path": "work/fluid-attachments-audit-20261022/RoleProbe.java",
+        "sha256": "4aa9a1818fbc4369f6e42eaf93620943b1f544a99da01be3dd4096b941e2adde"
+      }
+    ]
+  },
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "formal_findings_added": [
+    {
+      "id": "ALIGN-389",
+      "finding": "Held Ender Garbage Bin command is missing on tap/nozzle; ordinary native fluid-container interaction does not replace it."
+    },
+    {
+      "id": "ALIGN-390",
+      "finding": "Tap has no lower-sandwich liquid ingredient path; current recipient search only asks ordinary fluid capability."
+    },
+    {
+      "id": "ALIGN-391",
+      "finding": "Mapped non-water liquid per-click amount is collapsed to 250 unless texture mode is molten; milk old 1000/current 250 under stated recipient conditions."
+    },
+    {
+      "id": "ALIGN-392",
+      "finding": "Normal material-variant explosion resistance collapsed to 6; 20 of 24 original declaration rows differ. No blast or overload change."
+    },
+    {
+      "id": "ALIGN-393",
+      "finding": "Tap empty-hand XP/mob essence conversion is absent. Requires a valid accessible corresponding fluid; optional OpenBlocks conversion and other external mods are not claimed tested."
+    },
+    {
+      "id": "ALIGN-394",
+      "finding": "Fluid attachments gained native outline collision; original shared attachment base returns null. No entity movement or rendered selection test."
+    },
+    {
+      "id": "ALIGN-395",
+      "finding": "Four bare base attachment IDs remain independent block/item registrations alongside 24 material IDs, rather than true registry aliases. Visibility, recipes and save migration are separate; no IDs removed here."
+    }
+  ],
+  "formal_findings_extended": [
+    {
+      "id": "ALIGN-132",
+      "scope": "Successful empty-hand below tap pour lacks the original spray/water pair in the attachment and native transfer helper; target-owned sounds are not excluded."
+    }
+  ],
+  "rejected_or_bounded_findings": [
+    "Neo TapBlock(true) source contains a cap_nozzle shape, but the actual Neo registration never constructs that wrapper; do not report a live Neo nozzle polarity defect from dead registration path.",
+    "Current river water passes isSame(WATER) through GTWorldWaterFluid; tag/identity override must be read before claiming cauldron water rejection. Sea/swamp broadening follows prior user water-family policy.",
+    "Current phase/acid screen and explicit FluidToolTarget preference already exist; new core helpers retain the exact existing predicates.",
+    "24 material constant/acid rows match original representative declarations; no all-material or group-recipe parity claim.",
+    "Cauldron movement amounts match 6004 source cases; original no-op click consumption and modern PASS are not claimed equal.",
+    "New readonly core query methods are added; existing public types/signatures retained. No gameplay, physical values, registration identities or recipe/resource changes."
+  ],
+  "preparation_attempts": [
+    {
+      "result": "corrected preparation",
+      "detail": "Formatter altered a leading non-Javadoc license comment; preview rejected before apply and exact original notice restored. Reused native entry occurred in two prior receipts; dedup now verifies equal artifact/entry hashes instead of treating provenance repetition as different content."
+    },
+    {
+      "result": "corrected excerpt selection preparation",
+      "detail": "GT water source and flowing subclasses both override isSame; both exact occurrences are now separately archived, rather than assuming one matching declaration."
+    }
+  ],
+  "limits": [
+    "No Gradle, whole-mod compilation, GameTest, actual world, entity collision, explosion, client rendering, save restart, build, push or GitHub write.",
+    "Core probe executes the real record with identity-only material stubs; it is not live material bootstrap or native fluid transaction testing.",
+    "Full resource/recipes, compatibility gases, target-specific drain selection, container remainders, native transfers/lifecycle and remaining systems continue.",
+    "395 cumulative formal records include repaired entries/policy and are not unresolved count or completion percentage. Goal active."
+  ],
+  "root_revalidation": {
+    "baseline_git_sources": true,
+    "readability_proof": true,
+    "edited_sources": 4,
+    "platform_views": 7,
+    "original_sources": 16,
+    "current_sources": 22,
+    "native_entries": 5,
+    "lines_before": 326,
+    "lines_after": 376,
+    "new_helpers_verified": 3,
+    "rewritten_call_sites": 5,
+    "protected_materials": true,
+    "probe_inputs": true,
+    "source_hashes_current": true,
+    "source_and_native_excerpt_ranges_and_hashes_current": true,
+    "native_artifacts_entries_and_outputs_current": true,
+    "controlled_remaining_code_proof_reproduced": true,
+    "formal_rows_contiguous": 395,
+    "navigation_ledgers_linked": [
+      "PLAN",
+      "STATUS",
+      "DECISIONS",
+      "VERIFICATION",
+      "SOURCE_LAYOUT",
+      "SOURCE_READABILITY_INVENTORY",
+      "ORIGINAL_ALIGNMENT_AUDIT"
+    ],
+    "catalog_reference_rows_current": 24,
+    "local_identifier_positions": 26,
+    "issue_scope_unchanged_normalized_text": true
+  }
+}

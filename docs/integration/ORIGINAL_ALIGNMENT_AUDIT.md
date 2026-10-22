@@ -1,5 +1,7 @@
 # 原版对齐与源码结构审计
 
+2026-10-22 第一百一十六批：附件新增389–395排空、三明治、剂量、抗爆、经验、碰撞及裸ID分裂，扩132。16原／22当前、34引用、五原生条目／八引用；24材质／防酸对应，四源326→376行、七完整剩余视图及三新helper受控保持，见[专题](FLUID_ATTACHMENTS_AUDIT.md)。约0.51秒core元数据探针与6004源算术不是世界，395不是待修数，全面goal继续。
+
 2026-10-22 第一百一十五批：硬币新增387光照3→0、388普通选取裸堆，004扩两项3D配置。9原／23当前Java、4资源、12原生条目／14引用；保存、默认接收与两端客户端分派已有，见[专题](COIN_LIFECYCLE_AUDIT.md)。六源855→936行、22局部标识位置归一后11完整视图保持；约0.48秒4112重排条件对应原函数，不是原生世界验收。388不是待修数，全面goal继续。
 
 2026-10-22 第一百一十四批：铸币新增384自动锤绑定、385全零世界币平面分支、386Unique提示，扩132／139。9原／32当前Java、19资源、21引用；六源477→590行和11完整视图保持。默认32行／192物品盒、模具两层六盒与2097152位行转换见[专题](COIN_MINTING_AUDIT.md)。未把冗余准入、手持无限预算或原未完成GUI误报为缺项；386不是未修数，全面goal继续。
@@ -182,7 +184,7 @@
 | ALIGN-129 | 确认苦力怕点火回调不同。 | 原版为服务端左键实体拦截。 | 当前多物品右键，起火工具 hurtEnemy；完整攻击效果未世界验证，见[报告](IGNITION_EXTINGUISHER_AUDIT.md)。 |
 | ALIGN-130 | 确认燃烧室点火／灭火工具分派不完整。 | 原版三类宿主识别两个工具钩子。 | Forge 缺随机工具点火接口，Neo 有该接口；两版都缺喷罐灭火接口，见[报告](IGNITION_EXTINGUISHER_AUDIT.md)。 |
 | ALIGN-131 | 确认原生点火返回零后错误兼容回退。 | 原版按目标类型选择原生或 ToolCompat，不以返回值切换。 | 当前零成本后仍点 TNT／相邻空气；已燃雷管可进入此路径，未世界复现，见[报告](IGNITION_EXTINGUISHER_AUDIT.md)。 |
-| ALIGN-132 | 确认部分物品／库存交互缺少反馈声音。 | 原版起火尝试、成功喷射／封装和瓶框成功取放分别主动发送声音。 | 当前对应回调未调用；雷管、自动点火器、书架取物等已有声音，不列为全局无声。见[工具报告](CONSUMABLE_FEEDBACK_AUDIT.md)及[瓶框补充](BOTTLE_BOOKSHELF_AUDIT.md)。颜色喷罐已有FIRE_EXTINGUISH占位调用，清漆仍缺专用物品层声，见[喷漆目标](PAINT_TARGETS_AUDIT.md)。USB／HDD持有U盘复制／清除缺原playClick，普通面板入口不补声，见[数据交换](USB_SWITCH_AUDIT.md)。 高级按钮原手动脉冲有释放声且音高随活跃变化，当前仅固定按下声；见[按钮曲柄](BUTTON_CRANK_AUDIT.md)。  微型门客户端晚激活的portal专有声也未接；通用起火声不补此路径，见[微型门](MINI_PORTAL_AUDIT.md)。  材料堆沿柱取料的声音在原选中顶层、当前被点击底层，已有声而位置不同，见[材料堆](MATERIAL_PILES_AUDIT.md)。 原硬锤铸币成功播放random.anvil_land，当前模具播放ANVIL_USE；已有反馈但事件不同，见[铸币](COIN_MINTING_AUDIT.md)。 |
+| ALIGN-132 | 确认部分物品／库存交互缺少反馈声音。 | 原版起火尝试、成功喷射／封装和瓶框成功取放分别主动发送声音。 | 当前对应回调未调用；雷管、自动点火器、书架取物等已有声音，不列为全局无声。见[工具报告](CONSUMABLE_FEEDBACK_AUDIT.md)及[瓶框补充](BOTTLE_BOOKSHELF_AUDIT.md)。颜色喷罐已有FIRE_EXTINGUISH占位调用，清漆仍缺专用物品层声，见[喷漆目标](PAINT_TARGETS_AUDIT.md)。USB／HDD持有U盘复制／清除缺原playClick，普通面板入口不补声，见[数据交换](USB_SWITCH_AUDIT.md)。 高级按钮原手动脉冲有释放声且音高随活跃变化，当前仅固定按下声；见[按钮曲柄](BUTTON_CRANK_AUDIT.md)。  微型门客户端晚激活的portal专有声也未接；通用起火声不补此路径，见[微型门](MINI_PORTAL_AUDIT.md)。  材料堆沿柱取料的声音在原选中顶层、当前被点击底层，已有声而位置不同，见[材料堆](MATERIAL_PILES_AUDIT.md)。 原硬锤铸币成功播放random.anvil_land，当前模具播放ANVIL_USE；已有反馈但事件不同，见[铸币](COIN_MINTING_AUDIT.md)。 龙头空手向下方注液缺原喷射／水双声，通用转移函数不补；不排除目标自发声，见[附件](FLUID_ATTACHMENTS_AUDIT.md)。 |
 | ALIGN-133 | 确认原版起火概率配置未接入。 | `GT6_Main` 读取 1–100 的 `FlintAndSteelChance`，默认 30。 | GT 工具固定传默认 30；默认一致，配置收尾仍按先前安排延后，见[报告](CONSUMABLE_FEEDBACK_AUDIT.md)。 |
 | ALIGN-134 | 确认胶带创造预算及扣量与原版不同。 | 无限物品玩家使用整卷预算，成功不减剩余量。 | 当前传已存余量且成功照扣；大容量存储存在真实预算准入路径，见[报告](CONSUMABLE_FEEDBACK_AUDIT.md)。 |
 | ALIGN-135 | 确认部分零余量耗材未完成空形态转换。 | 喷罐／胶带在目标无反应后仍统一检查耗尽。 | 创造喷罐受非创造分支限制，胶带提前退出；非创造喷罐已对应，见[报告](CONSUMABLE_FEEDBACK_AUDIT.md)。有效目标还存在原先动作后清空、当前正余量准入的差异；实体零罐会清空但拒染色，保留防免费动作，见[消耗边界](PAINT_TARGETS_AUDIT.md)。 |
@@ -439,6 +441,13 @@
 | ALIGN-386 | 确认硬币提示漏Unique后缀。 | 原按mIsUnique附加材料行标识。 | 铸币仍保存标志，但物品及已核事件入口未显示；不是丢字段，见[铸币](COIN_MINTING_AUDIT.md)。 |
 | ALIGN-387 | 确认硬币堆遮光3变0。 | 原世界块委托实体LIGHT_OPACITY_WATER=3。 | 当前动态非遮蔽、固定非完整选框与空流体经两端原生规则得0；未光照实测，见[生命周期](COIN_LIFECYCLE_AUDIT.md)。 |
 | ALIGN-388 | 确认硬币堆普通选取返回裸堆物品。 | 原世界块经Base04写材料／币模／unique后构造硬币。 | 当前Block默认clone构造coin_pile BlockItem，未读取堆内硬币；两端接口默认委托已核，限普通后备链，见[生命周期](COIN_LIFECYCLE_AUDIT.md)。 |
+| ALIGN-389 | 确认附件缺持末影垃圾桶排空命令。 | 原龙头／喷嘴检查VOIDING_ITEMS，32709明确入集合。 | 当前只转原生容器交互，无此命令入口。见[附件](FLUID_ATTACHMENTS_AUDIT.md)。 |
+| ALIGN-390 | 确认龙头缺下方三明治液体配料入口。 | 原装瓶并按基础份数／4扣流体，调用addIngredient。 | 当前仅查普通流体能力，三明治有物品配料入口但无此接线。见[附件](FLUID_ATTACHMENTS_AUDIT.md)。 |
+| ALIGN-391 | 确认下方注液未保留全部材料单位剂量。 | 原非水FLUID_MAP成员按材料单位，牛奶1000L。 | 当前只熔岩1000／熔融144，其余250；条件源见证非实际注液。见[附件](FLUID_ATTACHMENTS_AUDIT.md)。 |
+| ALIGN-392 | 确认附件材质抗爆统一成6。 | 原24行按材质为3／5／6／10／100，正常getter读取配置。 | 当前24材质ID两端均0.5／6，20项抗爆不同；未模拟爆炸或改过载。见[附件](FLUID_ATTACHMENTS_AUDIT.md)。 |
+| ALIGN-393 | 确认龙头缺经验流体取经验分支。 | 原XP／Mob有无OpenBlocks时的默认换算。 | 当前空手只向下方注液；要求实际存在可排相应流体，未执行经验实体。见[附件](FLUID_ATTACHMENTS_AUDIT.md)。 |
+| ALIGN-394 | 确认附件新增原本没有的实体碰撞。 | 原Attachment返回null，世界块转发此接口。 | 当前默认hasCollision使用非空选框，覆盖板后备不消除；未行走实测。见[附件](FLUID_ATTACHMENTS_AUDIT.md)。 |
+| ALIGN-395 | 确认四个裸附件ID仍独立重复登记。 | 原相关四class共24项材质登记。 | 当前24材质之外另有4个裸Block／BlockItem构造，并非注册别名；可见／配方／迁移另核。见[附件](FLUID_ATTACHMENTS_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 

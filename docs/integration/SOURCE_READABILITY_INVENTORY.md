@@ -1,5 +1,7 @@
 # 活动源码结构与可读性盘点
 
+2026-10-22 第一百一十六批：四份流体附件源326→376行，重复角色判断下沉core，FluidToolTarget中继逐操作展开，t／funnel改明确局部名；三个helper、五调用、七完整剩余平台视图有受控证明。见[专题](FLUID_ATTACHMENTS_AUDIT.md)及[回执](verification/fluid-attachments-audit-20261022.json)。不是重新引入旧loader命名，也没有借整理修复玩法；其余大职责／重复和全系统继续。
+
 2026-10-22 第一百零六批：五份矿物core／目录、床岩feature／维度边界及矿石解析器502→581行；删除两个仅剩声明的私有包装，保留已对齐表格，展开核心循环及平台回调。四源六视图完整相同，另两视图在显式去除私有段后剩余相同，删除源码、引用范围与限制随[回执](verification/spring-bedrock-dispatch-audit-20261022.json)归档。不是所有原token原封不动，也不改变生成策略，见[专题](SPRING_BEDROCK_DISPATCH_AUDIT.md)。
 
 2026-10-22 第一百零五批：FluidSpringRules、GTFluidSprings、FluidSpringBlock／Entity、FluidSpringClient／BakedModel及GTFluidSpringsFeature七源742→908行；展开循环、变体工厂、旧状态、服务器门控与模型分派，保留原已清楚的数组排版。13完整代码流、字面量位置／其余注释／条件保持，明确amount是roll边界及未移植的原分支，未改玩法，见[液体泉](FLUID_SPRING_AUDIT.md)。下文引用筛查为第一百零四批快照，不能当新增本批后的完整覆盖率；大职责、重复方法和全系统队列继续。
