@@ -1,0 +1,414 @@
+{
+  "scope": "User-authorized project translations for modern Jade UI only; not original GT6 sentences.",
+  "authorization": "2026-10-22: complete missing Jade Chinese using the TeamNED GregTech.lang release as terminology reference.",
+  "reference_release": "https://github.com/TeamNED/GregTech6-Translation-Groupware/releases/tag/6.17.06-alpha.5",
+  "values": {
+    "config.jade.plugin_gt6ce.basic_machine": {
+      "english": "GT Basic Machine",
+      "value": "GT 基础机器"
+    },
+    "config.jade.plugin_gt6ce.burning_box": {
+      "english": "GT Burning Box",
+      "value": "GT 燃烧室"
+    },
+    "config.jade.plugin_gt6ce.construction_name": {
+      "english": "GT Construction Names",
+      "value": "GT 建筑方块名称"
+    },
+    "config.jade.plugin_gt6ce.crucible": {
+      "english": "GT Crucible",
+      "value": "GT 坩埚"
+    },
+    "config.jade.plugin_gt6ce.dust_funnel": {
+      "english": "GT Dust Funnel",
+      "value": "GT 筛粉漏斗"
+    },
+    "config.jade.plugin_gt6ce.energy_buffer": {
+      "english": "GT Energy Buffer",
+      "value": "GT 能量缓冲器"
+    },
+    "config.jade.plugin_gt6ce.engine": {
+      "english": "GT Engine",
+      "value": "GT 引擎"
+    },
+    "config.jade.plugin_gt6ce.extender": {
+      "english": "Universal extender controls",
+      "value": "通用扩展器控制"
+    },
+    "config.jade.plugin_gt6ce.mold": {
+      "english": "GT Mold",
+      "value": "GT 模具"
+    },
+    "config.jade.plugin_gt6ce.multiblock": {
+      "english": "GT Multiblock Controller",
+      "value": "GT 多方块控制器"
+    },
+    "config.jade.plugin_gt6ce.reactor": {
+      "english": "Nuclear reactor",
+      "value": "核反应堆"
+    },
+    "config.jade.plugin_gt6ce.rock_twig": {
+      "english": "GT Rock/Twig",
+      "value": "GT 岩石／树枝"
+    },
+    "config.jade.plugin_gt6ce.steam_boiler": {
+      "english": "GT Steam Boiler",
+      "value": "GT 蒸汽锅炉"
+    },
+    "config.jade.plugin_gt6ce.steam_turbine": {
+      "english": "GT Steam Turbine",
+      "value": "GT 蒸汽涡轮机"
+    },
+    "gt.axial.state.enabled": {
+      "english": "Enabled",
+      "value": "已启用"
+    },
+    "gt.axial.state.overloaded": {
+      "english": "Overload shutdown: sneak + empty-hand right-click to reset",
+      "value": "过载停机：潜行并空手右击以复位"
+    },
+    "gt.axial.state.stopped": {
+      "english": "Stopped",
+      "value": "已停止"
+    },
+    "gt.tooltip.axial.dynamo": {
+      "english": "Nominal: %s RU/t → %s EU/t (75%%)",
+      "value": "额定：%s RU/t → %s EU/t（75%%）"
+    },
+    "gt.tooltip.axial.steam": {
+      "english": "Nominal: %s L steam/t → %s RU/t",
+      "value": "额定：%s L 蒸汽/t → %s RU/t"
+    },
+    "gt6ce.fusion.output": {
+      "english": "Output: %s EU/t",
+      "value": "输出：%s EU/t"
+    },
+    "gt6ce.fusion.startup": {
+      "english": "Startup remaining: %s LU",
+      "value": "剩余启动能量：%s LU"
+    },
+    "gt6ce.jade.rock_content": {
+      "english": "Contains: %s",
+      "value": "含有：%s"
+    },
+    "gt6ce.jade.twig_content": {
+      "english": "Contains: Sticks",
+      "value": "含有：木棍"
+    },
+    "jade.gt6ce.basic_machine.fluid": {
+      "english": "%1$s %2$s: %3$s / %4$s mB (%5$s%%)",
+      "value": "%1$s %2$s：%3$s / %4$s mB（%5$s%%）"
+    },
+    "jade.gt6ce.basic_machine.fluid_in": {
+      "english": "[In]",
+      "value": "[输入]"
+    },
+    "jade.gt6ce.basic_machine.fluid_out": {
+      "english": "[Out]",
+      "value": "[输出]"
+    },
+    "jade.gt6ce.basic_machine.items": {
+      "english": "Items: %1$s / %2$s",
+      "value": "物品：%1$s / %2$s"
+    },
+    "jade.gt6ce.basic_machine.label": {
+      "english": "%1$s (T%2$s)",
+      "value": "%1$s（T%2$s）"
+    },
+    "jade.gt6ce.boiler.calcified": {
+      "english": "Efficiency after calcification: %s%%",
+      "value": "钙化后效率：%s%%"
+    },
+    "jade.gt6ce.boiler.contact_damage": {
+      "english": "Contact heat damage: %.2f",
+      "value": "接触热伤害：%.2f"
+    },
+    "jade.gt6ce.boiler.descaling_damage": {
+      "english": "Descaling heat damage: %.2f",
+      "value": "除垢热伤害：%.2f"
+    },
+    "jade.gt6ce.boiler.descaling_explosion": {
+      "english": "Descaling at this pressure causes an explosion",
+      "value": "在此压力下除垢会引发爆炸"
+    },
+    "jade.gt6ce.boiler.dismantle_danger": {
+      "english": "Breaking explodes: strength %.2f; entity radius %.2f blocks",
+      "value": "拆除会爆炸：强度 %.2f；实体影响半径 %.2f 格"
+    },
+    "jade.gt6ce.boiler.dismantle_safe": {
+      "english": "Current pressure is safe to dismantle",
+      "value": "当前压力下可安全拆除"
+    },
+    "jade.gt6ce.boiler.heat": {
+      "english": "Heat: %s / %s HU",
+      "value": "热量：%s / %s HU"
+    },
+    "jade.gt6ce.boiler.pressure": {
+      "english": "Pressure: %s / 31",
+      "value": "压力：%s / 31"
+    },
+    "jade.gt6ce.boiler.steam": {
+      "english": "Steam: %s / %s L (%s%%)",
+      "value": "蒸汽：%s / %s L（%s%%）"
+    },
+    "jade.gt6ce.boiler.warn_dry": {
+      "english": "Warning: boiler is hot and dry!",
+      "value": "警告：锅炉高温且缺水！"
+    },
+    "jade.gt6ce.boiler.warn_overheat": {
+      "english": "Warning: overheating!",
+      "value": "警告：过热！"
+    },
+    "jade.gt6ce.boiler.warn_overpressure": {
+      "english": "Warning: overpressure!",
+      "value": "警告：超压！"
+    },
+    "jade.gt6ce.boiler.water": {
+      "english": "Water: %s / %s L (%s%%)",
+      "value": "水：%s / %s L（%s%%）"
+    },
+    "jade.gt6ce.burning_box.ash": {
+      "english": "Ashes: %1$s x%2$s",
+      "value": "灰烬：%1$s ×%2$s"
+    },
+    "jade.gt6ce.burning_box.fuel": {
+      "english": "Fuel: %1$s x%2$s",
+      "value": "燃料：%1$s ×%2$s"
+    },
+    "jade.gt6ce.burning_box.heat": {
+      "english": "Stored heat: %1$s HU",
+      "value": "储存热量：%1$s HU"
+    },
+    "jade.gt6ce.crucible.cache": {
+      "english": "Cache slot: %1$s x%2$s",
+      "value": "缓存槽：%1$s ×%2$s"
+    },
+    "jade.gt6ce.crucible.content": {
+      "english": "Contents: %1$s",
+      "value": "内容物：%1$s"
+    },
+    "jade.gt6ce.crucible.display": {
+      "english": "Render: %1$s (%2$s)",
+      "value": "显示：%1$s（%2$s）"
+    },
+    "jade.gt6ce.crucible.fill": {
+      "english": "Fill level: %1$s%%",
+      "value": "填充量：%1$s%%"
+    },
+    "jade.gt6ce.crucible.warning": {
+      "english": "Approaching meltdown!",
+      "value": "即将熔毁！"
+    },
+    "jade.gt6ce.dust_funnel.fraction": {
+      "english": "Stored: %1$s/72 dust of %2$s",
+      "value": "暂存：%1$s/72 堆%2$s粉"
+    },
+    "jade.gt6ce.dust_funnel.fraction_hint": {
+      "english": "Add the same material or remove the remainder with pincers",
+      "value": "补入同种材料，或用钳子取出余粉"
+    },
+    "jade.gt6ce.dust_funnel.mode": {
+      "english": "Output mode: %s",
+      "value": "输出模式：%s"
+    },
+    "jade.gt6ce.dust_funnel.size.0": {
+      "english": "Dust Block",
+      "value": "粉块"
+    },
+    "jade.gt6ce.dust_funnel.size.1": {
+      "english": "Dust",
+      "value": "粉"
+    },
+    "jade.gt6ce.dust_funnel.size.2": {
+      "english": "Small Dust",
+      "value": "小堆粉"
+    },
+    "jade.gt6ce.dust_funnel.size.3": {
+      "english": "Tiny Dust",
+      "value": "小撮粉"
+    },
+    "jade.gt6ce.dust_funnel.size.4": {
+      "english": "1/72 Dust",
+      "value": "1/72 堆粉"
+    },
+    "jade.gt6ce.energy.active": {
+      "english": "  Receiving: %1$s %2$s/t (Active)",
+      "value": "  接收：%1$s %2$s/t（工作中）"
+    },
+    "jade.gt6ce.energy.actual": {
+      "english": "Average input (1 s): %1$s %2$s/t",
+      "value": "平均输入（1 秒）：%1$s %2$s/t"
+    },
+    "jade.gt6ce.energy.idle": {
+      "english": "  (Idle)",
+      "value": "  （空闲）"
+    },
+    "jade.gt6ce.energy.in": {
+      "english": "Energy Input: %1$s %2$s/t",
+      "value": "能量输入：%1$s %2$s/t"
+    },
+    "jade.gt6ce.energy.multiplier": {
+      "english": "Input multiplier: %1$s× (%2$s %3$s/t = 1×)",
+      "value": "输入倍率：%1$s×（%2$s %3$s/t = 1×）"
+    },
+    "jade.gt6ce.energy.range": {
+      "english": "  Range: %1$s - %2$s %3$s/t",
+      "value": "  范围：%1$s - %2$s %3$s/t"
+    },
+    "jade.gt6ce.energy.stored": {
+      "english": "%1$s / %2$s %3$s (%4$s%%)",
+      "value": "%1$s / %2$s %3$s（%4$s%%）"
+    },
+    "jade.gt6ce.engine.eff": {
+      "english": "Efficiency: %1$s",
+      "value": "效率：%1$s"
+    },
+    "jade.gt6ce.engine.in": {
+      "english": "IN: %1$s %2$s/t",
+      "value": "输入：%1$s %2$s/t"
+    },
+    "jade.gt6ce.engine.out": {
+      "english": "KU: %1$s/t | Stored: %2$s/%3$s (%4$s%%)",
+      "value": "KU：%1$s/t | 储量：%2$s/%3$s（%4$s%%）"
+    },
+    "jade.gt6ce.engine.out_input_buffer": {
+      "english": "KU: %1$s/t | Input buffer: %2$s/%3$s %5$s (%4$s%%)",
+      "value": "KU：%1$s/t | 输入缓冲：%2$s/%3$s %5$s（%4$s%%）"
+    },
+    "jade.gt6ce.engine.status.off": {
+      "english": "Status: OFF",
+      "value": "状态：关闭"
+    },
+    "jade.gt6ce.engine.status.preheating": {
+      "english": "Status: Preheating (%1$s%%)",
+      "value": "状态：预热中（%1$s%%）"
+    },
+    "jade.gt6ce.engine.status.running": {
+      "english": "Status: Running (%1$s%%)",
+      "value": "状态：运行中（%1$s%%）"
+    },
+    "jade.gt6ce.engine.status.shutdown": {
+      "english": "Status: SHUTDOWN (Over Capacity)",
+      "value": "状态：停机（超出容量）"
+    },
+    "jade.gt6ce.engine.steam": {
+      "english": "Steam: %1$s/%2$s L (%3$s%%)",
+      "value": "蒸汽：%1$s/%2$s L（%3$s%%）"
+    },
+    "jade.gt6ce.engine.title": {
+      "english": "Engine: %1$s",
+      "value": "引擎：%1$s"
+    },
+    "jade.gt6ce.engine.water": {
+      "english": "Water: %1$s/%2$s L (%3$s%%)",
+      "value": "水：%1$s/%2$s L（%3$s%%）"
+    },
+    "jade.gt6ce.extender.active": {
+      "english": "Target: processing / delivering energy",
+      "value": "目标：正在加工／输送能量"
+    },
+    "jade.gt6ce.extender.idle": {
+      "english": "Target: idle",
+      "value": "目标：空闲"
+    },
+    "jade.gt6ce.extender.progress": {
+      "english": "Work: %s / %s",
+      "value": "工作进度：%s / %s"
+    },
+    "jade.gt6ce.extender.running": {
+      "english": "Target: running without successful output",
+      "value": "目标：运行中，但未成功输出"
+    },
+    "jade.gt6ce.mold.content": {
+      "english": "Content: %1$s (%2$sU, %3$s)",
+      "value": "内容物：%1$s（%2$sU，%3$s）"
+    },
+    "jade.gt6ce.mold.output": {
+      "english": "Mold output: %s",
+      "value": "模具产物：%s"
+    },
+    "jade.gt6ce.mold.solid_output": {
+      "english": "Solid output: %1$s x%2$s",
+      "value": "固态产物：%1$s ×%2$s"
+    },
+    "jade.gt6ce.mold.state.solidified": {
+      "english": "solidified",
+      "value": "已凝固"
+    },
+    "jade.gt6ce.mold.temperature": {
+      "english": "Temp: %1$s K / %2$s K",
+      "value": "温度：%1$s K / %2$s K"
+    },
+    "jade.gt6ce.multiblock.energy": {
+      "english": "Stored: %s / %s %s",
+      "value": "储量：%s / %s %s"
+    },
+    "jade.gt6ce.multiblock.fluid": {
+      "english": "%s: %s / %s mB",
+      "value": "%s：%s / %s mB"
+    },
+    "jade.gt6ce.multiblock.formed": {
+      "english": "Structure: formed",
+      "value": "结构：已成型"
+    },
+    "jade.gt6ce.multiblock.incomplete": {
+      "english": "Structure: incomplete / unavailable",
+      "value": "结构：不完整／不可用"
+    },
+    "jade.gt6ce.multiblock.jei": {
+      "english": "JEI: check controller recipes for assembly",
+      "value": "JEI：查看控制器配方以了解组装方式"
+    },
+    "jade.gt6ce.multiblock.progress": {
+      "english": "Progress: %s%%",
+      "value": "进度：%s%%"
+    },
+    "jade.gt6ce.reactor.fluid": {
+      "english": "%s: %s mB",
+      "value": "%s：%s mB"
+    },
+    "jade.gt6ce.reactor.heat": {
+      "english": "Stored heat: %s",
+      "value": "储存热量：%s"
+    },
+    "jade.gt6ce.reactor.ports": {
+      "english": "Hot outlet: %s; excess coolant: %s",
+      "value": "热流体出口：%s；多余冷却剂：%s"
+    },
+    "message.gt6ce.extender.disabled": {
+      "english": "Connected machine disabled",
+      "value": "已禁用连接的机器"
+    },
+    "message.gt6ce.extender.enabled": {
+      "english": "Connected machine enabled",
+      "value": "已启用连接的机器"
+    },
+    "message.gt6ce.extender.mode": {
+      "english": "Connected machine mode: %s",
+      "value": "连接机器的模式：%s"
+    },
+    "message.gt6ce.extender.unavailable": {
+      "english": "No supported machine connected",
+      "value": "未连接受支持的机器"
+    },
+    "message.gt6ce.reactor.detail": {
+      "english": "Rods %s/%s | Neutrons %s | Heat %s/t | %s | Stored legacy rods %s",
+      "value": "反应堆棒 %s/%s | 中子 %s | 热量 %s/t | %s | 暂存旧版反应堆棒 %s"
+    },
+    "message.gt6ce.reactor.stopped": {
+      "english": "Stopped",
+      "value": "已停止"
+    }
+  },
+  "reference_asset": "https://github.com/TeamNED/GregTech6-Translation-Groupware/releases/download/6.17.06-alpha.5/GregTech.lang",
+  "reference_sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0",
+  "reference_matches_pinned_source": true,
+  "terminology": {
+    "gt.multitileentity.32704": "筛粉漏斗",
+    "gt.lang.efficiency": "效率",
+    "gt.lang.energy.input": "能量输入",
+    "gt.lang.energy.output": "能量输出",
+    "gt.lang.tool.name.pincers": "钳子",
+    "gt.lang.recipes.mold": "这个模具生产"
+  }
+}
