@@ -248,7 +248,7 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
     @Override public long getEnergySizeInputRecommended(GregTechTags.Tag type,Direction side) { return usesTimeEnergy()?1:512; }
     @Override public long getEnergySizeInputMin(GregTechTags.Tag type,Direction side) { return inputMinimum(); }
     @Override public long getEnergySizeInputMax(GregTechTags.Tag type,Direction side) { return inputMaximum(); }
-    @Override protected boolean structureComplete() { return isStructureOk(); }
+    @Override protected boolean structureComplete() { return isStructureOk() && conditionPartsMet(); }
     protected java.util.List<LargeMachineLayouts.Cell> structureCells() { return LargeMachineLayouts.cells(spec().machineName()); }
     protected boolean validStructureParts() {return true;}
     protected boolean matchesPart(LargeMachineLayouts.Cell cell,net.minecraft.world.level.block.Block expected,net.minecraft.world.level.block.Block actual) {return (actual == expected);}
@@ -280,6 +280,15 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         }
         return bindings.update(parts,pos->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).canBind(worldPosition),
                 (pos,role)->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).bind(worldPosition,role),this::release);
+    }
+    /** Bound condition parts must all be satisfied. A structure with none works as before. */
+    private boolean conditionPartsMet() {
+        if (level == null) return true;
+        for (BlockPos pos : bindings.positions()) {
+            if (level.getBlockEntity(pos) instanceof AddonEnergyPartBlockEntity part && part.condition() && !part.satisfied())
+                return false;
+        }
+        return true;
     }
     private void release(BlockPos pos) { if(level!=null&&level.hasChunkAt(pos)&&level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part) part.release(worldPosition); }
     @Override public void setRemoved() {bindings.clear(this::release);super.setRemoved();}

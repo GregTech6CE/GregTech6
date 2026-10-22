@@ -29,4 +29,10 @@ public interface EnergyPart {
 
     /** Stops emission until the next {@link #setOutput(long, long)}. */
     void stop();
+
+    /** True when this part drains a condition each tick. An output part is false. */
+    boolean condition();
+
+    /** True when the last condition drain was paid. An output part is false. */
+    boolean satisfied();
 }
