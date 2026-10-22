@@ -14,8 +14,11 @@ import java.util.Objects;
  * The main input may declare a packet range or {@code anyPacket()}, and it may turn overload off.
  * It may be omitted when the machine emits. {@code auxiliaryEnergy} is a second buffer the
  * behavior reads by type. It may share a face with the main input when the energy types differ.
+ * {@code io} limits item and fluid faces. Leaving it unset keeps every face open.
  */
 public final class BehaviorMachine implements AddonMachine {
+    /** Every relative face. An unset {@code io} uses this mask. */
+    private static final int EVERY_FACE = (1 << 6) - 1;
     public static final int SLOT = 18;
     public static final int TANK_WIDTH = 18;
     public static final int TANK_HEIGHT = 54;
@@ -56,11 +59,12 @@ public final class BehaviorMachine implements AddonMachine {
     private final Progress progress;
     private final int maxRange;
     private final List<String> recipeMaps;
+    private final MachineIo io;
 
     private BehaviorMachine(MachineCasing casing, EnergyInput energy, EnergyInput auxiliary, EnergyOutput output,
                             String blockEntityId, int guiWidth, int guiHeight, String gui, int energyX, int energyY,
                             List<ItemSlot> items, List<FluidSlot> fluids, List<Toggle> toggles, Progress progress,
-                            int maxRange, List<String> recipeMaps) {
+                            int maxRange, List<String> recipeMaps, MachineIo io) {
         this.casing = casing;
         this.energy = energy;
         this.auxiliary = auxiliary;
@@ -77,6 +81,7 @@ public final class BehaviorMachine implements AddonMachine {
         this.progress = progress;
         this.maxRange = maxRange;
         this.recipeMaps = recipeMaps;
+        this.io = io;
     }
 
     @Override public MachineCasing casing() { return casing; }
@@ -98,6 +103,8 @@ public final class BehaviorMachine implements AddonMachine {
     public Progress progress() { return progress; }
     public int maxRange() { return maxRange; }
     public List<String> recipeMaps() { return List.copyOf(recipeMaps); }
+    /** Null when every item and fluid face stays open and no automatic face was declared. */
+    public MachineIo io() { return io; }
 
     /** Registry path. An empty block entity id becomes {@code be_<id>}. */
     public String blockEntityPath() {
@@ -127,6 +134,22 @@ public final class BehaviorMachine implements AddonMachine {
         return mask;
     }
 
+    /** Item-insert faces. An unset {@code io} is every face. A named {@code io} leaves an unnamed channel closed. */
+    public int itemInputMask() { return faceMask(io == null ? null : io.itemInputs()); }
+    /** Item-extract faces. Same default as {@link #itemInputMask()}. */
+    public int itemOutputMask() { return faceMask(io == null ? null : io.itemOutputs()); }
+    /** Fluid-fill faces. Same default as {@link #itemInputMask()}. */
+    public int fluidInputMask() { return faceMask(io == null ? null : io.fluidInputs()); }
+    /** Fluid-drain faces. Same default as {@link #itemInputMask()}. */
+    public int fluidOutputMask() { return faceMask(io == null ? null : io.fluidOutputs()); }
+
+    private static int faceMask(List<MachineFace> faces) {
+        if (faces == null) return EVERY_FACE;
+        int mask = 0;
+        for (MachineFace face : faces) mask |= face.bit();
+        return mask;
+    }
+
     public int initialToggles() {
         int bits = 0;
         for (int i = 0; i < toggles.size(); i++) if (toggles.get(i).initiallyOn()) bits |= 1 << i;
@@ -149,12 +172,13 @@ public final class BehaviorMachine implements AddonMachine {
                 && Objects.equals(output, that.output)
                 && blockEntityId.equals(that.blockEntityId) && gui.equals(that.gui)
                 && items.equals(that.items) && fluids.equals(that.fluids) && toggles.equals(that.toggles)
-                && progress.equals(that.progress) && recipeMaps.equals(that.recipeMaps);
+                && progress.equals(that.progress) && recipeMaps.equals(that.recipeMaps)
+                && Objects.equals(io, that.io);
     }
 
     @Override public int hashCode() {
         return Objects.hash(casing, energy, auxiliary, output, blockEntityId, guiWidth, guiHeight, gui, energyX, energyY,
-                items, fluids, toggles, progress, maxRange, recipeMaps);
+                items, fluids, toggles, progress, maxRange, recipeMaps, io);
     }
 
     public static Builder builder(MachineCasing casing) { return new Builder(casing); }
@@ -215,8 +239,13 @@ public final class BehaviorMachine implements AddonMachine {
 
         public BehaviorMachine build() {
             if (casing == null) throw new IllegalArgumentException("Missing casing");
-            if (io != null)
-                throw new IllegalArgumentException("Behavior machines cannot declare item and fluid faces");
+            if (io != null) {
+                if (io.hasTarget())
+                    throw new IllegalArgumentException("Behavior machines cannot declare an IO target");
+                if (io.itemAutoInput() != null || io.itemAutoOutput() != null
+                        || io.fluidAutoInput() != null || io.fluidAutoOutput() != null)
+                    throw new IllegalArgumentException("Behavior machines cannot declare an automatic face");
+            }
             if (fuelOutput != null)
                 throw new IllegalArgumentException("Behavior machines cannot declare fuel output");
             String id = casing.id();
@@ -295,7 +324,7 @@ public final class BehaviorMachine implements AddonMachine {
             return new BehaviorMachine(casing.resolve(machineType, true, tier), storedEnergy, storedAuxiliary, output,
                     blockEntity,
                     guiWidth, guiHeight, gui, energyX, energyY, List.copyOf(items), List.copyOf(fluids),
-                    List.copyOf(toggles), progress, maxRange, List.copyOf(mapNames));
+                    List.copyOf(toggles), progress, maxRange, List.copyOf(mapNames), io);
         }
     }
 

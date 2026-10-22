@@ -23,8 +23,34 @@ public interface MachineBehavior {
     /** Items a player or a pipe may put in this slot. Output slots never call this. */
     boolean canInsert(MachineBehaviorContext context, int slot, ItemStack stack);
 
+    /**
+     * Same check, plus the face the pipe used. The default calls {@link #canInsert} without a face.
+     * A null face is the menu or an unsided handler.
+     */
+    default boolean canInsert(MachineBehaviorContext context, int slot, ItemStack stack, MachineFace face) {
+        return canInsert(context, slot, stack);
+    }
+
     /** Fluids this tank may hold. */
     boolean canFill(MachineBehaviorContext context, int tank, FluidStack stack);
+
+    /**
+     * Same check, plus the face the pipe or container used. The default calls {@link #canFill} without a face.
+     * A null face is the menu or an unsided handler.
+     */
+    default boolean canFill(MachineBehaviorContext context, int tank, FluidStack stack, MachineFace face) {
+        return canFill(context, tank, stack);
+    }
+
+    /**
+     * Whether this pushed packet may enter. GregTech asks from {@code doInject} after the face
+     * check and the buffer check, on the main buffer and the auxiliary buffer. False refuses
+     * that packet: it is not stored and it does not overload. The default accepts. A null face
+     * means the caller did not name a side. The machine's own pull does not ask.
+     */
+    default boolean acceptsEnergy(MachineBehaviorContext context, String type, MachineFace face, long size, long amount) {
+        return true;
+    }
 
     /**
      * How much of {@code stack} the tank takes. The default stores that fluid when {@link #canFill}

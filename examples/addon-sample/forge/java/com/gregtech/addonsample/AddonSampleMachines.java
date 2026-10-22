@@ -108,7 +108,7 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
                         .fuelMap("addon_sample.fuel.gas").efficiency(5_000)
                         .output(FuelOutput.builder("RU", 32).behind(4).build())
                         .tank(8_000).multi().build(),
-                IRRIGATOR, MINER, VOID_HOPPER, ROTATION_BUFFER, HAND_CRANK, TRANSFORMER, CLUSTER, SOLID_BOILER, COMPRESSOR, WATER_WHEEL, HAMMER_SWITCH);
+                IRRIGATOR, MINER, VOID_HOPPER, ROTATION_BUFFER, HAND_CRANK, TRANSFORMER, CLUSTER, SOLID_BOILER, COMPRESSOR, WATER_WHEEL, HAMMER_SWITCH, INLET);
     }
 
     @Override public List<LayoutPart> layoutParts() {
@@ -160,7 +160,8 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
 
     @Override public Set<String> machineTypes() {
         return Set.of("irrigator", "sampleminer", "samplehopper", "ru_buffer", "hand_crank",
-                "sample_transformer", "sample_cluster", "sampleboiler", "samplecompressor", "sample_wheel", "sample_switch");
+                "sample_transformer", "sample_cluster", "sampleboiler", "samplecompressor", "sample_wheel", "sample_switch",
+                "sample_inlet");
     }
 
     @Override public MachineBehavior create(String machineType) {
@@ -176,6 +177,7 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
             case "samplecompressor" -> new Compressor();
             case "sample_wheel" -> new WaterWheel();
             case "sample_switch" -> new HammerSwitch();
+            case "sample_inlet" -> new Inlet();
             default -> throw new IllegalArgumentException(machineType);
         };
     }
@@ -280,6 +282,15 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
             .gui("addon_sample:textures/gui/machine.png")
             .build();
 
+    /** Water only from the top. A saved {@code shut} flag refuses the next energy packet. */
+    private static final BehaviorMachine INLET = BehaviorMachine.builder(
+            MachineCasing.builder("sample_inlet", "Steel").machineType("sample_inlet").tier(1).build())
+            .energy(EnergyInput.builder("EU", 32).capacity(10_000).build())
+            .gui("addon_sample:textures/gui/machine.png")
+            .fluid(8000, 152, 8, BehaviorMachine.SlotRole.INPUT)
+            .io(MachineIo.builder().fluidInputs(MachineFace.TOP).build())
+            .build();
+
     /** KU on the bottom, gas in the tank, compressed drum on the back. */
     private static final BehaviorMachine COMPRESSOR = BehaviorMachine.builder(
             MachineCasing.builder("sample_compressor", "Steel").machineType("samplecompressor").tier(1).build())
@@ -315,6 +326,20 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
             if (tool != AddonTool.SOFT_HAMMER) return false;
             context.state().setBoolean("armed", !context.state().getBoolean("armed"));
             return true;
+        }
+    }
+
+    /** Top fluid face only. {@code shut} makes {@link #acceptsEnergy} refuse the packet. */
+    private static final class Inlet implements MachineBehavior {
+        @Override public boolean canInsert(MachineBehaviorContext context, int slot, ItemStack stack) { return false; }
+        @Override public boolean canFill(MachineBehaviorContext context, int tank, FluidStack stack) {
+            return stack != null && !stack.isEmpty() && stack.getFluid() == Fluids.WATER;
+        }
+        @Override public void tick(MachineBehaviorContext context) {}
+
+        @Override public boolean acceptsEnergy(MachineBehaviorContext context, String type, MachineFace face,
+                                               long size, long amount) {
+            return !context.state().getBoolean("shut");
         }
     }
 

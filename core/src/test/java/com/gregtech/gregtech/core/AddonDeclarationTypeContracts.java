@@ -56,7 +56,19 @@ public final class AddonDeclarationTypeContracts {
         fails(() -> RecipeMachine.builder(casing).energy(EnergyInput.builder("EU", 32).capacity(0).build())
                 .recipeMap("aa.recipe.press").build(), "energy capacity");
 
-        fails(() -> BehaviorMachine.builder(casing).energy(energy).gui(GUI).io(io).build(), "item and fluid");
+        var faced = BehaviorMachine.builder(casing).energy(energy).gui(GUI).io(io).build();
+        check(faced.io() != null && faced.itemInputMask() == MachineFace.FRONT.bit()
+                && faced.itemOutputMask() == 0 && faced.fluidInputMask() == 0 && faced.fluidOutputMask() == 0,
+                "behavior machine keeps declared faces and closes the rest");
+        var open = BehaviorMachine.builder(casing).energy(energy).gui(GUI).build();
+        check(open.io() == null && open.itemInputMask() == (1 << 6) - 1 && open.fluidOutputMask() == (1 << 6) - 1,
+                "an unset behavior io keeps every face open");
+        check(faced.equals(BehaviorMachine.builder(casing).energy(energy).gui(GUI).io(io).build())
+                && !faced.equals(open), "behavior io is part of equality");
+        fails(() -> BehaviorMachine.builder(casing).energy(energy).gui(GUI)
+                .io(MachineIo.builder().itemAutoOutput(MachineFace.BOTTOM).build()).build(), "automatic face");
+        fails(() -> BehaviorMachine.builder(casing).energy(energy).gui(GUI)
+                .io(MachineIo.builder().itemOutputTarget(1, 0, 0, MachineFace.FRONT).build()).build(), "IO target");
         fails(() -> BehaviorMachine.builder(casing).energy(energy).gui(GUI).output(fuel).build(), "fuel output");
 
         var tiered = MachineCasing.builder("press", "Steel").tier(1).build();

@@ -136,7 +136,7 @@ public class BehaviorMachineBlock extends GTFacingMachineBlock implements Entity
         IFluidHandlerItem fluidItem = held.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).resolve().orElse(null);
 //?}
         if (fluidItem != null && machine.tanks() > 0) {
-            if (!level.isClientSide) pour(player, hand, machine, fluidItem);
+            if (!level.isClientSide) pour(player, hand, machine, fluidItem, hit.getDirection());
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
         if (!level.isClientSide && machine.onUse(player, hand)) return InteractionResult.sidedSuccess(false);
@@ -172,14 +172,17 @@ public class BehaviorMachineBlock extends GTFacingMachineBlock implements Entity
         return null;
     }
 
-    private static void pour(Player player, InteractionHand hand, BehaviorMachineBlockEntity machine, IFluidHandlerItem fluidItem) {
+    private static void pour(Player player, InteractionHand hand, BehaviorMachineBlockEntity machine,
+                             IFluidHandlerItem fluidItem, Direction side) {
+        IFluidHandler tanks = machine.fluidHandler(side);
+        if (tanks == null) return;
         FluidStack available = fluidItem.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);
         if (available.isEmpty()) return;
-        int accepted = machine.fluids().fill(available, IFluidHandler.FluidAction.SIMULATE);
+        int accepted = tanks.fill(available, IFluidHandler.FluidAction.SIMULATE);
         if (accepted <= 0) return;
         FluidStack drained = fluidItem.drain(accepted, IFluidHandler.FluidAction.EXECUTE);
         if (drained.isEmpty()) return;
-        machine.fluids().fill(drained, IFluidHandler.FluidAction.EXECUTE);
+        tanks.fill(drained, IFluidHandler.FluidAction.EXECUTE);
         player.setItemInHand(hand, fluidItem.getContainer());
     }
 

@@ -102,10 +102,16 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     private final Context context = new Context();
     private final PipeItems pipeItems = new PipeItems();
     private final PipeFluids pipeFluids = new PipeFluids();
+    private final IItemHandler[] itemSides = new IItemHandler[6];
+    private final IFluidHandler[] fluidSides = new IFluidHandler[6];
 //? if >=1.21.1 {
 /**///?} else {
     private final LazyOptional<IItemHandler> itemCap = LazyOptional.of(() -> pipeItems);
     private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> pipeFluids);
+    @SuppressWarnings("unchecked")
+    private final LazyOptional<IItemHandler>[] sidedItemCaps = new LazyOptional[6];
+    @SuppressWarnings("unchecked")
+    private final LazyOptional<IFluidHandler>[] sidedFluidCaps = new LazyOptional[6];
 //?}
     private final GregTechTags.Tag energyTag;
     private final GregTechTags.Tag energyOutTag;
@@ -180,14 +186,44 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     public boolean toggle(int index) { return context.toggle(index); }
 //? if >=1.21.1 {
 /*
-    public IItemHandler itemCapability(@Nullable Direction side) { return pipeItems; }
+    public IItemHandler itemCapability(@Nullable Direction side) { return itemHandler(side); }
 
     @Nullable
-    public IFluidHandler fluidCapability(@Nullable Direction side) {
-        return tanks.length == 0 ? null : pipeFluids;
-    }
+    public IFluidHandler fluidCapability(@Nullable Direction side) { return fluidHandler(side); }
 *///?} else {
 //?}
+
+    /** Unsided when {@code side} is null or the machine declares no {@code MachineIo}. A closed face is null. */
+    @Nullable
+    public IItemHandler itemHandler(@Nullable Direction side) {
+        if (side == null || declaration.io() == null) return pipeItems;
+        int rel = relative(side);
+        boolean insert = FaceConfig.has(declaration.itemInputMask(), rel);
+        boolean extract = FaceConfig.has(declaration.itemOutputMask(), rel);
+        if (!insert && !extract) return null;
+        IItemHandler cached = itemSides[rel];
+        if (cached == null) itemSides[rel] = cached = new PipeItems(faceAt(rel), insert, extract);
+        return cached;
+    }
+
+    /** Unsided when {@code side} is null or the machine declares no {@code MachineIo}. A closed face is null. */
+    @Nullable
+    public IFluidHandler fluidHandler(@Nullable Direction side) {
+        if (tanks.length == 0) return null;
+        if (side == null || declaration.io() == null) return pipeFluids;
+        int rel = relative(side);
+        boolean fill = FaceConfig.has(declaration.fluidInputMask(), rel);
+        boolean drain = FaceConfig.has(declaration.fluidOutputMask(), rel);
+        if (!fill && !drain) return null;
+        IFluidHandler cached = fluidSides[rel];
+        if (cached == null) fluidSides[rel] = cached = new PipeFluids(faceAt(rel), fill, drain);
+        return cached;
+    }
+
+    private static MachineFace faceAt(int relative) {
+        for (MachineFace face : MachineFace.values()) if (face.index() == relative) return face;
+        return MachineFace.FRONT;
+    }
 
     public boolean behaviorAllows(int slot, ItemStack stack) {
         return behavior.canInsert(context, slot, stack);
@@ -421,15 +457,45 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) return itemCap.cast();
-        if (cap == ForgeCapabilities.FLUID_HANDLER && tanks.length > 0) return fluidCap.cast();
+        if (cap == ForgeCapabilities.ITEM_HANDLER) return itemCapability(side).cast();
+        if (cap == ForgeCapabilities.FLUID_HANDLER && tanks.length > 0) {
+            LazyOptional<IFluidHandler> fluids = fluidCapability(side);
+            return fluids == null ? LazyOptional.empty() : fluids.cast();
+        }
         return super.getCapability(cap, side);
+    }
+
+    private LazyOptional<IItemHandler> itemCapability(@Nullable Direction side) {
+        if (side == null || declaration.io() == null) return itemCap;
+        int rel = relative(side);
+        if (itemHandler(side) == null) return LazyOptional.empty();
+        if (sidedItemCaps[rel] == null) {
+            IItemHandler handler = itemSides[rel];
+            sidedItemCaps[rel] = LazyOptional.of(() -> handler);
+        }
+        return sidedItemCaps[rel];
+    }
+
+    @Nullable
+    private LazyOptional<IFluidHandler> fluidCapability(@Nullable Direction side) {
+        if (fluidHandler(side) == null) return null;
+        if (side == null || declaration.io() == null) return fluidCap;
+        int rel = relative(side);
+        if (sidedFluidCaps[rel] == null) {
+            IFluidHandler handler = fluidSides[rel];
+            sidedFluidCaps[rel] = LazyOptional.of(() -> handler);
+        }
+        return sidedFluidCaps[rel];
     }
 
     @Override public void invalidateCaps() {
         super.invalidateCaps();
         itemCap.invalidate();
         fluidCap.invalidate();
+        for (int i = 0; i < sidedItemCaps.length; i++) {
+            if (sidedItemCaps[i] != null) sidedItemCaps[i].invalidate();
+            if (sidedFluidCaps[i] != null) sidedFluidCaps[i].invalidate();
+        }
     }
 
 //?}
@@ -469,7 +535,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
 
     @Override
     public long doInject(String energy, Direction side, long size, long amount, boolean doInject) {
-        if (auxiliaryAccepts(energy, side)) return injectAuxiliary(energy, size, amount, doInject);
+        if (auxiliaryAccepts(energy, side)) return injectAuxiliary(energy, side, size, amount, doInject);
         if (!hasInput() || !isEnergyAcceptingFrom(energy, side, false)
                 || size == 0 || size == Long.MIN_VALUE || amount <= 0) return 0;
         var input = declaration.energy();
@@ -477,6 +543,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         var decision = BehaviorEnergyRules.admitInput(stored, bufferCapacity(), size, amount,
                 any ? 1 : accepted.energyInMin(), any ? Long.MAX_VALUE : accepted.energyInMax(),
                 any, input.overload(), any || input.rangeSpecified());
+        if (!takePacket(decision.packets(), decision.overload(), energy, side, size, amount)) return 0;
         if (decision.overload()) {
             if (doInject) com.gregtech.gregtech.api.energy.MachineOverload.apply(this, Math.abs(size), energy);
             return decision.packets();
@@ -488,11 +555,12 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         return decision.packets();
     }
 
-    private long injectAuxiliary(String energy, long size, long amount, boolean doInject) {
+    private long injectAuxiliary(String energy, Direction side, long size, long amount, boolean doInject) {
         var auxiliary = declaration.auxiliary();
         boolean anyPacket = auxiliary.anyPacket();
         var decision = PartEnergyRules.admit(auxiliaryStored, auxiliary.capacity(), size, amount,
                 anyPacket ? 1 : auxiliary.rangeMin(), anyPacket ? Long.MAX_VALUE : auxiliary.rangeMax(), anyPacket);
+        if (!takePacket(decision.packets(), decision.overload(), energy, side, size, amount)) return 0;
         if (decision.overload()) {
             if (doInject) com.gregtech.gregtech.api.energy.MachineOverload.apply(this, Math.abs(size), energy);
             return decision.packets();
@@ -502,6 +570,13 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             setChanged();
         }
         return decision.packets();
+    }
+
+    /** False after the face and buffer checks means this packet is refused whole. */
+    private boolean takePacket(long packets, boolean overload, String energy, Direction side, long size, long amount) {
+        if (packets <= 0 && !overload) return false;
+        MachineFace face = side == null ? null : clickedFace(side);
+        return behavior.acceptsEnergy(context, energy, face, size, amount);
     }
 
     @Override
@@ -1037,39 +1112,64 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     }
 
     private final class PipeItems implements IItemHandler {
+        @Nullable private final MachineFace face;
+        private final boolean allowInsert;
+        private final boolean allowExtract;
+
+        private PipeItems() { this(null, true, true); }
+
+        private PipeItems(@Nullable MachineFace face, boolean allowInsert, boolean allowExtract) {
+            this.face = face;
+            this.allowInsert = allowInsert;
+            this.allowExtract = allowExtract;
+        }
+
         @Override public int getSlots() { return items.getSlots(); }
         @Override public ItemStack getStackInSlot(int slot) { return items.getStackInSlot(slot); }
         @Override public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-            if (!insertable(slot) || stack == null || stack.isEmpty() || !behavior.canInsert(context, slot, stack)) return stack;
+            if (!allowInsert || !insertable(slot) || stack == null || stack.isEmpty()
+                    || !behavior.canInsert(context, slot, stack, face)) return stack;
             return items.insertItem(slot, stack, simulate);
         }
         @Override public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            return extractable(slot) ? items.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
+            return allowExtract && extractable(slot) ? items.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
         }
         @Override public int getSlotLimit(int slot) { return items.getSlotLimit(slot); }
         @Override public boolean isItemValid(int slot, ItemStack stack) {
-            return insertable(slot) && behavior.canInsert(context, slot, stack);
+            return allowInsert && insertable(slot) && behavior.canInsert(context, slot, stack, face);
         }
     }
 
     private final class PipeFluids implements IFluidHandler {
+        @Nullable private final MachineFace face;
+        private final boolean allowFill;
+        private final boolean allowDrain;
+
+        private PipeFluids() { this(null, true, true); }
+
+        private PipeFluids(@Nullable MachineFace face, boolean allowFill, boolean allowDrain) {
+            this.face = face;
+            this.allowFill = allowFill;
+            this.allowDrain = allowDrain;
+        }
+
         @Override public int getTanks() { return tanks.length; }
         @Override public FluidStack getFluidInTank(int tank) { return tanks[tank].copy(); }
         @Override public int getTankCapacity(int tank) { return tanks[tank].capacity; }
         @Override public boolean isFluidValid(int tank, FluidStack stack) {
-            return fillable(tank) && behavior.canFill(context, tank, stack);
+            return allowFill && fillable(tank) && behavior.canFill(context, tank, stack, face);
         }
         @Override public int fill(FluidStack resource, FluidAction action) {
-            if (resource == null || resource.isEmpty()) return 0;
+            if (!allowFill || resource == null || resource.isEmpty()) return 0;
             for (int tank = 0; tank < tanks.length; tank++) {
-                if (!fillable(tank)) continue;
+                if (!fillable(tank) || !behavior.canFill(context, tank, resource, face)) continue;
                 int taken = behavior.acceptFluid(context, tank, resource, action.simulate());
                 if (taken > 0) return taken;
             }
             return 0;
         }
         @Override public FluidStack drain(FluidStack resource, FluidAction action) {
-            if (resource == null || resource.isEmpty()) return FluidStack.EMPTY;
+            if (!allowDrain || resource == null || resource.isEmpty()) return FluidStack.EMPTY;
             for (int tank = 0; tank < tanks.length; tank++) {
                 if (!drainable(tank) || tanks[tank].fluid != resource.getFluid()) continue;
                 FluidStack drained = tanks[tank].drain(resource.getAmount(), action.simulate());
@@ -1079,6 +1179,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             return FluidStack.EMPTY;
         }
         @Override public FluidStack drain(int maxDrain, FluidAction action) {
+            if (!allowDrain) return FluidStack.EMPTY;
             for (int tank = 0; tank < tanks.length; tank++) {
                 if (!drainable(tank)) continue;
                 FluidStack drained = tanks[tank].drain(maxDrain, action.simulate());
