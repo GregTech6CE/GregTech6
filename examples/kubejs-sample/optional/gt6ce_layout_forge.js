@@ -1,0 +1,7 @@
+ServerEvents.highPriorityData(event => {
+  GT6CE.layout(event, 'largepress', [
+    { right: 1, up: 0, back: 0, match: 'minecraft:iron_block', role: 'casing' },
+    { right: 0, up: 0, back: 1, match: 'tank_wall', role: 'energy_input' },
+    { right: -1, up: 0, back: 0, match: 'press_emitter', role: 'energy_output' }
+  ])
+})

@@ -16,6 +16,7 @@ Legacy contributors still load from an installed GregTech jar. They are deprecat
   - [Adding recipes from `onRecipesReady`](#adding-recipes-from-onrecipesready)
 - [Recipes](#recipes)
   - [Machine recipe datapacks](#machine-recipe-datapacks)
+  - [KubeJS](#kubejs)
   - [Viewer rows](#viewer-rows)
   - [Multiple dynamic providers](#multiple-dynamic-providers)
 - [Materials](#materials)
@@ -29,6 +30,7 @@ Legacy contributors still load from an installed GregTech jar. They are deprecat
   - [Energy](#energy)
   - [Items and fluids](#items-and-fluids)
   - [Structures](#structures)
+  - [Structure layout datapacks](#structure-layout-datapacks)
   - [Recipe tables](#recipe-tables)
   - [Recipe machines](#recipe-machines)
   - [Behavior machines](#behavior-machines)
@@ -166,7 +168,7 @@ Add, display and remove machine recipe rows.
 
 ### Machine recipe datapacks
 
-A datapack can add or remove static rows on a machine recipe map that already exists. Put the JSON in the vanilla recipe directory: `data/<namespace>/recipes/` on Forge 1.20.1, and `data/<namespace>/recipe/` on NeoForge 1.21.1. It cannot create a map, and it does not see or edit dynamic providers. The same JSON is what KubeJS `event.custom()` submits. There is no KubeJS plugin. `event.remove({type: "gt6ce:machine"})` removes the marker recipes from the vanilla recipe manager; the next reload then rebuilds the machine maps from the markers that remain.
+A datapack can add or remove static rows on a machine recipe map that already exists. Put the JSON in the vanilla recipe directory: `data/<namespace>/recipes/` on Forge 1.20.1, and `data/<namespace>/recipe/` on NeoForge 1.21.1. It cannot create a map, and it does not see or edit dynamic providers. KubeJS `event.custom()` and the schema below submit that same JSON. `event.remove({type: "gt6ce:machine"})` removes the marker recipes from the vanilla recipe manager; the next reload then rebuilds the machine maps from the markers that remain.
 
 Rebuild order, after tags are bound:
 
@@ -214,7 +216,29 @@ Built-in machine recipe map names (resolved by both `AddonRecipes.map(name)` and
 - Display and reference maps: `gt.recipe.cruciblealloying`, `gt.recipe.cruciblesmelting`, `gt.recipe.bedrockorelist`, `gt.recipe.byproductlist`, `gt.recipe.bumblequeen`, `gt.recipe.trees`, `gt.recipe.other`, `gt.recipe.toolhead`.
 - Built-in fuel recipe maps: `gt.recipe.fuels.fluidbed`, `gt.recipe.fuels.burn`, `gt.recipe.fuels.gas`, `gt.recipe.fuels.hot`, `gt.recipe.fuels.plasma`, `gt.recipe.fuels.engine`, `gt.recipe.fuels.turbine`, `gt.recipe.fuels.magic`.
 
-In a GT6CE repository checkout, development runs can add KubeJS with `-PkubejsRuntime=true`. The dependency stays out of the production jar and is independent of `-PcompatRuntime`.
+### KubeJS
+
+When KubeJS is installed, GregTech registers a `gt6ce:machine` recipe schema. The plugin class in `kubejs.plugins.txt` is not loaded when KubeJS is absent. `event.custom()` and `event.remove({type: "gt6ce:machine"})` still work.
+
+```js
+ServerEvents.recipes(event => {
+  event.recipes.gt6ce.machine('gt.recipe.crusher')
+    .itemInputs('minecraft:iron_ore', '#minecraft:coals')
+    .fluidInputs(Fluid.of('minecraft:water', 1000))
+    .itemOutputs(Item.of('minecraft:emerald').withChance(5000))
+    .eu(16).duration(64)
+  GT6CE.removeMachine(event, { map: 'gt.recipe.crusher', itemInputs: ['minecraft:iron_ore'] })
+  GT6CE.clearMap(event, 'gt.recipe.crusher')
+})
+```
+
+`GT6CE.maps()` lists the built-in map names plus addon maps installed so far. A name that is not on that list fails while the script loads, before the overlay rejects it. KubeJS on 1.21.1 removed `Item.of().withChance`, so the chance is a field: `.itemOutputs({ item: 'minecraft:emerald', chance: 5000 })`. `withChance(5000)` is parts per 10000 on 1.20.1 only. A fraction greater than 0 and at most 1 is multiplied by 10000.
+
+In a GT6CE repository checkout, KubeJS is always `compileOnly`. `-PkubejsRuntime=true` adds it to the development runtime only. The dependency stays out of the production jar and is independent of `-PcompatRuntime`.
+
+The startup script `GT6CEStartupEvents.machines` can declare recipe tables, recipe machines, fuel generators, casings, layouts, and casing or energy parts. The content is registered in the `kubejs:` namespace. The client and the server must load the same startup script, or the registries diverge. KubeJS loads startup scripts from its own mod constructor, and GregTech reads the declarations while blocks are registered. If the scripts have not loaded by then, startup fails with a message containing `KubeJS startup scripts have not loaded`.
+
+Behavior machines, functional parts with slots or a tick, pipes, compressed gas tanks and materials are not available from this script. Block states, models and language files belong in `kubejs/assets/kubejs/`. GregTech generates the default model for a structure part. The sample is `examples/kubejs-sample/`.
 
 ### Viewer rows
 
@@ -486,6 +510,34 @@ A block id or tag is a resource location: a lower-case namespace, one colon, and
 Whether a layout is required, and when the machine counts as formed, depends on the template. A large recipe machine must have a layout of the same machine type. A missing layout fails startup, and a failed structure check does not start a job. A multiblock fuel generator must have a layout of the same machine type. A single-block fuel generator cannot have a layout, and it starts formed. A behavior layout is optional. With none, the first server tick sets formed, and formed is false before that tick. With a layout, the cells are checked. All three checks match a cell the same way.
 
 A part name that is not a block id or a tag is a `SharedLargeMachineParts` name, `air`, `tank_wall`, `tank_wall_dense`, `centrifuge_part`, `heat_transmitter`, `distillation_tower_part`, `electrolyzer_part`, or a name from `layoutParts()`. An empty layout, a duplicated position, an unknown part, a layout with no controller, or a large recipe machine with no layout fails startup and names the addon.
+
+### Structure layout datapacks
+
+`data/<namespace>/gt6ce_layouts/<machineType>.json` replaces the cells of an addon or KubeJS machine that is already registered. It does not add a block or a machine. Built-in controllers cannot be replaced. A file that names a built-in controller, an unknown machine, an unknown part, an unknown block, or that fails to parse is skipped with one warning, and the reload continues.
+
+```json
+{
+  "cells": [
+    { "right": 1, "up": 0, "back": 0, "match": "press_casing", "role": "casing" },
+    { "right": 0, "up": 0, "back": 1, "match": "tank_wall", "role": "energy_input" }
+  ]
+}
+```
+
+`match` uses `CellMatch.parse`: `air`, a leading `#` for a tag, a `:` for a block id, and any other text as a part name. `role` is a `StructureRole` name, in any case. A block or a tag must be `casing`. The origin, a repeated cell, an empty list and an unknown field reject that file. When several files name the same machine, they are applied in resource-id order and the later file wins. Top-level fields that start with `_` are ignored.
+
+`/reload` restores the startup layouts, then applies the current datapack. A machine that was already formed is checked against the new layout on its next structure check. A part that is no longer in the layout is unbound. The server sends the overlay to the client. Structure preview, the JEI multiblock page and the hint text are rebuilt from the new cells. EMI reloads with them. If its reload entry cannot be called, that failure is logged once and the layout itself still applies.
+
+KubeJS writes the same JSON. 1.20.1 uses `ServerEvents.highPriorityData`. 1.21.1 uses `ServerEvents.generateData('after_mods', ...)`. `GT6CE.layout(event, machine, cells)` takes the same cells and writes `data/kubejs/gt6ce_layouts/<machine>.json`.
+
+```js
+ServerEvents.highPriorityData(event => {
+  GT6CE.layout(event, 'largepress', [
+    { right: 1, up: 0, back: 0, match: 'minecraft:iron_block', role: 'casing' },
+    { right: 0, up: 0, back: 1, match: 'tank_wall', role: 'energy_input' }
+  ])
+})
+```
 
 `layoutParts()` returns casings, energy parts and functional parts:
 
@@ -771,7 +823,7 @@ Vanilla dispensers (including droppers), hoppers, pistons, TNT, note blocks, tra
 - `GTValues`, `GTVoltageTiers`, `BasicMachineEnergy` and `MachineWorkCost`.
 - `EnergyBlock` for an addon energy block. `AddonEnergy` runs GregTech's packet gate. EU cable insert and extract accept this interface. Axles, laser fiber, relays, long-distance transformers, and built-in injection or extraction resolve neighbors through `EnergyBlockViews`, so they also see this interface. Scanner, Jade and cover readouts still see only GregTech's own energy blocks.
 - `AddonTool`: `SPADE`, `UNIVERSAL_SPADE` and `MAGNIFYING_GLASS`, plus `AddonTools.matches`, `isMagnifyingGlass` and `damageForUse`.
-- Datapack types `gt6ce:machine` and `gt6ce:machine_removal` on maps that already exist.
+- Datapack types `gt6ce:machine` and `gt6ce:machine_removal` on maps that already exist. KubeJS can add and remove those static rows, and a startup script can declare `kubejs:` recipe tables, recipe machines, fuel generators, casings, layouts and energy parts. `data/<namespace>/gt6ce_layouts/<machineType>.json` can replace an addon or script layout on reload. It cannot change a built-in controller.
 - `GtSignalCarrier`, `GtSignalSource`, `GtSignalReceiver`, `CropScanSource`, and the empty `gt6ce:signal_wire_receivers` block tag.
 
 These stay closed. `BasicMachineBlock` and `BasicMachineBlockEntity` are GregTech's machine implementation; an addon machine is data, not a subclass. `Recipe.mRecipeList` is the internal row list; production code uses the `AddonRecipes.Line` returned by `add`. `GTMaterial`, `GTMaterialRegistry` and the material sentinels are replaced by `GregTechMaterials`. `GregTechTags` is replaced by energy short names. `MachineRecipeMaps` fields are replaced by `AddonRecipes.map(name)`. `MaterialPrefix` constants are replaced by prefix name strings. The full tool catalog stays inside GregTech.

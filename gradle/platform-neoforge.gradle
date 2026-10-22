@@ -30,6 +30,7 @@ repositories {
     maven { name = 'BlameJared'; url = 'https://maven.blamejared.com' }
     maven { name = 'Modrinth'; url = 'https://api.modrinth.com/maven' }
     maven { name = 'EMI'; url = 'https://maven.terraformersmc.com/releases' }
+    maven { name = 'Latvian'; url = 'https://maven.latvian.dev/releases' }
 }
 
 dependencies {
@@ -61,6 +62,13 @@ dependencies {
     }
     if (rootProject.findProperty('compatRuntime') == 'hc') {
         runtimeOnly "maven.modrinth:pams-harvestcraft-2-food-core:${rootProject.property('neoforge_hc_version')}"
+    }
+    // KubeJS stays off the production jar. The classes are loaded only when KubeJS reads kubejs.plugins.txt.
+    compileOnly "dev.latvian.mods:kubejs-neoforge:${rootProject.property('kubejs_neoforge_version')}"
+    compileOnly "dev.latvian.mods:rhino:${rootProject.property('rhino_neoforge_version')}"
+    if (rootProject.findProperty('kubejsRuntime')?.toString() == 'true') {
+        runtimeOnly "dev.latvian.mods:kubejs-neoforge:${rootProject.property('kubejs_neoforge_version')}"
+        runtimeOnly "dev.latvian.mods:rhino:${rootProject.property('rhino_neoforge_version')}"
     }
 
     if (rootProject.findProperty('directCoreClasspath')?.toString() == 'true') {
