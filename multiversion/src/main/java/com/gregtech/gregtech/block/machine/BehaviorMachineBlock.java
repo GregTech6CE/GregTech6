@@ -2,12 +2,11 @@ package com.gregtech.gregtech.block.machine;
 
 import com.gregtech.gregtech.api.addon.AddonMachines;
 import com.gregtech.gregtech.api.addon.BehaviorMachine;
+import com.gregtech.gregtech.api.addon.platform.AddonTool;
+import com.gregtech.gregtech.api.addon.platform.AddonTools;
 import com.gregtech.gregtech.api.machine.MachineSpec;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
-//? if >=1.21.1 {
-/**///?} else {
 import com.gregtech.gregtech.api.tool.GTToolHelper;
-//?}
 import com.gregtech.gregtech.blockentity.machine.BehaviorMachineBlockEntity;
 //? if >=1.21.1 {
 /*import com.gregtech.gregtech.platform.neoforge.NeoToolBindings;
@@ -23,6 +22,7 @@ import net.minecraft.world.InteractionResult;
 /*import net.minecraft.world.ItemInteractionResult;
 *///?} else {
 //?}
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -117,9 +117,13 @@ public class BehaviorMachineBlock extends GTFacingMachineBlock implements Entity
 
     private InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
                                        InteractionHand hand, BlockHitResult hit) {
+        InteractionResult tool = toolClick(level, pos, player, hand, hit);
+        if (tool != InteractionResult.PASS) return tool;
         InteractionResult wrench = handleWrench(state, level, pos, player, hand, hit);
 *///?} else {
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        InteractionResult tool = toolClick(level, pos, player, hand, hit);
+        if (tool != InteractionResult.PASS) return tool;
         InteractionResult wrench = super.use(state, level, pos, player, hand, hit);
 //?}
         if (wrench != InteractionResult.PASS) return wrench;
@@ -145,6 +149,27 @@ public class BehaviorMachineBlock extends GTFacingMachineBlock implements Entity
         }
 //?}
         return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    /** A recognized tool asks the behavior before a wrench can rotate the block. */
+    private static InteractionResult toolClick(Level level, BlockPos pos, Player player,
+                                               InteractionHand hand, BlockHitResult hit) {
+        ItemStack held = player.getItemInHand(hand);
+        AddonTool tool = knownTool(held);
+        if (tool == null || !(level.getBlockEntity(pos) instanceof BehaviorMachineBlockEntity machine))
+            return InteractionResult.PASS;
+        if (!machine.onTool(tool, player, hand, machine.clickedFace(hit.getDirection()))) return InteractionResult.PASS;
+        if (!level.isClientSide) {
+            EquipmentSlot slot = hand == InteractionHand.OFF_HAND ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND;
+            GTToolHelper.damageForToolClickReturn(held, 10_000L, player, slot);
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    private static AddonTool knownTool(ItemStack held) {
+        if (held == null || held.isEmpty()) return null;
+        for (AddonTool tool : AddonTool.values()) if (AddonTools.matches(held, tool)) return tool;
+        return null;
     }
 
     private static void pour(Player player, InteractionHand hand, BehaviorMachineBlockEntity machine, IFluidHandlerItem fluidItem) {

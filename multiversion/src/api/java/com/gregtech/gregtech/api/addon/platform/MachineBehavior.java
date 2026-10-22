@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.api.addon.platform;
 
+import com.gregtech.gregtech.api.addon.MachineFace;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -41,8 +42,18 @@ public interface MachineBehavior {
     default void beforeBreak(MachineBehaviorContext context) {}
 
     /**
+     * A player used this block with a recognized GregTech tool. GregTech asks before a wrench
+     * rotates the block, on the side that received the click. Return true to consume the click:
+     * the server then spends the usual tool-click durability, and the block does not rotate or open.
+     * The default returns false. An unrecognized tool never calls this.
+     */
+    default boolean onTool(MachineBehaviorContext context, AddonTool tool, Player player, InteractionHand hand,
+                           MachineFace face) { return false; }
+
+    /**
      * A player used this block. Return true when the behavior handled it.
-     * The default returns false and the machine menu opens. A wrench and a fluid container are handled first.
+     * The default returns false and the machine menu opens. A recognized tool is asked first.
+     * A wrench that was not handled, then a fluid container, come before this.
      */
     default boolean onUse(MachineBehaviorContext context, Player player, InteractionHand hand) { return false; }
 }
