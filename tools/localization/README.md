@@ -83,3 +83,17 @@ python -X utf8 tools/integration/import_identity_localization.py --source <原�
 对无法由一个代表物品描述的类别，`remi_title_labels.py` 固定用户要求的中英文类别词（例如切片器刀片与食用模具），这些是界面标题，不冒充原版物品翻译。
 `localization.py` 对中英文重新计算并校验，也不修改原文键、
 原生物品别名或英文声明。导入工具的 `expected_chinese` 使用相同规则。
+
+## Jade 项目界面翻译（2026-10-22）
+
+用户新增要求补全 Jade 中文，并以 TeamNED 发布的 GregTech.lang 为术语参考。
+已核对 `6.17.06-alpha.5` 发布资产，SHA-256 为
+`0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0`，
+与现有压缩原文快照逐字节相同，因此不替换或改写原始来源。
+`jade_project.json` 单独记录现代移植界面的项目译文、英文原句、用户授权与术语证据；
+例如筛粉漏斗、钳子、能量输入和效率采用该来源的术语，但新提示不冒充原版句子。
+范围限于 `jade.gt6ce.*`、`config.jade.plugin_gt6ce.*`，以及 `JADE_SHARED_KEYS` 明确列出的
+15 个供 Jade 复用的状态／提示键（反应堆、扩展器、轴向机器、聚变和岩石／树枝）；
+不开放整个 message 或 tooltip 命名空间，不覆盖原文、别名或
+已核验的 CrucibleCraft 译文。新增条目必须保留格式参数，英文变化或越界均拒绝同步。
+仅含单位、数值与占位符的行保留其语义；既有有源中文继续沿用原绑定。

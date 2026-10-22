@@ -227,6 +227,46 @@ def stone_rock_heading(english, source):
     return {key: '%s' + suffix}
 
 
+# Exact shared keys used by Jade providers; no general message/tooltip exemption.
+JADE_SHARED_KEYS = frozenset({
+    'gt.axial.state.enabled',
+    'gt.axial.state.overloaded',
+    'gt.axial.state.stopped',
+    'gt.tooltip.axial.dynamo',
+    'gt.tooltip.axial.steam',
+    'gt6ce.fusion.output',
+    'gt6ce.fusion.startup',
+    'gt6ce.jade.rock_content',
+    'gt6ce.jade.twig_content',
+    'message.gt6ce.extender.disabled',
+    'message.gt6ce.extender.enabled',
+    'message.gt6ce.extender.mode',
+    'message.gt6ce.extender.unavailable',
+    'message.gt6ce.reactor.detail',
+    'message.gt6ce.reactor.stopped',
+})
+
+def is_jade_project_key(key):
+    return key.startswith(('jade.gt6ce.', 'config.jade.plugin_gt6ce.')) or key in JADE_SHARED_KEYS
+
+
+def load_jade_project(repo=ROOT):
+    """Narrow user-authorized translations of modern Jade UI, not source copies."""
+    path = repo / CONFIG_PATH / 'jade_project.json'
+    if not path.exists():
+        return {}
+    rows = read_json(path)['values']
+    for key, row in rows.items():
+        if not is_jade_project_key(key):
+            raise ValueError('Project Jade translation outside authorized namespace: ' + key)
+        if not isinstance(row, dict) or any(not isinstance(row.get(field), str) or not row[field]
+                                            for field in ('english', 'value')):
+            raise ValueError('Incomplete project Jade translation: ' + key)
+        if format_arguments(row['english']) != format_arguments(row['value']):
+            raise ValueError('Project Jade format arguments differ: ' + key)
+    return rows
+
+
 def expected_chinese(english, source, aliases, *, repo=ROOT):
     for label, mapping in [('English', english), ('source', source), ('aliases', aliases)]:
         if not isinstance(mapping, dict) or any(not isinstance(k, str) or not isinstance(v, str)
@@ -251,6 +291,13 @@ def expected_chinese(english, source, aliases, *, repo=ROOT):
             raise ValueError('Adopted English drifted: ' + key)
         if key in aliases or key in source:
             raise ValueError('Adopted copy overrides an original binding: ' + key)
+        result[key] = row['value']
+    adopted_keys = load_adopted(repo).keys()
+    for key, row in load_jade_project(repo).items():
+        if english.get(key) != row['english']:
+            raise ValueError('Project Jade English drifted or key missing: ' + key)
+        if key in aliases or key in source or key in adopted_keys:
+            raise ValueError('Project Jade translation overrides source binding: ' + key)
         result[key] = row['value']
     if any(k.startswith('emi.group.gt6ce.') for k in english):
         from integration.remi_group_titles import headings
@@ -297,10 +344,11 @@ def synchronize(repo=ROOT, *, write=False, external=None):
         raise ValueError('Adopted key is not in English: ' + ', '.join(missing_adopted[:8]))
     rock_heading = stone_rock_heading(english, source)
     fallback = sorted(english.keys() - source.keys() - aliases.keys() - derived_titles.keys()
-                      - rock_heading.keys() - adopted.keys())
+                      - rock_heading.keys() - adopted.keys() - load_jade_project(repo).keys())
     return {'source_sha256': meta['sha256'], 'source_keys': len(source), 'english': english_report,
             'native_aliases': len(aliases), 'chinese_keys': len(expected), 'derived_emi_headings': len(derived_titles),
             'derived_stone_rock_templates': len(rock_heading), 'adopted_cruciblecraft_copies': len(adopted),
+            'project_jade_translations': len(load_jade_project(repo)),
             'english_fallback_count': len(fallback), 'english_fallback_keys': fallback,
             'changes': {k: len(v) for k, v in delta.items()}}
 

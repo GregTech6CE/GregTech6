@@ -35,7 +35,7 @@ class SourcePolicyTests(unittest.TestCase):
         self.write_json(CONFIG_PATH / 'aliases.json', self.aliases)
         self.write_json(CONFIG_PATH / 'english_source.json', {'values': {}})
         self.write_json(LANG_PATH / 'en_us.json', self.english)
-        self.good = expected_chinese(self.english, self.source, self.aliases)
+        self.good = expected_chinese(self.english, self.source, self.aliases, repo=self.repo)
         self.write_json(LANG_PATH / 'zh_cn.json', self.good)
 
     def write_json(self, relative, value):
@@ -66,11 +66,11 @@ class SourcePolicyTests(unittest.TestCase):
     def test_unknown_alias_and_original_key_override_are_rejected(self):
         for bindings in ({'item.name': 'nonexistent'}, {'gt.empty': 'gt.name'}):
             with self.assertRaises(ValueError):
-                expected_chinese(self.english, self.source, bindings)
+                expected_chinese(self.english, self.source, bindings, repo=self.repo)
 
     def test_chinese_cannot_be_hidden_in_english_fallback(self):
         with self.assertRaisesRegex(ValueError, 'bypasses'):
-            expected_chinese({'item.guessed': '自行翻译'}, self.source, {})
+            expected_chinese({'item.guessed': '自行翻译'}, self.source, {}, repo=self.repo)
 
     def test_duplicate_json_and_conflicting_lang_keys_fail(self):
         file = self.repo / LANG_PATH / 'zh_cn.json'
