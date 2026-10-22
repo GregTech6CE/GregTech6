@@ -429,6 +429,30 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         return sent;
     }
 
+    private long emitTo(BlockPos target, Direction side, long size, long amount) {
+        EnergyOutput output = declaration.output();
+        if (output == null) {
+            BehaviorEnergyRules.requireEmit(size, amount, 0, 0);
+            return 0;
+        }
+        BehaviorEnergyRules.requireEmit(size, amount, output.minSize(), output.maxSize(), output.maxAmount(),
+                output.allowNegative());
+        if (energyOutTag == null || level == null || target == null) return 0;
+        if (!level.hasChunkAt(target)) return 0;
+        BlockEntity receiver = level.getBlockEntity(target);
+        if (receiver == null || receiver.isRemoved()) return 0;
+        long magnitude = output.allowNegative() ? Math.abs(size) : size;
+        long packets = Math.min(amount, Math.max(0, stored) / magnitude);
+        if (packets <= 0) return 0;
+        long sent = com.gregtech.gregtech.api.energy.EnergyTransfer.insertEnergyInto(
+                energyOutTag, side, size, packets, this, receiver);
+        if (sent > 0) {
+            stored -= Math.multiplyExact(magnitude, sent);
+            setChanged();
+        }
+        return sent;
+    }
+
     @Nullable
     private EnergyPartView boundPart(String name) {
         if (!formed || name == null) return null;
@@ -1022,6 +1046,9 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             setChanged();
         }
         @Override public long emit(long size, long amount) { return BehaviorMachineBlockEntity.this.emit(size, amount); }
+        @Override public long emitTo(BlockPos target, Direction side, long size, long amount) {
+            return BehaviorMachineBlockEntity.this.emitTo(target, side, size, amount);
+        }
         @Override public long pushToPart(String part, String type, long size, long amount) {
             return BehaviorMachineBlockEntity.this.pushToPart(part, type, size, amount);
         }

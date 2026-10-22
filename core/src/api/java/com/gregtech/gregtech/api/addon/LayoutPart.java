@@ -141,6 +141,7 @@ public final class LayoutPart {
 
         public Builder energyOutput(EnergyOutput output, long capacity) {
             if (output == null) throw new IllegalArgumentException("Missing energy output");
+            if (output.remote()) throw new IllegalArgumentException("A structure part cannot use a remote output");
             energy = output;
             energyCapacity = capacity;
             return this;
