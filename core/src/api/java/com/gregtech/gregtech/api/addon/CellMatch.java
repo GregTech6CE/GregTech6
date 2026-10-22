@@ -12,7 +12,7 @@ import java.util.Objects;
 public sealed interface CellMatch permits CellMatch.Part, CellMatch.Air, CellMatch.Block, CellMatch.Tag {
     /**
      * {@code air} is air. A leading {@code #} is a block tag. A colon is a block id.
-     * Anything else is a part name. This is the rule {@link MachineLayout.Cell} uses.
+     * Anything else is a part name.
      */
     static CellMatch parse(String text) {
         if (text == null || text.isBlank()) throw new IllegalArgumentException("Missing structure part");
@@ -44,7 +44,12 @@ public sealed interface CellMatch permits CellMatch.Part, CellMatch.Air, CellMat
     private static void requireLocation(String id, boolean tag) {
         if (id == null || id.isBlank() || id.startsWith("#") || id.indexOf(':') < 0)
             throw new IllegalArgumentException("Invalid block name: " + id);
-        MachineLayout.checkPlainBlock(tag ? "#" + id : id);
+        String part = tag ? "#" + id : id;
+        int colon = id.indexOf(':');
+        if (colon <= 0 || colon != id.lastIndexOf(':') || colon == id.length() - 1
+                || !id.substring(0, colon).matches("[a-z0-9_.-]+")
+                || !id.substring(colon + 1).matches("[a-z0-9/._-]+"))
+            throw new IllegalArgumentException("Invalid block name: " + part);
     }
 
     final class Part implements CellMatch {

@@ -442,9 +442,7 @@ A packet larger than the maximum is consumed and then follows the overload rule.
 
 Faces are `MachineFace`: `BOTTOM`, `TOP`, `RIGHT`, `FRONT`, `LEFT`, `BACK`. `index()` and `bit()` are the mask positions. A face list on a new declaration rejects a repeated face.
 
-`EnergyInput.faces` does not follow `MachineIo`, and the default is not the same on the two templates. On a recipe machine, leaving faces unset is all six. An empty list is allowed and means there is no energy-input face. On a behavior machine, leaving faces unset is every face except the front. An empty list fails. Setting `MachineIo` does not change these faces.
-
-An older recipe entry that called any face method and did not set `energyInputs` is converted to an empty `faces()` list. A new `EnergyInput` that omits `faces()` is still all six, including when the machine also sets `MachineIo`. That is the only default that differs between the older entry and this one.
+`EnergyInput.faces` does not follow `MachineIo`, and the default is not the same on the two templates. On a recipe machine, leaving faces unset is all six, including when the machine also sets `MachineIo`. An empty list is allowed and means there is no energy-input face. On a behavior machine, leaving faces unset is every face except the front. An empty list fails. Setting `MachineIo` does not change these faces.
 
 `EnergyInput.capacity` is the stored-energy cap. On a behavior machine's main input it is at least 0, and the default is 0, including a call of `capacity(0)`. Zero means the buffer equals the rated input: GregTech drains that amount after the behavior returns, so unused energy does not carry into the next tick. A capacity above 0 keeps what remains, capped at that capacity. A recipe machine that calls `capacity` fails. An output part does not use this field. Its capacity is the second argument of `LayoutPart.energyOutput` and must be at least 1. A condition part and an auxiliary input both require a positive capacity. GregTech does not drain those two buffers with the main-input rule.
 
@@ -809,7 +807,7 @@ API **0** is the GT6CE development baseline and includes all the capabilities be
 
 ### Deprecation and removal
 
-Legacy entries are marked deprecated from the CE baseline `0.0`. Numeric material entries retain their `0.9` earliest removal deadline; the four legacy contributor and layout entries stay until `0.10`. The machine-declaration types and the seven old contributor methods stay through `0.1` and are removed at `0.2`. Resetting the current version does not bring removal forward.
+Legacy entries are marked deprecated from the CE baseline `0.0`. Numeric material entries retain their `0.9` earliest removal deadline; the four legacy contributor and layout entries stay until `0.10`. Resetting the current version does not bring removal forward.
 
 | Entry | Deprecated | Replacement | Remove at |
 | --- | --- | --- | --- |
@@ -820,36 +818,6 @@ Legacy entries are marked deprecated from the CE baseline `0.0`. Numeric materia
 | com.gregtech.gregtech.api.addon.MaterialDeclaration#builder | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
 | com.gregtech.gregtech.api.addon.AddonMaterials#ADDON_ID_MIN | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
 | com.gregtech.gregtech.api.addon.AddonMaterials#ADDON_ID_MAX | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
-| com.gregtech.gregtech.api.addon.MachineDeclaration | 0.0 | RecipeMachine | 0.2 |
-| com.gregtech.gregtech.api.addon.MachineDeclaration.Builder | 0.0 | RecipeMachine.builder | 0.2 |
-| com.gregtech.gregtech.api.addon.MachineDeclaration.Kind | 0.0 | RecipeMachine.basic() / largeRecipe() | 0.2 |
-| com.gregtech.gregtech.api.addon.MachineDeclaration.Target | 0.0 | IoTarget | 0.2 |
-| com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration | 0.0 | BehaviorMachine | 0.2 |
-| com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.Builder | 0.0 | BehaviorMachine.builder | 0.2 |
-| com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.Face | 0.0 | MachineFace | 0.2 |
-| com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.SlotRole | 0.0 | BehaviorMachine.SlotRole | 0.2 |
-| com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.ItemSlot | 0.0 | BehaviorMachine.ItemSlot | 0.2 |
-| com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.FluidSlot | 0.0 | BehaviorMachine.FluidSlot | 0.2 |
-| com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.Toggle | 0.0 | BehaviorMachine.Toggle | 0.2 |
-| com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.Progress | 0.0 | BehaviorMachine.Progress | 0.2 |
-| com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration | 0.0 | FuelGenerator | 0.2 |
-| com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration.Builder | 0.0 | FuelGenerator.builder | 0.2 |
-| com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration.Kind | 0.0 | FuelGenerator.single() / multi() | 0.2 |
-| com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration.Output | 0.0 | FuelOutput | 0.2 |
-| com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration.Output.Side | 0.0 | FuelOutput front, back, or behind | 0.2 |
-| com.gregtech.gregtech.api.addon.MachineLayout | 0.0 | StructureLayout | 0.2 |
-| com.gregtech.gregtech.api.addon.MachineLayout.Cell | 0.0 | LayoutCell | 0.2 |
-| com.gregtech.gregtech.api.addon.StructurePartDeclaration | 0.0 | LayoutPart | 0.2 |
-| com.gregtech.gregtech.api.addon.StructurePartEnergy | 0.0 | LayoutPart.energyOutput(EnergyOutput, capacity) | 0.2 |
-| com.gregtech.gregtech.api.addon.RecipeMapDeclaration | 0.0 | RecipeTable.machine(name) | 0.2 |
-| com.gregtech.gregtech.api.addon.FuelMapDeclaration | 0.0 | RecipeTable.fuel(name) | 0.2 |
-| com.gregtech.gregtech.api.addon.AddonMachineContributor#machines | 0.0 | addonMachines() | 0.2 |
-| com.gregtech.gregtech.api.addon.AddonMachineContributor#behaviorMachines | 0.0 | addonMachines() | 0.2 |
-| com.gregtech.gregtech.api.addon.AddonMachineContributor#fuelGenerators | 0.0 | addonMachines() | 0.2 |
-| com.gregtech.gregtech.api.addon.AddonMachineContributor#layouts | 0.0 | structureLayouts() | 0.2 |
-| com.gregtech.gregtech.api.addon.AddonMachineContributor#parts | 0.0 | layoutParts() | 0.2 |
-| com.gregtech.gregtech.api.addon.AddonMachineContributor#recipeMaps | 0.0 | recipeTables() | 0.2 |
-| com.gregtech.gregtech.api.addon.AddonMachineContributor#fuelMaps | 0.0 | recipeTables() | 0.2 |
 
 ## License
 
