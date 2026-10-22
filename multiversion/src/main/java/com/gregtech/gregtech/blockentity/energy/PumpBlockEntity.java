@@ -75,7 +75,7 @@ public class PumpBlockEntity extends GTEnergyBlockEntity {
     public void load(CompoundTag tag) {
         super.load(tag);
 //?}
-        energyBuffer = tag.getLong("energyBuffer");
+        energyBuffer = Math.max(0, tag.getLong("energyBuffer"));
         scanCooldown = tag.getInt("scanCooldown");
         pumpX = tag.getInt("pumpX");
         pumpZ = tag.getInt("pumpZ");
@@ -176,12 +176,9 @@ public class PumpBlockEntity extends GTEnergyBlockEntity {
 
     @Override
     public long getEnergyDemanded(GregTechTags.Tag energyType, @Nullable Direction side, long size) {
-        if (energyType != GregTechTags.Energy.RU || size == Long.MIN_VALUE) return 0;
-        long packet = Math.abs(size);
-        if (packet < getEnergySizeInputMin(energyType, side)
-                || packet > getEnergySizeInputMax(energyType, side)) return 0;
-        long room = ENERGY_TO_START_DRAIN - energyBuffer;
-        return room <= 0 ? 0 : room / packet;
+        if (!isEnergyAcceptingFrom(energyType, side, false)) return 0;
+        return com.gregtech.gregtech.content.energy.PumpWorkRules.accepted(
+                energyBuffer, size, Long.MAX_VALUE, getEnergySizeInputMax(energyType, side));
     }
 
     @Override

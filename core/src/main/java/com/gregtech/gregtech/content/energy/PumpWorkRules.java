@@ -10,9 +10,12 @@ public final class PumpWorkRules {
             TANK_CAPACITY = 16000;
 
     public static long accepted(long stored, long size, long offered, long maximum) {
-        if (size == Long.MIN_VALUE || offered <= 0) return 0;
+        if (size == Long.MIN_VALUE || offered <= 0 || stored < 0) return 0;
         long packet = Math.abs(size);
         if (packet < 8 || packet > maximum || stored >= START_ENERGY) return 0;
-        return Math.min(offered, (START_ENERGY - stored) / packet);
+        // Original MultiTileEntityPump.doInject accepts the final whole packet past 8192.
+        // Flooring here strands non-divisor packet sizes below the threshold forever.
+        long room = START_ENERGY - stored;
+        return Math.min(offered, room / packet + (room % packet == 0 ? 0 : 1));
     }
 }

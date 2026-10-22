@@ -295,6 +295,9 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
     /** GT6's {@code onTick2} body ({@code :107-277}), one tick of the bumbliary. */
     public void tickLogic() {
         if (level == null || level.isClientSide) return;
+        long previousLife = life;
+        long previousCountdown = countdown;
+        ItemStack[] previousBrood = brood;
         endedQueen = false;                                                     // GT6 :107
 
         ItemStack royal = inventory.getStackInSlot(layout.royal());
@@ -345,6 +348,11 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
             life = 0;                                                           // GT6 :274
             brood = NO_BROOD;                                                   // GT6 :275
             countdown = COUNTDOWN;                                              // GT6 :276
+        }
+        // The original base/proxy marks loaded machines for saving every second. Here the native
+        // chunk must be dirtied even when no inventory slot changed (life and pairing waits).
+        if (life != previousLife || countdown != previousCountdown || brood != previousBrood) {
+            setChanged();
         }
     }
 
@@ -398,7 +406,7 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
 
         for (int slot : layout.dead()) {                                        // GT6 :124
             ItemStack found = inventory.getStackInSlot(slot);
-            if (BumbleBeeType.of(found) != null) inventory.setStackInSlot(slot, kill(found));
+            if (BumbleBeeType.of(found) != null) inventory.setStackInSlot(slot, ItemStack.EMPTY);
         }
 
         ItemStack queen = inventory.getStackInSlot(layout.royal());             // GT6 :126-128
@@ -415,7 +423,9 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
         for (ItemStack child : brood) {                                         // GT6 :135-143
             if (child == null || child.isEmpty() || BumbleBeeType.of(child) == null) continue;
             if (checkEnvironment(BumbleBeeGenes.of(child, level.random))) {
-                if (!addStackToSlot(layout.drone(), child)) {
+                // An empty main slot is deliberately skipped: promotion only scans spare slots.
+                if (inventory.getStackInSlot(layout.drone()).isEmpty()
+                        || !addStackToSlot(layout.drone(), child)) {
                     for (int slot : layout.drones()) if (addStackToSlot(slot, child)) break;
                 }
             } else {

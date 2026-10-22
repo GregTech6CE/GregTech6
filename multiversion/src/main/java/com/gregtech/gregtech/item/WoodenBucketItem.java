@@ -106,18 +106,21 @@ public final class WoodenBucketItem extends TechItem {
     @Override
     public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
         Player player = context.getPlayer();
-        if (player == null || !player.mayUseItemAt(context.getClickedPos(), context.getClickedFace(), stack))
+        if (player == null || !context.getLevel().mayInteract(player, context.getClickedPos())
+                || !player.mayUseItemAt(context.getClickedPos(), context.getClickedFace(), stack))
             return InteractionResult.PASS;
         Level level = context.getLevel();
         var state = level.getBlockState(context.getClickedPos());
-        boolean fillCauldron = content == WoodenBucketCatalog.water() && state.is(Blocks.CAULDRON);
+        boolean fillCauldron = content == WoodenBucketCatalog.water()
+                && (state.is(Blocks.CAULDRON) || state.is(Blocks.WATER_CAULDRON)
+                && state.getValue(LayeredCauldronBlock.LEVEL) < 3);
         boolean drainCauldron = content.empty() && state.is(Blocks.WATER_CAULDRON)
                 && state.getValue(LayeredCauldronBlock.LEVEL) == 3;
         if (fillCauldron || drainCauldron) {
-            if (!level.isClientSide && level.mayInteract(player, context.getClickedPos())) {
-                level.setBlockAndUpdate(context.getClickedPos(), fillCauldron
+            if (!level.isClientSide) {
+                if (!level.setBlockAndUpdate(context.getClickedPos(), fillCauldron
                         ? Blocks.WATER_CAULDRON.defaultBlockState().setValue(LayeredCauldronBlock.LEVEL, 3)
-                        : Blocks.CAULDRON.defaultBlockState());
+                        : Blocks.CAULDRON.defaultBlockState())) return InteractionResult.PASS;
                 ItemStack next = variant(stack, fillCauldron ? WoodenBucketCatalog.empty() : WoodenBucketCatalog.water());
                 if (!player.isCreative() || drainCauldron)
                     player.setItemInHand(context.getHand(), ItemUtils.createFilledResult(stack, player, next));
@@ -125,6 +128,15 @@ public final class WoodenBucketItem extends TechItem {
                         : SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1, 1);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        // Predict acceptance without changing the client tank or inventory. FluidUtil's
+        // interact method executes transfers; only the logical server may call it.
+        if (level.isClientSide) {
+            boolean accepted = FluidUtil.getFluidHandler(level, context.getClickedPos(), context.getClickedFace())
+                    .map(handler -> FluidUtil.tryFillContainer(stack, handler, Integer.MAX_VALUE, null, false).isSuccess()
+                            || FluidUtil.tryEmptyContainer(stack, handler, Integer.MAX_VALUE, null, false).isSuccess())
+                    .orElse(false);
+            return accepted ? InteractionResult.SUCCESS : InteractionResult.PASS;
         }
         return FluidUtil.interactWithFluidHandler(player, context.getHand(), level, context.getClickedPos(),
                 context.getClickedFace()) ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;

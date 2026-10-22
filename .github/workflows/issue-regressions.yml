@@ -2,7 +2,7 @@ name: Focused issue regressions
 
 on:
   push:
-    branches: ['fix/ci-jade-issue-audit-20261022']
+    branches: ['main', 'fix/ci-jade-issue-audit-20261022']
   workflow_dispatch:
 
 permissions:

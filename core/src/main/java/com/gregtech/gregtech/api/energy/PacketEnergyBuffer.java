@@ -29,11 +29,10 @@ public class PacketEnergyBuffer {
      */
     public long receiveEnergy(long size, long amount, boolean doInject) {
         if (size <= 0 || amount <= 0 || !canReceive) return 0;
-        long total = size * amount;
         long space = energyCapacity - energyStored;
         if (space <= 0) return 0;
-        long accepted = Math.min(total, space);
-        long acceptedPackets = accepted / size;
+        // Bound the packet count before multiplication: requests may span the full long range.
+        long acceptedPackets = Math.min(amount, space / size);
         if (acceptedPackets <= 0) return 0;
         if (doInject) {
             energyStored += acceptedPackets * size;
@@ -49,9 +48,7 @@ public class PacketEnergyBuffer {
      */
     public long extractEnergy(long size, long amount, boolean doExtract) {
         if (size <= 0 || amount <= 0 || !canExtract) return 0;
-        long total = size * amount;
-        long available = Math.min(total, energyStored);
-        long extractedPackets = available / size;
+        long extractedPackets = Math.min(amount, energyStored / size);
         if (extractedPackets <= 0) return 0;
         if (doExtract) {
             energyStored -= extractedPackets * size;
@@ -70,7 +67,7 @@ public class PacketEnergyBuffer {
     public boolean canReceive() { return canReceive; }
     public boolean canExtract() { return canExtract; }
 
-    public void setStored(long v) { this.energyStored = Math.min(v, energyCapacity); }
+    public void setStored(long v) { this.energyStored = Math.max(0, Math.min(v, energyCapacity)); }
     public void setCapacity(long v) { this.energyCapacity = Math.max(1, v); if (energyStored > energyCapacity) energyStored = energyCapacity; }
     public void setCanReceive(boolean v) { this.canReceive = v; }
     public void setCanExtract(boolean v) { this.canExtract = v; }

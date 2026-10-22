@@ -11,10 +11,27 @@ FORGE_METHODS = {
 }
 
 
+FUNCTIONAL_CASES = {
+    'bumblelifecycleissuetests.ordinarylifecyclepromotesloneprincess',
+    'bumblelifecycleissuetests.advancedlifecyclepromotesloneprincess',
+    'bumblelifecycleissuetests.deathclearsoldbeesbutpreservesunrelateditems',
+    'bumblelifecycleissuetests.occupiedmainandblockedspareslotskeeporiginalrules',
+    'bumblelifecycleissuetests.unsuitablebrooddiesinsteadofpromoting',
+    'bumblelifecycleissuetests.pureprogressticksdirtynativechunkandserialize',
+
+    'storagecovertransactiontests.garbageswapcommitsexactlyonce',
+    'storagecovertransactiontests.garbagequickmovepreserveseveryremainder',
+    'storagecovertransactiontests.usbnonselectorremovalpreservesselectedfile',
+    'radawayconsumptiontests.lastradawaypillappliesonedose',
+    'radawayconsumptiontests.stackedradawayappliesonceperpill',
+    'radawayconsumptiontests.ordinaryfoodstillappliesstatisticsonce',
+    'woodenbuckettransactiontests.topupconsumesexactlyonebucketandkeepsband',
+    'woodenbuckettransactiontests.waterdoesnotreplacelavaorpowdersnow',
+}
 GAS_CASE = 'gasmotionregressiontests.gasusesairmotionwithoutremovinghazards'
 EXPECTED = {
-    'forge': {'openissueregressiontests.' + method for method in FORGE_METHODS} | {GAS_CASE},
-    'neoforge': {GAS_CASE},
+    'forge': {'openissueregressiontests.' + method for method in FORGE_METHODS} | {GAS_CASE} | FUNCTIONAL_CASES,
+    'neoforge': {GAS_CASE} | FUNCTIONAL_CASES,
 }
 
 
