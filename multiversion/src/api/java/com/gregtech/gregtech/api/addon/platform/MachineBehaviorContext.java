@@ -142,10 +142,11 @@ public interface MachineBehaviorContext {
     int collectItems(int radius, boolean voidThem);
 
     /**
-     * Stores {@code stack} in the compressed gas drum on {@code face}.
-     * Returns how many millibuckets that drum accepted.
-     * A missing drum, a pipe, or an ordinary tank accepts nothing.
-     * This writes the drum immediately. The behavior removes the fluid from its own tank.
+     * Stores {@code stack} in the compressed-gas receiver on {@code face}.
+     * A single-block drum accepts on every side. A behavior machine accepts on its valve face.
+     * Returns how many millibuckets that receiver stored.
+     * A missing receiver, a pipe, or an ordinary tank accepts nothing.
+     * This writes immediately. The behavior removes the fluid from its own tank.
      */
     int pushCompressedGas(Direction face, FluidStack stack);
 }

@@ -30,7 +30,8 @@ import javax.annotation.Nullable;
  * Stores one gas. Pipes, buckets and funnels cannot fill it.
  * {@link #fillCompressed} is the compressor path. Drain is open, so a fuel machine can take the gas.
  */
-public class CompressedGasTankBlockEntity extends BlockEntity implements IFluidHandler {
+public class CompressedGasTankBlockEntity extends BlockEntity implements IFluidHandler,
+        com.gregtech.gregtech.api.fluid.CompressedGasReceiver {
     private final FluidTankGT tank;
 
 //? if >=1.21.1 {
@@ -61,6 +62,12 @@ public class CompressedGasTankBlockEntity extends BlockEntity implements IFluidH
 
     private com.gregtech.gregtech.api.addon.CompressedGasTankDeclaration declaration() {
         return block().declaration();
+    }
+
+    @Override public int receiveCompressedGas(Direction side, FluidStack stack) { return fillCompressed(stack); }
+
+    @Override public FluidStack extractCompressedGas(Direction side, int amount, boolean execute) {
+        return drain(amount, execute ? FluidAction.EXECUTE : FluidAction.SIMULATE);
     }
 
     /** Compressor insertion. Returns the millibuckets stored. */

@@ -812,6 +812,7 @@ public final class GregTechClient {
             MenuScreens.register(GTMenuTypes.GARBAGE_DUMP.get(), HopperScreen::new);
             MenuScreens.register(GTMenuTypes.BASIC_MACHINE.get(), BasicMachineScreen::new);
             MenuScreens.register(GTMenuTypes.BEHAVIOR_MACHINE.get(), com.gregtech.gregtech.client.gui.BehaviorMachineScreen::new);
+            MenuScreens.register(GTMenuTypes.PART.get(), com.gregtech.gregtech.client.gui.PartScreen::new);
             MenuScreens.register(GTMenuTypes.FILTER.get(),com.gregtech.gregtech.client.gui.FilterScreen::new);
             MenuScreens.register(GTMenuTypes.USB_SWITCH.get(), com.gregtech.gregtech.client.gui.DataSwitchScreen::new);
             MenuScreens.register(GTMenuTypes.HDD_SWITCH.get(), com.gregtech.gregtech.client.gui.DataSwitchScreen::new);

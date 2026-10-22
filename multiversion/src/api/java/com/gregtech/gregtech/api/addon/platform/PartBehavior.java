@@ -4,6 +4,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+//? if >=1.21.1 {
+/*import net.neoforged.neoforge.fluids.FluidStack;
+*///?} else {
+import net.minecraftforge.fluids.FluidStack;
+//?}
 
 import java.util.List;
 
@@ -28,6 +33,12 @@ public interface PartBehavior {
 
     /** A pipe may take from this slot. The face list is checked before this. */
     default boolean canExtract(PartContext context, int slot) { return true; }
+
+    /** Fluid a pipe may put in this tank. The face list is checked before this. */
+    default boolean canFill(PartContext context, int tank, FluidStack stack) { return true; }
+
+    /** A pipe may take from this tank. The face list is checked before this. */
+    default boolean canDrain(PartContext context, int tank) { return true; }
 
     /** A slot changed through a pipe or {@link PartContext#setItem}. */
     default void onSlotsChanged(PartContext context, int slot) {}
