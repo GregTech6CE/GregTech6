@@ -279,8 +279,10 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
             if(!matchesPart(cell,expected,level.getBlockState(pos).getBlock()) || !(level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity)) {bindings.clear(this::release);return false;}
             parts.put(pos,cell.role());
         }
-        return bindings.update(parts,pos->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).canBind(worldPosition),
+        boolean formed = bindings.update(parts,pos->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).canBind(worldPosition),
                 (pos,role)->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).bind(worldPosition,role),this::release);
+        if (formed) com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front, layout);
+        return formed;
     }
     /** Bound condition parts must all be satisfied. A structure with none works as before. */
     private boolean conditionPartsMet() {

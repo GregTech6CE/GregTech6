@@ -26,6 +26,7 @@ public final class BasicMachineRegistries {
  public static final DeferredRegister<MenuType<?>> MENUS=DeferredRegister.create(Registries.MENU,"gt6ce");
  public static final DeferredHolder<MenuType<?>,MenuType<com.gregtech.gregtech.client.gui.BasicMachineContainerMenu>> MENU=MENUS.register("basic_machine",()->IMenuTypeExtension.create(com.gregtech.gregtech.client.gui.BasicMachineContainerMenu::new));
  public static final DeferredHolder<MenuType<?>,MenuType<com.gregtech.gregtech.client.gui.BehaviorMachineMenu>> BEHAVIOR_MENU=MENUS.register("behavior_machine",()->IMenuTypeExtension.create((id,inventory,buffer)->new com.gregtech.gregtech.client.gui.BehaviorMachineMenu(id,inventory,buffer)));
+ public static final DeferredHolder<MenuType<?>,MenuType<com.gregtech.gregtech.client.gui.PartMenu>> PART_MENU=MENUS.register("part",()->IMenuTypeExtension.create((id,inventory,buffer)->new com.gregtech.gregtech.client.gui.PartMenu(id,inventory,buffer)));
  private static final List<DeferredHolder<Block,BasicMachineBlock>> MACHINES=new ArrayList<>();
  private static final List<DeferredHolder<BlockEntityType<?>,BlockEntityType<BasicMachineBlockEntity>>> TYPES=new ArrayList<>();
  public static List<DeferredHolder<Block,BasicMachineBlock>> all(){return Collections.unmodifiableList(MACHINES);}

@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.core;
 
+import com.gregtech.gregtech.api.addon.BehaviorEnergyRules;
 import com.gregtech.gregtech.api.addon.BehaviorMachine;
 import com.gregtech.gregtech.api.addon.CellMatch;
 import com.gregtech.gregtech.api.addon.EnergyInput;
@@ -15,6 +16,11 @@ import com.gregtech.gregtech.api.addon.MachineIo;
 import com.gregtech.gregtech.api.addon.PartEnergyRules;
 import com.gregtech.gregtech.api.addon.PartSlotRules;
 import com.gregtech.gregtech.api.addon.PartSlots;
+import com.gregtech.gregtech.api.addon.PartTankRules;
+import com.gregtech.gregtech.api.addon.PartTanks;
+import com.gregtech.gregtech.api.addon.AddonMachines;
+import com.gregtech.gregtech.api.kubejs.StructureLayoutDocuments;
+import com.gregtech.gregtech.content.multiblock.PartDesigns;
 import com.gregtech.gregtech.api.addon.RecipeMachine;
 import com.gregtech.gregtech.api.addon.RecipeTable;
 import com.gregtech.gregtech.api.addon.StructureLayout;
@@ -36,7 +42,9 @@ public final class AddonDeclarationTypeContracts {
         tables();
         structure();
         secondEnergy();
+        mainEnergy();
         functionalParts();
+        partAdditions();
         System.out.println("passed " + assertions);
     }
 
@@ -54,8 +62,19 @@ public final class AddonDeclarationTypeContracts {
         fails(() -> RecipeMachine.builder(casing).energy(EnergyInput.builder("EU", 32).capacity(0).build())
                 .recipeMap("aa.recipe.press").build(), "energy capacity");
 
-        fails(() -> behavior(casing, EnergyInput.builder("EU", 32).range(1, 64).build()), "energy range");
-        fails(() -> BehaviorMachine.builder(casing).energy(energy).gui(GUI).io(io).build(), "item and fluid");
+        var faced = BehaviorMachine.builder(casing).energy(energy).gui(GUI).io(io).build();
+        check(faced.io() != null && faced.itemInputMask() == MachineFace.FRONT.bit()
+                && faced.itemOutputMask() == 0 && faced.fluidInputMask() == 0 && faced.fluidOutputMask() == 0,
+                "behavior machine keeps declared faces and closes the rest");
+        var open = BehaviorMachine.builder(casing).energy(energy).gui(GUI).build();
+        check(open.io() == null && open.itemInputMask() == (1 << 6) - 1 && open.fluidOutputMask() == (1 << 6) - 1,
+                "an unset behavior io keeps every face open");
+        check(faced.equals(BehaviorMachine.builder(casing).energy(energy).gui(GUI).io(io).build())
+                && !faced.equals(open), "behavior io is part of equality");
+        fails(() -> BehaviorMachine.builder(casing).energy(energy).gui(GUI)
+                .io(MachineIo.builder().itemAutoOutput(MachineFace.BOTTOM).build()).build(), "automatic face");
+        fails(() -> BehaviorMachine.builder(casing).energy(energy).gui(GUI)
+                .io(MachineIo.builder().itemOutputTarget(1, 0, 0, MachineFace.FRONT).build()).build(), "IO target");
         fails(() -> BehaviorMachine.builder(casing).energy(energy).gui(GUI).output(fuel).build(), "fuel output");
 
         var tiered = MachineCasing.builder("press", "Steel").tier(1).build();
@@ -279,7 +298,7 @@ public final class AddonDeclarationTypeContracts {
         check(open.anyPacket() && !open.rangeSpecified(), "anyPacket leaves the range unset");
         fails(() -> EnergyInput.builder("HU", 32).range(1, 64).anyPacket().build(), "any packet");
         fails(() -> recipe(EnergyInput.builder("EU", 32).anyPacket().build()), "packet size");
-        fails(() -> behavior(casing("press"), EnergyInput.builder("EU", 32).anyPacket().build()), "packet size");
+        fails(() -> behavior(casing("press"), EnergyInput.builder("EU", 32).anyPacket().build()), "positive");
 
         var auxiliary = EnergyInput.builder("HU", 32).anyPacket().capacity(50_000).faces(MachineFace.FRONT).build();
         var machine = BehaviorMachine.builder(casing("deburn")).energy(eu(32)).gui(GUI).auxiliaryEnergy(auxiliary).build();
@@ -296,8 +315,13 @@ public final class AddonDeclarationTypeContracts {
                 .build();
         check(!ranged.auxiliary().anyPacket() && ranged.auxiliary().rangeMin() == 32 && ranged.auxiliary().rangeMax() == 128,
                 "auxiliary range stays on the second input");
-        fails(() -> BehaviorMachine.builder(casing("deburn")).energy(eu(32)).gui(GUI)
+        var sharedFace = BehaviorMachine.builder(casing("deburn")).energy(eu(32)).gui(GUI)
                 .auxiliaryEnergy(EnergyInput.builder("HU", 32).anyPacket().capacity(50_000).faces(MachineFace.TOP).build())
+                .build();
+        check((sharedFace.energyMask() & sharedFace.auxiliaryMask()) == MachineFace.TOP.bit(),
+                "different types share the top face");
+        fails(() -> BehaviorMachine.builder(casing("deburn")).energy(eu(32)).gui(GUI)
+                .auxiliaryEnergy(EnergyInput.builder("EU", 32).anyPacket().capacity(50_000).faces(MachineFace.TOP).build())
                 .build(), "overlaps");
         fails(() -> BehaviorMachine.builder(casing("deburn")).energy(eu(32)).gui(GUI)
                 .auxiliaryEnergy(EnergyInput.builder("HU", 32).capacity(50_000).faces(MachineFace.FRONT).build()).build(),
@@ -322,6 +346,55 @@ public final class AddonDeclarationTypeContracts {
         check(!dry.satisfied() && dry.stored() == 100, "a short condition buffer is not drained");
         var wet = PartEnergyRules.drain(192, 192);
         check(wet.satisfied() && wet.stored() == 0, "an exact condition buffer is drained");
+    }
+
+    private static void mainEnergy() {
+        var ranged = behavior(casing("press"), EnergyInput.builder("EU", 32).range(16, 64).build());
+        check(ranged.energy().rangeSpecified() && ranged.energy().rangeMin() == 16 && ranged.energy().rangeMax() == 64
+                        && ranged.energy().overload(),
+                "main input keeps a packet range and overloads by default");
+        fails(() -> behavior(casing("press"), EnergyInput.builder("EU", 32).range(64, 256).build()), "packet range");
+        var open = behavior(casing("press"), EnergyInput.builder("EU", 32).anyPacket().capacity(10_000).build());
+        check(open.energy().anyPacket() && open.energy().capacity() == 10_000
+                        && open.energy().faces().equals(MachineFace.exceptFront()),
+                "main anyPacket uses the default faces");
+        var quiet = behavior(casing("press"), EnergyInput.builder("EU", 32).overload(false).build());
+        check(!quiet.energy().overload() && !quiet.energy().rangeSpecified(), "the default window can refuse overload");
+        fails(() -> recipe(EnergyInput.builder("EU", 32).overload(false).build()), "overload");
+        fails(() -> LayoutPart.builder("sample_condition", "Steel").hardness(6.0F)
+                .energyInput(EnergyInput.builder("EU", 128).range(64, 256).capacity(10_000)
+                        .faces(MachineFace.FRONT).overload(false).build())
+                .condition(192).build(), "overload");
+
+        var wheel = BehaviorMachine.builder(casing("wheel")).gui(GUI)
+                .energyOutput(EnergyOutput.builder("EU", 32, 1).faces(MachineFace.TOP).build()).build();
+        check(wheel.energy() == null && wheel.energyMask() == 0 && wheel.emitsEnergy()
+                        && wheel.output().faces().equals(List.of(MachineFace.TOP)),
+                "an output-only machine has no input");
+        fails(() -> BehaviorMachine.builder(casing("wheel")).gui(GUI).build(), "Missing energy");
+        var slotted = BehaviorMachine.builder(casing("wheel")).gui(GUI)
+                .energyOutput(EnergyOutput.builder("EU", 32, 1).faces(MachineFace.TOP).build())
+                .item(8, 8, BehaviorMachine.SlotRole.OUTPUT).build();
+        check(slotted.items().size() == 1, "the energy gauge is absent, so a slot can use its place");
+        var emittingAux = BehaviorMachine.builder(casing("wheel")).gui(GUI)
+                .energyOutput(EnergyOutput.builder("EU", 32, 1).faces(MachineFace.TOP).build())
+                .auxiliaryEnergy(EnergyInput.builder("HU", 16).range(8, 32).capacity(1_000).faces(MachineFace.BACK).build())
+                .build();
+        check(emittingAux.energy() == null && emittingAux.auxiliary().type().equals("HU"),
+                "an output-only machine can still take a second input");
+
+        var over = BehaviorEnergyRules.admitInput(0, 64, 128, 2, 16, 64, false, true, false);
+        check(over.overload() && over.packets() == 2, "the default window still overloads above the maximum");
+        var small = BehaviorEnergyRules.admitInput(0, 64, 8, 1, 16, 64, false, true, false);
+        check(!small.overload() && small.packets() == 1, "the default window still stores an undersized packet");
+        var refused = BehaviorEnergyRules.admitInput(0, 64, 128, 2, 16, 64, false, false, false);
+        check(!refused.overload() && refused.packets() == 0, "overload off refuses an oversized packet");
+        var low = BehaviorEnergyRules.admitInput(0, 64, 8, 1, 16, 64, false, false, false);
+        check(low.packets() == 0, "overload off refuses an undersized packet");
+        var narrow = BehaviorEnergyRules.admitInput(0, 1_000, 8, 1, 16, 64, false, true, true);
+        check(narrow.packets() == 0 && !narrow.overload(), "a declared range refuses an undersized packet");
+        var any = BehaviorEnergyRules.admitInput(0, 1_000, 10_000, 1, 0, 0, true, true, true);
+        check(!any.overload() && any.packets() == 1, "main anyPacket does not overload");
     }
 
     private static void functionalParts() {
@@ -389,6 +462,55 @@ public final class AddonDeclarationTypeContracts {
         model.stop();
         check(!model.running() && model.extract(0).equals("redstone") && model.power() == 4, "stop releases the items");
         check(model.item(1).equals("diamond"), "the other slot stays");
+    }
+
+    private static void partAdditions() {
+        var tanks = PartTanks.builder(2).capacity(8_000).insert(MachineFace.TOP).extract(MachineFace.BOTTOM).build();
+        var part = LayoutPart.builder("sample_tank", "Steel").hardness(6.0F)
+                .tanks(tanks).gui("aa_sample:textures/gui/part.png").build();
+        check(part.functional() && part.tanks().count() == 2 && part.tanks().capacity() == 8_000
+                        && part.gui().equals("aa_sample:textures/gui/part.png"),
+                "tanks and a menu make a part functional");
+        check(PartTankRules.inserts(tanks, MachineFace.TOP) && !PartTankRules.inserts(tanks, MachineFace.BOTTOM)
+                        && !PartTankRules.extracts(tanks, null) && !PartTankRules.inserts(null, MachineFace.TOP),
+                "tank faces follow the declared lists");
+        fails(() -> PartTanks.builder(0).capacity(1).build(), "1 to");
+        fails(() -> PartTanks.builder(9).capacity(1).build(), "1 to");
+        fails(() -> PartTanks.builder(1).build(), "capacity");
+        fails(() -> PartTanks.builder(1).capacity(0).build(), "capacity");
+        fails(() -> PartTanks.builder(1).capacity(PartTanks.MAX_CAPACITY + 1).build(), "capacity");
+        fails(() -> LayoutPart.builder("sample_tank", "Steel").hardness(6.0F).tanks(null).build(), "Missing");
+        fails(() -> LayoutPart.builder("sample_tank", "Steel").hardness(6.0F).gui("textures/gui/part.png").build(),
+                "gui");
+
+        var valve = BehaviorMachine.builder(casing("press")).energy(eu(32)).gui(GUI).gasValve(MachineFace.BACK).build();
+        var closed = BehaviorMachine.builder(casing("press")).energy(eu(32)).gui(GUI).build();
+        check(valve.gasValve() == MachineFace.BACK && closed.gasValve() == null && !valve.equals(closed),
+                "a behavior machine can name one compressed-gas valve");
+        fails(() -> BehaviorMachine.builder(casing("press")).energy(eu(32)).gui(GUI).gasValve(null).build(), "valve");
+
+        check(PartDesigns.max("steel_wall") == 7 && PartDesigns.max("wood_wall") == -1
+                        && PartDesigns.folder("centrifuge_part").equals("centrifugeparts"),
+                "design support follows the original part table");
+        var designed = StructureLayout.builder("samplepress")
+                .cell(1, 0, 0, CellMatch.parse("steel_wall"), StructureRole.CASING, 7).build();
+        check(designed.cells().get(0).design() == 7, "a cell can name a design");
+        var json = StructureLayoutDocuments.canonical(designed);
+        check(json.contains("\"design\":7") && StructureLayoutDocuments.parse("samplepress", json).equals(designed),
+                "a layout document keeps the design");
+        var shared = AddonMachines.sharedCells("test", designed);
+        check(shared.size() == 1 && shared.get(0).design() == 7, "install keeps a supported design");
+        fails(() -> AddonMachines.sharedCells("test", StructureLayout.builder("samplepress")
+                .cell(1, 0, 0, CellMatch.parse("steel_wall"), StructureRole.CASING, 8).build()),
+                IllegalStateException.class, "does not support");
+        fails(() -> AddonMachines.sharedCells("test", StructureLayout.builder("samplepress")
+                .cell(1, 0, 0, CellMatch.parse("wood_wall"), StructureRole.CASING, 1).build()),
+                IllegalStateException.class, "does not support");
+        fails(() -> AddonMachines.sharedCells("test", StructureLayout.builder("samplepress")
+                .cell(1, 0, 0, CellMatch.parse("minecraft:iron_block"), StructureRole.CASING, 1).build()),
+                IllegalStateException.class, "does not support");
+        fails(() -> LayoutCell.at(1, 0, 0, CellMatch.parse("steel_wall"), StructureRole.CASING).withDesign(-1),
+                "0 to 255");
     }
 
     /** The sample compute part, without a block entity: four stack-1 slots, redstone 1, diamond 4. */

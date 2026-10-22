@@ -1,5 +1,7 @@
 package com.gregtech.gregtech.api.addon.platform;
 
+import com.gregtech.gregtech.api.addon.GregTechMaterials;
+
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -40,5 +42,8 @@ public final class AddonPlatform {
         long inject(EnergyBlock block, String energy, Direction side, long size, long amount, boolean execute);
 
         long extract(EnergyBlock block, String energy, Direction side, long size, long amount, boolean execute);
+
+        /** Prefix and material units already stored for this stack, or empty when the stack is unknown. */
+        GregTechMaterials.StackComposition composition(ItemStack stack);
     }
 }

@@ -15,12 +15,12 @@ import java.util.Set;
 /** Reads and writes {@code data/<namespace>/gt6ce_layouts/<machineType>.json}. */
 public final class StructureLayoutDocuments {
     private static final Set<String> ROOT = Set.of("cells");
-    private static final Set<String> CELL = Set.of("right", "up", "back", "match", "role");
+    private static final Set<String> CELL = Set.of("right", "up", "back", "match", "role", "design");
 
     private StructureLayoutDocuments() {}
 
     /** One cell before it is checked against {@link StructureLayout}. */
-    public record CellSpec(int right, int up, int back, String match, String role) {}
+    public record CellSpec(int right, int up, int back, String match, String role, int design) {}
 
     public static StructureLayout parse(String machine, String json) {
         return layout(machine, cells(JsonMaps.object(json)));
@@ -28,8 +28,12 @@ public final class StructureLayoutDocuments {
 
     public static StructureLayout layout(String machine, List<CellSpec> cells) {
         var builder = StructureLayout.builder(machine);
-        for (CellSpec cell : cells)
-            builder.cell(cell.right(), cell.up(), cell.back(), CellMatch.parse(cell.match()), role(cell.role()));
+        for (CellSpec cell : cells) {
+            var match = CellMatch.parse(cell.match());
+            var part = role(cell.role());
+            if (cell.design() < 0) builder.cell(cell.right(), cell.up(), cell.back(), match, part);
+            else builder.cell(cell.right(), cell.up(), cell.back(), match, part, cell.design());
+        }
         return builder.build();
     }
 
@@ -46,6 +50,7 @@ public final class StructureLayoutDocuments {
             string(json, cell.match().toString());
             json.append(",\"role\":");
             string(json, cell.role().name().toLowerCase(Locale.ROOT));
+            if (cell.design() >= 0) json.append(",\"design\":").append(cell.design());
             json.append('}');
         }
         return json.append("]}").toString();
@@ -67,7 +72,7 @@ public final class StructureLayoutDocuments {
             for (var key : cell.keySet())
                 if (!CELL.contains(key)) throw new IllegalArgumentException("Unknown field " + key);
             out.add(new CellSpec(integer(cell, "right"), integer(cell, "up"), integer(cell, "back"),
-                    required(cell, "match"), required(cell, "role")));
+                    required(cell, "match"), required(cell, "role"), design(cell)));
         }
         return out;
     }
@@ -85,6 +90,13 @@ public final class StructureLayoutDocuments {
         var value = json.get(key);
         if (value instanceof String text && !text.isBlank()) return text;
         throw new IllegalArgumentException(key + " is required");
+    }
+
+    private static int design(Map<String, Object> json) {
+        if (!json.containsKey("design")) return -1;
+        int value = integer(json, "design");
+        if (value < 0 || value > 255) throw new IllegalArgumentException("design");
+        return value;
     }
 
     private static int integer(Map<String, Object> json, String key) {

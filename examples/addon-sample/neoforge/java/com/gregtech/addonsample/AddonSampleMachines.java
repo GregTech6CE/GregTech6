@@ -20,6 +20,7 @@ import com.gregtech.gregtech.api.addon.RecipeTable;
 import com.gregtech.gregtech.api.addon.StructureLayout;
 import com.gregtech.gregtech.api.addon.StructureRole;
 import com.gregtech.gregtech.api.addon.platform.AddonFluids;
+import com.gregtech.gregtech.api.addon.platform.AddonTool;
 import com.gregtech.gregtech.api.addon.platform.AddonRecipes;
 import com.gregtech.gregtech.api.addon.platform.BehaviorMachineContributor;
 import com.gregtech.gregtech.api.addon.platform.MachineBehavior;
@@ -103,11 +104,15 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
                         .fuelMap("addon_sample.fuel.gas").efficiency(10_000)
                         .output(FuelOutput.builder("RU", 32).front().build())
                         .tank(4_000).single().build(),
+                FuelGenerator.builder(MachineCasing.builder("sample_motor", "Steel").machineType("sample_motor").build())
+                        .fuelMap("addon_sample.fuel.gas").efficiency(10_000)
+                        .output(FuelOutput.builder("RU", 32).front().build())
+                        .amperes(4).tank(4_000).single().build(),
                 FuelGenerator.builder(MachineCasing.builder("sample_turbine", "Steel").machineType("sample_turbine").build())
                         .fuelMap("addon_sample.fuel.gas").efficiency(5_000)
                         .output(FuelOutput.builder("RU", 32).behind(4).build())
                         .tank(8_000).multi().build(),
-                IRRIGATOR, MINER, VOID_HOPPER, ROTATION_BUFFER, HAND_CRANK, TRANSFORMER, CLUSTER, SOLID_BOILER, COMPRESSOR);
+                IRRIGATOR, MINER, VOID_HOPPER, ROTATION_BUFFER, HAND_CRANK, TRANSFORMER, CLUSTER, SOLID_BOILER, COMPRESSOR, WATER_WHEEL, HAMMER_SWITCH, INLET);
     }
 
     @Override public List<LayoutPart> layoutParts() {
@@ -159,7 +164,8 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
 
     @Override public Set<String> machineTypes() {
         return Set.of("irrigator", "sampleminer", "samplehopper", "ru_buffer", "hand_crank",
-                "sample_transformer", "sample_cluster", "sampleboiler", "samplecompressor");
+                "sample_transformer", "sample_cluster", "sampleboiler", "samplecompressor", "sample_wheel", "sample_switch",
+                "sample_inlet");
     }
 
     @Override public MachineBehavior create(String machineType) {
@@ -173,6 +179,9 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
             case "sample_cluster" -> new Cluster();
             case "sampleboiler" -> new SolidBoiler();
             case "samplecompressor" -> new Compressor();
+            case "sample_wheel" -> new WaterWheel();
+            case "sample_switch" -> new HammerSwitch();
+            case "sample_inlet" -> new Inlet();
             default -> throw new IllegalArgumentException(machineType);
         };
     }
@@ -263,6 +272,29 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
             .recipeMaps("addon_sample.fuel.solid")
             .build();
 
+    /** Emits one EU packet upward. No face accepts energy, and the menu has no energy bar. */
+    private static final BehaviorMachine WATER_WHEEL = BehaviorMachine.builder(
+            MachineCasing.builder("sample_wheel", "Steel").machineType("sample_wheel").tier(1).build())
+            .gui("addon_sample:textures/gui/machine.png")
+            .energyOutput(EnergyOutput.builder("EU", 32, 1).faces(MachineFace.TOP).build())
+            .build();
+
+    /** A soft hammer flips a saved flag. A wrench is left to GregTech and still rotates the block. */
+    private static final BehaviorMachine HAMMER_SWITCH = BehaviorMachine.builder(
+            MachineCasing.builder("sample_switch", "Steel").machineType("sample_switch").tier(1).build())
+            .energy(EnergyInput.builder("EU", 32).build())
+            .gui("addon_sample:textures/gui/machine.png")
+            .build();
+
+    /** Water only from the top. A saved {@code shut} flag refuses the next energy packet. */
+    private static final BehaviorMachine INLET = BehaviorMachine.builder(
+            MachineCasing.builder("sample_inlet", "Steel").machineType("sample_inlet").tier(1).build())
+            .energy(EnergyInput.builder("EU", 32).capacity(10_000).build())
+            .gui("addon_sample:textures/gui/machine.png")
+            .fluid(8000, 152, 8, BehaviorMachine.SlotRole.INPUT)
+            .io(MachineIo.builder().fluidInputs(MachineFace.TOP).build())
+            .build();
+
     /** KU on the bottom, gas in the tank, compressed drum on the back. */
     private static final BehaviorMachine COMPRESSOR = BehaviorMachine.builder(
             MachineCasing.builder("sample_compressor", "Steel").machineType("samplecompressor").tier(1).build())
@@ -270,6 +302,50 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
             .gui("addon_sample:textures/gui/machine.png")
             .fluid(8000, 152, 8, BehaviorMachine.SlotRole.INPUT)
             .build();
+
+    /** Generates one EU packet and pushes it out the top. The main input cache stays empty. */
+    private static final class WaterWheel implements MachineBehavior {
+        @Override public boolean canInsert(MachineBehaviorContext context, int slot, ItemStack stack) { return false; }
+        @Override public boolean canFill(MachineBehaviorContext context, int tank, FluidStack stack) { return false; }
+
+        @Override public void tick(MachineBehaviorContext context) {
+            var state = context.state();
+            state.setLong("seen", context.energy());
+            state.setLong("added", context.generate(32));
+            state.setLong("after", context.energy());
+            long sent = context.emit(32, 1);
+            state.setLong("sent", sent);
+            if (sent > 0) context.working(true);
+        }
+    }
+
+    /** Soft hammer flips {@code armed}. Any other tool, including a wrench, is not handled. */
+    private static final class HammerSwitch implements MachineBehavior {
+        @Override public boolean canInsert(MachineBehaviorContext context, int slot, ItemStack stack) { return false; }
+        @Override public boolean canFill(MachineBehaviorContext context, int tank, FluidStack stack) { return false; }
+        @Override public void tick(MachineBehaviorContext context) {}
+
+        @Override public boolean onTool(MachineBehaviorContext context, AddonTool tool, Player player,
+                                        InteractionHand hand, MachineFace face) {
+            if (tool != AddonTool.SOFT_HAMMER) return false;
+            context.state().setBoolean("armed", !context.state().getBoolean("armed"));
+            return true;
+        }
+    }
+
+    /** Top fluid face only. {@code shut} makes {@link #acceptsEnergy} refuse the packet. */
+    private static final class Inlet implements MachineBehavior {
+        @Override public boolean canInsert(MachineBehaviorContext context, int slot, ItemStack stack) { return false; }
+        @Override public boolean canFill(MachineBehaviorContext context, int tank, FluidStack stack) {
+            return stack != null && !stack.isEmpty() && stack.getFluid() == Fluids.WATER;
+        }
+        @Override public void tick(MachineBehaviorContext context) {}
+
+        @Override public boolean acceptsEnergy(MachineBehaviorContext context, String type, MachineFace face,
+                                               long size, long amount) {
+            return !context.state().getBoolean("shut");
+        }
+    }
 
     /** Waters one dry farmland within two blocks, spending water and EU. */
     private static final class Irrigator implements MachineBehavior {

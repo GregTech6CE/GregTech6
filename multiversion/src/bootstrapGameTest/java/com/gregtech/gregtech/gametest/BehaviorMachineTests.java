@@ -1,8 +1,12 @@
 package com.gregtech.gregtech.gametest;
 
 import com.gregtech.gregtech.api.recipe.RecipeMap;
+import com.gregtech.gregtech.api.tool.GTToolType;
 import com.gregtech.gregtech.block.machine.BehaviorMachineBlock;
 import com.gregtech.gregtech.blockentity.machine.BehaviorMachineBlockEntity;
+import com.gregtech.gregtech.content.material.Materials;
+import com.gregtech.gregtech.content.material.generated.WoodMaterials;
+import com.gregtech.gregtech.item.GTToolItem;
 import com.gregtech.gregtech.client.gui.BehaviorMachineMenu;
 import com.gregtech.gregtech.jei.RecipeMachines;
 import net.minecraft.core.BlockPos;
@@ -11,9 +15,13 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.material.Fluids;
 //? if >=1.21.1 {
@@ -24,6 +32,7 @@ import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 import net.neoforged.neoforge.items.IItemHandler;
 *///?} else {
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.gametest.GameTestHolder;
@@ -163,11 +172,125 @@ public final class BehaviorMachineTests {
         helper.succeed();
     }
 
+    @GameTest(template = "test_empty", timeoutTicks = 100)
+    public static void outputOnlyMachineEmitsAndAcceptsNothing(GameTestHelper helper) {
+        var pos = helper.absolutePos(new BlockPos(2, 0, 2)).atY(250);
+        var machine = place(helper, pos, "addon_sample:sample_wheel");
+        for (Direction side : Direction.values()) {
+            helper.assertTrue(machine.doInject("EU", side, 32, 1, true) == 0, side + " rejects EU");
+            helper.assertTrue(!machine.isEnergyAcceptingFrom("EU", side, false), side + " accepts nothing");
+        }
+        helper.assertTrue(machine.storedEnergy() == 0, "rejected packets are not stored");
+        helper.assertTrue(machine.declaration().energy() == null, "no main input");
+        BehaviorMachineBlockEntity.serverTick(helper.getLevel(), pos, machine.getBlockState(), machine);
+        helper.assertTrue(machine.state().getLong("seen") == 0 && machine.state().getLong("after") == 0,
+                "the main cache reads as zero");
+        helper.assertTrue(machine.state().getLong("added") == 32, "generate fills the output buffer");
+        helper.assertTrue(machine.state().getLong("sent") == 0 && machine.storedEnergy() == 32, "the packet waits");
+        var above = pos.above();
+        var receiverBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.parse("addon_sample:irrigator"));
+        helper.getLevel().setBlockAndUpdate(above, receiverBlock.defaultBlockState().setValue(BehaviorMachineBlock.FACING, Direction.NORTH));
+        var receiver = helper.getLevel().getBlockEntity(above);
+        helper.assertTrue(receiver instanceof BehaviorMachineBlockEntity, "receiver");
+        BehaviorMachineBlockEntity.serverTick(helper.getLevel(), pos, machine.getBlockState(), machine);
+        helper.assertTrue(machine.state().getLong("sent") == 1, "one packet leaves through the top");
+        helper.assertTrue(((BehaviorMachineBlockEntity) receiver).storedEnergy() == 32, "the neighbor stored the packet");
+        helper.assertTrue(machine.storedEnergy() == 0, "the wheel spent the packet");
+        helper.getLevel().removeBlock(pos, false);
+        helper.getLevel().removeBlock(above, false);
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 100)
+    public static void softHammerTogglesAndWrenchStillRotates(GameTestHelper helper) {
+        var pos = helper.absolutePos(new BlockPos(2, 0, 2)).atY(250);
+        var machine = place(helper, pos, "addon_sample:sample_switch");
+        helper.assertTrue(machine.getBlockState().getValue(BehaviorMachineBlock.FACING) == Direction.NORTH, "starts north");
+        var player = survival(helper);
+        var hammer = GTToolItem.create(GTToolType.SOFT_HAMMER, Materials.Steel, WoodMaterials.Wood);
+        player.setItemInHand(InteractionHand.MAIN_HAND, hammer);
+        click(helper, pos, player, Direction.UP);
+        helper.assertTrue(machine.state().getBoolean("armed"), "soft hammer toggles");
+        helper.assertTrue(machine.getBlockState().getValue(BehaviorMachineBlock.FACING) == Direction.NORTH,
+                "soft hammer does not rotate");
+        helper.assertTrue(hammer.getDamageValue() == 100, "soft hammer spends one tool click");
+        var crowbar = GTToolItem.create(GTToolType.CROWBAR, Materials.Steel, WoodMaterials.Wood);
+        helper.assertTrue(!crowbar.isEmpty(), "crowbar");
+        player.setItemInHand(InteractionHand.MAIN_HAND, crowbar);
+        click(helper, pos, player, Direction.UP);
+        helper.assertTrue(machine.state().getBoolean("armed")
+                && machine.getBlockState().getValue(BehaviorMachineBlock.FACING) == Direction.NORTH,
+                "an unrecognized tool keeps the old click");
+        var wrench = GTToolItem.create(GTToolType.WRENCH, Materials.Steel, WoodMaterials.Wood);
+        player.setItemInHand(InteractionHand.MAIN_HAND, wrench);
+        click(helper, pos, player, Direction.EAST);
+        helper.assertTrue(helper.getLevel().getBlockState(pos).getValue(BehaviorMachineBlock.FACING) == Direction.EAST,
+                "wrench still rotates");
+        helper.assertTrue(machine.state().getBoolean("armed"), "wrench does not toggle");
+        helper.getLevel().removeBlock(pos, false);
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 100)
+    public static void topFaceFillsAndARefusalLeavesTheBuffer(GameTestHelper helper) {
+        var pos = helper.absolutePos(new BlockPos(2, 0, 2)).atY(250);
+        var machine = place(helper, pos, "addon_sample:sample_inlet");
+        helper.assertTrue(fluidCap(helper, pos, Direction.EAST) == null, "east fluid face is closed");
+        helper.assertTrue(fluidCap(helper, pos, Direction.DOWN) == null, "bottom fluid face is closed");
+        IFluidHandler top = fluidCap(helper, pos, Direction.UP);
+        helper.assertTrue(top != null, "top fluid face is open");
+        helper.assertTrue(top.fill(new FluidStack(Fluids.WATER, 250), IFluidHandler.FluidAction.EXECUTE) == 250,
+                "top accepts water");
+        helper.assertTrue(machine.doInject("EU", Direction.UP, 32, 1, true) == 1, "up stores one packet");
+        helper.assertTrue(machine.storedEnergy() == 32, "buffer grew");
+        machine.state().setBoolean("shut", true);
+        helper.assertTrue(machine.doInject("EU", Direction.UP, 32, 1, true) == 0, "callback refuses the packet");
+        helper.assertTrue(machine.storedEnergy() == 32, "a refused packet is not stored");
+        helper.getLevel().removeBlock(pos, false);
+        helper.succeed();
+    }
+
+    private static IFluidHandler fluidCap(GameTestHelper helper, BlockPos pos, Direction side) {
+//? if >=1.21.1 {
+/*        return helper.getLevel().getCapability(Capabilities.FluidHandler.BLOCK, pos, side);
+*///?} else {
+        var entity = helper.getLevel().getBlockEntity(pos);
+        if (!(entity instanceof BehaviorMachineBlockEntity machine)) return null;
+        return machine.getCapability(ForgeCapabilities.FLUID_HANDLER, side).orElse(null);
+//?}
+    }
+
+    private static Player survival(GameTestHelper helper) {
+//? if >=1.21.1 {
+/*        return helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+*///?} else {
+        var player = helper.makeMockPlayer();
+        if (player instanceof net.minecraft.server.level.ServerPlayer server)
+            server.gameMode.changeGameModeForPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        return player;
+//?}
+    }
+
+    private static void click(GameTestHelper helper, BlockPos pos, Player player, Direction side) {
+        var hit = new BlockHitResult(Vec3.atCenterOf(pos).add(side.getStepX() * 0.5, side.getStepY() * 0.5, side.getStepZ() * 0.5),
+                side, pos, false);
+        var state = helper.getLevel().getBlockState(pos);
+//? if >=1.21.1 {
+/*        state.useItemOn(player.getItemInHand(InteractionHand.MAIN_HAND), helper.getLevel(), player, InteractionHand.MAIN_HAND, hit);
+*///?} else {
+        state.use(helper.getLevel(), player, InteractionHand.MAIN_HAND, hit);
+//?}
+    }
+
     private static BehaviorMachineBlockEntity place(GameTestHelper helper, BlockPos pos) {
-        var block = BuiltInRegistries.BLOCK.get(ResourceLocation.parse("addon_sample:irrigator"));
+        return place(helper, pos, "addon_sample:irrigator");
+    }
+
+    private static BehaviorMachineBlockEntity place(GameTestHelper helper, BlockPos pos, String id) {
+        var block = BuiltInRegistries.BLOCK.get(ResourceLocation.parse(id));
         helper.getLevel().setBlockAndUpdate(pos, block.defaultBlockState().setValue(BehaviorMachineBlock.FACING, Direction.NORTH));
         var entity = helper.getLevel().getBlockEntity(pos);
-        if (!(entity instanceof BehaviorMachineBlockEntity machine)) throw new AssertionError("No irrigator");
+        if (!(entity instanceof BehaviorMachineBlockEntity machine)) throw new AssertionError("No " + id);
         return machine;
     }
 

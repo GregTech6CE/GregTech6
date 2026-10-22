@@ -87,6 +87,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         emitStructureParts(result);
         emitAddonPipes(result);
         emitCompressedTanks(result);
+        emitAddonBlockPrefixes(result);
         for (var item : BuiltInRegistries.ITEM) {
             ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
             if (item instanceof com.gregtech.gregtech.api.material.MaterialFormItem material && material.getPrefix().isAddon()) {
@@ -265,6 +266,31 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         return new ResourceLocation(namespace, path);
     }
 //?}
+
+    private static void emitAddonBlockPrefixes(Map<ResourceLocation, byte[]> result) {
+        var emitted = new HashSet<String>();
+        for (var block : BuiltInRegistries.BLOCK) {
+            if (!(block instanceof MaterialBlockLike like) || !like.prefix().isAddon()) continue;
+            var prefix = like.prefix();
+            var id = BuiltInRegistries.BLOCK.getKey(block);
+            if (id == null || !emitted.add(prefix.getTextureFileName())) continue;
+            String texture = prefix.textureNamespace() + ":" + prefix.addonTexturePath();
+            String model = "{\"parent\":\"minecraft:block/cube_all\",\"textures\":{\"all\":\"" + texture
+                    + "\",\"particle\":\"" + texture + "\"}}";
+            result.put(location("models/block/material/addon/" + prefix.getTextureFileName() + ".json"),
+                    model.getBytes(StandardCharsets.UTF_8));
+        }
+        for (var block : BuiltInRegistries.BLOCK) {
+            if (!(block instanceof MaterialBlockLike like) || !like.prefix().isAddon()) continue;
+            var id = BuiltInRegistries.BLOCK.getKey(block);
+            if (id == null || !"gt6ce".equals(id.getNamespace())) continue;
+            String parent = "gt6ce:block/material/addon/" + like.prefix().getTextureFileName();
+            result.put(location("blockstates/" + id.getPath() + ".json"),
+                    ("{\"variants\":{\"\":{\"model\":\"" + parent + "\"}}}").getBytes(StandardCharsets.UTF_8));
+            result.put(location("models/item/" + id.getPath() + ".json"),
+                    ("{\"parent\":\"" + parent + "\"}").getBytes(StandardCharsets.UTF_8));
+        }
+    }
 
     @Override
     public IoSupplier<InputStream> getRootResource(String... path) {

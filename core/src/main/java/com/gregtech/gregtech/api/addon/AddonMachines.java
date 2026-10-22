@@ -70,10 +70,12 @@ public final class AddonMachines {
                              IoTarget itemInputSource, IoTarget fluidInputSource,
                              boolean energyRangeSpecified, long energyInMin, long energyInMax) {}
     private record FuelSignature(String fuelMap, int efficiency, String energy, long outputPerTick, int tankCapacity,
-                                 FuelOutput output, boolean multi) {}
+                                 FuelOutput output, boolean multi, int amperes) {}
     private record BehaviorSignature(String energy, String auxiliary, String energyOut,
                                      List<BehaviorMachine.SlotRole> items,
-                                     List<BehaviorMachine.SlotRole> fluids, List<String> toggleKeys) {}
+                                     List<BehaviorMachine.SlotRole> fluids, List<String> toggleKeys,
+                                     int itemIn, int itemOut, int fluidIn, int fluidOut,
+                                     long outMin, boolean outNegative) {}
     private record PreparedLayout(String addonId, String machineName, List<SharedLargeMachineLayouts.Cell> cells) {}
 
     public static void collectContributors() {
@@ -664,7 +666,7 @@ public final class AddonMachines {
                             + "' disagrees with an earlier definition of that machine");
                 var signature = new FuelSignature(declaration.fuelMap(), declaration.efficiency(),
                         declaration.output().type(), declaration.output().perTick(), declaration.tankCapacity(),
-                        declaration.output(), declaration.multi());
+                        declaration.output(), declaration.multi(), declaration.amperes());
                 FuelSignature existing = signatures.putIfAbsent(machineName, signature);
                 if (existing != null && !existing.equals(signature))
                     throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName
@@ -709,11 +711,27 @@ public final class AddonMachines {
                 if (material == null || !material.isValid())
                     throw new IllegalStateException("Addon '" + submission.addonId + "' machine '"
                             + id + "' uses unknown material '" + materialName + "'");
-                try {
-                    energy(declaration.energy().type());
-                } catch (IllegalArgumentException failure) {
-                    throw new IllegalStateException("Addon '" + submission.addonId + "' machine '"
-                            + id + "' uses unknown energy type '" + declaration.energy().type() + "'", failure);
+                String energyType = "";
+                long min = 0;
+                long max = 0;
+                if (declaration.energy() != null) {
+                    energyType = declaration.energy().type();
+                    try {
+                        energy(energyType);
+                    } catch (IllegalArgumentException failure) {
+                        throw new IllegalStateException("Addon '" + submission.addonId + "' machine '"
+                                + id + "' uses unknown energy type '" + energyType + "'", failure);
+                    }
+                    if (declaration.energy().anyPacket()) {
+                        min = 1;
+                        max = Long.MAX_VALUE;
+                    } else if (declaration.energy().rangeSpecified()) {
+                        min = declaration.energy().rangeMin();
+                        max = declaration.energy().rangeMax();
+                    } else {
+                        min = BasicMachineParameters.defaultEnergyInMin(energyType, declaration.energy().perTick());
+                        max = BasicMachineParameters.defaultEnergyInMax(energyType, declaration.energy().perTick());
+                    }
                 }
                 if (declaration.auxiliary() != null) {
                     try {
@@ -755,12 +773,16 @@ public final class AddonMachines {
                 if (machineSignature.containsKey(machineName) || generatorNames.contains(machineName))
                     throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName
                             + "' disagrees with an earlier definition of that machine");
-                var signature = new BehaviorSignature(declaration.energy().type(),
+                var signature = new BehaviorSignature(energyType,
                         declaration.auxiliary() == null ? "" : declaration.auxiliary().type(),
                         declaration.output() == null ? "" : declaration.output().type(),
                         declaration.items().stream().map(BehaviorMachine.ItemSlot::role).toList(),
                         declaration.fluids().stream().map(BehaviorMachine.FluidSlot::role).toList(),
-                        declaration.toggles().stream().map(BehaviorMachine.Toggle::translationKey).toList());
+                        declaration.toggles().stream().map(BehaviorMachine.Toggle::translationKey).toList(),
+                        declaration.itemInputMask(), declaration.itemOutputMask(),
+                        declaration.fluidInputMask(), declaration.fluidOutputMask(),
+                        declaration.output() == null ? 0 : declaration.output().minSize(),
+                        declaration.output() != null && declaration.output().allowNegative());
                 BehaviorSignature existing = signatures.putIfAbsent(machineName, signature);
                 if (existing != null && !existing.equals(signature))
                     throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName
@@ -771,8 +793,6 @@ public final class AddonMachines {
                 if (!BehaviorMachineFactories.types(submission.addonId).contains(machineName))
                     throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName
                             + "' has no behavior factory");
-                long min = BasicMachineParameters.defaultEnergyInMin(declaration.energy().type(), declaration.energy().perTick());
-                long max = BasicMachineParameters.defaultEnergyInMax(declaration.energy().type(), declaration.energy().perTick());
                 var row = new AcceptedBehavior(submission.addonId, declaration, min, max, declaration.blockEntityPath());
                 AcceptedBehavior shared = byPath.putIfAbsent(submission.addonId + ":" + row.blockEntityPath(), row);
                 if (shared != null && (!shared.declaration().casing().machineType().equals(machineName)
@@ -804,21 +824,36 @@ public final class AddonMachines {
             var role = StructureGrid.Role.valueOf(cell.role().name());
             CellMatch match = cell.match();
             if (match instanceof CellMatch.Block block) {
+                rejectDesign(source, layout.name(), cell, block.id());
                 cells.add(new SharedLargeMachineLayouts.Cell(cell.right(), cell.up(), cell.back(), 0,
-                        role, block.id()));
+                        role, block.id(), cell.design()));
             } else if (match instanceof CellMatch.Tag tag) {
+                rejectDesign(source, layout.name(), cell, "#" + tag.id());
                 cells.add(new SharedLargeMachineLayouts.Cell(cell.right(), cell.up(), cell.back(), 0,
-                        role, "#" + tag.id()));
+                        role, "#" + tag.id(), cell.design()));
             } else {
                 String name = match instanceof CellMatch.Air ? "air" : ((CellMatch.Part) match).name();
                 int part = SharedLargeMachineParts.idForName(name);
                 if (part < 0)
                     throw new IllegalStateException(source + " layout '" + layout.name()
                             + "' uses unknown part '" + name + "'");
-                cells.add(new SharedLargeMachineLayouts.Cell(cell.right(), cell.up(), cell.back(), part, role));
+                if (cell.design() >= 0) {
+                    int max = com.gregtech.gregtech.content.multiblock.PartDesigns.max(name);
+                    if (max < 0 || cell.design() > max)
+                        throw new IllegalStateException(source + " layout '" + layout.name()
+                                + "' cell '" + name + "' does not support design " + cell.design());
+                }
+                cells.add(new SharedLargeMachineLayouts.Cell(cell.right(), cell.up(), cell.back(), part, role,
+                        null, cell.design()));
             }
         }
         return List.copyOf(cells);
+    }
+
+    private static void rejectDesign(String source, String layout, LayoutCell cell, String block) {
+        if (cell.design() < 0) return;
+        throw new IllegalStateException(source + " layout '" + layout + "' cell '" + block
+                + "' does not support design " + cell.design());
     }
 
     private static String safeId(GregTechMachineContributor contributor) {

@@ -3,6 +3,9 @@ package com.gregtech.gregtech.blockentity.machine;
 import com.gregtech.gregtech.api.addon.LayoutPart;
 import com.gregtech.gregtech.api.addon.PartSlotRules;
 import com.gregtech.gregtech.api.addon.PartSlots;
+import com.gregtech.gregtech.api.addon.PartTankRules;
+import com.gregtech.gregtech.api.addon.PartTanks;
+import com.gregtech.gregtech.api.fluid.FluidTankGT;
 import com.gregtech.gregtech.api.addon.LayoutPartHosts;
 import com.gregtech.gregtech.api.addon.platform.BehaviorState;
 import com.gregtech.gregtech.api.addon.platform.MachineBehavior;
@@ -20,6 +23,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+//? if >=1.21.1 {
+/*import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+*///?} else {
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+//?}
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -29,8 +39,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Slots, tick, click and named fields for one part. Absent on a casing and on an energy-only part.
- * Saved under {@code gt.part_slots} and {@code gt.part_fields}, never under the energy keys.
+ * Slots, tanks, tick, click and named fields for one part. Absent on a casing and on an energy-only part.
+ * Saved under {@code gt.part_slots}, {@code gt.part_tanks} and {@code gt.part_fields}, never under the energy keys.
  */
 public final class FunctionalPartRuntime {
     /** The block entity that owns this runtime. */
@@ -60,14 +70,17 @@ public final class FunctionalPartRuntime {
 
     private final Host host;
     @Nullable private final PartSlots slots;
+    @Nullable private final PartTanks tankRules;
     private final boolean ticks;
     private final boolean handlesUse;
     private final Set<String> fieldNames;
     private final PartBehavior behavior;
     private final Slots items;
+    private final FluidTankGT[] tanks;
     private final DeclaredState state = new DeclaredState();
     private final Context context = new Context();
     private final Object[] sided = new Object[7];
+    private final Object[] fluidSided = new Object[7];
     private boolean loading;
     private int notifying;
 
@@ -75,18 +88,28 @@ public final class FunctionalPartRuntime {
         this.host = host;
         LayoutPart part = host.declaration();
         this.slots = part.slots();
+        this.tankRules = part.tanks();
         this.ticks = part.ticks();
         this.handlesUse = part.handlesUse();
         this.fieldNames = Set.copyOf(part.fields());
         this.behavior = LayoutPartHosts.create(host.addonId(), part.name());
         this.items = new Slots(slots == null ? 0 : slots.count());
+        this.tanks = new FluidTankGT[tankRules == null ? 0 : tankRules.count()];
+        for (int i = 0; i < tanks.length; i++)
+            tanks[i] = new FluidTankGT(tankRules.capacity()).setOnChanged(this::tankChanged);
     }
+
+    public LayoutPart declaration() { return host.declaration(); }
+
+    public boolean opensMenu() { return host.declaration().gui() != null; }
 
     public PartBehavior behavior() { return behavior; }
 
     public PartContext context() { return context; }
 
     public int slotCount() { return items.getSlots(); }
+
+    public int tankCount() { return tanks.length; }
 
     public boolean handlesUse() { return handlesUse; }
 
@@ -109,7 +132,22 @@ public final class FunctionalPartRuntime {
         return behavior.onWrench(context, player, hit);
     }
 
-    public List<Component> describe() { return behavior.describe(context); }
+    public List<Component> describe() {
+        var lines = new ArrayList<Component>(behavior.describe(context));
+        for (int tank = 0; tank < tanks.length; tank++) {
+            FluidStack fluid = tanks[tank].getFluid();
+            String name = fluid.isEmpty() ? "empty" : fluid.getDisplayName().getString();
+            lines.add(Component.literal("tank " + tank + " " + name + " "
+                    + tanks[tank].getAmount() + "/" + tanks[tank].getCapacity()));
+        }
+        return lines;
+    }
+
+    private void tankChanged() {
+        if (loading) return;
+        host.markChanged();
+        host.syncToClient();
+    }
 
 //? if >=1.21.1 {
 /*    public net.neoforged.neoforge.items.IItemHandler items(Direction side) {
@@ -124,6 +162,19 @@ public final class FunctionalPartRuntime {
 *///?} else {
         return (net.minecraftforge.items.IItemHandler) sided[index];
 //?}
+    }
+
+//? if >=1.21.1 {
+/*    public net.neoforged.neoforge.items.IItemHandler inventory() { return items; }
+    public IFluidHandler fluids(Direction side) {
+*///?} else {
+    public net.minecraftforge.items.IItemHandler inventory() { return items; }
+    public IFluidHandler fluids(Direction side) {
+//?}
+        if (tanks.length == 0) return null;
+        int index = side == null ? 6 : side.ordinal();
+        if (fluidSided[index] == null) fluidSided[index] = new SidedFluid(side);
+        return (IFluidHandler) fluidSided[index];
     }
 
     public void dropInto(Level level, BlockPos pos) {
@@ -170,9 +221,18 @@ public final class FunctionalPartRuntime {
         return slots != null && side != null && PartSlotRules.extracts(slots, PartFaces.relative(facing(), side));
     }
 
+    private boolean fills(Direction side) {
+        return tankRules != null && side != null && PartTankRules.inserts(tankRules, PartFaces.relative(facing(), side));
+    }
+
+    private boolean drains(Direction side) {
+        return tankRules != null && side != null && PartTankRules.extracts(tankRules, PartFaces.relative(facing(), side));
+    }
+
 //? if >=1.21.1 {
 /*    public void save(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         saveSlots(tag, lookup);
+        saveTanks(tag, lookup);
         tag.put("gt.part_fields", state.save(lookup));
     }
 
@@ -180,6 +240,7 @@ public final class FunctionalPartRuntime {
         loading = true;
         try {
             loadSlots(tag, lookup);
+            loadTanks(tag, lookup);
             if (tag.contains("gt.part_fields")) state.load(lookup, tag.getCompound("gt.part_fields"));
         } finally {
             loading = false;
@@ -202,9 +263,30 @@ public final class FunctionalPartRuntime {
         for (int slot = 0; slot < items.getSlots() && slot < list.size(); slot++)
             items.setStackInSlot(slot, ItemStack.parseOptional(lookup, list.getCompound(slot)));
     }
+
+    private void saveTanks(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        if (tanks.length == 0) return;
+        ListTag list = new ListTag();
+        for (FluidTankGT tank : tanks) {
+            CompoundTag saved = new CompoundTag();
+            tank.writeToNBT(saved, lookup);
+            list.add(saved);
+        }
+        tag.put("gt.part_tanks", list);
+    }
+
+    private void loadTanks(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        if (tanks.length == 0 || !tag.contains("gt.part_tanks")) return;
+        ListTag list = tag.getList("gt.part_tanks", Tag.TAG_COMPOUND);
+        for (int tank = 0; tank < tanks.length && tank < list.size(); tank++) {
+            tanks[tank].readFromNBT(list.getCompound(tank), lookup);
+            tanks[tank].setCapacity(tankRules.capacity());
+        }
+    }
 *///?} else {
     public void save(CompoundTag tag) {
         saveSlots(tag);
+        saveTanks(tag);
         tag.put("gt.part_fields", state.save());
     }
 
@@ -212,6 +294,7 @@ public final class FunctionalPartRuntime {
         loading = true;
         try {
             loadSlots(tag);
+            loadTanks(tag);
             if (tag.contains("gt.part_fields")) state.load(tag.getCompound("gt.part_fields"));
         } finally {
             loading = false;
@@ -231,6 +314,26 @@ public final class FunctionalPartRuntime {
         ListTag list = tag.getList("gt.part_slots", Tag.TAG_COMPOUND);
         for (int slot = 0; slot < items.getSlots() && slot < list.size(); slot++)
             items.setStackInSlot(slot, ItemStack.of(list.getCompound(slot)));
+    }
+
+    private void saveTanks(CompoundTag tag) {
+        if (tanks.length == 0) return;
+        ListTag list = new ListTag();
+        for (FluidTankGT tank : tanks) {
+            CompoundTag saved = new CompoundTag();
+            tank.writeToNBT(saved);
+            list.add(saved);
+        }
+        tag.put("gt.part_tanks", list);
+    }
+
+    private void loadTanks(CompoundTag tag) {
+        if (tanks.length == 0 || !tag.contains("gt.part_tanks")) return;
+        ListTag list = tag.getList("gt.part_tanks", Tag.TAG_COMPOUND);
+        for (int tank = 0; tank < tanks.length && tank < list.size(); tank++) {
+            tanks[tank].readFromNBT(list.getCompound(tank));
+            tanks[tank].setCapacity(tankRules.capacity());
+        }
     }
 //?}
 
@@ -287,6 +390,56 @@ public final class FunctionalPartRuntime {
         }
     }
 
+    private final class SidedFluid implements IFluidHandler {
+        private final Direction side;
+
+        SidedFluid(Direction side) { this.side = side; }
+
+        @Override public int getTanks() { return tanks.length; }
+
+        @Override public FluidStack getFluidInTank(int tank) {
+            return tank < 0 || tank >= tanks.length ? FluidStack.EMPTY : tanks[tank].getFluid();
+        }
+
+        @Override public int getTankCapacity(int tank) {
+            return tank < 0 || tank >= tanks.length ? 0 : tanks[tank].getCapacity();
+        }
+
+        @Override public boolean isFluidValid(int tank, FluidStack stack) {
+            return tank >= 0 && tank < tanks.length && fills(side) && behavior.canFill(context, tank, stack);
+        }
+
+        @Override public int fill(FluidStack resource, FluidAction action) {
+            if (!fills(side) || resource == null || resource.isEmpty()) return 0;
+            for (int tank = 0; tank < tanks.length; tank++) {
+                if (!behavior.canFill(context, tank, resource)) continue;
+                int taken = tanks[tank].fill(resource, action);
+                if (taken > 0) return taken;
+            }
+            return 0;
+        }
+
+        @Override public FluidStack drain(FluidStack resource, FluidAction action) {
+            if (!drains(side) || resource == null || resource.isEmpty()) return FluidStack.EMPTY;
+            for (int tank = 0; tank < tanks.length; tank++) {
+                if (!behavior.canDrain(context, tank)) continue;
+                FluidStack drained = tanks[tank].drain(resource, action);
+                if (!drained.isEmpty()) return drained;
+            }
+            return FluidStack.EMPTY;
+        }
+
+        @Override public FluidStack drain(int maxDrain, FluidAction action) {
+            if (!drains(side)) return FluidStack.EMPTY;
+            for (int tank = 0; tank < tanks.length; tank++) {
+                if (!behavior.canDrain(context, tank)) continue;
+                FluidStack drained = tanks[tank].drain(maxDrain, action);
+                if (!drained.isEmpty()) return drained;
+            }
+            return FluidStack.EMPTY;
+        }
+    }
+
     private final class Context implements PartContext {
         @Override public Level level() { return host.level(); }
 
@@ -307,6 +460,30 @@ public final class FunctionalPartRuntime {
             int limit = items.getSlotLimit(slot);
             if (!next.isEmpty() && next.getCount() > limit) next.setCount(limit);
             items.setStackInSlot(slot, next);
+        }
+
+        @Override public int tanks() { return FunctionalPartRuntime.this.tanks.length; }
+
+        @Override public FluidStack fluid(int tank) {
+            if (tank < 0 || tank >= tanks()) return FluidStack.EMPTY;
+            return FunctionalPartRuntime.this.tanks[tank].getFluid();
+        }
+
+        @Override public int tankCapacity(int tank) {
+            if (tank < 0 || tank >= tanks()) return 0;
+            return FunctionalPartRuntime.this.tanks[tank].getCapacity();
+        }
+
+        @Override public int fill(int tank, FluidStack stack, boolean simulate) {
+            if (tank < 0 || tank >= tanks()) throw new IllegalArgumentException("tank " + tank);
+            return FunctionalPartRuntime.this.tanks[tank].fill(stack,
+                    simulate ? IFluidHandler.FluidAction.SIMULATE : IFluidHandler.FluidAction.EXECUTE);
+        }
+
+        @Override public FluidStack drain(int tank, int amount, boolean simulate) {
+            if (tank < 0 || tank >= tanks()) throw new IllegalArgumentException("tank " + tank);
+            return FunctionalPartRuntime.this.tanks[tank].drain(amount,
+                    simulate ? IFluidHandler.FluidAction.SIMULATE : IFluidHandler.FluidAction.EXECUTE);
         }
 
         @Override public boolean bound() {

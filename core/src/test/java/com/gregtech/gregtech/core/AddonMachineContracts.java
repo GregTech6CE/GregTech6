@@ -83,6 +83,7 @@ public final class AddonMachineContracts {
             case "overlap" -> overlap();
             case "bounds" -> bounds();
             case "benergy" -> behaviorEnergy();
+            case "binput" -> behaviorInput();
             case "factory" -> missingFactory();
             case "share" -> sharedBlockEntity();
             case "bconflict" -> behaviorConflict();
@@ -414,6 +415,22 @@ public final class AddonMachineContracts {
         expectThrows(IllegalArgumentException.class, () -> BehaviorEnergyRules.requireEmit(64, 1, 32, 4), "exceeds");
         expectThrows(IllegalArgumentException.class, () -> BehaviorEnergyRules.requireEmit(32, 5, 32, 4), "exceeds");
         expectThrows(IllegalStateException.class, () -> BehaviorEnergyRules.requireEmit(32, 1, 0, 0), "no energy output");
+        var signed = EnergyOutput.builder("KU", 64, 2).minSize(16).allowNegative().faces(MachineFace.FRONT).build();
+        check(signed.minSize() == 16 && signed.allowNegative(), "KU output keeps a minimum and a direction sign");
+        check(!signed.equals(EnergyOutput.builder("KU", 64, 2).faces(MachineFace.FRONT).build()),
+                "the default minimum is not a declared minimum of 16");
+        BehaviorEnergyRules.requireEmit(-32, 2, signed.minSize(), signed.maxSize(), signed.maxAmount(), true);
+        assertions++;
+        expectThrows(IllegalArgumentException.class, () -> BehaviorEnergyRules.requireEmit(-8, 1, 16, 64, 2, true), "exceeds");
+        expectThrows(IllegalArgumentException.class, () -> BehaviorEnergyRules.requireEmit(-32, 1, 1, 64, 1, false), "exceeds");
+        expectThrows(IllegalArgumentException.class, () -> EnergyOutput.builder("EU", 32, 1).allowNegative()
+                .faces(MachineFace.FRONT).build(), "negative");
+        expectThrows(IllegalArgumentException.class, () -> EnergyOutput.builder("HU", 32, 1).allowNegative()
+                .faces(MachineFace.FRONT).build(), "negative");
+        expectThrows(IllegalArgumentException.class, () -> EnergyOutput.builder("RU", 32, 1).minSize(0)
+                .faces(MachineFace.FRONT).build(), "minimum");
+        expectThrows(IllegalArgumentException.class, () -> EnergyOutput.builder("RU", 32, 1).minSize(33)
+                .faces(MachineFace.FRONT).build(), "minimum");
 
         var stored = BehaviorMachine.builder(MachineCasing.builder("ru_buffer", "Steel").build())
                 .energy(EnergyInput.builder("RU", 32).capacity(32_000)
@@ -476,6 +493,30 @@ public final class AddonMachineContracts {
                 .energy(EnergyInput.builder("EU", 32).build())
                 .gui("aa_sample:textures/gui/machine.png").energyGauge(-1, 8).build(),
                 "outside");
+    }
+
+    private static void behaviorInput() {
+        var wheel = BehaviorMachine.builder(MachineCasing.builder("sample_wheel", "Steel").machineType("sample_wheel").build())
+                .gui("aa_sample:textures/gui/machine.png")
+                .energyOutput(EnergyOutput.builder("EU", 32, 1).faces(MachineFace.TOP).build())
+                .build();
+        var wide = BehaviorMachine.builder(MachineCasing.builder("sample_wide", "Steel").machineType("sample_wide").build())
+                .energy(EnergyInput.builder("EU", 32).anyPacket().capacity(10_000).build())
+                .gui("aa_sample:textures/gui/machine.png")
+                .build();
+        check(wheel.energy() == null && wide.energy().anyPacket(), "declarations keep the new input rules");
+        prepare();
+        GTMaterialRegistry.init();
+        BehaviorMachineFactories.collect(Map.of("aa_sample", Set.of("sample_wheel", "sample_wide")));
+        AddonMachines.accept("aa_sample", List.of(), List.of(), List.of(), List.of(wheel, wide));
+        AddonMachines.install(Set.of("centrifuge"), AddonMachines.builtInRecipeMapNames());
+        check(AddonMachines.behaviorMachines().size() == 2, "both machines accepted");
+        var installedWheel = AddonMachines.behaviorMachines().get(0);
+        var installedWide = AddonMachines.behaviorMachines().get(1);
+        check(installedWheel.declaration().energy() == null && installedWheel.energyInMin() == 0
+                        && installedWheel.energyInMax() == 0, "output only has no input window");
+        check(installedWide.energyInMin() == 1 && installedWide.energyInMax() == Long.MAX_VALUE,
+                "anyPacket has no maximum");
     }
 
     private static void behaviorEnergy() {
@@ -682,6 +723,13 @@ public final class AddonMachineContracts {
                 .fuelMap("aa.fuel.gas").output(out).tank(0).build(), "parameters");
         expectThrows(IllegalArgumentException.class, () -> FuelOutput.builder("RU", 16).behind(0).build(), "distance");
         expectThrows(IllegalArgumentException.class, () -> FuelOutput.builder("RU", 16).behind(9).build(), "distance");
+        check(engine("aa.fuel.gas").amperes() == 1, "fuel amperes default to one");
+        var motor = FuelGenerator.builder(casing).fuelMap("aa.fuel.gas").output(out).amperes(4).build();
+        check(motor.amperes() == 4, "fuel amperes are stored");
+        expectThrows(IllegalArgumentException.class, () -> FuelGenerator.builder(casing)
+                .fuelMap("aa.fuel.gas").output(out).amperes(0).build(), "amperes");
+        expectThrows(IllegalArgumentException.class, () -> FuelGenerator.builder(casing)
+                .fuelMap("aa.fuel.gas").output(out).amperes(FuelGenerator.MAX_AMPERES + 1).build(), "amperes");
         expectThrows(IllegalArgumentException.class, () -> RecipeTable.fuel("Not A Map")
                 .title("Gas").gui("aa_sample:textures/gui/machines/gas")
                 .inputFluids(1).outputFluids(1).minimalInputFluids(1).minimalInputs(1).build(), "fuel");

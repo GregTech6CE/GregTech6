@@ -22,6 +22,7 @@ public final class MaterialBlockDefinitions {
             boolean addonOre = AddonMaterials.hasOreForm(material) && !GTMaterialRegistry.isCoreMaterial(material);
             if (addonOre) addonOres.add(material);
             for (BlockMaterialPrefix prefix : BlockPrefixRegistry.all()) {
+                if (prefix.isAddon()) continue;
                 if (!prefix.isValidFor(material)) continue;
                 if (addonOre && ADDON_ORE_HELD_BACK.contains(prefix.getName())) continue;
                 add(result, ids, prefix, material);
@@ -34,6 +35,15 @@ public final class MaterialBlockDefinitions {
             BlockMaterialPrefix oreSmall = BlockMaterialPrefix.oreSmall;
             if (ore != null && ore.isValidFor(material)) add(result, ids, ore, material);
             if (oreSmall != null && oreSmall.isValidFor(material)) add(result, ids, oreSmall, material);
+        }
+        // Declared block prefixes follow those, so neither they nor the ores shift a built-in id.
+        for (BlockMaterialPrefix prefix : BlockPrefixRegistry.all()) {
+            if (!prefix.isAddon()) continue;
+            for (GTMaterial material : GTMaterialRegistry.sortedMaterials()) {
+                if (material.has(MaterialProperty.HIDDEN) || material.resolve() != material) continue;
+                if (!prefix.isValidFor(material)) continue;
+                add(result, ids, prefix, material);
+            }
         }
         return List.copyOf(result);
     }

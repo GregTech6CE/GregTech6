@@ -3,8 +3,10 @@ import com.gregtech.gregtech.api.multiblock.StructureGrid.Role;import java.util.
 /** Original GT6 large-machine coordinates and material-part IDs; no Minecraft registry. */
 public final class SharedLargeMachineLayouts {private SharedLargeMachineLayouts(){}
     /** {@code plain} is a block id or {@code #} tag. Null means {@code part} is a structure part. */
-    public record Cell(int right,int up,int back,int part,Role role,String plain){
-        public Cell(int right,int up,int back,int part,Role role){this(right,up,back,part,role,null);}
+    /** {@code design} is {@code -1} when the cell does not write {@code gt.design}. */
+    public record Cell(int right,int up,int back,int part,Role role,String plain,int design){
+        public Cell(int right,int up,int back,int part,Role role){this(right,up,back,part,role,null,-1);}
+        public Cell(int right,int up,int back,int part,Role role,String plain){this(right,up,back,part,role,plain,-1);}
     }
     private static final Map<String,List<Cell>> DEFINITIONS=new LinkedHashMap<>(create());
     /** Names present before any addon layout is added. Those layouts are not replaceable. */

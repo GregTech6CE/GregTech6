@@ -80,6 +80,7 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
                 pos -> ((com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity) level.getBlockEntity(pos)).canBind(worldPosition),
                 (pos, role) -> ((com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
                 this::release);
+        if (formed) com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front, layout);
         return formed;
     }
 
