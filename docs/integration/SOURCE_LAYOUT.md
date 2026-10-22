@@ -1,5 +1,7 @@
 # 当前源码导航与命名约定
 
+铸币：core `CoinStampPattern`保存两面16行及unique，原生`CoinMoldBlockEntity`接单格库存／配置与输出，`CoinMoldBlock`接手动点击；`CoinMoldRenderer`用`CoinMoldGeometry.CONTENT`。世界币／物品币分别走`CoinPileRenderer`与`CoinItemBakedModel`／`CoinItemRenderer`，`CoinGeometry`处理默认及实际tag位图。自动锤另走`PoweredToolTarget`，模具手动strike存在不代表自动接通，见[铸币核查](COIN_MINTING_AUDIT.md)。
+
 可放置材料堆：core `MaterialPileRules`给64上限、层高和27消失偏移，`CoinPileRules`给4×4币格／重排数学；共享`GTMaterialPiles`／`GTCoinPiles`实际登记，两版调用同一注册。普通`PileBlockEntity`存单物品，硬币实体存16格与实际币型；两个ExpireHandler共用`PilePlacementChecks`的当前原生谓词。手动放置、材料合并、掉落查询和渲染模型是不同入口，见[材料堆](MATERIAL_PILES_AUDIT.md)。
 
 微型门：core `MiniPortalSignals`管理六面待收信号与超时，共享`DungeonPortalBlockEntity`做最近跨维度目标／相对邻居和保存，继承`CapabilityRelayBlockEntity`／`EnergyRelayBlockEntity`接物品、流体与能源。实际两种方块在`GTDungeonBlocks`，Neo能力在`StorageContainerCapabilities`；类名中的Dungeon是历史名称，地牢原版传送门房间另走`worldgen/dungeon`。模型、碰撞、按面比较器和工具入口须分别核对，见[微型门](MINI_PORTAL_AUDIT.md)。

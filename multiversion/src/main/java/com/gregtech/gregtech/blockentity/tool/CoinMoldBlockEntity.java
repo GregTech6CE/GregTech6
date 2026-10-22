@@ -26,14 +26,28 @@ import org.jetbrains.annotations.Nullable;
 
 /** One-plate inventory and GT6 coin-pattern NBT for {@code MultiTileEntityMoldCoinage}. */
 public final class CoinMoldBlockEntity extends BlockEntity {
-    private final com.gregtech.gregtech.content.tool.CoinStampPattern pattern=new com.gregtech.gregtech.content.tool.CoinStampPattern();
+    private final com.gregtech.gregtech.content.tool.CoinStampPattern pattern = new com.gregtech.gregtech.content.tool.CoinStampPattern();
     private final ItemStackHandler inventory = new ItemStackHandler(1) {
-        @Override public int getSlotLimit(int slot) { return 1; }
-        @Override public boolean isItemValid(int slot, ItemStack stack) { return acceptsPlate(stack); }
-        @Override public ItemStack extractItem(int slot, int amount, boolean simulate) {
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return 1;
+        }
+
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            return acceptsPlate(stack);
+        }
+
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
             return acceptsPlate(getStackInSlot(slot)) ? ItemStack.EMPTY : super.extractItem(slot, amount, simulate);
         }
-        @Override protected void onContentsChanged(int slot) { sync(); }
+
+        @Override
+        protected void onContentsChanged(int slot) {
+            sync();
+        }
     };
 
 //? if >=1.21.1 {
@@ -49,10 +63,12 @@ public final class CoinMoldBlockEntity extends BlockEntity {
         if (stack.isEmpty()) return false;
         MaterialEquivalence.Form form = MaterialEquivalence.form(stack);
         return form != null && form.prefix() == MaterialPrefix.plateTiny
-                && !GTItems.getStack(MaterialPrefix.coin, form.material(), 1).isEmpty();
+        && !GTItems.getStack(MaterialPrefix.coin, form.material(), 1).isEmpty();
     }
 
-    public ItemStack contents() { return inventory.getStackInSlot(0).copy(); }
+    public ItemStack contents() {
+        return inventory.getStackInSlot(0).copy();
+    }
 
     public boolean insertPlate(ItemStack stack, boolean creative) {
         if (!contents().isEmpty() || !acceptsPlate(stack)) return false;
@@ -65,14 +81,14 @@ public final class CoinMoldBlockEntity extends BlockEntity {
 
     /** Manual retrieval also accepts the unstruck plate; automation still cannot extract plates. */
     public ItemStack takeContents() {
-        ItemStack current=inventory.getStackInSlot(0).copy();
-        inventory.setStackInSlot(0,ItemStack.EMPTY);
+        ItemStack current = inventory.getStackInSlot(0).copy();
+        inventory.setStackInSlot(0, ItemStack.EMPTY);
         return current;
     }
 
     @Nullable public com.gregtech.gregtech.api.material.GTMaterial displayedMaterial() {
-        var form=MaterialEquivalence.form(inventory.getStackInSlot(0));
-        return form==null ? null : form.material();
+        var form = MaterialEquivalence.form(inventory.getStackInSlot(0));
+        return form == null ? null : form.material();
     }
 
     public ItemStack takeCoin() {
@@ -97,14 +113,15 @@ public final class CoinMoldBlockEntity extends BlockEntity {
         // GT6 writes every row, including zero rows. Otherwise a blank custom die is
         // indistinguishable from an untagged registered coin using the default relief.
 //? if >=1.21.1 {
-        /*CompoundTag coinTag=coin.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
-        if(pattern.unique())coinTag.putBoolean(com.gregtech.gregtech.content.tool.CoinStampPattern.UNIQUE,true);
+        /*CompoundTag coinTag = coin.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
+                net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
+        if (pattern.unique()) coinTag.putBoolean(com.gregtech.gregtech.content.tool.CoinStampPattern.UNIQUE, true);
 *///?} else {
         CompoundTag coinTag = coin.getOrCreateTag();
 //?}
         pattern.write(coinTag::putShort);
 //? if >=1.21.1 {
-        /*coin.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA,net.minecraft.world.item.component.CustomData.of(coinTag));
+        /*coin.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(coinTag));
 *///?} else {
 //?}
         inventory.setStackInSlot(0, coin);
@@ -138,13 +155,13 @@ public final class CoinMoldBlockEntity extends BlockEntity {
     private void sync() {
         setChanged();
         if (level != null && !level.isClientSide)
-            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
+        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
     }
 
     @Override
 //? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
+    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.saveAdditional(tag, lookup);
 *///?} else {
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
@@ -159,40 +176,55 @@ public final class CoinMoldBlockEntity extends BlockEntity {
 
     @Override
 //? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
+    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.loadAdditional(tag, lookup);
 *///?} else {
     public void load(CompoundTag tag) {
         super.load(tag);
 //?}
         if (tag.contains("Pattern")) loadItemConfig(tag.getCompound("Pattern"));
 //? if >=1.21.1 {
-        /*if (tag.contains("Inventory")) inventory.deserializeNBT(lookup,tag.getCompound("Inventory"));
+        /*if (tag.contains("Inventory")) inventory.deserializeNBT(lookup, tag.getCompound("Inventory"));
 *///?} else {
         if (tag.contains("Inventory")) inventory.deserializeNBT(tag.getCompound("Inventory"));
 //?}
     }
 
 //? if >=1.21.1 {
-    /*@Override public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) { return saveWithoutMetadata(lookup); }
-    @Override public void handleUpdateTag(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup){loadAdditional(tag,lookup);}
+    /*@Override
+    public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
+        return saveWithoutMetadata(lookup);
+    }
+
+    @Override
+    public void handleUpdateTag(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        loadAdditional(tag, lookup);
+    }
 *///?} else {
-    @Override public CompoundTag getUpdateTag() { return saveWithoutMetadata(); }
+    @Override
+    public CompoundTag getUpdateTag() {
+        return saveWithoutMetadata();
+    }
 //?}
-    @Override public @Nullable ClientboundBlockEntityDataPacket getUpdatePacket() {
+    @Override
+    public @Nullable ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }
 //? if >=1.21.1 {
-    /*@Override public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet,net.minecraft.core.HolderLookup.Provider lookup) {
-        if (packet.getTag() != null) loadAdditional(packet.getTag(),lookup);
+    /*@Override
+    public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet, net.minecraft.core.HolderLookup.Provider lookup) {
+        if (packet.getTag() != null) loadAdditional(packet.getTag(), lookup);
 *///?} else {
-    @Override public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet) {
+    @Override
+    public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet) {
         if (packet.getTag() != null) load(packet.getTag());
 //?}
     }
 
 //? if >=1.21.1 {
-    /*public net.neoforged.neoforge.items.IItemHandler itemHandler(){return inventory;}
+    /*public net.neoforged.neoforge.items.IItemHandler itemHandler() {
+        return inventory;
+    }
 *///?} else {
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction side) {
