@@ -5,7 +5,13 @@ import java.util.Objects;
 
 /** SPDX-License-Identifier: LGPL-3.0-or-later */
 
-/** One addon multiblock structure. The controller occupies the origin and is not a cell. */
+/**
+ * One addon multiblock structure. The controller occupies the origin and is not a cell.
+ *
+ * @deprecated Use {@link StructureLayout}. Removal is 0.2.
+ */
+@Deprecated(since = "0.0", forRemoval = true)
+@AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.MachineLayout", removeAt = "0.2")
 public record MachineLayout(String machineName, List<Cell> cells) {
     public MachineLayout {
         if (machineName == null || !machineName.matches("[a-z0-9_]+"))
@@ -18,7 +24,11 @@ public record MachineLayout(String machineName, List<Cell> cells) {
      * {@code part} is a GregTech structure part name, {@code air}, a structure casing, an addon part name,
      * a block id such as {@code minecraft:glass}, or a block tag such as {@code #c:glass_blocks}.
      * A block id or tag has to use {@link StructureRole#CASING}.
+     *
+     * @deprecated Use {@link LayoutCell}. Removal is 0.2.
      */
+    @Deprecated(since = "0.0", forRemoval = true)
+    @AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.MachineLayout.Cell", removeAt = "0.2")
     public record Cell(int right, int up, int back, String part, StructureRole role) {
         public Cell {
             if (part == null || part.isBlank()) throw new IllegalArgumentException("Missing structure part");
