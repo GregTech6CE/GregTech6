@@ -1,0 +1,719 @@
+{
+  "date": "2026-10-22",
+  "batch": 123,
+  "baseline": "268b8c10c83caf590322135cb945e8013ca9f52e",
+  "previous_goal_turn": {
+    "classification": "progress",
+    "commit": "268b8c10c",
+    "evidence": "Energy node creation shared and 39 explicit stack-limit identities recorded."
+  },
+  "provenance": {
+    "authors": "GregTech-6 Team / Gregorius Techneticies",
+    "license": "Original LGPL notices retained; current property extraction imports no additional original implementation.",
+    "original_tree_read_only": true
+  },
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityClassContainer.java",
+      "raw_sha256": "ea006ef8b03ffd30044da0bb044dfcc8227f37712becd555f7bc5a9747f3af8a",
+      "lines": 55,
+      "notice_sha256": "c635bd8e84f1d5b02a1299180479660a636e876419d763c9cd0714b9487e28b7"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityItemInternal.java",
+      "raw_sha256": "7e103a13f02097dcfd1c91334cb3da238b9f509ee4cbb584dfd7267bf26f8bb1",
+      "lines": 659,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityRegistry.java",
+      "raw_sha256": "70fb3ce00e7036e343e253e0f9fd8401b05c3f4f4e16b88f1b3fb94c3b111e83",
+      "lines": 271,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java",
+      "raw_sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+      "lines": 1011,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase02AdjacentTEBuffer.java",
+      "raw_sha256": "428885bd6d436be6fefaef3bcd70fdd883a29ae329bb4d0826ddaf152eaef00f",
+      "lines": 173,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "raw_sha256": "f3d52213bf41c3132a37e6f838719db85c85ac94e48b9f24b932a1996688489d",
+      "lines": 166,
+      "notice_sha256": "accc18a4bf87847b3134c2814611b821dcb8c3083277f78c0f8f2cf8e6f05caf"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "raw_sha256": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9",
+      "lines": 256,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "raw_sha256": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+      "lines": 189,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "raw_sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+      "lines": 496,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "raw_sha256": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+      "lines": 117,
+      "notice_sha256": "c635bd8e84f1d5b02a1299180479660a636e876419d763c9cd0714b9487e28b7"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "raw_sha256": "4470fc88dede52de55ba387e963d95243ec33ef287ae4f917ce73d874bcede2b",
+      "lines": 62,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "raw_sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+      "lines": 98,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/energy/TileEntityBase10EnergyBatBox.java",
+      "raw_sha256": "21ee1d11820ce91c0f693d4bf7684503ed29d8b8fa2cf7b434ebbd2143338fd7",
+      "lines": 236,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "raw_sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "lines": 2243,
+      "notice_sha256": "6855675ee4a01a21169dd2a3ed5df729ac3198a4b2e3b869f91e1a45c79e6aca"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/storage/MultiTileEntityBatteryBox.java",
+      "raw_sha256": "950a267dbb2f35248a064e5797e3658e6396c4f5a2f06cefcec7cd2e04f4b5fe",
+      "lines": 54,
+      "notice_sha256": "63c517dd35b913cfc46d1f7881d524c83334db090a72278eefbb881a3ef42a1b"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/storage/MultiTileEntityBatteryBoxLarge.java",
+      "raw_sha256": "0df829051bc1a876cd3ef0410fc4c484d1f8851034aade2b55c88a4dfdc46834",
+      "lines": 52,
+      "notice_sha256": "63c517dd35b913cfc46d1f7881d524c83334db090a72278eefbb881a3ef42a1b"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTGearboxes.java",
+      "raw_sha256": "b33e2b987f54d8d5cbf13b205c40f06c626a12568f2860459549f098db83fdb3",
+      "lines": 146
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/BatteryBoxDefinitions.java",
+      "raw_sha256": "44c139356fd95274244243af5402cd81dfbe13f3b47b8f3fe303e89cc014dd00",
+      "lines": 48
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/energy/BatteryBoxBlock.java",
+      "raw_sha256": "4ec931b763d90690a88ff3da2c6926ba17cf0c563626d06b2d1d4e483652a135",
+      "lines": 40
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/GearboxCatalog.java",
+      "raw_sha256": "09b67200766f8b554d69be27502bad91628637816f4401d3e8a06ba75c3c3fd1",
+      "lines": 47
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java",
+      "raw_sha256": "afe136cb11358ebcd7210e990b2815bbf9c83bd34c91f3e0515fe21815463286",
+      "lines": 179
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/energy/EnergyNodeBlock.java",
+      "raw_sha256": "a2beda8d582254a0eb37f6e6c664f2ff9040127bd1e60cd7b4a9cbf640acfb5a",
+      "lines": 367
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/EnergyNodeBlockEntity.java",
+      "raw_sha256": "c85914e0ae9b509383c9323d85dba161baf4dbb53875f3581a63fca8c8a426c8",
+      "lines": 1242
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/energy/BatteryBoxEnergy.java",
+      "raw_sha256": "f5599f66927860e9733ec557703b35647a95061583333af81e502f58f9a84296",
+      "lines": 154
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/EnergyNodeDefinitions.java",
+      "raw_sha256": "ed146e888149edb8c2fffaa4b9dd0a9b8b90fe07e8a37958ebe37185cbf0a537",
+      "lines": 90
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/BatteryBoxState.java",
+      "raw_sha256": "95e57072502f19fe6df500cb5f56fa121b156e5e16505d2871b9010f8a5315a7",
+      "lines": 163
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/energy/GearboxSpec.java",
+      "raw_sha256": "dfac20b712e132643d866ca08232eb4ac288b597b7dbe1ca6cfe01603f8038a5",
+      "lines": 6
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/energy/EnergyNodeSpec.java",
+      "raw_sha256": "f1c241bbe59ee6e6c5b7565472d72ca140a55f672d7d82fe1ff97da918ae65e0",
+      "lines": 129
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/MachineBlockBootstrap.java",
+      "raw_sha256": "b421bde641834b50ad763f586dbcf5f484bdb30b0131d2735d4efbb0f20bd477",
+      "lines": 53
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "raw_sha256": "a83787a7e2ca56b3b695b41f221cff2ee046880b09354fdf78b35bd2cc070a02",
+      "lines": 191
+    }
+  ],
+  "source_scope": "Named constructor/registration contracts only; twelve original hierarchy files checked for stack-limit override inheritance, not declared completely audited.",
+  "excerpts": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 892,
+      "end_line": 896,
+      "excerpt_sha256": "2ad6f6b850300610b3d18b5c408e89c6cead2efd6323261847d4f882d3922848",
+      "text": "\t\t// Battery Boxes\n\t\tfor (int i = 0; i < 10; i++) {\n\t\t\taRegistry.add(\"Battery Box (\"       +VN[i]+\")\", \"Battery Boxes\", 10080+i, 10081, MultiTileEntityBatteryBox      .class, MT.DATA.Electric_T[i].mToolQuality, 16, aMachine, UT.NBT.make(NBT_MATERIAL, MT.DATA.Electric_T[i], NBT_HARDNESS, 4.0F, NBT_RESISTANCE, 4.0F, NBT_INPUT, V[i], NBT_OUTPUT, V[i], NBT_ENERGY_EMITTED, TD.Energy.EU, NBT_INV_SIZE,  4), \"WCW\", \"WCW\", \"XMX\", 'C', MT.DATA.CABLES_01[i], 'X', OD_CIRCUITS[i], 'W', MT.DATA.WIRES_01[i], 'M', OP.casingMachine.dat(MT.DATA.Electric_T[i]));\n\t\t\taRegistry.add(\"Large Battery Box (\" +VN[i]+\")\", \"Battery Boxes\", 10090+i, 10081, MultiTileEntityBatteryBoxLarge .class, MT.DATA.Electric_T[i].mToolQuality, 16, aMachine, UT.NBT.make(NBT_MATERIAL, MT.DATA.Electric_T[i], NBT_HARDNESS, 4.0F, NBT_RESISTANCE, 4.0F, NBT_INPUT, V[i], NBT_OUTPUT, V[i], NBT_ENERGY_EMITTED, TD.Energy.EU, NBT_INV_SIZE, 16), \"WCW\", \"WCW\", \"XMX\", 'C', MT.DATA.CABLES_04[i], 'X', OD_CIRCUITS[i], 'W', MT.DATA.WIRES_04[i], 'M', aRegistry.getItem(10040+i));\n\t\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityClassContainer.java",
+      "start_line": 41,
+      "end_line": 46,
+      "excerpt_sha256": "7e213bcdda06282e374821d1a3fc359c9b61e257ffa1de650295c31a34866e08",
+      "text": "\tpublic MultiTileEntityClassContainer(int aID, int aCreativeTabID, Class<? extends TileEntity> aClass, int aBlockMetaData, int aStackSize, MultiTileEntityBlock aBlock, NBTTagCompound aParameters) {\n\t\tif (!IMultiTileEntity.class.isAssignableFrom(aClass)) throw new IllegalArgumentException(\"MultiTileEntities must implement the Interface IMultiTileEntity!\");\n\t\tmBlockMetaData = (byte)aBlockMetaData;\n\t\tmStackSize = (byte)aStackSize;\n\t\tmParameters = aParameters==null?UT.NBT.make():aParameters;\n\t\tmHidden = mParameters.getBoolean(NBT_HIDDEN);"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityRegistry.java",
+      "start_line": 148,
+      "end_line": 150,
+      "excerpt_sha256": "9adf193244c83831b199fc40c67707dec96551f9407edb1f6227e89ccace591a",
+      "text": "\tpublic ItemStack add(String aLocalised, String aCategoricalName, int aID, int aCreativeTabID, Class<? extends TileEntity> aClass, int aBlockMetaData, int aStackSize, MultiTileEntityBlock aBlock, NBTTagCompound aParameters, Object... aRecipe) {\n\t\treturn add(aLocalised, aCategoricalName, new MultiTileEntityClassContainer(aID, aCreativeTabID, aClass, aBlockMetaData, aStackSize, aBlock, aParameters), aRecipe);\n\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityItemInternal.java",
+      "start_line": 241,
+      "end_line": 250,
+      "excerpt_sha256": "520de3a8b3ecf24dc2771579b9193aacd888fa26549309496e286c7a3f6216a5",
+      "text": "\tpublic int getItemStackLimit(ItemStack aStack) {\n\t\tMultiTileEntityClassContainer tContainer = mBlock.mMultiTileEntityRegistry.getClassContainer(aStack);\n\t\tif (tContainer == null) return 1;\n\t\tMultiTileEntityContainer tTileEntityContainer = mBlock.mMultiTileEntityRegistry.getNewTileEntityContainer(aStack);\n\t\tif (tTileEntityContainer != null && tTileEntityContainer.mTileEntity instanceof IMTE_GetMaxStackSize) {\n\t\t\treturn UT.Code.bindStack(((IMTE_GetMaxStackSize)tTileEntityContainer.mTileEntity).getMaxStackSize(aStack, tContainer.mStackSize));\n\t\t}\n\t\treturn tContainer.mStackSize;\n\t}\n\t"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/storage/MultiTileEntityBatteryBox.java",
+      "start_line": 31,
+      "end_line": 32,
+      "excerpt_sha256": "b837b8b905c88a817cdb2d6e6ceb703dc7896d2e130bee33ebcdd467cbe999fe",
+      "text": "public class MultiTileEntityBatteryBox extends TileEntityBase10EnergyBatBox implements ITileEntityEnergyElectricityAcceptor {\n\t@Override"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/storage/MultiTileEntityBatteryBoxLarge.java",
+      "start_line": 29,
+      "end_line": 30,
+      "excerpt_sha256": "8132ecdbda981e20b0c196abd1ee95b746c6105850a76cebeba33e503e88815f",
+      "text": "public class MultiTileEntityBatteryBoxLarge extends MultiTileEntityBatteryBox {\n\t@Override"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/energy/TileEntityBase10EnergyBatBox.java",
+      "start_line": 50,
+      "end_line": 51,
+      "excerpt_sha256": "ec6ec09fd3f43b5dba88d10645fcc91f53400459ec985c39f7d54f6dd9b094bc",
+      "text": "public abstract class TileEntityBase10EnergyBatBox extends TileEntityBase09FacingSingle implements ITileEntityEnergy, ITileEntityEnergyDataCapacitor, ITileEntityRunningActively, ITileEntitySwitchableOnOff, ITileEntitySwitchableMode, ITileEntityProgress {\n\tpublic boolean mEmitsEnergy = F, mStopped = F, mActive = F;"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTGearboxes.java",
+      "start_line": 139,
+      "end_line": 145,
+      "excerpt_sha256": "6b3ecf9f5040b51082a71974a059984c8543d6082e7062860d2775bd717e12c7",
+      "text": "    private static BlockBehaviour.Properties machineProperties(boolean wooden) {\n        return BlockBehaviour.Properties.of()\n                .mapColor(wooden ? MapColor.WOOD : MapColor.METAL)\n                .strength(6.0f, 6.0f)\n                .sound(wooden ? SoundType.WOOD : SoundType.METAL)\n                .requiresCorrectToolForDrops();\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTGearboxes.java",
+      "start_line": 92,
+      "end_line": 119,
+      "excerpt_sha256": "a80f3ede8111398c0afe0a4aa34d26bfc1a32bd0e476e5fbfec4779d1639d3d4",
+      "text": "    private static void registerGearbox(Tier tier) {\n        String id = \"gearbox_\" + tier.suffix();\n        // The original custom gearbox only has NBT_INPUT = VMAX[t]. maxPower\n        // is a legacy display field in this port and must not limit transfers.\n        GearboxSpec spec = com.gregtech.gregtech.content.energy.GearboxCatalog.gearbox(tier);\n        boolean wooden = tier.voltageTier() == 0;\n//? if >=1.21.1 {\n        /*DeferredHolder<Block, GearboxBlock> block = BLOCKS.register(id,\n*///?} else {\n        RegistryObject<GearboxBlock> block = GTBlocks.BLOCKS.register(id,\n//?}\n                () -> new GearboxBlock(spec, machineProperties(wooden).noOcclusion()));\n        ALL_GEARBOXES.add(block);\n//? if >=1.21.1 {\n        /*ITEMS.register(id,\n*///?} else {\n        GTBlocks.BLOCK_ITEMS.register(id,\n//?}\n                () -> new BlockItem(block.get(), new Item.Properties().stacksTo(16)));\n    }\n\n    private static void registerTransformer(Tier tier) {\n        // NBT_INPUT = V[t], NBT_OUTPUT = V[t-1] (wood: 2); multiplier 4.\n        int voltageTierIndex = tier.voltageTier();\n        String id = \"rotation_transformer_\" + tier.suffix();\n        EnergyNodeSpec spec = com.gregtech.gregtech.content.energy.GearboxCatalog.transformer(tier);\n        boolean wooden = voltageTierIndex == 0;\n//? if >=1.21.1 {"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTGearboxes.java",
+      "start_line": 113,
+      "end_line": 140,
+      "excerpt_sha256": "3de2747e7d4b10e672b1f3968ea014ef4108e0fcc52797e775fc49ef0b6972d7",
+      "text": "    private static void registerTransformer(Tier tier) {\n        // NBT_INPUT = V[t], NBT_OUTPUT = V[t-1] (wood: 2); multiplier 4.\n        int voltageTierIndex = tier.voltageTier();\n        String id = \"rotation_transformer_\" + tier.suffix();\n        EnergyNodeSpec spec = com.gregtech.gregtech.content.energy.GearboxCatalog.transformer(tier);\n        boolean wooden = voltageTierIndex == 0;\n//? if >=1.21.1 {\n        /*DeferredHolder<Block, EnergyNodeBlock> block = BLOCKS.register(id,\n*///?} else {\n        RegistryObject<EnergyNodeBlock> block = GTBlocks.BLOCKS.register(id,\n//?}\n                () -> new EnergyNodeBlock(spec, machineProperties(wooden)));\n        ALL_TRANSFORMERS.add(block);\n//? if >=1.21.1 {\n        /*ITEMS.register(id,\n*///?} else {\n        GTBlocks.BLOCK_ITEMS.register(id,\n//?}\n                () -> new BlockItem(block.get(), new Item.Properties().stacksTo(16)));\n    }\n\n    public static void bootstrap() {\n        if (ALL_GEARBOXES.size() != 13 || ALL_TRANSFORMERS.size() != 13)\n            throw new IllegalStateException(\"GTGearboxes must register the original 13+13 variants\");\n    }\n\n    private static BlockBehaviour.Properties machineProperties(boolean wooden) {\n        return BlockBehaviour.Properties.of()"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/BatteryBoxDefinitions.java",
+      "start_line": 36,
+      "end_line": 46,
+      "excerpt_sha256": "26607aae796b6f2b556a9e934675573d476c6c5f56ad78a2b8d52d5543bd50cf",
+      "text": "    public static List<EnergyNodeSpec> specifications() {\n        var result = new ArrayList<EnergyNodeSpec>();\n        for (int tier = 0; tier < 10; tier++)\n            for (boolean large : new boolean[]{false, true}) {\n                String name = (large ? \"Large Battery Box (\" : \"Battery Box (\") + label(tier) + \")\";\n                result.add(EnergyNodeSpec.builder((large ? \"energy_storage_\" : \"battery_box_\") + TIERS.get(tier), material(tier))\n                        .kind(EnergyNodeSpec.Kind.STORAGE).texture(\"energystorages/battery_electric\" + (large ? \"_large\" : \"\"))\n                        .input(GregTechTags.Energy.EU, 8L << (2 * tier)).output(GregTechTags.Energy.EU, 8L << (2 * tier))\n                        .batterySlots(large ? 16 : 4).capacity(0).name(name).build());\n            }\n        return List.copyOf(result);"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/energy/BatteryBoxBlock.java",
+      "start_line": 13,
+      "end_line": 13,
+      "excerpt_sha256": "b3ef26cd3c46f9544cfedf7708da16c8b220e5a8438db03bfe8f99baa986b072",
+      "text": "    public static final IntegerProperty CHARGE_STATE = IntegerProperty.create(\"charge_state\", 0, 2);"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/GearboxCatalog.java",
+      "start_line": 39,
+      "end_line": 46,
+      "excerpt_sha256": "8ba9572cf09f16995a2a5250ce45d8b6e5a8499cb734d5b71773071192aa9d2d",
+      "text": "    public static EnergyNodeSpec transformer(Tier tier) {\n        int voltageTierIndex = tier.voltageTier();\n        long inputVoltage = V[voltageTierIndex], outputVoltage = voltageTierIndex == 0 ? 2 : V[voltageTierIndex - 1];\n        return new EnergyNodeSpec(\"rotation_transformer_\" + tier.suffix(), tier.material(),\n                EnergyNodeSpec.Kind.CONVERTER, \"transformers/rotation_transformer\",\n                GregTechTags.Energy.RU, GregTechTags.Energy.RU,\n                inputVoltage, outputVoltage, inputVoltage * 2, tier.material().getLocalName() + \" Transformer Gearbox\", 0);\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java",
+      "start_line": 170,
+      "end_line": 173,
+      "excerpt_sha256": "48f98c5414aafdadd7801e35bf8aa9f594a8d721e3d03fb2c3e4eaa6959bc7b4",
+      "text": "    private static Item.Properties itemProperties(EnergyNodeSpec spec) {\n        return com.gregtech.gregtech.content.energy.OriginalSteamTurbines.handles(spec)\n                ? new Item.Properties().stacksTo(16) : new Item.Properties();\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/EnergyNodeDefinitions.java",
+      "start_line": 85,
+      "end_line": 85,
+      "excerpt_sha256": "58e2584dad1bc605a318fe17bffb4f1ee7db2c2c7a25163eabb65d15eccd556f",
+      "text": "        result.addAll(BatteryBoxDefinitions.specifications());"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/EnergyNodeBlockEntity.java",
+      "start_line": 136,
+      "end_line": 138,
+      "excerpt_sha256": "6e0a31dcbcd241cf806e07297b5fc62a8303b1b0d5a04b1e3893b425b7813d92",
+      "text": "            batteries=net.minecraft.core.NonNullList.withSize(spec.batterySlots(),net.minecraft.world.item.ItemStack.EMPTY);\n            batteryEnergy = new com.gregtech.gregtech.content.energy.BatteryBoxEnergy(batteries, spec.inputRate());\n            if(!(batteryCovers instanceof java.util.EnumMap))batteryCovers=new java.util.EnumMap<>(Direction.class);"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/MachineBlockBootstrap.java",
+      "start_line": 25,
+      "end_line": 25,
+      "excerpt_sha256": "7f054df4e758d66f966ae39c6b8ba1087833ff3fbe074b082401d1fd8604ddf9",
+      "text": "        GTEnergyNodes.registerAll();"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "start_line": 106,
+      "end_line": 106,
+      "excerpt_sha256": "7ee9d065af06b79a2d2b23a6ba4f56086ec112056a5c42ab14524a20cf7e1ec8",
+      "text": "        com.gregtech.gregtech.registry.GTEnergyNodes.register(modEventBus);"
+    }
+  ],
+  "native_evidence": [
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/item/Item$Properties.class",
+      "entry_sha256": "ef82809daf76d1556fc756f8071d069e31e0886f432b254af745804f0cef4036",
+      "javap_output": "work/garbage-physical-audit-20261022/forge-Item$Properties.javap.txt",
+      "javap_sha256": "3913faab1d497a343cf15c26692ba50ab1b95bbc9010404d8fd8d99b0e695989"
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/item/Item.java",
+      "entry_sha256": "d176c58aee3e1698000514bf00f01ddf495f7dcd8c89fb2acd832391aae1be48",
+      "extracted_path": "work/garbage-physical-audit-20261022/neo-Item.java"
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/core/component/DataComponents.java",
+      "entry_sha256": "933a4881379b8bf9a86e42bceda93d846a58d8ce9939e46dc95a70f91cab1998",
+      "extracted_path": "work/garbage-physical-audit-20261022/neo-DataComponents.java"
+    }
+  ],
+  "reused_native_excerpts": [
+    {
+      "path": "C:/Dev/GregTech6/work/garbage-physical-audit-20261022/forge-Item$Properties.javap.txt",
+      "start_line": 19,
+      "end_line": 42,
+      "excerpt_sha256": "a6a7cdbdc172fbe059ec40e9797c743aedd060e3b381733424667645261d392f",
+      "text": "  public net.minecraft.world.item.Item$Properties();\n    Code:\n       0: aload_0\n       1: invokespecial #27                 // Method java/lang/Object.\"<init>\":()V\n       4: aload_0\n       5: bipush        64\n       7: putfield      #29                 // Field maxStackSize:I\n      10: aload_0\n      11: getstatic     #34                 // Field net/minecraft/world/item/Rarity.COMMON:Lnet/minecraft/world/item/Rarity;\n      14: putfield      #36                 // Field rarity:Lnet/minecraft/world/item/Rarity;\n      17: aload_0\n      18: getstatic     #41                 // Field net/minecraft/world/flag/FeatureFlags.VANILLA_SET:Lnet/minecraft/world/flag/FeatureFlagSet;\n      21: putfield      #43                 // Field requiredFeatures:Lnet/minecraft/world/flag/FeatureFlagSet;\n      24: aload_0\n      25: iconst_1\n      26: putfield      #45                 // Field canRepair:Z\n      29: return\n\n  public net.minecraft.world.item.Item$Properties food(net.minecraft.world.food.FoodProperties);\n    Code:\n       0: aload_0\n       1: aload_1\n       2: putfield      #51                 // Field foodProperties:Lnet/minecraft/world/food/FoodProperties;\n       5: aload_0"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/garbage-physical-audit-20261022/neo-DataComponents.java",
+      "start_line": 233,
+      "end_line": 240,
+      "excerpt_sha256": "9726d283717cce7f255a572a3f73113e5bc0919af382950239d7a8f99f8b93c4",
+      "text": "    public static final DataComponentMap COMMON_ITEM_COMPONENTS = DataComponentMap.builder()\n        .set(MAX_STACK_SIZE, 64)\n        .set(LORE, ItemLore.EMPTY)\n        .set(ENCHANTMENTS, ItemEnchantments.EMPTY)\n        .set(REPAIR_COST, 0)\n        .set(ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.EMPTY)\n        .set(RARITY, Rarity.COMMON)\n        .build();"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/garbage-physical-audit-20261022/neo-Item.java",
+      "start_line": 464,
+      "end_line": 464,
+      "excerpt_sha256": "b9900b266f60766ef2741914192950e68c13ce8673e5dc8a279cc02cf0a827b1",
+      "text": "            return this.components == null ? DataComponents.COMMON_ITEM_COMPONENTS : COMPONENT_INTERNER.intern(this.components.build());"
+    }
+  ],
+  "original_inheritance": {
+    "gregtech/tileentity/energy/storage/MultiTileEntityBatteryBox.java": [
+      "gregtech/tileentity/energy/storage/MultiTileEntityBatteryBox.java",
+      "gregapi/tileentity/energy/TileEntityBase10EnergyBatBox.java",
+      "gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "gregapi/tileentity/base/TileEntityBase02AdjacentTEBuffer.java",
+      "gregapi/tileentity/base/TileEntityBase01Root.java"
+    ],
+    "gregtech/tileentity/energy/storage/MultiTileEntityBatteryBoxLarge.java": [
+      "gregtech/tileentity/energy/storage/MultiTileEntityBatteryBoxLarge.java",
+      "gregtech/tileentity/energy/storage/MultiTileEntityBatteryBox.java",
+      "gregapi/tileentity/energy/TileEntityBase10EnergyBatBox.java",
+      "gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "gregapi/tileentity/base/TileEntityBase02AdjacentTEBuffer.java",
+      "gregapi/tileentity/base/TileEntityBase01Root.java"
+    ]
+  },
+  "battery_box_identity_matrix": [
+    {
+      "original_id": 10080,
+      "current_id": "gt6ce:battery_box_ulv",
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64,
+      "battery_slots": 4
+    },
+    {
+      "original_id": 10081,
+      "current_id": "gt6ce:battery_box_lv",
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64,
+      "battery_slots": 4
+    },
+    {
+      "original_id": 10082,
+      "current_id": "gt6ce:battery_box_mv",
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64,
+      "battery_slots": 4
+    },
+    {
+      "original_id": 10083,
+      "current_id": "gt6ce:battery_box_hv",
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64,
+      "battery_slots": 4
+    },
+    {
+      "original_id": 10084,
+      "current_id": "gt6ce:battery_box_ev",
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64,
+      "battery_slots": 4
+    },
+    {
+      "original_id": 10085,
+      "current_id": "gt6ce:battery_box_iv",
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64,
+      "battery_slots": 4
+    },
+    {
+      "original_id": 10086,
+      "current_id": "gt6ce:battery_box_luv",
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64,
+      "battery_slots": 4
+    },
+    {
+      "original_id": 10087,
+      "current_id": "gt6ce:battery_box_zpm",
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64,
+      "battery_slots": 4
+    },
+    {
+      "original_id": 10088,
+      "current_id": "gt6ce:battery_box_uv",
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64,
+      "battery_slots": 4
+    },
+    {
+      "original_id": 10089,
+      "current_id": "gt6ce:battery_box_xv",
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64,
+      "battery_slots": 4
+    },
+    {
+      "original_id": 10090,
+      "current_id": "gt6ce:energy_storage_ulv",
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64,
+      "battery_slots": 16
+    },
+    {
+      "original_id": 10091,
+      "current_id": "gt6ce:energy_storage_lv",
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64,
+      "battery_slots": 16
+    },
+    {
+      "original_id": 10092,
+      "current_id": "gt6ce:energy_storage_mv",
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64,
+      "battery_slots": 16
+    },
+    {
+      "original_id": 10093,
+      "current_id": "gt6ce:energy_storage_hv",
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64,
+      "battery_slots": 16
+    },
+    {
+      "original_id": 10094,
+      "current_id": "gt6ce:energy_storage_ev",
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64,
+      "battery_slots": 16
+    },
+    {
+      "original_id": 10095,
+      "current_id": "gt6ce:energy_storage_iv",
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64,
+      "battery_slots": 16
+    },
+    {
+      "original_id": 10096,
+      "current_id": "gt6ce:energy_storage_luv",
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64,
+      "battery_slots": 16
+    },
+    {
+      "original_id": 10097,
+      "current_id": "gt6ce:energy_storage_zpm",
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64,
+      "battery_slots": 16
+    },
+    {
+      "original_id": 10098,
+      "current_id": "gt6ce:energy_storage_uv",
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64,
+      "battery_slots": 16
+    },
+    {
+      "original_id": 10099,
+      "current_id": "gt6ce:energy_storage_xv",
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64,
+      "battery_slots": 16
+    }
+  ],
+  "formal_findings_added": [],
+  "formal_findings_extended": [
+    218
+  ],
+  "stack_limit_scope": {
+    "new_devices": 20,
+    "previously_recorded": 62,
+    "cumulative_named_scope": 82,
+    "limits": "Default plain battery-box items; not charged chemical batteries, component overrides, complete storage behavior or inventory execution."
+  },
+  "retained_contracts": [
+    "Both gearbox and rotation-transformer item constructors still explicitly use stacksTo(16).",
+    "Only custom gearboxes use noOcclusion; rotation transformers retain their previous occlusion properties.",
+    "Battery slot counts remain 4/16; CHARGE_STATE remains 0..2; inventory/content energy and working buffer are not combined.",
+    "Tier/material/value tables and public APIs unchanged; current 20 and 13+13 identities are not a whole-system completion count."
+  ],
+  "refactoring": {
+    "baseline": "268b8c10c83caf590322135cb945e8013ca9f52e",
+    "files": {
+      "multiversion/src/main/java/com/gregtech/gregtech/registry/GTGearboxes.java": {
+        "before_raw_sha256": "411fda439f57a99884a233b56abb0c79686a2b0e090e620b87eb81aafbf596e1",
+        "after_raw_sha256": "b33e2b987f54d8d5cbf13b205c40f06c626a12568f2860459549f098db83fdb3",
+        "before_lines": 129,
+        "after_lines": 146,
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 608,
+            "sha256": "a3673920bcfa87ed12e7294fd91f981c3b292fba34e6d2efd37c62b18b965527"
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 875,
+            "sha256": "a8a8d32535ae8ce13fd3e04e0e8c68cd8f703e66020c5f85d51ab8f9355af517"
+          }
+        ],
+        "controlled_local_names": {
+          "t": 2
+        }
+      },
+      "core/src/main/java/com/gregtech/gregtech/content/energy/BatteryBoxDefinitions.java": {
+        "before_raw_sha256": "f53b97291a0767b2a7dccfcde89f7c95708a42556c0eee1160569721d3bc20b8",
+        "after_raw_sha256": "44c139356fd95274244243af5402cd81dfbe13f3b47b8f3fe303e89cc014dd00",
+        "before_lines": 28,
+        "after_lines": 48,
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 426,
+            "sha256": "2f4335eb3e0d75ba29b1678cbfbfdaa7d1f58232645768f6b2a911e7c1368314"
+          }
+        ],
+        "controlled_local_names": {}
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/energy/BatteryBoxBlock.java": {
+        "before_raw_sha256": "18b03fa0d2ef7811ebe18545c9c64754df53acbf39070693ffde43dc2bb8fd2b",
+        "after_raw_sha256": "4ec931b763d90690a88ff3da2c6926ba17cf0c563626d06b2d1d4e483652a135",
+        "before_lines": 25,
+        "after_lines": 40,
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 301,
+            "sha256": "aae92bcb1530ceae02eeb7486efd7117c32e9ba2d5122cb6fe179e94308affc5"
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 301,
+            "sha256": "aae92bcb1530ceae02eeb7486efd7117c32e9ba2d5122cb6fe179e94308affc5"
+          }
+        ],
+        "controlled_local_names": {}
+      },
+      "core/src/main/java/com/gregtech/gregtech/content/energy/GearboxCatalog.java": {
+        "before_raw_sha256": "9c290c674d071bae778965dae13db3cc1cc70bde334ea38ea00a8238a3c7b354",
+        "after_raw_sha256": "09b67200766f8b554d69be27502bad91628637816f4401d3e8a06ba75c3c3fd1",
+        "before_lines": 47,
+        "after_lines": 47,
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 492,
+            "sha256": "3e43044d68af4f0dc2edc8947dad7b3b2e5624ac6ce400ece2aab3f1e3452d8f"
+          }
+        ],
+        "controlled_local_names": {
+          "t": 4,
+          "input": 3,
+          "output": 2
+        }
+      }
+    },
+    "scope": "Full native/core views after exact property extraction, unused-import removal and local-only names.",
+    "property_factory": {
+      "removed_identical_expression_count": 2,
+      "new_helper_bodies_checked": 2,
+      "retained_difference": "Gearbox caller alone still applies noOcclusion; transformer caller does not.",
+      "evaluation": "wooden remains computed before supplier capture; fresh properties still allocated inside each supplier."
+    },
+    "unused_imports_removed": [
+      "import com.gregtech.gregtech.api.material.GTMaterial;",
+      "import com.gregtech.gregtech.content.material.Materials;",
+      "import com.gregtech.gregtech.content.material.generated.WoodMaterials;",
+      "import com.gregtech.gregtech.data.GregTechTags;"
+    ]
+  },
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "compile": {
+    "result": "core and both compileJava passed",
+    "duration_reported": "1m 16s",
+    "log": "work/battery-gear-registration-audit-20261022/compile.log",
+    "log_sha256": "ac38d98aaf6b545b9aab05e8ec223cfe82c5a6debc6629c952b5c7995582d47b",
+    "temporary_adapter_path": "work/storage-inserter-audit-20261022/cached-api-classpath.gradle",
+    "temporary_adapter_sha256": "51a1ed5becc4b14c87f6eeef31d2c8fc984e02735ee630b3c292496c2798cdbe",
+    "cached_forge_artifacts": [
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/mezz/jei/jei-1.20.1-common-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-common-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/mezz/jei/jei-1.20.1-common-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-common-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "sha256": "7786d88e4ffd38f62d057b86eb56aa6a116037f2a4dbccb0aa77877b7dc8f4fd",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/mezz/jei/jei-1.20.1-forge-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-forge-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/mezz/jei/jei-1.20.1-forge-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-forge-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "sha256": "b50a6a64c629e51346deec045495ba932be2bcab4ffb5a46fe483df1e06c832a",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1-api.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1-api.jar",
+        "sha256": "268f4572a6297bcd38c176e9361ee245364bb255e1a74e0fec96a973ef1379c0",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1.jar",
+        "sha256": "a2df46e253e208d39576808509eb384b42d992ba77d1c3aec31b97611be6e64b",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/maven/modrinth/jade/11.13.2+forge_mapped_official_1.20.1/jade-11.13.2+forge_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/maven/modrinth/jade/11.13.2+forge_mapped_official_1.20.1/jade-11.13.2+forge_mapped_official_1.20.1.jar",
+        "sha256": "15030cb00590540a5a37bd6bd509df4c01116406dd7c1a760b55e81f83f2bd62",
+        "action": "copied existing exact-coordinate jar"
+      }
+    ],
+    "cached_neo_emi_api": {
+      "path": "C:/Dev/GregTech6/work/emi-maven/dev/emi/emi-neoforge/1.1.24+1.21.1/emi-neoforge-1.1.24+1.21.1-api.jar",
+      "sha256": "b3a8e23c5e59813f184423b94e37bb635867ddc9be2b68b3502fad7b9134779b"
+    },
+    "limits": "Unchanged same-version local API adapter; production Gradle configuration unchanged, no default offline metadata/CI recovery claim."
+  },
+  "preparation_notes": [
+    "Initial guessed battery audit/core helper paths did not exist; actual file inventory supplied the correct storage report and shared native energy helper.",
+    "Preview fluent/loop indentation was manually clarified before production writes; all complete code streams then rechecked."
+  ],
+  "verification_limits": {
+    "mirror_tests_added": false,
+    "GameTest": false,
+    "game": false,
+    "original_game": false,
+    "world_restart": false,
+    "build": false,
+    "push": false,
+    "github_writes": false,
+    "whole_goal_complete": false
+  },
+  "root_revalidation": {
+    "sources_and_native_artifacts": "match current bytes",
+    "source_excerpts": "18 current exact spans plus three reused native spans match",
+    "refactoring": "six full native/core views and two exact expanded property-helper bodies match",
+    "stack_matrix": "20 unique old/new identities; default16->64, explicit cumulative82",
+    "historical_docs": "only ALIGN-218 intentionally rewritten; other old lines preserved",
+    "protected_materials": "unchanged",
+    "compile_log_and_exact_inputs": "match",
+    "formal_ids": {
+      "contiguous": true,
+      "count": 419,
+      "new_ids": []
+    },
+    "new_links": "resolve",
+    "production_build_configuration": "unchanged",
+    "whole_goal_complete": false
+  }
+}

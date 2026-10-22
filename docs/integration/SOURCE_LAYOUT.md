@@ -1,5 +1,7 @@
 # 当前源码导航与命名约定
 
+2026-10-22：GTGearboxes.machineProperties共用木／金属物性，仅gearbox调用者追加noOcclusion；两个物品入口仍明确stack16。core BatteryBoxDefinitions给20盒身份／四或十六槽，BatteryBoxBlock只给0..2指示状态和面板红石；运行仍由BatteryBoxEnergy／BatteryBoxState负责。四源整理、堆叠扩围和双版编译见[核查](BATTERY_GEAR_REGISTRATION_AUDIT.md)。
+
 2026-10-22：共享 `registry/GTEnergyNodes.java` 的createBlock／itemProperties／registerSpecifications统一两版创建策略；各自ALL、注册类型／订阅、能力和反应堆时机保留。core `content/energy/EnergyNodeDefinitions.java`只定义规格，局部档位字段改为inputRate／outputRate／material，固定值表保留。三完整流、39项堆叠扩围和双版编译见[注册核查](ENERGY_NODE_REGISTRATION_AUDIT.md)。
 
 2026-10-22：core `content/energy/SignalWireColors.java`只给默认染色三元规则，Forge GregTechClient的物品／方块与Neo SignalWireClientSetup共用，BlockPaintColorMixin仍独立处理喷漆。Neo WireToolInteractions／SignalWireClientSetup展开，42局部名称明确，三完整流与含120双版编译见[客户端核查](SIGNAL_WIRE_CLIENT_AUDIT.md)。覆盖板准入和裸线继承资格分别追真实消费者，未在整理时改变策略。
