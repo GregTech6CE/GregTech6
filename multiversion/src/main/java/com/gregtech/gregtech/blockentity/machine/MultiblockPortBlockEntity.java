@@ -28,6 +28,17 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
             new com.gregtech.gregtech.content.logistics.LogisticsCovers(this, this);
     private BlockPos controller;
     private MultiblockLayout.Role role;
+    /** Original {@code gt.design}. Zero is the default texture and is omitted from NBT. */
+    private int design;
+//? if >=1.21.1 {
+/*    public static final net.neoforged.neoforge.client.model.data.ModelProperty<Integer> DESIGN =
+            new net.neoforged.neoforge.client.model.data.ModelProperty<>();
+*///?} else {
+    public static final net.minecraftforge.client.model.data.ModelProperty<Integer> DESIGN =
+            new net.minecraftforge.client.model.data.ModelProperty<>();
+//?}
+    private int designSaved;
+    private boolean designHeld;
 //? if >=1.21.1 {
 //?} else {
     private LazyOptional<IFluidHandler> fluid=LazyOptional.empty();
@@ -87,6 +98,40 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
     }
     public boolean isBoundTo(BlockPos owner) {return owner.equals(controller);}
     public boolean canBind(BlockPos owner) { return controller==null || controller.equals(owner) || owner()==null; }
+    public int structureDesign() { return design; }
+
+    /** Remembers the previous index, then writes {@code gt.design}. A second call keeps the first remembered value. */
+    public void applyStructureDesign(int next) {
+        if (next < 0) return;
+        if (!designHeld) {
+            designSaved = design;
+            designHeld = true;
+        }
+        setStructureDesign(next);
+    }
+
+    /** Puts back the index from before {@link #applyStructureDesign}. */
+    public void restoreStructureDesign() {
+        if (!designHeld) return;
+        int previous = designSaved;
+        designHeld = false;
+        designSaved = 0;
+        setStructureDesign(previous);
+    }
+
+    private void setStructureDesign(int next) {
+        int clamped = Math.max(0, Math.min(255, next));
+        if (design == clamped && level != null) {
+            setChanged();
+            return;
+        }
+        design = clamped;
+        setChanged();
+        if (level != null && !level.isClientSide)
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+        if (level != null && level.isClientSide) requestModelDataUpdate();
+    }
+
     public void bind(BlockPos owner,MultiblockLayout.Role role) {
         this.controller=owner.immutable(); this.role=role;
 //? if >=1.21.1 {
@@ -107,7 +152,14 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
         if (state.hasProperty(property) && state.getValue(property) != formed)
             level.setBlock(worldPosition, state.setValue(property, formed), 3);
     }
-    public void release(BlockPos owner) { if(owner.equals(controller)) {controller=null;role=null;updateCrucibleVisual(false);} }
+    public void release(BlockPos owner) {
+        if (owner.equals(controller)) {
+            controller = null;
+            role = null;
+            updateCrucibleVisual(false);
+            restoreStructureDesign();
+        }
+    }
     @Override public boolean canLogistics(Direction side) {
         // GT6 multiblock parts delegate logistics to their owner; only a Logistics Core opts in.
         return (role == MultiblockLayout.Role.LOGISTICS || role == MultiblockLayout.Role.ENERGY_INPUT)
@@ -149,21 +201,40 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
     /*@Override protected void saveAdditional(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
         super.saveAdditional(tag,lookup);
         covers.save(tag, lookup);
+        saveDesign(tag);
 *///?} else {
     @Override protected void saveAdditional(net.minecraft.nbt.CompoundTag tag) {
         super.saveAdditional(tag);
         covers.save(tag);
+        saveDesign(tag);
 //?}
     }
 //? if >=1.21.1 {
     /*@Override protected void loadAdditional(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
         super.loadAdditional(tag,lookup);
         covers.load(tag, lookup);
+        loadDesign(tag);
 *///?} else {
     @Override public void load(net.minecraft.nbt.CompoundTag tag) {
         super.load(tag);
         covers.load(tag);
+        loadDesign(tag);
 //?}
+    }
+
+    private void saveDesign(net.minecraft.nbt.CompoundTag tag) {
+        if (design != 0) tag.putByte("gt.design", (byte) design);
+        if (designHeld) {
+            tag.putBoolean("gt.design_held", true);
+            tag.putByte("gt.design_saved", (byte) designSaved);
+        }
+    }
+
+    private void loadDesign(net.minecraft.nbt.CompoundTag tag) {
+        design = tag.contains("gt.design") ? tag.getByte("gt.design") & 255 : 0;
+        designHeld = tag.getBoolean("gt.design_held");
+        designSaved = designHeld && tag.contains("gt.design_saved") ? tag.getByte("gt.design_saved") & 255 : 0;
+        if (level != null && level.isClientSide) requestModelDataUpdate();
     }
 //? if >=1.21.1 {
     /*private net.neoforged.neoforge.items.IItemHandler itemTarget() { var owner=owner(); return owner!=null&&owner.isStructureOk()?owner.portItems(role):null; }
@@ -221,4 +292,31 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
     @Override public long getEnergyStored(GregTechTags.Tag t,Direction side) {var o=owner();return o==null?0:o.portEnergyStored(role,t);}
     @Override public long getEnergyCapacity(GregTechTags.Tag t,Direction side) {var o=owner();return o==null?0:o.portEnergyCapacity(role,t);}
     @Override public long doInject(GregTechTags.Tag t,Direction side,long size,long amount,boolean execute) {var o=owner();return o!=null&&o.isStructureOk()?o.injectPortEnergy(role,t,size,amount,execute):0;}
+
+//? if >=1.21.1 {
+/*    @Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
+    }
+    @Override public void onDataPacket(net.minecraft.network.Connection net,
+            net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,
+            net.minecraft.core.HolderLookup.Provider lookup) {
+        if (packet.getTag() != null) loadAdditional(packet.getTag(), lookup);
+    }
+    @Override public net.neoforged.neoforge.client.model.data.ModelData getModelData() {
+        return net.neoforged.neoforge.client.model.data.ModelData.builder()
+                .with(DESIGN, design).build();
+    }
+*///?} else {
+    @Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
+    }
+    @Override public void onDataPacket(net.minecraft.network.Connection net,
+            net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet) {
+        if (packet.getTag() != null) load(packet.getTag());
+    }
+    @Override public net.minecraftforge.client.model.data.ModelData getModelData() {
+        return net.minecraftforge.client.model.data.ModelData.builder()
+                .with(DESIGN, design).build();
+    }
+//?}
 }

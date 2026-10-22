@@ -6,7 +6,7 @@ import java.util.Objects;
 /** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
- * One addon recipe machine. Defaults match {@link MachineDeclaration}: basic kind, parallel 1,
+ * One addon recipe machine. Defaults: basic kind, parallel 1,
  * efficiency 10000, constant energy on, cheap overclock unset and off, no light gate.
  * The machine type is the id unchanged. A slash in that id is still invalid.
  */
@@ -141,6 +141,10 @@ public final class RecipeMachine implements AddonMachine {
             if (energy == null) throw new IllegalArgumentException("Missing energy type for " + id);
             if (energy.capacitySpecified())
                 throw new IllegalArgumentException("Recipe machine '" + id + "' cannot declare energy capacity");
+            if (energy.anyPacket())
+                throw new IllegalArgumentException("Recipe machine '" + id + "' cannot ignore packet size");
+            if (!energy.overload())
+                throw new IllegalArgumentException("Recipe machine '" + id + "' cannot disable overload");
             if (energy.perTick() < 0)
                 throw new IllegalArgumentException("Invalid energy per tick for " + id + ": " + energy.perTick());
             if (energy.rangeSpecified() && "TU".equalsIgnoreCase(energy.type()))

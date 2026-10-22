@@ -47,15 +47,19 @@ public interface MachineBehaviorContext {
     /** Removes up to {@code amount} mB. Returns the fluid that left the tank. */
     FluidStack drain(int tank, int amount, boolean simulate);
 
-    /** Energy stored for this tick, in the machine's energy unit. */
+    /**
+     * Energy stored in the main input, in the machine's energy unit.
+     * A machine that declares no main input returns 0. {@link #generate} and {@link #emit} still move energy.
+     */
     long energy();
 
-    /** Removes {@code amount} from {@link #energy()}. Returns false when there is less than that. */
+    /** Removes {@code amount} from {@link #energy()}. Returns false when there is less than that, or when there is no main input. */
     boolean consume(long amount);
 
     /**
      * Adds as much of {@code amount} as the buffer can hold.
      * The buffer is the declared capacity, or the rated input maximum when that capacity is 0.
+     * A machine with no main input holds one full output packet ({@code maxSize} times {@code maxAmount}).
      * Returns how much was stored.
      */
     long generate(long amount);
@@ -72,6 +76,36 @@ public interface MachineBehaviorContext {
      * A request above the declared maximum throws.
      */
     long emit(long size, long amount);
+
+    /**
+     * Sends {@code amount} packets of {@code size} to the block entity at {@code target},
+     * entering it through {@code side}. It uses the declared output type and packet limits,
+     * spends this machine's stored energy for each packet the target accepts, and returns how
+     * many packets left. The declared output faces are not used. A null {@code side} means no
+     * side. A request above the declared maximum throws, as {@link #emit(long, long)} does.
+     * A target in an unloaded chunk, without a block entity, or with no energy receiver accepts
+     * nothing. The target is looked up for this call only and is not kept.
+     */
+    long emitTo(BlockPos target, Direction side, long size, long amount);
+
+    /**
+     * Charges a bound two-way part from the controller channel and arms {@code amount}
+     * packets of {@code size}. The part emits them from its own faces on its next server tick.
+     * Returns the amount the part stored. This does not spend {@link #energy()}; the behavior
+     * keeps its own accounting. Returns 0 when the part is missing, is not a two-way part,
+     * or its output type differs from {@code type}. A request the part's output declaration
+     * rejects throws.
+     */
+    long pushToPart(String part, String type, long size, long amount);
+
+    /**
+     * Moves up to {@code amount} packets of {@code size} from this machine's stored energy
+     * into the named bound part and arms it. The part emits on its own tick. Returns the amount
+     * moved out of this machine. This does not require the machine to declare output faces,
+     * but a machine whose stored energy has a declared type only feeds a matching part.
+     * A request the part's output declaration rejects throws.
+     */
+    long emit(String part, long size, long amount);
 
     boolean toggle(int index);
 
@@ -94,6 +128,37 @@ public interface MachineBehaviorContext {
     /** Energy parts bound by the formed layout. Empty when {@link #structureFormed()} is false. */
     List<EnergyPart> energyParts();
 
+    /**
+     * How many copies of the repeat group {@code key} matched this tick.
+     * Zero when the structure is not formed, the key is unknown, or the layout has no such group.
+     */
+    int structureRepeats(String key);
+
+    /**
+     * Addon parts bound by the formed layout, energy parts and functional parts together.
+     * A casing is not included. Empty when {@link #structureFormed()} is false.
+     * {@link #energyParts()} is the energy view of this same binding.
+     */
+    List<BoundPart> parts();
+
+    /**
+     * True when no bound part is a condition, or every bound condition part is satisfied.
+     * An unformed structure has no bound parts, so this is true. The behavior tick still runs.
+     */
+    boolean conditionsMet();
+
+    /**
+     * Auxiliary buffer for {@code type}, in that energy's unit.
+     * This is not {@link #energy()}. An unknown type, or a machine with no auxiliary input, is 0.
+     */
+    long energy(String type);
+
+    /**
+     * Removes {@code amount} from the auxiliary buffer of {@code type}.
+     * Returns false when the type is not the auxiliary type or the buffer is short.
+     */
+    boolean consume(String type, long amount);
+
     BehaviorState state();
 
     /**
@@ -113,10 +178,11 @@ public interface MachineBehaviorContext {
     int collectItems(int radius, boolean voidThem);
 
     /**
-     * Stores {@code stack} in the compressed gas drum on {@code face}.
-     * Returns how many millibuckets that drum accepted.
-     * A missing drum, a pipe, or an ordinary tank accepts nothing.
-     * This writes the drum immediately. The behavior removes the fluid from its own tank.
+     * Stores {@code stack} in the compressed-gas receiver on {@code face}.
+     * A single-block drum accepts on every side. A behavior machine accepts on its valve face.
+     * Returns how many millibuckets that receiver stored.
+     * A missing receiver, a pipe, or an ordinary tank accepts nothing.
+     * This writes immediately. The behavior removes the fluid from its own tank.
      */
     int pushCompressedGas(Direction face, FluidStack stack);
 }

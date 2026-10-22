@@ -3,23 +3,106 @@ import com.gregtech.gregtech.api.multiblock.StructureGrid.Role;import java.util.
 /** Original GT6 large-machine coordinates and material-part IDs; no Minecraft registry. */
 public final class SharedLargeMachineLayouts {private SharedLargeMachineLayouts(){}
     /** {@code plain} is a block id or {@code #} tag. Null means {@code part} is a structure part. */
-    public record Cell(int right,int up,int back,int part,Role role,String plain){
-        public Cell(int right,int up,int back,int part,Role role){this(right,up,back,part,role,null);}
+    /** {@code design} is {@code -1} when the cell does not write {@code gt.design}. */
+    public record Cell(int right,int up,int back,int part,Role role,String plain,int design){
+        public Cell(int right,int up,int back,int part,Role role){this(right,up,back,part,role,null,-1);}
+        public Cell(int right,int up,int back,int part,Role role,String plain){this(right,up,back,part,role,plain,-1);}
+    }
+    /** Repeat cells use coordinates relative to the anchor and the repeat direction. */
+    public record Repeat(String key,int up,int min,int max,int step,int height,List<Cell> cells){
+        public Repeat{
+            if(key==null||!key.matches("[a-z][a-z0-9_]{0,63}")) throw new IllegalArgumentException("Invalid repeat key: "+key);
+            if(min<1) throw new IllegalArgumentException("Repeat '"+key+"' needs min >= 1");
+            if(max!=-1&&max<min) throw new IllegalArgumentException("Repeat '"+key+"' needs max >= min or -1");
+            if(max>256) throw new IllegalArgumentException("Repeat '"+key+"' max is too large: "+max);
+            if(step!=1&&step!=-1) throw new IllegalArgumentException("Repeat '"+key+"' step must be 1 or -1");
+            if(cells==null||cells.isEmpty()) throw new IllegalArgumentException("Repeat '"+key+"' is empty");
+            cells=List.copyOf(cells);
+        }
+        public int absoluteUp(Cell cell,int copy){return up+step*(cell.up()+copy*height);}
+    }
+    public record Layout(List<Cell> cells,List<Repeat> repeats){
+        public Layout{ cells=cells==null?List.of():List.copyOf(cells); repeats=repeats==null?List.of():List.copyOf(repeats); }
     }
     private static final Map<String,List<Cell>> DEFINITIONS=new LinkedHashMap<>(create());
+    private static final Map<String,List<Repeat>> REPEATS=new LinkedHashMap<>();
+    /** Names present before any addon layout is added. Those layouts are not replaceable. */
+    private static final Set<String> BUILTIN=Set.copyOf(DEFINITIONS.keySet());
+    private static Map<String,List<Cell>> overlay=Map.of();
+    private static Map<String,List<Repeat>> overlayRepeats=Map.of();
     private static boolean frozen;
-    public static List<Cell> cells(String machine) { return DEFINITIONS.get(machine); }
+    /** Fixed cells plus every repeat group expanded to its minimum count, for previews. */
+    public static List<Cell> cells(String machine) {
+        var base=baseCells(machine);
+        if(base==null) return null;
+        var repeats=repeats(machine);
+        if(repeats.isEmpty()) return base;
+        var out=new ArrayList<>(base);
+        for(var repeat:repeats) for(int copy=0;copy<repeat.min();copy++) for(var cell:repeat.cells())
+            out.add(new Cell(cell.right(),repeat.absoluteUp(cell,copy),cell.back(),cell.part(),cell.role(),cell.plain(),cell.design()));
+        return List.copyOf(out);
+    }
+    /** Fixed cells without expanding repeats. */
+    public static List<Cell> baseCells(String machine) {
+        var replaced=overlay.get(machine);
+        return replaced!=null?replaced:DEFINITIONS.get(machine);
+    }
+    public static List<Repeat> repeats(String machine) {
+        var replaced=overlayRepeats.get(machine);
+        return replaced!=null?replaced:REPEATS.getOrDefault(machine,List.of());
+    }
+    /** The layout a structure check reads. Null when the machine has no layout. */
+    public static Layout layout(String machine) {
+        var base=baseCells(machine);
+        return base==null?null:new Layout(base,repeats(machine));
+    }
+    /** The layout stored at startup, ignoring a datapack replacement. */
+    public static List<Cell> baseline(String machine) { return DEFINITIONS.get(machine); }
+    public static boolean builtIn(String machine) { return BUILTIN.contains(machine); }
+    /** True after layouts freeze, for an addon or script machine that already has a layout. */
+    public static boolean replaceable(String machine) {
+        return frozen && machine!=null && !BUILTIN.contains(machine) && DEFINITIONS.containsKey(machine);
+    }
+    public static Set<String> overlaid() { return overlay.keySet(); }
+    /**
+     * Replaces addon and script layouts. An empty map restores every baseline.
+     * Built-in controllers are rejected. Callers drop unknown files before this.
+     */
+    public static void overlay(Map<String,List<Cell>> replacements) { overlay(replacements, Map.of()); }
+    /** Replaces addon and script layouts, including their repeat groups. An empty pair restores every baseline. */
+    public static void overlay(Map<String,List<Cell>> replacements, Map<String,List<Repeat>> repeated) {
+        if (!frozen) throw new IllegalStateException("Large machine layouts are not ready");
+        var next=new LinkedHashMap<String,List<Cell>>();
+        var nextRepeats=new LinkedHashMap<String,List<Repeat>>();
+        if (replacements!=null) for (var entry:replacements.entrySet()) {
+            if (!replaceable(entry.getKey()))
+                throw new IllegalArgumentException("Layout cannot be replaced: "+entry.getKey());
+            var groups=repeated==null?List.<Repeat>of():repeated.getOrDefault(entry.getKey(),List.of());
+            if ((entry.getValue()==null || entry.getValue().isEmpty()) && groups.isEmpty())
+                throw new IllegalArgumentException("Large machine layout '"+entry.getKey()+"' is empty");
+            next.put(entry.getKey(), entry.getValue()==null?List.of():List.copyOf(entry.getValue()));
+            if (!groups.isEmpty()) nextRepeats.put(entry.getKey(), List.copyOf(groups));
+        }
+        overlay=Map.copyOf(next);
+        overlayRepeats=Map.copyOf(nextRepeats);
+    }
     public static Set<String> machines() { return Collections.unmodifiableSet(DEFINITIONS.keySet()); }
     /** Open only while addon layouts are collected. Built-in names stay reserved. */
-    public static void add(String machine, List<Cell> cells) {
+    public static void add(String machine, List<Cell> cells) { add(machine, cells, List.of()); }
+    public static void add(String machine, Layout layout) {
+        if (layout==null) throw new IllegalArgumentException("Missing large machine layout");
+        add(machine, layout.cells(), layout.repeats());
+    }
+    public static void add(String machine, List<Cell> cells, List<Repeat> repeats) {
         if (frozen) throw new IllegalStateException("Large machine layouts are frozen");
         if (machine == null || !machine.matches("[a-z0-9_]+"))
             throw new IllegalArgumentException("Invalid large machine layout: " + machine);
-        if (cells == null || cells.isEmpty())
+        if ((cells == null || cells.isEmpty()) && (repeats == null || repeats.isEmpty()))
             throw new IllegalArgumentException("Large machine layout '" + machine + "' is empty");
         if (DEFINITIONS.containsKey(machine))
             throw new IllegalStateException("Duplicate large machine layout: " + machine);
-        DEFINITIONS.put(machine, List.copyOf(cells));
+        DEFINITIONS.put(machine, cells==null?List.of():List.copyOf(cells));
+        if (repeats!=null && !repeats.isEmpty()) REPEATS.put(machine, List.copyOf(repeats));
     }
     public static void freeze() { frozen = true; }
     private static Map<String,List<Cell>> create() {

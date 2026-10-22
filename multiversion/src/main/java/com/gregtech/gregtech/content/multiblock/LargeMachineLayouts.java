@@ -8,9 +8,11 @@ import java.util.*;
 
 /** Coordinates and port roles translated from the corresponding GT6 MultiTileEntity classes. */
 public final class LargeMachineLayouts {
-    public record Cell(int right,int up,int back,int part,Role role,String plain) {
-        public Cell(int right,int up,int back,int part,Role role) { this(right, up, back, part, role, null); }
-        public BlockPos at(BlockPos origin,Direction front) { return origin.relative(front.getClockWise(),right).above(up).relative(front.getOpposite(),back); }
+    public record Cell(int right,int up,int back,int part,Role role,String plain,int design) {
+        public Cell(int right,int up,int back,int part,Role role) { this(right, up, back, part, role, null, -1); }
+        public Cell(int right,int up,int back,int part,Role role,String plain) { this(right, up, back, part, role, plain, -1); }
+        public BlockPos at(BlockPos origin,Direction front) { return at(origin,front,up); }
+        public BlockPos at(BlockPos origin,Direction front,int layer) { return origin.relative(front.getClockWise(),right).above(layer).relative(front.getOpposite(),back); }
         public boolean plainBlock() { return plain != null; }
         public Block block() {
             if (plain != null) return PlainStructureBlocks.preview(plain);
@@ -25,13 +27,48 @@ public final class LargeMachineLayouts {
             default -> LargeMachineParts.block(part);
             };
         }
-        public boolean matches(net.minecraft.world.level.Level level, net.minecraft.world.level.block.state.BlockState state) {
-            return plain != null && PlainStructureBlocks.matches(level, plain, state);
+        public boolean matches(net.minecraft.world.level.Level level, BlockPos pos, net.minecraft.world.level.block.state.BlockState state) {
+            return plain != null && PlainStructureBlocks.matches(level, pos, plain, state);
         }
     }
-    public static List<Cell> fromShared(List<SharedLargeMachineLayouts.Cell> cells){return cells==null?null:cells.stream().map(cell->new Cell(cell.right(),cell.up(),cell.back(),cell.part(),Role.valueOf(cell.role().name()),cell.plain())).toList();}
+    /** Repeat cells keep coordinates relative to the anchor. */
+    public record Repeat(String key,int up,int min,int max,int step,int height,List<Cell> cells){
+        public int absoluteUp(Cell cell,int copy){return up+step*(cell.up()+copy*height);}
+    }
+    /** Fixed cells plus repeat groups. */
+    public record Layout(List<Cell> cells,List<Repeat> repeats){}
+    /** One cell resolved to a world position. */
+    public record Placed(Cell cell,BlockPos pos){}
+    /** Upper bound for an unbounded repeat, so a check cannot walk forever. */
+    public static final int MAX_REPEATS=64;
+    /**
+     * Resolves every fully matching copy of {@code repeat}. Returns null when fewer than
+     * {@code min} copies match. The first copy with a failing cell ends the walk.
+     */
+    public static List<Placed> repeatCells(net.minecraft.world.level.Level level,BlockPos origin,Direction front,
+                                           Repeat repeat,java.util.function.BiPredicate<Cell,BlockPos> matches){
+        int limit=repeat.max()<0?MAX_REPEATS:repeat.max();
+        var out=new ArrayList<Placed>();
+        int matched=0;
+        for(int copy=0;copy<limit;copy++){
+            var copyCells=new ArrayList<Placed>();
+            boolean complete=true;
+            for(var cell:repeat.cells()){
+                var pos=cell.at(origin,front,repeat.absoluteUp(cell,copy));
+                if(!matches.test(cell,pos)){complete=false;break;}
+                copyCells.add(new Placed(cell,pos));
+            }
+            if(!complete)break;
+            out.addAll(copyCells);
+            matched++;
+        }
+        return matched<repeat.min()?null:List.copyOf(out);
+    }
+    public static List<Cell> fromShared(List<SharedLargeMachineLayouts.Cell> cells){return cells==null?null:cells.stream().map(cell->new Cell(cell.right(),cell.up(),cell.back(),cell.part(),Role.valueOf(cell.role().name()),cell.plain(),cell.design())).toList();}
     private static final Map<String,List<Cell>> CACHE=new LinkedHashMap<>();
+    private static final Map<String,Layout> LAYOUTS=new LinkedHashMap<>();
     static { for (String machine : SharedLargeMachineLayouts.machines()) CACHE.put(machine, fromShared(SharedLargeMachineLayouts.cells(machine))); }
+    /** Fixed cells plus repeats expanded to their minimum count, for previews. */
     public static List<Cell> cells(String machine) {
         var cached = CACHE.get(machine);
         if (cached != null) return cached;
@@ -41,8 +78,27 @@ public final class LargeMachineLayouts {
         CACHE.put(machine, converted);
         return converted;
     }
+    /** The layout a structure check reads. Null when the machine has no layout. */
+    public static Layout layout(String machine) {
+        var cached = LAYOUTS.get(machine);
+        if (cached != null) return cached;
+        var shared = SharedLargeMachineLayouts.layout(machine);
+        if (shared == null) return null;
+        var repeats = new ArrayList<Repeat>();
+        for (var repeat : shared.repeats())
+            repeats.add(new Repeat(repeat.key(), repeat.up(), repeat.min(), repeat.max(), repeat.step(),
+                    repeat.height(), fromShared(repeat.cells())));
+        var converted = new Layout(fromShared(shared.cells()), List.copyOf(repeats));
+        LAYOUTS.put(machine, converted);
+        return converted;
+    }
     public static Set<String> machines() {
         for (String machine : SharedLargeMachineLayouts.machines()) cells(machine);
         return Set.copyOf(CACHE.keySet());
+    }
+    /** Drops cached cells so the next check reads a reloaded layout. Built-in caches refill from the baseline. */
+    public static void forget(Iterable<String> machines) {
+        if (machines == null) return;
+        for (String machine : machines) { CACHE.remove(machine); LAYOUTS.remove(machine); }
     }
 }

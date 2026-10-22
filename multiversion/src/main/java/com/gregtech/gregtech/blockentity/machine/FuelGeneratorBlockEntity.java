@@ -1,6 +1,7 @@
 package com.gregtech.gregtech.blockentity.machine;
 
-import com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration;
+import com.gregtech.gregtech.api.addon.FuelGenerator;
+import com.gregtech.gregtech.api.addon.FuelOutput;
 import com.gregtech.gregtech.api.energy.EnergyBlockViews;
 import com.gregtech.gregtech.api.energy.EnergyTransfer;
 import com.gregtech.gregtech.api.energy.IEnergyBlock;
@@ -64,7 +65,7 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
 
     public FuelGeneratorBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
-        FuelGeneratorDeclaration declaration = declaration();
+        FuelGenerator declaration = declaration();
         recipes = RecipeMap.RECIPE_MAPS.get(declaration.fuelMap());
         int outputs = recipes == null ? 0 : recipes.mOutputFluidCount;
         fuel = new FluidTank(declaration.tankCapacity(), stack -> recipes != null && recipes.containsInput(stack)) {
@@ -79,7 +80,7 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
         exhaust = List.copyOf(tanks);
     }
 
-    public FuelGeneratorDeclaration declaration() {
+    public FuelGenerator declaration() {
         return ((FuelGeneratorBlock) getBlockState().getBlock()).declaration();
     }
 
@@ -120,18 +121,20 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
             if (budget <= 0) return;
             BlockPos neighbor = worldPosition.relative(side);
             if (!level.hasChunkAt(neighbor)) continue;
-            if (!(level.getBlockEntity(neighbor) instanceof CompressedGasTankBlockEntity drum)) continue;
-            FluidStack preview = drum.drain(budget, IFluidHandler.FluidAction.SIMULATE);
+            if (!(level.getBlockEntity(neighbor) instanceof com.gregtech.gregtech.api.fluid.CompressedGasReceiver receiver))
+                continue;
+            Direction face = side.getOpposite();
+            FluidStack preview = receiver.extractCompressedGas(face, budget, false);
             if (preview.isEmpty() || !fuel.isFluidValid(preview)) continue;
             int room = fuel.fill(preview, IFluidHandler.FluidAction.SIMULATE);
             if (room <= 0) continue;
-            FluidStack taken = drum.drain(room, IFluidHandler.FluidAction.EXECUTE);
+            FluidStack taken = receiver.extractCompressedGas(face, room, true);
             if (taken.isEmpty()) continue;
             int storedAmount = fuel.fill(taken, IFluidHandler.FluidAction.EXECUTE);
             if (storedAmount < taken.getAmount()) {
                 FluidStack leftover = taken.copy();
                 leftover.setAmount(taken.getAmount() - storedAmount);
-                drum.fillCompressed(leftover);
+                receiver.receiveCompressedGas(face, leftover);
             }
             budget -= storedAmount;
         }
@@ -139,7 +142,7 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
 
     private void burn() {
         if (recipes == null || fuel.isEmpty()) return;
-        long room = Math.multiplyExact(declaration().outputPerTick(), 2) - stored;
+        long room = Math.multiplyExact(declaration().output().perTick(), 2) - stored;
         if (room <= 0) return;
         var outputs = new ArrayList<FluidStack>();
         int[] capacities = new int[exhaust.size()];
@@ -165,27 +168,28 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
     }
 
     private void emit() {
-        long packet = declaration().outputPerTick();
-        if (stored < packet || energyType() == null) return;
-        long sent = switch (declaration().output().side()) {
-            case FRONT -> EnergyTransfer.emitEnergyToSide(energyType(), front(), packet, 1, this);
-            case BACK -> EnergyTransfer.emitEnergyToSide(energyType(), front().getOpposite(), packet, 1, this);
-            case BEHIND -> injectBehind(packet);
-        };
+        long packet = declaration().output().perTick();
+        if (packet < 1 || stored < packet || energyType() == null) return;
+        long packets = Math.min(declaration().amperes(), stored / packet);
+        FuelOutput output = declaration().output();
+        long sent = output.behind() > 0 ? injectBehind(packet, packets)
+                : output.front()
+                ? EnergyTransfer.emitEnergyToSide(energyType(), front(), packet, packets, this)
+                : EnergyTransfer.emitEnergyToSide(energyType(), front().getOpposite(), packet, packets, this);
         if (sent > 0) {
-            stored -= packet;
+            stored -= packet * sent;
             emitted = true;
             setChanged();
         }
     }
 
-    private long injectBehind(long packet) {
+    private long injectBehind(long packet, long packets) {
         Direction back = front().getOpposite();
-        BlockPos target = worldPosition.relative(back, declaration().output().distance());
+        BlockPos target = worldPosition.relative(back, declaration().output().behind());
         if (level == null || !level.hasChunkAt(target)) return 0;
         IEnergyBlock receiver = EnergyBlockViews.view(level.getBlockEntity(target));
         if (receiver == null) return 0;
-        return receiver.doEnergyInjection(energyType(), back.getOpposite(), packet, 1, true);
+        return receiver.doEnergyInjection(energyType(), back.getOpposite(), packet, packets, true);
     }
 
     private void updateAppearance() {
@@ -208,16 +212,15 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
 //?}
     private GregTechTags.Tag energyType() {
         if (energy != null) return energy;
-        String name = declaration().energy();
+        String name = declaration().output().type();
         energy = GregTechTags.Energy.ALL.stream().filter(tag -> tag.getShortName().equalsIgnoreCase(name)).findFirst().orElse(null);
         return energy;
     }
 
     private boolean outputs(GregTechTags.Tag type, @Nullable Direction side) {
-        if (type != energyType() || declaration().output().side() == FuelGeneratorDeclaration.Output.Side.BEHIND) return false;
+        if (type != energyType() || declaration().output().behind() > 0) return false;
         if (side == null) return true;
-        return declaration().output().side() == FuelGeneratorDeclaration.Output.Side.FRONT
-                ? side == front() : side == front().getOpposite();
+        return declaration().output().front() ? side == front() : side == front().getOpposite();
     }
 
     @Override public boolean isEnergyType(GregTechTags.Tag type, @Nullable Direction side, boolean emitting) {
@@ -228,7 +231,7 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
     }
     @Override public boolean isEnergyAcceptingFrom(GregTechTags.Tag type, @Nullable Direction side, boolean theoretical) { return false; }
     @Override public boolean isEnergyEmittingTo(GregTechTags.Tag type, @Nullable Direction side, boolean theoretical) {
-        return outputs(type, side) && (theoretical || !stopped && formed && stored >= declaration().outputPerTick());
+        return outputs(type, side) && (theoretical || !stopped && formed && stored >= declaration().output().perTick());
     }
     @Override public long doEnergyInjection(GregTechTags.Tag type, @Nullable Direction side, long size, long amount, boolean doInject) { return 0; }
     @Override public long getEnergyDemanded(GregTechTags.Tag type, @Nullable Direction side, long size) { return 0; }
@@ -238,7 +241,7 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
     @Override public long getEnergySizeInputRecommended(GregTechTags.Tag type, @Nullable Direction side) { return 0; }
     @Override public long getEnergySizeInputMax(GregTechTags.Tag type, @Nullable Direction side) { return 0; }
     @Override public long getEnergySizeOutputMin(GregTechTags.Tag type, @Nullable Direction side) {
-        return outputs(type, side) ? declaration().outputPerTick() : 0;
+        return outputs(type, side) ? declaration().output().perTick() : 0;
     }
     @Override public long getEnergySizeOutputRecommended(GregTechTags.Tag type, @Nullable Direction side) {
         return getEnergySizeOutputMin(type, side);
@@ -250,7 +253,7 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
         return type == energyType() ? stored : 0;
     }
     @Override public long getEnergyCapacity(GregTechTags.Tag type, @Nullable Direction side) {
-        return type == energyType() ? Math.max(stored, declaration().outputPerTick() * 2) : 0;
+        return type == energyType() ? Math.max(stored, declaration().output().perTick() * 2) : 0;
     }
 
     @Override public int getTanks() { return 1 + exhaust.size(); }

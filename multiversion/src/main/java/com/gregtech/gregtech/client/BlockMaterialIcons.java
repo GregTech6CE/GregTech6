@@ -31,6 +31,14 @@ public final class BlockMaterialIcons {
 //?}
     }
 
+    public static ResourceLocation addonModel(BlockMaterialPrefix prefix) {
+//? if >=1.21.1 {
+        /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","block/material/addon/" + prefix.getTextureFileName());
+*///?} else {
+        return GregTech.id("block/material/addon/" + prefix.getTextureFileName());
+//?}
+    }
+
     public static ResourceLocation sharedModelLocation(MaterialTextureSet set, BlockMaterialPrefix prefix) {
 //? if >=1.21.1 {
         /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","block/material/" + set.folder() + "/" + prefix.getTextureFileName());

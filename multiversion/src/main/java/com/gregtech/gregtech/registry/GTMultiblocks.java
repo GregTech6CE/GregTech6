@@ -74,11 +74,20 @@ public final class GTMultiblocks {
         for (var part : com.gregtech.gregtech.api.addon.AddonMachines.structureParts()) {
             var declaration = part.declaration();
             float hardness = declaration.hardness();
+            boolean energyPart = declaration.energy() != null || declaration.energyInput() != null;
+            boolean functional = declaration.functional();
             var properties = BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(hardness, hardness)
                     .requiresCorrectToolForDrops();
-            var block = declaration.energy() == null
-                    ? registerAddon(part.addonId(), declaration.name(), () -> new MultiblockPortBlock(properties))
-                    : registerAddon(part.addonId(), declaration.name(), () -> new AddonEnergyPartBlock(properties, declaration.energy()));
+            if (energyPart) properties = properties.lightLevel(state ->
+                    state.hasProperty(AddonEnergyPartBlock.SATISFIED) && state.getValue(AddonEnergyPartBlock.SATISFIED) ? 12 : 0);
+            var partProperties = properties;
+            var block = energyPart
+                    ? registerAddon(part.addonId(), declaration.name(), () -> new AddonEnergyPartBlock(partProperties,
+                            part.addonId(), declaration))
+                    : functional
+                    ? registerAddon(part.addonId(), declaration.name(), () -> new AddonFunctionalPartBlock(partProperties,
+                            part.addonId(), declaration))
+                    : registerAddon(part.addonId(), declaration.name(), () -> new MultiblockPortBlock(partProperties));
             if (NAMED.put(part.id(), block) != null)
                 throw new IllegalStateException("Addon structure part id already used: " + part.id());
             ADDON_PARTS.add(new AddonPart(block, declaration.material(), declaration.texture()));
@@ -136,7 +145,8 @@ public final class GTMultiblocks {
             //?}
         }
         for (var part : ADDON_PARTS)
-            if (!(part.block().get() instanceof AddonEnergyPartBlock)) blocks.add(part.block().get());
+            if (!(part.block().get() instanceof AddonEnergyPartBlock)
+                    && !(part.block().get() instanceof AddonFunctionalPartBlock)) blocks.add(part.block().get());
         return blocks.toArray(Block[]::new);
     }
     /** Addon energy parts. Empty when no addon declared one. Not valid for {@code gt6ce:multiblock_port}. */
@@ -144,6 +154,13 @@ public final class GTMultiblocks {
         var blocks = new ArrayList<Block>();
         for (var part : ADDON_PARTS)
             if (part.block().get() instanceof AddonEnergyPartBlock energy) blocks.add(energy);
+        return blocks.toArray(Block[]::new);
+    }
+    /** Addon functional parts with no energy role. Empty when no addon declared one. */
+    public static Block[] functionalPartBlocks() {
+        var blocks = new ArrayList<Block>();
+        for (var part : ADDON_PARTS)
+            if (part.block().get() instanceof AddonFunctionalPartBlock functional) blocks.add(functional);
         return blocks.toArray(Block[]::new);
     }
     private static List<RegisteredBlock<Block>> range(int low, int high) {

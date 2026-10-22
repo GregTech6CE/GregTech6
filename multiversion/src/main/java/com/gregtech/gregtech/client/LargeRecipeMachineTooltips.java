@@ -45,7 +45,7 @@ public final class LargeRecipeMachineTooltips {
         add(lines,"gt.lang.use.magnifyingglass.to.detail",ChatFormatting.DARK_GRAY);
         StorageBlockTooltips.facing(lines);
     }
-    private static void io(List<Component> lines,String key,boolean output,com.gregtech.gregtech.api.addon.MachineDeclaration.Target target,ChatFormatting color) {
+    private static void io(List<Component> lines,String key,boolean output,com.gregtech.gregtech.api.addon.IoTarget target,ChatFormatting color) {
         var line=add(lines,key,color).append(": ");
         // A rear cell faces the machine, so its receiver is FRONT. The line names the rear of the structure.
         String face=output?(target!=null&&target.back()!=0?"gt.lang.face.back":"gt.lang.face.bottom"):"gt.lang.face.any";

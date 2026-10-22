@@ -16,6 +16,9 @@ import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.MaterialProperty;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.gregtech.gregtech.api.material.MaterialBlockDefinitions;
+import com.gregtech.gregtech.api.prefix.BlockMaterialPrefix;
+import com.gregtech.gregtech.api.prefix.BlockPrefixRegistry;
+import com.gregtech.gregtech.block.BlockMaterialWeights;
 import com.gregtech.gregtech.api.material.MaterialDefinition;
 import com.gregtech.gregtech.api.material.MaterialItemDefinitions;
 import com.gregtech.gregtech.data.generated.MaterialForms;
@@ -66,6 +69,11 @@ public final class AddonMaterialContracts {
             case "named" -> namedDeclaration();
             case "scale" -> scale();
             case "softform" -> softPlate();
+            case "softmiss" -> softPlateRejected();
+            case "wires" -> wires();
+            case "wireplate" -> wirePlateRejected();
+            case "blockprefix" -> blockPrefix();
+            case "blockform" -> blockFormRejected();
             case "oreraw" -> rawOreStillRejected();
             case "ores" -> ores();
             case "oremismatch" -> oreMismatch();
@@ -82,6 +90,7 @@ public final class AddonMaterialContracts {
             case "prefixmiss" -> prefixMissing();
             case "prefixcond" -> prefixCondition();
             case "byproducts" -> byproducts();
+            case "reads" -> reads();
             default -> throw new IllegalArgumentException("Unknown scenario: " + args[0]);
         }
         System.out.println(args[0] + " passed " + assertions);
@@ -260,22 +269,110 @@ public final class AddonMaterialContracts {
 
     private static void softPlate() throws Exception {
         prepare();
-        AddonMaterials.submit("aa_soft", List.of(MaterialDefinition.builder(1, "SoftRubber").dust().build()),
-                List.of(new MaterialFormRequest("SoftRubber", "plate"), new MaterialFormRequest("SoftRubber", "foil")), null);
+        AddonMaterials.submitDeclared("aa_soft", List.of(MaterialDeclaration.builder("SoftRubber")
+                        .displayName("Soft Rubber").color(0xE8E8E8).dust().polymer().build()),
+                List.of(new MaterialFormRequest("SoftRubber", "plate"), new MaterialFormRequest("SoftRubber", "foil")));
         GTMaterialRegistry.init();
         boolean plate = false;
         boolean foil = false;
         boolean family = false;
+        boolean wire = false;
         for (var definition : MaterialItemDefinitions.all()) {
             if (!"SoftRubber".equals(definition.material().getName())) continue;
             String prefix = definition.prefix().getName();
             if ("plate".equals(prefix)) plate = true;
             if ("foil".equals(prefix)) foil = true;
+            if ("wireFine".equals(prefix)) wire = true;
             if ("plateDense".equals(prefix) || "plateDouble".equals(prefix)) family = true;
         }
-        check(plate && foil, "a dust material can explicitly request a plate and a foil");
-        check(!family, "the request does not add the rest of the plate family");
+        check(plate && foil, "polymer() lets a dust material request a plate and a foil");
+        check(!family && !wire, "polymer() does not add the plate family or a wire");
         check(ITEM_ID_SHA256.equals(coreAutomaticFingerprint()), "explicit plates do not change built-in item ids");
+    }
+
+    private static void softPlateRejected() {
+        prepare();
+        AddonMaterials.submitDeclared("aa_soft", List.of(MaterialDeclaration.builder("PlainDust")
+                        .displayName("Plain Dust").color(0x888888).dust().build()),
+                List.of(new MaterialFormRequest("PlainDust", "plate")));
+        expectThrows("not valid", "plate", "PlainDust");
+    }
+
+    private static void wires() throws Exception {
+        prepare();
+        AddonMaterials.submitDeclared("aa_wire", List.of(MaterialDeclaration.builder("SoftWire")
+                        .displayName("Soft Wire").color(0x333333).dust().wires().build()),
+                List.of(new MaterialFormRequest("SoftWire", "wireFine")));
+        GTMaterialRegistry.init();
+        boolean wire = false;
+        boolean plate = false;
+        for (var definition : MaterialItemDefinitions.all()) {
+            if (!"SoftWire".equals(definition.material().getName())) continue;
+            if ("wireFine".equals(definition.prefix().getName())) wire = true;
+            if ("plate".equals(definition.prefix().getName())) plate = true;
+        }
+        check(wire && !plate, "wires() emits wireFine and not a plate");
+        check(ITEM_ID_SHA256.equals(coreAutomaticFingerprint()), "wires do not change built-in item ids");
+    }
+
+    private static void wirePlateRejected() {
+        prepare();
+        AddonMaterials.submitDeclared("aa_wire", List.of(MaterialDeclaration.builder("SoftWire")
+                        .displayName("Soft Wire").color(0x333333).dust().wires().build()),
+                List.of(new MaterialFormRequest("SoftWire", "plate")));
+        expectThrows("not valid", "plate", "SoftWire");
+    }
+
+    private static void blockPrefix() throws Exception {
+        prepare();
+        expectThrows(IllegalArgumentException.class,
+                () -> PrefixDeclaration.block("sampleCasing", "", " Sample Casing", 8, "slab",
+                        "block/sample_casing", "storage_blocks/sample_casing", List.of("SoftRubber")),
+                "block shape must be cube");
+        AddonMaterials.submitDeclared("aa_block", List.of(MaterialDeclaration.builder("SoftRubber")
+                        .displayName("Soft Rubber").color(0xE8E8E8).dust().polymer().build()),
+                List.of(new MaterialFormRequest("SoftRubber", "plate")),
+                List.of(PrefixDeclaration.block("sampleCasing", "", " Sample Casing", 8, "cube",
+                        "block/sample_casing", "storage_blocks/sample_casing", List.of("SoftRubber"))));
+        GTMaterialRegistry.init();
+        BlockMaterialPrefix prefix = BlockPrefixRegistry.byName("sampleCasing");
+        GTMaterial material = GTMaterialRegistry.get("SoftRubber").resolve();
+        check(prefix != null && prefix.isAddon() && "sampleCasing".equals(prefix.compositionName()),
+                "the block prefix keeps its name for composition lookup");
+        check("aa_block".equals(prefix.textureNamespace()) && "block/sample_casing".equals(prefix.addonTexturePath()),
+                "the texture stays in the addon namespace");
+        check("storage_blocks/sample_casing".equals(prefix.oreDictionary()), "the ore dictionary name is kept");
+        var weights = BlockMaterialWeights.contained(material, prefix);
+        check(weights.size() == 1 && "SoftRubber".equals(weights.get(0).material().getName())
+                        && weights.get(0).amount() == 8 * GTValues.U,
+                "the block contains the declared units");
+        int lastCore = -1;
+        int block = -1;
+        var blocks = MaterialBlockDefinitions.all();
+        for (int i = 0; i < blocks.size(); i++) {
+            var definition = blocks.get(i);
+            if (GTMaterialRegistry.isCoreMaterial(definition.material()) && !definition.prefix().isAddon()) lastCore = i;
+            if (definition.prefix() == prefix && definition.material() == material) block = i;
+        }
+        check(block == blocks.size() - 1 && block > lastCore
+                        && blocks.get(block).blockId().equals("sample_casing_softrubber"),
+                "the addon block is appended after the built-in blocks");
+        check(BLOCK_ID_SHA256.equals(coreBlockFingerprint()), "block prefixes do not change built-in block ids");
+        boolean plate = false;
+        for (var definition : MaterialItemDefinitions.all()) {
+            if (definition.material() == material && "plate".equals(definition.prefix().getName())) plate = true;
+        }
+        check(plate, "the same material can still request a polymer plate");
+    }
+
+    private static void blockFormRejected() {
+        prepare();
+        AddonMaterials.submitDeclared("aa_block", List.of(MaterialDeclaration.builder("SoftRubber")
+                        .displayName("Soft Rubber").color(0xE8E8E8).dust().build()),
+                List.of(new MaterialFormRequest("SoftRubber", "sampleCasing")),
+                List.of(PrefixDeclaration.block("sampleCasing", "", " Sample Casing", 8, "cube",
+                        "block/sample_casing", "storage_blocks/sample_casing", List.of("SoftRubber"))));
+        expectThrows("block prefix", "sampleCasing", "SoftRubber");
     }
 
     private static void rawOreStillRejected() {
@@ -570,6 +667,31 @@ public final class AddonMaterialContracts {
         check(ITEM_ID_SHA256.equals(coreAutomaticFingerprint()), "condition prefixes do not change built-in item ids");
     }
 
+    private static void reads() {
+        prepare();
+        com.gregtech.gregtech.internal.addon.AddonCoreServices.bind();
+        GTMaterialRegistry.init();
+        var table = GTMaterialRegistry.get("Iron");
+        var iron = GregTechMaterials.find("Iron");
+        check(iron.mass() == table.getMass() && table.getMass() == 56, "iron mass matches the table");
+        check(iron.toolQuality() == table.getToolQuality() && table.getToolQuality() == 2, "iron tool quality matches the table");
+        check(iron.toolSpeed() == table.getToolSpeed() && table.getToolSpeed() == 6F, "iron tool speed matches the table");
+        check(iron.toolDurability() == table.getToolDurability() && table.getToolDurability() == 256L,
+                "iron tool durability matches the table");
+        var unknown = GregTechMaterials.find("NotRegisteredYet");
+        check(!unknown.valid() && unknown.mass() == GregTechMaterials.invalid().mass(), "an unknown material reads the sentinel");
+        var ingot = GregTechMaterials.StackComposition.of("ingot",
+                List.of(new GregTechMaterials.Component("Iron", MaterialPrefix.ingot.getMaterialWeight())));
+        check(ingot.present() && "ingot".equals(ingot.prefix()) && ingot.units().size() == 1
+                        && "Iron".equals(ingot.units().get(0).material())
+                        && ingot.units().get(0).amount() == GTValues.U,
+                "an iron ingot is one iron unit");
+        var dirt = GregTechMaterials.StackComposition.of(null, List.of());
+        check(!dirt.present() && dirt.prefix().isEmpty() && dirt.units().isEmpty(), "an unknown stack is empty");
+        check(!GregTechMaterials.StackComposition.of("ingot",
+                List.of(new GregTechMaterials.Component("Iron", 0))).present(), "a zero amount is not a unit");
+    }
+
     private static void byproducts() throws Exception {
         prepare();
         com.gregtech.gregtech.internal.addon.AddonCoreServices.bind();
@@ -646,7 +768,7 @@ public final class AddonMaterialContracts {
     private static String coreBlockFingerprint() throws Exception {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         for (MaterialBlockDefinitions.Definition definition : MaterialBlockDefinitions.all()) {
-            if (!GTMaterialRegistry.isCoreMaterial(definition.material())) continue;
+            if (!GTMaterialRegistry.isCoreMaterial(definition.material()) || definition.prefix().isAddon()) continue;
             String line = definition.blockId() + "\t" + definition.baseBlockId() + "\t"
                     + definition.prefix().getName() + "\t" + definition.material().getName() + "\t"
                     + definition.material().getId() + "\n";

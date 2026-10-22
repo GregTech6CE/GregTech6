@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.internal.addon;
 
+import com.gregtech.gregtech.api.addon.GregTechMaterials;
 import com.gregtech.gregtech.api.addon.SelectorTags;
 import com.gregtech.gregtech.api.addon.platform.AddonPlatform;
 import com.gregtech.gregtech.api.addon.platform.AddonTool;
@@ -7,6 +8,7 @@ import com.gregtech.gregtech.api.addon.platform.EnergyBlock;
 import com.gregtech.gregtech.api.energy.EnergyBlockDefaults;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
+import com.gregtech.gregtech.api.material.ItemMaterialRegistry;
 import com.gregtech.gregtech.api.prefix.PrefixRegistry;
 import com.gregtech.gregtech.api.tool.GTToolHelper;
 import com.gregtech.gregtech.api.tool.GTToolType;
@@ -19,6 +21,8 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+
+import java.util.ArrayList;
 
 /** SPDX-License-Identifier: LGPL-3.0-or-later. Installs the shared platform addon entry. */
 public final class AddonPlatformServices {
@@ -68,6 +72,23 @@ public final class AddonPlatformServices {
 
         @Override public long extract(EnergyBlock block, String energy, Direction side, long size, long amount, boolean execute) {
             return EnergyBlockDefaults.doEnergyExtraction(AddonEnergyAdapter.of(block), tag(energy), side, size, amount, execute);
+        }
+
+        @Override public GregTechMaterials.StackComposition composition(ItemStack stack) {
+            if (stack == null || stack.isEmpty()) return GregTechMaterials.StackComposition.EMPTY;
+            var data = ItemMaterialRegistry.get(stack).orElse(null);
+            if (data == null || data.components().isEmpty()) return GregTechMaterials.StackComposition.EMPTY;
+            String prefix = data.prefix() == null ? "" : data.prefix().getName();
+            if (prefix.isEmpty() && stack.getItem() instanceof net.minecraft.world.item.BlockItem blockItem
+                    && blockItem.getBlock() instanceof com.gregtech.gregtech.block.MaterialBlockLike like
+                    && like.prefix() != null)
+                prefix = like.prefix().compositionName();
+            var units = new ArrayList<GregTechMaterials.Component>();
+            for (var component : data.components()) {
+                if (component.material() == null || !component.material().isValid() || component.amount() <= 0) continue;
+                units.add(new GregTechMaterials.Component(component.material().resolve().getName(), component.amount()));
+            }
+            return GregTechMaterials.StackComposition.of(prefix, units);
         }
     }
 }

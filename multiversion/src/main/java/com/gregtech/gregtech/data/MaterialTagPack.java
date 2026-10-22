@@ -245,6 +245,8 @@ public final class MaterialTagPack extends AbstractPackResources {
 //?}
                     add(tags,"gt6ce",kind,m.prefix().getRegistryName()+"/"+name,id.toString());
                     if(group!=null) add(tags,"forge",kind,group.equals("storage_blocks/raw")?"storage_blocks/raw_"+name:group+"/"+name,id.toString());
+                    if(!m.prefix().oreDictionary().isEmpty())
+                        add(tags,"forge",kind,m.prefix().oreDictionary()+"/"+name,id.toString());
                 }
                 if(ironMaterials.contains(m.material().resolve()))
 //? if >=1.21.1 {

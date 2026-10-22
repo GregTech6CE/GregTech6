@@ -20,7 +20,9 @@ public record MaterialDeclaration(
         boolean liquid,
         boolean metal,
         boolean ores,
-        List<String> oreByproducts
+        List<String> oreByproducts,
+        boolean polymer,
+        boolean wires
 ) {
     public MaterialDeclaration {
         if (id < 0 || id >= 10_000) throw new IllegalArgumentException("Material ID must be 0..9999: " + id);
@@ -70,6 +72,8 @@ public record MaterialDeclaration(
         private boolean metal;
         private boolean ores;
         private List<String> oreByproducts = List.of();
+        private boolean polymer;
+        private boolean wires;
 
         private Builder(int id, String name) {
             this.id = id;
@@ -106,6 +110,15 @@ public record MaterialDeclaration(
          * Ore-processing byproducts, in GregTech's order. The first is the wash byproduct.
          * Calling this also turns {@link #ores()} on.
          */
+        /**
+         * Plate and foil requests only. This does not add double plates, dense plates, rods or an ingot.
+         * A metal that already generates those forms does not need it.
+         */
+        public Builder polymer() { polymer = true; return this; }
+
+        /** {@code wireFine} requests only. This does not add the electric wire blocks. */
+        public Builder wires() { wires = true; return this; }
+
         public Builder oreByproducts(String... materials) {
             ores = true;
             if (materials == null || materials.length == 0)
@@ -116,7 +129,7 @@ public record MaterialDeclaration(
 
         public MaterialDeclaration build() {
             return new MaterialDeclaration(id, name, displayName, color, meltingPoint, boilingPoint, density,
-                    formula, dust, gas, liquid, metal, ores, oreByproducts);
+                    formula, dust, gas, liquid, metal, ores, oreByproducts, polymer, wires);
         }
     }
 }

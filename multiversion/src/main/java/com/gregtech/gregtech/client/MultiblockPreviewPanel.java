@@ -24,7 +24,21 @@ public final class MultiblockPreviewPanel {
         var font=Minecraft.getInstance().font;
         for(int i=0;i<POSITIONS.length;i++) { int x=POSITIONS[i],w=i==4?34:18; graphics.fill(x,buttonTop(),x+w,buttonTop()+14,0xffd0d0d0);graphics.drawString(font,LABELS[i],x+4,buttonTop()+3,0xff333333,false); }
         graphics.drawString(font,Component.translatable(layer<0?"gt6ce.jei.preview.all":"gt6ce.jei.preview.layer",layer+1),6,height-24,0xff555555,false);
+        var repeats=repeatNotes();
+        if(!repeats.isEmpty())graphics.drawString(font,String.join("  ",repeats),6,height-36,0xff777777,false);
         graphics.drawString(font,Component.translatable("gt6ce.jei.preview.help"),6,height-12,0xff555555,false);
+    }
+    private List<String> repeatNotes() {
+        if(!(info.controller().getItem() instanceof net.minecraft.world.item.BlockItem item))return List.of();
+        String machine=null;
+        if(item.getBlock() instanceof com.gregtech.gregtech.block.machine.BasicMachineBlock basic)machine=basic.basicSpec().machineName();
+        else if(item.getBlock() instanceof com.gregtech.gregtech.block.machine.BehaviorMachineBlock behavior)machine=behavior.accepted().declaration().casing().machineType();
+        if(machine==null)return List.of();
+        var layout=com.gregtech.gregtech.content.multiblock.LargeMachineLayouts.layout(machine);
+        if(layout==null||layout.repeats().isEmpty())return List.of();
+        var out=new ArrayList<String>();
+        for(var repeat:layout.repeats())out.add("↻ "+repeat.key()+" "+repeat.min()+"–"+(repeat.max()<0?"…":repeat.max()));
+        return out;
     }
     public boolean click(double x,double y,int button) {
         if(button!=0||y<buttonTop()||y>=buttonTop()+14)return false;

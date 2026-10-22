@@ -1,15 +1,24 @@
 package com.gregtech.gregtech.core;
 
+import com.gregtech.gregtech.api.addon.AddonMachine;
 import com.gregtech.gregtech.api.addon.BehaviorEnergyRules;
+import com.gregtech.gregtech.api.addon.BehaviorMachine;
 import com.gregtech.gregtech.api.addon.BehaviorRecipeCatalysts;
 import com.gregtech.gregtech.api.addon.AddonOverclock;
 import com.gregtech.gregtech.api.addon.AddonMachineContributor;
 import com.gregtech.gregtech.api.addon.AddonMachineDefinition;
-import com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration;
+import com.gregtech.gregtech.api.addon.CellMatch;
 import com.gregtech.gregtech.api.addon.CompressedGasTankDeclaration;
-import com.gregtech.gregtech.api.addon.MachineDeclaration;
-import com.gregtech.gregtech.api.addon.MachineLayout;
-import com.gregtech.gregtech.api.addon.RecipeMapDeclaration;
+import com.gregtech.gregtech.api.addon.EnergyInput;
+import com.gregtech.gregtech.api.addon.EnergyOutput;
+import com.gregtech.gregtech.api.addon.FuelGenerator;
+import com.gregtech.gregtech.api.addon.FuelOutput;
+import com.gregtech.gregtech.api.addon.LayoutCell;
+import com.gregtech.gregtech.api.addon.MachineCasing;
+import com.gregtech.gregtech.api.addon.MachineIo;
+import com.gregtech.gregtech.api.addon.RecipeMachine;
+import com.gregtech.gregtech.api.addon.RecipeTable;
+import com.gregtech.gregtech.api.addon.StructureLayout;
 import com.gregtech.gregtech.api.addon.StructureRole;
 import com.gregtech.gregtech.api.addon.BehaviorRangeRules;
 import com.gregtech.gregtech.api.addon.ExclusiveOutputRules;
@@ -17,9 +26,12 @@ import com.gregtech.gregtech.api.addon.RecipeOutputChances;
 import com.gregtech.gregtech.api.energy.MachineFaceMasks;
 import com.gregtech.gregtech.api.addon.AddonMachineLayout;
 import com.gregtech.gregtech.api.addon.AddonMachines;
-import com.gregtech.gregtech.api.addon.StructurePartDeclaration;
 import com.gregtech.gregtech.api.addon.BehaviorMachineFactories;
-import com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration;
+import com.gregtech.gregtech.api.addon.LayoutPart;
+import com.gregtech.gregtech.api.addon.LayoutPartFactories;
+import com.gregtech.gregtech.api.addon.PartSlots;
+import com.gregtech.gregtech.api.addon.IoTarget;
+import com.gregtech.gregtech.api.addon.MachineFace;
 import com.gregtech.gregtech.api.addon.GregTechMachineContributor;
 import com.gregtech.gregtech.api.machine.BasicMachineEnergy;
 import com.gregtech.gregtech.api.machine.BasicMachineParameters;
@@ -59,6 +71,8 @@ public final class AddonMachineContracts {
             case "duplicate" -> duplicate();
             case "part" -> unknownPart();
             case "partok" -> partOk();
+            case "partfn" -> partFunctional();
+            case "partmiss" -> partMissingFactory();
             case "partname" -> partName();
             case "partmat" -> partMaterial();
             case "partdup" -> partDuplicate();
@@ -69,6 +83,7 @@ public final class AddonMachineContracts {
             case "overlap" -> overlap();
             case "bounds" -> bounds();
             case "benergy" -> behaviorEnergy();
+            case "binput" -> behaviorInput();
             case "factory" -> missingFactory();
             case "share" -> sharedBlockEntity();
             case "bconflict" -> behaviorConflict();
@@ -106,34 +121,38 @@ public final class AddonMachineContracts {
     }
 
     private static void knobs() {
-        var plain = MachineDeclaration.builder("press", "Steel").energy("EU", 32).recipeMap("aa.recipe.press").basic().build();
-        check(!plain.facesSpecified(), "default faces are unspecified");
+        var plain = RecipeMachine.builder(MachineCasing.builder("press", "Steel").build())
+                .energy(EnergyInput.builder("EU", 32).build())
+                .recipeMap("aa.recipe.press").basic().build();
+        check(plain.io() == null && !plain.energy().facesSpecified(), "default faces are unspecified");
         check(!plain.cheapOverclocking() && !plain.cheapOverclockingSpecified(), "default cheap overclock is off and unset");
         check(plain.minimumLightAbove() == 0, "default light gate is off");
         check(!plain.searchOutputTanks() && !plain.exclusiveOutputs(), "default output-tank search and exclusive outputs are off");
-        check(plain.itemOutputTarget() == null && plain.fluidOutputTarget() == null
-                && plain.itemInputSource() == null && plain.fluidInputSource() == null, "default IO targets are absent");
         check(!AddonOverclock.enabled(true, true, plain.cheapOverclocking(), true), "addon basic ignores a cheap built-in name");
         check(AddonOverclock.enabled(false, false, false, true), "built-in legacy cheap stays");
         check(!AddonOverclock.enabled(false, true, false, true), "an explicit off replaces a large machine's legacy cheap rule");
 
-        var declared = MachineDeclaration.builder("press", "Steel").energy("EU", 32).recipeMap("aa.recipe.press")
-                .itemInputs(BehaviorMachineDeclaration.Face.TOP)
-                .itemOutputs(BehaviorMachineDeclaration.Face.BOTTOM)
-                .energyInputs(BehaviorMachineDeclaration.Face.BACK)
-                .itemAutoOutput(BehaviorMachineDeclaration.Face.BOTTOM)
+        var declared = RecipeMachine.builder(MachineCasing.builder("press", "Steel").build())
+                .energy(EnergyInput.builder("EU", 32).faces(MachineFace.BACK).build())
+                .io(MachineIo.builder()
+                        .itemInputs(MachineFace.TOP)
+                        .itemOutputs(MachineFace.BOTTOM)
+                        .itemAutoOutput(MachineFace.BOTTOM)
+                        .build())
+                .recipeMap("aa.recipe.press")
                 .cheapOverclocking(true)
                 .minimumLightAbove(14)
                 .build();
-        check(declared.facesSpecified() && declared.itemAutoOutput() == BehaviorMachineDeclaration.Face.BOTTOM, "declared faces");
+        check(declared.io() != null && declared.io().itemAutoOutput() == MachineFace.BOTTOM, "declared faces");
         check(declared.cheapOverclocking() && declared.cheapOverclockingSpecified(), "cheap overclock opt-in");
         check(AddonOverclock.enabled(true, true, declared.cheapOverclocking(), false), "opt-in cheap overclock is on");
         check(declared.minimumLightAbove() == 14, "light gate");
         int top = 0;
-        for (var face : declared.itemInputs()) top |= face.bit();
-        check(top == (1 << BehaviorMachineDeclaration.Face.TOP.index()), "top bit matches the face index");
-        expectThrows(IllegalArgumentException.class, () -> MachineDeclaration.builder("press", "Steel")
-                .energy("EU", 32).recipeMap("aa.recipe.press").minimumLightAbove(16).build(), "light");
+        for (var face : declared.io().itemInputs()) top |= face.bit();
+        check(top == (1 << MachineFace.TOP.index()), "top bit matches the face index");
+        expectThrows(IllegalArgumentException.class, () -> RecipeMachine.builder(MachineCasing.builder("press", "Steel").build())
+                .energy(EnergyInput.builder("EU", 32).build())
+                .recipeMap("aa.recipe.press").minimumLightAbove(16).build(), "light");
         int[] certain = RecipeOutputChances.normalize(null, 2);
         check(certain.length == 2 && certain[0] == 10_000 && certain[1] == 10_000, "missing chances are certain");
         check(RecipeOutputChances.normalize(new int[0], 1)[0] == 10_000, "an empty chance list is certain");
@@ -142,7 +161,9 @@ public final class AddonMachineContracts {
         expectThrows(IllegalArgumentException.class, () -> RecipeOutputChances.normalize(new int[]{5_000}, 2), "does not match");
         expectThrows(IllegalArgumentException.class, () -> RecipeOutputChances.normalize(new int[]{0}, 1), "1..");
 
-        var detector = MachineDeclaration.builder("detector", "Steel").energy("EU", 32).recipeMap("aa.recipe.detector")
+        var detector = RecipeMachine.builder(MachineCasing.builder("detector", "Steel").build())
+                .energy(EnergyInput.builder("EU", 32).build())
+                .recipeMap("aa.recipe.detector")
                 .searchOutputTanks(true).exclusiveOutputs(true).build();
         check(detector.searchOutputTanks() && detector.exclusiveOutputs(), "both switches opt in");
         ExclusiveOutputRules.requirePair(2, 2);
@@ -220,8 +241,8 @@ public final class AddonMachineContracts {
                 List.of(new AddonMachineLayout("largesamplepress", List.of(
                         new AddonMachineLayout.Cell(1, 0, 0, "sample_wall", StructureGrid.Role.CASING)))),
                 List.of(), List.of(), List.of(),
-                List.of(new StructurePartDeclaration("sample_wall", "Steel", "", 6.0F),
-                        new StructurePartDeclaration("sample_cap", "Iron", "block/sample_cap", 4.0F)));
+                List.of(LayoutPart.builder("sample_wall", "Steel").hardness(6.0F).build(),
+                        LayoutPart.builder("sample_cap", "Iron").texture("block/sample_cap").hardness(4.0F).build()));
         AddonMachines.install(Set.of("centrifuge"), AddonMachines.builtInRecipeMapNames());
         check(AddonMachines.structureParts().isEmpty() == false && AddonMachines.structureParts().size() == 2, "two parts");
         check(AddonMachines.partId("sample_wall") == 1_000_000, "first runtime id");
@@ -234,11 +255,36 @@ public final class AddonMachineContracts {
         check(cells != null && cells.size() == 1 && cells.get(0).part() == 1_000_000, "layout stored the runtime id");
     }
 
+    private static void partMissingFactory() {
+        prepare();
+        GTMaterialRegistry.init();
+        AddonMachines.acceptLayoutParts("aa_part", List.of(computePart()));
+        expectInstall("aa_part", "sample_compute", "no part factory");
+    }
+
+    private static void partFunctional() {
+        prepare();
+        GTMaterialRegistry.init();
+        LayoutPartFactories.collect(Map.of("aa_part", Set.of("sample_compute")));
+        var declared = computePart();
+        AddonMachines.acceptLayoutParts("aa_part", List.of(declared));
+        AddonMachines.install(Set.of("centrifuge"), AddonMachines.builtInRecipeMapNames());
+        var stored = AddonMachines.structureParts();
+        check(stored.size() == 1 && stored.get(0).declaration().equals(declared) && stored.get(0).declaration().functional(),
+                "a functional part installs through its factory");
+    }
+
+    private static LayoutPart computePart() {
+        return LayoutPart.builder("sample_compute", "Steel").hardness(6.0F)
+                .slots(PartSlots.builder(4).stackLimit(1).drops(true).build())
+                .tick().use().field("power").field("running").build();
+    }
+
     private static void partName() {
         prepare();
         GTMaterialRegistry.init();
         AddonMachines.accept("aa_part", List.of(), List.of(), List.of(), List.of(), List.of(), List.of(),
-                List.of(new StructurePartDeclaration("steel_wall", "Steel", "", 6.0F)));
+                List.of(LayoutPart.builder("steel_wall", "Steel").hardness(6.0F).build()));
         expectInstall("aa_part", "steel_wall", "built-in");
     }
 
@@ -246,14 +292,14 @@ public final class AddonMachineContracts {
         prepare();
         GTMaterialRegistry.init();
         AddonMachines.accept("aa_part", List.of(), List.of(), List.of(), List.of(), List.of(), List.of(),
-                List.of(new StructurePartDeclaration("sample_wall", "NotAMaterial", "", 6.0F)));
+                List.of(LayoutPart.builder("sample_wall", "NotAMaterial").hardness(6.0F).build()));
         expectInstall("aa_part", "unknown", "material", "NotAMaterial");
     }
 
     private static void partDuplicate() {
         prepare();
         GTMaterialRegistry.init();
-        var part = new StructurePartDeclaration("sample_wall", "Steel", "", 6.0F);
+        var part = LayoutPart.builder("sample_wall", "Steel").hardness(6.0F).build();
         AddonMachines.accept("aa_one", List.of(), List.of(), List.of(), List.of(), List.of(), List.of(), List.of(part));
         AddonMachines.accept("aa_two", List.of(), List.of(), List.of(), List.of(), List.of(), List.of(), List.of(part));
         expectInstall("aa_two", "sample_wall", "aa_one");
@@ -344,9 +390,11 @@ public final class AddonMachineContracts {
     }
 
     private static void overlap() {
-        expectThrows(IllegalArgumentException.class, () -> BehaviorMachineDeclaration.builder("bad_press", "Steel")
-                .energy("EU", 32).gui("aa_sample:textures/gui/machine.png")
-                .fluid(1000, 8, 8, BehaviorMachineDeclaration.SlotRole.INPUT).build(),
+        expectThrows(IllegalArgumentException.class, () -> BehaviorMachine.builder(
+                MachineCasing.builder("bad_press", "Steel").build())
+                .energy(EnergyInput.builder("EU", 32).build())
+                .gui("aa_sample:textures/gui/machine.png")
+                .fluid(1000, 8, 8, BehaviorMachine.SlotRole.INPUT).build(),
                 "overlaps");
     }
 
@@ -367,49 +415,66 @@ public final class AddonMachineContracts {
         expectThrows(IllegalArgumentException.class, () -> BehaviorEnergyRules.requireEmit(64, 1, 32, 4), "exceeds");
         expectThrows(IllegalArgumentException.class, () -> BehaviorEnergyRules.requireEmit(32, 5, 32, 4), "exceeds");
         expectThrows(IllegalStateException.class, () -> BehaviorEnergyRules.requireEmit(32, 1, 0, 0), "no energy output");
+        var signed = EnergyOutput.builder("KU", 64, 2).minSize(16).allowNegative().faces(MachineFace.FRONT).build();
+        check(signed.minSize() == 16 && signed.allowNegative(), "KU output keeps a minimum and a direction sign");
+        check(!signed.equals(EnergyOutput.builder("KU", 64, 2).faces(MachineFace.FRONT).build()),
+                "the default minimum is not a declared minimum of 16");
+        BehaviorEnergyRules.requireEmit(-32, 2, signed.minSize(), signed.maxSize(), signed.maxAmount(), true);
+        assertions++;
+        expectThrows(IllegalArgumentException.class, () -> BehaviorEnergyRules.requireEmit(-8, 1, 16, 64, 2, true), "exceeds");
+        expectThrows(IllegalArgumentException.class, () -> BehaviorEnergyRules.requireEmit(-32, 1, 1, 64, 1, false), "exceeds");
+        expectThrows(IllegalArgumentException.class, () -> EnergyOutput.builder("EU", 32, 1).allowNegative()
+                .faces(MachineFace.FRONT).build(), "negative");
+        expectThrows(IllegalArgumentException.class, () -> EnergyOutput.builder("HU", 32, 1).allowNegative()
+                .faces(MachineFace.FRONT).build(), "negative");
+        expectThrows(IllegalArgumentException.class, () -> EnergyOutput.builder("RU", 32, 1).minSize(0)
+                .faces(MachineFace.FRONT).build(), "minimum");
+        expectThrows(IllegalArgumentException.class, () -> EnergyOutput.builder("RU", 32, 1).minSize(33)
+                .faces(MachineFace.FRONT).build(), "minimum");
 
-        var stored = BehaviorMachineDeclaration.builder("ru_buffer", "Steel")
-                .energy("RU", 32).gui("aa_sample:textures/gui/machine.png")
-                .energyCapacity(32_000)
-                .energyFaces(List.of(BehaviorMachineDeclaration.Face.LEFT, BehaviorMachineDeclaration.Face.RIGHT))
-                .energyOutputs(BehaviorMachineDeclaration.Face.BACK)
-                .energyOut("RU").energyOutMax(32, 1)
+        var stored = BehaviorMachine.builder(MachineCasing.builder("ru_buffer", "Steel").build())
+                .energy(EnergyInput.builder("RU", 32).capacity(32_000)
+                        .faces(MachineFace.LEFT, MachineFace.RIGHT).build())
+                .gui("aa_sample:textures/gui/machine.png")
+                .energyOutput(EnergyOutput.builder("RU", 32, 1).faces(MachineFace.BACK).build())
                 .build();
-        check(stored.energyCapacity() == 32_000, "declared capacity");
-        check(stored.energyOutSize() == 32 && stored.energyOutAmount() == 1, "output maximum");
-        check(stored.emitsEnergy() && stored.energyOutputFaces().size() == 1, "one output face");
-        var plain = BehaviorMachineDeclaration.builder("irrigator", "Steel")
-                .energy("EU", 32).gui("aa_sample:textures/gui/machine.png").build();
-        check(plain.energyCapacity() == 0 && !plain.emitsEnergy() && plain.energyOut().isEmpty(), "storage defaults stay empty");
-        expectThrows(IllegalArgumentException.class, () -> BehaviorMachineDeclaration.builder("bad_press", "Steel")
-                .energy("EU", 32).gui("aa_sample:textures/gui/machine.png").energyCapacity(-1).build(), "negative energy capacity");
-        expectThrows(IllegalArgumentException.class, () -> BehaviorMachineDeclaration.builder("bad_press", "Steel")
-                .energy("EU", 32).gui("aa_sample:textures/gui/machine.png").energyOut("RU").build(), "energy output needs");
-        expectThrows(IllegalArgumentException.class, () -> BehaviorMachineDeclaration.builder("bad_press", "Steel")
-                .energy("EU", 32).gui("aa_sample:textures/gui/machine.png")
-                .energyOutputs(BehaviorMachineDeclaration.Face.BACK, BehaviorMachineDeclaration.Face.BACK)
-                .energyOut("RU").energyOutMax(32, 1).build(), "repeats an energy output face");
+        check(stored.energy().capacity() == 32_000, "declared capacity");
+        check(stored.output().maxSize() == 32 && stored.output().maxAmount() == 1, "output maximum");
+        check(stored.emitsEnergy() && stored.output().faces().size() == 1, "one output face");
+        var plain = BehaviorMachine.builder(MachineCasing.builder("irrigator", "Steel").build())
+                .energy(EnergyInput.builder("EU", 32).build())
+                .gui("aa_sample:textures/gui/machine.png").build();
+        check(plain.energy().capacity() == 0 && !plain.emitsEnergy() && plain.output() == null, "storage defaults stay empty");
+        expectThrows(IllegalArgumentException.class, () -> EnergyInput.builder("EU", 32).capacity(-1).build(), "Negative energy capacity");
+        expectThrows(IllegalArgumentException.class, () -> EnergyOutput.builder("RU", 32, 1).build(), "needs a face");
+        expectThrows(IllegalArgumentException.class, () -> EnergyOutput.builder("RU", 32, 1)
+                .faces(MachineFace.BACK, MachineFace.BACK).build(), "Repeated");
 
         prepare();
         GTMaterialRegistry.init();
         AddonMachines.accept("aa_sample", List.of(), List.of(), List.of(), List.of(
-                BehaviorMachineDeclaration.builder("ru_buffer", "Steel").energy("RU", 32)
+                BehaviorMachine.builder(MachineCasing.builder("ru_buffer", "Steel").build())
+                        .energy(EnergyInput.builder("RU", 32).build())
                         .gui("aa_sample:textures/gui/machine.png")
-                        .energyOutputs(BehaviorMachineDeclaration.Face.BACK).energyOut("ZZ").energyOutMax(32, 1).build()));
+                        .energyOutput(EnergyOutput.builder("ZZ", 32, 1).faces(MachineFace.BACK).build()).build()));
         expectInstall("aa_sample", "unknown energy output", "ZZ");
     }
 
     private static void behaviorRange() {
-        var plain = BehaviorMachineDeclaration.builder("irrigator", "Steel")
-                .energy("EU", 32).gui("aa_sample:textures/gui/machine.png").build();
+        var plain = BehaviorMachine.builder(MachineCasing.builder("irrigator", "Steel").build())
+                .energy(EnergyInput.builder("EU", 32).build())
+                .gui("aa_sample:textures/gui/machine.png").build();
         check(plain.maxRange() == 0, "range defaults to 0");
-        var miner = BehaviorMachineDeclaration.builder("miner", "Steel")
-                .energy("EU", 32).gui("aa_sample:textures/gui/machine.png").maxRange(4).build();
+        var miner = BehaviorMachine.builder(MachineCasing.builder("miner", "Steel").build())
+                .energy(EnergyInput.builder("EU", 32).build())
+                .gui("aa_sample:textures/gui/machine.png").maxRange(4).build();
         check(miner.maxRange() == 4, "declared range");
-        expectThrows(IllegalArgumentException.class, () -> BehaviorMachineDeclaration.builder("bad_press", "Steel")
-                .energy("EU", 32).gui("aa_sample:textures/gui/machine.png").maxRange(-1).build(), "range must be");
-        expectThrows(IllegalArgumentException.class, () -> BehaviorMachineDeclaration.builder("bad_press", "Steel")
-                .energy("EU", 32).gui("aa_sample:textures/gui/machine.png").maxRange(BehaviorRangeRules.LIMIT + 1).build(), "range must be");
+        expectThrows(IllegalArgumentException.class, () -> BehaviorMachine.builder(MachineCasing.builder("bad_press", "Steel").build())
+                .energy(EnergyInput.builder("EU", 32).build())
+                .gui("aa_sample:textures/gui/machine.png").maxRange(-1).build(), "range must be");
+        expectThrows(IllegalArgumentException.class, () -> BehaviorMachine.builder(MachineCasing.builder("bad_press", "Steel").build())
+                .energy(EnergyInput.builder("EU", 32).build())
+                .gui("aa_sample:textures/gui/machine.png").maxRange(BehaviorRangeRules.LIMIT + 1).build(), "range must be");
         expectThrows(IllegalStateException.class, () -> BehaviorRangeRules.requireUsable(0), "range is 0");
         expectThrows(IllegalStateException.class, () -> BehaviorRangeRules.requireRadius(0, 1), "range is 0");
         expectThrows(IllegalArgumentException.class, () -> BehaviorRangeRules.requireInside(4, 5, 0, 0), "outside range");
@@ -424,16 +489,41 @@ public final class AddonMachineContracts {
     }
 
     private static void bounds() {
-        expectThrows(IllegalArgumentException.class, () -> BehaviorMachineDeclaration.builder("bad_press", "Steel")
-                .energy("EU", 32).gui("aa_sample:textures/gui/machine.png").energyGauge(-1, 8).build(),
+        expectThrows(IllegalArgumentException.class, () -> BehaviorMachine.builder(MachineCasing.builder("bad_press", "Steel").build())
+                .energy(EnergyInput.builder("EU", 32).build())
+                .gui("aa_sample:textures/gui/machine.png").energyGauge(-1, 8).build(),
                 "outside");
+    }
+
+    private static void behaviorInput() {
+        var wheel = BehaviorMachine.builder(MachineCasing.builder("sample_wheel", "Steel").machineType("sample_wheel").build())
+                .gui("aa_sample:textures/gui/machine.png")
+                .energyOutput(EnergyOutput.builder("EU", 32, 1).faces(MachineFace.TOP).build())
+                .build();
+        var wide = BehaviorMachine.builder(MachineCasing.builder("sample_wide", "Steel").machineType("sample_wide").build())
+                .energy(EnergyInput.builder("EU", 32).anyPacket().capacity(10_000).build())
+                .gui("aa_sample:textures/gui/machine.png")
+                .build();
+        check(wheel.energy() == null && wide.energy().anyPacket(), "declarations keep the new input rules");
+        prepare();
+        GTMaterialRegistry.init();
+        BehaviorMachineFactories.collect(Map.of("aa_sample", Set.of("sample_wheel", "sample_wide")));
+        AddonMachines.accept("aa_sample", List.of(), List.of(), List.of(), List.of(wheel, wide));
+        AddonMachines.install(Set.of("centrifuge"), AddonMachines.builtInRecipeMapNames());
+        check(AddonMachines.behaviorMachines().size() == 2, "both machines accepted");
+        var installedWheel = AddonMachines.behaviorMachines().get(0);
+        var installedWide = AddonMachines.behaviorMachines().get(1);
+        check(installedWheel.declaration().energy() == null && installedWheel.energyInMin() == 0
+                        && installedWheel.energyInMax() == 0, "output only has no input window");
+        check(installedWide.energyInMin() == 1 && installedWide.energyInMax() == Long.MAX_VALUE,
+                "anyPacket has no maximum");
     }
 
     private static void behaviorEnergy() {
         prepare();
         GTMaterialRegistry.init();
         AddonMachines.accept("aa_sample", List.of(), List.of(), List.of(), List.of(irrigator("bad_press", 8000,
-                BehaviorMachineDeclaration.SlotRole.INPUT, "", "ZZ")));
+                BehaviorMachine.SlotRole.INPUT, "", "ZZ")));
         expectInstall("aa_sample", "unknown", "energy", "ZZ");
     }
 
@@ -441,7 +531,7 @@ public final class AddonMachineContracts {
         prepare();
         GTMaterialRegistry.init();
         AddonMachines.accept("aa_sample", List.of(), List.of(), List.of(), List.of(irrigator("irrigator", 8000,
-                BehaviorMachineDeclaration.SlotRole.INPUT, "", "EU")));
+                BehaviorMachine.SlotRole.INPUT, "", "EU")));
         expectInstall("aa_sample", "irrigator", "no", "behavior", "factory");
     }
 
@@ -450,8 +540,8 @@ public final class AddonMachineContracts {
         GTMaterialRegistry.init();
         BehaviorMachineFactories.collect(Map.of("aa_sample", Set.of("irrigator")));
         AddonMachines.accept("aa_sample", List.of(), List.of(), List.of(), List.of(
-                irrigator("irrigator", 8000, BehaviorMachineDeclaration.SlotRole.INPUT, "be_irrigator", "EU"),
-                irrigator("irrigator_2", 16000, BehaviorMachineDeclaration.SlotRole.INPUT, "be_irrigator", "EU")));
+                irrigator("irrigator", 8000, BehaviorMachine.SlotRole.INPUT, "be_irrigator", "EU"),
+                irrigator("irrigator_2", 16000, BehaviorMachine.SlotRole.INPUT, "be_irrigator", "EU")));
         AddonMachines.install(Set.of("centrifuge"), AddonMachines.builtInRecipeMapNames());
         check(AddonMachines.behaviorMachines().size() == 2, "both tiers accepted");
         check(AddonMachines.machines().isEmpty(), "behavior machines are not recipe machines");
@@ -470,9 +560,9 @@ public final class AddonMachineContracts {
         GTMaterialRegistry.init();
         BehaviorMachineFactories.collect(Map.of("aa_one", Set.of("irrigator")));
         AddonMachines.accept("aa_one", List.of(), List.of(), List.of(), List.of(irrigator("irrigator", 8000,
-                BehaviorMachineDeclaration.SlotRole.INPUT, "", "EU")));
+                BehaviorMachine.SlotRole.INPUT, "", "EU")));
         AddonMachines.accept("aa_two", List.of(), List.of(), List.of(), List.of(irrigator("irrigator", 8000,
-                BehaviorMachineDeclaration.SlotRole.INPUT, "", "EU")));
+                BehaviorMachine.SlotRole.INPUT, "", "EU")));
         expectInstall("aa_two", "irrigator", "aa_one");
     }
 
@@ -481,8 +571,8 @@ public final class AddonMachineContracts {
         GTMaterialRegistry.init();
         BehaviorMachineFactories.collect(Map.of("aa_sample", Set.of("irrigator")));
         AddonMachines.accept("aa_sample", List.of(), List.of(), List.of(), List.of(
-                irrigator("irrigator", 8000, BehaviorMachineDeclaration.SlotRole.INPUT, "", "EU"),
-                irrigator("irrigator_2", 8000, BehaviorMachineDeclaration.SlotRole.OUTPUT, "be_other", "EU")));
+                irrigator("irrigator", 8000, BehaviorMachine.SlotRole.INPUT, "", "EU"),
+                irrigator("irrigator_2", 8000, BehaviorMachine.SlotRole.OUTPUT, "be_other", "EU")));
         expectInstall("aa_sample", "irrigator", "disagrees");
     }
 
@@ -493,68 +583,63 @@ public final class AddonMachineContracts {
         AddonMachines.accept("aa_sample", List.of(), List.of(),
                 List.of(new AddonMachineLayout("irrigator", List.of(
                         new AddonMachineLayout.Cell(1, 0, 0, "tank_wall", StructureGrid.Role.CASING)))),
-                List.of(irrigator("irrigator", 8000, BehaviorMachineDeclaration.SlotRole.INPUT, "", "EU")));
+                List.of(irrigator("irrigator", 8000, BehaviorMachine.SlotRole.INPUT, "", "EU")));
         AddonMachines.install(Set.of("centrifuge"), AddonMachines.builtInRecipeMapNames());
         check(SharedLargeMachineLayouts.cells("irrigator") != null, "behavior machine owns the layout");
         check(AddonMachines.behaviorMachines().size() == 1, "behavior machine accepted");
     }
 
     private static void energyPlain() {
-        var casing = new StructurePartDeclaration("sample_wall", "Steel", "", 6.0F);
+        var casing = LayoutPart.builder("sample_wall", "Steel").hardness(6.0F).build();
         check(casing.energy() == null, "casing has no energy role");
         prepare();
         GTMaterialRegistry.init();
         int steel = SharedLargeMachineParts.idForName("steel_wall");
         AddonMachines.accept("aa_part", List.of(), List.of(), List.of(), List.of(), List.of(), List.of(),
-                List.of(casing, new StructurePartDeclaration("sample_emitter", "Steel", "", 6.0F,
-                        new com.gregtech.gregtech.api.addon.StructurePartEnergy("EU", 1_000,
-                                List.of(BehaviorMachineDeclaration.Face.FRONT), 32, 1))));
+                List.of(casing, LayoutPart.builder("sample_emitter", "Steel").hardness(6.0F)
+                        .energyOutput(EnergyOutput.builder("EU", 32, 1).faces(MachineFace.FRONT).build(), 1_000).build()));
         AddonMachines.install(Set.of("centrifuge"), AddonMachines.builtInRecipeMapNames());
         check(AddonMachines.structureParts().get(0).declaration().energy() == null, "installed casing matches card 25");
         var energy = AddonMachines.structureParts().get(1).declaration().energy();
-        check(energy != null && "EU".equals(energy.type()) && energy.capacity() == 1_000, "energy role kept");
+        check(energy != null && "EU".equals(energy.type())
+                && AddonMachines.structureParts().get(1).declaration().energyCapacity() == 1_000, "energy role kept");
         check(SharedLargeMachineParts.idForName("steel_wall") == steel && steel == 18009, "steel wall stays 18009");
         check(AddonMachines.partId("sample_wall") == 1_000_000, "casing id still starts at 1000000");
     }
 
     private static void energyMax() {
-        expectThrows(IllegalArgumentException.class, () -> new com.gregtech.gregtech.api.addon.StructurePartEnergy(
-                "EU", 0, List.of(BehaviorMachineDeclaration.Face.FRONT), 32, 1), "capacity", "positive");
-        expectThrows(IllegalArgumentException.class, () -> new com.gregtech.gregtech.api.addon.StructurePartEnergy(
-                "EU", 10, List.of(BehaviorMachineDeclaration.Face.FRONT, BehaviorMachineDeclaration.Face.FRONT), 32, 1),
-                "repeats");
-        expectThrows(IllegalArgumentException.class, () -> new com.gregtech.gregtech.api.addon.StructurePartEnergy(
-                "EU", 10, List.of(), 32, 1), "output face");
-        expectThrows(IllegalArgumentException.class, () -> new com.gregtech.gregtech.api.addon.StructurePartEnergy(
-                "EU", 10, List.of(BehaviorMachineDeclaration.Face.FRONT), 0, 1), "positive");
-        var energy = new com.gregtech.gregtech.api.addon.StructurePartEnergy("RU", 100,
-                List.of(BehaviorMachineDeclaration.Face.FRONT), 32, 1);
-        check(energy.accept(90, 50) == 10, "charge stops at capacity");
-        check(energy.accept(100, 5) == 0, "full buffer accepts nothing");
-        expectThrows(IllegalArgumentException.class, () -> energy.requireOutput(64, 1), "exceeds");
-        energy.requireOutput(32, 1);
+        expectThrows(IllegalArgumentException.class, () -> LayoutPart.builder("sample_emitter", "Steel").hardness(6.0F)
+                .energyOutput(EnergyOutput.builder("EU", 32, 1).faces(MachineFace.FRONT).build(), 0).build(), "capacity", "positive");
+        expectThrows(IllegalArgumentException.class, () -> EnergyOutput.builder("EU", 32, 1)
+                .faces(MachineFace.FRONT, MachineFace.FRONT).build(), "Repeated");
+        expectThrows(IllegalArgumentException.class, () -> EnergyOutput.builder("EU", 32, 1)
+                .faces().build(), "needs a face");
+        expectThrows(IllegalArgumentException.class, () -> EnergyOutput.builder("EU", 0, 1)
+                .faces(MachineFace.FRONT).build(), "positive");
+        check(BasicMachineEnergy.accepted(90, 100, 1, 50) == 10, "charge stops at capacity");
+        check(BasicMachineEnergy.accepted(100, 100, 1, 5) == 0, "full buffer accepts nothing");
+        expectThrows(IllegalArgumentException.class, () -> BehaviorEnergyRules.requireEmit(64, 1, 32, 1), "exceeds");
+        BehaviorEnergyRules.requireEmit(32, 1, 32, 1);
     }
 
     private static void energyUnknown() {
         prepare();
         GTMaterialRegistry.init();
         AddonMachines.accept("aa_part", List.of(), List.of(), List.of(), List.of(), List.of(), List.of(),
-                List.of(new StructurePartDeclaration("sample_emitter", "Steel", "", 6.0F,
-                        new com.gregtech.gregtech.api.addon.StructurePartEnergy("ZZ", 1_000,
-                                List.of(BehaviorMachineDeclaration.Face.FRONT), 32, 1))));
+                List.of(LayoutPart.builder("sample_emitter", "Steel").hardness(6.0F)
+                        .energyOutput(EnergyOutput.builder("ZZ", 32, 1).faces(MachineFace.FRONT).build(), 1_000).build()));
         expectInstall("aa_part", "unknown energy", "ZZ");
     }
 
-    private static BehaviorMachineDeclaration irrigator(String id, int capacity,
-                                                        BehaviorMachineDeclaration.SlotRole input,
-                                                        String blockEntity, String energy) {
-        var builder = BehaviorMachineDeclaration.builder(id, "Steel")
-                .machineType("irrigator")
-                .energy(energy, 32)
+    private static BehaviorMachine irrigator(String id, int capacity,
+                                             BehaviorMachine.SlotRole input,
+                                             String blockEntity, String energy) {
+        var builder = BehaviorMachine.builder(MachineCasing.builder(id, "Steel").machineType("irrigator").build())
+                .energy(EnergyInput.builder(energy, 32).build())
                 .gui("aa_sample:textures/gui/machine.png")
                 .item(44, 26, input)
-                .item(116, 26, BehaviorMachineDeclaration.SlotRole.OUTPUT)
-                .fluid(capacity, 152, 8, BehaviorMachineDeclaration.SlotRole.INPUT)
+                .item(116, 26, BehaviorMachine.SlotRole.OUTPUT)
+                .fluid(capacity, 152, 8, BehaviorMachine.SlotRole.INPUT)
                 .toggle("aa.irrigator.water", 26, 64, true);
         if (!blockEntity.isEmpty()) builder.blockEntityId(blockEntity);
         return builder.build();
@@ -572,7 +657,7 @@ public final class AddonMachineContracts {
         check(AddonMachines.fuelMaps().size() == 1, "one fuel map accepted");
         check("aa.fuel.gas".equals(AddonMachines.fuelMaps().get(0).spec().mNameInternal), "fuel map name kept");
         check(AddonMachines.fuelGenerators().size() == 2, "engine and turbine accepted");
-        check(AddonMachines.fuelGenerators().get(1).declaration().output().distance() == 4, "turbine outputs four blocks behind");
+        check(AddonMachines.fuelGenerators().get(1).declaration().output().behind() == 4, "turbine outputs four blocks behind");
         var cells = SharedLargeMachineLayouts.cells("sampleturbine");
         check(cells != null && cells.size() == 1 && cells.get(0).part() == 18002, "turbine layout uses the tank wall");
         boolean closed = false;
@@ -596,8 +681,9 @@ public final class AddonMachineContracts {
         prepare();
         GTMaterialRegistry.init();
         AddonMachines.accept("aa_sample", List.of(), List.of(), List.of(), List.of(), List.of(fuelMap("aa.fuel.gas")),
-                List.of(FuelGeneratorDeclaration.builder("engine", "Steel").fuelMap("aa.fuel.gas")
-                        .energy("ZZ", 16).single().build()));
+                List.of(FuelGenerator.builder(MachineCasing.builder("engine", "Steel").build())
+                        .fuelMap("aa.fuel.gas")
+                        .output(FuelOutput.builder("ZZ", 16).front().build()).single().build()));
         expectInstall("aa_sample", "unknown", "energy", "ZZ");
     }
 
@@ -626,21 +712,27 @@ public final class AddonMachineContracts {
     }
 
     private static void fuelBounds() {
-        expectThrows(IllegalArgumentException.class, () -> FuelGeneratorDeclaration.builder("engine", "Steel")
-                .fuelMap("aa.fuel.gas").energy("RU", 16).efficiency(0).build(), "efficiency");
-        expectThrows(IllegalArgumentException.class, () -> FuelGeneratorDeclaration.builder("engine", "Steel")
-                .fuelMap("aa.fuel.gas").energy("RU", 16).efficiency(100_001).build(), "efficiency");
-        expectThrows(IllegalArgumentException.class, () -> FuelGeneratorDeclaration.builder("engine", "Steel")
-                .fuelMap("aa.fuel.gas").energy("RU", 0).build(), "parameters");
-        expectThrows(IllegalArgumentException.class, () -> FuelGeneratorDeclaration.builder("engine", "Steel")
-                .fuelMap("aa.fuel.gas").energy("RU", 16).tank(0).build(), "parameters");
-        expectThrows(IllegalArgumentException.class, () -> FuelGeneratorDeclaration.builder("engine", "Steel")
-                .fuelMap("aa.fuel.gas").energy("RU", 16).outputBehind(0).build(), "distance");
-        expectThrows(IllegalArgumentException.class, () -> FuelGeneratorDeclaration.builder("engine", "Steel")
-                .fuelMap("aa.fuel.gas").energy("RU", 16).outputBehind(9).build(), "distance");
-        expectThrows(IllegalArgumentException.class, () -> new com.gregtech.gregtech.api.addon.FuelMapDeclaration(
-                "Not A Map", "Gas", "aa_sample:textures/gui/machines/gas",
-                0, 0, 0, 1, 1, 1, 1, false, false, false, false), "fuel");
+        var casing = MachineCasing.builder("engine", "Steel").build();
+        var out = FuelOutput.builder("RU", 16).front().build();
+        expectThrows(IllegalArgumentException.class, () -> FuelGenerator.builder(casing)
+                .fuelMap("aa.fuel.gas").output(out).efficiency(0).build(), "efficiency");
+        expectThrows(IllegalArgumentException.class, () -> FuelGenerator.builder(casing)
+                .fuelMap("aa.fuel.gas").output(out).efficiency(100_001).build(), "efficiency");
+        expectThrows(IllegalArgumentException.class, () -> FuelOutput.builder("RU", 0).front().build(), "per tick");
+        expectThrows(IllegalArgumentException.class, () -> FuelGenerator.builder(casing)
+                .fuelMap("aa.fuel.gas").output(out).tank(0).build(), "parameters");
+        expectThrows(IllegalArgumentException.class, () -> FuelOutput.builder("RU", 16).behind(0).build(), "distance");
+        expectThrows(IllegalArgumentException.class, () -> FuelOutput.builder("RU", 16).behind(9).build(), "distance");
+        check(engine("aa.fuel.gas").amperes() == 1, "fuel amperes default to one");
+        var motor = FuelGenerator.builder(casing).fuelMap("aa.fuel.gas").output(out).amperes(4).build();
+        check(motor.amperes() == 4, "fuel amperes are stored");
+        expectThrows(IllegalArgumentException.class, () -> FuelGenerator.builder(casing)
+                .fuelMap("aa.fuel.gas").output(out).amperes(0).build(), "amperes");
+        expectThrows(IllegalArgumentException.class, () -> FuelGenerator.builder(casing)
+                .fuelMap("aa.fuel.gas").output(out).amperes(FuelGenerator.MAX_AMPERES + 1).build(), "amperes");
+        expectThrows(IllegalArgumentException.class, () -> RecipeTable.fuel("Not A Map")
+                .title("Gas").gui("aa_sample:textures/gui/machines/gas")
+                .inputFluids(1).outputFluids(1).minimalInputFluids(1).minimalInputs(1).build(), "fuel");
     }
 
     private static RecipeMapSpec fuelMap(String name) {
@@ -648,61 +740,64 @@ public final class AddonMachineContracts {
                 0, 0, 0, 1, 1, 1, 1, false, false, false, false);
     }
 
-    private static FuelGeneratorDeclaration engine(String fuelMap) {
-        return FuelGeneratorDeclaration.builder("engine", "Steel").machineType("sampleengine")
-                .fuelMap(fuelMap).efficiency(10_000).energy("RU", 16).tank(4000).outputFront().single().build();
+    private static FuelGenerator engine(String fuelMap) {
+        return FuelGenerator.builder(MachineCasing.builder("engine", "Steel").machineType("sampleengine").build())
+                .fuelMap(fuelMap).efficiency(10_000)
+                .output(FuelOutput.builder("RU", 16).front().build())
+                .tank(4000).single().build();
     }
 
-    private static FuelGeneratorDeclaration turbine(String fuelMap) {
-        return FuelGeneratorDeclaration.builder("turbine", "Steel").machineType("sampleturbine")
-                .fuelMap(fuelMap).efficiency(5_000).energy("RU", 32).tank(8000).outputBehind(4).multi().build();
+    private static FuelGenerator turbine(String fuelMap) {
+        return FuelGenerator.builder(MachineCasing.builder("turbine", "Steel").machineType("sampleturbine").build())
+                .fuelMap(fuelMap).efficiency(5_000)
+                .output(FuelOutput.builder("RU", 32).behind(4).build())
+                .tank(8000).multi().build();
     }
 
     private static void ioTarget() {
-        var right = BehaviorMachineDeclaration.Face.RIGHT;
-        expectThrows(IllegalArgumentException.class, () -> new MachineDeclaration.Target(0, 0, 0, right), "origin");
-        expectThrows(IllegalArgumentException.class, () -> new MachineDeclaration.Target(17, 0, 0, right), "out of range");
-        expectThrows(IllegalArgumentException.class, () -> new MachineDeclaration.Target(0, -17, 0, right), "out of range");
-        expectThrows(IllegalArgumentException.class, () -> new MachineDeclaration.Target(0, 0, 17, right), "out of range");
-        expectThrows(IllegalArgumentException.class, () -> new MachineDeclaration.Target(1, 0, 0, null), "receiver");
-        var edge = new MachineDeclaration.Target(-16, 16, -16, BehaviorMachineDeclaration.Face.BACK);
+        var right = MachineFace.RIGHT;
+        expectThrows(IllegalArgumentException.class, () -> IoTarget.at(0, 0, 0, right), "origin");
+        expectThrows(IllegalArgumentException.class, () -> IoTarget.at(17, 0, 0, right), "out of range");
+        expectThrows(IllegalArgumentException.class, () -> IoTarget.at(0, -17, 0, right), "out of range");
+        expectThrows(IllegalArgumentException.class, () -> IoTarget.at(0, 0, 17, right), "out of range");
+        expectThrows(IllegalArgumentException.class, () -> IoTarget.at(1, 0, 0, null), "receiver");
+        var edge = IoTarget.at(-16, 16, -16, MachineFace.BACK);
         check(edge.right() == -16 && edge.up() == 16 && edge.back() == -16, "±16 stays inside the limit");
-        expectThrows(IllegalArgumentException.class, () -> MachineDeclaration.builder("press", "Steel")
-                .energy("EU", 32).recipeMap("aa.recipe.press").basic()
-                .itemOutputTarget(1, 0, 0, right).build(), "large recipe");
-        expectThrows(IllegalArgumentException.class, () -> MachineDeclaration.builder("press", "Steel")
-                .energy("EU", 32).recipeMap("aa.recipe.press").largeRecipe()
-                .itemAutoOutput(BehaviorMachineDeclaration.Face.BOTTOM)
+        var casing = MachineCasing.builder("press", "Steel").build();
+        var energy = EnergyInput.builder("EU", 32).build();
+        expectThrows(IllegalArgumentException.class, () -> RecipeMachine.builder(casing)
+                .energy(energy).recipeMap("aa.recipe.press").basic()
+                .io(MachineIo.builder().itemOutputTarget(1, 0, 0, right).build()).build(), "large recipe");
+        expectThrows(IllegalArgumentException.class, () -> MachineIo.builder()
+                .itemAutoOutput(MachineFace.BOTTOM)
                 .itemOutputTarget(1, 0, 0, right).build(), "conflicts");
-        expectThrows(IllegalArgumentException.class, () -> MachineDeclaration.builder("press", "Steel")
-                .energy("EU", 32).recipeMap("aa.recipe.press").largeRecipe()
-                .fluidAutoOutput(BehaviorMachineDeclaration.Face.BOTTOM)
+        expectThrows(IllegalArgumentException.class, () -> MachineIo.builder()
+                .fluidAutoOutput(MachineFace.BOTTOM)
                 .fluidOutputTarget(1, 0, 0, right).build(), "conflicts");
-        expectThrows(IllegalArgumentException.class, () -> MachineDeclaration.builder("press", "Steel")
-                .energy("EU", 32).recipeMap("aa.recipe.press").largeRecipe()
-                .itemAutoInput(BehaviorMachineDeclaration.Face.TOP)
+        expectThrows(IllegalArgumentException.class, () -> MachineIo.builder()
+                .itemAutoInput(MachineFace.TOP)
                 .itemInputSource(1, 0, 0, right).build(), "conflicts");
-        expectThrows(IllegalArgumentException.class, () -> MachineDeclaration.builder("press", "Steel")
-                .energy("EU", 32).recipeMap("aa.recipe.press").largeRecipe()
-                .fluidAutoInput(BehaviorMachineDeclaration.Face.TOP)
+        expectThrows(IllegalArgumentException.class, () -> MachineIo.builder()
+                .fluidAutoInput(MachineFace.TOP)
                 .fluidInputSource(1, 0, 0, right).build(), "conflicts");
-        var plain = MachineDeclaration.builder("plain", "Steel").energy("EU", 512).recipeMap("aa.recipe.press")
+        var plain = RecipeMachine.builder(MachineCasing.builder("plain", "Steel").build())
+                .energy(EnergyInput.builder("EU", 512).build()).recipeMap("aa.recipe.press")
                 .largeRecipe().structureKeys(List.of("aa.structure.press")).build();
-        check(plain.itemOutputTarget() == null && plain.fluidOutputTarget() == null
-                && plain.itemInputSource() == null && plain.fluidInputSource() == null
-                && plain.itemAutoOutput() == null, "an undeclared machine keeps every target absent");
-        var aimed = MachineDeclaration.builder("aimed", "Steel").energy("EU", 512).recipeMap("aa.recipe.press")
+        check(plain.io() == null, "an undeclared machine keeps every target absent");
+        var aimed = RecipeMachine.builder(MachineCasing.builder("aimed", "Steel").build())
+                .energy(EnergyInput.builder("EU", 512).build()).recipeMap("aa.recipe.press")
                 .largeRecipe().structureKeys(List.of("aa.structure.press"))
-                .itemOutputTarget(2, 0, 1, BehaviorMachineDeclaration.Face.RIGHT)
-                .fluidOutputTarget(-2, 0, 1, BehaviorMachineDeclaration.Face.LEFT)
-                .itemInputSource(0, 2, 1, BehaviorMachineDeclaration.Face.BOTTOM)
-                .fluidInputSource(0, 1, 2, BehaviorMachineDeclaration.Face.FRONT)
+                .io(MachineIo.builder()
+                        .itemOutputTarget(2, 0, 1, MachineFace.RIGHT)
+                        .fluidOutputTarget(-2, 0, 1, MachineFace.LEFT)
+                        .itemInputSource(0, 2, 1, MachineFace.BOTTOM)
+                        .fluidInputSource(0, 1, 2, MachineFace.FRONT).build())
                 .build();
-        check(aimed.itemAutoOutput() == null && aimed.fluidAutoOutput() == null
-                && aimed.itemAutoInput() == null && aimed.fluidAutoInput() == null,
+        check(aimed.io().itemAutoOutput() == null && aimed.io().fluidAutoOutput() == null
+                && aimed.io().itemAutoInput() == null && aimed.io().fluidAutoInput() == null,
                 "a target leaves the automatic face unset");
-        check(aimed.itemOutputTarget().right() == 2 && aimed.fluidOutputTarget().right() == -2
-                && aimed.itemInputSource().up() == 2 && aimed.fluidInputSource().back() == 2,
+        check(aimed.io().itemOutputTarget().right() == 2 && aimed.io().fluidOutputTarget().right() == -2
+                && aimed.io().itemInputSource().up() == 2 && aimed.io().fluidInputSource().back() == 2,
                 "the four cells are kept");
         prepare();
         GTMaterialRegistry.init();
@@ -710,7 +805,7 @@ public final class AddonMachineContracts {
         expectThrows(IllegalArgumentException.class, () -> BasicMachineParameters.builder("press", steel)
                 .energy(GregTechTags.Energy.EU, 32)
                 .faces(MachineFaceMasks.builder().itemAutoOut(MachineFaceMasks.BOTTOM).build())
-                .itemOutputTarget(new MachineDeclaration.Target(1, 0, 0, right))
+                .itemOutputTarget(IoTarget.at(1, 0, 0, MachineFace.RIGHT))
                 .build(), "conflicts");
         var bare = BasicMachineParameters.builder("plain_press", steel).machineType("sampleplain")
                 .energy(GregTechTags.Energy.EU, 512).build();
@@ -718,10 +813,10 @@ public final class AddonMachineContracts {
                 && bare.itemInputSource() == null && bare.fluidInputSource() == null
                 && bare.faceConfig().itemAutoOutput() == -1 && bare.faceConfig().fluidAutoOutput() == -1,
                 "no target leaves the previous face mask");
-        var item = new MachineDeclaration.Target(2, 0, 1, BehaviorMachineDeclaration.Face.RIGHT);
-        var fluid = new MachineDeclaration.Target(-2, 0, 1, BehaviorMachineDeclaration.Face.LEFT);
-        var itemIn = new MachineDeclaration.Target(0, 2, 1, BehaviorMachineDeclaration.Face.BOTTOM);
-        var fluidIn = new MachineDeclaration.Target(0, 1, 2, BehaviorMachineDeclaration.Face.FRONT);
+        var item = IoTarget.at(2, 0, 1, MachineFace.RIGHT);
+        var fluid = IoTarget.at(-2, 0, 1, MachineFace.LEFT);
+        var itemIn = IoTarget.at(0, 2, 1, MachineFace.BOTTOM);
+        var fluidIn = IoTarget.at(0, 1, 2, MachineFace.FRONT);
         var aimedParameters = BasicMachineParameters.builder("aimed_press", steel).machineType("sampletarget")
                 .energy(GregTechTags.Energy.EU, 512)
                 .itemOutputTarget(item).fluidOutputTarget(fluid)
@@ -768,26 +863,30 @@ public final class AddonMachineContracts {
     }
 
     private static void energyRange() throws Exception {
-        var unset = MachineDeclaration.builder("press", "Steel").energy("EU", 32).recipeMap("aa.recipe.press").basic().build();
-        check(!unset.energyRangeSpecified() && unset.energyInMin() == 0 && unset.energyInMax() == 0, "an unset range is 0..0");
-        check(MachineDeclaration.builder("press", "Steel").energy("EU", 32).recipeMap("aa.recipe.press")
-                .energyRange(0, 0).build().energyRangeSpecified() == false, "0..0 is still unset");
-        var outside = MachineDeclaration.builder("press", "Steel").energy("EU", 32).recipeMap("aa.recipe.press")
-                .energyRange(64, 256).build();
-        check(outside.energyRangeSpecified() && outside.energyPerTick() == 32
-                && outside.energyInMin() == 64 && outside.energyInMax() == 256, "nominal may sit outside the range");
-        check(MachineDeclaration.builder("press", "Steel").energy("EU", 32).recipeMap("aa.recipe.press")
-                .energyRange(1, 1).build().energyInMax() == 1, "a single accepted size is allowed");
-        expectThrows(IllegalArgumentException.class, () -> MachineDeclaration.builder("press", "Steel")
-                .energy("EU", 32).recipeMap("aa.recipe.press").energyRange(8, 4).build(), "Invalid energy range");
-        expectThrows(IllegalArgumentException.class, () -> MachineDeclaration.builder("press", "Steel")
-                .energy("EU", 32).recipeMap("aa.recipe.press").energyRange(0, 8).build(), "Invalid energy range");
-        expectThrows(IllegalArgumentException.class, () -> MachineDeclaration.builder("press", "Steel")
-                .energy("EU", 32).recipeMap("aa.recipe.press").energyRange(8, 0).build(), "Invalid energy range");
-        expectThrows(IllegalArgumentException.class, () -> MachineDeclaration.builder("time_press", "Steel")
-                .energy("TU", 1).recipeMap("aa.recipe.press").energyRange(1, 16).build(), "TU", "energy range");
-        expectThrows(IllegalArgumentException.class, () -> MachineDeclaration.builder("time_press", "Steel")
-                .energy("tu", 1).recipeMap("aa.recipe.press").largeRecipe().energyRange(1, 32).build(), "TU", "energy range");
+        var casing = MachineCasing.builder("press", "Steel").build();
+        var unset = RecipeMachine.builder(casing).energy(EnergyInput.builder("EU", 32).build())
+                .recipeMap("aa.recipe.press").basic().build();
+        check(!unset.energy().rangeSpecified() && unset.energy().rangeMin() == 0 && unset.energy().rangeMax() == 0,
+                "an unset range is 0..0");
+        expectThrows(IllegalArgumentException.class, () -> EnergyInput.builder("EU", 32).range(0, 0).build(),
+                "Invalid energy range");
+        var outside = RecipeMachine.builder(casing)
+                .energy(EnergyInput.builder("EU", 32).range(64, 256).build())
+                .recipeMap("aa.recipe.press").build();
+        check(outside.energy().rangeSpecified() && outside.energy().perTick() == 32
+                && outside.energy().rangeMin() == 64 && outside.energy().rangeMax() == 256,
+                "nominal may sit outside the range");
+        check(RecipeMachine.builder(casing).energy(EnergyInput.builder("EU", 32).range(1, 1).build())
+                .recipeMap("aa.recipe.press").build().energy().rangeMax() == 1,
+                "a single accepted size is allowed");
+        expectThrows(IllegalArgumentException.class, () -> EnergyInput.builder("EU", 32).range(8, 4).build(), "Invalid energy range");
+        expectThrows(IllegalArgumentException.class, () -> EnergyInput.builder("EU", 32).range(0, 8).build(), "Invalid energy range");
+        expectThrows(IllegalArgumentException.class, () -> EnergyInput.builder("EU", 32).range(8, 0).build(), "Invalid energy range");
+        expectThrows(IllegalArgumentException.class, () -> RecipeMachine.builder(MachineCasing.builder("time_press", "Steel").build())
+                .energy(EnergyInput.builder("TU", 1).range(1, 16).build()).recipeMap("aa.recipe.press").build(), "TU", "energy range");
+        expectThrows(IllegalArgumentException.class, () -> RecipeMachine.builder(MachineCasing.builder("time_press", "Steel").build())
+                .energy(EnergyInput.builder("tu", 1).range(1, 32).build()).recipeMap("aa.recipe.press").largeRecipe().build(),
+                "TU", "energy range");
         prepare();
         GTMaterialRegistry.init();
         var steel = GTMaterialRegistry.get("Steel");
@@ -880,11 +979,11 @@ public final class AddonMachineContracts {
 
     private static void plainBlock() {
         expectThrows(IllegalArgumentException.class,
-                () -> new MachineLayout.Cell(1, 0, 0, "minecraft:glass", StructureRole.ENERGY_INPUT),
+                () -> LayoutCell.at(1, 0, 0, CellMatch.block("minecraft:glass"), StructureRole.ENERGY_INPUT),
                 "casing");
         for (String bad : new String[] {"Minecraft:Glass", "minecraft:", "#", "#c:", "mine craft:stone"}) {
             expectThrows(IllegalArgumentException.class,
-                    () -> new MachineLayout.Cell(1, 0, 0, bad, StructureRole.CASING),
+                    () -> CellMatch.parse(bad),
                     "Invalid block name");
         }
         prepare();
@@ -914,20 +1013,21 @@ public final class AddonMachineContracts {
     private static void plainRole() {
         prepare();
         GTMaterialRegistry.init();
-        AddonMachines.accept("aa_sample", List.of(map("aa.recipe.press")),
+        expectThrows(IllegalStateException.class, () -> AddonMachines.accept("aa_sample", List.of(map("aa.recipe.press")),
                 List.of(large("large_press", "largesamplepress", "aa.recipe.press")),
                 List.of(new AddonMachineLayout("largesamplepress", List.of(
-                        new AddonMachineLayout.Cell(1, 0, 0, "minecraft:glass", StructureGrid.Role.ENERGY_INPUT)))));
-        expectInstall("aa_sample", "largesamplepress", "casing");
+                        new AddonMachineLayout.Cell(1, 0, 0, "minecraft:glass", StructureGrid.Role.ENERGY_INPUT))))),
+                "aa_sample", "largesamplepress", "casing");
     }
 
-    private static MachineLayout wall(String name) {
-        return new MachineLayout(name, List.of(new MachineLayout.Cell(1, 0, 0, "tank_wall", StructureRole.CASING)));
+    private static StructureLayout wall(String name) {
+        return StructureLayout.builder(name)
+                .cell(1, 0, 0, CellMatch.part("tank_wall"), StructureRole.CASING).build();
     }
 
-    private static RecipeMapDeclaration pressMap() {
-        return new RecipeMapDeclaration("aa.recipe.press", "Sample", "aa_sample:textures/gui/machines/press",
-                1, 1, 1, 0, 0, 0, 1, true, false, false, false);
+    private static RecipeTable pressMap() {
+        return RecipeTable.machine("aa.recipe.press").title("Sample").gui("aa_sample:textures/gui/machines/press")
+                .inputItems(1).outputItems(1).minimalInputItems(1).minimalInputs(1).needsOutputs(true).build();
     }
 
     private static void loadMachine(Class<?> contributor) {
@@ -997,14 +1097,14 @@ public final class AddonMachineContracts {
         BehaviorRecipeCatalysts.add(index, List.of("aa.fuel.solid"), "boiler", name -> name, Object::equals);
         check(index.get("aa.fuel.solid").size() == 1, "the same machine is not listed twice");
 
-        var plain = BehaviorMachineDeclaration.builder("irrigator", "Steel")
-                .energy("EU", 32).gui("aa_sample:textures/gui/machine.png").build();
+        var plain = BehaviorMachine.builder(MachineCasing.builder("irrigator", "Steel").build())
+                .energy(EnergyInput.builder("EU", 32).build()).gui("aa_sample:textures/gui/machine.png").build();
         check(plain.recipeMaps().isEmpty(), "recipe maps default to empty");
-        expectThrows(IllegalArgumentException.class, () -> BehaviorMachineDeclaration.builder("bad_press", "Steel")
-                .energy("EU", 32).gui("aa_sample:textures/gui/machine.png")
+        expectThrows(IllegalArgumentException.class, () -> BehaviorMachine.builder(MachineCasing.builder("bad_press", "Steel").build())
+                .energy(EnergyInput.builder("EU", 32).build()).gui("aa_sample:textures/gui/machine.png")
                 .recipeMaps("aa.fuel.solid", "aa.fuel.solid").build(), "repeats");
-        expectThrows(IllegalArgumentException.class, () -> BehaviorMachineDeclaration.builder("bad_press", "Steel")
-                .energy("EU", 32).gui("aa_sample:textures/gui/machine.png")
+        expectThrows(IllegalArgumentException.class, () -> BehaviorMachine.builder(MachineCasing.builder("bad_press", "Steel").build())
+                .energy(EnergyInput.builder("EU", 32).build()).gui("aa_sample:textures/gui/machine.png")
                 .recipeMaps("Not A Map").build(), "Invalid recipe map");
 
         prepare();
@@ -1038,9 +1138,9 @@ public final class AddonMachineContracts {
         expectInstall("aa_two", "boiler", "unknown", "aa.fuel.solid");
     }
 
-    private static BehaviorMachineDeclaration boiler(String... maps) {
-        return BehaviorMachineDeclaration.builder("boiler", "Steel").machineType("boiler")
-                .energy("EU", 32).gui("aa_sample:textures/gui/machine.png").recipeMaps(maps).build();
+    private static BehaviorMachine boiler(String... maps) {
+        return BehaviorMachine.builder(MachineCasing.builder("boiler", "Steel").machineType("boiler").build())
+                .energy(EnergyInput.builder("EU", 32).build()).gui("aa_sample:textures/gui/machine.png").recipeMaps(maps).build();
     }
 
     private static void gasOk() {
@@ -1104,41 +1204,43 @@ public final class AddonMachineContracts {
 
     public static final class RangeContributor implements AddonMachineContributor {
         @Override public String addonId() { return "aa_sample"; }
-        @Override public List<RecipeMapDeclaration> recipeMaps() { return List.of(pressMap()); }
-        @Override public List<MachineDeclaration> machines() {
+        @Override public List<RecipeTable> recipeTables() { return List.of(pressMap()); }
+        @Override public List<AddonMachine> addonMachines() {
             return List.of(
-                    MachineDeclaration.builder("press_slow", "Steel").machineType("samplepress")
-                            .energy("EU", 32).recipeMap("aa.recipe.press").basic().build(),
-                    MachineDeclaration.builder("press_fast", "Steel").machineType("samplepress")
-                            .energy("EU", 64).recipeMap("aa.recipe.press").basic().build(),
-                    MachineDeclaration.builder("time_press", "Steel").machineType("sampletime")
-                            .energy("TU", 1).recipeMap("aa.recipe.press").basic().build(),
-                    MachineDeclaration.builder("large_press", "Steel").machineType("largesamplepress")
-                            .energy("EU", 512).recipeMap("aa.recipe.press").largeRecipe().build(),
-                    MachineDeclaration.builder("large_heat", "Steel").machineType("largeheat")
-                            .energy("HU", 512).recipeMap("aa.recipe.press").largeRecipe().build(),
-                    MachineDeclaration.builder("large_wide", "Steel").machineType("largewide")
-                            .energy("EU", 512).recipeMap("aa.recipe.press").largeRecipe().energyRange(256, 2048).build(),
-                    MachineDeclaration.builder("large_low", "Steel").machineType("largerange")
-                            .energy("EU", 128).recipeMap("aa.recipe.press").largeRecipe().energyRange(64, 256).build(),
-                    MachineDeclaration.builder("large_high", "Steel").machineType("largerange")
-                            .energy("EU", 256).recipeMap("aa.recipe.press").largeRecipe().energyRange(64, 256).build());
+                    RecipeMachine.builder(MachineCasing.builder("press_slow", "Steel").machineType("samplepress").build())
+                            .energy(EnergyInput.builder("EU", 32).build()).recipeMap("aa.recipe.press").basic().build(),
+                    RecipeMachine.builder(MachineCasing.builder("press_fast", "Steel").machineType("samplepress").build())
+                            .energy(EnergyInput.builder("EU", 64).build()).recipeMap("aa.recipe.press").basic().build(),
+                    RecipeMachine.builder(MachineCasing.builder("time_press", "Steel").machineType("sampletime").build())
+                            .energy(EnergyInput.builder("TU", 1).build()).recipeMap("aa.recipe.press").basic().build(),
+                    RecipeMachine.builder(MachineCasing.builder("large_press", "Steel").machineType("largesamplepress").build())
+                            .energy(EnergyInput.builder("EU", 512).build()).recipeMap("aa.recipe.press").largeRecipe().build(),
+                    RecipeMachine.builder(MachineCasing.builder("large_heat", "Steel").machineType("largeheat").build())
+                            .energy(EnergyInput.builder("HU", 512).build()).recipeMap("aa.recipe.press").largeRecipe().build(),
+                    RecipeMachine.builder(MachineCasing.builder("large_wide", "Steel").machineType("largewide").build())
+                            .energy(EnergyInput.builder("EU", 512).range(256, 2048).build()).recipeMap("aa.recipe.press").largeRecipe().build(),
+                    RecipeMachine.builder(MachineCasing.builder("large_low", "Steel").machineType("largerange").build())
+                            .energy(EnergyInput.builder("EU", 128).range(64, 256).build()).recipeMap("aa.recipe.press").largeRecipe().build(),
+                    RecipeMachine.builder(MachineCasing.builder("large_high", "Steel").machineType("largerange").build())
+                            .energy(EnergyInput.builder("EU", 256).range(64, 256).build()).recipeMap("aa.recipe.press").largeRecipe().build());
         }
-        @Override public List<MachineLayout> layouts() {
+        @Override public List<StructureLayout> structureLayouts() {
             return List.of(wall("largesamplepress"), wall("largeheat"), wall("largewide"), wall("largerange"));
         }
     }
 
     public static final class RangeDisagreeContributor implements AddonMachineContributor {
         @Override public String addonId() { return "aa_sample"; }
-        @Override public List<RecipeMapDeclaration> recipeMaps() { return List.of(pressMap()); }
-        @Override public List<MachineDeclaration> machines() {
+        @Override public List<RecipeTable> recipeTables() { return List.of(pressMap()); }
+        @Override public List<AddonMachine> addonMachines() {
             return List.of(
-                    MachineDeclaration.builder("large_a", "Steel").machineType("largesame")
-                            .energy("EU", 512).recipeMap("aa.recipe.press").largeRecipe().energyRange(256, 2048).build(),
-                    MachineDeclaration.builder("large_b", "Steel").machineType("largesame")
-                            .energy("EU", 512).recipeMap("aa.recipe.press").largeRecipe().build());
+                    RecipeMachine.builder(MachineCasing.builder("large_a", "Steel").machineType("largesame").build())
+                            .energy(EnergyInput.builder("EU", 512).range(256, 2048).build())
+                            .recipeMap("aa.recipe.press").largeRecipe().build(),
+                    RecipeMachine.builder(MachineCasing.builder("large_b", "Steel").machineType("largesame").build())
+                            .energy(EnergyInput.builder("EU", 512).build())
+                            .recipeMap("aa.recipe.press").largeRecipe().build());
         }
-        @Override public List<MachineLayout> layouts() { return List.of(wall("largesame")); }
+        @Override public List<StructureLayout> structureLayouts() { return List.of(wall("largesame")); }
     }
 }

@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.api.addon.platform;
 
+import com.gregtech.gregtech.api.addon.GregTechMaterials;
 import com.gregtech.gregtech.api.addon.SelectorTags;
 
 import net.minecraft.world.item.ItemStack;
@@ -16,6 +17,15 @@ public final class AddonItems {
 
     public static ItemStack stack(String prefix, String material) {
         return stack(prefix, material, 1);
+    }
+
+    /**
+     * Prefix name and material units GregTech already stores for this stack.
+     * An unknown stack is empty. The stack count is not multiplied in.
+     */
+    public static GregTechMaterials.StackComposition composition(ItemStack stack) {
+        if (stack == null || stack.isEmpty()) return GregTechMaterials.StackComposition.EMPTY;
+        return AddonPlatform.services().composition(stack);
     }
 
     /** Programmed circuit {@code n} ({@code integrated_circuit_n}), count 1. Outside 0..24 fails. */

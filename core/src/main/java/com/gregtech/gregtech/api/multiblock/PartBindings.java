@@ -15,4 +15,5 @@ public final class PartBindings<P,R> {
         return true;
     }
     public void clear(Consumer<P> release) { bound.forEach(release); bound.clear(); }
+    public Set<P> positions() { return Set.copyOf(bound); }
 }
