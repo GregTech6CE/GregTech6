@@ -65,7 +65,8 @@ jobs:
         run: >-
           python -X utf8 -m unittest
           tools.tests.test_source_policy tools.tests.test_standard_chinese
-          tools.tests.test_jade_translations tools.tests.test_localization_coverage
+          tools.tests.test_jade_translations tools.tests.test_jade_dynamic_localization
+          tools.tests.test_issue76_sapling_assets tools.tests.test_localization_coverage
           tools.tests.test_identity_localization tools.tests.test_numbered_language
           tools.tests.test_material_names tools.tests.test_creative_language
           tools.tests.test_delivery_language tools.tests.test_native_layout tools.tests.test_gearbox_item_roots

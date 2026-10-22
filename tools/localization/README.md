@@ -97,3 +97,10 @@ python -X utf8 tools/integration/import_identity_localization.py --source <原�
 不开放整个 message 或 tooltip 命名空间，不覆盖原文、别名或
 已核验的 CrucibleCraft 译文。新增条目必须保留格式参数，英文变化或越界均拒绝同步。
 仅含单位、数值与占位符的行保留其语义；既有有源中文继续沿用原绑定。
+
+Jade 动态名称补充：六个方向、蒸汽输入与方坯模具形状使用项目 Jade 键；
+原文 `itemGroup.billet=Billets` 保持不变，中文“方坯”仅用于现代 Jade 模具行。
+五个旧控制器名字按 `OriginalMachineMaterialData` / `SourceBlockProperties` 的
+明确族身份绑定：cokeoven→17000、implosioncompressor→17110、distillationtower→17101、
+cryodistillationtower→17111、fusionreactor→17198。沿用原文名字，不根据旧注册路径中的
+`stainless_steel` 后缀猜测材质或为焦炉／聚变堆伪造原版材质身份。

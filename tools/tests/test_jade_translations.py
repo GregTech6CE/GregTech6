@@ -86,3 +86,21 @@ class JadeTranslations(unittest.TestCase):
                 expected_chinese({key: 'Changed: %s'}, {}, {}, repo=root)
             with self.assertRaisesRegex(ValueError, 'overrides source'):
                 expected_chinese({key: 'Heat: %s'}, {key: '原文 %s'}, {}, repo=root)
+
+    def test_dynamic_controller_aliases_use_recorded_original_identity(self):
+        from localization import read_json, load_source, CONFIG_PATH, LANG_PATH
+        aliases = read_json(ROOT / CONFIG_PATH / 'aliases.json')
+        source, _ = load_source()
+        chinese = read_json(ROOT / LANG_PATH / 'zh_cn.json')
+        identities = (ROOT / 'core/src/main/java/com/gregtech/gregtech/content/machine/OriginalMachineMaterialData.java').read_text()
+        for family, source_id in [('cokeoven', 17000), ('implosioncompressor', 17110),
+                                  ('distillationtower', 17101), ('cryodistillationtower', 17111),
+                                  ('fusionreactor', 17198)]:
+            key = f'block.gt6ce.{family}_stainless_steel'
+            original = f'gt.multitileentity.{source_id}'
+            with self.subTest(key=key):
+                self.assertRegex(identities, rf'add\("{family}",\s*1,\s*{source_id},')
+                self.assertEqual(aliases[key], original)
+                self.assertEqual(chinese[key], source[original])
+        self.assertEqual(chinese['itemGroup.gt6ce.billet'], source['itemGroup.billet'])
+        self.assertEqual(chinese['jade.gt6ce.mold.shape.billet'], '方坯')

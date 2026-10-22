@@ -21,7 +21,7 @@ public enum ReactorJadeProvider implements IBlockComponentProvider,IServerDataPr
     @Override public void appendTooltip(ITooltip tooltip,BlockAccessor accessor,IPluginConfig config){
         var d=accessor.getServerData();if(!d.contains("gt_reactor_rods"))return;
         tooltip.add(Component.translatable("message.gt6ce.reactor.detail",d.getInt("gt_reactor_rods"),d.getInt("gt_reactor_slots"),d.getLong("gt_reactor_neutrons"),d.getLong("gt_reactor_heat"),Component.translatable(d.getBoolean("gt_reactor_stopped")?"message.gt6ce.reactor.stopped":"message.gt6ce.reactor.running"),d.getInt("gt_reactor_overflow")));
-        tooltip.add(Component.translatable("jade.gt6ce.reactor.ports",d.getString("gt_reactor_hot_side"),d.getString("gt_reactor_cold_side")));
+        tooltip.add(Component.translatable("jade.gt6ce.reactor.ports",JadeText.direction(d.getString("gt_reactor_hot_side")),JadeText.direction(d.getString("gt_reactor_cold_side"))));
         tooltip.add(Component.translatable("jade.gt6ce.reactor.heat",d.getLong("gt_reactor_stored")));
 //? if >=1.21.1 {
         /*for(String key:new String[]{"gt_reactor_in","gt_reactor_out"}){var fluid=net.neoforged.neoforge.fluids.FluidStack.parseOptional(accessor.getLevel().registryAccess(),d.getCompound(key));if(!fluid.isEmpty())tooltip.add(Component.translatable("jade.gt6ce.reactor.fluid",fluid.getDisplayName(),fluid.getAmount()));}
