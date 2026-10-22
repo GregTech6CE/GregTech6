@@ -1,5 +1,19 @@
 # 实现选择记录
 
+## 2026-10-22 / 功能零件的组合方式
+
+`LayoutPart` 上的物品槽、tick、右键和命名字段可以单独写，也可以和能量输出或条件输入写在同一零件上。什么都不写仍是外壳。`energyOutput` 和 `energyInput` 仍不能一起写。
+
+平台用 `LayoutPartContributor` 按零件名配对行为，服务文件是 `META-INF/services/com.gregtech.gregtech.api.addon.platform.LayoutPartContributor`。外壳和只含能量的零件不登记。功能零件没有工厂时启动失败，并写出附属和零件名。行为实例在方块实体构造时创建，每个方块实体一份。附属不继承 GT 的方块实体。
+
+`MachineBehaviorContext.parts()` 是绑定零件的总入口。`energyParts()` 留着，是同一份绑定里带能量角色的那一部分。既有能量又有功能的格子在 `parts()` 里出现一次，`energy()` 和 `behavior()` 都有，并且也在 `energyParts()` 里。外壳不进这两份列表。不另加 `computeParts()`。结构拆开或零件被移除之后，这两份列表清空。`BoundPart`、它的行为和上下文不要留到回调外面。
+
+槽存 `gt.part_slots`，字段存 `gt.part_fields`。字段形状和行为机器的 `i`、`l`、`b`、`s`、`t` 相同。已有的 `gt.part_energy`、`gt.part_output`、`gt.part_amount`、`gt.part_stopped`、`gt.part_input`、`gt.part_satisfied` 不改。外壳和只含能量的零件不写新键，也不因此发方块实体更新包。
+
+没有能量角色的功能零件用新方块实体 `gt6ce:addon_functional_part`。同时带能量的零件仍用 `gt6ce:addon_energy_part`。内置零件不加这些能力。`StructurePartDeclaration` 不改。
+
+坩埚的只读视图、无线计算零件、太阳镜往远处送能都不在这次。只读视图和远程送能另开卡。无线计算等计算机集群有卡以后再写零件侧。
+
 ## 2026-10-22 / 第二种输入能量的名字和存档
 
 `EnergyInput.anyPacket()` 是「不检查包大小」。它和 `range` 不能一起写。配方机器、行为机器的主输入、条件零件写了就失败。只有 `BehaviorMachine.auxiliaryEnergy` 接受它。

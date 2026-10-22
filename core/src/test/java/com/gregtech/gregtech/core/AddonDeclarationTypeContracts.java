@@ -1,6 +1,8 @@
 package com.gregtech.gregtech.core;
 
+import com.gregtech.gregtech.api.addon.AddonMachines;
 import com.gregtech.gregtech.api.addon.BehaviorMachine;
+import com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration;
 import com.gregtech.gregtech.api.addon.CellMatch;
 import com.gregtech.gregtech.api.addon.EnergyInput;
 import com.gregtech.gregtech.api.addon.EnergyOutput;
@@ -13,9 +15,13 @@ import com.gregtech.gregtech.api.addon.MachineCasing;
 import com.gregtech.gregtech.api.addon.MachineFace;
 import com.gregtech.gregtech.api.addon.MachineIo;
 import com.gregtech.gregtech.api.addon.PartEnergyRules;
+import com.gregtech.gregtech.api.addon.PartSlotRules;
+import com.gregtech.gregtech.api.addon.PartSlots;
 import com.gregtech.gregtech.api.addon.RecipeMachine;
 import com.gregtech.gregtech.api.addon.RecipeTable;
 import com.gregtech.gregtech.api.addon.StructureLayout;
+import com.gregtech.gregtech.api.addon.StructurePartDeclaration;
+import com.gregtech.gregtech.api.addon.StructurePartEnergy;
 import com.gregtech.gregtech.api.addon.StructureRole;
 
 import java.util.List;
@@ -34,6 +40,7 @@ public final class AddonDeclarationTypeContracts {
         tables();
         structure();
         secondEnergy();
+        functionalParts();
         System.out.println("passed " + assertions);
     }
 
@@ -319,6 +326,121 @@ public final class AddonDeclarationTypeContracts {
         check(!dry.satisfied() && dry.stored() == 100, "a short condition buffer is not drained");
         var wet = PartEnergyRules.drain(192, 192);
         check(wet.satisfied() && wet.stored() == 0, "an exact condition buffer is drained");
+    }
+
+    private static void functionalParts() {
+        var wall = LayoutPart.builder("sample_wall", "Steel").hardness(6.0F).build();
+        check(!wall.functional() && wall.slots() == null && !wall.ticks() && !wall.handlesUse() && wall.fields().isEmpty(),
+                "a casing has no functional capability");
+        check(AddonMachines.layoutPart(new StructurePartDeclaration("sample_wall", "Steel", "", 6.0F)).equals(wall),
+                "an old casing equals the layout part");
+
+        var emitter = LayoutPart.builder("sample_emitter", "Steel").hardness(6.0F).texture("block/sample_emitter")
+                .energyOutput(EnergyOutput.builder("RU", 32, 1).faces(MachineFace.FRONT).build(), 1_000).build();
+        var oldEmitter = new StructurePartDeclaration("sample_emitter", "Steel", "block/sample_emitter", 6.0F,
+                new StructurePartEnergy("RU", 1_000, List.of(BehaviorMachineDeclaration.Face.FRONT), 32, 1));
+        check(AddonMachines.layoutPart(oldEmitter).equals(emitter), "an old energy part equals the layout part");
+        check(!emitter.functional(), "an energy-only part is not functional");
+
+        var compute = LayoutPart.builder("sample_compute", "Steel").hardness(6.0F)
+                .slots(PartSlots.builder(4).stackLimit(1).drops(true).build())
+                .tick().use().field("power").field("running").build();
+        check(compute.functional() && compute.slots().count() == 4 && compute.slots().stackLimit() == 1
+                        && compute.slots().drops() && compute.slots().insertFaces().isEmpty()
+                        && compute.ticks() && compute.handlesUse()
+                        && compute.fields().equals(List.of("power", "running")),
+                "a compute part keeps slots, a tick, a click and its fields");
+
+        fails(() -> PartSlots.builder(0).build(), "1 to");
+        fails(() -> PartSlots.builder(17).build(), "1 to");
+        fails(() -> PartSlots.builder(1).stackLimit(0).build(), "stack limit");
+        fails(() -> PartSlots.builder(1).stackLimit(65).build(), "stack limit");
+        fails(() -> LayoutPart.builder("sample_compute", "Steel").hardness(6.0F).slots(null).build(), "Missing");
+        fails(() -> PartSlots.builder(1).insert(MachineFace.FRONT, MachineFace.FRONT).build(), "Repeated");
+        fails(() -> PartSlots.builder(1).insert(new MachineFace[] {null}).build(), "Missing");
+        fails(() -> LayoutPart.builder("sample_compute", "Steel").hardness(6.0F).field("Power").build(), "Invalid");
+        fails(() -> LayoutPart.builder("sample_compute", "Steel").hardness(6.0F).field("power").field("power").build(),
+                "Repeated");
+        var many = LayoutPart.builder("sample_compute", "Steel").hardness(6.0F);
+        for (int i = 0; i < LayoutPart.MAX_FIELDS; i++) many.field("f" + i);
+        check(many.build().fields().size() == LayoutPart.MAX_FIELDS, "sixteen fields fit");
+        fails(() -> many.field("extra"), "Too many");
+
+        var combined = LayoutPart.builder("sample_emitter", "Steel").hardness(6.0F)
+                .energyOutput(EnergyOutput.builder("RU", 32, 1).faces(MachineFace.FRONT).build(), 1_000)
+                .slots(PartSlots.builder(1).build()).build();
+        check(combined.functional() && combined.energy() != null, "energy and slots can share a part");
+        var input = EnergyInput.builder("EU", 128).range(64, 256).capacity(10_000).faces(MachineFace.FRONT).build();
+        fails(() -> LayoutPart.builder("sample_condition", "Steel").hardness(6.0F)
+                .energyOutput(EnergyOutput.builder("RU", 32, 1).faces(MachineFace.BACK).build(), 1_000)
+                .energyInput(input).condition(192).build(), "both");
+        var ticking = LayoutPart.builder("sample_condition", "Steel").hardness(6.0F)
+                .energyInput(input).condition(192).tick().build();
+        check(ticking.functional() && ticking.condition() && ticking.ticks(), "a condition part may tick");
+
+        var faced = PartSlots.builder(2).insert(MachineFace.FRONT).extract(MachineFace.BACK).build();
+        check(PartSlotRules.inserts(faced, MachineFace.FRONT) && !PartSlotRules.inserts(faced, MachineFace.BACK),
+                "insert faces are the declared list");
+        check(PartSlotRules.extracts(faced, MachineFace.BACK) && !PartSlotRules.extracts(faced, null),
+                "extract faces are the declared list");
+        check(!PartSlotRules.inserts(null, MachineFace.FRONT), "missing slots do not insert");
+        check(PartSlotRules.accepted(0, 1, 4) == 1, "a stack limit of one accepts one");
+        check(PartSlotRules.accepted(1, 1, 4) == 0, "a full slot accepts nothing");
+        check(PartSlotRules.accepted(0, 64, 0) == 0, "nothing offered fits nothing");
+
+        var model = new ComputeModel();
+        check(model.insert(0, "redstone") && model.power() == 1, "redstone is one power");
+        check(model.insert(1, "diamond") && model.power() == 5, "diamond is four power");
+        check(!model.insert(1, "redstone"), "an occupied slot rejects another item");
+        check(!model.tryStart(6) && !model.running(), "start needs enough power");
+        check(model.tryStart(5) && model.running(), "start locks the part");
+        check(!model.insert(2, "redstone") && model.extract(0).isEmpty(), "a running part rejects items");
+        model.stop();
+        check(!model.running() && model.extract(0).equals("redstone") && model.power() == 4, "stop releases the items");
+        check(model.item(1).equals("diamond"), "the other slot stays");
+    }
+
+    /** The sample compute part, without a block entity: four stack-1 slots, redstone 1, diamond 4. */
+    private static final class ComputeModel {
+        private final String[] items = new String[4];
+        private int power;
+        private boolean running;
+
+        int power() { return power; }
+        boolean running() { return running; }
+        String item(int slot) { return items[slot] == null ? "" : items[slot]; }
+
+        boolean insert(int slot, String item) {
+            if (running || slot < 0 || slot >= items.length || item == null || item.isEmpty() || items[slot] != null)
+                return false;
+            items[slot] = item;
+            recount();
+            return true;
+        }
+
+        String extract(int slot) {
+            if (running || slot < 0 || slot >= items.length || items[slot] == null) return "";
+            String taken = items[slot];
+            items[slot] = null;
+            recount();
+            return taken;
+        }
+
+        boolean tryStart(int needed) {
+            if (power < needed) return false;
+            running = true;
+            return true;
+        }
+
+        void stop() { running = false; }
+
+        private void recount() {
+            power = 0;
+            for (String item : items) {
+                if ("redstone".equals(item)) power += 1;
+                else if ("diamond".equals(item)) power += 4;
+            }
+        }
     }
 
     private static final String GUI = "aa_sample:textures/gui/machine.png";
