@@ -161,8 +161,8 @@ public final class TrackBlock {
 
     /**
      * GT6's detector track ({@code Loader_Rails:63-72}). GT6 keeps the cart's momentum and only
-     * reports the cart through redstone/comparator, which is what vanilla's
-     * {@link DetectorRailBlock} does, so only the speed is added here.
+     * reports the cart through redstone/comparator. This adapter inherits the native detector;
+     * its detection bounds and extension hooks require separate parity checks.
      */
     public static final class Detector extends DetectorRailBlock {
 //? if >=1.21.1 {
