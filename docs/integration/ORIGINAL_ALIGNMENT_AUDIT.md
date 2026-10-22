@@ -1,5 +1,7 @@
 # 原版对齐与源码结构审计
 
+2026-10-22 第一百一十八批：垃圾设备新增407–412物性、自身掉落、碰撞、遮光、创建提示和物品上限差异；13原／22当前、33引用、12原生条目／23引用与18资源见[专题](GARBAGE_PHYSICAL_AUDIT.md)。四源325→424行、14标识位置及七完整平台视图保持；原绘制盒对应不代表碰撞对应。无游戏／编译／构建，412不是未修数；默认RGB及全系统继续。
+
 2026-10-22 第一百一十七批：共享垃圾池新增396–406并扩139，14原／18当前、43引用、九原生条目／十二引用；原保存与相同标签合并已有，容量／数值政策不借整理更改。四源509→621行、70局部名及七完整代码视图保持，见[专题](GARBAGE_POOL_AUDIT.md)。快捷栏复制为源码与原生调用链见证，非游戏实测；406不是待修数，全面goal继续。
 
 2026-10-22 第一百一十六批：附件新增389–395排空、三明治、剂量、抗爆、经验、碰撞及裸ID分裂，扩132。16原／22当前、34引用、五原生条目／八引用；24材质／防酸对应，四源326→376行、七完整剩余视图及三新helper受控保持，见[专题](FLUID_ATTACHMENTS_AUDIT.md)。约0.51秒core元数据探针与6004源算术不是世界，395不是待修数，全面goal继续。
@@ -461,6 +463,12 @@
 | ALIGN-404 | 确认垃圾桶拆除主动散落缓冲。 | 原canDrop=false且keepSlot=false。 | 当前移除调用BlockContents.drop；限仍有内容路径，未全loot／爆炸实测。见[垃圾池](GARBAGE_POOL_AUDIT.md)。 |
 | ALIGN-405 | 确认垃圾池漏原内置回收器黑名单。 | 原32710明确加BLACKLIST且trash先拒绝。 | 当前非空即接收，没有对应内部成员过滤。见[垃圾池](GARBAGE_POOL_AUDIT.md)。 |
 | ALIGN-406 | 确认回收器缺向下方空气丢物路径。 | 原ST.move启用eject，ST.put向无碰撞空气放实体并扣物。 | 当前下方无BE提前返回；普通Y64条件源见证，非实体执行。见[垃圾池](GARBAGE_POOL_AUDIT.md)。 |
+| ALIGN-407 | 确认两垃圾设备物性与原声明不同。 | 桶0.5／6、回收器6／6，原基类实际读入。 | 两端3／3和8／1200；原生属性／getter已核，非采掘／爆炸实测。见[物性](GARBAGE_PHYSICAL_AUDIT.md)。 |
+| ALIGN-408 | 确认回收器默认自身掉落路径增加。 | 原getDrops空列表，世界MTE真实转发。 | 当前普通Block及内置loot包生成自身条目；限默认数据与采集条件，未破坏实测。见[物性](GARBAGE_PHYSICAL_AUDIT.md)。 |
+| ALIGN-409 | 确认垃圾桶碰撞沿用绘制外形。 | 原Root完整box、Covers实际添加，绘制盒另计。 | 当前原生碰撞取两盒SHAPE；16格源推导4096→3376，非实体/API执行。见[物性](GARBAGE_PHYSICAL_AUDIT.md)。 |
+| ALIGN-410 | 确认垃圾桶遮光3变为干0／含水1。 | 原覆写LIGHT_OPACITY_WATER常量3。 | 当前无专用覆写；按两端原生getter与含水FluidState推导，非照明实测。见[物性](GARBAGE_PHYSICAL_AUDIT.md)。 |
+| ALIGN-411 | 确认回收器缺红色管理员创建说明。 | 原三行用途后加ADMIN_ONLY_CREATION。 | 当前三行及共用tooltip没有补；不是原GUI权限缺失结论。见[物性](GARBAGE_PHYSICAL_AUDIT.md)。 |
+| ALIGN-412 | 确认两垃圾设备默认物品上限16→64。 | 注册aStackSize存于ClassContainer并供内部物品返回。 | 当前普通BlockItem未设stacksTo，双版默认64；限未改组件／NBT形式，政策未改。见[物性](GARBAGE_PHYSICAL_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 

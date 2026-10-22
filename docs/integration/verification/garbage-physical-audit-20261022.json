@@ -1,0 +1,1110 @@
+{
+  "date": "2026-10-22",
+  "batch": 118,
+  "baseline": "f6ee2c6cf9cadb483b44ce3fe8f69b6c5d564596",
+  "previous_goal_turn": {
+    "classification": "progress",
+    "commit": "f6ee2c6cf",
+    "evidence": "Issue #78 original survival generation, placed-rock registration and whole-stack pickup trace recorded."
+  },
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/inventories/MultiTileEntityEnderGarbageBin.java",
+      "raw_sha256": "b6ae781187ca65def5cfbeec586fa52dffbfc8c355e720639145bf5aca587b24",
+      "lines": 149,
+      "notice_sha256": "36e3d024041926fe48f5024ea2175f63dcd6ec92fdc33bcfecf357b4bb27e51d"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/inventories/MultiTileEntityEnderGarbageDump.java",
+      "raw_sha256": "3de85a8940f78692d4c73c9aa66328f1147c0794f5b7dcc1423c0558292268d3",
+      "lines": 171,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "raw_sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "lines": 2243,
+      "notice_sha256": "6855675ee4a01a21169dd2a3ed5df729ac3198a4b2e3b869f91e1a45c79e6aca"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityClassContainer.java",
+      "raw_sha256": "ea006ef8b03ffd30044da0bb044dfcc8227f37712becd555f7bc5a9747f3af8a",
+      "lines": 55,
+      "notice_sha256": "c635bd8e84f1d5b02a1299180479660a636e876419d763c9cd0714b9487e28b7"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityRegistry.java",
+      "raw_sha256": "70fb3ce00e7036e343e253e0f9fd8401b05c3f4f4e16b88f1b3fb94c3b111e83",
+      "lines": 271,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityItemInternal.java",
+      "raw_sha256": "7e103a13f02097dcfd1c91334cb3da238b9f509ee4cbb584dfd7267bf26f8bb1",
+      "lines": 659,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "raw_sha256": "78ef2ca64595500bb841faec8304dee0f3e276e14b54c62f494c3116c29ce0b7",
+      "lines": 307,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java",
+      "raw_sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+      "lines": 1011,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "raw_sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+      "lines": 496,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "raw_sha256": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+      "lines": 117,
+      "notice_sha256": "c635bd8e84f1d5b02a1299180479660a636e876419d763c9cd0714b9487e28b7"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "raw_sha256": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+      "lines": 189,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "raw_sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "lines": 2345,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/LH.java",
+      "raw_sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8",
+      "lines": 749,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/inventory/EnderGarbageBlock.java",
+      "raw_sha256": "e823aafe66499f7c12db90ab7ce1278db037ce425a4b4777387ecb9c63553638",
+      "lines": 146
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/inventory/EnderGarbageDumpBlock.java",
+      "raw_sha256": "52b72a66f70fc3a62cbaf1c44244a7a2847023ebfdd5c1fbcce37d908ba16005",
+      "lines": 122
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/gui/GarbageDumpContainerMenu.java",
+      "raw_sha256": "9b1c616dd2515fc25c9347c327c6045f308641e574fe43994bdc06ea51a270dc",
+      "lines": 49
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTStorageContainers.java",
+      "raw_sha256": "f189e47930718d20e52520b90e7ed353523badf691faf37a0c58743db8d0033c",
+      "lines": 107
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTStorage.java",
+      "raw_sha256": "4eefb889c50fd513b84e4751774a47ead8870d379c1f2bb295e7abfe96a4ae94",
+      "lines": 206
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/data/BlockLootPack.java",
+      "raw_sha256": "b3c9953adcc80fed879752980d7da9ff4d38c5a8a333eb6ddb9e734f25a11363",
+      "lines": 157
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/data/BlockHarvestPolicy.java",
+      "raw_sha256": "049e96dbead037754ac0d397005597ac00dd41ede9901d2999bc173faf4a44fa",
+      "lines": 90
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/GTWaterloggable.java",
+      "raw_sha256": "bf3b559ef1fcb6b5f86192fc5a2d889464380b59922844309c0ee990c19e398c",
+      "lines": 59
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/CommonBlockTooltips.java",
+      "raw_sha256": "660474c0bba3c3124c2bfb26d0efcac8b0c289a03c6be6d5425324cdfff88cbb",
+      "lines": 140,
+      "notice_sha256": "b59d6e5f08309bc51e02c5a74bb843c7775ca75664191948a066656f0df681e0"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/CommonBlockTooltipHandler.java",
+      "raw_sha256": "e157d9041e66f4bcb89dc63f2b4b31af2852a014a56d8958eb9d7fa2bfbd56a9",
+      "lines": 33
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageBlockEntity.java",
+      "raw_sha256": "419af4b8c6f9eb5d6d180d26ad01cfd7e8980c59606a4bf34f1f8605d071d847",
+      "lines": 223
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageDumpBlockEntity.java",
+      "raw_sha256": "9421548646f4e51be007a89e3518fc07885a2a56240aae2c13c560ca4908fe02",
+      "lines": 149
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/world/GarbageData.java",
+      "raw_sha256": "a6c224f9b73804211d5ac93ec729c6fb2f6dd8261582b447f66d099e33bf1a2c",
+      "lines": 223
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockEntityPaintMixin.java",
+      "raw_sha256": "9478638ce61d66b55c8a08bcbc225078d364b51e2983b2bebe11c292d6e22467",
+      "lines": 130
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockPaintColorMixin.java",
+      "raw_sha256": "7a3a13f288f0a3ba228bf8afeae49f1e5b6d58f704f1bf83e74e36114ca3e7a8",
+      "lines": 22
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/ItemPaintColorMixin.java",
+      "raw_sha256": "1f4ad5466b9ba341ab4f22fe0ac3d9e2638a47e07afd08954b47953489253697",
+      "lines": 29
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "raw_sha256": "4f62bc352b16e6e4395538d1ef36cbcb395265ef5c3887ca6fd2c705fdce682f",
+      "lines": 824
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/MaterialBlockClientColors.java",
+      "raw_sha256": "d4375812a13c7774b9503a5455403d297b4629e33398ea4f30f4e9103093c030",
+      "lines": 34
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/MaterialShellColors.java",
+      "raw_sha256": "0077a3e68f6b3c6ea0bb8a751a4785a3a7dcbd62d0bc33c3e37a9ec54361c8bc",
+      "lines": 34
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/SourceBlockProperties.java",
+      "raw_sha256": "7d2defd50583dd887a8f8002c14aef06045c160c6fcc54054ea75426a67769b1",
+      "lines": 1009,
+      "notice_sha256": "f4f274633366a435220cd3083f7afa7da4223a3123ddb7dcee5c62e217ea5519"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/machine/OriginalStorageMaterialData.java",
+      "raw_sha256": "b3cfc5cb035f32ae563b21318e26aeb46566e679c6b2a683d68cfe2008027d07",
+      "lines": 101,
+      "notice_sha256": "1ff34edb44eb6075e7711b3d10771aa0298a38632324880b4dbbbb037f4d56f0"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/OriginalSurvivalRecipes.java",
+      "raw_sha256": "f68a3935d0426b3883c3b61b691074b40852f94f0c336787d684390dbc050f4c",
+      "lines": 234,
+      "notice_sha256": "aabc70503900b7cfd796aa94b05aed953ad0782aead096a238bd26341349ae67"
+    }
+  ],
+  "source_scope": "Listed files support the recorded excerpts/consumers. Hashes are provenance, not proof that every behavior in those files was verified.",
+  "provenance": {
+    "reference_tree_read_only": true,
+    "original_authors": "GregTech-6 Team / Gregorius Techneticies",
+    "license": "Original LGPL notices retained; no original source edited."
+  },
+  "excerpts": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/inventories/MultiTileEntityEnderGarbageBin.java",
+      "start_line": 115,
+      "end_line": 127,
+      "excerpt_sha256": "86e133288dbd6ecb220593564e922bdb8d25130b59f240cff230be03fdbd78f7",
+      "text": "\tpublic boolean setBlockBounds2(Block aBlock, int aRenderPass, boolean[] aShouldSideBeRendered) {\n\t\tif (aRenderPass == 0) {\n\t\t\tbox(aBlock, PX_P[ 0], PX_P[12], PX_P[ 0], PX_N[ 0], PX_N[ 0], PX_N[ 0]);\n\t\t} else {\n\t\t\tbox(aBlock, PX_P[ 1], PX_P[ 0], PX_P[ 1], PX_N[ 1], PX_N[ 4], PX_N[ 1]);\n\t\t}\n\t\treturn T;\n\t}\n\t\n\t@Override\n\tpublic ITexture getTexture2(Block aBlock, int aRenderPass, byte aSide, boolean[] aShouldSideBeRendered) {\n\t\treturn (aRenderPass == 0 ? (aSide == SIDE_BOTTOM || aShouldSideBeRendered[aSide]) : aSide != SIDE_TOP && (aSide != SIDE_BOTTOM || aShouldSideBeRendered[aSide])) ? BlockTextureMulti.get(BlockTextureDefault.get(sColoreds[FACES_TBS[aSide]], mRGBa), BlockTextureDefault.get(sOverlays[FACES_TBS[aSide]])) : null;\n\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/inventories/MultiTileEntityEnderGarbageBin.java",
+      "start_line": 125,
+      "end_line": 139,
+      "excerpt_sha256": "6e0459ff4938f554f4aef77faa66cc3d5b9577a69bb8e741321d8d1cc7f94162",
+      "text": "\tpublic ITexture getTexture2(Block aBlock, int aRenderPass, byte aSide, boolean[] aShouldSideBeRendered) {\n\t\treturn (aRenderPass == 0 ? (aSide == SIDE_BOTTOM || aShouldSideBeRendered[aSide]) : aSide != SIDE_TOP && (aSide != SIDE_BOTTOM || aShouldSideBeRendered[aSide])) ? BlockTextureMulti.get(BlockTextureDefault.get(sColoreds[FACES_TBS[aSide]], mRGBa), BlockTextureDefault.get(sOverlays[FACES_TBS[aSide]])) : null;\n\t}\n\t\n\t// Icons\n\tpublic static IIconContainer sColoreds[] = new IIconContainer[] {\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/endergarbage/bin/colored/bottom\"),\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/endergarbage/bin/colored/top\"),\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/endergarbage/bin/colored/side\"),\n\t}, sOverlays[] = new IIconContainer[] {\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/endergarbage/bin/overlay/bottom\"),\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/endergarbage/bin/overlay/top\"),\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/endergarbage/bin/overlay/side\"),\n\t};\n\t"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/inventories/MultiTileEntityEnderGarbageBin.java",
+      "start_line": 145,
+      "end_line": 145,
+      "excerpt_sha256": "d6b6ca41bc0e89a3abd27407ae9d069aaeabb7d58baf9361f695734ce1b6e9f5",
+      "text": "\t@Override public int getLightOpacity() {return LIGHT_OPACITY_WATER;}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/inventories/MultiTileEntityEnderGarbageDump.java",
+      "start_line": 61,
+      "end_line": 66,
+      "excerpt_sha256": "dbc1c6a1d734f37c89991000da401e8969364cf47ad32b99bc311f24d89c2587",
+      "text": "\tpublic void addToolTips(List<String> aList, ItemStack aStack, boolean aF3_H) {\n\t\taList.add(Chat.CYAN + LH.get(\"gt.multitileentity.ender.garbage.dump.tooltip.1\"));\n\t\taList.add(Chat.CYAN + LH.get(\"gt.multitileentity.ender.garbage.dump.tooltip.2\"));\n\t\taList.add(Chat.CYAN + LH.get(\"gt.multitileentity.ender.garbage.dump.tooltip.3\"));\n\t\taList.add(Chat.RED + LH.get(LH.ADMIN_ONLY_CREATION));\n\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/inventories/MultiTileEntityEnderGarbageDump.java",
+      "start_line": 101,
+      "end_line": 103,
+      "excerpt_sha256": "02994d054a90e8f73f1b7ab34fa6a71ac83243a6a91232e099334e652721a83d",
+      "text": "\tpublic ArrayListNoNulls<ItemStack> getDrops(int aFortune, boolean aSilkTouch) {\n\t\treturn ST.arraylist();\n\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/inventories/MultiTileEntityEnderGarbageDump.java",
+      "start_line": 151,
+      "end_line": 164,
+      "excerpt_sha256": "fe2ced9da3dbd216f41c14dcdaddff0c3d0be22895aa26b04c0bae346bc078c9",
+      "text": "\tpublic ITexture getTexture2(Block aBlock, int aRenderPass, byte aSide, boolean[] aShouldSideBeRendered) {\n\t\treturn aShouldSideBeRendered[aSide] ? BlockTextureMulti.get(BlockTextureDefault.get(sColoreds[FACES_TBS[aSide]], mRGBa), BlockTextureDefault.get(sOverlays[FACES_TBS[aSide]])) : null;\n\t}\n\t\n\t// Icons\n\tpublic static IIconContainer sColoreds[] = new IIconContainer[] {\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/endergarbage/dump/colored/bottom\"),\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/endergarbage/dump/colored/top\"),\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/endergarbage/dump/colored/side\"),\n\t}, sOverlays[] = new IIconContainer[] {\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/endergarbage/dump/overlay/bottom\"),\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/endergarbage/dump/overlay/top\"),\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/endergarbage/dump/overlay/side\"),\n\t};"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 2231,
+      "end_line": 2232,
+      "excerpt_sha256": "67a3e8b6009a3d32ae953bec7946bf3935056c23bab4f9fd188102ce6391f3ff",
+      "text": "\t\taMat = ANY.Steel;           aRegistry.add(\"Ender Garbage Dump\"                                  , \"Misc Tool Blocks\"                    , 32710, 32720, MultiTileEntityEnderGarbageDump.class                   , aMat.mToolQuality, 16, aMachine       , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F)); ItemsGT.DEBUG_ITEMS.add(aRegistry.getItem()); ItemsGT.ILLEGAL_DROPS.add(aRegistry.getItem()); GarbageGT.BLACKLIST.add(aRegistry.getItem());\n\t\taMat = ANY.Steel;           aRegistry.add(\"Ender Garbage Bin\"                                   , \"Misc Tool Blocks\"                    , 32709, 32720, MultiTileEntityEnderGarbageBin.class                    ,                 0, 16, aUtilStone     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   6.0F), \"OOO\", \"OXO\", \"PPP\", 'O', OP.plate.dat(MT.Obsidian), 'P', OP.plate.dat(ANY.Iron), 'X', OP.gem.dat(MT.EnderEye)); ItemsGT.VOIDING_ITEMS.add(aRegistry.getItem());"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityClassContainer.java",
+      "start_line": 41,
+      "end_line": 54,
+      "excerpt_sha256": "3e621700ca2396efb36e1c2ee671390692a2283f4970de34094a4b5cb3afcdf7",
+      "text": "\tpublic MultiTileEntityClassContainer(int aID, int aCreativeTabID, Class<? extends TileEntity> aClass, int aBlockMetaData, int aStackSize, MultiTileEntityBlock aBlock, NBTTagCompound aParameters) {\n\t\tif (!IMultiTileEntity.class.isAssignableFrom(aClass)) throw new IllegalArgumentException(\"MultiTileEntities must implement the Interface IMultiTileEntity!\");\n\t\tmBlockMetaData = (byte)aBlockMetaData;\n\t\tmStackSize = (byte)aStackSize;\n\t\tmParameters = aParameters==null?UT.NBT.make():aParameters;\n\t\tmHidden = mParameters.getBoolean(NBT_HIDDEN);\n\t\tmID = (short)aID;\n\t\tmCreativeTabID = (short)aCreativeTabID;\n\t\tmBlock = aBlock;\n\t\tmClass = aClass;\n\t\tif (mParameters.hasKey(NBT_MATERIAL) && !mParameters.hasKey(NBT_COLOR)) mParameters.setInteger(NBT_COLOR, UT.Code.getRGBInt(OreDictMaterial.get(mParameters.getString(NBT_MATERIAL)).fRGBaSolid));\n\t\ttry {mCanonicalTileEntity = aClass.newInstance();} catch (Throwable e) {throw new IllegalArgumentException(e);}\n\t\tif (mCanonicalTileEntity instanceof IMultiTileEntity) ((IMultiTileEntity)mCanonicalTileEntity).initFromNBT(mParameters, mID, (short)-1);\n\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityRegistry.java",
+      "start_line": 148,
+      "end_line": 150,
+      "excerpt_sha256": "9adf193244c83831b199fc40c67707dec96551f9407edb1f6227e89ccace591a",
+      "text": "\tpublic ItemStack add(String aLocalised, String aCategoricalName, int aID, int aCreativeTabID, Class<? extends TileEntity> aClass, int aBlockMetaData, int aStackSize, MultiTileEntityBlock aBlock, NBTTagCompound aParameters, Object... aRecipe) {\n\t\treturn add(aLocalised, aCategoricalName, new MultiTileEntityClassContainer(aID, aCreativeTabID, aClass, aBlockMetaData, aStackSize, aBlock, aParameters), aRecipe);\n\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityItemInternal.java",
+      "start_line": 241,
+      "end_line": 249,
+      "excerpt_sha256": "0a474686a7d24127e0fe2dc24fb67158dc150694b6a757edf7c25563c06ebf32",
+      "text": "\tpublic int getItemStackLimit(ItemStack aStack) {\n\t\tMultiTileEntityClassContainer tContainer = mBlock.mMultiTileEntityRegistry.getClassContainer(aStack);\n\t\tif (tContainer == null) return 1;\n\t\tMultiTileEntityContainer tTileEntityContainer = mBlock.mMultiTileEntityRegistry.getNewTileEntityContainer(aStack);\n\t\tif (tTileEntityContainer != null && tTileEntityContainer.mTileEntity instanceof IMTE_GetMaxStackSize) {\n\t\t\treturn UT.Code.bindStack(((IMTE_GetMaxStackSize)tTileEntityContainer.mTileEntity).getMaxStackSize(aStack, tContainer.mStackSize));\n\t\t}\n\t\treturn tContainer.mStackSize;\n\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "start_line": 191,
+      "end_line": 192,
+      "excerpt_sha256": "5eb834c840cea0df07924d8f4613495a65c67089f1ca198b62beb7e22aa2cd56",
+      "text": "\t@Override @SuppressWarnings(\"unchecked\") public final void addCollisionBoxesToList(World aWorld, int aX, int aY, int aZ, AxisAlignedBB aAABB, @SuppressWarnings(\"rawtypes\") List aList, Entity aEntity) {TileEntity aTileEntity = aWorld.getTileEntity(aX, aY, aZ); if (aTileEntity instanceof IMTE_AddCollisionBoxesToList) ((IMTE_AddCollisionBoxesToList)aTileEntity).addCollisionBoxesToList(aAABB, aList, aEntity); else if (aTileEntity != null) super.addCollisionBoxesToList(aWorld, aX, aY, aZ, aAABB, aList, aEntity);}\n\t@Override public final AxisAlignedBB getCollisionBoundingBoxFromPool(World aWorld, int aX, int aY, int aZ) {TileEntity aTileEntity = aWorld.getTileEntity(aX, aY, aZ); return aTileEntity instanceof IMTE_GetCollisionBoundingBoxFromPool ? ((IMTE_GetCollisionBoundingBoxFromPool)aTileEntity).getCollisionBoundingBoxFromPool() : aTileEntity == null ? null : AxisAlignedBB.getBoundingBox(aX, aY, aZ, aX+1, aY+1, aZ+1);}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "start_line": 262,
+      "end_line": 262,
+      "excerpt_sha256": "6a3b9a62b9e7e5ba7b066035442bab3b53596b78b067703a86b8502a487fd7ab",
+      "text": "\t@Override public final ArrayList<ItemStack> getDrops(World aWorld, int aX, int aY, int aZ, int aUnusableMetaData, int aFortune) {TileEntity aTileEntity = WD.te(aWorld, aX, aY, aZ, T); if (aTileEntity instanceof IMTE_GetDrops) return ((IMTE_GetDrops)aTileEntity).getDrops(aFortune, F); return ST.arraylist();}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "start_line": 266,
+      "end_line": 266,
+      "excerpt_sha256": "219e29a8142de08243eacc7082cc0fb6c49440834a4ead2494ca9ac867984b5d",
+      "text": "\t@Override public final int getLightOpacity(IBlockAccess aWorld, int aX, int aY, int aZ) {TileEntity aTileEntity = aWorld.getTileEntity(aX, aY, aZ); return aTileEntity instanceof IMTE_GetLightOpacity?((IMTE_GetLightOpacity)aTileEntity).getLightOpacity():mOpaque?LIGHT_OPACITY_MAX:LIGHT_OPACITY_NONE;}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java",
+      "start_line": 833,
+      "end_line": 835,
+      "excerpt_sha256": "6d230563931eee137354eca7be3aebdfd79191abfb77aaa00245d9bd93e3d96c",
+      "text": "\tpublic AxisAlignedBB getCollisionBoundingBoxFromPool() {return box();}\n\tpublic AxisAlignedBB getSelectedBoundingBoxFromPool () {if (FORCE_FULL_SELECTION_BOXES) return box(); return box(shrunkBox());}\n\tpublic void setBlockBoundsBasedOnState(Block aBlock) {if (FORCE_FULL_SELECTION_BOXES) box(aBlock); else box(aBlock, shrunkBox());}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java",
+      "start_line": 954,
+      "end_line": 954,
+      "excerpt_sha256": "4250b4adbeab2ac6c3e7b7c902acaa9f88e5907e35248e1b2974c1e63c595255",
+      "text": "\tpublic AxisAlignedBB box() {return AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord+1, yCoord+1, zCoord+1);}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "start_line": 471,
+      "end_line": 478,
+      "excerpt_sha256": "ece6a7ae9a68de13f80ebaaeef4ba859c1537d0b2a65956ec97683709e967c90",
+      "text": "\tpublic final void addCollisionBoxesToList(AxisAlignedBB aAABB, List<AxisAlignedBB> aList, Entity aEntity) {\n\t\tif (addDefaultCollisionBoxToList()) box(getCollisionBoundingBoxFromPool(), aAABB, aList);\n\t\tif (hasCovers()) for (byte tSide : ALL_SIDES_VALID) if (mCovers.mBehaviours[tSide] != null) mCovers.mBehaviours[tSide].getCollisions(tSide, mCovers, aAABB, aList, aEntity);\n\t\taddCollisionBoxesToList2(aAABB, aList, aEntity);\n\t}\n\t\n\tpublic boolean addDefaultCollisionBoxToList() {return T;}\n\tpublic void addCollisionBoxesToList2(AxisAlignedBB aAABB, List<AxisAlignedBB> aList, Entity aEntity) {/**/}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "start_line": 55,
+      "end_line": 63,
+      "excerpt_sha256": "b45403a3e27a15b90bf61f91b3b914724949f8897f57d777a297dd203af7b402",
+      "text": "\tpublic void readFromNBT2(NBTTagCompound aNBT) {\n\t\tsuper.readFromNBT2(aNBT);\n\t\tif (aNBT.hasKey(NBT_COLOR)) mRGBa = aNBT.getInteger(NBT_COLOR);\n\t\tif (aNBT.hasKey(NBT_PAINTED)) mIsPainted = aNBT.getBoolean(NBT_PAINTED);\n\t\tif (aNBT.hasKey(NBT_HARDNESS)) mHardness = aNBT.getFloat(NBT_HARDNESS);\n\t\tif (aNBT.hasKey(NBT_RESISTANCE)) mResistance = aNBT.getFloat(NBT_RESISTANCE);\n\t\tif (aNBT.hasKey(NBT_FLAMMABILITY)) mFlammability = aNBT.getInteger(NBT_FLAMMABILITY);\n\t\tif (aNBT.hasKey(NBT_MATERIAL)) mMaterial = OreDictMaterial.get(aNBT.getString(NBT_MATERIAL));\n\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "start_line": 109,
+      "end_line": 110,
+      "excerpt_sha256": "b70026985200bfc6d06f3a6d48d5d1c8f450b320e6a64cb2c228bfb3574edaa3",
+      "text": "\t@Override public float getBlockHardness() {return mHardness;}\n\t@Override public float getExplosionResistance2() {return mResistance;}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "start_line": 245,
+      "end_line": 245,
+      "excerpt_sha256": "74fdc3f93d68d3dac1276e5810f8b31e02fce6f814d4a42843a62152c9efac19",
+      "text": "\tpublic static final int LIGHT_OPACITY_NONE = 0, LIGHT_OPACITY_LEAVES = 1, LIGHT_OPACITY_WATER = 3, LIGHT_OPACITY_MAX = 255;"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/LH.java",
+      "start_line": 654,
+      "end_line": 654,
+      "excerpt_sha256": "f8970d8458b5d789f20c231cd43029768f0474a5c1d0b156c29e6fdb19ca60f8",
+      "text": "\t\tadd(ADMIN_ONLY_CREATION                         , \"Admins have to spawn this in. (or you MineTweaker a Recipe in)\");"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/inventory/EnderGarbageBlock.java",
+      "start_line": 39,
+      "end_line": 42,
+      "excerpt_sha256": "27d5d8bf9f7a849cecf9857f4efb7ba09e90737a8f0c3dd3c9e4afb5b324460e",
+      "text": "    private static final VoxelShape SHAPE = Shapes.or(\n            Block.box(0, 12, 0, 16, 16, 16),\n            Block.box(1, 0, 1, 15, 12, 15));\n"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/inventory/EnderGarbageBlock.java",
+      "start_line": 71,
+      "end_line": 73,
+      "excerpt_sha256": "c0a95fcf7582863b719e343d99447dacb9189f80670d5bc5e3db885e2ebd963f",
+      "text": "    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext blockContext) {\n        return SHAPE;\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/inventory/EnderGarbageDumpBlock.java",
+      "start_line": 33,
+      "end_line": 39,
+      "excerpt_sha256": "760e3f4295f443a61b47bd164af585203402cdfa42b0ec771cb15783de650ea8",
+      "text": "public class EnderGarbageDumpBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {\n\n    public EnderGarbageDumpBlock(Properties properties) {\n        super(properties);\n        registerDefaultState(stateDefinition.any().setValue(GTWaterloggable.WATERLOGGED, false));\n    }\n"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/inventory/EnderGarbageDumpBlock.java",
+      "start_line": 115,
+      "end_line": 120,
+      "excerpt_sha256": "ce1378edce3b0df552e0bc70e7d17b2ac671b228e3f253c8d7e6f5d7bf036fb1",
+      "text": "        tooltip.add(Component.translatable(\"gt.tooltip.garbage_dump.1\")\n                .withStyle(net.minecraft.ChatFormatting.AQUA));\n        tooltip.add(Component.translatable(\"gt.tooltip.garbage_dump.2\")\n                .withStyle(net.minecraft.ChatFormatting.AQUA));\n        tooltip.add(Component.translatable(\"gt.tooltip.garbage_dump.3\")\n                .withStyle(net.minecraft.ChatFormatting.AQUA));"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/gui/GarbageDumpContainerMenu.java",
+      "start_line": 36,
+      "end_line": 49,
+      "excerpt_sha256": "3636b1c32b498036e17f59b9b173ce8d6fb1aa9898b417947b38138de40aacb1",
+      "text": "    public ItemStack quickMoveStack(Player player, int index) {\n        if (index >= slotCount()) return ItemStack.EMPTY; // no inserting trash here\n        Slot slot = slots.get(index);\n        if (!(slot instanceof SlotItemHandler handlerSlot) || !slot.hasItem()) return ItemStack.EMPTY;\n        ItemStack taken = handlerSlot.getItemHandler().extractItem(index, 64, false);\n        if (taken.isEmpty()) return ItemStack.EMPTY;\n        if (!player.getInventory().add(taken) && !taken.isEmpty() && !player.level().isClientSide) {\n            // inventory full: put the rest back on the garbage pile\n            com.gregtech.gregtech.world.GarbageData.get(player.level()).trash(taken);\n        }\n        broadcastChanges();\n        return ItemStack.EMPTY;\n    }\n}"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTStorageContainers.java",
+      "start_line": 83,
+      "end_line": 91,
+      "excerpt_sha256": "c469aeadfa9b80d28a4eadfd9e48f241db6b27c070e3be4d615200f6dc3fb032",
+      "text": "        ENDER_GARBAGE = GTBlocks.BLOCKS.register(\"ender_garbage_bin\",\n                () -> new EnderGarbageBlock(BlockBehaviour.Properties.of()\n                        .mapColor(MapColor.COLOR_BLACK)\n                        .strength(3, 3)\n                        .requiresCorrectToolForDrops()\n                        .noOcclusion()));\n        GTBlocks.BLOCK_ITEMS.register(\"ender_garbage_bin\", () -> new net.minecraft.world.item.BlockItem(ENDER_GARBAGE.get(),\n                new net.minecraft.world.item.Item.Properties()));\n        ENDER_GARBAGE_DUMP = GTBlocks.BLOCKS.register(\"ender_garbage_dump\","
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTStorageContainers.java",
+      "start_line": 91,
+      "end_line": 98,
+      "excerpt_sha256": "8e632321ead99bbead68c96558540a56904b3b49d9c23cfb152fc6284171b916",
+      "text": "        ENDER_GARBAGE_DUMP = GTBlocks.BLOCKS.register(\"ender_garbage_dump\",\n                () -> new EnderGarbageDumpBlock(BlockBehaviour.Properties.of()\n                        .mapColor(MapColor.COLOR_BLACK)\n                        .strength(8, 1200)\n                        .requiresCorrectToolForDrops()));\n        GTBlocks.BLOCK_ITEMS.register(\"ender_garbage_dump\", () -> new net.minecraft.world.item.BlockItem(ENDER_GARBAGE_DUMP.get(),\n                new net.minecraft.world.item.Item.Properties()));\n        USB_SWITCH = GTBlocks.BLOCKS.register(\"usb_switch\", () -> new UsbSwitchBlock(UsbSwitchBlock.Kind.USB,"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTStorage.java",
+      "start_line": 136,
+      "end_line": 152,
+      "excerpt_sha256": "6836681dc401ff8055766cf72c9fd12483b0f0e6ede18dba75481f7b646d91cc",
+      "text": "        ENDER_GARBAGE = GTBlocks.BLOCKS.register(\"ender_garbage_bin\", () ->\n                new com.gregtech.gregtech.block.inventory.EnderGarbageBlock(\n                        BlockBehaviour.Properties.of()\n                                .mapColor(MapColor.COLOR_BLACK)\n                                .strength(3.0f, 3.0f)\n                                .requiresCorrectToolForDrops()\n                                .noOcclusion()));\n        GTBlocks.BLOCK_ITEMS.register(\"ender_garbage_bin\",\n                () -> new BlockItem(ENDER_GARBAGE.get(), new Item.Properties()));\n        ENDER_GARBAGE_DUMP = GTBlocks.BLOCKS.register(\"ender_garbage_dump\", () ->\n                new com.gregtech.gregtech.block.inventory.EnderGarbageDumpBlock(\n                        BlockBehaviour.Properties.of()\n                                .mapColor(MapColor.COLOR_BLACK)\n                                .strength(8.0f, 1200.0f)\n                                .requiresCorrectToolForDrops()));\n        GTBlocks.BLOCK_ITEMS.register(\"ender_garbage_dump\",\n                () -> new BlockItem(ENDER_GARBAGE_DUMP.get(), new Item.Properties()));"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/data/BlockLootPack.java",
+      "start_line": 69,
+      "end_line": 133,
+      "excerpt_sha256": "05d0c608680c875a3e1f4a905651143378815b8d150fdf66532fd90e353c7ef0",
+      "text": "    private synchronized Map<ResourceLocation, byte[]> data() {\n        if (resources != null) return resources;\n        var gson = new com.google.gson.Gson();\n        var result = new HashMap<ResourceLocation, byte[]>();\n        var tags = new TreeMap<String, Set<String>>();\n//? if >=1.21.1 {\n        /*for (var block : BuiltInRegistries.BLOCK) {\n            var id = BuiltInRegistries.BLOCK.getKey(block);\n*///?} else {\n        for (var block : ForgeRegistries.BLOCKS.getValues()) {\n            var id = ForgeRegistries.BLOCKS.getKey(block);\n//?}\n            if (id == null || !id.getNamespace().equals(\"gt6ce\") || block instanceof net.minecraft.world.level.block.LiquidBlock) continue;\n            String tag = BlockHarvestPolicy.tag(BlockHarvestPolicy.tool(block));\n            tags.computeIfAbsent(tag, k -> new TreeSet<>()).add(id.toString());\n            int level = BlockHarvestPolicy.level(block);\n            if (level > 0) tags.computeIfAbsent(\"minecraft:needs_\" + (level >= 3 ? \"diamond\" : level == 2 ? \"iron\" : \"stone\") + \"_tool\",\n                    k -> new TreeSet<>()).add(id.toString());\n            if (block.asItem() == Items.AIR) continue;\n            // Supply vanilla loot only. Blocks overriding getDrops retain their specialized NBT/drop behavior.\n            // GT6 spike metadata distinguished the two materials and wall/omni/falling mode. Copy\n            // those properties into BlockStateTag so mining a configured spike does not erase them.\n            Map<String, Object> entry = block instanceof com.gregtech.gregtech.api.block.StatefulBlockLoot stateful\n//? if >=1.21.1 {\n            /*// Version-specific branch.\n                    ? Map.of(\"type\", \"minecraft:item\", \"name\", BuiltInRegistries.ITEM.getKey(block.asItem()).toString(),\n*///?} else {\n            // Version-specific branch.\n                    ? Map.of(\"type\", \"minecraft:item\", \"name\", ForgeRegistries.ITEMS.getKey(block.asItem()).toString(),\n//?}\n                    \"functions\", List.of(Map.of(\"function\", \"minecraft:copy_state\", \"block\", id.toString(),\n                    \"properties\", stateful.lootStateProperties())))\n//? if >=1.21.1 {\n                    /*: Map.of(\"type\", \"minecraft:item\", \"name\", BuiltInRegistries.ITEM.getKey(block.asItem()).toString());\n*///?} else {\n                    : Map.of(\"type\", \"minecraft:item\", \"name\", ForgeRegistries.ITEMS.getKey(block.asItem()).toString());\n//?}\n            var pool = Map.of(\"rolls\", 1, \"entries\", List.of(entry), \"conditions\", List.of(Map.of(\"condition\", \"minecraft:survives_explosion\")));\n//? if >=1.21.1 {\n            /*result.put(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), \"loot_table/blocks/\" + id.getPath() + \".json\"),\n*///?} else {\n            result.put(new ResourceLocation(id.getNamespace(), \"loot_tables/blocks/\" + id.getPath() + \".json\"),\n//?}\n                    gson.toJson(Map.of(\"type\", \"minecraft:block\", \"pools\", List.of(pool))).getBytes(StandardCharsets.UTF_8));\n        }\n        tags.forEach((tag, values) -> {\n            var id = ResourceLocation.parse(tag);\n//? if >=1.21.1 {\n            /*result.put(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), \"tags/block/\" + id.getPath() + \".json\"),\n*///?} else {\n            result.put(new ResourceLocation(id.getNamespace(), \"tags/blocks/\" + id.getPath() + \".json\"),\n//?}\n                    gson.toJson(Map.of(\"replace\", false, \"values\", values)).getBytes(StandardCharsets.UTF_8));\n        });\n        resources = Collections.unmodifiableMap(result);\n        return resources;\n    }\n\n    public IoSupplier<InputStream> getRootResource(String... path) {\n        if (path.length != 1 || !path[0].equals(\"pack.mcmeta\")) return null;\n//? if >=1.21.1 {\n        /*return () -> new ByteArrayInputStream(\"{\\\"pack\\\":{\\\"pack_format\\\":48,\\\"description\\\":\\\"GregTech block loot and harvest tags\\\"}}\".getBytes(\n                StandardCharsets.UTF_8));\n*///?} else {\n        return () -> new ByteArrayInputStream(\"{\\\"pack\\\":{\\\"pack_format\\\":15,\\\"description\\\":\\\"GregTech block loot and harvest tags\\\"}}\".getBytes("
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/CommonBlockTooltips.java",
+      "start_line": 43,
+      "end_line": 77,
+      "excerpt_sha256": "010cc40420ca88b940fad8bee5f1da0cbcfbb90cbe85770dcc19012d83b38966",
+      "text": "    public static void append(ItemStack stack, List<Component> lines) {\n        if (stack.isEmpty() || !(stack.getItem() instanceof BlockItem item)) return;\n        Block block = item.getBlock();\n        if (!BuiltInRegistries.BLOCK.getKey(block).getNamespace().equals(\"gt6ce\")) return;\n        boolean flammable = lines.stream().anyMatch(line -> containsAnyKey(line, FLAME_KEYS));\n        var state = block.defaultBlockState();\n        for (var side : Direction.values())\n            flammable |= state.getFlammability(EmptyBlockGetter.INSTANCE, BlockPos.ZERO, side) > 0;\n        // Native tooltip events include the item name at index0. Keep player names/lore intact.\n        Component name = lines.isEmpty() ? null : lines.get(0);\n        Component blast = lines.stream().filter(line -> line != name\n                && containsAnyKey(line, Set.of(\"gt.lang.blastresistance\"))).findFirst().orElse(null);\n        lines.removeIf(line -> line != name && (containsAnyKey(line, OLD_HARVEST) || containsAnyKey(line, FLAME_KEYS)\n                || containsAnyKey(line, Set.of(\"gt.lang.blastresistance\"))\n                || line.getContents().equals(HAND_HARVEST.getContents()) && line.getStyle().equals(HAND_HARVEST.getStyle())));\n        var rows = new ArrayList<Component>();\n        if (flammable) rows.add(Component.translatable(FLAMMABLE).withStyle(ChatFormatting.RED));\n        if (block instanceof BookShelfBlock && !containsKey(lines, ENCHANT))\n            rows.add(Component.translatable(ENCHANT).withStyle(ChatFormatting.DARK_GRAY));\n        if (hasAttachedCover(stack) && !containsKey(lines, UNCOVER))\n            rows.add(Component.translatable(UNCOVER).withStyle(ChatFormatting.DARK_GRAY));\n        if (blast != null) rows.add(blast);\n        else if (!containsKey(lines, \"gt.lang.blastresistance\"))\n            TooltipHelper.appendBlastResistance(block.getExplosionResistance(), rows);\n        // One policy drives the datagen tags, actual harvest event and visible tool/level.\n        rows.add(harvestLine(block));\n        int insertion = lines.size();\n        for (int i = 0; i < lines.size(); i++) if (containsAnyKey(lines.get(i),\n                Set.of(\"tooltip.gt6ce.contained_materials\", \"tooltip.gt6ce.f3h_hint\"))) {\n            insertion = i; break;\n        }\n        lines.addAll(insertion, rows);\n    }\n\n    public static Component harvestLine(Block block) {"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/GTWaterloggable.java",
+      "start_line": 43,
+      "end_line": 45,
+      "excerpt_sha256": "5876586126d169d7e7b943f535c1cac6c619805cc28789af5c8b58cb13727b78",
+      "text": "    public static FluidState getFluidState(BlockState state) {\n        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : Fluids.EMPTY.defaultFluidState();\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageDumpBlockEntity.java",
+      "start_line": 71,
+      "end_line": 73,
+      "excerpt_sha256": "f121ae4939e2c7c6e8e6b984d223a336880491429e6e9dce133df80d504865f9",
+      "text": "        public void setStackInSlot(int slot, ItemStack stack) {\n            /* read-only view */\n        }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/OriginalSurvivalRecipes.java",
+      "start_line": 217,
+      "end_line": 217,
+      "excerpt_sha256": "f177691f4a78e129364d88110a94f142e556acc6e052da871aeb66d657e42e0d",
+      "text": "        new Row(\"ender_garbage_bin\", 1, ImportedMaterialData.Steel, \"OOO|OXO|PPP\", Map.of('O', \"mat:plate@Obsidian\", 'P', \"tag:gt6ce:technology/any_iron_plate\", 'X', \"mat:gem@EnderEye\")),"
+    }
+  ],
+  "native_evidence": [
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/Block.class",
+      "entry_sha256": "02e5ba8d458ab32234a2d8d73de3554dc0ffbbd4ee9e3d0ad41ef45a69f6f8de",
+      "javap_output": "work/coin-lifecycle-audit-20261022/forge-Block.javap.txt",
+      "javap_sha256": "865dda475e8745bb35abaf8e99b5bc7c112e86af340073e7defa73f179443199",
+      "reused_from": "docs/integration/verification/coin-lifecycle-audit-20261022.json",
+      "revalidated": true
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour.class",
+      "entry_sha256": "33a73cccc684a0d41bb0f075c13b2cad5721b3d9e6402c85f3e965d83890a288",
+      "javap_output": "work/coin-lifecycle-audit-20261022/forge-BlockBehaviour.javap.txt",
+      "javap_sha256": "4f7a519524136790967ca9923c140ed4e36fef2481fa1c309e26ba277bbdece7",
+      "reused_from": "docs/integration/verification/coin-lifecycle-audit-20261022.json",
+      "revalidated": true
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase.class",
+      "entry_sha256": "ec49ba5e67c5272060397ed4fccf512ab7e2cf965da8295db850321540ebaa70",
+      "javap_output": "work/coin-lifecycle-audit-20261022/forge-BlockBehaviour$BlockStateBase.javap.txt",
+      "javap_sha256": "90f3dd80da0c006166b80375279407de56d2db47b2b2103a0d06e853720834dd",
+      "reused_from": "docs/integration/verification/coin-lifecycle-audit-20261022.json",
+      "revalidated": true
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/block/Block.java",
+      "entry_sha256": "fe57fd48e078ed5a72a3309ac63ac615aa4aed4d7e6cf0d52754b2c06fe27533",
+      "extracted_path": "work/coin-lifecycle-audit-20261022/neo-Block.java",
+      "reused_from": "docs/integration/verification/coin-lifecycle-audit-20261022.json",
+      "revalidated": true
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour.java",
+      "entry_sha256": "410ae028d36585b6c210e853720ea3fb973154a4d7800a082d541293cf355014",
+      "extracted_path": "work/coin-lifecycle-audit-20261022/neo-BlockBehaviour.java",
+      "reused_from": "docs/integration/verification/coin-lifecycle-audit-20261022.json",
+      "revalidated": true
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour$Properties.class",
+      "entry_sha256": "7b379ccb00fa99762c6961f9e94d2258c994c12c59a46aa4789ee5851ed3eb52",
+      "javap_output": "work/mini-portal-audit-20261022/forge-BlockBehaviour$Properties.javap.txt",
+      "javap_sha256": "7ac86268ff86932e5c8cb6737878da61b2fe46dc71bd3c8a222b82d468171cc4",
+      "reused_from": "docs/integration/verification/fluid-attachments-audit-20261022.json",
+      "revalidated": true
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/item/Item$Properties.class",
+      "entry_sha256": "ef82809daf76d1556fc756f8071d069e31e0886f432b254af745804f0cef4036",
+      "javap_output": "work/garbage-physical-audit-20261022/forge-Item$Properties.javap.txt",
+      "javap_sha256": "3913faab1d497a343cf15c26692ba50ab1b95bbc9010404d8fd8d99b0e695989"
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/item/BlockItem.class",
+      "entry_sha256": "2b3e1defc87df357543458f44516b32b7519bb42746690fc24cee8ba6db4defc",
+      "javap_output": "work/garbage-physical-audit-20261022/forge-BlockItem.javap.txt",
+      "javap_sha256": "99c2f0228f3f7101d657bbbeb3f0a23b6f66c521c4bab421faa44896a5d1364d"
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase$Cache.class",
+      "entry_sha256": "96cc044f3f2fbe2d1faf965057b49baae08f3dbc44949ce1386b10b44a5a0174",
+      "javap_output": "work/garbage-physical-audit-20261022/forge-BlockBehaviour$BlockStateBase$Cache.javap.txt",
+      "javap_sha256": "de7c6b08833b0cb3ac9f31504c34ae3fe7b4739f76ab06c7bc21eda11c652d65"
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/item/Item.java",
+      "entry_sha256": "d176c58aee3e1698000514bf00f01ddf495f7dcd8c89fb2acd832391aae1be48",
+      "extracted_path": "work/garbage-physical-audit-20261022/neo-Item.java"
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/core/component/DataComponents.java",
+      "entry_sha256": "933a4881379b8bf9a86e42bceda93d846a58d8ce9939e46dc95a70f91cab1998",
+      "extracted_path": "work/garbage-physical-audit-20261022/neo-DataComponents.java"
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/item/BlockItem.java",
+      "entry_sha256": "f26f291ad73176d372d7916d05eb396358f41d08dbffcca02f1d425972b5c7ea",
+      "extracted_path": "work/garbage-physical-audit-20261022/neo-BlockItem.java"
+    }
+  ],
+  "native_excerpts": [
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/forge-BlockBehaviour.javap.txt",
+      "start_line": 280,
+      "end_line": 308,
+      "excerpt_sha256": "5765d2abd7996aef5e9289abbd6e70512f5c87d168ed5495f0216453b187524f",
+      "text": "  public java.util.List<net.minecraft.world.item.ItemStack> getDrops(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.storage.loot.LootParams$Builder);\n    Code:\n       0: aload_0\n       1: invokevirtual #357                // Method getLootTable:()Lnet/minecraft/resources/ResourceLocation;\n       4: astore_3\n       5: aload_3\n       6: getstatic     #361                // Field net/minecraft/world/level/storage/loot/BuiltInLootTables.EMPTY:Lnet/minecraft/resources/ResourceLocation;\n       9: if_acmpne     16\n      12: invokestatic  #367                // Method java/util/Collections.emptyList:()Ljava/util/List;\n      15: areturn\n      16: aload_2\n      17: getstatic     #373                // Field net/minecraft/world/level/storage/loot/parameters/LootContextParams.BLOCK_STATE:Lnet/minecraft/world/level/storage/loot/parameters/LootContextParam;\n      20: aload_1\n      21: invokevirtual #377                // Method net/minecraft/world/level/storage/loot/LootParams$Builder.withParameter:(Lnet/minecraft/world/level/storage/loot/parameters/LootContextParam;Ljava/lang/Object;)Lnet/minecraft/world/level/storage/loot/LootParams$Builder;\n      24: getstatic     #383                // Field net/minecraft/world/level/storage/loot/parameters/LootContextParamSets.BLOCK:Lnet/minecraft/world/level/storage/loot/parameters/LootContextParamSet;\n      27: invokevirtual #387                // Method net/minecraft/world/level/storage/loot/LootParams$Builder.create:(Lnet/minecraft/world/level/storage/loot/parameters/LootContextParamSet;)Lnet/minecraft/world/level/storage/loot/LootParams;\n      30: astore        4\n      32: aload         4\n      34: invokevirtual #391                // Method net/minecraft/world/level/storage/loot/LootParams.getLevel:()Lnet/minecraft/server/level/ServerLevel;\n      37: astore        5\n      39: aload         5\n      41: invokevirtual #397                // Method net/minecraft/server/level/ServerLevel.getServer:()Lnet/minecraft/server/MinecraftServer;\n      44: invokevirtual #403                // Method net/minecraft/server/MinecraftServer.getLootData:()Lnet/minecraft/world/level/storage/loot/LootDataManager;\n      47: aload_3\n      48: invokevirtual #408                // Method net/minecraft/world/level/storage/loot/LootDataManager.getLootTable:(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/world/level/storage/loot/LootTable;\n      51: astore        6\n      53: aload         6\n      55: aload         4\n      57: invokevirtual #414                // Method net/minecraft/world/level/storage/loot/LootTable.getRandomItems:(Lnet/minecraft/world/level/storage/loot/LootParams;)Lit/unimi/dsi/fastutil/objects/ObjectArrayList;"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/forge-BlockBehaviour.javap.txt",
+      "start_line": 340,
+      "end_line": 359,
+      "excerpt_sha256": "eedfa964e287465f909041329d99fbf391d076722425aa35a0c5db7d110ea6ad",
+      "text": "  public int getLightBlock(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos);\n    Code:\n       0: aload_1\n       1: aload_2\n       2: aload_3\n       3: invokevirtual #470                // Method net/minecraft/world/level/block/state/BlockState.isSolidRender:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z\n       6: ifeq          16\n       9: aload_2\n      10: invokeinterface #473,  1          // InterfaceMethod net/minecraft/world/level/BlockGetter.getMaxLightLevel:()I\n      15: ireturn\n      16: aload_1\n      17: aload_2\n      18: aload_3\n      19: invokevirtual #476                // Method net/minecraft/world/level/block/state/BlockState.propagatesSkylightDown:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z\n      22: ifeq          29\n      25: iconst_0\n      26: goto          30\n      29: iconst_1\n      30: ireturn\n"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/forge-BlockBehaviour.javap.txt",
+      "start_line": 392,
+      "end_line": 404,
+      "excerpt_sha256": "80596e65aa1e63906856a8147ef3bd52bc57aac06710857c06d91124d828cce9",
+      "text": "  public net.minecraft.world.phys.shapes.VoxelShape getCollisionShape(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.phys.shapes.CollisionContext);\n    Code:\n       0: aload_0\n       1: getfield      #71                 // Field hasCollision:Z\n       4: ifeq          16\n       7: aload_1\n       8: aload_2\n       9: aload_3\n      10: invokevirtual #439                // Method net/minecraft/world/level/block/state/BlockState.getShape:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/shapes/VoxelShape;\n      13: goto          19\n      16: invokestatic  #462                // Method net/minecraft/world/phys/shapes/Shapes.empty:()Lnet/minecraft/world/phys/shapes/VoxelShape;\n      19: areturn\n"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/forge-Block.javap.txt",
+      "start_line": 516,
+      "end_line": 533,
+      "excerpt_sha256": "245dbc33eda17038e1b7a432e059bfca9bce36ef1acecf7a45dcf2bea8d61d1a",
+      "text": "  public boolean propagatesSkylightDown(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos);\n    Code:\n       0: aload_1\n       1: aload_2\n       2: aload_3\n       3: invokevirtual #629                // Method net/minecraft/world/level/block/state/BlockState.getShape:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/shapes/VoxelShape;\n       6: invokestatic  #609                // Method isShapeFullBlock:(Lnet/minecraft/world/phys/shapes/VoxelShape;)Z\n       9: ifne          26\n      12: aload_1\n      13: invokevirtual #633                // Method net/minecraft/world/level/block/state/BlockState.getFluidState:()Lnet/minecraft/world/level/material/FluidState;\n      16: invokevirtual #636                // Method net/minecraft/world/level/material/FluidState.isEmpty:()Z\n      19: ifeq          26\n      22: iconst_1\n      23: goto          27\n      26: iconst_0\n      27: ireturn\n\n  public void animateTick(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.util.RandomSource);"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/forge-BlockBehaviour$BlockStateBase.javap.txt",
+      "start_line": 571,
+      "end_line": 593,
+      "excerpt_sha256": "59ee6b382d34e8cbaeb0620efc4ba2ad2bc6e88d44553de92957fcc130b47e82",
+      "text": "  public boolean isSolidRender(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos);\n    Code:\n       0: aload_0\n       1: getfield      #214                // Field cache:Lnet/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase$Cache;\n       4: ifnull        15\n       7: aload_0\n       8: getfield      #214                // Field cache:Lnet/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase$Cache;\n      11: getfield      #452                // Field net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase$Cache.solidRender:Z\n      14: ireturn\n      15: aload_0\n      16: invokevirtual #113                // Method asState:()Lnet/minecraft/world/level/block/state/BlockState;\n      19: astore_3\n      20: aload_3\n      21: invokevirtual #454                // Method net/minecraft/world/level/block/state/BlockState.canOcclude:()Z\n      24: ifeq          39\n      27: aload_3\n      28: aload_1\n      29: aload_2\n      30: invokevirtual #455                // Method net/minecraft/world/level/block/state/BlockState.getOcclusionShape:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/shapes/VoxelShape;\n      33: invokestatic  #459                // Method net/minecraft/world/level/block/Block.isShapeFullBlock:(Lnet/minecraft/world/phys/shapes/VoxelShape;)Z\n      36: goto          40\n      39: iconst_0\n      40: ireturn"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/forge-BlockBehaviour$BlockStateBase.javap.txt",
+      "start_line": 202,
+      "end_line": 230,
+      "excerpt_sha256": "da693acd38a4c09e31b208f47234fb8e2e8c10cf4f348917747fce49060d5a7a",
+      "text": "  public void initCache();\n    Code:\n       0: aload_0\n       1: aload_0\n       2: getfield      #206                // Field owner:Ljava/lang/Object;\n       5: checkcast     #102                // class net/minecraft/world/level/block/Block\n       8: aload_0\n       9: invokevirtual #113                // Method asState:()Lnet/minecraft/world/level/block/state/BlockState;\n      12: invokevirtual #247                // Method net/minecraft/world/level/block/Block.getFluidState:(Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/material/FluidState;\n      15: putfield      #100                // Field fluidState:Lnet/minecraft/world/level/material/FluidState;\n      18: aload_0\n      19: aload_0\n      20: getfield      #206                // Field owner:Ljava/lang/Object;\n      23: checkcast     #102                // class net/minecraft/world/level/block/Block\n      26: aload_0\n      27: invokevirtual #113                // Method asState:()Lnet/minecraft/world/level/block/state/BlockState;\n      30: invokevirtual #249                // Method net/minecraft/world/level/block/Block.isRandomlyTicking:(Lnet/minecraft/world/level/block/state/BlockState;)Z\n      33: putfield      #251                // Field isRandomlyTicking:Z\n      36: aload_0\n      37: invokevirtual #255                // Method getBlock:()Lnet/minecraft/world/level/block/Block;\n      40: invokevirtual #258                // Method net/minecraft/world/level/block/Block.hasDynamicShape:()Z\n      43: ifne          61\n      46: aload_0\n      47: new           #17                 // class net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase$Cache\n      50: dup\n      51: aload_0\n      52: invokevirtual #113                // Method asState:()Lnet/minecraft/world/level/block/state/BlockState;\n      55: invokespecial #261                // Method net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase$Cache.\"<init>\":(Lnet/minecraft/world/level/block/state/BlockState;)V\n      58: putfield      #214                // Field cache:Lnet/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase$Cache;"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/garbage-physical-audit-20261022/forge-BlockBehaviour$BlockStateBase$Cache.javap.txt",
+      "start_line": 23,
+      "end_line": 58,
+      "excerpt_sha256": "7f5c22df67436f242c310c8a2a0460eb392523b29a3887634da55f180086d8b7",
+      "text": "  net.minecraft.world.level.block.state.BlockBehaviour$BlockStateBase$Cache(net.minecraft.world.level.block.state.BlockState);\n    Code:\n       0: aload_0\n       1: invokespecial #43                 // Method java/lang/Object.\"<init>\":()V\n       4: aload_1\n       5: invokevirtual #49                 // Method net/minecraft/world/level/block/state/BlockState.getBlock:()Lnet/minecraft/world/level/block/Block;\n       8: astore_2\n       9: aload_0\n      10: aload_1\n      11: getstatic     #55                 // Field net/minecraft/world/level/EmptyBlockGetter.INSTANCE:Lnet/minecraft/world/level/EmptyBlockGetter;\n      14: getstatic     #61                 // Field net/minecraft/core/BlockPos.ZERO:Lnet/minecraft/core/BlockPos;\n      17: invokevirtual #65                 // Method net/minecraft/world/level/block/state/BlockState.isSolidRender:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z\n      20: putfield      #67                 // Field solidRender:Z\n      23: aload_0\n      24: aload_2\n      25: aload_1\n      26: getstatic     #55                 // Field net/minecraft/world/level/EmptyBlockGetter.INSTANCE:Lnet/minecraft/world/level/EmptyBlockGetter;\n      29: getstatic     #61                 // Field net/minecraft/core/BlockPos.ZERO:Lnet/minecraft/core/BlockPos;\n      32: invokevirtual #72                 // Method net/minecraft/world/level/block/Block.propagatesSkylightDown:(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z\n      35: putfield      #74                 // Field propagatesSkylightDown:Z\n      38: aload_0\n      39: aload_2\n      40: aload_1\n      41: getstatic     #55                 // Field net/minecraft/world/level/EmptyBlockGetter.INSTANCE:Lnet/minecraft/world/level/EmptyBlockGetter;\n      44: getstatic     #61                 // Field net/minecraft/core/BlockPos.ZERO:Lnet/minecraft/core/BlockPos;\n      47: invokevirtual #78                 // Method net/minecraft/world/level/block/Block.getLightBlock:(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)I\n      50: putfield      #80                 // Field lightBlock:I\n      53: aload_1\n      54: invokevirtual #84                 // Method net/minecraft/world/level/block/state/BlockState.canOcclude:()Z\n      57: ifne          68\n      60: aload_0\n      61: aconst_null\n      62: putfield      #86                 // Field occlusionShapes:[Lnet/minecraft/world/phys/shapes/VoxelShape;\n      65: goto          140\n      68: aload_0\n      69: getstatic     #88                 // Field DIRECTIONS:[Lnet/minecraft/core/Direction;"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/forge-Block.javap.txt",
+      "start_line": 920,
+      "end_line": 925,
+      "excerpt_sha256": "87ea79c110de6520735673892256b8893d6c66d1529de40a7c832ac6f517e4d9",
+      "text": "  public float getExplosionResistance();\n    Code:\n       0: aload_0\n       1: getfield      #914                // Field explosionResistance:F\n       4: freturn\n"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/mini-portal-audit-20261022/forge-BlockBehaviour$Properties.javap.txt",
+      "start_line": 352,
+      "end_line": 367,
+      "excerpt_sha256": "267d6a61bd93a4aae051b95bb94ea7878f37c4af403e67c2aed23ce141f772ca",
+      "text": "  public net.minecraft.world.level.block.state.BlockBehaviour$Properties strength(float, float);\n    Code:\n         0: aload_0\n         1: fload_1\n         2: invokevirtual #296                // Method destroyTime:(F)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;\n         5: fload_2\n         6: invokevirtual #298                // Method explosionResistance:(F)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;\n         9: areturn\n\n  public net.minecraft.world.level.block.state.BlockBehaviour$Properties instabreak();\n    Code:\n         0: aload_0\n         1: fconst_0\n         2: invokevirtual #303                // Method strength:(F)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;\n         5: areturn\n"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/garbage-physical-audit-20261022/forge-Item$Properties.javap.txt",
+      "start_line": 19,
+      "end_line": 42,
+      "excerpt_sha256": "a6a7cdbdc172fbe059ec40e9797c743aedd060e3b381733424667645261d392f",
+      "text": "  public net.minecraft.world.item.Item$Properties();\n    Code:\n       0: aload_0\n       1: invokespecial #27                 // Method java/lang/Object.\"<init>\":()V\n       4: aload_0\n       5: bipush        64\n       7: putfield      #29                 // Field maxStackSize:I\n      10: aload_0\n      11: getstatic     #34                 // Field net/minecraft/world/item/Rarity.COMMON:Lnet/minecraft/world/item/Rarity;\n      14: putfield      #36                 // Field rarity:Lnet/minecraft/world/item/Rarity;\n      17: aload_0\n      18: getstatic     #41                 // Field net/minecraft/world/flag/FeatureFlags.VANILLA_SET:Lnet/minecraft/world/flag/FeatureFlagSet;\n      21: putfield      #43                 // Field requiredFeatures:Lnet/minecraft/world/flag/FeatureFlagSet;\n      24: aload_0\n      25: iconst_1\n      26: putfield      #45                 // Field canRepair:Z\n      29: return\n\n  public net.minecraft.world.item.Item$Properties food(net.minecraft.world.food.FoodProperties);\n    Code:\n       0: aload_0\n       1: aload_1\n       2: putfield      #51                 // Field foodProperties:Lnet/minecraft/world/food/FoodProperties;\n       5: aload_0"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/garbage-physical-audit-20261022/forge-BlockItem.javap.txt",
+      "start_line": 9,
+      "end_line": 18,
+      "excerpt_sha256": "8a7a8073c197c2aab223d030811009f25f5a8d59298f3e9bd36fbfb052c9eacd",
+      "text": "  public net.minecraft.world.item.BlockItem(net.minecraft.world.level.block.Block, net.minecraft.world.item.Item$Properties);\n    Code:\n       0: aload_0\n       1: aload_2\n       2: invokespecial #38                 // Method net/minecraft/world/item/Item.\"<init>\":(Lnet/minecraft/world/item/Item$Properties;)V\n       5: aload_0\n       6: aload_1\n       7: putfield      #40                 // Field block:Lnet/minecraft/world/level/block/Block;\n      10: return\n"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/neo-BlockBehaviour.java",
+      "start_line": 264,
+      "end_line": 273,
+      "excerpt_sha256": "a09e2c6c2b3210abb9545cf88ef05cc2e68dddbbf44ff8426e7864eab2acb38e",
+      "text": "    protected List<ItemStack> getDrops(BlockState p_287732_, LootParams.Builder p_287596_) {\n        ResourceKey<LootTable> resourcekey = this.getLootTable();\n        if (resourcekey == BuiltInLootTables.EMPTY) {\n            return Collections.emptyList();\n        } else {\n            LootParams lootparams = p_287596_.withParameter(LootContextParams.BLOCK_STATE, p_287732_).create(LootContextParamSets.BLOCK);\n            ServerLevel serverlevel = lootparams.getLevel();\n            LootTable loottable = serverlevel.getServer().reloadableRegistries().getLootTable(resourcekey);\n            return loottable.getRandomItems(lootparams);\n        }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/neo-BlockBehaviour.java",
+      "start_line": 292,
+      "end_line": 298,
+      "excerpt_sha256": "921927949552f401caa699a5f093aead7f80d359916a5953afae3d623197b439",
+      "text": "    protected int getLightBlock(BlockState p_60585_, BlockGetter p_60586_, BlockPos p_60587_) {\n        if (p_60585_.isSolidRender(p_60586_, p_60587_)) {\n            return p_60586_.getMaxLightLevel();\n        } else {\n            return p_60585_.propagatesSkylightDown(p_60586_, p_60587_) ? 0 : 1;\n        }\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/neo-BlockBehaviour.java",
+      "start_line": 321,
+      "end_line": 323,
+      "excerpt_sha256": "1a96479146d1e0e83425b58d0a71d014cc282180baab8b0deb420684811e4d56",
+      "text": "    protected VoxelShape getCollisionShape(BlockState p_60572_, BlockGetter p_60573_, BlockPos p_60574_, CollisionContext p_60575_) {\n        return this.hasCollision ? p_60572_.getShape(p_60573_, p_60574_) : Shapes.empty();\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/neo-BlockBehaviour.java",
+      "start_line": 381,
+      "end_line": 383,
+      "excerpt_sha256": "c22b01f6789992b91708a38bdc2415b6da3d2d354a34452a85f1ee7101bce535",
+      "text": "    protected boolean propagatesSkylightDown(BlockState p_320652_, BlockGetter p_320953_, BlockPos p_320082_) {\n        return !Block.isShapeFullBlock(p_320652_.getShape(p_320953_, p_320082_)) && p_320652_.getFluidState().isEmpty();\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/neo-BlockBehaviour.java",
+      "start_line": 628,
+      "end_line": 635,
+      "excerpt_sha256": "ba873d71de991f23ad909f4f6b75e3481a601dd64cf0e3cb903b69062afcef1c",
+      "text": "        public boolean isSolidRender(BlockGetter p_60805_, BlockPos p_60806_) {\n            if (this.cache != null) {\n                return this.cache.solidRender;\n            } else {\n                BlockState blockstate = this.asState();\n                return blockstate.canOcclude() ? Block.isShapeFullBlock(blockstate.getOcclusionShape(p_60805_, p_60806_)) : false;\n            }\n        }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/neo-BlockBehaviour.java",
+      "start_line": 484,
+      "end_line": 495,
+      "excerpt_sha256": "793c4a5d0bb47fd41d7077ab759660c16e637b5e9340b3b12aab729f5d2b3b42",
+      "text": "        public void initCache() {\n            this.fluidState = this.owner.getFluidState(this.asState());\n            this.isRandomlyTicking = this.owner.isRandomlyTicking(this.asState());\n            if (!this.getBlock().hasDynamicShape()) {\n                this.cache = new BlockBehaviour.BlockStateBase.Cache(this.asState());\n            }\n\n            this.legacySolid = this.calculateSolid();\n        }\n\n        public Block getBlock() {\n            return this.owner;"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/neo-BlockBehaviour.java",
+      "start_line": 904,
+      "end_line": 910,
+      "excerpt_sha256": "dd06908f0cffa53bf05b99f31e674560a11b6c7de650aa2a483c6178a94462b1",
+      "text": "            Cache(BlockState p_60853_) {\n                Block block = p_60853_.getBlock();\n                this.solidRender = p_60853_.isSolidRender(EmptyBlockGetter.INSTANCE, BlockPos.ZERO);\n                this.propagatesSkylightDown = block.propagatesSkylightDown(p_60853_, EmptyBlockGetter.INSTANCE, BlockPos.ZERO);\n                this.lightBlock = block.getLightBlock(p_60853_, EmptyBlockGetter.INSTANCE, BlockPos.ZERO);\n                if (!p_60853_.canOcclude()) {\n                    this.occlusionShapes = null;"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/neo-BlockBehaviour.java",
+      "start_line": 114,
+      "end_line": 124,
+      "excerpt_sha256": "0ac497092566e8636912f4a1aceb94fee6cf35ed7f25951788dd7dafc3a963a3",
+      "text": "        final ResourceKey<LootTable> lootTableCache = p_60452_.drops;\n        if (lootTableCache != null) {\n            this.lootTableSupplier = () -> lootTableCache;\n        } else if (p_60452_.lootTableSupplier != null) {\n            this.lootTableSupplier = p_60452_.lootTableSupplier;\n        } else {\n            this.lootTableSupplier = () -> {\n                ResourceLocation resourcelocation = BuiltInRegistries.BLOCK.getKey(this.asBlock());\n                return ResourceKey.create(Registries.LOOT_TABLE, resourcelocation.withPrefix(\"blocks/\"));\n            };\n        }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/neo-Block.java",
+      "start_line": 357,
+      "end_line": 359,
+      "excerpt_sha256": "1b641acb06cf84893fd7831c2402fce4113365c38dfd8b5840f4a7704b6bb8e9",
+      "text": "    public float getExplosionResistance() {\n        return this.explosionResistance;\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/garbage-physical-audit-20261022/neo-BlockItem.java",
+      "start_line": 38,
+      "end_line": 41,
+      "excerpt_sha256": "64958c7f4b66cbede24b83acbf83b2db7979aac47360a0656c6d3eee9463da89",
+      "text": "    public BlockItem(Block p_40565_, Item.Properties p_40566_) {\n        super(p_40566_);\n        this.block = p_40565_;\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/garbage-physical-audit-20261022/neo-Item.java",
+      "start_line": 463,
+      "end_line": 465,
+      "excerpt_sha256": "8ae20a5465d9f788df88a1d598b1e6c0531366a729dcaa861839bc31a1bca7bd",
+      "text": "        private DataComponentMap buildComponents() {\n            return this.components == null ? DataComponents.COMMON_ITEM_COMPONENTS : COMPONENT_INTERNER.intern(this.components.build());\n        }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/garbage-physical-audit-20261022/neo-DataComponents.java",
+      "start_line": 233,
+      "end_line": 240,
+      "excerpt_sha256": "9726d283717cce7f255a572a3f73113e5bc0919af382950239d7a8f99f8b93c4",
+      "text": "    public static final DataComponentMap COMMON_ITEM_COMPONENTS = DataComponentMap.builder()\n        .set(MAX_STACK_SIZE, 64)\n        .set(LORE, ItemLore.EMPTY)\n        .set(ENCHANTMENTS, ItemEnchantments.EMPTY)\n        .set(REPAIR_COST, 0)\n        .set(ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.EMPTY)\n        .set(RARITY, Rarity.COMMON)\n        .build();"
+    }
+  ],
+  "readability": {
+    "baseline": "f6ee2c6cf9cadb483b44ce3fe8f69b6c5d564596",
+    "files": {
+      "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/EnderGarbageBlock.java": {
+        "before_raw_sha256": "ce735f79021b6a4f04c296479ad658fe0a34ecfd25bf0f74b81840a872aaf895",
+        "after_raw_sha256": "e823aafe66499f7c12db90ab7ce1278db037ce425a4b4777387ecb9c63553638",
+        "before_lines": 129,
+        "after_lines": 146,
+        "comment_corrections": [
+          [
+            "GT6 bounds: a full-width lid plate above a 1px-inset bin body",
+            "GT6 visual bounds; this port also uses these boxes for its outline and collision."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1004,
+            "execution_sha256": "3428b1de4036e59bd1ba68e22d62f7de644a1772441d5edaf1ba7168fa1c1d0b",
+            "literal_positions_sha256": "afa95a3ea9fbc6f9273bb4d50c8f4183b1a9adcb981b5f271219949812ad5965",
+            "literal_count": 16
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1160,
+            "execution_sha256": "d158603c7bd0ca7318b8e0ef81dd507455252f10e234af18d24830f8f08fb375",
+            "literal_positions_sha256": "2384ed006e461108da1a9b4dcab9961d510cc5559f113a9fc0820fadbd6b7f08",
+            "literal_count": 16
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/EnderGarbageDumpBlock.java": {
+        "before_raw_sha256": "fb6e37ba7378fcbbabf07cefd5e81de39905e07a0193d47ced28f945d9031a3b",
+        "after_raw_sha256": "52b72a66f70fc3a62cbaf1c44244a7a2847023ebfdd5c1fbcce37d908ba16005",
+        "before_lines": 107,
+        "after_lines": 122,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 765,
+            "execution_sha256": "97a32e8e14de84f869b2136fccd3b2f74350b7effbabbf5a6ef1d38a17cbed7d",
+            "literal_positions_sha256": "644d95f858b986c3c599a2ded180d8f873452c049258d5425374fef2981826fd",
+            "literal_count": 4
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 921,
+            "execution_sha256": "299e0776eb8e8414262cd852637118bc15393098dcc6034bd0975291c25e9dbc",
+            "literal_positions_sha256": "52afc92275f0d34d9a52ec2ce0faaa42ef1d8f86e49fe879a907cab2aa3f9724",
+            "literal_count": 4
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/client/gui/GarbageDumpContainerMenu.java": {
+        "before_raw_sha256": "273c1cff1910c61ae2b51010177f0afa8600b71ceac031c760a06f616c3afeed",
+        "after_raw_sha256": "9b1c616dd2515fc25c9347c327c6045f308641e574fe43994bdc06ea51a270dc",
+        "before_lines": 49,
+        "after_lines": 49,
+        "comment_corrections": [
+          [
+            " * garbage piles. Pile counts can exceed a stack, so all removals go through\n * the handler instead of mutating the displayed stacks.",
+            " * garbage piles. Shift-click extracts through the handler because display stacks are copies.\n * Other clicks use the native slot contract; this menu does not override their mutations."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 324,
+            "execution_sha256": "80150a503924f3c6ef7957a3bde69692cd2501934acf9ac15a2350ed38a52eb1",
+            "literal_positions_sha256": "04ce68de84ed9942ff7a9b9238f258ca47b9e51c9b59a2c782d2501cc9ab77bb",
+            "literal_count": 1
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 328,
+            "execution_sha256": "a6cc35f6b08f77ecd39a6a2e9585c88c37bb955b28d4808a6dc0de3d6c20244a",
+            "literal_positions_sha256": "2bdede394a6bf7ff0d27ba167594db0f451e055819356316459b7d6bf39097c7",
+            "literal_count": 1
+          }
+        ]
+      },
+      "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTStorageContainers.java": {
+        "before_raw_sha256": "a587a6138eaee75e03dc20ba09b54a99e14cbbfbc85eebac29903f1bc2b992b9",
+        "after_raw_sha256": "f189e47930718d20e52520b90e7ed353523badf691faf37a0c58743db8d0033c",
+        "before_lines": 40,
+        "after_lines": 107,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "neoforge",
+            "tokens": 1399,
+            "execution_sha256": "76beb69e70f83e2ed1397bc38b9dd32698b53a5482db4f1d45e4362ee08b8bc8",
+            "literal_positions_sha256": "428ba4c9f46f920c5acddfa421a3d378d52e4959efe125513fa2fa9ff7019143",
+            "literal_count": 36
+          }
+        ]
+      }
+    },
+    "controlled_identifier_renames": {
+      "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/EnderGarbageBlock.java": {
+        "mapping": {
+          "ctx": "blockContext",
+          "dir": "direction",
+          "sp": "serverPlayer"
+        },
+        "exact_identifier_occurrences": {
+          "ctx": 3,
+          "dir": 1,
+          "sp": 2
+        },
+        "new_names_absent_from_original_code": true,
+        "mapping_injective": true
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/EnderGarbageDumpBlock.java": {
+        "mapping": {
+          "ctx": "blockContext",
+          "dir": "direction",
+          "sp": "serverPlayer"
+        },
+        "exact_identifier_occurrences": {
+          "ctx": 2,
+          "dir": 1,
+          "sp": 2
+        },
+        "new_names_absent_from_original_code": true,
+        "mapping_injective": true
+      },
+      "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTStorageContainers.java": {
+        "mapping": {
+          "b": "registeredDrawer"
+        },
+        "exact_identifier_occurrences": {
+          "b": 3
+        },
+        "new_names_absent_from_original_code": true,
+        "mapping_injective": true
+      }
+    },
+    "scope": "Complete ordered platform code, literal positions, other comments and Stonecutter directives after explicit identifier normalization. No gameplay, registry ID, recipe, schema or data change."
+  },
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "resources": [
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/ender_garbage_bin.json",
+      "raw_sha256": "a773c1d0fe303b81761f7f4d3a78fbe73430c80f0c2e6228b1510dd91f78783b"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/ender_garbage_bin.json",
+      "raw_sha256": "fc726fdd381519b49e1b9fa4b269fe8d2799381a75747261407ae728d889a51e"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/resources/assets/gt6ce/models/block/machine/storage/ender_garbage_bin.json",
+      "raw_sha256": "abcd3e64c087e4b5ea9343cbb0a796c28039961961bc70c3f4833ccc4b7a4a75"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/ender_garbage_dump.json",
+      "raw_sha256": "4d1bb8e93a878a78826beef9b78ff71c3984708df793fb2dd803426b7241c55b"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/ender_garbage_dump.json",
+      "raw_sha256": "3cec95a69ec364aa1931ed2c2db2264592e912f367171d27333f6dd4f43bb7be"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/resources/assets/gt6ce/models/block/machine/storage/ender_garbage_dump.json",
+      "raw_sha256": "574ac138812112a3d33506dd813681f4713f8827cc642b47377941dd54f27cc6"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/block/machines/endergarbage/bin/colored/bottom.png",
+      "raw_sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e",
+      "png_dimensions": [
+        16,
+        16
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/block/machines/endergarbage/bin/colored/side.png",
+      "raw_sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e",
+      "png_dimensions": [
+        16,
+        16
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/block/machines/endergarbage/bin/colored/top.png",
+      "raw_sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e",
+      "png_dimensions": [
+        16,
+        16
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/block/machines/endergarbage/bin/overlay/bottom.png",
+      "raw_sha256": "e8cd54840d80be4666ad4206fedec84054136518171a68e93e1f63ed4d6b6040",
+      "png_dimensions": [
+        16,
+        16
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/block/machines/endergarbage/bin/overlay/side.png",
+      "raw_sha256": "3078282a2680d2bdfe2b57a5a582ce928d3ac2b9b9af41d8ede9a8fb1c9056d2",
+      "png_dimensions": [
+        16,
+        16
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/block/machines/endergarbage/bin/overlay/top.png",
+      "raw_sha256": "3978ea9afe6bfc3e2de5c52ba70133b78fd51ff849c3461890b6c630daab777c",
+      "png_dimensions": [
+        16,
+        16
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/block/machines/endergarbage/dump/colored/bottom.png",
+      "raw_sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e",
+      "png_dimensions": [
+        16,
+        16
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/block/machines/endergarbage/dump/colored/side.png",
+      "raw_sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e",
+      "png_dimensions": [
+        16,
+        16
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/block/machines/endergarbage/dump/colored/top.png",
+      "raw_sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e",
+      "png_dimensions": [
+        16,
+        16
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/block/machines/endergarbage/dump/overlay/bottom.png",
+      "raw_sha256": "0d572608818c7ee19e733de4cc9f67aec31ce5302467d30b948d2a2ad2bf66d6",
+      "png_dimensions": [
+        16,
+        16
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/block/machines/endergarbage/dump/overlay/side.png",
+      "raw_sha256": "d79c63123ccd1437109096c637c12a0245139246cb777116a8186bad33e16123",
+      "png_dimensions": [
+        16,
+        16
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/block/machines/endergarbage/dump/overlay/top.png",
+      "raw_sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+      "png_dimensions": [
+        16,
+        16
+      ]
+    }
+  ],
+  "resource_checks": [
+    {
+      "id": "ender_garbage_bin",
+      "ordered_boxes_each_layer": [
+        [
+          [
+            0,
+            12,
+            0
+          ],
+          [
+            16,
+            16,
+            16
+          ]
+        ],
+        [
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            15,
+            12,
+            15
+          ]
+        ]
+      ],
+      "layers": 2,
+      "state_and_item_references": "match",
+      "base_tint_index": 0,
+      "overlay_has_no_tint": true,
+      "face_sets_and_texture_files": "match expected source geometry"
+    },
+    {
+      "id": "ender_garbage_dump",
+      "ordered_boxes_each_layer": [
+        [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            16,
+            16,
+            16
+          ]
+        ]
+      ],
+      "layers": 2,
+      "state_and_item_references": "match",
+      "base_tint_index": 0,
+      "overlay_has_no_tint": true,
+      "face_sets_and_texture_files": "match expected source geometry"
+    }
+  ],
+  "formal_findings_added": [
+    407,
+    408,
+    409,
+    410,
+    411,
+    412
+  ],
+  "formal_findings_extended": [],
+  "source_derivations": {
+    "bin_16_grid_cells": {
+      "original_full_collision": 4096,
+      "current_union": 3376,
+      "difference": 720,
+      "execution_scope": "Python integer box enumeration; no native VoxelShape API"
+    },
+    "bin_light_block": {
+      "original": 3,
+      "current_dry": 0,
+      "current_waterlogged": 1,
+      "execution_scope": "Derived from actual native getters, shape and fluid state; not API/world execution"
+    },
+    "bare_item_stack_limits": {
+      "original_bin_and_dump": 16,
+      "current_bin_and_dump": 64,
+      "scope": "Default unmodified BlockItem forms; no custom component/NBT packs applied"
+    }
+  },
+  "not_claimed_complete": [
+    "Default material RGB callback coverage and actual pixels",
+    "Full native menus, networking, live SWAP reproduction",
+    "Actual break/explosion and all tool/drop event combinations",
+    "Full recipe list and all world lifecycle paths",
+    "Saved-world restart and cross-version migration"
+  ],
+  "rejected_or_existing": [
+    "Missing static loot JSON is not missing drops: actual built-in registry pack supplies them.",
+    "Bin visual/render boxes already match original; full original collision is a separate contract.",
+    "Current paint mixins exist, so do not report all paint functionality absent.",
+    "Dump admin creation tooltip is not an original GUI permission restriction."
+  ],
+  "preparation_notes": [
+    "ctx -> context rejected by new-name guard because Neo TooltipContext already uses context; used blockContext before applying.",
+    "Comparison of in-memory tuples with JSON lists normalized before equality assertion.",
+    "Native receipt artifact keys normalized through Path before lookup; no production code affected."
+  ],
+  "limits": {
+    "java_compile": "not_run",
+    "java_probe": "not_run",
+    "gradle": "not_run",
+    "game": "not_run",
+    "render_pixels": "not_run",
+    "build": "not_run",
+    "push": "not_run",
+    "github_write": "not_run",
+    "original_texture_comparison": "Expected original endergarbage directory missing from reference snapshot; current PNG headers/references only.",
+    "neo_loader_rewrite": "Existing Stonecutter composite rewrite rule read; no fresh resource generation in this batch.",
+    "goal": "active; full original audit/readability objective remains unfinished."
+  },
+  "root_revalidation": {
+    "current_sources_resources_original_hashes": "match",
+    "source_and_native_excerpts": "match exact current spans",
+    "native_artifacts_and_entries": "match",
+    "readability_proof": "match current seven platform code streams",
+    "formal_ids": {
+      "contiguous": true,
+      "count": 412
+    },
+    "protected_materials": "unchanged",
+    "new_report_links": "resolve",
+    "whole_goal_complete": false
+  }
+}
