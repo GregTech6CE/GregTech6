@@ -12,6 +12,7 @@ import com.gregtech.gregtech.api.addon.LayoutPart;
 import com.gregtech.gregtech.api.addon.MachineCasing;
 import com.gregtech.gregtech.api.addon.MachineFace;
 import com.gregtech.gregtech.api.addon.MachineIo;
+import com.gregtech.gregtech.api.addon.PartEnergyRules;
 import com.gregtech.gregtech.api.addon.RecipeMachine;
 import com.gregtech.gregtech.api.addon.RecipeTable;
 import com.gregtech.gregtech.api.addon.StructureLayout;
@@ -32,6 +33,7 @@ public final class AddonDeclarationTypeContracts {
         ioAndFuel();
         tables();
         structure();
+        secondEnergy();
         System.out.println("passed " + assertions);
     }
 
@@ -234,9 +236,12 @@ public final class AddonDeclarationTypeContracts {
         var emitter = LayoutPart.builder("sample_emitter", "Steel").hardness(6.0F).texture("block/sample_emitter")
                 .energyOutput(emitted(), 1_000).build();
         check(emitter.energy().equals(emitted()) && emitter.energyCapacity() == 1_000, "energy part stores its output");
+        check(emitter.energyInput() == null && emitter.conditionPerTick() == 0 && !emitter.condition(),
+                "an output part does not accept");
 
         var machine = behavior(casing("miner"), eu(32));
         check(!machine.emitsEnergy() && machine.energyOutMask() == 0 && machine.output() == null, "no behavior output");
+        check(machine.auxiliary() == null && machine.auxiliaryMask() == 0, "no auxiliary input");
         var emitting = BehaviorMachine.builder(casing("miner")).energy(eu(32)).gui(GUI)
                 .energyOutput(emitted()).build();
         check(emitting.emitsEnergy() && emitting.energyOutMask() == MachineFace.BACK.bit()
@@ -244,6 +249,76 @@ public final class AddonDeclarationTypeContracts {
                 "behavior output is one object");
         fails(() -> BehaviorMachine.builder(casing("bad")).energy(eu(32)).gui(GUI)
                 .fluid(1000, 8, 8, BehaviorMachine.SlotRole.INPUT).build(), "overlaps");
+    }
+
+    private static void secondEnergy() {
+        var input = EnergyInput.builder("EU", 128).range(64, 256).capacity(10_000).faces(MachineFace.FRONT).build();
+        var condition = LayoutPart.builder("sample_condition", "Steel").hardness(6.0F)
+                .energyInput(input).condition(192).build();
+        check(condition.energy() == null && condition.energyCapacity() == 0 && condition.condition()
+                        && condition.conditionPerTick() == 192 && condition.energyInput().capacity() == 10_000
+                        && condition.energyInput().rangeMin() == 64 && condition.energyInput().rangeMax() == 256,
+                "a condition part stores its input");
+        fails(() -> LayoutPart.builder("sample_condition", "Steel").hardness(6.0F)
+                .energyOutput(emitted(), 1_000).energyInput(input).condition(192).build(), "both");
+        fails(() -> LayoutPart.builder("sample_condition", "Steel").hardness(6.0F).condition(192).build(), "condition");
+        fails(() -> LayoutPart.builder("sample_condition", "Steel").hardness(6.0F).energyInput(input).build(), "condition");
+        fails(() -> LayoutPart.builder("sample_condition", "Steel").hardness(6.0F)
+                .energyInput(EnergyInput.builder("EU", 128).range(64, 256).capacity(10_000)
+                        .faces(MachineFace.FRONT).anyPacket().build()).condition(192).build(), "any packet");
+        fails(() -> LayoutPart.builder("sample_condition", "Steel").hardness(6.0F)
+                .energyInput(EnergyInput.builder("EU", 32).range(64, 256).capacity(10_000).faces(MachineFace.FRONT).build())
+                .condition(192).build(), "packet range");
+        fails(() -> LayoutPart.builder("sample_condition", "Steel").hardness(6.0F).energyInput(input).condition(20_000).build(),
+                "capacity");
+
+        var open = EnergyInput.builder("HU", 32).anyPacket().build();
+        check(open.anyPacket() && !open.rangeSpecified(), "anyPacket leaves the range unset");
+        fails(() -> EnergyInput.builder("HU", 32).range(1, 64).anyPacket().build(), "any packet");
+        fails(() -> recipe(EnergyInput.builder("EU", 32).anyPacket().build()), "packet size");
+        fails(() -> behavior(casing("press"), EnergyInput.builder("EU", 32).anyPacket().build()), "packet size");
+
+        var auxiliary = EnergyInput.builder("HU", 32).anyPacket().capacity(50_000).faces(MachineFace.FRONT).build();
+        var machine = BehaviorMachine.builder(casing("deburn")).energy(eu(32)).gui(GUI).auxiliaryEnergy(auxiliary).build();
+        check(machine.energy().type().equals("EU") && machine.energy().perTick() == 32 && !machine.energy().anyPacket()
+                        && !machine.energy().rangeSpecified() && machine.energy().faces().equals(MachineFace.exceptFront())
+                        && machine.auxiliary().anyPacket() && machine.auxiliary().capacity() == 50_000
+                        && machine.auxiliaryMask() == MachineFace.FRONT.bit()
+                        && (machine.energyMask() & machine.auxiliaryMask()) == 0,
+                "auxiliary energy is a separate buffer on its own face");
+        check(!behavior(casing("deburn"), eu(32)).equals(machine), "auxiliary energy changes the machine");
+        var ranged = BehaviorMachine.builder(casing("heater")).energy(EnergyInput.builder("EU", 32)
+                        .faces(MachineFace.BACK).build()).gui(GUI)
+                .auxiliaryEnergy(EnergyInput.builder("HU", 64).range(32, 128).capacity(8_000).faces(MachineFace.TOP).build())
+                .build();
+        check(!ranged.auxiliary().anyPacket() && ranged.auxiliary().rangeMin() == 32 && ranged.auxiliary().rangeMax() == 128,
+                "auxiliary range stays on the second input");
+        fails(() -> BehaviorMachine.builder(casing("deburn")).energy(eu(32)).gui(GUI)
+                .auxiliaryEnergy(EnergyInput.builder("HU", 32).anyPacket().capacity(50_000).faces(MachineFace.TOP).build())
+                .build(), "overlaps");
+        fails(() -> BehaviorMachine.builder(casing("deburn")).energy(eu(32)).gui(GUI)
+                .auxiliaryEnergy(EnergyInput.builder("HU", 32).capacity(50_000).faces(MachineFace.FRONT).build()).build(),
+                "anyPacket");
+        fails(() -> BehaviorMachine.builder(casing("deburn")).energy(eu(32)).gui(GUI)
+                .auxiliaryEnergy(EnergyInput.builder("HU", 32).anyPacket().faces(MachineFace.FRONT).build()).build(),
+                "positive");
+
+        var over = PartEnergyRules.admit(0, 1_000, 300, 2, 64, 256, false);
+        check(over.overload() && over.packets() == 2, "an oversized packet overloads and is consumed");
+        var small = PartEnergyRules.admit(0, 1_000, 32, 1, 64, 256, false);
+        check(!small.overload() && small.packets() == 0, "an undersized packet is not stored");
+        var fit = PartEnergyRules.admit(0, 1_000, 128, 4, 64, 256, false);
+        check(!fit.overload() && fit.packets() == 4, "in-range packets fit");
+        var capped = PartEnergyRules.admit(900, 1_000, 128, 4, 64, 256, false);
+        check(!capped.overload() && capped.packets() == 1, "the buffer caps how many packets fit");
+        var any = PartEnergyRules.admit(0, 1_000, 10_000, 1, 0, 0, true);
+        check(!any.overload() && any.packets() == 1, "anyPacket does not overload");
+        check(com.gregtech.gregtech.api.machine.BasicMachineEnergy.add(0, 1_000, 10_000, any.packets()) == 1_000,
+                "anyPacket fills up to capacity");
+        var dry = PartEnergyRules.drain(100, 192);
+        check(!dry.satisfied() && dry.stored() == 100, "a short condition buffer is not drained");
+        var wet = PartEnergyRules.drain(192, 192);
+        check(wet.satisfied() && wet.stored() == 0, "an exact condition buffer is drained");
     }
 
     private static final String GUI = "aa_sample:textures/gui/machine.png";
