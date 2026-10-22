@@ -9,7 +9,11 @@ import java.util.Objects;
  * short name, such as {@code RU}. {@code outputPerTick} is one packet. A multiblock uses a
  * {@link MachineLayout} whose name is {@code machineType}. Output is the front face, the back
  * face, or a fixed number of blocks behind the front. There is no arbitrary offset.
+ *
+ * @deprecated Use {@link FuelGenerator}. Removal is 0.2.
  */
+@Deprecated(since = "0.0", forRemoval = true)
+@AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration", removeAt = "0.2")
 public record FuelGeneratorDeclaration(
         String id,
         String material,
@@ -46,10 +50,27 @@ public record FuelGeneratorDeclaration(
             throw new IllegalArgumentException("Invalid machine parameters for " + id);
     }
 
+    /**
+     * @deprecated Use {@link FuelGenerator#single()} or {@link FuelGenerator#multi()}. Removal is 0.2.
+     */
+    @Deprecated(since = "0.0", forRemoval = true)
+    @AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration.Kind", removeAt = "0.2")
     public enum Kind { SINGLE, MULTI }
 
-    /** Where one packet leaves. {@code BEHIND} injects into the block {@code distance} steps past the front. */
+    /**
+     * Where one packet leaves. {@code BEHIND} injects into the block {@code distance} steps past the front.
+     *
+     * @deprecated Use {@link FuelOutput}. Removal is 0.2.
+     */
+    @Deprecated(since = "0.0", forRemoval = true)
+    @AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration.Output", removeAt = "0.2")
     public record Output(Side side, int distance) {
+        /**
+         * @deprecated Use {@link FuelOutput.Builder#front()}, {@link FuelOutput.Builder#back()},
+         * or {@link FuelOutput.Builder#behind(int)}. Removal is 0.2.
+         */
+        @Deprecated(since = "0.0", forRemoval = true)
+        @AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration.Output.Side", removeAt = "0.2")
         public enum Side { FRONT, BACK, BEHIND }
 
         public Output {
@@ -69,6 +90,11 @@ public record FuelGeneratorDeclaration(
 
     public static Builder builder(String id, String material) { return new Builder(id, material); }
 
+    /**
+     * @deprecated Use {@link FuelGenerator#builder(MachineCasing)}. Removal is 0.2.
+     */
+    @Deprecated(since = "0.0", forRemoval = true)
+    @AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration.Builder", removeAt = "0.2")
     public static final class Builder {
         private final String id;
         private final String material;

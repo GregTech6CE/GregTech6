@@ -23,7 +23,11 @@ import java.util.Objects;
  * component is from -16 to 16. Naming a cell leaves that channel's automatic face unset; setting both fails.
  * {@code energyInMin} and {@code energyInMax} stay {@code 0} until {@code energyRange} is set.
  * A TU machine cannot declare a range. The nominal input may sit outside the range.
+ *
+ * @deprecated Use {@link RecipeMachine}. Removal is 0.2.
  */
+@Deprecated(since = "0.0", forRemoval = true)
+@AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.MachineDeclaration", removeAt = "0.2")
 public record MachineDeclaration(
         String id,
         String material,
@@ -122,9 +126,20 @@ public record MachineDeclaration(
         return List.copyOf(copy);
     }
 
+    /**
+     * @deprecated Use {@link RecipeMachine#basic()} or {@link RecipeMachine#largeRecipe()}. Removal is 0.2.
+     */
+    @Deprecated(since = "0.0", forRemoval = true)
+    @AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.MachineDeclaration.Kind", removeAt = "0.2")
     public enum Kind { BASIC, LARGE_RECIPE }
 
-    /** One cell, in the same coordinates as {@link MachineLayout.Cell}, plus the face that receives the transfer. */
+    /**
+     * One cell, in the same coordinates as {@link MachineLayout.Cell}, plus the face that receives the transfer.
+     *
+     * @deprecated Use {@link IoTarget}. Removal is 0.2.
+     */
+    @Deprecated(since = "0.0", forRemoval = true)
+    @AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.MachineDeclaration.Target", removeAt = "0.2")
     public record Target(int right, int up, int back, BehaviorMachineDeclaration.Face receiver) {
         public Target {
             if (receiver == null) throw new IllegalArgumentException("Missing receiver");
@@ -137,6 +152,11 @@ public record MachineDeclaration(
 
     public static Builder builder(String id, String material) { return new Builder(id, material); }
 
+    /**
+     * @deprecated Use {@link RecipeMachine#builder(MachineCasing)}. Removal is 0.2.
+     */
+    @Deprecated(since = "0.0", forRemoval = true)
+    @AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.MachineDeclaration.Builder", removeAt = "0.2")
     public static final class Builder {
         private final String id;
         private final String material;

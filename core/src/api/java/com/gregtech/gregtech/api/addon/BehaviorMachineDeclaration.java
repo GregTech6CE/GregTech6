@@ -13,7 +13,11 @@ import java.util.Objects;
  * Widget positions are pixels on a GUI whose background is {@code gui}. The sheet must place
  * the slot, energy, tank, progress and toggle sprites at the UV constants below; that is the
  * sheet gt6-crops already uses.
+ *
+ * @deprecated Use {@link BehaviorMachine}. Removal is 0.2.
  */
+@Deprecated(since = "0.0", forRemoval = true)
+@AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration", removeAt = "0.2")
 public record BehaviorMachineDeclaration(
         String id,
         String material,
@@ -183,7 +187,13 @@ public record BehaviorMachineDeclaration(
         return bits;
     }
 
-    /** Machine-relative face. Bit indexes match GregTech's machine face masks. */
+    /**
+     * Machine-relative face. Bit indexes match GregTech's machine face masks.
+     *
+     * @deprecated Use {@link MachineFace}. Removal is 0.2.
+     */
+    @Deprecated(since = "0.0", forRemoval = true)
+    @AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.Face", removeAt = "0.2")
     public enum Face {
         BOTTOM(0), TOP(1), RIGHT(2), FRONT(3), LEFT(4), BACK(5);
         private final int index;
@@ -192,11 +202,39 @@ public record BehaviorMachineDeclaration(
         public int bit() { return 1 << index; }
     }
 
+    /**
+     * @deprecated Use {@link BehaviorMachine.SlotRole}. Removal is 0.2.
+     */
+    @Deprecated(since = "0.0", forRemoval = true)
+    @AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.SlotRole", removeAt = "0.2")
     public enum SlotRole { INPUT, OUTPUT, ANY }
 
+    /**
+     * @deprecated Use {@link BehaviorMachine.ItemSlot}. Removal is 0.2.
+     */
+    @Deprecated(since = "0.0", forRemoval = true)
+    @AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.ItemSlot", removeAt = "0.2")
     public record ItemSlot(int x, int y, SlotRole role) {}
+
+    /**
+     * @deprecated Use {@link BehaviorMachine.FluidSlot}. Removal is 0.2.
+     */
+    @Deprecated(since = "0.0", forRemoval = true)
+    @AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.FluidSlot", removeAt = "0.2")
     public record FluidSlot(int capacity, int x, int y, SlotRole role) {}
+
+    /**
+     * @deprecated Use {@link BehaviorMachine.Toggle}. Removal is 0.2.
+     */
+    @Deprecated(since = "0.0", forRemoval = true)
+    @AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.Toggle", removeAt = "0.2")
     public record Toggle(String translationKey, int x, int y, boolean initiallyOn) {}
+
+    /**
+     * @deprecated Use {@link BehaviorMachine.Progress}. Removal is 0.2.
+     */
+    @Deprecated(since = "0.0", forRemoval = true)
+    @AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.Progress", removeAt = "0.2")
     public record Progress(int x, int y) {}
 
     private record Widget(String name, int x, int y, int width, int height) {
@@ -208,6 +246,11 @@ public record BehaviorMachineDeclaration(
 
     public static Builder builder(String id, String material) { return new Builder(id, material); }
 
+    /**
+     * @deprecated Use {@link BehaviorMachine#builder(MachineCasing)}. Removal is 0.2.
+     */
+    @Deprecated(since = "0.0", forRemoval = true)
+    @AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.Builder", removeAt = "0.2")
     public static final class Builder {
         private final String id;
         private final String material;
