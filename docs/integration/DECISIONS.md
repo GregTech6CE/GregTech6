@@ -1,5 +1,9 @@
 # 实现选择记录
 
+## 2026-10-22 / 行为机器远程送能
+
+`MachineBehaviorContext.emitTo(target, side, size, amount)` 用机器已有的 `energyOutput` 声明（类型、包下限、上限、包次数和负包开关），不看声明上的面。`EnergyOutput.remote()` 允许这种输出不写面：没有相邻面路径，`emit` 送不出去，只走 `emitTo`；写了面再加 `remote()` 时两条路都能用。能量零件不能写 `remote()`，结构零件仍要面。原来面为空的声明会启动失败，现在只有带 `remote()` 才通过，这是新增能力而不是放宽旧声明。每有一包被目标收下就扣控制器储能，返回收下的包数；请求超出声明时和 `emit(size, amount)` 一样抛出。`side` 是接收方的面，null 表示不分面。目标每次调用现查：区块没加载、方块实体不存在或已经被移除都返回 0，不保留方块实体。目标坐标存在 `BehaviorState`（三个 `setInt` 键），不写在机器声明上，因为坐标属于放下的这一块，而声明由同类型机器共用；这样也不新增存档键或格式。太阳镜仍是行为模板里的机器，不做成结构零件，客户端朝向渲染不在这一批。
+
 ## 2026-10-22 / 坩埚只读视图
 
 读数挂在控制器侧。`MachineBehavior` 增加 `getCrucibleMaterial(context)`，返回熔融材料名或空串；现有的 `getCrucibleTemperature` 和 `getCrucibleContentAmount` 不变。绑定零件通过 `PartContext.crucible()` 读取三者合成的 `CrucibleContent` 快照（材料名、GT 单位数量、开尔文温度、`present()`）。不放在 `MachineBehaviorContext` 上，因为零件拿不到控制器那一侧的上下文；由控制器的方块实体在每次调用时现取行为结果，结构拆开、控制器方块实体被移除或没有绑定后返回空视图，不保留方块实体。材料用名字而不是 `GTMaterial`，附属用 `GregTechMaterials.find` 解析，避免把内部材料类型带进 SDK。读取只读，不扣除材料；取材料仍走 `fillMoldAtSide`。只覆盖行为机器控制器，因为附属零件只绑在行为机器上。
