@@ -18,6 +18,27 @@ public final class BehaviorEnergyRules {
     }
 
     /**
+     * How many packets the main input of a behavior machine takes.
+     * {@code anyPacket} skips the window. {@code ranged} refuses a packet below {@code min}.
+     * The default window still stores an undersized packet while {@code overload} is true.
+     * A packet above {@code max} overloads when {@code overload} is true, and is refused when it is false.
+     */
+    public static PartEnergyRules.Admission admitInput(long stored, long capacity, long size, long amount,
+                                                        long min, long max, boolean anyPacket, boolean overload,
+                                                        boolean ranged) {
+        if (anyPacket)
+            return PartEnergyRules.admit(stored, capacity, size, amount, 1, Long.MAX_VALUE, true);
+        if (size == 0 || size == Long.MIN_VALUE || amount <= 0 || capacity < 1)
+            return new PartEnergyRules.Admission(0, false);
+        long sizeAbs = Math.abs(size);
+        if (sizeAbs > max)
+            return overload ? new PartEnergyRules.Admission(amount, true) : new PartEnergyRules.Admission(0, false);
+        if ((ranged || !overload) && sizeAbs < min)
+            return new PartEnergyRules.Admission(0, false);
+        return new PartEnergyRules.Admission(BasicMachineEnergy.accepted(stored, capacity, size, amount), false);
+    }
+
+    /**
      * Reads {@code gt.capacity}. A missing key uses the declaration.
      * A negative saved value is rejected.
      */

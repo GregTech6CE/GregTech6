@@ -205,6 +205,8 @@ public final class LayoutPart {
                 throw new IllegalArgumentException("Energy part type is invalid: " + input.type());
             if (input.anyPacket())
                 throw new IllegalArgumentException("Structure part '" + name + "' cannot ignore packet size");
+            if (!input.overload())
+                throw new IllegalArgumentException("Structure part '" + name + "' cannot disable overload");
             if (!input.rangeSpecified())
                 throw new IllegalArgumentException("Structure part '" + name + "' energy input needs a packet range");
             if (!input.facesSpecified() || input.faces().isEmpty())

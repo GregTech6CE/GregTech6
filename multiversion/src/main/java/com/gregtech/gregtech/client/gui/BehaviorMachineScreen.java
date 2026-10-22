@@ -98,6 +98,7 @@ public class BehaviorMachineScreen extends AbstractContainerScreen<BehaviorMachi
     }
 
     private void drawEnergy(GuiGraphics graphics) {
+        if (declaration.energy() == null) return;
         int left = leftPos + declaration.energyX();
         int top = topPos + declaration.energyY();
         blit(graphics, left, top, BehaviorMachine.UV_ENERGY_U, BehaviorMachine.UV_ENERGY_V,

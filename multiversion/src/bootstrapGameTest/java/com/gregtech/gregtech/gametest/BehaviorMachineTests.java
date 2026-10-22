@@ -163,11 +163,44 @@ public final class BehaviorMachineTests {
         helper.succeed();
     }
 
+    @GameTest(template = "test_empty", timeoutTicks = 100)
+    public static void outputOnlyMachineEmitsAndAcceptsNothing(GameTestHelper helper) {
+        var pos = helper.absolutePos(new BlockPos(2, 0, 2)).atY(250);
+        var machine = place(helper, pos, "addon_sample:sample_wheel");
+        for (Direction side : Direction.values()) {
+            helper.assertTrue(machine.doInject("EU", side, 32, 1, true) == 0, side + " rejects EU");
+            helper.assertTrue(!machine.isEnergyAcceptingFrom("EU", side, false), side + " accepts nothing");
+        }
+        helper.assertTrue(machine.storedEnergy() == 0, "rejected packets are not stored");
+        helper.assertTrue(machine.declaration().energy() == null, "no main input");
+        BehaviorMachineBlockEntity.serverTick(helper.getLevel(), pos, machine.getBlockState(), machine);
+        helper.assertTrue(machine.state().getLong("seen") == 0 && machine.state().getLong("after") == 0,
+                "the main cache reads as zero");
+        helper.assertTrue(machine.state().getLong("added") == 32, "generate fills the output buffer");
+        helper.assertTrue(machine.state().getLong("sent") == 0 && machine.storedEnergy() == 32, "the packet waits");
+        var above = pos.above();
+        var receiverBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.parse("addon_sample:irrigator"));
+        helper.getLevel().setBlockAndUpdate(above, receiverBlock.defaultBlockState().setValue(BehaviorMachineBlock.FACING, Direction.NORTH));
+        var receiver = helper.getLevel().getBlockEntity(above);
+        helper.assertTrue(receiver instanceof BehaviorMachineBlockEntity, "receiver");
+        BehaviorMachineBlockEntity.serverTick(helper.getLevel(), pos, machine.getBlockState(), machine);
+        helper.assertTrue(machine.state().getLong("sent") == 1, "one packet leaves through the top");
+        helper.assertTrue(((BehaviorMachineBlockEntity) receiver).storedEnergy() == 32, "the neighbor stored the packet");
+        helper.assertTrue(machine.storedEnergy() == 0, "the wheel spent the packet");
+        helper.getLevel().removeBlock(pos, false);
+        helper.getLevel().removeBlock(above, false);
+        helper.succeed();
+    }
+
     private static BehaviorMachineBlockEntity place(GameTestHelper helper, BlockPos pos) {
-        var block = BuiltInRegistries.BLOCK.get(ResourceLocation.parse("addon_sample:irrigator"));
+        return place(helper, pos, "addon_sample:irrigator");
+    }
+
+    private static BehaviorMachineBlockEntity place(GameTestHelper helper, BlockPos pos, String id) {
+        var block = BuiltInRegistries.BLOCK.get(ResourceLocation.parse(id));
         helper.getLevel().setBlockAndUpdate(pos, block.defaultBlockState().setValue(BehaviorMachineBlock.FACING, Direction.NORTH));
         var entity = helper.getLevel().getBlockEntity(pos);
-        if (!(entity instanceof BehaviorMachineBlockEntity machine)) throw new AssertionError("No irrigator");
+        if (!(entity instanceof BehaviorMachineBlockEntity machine)) throw new AssertionError("No " + id);
         return machine;
     }
 
