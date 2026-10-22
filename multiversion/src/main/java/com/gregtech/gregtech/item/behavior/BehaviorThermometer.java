@@ -15,22 +15,24 @@ import net.minecraft.world.level.Level;
 
 /** GT6's reusable quicksilver thermometer, reading the target's actual thermal state. */
 public final class BehaviorThermometer {
-    private BehaviorThermometer() {}
+
+    private BehaviorThermometer() {
+    }
 
     public static ItemBehaviors.Outcome useOn(Level level, BlockPos pos, Player player, ItemStack stack) {
-        var target = level.getBlockEntity(pos);
+        var blockEntity = level.getBlockEntity(pos);
         Component message;
-        if (target instanceof BoilerTankBlockEntity boiler) {
+        if (blockEntity instanceof BoilerTankBlockEntity boiler) {
             message = Component.translatable("jade.gt6ce.boiler.heat", boiler.storedHeat(),
                     boiler.spec().heatCapacity());
-        } else if (target instanceof ReactorCoreBlockEntity reactor) {
+        } else if (blockEntity instanceof ReactorCoreBlockEntity reactor) {
             message = Component.translatable("jade.gt6ce.boiler.heat_nocap", reactor.lastHeat);
         } else {
-            Long temperature = target instanceof ITileEntityCrucible crucible ? crucible.getCrucibleTemperature()
-                    : target instanceof MoldBlockEntity mold ? mold.getTemperature()
-                    : target instanceof MoldBasinBlockEntity basin ? basin.getTemperature()
-                    : target instanceof TankBlockEntity tank ? tank.getTemperature()
-                    : target instanceof MultiblockTankControllerBlockEntity tank ? fluidTemperature(tank) : null;
+            Long temperature = blockEntity instanceof ITileEntityCrucible crucible ? crucible.getCrucibleTemperature()
+            : blockEntity instanceof MoldBlockEntity mold ? mold.getTemperature()
+            : blockEntity instanceof MoldBasinBlockEntity basin ? basin.getTemperature()
+            : blockEntity instanceof TankBlockEntity tank ? tank.getTemperature()
+            : blockEntity instanceof MultiblockTankControllerBlockEntity tank ? fluidTemperature(tank) : null;
             if (temperature == null) return ItemBehaviors.Outcome.refused(stack);
             message = Component.translatable("jade.gt6ce.crucible.temperature", temperature);
         }
@@ -41,7 +43,7 @@ public final class BehaviorThermometer {
     private static long fluidTemperature(MultiblockTankControllerBlockEntity tank) {
         var fluid = tank.fluidHandler().getFluidInTank(0);
         if (fluid.isEmpty()) return 293;
-        var entry = com.gregtech.gregtech.registry.GTFluids.entryForFluid(fluid.getFluid());
-        return entry == null ? fluid.getFluid().getFluidType().getTemperature(fluid) : entry.temperature();
+        var fluidEntry = com.gregtech.gregtech.registry.GTFluids.entryForFluid(fluid.getFluid());
+        return fluidEntry == null ? fluid.getFluid().getFluidType().getTemperature(fluid) : fluidEntry.temperature();
     }
 }
