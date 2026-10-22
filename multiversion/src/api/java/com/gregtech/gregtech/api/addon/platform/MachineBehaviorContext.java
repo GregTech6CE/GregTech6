@@ -47,15 +47,19 @@ public interface MachineBehaviorContext {
     /** Removes up to {@code amount} mB. Returns the fluid that left the tank. */
     FluidStack drain(int tank, int amount, boolean simulate);
 
-    /** Energy stored for this tick, in the machine's energy unit. */
+    /**
+     * Energy stored in the main input, in the machine's energy unit.
+     * A machine that declares no main input returns 0. {@link #generate} and {@link #emit} still move energy.
+     */
     long energy();
 
-    /** Removes {@code amount} from {@link #energy()}. Returns false when there is less than that. */
+    /** Removes {@code amount} from {@link #energy()}. Returns false when there is less than that, or when there is no main input. */
     boolean consume(long amount);
 
     /**
      * Adds as much of {@code amount} as the buffer can hold.
      * The buffer is the declared capacity, or the rated input maximum when that capacity is 0.
+     * A machine with no main input holds one full output packet ({@code maxSize} times {@code maxAmount}).
      * Returns how much was stored.
      */
     long generate(long amount);

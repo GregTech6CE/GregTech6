@@ -143,6 +143,8 @@ public final class RecipeMachine implements AddonMachine {
                 throw new IllegalArgumentException("Recipe machine '" + id + "' cannot declare energy capacity");
             if (energy.anyPacket())
                 throw new IllegalArgumentException("Recipe machine '" + id + "' cannot ignore packet size");
+            if (!energy.overload())
+                throw new IllegalArgumentException("Recipe machine '" + id + "' cannot disable overload");
             if (energy.perTick() < 0)
                 throw new IllegalArgumentException("Invalid energy per tick for " + id + ": " + energy.perTick());
             if (energy.rangeSpecified() && "TU".equalsIgnoreCase(energy.type()))

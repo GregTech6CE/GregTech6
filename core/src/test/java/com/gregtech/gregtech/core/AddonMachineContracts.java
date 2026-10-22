@@ -83,6 +83,7 @@ public final class AddonMachineContracts {
             case "overlap" -> overlap();
             case "bounds" -> bounds();
             case "benergy" -> behaviorEnergy();
+            case "binput" -> behaviorInput();
             case "factory" -> missingFactory();
             case "share" -> sharedBlockEntity();
             case "bconflict" -> behaviorConflict();
@@ -476,6 +477,30 @@ public final class AddonMachineContracts {
                 .energy(EnergyInput.builder("EU", 32).build())
                 .gui("aa_sample:textures/gui/machine.png").energyGauge(-1, 8).build(),
                 "outside");
+    }
+
+    private static void behaviorInput() {
+        var wheel = BehaviorMachine.builder(MachineCasing.builder("sample_wheel", "Steel").machineType("sample_wheel").build())
+                .gui("aa_sample:textures/gui/machine.png")
+                .energyOutput(EnergyOutput.builder("EU", 32, 1).faces(MachineFace.TOP).build())
+                .build();
+        var wide = BehaviorMachine.builder(MachineCasing.builder("sample_wide", "Steel").machineType("sample_wide").build())
+                .energy(EnergyInput.builder("EU", 32).anyPacket().capacity(10_000).build())
+                .gui("aa_sample:textures/gui/machine.png")
+                .build();
+        check(wheel.energy() == null && wide.energy().anyPacket(), "declarations keep the new input rules");
+        prepare();
+        GTMaterialRegistry.init();
+        BehaviorMachineFactories.collect(Map.of("aa_sample", Set.of("sample_wheel", "sample_wide")));
+        AddonMachines.accept("aa_sample", List.of(), List.of(), List.of(), List.of(wheel, wide));
+        AddonMachines.install(Set.of("centrifuge"), AddonMachines.builtInRecipeMapNames());
+        check(AddonMachines.behaviorMachines().size() == 2, "both machines accepted");
+        var installedWheel = AddonMachines.behaviorMachines().get(0);
+        var installedWide = AddonMachines.behaviorMachines().get(1);
+        check(installedWheel.declaration().energy() == null && installedWheel.energyInMin() == 0
+                        && installedWheel.energyInMax() == 0, "output only has no input window");
+        check(installedWide.energyInMin() == 1 && installedWide.energyInMax() == Long.MAX_VALUE,
+                "anyPacket has no maximum");
     }
 
     private static void behaviorEnergy() {

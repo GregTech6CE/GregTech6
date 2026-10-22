@@ -139,8 +139,8 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         this.tanks = new Tank[declaration.fluids().size()];
         for (int i = 0; i < tanks.length; i++) tanks[i] = new Tank(declaration.fluids().get(i));
         this.toggles = declaration.initialToggles();
-        this.capacity = declaration.energy().capacity();
-        this.energyTag = GregTechTags.Energy.ALL.stream()
+        this.capacity = declaredCapacity();
+        this.energyTag = !hasInput() ? null : GregTechTags.Energy.ALL.stream()
                 .filter(tag -> tag.getShortName().equalsIgnoreCase(declaration.energy().type()))
                 .findFirst().orElseThrow();
         this.energyOutTag = energyOutName().isBlank() ? null : GregTechTags.Energy.ALL.stream()
@@ -229,6 +229,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     }
 
     private void pollEnergy(Level level, BlockPos pos) {
+        if (!hasInput()) return;
         long size = declaration.energy().perTick();
         for (Direction side : Direction.values()) {
             if (!accepts(side)) continue;
@@ -297,7 +298,23 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         return isEnergyEmittingTo(energy, side, true) ? energyOutSize() : 0;
     }
 
+    private boolean hasInput() { return declaration.energy() != null; }
+
+    /** One full output packet. An output-only machine keeps generated energy here until {@code emit}. */
+    private long outputRoom() {
+        long size = energyOutSize();
+        long amount = energyOutAmount();
+        if (size < 1 || amount < 1) return 0;
+        if (amount > Long.MAX_VALUE / size) return Long.MAX_VALUE;
+        return size * amount;
+    }
+
+    private long declaredCapacity() {
+        return hasInput() ? declaration.energy().capacity() : outputRoom();
+    }
+
     private long bufferCapacity() {
+        if (!hasInput()) return Math.max(0, capacity);
         return BehaviorEnergyRules.buffer(capacity, accepted.energyInMax());
     }
 
@@ -411,13 +428,13 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     public boolean isEnergyType(String energy, Direction side, boolean emitting) {
         if (energy == null) return false;
         if (emitting) return declaration.emitsEnergy() && energy.equalsIgnoreCase(energyOutName());
-        return sameEnergy(energy, declaration.energy().type())
+        return (hasInput() && sameEnergy(energy, declaration.energy().type()))
                 || (declaration.auxiliary() != null && sameEnergy(energy, declaration.auxiliary().type()));
     }
 
     @Override public java.util.Collection<String> getEnergyTypes(Direction side) {
         var names = new java.util.ArrayList<String>();
-        names.add(declaration.energy().type());
+        if (hasInput()) names.add(declaration.energy().type());
         if (declaration.auxiliary() != null && !containsEnergy(names, declaration.auxiliary().type()))
             names.add(declaration.auxiliary().type());
         if (declaration.emitsEnergy() && !containsEnergy(names, energyOutName()))
@@ -433,7 +450,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     @Override
     public boolean isEnergyAcceptingFrom(String energy, Direction side, boolean theoretical) {
         if (auxiliaryAccepts(energy, side)) return true;
-        return sameEnergy(energy, declaration.energy().type()) && accepts(side);
+        return hasInput() && sameEnergy(energy, declaration.energy().type()) && accepts(side);
     }
 
     @Override
@@ -444,18 +461,22 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     @Override
     public long doInject(String energy, Direction side, long size, long amount, boolean doInject) {
         if (auxiliaryAccepts(energy, side)) return injectAuxiliary(energy, size, amount, doInject);
-        if (!isEnergyAcceptingFrom(energy, side, false) || size == 0 || size == Long.MIN_VALUE || amount <= 0) return 0;
-        long sizeAbs = Math.abs(size);
-        if (sizeAbs > accepted.energyInMax()) {
-            if (doInject) com.gregtech.gregtech.api.energy.MachineOverload.apply(this, sizeAbs, energy);
-            return amount;
+        if (!hasInput() || !isEnergyAcceptingFrom(energy, side, false)
+                || size == 0 || size == Long.MIN_VALUE || amount <= 0) return 0;
+        var input = declaration.energy();
+        boolean any = input.anyPacket();
+        var decision = BehaviorEnergyRules.admitInput(stored, bufferCapacity(), size, amount,
+                any ? 1 : accepted.energyInMin(), any ? Long.MAX_VALUE : accepted.energyInMax(),
+                any, input.overload(), any || input.rangeSpecified());
+        if (decision.overload()) {
+            if (doInject) com.gregtech.gregtech.api.energy.MachineOverload.apply(this, Math.abs(size), energy);
+            return decision.packets();
         }
-        long taken = BasicMachineEnergy.accepted(stored, bufferCapacity(), size, amount);
-        if (doInject && taken > 0) {
-            stored = BasicMachineEnergy.add(stored, bufferCapacity(), size, taken);
+        if (doInject && decision.packets() > 0) {
+            stored = BasicMachineEnergy.add(stored, bufferCapacity(), size, decision.packets());
             setChanged();
         }
-        return taken;
+        return decision.packets();
     }
 
     private long injectAuxiliary(String energy, long size, long amount, boolean doInject) {
@@ -485,14 +506,20 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             }
             return BasicMachineEnergy.demanded(auxiliaryStored, auxiliary.capacity(), size);
         }
-        if (!isEnergyAcceptingFrom(energy, side, false) || size == 0 || size == Long.MIN_VALUE) return 0;
+        if (!hasInput() || !isEnergyAcceptingFrom(energy, side, false) || size == 0 || size == Long.MIN_VALUE) return 0;
+        var input = declaration.energy();
+        if (!input.anyPacket()) {
+            long sizeAbs = Math.abs(size);
+            boolean outside = sizeAbs < accepted.energyInMin() || sizeAbs > accepted.energyInMax();
+            if (outside && (input.rangeSpecified() || !input.overload())) return 0;
+        }
         return BasicMachineEnergy.demanded(stored, bufferCapacity(), size);
     }
 
     @Override public long getEnergyOffered(String energy, Direction side, long size) { return 0; }
     @Override public long getEnergySizeInputRecommended(String energy, Direction side) {
         if (auxiliaryAccepts(energy, side)) return declaration.auxiliary().perTick();
-        return declaration.energy().perTick();
+        return hasInput() ? declaration.energy().perTick() : 0;
     }
     @Override public long getEnergySizeOutputRecommended(String energy, Direction side) { return outputSize(energy, side); }
     @Override public long getEnergySizeOutputMin(String energy, Direction side) { return outputSize(energy, side); }
@@ -500,17 +527,19 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     @Override public long getEnergySizeInputMin(String energy, Direction side) {
         if (auxiliaryAccepts(energy, side))
             return declaration.auxiliary().anyPacket() ? 1 : declaration.auxiliary().rangeMin();
-        return accepted.energyInMin();
+        if (!hasInput()) return 0;
+        return declaration.energy().anyPacket() ? 1 : accepted.energyInMin();
     }
     @Override public long getEnergySizeInputMax(String energy, Direction side) {
         if (auxiliaryAccepts(energy, side))
             return declaration.auxiliary().anyPacket() ? Long.MAX_VALUE : declaration.auxiliary().rangeMax();
-        return accepted.energyInMax();
+        if (!hasInput()) return 0;
+        return declaration.energy().anyPacket() ? Long.MAX_VALUE : accepted.energyInMax();
     }
 
     @Override public boolean isEnergyCapacitorType(String energy, Direction side) {
         if (auxiliaryAccepts(energy, side)) return true;
-        return capacity > 0 && sameEnergy(energy, declaration.energy().type()) && !auxiliaryFace(side);
+        return hasInput() && capacity > 0 && sameEnergy(energy, declaration.energy().type()) && accepts(side);
     }
 
     @Override public long getEnergyStored(String energy, Direction side) {
@@ -525,7 +554,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
 
     @Override public java.util.Collection<String> getEnergyCapacitorTypes(Direction side) {
         var names = new java.util.ArrayList<String>();
-        if (capacity > 0) names.add(declaration.energy().type());
+        if (hasInput() && capacity > 0) names.add(declaration.energy().type());
         if (declaration.auxiliary() != null && !containsEnergy(names, declaration.auxiliary().type()))
             names.add(declaration.auxiliary().type());
         return List.copyOf(names);
@@ -595,7 +624,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
 *///?} else {
     public void readMachine(CompoundTag tag) {
 //?}
-        capacity = BehaviorEnergyRules.readCapacity(tag.contains("gt.capacity"), tag.getLong("gt.capacity"), declaration.energy().capacity());
+        capacity = BehaviorEnergyRules.readCapacity(tag.contains("gt.capacity"), tag.getLong("gt.capacity"), declaredCapacity());
         capacitySet = tag.contains("gt.capacity");
         stored = Math.max(0, Math.min(bufferCapacity(), tag.getLong("gt.energy")));
         auxiliaryStored = 0;
@@ -782,10 +811,10 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             if (!simulate && !drained.isEmpty()) setChanged();
             return drained;
         }
-        @Override public long energy() { return stored; }
+        @Override public long energy() { return hasInput() ? stored : 0; }
         @Override public boolean consume(long amount) {
             if (amount < 0) throw new IllegalArgumentException("negative energy");
-            if (stored < amount) return false;
+            if (!hasInput() || stored < amount) return false;
             stored -= amount;
             setChanged();
             return true;
