@@ -1,0 +1,111 @@
+package com.gregtech.gregtech.api.kubejs;
+
+import com.gregtech.gregtech.api.addon.CellMatch;
+import com.gregtech.gregtech.api.addon.StructureLayout;
+import com.gregtech.gregtech.api.addon.StructureRole;
+import com.gregtech.gregtech.api.recipe.data.JsonMaps;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+
+/** Reads and writes {@code data/<namespace>/gt6ce_layouts/<machineType>.json}. */
+public final class StructureLayoutDocuments {
+    private static final Set<String> ROOT = Set.of("cells");
+    private static final Set<String> CELL = Set.of("right", "up", "back", "match", "role");
+
+    private StructureLayoutDocuments() {}
+
+    /** One cell before it is checked against {@link StructureLayout}. */
+    public record CellSpec(int right, int up, int back, String match, String role) {}
+
+    public static StructureLayout parse(String machine, String json) {
+        return layout(machine, cells(JsonMaps.object(json)));
+    }
+
+    public static StructureLayout layout(String machine, List<CellSpec> cells) {
+        var builder = StructureLayout.builder(machine);
+        for (CellSpec cell : cells)
+            builder.cell(cell.right(), cell.up(), cell.back(), CellMatch.parse(cell.match()), role(cell.role()));
+        return builder.build();
+    }
+
+    public static String canonical(StructureLayout layout) {
+        var json = new StringBuilder().append("{\"cells\":[");
+        var cells = layout.cells();
+        for (int i = 0; i < cells.size(); i++) {
+            if (i > 0) json.append(',');
+            var cell = cells.get(i);
+            json.append("{\"right\":").append(cell.right())
+                    .append(",\"up\":").append(cell.up())
+                    .append(",\"back\":").append(cell.back())
+                    .append(",\"match\":");
+            string(json, cell.match().toString());
+            json.append(",\"role\":");
+            string(json, cell.role().name().toLowerCase(Locale.ROOT));
+            json.append('}');
+        }
+        return json.append("]}").toString();
+    }
+
+    private static List<CellSpec> cells(Map<String, Object> json) {
+        for (var key : json.keySet())
+            if (!key.startsWith("_") && !ROOT.contains(key)) throw new IllegalArgumentException("Unknown field " + key);
+        var value = json.get("cells");
+        if (!(value instanceof List<?> list) || list.isEmpty()) throw new IllegalArgumentException("cells");
+        var out = new ArrayList<CellSpec>();
+        for (var element : list) {
+            if (!(element instanceof Map<?, ?> raw)) throw new IllegalArgumentException("cells entries must be objects");
+            var cell = new LinkedHashMap<String, Object>();
+            for (var entry : raw.entrySet()) {
+                if (!(entry.getKey() instanceof String name)) throw new IllegalArgumentException("cells key");
+                cell.put(name, entry.getValue());
+            }
+            for (var key : cell.keySet())
+                if (!CELL.contains(key)) throw new IllegalArgumentException("Unknown field " + key);
+            out.add(new CellSpec(integer(cell, "right"), integer(cell, "up"), integer(cell, "back"),
+                    required(cell, "match"), required(cell, "role")));
+        }
+        return out;
+    }
+
+    private static StructureRole role(String text) {
+        if (text == null || text.isBlank()) throw new IllegalArgumentException("role");
+        try {
+            return StructureRole.valueOf(text.trim().toUpperCase(Locale.ROOT));
+        } catch (IllegalArgumentException failure) {
+            throw new IllegalArgumentException("Unknown structure role: " + text);
+        }
+    }
+
+    private static String required(Map<String, Object> json, String key) {
+        var value = json.get(key);
+        if (value instanceof String text && !text.isBlank()) return text;
+        throw new IllegalArgumentException(key + " is required");
+    }
+
+    private static int integer(Map<String, Object> json, String key) {
+        var value = json.get(key);
+        if (!(value instanceof Number number)) throw new IllegalArgumentException(key + " must be a number");
+        double wide = number.doubleValue();
+        if (!Double.isFinite(wide) || wide != Math.rint(wide) || wide > Integer.MAX_VALUE || wide < Integer.MIN_VALUE)
+            throw new IllegalArgumentException(key + " must be an integer");
+        return number.intValue();
+    }
+
+    private static void string(StringBuilder json, String value) {
+        json.append('"');
+        for (int i = 0; i < value.length(); i++) {
+            char c = value.charAt(i);
+            switch (c) {
+                case '"' -> json.append("\\\"");
+                case '\\' -> json.append("\\\\");
+                default -> json.append(c);
+            }
+        }
+        json.append('"');
+    }
+}
