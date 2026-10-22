@@ -1,6 +1,7 @@
 package com.gregtech.gregtech.core;
 
 import com.gregtech.gregtech.api.addon.AddonMaterials;
+import com.gregtech.gregtech.api.addon.CrucibleContent;
 import com.gregtech.gregtech.api.addon.CrucibleReactionDeclaration;
 import com.gregtech.gregtech.api.addon.CrucibleReactionRemoval;
 import com.gregtech.gregtech.api.addon.MaterialComposition;
@@ -114,6 +115,12 @@ public final class CrucibleAddonContracts {
                 "a removal that hits nothing warns");
         check(warnings.stream().noneMatch(message -> message.contains("can take that reaction over")),
                 "distinct input rows do not warn about taking over");
+        check(!CrucibleContent.EMPTY.present(), "an empty crucible view has no material");
+        var view = new CrucibleContent("SampleAlloy", 2 * unit, 1400);
+        check(view.present() && view.amount() == 2 * unit && view.temperature() == 1400,
+                "a crucible view keeps its material, amount and temperature");
+        check(new CrucibleContent(null, -1, -1).equals(CrucibleContent.EMPTY),
+                "a view with no material and no positive amount is empty");
     }
 
     private static void coreComposition() {

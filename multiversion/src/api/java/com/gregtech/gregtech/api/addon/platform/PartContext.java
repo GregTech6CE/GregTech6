@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.api.addon.platform;
 
+import com.gregtech.gregtech.api.addon.CrucibleContent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
@@ -66,6 +67,14 @@ public interface PartContext {
      * Do not keep this past the callback. A broken structure drops it.
      */
     @Nullable MachineBehavior controller();
+
+    /**
+     * Read-only snapshot of the molten material the bound controller exposes, with its amount
+     * in GregTech units and its temperature in Kelvin. Empty when no controller is bound, the
+     * structure is not formed, or that controller exposes no molten material.
+     * This reads; it removes nothing, and no block entity is kept.
+     */
+    CrucibleContent crucible();
 
     /**
      * Values named by {@code LayoutPart.field}. A key that was not named throws.

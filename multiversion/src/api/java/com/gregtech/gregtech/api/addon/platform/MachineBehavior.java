@@ -63,6 +63,13 @@ public interface MachineBehavior {
     }
 
     /**
+     * Name of the molten material this behavior currently exposes, or an empty string when it
+     * holds none. A behavior that is not a crucible returns an empty string. Reading it removes
+     * nothing; the crucible's own storage is unchanged.
+     */
+    default String getCrucibleMaterial(MachineBehaviorContext context) { return ""; }
+
+    /**
      * Current temperature of molten material held by this behavior, in Kelvin.
      * A behavior that is not a crucible returns zero.
      */

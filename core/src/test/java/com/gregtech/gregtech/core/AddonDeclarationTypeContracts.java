@@ -380,6 +380,15 @@ public final class AddonDeclarationTypeContracts {
         check(wheel.energy() == null && wheel.energyMask() == 0 && wheel.emitsEnergy()
                         && wheel.output().faces().equals(List.of(MachineFace.TOP)),
                 "an output-only machine has no input");
+        var remote = BehaviorMachine.builder(casing("mirror")).gui(GUI)
+                .energyOutput(EnergyOutput.builder("HU", 16, 1).remote().build()).build();
+        check(remote.emitsEnergy() && remote.output().remote() && remote.output().faces().isEmpty()
+                        && remote.energyOutMask() == 0,
+                "a remote output needs no face");
+        check(EnergyOutput.builder("HU", 16, 1).remote().build().equals(remote.output()),
+                "the remote flag is part of output equality");
+        fails(() -> LayoutPart.builder("sample_remote", "Steel").hardness(6.0F)
+                .energyOutput(EnergyOutput.builder("HU", 16, 1).remote().build(), 1_000).build(), "remote");
         fails(() -> BehaviorMachine.builder(casing("wheel")).gui(GUI).build(), "Missing energy");
         var slotted = BehaviorMachine.builder(casing("wheel")).gui(GUI)
                 .energyOutput(EnergyOutput.builder("EU", 32, 1).faces(MachineFace.TOP).build())

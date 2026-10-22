@@ -112,7 +112,7 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
                         .fuelMap("addon_sample.fuel.gas").efficiency(5_000)
                         .output(FuelOutput.builder("RU", 32).behind(4).build())
                         .tank(8_000).multi().build(),
-                IRRIGATOR, MINER, VOID_HOPPER, ROTATION_BUFFER, HAND_CRANK, TRANSFORMER, CLUSTER, SOLID_BOILER, COMPRESSOR, WATER_WHEEL, HAMMER_SWITCH, INLET);
+                IRRIGATOR, MINER, VOID_HOPPER, ROTATION_BUFFER, HAND_CRANK, TRANSFORMER, CLUSTER, SOLID_BOILER, COMPRESSOR, WATER_WHEEL, HAMMER_SWITCH, INLET, MIRROR);
     }
 
     @Override public List<LayoutPart> layoutParts() {
@@ -165,7 +165,7 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
     @Override public Set<String> machineTypes() {
         return Set.of("irrigator", "sampleminer", "samplehopper", "ru_buffer", "hand_crank",
                 "sample_transformer", "sample_cluster", "sampleboiler", "samplecompressor", "sample_wheel", "sample_switch",
-                "sample_inlet");
+                "sample_inlet", "sample_mirror");
     }
 
     @Override public MachineBehavior create(String machineType) {
@@ -182,6 +182,7 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
             case "sample_wheel" -> new WaterWheel();
             case "sample_switch" -> new HammerSwitch();
             case "sample_inlet" -> new Inlet();
+            case "sample_mirror" -> new Mirror();
             default -> throw new IllegalArgumentException(machineType);
         };
     }
@@ -279,6 +280,13 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
             .energyOutput(EnergyOutput.builder("EU", 32, 1).faces(MachineFace.TOP).build())
             .build();
 
+    /** Generates one HU packet and sends it to a saved coordinate three blocks down. No output face. */
+    private static final BehaviorMachine MIRROR = BehaviorMachine.builder(
+            MachineCasing.builder("sample_mirror", "Steel").machineType("sample_mirror").tier(1).build())
+            .gui("addon_sample:textures/gui/machine.png")
+            .energyOutput(EnergyOutput.builder("HU", 16, 1).remote().build())
+            .build();
+
     /** A soft hammer flips a saved flag. A wrench is left to GregTech and still rotates the block. */
     private static final BehaviorMachine HAMMER_SWITCH = BehaviorMachine.builder(
             MachineCasing.builder("sample_switch", "Steel").machineType("sample_switch").tier(1).build())
@@ -314,6 +322,29 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
             state.setLong("added", context.generate(32));
             state.setLong("after", context.energy());
             long sent = context.emit(32, 1);
+            state.setLong("sent", sent);
+            if (sent > 0) context.working(true);
+        }
+    }
+
+    /** Saves a target once, then sends one generated HU packet there every tick. */
+    private static final class Mirror implements MachineBehavior {
+        @Override public boolean canInsert(MachineBehaviorContext context, int slot, ItemStack stack) { return false; }
+        @Override public boolean canFill(MachineBehaviorContext context, int tank, FluidStack stack) { return false; }
+
+        @Override public void tick(MachineBehaviorContext context) {
+            var state = context.state();
+            if (!state.getBoolean("bound")) {
+                BlockPos target = context.pos().below(3);
+                state.setInt("target_x", target.getX());
+                state.setInt("target_y", target.getY());
+                state.setInt("target_z", target.getZ());
+                state.setBoolean("bound", true);
+            }
+            var target = new BlockPos(state.getInt("target_x"), state.getInt("target_y"),
+                    state.getInt("target_z"));
+            context.generate(16);
+            long sent = context.emitTo(target, Direction.UP, 16, 1);
             state.setLong("sent", sent);
             if (sent > 0) context.working(true);
         }
