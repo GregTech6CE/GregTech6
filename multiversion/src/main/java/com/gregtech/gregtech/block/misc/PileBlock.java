@@ -40,13 +40,14 @@ import java.util.List;
  * merges an identical stack into the pile ({@code :81-96}) or takes one item back out of it
  * ({@code :98-111}), and breaking the pile drops that stack ({@code :72-74}). GT6's dungeon places
  * them from real material stacks ({@code DungeonData.java:262-275}) and dropped ingots and plates
- * snap into existing piles ({@code GT_API_Proxy.java:1468-1470}). The port keeps GT6's three block
- * ids and adds that behaviour through {@link PileBlockEntity}.
+ * form new piles when they expire ({@code GT_API_Proxy.java:1468-1470}). The port keeps the three material pile
+ * kinds and adds that behaviour through {@link PileBlockEntity}.
  *
  * <h2>Port differences</h2>
  *
- * <p>The port's pile is an ordinary block with its own block item, while GT6's pile <em>is</em> the
- * material stack item; everything below follows from that and is noted at the code that needs it:</p>
+ * <p>The port exposes standalone empty pile block items. GT6 normally wraps a material stack in
+ * its registered multi-tile item; ordinary interactions and drops use that stored stack.
+ * The following port differences require separate parity decisions:</p>
  * <ul>
  *   <li>A held stack is matched by prefix and material ({@link PileBlockEntity#canAccept}) instead of
  *       GT6's item identity ({@code ST.equal}, {@code ST.java:92-94}), so the port's own iron ingot
@@ -218,8 +219,8 @@ public class PileBlock extends Block implements EntityBlock {
 
     /**
      * GT6's column walk ({@code MultiTileEntityPlaceable.java:99-105}): the item is taken from the
-     * highest pile above the clicked one that carries the very same stack, which is where GT6 keeps
-     * the stack size of the whole column.
+     * highest pile above the clicked one that carries the very same stack. The original decrements
+     * that selected pile's own stack; it does not store one aggregate count for the whole column.
      */
     private static PileBlockEntity topOfColumn(Level level, BlockPos pos, PileBlockEntity clicked) {
         PileBlockEntity top = clicked;

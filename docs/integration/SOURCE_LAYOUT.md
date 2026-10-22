@@ -1,5 +1,7 @@
 # 当前源码导航与命名约定
 
+可放置材料堆：core `MaterialPileRules`给64上限、层高和27消失偏移，`CoinPileRules`给4×4币格／重排数学；共享`GTMaterialPiles`／`GTCoinPiles`实际登记，两版调用同一注册。普通`PileBlockEntity`存单物品，硬币实体存16格与实际币型；两个ExpireHandler共用`PilePlacementChecks`的当前原生谓词。手动放置、材料合并、掉落查询和渲染模型是不同入口，见[材料堆](MATERIAL_PILES_AUDIT.md)。
+
 微型门：core `MiniPortalSignals`管理六面待收信号与超时，共享`DungeonPortalBlockEntity`做最近跨维度目标／相对邻居和保存，继承`CapabilityRelayBlockEntity`／`EnergyRelayBlockEntity`接物品、流体与能源。实际两种方块在`GTDungeonBlocks`，Neo能力在`StorageContainerCapabilities`；类名中的Dungeon是历史名称，地牢原版传送门房间另走`worldgen/dungeon`。模型、碰撞、按面比较器和工具入口须分别核对，见[微型门](MINI_PORTAL_AUDIT.md)。
 
 工具形状边界：共享`ShapedToolBlock`负责静态轮廓、旋转与扳手入口，`ScaffoldBlock`另覆写动态碰撞／轮廓；`CoverCollisionMixin`的选中和移动碰撞注入已经展开。原生挂接另走getBlockSupportShape／SupportType，绳子的可燃性和抗性则来自实际注册属性，不能用这些轮廓替代，见[物性与承托](UTILITY_PHYSICS_AUDIT.md)。

@@ -1,5 +1,7 @@
 # 原版对齐与源码结构审计
 
+2026-10-22 第一百一十三批：材料／硬币堆新增377–383并扩132，13原／19当前Java、17引用和201资源留痕；192模型、195引用与27偏移对应，六原图缺失不计字节通过。七旧540→646行加20行共用谓词，12旧平台视图与两新正文受控保持，见[专题](MATERIAL_PILES_AUDIT.md)。未改玩法／编译／游戏，383不是未修数，全面goal继续。
+
 2026-10-22 第一百一十二批：微型门新增370–376联动定义、放大镜、眼类准入、碰撞、遮光、提示和粒子差异，132／278扩具体入口。29原／14当前Java、12资源、四原生条目和19引用留痕；四源716→797行、七完整视图保持，短信号时序与13／12模型盒核对见[专题](MINI_PORTAL_AUDIT.md)。376不是未修数；真实跨维度、其余系统和全面goal继续。
 
 2026-10-22 第一百一十一批：材料轨新增367工具操作绑定、368检测框、369助推传播身份差异；两原／十当前Java、13引用和八原生条目核实。三源342→397行、五完整平台视图在四处私有标识更名归一后保持，已有轮询／基本信号另列，见[专题](RAIL_CONTROLS_AUDIT.md)。未改玩法／编译／游戏／构建，369条不是未修数，全面goal继续。
@@ -176,7 +178,7 @@
 | ALIGN-129 | 确认苦力怕点火回调不同。 | 原版为服务端左键实体拦截。 | 当前多物品右键，起火工具 hurtEnemy；完整攻击效果未世界验证，见[报告](IGNITION_EXTINGUISHER_AUDIT.md)。 |
 | ALIGN-130 | 确认燃烧室点火／灭火工具分派不完整。 | 原版三类宿主识别两个工具钩子。 | Forge 缺随机工具点火接口，Neo 有该接口；两版都缺喷罐灭火接口，见[报告](IGNITION_EXTINGUISHER_AUDIT.md)。 |
 | ALIGN-131 | 确认原生点火返回零后错误兼容回退。 | 原版按目标类型选择原生或 ToolCompat，不以返回值切换。 | 当前零成本后仍点 TNT／相邻空气；已燃雷管可进入此路径，未世界复现，见[报告](IGNITION_EXTINGUISHER_AUDIT.md)。 |
-| ALIGN-132 | 确认部分物品／库存交互缺少反馈声音。 | 原版起火尝试、成功喷射／封装和瓶框成功取放分别主动发送声音。 | 当前对应回调未调用；雷管、自动点火器、书架取物等已有声音，不列为全局无声。见[工具报告](CONSUMABLE_FEEDBACK_AUDIT.md)及[瓶框补充](BOTTLE_BOOKSHELF_AUDIT.md)。颜色喷罐已有FIRE_EXTINGUISH占位调用，清漆仍缺专用物品层声，见[喷漆目标](PAINT_TARGETS_AUDIT.md)。USB／HDD持有U盘复制／清除缺原playClick，普通面板入口不补声，见[数据交换](USB_SWITCH_AUDIT.md)。 高级按钮原手动脉冲有释放声且音高随活跃变化，当前仅固定按下声；见[按钮曲柄](BUTTON_CRANK_AUDIT.md)。  微型门客户端晚激活的portal专有声也未接；通用起火声不补此路径，见[微型门](MINI_PORTAL_AUDIT.md)。 |
+| ALIGN-132 | 确认部分物品／库存交互缺少反馈声音。 | 原版起火尝试、成功喷射／封装和瓶框成功取放分别主动发送声音。 | 当前对应回调未调用；雷管、自动点火器、书架取物等已有声音，不列为全局无声。见[工具报告](CONSUMABLE_FEEDBACK_AUDIT.md)及[瓶框补充](BOTTLE_BOOKSHELF_AUDIT.md)。颜色喷罐已有FIRE_EXTINGUISH占位调用，清漆仍缺专用物品层声，见[喷漆目标](PAINT_TARGETS_AUDIT.md)。USB／HDD持有U盘复制／清除缺原playClick，普通面板入口不补声，见[数据交换](USB_SWITCH_AUDIT.md)。 高级按钮原手动脉冲有释放声且音高随活跃变化，当前仅固定按下声；见[按钮曲柄](BUTTON_CRANK_AUDIT.md)。  微型门客户端晚激活的portal专有声也未接；通用起火声不补此路径，见[微型门](MINI_PORTAL_AUDIT.md)。  材料堆沿柱取料的声音在原选中顶层、当前被点击底层，已有声而位置不同，见[材料堆](MATERIAL_PILES_AUDIT.md)。 |
 | ALIGN-133 | 确认原版起火概率配置未接入。 | `GT6_Main` 读取 1–100 的 `FlintAndSteelChance`，默认 30。 | GT 工具固定传默认 30；默认一致，配置收尾仍按先前安排延后，见[报告](CONSUMABLE_FEEDBACK_AUDIT.md)。 |
 | ALIGN-134 | 确认胶带创造预算及扣量与原版不同。 | 无限物品玩家使用整卷预算，成功不减剩余量。 | 当前传已存余量且成功照扣；大容量存储存在真实预算准入路径，见[报告](CONSUMABLE_FEEDBACK_AUDIT.md)。 |
 | ALIGN-135 | 确认部分零余量耗材未完成空形态转换。 | 喷罐／胶带在目标无反应后仍统一检查耗尽。 | 创造喷罐受非创造分支限制，胶带提前退出；非创造喷罐已对应，见[报告](CONSUMABLE_FEEDBACK_AUDIT.md)。有效目标还存在原先动作后清空、当前正余量准入的差异；实体零罐会清空但拒染色，保留防免费动作，见[消耗边界](PAINT_TARGETS_AUDIT.md)。 |
@@ -421,6 +423,13 @@
 | ALIGN-374 | 确认微型门明确遮光值1变0。 | 原返回LIGHT_OPACITY_LEAVES，常量1。 | 当前getLightBlock返回0；实际世界光照及独立激活发光参数未验，见[微型门](MINI_PORTAL_AUDIT.md)。 |
 | ALIGN-375 | 确认微型门实际提示缺两项原信息。 | 原包括最近激活目标选择和区块加载器要求。 | 当前appendHoverText没有消费这两项，语言键存在不能代替提示入口，见[微型门](MINI_PORTAL_AUDIT.md)。 |
 | ALIGN-376 | 确认下界微型门缺原激活世界粒子。 | 原随机显示回调生成四个portal粒子。 | 当前无客户端动画回调／ticker；纹理动画已有，非全部动画缺失，见[微型门](MINI_PORTAL_AUDIT.md)。 |
+| ALIGN-377 | 确认可放置碎料堆32103未接入。 | 原有注册、潜行手放和消失放置三入口。 | 当前Kind及两种放置只接锭／板／宝石板，碎料物品本身存在，见[材料堆](MATERIAL_PILES_AUDIT.md)。 |
+| ALIGN-378 | 确认材料堆合并身份合同放宽。 | 原ST.equal核物品身份／元数据／NBT。 | 当前同resolve材料／前缀／数据可跨物品合并成首物品数量；柱匹配仍精确，不混同，见[材料堆](MATERIAL_PILES_AUDIT.md)。 |
+| ALIGN-379 | 确认空堆与拒绝点击合同不同。 | 原无效空堆点击移除，匹配满堆消耗交互。 | 当前独立空堆物品及空／满PASS允许后续原生操作；原空状态非绝不可能，见[材料堆](MATERIAL_PILES_AUDIT.md)。 |
+| ALIGN-380 | 确认两种堆的掉落查询会改真实库存。 | 原getDrops只构造列表。 | 当前查询即clearContents；未拆除的重复查询第二次为空，未复现第三方吞物，见[材料堆](MATERIAL_PILES_AUDIT.md)。 |
+| ALIGN-381 | 确认硬币堆硬度／抗性1／0变3／3。 | 原两实际属性覆写为1与0。 | 当前共用注册两端都调用strength(3,3)，不据工具声明猜最终采集，见[材料堆](MATERIAL_PILES_AUDIT.md)。 |
+| ALIGN-382 | 确认材料堆消失放置丢额外水成员。 | 原WD.irrelevant准入BlockWaterlike／可选Streams水。 | 当前只列Blocks.WATER；原硬币另走原生放置检查，不套此原调用，见[材料堆](MATERIAL_PILES_AUDIT.md)。 |
+| ALIGN-383 | 确认手动锭堆漏Botania信标让路条件。 | 原关联Botania自产材料、点击信标时跳过该分支。 | 当前无对应门控，属已关联物品前提的联动合同，不假定当前装有该模组，见[材料堆](MATERIAL_PILES_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 

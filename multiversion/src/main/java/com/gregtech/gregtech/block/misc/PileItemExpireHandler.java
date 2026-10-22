@@ -11,7 +11,6 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.event.entity.item.ItemExpireEvent;
@@ -59,7 +58,7 @@ public final class PileItemExpireHandler {
         for (BlockPos offset : CUBE_3) {
             BlockPos target = origin.offset(offset);
             if (!level.isInWorldBounds(target) || !level.getWorldBorder().isWithinBounds(target)
-                    || !isIrrelevant(level.getBlockState(target))) continue;
+                    || !PilePlacementChecks.canReplaceForExpiry(level.getBlockState(target))) continue;
             BlockState placed = kind.block().defaultBlockState();
             if (!placed.canSurvive(level, target) || !level.setBlock(target, placed, Block.UPDATE_ALL)) continue;
 
@@ -89,15 +88,5 @@ public final class PileItemExpireHandler {
         }
     }
 
-    /** GT6 {@code WD.irrelevant}: air, vine, snow layer, fire, grass/fern or water. */
-    private static boolean isIrrelevant(BlockState state) {
-        return state.isAir() || state.is(Blocks.VINE) || state.is(Blocks.SNOW)
-                || state.is(Blocks.FIRE) || state.is(Blocks.SOUL_FIRE)
-//? if >=1.21.1 {
-                /*|| state.is(Blocks.SHORT_GRASS) || state.is(Blocks.TALL_GRASS)
-*///?} else {
-                || state.is(Blocks.GRASS) || state.is(Blocks.TALL_GRASS)
-//?}
-                || state.is(Blocks.FERN) || state.is(Blocks.LARGE_FERN) || state.is(Blocks.WATER);
-    }
+
 }
