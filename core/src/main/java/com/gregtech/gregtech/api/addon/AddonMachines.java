@@ -70,11 +70,12 @@ public final class AddonMachines {
                              IoTarget itemInputSource, IoTarget fluidInputSource,
                              boolean energyRangeSpecified, long energyInMin, long energyInMax) {}
     private record FuelSignature(String fuelMap, int efficiency, String energy, long outputPerTick, int tankCapacity,
-                                 FuelOutput output, boolean multi) {}
+                                 FuelOutput output, boolean multi, int amperes) {}
     private record BehaviorSignature(String energy, String auxiliary, String energyOut,
                                      List<BehaviorMachine.SlotRole> items,
                                      List<BehaviorMachine.SlotRole> fluids, List<String> toggleKeys,
-                                     int itemIn, int itemOut, int fluidIn, int fluidOut) {}
+                                     int itemIn, int itemOut, int fluidIn, int fluidOut,
+                                     long outMin, boolean outNegative) {}
     private record PreparedLayout(String addonId, String machineName, List<SharedLargeMachineLayouts.Cell> cells) {}
 
     public static void collectContributors() {
@@ -665,7 +666,7 @@ public final class AddonMachines {
                             + "' disagrees with an earlier definition of that machine");
                 var signature = new FuelSignature(declaration.fuelMap(), declaration.efficiency(),
                         declaration.output().type(), declaration.output().perTick(), declaration.tankCapacity(),
-                        declaration.output(), declaration.multi());
+                        declaration.output(), declaration.multi(), declaration.amperes());
                 FuelSignature existing = signatures.putIfAbsent(machineName, signature);
                 if (existing != null && !existing.equals(signature))
                     throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName
@@ -779,7 +780,9 @@ public final class AddonMachines {
                         declaration.fluids().stream().map(BehaviorMachine.FluidSlot::role).toList(),
                         declaration.toggles().stream().map(BehaviorMachine.Toggle::translationKey).toList(),
                         declaration.itemInputMask(), declaration.itemOutputMask(),
-                        declaration.fluidInputMask(), declaration.fluidOutputMask());
+                        declaration.fluidInputMask(), declaration.fluidOutputMask(),
+                        declaration.output() == null ? 0 : declaration.output().minSize(),
+                        declaration.output() != null && declaration.output().allowNegative());
                 BehaviorSignature existing = signatures.putIfAbsent(machineName, signature);
                 if (existing != null && !existing.equals(signature))
                     throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName

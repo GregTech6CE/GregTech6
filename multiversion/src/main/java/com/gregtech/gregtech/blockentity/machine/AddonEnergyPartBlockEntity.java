@@ -108,7 +108,8 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity
     public void setOutput(long size, long amount) {
         EnergyOutput output = energy();
         if (output == null) throw new IllegalStateException("Energy part declares no output");
-        BehaviorEnergyRules.requireEmit(size, amount, output.maxSize(), output.maxAmount());
+        BehaviorEnergyRules.requireEmit(size, amount, output.minSize(), output.maxSize(), output.maxAmount(),
+                output.allowNegative());
         if (boundRole() != MultiblockLayout.Role.ENERGY_OUTPUT)
             throw new IllegalStateException("Energy part is not an ENERGY_OUTPUT cell");
         outputSize = size;
@@ -169,6 +170,11 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity
             level.setBlock(worldPosition, state.setValue(AddonEnergyPartBlock.SATISFIED, value), 3);
     }
 
+    private long packetMagnitude(EnergyOutput output) {
+        if (output == null || outputSize == Long.MIN_VALUE) return 0;
+        return output.allowNegative() ? Math.abs(outputSize) : outputSize;
+    }
+
     private void emitTick() {
         EnergyOutput output = energy();
         if (level == null || level.isClientSide || output == null || stopped) return;
@@ -176,8 +182,9 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity
             stop();
             return;
         }
-        if (outputSize < 1 || outputAmount < 1 || stored < outputSize) return;
-        long left = Math.min(outputAmount, stored / outputSize);
+        long magnitude = packetMagnitude(output);
+        if (magnitude < 1 || outputAmount < 1 || stored < magnitude) return;
+        long left = Math.min(outputAmount, stored / magnitude);
         long sent = 0;
         for (MachineFace face : output.faces()) {
             if (left <= 0) break;
@@ -186,7 +193,7 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity
             left -= used;
         }
         if (sent > 0) {
-            stored -= Math.multiplyExact(outputSize, sent);
+            stored -= Math.multiplyExact(magnitude, sent);
             setChanged();
         }
     }
@@ -315,8 +322,9 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity
     }
 
     @Override public long getEnergyOffered(GregTechTags.Tag type, Direction side, long size) {
-        if (!isEnergyEmittingTo(type, side, false) || size != outputSize || outputSize < 1) return 0;
-        return Math.min(outputAmount, stored / outputSize);
+        long magnitude = packetMagnitude(energy());
+        if (!isEnergyEmittingTo(type, side, false) || size != outputSize || magnitude < 1) return 0;
+        return Math.min(outputAmount, stored / magnitude);
     }
 
     @Override public long getEnergyStored(GregTechTags.Tag type, Direction side) {
@@ -377,7 +385,8 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity
     private void loadEnergy(CompoundTag tag) {
         stored = Math.max(0, tag.getLong("gt.part_energy"));
         if (energy() != null && stored > block().capacity()) stored = block().capacity();
-        outputSize = Math.max(0, tag.getLong("gt.part_output"));
+        long savedOutput = tag.getLong("gt.part_output");
+        outputSize = energy() != null && energy().allowNegative() ? savedOutput : Math.max(0, savedOutput);
         outputAmount = Math.max(0, tag.getLong("gt.part_amount"));
         stopped = !tag.contains("gt.part_stopped") || tag.getBoolean("gt.part_stopped");
         inputStored = 0;

@@ -104,6 +104,10 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
                         .fuelMap("addon_sample.fuel.gas").efficiency(10_000)
                         .output(FuelOutput.builder("RU", 32).front().build())
                         .tank(4_000).single().build(),
+                FuelGenerator.builder(MachineCasing.builder("sample_motor", "Steel").machineType("sample_motor").build())
+                        .fuelMap("addon_sample.fuel.gas").efficiency(10_000)
+                        .output(FuelOutput.builder("RU", 32).front().build())
+                        .amperes(4).tank(4_000).single().build(),
                 FuelGenerator.builder(MachineCasing.builder("sample_turbine", "Steel").machineType("sample_turbine").build())
                         .fuelMap("addon_sample.fuel.gas").efficiency(5_000)
                         .output(FuelOutput.builder("RU", 32).behind(4).build())
