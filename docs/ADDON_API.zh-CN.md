@@ -16,6 +16,7 @@ API 版本 **0** 对应模组版本 **0.0.0**，平台是 Forge 1.20.1 与 NeoFo
   - [在 `onRecipesReady` 里添加配方](#在-onrecipesready-里添加配方)
 - [配方](#配方)
   - [机器配方数据包](#机器配方数据包)
+  - [KubeJS](#kubejs)
   - [展示行](#展示行)
   - [多个动态配方 provider](#多个动态配方-provider)
 - [材料](#材料)
@@ -29,6 +30,7 @@ API 版本 **0** 对应模组版本 **0.0.0**，平台是 Forge 1.20.1 与 NeoFo
   - [能量](#能量)
   - [物品和流体](#物品和流体)
   - [结构](#结构)
+  - [结构布局数据包](#结构布局数据包)
   - [配方表](#配方表)
   - [配方机器](#配方机器)
   - [行为机器](#行为机器)
@@ -165,7 +167,7 @@ var kept = new AddonRecipes.Line(
 
 ### 机器配方数据包
 
-数据包可以给已经存在的机器配方表加静态行、删静态行。JSON 放在该版本的原版配方目录：Forge 1.20.1 用 `data/<命名空间>/recipes/`，NeoForge 1.21.1 用 `data/<命名空间>/recipe/`。不能新建配方表，也看不到、改不了动态配方。KubeJS 的 `event.custom()` 提交的就是同一份 JSON，没有单独的 KubeJS 插件。`event.remove({type: "gt6ce:machine"})` 删的是原版配方管理器里的标记配方；下一次重载按剩下的标记重建机器表。
+数据包可以给已经存在的机器配方表加静态行、删静态行。JSON 放在该版本的原版配方目录：Forge 1.20.1 用 `data/<命名空间>/recipes/`，NeoForge 1.21.1 用 `data/<命名空间>/recipe/`。不能新建配方表，也看不到、改不了动态配方。KubeJS 的 `event.custom()` 和下面的 schema 提交的都是同一份 JSON。`event.remove({type: "gt6ce:machine"})` 删的是原版配方管理器里的标记配方；下一次重载按剩下的标记重建机器表。
 
 标签绑定之后的重建顺序：
 
@@ -213,7 +215,29 @@ var kept = new AddonRecipes.Line(
 - 展示与速查表：`gt.recipe.cruciblealloying`、`gt.recipe.cruciblesmelting`、`gt.recipe.bedrockorelist`、`gt.recipe.byproductlist`、`gt.recipe.bumblequeen`、`gt.recipe.trees`、`gt.recipe.other`、`gt.recipe.toolhead`。
 - 内置燃料配方表：`gt.recipe.fuels.fluidbed`、`gt.recipe.fuels.burn`、`gt.recipe.fuels.gas`、`gt.recipe.fuels.hot`、`gt.recipe.fuels.plasma`、`gt.recipe.fuels.engine`、`gt.recipe.fuels.turbine`、`gt.recipe.fuels.magic`。
 
-在 GT6CE 源码仓库里启动开发运行时，可以用 `-PkubejsRuntime=true` 装上 KubeJS。这个依赖不进成品，也不占用 `-PcompatRuntime`。
+### KubeJS
+
+装了 KubeJS 时，GT 注册 `gt6ce:machine` 配方 schema。没装时 `kubejs.plugins.txt` 里的插件类不会加载。`event.custom()` 和 `event.remove({type: "gt6ce:machine"})` 仍然有效。
+
+```js
+ServerEvents.recipes(event => {
+  event.recipes.gt6ce.machine('gt.recipe.crusher')
+    .itemInputs('minecraft:iron_ore', '#minecraft:coals')
+    .fluidInputs(Fluid.of('minecraft:water', 1000))
+    .itemOutputs(Item.of('minecraft:emerald').withChance(5000))
+    .eu(16).duration(64)
+  GT6CE.removeMachine(event, { map: 'gt.recipe.crusher', itemInputs: ['minecraft:iron_ore'] })
+  GT6CE.clearMap(event, 'gt.recipe.crusher')
+})
+```
+
+`GT6CE.maps()` 返回内置表名，加上已经安装的附属表名。表名不在这份名单里时，脚本加载阶段就报错，不必等到覆盖层拒绝。1.21.1 的 KubeJS 去掉了 `Item.of().withChance`，几率写在对象上：`.itemOutputs({ item: 'minecraft:emerald', chance: 5000 })`。`withChance(5000)` 只在 1.20.1 上按万分比使用；大于 0 且不超过 1 的小数会乘 10000。
+
+在 GT6CE 源码仓库里，KubeJS 始终是 `compileOnly`。只有 `-PkubejsRuntime=true` 才把它放进开发运行时。这个依赖不进成品，也不占用 `-PcompatRuntime`。
+
+启动脚本 `GT6CEStartupEvents.machines` 可以声明配方表、配方机器、燃料机、外壳、布局，以及外壳和能量零件。内容进 `kubejs:` 命名空间。客户端和服务端必须加载同一份 startup 脚本，否则注册表对不上。KubeJS 在自己的模组构造里加载 startup 脚本，GT 在方块注册时才读这些声明。如果那时脚本还没加载，启动失败，信息含 `KubeJS startup scripts have not loaded`。
+
+行为机器、带物品槽或 tick 的功能零件、管子、压缩气罐和材料不在这套脚本里。方块状态、模型和语言文件放在 `kubejs/assets/kubejs/`。结构零件由 GT 生成默认模型。样例在 `examples/kubejs-sample/`。
 
 ### 展示行
 
@@ -485,6 +509,34 @@ StructureLayout.builder("mypress")
 要不要布局、什么时候算成形，按模板分开。大型配方机器必须有一张同机器类型的布局。没有布局就启动失败。结构检查不通过就不能开工。多方块燃料机必须有一张同机器类型的布局。单方块燃料机不能挂布局，一开始就是成形的。行为机器的布局可选。没有布局时，第一次服务端 tick 把成形设为真，这一 tick 之前是假。有布局才逐格检查。三种检查匹配格子的方式相同。
 
 不是方块 id、也不是标签的零件名，用 `SharedLargeMachineParts` 的名字、`air`、`tank_wall`、`tank_wall_dense`、`centrifuge_part`、`heat_transmitter`、`distillation_tower_part`、`electrolyzer_part`，或 `layoutParts()` 返回的名字。空布局、重复坐标、未知零件、没有控制器的布局、没有布局的大型配方机器，都会在启动时报错并写出附属。
+
+### 结构布局数据包
+
+`data/<命名空间>/gt6ce_layouts/<machineType>.json` 可以换掉已经注册的附属机器或 KubeJS 机器的布局格子。不能新增方块，也不能新增机器。内置控制器的布局不能换。写了内置名字、未知机器、未知零件、未知方块，或解析失败的文件会被跳过，并记一条警告，重载继续。
+
+```json
+{
+  "cells": [
+    { "right": 1, "up": 0, "back": 0, "match": "press_casing", "role": "casing" },
+    { "right": 0, "up": 0, "back": 1, "match": "tank_wall", "role": "energy_input" }
+  ]
+}
+```
+
+`match` 用 `CellMatch.parse`：`air`、`#` 开头是标签、含 `:` 是方块 id，其余是零件名。`role` 是 `StructureRole` 的名字，不区分大小写。方块和标签必须是 `casing`。原点、重复格子、空列表和未知字段拒绝这一份文件。同一个机器有多份文件时，按资源 id 排序，后面的覆盖前面的。顶层以 `_` 开头的字段会被忽略。
+
+`/reload` 先恢复启动时的布局，再应用当前数据包。已经成形的机器在下一次结构检查里按新布局判断。不再属于布局的零件会解除绑定。服务端把这份覆盖同步给客户端。结构预览、JEI 的多方块页和提示文字按新格子重画。EMI 会跟着重载；读不到它的重载入口时只记一次失败，不影响布局本身。
+
+KubeJS 写出同一份 JSON。1.20.1 用 `ServerEvents.highPriorityData`。1.21.1 用 `ServerEvents.generateData('after_mods', ...)`。`GT6CE.layout(event, machine, cells)` 的格子参数相同，文件落在 `data/kubejs/gt6ce_layouts/<machine>.json`。
+
+```js
+ServerEvents.highPriorityData(event => {
+  GT6CE.layout(event, 'largepress', [
+    { right: 1, up: 0, back: 0, match: 'minecraft:iron_block', role: 'casing' },
+    { right: 0, up: 0, back: 1, match: 'tank_wall', role: 'energy_input' }
+  ])
+})
+```
 
 `layoutParts()` 返回外壳、能量零件和功能零件：
 
@@ -758,7 +810,7 @@ public final class MySourceBlockEntity extends BlockEntity implements GtSignalSo
 
 ## 范围
 
-当前支持注册和配方就绪生命周期；`AddonMaterialContributor` 按名字排队材料和已有前缀的追加形态（生成 `gt6ce:` 物品），`dust()` 和 `metal()` 选择生成哪些形态，`prefixes()` 在附属自己的命名空间里增加物品前缀，读取用 `GregTechMaterials`（含 `byproducts()`），前缀是否存在用 `GregTechPrefixes.exists`，数字 id 从 10000 起在启动时分配，不写入存档；`oreVeins()` 和 `smallOres()` 把大矿脉和小矿追加在 `minecraft:overworld`、`minecraft:the_nether` 或 `minecraft:the_end` 的内置行之后；`compositions()`、`smeltingTargets()`、`crucibleReactions()` 和 `crucibleRemovals()` 用材料名，在材料链接时生效；`AddonItems.stack` 和 `AddonItems.selectorTag`（0 到 24 号编程电路）；`AddonFluids` 按 GT 流体字段名取静液或流动液（`DistW`，不是材料名），`AddonFluids.gas` 判断这种流体是不是气体；已有配方表上的 `AddonRecipes`（添加、展示、碰撞、物品输入检查、动态 provider、查找，`add` 返回 null 表示被拒绝；`keptInputs` 标出留在机器里的物品输入，数量 0 仍被拒绝）；`AddonMachineContributor` 的配方机器和大型配方机器，含 `searchOutputTanks`、`exclusiveOutputs`、`EnergyInput.range(min, max)`，没声明范围的大型机不是标称的一半到两倍，大型配方机器还可以各指定一格物品输出、流体输出、物品输入和流体输入，能源用短名例如 `EU`，多方块可以写 GT 零件名，或 `layoutParts()` 里的外壳、能量零件和功能零件，条件零件是 `energyInput` 加 `condition`，大型配方机有绑定的条件零件不满足时不加工，没有条件零件则不变，机器和零件都由 GT 注册到附属命名空间，结构角色是 `StructureRole`，结构格还可以写方块 id 或 `#` 标签，这种格子只作 `CASING` 且不绑定；`fluidPipes()` 和 `itemPipes()` 各加一行材料，GT 按内置档位展开，方块在附属自己的命名空间；`compressedGasTanks()` 声明压缩气罐，普通灌入关闭，`pushCompressedGas` 只灌相邻的这种罐，燃料能源机器每 tick 最多抽 1000 mB；`BehaviorMachine` 以及加载器上的 `BehaviorMachineContributor`、`MachineBehavior`、`MachineBehaviorContext`、`BehaviorState`，外壳由 GT 持有，附属不继承它，也不接触 NBT，`recipeMaps` 点名机器表或燃料表后这台机器成为 JEI 和 EMI 的催化剂，加工仍由行为自己做，`find` 读到的燃料行把产出能量存成负数的 `euPerTick`，`EnergyInput.capacity`、`emit`、`generate`、`setCapacity`、`onUse`、`maxRange`、`breakBlock` 和 `collectItems` 属于这层外壳，同名结构让 `structureFormed()`、`parts()`、`energyParts()` 和 `conditionsMet()` 可用，`parts()` 是绑定的附属零件，`energyParts()` 是这份列表的能量视图，`charge`、`setOutput` 和 `stop` 写只出的零件，`charge` 也给条件零件充能，条件零件缺电时 `tick` 仍会跑，`auxiliaryEnergy` 把第二种输入存成 `gt.aux_energy`，`energy(type)` 和 `consume(type, amount)` 只用这份缓存，改过的容量由 GT 写成 `gt.capacity`，零件缓存存在零件自己的 NBT；功能结构零件在 `LayoutPart` 上写 `slots`、`tick`、`use` 或 `field`，并用 `LayoutPartContributor` 按名字配对，方块实体由 GT 持有，槽存 `gt.part_slots`，字段存 `gt.part_fields`，没有能量角色的用 `gt6ce:addon_functional_part`，同时带能量角色的仍用 `gt6ce:addon_energy_part`，附属不继承方块实体，`LayoutPartClient` 可以为同步过来的 `PartClientView` 返回方块实体渲染器；`RecipeTable.fuel` 和 `FuelGenerator`，燃料表进入 JEI、EMI 和数据包覆盖层，机器烧流体燃料，每 tick 从正面、背面或背后 1 到 8 格输出一个能量包，多方块结构可以写 GT 零件名，或 `layoutParts()` 里的外壳；`GTValues`、`GTVoltageTiers`、`BasicMachineEnergy`、`MachineWorkCost`；附属实现的 `EnergyBlock`，`AddonEnergy` 走 GT 的能量包门槛，EU 电缆的插入和抽出接受这个接口，轴、激光纤维、中继、远距变压器和内置机器的注入或抽取经 `EnergyBlockViews` 也能看见这个接口，扫描仪、Jade 和盖板读数仍只看见 GT 自己的能量方块；`AddonTool` 的 `SPADE`、`UNIVERSAL_SPADE`、`MAGNIFYING_GLASS`，以及 `AddonTools.matches`、`isMagnifyingGlass`、`damageForUse`；`gt6ce:machine` 与 `gt6ce:machine_removal` 两种数据包配方；`GtSignalCarrier`、`GtSignalSource`、`GtSignalReceiver`、`CropScanSource` 和空的 `gt6ce:signal_wire_receivers` 方块标签。
+当前支持注册和配方就绪生命周期；`AddonMaterialContributor` 按名字排队材料和已有前缀的追加形态（生成 `gt6ce:` 物品），`dust()` 和 `metal()` 选择生成哪些形态，`prefixes()` 在附属自己的命名空间里增加物品前缀，读取用 `GregTechMaterials`（含 `byproducts()`），前缀是否存在用 `GregTechPrefixes.exists`，数字 id 从 10000 起在启动时分配，不写入存档；`oreVeins()` 和 `smallOres()` 把大矿脉和小矿追加在 `minecraft:overworld`、`minecraft:the_nether` 或 `minecraft:the_end` 的内置行之后；`compositions()`、`smeltingTargets()`、`crucibleReactions()` 和 `crucibleRemovals()` 用材料名，在材料链接时生效；`AddonItems.stack` 和 `AddonItems.selectorTag`（0 到 24 号编程电路）；`AddonFluids` 按 GT 流体字段名取静液或流动液（`DistW`，不是材料名），`AddonFluids.gas` 判断这种流体是不是气体；已有配方表上的 `AddonRecipes`（添加、展示、碰撞、物品输入检查、动态 provider、查找，`add` 返回 null 表示被拒绝；`keptInputs` 标出留在机器里的物品输入，数量 0 仍被拒绝）；`AddonMachineContributor` 的配方机器和大型配方机器，含 `searchOutputTanks`、`exclusiveOutputs`、`EnergyInput.range(min, max)`，没声明范围的大型机不是标称的一半到两倍，大型配方机器还可以各指定一格物品输出、流体输出、物品输入和流体输入，能源用短名例如 `EU`，多方块可以写 GT 零件名，或 `layoutParts()` 里的外壳、能量零件和功能零件，条件零件是 `energyInput` 加 `condition`，大型配方机有绑定的条件零件不满足时不加工，没有条件零件则不变，机器和零件都由 GT 注册到附属命名空间，结构角色是 `StructureRole`，结构格还可以写方块 id 或 `#` 标签，这种格子只作 `CASING` 且不绑定；`fluidPipes()` 和 `itemPipes()` 各加一行材料，GT 按内置档位展开，方块在附属自己的命名空间；`compressedGasTanks()` 声明压缩气罐，普通灌入关闭，`pushCompressedGas` 只灌相邻的这种罐，燃料能源机器每 tick 最多抽 1000 mB；`BehaviorMachine` 以及加载器上的 `BehaviorMachineContributor`、`MachineBehavior`、`MachineBehaviorContext`、`BehaviorState`，外壳由 GT 持有，附属不继承它，也不接触 NBT，`recipeMaps` 点名机器表或燃料表后这台机器成为 JEI 和 EMI 的催化剂，加工仍由行为自己做，`find` 读到的燃料行把产出能量存成负数的 `euPerTick`，`EnergyInput.capacity`、`emit`、`generate`、`setCapacity`、`onUse`、`maxRange`、`breakBlock` 和 `collectItems` 属于这层外壳，同名结构让 `structureFormed()`、`parts()`、`energyParts()` 和 `conditionsMet()` 可用，`parts()` 是绑定的附属零件，`energyParts()` 是这份列表的能量视图，`charge`、`setOutput` 和 `stop` 写只出的零件，`charge` 也给条件零件充能，条件零件缺电时 `tick` 仍会跑，`auxiliaryEnergy` 把第二种输入存成 `gt.aux_energy`，`energy(type)` 和 `consume(type, amount)` 只用这份缓存，改过的容量由 GT 写成 `gt.capacity`，零件缓存存在零件自己的 NBT；功能结构零件在 `LayoutPart` 上写 `slots`、`tick`、`use` 或 `field`，并用 `LayoutPartContributor` 按名字配对，方块实体由 GT 持有，槽存 `gt.part_slots`，字段存 `gt.part_fields`，没有能量角色的用 `gt6ce:addon_functional_part`，同时带能量角色的仍用 `gt6ce:addon_energy_part`，附属不继承方块实体，`LayoutPartClient` 可以为同步过来的 `PartClientView` 返回方块实体渲染器；`RecipeTable.fuel` 和 `FuelGenerator`，燃料表进入 JEI、EMI 和数据包覆盖层，机器烧流体燃料，每 tick 从正面、背面或背后 1 到 8 格输出一个能量包，多方块结构可以写 GT 零件名，或 `layoutParts()` 里的外壳；`GTValues`、`GTVoltageTiers`、`BasicMachineEnergy`、`MachineWorkCost`；附属实现的 `EnergyBlock`，`AddonEnergy` 走 GT 的能量包门槛，EU 电缆的插入和抽出接受这个接口，轴、激光纤维、中继、远距变压器和内置机器的注入或抽取经 `EnergyBlockViews` 也能看见这个接口，扫描仪、Jade 和盖板读数仍只看见 GT 自己的能量方块；`AddonTool` 的 `SPADE`、`UNIVERSAL_SPADE`、`MAGNIFYING_GLASS`，以及 `AddonTools.matches`、`isMagnifyingGlass`、`damageForUse`；`gt6ce:machine` 与 `gt6ce:machine_removal` 两种数据包配方；KubeJS 可以增删这些静态行，并在 startup 脚本里声明 `kubejs:` 配方表、配方机器、燃料机、外壳、布局和能量零件；`data/<命名空间>/gt6ce_layouts/<machineType>.json` 可以在重载时替换附属或脚本机器的布局，不能改内置控制器；`GtSignalCarrier`、`GtSignalSource`、`GtSignalReceiver`、`CropScanSource` 和空的 `gt6ce:signal_wire_receivers` 方块标签。
 
 这些保持关闭。`BasicMachineBlock` 和 `BasicMachineBlockEntity` 是 GT 的机器实现，附属机器是数据，不是子类。`Recipe.mRecipeList` 是内部行表，正式代码用 `add` 返回的 `AddonRecipes.Line`。`GTMaterial`、`GTMaterialRegistry` 和材料哨兵由 `GregTechMaterials` 代替。`GregTechTags` 由能源短名代替。`MachineRecipeMaps` 的字段由 `AddonRecipes.map(name)` 代替。`MaterialPrefix` 常量由前缀名字符串代替。完整工具目录留在 GT 里。
 

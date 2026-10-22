@@ -1,0 +1,28 @@
+GT6CEStartupEvents.machines(event => {
+  event.addTable(event.recipeTable('kubejs.recipe.press')
+    .title('KubeJS Press')
+    .gui('gt6ce:textures/gui/machines/press')
+    .inputItems(1)
+    .outputItems(1)
+    .minimalInputItems(1)
+    .minimalInputs(1)
+    .needsOutputs(true)
+    .build())
+
+  event.addPart(event.part('press_casing', 'Steel').hardness(6).build())
+  event.addPart(event.part('press_emitter', 'Steel').hardness(6)
+    .energyOutput(event.energyOutput('EU', 32, 1).faces(event.face('front')).build(), 100000)
+    .build())
+
+  event.addLayout(event.layout('largepress')
+    .cell(1, 0, 0, event.match('press_casing'), event.role('casing'))
+    .cell(0, 0, 1, event.match('tank_wall'), event.role('energy_input'))
+    .cell(-1, 0, 0, event.match('press_emitter'), event.role('energy_output'))
+    .build())
+
+  event.addMachine(event.recipeMachine('largepress', 'Steel')
+    .energy(event.energy('EU', 128).build())
+    .recipeMap('kubejs.recipe.press')
+    .largeRecipe()
+    .build())
+})
