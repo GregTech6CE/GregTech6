@@ -1,0 +1,775 @@
+{
+  "date": "2026-10-22",
+  "batch": 126,
+  "baseline": "1687c15b4fb92d2df9843748d304243df26b7e35",
+  "previous_goal_turn": {
+    "classification": "progress",
+    "commit": "1687c15b4",
+    "evidence": "Shared statistic loading committed; 422..424 confirmed and documented from actual consumption dispatch."
+  },
+  "provenance": {
+    "original_tree_read_only": true,
+    "authors": "GregTech-6 Team / Gregorius Techneticies",
+    "license": "Original LGPL notices preserved; local item implementation only reformatted/moved, no native code imported."
+  },
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/MultiItemRandomTools.java",
+      "raw_sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+      "lines": 723,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/MultiItem.java",
+      "raw_sha256": "eff4a22e1d6e3277e93a3d34519111f514d61954c2a5b3bfaf90aca88660901d",
+      "lines": 552,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/MultiItemRandom.java",
+      "raw_sha256": "02f685214eac048d3bbdb7b7967c2c75ce1d3b8d5acd5d774772c7888dd4eb38",
+      "lines": 440,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/MultiItemRandomWithCompat.java",
+      "raw_sha256": "7c43e8d178625b9a4ad9244de90e47c2371c36e459d5728d9e4cc37f8dec5975",
+      "lines": 63,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_Remote.java",
+      "raw_sha256": "f7b3d56ecde1116d1de5ab2971df138b61891660720f625c1850ec74d8f7842b",
+      "lines": 146,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/behaviors/Behavior_Tool.java",
+      "raw_sha256": "f41879dadcb2b4cf8b55c1156b903fc6e00e5dbb9644b1158869849be4b48daf",
+      "lines": 80,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/ITileEntityRemoteActivateable.java",
+      "raw_sha256": "f8129be5351ed9f9eb20627c994b7d058499a05b237ca317fc54f7ccdb7122cc",
+      "lines": 29,
+      "notice_sha256": "63c517dd35b913cfc46d1f7881d524c83334db090a72278eefbb881a3ef42a1b"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore1x1.java",
+      "raw_sha256": "06614619f47aef22f7eefda3a5851b55869c3cbc8462f45bf3165fa3dbdbc779",
+      "lines": 356,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore2x2.java",
+      "raw_sha256": "0ae845889da1b5aa793c23bd5171a864c2f8c56e82efdadb94af5f880e358182",
+      "lines": 418,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/WD.java",
+      "raw_sha256": "c8335988b7bd9dbf44df6790d867ac6cfe2e6414793abb0cdd14c32cd342f095",
+      "lines": 1056,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorRemote.java",
+      "raw_sha256": "9d64501d6ec493e7a858bffb948c82ff1276b0ecc25719a6685b6095fff6ff20",
+      "lines": 321
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/GeigerCounterItem.java",
+      "raw_sha256": "d0957c285fa0970c1851741a2a45ef74e0e5ee028ee5aefd09cb4d5978f10620",
+      "lines": 30
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/RemoteActivatorItem.java",
+      "raw_sha256": "f5f94f31564fa4750abcfa55ae46338e25ba276e4f525c8fdec0827140f42573",
+      "lines": 30
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/TechItem.java",
+      "raw_sha256": "16d7936a79b171cc6abefe40851d269d2c1d84b4ee397671eda069f684914f59",
+      "lines": 68
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "raw_sha256": "aab379aa689ef4f83c62746d22ccca6bc511c6b323ca11e026ab6f215d1abff4",
+      "lines": 224
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "raw_sha256": "5988d830de0b678a5f35bb94e7d3cdb699c3bc84d22ef72bb6130f5839b5bd70",
+      "lines": 710
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/RemoteActivatable.java",
+      "raw_sha256": "5176bf7157eb87413c34a9f949232cd4275ae42170b1197ec4e53fe91e0f3185",
+      "lines": 21
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCoreBlockEntity.java",
+      "raw_sha256": "ef616196f083d493deca21f66563494540f49dba01e98fceeb9c72f094b0c44b",
+      "lines": 560
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/tool/DynamiteBlock.java",
+      "raw_sha256": "5aa569ab70fe52331b496b883edbdd45449b96917567e382d39c20f82d091611",
+      "lines": 138
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/RadiationMedicineRecipes.java",
+      "raw_sha256": "566638cefcacb8838635f2d81d89175517085a7be06e40a4cdd946f5361f36da",
+      "lines": 69
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/tool/ItemBehaviorCatalog.java",
+      "raw_sha256": "54b67d9c4b6cafa554afbe1f0c65c488dcf929c567ff1180603aa37e23b5b396",
+      "lines": 57
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/registry/GTMultiItemsGen.java",
+      "raw_sha256": "d4b794642713c208ad27ccd765a9dd9cbcdb13a7c568aec1e910f7ead3058611",
+      "lines": 1297
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/DeferredRegistrySubmission.java",
+      "raw_sha256": "e46df82fbff29df6f097e228f47e12c6c9a521cc94237301047c6bd6ad7b1689",
+      "lines": 33
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "raw_sha256": "a83787a7e2ca56b3b695b41f221cff2ee046880b09354fdf78b35bd2cc070a02",
+      "lines": 191
+    }
+  ],
+  "source_excerpts": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/MultiItemRandomTools.java",
+      "anchor": "IL.Tool_Remote_Activator           .set",
+      "start_line": 515,
+      "end_line": 515,
+      "excerpt_sha256": "bc604ebd378232c16e2d37d07265c0e2c2c2e5cf7127f6df7776ef5290059d18"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/MultiItemRandomTools.java",
+      "anchor": "IL.Geiger_Counter                  .set",
+      "start_line": 529,
+      "end_line": 530,
+      "excerpt_sha256": "91deee4cd65a252aeb7f9a0a9a5cd3e17077c0afc1f565e595e20230baf22267"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/MultiItemRandomTools.java",
+      "anchor": "public int getDefaultStackLimit(",
+      "start_line": 696,
+      "end_line": 704,
+      "excerpt_sha256": "c7f9ae9bf8648bceb3a0c11712b9a2ed2ec1828c2deeccf4f66dab23df9603bc"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/MultiItem.java",
+      "anchor": "public int getItemStackLimit(",
+      "start_line": 391,
+      "end_line": 400,
+      "excerpt_sha256": "9a54c77cb1d3ef8758d899a1e42aba4d9aff6c0b17574b3626bc7b92848e7864"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/MultiItem.java",
+      "anchor": "tBehavior.getAdditionalToolTips",
+      "start_line": 272,
+      "end_line": 274,
+      "excerpt_sha256": "e7b0245d6d1f953d7f6bfe877c9e66de0469cffc805fb18c121b0cfff4caa57b"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_Remote.java",
+      "anchor": "public boolean onItemUseFirst(",
+      "start_line": 46,
+      "end_line": 73,
+      "excerpt_sha256": "114db1e1b036bb7f05801207ed187e9211c87a4351e0394796a1bd498f5de00c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_Remote.java",
+      "anchor": "public ItemStack onItemRightClick(",
+      "start_line": 75,
+      "end_line": 90,
+      "excerpt_sha256": "2069e82c569b9471dabc1d09bfd9830f095ad091ca41bdff0fa309d977e45a32"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_Remote.java",
+      "anchor": "public static boolean addCoords(",
+      "start_line": 92,
+      "end_line": 108,
+      "excerpt_sha256": "d75e48adc607d508a8bd7bb26c387441607ecf07a69a63e24af20314f043a975"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_Remote.java",
+      "anchor": "public static ArrayListNoNulls<ChunkCoordinates> getCoords(",
+      "start_line": 110,
+      "end_line": 119,
+      "excerpt_sha256": "cba1dfbb466cead7683693ceaa7a057f414c39f999ad5b79dd047735da4195f3"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_Remote.java",
+      "anchor": "public static void setCoords(",
+      "start_line": 121,
+      "end_line": 135,
+      "excerpt_sha256": "a8be211240d2bf96210cced67fcc7804f5b3b251333664f4722a4c35be7157c0"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_Remote.java",
+      "anchor": "LH.add(\"gt.behaviour.remote\"",
+      "start_line": 138,
+      "end_line": 145,
+      "excerpt_sha256": "fcf75183654c84e9547ca6714564f05c4672b226ae043731b12d31f017328242"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/behaviors/Behavior_Tool.java",
+      "anchor": "public boolean onItemUseFirst(",
+      "start_line": 57,
+      "end_line": 68,
+      "excerpt_sha256": "053e43493f9d3b3e38b02c6958fa1fb8e43ef8f3bd9642eda32689e807ac0451"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore1x1.java",
+      "anchor": "if (aTool.equals(TOOL_geigercounter))",
+      "start_line": 241,
+      "end_line": 247,
+      "excerpt_sha256": "a158aa078c1661b2399a3ea6f3190f4b186d620fafb4e2e41ee8849325306436"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore2x2.java",
+      "anchor": "if (aTool.equals(TOOL_geigercounter))",
+      "start_line": 269,
+      "end_line": 275,
+      "excerpt_sha256": "3950b75933ef72fa0ac435941adb9d0c2c963b5db168276c5ebecbe2978444d8"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/WD.java",
+      "anchor": "public static TileEntity te(World aWorld, ChunkCoordinates",
+      "start_line": 344,
+      "end_line": 358,
+      "excerpt_sha256": "7cdfe82e410b6f435e67db177d324679e6cfe7ff3b79cf9def96e9b1790bb39a"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/GeigerCounterItem.java",
+      "anchor": "public GeigerCounterItem()",
+      "start_line": 12,
+      "end_line": 14,
+      "excerpt_sha256": "97e77b50f5efdb5f46644a67ec365ead81b7564a294f1b6cd0a91e3a8d93d171"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/GeigerCounterItem.java",
+      "anchor": "public static Component reading(",
+      "start_line": 16,
+      "end_line": 22,
+      "excerpt_sha256": "0a200142014beaf58776daa2a67a05bebecda7fc4fd956f1499c69defefd2613"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/GeigerCounterItem.java",
+      "anchor": "public InteractionResult onItemUseFirst(",
+      "start_line": 23,
+      "end_line": 30,
+      "excerpt_sha256": "eebcef3a72224c483464cb17a0c8c6c55d86ecf969c1bc4caaf7bf2e9052eb74"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/RemoteActivatorItem.java",
+      "anchor": "public InteractionResult onItemUseFirst(",
+      "start_line": 16,
+      "end_line": 25,
+      "excerpt_sha256": "ea09ddf54ba0da5248c312604e6bde6b93ee32339705eed11d88bdbc0121d27d"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/RemoteActivatorItem.java",
+      "anchor": "public InteractionResultHolder<ItemStack> use(",
+      "start_line": 25,
+      "end_line": 30,
+      "excerpt_sha256": "87fdcd95e7eaa6115239793d1f841562a11d984d3ff96ce945aaf495a7345583"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorRemote.java",
+      "anchor": "public static boolean addCoords(",
+      "start_line": 45,
+      "end_line": 69,
+      "excerpt_sha256": "e3ef103ec0b25236dae3dc3f9eaa23634fd085fa1cada407c67c25e82013b2b0"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorRemote.java",
+      "anchor": "public static List<BlockPos> getCoords(",
+      "start_line": 96,
+      "end_line": 108,
+      "excerpt_sha256": "977d4dff5147831ff119e300d08c3864c004a71731f6f6cb79ecae11cc11c3d9"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorRemote.java",
+      "anchor": "public static void setCoords(",
+      "start_line": 127,
+      "end_line": 143,
+      "excerpt_sha256": "35a33f0c074b54dd5950415d9c4d6135480d4cf657636e6ac709a9043347235c"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorRemote.java",
+      "anchor": "private static RemoteActivatable target(",
+      "start_line": 162,
+      "end_line": 167,
+      "excerpt_sha256": "af8079694f0154a17a88c10fc59b5470bf34f727c0ae654c1e6a308d07d34bca"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorRemote.java",
+      "anchor": "public static Outcome useOn(",
+      "start_line": 188,
+      "end_line": 229,
+      "excerpt_sha256": "1bcf602dfbde636716b23159e51316226af93c383ab316f93993aeb1fe8821b6"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorRemote.java",
+      "anchor": "public static Outcome useInAir(",
+      "start_line": 261,
+      "end_line": 294,
+      "excerpt_sha256": "eab4d2fb826fdfc55d6a494459d95f3b2ae7581a9964c8af1fe1b8cc2fefd69e"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorRemote.java",
+      "anchor": "private static boolean inRange(",
+      "start_line": 306,
+      "end_line": 310,
+      "excerpt_sha256": "5bf08bac2c91da25630b2ea5ea3abd55e33092bce09d9484819ea4e1566709ce"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorRemote.java",
+      "anchor": "private static void message(",
+      "start_line": 318,
+      "end_line": 320,
+      "excerpt_sha256": "923bbc9b4c3372ac9024bcc2ffd65afb647118863628f27459c6f22f534027a2"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/TechItem.java",
+      "anchor": "public void appendHoverText(",
+      "start_line": 22,
+      "end_line": 68,
+      "excerpt_sha256": "0b4c3a1912b427a624ef087475ff362039c1a9d2c965f58d7b859c7ecb47689c"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "anchor": "public static void tooltip(",
+      "start_line": 350,
+      "end_line": 359,
+      "excerpt_sha256": "9f8b65a190181be68adf86b59352977ffd74937a10c69fcbd7693d47472cc6e1"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "anchor": "id.equals(\"remote_activator\")",
+      "start_line": 26,
+      "end_line": 26,
+      "excerpt_sha256": "5c5e4af75919a9f92ebbf18794172f9323c4c8e8c8bc3d7d0a57f9e0be636d15"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "anchor": "public InteractionResult onItemUseFirst(",
+      "start_line": 79,
+      "end_line": 94,
+      "excerpt_sha256": "bfc29c173248da1e204e56b8bf9858840ce27674a7b9229f82b21781ebd13ce0"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "anchor": "public InteractionResultHolder<ItemStack> use(",
+      "start_line": 115,
+      "end_line": 125,
+      "excerpt_sha256": "f3cdf819e86a3f5482f5912f593f4a0cf185f05f8c4d0aa09d7c4842e04447fd"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "anchor": "case \"geiger_counter\" ->",
+      "start_line": 173,
+      "end_line": 173,
+      "excerpt_sha256": "62cccc7832f66b46ec53a8ed331b14504f9cc12adabbe7e628ebbc41b1af8727"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/tool/DynamiteBlock.java",
+      "anchor": "public boolean remoteActivate(",
+      "start_line": 115,
+      "end_line": 118,
+      "excerpt_sha256": "886acccf293d3e6b00797f91cd4ef967055a0e6e303f35aa8b8e37d9754e150f"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/RadiationMedicineRecipes.java",
+      "anchor": "for(String gas:",
+      "start_line": 20,
+      "end_line": 33,
+      "excerpt_sha256": "775591494af488cc30e5b8050374ade2a0214b3559d843d74c72eff301a7737c"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/DeferredRegistrySubmission.java",
+      "anchor": "GTMultiItems.register(bus)",
+      "start_line": 20,
+      "end_line": 20,
+      "excerpt_sha256": "30f09523ff6808080bded169cfd5345b4ad893c23708410b8b42dbf9188e7b52"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "anchor": "GTMultiItems.register(modEventBus)",
+      "start_line": 92,
+      "end_line": 92,
+      "excerpt_sha256": "e74d9eec32c40c33951303ed48f614ee667cd17d477eed9b5ce2d2e9ee477d6a"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/handheld-instruments-audit-20261022/forge-ItemProperties.javap.txt",
+      "anchor": "public net.minecraft.world.item.Item$Properties stacksTo(int)",
+      "start_line": 45,
+      "end_line": 60,
+      "excerpt_sha256": "023eee9c7f1c80329da4407a726cd4fb38b4e0801df102c69ff2695d21ce8082"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/handheld-instruments-audit-20261022/neo-ItemProperties.javap.txt",
+      "anchor": "public net.minecraft.world.item.Item$Properties stacksTo(int)",
+      "start_line": 33,
+      "end_line": 48,
+      "excerpt_sha256": "0af3cdfe0561eb6bbf4f3360dfb07eb8c260524c15562ff7d485fe2837f0ef37"
+    }
+  ],
+  "native_evidence": {
+    "entries": [
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+        "entry": "net/minecraft/world/item/Item.class",
+        "entry_sha256": "b0e69c533ce7ea00deeeb5d369bcc71ca345fcaf380e3c136e178bd67d8b87a6",
+        "read_output": "work/radiation-consumables-audit-20261022/forge-Item.javap.txt",
+        "read_output_sha256": "83dd1613da86768aa12cd9afa9b5d52396d0ffc7be9b339c96dd328f8b84304a"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+        "artifact_sha256": "9a99670ebf7e9f40ad66153a37f9d8c5b6406fdca9f07b83acdc52cb1842adb6",
+        "entry": "net/minecraft/world/item/Item.class",
+        "entry_sha256": "d4234cf5acb218b2056a38845170ec8266e16dc39ae0ed5fe5328cac153af462",
+        "read_output": "work/radiation-consumables-audit-20261022/neo-Item.javap.txt",
+        "read_output_sha256": "c8ff2f95c5a75610d5622a4a073db0d974265914584d82cf37f0f3d52f50169c"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+        "entry": "net/minecraft/world/item/Item$Properties.class",
+        "entry_sha256": "ef82809daf76d1556fc756f8071d069e31e0886f432b254af745804f0cef4036",
+        "read_output": "work/handheld-instruments-audit-20261022/forge-ItemProperties.javap.txt",
+        "read_output_sha256": "6369f9b48f65e84ddea092b7da5c45404b6ee4adc3912eb5f9bd7dc5216fdedd"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+        "artifact_sha256": "9a99670ebf7e9f40ad66153a37f9d8c5b6406fdca9f07b83acdc52cb1842adb6",
+        "entry": "net/minecraft/world/item/Item$Properties.class",
+        "entry_sha256": "35f8678fef22d0d45136b8f2e7250067f579e072b4bb2dc1bbf9c806c7b0748b",
+        "read_output": "work/handheld-instruments-audit-20261022/neo-ItemProperties.javap.txt",
+        "read_output_sha256": "50088ca5c9394cf11821226ba825bd3e5a60c2c7d1732794b9c52f84bbc0770f"
+      }
+    ],
+    "reused_receipt": {
+      "path": "docs/integration/verification/radiation-consumables-audit-20261022.json",
+      "sha256": "214eecd92269d2af25ac53a322367ef5fda3ad828d4081d846279faa18e23a89"
+    },
+    "scope": "Actual Item/Properties native code reading only; no item stack or Minecraft method executed."
+  },
+  "assets": [
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/lang/en_us.json",
+      "raw_sha256": "22b457eebef8f2eea9df0cb6590d1192c626969bfdbecf985d3d8f28ac22fc28",
+      "lines": 16479
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/lang/zh_cn.json",
+      "raw_sha256": "9fde3bab081cd65e464a5d918fdc9ff92ab910c4660fd8311c7ba73a4e710cb4",
+      "lines": 142305
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/recipes/technology/remote_activator.json",
+      "raw_sha256": "ecbf99cc36ca5933dd15720e3d039d0449d4644e5f8ad9531ab3ddec7836599c",
+      "lines": 37
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/recipes/nuclear/geiger_counter_empty.json",
+      "raw_sha256": "e3c4cf52d03f37028bdb121421398057d4531b21fa6344fc4d994d5ab505bf60",
+      "lines": 31
+    }
+  ],
+  "language_observations": {
+    "en_us": {
+      "item.gt6ce.remote_activator.tooltip": "",
+      "gt.behaviour.remote": null,
+      "item.gt6ce.geiger_counter.tooltip": "Measures Neutron Count"
+    },
+    "zh_cn": {
+      "item.gt6ce.remote_activator.tooltip": "",
+      "gt.behaviour.remote": "在128m范围内激活16个方块",
+      "item.gt6ce.geiger_counter.tooltip": "盖革一响……"
+    }
+  },
+  "formal_findings_added": [
+    425,
+    426
+  ],
+  "formal_findings_extended": [
+    3,
+    132
+  ],
+  "findings": [
+    {
+      "id": 425,
+      "contract": "Ordinary pristine original Geiger Counter10002 has default stack64; concrete MultiItemRandomTools override also returns64, not merely base MultiItem.",
+      "current": "Both registered platforms construct GeigerCounterItem with new Properties().stacksTo(1). Native Properties mutates the actual max-stack field/component.",
+      "scope": "Ordinary item form, not energy-NBT special cases, custom third-party modifications or inventory operation/game testing. Retained in this source cleanup."
+    },
+    {
+      "id": 426,
+      "contract": "Original remote Behavior_Remote.getAdditionalToolTips supplies up to64 blocks /128m description through MultiItem behavior tooltip dispatch.",
+      "current": "Both actual adapters inherit TechItem; per-item tooltip key is empty, shared behavior tooltip dispatcher handles USB only, and Neo remote adapter has no override. No direct range-tooltip consumer found in maintained source.",
+      "scope": "Current built-in hover path/default resources, not third-party tooltip providers. zh_cn has a legacy unused key while en_us lacks it; language patch left unchanged."
+    },
+    {
+      "extends": 132,
+      "contract": "Original manual bind/remove/refuse/full paths beep; activation clicks.",
+      "current": "Manual useOn/useInAir omit corresponding sound calls. Automatic addCoords already plays a success sound, so do not report all remote operations silent.",
+      "scope": "Remote item feedback layer only; a target may make its own sound. No audio/game verification."
+    },
+    {
+      "extends": 3,
+      "current": "Four remote chat messages are Component.literal English; no localization lookup in the actual message helper.",
+      "scope": "Localization path observation, not automatic replacement of source Chinese patch strings."
+    }
+  ],
+  "existing_and_limits": {
+    "remote": "Registered item paths call shared bind/fire behavior; max64 per dimension,128 each axis, indexed c/x/y/z markers and keep-binding boolean are present.",
+    "storage_policy": "Modern dimension ResourceLocation keys are deliberate; original numeric dimension migration not provided or tested.",
+    "target": "Actual dynamite target arms and returnsfalse for removal. Advanced-button remote gap is already330, not duplicated.",
+    "geiger": "Current hand interaction reads core neutrons and stopped state. Original oNeutronCounts snapshot timing, host delegation and complete item tooltip differences remain to audit.",
+    "recipes": "Two static recipe outputs and three Canner gas route declarations inspected; ingredients/tags/survival accessibility not fully accepted."
+  },
+  "refactoring": {
+    "files": {
+      "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorRemote.java": {
+        "old_path": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorRemote.java",
+        "before_raw_sha256": "802ffa3c9b59bb123167097f7014cfb627a935561f3c0edd2cb85002f6e93f8b",
+        "after_raw_sha256": "9d64501d6ec493e7a858bffb948c82ff1276b0ecc25719a6685b6095fff6ff20",
+        "before_lines": 390,
+        "after_lines": 321,
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1160,
+            "token_sha256": "63ee51fcfd3dcc271bbfe8d8032f38dc100ebe23a99b1b04ff19374716082ec3"
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1248,
+            "token_sha256": "67b7b4751fa29850b741785653b335fc48874b294f4850cb832fc40ca5b27667"
+          }
+        ],
+        "local_rename_counts": {
+          "i": 13
+        }
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/item/GeigerCounterItem.java": {
+        "old_path": "multiversion/src/main/java/com/gregtech/gregtech/item/GeigerCounterItem.java",
+        "before_raw_sha256": "da56edcdf18ed30523d213f48dbb78efe69c1ba21008426100c882adf56cc1a2",
+        "after_raw_sha256": "d0957c285fa0970c1851741a2a45ef74e0e5ee028ee5aefd09cb4d5978f10620",
+        "before_lines": 23,
+        "after_lines": 30,
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 260,
+            "token_sha256": "3ef6b8c1df98559f8e04e700f420c1247c1dca3488424b81f0358abc978dabf5"
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 260,
+            "token_sha256": "3ef6b8c1df98559f8e04e700f420c1247c1dca3488424b81f0358abc978dabf5"
+          }
+        ],
+        "local_rename_counts": {
+          "values": 2,
+          "n": 2
+        }
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/item/RemoteActivatorItem.java": {
+        "old_path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/item/RemoteActivatorItem.java",
+        "before_raw_sha256": "097aa929eb5393ea386d675d0641b1013fe2e520fd0ab500ac4ea7b7d55e653c",
+        "after_raw_sha256": "f5f94f31564fa4750abcfa55ae46338e25ba276e4f525c8fdec0827140f42573",
+        "before_lines": 9,
+        "after_lines": 30,
+        "views": [
+          {
+            "platform": "neoforge",
+            "tokens": 282,
+            "token_sha256": "0e7789659f90dc99dd81531e31e07b530fa4a3ebf4ca342736be6d44e454e8fc"
+          },
+          {
+            "platform": "forge-newly-shared",
+            "tokens": 282,
+            "scope": "Same complete code as old Neo wrapper; Forge registry still uses its pre-existing generic behavior dispatch."
+          }
+        ],
+        "local_rename_counts": {
+          "pos": 5,
+          "point": 4
+        }
+      }
+    },
+    "scope": "Full ordered code/literals and remaining comments after exact class-javadoc replacement and listed local renames. No gameplay change.",
+    "moved_class": {
+      "from": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/item/RemoteActivatorItem.java",
+      "to": "multiversion/src/main/java/com/gregtech/gregtech/item/RemoteActivatorItem.java",
+      "public_class_and_package": "unchanged",
+      "native_dependencies": "Only shared Minecraft types and existing shared behavior; actual Forge compilation required."
+    },
+    "documentation": {
+      "duplicate_remote_class_comments": 2,
+      "replacement_comments": 1,
+      "preserved": "Remaining method/source references and executable semantics."
+    }
+  },
+  "compiled_inputs": [
+    {
+      "platform": "forge",
+      "path": "multiversion/versions/1.20.1-forge/build/generated/stonecutter/main/java/com/gregtech/gregtech/item/GeigerCounterItem.java",
+      "raw_sha256": "89fc6fa2ac01beeb58260cab6ee8038b0fc7603dc01351b3a718aab339a2f713",
+      "current_path": "multiversion/src/main/java/com/gregtech/gregtech/item/GeigerCounterItem.java",
+      "comparison": "Full projected ordered tokens equal actual compile input; final Geiger spacing only differs from its compile input."
+    },
+    {
+      "platform": "forge",
+      "path": "multiversion/versions/1.20.1-forge/build/generated/stonecutter/main/java/com/gregtech/gregtech/item/RemoteActivatorItem.java",
+      "raw_sha256": "f5f94f31564fa4750abcfa55ae46338e25ba276e4f525c8fdec0827140f42573",
+      "current_path": "multiversion/src/main/java/com/gregtech/gregtech/item/RemoteActivatorItem.java",
+      "comparison": "Full projected ordered tokens equal actual compile input; final Geiger spacing only differs from its compile input."
+    },
+    {
+      "platform": "forge",
+      "path": "multiversion/versions/1.20.1-forge/build/generated/stonecutter/main/java/com/gregtech/gregtech/item/behavior/BehaviorRemote.java",
+      "raw_sha256": "9d64501d6ec493e7a858bffb948c82ff1276b0ecc25719a6685b6095fff6ff20",
+      "current_path": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorRemote.java",
+      "comparison": "Full projected ordered tokens equal actual compile input; final Geiger spacing only differs from its compile input."
+    },
+    {
+      "platform": "neoforge",
+      "path": "multiversion/versions/1.21.1-neoforge/build/generated/stonecutter/main/java/com/gregtech/gregtech/item/GeigerCounterItem.java",
+      "raw_sha256": "89fc6fa2ac01beeb58260cab6ee8038b0fc7603dc01351b3a718aab339a2f713",
+      "current_path": "multiversion/src/main/java/com/gregtech/gregtech/item/GeigerCounterItem.java",
+      "comparison": "Full projected ordered tokens equal actual compile input; final Geiger spacing only differs from its compile input."
+    },
+    {
+      "platform": "neoforge",
+      "path": "multiversion/versions/1.21.1-neoforge/build/generated/stonecutter/main/java/com/gregtech/gregtech/item/RemoteActivatorItem.java",
+      "raw_sha256": "f5f94f31564fa4750abcfa55ae46338e25ba276e4f525c8fdec0827140f42573",
+      "current_path": "multiversion/src/main/java/com/gregtech/gregtech/item/RemoteActivatorItem.java",
+      "comparison": "Full projected ordered tokens equal actual compile input; final Geiger spacing only differs from its compile input."
+    },
+    {
+      "platform": "neoforge",
+      "path": "multiversion/versions/1.21.1-neoforge/build/generated/stonecutter/main/java/com/gregtech/gregtech/item/behavior/BehaviorRemote.java",
+      "raw_sha256": "d649454854b0fe347fe1b26b5e0ca99d393464958ed3fde0c6128c504e66fa35",
+      "current_path": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorRemote.java",
+      "comparison": "Full projected ordered tokens equal actual compile input; final Geiger spacing only differs from its compile input."
+    }
+  ],
+  "compile": {
+    "status": "passed",
+    "duration_seconds": 73,
+    "tasks": [
+      "multiversion:1.20.1-forge:compileJava",
+      "multiversion:1.21.1-neoforge:compileJava"
+    ],
+    "log": "work/handheld-instruments-audit-20261022/compile.log",
+    "log_sha256": "80a9a77a0cf7c92436e230fecf46f4f61d0e473b692201282577bba13f76a96f",
+    "temporary_adapter": "work/storage-inserter-audit-20261022/cached-api-classpath.gradle",
+    "temporary_adapter_sha256": "51a1ed5becc4b14c87f6eeef31d2c8fc984e02735ee630b3c292496c2798cdbe",
+    "cached_forge_artifacts": [
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/mezz/jei/jei-1.20.1-common-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-common-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/mezz/jei/jei-1.20.1-common-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-common-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "sha256": "7786d88e4ffd38f62d057b86eb56aa6a116037f2a4dbccb0aa77877b7dc8f4fd",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/mezz/jei/jei-1.20.1-forge-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-forge-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/mezz/jei/jei-1.20.1-forge-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-forge-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "sha256": "b50a6a64c629e51346deec045495ba932be2bcab4ffb5a46fe483df1e06c832a",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1-api.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1-api.jar",
+        "sha256": "268f4572a6297bcd38c176e9361ee245364bb255e1a74e0fec96a973ef1379c0",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1.jar",
+        "sha256": "a2df46e253e208d39576808509eb384b42d992ba77d1c3aec31b97611be6e64b",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/maven/modrinth/jade/11.13.2+forge_mapped_official_1.20.1/jade-11.13.2+forge_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/maven/modrinth/jade/11.13.2+forge_mapped_official_1.20.1/jade-11.13.2+forge_mapped_official_1.20.1.jar",
+        "sha256": "15030cb00590540a5a37bd6bd509df4c01116406dd7c1a760b55e81f83f2bd62",
+        "action": "copied existing exact-coordinate jar"
+      }
+    ],
+    "cached_neo_emi_api": {
+      "path": "C:/Dev/GregTech6/work/emi-maven/dev/emi/emi-neoforge/1.1.24+1.21.1/emi-neoforge-1.1.24+1.21.1-api.jar",
+      "sha256": "b3a8e23c5e59813f184423b94e37bb635867ddc9be2b68b3502fad7b9134779b"
+    },
+    "scope": "Same-version cached API adapter; final Geiger whitespace is proven token-equal to six actual generated compile inputs. No default offline/CI or game claim."
+  },
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "gameplay_changes": false,
+  "game_launched": false,
+  "jar_built": false,
+  "github_writes": false,
+  "goal_status": "active",
+  "whole_goal_complete": false,
+  "root_revalidation": {
+    "sources": "10 original/14 current and4 assets match hashes",
+    "excerpts": "40 spans match",
+    "native": "4 artifact entries match",
+    "refactoring": "Five old platform views and new Forge wrapper preserve full ordered tokens after listed local names/class comment normalization",
+    "class_move": "Same package/public class, old Neo file absent; new shared file exists",
+    "actual_compile_inputs": "All six generated inputs token-equal to final shared sources",
+    "compile": "73s successful dual platform compile; exact same-version API inputs match",
+    "protected_materials": "unchanged",
+    "historical_docs": "All prior lines preserved; insertions only",
+    "formal_ids": {
+      "contiguous": true,
+      "count": 426,
+      "new": [
+        425,
+        426
+      ]
+    },
+    "links": "resolve",
+    "production_build_configuration": "unchanged",
+    "gameplay_acceptance": false,
+    "whole_goal_complete": false
+  },
+  "source_discovery_evidence": {
+    "files": [
+      {
+        "path": "multiversion/migration-manifest.json",
+        "sha256": "54bc55bdea787e7af4525ab18618f456e5fb265a569a1834f0fcbf37f820c15f"
+      },
+      {
+        "path": "tools/integration/check_stonecutter_sources.py",
+        "sha256": "30152076b3383862b4742815cf21951a805c25d955365a7ff1a67bd302278c7c"
+      },
+      {
+        "path": "tools/integration/migrate_stonecutter_sources.py",
+        "sha256": "93c8b49f663884f7f562b163fbdef90898390ea64ee9873a555aa769aa168916"
+      }
+    ],
+    "historical_manifest": "Frozen4e39348c6 migration snapshot still says neoforge_only for original RemoteActivatorItem; intentionally not rewritten into current-state evidence.",
+    "current_checker": "Non-baseline mode discovers actual common and override source roots; both generated outputs contain this now-shared class exactly once.",
+    "scope": "Current discovery branch read and same moved-class generated inputs checked, not a full source/resource checker run or historical migration-baseline pass."
+  }
+}

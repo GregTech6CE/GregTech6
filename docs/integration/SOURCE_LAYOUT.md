@@ -1,5 +1,7 @@
 # 当前源码导航与命名约定
 
+2026-10-22：共享item/RemoteActivatorItem提供原生回调包装，Neo工厂实际使用，Forge仍由GTMultiItems内部通用物品经ItemBehaviors分派；两者转给共享BehaviorRemote。后者维护每维度坐标列表、范围和目标保留协议，RemoteActivatable只定义目标合同，原生数据读写仍各自适配。GeigerCounterItem读取ReactorCoreBlockEntity状态；包装共享与待核采样时序分别说明，见[手持仪表](HANDHELD_INSTRUMENTS_AUDIT.md)。
+
 2026-10-22：core FoodStatisticRows存六统计数据，NutritionRules管0–127夹取／数值效果；原生GTFoodStatsGen.build共用表装载，两个resolveItem只做注册表查询，GTFoodStats提供物品身份查询。FoodStatEvents消费完成前物品副本，RadawayItem另有专用回调，PlayerRadiation管持久剂量／症状，ReactorRadiation管外来暴露／防护。数据行与调用次数不可混同，现存422–424见[辐射消耗品](RADIATION_CONSUMABLES_AUDIT.md)。
 
 2026-10-22：core HazmatSuitCatalog定义六套；GTRadiationProtection注册24件，Forge经GTFuelRods触发初始化，Neo经材料注册触发。RadiationSuitItem.texturePath共用槽位／路径，原生返回类型留薄入口；GTHazmat读取八组物品标签，护甲计算仍由原生ArmorItem处理。路径共用、减伤／提示差异和证据见[防护服核查](HAZMAT_SUIT_AUDIT.md)。
