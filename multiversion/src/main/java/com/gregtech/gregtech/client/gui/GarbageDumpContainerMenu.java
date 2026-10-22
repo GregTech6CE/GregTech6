@@ -16,8 +16,8 @@ import net.minecraftforge.items.SlotItemHandler;
 
 /**
  * GT6 Ender Garbage Dump GUI: a 54-slot extract-only window over the global
- * garbage piles. Pile counts can exceed a stack, so all removals go through
- * the handler instead of mutating the displayed stacks.
+ * garbage piles. Shift-click extracts through the handler because display stacks are copies.
+ * Other clicks use the native slot contract; this menu does not override their mutations.
  */
 public class GarbageDumpContainerMenu extends HopperContainerMenu {
 
