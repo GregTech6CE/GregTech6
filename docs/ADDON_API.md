@@ -644,7 +644,7 @@ JEI catalysts and the multiblock preview follow the registered machine list. A l
 
 Return each `BehaviorMachine` from `addonMachines()`. Also list a `BehaviorMachineContributor` in `META-INF/services/com.gregtech.gregtech.api.addon.platform.BehaviorMachineContributor`. That interface lives in the loader API because `FluidStack` differs between Forge and NeoForge. `machineTypes()` must include every behavior machine type this addon declares. GregTech calls `create` once for each placed block entity. A missing factory fails startup and names the addon and the machine type.
 
-The behavior does not extend a GregTech class. `MachineBehavior` requires three methods—`tick(context)`, `canInsert(context, slot, stack)` and `canFill(context, tank, stack)`—and provides six optional default methods: `acceptFluid(context, tank, stack, simulate)`, `onToggle(context, toggle)`, `beforeBreak(context)`, `onTool(context, tool, player, hand, face)`, `onUse(context, player, hand)` and `acceptsEnergy(context, type, face, size, amount)`. `canInsert` and `canFill` also have a face overload. It defaults to the method without a face, so an existing behavior keeps working. A pipe calls the face overload. A null face is the menu or an unsided handler. `MachineBehaviorContext` reads and writes items, tanks, energy, toggles, progress and the world. `BehaviorState` stores int, long, boolean, string and item values by key. GregTech writes that map to NBT. The behavior does not touch `CompoundTag`. A missing key reads as zero, false, an empty string or an empty item. Keys match `[a-z0-9_.]{1,64}`. Strings are at most 256 characters. GregTech drops inventory items and state items when the block breaks, after `beforeBreak`.
+The behavior does not extend a GregTech class. `MachineBehavior` requires three methods—`tick(context)`, `canInsert(context, slot, stack)` and `canFill(context, tank, stack)`—and provides optional default methods for fluid acceptance, energy acceptance, toggles, breaking, tools, use and crucible access. The crucible methods are `getCrucibleTemperature(context)`, `getCrucibleContentAmount(context)` and `fillMoldAtSide(context, mold, crucibleSide, moldSide)`. Their defaults report zero and refuse the pour, so an existing behavior keeps working. `CrucibleMold` is the SDK-safe target view of GT6CE's internal mold interface; call `fillMold(material, amount, temperature, moldSide)` and subtract the returned amount from the behavior's own molten storage. Behavior block entities bridge that callback to the normal GT mold, basin or faucet, so existing mold interactions work without an addon subclassing a block entity. `canInsert` and `canFill` also have a face overload. It defaults to the method without a face, so an existing behavior keeps working. A pipe calls the face overload. A null face is the menu or an unsided handler. `MachineBehaviorContext` reads and writes items, tanks, energy, toggles, progress and the world. `BehaviorState` stores int, long, boolean, string and item values by key. GregTech writes that map to NBT. The behavior does not touch `CompoundTag`. A missing key reads as zero, false, an empty string or an empty item. Keys match `[a-z0-9_.]{1,64}`. Strings are at most 256 characters. GregTech drops inventory items and state items when the block breaks, after `beforeBreak`.
 
 ```java
 public List<AddonMachine> addonMachines() {
@@ -657,6 +657,35 @@ public List<AddonMachine> addonMachines() {
             .fluid(8000, 152, 8, BehaviorMachine.SlotRole.INPUT)
             .toggle("my_addon.irrigator.water", 26, 64, true)
             .build());
+}
+```
+
+To make a behavior machine a molten-material source, keep the material and amount in
+`BehaviorState` (or another behavior-owned store) and implement the three crucible
+callbacks:
+
+```java
+@Override
+public long getCrucibleTemperature(MachineBehaviorContext context) {
+    return context.state().getLong("temperature");
+}
+
+@Override
+public long getCrucibleContentAmount(MachineBehaviorContext context) {
+    return context.state().getLong("amount");
+}
+
+@Override
+public boolean fillMoldAtSide(MachineBehaviorContext context, CrucibleMold mold,
+                               int crucibleSide, int moldSide) {
+    var state = context.state();
+    var material = GregTechMaterials.find(state.getString("material"));
+    long amount = state.getLong("amount");
+    long accepted = amount <= 0 || !material.valid() ? 0
+            : mold.fillMold(material, amount, getCrucibleTemperature(context), moldSide);
+    if (accepted <= 0) return false;
+    state.setLong("amount", amount - accepted);
+    return true;
 }
 ```
 
@@ -850,7 +879,7 @@ Vanilla dispensers (including droppers), hoppers, pistons, TNT, note blocks, tra
 
 These stay closed. `BasicMachineBlock` and `BasicMachineBlockEntity` are GregTech's machine implementation; an addon machine is data, not a subclass. `Recipe.mRecipeList` is the internal row list; production code uses the `AddonRecipes.Line` returned by `add`. `GTMaterial`, `GTMaterialRegistry` and the material sentinels are replaced by `GregTechMaterials`. `GregTechTags` is replaced by energy short names. `MachineRecipeMaps` fields are replaced by `AddonRecipes.map(name)`. `MaterialPrefix` constants are replaced by prefix name strings. The full tool catalog stays inside GregTech.
 
-API version 0 includes crucible compositions, smelting targets and alloy rows, and still reads an old numeric material id as a built-in material, writing the name the next time that block or item is saved. It does **not** promise solid fuel, energy conversion, moving the built-in engines onto this template, addon-drawn GUIs, a read-only view of a crucible, wireless compute parts, remote energy emission to a saved coordinate, crucible blocks, writing a crucible's temperature or contents, melting an arbitrary non-GregTech item, datapack crucible rows, datapack-created recipe maps without a contributor, datapack reloads of the material table, one binary for both loaders, or a complete old GregAPI replacement. Only the documented entries are the compatibility surface. Use [the voltage guide](VOLTAGE_TIERS.md) rather than GT5/GTCE tier labels.
+API version 0 includes crucible compositions, smelting targets and alloy rows, behavior-machine crucible callbacks, and still reads an old numeric material id as a built-in material, writing the name the next time that block or item is saved. It does **not** promise solid fuel, energy conversion, moving the built-in engines onto this template, addon-drawn GUIs, wireless compute parts, remote energy emission to a saved coordinate, crucible blocks, writing a crucible's temperature or contents, melting an arbitrary non-GregTech item, datapack crucible rows, datapack-created recipe maps without a contributor, datapack reloads of the material table, one binary for both loaders, or a complete old GregAPI replacement. Only the documented entries are the compatibility surface. Use [the voltage guide](VOLTAGE_TIERS.md) rather than GT5/GTCE tier labels.
 
 ## Versioning and compatibility
 

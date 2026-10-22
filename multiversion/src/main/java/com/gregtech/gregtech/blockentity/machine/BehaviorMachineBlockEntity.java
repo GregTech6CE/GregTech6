@@ -4,6 +4,7 @@ import com.gregtech.gregtech.api.addon.AddonMachines;
 import com.gregtech.gregtech.api.addon.BehaviorEnergyRules;
 import com.gregtech.gregtech.api.addon.EnergyOutput;
 import com.gregtech.gregtech.api.addon.BehaviorMachine;
+import com.gregtech.gregtech.api.addon.CrucibleMold;
 import com.gregtech.gregtech.api.addon.MachineFace;
 import com.gregtech.gregtech.api.addon.PartEnergyRules;
 import com.gregtech.gregtech.api.addon.BehaviorRangeRules;
@@ -26,6 +27,9 @@ import com.gregtech.gregtech.api.energy.EnergyBlockViews;
 import com.gregtech.gregtech.api.energy.FaceConfig;
 import com.gregtech.gregtech.api.energy.IEnergyBlock;
 import com.gregtech.gregtech.api.machine.BasicMachineEnergy;
+import com.gregtech.gregtech.api.machine.ITileEntityCrucible;
+import com.gregtech.gregtech.api.machine.ITileEntityMold;
+import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.gregtech.gregtech.block.machine.BehaviorMachineBlock;
 import com.gregtech.gregtech.client.gui.BehaviorMachineMenu;
 import com.gregtech.gregtech.data.GregTechTags;
@@ -94,7 +98,7 @@ import java.util.UUID;
 
 /** Shell block entity. The addon behavior never sees this class. */
 public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlock, MenuProvider,
-        com.gregtech.gregtech.api.fluid.CompressedGasReceiver {
+        com.gregtech.gregtech.api.fluid.CompressedGasReceiver, ITileEntityCrucible {
     private final BehaviorMachine declaration;
     private final AddonMachines.AcceptedBehavior accepted;
     private final MachineBehavior behavior;
@@ -186,6 +190,30 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     }
     public MachineBehavior behavior() { return behavior; }
     public boolean toggle(int index) { return context.toggle(index); }
+
+    @Override
+    public boolean fillMoldAtSide(ITileEntityMold mold, int crucibleSide, int moldSide) {
+        if (mold == null) return false;
+        return behavior.fillMoldAtSide(context, moldTarget(mold), crucibleSide, moldSide);
+    }
+
+    @Override
+    public long getCrucibleTemperature() {
+        return behavior.getCrucibleTemperature(context);
+    }
+
+    @Override
+    public long getCrucibleContentAmount() {
+        return behavior.getCrucibleContentAmount(context);
+    }
+
+    private static CrucibleMold moldTarget(ITileEntityMold mold) {
+        return (material, amount, temperature, side) -> {
+            if (material == null || !material.valid() || material.resolve() == null) return 0;
+            var resolved = GTMaterialRegistry.get(material.resolve().name());
+            return resolved.isValid() ? mold.fillMold(resolved, amount, temperature, side) : 0;
+        };
+    }
 //? if >=1.21.1 {
 /*
     public IItemHandler itemCapability(@Nullable Direction side) { return itemHandler(side); }

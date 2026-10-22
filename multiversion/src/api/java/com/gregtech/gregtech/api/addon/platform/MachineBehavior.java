@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.api.addon.platform;
 
+import com.gregtech.gregtech.api.addon.CrucibleMold;
 import com.gregtech.gregtech.api.addon.MachineFace;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -60,6 +61,32 @@ public interface MachineBehavior {
         if (stack == null || stack.isEmpty() || !canFill(context, tank, stack)) return 0;
         return context.fill(tank, stack, simulate);
     }
+
+    /**
+     * Current temperature of molten material held by this behavior, in Kelvin.
+     * A behavior that is not a crucible returns zero.
+     */
+    default long getCrucibleTemperature(MachineBehaviorContext context) { return 0; }
+
+    /**
+     * Total amount of molten material held by this behavior, in GT units.
+     * A behavior that is not a crucible returns zero.
+     */
+    default long getCrucibleContentAmount(MachineBehaviorContext context) { return 0; }
+
+    /**
+     * Attempts to pour this behavior's molten material into an adjacent mold.
+     *
+     * <p>The supplied target is an SDK-safe view of the real mold. The behavior owns
+     * its material inventory and must call {@link CrucibleMold#fillMold} for each
+     * material it wants to offer, reducing its own content by the amount returned.
+     * {@code crucibleSide} is the side of this machine and {@code moldSide} is the
+     * receiving side of the mold.</p>
+     *
+     * @return true when material was transferred
+     */
+    default boolean fillMoldAtSide(MachineBehaviorContext context, CrucibleMold mold,
+                                   int crucibleSide, int moldSide) { return false; }
 
     /** A player flipped this switch. The new value is already stored. */
     default void onToggle(MachineBehaviorContext context, int toggle) {}
