@@ -132,7 +132,7 @@ tasks.named('check').configure { dependsOn addonApiClosureCheck }
     tasks.named('check').configure { dependsOn contract }
 }
 
-['kind', 'duplicate', 'part', 'partok', 'partfn', 'partmiss', 'partname', 'partmat', 'partdup', 'map', 'energy', 'controller', 'service', 'overlap', 'bounds', 'benergy', 'factory', 'share', 'bconflict', 'bslots', 'blayout', 'fuelok', 'fuelmap', 'fuelenergy', 'fuelstruct', 'fuelname', 'fuelmachine', 'fuelbounds', 'knobs', 'face', 'bstore', 'brange', 'epart', 'emax', 'eunknown', 'gasok', 'gasdup', 'gasmat', 'iotarget', 'erange', 'erangedisagree', 'erangetu', 'plainblock', 'plainrole', 'bcatalyst', 'bunknown', 'bforeign'].each { scenario ->
+['kind', 'duplicate', 'part', 'partok', 'partfn', 'partmiss', 'partname', 'partmat', 'partdup', 'map', 'energy', 'controller', 'service', 'overlap', 'bounds', 'benergy', 'binput', 'factory', 'share', 'bconflict', 'bslots', 'blayout', 'fuelok', 'fuelmap', 'fuelenergy', 'fuelstruct', 'fuelname', 'fuelmachine', 'fuelbounds', 'knobs', 'face', 'bstore', 'brange', 'epart', 'emax', 'eunknown', 'gasok', 'gasdup', 'gasmat', 'iotarget', 'erange', 'erangedisagree', 'erangetu', 'plainblock', 'plainrole', 'bcatalyst', 'bunknown', 'bforeign'].each { scenario ->
     def contract = tasks.register("addonMachineContracts_${scenario}", JavaExec) {
         description = "Runs addon machine scenario ${scenario} in its own JVM."
         group = 'verification'
@@ -152,7 +152,7 @@ tasks.named('check').configure { dependsOn addonApiClosureCheck }
     tasks.named('check').configure { dependsOn contract }
 }
 
-['service', 'name', 'id', 'addons', 'range', 'form', 'invalid', 'late', 'mismatch', 'casefold', 'corecase', 'order', 'named', 'softform', 'oreraw', 'ores', 'oremismatch', 'orelist', 'oreunknown', 'vein', 'veinname', 'veinore', 'veindup', 'veinbad', 'prefix', 'prefixname', 'prefixcase', 'prefixmiss', 'prefixcond', 'byproducts'].each { scenario ->
+['service', 'name', 'id', 'addons', 'range', 'form', 'invalid', 'late', 'mismatch', 'casefold', 'corecase', 'order', 'named', 'softform', 'softmiss', 'wires', 'wireplate', 'blockprefix', 'blockform', 'oreraw', 'ores', 'oremismatch', 'orelist', 'oreunknown', 'vein', 'veinname', 'veinore', 'veindup', 'veinbad', 'prefix', 'prefixname', 'prefixcase', 'prefixmiss', 'prefixcond', 'byproducts', 'reads'].each { scenario ->
     def contract = tasks.register("addonMaterialContracts_${scenario}", JavaExec) {
         description = "Runs addon material scenario ${scenario} in its own JVM."
         group = 'verification'

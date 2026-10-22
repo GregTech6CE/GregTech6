@@ -126,11 +126,17 @@ public final class AddonLoaderServices {
             ItemStack stack = inputs[i];
             RecipeKeptInputs.requirePositiveCount(stack == null || stack.isEmpty() ? 0 : stack.getCount(), i);
         }
+        FluidStack[] fluidInputs = line.fluidInputs();
+        for (int i = 0; i < fluidInputs.length; i++) {
+            FluidStack stack = fluidInputs[i];
+            RecipeKeptInputs.requirePositiveFluid(stack == null || stack.isEmpty() ? 0 : stack.getAmount(), i);
+        }
         long[] chances = new long[line.outputChances().length];
         for (int i = 0; i < chances.length; i++) chances[i] = line.outputChances()[i];
         return new Recipe(inputs, line.itemOutputs(), null, chances,
-                line.fluidInputs(), line.fluidOutputs(), line.duration(), line.euPerTick(), line.special())
-                .withCatalystInputs(line.keptInputs());
+                fluidInputs, line.fluidOutputs(), line.duration(), line.euPerTick(), line.special())
+                .withCatalystInputs(line.keptInputs())
+                .withCatalystFluidInputs(line.keptFluidInputs());
     }
 
     private static AddonRecipes.Line line(Recipe recipe) {
@@ -140,6 +146,7 @@ public final class AddonLoaderServices {
             chances[i] = recipe.mChances != null && i < recipe.mChances.length
                     ? (int) recipe.mChances[i] : RecipeOutputChances.CERTAIN;
         return AddonRecipes.Line.read(recipe.mInputs, recipe.mOutputs, recipe.mFluidInputs, recipe.mFluidOutputs,
-                recipe.mDuration, recipe.mEUt, recipe.mSpecialValue, chances, recipe.explicitCatalystInputs());
+                recipe.mDuration, recipe.mEUt, recipe.mSpecialValue, chances, recipe.explicitCatalystInputs(),
+                recipe.explicitCatalystFluidInputs());
     }
 }

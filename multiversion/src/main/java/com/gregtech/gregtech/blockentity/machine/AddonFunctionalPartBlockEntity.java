@@ -23,6 +23,10 @@ public class AddonFunctionalPartBlockEntity extends MultiblockPortBlockEntity
             new java.util.EnumMap<>(Direction.class);
     private net.minecraftforge.common.util.LazyOptional<net.minecraftforge.items.IItemHandler> unsided =
             net.minecraftforge.common.util.LazyOptional.empty();
+    private final java.util.EnumMap<Direction, net.minecraftforge.common.util.LazyOptional<net.minecraftforge.fluids.capability.IFluidHandler>> fluidCaps =
+            new java.util.EnumMap<>(Direction.class);
+    private net.minecraftforge.common.util.LazyOptional<net.minecraftforge.fluids.capability.IFluidHandler> unsidedFluid =
+            net.minecraftforge.common.util.LazyOptional.empty();
 //?}
 
     public AddonFunctionalPartBlockEntity(BlockPos pos, BlockState state) {
@@ -98,6 +102,12 @@ public class AddonFunctionalPartBlockEntity extends MultiblockPortBlockEntity
         return own != null ? own : super.itemCapability(side);
     }
 
+    @Override public net.neoforged.neoforge.fluids.capability.IFluidHandler fluidCapability(Direction side) {
+        if (isRemoved()) return null;
+        var own = function.fluids(side);
+        return own != null ? own : super.fluidCapability(side);
+    }
+
     @Override protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         super.saveAdditional(tag, lookup);
         function.save(tag, lookup);
@@ -138,6 +148,14 @@ public class AddonFunctionalPartBlockEntity extends MultiblockPortBlockEntity
             }
             return itemCaps.computeIfAbsent(side, found -> net.minecraftforge.common.util.LazyOptional.of(() -> function.items(found))).cast();
         }
+        if (cap == net.minecraftforge.common.capabilities.ForgeCapabilities.FLUID_HANDLER && !isRemoved()
+                && function.fluids(side) != null) {
+            if (side == null) {
+                if (!unsidedFluid.isPresent()) unsidedFluid = net.minecraftforge.common.util.LazyOptional.of(() -> function.fluids(null));
+                return unsidedFluid.cast();
+            }
+            return fluidCaps.computeIfAbsent(side, found -> net.minecraftforge.common.util.LazyOptional.of(() -> function.fluids(found))).cast();
+        }
         return super.getCapability(cap, side);
     }
 
@@ -146,11 +164,15 @@ public class AddonFunctionalPartBlockEntity extends MultiblockPortBlockEntity
         unsided.invalidate();
         itemCaps.values().forEach(net.minecraftforge.common.util.LazyOptional::invalidate);
         itemCaps.clear();
+        unsidedFluid.invalidate();
+        fluidCaps.values().forEach(net.minecraftforge.common.util.LazyOptional::invalidate);
+        fluidCaps.clear();
     }
 
     @Override public void reviveCaps() {
         super.reviveCaps();
         unsided = net.minecraftforge.common.util.LazyOptional.empty();
+        unsidedFluid = net.minecraftforge.common.util.LazyOptional.empty();
     }
 
     @Override protected void saveAdditional(CompoundTag tag) {

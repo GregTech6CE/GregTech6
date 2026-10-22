@@ -33,7 +33,8 @@ final class ScriptValues {
             var cell = object(element);
             out.add(new StructureLayoutDocuments.CellSpec(
                     number(cell.get("right")), number(cell.get("up")), number(cell.get("back")),
-                    text(cell.get("match")), text(cell.get("role"))));
+                    text(cell.get("match")), text(cell.get("role")),
+                    cell.containsKey("design") ? number(cell.get("design")) : -1));
         }
         return out;
     }

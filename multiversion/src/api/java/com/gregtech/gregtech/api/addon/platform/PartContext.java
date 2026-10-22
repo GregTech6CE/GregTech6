@@ -4,6 +4,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+//? if >=1.21.1 {
+/*import net.neoforged.neoforge.fluids.FluidStack;
+*///?} else {
+import net.minecraftforge.fluids.FluidStack;
+//?}
 
 import javax.annotation.Nullable;
 
@@ -32,6 +37,22 @@ public interface PartContext {
      * A count above the declared stack limit is cut to that limit.
      */
     void setItem(int slot, ItemStack stack);
+
+    int tanks();
+
+    /** Empty when this part has no tank at {@code tank}, or that tank is empty. */
+    FluidStack fluid(int tank);
+
+    int tankCapacity(int tank);
+
+    /**
+     * Puts fluid into one tank. This does not ask {@link PartBehavior#canFill} or the face list.
+     * Returns the millibuckets stored.
+     */
+    int fill(int tank, FluidStack stack, boolean simulate);
+
+    /** Takes fluid from one tank. This does not ask {@link PartBehavior#canDrain} or the face list. */
+    FluidStack drain(int tank, int amount, boolean simulate);
 
     /** True when a formed controller currently claims this part. */
     boolean bound();

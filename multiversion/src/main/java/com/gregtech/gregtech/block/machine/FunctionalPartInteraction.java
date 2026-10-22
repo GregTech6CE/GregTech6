@@ -3,14 +3,21 @@ package com.gregtech.gregtech.block.machine;
 import com.gregtech.gregtech.api.tool.GTToolHelper;
 import com.gregtech.gregtech.api.tool.GTToolType;
 import com.gregtech.gregtech.blockentity.machine.FunctionalPartRuntime;
+import com.gregtech.gregtech.client.gui.PartMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+//? if >=1.21.1 {
+//?} else {
+import net.minecraftforge.network.NetworkHooks;
+//?}
 
 /** Wrench, magnifying glass and part click. Energy-only parts do not call this. */
 public final class FunctionalPartInteraction {
@@ -33,10 +40,21 @@ public final class FunctionalPartInteraction {
             if (!level.isClientSide) for (Component line : lines) player.displayClientMessage(line, false);
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
-        if (!runtime.handlesUse()) return InteractionResult.PASS;
+        if (!runtime.handlesUse() && !runtime.opensMenu()) return InteractionResult.PASS;
         if (level.isClientSide) return InteractionResult.sidedSuccess(true);
-        return runtime.onUse(player, hand, partHit)
-                ? InteractionResult.sidedSuccess(false) : InteractionResult.PASS;
+        boolean used = runtime.handlesUse() && runtime.onUse(player, hand, partHit);
+        if (!used && runtime.opensMenu() && player instanceof ServerPlayer server) openMenu(server, host);
+        return used || runtime.opensMenu() ? InteractionResult.sidedSuccess(false) : InteractionResult.PASS;
+    }
+
+    private static void openMenu(ServerPlayer server, FunctionalPartRuntime.Host host) {
+        Component title = host.blockState().getBlock().getName();
+        var provider = new SimpleMenuProvider((id, inventory, player) -> new PartMenu(id, inventory, host), title);
+//? if >=1.21.1 {
+/*        server.openMenu(provider, buf -> buf.writeBlockPos(host.pos()));
+*///?} else {
+        NetworkHooks.openScreen(server, provider, buf -> buf.writeBlockPos(host.pos()));
+//?}
     }
 
     public static com.gregtech.gregtech.api.addon.platform.PartHit hitOf(BlockPos pos, BlockHitResult hit) {

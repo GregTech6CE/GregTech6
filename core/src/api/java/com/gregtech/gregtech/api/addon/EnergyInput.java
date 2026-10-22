@@ -21,10 +21,11 @@ public final class EnergyInput {
     private final boolean capacitySpecified;
     private final long capacity;
     private final boolean anyPacket;
+    private final boolean overload;
 
     private EnergyInput(String type, long perTick, boolean rangeSpecified, long rangeMin, long rangeMax,
                         boolean facesSpecified, List<MachineFace> faces, boolean capacitySpecified, long capacity,
-                        boolean anyPacket) {
+                        boolean anyPacket, boolean overload) {
         this.type = type;
         this.perTick = perTick;
         this.rangeSpecified = rangeSpecified;
@@ -35,6 +36,7 @@ public final class EnergyInput {
         this.capacitySpecified = capacitySpecified;
         this.capacity = capacity;
         this.anyPacket = anyPacket;
+        this.overload = overload;
     }
 
     public String type() { return type; }
@@ -73,16 +75,23 @@ public final class EnergyInput {
      */
     public boolean anyPacket() { return anyPacket; }
 
+    /**
+     * True unless {@link Builder#overload(boolean)} was called with false.
+     * A behavior machine's main input then refuses a packet outside its window
+     * and does not overload. The default still overloads above the maximum.
+     */
+    public boolean overload() { return overload; }
+
     EnergyInput withFaces(List<MachineFace> resolved) {
         return new EnergyInput(type, perTick, rangeSpecified, rangeMin, rangeMax,
-                facesSpecified, List.copyOf(resolved), capacitySpecified, capacity, anyPacket);
+                facesSpecified, List.copyOf(resolved), capacitySpecified, capacity, anyPacket, overload);
     }
 
     /** Zero capacity is the behavior-machine default, whether or not the builder named it. */
     EnergyInput collapseDefaultCapacity() {
         if (capacity != 0) return this;
         return new EnergyInput(type, perTick, rangeSpecified, rangeMin, rangeMax,
-                facesSpecified, faces, false, 0, anyPacket);
+                facesSpecified, faces, false, 0, anyPacket, overload);
     }
 
     @Override public boolean equals(Object other) {
@@ -91,13 +100,13 @@ public final class EnergyInput {
         return perTick == that.perTick && rangeSpecified == that.rangeSpecified
                 && rangeMin == that.rangeMin && rangeMax == that.rangeMax
                 && facesSpecified == that.facesSpecified && capacitySpecified == that.capacitySpecified
-                && capacity == that.capacity && anyPacket == that.anyPacket
+                && capacity == that.capacity && anyPacket == that.anyPacket && overload == that.overload
                 && type.equals(that.type) && faces.equals(that.faces);
     }
 
     @Override public int hashCode() {
         return Objects.hash(type, perTick, rangeSpecified, rangeMin, rangeMax,
-                facesSpecified, faces, capacitySpecified, capacity, anyPacket);
+                facesSpecified, faces, capacitySpecified, capacity, anyPacket, overload);
     }
 
     public static Builder builder(String type, long perTick) { return new Builder(type, perTick); }
@@ -113,6 +122,7 @@ public final class EnergyInput {
         private boolean capacitySpecified;
         private long capacity;
         private boolean anyPacket;
+        private boolean overload = true;
 
         private Builder(String type, long perTick) {
             this.type = type;
@@ -152,6 +162,16 @@ public final class EnergyInput {
             return this;
         }
 
+        /**
+         * {@code false} refuses a packet outside the accepted window and does not overload.
+         * The default is {@code true}: a packet above the maximum is consumed and overloads.
+         * A recipe machine and a condition part reject {@code false}.
+         */
+        public Builder overload(boolean enabled) {
+            overload = enabled;
+            return this;
+        }
+
         public EnergyInput build() {
             if (type == null || type.isBlank())
                 throw new IllegalArgumentException("Missing energy type");
@@ -162,7 +182,7 @@ public final class EnergyInput {
             if (capacitySpecified && capacity < 0)
                 throw new IllegalArgumentException("Negative energy capacity");
             return new EnergyInput(type, perTick, rangeSpecified, rangeMin, rangeMax, facesSpecified,
-                    MachineFace.distinct(faces, "energy face"), capacitySpecified, capacity, anyPacket);
+                    MachineFace.distinct(faces, "energy face"), capacitySpecified, capacity, anyPacket, overload);
         }
     }
 }

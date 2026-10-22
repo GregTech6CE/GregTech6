@@ -22,10 +22,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.material.Fluids;
 //? if >=1.21.1 {
-/*import net.neoforged.neoforge.gametest.GameTestHolder;
+/*import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 *///?} else {
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 //?}
@@ -120,6 +125,21 @@ public final class AddonSampleMachineTests {
         run(helper, machine, 32, 40);
         helper.assertTrue(machine.inventory().getStackInSlot(0).isEmpty(), "press consumed the ingot");
         helper.assertTrue(machine.inventory().getStackInSlot(machine.inputSlots()).is(Items.GOLD_NUGGET), "press produced a gold nugget");
+        helper.getLevel().removeBlock(pos, false);
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 200)
+    public static void keptFluidStaysInTheTank(GameTestHelper helper) {
+        var pos = helper.absolutePos(new BlockPos(2, 0, 2)).atY(250);
+        var machine = place(helper, "addon_sample:sample_detector", pos);
+        machine.inventory().setStackInSlot(0, new ItemStack(Items.CLAY_BALL));
+        helper.assertTrue(machine.fill(new FluidStack(Fluids.LAVA, 100), IFluidHandler.FluidAction.EXECUTE) == 100,
+                "lava accepted");
+        run(helper, machine, 32, 40);
+        helper.assertTrue(machine.getTanksInput()[0].getFluidInTank(0).getAmount() == 100, "kept lava was not drained");
+        helper.assertTrue(machine.inventory().getStackInSlot(0).isEmpty(), "clay was consumed");
+        helper.assertTrue(machine.inventory().getStackInSlot(machine.inputSlots()).is(Items.BRICK), "brick produced");
         helper.getLevel().removeBlock(pos, false);
         helper.succeed();
     }

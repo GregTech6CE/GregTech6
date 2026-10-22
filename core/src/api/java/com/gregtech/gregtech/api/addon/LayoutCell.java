@@ -11,13 +11,16 @@ public final class LayoutCell {
     private final int back;
     private final CellMatch match;
     private final StructureRole role;
+    /** {@code -1} leaves the part's design index untouched. */
+    private final int design;
 
-    private LayoutCell(int right, int up, int back, CellMatch match, StructureRole role) {
+    private LayoutCell(int right, int up, int back, CellMatch match, StructureRole role, int design) {
         this.right = right;
         this.up = up;
         this.back = back;
         this.match = match;
         this.role = role;
+        this.design = design;
     }
 
     public int right() { return right; }
@@ -26,6 +29,19 @@ public final class LayoutCell {
     public CellMatch match() { return match; }
     public StructureRole role() { return role; }
 
+    /** {@code -1} when this cell does not write a design index. */
+    public int design() { return design; }
+
+    /**
+     * Writes {@code gt.design} when the structure forms and restores the previous value when it breaks.
+     * Only a part whose original design count includes this index accepts it. That check runs when the layout is installed.
+     */
+    public LayoutCell withDesign(int design) {
+        if (design < 0 || design > 255)
+            throw new IllegalArgumentException("Structure design must be 0 to 255: " + design);
+        return new LayoutCell(right, up, back, match, role, design);
+    }
+
     public static LayoutCell at(int right, int up, int back, CellMatch match, StructureRole role) {
         if (match == null) throw new IllegalArgumentException("Missing structure part");
         Objects.requireNonNull(role, "role");
@@ -33,17 +49,17 @@ public final class LayoutCell {
             throw new IllegalArgumentException("Structure cell cannot be the origin");
         if ((match instanceof CellMatch.Block || match instanceof CellMatch.Tag) && role != StructureRole.CASING)
             throw new IllegalArgumentException("Plain block '" + match + "' requires the casing role");
-        return new LayoutCell(right, up, back, match, role);
+        return new LayoutCell(right, up, back, match, role, -1);
     }
 
     @Override public boolean equals(Object other) {
         if (this == other) return true;
         if (!(other instanceof LayoutCell that)) return false;
-        return right == that.right && up == that.up && back == that.back
+        return right == that.right && up == that.up && back == that.back && design == that.design
                 && match.equals(that.match) && role == that.role;
     }
 
     @Override public int hashCode() {
-        return Objects.hash(right, up, back, match, role);
+        return Objects.hash(right, up, back, match, role, design);
     }
 }

@@ -8,8 +8,9 @@ import java.util.*;
 
 /** Coordinates and port roles translated from the corresponding GT6 MultiTileEntity classes. */
 public final class LargeMachineLayouts {
-    public record Cell(int right,int up,int back,int part,Role role,String plain) {
-        public Cell(int right,int up,int back,int part,Role role) { this(right, up, back, part, role, null); }
+    public record Cell(int right,int up,int back,int part,Role role,String plain,int design) {
+        public Cell(int right,int up,int back,int part,Role role) { this(right, up, back, part, role, null, -1); }
+        public Cell(int right,int up,int back,int part,Role role,String plain) { this(right, up, back, part, role, plain, -1); }
         public BlockPos at(BlockPos origin,Direction front) { return origin.relative(front.getClockWise(),right).above(up).relative(front.getOpposite(),back); }
         public boolean plainBlock() { return plain != null; }
         public Block block() {
@@ -29,7 +30,7 @@ public final class LargeMachineLayouts {
             return plain != null && PlainStructureBlocks.matches(level, plain, state);
         }
     }
-    public static List<Cell> fromShared(List<SharedLargeMachineLayouts.Cell> cells){return cells==null?null:cells.stream().map(cell->new Cell(cell.right(),cell.up(),cell.back(),cell.part(),Role.valueOf(cell.role().name()),cell.plain())).toList();}
+    public static List<Cell> fromShared(List<SharedLargeMachineLayouts.Cell> cells){return cells==null?null:cells.stream().map(cell->new Cell(cell.right(),cell.up(),cell.back(),cell.part(),Role.valueOf(cell.role().name()),cell.plain(),cell.design())).toList();}
     private static final Map<String,List<Cell>> CACHE=new LinkedHashMap<>();
     static { for (String machine : SharedLargeMachineLayouts.machines()) CACHE.put(machine, fromShared(SharedLargeMachineLayouts.cells(machine))); }
     public static List<Cell> cells(String machine) {

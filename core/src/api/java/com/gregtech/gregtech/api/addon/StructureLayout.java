@@ -50,6 +50,10 @@ public final class StructureLayout {
             return cell(LayoutCell.at(right, up, back, match, role));
         }
 
+        public Builder cell(int right, int up, int back, CellMatch match, StructureRole role, int design) {
+            return cell(LayoutCell.at(right, up, back, match, role).withDesign(design));
+        }
+
         public StructureLayout build() {
             if (name == null || !name.matches("[a-z0-9_]+"))
                 throw new IllegalArgumentException("Invalid layout name: " + name);
