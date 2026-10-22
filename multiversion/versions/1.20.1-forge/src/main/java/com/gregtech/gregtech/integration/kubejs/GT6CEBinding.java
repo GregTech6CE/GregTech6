@@ -28,7 +28,7 @@ public final class GT6CEBinding {
 
     /** Writes {@code data/kubejs/gt6ce_layouts/<machine>.json}. The machine must already exist. */
     public void layout(DataPackEventJS event, String machine, Object cells) {
-        var layout = StructureLayoutDocuments.layout(machine, ScriptValues.cells(cells));
+        var layout = StructureLayoutDocuments.layout(machine, ScriptValues.cells(cells), ScriptValues.repeats(cells));
         event.addJson(new ResourceLocation("kubejs", "gt6ce_layouts/" + machine),
                 JsonParser.parseString(StructureLayoutDocuments.canonical(layout)).getAsJsonObject());
     }

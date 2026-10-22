@@ -85,10 +85,10 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity
     @Override public boolean getBoolean(String key) { return function != null && function.context().state().getBoolean(key); }
     @Override public String getString(String key) { return function == null ? "" : function.context().state().getString(key); }
 
-    /** Output buffer, or the input buffer when this part accepts energy. */
-    public long stored() { return input() != null ? inputStored : stored; }
+    /** Output buffer, or the input buffer when this part only accepts energy. */
+    public long stored() { return energy() != null ? stored : inputStored; }
 
-    public long capacity() { return input() != null ? input().capacity() : block().capacity(); }
+    public long capacity() { return energy() != null ? block().capacity() : input() != null ? input().capacity() : 0; }
 
     public boolean condition() { return block().condition(); }
 
@@ -101,12 +101,15 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity
 
     /** Adds up to the free space. The caller decides whether this part is bound. */
     public long charge(long amount) {
+        if (energy() != null) {
+            long accepted = accept(stored, block().capacity(), amount);
+            if (accepted <= 0) return 0;
+            stored += accepted;
+            setChanged();
+            return accepted;
+        }
         if (input() != null) return storeInput(amount);
-        long accepted = accept(stored, block().capacity(), amount);
-        if (accepted <= 0) return 0;
-        stored += accepted;
-        setChanged();
-        return accepted;
+        return 0;
     }
 
     public void setOutput(long size, long amount) {
@@ -116,6 +119,7 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity
                 output.allowNegative());
         if (boundRole() != MultiblockLayout.Role.ENERGY_OUTPUT)
             throw new IllegalStateException("Energy part is not an ENERGY_OUTPUT cell");
+        if (outputSize == size && outputAmount == amount && !stopped) return;
         outputSize = size;
         outputAmount = amount;
         stopped = false;
@@ -240,6 +244,12 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity
         return outputTag;
     }
 
+    /** The part's output energy type, or an empty string when it does not emit. */
+    public String outputType() { return energy() == null ? "" : energy().type(); }
+
+    /** The part's output tag, or null when it does not emit. */
+    public GregTechTags.Tag outputEnergyTag() { return energy() == null ? null : outputTag(); }
+
     private GregTechTags.Tag inputTag() {
         if (inputTag != null) return inputTag;
         inputTag = tag(input().type());
@@ -262,7 +272,8 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity
     private boolean inputSide(Direction side) {
         EnergyInput input = input();
         if (input == null) return false;
-        if (side == null) return true;
+        // A two-way part names no input faces; its input is the controller channel only.
+        if (side == null) return !input.faces().isEmpty();
         for (MachineFace face : input.faces())
             if (world(face) == side) return true;
         return false;

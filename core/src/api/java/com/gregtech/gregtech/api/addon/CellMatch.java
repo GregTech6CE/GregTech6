@@ -9,14 +9,19 @@ import java.util.Objects;
  * {@link #part(String)}. {@link #block(String)} and {@link #tag(String)} are plain blocks
  * and may only be placed with {@link StructureRole#CASING}.
  */
-public sealed interface CellMatch permits CellMatch.Part, CellMatch.Air, CellMatch.Block, CellMatch.Tag {
+public sealed interface CellMatch permits CellMatch.Part, CellMatch.Air, CellMatch.Block, CellMatch.Tag,
+        CellMatch.AnyFluid, CellMatch.AnyOpaque {
     /**
-     * {@code air} is air. A leading {@code #} is a block tag. A colon is a block id.
-     * Anything else is a part name.
+     * {@code air} is air. {@code anyfluid} is any fluid block; {@code anyfluid#id} also requires
+     * that fluid's tag. {@code anyopaque} is any opaque, solid-render block. A leading {@code #}
+     * is a block tag. A colon is a block id. Anything else is a part name.
      */
     static CellMatch parse(String text) {
         if (text == null || text.isBlank()) throw new IllegalArgumentException("Missing structure part");
         if (text.equals("air")) return air();
+        if (text.equals("anyfluid")) return anyFluid();
+        if (text.equals("anyopaque")) return anyOpaque();
+        if (text.startsWith("anyfluid#")) return anyFluid(text.substring("anyfluid#".length()));
         if (text.startsWith("#")) return tag(text.substring(1));
         if (text.indexOf(':') >= 0) return block(text);
         return part(text);
@@ -29,6 +34,18 @@ public sealed interface CellMatch permits CellMatch.Part, CellMatch.Air, CellMat
     }
 
     static CellMatch air() { return Air.INSTANCE; }
+
+    /** Any block whose fluid state is non-empty. */
+    static CellMatch anyFluid() { return AnyFluid.ANY; }
+
+    /** Any block whose fluid state is non-empty and carries {@code fluidTag}. */
+    static CellMatch anyFluid(String fluidTag) {
+        requireLocation(fluidTag, true);
+        return new AnyFluid(fluidTag);
+    }
+
+    /** Any opaque block that renders as a solid cube. */
+    static CellMatch anyOpaque() { return AnyOpaque.INSTANCE; }
 
     static CellMatch block(String id) {
         requireLocation(id, false);
@@ -110,5 +127,37 @@ public sealed interface CellMatch permits CellMatch.Part, CellMatch.Air, CellMat
         @Override public int hashCode() { return id.hashCode(); }
 
         @Override public String toString() { return "#" + id; }
+    }
+
+    /** Any fluid block. {@code tag} is null when the fluid tag is not restricted. */
+    final class AnyFluid implements CellMatch {
+        private static final AnyFluid ANY = new AnyFluid(null);
+        private final String tag;
+
+        private AnyFluid(String tag) { this.tag = tag; }
+
+        /** Null when this matches every fluid. */
+        public String tag() { return tag; }
+
+        @Override public boolean equals(Object other) {
+            return other instanceof AnyFluid that && Objects.equals(tag, that.tag);
+        }
+
+        @Override public int hashCode() { return Objects.hashCode(tag); }
+
+        @Override public String toString() { return tag == null ? "anyfluid" : "anyfluid#" + tag; }
+    }
+
+    /** Any opaque, solid-render block. */
+    final class AnyOpaque implements CellMatch {
+        private static final AnyOpaque INSTANCE = new AnyOpaque();
+
+        private AnyOpaque() {}
+
+        @Override public boolean equals(Object other) { return other instanceof AnyOpaque; }
+
+        @Override public int hashCode() { return 1; }
+
+        @Override public String toString() { return "anyopaque"; }
     }
 }

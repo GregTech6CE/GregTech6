@@ -1,6 +1,10 @@
 package com.gregtech.gregtech.core;
 
 import com.gregtech.gregtech.api.addon.AddonMachines;
+import com.gregtech.gregtech.api.addon.CellMatch;
+import com.gregtech.gregtech.api.addon.LayoutRepeat;
+import com.gregtech.gregtech.api.addon.StructureLayout;
+import com.gregtech.gregtech.api.addon.StructureRole;
 import com.gregtech.gregtech.api.kubejs.StructureLayoutDocuments;
 import com.gregtech.gregtech.api.multiblock.StructureGrid;
 import com.gregtech.gregtech.content.multiblock.SharedLargeMachineLayouts;
@@ -39,6 +43,12 @@ public final class StructureLayoutOverlayContracts {
 
         var baseline = List.of(new SharedLargeMachineLayouts.Cell(1, 0, 0, 18002, StructureGrid.Role.CASING));
         SharedLargeMachineLayouts.add("scriptpress", baseline);
+        var repeated = StructureLayoutDocuments.parse("scriptpress", """
+                {"cells":[{"right":1,"up":0,"back":0,"match":"tank_wall","role":"casing"}],
+                 "repeats":[{"key":"absorber","up":1,"min":1,"max":3,"cells":[
+                 {"right":2,"up":0,"back":0,"match":"anyopaque","role":"casing"}]}]}""");
+        var sharedRepeat = AddonMachines.sharedLayout("test", repeated);
+        SharedLargeMachineLayouts.add("repeatpress", sharedRepeat);
         expectThrows(IllegalStateException.class, () -> SharedLargeMachineLayouts.overlay(Map.of()), "not ready");
         SharedLargeMachineLayouts.freeze();
         check(SharedLargeMachineLayouts.replaceable("scriptpress"), "addon layout is replaceable");
@@ -57,6 +67,39 @@ public final class StructureLayoutOverlayContracts {
         SharedLargeMachineLayouts.overlay(Map.of());
         check(SharedLargeMachineLayouts.cells("scriptpress").equals(baseline), "empty overlay restores the baseline");
         check(SharedLargeMachineLayouts.overlaid().isEmpty(), "overlay is cleared");
+
+        var predicates = StructureLayoutDocuments.parse("scriptpress", """
+                {"cells":[
+                {"right":1,"up":0,"back":0,"match":"anyfluid","role":"casing"},
+                {"right":2,"up":0,"back":0,"match":"anyfluid#minecraft:water","role":"casing"},
+                {"right":3,"up":0,"back":0,"match":"anyopaque","role":"casing"}]}""");
+        check(predicates.cells().get(0).match() instanceof CellMatch.AnyFluid, "any fluid");
+        check(predicates.cells().get(1).match().toString().equals("anyfluid#minecraft:water"), "fluid tag");
+        check(predicates.cells().get(2).match() instanceof CellMatch.AnyOpaque, "any opaque");
+        check(StructureLayoutDocuments.parse("scriptpress", StructureLayoutDocuments.canonical(predicates))
+                .equals(predicates), "predicate round trip");
+        expectThrows(IllegalArgumentException.class, () -> StructureLayoutDocuments.parse("scriptpress",
+                "{\"cells\":[{\"right\":1,\"up\":0,\"back\":0,\"match\":\"anyopaque\",\"role\":\"energy_input\"}]}"), "casing");
+        expectThrows(IllegalArgumentException.class, () -> CellMatch.parse("anyfluid#minecraft"), "Invalid block name");
+
+        check(repeated.repeats().size() == 1 && repeated.repeats().get(0).height() == 1, "repeat parse");
+        check(StructureLayoutDocuments.parse("scriptpress", StructureLayoutDocuments.canonical(repeated))
+                .equals(repeated), "repeat round trip");
+        var downward = StructureLayoutDocuments.parse("scriptpress", """
+                {"repeats":[{"key":"drill","up":-1,"min":1,"max":-1,"step":-1,"cells":[
+                 {"right":1,"up":0,"back":0,"match":"anyopaque","role":"casing"}]}]}""");
+        check(downward.repeats().get(0).step() == -1 && downward.repeats().get(0).unbounded(), "downward unbounded");
+        expectThrows(IllegalArgumentException.class, () -> StructureLayoutDocuments.parse("scriptpress",
+                "{\"repeats\":[{\"key\":\"absorber\",\"up\":1,\"min\":2,\"max\":1,\"cells\":[{\"right\":1,\"up\":0,\"back\":0,\"match\":\"air\",\"role\":\"air\"}]}]}"), "max >= min");
+        expectThrows(IllegalArgumentException.class, () -> StructureLayoutDocuments.parse("scriptpress",
+                "{\"repeats\":[{\"key\":\"absorber\",\"up\":1,\"min\":1,\"max\":2,\"extra\":1,\"cells\":[{\"right\":1,\"up\":0,\"back\":0,\"match\":\"air\",\"role\":\"air\"}]}]}"), "Unknown field");
+        var built = StructureLayout.builder("repeatpress2")
+                .repeat(LayoutRepeat.builder("absorber", 1, 1, 4).step(-1)
+                        .cell(1, 0, 0, CellMatch.anyOpaque(), StructureRole.CASING).build())
+                .build();
+        check(built.repeats().get(0).step() == -1, "builder repeat");
+        check(sharedRepeat.repeats().size() == 1 && sharedRepeat.cells().size() == 1, "shared repeat");
+        check(SharedLargeMachineLayouts.cells("repeatpress").size() == 2, "repeat min expansion");
         System.out.println("structure layout overlay passed " + assertions);
     }
 
