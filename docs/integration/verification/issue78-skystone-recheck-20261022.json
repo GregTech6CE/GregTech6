@@ -1,0 +1,161 @@
+{
+  "date": "2026-10-22",
+  "baseline": "c497a027f02b7d164464439fcf667f2d37957502",
+  "scope": "Issue #78 follow-up: source trace of ordinary dungeon generation, placed-rock identity, saved stack count and virtual pickup/drop dispatch. This is not original-game execution.",
+  "conclusion": "The single placed Sky Stone in the barracks can intentionally hold 16 through 64 rock items; count 49 is valid. Quantity itself does not constitute a port defect. No claim about all other rock behavior.",
+  "original_multitile_id": 32074,
+  "room_relative_position": [
+    14,
+    2,
+    11
+  ],
+  "quantity_derivation": {
+    "expression": "16 + Random.nextInt(49)",
+    "minimum": 16,
+    "maximum_inclusive": 64,
+    "possible_integer_results": 49,
+    "screenshot_count": 49,
+    "method": "Finite arithmetic derivation, not RNG/game execution"
+  },
+  "original_entry": "Loader_Worldgen enabled ordinary overworld dungeon -> WorldgenDungeonGT BARRACKS -> DungeonChunkBarracks",
+  "pickup_trace": "32074 -> RockPlaced extends misc.Rock extends placeables.Rock; stored NBT Count -> mRock; RockPlaced overrides getRock(amount) returning mRock unchanged; superclass activation/drop methods dispatch to that override.",
+  "sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_Worldgen.java",
+      "raw_sha256": "ebd09b9af84bf8e275ffbe856a706d0206a51fd8869a6b3a39ceddbb321c550a",
+      "start_line": 652,
+      "end_line": 652,
+      "excerpt_sha256": "4129c6eea84b94cf65b70578bf1cd7be1a154585cf384ae54b1d42aba5e057f3",
+      "text": "\t\tnew WorldgenDungeonGT(\"overworld.structure.dungeon.large\", T, 100, 3, 7, 20, 20, 6, T, F, F, T, T, T, T, T, GEN_OVERWORLD, GEN_GT, GEN_PFAA, GEN_TFC);"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/worldgen/dungeon/WorldgenDungeonGT.java",
+      "raw_sha256": "1903ee71ed4f9dd1de6996bdad15953bb4800fee4293a44fc5e269c92e3c27e8",
+      "start_line": 278,
+      "end_line": 294,
+      "excerpt_sha256": "8388eba8e2ab90de045ad719faf83a4123d04db0a0397ea0c7f7cdab364bb457",
+      "text": "\t\t\taWorld.getChunkFromChunkCoords((aMinX >> 4) + i, (aMinZ >> 4) + j).setChunkModified();\n\t\t}\n\t\tfor (int i = 1; i < tRoomLayout.length-1; i++) for (int j = 1; j < tRoomLayout[i].length-1; j++) if (tRoomLayout[i][j] < 0) {\n\t\t\taWorld.getChunkFromChunkCoords((aMinX >> 4) + i, (aMinZ >> 4) + j).setChunkModified();\n\t\t\t\n\t\t\tint tConnectionCount = 0;\n\t\t\tfor (byte tSide : ALL_SIDES_HORIZONTAL) if (tRoomLayout[i+OFFX[tSide]][j+OFFZ[tSide]] != 0) tConnectionCount++;\n\t\t\t\n\t\t\tDungeonData aData = new DungeonData(aWorld, aMinX+i*16, tOffsetY, aMinZ+j*16, this, tPrimaryBlock, tSecondaryBlock, tRegistry, tLightUpdateCoords, tTags, tKeyIDs, tKeyStacks, tGeneratedKeys, tRoomLayout, i, j, tConnectionCount, tColor, new Random(aRandom.nextLong()), tCoin);\n\t\t\t\n\t\t\tswitch(tRoomLayout[i][j]) {\n\t\t\tcase -128: try {if (tConnectionCount == 4) CORRIDOR4.generate(aData); else if (tConnectionCount == 3) CORRIDOR3.generate(aData); else CORRIDOR.generate(aData);} catch(Throwable e) {e.printStackTrace(ERR);} break;\n\t\t\tcase   -2: try {ENTRANCE.generate(aData);} catch(Throwable e) {e.printStackTrace(ERR);} break;\n\t\t\tcase   -1: try {BARRACKS.generate(aData);} catch(Throwable e) {e.printStackTrace(ERR);} break;\n\t\t\t}\n\t\t\t\n\t\t\taWorld.getChunkFromChunkCoords((aMinX >> 4) + i, (aMinZ >> 4) + j).setChunkModified();"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/worldgen/dungeon/DungeonChunkBarracks.java",
+      "raw_sha256": "3487b290d57c3050c9f25dbdb1eef118ec0af5628ad56f793b49d8cf272242de",
+      "start_line": 92,
+      "end_line": 106,
+      "excerpt_sha256": "b88371f2402ad163c7a9a356b7230e3ff0f5c662bd5b94eec34326321a3e31fd",
+      "text": "\t\taData.set( 1, 1,  4, Blocks.crafting_table, 0, 2);\n\t\taData.set( 1, 1, 11, Blocks.crafting_table, 0, 2);\n\t\taData.set(14, 1,  4, Blocks.crafting_table, 0, 2);\n\t\taData.set(14, 1, 11, Blocks.crafting_table, 0, 2);\n\t\t\n\t\tFL[] tDrinks = new FL[] {null, null, null, null, null, FL.Purple_Drink, FL.Grenade_Juice, FL.Vodka, FL.Leninade, FL.Mead, FL.BAWLS, FL.Whiskey_GlenMcKenner, FL.Wine_Grape_Purple};\n\t\t\n\t\tBlock\n\t\ttHexoriumColor  = ST.block(MD.HEX, UT.Code.select(aData.mColor, \"blockEnergizedHexoriumMonolithRainbow\", HEXORIUM_MONOLITHS)),\n\t\ttHexoriumRandom = ST.block(MD.HEX, UT.Code.select(              \"blockEnergizedHexoriumMonolithRainbow\", HEXORIUM_MONOLITHS));\n\t\t\n\t\taData.cup( 1, 2,  4, UT.Code.select(null, tDrinks), aData.next1in2() ? tHexoriumColor : tHexoriumRandom, 9);\n\t\taData.cup( 1, 2, 11, UT.Code.select(null, tDrinks), aData.next1in2() ? tHexoriumColor : tHexoriumRandom, 9);\n\t\taData.cup(14, 2,  4, UT.Code.select(null, tDrinks), aData.next1in2() ? tHexoriumColor : tHexoriumRandom, 9);\n\t\taData.set(14, 2, 11, SIDE_UNKNOWN, 32074, ST.save(NBT_VALUE, OP.rockGt.mat(MT.STONES.SkyStone, 16+aData.next(49))), T, T);// You need 4 Blocks of Sky Stone to start an AE System, so these 16+ Rocks will guarantee that you have enough, even when AE Meteors are disabled, or if AE got added to the Modpack later."
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/worldgen/dungeon/DungeonData.java",
+      "raw_sha256": "c4e55b5bb9a4c2e7461fd48972098e7d12ad06f6edeb544470ddffb40bc65946",
+      "start_line": 89,
+      "end_line": 89,
+      "excerpt_sha256": "3445aff84105bea7d421136b657b58d3969ea80afb93b4eb91711e285934726b",
+      "text": "\tpublic int next(int aNumber) {return mRandom.nextInt(aNumber);}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/worldgen/dungeon/DungeonData.java",
+      "raw_sha256": "c4e55b5bb9a4c2e7461fd48972098e7d12ad06f6edeb544470ddffb40bc65946",
+      "start_line": 196,
+      "end_line": 198,
+      "excerpt_sha256": "0780c1753706534f83bbc7a37b10cc4f5ed97f9ed47badcc9c4e6f59c62487fe",
+      "text": "\tpublic boolean set(int aX, int aY, int aZ, byte aSide, long aMeta, NBTTagCompound aNBT, boolean aCauseBlockUpdates, boolean aForcePlacement) {\n\t\treturn mMTERegistryGT.mBlock.placeBlock(mWorld, mX+aX, mY+aY, mZ+aZ, aSide, (short)aMeta, aNBT, aCauseBlockUpdates, aForcePlacement);\n\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "raw_sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "start_line": 2033,
+      "end_line": 2035,
+      "excerpt_sha256": "77824d4958a2704f6188e201010dd335f254ae5f54329e8f6982a5f34cccc8c9",
+      "text": "\t\taRegistry.add(\"Rock\"                                                , \"Untyped\"                             , 32757, 32764, gregtech.tileentity.misc.MultiTileEntityRock.class      ,                 0, 64, aUtilStone     , null); // yes I have to pass the \"gregtech.tileentity.misc.MultiTileEntityRock\" Version!\n\t\taRegistry.add(\"Rock\"                                                , \"Untyped\"                             , 32074, 32764, MultiTileEntityRockPlaced.class                         ,                 0, 64, aUtilStone     , null);\n\t\taRegistry.add(\"Stick\"                                               , \"Untyped\"                             , 32756, 32764, MultiTileEntityStick.class                              ,                 0, 64, aUtilWood      , null);"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/placeables/MultiTileEntityRockPlaced.java",
+      "raw_sha256": "6c2a19a5c4c5573ca4569ea51ad1b6362ca16cba330a5eea7a00d7e72f34cfca",
+      "start_line": 20,
+      "end_line": 31,
+      "excerpt_sha256": "3251c9c39992c1118c921181956753b79629c0179c2a115283d8ed934ee9e872",
+      "text": "package gregtech.tileentity.placeables;\n\nimport net.minecraft.item.ItemStack;\n\n/**\n * @author Gregorius Techneticies\n */\npublic class MultiTileEntityRockPlaced extends gregtech.tileentity.misc.MultiTileEntityRock {\n\t@Override public ItemStack getRock(int aAmount) {return mRock;}\n\t@Override public String getTileEntityName() {return \"gt.multitileentity.rock.placed\";}\n}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/misc/MultiTileEntityRock.java",
+      "raw_sha256": "c6e56f2fdb2d0cf9f5786472a91ccf4a4c64cb3604a91cfa372499b6fbe89a4a",
+      "start_line": 20,
+      "end_line": 27,
+      "excerpt_sha256": "cce4b81a24a99ab04700fcb0446848afbff06019621178f26fa92a01c89fc27a",
+      "text": "package gregtech.tileentity.misc;\n\n/**\n * @author Gregorius Techneticies\n */\npublic class MultiTileEntityRock extends gregtech.tileentity.placeables.MultiTileEntityRock {\n\t// I need to pass this through because of an Addon.\n}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/placeables/MultiTileEntityRock.java",
+      "raw_sha256": "34db5a8ef1711292b14b99595aa515b51448923508b56473dda13615a4e94368",
+      "start_line": 60,
+      "end_line": 82,
+      "excerpt_sha256": "84fee03c6090e5f0115a69daa4e3c0d1c2f04f6d21e9584eb987649e01ad2f70",
+      "text": "\t@Override\n\tpublic void readFromNBT2(NBTTagCompound aNBT) {\n\t\tRandom tRandom = WD.random(this);\n\t\tmMinX = PX_P[4 + tRandom.nextInt(4)];\n\t\tmMinZ = PX_P[4 + tRandom.nextInt(4)];\n\t\tmMaxX = PX_N[4 + tRandom.nextInt(4)];\n\t\tmMaxZ = PX_N[4 + tRandom.nextInt(4)];\n\t\tmMaxY = PX_P[1 + tRandom.nextInt(4)];\n\t\t\n\t\tmRock = ST.load(aNBT, NBT_VALUE);\n\t\tsuper.readFromNBT2(aNBT);\n\t}\n\t\n\t@Override\n\tpublic void writeToNBT2(NBTTagCompound aNBT) {\n\t\tsuper.writeToNBT2(aNBT);\n\t\tST.save(aNBT, NBT_VALUE, mRock);\n\t}\n\t\n\t@Override\n\tpublic ArrayListNoNulls<ItemStack> getDrops(int aFortune, boolean aSilkTouch) {\n\t\treturn ST.arraylist(getRock(1+rng(1+aFortune)));\n\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/placeables/MultiTileEntityRock.java",
+      "raw_sha256": "34db5a8ef1711292b14b99595aa515b51448923508b56473dda13615a4e94368",
+      "start_line": 142,
+      "end_line": 168,
+      "excerpt_sha256": "d5c95f81c606f23c0a6b2396bf753f387fc75799cee472f2ebc14368dfa1e3e4",
+      "text": "\t@Override\n\tpublic boolean onBlockActivated2(EntityPlayer aPlayer, byte aSide, float aHitX, float aHitY, float aHitZ) {\n\t\tif (isClientSide()) return T;\n\t\tST.give(aPlayer, getRock(1), T, worldObj, xCoord+0.5, yCoord+0.5, zCoord+0.5);\n\t\tplayCollect();\n\t\treturn setToAir();\n\t}\n\t\n\t@Override\n\tpublic void onNeighborBlockChange(World aWorld, Block aBlock) {\n\t\tif (isServerSide()) {\n\t\t\tif (!worldObj.getBlock(xCoord, yCoord-1, zCoord).isSideSolid(worldObj, xCoord, yCoord-1, zCoord, FORGE_DIR[SIDE_TOP])) {\n\t\t\t\tST.drop(worldObj, getCoords(), getRock(1));\n\t\t\t\tsetToAir();\n\t\t\t\treturn;\n\t\t\t}\n\t\t\tfor (byte tSide : ALL_SIDES_HORIZONTAL_UP) if (WD.liquid(getBlockAtSide(tSide))) {\n\t\t\t\tST.drop(worldObj, getCoords(), getRock(1));\n\t\t\t\tsetToAir();\n\t\t\t\treturn;\n\t\t\t}\n\t\t}\n\t}\n\t\n\tpublic ItemStack getRock(int aAmount) {\n\t\treturn mRock == null ? getDefaultRock(aAmount) : ST.amount(aAmount, mRock);\n\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/ST.java",
+      "raw_sha256": "5ff16d9051e2744a66c711bd5f2581785ba8af7b2272fb1023a6d2f4ddb783a8",
+      "start_line": 1260,
+      "end_line": 1288,
+      "excerpt_sha256": "f645cdf338d4ab84cc55e30d41f6f6aee4bebd2cc944089c8d2f349172d63b22",
+      "text": "\t\n\t/** Loads an ItemStack properly. */\n\tpublic static ItemStack load(NBTTagCompound aNBT, String aTagName) {\n\t\treturn aNBT == null ? null : load(aNBT.getCompoundTag(aTagName), NI);\n\t}\n\t/** Loads an ItemStack properly. */\n\tpublic static ItemStack load(NBTTagCompound aNBT, String aTagName, ItemStack aDefault) {\n\t\treturn aNBT == null ? null : load(aNBT.getCompoundTag(aTagName), aDefault);\n\t}\n\t\n\t/** Loads an ItemStack properly. */\n\tpublic static ItemStack load(NBTTagCompound aNBT) {\n\t\treturn load(aNBT, NI);\n\t}\n\t/** Loads an ItemStack properly. */\n\tpublic static ItemStack load(NBTTagCompound aNBT, ItemStack aDefault) {\n\t\tif (aNBT == null || aNBT.hasNoTags()) return null;\n\t\tItemStack rStack = make(Item.getItemById(aNBT.getShort(\"id\")), aNBT.getInteger(\"Count\"), aNBT.getShort(\"Damage\"));\n\t\tif (rStack == null) if (aNBT.hasKey(\"od\")) {\n\t\t\trStack = OreDictManager.INSTANCE.getStack(aNBT.getString(\"od\"), aNBT.getInteger(\"Count\"));\n\t\t\tif (rStack == null) return aDefault == null ? null : update_(OM.get_(aDefault));\n\t\t} else return aDefault == null ? null : update_(OM.get_(aDefault));\n\t\t// Has to use setTagCompound instead of putting it into make()\n\t\t// because it would delete certain Tags on load, making stuff like unscanned Forestry Bees unstackable.\n\t\t// But update_() will still delete a completely empty NBT later on.\n\t\trStack.setTagCompound(aNBT.hasKey(\"tag\", 10)?aNBT.getCompoundTag(\"tag\"):null);\n\t\t// Does anyone even migrate IC2exp Items anymore? This is only used when updating from IC2-Non-Exp to IC2-Exp.\n\t//  if (item_(rStack).getClass().getName().startsWith(\"ic2.core.migration\")) item_(rStack).onUpdate(rStack, DW, null, 0, F); // I do not think this could possibly happen anymore\n\t\treturn update_(OM.get_(rStack));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/ST.java",
+      "raw_sha256": "5ff16d9051e2744a66c711bd5f2581785ba8af7b2272fb1023a6d2f4ddb783a8",
+      "start_line": 1333,
+      "end_line": 1338,
+      "excerpt_sha256": "b265168f8c35154f822fe336bf343ed6c7839f0e5af0421f39500e47c72f0292",
+      "text": "\t/** Saves an ItemStack properly. */\n\tpublic static NBTTagCompound save(String aTagName, ItemStack aStack) {\n\t\tNBTTagCompound aNBT = UT.NBT.make();\n\t\tNBTTagCompound tNBT = save(aStack);\n\t\tif (tNBT == null) aNBT.removeTag(aTagName); else aNBT.setTag(aTagName, tNBT);\n\t\treturn aNBT;"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/ST.java",
+      "raw_sha256": "5ff16d9051e2744a66c711bd5f2581785ba8af7b2272fb1023a6d2f4ddb783a8",
+      "start_line": 1390,
+      "end_line": 1400,
+      "excerpt_sha256": "c97c50e3ded130d3ff5d8f483178849e78978f7673a4b05b6001335258d29e68",
+      "text": "\tpublic static NBTTagCompound save(ItemStack aStack) {\n\t\tif (aStack == null || item_(aStack) == null || aStack.stackSize < 0) return null;\n\t\tNBTTagCompound rNBT = UT.NBT.make();\n\t\taStack = OM.get_(aStack);\n\t\trNBT.setShort(\"id\", id(aStack));\n\t\tUT.NBT.setNumber(rNBT, \"Count\", aStack.stackSize);\n\t\tUT.NBT.setNumber(rNBT, \"Damage\", meta_(aStack));\n\t\tif (aStack.hasTagCompound()) rNBT.setTag(\"tag\", aStack.getTagCompound());\n\t\tOreDictItemData tData = OM.anyassociation_(aStack);\n\t\tif (tData != null) rNBT.setString(\"od\", tData.toString());\n\t\treturn rNBT;"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonChunkBarracks.java",
+      "raw_sha256": "716687feb38fdb13429e532d8cd1f36886973bbc2c811ee87f8bde3c3dc1a17b",
+      "start_line": 151,
+      "end_line": 169,
+      "excerpt_sha256": "841b79322509e7c5a32e95a0291aed74402861920919b7c877776a62510a321c",
+      "text": "        // GT6 :92-95 - a crafting table in each corner.\n        data.set(1, 1, 4, Blocks.CRAFTING_TABLE.defaultBlockState());\n        data.set(1, 1, 11, Blocks.CRAFTING_TABLE.defaultBlockState());\n        data.set(14, 1, 4, Blocks.CRAFTING_TABLE.defaultBlockState());\n        data.set(14, 1, 11, Blocks.CRAFTING_TABLE.defaultBlockState());\n\n        // GT6 :97-105 - real 250 mB cups, with its optional Hexorium choice consuming the same room roll.\n        GTDungeonCupDrinks.barracks(data, 1, 2, 4);\n        GTDungeonCupDrinks.barracks(data, 1, 2, 11);\n        GTDungeonCupDrinks.barracks(data, 14, 2, 4);\n\n        // GT6 :106 - multi-tile 32074 stores one stack of 16..64 Sky Stone rocks as a small placed rock.\n        // Preserve the original draw even if world placement fails, so later room rolls stay aligned.\n        int skyStoneCount = 16 + data.next(49);\n        BlockPos skyStonePos = new BlockPos(data.x + 14, data.y + 2, data.z + 11);\n        if (GTRockPlacement.place(data.level, skyStonePos, GT6Materials.Stones.SkyStone.getName(), null, false)\n                && data.level.getBlockEntity(skyStonePos) instanceof RockBlockEntity rock) {\n            rock.setCount(skyStoneCount);\n        }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/RockBlockEntity.java",
+      "raw_sha256": "b65690a099329e7347ccd1141bba4e6d7cb580395997093a96cb91701ffe033e",
+      "start_line": 40,
+      "end_line": 48,
+      "excerpt_sha256": "e0c37d239c60aeb4dc309bb1d915f581588caa3d5ebc98fc71d5bd9004a083da",
+      "text": "    /** Placed GT6 rocks can contain a full stack (for example the Sky Stone in dungeon barracks). */\n    private int count = 1;\n\n    public int count() { return count; }\n\n    public void setCount(int count) {\n        this.count = Math.max(1, Math.min(64, count));\n        setChanged();\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/RockBlock.java",
+      "raw_sha256": "bfe4cfc8b3929064e6f3bd99413f146d8fa51a605639b0320c89ba6855f69624",
+      "start_line": 95,
+      "end_line": 144,
+      "excerpt_sha256": "7317d8310a316ee71caf8bc363327a7da8df144913302b59025bd6d24aff1f5d",
+      "text": "    /** Right-click picks the rock up (rockGt item + raw ore when marking a bedrock deposit). */\n    @Override\n//? if >=1.21.1 {\n    /*public net.minecraft.world.InteractionResult useWithoutItem(BlockState state, net.minecraft.world.level.Level level,\n            BlockPos pos, net.minecraft.world.entity.player.Player player,\n            net.minecraft.world.phys.BlockHitResult hit) {\n*///?} else {\n    public net.minecraft.world.InteractionResult use(BlockState state, net.minecraft.world.level.Level level,\n                                                     BlockPos pos, net.minecraft.world.entity.player.Player player,\n                                                     net.minecraft.world.InteractionHand hand,\n                                                     net.minecraft.world.phys.BlockHitResult hit) {\n//?}\n        if (!level.isClientSide) {\n            List<ItemStack> stacks = yields(level.getBlockEntity(pos));\n            level.removeBlock(pos, false);\n            for (ItemStack stack : stacks) {\n                if (!player.addItem(stack)) {\n                    player.drop(stack, false);\n                }\n            }\n        }\n        return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);\n    }\n\n    /** rockGt of the material, plus a raw ore chunk when the rock marks a bedrock deposit. */\n    private static List<ItemStack> yields(@Nullable BlockEntity be) {\n        // GT6's item-on-the-ground mode: the rock carries the exact item it hands out.\n        if (be instanceof RockBlockEntity rock && !rock.itemId().isEmpty()) {\n            ItemStack explicit=rock.itemStack();\n            // The original lying-item mode represents one exact item. Indicator bonuses belong\n            // to the separate material-rock mode; otherwise meteoric raw ore is duplicated.\n            return explicit.isEmpty()?java.util.List.of():java.util.List.of(explicit);\n        }\n        String materialName = be instanceof RockBlockEntity rock ? rock.getMaterial() : RockBlockEntity.DEFAULT_MATERIAL;\n        GTMaterial material = GTMaterialRegistry.get(materialName);\n        if (material == null || !material.resolve().isValid()) return Collections.emptyList();\n        java.util.ArrayList<ItemStack> out = new java.util.ArrayList<>(2);\n        int amount = be instanceof RockBlockEntity rock ? rock.count() : 1;\n        ItemStack rockItem = MaterialStackItemHelper.mat(MaterialPrefix.rockGt, material.resolve(), amount);\n        if (!rockItem.isEmpty()) out.add(rockItem);\n        if (be instanceof RockBlockEntity rock && rock.hasRawOre()) {\n            ItemStack raw = MaterialStackItemHelper.mat(MaterialPrefix.oreRaw, material.resolve(), 1);\n            if (!raw.isEmpty()) out.add(raw);\n        }\n        return out;\n    }\n\n    @Override\n    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {\n        return yields(builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY));"
+    }
+  ],
+  "protected_materials": {
+    "WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "production_edits": false,
+  "game_launched": false,
+  "compile_or_package": false,
+  "github_writes": false,
+  "goal": "Active; original alignment and readability work remain incomplete."
+}
