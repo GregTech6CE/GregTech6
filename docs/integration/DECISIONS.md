@@ -1,5 +1,9 @@
 # 实现选择记录
 
+## 2026-10-22 / BehaviorMachine 坩埚桥接
+
+`BehaviorMachineBlockEntity` 实现内部 `ITileEntityCrucible`，把温度、熔融材料总量和浇铸动作交给 `MachineBehavior` 的默认回调。附属 API 不暴露内部 `GTMaterial` 或 `ITileEntityMold`，而是用 `CrucibleMold` 和 `GregTechMaterials.Material`；GT 在边界处按已解析材料名转换并复用现有模具、坩埚盆和龙头校验。未实现这些回调的旧行为保持零温度、零内容量并拒绝浇铸。行为自己扣除 `CrucibleMold.fillMold` 返回的实际消耗量，避免壳层复制或保存附属库存。
+
 ## 2026-10-22 / 功能零件的组合方式
 
 `LayoutPart` 上的物品槽、tick、右键和命名字段可以单独写，也可以和能量输出或条件输入写在同一零件上。什么都不写仍是外壳。`energyOutput` 和 `energyInput` 仍不能一起写。
@@ -12,7 +16,7 @@
 
 没有能量角色的功能零件用新方块实体 `gt6ce:addon_functional_part`。同时带能量的零件仍用 `gt6ce:addon_energy_part`。内置零件不加这些能力。`StructurePartDeclaration` 不改。
 
-坩埚的只读视图、无线计算零件、太阳镜往远处送能都不在这次。只读视图和远程送能另开卡。无线计算等计算机集群有卡以后再写零件侧。
+无线计算零件、太阳镜往远处送能不在功能零件这次。坩埚只读视图已由上面的 BehaviorMachine 桥接记录覆盖；远程送能另开卡。无线计算等计算机集群有卡以后再写零件侧。
 
 ## 2026-10-22 / 第二种输入能量的名字和存档
 

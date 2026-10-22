@@ -643,7 +643,7 @@ JEI 催化剂和多方块预览跟着已注册的机器列表。有布局的大�
 
 每个 `BehaviorMachine` 从 `addonMachines()` 返回。另外在 `META-INF/services/com.gregtech.gregtech.api.addon.platform.BehaviorMachineContributor` 里列出 `BehaviorMachineContributor`。这个接口在加载器 API 里，因为 Forge 和 NeoForge 的 `FluidStack` 不同。`machineTypes()` 必须盖住这个附属声明的每一种行为机器类型。每放下一台方块实体，GT 调用一次 `create`。缺少工厂时启动失败，并写出附属和机器类型。
 
-行为不继承 GT 的类。`MachineBehavior` 有三个必须实现的方法——`tick(context)`、`canInsert(context, slot, stack)` 和 `canFill(context, tank, stack)`——以及六个带默认实现的可选方法：`acceptFluid(context, tank, stack, simulate)`、`onToggle(context, toggle)`、`beforeBreak(context)`、`onTool(context, tool, player, hand, face)`、`onUse(context, player, hand)` 和 `acceptsEnergy(context, type, face, size, amount)`。`canInsert` 和 `canFill` 另有带面的重载，缺省转到不带面的方法，所以现有行为不用改。管子调用带面的重载。面是 null 表示菜单或不分面的处理器。`MachineBehaviorContext` 读写物品、储罐、能量、开关、进度和世界。`BehaviorState` 按键存 int、long、boolean、字符串和物品。GT 把这张表写进 NBT。行为不接触 `CompoundTag`。没有这个键时读到 0、false、空字符串或空物品。键匹配 `[a-z0-9_.]{1,64}`。字符串最长 256。方块被拆掉时，GT 在 `beforeBreak` 之后丢掉库存物品和状态里的物品。
+行为不继承 GT 的类。`MachineBehavior` 有三个必须实现的方法——`tick(context)`、`canInsert(context, slot, stack)` 和 `canFill(context, tank, stack)`——并为流体接受、能量接受、开关、拆除、工具、右键和坩埚访问提供可选的默认方法。坩埚方法是 `getCrucibleTemperature(context)`、`getCrucibleContentAmount(context)` 和 `fillMoldAtSide(context, mold, crucibleSide, moldSide)`。默认值是零并拒绝浇铸，所以现有行为不用改。`CrucibleMold` 是 SDK 对 GT6CE 内部模具接口的安全视图；调用 `fillMold(material, amount, temperature, moldSide)`，并从行为自己的熔融材料存储里扣掉返回的数量。行为机器方块实体会把这个回调桥接到普通 GT 模具、坩埚盆或龙头，因此附属不用继承方块实体就能接入原有浇铸交互。`canInsert` 和 `canFill` 另有带面的重载，缺省转到不带面的方法，所以现有行为不用改。管子调用带面的重载。面是 null 表示菜单或不分面的处理器。`MachineBehaviorContext` 读写物品、储罐、能量、开关、进度和世界。`BehaviorState` 按键存 int、long、boolean、字符串和物品。GT 把这张表写进 NBT。行为不接触 `CompoundTag`。没有这个键时读到 0、false、空字符串或空物品。键匹配 `[a-z0-9_.]{1,64}`。字符串最长 256。方块被拆掉时，GT 在 `beforeBreak` 之后丢掉库存物品和状态里的物品。
 
 ```java
 public List<AddonMachine> addonMachines() {
@@ -656,6 +656,33 @@ public List<AddonMachine> addonMachines() {
             .fluid(8000, 152, 8, BehaviorMachine.SlotRole.INPUT)
             .toggle("my_addon.irrigator.water", 26, 64, true)
             .build());
+}
+```
+
+要让行为机器成为熔融材料来源，把材料和数量放在 `BehaviorState`（或行为自己的存储）中，并实现三个坩埚回调：
+
+```java
+@Override
+public long getCrucibleTemperature(MachineBehaviorContext context) {
+    return context.state().getLong("temperature");
+}
+
+@Override
+public long getCrucibleContentAmount(MachineBehaviorContext context) {
+    return context.state().getLong("amount");
+}
+
+@Override
+public boolean fillMoldAtSide(MachineBehaviorContext context, CrucibleMold mold,
+                               int crucibleSide, int moldSide) {
+    var state = context.state();
+    var material = GregTechMaterials.find(state.getString("material"));
+    long amount = state.getLong("amount");
+    long accepted = amount <= 0 || !material.valid() ? 0
+            : mold.fillMold(material, amount, getCrucibleTemperature(context), moldSide);
+    if (accepted <= 0) return false;
+    state.setLong("amount", amount - accepted);
+    return true;
 }
 ```
 
@@ -836,7 +863,7 @@ public final class MySourceBlockEntity extends BlockEntity implements GtSignalSo
 
 这些保持关闭。`BasicMachineBlock` 和 `BasicMachineBlockEntity` 是 GT 的机器实现，附属机器是数据，不是子类。`Recipe.mRecipeList` 是内部行表，正式代码用 `add` 返回的 `AddonRecipes.Line`。`GTMaterial`、`GTMaterialRegistry` 和材料哨兵由 `GregTechMaterials` 代替。`GregTechTags` 由能源短名代替。`MachineRecipeMaps` 的字段由 `AddonRecipes.map(name)` 代替。`MaterialPrefix` 常量由前缀名字符串代替。完整工具目录留在 GT 里。
 
-`onRecipesReady` 仍不是数据包重载事件。API 版本 0 包含坩埚成分、熔炼目标和合金反应，仍会把旧的材料数字 id 读成内置材料，并在这个方块或物品下次保存时写成名字。这一版不承诺固体燃料、能量转换、把内置引擎改到这套模板上、附属自绘 GUI、坩埚的只读视图、无线计算零件、往记下的坐标远程送能、坩埚方块、写入坩埚温度或内容物、任意非 GT 物品的熔化登记、坩埚数据包、不经入口就用数据包新建配方表、材料表的数据包重载、一份二进制同时跑两个加载器，或完整旧 GregAPI 替代。1.0 之前仅文档列出的入口作为兼容面。电压等级以[原GT6电压说明](VOLTAGE_TIERS.md)为准。
+`onRecipesReady` 仍不是数据包重载事件。API 版本 0 包含坩埚成分、熔炼目标、合金反应和行为机器坩埚回调，仍会把旧的材料数字 id 读成内置材料，并在这个方块或物品下次保存时写成名字。这一版不承诺固体燃料、能量转换、把内置引擎改到这套模板上、附属自绘 GUI、无线计算零件、往记下的坐标远程送能、坩埚方块、写入坩埚温度或内容物、任意非 GT 物品的熔化登记、坩埚数据包、不经入口就用数据包新建配方表、材料表的数据包重载、一份二进制同时跑两个加载器，或完整旧 GregAPI 替代。1.0 之前仅文档列出的入口作为兼容面。电压等级以[原GT6电压说明](VOLTAGE_TIERS.md)为准。
 
 ## 版本与兼容性
 
