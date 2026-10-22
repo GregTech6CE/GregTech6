@@ -1,0 +1,55 @@
+{
+  "date": "2026-10-23",
+  "branch": "main",
+  "source_commit": "ebf8d078c0e77d5b62f1ccd944bda72f355c3687",
+  "pushed_commit": "ebf8d078c0e77d5b62f1ccd944bda72f355c3687",
+  "local_parent": "0c1dc804e",
+  "remote_parent": "b4c2603fd",
+  "remote_commits_merged": 29,
+  "merge_conflicts": {
+    "docs/integration/DECISIONS.md": "Both histories retained, internal order preserved; no remaining unmerged files."
+  },
+  "result": "BUILD SUCCESSFUL in 13m 22s",
+  "log": "work/dual-user-build-online-20261023.log",
+  "log_sha256": "800bb9567f0521d91f0bb74b9225d36131edcc9fc78e97492deaf955531d1a5a",
+  "tasks": [
+    ":multiversion:1.20.1-forge:distributionJar",
+    ":multiversion:1.21.1-neoforge:jar"
+  ],
+  "dependency_resolution": "Existing exact-version cached API/EMI adapters plus official project-declared Maven repositories for newly merged KubeJS/Rhino/Architectury dependencies. No production dependency version changed.",
+  "initial_attempt": "Offline build failed because new optional compile dependencies were not cached; online build followed.",
+  "protected_material": {
+    "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java",
+    "sha256": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "state": "User formatting preserved, compiled in delivery, left uncommitted/unpushed."
+  },
+  "not_run": [
+    "full tests",
+    "game launch",
+    "gameplay acceptance",
+    "save restart"
+  ],
+  "whole_alignment_goal_complete": false,
+  "files": [
+    {
+      "platform": "1.20.1-forge",
+      "path": "build/deliveries/20261023-ebf8d078c/gt6ce-1.20.1-forge-0.0.0.jar",
+      "bytes": 41372930,
+      "sha256": "05096fc6fa2c05d913851a99ce842804028cdaff2d9339fe28d201e91a786f1d",
+      "zip_crc": "passed",
+      "entry_count": 85308,
+      "metadata": "gt6ce / GregTech 6 Community Edition / 0.0.0; optional KubeJS",
+      "merged_content": "Upstream CrucibleContent/KubeJS plus current local bucket registration methods present"
+    },
+    {
+      "platform": "1.21.1-neoforge",
+      "path": "build/deliveries/20261023-ebf8d078c/gt6ce-neoforge-1.21.1-0.0.0.jar",
+      "bytes": 41236411,
+      "sha256": "9c7075c6da93f1e32039f7ccd9cb3a79281cdd7414e9935dc9479d56fc53a4b5",
+      "zip_crc": "passed",
+      "entry_count": 84585,
+      "metadata": "gt6ce / GregTech 6 Community Edition / 0.0.0; optional KubeJS",
+      "merged_content": "Upstream CrucibleContent/KubeJS plus current local bucket registration methods present"
+    }
+  ]
+}
