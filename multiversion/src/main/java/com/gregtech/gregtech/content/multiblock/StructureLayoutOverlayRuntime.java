@@ -61,19 +61,25 @@ public final class StructureLayoutOverlayRuntime {
 
     private static void install(Map<String, String> next) {
         var previous = new HashSet<>(SharedLargeMachineLayouts.overlaid());
-        var cells = new LinkedHashMap<String, List<SharedLargeMachineLayouts.Cell>>();
+        var layouts = new LinkedHashMap<String, SharedLargeMachineLayouts.Layout>();
         var accepted = new TreeMap<String, String>();
         for (var entry : next.entrySet()) {
             try {
                 var layout = StructureLayoutDocuments.parse(entry.getKey(), entry.getValue());
                 if (!accept(entry.getKey(), layout)) continue;
-                cells.put(entry.getKey(), AddonMachines.sharedCells(entry.getKey(), layout));
+                layouts.put(entry.getKey(), AddonMachines.sharedLayout(entry.getKey(), layout));
                 accepted.put(entry.getKey(), StructureLayoutDocuments.canonical(layout));
             } catch (RuntimeException failure) {
                 warn(entry.getKey() + " " + failure.getMessage());
             }
         }
-        SharedLargeMachineLayouts.overlay(cells);
+        var cells = new LinkedHashMap<String, List<SharedLargeMachineLayouts.Cell>>();
+        var repeats = new LinkedHashMap<String, List<SharedLargeMachineLayouts.Repeat>>();
+        for (var entry : layouts.entrySet()) {
+            cells.put(entry.getKey(), entry.getValue().cells());
+            if (!entry.getValue().repeats().isEmpty()) repeats.put(entry.getKey(), entry.getValue().repeats());
+        }
+        SharedLargeMachineLayouts.overlay(cells, repeats);
         documents = Map.copyOf(accepted);
         previous.addAll(accepted.keySet());
         LargeMachineLayouts.forget(previous);
@@ -84,7 +90,7 @@ public final class StructureLayoutOverlayRuntime {
             warn(source + " does not replace an addon layout");
             return false;
         }
-        for (var cell : layout.cells()) {
+        for (var cell : allCells(layout)) {
             if (cell.match() instanceof CellMatch.Block block && !registered(block.id())) {
                 warn(source + " uses unknown block '" + block.id() + "'");
                 return false;
@@ -92,6 +98,13 @@ public final class StructureLayoutOverlayRuntime {
         }
         AddonMachines.sharedCells(source, layout);
         return true;
+    }
+
+    private static java.util.List<com.gregtech.gregtech.api.addon.LayoutCell> allCells(
+            com.gregtech.gregtech.api.addon.StructureLayout layout) {
+        var out = new ArrayList<>(layout.cells());
+        for (var repeat : layout.repeats()) out.addAll(repeat.cells());
+        return out;
     }
 
     private static boolean registered(String id) {

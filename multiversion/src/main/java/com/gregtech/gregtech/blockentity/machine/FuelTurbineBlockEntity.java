@@ -61,7 +61,7 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
                 return false;
             }
             if (cell.plainBlock()) {
-                if (!cell.matches(level, level.getBlockState(pos))) {
+                if (!cell.matches(level, pos, level.getBlockState(pos))) {
                     bindings.clear(this::release);
                     formed = false;
                     return false;

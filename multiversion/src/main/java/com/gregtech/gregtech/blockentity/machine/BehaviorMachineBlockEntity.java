@@ -4,6 +4,7 @@ import com.gregtech.gregtech.api.addon.AddonMachines;
 import com.gregtech.gregtech.api.addon.BehaviorEnergyRules;
 import com.gregtech.gregtech.api.addon.EnergyOutput;
 import com.gregtech.gregtech.api.addon.BehaviorMachine;
+import com.gregtech.gregtech.api.addon.CrucibleMold;
 import com.gregtech.gregtech.api.addon.MachineFace;
 import com.gregtech.gregtech.api.addon.PartEnergyRules;
 import com.gregtech.gregtech.api.addon.BehaviorRangeRules;
@@ -26,6 +27,9 @@ import com.gregtech.gregtech.api.energy.EnergyBlockViews;
 import com.gregtech.gregtech.api.energy.FaceConfig;
 import com.gregtech.gregtech.api.energy.IEnergyBlock;
 import com.gregtech.gregtech.api.machine.BasicMachineEnergy;
+import com.gregtech.gregtech.api.machine.ITileEntityCrucible;
+import com.gregtech.gregtech.api.machine.ITileEntityMold;
+import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.gregtech.gregtech.block.machine.BehaviorMachineBlock;
 import com.gregtech.gregtech.client.gui.BehaviorMachineMenu;
 import com.gregtech.gregtech.data.GregTechTags;
@@ -94,7 +98,7 @@ import java.util.UUID;
 
 /** Shell block entity. The addon behavior never sees this class. */
 public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlock, MenuProvider,
-        com.gregtech.gregtech.api.fluid.CompressedGasReceiver {
+        com.gregtech.gregtech.api.fluid.CompressedGasReceiver, ITileEntityCrucible {
     private final BehaviorMachine declaration;
     private final AddonMachines.AcceptedBehavior accepted;
     private final MachineBehavior behavior;
@@ -130,6 +134,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     private boolean formed;
     private List<EnergyPart> energyParts = List.of();
     private List<BoundPart> boundParts = List.of();
+    private Map<String, Integer> repeatCounts = Map.of();
     private int breaksLeft;
     private int itemsLeft;
     @Nullable private UUID placerId;
@@ -186,6 +191,30 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     }
     public MachineBehavior behavior() { return behavior; }
     public boolean toggle(int index) { return context.toggle(index); }
+
+    @Override
+    public boolean fillMoldAtSide(ITileEntityMold mold, int crucibleSide, int moldSide) {
+        if (mold == null) return false;
+        return behavior.fillMoldAtSide(context, moldTarget(mold), crucibleSide, moldSide);
+    }
+
+    @Override
+    public long getCrucibleTemperature() {
+        return behavior.getCrucibleTemperature(context);
+    }
+
+    @Override
+    public long getCrucibleContentAmount() {
+        return behavior.getCrucibleContentAmount(context);
+    }
+
+    private static CrucibleMold moldTarget(ITileEntityMold mold) {
+        return (material, amount, temperature, side) -> {
+            if (material == null || !material.valid() || material.resolve() == null) return 0;
+            var resolved = GTMaterialRegistry.get(material.resolve().name());
+            return resolved.isValid() ? mold.fillMold(resolved, amount, temperature, side) : 0;
+        };
+    }
 //? if >=1.21.1 {
 /*
     public IItemHandler itemCapability(@Nullable Direction side) { return itemHandler(side); }
@@ -390,6 +419,50 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             setChanged();
         }
         return sent;
+    }
+
+    @Nullable
+    private EnergyPartView boundPart(String name) {
+        if (!formed || name == null) return null;
+        for (EnergyPart part : energyParts)
+            if (part instanceof EnergyPartView view && view.name().equals(name)) return view;
+        return null;
+    }
+
+    private long pushToPart(String name, String type, long size, long amount) {
+        if (level == null || name == null || type == null || amount < 1) return 0;
+        var view = boundPart(name);
+        if (view == null || !view.controllerInput() || !type.equalsIgnoreCase(view.outputType())) return 0;
+        var output = view.part.declaration().energy();
+        long magnitude = output.allowNegative() ? Math.abs(size) : size;
+        if (magnitude < 1) return 0;
+        long request = Math.multiplyExact(magnitude, amount);
+        view.setOutput(size, amount);
+        return view.charge(request);
+    }
+
+    private long emitToPart(String name, long size, long amount) {
+        if (level == null || name == null) return 0;
+        var view = boundPart(name);
+        if (view == null) return 0;
+        var output = view.part.declaration().energy();
+        if (output == null) return 0;
+        BehaviorEnergyRules.requireEmit(size, amount, output.minSize(), output.maxSize(), output.maxAmount(),
+                output.allowNegative());
+        String offered = declaration.output() != null ? declaration.output().type()
+                : declaration.energy() != null ? declaration.energy().type() : null;
+        if (offered != null && !offered.equalsIgnoreCase(output.type())) return 0;
+        long magnitude = output.allowNegative() ? Math.abs(size) : size;
+        if (magnitude < 1) return 0;
+        long packets = Math.min(amount, Math.max(0, stored) / magnitude);
+        if (packets <= 0) return 0;
+        view.setOutput(size, packets);
+        long accepted = view.charge(Math.multiplyExact(magnitude, packets));
+        if (accepted > 0) {
+            stored -= accepted;
+            setChanged();
+        }
+        return accepted;
     }
 
     private Direction world(MachineFace face) {
@@ -941,6 +1014,12 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             setChanged();
         }
         @Override public long emit(long size, long amount) { return BehaviorMachineBlockEntity.this.emit(size, amount); }
+        @Override public long pushToPart(String part, String type, long size, long amount) {
+            return BehaviorMachineBlockEntity.this.pushToPart(part, type, size, amount);
+        }
+        @Override public long emit(String part, long size, long amount) {
+            return BehaviorMachineBlockEntity.this.emitToPart(part, size, amount);
+        }
         @Override public boolean toggle(int index) { return (toggles & (1 << index)) != 0; }
         @Override public void setToggle(int index, boolean on) {
             if (index < 0 || index >= declaration.toggles().size())
@@ -960,6 +1039,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         @Override public void working(boolean value) { working = value; }
         @Override public boolean structureFormed() { return formed; }
         @Override public List<EnergyPart> energyParts() { return formed ? energyParts : List.of(); }
+        @Override public int structureRepeats(String key) { return formed && key != null ? repeatCounts.getOrDefault(key, 0) : 0; }
         @Override public List<BoundPart> parts() { return formed ? boundParts : List.of(); }
         @Override public boolean conditionsMet() {
             for (EnergyPart part : energyParts()) if (part.condition() && !part.satisfied()) return false;
@@ -1017,21 +1097,23 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     }
 
     private void refreshStructure() {
-        var layout = LargeMachineLayouts.cells(declaration.casing().machineType());
+        var layout = LargeMachineLayouts.layout(declaration.casing().machineType());
         if (layout == null) {
             formed = true;
             energyParts = List.of();
             boundParts = List.of();
+            repeatCounts = Map.of();
             return;
         }
         formed = claimStructure(layout);
         if (!formed) {
             energyParts = List.of();
             boundParts = List.of();
+            repeatCounts = Map.of();
         }
     }
 
-    private boolean claimStructure(List<LargeMachineLayouts.Cell> layout) {
+    private boolean claimStructure(LargeMachineLayouts.Layout layout) {
         if (level == null || isRemoved()) {
             structureBindings.clear(this::releaseStructure);
             return false;
@@ -1039,37 +1121,36 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         Direction front = getBlockState().hasProperty(HorizontalDirectionalBlock.FACING)
                 ? getBlockState().getValue(HorizontalDirectionalBlock.FACING) : Direction.NORTH;
         var parts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
-        for (var cell : layout) {
+        for (var cell : layout.cells()) {
             BlockPos cellPos = cell.at(worldPosition, front);
-            if (!level.hasChunkAt(cellPos)) {
+            if (!matchesCell(cell, cellPos)) {
                 structureBindings.clear(this::releaseStructure);
                 return false;
             }
-            if (cell.role() == MultiblockLayout.Role.AIR) {
-                if (level.isEmptyBlock(cellPos)) continue;
+            if (cell.role() != MultiblockLayout.Role.AIR && !cell.plainBlock())
+                parts.put(cellPos, cell.role());
+        }
+        var repeatPlaced = new ArrayList<LargeMachineLayouts.Placed>();
+        var counts = new LinkedHashMap<String, Integer>();
+        for (var repeat : layout.repeats()) {
+            var placed = LargeMachineLayouts.repeatCells(level, worldPosition, front, repeat, this::matchesCell);
+            if (placed == null) {
                 structureBindings.clear(this::releaseStructure);
                 return false;
             }
-            if (cell.plainBlock()) {
-                if (!cell.matches(level, level.getBlockState(cellPos))) {
-                    structureBindings.clear(this::releaseStructure);
-                    return false;
-                }
-                continue;
-            }
-            if (level.getBlockState(cellPos).getBlock() != cell.block()
-                    || !(level.getBlockEntity(cellPos) instanceof MultiblockPortBlockEntity)) {
-                structureBindings.clear(this::releaseStructure);
-                return false;
-            }
-            parts.put(cellPos, cell.role());
+            counts.put(repeat.key(), placed.size() / repeat.cells().size());
+            repeatPlaced.addAll(placed);
+            for (var cell : placed)
+                if (cell.cell().role() != MultiblockLayout.Role.AIR && !cell.cell().plainBlock())
+                    parts.put(cell.pos(), cell.cell().role());
         }
         boolean claimed = structureBindings.update(parts,
                 pos -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).canBind(worldPosition),
                 (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
                 this::releaseStructure);
         if (!claimed) return false;
-        com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front, layout);
+        com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front, layout.cells());
+        com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, repeatPlaced);
         var found = new ArrayList<EnergyPart>();
         var bound = new ArrayList<BoundPart>();
         for (BlockPos cellPos : parts.keySet()) {
@@ -1083,7 +1164,16 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         }
         energyParts = List.copyOf(found);
         boundParts = List.copyOf(bound);
+        repeatCounts = Map.copyOf(counts);
         return true;
+    }
+
+    private boolean matchesCell(LargeMachineLayouts.Cell cell, BlockPos cellPos) {
+        if (!level.hasChunkAt(cellPos)) return false;
+        if (cell.role() == MultiblockLayout.Role.AIR) return level.isEmptyBlock(cellPos);
+        if (cell.plainBlock()) return cell.matches(level, cellPos, level.getBlockState(cellPos));
+        return level.getBlockState(cellPos).getBlock() == cell.block()
+                && level.getBlockEntity(cellPos) instanceof MultiblockPortBlockEntity;
     }
 
     private void releaseStructure(BlockPos pos) {
@@ -1095,6 +1185,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         structureBindings.clear(this::releaseStructure);
         energyParts = List.of();
         boundParts = List.of();
+        repeatCounts = Map.of();
         formed = false;
         super.setRemoved();
     }
@@ -1119,6 +1210,11 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         }
         @Override public boolean condition() { return part.condition(); }
         @Override public boolean satisfied() { return part.satisfied(); }
+        private boolean controllerInput() {
+            var declaration = part.declaration();
+            return declaration.energy() != null && declaration.energyInput() != null;
+        }
+        private String outputType() { return part.outputType(); }
     }
 
     private final class BoundView implements BoundPart {
