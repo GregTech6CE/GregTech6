@@ -1,0 +1,74 @@
+name: Focused issue regressions
+
+on:
+  push:
+    branches: ['fix/ci-jade-issue-audit-20261022']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: issue-regressions-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  forge-issues:
+    name: Forge issue gameplay regressions
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install JDK 21 toolchain
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - run: echo "JAVA21_HOME=$JAVA_HOME" >> "$GITHUB_ENV"
+      - name: Install JDK 17 launcher
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - run: echo "JAVA17_HOME=$JAVA_HOME" >> "$GITHUB_ENV"
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Check sapling asset regression
+        run: python -X utf8 -m unittest tools.tests.test_issue76_sapling_assets
+      - name: Run isolated development GameTests
+        # Official development GameTestServer exemption only. Never write eula=true;
+        # this does not accept a production dedicated-server EULA.
+        run: |
+          chmod +x gradlew
+          mkdir -p work
+          ./gradlew --no-daemon --stacktrace \
+            -Dorg.gradle.java.home="$JAVA17_HOME" \
+            -Dorg.gradle.java.installations.fromEnv=JAVA17_HOME,JAVA21_HOME \
+            -Dorg.gradle.java.installations.auto-download=false \
+            -PgameTestNamespaces=gregtech_issue_audit \
+            -PgameTestHeap=3g \
+            -PgameTestDirectory=build/issues-64-81-gametest \
+            -PgameTestReport=build/reports/gametest/issues-64-81.xml \
+            :multiversion:1.20.1-forge:runGameTestServer \
+            2>&1 | tee work/issues-gametest.log
+      - name: Require every selected regression to execute and pass
+        if: always()
+        run: >-
+          python -X utf8 tools/integration/check_issue_gametest_report.py
+          multiversion/versions/1.20.1-forge/build/reports/gametest/issues-64-81.xml
+      - name: Preserve regression evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: forge-issue-regressions-${{ github.sha }}
+          if-no-files-found: warn
+          path: |
+            work/issues-gametest.log
+            multiversion/versions/1.20.1-forge/build/reports/gametest/issues-64-81.xml
+            multiversion/versions/1.20.1-forge/build/issues-64-81-gametest/logs/
