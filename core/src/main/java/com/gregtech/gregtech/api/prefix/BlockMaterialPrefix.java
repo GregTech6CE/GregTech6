@@ -50,6 +50,10 @@ public final class BlockMaterialPrefix {
     private final long materialWeight;
     private final String registryName;
     private final String textureFileName;
+    private final boolean addon;
+    private final String textureNamespace;
+    private final String addonTexturePath;
+    private final String oreDictionary;
 
     public static BlockMaterialPrefix define(String name, String displayName, String namePrefix, String nameSuffix,
                                              Predicate<GTMaterial> validator, float baseHardness, float baseResistance,
@@ -64,13 +68,24 @@ public final class BlockMaterialPrefix {
                                              int harvestLevelOffset, MapColor mapColor, SoundType soundType,
                                              boolean falling, long materialWeight, String textureFileName) {
         return new BlockMaterialPrefix(name, displayName, namePrefix, nameSuffix, validator, baseHardness,
-                baseResistance, harvestLevelOffset, mapColor, soundType, falling, materialWeight, textureFileName);
+                baseResistance, harvestLevelOffset, mapColor, soundType, falling, materialWeight, textureFileName,
+                false, "", "", "");
+    }
+
+    /** Addon cube. Registered after the built-in prefixes, and appended after built-in blocks. */
+    public static BlockMaterialPrefix defineAddon(String name, String displayName, String namePrefix, String nameSuffix,
+                                                  long materialWeight, String textureNamespace, String texturePath,
+                                                  String oreDictionary, Predicate<GTMaterial> validator) {
+        return new BlockMaterialPrefix(name, displayName, namePrefix, nameSuffix, validator, 1.7F, 5.0F, 0,
+                MapColor.METAL, SoundType.METAL, false, materialWeight, null, true, textureNamespace, texturePath,
+                oreDictionary);
     }
 
     BlockMaterialPrefix(String name, String displayName, String namePrefix, String nameSuffix,
                         Predicate<GTMaterial> validator, float baseHardness, float baseResistance,
                         int harvestLevelOffset, MapColor mapColor, SoundType soundType, boolean falling,
-                        long materialWeight, String textureFileNameOverride) {
+                        long materialWeight, String textureFileNameOverride, boolean addon,
+                        String textureNamespace, String addonTexturePath, String oreDictionary) {
         this.name = name;
         this.displayName = displayName;
         this.namePrefix = namePrefix;
@@ -85,6 +100,10 @@ public final class BlockMaterialPrefix {
         this.materialWeight = materialWeight;
         this.registryName = MaterialPrefix.camelToSnake(name);
         this.textureFileName = textureFileNameOverride != null ? textureFileNameOverride.toLowerCase() : name.toLowerCase();
+        this.addon = addon;
+        this.textureNamespace = textureNamespace == null ? "" : textureNamespace;
+        this.addonTexturePath = addonTexturePath == null ? "" : addonTexturePath;
+        this.oreDictionary = oreDictionary == null ? "" : oreDictionary;
         BlockPrefixRegistry.register(this);
     }
 
@@ -101,6 +120,13 @@ public final class BlockMaterialPrefix {
     public String getNameSuffix() { return nameSuffix; }
     public String getRegistryName() { return registryName; }
     public String getTextureFileName() { return textureFileName; }
+    public boolean isAddon() { return addon; }
+    public String textureNamespace() { return textureNamespace; }
+    public String addonTexturePath() { return addonTexturePath; }
+    /** Tag path under {@code forge:}, or empty for a built-in prefix. */
+    public String oreDictionary() { return oreDictionary; }
+    /** Prefix name card 04 reports for an addon block. Built-in blocks stay unnamed. */
+    public String compositionName() { return addon ? name : ""; }
     public float baseHardness() { return baseHardness; }
     public float baseResistance() { return baseResistance; }
     public int harvestLevelOffset() { return harvestLevelOffset; }

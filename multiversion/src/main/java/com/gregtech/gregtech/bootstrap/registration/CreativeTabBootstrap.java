@@ -12,7 +12,8 @@ public static void register(net.neoforged.bus.api.IEventBus bus){GTCreativeTabIc
     private static void populatePrefix(BuildCreativeModeTabContentsEvent event, MaterialPrefix prefix) {
         for (var binding : GTItems.creativeEntries(prefix)) {
             GTMaterial material=binding.material();
-            if (material.has(MaterialProperty.HIDDEN) || material.resolve()!=material || !prefix.isValidFor(material)) continue;
+            if (material.has(MaterialProperty.HIDDEN) || material.resolve()!=material
+                    || (!prefix.isValidFor(material) && !com.gregtech.gregtech.api.addon.AddonMaterials.explicitPlateOrFoil(prefix, material))) continue;
             if(binding.item().isBound()) event.accept(new ItemStack(binding.item().get(),1));
 *///?} else {
 
@@ -506,7 +507,8 @@ public class CreativeTabBootstrap implements InitializationStep {
     private static void populatePrefix(BuildCreativeModeTabContentsEvent event, MaterialPrefix prefix) {
         for (var binding : GTItems.creativeEntries(prefix)) {
             GTMaterial material=binding.material();
-            if (material.has(MaterialProperty.HIDDEN) || material.resolve()!=material || !prefix.isValidFor(material)) continue;
+            if (material.has(MaterialProperty.HIDDEN) || material.resolve()!=material
+                    || (!prefix.isValidFor(material) && !com.gregtech.gregtech.api.addon.AddonMaterials.explicitPlateOrFoil(prefix, material))) continue;
             if(binding.item().isPresent()) event.accept(new ItemStack(binding.item().get(),1));
         }
     }

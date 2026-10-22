@@ -297,7 +297,7 @@ GT 在内置目录之后按名字排序分配数字 id，从 10000 起。内置 
 
 存档写名字。坩埚内容在 `gt.materials` 里是 `{name, amount}`。坩埚显示字段 `gt.display.material` 是名字，没有要显示的材料时是空字符串。USB 和硬盘文件仍用键 `gt.replicator.data`，值改成名字字符串。旧构建写的数字 `id`，以及数字形式的 `gt.replicator.data` / `gt.display.material`，仍能读回内置材料，读不回附属材料。找不到的名字会跳过，和原来找不到 id 一样。附属物品 id 冲突不会加数字后缀。
 
-生成形态注册在 **`gt6ce`** 命名空间，走两个加载器已经在用的 `MaterialItemDefinitions` 列表。附属手写的物品、方块和机器留在自己的命名空间。两个加载器在按命名空间分支时把 `gt6ce:` 当成 GT 内容，包括食物物品查找，所以生成出来的附属形态也走这些检查。新材料只拿到这份列表按它的属性已经会生成的前缀：粉物品来自 `dust()`。`forms()` 只能点名这些前缀。列表已经发出的一对不会再注册第二次。不在这份列表里的前缀，包括 `crystal`，启动失败。`crystal` 有校验器，但内置目录从不生成它，所以没有图标，也没有 `item.gt6ce.crystal` 翻译。已生成的前缀如果过不了 `isValidFor`，仍然启动失败。例外是附属材料显式请求的 `plate` 和 `foil`：没有锭也会生成这两件物品，不会因此多出双板、密板或杆。钻石的板仍然失败，因为钻石是内置材料。没有声明 `ores()` 的材料，`oreRaw` 仍然失败。`ore` 和 `oreSmall` 是方块前缀，`forms()` 点名它们会失败。其他被拒绝的前缀仍然失败。新前缀用下一节的 `prefixes()` 声明。`forms()` 仍然不能点名生成列表以外的前缀。材料表在启动时固定，数据包重载不能增删。旧的数字 id 在方块或物品加载时读取。存档要等这个方块或物品再次保存才写成名字。
+生成形态注册在 **`gt6ce`** 命名空间，走两个加载器已经在用的 `MaterialItemDefinitions` 列表。附属手写的物品、方块和机器留在自己的命名空间。两个加载器在按命名空间分支时把 `gt6ce:` 当成 GT 内容，包括食物物品查找，所以生成出来的附属形态也走这些检查。新材料只拿到这份列表按它的属性已经会生成的前缀：粉物品来自 `dust()`。`forms()` 只能点名这些前缀。列表已经发出的一对不会再注册第二次。不在这份列表里的前缀，包括 `crystal`，启动失败。`crystal` 有校验器，但内置目录从不生成它，所以没有图标，也没有 `item.gt6ce.crystal` 翻译。已生成的前缀如果过不了 `isValidFor`，仍然启动失败。`MaterialDeclaration.Builder.polymer()` 让这个附属材料在没有锭时请求 `plate` 和 `foil`。`wires()` 让它请求 `wireFine`。两个标记都不会带上同族的其余形态，内置材料也不能用：钻石的板仍然失败。粉材料两个标记都没有时，请求仍然失败。原版目录里，机械锭自带板和箔，细线是单独的标签；橡胶、塑料、PTFE、PVC、电木和聚碳酸酯两者都有，石墨烯有板、箔和细线但没有锭，石墨只有杆、没有板。没有声明 `ores()` 的材料，`oreRaw` 仍然失败。`ore` 和 `oreSmall` 是方块前缀，`forms()` 点名它们会失败。其他被拒绝的前缀仍然失败。新前缀用下一节的 `prefixes()` 声明。`forms()` 仍然不能点名生成列表以外的前缀。材料表在启动时固定，数据包重载不能增删。旧的数字 id 在方块或物品加载时读取。存档要等这个方块或物品再次保存才写成名字。
 
 翻译键是 `material.gt6ce.<小写名>`，来自 `GTMaterial.getTranslationKey()`。放在附属自己的 `assets/gt6ce/lang/en_us.json` 和 `zh_cn.json`。Minecraft 按键把这些文件和 GT 的语言文件合并。只有一个附属时，提示用 `tooltip.gt6ce.material_from_addon`（英文 “Added by the %s addon”）。共享中文文件里这个键保留英文回退，因为它不是原版 GT6 译文。多个附属共用一种材料时用 `tooltip.gt6ce.material_from_addons`。共享中文文件里这两个键都保留英文回退，因为它们不是原版 GT6 译文。
 
@@ -330,7 +330,9 @@ public List<PrefixDeclaration> prefixes() {
 
 物品注册在**附属自己的**命名空间，排在生成出来的 `gt6ce:` 形态之后。顺序是附属 id、声明顺序、材料名。路径和内置形态一样，例如 `sample_blank_iron`。同一个命名空间里路径撞车就启动失败。它不占用 `gt6ce:` 的 id，也不改内置物品 id 列表。`forms()` 不能点这个前缀，材料由声明上的名单决定。启动之后 `GregTechPrefixes.exists` 对这个名字返回真。`AddonItems.stack` 能取到物品。
 
-GT 不为这个前缀添加加工配方。这一节不包括方块前缀。
+GT 不为这个前缀添加加工配方。
+
+`PrefixDeclaration.block` 是实心方块，不是物品前缀。`shape` 只能是 `cube`。`texture` 是附属自己命名空间里的路径。`oreDictionary` 是标签路径，例如 `storage_blocks/sample_casing`；每种材料会带上 `forge:<oreDictionary>/<material>`。方块和物品注册在 **`gt6ce`**，排在内置材料方块和附属矿石方块之后，所以那些 id 不动。材料列表决定生成哪些方块。`forms()` 不能点名这个前缀。`AddonItems.composition` 返回前缀名和声明的材料单位。已经能通过 `isValidFor` 的金属，不需要为它本来就会生成的形态再调用 `polymer()` 或 `wires()`。
 
 ### 世界生成
 
