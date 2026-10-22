@@ -79,6 +79,10 @@ public final class AddonPlatformServices {
             var data = ItemMaterialRegistry.get(stack).orElse(null);
             if (data == null || data.components().isEmpty()) return GregTechMaterials.StackComposition.EMPTY;
             String prefix = data.prefix() == null ? "" : data.prefix().getName();
+            if (prefix.isEmpty() && stack.getItem() instanceof net.minecraft.world.item.BlockItem blockItem
+                    && blockItem.getBlock() instanceof com.gregtech.gregtech.block.MaterialBlockLike like
+                    && like.prefix() != null)
+                prefix = like.prefix().compositionName();
             var units = new ArrayList<GregTechMaterials.Component>();
             for (var component : data.components()) {
                 if (component.material() == null || !component.material().isValid() || component.amount() <= 0) continue;
