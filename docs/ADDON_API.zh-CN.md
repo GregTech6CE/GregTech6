@@ -289,6 +289,8 @@ public final class MyMaterials implements AddonMaterialContributor {
 
 用名字声明材料。入口是 `MaterialDeclaration.builder(String)`。`builder(int, String)` 保留到 0.9，传入的数字被忽略，并记一条警告。`AddonMaterials.ADDON_ID_MIN` 和 `ADDON_ID_MAX` 也保留到 0.9，不再是附属可以占用的区间。
 
+`MaterialDeclaration.Builder.centrifuge()` 允许按这种材料另行声明的成分生成离心机分解配方；`electrolyzer()` 允许生成电解机分解配方。两个权限默认都关闭，可以只开一个，也可以同时开启。它们不会相互开启，也不会补出缺失的形态：输入材料必须有粉形态，所有产物都能解析时才会生成配方。例如，`.dust().centrifuge()` 只选择离心机。自动生成的电解机配方还需要 0 号选择器（`AddonItems.selectorTag(0)`），只检查存在、不消耗；自动生成的离心机配方不需要这个选择器。这两个权限也属于同名共享声明必须一致的属性。原有的 16 参数 `MaterialDeclaration` 构造方法仍然可用，两个新增权限都取 `false`。
+
 名字按原文比较。只差大小写的两种写法会启动失败，因为生成的物品 id 会转成小写。报错写出两种写法；如果来自附属，也写出双方的附属 id。和内置材料同名仍然失败。要给内置材料加形态，用 `forms()`。
 
 两个附属可以声明同一个名字。显示名、颜色、贴图、熔点、沸点、密度、化学式、属性、原子数和透明度必须全部相同。`forms()` 取并集。材料按附属 id 顺序记下每一个声明它的附属。只有一个附属时提示用 `tooltip.gt6ce.material_from_addon`。多于一个时用 `tooltip.gt6ce.material_from_addons`（“Added by the %s addons”），附属 id 用逗号拼在一起。字段不一致就启动失败，并写出双方和那个字段。
@@ -371,6 +373,8 @@ GT 形态丢进坩埚已经会化。数量是这个形态的材料重量。温�
 `compositions()`、`smeltingTargets()`、`crucibleReactions()` 和 `crucibleRemovals()` 是 `AddonMaterialContributor` 上的纯数据。GT 在内置目录链接之后、配方加载之前读取。名字是材料名。`Cr` 和 `Chromium` 是同一种材料。未知名字、产量、比例或除数不大于 0、新反应没有原料、产物又出现在自己的原料里，都会启动失败，并写出附属 id。
 
 成分只能写给本附属声明的材料。每个分量是 `GTValues.U` 的正整数倍。除数会存进成分，有成分以后提示里的化学式改由成分生成。`crucible = true` 再加一条合金反应：比例是 `amount / U`，产量是除数。`crucible = false` 只存成分，不加反应。两个附属合并了同一种材料时，成分连同这个开关必须一致。
+
+单独声明成分不会自动允许离心机或电解机配方。`crucible = true` 只增加上文的坩埚反应，不会授予这两种机器的分解权限。需要时在对应的 `MaterialDeclaration` 上显式调用 `.centrifuge()`、`.electrolyzer()`，或同时调用两者。显式声明的机器配方仍是独立的入口。
 
 熔炼目标也只能写给本附属的材料。`amount` 是每 1U 输入对应的产出，所以 `U` 表示 1:1。声明会给材料加上熔化标记，坩埚熔炼页才列出它。不声明就保持默认：熔成自己，没有熔化标记。
 

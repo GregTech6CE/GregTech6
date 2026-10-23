@@ -72,5 +72,11 @@ public enum MaterialProperty {
      */
     NEVER_FURNACE,
     /** Silicon boules and similar  - force-added per material in GT6. */
-    BOULE
+    BOULE,
+    /** GT6 TD.Compounds.DECOMPOSABLE: composition may be processed only by explicitly permitted maps. */
+    DECOMPOSABLE,
+    /** GT6 TD.Processing.CENTRIFUGE, independent of the composition's component types. */
+    CENTRIFUGE,
+    /** GT6 TD.Processing.ELECTROLYSER, independent of the composition's component types. */
+    ELECTROLYSER
 }

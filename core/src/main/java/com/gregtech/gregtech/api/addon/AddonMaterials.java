@@ -159,6 +159,8 @@ public final class AddonMaterials {
             else if (declaration.dust()) builder.dust();
             if (declaration.gas()) builder.gas();
             if (declaration.liquid()) builder.liquid();
+            if (declaration.centrifuge()) builder.properties(MaterialProperty.DECOMPOSABLE, MaterialProperty.CENTRIFUGE);
+            if (declaration.electrolyzer()) builder.properties(MaterialProperty.DECOMPOSABLE, MaterialProperty.ELECTROLYSER);
             definitions.add(builder.build());
         }
         return List.copyOf(definitions);

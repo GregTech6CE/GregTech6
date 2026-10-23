@@ -133,6 +133,8 @@ public class FluidCatalog {
     }
 
     private static final Map<String, FluidEntry> REGISTRY = new LinkedHashMap<>();
+    /** Original createMolten provenance, not inferred from a sprite or a late material binding. */
+    private static final java.util.Set<String> MOLTEN_FACTORY_FIELDS = new java.util.LinkedHashSet<>();
     /**
      * Generated key aliases: GT6 asks for "the material's gas/liquid" regardless of which of the two
      * states registered the fluid first, so {@code GenGas_X}/{@code GenLiquid_X} may both exist while
@@ -212,6 +214,7 @@ public class FluidCatalog {
     @SuppressWarnings("unused")
     private static FluidEntry createMolten(GTMaterial material) {
         String name = material.getName();
+        MOLTEN_FACTORY_FIELDS.add("GenMolten_" + name);
         FluidEntry entry = register("GenMolten_" + name,
                 new FluidEntry("molten." + name.toLowerCase(Locale.ROOT), FluidTextureMode.GENERIC_MOLTEN,
                         name, 0, true, false, false, 0, 0, 0,
@@ -910,6 +913,7 @@ public class FluidCatalog {
     ;
 
     private static FluidEntry createMolten(String materialName) {
+        MOLTEN_FACTORY_FIELDS.add("GenMolten_" + materialName);
         return register("GenMolten_" + materialName,
                 new FluidEntry("molten." + materialName.toLowerCase(Locale.ROOT), FluidTextureMode.GENERIC_MOLTEN,
                         materialName, 0, true, false, false, 0, 0, 0, DEF_ENV_TEMP, FluidFlags.LIQUID));
@@ -953,6 +957,7 @@ public class FluidCatalog {
             }
             int tint = moltenTint(material);
             int temp = (int) material.getMeltingPoint();
+            MOLTEN_FACTORY_FIELDS.add("GenMolten_" + material.getName());
             register("GenMolten_" + material.getName(),
                     new FluidEntry(registryName, FluidTextureMode.GENERIC_MOLTEN,
                             material.getName(), tint, true, false, false, 0, 0, 0, temp, FluidFlags.LIQUID));
@@ -993,11 +998,40 @@ public class FluidCatalog {
             }
             String field = gas ? "GenGas_" + material.getName() : "GenLiquid_" + material.getName();
             if (REGISTRY.containsKey(field)) continue;
+            // These legacy port IDs represent original molten salts despite their LIQUID workaround.
+            // Preserve the IDs/flags and recipe identity; only restore the original factory metadata.
+            if (switch (material.getName()) {
+                case "Cryolite", "AluminiumFluoride", "LithiumChloride", "LithiumChlorate" -> true;
+                default -> false;
+            }) MOLTEN_FACTORY_FIELDS.add(field);
             register(field, new FluidEntry(lower, FluidTextureMode.DEDICATED, material.getName(), 0, true, false,
                     gas, 0, 0, 0, DEF_ENV_TEMP,
                     gas ? FluidFlags.GAS_FLAG : FluidFlags.LIQUID));
             // GT6 keeps one fluid object for both states, so the other generated key aliases it.
             GENERATED_ALIASES.put((gas ? "GenLiquid_" : "GenGas_") + material.getName(), field);
+        }
+    }
+
+    /**
+     * Finalize material-dependent factory properties only after material initialization.
+     * Static Molten_* fields are immutable declaration snapshots; get()/all() are the canonical
+     * prepared definitions used for native registration and runtime metadata. Do not reflect-write
+     * final fields or infer molten properties from GENERIC_MOLTEN textures: dedicated declarations
+     * such as Ender and Redstone explicitly specify different temperature/light values.
+     */
+    public static void finalizeMaterialFluidProperties() {
+        if (definitionsClosed) throw new IllegalStateException("Material fluid properties after registration");
+        for (String field : MOLTEN_FACTORY_FIELDS) {
+            FluidEntry entry = REGISTRY.get(field);
+            if (entry == null || entry.materialKey() == null) continue;
+            GTMaterial material = com.gregtech.gregtech.api.material.GTMaterialRegistry
+                    .get(entry.materialKey()).resolve();
+            if (!material.isValid()) continue;
+            int melting = material.getMeltingPoint();
+            // Original FL.createMolten: literal 300 K floor, bounded below the boiling point.
+            int temperature = melting <= 0 ? 1000
+                    : melting < 300 ? Math.min(300, material.getBoilingPoint() - 1) : melting;
+            REGISTRY.put(field, entry.withTemperature(temperature).withLuminosity(10));
         }
     }
 

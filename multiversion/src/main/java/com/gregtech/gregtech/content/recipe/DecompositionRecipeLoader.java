@@ -5,12 +5,14 @@ import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.gregtech.gregtech.api.material.MaterialComponent;
 import com.gregtech.gregtech.api.material.MaterialProperty;
 import com.gregtech.gregtech.api.material.MaterialStackItemHelper;
+import com.gregtech.gregtech.api.recipe.Recipe;
 import com.gregtech.gregtech.api.recipe.RecipeMap;
 import com.gregtech.gregtech.data.RegisteredFluids;
 import com.gregtech.gregtech.data.MaterialPrefix;
 import com.gregtech.gregtech.data.MachineRecipeMaps;
 import com.gregtech.gregtech.bootstrap.InitializationStep;
 import com.gregtech.gregtech.registry.GTFluids;
+import com.gregtech.gregtech.registry.GTTechnological;
 import com.gregtech.gregtech.util.OM;
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.item.ItemStack;
@@ -32,11 +34,12 @@ import static com.gregtech.gregtech.api.material.GTValues.U;
 /**
  * Current decomposition registration from the shared material composition catalog.
  *
- * <p>This implementation requires a dust input and chooses a machine from the direct components'
- * ELEMENT flags. Named fluid outputs require GAS/LIQUID flags and a bound registered holder;
+ * <p>Admission requires the original DECOMPOSABLE flag plus an explicit CENTRIFUGE and/or
+ * ELECTROLYSER permission. Composition alone never grants a machine route. This implementation
+ * still requires a dust input; Electrolyzer rows also require retained selector zero. Named fluid outputs require GAS/LIQUID flags and a bound registered holder;
  * otherwise it requests dust. An unresolved component skips the entire submission. These rules,
  * work parameters and submission counts are audited separately against GT6's
- * {@code Loader_Recipes_Decomp}; they do not encode all of its processing or phase contracts.</p>
+ * {@code Loader_Recipes_Decomp}; they do not yet encode all of its phase/work contracts.</p>
  */
 public class DecompositionRecipeLoader implements InitializationStep {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -48,7 +51,10 @@ public class DecompositionRecipeLoader implements InitializationStep {
         for (GTMaterial entry : GTMaterialRegistry.allMaterials()) {
             GTMaterial material = entry.resolve();
             if (material != entry || !material.isValid()) continue;
-            if (!material.hasComposition()) continue;
+            if (!material.hasComposition() || !material.has(MaterialProperty.DECOMPOSABLE)) continue;
+            boolean centrifuge = material.has(MaterialProperty.CENTRIFUGE);
+            boolean electrolyzer = material.has(MaterialProperty.ELECTROLYSER);
+            if (!centrifuge && !electrolyzer) continue;
             long divider = material.getCompositionDivider();
             if (divider <= 0 || divider > 64) continue;
             if (material.has(MaterialProperty.ANTIMATTER)) continue;
@@ -59,7 +65,6 @@ public class DecompositionRecipeLoader implements InitializationStep {
             List<ItemStack> dustOutputs = new ArrayList<>();
             List<FluidStack> fluidOutputs = new ArrayList<>();
             long totalAmount = 0;
-            boolean allElements = true;
             boolean complete = true;
 
             for (MaterialComponent component : material.getCompositionComponents()) {
@@ -69,7 +74,6 @@ public class DecompositionRecipeLoader implements InitializationStep {
                     break;
                 }
                 totalAmount += component.amount();
-                if (!part.has(MaterialProperty.ELEMENT)) allElements = false;
 
                 FluidStack fluid = namedFluid(part, component.amount());
                 if (fluid != null) {
@@ -90,19 +94,34 @@ public class DecompositionRecipeLoader implements InitializationStep {
                 continue;
             }
 
-            RecipeMap map = allElements ? MachineRecipeMaps.Electrolyzer : MachineRecipeMaps.Centrifuge;
             long duration = Math.max(16, totalAmount * 14 / U);
-            long eut = allElements ? 64 : 16;
-            if (fluidOutputs.isEmpty()) {
-                map.addRecipe1(true, eut, duration, input, dustOutputs.toArray(RecipeMap.ZL_IS));
-            } else {
-                map.addRecipe1(true, eut, duration, input,
-                        RecipeMap.ZL_FS, fluidOutputs.toArray(RecipeMap.ZL_FS),
-                        dustOutputs.toArray(RecipeMap.ZL_IS));
-            }
-            added++;
+            if (centrifuge) add(MachineRecipeMaps.Centrifuge, 16, duration, input, dustOutputs, fluidOutputs);
+            if (electrolyzer) add(MachineRecipeMaps.Electrolyzer, 64, duration, input, dustOutputs, fluidOutputs);
         }
         LOGGER.info("[gregtech] Decomposition recipes: {} added, {} skipped (incomplete outputs)", added, skipped);
+    }
+
+    private void add(RecipeMap map, long eut, long duration, ItemStack input,
+                     List<ItemStack> dustOutputs, List<FluidStack> fluidOutputs) {
+        boolean electrolyzer = map == MachineRecipeMaps.Electrolyzer;
+        var selector = electrolyzer ? GTTechnological.selectorTag(0) : null;
+        if (electrolyzer && selector == null) {
+            skipped++;
+            return;
+        }
+        // Preserve the existing normalization before adding the presence-only selector. A native
+        // count-one catalyst passed into make() would otherwise prevent common-factor reduction.
+        Recipe recipe = RecipeMap.make(true, new ItemStack[]{input}, dustOutputs.toArray(RecipeMap.ZL_IS),
+                null, RecipeMap.ZL_LONG, RecipeMap.ZL_FS, fluidOutputs.toArray(RecipeMap.ZL_FS), duration, eut, 0);
+        if (recipe != null && electrolyzer) {
+            // Original Loader_Recipes_Decomp supplies ST.tag(0) for every Electrolyzer row.
+            // Keep the actual native selector visible, while retaining it during consumption.
+            recipe = new Recipe(new ItemStack[]{new ItemStack(selector), recipe.mInputs[0]}, recipe.mOutputs,
+                    recipe.mSpecialItems, recipe.mChances, recipe.mFluidInputs, recipe.mFluidOutputs,
+                    recipe.mDuration, recipe.mEUt, recipe.mSpecialValue).withCatalystInputs(0);
+        }
+        map.addRecipe(recipe);
+        added++;
     }
 
     /** Named FL fluid for gas/liquid components (1 U = 1000 mB), or null. */

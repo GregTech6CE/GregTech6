@@ -84,6 +84,8 @@ public final class FluidDefinitions {
 
         // ---- generated gas./liquid. fluids for gaseous/liquid materials (chemistry chains) ----
         FluidCatalog.registerGeneratedGasLiquidFluids(GTMaterialRegistry.allMaterials());
+        // Material factories depend on initialized stats, and must finalize before native holders.
+        FluidCatalog.finalizeMaterialFluidProperties();
 
         // ---- GT6 Loader_Fluids: FL.make() material-fluid binding ----
         bindMaterialFluids();

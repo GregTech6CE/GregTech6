@@ -19,7 +19,30 @@ public final class FluidPhysicalPropertiesChecks {
         check(FluidCatalog.isBuiltInDefinition(FluidCatalog.Beer), "built-in provenance exists before preparation");
         check(FluidCatalog.isBuiltInDefinition(FluidCatalog.Beer.withTemperature(301)),
                 "immutable metadata copies keep built-in registry provenance");
+        var staticWax = FluidCatalog.Molten_Wax;
+        var ender = FluidCatalog.Ender;
+        var declaredPaths = FluidCatalog.all();
         FluidDefinitions.prepare();
+        var wax = FluidCatalog.get("GenMolten_Wax");
+        check(wax.temperature() == 350 && wax.luminosity() == 10, "prepared static factory metadata");
+        check(FluidCatalog.Molten_Wax == staticWax, "immutable declaration snapshot is not reflection-written");
+        check(wax.registryName().equals(staticWax.registryName()) && FluidCatalog.isBuiltInDefinition(wax),
+                "canonical static factory preserves registry identity and built-in provenance");
+        check(FluidCatalog.get("Ender") == ender && ender.temperature() == 2723 && ender.luminosity() == 5,
+                "generic molten sprite does not override authored dedicated properties");
+        for (var declaration : declaredPaths.entrySet()) {
+            var prepared = FluidCatalog.get(declaration.getKey());
+            check(prepared != null && declaration.getValue().registryName().equals(prepared.registryName()),
+                    "existing registry identity retained: " + declaration.getKey());
+        }
+        var cryolite = FluidCatalog.get("GenLiquid_Cryolite");
+        check(cryolite == FluidCatalog.get("GenGas_Cryolite") && !cryolite.gas()
+                        && cryolite.temperature() == 1285 && cryolite.luminosity() == 10,
+                "legacy molten aliases share canonical metadata without changing state");
+        check(FluidCatalog.get("GenMolten_Cryolite") == null, "metadata repair does not add a replacement ID");
+        var preparedOnce = FluidCatalog.all();
+        FluidDefinitions.prepare();
+        check(preparedOnce.equals(FluidCatalog.all()), "material fluid preparation is value-idempotent");
         check(FluidCatalog.isBuiltInDefinition(FluidCatalog.get("Beer")),
                 "import reconciliation retains built-in provenance");
         var generatedIron = FluidCatalog.get("GenMolten_Iron");

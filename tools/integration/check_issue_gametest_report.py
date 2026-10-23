@@ -12,6 +12,16 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'materialdecompositionpolicytests.genericelectrolysisrequiresandretainsselectorzero',
+    'materialdecompositionpolicytests.unflaggedaluminaandsaltdonotautodecompose',
+    'materialdecompositionpolicytests.decompositionmapsfollowexplicitmaterialprocessing',
+    'materialdecompositionpolicytests.specializedaluminastillconsumescarbonandbothfluids',
+    'fluidmaterialmetadatatests.cryolitekeepsidandoriginalmoltenproperties',
+    'fluidmaterialmetadatatests.aluminiumfluoridekeepsidandoriginalmoltenproperties',
+    'fluidmaterialmetadatatests.legacymoltensaltskeepidsandoriginalproperties',
+    'fluidmaterialmetadatatests.generatedmoltenusesoriginalheatandlight',
+    'fluidmaterialmetadatatests.staticgeneratedmoltenusesmaterialheatandlight',
+    'fluidmaterialmetadatatests.explicitfluidpropertiesremainauthoritative',
     'queuemenupermissiontests.queueguipickupcanextracteveryslot',
     'queuemenupermissiontests.queueguiquickmovecanextracteveryslot',
     'queuemenupermissiontests.queueguipickupinsertionandcapacityusemanualslots',

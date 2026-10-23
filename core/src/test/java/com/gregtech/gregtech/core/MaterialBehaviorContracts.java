@@ -54,10 +54,10 @@ public final class MaterialBehaviorContracts {
     // Restore MT.stoneelec's original STONE texture on the three granite materials only.
     // Normalizing just those fields reproduces both prior full graph fingerprints:
     // docs/integration/verification/stone-rock-material-differential-20261019.json.
-    private static final String DEFINITIONS_SHA256 = "76eed54866c620858a6c5419cb666e84aa8e52a40b5ef839c89476e2e665c3f1";
+    private static final String DEFINITIONS_SHA256 = "ea0a8bfb8be3a4d0999a5c3fcc97f96b65c80951edd6c73228786dfb7407b359";
     /** MaterialItemDefinitions.all() before addon materials existed, 56085 rows, zero suffixes. */
     private static final String ITEM_ID_SHA256 = "c3360a6cdc2ac4aa396b7a9bb778f11663171afb4e949709c65f3903f25a5fef";
-    private static final String POST_INIT_SHA256 = "2e64c03ab65dce53a23500c1ebde6fde8aa86460eb0a33e2bea9864b620104a7";
+    private static final String POST_INIT_SHA256 = "d0409357008b5805d5ae2fb45b7cc7b7fe283b7537e762d2be74fb2301483f40";
     private static int assertions;
     private MaterialBehaviorContracts() {}
 
