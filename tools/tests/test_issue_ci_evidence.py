@@ -10,7 +10,7 @@ import unittest
 import xml.etree.ElementTree as ET
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'integration'))
-from check_issue_gametest_report import check, EXPECTED, LEGACY_CASE_NAMESPACES, API_CONTRACT_CASES, ENERGY_STORAGE_CASE_NAMESPACES, COVER_REMOVAL_CASE_NAMESPACES, expected_namespace
+from check_issue_gametest_report import check, EXPECTED, LEGACY_CASE_NAMESPACES, API_CONTRACT_CASES, ENERGY_STORAGE_CASE_NAMESPACES, COVER_REMOVAL_CASE_NAMESPACES, ORE_SOURCE_CASES, expected_namespace
 import verify_artifacts
 from verify_artifacts import required_forge_mixin_mappings
 
@@ -222,6 +222,41 @@ class IssueEvidenceTests(unittest.TestCase):
                     ET.SubElement(case, result, message='native LU block interaction did not pass')
                     with self.subTest(platform=platform, identity=identity, result=result), self.assertRaisesRegex(ValueError, 'failure/error/skipped'):
                         self.verify(root, platform)
+
+    def test_all_27_ore_cases_required_on_both_loaders(self):
+        self.assertEqual(len(ORE_SOURCE_CASES), 27)
+        for platform in EXPECTED:
+            for identity in ORE_SOURCE_CASES:
+                root = self.report(platform)
+                suite = root.find('testsuite')
+                case = next(c for c in suite if c.get('classname') == expected_namespace(identity)
+                            and c.get('name') == identity.split('.', 1)[1])
+                suite.remove(case)
+                with self.subTest(platform=platform, identity=identity), self.assertRaisesRegex(ValueError, 'did not execute'):
+                    self.verify(root, platform)
+
+    def test_ore_namespace_and_failure_cannot_be_masked(self):
+        repo = Path(__file__).resolve().parents[2]
+        self.assertIn('gt6ce_machine_performance,gregtech_ore_source_audit',
+                      (repo / '.github/workflows/issue-regressions.yml').read_text())
+        for platform in EXPECTED:
+            for result in ('wrong_namespace', 'qualified_method_wrong_namespace', 'class_suffix_wrong_namespace', 'failure', 'error', 'skipped'):
+                root = self.report(platform)
+                case = next(c for c in root.iter('testcase')
+                            if c.get('classname') == 'gregtech_ore_source_audit:test_empty')
+                if result == 'wrong_namespace':
+                    case.set('classname', 'gregtech_issue_audit:test_empty')
+                elif result == 'qualified_method_wrong_namespace':
+                    identity = next(i for i in ORE_SOURCE_CASES if i.split('.', 1)[1] == case.get('name'))
+                    case.set('name', identity)
+                    case.set('classname', 'gregtech_issue_audit:test_empty')
+                elif result == 'class_suffix_wrong_namespace':
+                    identity = next(i for i in ORE_SOURCE_CASES if i.split('.', 1)[1] == case.get('name'))
+                    case.set('classname', 'wrong.' + identity.split('.', 1)[0])
+                else:
+                    ET.SubElement(case, result, message='ore source contract did not pass')
+                with self.subTest(platform=platform, result=result), self.assertRaises(ValueError):
+                    self.verify(root, platform)
 
     def test_empty_report_rejected(self):
         with self.assertRaisesRegex(ValueError, 'did not execute'):

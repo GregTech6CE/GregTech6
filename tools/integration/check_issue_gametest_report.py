@@ -277,7 +277,40 @@ COVER_REMOVAL_CASE_NAMESPACES = {
 }
 
 
+ORE_SOURCE_CASES = {
+    'oresourcedifferentialtests.crusherraw',
+    'oresourcedifferentialtests.sluicewater',
+    'oresourcedifferentialtests.sifter',
+    'oresourcedifferentialtests.centrifugepurified',
+    'oresourcedifferentialtests.sluicepetrotheum',
+    'oresourcedifferentialtests.steamcracking',
+    'oresourcedifferentialtests.sluicewatertiny',
+    'oresourcedifferentialtests.siftertiny',
+    'oresourcedifferentialtests.centrifugepurifiedtiny',
+    'oresourcedifferentialtests.sluicepetrotheumtiny',
+    'oresourcedifferentialtests.steamcrackingtiny',
+    'oresourcedifferentialtests.shreddercrushed',
+    'oresourcedifferentialtests.shreddercrushedpurified',
+    'oresourcedifferentialtests.shreddercrushedcentrifuged',
+    'oresourcedifferentialtests.shreddercrushedtiny',
+    'oresourcedifferentialtests.shreddercrushedpurifiedtiny',
+    'oresourcedifferentialtests.shreddercrushedcentrifugedtiny',
+    'oresourcecontroltests.furnaceusessourcefurnacenotmeltingflag',
+    'oresourcecontroltests.gemlessandwoodlikematerialsdonotacquiregenericoreroutes',
+    'oresourcecontroltests.magneticoreusesonlyoppositemagneticcandidates',
+    'oresourcecontroltests.allregisteredsluiceskeepnineoutputsacrosssaveload',
+    'oresourcecontroltests.opaquelapisgradesuseoriginalfallbackevenwhenlegacygradeitemsexist',
+    'oresourcecontroltests.sluicerollseachofeightslotsandeachitemindependently',
+    'oresourcecontroltests.realaddonownedmapssurvivetwooverlayrebuilds',
+    'orebathsupplementtests.cinnabarblockdustcryotheum',
+    'orebathsupplementtests.cinnabarcrushedcryotheum',
+    'orebathsupplementtests.cinnabartinycrushedcryotheum',
+}
+
+
 def expected_namespace(identity):
+    if identity in ORE_SOURCE_CASES:
+        return 'gregtech_ore_source_audit:test_empty'
     if identity in COVER_REMOVAL_CASE_NAMESPACES:
         return COVER_REMOVAL_CASE_NAMESPACES[identity]
     if identity in ENERGY_STORAGE_CASE_NAMESPACES:
@@ -288,8 +321,8 @@ def expected_namespace(identity):
 
 
 EXPECTED = {
-    'forge': {'openissueregressiontests.' + method for method in FORGE_METHODS} | {GAS_CASE} | FUNCTIONAL_CASES | FORGE_ONLY_CASES | set(LEGACY_CASE_NAMESPACES) | API_CONTRACT_CASES | set(ENERGY_STORAGE_CASE_NAMESPACES),
-    'neoforge': {GAS_CASE} | FUNCTIONAL_CASES | set(LEGACY_CASE_NAMESPACES) | API_CONTRACT_CASES | set(ENERGY_STORAGE_CASE_NAMESPACES),
+    'forge': {'openissueregressiontests.' + method for method in FORGE_METHODS} | {GAS_CASE} | FUNCTIONAL_CASES | FORGE_ONLY_CASES | set(LEGACY_CASE_NAMESPACES) | API_CONTRACT_CASES | set(ENERGY_STORAGE_CASE_NAMESPACES) | ORE_SOURCE_CASES,
+    'neoforge': {GAS_CASE} | FUNCTIONAL_CASES | set(LEGACY_CASE_NAMESPACES) | API_CONTRACT_CASES | set(ENERGY_STORAGE_CASE_NAMESPACES) | ORE_SOURCE_CASES,
 }
 
 
@@ -311,6 +344,10 @@ def check(path, platform='forge'):
         classname = case.get('classname', '').lower()
         for identity in expected:
             test_class, method = identity.split('.', 1)
+            if identity in ORE_SOURCE_CASES:
+                if name == method and classname == expected_namespace(identity):
+                    found.add(identity)
+                continue
             # Mojang's JUnit reporter uses the template resource as classname,
             # and PrefixGameTestTemplate(false) leaves a bare method name.
             if name == method and classname == expected_namespace(identity):

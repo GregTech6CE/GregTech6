@@ -161,34 +161,51 @@ public final class CoverRemovalUpdateTests {
         h.assertTrue(drops(f,cover)==0&&h.getLevel().getBlockState(f.pos)==hostState,"host and returned-cover preservation");
         h.assertTrue(f.host().removeCover(side).isEmpty()&&drops(f,Items.LEVER)==(retain?0:1),"repeated empty removal cannot duplicate drops");
     }
+    /** GameTest loads template chunks asynchronously; wait for observable native readiness before any fixture mutation.
+     * thenExecute runs the interaction matrix once, so a failed gameplay assertion is never retried into a pass.
+     * The existing timeoutTicks=100 bounds this readiness wait and the whole test.
+     */
+    private static void whenFixtureChunksReady(GameTestHelper h,Runnable matrix) {
+        h.startSequence().thenWaitUntil(()->{
+            var center=h.absolutePos(new BlockPos(4,4,4));
+            for(var at:BlockPos.betweenClosed(center.offset(-2,-2,-2),center.offset(2,2,2))) {
+                h.assertTrue(h.getLevel().areEntitiesLoaded(net.minecraft.world.level.ChunkPos.asLong(at))
+                        &&h.getLevel().isPositionEntityTicking(at),
+                        "waiting for native entity-drop fixture chunk to load and tick: "+at);
+            }
+        }).thenExecute(matrix).thenSucceed();
+    }
     @GameTest(template="cover_removal_empty",timeoutTicks=100)
     public static void crowbarRemovalDetachesNativeLeverOnEveryThinWireFace(GameTestHelper h) {
-        for(boolean insulated:new boolean[]{false,true})for(var side:Direction.values())
-            try(var f=new Fixture(h,side.ordinal()+(insulated?6:0),insulated)) {
-                exercise(h,f,side,false,GTTechnological.get("blank_cover"));
-            }
-        h.succeed();
+        whenFixtureChunksReady(h,()->{
+            for(boolean insulated:new boolean[]{false,true})for(var side:Direction.values())
+                try(var f=new Fixture(h,side.ordinal()+(insulated?6:0),insulated)) {
+                    exercise(h,f,side,false,GTTechnological.get("blank_cover"));
+                }
+        });
     }
     @GameTest(template="cover_removal_empty",timeoutTicks=100)
     public static void crowbarRemovalDistinguishesMediumAndFullDiameterPipeSupport(GameTestHelper h) {
-        for(boolean huge:new boolean[]{false,true})for(var side:Direction.values())
-            try(var f=new Fixture(h,20+side.ordinal()+(huge?6:0))) {
-                var pipe=net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(
-                        net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",huge?"pipe_huge_steel":"pipe_medium_steel"));
-                h.assertTrue(pipe instanceof com.gregtech.gregtech.block.machine.FluidPipeBlock,"registered pipe fixture");
-                f.set(f.pos,pipe.defaultBlockState());
-                exercise(h,f,side,huge,GTTechnological.get("blank_cover"));
-            }
-        h.succeed();
+        whenFixtureChunksReady(h,()->{
+            for(boolean huge:new boolean[]{false,true})for(var side:Direction.values())
+                try(var f=new Fixture(h,20+side.ordinal()+(huge?6:0))) {
+                    var pipe=net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(
+                            net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",huge?"pipe_huge_steel":"pipe_medium_steel"));
+                    h.assertTrue(pipe instanceof com.gregtech.gregtech.block.machine.FluidPipeBlock,"registered pipe fixture");
+                    f.set(f.pos,pipe.defaultBlockState());
+                    exercise(h,f,side,huge,GTTechnological.get("blank_cover"));
+                }
+        });
     }
     @GameTest(template="cover_removal_empty",timeoutTicks=100)
     public static void removingNonsolidValvePreservesUnderlyingFullHostSupport(GameTestHelper h) {
-        for(var side:Direction.values())try(var f=new Fixture(h,40+side.ordinal())) {
-            var pipe=net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(
-                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","pipe_huge_steel"));
-            f.set(f.pos,pipe.defaultBlockState());
-            exercise(h,f,side,true,GTTechnological.get(com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.PRESSURE_VALVE));
-        }
-        h.succeed();
+        whenFixtureChunksReady(h,()->{
+            for(var side:Direction.values())try(var f=new Fixture(h,40+side.ordinal())) {
+                var pipe=net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(
+                        net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","pipe_huge_steel"));
+                f.set(f.pos,pipe.defaultBlockState());
+                exercise(h,f,side,true,GTTechnological.get(com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.PRESSURE_VALVE));
+            }
+        });
     }
 }

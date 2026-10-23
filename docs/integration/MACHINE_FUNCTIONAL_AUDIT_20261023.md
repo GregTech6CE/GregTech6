@@ -217,3 +217,7 @@ Fixed crystal charger right-click admission to use the node energy type (LU), re
 Source guards: added63 independently source-verified localization aliases,10 scoped Jade declarations and3 generic EMI headings; restored exact pressure-sensor naming. Generated resource ordering synchronized without removing entries.
 
 See [signal cover audit](SIGNAL_COVER_BEHAVIOR_AUDIT.md) and [removal audit](COVER_REMOVAL_UPDATE_AUDIT.md). Final local453 gate passes (Forge231/Neo222),137guards,491REMI,1023shared package classes and SDK112core/46native. Remote CI remains separately required.
+
+## Bounded ore-source alignment
+
+See [ore-source audit](ORE_PROCESSING_SOURCE_ALIGNMENT.md). Shared furnace/sluice/sifter/magnetic policy and bounded Cinnabar processing now pass27 new cases per loader; full local507 passes (Forge258/Neo249). Preserve UNKNOWN/addon ownership, external explicit rows and existing item IDs. Thermal recycling, raw gem crafting conditions and late external-form refresh remain separate unfinished work.
