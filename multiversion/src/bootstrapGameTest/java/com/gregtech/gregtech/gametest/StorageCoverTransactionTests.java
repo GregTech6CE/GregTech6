@@ -129,6 +129,15 @@ public final class StorageCoverTransactionTests {
             var pos = new BlockPos(2, 1, 2);
             h.setBlock(pos, BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", kind)));
             var port = (UsbSwitchBlockEntity) h.getLevel().getBlockEntity(h.absolutePos(pos));
+            for (String selectorId : new String[]{"manual_selector", "button_panel_selector", "redstone_selector"}) {
+                var selector = item(selectorId);
+                h.assertTrue(!selector.isEmpty() && com.gregtech.gregtech.content.cover.CoverItems.isCover(selector),
+                        "registered selector is admitted as a cover: " + selectorId);
+                h.assertTrue(port.attachCover(Direction.NORTH, selector), "mode-capable " + kind + " accepts " + selectorId);
+                port.setMode(7);
+                h.assertTrue(!port.removeCover(Direction.NORTH).isEmpty() && port.mode() == 0,
+                        "every selector removal resets mode: " + selectorId);
+            }
             for (int mode = 0; mode < 16; mode++) {
                 var file = new CompoundTag();
                 file.putInt("selected_file", mode);
