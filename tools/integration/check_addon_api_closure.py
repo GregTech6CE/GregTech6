@@ -146,6 +146,28 @@ def jar_classes(path):
         return {name[:-6] for name in archive.namelist() if name.endswith('.class')}
 
 
+def sdk_contents(path, allowed):
+    """The compile-only SDK is exactly the public classes plus manifest/license notices."""
+    errors = []
+    with zipfile.ZipFile(path) as archive:
+        names = [entry.filename for entry in archive.infolist() if not entry.is_dir()]
+        if len(names) != len(set(names)):
+            errors.append('SDK contains duplicate entries')
+        classes = {name[:-6] for name in names if name.endswith('.class')}
+        errors.extend('SDK contains non-API class ' + name for name in sorted(classes - allowed))
+        errors.extend('SDK is missing API class ' + name for name in sorted(allowed - classes))
+        for name in names:
+            if not (name.endswith('.class') or name == 'META-INF/MANIFEST.MF'
+                    or name.startswith('META-INF/gregtech6/')):
+                errors.append('SDK contains runtime/non-API resource ' + name)
+        if 'META-INF/MANIFEST.MF' in names:
+            manifest = archive.read('META-INF/MANIFEST.MF').decode('utf-8')
+            if any(line.lower().startswith(('mixinconfigs:', 'fmlmodtype:', 'modtype:'))
+                   for line in manifest.splitlines()):
+                errors.append('SDK manifest declares runtime mod/mixin metadata')
+    return errors
+
+
 def permitted(name, kind, api_names):
     if name in api_names or name.startswith(('java/', 'javax/', 'jdk/')):
         return True
@@ -248,6 +270,7 @@ def main():
             parser.error('--sample and --sdk are used together')
         sample_names = class_names(args.sample)
         sdk_names = jar_classes(args.sdk)
+        errors.extend(sdk_contents(args.sdk, allowed))
         errors.extend(violations(args.sample, sample_names | sdk_names, args.kind))
     if errors:
         raise SystemExit('Addon API closure failed:\n' + '\n'.join(errors[:40]))

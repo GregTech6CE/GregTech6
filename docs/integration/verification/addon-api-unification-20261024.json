@@ -1,0 +1,334 @@
+{
+  "date": "2026-10-24",
+  "scope": "Existing addon API contract unification; not a complete generic machine framework",
+  "versions": {
+    "mod": "0.0.0",
+    "api": 0
+  },
+  "core_contracts": {
+    "energy_transfer_assertions": 475,
+    "recipe_line_assertions": 37,
+    "api_version_assertions": 84,
+    "passed": true
+  },
+  "compilation": {
+    "forge_1_20_1": true,
+    "neoforge_1_21_1": true,
+    "both_native_api": true,
+    "both_samples": true,
+    "both_gametest_sources": true
+  },
+  "gametest": {
+    "loader": "neoforge",
+    "namespace": "gt6ce_api_contracts",
+    "required_passed": 7,
+    "test_runtime_ms": 805.4,
+    "real_sample_host_storage": true,
+    "energy_accounting_uses_controlled_context": true,
+    "forge_executed": false
+  },
+  "sdk": [
+    {
+      "path": "C:\\Dev\\GregTech6\\multiversion\\versions\\1.20.1-forge\\build\\addon-sdk\\gt6ce-addon-sdk-1.20.1-forge-0.0.0.jar",
+      "loader": "forge",
+      "bytes": 208840,
+      "sha256": "6ee6d728380d6eb87b35bc0c2b701957635e90565c9e459b975998c7c0ba7537",
+      "core_api_classes": 112,
+      "platform_api_classes": 46,
+      "shared_classes": 112,
+      "api_closure_checked": true,
+      "zip_crc_checked": true,
+      "compile_only": true,
+      "external_addon_runtime_verified": false
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\multiversion\\versions\\1.21.1-neoforge\\build\\addon-sdk\\gt6ce-addon-sdk-1.21.1-neoforge-0.0.0.jar",
+      "loader": "neoforge",
+      "bytes": 208934,
+      "sha256": "7c7af8a6f772a22cddbf2de30aca35690831bdbaf9f8fd7a8107861bc704e523",
+      "core_api_classes": 112,
+      "platform_api_classes": 46,
+      "shared_classes": 112,
+      "api_closure_checked": true,
+      "zip_crc_checked": true,
+      "compile_only": true,
+      "external_addon_runtime_verified": false
+    }
+  ],
+  "sdk_attachments": [
+    {
+      "loader": "forge",
+      "classifier": "sources",
+      "path": "multiversion/versions/1.20.1-forge/build/addon-sdk/gt6ce-addon-sdk-1.20.1-forge-0.0.0-sources.jar",
+      "sha256": "975090be0daf0fe852398a02db2003e39e37f38cc8c2052788bd391576a08a91",
+      "bytes": 128246,
+      "source_files": 103,
+      "zip_crc_and_notices_checked": true
+    },
+    {
+      "loader": "forge",
+      "classifier": "javadoc",
+      "path": "multiversion/versions/1.20.1-forge/build/addon-sdk/gt6ce-addon-sdk-1.20.1-forge-0.0.0-javadoc.jar",
+      "sha256": "8800a654657638a8a91e06a25dfc18da77d00d609f7321b7bb1ae35ee29a4051",
+      "bytes": 681940,
+      "source_files": 0,
+      "zip_crc_and_notices_checked": true
+    },
+    {
+      "loader": "neoforge",
+      "classifier": "sources",
+      "path": "multiversion/versions/1.21.1-neoforge/build/addon-sdk/gt6ce-addon-sdk-1.21.1-neoforge-0.0.0-sources.jar",
+      "sha256": "9f30c519c5c3c3b3266622e4f4915ef78a06a8a7f6c12a0e55cc43419a4d1d0b",
+      "bytes": 128239,
+      "source_files": 103,
+      "zip_crc_and_notices_checked": true
+    },
+    {
+      "loader": "neoforge",
+      "classifier": "javadoc",
+      "path": "multiversion/versions/1.21.1-neoforge/build/addon-sdk/gt6ce-addon-sdk-1.21.1-neoforge-0.0.0-javadoc.jar",
+      "sha256": "f74ff674e6eafe2ed2d5905b9d1b0a5536fbbef6f8696cd414a7027338724dd3",
+      "bytes": 701578,
+      "source_files": 0,
+      "zip_crc_and_notices_checked": true
+    }
+  ],
+  "binary_signature_comparison": {
+    "scope": "NeoForge 1.21.1 SDK JVM public/protected binary signatures; no execution, behavioral compatibility or generic/source compatibility claim",
+    "old": {
+      "path": "C:\\Dev\\ktfruaddon-build-20261023\\gt6-ktfruaddon-main\\libs\\gt6ce\\gt6ce-addon-sdk-1.21.1-neoforge-0.0.0.jar",
+      "sha256": "a74dfbe7f06fca791b91a26cceee995e36f5b2e994a8df2e9be1c37ab16a59e3",
+      "size": 185104
+    },
+    "new": {
+      "path": "C:\\Dev\\GregTech6\\multiversion\\versions\\1.21.1-neoforge\\build\\addon-sdk\\gt6ce-addon-sdk-1.21.1-neoforge-0.0.0.jar",
+      "sha256": "7c7af8a6f772a22cddbf2de30aca35690831bdbaf9f8fd7a8107861bc704e523",
+      "size": 208934
+    },
+    "counts": {
+      "old_classes_total": 132,
+      "new_classes_total": 158,
+      "old_public_protected_classes": 128,
+      "old_public_protected_fields": 105,
+      "old_public_protected_methods_constructors": 961,
+      "old_interfaces_checked": 30
+    },
+    "classfile_major_versions": {
+      "old": [
+        61,
+        65
+      ],
+      "new": [
+        61,
+        65
+      ]
+    },
+    "issues": [],
+    "added_classes": [
+      "com/gregtech/gregtech/api/addon/EnergyTransfer",
+      "com/gregtech/gregtech/api/addon/MachineTuning",
+      "com/gregtech/gregtech/api/addon/MachineTuningContributor",
+      "com/gregtech/gregtech/api/addon/platform/AddonRecipes$Line$Builder",
+      "com/gregtech/gregtech/api/addon/platform/AddonSensor",
+      "com/gregtech/gregtech/api/addon/platform/AddonSensorContributor",
+      "com/gregtech/gregtech/api/addon/platform/BehaviorAccess",
+      "com/gregtech/gregtech/api/addon/platform/BehaviorAccess$1",
+      "com/gregtech/gregtech/api/addon/platform/BehaviorAccess$2",
+      "com/gregtech/gregtech/api/addon/platform/BehaviorAccess$Drain",
+      "com/gregtech/gregtech/api/addon/platform/BehaviorAccess$Fill",
+      "com/gregtech/gregtech/api/addon/platform/BehaviorMachineClient",
+      "com/gregtech/gregtech/api/addon/platform/BehaviorMachineClientView",
+      "com/gregtech/gregtech/api/addon/platform/BehaviorMachineMenuView",
+      "com/gregtech/gregtech/api/addon/platform/FluidAccess",
+      "com/gregtech/gregtech/api/addon/platform/InventoryAccess",
+      "com/gregtech/gregtech/api/addon/platform/MachineEnergy",
+      "com/gregtech/gregtech/api/addon/platform/SensorContext",
+      "com/gregtech/gregtech/api/machine/HeatHandler",
+      "com/gregtech/gregtech/api/machine/MachineControl",
+      "com/gregtech/gregtech/api/machine/MachineControl$Provider",
+      "com/gregtech/gregtech/api/sensor/CompressionSensorSource",
+      "com/gregtech/gregtech/api/sensor/ProgressSensorSource",
+      "com/gregtech/gregtech/api/sensor/TemperatureSource",
+      "com/gregtech/gregtech/api/transport/FluidPipeConnectable",
+      "com/gregtech/gregtech/api/transport/ItemPipeConnectable"
+    ],
+    "added_public_members_on_existing_classes": [
+      {
+        "class": "com/gregtech/gregtech/api/addon/BehaviorMachine$Builder",
+        "kind": "methods",
+        "name": "signalOutput",
+        "descriptor": "(Z)Lcom/gregtech/gregtech/api/addon/BehaviorMachine$Builder;",
+        "abstract": false,
+        "static": false
+      },
+      {
+        "class": "com/gregtech/gregtech/api/addon/BehaviorMachine$Builder",
+        "kind": "methods",
+        "name": "clientState",
+        "descriptor": "([Ljava/lang/String;)Lcom/gregtech/gregtech/api/addon/BehaviorMachine$Builder;",
+        "abstract": false,
+        "static": false
+      },
+      {
+        "class": "com/gregtech/gregtech/api/addon/BehaviorMachine",
+        "kind": "methods",
+        "name": "signalOutput",
+        "descriptor": "()Z",
+        "abstract": false,
+        "static": false
+      },
+      {
+        "class": "com/gregtech/gregtech/api/addon/BehaviorMachine",
+        "kind": "methods",
+        "name": "clientState",
+        "descriptor": "()Ljava/util/List;",
+        "abstract": false,
+        "static": false
+      },
+      {
+        "class": "com/gregtech/gregtech/api/addon/MaterialDeclaration$Builder",
+        "kind": "methods",
+        "name": "centrifuge",
+        "descriptor": "()Lcom/gregtech/gregtech/api/addon/MaterialDeclaration$Builder;",
+        "abstract": false,
+        "static": false
+      },
+      {
+        "class": "com/gregtech/gregtech/api/addon/MaterialDeclaration$Builder",
+        "kind": "methods",
+        "name": "electrolyzer",
+        "descriptor": "()Lcom/gregtech/gregtech/api/addon/MaterialDeclaration$Builder;",
+        "abstract": false,
+        "static": false
+      },
+      {
+        "class": "com/gregtech/gregtech/api/addon/MaterialDeclaration",
+        "kind": "methods",
+        "name": "<init>",
+        "descriptor": "(ILjava/lang/String;Ljava/lang/String;IIIFLjava/lang/String;ZZZZZLjava/util/List;ZZZZ)V",
+        "abstract": false,
+        "static": false
+      },
+      {
+        "class": "com/gregtech/gregtech/api/addon/MaterialDeclaration",
+        "kind": "methods",
+        "name": "centrifuge",
+        "descriptor": "()Z",
+        "abstract": false,
+        "static": false
+      },
+      {
+        "class": "com/gregtech/gregtech/api/addon/MaterialDeclaration",
+        "kind": "methods",
+        "name": "electrolyzer",
+        "descriptor": "()Z",
+        "abstract": false,
+        "static": false
+      },
+      {
+        "class": "com/gregtech/gregtech/api/addon/platform/AddonRecipes$Line",
+        "kind": "methods",
+        "name": "<init>",
+        "descriptor": "([Lnet/minecraft/world/item/ItemStack;[Lnet/minecraft/world/item/ItemStack;[Lnet/neoforged/neoforge/fluids/FluidStack;[Lnet/neoforged/neoforge/fluids/FluidStack;JJJ[I[I[I[I)V",
+        "abstract": false,
+        "static": false
+      },
+      {
+        "class": "com/gregtech/gregtech/api/addon/platform/AddonRecipes$Line",
+        "kind": "methods",
+        "name": "builder",
+        "descriptor": "()Lcom/gregtech/gregtech/api/addon/platform/AddonRecipes$Line$Builder;",
+        "abstract": false,
+        "static": true
+      },
+      {
+        "class": "com/gregtech/gregtech/api/addon/platform/AddonRecipes$Line",
+        "kind": "methods",
+        "name": "presenceFluidInputs",
+        "descriptor": "()[I",
+        "abstract": false,
+        "static": false
+      },
+      {
+        "class": "com/gregtech/gregtech/api/addon/platform/AddonRecipes$Line",
+        "kind": "methods",
+        "name": "read",
+        "descriptor": "([Lnet/minecraft/world/item/ItemStack;[Lnet/minecraft/world/item/ItemStack;[Lnet/neoforged/neoforge/fluids/FluidStack;[Lnet/neoforged/neoforge/fluids/FluidStack;JJJ[I[I[I[I)Lcom/gregtech/gregtech/api/addon/platform/AddonRecipes$Line;",
+        "abstract": false,
+        "static": true
+      },
+      {
+        "class": "com/gregtech/gregtech/api/addon/platform/MachineBehavior",
+        "kind": "methods",
+        "name": "gtSignal",
+        "descriptor": "(Lcom/gregtech/gregtech/api/addon/platform/MachineBehaviorContext;I)J",
+        "abstract": false,
+        "static": false
+      },
+      {
+        "class": "com/gregtech/gregtech/api/addon/platform/MachineBehaviorContext",
+        "kind": "methods",
+        "name": "inventoryAccess",
+        "descriptor": "()Lcom/gregtech/gregtech/api/addon/platform/InventoryAccess;",
+        "abstract": false,
+        "static": false
+      },
+      {
+        "class": "com/gregtech/gregtech/api/addon/platform/MachineBehaviorContext",
+        "kind": "methods",
+        "name": "fluidAccess",
+        "descriptor": "()Lcom/gregtech/gregtech/api/addon/platform/FluidAccess;",
+        "abstract": false,
+        "static": false
+      },
+      {
+        "class": "com/gregtech/gregtech/api/addon/platform/MachineBehaviorContext",
+        "kind": "methods",
+        "name": "energyAccess",
+        "descriptor": "()Lcom/gregtech/gregtech/api/addon/platform/MachineEnergy;",
+        "abstract": false,
+        "static": false
+      },
+      {
+        "class": "com/gregtech/gregtech/api/addon/platform/PartContext",
+        "kind": "methods",
+        "name": "inventoryAccess",
+        "descriptor": "()Lcom/gregtech/gregtech/api/addon/platform/InventoryAccess;",
+        "abstract": false,
+        "static": false
+      },
+      {
+        "class": "com/gregtech/gregtech/api/addon/platform/PartContext",
+        "kind": "methods",
+        "name": "fluidAccess",
+        "descriptor": "()Lcom/gregtech/gregtech/api/addon/platform/FluidAccess;",
+        "abstract": false,
+        "static": false
+      }
+    ],
+    "result": "PASS"
+  },
+  "build": {
+    "successful": true,
+    "elapsed_seconds": 144,
+    "log": "work/api-unification-20261024/verify-resume.log",
+    "log_sha256": "824c9ed182ec79aa5def6c8228f8234eb0d1b0c81cd7f7b6e8d5def6ab18c96e",
+    "offline_cached_dependencies": true,
+    "local_repository_init_scripts": [
+      "work/emi-local.init.gradle",
+      "work/user-build-20261023-repositories.init.gradle"
+    ]
+  },
+  "limitations": [
+    "Line getter mutations intentionally no longer modify the recipe row",
+    "No third-party addon runtime verification",
+    "No full native energy network test",
+    "No client or saved-world restart verification",
+    "No arbitrary channel framework, cross-resource transaction executor, or state migration added",
+    "No full mod release jar or push this turn"
+  ],
+  "protected_material_hashes": {
+    "WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  }
+}

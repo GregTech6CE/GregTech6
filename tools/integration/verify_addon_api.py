@@ -12,7 +12,7 @@ from collections import Counter
 
 from verify_artifacts import compiled_core_hashes
 from native_layout import platform_build
-from check_addon_api_closure import class_names, violations
+from check_addon_api_closure import class_names, violations, sdk_contents
 
 LOADERS = {'core': 61, 'forge': 61, 'neoforge': 65}
 
@@ -34,6 +34,7 @@ def inspect(path, repo, loader='core'):
     errors = violations(core_dir, class_names(core_dir), 'core')
     if platform_dir:
         errors.extend(violations(platform_dir, allowed, loader))
+    errors.extend(sdk_contents(path, allowed))
     if errors:
         raise ValueError('SDK API closure failed: ' + '; '.join(errors[:12]))
 
