@@ -67,5 +67,27 @@ public final class BehaviorPlaceWoodworkingSupplies {
         }
         return InteractionResult.PASS;
     }
-    public static net.minecraft.world.InteractionResult placeTorch(net.minecraft.world.item.context.UseOnContext context,boolean usable){var player=context.getPlayer();if(player==null||!usable)return net.minecraft.world.InteractionResult.PASS;for(int slot=player.getInventory().getContainerSize()-1;slot>=0;slot--){var item=player.getInventory().getItem(slot);if(!item.is(net.minecraft.world.item.Items.TORCH))continue;var copy=item.copyWithCount(1);var placement=new net.minecraft.world.item.context.BlockPlaceContext(context.getLevel(),player,context.getHand(),copy,new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(),context.getClickedFace(),context.getClickedPos(),context.isInside()));var result=((net.minecraft.world.item.BlockItem)item.getItem()).place(placement);if(result.consumesAction()&&!context.getLevel().isClientSide&&!player.getAbilities().instabuild)item.shrink(1);return result;}return net.minecraft.world.InteractionResult.PASS;}
+    public static InteractionResult placeTorch(UseOnContext context, boolean usable) {
+        var player = context.getPlayer();
+        var level = context.getLevel();
+        if (level.isClientSide || player == null || !usable
+                || !ManualToolBehaviorAccess.mayEdit(level, player, context.getClickedPos())) return InteractionResult.PASS;
+        for (int slot = player.getInventory().getContainerSize() - 1; slot >= 0; slot--) {
+            var stock = player.getInventory().getItem(slot);
+            if (!stock.is(Items.TORCH)) continue;
+            var copy = stock.copyWithCount(1);
+            var hit = new BlockHitResult(context.getClickLocation(), context.getClickedFace(),
+                    context.getClickedPos(), context.isInside());
+            var placement = new UseOnContext(level, player, context.getHand(), copy, hit);
+            var target = new BlockPlaceContext(placement).getClickedPos();
+            if (!level.hasChunkAt(target) || !ManualToolBehaviorAccess.mayEdit(level, player, target)) return InteractionResult.PASS;
+            // The nested transaction owns the torch copy; the outer transaction owns only the drill.
+            // Commit inventory stock only after the torch's placement event accepted the world change.
+            var result = copy.useOn(placement);
+            if (result.consumesAction() && !player.getAbilities().instabuild) stock.shrink(1 - copy.getCount());
+            player.getInventory().setChanged();
+            return result;
+        }
+        return InteractionResult.PASS;
+    }
 }

@@ -856,8 +856,10 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     /** Whether {@code parallel} runs of the recipe's fluid outputs fit into the output tanks. */
     private boolean fluidsFit(Recipe recipe, int parallel) {
         long[] free = new long[tanksOutput.length];
+        FluidStack[] reserved = new FluidStack[tanksOutput.length];
         for (int i = 0; i < tanksOutput.length; i++) {
             free[i] = Math.max(0, tanksOutput[i].capacity() - tanksOutput[i].getAmount());
+            reserved[i] = tanksOutput[i].isEmpty() ? FluidStack.EMPTY : tanksOutput[i].getFluid().copy();
         }
         for (var output : recipe.mFluidOutputs) {
             if (output == null || output.isEmpty()) continue;
@@ -865,11 +867,16 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             for (int pass = 0; pass < 2 && remaining > 0; pass++) {
                 for (int i = 0; i < tanksOutput.length && remaining > 0; i++) {
                     if (free[i] <= 0) continue;
-                    var fluid = tanksOutput[i].getFluid();
-                    boolean empty = tanksOutput[i].isEmpty();
+                    var fluid = reserved[i];
+                    boolean empty = fluid.isEmpty();
+//? if >=1.21.1 {
+/*                    if (empty ? pass == 0 : !FluidStack.isSameFluidSameComponents(fluid, output)) continue;
+*///?} else {
                     if (empty ? pass == 0 : !fluid.isFluidEqual(output)) continue;
+//?}
                     long take = Math.min(free[i], remaining);
                     free[i] -= take;
+                    if (empty && take > 0) reserved[i] = output.copy();
                     remaining -= take;
                 }
             }
@@ -892,10 +899,10 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     }
 
     /** Deduct only deliveries confirmed by the shared transfer engine. */
-    private void pushOutputItems(IItemHandler target) {
+    private void pushOutputItems(IItemHandler target, Direction side) {
         for (int slot = itemHandler.inputCount(); slot < itemHandler.getSlots(); slot++) {
             ItemStack offered = itemHandler.getStackInSlot(slot);
-            if (offered.isEmpty()) continue;
+            if (offered.isEmpty() || !allowsItemTraffic(side, offered, false)) continue;
             var result = com.gregtech.gregtech.content.transport.ItemPipeTransferAdapter.transfer(
                     offered.copy(), () -> target);
             if (result.accepted() > 0) itemHandler.extractItem(slot, result.accepted(), false);
@@ -978,8 +985,9 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         for (int srcSlot = 0; srcSlot < source.getSlots(); srcSlot++) {
             ItemStack stack = source.getStackInSlot(srcSlot);
             if (stack.isEmpty()) continue;
-            if (!acceptsAutomaticInput(stack)) continue;
+            if (!acceptsAutomaticInput(stack) || !allowsItemTraffic(absolute, stack, true)) continue;
             for (int i = 0; i < inputCount; i++) {
+                if (!allowsItemTraffic(absolute, stack, true)) break;
                 ItemStack remaining = itemHandler.insertItem(i, stack.copy(), true);
                 int toTake = stack.getCount() - remaining.getCount();
                 if (toTake <= 0) continue;
@@ -1013,11 +1021,13 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         int totalSlots = itemHandler.getSlots();
 
         if (target != null) {
-            pushOutputItems(target);
+            pushOutputItems(target, absolute);
         } else if (level.isEmptyBlock(adj)) {
             // Drop into air like a hopper
             for (int i = firstOutputSlot; i < totalSlots; i++) {
-                ItemStack extracted = itemHandler.extractItem(i, itemHandler.getStackInSlot(i).getCount(), false);
+                ItemStack offered = itemHandler.getStackInSlot(i);
+                if (!allowsItemTraffic(absolute, offered, false)) continue;
+                ItemStack extracted = itemHandler.extractItem(i, offered.getCount(), false);
                 if (extracted.isEmpty()) continue;
                 double x = adj.getX() + 0.5;
                 double y = adj.getY() + 0.5;
@@ -1698,6 +1708,13 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     // ── Sided wrappers ────────────────────────────────────────────────────
 
+    /** Own-face policy applies to active auto-I/O as well as passive capability traffic. */
+    private boolean allowsItemTraffic(Direction side, ItemStack stack, boolean inserting) {
+        return !isRemoved() && !isFaceShuttered(side)
+                && com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side), inserting)
+                && !coverBlocksItemTraffic(side) && coverFilterPermits(side, stack);
+    }
+
     private record SidedItemHandler(BasicMachineBlockEntity be, int relativeSide, IItemHandler inner, boolean canInsert, boolean canExtract)
             implements IItemHandler {
         @Override public int getSlots() { return inner.getSlots(); }
@@ -1709,23 +1726,20 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         // machine behaving exactly as before this batch.
         @Override public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
             Direction side = be.relativeToAbsolute(relativeSide);
-            return com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsItem(be.getCover(side),true) && canInsert && be.acceptsAutomaticInput(stack) && !be.isRemoved() && !be.isFaceShuttered(side)
-                    && !be.coverBlocksItemTraffic(side) && be.coverFilterPermits(side, stack)
+            return canInsert && be.acceptsAutomaticInput(stack) && be.allowsItemTraffic(side, stack, true)
                     ? inner.insertItem(slot, stack, simulate) : stack;
         }
         @Override public ItemStack extractItem(int slot, int amount, boolean simulate) {
             if (slot < be.inputSlots()) return ItemStack.EMPTY;
             Direction side = be.relativeToAbsolute(relativeSide);
             ItemStack existing = inner.getStackInSlot(slot);
-            return com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsItem(be.getCover(side),false) && canExtract && !be.isRemoved() && !be.isFaceShuttered(side)
-                    && !be.coverBlocksItemTraffic(side) && be.coverFilterPermits(side, existing)
+            return canExtract && be.allowsItemTraffic(side, existing, false)
                     ? inner.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
         }
         @Override public int getSlotLimit(int slot) { return inner.getSlotLimit(slot); }
         @Override public boolean isItemValid(int slot, ItemStack stack) {
             Direction side = be.relativeToAbsolute(relativeSide);
-            return com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsItem(be.getCover(side),true) && canInsert && be.acceptsAutomaticInput(stack) && !be.isRemoved() && !be.isFaceShuttered(side)
-                    && !be.coverBlocksItemTraffic(side) && be.coverFilterPermits(side, stack)
+            return canInsert && be.acceptsAutomaticInput(stack) && be.allowsItemTraffic(side, stack, true)
                     && inner.isItemValid(slot, stack);
         }
     }
