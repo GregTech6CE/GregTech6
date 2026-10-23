@@ -74,4 +74,4 @@
 
 [ControllerStructureLayouts](../../multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/ControllerStructureLayouts.java)仅vonDaGraagg方法改为core委托，并纠正类注释对实际验证消费者的过强描述。方法外Forge1439／Neo1446项保持，方法内通过旧原版／core／旧预览的63个有序单元重建及新委托语句核对，**不把这次共享改动宣称为整个方法词法不变**。现有核心生成列表为确定性纯数据，引用不引入世界依赖；异常分配、类初始化和实际预览仍未运行验收。
 
-原MultiTileEntityVonDaGraagg头载GregTech-6 Team2025、Gregorius Techneticies、LGPL-3.0-or-later；其余原来源各自保留头及摘要。没有把外部总线或原生源码拷进生产；用户CompoundMaterials／WoodMaterials摘要保持。未Java编译／目标初始化、Gradle、测试、游戏、pack生成、供电／刷怪／安装仪表、磁盘重启、构建或推送。全面核查仍继续，正式247条包括已修复／部分修复、扩展合同和保留政策，不是247个待修故障。
+原MultiTileEntityVonDaGraagg头载GregTech-6 Team2025、Gregorius Techneticies、LGPL-3.0-or-later；其余原来源各自保留头及摘要。没有把外部总线或原生源码拷进生产；CompoundMaterials／WoodMaterials摘要保持。未Java编译／目标初始化、Gradle、测试、游戏、pack生成、供电／刷怪／安装仪表、磁盘重启、构建或推送。全面核查仍继续，正式247条包括已修复／部分修复、扩展合同和保留政策，不是247个待修故障。

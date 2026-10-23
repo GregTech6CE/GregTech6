@@ -38,8 +38,8 @@ ComponentCoverRuntime.canAttach据此拒绝传送带／泵；PanelCoverRuntime�
 
 展开CapabilityRelayBlockEntity缓存、失效及ItemRelay／FluidRelay，限定局部active→visited、h→targetHandler。EnergyRelayBlockEntity展开FE及19项GT方法，lambda e／s→recipient／recipientSide；真正的target方法和成员名保持，注释限定子类负责目标解析。Neo StorageContainerCapabilities拆开20项注册，e／be→event／blockEntity，表达式及注册顺序保持；最长行由2801降至123。
 
-三源五平台完整执行流1552／1453、1610／1511、902在明确局部名称归一后保持；原始字面量位置、唯一注释纠正、其它注释、Stonecutter条件及用户两材料表摘要单独复核。25原版／34当前源码和48共享平台视图归档。
+三源五平台完整执行流1552／1453、1610／1511、902在明确局部名称归一后保持；原始字面量位置、唯一注释纠正、其它注释、Stonecutter条件及两份材料表摘要单独复核。25原版／34当前源码和48共享平台视图归档。
 
 原普通扩展器缓存红石值，当前查询实时计算；桥的比较器原接口有面而现代原生入口无面。完整通知／强弱信号／缓存时点／反馈环继续，不能由路由样本证明对齐。possible／success沿用110，漆色273–274不重新编号。
 
-未Java编译／目标初始化、Gradle、测试、游戏、实际能力操作、包投递、世界重启、构建或推送。其它宿主、完整红石／能源／覆盖板组合和全面项目队列继续，goal保持active。
+未Java编译／目标初始化、Gradle、测试、游戏、实际能力操作、包投递、世界重启、构建或推送。其它宿主、完整红石／能源／覆盖板组合和全面项目队列继续，整体移植仍未完成。

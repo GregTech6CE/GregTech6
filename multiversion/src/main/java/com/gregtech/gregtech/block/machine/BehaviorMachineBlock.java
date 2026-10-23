@@ -75,6 +75,11 @@ public class BehaviorMachineBlock extends GTFacingMachineBlock implements Entity
     public AddonMachines.AcceptedBehavior accepted() { return accepted; }
     public BehaviorMachine declaration() { return accepted.declaration(); }
 
+    @Override
+    public boolean isSignalSource(BlockState state) {
+        return declaration().signalOutput();
+    }
+
     public ResourceLocation modelId(String suffix) {
         return ResourceLocation.fromNamespaceAndPath(accepted.addonId(),
                 "block/machine/basic/" + accepted.declaration().casing().machineType() + suffix);

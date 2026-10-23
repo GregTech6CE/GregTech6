@@ -1,6 +1,6 @@
 # 2026-10-18 / 正式身份清理与双版业务去重
 
-用户要求删除重复旧 ID，不保留别名／重映射，并在 Stonecutter 分支实际合并业务实现。当前分支已由 `experiment/stonecutter-emi` 改名为 `experiment/stonecutter`；本批不推送、不合并 main。
+要求删除重复旧 ID，不保留别名／重映射，并在 Stonecutter 分支实际合并业务实现。当前分支已由 `experiment/stonecutter-emi` 改名为 `experiment/stonecutter`；本批不推送、不合并 main。
 
 ## 正式身份
 

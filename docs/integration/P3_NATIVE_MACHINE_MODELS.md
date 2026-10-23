@@ -12,7 +12,7 @@ CapsuleCellRenderer 完整恢复 cell 容器四侧流体窗口，用真实 vesse
 
 必要集中编译和单次既有 Neo 主菜单启动/Native jar 构建回执位于 verification/p3-native-machine-models-*.json、p3-neoforge-machine-models-client-startup.json。实际烘焙日志可证明事件和模型接线，不能证明进入世界的警告、染色、旋转或 cell 流体画面；不新增测试夹具，不频繁重复启动。
 
-待验：实际机器状态/手持、熔毁与坩埚内容画面、cell 窗口/能力与数据更新、F3+T、真实专服联机、本批生产 jar 运行、完整生存流程、独立世界重载与旧档。完整三来源 goal 保持 active。
+待验：实际机器状态/手持、熔毁与坩埚内容画面、cell 窗口/能力与数据更新、F3+T、真实专服联机、本批生产 jar 运行、完整生存流程、独立世界重载与旧档。整体移植仍未完成。
 
 
 同批晚改：本次实际客户端只剩1个block模型缺失，即Source继承但未被任何渲染使用的barometer/sprites.json请求；Native移除该多余注册，真实压力表仍取已有atlas sprite。最终Native jar/Forge compile 20s通过，不重复客户端，修正后警告数量不声称已实跑。上一批82个无用矿石材料模板请求在本次实际日志已消失；45气体材料blockstate和57462初始item JSON警告仍独立记录。

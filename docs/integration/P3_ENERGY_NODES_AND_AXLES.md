@@ -10,4 +10,4 @@ Neo 原生注册完整70个能源目录设备：10电动机/电发电机、9电�
 
 AxleCatalog 保留13种原材料与各4规格，共52传动轴，Forge 与 Neo 共用。AxleConnectionRules 按 down/up/north/south/west/east 连接位保留至多两个同轴面的规则。Neo 原生轴实体保留有符号 RU、转速/功率上限、递归去重、原零额定线损、过载与运行旋转、区块卸载能源图清理；原动态模型和动画 texture metadata 原字节搬入共享资源，水浸/碰撞/双向接线和邻接粗细查询接原模块。13个可装齿轮箱与13个旋转变压器是下一批依赖，完整手动/电动工具和这些设备的制作/生存取得也尚待整合。
 
-三批集中 :neoforge:compileJava :compileJava，首轮27秒因 Neo 爆炸 SoundEvent 的 Holder 引用差异失败，取 value() 修复后27秒通过，core/Neo/Forge Java 都成功。之后核对原 BE 支持集合补齐5个保留电池路径，最后单独 Neo 编译通过，耗时见 verification/p3-energy-nodes-axles-compile.json。回执保留各轮日志 SHA；没有为本批启动游戏、测试实际充放电/转换/过载/轴网、打开界面或世界独立重载，也没有新 jar 验包。上一轮线缆专服通过不能覆盖这批新工厂。目标仍 active。
+三批集中 :neoforge:compileJava :compileJava，首轮27秒因 Neo 爆炸 SoundEvent 的 Holder 引用差异失败，取 value() 修复后27秒通过，core/Neo/Forge Java 都成功。之后核对原 BE 支持集合补齐5个保留电池路径，最后单独 Neo 编译通过，耗时见 verification/p3-energy-nodes-axles-compile.json。回执保留各轮日志 SHA；没有为本批启动游戏、测试实际充放电/转换/过载/轴网、打开界面或世界独立重载，也没有新 jar 验包。上一轮线缆专服通过不能覆盖这批新工厂。仍未完成。

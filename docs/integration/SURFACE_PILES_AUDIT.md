@@ -48,7 +48,7 @@ core 的 configured_feature／placed_feature 中已有 gt_rocks、gt_surface_flo
 
 规则表保留 Spruce／Taiga／Boreal → Spruce，Birch → Birch，Jungle → Junglewood，Savanna → Acacia，Roofed／Dark Oak → DarkOak，Maple、Aspen、SilverPine、Towerwood、Redwood、Cypress、Pine、Fir 等分支。普通分支中 1/16 为 Dead、1/16 Mossy、1/16 Rotten，剩余 13/16 为群系木种或普通 stick；冰寒／沼泽等带 ! 的分支直接选 Frozen／Mossy 等，不再追加该混合。current dark_forest 映射 roofed forest，避免把现代原版黑森林误当旧外部 dark forest 的 Towerwood。
 
-TwigBlock 先尝试原 WoodX 拼写，无效则去掉 Wood 前缀，再经 MaterialRegistryExtras 别名（例如 Jungle→Junglewood、Coconut→Coconutwood、Autumn→Autumnwood）解析。WoodMaterials 有这些材料，wood 工厂和 stick 前缀允许生成，相同定义流在双端注册。因此旧注释“twigs drop vanilla sticks”不代表实际只能掉 vanilla stick。没有触碰用户正在整理的 WoodMaterials.java，来源回执仅记录读取时哈希。
+TwigBlock 先尝试原 WoodX 拼写，无效则去掉 Wood 前缀，再经 MaterialRegistryExtras 别名（例如 Jungle→Junglewood、Coconut→Coconutwood、Autumn→Autumnwood）解析。WoodMaterials 有这些材料，wood 工厂和 stick 前缀允许生成，相同定义流在双端注册。因此旧注释“twigs drop vanilla sticks”不代表实际只能掉 vanilla stick。没有触碰正在整理的 WoodMaterials.java，来源回执仅记录读取时哈希。
 
 原 IL.Stick 在 LoaderItemList.java:774 默认绑定 vanilla stick，TFC 存在时可替换；下文 vanilla stick 结论均按默认无该可选提供者限定。原 Twig getDrops 使用 `1+rng(1+fortune)`，当前 TwigBlock.getDrops:36–47 读取真实工具 Fortune 并传相同数量公式；右键两边均取 1 并移除块。手摆旧 32073 的 getDefaultStick 覆写固定 vanilla stick×1，不能误以为旧手摆任意木棍能保留原木种。
 

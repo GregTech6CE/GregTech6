@@ -13,4 +13,4 @@
 
 复现：Java17 Gradle launcher，Native 使用现有 Java21 工具链。新的本机 flat/offline/loopback 隔离目录，既有获同意的 eula=true 副本；`-PdirectCoreResources=true -PdirectCoreClasspath=true -PelectricFluxCraftingSmoke=true -PserverSmokePhase=prepare -PserverSmokeId=<新 UUID> -PserverDirectory=build/<新隔离目录> -PserverSmokeX=0 -PserverSmokeY=240 -PserverSmokeZ=0 :neoforge:runServer`。双包 `-PdirectCoreResources=true :distributionJar :neoforge:jar`。源码/原始行/键/SHA、实际进程回执和限制见同名 .json 与 core/provenance 清单。
 
-当前新增十行未在 Forge 运行，Forge 动力玩法、玩家取得原料、成品安装、柴油入口、客户端供能与旧档继续待验。隔离 offline 专服记录 Mojang public-key 请求超时，未阻止启动/配方/tick/正常保存；保留原日志。第三方来源、许可未修改，goal active。
+当前新增十行未在 Forge 运行，Forge 动力玩法、玩家取得原料、成品安装、柴油入口、客户端供能与旧档继续待验。隔离 offline 专服记录 Mojang public-key 请求超时，未阻止启动/配方/tick/正常保存；保留原日志。第三方来源、许可未修改，整体移植仍未完成。

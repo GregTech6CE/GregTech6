@@ -4,7 +4,7 @@
 
 已先读工作约定、四份中央文档、第五十九批 NUCLEAR_NETWORK_AUDIT.md 和 nuclear-contract-audit-20261021.json。本稿不重复209／210，也不恢复 phase18 误报：原棒 reaction 消费 o，正常内置棒为20N；这里仅核队列持有、原生事件次序、卸载和异常传播。
 
-原根 `C:/Dev/gregtech6-master/gregtech6-master/src/main/java`；当前根 `C:/Dev/GregTech6`。原源码保留 GregTech-6 Team、Gregorius Techneticies、LGPL-3.0-or-later 头；原生证据来自已有本地依赖，不复制第三方方法体。Minecraft／loader 为1.20.1／Forge47.4.20 与1.21.1／NeoForge21.1.243。实际总线依赖为 Forge eventbus6.2.33、Neo bus8.0.5，由 userdev config／Neo module 元数据确认，非仅取任意缓存 jar。JDK21 源只用于核 WeakHashMap 持有语义，不冒称用户当前运行的 Java 版本。
+原根 `C:/Dev/gregtech6-master/gregtech6-master/src/main/java`；当前根 `C:/Dev/GregTech6`。原源码保留 GregTech-6 Team、Gregorius Techneticies、LGPL-3.0-or-later 头；原生证据来自已有本地依赖，不复制第三方方法体。Minecraft／loader 为1.20.1／Forge47.4.20 与1.21.1／NeoForge21.1.243。实际总线依赖为 Forge eventbus6.2.33、Neo bus8.0.5，由 userdev config／Neo module 元数据确认，非仅取任意缓存 jar。JDK21 源只用于核 WeakHashMap 持有语义，不冒称当前运行的 Java 版本。
 
 ## 核心结论
 

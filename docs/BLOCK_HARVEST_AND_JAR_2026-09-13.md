@@ -4,7 +4,7 @@
 
 这次使用真实注册表和 Block.getDrops 复现：2,205 个没有专用 getDrops 的可掉落方块，全部缺失默认掉落。修复前清单见 block-loot-before.json。这不是纯贴图问题。
 
-新增 BlockLootPack 内置服务器数据包，为已注册 GT 方块提供标准掉落表，默认一块掉一个自身物品，使用 survives_explosion 条件。无物品形式的方块和流体方块不生成物品掉落。走专用 getDrops 的矿石、岩石、材质块和带 NBT 机器继续使用各自逻辑，不叠加第二份方块。数据包优先级在底部，用户数据包仍可覆盖默认表，不写入几千个零碎资源文件。
+新增 BlockLootPack 内置服务器数据包，为已注册 GT 方块提供标准掉落表，默认一块掉一个自身物品，使用 survives_explosion 条件。无物品形式的方块和流体方块不生成物品掉落。走专用 getDrops 的矿石、岩石、材质块和带 NBT 机器继续使用各自逻辑，不叠加第二份方块。数据包优先级在底部，数据包仍可覆盖默认表，不写入几千个零碎资源文件。
 
 新增 BlockHarvestPolicy，统一给全部非流体 GT 方块提供挖掘分类。依据 GT6 Loader_MultiTileEntities 的 aMetal/aMachine/aMetalWires/aWooden/aStone 等分类：材质块/石材用镐，木制外壳和木箱用斧，粉块用铲，机器和金属管轴支持扳手，导线支持剪线钳，树叶支持剪刀。其余普通方块按既有材质声音分类；工具操作与拆卸是不同动作，右键调整功能没有改成左键挖掘。
 
@@ -40,7 +40,7 @@
 
 ## 红色合金线补充核对
 
-用户指出希望每格衰减 1、最大值 16；但所提供的 GT6 源码 Loader_MultiTileEntities.java 第 1895–1896 行设置 NBT_PIPELOSS=MAX_RANGE/16，MultiTileEntityWireRedstoneInsulated.getRedstoneAtSide 将输入乘 MAX_RANGE 并扣损耗，输出用 bind4 限定为 0–15。该源码对应约每 16 格衰减一级，和用户描述不同；未经确认不把自定义行为标为原版修复。当前待用户确认选择。
+指出希望每格衰减 1、最大值 16；但所提供的 GT6 源码 Loader_MultiTileEntities.java 第 1895–1896 行设置 NBT_PIPELOSS=MAX_RANGE/16，MultiTileEntityWireRedstoneInsulated.getRedstoneAtSide 将输入乘 MAX_RANGE 并扣损耗，输出用 bind4 限定为 0–15。该源码对应约每 16 格衰减一级，和描述不同；未经确认不把自定义行为标为原版修复。当前待确认选择。
 
 ## 已生成测试 JAR
 
@@ -51,4 +51,4 @@
 - SHA-256：`29e15ceb15b6f9c6cb6fc30308e21f2d1731215d4dc5c747e562c3a5e23d6bdb`。
 - 红色合金线在此包保留所提供源码行为，未擅自修改为每格衰减 1。
 
-后续确认：用户已确认红色合金线先前看错，继续保留所提供 GT6 源码行为，无需改成每格衰减 1。
+后续确认：已确认红色合金线先前看错，继续保留所提供 GT6 源码行为，无需改成每格衰减 1。

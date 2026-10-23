@@ -7,6 +7,7 @@ import com.gregtech.gregtech.api.addon.MaterialComposition;
 import com.gregtech.gregtech.api.addon.MaterialDeclaration;
 import com.gregtech.gregtech.api.addon.MaterialFormRequest;
 import com.gregtech.gregtech.api.addon.OreVeinDeclaration;
+import com.gregtech.gregtech.api.addon.PrefixCondition;
 import com.gregtech.gregtech.api.addon.PrefixDeclaration;
 import com.gregtech.gregtech.api.addon.SmallOreDeclaration;
 import com.gregtech.gregtech.api.addon.SmeltingTargetDeclaration;
@@ -58,7 +59,9 @@ public final class AddonSampleMaterials implements AddonMaterialContributor {
 
     @Override public List<PrefixDeclaration> prefixes() {
         return List.of(new PrefixDeclaration("sampleBlank", "", " Sample Blank", 8, "item/sample_blank",
-                        List.of("Iron", "SampleAlloy"), Set.of()),
+                        List.of("Iron", "SampleAlloy"),
+                        Set.of(PrefixCondition.METAL, PrefixCondition.MOLTEN),
+                        List.of("AnnealedCopper")),
                 PrefixDeclaration.block("sampleCasing", "", " Sample Casing", 8, "cube", "block/sample_casing",
                         "storage_blocks/sample_casing", List.of("SampleRubber")));
     }

@@ -20,4 +20,4 @@ NeoForge 1.21.1 在生存模式服务器 FakePlayer 下实际右键拾取三个�
 - Selected NeoForge Flint/Wood pick and four normal Cu/Tin ores; no all-tool/all-material/fortune/Forge counterpart runtime coverage this batch.
 - Smelting these actual raw ores into bronze, bronze head casting/assembly, natural world survival, powered clients, installed JAR runtime and complete three-source integration remain pending.
 
-复现：Java17启动Gradle、Neo使用已有Java21工具链，新的flat/offline/loopback隔离目录及既有获同意EULA副本。`-PdirectCoreResources=true -PdirectCoreClasspath=true -PearlyToolChainSmoke=true -PserverSmokePhase=prepare|verify -PserverSmokeId=<同UUID> -PserverDirectory=build/<新隔离目录> -PserverSmokeX=0 -PserverSmokeY=240 -PserverSmokeZ=0 :neoforge:runServer`。完整goal保持active，来源和许可不变。
+复现：Java17启动Gradle、Neo使用已有Java21工具链，新的flat/offline/loopback隔离目录及既有获同意EULA副本。`-PdirectCoreResources=true -PdirectCoreClasspath=true -PearlyToolChainSmoke=true -PserverSmokePhase=prepare|verify -PserverSmokeId=<同UUID> -PserverDirectory=build/<新隔离目录> -PserverSmokeX=0 -PserverSmokeY=240 -PserverSmokeZ=0 :neoforge:runServer`。整体移植仍未完成，来源和许可不变。

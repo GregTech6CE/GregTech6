@@ -1,9 +1,9 @@
 # 第一批真实机器平台移植
 
-用户最新执行要求（2026-09-30）：优先快速合并三个项目的源码。暂停所有构建、测试、游戏启动及逐项验收，连续批量移植并处理直接冲突；新增代码明确标记未验证。原验收标准留待后续恢复，不据此把当前整合标记完成。
+最新执行要求（2026-09-30）：优先快速合并三个项目的源码。暂停所有构建、测试、游戏启动及逐项验收，连续批量移植并处理直接冲突；新增代码明确标记未验证。原验收标准留待后续恢复，不据此把当前整合标记完成。
 
 
-本批以实现为主，按用户要求集中验证。统一编译已通过1m33s（6305现有core断言、Forge main/bootstrap、Neo main）；Neo实际加工已通过：tick3011自然1357K得到4U青铜，tick3020四次正式锭完成，1 required，游戏阶段2.844s。Forge接线后的四项也在同一次Gradle通过，合计5m，XML零failure/error/skip；回执见verification/p2-first-machines-playflow.json。
+本批以实现为主，按要求集中验证。统一编译已通过1m33s（6305现有core断言、Forge main/bootstrap、Neo main）；Neo实际加工已通过：tick3011自然1357K得到4U青铜，tick3020四次正式锭完成，1 required，游戏阶段2.844s。Forge接线后的四项也在同一次Gradle通过，合计5m，XML零failure/error/skip；回执见verification/p2-first-machines-playflow.json。
 
 ## 单一领域来源
 

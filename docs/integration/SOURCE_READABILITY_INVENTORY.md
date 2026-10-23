@@ -73,13 +73,13 @@
 
 2026-10-21 续：表中 GTEngines、FiniteBottleFillingRecipe 的隐藏 Neo 体及 core GeneratedRecipeSink 也已展开，五份执行投影保持；瓶框三份整理另有六份投影。表中对应行保留原盘点数值，当前不再列作待整理，见[第四十七批](BOTTLE_BOOKSHELF_AUDIT.md)。大型业务类与其它压行仍继续。
 
-2026-10-21 再续：core BumbleGenomeRules 与 BumbleSpeciesRules 已从 21／42 行展开为 58／75 行，667／420 个执行词法项及字面量位置保持，随机顺序和数值没有改变。原生养蜂实体／基因边界仍有压行和职责整理待续，见[第四十九批](BUMBLE_LIFECYCLE_AUDIT.md)。用户 CompoundMaterials 的 570 条定义仍是等号第 66 列／RGB 第 141 列，内容／注释未变，格式化入口不再改写它。
+2026-10-21 再续：core BumbleGenomeRules 与 BumbleSpeciesRules 已从 21／42 行展开为 58／75 行，667／420 个执行词法项及字面量位置保持，随机顺序和数值没有改变。原生养蜂实体／基因边界仍有压行和职责整理待续，见[第四十九批](BUMBLE_LIFECYCLE_AUDIT.md)。CompoundMaterials 的 570 条定义仍是等号第 66 列／RGB 第 141 列，内容／注释未变，格式化入口不再改写它。
 
 第五十批继续展开 BumbleBeeGenes（232→308 行）与 GTBumbleBlocks（28→56 行），明确 NBT／组件、默认基因和注册工厂边界；自然巢说明纠正旧颜色身份及火焰参数归因。三份源码六份执行投影保持，见[自然巢](BUMBLE_HIVE_PHYSICAL_AUDIT.md)与[回执](verification/inventory-persistence-audit-20261021.json)。更大的养蜂实体及共用菜单仍待按职责核查／整理，没有将说明纠正算成玩法修复。
 
-第五十一批已展开共用 InventorySlotLayout（247→254行）、HopperContainerMenu（115→123行）、BushGrowthRules（6→18行）及BushBlockEntity的压行／版本边界（215→229行）。四份源码六份执行投影保持，坐标值、计数和随机调用不变；说明不再声称所有原版菜单／环境已完全一致。共用菜单九类实际宿主及手动权限归属已追踪，见[菜单](SHARED_MENU_AUDIT.md)、[灌木](BERRY_BUSH_AUDIT.md)与[回执](verification/bush-menu-audit-20261021.json)。用户WoodMaterials编辑保持未纳入本批，CompoundMaterials统一RGB列继续保留。
+第五十一批已展开共用 InventorySlotLayout（247→254行）、HopperContainerMenu（115→123行）、BushGrowthRules（6→18行）及BushBlockEntity的压行／版本边界（215→229行）。四份源码六份执行投影保持，坐标值、计数和随机调用不变；说明不再声称所有原版菜单／环境已完全一致。共用菜单九类实际宿主及手动权限归属已追踪，见[菜单](SHARED_MENU_AUDIT.md)、[灌木](BERRY_BUSH_AUDIT.md)与[回执](verification/bush-menu-audit-20261021.json)。WoodMaterials编辑保持未纳入本批，CompoundMaterials统一RGB列继续保留。
 
-第五十二批展开MaterialFactories长参数和方法（132→147行），以当前实现说明取代三处过强原版归因；1304项执行词法与字面量位置相同，不改变public接口、工厂属性和调用顺序。原elec／cent与当前gem／MAGICAL的实质差异进入[材料核查](LIQUID_ACID_FACTORY_AUDIT.md)，没有借排版偷偷修正；生成材料表与用户空格均保持。
+第五十二批展开MaterialFactories长参数和方法（132→147行），以当前实现说明取代三处过强原版归因；1304项执行词法与字面量位置相同，不改变public接口、工厂属性和调用顺序。原elec／cent与当前gem／MAGICAL的实质差异进入[材料核查](LIQUID_ACID_FACTORY_AUDIT.md)，没有借排版偷偷修正；生成材料表与空格均保持。
 
 第五十三批展开GTBushes注册／目录／物品工厂（43→58行），同时展开真实Neo注释体；GTBushesFeature整理换行并纠正三处过强原版归因（136→135行），明确算法表保留与调用半坐标差异。两份共享源码四份执行投影相同，注册顺序、地面／群系谓词、随机次数与字面量不变，见[物理](BERRY_BUSH_PHYSICAL_AUDIT.md)、[生成](BERRY_BUSH_WORLDGEN_AUDIT.md)及[回执](verification/bush-physical-worldgen-audit-20261021.json)。
 
@@ -87,7 +87,7 @@
 
 第五十五批对全部1041份共享原生维护输入显式投影2082次，确认四项完整类体重复候选，并排除MetalChestBlockItem和GTEngines的声明／原生职责边界。VanillaProcessingRecipes与AlloyRecipeLoader已合并954→334行，四份完整执行词法／字面量位置保持；Chemical及有真实加载顺序差异的GeneratedRecipeResolver独立继续。171项方法级密度结果未经逐项核查，不是缺陷数，见[结构报告](NATIVE_BODY_SHARING_AUDIT.md)和[全量身份回执](verification/native-body-sharing-audit-20261021.json)。
 
-第五十七批继续完成后两项Chemical与GeneratedRecipeResolver整类共享，1775→641行；四个候选总2729→975行。解析器两端加载顺序、注册表查找／命名空间表达式和所有公开接口保持，四份完整执行／字面量位置相同；旧数量、永久缺失、入口和统计注释单独纠正。未审方法级／大职责和其它原生注册边界继续，见[共享报告](RECIPE_RESOLVER_SHARING_AUDIT.md)与[证明](verification/chemical-resolver-sharing-20261021.json)。用户WoodMaterials和CompoundMaterials排版未改。
+第五十七批继续完成后两项Chemical与GeneratedRecipeResolver整类共享，1775→641行；四个候选总2729→975行。解析器两端加载顺序、注册表查找／命名空间表达式和所有公开接口保持，四份完整执行／字面量位置相同；旧数量、永久缺失、入口和统计注释单独纠正。未审方法级／大职责和其它原生注册边界继续，见[共享报告](RECIPE_RESOLVER_SHARING_AUDIT.md)与[证明](verification/chemical-resolver-sharing-20261021.json)。WoodMaterials和CompoundMaterials排版未改。
 
 第五十八批完成原盘点中的ReactorCoreBlockEntity压行展开：236→560行、最长305→152；包含被Neo注释包裹的能力和保存同步。两份执行投影、各31字面量位置／5注释和30条件保持，未拆改状态或行为。棒目录／纯算术／冷却参数与原生网络／实体／流体身份导航见[核反应堆源码](NUCLEAR_SOURCE_LAYOUT.md)及[证明](verification/reactor-core-readability-20261021.json)；仍有其它压行／大职责待续，不把本次格式整理算成核反应堆完成。
 
@@ -97,7 +97,7 @@
 
 37 个文件位于 generated 目录，不代表只有 37 个生成文件；例如创造目录也有生成维护，而 GeneratedRecipeSink 属运行桥接。材料表由 `transpile_gt6_materials → modular_materials` 维护，工作属性／目标／事实有独立提取器，化学行与蜂巢行也各有来源工具。整理生成结果必须同步模板，并向隔离目录重现，不能直接执行会覆盖其它 adopted 内容的旧导入脚本。
 
-本轮已将用户 CompoundMaterials 的统一 RGB 列同步到生成端，七表可重现，见[材料排版记录](MATERIAL_TABLE_FORMATTING_20261020.md)。仍发现旧 `extract_compositions.py` 固定其它磁盘路径，未执行它，也不据此断言当前生产组成错误。
+本轮已将CompoundMaterials 的统一 RGB 列同步到生成端，七表可重现，见[材料表排版记录](MATERIAL_TABLE_FORMATTING_20261020.md)。仍发现旧 `extract_compositions.py` 固定其它磁盘路径，未执行它，也不据此断言当前生产组成错误。
 
 本批 OriginalStorageTooltipData 仅展开列表、分支和方法，544 个词法项、54 个字面量、3 个注释保持。其它存储整理见[源链报告](SAFE_LOCKER_AUDIT.md)。[盘点摘要](verification/source-readability-inventory-20261020.json)保存范围、候选与摘要哈希；完整逐文件 scratch 清单未作为玩法证明。本轮没有用目录盘点声称全部代码已标准化，后续压行与职责拆分继续。
 
@@ -115,7 +115,7 @@
 
 第六十七批整理LargeDynamoControllerBlockEntity、LargeDynamoControllerBlock、AxialGeneratorDefinitions、AxialStructureTransform和SharedTurbineStructure：展开压行方法／三重循环／平台读取，八个局部与lambda短名改为cellPos、parameters、firstOriginalId、offset及ticker参数。九份完整执行流与字面量位置保持，offset方法名不随变量归一，注释／指令不变，见[导航](LARGE_DYNAMO_AUDIT.md)及[回执](verification/large-dynamo-audit-20261021.json)。没有重命名公开API或修改材料表；其余压行、大职责边界及全面核查继续。
 
-第六十八批整理LargeHeatExchangerControllerBlockEntity、LargeHeatExchangerControllerBlock、HotFluidFuelCycle、HeatExchangerData、HeatExchangerRules、SharedHeatExchangerStructure。结构局部／lambda、燃料候选、defaults与batchCount改为明确名字，展开压行、平台能力／保存及三重循环；十份完整执行流和字面量位置保持。未跟随局部名改包名context、原builder或Charge.batches组件；仅一条过强“原循环等价”说明限缩，许可证头／其它注释／指令保留，见[导航](LARGE_HEAT_EXCHANGER_AUDIT.md)及[回执](verification/large-heat-exchanger-audit-20261021.json)。未改用户材料或公开二进制方法签名，全面可读性队列继续。
+第六十八批整理LargeHeatExchangerControllerBlockEntity、LargeHeatExchangerControllerBlock、HotFluidFuelCycle、HeatExchangerData、HeatExchangerRules、SharedHeatExchangerStructure。结构局部／lambda、燃料候选、defaults与batchCount改为明确名字，展开压行、平台能力／保存及三重循环；十份完整执行流和字面量位置保持。未跟随局部名改包名context、原builder或Charge.batches组件；仅一条过强“原循环等价”说明限缩，许可证头／其它注释／指令保留，见[导航](LARGE_HEAT_EXCHANGER_AUDIT.md)及[回执](verification/large-heat-exchanger-audit-20261021.json)。未改材料或公开二进制方法签名，全面可读性队列继续。
 
 2026-10-21 第六十九批：禁刷怪塔四份压行源码已展开，局部／ticker参数明确命名，七份完整执行视图保持；ControllerStructureLayouts的重复63格改读core布局，方法外两视图保持，内部以原／core／旧预览有序单元证明。不是只改文件名，也不把共享改动冒称完整词法不变，见[禁刷怪塔](VON_DA_GRAAGG_AUDIT.md)。其它压行与职责整理继续。
 
@@ -123,40 +123,40 @@
 
 2026-10-21 第七十一批：物流核心布局／输入、BE／Block及路由薄边界五份展开，tick块缩进与局部名称明确，重复LogisticsCoverHost import精确去一条。四处说明限定模拟软上限／无电复位／扫描绑定／需求值；八完整执行在该import去除与限定绑定后保持。见[物流状态](LOGISTICS_CORE_STATE_AUDIT.md)，路由、生命周期与其余源码整理继续。
 
-2026-10-21 第七十二批：LogisticsCoverDefinition／Type展开共享定义与原生映射方法，Interaction展开Neo数据／拒绝条件和反馈，两段old／next改为previousValue／nextTargetSize；FluidRouter拆拥挤条件与选择表达式。四源码七完整执行流540、370／370、1720／1729、1518／1521在限定绑定归一后保持，三处说明纠正。交互最长行174降到119／122，用户材料表不动，见[物流搬运](LOGISTICS_TRANSFER_AUDIT.md)及[回执](verification/logistics-transfer-audit-20261021.json)；其余可读性与全面核查继续。
+2026-10-21 第七十二批：LogisticsCoverDefinition／Type展开共享定义与原生映射方法，Interaction展开Neo数据／拒绝条件和反馈，两段old／next改为previousValue／nextTargetSize；FluidRouter拆拥挤条件与选择表达式。四源码七完整执行流540、370／370、1720／1729、1518／1521在限定绑定归一后保持，三处说明纠正。交互最长行174降到119／122，材料表不动，见[物流搬运](LOGISTICS_TRANSFER_AUDIT.md)及[回执](verification/logistics-transfer-audit-20261021.json)；其余可读性与全面核查继续。
 
-2026-10-21 第七十三批：LogisticsNetwork展开种子三循环／快照方法，距离a／b改为origin／target；LogisticsCovers展开数据与同步／掉落，循环i改为faceIndex；物流线BE展开两版保存。ExtenderSpec展开八定义，RelayRoutingRules由3→12行，保留66项完整执行；五源总八份完整执行和原始字面量位置保持，四处说明限定，用户材料不动，见[网络专题](LOGISTICS_NETWORK_AUDIT.md)和[回执](verification/logistics-network-audit-20261021.json)。全面可读性队列继续。
+2026-10-21 第七十三批：LogisticsNetwork展开种子三循环／快照方法，距离a／b改为origin／target；LogisticsCovers展开数据与同步／掉落，循环i改为faceIndex；物流线BE展开两版保存。ExtenderSpec展开八定义，RelayRoutingRules由3→12行，保留66项完整执行；五源总八份完整执行和原始字面量位置保持，四处说明限定，材料表未动，见[网络专题](LOGISTICS_NETWORK_AUDIT.md)和[回执](verification/logistics-network-audit-20261021.json)。全面可读性队列继续。
 
-2026-10-21 第七十四批：LogisticsWireBlock展开Neo交互／连接／形状，局部neighborPos、updatedState、connectedHere／There、entityContext明确；renderer的be／vc／out改为blockEntity／vertices／surfaceOffset。Neo注册和客户端订阅展开，queued IDs lambda h改holder，两处职责说明纠正。四源六完整执行1462／1909、904／890、449、196及原始字面量位置保持，最长线275降161、注册307降123；用户材料表不动，见[客户端](LOGISTICS_CLIENT_AUDIT.md)及[回执](verification/logistics-client-audit-20261021.json)。其余可读性和全面核查继续。
+2026-10-21 第七十四批：LogisticsWireBlock展开Neo交互／连接／形状，局部neighborPos、updatedState、connectedHere／There、entityContext明确；renderer的be／vc／out改为blockEntity／vertices／surfaceOffset。Neo注册和客户端订阅展开，queued IDs lambda h改holder，两处职责说明纠正。四源六完整执行1462／1909、904／890、449、196及原始字面量位置保持，最长线275降161、注册307降123；材料表不动，见[客户端](LOGISTICS_CLIENT_AUDIT.md)及[回执](verification/logistics-client-audit-20261021.json)。其余可读性和全面核查继续。
 
-2026-10-21 第七十五批：储罐BE、主阀Block、TankValveSpec、HollowTankStructure、MultiblockTankData共五源展开；限定be／f／ctx／ticker参数／all／p／容量临时量改具名，真实TankValveParameters.all()成员调用保持。十份完整执行及原始字面量位置、来源注释／指令另核，五处职责说明纠正，用户材料排版不动，见[储罐专题](MULTIBLOCK_TANK_AUDIT.md)及[回执](verification/multiblock-tank-audit-20261021.json)。完整可读性与原版核查继续。
+2026-10-21 第七十五批：储罐BE、主阀Block、TankValveSpec、HollowTankStructure、MultiblockTankData共五源展开；限定be／f／ctx／ticker参数／all／p／容量临时量改具名，真实TankValveParameters.all()成员调用保持。十份完整执行及原始字面量位置、来源注释／指令另核，五处职责说明纠正，材料表排版不动，见[储罐专题](MULTIBLOCK_TANK_AUDIT.md)及[回执](verification/multiblock-tank-audit-20261021.json)。完整可读性与原版核查继续。
 
-2026-10-21 第七十六批：MultiblockPortBlock展开Neo交互／火回调／渲染／基础掉落，两处id改registryId；TankFlowRules展开委托。FluidHazards缩短总说明，明确注册依赖与外部气体近似。三源六完整执行保持，三处说明纠正／未归一字面量位置／其余注释指令另核，用户材料不动，见[危害专题](TANK_HAZARDS_AUDIT.md)。全面可读性目标继续。
+2026-10-21 第七十六批：MultiblockPortBlock展开Neo交互／火回调／渲染／基础掉落，两处id改registryId；TankFlowRules展开委托。FluidHazards缩短总说明，明确注册依赖与外部气体近似。三源六完整执行保持，三处说明纠正／未归一字面量位置／其余注释指令另核，材料表未动，见[危害专题](TANK_HAZARDS_AUDIT.md)。全面可读性目标继续。
 
-2026-10-21 第七十七批：展开FluidAttachmentBlock的构造旋转／访问包装／Neo交互和注入分支、MultiblockTankTooltips的内容／防护拼接、MultiblockJadeProvider的状态／流体序列化；core OriginalTankTooltipData循环i改digitIndex，构造两个b绑定改bounds。四源七完整执行及原始字面量位置保持，一处接口职责说明纠正，用户材料表不动，见[工具与制作专题](TANK_TOOLS_RECIPES_AUDIT.md)和[回执](verification/tank-tools-audit-20261021.json)。全面可读性与原版核查继续。
+2026-10-21 第七十七批：展开FluidAttachmentBlock的构造旋转／访问包装／Neo交互和注入分支、MultiblockTankTooltips的内容／防护拼接、MultiblockJadeProvider的状态／流体序列化；core OriginalTankTooltipData循环i改digitIndex，构造两个b绑定改bounds。四源七完整执行及原始字面量位置保持，一处接口职责说明纠正，材料表不动，见[工具与制作专题](TANK_TOOLS_RECIPES_AUDIT.md)和[回执](verification/tank-tools-audit-20261021.json)。全面可读性与原版核查继续。
 
-2026-10-21 第七十八批：PaintSprayItem展开喷漆lambda／实体判断，两端17→98行，c／p仅在onItemUseFirst内改context／targetPos，保留已有Neo提示context。ComponentCoverFallbackRenderer展开事件和逐面绘制，Neo MultiblockClientSetup拆开渲染／颜色注册，core OriginalMultiblockTintPolicy展开switch；三处职责说明纠正，四源六完整执行76、940／942、526／532、547及未归一字面量位置保持。用户570条CompoundMaterials对齐和WoodMaterials修改保留，见[客户端专题](TANK_CLIENT_AUDIT.md)及[回执](verification/tank-client-audit-20261021.json)；全面可读性目标继续。
+2026-10-21 第七十八批：PaintSprayItem展开喷漆lambda／实体判断，两端17→98行，c／p仅在onItemUseFirst内改context／targetPos，保留已有Neo提示context。ComponentCoverFallbackRenderer展开事件和逐面绘制，Neo MultiblockClientSetup拆开渲染／颜色注册，core OriginalMultiblockTintPolicy展开switch；三处职责说明纠正，四源六完整执行76、940／942、526／532、547及未归一字面量位置保持。570 条CompoundMaterials对齐和WoodMaterials修改保留，见[客户端专题](TANK_CLIENT_AUDIT.md)及[回执](verification/tank-client-audit-20261021.json)；全面可读性目标继续。
 
-2026-10-21 第七十九批：PaintState9→42行、PaintingRules11→73行、Paintable3→10行，16色逐行列出，mix的a／b改firstRgb／secondRgb，restore的flag改paintedFlag；三共享颜色Mixin展开保存／更新／回调，两个cir改callback。六源九完整执行170、544、45、832／865、210／210、202／230及原始字面量位置保持，两处职责说明纠正／用户材料不动，见[喷漆专题](PAINT_STATE_AUDIT.md)及[回执](verification/paint-state-audit-20261021.json)。其余宿主与全面源码核查继续。
+2026-10-21 第七十九批：PaintState9→42行、PaintingRules11→73行、Paintable3→10行，16色逐行列出，mix的a／b改firstRgb／secondRgb，restore的flag改paintedFlag；三共享颜色Mixin展开保存／更新／回调，两个cir改callback。六源九完整执行170、544、45、832／865、210／210、202／230及原始字面量位置保持，两处职责说明纠正／材料表未动，见[喷漆专题](PAINT_STATE_AUDIT.md)及[回执](verification/paint-state-audit-20261021.json)。其余宿主与全面源码核查继续。
 
-2026-10-21 第八十批：ExtenderBlockEntity展开覆盖板／保存更新／路由／控制／信号，SourceExtenderBlock展开两版工具交互和ticker，c／be分别限定方法内改control／blockEntity。清漆陈旧大说明改为实际目标和委托边界；PaintTargets／FixedConstructionColor缩进、WolfCollarAccessor和六项GrassSoilCatalog也已整理。七源十三完整执行557／557、770／770、412／412、81／81、2515／2587、1305／1575、133与未归一字面量位置保持，六说明纠正／用户材料不动，见[专题](PAINT_TARGETS_AUDIT.md)及[回执](verification/paint-targets-audit-20261021.json)。其它源码与全面原版核查继续。
+2026-10-21 第八十批：ExtenderBlockEntity展开覆盖板／保存更新／路由／控制／信号，SourceExtenderBlock展开两版工具交互和ticker，c／be分别限定方法内改control／blockEntity。清漆陈旧大说明改为实际目标和委托边界；PaintTargets／FixedConstructionColor缩进、WolfCollarAccessor和六项GrassSoilCatalog也已整理。七源十三完整执行557／557、770／770、412／412、81／81、2515／2587、1305／1575、133与未归一字面量位置保持，六说明纠正／材料表未动，见[专题](PAINT_TARGETS_AUDIT.md)及[回执](verification/paint-targets-audit-20261021.json)。其它源码与全面原版核查继续。
 
-2026-10-21 第八十一批：CapabilityRelayBlockEntity展开缓存／失效／内层包装，active与h限定区域改visited／targetHandler；EnergyRelayBlockEntity展开FE及19项GT转发，e／s改recipient／recipientSide，保留target方法及所有成员名。Neo StorageContainerCapabilities拆注册，e／be改event／blockEntity，注册表达式顺序不变。三源五完整执行1552／1453、1610／1511、902与字面量位置保持，唯一说明限定子类目标职责，材料未动，见[专题](EXTENDER_CAPABILITIES_AUDIT.md)和[回执](verification/extender-capabilities-audit-20261021.json)；全面队列继续。
+2026-10-21 第八十一批：CapabilityRelayBlockEntity展开缓存／失效／内层包装，active与h限定区域改visited／targetHandler；EnergyRelayBlockEntity展开FE及19项GT转发，e／s改recipient／recipientSide，保留target方法及所有成员名。Neo StorageContainerCapabilities拆注册，e／be改event／blockEntity，注册表达式顺序不变。三源五完整执行1552／1453、1610／1511、902与字面量位置保持，唯一说明限定子类目标职责，材料表未动，见[专题](EXTENDER_CAPABILITIES_AUDIT.md)和[回执](verification/extender-capabilities-audit-20261021.json)；全面队列继续。
 
-2026-10-21 第八十二批：CoverSignalMixin展开宿主选择及三注入，cir改callback并纠正覆盖范围说明；ExtenderJadeProvider展开服务器数据／tooltip，block／data改sourceBlock／controlData；ExtenderCoverRenderer展开render，be／partial改blockEntity／partialTick。三源六完整执行515／515、535／535、139／139与字面量位置保持，成员／注册／调用／光照不变，材料未动，见[信号](EXTENDER_SIGNALS_AUDIT.md)和[回执](verification/extender-signals-audit-20261021.json)。全面可读性与原版核查继续。
+2026-10-21 第八十二批：CoverSignalMixin展开宿主选择及三注入，cir改callback并纠正覆盖范围说明；ExtenderJadeProvider展开服务器数据／tooltip，block／data改sourceBlock／controlData；ExtenderCoverRenderer展开render，be／partial改blockEntity／partialTick。三源六完整执行515／515、535／535、139／139与字面量位置保持，成员／注册／调用／光照不变，材料表未动，见[信号](EXTENDER_SIGNALS_AUDIT.md)和[回执](verification/extender-signals-audit-20261021.json)。全面可读性与原版核查继续。
 
-2026-10-21 第八十三批：FilterBlockEntity展开保存／加载／模板循环，i／data／stack按限定区域改templateSlot／entryData／templateStack；FilterBlock的b／ctx改builder／context并展开两版交互／掉落／包装。FilterMenu拆构造／槽位，col改column；FilterScreen展开两版render／布局，partial／button改partialTick／clickedButton。四源八完整执行1355／1399、1242／1536、820／820、454／449与字面量位置保持，一说明限定主面选择旁路，用户材料不动，见[专题](FILTER_BLOCKS_AUDIT.md)及[回执](verification/filter-blocks-audit-20261021.json)。全面源码标准化与对齐继续。
+2026-10-21 第八十三批：FilterBlockEntity展开保存／加载／模板循环，i／data／stack按限定区域改templateSlot／entryData／templateStack；FilterBlock的b／ctx改builder／context并展开两版交互／掉落／包装。FilterMenu拆构造／槽位，col改column；FilterScreen展开两版render／布局，partial／button改partialTick／clickedButton。四源八完整执行1355／1399、1242／1536、820／820、454／449与字面量位置保持，一说明限定主面选择旁路，材料表未动，见[专题](FILTER_BLOCKS_AUDIT.md)及[回执](verification/filter-blocks-audit-20261021.json)。全面源码标准化与对齐继续。
 
-2026-10-21 第八十四批：FluidDisplayBinding展开两版序列化／查找，id／item／out／tag改fluidId／carrierItem／displayStack／payloadData；两版FluidItem／FluidDisplayItem展开handler等方法，f改resolvedFluid；ManualToolRules只展开方法。四源五执行421／697、1297、1510、129及字面量位置保持；五说明准确限定饮用载体和无玩家检查的source handler，成员／数值／序列化／玩法不变，用户材料不动，见[专题](FILTER_FLUID_TOOLS_AUDIT.md)及[回执](verification/filter-fluid-tools-audit-20261021.json)。全面标准化／对齐继续。
+2026-10-21 第八十四批：FluidDisplayBinding展开两版序列化／查找，id／item／out／tag改fluidId／carrierItem／displayStack／payloadData；两版FluidItem／FluidDisplayItem展开handler等方法，f改resolvedFluid；ManualToolRules只展开方法。四源五执行421／697、1297、1510、129及字面量位置保持；五说明准确限定饮用载体和无玩家检查的source handler，成员／数值／序列化／玩法不变，材料表未动，见[专题](FILTER_FLUID_TOOLS_AUDIT.md)及[回执](verification/filter-fluid-tools-audit-20261021.json)。全面标准化／对齐继续。
 
 2026-10-21 第八十五批：core ContainerShapeLike／PipeFormLike展开接口；共享FilterRules展开短条件及映射，限定方法中参数／模式变量／循环局部名改为具体用途。LogisticsItemFilter展开条件并纠正两处说明。四源六执行21、21、514／505、235／235和字面量位置／其它注释／指令保持，材料表未动，见[专题](FILTER_PREFIX_MEMBERSHIP_AUDIT.md)及[回执](verification/filter-prefix-membership-audit-20261021.json)。全面标准化／原版核查继续。
 
-2026-10-21 第八十六批：core LogisticsRoutingRules展开短条件、明确处理器／轮次／结果／等级／数量局部名，DisplayRules展开判断并明确参数；共享LogisticsItemRouter展开记录／条件，宿主／目标及转换／槽位循环使用描述性名称。核心BE仅纠正公开单轮方法与普通ticker门槛说明。四源六完整执行716、234、2240／2241、3094／3135及字面量位置／其它注释／指令保持，材料未动，见[专题](LOGISTICS_SCHEDULING_AUDIT.md)和[回执](verification/logistics-scheduling-audit-20261021.json)。全面标准化／原版核查继续。
+2026-10-21 第八十六批：core LogisticsRoutingRules展开短条件、明确处理器／轮次／结果／等级／数量局部名，DisplayRules展开判断并明确参数；共享LogisticsItemRouter展开记录／条件，宿主／目标及转换／槽位循环使用描述性名称。核心BE仅纠正公开单轮方法与普通ticker门槛说明。四源六完整执行716、234、2240／2241、3094／3135及字面量位置／其它注释／指令保持，材料表未动，见[专题](LOGISTICS_SCHEDULING_AUDIT.md)和[回执](verification/logistics-scheduling-audit-20261021.json)。全面标准化／原版核查继续。
 
-2026-10-21 同步前可读性提交：展开物流大容量存储实体及两类方块入口、Neo StorageRegistries注册／构造流程，明确eventBus／materialSpec／registryId等局部名，两个显式import缩短相同类型；普通存储Neo说明修正已完成的137，注册说明不再称物流变种未接。五源九执行344／378、291／291、170／170、2053／2128、855在列明局部名和两个类型import归一后保持；原始字面量值、恢复类型拼写后的字面量位置、其它注释／Stonecutter指令不变，见[回执](verification/logistics-storage-readability-20261021.json)。材料不动，未构建／游戏，直接存储核查及全面队列继续。
+2026-10-21 同步前可读性提交：展开物流大容量存储实体及两类方块入口、Neo StorageRegistries注册／构造流程，明确eventBus／materialSpec／registryId等局部名，两个显式import缩短相同类型；普通存储Neo说明修正已完成的137，注册说明不再称物流变种未接。五源九执行344／378、291／291、170／170、2053／2128、855在列明局部名和两个类型import归一后保持；原始字面量值、恢复类型拼写后的字面量位置、其它注释／Stonecutter指令不变，见[回执](verification/logistics-storage-readability-20261021.json)。材料表未动，未构建／游戏，直接存储核查及全面队列继续。
 
-2026-10-21 第八十七批：MassStorageBlockEntity展开模板／模式getter、提取后更新、匿名物品能力方法与失效清理，维护源374→475行；纯空白调整，无名称／import归一。Forge2577／Neo2354全部有序执行词法、各60个字面量原始位置、注释及Stonecutter条件不变。同步前五源九视图另复核，未计作本批新修改；材料摘要保持，见[直接存储专题](LOGISTICS_DIRECT_STORAGE_AUDIT.md)和[回执](verification/logistics-direct-storage-audit-20261021.json)。未修玩法／编译／游戏／构建，全面目标继续。
+2026-10-21 第八十七批：MassStorageBlockEntity展开模板／模式getter、提取后更新、匿名物品能力方法与失效清理，维护源374→475行；纯空白调整，无名称／import归一。Forge2577／Neo2354全部有序执行词法、各60个字面量原始位置、注释及Stonecutter条件不变。同步前五源九视图另复核，未计作本批新修改；材料表摘要保持，见[直接存储专题](LOGISTICS_DIRECT_STORAGE_AUDIT.md)和[回执](verification/logistics-direct-storage-audit-20261021.json)。未修玩法／编译／游戏／构建，全面目标继续。
 
-2026-10-21 第八十八批：展开LongDistEndpointBlockEntity、LongDistanceTransformerBlockEntity、两类端点方块与LongDistPipeBlock，共520→980维护行；两实体changed中e／current／previous改observedEntry／currentState／previousState，补两职责注释。十完整执行1658／1686、2476／2502、1280／1439、532／532、1426／1585及原始字面量位置／其它注释／条件／版权头保持，未改import、调用或玩法，见[长距离专题](LONG_DISTANCE_LIFECYCLE_AUDIT.md)及[回执](verification/long-distance-lifecycle-audit-20261021.json)。用户材料保持，全面标准化与原版核查继续。
+2026-10-21 第八十八批：展开LongDistEndpointBlockEntity、LongDistanceTransformerBlockEntity、两类端点方块与LongDistPipeBlock，共520→980维护行；两实体changed中e／current／previous改observedEntry／currentState／previousState，补两职责注释。十完整执行1658／1686、2476／2502、1280／1439、532／532、1426／1585及原始字面量位置／其它注释／条件／版权头保持，未改import、调用或玩法，见[长距离专题](LONG_DISTANCE_LIFECYCLE_AUDIT.md)及[回执](verification/long-distance-lifecycle-audit-20261021.json)。材料表保持，全面标准化与原版核查继续。
 
-2026-10-21 第八十九批：UsbDataRules／UsbDataMedia／UsbSwitchBlockEntity三源395→579行，展开级别／组件／控制／保存；tier方法id／n改registryPath／tierDigit。另只改GTMaterialDataRecipes空闲查找职责说明，实体注释准确标明过宽重置。四源七执行277、886／1038、2034／1888、3762／3859在限定名称归一后保持，字面量位置／其它注释／条件另核，未改玩法或用户材料，见[USB专题](USB_SWITCH_AUDIT.md)与[回执](verification/usb-switch-audit-20261021.json)。全面目标继续。
+2026-10-21 第八十九批：UsbDataRules／UsbDataMedia／UsbSwitchBlockEntity三源395→579行，展开级别／组件／控制／保存；tier方法id／n改registryPath／tierDigit。另只改GTMaterialDataRecipes空闲查找职责说明，实体注释准确标明过宽重置。四源七执行277、886／1038、2034／1888、3762／3859在限定名称归一后保持，字面量位置／其它注释／条件另核，未改玩法或材料，见[USB专题](USB_SWITCH_AUDIT.md)与[回执](verification/usb-switch-audit-20261021.json)。全面目标继续。

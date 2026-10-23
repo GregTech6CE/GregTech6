@@ -24,6 +24,6 @@
 - gregtech6-1.20.1-forge-0.0.0.jar：38,582,714 字节，SHA-256 `a652fd1c80de31ff2add6367e7beac8cb67a4ea45b204386df486f69b2682bd1`。
 - gregtech6-neoforge-1.21.1-0.0.0.jar：36,773,769 字节，SHA-256 `3d4c029bcbb1eb39f91c59b25793344c84be18a9307655417589e1e8509c5818`。
 
-复现：新隔离本机 flat 服务器目录，既有用户同意的 eula=true 配置副本；根 Java17 Gradle launcher，Native 实际 Java21 工具链。串行 `-PdirectCoreResources=true -PdirectCoreClasspath=true -PengineCraftingSmoke=true -PserverSmokePhase=prepare|verify -PserverSmokeId=<同平台同 UUID> -PserverDirectory=build/<新隔离目录> -PserverSmokeX=0 -PserverSmokeY=240 -PserverSmokeZ=0 :runServer` 或 `:neoforge:runServer`。每个版本独立世界，不能将 1.21 世界交给 1.20。正式双包 `-PdirectCoreResources=true :distributionJar :neoforge:jar` 不使用 directCoreClasspath。
+复现：新隔离本机 flat 服务器目录，既有同意的 eula=true 配置副本；根 Java17 Gradle launcher，Native 实际 Java21 工具链。串行 `-PdirectCoreResources=true -PdirectCoreClasspath=true -PengineCraftingSmoke=true -PserverSmokePhase=prepare|verify -PserverSmokeId=<同平台同 UUID> -PserverDirectory=build/<新隔离目录> -PserverSmokeX=0 -PserverSmokeY=240 -PserverSmokeZ=0 :runServer` 或 `:neoforge:runServer`。每个版本独立世界，不能将 1.21 世界交给 1.20。正式双包 `-PdirectCoreResources=true :distributionJar :neoforge:jar` 不使用 directCoreClasspath。
 
-电力/通量/柴油引擎制作入口、真实玩家工作台、设备/材料可得性、Forge 对应动力链、成品安装、旧档与完整三源整合继续待验。Goal active。
+电力/通量/柴油引擎制作入口、真实玩家工作台、设备/材料可得性、Forge 对应动力链、成品安装、旧档与完整三源整合继续待验。整体移植仍未完成。

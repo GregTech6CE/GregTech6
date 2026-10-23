@@ -50,7 +50,7 @@ GameTest 服务器不代替真实专服持久化测试。当前没有游戏内�
 
 两平台官方开发 GameTestServer 自行退出，required 测试失败决定退出码。官方 [NeoForge Eula 补丁](https://github.com/neoforged/NeoForge/blob/1.21.1/patches/net/minecraft/server/Eula.java.patch) 与 [Forge Eula 补丁](https://github.com/MinecraftForge/MinecraftForge/blob/1.20.1/patches/minecraft/net/minecraft/server/Eula.java.patch) 明确为开发 GameTest 放行；本流程不写 `eula=true`。这仅是框架测试启动证据，不代表正式 dedicated server、玩法或存档验证。
 
-客户端后续验证应使用隔离 gameDirectory，确认 TitleScreen 出现、加载 overlay 消失且产生可定位的本次日志，之后由 opt-in 的客户端 tick 监听正常 `Minecraft.stop()` 退出。第一 tick smoke 只说明初始化没有崩溃，不能代替世界渲染、界面交互和 gameplay 验收。正式专用服务器若要求 EULA，保留原文件并由用户确认；不借 GameTest 开发豁免改变正式运行配置。
+客户端后续验证应使用隔离 gameDirectory，确认 TitleScreen 出现、加载 overlay 消失且产生可定位的本次日志，之后由 opt-in 的客户端 tick 监听正常 `Minecraft.stop()` 退出。第一 tick smoke 只说明初始化没有崩溃，不能代替世界渲染、界面交互和 gameplay 验收。正式专用服务器若要求 EULA，保留原文件并经确认；不借 GameTest 开发豁免改变正式运行配置。
 
 ## 首条玩法链的最小依赖闭包
 

@@ -9,4 +9,4 @@ Share exact16-dye palette, iron-rod aliases, road speed and foam drying roll acr
 - Native BushBlock soil boundary from prior batch, invalid save data, Forge runtime/client rendering/independent reload/old saves and new production jars pending.
 - Source spike falling behavior has not been checked for entity landing, damage and mode persistence; native item components preserve mode/secondary, wall facing is chosen at placement as source.
 
-Complete original referenced models were shared, including7 common wall/omni spike meshes. No new subsystem fixtures or ordinary startup; D010 fast bulk integration. Full integration goal remains active.
+Complete original referenced models were shared, including7 common wall/omni spike meshes. No new subsystem fixtures or ordinary startup; D010 fast bulk integration. The overall port is still incomplete.

@@ -1,6 +1,6 @@
 # 第四十批：GT6 栏杆、数据交换机、仓储材料换算与地牢工坊
 
-本批继续以 `F:\Dev\GregTech6\gregtech6-master\gregtech6-master` 为玩法和数据依据。用户确认，地牢中 GT6 原本放置的 Minecraft 工作台与铁砧应保留。GTM 没有作为代码来源。本批没有构建 jar；客户端外观仍需用 IDEA `runClient` 验收。
+本批继续以 `F:\Dev\GregTech6\gregtech6-master\gregtech6-master` 为玩法和数据依据。确认，地牢中 GT6 原本放置的 Minecraft 工作台与铁砧应保留。GTM 没有作为代码来源。本批没有构建 jar；客户端外观仍需用 IDEA `runClient` 验收。
 
 ## 已完成
 

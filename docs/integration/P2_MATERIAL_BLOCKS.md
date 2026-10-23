@@ -1,6 +1,6 @@
 # 材料方块与首批世界生成源码整合
 
-本批从主线246d8c3ad8继续，按用户指示未构建、测试或启动游戏。共享原BlockMaterialPrefix/BlockPrefixRegistry/MaterialPrefixes、石种变体/旗标/组成重量、CellNoise及两种特殊矿Spec表；颜色/声音改纯枚举并由两平台薄映射，材料块定义流保持原材料排序、隐藏/canonical/valid筛选及ID碰撞规则。
+本批从主线246d8c3ad8继续，按指示未构建、测试或启动游戏。共享原BlockMaterialPrefix/BlockPrefixRegistry/MaterialPrefixes、石种变体/旗标/组成重量、CellNoise及两种特殊矿Spec表；颜色/声音改纯枚举并由两平台薄映射，材料块定义流保持原材料排序、隐藏/canonical/valid筛选及ID碰撞规则。
 
 Neo沿原目录和ID注册全共享材料方块、27×16石块与27×16定向水浸半砖；另迁原37种晶体/岩矿/原版风格矿、真实planks_treated及plate/WoodTreated绑定、地表rock/twigs与rock存储。采收/掉落/XP/破碎矿下落/床岩不可破坏、半砖合并及材料组成采用原规则；OreHarvest吸收masson的1.21附魔holder边界，OreHostStateAdapter吸收拒绝不适用宿主及保留状态属性规则，继续使用原GT宿主state而非注册两套矿ID。
 

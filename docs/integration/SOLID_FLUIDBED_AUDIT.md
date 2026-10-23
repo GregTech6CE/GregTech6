@@ -14,7 +14,7 @@
 
 原版循环 Charcoal、Coal、CoalCoke、Lignite、LigniteCoke、Anthracite、Prismane、Lonsdaleite、PetCoke、Peat、PeatBituminous 共 11 种材料，分别尝试注册 blockDust、dust、dustSmall、dustTiny、dustDiv72 五种形态，即 55 次注册调用；这不等于核验过 55 条有效最终配方。方解石输入分别为 648、72、18、8、1 L；热量按材料炉燃烧时间的三倍和物质量缩放，灰渣按燃烧目标的一半缩放。
 
-当前 `OriginalFuelRecipeRows` 及其消费者没有这组分支。在受版本控制的生产 Java／资源中检索精确表名及 FluidBed 引用，找到表声明、控制器与展示文本，没有找到内置配方写入入口；普通 RecipeMap 的构造也不会自动补充它们。当前 core 枚举实际只有四种燃料行 kind。结论是**内置注册缺失**，不声称第三方附属或用户数据包绝不可能向该表写入配方，也没有启动游戏枚举最终配方。
+当前 `OriginalFuelRecipeRows` 及其消费者没有这组分支。在受版本控制的生产 Java／资源中检索精确表名及 FluidBed 引用，找到表声明、控制器与展示文本，没有找到内置配方写入入口；普通 RecipeMap 的构造也不会自动补充它们。当前 core 枚举实际只有四种燃料行 kind。结论是**内置注册缺失**，不声称第三方附属或数据包绝不可能向该表写入配方，也没有启动游戏枚举最终配方。
 
 这项缺失会遮蔽下面控制器问题：灰渣、数量及部分容量差异要在数据包提供配方或补齐原版配方后才能触发，不能把代码中的潜在问题说成已观察到的游戏丢物品。
 

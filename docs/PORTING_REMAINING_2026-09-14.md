@@ -6,7 +6,7 @@
 > 缺失内容 token：**49**（§32；`i:` 11 / `omd:` 2 / `tech:` 36 — 其余全是别的模组或 GT6 本就恒假的内容）
 > 数字全部由脚本从两侧源码与测试报告里现算，不靠回忆：`tools/audit_porting_progress.py`、`tools/census_gt6_registrations.py`
 > 产物：`docs/porting-progress.json`、`docs/gt6-registration-census.json`
-> 续批记录见 §11（用户报错第一批）、§12（材料形态对齐 + 熔炉熔炼 + JEI 工具组装）、§15、§16（配方清零）、
+> 续批记录见 §11（反馈错第一批）、§12（材料形态对齐 + 熔炉熔炼 + JEI 工具组装）、§15、§16（配方清零）、
 > §17（覆盖板共享身份）、§18（形态条件 + 引用拼写）、§19（绳索/炸药）、§20+§21（战利品：世界宝箱 + 战利品袋 + 16 本手册）、
 > §22（材料形态按 GT6 材料 id 查）、§23（前缀条件对齐）、§24（方块形态/石器工具头/熔融流体/微型板）、
 > §25（自选战利品箱 + 战利品瓶）、§26（GT6 主类里的打印机/扫描仪/开箱机配方）、§27（石头挤出 + 配方表空壳加固）、
@@ -127,7 +127,7 @@ Bedrock Mining Drill → `BEDROCK_DRILL_MAIN`。
 
 **合计：GT6 该分类的 117 条注册 = 98 个零件 + 19 台控制器 + 0 缺失**，且这 117 条现在是 `data/generated/GT6MultiblockIds`（生成表）+ `gametest/MultiblockCoverageTests` 两项测试**机器可查**的（门禁日志：`[multiblock] rows=117 parts=98 controllers=19 missing=0`；布局侧 `layouts=13 cells=708 distinctPartIds=19`）。
 
-> 修正（2026-09-14 续批，用户实测）：JEI 里实际显示 **37 种多方块结构**，不是本节早先写的"15 台主机"——
+> 修正（2026-09-14 续批，实机测试）：JEI 里实际显示 **37 种多方块结构**，不是本节早先写的"15 台主机"——
 > 早先那个数字只数了 `registry/GTMultiblocks` 的独立控制器，漏掉了**蓝图式多方块**：
 > `content/multiblock/LargeMachineLayouts` 的 13 套大型机结构、`GasTurbineDefinitions`/`AxialGeneratorDefinitions`
 > 的逐等级燃气轮机与发电机组、`ControllerStructureLayouts.all()` 的 10 套控制器结构，以及
@@ -290,14 +290,14 @@ python tools\audit_tech_item_tokens.py          # -> docs/tech-item-tokens.json
 
 ---
 
-## 11. 续批（同日晚）：用户实测报错的第一批修复 + 下一轮配方清单
+## 11. 续批（同日晚）：实机测试报错的第一批修复 + 下一轮配方清单
 
-用户实测报了一批具体缺陷，本轮修掉其中可以在不改注册 ID 的前提下完成的部分，
+实机测试报了一批具体缺陷，本轮修掉其中可以在不改注册 ID 的前提下完成的部分，
 其余按"原版出处"列进 §11.2 的清单，不再靠猜。
 
 ### 11.1 已修（`All 266 required tests passed`）
 
-| 问题（用户报告） | 根因 | 修复 |
+| 问题（反馈） | 根因 | 修复 |
 |---|---|---|
 | **同种流体被注册多份**：`hydrogen`（无配方、默认贴图不染色）、`gas_hydrogen`（正确）、`liquid_hydrogen`（无配方但染色） | 移植版自己发明了 `gas.<material>` / `liquid.<material>` 名字，而原版 `FL.createGas`/`FL.createLiquid` 用的是**材料名本身**（`FL.java:1072,1080`）并且**复用已注册的同名流体**（`FL.java:1110`） | `registerGeneratedGasLiquidFluids` 改为：材料已有专属流体则复用并把材料绑定上去（染色/配方都落到同一个流体），否则注册**一个**以材料命名的流体；`GenGas_`/`GenLiquid_` 保留为别名键（`canonicalField`）。**注册总量 1034 → 914**（去掉 120 个重复流体） |
 | **坩埚配方不该显示耗时** | JEI 分类无条件画 `Time: N ticks`，而坩埚是"到达熔点即转化" | `RecipeMap.instantRecipes()` 新标志，两张坩埚表启用；`RecipeMapCategory` 对它们不再画耗时行（温度行保留） |
@@ -305,7 +305,7 @@ python tools\audit_tech_item_tokens.py          # -> docs/tech-item-tokens.json
 | **部分物品没有 Forge item tag / 同材料形态没有统一 tag** | 原 `MaterialTagPack` 只写"按形态"的 tag | 新增 `gregtech:material/<material>`（**同一材料的所有形态**：锭/粉/小堆/板/杆/齿轮/块… 合并到一个 tag）；原版统一方块（铁/金/铜/红石/煤…）按材料重量补 `forge:storage_blocks/<material>` 与 `forge:ores/<material>`；GT 工具补 `forge:tools/<type>`（如 `forge:tools/wrench`） |
 | 聚变配方在改名后失效 | `Loader_Recipes_Fusion` 用被删掉的 `gas.<material>` 名字查流体 | 改为按材料的**真实气相**解析（`GTGeneratedChem.materialFluid`），熔融相仍用 `molten.` 前缀；日志 `Fusion recipes: 18 / 18; unresolved: []` |
 
-### 11.2 用户报告逐条状态（本轮与 §12 两批合计，都附原版出处）
+### 11.2 反馈逐条状态（本轮与 §12 两批合计，都附原版出处）
 
 | 报告 | 现状（已核对） | 原版出处 / 下一步 |
 |---|---|---|
@@ -335,7 +335,7 @@ All 266 required tests passed :)
 
 ## 12. 续批（同日夜～次日凌晨）：材料形态对齐 + 熔炉熔炼 + 三批配方族
 
-用户要求「一次多移植一点」。本轮按「先量化、再动手、每步过门」推进，质量门从 280 项涨到 **291 项**。
+要求「一次多移植一点」。本轮按「先量化、再动手、每步过门」推进，质量门从 280 项涨到 **291 项**。
 
 ### 12.1 材料形态与原版对齐（最大的一块）
 
@@ -356,7 +356,7 @@ All 266 required tests passed :)
 | 原版熔炉 | 原版 `RM.add_smelting` 是直接写进**原版熔炉配方表**（`RM.java:805-821`），移植版原先只写自己的 `Furnace` 表。`Loader_OvenRecipes` 现在把该表镜像进原版配方管理器（本次 **1325 条**），已有数据包配方（`data/gregtech/recipes/**`，如陶瓷碗烧结）保持不变 |
 | 测试 | `gametest/FurnaceSmeltingTests.java`（5 项）：与公式逐条比对、碎块/粒的级联、粉碎矿的 9/8 权重、原版熔炉里确实有该行、报告落盘 `docs/furnace-smelting-coverage.json` |
 
-### 12.3 JEI 工具组装页签（用户报的「JEI 工具组合配方显示」）
+### 12.3 JEI 工具组装页签（反馈的「JEI 工具组合配方显示」）
 
 | 项 | 内容 |
 |---|---|
@@ -375,7 +375,7 @@ All 266 required tests passed :)
 
 ### 12.5 本轮之后的剩余（按可玩性排序）
 
-1. **管道族**（用户报告里唯一完全没动的一项）：需要按尺寸的管件方块/模型，不是配方问题。
+1. **管道族**（反馈里唯一完全没动的一项）：需要按尺寸的管件方块/模型，不是配方问题。
 2. **`Misc Tool Blocks` / `Fluid Containers` 的方块本体**：Sifting Table、Grindstone、Plant Pot、Coinage Mold、Sap Bag、Bumbliary、Fluid Funnel、Barrel/Drum/Canister（原版 86+51 条注册）。
 3. **配方钥匙物品**：`IL.Module_*_Generator`（Extruder 210 条）、`IL.Rope_*`、EtFu 食物 —— 缺物品本体与贴图。
 4. **矿物词典事件层**（§5.3-1）：`Loader_Recipes_OreDict`(74) 与 `Loader_Recipes_Crops`(133) 需要「按 Forge 标签逐物品展开配方」的运行时能力。
@@ -407,7 +407,7 @@ All 291 required tests passed :)
 
 ## 13. 续批（次日）：把「有物品但没配方」量化，再补齐三批
 
-用户报告里最难核对的一类问题是「某个物品在生存里做不出来」。这一轮先把它变成**可复现的报告**，
+反馈里最难核对的一类问题是「某个物品在生存里做不出来」。这一轮先把它变成**可复现的报告**，
 再按报告补配方。
 
 ### 13.1 报告：`docs/items-without-recipes.json`（`gametest/CraftingCoverageTests`）
@@ -473,9 +473,9 @@ All 291 required tests passed :)
 
 ---
 
-## 15. 续批（用户实测第三批）：漏掉的「注册式配方」+ 砧/箱/管/线/水晶电路
+## 15. 续批（实机测试第三批）：漏掉的「注册式配方」+ 砧/箱/管/线/水晶电路
 
-用户指出三件事：**原版有「板 + 剪线钳」做 1x 导线**、**原版有扳手/弯曲绕筒/锤子 + 弯曲板做管道的工作台配方**、
+指出三件事：**原版有「板 + 剪线钳」做 1x 导线**、**原版有扳手/弯曲绕筒/锤子 + 弯曲板做管道的工作台配方**、
 **箱子/mass storage/砧没有制作配方、砧也没有砸矿石的配方、crystal processor 没配方**。
 核查后发现前两条是对的，我上一轮漏了它们——原因是**原版把配方写在 `aRegistry.add(...)` 的参数里**，
 不是 `CR.shaped(...)` 调用，所以按行搜 `CR.` 一律搜不到。
@@ -497,7 +497,7 @@ small  " P " / "wzh"                large  "PPP" / "wzh" / "PPP"
 huge   "PPP" / "wzh" / "PPP"（用双板 plateDouble）
 限制管  " h " / "RPR" / " R "（R = 钢环，P = 同尺寸普通管；large/huge 图案略不同）
 ```
-键：`s` 锯、`w` 扳手、`z` 弯曲绕筒、`h` 锤子（与用户描述完全一致）。
+键：`s` 锯、`w` 扳手、`z` 弯曲绕筒、`h` 锤子（与描述完全一致）。
 **更正 §14.2 的结论**：限制管不是「只有物品没有配方」，它可以由普通管 + 钢环在工作台做出来。
 
 ### 15.3 砧、箱子、mass storage（`Loader_MultiTileEntities:132-141`、`:2184-2218`）
@@ -509,9 +509,9 @@ huge   "PPP" / "wzh" / "PPP"（用双板 plateDouble）
 | 抽屉 / 柜子 | `"CTC"/"TdT"/"CTC"`、`"SdS"/"LCL"/"TMT"` | C 金属箱、L 皮革、M 机壳 |
 | 砧（全部 34 种） | `"RRR"/"hR "/"RRR"` | 石砧 = 原版石头；黑石/花岗岩砧 = 对应石砖块；金属砧 = 对应**锭**；h 锤子 |
 
-### 15.4 1x 导线：板 + 剪线钳（用户报告）
+### 15.4 1x 导线：板 + 剪线钳（反馈）
 
-按用户描述实现：图案 `"Px"`（第一格板、第二格剪线钳）→ **1× 1x 导线**，共 29 种导线族。
+按描述实现：图案 `"Px"`（第一格板、第二格剪线钳）→ **1× 1x 导线**，共 29 种导线族。
 依据是原版自己的 `"xP"` 图案（`Compat_Recipes_IndustrialCraft: x 剪线钳 + 板 → 2 导体`），
 原版对**自家导线**只写了 Wiremill 机器配方，这一条是应要求的补齐（已在类注释里标明）。
 
@@ -531,7 +531,7 @@ huge   "PPP" / "wzh" / "PPP"（用双板 plateDouble）
 新增 `gametest/AnvilSmashingTests`：放真砧、放矿石形态、用锤子敲，断言有产出。
 结果：`crushed` / `oreRaw` / `rockGt` **都能敲出东西**（`oreRaw → 粉碎矿 1 + 小粉碎矿 6`，`crushed → 粉 1 + 1/72 粉 9`）。
 
-> **仍需用户确认的一点**：原版里砧的输入是**矿石形态**（raw ore / crushed ore），不是矿石方块；
+> **仍需确认的一点**：原版里砧的输入是**矿石形态**（raw ore / crushed ore），不是矿石方块；
 > 而移植版的矿石方块目前按原版 1.20 战利品表掉落**方块本身**（`data/BlockLootPack`），
 > 原版则是挖矿直接得到粉碎/粗矿。如果你在砧上用的是「矿石方块」，那它是两台机器（Crusher/Hammer）的输入，
 > 原版砧同样不接受它。要不要把矿石方块改成掉落粉碎矿（更接近原版生存节奏）？
@@ -838,7 +838,7 @@ new WorldgenDungeonGT("overworld.structure.dungeon.large", T, 100, 3, 7, 20, 20,
 Hexxit/EtFuturum 方块）整条跳过并注明；GT6 的 `mLightUpdateCoords` 假光照 → **移植版把红石灯直接点亮**
 （1.20.1 的 LIGHT 阶段按真实光源算光，GT6 是写死亮度 15）；`GTDungeonData.water()` 与钥匙字段暂时无使用者（记档）。
 
-**门禁抓出的两处**（都是我这边的测试/布局，不是子代理的实现）：
+**门禁抓出的两处**（都是本批的测试/布局，不是并行任务的实现）：
 ①布局数组被写成了**锯齿**（每行各掷一次尺寸）⇒ `settle` 的斜向索引越界（GT6 是 `new byte[A][B]` 的矩形数组，两个尺寸各掷一次 ⇒ 已改）；
 ②`cellOf` 的"越界"断言取 `anchor + 2`，而 5×5 布局的中格是 i=2、+2 正好是 i=4（仍在界内）⇒ 改成 +3；
 ③顺带修正：`Blocks.LIT_REDSTONE_LAMP`/`Blocks.BOOKS`/`AnvilBlock.DAMAGE` 在 1.20.1 都不存在
@@ -872,7 +872,7 @@ Hexxit/EtFuturum 方块）整条跳过并注明；GT6 的 `mLightUpdateCoords` �
 | `registry/GTMultiItemsGen.java` | **+320 个蜂物品**（80 蜂种 × 4 扫描态：`<prefix>_scanned_{drone,princess,queen,dead}`），多物品表 958 → **1278** 条 |
 | `content/bumble/BumbleBeeType.java` | 四个 `SCANNED_*` 的 `registered` 由 false → **true**（§74 预留的 4 个类型到齐，8 个类型全部注册） |
 | 语言键 | 中英各 **+320** 条（`tools/add_bumble_scanned_lang.py`，幂等；英文＝显示名，中文＝现有活体译名 + "(扫描)"），满足 `MaterialCompatibilityTests` 的"每个注册物品都要有双语键"守卫 |
-| `content/recipe/GTBumbleBeeRecipes.java`（新） | GT6 `RecipeMapBumblelyzer.findRecipe:51-74` 的移植：**活体蜂 ×1 + 微型纸板 ×1 + 10 mB 蜂蜜 → 该蜂的扫描态 ×1**，**64 tick / 16 EU/t**（GT6 的 `Recipe` 构造器是 `(…, duration, eut, …)`；任务书里那句"64 EU/t × 16 tick"是我写反了，以 GT6 为准），基因组 NBT 整份带过去；GT6 :61 的"已扫描蜂直通"行也照做（1 tick / 16 EU/t、不吃蜂蜜与纸板）；蜂蜜按 GT6 `FL.java:139-141` 的 HONEY 标志认（Honey/HoneyGtC/HoneyBoP + Honeydew）；纸板 = `plate_tiny_paper`（GT6 `OP.plateTiny.mat(MT.Paper,1)`）；林业蜂那一段（:63-69）按"移植版没有林业"跳过并注明 |
+| `content/recipe/GTBumbleBeeRecipes.java`（新） | GT6 `RecipeMapBumblelyzer.findRecipe:51-74` 的移植：**活体蜂 ×1 + 微型纸板 ×1 + 10 mB 蜂蜜 → 该蜂的扫描态 ×1**，**64 tick / 16 EU/t**（GT6 的 `Recipe` 构造器是 `(…, duration, eut, …)`；任务书里那句"64 EU/t × 16 tick"写反了，以 GT6 为准），基因组 NBT 整份带过去；GT6 :61 的"已扫描蜂直通"行也照做（1 tick / 16 EU/t、不吃蜂蜜与纸板）；蜂蜜按 GT6 `FL.java:139-141` 的 HONEY 标志认（Honey/HoneyGtC/HoneyBoP + Honeydew）；纸板 = `plate_tiny_paper`（GT6 `OP.plateTiny.mat(MT.Paper,1)`）；林业蜂那一段（:63-69）按"移植版没有林业"跳过并注明 |
 | `content/bumble/GTBumbleMutations.java`（新） | GT6 `MultiItemBumbles` 的**变异与组合表**：组合 **20/20 条**（`bumbleCombine:378-435` 的嵌套 switch，逐条机械化比对 0 出入、0 跳过），变异按 `bumbleMutateChance:459` 的等级开关（0/1→500、2→250、3→25、其余 0）与方向开关（±10 / 无抽取 / 复制），80 个蜂种全在 0..3 级且目标全部存在；GT6 `addItems:180-185` 那六条从未实现的注释（Jungle+Water=Swamp 等）原样保留为文档 |
 | `content/bumble/BumbleBreeding.java`（新） | `MultiTileEntityBumbliary.onTick2:113-272` 的育种内核：`findDroneSlot`（主槽优先、同种优先、末位覆盖，-1 表示没有）、`breed`（`princessCount = 1+rng(5)/2`；同种 → 该种 + 逐只 `mutate` 掷骰；异种 → 每只四选一 {A 公主, B 公主, combine(A,B), combine(B,A)}，工蜂用 DRONE 版；全部后代走 `BumbleBeeGenes.inherit` 继承双亲基因；`lifeSpan` = 公主的寿命基因；`queen` = 公主加冕、保留公主基因组；`droneDead` = 被杀死的工蜂；`droneCost` = 工蜂堆叠 >1 时为 2）、`sameSpecies`；扫描态在加冕/死亡时保持（S_PRINCESS→S_QUEEN、S_DRONE→S_DEAD），后代本身永远是普通态（GT6 的 `bumblePrincess/Drone` 就是 +1/+0） |
 | `tools/generate_bumble_scanned_models.py`（新） | 320 个扫描态物品的 **item 模型**（GT6 资源包里没有单独的扫描贴图，逐条复制活体同族的模型：`layer0` = 蜂种贴图、`layer1` = `overlay_<type>`），幂等（复跑 0 变化） |
@@ -989,9 +989,9 @@ NBT 往返（GT6 的三个键 + 基因组）；破坏运行中的机器把蜜蜂
 
 ---
 
-## 80–83. 续批（用户实测四项 + 一批内容）：**地牢接入 locate** / **地牢用回半砖** / **GT 三种水＝原版水** / **币堆与板堆变成真容器** / 木头字典工作台配方 + 工坊真机器 + 词典 11 种加工目标 + 蜂分析仪展示行
+## 80–83. 续批（实机测试四项 + 一批内容）：**地牢接入 locate** / **地牢用回半砖** / **GT 三种水＝原版水** / **币堆与板堆变成真容器** / 木头字典工作台配方 + 工坊真机器 + 词典 11 种加工目标 + 蜂分析仪展示行
 
-用户这轮提了四项实测问题，另加"继续推进"。四批并行做完，下面按问题分节。
+本轮提了四项实测问题，另加"继续推进"。四批并行做完，下面按问题分节。
 
 ### 80. 地牢接入原版 `/locate structure gregtech:gt_dungeon`
 
@@ -1049,9 +1049,9 @@ NBT 往返（GT6 的三个键 + 基因组）；破坏运行中的机器把蜜蜂
 
 ---
 
-## 84–90. 续批（用户实测七项）：**内存增长** / **三种水＝原版水（补完）** / **黏土表面** / **真硬币** / **四个堆的贴图建模** / **地牢储罐** / **手摇曲柄**
+## 84–90. 续批（实机测试七项）：**内存增长** / **三种水＝原版水（补完）** / **黏土表面** / **真硬币** / **四个堆的贴图建模** / **地牢储罐** / **手摇曲柄**
 
-用户实测报了七条，六批并行处理，门禁从 513 → **534 项全过**（新增 21 项测试）。下面逐条。
+实机测试报了七条，六批并行处理，门禁从 513 → **534 项全过**（新增 21 项测试）。下面逐条。
 
 ### 84. 内存异常占用：三处"设计上无界增长" + 一处加固
 
@@ -1070,7 +1070,7 @@ NBT 往返（GT6 的三个键 + 基因组）；破坏运行中的机器把蜜蜂
 
 ### 85. 三种水＝原版水（补完：音效/动画/透明/含水方块）
 
-上一批只改了"颜色 + 流体标签 + 属性"，用户实测仍不对，本批找到并修掉三个**各自独立的真实根因**（都对着 1.20.1/Forge 源码确认）：
+上一批只改了"颜色 + 流体标签 + 属性"，实机测试仍不对，本批找到并修掉三个**各自独立的真实根因**（都对着 1.20.1/Forge 源码确认）：
 
 | 症状 | 根因 | 修法 |
 |---|---|---|
@@ -1163,7 +1163,7 @@ NBT 往返（GT6 的三个键 + 基因组）；破坏运行中的机器把蜜蜂
 
 ### 91.5 本轮踩到的门禁/环境坑（已写进交接单）
 
-1. **门禁 JVM 因"提交限额"起不来**：这台机器上用户同时在跑游戏（commit 用量 62/66 GB，可用提交 3.4~6 GB），4G/3G 堆的 G1 版门禁直接 `mmap failed to map 1002438656 bytes for G1 virtual space`（`os::commit_memory ... errno=1455`）⇒ 解法是 **`gradlew --stop` 回收守护进程 + `--no-daemon` + `-PgameTestJvmArgs=-XX:+UseSerialGC`**（G1 的大块虚拟预留是触发点，SerialGC 不预留）。为此 `build.gradle` 新增 `gameTestJvmArgs` 属性（不传时行为与以前完全一致）。
+1. **门禁 JVM 因"提交限额"起不来**：这台机器上同时在跑游戏（commit 用量 62/66 GB，可用提交 3.4~6 GB），4G/3G 堆的 G1 版门禁直接 `mmap failed to map 1002438656 bytes for G1 virtual space`（`os::commit_memory ... errno=1455`）⇒ 解法是 **`gradlew --stop` 回收守护进程 + `--no-daemon` + `-PgameTestJvmArgs=-XX:+UseSerialGC`**（G1 的大块虚拟预留是触发点，SerialGC 不预留）。为此 `build.gradle` 新增 `gameTestJvmArgs` 属性（不传时行为与以前完全一致）。
 2. **2G 堆跑不完套件**（`OutOfMemoryError: Java heap space`）⇒ 这台机器上 3G 是下限。
 3. **被 OOM 中断的门禁会留下半个世界**（本轮第一次 2G 运行 OOM 后，下一轮的 `AnvilSmashingTests.oreFormsSmashWithAHammer` 开始红）⇒ 与已知的"测试数变化要换世界"合并处理：把 `build/gametest-run/world` 挪走再跑。
 4. `BlockPlaceContext(level, null, …)` 在 1.20.1 会让**原版** `getNearestLookingDirection()` NPE（`Entity.getViewXRot`）⇒ 要建放置上下文就传一个 mock 玩家，别偷懒传 null。
@@ -1384,7 +1384,7 @@ GTDrinks.registered() + GTDrinks.unresolved().size() == GTDrinksGen.ROWS.size()
 
 ## 100. 续批：抄 **TerraFirmaCraft 的"水家族"做法**修掉 GT 水的渲染接缝与水面合并
 
-用户指出参考模组 `F:\Dev\GregTech6\TerraFirmaCraft-1.20.x` 有海水/淡水区分、含水方块与边缘处理。读它的实现后找到移植版缺的那一环：
+指出参考模组 `F:\Dev\GregTech6\TerraFirmaCraft-1.20.x` 有海水/淡水区分、含水方块与边缘处理。读它的实现后找到移植版缺的那一环：
 
 **TFC 的做法（`common/fluids/RiverWaterFluid.java:28-53`、`common/blocks/RiverWaterBlock.java:33-79`）**
 - 它的河水 **`extends WaterFluid`**（继承原版水的抽象类），并覆写 **`isSame(Fluid)`**：`super.isSame(fluid) || fluid == TFCFluids.RIVER_WATER.get()` ⇒ **把自家流体并进"水"这个家族**；
@@ -1411,7 +1411,7 @@ GTDrinks.registered() + GTDrinks.unresolved().size() == GTDrinksGen.ROWS.size()
 
 ## 101. 实测收口：**9 GB 内存不足的真因**（客户端实测 2h38m + 5 GB 堆快照）＋ 本轮推进计划
 
-用户报"跑一段时间 9 G 也 OOM"。这轮**没有靠猜**：真的开了客户端（`gradlew runClient`，PID 37928，`-XX:MaxHeapSize=8.38 GB`）、进了世界、按分钟用 `jcmd GC.heap_info`/`GC.class_histogram` 采样，并在现象最明显时手动 `jcmd GC.heap_dump`（`F:\Dev\GregTech6\gt-heap-live.hprof`，**5.02 GB**）。结论与 §84/§97 的修复**不同**，必须单独记档：
+反馈"跑一段时间 9 G 也 OOM"。这轮**没有靠猜**：真的开了客户端（`gradlew runClient`，PID 37928，`-XX:MaxHeapSize=8.38 GB`）、进了世界、按分钟用 `jcmd GC.heap_info`/`GC.class_histogram` 采样，并在现象最明显时手动 `jcmd GC.heap_dump`（`F:\Dev\GregTech6\gt-heap-live.hprof`，**5.02 GB**）。结论与 §84/§97 的修复**不同**，必须单独记档：
 
 ### 101.1 结论一：**没有泄漏**（站住不动即完全冻结）
 
@@ -1473,7 +1473,7 @@ cmd /c ".\gradlew.bat runClient --offline -Dnet.minecraftforge.gradle.check.cert
 **所以正确的优先级是**：
 1. **降低"每区块的世界数据"**（收益最大，但也最难）：①减少 GT 矿石在区块里的**方块种类**（同一种材料/岩石组合复用同一个 `BlockState` 实例、避免每格引入新调色板条目）；②复核 `GTWorldFluidBlock`/矿石方块是否触发了不必要的 `ModelData` 查询；③必要时把"岩石变体"从方块状态维度降为材质映射（配合 §101 的 BE 议题一起评估）。
 2. **矿石 BE 改造**（约 15–20 %）：仍值得做——它同时减少 `blockEntities` 映射、`BlockEntityInfo` 与 BE ticker 开销，但**不该按"数 GB"排期**，而应作为"每区块成本"整体优化的一部分。
-3. **视距/模拟距离**（唯一无需改代码、线性生效的杠杆，用户侧即可）：区块数直接决定 360–560 KB/区块 的总量。
+3. **视距/模拟距离**（唯一无需改代码、线性生效的杠杆，客户端侧即可）：区块数直接决定 360–560 KB/区块 的总量。
 
 **教训记档**：在把"实例数 × 单实例成本"写成收益之前，先把单实例成本量出来——本批就是靠这一步才发现"180 万实例"听起来吓人、实际只有 0.3–0.5 GB。
 
@@ -1481,13 +1481,13 @@ cmd /c ".\gradlew.bat runClient --offline -Dnet.minecraftforge.gradle.check.cert
 
 ---
 
-## 103. A / B / C 三项的**可执行方案**（用户已批准，等一轮充足预算开工）
+## 103. A / B / C 三项的**可执行方案**（已批准，等一轮充足预算开工）
 
-用户批准"ABC 都做"。三项都属结构性改动，**每项都要动 5–8 个文件并跑至少两轮门禁**（约 8 分钟/轮），故先把方案与影响面钉在这里，避免开工时临时决策；同时按 §102 的实测成本排优先级。
+批准"ABC 都做"。三项都属结构性改动，**每项都要动 5–8 个文件并跑至少两轮门禁**（约 8 分钟/轮），故先把方案与影响面钉在这里，避免开工时临时决策；同时按 §102 的实测成本排优先级。
 
 ### 103.A 每区块世界数据（收益 ≈ 世界增量的 80 %，最难）
 
-> **硬约束（用户 2026-09-17 明确）**：**只优化 GregTech 自己加进区块的东西，原版一律不动**——不改区块 section/调色板/光照/网格这类原版内部机制，不 mixin 原版类，不替换原版方块。因此本项的着力点是 **GT 自己放置的方块与它们的状态**，而不是"让区块本身更省"。
+> **硬约束（ 2026-09-17 明确）**：**只优化 GregTech 自己加进区块的东西，原版一律不动**——不改区块 section/调色板/光照/网格这类原版内部机制，不 mixin 原版类，不替换原版方块。因此本项的着力点是 **GT 自己放置的方块与它们的状态**，而不是"让区块本身更省"。
 
 GT 自己往每个区块里塞的东西，按体积排序的排查清单：
 1. **GT 石层方块（27 种 `StoneType`）**：GT 的石层特征把大量原版石头替换成 GT 石头 ⇒ 直接抬高该 section 的调色板条目数与方块种类。手段：确认同一种 GT 石头在整个区块里**复用同一个 `BlockState` 实例**（带属性的状态别每格新建）；石层写入用预建的状态常量表而不是每格 `setValue(...)`。
@@ -1604,7 +1604,7 @@ GT 自己往每个区块里塞的东西，按体积排序的排查清单：
 
 ## 105. 移植版的**第一条 mixin**：让原版水也认 GT6 的水（水面双向平滑过渡）
 
-用户问"mixin 可以让水[面]平滑过渡，要不要作为前置加上"。查完的结论是：**加，但只加这一条，而且它不是前置**——§100 已经把那条渲染接缝修好了一半，剩下的一半（**原版那一侧**）确实只有 mixin 能补；它是自洽的一小块（1 个 mixin + 1 项测试），不阻塞任何其它批次，所以顺手做完。
+提问"mixin 可以让水[面]平滑过渡，要不要作为前置加上"。查完的结论是：**加，但只加这一条，而且它不是前置**——§100 已经把那条渲染接缝修好了一半，剩下的一半（**原版那一侧**）确实只有 mixin 能补；它是自洽的一小块（1 个 mixin + 1 项测试），不阻塞任何其它批次，所以顺手做完。
 
 ### 105.1 到底缺哪一半（源码依据）
 
@@ -1624,7 +1624,7 @@ GT 自己往每个区块里塞的东西，按体积排序的排查清单：
 | `build.gradle` | 新增 `id 'org.spongepowered.mixin' version '0.7.+'`（**MixinGradle 0.7.38**）+ `annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'` + `mixin { add sourceSets.main, 'gregtech.refmap.json'; config 'gregtech.mixins.json' }` |
 | `gametest/WaterFluidParityTests.java` | 新增 **1 项** `vanillaWaterKnowsTheWorldWaters`（同时是"mixin 到底有没有加载"的守门测试） |
 
-**关键踩坑（值得记档）**：**Forge 47.4.20 没有 `mods.toml` 的 `[[mixins]]` 块**——用 `javap` 查 `fmlloader` 的 `ModInfo`，字段表里**没有 `mixins`**（那是后来才加的）。所以 dev 侧发现 config 只能靠 MixinGradle（它写 jar manifest 的 `MixinConfigs` 并在 dev 注册 config）或启动参数；"手写 refmap + manifest" 那套在 dev 里**根本不会加载**（而 dev 正是用户跑 `runClient` 的方式）。这也是移植版**第一次**引入 mixin：此前全仓 mixin 数为 **0**（§2 "核心修改 asm 18 → 0"）。
+**关键踩坑（值得记档）**：**Forge 47.4.20 没有 `mods.toml` 的 `[[mixins]]` 块**——用 `javap` 查 `fmlloader` 的 `ModInfo`，字段表里**没有 `mixins`**（那是后来才加的）。所以 dev 侧发现 config 只能靠 MixinGradle（它写 jar manifest 的 `MixinConfigs` 并在 dev 注册 config）或启动参数；"手写 refmap + manifest" 那套在 dev 里**根本不会加载**（而 dev 正是在 `runClient` 中 的方式）。这也是移植版**第一次**引入 mixin：此前全仓 mixin 数为 **0**（§2 "核心修改 asm 18 → 0"）。
 
 ### 105.3 验证
 
@@ -1647,7 +1647,7 @@ GT 自己往每个区块里塞的东西，按体积排序的排查清单：
 
 ## 106. 下一批预研（§103.C 第一批：瓶子族）——**比 §5.1b 里写的要少得多**
 
-用户说"继续移植"，本轮先把它摸清（没有改代码），结论是**瓶子族已经完成了大半**，下批只需补两处：
+提出"继续移植"，本轮先把它摸清（没有改代码），结论是**瓶子族已经完成了大半**，下批只需补两处：
 
 ### 106.1 现状（都在仓库里，逐项核对过）
 
@@ -1675,7 +1675,7 @@ GT 自己往每个区块里塞的东西，按体积排序的排查清单：
 
 ## 107. 大批次：§103.C 瓶子族收口 + 三路并行（流体危害 / 覆盖板 / 能力句柄 + 矿石资产）+ §103.A 审计结论
 
-用户说"可以多移植一堆东西，一次花几个小时也没事"，所以本轮一次做四路：我自己做**瓶子族收口**（§106 预研的落地），另开三个子代理并行做**流体危害标记与执行**、**覆盖板（排水盖 + 进气盖）**、**§97 能力句柄断言 + 矿石资产补齐**；最后统一门禁 + 重建 jar。
+提出"可以多移植一堆东西，一次花几个小时也没事"，所以本轮一次做四路：**瓶子族收口**（§106 预研的落地），另开三个并行任务分别做**流体危害标记与执行**、**覆盖板（排水盖 + 进气盖）**、**§97 能力句柄断言 + 矿石资产补齐**；最后统一门禁 + 重建 jar。
 
 ### 107.1 瓶子族收口（GT6 `MultiItemBottles` 真的能喝了）
 
@@ -1731,7 +1731,7 @@ GT 自己往每个区块里塞的东西，按体积排序的排查清单：
 | ④GT 的 BE | 矿石已由 §103.B 清零；其余机器 BE 数量按 §101 实测无异常 |
 | ⑤`getRenderTypes` 是否过宽 | `block/` 下只有 `OreBakedModel` 返回 `cutoutMipped`（矿石需要），没有过宽的 `ChunkRenderTypeSet`；返回 `skipRendering=false` 的几个 GT 方块（模具/坩埚交叉）都是**非满方块**，false 正是它们该有的答案 |
 
-**所以 §103.A 的剩余空间**：要么动"内容体积"（少铺 GT 石头/矿石/水，与移植目标冲突），要么动原版区块机制（用户明令不动）。**记档：在"不碰原版"的约束下，§103.A 已没有剩余的廉价收益**；真正的线性杠杆仍是视距/模拟距离（用户侧）。
+**所以 §103.A 的剩余空间**：要么动"内容体积"（少铺 GT 石头/矿石/水，与移植目标冲突），要么动原版区块机制（明令不动）。**记档：在"不碰原版"的约束下，§103.A 已没有剩余的廉价收益**；真正的线性杠杆仍是视距/模拟距离（客户端侧）。
 
 ### 107.4 本轮的既有发现（记档，不改）
 
@@ -1783,7 +1783,7 @@ GT 自己往每个区块里塞的东西，按体积排序的排查清单：
 
 ## 108. 世界流体危害（泡在酸/油/温泉水里）+ 传感器按**机器数**补齐到 20 + 三路并行（覆盖板 / 食品物品族 / 物品行为层）
 
-用户说"继续移植，长线移植我睡醒了检查"，所以照 §107 的办法再开四路：我做**世界流体危害**与**传感器矩阵**，另开三个子代理分别做**覆盖板第二批**、**GT6 食品物品族**、**GT6 物品行为层**；接口先行 + 文件白名单 + 只做 javac 自检（规矩见 `build/round108-brief.md`）。
+提出"继续移植，长线移植我睡醒了检查"，所以照 §107 的办法再开四路：**世界流体危害**与**传感器矩阵**，另开三个并行任务分别做**覆盖板第二批**、**GT6 食品物品族**、**GT6 物品行为层**；接口先行 + 文件白名单 + 只做 javac 自检（规矩见 `build/round108-brief.md`）。
 
 ### 108.1 世界流体危害：GT6 的两张效果表**全部**落地（关掉 §91/§107 记档的"酸液浸泡"）
 
@@ -1838,7 +1838,7 @@ GT 自己往每个区块里塞的东西，按体积排序的排查清单：
 1. **`CoverItems.portCoverId` 漏了两个 id** ⇒ `pressure_value` 与 `panel_asphalt` 的 `behavior(...)` 恒为 `null`：玩家能贴上去，但 `getCoverId` 永远不派发，行为**永不执行**。已补 `|| id.equals("pressure_value") || id.equals("panel_asphalt")`，并把代理写的"缺口哨兵"测试翻面成 `pressureValveAndAsphaltAreDispatchableCovers`（断言派发成功而不是断言缺失）。
 2. **机器上红石火把的语义是反的**：GT6 的火把是**反相器**（线有电 → 火把灭，`CoverRedstoneTorch:43` + `:50-57` 的 `mVisuals==0?15:0`），中继器才是跟随器（`CoverRedstoneRepeater:43`）；移植版 `updateCoverSignals` 原本把两者都写成 `mRunning ? 15 : 0`。已改成走 `CoverUtilityBehaviors.torchVisual/repeaterVisual/torchSignal`，`BasicMachineBlockEntity` 里只留一个 `redstoneCoverSignal(side)` 私有方法。
 
-**接线**（代理白名单外，我做的）：`tickCovers` 末尾调 `tickUtilityCovers(level,pos)`（它自己走六面、自带 `panels.stopped()` 闸门）；`BasicMachineBlock.use` 加三种交互（空手点 `crafting_table_cover` 的面 → 工作台；螺丝刀 → 翻黑白名单；软锤 → 清空滤器；持非 cover 物品 → 设为滤器）；`BasicMachineBlock.stepOn` 在**顶面**是 `panel_asphalt` 时给实体加速。
+**接线**（文件白名单外）：`tickCovers` 末尾调 `tickUtilityCovers(level,pos)`（它自己走六面、自带 `panels.stopped()` 闸门）；`BasicMachineBlock.use` 加三种交互（空手点 `crafting_table_cover` 的面 → 工作台；螺丝刀 → 翻黑白名单；软锤 → 清空滤器；持非 cover 物品 → 设为滤器）；`BasicMachineBlock.stepOn` 在**顶面**是 `panel_asphalt` 时给实体加速。
 
 **测试**：新 `gametest/CoverBehaviorTests`（BASE 27000）**17 项**，其中 9 项走"真机贴 cover → `getCoverId` → `CoverItems.behavior` → 行为"的完整派发链。
 
@@ -1875,7 +1875,7 @@ GT 自己往每个区块里塞的东西，按体积排序的排查清单：
 
 **落地**：新 `content/food/GTFoodItems`（表访问 + `foodProperties`/`itemProperties` + 吃掉退空容器的事件）+ 新 `registry/GTFoodItems`（缺口注册表，今天 0 条并打印对账）+ 新 `content/recipe/FoodItemRecipes`（**只依赖移植版已有物**的四族：Furnace 25 行 / Slicer 10 行 / Mixer 30 行 / Boxinator-Unboxinator 9 行）+ `tools/extract_gt6_food_items.py`（新，解析 `MultiItemFood` 并与 `GTMultiItemsGen` 对账）+ `tools/generate_food_item_assets.py`（新：266/266 贴图与模型核对通过，**造贴图 0 张**；语言键新增 **400** 条 `item.gregtech.<id>.food`，中英各 200，幂等）。
 
-**接线（我做的 6 处）**：`Loader_Submit` 提交 `GTFoodItems` 的 DeferredRegister、`Loader_Items` 调 `registerAll()`、`GregTech` Phase C 加 `FoodItemRecipes.register()`、**`GTMultiItems` 的食品属性改用 `GTFoodItems.itemProperties(id)`**（真正的行为修复：此前 **266 个食品共用一个占位食物值** 4/0.3）、`TechItem` 增加红色食物提示行（`FoodStat.java:198` 的样式，否则新加的 400 个键无人读）、`FoodStatsTests` 的 20 → **201**。
+**接线（6 处）**：`Loader_Submit` 提交 `GTFoodItems` 的 DeferredRegister、`Loader_Items` 调 `registerAll()`、`GregTech` Phase C 加 `FoodItemRecipes.register()`、**`GTMultiItems` 的食品属性改用 `GTFoodItems.itemProperties(id)`**（真正的行为修复：此前 **266 个食品共用一个占位食物值** 4/0.3）、`TechItem` 增加红色食物提示行（`FoodStat.java:198` 的样式，否则新加的 400 个键无人读）、`FoodStatsTests` 的 20 → **201**。
 
 **测试**：新 `gametest/FoodItemTests` **7 项**（BASE 29000）：266/266 注册与缺口 0、食物值与 GT6 逐条对齐、六项统计对齐、吃掉后统计变化、退空容器（含背包塞满时掉落到世界）、配方可查（Slicer/Furnace/Mixer，并**断言骡肉没有熔炼行**）、SKIPPED 有意为之。
 
@@ -1895,7 +1895,7 @@ GT 自己往每个区块里塞的东西，按体积排序的排查清单：
 
 **为什么是这 9 条**：它们的物品在移植版**全部已注册**（`GTMultiItemsGen:63-145`），而移植版**恰好只注册了这 4 个喷雾族**（各带 `_2` 已用变体），且 C-Foam 湿/硬化方块与 `CFoamBlockEntity.dry()` 都在 ⇒ 属于"物品本体已有 + 逻辑自包含 + GameTest 可驱动"的最优子集；GT6 里 5 个喷雾类共用同一套 empty/used/full + `gt.remaining` 结构，一次做完最省。**所有消耗数值都取原版构造参数**：胶带 quality 0/1/2 = 10000/100000/10000000 次（`MultiItemRandomTools:559,568,577`）、打火石概率 9000/10000/5000/5500、打火机 Invar 100 次 / 铂 1000 次、喷雾 256×10 次。
 
-**落地**：新包 `item/behavior/`（`ItemBehaviors` 统一入口 + 9 个行为类，纯函数 + `Outcome`/`Consumable`/`SprayEffect` 等小值类型；`useOn`/`useOnEntity` 派发器先按**注册表 id** 判定，未命中的 multi-item 直接 `PASS`，不分配对象）。**接线（我做的）**：`GTToolItem.onItemUseFirst` 在坩埚铲分支之前加 PLUNGER 与 FLINT_AND_TINDER 两条（`Behavior_Plunger_Fluid:49-62`、`Behavior_FlintAndTinder:45-61`）、`GTToolItem.hurtEnemy` 加"打火石点苦力怕"分支（`:69-78`）、`GTMultiItems.MultiItem` 加 `onItemUseFirst` + `interactLivingEntity` 两个派发入口（对全部 1278 个 multi-item 安全）。
+**落地**：新包 `item/behavior/`（`ItemBehaviors` 统一入口 + 9 个行为类，纯函数 + `Outcome`/`Consumable`/`SprayEffect` 等小值类型；`useOn`/`useOnEntity` 派发器先按**注册表 id** 判定，未命中的 multi-item 直接 `PASS`，不分配对象）。**接线**：`GTToolItem.onItemUseFirst` 在坩埚铲分支之前加 PLUNGER 与 FLINT_AND_TINDER 两条（`Behavior_Plunger_Fluid:49-62`、`Behavior_FlintAndTinder:45-61`）、`GTToolItem.hurtEnemy` 加"打火石点苦力怕"分支（`:69-78`）、`GTMultiItems.MultiItem` 加 `onItemUseFirst` + `interactLivingEntity` 两个派发入口（对全部 1278 个 multi-item 安全）。
 
 **测试**：新 `gametest/ItemBehaviorTests` **14 项**（BASE 33000），每项都有正例与反面用例：行为表 33 个 id 全部有注册物品且未认领的物品不算、派发器两向路由、扫描仪（无 BE 计费 0 / 段数×512 / level 10 与 100 两道门 / 爆抗阈值）、胶带（遮挡面不消耗且目标不被调用 / `full→used` 计数 / 最后一击整叠消耗）、活塞（1000 mB + 100 耐久 / 创造不掉耐久 / 耐久耗尽时**罐里的流体不动**）、打火石（成功点火 + 失败 roll 仍 acted 且扣耐久）、打火机（100→99 / 最后 1 点变空壳 / 火柴失败 roll 也消耗 / 成功但无处点火则保留 / 创造不烧燃料）、硬化喷（湿→硬化、已硬化再喷无效）、清除喷（硬化块→空气、石头无效）、灭火器（3 处火 −30 / 燃烧的苦力怕 −10 且熄灭 / <10 次不能区域喷射）、除色喷（染色玻璃/板/彩瓦各 −10、普通玻璃不变）。
 
@@ -2114,7 +2114,7 @@ GT 自己往每个区块里塞的东西，按体积排序的排查清单：
 | jar | `build\libs\gregtech-1.0.0.jar` **30.6 MB（32,125,953 字节）**，sha256 `F678C7A981CE20E8CBA35F08C1B27B3DC0BE5CC4368051780B510304A398EF27`，**66,544** 条目 |
 | 顺序不变量 | `java newest < gate log` **True**、`gate log < jar` **True** |
 
-**流程上的一条新经验**：这三个小类由子代理写（我给冻结签名 + 文件白名单 + javac 自检），**它反过来指出我写的测试里有 3 处判据错**（① 填充 64 个坐标时把被点的那一个也填进去了 ⇒ 走的是"已绑定就移除"分支而不是"已满"分支；② `makeMockSurvivalPlayer()` 站在世界原点，距本站点 5.5 万格 ⇒ 128 格范围判定必然不成立，要 `player.moveTo(...)`；③ GT6 `:72` 的 `return T` 在四个分支**之后**，所以"加不进去"时它照样返回 `T`，我的 `assertFalse(acted())` 是错的）。**让实现者复查调用者的测试**比让主代理自审更有效——§108.8 那条"代理写的测试第一次跑几乎必红"这次被**提前**消化掉了，门禁一次就绿。
+**流程上的一条新经验**：这三个小类由并行任务写（冻结签名 + 文件白名单 + javac 自检），**并行任务反过来指出测试里有 3 处判据错**（① 填充 64 个坐标时把被点的那一个也填进去了 ⇒ 走的是"已绑定就移除"分支而不是"已满"分支；② `makeMockSurvivalPlayer()` 站在世界原点，距本站点 5.5 万格 ⇒ 128 格范围判定必然不成立，要 `player.moveTo(...)`；③ GT6 `:72` 的 `return T` 在四个分支**之后**，所以"加不进去"时它照样返回 `T`，我的 `assertFalse(acted())` 是错的）。**让实现者复查调用者的测试**比自审更有效——§108.8 那条"并行任务写的测试第一次跑几乎必红"这次被**提前**消化掉了，门禁一次就绿。
 
 **没有执行 `git commit`。**
 
@@ -2139,7 +2139,7 @@ GT 自己往每个区块里塞的东西，按体积排序的排查清单：
 
 ### 111.3 补上的一个真语义缺口：管道间均压绕过滤器
 
-子代理的报告里诚实列了 9 处差异，第 4 条是**真的会漏**：管道的**管道间均压**走的是 `adjPipe.fill(...)` 直调，绕过了接收侧那一面；也就是说滤器只拦机器/外部能力查询，**拦不住邻居管道的均压**——而 GT6 的滤器恰恰是**面**上的拦截，等于"玩家装的滤器被自家均压绕过去"。
+并行任务的报告里诚实列了 9 处差异，第 4 条是**真的会漏**：管道的**管道间均压**走的是 `adjPipe.fill(...)` 直调，绕过了接收侧那一面；也就是说滤器只拦机器/外部能力查询，**拦不住邻居管道的均压**——而 GT6 的滤器恰恰是**面**上的拦截，等于"玩家装的滤器被自家均压绕过去"。
 
 修法：在 `distribute` 的管道间分支里，先取 `directionTo(adjPipe)`，再问 `adjPipe.coverFluidFilterPermits(toTarget.getOpposite(), drained)`，不通过就 `continue`（机器侧本来就走接收方的 `getCapability`，已被同名方法过滤）。配套测试 `theFilterAlsoGatesThePipeToPipeFlow` **两头都钉**：滤器是熔岩时水不许过去、换成水之后同一对流必须通。
 
@@ -2353,7 +2353,7 @@ GT 自己往每个区块里塞的东西，按体积排序的排查清单：
 
 ## 116. 续批：错误报告-2026-9-18 的**崩溃定因**（Java 25 实验 flag 下的 C2 本地内存失败）+ 客户端资源洪泛的**三类根因**全量修复
 
-用户报：内存一直稳在 3–4 G，却突然 `insufficient memory`。先定因（§116.1：**不是**模组、**不是**堆），再修模组侧真正存在的问题（§116.2–116.4：客户端资源错误洪泛），最后重出 jar（§116.5）。
+反馈：内存一直稳在 3–4 G，却突然 `insufficient memory`。先定因（§116.1：**不是**模组、**不是**堆），再修模组侧真正存在的问题（§116.2–116.4：客户端资源错误洪泛），最后重出 jar（§116.5）。
 
 ### 116.1 崩溃定因：堆只用了 42%，爆的是 **C2 编译器的 arena**
 
@@ -2370,7 +2370,7 @@ GT 自己往每个区块里塞的东西，按体积排序的排查清单：
 | JVM | **Java 25.0.4.1**，`-Xmx9216m -XX:+UseCompactObjectHeaders -XX:G1HeapRegionSize=32M -XX:G1NewRegionPercent=20 …` | 实验性 `UseCompactObjectHeaders` + 32M 大 region |
 | 时机 | 会话第 **8 分 10 秒**，玩家 `/locate` 找到地牢（784,~,-608）后连续传送、猛加载区块 | 大量类首次加载 ⇒ C2 编译队列暴涨 ⇒ arena 连片申请 |
 
-**结论**：这是一次**进程级本地内存（native）提交失败**，发生在 JVM 的 C2 编译 arena 里，不是堆溢出、也不是本模组某个分配点。用户看到"3–4 G 很稳"是对的——稳的是堆，被杀的是堆外。
+**结论**：这是一次**进程级本地内存（native）提交失败**，发生在 JVM 的 C2 编译 arena 里，不是堆溢出、也不是本模组某个分配点。实机看到"3–4 G 很稳"是对的——稳的是堆，被杀的是堆外。
 
 **修法（启动参数，属整合包侧；`D:\Minecraft整合包\GT6移植测试\`）**：
 
@@ -2438,7 +2438,7 @@ GT 自己往每个区块里塞的东西，按体积排序的排查清单：
 
 ## 117. 续批：地牢储藏室终于堆上**真正的板条箱**（GT6 的 12 种 crate 多方块 → 移植版 6 个板条箱方块 + 五张材料表）
 
-用户提示"现在有板条箱，可以直接在地牢中引用"——指的就是这一处：`GTDungeonChunkRoomStorage` 的类注释里一直写着 **"the port has no crates, so every stack is the port's plain shelving rack"**，四个象限全用**书架**顶替，材料表与尺寸 roll 一并丢弃。
+提示"现在有板条箱，可以直接在地牢中引用"——指的就是这一处：`GTDungeonChunkRoomStorage` 的类注释里一直写着 **"the port has no crates, so every stack is the port's plain shelving rack"**，四个象限全用**书架**顶替，材料表与尺寸 roll 一并丢弃。
 
 ### 117.1 缺口与已有的另一半
 
@@ -2881,7 +2881,7 @@ GT6 权威规格（本批逐行核过，写进代码注释）：结构 5×5×5 �
 
 ### 125.6 门禁那件事（新记档，省下一轮的十几分钟）
 
-本批只加了一个**未被引用**的类，却跑出 3 条红：`DungeonTests.crateDrawsBlockBeforeMaterial`（"the crate was placed"）、`PipeCoverTests.aPipeDropsItsCoversWhenBroken`、`ItemPipeCoverTests.anItemPipeDropsItsCoversWhenBroken`（后两条都是 "found 2"）。同时日志里有 **`Can't keep up! … Running 11273ms or 225 ticks behind`**（用户客户端在跑，PID 55304 占 2.8 GB）。
+本批只加了一个**未被引用**的类，却跑出 3 条红：`DungeonTests.crateDrawsBlockBeforeMaterial`（"the crate was placed"）、`PipeCoverTests.aPipeDropsItsCoversWhenBroken`、`ItemPipeCoverTests.anItemPipeDropsItsCoversWhenBroken`（后两条都是 "found 2"）。同时日志里有 **`Can't keep up! … Running 11273ms or 225 ticks behind`**（客户端在跑，PID 55304 占 2.8 GB）。
 
 - **判据**：这 3 条都在**复用世界**（`build/gametest-run/world`，`CreationTime` 2026-09-19 02:13:58，即 §124 那张）上跑；"found 2" 正是 §109 记过的"前几轮遗留的同名掉落物还在世界里"。未被引用的新类不可能影响它们。
 - **处置**：`Move-Item build\gametest-run\world build\gametest-run\world-red125a-20260919-2045` ⇒ **新世界重跑**（不是改代码）。
@@ -3416,7 +3416,7 @@ if (aSide == OPOS[mFacing]) tIndex = (tCoords[1] < PX_P[8]? 20:27) - clamp(0, 6,
 
 门禁里踩到三个坑（都是**测试自己的问题**，实现没错）：①GameTest 的 `makeMockPlayer()` **恒为创造模式**（`isCreative()` 被覆写），所以"放书后手上少一本"测不了 ⇒ 改为断言"每点一次正好存 1 本"，并在测试里写明；②断言"石头点击后第 1 槽仍空"不成立——mock 玩家的 `setItemInHand` 不生效，第二次点击存的还是那本书 ⇒ 改成**比较总存量**而不是具体槽位；③`BookShelfBlockEntity` 的 capability 原来在 `onLoad()` 里赋值，新放的方块实体没走到那里 ⇒ `getCapability` 返回空，改成构造时就绪。
 
-**门禁插曲（本批三次）**：`-PgameTestHeap=3G` 下连续两次在**同一处**日志停更 8 分钟（JVM 3.5 GB 堆、CPU 仍在涨，用户同时在跑 Minecraft）；杀掉陈旧 `gameTest` JVM 后改用 `-PgameTestHeap=4G` 重跑，**2 分 30 秒**全绿（未改任何代码）。
+**门禁插曲（本批三次）**：`-PgameTestHeap=3G` 下连续两次在**同一处**日志停更 8 分钟（JVM 3.5 GB 堆、CPU 仍在涨，同时在跑 Minecraft）；杀掉陈旧 `gameTest` JVM 后改用 `-PgameTestHeap=4G` 重跑，**2 分 30 秒**全绿（未改任何代码）。
 
 ### 53.3 结果
 
@@ -3460,7 +3460,7 @@ if (aSide == OPOS[mFacing]) tIndex = (tCoords[1] < PX_P[8]? 20:27) - clamp(0, 6,
 
 写测试踩了两个坑：①石头方块 id 不是 `<type>` 而是 **`<type>_<variant>`**（`GTBlocks.getStone(type, StoneVariant.STONE)`）——第一版用 `gregtech:prismarine_dark` 查注册表直接失败；②柱体每块有 1/8 变矿石，所以形状断言不能只认三棱柱石，改成"三棱柱石**或**该柱的矿石"。
 
-**门禁插曲**：本批三次运行里两次遇到**日志停更 7–14 分钟**的陈旧 JVM（3.5 GB 堆、CPU 仍在涨，用户同时在跑 Minecraft）——按记录过的处置：杀掉陈旧 `gameTest` JVM、删日志重跑，**未改代码**即全绿（本次无改动重跑 2 分 39 秒完成）。
+**门禁插曲**：本批三次运行里两次遇到**日志停更 7–14 分钟**的陈旧 JVM（3.5 GB 堆、CPU 仍在涨，同时在跑 Minecraft）——按记录过的处置：杀掉陈旧 `gameTest` JVM、删日志重跑，**未改代码**即全绿（本次无改动重跑 2 分 39 秒完成）。
 
 ### 52.4 结果
 
@@ -3610,7 +3610,7 @@ GT6 `Loader_Worldgen:576-578` 的三条登记——`new WorldgenOcean("ocean.sea
 | 海/河/沼泽水体 | 原版水 | **GT6 的 sea/river/swamp water**（按 GT6 顺序、整列替换） |
 | 缺失 token | 49 | **49** |
 
-**门禁插曲**：首次运行在 15:09 之后**日志停更 12 分钟**（JVM 3.5 GB 堆、CPU 仍在跑）＝记录过的环境性堆压力（用户同时在跑 Minecraft）；终止陈旧 `gameTest` JVM 后**未改代码**重跑即全绿（394 → 397 的增量与新增 3 项吻合）。
+**门禁插曲**：首次运行在 15:09 之后**日志停更 12 分钟**（JVM 3.5 GB 堆、CPU 仍在跑）＝记录过的环境性堆压力（同时在跑 Minecraft）；终止陈旧 `gameTest` JVM 后**未改代码**重跑即全绿（394 → 397 的增量与新增 3 项吻合）。
 
 **没有执行 `git commit`。**
 
@@ -3886,7 +3886,7 @@ GT6 把它的**机制提示页**放在一个只读的配方页签里（NEI 的 "
 
 ---
 
-## 41. 用户报告修复：自然生成的树**树叶会自己消失**——补上 GT6 的树叶判断 + 补上缺失的木头标签
+## 41. 反馈修复：自然生成的树**树叶会自己消失**——补上 GT6 的树叶判断 + 补上缺失的木头标签
 
 **报告**："自然生成的树的树叶会自己随时间消失，没有加上原版那样的判断。"
 
@@ -3906,7 +3906,7 @@ GT6 把它的**机制提示页**放在一个只读的配方页签里（NEI 的 "
 
 | 测试 | 断言 |
 |---|---|
-| `standingTreeKeepsItsLeaves` | **12 个树种**各长一棵真树，对**它的每一片叶子**做 **200 轮**随机刻 ⇒ **一片都不能少**（正是用户报告的场景） |
+| `standingTreeKeepsItsLeaves` | **12 个树种**各长一棵真树，对**它的每一片叶子**做 **200 轮**随机刻 ⇒ **一片都不能少**（正是反馈的场景） |
 | `choppedTreeLosesItsLeaves` | 砍掉整根树干后再随机刻 ⇒ **所有叶子都烂掉**（GT6 的"没原木才掉"） |
 | `persistentLeavesAndRangesMatchGt6` | `persistent` 叶子 500 次随机刻不掉；**范围表逐项等于 GT6**（橡胶 2/2、柳 4/2、椰 4/1、枫 3/2、蓝云杉 6/2、蓝桃花心 3/4、桂皮 3/3）；`hasLogNearby` 对"5 格外的叶子"为假、对旁边有原木为真 |
 | `woodIsInVanillaTags` | 12 种原木都在 `#minecraft:logs`、12 种树叶都在 `#minecraft:leaves` |
@@ -3952,7 +3952,7 @@ GT6 的 `WorldgenRacks`（`Loader_Worldgen:619`）名字里有 "Racks"，实际�
 | `scatterSpecialCases` | **下界砖**：12 次掷点里必然出现古代残骸原矿（1/4）与下界石英、且不会出现别的组合；**砂砾**：物品就是 `minecraft:flint`；**灵魂沙**：阴郁石或下界石英 |
 | `groundItemYieldsItsItem` | item 模式往返（BE 存取 + 解析成物品栈）、**破坏掉落的是该物品**（`getDrops` 走 LootParams）、方块外观取脚下的 `GROUND`（下界岩） |
 
-**本轮门禁的插曲**：第一次运行在 `=====` 进度条处**卡死 10 分钟**（JVM 3.5 GB 堆、日志不再增长）——属于此前记录过的环境性堆压力（用户同时在跑 Minecraft），终止陈旧 JVM 后重跑即全绿；代码侧无需改动。**教训与之前一致：这类挂起先重试，不要先去改代码。**
+**本轮门禁的插曲**：第一次运行在 `=====` 进度条处**卡死 10 分钟**（JVM 3.5 GB 堆、日志不再增长）——属于此前记录过的环境性堆压力（同时在跑 Minecraft），终止陈旧 JVM 后重跑即全绿；代码侧无需改动。**教训与之前一致：这类挂起先重试，不要先去改代码。**
 
 ### 40.4 结果
 
@@ -4189,7 +4189,7 @@ GT6 的 `WorldgenRacks`（`Loader_Worldgen:619`）名字里有 "Racks"，实际�
 
 新批次第一次跑门禁时，§34 的三项树测试**全部失败**，诊断打印出 `above=gregtech:log_rubber`、
 `surface=271`——**GameTest 的世界目录在多次运行之间是复用的**，所以上一轮长出来的树还立在原地，
-第二轮就被自己挡住了。这不只是本批的问题：**§34 的"全绿"只在世界是空的时候成立**，用户重跑门禁就会红。
+第二轮就被自己挡住了。这不只是本批的问题：**§34 的"全绿"只在世界是空的时候成立**，重跑门禁就会红。
 修法：`TreeGrowthTests` 在每次种树前**清理场地**（以基准点为中心 17×17、上下 2~22 格，只清非空气方块，
 开销可忽略），蓝云杉高度门槛测试的两个场地同样处理。本轮门禁**在上一轮树木仍在世界里的前提下**通过，
 即幂等性已被实测验证。
@@ -4502,9 +4502,9 @@ Hydrated Coal 的相关行）；②新材料的语言键由 `tools/import_gt_lan
 
 ---
 
-## 29. 续批（用户实测报告）：工具配方回归**有序合成**，并补上原版的工具头工作台配方
+## 29. 续批（实机测试报告）：工具配方回归**有序合成**，并补上原版的工具头工作台配方
 
-用户报告：**"工具制作方法是无序合成，原版是有序合成并且在工作台配方表里展示"**。核查后确认移植版错了，
+反馈：**"工具制作方法是无序合成，原版是有序合成并且在工作台配方表里展示"**。核查后确认移植版错了，
 而且错得比报告的还多一层：所有工具都用**一条**自定义配方（`gregtech:tool_assembly`）描述，它是一个
 `CustomRecipe`——**没有 ingredient、任意摆放 2 格就能匹配**，因此既不是有序合成，也进不了工作台的配方表
 （JEI 只能靠移植版自己的「工具组装」页签展示）。
@@ -4528,7 +4528,7 @@ Hydrated Coal 的相关行）；②新材料的语言键由 `tools/import_gt_lan
 * **`recipe/GTToolRecipes.java`（新）**：GT6 的图案表——一体式工具 27 条图案（金属版 + 宝石版）、工具头 35 条图案、
   头+柄 19 个工具；每条带 `mirror` 与 `normalHandle`（原版 `mUseNormalHandle`：柄是「该材料的柄材料」还是「同材料的棒」）。
 * **`recipe/GTToolPatternRecipe.java`（新，基类）** + `GTToolCraftingRecipe` / `GTToolHeadRecipe` / `GTFlintAndTinderRecipe`：
-  都是**真正的 `ShapedRecipe` 子类**，所以它们**就是工作台配方**，会出现在 JEI 的 crafting 分类里（这就是用户要的
+  都是**真正的 `ShapedRecipe` 子类**，所以它们**就是工作台配方**，会出现在 JEI 的 crafting 分类里（这就是需要的
   "在工作台配方表里展示"）。
   匹配用「图案 + 材料一致性」判定而不是 ingredient 比对：GT6 是**每种材料注册一行**（`onOreRegistration`），
   移植版有 ~1,100 材料，照搬会是几万条配方与巨大的同步包，所以改成**一行图案 + 谓词匹配**（同一个材料贯穿所有材料格、
@@ -5448,7 +5448,7 @@ All 306 required tests passed :)
 ---
 
 
-用户指出 §16.2 里我标为「有意差异」的两处应该按原版做实，于是这一轮把覆盖板的**物品身份**改成原版模型；
+指出 §16.2 里我标为「有意差异」的两处应该按原版做实，于是这一轮把覆盖板的**物品身份**改成原版模型；
 顺手还修掉了一个卡住整族挤出机配方的引用解析问题。
 
 ### 17.1 覆盖板：原版根本没有「泵盖板」这种物品
@@ -5534,7 +5534,7 @@ All 304 required tests passed :)
 
 ## 17. 续批：覆盖板回归原版的「一个物品兼两职」+ 发电机模块解锁挤出机
 
-用户指出 §16.2 里我标为「有意差异」的两处应该按原版做实，于是这一轮把覆盖板的**物品身份**改成原版模型；
+指出 §16.2 里我标为「有意差异」的两处应该按原版做实，于是这一轮把覆盖板的**物品身份**改成原版模型；
 
 * 选择器电路（`integrated_circuit_0..24`）在原版**是可以合成的**（`gregapi/item/ItemIntegratedCircuit.java:58-85`），
   移植版却把它写进了"by design 永不合成"名单——而 ULV~HV 的场发生器/机械臂/传感器/信号发射器
@@ -5571,7 +5571,7 @@ All 304 required tests passed :)
 | `cover_redstone_torch` / `cover_redstone_repeater` | 原版直接把**原版红石火把/中继器**注册成盖板，没有独立物品 | `GT_API:799-802` |
 | `cover_tag_selector` | 原版 = 编程电路（`ItemIntegratedCircuit:87` 把 meta 0..15 注册成 `CoverSelectorTag`） | `ItemIntegratedCircuit:87` |
 
-两处当时的差异已按用户要求做实（**§17 已改写这两条、并删掉了相关壳物品与转换配方**）：
+两处当时的差异已按要求做实（**§17 已改写这两条、并删掉了相关壳物品与转换配方**）：
 
 1. 原版 `IL.PUMPS`「电动泵」一个物品兼两职（机器零件 + 盖板）；移植版拆成两件，
    零件已经带着原配方（`components/pump_lv.json` 等），所以盖板做成**零件的 1:1 转换**，
@@ -5651,9 +5651,9 @@ All 302 required tests passed :)
 
 ---
 
-## 14. 续批（用户实测第二批）：JEI 卡顿的 tag、管道/导线配方、堆叠数量、金被叫成 Goldwood
+## 14. 续批（实机测试第二批）：JEI 卡顿的 tag、管道/导线配方、堆叠数量、金被叫成 Goldwood
 
-用户报了 5 个具体问题，逐条修如下（这一轮之后质量门 **296 项**）。
+反馈了 5 个具体问题，逐条修如下（这一轮之后质量门 **296 项**）。
 
 ### 14.1 `#gregtech:material` 让 JEI 卡几秒 → 去掉聚合 tag
 

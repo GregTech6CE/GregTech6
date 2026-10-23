@@ -2,7 +2,7 @@
 
 ## 来源与接入范围
 
-本批响应用户“将 lombinaxmasson 最新 main PR 整理到 Stonecutter，并说明各 PR 内容”的要求。目标为 `experiment/stonecutter`；主线来源固定为 [`c899462a616100a1007f9dec56372ea6489c9f0a`](https://github.com/SaltNya/GregTech6/commit/c899462a616100a1007f9dec56372ea6489c9f0a)，即 [PR #45](https://github.com/SaltNya/GregTech6/pull/45)，2026-10-18 22:14:24（上海）合入 main。本地接入前版本为 `a36f35f251fc0f36c13d4e2953082d4c619ea008`，共同祖先为 `9b244838acf887f45cba6b256fc64aa9d8588ea5`。
+本批响应“将 lombinaxmasson 最新 main PR 整理到 Stonecutter，并说明各 PR 内容”的要求。目标为 `experiment/stonecutter`；主线来源固定为 [`c899462a616100a1007f9dec56372ea6489c9f0a`](https://github.com/SaltNya/GregTech6/commit/c899462a616100a1007f9dec56372ea6489c9f0a)，即 [PR #45](https://github.com/SaltNya/GregTech6/pull/45)，2026-10-18 22:14:24（上海）合入 main。本地接入前版本为 `a36f35f251fc0f36c13d4e2953082d4c619ea008`，共同祖先为 `9b244838acf887f45cba6b256fc64aa9d8588ea5`。
 
 作者为 GitHub `lombinaxmasson`，提交署名 **Lorbineitte Masson <JeunesseRouge@protonmail.com>**。采用真实 Git 历史及 PR API 数据，不将存档快照伪造为作者提交。代码原有 LGPL-3.0-or-later 标识、项目 NOTICE 和来源许可证文件保留。逐项来源、提交与文件摘要见[来源回执](main-addon-stack-provenance-20261018.json)。
 

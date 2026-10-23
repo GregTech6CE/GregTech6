@@ -8,4 +8,4 @@ BasicMachineBlock掉落组件保留原保存字段和移除库存/盖板语义�
 
 MassStorageBlock沿用既有真实百万件状态、fraction loose drops、封箱壳与Native组件格式，补缺失Source边界：剪刀/刀拆封调用damageForToolClickReturn(1000)；螺丝刀模式切换经GTToolHelper.damageForUse(1)并显示filter keep/reset消息；空仓Shift消息显示原empty翻译。新增原creative pick完整update tag（含未封箱库存/分量，不走harvest扣分量壳），按实际LevelReader.registryAccess保存并写实体id。物品tooltip恢复原3行与已打包库存数量/名称，使用实际TooltipContext.registries解析组件；无provider时不伪造材料查询。普通/物流仓储继承该实现，不重新注册内容；实际pick/数量/分量与封箱拆封待验。
 
-3 Native Java，Core/资源/Forge/三个来源未改。集中Native compile+jar / Forge compile28秒通过，当前3个class与实际jar一致；无新夹具、不重复游戏。前次短专服不覆盖本批工具/组件/仓储行为。客户端、reload、成品jar、完整生存流程、独立进程存档重载和旧档仍待验；其他系统双版本对齐和完整三源goal保持active。
+3 Native Java，Core/资源/Forge/三个来源未改。集中Native compile+jar / Forge compile28秒通过，当前3个class与实际jar一致；无新夹具、不重复游戏。前次短专服不覆盖本批工具/组件/仓储行为。客户端、reload、成品jar、完整生存流程、独立进程存档重载和旧档仍待验；其他系统双版本对齐和完整三源整体移植仍未完成。

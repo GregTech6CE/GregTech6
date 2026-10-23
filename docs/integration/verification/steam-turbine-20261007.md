@@ -27,8 +27,8 @@
 
 ## 后续验收
 
-按用户减少测试要求，热能、磁铁、轮机三个批次合并普通双包/CRC/current-class核对和正式Loader隔离启动，运行预备成品方法/模型与限定世界检查。最后已验收成品仍 `build/verified/20261006-211017Z-dc39ad68`，代码6c136a60，**不含**三个新批次。完整生存、独立世界重启、旧档、专服、玩家悬停及所有方块的剩余专属提示/材料仍未完成。
+按减少测试要求，热能、磁铁、轮机三个批次合并普通双包/CRC/current-class核对和正式Loader隔离启动，运行预备成品方法/模型与限定世界检查。最后已验收成品仍 `build/verified/20261006-211017Z-dc39ad68`，代码6c136a60，**不含**三个新批次。完整生存、独立世界重启、旧档、专服、玩家悬停及所有方块的剩余专属提示/材料仍未完成。
 
-仅本地提交；未推送，PR暂缓。整个移植goal保持active。
+仅本地提交；未推送，PR暂缓。整个移植整体移植仍未完成。
 
-Pooled ordinary-JAR and installed-loader acceptance passed at code12010bfa. Both native fixture pairs passed in the six-test pool; ordinary distribution methods/factories/tooltips/baked states verified separately. See [pooled delivery](converter-pooled-delivery-20261007.json) for package hashes, finite scopes, all runtime attempts and remaining boundaries. Goal active; local only.
+Pooled ordinary-JAR and installed-loader acceptance passed at code12010bfa. Both native fixture pairs passed in the six-test pool; ordinary distribution methods/factories/tooltips/baked states verified separately. See [pooled delivery](converter-pooled-delivery-20261007.json) for package hashes, finite scopes, all runtime attempts and remaining boundaries. 整体移植仍未完成; local only.

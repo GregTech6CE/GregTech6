@@ -2,7 +2,7 @@
 
 第七十三批，2026-10-21，基线`54d8cde85`。接续[核心状态](LOGISTICS_CORE_STATE_AUDIT.md)和[实际搬运](LOGISTICS_TRANSFER_AUDIT.md)，新增ALIGN-258–260，补充036的区块证据边界。24份原版、32份当前输入、46个平台视图，以及本机两个原生工件14个entry／7份只读javap视图见[回执](verification/logistics-network-audit-20261021.json)。这是持续全面审计的一批，不是整套物流的验收或260个未修复问题。
 
-原只读根为`C:/Dev/gregtech6-master/gregtech6-master/src/main/java`，原作者与许可证头随来源留存，没有更改原目录。用户的CompoundMaterials和WoodMaterials以本轮开始时的字节摘要保护。
+原只读根为`C:/Dev/gregtech6-master/gregtech6-master/src/main/java`，原作者与许可证头随来源留存，没有更改原目录。CompoundMaterials 和 WoodMaterials以本轮开始时的字节摘要保护。
 
 ## ALIGN-258：撬下物流过滤覆盖板丢失样本
 
@@ -44,7 +44,7 @@
 
 展开LogisticsNetwork种子三重循环与Snapshot方法，距离参数a／b改为origin／target；LogisticsCovers的保存／重载／掉落循环索引i改为faceIndex，拆开更新、序列化和拒绝条件；物流线方块实体展开两版保存／同步方法。ExtenderSpec展开八项属性和构造赋值，补全来源30255／30755说明；RelayRoutingRules由3行展开到12行，明确展示桥和扩展器的侧面选择，没有改运算顺序或公开方法。
 
-五源码八份完整执行流在限定局部绑定归一后保持：ExtenderSpec 281、Network 574／574、Covers 1382／1420、Wire BE 381／377、RelayRoutingRules 66。原始字符串／数值位置另核，四处列明注释纠正，其余注释、Stonecutter指令和用户材料保持。没有用小函数检查替代整份选中源码证明。
+五源码八份完整执行流在限定局部绑定归一后保持：ExtenderSpec 281、Network 574／574、Covers 1382／1420、Wire BE 381／377、RelayRoutingRules 66。原始字符串／数值位置另核，四处列明注释纠正，其余注释、Stonecutter指令和材料表保持。没有用小函数检查替代整份选中源码证明。
 
 本轮未Java编译／初始化、Gradle、测试、游戏、构建或推送；javap是对本机已有工件的只读反汇编。全面核查仍在进行，来源和完整词法证明不能替代实际外部节点、磁盘重启、客户端或全部功能验收。
 

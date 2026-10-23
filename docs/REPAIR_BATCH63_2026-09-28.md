@@ -23,11 +23,11 @@
 
 最终日志 build/gametest_batch63_legacy_voltage_green.log，新世界 build/gametest-batch63-legacy-voltage-green。06:43:53 报告 All 1018 required tests passed，06:44:20 正常关闭，Gradle 退出码 0，BUILD SUCCESSFUL in 9m 8s。新增两项和修正后的充电台/线缆测试全部包含在全套门禁内。运行中代码与资源冻结，没有构建 jar。
 
-## 待完成与用户测试
+## 待完成与实机测试
 
 在充电台使用旧 LV 电池时，应只能接收 16–64 EU/包；128/512 EU 应拒收。同档电池盒可使用旧电池，错档不能把它作为输出电源。正规化学电池和工具装配配方继续保留。不要把旧通用物品的历史容量解释成原版化学规格。
 
-下一步继续核对电动工具实际挖掘/使用行为与材料磨损，而非只验证其配方和储能。大型坩埚客户端外观/Jade 仍待用户实测；完整占位清理目标未完成。
+下一步继续核对电动工具实际挖掘/使用行为与材料磨损，而非只验证其配方和储能。大型坩埚客户端外观/Jade 仍待实机验证；完整占位清理目标未完成。
 
 下一批已核实的起点：GTToolHelper.matchesTool/isTool 主要识别 GTToolItem，ElectricToolItem 不在该继承链，damageForToolClickReturn 也有 isTool 闸门。不要只扩识别而漏掉耗电。原版 GT_Tool_Drill_LV.isMiningTool 为 false，仅匹配 harvestTool=drill，不应套普通镐；GT_Tool_Chainsaw_LV 继承斧行为，另有剪叶、冰块掉落、速度及品质规则。电动扳手还有 Behavior_Switch_Metadata 模式切换，需与普通扳手/活动扳手区别核对。
 

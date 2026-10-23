@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "scope": "gt6-logic addon API batch 4: HeatHandler read/write facade and boiler/heat-exchanger/crucible adapters",
+  "branch": "addon/remaining-api-gaps",
+  "base_head": "57e2a45e5",
+  "card": "docs/card-plans/active/48-gt6-logic-api-gaps.md batch 4",
+  "mod_version": "0.0.0",
+  "api_version": 0,
+  "jdk_toolchains": {
+    "core": 17,
+    "forge": 17,
+    "neoforge": 21
+  },
+  "implementation": {
+    "api": "core/src/api/java/com/gregtech/gregtech/api/machine/HeatHandler.java",
+    "adapters": [
+      "BoilerTankBlockEntity",
+      "OriginalLargeBoilerControllerBlockEntity",
+      "HeatExchangerBlockEntity",
+      "LargeHeatExchangerControllerBlockEntity",
+      "SmeltingCrucibleBlockEntity (Forge tree)",
+      "SmeltingCrucibleEntity (NeoForge tree)"
+    ],
+    "inherited": "LargeCrucibleControllerBlockEntity inherits the crucible adapter in both trees",
+    "temperature_policy": "Boilers and heat exchangers report the environment temperature; crucibles report their own Kelvin. Signed buffers and the next-tick conversion/explosion rules are unchanged."
+  },
+  "platform_compile": {
+    "command": "./gradlew :multiversion:1.20.1-forge:compileJava :multiversion:1.21.1-neoforge:compileJava --console=plain",
+    "result": "BUILD SUCCESSFUL",
+    "gametest_compile": {
+      "command": "./gradlew :multiversion:1.20.1-forge:compileBootstrapGameTestJava :multiversion:1.21.1-neoforge:compileBootstrapGameTestJava --console=plain",
+      "result": "BUILD SUCCESSFUL"
+    },
+    "api_closure": {
+      "command": "./gradlew :core:addonApiClosureCheck :multiversion:1.20.1-forge:addonApiClosureCheck :multiversion:1.21.1-neoforge:addonApiClosureCheck --console=plain",
+      "result": "BUILD SUCCESSFUL",
+      "core": "Addon API closure passed (core): 109 API classes",
+      "forge": "Addon API closure passed (forge): 140 API classes",
+      "neoforge": "Addon API closure passed (neoforge): 140 API classes"
+    }
+  },
+  "gametests": {
+    "namespace": "gregtech_heat_handler",
+    "tests": [
+      "boilerAdapterSimulatesThenBoilsWater",
+      "boilerOverfillStillExplodesOnItsTick",
+      "crucibleAdapterUsesASignedUnboundedBuffer"
+    ],
+    "runtime_parameters": {
+      "heap": "3g",
+      "forge_jvm_args": "-XX:+UseSerialGC",
+      "fresh_game_directory_each_attempt": true
+    },
+    "forge": {
+      "command": "./gradlew :multiversion:1.20.1-forge:runGameTestServer -PgameTestNamespaces=gregtech_heat_handler -PgameTestHeap=3g \"-PgameTestJvmArgs=-XX:+UseSerialGC\" -PgameTestDirectory=build/gametest-heat-handler-b4b --console=plain",
+      "result": "All 3 required tests passed",
+      "log": "work/batch4-forge-heat.log",
+      "sha256": "619918c76819875aadb352a405b16ed2f0b9671d76a4bafc4c22fe1541e36816"
+    },
+    "neoforge": {
+      "command": "./gradlew :multiversion:1.21.1-neoforge:runGameTestServer -PgameTestNamespaces=gregtech_heat_handler -PgameTestHeap=3g -PneoforgeGameTestDirectory=build/bootstrap-gametest-heat-handler-b4 --console=plain",
+      "result": "All 3 required tests passed",
+      "log": "work/batch4-neoforge-heat.log",
+      "sha256": "ba3ffeaad7880e100f494a1a4b8dd18d8ca89acaa6a0da8b64a05ccc488a040b"
+    },
+    "aborted_attempt": {
+      "platform": "forge",
+      "cause": "Gradle build daemon disappeared unexpectedly (killed or crashed) before the test server started; not counted as a failure.",
+      "rerun": "same command with a fresh game directory"
+    }
+  },
+  "not_verified": [
+    "core:check not rerun for this batch (core API gained one pure interface; closures passed)",
+    "gameplay",
+    "dedicated server",
+    "saved-world restart"
+  ]
+}

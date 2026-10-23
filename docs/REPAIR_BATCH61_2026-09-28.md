@@ -15,7 +15,7 @@
 
 保留旧 energy_node 方块实体类型对这五个方块的读取许可。旧实体 onLoad 时，若发现自己已是化学电池方块，就把 gt.buffer 转为 gt.charge 并替换为 ChemicalBatteryBlockEntity。电量仍按同一 V×64000 容量限制；之后存档写入 chemical_battery 类型。已移除旧实体再次收到 onLoad 不得重复迁移。
 
-这仅针对该五种旧电池，未添加旧矿石迁移，也未修改其它 energy_node 实例。迁移后的客户端外观与旧测试世界实际重载仍建议用户验收。
+这仅针对该五种旧电池，未添加旧矿石迁移，也未修改其它 energy_node 实例。迁移后的客户端外观与旧测试世界实际重载仍建议人工验收。
 
 ## 验证
 
@@ -25,12 +25,12 @@
 - 完整门禁 build/gametest_batch61_legacy_batteries.log：06:07:04 **1015/1015 required tests passed**，退出码 0，BUILD SUCCESSFUL in 9m 18s，06:07:36 正常退出；无 failed! 或 Parsing error。使用新世界 build/gametest-batch61-legacy-batteries，期间冻结 Java/资源，最新 Java 时间早于最终日志。未启动客户端目视。
 - docs/porting-progress.json 已刷新，缺失 token 仍为 49。
 
-## 后续与用户验收
+## 后续与人工验收
 
 1. 在旧测试世界加载已经放置的 battery_eu_*，检查电量与模型；挖回后应为可充放电的锂钴电池物品。放置后不应再向电缆直接供电，需装入电池盒。
 2. 创造栏选择规范锂钴电池，测试潜行放置、带电掉落、电量条颜色以及对应电池盒充放电。
 3. 本轮不是全部旧电池清理完成。GTElectricItems 还有 battery_lv..iv 五种旧非放置 BatteryItem，容量 100000×4^(tier−1)，不能凭名称认定对应某种 GT6 化学电池；其电压规则、制作路线和旧工具依赖仍需继续核对。
 4. 下一轮优先修正制作配方电池映射：原版 Loader_MultiTileEntities.java:1264–1267 的燃气轮机 B 位是 gt:re-battery1..4；现 recipes/axial/large_gas_turbine_*.json 错误缩成 battery_lv..ev 单一物品。应追踪 generate_multiblock_recipe_table.py:308 之后的 token 到 ingredient 链路，改成已存在的 rechargeable_batteries 等级标签，并审计其它同类配方，不是改造原配方形状。
-5. 高档电路及 10049 制作依赖、原版兼容材料、变压器启动过载宽限/完整结构检查等仍未齐。大型坩埚仍待用户实测。
+5. 高档电路及 10049 制作依赖、原版兼容材料、变压器启动过载宽限/完整结构检查等仍未齐。大型坩埚仍待实机验证。
 
 本轮未构建 jar。没有执行 git commit。整体移植目标仍在进行中。

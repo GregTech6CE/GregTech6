@@ -14,7 +14,7 @@
 
 ## 生成器
 
-`generate_energy_node_assets.py --battery-boxes-only` 只更新这六个电池盒。完整生成分支也保留三态逻辑；相同文件内容不重写。标准中文从用户 GregTech.lang 的 10080–10085 获取，其它设备的既有翻译不再被此生成器覆写。
+`generate_energy_node_assets.py --battery-boxes-only` 只更新这六个电池盒。完整生成分支也保留三态逻辑；相同文件内容不重写。标准中文从GregTech.lang 的 10080–10085 获取，其它设备的既有翻译不再被此生成器覆写。
 
 ## 验证
 
@@ -24,19 +24,19 @@
 - 完整门禁在新目录 build/gametest-batch57-battery-panels 完成：2026-09-28 04:31:47 **1001/1001 required tests passed**，Gradle 退出码 0，BUILD SUCCESSFUL in 8m 47s。日志 build/gametest_batch57_battery_panels.log 无 failed! 或 Parsing error，运行期间未修改 Java/资源。
 - 本轮未实际启动客户端目视，不以结构测试替代贴图像素验收。
 
-## 用户验收
+## 人工验收
 
 重启 IDEA runClient：普通电池盒应按工作缓冲显示静止/激活/闪烁原版覆盖层；转向和含水后仍正常。空盒先贴能源显示板可成功；装入完整电池后显示随电量更新。按钮选择器点击应修改输出安培模式，状态面板右下开关控制输出；剪线钳切换检测器强/弱信号，撬棍拆下面板，拆盒掉落剩余面板和带电电池。
 
 ## 下一批依据与剩余
 
-普通盒仍只有 ULV–IV 六档；GT6 Loader_MultiTileEntities.java:892–895 实际为十档普通四槽和十档大型十六槽。Electric_T 前十项依次 TinAlloy、SteelGalvanized、Al、StainlessSteel、Cr、Ti、Ir、Os、Trinitanium、Trinaquadalloy；用户中文第九索引档为 PUV1。不要沿用五档机器的材料循环冒称十档全齐。
+普通盒仍只有 ULV–IV 六档；GT6 Loader_MultiTileEntities.java:892–895 实际为十档普通四槽和十档大型十六槽。Electric_T 前十项依次 TinAlloy、SteelGalvanized、Al、StainlessSteel、Cr、Ti、Ir、Os、Trinitanium、Trinaquadalloy；中文第九索引档为 PUV1。不要沿用五档机器的材料循环冒称十档全齐。
 
-现有 energy_storage_lv..iv 是另一组占位：使用大型电池盒贴图却具有凭空的 v*1000000 容量。下一批应优先考虑把这五个现有 ID 改为原版大型电池盒，而不是继续增加一套功能重复的新 ID；保留用户物品和必要存档读取，但不要保留错误免费容量作为原版规则。
+现有 energy_storage_lv..iv 是另一组占位：使用大型电池盒贴图却具有凭空的 v*1000000 容量。下一批应优先考虑把这五个现有 ID 改为原版大型电池盒，而不是继续增加一套功能重复的新 ID；保留物品和必要存档读取，但不要保留错误免费容量作为原版规则。
 
 HopperContainerMenu 已有 case 16 的 4×4 排列，但 GTMenuTypes.HOPPER_SIZES 未注册 16，forSlotCount(16) 会退到 18。应补精确 MenuType/客户端纹理选择并验证 16 格、玩家格位和 shift-click，而非重复写已有布局。
 
-直接面板已接入，但 shutter 物品闸门、其它普通控制覆盖板、十档生存配方以及旧通用 BatteryItem 电压规格仍待继续。大型坩埚仍等用户实测。完整目标未完成，未构建 jar，没有执行 git commit。
+直接面板已接入，但 shutter 物品闸门、其它普通控制覆盖板、十档生存配方以及旧通用 BatteryItem 电压规格仍待继续。大型坩埚仍等实机测试。完整目标未完成，未构建 jar，没有执行 git commit。
 
 大型盒配方的 M 是原版注册 10040+i 的变压器，不是普通机壳。现有 EnergyNodeDefinitions 只注册 ulv_lv 到 ev_iv 五个变压器，因此从大型 IV 起的依赖不齐；补大型盒生存路线时必须连同对应变压器/电路等级核对，不能回退成机壳假装配方完整。普通盒用一倍线缆和线，大型盒用四倍线缆和线，图案均为 WCW / WCW / XMX。
 

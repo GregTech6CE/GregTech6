@@ -1,12 +1,12 @@
 # 第四十三批：水体共享面回归与 GT6 内容续补
 
-本批以 `F:\Dev\GregTech6\gregtech6-master\gregtech6-master` 为 GT6 行为依据。当前用户主要在 IDEA 中运行 `runClient`，所以本批没有打包 jar，也没有执行 `git commit`。
+本批以 `F:\Dev\GregTech6\gregtech6-master\gregtech6-master` 为 GT6 行为依据。当前主要在 IDEA 中运行 `runClient`，所以本批没有打包 jar，也没有执行 `git commit`。
 
 ## 原版水与 GT 世界水
 
 `WaterFluidMixin` 仍覆盖原版静止／流动水的 `isSame`；GT 海水、河水、沼泽水两态由 `GTWorldWaterFluid` 覆盖反方向，六种流体在 `#minecraft:water` 中。客户端启动时已有主动调用 Mixin 与透明层检查。本批进一步在 `WaterFluidParityTests.vanillaWaterKnowsTheWorldWaters` 对六种 GT 水逐一调用原版水和 GT 水方块的 `skipRendering`，断言双方都隐藏交界共享面。该测试走 `LiquidBlock.skipRendering` 和 `GTWorldFluidBlock.skipRendering` 的实际入口，补上仅检查 `Fluid.isSame` 时漏掉的方块层回归点。
 
-上批 `build/runclient_water_batch42.log` 证实 Gradle 客户端确实注入 `WaterFluidMixin` 并加载了材质图集，但在进入世界前主动停止。当前 `.idea/runConfigurations/runClient.xml` 已包含 `--mixin.config gregtech.mixins.json`；从那以后没有一份 IDEA 客户端进入世界的日志或截图，因此**不能仅凭 GameTest 声称用户看到的像素问题已消失**。请完整停止旧 Java 进程后重启 IDEA `runClient`，分别查看原版水与海水／河水／沼泽水的静水、流水交界。如果仍异常，需区分接缝、透明度、颜色或水下画面，并查看该次 `run/logs/debug.log` 的 Mixin 加载记录。
+上批 `build/runclient_water_batch42.log` 证实 Gradle 客户端确实注入 `WaterFluidMixin` 并加载了材质图集，但在进入世界前主动停止。当前 `.idea/runConfigurations/runClient.xml` 已包含 `--mixin.config gregtech.mixins.json`；从那以后没有一份 IDEA 客户端进入世界的日志或截图，因此**不能仅凭 GameTest 声称实机看到的像素问题已消失**。请完整停止旧 Java 进程后重启 IDEA `runClient`，分别查看原版水与海水／河水／沼泽水的静水、流水交界。如果仍异常，需区分接缝、透明度、颜色或水下画面，并查看该次 `run/logs/debug.log` 的 Mixin 加载记录。
 
 ## 本批其它实现
 

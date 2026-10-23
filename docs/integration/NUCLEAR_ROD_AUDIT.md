@@ -2,7 +2,7 @@
 
 第五十九批子域，2026-10-21，新增 ALIGN-202–205。行为观察基线为 `67dff604decf8f08df3c09dd12ede04a1158b22f`；随后 `e4867cf1ee33a02cf40ad2061706d06a9d22e007` 仅展开核心源码并补职责导航，执行与原注释保持，没有修复下述合同。本稿涉及 ReactorCoreBlockEntity 的旧行号按67d基线，现文件以同名方法重定位。来源、两端投影、有限参数和核心排版证明由[统一回执](verification/nuclear-contract-audit-20261021.json)汇总。
 
-原模组根为 `C:/Dev/gregtech6-master/gregtech6-master/src/main/java`，当前根为 `C:/Dev/GregTech6`。本子域留存21份原版／52份当前路径身份，18份共享维护源的36份显式平台视图；没有修改生产或用户材料表，没有导入／执行生成器、Java初始化、Gradle、编译、新测试、游戏、构建或推送。这里只审目录、单棒公式、注册／消费和棒配方／提示；核心冷却、控制、运行状态、保存及中子网络空间／周期另行归档。
+原模组根为 `C:/Dev/gregtech6-master/gregtech6-master/src/main/java`，当前根为 `C:/Dev/GregTech6`。本子域留存21份原版／52份当前路径身份，18份共享维护源的36份显式平台视图；没有修改生产或材料表，没有导入／执行生成器、Java初始化、Gradle、编译、新测试、游戏、构建或推送。这里只审目录、单棒公式、注册／消费和棒配方／提示；核心冷却、控制、运行状态、保存及中子网络空间／周期另行归档。
 
 原棒类保留GregTech-6 Team的2021／2022版权与LGPL-3.0-or-later头，作者Gregorius Techneticies；Moderator还署名Erik3003。当前NOTICE及已有native-nuclear来源记录继续保留；本批未引入新源码、资产、依赖或扩大发布许可信任范围，不推定原快照发行版本或制造上游commit。
 

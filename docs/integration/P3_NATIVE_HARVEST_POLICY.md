@@ -8,4 +8,4 @@ Native 早期 BlockHarvestPolicy 缺少当前 Forge 的多类判定，导致既�
 
 1 Native Java，Core/Forge/资源/三来源未改。集中 Neo/Forge compile 55s 通过；最近三批之后一次已有 Neo 短专服 3m 37s 通过，真实200ticks/正常保存停止。它只证明开发模式加载和短运行，不证明逐个 tool/tier tag、真正采掘/掉落磨损、上批有限液体制作或物品组件编码成功。无新夹具、重复客户端或全资源 JAR 打包；成品 JAR、完整生存链、独立世界重载与旧档仍待验。
 
-此前交付的 Git 上传源码包固定于 8b47b7dc90，不被本批重写。本批是该提交之后的新修改；之前 d86cdfbcad 模组包也不含本批及上一批实体 id 修正。构建最新源码请按 BUILDING.md，完整三源目标保持 active。
+此前交付的 Git 上传源码包固定于 8b47b7dc90，不被本批重写。本批是该提交之后的新修改；之前 d86cdfbcad 模组包也不含本批及上一批实体 id 修正。构建最新源码请按 BUILDING.md，完整三源仍未完成。

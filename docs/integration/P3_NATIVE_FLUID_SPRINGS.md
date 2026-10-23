@@ -9,4 +9,4 @@ Retain source1 identities, spring/amount/active NBT,7 spring rows, full7-layer c
 - No fluid-specific nozzle rendering; invalid legacy fluid ID can still fail parse; no old-save compatibility proven.
 - Actual generation, fluid extraction, gameplay, client rendering, Forge runtime, independent reload, old saves and new production jars unverified.
 
-Dual compile passed19s. One grouped ordinary Neo startup covers this and the preceding mineral/black-sand/Nether waves; startup outcome recorded separately. Full integration goal remains active.
+Dual compile passed19s. One grouped ordinary Neo startup covers this and the preceding mineral/black-sand/Nether waves; startup outcome recorded separately. The overall port is still incomplete.

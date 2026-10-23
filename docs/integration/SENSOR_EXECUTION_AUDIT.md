@@ -6,7 +6,7 @@
 
 ## ALIGN-113：独立传感器的比例红石分档错误
 
-原版 MultiTileEntitySensorTE 的 SCALE 和 PERCENT 输出调用 UT.Code.scale：输入不大于零时为 0，达到上限时为 15，中间正值为 `1 + value * 14 / maximum`。比例模式的 maximum 使用用户阈值；百分比模式先计算整数百分比，再以 100 为上限计算红石。
+原版 MultiTileEntitySensorTE 的 SCALE 和 PERCENT 输出调用 UT.Code.scale：输入不大于零时为 0，达到上限时为 15，中间正值为 `1 + value * 14 / maximum`。比例模式的 maximum 使用给定阈值；百分比模式先计算整数百分比，再以 100 为上限计算红石。
 
 当前 SensorControl.scaled 使用 `value * 15 / maximum` 向下取整，并在 maximum<=0 时直接返回 0。它可用于普通数值比例，却不等于原版这个红石分档函数。
 

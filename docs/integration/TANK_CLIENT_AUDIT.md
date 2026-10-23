@@ -46,6 +46,6 @@ Forge GTPackets和Neo MachinePayloads均注册该包；Forge派到客户端recei
 
 展开PaintSprayItem的喷漆lambda、实体判断和提示，限定onItemUseFirst方法区域内的c／p改context／targetPos，保留Neo提示方法原有context参数。展开覆盖板render事件、Neo多方块渲染／颜色注册和core后备材料switch；三处说明改成实际职责，保留Brokestar及原作者版权说明。
 
-四源六份完整执行流保持：core76、喷漆940／942、后备覆盖板526／532、Neo注册547项。局部改名归一不包含成员访问；原始字面量及其位置、其余注释和Stonecutter指令另核。用户CompoundMaterials和WoodMaterials原始摘要保持；本轮复看CompoundMaterials的570条声明等号均第66列、RGB均第141列，没有Tab和行尾空格，未重排。
+四源六份完整执行流保持：core76、喷漆940／942、后备覆盖板526／532、Neo注册547项。局部改名归一不包含成员访问；原始字面量及其位置、其余注释和Stonecutter指令另核。CompoundMaterials和WoodMaterials原始摘要保持；本轮复看CompoundMaterials的570条声明等号均第66列、RGB均第141列，没有Tab和行尾空格，未重排。
 
-未Java编译／目标初始化、Gradle、测试、游戏、最终资源烘焙、构建或推送。实际客户端UV／颜色／包生命周期、原版完整物品渲染、磁盘重启和其它原版系统仍在全面核查队列；goal继续active。
+未Java编译／目标初始化、Gradle、测试、游戏、最终资源烘焙、构建或推送。实际客户端UV／颜色／包生命周期、原版完整物品渲染、磁盘重启和其它原版系统仍在全面核查队列；整体核对继续。

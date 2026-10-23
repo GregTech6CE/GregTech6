@@ -24,7 +24,7 @@ MultiItem.onItemUse 先 useEnergy(0) 更新状态再检查可用 metadata；Mult
 
 新世界 build/gametest-batch69-woodworking-placement，日志 build/gametest_batch69_woodworking_placement.log；15:08:53 报告 All 1036 required tests passed，15:09:24 正常关闭，进程退出码 0，BUILD SUCCESSFUL（9m19s）。已刷新 docs/porting-progress.json。运行期间 Java/资源冻结，不构建 jar。
 
-## 用户验收与剩余
+## 人工验收与剩余
 
 背包后排放树苗/工作台，用上述工具右键泥土顶面种树、右键石头放工作台；确认背包材料扣一、工具电量/寿命不变；木头侧面不放工作台。空电电锯需先充电。其它树苗可由相应标签扩展。
 

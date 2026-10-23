@@ -1,8 +1,8 @@
 # 第七十一批：大型坩埚外表面纹理方向
 
-## 用户反馈与复现
+## 反馈与复现
 
-用户反馈大型坩埚外表面错误旋转，随后要求继续项目。先处理当前可复现故障。
+反馈大型坩埚外表面错误旋转，随后要求继续项目。先处理当前可复现故障。
 
 把 LargeCrucibleRenderer 原有顶点发射抽为 LargeCrucibleHullFace，在不改变旧 UV 算法时，用 VertexConsumer 捕获真实六面顶点。tools/check_large_crucible_uv.py 在旧实现上失败（build/crucible_uv_before.log）：南/西面顶端与底端使用了横向 UV，造成 90 度旋转；北/东面有水平镜像，顶/底也未遵循各自平面轴。
 

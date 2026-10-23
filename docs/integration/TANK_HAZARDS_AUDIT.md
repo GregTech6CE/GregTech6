@@ -2,7 +2,7 @@
 
 第七十六批，2026-10-21，基线`a9da9ba85`，承接[主阀与保存核查](MULTIBLOCK_TANK_AUDIT.md)。新增ALIGN-264木主阀缺原可燃性、265熔毁邻格点火政策差异。14份原版、28份当前输入、36个平台视图及本机两个原生工件6个entry／3份只读javap视图见[回执](verification/tank-hazards-audit-20261021.json)。这不是全部危害、物性、工具或实际游戏验收。
 
-原只读根为`C:/Dev/gregtech6-master/gregtech6-master/src/main/java`。作者／LGPL来源头随回执留存，原目录未动；MT原文件独居石注释已有两个替换字符，单列来源计数，未修改或借此证明该注释正确。CompoundMaterials和用户未提交的WoodMaterials保持本批起点字节摘要。
+原只读根为`C:/Dev/gregtech6-master/gregtech6-master/src/main/java`。作者／LGPL来源头随回执留存，原目录未动；MT原文件独居石注释已有两个替换字符，单列来源计数，未修改或借此证明该注释正确。CompoundMaterials和未提交的WoodMaterials保持本批起点字节摘要。
 
 ## ALIGN-264：木储罐壁板已有可燃性，主阀未接原属性
 
@@ -53,4 +53,4 @@
 
 三源码六份完整执行流保持：Port1230／1469、Flow74／74、Hazards771／771，仅归一明确局部绑定并排除成员访问；原始字符串／数值位置另核。三处说明纠正，其余注释／来源及Stonecutter指令保持，材料表不动。
 
-未Java编译／目标初始化、Gradle、测试、游戏、构建或推送；javap只读取现有工件。真实起火／灭火、客户端／Jade、音效、存档重启、配方和完整物性验收仍在全面队列，goal保持active。
+未Java编译／目标初始化、Gradle、测试、游戏、构建或推送；javap只读取现有工件。真实起火／灭火、客户端／Jade、音效、存档重启、配方和完整物性验收仍在全面队列，整体移植仍未完成。

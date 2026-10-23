@@ -71,4 +71,4 @@ Forge通用BehaviorPlungerFluid首先要求BE自身instanceof IFluidHandler；�
 
 五份完整有序执行词法及字面量位置保持：BE Forge2771／Neo2702，Block1000／1322；[Neo罐恢复辅助](../../multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/api/fluid/NativeMachineTankData.java)3→16行、174项保持。BE一条注释改为当前周期，去掉“必须有矿”的过强暗示；其余注释、许可证和Stonecutter指令保留。原BedrockDrill头为GregTech-6 Team2025、Gregorius Techneticies、LGPL-3.0-or-later，其余来源独立留头／摘要；没有复制外部原生方法进生产。
 
-用户CompoundMaterials／WoodMaterials摘要保持，未Java编译／目标初始化、Gradle、测试、游戏、pack生成、供能／排液／爆炸、磁盘重启、构建或推送。正式251条包括已修复／部分修复、扩展合同和保留政策，不能当作251个未修故障；全面核查继续。
+CompoundMaterials／WoodMaterials摘要保持，未Java编译／目标初始化、Gradle、测试、游戏、pack生成、供能／排液／爆炸、磁盘重启、构建或推送。正式251条包括已修复／部分修复、扩展合同和保留政策，不能当作251个未修故障；全面核查继续。

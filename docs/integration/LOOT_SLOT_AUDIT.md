@@ -41,7 +41,7 @@ qx.javap 46–115 行的库存方法在字节码偏移 74–87，以及超堆叠
 | 启动注册 | GregTech.java:53 → MachineBlockBootstrap.run:18 → registerMachines:32 → GTLootChests.registerAll | GregTechNeoForge.java:86 → GTMetalChests.initialize:9 → GTLootChests.registerAll |
 | 方块目录 | 共用 GTLootChests.java:37、54–69，按 LootChestCatalog 注册 loot_chest_books 等方块与物品 | 同一共用目录，DeferredHolder 分支 |
 | 对应实体绑定 | 共用 GTBlockEntities.java:352–359，把 GTLootChests.LOOT_CHESTS 并入 METAL_CHEST 的有效方块 | 共用 GTBlockEntities.java:98 经 GTMetalChests.all；平台 GTMetalChests.java:4 把 LOOT_CHESTS 并入 |
-| 用户开 GUI | 共用 MetalChestBlock.java:194、206 的 use → ServerPlayer.openMenu | 共用 MetalChestBlock.java:177／187 → interact:191 → openMenu:206 |
+| 玩家打开 GUI | 共用 MetalChestBlock.java:194、206 的 use → ServerPlayer.openMenu | 共用 MetalChestBlock.java:177／187 → interact:191 → openMenu:206 |
 | 首开填槽 | 共用 MetalChestBlockEntity.createMenu:222–224 → generateLootIfNeeded:154 → 无 dungeonLoot 时的 LootChestBlock 分支:181–188 | 同一共用主链 |
 | 平台库存类型 | Forge ItemStackHandler | NeoForge ItemStackHandler |
 

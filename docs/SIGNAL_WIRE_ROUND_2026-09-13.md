@@ -29,7 +29,7 @@
 - 最终 GameTest：168 项全部通过，日志 `F:/Dev/GregTech6/signal-wire-final.log` 无 ERROR，`BUILD SUCCESSFUL`（2 分 23 秒）。
 - Python：86 项通过。
 - 材质引用检查：775 个文件，0 个未解析声明。
-- 仅编译与运行 GameTest，未构建 JAR、未启动用户客户端。
+- 仅编译与运行 GameTest，未构建 JAR、未启动客户端。
 - 日志：`F:/Dev/GregTech6/signal-wire-python-final.log`；资源报告：`signal-wire-render-check.json`。所改已跟踪代码的 `git diff --check` 通过。
 
 新增游戏测试涵盖：真实信号源与输入面排除、实心方块输出、比较器取整、发光、17/65 根线路的精确衰减、混合绝缘线、环路断电、断口隔离、模式存档、移除后接口失效、六面剪线钳和九条制造路线。已有材料守恒测试扩展为同时核验电力线与信号线。

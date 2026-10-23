@@ -66,6 +66,6 @@
 
 LargeDynamoControllerBlockEntity和Block展开注入／需求／ticker及两端旧键读取；AxialGeneratorDefinitions展开布局构造、档位映射和注册列表；AxialStructureTransform展开坐标边界，SharedTurbineStructure展开三重循环。八个局部／lambda绑定由短名改为cellPos、parameters、firstOriginalId、offset和ticker参数名称；公开类型／签名／字段／注册ID、常量、字面量、运算、条件与语句顺序不改。
 
-完整执行流比较为BE Forge732／Neo745、Block236／236、档位570／570、坐标255／255、共享结构199项；只归一列明的绑定，坐标offset变量与origin.offset方法名明确区分。注释和Stonecutter指令保持，用户CompoundMaterials／WoodMaterials摘要不变。源证明不是编译或游戏测试。
+完整执行流比较为BE Forge732／Neo745、Block236／236、档位570／570、坐标255／255、共享结构199项；只归一列明的绑定，坐标offset变量与origin.offset方法名明确区分。注释和Stonecutter指令保持，CompoundMaterials／WoodMaterials摘要不变。源证明不是编译或游戏测试。
 
 原Dynamo为GregTech-6 Team2025、Gregorius Techneticies、LGPL-3.0-or-later；各引用来源独立留头与摘要。本轮只整理既有移植源码，没有把原生或原版方法体／资产新复制进生产。未运行Java编译／目标初始化、Gradle、测试、游戏供能／声音、存档重启、构建或推送。大型换热器、其余能量、配方／模型／材料、控制器和全面队列仍继续，不能由三个新记录推算完成比例。

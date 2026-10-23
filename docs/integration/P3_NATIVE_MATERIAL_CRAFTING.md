@@ -10,6 +10,6 @@ OriginalCraftingJson 是新增的薄 Native JSON 输出边界，编码原 Ingred
 
 5 Native Java（3完整loader+1输出边界+既有pack接线），Core/资源/Forge/来源未改。集中compile+Native jar/Forge compile40秒通过。仅核本批当前编译类与成品jar，无新增夹具或本批重复启动。前批专服证明旧pack基础设施可加载，不能代替本批大量新配方的生成/解析/耗时、真实匹配/数量/余物/镜像、客户端/JEI/index/reload检查；留到随后集中短检查。
 
-成品jar、完整生存流程、独立世界保存重载和旧档兼容仍待验，其他剩余配方族/两版本对齐及完整三来源goal继续active。
+成品jar、完整生存流程、独立世界保存重载和旧档兼容仍待验，其他剩余配方族/两版本对齐及完整三来源整体核对继续。
 
 后续集中启动更新：P3_NATIVE_OVEN_BRIDGE.md 已记录本批三类实际运行生成/配方解析与短专服结果；原批次compile-only范围保留，逐条合成仍未验证。

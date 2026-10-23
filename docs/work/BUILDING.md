@@ -43,7 +43,7 @@ $env:JAVA21_HOME = 'C:\Users\Asus\AppData\Roaming\.minecraft\runtime\java-runtim
 $env:JAVA_HOME = $env:JAVA17_HOME
 ```
 
-以上是当前开发机路径，其他电脑改为自己的 JDK 安装目录。环境变量指向 JDK 根目录，不要指向 `bin`。用户提供的 Java 21 `bin` 路径对应上面的根目录。
+以上是当前开发机路径，其他电脑改为自己的 JDK 安装目录。环境变量指向 JDK 根目录，不要指向 `bin`。提供的 Java 21 `bin` 路径对应上面的根目录。
 
 ## 快速构建模组文件
 

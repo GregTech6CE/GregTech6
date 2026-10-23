@@ -1,6 +1,6 @@
 # 原版加热器、双类型制冷器与材料数量（2026-10-07）
 
-本批基线 `102ceb82`。用户要求全部方块的原版专属提示和各机器材料数量，并要求多轮合并普通双版本验收。本批补齐四组、20 款原版热能设备；保留 10 个已有电力 ID，新增 10 个 RF 加热器/制冷器 ID。整体 goal active，只做本地提交，不推送或处理 PR。
+本批基线 `102ceb82`。要求全部方块的原版专属提示和各机器材料数量，并要求多轮合并普通双版本验收。本批补齐四组、20 款原版热能设备；保留 10 个已有电力 ID，新增 10 个 RF 加热器/制冷器 ID。整体移植仍未完成，只做本地提交，不推送或处理 PR。
 
 ## 原版记录及实现
 
@@ -9,7 +9,7 @@
 - 原转换器公共算术继续共享：2N 缓冲、输入 N/2..2N、输出 M/2..2M、固定向上取整耗能、64 样本三态工作历史。HU/CU 发送 size=1、amount=输出量；停止拒收和关闭视觉，旧缓冲仍转换/耗散。冷能正面、同量热能背面，两路分别发送，只耗一次输入；制冷器四侧输入，加热器除正面都可输入。源双类型 API 仍宣告 HU，但 HU 的输出额定 getter 为 0，提示使用实际第二路额定量。RF能力按面使用动态包装，使缓存的能力仍遵守当前停止/朝向/覆盖门；同一修正覆盖既有RF电动机，两端实际能力场景仍待合并运行。
 - 电力/RF 加热器与电力制冷器开放原选择器模式 0..15。RF 制冷器原类未实现 ITileEntitySwitchableMode，保留保存字段/公共算术，但不开放选择器；最终复核时据此修正。原生存储键保持，新增公共 gt.mode/can.energy/active.energy 保存；旋转方向字段仍仅电动机写入。
 - 加热器采用原正面 2px 碰撞缩进、活动时 min(10, nominalHU/10) 碰撞热伤害；沿用现有原生热伤害及火抗/防护逻辑。两端连接到实际工厂和三态 blockstate，20 款每端共 720 状态。
-- 提示含原输入/输出范围、对应面、接触危险/延长器、扳手、抗爆和效率。保留 LH 对双输出逐路加效率行的行为：电力制冷器两行25%，RF制冷器两行50%；与重复高级材料段无关。43 个选定中文值（23提示键、20名称）逐字来自用户补丁，未生成翻译。名称/创造栏的全源登记顺序已固定。
+- 提示含原输入/输出范围、对应面、接触危险/延长器、扳手、抗爆和效率。保留 LH 对双输出逐路加效率行的行为：电力制冷器两行25%，RF制冷器两行50%；与重复高级材料段无关。43 个选定中文值（23提示键、20名称）逐字来自补丁，未生成翻译。名称/创造栏的全源登记顺序已固定。
 
 代码采用 canonical 1.7.10；`_w` 对照对应原生适配并提供缺失原贴图。36 个所选资源（含12个原有电力底层/静止贴图，24个新增资源）哈希已核实。40 状态文件、60 新方块模型及20新物品模型使用既有双平台 composite loader，底层 tint0、覆盖层不染色，所有静态引用存在。原代码作者 GregTech-6 Team/Gregorius Techneticies、LGPL-3.0-or-later 与资产 CC0 证据见 [来源账本](thermal-converter-source-20261007.json)。未改只读来源。
 
@@ -23,8 +23,8 @@
 
 ## 后续边界
 
-按用户要求，普通双版打包、验包、成品自启动与新有限场景留待后续批次合并。最后已验收对为 `C:/Dev/GregTech6/build/verified/20261006-211017Z-dc39ad68`，源码6c136a60，不含本批热能修改。
+按要求，普通双版打包、验包、成品自启动与新有限场景留待后续批次合并。最后已验收对为 `C:/Dev/GregTech6/build/verified/20261006-211017Z-dc39ad68`，源码6c136a60，不含本批热能修改。
 
 原延长器提示在客户端每25 tick切换灰/暗灰；本批文本与固定灰色接入，闪烁仍待续。通用采集/火焰/所有者/覆盖状态、其余机器专属提示与缺失材料、声音、source BREAKING 配置及保存额定覆盖继续推进。完整自然调度生存链、玩家悬停截图、成品真实回收、独立世界重启及历史存档兼容仍未验收。
 
-Pooled ordinary-JAR and installed-loader acceptance passed at code12010bfa. Both native fixture pairs passed in the six-test pool; ordinary distribution methods/factories/tooltips/baked states verified separately. See [pooled delivery](converter-pooled-delivery-20261007.json) for package hashes, finite scopes, all runtime attempts and remaining boundaries. Goal active; local only.
+Pooled ordinary-JAR and installed-loader acceptance passed at code12010bfa. Both native fixture pairs passed in the six-test pool; ordinary distribution methods/factories/tooltips/baked states verified separately. See [pooled delivery](converter-pooled-delivery-20261007.json) for package hashes, finite scopes, all runtime attempts and remaining boundaries. 整体移植仍未完成; local only.

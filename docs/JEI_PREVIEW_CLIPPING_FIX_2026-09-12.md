@@ -10,7 +10,7 @@
 
 ## GTM 参考范围
 
-检查了用户提供的 GTM `MultiblockInfoJeiCategory`、`MultiblockPreviewWidget` 和 `MultiblockSchemaInfo`：它把结构数据、相机和交互放入 ModularUI 的 SchemaRenderer/SchemaWidget，而 JEI 分类负责嵌入控件和提供材料清单。本次参考其将预览区域独立管理的思路，没有复制 GTM 或 ModularUI 代码，也没有引入这些依赖。
+检查了提供的 GTM `MultiblockInfoJeiCategory`、`MultiblockPreviewWidget` 和 `MultiblockSchemaInfo`：它把结构数据、相机和交互放入 ModularUI 的 SchemaRenderer/SchemaWidget，而 JEI 分类负责嵌入控件和提供材料清单。本次参考其将预览区域独立管理的思路，没有复制 GTM 或 ModularUI 代码，也没有引入这些依赖。
 
 ## 验证
 

@@ -589,4 +589,24 @@ public final class SensorSourceTests {
         h.assertTrue(meter.value() == 0,"Removed controller leaves no stale measurement");
         h.succeed();
     }
+
+    @GameTest(template="test_empty",timeoutTicks=100)
+    public static void thermometer_reads_temperature_source(GameTestHelper h) {
+        var world=h.getLevel();
+        var sensorPos=h.absolutePos(new BlockPos(4,2,4));
+        var block=(SensorBlock)BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.parse("gt6ce:sensor_thermometer"));
+        var state=block.defaultBlockState().setValue(net.minecraft.world.level.block.DirectionalBlock.FACING, Direction.NORTH);
+        world.setBlockAndUpdate(sensorPos,state);
+        var targetPos=sensorPos.south();
+        world.setBlockAndUpdate(targetPos, SignalProbes.SOURCE.defaultBlockState());
+        var probe=(SignalProbes.SignalProbeSourceBlockEntity)world.getBlockEntity(targetPos);
+        probe.temperature=1234; probe.maximum=2000;
+        var sensor=(SensorBlockEntity)world.getBlockEntity(sensorPos);
+        SensorBlockEntity.measure(world,sensorPos,state,sensor);
+        h.assertTrue(sensor.value()==1234,"thermometer reads TemperatureSource");
+        probe.temperature=999;
+        SensorBlockEntity.measure(world,sensorPos,state,sensor);
+        h.assertTrue(sensor.value()==999,"thermometer re-reads TemperatureSource");
+        h.succeed();
+    }
 }

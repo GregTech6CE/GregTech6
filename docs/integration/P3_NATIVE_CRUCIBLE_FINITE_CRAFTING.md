@@ -8,4 +8,4 @@ ToolShapedRecipe 恢复 Source drainFiniteIngredients：在允许的偏移和镜
 
 FiniteBottleFillingRecipe 的 Lubricant 条件同时接受 Lubricant 和 LubRoCant，与 Forge 一致；原 Native 只有前者不存在时才接受后者，现修正。含 gt.display_fluid 展示载荷的物品拒绝进入有限液体配方，沿用已有 FluidDisplayBinding。保留实际容器能力、前后液量差 1000 mB、Native 组件一致性检查与延迟生成示例物品；没有使用显示物品伪造耗液。
 
-3 Native Java；Core、Forge、资源及三来源不改。集中 Native jar/Forge compile 5m 27s 通过，相关 6 个当前 class 与实际 jar 匹配。按 D010 不新增夹具或重复客户端/专服启动。上批启动不能证明本批加工合成；成品 jar 运行、完整玩法、独立进程世界重载和旧档仍未验证，双版本剩余对齐与完整三源 goal 保持 active。
+3 Native Java；Core、Forge、资源及三来源不改。集中 Native jar/Forge compile 5m 27s 通过，相关 6 个当前 class 与实际 jar 匹配。按 D010 不新增夹具或重复客户端/专服启动。上批启动不能证明本批加工合成；成品 jar 运行、完整玩法、独立进程世界重载和旧档仍未验证，双版本剩余对齐与完整三源整合仍未完成。

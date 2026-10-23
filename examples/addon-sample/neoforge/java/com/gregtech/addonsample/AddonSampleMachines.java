@@ -25,6 +25,7 @@ import com.gregtech.gregtech.api.addon.platform.AddonRecipes;
 import com.gregtech.gregtech.api.addon.platform.BehaviorMachineContributor;
 import com.gregtech.gregtech.api.addon.platform.MachineBehavior;
 import com.gregtech.gregtech.api.addon.platform.MachineBehaviorContext;
+import com.gregtech.gregtech.api.signal.GtSignalCarrier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -72,6 +73,9 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
         return List.of(
                 RecipeMachine.builder(MachineCasing.builder("sample_press", "Steel").machineType("samplepress").tier(1).build())
                         .energy(EnergyInput.builder("EU", 32).faces(MachineFace.BACK).build())
+                        .auxiliaryEnergy(EnergyInput.builder("LU", 32).range(16, 64).capacity(8_000)
+                                .faces(MachineFace.FRONT).build())
+                        .startupEnergy(true)
                         .io(MachineIo.builder()
                                 .itemInputs(MachineFace.TOP)
                                 .itemOutputs(MachineFace.BOTTOM)
@@ -143,7 +147,9 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
                 for (int back = 0; back <= 2; back++) {
                     if (right == 0 && up == 0 && back == 0) continue;
                     if (right == -1 && up == 1 && back == 2) {
-                        press.cell(right, up, back, CellMatch.block("minecraft:glass"), StructureRole.CASING);
+                        press.cell(right, up, back, CellMatch.oneOf(
+                                CellMatch.block("minecraft:glass"),
+                                CellMatch.part("large_niobium_titanium_coil")), StructureRole.CASING);
                         continue;
                     }
                     var role = back == 1 && right == 0
@@ -290,8 +296,9 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
     /** A soft hammer flips a saved flag. A wrench is left to GregTech and still rotates the block. */
     private static final BehaviorMachine HAMMER_SWITCH = BehaviorMachine.builder(
             MachineCasing.builder("sample_switch", "Steel").machineType("sample_switch").tier(1).build())
-            .energy(EnergyInput.builder("EU", 32).build())
+            .energy(EnergyInput.builder("EU", 32).anyType().build())
             .gui("addon_sample:textures/gui/machine.png")
+            .signalOutput(true)
             .build();
 
     /** Water only from the top. A saved {@code shut} flag refuses the next energy packet. */
@@ -355,6 +362,10 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
         @Override public boolean canInsert(MachineBehaviorContext context, int slot, ItemStack stack) { return false; }
         @Override public boolean canFill(MachineBehaviorContext context, int tank, FluidStack stack) { return false; }
         @Override public void tick(MachineBehaviorContext context) {}
+
+        @Override public long gtSignal(MachineBehaviorContext context, int side) {
+            return context.state().getBoolean("armed") ? 15L * GtSignalCarrier.UNIT : 0;
+        }
 
         @Override public boolean onTool(MachineBehaviorContext context, AddonTool tool, Player player,
                                         InteractionHand hand, MachineFace face) {

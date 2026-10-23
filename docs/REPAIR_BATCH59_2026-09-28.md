@@ -15,7 +15,7 @@
 - ANY.java:124 的 Cu 为 Cu、AnnealedCopper；MT.DATA.CABLES_01/04 和 WIRES_01/04 的 MV 位使用 ANY.Cu。
 - CoverShutter 的 interceptItemInsert/Extract 条件为“普通闸门且覆盖板停止，或反向闸门且覆盖板运行”。此停止标志来自覆盖板控制器，不能误用电池盒本身的输出启停标志。
 - 本轮针对电池盒物品库存；没有把闸门宣称为已实现所有连接器断开、流体、电力或其它机器行为。
-- T7–T9 电路、原版 10049 依赖、变压器活动动画及控制覆盖板、旧通用电池电压归并仍待完成。大型坩埚仍待用户客户端实测。
+- T7–T9 电路、原版 10049 依赖、变压器活动动画及控制覆盖板、旧通用电池电压归并仍待完成。大型坩埚仍待客户端实测。
 
 ## 验证
 
@@ -25,7 +25,7 @@
 - 初次编译发现局部变量 form 重名，已改为 wireForm；随后 ForgeGradle 证书预检临时失败，未进入编译。按原配置重试已恢复，无需修改证书设置；最终 build/gametest_batch59_materials_shutter.log 于 05:28:13 **1008/1008 required tests passed**，退出码 0，BUILD SUCCESSFUL in 9m 33s，05:28:45 正常退出。无 failed! 或 Parsing error，使用新世界 build/gametest-batch59-materials-shutter。门禁期间 Java/资源冻结，最新 Java 时间早于最终日志。
 - 已刷新 docs/porting-progress.json，缺失 token 仍为 49；未将注册数当作完整度。
 
-## 用户测试
+## 实机测试
 
 在 JEI 查看变压器铁双板／铜线位，应该能轮换显示对应材料组；用钢双板、退火铜线试做低档变压器，高档不能用普通铜线替代。MV 两种电池盒也应接受对应粗细的退火铜裸线和电缆。
 

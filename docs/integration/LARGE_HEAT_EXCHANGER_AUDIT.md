@@ -66,6 +66,6 @@ ToolShapedRecipe把输入交原生有序配方；CraftingTools.expand只扩展gt
 
 LargeHeatExchangerControllerBlockEntity展开结构／工具、八路、冷热能力和两端保存；Block展开版本交互与ticker；HotFluidFuelCycle展开候选选择，HeatExchangerData展开设置／长罐边界，HeatExchangerRules展开有界计划，SharedHeatExchangerStructure展开三重循环。结构局部、lambda、候选燃料、默认值及批次数改用明确名称；公开类型、字段、注册ID、方法类型签名、常量、分支和语句顺序保持。
 
-完整词法与字面量位置在仅列明绑定归一后相等：BE Forge3168／Neo3103，Block924／1185，燃料496／502，设置392／452，core数值569，core结构253。包名context、原getDrops参数builder和Charge.batches组件均未跟随新局部名称改动，许可证头、其它注释及Stonecutter指令保持；一条数值说明限定了原先过强的等价范围。用户CompoundMaterials／WoodMaterials摘要保持。
+完整词法与字面量位置在仅列明绑定归一后相等：BE Forge3168／Neo3103，Block924／1185，燃料496／502，设置392／452，core数值569，core结构253。包名context、原getDrops参数builder和Charge.batches组件均未跟随新局部名称改动，许可证头、其它注释及Stonecutter指令保持；一条数值说明限定了原先过强的等价范围。CompoundMaterials／WoodMaterials摘要保持。
 
 原LargeHeatExchanger头为GregTech-6 Team2025、Gregorius Techneticies、LGPL-3.0-or-later，其余来源独立留头与摘要；官方Forge源仅引用，没有复制旧方法体／原生源码／资产进生产。本轮未运行目标初始化／Java编译、Gradle、测试、资源包生成、实际供能／排液／造结构／覆盖板／合成、存档重启、构建或推送。其余大型能源、全部配方／材料、控制器、世界、模型和外部扩展仍在全面队列中。

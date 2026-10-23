@@ -27,7 +27,8 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 //?}
 import java.util.*;
 
-public final class HeatExchangerBlockEntity extends GTEnergyBlockEntity implements IFluidHandler, FluidToolTarget {
+public final class HeatExchangerBlockEntity extends GTEnergyBlockEntity implements IFluidHandler, FluidToolTarget,
+        com.gregtech.gregtech.api.machine.HeatHandler {
     private final HeatExchangerRules.Settings settings;
     private final FluidTankGT hot, cold;
     private long heat, history;
@@ -41,6 +42,45 @@ public final class HeatExchangerBlockEntity extends GTEnergyBlockEntity implemen
     }
     public long tankAmount(int tank) { return tank == 0 ? hot.getAmount() : cold.getAmount(); }
     public HeatExchangerRules.Settings settings() { return settings; }
+
+    // ── HeatHandler: the exchanger buffers HU for its upward outlets ────────────────────────
+
+    @Override public long heatStored() { return heat; }
+    @Override public long heatCapacity() { return settings.bufferTarget(); }
+    @Override public long temperatureK() { return com.gregtech.gregtech.data.GregTechConstants.DEF_ENV_TEMP; }
+
+    @Override public long insertHeat(long signedHU, boolean simulate) {
+        if (signedHU == 0) return 0;
+        if (signedHU > 0) {
+            long accepted = heat < 0 ? signedHU : Math.min(signedHU, Long.MAX_VALUE - heat);
+            if (!simulate && accepted > 0) {
+                heat += accepted;
+                setChanged();
+            }
+            return accepted;
+        }
+        if (signedHU == Long.MIN_VALUE) return 0;
+        long removed = Math.min(Math.max(0, heat), -signedHU);
+        if (!simulate && removed > 0) {
+            heat -= removed;
+            setChanged();
+        }
+        return -removed;
+    }
+
+    @Override public long extractHeat(long signedHU, boolean simulate) {
+        if (signedHU == 0) return 0;
+        if (signedHU > 0) {
+            long removed = Math.min(Math.max(0, heat), signedHU);
+            if (!simulate && removed > 0) {
+                heat -= removed;
+                setChanged();
+            }
+            return removed;
+        }
+        if (signedHU == Long.MIN_VALUE) return 0;
+        return insertHeat(-signedHU, simulate);
+    }
     public void tick() {
         if (level == null || level.isClientSide) return;
         long offered = Math.min(settings.rate(), heat);

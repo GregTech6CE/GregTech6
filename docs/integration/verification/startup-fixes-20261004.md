@@ -1,13 +1,13 @@
 # 2026-10-04 / 双版本启动崩溃
 
-用户反馈 NeoForge 1.21.1 报 `Neo machine recipes initialized twice`，随后附上 Forge 1.20.1 启动日志。本批优先修复启动，暂缓太阳能板和占位电池；整体移植 goal 保持 active。
+反馈 NeoForge 1.21.1 报 `Neo machine recipes initialized twice`，随后附上 Forge 1.20.1 启动日志。本批优先修复启动，暂缓太阳能板和占位电池；整体移植仍未完成。
 
 ## 实际故障链
 
-- Forge 用户附件显示 `ModelEvent.ModifyBakingResult → SmelteryClientModels.aliasHullBlocks → MoldItemBakedModel.grid → FaceBakery`，纹理 sprite 为 null。用户实例为 Forge 47.4.26 / Java 25.0.2。
+- Forge 附件显示 `ModelEvent.ModifyBakingResult → SmelteryClientModels.aliasHullBlocks → MoldItemBakedModel.grid → FaceBakery`，纹理 sprite 为 null。游戏实例为 Forge 47.4.26 / Java 25.0.2。
 - 从附件中已知实例目录读取同机 NeoForge 21.1.252 日志和崩溃报告，确认首次错误在 12:30:13：`TextureAtlas.getSprite → MoldItemBakedModel.grid` 报 `Tried to lookup sprite, but atlas is not initialized`。
-- 同一 Neo 日志显示 12:30:25.992 公共初始化首次成功；12:30:26.000 客户端因模型加载错误清除选中资源包并重试，随后公共初始化在 deferred queue 再次执行，触发用户看到的二次配方初始化异常。因此两个版本有相同的模具模型根因，Neo 的二次初始化是资源重试后的后续错误。
-- 没有复制整个用户日志或登录参数到仓库。仅与错误有关的摘录保存在 ignored `work/user-neo-startup-excerpt-20261004.txt`。
+- 同一 Neo 日志显示 12:30:25.992 公共初始化首次成功；12:30:26.000 客户端因模型加载错误清除选中资源包并重试，随后公共初始化在 deferred queue 再次执行，触发实机看到的二次配方初始化异常。因此两个版本有相同的模具模型根因，Neo 的二次初始化是资源重试后的后续错误。
+- 没有复制整个日志或登录参数到仓库。仅与错误有关的摘录保存在 ignored `work/user-neo-startup-excerpt-20261004.txt`。
 
 ## 修正
 
@@ -27,6 +27,6 @@ Forge/NeoForge 的固定依赖 `ModelEvent.ModifyBakingResult` 文档都说明�
 
 ## 运行边界
 
-NeoForge 21.1.243 / Java 21.0.7 搭配 EMI 1.1.24 与 Jade 的开发运行环境只启动一次，成功完成模型加载并到达实际渲染的 TitleScreen，自动截图及退出；CLIENT_SMOKE_SUCCESS 显示105,693ms、151帧、1280×720，Gradle 2m57s终态成功。日志 `work/startup-fixes-neo-client-20261004.log`。这验证当前编译输出的开发客户端，不把它称作用户 NeoForge 21.1.252 / Java25生产实例的复测。本批没有 Forge 新客户端启动、GameTest、世界/存档/机器/EMI重载实测。用户运行的 Forge/NeoForge 小版本和 Java 版本见上文，构建固定目标仍为 Forge 47.2.20 / NeoForge 21.1.243。
+NeoForge 21.1.243 / Java 21.0.7 搭配 EMI 1.1.24 与 Jade 的开发运行环境只启动一次，成功完成模型加载并到达实际渲染的 TitleScreen，自动截图及退出；CLIENT_SMOKE_SUCCESS 显示105,693ms、151帧、1280×720，Gradle 2m57s终态成功。日志 `work/startup-fixes-neo-client-20261004.log`。这验证当前编译输出的开发客户端，不把它称作 NeoForge 21.1.252 / Java25生产实例的复测。本批没有 Forge 新客户端启动、GameTest、世界/存档/机器/EMI重载实测。实际运行的 Forge/NeoForge 小版本和 Java 版本见上文，构建固定目标仍为 Forge 47.2.20 / NeoForge 21.1.243。
 
-Neo 用户原日志还有既有非法路径、动画帧及外部前缀 tab_icon 的警告，本批不宣称全量警告清零。太阳能板生成条件/活动贴图、占位电池和更广移植缺口继续接续。
+Neo 原日志还有既有非法路径、动画帧及外部前缀 tab_icon 的警告，本批不宣称全量警告清零。太阳能板生成条件/活动贴图、占位电池和更广移植缺口继续接续。

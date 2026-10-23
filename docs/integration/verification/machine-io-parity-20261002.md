@@ -32,7 +32,7 @@
 ./gradlew.bat --console=plain -PdirectCoreResources=true -PdirectCoreClasspath=true -PserverSmokePhase=verify -PserverSmokeId=cb23b5a6-244c-4102-bce8-0b817bc7f390 -PmachineWorldSmoke=true -PserverDirectory=build/machine-world-20261002 -PserverSmokeX=0 -PserverSmokeY=240 -PserverSmokeZ=0 :neoforge:runServer
 ```
 
-隔离开发世界只监听本机。未修改用户 `.minecraft` 配置，未写入生产 EULA 接受文件。正常 CI 不依赖这些本地 direct 选项。
+隔离开发世界只监听本机。未修改`.minecraft` 配置，未写入生产 EULA 接受文件。正常 CI 不依赖这些本地 direct 选项。
 
 ## 验证边界
 
@@ -40,7 +40,7 @@
 
 动态接收端的所有物品/流体余量、回送掉落、覆盖物、能力替换/重入/卸载尚未做相应场景的实际运行。违反处理器合同、在抛异常前发生不可观测副作用的第三方接收端，不作事务保证。输入流体在源排出后本机被重入修改、物品源在目标确认后被重入修改等边界仍需后续整合；此批不是所有传输场景的守恒完成声明。
 
-完整三源整合 goal 保持 active，后续继续生存可达性、平台运行、渲染与接口、各系统保存和兼容范围。
+整体移植仍未完成，后续继续生存可达性、平台运行、渲染与接口、各系统保存和兼容范围。
 
 ## 最终双版本产物
 

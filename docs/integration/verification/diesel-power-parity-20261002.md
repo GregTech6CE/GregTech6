@@ -21,4 +21,4 @@
 
 兼容范围：保留当前gregtech注册、燃料/排气tank、stopped和历史kuEnergy字段数值；柴油输出语义恢复RU，旧直接KU负载必须加RU→KU旋转活塞。只证明本次d63e117f1隔离Neo世界，不覆盖原1.7.10/其他来源或跨Minecraft存档。原固定输出min/max提示仍继承通用范围待对齐；动画活动三态、全部燃料/姿态/过压、Forge动力运行、客户端/成品安装和完整生存继续待验。
 
-复现：baseline需d63e117f1生产源码加既有probe，`-PdirectCoreResources=true -PdirectCoreClasspath=true -PdieselPowerSmoke=true -PdieselPowerBaseline=true -PserverSmokePhase=prepare ... :neoforge:runServer`；新源码同世界`-PdieselPowerSmoke=true -PserverSmokePhase=verify`，第三次再加`-PdieselPowerReadOnly=true`。使用显式同UUID/新隔离directory及0,240,0坐标。Java17 Gradle、Native现有Java21；无第三方授权变化，goal active。
+复现：baseline需d63e117f1生产源码加既有probe，`-PdirectCoreResources=true -PdirectCoreClasspath=true -PdieselPowerSmoke=true -PdieselPowerBaseline=true -PserverSmokePhase=prepare ... :neoforge:runServer`；新源码同世界`-PdieselPowerSmoke=true -PserverSmokePhase=verify`，第三次再加`-PdieselPowerReadOnly=true`。使用显式同UUID/新隔离directory及0,240,0坐标。Java17 Gradle、Native现有Java21；无第三方授权变化，整体移植仍未完成。

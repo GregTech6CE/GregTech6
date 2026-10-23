@@ -10,4 +10,4 @@ CreosoteAxleRecipe 采用原有限容器匹配/余物流程，适配 Native ICus
 
 Native 已有配方数据包处理 reload 与覆盖顺序，未照搬 Forge RuntimeRecipeLifecycle 的整套手动替换管线。只补 ShapelessRecipeTooltipIndexLoader 的全局 OnDatapackSyncEvent LOWEST 刷新，使用真实 server.registryAccess()；单玩家同步跳过，避免每次加入重复全量扫描。
 
-7 Java 文件，Core/资源/Forge/来源项目未改。集中 Native compile+jar/Forge compile 通过；随后只跑一次既有 Neo 专服短启动，日志观察 52 行生成，配方加载、200 tick、正常保存/停止通过。无新增专项夹具。编译与启动不证明实际容器合成、工具磨损、提示画面、索引 reload 内容、成品 jar、完整玩法、独立世界重载或旧存档；均待集中验收。完整三来源 goal 仍 active。
+7 Java 文件，Core/资源/Forge/来源项目未改。集中 Native compile+jar/Forge compile 通过；随后只跑一次既有 Neo 专服短启动，日志观察 52 行生成，配方加载、200 tick、正常保存/停止通过。无新增专项夹具。编译与启动不证明实际容器合成、工具磨损、提示画面、索引 reload 内容、成品 jar、完整玩法、独立世界重载或旧存档；均待集中验收。整体移植仍未完成。

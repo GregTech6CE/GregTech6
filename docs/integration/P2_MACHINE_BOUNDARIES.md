@@ -1,6 +1,6 @@
 # P2：NeoForge 首条真实机器链的迁移边界
 
-2026-09-30，只读代码审查；基准 main `de18243bb9a81a7752d778ec8a5d1d392ba6294d`，Forge 开发夹具诊断日志以主会话正在复跑的版本为准。此审查只新增本文档，没有修改生产/core Java、Gradle，也没有启动游戏。源码位置以下均相对 `F:\Dev\GregtTech6New\gregtech6`。
+2026-09-30，只读代码审查；基准 main `de18243bb9a81a7752d778ec8a5d1d392ba6294d`，Forge 开发夹具诊断日志以正在复跑的版本为准。此审查只新增本文档，没有修改生产/core Java、Gradle，也没有启动游戏。源码位置以下均相对 `F:\Dev\GregtTech6New\gregtech6`。
 
 目标是把项目1的真实砖燃烧箱 → 陶瓷坩埚 → 青铜 → 陶瓷模具链迁入 Neo，使用现有共享 GTMaterial/GTMaterialRegistry/MaterialPrefix/CrucibleReactions。不能用一套演示物品、第二份材料目录或直接写入4U青铜替代迁移。源码存在、纯合约通过、给定器材加工、生存获得器材、世界内渲染与真实机器保存重启分别验收。
 
@@ -91,7 +91,7 @@ Neo loadAdditional/saveAdditional/updateTag 必须使用本版本 HolderLookup.P
 
 以上质量数字是本次用Python标准库按Java float32密度独立计算，没有运行机器。实现需共享同一函数并对源版本与抽取版本验证，固定动作不要求所有随机生物群系同tick完成。环境代码 `SmelteryBlockEntityHelper.java:27` 是 `273+round(biomeBaseTemp*20)`，不能把测试的ambient写死293。
 
-主会话实际观察：首跑 `work/p2-forge-bronze-playflow-runtime.log` 主链在tick3011合金、3020四锭完成；同次负例因冷坩埚有额外物料失败，整次失败不可删。新world诊断 `work/p2-forge-bronze-playflow-diagnostic.log:1396/1528–1532` 两项通过：冷坩埚283K/0HU/空，容量16U铜+缓存一锭；tick3028合金、3037四锭完成。主会话物理隔离/XML复跑已通过4m17s，见verification/p2-forge-playflow.json；Neo真实链尚未运行。本审查不把静态金样或这些Forge日志替代Neo玩法/世界重载。
+实际观察：首跑 `work/p2-forge-bronze-playflow-runtime.log` 主链在tick3011合金、3020四锭完成；同次负例因冷坩埚有额外物料失败，整次失败不可删。新world诊断 `work/p2-forge-bronze-playflow-diagnostic.log:1396/1528–1532` 两项通过：冷坩埚283K/0HU/空，容量16U铜+缓存一锭；tick3028合金、3037四锭完成。物理隔离/XML复跑已通过4m17s，见verification/p2-forge-playflow.json；Neo真实链尚未运行。本审查不把静态金样或这些Forge日志替代Neo玩法/世界重载。
 
 ## 冷坩埚额外Leather/Steel：已定位事实与尚未确定来源
 

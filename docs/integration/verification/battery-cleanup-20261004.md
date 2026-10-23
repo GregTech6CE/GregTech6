@@ -1,6 +1,6 @@
 # 2026-10-04 / 占位电池移除与原生旧物品迁移
 
-用户反馈的五个按电压命名的占位电池仍有独立注册、创造栏、工具配方与资源。本批按只读 GT6 `Loader_MultiTileEntities` 14000..14044、`Loader_Tools` 的 re-battery 等级组继续推进；整体移植 goal 保持 active。
+反馈的五个按电压命名的占位电池仍有独立注册、创造栏、工具配方与资源。本批按只读 GT6 `Loader_MultiTileEntities` 14000..14044、`Loader_Tools` 的 re-battery 等级组继续推进；整体移植仍未完成。
 
 ## 实际改变
 
@@ -39,10 +39,10 @@
 
 ## 正式交付
 
-初始正式双版10m45s完成，但用户实测暴露Forge缺refmap及Neo安装副本ZIP损坏，未作为最终交付。Forge完整编译与最终双版/独立探针4m37s成功；[验包](battery-cleanup-artifacts-20261004.json)核对655当前共享class、ZIP全条目CRC、完整生产映射和测试类排除，[内容报告](battery-cleanup-content-20261004.json)核对Forge11个/Neo8个本批原生class及电池资源删除。
+初始正式双版10m45s完成，但实机测试暴露Forge缺refmap及Neo安装副本ZIP损坏，未作为最终交付。Forge完整编译与最终双版/独立探针4m37s成功；[验包](battery-cleanup-artifacts-20261004.json)核对655当前共享class、ZIP全条目CRC、完整生产映射和测试类排除，[内容报告](battery-cleanup-content-20261004.json)核对Forge11个/Neo8个本批原生class及电池资源删除。
 
 正式Forge47.4.26/Neo21.1.252和Java25.0.2的隔离客户端均已到真实主菜单，正常退出及1280×720截图实际查看；没有在此生产组合再次新建世界。完整成品保存到新的稳定目录，见 [启动与交付记录](production-delivery-startup-20261004.md) 和 [大小/哈希/路径](production-delivery-publication-20261004.json)。没有重复完整共享套件或其他机器测试；原有相关GameTest/Neo电动工具夹具仅同步真实容量/配方ID并参加编译，没有执行。
 
 ## 仍未证明
 
-原生物品解析/规范保存已实际执行；用户旧存档和Forge旧注册表快照的MissingMappingsEvent尚未实际重载。用户Neo21.1.252/Forge47.4.26/Java25实例没有原地改动。新建世界开发检查和成品主菜单启动不等于充电/电池箱网络、完整生存工具制作、外部电池兼容、物品栏交互或Nexus全部布局验收。非法资源路径、动画帧及EMI未翻译标签仍在；其他面板、反应堆内容、蜜蜂、全面tooltip和最终cfg继续接续。
+原生物品解析/规范保存已实际执行；旧存档和Forge旧注册表快照的MissingMappingsEvent尚未实际重载。Neo 21.1.252/Forge47.4.26/Java25实例没有原地改动。新建世界开发检查和成品主菜单启动不等于充电/电池箱网络、完整生存工具制作、外部电池兼容、物品栏交互或Nexus全部布局验收。非法资源路径、动画帧及EMI未翻译标签仍在；其他面板、反应堆内容、蜜蜂、全面tooltip和最终cfg继续接续。

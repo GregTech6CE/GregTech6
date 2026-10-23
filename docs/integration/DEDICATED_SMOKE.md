@@ -1,6 +1,6 @@
 # 普通开发专服与真实世界重启探针
 
-日期：2026-09-30。实现属于bootstrapGameTest开发源集，主会话已接线、编译并串行运行两平台prepare/verify，实际读取重启后的标本通过。两平台只在明确的 `gregtech.integration.serverSmokePhase=prepare|verify` 开启；默认空字符串关闭。探针不进入生产jar，证据见VERIFICATION.md及verification/。
+日期：2026-09-30。实现属于bootstrapGameTest开发源集，已接线、编译并串行运行两平台prepare/verify，实际读取重启后的标本通过。两平台只在明确的 `gregtech.integration.serverSmokePhase=prepare|verify` 开启；默认空字符串关闭。探针不进入生产jar，证据见VERIFICATION.md及verification/。
 
 证据范围是普通DedicatedServer启动、200次真实服务器tick、正常停止路径，以及同一版本同一世界第二次启动恢复原版箱子/物品/方块。箱子标本为3个原版铜锭+1个原版铁锭，不是铜锡合金配方，不能称GT6机器、铜锡/青铜玩法、成品jar、跨版本世界迁移或旧存档兼容通过。
 
@@ -8,7 +8,7 @@
 
 Forge入口 `src/bootstrapGameTest/java/com/gregtech/gregtech/integration/server/ForgeDedicatedSmoke.java`，Neo入口 `neoforge/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/server/NeoForgeDedicatedSmoke.java`。两者限定Dist.DEDICATED_SERVER并检查真实对象是DedicatedServer，拒绝GameTestServer。客户端探针仍限定Dist.CLIENT；此代码没有net.minecraft.client类型。
 
-Root使用新的开发run目录与单独level-name，server.properties仅绑定127.0.0.1、有限独立端口，禁止把prepare指向用户存档。两个阶段使用同一平台、同一runDir、同一level-name、同一worldRoot和同一UUID，分别启动独立JVM；不要在prepare/verify之间删除或重建世界。两个版本使用各自的世界，不能让1.20.1和1.21.1共写一个世界。
+Root使用新的开发run目录与单独level-name，server.properties仅绑定127.0.0.1、有限独立端口，禁止把prepare指向存档。两个阶段使用同一平台、同一runDir、同一level-name、同一worldRoot和同一UUID，分别启动独立JVM；不要在prepare/verify之间删除或重建世界。两个版本使用各自的世界，不能让1.20.1和1.21.1共写一个世界。
 
 游戏JVM必传 `gregtech.integration.serverSmokeId`，必须规范UUID字符串；prepare和verify相同。可选 `gregtech.integration.serverSmokeX/Y/Z` 必须三项同时给整数；缺省取overworld保存的出生点偏移(8,12,8)。坐标必须在世界边界和建筑高度内，east邻块为Dirt。准备位置及邻块必须都是空气，探针拒绝覆盖非空气；失败时改用新的测试世界或显式安全坐标，不能复用已经prepare的位置再prepare。
 
@@ -39,7 +39,7 @@ Forge解析源码：`C:\Users\Asus\.gradle\caches\forge_gradle\minecraft_user_re
 - `TickEvent.java:37–64` 的ServerTickEvent含phase/getServer；使用END一次计tick。
 - `MinecraftServer.java:638,671–698`：initServer完成后Started；正常loop退出触发Stopping；finally执行stopServer后Stopped；`halt:620–629`只清running并可选join，故用false；`stopServer:549–590`保存与关闭区块；`isStopped:1175`、`getWorldPath:1690–1692`可用。
 - `BaseContainerBlockEntity.java:45–59`：setCustomName/getCustomName；`ChestBlockEntity.java:61–82`：27槽、实际NBT load/saveAllItems；`RandomizableContainerBlockEntity.java:96–123`真实getItem/setItem；`Level.java:195–200`真实setBlock。
-- `Eula.java:19` 条件为IDE||ForgeGameTestHooks.isGametestServer()||readFile；不能据此假定Forge普通开发专服绕过文件。当前Forge普通run实际生成eula=false并拒绝启动，首次prepare未通过。用户随后明确同意Minecraft EULA用于本项目隔离本地测试，主会话只在对应目录写eula=true，重跑prepare和verify通过。探针本身不编辑EULA。
+- `Eula.java:19` 条件为IDE||ForgeGameTestHooks.isGametestServer()||readFile；不能据此假定Forge普通开发专服绕过文件。当前Forge普通run实际生成eula=false并拒绝启动，首次prepare未通过。随后明确同意Minecraft EULA用于本项目隔离本地测试，只在对应目录写eula=true，重跑prepare和verify通过。探针本身不编辑EULA。
 
 Neo解析源码：`F:\Dev\GregtTech6New\gregtech6\neoforge\build\moddev\artifacts\neoforge-21.1.243-sources.jar`。
 
@@ -77,7 +77,7 @@ systemProperty 'gregtech.integration.serverSmokeId', (rootProject.findProperty('
 $specimenUuid = [guid]::NewGuid().ToString()
 $forgeRun = "build/persistence-forge-$specimenUuid"
 # 先创建该新目录的server.properties，绑定127.0.0.1/独立端口、flat、view/simulation=2。
-# 本会话用户已明确接受EULA，允许在这个隔离本地测试目录写eula=true。
+# 本次已明确接受EULA，允许在这个隔离本地测试目录写eula=true。
 .\gradlew.bat --no-daemon --console=plain :runServer "-PserverDirectory=$forgeRun" -PserverSmokePhase=prepare "-PserverSmokeId=$specimenUuid"
 .\gradlew.bat --no-daemon --console=plain :runServer "-PserverDirectory=$forgeRun" -PserverSmokePhase=verify "-PserverSmokeId=$specimenUuid"
 # Neo用自己的独立世界和新UUID，分别保存两个阶段日志。
@@ -92,7 +92,7 @@ $neoRun = "build/persistence-neoforge-$neoSpecimenUuid"
 
 ## 实际两阶段验收
 
-Neo46s/44s，Forge2m35s/2m29s通过，均为不同JVM/同UUID/同world读取。Forge首跑EULA失败单独保留；用户随后同意后重跑，不把首跑当通过。完整原版库存、邻接方块、200tick、正常三维度保存和文件门禁已验，汇总见verification/p2-{forge,neoforge}-dedicated.json。
+Neo46s/44s，Forge2m35s/2m29s通过，均为不同JVM/同UUID/同world读取。Forge首跑EULA失败单独保留；随后同意后重跑，不把首跑当通过。完整原版库存、邻接方块、200tick、正常三维度保存和文件门禁已验，汇总见verification/p2-{forge,neoforge}-dedicated.json。
 
 验收工具tools/integration/verify_dedicated_smoke.py必须传两个真实退出码、两个完整日志、期望平台/UUID/world绝对或仓内路径；不能只检查SUCCESS文本。示例使用此次Forge回执：
 

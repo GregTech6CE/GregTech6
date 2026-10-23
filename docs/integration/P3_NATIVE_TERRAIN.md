@@ -11,6 +11,6 @@ Actual gt_pits, gt_turf, gt_surface_deposits, gt_water_bodies and gt_rocks featu
 - Nether deposits/crystal blocks, bedrock/deep-ocean/black-sand/coltan/fluid springs/dungeons and remaining source features are not claimed complete.
 - Full gameplay/client/Forge runtime/independent world restart/old saves/new jars pending.
 
-Grouped core/Neo/Forge compile passed19s. One grouped ordinary Neo200tick start covers bee, surface life and terrain registration/data; its result recorded separately. No extra fixture. Sources untouched and full goal active.
+Grouped core/Neo/Forge compile passed19s. One grouped ordinary Neo200tick start covers bee, surface life and terrain registration/data; its result recorded separately. No extra fixture. Sources untouched and The overall port is still incomplete.
 
 Grouped ordinary Neo startup passed1m59s after core archive ZIP64 entry-limit repair.960 bee display rows,80 crop processing rows,2 bumble crafting rows and6421total crafting recipes loaded; DedicatedServer200ticks normally saved/stopped. Receipt:verification/p3-neoforge-bumble-surface-terrain-startup.json. No retry for nonblocking Mojang key fetch timeout. Actual gameplay/client terrain generation/Forge/restart/old saves/new jars remain unverified.

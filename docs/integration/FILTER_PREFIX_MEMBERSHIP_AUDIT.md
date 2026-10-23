@@ -31,6 +31,6 @@ MaterialFormItem主前缀、cell容器的capcellcon、按粗细拼接的管道�
 
 展开core的ContainerShapeLike、PipeFormLike接口，保持原签名；展开共享FilterRules的短条件和六组映射，template／candidate等参数、item／pipe／block模式变量及entry／result／word局部变量改为能说明用途的名称。LogisticsItemFilter展开短条件，并把两处说明改为准确描述当前“模板物品或一个推导前缀”的职责。
 
-四源六执行视图的完整有序Java token流在限定局部命名归一后保持：21、21、514／505、235／235；未归一字符串／数值／字符字面量及其位置、其它注释、Stonecutter指令分别核对。14份原版／28份当前输入和34份共享平台视图归档；原版版权／作者头保留。用户CompoundMaterials的570项对齐和WoodMaterials现有修改保持，不编辑或提交用户材料表。
+四源六执行视图的完整有序Java token流在限定局部命名归一后保持：21、21、514／505、235／235；未归一字符串／数值／字符字面量及其位置、其它注释、Stonecutter指令分别核对。14份原版／28份当前输入和34份共享平台视图归档；原版版权／作者头保留。CompoundMaterials的570项对齐和WoodMaterials现有修改保持，不编辑或提交材料表。
 
-未Java编译／目标初始化、Gradle、测试、游戏、最终注册表／数据包、实际选择／UI／运输、保存重启、构建或推送。全部前缀关系、现代身份政策、其它宿主与全面功能／可读性队列仍未完成，goal保持active。
+未Java编译／目标初始化、Gradle、测试、游戏、最终注册表／数据包、实际选择／UI／运输、保存重启、构建或推送。全部前缀关系、现代身份政策、其它宿主与全面功能／可读性队列仍未完成，整体移植仍未完成。

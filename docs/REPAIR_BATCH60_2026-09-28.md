@@ -29,7 +29,7 @@
 - 完整门禁 build/gametest_batch60_transformer_controls.log：05:44:22 **1012/1012 required tests passed**，退出码 0，BUILD SUCCESSFUL in 9m 30s，05:44:52 正常退出；无 failed! 或 Parsing error。使用新目录 build/gametest-batch60-transformer-controls。运行期间冻结 Java/资源，最新 Java 时间早于最终日志；未启动客户端目视。
 - docs/porting-progress.json 已刷新，缺失 token 仍为 49。
 
-## 用户测试与后续
+## 实机测试与后续
 
 重启 runClient，用有稳定输入的变压器观察启动闪烁、持续约 3.2 秒后的 active 覆盖层和断能后的回落；停止开关应立即令外观 idle。输出堵塞可能保持工作外观，但状态面板的实际输电指示应区别于“达到工作阈值”。
 
@@ -37,4 +37,4 @@
 
 下一轮有明确代码证据的占位：EnergyNodeDefinitions.java:114 的 battery_eu_8/32/128/512/2048 仍为通用 EnergyNodeBlock，固定 V×64000 容量并使用普通 BlockItem；与第五十四批真实化学电池的物品充放电、放置和保电掉落不一致，材质也仍按机壳梯度配色。应先核对原版高级化学电池身份再整合，避免留下两套矛盾规则。
 
-高档电路和原版缺失 10049 制作依赖、旧通用电池电压规则、其它能源占位物、Actually Additions 兼容材料仍未完成。大型坩埚仍待用户实测。本轮未构建 jar，没有执行 git commit，完整目标仍在进行中。
+高档电路和原版缺失 10049 制作依赖、旧通用电池电压规则、其它能源占位物、Actually Additions 兼容材料仍未完成。大型坩埚仍待实机验证。本轮未构建 jar，没有执行 git commit，完整目标仍在进行中。

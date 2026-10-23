@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "scope": "gt6-logic addon API batch 3: export MachineControl, add read-only energy/progress and the external switch input",
+  "branch": "addon/remaining-api-gaps",
+  "base_head": "57e2a45e5",
+  "card": "docs/card-plans/active/48-gt6-logic-api-gaps.md batch 3",
+  "decision": "Masson chose read-only energy/progress plus external signal on 2026-10-23; setProgress/setEnergy stay closed until SaltNya decides otherwise.",
+  "mod_version": "0.0.0",
+  "api_version": 0,
+  "jdk_toolchains": {
+    "core": 17,
+    "forge": 17,
+    "neoforge": 21
+  },
+  "platform_compile": {
+    "command": "./gradlew :multiversion:1.20.1-forge:compileJava :multiversion:1.21.1-neoforge:compileJava :multiversion:1.20.1-forge:addonApiClosureCheck :multiversion:1.21.1-neoforge:addonApiClosureCheck --console=plain",
+    "result": "BUILD SUCCESSFUL",
+    "api_closure": {
+      "forge": "Addon API closure passed (forge): 139 API classes",
+      "neoforge": "Addon API closure passed (neoforge): 139 API classes"
+    },
+    "gametest_compile": {
+      "command": "./gradlew :multiversion:1.20.1-forge:compileBootstrapGameTestJava :multiversion:1.21.1-neoforge:compileBootstrapGameTestJava --console=plain",
+      "result": "BUILD SUCCESSFUL"
+    }
+  },
+  "gametests": {
+    "namespace": "gregtech_machine_control",
+    "tests": [
+      "readsEnergyCapacityAndProgressWhileWritesStayClosed",
+      "externalSignalDrivesTheSwitchFaceAndPersists"
+    ],
+    "runtime_parameters": {
+      "heap": "3g",
+      "forge_jvm_args": "-XX:+UseSerialGC",
+      "fresh_game_directory_each_attempt": true
+    },
+    "forge": {
+      "command": "./gradlew :multiversion:1.20.1-forge:runGameTestServer -PgameTestNamespaces=gregtech_machine_control -PgameTestHeap=3g \"-PgameTestJvmArgs=-XX:+UseSerialGC\" -PgameTestDirectory=build/gametest-machine-control-b3e --console=plain",
+      "result": "All 2 required tests passed",
+      "log": "work/batch3-forge-control.log",
+      "sha256": "de7dfa3a32870cd6653c1e6e028d6b6f47d10dc15c2d7d653910dd9e7df5da44"
+    },
+    "neoforge": {
+      "command": "./gradlew :multiversion:1.21.1-neoforge:runGameTestServer -PgameTestNamespaces=gregtech_machine_control -PgameTestHeap=3g -PneoforgeGameTestDirectory=build/bootstrap-gametest-machine-control-b3e --console=plain",
+      "result": "All 2 required tests passed",
+      "log": "work/batch3-neoforge-control.log",
+      "sha256": "b50bc0c8b6adc9c983568b039400fb9ef3d2aa8ea1cf6f989b65980a3445441e"
+    },
+    "initial_failures": [
+      {
+        "test": "readsenergycapacityandprogresswhilewritesstayclosed",
+        "platform": "forge",
+        "message": "stored energy becomes readable",
+        "cause": "the test passed doInject=false to doEnergyInjection, which is the simulate flag; the gate accepted a packet but no state changed.",
+        "fix": "pass true and inject a full energyInMax packet"
+      },
+      {
+        "test": "externalsignaldrivestheswitchfaceandpersists",
+        "platform": "neoforge",
+        "message": "unpowered switch keeps the machine stopped",
+        "cause": "registry order differs per platform; the first machine with energyIn > 0 on NeoForge was a subclass that overrides the cover gate.",
+        "fix": "select only an entity whose class is exactly BasicMachineBlockEntity"
+      }
+    ]
+  },
+  "not_verified": [
+    "core:check not rerun for this batch (core unchanged; MachineControl moved into the native API source set)",
+    "gameplay",
+    "dedicated server",
+    "saved-world restart"
+  ]
+}

@@ -14,4 +14,7 @@ public interface ToolInteractionTarget {
                                  net.minecraft.world.entity.player.Player player, ItemStack tool) { return true; }
     default void toolStateChanged(net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos, BlockState state) {}
     default void toolStateChanged(net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos, BlockState state,ToolInteractionSpec operation) {toolStateChanged(level,pos,state);}
+    /** Server-only hook for a connection bit the wrench just set; the neighbour receives its own call. */
+    default void connectionToggled(net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,
+                                   net.minecraft.core.Direction side, boolean connected) {}
 }

@@ -44,6 +44,6 @@
 
 整理CoverSignalMixin三项注入及宿主选择，cir→callback，说明改为实际的输出覆盖及排除范围。ExtenderJadeProvider展开服务端数据与tooltip，局部block／data→sourceBlock／controlData；只说明调用路径存在，不据此验收控制可用性／成功状态（沿用110）。ExtenderCoverRenderer展开渲染，be／partial→blockEntity／partialTick，调用及光照参数不变。
 
-三源六完整平台执行流515／515、535／535、139／139在限定局部名称归一后保持；原始字符串／数值位置、唯一说明纠正、其它注释和指令另核。16原版／24当前源码、28共享平台视图归档；用户CompoundMaterials与WoodMaterials原始摘要不动。
+三源六完整平台执行流515／515、535／535、139／139在限定局部名称归一后保持；原始字符串／数值位置、唯一说明纠正、其它注释和指令另核。16原版／24当前源码、28共享平台视图归档；CompoundMaterials与WoodMaterials原始摘要不动。
 
-未Java编译／目标初始化、Gradle、测试、游戏、世界fixture、实际包投递、重启、构建或推送。上述玩法差异仅记录；其它宿主、原生引擎完整连线、覆盖板组合、通知时序及全面项目队列继续，goal保持active。
+未Java编译／目标初始化、Gradle、测试、游戏、世界fixture、实际包投递、重启、构建或推送。上述玩法差异仅记录；其它宿主、原生引擎完整连线、覆盖板组合、通知时序及全面项目队列继续，整体移植仍未完成。

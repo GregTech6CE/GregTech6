@@ -57,7 +57,7 @@
 
 `bootstrapGameTest` 是独立源集，生产 jar 默认仅包含 main 和 core 输出；Neo bootstrap 三项只测 core linkage/固定数学值。即使官方开发 GameTestServer 成功，也只可记录“开发 server bootstrap + 共享逻辑”证据。生产 jar 在实际专服环境加载、客户端画面/交互、可选 JEI/Jade 缺省/启用、真实取得原料并完成青铜链、磁盘保存/关服/重启、旧世界迁移仍须各自验收。NBT 内存往返、日志声明和编译不能替代这些门。
 
-当前没有可证明的其它实质构建配置错误；正在变更的 bootstrap 配置及新 Forge 包需在最终冻结工作树后复核。此审查没有宣告 P1、授权门或完整整合 goal 完成。
+当前没有可证明的其它实质构建配置错误；正在变更的 bootstrap 配置及新 Forge 包需在最终冻结工作树后复核。此审查没有宣告 P1、授权门或完整整合目标完成。
 
 ## R1/R2/R3 修复记录
 

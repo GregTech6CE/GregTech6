@@ -1,7 +1,7 @@
 {
   "type": "gt6ce:machine",
   "map": "addon_sample.recipe.press",
-  "item_inputs": [{ "item": "minecraft:iron_ingot" }],
+  "item_inputs": [{ "item": "minecraft:iron_block" }],
   "item_outputs": [{ "item": "minecraft:gold_nugget" }],
   "eu_per_tick": 32,
   "duration": 20

@@ -12,6 +12,6 @@ GTRenderHelper/GTWrenchOverlay/ToolFaceOverlay/SlabPlacementOverlayRenderer保�
 
 两次必要集中编译24s/13s通过；单次既有Neo普通专服加Native打包1m46s通过，200tick、正常三维度保存退出，Jade GT插件也在专服发现/注册。没有新增夹具、反复客户端或真实交互检查。发布格式jar内本批类已与实际编译输出逐字节比对；未变共享core/资源不重复全量验包，Forge上一包复用。
 
-未验证：本批客户端启动、实际提示/索引内容、工具选面与半砖、压力表/花提示画面、server数据重载、真实流体能力/饮用、JEI/Jade实用、生产jar运行、完整玩法、独立重载和旧档。普通保存退出不是保存后再次加载。此前41坩埚模具loader修正也尚未再次客户端实跑。原完整三源goal仍active，不能把编译或专服启动写成功能完成。
+未验证：本批客户端启动、实际提示/索引内容、工具选面与半砖、压力表/花提示画面、server数据重载、真实流体能力/饮用、JEI/Jade实用、生产jar运行、完整玩法、独立重载和旧档。普通保存退出不是保存后再次加载。此前41坩埚模具loader修正也尚未再次客户端实跑。整体移植仍未完成，不能把编译或专服启动写成功能完成。
 
 Neo实际平台边界补充：已读取当前moddev neoforge-21.1.243-merged.jar的LevelRenderer/GameRenderer字节码。LevelRenderer在世界实体/图层渲染段先将modelViewMatrix乘入RenderSystem全局model-view stack并apply，末尾才pop；沿用event的局部PoseStack和相机相对平移，未再乘一遍view矩阵。此为代码边界证据，仍不代替工具叠层世界画面验收。

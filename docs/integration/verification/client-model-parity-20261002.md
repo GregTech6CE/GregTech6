@@ -10,7 +10,7 @@
 
 最终 Native 同一短启动检查确认所有 56,036 材料物品与 925 流体物品最终库存模型均非 missing sentinel，实际渲染铁锭、铜板、青铜齿轮、金币、芦苇水流体显示物品和粉碎机到主菜单上的 bootstrap 画廊，截图生成、解码、人工查看及正常停止。无模型 JSON 加载失败、无缺失方块状态/非法动画帧；仍有 Pine/Ebony/White Mahoe 木辞典种类原美术缺口，没有移除注册或用任意替代图伪装完成。
 
-首轮 Forge 隔离目录未预置首次辅助提示选项，超时停在 AccessibilityOnboardingScreen（尽管 Gradle 返回 0）；该首轮不算通过。另外发现 Forge 还注册 40 组不存在的 ore/oreSmall 模板，改为仅加载实际新增 NONE 分类图标模板，世界矿石继续使用专用入口。仅在 build/client-smoke-run/options.txt 关闭首次辅助提示/静音，不触碰用户 .minecraft。重试 Forge 相同生产适配在实际开发客户端进入主菜单，截图解码/人工查看/正常停止。Forge 本批未增加全目录模型/六物品画廊断言。两最终运行加载 Blue Mahoe 世界模型原贴图路径更正，但库存 JSON 有另一旧拼写；Native 成功日志与首轮 Forge 日志仍报告该库存贴图缺失。本批随后修正库存引用并核对原 PNG/两包资源，最终 Forge 重试已无该缺失贴图引用；Native 未再逐件查看这棵树苗，不把该 Native 一项计为运行验证通过。
+首轮 Forge 隔离目录未预置首次辅助提示选项，超时停在 AccessibilityOnboardingScreen（尽管 Gradle 返回 0）；该首轮不算通过。另外发现 Forge 还注册 40 组不存在的 ore/oreSmall 模板，改为仅加载实际新增 NONE 分类图标模板，世界矿石继续使用专用入口。仅在 build/client-smoke-run/options.txt 关闭首次辅助提示/静音，不触碰.minecraft。重试 Forge 相同生产适配在实际开发客户端进入主菜单，截图解码/人工查看/正常停止。Forge 本批未增加全目录模型/六物品画廊断言。两最终运行加载 Blue Mahoe 世界模型原贴图路径更正，但库存 JSON 有另一旧拼写；Native 成功日志与首轮 Forge 日志仍报告该库存贴图缺失。本批随后修正库存引用并核对原 PNG/两包资源，最终 Forge 重试已无该缺失贴图引用；Native 未再逐件查看这棵树苗，不把该 Native 一项计为运行验证通过。
 
 ## 限度
 
@@ -25,4 +25,4 @@
 - gregtech6-1.20.1-forge-0.0.0.jar：38,565,901 字节，SHA-256 `bb2bc63583bb66be7041b8c54377d771dcd2a93ae728dfb57031d3434fb699ba`。
 - gregtech6-neoforge-1.21.1-0.0.0.jar：36,756,963 字节，SHA-256 `306749b43f785e13366773ae0c79691498db85c1075551e6d2b28c06d06d6fe0`。
 
-命令：Neo `-PdirectCoreResources=true -PdirectCoreClasspath=true :compileJava :neoforge:compileJava -PclientSmoke=true -PclientModelSmoke=true -PclientSmokeTimeout=240 -PclientSmokeHeap=4g :neoforge:runClient`；Forge `-PdirectCoreResources=true -PdirectCoreClasspath=true -PclientSmoke=true -PclientSmokeTimeout=240 :runClient`；最终 `-PdirectCoreResources=true :distributionJar :neoforge:jar`。Java17 Gradle launcher，两平台按本机配置工具链；4g/6g 是隔离 smoke 的运行配置，不更改用户游戏设置。名称、0.0.0、gregtech6 与旧 gregtech: 资源/保存命名空间不变；未修改授权、来源目录或推送远端。Goal active。
+命令：Neo `-PdirectCoreResources=true -PdirectCoreClasspath=true :compileJava :neoforge:compileJava -PclientSmoke=true -PclientModelSmoke=true -PclientSmokeTimeout=240 -PclientSmokeHeap=4g :neoforge:runClient`；Forge `-PdirectCoreResources=true -PdirectCoreClasspath=true -PclientSmoke=true -PclientSmokeTimeout=240 :runClient`；最终 `-PdirectCoreResources=true :distributionJar :neoforge:jar`。Java17 Gradle launcher，两平台按本机配置工具链；4g/6g 是隔离 smoke 的运行配置，不更改游戏设置。名称、0.0.0、gregtech6 与旧 gregtech: 资源/保存命名空间不变；未修改授权、来源目录或推送远端。整体移植仍未完成。

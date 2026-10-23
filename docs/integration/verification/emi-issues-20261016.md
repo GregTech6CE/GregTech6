@@ -1,12 +1,12 @@
 # 2026-10-16 / EMI issues #27、#28
 
-用户确认处理的是 [issue #27](https://github.com/SaltNya/GregTech6/issues/27) 和 [issue #28](https://github.com/SaltNya/GregTech6/issues/28)，不是 PR。本批不处理 PR #29–31。#28 按最后澄清限定为材料形态分类：不同材质的锭归锭组，板归板组，杆归杆组；不按铜、铁等物质分组。
+确认处理的是 [issue #27](https://github.com/SaltNya/GregTech6/issues/27) 和 [issue #28](https://github.com/SaltNya/GregTech6/issues/28)，不是 PR。本批不处理 PR #29–31。#28 按最后澄清限定为材料形态分类：不同材质的锭归锭组，板归板组，杆归杆组；不按铜、铁等物质分组。
 
 ## 实现
 
 - 两平台新增原生 `ToolAssemblyEmiRecipe`，复用 JEI 已用的 `ToolAssemblyCatalog`。每个工具类型/头部材料一行，全部合法头部加入 EMI 输入索引，柄的候选沿原材料限制。图案中的加工工具列为催化物；工具装配仅作展示，不启用自动配方树（输出使用代表性柄）。安装 EMI 时不再通过 JEI 桥重复注册这批行，独立 JEI 保留既有注册。
 - `core` 共享资源添加 56 个 Reliable EMI 材料形态组，通过现有 `gregtech:<prefix>` 标签收集不同材质。没有使用 `gregtech:material/<material>` 物质标签。工具、机器、玻璃、木板、半砖、模具等不新增分组。防腐木板虽绑定 plate/WoodTreated，仍显式排除；同时排除原版及 GT 木板标签。
-- 组名直接复用既有中英文 `itemGroup.gregtech.*` 键，无新增翻译或语言改写。生成器 `tools/integration/generate_remi_material_groups.py --check` 核对全部资源和双语键。Reliable EMI 未安装时，普通 EMI 忽略这些资源，物品列表维持既有行为；不增加硬依赖，不写用户配置。
+- 组名直接复用既有中英文 `itemGroup.gregtech.*` 键，无新增翻译或语言改写。生成器 `tools/integration/generate_remi_material_groups.py --check` 核对全部资源和双语键。Reliable EMI 未安装时，普通 EMI 忽略这些资源，物品列表维持既有行为；不增加硬依赖，不写配置。
 - 候选槽复用显式列表 `MachineEmiIngredient`，避免为每个候选集合重新扫描所有物品标签。
 
 ## 有限验证

@@ -14,4 +14,4 @@ Native 边界对应实际 GTEngines ROTATION、FluidTransportRegistries.pipes、
 
 只改两个 Native Java 文件，Core/资源/Forge/三个来源不变。第一组 compile+jar 31秒通过；补技术物品后最终 compile+jar 23秒通过，当前本批编译类和实际成品 jar 字节一致。本批不重复客户端/专服，不加专项夹具。上一批专服通过证明既有 Native 配方基础设施可启动，不能代替本批新生成逻辑的启动/数量/真实制作证据。
 
-待后续集中验证：本批运行时生成/codec解析、实际输入匹配/工具磨损/油瓶余物/镜像和生存链、客户端配方展示、datapack重载、成品jar、独立保存重载/旧档。完整三来源 goal 仍 active。
+待后续集中验证：本批运行时生成/codec解析、实际输入匹配/工具磨损/油瓶余物/镜像和生存链、客户端配方展示、datapack重载、成品jar、独立保存重载/旧档。整体移植仍未完成。

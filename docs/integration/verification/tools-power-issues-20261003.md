@@ -35,7 +35,7 @@
 
 ## 来源与复现
 
-原版源码来自用户指定 `C:\Dev\gregtech6-master\gregtech6-master`，只读参考；逐文件 SHA-256 和材料快照差异见 [来源回执](tools-power-sources-20261003.json)。新增材料快照只包含石化木形态、褐煤焦炭和石油焦的源数据修正，并有八条独立原版固定值断言；没有放弃全目录指纹检查。
+原版源码来自指定 `C:\Dev\gregtech6-master\gregtech6-master`，只读参考；逐文件 SHA-256 和材料快照差异见 [来源回执](tools-power-sources-20261003.json)。新增材料快照只包含石化木形态、褐煤焦炭和石油焦的源数据修正，并有八条独立原版固定值断言；没有放弃全目录指纹检查。
 
 [世界和配方回执](tools-power-gametests-20261003.json) 记录最终日志哈希、断言、配方数量和动力链夹具边界。`work/emi-local.init.gradle` 是本机离线镜像入口，项目依赖仍为官方 Maven；测试目录和本机日志不捆入成品。
 
@@ -60,4 +60,4 @@ EMI 重跑夹具只复用位置与流体身份完全匹配的已有泉方块，�
 | `build/libs/gregtech6-1.20.1-forge-0.0.0.jar` | 38,571,234 | `c493922709bdf004c034a97b0a6f74df29429b46dce9961f52986354a1a2bfc4` |
 | `neoforge/build/libs/gregtech6-neoforge-1.21.1-0.0.0.jar` | 36,784,045 | `3f70afc47f54cebfc57208d0f4757e6e24c1623b4ba6c364d0c9ed13b6d0d255` |
 
-整模组移植、全部机器生存链、成品客户端安装和旧世界升级仍各自需要独立证据。整体 goal 保持进行中，当前工作目录为 `C:\Dev\GregTech6`；旧 goal 中的 `GregTech6-main` 子目录不是当前树。
+整模组移植、全部机器生存链、成品客户端安装和旧世界升级仍各自需要独立证据。整体移植仍在进行，当前工作目录为 `C:\Dev\GregTech6`；旧目标中的 `GregTech6-main` 子目录不是当前树。

@@ -12,7 +12,7 @@
 
 来源为 Gregorius Techneticies / GregTech-6 Team，沿用 LGPL-3.0-or-later 与 NOTICE；没有修改原项目、增加依赖或引入资产。18 个原始文件与当前生产文件 SHA-256 见 [来源回执](autocrafting-source-20261004.json)。代码提交：`651d5a5fade5b73bc9dce3444be2b362225e35ce`；构建先于提交，不声明 JAR 内嵌 Git SHA。
 
-## 本次用户提问：上层基岩
+## 本次问题：上层基岩
 
 对照 `WorldgenOresBedrock:181–212` 和 `WD.removeBedrock:782–801`：首次矿点生成将底层上方第 1–6 层的 muffin 轮廓替换为深板岩/地狱岩，再布矿；若原版未提供深板岩，removeBedrock 使用当地普通石材。它不是替换为空气，也不删除底层或轮廓外基岩。此前 `7bff1d9f` 已将母岩替换接入两版，现代高度相对世界最低层。本批仅复核，没有重新修改该代码；既有区块不会因为新的生成逻辑自动改写。
 
@@ -34,4 +34,4 @@
 
 没有启动 Minecraft 客户端或 GameTest，没有实际 Bath/Scanner/Printer/Autocrafter 生存加工、原生配方注册运行或存档重载证据。普通纸与本模组媒介身份已接入，其他模组的纸/蓝图/无限工具标签需后续对照。
 
-已提供 `AutocraftableCraftingRecipe.isAutocraftableByGT()` 与可选 JSON `gregtech_autocraftable: false` 拒绝路径，但其他导入器仍未完整保留原版 `CR.NO_AUTO` 标记；不能将全局自动合成权限声明为原版一致。蓝图写入中容器工具的 NBT 清理、空白纸附带数据保留及其他外部扫描内容仍待按源头接续。整体移植 goal 保持 active。
+已提供 `AutocraftableCraftingRecipe.isAutocraftableByGT()` 与可选 JSON `gregtech_autocraftable: false` 拒绝路径，但其他导入器仍未完整保留原版 `CR.NO_AUTO` 标记；不能将全局自动合成权限声明为原版一致。蓝图写入中容器工具的 NBT 清理、空白纸附带数据保留及其他外部扫描内容仍待按源头接续。整体移植仍未完成。

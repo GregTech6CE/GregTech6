@@ -1,6 +1,6 @@
 # 电磁铁原版提示、双磁极与材料数量（2026-10-07）
 
-基线 `4d2f91e1`。继续用户要求的全方块原版 tooltip 与精确机器材料记录。本批十种 EU/RF 电磁铁保留方块身份，整体 goal active，仅本地提交，无推送或 PR。
+基线 `4d2f91e1`。继续要求的全方块原版 tooltip 与精确机器材料记录。本批十种 EU/RF 电磁铁保留方块身份，整体移植仍未完成，仅本地提交，无推送或 PR。
 
 ## 实现与来源
 
@@ -12,7 +12,7 @@
 
 保留 `gt.magnet_stopped/mode/overloads` 键，停止与模式成为同一公共状态的别名。无 `gt.mode` 的旧磁铁读取旧磁铁键，避免旧存档始终写false的通用停止键覆盖真实停止状态；新记录读取公共键。只准备原生方法往返检查，尚未验证历史世界或独立重启。
 
-提示接原输入/输出范围、四侧/正背面、MU原单位及颜色、总双极100%效率、RF接收说明、扳手、抗爆及延长器提醒。原来把最小输入写为额定输入和虚构模式工具提示已替代。35选定中文值（25提示键/10名称）全部逐字照用户汉化补丁；原登记创造顺序固定到十个具体身份。延长器文字暂用原闪烁颜色的初始灰色，完整动态闪烁仍是缺口。
+提示接原输入/输出范围、四侧/正背面、MU原单位及颜色、总双极100%效率、RF接收说明、扳手、抗爆及延长器提醒。原来把最小输入写为额定输入和虚构模式工具提示已替代。35选定中文值（25提示键/10名称）全部逐字照汉化补丁；原登记创造顺序固定到十个具体身份。延长器文字暂用原闪烁颜色的初始灰色，完整动态闪烁仍是缺口。
 
 30原版/汉化/许可引用、8个 `_w` 行为比较及18既有原图PNG哈希已检查；80实际原生模型/状态/物品引用核实。每端12通配选择器覆盖24原生状态，十款共240；底层材质tint0，静态与活动覆盖贴图保持。原代码作者 GregTech-6 Team/Gregorius Techneticies，LGPL-3.0-or-later；选择资产CC0证据保留。采用原版1.7.10行为，`_w`仅作对照及缺失原图来源，未改只读来源。详见[来源账本](magnet-converter-source-20261007.json)。
 
@@ -22,8 +22,8 @@
 
 准备每端两项限定场景：实际双极→两个原生磁化机、停止剩余转换、模式耗能、旧键/新键方法往返、RF缓存能力及旋转；十个真实制作、工具损耗、配方同步、存储输入保护、回收与坩埚解析。成品探针新增十实际工厂、精确材料/单次高级段、原提示与240烘焙状态检查。以上本轮只有源码编译，尚未运行。
 
-按用户要求，普通双JAR、当前class/CRC验包、正式Loader自启动与限定游戏场景继续多轮合并。最后已验收包仍 `build/verified/20261006-211017Z-dc39ad68`，不包含热能或本轮磁铁修改。没有安装用户实例或交付新成品。
+按要求，普通双JAR、当前class/CRC验包、正式Loader自启动与限定游戏场景继续多轮合并。最后已验收包仍 `build/verified/20261006-211017Z-dc39ad68`，不包含热能或本轮磁铁修改。没有安装游戏实例或交付新成品。
 
 全方块其余专属提示/材料、原闪烁/采集/火焰/所有者/覆盖通用行、原配置和保存额定参数、默认结构检查、蒸汽轮机完整原变种与200L蒸汽凝水、完整生存/专服/物理悬停/独立重启/历史档仍待续。
 
-Pooled ordinary-JAR and installed-loader acceptance passed at code12010bfa. Both native fixture pairs passed in the six-test pool; ordinary distribution methods/factories/tooltips/baked states verified separately. See [pooled delivery](converter-pooled-delivery-20261007.json) for package hashes, finite scopes, all runtime attempts and remaining boundaries. Goal active; local only.
+Pooled ordinary-JAR and installed-loader acceptance passed at code12010bfa. Both native fixture pairs passed in the six-test pool; ordinary distribution methods/factories/tooltips/baked states verified separately. See [pooled delivery](converter-pooled-delivery-20261007.json) for package hashes, finite scopes, all runtime attempts and remaining boundaries. 整体移植仍未完成; local only.

@@ -13,7 +13,7 @@
 
 ## 依据和许可
 
-沿用已固定的 Stonecutter 0.7.11 / Gradle 8.8，参考官方镜像 `0.7` 提交 `fffcb7151d83bf6e40f3631131143fb08c06f230` 的 `StonecutterBuildImpl`、`StonecutterBuildTasksImpl`、`SCPrepareTask` 了解生成路径和任务依赖。插件源码为 LGPL-3.0，本次没有复制插件实现；迁入的 EMI 代码来自本项目上述基线，原作者／许可不变。用户给出的 Codeberg 地址被网页工具按 robots.txt 拒绝读取，使用前次已保留的官方镜像源码核对，未要求用户补页面。
+沿用已固定的 Stonecutter 0.7.11 / Gradle 8.8，参考官方镜像 `0.7` 提交 `fffcb7151d83bf6e40f3631131143fb08c06f230` 的 `StonecutterBuildImpl`、`StonecutterBuildTasksImpl`、`SCPrepareTask` 了解生成路径和任务依赖。插件源码为 LGPL-3.0，本次没有复制插件实现；迁入的 EMI 代码来自本项目上述基线，原作者／许可不变。指定的 Codeberg 地址被网页工具按 robots.txt 拒绝读取，使用前次已保留的官方镜像源码核对，未要求补页面。
 
 ## 核验与边界
 

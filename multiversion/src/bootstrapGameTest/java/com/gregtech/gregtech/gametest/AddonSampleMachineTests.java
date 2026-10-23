@@ -21,6 +21,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluids;
 //? if >=1.21.1 {
@@ -121,10 +122,12 @@ public final class AddonSampleMachineTests {
     public static void samplePressConsumesEuAndEmitsNugget(GameTestHelper helper) {
         var pos = helper.absolutePos(new BlockPos(2, 0, 2)).atY(250);
         var machine = place(helper, "addon_sample:sample_press", pos);
-        machine.inventory().setStackInSlot(0, new ItemStack(Items.IRON_INGOT));
+        helper.getLevel().setBlockAndUpdate(pos.below(), Blocks.STONE.defaultBlockState());
+        machine.inventory().setStackInSlot(0, new ItemStack(Items.IRON_BLOCK));
         run(helper, machine, 32, 40);
-        helper.assertTrue(machine.inventory().getStackInSlot(0).isEmpty(), "press consumed the ingot");
-        helper.assertTrue(machine.inventory().getStackInSlot(machine.inputSlots()).is(Items.GOLD_NUGGET), "press produced a gold nugget");
+        helper.assertTrue(machine.inventory().getStackInSlot(0).isEmpty(), "press consumed the input");
+        var produced = machine.inventory().getStackInSlot(machine.inputSlots());
+        helper.assertTrue(produced.is(Items.GOLD_NUGGET), "press produced " + produced);
         helper.getLevel().removeBlock(pos, false);
         helper.succeed();
     }
