@@ -20,8 +20,8 @@ Port six EU automatic igniters and four signed-KU automatic hammers with complet
 - Four legacy extenders expose identical basic opposing relay behavior despite names including wireless; they are not claimed to implement wireless range. Full source extender/bridge redstone and FE reentrancy, unloaded targets and filter packed state are unverified. Universal cover shutter applies to item/fluid forwarding as in baseline; broader energy gating remains pending.
 - Native FluidDisplayBinding is a real filter resolver/payload API; actual external fluid display creation/render/subtype and JEI consumption remain unverified.
 - Automatic hammer native anvil/manual processing utility block targets remain unported. Fallback hammer harvest retains baseline no-block-entity/pickaxe gate and vanilla drops, not masson broader crush conversions. Source1 instant fixed-strength overvoltage differs from masson queued tier-strength explosions. No auto-tool gameplay or energy chain has been exercised.
-- Client/rendering, Forge runtime, complete survival chain, independent saved-world restart/old saves and production jars remain pending. Publication authorization is unchanged; full goal stays active.
+- Client/rendering, Forge runtime, complete survival chain, independent saved-world restart/old saves and production jars remain pending. Publication authorization is unchanged; The overall port is still incomplete.
 
-28 actual block variants; final grouped dual compile21s. Ordinary startup recorded separately. Full goal remains active.
+28 actual block variants; final grouped dual compile21s. Ordinary startup recorded separately. The overall port is still incomplete.
 
 Grouped native ordinary dedicated startup PASS4m48s,200 ticks and all dimensions saved; see verification/p3-neoforge-usb-relays-auto-startup.json. Static-copy bypass directCoreResources is now runtime-covered. Optional directCoreClasspath was added afterwards for the next already-justified grouped startup, and remains unverified; combine -PdirectCoreResources=true -PdirectCoreClasspath=true for local runs. Default release/CI still uses the original core project dependency.

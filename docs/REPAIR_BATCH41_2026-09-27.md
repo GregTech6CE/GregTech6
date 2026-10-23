@@ -1,6 +1,6 @@
 # 第四十一批：IDEA 水体 Mixin、物流过滤与物流量子存储器、地牢手册
 
-本批按 `F:\Dev\GregTech6\gregtech6-master\gregtech6-master` 的 GT6 源码核对行为和数据。GTM 未作为代码来源。用户通过 IDEA `runClient` 测试，因此没有构建 jar。
+本批按 `F:\Dev\GregTech6\gregtech6-master\gregtech6-master` 的 GT6 源码核对行为和数据。GTM 未作为代码来源。使用 IDEA `runClient` 测试，因此没有构建 jar。
 
 ## 水面渲染回归
 
@@ -27,4 +27,4 @@
 
 首轮全量 `build/gametest_batch41.log` 的 937 项中有 1 项前缀保留测试假红：箱子直接保存测试传入的可变 `ItemStack`，路由抽空后原测试变量的 `getItem()` 变成 AIR，错误地拿它与成功送达的物品比较。入箱时改用副本后，新世界 `build/gametest_batch43.log` **937/937 通过**。再补普通仓／物流仓的扳手采掘和一项实际采掘测试，新世界 `build/gametest_batch44.log` **938/938 通过**。之后发现书籍生成器之前的 `--check` 形同普通写入；已改成真正只读并且只在内容有变化时更新文件，以免无意义地触发重编译。
 
-最终干净门禁 `build/gametest_batch45.log` 于 2026-09-27 12:35:34 **938/938 项通过**，Gradle `BUILD SUCCESSFUL in 8m 54s`、退出码 0，`compileJava` 和 `processResources` 均为 `UP-TO-DATE`。同一日志中可见 `Registering mixin config: gregtech.mixins.json` 和 `Mixing WaterFluidMixin ... WaterFluid`，证实测试启动链加载了水体 Mixin；IDEA 客户端渲染仍需用户重新启动 `runClient` 后目视检查。本批未构建 jar，未运行客户端视觉验收。
+最终干净门禁 `build/gametest_batch45.log` 于 2026-09-27 12:35:34 **938/938 项通过**，Gradle `BUILD SUCCESSFUL in 8m 54s`、退出码 0，`compileJava` 和 `processResources` 均为 `UP-TO-DATE`。同一日志中可见 `Registering mixin config: gregtech.mixins.json` 和 `Mixing WaterFluidMixin ... WaterFluid`，证实测试启动链加载了水体 Mixin；IDEA 客户端渲染仍需重新启动 `runClient` 后目视检查。本批未构建 jar，未运行客户端视觉验收。

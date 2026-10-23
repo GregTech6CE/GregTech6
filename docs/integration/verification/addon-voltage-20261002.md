@@ -6,7 +6,7 @@
 
 核对原GT6 CS.java:146-157，纠正显示层UV后的GT5/GTCE名称为PUV1..PUV5/XV，并把旧GregTechConstants.V末两项2147483647/Long.MAX_VALUE改成原2147483648/8589934592。旧常量改由同一规范表复制，避免两份规则漂移；HU/KU/RU不是EU电压。
 
-用户直接确认本人是saltnya，并要求沿用另外两份来源许可证，因此本项目代码采用LGPL-3.0-or-later，双版元数据和中英README同步，GNU原文及NOTICE进入两包和SDK。旧Forge MDK文本原文仍在审计记录，原第三方资产/组件和作者署名未重授权。CI增加SDK构建/验包，并移除已失效的saltnya授权未决公开测试包限制；没有推送或创建GitHub Release，远程CI未验证。
+确认本人是saltnya，并要求沿用另外两份来源许可证，因此本项目代码采用LGPL-3.0-or-later，双版元数据和中英README同步，GNU原文及NOTICE进入两包和SDK。旧Forge MDK文本原文仍在审计记录，原第三方资产/组件和作者署名未重授权。CI增加SDK构建/验包，并移除已失效的saltnya授权未决公开测试包限制；没有推送或创建GitHub Release，远程CI未验证。
 
 - neo_prepare：2m，PID 21396，200普通tick，实际退出0、正常保存停止。
 - forge_prepare：2m 20s，PID 82744，200普通tick，实际退出0、正常保存停止。
@@ -26,4 +26,4 @@
 - Original table values/names are checked; this is not all-tiers machine/bridge/overvoltage runtime coverage or universal saved-world migration.
 - Production mod JARs are packaged and checked, while runtime launches use the current development source sets. Installed production-JAR client/server launches, complete source integration and full survival remain pending.
 
-复现工具段：Java17 Gradle及Native已有Java21工具链；隔离flat/offline/loopback目录和获同意EULA副本，`-PdirectCoreResources=true -PdirectCoreClasspath=true -PtoolAssemblySmoke=true -PserverSmokePhase=prepare|verify -PserverSmokeId=<同UUID> -PserverDirectory=build/<隔离目录> -PserverSmokeX=0 -PserverSmokeY=240 -PserverSmokeZ=0 :runServer`或`:neoforge:runServer`。正式打包不加directCoreClasspath。完整goal仍active。
+复现工具段：Java17 Gradle及Native已有Java21工具链；隔离flat/offline/loopback目录和获同意EULA副本，`-PdirectCoreResources=true -PdirectCoreClasspath=true -PtoolAssemblySmoke=true -PserverSmokePhase=prepare|verify -PserverSmokeId=<同UUID> -PserverDirectory=build/<隔离目录> -PserverSmokeX=0 -PserverSmokeY=240 -PserverSmokeZ=0 :runServer`或`:neoforge:runServer`。正式打包不加directCoreClasspath。整体移植仍未完成。

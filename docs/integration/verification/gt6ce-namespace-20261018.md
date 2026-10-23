@@ -4,7 +4,7 @@
 
 ## 范围
 
-用户要求将内容与资源 ID 也改为 `gt6ce:`，并将物品提示中的模组名称显示为 `GregTech 6 Community Edition`。本批在 `experiment/stonecutter` 分支执行以下迁移：
+要求将内容与资源 ID 也改为 `gt6ce:`，并将物品提示中的模组名称显示为 `GregTech 6 Community Edition`。本批在 `experiment/stonecutter` 分支执行以下迁移：
 
 - 物品、方块、流体、配方、标签、模型、声音、网络等自有身份统一使用 `gt6ce:`；加载器 ID 仍为 `gt6ce`。
 - 共用与版本专有资源的 9 个 `assets/gregtech`／`data/gregtech` 根目录改为 `assets/gt6ce`／`data/gt6ce`，资源引用及已有结构数据同步。
@@ -12,7 +12,7 @@
 - 材料拥有者、原生物品归属映射和 EMI 通过新命名空间找到同一模组容器，显示完整产品名称。
 - 活动生成器、自检、验包及当前使用指南同步；验包明确拒绝旧资源根目录和资源 JSON 中的 `gregtech:` 引用，包括转义字符和 `item:gregtech:` 嵌套标识。
 
-Java 包 `com.gregtech.gregtech`、原作者路径与 URL、`META-INF/gregtech6` 来源／许可记录、Mixin 文件名、测试内部协议和冻结迁移清单保持独立身份。此前用户要求不保留旧重复身份，本批也不添加 `gregtech:` 到 `gt6ce:` 的存档或注册兼容映射；引用旧 ID 的世界与脚本需要另行迁移。
+Java 包 `com.gregtech.gregtech`、原作者路径与 URL、`META-INF/gregtech6` 来源／许可记录、Mixin 文件名、测试内部协议和冻结迁移清单保持独立身份。此前要求不保留旧重复身份，本批也不添加 `gregtech:` 到 `gt6ce:` 的存档或注册兼容映射；引用旧 ID 的世界与脚本需要另行迁移。
 
 ## 静态与核心验证
 

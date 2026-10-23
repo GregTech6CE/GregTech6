@@ -1,6 +1,6 @@
 # 2026-10-02：恢复后玩法与双平台熔炼修复
 
-当前目录 `F:\Dev\GregtTech6New\GregTech6`。起点提交 `499150156795d2ea97c6730bcd247007e68ee433`。遵循用户的速度优先与双版本对齐要求，复用既有青铜流程和普通服务器检查；没有新增独立子系统测试工程。名称、加载 ID、版本号和第三方许可未更改。
+当前目录 `F:\Dev\GregtTech6New\GregTech6`。起点提交 `499150156795d2ea97c6730bcd247007e68ee433`。遵循速度优先与双版本对齐要求，复用既有青铜流程和普通服务器检查；没有新增独立子系统测试工程。名称、加载 ID、版本号和第三方许可未更改。
 
 ## 修复及选择
 
@@ -44,7 +44,7 @@
 ./gradlew.bat --console=plain -PdirectCoreResources=true -PdirectCoreClasspath=true -PserverSmokePhase=verify -PserverSmokeId=eb3764a6-ab5c-4275-a30b-c2bb1aa311ce -PsmelteryWorldSmoke=true -PserverDirectory=build/world-restart-20261002 -PserverSmokeX=0 -PserverSmokeY=240 -PserverSmokeZ=0 :neoforge:runServer
 ```
 
-两个 direct 选项仅用于本地加速，正常双版 CI 不依赖它们。服务器隔离目录配置只监听本机；未修改用户 Minecraft 配置或写入生产 EULA 接受文件。
+两个 direct 选项仅用于本地加速，正常双版 CI 不依赖它们。服务器隔离目录配置只监听本机；未修改 Minecraft 配置或写入生产 EULA 接受文件。
 
 ## 范围和后续
 
@@ -54,4 +54,4 @@
 
 龙头负高度、交叉流道异常恢复、缺失输出材料、拆除余料的全材料/分数单位覆盖仍没有对应游戏运行实证。小于最小可用注册形态的任意旧 NBT 余数，以及没有可用小份形态的材料，拆除仍存在恢复缺口；不声明所有材料/异常存档完全守恒。现有目标凝固材料 identity fallback、龙头自动模式的交互入口、39 材质设备生存取得范围继续列为缺口。
 
-Forge 此批编译通过，未重跑对应玩法、客户端与存档重启；两版成品 JAR 安装启动、当前改动的世界内视觉、全生存链和旧存档仍待验。当前只是一个完成的整合批次，完整三源 goal 保持 active。
+Forge 此批编译通过，未重跑对应玩法、客户端与存档重启；两版成品 JAR 安装启动、当前改动的世界内视觉、全生存链和旧存档仍待验。当前只是一个完成的整合批次，整体移植仍未完成。

@@ -7,4 +7,4 @@ Use source1 actual7 non-spreading plant-soil grass variants and3 ordinary aged v
 - Spring indicator helper now resolves blocks but source worldgen still never calls it.
 - These10 registrations/resources are compile-covered only, not covered by preceding server startup; actual drops/soil/client/reload unverified.
 
-Grouped dual compilation passed 19s. D010 no extra startup/fixture. Full goal stays active.
+Grouped dual compilation passed 19s. D010 no extra startup/fixture. The overall port is still incomplete.

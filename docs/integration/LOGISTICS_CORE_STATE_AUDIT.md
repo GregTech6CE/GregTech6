@@ -59,7 +59,7 @@
 
 比较只先从旧源删除这一条精确重复import，再在列明方法区域归一局部绑定，其余完整执行词法及字面量位置相同：core490／129，BE Forge3094／Neo3135，Block1112／1287，路由边界394／394。不是全局替换core／controller；四处说明分别限定软上限计划、无电使用量复位、扫描会验证／绑定及需求值单位，许可证、其它注释和Stonecutter指令保持。
 
-原MultiTileEntityLogisticsCore头载GregTech-6 Team2025、Gregorius Techneticies、LGPL-3.0-or-later，其余来源各留头／摘要；未将原生／原作者方法复制进生产。用户CompoundMaterials／WoodMaterials摘要保持，未Java编译／目标初始化、Gradle、测试、游戏、实际路由／UI／覆盖板、pack生成、磁盘重启、构建或推送。正式254条包含已修复／部分修复、扩展合同和保留政策，不是254个待修故障；全面目标保持进行。
+原MultiTileEntityLogisticsCore头载GregTech-6 Team2025、Gregorius Techneticies、LGPL-3.0-or-later，其余来源各留头／摘要；未将原生／原作者方法复制进生产。CompoundMaterials／WoodMaterials摘要保持，未Java编译／目标初始化、Gradle、测试、游戏、实际路由／UI／覆盖板、pack生成、磁盘重启、构建或推送。正式254条包含已修复／部分修复、扩展合同和保留政策，不是254个待修故障；全面目标保持进行。
 
 第七十三批继续[网络与生命周期](LOGISTICS_NETWORK_AUDIT.md)：新增258–260的撬下样本、万能代理和回调异常，区块保护／平手／同步链也已补证。实际世界调度、外部节点、重启和客户端仍未整体接受；此前待续项不作为永久未核结论。
 

@@ -36,7 +36,7 @@ VanillaProcessingRecipes与AlloyRecipeLoader合计954→334维护行，减少620
 
 [回执](verification/native-body-sharing-audit-20261021.json)保存1041份观察源码身份、2082份视图摘要、四个候选的实际方法／入口和差异上下文、排除理由、工具身份及两文件去重前后完整执行证明。root重新核对全部基线视图和四份最终视图，保留原观察hash，不把重构后的文件冒充扫描前快照；Git旧视图CRLF与通用换行视图的摘要口径分开。
 
-没有新增原版／第三方代码导入；已有来源注释和署名保留。用户WoodMaterials编辑及CompoundMaterials列对齐未纳入本批改动。未运行生成器、Gradle、Java编译、测试、游戏、存档重启、构建或推送；源码执行不变不代表已完成配方玩法验收。
+没有新增原版／第三方代码导入；已有来源注释和署名保留。WoodMaterials编辑及CompoundMaterials列对齐未纳入本批改动。未运行生成器、Gradle、Java编译、测试、游戏、存档重启、构建或推送；源码执行不变不代表已完成配方玩法验收。
 
 继续独立处理ChemicalRecipeLoader、保留加载顺序的GeneratedRecipeResolver，再审方法级职责和版本边界。全面原版核查仍继续光莲、地表堆和其它未核系统，不能把四个候选处理完当全部架构完成。
 

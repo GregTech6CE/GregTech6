@@ -2,7 +2,7 @@
 
 第七十五批，2026-10-21，基线 `64a3007c3`。覆盖原17001–17067范围内实际25种主阀的目录字面量、普通流体访问、结构检查和最终物品保存链。新增ALIGN-262–263，扩036／232／233；26份原版、46份当前输入、68个平台视图及本机两个原生工件8个entry／4份只读javap视图见[回执](verification/multiblock-tank-audit-20261021.json)。输入留痕不代表整文件、整个储罐系统或游戏运行验收。
 
-原只读根为 `C:/Dev/gregtech6-master/gregtech6-master/src/main/java`，作者／LGPL来源头随回执保存，原目录未动。CompoundMaterials和用户未提交的WoodMaterials按本批起点摘要保持。
+原只读根为 `C:/Dev/gregtech6-master/gregtech6-master/src/main/java`，作者／LGPL来源头随回执保存，原目录未动。CompoundMaterials和未提交的WoodMaterials按本批起点摘要保持。
 
 ## 25种主阀的真实注册与字面量
 
@@ -63,4 +63,4 @@ GTBlockEntities的MULTIBLOCK_TANK构造支持数组先列17002、17042，后拼�
 
 完整双版执行流逐项比较：BE2865／2759，Block1218／1586，Spec313／313，Hollow206／206，Data177／190。比较仅归一明确的局部绑定，不归一成员访问；例如TankValveParameters.all()必须原样保留。另比较未归一的字符串／数值及其位置，防止局部改名掩盖常量或真实方法名变化。
 
-未Java编译／目标初始化、Gradle、测试、游戏、构建或推送。只读源码和原生工件证据不替代实际世界与客户端验收；全部原版差异核查和可读性目标保持active。
+未Java编译／目标初始化、Gradle、测试、游戏、构建或推送。只读源码和原生工件证据不替代实际世界与客户端验收；全部原版差异核查和可读性目标仍未完成。

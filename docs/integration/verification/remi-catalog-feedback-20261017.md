@@ -10,7 +10,7 @@
 
 粘土模具组包含未烧制的龙头、坩埚、浇铸道、盆、杯等器具，标题改为“未烧制的粘土模具与器具”。已烧制陶瓷模具保持原分类。原 MultiItemFood 中的五种粘土球和未烧制粘土蜂巢从宽泛食物组排除，否则其 120 优先级会覆盖粘土组。
 
-所有分组采用形态／用途标题，移除代表物品的材质、电压、颜色、蜂种和口味，保留导线尺寸、普通／致密、普通／强化、燃料种类等分界。使用 300 个独立 `emi.group.gregtech.*` 标题；其余材料形态沿用已有通用分类键。不可由一个代表物品表达的组合组使用用户明确要求的界面词汇，记录在 `remi_title_labels.py`，不冒充原版物品汉化。
+所有分组采用形态／用途标题，移除代表物品的材质、电压、颜色、蜂种和口味，保留导线尺寸、普通／致密、普通／强化、燃料种类等分界。使用 300 个独立 `emi.group.gregtech.*` 标题；其余材料形态沿用已有通用分类键。不可由一个代表物品表达的组合组使用明确要求的界面词汇，记录在 `remi_title_labels.py`，不冒充原版物品汉化。
 
 既有非分组语言项逐项保持原值：英文 15521 项、中文 141372 项。原补丁原文及 12836 项原英文声明的自检规则保留。
 
@@ -46,8 +46,8 @@
 
 813 个当前共享类、两平台元信息、完整 ZIP CRC、无重复／测试类泄漏验包通过；435 份分组与双语文件逐字节等于最终源码。最终成品 `build/verified/20261017-133216Z-a256755a/`，见[交付回执](remi-catalog-delivery-20261017.json)。
 
-Forge 本批未启动游戏；不将 NeoForge 实机结果替代 Forge 实机、JEI 隐藏、旧存档重启及所有多方块混用验收。测试世界是独立临时世界，未修改用户整合包。
+Forge 本批未启动游戏；不将 NeoForge 实机结果替代 Forge 实机、JEI 隐藏、旧存档重启及所有多方块混用验收。测试世界是独立临时世界，未修改整合包。
 
 ## 来源
 
-原作者 GregTech-6 Team / Gregorius Techneticies，LGPL-3.0-or-later，沿用项目既有许可证及来源记录。对照用户保留的 `C:/Dev/gregtech6-master/gregtech6-master/src/main/java/`：`WorldgenCenterBiomes.java`（三种 Sands）、`BlockBaleGrass.java`（调度与环境）、`Loader_MultiTileEntities.java`（部件编号与两种 ZPM 放能器）、`MultiItemRandomTools.java`（十种钥匙）。逐文件 SHA-256 及静态核验见本批静态回执；没有修改参考源码。
+原作者 GregTech-6 Team / Gregorius Techneticies，LGPL-3.0-or-later，沿用项目既有许可证及来源记录。对照保留的 `C:/Dev/gregtech6-master/gregtech6-master/src/main/java/`：`WorldgenCenterBiomes.java`（三种 Sands）、`BlockBaleGrass.java`（调度与环境）、`Loader_MultiTileEntities.java`（部件编号与两种 ZPM 放能器）、`MultiItemRandomTools.java`（十种钥匙）。逐文件 SHA-256 及静态核验见本批静态回执；没有修改参考源码。

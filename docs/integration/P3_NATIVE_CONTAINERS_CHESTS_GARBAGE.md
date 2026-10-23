@@ -19,6 +19,6 @@ Port complete2 Ender garbage blocks:9-slot/redstone-gated insert-only buffer/100
 - Native loot rows can remain unresolved where optional/source plain items are not yet registered. A compiled resolver/catalog does not prove all tables populated. Dictionary and book rendering/crafting pages remain unverified.
 - Source garbage discards oldest distinct piles after256 entries, caps fluid amounts to int, and stores item counts as long without overflow protection. Recovery menu validity/partial destination insertion/reentrant inventory hooks and actual SavedData restart have not been verified.
 - Only existing original assets are moved; complete per-variant item/model availability is not claimed. Forge and Neo loader files are separate; resource changes were not rendered or launched.
-- Forge runtime, real core survival chain, independent world restart/old-save migration and production jar/client acceptance remain pending. Optional directCoreResources speed path remains awaiting next grouped startup. Full goal remains active.
+- Forge runtime, real core survival chain, independent world restart/old-save migration and production jar/client acceptance remain pending. Optional directCoreResources speed path remains awaiting next grouped startup. The overall port is still incomplete.
 
-202 real block variants, grouped dual compile32s. No new fixtures/startup. Full goal stays active.
+202 real block variants, grouped dual compile32s. No new fixtures/startup. The overall port is still incomplete.

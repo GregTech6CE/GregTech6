@@ -16,7 +16,7 @@
 - 用例覆盖太阳能板无含水属性、水桶拒绝、六面完整宿主判定、两像素板厚，及 #19–24 已有工具、拆装、物流、闸板、滤网、排水等代表路径；安装盖板后的细管仍按非完整宿主渲染。
 - 四份太阳能板资源无含水变体，八张贴图逐字节匹配来源哈希。
 
-日志保留在 `work/cover-solar-20261011.log` 和 `work/cover-solar-forge-retry-20261011.log`。没有运行全量 GameTest。客户端六面视觉、完整生存链、用户旧存档及独立存档重启未验收；GameTest 不是客户端视觉验收。
+日志保留在 `work/cover-solar-20261011.log` 和 `work/cover-solar-forge-retry-20261011.log`。没有运行全量 GameTest。客户端六面视觉、完整生存链、旧存档及独立存档重启未验收；GameTest 不是客户端视觉验收。
 
 ## GitHub issue 范围
 

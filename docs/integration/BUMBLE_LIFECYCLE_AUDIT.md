@@ -23,7 +23,7 @@
 
 生命周期对应：
 
-1. `WorldgenHives.java:195–203` 取环境生成基因，填蜂脾、公主、雄蜂。当前 `worldgen/GTBumbleHivesFeature.java:291–305,318–334` 同样把真实环境基因给三组物品，蜂脾数量 `(work+999)/1000` 对应原版向上取整。当前生成的是 `bumble_hive_<color>` 固定方块 ID，遵循用户扁平化要求。`FixedBumbleHiveBlock.java:17–18` 不注册颜色状态；旧 `COLOR` 属性和 `migrateLegacyVariant` 是兼容分支，不是当前新巢身份。
+1. `WorldgenHives.java:195–203` 取环境生成基因，填蜂脾、公主、雄蜂。当前 `worldgen/GTBumbleHivesFeature.java:291–305,318–334` 同样把真实环境基因给三组物品，蜂脾数量 `(work+999)/1000` 对应原版向上取整。当前生成的是 `bumble_hive_<color>` 固定方块 ID，遵循扁平化要求。`FixedBumbleHiveBlock.java:17–18` 不注册颜色状态；旧 `COLOR` 属性和 `migrateLegacyVariant` 是兼容分支，不是当前新巢身份。
 2. 自然巢是生成时填满的九格静态容器。原 `MultiTileEntityBumbleHive` 没有养殖 tick，当前固定自然巢也没有生产 tick，不能据此报“自然巢不会繁殖”。原 `:93–99` 禁止自动化、只在玩家采集时释放库存；当前 `BumbleHiveBlock.java:90–92` 在玩家破坏时释放/清空，BE `:121–124` 的 Forge handler 禁用，Neo 未发现给自然巢注册 item capability。两版巢的方块 loot table 都是空 pools，不额外再生成自身。非玩家破坏未原生复现。
 3. 养蜂箱先读温度、湿度、天空环境。原普通/高级 `:95–112` 和当前 BE `:250–290` 首 tick / 每 1200 tick 更新，天空标志均一旦 true 后不主动回 false。环境影响见下方边界，不把刻意保留的天空锁存判成新 bug。
 4. 普通箱 36 格、高级箱 20 格，以及 comb、royal、drone、dead 分组已由 `core/.../BumbliarySlotLayouts.java` 提供。高级格 11 同时出现在蜂脾/备用雄蜂列表，是原版 `SLOTS_COMBS`/`SLOTS_DRONE` 原样情况，不应擅自认定重复槽位错误。

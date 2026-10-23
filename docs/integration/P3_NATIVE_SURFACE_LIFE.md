@@ -12,6 +12,6 @@ Use source1 complete8-berry table/growth/harvest/packing and exact9 diggable ide
 - Original source log-shape placement can overwrite neighboring blocks; generated-source chunks and compatibility still unverified.
 - Dedicated-server startup for these two batches deferred to one grouped startup; Forge runtime, full survival, independent reload, old saves and fresh jars pending.
 
-Grouped core/Neo/Forge compile passed20s after native ResourceLocation import repaired; no new fixture/individual startup. Source trees unchanged; full goal active.
+Grouped core/Neo/Forge compile passed20s after native ResourceLocation import repaired; no new fixture/individual startup. Source trees unchanged; The overall port is still incomplete.
 
 Grouped ordinary Neo startup passed1m59s after core archive ZIP64 entry-limit repair.960 bee display rows,80 crop processing rows,2 bumble crafting rows and6421total crafting recipes loaded; DedicatedServer200ticks normally saved/stopped. Receipt:verification/p3-neoforge-bumble-surface-terrain-startup.json. No retry for nonblocking Mojang key fetch timeout. Actual gameplay/client terrain generation/Forge/restart/old saves/new jars remain unverified.

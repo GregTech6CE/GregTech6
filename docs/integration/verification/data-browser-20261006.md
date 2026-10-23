@@ -15,8 +15,8 @@ Forge JEI/EMI、Neo JEI/EMI 四个开发客户端组合各打开扫描、打印�
 | Forge1.20.1 | 377d2c0371f7bbad07e47b40fec6125e1caeecd34667ecce9c9254713647b80c |
 | NeoForge1.21.1 | 13b8ff2c6573ab0f36f549c45cef84ec42491755b6c79bc3cba27eed61e4692b |
 
-Java25正式Forge47.4.26/Neo21.1.252隔离主菜单自启动57.52s/65.98s、182/181帧、退出0。两包四USB文件身份运行断言通过；截图仍是原建材/木板主菜单预览，不当作成品世界配方浏览证据。用户安装文件未改，启动后SHA/CRC相同。5原版来源、2比较参考及2语言文件未改。
+Java25正式Forge47.4.26/Neo21.1.252隔离主菜单自启动57.52s/65.98s、182/181帧、退出0。两包四USB文件身份运行断言通过；截图仍是原建材/木板主菜单预览，不当作成品世界配方浏览证据。安装文件未改，启动后SHA/CRC相同。5原版来源、2比较参考及2语言文件未改。
 
 复现页面检查：JDK21、offline Gradle8.8，`-I work/emi-local.init.gradle -PdirectCoreClasspath=true -PdirectCoreResources=true -PclientCreateWorldSmoke=true -PclientSmoke=false -PclientSmokeTimeout=600 -PclientSmokeHeap=4g -PrecipePresentationRuntimeOnly=true -PmaterialDataBrowserRuntimeOnly=true :runClient`；Neo换成`:neoforge:runClient`；两版EMI组合加`-PemiSmoke=true`。普通构建不带directCore参数。每个场景等待终态，禁止重叠Gradle。
 
-玩家页面开发环境、成品主菜单、真实机器/生存、独立存档重启分别记证。后两项、旧档、HDD/线缆/端口和非标准介质的全部显示、EMI独立运行及真实外部模组仍未验收。整个goal active；本批本地提交，未推送，PR暂不处理。
+玩家页面开发环境、成品主菜单、真实机器/生存、独立存档重启分别记证。后两项、旧档、HDD/线缆/端口和非标准介质的全部显示、EMI独立运行及真实外部模组仍未验收。整体移植仍未完成；本批本地提交，未推送，PR暂不处理。

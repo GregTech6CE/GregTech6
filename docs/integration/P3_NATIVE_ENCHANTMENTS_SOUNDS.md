@@ -8,4 +8,4 @@ Source WEAPON是SwordItem，DIGGER是DiggerItem；Native采用minecraft:swords�
 
 GTSounds用现有FluidTransportRegistries.SOUNDS/WRENCH别名，只新增screwdriver/beep；mod构造在同一deferred register挂bus前bootstrap，避免重复wrench身份/声音注册。已有core sounds.json和三ogg原资源不变，不伪造音频。本批2 Java+8 Native数据资源，Core/Forge/三来源未改。
 
-集中Native compile+jar/Forge compile1分14秒通过。三批之后一次已有Neo专服短启动2分9秒通过，200ticks正常保存停止；日志观察前批sensor20全部生成/0缺失、桥接前RecipeManager34379，无配方/动态registry/tag加载错误。只是当前和前两批注册/数据加载及短运行证据，未独立枚举五个附魔holder；不证明实际附魔、音效播放、工具/拆装/组件放回/仓储分量余物。无新夹具或客户端重复启动。成品jar运行、reload、完整玩法、独立世界重载和旧档、剩余两版本对齐及完整三源goal继续active。
+集中Native compile+jar/Forge compile1分14秒通过。三批之后一次已有Neo专服短启动2分9秒通过，200ticks正常保存停止；日志观察前批sensor20全部生成/0缺失、桥接前RecipeManager34379，无配方/动态registry/tag加载错误。只是当前和前两批注册/数据加载及短运行证据，未独立枚举五个附魔holder；不证明实际附魔、音效播放、工具/拆装/组件放回/仓储分量余物。无新夹具或客户端重复启动。成品jar运行、reload、完整玩法、独立世界重载和旧档、剩余两版本对齐及完整三源整体核对继续。

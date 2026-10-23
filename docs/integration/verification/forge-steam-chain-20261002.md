@@ -19,4 +19,4 @@ Forge 1.20.1 的致密青铜燃烧箱→强化青铜锅炉→中型钢蒸汽管�
 - Current local Forge world; no original GT6, other-source or cross-Minecraft save import. After reload normal machines continue changing state.
 - No current Forge client powered-world or installed-JAR launch; full integration remains active. Existing Neo steam evidence retains its earlier snapshot/sprint scope.
 
-复现：Java17 Gradle，显式同UUID和新的flat/offline/loopback隔离目录，既有获同意EULA副本。`-PdirectCoreResources=true -PdirectCoreClasspath=true -PsteamChainSmoke=true -PserverSmokePhase=prepare|verify -PserverSmokeId=<同UUID> -PserverDirectory=build/<新隔离目录> -PserverSmokeX=0 -PserverSmokeY=240 -PserverSmokeZ=0 :runServer`。prepare最多12000普通tick/660s，实际产物出箱后且至少200tick即停；verify固定200tick。第三方许可未改，完整goal active。
+复现：Java17 Gradle，显式同UUID和新的flat/offline/loopback隔离目录，既有获同意EULA副本。`-PdirectCoreResources=true -PdirectCoreClasspath=true -PsteamChainSmoke=true -PserverSmokePhase=prepare|verify -PserverSmokeId=<同UUID> -PserverDirectory=build/<新隔离目录> -PserverSmokeX=0 -PserverSmokeY=240 -PserverSmokeZ=0 :runServer`。prepare最多12000普通tick/660s，实际产物出箱后且至少200tick即停；verify固定200tick。第三方许可未改，整体移植仍未完成。

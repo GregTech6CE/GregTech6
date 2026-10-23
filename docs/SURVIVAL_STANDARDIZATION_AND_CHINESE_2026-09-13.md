@@ -2,9 +2,9 @@
 
 ## 本轮完成
 
-- 红色合金线：用户已确认之前看错，继续保持所提供 GT6 源码的衰减行为，本轮没有改信号系统。
+- 红色合金线：已确认之前看错，继续保持所提供 GT6 源码的衰减行为，本轮没有改信号系统。
 - 输送机模块 11 个注册 ID 从 compact__electric_conveyor_* 改为 compact_electric_conveyor_*。模型与现有制作配方同步更新；MissingMappingsEvent 对旧存档 ID 重映射，GTTechnological.get 兼容旧代码查询。保留旧模型资源作兼容；没有注册第二套重复物品。第三方数据包若硬编码旧 ID，仍应更新自己的 JSON。
-- 标准中文：sync_standard_chinese.py 读取用户 GregTech.lang，通过原版 MultiItem 数字 ID、原版注册英文名的唯一对应和明确的多方块 ID 映射导入。当前 1,090 条名称有直接来源，其中纠正 1,052 条旧译名。不是用英文单词表重新猜译。
+- 标准中文：sync_standard_chinese.py 读取GregTech.lang，通过原版 MultiItem 数字 ID、原版注册英文名的唯一对应和明确的多方块 ID 映射导入。当前 1,090 条名称有直接来源，其中纠正 1,052 条旧译名。不是用英文单词表重新猜译。
 - 输送机的标准名称为“输送机模块”，筛台为“筛选台”等。已有移植版 XV 额外等级并不存在于原版十级注册循环，因此沿用标准家族名称只替换等级后缀，在 standard-chinese-derived.json 单独注明，没有伪装成原文件原句。
 - import_gt_lang.py、generate_tech_lang.py、complete_registered_lang.py、transpile_gt6_multiitems.py 在生成结束后执行标准中文校准，防止重新生成时覆盖标准名。本轮没有重跑具有资源清理操作的整套移植生成器。
 - 新增 184 条 GT 木材与下界木加工记录（含冷却液变体）：八种现有 GT 树种的原木锯切、梁锯切、四种水去皮和木板车削；绯红/诡异菌柄及菌核的普通/去皮锯切。产物为对应树种木板、梁及粉末，下界木不凭空添加木炭燃料路线。

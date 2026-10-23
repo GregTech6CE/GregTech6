@@ -28,7 +28,7 @@ Forge 的 FluidPipeDefinitions → GTFluidPipes.register 和 Neo 的 FluidTransp
 
 16 组原版材料关闭接触伤害：Ironwood、Aluminium、Invar、Efrine、Netherite、GaiaSpirit、Draconium、DraconiumAwakened、Infinity、Adamantium、BedrockHSLAAlloy、Thaumium、Manasteel、VoidMetal、Terrasteel、Carbon，共 112 种规格。
 
-当前 FluidPipeMat 与 PipeSpec 都没有 contactDamage；FluidPipeBlock.entityInside 对所有管道调用 applyContactTemperatureDamage，仅先排除客户端和旁观者。因而这些原版本应免接触伤害的管道，在温度及实体条件满足伤害函数时也会伤害。不是说常温触碰一定受伤，也不是说所有防护服失效。旁观者豁免符合用户此前要求，本轮不撤销。
+当前 FluidPipeMat 与 PipeSpec 都没有 contactDamage；FluidPipeBlock.entityInside 对所有管道调用 applyContactTemperatureDamage，仅先排除客户端和旁观者。因而这些原版本应免接触伤害的管道，在温度及实体条件满足伤害函数时也会伤害。不是说常温触碰一定受伤，也不是说所有防护服失效。旁观者豁免符合此前要求，本轮不撤销。
 
 ## ALIGN-084：管道方块硬度与橡胶的非阻挡属性丢失
 

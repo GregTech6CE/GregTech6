@@ -1,14 +1,14 @@
 # 三批机器提示、含材料数量及普通成品集中验收
 
-2026-10-07。普通生产源码 c0b870146，包含3434af735普通机器、08a076ab3高级控制器、68016a9bc大型能源核心及本次两个实际安装修复；整体goal保持active。
+2026-10-07。普通生产源码 c0b870146，包含3434af735普通机器、08a076ab3高级控制器、68016a9bc大型能源核心及本次两个实际安装修复；整体移植仍未完成。
 
 ## 实际修复与来源
 
-第一次普通构建成功，但实际安装Forge的物品提示调用抛出`IllegalArgumentException: Source energy:MU`。共享单位映射漏了原偏振器20221–20225、磁选机20301–20305使用的磁能。6146c57c1增加`gt.td.short.energy.magnetic`映射和双原生深灰色；现有中英文MU资源保持，中文逐字复用用户补丁。新增一条固定来源断言，两端原247物品检查补十个磁能机器的单位/语言/原TD深灰色检查。
+第一次普通构建成功，但实际安装Forge的物品提示调用抛出`IllegalArgumentException: Source energy:MU`。共享单位映射漏了原偏振器20221–20225、磁选机20301–20305使用的磁能。6146c57c1增加`gt.td.short.energy.magnetic`映射和双原生深灰色；现有中英文MU资源保持，中文逐字复用补丁。新增一条固定来源断言，两端原247物品检查补十个磁能机器的单位/语言/原TD深灰色检查。
 
 第二次安装Forge已通过普通机器检查，随后发现聚变反应堆没有结构和配方说明：`MachineBlockRegistration`注册的是普通`BlockItem`，Forge聚变方块没有`appendHoverText`，因此机器专属提示路径未执行。c0b870146令方块调用已有原高级控制器提示模块，保留原去重规则。Neo使用已接线的BasicMachine物品注册路径，本处无另造Neo块或修改能源执行器。聚变构造参数/实体保存/tick、世界夹具均未修改，不因此重复世界运行。
 
-原作者GregTech-6 Team/Gregorius Techneticies、LGPL-3.0-or-later保留。原TD/BasicMachine/登记文件及61当前源码SHA、用户汉化文件SHA见[交付回执](tooltip-pooled-delivery-20261007.json)。三前批来源回执保留其历史提交的哈希；嵌套current路径不假装等于当前代码。
+原作者GregTech-6 Team/Gregorius Techneticies、LGPL-3.0-or-later保留。原TD/BasicMachine/登记文件及61当前源码SHA、汉化文件SHA见[交付回执](tooltip-pooled-delivery-20261007.json)。三前批来源回执保留其历史提交的哈希；嵌套current路径不假装等于当前代码。
 
 ## 分阶段验收
 

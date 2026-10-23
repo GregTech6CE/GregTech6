@@ -42,6 +42,6 @@
 
 展开FilterBlockEntity保存／读取、模板循环和能力谓词，i→templateSlot，load局部data／stack→entryData／templateStack；注释明确主面绕过选择。FilterBlock展开两版交互、工具、掉落和Neo包装，b／ctx限定方法改builder／context。FilterMenu展开构造／幽灵槽操作，col改column；FilterScreen展开布局／两版render，partial／button改partialTick／clickedButton。成员、调用、数值、注册及玩法保持。
 
-四源八完整执行流1355／1399、1242／1536、820／820、454／449在限定局部命名归一后保持；原始字面量位置、唯一说明纠正、其它注释／Stonecutter指令及用户CompoundMaterials／WoodMaterials摘要另核。24原／31当前源码、42共享平台视图归档。
+四源八完整执行流1355／1399、1242／1536、820／820、454／449在限定局部命名归一后保持；原始字面量位置、唯一说明纠正、其它注释／Stonecutter指令及CompoundMaterials／WoodMaterials摘要另核。24原／31当前源码、42共享平台视图归档。
 
-未Java编译／目标初始化、Gradle、测试、游戏、模板实际输入、画面、真实搬运／掉落／重启、构建或推送。工具费用／放大镜、材料流体与多前缀、所有次面／旋转、其它宿主和全面项目队列继续，goal保持active。
+未Java编译／目标初始化、Gradle、测试、游戏、模板实际输入、画面、真实搬运／掉落／重启、构建或推送。工具费用／放大镜、材料流体与多前缀、所有次面／旋转、其它宿主和全面项目队列继续，整体移植仍未完成。

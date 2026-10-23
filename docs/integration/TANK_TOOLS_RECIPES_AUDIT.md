@@ -2,7 +2,7 @@
 
 第七十七批，2026-10-21，基线`18ee675d1`，承接[主阀／保存](MULTIBLOCK_TANK_AUDIT.md)与[危害／输出](TANK_HAZARDS_AUDIT.md)。新增ALIGN-266钨主阀制作未保留ANY.W、267壁板温度计被坩埚分支截获，扩126／232／251／262。22份原版、52份当前输入、64个平台视图、本机两个原生工件9个entry／7份只读javap，以及25条制作声明和六个双语结构说明见[回执](verification/tank-tools-audit-20261021.json)。本批没有运行Java目标代码、存档或客户端。
 
-原只读根为`C:/Dev/gregtech6-master/gregtech6-master/src/main/java`；作者／LGPL头及原输入摘要留存，原文件未改。CompoundMaterials和用户未提交的WoodMaterials保持本批起点摘要。原输入若已有替换字符单列来源计数，不把全文件哈希当作全部文字／代码已验收。
+原只读根为`C:/Dev/gregtech6-master/gregtech6-master/src/main/java`；作者／LGPL头及原输入摘要留存，原文件未改。CompoundMaterials和未提交的WoodMaterials保持本批起点摘要。原输入若已有替换字符单列来源计数，不把全文件哈希当作全部文字／代码已验收。
 
 ## ALIGN-266：4种钨主阀的制作定义未保留ANY.W组
 
@@ -36,7 +36,7 @@ MaterialTagPack的普通标签按真实单一材料生成；拼写别名只处�
 
 ## 物品说明、双语结构文字和Jade已有入口
 
-TankControllerBlock.appendHoverText实际调用MultiblockTankTooltips；后者读取物品保存的罐内容，使用long容量／数量，按spec列出simple限制、防护与熔毁温度，并附结构、工具和朝向说明。六个3³／5³结构英文与原LH.add逐字相符，中文与用户指定`C:/Dev/GregTech_zh_cn.lang`相应S键逐字相符。只接受这六个键，未将其扩大为全语言验收。
+TankControllerBlock.appendHoverText实际调用MultiblockTankTooltips；后者读取物品保存的罐内容，使用long容量／数量，按spec列出simple限制、防护与熔毁温度，并附结构、工具和朝向说明。六个3³／5³结构英文与原LH.add逐字相符，中文与指定`C:/Dev/GregTech_zh_cn.lang`相应S键逐字相符。只接受这六个键，未将其扩大为全语言验收。
 
 原FluidTankGT.contentcap本来就包含结尾`L)`，当前保留相同形式，不能据观感擅自作为移植独有的括号回归修正。工具提示仍推荐建造棒／放大镜，但233已确认专用功能未接，复制说明不等于实现功能。
 
@@ -48,4 +48,4 @@ GTJadePlugin实际注册服务端BlockEntity数据和客户端Block组件；主�
 
 四源七份完整执行流保持：core提示数据214，物品提示591／631，Jade1103／1144，附件2368／2614。仅归一明确局部绑定，成员调用和原始字符串／数值位置独立检查；一处说明纠正，其余注释／来源和Stonecutter指令保持。
 
-未编译／目标初始化、Gradle、测试、游戏、构建或推送。声明比较、原生祖先检查和输入摘要不替代最终生存合成、工具交互、客户端或磁盘重启；其余全部原版系统与可读性队列继续，goal保持active。
+未编译／目标初始化、Gradle、测试、游戏、构建或推送。声明比较、原生祖先检查和输入摘要不替代最终生存合成、工具交互、客户端或磁盘重启；其余全部原版系统与可读性队列继续，整体移植仍未完成。

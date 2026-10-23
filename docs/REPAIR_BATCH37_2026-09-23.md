@@ -1,6 +1,6 @@
 # 第三十七批移植核对：基岩破碎矿、草垛、传感器与数据介质
 
-本批以 `F:\Dev\GregTech6\gregtech6-master\gregtech6-master` 原版源码为依据。用户确认 GT6 地牢原本使用的 Minecraft 工作台、铁砧应保持原版，现有地牢生成代码按此保留。本批不构建 jar，客户端贴图与手感仍需在 IDEA `runClient` 目测。
+本批以 `F:\Dev\GregTech6\gregtech6-master\gregtech6-master` 原版源码为依据。确认 GT6 地牢原本使用的 Minecraft 工作台、铁砧应保持原版，现有地牢生成代码按此保留。本批不构建 jar，客户端贴图与手感仍需在 IDEA `runClient` 目测。
 
 ## 已实现
 

@@ -1,6 +1,6 @@
 # GitHub Issues #1–#6 与 NeoForge 工具显示修复
 
-日期：2026-10-03。工作树：`C:\Dev\GregTech6`。Forge 1.20.1 / 47.4.20，NeoForge 1.21.1 / 21.1.243。问题内容来自 [SaltNya/GregTech6 Issues](https://github.com/SaltNya/GregTech6/issues)，原版规则对照用户提供的 GT6 1.7.10 源码。
+日期：2026-10-03。工作树：`C:\Dev\GregTech6`。Forge 1.20.1 / 47.4.20，NeoForge 1.21.1 / 21.1.243。问题内容来自 [SaltNya/GregTech6 Issues](https://github.com/SaltNya/GregTech6/issues)，原版规则对照提供的 GT6 1.7.10 源码。
 
 ## 修复范围
 

@@ -1,4 +1,4 @@
-# 物流核心批次「对接单」（本会话核对结果 + 下一步确切做法）
+# 物流核心批次对接单（本次核对结果与后续做法）
 
 > **2026-09-20 审计更正（优先于下文历史叙述）**：原文“逐文件无遗漏”仅是当时自述，mtime 不能证明作者或会话归属；后续文档本身也有修改。历史 681 项通过及 jar 哈希已核对，但不证明无功能缺陷。本次未重跑 GameTest。继续工作先看 `AUDIT_NEXT_STEPS_2026-09-20.md` 和 `WEEKLY_AUDIT_2026-09-19.md`。
 >
@@ -7,7 +7,7 @@
 > Crystal Chargers 在当前检查的 GT6 内置物品中未找到 LU 储能物品，这只能支持“内置使用链缺失”；外部物品可实现能源接口，不能据此断言机器永远不可用或从完整移植范围永久排除。量子充能器及长距离端点已存在，也不等于全部交互完成验收。后文保留为历史交接记录，遇冲突以上述更正和实际源码为准。
 
 
-> 写给接手的**更高级 agent**（或下一个对话）。本文件只写**能核对的结论**，每条都带 `文件:行`。
+> 本文件写给后续接手的人，只写能核对的结论，每条都带 `文件:行`。
 > 工程：`F:\Dev\GregTech6\GregTech6`；GT6 权威源：`F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\java`。
 > 上一份主交接单（§1 状态 / §2 命令 / §3 70+ 条陷阱）：`C:\Users\Asus\AppData\Local\Temp\gt6-port-handoff-2026-09-17.md`。
 
@@ -15,19 +15,19 @@
 
 ## §0 一句话结论
 
-目标里排的优先级 **① 量子充能器 T1–T5、② 长距离运输端点 10060/10061 都已经实现**（§124 的「真正缺的三小批」是假阳性，2/3 错）；真正剩下的大件就是 **③ 物流核心**——移植版已有 14 个物流覆盖板**物品**+47 条配方+36 份资产，但**一个行为都没有**，`logistics_core` 还是 `new Block(...)` 占位。本会话已落地物流核心的**结构层**（1 个 157 行新类，javac exit 0），其余按 §4.4 的 W1→W4 接着做。
+目标里排的优先级 **① 量子充能器 T1–T5、② 长距离运输端点 10060/10061 都已经实现**（§124 的「真正缺的三小批」是假阳性，2/3 错）；真正剩下的大件就是 **③ 物流核心**——移植版已有 14 个物流覆盖板**物品**+47 条配方+36 份资产，但**一个行为都没有**，`logistics_core` 还是 `new Block(...)` 占位。本次已落地物流核心的**结构层**（1 个 157 行新类，javac exit 0），其余按 §4.4 的 W1→W4 接着做。
 
 ---
 
-## §1 本会话改动清单（逐文件核对，无遗漏）
+## §1 本次改动清单（逐文件核对，无遗漏）
 
 | 文件 | 时间 | 性质 | 验证状态 |
 |---|---|---|---|
 | `src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoreStructure.java` | 14:43:14 | **新增，157 行**（结构分类 + CPU 计数 + 经济学取值），**未接线**（无注册/无 BE/无测试引用） | `python tools/javac_selfcheck.py <该文件>` → **exit 0**；`gradlew compileJava` → **BUILD SUCCESSFUL**（45 warning 全是既有的 `ResourceLocation(String,String)` 等）；门禁见 §5 |
 | `docs/gt6-registration-census.json` | 14:40:50 | 运行 `python tools/census_gt6_registrations.py` 的**副产物重写**（该文件 git 未跟踪 `??`，无内容风险） | 与 §124 口径一致（Basic Machines 62 → missing 0） |
 
-- 除此之外，本会话**没有**修改任何既有 Java / 资源 / 文档；**没有**执行 `git commit`。
-- 会话窗口内其它 mtime 变化（`docs/NEXT_GOAL.md` 14:36:58、`PORTING_AUDIT.md`/`PORTING_REMAINING`/`docs/porting-progress.json` 02:21）都是**上一段收尾**留下的，不是本会话产物。
+- 除此之外，本次**没有**修改任何既有 Java / 资源 / 文档；**没有**执行 `git commit`。
+- 本次工作期间其它 mtime 变化（`docs/NEXT_GOAL.md` 14:36:58、`PORTING_AUDIT.md`/`PORTING_REMAINING`/`docs/porting-progress.json` 02:21）都是**上一段收尾**留下的，不是本次产物。
 
 ---
 
@@ -77,7 +77,7 @@
 - `:117-142` 遍历 `i,j,k ∈ [-2,2]`，按**平方距离**分类：
   - `i²+j²+k² < 4` → 内核 3×3×3（**27** 格）：CPU 或墙；
   - `i²+j²+k² > 6` → **44** 格 galvanized 钢墙（**同时是进电面**，`:138` 角色 `ONLY_LOGISTICS & ONLY_ENERGY_IN`）；
-  - 其余 → 通风单元，**54** 格，减去控制器自己那格 = **53**（与 tooltip 的 "44 Walls / 53 Ventilation Units" 完全对上，这个算术本会话已复算）。
+  - 其余 → 通风单元，**54** 格，减去控制器自己那格 = **53**（与 tooltip 的 "44 Walls / 53 Ventilation Units" 完全对上，这个算术本次已复算）。
 - `:119-136` CPU 计数：`18200` versatile → **四表各 +1**；`18201/18202/18203/18204` → 各自 **+4**；内核里放 `18008` 墙 → **+0**（"cheapstake" 分支，tooltip："You can replace CPUs with Walls"）。
 - `:64/:143` `MAX_STORAGE_CPU_COUNT = 108`（storage 计数夹紧）；`:144` 有效条件 = 结构完整 **且** 四个计数**都 > 0**。
 
@@ -108,7 +108,7 @@
 
 **覆盖板契约**：`gregapi/cover/covers/AbstractCoverAttachmentLogistics.java`（113 行）+ `AbstractCoverAttachmentLogisticsDisplay.java`（55 行）；12 个实体覆盖板（generic 37-41 行 / item 99-107 / fluid 112）+ 4 个 CPU 显示（各 55 行，其值/视觉映射写在核心 `:300-319`）。
 
-### 4.3 本会话已落地的一半
+### 4.3 本次已落地的一半
 
 `src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoreStructure.java`（**157 行**，javac exit 0）：
 
@@ -146,7 +146,7 @@
 
 ---
 
-## §5 本会话的验证状态（命令照抄）
+## §5 本次验证状态（命令照抄）
 
 ```powershell
 cmd /c ".\gradlew.bat compileJava --offline --no-daemon -Dorg.gradle.jvmargs=-Xmx512m -Dnet.minecraftforge.gradle.check.certs=false --console=plain > build\compile.log 2>&1"
@@ -158,29 +158,29 @@ python tools\handoff_check.py
 
 | 项 | 值 |
 |---|---|
-| `compileJava` | **BUILD SUCCESSFUL**（2026-09-19，本会话） |
-| 门禁（第一次，复用 §124 那张世界） | **3 条红，全部与本会话改动无关**：`DungeonTests.crateDrawsBlockBeforeMaterial`（"the crate was placed"）、`PipeCoverTests.aPipeDropsItsCoversWhenBroken`、`ItemPipeCoverTests.anItemPipeDropsItsCoversWhenBroken`（后两条 "found 2"＝前几轮遗留掉落物）；同时有 `Can't keep up! … 11273ms or 225 ticks behind`（用户客户端 PID 55304 在跑）。**判据**：3 条都在 `CreationTime 2026-09-19 02:13:58` 的复用世界上跑，且未被引用的新类不可能影响它们；**处置＝挪走世界**（`build\gametest-run\world` → `world-red125a-20260919-2045`）**换新世界重跑** |
+| `compileJava` | **BUILD SUCCESSFUL**（2026-09-19，本次） |
+| 门禁（第一次，复用 §124 那张世界） | **3 条红，全部与本次改动无关**：`DungeonTests.crateDrawsBlockBeforeMaterial`（"the crate was placed"）、`PipeCoverTests.aPipeDropsItsCoversWhenBroken`、`ItemPipeCoverTests.anItemPipeDropsItsCoversWhenBroken`（后两条 "found 2"＝前几轮遗留掉落物）；同时有 `Can't keep up! … 11273ms or 225 ticks behind`（客户端 PID 55304 在跑）。**判据**：3 条都在 `CreationTime 2026-09-19 02:13:58` 的复用世界上跑，且未被引用的新类不可能影响它们；**处置＝挪走世界**（`build\gametest-run\world` → `world-red125a-20260919-2045`）**换新世界重跑** |
 | 门禁（新世界，最终） | **`All 681 required tests passed :)`**（2026-09-19 20:55:16，0 条 `failed!`，测试数 681 不变） |
 | jar / 顺序不变量 | `gregtech-1.0.0.jar` **32.5 MB（34,045,205 字节）**、**72,845** 条目（72,840 → 72,845，+5 = 新类的 class 文件）、sha256 `16661AFA3C3C04847C296B49E2D9E4D334E13464A691A8407F853931B8A5C79B`；`java newest < gate log` **True**、`gate log < jar` **True**（`python tools/handoff_check.py`） |
-| 注册量 | 不变（本会话没有注册任何东西）：items **70,760** / blocks **12,099** / 材料 1156 / 流体 925 / 缺失 token 49 / 多方块部件 89 |
+| 注册量 | 不变（本次没有注册任何东西）：items **70,760** / blocks **12,099** / 材料 1156 / 流体 925 / 缺失 token 49 / 多方块部件 89 |
 
-**收尾结果**（本会话已完成）：compileJava **BUILD SUCCESSFUL** → 门禁 **`All 681 required tests passed :)`**（20:55:16）→ `gradlew build` **成功**（jar 重建，sha256 `16661AFA…`）→ `tools/handoff_check.py` **True/True** → `tools/audit_porting_progress.py` 已刷新 `docs/porting-progress.json`（注册量不变）。**工作树唯一的 Java 新增就是那个 157 行的结构类**，其余为生成的 JSON/文档。
+**收尾结果**（本次已完成）：compileJava **BUILD SUCCESSFUL** → 门禁 **`All 681 required tests passed :)`**（20:55:16）→ `gradlew build` **成功**（jar 重建，sha256 `16661AFA…`）→ `tools/handoff_check.py` **True/True** → `tools/audit_porting_progress.py` 已刷新 `docs/porting-progress.json`（注册量不变）。**工作树唯一的 Java 新增就是那个 157 行的结构类**，其余为生成的 JSON/文档。
 
 ---
 
-## §6 建议调用的 skills（给接手的 agent）
+## §6 建议调用的 skills
 
 | skill | 何时用 |
 |---|---|
 | `tdd` | 本项目节奏：改代码 → 立刻加/改 GameTest → 跑门禁 |
 | `diagnose` | 门禁红/行为不符时按「复现→最小化→假设→插桩→修→回归」 |
 | `handoff` | 下一轮再交班时重写本文件 |
-| 用户库里的项目专属 skill | `pwsh-run-python-script-file`（PowerShell 里多行 Python 必须写文件）、`pwsh-locate-file-then-read`、`pwsh-inventory-port-ids`、`map-gt6-recipe-keys-to-port-items`、`generate-machine-recipe-table`、`gt6-port-ropes-explosives-and-tint-textures` |
+| 本机的项目专属 skill | `pwsh-run-python-script-file`（PowerShell 里多行 Python 必须写文件）、`pwsh-locate-file-then-read`、`pwsh-inventory-port-ids`、`map-gt6-recipe-keys-to-port-items`、`generate-machine-recipe-table`、`gt6-port-ropes-explosives-and-tint-textures` |
 
 ---
 
-## §7 本会话**没有**做（明确边界）
+## §7 本次**没有**做（明确边界）
 
-- 没有写任何门禁测试、没有接线、没有重建 jar（门禁与 jar 由本会话的收尾步骤补跑，见 §5）；
+- 没有写任何门禁测试、没有接线、没有重建 jar（门禁与 jar 由本次收尾步骤补跑，见 §5）；
 - 没有改任何既有 Java/资源；
 - **没有执行 `git commit`。**

@@ -2,7 +2,7 @@
 
 第五十四批，2026-10-21，新增 ALIGN-189–193。初查起点为 `e3f08722c4934a9478b38e7b3395012eedd803b1`，初查收据采集时为 `f42d88cb2bf2d4444c624e722e8bb722d42d35d8`；其间归档了前批文档。共享代码去重以 `f42d88cb2` 为基线，将 `DecompositionRecipeLoader.java` 的两份完整业务合为一份，336→124 行，仅保留原生导入和 holder 类型／查询两处条件块，并纠正过强的原版归因说明。Forge 850／Neo 858 个完整执行词法项、字面量及位置逐项相同；没有在去重中修复下列行为。原／最终哈希、双端证明及来源由[统一回执](verification/material-decomposition-audit-20261021.json)记录。以下当前加载器行号按去重后的 124 行文件。
 
-本批没有运行／导入生成器，没有 Gradle、编译、新测试、游戏、世界重启或构建，没有推送；没有修改用户材料表。原模组根为 `C:/Dev/gregtech6-master/gregtech6-master/src/main/java`，当前根为 `C:/Dev/GregTech6`。原文件保留 GregTech-6 Team／Gregorius Techneticies 与 LGPL-3.0-or-later 头；这里只引用源码行为，没有移入原生依赖源码，也没有扩大已有发布许可信任范围。
+本批没有运行／导入生成器，没有 Gradle、编译、新测试、游戏、世界重启或构建，没有推送；没有修改材料表。原模组根为 `C:/Dev/gregtech6-master/gregtech6-master/src/main/java`，当前根为 `C:/Dev/GregTech6`。原文件保留 GregTech-6 Team／Gregorius Techneticies 与 LGPL-3.0-or-later 头；这里只引用源码行为，没有移入原生依赖源码，也没有扩大已有发布许可信任范围。
 
 ## 实际加载入口与已保留的数据
 

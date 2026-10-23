@@ -56,7 +56,7 @@
 
 当前工作树为 `C:\Dev\GregTech6\GregTech6-main`，无 `.git`；下文旧机器上的提交、标签及历史恢复记录不代表这些 Git 对象存在于本次解压目录。
 
-新增用户提供的 **wolfram0108 / gregtech6_w** 快照实际位于 `C:\Dev\gregtech6_w-main\gregtech6_w-main`，README 标注 Minecraft 26.1.2 / NeoForge 26.1.2.109 / Java 25，代码 LGPL-3.0-or-later。源码头保留 GregTech-6 Team 版权及 wolfram0108 的 2026 移植声明。作为行为和适配思路参考，不改变当前项目目标版本。没有将无 Git 元数据的快照认作远程最新提交。
+新增提供的 **wolfram0108 / gregtech6_w** 快照实际位于 `C:\Dev\gregtech6_w-main\gregtech6_w-main`，README 标注 Minecraft 26.1.2 / NeoForge 26.1.2.109 / Java 25，代码 LGPL-3.0-or-later。源码头保留 GregTech-6 Team 版权及 wolfram0108 的 2026 移植声明。作为行为和适配思路参考，不改变当前项目目标版本。没有将无 Git 元数据的快照认作远程最新提交。
 
 本批对照其多通道流体管与原 GT6，实现共享流体通道选择，未整体引入该项目代码或资产。来源文件哈希、各来源比较、采用边界和验证见 [流体管道记录](verification/fluid-pipe-channels-20261002.md)。其余本机只读来源为 `C:\Dev\gregtech6-master\gregtech6-master`、`C:\Dev\cruciblecraft-master\cruciblecraft-master`、`C:\Dev\gregtech6yizhi-main\gregtech6-main`。
 
@@ -64,11 +64,11 @@
 
 ## 三个来源快照
 
-- **saltnya / gregtech6reborn**：`F:\Dev\GregtTech6New\Libs\gregtech6reborn`。用户指定为初始基础及功能保留基准。完整文件树已复制到整合目录；原始快照的本地导入提交为 `415617825945a9f54b11fdc359ff9b3cf694c8cd`，标签为 `import/saltnya-snapshot`。这是新仓保存的快照，不是 saltnya 的原始提交历史。基线为 Minecraft 1.20.1 Forge；没有现成 NeoForge 模块。许可范围待核实。
+- **saltnya / gregtech6reborn**：`F:\Dev\GregtTech6New\Libs\gregtech6reborn`。指定为初始基础及功能保留基准。完整文件树已复制到整合目录；原始快照的本地导入提交为 `415617825945a9f54b11fdc359ff9b3cf694c8cd`，标签为 `import/saltnya-snapshot`。这是新仓保存的快照，不是 saltnya 的原始提交历史。基线为 Minecraft 1.20.1 Forge；没有现成 NeoForge 模块。许可范围待核实。
 - **brokestar233 / gregtech6-main**：`F:\Dev\GregtTech6New\Libs\gregtech6-main`。具有 1.20.1 Forge / 1.21.1 NeoForge Stonecutter 共享源方案。作为逐系统实现及平台适配候选，尚未整体导入运行时。归档没有 `.git`，且 `third-party/modularui` 为空；缺少实际 gitlink 与可构建 fork。代码声明 LGPL-3.0-or-later，资产包含不同许可，不可统一标为 CC0。
 - **masson / cruciblecraft**：`F:\Dev\GregtTech6New\Libs\cruciblecraft`。具有 NeoForge 1.21.1 实现、质量/能量算术、事务执行和逐文件来源政策。作为纯逻辑、平台实现及验证候选，尚未整体导入运行时。作者声明为 Lorbineitte Masson，代码 LGPL-3.0-or-later；作者自写资源、GT6 默认资产、MDK、参考副本需分别记账。
 
-三份来源都是无 Git 元数据的本地文件快照。作者标识 saltnya、brokestar233、masson 来自用户说明，不能推定快照内每个文件均由该作者独立创作。上游作者头、第三方来源和已存在许可保持原文；可获得原仓 clone/bundle 后，另记录 URL、实际 ref/SHA、快照对应关系和来源中的未提交差异。
+三份来源都是无 Git 元数据的本地文件快照。作者标识 saltnya、brokestar233、masson 来自说明，不能推定快照内每个文件均由该作者独立创作。上游作者头、第三方来源和已存在许可保持原文；可获得原仓 clone/bundle 后，另记录 URL、实际 ref/SHA、快照对应关系和来源中的未提交差异。
 
 ## 可获得原始历史的准确入口
 
@@ -105,13 +105,13 @@
 4. registry ID、material ID、单位、配方、NBT/组件及网络兼容变化。
 5. 执行过的构建/行为检查、输入夹具、结果路径与整合 Git commit；未执行项及已知缺口。
 
-不要把自己的导入提交冒充原作者提交，也不要为恢复历史重写作者信息。已有源头引用要随抽取代码保留；仅作研究比较的未采用代码与真正分发内容区分记账。GitHub 远程所有者由用户提供，本文件出现的来源 URL 不授权把新仓发布到该所有者名下。
+不要把自己的导入提交冒充原作者提交，也不要为恢复历史重写作者信息。已有源头引用要随抽取代码保留；仅作研究比较的未采用代码与真正分发内容区分记账。GitHub 远程所有者由项目方提供，本文件出现的来源 URL 不授权把新仓发布到该所有者名下。
 
 ## 已恢复的原始历史与准确快照对应
 
 2026-09-30 已将公开原始仓库的分支和标签历史 fetch 到本地Git独立refs，保留原始提交和作者：
 
-- brokestar：`upstream-brokestar/main` 可达3055个提交。用户快照并非当前远程HEAD；完整220275个tracked文件的SHA-256与 `3118acbf83a84d05fa37d57af1705cf00e423ca9` 全部一致，无改变/缺失/额外文件。本地标签 `source/brokestar233-snapshot` 指向这个原始提交。
+- brokestar：`upstream-brokestar/main` 可达3055个提交。快照并非当前远程HEAD；完整220275个tracked文件的SHA-256与 `3118acbf83a84d05fa37d57af1705cf00e423ca9` 全部一致，无改变/缺失/额外文件。本地标签 `source/brokestar233-snapshot` 指向这个原始提交。
 - masson：`upstream-masson/master` 可达202个提交，完整61192个tracked文件与 `2ba4e4b60f7a770360b2ec7ca2adad3507ec4a28` 全部一致。本地标签 `source/masson-snapshot`。
 - brokestar原快照的ModularUI gitlink为 `ec524db7a5724f8cf3c837436b1ae742c778c62f`；已获取 `https://github.com/Meow404club/modularui.git` 历史并建立 `source/modularui-brokestar-snapshot` 标签。恢复的是引用和历史，未在运行时导入ModularUI。
 - saltnya 的原Git仓仍未提供，只有 `import/saltnya-snapshot` 的本地原字节文件快照和hash清单。不能伪造其原作者提交。
@@ -121,4 +121,4 @@
 
 ## 2026-10-19 / 新报告的工具、木桶与坩埚交互修复
 
-本轮工具／木桶／坩埚／测温／引擎接口依据原版GT6 Java；171木桶原图来自_w保留的GT6资产目录，CC0-1.0，已保留资产授权文本及NOTICE。木桶中文逐字使用用户指定补丁。 [详细范围、来源和验证边界](verification/gameplay-feedback-20261019.md)。仅本地，无推送或发布。
+本轮工具／木桶／坩埚／测温／引擎接口依据原版GT6 Java；171木桶原图来自_w保留的GT6资产目录，CC0-1.0，已保留资产授权文本及NOTICE。木桶中文逐字使用指定补丁。 [详细范围、来源和验证边界](verification/gameplay-feedback-20261019.md)。仅本地，无推送或发布。

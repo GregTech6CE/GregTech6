@@ -1,6 +1,6 @@
 # 第四十二批：水体回归、原版堆叠放置、地牢板条箱与手工器皿
 
-本批延续 GT6 原版行为核对，源码根目录为 `F:\Dev\GregTech6\gregtech6-master\gregtech6-master`。没有从 GTM 复制实现。用户仍主要通过 IDEA `runClient` 测试，因此本批不打包 jar。
+本批延续 GT6 原版行为核对，源码根目录为 `F:\Dev\GregTech6\gregtech6-master\gregtech6-master`。没有从 GTM 复制实现。仍主要通过 IDEA `runClient` 测试，因此本批不打包 jar。
 
 ## 水体交界
 

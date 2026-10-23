@@ -1,6 +1,6 @@
 # 原版电池盒、太阳能板与变压器提示 / 2026-10-07
 
-本批承接 `d7b7c3d3`，继续用户要求的全方块专属提示和原版材料记录。共用 `OriginalEnergyDeviceTooltipData` 保存原范围及提示选择，Forge/Neo 的 `EnergyDeviceTooltips` 仅负责原生文字，物品的 `BlockEntityTag`/`BLOCK_ENTITY_DATA` 读取留在两端。
+本批承接 `d7b7c3d3`，继续要求的全方块专属提示和原版材料记录。共用 `OriginalEnergyDeviceTooltipData` 保存原范围及提示选择，Forge/Neo 的 `EnergyDeviceTooltips` 仅负责原生文字，物品的 `BlockEntityTag`/`BLOCK_ENTITY_DATA` 读取留在两端。
 
 ## 实施范围
 
@@ -12,7 +12,7 @@
 
 ## 来源与中文
 
-[来源清单](energy-device-tooltip-source-20261007.json)固定19原版/许可证/汉化文件及4个 `_w` 比较文件的SHA、字节数、作者及LGPL-3.0-or-later证据。以用户指定的1.7.10为行为权威；`_w` 同一电池/太阳能/转换器/双向分支用于对照，不导入第二套平台实现。其他两快照和saltnya的材料提示选择见前轮 [来源](functional-tooltip-source-20261007.json)。
+[来源清单](energy-device-tooltip-source-20261007.json)固定19原版/许可证/汉化文件及4个 `_w` 比较文件的SHA、字节数、作者及LGPL-3.0-or-later证据。以指定的1.7.10为行为权威；`_w` 同一电池/太阳能/转换器/双向分支用于对照，不导入第二套平台实现。其他两快照和saltnya的材料提示选择见前轮 [来源](functional-tooltip-source-20261007.json)。
 
 15个相关中文键均逐字匹配 `C:/Dev/GregTech_zh_cn.lang`，中文JSON值与本批基线相同；只补8个缺失英文键。没有生成翻译。只读源/比较文件复核保持相同。
 
@@ -22,7 +22,7 @@
 - 两端主源码及 `compileProductionSmokeJava` 合并增量编译23秒通过；复核TD颜色后最终增量编译21秒通过，后次core/探针任务up-to-date。既有弃用API警告仍存在。
 - 下轮普通成品探针新增44设备提示单次完整性、实际原生工厂对象的六个范围getter，以及22换向物品数据形状/原生切换后getter一致性检查；本轮仅编译，没有运行。前轮52轴/13自定义齿轮箱/5大锅炉的新探针同样尚未运行。
 - 首次来源账本脚本猜测 `addBlock` 行名，得到0而失败；查明生成表使用 `BLOCK_DATA.put`，仅修正账本解析。没有改变生产数据或减少测试/覆盖范围。
-- 未生成新普通JAR；按用户要求数轮集中普通打包/验包/正式加载器自启动。最后已验收目录仍是 `build/verified/20261006-195055Z-1fceed96`，源码 `ae3e1857`，不含本批及 `d7b7c3d3`。
+- 未生成新普通JAR；按要求数轮集中普通打包/验包/正式加载器自启动。最后已验收目录仍是 `build/verified/20261006-195055Z-1fceed96`，源码 `ae3e1857`，不含本批及 `d7b7c3d3`。
 
 可重现入口：Gradle8.8/JDK21，`--offline --no-daemon --console=plain -I work/emi-local.init.gradle :core:machineSpecBehaviorContracts :compileJava :neoforge:compileJava :compileProductionSmokeJava :neoforge:compileProductionSmokeJava`。两个日志及SHA固定在来源清单，原始日志在忽略的 `work/energy-device-tooltips-compile-20261007.log` 与 `work/energy-device-tooltips-final-compile-20261007.log`。
 
@@ -30,4 +30,4 @@
 
 电动机/发电机/磁铁/热冷转换器/涡轮的完整原行为和专属提示仍是独立缺口，没有借本批通用范围冒称已对齐。其余全方块材料与提示、采集工具等级/火焰/所有者/覆盖状态、旋转泵和legacy大锅炉原型、完整生存供能、玩家悬停、独立世界保存重启/历史档及实际外部提供方继续未验收。ULV行为修正本轮证据为源算术/gate及原生编译，不是实际世界能量输送。
 
-本批仅本地提交，不推送，PR暂缓；整个持续移植goal active。
+本批仅本地提交，不推送，PR暂缓；整个持续移植整体移植仍未完成。

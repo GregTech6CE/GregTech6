@@ -1,6 +1,6 @@
 # 双版本初期对齐：原有配方和事件
 
-用户要求先只对齐1.20.1 Forge与1.21.1 NeoForge，并尽快交付初期可用结果。本轮以现有Forge源码、PORTING_TODO、docs/FUSION_PORT_2026-09-12.md、docs/MATTER_FABRICATOR_PORT_2026-09-12.md及对应实际注册为参考；不将旧文档的完成声明当作Native验收。彩色owned泡沫扩展仅在忽略区准备，未执行正式源码修改；brokestar/masson新增差异融合暂停，原完整goal保持active。
+先只对齐1.20.1 Forge与1.21.1 NeoForge，并尽快交付初期可用结果。本轮以现有Forge源码、PORTING_TODO、docs/FUSION_PORT_2026-09-12.md、docs/MATTER_FABRICATOR_PORT_2026-09-12.md及对应实际注册为参考；不将旧文档的完成声明当作Native验收。彩色owned泡沫扩展仅在忽略区准备，未执行正式源码修改；brokestar/masson新增差异融合暂停，原整体移植仍未完成。
 
 完整接入原14个配方家族：砧粉碎、基岩指示花、生物材料、坩埚熔炼、可挖泥土、炉炼、Glowtus、机器外壳、粉碎回收、石材工具生存链、石材形态、结构件、生存用品及车辆装拆。Native不另建材料/配方框架，使用现有共享材料身份、GT6 U、真实Recipe/RecipeMap及原形态注册；显式家族优先于生成表，恢复Source1相对次序。原Native提前注册的FermenterFood及材料postInit保持已有生命周期，未重复注册。补回可挖方块/球组成接线。
 
@@ -25,4 +25,4 @@
 首次正式打包发现Native与共享core存在27个字节完全相同的旧资源副本，触发jar重复路径拒绝。移除Native原文件及对应已加工的27个副本，共享原字节为唯一来源；没有用EXCLUDE策略隐藏未知重复或删除平台loader分支。首次失败日志p3-version-alignment-jars-20261001.log，最终重打包结果另记。
 
 
-2026-10-01 D011初期双版本测试JAR产出：Forge1.20.1 38522701 bytes，NeoForge1.21.1 35452249 bytes；首次Native打包重复路径失败，27完全相同资源副本归一后最终打包54s通过。已有验包器确认两包570当前共享class、67498共享资源/通知字节一致、平台元数据正确、无重复或测试专用条目。只是构建/包内容证据，未执行新成品jar启动/玩法/独立重载；可选Native JEI/Jade和客户端缺口仍待对齐，原完整goal保持active。回执verification/p3-version-alignment-artifacts.json。
+2026-10-01 D011初期双版本测试JAR产出：Forge1.20.1 38522701 bytes，NeoForge1.21.1 35452249 bytes；首次Native打包重复路径失败，27完全相同资源副本归一后最终打包54s通过。已有验包器确认两包570当前共享class、67498共享资源/通知字节一致、平台元数据正确、无重复或测试专用条目。只是构建/包内容证据，未执行新成品jar启动/玩法/独立重载；可选Native JEI/Jade和客户端缺口仍待对齐，原整体移植仍未完成。回执verification/p3-version-alignment-artifacts.json。

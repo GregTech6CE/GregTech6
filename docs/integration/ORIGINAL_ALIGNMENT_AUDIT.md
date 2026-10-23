@@ -18,7 +18,7 @@
 
 每项核查需追踪原版入口、当前入口、实际调用链、物品／材料身份、参数、保存状态和平台分支。区分：确认缺失、确认差异、现代版本适配、外部模组条件、已有实现但未运行验证、尚未核查。原版 1.7.10 专属兼容模块不能按“没有同名类”直接判为移植遗漏。
 
-用户要求的是全面盘点和代码可读性改进。本轮不把它缩小成构建通过，也不擅自把所有行为差异批量改掉。测试以确有影响的定向验证为主。
+要求的是全面盘点和代码可读性改进。本轮不把它缩小成构建通过，也不擅自把所有行为差异批量改掉。测试以确有影响的定向验证为主。
 
 ## 已重新核对的现存差异
 
@@ -27,7 +27,7 @@
 | ALIGN-001 | 确认缺少小坩埚碰撞致死后的材料回收。现有烫伤不等于原版完整碰撞处理。 | `gregtech/tileentity/tools/MultiTileEntitySmeltery.java:622`：温度伤害致死后按实体种类加入肉、骨、铁、雪、火药等，带相应初始温度。 | 共享 `block/machine/SmeltingCrucibleBlock.entityInside` 两版本分支均只调用温度伤害；需另核查大坩埚对应规则，不能直接复用所有小坩埚数量。 |
 | ALIGN-002 | 材料箭仅保留了部分行为，命中过程未对齐。 | `gregtech/entities/projectiles/EntityArrow_Material.java:171–241`：读取箭的材料及附魔，处理魔法伤害、火焰、击退、抢夺、特殊生物与命中回调。 | 共享 `entity/MaterialArrowEntity` 目前只接材料基础伤害、塑料速度、寿命、拾取和保存，命中沿用现代 `AbstractArrow`；`MaterialArrowRules` 无原版命中规则。现代弓自身附魔不能证明箭材料附魔等价，需逐条查物品赋魔和事件路径。 |
 | ALIGN-003 | 确认存在未进入语言系统的提示。 | 原版提示／扫描来源需按具体行继续比对汉化补丁。 | `item/FuelRodItem:183–211` 直接拼接 Remaining、Self、Fuel、Tier、Durability 等；`item/behavior/BehaviorScanner:170–183` 拼接 Input、Output、Stored。单块热交换器放大镜也直接拼Input／Output，见[热交换器](HEAT_EXCHANGER_AUDIT.md)。语言文件格式自检不证明这些提示已汉化。大型换热器专用放大镜Input／Output／Empty与流体句子也直接拼接，见[大型换热器](LARGE_HEAT_EXCHANGER_AUDIT.md)。17997右键Structure Incomplete／Logic等也直接拼接，字段缺项另列254，见[物流状态](LOGISTICS_CORE_STATE_AUDIT.md)。 |
-| ALIGN-004 | 配置覆盖仍不完整；cfg收尾安排保留。当前三个声明中两个过载选项有效，日志选项无消费者。 | 原Config真实load/save与代表链包括石层／维度、生物掉落、材料工具／处理倍率；不是仅静态常量。 | 两版COMMON注册及原生加载／保存／缓存刷新已接通，MachineOverload实际读取两个默认false选项；logMaterials未读。代表族缺配置入口，133概率沿旧项，Nexus全开是用户政策；见[配置核查](CONFIGURATION_CONTRACT_AUDIT.md)，完整矩阵／磁盘／多人仍待核。 |
+| ALIGN-004 | 配置覆盖仍不完整；cfg收尾安排保留。当前三个声明中两个过载选项有效，日志选项无消费者。 | 原Config真实load/save与代表链包括石层／维度、生物掉落、材料工具／处理倍率；不是仅静态常量。 | 两版COMMON注册及原生加载／保存／缓存刷新已接通，MachineOverload实际读取两个默认false选项；logMaterials未读。代表族缺配置入口，133概率沿旧项，Nexus全开是项目政策；见[配置核查](CONFIGURATION_CONTRACT_AUDIT.md)，完整矩阵／磁盘／多人仍待核。 |
 | ALIGN-005 | **结构问题已修复**，原先不是游戏缺标签。 | 前轮恢复的起火器配方集合应能被两版本消费。 | `EquipmentCraftingCatalog.TAGS` 已纳入起火器标签，NeoForge 由已有适配器读取共享内容，删除逐字节相同的版本资源副本。98 项目录由生成器重建并核对，源策略检查通过。 |
 | ALIGN-006 | 确认缺少 BURNING 材料属性对应的点火加成。 | `Behavior_FlintAndTinder:51,88` 判断 `FLAMMABLE` 或 `BURNING`；`MT:1275` 的 Blaze 带 `BURNING`。 | `BehaviorFlintAndTinder.useOn` 只读取 `FLAMMABLE`；当前材料属性没有 BURNING 路径。范围是材料点火概率，不是所有打火机失效。 |
 | ALIGN-007 | 确认工具的材料自动收集分支缺失。 | `MultiItemTool.canCollectDropsDirectly:217` 同时考虑工具种类、主材料和副材料 `AUTO_COLLECTING`；`MT:1272` 的 Basalz 有该属性。 | `GTToolHelper.canCollectMachineDrop` 只检查 `type.canCollect()` 和耐久；材料表未携带该属性。现有扳手直接收集能力仍然存在，不能判整类收集缺失。 |
@@ -317,7 +317,7 @@
 | ALIGN-288 | 确认长距离活动不可用指示简化原目标对象／归属门槛。 | 原状态3要求mTarget对象及发送者条件，恢复坐标但未绑定时走普通历史。 | 当前known且live owner空即3并保持history，目标已加载但尚未解析亦会进入；128条件24状态／历史差异为源投影，非传输失效或实际重启验收，见[活动状态](LONG_DISTANCE_LIFECYCLE_AUDIT.md)。 |
 | ALIGN-289 | 确认USB／HDD移除非选择面板错误重置文件模式。 | 原selector移除设0，红石发射面板沿父类空移除保留mode。 | 当前宿主对全部PanelCover先setMode(0)，共享removed正确门控不能撤销；稳定手动选择＋发射面板64条件30不同，未游戏交互，见[交换器](USB_SWITCH_AUDIT.md)。 |
 
-可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
+可读性第二十六批：按要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 
 可读性第二十七批：材料中间快照及分表生成器已恢复当前七份生产文件的逐字再现，运行时数据不变。旧计数／路径自检已修正；仍有 14 项原版矿物处理导入跳过，未作为已解决事项，见 [材料生成链核查](MATERIAL_GENERATION_AUDIT.md)。
 
@@ -375,7 +375,7 @@
 
 目录迁移不更改注册 ID、资源、初始化顺序、配方数值或保存格式。方法体和字符串已按 Forge／NeoForge 两种条件展开，与基线归一化比较。聚变配方需要的两个解析方法由包内访问显式改为 public；它们仍不是对外 SDK API。完整映射见 [迁移记录](verification/loader-package-migration-20261019.json)。
 
-首批双版主代码及探针编译通过（1m28s）；105 个 Java 文件两版归一化比较通过。当时额外源策略检查因 ALIGN-005 的标签目录遗漏失败；第二批已修复并通过。首批未运行游戏或打包，之后按用户要求交付的当前工作树包另见 [构建回执](verification/current-build-20261019.json)。
+首批双版主代码及探针编译通过（1m28s）；105 个 Java 文件两版归一化比较通过。当时额外源策略检查因 ALIGN-005 的标签目录遗漏失败；第二批已修复并通过。首批未运行游戏或打包，之后按要求交付的当前工作树包另见 [构建回执](verification/current-build-20261019.json)。
 
 第二批已经完成 `Loader_...`／`IGTLoader`／`GTGeneratedChem` 共 30 个活动类名整理及共用机器配方清单。原版来源注释和历史回执保留原名。78 个非启动入口 Java 文件在正确展开 Stonecutter 条件后，除声明的接口适配外代码／字面量等价；两平台各 54 步调用序列相同，日志和异常定位改用明确职责名称。NeoForge 旧独立配方加载类已删除。
 
@@ -427,7 +427,7 @@
 
 第五十三批归档灌木物理与生成差异ALIGN-183–188：实际抗爆覆写、instabreak副作用、火对象表、条件性墙内检测，及半坐标、原木射线和群系门控。基础碰撞／LightBlock1/0与九种池已有对应；现代高度、群系及原Map顺序不盲目还原。两份源码四份执行投影保持，四坐标有限数学反例独立复算，见[物理](BERRY_BUSH_PHYSICAL_AUDIT.md)、[世界生成](BERRY_BUSH_WORLDGEN_AUDIT.md)与[回执](verification/bush-physical-worldgen-audit-20261021.json)。继续材料分解输入／地图／参数、其余植物／特征及全面队列。
 
-第五十二批沿用户两条材质写法追原工厂→生成器→属性补偿→双端注册／真实危险消费，新增ALIGN-180–182。19条酸性及成分、18条实际流体已有实现；额外固态形态、氟硅酸魔法误标、黑矾状态遗漏分别登记，不按19种材料拆问题。MaterialFactories仅展开参数／方法和纠正说明，1304执行词法项／字面量位置保持，见[报告](LIQUID_ACID_FACTORY_AUDIT.md)与[回执](verification/liquid-acid-factory-audit-20261021.json)。继续通用分解输入／地图、其余材料工厂、植物物理／世界生成及全面队列。
+第五十二批沿两条材质写法追原工厂→生成器→属性补偿→双端注册／真实危险消费，新增ALIGN-180–182。19条酸性及成分、18条实际流体已有实现；额外固态形态、氟硅酸魔法误标、黑矾状态遗漏分别登记，不按19种材料拆问题。MaterialFactories仅展开参数／方法和纠正说明，1304执行词法项／字面量位置保持，见[报告](LIQUID_ACID_FACTORY_AUDIT.md)与[回执](verification/liquid-acid-factory-audit-20261021.json)。继续通用分解输入／地图、其余材料工厂、植物物理／世界生成及全面队列。
 
 第五十一批归档灌木五项环境／支撑／工具差异及队列 GUI 取物限制 ALIGN-174–179；共用菜单九类实际宿主将173扩为六类同源范围，保留三类补偿／限制。四份源码六份执行词法投影相同，见[灌木](BERRY_BUSH_AUDIT.md)、[菜单](SHARED_MENU_AUDIT.md)和[回执](verification/bush-menu-audit-20261021.json)。继续酸类材料工厂继承、植物物理／世界生成及全面队列，不将已存在的生命周期和静态源链冒充整系统验收。
 
@@ -457,7 +457,7 @@
 
 第十四批逐位置核对物质制造的 149 个坐标／角色和处理器替换，28 条特殊配方声明及额定目录对应；聚变恢复后连续下一批新增 ALIGN-056。修订旧聚变源自检以直接读取维护目录，分别检查两版主控资源，见 [报告](MATTER_AND_FUSION_CONTINUITY_AUDIT.md)。完整物质制造配方解析／相态单位量和其它系统仍待核。
 
-第十三批完成聚变／内爆的结构目录、额定参数和四项执行差异核查，详见 [专题报告](ADVANCED_CONTROLLER_AUDIT.md)。两份参数／布局代码展开且代码和字面量等价；聚变结构生成器统一到共享 core，886 格可全文复现。继续特殊主控的重载／停机连续性、物质制造机、储能／变压器和网络；旧聚变资源自检的过时路径也需修订。全面目标仍未完成。
+第十三批完成聚变／内爆的结构目录、额定参数和四项执行差异核查，详见 [专题报告](ADVANCED_CONTROLLER_AUDIT.md)。两份参数／布局代码展开且代码和字面量等价；聚变结构生成器统一到共享 core，886 格可全文复现。继续特殊主控的重载／停机连续性、物质制造机、储能／变压器和网络；旧聚变资源自检的过时路径也需修订。全面核查仍未完成。
 
 继续核查材料属性的成员与工厂继承、处理目标和前缀监听器，以及锅炉、其它能源转换／储能与网络系统。同步整理相关过大／压行实现。第五批已整理三份能源核心源码的格式与职责说明，并在 SOURCE_LAYOUT 中补充批量材料数据导航。每条结论附原版和当前调用链；完整审计仍未完成，不能以这一批编译通过结束目标。
 

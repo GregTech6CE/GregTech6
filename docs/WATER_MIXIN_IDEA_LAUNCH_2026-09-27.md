@@ -32,7 +32,7 @@ Mixin 未加载，重新生成后的参数检查证明配置已补齐；最终�
 
 ## 再次报告后的防回归处理
 
-用户再次报告交界渲染异常时，项目中最新的客户端 `run/logs/latest.log` 仍是
+再次报告交界渲染异常时，项目中最新的客户端 `run/logs/latest.log` 仍是
 2026-09-23 的旧启动记录；它确实缺少 Mixin 参数，但不能代表 2026-09-27 修正后的
 `runClient`。当前 `.idea/runConfigurations/runClient.xml` 已带参数，jar manifest 也有
 `MixinConfigs: gregtech.mixins.json`。因此不能仅凭旧日志宣称当前视觉问题已消失。
@@ -53,17 +53,17 @@ Mixin 未加载，重新生成后的参数检查证明配置已补齐；最终�
 最终全新世界 `build/gametest_water_batch42_green.log` 记录了
 `Mixing WaterFluidMixin ... WaterFluid`，**942/942 项 GameTest 通过**，退出码 0。
 它证明测试启动链与服务器侧流体同族测试通过；IDEA 客户端的实际渲染结果仍需
-用户完全停止旧进程后重新运行 `runClient`，在原版水与三种 GT 水的静水、流水交界处目视核对。
+完全停止旧进程后重新运行 `runClient`，在原版水与三种 GT 水的静水、流水交界处目视核对。
 
 随后本机启动了一次 Gradle `runClient`，见 `build/runclient_water_batch42.log`：
 14:22:37 注册 `gregtech.mixins.json`，14:22:39 将 `WaterFluidMixin` 注入 `WaterFluid`，
 14:23:45 到达材质图集与声音引擎加载阶段，未触发新的客户端校验异常。加载链验证后主动停止进程，
 故该次 `runClient` 的退出码 1 代表中断，不代表编译或启动异常。此检查没有进入世界观察像素；
-IDEA 自己的 `runClient` 及实际水面交界仍待用户验收。
+IDEA 自己的 `runClient` 及实际水面交界仍待人工验收。
 
 ## 第四十三批补充
 
-`WaterFluidParityTests.vanillaWaterKnowsTheWorldWaters` 现对海水、河水、沼泽水的静止和流动状态逐一调用原版水与 GT 方块的 `skipRendering`，验证两侧都隐藏交界共享面。独立新世界 `build/gametest_batch43_water_green.log` 中 953/953 项测试通过，日志确认 `WaterFluidMixin` 注入。它覆盖代码级共享面判定，仍不等于 IDEA 世界内的像素验收。若用户重启 `runClient` 后仍看到异常，请以那次新日志和具体表现为准继续排查，不能拿 2026-09-23 的旧日志或仅凭服务器测试推断客户端画面。
+`WaterFluidParityTests.vanillaWaterKnowsTheWorldWaters` 现对海水、河水、沼泽水的静止和流动状态逐一调用原版水与 GT 方块的 `skipRendering`，验证两侧都隐藏交界共享面。独立新世界 `build/gametest_batch43_water_green.log` 中 953/953 项测试通过，日志确认 `WaterFluidMixin` 注入。它覆盖代码级共享面判定，仍不等于 IDEA 世界内的像素验收。若重启 `runClient` 后仍看到异常，请以那次新日志和具体表现为准继续排查，不能拿 2026-09-23 的旧日志或仅凭服务器测试推断客户端画面。
 
 ## 第四十四批补充
 

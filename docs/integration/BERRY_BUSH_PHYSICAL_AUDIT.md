@@ -6,7 +6,7 @@
 
 ## 身份政策、原型与实际入口
 
-食品、棉花和材料莓继续采用用户要求的扁平变种 ID。核心与六方向枝条的区别是支撑状态，不是恢复以 NBT 记录物种身份的理由。以下比较限定项目默认实现、正常无覆盖板灌木，没有外部模组／数据包额外补偿。
+食品、棉花和材料莓继续采用要求的扁平变种 ID。核心与六方向枝条的区别是支撑状态，不是恢复以 NBT 记录物种身份的理由。以下比较限定项目默认实现、正常无覆盖板灌木，没有外部模组／数据包额外补偿。
 
 原 `gregtech/loaders/b/Loader_MultiTileEntities.java:103` 创建 `aBush`，使用 `Material.leaves`、草音效，并明确 `aOpaque=false`、`aNormalCube=false`；`:2030` 把 `MultiTileEntityBush` 注册为 32759，传入硬度 `0.5F`、抗爆参数 `0.3F`。原宿主 `gregapi/block/multitileentity/MultiTileEntityBlock.java:299–300` 把实际硬度／抗爆查询转发给 tile 接口，`:253–254,266` 转发火属性与光遮挡，`:191–192` 转发碰撞形状，不能把这些声明当成未调用的接口。
 

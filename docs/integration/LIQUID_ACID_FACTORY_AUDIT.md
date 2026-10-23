@@ -2,7 +2,7 @@
 
 第五十二批，2026-10-21。行为观察与排版基线为 `21f68f1b1874e0d99a95e11de5d3bdfe68c9e1fb`，新增 ALIGN-180–182。`MaterialFactories.java` 仅展开排版并纠正三处过强的原版归因说明，没有改变工厂签名、属性、顺序或执行内容；132→147 行、1304 个执行词法项及字面量位置等价证明、原始／最终哈希由[本批统一回执](verification/liquid-acid-factory-audit-20261021.json)记录。以下当前工厂行号使用排版后的文件。
 
-本批没有修改材料生成声明或用户整理的材料表，没有运行／导入材料生成器，没有运行 Gradle、编译、新测试、游戏、世界重启或构建，没有推送。原模组根为 `C:/Dev/gregtech6-master/gregtech6-master/src/main/java`，当前根为 `C:/Dev/GregTech6`。原文件保留 GregTech-6 Team／Gregorius Techneticies 与 LGPL-3.0-or-later 头；本报告只引用行为证据，没有移入原生依赖源码，也没有据此另行裁定发布授权。
+本批没有修改材料生成声明或整理过的材料表，没有运行／导入材料生成器，没有运行 Gradle、编译、新测试、游戏、世界重启或构建，没有推送。原模组根为 `C:/Dev/gregtech6-master/gregtech6-master/src/main/java`，当前根为 `C:/Dev/GregTech6`。原文件保留 GregTech-6 Team／Gregorius Techneticies 与 LGPL-3.0-or-later 头；本报告只引用行为证据，没有移入原生依赖源码，也没有据此另行裁定发布授权。
 
 ## 原工厂含义及实际生成链
 

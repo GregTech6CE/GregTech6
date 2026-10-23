@@ -22,7 +22,7 @@ Name-only differential probe: both original SHA-256 fingerprints recovered exact
 
 Post-fix material task: passed, 6,154 assertions. Forge Java compilation: passed.
 
-Remote confirmation: the user pushed commit `dbd38be949378aca72ea0174501a95c6d7c1f547`. Run https://github.com/SaltNya/GregTech6/actions/runs/36903728760 completed successfully in 4m 43s, including both platform jobs and the required-builds aggregate. Two packaging reports were produced. No remote push or workflow dispatch was performed by the agent.
+Remote confirmation: the user pushed commit `dbd38be949378aca72ea0174501a95c6d7c1f547`. Run https://github.com/SaltNya/GregTech6/actions/runs/36903728760 completed successfully in 4m 43s, including both platform jobs and the required-builds aggregate. Two packaging reports were produced. No remote push or workflow dispatch was performed.
 
 Final local command: `gradlew.bat --console=plain :core:check :build :neoforge:build`. Result: **BUILD SUCCESSFUL in 11m 17s**, 28 actionable tasks (24 executed, 4 up-to-date). Both production platform artifacts were produced.
 

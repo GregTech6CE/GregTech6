@@ -1,6 +1,6 @@
 # 2026-10-03 user report batch
 
-The full port goal remains active. Current build/runtime results are recorded separately; this is the work list.
+The overall port is still incomplete. Current build/runtime results are recorded separately; this is the work list.
 
 - Water compatibility: general water family/type/tag behavior, vanilla and GT water-surface plants, waterlogged placement and container API. Native Forge and NeoForge water + tool/power suite passed 11 tests each in `work/water-woods-native3.log`; final packaged binaries still pending.
 - Ordinary wood material source parsing: all 110 MT.woodnormal rows restored, including Magicwood and three qualified field collisions. 1,212 source fixture assertions and full graph differential verified; shared check passed.

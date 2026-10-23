@@ -4,7 +4,7 @@
 
 `com.gregtech.gregtech.api.machine.MachineSpec` 和 `CrucibleSpec` 从 Forge `src/main/java` 移到 `core/src/main/java`，包名、record字段、构造器、方法和原文件字节不变。原位置不保留第二份类。主构建既有 `implementation project(':core')` 提供同一 API。
 
-原始来源是用户提供的saltnya快照标签 `import/saltnya-snapshot`，本地导入提交 `415617825945a9f54b11fdc359ff9b3cf694c8cd`。该提交不代表恢复了原作者历史。作者归属与适用许可仍未解决；原 All Rights Reserved 元数据与Forge MDK许可证文本没有更改，没有自行授予新许可。完整参数来源、blob与SHA见 `core/provenance/machine-spec-extractions.json`。
+原始来源是提供的saltnya快照标签 `import/saltnya-snapshot`，本地导入提交 `415617825945a9f54b11fdc359ff9b3cf694c8cd`。该提交不代表恢复了原作者历史。作者归属与适用许可仍未解决；原 All Rights Reserved 元数据与Forge MDK许可证文本没有更改，没有自行授予新许可。完整参数来源、blob与SHA见 `core/provenance/machine-spec-extractions.json`。
 
 - MachineSpec：原blob `05bfe51c9275e4d69f4c3a3bfe5c74fc112b0b30`，SHA256 `872fb50a6656f86c201d98d094a253244e00a525c94151098b47ffa8184c86e5`。
 - CrucibleSpec：原blob `8bf97aef1854170ca90f0966892201a05a5a8b3e`，SHA256 `521ed7556904427c6d1b3653fe930f9b697affd15895cb9ed528a8e80ab5fd9e`。

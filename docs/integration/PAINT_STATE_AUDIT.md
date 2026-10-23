@@ -36,8 +36,8 @@ Neo的基础材料处理器经ItemColorARGB.opaque返回FF开头的不透明ARGB
 
 PaintState从9→42行展开paint／mix／clear／restore，restore的flag改paintedFlag；PaintingRules从11→73行拆16色列表、混色表达式和实体／草方块方法，mix的a／b改firstRgb／secondRgb。Paintable接口逐行展开，三个Mixin拆开原生导入、方法、更新／保存／读取与客户端回调；两个颜色回调的cir改callback，两处说明改为实际边界并保留Brokestar署名。
 
-九份完整执行流170、544、45、832／865、210／210、202／230在限定方法局部命名归一后保持，原始字符串／数值位置、其余注释和Stonecutter条件另核。用户CompoundMaterials／WoodMaterials原始摘要不变。
+九份完整执行流170、544、45、832／865、210／210、202／230在限定方法局部命名归一后保持，原始字符串／数值位置、其余注释和Stonecutter条件另核。CompoundMaterials／WoodMaterials原始摘要不变。
 
 17份原版／29份当前来源、36份共享平台视图、两个主阀资源和两个原生工件15entry／6次只读javap留痕。原MT.java的Monazite注释中已有两个替换字符，只读保留并记录，不当本次编辑引入。
 
-未Java编译／目标初始化、Gradle、测试、游戏、最终GPU显示、真实保存重启、构建或推送。其余宿主的override／专用renderer／保存掉落、全部喷漆目标以及其它原版系统继续，goal保持active。
+未Java编译／目标初始化、Gradle、测试、游戏、最终GPU显示、真实保存重启、构建或推送。其余宿主的override／专用renderer／保存掉落、全部喷漆目标以及其它原版系统继续，整体移植仍未完成。

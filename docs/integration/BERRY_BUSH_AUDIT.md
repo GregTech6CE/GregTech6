@@ -6,7 +6,7 @@
 
 ## 身份政策与实际入口
 
-用户要求的扁平化已实现：食品、棉花、材料莓分别使用独立灌木注册 ID。物种不再依赖新堆叠的 NBT；`stage=0..3` 和 `support=0..6` 表示成熟阶段和支撑方向，继续使用方块状态是合理的实现。旧 bare ID 的 `berry` 键属于兼容入口，不能因其与原版字段不同就报物种功能缺失，也不建议恢复以 NBT 表示新物种身份。
+要求的扁平化已实现：食品、棉花、材料莓分别使用独立灌木注册 ID。物种不再依赖新堆叠的 NBT；`stage=0..3` 和 `support=0..6` 表示成熟阶段和支撑方向，继续使用方块状态是合理的实现。旧 bare ID 的 `berry` 键属于兼容入口，不能因其与原版字段不同就报物种功能缺失，也不建议恢复以 NBT 表示新物种身份。
 
 原主体为 `gregtech/tileentity/plants/MultiTileEntityBush.java`。`gregtech/loaders/b/Loader_MultiTileEntities.java:2030` 注册 32759，`Loader_Worldgen.java:633` 加入活跃 `WorldgenBushes`。它继承 GT 方块实体 ticker，不是 Minecraft 甜浆果丛，也不靠随机 tick 生长。
 
@@ -89,7 +89,7 @@
 
 原 `onBlockActivated3:174` 的 `BushesGT.get(aStack) != null` 不能读成“只允许已注册莓”。原 `CS.java:1583` 对未知物品返回 DEFAULT，`UT.Code.getWithDefault:1375–1376` 返回非空默认数组。因此原空灌木实际上可以采用任意有效物品为输出，并使用默认外观。
 
-当前 `GTBerryBushes.of` 与 `GTBushes.byBerry` 要求可识别类型和已注册变种，收窄了这个原宽松／疑似缺陷行为。用户已明确要求独立变种 ID，本次不建议以 NBT 恢复任意物品身份，也不把禁止普通石头等任意物品种入直接编号为应恢复玩法。合法外部材料莓／食品提供者应另核现代注册扩展合同；食品八种、棉花、已定义材料莓的主体路径已经存在。
+当前 `GTBerryBushes.of` 与 `GTBushes.byBerry` 要求可识别类型和已注册变种，收窄了这个原宽松／疑似缺陷行为。已明确要求独立变种 ID，本次不建议以 NBT 恢复任意物品身份，也不把禁止普通石头等任意物品种入直接编号为应恢复玩法。合法外部材料莓／食品提供者应另核现代注册扩展合同；食品八种、棉花、已定义材料莓的主体路径已经存在。
 
 ## 未完成范围
 

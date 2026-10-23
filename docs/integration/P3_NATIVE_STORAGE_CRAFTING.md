@@ -8,4 +8,4 @@
 
 集中 Native compile+jar/Forge compile 50秒通过。一次既有 Neo专服短启动2分1秒通过，200 tick后正常保存停止。实际日志生成：齿轮箱13、变压器13、旋转发动机13、泵4、线30、管334、砧34、栏杆7、处理器1、电池壳5、存储542，加前批轴52，手工总计1048行；原生RecipeManager全体7515条且未记录配方解析错误。这是生成/加载证据，未逐条枚举manager身份或执行制作。
 
-原 Forge 手工 loader 的12个入口族至此已接入同一 Native ManualToolRecipePack；之前 P3_NATIVE_HAND_CRAFTING.md 的 storage代码缺口由本批覆盖，原报告检查范围保留。实际匹配、工具磨损/容器余物、客户端配方显示、数据包重载、成品jar、完整生存链、独立进程重载及旧档仍待验；其他系统的双版本对齐与完整三来源goal继续active。
+原 Forge 手工 loader 的12个入口族至此已接入同一 Native ManualToolRecipePack；之前 P3_NATIVE_HAND_CRAFTING.md 的 storage代码缺口由本批覆盖，原报告检查范围保留。实际匹配、工具磨损/容器余物、客户端配方显示、数据包重载、成品jar、完整生存链、独立进程重载及旧档仍待验；其他系统的双版本对齐与完整三来源整体核对继续。

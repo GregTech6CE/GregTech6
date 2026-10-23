@@ -4,7 +4,7 @@
 
 ## 范围与基线
 
-- Git 最新提交仍为 2026-06-15 的 `460cc52e`，本周没有可供逐提交审查的新提交。HEAD 差异混合了此前数月工作，不能全部归因于最近的 agent。
+- Git 最新提交仍为 2026-06-15 的 `460cc52e`，本周没有可供逐提交审查的新提交。HEAD 差异混合了此前数月工作，不能全部归因于最近的改动。
 - 按本地修改时间从 `2026-09-13 22:42:00` 筛选 `src / tools / docs`，共 11059 个候选文件，其中 433 个 Java、9742 个 JSON、686 个 PNG、171 个 Python。时间戳只能定位候选，不能证明作者或精确改动内容。
 - 清单见 `weekly-audit-file-inventory-2026-09-19.json`。它不含根目录配置、删除文件，以及本次清单生成后的改动，不能用作完整备份。
 - Java 候选包括：96 个 GameTest、70 个 content、53 个 worldgen、35 个 block、31 个 loaders、27 个 blockentity、26 个 data，以及其余注册、客户端、物品和 API 文件。分类详见 `weekly-audit-static-2026-09-19.json`。
@@ -202,11 +202,11 @@ BasicMachineContainerMenu、BumbliaryContainerMenu 的 stillValid 仅检查方�
 
 抽查旧日志提到的蓝马槿树叶及 abyssalnite 原矿箱，当前相应模型/贴图已经存在。不能把旧日志所有报错再次算为当前未修复。
 
-木轴静态模型仍含无命名空间的 `block/iconsets/axle`，默认会指向 minecraft；老生成器 `generate_wave38_assets.py` 也如此。该问题文件时间为 6 月/9 月 11 日，不应归咎本周 agent。`PipeWireClientModels` 随后用正确的 GT 纹理替换轴的世界与物品模型，所以静态警告不能直接证明最终画面仍紫黑。全量静态检查只检查 `gregtech:`，会漏报这种写错命名空间的引用。
+木轴静态模型仍含无命名空间的 `block/iconsets/axle`，默认会指向 minecraft；老生成器 `generate_wave38_assets.py` 也如此。该问题文件时间为 6 月/9 月 11 日，不应归咎本周改动。`PipeWireClientModels` 随后用正确的 GT 纹理替换轴的世界与物品模型，所以静态警告不能直接证明最终画面仍紫黑。全量静态检查只检查 `gregtech:`，会漏报这种写错命名空间的引用。
 
-## 用户补充交接信息的独立核对
+## 补充交接信息的独立核对
 
-用户提供的 §125 收尾信息已核对到当前磁盘，不把交接自述直接当证据。
+提供的 §125 收尾信息已核对到当前磁盘，不把交接自述直接当证据。
 
 **已证实：** jar 大小 34,045,205 字节，ZIP 条目 72,845，SHA256 `16661AFA3C3C04847C296B49E2D9E4D334E13464A691A8407F853931B8A5C79B` 完全一致；build/gametest.log 包含 20:55:16 的 681 GAME TESTS COMPLETE / All 681 required tests passed 和 BUILD SUCCESSFUL。两个时间戳不变量均为 true。注册快照中的 1156 / 70760 / 12099 / 925 / missing 49 一致。主交接临时文件存在。
 
@@ -216,13 +216,13 @@ BasicMachineContainerMenu、BumbliaryContainerMenu 的 stillValid 仅检查方�
 
 **测试通过仍含真实资源缺口：** 已直接打开这份 SHA 对应的 jar，确认 sapling_blue_mahoe 的物品模型引用 `gregtech:block/iconsets/sapling_small_blue_mahoe`，但 jar 内没有对应 PNG。因此这份“全绿”交付确实未覆盖客户端贴图完整性，而不是仅工作树和 jar 不一致。校验摘要见 `weekly-audit-handoff-check-2026-09-19.json`。
 
-**归属边界：** 用户提供的“最后一个会话只改这些文件”有助于划定范围，但无逐会话快照或提交，mtime 无法证明作者。不能把本周所有缺陷都归到最后的 LogisticsCoreStructure 会话；当前按本周候选文件审查，并按具体修改时间记录。
+**归属边界：** 提供的“最后一个会话只改这些文件”有助于划定范围，但无逐会话快照或提交，mtime 无法证明作者。不能把本周所有缺陷都归到最后的 LogisticsCoreStructure 会话；当前按本周候选文件审查，并按具体修改时间记录。
 
 **快照工具还有一处解析异常：** porting-progress.json 的 registry.queued 中，一个 key 跨行吞进下一条日志（含 `Queued 49 fuel rod items`），说明生成器的日志解析不能直接作逐分类精确计数。总注册数本次与交接一致，不代表这个分类键正确。
 
 **覆盖板数量口径需纠正：** GTTechnological 实际是 6 个物品/流体过滤覆盖板、3 个通用进出/存储覆盖板、1 个 dump、4 个 CPU 显示，共 14 个。原版对应 10 个物流动作具体类和 4 个显示具体类，另外 2 个是抽象基类。因此 W3 应实现 10 个动作行为，而不是把交接里的“12 个实体覆盖板”机械转成 12 个注册项；通用覆盖板本身兼管物品和流体。应按实际类逐一核对功能，不能凭数量补出不存在的覆盖板。
 
-**交接文档内部还有历史描述残留：** §1 声称只有两项改动且没有改文档，§7 仍写“没有重建 jar”，同时 §5 已记载最终文档及构建收尾。用户本条消息中的最终清单更完整；旧段落应标注为收尾前快照，不能当作最终逐文件无遗漏凭据。只凭时间顺序也不能证明 jar 与测试所用源码内容完全一致，需要快照或构建时源码清单。
+**交接文档内部还有历史描述残留：** §1 声称只有两项改动且没有改文档，§7 仍写“没有重建 jar”，同时 §5 已记载最终文档及构建收尾。本条消息中的最终清单更完整；旧段落应标注为收尾前快照，不能当作最终逐文件无遗漏凭据。只凭时间顺序也不能证明 jar 与测试所用源码内容完全一致，需要快照或构建时源码清单。
 
 ## 管道自动化补充核查
 
@@ -238,7 +238,7 @@ ItemPipeBlockEntity.pushItemsToPipe（610–626 行）只调用发送面的 cove
 
 ## 储罐与漏斗补充核查
 
-以下均为当前源码调用链核查，未启动客户端复现；文件修改时间只界定候选范围，不证明哪一位 agent 引入了每一行。
+以下均为当前源码调用链核查，未启动客户端复现；文件修改时间只界定候选范围，不证明哪一条工作线引入了每一行。
 
 ### 19. 储罐发酵进度读档后重置
 
@@ -378,7 +378,7 @@ CFoamBlockEntity 保存 timer 却在 tick 增加 timer 时不 setChanged，只�
 
 ### 34. 普通旧区块的矿石背景迁移没有经过预期回调（已退出修复范围）
 
-用户确认（2026-09-19）：模组尚未发布，目前仅本人测试，可以不保留旧矿石迁移。因此本项保留为审计记录，不再作为发布阻塞或要求补齐的功能，不投入真实旧区块迁移测试。后续可移除旧矿石实体、仅服务迁移的注册与测试，并同步修正文档；正常新世界的矿石背景、掉落、材料绑定和加工配方仍须保留并验证。注意 OreBlock 当前物品数据仍引用旧类的 TAG_STONE，清理时须先解耦共用数据键，不能直接删除类造成正常矿石物品背景丢失。本次仅调整审计范围，尚未删除实现。
+确认（2026-09-19）：模组尚未发布，目前仅本人测试，可以不保留旧矿石迁移。因此本项保留为审计记录，不再作为发布阻塞或要求补齐的功能，不投入真实旧区块迁移测试。后续可移除旧矿石实体、仅服务迁移的注册与测试，并同步修正文档；正常新世界的矿石背景、掉落、材料绑定和加工配方仍须保留并验证。注意 OreBlock 当前物品数据仍引用旧类的 TAG_STONE，清理时须先解耦共用数据键，不能直接删除类造成正常矿石物品背景丢失。本次仅调整审计范围，尚未删除实现。
 
 OreBlockEntity 把旧 stone 标签迁移放在 onLoad，类说明假定所有旧实体都经过 LevelChunk.promotePendingBlockEntity。已直接读取本机 Forge 47.4.20 mapped sources：ChunkSerializer 的普通完整区块恢复路径（395–405 行）对 keepPacked=false 的标签调用 BlockEntity.loadStatic 后，直接调用 LevelChunk.setBlockEntity。后者仅在当前 state.hasBlockEntity() 时设置 level 并加入实体表；OreBlock 已移除 EntityBlock，所以旧实体被拒绝，不会进入随后已注册实体的 onLoad，stone 标签未迁入状态。keepPacked=true 的待解包路径才可能经过类注释描述的 promotePendingBlockEntity。
 
@@ -542,7 +542,7 @@ arrivalPlatform 无目标时直接替换 3×3 脚下方块为黑曜石、清除�
 
 GTColtanFeature.distanceSquared 用 int 相乘并相加，placeField 随后直接与 480²、64² 比较。以中心 (0,0)、区块原点 (50000,0) 为数值见证，真实距离平方 2500000000，Java int 回绕为 -1794967296，会同时通过外圈和内圈判断。整数证据在 `docs/weekly-audit-coltan-distance-2026-09-19.json`，并非实际世界生成结果；实际中心来自世界种子，世界层面仍需对应种子/坐标复测。
 
-原版 gregtech/worldgen/overworld/WorldgenColtan:59 也使用相同 int 表达式，因此本项不能称为本周 agent 新引入的回归。若目标是正常的 480 格局部矿区，应先提升减法及乘法为 long 再比较，并增加超出 46340 格和世界边界附近的测试；原版实现有缺陷不代表移植必须保留整数溢出。现有中心高斯抽样测试验证中心生成，不等于验证远处半径判断。
+原版 gregtech/worldgen/overworld/WorldgenColtan:59 也使用相同 int 表达式，因此本项不能称为本周新引入的回归。若目标是正常的 480 格局部矿区，应先提升减法及乘法为 long 再比较，并增加超出 46340 格和世界边界附近的测试；原版实现有缺陷不代表移植必须保留整数溢出。现有中心高斯抽样测试验证中心生成，不等于验证远处半径判断。
 
 ### 矿坑、黑沙和散落岩石已检查的边界
 
@@ -824,13 +824,13 @@ MachineRegistry 基础机器注册把实体类型延迟到方块注册后构建�
 
 ### 86. 机器界面 95% 就画满进度条，部分界面文字仍未本地化
 
-BasicMachineBlockEntity.getProgressPercent 返回 0..100，但 BasicMachineScreen.renderBg 使用 20*min(progress,95)/95 计算箭头宽度。因此尚在加工的 95..99% 阶段就显示完整箭头；这不是同步百分比单位差异。应使用同一 100% 契约，并验证加工完成/输出等待的显示区别。RecipeMapCategory.getTitle 直接返回 map.mNameLocal 英文 literal；TankTooltips.sendTankInfo 的 Normal、Sealed、Not fermenting、Fermenting into 及部分容量连接文本也直接写英文，中文语言文件无法替换。它们尚不满足用户要求的完整中文界面，不应以 lang 键存在率判定已完成。
+BasicMachineBlockEntity.getProgressPercent 返回 0..100，但 BasicMachineScreen.renderBg 使用 20*min(progress,95)/95 计算箭头宽度。因此尚在加工的 95..99% 阶段就显示完整箭头；这不是同步百分比单位差异。应使用同一 100% 契约，并验证加工完成/输出等待的显示区别。RecipeMapCategory.getTitle 直接返回 map.mNameLocal 英文 literal；TankTooltips.sendTankInfo 的 Normal、Sealed、Not fermenting、Fermenting into 及部分容量连接文本也直接写英文，中文语言文件无法替换。它们尚不满足要求的完整中文界面，不应以 lang 键存在率判定已完成。
 
 ### 机器 GUI、JEI 与流体同步核查结果
 
 对 MachineRecipeMaps 中 85 个直接声明的表按当前 MachineGuiLayout 计算 16×16 槽位矩形，没有发现槽位互相重叠。提取的 79 个 GUI 名称经当前别名规则解析后，资源全部存在且均为 256×256 PNG；结果在 weekly-audit-gui-slot-overlaps-2026-09-19.json。该检查没有渲染纹理，不能证明槽位边框与贴图像素、箭头、字体或拖动物品层级正确。
 
-JEI 使用 GU 符合用户后续确认的统一单位；真实流体通过 FluidDisplayBinding 展示，并额外登记不可见 FluidStack 供搜索关联，未发现该入口重新用能源类型替代 GU。特殊温度行目前对应的坩埚表需结合实际配方数值确认；不把静态绘制坐标存在当成所有配方均正确。
+JEI 使用 GU 符合后续确认的统一单位；真实流体通过 FluidDisplayBinding 展示，并额外登记不可见 FluidStack 供搜索关联，未发现该入口重新用能源类型替代 GU。特殊温度行目前对应的坩埚表需结合实际配方数值确认；不把静态绘制坐标存在当成所有配方均正确。
 
 MachineFluidMenuTests 确实经过 PacketSyncFluids 编解码再 apply，覆盖数量更新、NBT 改变触发、清空、窗口 ID 不符拒收、快照复制及关闭后停发。它通过 RecordingMenu 捕获包，再在服务端构造模拟客户端菜单，因此不覆盖真实网络分发和客户端渲染。本轮阅读并核对这些检查，未重新运行测试。BasicMachineScreen 使用实际流体的 stillTexture 和 tint RGB，alpha 固定 1；是否符合各流体视觉需客户端验收。菜单距离校验不足仍见前述边界记录，不重复计为新问题。
 
@@ -950,7 +950,7 @@ RockAndDeepOceanTests 的相关测试验证生成落点/材料分布，没有在
 
 ### 矿石与流体泉入口补充边界
 
-OreBlock 当前普通矿的非精准采集返回 oreRaw，精准采集携带围岩状态；基岩围岩返回零挖掘进度和空掉落，并提升爆炸抗性。旧 BlockEntityTag 兼容仍在类内，按用户要求不再视作必须修复的功能；正常围岩 BlockStateTag 与旧实体常量需要先解耦再清理。OreHostStone 枚举是正常世界生成/渲染需要的数据，不应随旧存档迁移一起删除。FluidSpringBlock 的服务端 tick 确实转发给实体，不能再把实体的问题归因于入口没接线；已确认的泉水问题仍见第 15 项。
+OreBlock 当前普通矿的非精准采集返回 oreRaw，精准采集携带围岩状态；基岩围岩返回零挖掘进度和空掉落，并提升爆炸抗性。旧 BlockEntityTag 兼容仍在类内，按要求不再视作必须修复的功能；正常围岩 BlockStateTag 与旧实体常量需要先解耦再清理。OreHostStone 枚举是正常世界生成/渲染需要的数据，不应随旧存档迁移一起删除。FluidSpringBlock 的服务端 tick 确实转发给实体，不能再把实体的问题归因于入口没接线；已确认的泉水问题仍见第 15 项。
 
 ### 99. 材料字典标题拼入 Component 调试描述，触发无效书籍
 
@@ -1244,7 +1244,7 @@ OreAssetCoverageTests 遍历实际 OreBlock 注册，比仅按生成器输入验
 
 ElectronicsTests 对 84 条组件配方实际匹配/assemble、工具损耗/破损拒绝，以及 173 条电子配方的 RecipeInputs.consume 和催化剂保留进行了检查；另有焊料限制电路等级与透镜并行竞争测试，具有实质覆盖。不过输入由配方本身构造，组件只要求结果非空，并未独立核对 GT6 数量和所有标签替代。GTMainRecipesTests 的打印机测试把任意正量流体当成黑色染料，没有检查具体流体、数量、能源和时长；地图仅锁定纸为 8，未锁定指南针/产物数量；displayRowsAreFake 强制 skipped 至少 5，未来补齐内容需要改测试而非维持缺口。
 
-SurvivalExtensionTests 实际检查普通铁矿掉一个原矿、精准采集保存围岩状态，并扫所有普通矿的 oreRaw 形式存在；但仍额外断言 BlockEntityTag 必须存在。用户已允许移除旧矿石迁移，这条兼容断言也应随旧标签清理，保留 BlockStateTag 和新世界围岩/掉落检查。Unit 搜索测试检查别名集合，不是 JEI 客户端实际搜索；石材路线多数检查能找到配方而不核对数量。ToolBlockTests 检查绳索颜色字段、爆炸强度常量及配方存在，不覆盖攀爬、真实爆炸形状或引信交互；其中 2.5/10 半径期望正好与第 73 项原版差异有关，不能拿这条测试证明爆炸机制忠实。
+SurvivalExtensionTests 实际检查普通铁矿掉一个原矿、精准采集保存围岩状态，并扫所有普通矿的 oreRaw 形式存在；但仍额外断言 BlockEntityTag 必须存在。已允许移除旧矿石迁移，这条兼容断言也应随旧标签清理，保留 BlockStateTag 和新世界围岩/掉落检查。Unit 搜索测试检查别名集合，不是 JEI 客户端实际搜索；石材路线多数检查能找到配方而不核对数量。ToolBlockTests 检查绳索颜色字段、爆炸强度常量及配方存在，不覆盖攀爬、真实爆炸形状或引信交互；其中 2.5/10 半径期望正好与第 73 项原版差异有关，不能拿这条测试证明爆炸机制忠实。
 
 ## 材料处理与别名生成数据补充核查
 
@@ -1288,7 +1288,7 @@ GTMultiItemsGen 当前共有 1278 条四元组，其中 320 条 id 含 scanned�
 
 风险进一步扩展到资源：cleanup_previous 根据现有表删除全部旧 item model、整类纹理目录与两种语言的名称键；重建后只对新 registered 写英文 display（中文也使用英文），因此手工追加扫描模型/名称不保留。第 7 项中文回退的既有工具问题也适用于此维护流程。正常世界中当前文件仍保留变体，本次只读取生成器并统计，没有执行带清理副作用的 main。证据为 weekly-audit-multiitems-generator-2026-09-19.json。修复应先将扫描形态与中文维护规则纳入生成器，再做隔离重生成差异检查。
 
-GTBlockEntities 的分组注册已定向检查：管线、轴、变速箱、泵、燃烧室、坩埚族、容器、传感器等从各注册列表提供有效方块；树洞/树液袋、双传送门、两种养蜂箱、三种堆叠物、硬币和湿泡沫均有实体绑定。多档燃气轮机与轴向涡轮/发电机使用定义列表，五档长距离变压器显式列出；激光转换器按实际类过滤，USB 交换机有实体，物流核心仍未见专用实体（与第 4 项一致）。旧 ORE 实体注册仍绑定矿石块，按用户决定可在解耦后移除；书架“八槽”注释过时，不代表实体实际只有八槽。这里验证的是注册调用与来源，不是每个方块已实际放置/重载的完整验收，不以注册存在反驳行为缺陷。
+GTBlockEntities 的分组注册已定向检查：管线、轴、变速箱、泵、燃烧室、坩埚族、容器、传感器等从各注册列表提供有效方块；树洞/树液袋、双传送门、两种养蜂箱、三种堆叠物、硬币和湿泡沫均有实体绑定。多档燃气轮机与轴向涡轮/发电机使用定义列表，五档长距离变压器显式列出；激光转换器按实际类过滤，USB 交换机有实体，物流核心仍未见专用实体（与第 4 项一致）。旧 ORE 实体注册仍绑定矿石块，按决定可在解耦后移除；书架“八槽”注释过时，不代表实体实际只有八槽。这里验证的是注册调用与来源，不是每个方块已实际放置/重载的完整验收，不以注册存在反驳行为缺陷。
 
 ## 战利品与大蓝图回归测试的补充边界
 
@@ -1342,9 +1342,9 @@ DungeonTests 本批补查农场和瓶箱路径，并结合此前房间/仓库/�
 
 重新核对当前源码：LongDistancePowerTests 有 3 个 @GameTest；GTTechnological 注册 6 个 filtered、3 个 generic、1 个 dump 路由用途及 4 个显示用途物流覆盖板；GTLasers 的 logistics_core 仍为普通 Block，logistics_wire 仍列于 iconset 装饰注册；LogisticsCoreStructure.range 返回 control，energyPerOperation 返回 128 + logic × 64 × conversion。与先前审计一致，未发现这些问题已经由其他工作修复。
 
-本次已修改 NEXT_GOAL 顶部“没有半成品”断言，明确 681 项和 jar 为历史快照，并把修复优先级置于新增物流核心之前。物流对接单顶部新增优先勘误，纠正测试数、覆盖板分类、范围和能耗含义，同时撤回“Crystal Chargers 永远不可用、无需移植”的过强结论：没有内置 LU 物品不能排除外部接口实现。历史原文保留作追溯。新的 AUDIT_NEXT_STEPS_2026-09-20.md 列出修复顺序、验证方式、生存链和客户端测试，以及用户允许删除旧矿石迁移的边界。
+本次已修改 NEXT_GOAL 顶部“没有半成品”断言，明确 681 项和 jar 为历史快照，并把修复优先级置于新增物流核心之前。物流对接单顶部新增优先勘误，纠正测试数、覆盖板分类、范围和能耗含义，同时撤回“Crystal Chargers 永远不可用、无需移植”的过强结论：没有内置 LU 物品不能排除外部接口实现。历史原文保留作追溯。新的 AUDIT_NEXT_STEPS_2026-09-20.md 列出修复顺序、验证方式、生存链和客户端测试，以及允许删除旧矿石迁移的边界。
 
-本次只修改三份交接/推进 Markdown 和本报告，没有修改 Java、正式资源或测试，没有运行新 GameTest/客户端或打包。未修改临时目录的其他 agent 原交接单，以免覆盖其历史记录。剩余非 Java 清单中还包括 test_fusion_empty.nbt、materials-source.java.txt、missing-content-tokens.txt 及机器配方/历史进度文档；格式统计不能替代这些内容与来源的核对，整体审计尚未据此标记完成。
+本次只修改三份交接/推进 Markdown 和本报告，没有修改 Java、正式资源或测试，没有运行新 GameTest/客户端或打包。未修改临时目录中的其他交接单，以免覆盖其历史记录。剩余非 Java 清单中还包括 test_fusion_empty.nbt、materials-source.java.txt、missing-content-tokens.txt 及机器配方/历史进度文档；格式统计不能替代这些内容与来源的核对，整体审计尚未据此标记完成。
 
 ### 123. 缺失内容清单在零缺失日志下不会清空，进度会沿用旧值
 
@@ -1420,9 +1420,9 @@ rank_missing_content.py 当前读取 49 个 token，输出 recipe occurrences bl
 
 新增 weekly-audit-python-coverage-2026-09-20.json，列出 171 个时间戳候选脚本与报告具名章节的对应关系。该索引特意不把“名称出现在报告”当作语义通过：没有对应关系的脚本可能是此前按模块检查但未登记名称，也可能尚未定向检查，后续要查证并补证，不能把它们自动标为已完成。所有候选的 AST 解析已另有格式证据。
 
-### 128. 树苗名称偏离用户标准中文，补键脚本也无法补齐部分缺失
+### 128. 树苗名称偏离标准中文，补键脚本也无法补齐部分缺失
 
-原版 BlockTreeSaplingAB.java:51–53、59–61 确认 Hazel/Cinnamon/Coconut 对应 meta 4/5/6（及 12/13/14）。用户 GregTech.lang 的 gt.block.sapling.4/.5/.6 分别是“榛树树苗”“肉桂树苗”“椰子树木树苗”；当前 zh_cn 对应值是“榛木树苗”“桂皮树苗”“椰木树苗”。这三项为新增具体标准差异，不能把此前仅材料相关的 7 项比较当作全部语言覆盖。
+原版 BlockTreeSaplingAB.java:51–53、59–61 确认 Hazel/Cinnamon/Coconut 对应 meta 4/5/6（及 12/13/14）。GregTech.lang 的 gt.block.sapling.4/.5/.6 分别是“榛树树苗”“肉桂树苗”“椰子树木树苗”；当前 zh_cn 对应值是“榛木树苗”“桂皮树苗”“椰木树苗”。这三项为新增具体标准差异，不能把此前仅材料相关的 7 项比较当作全部语言覆盖。
 
 add_tree_species_lang.py 未读取标准中文源；只检查 entries[0]（hazel）是否存在，存在则跳过本语言全部四项。隔离副本保留 hazel、移除 coconut 后运行，英文和中文 coconut 都未补回，脚本仍报告 already has 1 of the new keys, skipping。修复应逐键补齐，并按原版 meta 映射取标准译名，而非另起中文名。证据见 weekly-audit-tree-lang-standard-2026-09-20.json；正式语言文件未改动。
 
@@ -1430,7 +1430,7 @@ add_tree_species_lang.py 未读取标准中文源；只检查 entries[0]（hazel
 
 读取并在独立副本上运行 add_tree_species_lang、add_loot_crate_lang、add_valve_part_lang、add_usb_tooltip_lang、drop_retired_cover_lang、add_track_lang、add_bumble_scanned_lang，当前两种语言文件语义均未变化，见 weekly-audit-lang-tools-2026-09-20.json。但无变化不代表名称符合标准，第 128 项是反例。
 
-valve_part 直接给两种语言添加原版英文，仅跳过已有键；USB 工具则逐键强制覆盖其硬编码中英文。track 从当前材料中文拼接族名，scanned bee 从已有普通蜜蜂名拼扫描后缀、缺中文时退回英文，并要求恰好 320 个扫描变体；它们没有证明与用户 GregTech.lang 的专属译名一致。蜜蜂计数前提与第 122 项重生成丢注册问题相关。drop_retired_cover_lang 仅删列出的六个精确键行，当前无删项，不应扩大为可安全删除任意覆盖板翻译的工具。
+valve_part 直接给两种语言添加原版英文，仅跳过已有键；USB 工具则逐键强制覆盖其硬编码中英文。track 从当前材料中文拼接族名，scanned bee 从已有普通蜜蜂名拼扫描后缀、缺中文时退回英文，并要求恰好 320 个扫描变体；它们没有证明与GregTech.lang 的专属译名一致。蜜蜂计数前提与第 122 项重生成丢注册问题相关。drop_retired_cover_lang 仅删列出的六个精确键行，当前无删项，不应扩大为可安全删除任意覆盖板翻译的工具。
 
 文字插入工具依赖一键一行、逗号和锚点布局，不能当通用 JSON 合并器。当前文件隔离重跑后可解析；本次没有把未覆盖的任意文件布局假设成当前游戏损坏。
 
@@ -1484,7 +1484,7 @@ report_non_ascii_chars.py 的 startswith 检查字节字面量包含反斜线转
 
 handoff_check 的题头 working tree still green 超出其实际能力：只打印日志片段与 mtime，不根据失败返回非零，也不检查资源/生成器修改时间、构建输入内容或源码与 class 对应；当日志不存在但 jar 存在时，gate log < jar 甚至会因 not exists(LOG) 被打印 True。蜂箱 jar 工具仅检查文件名、计数和八个 class 名，缺失也只打印 MISSING，不读 lang 键或模型/PNG 内容。因此必须保留此前对历史成功证据的范围限定。
 
-_heap_report 只处理已有 build/heap-world.log，没有采样当前 Java 进程。它将后续直方图行里的未匹配值以 None 覆盖先前计数，最后一个样本缺少计数；零值也会被过滤为缺失。现有日志里旧矿石实体数和堆内存变化不能直接归因到当前代码，更不能据最后四次历史样本判断现在仍有泄漏。用户已经允许取消旧矿石迁移，后续按新世界实际场景测量，不用旧表反复推动兼容修复。
+_heap_report 只处理已有 build/heap-world.log，没有采样当前 Java 进程。它将后续直方图行里的未匹配值以 None 覆盖先前计数，最后一个样本缺少计数；零值也会被过滤为缺失。现有日志里旧矿石实体数和堆内存变化不能直接归因到当前代码，更不能据最后四次历史样本判断现在仍有泄漏。已经允许取消旧矿石迁移，后续按新世界实际场景测量，不用旧表反复推动兼容修复。
 
 ## 八个解析辅助视图复核（2026-09-20）
 
@@ -1560,7 +1560,7 @@ gt6_machine_map 类头称两种生成表共用映射、不会不一致，但配�
 
 完整读取 generate_food_item_assets.py：缺图时将行加入 missing_textures 并 continue，最终返回失败只检查 wrote_models 或 lang_added，没有检查 missing_textures。当前正式资源 --check 输出 266 贴图存在、0 模型/语言变化、exit 0；将 PORT_TEXTURES 仅在内存中指向不存在的临时目录再次 --check，输出 266 个 MISSING TEXTURE、textures present:0，仍 exit 0。没有删除或改动任何正式图片。证据见 weekly-audit-food-loot-assets-2026-09-20.json。门禁应把缺图纳入失败条件，并测试缺源图、缺目标图、空 PNG 与缺模型各自结果。
 
-该工具对现有 PNG 只判断文件存在/非零长度，不比较原版图片或完整解码；模型存在时不解析引用。missing_models 列表没有实际 append，不能据没有 MISSING MODEL 输出排除错误模型。当前食品资源通过只是工具现有检查范围，先前全量解码/引用审查应作为另一份证据保留。补语言时两种语言都使用英文 display 和 Food 行，不读取用户标准中文；现有键保留，但若补缺键不能据“键齐全”声称完成中文。
+该工具对现有 PNG 只判断文件存在/非零长度，不比较原版图片或完整解码；模型存在时不解析引用。missing_models 列表没有实际 append，不能据没有 MISSING MODEL 输出排除错误模型。当前食品资源通过只是工具现有检查范围，先前全量解码/引用审查应作为另一份证据保留。补语言时两种语言都使用英文 display 和 Food 行，不读取标准中文；现有键保留，但若补缺键不能据“键齐全”声称完成中文。
 
 ## 战利品箱资源生成器补查（2026-09-20）
 
@@ -1574,7 +1574,7 @@ gt6_machine_map 类头称两种生成表共用映射、不会不一致，但配�
 - `derive_missing_tech_aliases.py` 的文档声明支持 `--json`，但入口没有解析参数，始终写固定 `docs/tech-item-token-aliases.json`。未经重定向不要作为只读检查运行。其原版注册匹配未去注释，原版物品元数据仅少量专门映射，其余直接按旧名称构造 `minecraft:` 目标；命名空间目标没有经过实际注册表验证，结果只能作为人工核对候选。
 - `audit_tech_item_tokens.py` 仅在指定 `--json` 时写文件。注册名来自文本匹配，包含任意注册器的 `.register()`，不能保证都是物品；带冒号的别名目标直接算已解析，也没有验证注册表实际存在。输出中的 recipes 是 token 出现次数，同一配方可含多个 token，不能当作独立配方数。
 
-以上是维护工具的实际边界，不据此断言当前游戏中已存在相同数量的错误配方。旧矿石迁移依用户决定不保留；后续清理仍需先解除正常物品背景数据对旧实体常量的依赖。
+以上是维护工具的实际边界，不据此断言当前游戏中已存在相同数量的错误配方。旧矿石迁移依决定不保留；后续清理仍需先解除正常物品背景数据对旧实体常量的依赖。
 
 ### 134. 旧书架资源脚本会恢复已失效的贴图路径
 
@@ -1661,7 +1661,7 @@ gt6_machine_map 类头称两种生成表共用映射、不会不一致，但配�
 
 完整读取 `tools/import_gt_lang.py`，三个输入材料文件当前均存在；只在内存执行材料合并，匹配 1,067 个条目，规避 1 个遮蔽已有规范名的字段别名，对当前中英文文件的材料键均无新增或变化。证据：`weekly-audit-lang-import-merge-2026-09-20.json`。
 
-其真正命令行入口在 main() 之后还调用 sync_standard_chinese.sync()；本批未运行该写入入口，内存合并结果也不代表整个语言流程无需改进。它依赖固定生成快照/两份附加表，不遍历所有运行时注册材料；局部名称只在含空格时用作英文显示名、缺文件仅跳过。因此全量语言验收仍以用户 GregTech.lang 和真实注册键为准，不能用“成功合并 1,067 条”替代。
+其真正命令行入口在 main() 之后还调用 sync_standard_chinese.sync()；本批未运行该写入入口，内存合并结果也不代表整个语言流程无需改进。它依赖固定生成快照/两份附加表，不遍历所有运行时注册材料；局部名称只在含空格时用作英文显示名、缺文件仅跳过。因此全量语言验收仍以GregTech.lang 和真实注册键为准，不能用“成功合并 1,067 条”替代。
 
 ## 最后六个生成器的定向复核（2026-09-20）
 
@@ -1682,7 +1682,7 @@ gt6_machine_map 类头称两种生成表共用映射、不会不一致，但配�
 
 候选 433 个 Java 已有定向源码/生成器核查记录，171 个 Python 均有明确章节证据索引；9742 JSON、20 mcmeta、686 PNG 已完成格式/完整解码与相应资源族的生成/引用核查。一个 NBT 空模板、两个文本输入、四份候选 MD 的相关生成来源及进度声明已交叉检查。资源格式正确不代表每个视觉效果正确，索引有引用也不代表脚本无缺陷，具体边界保留在各节。
 
-根目录有本周时间戳的 build.gradle、PORTING_AUDIT.md 和旧 JVM 崩溃日志，已分别核对构建/资源路径、历史进度声明和崩溃阶段；更早的配置文件作为运行依赖读取，但不归为本周新增。审计自己的日志单列，未当作其他 agent 的产物。
+根目录有本周时间戳的 build.gradle、PORTING_AUDIT.md 和旧 JVM 崩溃日志，已分别核对构建/资源路径、历史进度声明和崩溃阶段；更早的配置文件作为运行依赖读取，但不归为本周新增。审计自己的日志单列，未当作其他工作线的产物。
 
 六月 HEAD 至当前另有 **36 个删除文件**，无删除时间戳可判断发生周次，已补查其替代路径：
 
@@ -1691,11 +1691,11 @@ gt6_machine_map 类头称两种生成表共用映射、不会不一致，但配�
 - 19 个旧工具 JSON 由 Loader_ToolCraftingRecipes 和 GTToolRecipes 的运行注册替代；因此“JSON 删除”不等于工具不可合成。但 ServerStarted-only 的 reload 丢失风险和客户端配方序列化问题仍须修复。
 - atlas 从 assets/gregtech/atlases/blocks.json 转到 assets/minecraft/atlases/blocks.json；原有目录来源保留，void 改为现有 iconsets/void，并补 axle。没有据旧位置缺文件判为贴图删除。
 
-相对最初 11059 项候选清单，当前没有候选文件丢失，也没有 src/tools 文件尺寸或 mtime 漂移。30 项文档/报告有时间变化，其中包括另一 agent 历史门禁刷新与本次交接更正；不能把同尺寸自动报告视为内容逐字证明，也不能把其刷新当作本次新跑 GameTest。清单与差异存于 `weekly-audit-scope-closure-2026-09-20.json`。
+相对最初 11059 项候选清单，当前没有候选文件丢失，也没有 src/tools 文件尺寸或 mtime 漂移。30 项文档/报告有时间变化，其中包括另一条工作线的历史门禁刷新与本次交接更正；不能把同尺寸自动报告视为内容逐字证明，也不能把其刷新当作本次新跑 GameTest。清单与差异存于 `weekly-audit-scope-closure-2026-09-20.json`。
 
 ### 完成验收与明确留给修复阶段的工作
 
-用户要求的四项已分别落实：按时间筛选并补查范围外删除/根配置；核对代码、资源、生成来源与测试覆盖并记录确证问题；交叉检查他人交接的实现、规格、历史门禁及 jar 声明；在 AUDIT_NEXT_STEPS_2026-09-20.md 和 NEXT_GOAL.md 给出继续工作的优先级及验收路径。旧矿石迁移按用户决定不保留，不再作为移植阻塞项。
+要求的四项已分别落实：按时间筛选并补查范围外删除/根配置；核对代码、资源、生成来源与测试覆盖并记录确证问题；交叉检查他人交接的实现、规格、历史门禁及 jar 声明；在 AUDIT_NEXT_STEPS_2026-09-20.md 和 NEXT_GOAL.md 给出继续工作的优先级及验收路径。旧矿石迁移按决定不保留，不再作为移植阻塞项。
 
 本次未修改游戏 Java/资源/测试，未 commit，未新打包，未启动客户端或重跑整套 GameTest。已执行的编译、Python 测试、引用/格式检查与隔离复现各按真实结果记录；未通过项目没有标绿。后续进入修复阶段先处理协议与丢失/复制问题，再处理 reload、能源/配方和生成器回退，最后继续物流核心 W1–W4。完整游戏兼容性和客户端视觉验证仍需在修复后执行。
 

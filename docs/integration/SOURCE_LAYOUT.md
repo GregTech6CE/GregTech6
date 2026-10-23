@@ -73,7 +73,7 @@ USB／HDD：core `UsbDataRules`给键名、内置ID／级别和模式范围；�
 
 这些材料数据属于共享 core，两版本共同读取。生成文件的持久修改需要同步对应生成器（`tools/transpile_gt6_materials.py` 与 `tools/modular_materials.py`），否则重新生成会覆盖。工厂继承／加工属性的已知缺口仍见审计主表，不能根据一个定义行推断所有后续加工行为。
 
-CompoundMaterials 现保留用户统一颜色列；生成端和独立排版入口使用同一计算规则。`dust(...).setTextureSet(...)` 与 `elec(..., texture)` 来自不同工厂签名，不能互换工厂统一外观写法，见[说明与七表重现](MATERIAL_TABLE_FORMATTING_20261020.md)。
+CompoundMaterials 现保留统一颜色列；生成端和独立排版入口使用同一计算规则。`dust(...).setTextureSet(...)` 与 `elec(..., texture)` 来自不同工厂签名，不能互换工厂统一外观写法，见[说明与七表重现](MATERIAL_TABLE_FORMATTING_20261020.md)。
 
 ## 初始化和配方从哪里看
 
@@ -356,7 +356,7 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 ## 液态材料工厂与补偿
 
 - core `api/material/MaterialFactories.java`：当前工厂默认属性和纹理入口，长参数／方法已展开；不是所有默认值都与原版同名helper等价。
-- `tools/transpile_gt6_materials.py`先识别源工厂族，`tools/modular_materials.py`再拆分声明；用户整理的CompoundMaterials保持独立颜色列。不要直接运行旧脚本覆盖采用后的数据。
+- `tools/transpile_gt6_materials.py`先识别源工厂族，`tools/modular_materials.py`再拆分声明；整理过的CompoundMaterials保持独立颜色列。不要直接运行旧脚本覆盖采用后的数据。
 - core `content/material/MaterialDefinitions.java`的link加载组成／事实／形态补偿；`content/fluid/FluidDefinitions.prepare`在实际流体注册前补状态。`data/generated/MaterialForms.java`只是前缀准入侧表，不能替代GTMaterial.GAS/LIQUID。
 - `api/fluid/FluidHazards.isMagic`读取生成流体关联材料，`FluidPipeBlockEntity.checkSafety`真正消费危险标志。三项差异与已有补偿见[液态酸核查](LIQUID_ACID_FACTORY_AUDIT.md)。
 
@@ -374,7 +374,7 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 
 第六十批核辅助类已展开：core `content/nuclear/RodPhysicsMath.java` 的数量／向上取整与热／寿命运算，以及 `ReactorCoolantRules.java` 的11项冷却表／棒参数修饰改用明确参数名。原生Fluid解析仍看 `ReactorCoolants`，不能把表键当成已验证的实际注册流体；本次只做可读性保持，见[核导航](NUCLEAR_SOURCE_LAYOUT.md)。
 
-第六十一批补充[配置入口与真实消费](CONFIGURATION_CONTRACT_AUDIT.md)：共享`GregTechConfig.java`定义三个键，两版入口注册COMMON spec，默认文件由加载器命名为`gt6ce-common.toml`。两个过载getter由`MachineOverload`等消费；日志键当前未被读取。原版材料／掉落／世界生成配置只核了代表矩阵，Nexus全开与配置收尾仍按用户安排。核状态和异常边界分别见[状态](NUCLEAR_TRANSITION_AUDIT.md)、[网络生命周期](NUCLEAR_NETWORK_LIFECYCLE_AUDIT.md)。
+第六十一批补充[配置入口与真实消费](CONFIGURATION_CONTRACT_AUDIT.md)：共享`GregTechConfig.java`定义三个键，两版入口注册COMMON spec，默认文件由加载器命名为`gt6ce-common.toml`。两个过载getter由`MachineOverload`等消费；日志键当前未被读取。原版材料／掉落／世界生成配置只核了代表矩阵，Nexus全开与配置收尾仍按安排。核状态和异常边界分别见[状态](NUCLEAR_TRANSITION_AUDIT.md)、[网络生命周期](NUCLEAR_NETWORK_LIFECYCLE_AUDIT.md)。
 
 第六十二批补充[工具参与工作台配方导航](TOOL_CRAFTING_SOURCE_LAYOUT.md)：ToolShapedRecipe／ToolShapelessRecipe处理工具返还、镜像／形态与空容器限制；工具本身的头柄／整体制作另看GTToolRecipes及相应配方类。两版包装serializer注册分别在Forge ToolBootstrap和NeoRecipeSerializers，不能与GTToolRecipeSerializers的tool-kind／pattern编码混为一层。
 

@@ -11,4 +11,4 @@ Actual gt_black_sand and gt_nether_deposits registrations,15 source resource rec
 - Source1 Nether feature relies on native biome modifier for dimension gating; direct invocation has no dimension check.
 - Full survival/client rendering/Forge runtime/reload/old saves/fresh jars pending.
 
-Grouped core/Neo/Forge compile passed19s; no new fixture or individual startup. All source trees unchanged and full goal active.
+Grouped core/Neo/Forge compile passed19s; no new fixture or individual startup. All source trees unchanged and The overall port is still incomplete.

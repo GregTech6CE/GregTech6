@@ -12,4 +12,4 @@ Actual gt_bedrock_ores, gt_coltan, gt_deep_ocean and gt_nether_scatter registrat
 - Deep ocean biome gate is only vanilla deep_ocean; newer deep ocean variants and mod dimensions absent.
 - Actual resource conservation/survival/drops/client rendering/Forge runtime/independent world reload/old saves/fresh jars pending.
 
-Grouped compilation passed19s; no new fixture or individual startup. Sources untouched and full goal active.
+Grouped compilation passed19s; no new fixture or individual startup. Sources untouched and The overall port is still incomplete.

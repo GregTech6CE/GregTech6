@@ -4,7 +4,7 @@
 
 ## 来源与取舍
 
-用户提供的新参考实际位于 `C:\Dev\gregtech6_w-main\gregtech6_w-main`。其 README 标明当前快照面向 Minecraft 26.1.2 / NeoForge / Java 25；本项目继续保持 Forge 1.20.1 / Java 17 与 NeoForge 1.21.1 / Java 21，共享领域逻辑，不整体搬入该版本的引擎适配层。
+提供的新参考实际位于 `C:\Dev\gregtech6_w-main\gregtech6_w-main`。其 README 标明当前快照面向 Minecraft 26.1.2 / NeoForge / Java 25；本项目继续保持 Forge 1.20.1 / Java 17 与 NeoForge 1.21.1 / Java 21，共享领域逻辑，不整体搬入该版本的引擎适配层。
 
 核对以下本地源码的 `MultiTileEntityPipeFluid.getFluidTankFillable2`、`distribute` 和 `fill`：
 
@@ -43,7 +43,7 @@ gradlew.bat --console=plain :core:check :build :neoforge:build :compileBootstrap
 gradlew.bat --console=plain -PdirectCoreResources=true -PdirectCoreClasspath=true -PgameTestNamespaces=gregtech_fluid_channels -PgameTestDirectory=build/fluid-channel-gametest-run -PneoforgeGameTestDirectory=build/fluid-channel-gametest-run :runGameTestServer :neoforge:runGameTestServer
 ```
 
-本机 wrapper 首次无法写用户缓存，获准重试后官方下载的 GitHub 跳转超时。改从 Gradle 镜像取得 8.8，并与官方 `downloads.gradle.org` 给出的 SHA-256 `a4b4158601f8636cdeeab09bd76afb640030bb5b144aafe261a5e8af027dc612` 核对一致，解压到 `work/gradle-runtime/gradle-8.8`。实际命令用其中的 `bin/gradle.bat` 代替 wrapper，没有修改项目 wrapper 或关闭 TLS 校验。
+本机 wrapper 首次无法写缓存，获准重试后官方下载的 GitHub 跳转超时。改从 Gradle 镜像取得 8.8，并与官方 `downloads.gradle.org` 给出的 SHA-256 `a4b4158601f8636cdeeab09bd76afb640030bb5b144aafe261a5e8af027dc612` 核对一致，解压到 `work/gradle-runtime/gradle-8.8`。实际命令用其中的 `bin/gradle.bat` 代替 wrapper，没有修改项目 wrapper 或关闭 TLS 校验。
 
 最终重打包曾在 ForgeGradle `EnvironmentChecks.testServerConnection` 的无读取超时 TLS 握手处等待（线程诊断 `work/gradle-package-diagnostic.txt`）；取消该次命令后，使用 `--no-daemon --offline` 及 JVM 的 `sun.net.client.defaultConnectTimeout=15000` / `sun.net.client.defaultReadTimeout=15000` 重试。未设置 `net.minecraftforge.gradle.check.certs=false`，未禁用 TLS/证书校验，也未修改项目依赖版本。
 

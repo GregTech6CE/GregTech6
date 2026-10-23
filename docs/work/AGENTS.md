@@ -11,4 +11,4 @@ User scope: integrate the three preserved source snapshots into this repository 
 - A build pass is not a gameplay pass. Track client, dedicated server, complete survival chain and actual saved-world restart independently. Keep old-save compatibility explicitly unverified until tested on backups.
 - Put scratch files/logs/run worlds in ignored `work/` or platform build/run directories. Keep durable decisions and test summaries under `docs/integration/`.
 - Preserve available original history; imported archives are snapshots, never fabricated original commits. Do not guess remote ownership. Do not publish or send external messages unless requested.
-- Keep the goal active until its acceptance conditions are actually met. Report exact blockers and attempts without marking unfinished work complete.
+- Keep the 整体移植仍未完成 until its acceptance conditions are actually met. Report exact blockers and attempts without marking unfinished work complete.

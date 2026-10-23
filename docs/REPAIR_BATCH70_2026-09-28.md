@@ -30,7 +30,7 @@ MultiTileEntityMoldCoinage.onBlockActivated3 允许顶面/侧面取出任何 slo
 
 ## 测试包交付与暂停
 
-用户要求本轮结束后打包并暂停下一轮。已执行 gradlew.bat build --offline --console=plain，退出码 0，BUILD SUCCESSFUL（5m17s），含 reobfJar 和 test/check。构建日志：build/build_batch70.log。
+要求本轮结束后打包并暂停下一轮。已执行 gradlew.bat build --offline --console=plain，退出码 0，BUILD SUCCESSFUL（5m17s），含 reobfJar 和 test/check。构建日志：build/build_batch70.log。
 
 - Jar：`F:\Dev\GregTech6\GregTech6\build\libs\gregtech-1.0.0.jar`
 - 大小：37,801,661 字节；80,432 个 ZIP 条目。

@@ -44,6 +44,6 @@ WolfCollarAccessor已在两版配置。实际本机1.20.1映射类的setter是pu
 
 展开ExtenderBlockEntity的覆盖板保存／更新、路径选择、控制lambda与信号方法，SourceExtenderBlock的两版交互／工具／ticker；c仅在machineControl的lambda内改control，be仅在ticker内改blockEntity。清漆说明改为实际目标／兼容边界；PaintTargets和FixedConstructionColor展开条件缩进；狼Invoker拆行，GrassSoilCatalog六项按行列出并明确side／top职责。
 
-七源十三份完整执行流：清漆557／557、目标770／770、建筑色412／412、Invoker81／81、扩展器2515／2587、方块1305／1575、core草目录133。在限定局部绑定归一后保持；原始字符串／数值位置、六处说明纠正、其余注释和Stonecutter指令另核。用户CompoundMaterials及WoodMaterials原始摘要保持。
+七源十三份完整执行流：清漆557／557、目标770／770、建筑色412／412、Invoker81／81、扩展器2515／2587、方块1305／1575、core草目录133。在限定局部绑定归一后保持；原始字符串／数值位置、六处说明纠正、其余注释和Stonecutter指令另核。CompoundMaterials及WoodMaterials原始摘要保持。
 
-26份原版／41份当前、46共享平台视图、四JSON及两个原生工件8entry／5次只读javap留痕，其中一次verbose只为核实Forge包的REF_invokeVirtual getUpdateTag引用。未编译／目标初始化、Gradle、测试、游戏、GPU、真实存档重启、构建或推送。外部颜色接口、全部属性与动物事件、喷罐生存补充配方、代理实际交互及其它原版系统继续，goal保持active。
+26份原版／41份当前、46共享平台视图、四JSON及两个原生工件8entry／5次只读javap留痕，其中一次verbose只为核实Forge包的REF_invokeVirtual getUpdateTag引用。未编译／目标初始化、Gradle、测试、游戏、GPU、真实存档重启、构建或推送。外部颜色接口、全部属性与动物事件、喷罐生存补充配方、代理实际交互及其它原版系统继续，整体移植仍未完成。

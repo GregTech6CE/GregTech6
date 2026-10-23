@@ -13,9 +13,9 @@ Use source1 complete60 advanced+60 charging tables with71 slots, transaction pla
 - Crafting tables retain source tool-head equality, per-menu planning cache, slot filters and output transaction behavior. Connected inventories/tanks, persistent arbitrary ghost patterns, selector features and full recipe/tool/bucket correctness remain pending.
 - Only existing original resources are retained; fewer per-item model files than registered variants remain source resource gaps. Both platform model-loader files are preserved separately.
 - Grouped startup occurred before model-loader boundary split and blueprint-model relocation; those resource changes need later client/native resource verification, not a repeat server startup.
-- Forge runtime, client rendering, survival chain, releases and migration from brokestar/masson namespaces remain unverified. Full integration goal stays active.
+- Forge runtime, client rendering, survival chain, releases and migration from brokestar/masson namespaces remain unverified. 整体移植仍未完成。
 
-315 real block variants; grouped dual compile20s. Full goal remains active.
+315 real block variants; grouped dual compile20s. 整体移植仍未完成。
 
 
 2026-10-01 集中Neo专服启动PASS：本轮315书架/保险箱/工作台、10钥匙/2蓝图及前批10草土/19建筑栏杆尖刺/4物品堆全部完成注册与数据加载，200tick普通运行并正常保存三维度退出。总7m55s，观察10.56秒；无新增夹具或额外玩法检测。回执p3-neoforge-storage-workstations-startup.json。模型loader分离/蓝图模型搬迁随后完成，运行交互/客户端/独立重载仍未验证。静态共享资源本地启动可选 -PdirectCoreResources=true 避免整库复制；正常CI/发布仍沿用原流程，该选项留下一次集中启动验证。

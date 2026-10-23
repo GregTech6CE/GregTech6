@@ -1,6 +1,6 @@
 # 2026-10-04 / 原版箭与装药弹壳
 
-整体移植 goal 保持 active。按用户要求减少测试，本批使用集中编译、共享固定样例和双平台验包，没有启动客户端或 GameTest。
+整体移植仍未完成。按要求减少测试，本批使用集中编译、共享固定样例和双平台验包，没有启动客户端或 GameTest。
 
 ## 来源与实现
 
@@ -33,6 +33,6 @@
 
 成品路径：C:\Dev\GregTech6\build\libs\gregtech6-1.20.1-forge-0.0.0.jar；C:\Dev\GregTech6\neoforge\build\libs\gregtech6-neoforge-1.21.1-0.0.0.jar。
 
-用户最新询问的基岩矿上层已再对照 WorldgenOresBedrock:195-207 与 WD.removeBedrock:782-798：矿团上方六层在其 muffin 范围内替换母岩，主世界为深板岩、下界为下界岩，不挖成空气，保留底层与范围外基岩。既有修正 7bff1d9f 已在当前两平台代码；不自动改写旧区块。
+最新询问的基岩矿上层已再对照 WorldgenOresBedrock:195-207 与 WD.removeBedrock:782-798：矿团上方六层在其 muffin 范围内替换母岩，主世界为深板岩、下界为下界岩，不挖成空气，保留底层与范围外基岩。既有修正 7bff1d9f 已在当前两平台代码；不自动改写旧区块。
 
 生产代码提交：`2ea1121d03e358e3493be57b377ebb3e17dda2a4`；本批验证记录作为单独文档提交。

@@ -13,6 +13,6 @@ Full ordinary36-slot and advanced20-slot bumbliaries, hive9-slot contents,640 be
 - Hive generation can leave an empty shell if content resolution fails; world generation and crafting/tag availability not yet runtime proven.
 - Forge runtime, dedicated-server coverage of this batch, independent saved-world restart, old saves and new production jars remain unverified.
 
-Grouped core/Neo/Forge compilation passed33s after correcting static properties factory collision, synthetic interact override, registry namespace, flower-pot getPotted and DeferredHolder field types. No added test fixtures or individual startup. All three source trees untouched; full goal remains active.
+Grouped core/Neo/Forge compilation passed33s after correcting static properties factory collision, synthetic interact override, registry namespace, flower-pot getPotted and DeferredHolder field types. No added test fixtures or individual startup. All three source trees untouched; The overall port is still incomplete.
 
 Grouped ordinary Neo startup passed1m59s after core archive ZIP64 entry-limit repair.960 bee display rows,80 crop processing rows,2 bumble crafting rows and6421total crafting recipes loaded; DedicatedServer200ticks normally saved/stopped. Receipt:verification/p3-neoforge-bumble-surface-terrain-startup.json. No retry for nonblocking Mojang key fetch timeout. Actual gameplay/client terrain generation/Forge/restart/old saves/new jars remain unverified.

@@ -79,7 +79,7 @@ if (rootProject.findProperty('clientSmoke') == 'true') {
 }
 ```
 
-已有mods.gregtech应继续包含main、core、bootstrapGameTest源集。测试代码没有编辑这两段Gradle配置；Root已在串行窗口接入。Root还将两个隔离build/client-smoke-run的options.txt预置onboardAccessibility:false及声音静音，避免开发首次启动进入辅助提示；这是独立测试配置，不改变用户.minecraft选项。测试类不会自动点击接受提示或把未到TitleScreen改成成功。
+已有mods.gregtech应继续包含main、core、bootstrapGameTest源集。测试代码没有编辑这两段Gradle配置；Root已在串行窗口接入。Root还将两个隔离build/client-smoke-run的options.txt预置onboardAccessibility:false及声音静音，避免开发首次启动进入辅助提示；这是独立测试配置，不改变.minecraft选项。测试类不会自动点击接受提示或把未到TitleScreen改成成功。
 
 编译命令（整合目录，Java17 Gradle launcher，Java17/21工具链仍按根脚本设置）：
 
@@ -116,7 +116,7 @@ python tools/integration/verify_client_smoke.py --self-test
 - 开发测试实现：已写入两平台bootstrap源集。
 - 两平台原探针bootstrap编译：Root实跑通过（38s）；Forge可配置预算/快照诊断已在重试命令自动重编译并运行。Neo新诊断版本尚未重跑，不重复声称该新版本的运行结果。
 - Neo原探针真实运行：Root报告38s正常退出，SUCCESS elapsedMs=8034，1280×720主菜单截图人工查看正常；日志、截图SHA及机读回执由Root集中记录。
-- Forge首跑：STARTED 21:18:27、atlas 21:19:54、recipes/advancements 21:20:12，21:20:27到120秒预算并FAILED；Gradle退出码0不足以通过。240秒上限重试实际82566ms/152帧成功，1280×720新PNG解码及主会话实际视觉检验通过，正常退出；详见VERIFICATION账本。
+- Forge首跑：STARTED 21:18:27、atlas 21:19:54、recipes/advancements 21:20:12，21:20:27到120秒预算并FAILED；Gradle退出码0不足以通过。240秒上限重试实际82566ms/152帧成功，1280×720新PNG解码及实际视觉检验通过，正常退出；详见VERIFICATION账本。
 - 验收脚本自检：Python3.13运行通过；Python3.10语法检查通过，尚未在3.10解释器运行。
 - 成品jar不包含测试类：源集/打包配置符合隔离设计，新增类的最终jar缺席检查仍待Root构建后执行。
 

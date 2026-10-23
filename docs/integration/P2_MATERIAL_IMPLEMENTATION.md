@@ -8,7 +8,7 @@ saltnya 导入快照 `import/saltnya-snapshot`（`41561782`）的39个真实类�
 
 最初候选36类经独立编译发现3个真实依赖，补入 `MaterialOreProcessing`、`PortableFluidContainerSpec`、`ReactorRodCatalog`。胶囊/反应棒规格保持原字节，供 MaterialFormCorrections 的既有规则直接调用，没有抄一份材料名称表。原 Forge 路径均移除同名类；core 单一输出由两个平台消费。
 
-`core/provenance/material-extractions.json` 记录每个原路径、core路径、原SHA-256、整合后SHA-256、字节一致性及边界取舍。作者身份使用用户给定 saltnya 来源标识，未恢复或捏造作者提交历史。授权仍未决，未添加、替换第三方许可；本地开发验证不通过发布许可门禁。
+`core/provenance/material-extractions.json` 记录每个原路径、core路径、原SHA-256、整合后SHA-256、字节一致性及边界取舍。作者身份使用给定的 saltnya 来源标识，未恢复或捏造作者提交历史。授权仍未决，未添加、替换第三方许可；本地开发验证不通过发布许可门禁。
 
 本批保留 saltnya 的全目录和原反应行为。brokestar 的图验证/热量与 masson 的转换/守恒/指纹思路已比较，见 P2_MATERIAL_DESIGN；本批尚未采纳它们的算法或第二套模型。下一次算法变更应在同一 GTMaterial/long U 上逐项比较原固定样本，再记录选择。
 

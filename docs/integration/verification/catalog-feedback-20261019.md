@@ -1,6 +1,6 @@
 # 分类、旧测试磁铁及砧上方块显示
 
-本批为 2026-10-19 用户反馈的分类与提示子项。双版共用规则；不改变瓶子的原创造分类、饮用行为或配方标签。静态数据与来源摘要见 [回执](catalog-feedback-20261019.json)。原始参考为 Gregorius Techneticies / GregTech 6 Team 的 GT6，Java 按原 LGPL-3.0-or-later，原有声明保留。
+本批为 2026-10-19 反馈的分类与提示子项。双版共用规则；不改变瓶子的原创造分类、饮用行为或配方标签。静态数据与来源摘要见 [回执](catalog-feedback-20261019.json)。原始参考为 Gregorius Techneticies / GregTech 6 Team 的 GT6，Java 按原 LGPL-3.0-or-later，原有声明保留。
 
 ## 实现
 

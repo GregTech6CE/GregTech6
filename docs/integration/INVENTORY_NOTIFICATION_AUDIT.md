@@ -89,7 +89,7 @@ Loader 在 updateNeighbourForOutputSignal 中先对相邻 BlockState 调 **onNei
 
 GT 漏斗／队列的 findInputSource、findOutputTarget 分别使用当前平台能力 API；Neo 走 level.getCapability，Forge 走实体 getCapability。筛粉漏斗的 NativeItemInventories.at 也按平台分支重新读取已加载邻格。当前管道是路由已有物品，不因其实现接收接口就等价于会主动抽取箱内物品。
 
-因此本轮的可靠结论是：原先箱子变更促进相邻自动化尽快重检的**专用通知合同未恢复**；存在定时重试，最大等待还受冷却、红石、内容、方向和能力规则影响。没有复现实测时延，也没有断言用户此前料斗故障仍然存在，或通知缺失必然永久卡死。
+因此本轮的可靠结论是：原先箱子变更促进相邻自动化尽快重检的**专用通知合同未恢复**；存在定时重试，最大等待还受冷却、红石、内容、方向和能力规则影响。没有复现实测时延，也没有断言此前料斗故障仍然存在，或通知缺失必然永久卡死。
 
 ## ALIGN-173：部分 shift 转出没有触发箱子自身库存回调
 

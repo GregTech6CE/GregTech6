@@ -68,4 +68,4 @@
 
 展开 SafeLockRules、OriginalStorageTooltipData、两份衣柜源码和 Neo 的 GTSafes／SafeClientSetup；纠正钥匙 ID／注册归属及地牢已使用钥匙箱的过时说明。另展开 Neo 的 StorageContainerClientSetup、EngineClientSetup、GTRelaysFilters。十二份源码共十七份 core／两版投影的 Java 词法和字面量与基线一致，Neo 维护注释体先显式展开；未改玩法、注册顺序或保存格式。
 
-[来源和比较回执](verification/safe-locker-audit-20261020.json)保存 23 份原版和 49 份当前文件哈希。本批没有运行 Gradle、编译、新测试、游戏、重启或构建；此前用户请求的双包交付基于 `36833296c`，单独保留构建回执。全面审计继续。
+[来源和比较回执](verification/safe-locker-audit-20261020.json)保存 23 份原版和 49 份当前文件哈希。本批没有运行 Gradle、编译、新测试、游戏、重启或构建；此前请求的双包交付基于 `36833296c`，单独保留构建回执。全面审计继续。

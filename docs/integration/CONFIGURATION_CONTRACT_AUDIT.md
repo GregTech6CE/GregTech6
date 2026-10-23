@@ -66,7 +66,7 @@ Forge主类97–98无条件记录材料／物品／方块数量；Neo主类166�
 | 生物掉落铅／肉类／杂物等开关 | GT_API:519–523默认true；Override_Drops:686／690／705按开关守卫实际箭、铅替换、肉类分支。 | MobDropEvents是双端实际服务端LOWEST监听，115–145等处直接执行默认路径，MobDropRules.Context也没有开关参数。已有铅替换、肉类变化，不能报整族未实现；原设置为false时可取消相应分支，当前COMMON spec没有这种入口。普通数据包改原生掉落表并不自动取消事件里的后续替换。 |
 | 每材料工具与处理倍率 | GT_API:250–256从Materials／OreProcessing写入倍率、quality、speed、durability和handle；MultiItemTool:182在创建工具时消费耐久。 | GTMaterial有setToolStats，ManualToolRules:8–12经GTToolHelper计算实际工具耐久，来源数据存在；生产配置没有材料覆盖矩阵。编辑源码／生成表或通过addon API改材料不是已提供的内置配置。未来应区分初始化覆盖与运行期已有工具数据，而非一律热改。 |
 | FlintAndSteelChance | GT6_Main:111限1–100，默认30；原Behavior_FlintAndTinder:51／53及GT_Proxy:270读取。 | GTToolItem:101–104固定传DEFAULT_FLINT_CHANCE=30；默认相同，可配置概率未接入。已有ALIGN-133，不重复编号，也不重审随机分支ALIGN-127。 |
-| Nexus／roads及中心五模块 | 原Loader_Worldgen:646–650五项默认false，各原Worldgen对象可配置。 | GTOriginFeature:44–53主动启用中心群系、道路、信标、Nexus、testing，OriginSpawnEvents同步出生位置。用户明确要求先全部开启、cfg收尾再做；当前全开是授权选择，不能作为原默认差异缺陷。本轮不改为false。 |
+| Nexus／roads及中心五模块 | 原Loader_Worldgen:646–650五项默认false，各原Worldgen对象可配置。 | GTOriginFeature:44–53主动启用中心群系、道路、信标、Nexus、testing，OriginSpawnEvents同步出生位置。明确要求先全部开启、cfg收尾再做；当前全开是授权选择，不能作为原默认差异缺陷。本轮不改为false。 |
 
 矩阵确认“原版可选、当前只有默认行为”与“默认行为本身错误”是不同问题。它不是完整配置清单，不能按旧所有键的数量计算缺陷，也不将此前明确延后的cfg工作说成未经授权的改动。
 
