@@ -1,0 +1,39 @@
+{
+  "scope": "Project-owned electrometer/tachometer functional readouts; exactly four keys, not original GT6 translation sentences.",
+  "authorization": "2026-10-23: continue comprehensive functional alignment and bug fixes; prior user request uses TeamNED GregTech.lang as Chinese terminology reference. Dedicated functional instrument text, not an expansion of Jade scope.",
+  "reference_release": "https://github.com/TeamNED/GregTech6-Translation-Groupware/releases/tag/6.17.06-alpha.5",
+  "reference_sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0",
+  "evidence": "Original wire line 136 / axle line 82 and gearbox lines 161–172 use EU/t and RU/t. Direction arguments reuse existing jade.gt6ce.direction.* translations. New input/output sentences are project-owned.",
+  "values": {
+    "message.gt6ce.meter.electric": {
+      "english": "%s EU/t",
+      "value": "%s EU/t"
+    },
+    "message.gt6ce.meter.rotary": {
+      "english": "%s RU/t",
+      "value": "%s RU/t"
+    },
+    "message.gt6ce.meter.input_side": {
+      "english": "Accepts from %s",
+      "value": "从%s输入"
+    },
+    "message.gt6ce.meter.output_side": {
+      "english": "Emits to %s",
+      "value": "向%s输出"
+    }
+  },
+  "source_evidence": {
+    "wire": {
+      "path": "src/main/java/gregapi/tileentity/connectors/MultiTileEntityWireElectric.java",
+      "sha256": "60dd3bf9147a220ab327a1aed3f0081382678eb0d6190e865e84e1b7dae89724"
+    },
+    "axle": {
+      "path": "src/main/java/gregapi/tileentity/connectors/MultiTileEntityAxle.java",
+      "sha256": "033cbb9dc03d4d2471cdcb544ac9c566337acf393f79c8e4cfc97eb3dac790f7"
+    },
+    "gearbox": {
+      "path": "src/main/java/gregtech/tileentity/energy/transformers/MultiTileEntityGearBox.java",
+      "sha256": "8196babc3f0682d441cfbbdd3461cb55a6a10629709acef6bf869dac83cee5a6"
+    }
+  }
+}
