@@ -12,6 +12,9 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'builderorevarianttests.orehostsskipmismatchedstock',
+    'builderorevarianttests.orebrokenformskipsmismatchedstock',
+    'builderorevarianttests.orenomatchingvariantpreservesinventory',
     'buildercontainertransactiontests.powderbucketsurvivalmainhand',
     'buildercontainertransactiontests.powderbucketsurvivaloffhand',
     'buildercontainertransactiontests.powderbucketcreativemainhand',
