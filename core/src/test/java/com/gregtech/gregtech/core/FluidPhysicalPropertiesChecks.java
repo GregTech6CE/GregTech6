@@ -16,7 +16,15 @@ public final class FluidPhysicalPropertiesChecks {
 
     static int verify() {
         assertions = 0;
+        check(FluidCatalog.isBuiltInDefinition(FluidCatalog.Beer), "built-in provenance exists before preparation");
+        check(FluidCatalog.isBuiltInDefinition(FluidCatalog.Beer.withTemperature(301)),
+                "immutable metadata copies keep built-in registry provenance");
         FluidDefinitions.prepare();
+        check(FluidCatalog.isBuiltInDefinition(FluidCatalog.get("Beer")),
+                "import reconciliation retains built-in provenance");
+        var generatedIron = FluidCatalog.get("GenMolten_Iron");
+        check(generatedIron != null && !FluidCatalog.isBuiltInDefinition(generatedIron),
+                "material-generated definitions are not part of the static directory");
         check(FluidPhysicalProperties.viscosity(FluidCatalog.Steam) == 200, "gas viscosity");
         check(FluidPhysicalProperties.density(FluidCatalog.Steam) == -1000, "explicit steam override");
         check(FluidPhysicalProperties.viscosity(FluidCatalog.HeliumPlasma) == 10, "plasma viscosity");

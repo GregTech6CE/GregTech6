@@ -919,6 +919,18 @@ public class FluidCatalog {
     // Registry
     // =======================================================================
 
+    // Capture only static declarations, after the last declaration/array initializer and before
+    // external registration or material generation can run. Immutable with* copies reconciled by
+    // bootstrap retain their path; a later material binding does not transfer registry ownership.
+    private static final java.util.Set<String> BUILT_IN_PATHS = REGISTRY.values().stream()
+            .map(entry -> sanitizePath(entry.registryName()))
+            .collect(java.util.stream.Collectors.toUnmodifiableSet());
+
+    /** Whether this registry path came from the built-in fluid directory, not material generation. */
+    public static boolean isBuiltInDefinition(FluidEntry entry) {
+        return entry != null && BUILT_IN_PATHS.contains(sanitizePath(entry.registryName()));
+    }
+
     public static Map<String, FluidEntry> all() {
         return Map.copyOf(REGISTRY);
     }
