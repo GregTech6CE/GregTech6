@@ -9172,6 +9172,7 @@
   "gt6ce.jei.assembly_steam_turbine": "Solid 3×3×4: steam at front, distilled water below, RU at rear centre.",
   "gt6ce.jei.assembly_tank": "Top-down layers, bottom to top. C faces the top edge. All walls allow fluid I/O. Keep the light cells empty. Controller also fits the top or bottom face center.",
   "gt6ce.jei.catalyst": "Not consumed",
+  "gt6ce.jei.fluid_presence": "Presence only (0 mB consumed; no amount reserved)",
   "gt6ce.jei.category.bedrock_ores": "GT Bedrock Ores",
   "gt6ce.jei.category.loot_tables": "GregTech Loot Tables",
   "gt6ce.jei.category.mob_drops": "GregTech Mob Drops",

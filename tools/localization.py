@@ -296,6 +296,30 @@ def load_instrument_project(repo=ROOT):
     return rows
 
 
+
+# User-confirmed presence-only recipe catalyst, not a generic JEI exemption.
+RECIPE_PROJECT_KEYS = frozenset({'gt6ce.jei.fluid_presence'})
+
+
+def load_recipe_project(repo=ROOT):
+    """Exact project recipe UI wording; never purported original translation."""
+    path = repo / CONFIG_PATH / 'recipe_project.json'
+    if not path.exists():
+        return {}
+    rows = read_json(path)['values']
+    if not isinstance(rows, dict):
+        raise ValueError('Project recipe values must be a mapping')
+    for key, row in rows.items():
+        if key not in RECIPE_PROJECT_KEYS:
+            raise ValueError('Project recipe translation outside exact allowlist: ' + key)
+        if not isinstance(row, dict) or any(not isinstance(row.get(field), str) or not row[field]
+                                            for field in ('english', 'value')):
+            raise ValueError('Incomplete project recipe translation: ' + key)
+        if format_arguments(row['english']) != format_arguments(row['value']):
+            raise ValueError('Project recipe format arguments differ: ' + key)
+    return rows
+
+
 def expected_chinese(english, source, aliases, *, repo=ROOT):
     for label, mapping in [('English', english), ('source', source), ('aliases', aliases)]:
         if not isinstance(mapping, dict) or any(not isinstance(k, str) or not isinstance(v, str)
@@ -334,6 +358,14 @@ def expected_chinese(english, source, aliases, *, repo=ROOT):
             raise ValueError('Project instrument English drifted or key missing: ' + key)
         if key in aliases or key in source or key in adopted_keys or key in jade_keys:
             raise ValueError('Project instrument translation overrides source/adopted/Jade binding: ' + key)
+        result[key] = row['value']
+    instrument_keys = load_instrument_project(repo).keys()
+    for key, row in load_recipe_project(repo).items():
+        if english.get(key) != row['english']:
+            raise ValueError('Project recipe English drifted or key missing: ' + key)
+        if (key in aliases or key in source or key in adopted_keys
+                or key in jade_keys or key in instrument_keys):
+            raise ValueError('Project recipe translation overrides source/adopted/Jade/instrument binding: ' + key)
         result[key] = row['value']
     if any(k.startswith('emi.group.gt6ce.') for k in english):
         from integration.remi_group_titles import headings
@@ -381,12 +413,13 @@ def synchronize(repo=ROOT, *, write=False, external=None):
     rock_heading = stone_rock_heading(english, source)
     fallback = sorted(english.keys() - source.keys() - aliases.keys() - derived_titles.keys()
                       - rock_heading.keys() - adopted.keys() - load_jade_project(repo).keys()
-                      - load_instrument_project(repo).keys())
+                      - load_instrument_project(repo).keys() - load_recipe_project(repo).keys())
     return {'source_sha256': meta['sha256'], 'source_keys': len(source), 'english': english_report,
             'native_aliases': len(aliases), 'chinese_keys': len(expected), 'derived_emi_headings': len(derived_titles),
             'derived_stone_rock_templates': len(rock_heading), 'adopted_cruciblecraft_copies': len(adopted),
             'project_jade_translations': len(load_jade_project(repo)),
             'project_instrument_translations': len(load_instrument_project(repo)),
+            'project_recipe_translations': len(load_recipe_project(repo)),
             'english_fallback_count': len(fallback), 'english_fallback_keys': fallback,
             'changes': {k: len(v) for k, v in delta.items()}}
 

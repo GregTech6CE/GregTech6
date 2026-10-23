@@ -289,6 +289,8 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, com.g
             if (!recipe.mEnabled || recipe.mFakeRecipe) continue;
             if (recipe.mInputs.length != 1 || !RecipeInputs.matches(recipe.mInputs[0], itemInput)) continue;
             if (recipe.mFluidInputs.length != 1 || recipe.mFluidOutputs.length == 0) continue;
+            // Barrel conversion replaces the whole fluid; presence-only rows belong to ordinary fermenters.
+            if (recipe.isPresenceFluidInput(0)) continue;
             FluidStack input = recipe.mFluidInputs[0];
             FluidStack output = recipe.mFluidOutputs[0];
             if (input == null || output == null || !input.isFluidEqual(fluid)) continue;

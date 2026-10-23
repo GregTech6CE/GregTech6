@@ -139,12 +139,13 @@ if (map.add(recipe) == null)
 
 This uses the existing GT recipe system, not a parallel addon recipe registry. Choose inputs/outputs and power/duration appropriate for your addon. New rows are available to the existing machine recipe lookup and viewers; overlapping inputs retain that map's original precedence rules. `onRecipesReady` runs once at startup. Datapack and KubeJS changes use the overlay below; they do not call the addon callback again.
 
-`AddonRecipes.Line` has four constructors:
+`AddonRecipes.Line` has five constructors:
 
 - `Line(ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs, FluidStack[] fluidOutputs, long duration, long euPerTick, long special)`
 - `Line(..., int[] outputChances)`
 - `Line(..., int[] outputChances, int[] keptInputs)`
 - `Line(..., int[] outputChances, int[] keptInputs, int[] keptFluidInputs)`
+- `Line(..., int[] outputChances, int[] keptInputs, int[] keptFluidInputs, int[] presenceFluidInputs)`
 
 `itemInputs`, `itemOutputs`, `fluidInputs` and `fluidOutputs` may be `null` or empty when unused (`FluidStack` is `net.minecraftforge.fluids.FluidStack` on Forge and `net.neoforged.neoforge.fluids.FluidStack` on NeoForge). `duration` is ticks (clamped to at least 1). `euPerTick` is energy per tick (non-negative on machine tables; negative on fuel tables for produced energy). `special` is the map-specific extra parameter (`0` for ordinary recipes, or temperature in K on crucible display maps). The seven-argument `Line` leaves every item output certain. Pass an `int` per item output, in parts per 10_000, when an output is not certain. `10000` is certain. An empty array is the same as omitting it. The length must match the item outputs, and each value is 1 to 10000. Fluid outputs stay certain. The machine, JEI, EMI and the datapack overlay all read that chance from the recipe row. A datapack item output already uses the same `chance` field.
 
@@ -152,7 +153,11 @@ This uses the existing GT recipe system, not a parallel addon recipe registry. C
 
 `keptInputs` lists item-input indexes the machine must see and must not consume. Leave each count at 1 or more. Null and an empty array mark nothing, and that row matches the same inputs it did before. An index outside the item inputs, or a repeated index, fails startup. A count of 0 still fails startup, and the message names `keptInputs`. EMI draws a marked input as a catalyst, the same way it draws a built-in catalyst input. The datapack overlay is unchanged: a count of 0 there is still rejected, and the overlay has no kept-input field.
 
-`keptFluidInputs` is the last array on `Line`: indexes of fluid inputs the machine must see and must not drain. Leave each amount positive. The machine checks that declared amount, including when it runs a batch, and does not multiply it by the batch. Null and an empty array mark nothing. An index outside the fluid inputs, or a repeated index, fails startup. A fluid input with amount 0 is now a presence-only catalyst: the tank must hold that fluid, a batch does not multiply it, and nothing is drained; a missing fluid leaves the row unmatched. Negative amounts still fail. The datapack overlay accepts a 0 mB input; a 0 mB output is still rejected. EMI draws the 0 mB input as a catalyst.
+`keptFluidInputs` lists fluid inputs whose positive declared quantity is reserved once and retained, independent of batch size. `presenceFluidInputs` instead lists presence-only conditions: matching checks the original tank contents, does not reserve or drain any quantity, and does not multiply by the batch. Repeated presence conditions may share the same fluid, including fluid consumed by another input. Missing fluid rejects the whole recipe. The two index arrays cannot overlap; duplicates and out-of-range indexes are rejected.
+
+The datapack overlay expresses presence-only conditions with amount 0; negative inputs and zero outputs are rejected. Native `FluidStack` loses fluid identity at zero, so native `Line` callers must supply a positive representative (for example 1 mB) and list its index in `presenceFluidInputs`. That representative is not a required extra reserve. Do not pass `new FluidStack(fluid, 0)` through the native API. Existing constructors retain their previous positive-input behavior. Recipe viewers label these conditions as presence-only catalysts.
+
+Presence-only rows are rejected (with a diagnostic) on the builtin direct-conversion fuel maps `gt.recipe.fuels.burn`, `gt.recipe.fuels.gas`, `gt.recipe.fuels.fluidbed`, `gt.recipe.fuels.engine`, and `gt.recipe.fuels.hot`; dynamic providers cannot bypass this restriction. Other fuel maps are not blanket-disabled. Heat exchangers also reject presence rows selected through a custom saved `gt.fuelmap`, without draining their fluid; they can still select an ordinary conversion row. Ordinary fermenters support presence conditions, but sealed barrels skip those rows because they replace their entire tank contents. Positive kept-fluid behavior in these specialized converters is unchanged and is not claimed to be supported by this fix.
 
 ```java
 var circuit = new AddonRecipes.Line(

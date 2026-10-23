@@ -35,6 +35,8 @@ public final class FermentationAccess {
                 if (recipe.mInputs.length != 1
                         || !com.gregtech.gregtech.api.recipe.RecipeInputs.matches(recipe.mInputs[0], item)) continue;
                 if (recipe.mFluidInputs.length != 1 || recipe.mFluidOutputs.length == 0) continue;
+                // Barrel conversion cannot preserve a presence-only input while replacing its tank.
+                if (recipe.isPresenceFluidInput(0)) continue;
                 var input = recipe.mFluidInputs[0];
                 var output = recipe.mFluidOutputs[0];
                 if (input == null || output == null || input.getFluid() != fluid.getFluid()) continue;

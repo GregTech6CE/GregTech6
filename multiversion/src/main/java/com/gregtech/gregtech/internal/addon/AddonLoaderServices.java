@@ -150,7 +150,8 @@ public final class AddonLoaderServices {
         return new Recipe(inputs, line.itemOutputs(), null, chances,
                 fluidInputs, line.fluidOutputs(), line.duration(), line.euPerTick(), line.special())
                 .withCatalystInputs(line.keptInputs())
-                .withCatalystFluidInputs(line.keptFluidInputs());
+                .withCatalystFluidInputs(line.keptFluidInputs())
+                .withPresenceFluidInputs(line.presenceFluidInputs());
     }
 
     private static AddonRecipes.Line line(Recipe recipe) {
@@ -161,6 +162,6 @@ public final class AddonLoaderServices {
                     ? (int) recipe.mChances[i] : RecipeOutputChances.CERTAIN;
         return AddonRecipes.Line.read(recipe.mInputs, recipe.mOutputs, recipe.mFluidInputs, recipe.mFluidOutputs,
                 recipe.mDuration, recipe.mEUt, recipe.mSpecialValue, chances, recipe.explicitCatalystInputs(),
-                recipe.explicitCatalystFluidInputs());
+                recipe.explicitCatalystFluidInputs(), recipe.explicitPresenceFluidInputs());
     }
 }

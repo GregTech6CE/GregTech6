@@ -12,6 +12,17 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'fluidpresencerecipetests.presenceusesoriginaltankswithoutreservation',
+    'fluidpresencerecipetests.addonpresencesurvivesreadaddfindroundtrip',
+    'fluidpresencerecipetests.presencecollisiondoesnotbecomeconsumablestock',
+    'fluidpresencerecipetests.unsupporteddirectfuelmapsfailclosed',
+    'fluidpresencerecipetests.barrelskipspresencewithoutdisablingordinaryfermenter',
+    'fluidpresencerecipetests.customexchangermaprejectspresencewithoutdraining',
+    'fluidpresencerecipetests.textualzerooverlayretainsnativefluididentity',
+    'lockeractivationtests.ordinarylockeronlyfrontmainhandswapsarmor',
+    'lockeractivationtests.incompatiblestoredequipmentskipsonlyitsownslot',
+    'multiblocknativechunklifecycletests.registeredmultiblocksurvivesrealunloadandstagedreload',
+
     'machinechunkboundarytests.formedlargemachinepollingdoesnotloadexteriorneighbor',
     'machinechunkboundarytests.unloadedautomaticioretainsstockthentransferstoloadedchest',
     'multiblockalternativebindingtests.mixedfixedalternativesbindonlyactualpartsineitherorder',
@@ -84,9 +95,16 @@ FUNCTIONAL_CASES = {
     'woodenbuckettransactiontests.topupconsumesexactlyonebucketandkeepsband',
     'woodenbuckettransactiontests.waterdoesnotreplacelavaorpowdersnow',
 }
+FORGE_ONLY_CASES = {
+    'covercapabilitylifetimetests.fallbackdrawercapabilitiesinvalidatewithsidemapping',
+    'covercapabilitylifetimetests.fallbackunresolvedcapabilitiesinvalidateonrotationandremoval',
+    'covercapabilitylifetimetests.fallbackcapabilitycachereplacesitemandfluidsources',
+    'covercapabilitylifetimetests.fallbacksharedsourceinvalidationsupportscrossfacerequery',
+    'covercapabilitylifetimetests.fallbackreentrantnewersourcesurvivesstaleouterlookup',
+}
 GAS_CASE = 'gasmotionregressiontests.gasusesairmotionwithoutremovinghazards'
 EXPECTED = {
-    'forge': {'openissueregressiontests.' + method for method in FORGE_METHODS} | {GAS_CASE} | FUNCTIONAL_CASES,
+    'forge': {'openissueregressiontests.' + method for method in FORGE_METHODS} | {GAS_CASE} | FUNCTIONAL_CASES | FORGE_ONLY_CASES,
     'neoforge': {GAS_CASE} | FUNCTIONAL_CASES,
 }
 
