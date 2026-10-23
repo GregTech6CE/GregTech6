@@ -1,7 +1,7 @@
 package com.gregtech.gregtech.blockentity.energy;
 
 import com.gregtech.gregtech.block.energy.ChemicalBatteryBlock;
-import com.gregtech.gregtech.content.energy.ChemicalBatterySpec;
+import com.gregtech.gregtech.content.energy.PortableBatterySpec;
 import com.gregtech.gregtech.item.ChemicalBatteryItem;
 //? if >=1.21.1 {
 /*import com.gregtech.gregtech.registry.GTChemicalBatteries;
@@ -24,7 +24,7 @@ public final class ChemicalBatteryBlockEntity extends BlockEntity {
 *///?} else {
     public ChemicalBatteryBlockEntity(BlockPos pos,BlockState state){super(GTBlockEntities.CHEMICAL_BATTERY.get(),pos,state);}
 //?}
-    public ChemicalBatterySpec spec(){return ((ChemicalBatteryBlock)getBlockState().getBlock()).spec();}
+    public PortableBatterySpec spec(){return ((ChemicalBatteryBlock)getBlockState().getBlock()).spec();}
     public long stored(){return charge;}
     public void setCharge(long value){
         charge=Math.max(0,Math.min(spec().capacity(),value));setChanged();

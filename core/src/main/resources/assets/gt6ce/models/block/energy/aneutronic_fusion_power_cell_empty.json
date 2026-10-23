@@ -1,0 +1,50 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "top": "gt6ce:block/iconsets/aneutronic_fusion_top",
+    "sides": "gt6ce:block/iconsets/aneutronic_fusion_sides",
+    "bottom": "gt6ce:block/iconsets/aneutronic_fusion_bottom",
+    "particle": "gt6ce:block/iconsets/aneutronic_fusion_sides"
+  },
+  "elements": [
+    {
+      "from": [
+        4,
+        0,
+        4
+      ],
+      "to": [
+        12,
+        4,
+        12
+      ],
+      "faces": {
+        "down": {
+          "texture": "#bottom",
+          "tintindex": 0
+        },
+        "up": {
+          "texture": "#top",
+          "tintindex": 0
+        },
+        "north": {
+          "texture": "#sides",
+          "tintindex": 0
+        },
+        "south": {
+          "texture": "#sides",
+          "tintindex": 0
+        },
+        "west": {
+          "texture": "#sides",
+          "tintindex": 0
+        },
+        "east": {
+          "texture": "#sides",
+          "tintindex": 0
+        }
+      }
+    }
+  ]
+}

@@ -3,7 +3,9 @@ package com.gregtech.gregtech.content.energy;
 import java.util.*;
 
 /** GT6 Loader_MultiTileEntities 14000..14044: five chemistries, ULV through EV. */
-public record ChemicalBatterySpec(Chemistry chemistry,int tier) {
+public record ChemicalBatterySpec(Chemistry chemistry,int tier) implements PortableBatterySpec {
+    public int color() { return chemistry.color; }
+    public com.gregtech.gregtech.data.GregTechTags.Tag energyType() { return com.gregtech.gregtech.data.GregTechTags.Energy.EU; }
     public enum Chemistry {
         LEAD_ACID("lead_acid",2000,0xFF8000,false),
         ALKALINE("alkaline",4000,0x0000FF,false),

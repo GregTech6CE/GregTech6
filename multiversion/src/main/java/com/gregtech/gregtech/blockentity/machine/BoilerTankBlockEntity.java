@@ -47,10 +47,19 @@ import java.util.Random;
  */
 public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements com.gregtech.gregtech.api.sensor.CompressionSensorSource, com.gregtech.gregtech.api.machine.HeatHandler {
 
+//? if >=1.21.1 {
+    /*private final com.gregtech.gregtech.api.machine.AdjacentCapabilityCache<IFluidHandler> steamOutput =
+            new com.gregtech.gregtech.api.machine.AdjacentCapabilityCache<>(this, net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK);
+*///?} else {
+    private final com.gregtech.gregtech.api.machine.AdjacentCapabilityCache<IFluidHandler> steamOutput =
+            new com.gregtech.gregtech.api.machine.AdjacentCapabilityCache<>(this, ForgeCapabilities.FLUID_HANDLER);
+//?}
+
     private BoilerSpec spec;
     private long heat;
     private int cooldown = 128;
     private short efficiency = 10000;
+    private int sentBarometer = -1, clientBarometer = -1;
     private final FluidTankGT waterTank = new FluidTankGT(4_000).setOnChanged(this::setChanged);
     private FluidTankGT steamTank = new FluidTankGT(64_000).setOnChanged(this::setChanged);
 
@@ -96,7 +105,7 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements com.gr
             if (!simulate && accepted > 0) {
                 heat += accepted;
                 cooldown = Math.max(cooldown, 32);
-                setChanged();
+                markMachineDataChanged();
             }
             return accepted;
         }
@@ -104,7 +113,7 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements com.gr
         long removed = Math.min(Math.max(0, heat), -signedHU);
         if (!simulate && removed > 0) {
             heat -= removed;
-            setChanged();
+            markMachineDataChanged();
         }
         return -removed;
     }
@@ -115,7 +124,7 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements com.gr
             long removed = Math.min(Math.max(0, heat), signedHU);
             if (!simulate && removed > 0) {
                 heat -= removed;
-                setChanged();
+                markMachineDataChanged();
             }
             return removed;
         }
@@ -130,6 +139,7 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements com.gr
     transient float smoothBarometerFrame;
 
     public int barometerValue() {
+        if (level != null && level.isClientSide && clientBarometer >= 0) return clientBarometer;
         return com.gregtech.gregtech.content.energy.BoilerHazards.pressure(steamTank.getAmount(), steamTank.capacity());
     }
 
@@ -145,12 +155,52 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements com.gr
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, BoilerTankBlockEntity be) {
         if (be.spec == null || level.isClientSide || be.isRemoved() || level.getBlockEntity(pos) != be) return;
-        be.boil();
-        be.coolDown();
-        be.pushSteamUp();
-        be.syncToClient();
-        if (be.heat > be.spec.heatCapacity() || be.steamTank.getAmount() >= be.steamTank.getCapacity()) {
-            be.explode();
+        be.beginMachineChanges();
+        try {
+            be.boil();
+            be.coolDown();
+            be.pushSteamUp();
+            be.syncBarometer();
+            if (be.heat > be.spec.heatCapacity() || be.steamTank.getAmount() >= be.steamTank.getCapacity()) {
+                be.explode();
+            }
+        } finally {
+            be.endMachineChanges();
+        }
+    }
+
+    private void syncBarometer() {
+        int value = barometerValue();
+        if (sentBarometer == value) return;
+        sentBarometer = value;
+        // The normal chunk tracker sends one packet only to players watching this chunk.
+        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+    }
+
+    @Override
+//? if >=1.21.1 {
+    /*public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
+*///?} else {
+    public CompoundTag getUpdateTag() {
+//?}
+        var tag = new CompoundTag();
+        tag.putByte("gt.boiler_visual", (byte) barometerValue());
+        return tag;
+    }
+
+    @Override
+//? if >=1.21.1 {
+    /*public void handleUpdateTag(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+*///?} else {
+    public void handleUpdateTag(CompoundTag tag) {
+//?}
+        if (tag.contains("gt.boiler_visual")) clientBarometer = tag.getByte("gt.boiler_visual") & 31;
+        else {
+//? if >=1.21.1 {
+            /*super.handleUpdateTag(tag, lookup);
+*///?} else {
+            super.handleUpdateTag(tag);
+//?}
         }
     }
 
@@ -178,12 +228,15 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements com.gr
         setChanged();
     }
     private void coolDown(){
+        long oldHeat = heat;
+        int oldCooldown = cooldown;
         if(cooldown--<=0){
             cooldown=0;
             heat=Math.max(0,heat-spec.steamOutput()*32);
             steamTank.remove(spec.steamOutput()*64);
             if(heat==0)cooldown=128;
         }
+        if (oldHeat != heat || oldCooldown != cooldown) markMachineDataChanged();
     }
 
     private boolean isDistilledWater() {
@@ -203,12 +256,7 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements com.gr
         if(!level.hasChunkAt(worldPosition.above()))return;
         var above = level.getBlockEntity(worldPosition.above());
         if (above == null) return;
-//? if >=1.21.1 {
-        /*IFluidHandler target = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,worldPosition.above(),Direction.DOWN);
-*///?} else {
-        IFluidHandler target = above.getCapability(ForgeCapabilities.FLUID_HANDLER, Direction.DOWN)
-                .resolve().orElse(null);
-//?}
+        IFluidHandler target = steamOutput.get(above, Direction.DOWN);
         if (target == null) return;
         long want = com.gregtech.gregtech.content.energy.BoilerSteamOutput.offered(steamTank.getAmount(), steamTank.capacity(), spec.steamOutput());
         FluidStack offer = steamTank.drain((int) Math.min(want, Integer.MAX_VALUE), IFluidHandler.FluidAction.SIMULATE);
@@ -355,7 +403,7 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements com.gr
         if (doInject && accepted > 0) {
             heat += accepted * size;
             cooldown=Math.max(cooldown,32);
-            setChanged();
+            markMachineDataChanged();
         }
         return accepted;
     }

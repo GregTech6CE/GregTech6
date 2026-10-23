@@ -1,0 +1,19 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.energy_crystals",
+  "contents": [
+    "item:gt6ce:gem_chipped_energiumred",
+    "item:gt6ce:gem_flawed_energiumred",
+    "item:gt6ce:gem_energiumred",
+    "item:gt6ce:gem_flawless_energiumred",
+    "item:gt6ce:gem_exquisite_energiumred",
+    "item:gt6ce:gem_legendary_energiumred",
+    "item:gt6ce:gem_chipped_energiumcyan",
+    "item:gt6ce:gem_flawed_energiumcyan",
+    "item:gt6ce:gem_energiumcyan",
+    "item:gt6ce:gem_flawless_energiumcyan",
+    "item:gt6ce:gem_exquisite_energiumcyan",
+    "item:gt6ce:gem_legendary_energiumcyan"
+  ],
+  "priority": 135
+}

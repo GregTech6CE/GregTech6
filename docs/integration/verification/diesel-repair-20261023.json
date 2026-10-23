@@ -1,0 +1,84 @@
+{
+  "date": "2026-10-23",
+  "source_commit": "b121ded87f1539c4383e4697e56417d2aaee5a5a",
+  "working_tree_changes_included": true,
+  "build": "BUILD SUCCESSFUL in 1m 47s",
+  "native_tests": "NeoForge: 2 required tests passed, six orientations, real fuel credit, stopped residual packet, blocked rear and CO2 vent, funnel/tap priority, Jade server payload",
+  "artifact_checks": "CRC; no duplicate entries; no test fixtures; 8 state families use active/inactive models; both composite loaders; 11 exact texture/animation files; RU translations; hidden resource-pack override",
+  "limits": [
+    "No client visual gameplay session",
+    "No Forge game runtime test this turn",
+    "No saved-world restart test this turn"
+  ],
+  "textures": [
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\generators\\motor_liquid\\colored\\back.png",
+      "target": "core\\src\\main\\resources\\assets\\gt6ce\\textures\\block\\machines\\generators\\motor_liquid\\colored\\back.png",
+      "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\generators\\motor_liquid\\colored\\front.png",
+      "target": "core\\src\\main\\resources\\assets\\gt6ce\\textures\\block\\machines\\generators\\motor_liquid\\colored\\front.png",
+      "sha256": "b94934858d010e0381fd5056dbc0ec00e964cad00c152944b2e6e0918991f977"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\generators\\motor_liquid\\colored\\sides.png",
+      "target": "core\\src\\main\\resources\\assets\\gt6ce\\textures\\block\\machines\\generators\\motor_liquid\\colored\\sides.png",
+      "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\generators\\motor_liquid\\overlay\\back.png",
+      "target": "core\\src\\main\\resources\\assets\\gt6ce\\textures\\block\\machines\\generators\\motor_liquid\\overlay\\back.png",
+      "sha256": "d7d7b4e63f3ae789badc895760bacdbc5c5a61332261dbc89e46cb37f1f898a1"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\generators\\motor_liquid\\overlay\\front.png",
+      "target": "core\\src\\main\\resources\\assets\\gt6ce\\textures\\block\\machines\\generators\\motor_liquid\\overlay\\front.png",
+      "sha256": "e183538e5e6f6af6b4acf6fb3960d53d07b2b0ac370e73d9e46500a929b54463"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\generators\\motor_liquid\\overlay\\sides.png",
+      "target": "core\\src\\main\\resources\\assets\\gt6ce\\textures\\block\\machines\\generators\\motor_liquid\\overlay\\sides.png",
+      "sha256": "763844cd3e9003c46357a10cbb0bd30644efabfb224d07de689a147481720a4d"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\generators\\motor_liquid\\overlay_active\\back.png",
+      "target": "core\\src\\main\\resources\\assets\\gt6ce\\textures\\block\\machines\\generators\\motor_liquid\\overlay_active\\back.png",
+      "sha256": "d7d7b4e63f3ae789badc895760bacdbc5c5a61332261dbc89e46cb37f1f898a1"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\generators\\motor_liquid\\overlay_active\\front.png",
+      "target": "core\\src\\main\\resources\\assets\\gt6ce\\textures\\block\\machines\\generators\\motor_liquid\\overlay_active\\front.png",
+      "sha256": "e80333c7c21264823fa005235da55f7aabde38d6c50f922e51f5df51c446d569"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\generators\\motor_liquid\\overlay_active\\front.png.mcmeta",
+      "target": "core\\src\\main\\resources\\assets\\gt6ce\\textures\\block\\machines\\generators\\motor_liquid\\overlay_active\\front.png.mcmeta",
+      "sha256": "01a4ea56f3505704d42cfa5437d69d4dab7815a3ffbec1761cc4c66e270bfdf4"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\generators\\motor_liquid\\overlay_active\\sides.png",
+      "target": "core\\src\\main\\resources\\assets\\gt6ce\\textures\\block\\machines\\generators\\motor_liquid\\overlay_active\\sides.png",
+      "sha256": "73664eddc0d2856f2b3cef642c52c0c80047a1f2f6486b4084fbfeef4e44420e"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\generators\\motor_liquid\\overlay_active\\sides.png.mcmeta",
+      "target": "core\\src\\main\\resources\\assets\\gt6ce\\textures\\block\\machines\\generators\\motor_liquid\\overlay_active\\sides.png.mcmeta",
+      "sha256": "fca3f174255b50d7cebb0aa633935da5d623931590499cae7b1c9d681904e2dd"
+    }
+  ],
+  "files": [
+    {
+      "platform": "1.20.1-forge",
+      "path": "C:\\Dev\\GregTech6\\build\\deliveries\\20261023-diesel-repair\\gt6ce-1.20.1-forge-0.0.0.jar",
+      "sha256": "681037314ebb63b1657152d1440d5cf62a918779915ffdb4e150462ed32df2c4",
+      "bytes": 41501034
+    },
+    {
+      "platform": "1.21.1-neoforge",
+      "path": "C:\\Dev\\GregTech6\\build\\deliveries\\20261023-diesel-repair\\gt6ce-neoforge-1.21.1-0.0.0.jar",
+      "sha256": "ce20001eec75287924035eb7e34bbdef9c5a7349eb2c8ee5b5bbe366d92c7753",
+      "bytes": 41361511
+    }
+  ]
+}

@@ -24,6 +24,19 @@ public final class SixCellDisplay {
         }
         return cells;
     }
+    /** Wooden barrels use only the four central cells, suppress leading zeroes, and turn red at capacity. */
+    public static Glyph[] barrel(long count, long capacity) {
+        Glyph[] cells = new Glyph[6];
+        if (count <= 0) return cells;
+        if (count >= capacity) {
+            String[] full = {"1", "0", "0", "percent"};
+            for (int i = 0; i < 4; i++) cells[i + 1] = glyph(full[i], 0xFF0000);
+        } else {
+            String digits = Long.toString(count);
+            for (int i = 0; i < digits.length(); i++) cells[5 - digits.length() + i] = glyph(digits.substring(i, i + 1), 0x202020);
+        }
+        return cells;
+    }
     public static Glyph[] sensor(long displayed, SensorControl.Mode mode, boolean hex, String unit, int unitColor) {
         Glyph[] cells = new Glyph[6];
         int value = (int)displayed & 65535;

@@ -36,7 +36,7 @@ public record ItemBootstrap() implements InitializationStep {
                             ? new CoinItem(new Item.Properties().stacksTo(64), material)
                             : com.gregtech.gregtech.content.recipe.MaterialArrowRules.isArrow(prefix, material)
                             ? new com.gregtech.gregtech.item.MaterialArrowItem(new Item.Properties().stacksTo(64), prefix, material)
-                            : new MaterialItem(new Item.Properties().stacksTo(64), prefix, material));
+                            : com.gregtech.gregtech.item.EnergyCrystalItem.createOrMaterial(prefix, material));
             GTItems.bind(prefix, material, registered);
             total++;
         }

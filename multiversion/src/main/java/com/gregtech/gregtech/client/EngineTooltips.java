@@ -41,7 +41,16 @@ public final class EngineTooltips {
             case FLUX     -> appendFlux(block, ms, tooltip);
             case STEAM    -> appendSteam(block, ms, tooltip);
             case ROTATION -> appendRotation(block, ms, tooltip);
-            case DIESEL   -> tooltip.add(Component.empty().append(Component.translatable("gt.lang.energy.output").append(": ")).append(Component.literal(TooltipHelper.formatLong(block.engineSpec(DieselEngineSpec.class).outputRate())+" RU/t ("+TooltipHelper.dirMaskToString(ENERGY_OUT_FACES)+")")).withStyle(ChatFormatting.RED));
+            case DIESEL -> {
+                tooltip.add(Component.translatable("gt.lang.recipes").append(": ")
+                        .append(Component.translatable(com.gregtech.gregtech.data.FuelRecipeMaps.Engine.mNameInternal)));
+                appendEfficiencyLine(10000, tooltip);
+                tooltip.add(Component.translatable("gt.lang.energy.output").append(": ")
+                        .append(TooltipHelper.formatLong(block.engineSpec(DieselEngineSpec.class).outputRate()) + " RU/t ("
+                                + TooltipHelper.dirMaskToString(ENERGY_OUT_FACES) + ")").withStyle(ChatFormatting.RED));
+                tooltip.add(Component.translatable("gt.lang.nogui.funnel.tap.tank"));
+                tooltip.add(Component.translatable("tooltip.gt6ce.engine.diesel.faces"));
+            }
         }
 
         // Tool hints
@@ -235,6 +244,11 @@ public final class EngineTooltips {
 
     private static void appendToolHints(EngineType type, List<Component> tooltip) {
         ChatFormatting g = ChatFormatting.WHITE;
+        if (type == EngineType.DIESEL) {
+            tooltip.add(Component.translatable("gt.lang.use.magnifyingglass.to.detail").withStyle(g));
+            tooltip.add(Component.translatable("tooltip." + MOD + ".engine.hint.wrench").withStyle(g));
+            return;
+        }
         if (type == EngineType.ELECTRIC || type == EngineType.FLUX) {
             tooltip.add(Component.translatable("tooltip.gt6ce.engine.piston.tools").withStyle(g));
         } else if (type == EngineType.STEAM) {

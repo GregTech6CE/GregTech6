@@ -52,7 +52,20 @@ public final class EnergyDeviceTooltips {
         }
     }
 
-    private static Component energyLine(OriginalEnergyDeviceTooltipData.Stats stats, GregTechTags.Tag type,
+    /** Original converter statistics, face names, efficiency and facing-tool hint. */
+    public static void appendLaser(com.gregtech.gregtech.content.energy.LaserSpec spec, float resistance, List<Component> lines) {
+        lines.add(energyLine(new OriginalEnergyDeviceTooltipData.Stats(spec.input() <= 16 ? 1 : spec.input() / 2, spec.input(), spec.input() * 2),
+                spec.inputType(), spec.backInputOnly() ? "gt.lang.face.back" : "gt.lang.face.any.but.front", false, true));
+        lines.add(energyLine(new OriginalEnergyDeviceTooltipData.Stats(spec.output() / 2, spec.output(), spec.output() * 2),
+                spec.outputType(), "gt.lang.face.front", true, true));
+        long normalizedInput = spec.kind() == com.gregtech.gregtech.content.energy.LaserSpec.Kind.FLUX ? spec.input() / 4 : spec.input();
+        lines.add(Component.translatable("gt.lang.efficiency").withStyle(ChatFormatting.YELLOW)
+                .append(Component.literal(": " + OriginalFunctionalTooltipData.efficiencyPercent((int)(10000 * spec.output() / normalizedInput)) + "%").withStyle(ChatFormatting.WHITE)));
+        StorageBlockTooltips.facing(lines);
+        TooltipHelper.appendBlastResistance(resistance, lines);
+    }
+
+    public static Component energyLine(OriginalEnergyDeviceTooltipData.Stats stats, GregTechTags.Tag type,
                                         String faceKey, boolean emitting, boolean alwaysShowRange) {
         var line = Component.translatable(emitting ? "gt.lang.energy.output" : "gt.lang.energy.input")
                 .withStyle(emitting ? ChatFormatting.RED : ChatFormatting.GREEN)
@@ -62,13 +75,17 @@ public final class EnergyDeviceTooltips {
                         : type == GregTechTags.Energy.HU ? "gt.td.short.energy.heat"
                         : type == GregTechTags.Energy.STEAM ? "gt.td.short.energy.steam"
                         : type == GregTechTags.Energy.MU ? "gt.td.short.energy.magnetic"
-                        : type == GregTechTags.Energy.CU ? "gt.td.short.energy.cryo" : "gt.td.short.energy.electricity")
+                        : type == GregTechTags.Energy.CU ? "gt.td.short.energy.cryo"
+                        : type == GregTechTags.Energy.LU ? "gt.td.short.energy.light"
+                        : type == GregTechTags.Energy.QU ? "gt.td.short.energy.quantum" : "gt.td.short.energy.electricity")
                         .withStyle(type == GregTechTags.Energy.RU ? ChatFormatting.GREEN
                                 : type == GregTechTags.Energy.RF ? ChatFormatting.DARK_RED
                                 : type == GregTechTags.Energy.HU ? ChatFormatting.RED
                                 : type == GregTechTags.Energy.STEAM ? ChatFormatting.GRAY
                                 : type == GregTechTags.Energy.MU ? ChatFormatting.DARK_GRAY
-                                : type == GregTechTags.Energy.CU ? ChatFormatting.AQUA : ChatFormatting.BLUE))
+                                : type == GregTechTags.Energy.CU ? ChatFormatting.AQUA
+                                : type == GregTechTags.Energy.LU ? ChatFormatting.YELLOW
+                                : type == GregTechTags.Energy.QU ? ChatFormatting.LIGHT_PURPLE : ChatFormatting.BLUE))
                 .append(Component.literal("/t").withStyle(ChatFormatting.WHITE));
         // LH omits both the range and face on fixed packets; the converter stats always include them.
         if (alwaysShowRange || stats.minimum() != stats.recommended() || stats.maximum() != stats.recommended()) {

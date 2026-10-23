@@ -32,6 +32,7 @@ public final class MachineRecipeLifecycle {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void tags(TagsUpdatedEvent event) {
+        for (var map : com.gregtech.gregtech.api.recipe.RecipeMap.RECIPE_MAP_LIST) map.invalidateLookup();
         if (!event.shouldUpdateStaticData()) return;
         MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
         if (server == null) return;

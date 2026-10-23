@@ -102,9 +102,9 @@ public class FluidTankGT implements IFluidHandler {
 
     public long add(long offered) {
         if (offered <= 0 || fluid.isEmpty()) return 0;
-        long space = capacity() - getAmount();
+        long previous = getAmount();
         long accepted = storage.add(offered, key());
-        if (space > 0) onChanged.run();
+        if (getAmount() != previous) onChanged.run();
         return accepted;
     }
 
@@ -120,8 +120,9 @@ public class FluidTankGT implements IFluidHandler {
     public long remove(long requested) {
         if (storage.preventsDraining() || requested <= 0 || fluid.isEmpty()) return 0;
         long removed = storage.remove(requested);
+        var previous = fluid;
         clearSpentIdentity();
-        onChanged.run();
+        if (removed != 0 || previous != fluid) onChanged.run();
         return removed;
     }
 
@@ -133,6 +134,8 @@ public class FluidTankGT implements IFluidHandler {
     }
 
     public void setFluid(FluidStack value, long amount) {
+        if (getAmount() == amount && fluid.getAmount() == value.getAmount()
+                && (fluid.isEmpty() && value.isEmpty() || sameIdentity(value))) return;
         fluid = value.copy();
         storage.setAmount(amount);
         onChanged.run();
@@ -143,9 +146,18 @@ public class FluidTankGT implements IFluidHandler {
     }
 
     public void setEmpty() {
+        if (fluid.isEmpty() && getAmount() == 0) return;
         fluid = FluidStack.EMPTY;
         storage.setAmount(0);
         onChanged.run();
+    }
+
+    private boolean sameIdentity(FluidStack value) {
+//? if >=1.21.1 {
+        /*return FluidStack.isSameFluidSameComponents(fluid, value);
+*///?} else {
+        return fluid.isFluidEqual(value);
+//?}
     }
 
     public long capacity() {

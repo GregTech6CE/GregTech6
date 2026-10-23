@@ -23,6 +23,33 @@ import java.util.Collection;
 /** Base block entity with GT6 default energy validation (GT6 {@code TileEntityBase01Root}). */
 public abstract class GTEnergyBlockEntity extends BlockEntity implements IEnergyBlock {
 
+    private int changeBatchDepth;
+    private boolean dataChanged, inventoryChanged;
+
+    /** Batch one synchronous machine operation; external inventory writes still notify immediately. */
+    protected final void beginMachineChanges() { changeBatchDepth++; }
+
+    protected final void endMachineChanges() {
+        if (--changeBatchDepth != 0) return;
+        boolean notify = inventoryChanged, save = dataChanged;
+        inventoryChanged = dataChanged = false;
+        if (isRemoved()) return;
+        if (notify) super.setChanged();
+        else if (save && level != null) level.blockEntityChanged(worldPosition);
+    }
+
+    /** Energy/progress changes need persistence, not an inventory/comparator neighbour scan. */
+    protected final void markMachineDataChanged() {
+        if (changeBatchDepth > 0) dataChanged = true;
+        else if (level != null) level.blockEntityChanged(worldPosition);
+    }
+
+    @Override
+    public void setChanged() {
+        if (changeBatchDepth > 0) inventoryChanged = dataChanged = true;
+        else super.setChanged();
+    }
+
     protected GTEnergyBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }

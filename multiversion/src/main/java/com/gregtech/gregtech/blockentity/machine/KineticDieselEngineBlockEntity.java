@@ -3,7 +3,6 @@ package com.gregtech.gregtech.blockentity.machine;
 import com.gregtech.gregtech.api.energy.FaceConfig;
 import com.gregtech.gregtech.api.fluid.FluidTankGT;
 import com.gregtech.gregtech.api.machine.DieselEngineSpec;
-import com.gregtech.gregtech.data.RegisteredFluids;
 import com.gregtech.gregtech.data.FuelRecipeMaps;
 import com.gregtech.gregtech.data.GregTechTags;
 import net.minecraft.core.BlockPos;
@@ -26,13 +25,15 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import javax.annotation.Nullable;
 
 /** Liquid-fuel → RU motor. Preserves complete FM.Engine cycle credit and original one-packet waste semantics. */
-public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implements com.gregtech.gregtech.api.machine.MachineControl.Provider {
+public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implements com.gregtech.gregtech.api.machine.MachineControl.Provider,
+        com.gregtech.gregtech.api.fluid.FluidToolTarget {
     protected boolean emitted;
     private final com.gregtech.gregtech.api.machine.MachineControl control=com.gregtech.gregtech.api.machine.MachineControls.switchable(this,
             ()->!isStopped(),value->setStopped(!value),this::isActive,()->emitted);
     @Override public com.gregtech.gregtech.api.machine.MachineControl machineControl(Direction side){return control;}
     DieselEngineSpec spec;
-    boolean active = true; // true = running unless stopped
+    boolean active;
+    private long activityHistory;
     boolean stopped;
     FluidTankGT fuelTank = new FluidTankGT(4000).setOnChanged(this::setChanged);
     FluidTankGT exhaustTank = new FluidTankGT(4000).setOnChanged(this::setChanged);
@@ -75,13 +76,20 @@ public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implem
     @Override public long getEnergySizeOutputMax(GregTechTags.Tag type, @Nullable Direction side) { return type==GregTechTags.Energy.RU?outputRate():0; }
     @Override public long getEnergyCapacity(GregTechTags.Tag type, @Nullable Direction side) { return type==GregTechTags.Energy.RU?Math.max(kuEnergy,outputRate()*2):0; }
 
+    // GT6 fixes RU output to the front; legacy saved face masks must not redirect it.
+    @Override public boolean isEnergyEmittingTo(GregTechTags.Tag type, @Nullable Direction side, boolean theoretical) {
+        return type == GregTechTags.Energy.RU && (side == null || side == facing());
+    }
+
+    public boolean isEmitting() { return emitted; }
+
     @Override protected GregTechTags.Tag inputEnergyType() { return GregTechTags.Energy.KU; } // doesn't accept external energy
 
     @Override
     public FaceConfig defaultFaceConfig() {
         return FaceConfig.builder()
-                .fluidIn(FaceConfig.LEFT, FaceConfig.RIGHT, FaceConfig.BACK, FaceConfig.TOP)
-                .fluidOut(FaceConfig.BOTTOM)
+                .fluidIn(FaceConfig.BOTTOM, FaceConfig.TOP, FaceConfig.FRONT, FaceConfig.BACK, FaceConfig.LEFT, FaceConfig.RIGHT)
+                .fluidOut(FaceConfig.BOTTOM, FaceConfig.TOP, FaceConfig.FRONT, FaceConfig.BACK, FaceConfig.LEFT, FaceConfig.RIGHT)
                 .energyOut(FaceConfig.FRONT)
                 .build();
     }
@@ -97,8 +105,8 @@ public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implem
 
     // ── Tick ─────────────────────────────────────────────────────────────────
 
-    public static <T extends KineticDieselEngineBlockEntity> void serverTick(
-            Level level, BlockPos pos, BlockState state, T be) {
+    public static void serverTick(
+            Level level, BlockPos pos, BlockState state, KineticDieselEngineBlockEntity be) {
         if (be.spec == null) return;
         long beforeEmission=be.kuEnergy;
         if(be.kuEnergy >= be.outputRate() && be.outputRate()>0) {
@@ -111,19 +119,27 @@ public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implem
         be.burnFuel();
         be.dischargeExhaust();
 
-        boolean wasActive = be.active;
-        be.active = be.kuEnergy > 0;
-        if (be.active != wasActive) {
-            level.setBlock(pos, state.setValue(com.gregtech.gregtech.block.machine.EngineBlock.LIT, be.active), 3);
+        // Original TE_Behavior_Active_Trinary keeps animation through short refuelling gaps.
+        long previousHistory = be.activityHistory;
+        be.activityHistory = (be.activityHistory << 1) | (be.active ? 1L : 0L);
+        boolean lit = !be.stopped && be.activityHistory != 0;
+        if (state.getValue(com.gregtech.gregtech.block.machine.EngineBlock.LIT) != lit) {
+            level.setBlock(pos, state.setValue(com.gregtech.gregtech.block.machine.EngineBlock.LIT, lit), 3);
         }
+        if (previousHistory != be.activityHistory) be.setChanged();
     }
 
     void burnFuel() {
-        if(level==null)return;
+        if (level == null) return;
+        if (com.gregtech.gregtech.api.machine.LiquidFuelCycle.needsFuel(kuEnergy, outputRate(), stopped)) active = false;
         while(com.gregtech.gregtech.api.machine.LiquidFuelCycle.needsFuel(kuEnergy,outputRate(),stopped) && !fuelTank.isEmpty()) {
             var tankFluid=fuelTank.getFluid();
             var recipe=FuelRecipeMaps.Engine.findRecipe(java.util.Collections.emptyList(),java.util.List.of(tankFluid),false,0,0);
-            if(recipe==null) {if(!FuelRecipeMaps.Engine.containsInput(tankFluid))fuelTank.setEmpty();return;}
+            if (recipe == null) {
+                // A valid but incomplete batch may wait 64 inactive ticks before changing fuel.
+                if (!FuelRecipeMaps.Engine.containsInput(tankFluid) || activityHistory == 0) fuelTank.setEmpty();
+                return;
+            }
             if(recipe.mFluidInputs==null || recipe.mFluidInputs.length!=1 || recipe.mFluidInputs[0]==null)return;
             int amount=recipe.mFluidInputs[0].getAmount();
             long energy=com.gregtech.gregtech.api.machine.LiquidFuelCycle.recipeEnergy(recipe.mEUt,recipe.mDuration);
@@ -136,40 +152,53 @@ public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implem
             if(fuelTank.drain(requested,IFluidHandler.FluidAction.EXECUTE).getAmount()!=amount)throw new IllegalStateException("Diesel fuel drain changed after simulation");
             if(exhaust!=null && !exhaust.isEmpty())exhaustTank.fill(exhaust,IFluidHandler.FluidAction.EXECUTE);
             kuEnergy=credited;
+            active = true;
             setChanged();
         }
     }
 
     void dischargeExhaust() {
         if (exhaustTank.isEmpty() || level == null) return;
-        Direction facing = facing();
-        BlockPos front = worldPosition.relative(facing.getOpposite());
-        var be = level.getBlockEntity(front);
-        if (be != null) {
+        Direction rear = facing().getOpposite();
+        BlockPos targetPos = worldPosition.relative(rear);
+        if (!level.hasChunkAt(targetPos)) return;
 //? if >=1.21.1 {
-            /*IFluidHandler target = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,front,facing);
+        /*IFluidHandler target = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK, targetPos, rear.getOpposite());
 *///?} else {
-            IFluidHandler target = be.getCapability(ForgeCapabilities.FLUID_HANDLER, facing)
-                    .resolve().orElse(null);
+        var owner = level.getBlockEntity(targetPos);
+        IFluidHandler target = owner == null ? null : owner.getCapability(ForgeCapabilities.FLUID_HANDLER, rear.getOpposite()).orElse(null);
 //?}
-            if (target != null) {
-                FluidStack drained = exhaustTank.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);
-                if (!drained.isEmpty()) {
-                    int filled = target.fill(drained, IFluidHandler.FluidAction.SIMULATE);
-                    if (filled > 0) {
-                        exhaustTank.drain(filled, IFluidHandler.FluidAction.EXECUTE);
-                        var moved=drained.copy();moved.setAmount(filled);target.fill(moved, IFluidHandler.FluidAction.EXECUTE);
-                    }
-                }
-            }
+        if (target != null) {
+            FluidStack offered = exhaustTank.getFluid().copy();
+            // Only remove the amount actually accepted, not a prior simulation result.
+            int accepted = target.fill(offered, IFluidHandler.FluidAction.EXECUTE);
+            exhaustTank.drain(accepted, IFluidHandler.FluidAction.EXECUTE);
         }
-        FluidStack exhaustFluid = exhaustTank.getFluid();
-        if (!exhaustFluid.isEmpty()
-                && exhaustFluid.getFluid().getFluidType().isLighterThanAir()
-                && level.isEmptyBlock(front)) {
+        FluidStack exhaust = exhaustTank.getFluid();
+        if (!exhaust.isEmpty()
+                && com.gregtech.gregtech.api.fluid.FluidHazards.isGas(exhaust.getFluid())
+                && level.getBlockState(targetPos).getCollisionShape(level, targetPos).isEmpty()) {
             exhaustTank.setEmpty();
         }
     }
+
+    /** Original tap access can recover input fuel only after the output tank is empty. */
+    @Override
+    public IFluidHandler fluidToolHandler(Direction side, boolean filling) {
+        if (isRemoved()) return null;
+        return filling ? new com.gregtech.gregtech.api.fluid.FluidPort(new DieselFluidHandler(this), true, false) : tap;
+    }
+
+    private final IFluidHandler tap = new IFluidHandler() {
+        private FluidTankGT tank() { return exhaustTank.isEmpty() ? fuelTank : exhaustTank; }
+        public int getTanks() { return 1; }
+        public FluidStack getFluidInTank(int slot) { return slot == 0 ? tank().getFluid().copy() : FluidStack.EMPTY; }
+        public int getTankCapacity(int slot) { return slot == 0 ? tank().getCapacity() : 0; }
+        public boolean isFluidValid(int slot, FluidStack fluid) { return false; }
+        public int fill(FluidStack fluid, FluidAction action) { return 0; }
+        public FluidStack drain(FluidStack fluid, FluidAction action) { return tank().drain(fluid, action); }
+        public FluidStack drain(int amount, FluidAction action) { return tank().drain(amount, action); }
+    };
 
     // ── NBT ──────────────────────────────────────────────────────────────────
 
@@ -182,6 +211,8 @@ public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implem
         super.saveAdditional(tag);
 //?}
         tag.putBoolean("stopped", stopped);
+        tag.putBoolean("dieselActive", active);
+        tag.putLong("dieselActivityHistory", activityHistory);
         CompoundTag fuelTag = new CompoundTag();
 //? if >=1.21.1 {
         /*fuelTank.writeToNBT(fuelTag,lookup);
@@ -207,6 +238,8 @@ public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implem
         super.load(tag);
 //?}
         stopped = tag.getBoolean("stopped");
+        active = tag.getBoolean("dieselActive");
+        activityHistory = tag.getLong("dieselActivityHistory");
 //? if >=1.21.1 {
         /*if (tag.contains("fuelTank")) fuelTank.readFromNBT(tag.getCompound("fuelTank"),lookup);
         if (tag.contains("exhaustTank")) exhaustTank.readFromNBT(tag.getCompound("exhaustTank"),lookup);
@@ -219,7 +252,7 @@ public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implem
     // ── Capabilities ─────────────────────────────────────────────────────────
 
 //? if >=1.21.1 {
-    /*public IFluidHandler fluidHandler(@Nullable Direction side){return side==null?null:new DieselFluidHandler(this,side);}
+    /*public IFluidHandler fluidHandler(@Nullable Direction side){return isRemoved() ? null : new DieselFluidHandler(this);}
 *///?} else {
     @Override
     public void invalidateCaps() {
@@ -229,9 +262,9 @@ public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implem
 
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.FLUID_HANDLER && side != null) {
+        if (cap == ForgeCapabilities.FLUID_HANDLER && !isRemoved()) {
             if (fluidCap == null || !fluidCap.isPresent()) {
-                fluidCap = LazyOptional.of(() -> new DieselFluidHandler(this, side));
+                fluidCap = LazyOptional.of(() -> new DieselFluidHandler(this));
             }
             return fluidCap.cast();
         }
@@ -239,18 +272,18 @@ public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implem
     }
 //?}
 
-    private record DieselFluidHandler(KineticDieselEngineBlockEntity be, Direction side) implements IFluidHandler {
+    private record DieselFluidHandler(KineticDieselEngineBlockEntity be) implements IFluidHandler {
         @Override
         public int getTanks() { return 2; }
 
         @Override
         public FluidStack getFluidInTank(int tank) {
-            return tank == 0 ? be.fuelTank.getFluid() : be.exhaustTank.getFluid();
+            return tank == 0 ? be.fuelTank.getFluid().copy() : tank == 1 ? be.exhaustTank.getFluid().copy() : FluidStack.EMPTY;
         }
 
         @Override
         public int getTankCapacity(int tank) {
-            return (int) (tank == 0 ? be.fuelTank.getCapacity() : be.exhaustTank.getCapacity());
+            return tank == 0 ? be.fuelTank.getCapacity() : tank == 1 ? be.exhaustTank.getCapacity() : 0;
         }
 
         @Override

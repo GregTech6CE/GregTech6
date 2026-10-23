@@ -83,6 +83,7 @@ public final class EnergyNodeDefinitions {
                     .capacity(16).name("Solar Panel (Germanium)").build());
 
         result.addAll(BatteryBoxDefinitions.specifications());
+        result.addAll(CrystalChargerDefinitions.specifications());
 
         result.addAll(OriginalThermalConverter.specifications());
         return com.gregtech.gregtech.api.definition.DefinitionCatalog.validated(result, EnergyNodeSpec::id);

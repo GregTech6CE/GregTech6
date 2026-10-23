@@ -1,6 +1,16 @@
 # 验证账本
 
+2026-10-24 / 物品桶与水晶：双版生产源码编译通过，NeoForge / Forge 各三项集中 GameTest 通过；实际验证 12 个材料水晶身份、20 台充能器、33 个可解析手工配方、LU 充放能守恒及 13 种桶的容量与保存。125 模型、46 贴图引用、45 个原版中文名称及双版掉落表、4 个 EMI 分类通过静态核对。无客户端视觉／存档重启／交付 JAR／推送。见[说明](CRYSTAL_BARREL_COMPLETION.md)和[来源回执](verification/crystal-barrel-20261024.json)。
+
+2026-10-24 / 机器 tick 优化：双版主代码编译通过；最终 Forge／NeoForge 各七项原生 GameTest 通过（Gradle 合计 3m25s），覆盖配方顺序／数量／动态上下文、缓存失效、锅炉产汽与数据加载、邻接旋转拆换、流体回调、自动输入恢复与连续产量。完整 Forge 测试源码编译曾被旧电池测试的两处 chemistry() 调用阻塞；最终使用临时 init 只编译本批测试，不修改生产配置。未客户端仪表／真实存档重启／用户产线复测／新 JAR／推送；见[本批说明](MACHINE_TICK_OPTIMIZATION.md)及[回执](verification/machine-tick-optimization-20261024.json)。
+
 2026-10-24 / 附属 API 统一化：core 能源 475、配方 37、版本 84 项断言通过；core／双端 API 依赖检查、双版代码／样例／测试编译、两端三种 SDK 构建通过（最终组合 2m24s）。NeoForge 七项集中原生 GameTest 通过；SDK 验包各 112 core + 46 原生类，旧 Neo SDK 的 128 类／105 字段／961 方法构造器保留，30 接口未新增抽象要求。未 Forge 游戏测试／第三方附属运行／客户端／存档重启；见[本批说明](ADDON_API_UNIFICATION.md)与[回执](verification/addon-api-unification-20261024.json)。
+
+2026-10-24 / 补齐氢气与氦-3便携电池、魔法力场吸收器和 Vindicator 稀土指示花；核对最新版 31023 大锅炉压力传感器已有实现，修正其中文用途说明。双版编译通过，Forge／NeoForge 各三项集中原生 GameTest 通过；105 贴图引用、双语键、稀土映射核对通过。无客户端视觉／存档重启／新 JAR／推送。见[本轮说明](LEGACY_ENERGY_DEVICES.md)与[来源回执](verification/legacy-energy-devices-20261024.json)。
+
+2026-10-23 / 用户燃油引擎修复：修正液体马达模型／活动动画、固定正面 RU、重气体背面排出、原版活动历史、漏斗／龙头及 Jade 专用 RU／流体数据。NeoForge 两项原生 GameTest 通过，双版打包成功（1m47s），包内状态／贴图／翻译／CRC 检查通过；此包也包含隐藏内部资源包。未客户端视觉验收及存档重启，详见[修复说明](DIESEL_ENGINE_REPAIR.md)和[回执](verification/diesel-repair-20261023.json)。
+
+2026-10-23 / 按用户要求隐藏内置共享模型资源包：`SharedInventoryModelPack.isHidden()` 返回 true，使用 Forge／NeoForge 自带的 UI 隐藏标志；保留必选加载、底部优先级和模型生成。已核对加载器将该标志传入 Pack 元数据并在资源包选择界面过滤；双版 compileJava 通过（2m31s），diff 检查通过。日志 `work/hidden-inventory-pack-20261023.log`。未启动游戏或重新打包，此改动尚未包含在此前交付的 JAR 中。
 
 2026-10-23 第一百三十批：11原／11当前重点Java、30段引用，14实际原生条目及12引用；1881维护文件仅作定位。51目录／40胶囊为源码计数，六完整视图与三个纯分档helper／共用成员签名保持，四实际生成输入对应；core／双版编译129秒通过。新增433–436，未游戏、存档、新测试或打包，不借编译宣称行为已修，见[专题](PORTABLE_VESSEL_AUDIT.md)／[回执](verification/portable-vessel-audit-20261023.json)。
 

@@ -1,0 +1,330 @@
+{
+  "date": "2026-10-24",
+  "codeLicense": "LGPL-3.0-or-later; GregTech-6 Team / Gregorius Techneticies",
+  "texturesLicense": "Original GT6 default resources; existing project CC0 provenance applies",
+  "sources": [
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase08Battery.java",
+      "sha256": "4db1df818cd2ef2dbf0ae167af3ed15f9993741380ea67ebc4db9bdc1d170d33"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase10EnergyBatBox.java",
+      "sha256": "21ee1d11820ce91c0f693d4bf7684503ed29d8b8fa2cf7b434ebbd2143338fd7"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase10EnergyConverter.java",
+      "sha256": "52cb409c7d35a8731338527301e09c8b779548e1851d5fe7fe91242fd25b9c44"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\inventories\\MultiTileEntityMassStorage.java",
+      "sha256": "ecf73ec1fba294c5f137cc814ea2152aa372861f4e60a1f81939ea60c2dc70cd"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\inventories\\MultiTileEntityMassStorageBarrel.java",
+      "sha256": "4fe158322d575df221d3befdd3d786b81672dfc69b5faed9d7c48b3463cfba31"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityRope.java",
+      "sha256": "dd0654c88cf26d3d68056ebfc721f2d67e240f8fcc76f0f0f15a8854dbf68e1e"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityLaserElectric.java",
+      "sha256": "030decc393ebfb04779903f2e4889617daabefa6c86f456d453af40c4d054d1d"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityLaserAbsorberElectric.java",
+      "sha256": "ee9de5e6283a4051614216ba0aaea639e93e92caa0b881e7691eebcdacab4b0a"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\render\\BlockTextureDefault.java",
+      "sha256": "626f10a146021b90da190d9ac051771e8d07b9cd9c62d68955b2db5c31602c85"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\batteries\\lu\\MultiTileEntityBatteryLU8.java",
+      "sha256": "300d9f1c6b5c0a65fc8c0ba20e7c5f02f84b1a2de14f95893c2f4ef610ab0566"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\batteries\\lu\\MultiTileEntityBatteryLU32.java",
+      "sha256": "6052d966c0696e97e92e6018b50443856fd66f51127fdb7911ae8d09f1c4e957"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\batteries\\lu\\MultiTileEntityBatteryLU128.java",
+      "sha256": "976b6022eb82020828d00ca4e3c44c717714820c558349db8e63281f9a845445"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\batteries\\lu\\MultiTileEntityBatteryLU512.java",
+      "sha256": "696f15fc78bfa1b8533d0514f3ff0101a42f97a85f6bb4e298cd78691464b637"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\batteries\\lu\\MultiTileEntityBatteryLU2048.java",
+      "sha256": "e879e584dfd107dc9a17d02fc0322df1ff1f9cf5eb255c19b7238ec25850e3d0"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\batteries\\lu\\MultiTileEntityBatteryLU8192.java",
+      "sha256": "cc9c722178bb0692d476d1a175d7d06955066c534b1e308c0b5de54d3fd74b26"
+    }
+  ],
+  "translation": {
+    "source": "C:/Dev/GregTech_zh_cn.lang",
+    "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+  },
+  "assets": [
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\energystorages\\crystal_laser\\colored\\front.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/energystorages/crystal_laser/colored/front.png",
+      "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\energystorages\\crystal_laser\\colored\\side.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/energystorages/crystal_laser/colored/side.png",
+      "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\energystorages\\crystal_laser\\overlay\\front.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/energystorages/crystal_laser/overlay/front.png",
+      "sha256": "dadfb10ea4e61c577aa277880767af657f3bbe19144701ac6fcbe6e97332beea"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\energystorages\\crystal_laser\\overlay\\side.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/energystorages/crystal_laser/overlay/side.png",
+      "sha256": "aef1e8d84ce0ebb2a358f6f7c7de012a3fa116b6d7979222a83114a5e7917c73"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\energystorages\\crystal_laser\\overlay_active\\front.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/energystorages/crystal_laser/overlay_active/front.png",
+      "sha256": "3662fbd21e17077f9e74d7315eb2ecc144f0ebb2e01840ed1bf16fed86e0ffee"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\energystorages\\crystal_laser\\overlay_active\\side.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/energystorages/crystal_laser/overlay_active/side.png",
+      "sha256": "d10032144f8c902d91248f950f4186fcbecda34420169858eeae74de18bdcf35"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\energystorages\\crystal_laser\\overlay_blinking\\front.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/energystorages/crystal_laser/overlay_blinking/front.png",
+      "sha256": "3662fbd21e17077f9e74d7315eb2ecc144f0ebb2e01840ed1bf16fed86e0ffee"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\energystorages\\crystal_laser\\overlay_blinking\\side.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/energystorages/crystal_laser/overlay_blinking/side.png",
+      "sha256": "e36bed0063a7902866c37cb65435b309c683233697e14b1fbad11c5b863edac6"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\energystorages\\crystal_laser\\overlay_blinking\\side.png.mcmeta",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/energystorages/crystal_laser/overlay_blinking/side.png.mcmeta",
+      "sha256": "920176fe0c003f6f293aab5fc344418356377d273c414a8f5378755e25674891"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\energystorages\\crystal_laser_large\\colored\\front.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/energystorages/crystal_laser_large/colored/front.png",
+      "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\energystorages\\crystal_laser_large\\colored\\side.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/energystorages/crystal_laser_large/colored/side.png",
+      "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\energystorages\\crystal_laser_large\\overlay\\front.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/energystorages/crystal_laser_large/overlay/front.png",
+      "sha256": "dadfb10ea4e61c577aa277880767af657f3bbe19144701ac6fcbe6e97332beea"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\energystorages\\crystal_laser_large\\overlay\\side.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/energystorages/crystal_laser_large/overlay/side.png",
+      "sha256": "1d38b53fbe21f9d0763dcffabc6a73d6992a327e74b3f452e92ff454f4e6d243"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\energystorages\\crystal_laser_large\\overlay_active\\front.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/energystorages/crystal_laser_large/overlay_active/front.png",
+      "sha256": "3662fbd21e17077f9e74d7315eb2ecc144f0ebb2e01840ed1bf16fed86e0ffee"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\energystorages\\crystal_laser_large\\overlay_active\\side.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/energystorages/crystal_laser_large/overlay_active/side.png",
+      "sha256": "a305b12b4ea1446a53ac263f1bdea34f4b3e400fc8c7fa5e848f320ee2ba591b"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\energystorages\\crystal_laser_large\\overlay_blinking\\front.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/energystorages/crystal_laser_large/overlay_blinking/front.png",
+      "sha256": "3662fbd21e17077f9e74d7315eb2ecc144f0ebb2e01840ed1bf16fed86e0ffee"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\energystorages\\crystal_laser_large\\overlay_blinking\\side.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/energystorages/crystal_laser_large/overlay_blinking/side.png",
+      "sha256": "e2d620275ff89cf563284fa9e3a48f9c20f120c73b8912a3c3918f16cddb8a23"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\energystorages\\crystal_laser_large\\overlay_blinking\\side.png.mcmeta",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/energystorages/crystal_laser_large/overlay_blinking/side.png.mcmeta",
+      "sha256": "920176fe0c003f6f293aab5fc344418356377d273c414a8f5378755e25674891"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\massstorage\\barrel\\colored\\back.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/massstorage/barrel/colored/back.png",
+      "sha256": "84fbf7592063f4e3a573e5f16380a8a1036762efa15fd8cefb5c93b4983b85ee"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\massstorage\\barrel\\colored\\bottom.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/massstorage/barrel/colored/bottom.png",
+      "sha256": "6ec21c5ccdc13f6f074c33ec28b681b99bb68fa74b21e5afd506a09516cffca6"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\massstorage\\barrel\\colored\\front.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/massstorage/barrel/colored/front.png",
+      "sha256": "406995d1f3eef24dc6dadd75d39b10adc93f160754da6c9f90c1618ad0ea70ca"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\massstorage\\barrel\\colored\\side.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/massstorage/barrel/colored/side.png",
+      "sha256": "84fbf7592063f4e3a573e5f16380a8a1036762efa15fd8cefb5c93b4983b85ee"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\massstorage\\barrel\\colored\\top.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/massstorage/barrel/colored/top.png",
+      "sha256": "6ec21c5ccdc13f6f074c33ec28b681b99bb68fa74b21e5afd506a09516cffca6"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\massstorage\\barrel\\overlay\\back.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/massstorage/barrel/overlay/back.png",
+      "sha256": "1811b125f6615a5d2beb449d0da4067f865608dfd131cc276c67db4a3e50a1f1"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\massstorage\\barrel\\overlay\\bottom.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/massstorage/barrel/overlay/bottom.png",
+      "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\massstorage\\barrel\\overlay\\front.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/massstorage/barrel/overlay/front.png",
+      "sha256": "ac0e8cfc56ba441d96b5f62bddb82222976768e0b510727829693a2362cb811b"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\massstorage\\barrel\\overlay\\side.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/massstorage/barrel/overlay/side.png",
+      "sha256": "1811b125f6615a5d2beb449d0da4067f865608dfd131cc276c67db4a3e50a1f1"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\massstorage\\barrel\\overlay\\top.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/massstorage/barrel/overlay/top.png",
+      "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\batteries\\lu\\8\\bottom.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/batteries/lu/8/bottom.png",
+      "sha256": "84bfbb21c54f3d28b411c7ae6dd4e9fbe6900b320f549eac205b2f293c5ec662"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\batteries\\lu\\8\\sides.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/batteries/lu/8/sides.png",
+      "sha256": "61c7c7fb5f8d267b18662126e787b853f74266aacf21af173ba0ed61fe86fd61"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\batteries\\lu\\8\\top.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/batteries/lu/8/top.png",
+      "sha256": "4c26249f1ab0940f9173d387a9fca995c79139c5ad403983430fefc7ad829654"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\batteries\\lu\\32\\bottom.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/batteries/lu/32/bottom.png",
+      "sha256": "84bfbb21c54f3d28b411c7ae6dd4e9fbe6900b320f549eac205b2f293c5ec662"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\batteries\\lu\\32\\sides.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/batteries/lu/32/sides.png",
+      "sha256": "61c7c7fb5f8d267b18662126e787b853f74266aacf21af173ba0ed61fe86fd61"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\batteries\\lu\\32\\top.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/batteries/lu/32/top.png",
+      "sha256": "4c26249f1ab0940f9173d387a9fca995c79139c5ad403983430fefc7ad829654"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\batteries\\lu\\128\\bottom.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/batteries/lu/128/bottom.png",
+      "sha256": "84bfbb21c54f3d28b411c7ae6dd4e9fbe6900b320f549eac205b2f293c5ec662"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\batteries\\lu\\128\\sides.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/batteries/lu/128/sides.png",
+      "sha256": "61c7c7fb5f8d267b18662126e787b853f74266aacf21af173ba0ed61fe86fd61"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\batteries\\lu\\128\\top.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/batteries/lu/128/top.png",
+      "sha256": "4c26249f1ab0940f9173d387a9fca995c79139c5ad403983430fefc7ad829654"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\batteries\\lu\\512\\bottom.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/batteries/lu/512/bottom.png",
+      "sha256": "84bfbb21c54f3d28b411c7ae6dd4e9fbe6900b320f549eac205b2f293c5ec662"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\batteries\\lu\\512\\sides.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/batteries/lu/512/sides.png",
+      "sha256": "61c7c7fb5f8d267b18662126e787b853f74266aacf21af173ba0ed61fe86fd61"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\batteries\\lu\\512\\top.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/batteries/lu/512/top.png",
+      "sha256": "4c26249f1ab0940f9173d387a9fca995c79139c5ad403983430fefc7ad829654"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\batteries\\lu\\2048\\bottom.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/batteries/lu/2048/bottom.png",
+      "sha256": "84bfbb21c54f3d28b411c7ae6dd4e9fbe6900b320f549eac205b2f293c5ec662"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\batteries\\lu\\2048\\sides.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/batteries/lu/2048/sides.png",
+      "sha256": "61c7c7fb5f8d267b18662126e787b853f74266aacf21af173ba0ed61fe86fd61"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\batteries\\lu\\2048\\top.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/batteries/lu/2048/top.png",
+      "sha256": "4c26249f1ab0940f9173d387a9fca995c79139c5ad403983430fefc7ad829654"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\batteries\\lu\\8192\\bottom.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/batteries/lu/8192/bottom.png",
+      "sha256": "84bfbb21c54f3d28b411c7ae6dd4e9fbe6900b320f549eac205b2f293c5ec662"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\batteries\\lu\\8192\\sides.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/batteries/lu/8192/sides.png",
+      "sha256": "61c7c7fb5f8d267b18662126e787b853f74266aacf21af173ba0ed61fe86fd61"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\batteries\\lu\\8192\\top.png",
+      "target": "core/src/main/resources/assets/gt6ce/textures/block/machines/batteries/lu/8192/top.png",
+      "sha256": "4c26249f1ab0940f9173d387a9fca995c79139c5ad403983430fefc7ad829654"
+    }
+  ],
+  "verified": {
+    "registeredVariants": 45,
+    "resolvedModels": 125,
+    "textureReferences": 46,
+    "matchingOriginalNames": 45,
+    "matchingDualLootTables": 45,
+    "emiGroups": 4,
+    "protectedWoodMaterialsSha256": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "nativeGameTests": {
+      "forge_1_20_1": {
+        "required": 3,
+        "passed": 3,
+        "log": "work/crystal-barrel-forge-tests.log"
+      },
+      "neoforge_1_21_1": {
+        "required": 3,
+        "passed": 3,
+        "log": "work/crystal-barrel-final-tests.log"
+      }
+    },
+    "dualProductionCompile": true
+  },
+  "runtimeVerification": "See CRYSTAL_BARREL_COMPLETION.md; no client visual or saved-world restart acceptance."
+}
