@@ -103,10 +103,10 @@ public final class FluidItemClientModels {
         };
 
 //? if >=1.21.1 {
-        /*for (var entry : com.gregtech.gregtech.platform.neoforge.fluid.FluidRegistries.ITEMS.getEntries()) {
+        /*for (var entry : com.gregtech.gregtech.platform.neoforge.fluid.FluidRegistries.allItems().toList()) {
             if (!(entry.get() instanceof FluidDisplayItem)) {
 *///?} else {
-        for (var entry : GTFluidItems.ITEMS.getEntries()) {
+        for (var entry : GTFluidItems.allEntries()) {
             if (!(entry.get() instanceof FluidItem)) {
 //?}
                 continue;
@@ -130,7 +130,7 @@ public final class FluidItemClientModels {
 
     @SubscribeEvent
     public static void registerColors(net.neoforged.neoforge.client.event.RegisterColorHandlersEvent.Item event) {
-        for(var entry:com.gregtech.gregtech.platform.neoforge.fluid.FluidRegistries.ITEMS.getEntries()) {
+        for(var entry:com.gregtech.gregtech.platform.neoforge.fluid.FluidRegistries.allItems().toList()) {
             if(!(entry.get() instanceof FluidDisplayItem item)) continue;
             event.register((stack,layer) -> {
                 if(layer!=0) return 0xFFFFFF;

@@ -50,7 +50,7 @@ public final class GTFluidType {
         long flags = entry == null ? 0 : entry.flags();
         String registry = entry == null ? id.toString() : entry.registryName();
         boolean industrial = "lubricant".equals(registry) || "rc lubricant".equals(registry);
-        Owner owner = id.getNamespace().equals("gt6ce") ? Owner.GT6
+        Owner owner = entry != null ? Owner.GT6
                 : fluid == net.minecraft.world.level.material.Fluids.WATER
                 || fluid == net.minecraft.world.level.material.Fluids.FLOWING_WATER
                 || fluid == net.minecraft.world.level.material.Fluids.LAVA

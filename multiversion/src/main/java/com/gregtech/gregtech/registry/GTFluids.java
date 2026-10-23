@@ -6,6 +6,10 @@ package com.gregtech.gregtech.registry;
 import com.gregtech.gregtech.GregTech;
 import com.gregtech.gregtech.api.fluid.GTWaterParity;
 //?}
+import com.gregtech.gregtech.api.addon.AddonMaterials;
+import com.gregtech.gregtech.api.material.GTMaterial;
+import com.gregtech.gregtech.api.material.GTMaterialRegistry;
+import com.gregtech.gregtech.api.mod.GregTechIdentity;
 import com.gregtech.gregtech.data.RegisteredFluids;
 import com.gregtech.gregtech.api.fluid.FluidPhysicalProperties;
 //? if >=1.21.1 {
@@ -23,7 +27,8 @@ import net.minecraft.world.level.BlockGetter;
 //?}
 import net.minecraft.world.level.material.Fluid;
 //? if >=1.21.1 {
-/*import net.neoforged.neoforge.fluids.FluidStack;
+/*import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -60,12 +65,44 @@ public final class GTFluids {
         return NON_LIQUID_TYPES.contains(type);
     }
 
+    /**
+     * Registry namespace of a generated fluid: the owning addon of the material it was derived
+     * from, otherwise {@code gt6ce}. Fluids without a material stay in the built-in namespace.
+     */
+    public static String namespace(RegisteredFluids.FluidEntry entry) {
+        String materialKey = entry.materialKey();
+        if (materialKey == null) materialKey = RegisteredFluids.boundMaterial(entry.registryName());
+        if (materialKey == null) return GregTechIdentity.MOD_ID;
+        GTMaterial material = GTMaterialRegistry.get(materialKey);
+        if (material == null || !material.isValid()) return GregTechIdentity.MOD_ID;
+        return AddonMaterials.namespaceOf(material.resolve());
+    }
+
 //? if >=1.21.1 {
     /*public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, "gt6ce");
     public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(BuiltInRegistries.FLUID, "gt6ce");
+    private static final Map<String, DeferredRegister<FluidType>> ADDON_FLUID_TYPES = new LinkedHashMap<>();
+    private static final Map<String, DeferredRegister<Fluid>> ADDON_FLUIDS = new LinkedHashMap<>();
     private static final Map<String, DeferredHolder<Fluid, ? extends Fluid>> STILL = new LinkedHashMap<>(), FLOWING = new LinkedHashMap<>();
     private static final Map<ResourceLocation, RegisteredFluids.FluidEntry> ENTRIES = new LinkedHashMap<>();
     private GTFluids() {}
+
+    /^* The fluid-type register for a namespace; addon namespaces get their own register. ^/
+    public static DeferredRegister<FluidType> fluidTypes(String namespace) {
+        if (GregTechIdentity.MOD_ID.equals(namespace)) return FLUID_TYPES;
+        return ADDON_FLUID_TYPES.computeIfAbsent(namespace,
+                id -> DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, id));
+    }
+
+    public static DeferredRegister<Fluid> fluids(String namespace) {
+        if (GregTechIdentity.MOD_ID.equals(namespace)) return FLUIDS;
+        return ADDON_FLUIDS.computeIfAbsent(namespace, id -> DeferredRegister.create(BuiltInRegistries.FLUID, id));
+    }
+
+    public static void registerAddonFluids(IEventBus bus) {
+        ADDON_FLUID_TYPES.values().forEach(register -> register.register(bus));
+        ADDON_FLUIDS.values().forEach(register -> register.register(bus));
+    }
     public static void bindFluid(String field, DeferredHolder<Fluid, ? extends Fluid> still, DeferredHolder<Fluid, ? extends Fluid> flowing, ResourceLocation id, RegisteredFluids.FluidEntry entry) {
         STILL.put(field, still); FLOWING.put(field, flowing); ENTRIES.put(id, entry);
 *///?} else {
@@ -74,9 +111,28 @@ public final class GTFluids {
     public static final DeferredRegister<Fluid> FLUIDS =
             DeferredRegister.create(ForgeRegistries.FLUIDS, GregTech.NAMESPACE);
 
+    private static final Map<String, DeferredRegister<FluidType>> ADDON_FLUID_TYPES = new HashMap<>();
+    private static final Map<String, DeferredRegister<Fluid>> ADDON_FLUIDS = new HashMap<>();
     private static final Map<String, RegistryObject<Fluid>> STILL_BY_FIELD = new HashMap<>();
     private static final Map<String, RegistryObject<Fluid>> FLOWING_BY_FIELD = new HashMap<>();
     private static final Map<ResourceLocation, RegisteredFluids.FluidEntry> ENTRY_BY_TYPE_ID = new HashMap<>();
+
+    /** The fluid-type register for a namespace; addon namespaces get their own register. */
+    public static DeferredRegister<FluidType> fluidTypes(String namespace) {
+        if (GregTech.NAMESPACE.equals(namespace)) return FLUID_TYPES;
+        return ADDON_FLUID_TYPES.computeIfAbsent(namespace,
+                id -> DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, id));
+    }
+
+    public static DeferredRegister<Fluid> fluids(String namespace) {
+        if (GregTech.NAMESPACE.equals(namespace)) return FLUIDS;
+        return ADDON_FLUIDS.computeIfAbsent(namespace, id -> DeferredRegister.create(ForgeRegistries.FLUIDS, id));
+    }
+
+    public static void registerAddonFluids(net.minecraftforge.eventbus.api.IEventBus bus) {
+        ADDON_FLUID_TYPES.values().forEach(register -> register.register(bus));
+        ADDON_FLUIDS.values().forEach(register -> register.register(bus));
+    }
 
     /** Registry metadata wins over density: some GT6 gases are heavier than air. */
     public static boolean isGas(FluidStack stack) {

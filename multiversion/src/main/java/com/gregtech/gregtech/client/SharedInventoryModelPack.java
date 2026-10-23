@@ -106,8 +106,16 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
                         ("{\"parent\":\"gt6ce:" + model + "\"}").getBytes(StandardCharsets.UTF_8));
                 continue;
             }
-            if (!id.getNamespace().equals("gt6ce") || SharedInventoryModelPack.class.getResource(
-                    "/assets/gt6ce/models/item/" + id.getPath() + ".json") != null) continue;
+            boolean materialForm = item instanceof com.gregtech.gregtech.api.material.MaterialFormItem material
+                    && !material.getPrefix().isAddon();
+//? if >=1.21.1 {
+            /*boolean fluidDisplay = item instanceof com.gregtech.gregtech.platform.neoforge.fluid.FluidDisplayItem;
+*///?} else {
+            boolean fluidDisplay = item instanceof com.gregtech.gregtech.item.FluidItem;
+//?}
+            if (!id.getNamespace().equals("gt6ce") && !materialForm && !fluidDisplay) continue;
+            if (SharedInventoryModelPack.class.getResource("/assets/" + id.getNamespace()
+                    + "/models/item/" + id.getPath() + ".json") != null) continue;
             ResourceLocation parent = null;
             if (item instanceof com.gregtech.gregtech.api.material.MaterialFormItem material) {
                 parent = MaterialIcons.sharedModelLocation(MaterialIcons.resolveTextureSet(material.getMaterial()), material.getPrefix());
@@ -136,18 +144,20 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
                     + "/models/" + parent.getPath() + ".json") == null) continue;
             byte[] json = references.computeIfAbsent(parent, key ->
                     MaterialIconDefinitions.sharedInventoryJson(key.toString()).getBytes(StandardCharsets.UTF_8));
-            result.put(location("models/item/" + id.getPath() + ".json"), json);
+            result.put(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"), json);
         }
         // Material bushes share the existing 28 geometries; resource packs can override each identity.
         byte[] bushStates=com.gregtech.gregtech.content.plant.MaterialBerryBushCatalog.blockstateJson().getBytes(StandardCharsets.UTF_8);
         byte[] bushItem=MaterialIconDefinitions.sharedInventoryJson("gt6ce:block/plants/bush_stage3").getBytes(StandardCharsets.UTF_8);
         for(var block:com.gregtech.gregtech.registry.GTBushes.allBlocks()) {
-            if(!((com.gregtech.gregtech.block.plant.BushBlock)block).berryId().startsWith("gt6ce:plant_gt_berry_"))continue;
+            var berryId=((com.gregtech.gregtech.block.plant.BushBlock)block).berryId();
+            int berryColon=berryId.indexOf(':');
+            if(!berryId.substring(berryColon+1).startsWith("plant_gt_berry_"))continue;
             var id=BuiltInRegistries.BLOCK.getKey(block);
-            if(SharedInventoryModelPack.class.getResource("/assets/gt6ce/blockstates/"+id.getPath()+".json")==null)
-                result.put(location("blockstates/"+id.getPath()+".json"),bushStates);
-            if(SharedInventoryModelPack.class.getResource("/assets/gt6ce/models/item/"+id.getPath()+".json")==null)
-                result.put(location("models/item/"+id.getPath()+".json"),bushItem);
+            if(SharedInventoryModelPack.class.getResource("/assets/"+id.getNamespace()+"/blockstates/"+id.getPath()+".json")==null)
+                result.put(named(id.getNamespace(),"blockstates/"+id.getPath()+".json"),bushStates);
+            if(SharedInventoryModelPack.class.getResource("/assets/"+id.getNamespace()+"/models/item/"+id.getPath()+".json")==null)
+                result.put(named(id.getNamespace(),"models/item/"+id.getPath()+".json"),bushItem);
         }
         // Registration gained material forms after the original static data generation.
         // Supply only absent states, using the same real template as the existing alias hook.
@@ -331,6 +341,8 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             if (block instanceof com.gregtech.gregtech.block.machine.CompressedGasTankBlock)
                 names.add(BuiltInRegistries.BLOCK.getKey(block).getNamespace());
         names.addAll(com.gregtech.gregtech.registry.AddonPipeRegistration.namespaces());
+        for (var material : com.gregtech.gregtech.api.material.GTMaterialRegistry.allMaterials())
+            names.addAll(com.gregtech.gregtech.api.addon.AddonMaterials.owners(material));
         return Set.copyOf(names);
     }
 
