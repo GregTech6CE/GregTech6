@@ -988,7 +988,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     }
 
     /** Deduct only deliveries confirmed by the shared transfer engine. */
-    private void pushOutputItems(IItemHandler target, Direction side) {
+    protected final void pushOutputItems(IItemHandler target, Direction side) {
         for (int slot = itemHandler.inputCount(); slot < itemHandler.getSlots(); slot++) {
             ItemStack offered = itemHandler.getStackInSlot(slot);
             if (offered.isEmpty() || !allowsItemTraffic(side, offered, false)) continue;
