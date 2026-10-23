@@ -118,7 +118,7 @@ public final class LayoutRepeat {
                 throw new IllegalArgumentException("Structure repeat '" + key + "' needs min >= 1");
             if (max != -1 && max < min)
                 throw new IllegalArgumentException("Structure repeat '" + key + "' needs max >= min or -1");
-            if (max > 256)
+            if (max > 1024)
                 throw new IllegalArgumentException("Structure repeat '" + key + "' max is too large: " + max);
             if (cells.isEmpty())
                 throw new IllegalArgumentException("Structure repeat '" + key + "' is empty");

@@ -8,9 +8,11 @@ import java.util.*;
 
 /** Coordinates and port roles translated from the corresponding GT6 MultiTileEntity classes. */
 public final class LargeMachineLayouts {
-    public record Cell(int right,int up,int back,int part,Role role,String plain,int design) {
-        public Cell(int right,int up,int back,int part,Role role) { this(right, up, back, part, role, null, -1); }
-        public Cell(int right,int up,int back,int part,Role role,String plain) { this(right, up, back, part, role, plain, -1); }
+    public record Cell(int right,int up,int back,int part,Role role,String plain,int design,List<SharedLargeMachineLayouts.Choice> alternatives) {
+        public Cell(int right,int up,int back,int part,Role role) { this(right, up, back, part, role, null, -1, java.util.List.of()); }
+        public Cell(int right,int up,int back,int part,Role role,String plain) { this(right, up, back, part, role, plain, -1, java.util.List.of()); }
+        public Cell(int right,int up,int back,int part,Role role,String plain,int design) { this(right, up, back, part, role, plain, design, java.util.List.of()); }
+        public Cell { alternatives = alternatives == null ? java.util.List.of() : java.util.List.copyOf(alternatives); }
         public BlockPos at(BlockPos origin,Direction front) { return at(origin,front,up); }
         public BlockPos at(BlockPos origin,Direction front,int layer) { return origin.relative(front.getClockWise(),right).above(layer).relative(front.getOpposite(),back); }
         public boolean plainBlock() { return plain != null; }
@@ -39,15 +41,16 @@ public final class LargeMachineLayouts {
     public record Layout(List<Cell> cells,List<Repeat> repeats){}
     /** One cell resolved to a world position. */
     public record Placed(Cell cell,BlockPos pos){}
-    /** Upper bound for an unbounded repeat, so a check cannot walk forever. */
-    public static final int MAX_REPEATS=64;
+    /** Upper bound for an unbounded repeat; the world height still caps the walk. */
+    public static final int MAX_REPEATS=1024;
     /**
      * Resolves every fully matching copy of {@code repeat}. Returns null when fewer than
      * {@code min} copies match. The first copy with a failing cell ends the walk.
      */
     public static List<Placed> repeatCells(net.minecraft.world.level.Level level,BlockPos origin,Direction front,
                                            Repeat repeat,java.util.function.BiPredicate<Cell,BlockPos> matches){
-        int limit=repeat.max()<0?MAX_REPEATS:repeat.max();
+        int span=Math.max(1,level.getHeight());
+        int limit=Math.min(span,repeat.max()<0?MAX_REPEATS:repeat.max());
         var out=new ArrayList<Placed>();
         int matched=0;
         for(int copy=0;copy<limit;copy++){
@@ -64,7 +67,9 @@ public final class LargeMachineLayouts {
         }
         return matched<repeat.min()?null:List.copyOf(out);
     }
-    public static List<Cell> fromShared(List<SharedLargeMachineLayouts.Cell> cells){return cells==null?null:cells.stream().map(cell->new Cell(cell.right(),cell.up(),cell.back(),cell.part(),Role.valueOf(cell.role().name()),cell.plain(),cell.design())).toList();}
+    public static List<Cell> fromShared(List<SharedLargeMachineLayouts.Cell> cells){return cells==null?null:cells.stream().map(cell->new Cell(cell.right(),cell.up(),cell.back(),cell.part(),Role.valueOf(cell.role().name()),cell.plain(),cell.design(),cell.alternatives())).toList();}
+    /** Matches a plain block choice without resolving a part id. */
+    public static boolean matchesPlain(net.minecraft.world.level.Level level,BlockPos pos,String plain){return PlainStructureBlocks.matches(level,pos,plain,level.getBlockState(pos));}
     private static final Map<String,List<Cell>> CACHE=new LinkedHashMap<>();
     private static final Map<String,Layout> LAYOUTS=new LinkedHashMap<>();
     static { for (String machine : SharedLargeMachineLayouts.machines()) CACHE.put(machine, fromShared(SharedLargeMachineLayouts.cells(machine))); }

@@ -33,6 +33,36 @@ public final class AddonFluids {
 
     /** True when {@code fluid} is a gas. Null and empty are false. */
     public static boolean gas(Fluid fluid) {
-        return AddonLoader.services().gas(fluid);
+        return fluid != null && AddonLoader.services().gas(fluid);
+    }
+
+    /** True when {@code stack} is acid. An empty stack is false. */
+    public static boolean acid(FluidStack stack) {
+        return stack != null && !stack.isEmpty() && acid(stack.getFluid());
+    }
+
+    /** True when {@code fluid} is acid. Null and empty are false. */
+    public static boolean acid(Fluid fluid) {
+        return fluid != null && AddonLoader.services().acid(fluid);
+    }
+
+    /** True when {@code stack} is plasma. An empty stack is false. */
+    public static boolean plasma(FluidStack stack) {
+        return stack != null && !stack.isEmpty() && plasma(stack.getFluid());
+    }
+
+    /** True when {@code fluid} is plasma. Null and empty are false. */
+    public static boolean plasma(Fluid fluid) {
+        return fluid != null && AddonLoader.services().plasma(fluid);
+    }
+
+    /** True when {@code stack} is magical. An empty stack is false. */
+    public static boolean magic(FluidStack stack) {
+        return stack != null && !stack.isEmpty() && magic(stack.getFluid());
+    }
+
+    /** True when {@code fluid} is magical. Null and empty are false. */
+    public static boolean magic(Fluid fluid) {
+        return fluid != null && AddonLoader.services().magic(fluid);
     }
 }

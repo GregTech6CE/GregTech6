@@ -50,11 +50,13 @@ public final class RecipeKeptInputs {
         return copy;
     }
 
-    /** Amount 0 is rejected. The message names {@code keptFluidInputs}. */
+    /**
+     * Negative amounts are rejected. An amount of 0 is a presence-only catalyst and is accepted;
+     * a positive amount may still be marked in {@code keptFluidInputs} to check without draining.
+     */
     public static void requirePositiveFluid(int amount, int index) {
-        if (amount > 0) return;
-        throw new IllegalArgumentException("Fluid input " + index + " has amount " + amount
-                + "; mark it in keptFluidInputs and leave the amount positive");
+        if (amount >= 0) return;
+        throw new IllegalArgumentException("Fluid input " + index + " has amount " + amount);
     }
 
     /** A kept fluid is checked once. An ordinary fluid is checked once per parallel. */

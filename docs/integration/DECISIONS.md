@@ -2000,3 +2000,15 @@ Sensors null-NBT源登记可合法携带REV，生成器只为这组解析，避�
 ## 2026-10-19 / 新报告的工具、木桶与坩埚交互修复
 
 坩埚说明页的unit关联仅用于JEI／EMI查询，实际物品匹配不扩大；木桶恢复独立内容变种与原版1件堆叠。薄覆盖板保留微小防叠面偏移；锅炉遵循原版整面接口，不凭外观缩成细管。全面核查goal仍按用户要求暂停。 [详细范围、来源和验证边界](verification/gameplay-feedback-20261019.md)。仅本地，无推送或发布。
+
+## 2026-10-23 / 附属接口剩余九条落地
+
+- `SharedLargeMachineParts.idForName` 在固定表之后查 `OriginalMultiblockPartData`，`implosion_compressor_wall`、`large_niobium_titanium_coil` 和 `fire_bricks` 能写进布局。
+- `CellMatch.oneOf(...)` 让一格接受多个候选；数据包和 KubeJS 的 `match` 可以是数组。`max=-1` 的重复段按世界高度检查，上限 1024。
+- 0 mB 流体输入是“只检查存在、不消耗”的催化剂；负数量仍拒绝，0 mB 输出仍拒绝。配方模型保留 0 mB 输入，匹配和并行都不扣数量。
+- `EnergyInput.anyType()` 只给行为机主输入；首个被收下的包锁定类型，存 `gt.energy_type`，锁前 `getEnergyTypes` 报全部 `ALL_GT`。
+- `RecipeMachine.auxiliaryEnergy` 加第二输入缓存；`startupEnergy(true)` 把每条配方的 `special` 作为启动需求，从第二缓存扣完才推进进度。键是 `gt.aux_energy` 和 `gt.startup_energy`。
+- 行为机实现 `MultiblockPortOwner`，结构上的 GT 总线、流体仓和能量仓按结构角色转发到行为机自己的槽、罐和能量缓存，不叠加控制器的面规则。
+- `PrefixCondition` 增加 `METAL`、`MOLTEN`、`ALLOY`；`MOLTEN` 同时接受较早的 `MELTING` 标记。`PrefixDeclaration.excludedMaterials` 在选材后按名字剔除。
+- `AddonFluids` 增加 `acid`、`plasma`、`magic`，转发 `FluidHazards`。
+- 验证：`:core:check` 通过；Forge 1.20.1 与 NeoForge 1.21.1 强制 `compileJava` 通过；两端 `compileAddonSample` 和 `addonApiClosureCheck` 通过。没有玩法、存档重启或专服验证；没有提交或推送。

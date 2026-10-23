@@ -33,10 +33,22 @@ final class ScriptValues {
             var cell = object(element);
             out.add(new StructureLayoutDocuments.CellSpec(
                     number(cell.get("right")), number(cell.get("up")), number(cell.get("back")),
-                    text(cell.get("match")), text(cell.get("role")),
+                    matches(cell.get("match")), text(cell.get("role")),
                     cell.containsKey("design") ? number(cell.get("design")) : -1));
         }
         return out;
+    }
+
+    /** One match string, or a list of alternatives. */
+    private static List<String> matches(Object value) {
+        Object unwrapped = unwrap(value);
+        if (unwrapped instanceof CharSequence text && !text.isEmpty()) return List.of(text.toString());
+        if (unwrapped instanceof List<?> list && !list.isEmpty()) {
+            var out = new ArrayList<String>();
+            for (Object element : list) out.add(text(element));
+            return List.copyOf(out);
+        }
+        throw new IllegalArgumentException("expected text or a list of text");
     }
 
     static List<StructureLayoutDocuments.RepeatSpec> repeats(Object spec) {

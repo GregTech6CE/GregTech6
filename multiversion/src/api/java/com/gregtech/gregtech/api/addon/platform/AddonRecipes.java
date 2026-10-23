@@ -1,6 +1,7 @@
 package com.gregtech.gregtech.api.addon.platform;
 
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.material.Fluids;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
 *///?} else {
@@ -144,8 +145,9 @@ public final class AddonRecipes {
             FluidStack[] copy = new FluidStack[stacks.length];
             for (int i = 0; i < stacks.length; i++) {
                 FluidStack stack = stacks[i];
-                int amount = stack == null || stack.isEmpty() ? 0 : stack.getAmount();
-                RecipeKeptInputs.requirePositiveFluid(amount, i);
+                if (stack == null || stack.getFluid() == Fluids.EMPTY)
+                    throw new IllegalArgumentException("Fluid input " + i + " is empty");
+                RecipeKeptInputs.requirePositiveFluid(stack.getAmount(), i);
                 copy[i] = stack.copy();
             }
             return copy;

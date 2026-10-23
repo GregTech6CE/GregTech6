@@ -79,26 +79,30 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
                     Component.translatable("gt6ce.jei.chance",chance/100.0).withStyle(net.minecraft.ChatFormatting.YELLOW)));
         }
         for(int i=0;i<fluids.length;i++) {
-            var fluid=fluids[i];if(fluid==null||fluid.isEmpty()) continue;
+            var fluid=fluids[i];
+            if(fluid==null||fluid.getFluid()==net.minecraft.world.level.material.Fluids.EMPTY) continue;
+            boolean catalyst=input&&fluid.getAmount()<=0;
+            var shown=catalyst?new FluidStack(fluid.getFluid(),1):fluid;
             var point=MachineGuiLayout.fluid(input,i);
 //? if >=1.21.1 {
-            /*var display=FluidDisplayBinding.display(net.minecraft.client.Minecraft.getInstance().level.registryAccess(),fluid);
+            /*var display=FluidDisplayBinding.display(net.minecraft.client.Minecraft.getInstance().level.registryAccess(),shown);
 *///?} else {
-            var display=FluidDisplayBinding.display(fluid);
+            var display=FluidDisplayBinding.display(shown);
 //?}
             var fluidSlot=builder.addSlot(role,point.x(),point.y()).setSlotName(role.name()+"_fluid_"+i);
             if (input) {
-                var containers = com.gregtech.gregtech.api.fluid.FluidContainerDisplayBinding.containers(fluid);
+                var containers = com.gregtech.gregtech.api.fluid.FluidContainerDisplayBinding.containers(shown);
                 if (!containers.isEmpty()) builder.addInvisibleIngredients(role).addItemStacks(containers);
             }
             if(!display.isEmpty()) fluidSlot.addItemStack(display).addTooltipCallback((view,tooltip)->
-                    tooltip.add(Component.translatable("gt6ce.fluid.amount",fluid.getAmount())));
+                    tooltip.add(catalyst?Component.translatable("gt6ce.jei.catalyst")
+                            :Component.translatable("gt6ce.fluid.amount",fluid.getAmount())));
 //? if >=1.21.1 {
-            /*else fluidSlot.addIngredient(NeoForgeTypes.FLUID_STACK,fluid).setFluidRenderer(Math.max(1000,fluid.getAmount()),false,16,16);
-            builder.addInvisibleIngredients(role).addIngredient(NeoForgeTypes.FLUID_STACK,fluid);
+            /*else fluidSlot.addIngredient(NeoForgeTypes.FLUID_STACK,shown).setFluidRenderer(Math.max(1000,shown.getAmount()),false,16,16);
+            builder.addInvisibleIngredients(role).addIngredient(NeoForgeTypes.FLUID_STACK,shown);
 *///?} else {
-            else fluidSlot.addIngredient(ForgeTypes.FLUID_STACK,fluid).setFluidRenderer(Math.max(1000,fluid.getAmount()),false,16,16);
-            builder.addInvisibleIngredients(role).addIngredient(ForgeTypes.FLUID_STACK,fluid);
+            else fluidSlot.addIngredient(ForgeTypes.FLUID_STACK,shown).setFluidRenderer(Math.max(1000,shown.getAmount()),false,16,16);
+            builder.addInvisibleIngredients(role).addIngredient(ForgeTypes.FLUID_STACK,shown);
 //?}
             // Generic creative proxies still find all compatible fluid variants via U/R.
             if(!display.isEmpty()) builder.addInvisibleIngredients(role).addItemStack(new ItemStack(display.getItem()));

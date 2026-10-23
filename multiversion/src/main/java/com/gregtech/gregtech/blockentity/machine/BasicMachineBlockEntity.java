@@ -97,6 +97,9 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     private long mEnergy;           // per-tick energy buffer (capped at energyInMax)
     private final com.gregtech.gregtech.content.machine.MachineInputAverage inputAverage =
             new com.gregtech.gregtech.content.machine.MachineInputAverage();
+    private long auxEnergy;         // second input buffer, when the spec declares one
+    private long startupRequirement; // remaining startup charge for the current recipe
+    private GregTechTags.Tag auxTag;
     private long mMinEnergy;        // per-tick energy cost for current recipe (after overclock)
     private long mMaxProgress;      // total energy needed for current recipe
     private int mParallelCount = 1; // GT6 large machine batch size for the running op
@@ -182,6 +185,10 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     public void setSpec(BasicMachineSpec spec) {
         this.spec = spec;
+        this.auxTag = spec == null || spec.auxiliaryEnergyType() == null ? null
+                : GregTechTags.Energy.ALL.stream()
+                        .filter(tag -> tag.getShortName().equalsIgnoreCase(spec.auxiliaryEnergyType()))
+                        .findFirst().orElse(null);
         adjacentEnergySourcesChanged();
         this.recipeMap = spec.recipeMap();
         this.faceConfig = spec.faceConfig();
@@ -360,9 +367,48 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             long extracted = source.doEnergyExtraction(energyTag(), absDir.getOpposite(), size, requested, true);
             if (extracted > 0) addReceivedEnergy(size, extracted);
         }
+        if (auxTag == null || spec.auxiliaryFaceMask() == 0) return;
+        long auxSize = spec.auxiliaryEnergyIn();
+        long auxCap = spec.auxiliaryEnergyCapacity();
+        for (int dir = 0; dir <= 5; dir++) {
+            if (!FaceConfig.has(spec.auxiliaryFaceMask(), dir)) continue;
+            Direction absDir = relativeToAbsolute(dir);
+            BlockPos adj = pos.relative(absDir);
+            BlockEntity be = level.getBlockEntity(adj);
+//? if >=1.21.1 {
+/*            if (be instanceof com.gregtech.gregtech.api.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) continue;
+*///?} else {
+            if (be instanceof MultiblockPortBlockEntity part && part.isBoundTo(worldPosition)) continue;
+//?}
+            IEnergyBlock source = EnergyBlockViews.view(be);
+            if (source == null || !source.isEnergyEmittingTo(auxTag, absDir.getOpposite(), false)) continue;
+            long offered = source.getEnergyOffered(auxTag, absDir.getOpposite(), auxSize);
+            if (offered <= 0) continue;
+            long requested = BasicMachineEnergy.accepted(auxEnergy, auxCap, auxSize, offered);
+            if (requested <= 0) continue;
+            long extracted = source.doEnergyExtraction(auxTag, absDir.getOpposite(), auxSize, requested, true);
+            if (extracted > 0) {
+                auxEnergy = BasicMachineEnergy.add(auxEnergy, auxCap, auxSize, extracted);
+                payStartup();
+            }
+        }
+    }
+
+    private void payStartup() {
+        if (startupRequirement <= 0 || auxEnergy <= 0) return;
+        long paid = Math.min(auxEnergy, startupRequirement);
+        auxEnergy -= paid;
+        startupRequirement -= paid;
     }
 
     private void doActive(Level level, BlockPos pos, long aEnergy) {
+        if (startupRequirement > 0) {
+            payStartup();
+            if (startupRequirement > 0) {
+                setChanged();
+                return;
+            }
+        }
         mProgress = com.gregtech.gregtech.api.recipe.MachineWorkCost.advance(mProgress, mMaxProgress, aEnergy);
         if (mProgress >= mMaxProgress) {
             if (!produceOutputs()) {
@@ -377,6 +423,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             mMaxProgress = 0;
             mMinEnergy = 0;
             mCurrentRecipe = null;
+            startupRequirement = 0;
             // Immediately check for next recipe
             if (aEnergy > 0 && mMaxProgress <= 0) checkRecipe();
         }
@@ -678,6 +725,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if (recipe == null || !exclusivePairOrPlain(recipe)) {
             mMaxProgress = 0;
             mCurrentRecipe = null;
+            startupRequirement = 0;
             return;
         }
 
@@ -690,7 +738,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         mMaxProgress=cost.totalWork();
 
         var remaining = com.gregtech.gregtech.api.recipe.RecipeInputs.consume(recipe, recipeInputItems(), fluids, parallel);
-        if (remaining == null || parallel < 1) { mMaxProgress=0; mCurrentRecipe=null; return; }
+        if (remaining == null || parallel < 1) { mMaxProgress=0; mCurrentRecipe=null; startupRequirement=0; return; }
         pendingOutputs = com.gregtech.gregtech.api.recipe.MachineWorkOutputs.roll(recipe,parallel,level.random::nextInt,usesExclusiveOutputs());
         for(int i=0;i<remaining.items().size();i++) itemHandler.setStackInSlot(i,remaining.items().get(i));
         var drained = matchedOutputTanks ? tanksOutput : tanksInput;
@@ -700,6 +748,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         mParallelCount = parallel;
         mCurrentRecipe = recipe;
         mProgress = 0;
+        startupRequirement = spec.startupEnergy() && recipe.mSpecialValue > 0 ? recipe.mSpecialValue : 0;
     }
 
     /** GT6's printer and replicator accept a USB cable in place of a retained stick. */
@@ -1268,21 +1317,27 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     @Override
     public boolean isEnergyType(GregTechTags.Tag energyType, @Nullable Direction side, boolean emitting) {
         if (energyType == null || spec == null) return false;
-        return spec.energyType().equalsIgnoreCase(energyType.getShortName());
+        return spec.energyType().equalsIgnoreCase(energyType.getShortName())
+                || (auxTag != null && auxTag == energyType);
     }
 
     @Override
     public Collection<GregTechTags.Tag> getEnergyTypes(@Nullable Direction side) {
         if (spec == null) return Collections.emptyList();
+        var tags = new java.util.ArrayList<GregTechTags.Tag>(2);
         GregTechTags.Tag tag = energyTag();
-        return tag != null ? Collections.singletonList(tag) : Collections.emptyList();
+        if (tag != null) tags.add(tag);
+        if (auxTag != null && !tags.contains(auxTag)) tags.add(auxTag);
+        return tags;
     }
 
     @Override
     public boolean isEnergyAcceptingFrom(GregTechTags.Tag energyType, @Nullable Direction side, boolean theoretical) {
         if (!isEnergyType(energyType, side, false) || (!theoretical && controlStopped)) return false;
         if (side == null) return true;
-        return FaceConfig.has(faceConfig.energyInputs(), relativeDir(side));
+        int mask = auxTag != null && auxTag == energyType
+                ? spec.auxiliaryFaceMask() : faceConfig.energyInputs();
+        return FaceConfig.has(mask, relativeDir(side));
     }
 
     @Override
@@ -1295,6 +1350,20 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
                          long size, long amount, boolean doInject) {
         if (size==0 || size==Long.MIN_VALUE || amount<=0 || !isEnergyAcceptingFrom(energyType, side, false)) return 0;
         long sizeAbs = Math.abs(size);
+        if (auxTag != null && auxTag == energyType) {
+            if (sizeAbs < spec.auxiliaryEnergyMin()) return 0;
+            if (sizeAbs > spec.auxiliaryEnergyMax()) {
+                if (doInject) explodeFromOvervoltage(sizeAbs, energyType);
+                return amount;
+            }
+            long consumed = BasicMachineEnergy.accepted(auxEnergy, spec.auxiliaryEnergyCapacity(), size, amount);
+            if (doInject && consumed > 0) {
+                auxEnergy = BasicMachineEnergy.add(auxEnergy, spec.auxiliaryEnergyCapacity(), size, consumed);
+                payStartup();
+                setChanged();
+            }
+            return consumed;
+        }
         if (sizeAbs > inputMaximum()) {
             // GT6 consumes oversized packets without crediting them; damage is opt-in.
             if (doInject) explodeFromOvervoltage(sizeAbs, energyType);
@@ -1322,6 +1391,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     @Override
     public long getEnergyDemanded(GregTechTags.Tag energyType, @Nullable Direction side, long size) {
         if (size==0||size==Long.MIN_VALUE||!isEnergyAcceptingFrom(energyType, side, false)) return 0;
+        if (auxTag != null && auxTag == energyType)
+            return BasicMachineEnergy.demanded(auxEnergy, spec.auxiliaryEnergyCapacity(), size);
         return BasicMachineEnergy.demanded(mEnergy, inputMaximum(), size);
     }
 
@@ -1332,16 +1403,19 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     @Override
     public long getEnergySizeInputRecommended(GregTechTags.Tag energyType, @Nullable Direction side) {
+        if (auxTag != null && auxTag == energyType) return spec.auxiliaryEnergyIn();
         return spec != null ? spec.energyIn() : 1;
     }
 
     @Override
     public long getEnergySizeInputMin(GregTechTags.Tag energyType, @Nullable Direction side) {
+        if (auxTag != null && auxTag == energyType) return spec.auxiliaryEnergyMin();
         return spec != null ? spec.energyInMin() : 1;
     }
 
     @Override
     public long getEnergySizeInputMax(GregTechTags.Tag energyType, @Nullable Direction side) {
+        if (auxTag != null && auxTag == energyType) return spec.auxiliaryEnergyMax();
         return spec != null ? inputMaximum() : 1;
     }
 
@@ -1490,6 +1564,10 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         tag.putLong(NBT_MAX_PROGRESS, mMaxProgress);
         tag.putInt("gt.parallel", mParallelCount);
         tag.putLong("gt.min_energy",mMinEnergy);
+        if (auxTag != null) {
+            tag.putLong("gt.aux_energy", auxEnergy);
+            tag.putLong("gt.startup_energy", startupRequirement);
+        }
 
 //? if >=1.21.1 {
 /*        if(pendingOutputs!=null) tag.put("gt.pending_outputs",pendingOutputs.save(lookup));
@@ -1656,6 +1734,10 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if (tag.contains(NBT_MAX_PROGRESS)) mMaxProgress = tag.getLong(NBT_MAX_PROGRESS);
         if (tag.contains("gt.parallel")) mParallelCount = Math.max(1, tag.getInt("gt.parallel"));
         mMinEnergy=tag.getLong("gt.min_energy");
+        auxEnergy = auxTag == null ? 0
+                : Math.max(0, Math.min(spec.auxiliaryEnergyCapacity(), tag.getLong("gt.aux_energy")));
+        startupRequirement = auxTag == null ? 0 : Math.max(0, tag.getLong("gt.startup_energy"));
+        if (mMaxProgress <= 0) startupRequirement = 0;
 
 //? if >=1.21.1 {
 /*        pendingOutputs=tag.contains("gt.pending_outputs")?com.gregtech.gregtech.api.recipe.MachineWorkOutputs.load(tag.getCompound("gt.pending_outputs"),lookup):null;

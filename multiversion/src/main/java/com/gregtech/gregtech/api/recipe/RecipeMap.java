@@ -3,6 +3,7 @@ package com.gregtech.gregtech.api.recipe;
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.material.Fluids;
 
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
@@ -405,8 +406,8 @@ public class RecipeMap {
         while (outLen > 0 && empty(aOutputs[outLen - 1])) outLen--;
         ItemStack[] tOutputs = new ItemStack[outLen];
         for (int i = 0; i < outLen; i++) tOutputs[i] = empty(aOutputs[i]) ? ItemStack.EMPTY : aOutputs[i].copy();
-        // Copy fluids, dropping null/empty entries entirely.
-        FluidStack[] tFluidInputs = copyFluids(aFluidInputs);
+        // Copy fluids. Inputs keep a 0 mB presence-only catalyst; outputs drop empty entries.
+        FluidStack[] tFluidInputs = copyFluidInputs(aFluidInputs);
         FluidStack[] tFluidOutputs = copyFluids(aFluidOutputs);
         // Fuel may produce energy alone (original Blaze hot fuel). Ordinary work still needs a product.
         if (tInputs.length + tFluidInputs.length <= 0) return null;
@@ -506,6 +507,17 @@ public class RecipeMap {
         return r;
     }
 
+    /** Inputs keep a declared 0 mB stack as a presence-only catalyst; null and empty types are dropped. */
+    private static FluidStack[] copyFluidInputs(FluidStack[] aFluids) {
+        int n = 0;
+        for (FluidStack f : aFluids) if (f != null && f.getFluid() != Fluids.EMPTY) n++;
+        if (n == 0) return ZL_FS;
+        FluidStack[] r = new FluidStack[n];
+        int i = 0;
+        for (FluidStack f : aFluids) if (f != null && f.getFluid() != Fluids.EMPTY) r[i++] = f.copy();
+        return r;
+    }
+
     // ── Validation / collision / storage ─────────────────────────────────
 
     private boolean validate(Recipe aRecipe, boolean aLogErrors) {
@@ -535,7 +547,7 @@ public class RecipeMap {
             for (Recipe t : tPool) if (tChecked.add(t) && inputsSatisfiedBy(t, aRecipe)) return t;
         }
         for (FluidStack f : aRecipe.mFluidInputs) {
-            if (f == null || f.isEmpty()) continue;
+            if (f == null || f.getFluid() == Fluids.EMPTY) continue;
             Collection<Recipe> tPool = mRecipeFluidMap.get(fluidKey(f));
             if (tPool == null) continue;
             if (tChecked == null) tChecked = new HashSet<>();
@@ -576,7 +588,16 @@ public class RecipeMap {
         var fluids = java.util.Arrays.stream(aCandidate.mFluidInputs)
                 .map(f -> f == null ? FluidStack.EMPTY : f.copy()).toArray(FluidStack[]::new);
         for (FluidStack in : aExisting.mFluidInputs) {
-            if (in == null || in.isEmpty()) continue;
+            if (in == null || in.getFluid() == Fluids.EMPTY) continue;
+            if (in.getAmount() <= 0) {
+                boolean present = false;
+                for (FluidStack f : fluids) {
+                    if (f.getFluid() != Fluids.EMPTY && f.isFluidEqual(in)) { present = true; break; }
+                }
+                if (!present) return false;
+                continue;
+            }
+            if (in.isEmpty()) continue;
             int needed = in.getAmount();
             for (FluidStack f : fluids) {
 
@@ -611,12 +632,12 @@ public class RecipeMap {
             for (var color : com.gregtech.gregtech.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(in))
                 mRecipeItemMap.computeIfAbsent(color.getItem(), k -> new HashSet<>()).add(aRecipe);
         }
-        // Index by input fluids
+        // Index by input fluids; a 0 mB catalyst still needs the fluid present.
         for (FluidStack f : aRecipe.mFluidInputs) {
-            if (f == null || f.isEmpty()) continue;
+            if (f == null || f.getFluid() == Fluids.EMPTY) continue;
             String fKey = fluidKey(f);
             mRecipeFluidMap.computeIfAbsent(fKey, k -> new HashSet<>()).add(aRecipe);
-            mMinInputTankSizes.merge(fKey, (long) f.getAmount(), Math::max);
+            mMinInputTankSizes.merge(fKey, (long) Math.max(1, f.getAmount()), Math::max);
             mMaxFluidInputSize = Math.max(mMaxFluidInputSize, f.getAmount());
         }
         for (FluidStack f : aRecipe.mFluidOutputs) {

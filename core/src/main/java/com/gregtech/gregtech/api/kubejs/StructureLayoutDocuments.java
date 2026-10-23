@@ -20,8 +20,8 @@ public final class StructureLayoutDocuments {
 
     private StructureLayoutDocuments() {}
 
-    /** One cell before it is checked against {@link StructureLayout}. */
-    public record CellSpec(int right, int up, int back, String match, String role, int design) {}
+    /** One cell before it is checked against {@link StructureLayout}. {@code matches} has one entry or an alternative group. */
+    public record CellSpec(int right, int up, int back, List<String> matches, String role, int design) {}
 
     /** One repeat group. Its cells use {@code up} relative to the anchor. */
     public record RepeatSpec(String key, int up, int min, int max, int step, List<CellSpec> cells) {}
@@ -40,7 +40,7 @@ public final class StructureLayoutDocuments {
     public static StructureLayout layout(String machine, List<CellSpec> cells, List<RepeatSpec> repeats) {
         var builder = StructureLayout.builder(machine);
         for (CellSpec cell : cells) {
-            var match = CellMatch.parse(cell.match());
+            var match = match(cell.matches());
             var part = role(cell.role());
             if (cell.design() < 0) builder.cell(cell.right(), cell.up(), cell.back(), match, part);
             else builder.cell(cell.right(), cell.up(), cell.back(), match, part, cell.design());
@@ -50,7 +50,7 @@ public final class StructureLayoutDocuments {
                     repeat.key(), repeat.up(), repeat.min(), repeat.max());
             if (repeat.step() != 1) group.step(repeat.step());
             for (CellSpec cell : repeat.cells()) {
-                var match = CellMatch.parse(cell.match());
+                var match = match(cell.matches());
                 var part = role(cell.role());
                 if (cell.design() < 0) group.cell(cell.right(), cell.up(), cell.back(), match, part);
                 else group.cell(cell.right(), cell.up(), cell.back(), match, part, cell.design());
@@ -93,7 +93,7 @@ public final class StructureLayoutDocuments {
                     .append(",\"up\":").append(cell.up())
                     .append(",\"back\":").append(cell.back())
                     .append(",\"match\":");
-            string(json, cell.match().toString());
+            matchText(json, cell.match());
             json.append(",\"role\":");
             string(json, cell.role().name().toLowerCase(Locale.ROOT));
             if (cell.design() >= 0) json.append(",\"design\":").append(cell.design());
@@ -136,7 +136,7 @@ public final class StructureLayoutDocuments {
             for (var key : cell.keySet())
                 if (!CELL.contains(key)) throw new IllegalArgumentException("Unknown field " + key);
             out.add(new CellSpec(integer(cell, "right"), integer(cell, "up"), integer(cell, "back"),
-                    required(cell, "match"), required(cell, "role"), design(cell)));
+                    matches(cell.get("match")), required(cell, "role"), design(cell)));
         }
         return out;
     }
@@ -156,6 +156,40 @@ public final class StructureLayoutDocuments {
         int value = integer(json, "step");
         if (value != 1 && value != -1) throw new IllegalArgumentException("step");
         return value;
+    }
+
+    private static CellMatch match(List<String> matches) {
+        if (matches.size() == 1) return CellMatch.parse(matches.get(0));
+        var members = new ArrayList<CellMatch>();
+        for (String value : matches) members.add(CellMatch.parse(value));
+        return CellMatch.oneOf(members);
+    }
+
+    /** One match string, or an array of alternatives. */
+    private static List<String> matches(Object value) {
+        if (value instanceof String text && !text.isBlank()) return List.of(text);
+        if (!(value instanceof List<?> list) || list.isEmpty())
+            throw new IllegalArgumentException("match is required");
+        var out = new ArrayList<String>();
+        for (Object element : list) {
+            if (!(element instanceof String text) || text.isBlank())
+                throw new IllegalArgumentException("match entries must be text");
+            out.add(text);
+        }
+        return List.copyOf(out);
+    }
+
+    private static void matchText(StringBuilder json, CellMatch match) {
+        if (match instanceof CellMatch.OneOf one) {
+            json.append('[');
+            for (int i = 0; i < one.members().size(); i++) {
+                if (i > 0) json.append(',');
+                string(json, one.members().get(i).toString());
+            }
+            json.append(']');
+            return;
+        }
+        string(json, match.toString());
     }
 
     private static StructureRole role(String text) {
