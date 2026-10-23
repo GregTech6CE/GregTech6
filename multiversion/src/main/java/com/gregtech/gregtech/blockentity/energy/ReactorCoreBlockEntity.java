@@ -31,6 +31,11 @@ public class ReactorCoreBlockEntity extends BlockEntity implements BlockContents
     public final FluidTankGT output = new FluidTankGT(64000) {
 
         @Override
+        public long capacity() {
+            return capacity(getFluid());
+        }
+
+        @Override
         public long capacity(FluidStack stack) {
             var steam = com.gregtech.gregtech.registry.GTFluids.still("Steam");
             return !stack.isEmpty() && steam != null && stack.getFluid() == steam.get() ? Math.max(getAmount(), 10240000L) : super.capacity(stack);
@@ -146,6 +151,8 @@ public class ReactorCoreBlockEntity extends BlockEntity implements BlockContents
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, ReactorCoreBlockEntity be) {
+        // Source ordinary tick exports old contents before the world-end reaction/cooling phases.
+        be.pushFluids();
         ReactorNetwork.enqueue(be);
     }
 
@@ -161,7 +168,6 @@ public class ReactorCoreBlockEntity extends BlockEntity implements BlockContents
         if (coolant != null) lastHeat = RodPhysics.ceil(lastHeat, coolant.heatDivider);
         storedHeat = Math.min(Long.MAX_VALUE - lastHeat, storedHeat) + lastHeat;
         if (!coolHeat() && rodCount() > 0) fail();
-        pushFluids();
         if (level.getGameTime() % 20 == 10 && neutronTotal() > 0) irradiate(1);
         setChanged();
         if (level.getGameTime() % 20 == 0) changed();

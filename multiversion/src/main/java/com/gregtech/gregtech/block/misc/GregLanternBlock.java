@@ -13,7 +13,10 @@ import net.minecraft.world.level.block.state.StateDefinition;
 /** GT6 {@code MultiTileEntityGregOLantern}: a horizontal-faced lit pumpkin with a Greg face. */
 public final class GregLanternBlock extends HorizontalDirectionalBlock {
 //? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<HorizontalDirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
+    /*@Override
+    public com.mojang.serialization.MapCodec<HorizontalDirectionalBlock> codec() {
+        return com.mojang.serialization.MapCodec.unit(this);
+    }
 *///?} else {
 //?}
     public GregLanternBlock(Properties properties) {
@@ -21,22 +24,29 @@ public final class GregLanternBlock extends HorizontalDirectionalBlock {
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
-    @Override protected void createBlockStateDefinition(StateDefinition.Builder<net.minecraft.world.level.block.Block, BlockState> builder) {
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<net.minecraft.world.level.block.Block, BlockState> builder) {
         builder.add(FACING);
     }
 
-    @Override public BlockState getStateForPlacement(BlockPlaceContext context) {
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
         return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
 
-    @Override public BlockState rotate(BlockState state, Rotation rotation) {
+    @Override
+    public BlockState rotate(BlockState state, Rotation rotation) {
         return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }
 
-    @Override public BlockState mirror(BlockState state, Mirror mirror) {
+    @Override
+    public BlockState mirror(BlockState state, Mirror mirror) {
         return rotate(state, mirror.getRotation(state.getValue(FACING)));
     }
 
     /** GT6 emits light 15 but reports no light opacity despite its full solid selection. */
-    @Override public int getLightBlock(BlockState state, BlockGetter level, BlockPos pos) { return 0; }
+    @Override
+    public int getLightBlock(BlockState state, BlockGetter level, BlockPos pos) {
+        return 0;
+    }
 }

@@ -57,7 +57,9 @@ public final class AddonRecipes {
     /**
      * One recipe row. {@code keptInputs} lists item-input indexes the machine checks for and does not consume.
      * {@code keptFluidInputs} does the same for fluid-input indexes: the declared amount is checked and not drained.
-     * Null marks nothing. A count of 0, or 0 mB, is rejected; leave the amount positive and name the index here.
+     * {@code presenceFluidInputs} checks only that the original tanks contain that fluid, without reserving any amount.
+     * Use positive native representatives for presence gates; native zero-sized stacks lose their fluid identity.
+     * Null marks nothing. Kept and presence indexes must not overlap.
      */
     public record Line(
             ItemStack[] itemInputs,
@@ -69,7 +71,8 @@ public final class AddonRecipes {
             long special,
             int[] outputChances,
             int[] keptInputs,
-            int[] keptFluidInputs
+            int[] keptFluidInputs,
+            int[] presenceFluidInputs
     ) {
         private static final ThreadLocal<Boolean> READING = ThreadLocal.withInitial(() -> Boolean.FALSE);
 
@@ -87,10 +90,17 @@ public final class AddonRecipes {
         public static Line read(ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs,
                                 FluidStack[] fluidOutputs, long duration, long euPerTick, long special,
                                 int[] outputChances, int[] keptInputs, int[] keptFluidInputs) {
+            return read(itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, euPerTick, special,
+                    outputChances, keptInputs, keptFluidInputs, null);
+        }
+
+        public static Line read(ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs,
+                                FluidStack[] fluidOutputs, long duration, long euPerTick, long special,
+                                int[] outputChances, int[] keptInputs, int[] keptFluidInputs, int[] presenceFluidInputs) {
             READING.set(Boolean.TRUE);
             try {
                 return new Line(itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, euPerTick, special,
-                        outputChances, keptInputs, keptFluidInputs);
+                        outputChances, keptInputs, keptFluidInputs, presenceFluidInputs);
             } finally {
                 READING.remove();
             }
@@ -115,6 +125,13 @@ public final class AddonRecipes {
                     outputChances, keptInputs, null);
         }
 
+        /** Compatibility overload: positive kept amounts, no presence-only gates. */
+        public Line(ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs, FluidStack[] fluidOutputs,
+                    long duration, long euPerTick, long special, int[] outputChances, int[] keptInputs, int[] keptFluidInputs) {
+            this(itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, euPerTick, special,
+                    outputChances, keptInputs, keptFluidInputs, null);
+        }
+
         public Line {
             itemInputs = copyItemInputs(itemInputs);
             itemOutputs = copyItems(itemOutputs);
@@ -124,6 +141,13 @@ public final class AddonRecipes {
             outputChances = RecipeOutputChances.normalize(outputChances, itemOutputs.length);
             keptInputs = RecipeKeptInputs.normalize(keptInputs, itemInputs.length);
             keptFluidInputs = RecipeKeptInputs.normalizeFluids(keptFluidInputs, fluidInputs.length);
+            presenceFluidInputs = RecipeKeptInputs.normalizeFluids(presenceFluidInputs, fluidInputs.length);
+            for (int index : presenceFluidInputs) {
+                if (fluidInputs[index].isEmpty()) throw new IllegalArgumentException("Presence fluid input " + index + " is empty");
+                for (int kept : keptFluidInputs) if (kept == index)
+                    throw new IllegalArgumentException("Fluid input " + index + " cannot be both kept and presence-only");
+                fluidInputs[index].setAmount(1);
+            }
         }
 
         private static ItemStack[] copyItemInputs(ItemStack[] stacks) {

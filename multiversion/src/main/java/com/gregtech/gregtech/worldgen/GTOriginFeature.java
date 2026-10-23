@@ -16,8 +16,13 @@ import java.util.Random;
 
 /** Original GT6 Nexus and axis roads; enabled by user request, configuration is deferred to finalisation. */
 public final class GTOriginFeature extends Feature<NoneFeatureConfiguration> {
-    public GTOriginFeature() { super(NoneFeatureConfiguration.CODEC); }
-    @Override public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+
+    public GTOriginFeature() {
+        super(NoneFeatureConfiguration.CODEC);
+    }
+
+    @Override
+    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
         var level = context.level();
         if (level.getLevel().dimension() != Level.OVERWORLD) return false;
         ChunkPos chunk = new ChunkPos(context.origin());
@@ -29,28 +34,28 @@ public final class GTOriginFeature extends Feature<NoneFeatureConfiguration> {
         boolean testing = (minX == 32 || minX == 48) && (minZ == -32 || minZ == -48);
         if (!center && !plaza && !nexus && !road) return false;
         // WD.waterLevel() is 62 in GT6, while the modern sea-level parameter is 63.
-        int height = level.getSeaLevel()+3;
-        NativeOriginWorld world = new NativeOriginWorld(level,chunk,height);
+        int height = level.getSeaLevel() + 3;
+        NativeOriginWorld world = new NativeOriginWorld(level, chunk, height);
         var biomes = new HashSet<String>();
         if (road && !plaza) {
             // The old generator rewrites both halves of a segment together. Read the complete
             // segment's biomes so modern independent half chunks choose the same bridge mode.
             boolean northSouth = minX == -16 || minX == 0;
-            for (int along=0;along<16;along++) for (int across=-16;across<16;across++)
-                biomes.add(world.getBiomeGenForCoords(northSouth ? across : minX+along,
-                        northSouth ? minZ+along : across).biomeName());
+            for (int along = 0; along < 16; along++) for (int across = -16; across < 16; across++)
+                biomes.add(world.getBiomeGenForCoords(northSouth ? across : minX + along,
+                        northSouth ? minZ + along : across).biomeName());
         }
-        var planChunk = new OriginWorld.Chunk(world,minX,minZ);
-        boolean placed = center && new SourceCenterBiomes(height).generate(world,planChunk,minX,minZ,
+        var planChunk = new OriginWorld.Chunk(world, minX, minZ);
+        boolean placed = center && new SourceCenterBiomes(height).generate(world, planChunk, minX, minZ,
                 new Random(level.getSeed() ^ chunk.toLong()));
-        SourceStreets streets = new SourceStreets(height,true,true,true,true);
+        SourceStreets streets = new SourceStreets(height, true, true, true, true);
         // The old generator writes a 64x64 plaza from its four centre chunks. Replaying that plan
         // per intersecting chunk with clipped writes preserves all 16 chunks in any generation order.
-        placed |= plaza ? streets.generate(world,-16,-16,-1,-1,biomes)
-                : road && streets.generate(world,minX,minZ,minX+15,minZ+15,biomes);
-        if (nexus) placed |= new SourceNexus(height,true).generate(world,new OriginWorld.Chunk(world,minX,minZ),
-                minX,minZ,new Random(level.getSeed() ^ chunk.toLong()));
-        if (testing) placed |= new SourceTesting(height).generate(world,planChunk,minX,minZ);
+        placed |= plaza ? streets.generate(world, -16, -16, -1, -1, biomes)
+                : road && streets.generate(world, minX, minZ, minX + 15, minZ + 15, biomes);
+        if (nexus) placed |= new SourceNexus(height, true).generate(world, new OriginWorld.Chunk(world, minX, minZ),
+                minX, minZ, new Random(level.getSeed() ^ chunk.toLong()));
+        if (testing) placed |= new SourceTesting(height).generate(world, planChunk, minX, minZ);
         return placed;
     }
 }

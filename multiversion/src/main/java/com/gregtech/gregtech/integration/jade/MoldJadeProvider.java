@@ -52,7 +52,8 @@ public enum MoldJadeProvider implements IBlockComponentProvider, IServerDataProv
         GTMaterial material = mold.getMoldContentMaterial();
         long amount = mold.getMoldContentAmount();
         if (material != null && material.isValid() && amount > 0) {
-            tag.putString(NBT_MATERIAL, material.getLocalName());
+            tag.putString(NBT_MATERIAL, material.getDisplayNameFallback());
+            tag.putString(NBT_MATERIAL + "_key", material.getTranslationKey());
             tag.putLong(NBT_AMOUNT, amount);
             String state;
             if (solidified) {
@@ -73,8 +74,12 @@ public enum MoldJadeProvider implements IBlockComponentProvider, IServerDataProv
             Object prefix = be.getMoldRecipePrefix();
             if (prefix instanceof MaterialPrefix mp) {
                 moldOutputName = mp.getDisplayName();
+                // The pinned original billet tab is English even in its Chinese language file.
+                tag.putString(NBT_MOLD_OUTPUT + "_key", mp == MaterialPrefix.billet
+                        ? "jade.gt6ce.mold.shape.billet" : "itemGroup.gt6ce." + mp.getRegistryName());
             } else if (prefix instanceof BlockMaterialPrefix bp) {
                 moldOutputName = bp.getDisplayName();
+                tag.putString(NBT_MOLD_OUTPUT + "_key", "itemGroup.gt6ce." + bp.getRegistryName());
             }
         } else if (accessor.getBlockEntity() instanceof MoldBasinBlockEntity be) {
             solidOutput = be.getSolidOutput();
@@ -109,7 +114,7 @@ public enum MoldJadeProvider implements IBlockComponentProvider, IServerDataProv
         if (data.contains(NBT_MATERIAL)) {
             String state = data.getString(NBT_STATE);
             tooltip.add(Component.translatable("jade.gt6ce.mold.content",
-                    data.getString(NBT_MATERIAL),
+                    JadeText.translated(data, NBT_MATERIAL + "_key", NBT_MATERIAL),
                     format(data.getLong(NBT_AMOUNT)),
                     Component.translatable("jade.gt6ce.mold.state." + state)));
         }
@@ -128,7 +133,7 @@ public enum MoldJadeProvider implements IBlockComponentProvider, IServerDataProv
 
         if (data.contains(NBT_MOLD_OUTPUT, CompoundTag.TAG_STRING)) {
             tooltip.add(Component.translatable("jade.gt6ce.mold.output",
-                    data.getString(NBT_MOLD_OUTPUT)));
+                    JadeText.translated(data, NBT_MOLD_OUTPUT + "_key", NBT_MOLD_OUTPUT)));
         }
     }
 

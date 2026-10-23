@@ -60,6 +60,8 @@ public final class ComponentCoverFallback {
     @SuppressWarnings({"unchecked","rawtypes"})
     public static boolean eligible(BlockEntity owner){
         if(!ownClass(owner)||owner.getLevel()==null||owner.isRemoved())return false;
+        // Loose material piles use plates as contents, not as machine covers.
+        if(owner instanceof com.gregtech.gregtech.blockentity.misc.PileBlockEntity)return false;
         // The active fallback service provides cover ticks even for otherwise passive GT storage.
         return owner.getBlockState().getBlock() instanceof net.minecraft.world.level.block.EntityBlock;
     }
@@ -83,9 +85,9 @@ public final class ComponentCoverFallback {
         if(!uses(owner))return;
         var storage=((FallbackCoverHost)owner).gregtechComponentStorage(false);
 //? if >=1.21.1 {
-        /*if(storage!=null && storage.hasCovers()){tag.putBoolean("gt.component_covers",true);storage.save(tag,lookup);}
+        /*if(storage!=null){tag.putBoolean("gt.component_covers",true);storage.save(tag,lookup);}
 *///?} else {
-        if(storage!=null && storage.hasCovers()){tag.putBoolean("gt.component_covers",true);storage.save(tag);}
+        if(storage!=null){tag.putBoolean("gt.component_covers",true);storage.save(tag);}
 //?}
     }
     /** Harvested GT block items retain the native attachment data. */
@@ -106,8 +108,10 @@ public final class ComponentCoverFallback {
 //?}
         if(!uses(owner))return;
         boolean present=false;for(var side:Direction.values())present|=tag.contains("gt_cover_"+side.ordinal());
+        // Unrelated partial block-entity updates do not carry an authoritative cover snapshot.
         if(!present&&!tag.getBoolean("gt.component_covers"))return;
         var host=(FallbackCoverHost)owner;var storage=host.gregtechComponentStorage(present);
+        // An empty authoritative snapshot must clear the last cover already on this client.
 //? if >=1.21.1 {
         /*if(storage==null)return;storage.load(tag,lookup);
 *///?} else {

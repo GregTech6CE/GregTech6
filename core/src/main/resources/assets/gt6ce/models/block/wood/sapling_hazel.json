@@ -2,5 +2,6 @@
   "parent": "minecraft:block/cross",
   "textures": {
     "cross": "gt6ce:block/iconsets/sapling_small_hazel"
-  }
+  },
+  "render_type": "minecraft:cutout"
 }

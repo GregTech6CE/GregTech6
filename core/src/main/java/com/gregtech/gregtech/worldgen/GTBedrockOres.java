@@ -6,15 +6,16 @@ import com.gregtech.gregtech.api.material.GTMaterial;
 import java.util.List;
 
 /**
- * Bedrock ore deposits (GT6 {@code WorldgenOresBedrock}, {@code Loader_Worldgen:725-770}).
- * {@code chance} is the GT6 rarity divisor (bigger = rarer); the indicator flower grows
- * on the surface above the deposit (GT6 BlockFlowersA/B, real-world indicator plants) and is
- * {@code null} for the Nether deposits, which GT6 registers without a flower.
+ * Current port catalogs for weighted bedrock selection, not the complete original registration lists.
+ * Original shared-floor membership and per-row attempts require separate dispatch logic.
  */
 public final class GTBedrockOres {
-    private GTBedrockOres() {}
 
-    public record BedrockOre(String name, GTMaterial material, int chance, String flowerId) {}
+    private GTBedrockOres() {
+    }
+
+    public record BedrockOre(String name, GTMaterial material, int chance, String flowerId) {
+    }
 
     public static final List<BedrockOre> OVERWORLD = List.of(
         new BedrockOre("diamond",       Materials.Diamond,                                                          128000, "flower_pandanus_candelabrum"),
@@ -48,7 +49,7 @@ public final class GTBedrockOres {
     );
 
     /**
-     * The Nether deposits (GT6 {@code Loader_Worldgen:758-764}). GT6 registers these without an
+     * The seven Nether-specific rows ({@code Loader_Worldgen:758-764}), registered without an
      * indicator flower — only surface rocks — so {@code flowerId} is null.
      */
     public static final List<BedrockOre> NETHER = List.of(

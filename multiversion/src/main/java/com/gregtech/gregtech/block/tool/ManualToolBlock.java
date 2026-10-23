@@ -32,7 +32,11 @@ public class ManualToolBlock extends net.minecraft.world.level.block.HorizontalD
     private final VoxelShape shape;
 
     private final String pestleMaterial;
-    public ManualToolBlock(ManualToolBlockEntity.Kind kind, Properties properties) { this(kind, "Steel", properties); }
+
+    public ManualToolBlock(ManualToolBlockEntity.Kind kind, Properties properties) {
+        this(kind, "Steel", properties);
+    }
+
     public ManualToolBlock(ManualToolBlockEntity.Kind kind, String pestleMaterial, Properties properties) {
         super(properties);
         this.kind = kind;
@@ -46,19 +50,42 @@ public class ManualToolBlock extends net.minecraft.world.level.block.HorizontalD
     }
 
 //? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<? extends net.minecraft.world.level.block.HorizontalDirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-    @Override public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return interact(state,level,pos,player,hand,hit)==InteractionResult.PASS?net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION:net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);}
-    @Override public InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return interact(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
-    @Override public java.util.List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder){return java.util.List.of(new ItemStack(this));}
+    /*@Override
+    public com.mojang.serialization.MapCodec<? extends net.minecraft.world.level.block.HorizontalDirectionalBlock> codec() {
+        return com.mojang.serialization.MapCodec.unit(this);
+    }
+
+    @Override
+    public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        return interact(state, level, pos, player, hand,
+                hit) == InteractionResult.PASS ? net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+                : net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    @Override
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return interact(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+
+    @Override
+    public java.util.List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
+        return java.util.List.of(new ItemStack(this));
+    }
 *///?} else {
 //?}
-    @Override protected void createBlockStateDefinition(net.minecraft.world.level.block.state.StateDefinition.Builder<Block, BlockState> builder) {
+    @Override
+    protected void createBlockStateDefinition(net.minecraft.world.level.block.state.StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING, STONE);
     }
-    @Override public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext context) {
+
+    @Override
+    public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext context) {
         return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
-    @Override public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+
+    @Override
+    public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return kind == ManualToolBlockEntity.Kind.GRINDSTONE && GTToolHelper.isMachineWrench(tool)
                 ? ToolInteractionSpec.facing(FACING, com.gregtech.gregtech.block.machine.MachineRotationType.HORIZONTAL) : null;
     }
@@ -74,7 +101,10 @@ public class ManualToolBlock extends net.minecraft.world.level.block.HorizontalD
         return index == 0 ? com.gregtech.gregtech.registry.GTToolBlocks.tintOf(kind) : 0xFFFFFF;
 //?}
     }
-    public ManualToolBlockEntity.Kind kind() { return kind; }
+
+    public ManualToolBlockEntity.Kind kind() {
+        return kind;
+    }
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
@@ -87,7 +117,8 @@ public class ManualToolBlock extends net.minecraft.world.level.block.HorizontalD
         return new ManualToolBlockEntity(pos, state);
     }
 
-    @Override public <T extends BlockEntity> net.minecraft.world.level.block.entity.BlockEntityTicker<T> getTicker(
+    @Override
+    public <T extends BlockEntity> net.minecraft.world.level.block.entity.BlockEntityTicker<T> getTicker(
             Level level, BlockState state, net.minecraft.world.level.block.entity.BlockEntityType<T> type) {
         return !level.isClientSide && kind == ManualToolBlockEntity.Kind.SIFTING
                 && type == com.gregtech.gregtech.registry.GTBlockEntities.MANUAL_TOOL.get()
@@ -100,7 +131,7 @@ public class ManualToolBlock extends net.minecraft.world.level.block.HorizontalD
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
 //?}
-                                 InteractionHand hand, BlockHitResult hit) {
+            InteractionHand hand, BlockHitResult hit) {
         // both hands fire use(); handling the off hand double-triggers
         // (insert+extract in one click, double withdrawals, armor swap-backs)
         if (hand == net.minecraft.world.InteractionHand.OFF_HAND) return InteractionResult.PASS;
@@ -124,7 +155,7 @@ public class ManualToolBlock extends net.minecraft.world.level.block.HorizontalD
 
     @Override
 //? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack,net.minecraft.world.item.Item.TooltipContext context,List<Component> tooltip, TooltipFlag flag) {
+    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
 *///?} else {
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
 //?}

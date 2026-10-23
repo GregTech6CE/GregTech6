@@ -1,9 +1,17 @@
 package com.gregtech.gregtech.worldgen;
+
 import com.gregtech.gregtech.block.wood.WoodSpecies;
+
 /** Original GT6 decay boxes and tree-hole refill gates, used by both platforms. */
 public final class TreeSpeciesRules {
- private TreeSpeciesRules(){}
- public static boolean allowsSand(WoodSpecies species){return species==WoodSpecies.COCONUT;}
+
+    private TreeSpeciesRules() {
+    }
+
+    public static boolean allowsSand(WoodSpecies species) {
+        return species == WoodSpecies.COCONUT;
+    }
+
     public static int rangeSide(WoodSpecies species) {
         return switch (species) {
             case RUBBER -> 2;                                    // AB meta 0

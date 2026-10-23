@@ -1,6 +1,5 @@
 package com.gregtech.gregtech.client;
 
-
 //? if >=1.21.1 {
 //?} else {
 import com.gregtech.gregtech.GregTech;
@@ -21,16 +20,20 @@ import net.minecraft.world.phys.AABB;
 /** Each occupied cell uses its own position and exact height, with the stored coin's GT6 die relief. */
 public final class CoinPileRenderer implements BlockEntityRenderer<CoinPileBlockEntity> {
 //? if >=1.21.1 {
-    /*static final net.minecraft.resources.ResourceLocation TEXTURE = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","textures/block/iconsets/coin.png");
-    static final net.minecraft.resources.ResourceLocation SIDE_TEXTURE = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","textures/block/iconsets/coin_side.png");
+    /*static final net.minecraft.resources.ResourceLocation TEXTURE = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",
+            "textures/block/iconsets/coin.png");
+    static final net.minecraft.resources.ResourceLocation SIDE_TEXTURE = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",
+            "textures/block/iconsets/coin_side.png");
 *///?} else {
     static final net.minecraft.resources.ResourceLocation TEXTURE = GregTech.id("textures/block/iconsets/coin.png");
     static final net.minecraft.resources.ResourceLocation SIDE_TEXTURE = GregTech.id("textures/block/iconsets/coin_side.png");
 //?}
-    public CoinPileRenderer(BlockEntityRendererProvider.Context context) {}
+    public CoinPileRenderer(BlockEntityRendererProvider.Context context) {
+    }
+
     @Override
     public void render(CoinPileBlockEntity pile, float partialTick, PoseStack pose,
-                       MultiBufferSource buffers, int light, int overlay) {
+            MultiBufferSource buffers, int light, int overlay) {
         var material = MaterialItem.getMaterial(pile.coinItem());
         int color = material == null ? 0xFFFFFF : material.getColor();
         CoinGeometry.MintPattern pattern = pile.coinPattern();
@@ -53,8 +56,8 @@ public final class CoinPileRenderer implements BlockEntityRenderer<CoinPileBlock
     }
 
     private static void drawCoinPixel(PoseStack.Pose pose, VertexConsumer out, AABB box,
-                                      CoinGeometry.MintPattern pattern,
-                                      int color, int light, boolean horizontal, float cellX, float cellZ) {
+            CoinGeometry.MintPattern pattern,
+            int color, int light, boolean horizontal, float cellX, float cellZ) {
         if (horizontal) {
             quad(pose, out, box, color, light, Direction.DOWN, cellX, cellZ);
             quad(pose, out, box, color, light, Direction.UP, cellX, cellZ);
@@ -68,11 +71,11 @@ public final class CoinPileRenderer implements BlockEntityRenderer<CoinPileBlock
     }
 
     /** GT6 samples world coin textures from bounds relative to the whole block. */
-    static void quad(PoseStack.Pose pose, VertexConsumer out, AABB b,
-                     int color, int light, Direction side, float cellX, float cellZ) {
-        float x0 = (float) b.minX, x1 = (float) b.maxX;
-        float y0 = (float) b.minY, y1 = (float) b.maxY;
-        float z0 = (float) b.minZ, z1 = (float) b.maxZ;
+    static void quad(PoseStack.Pose pose, VertexConsumer out, AABB bounds,
+            int color, int light, Direction side, float cellX, float cellZ) {
+        float x0 = (float) bounds.minX, x1 = (float) bounds.maxX;
+        float y0 = (float) bounds.minY, y1 = (float) bounds.maxY;
+        float z0 = (float) bounds.minZ, z1 = (float) bounds.maxZ;
         switch (side) {
             case DOWN -> {
                 vertex(pose, out, color, light, side, cellX, cellZ, x0, y0, z0);
@@ -114,24 +117,24 @@ public final class CoinPileRenderer implements BlockEntityRenderer<CoinPileBlock
     }
 
     private static void vertex(PoseStack.Pose pose, VertexConsumer out, int color, int light,
-                               Direction side, float cellX, float cellZ,
-                               float x, float y, float z) {
+            Direction side, float cellX, float cellZ,
+            float x, float y, float z) {
 //? if >=1.21.1 {
         /*out.addVertex(pose.pose(), x, y, z)
-                .setColor((color >> 16) & 255, (color >> 8) & 255, color & 255, 255)
-                .setUv(CoinGeometry.surfaceU(side, x + cellX, z + cellZ),
+        .setColor((color >> 16) & 255, (color >> 8) & 255, color & 255, 255)
+        .setUv(CoinGeometry.surfaceU(side, x + cellX, z + cellZ),
 *///?} else {
         out.vertex(pose.pose(), x, y, z)
-                .color((color >> 16) & 255, (color >> 8) & 255, color & 255, 255)
-                .uv(CoinGeometry.surfaceU(side, x + cellX, z + cellZ),
+        .color((color >> 16) & 255, (color >> 8) & 255, color & 255, 255)
+        .uv(CoinGeometry.surfaceU(side, x + cellX, z + cellZ),
 //?}
-                        CoinGeometry.surfaceV(side, y, z + cellZ))
+                CoinGeometry.surfaceV(side, y, z + cellZ))
 //? if >=1.21.1 {
-                /*.setOverlay(OverlayTexture.NO_OVERLAY).setLight(light)
-                .setNormal(pose, side.getStepX(), side.getStepY(), side.getStepZ());
+        /*.setOverlay(OverlayTexture.NO_OVERLAY).setLight(light)
+        .setNormal(pose, side.getStepX(), side.getStepY(), side.getStepZ());
 *///?} else {
-                .overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light)
-                .normal(pose.normal(), side.getStepX(), side.getStepY(), side.getStepZ()).endVertex();
+        .overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light)
+        .normal(pose.normal(), side.getStepX(), side.getStepY(), side.getStepZ()).endVertex();
 //?}
     }
 }

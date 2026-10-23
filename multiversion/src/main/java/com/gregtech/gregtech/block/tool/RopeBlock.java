@@ -46,9 +46,26 @@ public class RopeBlock extends HorizontalDirectionalBlock {
     }
 
 //? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-    @Override public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return switch(interact(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME,CONSUME_PARTIAL->net.minecraft.world.ItemInteractionResult.CONSUME;case FAIL->net.minecraft.world.ItemInteractionResult.FAIL;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
-    @Override public InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return interact(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
+    /*@Override
+    public com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec() {
+        return com.mojang.serialization.MapCodec.unit(this);
+    }
+
+    @Override
+    public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        return switch (interact(state, level, pos, player, hand, hit)) {
+            case SUCCESS -> net.minecraft.world.ItemInteractionResult.SUCCESS;
+            case CONSUME, CONSUME_PARTIAL -> net.minecraft.world.ItemInteractionResult.CONSUME;
+            case FAIL -> net.minecraft.world.ItemInteractionResult.FAIL;
+            default -> net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        };
+    }
+
+    @Override
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return interact(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
 //?}
     public RopeBlock(Properties properties, int tintRgb) {
@@ -58,7 +75,9 @@ public class RopeBlock extends HorizontalDirectionalBlock {
     }
 
     /** The rope material's colour (GT6 tints the shared greyscale texture with it). */
-    public int tintRgb() { return tintRgb; }
+    public int tintRgb() {
+        return tintRgb;
+    }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -96,7 +115,7 @@ public class RopeBlock extends HorizontalDirectionalBlock {
 
     @Override
     public BlockState updateShape(BlockState state, Direction dir, BlockState neighbor,
-                                  net.minecraft.world.level.LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+            net.minecraft.world.level.LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
         if (!state.canSurvive(level, pos)) return net.minecraft.world.level.block.Blocks.AIR.defaultBlockState();
         return super.updateShape(state, dir, neighbor, level, pos, neighborPos);
     }
@@ -107,7 +126,7 @@ public class RopeBlock extends HorizontalDirectionalBlock {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
 //?}
-                                 InteractionHand hand, BlockHitResult hit) {
+            InteractionHand hand, BlockHitResult hit) {
         // both hands fire use(); handling the off hand double-triggers
         if (hand == InteractionHand.OFF_HAND) return InteractionResult.PASS;
         ItemStack held = player.getItemInHand(hand);
@@ -123,7 +142,7 @@ public class RopeBlock extends HorizontalDirectionalBlock {
         if (!level.isClientSide) {
             level.setBlockAndUpdate(cursor, placed);
 //? if >=1.21.1 {
-            /*level.playSound(null, cursor, getSoundType(placed,level,cursor,player).getPlaceSound(),
+            /*level.playSound(null, cursor, getSoundType(placed, level, cursor, player).getPlaceSound(),
 *///?} else {
             level.playSound(null, cursor, soundType.getPlaceSound(),
 //?}
@@ -133,14 +152,20 @@ public class RopeBlock extends HorizontalDirectionalBlock {
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
-    @Override public boolean isLadder(BlockState state,LevelReader level,BlockPos pos,net.minecraft.world.entity.LivingEntity entity){return true;}
+    @Override
+    public boolean isLadder(BlockState state, LevelReader level, BlockPos pos, net.minecraft.world.entity.LivingEntity entity) {
+        return true;
+    }
 //? if >=1.21.1 {
-    /*@Override public java.util.List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder){return java.util.List.of(new ItemStack(this));}
+    /*@Override
+    public java.util.List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
+        return java.util.List.of(new ItemStack(this));
+    }
 *///?} else {
 //?}
     @Override
 //? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack,net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
 *///?} else {
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
 //?}

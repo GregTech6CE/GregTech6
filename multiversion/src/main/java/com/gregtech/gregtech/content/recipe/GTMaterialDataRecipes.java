@@ -42,8 +42,9 @@ import java.util.List;
  *       ({@code FL.mul(DYE_FLUIDS_CHEMICAL[Black], 1, 2 or 1, T)} = 72 / 144 mB in GT6's 144 mB unit).</li>
  *   <li>{@code RecipeMapReplicator:81-84} + {@code getReplicatorRecipe:88-114} — the stick plus
  *       {@code neutralmatter} (the material's neutrons) and {@code chargedmatter} (its protons)
- *       rebuilds the material: gem → gem plate → ingot → plate → nugget (9) → chunk (4) → dust → tiny
- *       dust (9) → small dust (4) → stick (2), and its fluid when it has no such form.</li>
+ *       rebuilds the material, preferring its ambient fluid, then its priority prefix, then gem → gem
+ *       plate → ingot → plate → nugget (9) → chunk (4) → dust → tiny dust (9) → small dust (4)
+ *       → stick (2), with liquid/gas/plasma fallback when no item form is available.</li>
  * </ul>
  *
  * <p>The port installs the three providers through {@link RecipeMap#dynamicRecipes}, so the
@@ -102,10 +103,12 @@ public final class GTMaterialDataRecipes {
     }
 
     /** Whether the providers are installed. */
-    public static boolean isRegistered() { return registered; }
+    public static boolean isRegistered() {
+        return registered;
+    }
 
     /**
-     * How many rows each provider can produce, for the start-up report and the tests:
+     * Material-level coverage estimates for diagnostics, not counts of all runtime or viewer rows:
      * {@code [scannable materials, printable dictionaries, replicable materials]}.
      * Iterates every material, so it is computed on demand rather than at start-up.
      */
@@ -223,17 +226,20 @@ public final class GTMaterialDataRecipes {
             java.util.regex.Pattern.compile("usb([1-4])_hdd");
 
     /** GT6 {@code NBT_USB_DATA+i}: the key of one slot's data compound. */
-    public static String slotDataKey(int slot) { return com.gregtech.gregtech.content.data.UsbDataRules.slotData(slot); }
+    public static String slotDataKey(int slot) {
+        return com.gregtech.gregtech.content.data.UsbDataRules.slotData(slot);
+    }
 
     /** GT6 {@code NBT_USB_TIER+i}: the key of one slot's tier byte. */
-    public static String slotTierKey(int slot) { return com.gregtech.gregtech.content.data.UsbDataRules.slotTier(slot); }
+    public static String slotTierKey(int slot) {
+        return com.gregtech.gregtech.content.data.UsbDataRules.slotTier(slot);
+    }
 
     /**
      * The drive's tier, read from its item id ({@code usb<N>_hdd}), or 0 when the stack is not a drive.
      * <p>
-     * GT6 carries the tier in the tile entity ({@code MultiTileEntityHDDSwitch.mUSBTier}); an item has
-     * no tile entity, and the port registers exactly one item per drive tier, so the id <em>is</em> the
-     * tier. Documented rather than hidden: a renamed item would silently stop being a drive.
+     * This helper parses the registry path; selected-file readers apply separate file-tier gates.
+     * The native USB switch instead recognizes built-in media through {@code UsbDataMedia}.
      * </p>
      */
     public static int driveTier(ItemStack stack) {
@@ -251,7 +257,9 @@ public final class GTMaterialDataRecipes {
     }
 
     /** Whether the stack is one of GT6's USB drives ({@code usb1_hdd} … {@code usb4_hdd}). */
-    public static boolean isDrive(ItemStack stack) { return driveTier(stack) > 0; }
+    public static boolean isDrive(ItemStack stack) {
+        return driveTier(stack) > 0;
+    }
 
     /** A drive's slot compound, or null when that slot holds no file. */
     @Nullable
@@ -342,7 +350,7 @@ public final class GTMaterialDataRecipes {
             tag.put(NBT_USB_DRIVE, driveTag);
 
 //? if >=1.21.1 {
-/*            com.gregtech.gregtech.content.data.UsbDataMedia.store(drive,tag);
+/*            com.gregtech.gregtech.content.data.UsbDataMedia.store(drive, tag);
 *///?} else {
 //?}
 
@@ -383,7 +391,10 @@ public final class GTMaterialDataRecipes {
         ItemStack scanned = null;
         for (ItemStack stack : items) {
             if (stack == null || stack.isEmpty()) continue;
-            if (usb == null && isScannerMedium(stack)) { usb = stack; continue; }
+            if (usb == null && isScannerMedium(stack)) {
+                usb = stack;
+                continue;
+            }
             if (scanned == null) scanned = stack;
         }
         if (usb == null || scanned == null) return null;
@@ -465,7 +476,7 @@ public final class GTMaterialDataRecipes {
         // the first stick's tag and reject a second stick carrying the same material.
         return new Recipe(
                 new ItemStack[]{paper.copyWithCount(sheets), usb.copyWithCount(1)},
-                new ItemStack[]{com.gregtech.gregtech.content.data.VisualDocumentData.printedPages(book,many)},
+                new ItemStack[]{com.gregtech.gregtech.content.data.VisualDocumentData.printedPages(book, many)},
                 null, null, new FluidStack[]{dye}, null,
                 many ? PRINTER_MANY_TICKS : PRINTER_TICKS, PRINTER_EU, 0).withCatalystInputs(1);
     }
@@ -480,7 +491,10 @@ public final class GTMaterialDataRecipes {
     public static Recipe replicator(List<ItemStack> items, List<FluidStack> fluids) {
         ItemStack usb = null;
         for (ItemStack stack : items) {
-            if (stack != null && !stack.isEmpty() && isScannerStick(stack)) { usb = stack; break; }
+            if (stack != null && !stack.isEmpty() && isScannerStick(stack)) {
+                usb = stack;
+                break;
+            }
         }
         if (usb == null) return null;
         GTMaterial material = scannedMaterial(usb);

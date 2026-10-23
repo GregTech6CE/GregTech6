@@ -18,127 +18,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * GT6 {@code Behavior_Remote} ({@code Behavior_Remote.java:43-146}) — the Remote Activator
- * ({@code MultiItemRandomTools:515}; the port registers it as {@code gt6ce:remote_activator} in
- * {@code GTMultiItemsGen.ENTRIES:124}). Its tooltip is the whole feature in one line: "Activates up to
- * 64 Blocks within a Range of 128m" ({@code :138}).
+ * Remote activator binding and activation, ported from GT6 Behavior_Remote (GregTech-6 Team).
  *
- * <h2>The two halves</h2>
+ * <p>Each dimension stores up to 64 coordinates. Sneak-click toggles a loaded target; normal use
+ * activates targets within 128 blocks on each axis. A target returns true to keep its binding,
+ * or false to remove it after activation. Block entities are checked before plain blocks.
  *
- * <ul>
- *   <li><b>Binding</b> — {@code onItemUseFirst} ({@code :47-73}), the port's {@link #useOn}: sneak and
- *       right-click a block to toggle its coordinate in the item's list. A coordinate the list already
- *       holds is removed ({@code :52-55}); a full list of {@link #MAX_COORDS} refuses the new one
- *       ({@code :56-58}); otherwise the block is added only when it is a {@link RemoteActivatable}
- *       ({@code :59-64}) and refused with "This cannot be added!" when it is not ({@code :65-68}). The
- *       list is written back in <em>every</em> case ({@code :70}) and the click answers {@code T}
- *       ({@code :72}).</li>
- *   <li><b>Activation</b> — {@code onItemRightClick} ({@code :76-90}), the port's {@link #useInAir}: a
- *       right-click <em>without</em> sneaking fires every bound coordinate of this dimension that lies
- *       within {@link #RANGE} blocks on all three axes ({@code :80-82}). A coordinate inside the range
- *       survives only when the block there is a {@link RemoteActivatable} and its
- *       {@code remoteActivate} returned {@code true} — GT6's "keep me bound" contract, which the dynamite
- *       answers with {@code false} on purpose, so a fired charge drops out of the list. A coordinate
- *       outside the range is kept untouched ({@code :83-85}).</li>
- * </ul>
+ * <p>The dimension key uses the modern resource location; c/x/y/z indexed fields retain the
+ * original marker layout. Numeric 1.7.10 dimension keys are not migrated here.
  *
- * <h2>The NBT layout, field for field</h2>
- *
- * <p>One compound per dimension, and inside it, for each index {@code i} from {@code 0}, a boolean
- * {@code "c" + i} followed by the ints {@code "x" + i}, {@code "y" + i} and {@code "z" + i}
- * ({@code :126-132}). The boolean carries no coordinate information at all: GT6 writes it purely as the
- * end marker its reader tests, walking {@code i = -1} while the compound still has {@code "c" + (++i)}
- * and stopping at the first missing one ({@code :115-117}). An empty list <em>removes</em> the
- * dimension's compound instead of writing an empty one ({@code :122-123}).</p>
- *
- * <p><b>One deviation, on purpose:</b> GT6 keys the compound by the numeric dimension id
- * ({@code "gt.remote.dim." + aWorld.provider.dimensionId}, {@code :113,123,133}), because 1.7.10
- * dimensions are numbers. 1.20.1 dimensions are {@code ResourceKey}s, so {@link #dimKey} uses
- * {@code level.dimension().location()} instead — {@code gt.remote.dim.minecraft:overworld} — and the
- * rest of the layout is unchanged. The tag therefore survives a round trip, but an item carried from
- * GT6 itself (or from a world whose dimension ids do not match the vanilla keys) will not find its
- * coordinates; there is no numeric id to fall back to in 1.20.1.</p>
- *
- * <h2>Finding the block to bind and fire</h2>
- *
- * <p>GT6 resolves a tile entity at the coordinate ({@code WD.te(aWorld, tCoords, F)} — never loading an
- * unloaded chunk, {@code :60,81,98}) and tests it against {@code ITileEntityRemoteActivateable}. The
- * port's implementer may be a plain block instead: the dynamite implements activation on its block
- * ({@code com.gregtech.gregtech.block.tool.DynamiteBlock}), so {@link #target} asks the block entity
- * first and the block second, the same resolution order {@code ItemBehaviors.igniteToolClick} uses, and
- * reports nothing for an unloaded coordinate.</p>
- *
- * <h2>What is not ported</h2>
- *
- * <ul>
- *   <li>The two sounds: four {@code SFX.GT_BEEP} beeps on binding ({@code :54,58,63,67}) and an
- *       {@code SFX.MC_CLICK} on activation ({@code :88}). This layer plays no sound of its own, so the
- *       audible half of the feedback is reduced to the chat line, which is the half the player reads.</li>
- *   <li>{@code LH.add("gt.behaviour.remote", …)} and {@code getAdditionalToolTips} ({@code :137-145}):
- *       tooltips belong to the item's registration, and this file adds no lang keys.</li>
- * </ul>
- */
-
-/**
- * GT6 {@code Behavior_Remote} ({@code Behavior_Remote.java:43-146}) — the Remote Activator
- * ({@code MultiItemRandomTools:515}; the port registers it as {@code gt6ce:remote_activator} in
- * {@code GTMultiItemsGen.ENTRIES:124}). Its tooltip is the whole feature in one line: "Activates up to
- * 64 Blocks within a Range of 128m" ({@code :138}).
- *
- * <h2>The two halves</h2>
- *
- * <ul>
- *   <li><b>Binding</b> — {@code onItemUseFirst} ({@code :47-73}), the port's {@link #useOn}: sneak and
- *       right-click a block to toggle its coordinate in the item's list. A coordinate the list already
- *       holds is removed ({@code :52-55}); a full list of {@link #MAX_COORDS} refuses the new one
- *       ({@code :56-58}); otherwise the block is added only when it is a {@link RemoteActivatable}
- *       ({@code :59-64}) and refused with "This cannot be added!" when it is not ({@code :65-68}). The
- *       list is written back in <em>every</em> case ({@code :70}) and the click answers {@code T}
- *       ({@code :72}).</li>
- *   <li><b>Activation</b> — {@code onItemRightClick} ({@code :76-90}), the port's {@link #useInAir}: a
- *       right-click <em>without</em> sneaking fires every bound coordinate of this dimension that lies
- *       within {@link #RANGE} blocks on all three axes ({@code :80-82}). A coordinate inside the range
- *       survives only when the block there is a {@link RemoteActivatable} and its
- *       {@code remoteActivate} returned {@code true} — GT6's "keep me bound" contract, which the dynamite
- *       answers with {@code false} on purpose, so a fired charge drops out of the list. A coordinate
- *       outside the range is kept untouched ({@code :83-85}).</li>
- * </ul>
- *
- * <h2>The NBT layout, field for field</h2>
- *
- * <p>One compound per dimension, and inside it, for each index {@code i} from {@code 0}, a boolean
- * {@code "c" + i} followed by the ints {@code "x" + i}, {@code "y" + i} and {@code "z" + i}
- * ({@code :126-132}). The boolean carries no coordinate information at all: GT6 writes it purely as the
- * end marker its reader tests, walking {@code i = -1} while the compound still has {@code "c" + (++i)}
- * and stopping at the first missing one ({@code :115-117}). An empty list <em>removes</em> the
- * dimension's compound instead of writing an empty one ({@code :122-123}).</p>
- *
- * <p><b>One deviation, on purpose:</b> GT6 keys the compound by the numeric dimension id
- * ({@code "gt.remote.dim." + aWorld.provider.dimensionId}, {@code :113,123,133}), because 1.7.10
- * dimensions are numbers. 1.20.1 dimensions are {@code ResourceKey}s, so {@link #dimKey} uses
- * {@code level.dimension().location()} instead — {@code gt.remote.dim.minecraft:overworld} — and the
- * rest of the layout is unchanged. The tag therefore survives a round trip, but an item carried from
- * GT6 itself (or from a world whose dimension ids do not match the vanilla keys) will not find its
- * coordinates; there is no numeric id to fall back to in 1.20.1.</p>
- *
- * <h2>Finding the block to bind and fire</h2>
- *
- * <p>GT6 resolves a tile entity at the coordinate ({@code WD.te(aWorld, tCoords, F)} — never loading an
- * unloaded chunk, {@code :60,81,98}) and tests it against {@code ITileEntityRemoteActivateable}. The
- * port's implementer may be a plain block instead: the dynamite implements activation on its block
- * ({@code com.gregtech.gregtech.block.tool.DynamiteBlock}), so {@link #target} asks the block entity
- * first and the block second, the same resolution order {@code ManualToolBehaviorAccess.igniteToolClick} uses, and
- * reports nothing for an unloaded coordinate.</p>
- *
- * <h2>What is not ported</h2>
- *
- * <ul>
- *   <li>The two sounds: four {@code SFX.GT_BEEP} beeps on binding ({@code :54,58,63,67}) and an
- *       {@code SFX.MC_CLICK} on activation ({@code :88}). This layer plays no sound of its own, so the
- *       audible half of the feedback is reduced to the chat line, which is the half the player reads.</li>
- *   <li>{@code LH.add("gt.behaviour.remote", …)} and {@code getAdditionalToolTips} ({@code :137-145}):
- *       tooltips belong to the item's registration, and this file adds no lang keys.</li>
- * </ul>
+ * <p>Manual binding and activation currently omit the original beeps/click. Automatic addCoords
+ * already plays a success sound. Item adapters do not yet append the original range tooltip.
  */
 public final class BehaviorRemote {
 
@@ -148,7 +38,8 @@ public final class BehaviorRemote {
     /** GT6 {@code Behavior_Remote:80}: {@code Math.abs(...) <= 128} on every axis, from the player. */
     public static final int RANGE = 128;
 
-    private BehaviorRemote() {}
+    private BehaviorRemote() {
+    }
 
     /** GT6's non-toggle binding path used by powered drills. A full remote is skipped. */
     public static boolean addCoords(ItemStack stack, Level level, BlockPos pos) {
@@ -163,7 +54,7 @@ public final class BehaviorRemote {
         if (target(level, pos) == null) return false;
         coords.add(pos.immutable());
 //? if >=1.21.1 {
-        /*com.gregtech.gregtech.platform.neoforge.StackCustomData.update(stack,tag->setCoords(tag,level,coords));
+        /*com.gregtech.gregtech.platform.neoforge.StackCustomData.update(stack, tag -> setCoords(tag, level, coords));
         level.playSound(null, pos, net.minecraft.sounds.SoundEvents.NOTE_BLOCK_PLING.value(),
 *///?} else {
         setCoords(stack.getOrCreateTag(), level, coords);
@@ -182,6 +73,7 @@ public final class BehaviorRemote {
      *
      * @return the key, e.g. {@code gt.remote.dim.minecraft:overworld}
      */
+
     public static String dimKey(Level level) {
         return "gt.remote.dim." + level.dimension().location();
     }
@@ -200,15 +92,20 @@ public final class BehaviorRemote {
      * @return a fresh mutable list, empty when nothing is bound — the callers of this layer are expected
      *         to edit it and hand it to {@link #setCoords} (GT6's list is an {@code ArrayListNoNulls})
      */
+
     public static List<BlockPos> getCoords(@Nullable CompoundTag tag, Level level) {
         List<BlockPos> coords = new ArrayList<>();
         if (tag == null) return coords;
-        CompoundTag dimension = tag.getCompound(dimKey(level));                 // :113
-        if (dimension.isEmpty()) return coords;                                 // :114
-        int i = -1;
-        while (dimension.contains("c" + (++i))) {                               // :115
-            coords.add(new BlockPos(dimension.getInt("x" + i), dimension.getInt("y" + i),
-                    dimension.getInt("z" + i)));                                // :116
+        CompoundTag dimension = tag.getCompound(dimKey(level));
+        // :113
+        if (dimension.isEmpty()) return coords;
+        // :114
+        int index = -1;
+        while (dimension.contains("c" + (++index))) {
+            // :115
+            coords.add(new BlockPos(dimension.getInt("x" + index), dimension.getInt("y" + index),
+                    dimension.getInt("z" + index)));
+            // :116
         }
         return coords;
     }
@@ -226,21 +123,26 @@ public final class BehaviorRemote {
      * @param level  the level whose dimension key is written
      * @param coords the surviving coordinates; an empty list removes the entry
      */
+
     public static void setCoords(CompoundTag tag, Level level, List<BlockPos> coords) {
         String key = dimKey(level);
         if (coords.isEmpty()) {
-            tag.remove(key);                                                    // :122-123
+            tag.remove(key);
+            // :122-123
             return;
         }
         CompoundTag dimension = new CompoundTag();
-        for (int i = 0, size = coords.size(); i < size; i++) {                   // :126-132
-            BlockPos coord = coords.get(i);
-            dimension.putBoolean("c" + i, true);                                // :128 - the end marker only
-            dimension.putInt("x" + i, coord.getX());
-            dimension.putInt("y" + i, coord.getY());
-            dimension.putInt("z" + i, coord.getZ());
+        for (int index = 0, size = coords.size(); index < size; index++) {
+            // :126-132
+            BlockPos coord = coords.get(index);
+            dimension.putBoolean("c" + index, true);
+            // :128 - the end marker only
+            dimension.putInt("x" + index, coord.getX());
+            dimension.putInt("y" + index, coord.getY());
+            dimension.putInt("z" + index, coord.getZ());
         }
-        tag.put(key, dimension);                                                // :133
+        tag.put(key, dimension);
+        // :133
     }
 
     /**
@@ -257,6 +159,7 @@ public final class BehaviorRemote {
      * @return the interface to call, or {@code null} when there is nothing remote-activatable there
      */
     @Nullable
+
     private static RemoteActivatable target(Level level, BlockPos pos) {
         if (!level.hasChunkAt(pos)) return null;
         if (level.getBlockEntity(pos) instanceof RemoteActivatable entity) return entity;
@@ -281,40 +184,55 @@ public final class BehaviorRemote {
      * @return GT6's {@code T} ({@code :72}) once the gates are passed — the click is handled even when
      *         nothing was bound; {@code F} on a gate
      */
+
     public static Outcome useOn(Level level, BlockPos pos, Direction side, @Nullable Player player,
-                                ItemStack stack, float hitX, float hitY, float hitZ) {
-        if (level.isClientSide) return Outcome.refused(stack);                          // :48
+            ItemStack stack, float hitX, float hitY, float hitZ) {
+        if (level.isClientSide) return Outcome.refused(stack);
+        // :48
         if (player == null) return Outcome.refused(stack);
-        if (!player.isShiftKeyDown()) return Outcome.refused(stack);                     // :48
+        if (!player.isShiftKeyDown()) return Outcome.refused(stack);
+        // :48
 //? if >=1.21.1 {
-        /*if (!ManualToolBehaviorAccess.mayEdit(level, player, pos)) return Outcome.refused(stack);    // :48
+        /*if (!ManualToolBehaviorAccess.mayEdit(level, player, pos)) return Outcome.refused(stack);
+        // :48
 *///?} else {
-        if (!ItemBehaviors.mayEdit(level, player, pos)) return Outcome.refused(stack);    // :48
+        if (!ItemBehaviors.mayEdit(level, player, pos)) return Outcome.refused(stack);
+        // :48
 //?}
 
 //? if >=1.21.1 {
-        /*CompoundTag tag = com.gregtech.gregtech.platform.neoforge.StackCustomData.read(stack);                                       // :49 UT.NBT.getNBT
+        /*CompoundTag tag = com.gregtech.gregtech.platform.neoforge.StackCustomData.read(stack);
+        // :49 UT.NBT.getNBT
 *///?} else {
-        CompoundTag tag = stack.getOrCreateTag();                                       // :49 UT.NBT.getNBT
+        CompoundTag tag = stack.getOrCreateTag();
+        // :49 UT.NBT.getNBT
 //?}
-        List<BlockPos> coords = getCoords(tag, level);                                  // :50
-        if (coords.contains(pos)) {                                                     // :52-55
+        List<BlockPos> coords = getCoords(tag, level);
+        // :50
+        if (coords.contains(pos)) {
+            // :52-55
             message(player, "Coordinates removed!");
             coords.remove(pos);
-        } else if (coords.size() >= MAX_COORDS) {                                       // :56-58
+        } else if (coords.size() >= MAX_COORDS) {
+            // :56-58
             message(player, "Cant hold more than 64 Coordinates per Dimension!");
-        } else if (target(level, pos) != null) {                                        // :59-64
+        } else if (target(level, pos) != null) {
+            // :59-64
             message(player, "Coordinates added!");
             coords.add(pos.immutable());
-        } else {                                                                        // :65-68
+        } else {
+            // :65-68
             message(player, "This cannot be added!");
         }
 //? if >=1.21.1 {
-        /*com.gregtech.gregtech.platform.neoforge.StackCustomData.update(stack,nbt->setCoords(nbt,level,coords)); // :70-71
+        /*com.gregtech.gregtech.platform.neoforge.StackCustomData.update(stack, nbt -> setCoords(nbt, level, coords));
+        // :70-71
 *///?} else {
-        setCoords(tag, level, coords);                                                  // :70-71
+        setCoords(tag, level, coords);
+        // :70-71
 //?}
-        return Outcome.acted(stack);                                                    // :72
+        return Outcome.acted(stack);
+        // :72
     }
 
     /**
@@ -339,44 +257,56 @@ public final class BehaviorRemote {
      *
      * @return GT6's "handled, this is the stack" ({@code :89}); {@code F} on a gate
      */
+
     public static Outcome useInAir(Level level, @Nullable Player player, ItemStack stack) {
-        if (level.isClientSide) return Outcome.refused(stack);                           // :77
+        if (level.isClientSide) return Outcome.refused(stack);
+        // :77
         if (player == null) return Outcome.refused(stack);
-        if (player.isShiftKeyDown()) return Outcome.refused(stack);                      // :77
+        if (player.isShiftKeyDown()) return Outcome.refused(stack);
+        // :77
 //? if >=1.21.1 {
         /*CompoundTag tag = com.gregtech.gregtech.platform.neoforge.StackCustomData.read(stack);
-        if (tag.isEmpty()) return Outcome.refused(stack);                                  // :77
+        if (tag.isEmpty()) return Outcome.refused(stack);
+        // :77
 *///?} else {
         CompoundTag tag = stack.getTag();
-        if (tag == null) return Outcome.refused(stack);                                  // :77
+        if (tag == null) return Outcome.refused(stack);
+        // :77
 //?}
 
         List<BlockPos> kept = new ArrayList<>();
-        for (BlockPos coords : getCoords(tag, level)) {                                  // :79
-            if (inRange(coords, player)) {                                               // :80
+        for (BlockPos coords : getCoords(tag, level)) {
+            // :79
+            if (inRange(coords, player)) {
+                // :80
                 RemoteActivatable activatable = target(level, coords);
                 // :82 - the coordinate stays only when the block answers "keep me bound".
                 if (activatable != null && activatable.remoteActivate(level, coords)) kept.add(coords);
             } else {
-                kept.add(coords);                                                        // :83-85
+                kept.add(coords);
+                // :83-85
             }
         }
 //? if >=1.21.1 {
-        /*com.gregtech.gregtech.platform.neoforge.StackCustomData.update(stack,nbt->setCoords(nbt,level,kept)); // :87
+        /*com.gregtech.gregtech.platform.neoforge.StackCustomData.update(stack, nbt -> setCoords(nbt, level, kept));
+        // :87
 *///?} else {
-        setCoords(tag, level, kept);                                                     // :87
+        setCoords(tag, level, kept);
+        // :87
 //?}
-        return Outcome.acted(stack);                                                     // :89
+        return Outcome.acted(stack);
+        // :89
     }
 
     /**
      * GT6 {@code Behavior_Remote:80}: {@code Math.abs(tCoords.posX - aPlayer.posX) <= 128} and the same
      * test for {@code y} and {@code z} — a cube around the player, not a sphere.
      */
+
     private static boolean inRange(BlockPos coords, Player player) {
         return Math.abs(coords.getX() - player.getX()) <= RANGE
-                && Math.abs(coords.getY() - player.getY()) <= RANGE
-                && Math.abs(coords.getZ() - player.getZ()) <= RANGE;
+        && Math.abs(coords.getY() - player.getY()) <= RANGE
+        && Math.abs(coords.getZ() - player.getZ()) <= RANGE;
     }
 
     /**
@@ -384,6 +314,7 @@ public final class BehaviorRemote {
      * that one player, not an action-bar message — the second argument {@code false} is what makes it
      * land in the chat, where GT6's chat messages go.
      */
+
     private static void message(Player player, String text) {
         player.displayClientMessage(Component.literal(text), false);
     }

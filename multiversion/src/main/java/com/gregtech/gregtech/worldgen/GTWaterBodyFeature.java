@@ -149,8 +149,8 @@ public class GTWaterBodyFeature extends Feature<NoneFeatureConfiguration> {
             // flowing/falling water below the surface turn into full source blocks.
             BlockState replacement = firstWater ? fill
                     : fill.setValue(LiquidBlock.LEVEL, state.getValue(LiquidBlock.LEVEL));
-            level.setBlock(cursor, replacement, 2);
-            placed = true;
+            placed |= level.setBlock(cursor, replacement, 2);
+            // Preserve the first encountered eligible water position even if its write fails.
             firstWater = false;
         }
         return placed;

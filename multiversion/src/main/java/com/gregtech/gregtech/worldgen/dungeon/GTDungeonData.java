@@ -1075,6 +1075,11 @@ public final class GTDungeonData {
         BlockPos pos = new BlockPos(x + ax, y + ay, z + az);
         boolean placed = level.setBlock(pos, state, Block.UPDATE_CLIENTS);
         Block block = state.getBlock();
+        // WorldGenRegion does not run the live LiquidBlock.onPlace callback. Start the
+        // source after generation so mob-farm water flows through the completed room.
+        var fluid = state.getFluidState();
+        if (placed && !fluid.isEmpty())
+            level.scheduleTick(pos, fluid.getType(), fluid.getType().getTickDelay(level));
         // Shape checks must see the completed room and neighbouring chunks. Vanilla consumes
         // this queue in LevelChunk.postProcessGeneration after the feature stages finish.
         if (placed && level instanceof net.minecraft.server.level.WorldGenRegion

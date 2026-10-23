@@ -2,7 +2,6 @@ package com.gregtech.gregtech.api.recipe;
 
 import java.util.*;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.material.Fluids;
 import com.gregtech.gregtech.api.addon.RecipeKeptInputs;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
@@ -55,12 +54,12 @@ public final class RecipeInputs {
         for (int inputIndex = 0; inputIndex < recipe.mFluidInputs.length; inputIndex++) {
             var required = recipe.mFluidInputs[inputIndex];
             if (required == null) continue;
-            // Amount 0 is a presence-only catalyst: the tank must hold the fluid, nothing is drained.
-            if (required.getAmount() <= 0) {
-                if (required.getFluid() == Fluids.EMPTY) continue;
+            // Test the original snapshot: presence neither reserves fluid nor depends on input order.
+            if (recipe.isPresenceFluidInput(inputIndex)) {
+                if (required.isEmpty()) return null;
                 boolean present = false;
-                for (FluidStack available : remainingFluids) {
-                    if (!available.isEmpty() && available.isFluidEqual(required)) { present = true; break; }
+                for (FluidStack available : fluids) {
+                    if (!available.isEmpty() && sameFluid(available, required)) { present = true; break; }
                 }
                 if (!present) return null;
                 continue;
@@ -90,6 +89,14 @@ public final class RecipeInputs {
         }
         return new Remaining(remainingItems, remainingFluids);
     }
+    public static boolean sameFluid(FluidStack available, FluidStack required) {
+//? if >=1.21.1 {
+        /*return FluidStack.isSameFluidSameComponents(available, required);
+*///?} else {
+        return available.isFluidEqual(required);
+//?}
+    }
+
     public static boolean matches(ItemStack required, ItemStack available) {
         if(available.isEmpty())return false;
         var colors = com.gregtech.gregtech.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(required);

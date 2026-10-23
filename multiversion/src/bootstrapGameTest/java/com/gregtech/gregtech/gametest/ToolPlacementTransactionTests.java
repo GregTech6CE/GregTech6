@@ -1,0 +1,240 @@
+package com.gregtech.gregtech.gametest;
+
+import com.gregtech.gregtech.api.material.GTMaterialRegistry;
+import com.gregtech.gregtech.api.tool.GTToolHelper;
+import com.gregtech.gregtech.api.tool.GTToolType;
+import com.gregtech.gregtech.registry.GTElectricItems;
+import com.gregtech.gregtech.registry.GTToolItems;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.gametest.framework.GameTest;
+import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.state.properties.SlabType;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+//? if >=1.21.1 {
+/*import net.neoforged.neoforge.gametest.GameTestHolder;
+import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
+*///?} else {
+import net.minecraftforge.gametest.GameTestHolder;
+import net.minecraftforge.gametest.PrefixGameTestTemplate;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.event.level.BlockEvent;
+//?}
+
+/** Real server interaction and cancellable placement events, not calls to a mirrored placement model. */
+@GameTestHolder("gregtech_issue_audit")
+@PrefixGameTestTemplate(false)
+public final class ToolPlacementTransactionTests {
+    private static ServerPlayer player(GameTestHelper h) {
+//? if >=1.21.1 {
+        /*var player = net.neoforged.neoforge.common.util.FakePlayerFactory.get(h.getLevel(),
+*///?} else {
+        var player = net.minecraftforge.common.util.FakePlayerFactory.get(h.getLevel(),
+//?}
+                new com.mojang.authlib.GameProfile(java.util.UUID.randomUUID(), "[gt-placement]"));
+        player.setGameMode(GameType.SURVIVAL);
+        player.setPos(h.absolutePos(new BlockPos(0, 20, 0)).getX(), h.absolutePos(new BlockPos(0, 20, 0)).getY(),
+                h.absolutePos(new BlockPos(0, 20, 0)).getZ());
+        return player;
+    }
+
+    private static ItemStack wand(String material) {
+        return GTToolHelper.write(GTToolItems.empty(GTToolType.BUILDER_WAND),
+                GTMaterialRegistry.get(material), GTMaterialRegistry.get("Wood"));
+    }
+
+    private static void click(ServerPlayer player, BlockPos pos, Direction face, double hitY) {
+        player.gameMode.useItemOn(player, player.level(), player.getMainHandItem(), InteractionHand.MAIN_HAND,
+                new BlockHitResult(new Vec3(pos.getX() + .5, pos.getY() + hitY, pos.getZ() + .5), face, pos, false));
+    }
+
+    public static final class PlacementListener {
+        private final ServerPlayer player;
+        public boolean cancel;
+        public int calls;
+        public PlacementListener(ServerPlayer player) { this.player = player; }
+        @SubscribeEvent public void placed(BlockEvent.EntityPlaceEvent event) {
+            if (event.getEntity() != player) return;
+            calls++;
+            if (cancel) event.setCanceled(true);
+        }
+    }
+
+    private static void register(PlacementListener listener) {
+//? if >=1.21.1 {
+        /*net.neoforged.neoforge.common.NeoForge.EVENT_BUS.register(listener);
+*///?} else {
+        net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(listener);
+//?}
+    }
+    private static void unregister(PlacementListener listener) {
+//? if >=1.21.1 {
+        /*net.neoforged.neoforge.common.NeoForge.EVENT_BUS.unregister(listener);
+*///?} else {
+        net.minecraftforge.common.MinecraftForge.EVENT_BUS.unregister(listener);
+//?}
+    }
+
+    @GameTest(template = "test_empty")
+    public static void builderSixFacesCommitExactlyOnce(GameTestHelper h) {
+        var player = player(h);
+        var support = h.absolutePos(new BlockPos(4, 20, 4));
+        var listener = new PlacementListener(player);
+        register(listener);
+        try {
+            for (var face : Direction.values()) {
+                player.getInventory().clearContent();
+                var tool = wand("Steel");
+                player.setItemInHand(InteractionHand.MAIN_HAND, tool);
+                player.getInventory().setItem(35, new ItemStack(Items.STONE, 8));
+                h.getLevel().setBlockAndUpdate(support, Blocks.STONE.defaultBlockState());
+                for (var side : Direction.values()) h.getLevel().setBlockAndUpdate(support.relative(side), Blocks.AIR.defaultBlockState());
+                int events = listener.calls;
+                click(player, support, face, .75);
+                h.assertTrue(h.getLevel().getBlockState(support.relative(face)).is(Blocks.STONE), "clicked face " + face);
+                for (var side : Direction.values()) if (side != face)
+                    h.assertTrue(h.getLevel().isEmptyBlock(support.relative(side)), "no wrong-face copy " + side);
+                h.assertTrue(player.getInventory().getItem(35).getCount() == 7, "one source consumed");
+                h.assertTrue(tool.getDamageValue() == 1, "one wear committed");
+                h.assertTrue(listener.calls == events + 1, "one placement event, no duplicate outer event");
+            }
+        } finally {
+            unregister(listener);
+            h.getLevel().removeBlock(support, false);
+            for (var side : Direction.values()) h.getLevel().removeBlock(support.relative(side), false);
+        }
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty")
+    public static void builderUsesHeadQualityAndHitCoordinates(GameTestHelper h) {
+        var player = player(h);
+        var origin = h.absolutePos(new BlockPos(4, 20, 4));
+        int low = GTMaterialRegistry.get("Wood").getToolQuality() + 1;
+        int high = GTMaterialRegistry.get("Steel").getToolQuality() + 1;
+        h.assertTrue(low < high, "fixture has unequal real material qualities");
+        try {
+            for (String material : new String[]{"Wood", "Steel"}) {
+                player.getInventory().clearContent();
+                player.setItemInHand(InteractionHand.MAIN_HAND, wand(material));
+                player.getInventory().setItem(35, new ItemStack(Items.STONE, 8));
+                for (int x : new int[]{0, low, high, high + 1}) {
+                    h.getLevel().setBlockAndUpdate(origin.offset(x, 0, 0), Blocks.STONE.defaultBlockState());
+                    h.getLevel().removeBlock(origin.offset(x, 1, 0), false);
+                }
+                click(player, origin, Direction.UP, 1);
+                h.assertTrue(h.getLevel().getBlockState(origin.offset(low, 1, 0)).is(Blocks.STONE), "inclusive low edge");
+                h.assertTrue(h.getLevel().getBlockState(origin.offset(high, 1, 0)).is(Blocks.STONE) == material.equals("Steel"), "material-dependent high edge");
+                h.assertTrue(h.getLevel().isEmptyBlock(origin.offset(high + 1, 1, 0)), "outside high edge excluded");
+                h.assertTrue(player.getInventory().getItem(35).getCount() == (material.equals("Steel") ? 5 : 6), "plane exact count");
+            }
+        } finally {
+            for (int x : new int[]{0, low, high, high + 1}) for (int y = 0; y <= 1; y++) h.getLevel().removeBlock(origin.offset(x, y, 0), false);
+        }
+        try {
+            player.getInventory().clearContent();
+            player.setItemInHand(InteractionHand.MAIN_HAND, wand("Steel"));
+            player.getInventory().setItem(35, new ItemStack(Items.OAK_SLAB, 2));
+            h.getLevel().setBlockAndUpdate(origin, Blocks.OAK_SLAB.defaultBlockState().setValue(SlabBlock.TYPE, SlabType.TOP));
+            click(player, origin, Direction.EAST, .8);
+            var placed = h.getLevel().getBlockState(origin.east());
+            h.assertTrue(placed.is(Blocks.OAK_SLAB) && placed.getValue(SlabBlock.TYPE) == SlabType.TOP, "original local hit height reaches BlockItem");
+        } finally {
+            h.getLevel().removeBlock(origin, false);
+            h.getLevel().removeBlock(origin.east(), false);
+        }
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty")
+    public static void builderCancellationRollsBackWorldStockAndWear(GameTestHelper h) {
+        var player = player(h);
+        var pos = h.absolutePos(new BlockPos(4, 20, 4));
+        var tool = wand("Steel");
+        player.setItemInHand(InteractionHand.MAIN_HAND, tool);
+        player.getInventory().setItem(35, new ItemStack(Items.STONE, 8));
+        var listener = new PlacementListener(player);
+        listener.cancel = true;
+        register(listener);
+        try {
+            h.getLevel().setBlockAndUpdate(pos, Blocks.STONE.defaultBlockState());
+            h.getLevel().removeBlock(pos.east(), false);
+            click(player, pos, Direction.EAST, .5);
+            h.assertTrue(listener.calls == 1, "cancellation event delivered exactly once");
+            h.assertTrue(h.getLevel().isEmptyBlock(pos.east()), "canceled world placement restored");
+            h.assertTrue(player.getInventory().getItem(35).getCount() == 8 && tool.getDamageValue() == 0, "canceled stock and wear unchanged");
+            h.assertTrue(h.getLevel().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,
+                    new net.minecraft.world.phys.AABB(pos).inflate(2)).isEmpty(), "cancellation creates no loose item refund");
+            listener.cancel = false;
+            click(player, pos, Direction.EAST, .5);
+            h.assertTrue(listener.calls == 2 && player.getInventory().getItem(35).getCount() == 7 && tool.getDamageValue() == 1,
+                    "retry commits one placement and one cost");
+            h.getLevel().setBlockAndUpdate(pos.east(), Blocks.BEDROCK.defaultBlockState());
+            click(player, pos, Direction.EAST, .5);
+            h.assertTrue(listener.calls == 2 && player.getInventory().getItem(35).getCount() == 7 && tool.getDamageValue() == 1,
+                    "blocked destination consumes neither source nor wear");
+            h.getLevel().removeBlock(pos.east(), false);
+            player.setGameMode(GameType.CREATIVE);
+            click(player, pos, Direction.EAST, .5);
+            h.assertTrue(listener.calls == 3 && player.getInventory().getItem(35).getCount() == 7 && tool.getDamageValue() == 1,
+                    "creative builder preserves source and wear");
+        } finally {
+            unregister(listener);
+            h.getLevel().removeBlock(pos.east(), false);
+            h.getLevel().removeBlock(pos, false);
+        }
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty")
+    public static void drillTorchCancellationAndCreativePreserveInventory(GameTestHelper h) {
+        var player = player(h);
+        var pos = h.absolutePos(new BlockPos(4, 20, 4));
+        var drill = GTElectricItems.get("electric_mining_drill").assembled(GTMaterialRegistry.get("Steel"), 10000);
+//? if >=1.21.1 {
+        /*com.gregtech.gregtech.platform.neoforge.StackCustomData.update(drill, tag -> tag.putLong("gt.charge", 1000));
+*///?} else {
+        drill.getOrCreateTag().putLong("gt.charge", 1000);
+//?}
+        player.setItemInHand(InteractionHand.MAIN_HAND, drill);
+        player.getInventory().setItem(35, new ItemStack(Items.TORCH, 8));
+        var listener = new PlacementListener(player);
+        register(listener);
+        try {
+            h.getLevel().setBlockAndUpdate(pos, Blocks.STONE.defaultBlockState());
+            h.getLevel().removeBlock(pos.above(), false);
+            listener.cancel = true;
+            click(player, pos, Direction.UP, 1);
+            h.assertTrue(listener.calls == 1 && h.getLevel().isEmptyBlock(pos.above()), "torch event denied and world restored");
+            h.assertTrue(player.getInventory().getItem(35).getCount() == 8, "canceled torch stock retained");
+            h.assertTrue(h.getLevel().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,
+                    new net.minecraft.world.phys.AABB(pos).inflate(2)).isEmpty(), "no loose torch refund or duplication");
+            listener.cancel = false;
+            click(player, pos, Direction.UP, 1);
+            h.assertTrue(listener.calls == 2 && h.getLevel().getBlockState(pos.above()).is(Blocks.TORCH), "one accepted event, no recursion/double placement");
+            h.assertTrue(player.getInventory().getItem(35).getCount() == 7, "successful torch costs exactly one");
+            h.getLevel().removeBlock(pos.above(), false);
+            player.setGameMode(GameType.CREATIVE);
+            click(player, pos, Direction.UP, 1);
+            h.assertTrue(listener.calls == 3 && player.getInventory().getItem(35).getCount() == 7, "creative placement keeps torch stock");
+            long charge = ((com.gregtech.gregtech.item.ElectricToolItem) drill.getItem()).getEnergyStored(drill,
+                    com.gregtech.gregtech.data.GregTechTags.Energy.EU);
+            h.assertTrue(charge == 1000 && player.getMainHandItem() == drill, "held drill identity/charge unchanged");
+        } finally {
+            unregister(listener);
+            h.getLevel().removeBlock(pos.above(), false);
+            h.getLevel().removeBlock(pos, false);
+        }
+        h.succeed();
+    }
+}

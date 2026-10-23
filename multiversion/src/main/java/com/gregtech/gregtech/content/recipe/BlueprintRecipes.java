@@ -27,25 +27,30 @@ import net.minecraftforge.fluids.FluidStack;
 //?}
 
 public final class BlueprintRecipes {
-    private BlueprintRecipes() {}
+
+    private BlueprintRecipes() {
+    }
+
     public static void register() {
-        MachineRecipeMaps.ScannerVisuals.contextualRecipes((level,machine,special,items,fluids) -> {
-            Recipe recipe = CanvasRecipes.scan(level,machine,special,items,fluids);
-            if(recipe != null)return recipe;
-            recipe=scan(level,machine,special,items,fluids);
-            return recipe != null ? recipe : VisualDocumentRecipes.scan(level,machine,special,items,fluids);
+        MachineRecipeMaps.ScannerVisuals.contextualRecipes((level, machine, special, items, fluids) -> {
+            Recipe recipe = CanvasRecipes.scan(level, machine, special, items, fluids);
+            if (recipe != null) return recipe;
+            recipe = scan(level, machine, special, items, fluids);
+            return recipe != null ? recipe : VisualDocumentRecipes.scan(level, machine, special, items, fluids);
         });
-        MachineRecipeMaps.Printer.contextualRecipes((level,machine,special,items,fluids) -> {
-            Recipe recipe = CanvasRecipes.print(level,machine,special,items,fluids);
-            if(recipe != null)return recipe;
-            recipe=print(level,machine,special,items,fluids);
-            return recipe != null ? recipe : VisualDocumentRecipes.print(level,machine,special,items,fluids);
+        MachineRecipeMaps.Printer.contextualRecipes((level, machine, special, items, fluids) -> {
+            Recipe recipe = CanvasRecipes.print(level, machine, special, items, fluids);
+            if (recipe != null) return recipe;
+            recipe = print(level, machine, special, items, fluids);
+            return recipe != null ? recipe : VisualDocumentRecipes.print(level, machine, special, items, fluids);
         });
     }
+
     private static boolean is(ItemStack stack, String path) {
         var id = BuiltInRegistries.ITEM.getKey(stack.getItem());
         return id.getNamespace().equals("gt6ce") && id.getPath().equals(path);
     }
+
     public static Recipe scan(Level level, BlockEntity machine, ItemStack special,
             List<ItemStack> items, List<FluidStack> fluids) {
         if (level.isClientSide) return null;
@@ -69,9 +74,13 @@ public final class BlueprintRecipes {
         written.getOrCreateTag().put("gt.usb.data", data);
         written.getOrCreateTag().putByte("gt.usb.tier", (byte) 1);
 //?}
-        return exact(new Recipe(new ItemStack[]{blueprint.copyWithCount(1), usb.copyWithCount(1)},
-                new ItemStack[]{written, blueprint.copyWithCount(1)}, null, null, null, null, 64, 16, 0));
+        return exact(new Recipe(
+                new ItemStack[]{blueprint.copyWithCount(1), usb.copyWithCount(1)},
+                new ItemStack[]{written, blueprint.copyWithCount(1)},
+                null, null, null, null,
+                64, 16, 0));
     }
+
     public static Recipe print(Level level, BlockEntity machine, ItemStack special,
             List<ItemStack> items, List<FluidStack> fluids) {
         if (level.isClientSide) return null;
@@ -91,7 +100,8 @@ public final class BlueprintRecipes {
         FluidStack dye = GTFluids.stack(blank ? "Dye_Chemical_White" : "Dye_Chemical_Blue", blank ? 16 : 144);
         if (dye == null || dye.isEmpty()) return null;
 //? if >=1.21.1 {
-        /*ItemStack output = new ItemStack(BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "blueprint")));
+        /*ItemStack output = new ItemStack(BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",
+                "blueprint")));
 *///?} else {
         ItemStack output = new ItemStack(BuiltInRegistries.ITEM.get(new net.minecraft.resources.ResourceLocation("gt6ce", "blueprint")));
 //?}
@@ -102,20 +112,31 @@ public final class BlueprintRecipes {
 *///?} else {
         if (!crafted.isEmpty()) output.setHoverName(crafted.getHoverName());
 //?}
-        return exact(new Recipe(new ItemStack[]{paper.copyWithCount(1), medium.copyWithCount(1)},
-                new ItemStack[]{output}, null, null, new FluidStack[]{dye}, null, blank ? 32 : 128, 16, 0)
+        return exact(new Recipe(
+                new ItemStack[]{paper.copyWithCount(1), medium.copyWithCount(1)},
+                new ItemStack[]{output},
+                null, null, new FluidStack[]{dye}, null,
+                blank ? 32 : 128, 16, 0)
                 .withCatalystInputs(1));
     }
+
     private static Recipe exact(Recipe recipe) {
         recipe.mExactItemInputs = true;
         recipe.mExplicitCatalystsOnly = true;
         recipe.mCanBeBuffered = false;
         return recipe;
     }
+
     private static ItemStack preview(Level level, ItemStack[] pattern) {
         var owner = new AbstractContainerMenu(null, 0) {
-            public boolean stillValid(Player player) { return false; }
-            public ItemStack quickMoveStack(Player player, int slot) { return ItemStack.EMPTY; }
+
+            public boolean stillValid(Player player) {
+                return false;
+            }
+
+            public ItemStack quickMoveStack(Player player, int slot) {
+                return ItemStack.EMPTY;
+            }
         };
         var grid = new TransientCraftingContainer(owner, 3, 3);
         for (int i = 0; i < pattern.length; i++) grid.setItem(i, pattern[i].copy());

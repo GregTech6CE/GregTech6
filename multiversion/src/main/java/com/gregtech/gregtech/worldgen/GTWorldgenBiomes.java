@@ -19,7 +19,7 @@ import java.util.Set;
  * samples at {@code (minX + 4k + 2, minZ + 4l + 2)} — the port reads those.
  */
 public final class GTWorldgenBiomes {
-    /** GT6 {@code BIOMES_RIVER} (plus the 1.20.1 oceans that count as rivers here). */
+    /** GT6 {@code BIOMES_RIVER}, mapped to modern river IDs. */
     public static final Set<ResourceLocation> RIVER = Set.of(
             id("river"), id("frozen_river"));
 

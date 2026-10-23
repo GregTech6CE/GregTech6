@@ -24,6 +24,8 @@ public final class OriginCreativeContents {
         if(item instanceof ElectricToolItem) return "tools";
         if(item instanceof com.gregtech.gregtech.item.PanelItemView) return "panels";
         if(item instanceof ChemicalBatteryItem) return "batteries";
+        // Shapes are accessories, even when their translated name matches "Extruder".
+        if(id.startsWith("extruder_shape_") || id.startsWith("low_heat_extruder_shape_")) return "molds";
 
 //? if >=1.21.1 {
 /*        if(item instanceof com.gregtech.gregtech.platform.neoforge.fluid.FluidDisplayItem) return "fluids";

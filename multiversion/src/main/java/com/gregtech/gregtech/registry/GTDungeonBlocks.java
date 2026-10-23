@@ -102,7 +102,7 @@ public final class GTDungeonBlocks {
         }
     }
 
-    /** GT6's portal properties: obsidian/end stone hardness, no collision, light while it is open. */
+    /** Current portal properties: source hardness, with port-specific collision and lighting settings. */
     private static BlockBehaviour.Properties properties(float hardness, float resistance) {
         return BlockBehaviour.Properties.of()
                 .mapColor(MapColor.COLOR_BLACK)

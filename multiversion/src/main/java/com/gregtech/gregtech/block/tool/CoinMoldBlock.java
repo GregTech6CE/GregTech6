@@ -32,8 +32,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-/** GT6 coinage mold: one tiny plate in, top-face hard-hammer strike, one metal coin out. */
+/** GT6 coinage mold: one tiny plate in, top-face hard-hammer strike, one coin out. */
 public final class CoinMoldBlock extends ShapedToolBlock implements EntityBlock {
+
     public CoinMoldBlock(Properties properties) {
         super("coin_mold", properties);
     }
@@ -45,12 +46,13 @@ public final class CoinMoldBlock extends ShapedToolBlock implements EntityBlock 
 
     @Override
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
-        return null; // The original mold is not a facing machine.
+        return null;
+        // The original mold is not a facing machine.
     }
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return Block.box(0,0,0,16,12,16);
+        return Block.box(0, 0, 0, 16, 12, 16);
     }
 
     @Override
@@ -64,9 +66,9 @@ public final class CoinMoldBlock extends ShapedToolBlock implements EntityBlock 
 *///?} else {
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
 //?}
-                                 InteractionHand hand, BlockHitResult hit) {
+            InteractionHand hand, BlockHitResult hit) {
         if (!(level.getBlockEntity(pos) instanceof CoinMoldBlockEntity mold)) return InteractionResult.PASS;
-        if (!player.mayBuild() || !level.mayInteract(player,pos)) return InteractionResult.FAIL;
+        if (!player.mayBuild() || !level.mayInteract(player, pos)) return InteractionResult.FAIL;
         ItemStack held = player.getItemInHand(hand);
         if (GTToolHelper.matchesTool(held, GTToolType.HARD_HAMMER)) {
             if (hit.getDirection() != Direction.UP) return InteractionResult.PASS;
@@ -92,15 +94,16 @@ public final class CoinMoldBlock extends ShapedToolBlock implements EntityBlock 
 
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer,
-                            ItemStack stack) {
+            ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
 //? if >=1.21.1 {
-        /*CompoundTag config = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getCompound("GT6CoinMold");
+        /*CompoundTag config = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
+                net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getCompound("GT6CoinMold");
 *///?} else {
         CompoundTag config = stack.getTagElement("GT6CoinMold");
 //?}
         if (config != null && level.getBlockEntity(pos) instanceof CoinMoldBlockEntity mold)
-            mold.loadItemConfig(config);
+        mold.loadItemConfig(config);
     }
 
     @Override
@@ -110,7 +113,7 @@ public final class CoinMoldBlock extends ShapedToolBlock implements EntityBlock 
     public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
 //?}
         if (!level.isClientSide && level.getBlockEntity(pos) instanceof CoinMoldBlockEntity mold)
-            mold.dropContents();
+        mold.dropContents();
 //? if >=1.21.1 {
         /*return super.playerWillDestroy(level, pos, state, player);
 *///?} else {
@@ -121,7 +124,7 @@ public final class CoinMoldBlock extends ShapedToolBlock implements EntityBlock 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState replacement, boolean moved) {
         if (!state.is(replacement.getBlock()) && level.getBlockEntity(pos) instanceof CoinMoldBlockEntity mold)
-            mold.dropContents();
+        mold.dropContents();
         super.onRemove(state, level, pos, replacement, moved);
     }
 
@@ -130,20 +133,24 @@ public final class CoinMoldBlock extends ShapedToolBlock implements EntityBlock 
         ItemStack item = new ItemStack(this);
         if (builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof CoinMoldBlockEntity mold)
 //? if >=1.21.1 {
-            /*{var data=new CompoundTag();data.put("GT6CoinMold",mold.saveItemConfig());item.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA,net.minecraft.world.item.component.CustomData.of(data));}
+        /*{
+            var data = new CompoundTag();
+            data.put("GT6CoinMold", mold.saveItemConfig());
+            item.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(data));
+        }
 *///?} else {
-            item.addTagElement("GT6CoinMold", mold.saveItemConfig());
+        item.addTagElement("GT6CoinMold", mold.saveItemConfig());
 //?}
         return List.of(item);
     }
 
     @Override
 //? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack,net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip,
+    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip,
 *///?} else {
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip,
 //?}
-                                TooltipFlag flag) {
+            TooltipFlag flag) {
         tooltip.add(Component.translatable("tooltip.gt6ce.coin_mold.1"));
         tooltip.add(Component.translatable("tooltip.gt6ce.coin_mold.2"));
     }

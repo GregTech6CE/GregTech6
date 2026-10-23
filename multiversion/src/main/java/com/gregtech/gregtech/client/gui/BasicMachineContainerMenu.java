@@ -226,7 +226,11 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return blockEntity == null || !blockEntity.isRemoved();
+        return blockEntity == null || !blockEntity.isRemoved()
+                && blockEntity.getLevel() == player.level()
+                && player.distanceToSqr(blockEntity.getBlockPos().getCenter()) <= 64
+                && player.level().hasChunkAt(blockEntity.getBlockPos())
+                && player.level().getBlockEntity(blockEntity.getBlockPos()) == blockEntity;
     }
 
     // ── Fluid sync ──────────────────────────────────────────────────────

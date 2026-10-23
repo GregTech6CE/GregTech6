@@ -45,7 +45,7 @@ public final class MachineEmiRecipe implements EmiRecipe {
             var choices = new ArrayList<EmiStack>();
             choices.add(fluid(fluid));
             for (var container : com.gregtech.gregtech.api.fluid.FluidContainerDisplayBinding.containers(fluid)) choices.add(EmiStack.of(container));
-            (recipe.isCatalystFluidInput(i) ? catalysts : inputs).add(EmiIngredient.of(choices));
+            ((recipe.isCatalystFluidInput(i) || recipe.isPresenceFluidInput(i)) ? catalysts : inputs).add(EmiIngredient.of(choices));
         }
         for (var special : RecipeSpecialItems.display(recipe.mSpecialItems)) catalysts.add(EmiStack.of(special));
         for (int i = 0; i < recipe.mOutputs.length; i++) {
@@ -153,7 +153,9 @@ public final class MachineEmiRecipe implements EmiRecipe {
             if (fluids[i] == null || fluids[i].isEmpty()) continue;
             var p = MachineGuiLayout.fluid(input, i);
             var slot = widgets.add(new FittedSlot(displayFluid(fluids[i]),p.x()-1,p.y()-1,scale,offset));
-            if (input && recipe.isCatalystFluidInput(i)) slot.catalyst(true).appendTooltip(Component.translatable("gt6ce.jei.catalyst"));
+            if (input && (recipe.isCatalystFluidInput(i) || recipe.isPresenceFluidInput(i)))
+                slot.catalyst(true).appendTooltip(Component.translatable(recipe.isPresenceFluidInput(i)
+                        ? "gt6ce.jei.fluid_presence" : "gt6ce.jei.catalyst"));
             if (!input) slot.recipeContext(this);
         }
     }

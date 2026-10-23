@@ -97,30 +97,45 @@ public class PartRecipeLoader implements InitializationStep {
     // ── Lathe: ingots/gems → rods, bolts → screws, gem plates → lenses ──────
 
     private void lathe(GTMaterial m) {
-        roll(MachineRecipeMaps.Lathe, m, MaterialPrefix.bolt, 1, MaterialPrefix.screw, 1, 2);
-        roll(MachineRecipeMaps.Lathe, m, MaterialPrefix.nugget, 1, MaterialPrefix.round, 1, 2);
-        roll(MachineRecipeMaps.Lathe, m, MaterialPrefix.plateGem, 1, MaterialPrefix.lens, 1, 16);
-        roll(MachineRecipeMaps.Lathe, m, MaterialPrefix.lens, 1, MaterialPrefix.ring, 1, 16);
-        roll(MachineRecipeMaps.Lathe, m, MaterialPrefix.bouleGt, 1, MaterialPrefix.stickLong, 3, 64);
-        roll(MachineRecipeMaps.Lathe, m, MaterialPrefix.gemChipped, 1, MaterialPrefix.bolt, 1, 4);
-        roll(MachineRecipeMaps.Lathe, m, MaterialPrefix.gemFlawed, 1, MaterialPrefix.bolt, 3, 8);
-        roll(MachineRecipeMaps.Lathe, m, MaterialPrefix.billet, 1, MaterialPrefix.stick, 1, 16);
+        lathePart(m, MaterialPrefix.bolt, 1, MaterialPrefix.screw, 1, 2);
+        lathePart(m, MaterialPrefix.nugget, 1, MaterialPrefix.round, 1, 2);
+        lathePart(m, MaterialPrefix.plateGem, 1, MaterialPrefix.lens, 1, 16);
+        lathePart(m, MaterialPrefix.lens, 1, MaterialPrefix.ring, 1, 16);
+        lathePart(m, MaterialPrefix.bouleGt, 1, MaterialPrefix.stickLong, 3, 64);
+        lathePart(m, MaterialPrefix.gemChipped, 1, MaterialPrefix.bolt, 1, 4);
+        lathePart(m, MaterialPrefix.gemFlawed, 1, MaterialPrefix.bolt, 3, 8);
+        lathePart(m, MaterialPrefix.billet, 1, MaterialPrefix.stick, 1, 16);
 
-        // ingot/gem → stick swarfs half the material off as small dust
+        // ingot/gem → stick returns half the material through its pulverization target.
         latheToStick(m, MaterialPrefix.ingot);
         latheToStick(m, MaterialPrefix.gem);
     }
 
     private void latheToStick(GTMaterial m, MaterialPrefix input) {
-        ItemStack in = mat(input, m, 1);
-        ItemStack stick = mat(MaterialPrefix.stick, m, 1);
-        if (in.isEmpty() || stick.isEmpty()) return;
-        ItemStack swarf = mat(MaterialPrefix.dustSmall, m, 2);
-        if (swarf.isEmpty()) {
-            MachineRecipeMaps.Lathe.addRecipe1(true, EU, 16, in, stick);
-        } else {
-            MachineRecipeMaps.Lathe.addRecipe1(true, EU, 16, in, stick, swarf);
-        }
+        lathePart(m, input, 1, MaterialPrefix.stick, 1, 16);
+    }
+
+    /** Original Loader_Recipes_Handlers:371–393 enables pulverized remains for these lathe rows. */
+    private void lathePart(GTMaterial m, MaterialPrefix in, int inCount,
+                           MaterialPrefix out, int outCount, long duration) {
+        ItemStack input = mat(in, m, inCount);
+        ItemStack output = mat(out, m, outCount);
+        if (input.isEmpty() || output.isEmpty()) return;
+        MachineRecipeMaps.Lathe.addRecipe1(true, EU, duration, input,
+                machiningOutputs(m, in, inCount, out, outCount, output));
+    }
+
+    /** RecipeMapHandlerPrefix:213–218 → OM.pulverize:370–371, including target identity and ratio. */
+    private static ItemStack[] machiningOutputs(GTMaterial material, MaterialPrefix in, int inCount,
+                                                MaterialPrefix out, int outCount, ItemStack output) {
+        long remains = in.getMaterialWeight() * inCount - out.getMaterialWeight() * outCount;
+        ItemStack dust = pulverizedRemains(material, remains);
+        return dust.isEmpty() ? new ItemStack[]{output} : new ItemStack[]{output, dust};
+    }
+
+    private static ItemStack pulverizedRemains(GTMaterial material, long remains) {
+        return OM.dust(material.getTargetPulverMaterial(),
+                PulverizationRules.amount(remains, material.getTargetPulverAmount()));
     }
 
     // ── Cutter: long rods / multi-ingots / gems → halves and plates ─────────
@@ -148,6 +163,7 @@ public class PartRecipeLoader implements InitializationStep {
         cut(m, MaterialPrefix.plateQuintuple, 1, MaterialPrefix.plate, 5, 64, 32);
     }
 
+    // Every existing row above enables pulverized remains in source Handlers:634–652.
     private void cut(GTMaterial m, MaterialPrefix in, int inCount, MaterialPrefix out, int outCount,
                      long duration, long eut) {
         ItemStack input = mat(in, m, inCount);
@@ -164,10 +180,12 @@ public class PartRecipeLoader implements InitializationStep {
                 net.minecraft.world.level.material.Fluids.WATER, (int) Math.max(16, duration));
 //? if >=1.21.1 {
 
-        /*MachineRecipeMaps.Cutter.addRecipe1(true, eut, duration, input, water, (net.neoforged.neoforge.fluids.FluidStack) null, output);
+        /*MachineRecipeMaps.Cutter.addRecipe1(true, eut, duration, input, water, (net.neoforged.neoforge.fluids.FluidStack) null,
+                machiningOutputs(m, in, inCount, out, outCount, output));
 
 *///?} else {
-        MachineRecipeMaps.Cutter.addRecipe1(true, eut, duration, input, water, (net.minecraftforge.fluids.FluidStack) null, output);
+        MachineRecipeMaps.Cutter.addRecipe1(true, eut, duration, input, water, (net.minecraftforge.fluids.FluidStack) null,
+                machiningOutputs(m, in, inCount, out, outCount, output));
 //?}
     }
 

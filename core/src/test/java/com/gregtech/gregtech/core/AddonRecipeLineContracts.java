@@ -70,8 +70,10 @@ public final class AddonRecipeLineContracts {
         check(RecipeKeptInputs.fluidDemand(false, 100, 4) == 400, "an ordinary fluid scales with the batch");
         expectThrows(() -> RecipeKeptInputs.normalizeFluids(new int[]{3}, 3), "outside");
         expectThrows(() -> RecipeKeptInputs.normalizeFluids(new int[]{0, 0}, 1), "Duplicate");
-        RecipeKeptInputs.requirePositiveFluid(0, 2);
-        check(RecipeKeptInputs.fluidDemand(false, 0, 4) == 0, "a zero-mB catalyst has no batch demand");
+        RecipeKeptInputs.requirePositiveFluid(1, 2);
+        assertions++;
+        expectThrows(() -> RecipeKeptInputs.requirePositiveFluid(0, 2), "amount");
+        check(RecipeKeptInputs.fluidDemand(false, 0, 4) == 0, "textual zero has no batch demand; native identity uses a separate presence mark");
         expectThrows(() -> RecipeKeptInputs.requirePositiveFluid(-4, 0), "amount");
     }
 

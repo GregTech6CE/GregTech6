@@ -278,8 +278,8 @@ public final class FoodStatsTests {
         Player kept = helper.makeMockSurvivalPlayer();
         PlayerFoodStats.change(kept, 30, GTFoodStats.ALCOHOL);
         FoodStatEvents.onClone(new PlayerEvent.Clone(kept, player, false));
-        helper.assertTrue(PlayerFoodStats.get(kept, GTFoodStats.ALCOHOL) == 30,
-                "a non-death clone keeps the statistics");
+        helper.assertTrue(PlayerFoodStats.get(kept, GTFoodStats.ALCOHOL) == 40,
+                "a non-death clone copies the original statistics, replacing stale destination data");
         Player died = helper.makeMockSurvivalPlayer();
         PlayerFoodStats.change(died, 30, GTFoodStats.ALCOHOL);
         FoodStatEvents.onClone(new PlayerEvent.Clone(died, player, true));

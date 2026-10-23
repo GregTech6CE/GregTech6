@@ -24,7 +24,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import javax.annotation.Nullable;
 import java.util.List;
 
-/** GT6 Dust Funnel (MultiTileEntityDustFunnel): feeds dusts into the crucible below. */
+/** GT6 Dust Funnel: combines dust sizes and sends the selected form downward. */
 public class DustFunnelBlock extends Block implements EntityBlock {
 
     // GT6 bounds: full top half + a centered spout below
@@ -77,8 +77,11 @@ public class DustFunnelBlock extends Block implements EntityBlock {
                 funnel.cycleMode(player.isShiftKeyDown());
                 player.displayClientMessage(funnel.modeIcon().getHoverName(), true);
                 com.gregtech.gregtech.api.tool.GTToolHelper.damageForUse(held, 1, player);
-            } else if (player.isShiftKeyDown() && held.isEmpty()
-                    || com.gregtech.gregtech.api.tool.GTToolHelper.matchesTool(held, com.gregtech.gregtech.api.tool.GTToolType.PINCERS)) {
+            } else if (com.gregtech.gregtech.api.tool.GTToolHelper.matchesTool(held, com.gregtech.gregtech.api.tool.GTToolType.PINCERS)) {
+                ItemStack out = funnel.retrieveFraction();
+                if (!out.isEmpty() && !player.addItem(out)) player.drop(out, false);
+                com.gregtech.gregtech.api.tool.GTToolHelper.damageForToolClickReturn(held, 10, player);
+            } else if (player.isShiftKeyDown() && held.isEmpty()) {
                 ItemStack out = funnel.retrieve();
                 if (!out.isEmpty() && !player.addItem(out)) player.drop(out, false);
             } else if (!held.isEmpty() && hit.getDirection() == net.minecraft.core.Direction.UP) {

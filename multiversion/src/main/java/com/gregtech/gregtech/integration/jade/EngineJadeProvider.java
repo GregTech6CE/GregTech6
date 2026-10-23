@@ -44,6 +44,7 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
 
         tag.putString(NBT_TYPE, type.name().toLowerCase(Locale.ROOT));
         tag.putString(NBT_NAME, ms.id());
+        tag.putString(NBT_NAME + "_key", block.getDescriptionId());
         tag.putLong(NBT_STORED, be.getEnergyStored(type == com.gregtech.gregtech.api.machine.EngineType.DIESEL
                 ? GregTechTags.Energy.RU : GregTechTags.Energy.KU, null));
         tag.putLong(NBT_OUT_RATE, ms.outputRate());
@@ -99,7 +100,7 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
         if (!data.contains(NBT_TYPE, CompoundTag.TAG_STRING)) return;
 
         String type = data.getString(NBT_TYPE);
-        String name = data.getString(NBT_NAME);
+        Component name = JadeText.translated(data, NBT_NAME + "_key", NBT_NAME);
         long inRate = data.getLong(NBT_IN_RATE);
         String inUnit = data.getString(NBT_IN_UNIT);
         long outRate = data.getLong(NBT_OUT_RATE);
@@ -108,7 +109,8 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
         int eff = data.getInt(NBT_EFF);
 
         tooltip.add(Component.translatable("jade.gt6ce.engine.title", name));
-        tooltip.add(Component.translatable("jade.gt6ce.engine.in", format(inRate), inUnit));
+        tooltip.add(Component.translatable("jade.gt6ce.engine.in", format(inRate), "steam".equals(type)
+                ? Component.translatable("jade.gt6ce.engine.input.steam") : Component.literal(inUnit)));
 
         int pct = capacity > 0 ? (int) Math.min(100, stored * 100 / capacity) : 0;
         boolean inputBuffer = "electric".equals(type) || "flux".equals(type);

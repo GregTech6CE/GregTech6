@@ -129,8 +129,8 @@ public class GTPitFeature extends Feature<NoneFeatureConfiguration> {
                 if (generated > 0) break;
                 continue;
             }
-            level.setBlock(cursor, fill, 2);
-            placed = true;
+            placed |= level.setBlock(cursor, fill, 2);
+            // Original depth counts eligible attempts as well as already-filled positions.
             generated++;
         }
         return placed;

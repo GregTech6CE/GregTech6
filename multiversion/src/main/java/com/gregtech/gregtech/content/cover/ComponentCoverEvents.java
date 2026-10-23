@@ -42,13 +42,26 @@ public final class ComponentCoverEvents {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void use(PlayerInteractEvent.RightClickBlock event) {
         if (!(event.getLevel().getBlockEntity(event.getPos()) instanceof PanelCoverHost host)) return;
-        if (ComponentCoverFallback.fallbackClass(host.coverOwner())
-                && !ComponentCoverFallback.eligible(host.coverOwner())) return;
+        var held = event.getEntity().getItemInHand(event.getHand());
+        boolean crowbar = com.gregtech.gregtech.api.tool.GTToolHelper.matchesTool(held,
+                com.gregtech.gregtech.api.tool.GTToolType.CROWBAR);
         var hit = event.getHitVec();
-        if (CoverItems.isCover(event.getEntity().getItemInHand(event.getHand()))
-                || com.gregtech.gregtech.api.tool.GTToolHelper.matchesTool(event.getEntity().getItemInHand(event.getHand()),
-                        com.gregtech.gregtech.api.tool.GTToolType.CROWBAR))
+        if (CoverItems.isCover(held) || crowbar)
             hit = hit.withDirection(com.gregtech.gregtech.api.tool.ToolInteractions.selectedFace(hit));
+        if (host.coverOwner() instanceof com.gregtech.gregtech.blockentity.misc.PileBlockEntity pile
+                && pile.canAccept(held)) {
+            // Allow the normal pile callback while sneaking, without bypassing protection events.
+//? if >=1.21.1 {
+            /*event.setUseBlock(net.neoforged.neoforge.common.util.TriState.TRUE);
+*///?} else {
+            event.setUseBlock(net.minecraftforge.eventbus.api.Event.Result.ALLOW);
+//?}
+            return;
+        }
+        boolean recoverPileCover = host.coverOwner() instanceof com.gregtech.gregtech.blockentity.misc.PileBlockEntity
+                && crowbar && !host.getCover(hit.getDirection()).isEmpty();
+        if (ComponentCoverFallback.fallbackClass(host.coverOwner())
+                && !ComponentCoverFallback.eligible(host.coverOwner()) && !recoverPileCover) return;
         var result = host instanceof com.gregtech.gregtech.content.logistics.LogisticsCoverHost logistics
                 ? com.gregtech.gregtech.content.logistics.LogisticsCoverInteraction.use(logistics,
                         event.getLevel(), event.getEntity(), event.getHand(), hit.getDirection())

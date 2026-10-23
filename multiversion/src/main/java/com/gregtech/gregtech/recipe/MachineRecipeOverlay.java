@@ -206,8 +206,8 @@ public final class MachineRecipeOverlay {
         FluidStack[] fluidOutputs;
         ItemStack[] outputs;
         try {
-            fluidInputs = fluids(spec.fluidInputs());
-            fluidOutputs = fluids(spec.fluidOutputs());
+            fluidInputs = fluids(spec.fluidInputs(), true);
+            fluidOutputs = fluids(spec.fluidOutputs(), false);
             outputs = outputs(spec.itemOutputs());
         } catch (IllegalArgumentException failure) {
             tally.rejected++;
@@ -254,6 +254,8 @@ public final class MachineRecipeOverlay {
         for (int i = 0; i < fluidOutputs.length; i++) copiedFluidOutputs[i] = fluidOutputs[i].copy();
         var recipe = new Recipe(items, copiedOutputs, null, chances, copiedFluidInputs, copiedFluidOutputs,
                 spec.duration(), com.gregtech.gregtech.data.FuelRecipeMaps.storedEu(map, spec.euPerTick()), spec.special());
+        recipe.withPresenceFluidInputs(java.util.stream.IntStream.range(0, spec.fluidInputs().size())
+                .filter(i -> spec.fluidInputs().get(i).amount() == 0).toArray());
         if (map.addRecipe(recipe, true, false, false, false) == null) tally.rejected++;
         else tally.added++;
     }
@@ -286,7 +288,14 @@ public final class MachineRecipeOverlay {
             itemCounts.add(stack.getCount());
         }
         var fluids = new ArrayList<FluidStack>();
-        for (var fluid : recipe.mFluidInputs) if (fluid != null && !fluid.isEmpty()) fluids.add(fluid);
+        var fluidAmounts = new ArrayList<Integer>();
+        for (int i = 0; i < recipe.mFluidInputs.length; i++) {
+            var fluid = recipe.mFluidInputs[i];
+            if (fluid != null && !fluid.isEmpty()) {
+                fluids.add(fluid);
+                fluidAmounts.add(recipe.isPresenceFluidInput(i) ? 0 : fluid.getAmount());
+            }
+        }
         var outputs = new ArrayList<ItemStack>();
         var chances = new ArrayList<Integer>();
         for (int i = 0; i < recipe.mOutputs.length; i++) {
@@ -303,7 +312,7 @@ public final class MachineRecipeOverlay {
             public int inputItemCount(int index) { return itemCounts.get(index); }
             public int inputFluids() { return fluids.size(); }
             public String inputFluid(int index) { return fluidKey(fluids.get(index)); }
-            public long inputFluidAmount(int index) { return fluids.get(index).getAmount(); }
+            public long inputFluidAmount(int index) { return fluidAmounts.get(index); }
             public int outputItems() { return outputs.size(); }
             public String outputItem(int index) { return BuiltInRegistries.ITEM.getKey(outputs.get(index).getItem()).toString(); }
             public int outputItemCount(int index) { return outputs.get(index).getCount(); }
@@ -345,13 +354,13 @@ public final class MachineRecipeOverlay {
         return stacks;
     }
 
-    private static FluidStack[] fluids(List<FluidComponent> components) {
+    private static FluidStack[] fluids(List<FluidComponent> components, boolean input) {
         var stacks = new FluidStack[components.size()];
         for (int i = 0; i < components.size(); i++) {
             var parsed = ResourceLocation.tryParse(components.get(i).fluid());
             Fluid fluid = parsed == null ? Fluids.EMPTY : BuiltInRegistries.FLUID.get(parsed);
             if (fluid == null || fluid == Fluids.EMPTY) throw new IllegalArgumentException("unknown fluid " + components.get(i).fluid());
-            stacks[i] = new FluidStack(fluid, (int) components.get(i).amount());
+            stacks[i] = new FluidStack(fluid, (int) (input ? Math.max(1, components.get(i).amount()) : components.get(i).amount()));
         }
         return stacks;
     }

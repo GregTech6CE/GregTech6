@@ -110,7 +110,8 @@ public class LockerBlock extends HorizontalDirectionalBlock implements EntityBlo
 //?}
                                  InteractionHand hand, BlockHitResult hit) {
         // A second off-hand callback would immediately swap the armor back.
-        if (hand == net.minecraft.world.InteractionHand.OFF_HAND) return InteractionResult.PASS;
+        if (hand == net.minecraft.world.InteractionHand.OFF_HAND || hit.getDirection() != state.getValue(FACING))
+            return InteractionResult.PASS;
         if (!(level.getBlockEntity(pos) instanceof LockerBlockEntity locker)) return InteractionResult.PASS;
         if (!level.isClientSide) {
             locker.swapArmor(player);

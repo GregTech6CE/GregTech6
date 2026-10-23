@@ -31,6 +31,9 @@ public final class HotFluidFuelCycle {
                     break;
                 }
         if (fuelRecipe == null) {
+            // A configurable map may contain presence-only rows. Reject without purging their fluid.
+            for (var candidate : map.mRecipeList)
+                if (matchesFluid(candidate, hot) && candidate.isPresenceFluidInput(0)) return idleResult;
             hot.setEmpty();
             return idleResult;
         }
@@ -52,6 +55,10 @@ public final class HotFluidFuelCycle {
     }
 
     private static boolean matches(Recipe recipe, FluidTankGT hot) {
+        return matchesFluid(recipe, hot) && !recipe.isPresenceFluidInput(0);
+    }
+
+    private static boolean matchesFluid(Recipe recipe, FluidTankGT hot) {
         return recipe != null && recipe.mEnabled && !recipe.mFakeRecipe && recipe.mInputs.length == 0
                 && recipe.mFluidInputs.length == 1 && !recipe.mFluidInputs[0].isEmpty()
 //? if >=1.21.1 {

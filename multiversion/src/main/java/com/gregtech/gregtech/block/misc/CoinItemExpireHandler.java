@@ -16,7 +16,6 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.event.entity.item.ItemExpireEvent;
@@ -85,7 +84,7 @@ public final class CoinItemExpireHandler {
             if (remaining <= 0) break;
             BlockPos target = origin.offset(offset);
             if (!level.isInWorldBounds(target) || !level.getWorldBorder().isWithinBounds(target)
-                    || !isIrrelevant(level.getBlockState(target)) || !placed.canSurvive(level, target)
+                    || !PilePlacementChecks.canReplaceForExpiry(level.getBlockState(target)) || !placed.canSurvive(level, target)
                     || !level.setBlock(target, placed, Block.UPDATE_ALL)) continue;
             if (level.getBlockEntity(target) instanceof CoinPileBlockEntity pile) {
                 int moved = pile.absorbDroppedCoins(coin.copyWithCount(remaining));
@@ -101,15 +100,5 @@ public final class CoinItemExpireHandler {
         else if (remaining < coin.getCount()) entity.setItem(coin.copyWithCount(remaining));
     }
 
-    /** GT6 WD.irrelevant: air, vine, snow layer, fire, grass/fern or water. */
-    private static boolean isIrrelevant(BlockState state) {
-        return state.isAir() || state.is(Blocks.VINE) || state.is(Blocks.SNOW)
-                || state.is(Blocks.FIRE) || state.is(Blocks.SOUL_FIRE)
-//? if >=1.21.1 {
-                /*|| state.is(Blocks.SHORT_GRASS) || state.is(Blocks.TALL_GRASS)
-*///?} else {
-                || state.is(Blocks.GRASS) || state.is(Blocks.TALL_GRASS)
-//?}
-                || state.is(Blocks.FERN) || state.is(Blocks.LARGE_FERN) || state.is(Blocks.WATER);
-    }
+
 }
