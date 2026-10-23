@@ -155,9 +155,7 @@ public final class GTDrinks {
                 return entry.getKey();
             }
         }
-        Fluid direct = stillFluid(field);
-        if (direct == null) direct = fluidOf(RegisteredFluids.get(field));
-        return direct != null ? direct : byRegistryPath(field);
+        return fluidOf(BottleFluidIdentity.resolve(field));
     }
 
     /** GT6 drink rows whose fluid is not in the port (other mods' fluids, vanilla potion brews). */

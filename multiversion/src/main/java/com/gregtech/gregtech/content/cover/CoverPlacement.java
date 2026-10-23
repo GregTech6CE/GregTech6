@@ -19,6 +19,8 @@ public final class CoverPlacement {
         boolean removing = GTToolHelper.matchesTool(stack, GTToolType.CROWBAR);
         if (!placing && !removing) return false;
         return level.getBlockEntity(pos) instanceof PanelCoverHost host
+                // Loose piles consume plates as contents, never as machine covers.
+                && !(host.coverOwner() instanceof com.gregtech.gregtech.blockentity.misc.PileBlockEntity)
                 && (ComponentCoverFallback.ownClass(host.coverOwner()) || ComponentCoverFallback.eligible(host.coverOwner()))
                 && (placing || host.hasAttachedCovers());
     }

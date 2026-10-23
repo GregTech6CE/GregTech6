@@ -122,7 +122,7 @@ public class GTPitFeature extends Feature<NoneFeatureConfiguration> {
                 if (generated > 0) break;
                 continue;
             }
-            if (state.is(BlockTags.DIRT)) {
+            if (isOriginalDirt(state)) {
                 // GT6 leaves dirt alone when it is the very first block and sits under wood/leaves.
                 if (generated <= 0 && (last.is(BlockTags.LOGS) || last.is(BlockTags.LEAVES))) continue;
             } else if (!hostAllowed(state, generated)) {
@@ -136,6 +136,11 @@ public class GTPitFeature extends Feature<NoneFeatureConfiguration> {
         return placed;
     }
 
+    /** 1.7.10 Blocks.dirt metadata 0/1/2; grass and modern dirt-tag additions are not hosts. */
+    private static boolean isOriginalDirt(BlockState state) {
+        return state.is(Blocks.DIRT) || state.is(Blocks.COARSE_DIRT) || state.is(Blocks.PODZOL);
+    }
+
     /**
      * GT6's host test: sediment (sand, clay, sand ores) is always a host, while rock and gravel only
      * continue a pit that already started.
@@ -143,7 +148,7 @@ public class GTPitFeature extends Feature<NoneFeatureConfiguration> {
     private static boolean hostAllowed(BlockState state, int generated) {
         if (state.is(BlockTags.SAND) || state.is(Blocks.CLAY) || isSandLike(state)) return true;
         if (generated <= 0) return false;
-        return isRock(state) || state.is(Blocks.GRAVEL) || state.is(BlockTags.DIRT);
+        return isRock(state) || state.is(Blocks.GRAVEL) || isOriginalDirt(state);
     }
 
     /** GT6's {@code BlocksGT.oreSand} family — the port keeps its sands as icon set blocks. */

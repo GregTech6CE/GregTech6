@@ -12,6 +12,19 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'bottlecontentsnativetests.vanillabottlesandnativecapabilitypayloadskeeptheiridentity',
+    'bottlefluidresolutiontests.allgeneratedbottlesresolvetheiractualregisteredfluid',
+    'bottlefluidresolutiontests.sixpreviouslywaterbottlesusesourcenamedspriteandwhitetint',
+    'crankdurationaudittests.singlesurvivalclickrunsovertwentysecondsuntilanotherinteraction',
+    'crankdurationaudittests.repeatedclicksdonotcreateastopdeadlineandleavingrangestops',
+    'crankdurationaudittests.creativedistancebypassandremovedoperatorstops',
+    'crankdurationaudittests.multiplayerlastremainingoperatorkeepscrankactive',
+    'crankdurationaudittests.energystartsnexttickandcontinueseverytickpasttwentyseconds',
+
+    'platepilehighlighttests.loosepilesneverselectcovergrid',
+    'platepilehighlighttests.legitimatecoverandtoolgridsremain',
+    'sedimentsurfaceaudittests.pitkeepsgrassandgeneratesbelowit',
+    'sedimentsurfaceaudittests.blacksandkeepsgrassandgeneratesbelowit',
     'spikedeliveryaudittests.thirtysourcevariantitems',
     'spikeconversionaudittests.twentyconversionsmatchonlytheirsourcevariant',
     'coverremovalupdatetests.crowbarremovaldetachesnativeleveroneverythinwireface',
@@ -311,6 +324,8 @@ ORE_SOURCE_CASES = {
 
 
 def expected_namespace(identity):
+    if identity.startswith('crankdurationaudittests.'):
+        return 'gregtech_issue_audit:crank_duration_empty'
     if identity in ORE_SOURCE_CASES:
         return 'gregtech_ore_source_audit:test_empty'
     if identity in COVER_REMOVAL_CASE_NAMESPACES:

@@ -144,6 +144,7 @@ public final class CrankTests {
 
         // GT6 clears mActive once the crank is not turned any more (:74-96); the port's pulse does the
         // same on its scheduled tick.
+        player.discard(); // Original stops once its only operator is no longer alive/present.
         BlockState active = level.getBlockState(crank);
         ((CrankBlock) active.getBlock()).tick(active, level, crank, level.getRandom());
         helper.assertTrue(!level.getBlockState(crank).getValue(CrankBlock.ACTIVE), "the pulse ends");
@@ -170,8 +171,9 @@ public final class CrankTests {
         InteractionResult result = crank(level, crank, player);
         helper.assertTrue(result.consumesAction(), "right-clicking a mounted crank works");
         helper.assertTrue(player.messages.isEmpty(), "the machine takes the packet, so nothing complains");
-        helper.assertTrue(machine.getEnergyTick() == CRANK_RU,
-                "GT6's -divup(8 * 2, 1) = 16 RU packet arrives, got " + machine.getEnergyTick());
+        helper.assertTrue(machine.getEnergyTick() == 0,
+                "GT6 activation only latches; energy begins on server tick, not click");
+        // CrankDurationAuditTests verifies actual scheduled per-tick packet delivery for 25 seconds.
         helper.assertTrue(level.getBestNeighborSignal(mount) == CrankBlock.ACTIVE_SIGNAL,
                 "a mounted crank powers its mount as well");
         helper.succeed();

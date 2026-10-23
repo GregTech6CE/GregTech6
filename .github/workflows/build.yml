@@ -73,6 +73,8 @@ jobs:
           tools.tests.test_delivery_language tools.tests.test_native_layout tools.tests.test_gearbox_item_roots
       - name: Check Reliable EMI grouping resources
         run: python -X utf8 tools/integration/generate_remi_material_groups.py --check
+      - name: Check original sediment worldgen registration
+        run: python -X utf8 tools/integration/check_sediment_worldgen_registration.py
       - name: Build platform and execute shared-core behavior contracts
         env:
           JAVA_HOME: ${{ env.JAVA17_HOME }}

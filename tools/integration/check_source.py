@@ -187,6 +187,8 @@ def main():
     ap.add_argument('--output', type=Path)
     ns = ap.parse_args()
     try:
+        from integration.check_sediment_worldgen_registration import check_source as check_sediment_source
+        check_sediment_source(ns.repo)
         report = check(ns.repo)
     except (ValueError, OSError) as error:
         ap.exit(1, f'{error}\n')
