@@ -1335,9 +1335,15 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     public boolean isEnergyAcceptingFrom(GregTechTags.Tag energyType, @Nullable Direction side, boolean theoretical) {
         if (!isEnergyType(energyType, side, false) || (!theoretical && controlStopped)) return false;
         if (side == null) return true;
-        int mask = auxTag != null && auxTag == energyType
-                ? spec.auxiliaryFaceMask() : faceConfig.energyInputs();
-        return FaceConfig.has(mask, relativeDir(side));
+        return (spec.energyType().equalsIgnoreCase(energyType.getShortName())
+                && FaceConfig.has(faceConfig.energyInputs(), relativeDir(side)))
+                || usesAuxiliaryInput(energyType, side);
+    }
+
+    /** Disjoint faces distinguish two inputs of the same type; unsided calls retain auxiliary priority. */
+    private boolean usesAuxiliaryInput(GregTechTags.Tag energyType, @Nullable Direction side) {
+        return auxTag != null && auxTag == energyType
+                && (side == null || FaceConfig.has(spec.auxiliaryFaceMask(), relativeDir(side)));
     }
 
     @Override
@@ -1350,7 +1356,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
                          long size, long amount, boolean doInject) {
         if (size==0 || size==Long.MIN_VALUE || amount<=0 || !isEnergyAcceptingFrom(energyType, side, false)) return 0;
         long sizeAbs = Math.abs(size);
-        if (auxTag != null && auxTag == energyType) {
+        if (usesAuxiliaryInput(energyType, side)) {
             if (sizeAbs < spec.auxiliaryEnergyMin()) return 0;
             if (sizeAbs > spec.auxiliaryEnergyMax()) {
                 if (doInject) explodeFromOvervoltage(sizeAbs, energyType);
@@ -1391,7 +1397,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     @Override
     public long getEnergyDemanded(GregTechTags.Tag energyType, @Nullable Direction side, long size) {
         if (size==0||size==Long.MIN_VALUE||!isEnergyAcceptingFrom(energyType, side, false)) return 0;
-        if (auxTag != null && auxTag == energyType)
+        if (usesAuxiliaryInput(energyType, side))
             return BasicMachineEnergy.demanded(auxEnergy, spec.auxiliaryEnergyCapacity(), size);
         return BasicMachineEnergy.demanded(mEnergy, inputMaximum(), size);
     }
@@ -1403,19 +1409,19 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     @Override
     public long getEnergySizeInputRecommended(GregTechTags.Tag energyType, @Nullable Direction side) {
-        if (auxTag != null && auxTag == energyType) return spec.auxiliaryEnergyIn();
+        if (usesAuxiliaryInput(energyType, side)) return spec.auxiliaryEnergyIn();
         return spec != null ? spec.energyIn() : 1;
     }
 
     @Override
     public long getEnergySizeInputMin(GregTechTags.Tag energyType, @Nullable Direction side) {
-        if (auxTag != null && auxTag == energyType) return spec.auxiliaryEnergyMin();
+        if (usesAuxiliaryInput(energyType, side)) return spec.auxiliaryEnergyMin();
         return spec != null ? spec.energyInMin() : 1;
     }
 
     @Override
     public long getEnergySizeInputMax(GregTechTags.Tag energyType, @Nullable Direction side) {
-        if (auxTag != null && auxTag == energyType) return spec.auxiliaryEnergyMax();
+        if (usesAuxiliaryInput(energyType, side)) return spec.auxiliaryEnergyMax();
         return spec != null ? inputMaximum() : 1;
     }
 
