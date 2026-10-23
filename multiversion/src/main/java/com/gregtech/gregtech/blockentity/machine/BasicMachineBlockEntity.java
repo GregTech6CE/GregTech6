@@ -77,7 +77,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         @Override public boolean isItemValid(int slot, ItemStack stack) {
             return com.gregtech.gregtech.content.recipe.AutocraftingRecipes.isProgram(stack);
         }
-        @Override protected void onContentsChanged(int slot) { setChanged(); mInventoryChanged = true; }
+        @Override protected void onContentsChanged(int slot) { inventoryChanged(); }
     };
 
 //? if >=1.21.1 {
@@ -226,8 +226,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         int totalSlots = recipeMap.mInputItemsCount + recipeMap.mOutputItemsCount;
         this.itemHandler = new MachineItemHandler(totalSlots, recipeMap.mInputItemsCount) {
             @Override protected void onContentsChanged(int slot) {
-                BasicMachineBlockEntity.this.setChanged();
-                mInventoryChanged = true;
+                inventoryChanged();
             }
         };
         this.tanksInput  = new FluidTankGT[recipeMap.mInputFluidCount];
@@ -1935,6 +1934,12 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         };
     }
     public IItemHandlerModifiable inventory() { return itemHandler; }
+
+    /** Normal handler changes and GUI live-stack merges both invalidate the inventory work state. */
+    public void inventoryChanged() {
+        setChanged();
+        mInventoryChanged = true;
+    }
     public int inputSlots() { return recipeMap != null ? recipeMap.mInputItemsCount : 0; }
     public int outputSlots() { return recipeMap != null ? recipeMap.mOutputItemsCount : 0; }
 

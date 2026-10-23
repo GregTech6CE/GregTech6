@@ -11,8 +11,21 @@ import net.minecraftforge.items.SlotItemHandler;
 
 /** Input slot — items can be freely inserted and extracted by the player. */
 public class SlotInput extends SlotItemHandler {
+    private final Runnable onChanged;
+
     public SlotInput(IItemHandler handler, int index, int x, int y) {
+        this(handler, index, x, y, () -> {});
+    }
+
+    public SlotInput(IItemHandler handler, int index, int x, int y, Runnable onChanged) {
         super(handler, index, x, y);
+        this.onChanged = onChanged;
+    }
+
+    @Override
+    public void setChanged() {
+        super.setChanged();
+        onChanged.run();
     }
 
     @Override

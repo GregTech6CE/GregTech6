@@ -164,7 +164,8 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
 
         for(int i=0;i<count;i++) {
             var point=com.gregtech.gregtech.api.recipe.MachineGuiLayout.item(input,i,count,fluids);
-            addSlot(input?new SlotInput(inv,start+i,point.x(),point.y()):new SlotOutput(inv,start+i,point.x(),point.y()));
+            addSlot(input ? new SlotInput(inv, start + i, point.x(), point.y(), this::inventorySlotChanged)
+                    : new SlotOutput(inv, start + i, point.x(), point.y(), this::inventorySlotChanged));
         }
     }
 
@@ -198,7 +199,15 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
             @Override public boolean mayPlace(ItemStack stack) {
                 return com.gregtech.gregtech.content.recipe.AutocraftingRecipes.isProgram(stack);
             }
+            @Override public void setChanged() {
+                super.setChanged();
+                inventorySlotChanged();
+            }
         });
+    }
+
+    private void inventorySlotChanged() {
+        if (blockEntity != null) blockEntity.inventoryChanged();
     }
 
     private void addPlayerSlots(Inventory playerInv) {
