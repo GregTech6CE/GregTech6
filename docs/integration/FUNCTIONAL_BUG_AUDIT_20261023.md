@@ -82,3 +82,11 @@ Four cases per loader use registered instrument callbacks and real wire/charging
 - Garbage bin/recycler server menus require the live original owner, same level and distance at most8 blocks. Generic/client constructors and extraction policies remain unchanged. Native tests call actual provider/menu validity for near/boundary/far/removed/destroyed/replaced/cross-level cases; packet-driven automatic closure is a separate boundary. No inventory-size normalization or oversized-save truncation: ordinary missing tags were verified not to cause the initially suspected zero-slot defect.
 
 Nine added cases per loader make required selected totals Forge47 / NeoForge43. These patches remain dependent on the exact commit's native build/test results. Later evidence must not be inferred from an earlier green batch.
+
+## Review correction: powder-snow container placement
+
+Adversarial review identified a regression in this audit's earlier builder useOn change: vanilla SolidBucketItem mutates the real context hand despite receiving a copied placement stack. Official1.20.1/1.21.1 server bytecode confirms survival substitutes an empty bucket;1.21.1 creative also assigns the synthetic context stack. This could replace the held wand.
+
+The follow-up handles only the exact vanilla powder-snow bucket/native replacements. It retains the source inventory slot, restores the original wand in finally after the known hand replacement, and commits the returned empty bucket to the depleted source slot only on successful survival placement. Canceled manufactured containers are discarded; creative stock/wear is unchanged. No pre-event hand swap or manual replacement of loader protection/snapshot code. Arbitrary different listener/mod hand replacements are not overwritten; an external default-bucket replacement indistinguishable from vanilla remains a compatibility boundary.
+
+Four additional native tests per loader exercise main/offhand × survival/creative, canceled then accepted placement, full inventory, exact stock/container/wand identity/wear and no loose extras. Required totals are Forge51 / NeoForge47. The earlier90-case green runs do not cover this new special-container correction; the exact follow-up commit must pass its98 selected cases before it is considered verified.

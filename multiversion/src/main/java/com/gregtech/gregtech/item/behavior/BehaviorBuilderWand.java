@@ -72,9 +72,9 @@ public final class BehaviorBuilderWand {
 //?}
 
                     if (!com.gregtech.gregtech.api.tool.GTToolHelper.isUsable(wand)) break placementLoop;
-                    ItemStack source = findSourceBlock(player, clicked);
-                    if (source.isEmpty()) break;   // GT6 runs out of matching blocks and stops the plane
-                    if (!place(level, player, target, side, source, wand, hitX, hitY, hitZ)) continue;
+                    int sourceSlot = findSourceBlock(player, clicked);
+                    if (sourceSlot < 0) break;   // GT6 runs out of matching blocks and stops the plane
+                    if (!place(level, player, target, side, sourceSlot, wand, hitX, hitY, hitZ)) continue;
 //? if >=1.21.1 {
                     /*if (!ManualToolBehaviorAccess.creative(player)) {
 *///?} else {
@@ -111,19 +111,30 @@ public final class BehaviorBuilderWand {
      * item's {@code BlockStateTag} and {@code BlockItem.place} reads it back, so the block test is the
      * one applied here.</p>
      */
-    private static ItemStack findSourceBlock(Player player, BlockState clicked) {
+    private static int findSourceBlock(Player player, BlockState clicked) {
         for (int slot = 35; slot >= 0; slot--) {
             ItemStack candidate = player.getInventory().getItem(slot);
             if (candidate.isEmpty()) continue;
             if (!(candidate.getItem() instanceof BlockItem blockItem)) continue;
-            if (blockItem.getBlock() == clicked.getBlock()) return candidate;
+            if (blockItem.getBlock() == clicked.getBlock()) return slot;
         }
-        return ItemStack.EMPTY;
+        return -1;
+    }
+
+    private static boolean isNativeEmptyBucket(ItemStack stack) {
+        if (stack.getCount() != 1) return false;
+        var bucket = new ItemStack(net.minecraft.world.item.Items.BUCKET);
+//? if >=1.21.1 {
+        /*return ItemStack.isSameItemSameComponents(stack, bucket);
+*///?} else {
+        return ItemStack.isSameItemSameTags(stack, bucket);
+//?}
     }
 
     /** The copied source owns the loader transaction, not the held wand. */
     private static boolean place(Level level, Player player, BlockPos support, Direction side,
-                                 ItemStack source, ItemStack wand, float hitX, float hitY, float hitZ) {
+                                 int sourceSlot, ItemStack wand, float hitX, float hitY, float hitZ) {
+        ItemStack source = player.getInventory().getItem(sourceSlot);
         InteractionHand hand = player.getOffhandItem() == wand ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
         ItemStack copy = source.copy();
         BlockHitResult hit = new BlockHitResult(new Vec3(support.getX() + hitX,
@@ -133,9 +144,38 @@ public final class BehaviorBuilderWand {
         if (!level.hasChunkAt(destination) || !ManualToolBehaviorAccess.mayEdit(level, player, destination)) return false;
         // ItemStack.useOn captures snapshots and returns only after cancellation/rollback.
         // Calling BlockItem.place directly would skip that boundary in onItemUseFirst.
-        InteractionResult result = copy.useOn(use);
-        if (!result.consumesAction()) return false;
-        if (!player.getAbilities().instabuild) source.shrink(Math.max(0, source.getCount() - copy.getCount()));
+        // Vanilla SolidBucketItem writes its container to the real context hand, even though
+        // the placement stack is a copy. Neo also writes the copy there in creative mode.
+        // Do not pre-swap hands: all native interaction/protection callbacks still run normally.
+        boolean solidBucket = source.is(net.minecraft.world.item.Items.POWDER_SNOW_BUCKET)
+                && source.getItem().getClass() == net.minecraft.world.item.SolidBucketItem.class;
+        ItemStack returnedContainer = ItemStack.EMPTY;
+        InteractionResult result;
+        try {
+            result = copy.useOn(use);
+        } finally {
+            ItemStack after = player.getItemInHand(hand);
+            if (solidBucket && after != wand) {
+                if (after == copy) {
+                    player.setItemInHand(hand, wand); // Native Neo creative replacement.
+                } else if (isNativeEmptyBucket(after)) {
+                    returnedContainer = after;
+                    player.setItemInHand(hand, wand);
+                }
+                // Unknown listener/mod replacements are not ours to overwrite or reinterpret.
+            }
+        }
+        if (!result.consumesAction()) return false; // Canceled native container is discarded too.
+        if (!player.getAbilities().instabuild) {
+            source.shrink(Math.max(0, source.getCount() - copy.getCount()));
+            if (!returnedContainer.isEmpty()) {
+                if (source.isEmpty() && player.getInventory().getItem(sourceSlot).isEmpty()) {
+                    player.getInventory().setItem(sourceSlot, returnedContainer);
+                } else if (!player.addItem(returnedContainer)) {
+                    player.drop(returnedContainer, false);
+                }
+            }
+        }
         player.getInventory().setChanged();
         return true;
     }

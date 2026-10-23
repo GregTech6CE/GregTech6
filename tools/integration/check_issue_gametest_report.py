@@ -12,6 +12,11 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'buildercontainertransactiontests.powderbucketsurvivalmainhand',
+    'buildercontainertransactiontests.powderbucketsurvivaloffhand',
+    'buildercontainertransactiontests.powderbucketcreativemainhand',
+    'buildercontainertransactiontests.powderbucketcreativeoffhand',
+
     'reactorcapacityordertests.fluidsensitivefillpreservesdefaultandmapcontracts',
     'reactorcapacityordertests.reactorsteamexpansioncommitswholebatchesandsurvivessaveload',
     'reactorcapacityordertests.reactorexportsoldhotcoolantbeforequeuedcoolingexactlyonce',
