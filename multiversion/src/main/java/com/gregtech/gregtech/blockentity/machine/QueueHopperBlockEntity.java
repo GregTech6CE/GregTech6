@@ -24,6 +24,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -53,7 +54,8 @@ import static net.minecraft.world.level.block.DirectionalBlock.FACING;
 /**
  * GT6 queuehopper block entity ({@code MultiTileEntityQueueHopper}).
  * <p>
- * Strict FIFO queue: slot 0 is input-only, last slot is output-only.
+ * Automated transfers use a strict FIFO queue: slot 0 is input-only, last slot is output-only.
+ * The manual GUI permits organizing every slot independently of that automation policy.
  * Items cascade-shift internally toward the output end.
  * Screwdriver adjusts per-slot capacity (mMode 1-64).
  */
@@ -697,6 +699,23 @@ public class QueueHopperBlockEntity extends BlockEntity implements IItemHandler,
     @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory playerInv, Player player) {
         return new HopperContainerMenu(GTMenuTypes.forSlotCount(invsize()), containerId, playerInv, this) {
+            @Override protected Slot createInventorySlot(IItemHandler handler, int index, int x, int y) {
+                return new InventorySlot(handler, index, x, y) {
+                    @Override public boolean mayPickup(Player viewer) {
+                        return hasItem();
+                    }
+                    @Override public ItemStack remove(int amount) {
+                        // Original manual GUI extraction does not use the automation exit gate.
+                        return amount <= 0 ? ItemStack.EMPTY
+                                : QueueHopperBlockEntity.this.extractItemInternal(index, amount, false);
+                    }
+                    @Override public int getMaxStackSize(ItemStack stack) {
+                        // Forge's default probes automation insertion by clearing/restoring the
+                        // slot: it both dirties the owner and reports zero for non-entry slots.
+                        return Math.min(stack.getMaxStackSize(), handler.getSlotLimit(index));
+                    }
+                };
+            }
             @Override protected void inventorySlotChanged(int index) {
                 QueueHopperBlockEntity.this.setChanged();
                 inventoryChanged = true;

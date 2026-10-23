@@ -12,6 +12,9 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'queuemenupermissiontests.queueguipickupcanextracteveryslot',
+    'queuemenupermissiontests.queueguiquickmovecanextracteveryslot',
+    'queuemenupermissiontests.queueguipickupinsertionandcapacityusemanualslots',
     'machinemenutransactiontests.basicinputandoutputquickmovesnotifyowner',
     'machinemenutransactiontests.autocrafterprogramquickmovesnotifyowner',
     'machinemenutransactiontests.behaviorquickmovesnotifyactualowners',
