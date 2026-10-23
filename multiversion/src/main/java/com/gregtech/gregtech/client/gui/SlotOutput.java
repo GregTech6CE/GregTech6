@@ -11,8 +11,21 @@ import net.minecraftforge.items.SlotItemHandler;
 
 /** Output slot — items can be taken but not placed by the player. */
 public class SlotOutput extends SlotItemHandler {
+    private final Runnable onChanged;
+
     public SlotOutput(IItemHandler handler, int index, int x, int y) {
+        this(handler, index, x, y, () -> {});
+    }
+
+    public SlotOutput(IItemHandler handler, int index, int x, int y, Runnable onChanged) {
         super(handler, index, x, y);
+        this.onChanged = onChanged;
+    }
+
+    @Override
+    public void setChanged() {
+        super.setChanged();
+        onChanged.run();
     }
 
     @Override
@@ -20,7 +33,7 @@ public class SlotOutput extends SlotItemHandler {
         return false;
     }
 
-        @Override
+    @Override
     public boolean mayPickup(net.minecraft.world.entity.player.Player player) {
         return true;
     }

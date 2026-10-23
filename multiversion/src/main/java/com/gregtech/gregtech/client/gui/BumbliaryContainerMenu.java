@@ -142,7 +142,7 @@ public class BumbliaryContainerMenu extends AbstractContainerMenu {
         if (index < machineSlots) {
             // GT6 transferStackInSlot:498-522, machine -> player.
             if (!moveItemStackTo(stack, machineSlots, slots.size(), true)) return ItemStack.EMPTY;
-        } else if (!moveItemStackTo(stack, 0, machineSlots, false)) {
+        } else if (!MachineMenuTransfers.moveToMachine(stack, slots, machineSlots)) {
             // Player -> machine: only the princess and the drone slot accept anything (:360-361).
             return ItemStack.EMPTY;
         }
@@ -179,6 +179,12 @@ public class BumbliaryContainerMenu extends AbstractContainerMenu {
             // plus the royal slot, which the machine's canTakeOutOfSlotGUI decides (:367-369).
             this.canTake = !royal && index != layout.drone() && !contains(layout.drones(), index);
             this.machine = machine;
+        }
+
+        @Override
+        public void setChanged() {
+            super.setChanged();
+            if (machine != null && machine.getLevel() != null && !machine.getLevel().isClientSide) machine.setChanged();
         }
 
         private static boolean contains(int[] slots, int index) {

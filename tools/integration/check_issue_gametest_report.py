@@ -12,6 +12,13 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'machinemenutransactiontests.basicinputandoutputquickmovesnotifyowner',
+    'machinemenutransactiontests.autocrafterprogramquickmovesnotifyowner',
+    'machinemenutransactiontests.behaviorquickmovesnotifyactualowners',
+    'machinemenutransactiontests.bumbliaryquickmovesnotifyowner',
+    'machinemenutransactiontests.advancedbumbliaryquickmovesnotifyowner',
+    'machinemenutransactiontests.behaviorquickmoverejectsexistingoutputmerge',
+    'machinemenutransactiontests.bumbliaryquickmovesrejectexistingoutputmerges',
     'menuslotnotificationtests.drawerquickmovesdirtynativechunk',
     'menuslotnotificationtests.metalchestquickmovesdirtynativechunk',
     'menuslotnotificationtests.safequickmovesdirtynativechunk',

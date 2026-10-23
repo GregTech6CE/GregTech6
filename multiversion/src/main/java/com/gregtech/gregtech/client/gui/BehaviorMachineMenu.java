@@ -50,6 +50,10 @@ public class BehaviorMachineMenu extends AbstractContainerMenu {
                 @Override public boolean mayPlace(ItemStack stack) {
                     return !output && machine.behaviorAllows(index, stack);
                 }
+                @Override public void setChanged() {
+                    super.setChanged();
+                    if (machine.getLevel() != null && !machine.getLevel().isClientSide) machine.setChanged();
+                }
             });
         }
         machineSlots = declaration.items().size();
@@ -97,7 +101,7 @@ public class BehaviorMachineMenu extends AbstractContainerMenu {
         ItemStack original = stack.copy();
         boolean moved = index < machineSlots
                 ? moveItemStackTo(stack, machineSlots, machineSlots + PLAYER_SLOTS, true)
-                : moveItemStackTo(stack, 0, machineSlots, false);
+                : MachineMenuTransfers.moveToMachine(stack, slots, machineSlots);
         if (!moved) return ItemStack.EMPTY;
         if (stack.isEmpty()) slot.setByPlayer(ItemStack.EMPTY);
         else slot.setChanged();
