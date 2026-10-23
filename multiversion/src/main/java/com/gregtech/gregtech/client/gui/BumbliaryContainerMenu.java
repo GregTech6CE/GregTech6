@@ -153,7 +153,11 @@ public class BumbliaryContainerMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return machine == null || !machine.isRemoved();
+        return machine == null || !machine.isRemoved()
+                && machine.getLevel() == player.level()
+                && player.distanceToSqr(machine.getBlockPos().getCenter()) <= 64
+                && player.level().hasChunkAt(machine.getBlockPos())
+                && player.level().getBlockEntity(machine.getBlockPos()) == machine;
     }
 
     /** GT6's {@code Slot_Normal} with its flags ({@code :395-434}). */

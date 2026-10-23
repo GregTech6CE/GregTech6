@@ -732,7 +732,15 @@ public class HopperBlockEntity extends BlockEntity implements IItemHandler, IIte
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory playerInv, Player player) {
-        return new HopperContainerMenu(GTMenuTypes.forSlotCount(invsize()), containerId, playerInv, this);
+        return new HopperContainerMenu(GTMenuTypes.forSlotCount(invsize()), containerId, playerInv, this) {
+            @Override
+            public boolean stillValid(Player viewer) {
+                return !isRemoved() && level != null && viewer.level() == level
+                        && viewer.distanceToSqr(worldPosition.getCenter()) <= 64
+                        && level.hasChunkAt(worldPosition)
+                        && level.getBlockEntity(worldPosition) == HopperBlockEntity.this;
+            }
+        };
     }
 
     // ── NBT ─────────────────────────────────────────────────────────────
