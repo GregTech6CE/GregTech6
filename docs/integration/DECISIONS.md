@@ -1851,3 +1851,12 @@ Sensors null-NBT源登记可合法携带REV，生成器只为这组解析，避�
 - 验证：`:core:check` 通过；Forge 1.20.1 与 NeoForge 1.21.1 强制 `compileJava` 通过；两端 `compileAddonSample` 和 `addonApiClosureCheck` 通过。没有玩法、存档重启或专服验证；没有提交或推送。
 - 导电流体不加接口：GT6 原版 `FL.java:754-766` 只有 `acid`、`plasma`、`magic`、`gas` 四个谓词，`CS.java:1577` 的 `ID_CONDUCTIVE` 是药水效果，没有流体导电判定。`AddonFluids` 保持 `gas`、`acid`、`plasma`、`magic`，需要导电判断的附属按自己的流体名表处理。
 - 样例：`examples/addon-sample` 两端用上第二/启动能量、`anyType()`、一格多选一和前缀条件加排除；`examples/kubejs-sample` 的布局 `match` 改成数组，压印配方加一条 0 mB 水输入作催化剂。两端 `compileAddonSample` 通过。
+
+## 2026-10-23 / gt6-logic 批次 1：传感器源导出与行为机信号输出
+
+- `ProgressSensorSource`、`CompressionSensorSource` 从 `core/src/main` 移到 `core/src/api`，FQCN 不变，进入 SDK。新增 `TemperatureSource`，`temperatureK(side)` 和 `maximumK(side)` 都用 `Direction.ordinal()`。`SensorBlockEntity` 的温度计先问 `TemperatureSource`，再回退坩埚。
+- 行为机声明 `BehaviorMachine.Builder.signalOutput(true)` 后，`BehaviorMachineBlock#isSignalSource` 为真，宿主方块实体实现 `GtSignalSource`。行为实现 `MachineBehavior.gtSignal(context, side)`；未声明时方块实体返回 0，也不改变现有信号网络。信号线仍把结果夹到 `[0, 15 * UNIT]`。
+- `signalOutput` 进入 `BehaviorMachine` 的 equals/hashCode；同一机器类型共用方块实体时按声明区分。
+- 样例：`examples/addon-sample` 两端的 `sample_switch` 声明 `signalOutput(true)`，软锤翻转的 `armed` 标志输出 15 级信号。
+- 新增 `SensorSourceTests.thermometer_reads_temperature_source`，用 GameTest 探针验证温度源读数；行为机信号目前只有声明契约和样例覆盖，尚无运行时 GameTest。
+- 验证：`:core:check` 通过（3m24s）；Forge 1.20.1 与 NeoForge 1.21.1 的 `compileJava`、`compileAddonSample`、`addonApiClosureCheck` 通过（两端 135 个 API 类）；`gregtech_sensor_source` 两端各 8/8 required tests passed。行为/样例命名空间两端各 12/12 通过。先前 `samplepressconsumeseuandemitsnugget` 的样例夹具问题已修：数据包 `press_iron.json` 改用 `IRON_BLOCK`，避开 `onRecipesReady` 已占用的 `IRON_INGOT` 行（覆盖层从 `added 3, rejected 1` 变为 `added 4, rejected 0`）；测试机器下方垫石头，防止底面自动输出把产物丢进空气。首次默认套件在 1536m 堆 OOM，改用 3g + SerialGC 后复跑。未做玩法、专服、存档重启验证。

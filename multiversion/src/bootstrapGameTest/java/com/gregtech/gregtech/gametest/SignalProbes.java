@@ -1,6 +1,7 @@
 package com.gregtech.gregtech.gametest;
 
 import com.gregtech.gregtech.api.mod.GregTechIdentity;
+import com.gregtech.gregtech.api.sensor.TemperatureSource;
 import com.gregtech.gregtech.api.signal.GtSignalReceiver;
 import com.gregtech.gregtech.api.signal.GtSignalSource;
 import net.minecraft.core.BlockPos;
@@ -78,9 +79,11 @@ public final class SignalProbes {
         }
     }
 
-    static final class SignalProbeSourceBlockEntity extends BlockEntity implements GtSignalSource {
+    static final class SignalProbeSourceBlockEntity extends BlockEntity implements GtSignalSource, TemperatureSource {
         long emitted;
         int queriedSide = Integer.MIN_VALUE;
+        long temperature;
+        long maximum;
 
         SignalProbeSourceBlockEntity(BlockPos pos, BlockState state) {
             super(TYPE, pos, state);
@@ -90,6 +93,16 @@ public final class SignalProbes {
         public long gtSignal(int side) {
             queriedSide = side;
             return emitted;
+        }
+
+        @Override
+        public long temperatureK(int side) {
+            return temperature;
+        }
+
+        @Override
+        public long maximumK(int side) {
+            return maximum;
         }
     }
 

@@ -25,6 +25,7 @@ import com.gregtech.gregtech.api.addon.platform.AddonRecipes;
 import com.gregtech.gregtech.api.addon.platform.BehaviorMachineContributor;
 import com.gregtech.gregtech.api.addon.platform.MachineBehavior;
 import com.gregtech.gregtech.api.addon.platform.MachineBehaviorContext;
+import com.gregtech.gregtech.api.signal.GtSignalCarrier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -297,6 +298,7 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
             MachineCasing.builder("sample_switch", "Steel").machineType("sample_switch").tier(1).build())
             .energy(EnergyInput.builder("EU", 32).anyType().build())
             .gui("addon_sample:textures/gui/machine.png")
+            .signalOutput(true)
             .build();
 
     /** Water only from the top. A saved {@code shut} flag refuses the next energy packet. */
@@ -360,6 +362,10 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
         @Override public boolean canInsert(MachineBehaviorContext context, int slot, ItemStack stack) { return false; }
         @Override public boolean canFill(MachineBehaviorContext context, int tank, FluidStack stack) { return false; }
         @Override public void tick(MachineBehaviorContext context) {}
+
+        @Override public long gtSignal(MachineBehaviorContext context, int side) {
+            return context.state().getBoolean("armed") ? 15L * GtSignalCarrier.UNIT : 0;
+        }
 
         @Override public boolean onTool(MachineBehaviorContext context, AddonTool tool, Player player,
                                         InteractionHand hand, MachineFace face) {

@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "scope": "gt6-logic addon API batch 1: export sensor sources and add behavior-machine GT signal output",
+  "branch": "addon/remaining-api-gaps",
+  "base_head": "dd617f146edec6ade8a1e4b6f68d4e84f9a5a27a",
+  "card": "docs/card-plans/active/48-gt6-logic-api-gaps.md batch 1",
+  "mod_version": "0.0.0",
+  "api_version": 0,
+  "jdk_toolchains": {
+    "core": 17,
+    "forge": 17,
+    "neoforge": 21
+  },
+  "core_check": {
+    "command": "./gradlew :core:check --console=plain",
+    "result": "BUILD SUCCESSFUL",
+    "elapsed": "3m 24s",
+    "actionable_tasks": "144 (137 executed, 7 up-to-date)"
+  },
+  "platform_compile": {
+    "forge": {
+      "command": "./gradlew :multiversion:1.20.1-forge:compileJava :multiversion:1.20.1-forge:compileAddonSample :multiversion:1.20.1-forge:addonApiClosureCheck --console=plain",
+      "result": "BUILD SUCCESSFUL",
+      "elapsed": "19s",
+      "api_closure": "Addon API closure passed (forge): 135 API classes"
+    },
+    "neoforge": {
+      "command": "./gradlew :multiversion:1.21.1-neoforge:compileJava :multiversion:1.21.1-neoforge:compileAddonSample :multiversion:1.21.1-neoforge:addonApiClosureCheck --console=plain",
+      "result": "BUILD SUCCESSFUL",
+      "elapsed": "17s",
+      "api_closure": "Addon API closure passed (neoforge): 135 API classes"
+    }
+  },
+  "gametests": {
+    "runtime_parameters": {
+      "heap": "3g",
+      "jvm_args": "-XX:+UseSerialGC",
+      "note": "The first default-namespace Forge run at the default 1536m heap hit OutOfMemoryError during chunk generation and is not counted as a pass."
+    },
+    "sensor_sources": {
+      "namespace": "gregtech_sensor_source",
+      "forge": {
+        "result": "All 8 required tests passed",
+        "log": "work/gt6-logic-batch1-forge-sensor.log",
+        "sha256": "5b821e66bb07b03fc04acf003517c4cb56dd6357a8e742205232ced874005a7d"
+      },
+      "neoforge": {
+        "result": "All 8 required tests passed",
+        "log": "work/gt6-logic-batch1-neoforge-sensor.log",
+        "sha256": "28b4b9d861596ae9c82524e9d744837b10802b20ad01d64cc4fe7282b6c8cd8f"
+      },
+      "covers": [
+        "thermometer_reads_temperature_source"
+      ]
+    },
+    "behavior_and_sample": {
+      "namespace": "gregtech_card16_behavior,gregtech_card11_sample",
+      "required_sample_addon": "-PaddonSample=true",
+      "forge": {
+        "result": "All 12 required tests passed",
+        "log": "work/gt6-logic-batch1-forge-behavior-sample-fixed.log",
+        "sha256": "cd080f465ef4cdd1f38c237de27ea3abac34975fb4038113cc6aac3401a035f2"
+      },
+      "neoforge": {
+        "result": "All 12 required tests passed",
+        "log": "work/gt6-logic-batch1-neoforge-behavior-sample-fixed.log",
+        "sha256": "095b76fb255913fe75cc524503cc418e9482893cc66fa47f612d025b1ad13019"
+      },
+      "initial_failure": {
+        "test": "samplepressconsumeseuandemitsnugget",
+        "both_platforms": true,
+        "message": "press produced a gold nugget",
+        "cause": "The sample data-pack row press_iron.json was rejected by the overlay (added 3, rejected 1) because onRecipesReady already adds an IRON_INGOT row; the test expects GOLD_NUGGET but the machine returns the IRON_INGOT row's output. The sample press also auto-outputs from its bottom face, and the test's bottom neighbor was air, so the product was dropped into the world and the output slot ended empty.",
+        "logs": {
+          "forge": "work/gt6-logic-batch1-forge-behavior-sample.log",
+          "neoforge": "work/gt6-logic-batch1-neoforge-behavior-sample.log"
+        },
+        "batch_1_related": false,
+        "baseline_compared": false
+      },
+      "fix": {
+        "files": [
+          "examples/addon-sample/forge/resources/data/addon_sample/recipes/press_iron.json",
+          "examples/addon-sample/neoforge/resources/data/addon_sample/recipe/press_iron.json",
+          "multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/AddonSampleMachineTests.java"
+        ],
+        "change": "The data-pack row now uses minecraft:iron_block, avoiding the onRecipesReady IRON_INGOT row; the test places stone below the machine so the bottom auto-output cannot drop the product into air.",
+        "result": "Both platforms: All 12 required tests passed"
+      }
+    }
+  },
+  "not_verified": [
+    "gameplay",
+    "dedicated server",
+    "saved-world restart",
+    "behavior-machine signal GameTest (declaration contract and sample compile only)"
+  ]
+}
