@@ -1,0 +1,156 @@
+{
+  "parent": "minecraft:block/block",
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.625,
+        0.625,
+        0.625
+      ]
+    },
+    "ground": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        3,
+        0
+      ],
+      "scale": [
+        0.25,
+        0.25,
+        0.25
+      ]
+    },
+    "fixed": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        75,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        2.5,
+        0
+      ],
+      "scale": [
+        0.375,
+        0.375,
+        0.375
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        0,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    }
+  },
+  "textures": {
+    "down": "gt6ce:block/machines/batteries/lu/128/bottom",
+    "up": "gt6ce:block/machines/batteries/lu/128/top",
+    "north": "gt6ce:block/machines/batteries/lu/128/sides",
+    "south": "gt6ce:block/machines/batteries/lu/128/sides",
+    "west": "gt6ce:block/machines/batteries/lu/128/sides",
+    "east": "gt6ce:block/machines/batteries/lu/128/sides",
+    "particle": "gt6ce:block/machines/batteries/lu/128/top"
+  },
+  "elements": [
+    {
+      "from": [
+        4,
+        0,
+        4
+      ],
+      "to": [
+        12,
+        8,
+        12
+      ],
+      "faces": {
+        "down": {
+          "texture": "#down",
+          "tintindex": 0
+        },
+        "up": {
+          "texture": "#up",
+          "tintindex": 0
+        },
+        "north": {
+          "texture": "#north",
+          "tintindex": 0
+        },
+        "south": {
+          "texture": "#south",
+          "tintindex": 0
+        },
+        "west": {
+          "texture": "#west",
+          "tintindex": 0
+        },
+        "east": {
+          "texture": "#east",
+          "tintindex": 0
+        }
+      }
+    }
+  ]
+}

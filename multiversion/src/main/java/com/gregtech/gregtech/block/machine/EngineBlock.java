@@ -180,19 +180,19 @@ public class EngineBlock extends DirectionalBlock implements EntityBlock, GTMach
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
-        if (engineType == EngineType.ROTATION) return Shapes.block();
+        if (engineType == EngineType.ROTATION || engineType == EngineType.DIESEL) return Shapes.block();
         return SHAPES.getOrDefault(state.getValue(FACING), SHAPES.get(Direction.DOWN));
     }
 
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
-        if (engineType == EngineType.ROTATION) return Shapes.block();
+        if (engineType == EngineType.ROTATION || engineType == EngineType.DIESEL) return Shapes.block();
         return SHAPES.getOrDefault(state.getValue(FACING), SHAPES.get(Direction.DOWN));
     }
 
     @Override
     public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
-        if (engineType == EngineType.STEAM) return 0;
+        if (engineType == EngineType.STEAM || engineType == EngineType.DIESEL) return 0;
         return state.getValue(LIT) ? 10 : 0;
     }
 
@@ -272,12 +272,21 @@ public class EngineBlock extends DirectionalBlock implements EntityBlock, GTMach
         }
 
         BlockEntity be = level.getBlockEntity(pos);
+        if (be instanceof KineticDieselEngineBlockEntity diesel) {
+            if (GTToolHelper.matchesTool(held, GTToolType.PLUNGER)) {
+                if (!level.isClientSide) {
+                    var tank = diesel.exhaustTank().isEmpty() ? diesel.fuelTank() : diesel.exhaustTank();
+                    if (!tank.isEmpty()) { tank.setEmpty(); GTToolHelper.damageForUse(held, 1, player); }
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
+        }
         if (be instanceof EngineBaseBlockEntity engine) {
             // GT6's bipolar rotation engine has a fixed four-side RU input and
             // two-end KU output. Its only facing tool is the wrench; cycling a
             // generic face mask here would consume screwdriver wear but could
             // never change its actual shaft geometry.
-            if (engineType != EngineType.ROTATION && GTToolHelper.isScrewdriver(held)) {
+            if (engineType != EngineType.ROTATION && engineType != EngineType.DIESEL && GTToolHelper.isScrewdriver(held)) {
                 if (!level.isClientSide) {
                     if (engine instanceof com.gregtech.gregtech.blockentity.machine.PistonEngineBlockEntity piston) {
                         piston.cyclePower();
@@ -289,7 +298,7 @@ public class EngineBlock extends DirectionalBlock implements EntityBlock, GTMach
             }
 
             // The rotation engine has no soft-hammer face reset in GT6 either.
-            if (engineType != EngineType.ROTATION && GTToolHelper.isSoftHammer(held)) {
+            if (engineType != EngineType.ROTATION && engineType != EngineType.DIESEL && GTToolHelper.isSoftHammer(held)) {
                 if (!level.isClientSide) {
                     if (engine instanceof KineticSteamEngineBlockEntity steam) {
                         if (steam.isShutdown()) {
@@ -310,7 +319,12 @@ public class EngineBlock extends DirectionalBlock implements EntityBlock, GTMach
             // Magnifying glass: show status for steam engines
             if (GTToolHelper.isMagnifyingGlass(held)) {
                 if (!level.isClientSide) {
-                    if (engine instanceof KineticSteamEngineBlockEntity steam) {
+                    if (engine instanceof KineticDieselEngineBlockEntity diesel) {
+                        player.sendSystemMessage(Component.translatable("jade.gt6ce.engine.diesel.fuel",
+                                com.gregtech.gregtech.api.multiblock.MultiblockTools.tankContent(diesel.fuelTank(), "Empty"), diesel.fuelTank().getCapacity()));
+                        player.sendSystemMessage(Component.translatable("jade.gt6ce.engine.diesel.exhaust",
+                                com.gregtech.gregtech.api.multiblock.MultiblockTools.tankContent(diesel.exhaustTank(), "Empty"), diesel.exhaustTank().getCapacity()));
+                    } else if (engine instanceof KineticSteamEngineBlockEntity steam) {
                         player.sendSystemMessage(
                                 Component.literal(steam.statusDescription()));
                     } else if (engine instanceof com.gregtech.gregtech.blockentity.machine.PistonEngineBlockEntity piston) {

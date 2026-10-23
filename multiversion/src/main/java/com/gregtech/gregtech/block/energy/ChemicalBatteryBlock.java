@@ -1,6 +1,6 @@
 package com.gregtech.gregtech.block.energy;
 
-import com.gregtech.gregtech.content.energy.ChemicalBatterySpec;
+import com.gregtech.gregtech.content.energy.PortableBatterySpec;
 import com.gregtech.gregtech.blockentity.energy.ChemicalBatteryBlockEntity;
 import com.gregtech.gregtech.item.ChemicalBatteryItem;
 import net.minecraft.core.BlockPos;
@@ -18,13 +18,16 @@ import net.minecraft.world.phys.shapes.*;
 import java.util.List;
 
 public final class ChemicalBatteryBlock extends Block implements EntityBlock {
-    private final ChemicalBatterySpec spec;
+    private final PortableBatterySpec spec;
     private final VoxelShape shape;
-    public ChemicalBatteryBlock(ChemicalBatterySpec spec){
+    public ChemicalBatteryBlock(PortableBatterySpec spec){
         super(Properties.of().mapColor(net.minecraft.world.level.material.MapColor.METAL).strength(0.5f,3f).sound(SoundType.METAL).noOcclusion());
         this.spec=spec;shape=Block.box(spec.inset(),0,spec.inset(),16-spec.inset(),spec.height(),16-spec.inset());
     }
-    public ChemicalBatterySpec spec(){return spec;}
+    public PortableBatterySpec spec(){return spec;}
+    @Override public RenderShape getRenderShape(BlockState state) {
+        return spec.barIndicator() ? RenderShape.MODEL : RenderShape.ENTITYBLOCK_ANIMATED;
+    }
 //? if >=1.21.1 {
     /*private net.minecraft.world.InteractionResult interact(BlockState state,Level level,BlockPos pos,Player player,
 *///?} else {
@@ -39,7 +42,7 @@ public final class ChemicalBatteryBlock extends Block implements EntityBlock {
 //?}
             return net.minecraft.world.InteractionResult.PASS;
         if(!level.isClientSide&&level.getBlockEntity(pos) instanceof ChemicalBatteryBlockEntity be) {
-            player.displayClientMessage(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.electric_tool.energy",be.stored(),spec.capacity()),true);
+            player.displayClientMessage(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.portable_battery.energy",be.stored(),spec.capacity(),spec.energyType().getShortName()),true);
 //? if >=1.21.1 {
             /*com.gregtech.gregtech.platform.neoforge.NeoToolBindings.damageForUse(tool,1,player,
 *///?} else {

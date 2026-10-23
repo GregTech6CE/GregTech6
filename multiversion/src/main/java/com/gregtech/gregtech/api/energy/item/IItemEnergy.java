@@ -8,6 +8,9 @@ import net.minecraft.core.BlockPos;
 /** Item charge API (GT6 {@code IItemEnergy}). */
 public interface IItemEnergy {
 
+    /** Apply a fuel-cell empty-shell replacement to the owning slot after an executed transfer. */
+    default ItemStack afterEnergyTransfer(ItemStack stack) { return stack; }
+
     boolean isEnergyType(ItemStack stack, GregTechTags.Tag energyType);
 
     /** Theoretical capability, independent of current charge or free capacity. */

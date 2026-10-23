@@ -9,11 +9,11 @@
       "x": 90
     },
     "facing=down,lit=true,waterlogged=false": {
-      "model": "gt6ce:block/machine/engine/engine_diesel",
+      "model": "gt6ce:block/machine/engine/engine_diesel_active",
       "x": 90
     },
     "facing=down,lit=true,waterlogged=true": {
-      "model": "gt6ce:block/machine/engine/engine_diesel",
+      "model": "gt6ce:block/machine/engine/engine_diesel_active",
       "x": 90
     },
     "facing=up,lit=false,waterlogged=false": {
@@ -25,11 +25,11 @@
       "x": 270
     },
     "facing=up,lit=true,waterlogged=false": {
-      "model": "gt6ce:block/machine/engine/engine_diesel",
+      "model": "gt6ce:block/machine/engine/engine_diesel_active",
       "x": 270
     },
     "facing=up,lit=true,waterlogged=true": {
-      "model": "gt6ce:block/machine/engine/engine_diesel",
+      "model": "gt6ce:block/machine/engine/engine_diesel_active",
       "x": 270
     },
     "facing=north,lit=false,waterlogged=false": {
@@ -39,10 +39,10 @@
       "model": "gt6ce:block/machine/engine/engine_diesel"
     },
     "facing=north,lit=true,waterlogged=false": {
-      "model": "gt6ce:block/machine/engine/engine_diesel"
+      "model": "gt6ce:block/machine/engine/engine_diesel_active"
     },
     "facing=north,lit=true,waterlogged=true": {
-      "model": "gt6ce:block/machine/engine/engine_diesel"
+      "model": "gt6ce:block/machine/engine/engine_diesel_active"
     },
     "facing=south,lit=false,waterlogged=false": {
       "model": "gt6ce:block/machine/engine/engine_diesel",
@@ -53,11 +53,11 @@
       "y": 180
     },
     "facing=south,lit=true,waterlogged=false": {
-      "model": "gt6ce:block/machine/engine/engine_diesel",
+      "model": "gt6ce:block/machine/engine/engine_diesel_active",
       "y": 180
     },
     "facing=south,lit=true,waterlogged=true": {
-      "model": "gt6ce:block/machine/engine/engine_diesel",
+      "model": "gt6ce:block/machine/engine/engine_diesel_active",
       "y": 180
     },
     "facing=west,lit=false,waterlogged=false": {
@@ -69,11 +69,11 @@
       "y": 270
     },
     "facing=west,lit=true,waterlogged=false": {
-      "model": "gt6ce:block/machine/engine/engine_diesel",
+      "model": "gt6ce:block/machine/engine/engine_diesel_active",
       "y": 270
     },
     "facing=west,lit=true,waterlogged=true": {
-      "model": "gt6ce:block/machine/engine/engine_diesel",
+      "model": "gt6ce:block/machine/engine/engine_diesel_active",
       "y": 270
     },
     "facing=east,lit=false,waterlogged=false": {
@@ -85,11 +85,11 @@
       "y": 90
     },
     "facing=east,lit=true,waterlogged=false": {
-      "model": "gt6ce:block/machine/engine/engine_diesel",
+      "model": "gt6ce:block/machine/engine/engine_diesel_active",
       "y": 90
     },
     "facing=east,lit=true,waterlogged=true": {
-      "model": "gt6ce:block/machine/engine/engine_diesel",
+      "model": "gt6ce:block/machine/engine/engine_diesel_active",
       "y": 90
     }
   }

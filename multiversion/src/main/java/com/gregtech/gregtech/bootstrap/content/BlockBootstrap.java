@@ -45,6 +45,8 @@ public record BlockBootstrap() implements InitializationStep {
 
     @Override
     public void run() {
+        com.gregtech.gregtech.registry.GTLegacyEnergyDevices.registerAll();
+        com.gregtech.gregtech.registry.GTItemBarrels.registerAll();
         registerMaterialBlocks();
         registerStoneBlocks();
         registerStoneSlabs();

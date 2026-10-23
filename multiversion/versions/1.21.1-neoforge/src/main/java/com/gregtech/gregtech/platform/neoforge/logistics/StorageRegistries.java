@@ -28,7 +28,7 @@ public final class StorageRegistries {
     public static final java.util.function.Supplier<BlockEntityType<MassStorageBlockEntity>> MASS_STORAGE =
             TYPES.register("mass_storage",
             () -> BlockEntityType.Builder.of(MassStorageBlockEntity::new,
-                    STORAGES.stream().map(java.util.function.Supplier::get).toArray(Block[]::new)).build(null));
+                    java.util.stream.Stream.concat(STORAGES.stream(), com.gregtech.gregtech.registry.GTItemBarrels.ALL.stream()).map(java.util.function.Supplier::get).toArray(Block[]::new)).build(null));
     public static final java.util.function.Supplier<BlockEntityType<LogisticsMassStorageBlockEntity>> LOGISTICS_MASS_STORAGE =
             TYPES.register("logistics_mass_storage",
             () -> BlockEntityType.Builder.of(LogisticsMassStorageBlockEntity::new,

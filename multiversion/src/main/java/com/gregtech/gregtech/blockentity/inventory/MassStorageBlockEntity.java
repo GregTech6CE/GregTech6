@@ -70,6 +70,7 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
     protected MassStorageBlockEntity(BlockEntityType<? extends MassStorageBlockEntity> type,
                                      BlockPos pos, BlockState state) {
         super(type, pos, state);
+        storage.setCapacity(baseCapacity());
     }
 
     public ItemStack template() {
@@ -105,8 +106,12 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
         return (mode & 4) != 0;
     }
 
+    public long baseCapacity() {
+        return getBlockState().getBlock() instanceof com.gregtech.gregtech.block.inventory.MassStorageBlock block ? block.capacity() : CAPACITY;
+    }
+
     public long maximumItems() {
-        return CAPACITY + (emitsOverflow() ? 256 : 0);
+        return baseCapacity() + (emitsOverflow() ? 256 : 0);
     }
 
     public void toggleAutoOutput() {
@@ -322,7 +327,7 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
         if (level == null || level.isClientSide || isPacked()) return;
         if (!inventoryChanged && level.getGameTime() % 100 != 0) return;
         inventoryChanged = false;
-        if (!autoOutput() && (!emitsOverflow() || stored() <= CAPACITY)) return;
+        if (!autoOutput() && (!emitsOverflow() || stored() <= baseCapacity())) return;
         BlockPos below = worldPosition.below();
         if (!level.hasChunkAt(below)) return;
 //? if >=1.21.1 {
@@ -333,7 +338,7 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
 //?}
         if (target == null) return;
         do {
-            int amount = (int) Math.min(64, autoOutput() ? stored() : stored() - CAPACITY);
+            int amount = (int) Math.min(64, autoOutput() ? stored() : stored() - baseCapacity());
             ItemStack offered = extract(amount, true);
             if (offered.isEmpty()) return;
 //? if >=1.21.1 {
@@ -351,7 +356,7 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
 //?}
             if (!returned.isEmpty()) insert(returned, false);
             if (returned.getCount() >= accepted || autoOutput()) return;
-        } while (stored() > CAPACITY);
+        } while (stored() > baseCapacity());
     }
 
 //? if >=1.21.1 {

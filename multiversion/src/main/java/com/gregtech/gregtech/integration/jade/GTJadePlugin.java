@@ -29,6 +29,8 @@ public class GTJadePlugin implements IWailaPlugin {
 
     @Override
     public void register(IWailaCommonRegistration registration) {
+        registration.registerBlockDataProvider(MagicFieldAbsorberJadeProvider.INSTANCE, com.gregtech.gregtech.blockentity.energy.MagicFieldAbsorberBlockEntity.class);
+        registration.registerBlockDataProvider(EnergyBufferJadeProvider.INSTANCE, com.gregtech.gregtech.blockentity.energy.PowerCellBlockEntity.class);
         registration.registerBlockDataProvider(DustFunnelJadeProvider.INSTANCE,
                 com.gregtech.gregtech.blockentity.tool.DustFunnelBlockEntity.class);
         registration.registerBlockDataProvider(TurbineJadeProvider.INSTANCE, com.gregtech.gregtech.blockentity.energy.EnergyNodeBlockEntity.class);
@@ -52,6 +54,8 @@ public class GTJadePlugin implements IWailaPlugin {
 
     @Override
     public void registerClient(IWailaClientRegistration registration) {
+        registration.registerBlockComponent(MagicFieldAbsorberJadeProvider.INSTANCE, com.gregtech.gregtech.block.energy.MagicFieldAbsorberBlock.class);
+        registration.registerBlockComponent(EnergyBufferJadeProvider.INSTANCE, com.gregtech.gregtech.block.energy.PowerCellBlock.class);
         registration.registerBlockComponent(DustFunnelJadeProvider.INSTANCE,
                 com.gregtech.gregtech.block.tool.DustFunnelBlock.class);
         registration.registerBlockComponent(TurbineJadeProvider.INSTANCE, com.gregtech.gregtech.block.energy.EnergyNodeBlock.class);

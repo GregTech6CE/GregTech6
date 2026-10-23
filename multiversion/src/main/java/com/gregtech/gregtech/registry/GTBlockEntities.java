@@ -350,6 +350,7 @@ public final class GTBlockEntities {
                 java.util.List<net.minecraft.world.level.block.Block> blocks = new java.util.ArrayList<>();
                 blocks.add(GTStorage.MASS_STORAGE.get());
                 GTStorage.MASS_STORAGES.forEach(ro -> blocks.add(ro.get()));
+                GTItemBarrels.ALL.forEach(ro -> blocks.add(ro.get()));
                 return BlockEntityType.Builder.of(
                         com.gregtech.gregtech.blockentity.inventory.MassStorageBlockEntity::new,
                         blocks.toArray(new net.minecraft.world.level.block.Block[0])).build(null);
@@ -713,4 +714,22 @@ public final class GTBlockEntities {
     public static final RegistryObject<BlockEntityType<com.gregtech.gregtech.blockentity.energy.ZpmDischargerBlockEntity>> ZPM_DISCHARGER =
             BLOCK_ENTITY_TYPES.register("zpm_discharger", () -> BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.energy.ZpmDischargerBlockEntity::new,GTLasers.ZPM_DISCHARGER_BASIC.get(),GTLasers.ZPM_DISCHARGER_ADVANCED.get(),GTLasers.ZPM_DISCHARGER_ELITE.get()).build(null));
 //?}
+
+    public static final java.util.function.Supplier<BlockEntityType<com.gregtech.gregtech.blockentity.energy.PowerCellBlockEntity>> POWER_CELL =
+//? if >=1.21.1 {
+            /*BLOCK_ENTITIES.register("power_cell", () ->
+*///?} else {
+            BLOCK_ENTITY_TYPES.register("power_cell", () ->
+//?}
+                    BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.energy.PowerCellBlockEntity::new,
+                            GTLegacyEnergyDevices.POWER_CELLS.stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
+
+    public static final java.util.function.Supplier<BlockEntityType<com.gregtech.gregtech.blockentity.energy.MagicFieldAbsorberBlockEntity>> MAGIC_FIELD_ABSORBER =
+//? if >=1.21.1 {
+            /*BLOCK_ENTITIES.register("magic_field_absorber", () ->
+*///?} else {
+            BLOCK_ENTITY_TYPES.register("magic_field_absorber", () ->
+//?}
+                    BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.energy.MagicFieldAbsorberBlockEntity::new,
+                            GTLegacyEnergyDevices.MAGIC_FIELD_ABSORBER.get()).build(null));
 }

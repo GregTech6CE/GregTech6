@@ -43,8 +43,10 @@ public final class MassStorageRenderer<T extends MassStorageBlockEntity> impleme
 
         int numeralColor = be instanceof com.gregtech.gregtech.blockentity.inventory.LogisticsMassStorageBlockEntity
                 ? 0x00FFFF : 0xFFFFFF;
-        SixCellDisplayRenderer.draw(com.gregtech.gregtech.api.sensor.SixCellDisplay.storage(
-                be.stored(), be.CAPACITY, numeralColor), ps, buffer, light);
+        var digits = state.getBlock() instanceof com.gregtech.gregtech.block.inventory.ItemBarrelBlock
+                ? com.gregtech.gregtech.api.sensor.SixCellDisplay.barrel(be.stored(), be.baseCapacity())
+                : com.gregtech.gregtech.api.sensor.SixCellDisplay.storage(be.stored(), be.baseCapacity(), numeralColor);
+        SixCellDisplayRenderer.draw(digits, ps, buffer, light);
         ps.popPose();
     }
 }

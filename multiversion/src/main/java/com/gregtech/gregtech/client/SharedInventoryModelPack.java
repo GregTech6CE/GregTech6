@@ -44,6 +44,13 @@ import java.util.*;
 //?}
 public final class SharedInventoryModelPack extends AbstractPackResources {
     private Map<ResourceLocation, byte[]> resources;
+
+    /** Internal model references remain loaded without appearing as a user-selectable pack. */
+    @Override
+    public boolean isHidden() {
+        return true;
+    }
+
 //? if >=1.21.1 {
     /*public SharedInventoryModelPack(PackLocationInfo info) { super(info); }
 *///?} else {

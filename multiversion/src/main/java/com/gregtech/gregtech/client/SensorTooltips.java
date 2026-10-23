@@ -23,6 +23,8 @@ public final class SensorTooltips {
     private static void addDescription(List<Component> lines, String key) {
         if (CommonBlockTooltips.containsKey(lines, key)) return;
         lines.add(Component.translatable(key).withStyle(ChatFormatting.AQUA));
+        if (key.equals("gt.tooltip.sensor.kilogibblometer"))
+            lines.add(Component.translatable("tooltip.gt6ce.sensor.kilogibblometer.boiler").withStyle(ChatFormatting.GRAY));
         lines.add(Component.translatable("gt.lang.nogui.rightclick.interact").withStyle(ChatFormatting.GOLD));
         for (var tool : List.of("gt.tooltip.sensor.screwdrive.buttons", "gt.tooltip.sensor.screwdrive.display",
                 "gt.tooltip.sensor.screwdrive.modes", "gt.lang.use.monkey.wrench.to.set.input.side"))
