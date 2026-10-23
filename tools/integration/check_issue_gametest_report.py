@@ -12,6 +12,9 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'builderspikevarianttests.spikematerialsskipmismatchedstock',
+    'builderspikevarianttests.spikemodesanddefaultpreserveplacementfacing',
+    'builderspikevarianttests.spikenomatchingidentitypreservesstockandwear',
     'builderorevarianttests.orehostsskipmismatchedstock',
     'builderorevarianttests.orebrokenformskipsmismatchedstock',
     'builderorevarianttests.orenomatchingvariantpreservesinventory',
