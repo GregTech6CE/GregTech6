@@ -12,6 +12,8 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'machineauxiliaryroutingtests.sametypeauxiliaryusesdisjointfacesandconservesbuffers',
+    'machineauxiliaryroutingtests.differenttypeauxiliaryretainstypeandfaceisolation',
     'builderspikevarianttests.spikematerialsskipmismatchedstock',
     'builderspikevarianttests.spikemodesanddefaultpreserveplacementfacing',
     'builderspikevarianttests.spikenomatchingidentitypreservesstockandwear',
