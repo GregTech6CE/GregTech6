@@ -15,7 +15,8 @@ Spec grammar:
   items:  omd:<Mat>:<mU>     OM.dust(material, mU/1000 * U)
           i:<prefix>:<Mat>:<count>
           tag:<N>            selector tag (catalyst)
-  fluids: m:<Mat>:<mB>       material gas/liquid/molten fluid
+  fluids: m:<Mat>:<amount>   legacy producer-dependent material-fluid amount
+          mu:<Mat>:<phase>:<source-U-long>:<up|down>  source-guarded exact material amount
           f:<FLKey>:<mB>     named FL fluid
           w:<mB>             water
 """
@@ -790,6 +791,10 @@ final class {CLASS_NAME} {{
     }}
 }}
 """
+    if SET == "chem":
+        from integration.migrate_alumina_fluid_units import migrate_chemistry
+        content = migrate_chemistry(content, _NativePath(SRC),
+                                    _NativePath(GT6) / "gregapi/data/CS.java")
     with open(OUT, "w", encoding="utf-8") as f:
         f.write(content)
     print(f"[{SET}] translated {parsed_calls} / {total} RM calls -> {len(ok)} recipes "

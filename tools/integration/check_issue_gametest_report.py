@@ -12,6 +12,9 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'aluminafluidunitcontracttests.scaledaluminaroutesuseexactsourceunits',
+    'aluminafluidunitcontracttests.sourceunittokenskeepnativeidentityandlegacysemantics',
+    'aluminafluidquantitytests.specializedaluminausesoriginalfluidcoefficients',
     'materialdecompositionpolicytests.genericelectrolysisrequiresandretainsselectorzero',
     'materialdecompositionpolicytests.unflaggedaluminaandsaltdonotautodecompose',
     'materialdecompositionpolicytests.decompositionmapsfollowexplicitmaterialprocessing',

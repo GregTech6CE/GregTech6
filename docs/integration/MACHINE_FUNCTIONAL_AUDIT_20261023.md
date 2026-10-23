@@ -147,3 +147,29 @@ A second actual-native diagnostic found why ordinary Coal-dust Alumina electroly
 Material fluid preparation now finalizes original createMolten temperature/light metadata from explicit factory provenance before either loader captures native holders. Legacy Cryolite/AlF3/lithium-salt IDs keep their identity and flags; generated/static molten definitions receive material heat and light10. Cryolite is1285K/light10, not300K/light0. Native FluidType and canonical catalog values agree; explicit dedicated temperature/light/viscosity/density overrides remain authoritative. No movement system, state flag, registry renaming or recipe-volume conversion was changed. Public immutable static declaration records remain snapshots; canonical prepared lookups supply runtime metadata. Original phase/amount-per-U and rounding discrepancies in generated chemistry tokens remain a separately bounded follow-up, including current ordinary Alumina fluid quantities14/28 versus original2/4 and fluorine28 versus29. This batch does not claim full chemical quantity parity.
 
 After the fixture correction and selector diagnosis, full local dual builds/core checks,120 source/evidence guards,486 REMI groups,both1009-class package checks and SDK111core/37native checks passed. Actual isolated GameTests passed Forge140 / NeoForge131 (271 total), strict required-case checks passed, and frozen source snapshots matched. The tested tree was f42ff8bae plus tracked diff SHA256 becdd8efb0ed0912c4a6db2388d900587ab63bbfee62bdb6e20a2c0a8dea2502 and the recorded added files. Final policy/selector test SHA2563693ae102ec04f140784b9024173828e870a81da4b9f9f04a459b0b3edd5150e; fluid test549bd252a340c1c7cdb9df87b3b483db86dbfc800a81d74075a9bc80ddf76742. This documentation is added after testing; separate exact-commit GitHub verification remains the merge gate.
+
+## Exact source-unit quantities for specialized Alumina electrolysis
+
+The unchanged-production native baseline passed140 prior Forge cases and failed only the new ordinary-Coal quantity assertion: the accepted, usable Coal3+Alumina10 row consumed14mB Cryolite and28mB Aluminium Fluoride and produced28mB Fluorine. Both original references instead specify2/4/29mB. The chemistry producer had rounded fractional material units before evaluating the expression and discarded the source phase and rounding direction; the old resolver also treated these saved ordinary-liquid identities differently from molten fallbacks.
+
+Only eight existing specialized Alumina rows now use an additive `mu:<material>:<liquid|gas>:<original-U-integer>:<up|down>` token. Original U=648648000 and integer expression order are preserved; conversion uses explicit source phase binding volumes and rounds only the final ratio, with overflow-safe arithmetic. Cryolite/Aluminium Fluoride retain their existing registered fluid identities but use their source144mB/U binding; CO2/Fluorine use1000mB/U. Unsupported bindings/phases, malformed or overflowing amounts and zero resolved volume are rejected. No fluid IDs, work parameters, items, processing permissions or coal-family coverage are changed. Legacy `m`, `f`, `fr`, `w` and the public legacy material-fluid resolver keep their existing behavior; this is not a global chemistry-unit rewrite.
+
+| Existing input form | Cryolite / Aluminium Fluoride input | Fluorine output |
+|---|---:|---:|
+| Coal dust3 or tiny dust27 + Alumina10 | 2 / 4mB | 29mB |
+| Coal block-dust1 (existing port fallback: dust9) + Alumina30 | 6 / 12mB | 87mB |
+| Coal small dust6 + Alumina5 | 1 / 2mB | 14mB |
+
+The producer validates both original references and changes exactly32 fluid tokens across those eight rows, with source hashes and expressions in [the migration provenance](verification/alumina-fluid-unit-migration-20261023.json). Its full-generation hook preserves the migration. The ordinary native baseline remains byte-identical. Two additional cases check actual accepted scaled dust-input rows and exact consumption, native fluid identities, long quantities, rounding and invalid-token rejection, and unchanged legacy-token controls. Scaled rows are tested directly rather than assuming a larger inventory must select the largest eligible recipe. These are registered-map/consumption-plan proofs, not a full survival-chain or every generated recipe audit.
+
+Full local dual builds/core checks (including18 exact-unit assertions),120 source/evidence guards,486 REMI groups,both1011-class package checks and SDK111core/37native checks passed. Actual isolated GameTests passed Forge143 / NeoForge134 (277 total), strict required-case checks passed, and frozen source snapshots matched. Tested tree:b121ded87 plus tracked diff SHA256 b9aef0bf6612df6b08e2736e0e6eb97b7a2f1b6285b80190ce27b653aedb5c19 and the recorded added files. The ordinary baseline test remained d2786ecbfd955c01b277d000407a10a5a3c0dc830f0e8cadba422e28c1a8a0f2; additional contract test3bf5d17e2f2fb4f5d41690bbef32776a478462655dbc9209717c31b0dbcb6aa1. A transient Maven TLS transport failure before initial baseline compilation was retried normally without changing certificate checks. Separate exact-commit GitHub verification remains the merge gate.
+
+Read-only reproduction from repository root (reference checkouts are not shipped):
+
+```sh
+python -B tools/integration/migrate_alumina_fluid_units.py \
+  --source work/references/gregtech6-original \
+  --compare-source work/references/gregtech6-w --check
+```
+
+Operational note: the preceding temperature/light metadata correction, not this quantity-only patch, makes Cryolite genuinely hot to pipe/tank safety checks. Retaining fluid IDs does not make existing low-temperature equipment safe; check its rated temperature before loading or running hot-fluid installations.
