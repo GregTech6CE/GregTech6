@@ -37,7 +37,7 @@ public final class MaterialBerryBushCatalog {
     private static final class Ready {
         private static final List<Variant> VARIANTS = MaterialItemDefinitions.all().stream()
                 .filter(d -> d.prefix() == MaterialPrefix.plantGtBerry)
-                .map(d -> new Variant("bush_" + d.itemId(), "gt6ce:" + d.itemId(),
+                .map(d -> new Variant("bush_" + d.itemId(), d.namespace() + ":" + d.itemId(),
                         d.material().getId(), d.material().getColor() & 0xffffff)).toList();
     }
 

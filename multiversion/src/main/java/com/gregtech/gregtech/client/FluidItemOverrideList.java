@@ -77,7 +77,8 @@ public final class FluidItemOverrideList extends ItemOverrides {
         // "molten_copper", not "molten.copper"; the old lookup missed them all
         // (purple-black missing texture on every molten fluid item).
         String path = RegisteredFluids.sanitizePath(flEntry.registryName());
-        ResourceLocation fluidId = ResourceLocation.fromNamespaceAndPath("gt6ce", path);
+        ResourceLocation fluidId = ResourceLocation.fromNamespaceAndPath(
+                com.gregtech.gregtech.registry.GTFluids.namespace(flEntry), path);
 //? if >=1.21.1 {
         /*Fluid fluid = BuiltInRegistries.FLUID.get(fluidId);
 *///?} else {

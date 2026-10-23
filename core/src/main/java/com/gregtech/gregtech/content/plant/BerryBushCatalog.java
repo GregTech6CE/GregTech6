@@ -56,7 +56,8 @@ public class BerryBushCatalog {
     /** Stable block identity; cotton is the original string-producing default bush. */
     public static String blockPath(String id) {
         if (id == null || id.isEmpty()) return "bush";
-        if (id.startsWith("gt6ce:")) id = id.substring("gt6ce:".length());
+        int colon = id.indexOf(':');
+        if (colon >= 0) id = id.substring(colon + 1);
         if (id.startsWith("plant_gt_berry_")) return "bush_" + id;
         BerryType type = byId(id);
         return type == null ? null : type == DEFAULT ? "bush_cotton" : "bush_" + type.id();
@@ -100,6 +101,9 @@ public class BerryBushCatalog {
     /** Source inventory pass: food/cotton show immature berries, material berries show solid RGB. */
     public static int inventoryColour(BerryType type) {
         if (type == null) return NO_BERRY_COLOUR;
-        return type.id().startsWith("gt6ce:plant_gt_berry_") ? type.berry() : type.immature();
+        String id = type.id();
+        int colon = id.indexOf(':');
+        if (colon >= 0) id = id.substring(colon + 1);
+        return id.startsWith("plant_gt_berry_") ? type.berry() : type.immature();
     }
 }
