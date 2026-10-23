@@ -56,7 +56,8 @@ public final class CoreBehaviorContracts {
         assertions += com.gregtech.gregtech.content.compat.CompatSpecs.check();
         assertions += CanvasSourceContracts.verify();
         coverAttachmentBounds();
-        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 33 groups (Java 17; no game dependencies)");
+        assertions += CoverRenderGeometryContracts.verify();
+        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 34 groups (Java 17; no game dependencies)");
     }
 
     private static void coverAttachmentBounds() {

@@ -15,9 +15,39 @@ final class CoverSurfaceRenderer {
     static void attachment(net.minecraft.world.level.block.entity.BlockEntity owner, Direction side,
                            PoseStack pose, VertexConsumer vertices, TextureAtlasSprite sprite, int light, int color) {
         if (!needsAttachment(owner, side)) return;
-        cuboid(pose, vertices, com.gregtech.gregtech.content.cover.CoverPlateGeometry.plate(side.ordinal()), sprite, light, color, null);
-        // The source holder is a two-pixel rod from the plate to the host's centre, without end caps.
-        cuboid(pose, vertices, com.gregtech.gregtech.content.cover.CoverPlateGeometry.holder(side.ordinal()), sprite, light, color, side.getAxis());
+        int covers = fullCoverMask(owner), hostFaces = hostFaceMask(owner);
+        int faces = com.gregtech.gregtech.content.cover.CoverRenderGeometry.plateFaces(side.ordinal(), covers | hostFaces);
+        // Covers on existing full host faces have no backing cuboid to claim edge volume.
+        cuboid(pose, vertices, com.gregtech.gregtech.content.cover.CoverRenderGeometry.plate(side.ordinal(), covers & ~hostFaces), sprite, light, color, faces);
+        // Source holders inset their lateral faces by PX_OFFSET; physical torch bounds stay unchanged.
+        cuboid(pose, vertices, com.gregtech.gregtech.content.cover.CoverRenderGeometry.holder(side.ordinal()), sprite, light, color, side.getAxis());
+    }
+    private static int fullCoverMask(net.minecraft.world.level.block.entity.BlockEntity owner) {
+        int mask = 0;
+        for (var side : Direction.values()) {
+            var stack = owner instanceof com.gregtech.gregtech.content.cover.PanelCoverHost host
+                    ? host.getCover(side) : net.minecraft.world.item.ItemStack.EMPTY;
+            if (stack.isEmpty() && owner instanceof com.gregtech.gregtech.content.logistics.LogisticsCoverHost logistics)
+                stack = logistics.logisticsCovers().get(side);
+            var id = com.gregtech.gregtech.content.cover.CoverItems.behavior(stack);
+            if (com.gregtech.gregtech.content.cover.CoverRenderGeometry.fullTexture(id)) mask |= 1 << side.ordinal();
+        }
+        return mask;
+    }
+    private static int hostFaceMask(net.minecraft.world.level.block.entity.BlockEntity owner) {
+        int mask = 0;
+        for (var side : Direction.values())
+            if (com.gregtech.gregtech.content.cover.CoverWorldInteraction.isCoverSurface(owner, side))
+                mask |= 1 << side.ordinal();
+        return mask;
+    }
+    private static void cuboid(PoseStack pose, VertexConsumer vertices,
+            com.gregtech.gregtech.content.cover.CoverPlateGeometry.Box box, TextureAtlasSprite sprite,
+            int light, int color, int faces) {
+        ArmRenderHelper.drawCuboid(pose.last().pose(), vertices,
+                (float)box.minX(), (float)box.minY(), (float)box.minZ(),
+                (float)box.maxX(), (float)box.maxY(), (float)box.maxZ(),
+                ((color>>16)&255)/255f, ((color>>8)&255)/255f, (color&255)/255f, sprite, light, faces);
     }
     private static void cuboid(PoseStack pose, VertexConsumer vertices,
             com.gregtech.gregtech.content.cover.CoverPlateGeometry.Box box, TextureAtlasSprite sprite,

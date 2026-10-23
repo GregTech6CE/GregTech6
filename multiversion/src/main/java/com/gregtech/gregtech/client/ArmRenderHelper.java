@@ -69,12 +69,22 @@ final class ArmRenderHelper {
                            TextureAtlasSprite sprite,
                            int packedLight,
                            @javax.annotation.Nullable Direction.Axis skipAxis) {
+        int faces = 63;
+        if (skipAxis != null) for (var side : Direction.values())
+            if (side.getAxis() == skipAxis) faces &= ~(1 << side.ordinal());
+        drawCuboid(mat, vc, x0, y0, z0, x1, y1, z1, r, g, b, sprite, packedLight, faces);
+    }
+
+    /** Render a subset of faces without changing their existing vertex order, UVs or shading. */
+    static void drawCuboid(Matrix4f mat, VertexConsumer vc,
+                           float x0, float y0, float z0, float x1, float y1, float z1,
+                           float r, float g, float b, TextureAtlasSprite sprite, int packedLight, int faces) {
         float u0 = sprite.getU0(), u1 = sprite.getU1();
         float v0 = sprite.getV0(), v1 = sprite.getV1();
         int overlay = OverlayTexture.NO_OVERLAY;
 
         // -Y (down): X→u, Z→vi, CCW from below
-        if (skipAxis != Direction.Axis.Y) {
+        if ((faces & 1 << Direction.DOWN.ordinal()) != 0) {
             float s = shade(0, -1, 0), sr = r * s, sg = g * s, sb = b * s;
             vertex(vc, mat, x0, y0, z0, u(x0,u0,u1), vi(z0,v0,v1), sr,sg,sb, overlay, packedLight,  0,-1, 0);
             vertex(vc, mat, x1, y0, z0, u(x1,u0,u1), vi(z0,v0,v1), sr,sg,sb, overlay, packedLight,  0,-1, 0);
@@ -83,7 +93,7 @@ final class ArmRenderHelper {
         }
 
         // +Y (up): X→u, Z→v, CCW from above
-        if (skipAxis != Direction.Axis.Y) {
+        if ((faces & 1 << Direction.UP.ordinal()) != 0) {
             float s = shade(0, 1, 0), sr = r * s, sg = g * s, sb = b * s;
             vertex(vc, mat, x0, y1, z0, u(x0,u0,u1), v(z0,v0,v1), sr,sg,sb, overlay, packedLight,  0, 1, 0);
             vertex(vc, mat, x0, y1, z1, u(x0,u0,u1), v(z1,v0,v1), sr,sg,sb, overlay, packedLight,  0, 1, 0);
@@ -92,7 +102,7 @@ final class ArmRenderHelper {
         }
 
         // -Z (north): X→u, Y→vi, CCW from -Z
-        if (skipAxis != Direction.Axis.Z) {
+        if ((faces & 1 << Direction.NORTH.ordinal()) != 0) {
             float s = shade(0, 0, -1), sr = r * s, sg = g * s, sb = b * s;
             vertex(vc, mat, x0, y0, z0, u(x0,u0,u1), vi(y0,v0,v1), sr,sg,sb, overlay, packedLight,  0, 0,-1);
             vertex(vc, mat, x0, y1, z0, u(x0,u0,u1), vi(y1,v0,v1), sr,sg,sb, overlay, packedLight,  0, 0,-1);
@@ -101,7 +111,7 @@ final class ArmRenderHelper {
         }
 
         // +Z (south): X→ui, Y→vi, CCW from +Z
-        if (skipAxis != Direction.Axis.Z) {
+        if ((faces & 1 << Direction.SOUTH.ordinal()) != 0) {
             float s = shade(0, 0, 1), sr = r * s, sg = g * s, sb = b * s;
             vertex(vc, mat, x0, y0, z1, ui(x0,u0,u1), vi(y0,v0,v1), sr,sg,sb, overlay, packedLight,  0, 0, 1);
             vertex(vc, mat, x1, y0, z1, ui(x1,u0,u1), vi(y0,v0,v1), sr,sg,sb, overlay, packedLight,  0, 0, 1);
@@ -110,7 +120,7 @@ final class ArmRenderHelper {
         }
 
         // -X (west): Z→u, Y→vi, CCW from -X
-        if (skipAxis != Direction.Axis.X) {
+        if ((faces & 1 << Direction.WEST.ordinal()) != 0) {
             float s = shade(-1, 0, 0), sr = r * s, sg = g * s, sb = b * s;
             vertex(vc, mat, x0, y0, z0, u(z0,u0,u1), vi(y0,v0,v1), sr,sg,sb, overlay, packedLight, -1, 0, 0);
             vertex(vc, mat, x0, y0, z1, u(z1,u0,u1), vi(y0,v0,v1), sr,sg,sb, overlay, packedLight, -1, 0, 0);
@@ -119,7 +129,7 @@ final class ArmRenderHelper {
         }
 
         // +X (east): Z→ui, Y→vi, CCW from +X
-        if (skipAxis != Direction.Axis.X) {
+        if ((faces & 1 << Direction.EAST.ordinal()) != 0) {
             float s = shade(1, 0, 0), sr = r * s, sg = g * s, sb = b * s;
             vertex(vc, mat, x1, y0, z0, ui(z0,u0,u1), vi(y0,v0,v1), sr,sg,sb, overlay, packedLight,  1, 0, 0);
             vertex(vc, mat, x1, y1, z0, ui(z0,u0,u1), vi(y1,v0,v1), sr,sg,sb, overlay, packedLight,  1, 0, 0);
