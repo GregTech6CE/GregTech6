@@ -71,6 +71,9 @@ public final class AddonDeclarationTypeContracts {
                 "an unset behavior io keeps every face open");
         check(faced.equals(BehaviorMachine.builder(casing).energy(energy).gui(GUI).io(io).build())
                 && !faced.equals(open), "behavior io is part of equality");
+        var signaling = BehaviorMachine.builder(casing).energy(energy).gui(GUI).signalOutput(true).build();
+        check(!open.signalOutput() && signaling.signalOutput(), "behavior signal output is declared");
+        check(!signaling.equals(open), "behavior signal output is part of equality");
         fails(() -> BehaviorMachine.builder(casing).energy(energy).gui(GUI)
                 .io(MachineIo.builder().itemAutoOutput(MachineFace.BOTTOM).build()).build(), "automatic face");
         fails(() -> BehaviorMachine.builder(casing).energy(energy).gui(GUI)

@@ -232,10 +232,14 @@ public class SensorBlockEntity extends BlockEntity {
                     maximum = Math.max(Integer.MIN_VALUE,Math.min(Integer.MAX_VALUE,maximum));
                 }
                 case THERMOMETER -> {
+                    if (target instanceof com.gregtech.gregtech.api.sensor.TemperatureSource source) {
+                        newValue = source.temperatureK(facing.ordinal());
+                        maximum = source.maximumK(facing.ordinal());
+                    }
 //? if >=1.21.1 {
-                    /*if (target instanceof com.gregtech.gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity crucible) {
+                    /*else if (target instanceof com.gregtech.gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity crucible) {
 *///?} else {
-                    if (target instanceof com.gregtech.gregtech.blockentity.machine.SmeltingCrucibleBlockEntity crucible) {
+                    else if (target instanceof com.gregtech.gregtech.blockentity.machine.SmeltingCrucibleBlockEntity crucible) {
 //?}
                         newValue = crucible.getTemperature();
                         maximum = crucible.getMeltDownLimitK();
