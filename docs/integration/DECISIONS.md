@@ -1849,3 +1849,5 @@ Sensors null-NBT源登记可合法携带REV，生成器只为这组解析，避�
 - `PrefixCondition` 增加 `METAL`、`MOLTEN`、`ALLOY`；`MOLTEN` 同时接受较早的 `MELTING` 标记。`PrefixDeclaration.excludedMaterials` 在选材后按名字剔除。
 - `AddonFluids` 增加 `acid`、`plasma`、`magic`，转发 `FluidHazards`。
 - 验证：`:core:check` 通过；Forge 1.20.1 与 NeoForge 1.21.1 强制 `compileJava` 通过；两端 `compileAddonSample` 和 `addonApiClosureCheck` 通过。没有玩法、存档重启或专服验证；没有提交或推送。
+- 导电流体不加接口：GT6 原版 `FL.java:754-766` 只有 `acid`、`plasma`、`magic`、`gas` 四个谓词，`CS.java:1577` 的 `ID_CONDUCTIVE` 是药水效果，没有流体导电判定。`AddonFluids` 保持 `gas`、`acid`、`plasma`、`magic`，需要导电判断的附属按自己的流体名表处理。
+- 样例：`examples/addon-sample` 两端用上第二/启动能量、`anyType()`、一格多选一和前缀条件加排除；`examples/kubejs-sample` 的布局 `match` 改成数组，压印配方加一条 0 mB 水输入作催化剂。两端 `compileAddonSample` 通过。
