@@ -26,7 +26,9 @@ public interface BehaviorState {
 
     void setString(String key, String value);
 
+    /** A detached snapshot. Change it locally, then call {@link #setItem} to persist the change. */
     ItemStack item(String key);
 
+    /** Stores a copy and marks the host changed; null/empty removes the stored item. */
     void setItem(String key, ItemStack stack);
 }

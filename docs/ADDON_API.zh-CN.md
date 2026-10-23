@@ -8,6 +8,8 @@ API 版本 **0** 对应模组版本 **0.0.0**，平台是 Forge 1.20.1 与 NeoFo
 
 旧的材料入口和机器入口在已安装的 GT 里仍会加载。它们已弃用，不在 SDK 里。新代码用 `AddonMaterialContributor` 和 `AddonMachineContributor`。
 
+部分 Java public 成员只是为了让 GT6CE 的独立源码集相互初始化：`AddonRuntime`、`AddonPlatform`、`AddonLoader` 的服务绑定、它们的 `Services` 实现，以及 `GregTechAddons.dispatchRecipesReady` 都是启动内部入口，不是附属扩展点。附属不要绑定或替换服务、实现这些服务接口或自行派发初始化回调；应使用 `GregTechAddons.register`、各 contributor，以及文档列出的材料、物品、流体、配方、工具和能源门面。某个启动入口出现在 SDK 里，不代表它属于受支持的附属契约。
+
 ## 目录
 
 - [快速上手](#快速上手)
@@ -54,7 +56,11 @@ API 版本 **0** 对应模组版本 **0.0.0**，平台是 Forge 1.20.1 与 NeoFo
 
 ### 基于 SDK 构建
 
-按目标加载器构建。Forge 运行 `./gradlew :multiversion:1.20.1-forge:addonSdkJar`，得到 `multiversion/versions/1.20.1-forge/build/addon-sdk/gt6ce-addon-sdk-1.20.1-forge-0.0.0.jar`。NeoForge 运行 `./gradlew :multiversion:1.21.1-neoforge:addonSdkJar`，得到 `multiversion/versions/1.21.1-neoforge/build/addon-sdk/gt6ce-addon-sdk-1.21.1-neoforge-0.0.0.jar`。Windows 上把 `./gradlew` 换成 `gradlew.bat`。每个 jar 是该加载器的只供编译 SDK：核心接口加上该加载器的平台接口，用 Mojang 名，并带许可声明（`META-INF/gregtech6`）。没有素材、没有模组描述文件，也没有单独的 `-sources.jar` 或 `-javadoc.jar`；在 IDE 里把 `core/src/api/java` 和 `multiversion/src/api/java` 挂为源码目录即可查看源码和 Javadoc。用 `compileOnly files(...)` 依赖这一个 jar。不要再次打包或 shade 这些类。运行时由已安装的 GT 提供。Forge 生产 jar 是 SRG，不是编译依赖。目前没有 Maven 坐标，从构建目录或 CI 产物取 jar。
+按目标加载器构建。Forge 运行 `./gradlew :multiversion:1.20.1-forge:addonSdk`，得到 `multiversion/versions/1.20.1-forge/build/addon-sdk/gt6ce-addon-sdk-1.20.1-forge-0.0.0.jar` 以及同名的 `-sources.jar`、`-javadoc.jar`。NeoForge 运行 `./gradlew :multiversion:1.21.1-neoforge:addonSdk`，在 `multiversion/versions/1.21.1-neoforge/build/addon-sdk/` 下得到以 `gt6ce-addon-sdk-1.21.1-neoforge-0.0.0` 命名的三份文件。Windows 上把 `./gradlew` 换成 `gradlew.bat`。
+
+SDK 只包含核心接口、该加载器的平台接口和许可声明（`META-INF/gregtech6`），使用 Mojang 名。源码包使用目标节点处理后的 API 源码，加载器导入与编译后的类一致；Javadoc 在 Forge 上使用 Java 17，在 NeoForge 上使用 Java 21。三个包都不包含实现类、素材或模组描述文件。在 IDE 里关联对应的源码包和 Javadoc 包。只有二进制 SDK 用 `compileOnly files(...)` 依赖；不要再次打包或 shade 这些类，运行时由已安装的 GT6CE 提供。Forge 生产 jar 是 SRG，不是编译依赖。目前没有 Maven 坐标，从本地构建目录取文件；CI 是否提供它们取决于工作流有没有收集。
+
+`addonSdkJar`、`addonSdkSourcesJar` 和 `addonSdkJavadocJar` 也可以分别运行；`addonSdkJavadoc` 只生成 HTML。普通 `assemble` 包含二进制 SDK 和源码包，Javadoc 通过 `addonSdk` 或 `addonSdkJavadocJar` 按需生成，避免每次构建模组都重新生成文档。
 
 仓库里的 [`examples/addon-sample/`](../examples/addon-sample/)（`forge/` 和 `neoforge/`）是完整可运行的样例工程，覆盖材料、前缀、世界生成、坩埚反应、配方机器、多方块、功能零件、行为机器、燃料机、管子和压缩气罐。在 GT6CE 仓库根目录下，运行 `./gradlew :multiversion:1.20.1-forge:compileAddonSample :multiversion:1.20.1-forge:addonApiClosureCheck`（或 `1.21.1-neoforge`）即可用 SDK 编译样例并检查没有引用内部类；在 `runClient` 或 `runServer` 时加上 `-PaddonSample=true` 即可把样例放进开发运行。
 
@@ -71,14 +77,14 @@ dependencies {
 }
 ```
 
-附属须声明必需依赖模组 **`gt6ce`**，写 `versionRange="[0.0.0,)"`、`ordering="NONE"`、`side="BOTH"`。Java 包名沿用 `com.gregtech.gregtech.*`，加载器模组 id 以及内容和存档命名空间是 **`gt6ce`**，`gregtech6` 只是保留名（防止被附属用作 `addonId()`）。只要附属注册了材料、前缀、机器、结构零件、管子或储罐，就会新增注册项，客户端和服务端都必须安装（`side="BOTH"`）；纯数据包配方改动（`gt6ce:machine` 与 `gt6ce:machine_removal`）放在服务端数据包里，由原版配方同步发给客户端。Forge 和 NeoForge 各编一份。一个 SDK 不会让 Forge 二进制在 NeoForge 上运行。
+附属须声明必需依赖模组 **`gt6ce`**，写 `versionRange="[0.0.0,0.1.0)"`、`ordering="NONE"`、`side="BOTH"`。Java 包名沿用 `com.gregtech.gregtech.*`，加载器模组 id 以及内容和存档命名空间是 **`gt6ce`**，`gregtech6` 只是保留名（防止被附属用作 `addonId()`）。只要附属注册了材料、前缀、机器、结构零件、管子或储罐，就会新增注册项，客户端和服务端都必须安装（`side="BOTH"`）；纯数据包配方改动（`gt6ce:machine` 与 `gt6ce:machine_removal`）放在服务端数据包里，由原版配方同步发给客户端。Forge 和 NeoForge 各编一份。一个 SDK 不会让 Forge 二进制在 NeoForge 上运行。
 
 ```toml
 # Forge: META-INF/mods.toml
 [[dependencies.my_addon]]
 modId="gt6ce"
 mandatory=true
-versionRange="[0.0.0,)"
+versionRange="[0.0.0,0.1.0)"
 ordering="NONE"
 side="BOTH"
 
@@ -86,7 +92,7 @@ side="BOTH"
 [[dependencies.my_addon]]
 modId="gt6ce"
 type="required"
-versionRange="[0.0.0,)"
+versionRange="[0.0.0,0.1.0)"
 ordering="NONE"
 side="BOTH"
 ```
@@ -131,17 +137,21 @@ import com.gregtech.gregtech.api.addon.platform.AddonRecipes;
 import net.minecraft.world.item.ItemStack;
 
 var map = AddonRecipes.map("gt.recipe.mortar");
-var recipe = new AddonRecipes.Line(
-        new ItemStack[]{new ItemStack(MyItems.MY_ORE.get())},
-        new ItemStack[]{AddonItems.stack("dust", "Copper")},
-        null, null, 20, 16, 0);
+var recipe = AddonRecipes.Line.builder()
+        .itemInputs(new ItemStack(MyItems.MY_ORE.get()))
+        .itemOutputs(AddonItems.stack("dust", "Copper"))
+        .duration(20)
+        .euPerTick(16)
+        .build();
 if (map.add(recipe) == null)
     throw new IllegalStateException("my_addon mortar recipe rejected");
 ```
 
 材料用 `GregTechMaterials`，物品用 `AddonItems`，已有配方表用 `AddonRecipes`。`GTValues`、`GTVoltageTiers`、`BasicMachineEnergy` 和 `MachineWorkCost` 也在 SDK 里。`onRecipesReady` 只在启动时走一次。数据包和 KubeJS 走下面的覆盖层，不会再次调用这个回调。
 
-`AddonRecipes.Line` 有五个构造方法：
+新代码推荐用 `AddonRecipes.Line.builder()` 明确各字段。提供 `itemInputs`、`itemOutputs`、`fluidInputs`、`fluidOutputs`、`duration`、`euPerTick`、`special`、`outputChances`、`keptInputs`、`keptFluidInputs` 和 `presenceFluidInputs`，最后调用 `build()`。栈和下标字段接受可变参数，每次调用替换该字段并立即复制传入数据。不写的字段默认为无输入输出、1 tick、能耗和特殊值为 0、物品输出必定产出、无保留或存在条件。`build()` 使用与构造方法相同的校验；重复使用 Builder 会创建互相独立的行，但不要跨线程共用这个可变 Builder。
+
+`Line` 是不可变快照：构造和读取都会复制数组及每个栈。修改 `line.itemInputs()[0]`、返回的概率数组或最初传入 Builder 的物品，都不会改动配方。数据需要变化时构造新行；替换已注册配方仍走既有移除／注册机制。`Map.find` 不消耗或修改传入的输入列表与栈。原有五个构造方法仍保留：
 
 - `Line(ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs, FluidStack[] fluidOutputs, long duration, long euPerTick, long special)`
 - `Line(..., int[] outputChances)`
@@ -726,6 +736,55 @@ if (level.getBlockEntity(pos) instanceof HeatHandler heat) {
 
 每个 `BehaviorMachine` 从 `addonMachines()` 返回。另外在 `META-INF/services/com.gregtech.gregtech.api.addon.platform.BehaviorMachineContributor` 里列出 `BehaviorMachineContributor`。这个接口在加载器 API 里，因为 Forge 和 NeoForge 的 `FluidStack` 不同。`machineTypes()` 必须盖住这个附属声明的每一种行为机器类型。每放下一台方块实体，GT 调用一次 `create`。缺少工厂时启动失败，并写出附属和机器类型。
 
+#### 统一的存储访问
+
+新行为代码推荐用 `context.inventoryAccess()` 和 `context.fluidAccess()`；`MachineBehaviorContext` 和 `PartContext` 都提供这两个相同接口。它们供宿主内部加工使用，绕过面限制、输入过滤和输入／输出槽位角色，不能当成面向管道的能力。只在当前服务端回调内使用，不要保留视图或上下文供下一 tick 或另一个线程访问。
+
+| 视图 | 操作 | 契约 |
+| --- | --- | --- |
+| `InventoryAccess` | `slots()`、`snapshot(slot)`、`set(slot, stack)`、`extract(slot, amount, simulate)` | 读取和取出结果都是独立栈。`set` 复制传入数据并通知宿主；null 表示清空。它遵循宿主自己的替换规则，不是会检查容量的插入。 |
+| `FluidAccess` | `tanks()`、`snapshot(tank)`、`capacity(tank)`、`fill(tank, stack, simulate)`、`drain(tank, amount, simulate)` | 数量和容量均为 mB。读取和排出结果是独立栈；灌入不修改传入栈，返回实际接受的 mB。 |
+
+零件宿主替换时会按堆叠上限截断，旧机器宿主的 setter 不会；不能把 `set` 当成会报告溢出的插入方法。两个视图都会拒绝越界下标，包括空操作。负的请求量抛异常，零数量的 `extract`、`fill` 和 `drain` 不改动存储；`set` 传入空栈则会清空槽位。`simulate=true` 不写入、不通知宿主。每次调用是单独的操作，不是跨槽位、储罐和能源的事务；模拟成功也不为后续回调预留资源。
+
+```java
+var inventory = context.inventoryAccess();
+ItemStack preview = inventory.extract(0, 1, true); // 不改动第 0 槽
+if (!preview.isEmpty()) {
+    ItemStack taken = inventory.extract(0, 1, false); // 保存实际取出结果
+    // 在这里处理实际返回的物品。
+}
+var tanks = context.fluidAccess();
+FluidStack contents = tanks.snapshot(0); // 修改 contents 不会改变储罐
+int capacityMb = tanks.capacity(0);
+```
+
+为保留已有附属行为，旧读取方法的对象归属不强行改写：机器的 `item(slot)` 可能是内部栈而 `fluid(tank)` 是副本；零件的 `item(slot)` 是副本而 `fluid(tank)` 可能是内部栈。不要直接修改这些旧读取结果来改存储，应通过宿主写入或使用新视图。`BehaviorState.item(key)` 也是副本，修改后用 `setItem(key, stack)` 保存。
+
+#### 明确的能源数量与扣除规则
+
+`MachineBehaviorContext.energyAccess()` 返回 `MachineEnergy`，通过方法名区分从宿主储能转移和由外部负责记账的供能。旧能源方法仍可调用；新视图适配它们，不改变已声明的通道、面、能量包窗口或过载规则。操作立即执行，不提供模拟模式。
+
+| 方法 | 能量归属与返回数量 |
+| --- | --- |
+| `mainInputStored()`、`consumeMainInput(units)` | 读取主输入储能，或一次性扣除请求量并返回是否成功；纯输出机器没有可供该方法读取的主输入。 |
+| `auxiliaryStored(type)`、`consumeAuxiliary(type, units)` | 只访问已有附加输入，未知类型返回 0／false。 |
+| `generate(units)`、`capacity()`、`setCapacity(units)` | 向宿主既有主缓冲加能量或设置容量；`generate` 返回实际接受的能量单位，纯输出机器也适用。 |
+| `emitStored(size, count)`、`emitStoredTo(pos, side, size, count)` | 按实际接受的完整包扣宿主储能并返回 `EnergyTransfer`；`side` 是接收方的世界方向面，null 表示不分面。 |
+| `transferStoredToPart(part, size, count)` | 按绑定零件实际接受的单位扣宿主储能，并设定零件输出；零件在自己的 tick 再向邻居送能。 |
+| `supplyPart(part, type, size, count)` | 提供由宿主缓冲以外的来源负责记账的能量。**不扣宿主储能**，调用者必须在自己的来源中准确扣除返回的接受量。 |
+
+`EnergyTransfer` 提供 `packetSize()`、`requestedPackets()`、`requestedUnits()`、`transferredUnits()`、`completePackets()`、`partialPacketUnits()` 和 `remainingUnits()`。零件缓冲可能只收下半包，因此以 `transferredUnits()` 为准确扣除量，不能只按 `completePackets()` 记账。负包大小保留声明允许的 KU／RU 方向，能量单位数量始终非负。非法负数量／包数和无法表示绝对值的包大小会在转移前被拒绝，请求乘积溢出会抛异常；零包请求不做转移。结果只描述本次调用，不是预留，也不需要再执行一次。
+
+```java
+var transfer = context.energyAccess().emitStored(32, 1); // 需要声明允许这种输出
+long deliveredUnits = transfer.transferredUnits();
+long unsentUnits = transfer.remainingUnits();
+// 宿主已经扣除了 deliveredUnits，不能再 consume 一次。
+```
+
+#### 原有回调与声明
+
 行为不继承 GT 的类。`MachineBehavior` 有三个必须实现的方法——`tick(context)`、`canInsert(context, slot, stack)` 和 `canFill(context, tank, stack)`——并为流体接受、能量接受、开关、拆除、工具、右键和坩埚访问提供可选的默认方法。控制器可以用 `pushToPart(part, type, size, amount)` 往双向零件的内部通道充电（不扣控制器储能），或用 `emit(part, size, amount)` 从控制器储能转入该零件；真正的对外发送发生在零件自己的 tick，未指定零件时 `emit(size, amount)` 仍只走控制器声明的面。`emitTo(target, side, size, amount)` 把同一份声明的输出类型和包上限送到记下的坐标上的方块实体，从它的 `side` 进入，不看声明的面。每有一包被目标收下就扣控制器储能，返回送出了多少包。目标区块没加载、没有方块实体或没有能量接收方时什么都不收，也不保留目标的任何引用。坐标存在 `BehaviorState`（例如三个 `setInt` 键），因为它属于放下的这一块，不属于共用的机器声明。坩埚方法是 `getCrucibleMaterial(context)`、`getCrucibleTemperature(context)`、`getCrucibleContentAmount(context)` 和 `fillMoldAtSide(context, mold, crucibleSide, moldSide)`。默认值是没有材料、零温度并拒绝浇铸，所以现有行为不用改。绑定到这台控制器的功能零件用 `PartContext.crucible()` 一次读出材料、数量和温度。`CrucibleMold` 是 SDK 对 GT6CE 内部模具接口的安全视图；调用 `fillMold(material, amount, temperature, moldSide)`，并从行为自己的熔融材料存储里扣掉返回的数量。行为机器方块实体会把这个回调桥接到普通 GT 模具、坩埚盆或龙头，因此附属不用继承方块实体就能接入原有浇铸交互。`canInsert` 和 `canFill` 另有带面的重载，缺省转到不带面的方法，所以现有行为不用改。管子调用带面的重载。面是 null 表示菜单或不分面的处理器。`MachineBehaviorContext` 读写物品、储罐、能量、开关、进度和世界。`BehaviorState` 按键存 int、long、boolean、字符串和物品。GT 把这张表写进 NBT。行为不接触 `CompoundTag`。没有这个键时读到 0、false、空字符串或空物品。键匹配 `[a-z0-9_.]{1,64}`。字符串最长 256。方块被拆掉时，GT 在 `beforeBreak` 之后丢掉库存物品和状态里的物品。
 
 ```java
@@ -979,19 +1038,23 @@ public final class MySourceBlockEntity extends BlockEntity implements GtSignalSo
 
 `onRecipesReady` 仍不是数据包重载事件。API 版本 0 包含坩埚成分、熔炼目标、合金反应、行为机器坩埚回调、绑定零件的只读坩埚视图，以及行为机器往记下的坐标远程送能，仍会把旧的材料数字 id 读成内置材料，并在这个方块或物品下次保存时写成名字。这一版不承诺固体燃料、能量转换、把内置引擎改到这套模板上、套在菜单之上的 `Screen` 之外的任意 GUI 控件、无线计算零件、坩埚方块、写入坩埚温度或内容物、任意非 GT 物品的熔化登记、坩埚数据包、不经入口就用数据包新建配方表、材料表的数据包重载、一份二进制同时跑两个加载器，或完整旧 GregAPI 替代。1.0 之前仅文档列出的入口作为兼容面。电压等级以[原GT6电压说明](VOLTAGE_TIERS.md)为准。
 
+本次统一补上明确的访问／对象归属契约、不可变配方快照和具名构造，并未增加通用事务式配方执行器、任意数量的能源通道或带版本号的行为状态迁移。既有配方机器模板和主／附加能源缓冲保持原有范围。
+
 ## 版本与兼容性
 
 版本策略、导入变更记录和移除时间表，供查阅。
 
 ### 版本策略
 
-依赖模组 id `gt6ce`，在 `mods.toml` 或 `neoforge.mods.toml` 里写 `versionRange="[0.0.0,)"`。`context.apiVersion()` 当前返回 **0**。本开发基线包含本文列出的全部能力，不要按导入代码的上游版本号屏蔽现有功能。API 号不能代替加载器依赖范围。
+依赖模组 id `gt6ce`，在 `mods.toml` 或 `neoforge.mods.toml` 里写 `versionRange="[0.0.0,0.1.0)"`。`context.apiVersion()` 当前返回 **0**。本开发基线包含本文列出的全部能力，不要按导入代码的上游版本号屏蔽现有功能。API 号不能代替加载器依赖范围。
 
-`gradle.properties` 的 `mod_version` 是 `0.MINOR.PATCH`。`GregTechAddons.API_VERSION` 就是这个 MINOR。PATCH 不改这份 API。1.0 之前，MINOR 升级可以破坏附属调用。破坏一个已经写明的入口，要么等下面的移除表到期，要么在同一版的变更表里写明。只使用未弃用入口时，写 `versionRange="[0.0.0,)"` 即可；如果附属仍依赖移除表里排期删除的旧入口（例如排期 `0.2` 移除的入口），建议把上限锁在该 MINOR 之前（例如 `"[0.0.0,0.2.0)"`），以免升级后因旧入口移除而报错。
+`gradle.properties` 的 `mod_version` 是 `0.MINOR.PATCH`。`GregTechAddons.API_VERSION` 就是这个 MINOR。PATCH 不破坏已写明的 API 契约。1.0 之前，MINOR 升级可以破坏附属调用。破坏一个已经写明的入口，要么等下面的移除表到期，要么在同一版的变更表里写明。针对 API 0 的附属应写 `versionRange="[0.0.0,0.1.0)"`，即便没有使用弃用入口也一样。验证新 MINOR 后才扩大上限，不能因为没用弃用入口就假定兼容所有未来版本。若已验证的范围跨过某个入口的移除版本，应先完成迁移，否则仍把上限锁在移除之前。本开发基线的 API 号和模组版本仍保持 **0** 与 **0.0.0**。
 
 要淘汰的入口同时标 `@Deprecated(since = "0.N", forRemoval = true)` 和 `@AddonApiRemoval(id = "<二进制名>", removeAt = "0.M")`，上面放同一段 Javadoc。`id` 是包名加类型，方法或字段再加 `#成员`。`@deprecated` 用 `{@link}` 或 `{@code}` 写出替代，并写上 `0.M`。`M` 至少是 `N + 2`：在 `0.N` 弃用的入口，`0.(N+1)` 仍然保留。`M` 小于等于当前 MINOR 时构建失败。到期后删掉入口，或把 `removeAt` 改晚并在本文写原因。没有 `forRemoval = true` 的 `@Deprecated` 不在这张表上。
 
 ### 变更
+
+2026-10-24，API **0**／模组 **0.0.0**：新增 `InventoryAccess`、`FluidAccess`、`MachineEnergy`、`EnergyTransfer`、`Line.builder()`，以及匹配的 SDK 源码／Javadoc 包。保留旧上下文方法和配方构造方法。`Line` 的数组读取现在返回防御性副本；先前直接改返回数组的调用者应改为构造新行。配方查询不再把调用者拥有的列表／栈直接交给动态提供者。本次没有迁移既有机器存储格式，也没有更改声明的能源通道。
 
 API **0** 是 GT6CE 的开发基线，包含下表全部能力。下列 1–7 只记录导入代码的上游开发阶段，不是 GT6CE 发版记录，也不是运行时功能门槛。
 

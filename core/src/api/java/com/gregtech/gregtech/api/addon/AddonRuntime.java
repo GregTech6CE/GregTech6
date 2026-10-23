@@ -11,6 +11,7 @@ public final class AddonRuntime {
 
     private AddonRuntime() {}
 
+    /** GT bootstrap only. Addons must not install or replace the host implementation. */
     public static synchronized void bind(Services implementation) {
         if (implementation == null) throw new IllegalArgumentException("addon services");
         if (services != null) throw new IllegalStateException("GregTech addon API is already installed");
@@ -22,7 +23,10 @@ public final class AddonRuntime {
         return services;
     }
 
-    /** Read-only material and prefix queries. Item stacks stay on the platform entry. */
+    /**
+     * GT bootstrap implementation contract, not an addon service-provider extension point.
+     * Addons query {@link GregTechMaterials} and {@link GregTechPrefixes} instead.
+     */
     public interface Services {
         GregTechMaterials.Catalog materials();
 

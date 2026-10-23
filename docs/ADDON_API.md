@@ -8,6 +8,8 @@ API version **0** is mod version **0.0.0** on Forge 1.20.1 and NeoForge 1.21.1. 
 
 Legacy contributors still load from an installed GregTech jar. They are deprecated and are not in the SDK. New code uses `AddonMaterialContributor` and `AddonMachineContributor`.
 
+Some public Java members exist only so GT6CE's separate source sets can initialize one another. `AddonRuntime`, `AddonPlatform` and `AddonLoader` service binding, their `Services` implementations, and `GregTechAddons.dispatchRecipesReady` are bootstrap internals, not addon extension points. Do not bind or replace services, implement those service interfaces, or dispatch the lifecycle from an addon. Use `GregTechAddons.register`, contributors, and the documented material, item, fluid, recipe, tool and energy facades. Being present in the SDK does not make a bootstrap entry part of the supported addon contract.
+
 ## Contents
 
 - [Getting started](#getting-started)
@@ -54,7 +56,11 @@ Set up the dependency and the SDK jar, register the addon, then add recipes.
 
 ### Building against the SDK
 
-Build the loader you are targeting. Forge: `./gradlew :multiversion:1.20.1-forge:addonSdkJar` writes `multiversion/versions/1.20.1-forge/build/addon-sdk/gt6ce-addon-sdk-1.20.1-forge-0.0.0.jar`. NeoForge: `./gradlew :multiversion:1.21.1-neoforge:addonSdkJar` writes `multiversion/versions/1.21.1-neoforge/build/addon-sdk/gt6ce-addon-sdk-1.21.1-neoforge-0.0.0.jar`. On Windows the command is `gradlew.bat`. Each jar is that loader's compile-only SDK: the core API plus that loader's platform API, in Mojang names, plus the license notices (`META-INF/gregtech6`). It has no assets, no mod descriptor, and no `-sources.jar` or `-javadoc.jar`; attach `core/src/api/java` and `multiversion/src/api/java` in your IDE for sources and Javadoc. Use `compileOnly files(...)` on that one jar. Do not shade or bundle these classes. The installed GregTech mod supplies them at runtime. A production Forge jar is SRG and is not the compile dependency. There is no Maven coordinate yet; take the jar from the build or from CI artifacts.
+Build the loader you are targeting. Forge: `./gradlew :multiversion:1.20.1-forge:addonSdk` writes `multiversion/versions/1.20.1-forge/build/addon-sdk/gt6ce-addon-sdk-1.20.1-forge-0.0.0.jar` plus matching `-sources.jar` and `-javadoc.jar` attachments. NeoForge: `./gradlew :multiversion:1.21.1-neoforge:addonSdk` writes the same three artifacts under `multiversion/versions/1.21.1-neoforge/build/addon-sdk/`, named `gt6ce-addon-sdk-1.21.1-neoforge-0.0.0`. On Windows the command is `gradlew.bat`.
+
+Each SDK contains only the core API and that loader's platform API, in Mojang names, plus the license notices (`META-INF/gregtech6`). The source attachment contains the target node's processed API sources, so loader imports match its compiled classes. Javadoc uses Java 17 for Forge and Java 21 for NeoForge. There are no implementation classes, assets or mod descriptors. Attach the matching source and Javadoc jars in the IDE. Use `compileOnly files(...)` on the binary SDK only; do not shade or bundle its classes. The installed GT6CE mod supplies them at runtime. A production Forge jar is SRG and is not the compile dependency. There is no Maven coordinate yet; take the artifacts from the local build. CI includes them only when its workflow collects them.
+
+`addonSdkJar`, `addonSdkSourcesJar` and `addonSdkJavadocJar` can also run independently; `addonSdkJavadoc` generates the HTML without packaging it. Normal `assemble` includes the binary and source SDKs. Javadoc is opt-in through `addonSdk` or `addonSdkJavadocJar`, so ordinary mod builds do not regenerate documentation.
 
 [`examples/addon-sample/`](../examples/addon-sample/) (`forge/` and `neoforge/`) is a complete working sample covering materials, prefixes, worldgen, crucible rows, recipe machines, multiblocks, functional layout parts, behavior machines, fuel generators, pipes and compressed gas tanks. In a GT6CE checkout, compile and verify it with `./gradlew :multiversion:1.20.1-forge:compileAddonSample :multiversion:1.20.1-forge:addonApiClosureCheck` (or `:multiversion:1.21.1-neoforge:...`), and launch a dev game with the sample loaded by passing `-PaddonSample=true` to `runClient` or `runServer`.
 
@@ -71,14 +77,14 @@ dependencies {
 }
 ```
 
-Declare a required loader dependency on **`gt6ce`** with `versionRange="[0.0.0,)"`, `ordering="NONE"` and `side="BOTH"`. Java packages use `com.gregtech.gregtech.*`, the loader mod id and content/save namespace are **`gt6ce`**, and `gregtech6` is reserved only so an addon does not claim it as `addonId()`. Any addon that registers materials, prefixes, machines, layout parts, pipes or tanks adds registry entries and must be installed on both client and server (`side="BOTH"`); datapack-only recipe changes (`gt6ce:machine` and `gt6ce:machine_removal`) live on the server and sync to clients through vanilla recipe sync. Build your addon separately for each loader, using that loader's supported Java/Minecraft toolchain. One SDK jar does not make a Forge addon binary load on NeoForge.
+Declare a required loader dependency on **`gt6ce`** with `versionRange="[0.0.0,0.1.0)"`, `ordering="NONE"` and `side="BOTH"`. Java packages use `com.gregtech.gregtech.*`, the loader mod id and content/save namespace are **`gt6ce`**, and `gregtech6` is reserved only so an addon does not claim it as `addonId()`. Any addon that registers materials, prefixes, machines, layout parts, pipes or tanks adds registry entries and must be installed on both client and server (`side="BOTH"`); datapack-only recipe changes (`gt6ce:machine` and `gt6ce:machine_removal`) live on the server and sync to clients through vanilla recipe sync. Build your addon separately for each loader, using that loader's supported Java/Minecraft toolchain. One SDK jar does not make a Forge addon binary load on NeoForge.
 
 ```toml
 # Forge: META-INF/mods.toml
 [[dependencies.my_addon]]
 modId="gt6ce"
 mandatory=true
-versionRange="[0.0.0,)"
+versionRange="[0.0.0,0.1.0)"
 ordering="NONE"
 side="BOTH"
 
@@ -86,7 +92,7 @@ side="BOTH"
 [[dependencies.my_addon]]
 modId="gt6ce"
 type="required"
-versionRange="[0.0.0,)"
+versionRange="[0.0.0,0.1.0)"
 ordering="NONE"
 side="BOTH"
 ```
@@ -132,17 +138,21 @@ import com.gregtech.gregtech.api.addon.platform.AddonRecipes;
 import net.minecraft.world.item.ItemStack;
 
 var map = AddonRecipes.map("gt.recipe.mortar");
-var recipe = new AddonRecipes.Line(
-        new ItemStack[]{new ItemStack(MyItems.MY_ORE.get())},
-        new ItemStack[]{AddonItems.stack("dust", "Copper")},
-        null, null, 20, 16, 0);
+var recipe = AddonRecipes.Line.builder()
+        .itemInputs(new ItemStack(MyItems.MY_ORE.get()))
+        .itemOutputs(AddonItems.stack("dust", "Copper"))
+        .duration(20)
+        .euPerTick(16)
+        .build();
 if (map.add(recipe) == null)
     throw new IllegalStateException("my_addon mortar recipe rejected");
 ```
 
 This uses the existing GT recipe system, not a parallel addon recipe registry. Choose inputs/outputs and power/duration appropriate for your addon. New rows are available to the existing machine recipe lookup and viewers; overlapping inputs retain that map's original precedence rules. `onRecipesReady` runs once at startup. Datapack and KubeJS changes use the overlay below; they do not call the addon callback again.
 
-`AddonRecipes.Line` has five constructors:
+Prefer `AddonRecipes.Line.builder()` for named fields. It offers `itemInputs`, `itemOutputs`, `fluidInputs`, `fluidOutputs`, `duration`, `euPerTick`, `special`, `outputChances`, `keptInputs`, `keptFluidInputs` and `presenceFluidInputs`, followed by `build()`. Stack and index setters accept varargs, replace that field, and copy their arguments immediately. Omitted fields mean no inputs or outputs, one tick, zero power/special value, certain item outputs, and no kept/presence inputs. `build()` applies the same validation as the constructors. Reusing a builder creates independent rows; do not share its mutable builder between threads.
+
+`Line` is an immutable snapshot: construction and accessors copy every array and stack. Editing `line.itemInputs()[0]`, a returned chance array or the original builder input does not edit the recipe. Construct a new row to express changed data; replacing a registered recipe still uses the existing removal/registration mechanisms. `Map.find` does not consume or modify the supplied input lists or stacks. The five existing constructors remain available:
 
 - `Line(ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs, FluidStack[] fluidOutputs, long duration, long euPerTick, long special)`
 - `Line(..., int[] outputChances)`
@@ -727,7 +737,56 @@ The merged fields go through the canonical `BasicMachineSpec` constructor. A sec
 
 Return each `BehaviorMachine` from `addonMachines()`. Also list a `BehaviorMachineContributor` in `META-INF/services/com.gregtech.gregtech.api.addon.platform.BehaviorMachineContributor`. That interface lives in the loader API because `FluidStack` differs between Forge and NeoForge. `machineTypes()` must include every behavior machine type this addon declares. GregTech calls `create` once for each placed block entity. A missing factory fails startup and names the addon and the machine type.
 
-The behavior does not extend a GregTech class. `MachineBehavior` requires three methods—`tick(context)`, `canInsert(context, slot, stack)` and `canFill(context, tank, stack)`—and provides optional default methods for fluid acceptance, energy acceptance, toggles, breaking, tools, use and crucible access. A controller may charge a two-way part through `pushToPart(part, type, size, amount)` (this does not spend the controller's stored energy), or move its own stored energy into one with `emit(part, size, amount)`. The neighbor-facing send happens on the part's own tick; `emit(size, amount)` without a part still uses only the controller's declared faces. `emitTo(target, side, size, amount)` sends the same declared output type and packet limits to a block entity at a saved coordinate, entering it through `side`; the declared faces are not used. It spends stored energy for each packet the target accepts and returns how many left. A target in an unloaded chunk, without a block entity, or with no energy receiver takes nothing, and nothing of the target is kept. Keep the coordinate in `BehaviorState` (for example three `setInt` keys), because it belongs to the placed block and not to the shared machine declaration. The crucible methods are `getCrucibleMaterial(context)`, `getCrucibleTemperature(context)`, `getCrucibleContentAmount(context)` and `fillMoldAtSide(context, mold, crucibleSide, moldSide)`. Their defaults report no material, zero and a refused pour, so an existing behavior keeps working. A functional part bound to that controller reads the material, amount and temperature together through `PartContext.crucible()`. `CrucibleMold` is the SDK-safe target view of GT6CE's internal mold interface; call `fillMold(material, amount, temperature, moldSide)` and subtract the returned amount from the behavior's own molten storage. Behavior block entities bridge that callback to the normal GT mold, basin or faucet, so existing mold interactions work without an addon subclassing a block entity. `canInsert` and `canFill` also have a face overload. It defaults to the method without a face, so an existing behavior keeps working. A pipe calls the face overload. A null face is the menu or an unsided handler. `MachineBehaviorContext` reads and writes items, tanks, energy, toggles, progress and the world. `BehaviorState` stores int, long, boolean, string and item values by key. GregTech writes that map to NBT. The behavior does not touch `CompoundTag`. A missing key reads as zero, false, an empty string or an empty item. Keys match `[a-z0-9_.]{1,64}`. Strings are at most 256 characters. GregTech drops inventory items and state items when the block breaks, after `beforeBreak`.
+#### Unified storage access
+
+New behavior code should use `context.inventoryAccess()` and `context.fluidAccess()`. Both `MachineBehaviorContext` and `PartContext` expose these same interfaces. They are host-owned processing views, not sided pipe capabilities: processing bypasses face, insertion-filter and input/output-role restrictions. Use them only during the current server callback, and never retain a view or context for a later tick or another thread.
+
+| View | Operations | Contract |
+| --- | --- | --- |
+| `InventoryAccess` | `slots()`, `snapshot(slot)`, `set(slot, stack)`, `extract(slot, amount, simulate)` | Reads and extraction results are detached stacks. `set` copies its argument and notifies the host; null means empty. It follows the host-specific replacement policy, not capacity-checked insertion. |
+| `FluidAccess` | `tanks()`, `snapshot(tank)`, `capacity(tank)`, `fill(tank, stack, simulate)`, `drain(tank, amount, simulate)` | Amounts/capacities are mB. Read/drain results are detached. Fill does not change its argument and returns accepted mB. |
+
+Part-host replacement clamps to its stack limit; the legacy machine-host setter does not. Do not treat `set` as an insertion that reports overflow. Both views reject invalid indexes, including empty operations. Negative requested amounts throw; zero-amount `extract`, `fill` and `drain` do nothing. Setting an empty stack clears the slot. `simulate=true` does not change storage or notify the host. Calls are individual operations, not a transaction across slots, tanks or energy; a successful simulation does not reserve resources for a later callback.
+
+```java
+var inventory = context.inventoryAccess();
+ItemStack preview = inventory.extract(0, 1, true); // leaves slot 0 unchanged
+if (!preview.isEmpty()) {
+    ItemStack taken = inventory.extract(0, 1, false); // persists the removal
+    // Process the actual returned stack here.
+}
+var tanks = context.fluidAccess();
+FluidStack contents = tanks.snapshot(0); // editing contents never changes the tank
+int capacityMb = tanks.capacity(0);
+```
+
+Legacy reads retain their original ownership for existing addons: machine `item(slot)` can be a live stack while machine `fluid(tank)` is detached; part `item(slot)` is detached while part `fluid(tank)` can be live. Never modify those legacy results to change storage; write through the host or use the new views. `BehaviorState.item(key)` is also detached; persist a changed copy with `setItem(key, stack)`.
+
+#### Explicit energy accounting
+
+`MachineBehaviorContext.energyAccess()` returns `MachineEnergy`. Its names distinguish owned-buffer transfers from externally accounted supplies. Existing energy methods remain callable; the new view adapts them without changing declared channels, faces, packet windows or overload behavior. It executes immediately and has no simulation mode.
+
+| Method | Ownership and returned quantity |
+| --- | --- |
+| `mainInputStored()`, `consumeMainInput(units)` | Read the main input or atomically spend the requested units; consumption returns success. An output-only machine has no main input to read. |
+| `auxiliaryStored(type)`, `consumeAuxiliary(type, units)` | Address the existing auxiliary input only; unknown types return zero / false. |
+| `generate(units)`, `capacity()`, `setCapacity(units)` | Add to or configure the host's existing main buffer. `generate` returns accepted units, including on output-only machines. |
+| `emitStored(size, count)`, `emitStoredTo(pos, side, size, count)` | Debit the host for accepted whole packets. Return `EnergyTransfer`; `side` is the receiving block's world-facing side, or null for unsided. |
+| `transferStoredToPart(part, size, count)` | Debit the host for units accepted by a bound part and arm its output. The part emits to neighbors on its own tick. |
+| `supplyPart(part, type, size, count)` | Supply energy owned outside the host buffer. This does **not** debit the host; the caller must account for exactly the accepted units in its own source. |
+
+`EnergyTransfer` reports `packetSize()`, `requestedPackets()`, `requestedUnits()`, `transferredUnits()`, `completePackets()`, `partialPacketUnits()` and `remainingUnits()`. Part buffers can accept part of a packet, so `transferredUnits()` is authoritative; do not account only `completePackets()`. Negative packet sizes retain the declared KU/RU direction; unit quantities remain nonnegative. Invalid negative unit/count requests and unrepresentable packet magnitudes are rejected before transfer; overflowing requests throw. Zero packets is a no-op. The result describes that call, not a reservation or a second operation to execute.
+
+```java
+var transfer = context.energyAccess().emitStored(32, 1); // requires compatible declared output
+long deliveredUnits = transfer.transferredUnits();
+long unsentUnits = transfer.remainingUnits();
+// The host already debited deliveredUnits. Do not consume it again.
+```
+
+#### Existing callbacks and declarations
+
+The behavior does not extend a GregTech class. `MachineBehavior` requires three methods—`tick(context)`, `canInsert(context, slot, stack)` and `canFill(context, tank, stack)`—and provides optional default methods for fluid acceptance, energy acceptance, toggles, breaking, tools, use and crucible access. A controller may charge a two-way part through `pushToPart(part, type, size, amount)` (this does not spend the controller's stored energy), or move its own stored energy into one with `emit(part, size, amount)`. The neighbor-facing send happens on the part's own tick; `emit(size, amount)` without a part still uses only the controller's declared faces. `emitTo(target, side, size, amount)` sends the same declared output type and packet limits to a block entity at a saved coordinate, entering it through `side`; the declared faces are not used. It spends stored energy for each packet the target accepts and returns the number of accepted packets, not the unsent count. A target in an unloaded chunk, without a block entity, or with no energy receiver takes nothing, and nothing of the target is kept. Keep the coordinate in `BehaviorState` (for example three `setInt` keys), because it belongs to the placed block and not to the shared machine declaration. The crucible methods are `getCrucibleMaterial(context)`, `getCrucibleTemperature(context)`, `getCrucibleContentAmount(context)` and `fillMoldAtSide(context, mold, crucibleSide, moldSide)`. Their defaults report no material, zero and a refused pour, so an existing behavior keeps working. A functional part bound to that controller reads the material, amount and temperature together through `PartContext.crucible()`. `CrucibleMold` is the SDK-safe target view of GT6CE's internal mold interface; call `fillMold(material, amount, temperature, moldSide)` and subtract the returned amount from the behavior's own molten storage. Behavior block entities bridge that callback to the normal GT mold, basin or faucet, so existing mold interactions work without an addon subclassing a block entity. `canInsert` and `canFill` also have a face overload. It defaults to the method without a face, so an existing behavior keeps working. A pipe calls the face overload. A null face is the menu or an unsided handler. `MachineBehaviorContext` reads and writes items, tanks, energy, toggles, progress and the world. `BehaviorState` stores int, long, boolean, string and item values by key. GregTech writes that map to NBT. The behavior does not touch `CompoundTag`. A missing key reads as zero, false, an empty string or an empty item. Keys match `[a-z0-9_.]{1,64}`. Strings are at most 256 characters. GregTech drops inventory items and state items when the block breaks, after `beforeBreak`.
 
 ```java
 public List<AddonMachine> addonMachines() {
@@ -995,19 +1054,23 @@ These stay closed. `BasicMachineBlock` and `BasicMachineBlockEntity` are GregTec
 
 API version 0 includes crucible compositions, smelting targets and alloy rows, behavior-machine crucible callbacks, a read-only crucible view for bound parts, remote energy emission from a behavior machine to a saved coordinate, and still reads an old numeric material id as a built-in material, writing the name the next time that block or item is saved. It does **not** promise solid fuel, energy conversion, moving the built-in engines onto this template, arbitrary GUI widgets beyond a full `Screen` hosted over the menu, wireless compute parts, crucible blocks, writing a crucible's temperature or contents, melting an arbitrary non-GregTech item, datapack crucible rows, datapack-created recipe maps without a contributor, datapack reloads of the material table, one binary for both loaders, or a complete old GregAPI replacement. Only the documented entries are the compatibility surface. Use [the voltage guide](VOLTAGE_TIERS.md) rather than GT5/GTCE tier labels.
 
+This unification adds explicit access/ownership contracts, immutable recipe snapshots and named construction. It does not add a general transactional recipe executor, arbitrary numbers of energy channels, or versioned behavior-state migrations. Existing recipe-machine templates and the main/auxiliary energy buffers keep their current scope.
+
 ## Versioning and compatibility
 
 Reference for the version policy, the history of imported changes, and the removal schedule.
 
 ### Version policy
 
-Depend on mod id `gt6ce` with `versionRange="[0.0.0,)"` in `mods.toml` or `neoforge.mods.toml`. `context.apiVersion()` currently returns **0**. All capabilities documented here are included in this development baseline; do not gate them on the imported upstream version numbers. The API number does not replace the loader dependency range.
+Depend on mod id `gt6ce` with `versionRange="[0.0.0,0.1.0)"` in `mods.toml` or `neoforge.mods.toml`. `context.apiVersion()` currently returns **0**. All capabilities documented here are included in this development baseline; do not gate them on the imported upstream version numbers. The API number does not replace the loader dependency range.
 
-`gradle.properties` `mod_version` is `0.MINOR.PATCH`. `GregTechAddons.API_VERSION` is that MINOR. A patch release does not change this API. Before 1.0 a minor release may break addon callers. Breaking a documented entry waits on the removal table below, or the same release names the break in the change table. Use `versionRange="[0.0.0,)"` while targeting non-deprecated entries in the `0.x` baseline; if your addon still calls an entry listed in the removal table (for example one scheduled for `0.2`), cap the upper bound before that minor (such as `"[0.0.0,0.2.0)"`) so the loader rejects an incompatible upgrade.
+`gradle.properties` `mod_version` is `0.MINOR.PATCH`. `GregTechAddons.API_VERSION` is that MINOR. A patch release does not break the documented API contract. Before 1.0 a minor release may break addon callers. Breaking a documented entry waits on the removal table below, or the same release names the break in the change table. An addon targeting API 0 should use `versionRange="[0.0.0,0.1.0)"`, even when it calls no deprecated entries. Verify a new minor before raising the upper bound. Never infer compatibility with every future minor from the absence of deprecated calls. If the verified range includes a scheduled removal, stop the range before that removal until the addon has migrated. The API number and mod version remain **0** and **0.0.0** in this baseline.
 
 Mark a doomed entry with `@Deprecated(since = "0.N", forRemoval = true)` and `@AddonApiRemoval(id = "<binary name>", removeAt = "0.M")` under one Javadoc. `id` is the package and type, plus `#member` for a method or field. The `@deprecated` note names the replacement with `{@link}` or `{@code}` and includes `0.M`. `M` is at least `N + 2`: an entry deprecated in `0.N` is still present in `0.(N+1)`. The build fails when `M` is less than or equal to the current minor. Delete the entry, or set a later `removeAt` and write the reason in this file. `@Deprecated` without `forRemoval = true` is not on this schedule.
 
 ### API changes
+
+2026-10-24, API **0** / mod **0.0.0**: added `InventoryAccess`, `FluidAccess`, `MachineEnergy`, `EnergyTransfer`, `Line.builder()`, and matching SDK source/Javadoc artifacts. Existing context methods and recipe constructors remain available. `Line` array accessors now return defensive copies: callers that previously modified returned arrays must construct a new row instead. Recipe lookup no longer exposes caller-owned lists/stacks to dynamic providers. No existing machine storage format or declared energy channel was migrated by this change.
 
 API **0** is the GT6CE development baseline and includes all the capabilities below. The following 1–7 labels describe imported upstream development, not GT6CE releases or runtime feature requirements.
 

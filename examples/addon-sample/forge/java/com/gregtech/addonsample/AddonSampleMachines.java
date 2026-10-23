@@ -623,19 +623,19 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
         }
 
         private static boolean start(MachineBehaviorContext context) {
-            AddonRecipes.Line line = AddonRecipes.map(MAP).find(List.of(context.item(0)), List.of(), false, 1, 0);
+            AddonRecipes.Line line = AddonRecipes.map(MAP).find(List.of(context.inventoryAccess().snapshot(0)), List.of(), false, 1, 0);
             if (line == null) return false;
             long produced = -line.euPerTick();
             if (produced <= 0 || produced > PACKET) return false;
-            if (!outputsFit(context.item(1), line)) return false;
-            ItemStack input = context.item(0).copy();
+            if (!outputsFit(context.inventoryAccess().snapshot(1), line)) return false;
+            ItemStack input = context.inventoryAccess().snapshot(0).copy();
             for (ItemStack required : line.itemInputs()) {
                 if (required == null || required.isEmpty()) continue;
                 if (input.getItem() != required.getItem() || input.getCount() < required.getCount()) return false;
                 input.shrink(required.getCount());
             }
-            context.setItem(0, input);
-            context.setItem(1, withOutputs(context.item(1), line));
+            context.inventoryAccess().set(0, input);
+            context.inventoryAccess().set(1, withOutputs(context.inventoryAccess().snapshot(1), line));
             int ticks = line.duration() > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) line.duration();
             context.state().setInt("burn", ticks);
             context.state().setInt("left", ticks);
