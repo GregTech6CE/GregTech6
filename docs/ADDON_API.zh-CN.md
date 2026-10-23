@@ -138,12 +138,13 @@ if (map.add(recipe) == null)
 
 材料用 `GregTechMaterials`，物品用 `AddonItems`，已有配方表用 `AddonRecipes`。`GTValues`、`GTVoltageTiers`、`BasicMachineEnergy` 和 `MachineWorkCost` 也在 SDK 里。`onRecipesReady` 只在启动时走一次。数据包和 KubeJS 走下面的覆盖层，不会再次调用这个回调。
 
-`AddonRecipes.Line` 有四个构造方法：
+`AddonRecipes.Line` 有五个构造方法：
 
 - `Line(ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs, FluidStack[] fluidOutputs, long duration, long euPerTick, long special)`
 - `Line(..., int[] outputChances)`
 - `Line(..., int[] outputChances, int[] keptInputs)`
 - `Line(..., int[] outputChances, int[] keptInputs, int[] keptFluidInputs)`
+- `Line(..., int[] outputChances, int[] keptInputs, int[] keptFluidInputs, int[] presenceFluidInputs)`
 
 不用的物品或流体数组可以传 `null` 或空数组（`FluidStack` 在 Forge 上是 `net.minecraftforge.fluids.FluidStack`，在 NeoForge 上是 `net.neoforged.neoforge.fluids.FluidStack`）。`duration` 是加工时长（单位 tick，至少为 1）。`euPerTick` 是每 tick 能量（机器配方表上为非负数；燃料表上把产出能量写成负数）。`special` 是配方表附加参数（普通配方填 `0`，坩埚展示表填开尔文温度）。七个参数的 `Line` 表示每个物品输出都必定产出。需要概率时，按物品输出各给一个 `int`，单位是万分比。`10000` 是必定。空数组和不写一样。长度必须和物品输出一致，每个值是 1 到 10000。流体输出仍是必定。机器加工、JEI、EMI 和数据包覆盖层读的是配方行上的同一个概率。数据包物品输出本来就有 `chance` 字段。
 
@@ -151,7 +152,11 @@ if (map.add(recipe) == null)
 
 `keptInputs` 列出不消耗的物品输入下标。每一项数量仍写成 1 或更多。不写或空数组表示都不标记，这一行匹配的输入和以前一样。下标越界或重复会启动失败。数量 0 仍然启动失败，错误信息会指向 `keptInputs`。EMI 把标记的输入画成催化剂，和内置催化剂输入一样。数据包覆盖层不变：那里的数量 0 仍被拒绝，覆盖层也没有这个字段。
 
-`keptFluidInputs` 是 `Line` 的最后一个数组，列出不消耗的流体输入下标。每一项数量仍写成正数。机器按声明的数量检查，批量加工时也不按批量相乘，并且不扣除。不写或空数组表示都不标记。下标越界或重复会启动失败。数量为 0 的流体输入现在表示「只检查存在、不消耗」的催化剂：只要罐里有这种流体就匹配，批量加工也不放大，不扣任何数量；缺这种流体时整条配方不匹配。负数量仍然启动失败。数据包覆盖层接受 0 mB 的流体输入；0 mB 的流体输出仍然拒绝。EMI 把 0 mB 输入画成催化剂。
+`keptFluidInputs` 列出按正数声明量检查并保留的流体输入，批量加工也只预留一次。`presenceFluidInputs` 则只检测配方开始前罐中是否存在该流体，不预留、不消耗，也不随批量放大。重复的存在条件可以共用同一份流体，其他输入也可以正常消耗这份流体；缺少该流体时整条配方不匹配。两个下标数组不能重叠，下标重复或越界均被拒绝。
+
+数据包覆盖层用数量 0 表达存在条件；负数输入和数量 0 的输出仍被拒绝。原生 `FluidStack` 数量为 0 时会丢失流体身份，因此原生 `Line` 调用者应传入正数代表栈（例如 1 mB），并把其下标列入 `presenceFluidInputs`。这 1 mB 只是身份代表，不是额外预留量；不要向原生 API 传入 `new FluidStack(fluid, 0)`。既有构造方法保持正数输入的原有语义。配方查看器会把此类条件标记为只检测存在的催化剂。
+
+当前内置直接转换燃料表 `gt.recipe.fuels.burn`、`gt.recipe.fuels.gas`、`gt.recipe.fuels.fluidbed`、`gt.recipe.fuels.engine`、`gt.recipe.fuels.hot` 会拒绝存在条件配方并记录原因，动态提供者也不能绕过；其他燃料表不统一禁用。 换热器通过存档 `gt.fuelmap` 选用自定义表时，也会跳过存在条件且不消耗该流体，仍可匹配普通转换配方。普通发酵机支持存在条件，但密封桶会跳过这类配方，因为桶会替换整罐内容。上述专用转换器的正数量保留流体行为保持原状，本次修复不宣称它们已支持该功能。
 
 ```java
 var circuit = new AddonRecipes.Line(

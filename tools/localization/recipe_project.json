@@ -1,0 +1,10 @@
+{
+  "scope": "Exactly one project-owned presence-only recipe catalyst tooltip; not original GT6 translation and no generic JEI namespace exception.",
+  "authorization": "2026-10-23 02:43:21 UTC: user confirmed “0mb就可以” in response to presence-only versus an extra reserved 1 mB. Presence is required, consumption is zero, no additional amount is reserved.",
+  "values": {
+    "gt6ce.jei.fluid_presence": {
+      "english": "Presence only (0 mB consumed; no amount reserved)",
+      "value": "仅需存在该流体（消耗 0 mB，不额外预留）"
+    }
+  }
+}

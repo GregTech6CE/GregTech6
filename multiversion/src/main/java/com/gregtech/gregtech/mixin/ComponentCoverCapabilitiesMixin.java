@@ -92,6 +92,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 //?}
 public abstract class ComponentCoverCapabilitiesMixin {
 //? if >=1.21.1 {
+//?} else {
+    @org.spongepowered.asm.mixin.Unique
+    private com.gregtech.gregtech.content.cover.ForgeCoverCapabilityCache gregtech$coverCapabilityCache;
+//?}
+//? if >=1.21.1 {
     /*@Inject(method="getCapability",at=@At("RETURN"),cancellable=true,remap=false,require=1)
     private void gregtech$gate(Level level,BlockPos pos,BlockState state,BlockEntity entity,Object context,CallbackInfoReturnable<Object> cir){
         if(!(context instanceof Direction side)||cir.getReturnValue()==null)return;
@@ -106,8 +111,13 @@ public abstract class ComponentCoverCapabilitiesMixin {
         var owner=(BlockEntity)(Object)this;var result=cir.getReturnValue();
         if(side==null||result==null||!ComponentCoverFallback.uses(owner))return;
         var host=(PanelCoverHost)owner;
-        if(capability==ForgeCapabilities.ITEM_HANDLER)cir.setReturnValue(result.lazyMap(raw->ComponentCoverAccess.items(host,side,(net.minecraftforge.items.IItemHandler)raw)));
-        else if(capability==ForgeCapabilities.FLUID_HANDLER)cir.setReturnValue(result.lazyMap(raw->ComponentCoverAccess.fluids(host,side,(net.minecraftforge.fluids.capability.IFluidHandler)raw)));
+        if (capability != ForgeCapabilities.ITEM_HANDLER && capability != ForgeCapabilities.FLUID_HANDLER) return;
+        if (gregtech$coverCapabilityCache == null) gregtech$coverCapabilityCache = new ForgeCoverCapabilityCache();
+        if (capability == ForgeCapabilities.ITEM_HANDLER)
+            cir.setReturnValue(gregtech$coverCapabilityCache.wrap(ForgeCapabilities.ITEM_HANDLER, side,
+                    result.cast(), raw -> ComponentCoverAccess.items(host, side, raw)));
+        else cir.setReturnValue(gregtech$coverCapabilityCache.wrap(ForgeCapabilities.FLUID_HANDLER, side,
+                result.cast(), raw -> ComponentCoverAccess.fluids(host, side, raw)));
 //?}
     }
 }

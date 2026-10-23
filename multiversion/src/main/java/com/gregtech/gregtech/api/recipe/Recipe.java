@@ -103,6 +103,7 @@ public class Recipe {
     public Recipe withCatalystFluidInputs(int... indices) {
         for (int index : indices) {
             if (index < 0 || index >= mFluidInputs.length) throw new IllegalArgumentException("Catalyst fluid input " + index);
+            if (presenceFluidInputs.get(index)) throw new IllegalArgumentException("Fluid input " + index + " is presence-only");
             catalystFluidInputs.set(index);
         }
         return this;
@@ -119,6 +120,30 @@ public class Recipe {
         for (int bit = catalystFluidInputs.nextSetBit(0); bit >= 0; bit = catalystFluidInputs.nextSetBit(bit + 1))
             indices[cursor++] = bit;
         return indices;
+    }
+
+    private final java.util.BitSet presenceFluidInputs = new java.util.BitSet();
+
+    /** Presence-only gates use positive native representatives, never zero-sized native stacks. */
+    public Recipe withPresenceFluidInputs(int... indices) {
+        for (int index : com.gregtech.gregtech.api.addon.RecipeKeptInputs.normalizeFluids(indices, mFluidInputs.length)) {
+            if (mFluidInputs[index] == null || mFluidInputs[index].isEmpty())
+                throw new IllegalArgumentException("Presence fluid input " + index + " needs a positive representative");
+            if (catalystFluidInputs.get(index))
+                throw new IllegalArgumentException("Fluid input " + index + " cannot be both kept and presence-only");
+            mFluidInputs[index] = mFluidInputs[index].copy();
+            mFluidInputs[index].setAmount(1);
+            presenceFluidInputs.set(index);
+        }
+        return this;
+    }
+
+    public boolean isPresenceFluidInput(int index) {
+        return index >= 0 && index < mFluidInputs.length && presenceFluidInputs.get(index);
+    }
+
+    public int[] explicitPresenceFluidInputs() {
+        return presenceFluidInputs.stream().toArray();
     }
 
     // ── Output helpers ───────────────────────────────────────────────────

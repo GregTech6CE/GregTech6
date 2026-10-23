@@ -26,13 +26,18 @@ public class LockerBlockEntity extends BlockEntity {
         super(com.gregtech.gregtech.registry.GTBlockEntities.LOCKER.get(), pos, state);
     }
 
-    /** Swap the four native equipment slots; face and armor validation are not performed here. */
+    /** Swap eligible equipment slots in order; the block enforces front-face activation. */
     public void swapArmor(Player player) {
+        boolean swapped = false;
         for (int i = 0; i < SLOTS.length; i++) {
+            // Keep an incompatible stored stack in its original slot; other slots still swap.
+            if (!armor[i].isEmpty() && !armor[i].canEquip(SLOTS[i], player)) continue;
             ItemStack worn = player.getItemBySlot(SLOTS[i]);
             player.setItemSlot(SLOTS[i], armor[i]);
             armor[i] = worn;
+            swapped = true;
         }
+        if (!swapped) return;
         if (level != null) {
 //? if >=1.21.1 {
             /*level.playSound(null, worldPosition, SoundEvents.ARMOR_EQUIP_IRON.value(),

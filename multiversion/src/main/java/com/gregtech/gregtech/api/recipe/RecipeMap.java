@@ -406,7 +406,7 @@ public class RecipeMap {
         while (outLen > 0 && empty(aOutputs[outLen - 1])) outLen--;
         ItemStack[] tOutputs = new ItemStack[outLen];
         for (int i = 0; i < outLen; i++) tOutputs[i] = empty(aOutputs[i]) ? ItemStack.EMPTY : aOutputs[i].copy();
-        // Copy fluids. Inputs keep a 0 mB presence-only catalyst; outputs drop empty entries.
+        // Native zero-sized stacks have no usable identity. Presence gates use Recipe.withPresenceFluidInputs.
         FluidStack[] tFluidInputs = copyFluidInputs(aFluidInputs);
         FluidStack[] tFluidOutputs = copyFluids(aFluidOutputs);
         // Fuel may produce energy alone (original Blaze hot fuel). Ordinary work still needs a product.
@@ -507,7 +507,7 @@ public class RecipeMap {
         return r;
     }
 
-    /** Inputs keep a declared 0 mB stack as a presence-only catalyst; null and empty types are dropped. */
+    /** Copy positive native representatives; legacy empty placeholders are dropped. */
     private static FluidStack[] copyFluidInputs(FluidStack[] aFluids) {
         int n = 0;
         for (FluidStack f : aFluids) if (f != null && f.getFluid() != Fluids.EMPTY) n++;
@@ -587,12 +587,15 @@ public class RecipeMap {
         }
         var fluids = java.util.Arrays.stream(aCandidate.mFluidInputs)
                 .map(f -> f == null ? FluidStack.EMPTY : f.copy()).toArray(FluidStack[]::new);
-        for (FluidStack in : aExisting.mFluidInputs) {
+        // Presence representatives are identities, not one extra mB available to satisfy consumption.
+        for (int i = 0; i < fluids.length; i++) if (aCandidate.isPresenceFluidInput(i)) fluids[i] = FluidStack.EMPTY;
+        for (int inputIndex = 0; inputIndex < aExisting.mFluidInputs.length; inputIndex++) {
+            FluidStack in = aExisting.mFluidInputs[inputIndex];
             if (in == null || in.getFluid() == Fluids.EMPTY) continue;
-            if (in.getAmount() <= 0) {
+            if (aExisting.isPresenceFluidInput(inputIndex)) {
                 boolean present = false;
-                for (FluidStack f : fluids) {
-                    if (f.getFluid() != Fluids.EMPTY && f.isFluidEqual(in)) { present = true; break; }
+                for (FluidStack f : aCandidate.mFluidInputs) {
+                    if (f != null && !f.isEmpty() && RecipeInputs.sameFluid(f, in)) { present = true; break; }
                 }
                 if (!present) return false;
                 continue;
@@ -621,9 +624,23 @@ public class RecipeMap {
         return f.getFluid().builtInRegistryHolder().key().location().toString();
     }
 
-    /** Unconditionally stores the recipe and updates the lookup indices. */
+    /** These builtin converters still interpret fluid input amounts directly, not as presence gates. */
+    private boolean supportsFluidPresence(Recipe recipe) {
+        if (recipe.explicitPresenceFluidInputs().length == 0) return true;
+        return switch (mNameInternal) {
+            case "gt.recipe.fuels.burn", "gt.recipe.fuels.gas", "gt.recipe.fuels.fluidbed",
+                    "gt.recipe.fuels.engine", "gt.recipe.fuels.hot" -> false;
+            default -> true;
+        };
+    }
+
+    /** Stores the recipe and updates lookup indices, rejecting unsupported presence-only fuel rows. */
     public synchronized Recipe add(Recipe aRecipe) {
         if (aRecipe == null) return null;
+        if (!supportsFluidPresence(aRecipe)) {
+            LOGGER.error("[{}] Presence-only fluid inputs are unsupported by this map's direct fuel converters; recipe rejected", mNameInternal);
+            return null;
+        }
         mRecipeList.add(aRecipe);
         // Index by input items
         for (ItemStack in : aRecipe.mInputs) {
@@ -743,7 +760,7 @@ public class RecipeMap {
         var inputFluids = new ArrayList<FluidStack>();
         for (var fluid : fluids) inputFluids.add(fluid == null ? FluidStack.EMPTY : fluid);
         for(int pass=0;pass<2;pass++) for (Recipe r : mRecipeList) {
-            if (!r.mEnabled || r.mFakeRecipe) continue;
+            if (!r.mEnabled || r.mFakeRecipe || !supportsFluidPresence(r)) continue;
             boolean exact=java.util.Arrays.stream(r.mInputs).allMatch(required->inputItems.stream().anyMatch(available->required.is(available.getItem())));
             if((pass==0)!=exact)continue;
             if (needsOutputs && r.mNeedsEmptyOutput && !allOutputSlotsEmpty(items, inputSlotCount, outputSlotCount)) continue;
@@ -753,7 +770,7 @@ public class RecipeMap {
         // `if (rRecipe != null) return rRecipe;` guards at the top of those findRecipe() bodies.
         if (mDynamicRecipes != null || mAddonDynamicRecipes.length != 0) {
             Recipe dynamic = firstDynamicRecipe(inputItems, inputFluids);
-            if (dynamic != null && dynamic.mEnabled && !dynamic.mFakeRecipe) {
+            if (dynamic != null && dynamic.mEnabled && !dynamic.mFakeRecipe && supportsFluidPresence(dynamic)) {
                 if (needsOutputs && dynamic.mNeedsEmptyOutput
                         && !allOutputSlotsEmpty(items, inputSlotCount, outputSlotCount)) return null;
                 if (RecipeInputs.consume(dynamic, inputItems, inputFluids, 1) != null) return dynamic;
@@ -761,7 +778,7 @@ public class RecipeMap {
         }
         if (mContextRecipes != null && level != null) {
             Recipe dynamic = mContextRecipes.find(level, machine, special, inputItems, inputFluids);
-            if (dynamic != null && dynamic.mEnabled && !dynamic.mFakeRecipe
+            if (dynamic != null && dynamic.mEnabled && !dynamic.mFakeRecipe && supportsFluidPresence(dynamic)
                     && (!needsOutputs || !dynamic.mNeedsEmptyOutput
                             || allOutputSlotsEmpty(items, inputSlotCount, outputSlotCount))
                     && RecipeInputs.consume(dynamic, inputItems, inputFluids, 1) != null) return dynamic;
@@ -773,11 +790,11 @@ public class RecipeMap {
     private Recipe firstDynamicRecipe(List<ItemStack> inputItems, List<FluidStack> inputFluids) {
         if (mDynamicRecipes != null) {
             Recipe recipe = mDynamicRecipes.find(inputItems, inputFluids);
-            if (recipe != null) return recipe;
+            if (recipe != null && supportsFluidPresence(recipe)) return recipe;
         }
         for (int i = 0; i < mAddonDynamicRecipes.length; i++) {
             Recipe recipe = mAddonDynamicRecipes[i].find(inputItems, inputFluids);
-            if (recipe != null) return recipe;
+            if (recipe != null && supportsFluidPresence(recipe)) return recipe;
         }
         return null;
     }
