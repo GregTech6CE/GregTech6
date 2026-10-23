@@ -33,6 +33,8 @@ API 版本 **0** 对应模组版本 **0.0.0**，平台是 Forge 1.20.1 与 NeoFo
   - [结构布局数据包](#结构布局数据包)
   - [配方表](#配方表)
   - [配方机器](#配方机器)
+  - [机器控制](#机器控制)
+  - [热量](#热量)
   - [行为机器](#行为机器)
   - [燃料机](#燃料机)
   - [管子](#管子)
@@ -668,6 +670,43 @@ GUI 路径会保留 `:` 前面写下的命名空间。`textures/gui/machines/Pre
 
 JEI 催化剂和多方块预览跟着已注册的机器列表。有布局的大型机器会出现在预览里。合成配方由附属自己的数据包提供。GT 不生成。附属大型机器用默认的端口路径。内置机器的名字分支仍只给内置机器。
 
+### 机器控制
+
+`MachineControl` 在 SDK 里。方块实体实现 `MachineControl.Provider`，按面返回控制对象；`MachineControl.find(entity, side)` 负责解析，这一面没有控制时返回 `null`。中继每次操作都重新解析目标，调用方不要把控制对象缓存到操作之外。
+
+```java
+var control = MachineControl.find(level.getBlockEntity(pos), side);
+if (control != null && control.available()) {
+    boolean on = control.enabled();
+    long energy = control.energy();
+    long capacity = control.energyCapacity();
+    long perTick = control.progressPerTick();
+}
+```
+
+`enabled()`/`setEnabled(boolean)`、`running()`、`active()`、`progress()` 和 `progressMax()` 是开关和进度接口。`energy()` 是缓存的能量，`energyCapacity()` 是它的上限，`progressPerTick()` 是下一个活动 tick 会推进的工作量（空闲时为 0）。后三项是只读的。
+
+内置机器的 `supportsWrite()` 为 `false`，`setProgress` 和 `setEnergy` 都返回 `false`：接口版本 0 不允许附属改写内置机器的能量缓存或进度。附属自己提供控制对象时也应保持同样的分工，并按自己的检查返回 `supportsWrite()`。
+
+`externalSignal(side)` 和 `setExternalSignal(side, level)` 是控制输入，不是状态写入，所以 `supportsWrite()` 为 `false` 时也能用。级别是 0–15，并随机器存档。它和这一面的盖板信号取较大值，再交给盖板的 `allows` 门控；因此外部控制器可以通过这一面的红石机器开关盖板停机或开机。超出 0–15 的值会被拒绝。
+
+### 热量
+
+`HeatHandler` 在 SDK 的 `com.gregtech.gregtech.api.machine` 里。方块实体实现它，就直接暴露一个有符号 HU 缓冲。`TemperatureSource`（见「传感器源」）仍是只读温度接口；需要写热量时用 `HeatHandler`。
+
+```java
+if (level.getBlockEntity(pos) instanceof HeatHandler heat) {
+    long stored = heat.heatStored();       // 有符号：冷量为负
+    long capacity = heat.heatCapacity();   // 无上限时是 Long.MAX_VALUE
+    long accepted = heat.insertHeat(8_000, true);
+    long removed = heat.extractHeat(2_000, false);
+}
+```
+
+数量是有符号热单位：正数加热，负数降温。两个写入方法返回实际接受或取走的带符号数量。`simulate` 不改变状态，返回值必须和执行时一致。`temperatureK()` 不会为负；不建模温度的机器（锅炉和热交换器）返回环境温度，坩埚返回自己的开尔文温度。
+
+适配的机器是单方块和原版大型锅炉、单方块和大型热交换器，以及两棵版本树里的坩埚。各自规则不变：没成形的大型锅炉拒绝输入，超过容量的锅炉仍在下一个 tick 爆炸，坩埚仍在下一个 tick 把存下的 HU 换算成开尔文。写热量是绕过机器正常能量输入的直接入口，不是新的加工路径。
+
 ### 行为机器
 
 每个 `BehaviorMachine` 从 `addonMachines()` 返回。另外在 `META-INF/services/com.gregtech.gregtech.api.addon.platform.BehaviorMachineContributor` 里列出 `BehaviorMachineContributor`。这个接口在加载器 API 里，因为 Forge 和 NeoForge 的 `FluidStack` 不同。`machineTypes()` 必须盖住这个附属声明的每一种行为机器类型。每放下一台方块实体，GT 调用一次 `create`。缺少工厂时启动失败，并写出附属和机器类型。
@@ -852,6 +891,10 @@ public List<ItemPipeDeclaration> itemPipes() {
 
 合成、焊接和材料回收走内置管子的规则。材料没有 `plateCurved` 时，合成和焊接跳过这一行。附属自己提供 `block.<命名空间>.<路径>` 翻译。GT 生成占位方块状态，动态管子模型会换掉它。这些行不是内置管子。
 
+方块实现 `FluidPipeConnectable` 或 `ItemPipeConnectable` 后不需要扳手：管子放在它旁边、它放在已有管子旁边、以及区块重载后都会自动连上。接口可以写在方块上，也可以写在方块实体上；`side` 是这个方块朝向管子的那一面，返回 `false` 表示这一面不连。这是显式 opt-in，内置机器和现有管子网络保持原来的连接方式。
+
+管子记住每一个被扳手关掉的面，并随方块存进存档。邻居变化、区块重载和存档重启后，自动连接都不会再打开这些面；用扳手重新接上会清掉标记。自动连接只补上缺的一边：它不会主动断开任何面，两根管子仍然要有一边先指向对方才会接上。
+
 ### 压缩气罐
 
 `AddonMachineContributor.compressedGasTanks()` 返回 `CompressedGasTankDeclaration`。id 是小写注册路径。材料必须已经注册。容量是绝对毫桶，1 到 1,024,000,000，不是压缩倍率。气密始终为真。耐酸、耐等离子体、耐魔法是耐压档。温度上限是材料熔点，安装时解析。
@@ -899,6 +942,8 @@ public final class MySourceBlockEntity extends BlockEntity implements GtSignalSo
 
 行为机器声明 `signalOutput(true)` 后，外壳方块实体已经实现 `GtSignalSource`，行为只需实现 `MachineBehavior.gtSignal`。未声明的行为机器不会被信号线读取。
 
+方块后放到线旁边时，线也会连上；信号源方块被移除时，这个端口会断开。方块实体实现 `GtSignalSource`、但方块本身没有覆盖 `Block#isSignalSource()` 时，也算信号源。用剪线钳手动接到非信号源方块的端口会保持打开，直到那个邻居被移除。
+
 只接收、不发出的方块，在方块实体上实现 `GtSignalReceiver`，或者把方块加进 `gt6ce:signal_wire_receivers` 方块标签。满足任一条件时，被强充能的实心方块不会被当成信号源。两个都满足时按接收端处理。这个标签出厂是空的，addon 在自己的数据包里追加：
 
 ```json
@@ -909,7 +954,7 @@ public final class MySourceBlockEntity extends BlockEntity implements GtSignalSo
 
 ## 范围
 
-当前支持注册和配方就绪生命周期；`AddonMaterialContributor` 按名字排队材料和已有前缀的追加形态（生成 `gt6ce:` 物品），`dust()` 和 `metal()` 选择生成哪些形态，`prefixes()` 在附属自己的命名空间里增加物品前缀，读取用 `GregTechMaterials`（含 `byproducts()`、`mass()`、`toolQuality()`、`toolSpeed()` 和 `toolDurability()`），前缀是否存在用 `GregTechPrefixes.exists`，数字 id 从 10000 起在启动时分配，不写入存档；`oreVeins()` 和 `smallOres()` 把大矿脉和小矿追加在 `minecraft:overworld`、`minecraft:the_nether` 或 `minecraft:the_end` 的内置行之后；`compositions()`、`smeltingTargets()`、`crucibleReactions()` 和 `crucibleRemovals()` 用材料名，在材料链接时生效；`AddonItems.stack`、`AddonItems.composition`（物品的前缀和材料单位）和 `AddonItems.selectorTag`（0 到 24 号编程电路）；`AddonFluids` 按 GT 流体字段名取静液或流动液（`DistW`，不是材料名），`AddonFluids.gas`、`acid`、`plasma` 和 `magic` 判断流体的分类；已有配方表上的 `AddonRecipes`（添加、展示、碰撞、物品输入检查、动态 provider、查找，`add` 返回 null 表示被拒绝；`keptInputs` 标出留在机器里的物品输入，`keptFluidInputs` 标出留在机器里的流体输入，0 mB 现在表示只检查存在的催化剂）；`AddonMachineContributor` 的配方机器和大型配方机器，含 `searchOutputTanks`、`exclusiveOutputs`、`EnergyInput.range(min, max)`、`auxiliaryEnergy` 和 `startupEnergy`，没声明范围的大型机不是标称的一半到两倍，大型配方机器还可以各指定一格物品输出、流体输出、物品输入和流体输入，能源用短名例如 `EU`，多方块可以写 GT 零件名，或 `layoutParts()` 里的外壳、能量零件和功能零件，条件零件是 `energyInput` 加 `condition`，大型配方机有绑定的条件零件不满足时不加工，没有条件零件则不变，机器和零件都由 GT 注册到附属命名空间，结构角色是 `StructureRole`，结构格还可以写方块 id、`#` 标签或 `oneOf` 多选一，普通方块格只作 `CASING` 且不绑定；`fluidPipes()` 和 `itemPipes()` 各加一行材料，GT 按内置档位展开，方块在附属自己的命名空间；`compressedGasTanks()` 声明压缩气罐，普通灌入关闭，`pushCompressedGas` 灌进相邻的压缩气体接收方：气罐每一面都收，行为机器只在 `gasValve` 那一面收，燃料能源机器每 tick 最多抽 1000 mB；`BehaviorMachine` 以及加载器上的 `BehaviorMachineContributor`、`MachineBehavior`、`MachineBehaviorContext`、`BehaviorState`，外壳由 GT 持有，附属不继承它，也不接触 NBT，`io(MachineIo)` 像配方机器那样限制物品和流体的面，不写则六面都开，`acceptsEnergy` 可以在面检查和缓存检查之后拒收注入的一包，`recipeMaps` 点名机器表或燃料表后这台机器成为 JEI 和 EMI 的催化剂，加工仍由行为自己做，`find` 读到的燃料行把产出能量存成负数的 `euPerTick`，`EnergyInput.capacity`、`emit`、`emitTo`、`generate`、`setCapacity`、`onTool`、`onUse`、`signalOutput(true)`、`gtSignal`、`maxRange`、`breakBlock` 和 `collectItems` 属于这层外壳，同名结构让 `structureFormed()`、`parts()`、`energyParts()` 和 `conditionsMet()` 可用，`parts()` 是绑定的附属零件，`energyParts()` 是这份列表的能量视图，`charge`、`setOutput` 和 `stop` 写只出的零件，`charge` 也给条件零件充能，条件零件缺电时 `tick` 仍会跑，机器有输出时可以省略主输入，主输入也可以写 `range`、`anyPacket()`、`anyType()` 或 `overload(false)`，行为机结构上的 GT 端口会转发物品、流体和能量，`EnergyOutput.minSize` 缺省是 1，`allowNegative()` 只给 KU 和 RU，`auxiliaryEnergy` 把第二种输入存成 `gt.aux_energy`，`energy(type)` 和 `consume(type, amount)` 只用这份缓存，改过的容量由 GT 写成 `gt.capacity`，零件缓存存在零件自己的 NBT；功能结构零件在 `LayoutPart` 上写 `slots`、`tanks`、`gui`、`tick`、`use` 或 `field`，并用 `LayoutPartContributor` 按名字配对，方块实体由 GT 持有，槽存 `gt.part_slots`，罐子存 `gt.part_tanks`，字段存 `gt.part_fields`，`gui` 打开只含这个零件的菜单，没有能量角色的用 `gt6ce:addon_functional_part`，同时带能量角色的仍用 `gt6ce:addon_energy_part`，附属不继承方块实体，`LayoutPartClient` 可以为同步过来的 `PartClientView` 返回方块实体渲染器，`PartContext.crucible()` 在不取走任何东西的情况下读出绑定控制器的坩埚材料、数量和温度，布局格子可以给有原版外观号的 GT 零件写 `design`，成形时写入 `gt.design`，拆开时还原，普通方块、标签、空气、附属零件或没有外观号的零件会在安装布局时失败；`RecipeTable.fuel` 和 `FuelGenerator`，燃料表进入 JEI、EMI 和数据包覆盖层，机器烧流体燃料，每 tick 最多送出声明的安培数，缺省是一包，从正面、背面或背后 1 到 8 格输出，多方块结构可以写 GT 零件名，或 `layoutParts()` 里的外壳；`GTValues`、`GTVoltageTiers`、`BasicMachineEnergy`、`MachineWorkCost`；附属实现的 `EnergyBlock`，`AddonEnergy` 走 GT 的能量包门槛，EU 电缆的插入和抽出接受这个接口，轴、激光纤维、中继、远距变压器和内置机器的注入或抽取经 `EnergyBlockViews` 也能看见这个接口，扫描仪、Jade 和盖板读数仍只看见 GT 自己的能量方块；`AddonTool` 的 `SPADE`、`UNIVERSAL_SPADE`、`MAGNIFYING_GLASS`、`SCREWDRIVER`、`SOFT_HAMMER`、`WRENCH`、`MONKEY_WRENCH`、`HARD_HAMMER`、`WIRE_CUTTER`、`SAW`，以及 `AddonTools.matches`、`isMagnifyingGlass`、`damageForUse`，判定走 GT 工具表；`gt6ce:machine` 与 `gt6ce:machine_removal` 两种数据包配方；KubeJS 可以增删这些静态行，并在 startup 脚本里声明 `kubejs:` 配方表、配方机器、燃料机、外壳、布局和能量零件；`data/<命名空间>/gt6ce_layouts/<machineType>.json` 可以在重载时替换附属或脚本机器的布局，不能改内置控制器；`GtSignalCarrier`、`GtSignalSource`、`GtSignalReceiver`、`CropScanSource`、`ProgressSensorSource`、`CompressionSensorSource`、`TemperatureSource` 和空的 `gt6ce:signal_wire_receivers` 方块标签。
+当前支持注册和配方就绪生命周期；`AddonMaterialContributor` 按名字排队材料和已有前缀的追加形态（生成 `gt6ce:` 物品），`dust()` 和 `metal()` 选择生成哪些形态，`prefixes()` 在附属自己的命名空间里增加物品前缀，读取用 `GregTechMaterials`（含 `byproducts()`、`mass()`、`toolQuality()`、`toolSpeed()` 和 `toolDurability()`），前缀是否存在用 `GregTechPrefixes.exists`，数字 id 从 10000 起在启动时分配，不写入存档；`oreVeins()` 和 `smallOres()` 把大矿脉和小矿追加在 `minecraft:overworld`、`minecraft:the_nether` 或 `minecraft:the_end` 的内置行之后；`compositions()`、`smeltingTargets()`、`crucibleReactions()` 和 `crucibleRemovals()` 用材料名，在材料链接时生效；`AddonItems.stack`、`AddonItems.composition`（物品的前缀和材料单位）和 `AddonItems.selectorTag`（0 到 24 号编程电路）；`AddonFluids` 按 GT 流体字段名取静液或流动液（`DistW`，不是材料名），`AddonFluids.gas`、`acid`、`plasma` 和 `magic` 判断流体的分类；已有配方表上的 `AddonRecipes`（添加、展示、碰撞、物品输入检查、动态 provider、查找，`add` 返回 null 表示被拒绝；`keptInputs` 标出留在机器里的物品输入，`keptFluidInputs` 标出留在机器里的流体输入，0 mB 现在表示只检查存在的催化剂）；`AddonMachineContributor` 的配方机器和大型配方机器，含 `searchOutputTanks`、`exclusiveOutputs`、`EnergyInput.range(min, max)`、`auxiliaryEnergy` 和 `startupEnergy`，没声明范围的大型机不是标称的一半到两倍，大型配方机器还可以各指定一格物品输出、流体输出、物品输入和流体输入，能源用短名例如 `EU`，多方块可以写 GT 零件名，或 `layoutParts()` 里的外壳、能量零件和功能零件，条件零件是 `energyInput` 加 `condition`，大型配方机有绑定的条件零件不满足时不加工，没有条件零件则不变，机器和零件都由 GT 注册到附属命名空间，结构角色是 `StructureRole`，结构格还可以写方块 id、`#` 标签或 `oneOf` 多选一，普通方块格只作 `CASING` 且不绑定；`fluidPipes()` 和 `itemPipes()` 各加一行材料，GT 按内置档位展开，方块在附属自己的命名空间；`compressedGasTanks()` 声明压缩气罐，普通灌入关闭，`pushCompressedGas` 灌进相邻的压缩气体接收方：气罐每一面都收，行为机器只在 `gasValve` 那一面收，燃料能源机器每 tick 最多抽 1000 mB；`BehaviorMachine` 以及加载器上的 `BehaviorMachineContributor`、`MachineBehavior`、`MachineBehaviorContext`、`BehaviorState`，外壳由 GT 持有，附属不继承它，也不接触 NBT，`io(MachineIo)` 像配方机器那样限制物品和流体的面，不写则六面都开，`acceptsEnergy` 可以在面检查和缓存检查之后拒收注入的一包，`recipeMaps` 点名机器表或燃料表后这台机器成为 JEI 和 EMI 的催化剂，加工仍由行为自己做，`find` 读到的燃料行把产出能量存成负数的 `euPerTick`，`EnergyInput.capacity`、`emit`、`emitTo`、`generate`、`setCapacity`、`onTool`、`onUse`、`signalOutput(true)`、`gtSignal`、`maxRange`、`breakBlock` 和 `collectItems` 属于这层外壳，同名结构让 `structureFormed()`、`parts()`、`energyParts()` 和 `conditionsMet()` 可用，`parts()` 是绑定的附属零件，`energyParts()` 是这份列表的能量视图，`charge`、`setOutput` 和 `stop` 写只出的零件，`charge` 也给条件零件充能，条件零件缺电时 `tick` 仍会跑，机器有输出时可以省略主输入，主输入也可以写 `range`、`anyPacket()`、`anyType()` 或 `overload(false)`，行为机结构上的 GT 端口会转发物品、流体和能量，`EnergyOutput.minSize` 缺省是 1，`allowNegative()` 只给 KU 和 RU，`auxiliaryEnergy` 把第二种输入存成 `gt.aux_energy`，`energy(type)` 和 `consume(type, amount)` 只用这份缓存，改过的容量由 GT 写成 `gt.capacity`，零件缓存存在零件自己的 NBT；功能结构零件在 `LayoutPart` 上写 `slots`、`tanks`、`gui`、`tick`、`use` 或 `field`，并用 `LayoutPartContributor` 按名字配对，方块实体由 GT 持有，槽存 `gt.part_slots`，罐子存 `gt.part_tanks`，字段存 `gt.part_fields`，`gui` 打开只含这个零件的菜单，没有能量角色的用 `gt6ce:addon_functional_part`，同时带能量角色的仍用 `gt6ce:addon_energy_part`，附属不继承方块实体，`LayoutPartClient` 可以为同步过来的 `PartClientView` 返回方块实体渲染器，`PartContext.crucible()` 在不取走任何东西的情况下读出绑定控制器的坩埚材料、数量和温度，布局格子可以给有原版外观号的 GT 零件写 `design`，成形时写入 `gt.design`，拆开时还原，普通方块、标签、空气、附属零件或没有外观号的零件会在安装布局时失败；`RecipeTable.fuel` 和 `FuelGenerator`，燃料表进入 JEI、EMI 和数据包覆盖层，机器烧流体燃料，每 tick 最多送出声明的安培数，缺省是一包，从正面、背面或背后 1 到 8 格输出，多方块结构可以写 GT 零件名，或 `layoutParts()` 里的外壳；`GTValues`、`GTVoltageTiers`、`BasicMachineEnergy`、`MachineWorkCost`；附属实现的 `EnergyBlock`，`AddonEnergy` 走 GT 的能量包门槛，EU 电缆的插入和抽出接受这个接口，轴、激光纤维、中继、远距变压器和内置机器的注入或抽取经 `EnergyBlockViews` 也能看见这个接口，扫描仪、Jade 和盖板读数仍只看见 GT 自己的能量方块；`AddonTool` 的 `SPADE`、`UNIVERSAL_SPADE`、`MAGNIFYING_GLASS`、`SCREWDRIVER`、`SOFT_HAMMER`、`WRENCH`、`MONKEY_WRENCH`、`HARD_HAMMER`、`WIRE_CUTTER`、`SAW`，以及 `AddonTools.matches`、`isMagnifyingGlass`、`damageForUse`，判定走 GT 工具表；`gt6ce:machine` 与 `gt6ce:machine_removal` 两种数据包配方；KubeJS 可以增删这些静态行，并在 startup 脚本里声明 `kubejs:` 配方表、配方机器、燃料机、外壳、布局和能量零件；`data/<命名空间>/gt6ce_layouts/<machineType>.json` 可以在重载时替换附属或脚本机器的布局，不能改内置控制器；`MachineControl`、`HeatHandler`、`GtSignalCarrier`、`GtSignalSource`、`GtSignalReceiver`、`FluidPipeConnectable`、`ItemPipeConnectable`、`CropScanSource`、`ProgressSensorSource`、`CompressionSensorSource`、`TemperatureSource` 和空的 `gt6ce:signal_wire_receivers` 方块标签。
 
 这些保持关闭。`BasicMachineBlock` 和 `BasicMachineBlockEntity` 是 GT 的机器实现，附属机器是数据，不是子类。`Recipe.mRecipeList` 是内部行表，正式代码用 `add` 返回的 `AddonRecipes.Line`。`GTMaterial`、`GTMaterialRegistry` 和材料哨兵由 `GregTechMaterials` 代替。`GregTechTags` 由能源短名代替。`MachineRecipeMaps` 的字段由 `AddonRecipes.map(name)` 代替。`MaterialPrefix` 常量由前缀名字符串代替。完整工具目录留在 GT 里。
 

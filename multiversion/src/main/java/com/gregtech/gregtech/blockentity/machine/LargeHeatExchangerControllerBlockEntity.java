@@ -31,6 +31,7 @@ import java.util.*;
 
 /** Original two-layer heat exchanger, hot-fluid recipes and eight upward heat outlets. */
 public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity implements MultiblockPortOwner, MultiblockToolTarget, IFluidHandler,
+        com.gregtech.gregtech.api.machine.HeatHandler,
         com.gregtech.gregtech.api.fluid.FluidToolTarget, com.gregtech.gregtech.api.machine.MachineControl.Provider {
     public static final int RATE = com.gregtech.gregtech.content.multiblock.OriginalGeneratorParameters.HEAT_EXCHANGER_RATE;
     private long heat, activityHistory;
@@ -92,6 +93,45 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
 
     public HeatExchangerRules.Settings settings() {
         return settings;
+    }
+
+    // ── HeatHandler: buffered heat is not gated on the shell, matching the source tick ──────
+
+    @Override public long heatStored() { return heat; }
+    @Override public long heatCapacity() { return settings.bufferTarget(); }
+    @Override public long temperatureK() { return com.gregtech.gregtech.data.GregTechConstants.DEF_ENV_TEMP; }
+
+    @Override public long insertHeat(long signedHU, boolean simulate) {
+        if (signedHU == 0) return 0;
+        if (signedHU > 0) {
+            long accepted = heat < 0 ? signedHU : Math.min(signedHU, Long.MAX_VALUE - heat);
+            if (!simulate && accepted > 0) {
+                heat += accepted;
+                setChanged();
+            }
+            return accepted;
+        }
+        if (signedHU == Long.MIN_VALUE) return 0;
+        long removed = Math.min(Math.max(0, heat), -signedHU);
+        if (!simulate && removed > 0) {
+            heat -= removed;
+            setChanged();
+        }
+        return -removed;
+    }
+
+    @Override public long extractHeat(long signedHU, boolean simulate) {
+        if (signedHU == 0) return 0;
+        if (signedHU > 0) {
+            long removed = Math.min(Math.max(0, heat), signedHU);
+            if (!simulate && removed > 0) {
+                heat -= removed;
+                setChanged();
+            }
+            return removed;
+        }
+        if (signedHU == Long.MIN_VALUE) return 0;
+        return insertHeat(-signedHU, simulate);
     }
 
     public long tankAmount(int index) {

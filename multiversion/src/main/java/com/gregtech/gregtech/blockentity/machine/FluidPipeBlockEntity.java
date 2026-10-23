@@ -131,9 +131,14 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     private final byte[] lastReceivedFrom;
     private long temperature = GregTechConstants.DEF_ENV_TEMP;
     private long transferredAmount;
+    /** Faces the wrench disconnected; auto-connect leaves them alone. Persisted so a reload keeps them. */
+    private int manualDisconnects;
+    /** Set on load; the next server tick repairs half-connections that the load order hid. */
+    private boolean reconnectPending = true;
 
     private static final String NBT_TEMPERATURE = "gt.temperature";
     private static final String NBT_TRANSFERRED = "gt.transferred";
+    private static final String NBT_MANUAL_DISCONNECTS = "gt.manual_disconnects";
     private static final String NBT_LAST_RECEIVED = "gt.last_received";
     private static final String NBT_TANK_PREFIX = "gt.tank.";
     /** One cover per face under the same key the machine uses ({@code BasicMachineBlockEntity:1299}). */
@@ -218,6 +223,10 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     }
 
     private void tickServer(BlockState state) {
+        if (reconnectPending) {
+            reconnectPending = false;
+            autoConnectOnPlace(null);
+        }
         transferredAmount = 0;
         boolean firstFluid = true;
         for (int i = 0; i < tanks.length; i++) {
@@ -531,44 +540,102 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     }
 
     /**
-     * Auto-connect on placement: connects to the clicked face, then scans all 6 sides
-     * and auto-connects to any adjacent same-type pipe that already has its connection
-     * facing toward this new pipe.
+     * Auto-connect on placement: the clicked face connects both ways, every other side completes a
+     * connection the neighbour already declares, and a block implementing
+     * {@link com.gregtech.gregtech.api.transport.FluidPipeConnectable} connects on any face.
+     * Faces the wrench closed stay closed.
      */
     public void autoConnectOnPlace(@Nullable Direction clickedFace) {
         if (level == null || level.isClientSide) return;
 
-        // First, connect to the clicked face (existing behavior)
         if (clickedFace != null) {
-            Direction toNeighbor = clickedFace.getOpposite();
-            BlockPos neighborPos = worldPosition.relative(toNeighbor);
-            BlockEntity be = level.getBlockEntity(neighborPos);
-            if (be instanceof FluidPipeBlockEntity neighborPipe) {
-                BlockState state = getBlockState();
-                BlockState newState = state.setValue(FluidPipeBlock.propFor(toNeighbor), true);
-                level.setBlockAndUpdate(worldPosition, newState);
-
-                BlockState neighborState = neighborPipe.getBlockState();
-                if (!neighborState.getValue(FluidPipeBlock.propFor(clickedFace))) {
-                    level.setBlockAndUpdate(neighborPos,
-                            neighborState.setValue(FluidPipeBlock.propFor(clickedFace), true));
+            Direction side = clickedFace.getOpposite();
+            if (canAutoConnect(side)) {
+                BlockEntity be = level.getBlockEntity(worldPosition.relative(side));
+                if (be instanceof FluidPipeBlockEntity neighborPipe) {
+                    if (!neighborPipe.isFaceManuallyDisconnected(clickedFace)) {
+                        connectOwnFace(side);
+                        BlockState neighborState = level.getBlockState(neighborPipe.getBlockPos());
+                        if (!neighborState.getValue(FluidPipeBlock.propFor(clickedFace))) {
+                            level.setBlockAndUpdate(neighborPipe.getBlockPos(),
+                                    neighborState.setValue(FluidPipeBlock.propFor(clickedFace), true));
+                        }
+                    }
+                } else if (isConnectableNeighbor(side)) {
+                    connectOwnFace(side);
                 }
             }
         }
 
-        // Then scan all 6 sides for adjacent pipes already connected toward us
         for (Direction dir : Direction.values()) {
-            BlockPos neighborPos = worldPosition.relative(dir);
-            BlockEntity be = level.getBlockEntity(neighborPos);
-            if (!(be instanceof FluidPipeBlockEntity neighborPipe)) continue;
-
-            BlockState neighborState = neighborPipe.getBlockState();
-            if (neighborState.getValue(FluidPipeBlock.propFor(dir.getOpposite()))) {
-                BlockState state = getBlockState();
-                if (!state.getValue(FluidPipeBlock.propFor(dir))) {
-                    level.setBlockAndUpdate(worldPosition, state.setValue(FluidPipeBlock.propFor(dir), true));
+            if (!canAutoConnect(dir)) continue;
+            BlockEntity be = level.getBlockEntity(worldPosition.relative(dir));
+            if (be instanceof FluidPipeBlockEntity neighborPipe) {
+                if (!neighborPipe.isFaceManuallyDisconnected(dir.getOpposite())
+                        && level.getBlockState(neighborPipe.getBlockPos())
+                                .getValue(FluidPipeBlock.propFor(dir.getOpposite()))) {
+                    connectOwnFace(dir);
                 }
+            } else if (isConnectableNeighbor(dir)) {
+                connectOwnFace(dir);
             }
+        }
+    }
+
+    /**
+     * Adds one connection after a neighbour was placed or changed. Returns whether anything changed.
+     * Never opens a face the wrench closed on either pipe.
+     */
+    public boolean tryConnectTo(Direction side) {
+        if (!canAutoConnect(side)) return false;
+        BlockPos neighborPos = worldPosition.relative(side);
+        BlockEntity be = level.getBlockEntity(neighborPos);
+        if (be instanceof FluidPipeBlockEntity neighborPipe) {
+            // Complete a half-connection only: two pipes stay apart until one side declares the other,
+            // exactly like the placement scan.
+            if (neighborPipe.isFaceManuallyDisconnected(side.getOpposite())) return false;
+            if (!level.getBlockState(neighborPos).getValue(FluidPipeBlock.propFor(side.getOpposite()))) return false;
+            return connectOwnFace(side);
+        }
+        return isConnectableNeighbor(side) && connectOwnFace(side);
+    }
+
+    private boolean canAutoConnect(Direction side) {
+        if (isFaceManuallyDisconnected(side)) return false;
+        BlockPos neighborPos = worldPosition.relative(side);
+        return level.hasChunkAt(neighborPos)
+                && com.gregtech.gregtech.content.cover.CoverConnections.canConnect(level, worldPosition, side);
+    }
+
+    private boolean isConnectableNeighbor(Direction side) {
+        BlockPos neighborPos = worldPosition.relative(side);
+        BlockState neighborState = level.getBlockState(neighborPos);
+        Direction neighborSide = side.getOpposite();
+        if (neighborState.getBlock() instanceof com.gregtech.gregtech.api.transport.FluidPipeConnectable block
+                && block.canConnectFluidPipe(neighborSide)) return true;
+        return level.getBlockEntity(neighborPos) instanceof com.gregtech.gregtech.api.transport.FluidPipeConnectable host
+                && host.canConnectFluidPipe(neighborSide);
+    }
+
+    private boolean connectOwnFace(Direction side) {
+        BlockState state = level.getBlockState(worldPosition);
+        if (state.getValue(FluidPipeBlock.propFor(side))) return false;
+        level.setBlockAndUpdate(worldPosition, state.setValue(FluidPipeBlock.propFor(side), true));
+        return true;
+    }
+
+    public boolean isFaceManuallyDisconnected(Direction side) {
+        return (manualDisconnects & (1 << side.ordinal())) != 0;
+    }
+
+    /** Called after a wrench toggled {@code side}; the bit is persisted with the pipe. */
+    public void setFaceManuallyDisconnected(Direction side, boolean disconnected) {
+        int next = disconnected
+                ? manualDisconnects | (1 << side.ordinal())
+                : manualDisconnects & ~(1 << side.ordinal());
+        if (next != manualDisconnects) {
+            manualDisconnects = next;
+            setChanged();
         }
     }
 
@@ -960,6 +1027,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
 //?}
         temperature = tag.contains(NBT_TEMPERATURE) ? tag.getLong(NBT_TEMPERATURE) : GregTechConstants.DEF_ENV_TEMP;
         transferredAmount = tag.contains(NBT_TRANSFERRED) ? tag.getLong(NBT_TRANSFERRED) : 0;
+        manualDisconnects = tag.contains(NBT_MANUAL_DISCONNECTS) ? tag.getByte(NBT_MANUAL_DISCONNECTS) & 0x3F : 0;
         for (int i = 0; i < tanks.length && i < lastReceivedFrom.length; i++) {
             lastReceivedFrom[i] = tag.contains(NBT_LAST_RECEIVED + i) ? tag.getByte(NBT_LAST_RECEIVED + i) : 0;
             if (tag.contains(NBT_TANK_PREFIX + i)) {
@@ -1047,6 +1115,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
 //?}
         tag.putLong(NBT_TEMPERATURE, temperature);
         tag.putLong(NBT_TRANSFERRED, transferredAmount);
+        tag.putByte(NBT_MANUAL_DISCONNECTS, (byte) manualDisconnects);
         for (int i = 0; i < tanks.length; i++) {
             tag.putByte(NBT_LAST_RECEIVED + i, lastReceivedFrom[i]);
             CompoundTag tankTag = new CompoundTag();

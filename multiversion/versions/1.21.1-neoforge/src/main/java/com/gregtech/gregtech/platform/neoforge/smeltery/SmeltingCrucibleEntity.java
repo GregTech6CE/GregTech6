@@ -36,7 +36,8 @@ import com.gregtech.gregtech.util.GTEntityHelper;
 import net.minecraft.world.InteractionResult;
 
 /** Neo world/cache/storage adapter for the shared real crucible engine. */
-public class SmeltingCrucibleEntity extends com.gregtech.gregtech.blockentity.GTEnergyBlockEntity implements com.gregtech.gregtech.api.energy.HeatEnergyBlock, com.gregtech.gregtech.api.machine.ITileEntityCrucible, com.gregtech.gregtech.api.fluid.MoltenMaterialStorage {
+public class SmeltingCrucibleEntity extends com.gregtech.gregtech.blockentity.GTEnergyBlockEntity implements com.gregtech.gregtech.api.energy.HeatEnergyBlock, com.gregtech.gregtech.api.machine.ITileEntityCrucible, com.gregtech.gregtech.api.fluid.MoltenMaterialStorage,
+        com.gregtech.gregtech.api.machine.HeatHandler {
     public static final long MAX_AMOUNT = 16L * GTValues.U;
     private final List<CrucibleMaterialStack> content = new ArrayList<>();
     private final ItemStackHandler cache = new ItemStackHandler(1) {
@@ -106,6 +107,38 @@ public class SmeltingCrucibleEntity extends com.gregtech.gregtech.blockentity.GT
     public net.neoforged.neoforge.fluids.capability.IFluidHandler moltenFluidHandler() { return new com.gregtech.gregtech.api.fluid.MoltenFluidHandler(this); }
 
     public long getEnergyBuffer() { return thermal.energyHU(); }
+
+    // ── HeatHandler: direct HU access into the signed buffer; the tick still owns conversion ──
+
+    @Override public long heatStored() { return thermal.energyHU(); }
+    /** The crucible buffer is a long with no rated ceiling. */
+    @Override public long heatCapacity() { return Long.MAX_VALUE; }
+    @Override public long temperatureK() { return getTemperature(); }
+
+    @Override public long insertHeat(long signedHU, boolean simulate) {
+        if (signedHU == 0) return 0;
+        if (signedHU > 0) {
+            long accepted = thermal.energyHU() < 0 ? signedHU
+                    : Math.min(signedHU, Long.MAX_VALUE - thermal.energyHU());
+            if (!simulate && accepted > 0) addHeatEnergy(accepted);
+            return accepted;
+        }
+        if (signedHU == Long.MIN_VALUE) return 0;
+        long removed = Math.min(Math.max(0, thermal.energyHU()), -signedHU);
+        if (!simulate && removed > 0) removeHeatEnergy(removed);
+        return -removed;
+    }
+
+    @Override public long extractHeat(long signedHU, boolean simulate) {
+        if (signedHU == 0) return 0;
+        if (signedHU > 0) {
+            long removed = Math.min(Math.max(0, thermal.energyHU()), signedHU);
+            if (!simulate && removed > 0) removeHeatEnergy(removed);
+            return removed;
+        }
+        if (signedHU == Long.MIN_VALUE) return 0;
+        return insertHeat(-signedHU, simulate);
+    }
     public List<CrucibleMaterialStack> getContentView() { return content.stream().map(CrucibleMaterialStack::copy).toList(); }
     public int getDisplayFillPercent() { return (getDisplayedHeight() & 255) * 100 / 255; }
     public String formatContentSummary() {

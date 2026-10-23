@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "scope": "gt6-logic addon API batch 2: opt-in pipe connection and signal-wire neighbour reconnection",
+  "branch": "addon/remaining-api-gaps",
+  "base_head": "57e2a45e5",
+  "card": "docs/card-plans/active/48-gt6-logic-api-gaps.md batch 2",
+  "mod_version": "0.0.0",
+  "api_version": 0,
+  "jdk_toolchains": {
+    "core": 17,
+    "forge": 17,
+    "neoforge": 21
+  },
+  "platform_compile": {
+    "forge": {
+      "command": "./gradlew :multiversion:1.20.1-forge:compileJava :multiversion:1.20.1-forge:compileBootstrapGameTestJava --console=plain",
+      "result": "BUILD SUCCESSFUL"
+    },
+    "neoforge": {
+      "command": "./gradlew :multiversion:1.21.1-neoforge:compileJava :multiversion:1.21.1-neoforge:compileBootstrapGameTestJava --console=plain",
+      "result": "BUILD SUCCESSFUL"
+    },
+    "api_closure": {
+      "command": "./gradlew :multiversion:1.20.1-forge:addonApiClosureCheck :multiversion:1.21.1-neoforge:addonApiClosureCheck --console=plain",
+      "result": "BUILD SUCCESSFUL",
+      "forge": "Addon API closure passed (forge): 137 API classes",
+      "neoforge": "Addon API closure passed (neoforge): 137 API classes"
+    }
+  },
+  "gametests": {
+    "namespace": "gregtech_pipe_auto",
+    "runtime_parameters": {
+      "heap": "3g",
+      "forge_jvm_args": "-XX:+UseSerialGC",
+      "neoforge_directory_property": "neoforgeGameTestDirectory",
+      "note": "Each platform ran in a fresh game directory. The first Forge attempt reused an older directory whose saved pipes occupied the same coordinates and produced two false failures; it is not counted."
+    },
+    "tests": [
+      "fluidPipeConnectsToConnectableBlockPlacedAfter",
+      "fluidPipePlacedAfterConnectableBlockConnects",
+      "itemPipeAutoConnectsInBothOrders",
+      "wrenchDisconnectSurvivesNeighbourChanges",
+      "placementScanRepairsHalfConnection",
+      "signalWireConnectsToSourcePlacedAfter",
+      "signalWirePlacedAfterSourceConnects",
+      "signalWireClearsConnectionWhenSourceIsRemoved",
+      "signalWiresConnectToEachOtherPlacedAfter"
+    ],
+    "forge": {
+      "command": "./gradlew :multiversion:1.20.1-forge:runGameTestServer -PgameTestNamespaces=gregtech_pipe_auto -PgameTestHeap=3g \"-PgameTestJvmArgs=-XX:+UseSerialGC\" -PgameTestDirectory=build/gametest-pipe-auto-forge-b3 --console=plain",
+      "result": "All 9 required tests passed",
+      "log": "work/batch2-forge-pipe.log",
+      "sha256": "12ce294d10c8079c1247a6854064e3eda8ddfdb0f6618f5be7ebbae7294cd0d0"
+    },
+    "neoforge": {
+      "command": "./gradlew :multiversion:1.21.1-neoforge:runGameTestServer -PgameTestNamespaces=gregtech_pipe_auto -PgameTestHeap=3g -PneoforgeGameTestDirectory=build/bootstrap-gametest-pipe-auto-b3 --console=plain",
+      "result": "All 9 required tests passed",
+      "log": "work/batch2-neoforge-pipe.log",
+      "sha256": "aaf0040ad3ba6a83c1ad3d2de93ccd25211c0f902a031691ed2795f7cbc9c3a6"
+    }
+  },
+  "not_verified": [
+    "core:check not rerun for this batch (no core or API-contract change)",
+    "gameplay",
+    "dedicated server",
+    "saved-world restart"
+  ]
+}

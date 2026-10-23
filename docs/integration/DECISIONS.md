@@ -1860,3 +1860,28 @@ Sensors null-NBT源登记可合法携带REV，生成器只为这组解析，避�
 - 样例：`examples/addon-sample` 两端的 `sample_switch` 声明 `signalOutput(true)`，软锤翻转的 `armed` 标志输出 15 级信号。
 - 新增 `SensorSourceTests.thermometer_reads_temperature_source`，用 GameTest 探针验证温度源读数；行为机信号目前只有声明契约和样例覆盖，尚无运行时 GameTest。
 - 验证：`:core:check` 通过（3m24s）；Forge 1.20.1 与 NeoForge 1.21.1 的 `compileJava`、`compileAddonSample`、`addonApiClosureCheck` 通过（两端 135 个 API 类）；`gregtech_sensor_source` 两端各 8/8 required tests passed。行为/样例命名空间两端各 12/12 通过。先前 `samplepressconsumeseuandemitsnugget` 的样例夹具问题已修：数据包 `press_iron.json` 改用 `IRON_BLOCK`，避开 `onRecipesReady` 已占用的 `IRON_INGOT` 行（覆盖层从 `added 3, rejected 1` 变为 `added 4, rejected 0`）；测试机器下方垫石头，防止底面自动输出把产物丢进空气。首次默认套件在 1536m 堆 OOM，改用 3g + SerialGC 后复跑。未做玩法、专服、存档重启验证。
+
+## 2026-10-23 / gt6-logic 批次 2：管道自动连接与扳手覆盖
+
+- 新增 `FluidPipeConnectable.canConnectFluidPipe(Direction)` 与 `ItemPipeConnectable.canConnectItemPipe(Direction)`（`multiversion/src/api/java/com/gregtech/gregtech/api/transport`）。接口可写在方块或方块实体上，`side` 是被连接方块朝向管道的一面。只有显式实现这两个接口的方块才会自动连接；内置机器和现有管路不改变。
+- 管道放置时连上点击面和所有已相邻的可连接方块；相邻方块后放置、区块重载后也补连。重连只补一侧，不会把两根互不指向的管子强行接上，也不会主动断开任何面。
+- 扳手断开的面记成 6 位掩码，写进管道自己的 `gt.manual_disconnects`（byte）；自动连接和重连都跳过这些面，扳手重新接上时清位。掩码随方块存档，重启后仍保持。
+- `FluidPipeBlock` / `ItemPipeBlock` 的 `onPlace` 在 Forge/NeoForge 1.20.1/1.21.1 早于方块实体注册，读不到自身状态；放置回调改到 `setPlacedBy`（两端共用），非物品放置由方块实体首个服务端 tick 的重连扫描补齐。新增逻辑一律从 `Level.getBlockState(pos)` 读权威状态，不依赖方块实体的缓存字段。
+- `SignalWireBlock` 增加 `neighborChanged`：相邻方块变成信号线、`isSignalSource()` 方块或方块实体实现 `GtSignalSource` 时补连；相邻方块被移除成空气时断开。`onPlace` 也识别方块实体级 `GtSignalSource`，所以方块不必再覆写 `Block#isSignalSource()`。剪线钳手动接到非信号源方块的面保持打开，只有该邻居被移除才清掉。
+- 验证：两端 `gregtech_pipe_auto` 各 9/9 required tests passed；两端 `compileJava`、`compileBootstrapGameTestJava`、`addonApiClosureCheck` 通过（137 个 API 类）。未做玩法、专服、存档重启验证。证据见 [gt6-logic-batch2-20261023.json](verification/gt6-logic-batch2-20261023.json)。
+
+## 2026-10-23 / gt6-logic 批次 3：内置机器控制门面
+
+- `MachineControl` 从 `multiversion/src/main` 移到 `multiversion/src/api`，FQCN 不变，进入 SDK（连同嵌套 `Provider`，累计 139 个 API 类）。
+- 新增只读 `energy()`、`energyCapacity()`、`progressPerTick()`。`BasicMachineBlockEntity` 分别返回 `mEnergy`、`inputMaximum()`，以及活动 tick 的供能量（空闲为 0）。
+- 写入按 Masson 2026-10-23 的选择保持关闭：内置机器的 `supportsWrite()` 恒为 false，`setProgress` / `setEnergy` 走默认拒绝。开放写需要 SaltNya 另议，本轮不实现。
+- `externalSignal(side)` / `setExternalSignal(side, level)` 是控制输入，不是状态写入：级别 0–15，按面存进 `gt.external_signals`（每面 4 位），随机器存档；越界值拒绝。`switchesAllowRunning` 在读取盖板红石时与本面外部信号取最大值，再交给盖板 `allows`，因此外部控制器可以经由红石机器开关盖板停机或开机；没有控制盖板的面不受影响。
+- 验证：两端 `gregtech_machine_control` 各 2/2 required tests passed；两端 `compileJava`、`compileBootstrapGameTestJava`、`addonApiClosureCheck` 通过。未做玩法、专服、存档重启验证。证据见 [gt6-logic-batch3-20261023.json](verification/gt6-logic-batch3-20261023.json)。
+
+## 2026-10-23 / gt6-logic 批次 4：HeatHandler 读写门面
+
+- 新增 `HeatHandler`（`core/src/api/java/com/gregtech/gregtech/api/machine`）：`heatStored()`、`heatCapacity()`、`temperatureK()`、`insertHeat(long, boolean)`、`extractHeat(long, boolean)`。数量是带符号 HU：正数加热，负数降温；`simulate` 不改变状态，返回值必须和执行一致。
+- 锅炉（单方块与原始大型）、热交换器（单方块与大型）直接在自己的 HU 缓冲上读写，`heatCapacity` 取各自额定容量；`temperatureK` 返回环境温度（`GregTechConstants.DEF_ENV_TEMP`），因为这些机器原本没有独立温度模型。大型锅炉未成形时拒绝插入，抽出不受结构限制。
+- 坩埚（Forge 树 `SmeltingCrucibleBlockEntity`、NeoForge 树 `SmeltingCrucibleEntity`）读写有符号能量缓冲，`heatCapacity` 为 `Long.MAX_VALUE`，`temperatureK` 返回自身开尔文；温度仍由下一个 tick 的 `ThermalStep` 从缓冲换算，写热量不直接改温度。大型坩埚控制器继承同一适配器。
+- 爆炸和冷却规则不变：超过容量的锅炉仍在下一个 tick 爆炸；坩埚的过热、熔毁和被动漂移仍走原 tick。
+- 验证：两端 `gregtech_heat_handler` 各 3/3 required tests passed；两端 `compileJava`、`compileBootstrapGameTestJava` 通过；`core`、Forge、NeoForge `addonApiClosureCheck` 通过（core 109、两端 140 个 API 类）。未做玩法、专服、存档重启验证。证据见 [gt6-logic-batch4-20261023.json](verification/gt6-logic-batch4-20261023.json)。
