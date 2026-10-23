@@ -12,6 +12,8 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'machinependingstatetests.partiallydeliveredmachinejobsurvivesfreshentityload',
+    'machinependingstatetests.blockedgasturbinepulsesurvivesfreshentityload',
     'behaviorstructuresafetytests.behaviormixedalternativesbindactualfixedandrepeatedparts',
     'behaviorstructuresafetytests.behaviorretainedportrejectsbrokenstructurebeforetickandrebinds',
     'behaviorstructuresafetytests.behaviorenergypollingdoesnotloadremoteborderneighbor',
