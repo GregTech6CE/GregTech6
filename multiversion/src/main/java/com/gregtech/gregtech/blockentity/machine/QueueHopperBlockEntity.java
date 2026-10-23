@@ -697,6 +697,10 @@ public class QueueHopperBlockEntity extends BlockEntity implements IItemHandler,
     @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory playerInv, Player player) {
         return new HopperContainerMenu(GTMenuTypes.forSlotCount(invsize()), containerId, playerInv, this) {
+            @Override protected void inventorySlotChanged(int index) {
+                QueueHopperBlockEntity.this.setChanged();
+                inventoryChanged = true;
+            }
             @Override
             public boolean stillValid(Player viewer) {
                 return !isRemoved() && level != null && viewer.level() == level

@@ -120,7 +120,7 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements com.gr
             return removed;
         }
         if (signedHU == Long.MIN_VALUE) return 0;
-        return insertHeat(-signedHU, simulate);
+        return -insertHeat(-signedHU, simulate);
     }
     @Nullable public FluidTankGT waterTank() { return waterTank; }
     @Nullable public FluidTankGT steamTank() { return steamTank; }

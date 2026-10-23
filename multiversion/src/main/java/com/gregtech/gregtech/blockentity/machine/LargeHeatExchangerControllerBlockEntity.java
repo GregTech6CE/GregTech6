@@ -131,7 +131,7 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
             return removed;
         }
         if (signedHU == Long.MIN_VALUE) return 0;
-        return insertHeat(-signedHU, simulate);
+        return -insertHeat(-signedHU, simulate);
     }
 
     public long tankAmount(int index) {

@@ -156,16 +156,16 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             if(level!=null&&level.isClientSide)return !controlStopped;
             boolean changed=controlStopped==enabled;controlStopped=!enabled;mInventoryChanged=true;
             if(changed)updateAdjacentToggleableEnergySources();
-            if(!enabled){mEnergy=0;mActive=false;mRunning=false;updateBlockStates(false,false);}
+            if(!enabled){mEnergy=0;mActive=false;mRunning=false;onControlStopped();updateBlockStates(false,false);}
             setChanged();return !controlStopped;
         }
-        public boolean running(){return available()&&mRunning;}
-        public boolean active(){return available()&&mActive;}
-        public long progress(){return available()?(successful?1:mProgress):0;}
-        public long progressMax(){return available()?(successful?1:mMaxProgress):0;}
+        public boolean running(){return available()&&controlRunning();}
+        public boolean active(){return available()&&controlActive();}
+        public long progress(){return available()?controlProgress():0;}
+        public long progressMax(){return available()?controlProgressMax():0;}
         public long energy(){return available()?mEnergy:0;}
         public long energyCapacity(){return available()?inputMaximum():0;}
-        public long progressPerTick(){return available()&&mActive?Math.min(inputMaximum(),mEnergy):0;}
+        public long progressPerTick(){return available()?controlProgressPerTick():0;}
         public int externalSignal(Direction side){
             return available()&&side!=null?externalSignals[side.ordinal()]&15:0;
         }
@@ -177,6 +177,14 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             return true;
         }
     };
+    /** Dedicated executors override read state without duplicating switch/external-signal ownership. */
+    protected boolean controlRunning() { return mRunning; }
+    protected boolean controlActive() { return mActive; }
+    protected long controlProgress() { return successful ? 1 : mProgress; }
+    protected long controlProgressMax() { return successful ? 1 : mMaxProgress; }
+    protected long controlProgressPerTick() { return mActive ? Math.min(inputMaximum(), mEnergy) : 0; }
+    protected void onControlStopped() {}
+
     @Override public com.gregtech.gregtech.api.machine.MachineControl machineControl(Direction side){return control;}
     private int packedExternalSignals(){
         int packed=0;
@@ -288,8 +296,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         refreshAdjacentEnergySources();
         if(sourceRequiresIgnition()&&sourceIgnitionTicks>0)sourceIgnitionTicks--;
         beforeMachineTick();
-        coverTicks++;
-        panels.beforeTick();
+        beginCoverTick();
         if(!structureComplete()) { successful=false;workPossible=false;if(mActive||mRunning) {mActive=false;mRunning=false;updateBlockStates(false,false);}updateCoverSignals();return; }
         refreshWorkPossible();
         boolean allowed=switchesAllowRunning();successful=false;
@@ -535,7 +542,13 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     // ── Cover behaviors (ticked each server tick) ───────────────────────
 
-    private void tickCovers(Level level, BlockPos pos) {
+    /** Cover-only lifecycle: no recipe work, energy polling or automatic machine output. */
+    protected final void beginCoverTick() {
+        coverTicks++;
+        panels.beforeTick();
+    }
+
+    protected final void tickCovers(Level level, BlockPos pos) {
         if(panels.stopped())return;
         for (Direction side : Direction.values()) {
             ItemStack stack = covers[side.ordinal()];
@@ -624,7 +637,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         var recipe=findRecipeWithUsbPort();
         if(recipe!=null && exclusivePairOrPlain(recipe)){int parallel=computeParallel(recipe, matchedFluids());workPossible=parallel>0&&com.gregtech.gregtech.api.recipe.MachineWorkCost.calculate(recipe.mEUt,recipe.mDuration,parallel,parallelScalesDuration(),efficiency(),inputMinimum(),inputMaximum(),cheapOverclocking(),usesTimeEnergy())!=null;}
     }
-    private void updateCoverSignals(){
+    protected final void updateCoverSignals(){
         if(level==null||level.isClientSide||isRemoved())return;
         panels.afterTick();
         boolean changed=false;var state=coverState();
@@ -984,7 +997,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     }
 
     /** Deduct only deliveries confirmed by the shared transfer engine. */
-    private void pushOutputItems(IItemHandler target, Direction side) {
+    protected final void pushOutputItems(IItemHandler target, Direction side) {
         for (int slot = itemHandler.inputCount(); slot < itemHandler.getSlots(); slot++) {
             ItemStack offered = itemHandler.getStackInSlot(slot);
             if (offered.isEmpty() || !allowsItemTraffic(side, offered, false)) continue;

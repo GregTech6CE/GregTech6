@@ -33,7 +33,7 @@ public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockE
         setSpec(com.gregtech.gregtech.content.machine.BasicMachineDefinitions.from(com.gregtech.gregtech.content.multiblock.OriginalMultiblockMachineParameters.implosionCompressor()));
     }
     public static void serverTick(Level level,BlockPos pos,BlockState state,ImplosionCompressorControllerBlockEntity machine) {
-        if(machine.isStructureOk()) BasicMachineBlockEntity.serverTick(level,pos,state,machine);
+        BasicMachineBlockEntity.serverTick(level,pos,state,machine);
     }
     @Override protected boolean structureComplete() { return isStructureOk(); }
     @Override public boolean isStructureOk() {

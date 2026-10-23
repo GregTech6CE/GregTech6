@@ -116,7 +116,7 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
             return removed;
         }
         if (signedHU == Long.MIN_VALUE) return 0;
-        return insertHeat(-signedHU, simulate);
+        return -insertHeat(-signedHU, simulate);
     }
     public long waterAmount() { return water.getAmount(); }
     @Override public long gibblValue(int side) { return steam.getAmount(); }

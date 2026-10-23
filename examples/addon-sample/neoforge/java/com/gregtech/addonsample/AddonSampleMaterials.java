@@ -22,6 +22,8 @@ public final class AddonSampleMaterials implements AddonMaterialContributor {
 
     @Override public List<MaterialDeclaration> materials() {
         var materials = new ArrayList<MaterialDeclaration>();
+        // Reuses the existing Beer fluid without taking its built-in registry identity.
+        materials.add(MaterialDeclaration.builder("Beer").liquid().build());
         materials.add(MaterialDeclaration.builder("SampleRubber")
                 .displayName("Sample Rubber").color(0xE8E8E8).meltingPointKelvin(350)
                 .boilingPointKelvin(600).density(1.2F).dust().polymer().build());

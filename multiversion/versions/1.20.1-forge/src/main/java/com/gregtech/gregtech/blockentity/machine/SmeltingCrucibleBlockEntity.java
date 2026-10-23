@@ -191,7 +191,7 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
             return removed;
         }
         if (signedHU == Long.MIN_VALUE) return 0;
-        return insertHeat(-signedHU, simulate);
+        return -insertHeat(-signedHU, simulate);
     }
 
     public List<CrucibleMaterialStack> getContentView() {
