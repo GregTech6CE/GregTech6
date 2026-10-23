@@ -48,7 +48,7 @@ jobs:
       - run: echo "JAVA17_HOME=$JAVA_HOME" >> "$GITHUB_ENV"
       - uses: gradle/actions/setup-gradle@v4
       - name: Check asset and CI evidence regressions
-        run: python -X utf8 -m unittest tools.tests.test_issue76_sapling_assets tools.tests.test_issue_ci_evidence tools.tests.test_selector_cover_admission
+        run: python -X utf8 -m unittest tools.tests.test_issue76_sapling_assets tools.tests.test_issue_ci_evidence tools.tests.test_selector_cover_admission tools.tests.test_instrument_translations
       - name: Run isolated development GameTests
         # Official development GameTestServer exemption only. Never write eula=true;
         # this does not accept a production dedicated-server EULA.

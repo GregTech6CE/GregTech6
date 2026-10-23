@@ -104,3 +104,14 @@ Jade 动态名称补充：六个方向、蒸汽输入与方坯模具形状使用
 明确族身份绑定：cokeoven→17000、implosioncompressor→17110、distillationtower→17101、
 cryodistillationtower→17111、fusionreactor→17198。沿用原文名字，不根据旧注册路径中的
 `stainless_steel` 后缀猜测材质或为焦炉／聚变堆伪造原版材质身份。
+
+## 手持仪表项目读数（2026-10-23）
+
+电表／转速计功能修复的四个读数键由 `instrument_project.json` 单独维护：
+`message.gt6ce.meter.electric`、`message.gt6ce.meter.rotary`、
+`message.gt6ce.meter.input_side`、`message.gt6ce.meter.output_side`。
+这是项目界面文字，不冒充 TeamNED 原版句子；原始来源压缩快照和哈希保持不变。
+EU/t、RU/t 保留原单位，方向参数复用既有 `jade.gt6ce.direction.*`，不扩大 Jade 范围。
+同步器只接受这四个精确键，检查英文原句、缺键、格式参数以及原文／别名／
+CrucibleCraft／Jade 绑定冲突，并独立报告 `project_instrument_translations`。
+未配置此项目映射的夹具仍按既有规则运行；不得用它翻译其它 message 或 tooltip。

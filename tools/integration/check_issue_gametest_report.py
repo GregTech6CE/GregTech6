@@ -12,6 +12,11 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'handheldmetertests.electrometerreadsacceptedwirepowerthroughregistereditem',
+    'handheldmetertests.tachometerreadsrealaxlestartuptransfer',
+    'handheldmetertests.tachometerreportsgearboxsidesandtransferredpower',
+    'handheldmetertests.handheldmetersrejectunsupportedtargetswithoutconsumption',
+
     'foodcloneimmunitytests.nondeathrestorecopiesfoodstatswithoutaliasing',
     'foodcloneimmunitytests.emptyoriginalclearsstaleclonefoodstats',
     'foodcloneimmunitytests.deathrestorestillclearsfoodstatsanddose',

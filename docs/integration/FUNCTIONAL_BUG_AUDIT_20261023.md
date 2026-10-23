@@ -58,3 +58,18 @@ Source chains include original `MultiTileEntityBasicMachine.canOutput/doInputIte
 - Reactor exposure delegates to the existing shared radiation-protection predicate, retaining server/alive/dose and undead/arthropod guards. This restores existing creative, iron-golem/wither and full-suit protection without changing severe-dose direct-damage policy, armor tags, species compatibility or global fluid capacity behavior.
 - Five additional native cases per loader use real ServerPlayer.restoreFrom (not synthetic Clone events), detached-compound mutation checks, death/absent controls and native exposure targets/armor. Selected totals become Forge34 / NeoForge30; source assertions or serialized tags alone are not treated as successful player restoration.
 - Reactor cooling/output order, steam-expanded capacity and handheld instrument dispatch remain separate investigated work, not silently included in this patch.
+
+## Fourth verification batch: registered handheld instrument consumers
+
+Registered electrometer/tachometer items now dispatch to actual cable/axle/gearbox counters, including original connected gearbox input/output face diagnostics. A read-only gearbox predicate exposes its existing recorded input mask; transfer timing and stopped-readout policies are unchanged. Unsupported/wrong-category targets return PASS and consume no instrument.
+
+Four exact project-owned message keys reuse existing direction translations. Dedicated allowlist/placeholder/English-drift/source-binding collision checks protect the language pipeline; original TeamNED bytes and existing Jade scope remain untouched. This is new instrument localization, not a claim of copying original translated sentences.
+
+Four cases per loader use registered instrument callbacks and real wire/charging-table, axle startup and gearbox/transformer transfers, recording only chat delivery. Native compilation/runtime remains gated by CI. Required totals are now Forge38 / NeoForge34; no full electrical-network or survival-chain certification is inferred.
+
+## Verified native checkpoints
+
+- First batch final `a59bf9e44565439f29de8924acbb89a4775dfe4a`: [focused run39877968391](https://github.com/GregTech6CE/GregTech6/actions/runs/39877968391), Forge19/NeoForge15 passed; [dual build39877968386](https://github.com/GregTech6CE/GregTech6/actions/runs/39877968386) passed. After fast-forward to main, [main focused39878627071](https://github.com/GregTech6CE/GregTech6/actions/runs/39878627071) and [main build39878627150](https://github.com/GregTech6CE/GregTech6/actions/runs/39878627150) passed again.
+- Earlier first-batch attempts correctly failed on selector admission, a loader-specific test API, and the unanchored consumption fixture. These checks were not disabled. The consumption fixture was isolated at an actual test position with no gravity; precise120→70→20→0 and item-count assertions remain.
+- Second/third batches final `69d66fb8851752e01de7ca5aa82bf3e305406509`: [focused39878636024](https://github.com/GregTech6CE/GregTech6/actions/runs/39878636024), Forge34/NeoForge30 passed; [dual build39878636010](https://github.com/GregTech6CE/GregTech6/actions/runs/39878636010) passed. These are native cases, distinct from Python XML-parser fixtures and the120 pure-Java contract processes.
+- These checkpoints do not cover later instrument/reactor changes; require the Actions checks of the exact later commit. No broad old-save/client/multiplayer acceptance is implied.

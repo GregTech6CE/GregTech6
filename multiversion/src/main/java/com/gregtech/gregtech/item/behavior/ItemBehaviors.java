@@ -219,6 +219,9 @@ public final class ItemBehaviors {
                                 ItemStack stack, float hitX, float hitY, float hitZ) {
         String id = itemId(stack);
         if (id == null) return Outcome.refused(stack);
+        if (id.equals("electrometer") || id.equals("tachometer")) {
+            return BehaviorHandheldMeter.useOn(level, pos, player, stack, id.equals("electrometer"));
+        }
         if (id.equals("quicksilver_thermometer")) {
             return BehaviorThermometer.useOn(level, pos, player, stack);
         }

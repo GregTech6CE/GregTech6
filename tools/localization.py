@@ -267,6 +267,35 @@ def load_jade_project(repo=ROOT):
     return rows
 
 
+
+# Exact functional instrument readouts; never a general message namespace exemption.
+INSTRUMENT_PROJECT_KEYS = frozenset({
+    'message.gt6ce.meter.electric',
+    'message.gt6ce.meter.rotary',
+    'message.gt6ce.meter.input_side',
+    'message.gt6ce.meter.output_side',
+})
+
+
+def load_instrument_project(repo=ROOT):
+    """Project-owned instrument sentences, not purported original translations."""
+    path = repo / CONFIG_PATH / 'instrument_project.json'
+    if not path.exists():
+        return {}
+    rows = read_json(path)['values']
+    if not isinstance(rows, dict):
+        raise ValueError('Project instrument values must be a mapping')
+    for key, row in rows.items():
+        if key not in INSTRUMENT_PROJECT_KEYS:
+            raise ValueError('Project instrument translation outside exact allowlist: ' + key)
+        if not isinstance(row, dict) or any(not isinstance(row.get(field), str) or not row[field]
+                                            for field in ('english', 'value')):
+            raise ValueError('Incomplete project instrument translation: ' + key)
+        if format_arguments(row['english']) != format_arguments(row['value']):
+            raise ValueError('Project instrument format arguments differ: ' + key)
+    return rows
+
+
 def expected_chinese(english, source, aliases, *, repo=ROOT):
     for label, mapping in [('English', english), ('source', source), ('aliases', aliases)]:
         if not isinstance(mapping, dict) or any(not isinstance(k, str) or not isinstance(v, str)
@@ -298,6 +327,13 @@ def expected_chinese(english, source, aliases, *, repo=ROOT):
             raise ValueError('Project Jade English drifted or key missing: ' + key)
         if key in aliases or key in source or key in adopted_keys:
             raise ValueError('Project Jade translation overrides source binding: ' + key)
+        result[key] = row['value']
+    jade_keys = load_jade_project(repo).keys()
+    for key, row in load_instrument_project(repo).items():
+        if english.get(key) != row['english']:
+            raise ValueError('Project instrument English drifted or key missing: ' + key)
+        if key in aliases or key in source or key in adopted_keys or key in jade_keys:
+            raise ValueError('Project instrument translation overrides source/adopted/Jade binding: ' + key)
         result[key] = row['value']
     if any(k.startswith('emi.group.gt6ce.') for k in english):
         from integration.remi_group_titles import headings
@@ -344,11 +380,13 @@ def synchronize(repo=ROOT, *, write=False, external=None):
         raise ValueError('Adopted key is not in English: ' + ', '.join(missing_adopted[:8]))
     rock_heading = stone_rock_heading(english, source)
     fallback = sorted(english.keys() - source.keys() - aliases.keys() - derived_titles.keys()
-                      - rock_heading.keys() - adopted.keys() - load_jade_project(repo).keys())
+                      - rock_heading.keys() - adopted.keys() - load_jade_project(repo).keys()
+                      - load_instrument_project(repo).keys())
     return {'source_sha256': meta['sha256'], 'source_keys': len(source), 'english': english_report,
             'native_aliases': len(aliases), 'chinese_keys': len(expected), 'derived_emi_headings': len(derived_titles),
             'derived_stone_rock_templates': len(rock_heading), 'adopted_cruciblecraft_copies': len(adopted),
             'project_jade_translations': len(load_jade_project(repo)),
+            'project_instrument_translations': len(load_instrument_project(repo)),
             'english_fallback_count': len(fallback), 'english_fallback_keys': fallback,
             'changes': {k: len(v) for k, v in delta.items()}}
 

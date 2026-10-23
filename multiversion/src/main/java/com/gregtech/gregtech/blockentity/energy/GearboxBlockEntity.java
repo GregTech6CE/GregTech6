@@ -416,6 +416,11 @@ public class GearboxBlockEntity extends BlockEntity implements IEnergyBlock {
         gearbox.setChanged();
     }
 
+    /** Original tachometer side diagnostic: the current recorded input mask, without advancing its window. */
+    public boolean receivedFrom(Direction side) {
+        return side != null && (inputSides & bit(side)) != 0;
+    }
+
     public long transferredLast() {
         return transferredLast;
     }
