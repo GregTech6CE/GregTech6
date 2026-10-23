@@ -62,8 +62,13 @@ public class HopperContainerMenu extends AbstractContainerMenu {
         var layout = com.gregtech.gregtech.api.inventory.InventorySlotLayout.layout(slotCount);
         int index = 0;
         for (var position : layout.positions())
-            addSlot(new SlotItemHandler(inventory, index++, position.x(), position.y()));
+            addSlot(createInventorySlot(inventory, index++, position.x(), position.y()));
         return layout.playerInventoryY();
+    }
+
+    /** Called during construction: overrides must use these parameters, not subclass fields. */
+    protected Slot createInventorySlot(IItemHandler handler, int index, int x, int y) {
+        return new SlotItemHandler(handler, index, x, y);
     }
 
     private void addPlayerInventory(Inventory playerInv, int yOffset) {

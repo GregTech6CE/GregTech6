@@ -86,7 +86,7 @@ public class BehaviorMachineMenu extends AbstractContainerMenu {
 
     @Override
     public boolean clickMenuButton(Player player, int id) {
-        return machine.flip(id);
+        return stillValid(player) && machine.flip(id);
     }
 
     @Override
@@ -107,6 +107,10 @@ public class BehaviorMachineMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return stillValid(access, player, machine.getBlockState().getBlock());
+        return !machine.isRemoved() && machine.getLevel() == player.level()
+                && player.level().hasChunkAt(machine.getBlockPos())
+                && player.level().getBlockEntity(machine.getBlockPos()) == machine
+                // Retain the loader's reach calculation (including Forge's reach attribute).
+                && stillValid(access, player, machine.getBlockState().getBlock());
     }
 }
