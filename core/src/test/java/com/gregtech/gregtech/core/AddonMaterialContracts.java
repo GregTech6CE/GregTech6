@@ -127,6 +127,8 @@ public final class AddonMaterialContracts {
                 nitrate++;
                 check(!definition.hasIdSuffix(), "new material keeps its base item id: " + definition.itemId());
                 check(automatic.contains(definition.prefix()), "new material items stay on generated prefixes: " + definition.itemId());
+                check("aa_sample".equals(definition.namespace()),
+                        "new material items use the addon namespace: " + definition.namespace() + ":" + definition.itemId());
             }
             if ("Iron".equals(definition.material().getName()) && automatic.contains(definition.prefix())) iron++;
             if ("dust_iron".equals(definition.itemId())) ironDust++;
@@ -170,6 +172,11 @@ public final class AddonMaterialContracts {
         check(AddonMaterials.acceptedForms().stream().anyMatch(form -> form.prefixName().equals("dust"))
                         && AddonMaterials.acceptedForms().stream().anyMatch(form -> form.prefixName().equals("dustSmall")),
                 "forms() is the union");
+        for (var definition : MaterialItemDefinitions.all()) {
+            if (!"SharedName".equals(definition.material().getName())) continue;
+            check("aa_pair".equals(definition.namespace()),
+                    "a shared material follows its first owner's namespace: " + definition.namespace());
+        }
     }
 
     private static void ignoredHighId() {

@@ -31,7 +31,6 @@ import com.gregtech.gregtech.block.stone.GTStoneSlabBlock;
 import com.gregtech.gregtech.data.MaterialPrefix;
 import com.gregtech.gregtech.api.prefix.PrefixRegistry;
 import com.gregtech.gregtech.data.generated.GT6Materials;
-import com.gregtech.gregtech.item.FluidItem;
 import com.gregtech.gregtech.item.GTToolItem;
 import com.gregtech.gregtech.bootstrap.InitializationStep;
 import com.gregtech.gregtech.registry.*;
@@ -437,8 +436,8 @@ public class CreativeTabBootstrap implements InitializationStep {
     }
 
     private static void populateFluids(BuildCreativeModeTabContentsEvent event) {
-        GTFluidItems.ITEMS.getEntries().stream()
-                .filter(e -> e.isPresent() && e.get() instanceof FluidItem fluid && !fluid.fluidEntry().isHidden())
+        GTFluidItems.allEntries().stream()
+                .filter(e -> e.isPresent() && !e.get().fluidEntry().isHidden())
                 .sorted(java.util.Comparator.comparing(e -> e.getId().getPath()))
                 .forEach(e -> event.accept(new ItemStack(e.get(), 1)));
     }
