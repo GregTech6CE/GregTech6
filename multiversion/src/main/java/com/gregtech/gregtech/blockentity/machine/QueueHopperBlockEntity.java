@@ -360,7 +360,10 @@ public class QueueHopperBlockEntity extends BlockEntity implements IItemHandler,
             if (!existing.isEmpty() && !ItemStack.isSameItemSameTags(existing, simExtract)) continue;
 //?}
 
-            int toTake = Math.min(simExtract.getCount(), space);
+            // An empty slot has no item-specific limit until the source is known.
+            int itemSpace = Math.min(limit, simExtract.getMaxStackSize()) - existing.getCount();
+            int toTake = Math.min(simExtract.getCount(), Math.min(space, itemSpace));
+            if (toTake <= 0) continue;
             ItemStack extracted = source.extractItem(srcSlot, toTake, false);
             if (!extracted.isEmpty()) {
                 if (existing.isEmpty()) {
@@ -369,7 +372,7 @@ public class QueueHopperBlockEntity extends BlockEntity implements IItemHandler,
                 } else {
                     existing.grow(extracted.getCount());
                 }
-                space -= extracted.getCount();
+                space = Math.min(limit, existing.getMaxStackSize()) - existing.getCount();
                 totalMoved += extracted.getCount();
                 setChanged();
                 inventoryChanged = true;

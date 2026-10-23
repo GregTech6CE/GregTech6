@@ -285,6 +285,10 @@ public class HopperBlockEntity extends BlockEntity implements IItemHandler, IIte
             if (simExtract.isEmpty()) continue;
 
             int prevCount = simExtract.getCount();
+            // GT6 ST.move requires the destination to accept at least mMode,
+            // not merely the source to contain that many items.
+            ItemStack simulatedRemainder = ItemHandlerHelper.insertItem(target, simExtract.copy(), true);
+            if (prevCount - simulatedRemainder.getCount() < minAmount) continue;
             ItemStack remainder = ItemHandlerHelper.insertItem(target, simExtract, false);
             int accepted = prevCount - remainder.getCount();
             if (accepted > 0) {
