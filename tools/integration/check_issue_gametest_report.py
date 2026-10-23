@@ -12,6 +12,7 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'fluidpipeinspectiontests.fluidpipemagnifierskipsunloadedchunksandreportsloadednetwork',
     'hoppertransfercontracttests.queuehopperpullrespectsselecteditemstacklimit',
     'hoppertransfercontracttests.queuehopperpreserveslegacyoversizedcontents',
     'hoppertransfercontracttests.hopperminimumbatchrequiresdestinationcapacity',
