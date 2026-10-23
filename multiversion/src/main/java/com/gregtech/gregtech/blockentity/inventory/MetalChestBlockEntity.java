@@ -233,6 +233,7 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, 
             if (!playerInv.player.isSpectator() && chest.level != null)
                 chest.openers.incrementOpeners(playerInv.player, chest.level, chest.worldPosition, chest.getBlockState());
         }
+        @Override protected void inventorySlotChanged(int index) { chest.setChanged(); }
         @Override public boolean stillValid(Player player) {
             return !chest.isRemoved() && chest.level != null && chest.level.getBlockEntity(chest.worldPosition) == chest
                     && player.distanceToSqr(chest.worldPosition.getX() + .5, chest.worldPosition.getY() + .5, chest.worldPosition.getZ() + .5) <= 64;

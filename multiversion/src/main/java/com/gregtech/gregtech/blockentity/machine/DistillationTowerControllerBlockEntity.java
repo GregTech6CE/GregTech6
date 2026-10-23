@@ -71,11 +71,7 @@ public class DistillationTowerControllerBlockEntity extends LargeRecipeMachineBl
         var target=level.getBlockEntity(targetPos)==null?null:level.getBlockEntity(targetPos).getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER,front).resolve().orElse(null);
 //?}
         if(target==null)return;
-        for(int slot=inputSlots();slot<inventory().getSlots();slot++) {
-            var offer=inventory().getStackInSlot(slot);if(offer.isEmpty())continue;
-            var result=com.gregtech.gregtech.content.transport.ItemPipeTransferAdapter.transfer(offer.copy(),()->target);
-            if(result.accepted()>0)inventory().extractItem(slot,result.accepted(),false);
-        }
+        pushOutputItems(target, relativeToAbsolute(relativeSide));
     }
 //? if >=1.21.1 {
     /*@Override public void loadAdditional(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {

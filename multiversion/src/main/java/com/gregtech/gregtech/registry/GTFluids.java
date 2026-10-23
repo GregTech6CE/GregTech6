@@ -67,9 +67,11 @@ public final class GTFluids {
 
     /**
      * Registry namespace of a generated fluid: the owning addon of the material it was derived
-     * from, otherwise {@code gt6ce}. Fluids without a material stay in the built-in namespace.
+     * from, otherwise {@code gt6ce}. Built-in definitions keep their namespace even when an addon
+     * material binds to their existing fluid; that binding supplies metadata, not ownership.
      */
     public static String namespace(RegisteredFluids.FluidEntry entry) {
+        if (RegisteredFluids.isBuiltInDefinition(entry)) return GregTechIdentity.MOD_ID;
         String materialKey = entry.materialKey();
         if (materialKey == null) materialKey = RegisteredFluids.boundMaterial(entry.registryName());
         if (materialKey == null) return GregTechIdentity.MOD_ID;

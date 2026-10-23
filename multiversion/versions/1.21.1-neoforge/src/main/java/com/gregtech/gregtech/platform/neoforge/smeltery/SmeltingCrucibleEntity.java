@@ -137,7 +137,7 @@ public class SmeltingCrucibleEntity extends com.gregtech.gregtech.blockentity.GT
             return removed;
         }
         if (signedHU == Long.MIN_VALUE) return 0;
-        return insertHeat(-signedHU, simulate);
+        return -insertHeat(-signedHU, simulate);
     }
     public List<CrucibleMaterialStack> getContentView() { return content.stream().map(CrucibleMaterialStack::copy).toList(); }
     public int getDisplayFillPercent() { return (getDisplayedHeight() & 255) * 100 / 255; }

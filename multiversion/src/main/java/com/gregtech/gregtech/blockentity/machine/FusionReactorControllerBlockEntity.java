@@ -20,7 +20,7 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
     private long chargeRemaining,chargeTotal,progress,duration,outputEU;
     private MachineWorkOutputs products;
     private Recipe continuousRecipe;
-    private boolean running;
+    private boolean running, passive, processing, completed;
 
 //? if >=1.21.1 {
     /*public FusionReactorControllerBlockEntity(net.minecraft.world.level.block.entity.BlockEntityType<?> type,BlockPos pos,BlockState state) {
@@ -58,22 +58,61 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
 
     public static void serverTick(Level level,BlockPos pos,BlockState state,FusionReactorControllerBlockEntity be){be.tickFusion();}
     private void tickFusion() {
-        running=false;
-        if(!isStructureOk()||!switchesAllowRunning()){continuousRecipe=null;updateActivity();return;}
-        if(products==null&&!startRecipe()){updateActivity();return;}
-        if(chargeRemaining>0){updateActivity();return;}
-        if(progress<duration) {
-            running=true;
-            if(outputEU>0)emitFusionEnergy();
-            progress++;
+        if (level == null || level.isClientSide || isRemoved()) return;
+        boolean wasPassive = passive, wasProcessing = processing;
+        beginCoverTick();
+        boolean formed = isStructureOk();
+        // Switches inspect the previous processing state, including blocked completed work.
+        boolean allowed = formed && switchesAllowRunning();
+        running = passive = processing = completed = false;
+        try {
+            if (!allowed) { continuousRecipe = null; return; }
+            passive = true;
+            if (products == null && !startRecipe()) return;
+            if (chargeRemaining > 0) return;
+            processing = true;
+            if (progress < duration) {
+                running = true;
+                if (outputEU > 0) emitFusionEnergy();
+                progress++;
+            }
+            if (progress >= duration && products.flush(inventory(), inputSlots(), getTanksOutput())) {
+                completed = true;
+                products = null; duration = 0; progress = 0; outputEU = 0;
+                // A continuously supplied, identical reaction retains its startup charge.
+                startRecipe();
+            }
+            setChanged();
+        } finally {
+            if (passive != wasPassive || processing != wasProcessing) setChanged();
+            updateActivity();
+            // Basic machines also run component covers while switched off, but not while unformed.
+            if (formed) tickCovers(level, worldPosition);
+            updateCoverSignals();
         }
-        if(progress>=duration&&products.flush(inventory(),inputSlots(),getTanksOutput())) {
-            products=null;duration=0;progress=0;outputEU=0;
-            // A continuously supplied, identical reaction retains its startup charge (GT6 mCurrentRecipe).
-            startRecipe();
-        }
-        setChanged();updateActivity();
     }
+
+    private Recipe availableRecipe() {
+        var items = new ArrayList<ItemStack>();
+        for (int i = 0; i < inputSlots(); i++) items.add(inventory().getStackInSlot(i));
+        var fluids = Arrays.stream(getTanksInput()).map(t -> t.getFluidInTank(0)).toList();
+        var recipe = recipeMap().findRecipe(items, fluids, false, inputSlots(), 0);
+        return recipe != null && recipe.mEUt <= 0 && recipe.mEUt != Long.MIN_VALUE ? recipe : null;
+    }
+
+    @Override public com.gregtech.gregtech.content.cover.MachineCoverSpec.State coverState() {
+        return new com.gregtech.gregtech.content.cover.MachineCoverSpec.State(
+                products != null || level != null && availableRecipe() != null, passive, processing, completed);
+    }
+    @Override protected boolean controlRunning() { return passive; }
+    @Override protected boolean controlActive() { return processing; }
+    @Override protected long controlProgress() { return completed ? 1 : progress; }
+    @Override protected long controlProgressMax() { return completed ? 1 : duration; }
+    @Override protected long controlProgressPerTick() { return processing && products != null && chargeRemaining == 0 && progress < duration ? 1 : 0; }
+    @Override protected void onControlStopped() {
+        running = passive = processing = completed = false;
+    }
+
     private boolean startRecipe() {
         var items=new ArrayList<ItemStack>();
         for(int i=0;i<inputSlots();i++)items.add(inventory().getStackInSlot(i));
@@ -142,6 +181,7 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
 //?}
         var job=new CompoundTag();job.putLong("charge",chargeRemaining);job.putLong("totalCharge",chargeTotal);
         job.putLong("progress",progress);job.putLong("duration",duration);job.putLong("outputEU",outputEU);
+        job.putBoolean("passive",passive);job.putBoolean("processing",processing);
 //? if >=1.21.1 {
         /*if(products!=null)job.put("products",products.save(lookup));
 *///?} else {
@@ -163,6 +203,10 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
 *///?} else {
         outputEU=Math.max(0,job.getLong("outputEU"));products=job.contains("products")?MachineWorkOutputs.load(job.getCompound("products")):null;
 //?}
-        continuousRecipe=null;running=false;
+        continuousRecipe=null;running=completed=false;
+        // Restore only an explicit saved latch, never infer processing from a waiting job.
+        // tickFusion validates the real structure before this latch can permit any work.
+        passive=machineControl(null).enabled() && products!=null && duration>0 && job.getBoolean("passive");
+        processing=passive && products!=null && duration>0 && chargeRemaining==0 && job.getBoolean("processing");
     }
 }
