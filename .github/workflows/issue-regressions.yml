@@ -59,6 +59,7 @@ jobs:
             -Dorg.gradle.java.home="$JAVA17_HOME" \
             -Dorg.gradle.java.installations.fromEnv=JAVA17_HOME,JAVA21_HOME \
             -Dorg.gradle.java.installations.auto-download=false \
+            -PaddonSample=true \
             -PgameTestNamespaces=gregtech_issue_audit \
             -PgameTestHeap=3g \
             -PgameTestDirectory=build/issues-64-81-gametest \

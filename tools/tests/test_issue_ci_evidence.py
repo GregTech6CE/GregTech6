@@ -44,6 +44,15 @@ class IssueEvidenceTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'failure/error/skipped'):
             self.verify(self.report('forge', failure=True), 'forge')
 
+    def test_behavior_fixture_mod_is_enabled_in_native_run(self):
+        repo = Path(__file__).resolve().parents[2]
+        workflow = (repo / '.github/workflows/issue-regressions.yml').read_text()
+        self.assertIn('-PaddonSample=true', workflow)
+        self.assertIn('-PgameTestNamespaces=gregtech_issue_audit', workflow)
+        # The fixture deliberately depends on a registered SDK consumer, not a synthetic block.
+        fixture = (repo / 'multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BehaviorStructureSafetyTests.java').read_text()
+        self.assertIn('"addon_sample", "irrigator"', fixture)
+
     def test_empty_report_rejected(self):
         with self.assertRaisesRegex(ValueError, 'did not execute'):
             self.verify(ET.Element('testsuite'), 'neoforge')
