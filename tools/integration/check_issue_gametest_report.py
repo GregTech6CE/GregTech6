@@ -12,6 +12,10 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'hoppertransfercontracttests.queuehopperpullrespectsselecteditemstacklimit',
+    'hoppertransfercontracttests.queuehopperpreserveslegacyoversizedcontents',
+    'hoppertransfercontracttests.hopperminimumbatchrequiresdestinationcapacity',
+
     'machinependingstatetests.partiallydeliveredmachinejobsurvivesfreshentityload',
     'machinependingstatetests.blockedgasturbinepulsesurvivesfreshentityload',
     'behaviorstructuresafetytests.behaviormixedalternativesbindactualfixedandrepeatedparts',
