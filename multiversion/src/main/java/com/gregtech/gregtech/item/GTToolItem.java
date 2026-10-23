@@ -91,6 +91,19 @@ public class GTToolItem extends Item {
             float hx = (float) (context.getClickLocation().x - clicked.getX());
             float hy = (float) (context.getClickLocation().y - clicked.getY());
             float hz = (float) (context.getClickLocation().z - clicked.getZ());
+            // Original Behavior_Tool runs the turbine's dedicated purge before generic fluid draining.
+            if (toolType == GTToolType.PLUNGER && GTToolHelper.matchesTool(stack, GTToolType.PLUNGER)
+                    && context.getLevel().hasChunkAt(clicked)
+                    && context.getLevel().getBlockEntity(clicked)
+                            instanceof com.gregtech.gregtech.blockentity.machine.LargeTurbineControllerBlockEntity turbine
+                    && !turbine.isRemoved()) {
+                int purged = turbine.purgeFluid();
+                if (purged > 0) {
+                    GTToolHelper.damageForToolClickReturn(stack, purged, context.getPlayer(),
+                            context.getHand() == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
+                    return InteractionResult.SUCCESS;
+                }
+            }
             if (toolType == GTToolType.PLUNGER
                     && com.gregtech.gregtech.item.behavior.BehaviorPlungerFluid.plungeFluid(
                             context.getLevel(), clicked, context.getPlayer(), stack,

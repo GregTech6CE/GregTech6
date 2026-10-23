@@ -169,10 +169,17 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
                 break;
             }
         }
-        if (fuelEnergy >= grade().inputMaximum()) {
+        // Source converters accept any packet in the advertised half-to-double nominal range.
+        // Bound HU before multiplying, including when a saved buffer is near Long.MAX_VALUE.
+        long convertibleHeat = Math.min(fuelEnergy, (long) grade().inputMaximum());
+        long rotation = convertibleHeat * grade().output() / grade().input();
+        if (rotation >= grade().output() / 2L) {
+            long heatNumerator = rotation * grade().input();
+            long heatUsed = heatNumerator / grade().output()
+                    + (heatNumerator % grade().output() == 0 ? 0 : 1);
             converting = true;
-            fuelEnergy -= grade().inputMaximum();
-            ruStored = grade().outputMaximum();
+            fuelEnergy -= heatUsed;
+            ruStored = rotation;
             setChanged();
         }
         updateRotorVisual(true, converting || emitted);

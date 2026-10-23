@@ -12,6 +12,17 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'turbineplungerprioritytests.nativeplungersneakingoffhandpreservessteampriority',
+    'turbineplungerprioritytests.nativeplungerpurgessteambeforerealcondensate',
+    'turbineplungerprioritytests.nativeplungerpurgesrealcondensateatoriginalwear',
+    'turbineplungerprioritytests.emptysteamturbineplungerdoesnotspendwear',
+    'turbineplungerprioritytests.nonturbinetankkeepsgenericthousandmbplunger',
+    'gasturbinepartialfueltests.minimumoperationalhydrogenbatchreachesrealdynamo',
+    'gasturbinepartialfueltests.fractionalpartialhydrogenbatchroundswithoutcreatingenergy',
+    'gasturbinepartialfueltests.belowminimumhydrogenbatchretainsheatwithoutru',
+    'gasturbinepartialfueltests.emptygasturbinecreatesnoenergyorexhaust',
+    'gasturbinepartialfueltests.fullhydrogenbatchpreservesmaximumoutputrate',
+    'gasturbinepartialfueltests.blockedpartialgaspulsesurvivesfreshentityloadandtransfersonce',
     'aluminafluidunitcontracttests.scaledaluminaroutesuseexactsourceunits',
     'aluminafluidunitcontracttests.sourceunittokenskeepnativeidentityandlegacysemantics',
     'aluminafluidquantitytests.specializedaluminausesoriginalfluidcoefficients',
