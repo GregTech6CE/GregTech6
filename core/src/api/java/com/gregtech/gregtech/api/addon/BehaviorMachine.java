@@ -363,6 +363,8 @@ public final class BehaviorMachine implements AddonMachine {
 
     private static EnergyInput auxiliaryInput(String id, EnergyInput auxiliary, EnergyInput main) {
         if (auxiliary == null) return null;
+        if (auxiliary.dynamic())
+            throw new IllegalArgumentException("Behavior machine '" + id + "' auxiliary energy cannot pick its type");
         if (!auxiliary.anyPacket() && !auxiliary.rangeSpecified())
             throw new IllegalArgumentException("Behavior machine '" + id
                     + "' auxiliary energy needs a packet range or anyPacket");

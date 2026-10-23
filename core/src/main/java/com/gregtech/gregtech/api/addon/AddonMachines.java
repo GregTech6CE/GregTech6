@@ -149,9 +149,17 @@ public final class AddonMachines {
         if (input.rangeSpecified()) parameters.energyRange(input.rangeMin(), input.rangeMax());
         else if (machine.largeRecipe()) parameters.omitEnergyRange();
         if (machine.cheapOverclockingSpecified()) parameters.cheapOverclocking(machine.cheapOverclocking());
+        var auxiliary = machine.auxiliary();
         return new AddonMachineDefinition(parameters.build(), machine.recipeMap(),
                 machine.largeRecipe() ? MachineControllerKind.LARGE_RECIPE : MachineControllerKind.BASIC,
-                machine.efficiency(), machine.constantEnergy(), machine.structureKeys());
+                machine.efficiency(), machine.constantEnergy(), machine.structureKeys(),
+                auxiliary == null ? null : auxiliary.type(),
+                auxiliary == null ? 0 : auxiliary.perTick(),
+                auxiliary == null ? 0 : (auxiliary.anyPacket() ? 1 : auxiliary.rangeMin()),
+                auxiliary == null ? 0 : (auxiliary.anyPacket() ? Long.MAX_VALUE : auxiliary.rangeMax()),
+                auxiliary == null ? 0 : auxiliary.capacity(),
+                auxiliary == null ? 0 : mask(auxiliary.faces()),
+                machine.startupEnergy());
     }
 
     /** The one path from a recipe or fuel table to the installed spec. */
@@ -716,13 +724,15 @@ public final class AddonMachines {
                 long max = 0;
                 if (declaration.energy() != null) {
                     energyType = declaration.energy().type();
-                    try {
-                        energy(energyType);
-                    } catch (IllegalArgumentException failure) {
-                        throw new IllegalStateException("Addon '" + submission.addonId + "' machine '"
-                                + id + "' uses unknown energy type '" + energyType + "'", failure);
+                    if (!declaration.energy().dynamic()) {
+                        try {
+                            energy(energyType);
+                        } catch (IllegalArgumentException failure) {
+                            throw new IllegalStateException("Addon '" + submission.addonId + "' machine '"
+                                    + id + "' uses unknown energy type '" + energyType + "'", failure);
+                        }
                     }
-                    if (declaration.energy().anyPacket()) {
+                    if (declaration.energy().anyPacket() || declaration.energy().dynamic()) {
                         min = 1;
                         max = Long.MAX_VALUE;
                     } else if (declaration.energy().rangeSpecified()) {
@@ -734,6 +744,9 @@ public final class AddonMachines {
                     }
                 }
                 if (declaration.auxiliary() != null) {
+                    if (declaration.auxiliary().dynamic())
+                        throw new IllegalStateException("Addon '" + submission.addonId + "' machine '"
+                                + id + "' auxiliary energy cannot pick its type");
                     try {
                         energy(declaration.auxiliary().type());
                     } catch (IllegalArgumentException failure) {
@@ -813,11 +826,16 @@ public final class AddonMachines {
     }
 
     private static void plain(String addonId, String layout, LayoutCell cell) {
-        CellMatch match = cell.match();
+        plain(addonId, layout, cell.match());
+    }
+
+    private static void plain(String addonId, String layout, CellMatch match) {
         if (match instanceof CellMatch.Block block)
             PLAIN_BLOCKS.add(new PlainBlock(addonId, layout, block.id()));
         else if (match instanceof CellMatch.Tag tag)
             PLAIN_BLOCKS.add(new PlainBlock(addonId, layout, "#" + tag.id()));
+        else if (match instanceof CellMatch.OneOf one)
+            for (CellMatch member : one.members()) plain(addonId, layout, member);
     }
 
     /** Converts a layout without recording plain blocks. {@code source} is the error prefix. */
@@ -842,12 +860,28 @@ public final class AddonMachines {
 
     private static SharedLargeMachineLayouts.Cell sharedCell(String source, String layoutName, LayoutCell cell) {
         var role = StructureGrid.Role.valueOf(cell.role().name());
+        var choices = sharedChoices(source, layoutName, cell);
+        var primary = choices.get(0);
+        return new SharedLargeMachineLayouts.Cell(cell.right(), cell.up(), cell.back(), primary.part(), role,
+                primary.plain(), cell.design(), choices.subList(1, choices.size()));
+    }
+
+    private static List<SharedLargeMachineLayouts.Choice> sharedChoices(String source, String layoutName, LayoutCell cell) {
         CellMatch match = cell.match();
+        if (match instanceof CellMatch.OneOf one) {
+            var out = new ArrayList<SharedLargeMachineLayouts.Choice>();
+            for (CellMatch member : one.members()) out.add(sharedChoice(source, layoutName, cell, member));
+            return out;
+        }
+        return List.of(sharedChoice(source, layoutName, cell, match));
+    }
+
+    private static SharedLargeMachineLayouts.Choice sharedChoice(String source, String layoutName,
+                                                                LayoutCell cell, CellMatch match) {
         if (LayoutCell.isPlainBlock(match)) {
             String plain = match.toString();
             rejectDesign(source, layoutName, cell, plain);
-            return new SharedLargeMachineLayouts.Cell(cell.right(), cell.up(), cell.back(), 0,
-                    role, plain, cell.design());
+            return new SharedLargeMachineLayouts.Choice(0, plain);
         }
         String name = match instanceof CellMatch.Air ? "air" : ((CellMatch.Part) match).name();
         int part = SharedLargeMachineParts.idForName(name);
@@ -860,8 +894,7 @@ public final class AddonMachines {
                 throw new IllegalStateException(source + " layout '" + layoutName
                         + "' cell '" + name + "' does not support design " + cell.design());
         }
-        return new SharedLargeMachineLayouts.Cell(cell.right(), cell.up(), cell.back(), part, role,
-                null, cell.design());
+        return new SharedLargeMachineLayouts.Choice(part, null);
     }
 
     private static void rejectDesign(String source, String layout, LayoutCell cell, String block) {

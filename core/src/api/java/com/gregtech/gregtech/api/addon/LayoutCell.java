@@ -59,8 +59,12 @@ public final class LayoutCell {
         return new LayoutCell(right, up, back, match, role, -1);
     }
 
-    /** A block id, block tag, or one of the block predicates. */
+    /** A block id, block tag, or one of the block predicates. A group is plain when any member is. */
     public static boolean isPlainBlock(CellMatch match) {
+        if (match instanceof CellMatch.OneOf one) {
+            for (CellMatch member : one.members()) if (isPlainBlock(member)) return true;
+            return false;
+        }
         return match instanceof CellMatch.Block || match instanceof CellMatch.Tag
                 || match instanceof CellMatch.AnyFluid || match instanceof CellMatch.AnyOpaque;
     }

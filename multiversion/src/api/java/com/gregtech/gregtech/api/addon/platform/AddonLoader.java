@@ -35,5 +35,14 @@ public final class AddonLoader {
 
         /** True when {@code fluid} is a gas. Empty and liquids are false. */
         boolean gas(Fluid fluid);
+
+        /** True when {@code fluid}'s material carries GT6's acid property. */
+        boolean acid(Fluid fluid);
+
+        /** True when {@code fluid} was declared as plasma. */
+        boolean plasma(Fluid fluid);
+
+        /** True when {@code fluid} carries GT6's magic flag or a magical material. */
+        boolean magic(Fluid fluid);
     }
 }

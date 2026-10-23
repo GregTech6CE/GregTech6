@@ -553,6 +553,10 @@ public final class AddonMaterials {
                 if (matches) selected.add(material);
             }
         }
+        for (String name : declaration.excludedMaterials()) {
+            GTMaterial found = GTMaterialRegistry.get(name);
+            if (found.isValid()) selected.remove(found.resolve());
+        }
         if (selected.isEmpty()) throw new IllegalStateException("Addon '" + addonId + "' prefix '"
                 + declaration.name() + "' matches no material");
         return selected;
@@ -567,6 +571,9 @@ public final class AddonMaterials {
             case NOT_STONE -> !material.has(MaterialProperty.STONE);
             case NOT_FOOD -> !MaterialWorkability.isFood(material);
             case NOT_MEAT -> !MEAT.contains(material.getName());
+            case METAL -> material.has(MaterialProperty.METAL);
+            case MOLTEN -> material.has(MaterialProperty.MOLTEN) || material.has(MaterialProperty.MELTING);
+            case ALLOY -> material.has(MaterialProperty.ALLOY);
         };
     }
 

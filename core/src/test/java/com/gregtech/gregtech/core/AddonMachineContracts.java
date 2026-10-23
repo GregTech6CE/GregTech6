@@ -249,6 +249,9 @@ public final class AddonMachineContracts {
         check(AddonMachines.partId("sample_cap") == 1_000_001, "second runtime id");
         check(SharedLargeMachineParts.idForName("sample_wall") == 1_000_000, "lookup sees the addon part");
         check(SharedLargeMachineParts.idForName("steel_wall") == steel && steel == 18009, "steel wall stays 18009");
+        check(SharedLargeMachineParts.idForName("implosion_compressor_wall") == 18023, "implosion wall id");
+        check(SharedLargeMachineParts.idForName("large_niobium_titanium_coil") == 18041, "niobium coil id");
+        check(SharedLargeMachineParts.idForName("fire_bricks") == 18000, "fire bricks id");
         check(SharedLargeMachineParts.DEFINITIONS.size() == walls, "built-in table unchanged");
         check(SharedLargeMachineParts.builtinId("sample_wall") < 0, "addon name is not built in");
         var cells = SharedLargeMachineLayouts.cells("largesamplepress");

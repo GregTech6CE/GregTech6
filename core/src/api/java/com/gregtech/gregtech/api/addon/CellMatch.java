@@ -10,7 +10,7 @@ import java.util.Objects;
  * and may only be placed with {@link StructureRole#CASING}.
  */
 public sealed interface CellMatch permits CellMatch.Part, CellMatch.Air, CellMatch.Block, CellMatch.Tag,
-        CellMatch.AnyFluid, CellMatch.AnyOpaque {
+        CellMatch.AnyFluid, CellMatch.AnyOpaque, CellMatch.OneOf {
     /**
      * {@code air} is air. {@code anyfluid} is any fluid block; {@code anyfluid#id} also requires
      * that fluid's tag. {@code anyopaque} is any opaque, solid-render block. A leading {@code #}
@@ -46,6 +46,25 @@ public sealed interface CellMatch permits CellMatch.Part, CellMatch.Air, CellMat
 
     /** Any opaque block that renders as a solid cube. */
     static CellMatch anyOpaque() { return AnyOpaque.INSTANCE; }
+
+    /** Any one of {@code members}. Nested groups and duplicates are rejected. */
+    static CellMatch oneOf(CellMatch... members) {
+        return oneOf(members == null ? null : java.util.List.of(members));
+    }
+
+    static CellMatch oneOf(java.util.List<CellMatch> members) {
+        if (members == null || members.size() < 2)
+            throw new IllegalArgumentException("A structure cell needs at least two alternatives");
+        var copy = new java.util.ArrayList<CellMatch>();
+        var seen = new java.util.HashSet<CellMatch>();
+        for (CellMatch member : members) {
+            if (member == null) throw new IllegalArgumentException("Missing structure alternative");
+            if (member instanceof OneOf) throw new IllegalArgumentException("Nested structure alternatives");
+            if (!seen.add(member)) throw new IllegalArgumentException("Duplicate structure alternative: " + member);
+            copy.add(member);
+        }
+        return new OneOf(java.util.List.copyOf(copy));
+    }
 
     static CellMatch block(String id) {
         requireLocation(id, false);
@@ -146,6 +165,26 @@ public sealed interface CellMatch permits CellMatch.Part, CellMatch.Air, CellMat
         @Override public int hashCode() { return Objects.hashCode(tag); }
 
         @Override public String toString() { return tag == null ? "anyfluid" : "anyfluid#" + tag; }
+    }
+
+    /** Any one of a fixed set of matches. */
+    final class OneOf implements CellMatch {
+        private final java.util.List<CellMatch> members;
+
+        private OneOf(java.util.List<CellMatch> members) { this.members = members; }
+
+        public java.util.List<CellMatch> members() { return members; }
+
+        @Override public boolean equals(Object other) {
+            return other instanceof OneOf that && members.equals(that.members);
+        }
+
+        @Override public int hashCode() { return members.hashCode(); }
+
+        @Override public String toString() {
+            return members.stream().map(Object::toString)
+                    .collect(java.util.stream.Collectors.joining(",", "[", "]"));
+        }
     }
 
     /** Any opaque, solid-render block. */

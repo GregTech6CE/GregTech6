@@ -2,11 +2,18 @@ package com.gregtech.gregtech.content.multiblock;
 import com.gregtech.gregtech.api.multiblock.StructureGrid.Role;import java.util.*;
 /** Original GT6 large-machine coordinates and material-part IDs; no Minecraft registry. */
 public final class SharedLargeMachineLayouts {private SharedLargeMachineLayouts(){}
+    /** One accepted block for a cell. {@code plain} is a block id, tag or predicate; null means a part id. */
+    public record Choice(int part,String plain){
+        public boolean plainBlock(){return plain!=null;}
+    }
     /** {@code plain} is a block id or {@code #} tag. Null means {@code part} is a structure part. */
     /** {@code design} is {@code -1} when the cell does not write {@code gt.design}. */
-    public record Cell(int right,int up,int back,int part,Role role,String plain,int design){
-        public Cell(int right,int up,int back,int part,Role role){this(right,up,back,part,role,null,-1);}
-        public Cell(int right,int up,int back,int part,Role role,String plain){this(right,up,back,part,role,plain,-1);}
+    /** {@code alternatives} are the extra accepted matches after the primary {@code part}/{@code plain}. */
+    public record Cell(int right,int up,int back,int part,Role role,String plain,int design,List<Choice> alternatives){
+        public Cell(int right,int up,int back,int part,Role role){this(right,up,back,part,role,null,-1,List.of());}
+        public Cell(int right,int up,int back,int part,Role role,String plain){this(right,up,back,part,role,plain,-1,List.of());}
+        public Cell(int right,int up,int back,int part,Role role,String plain,int design){this(right,up,back,part,role,plain,design,List.of());}
+        public Cell{ alternatives=alternatives==null?List.of():List.copyOf(alternatives); }
     }
     /** Repeat cells use coordinates relative to the anchor and the repeat direction. */
     public record Repeat(String key,int up,int min,int max,int step,int height,List<Cell> cells){
@@ -14,7 +21,7 @@ public final class SharedLargeMachineLayouts {private SharedLargeMachineLayouts(
             if(key==null||!key.matches("[a-z][a-z0-9_]{0,63}")) throw new IllegalArgumentException("Invalid repeat key: "+key);
             if(min<1) throw new IllegalArgumentException("Repeat '"+key+"' needs min >= 1");
             if(max!=-1&&max<min) throw new IllegalArgumentException("Repeat '"+key+"' needs max >= min or -1");
-            if(max>256) throw new IllegalArgumentException("Repeat '"+key+"' max is too large: "+max);
+            if(max>1024) throw new IllegalArgumentException("Repeat '"+key+"' max is too large: "+max);
             if(step!=1&&step!=-1) throw new IllegalArgumentException("Repeat '"+key+"' step must be 1 or -1");
             if(cells==null||cells.isEmpty()) throw new IllegalArgumentException("Repeat '"+key+"' is empty");
             cells=List.copyOf(cells);

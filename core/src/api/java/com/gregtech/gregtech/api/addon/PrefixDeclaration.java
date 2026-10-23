@@ -18,13 +18,22 @@ public record PrefixDeclaration(
         String texture,
         List<String> materials,
         Set<PrefixCondition> conditions,
+        List<String> excludedMaterials,
         boolean block,
         String oreDictionary
 ) {
     /** Item prefix. A block prefix uses {@link #block}. */
     public PrefixDeclaration(String name, String displayPrefix, String displaySuffix, long unitAmount,
                              String texture, List<String> materials, Set<PrefixCondition> conditions) {
-        this(name, displayPrefix, displaySuffix, unitAmount, texture, materials, conditions, false, "");
+        this(name, displayPrefix, displaySuffix, unitAmount, texture, materials, conditions, List.of(), false, "");
+    }
+
+    /** Item prefix with material names removed after the conditions select. */
+    public PrefixDeclaration(String name, String displayPrefix, String displaySuffix, long unitAmount,
+                             String texture, List<String> materials, Set<PrefixCondition> conditions,
+                             List<String> excludedMaterials) {
+        this(name, displayPrefix, displaySuffix, unitAmount, texture, materials, conditions, excludedMaterials,
+                false, "");
     }
 
     /**
@@ -40,7 +49,7 @@ public record PrefixDeclaration(
             throw new IllegalArgumentException(
                     "Prefix '" + name + "' ore dictionary name must be a tag path: " + oreDictionary);
         return new PrefixDeclaration(name, displayPrefix, displaySuffix, unitAmount, texture, materials, Set.of(),
-                true, oreDictionary);
+                List.of(), true, oreDictionary);
     }
 
     public PrefixDeclaration {
@@ -70,6 +79,19 @@ public record PrefixDeclaration(
             names.add(material);
         }
         materials = List.copyOf(names);
+        if (excludedMaterials == null) excludedMaterials = List.of();
+        else {
+            var excluded = new ArrayList<String>();
+            var excludedSeen = new HashSet<String>();
+            for (String material : excludedMaterials) {
+                if (material == null || material.isBlank())
+                    throw new IllegalArgumentException("Prefix '" + name + "' has an empty excluded material name");
+                if (!excludedSeen.add(material))
+                    throw new IllegalArgumentException("Prefix '" + name + "' excludes '" + material + "' twice");
+                excluded.add(material);
+            }
+            excludedMaterials = List.copyOf(excluded);
+        }
         if (conditions == null || conditions.isEmpty()) conditions = Set.of();
         else conditions = Set.copyOf(conditions);
         boolean positive = false;
