@@ -64,9 +64,21 @@ public final class NativeOriginWorld implements OriginWorld {
         BlockPos pos = new BlockPos(x, y, z);
         BlockState state = level.getBlockState(pos);
         return new OriginWorld.Block(BuiltInRegistries.BLOCK.getKey(state.getBlock()).toString(), -1,
-                state.isSolidRender(level, pos), !state.getFluidState().isEmpty(), state.is(BlockTags.LOGS),
+                state.isSolidRender(level, pos), !state.getFluidState().isEmpty(), roadWood(state),
                 state.is(BlockTags.LEAVES), state.getFluidState().is(FluidTags.WATER));
     }
+    /** Material-like road obstruction classification, not a replacement for log identity.
+     * These extensible vanilla tags cover common wooden components; they do not exhaust
+     * every legacy Material.wood block (for example arbitrary modded wooden machines).
+     */
+    private static boolean roadWood(BlockState state) {
+        return state.is(BlockTags.LOGS) || state.is(BlockTags.PLANKS)
+                || state.is(BlockTags.WOODEN_FENCES) || state.is(BlockTags.WOODEN_SLABS)
+                || state.is(BlockTags.WOODEN_STAIRS) || state.is(BlockTags.WOODEN_DOORS)
+                || state.is(BlockTags.WOODEN_TRAPDOORS) || state.is(BlockTags.WOODEN_BUTTONS)
+                || state.is(BlockTags.WOODEN_PRESSURE_PLATES);
+    }
+
 //? if >=1.21.1 {
     /*private static ResourceLocation id(String value) {
         return ResourceLocation.parse(value);
