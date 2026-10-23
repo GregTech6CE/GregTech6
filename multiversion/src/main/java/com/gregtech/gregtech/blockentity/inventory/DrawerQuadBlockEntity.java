@@ -79,6 +79,15 @@ public class DrawerQuadBlockEntity extends BlockEntity implements BlockContents 
         if (page < 0 || page >= COMPARTMENTS) throw new IllegalArgumentException("Invalid drawer page " + page);
         return new HopperContainerMenu(GTMenuTypes.forSlotCount(PAGE_SIZE), id, playerInventory,
                 view(IntStream.range(page * PAGE_SIZE, (page + 1) * PAGE_SIZE).toArray())) {
+            @Override protected net.minecraft.world.inventory.Slot createInventorySlot(IItemHandler handler, int index, int x, int y) {
+                return new SlotItemHandler(handler, index, x, y) {
+                    @Override public int getMaxStackSize(ItemStack stack) {
+                        // Forge's default probes by clearing/restoring this slot, which would
+                        // consume real legacy overflow during a supposedly read-only query.
+                        return Math.min(stack.getMaxStackSize(), handler.getSlotLimit(index));
+                    }
+                };
+            }
             @Override public boolean stillValid(Player player) {
                 return !isRemoved() && level != null && level.getBlockEntity(worldPosition) == DrawerQuadBlockEntity.this
                         && player.distanceToSqr(worldPosition.getX()+.5, worldPosition.getY()+.5, worldPosition.getZ()+.5) <= 64;

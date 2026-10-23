@@ -74,6 +74,12 @@ public final class AdvancedCraftingMenu extends AbstractContainerMenu {
         }
 
         @Override
+        public int getMaxStackSize(ItemStack stack) {
+            // A capacity query must not temporarily empty the grid and cancel flush mode.
+            return Math.min(stack.getMaxStackSize(), getMaxStackSize());
+        }
+
+        @Override
         public void setChanged() {
             super.setChanged();
             if (table != null) table.inventoryChanged();

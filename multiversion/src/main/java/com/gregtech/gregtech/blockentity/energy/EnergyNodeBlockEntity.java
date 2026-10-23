@@ -382,7 +382,14 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
     public net.minecraft.world.MenuProvider batteryMenu() {
         return new net.minecraft.world.SimpleMenuProvider(
                 (id, inv, p) -> new com.gregtech.gregtech.client.gui.HopperContainerMenu(
-                        com.gregtech.gregtech.registry.GTMenuTypes.forSlotCount(batteries.size()), id, inv, batterySlots),
+                        com.gregtech.gregtech.registry.GTMenuTypes.forSlotCount(batteries.size()), id, inv, batterySlots) {
+                    @Override public boolean stillValid(net.minecraft.world.entity.player.Player player) {
+                        return !isRemoved() && level != null && player.level() == level
+                                && player.distanceToSqr(worldPosition.getCenter()) <= 64
+                                && level.hasChunkAt(worldPosition)
+                                && level.getBlockEntity(worldPosition) == EnergyNodeBlockEntity.this;
+                    }
+                },
                 net.minecraft.network.chat.Component.translatable(getBlockState().getBlock().getDescriptionId()));
     }
 

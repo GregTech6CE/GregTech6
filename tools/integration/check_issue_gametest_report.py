@@ -12,6 +12,10 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'menulifetimecapacitytests.behaviormenurequiresliveownerandnativereach',
+    'menulifetimecapacitytests.batterymenusrequirelivenearbyowners',
+    'menulifetimecapacitytests.drawercapacityqueriespreservelegacyoverflow',
+    'menulifetimecapacitytests.advancedcraftingcapacityqueriespreserveflush',
     'controlleroutputlifecycletests.distillationremoteitemsrespectownfilterandshutter',
     'controlleroutputlifecycletests.cryoremoteitemsrespectownfilterandshutter',
     'controlleroutputlifecycletests.implosionnativetickerclearsinvalidactivityandretainsjob',
