@@ -267,38 +267,49 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         var front=getBlockState().getValue(HorizontalDirectionalBlock.FACING);
         var parts=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
         var ovenCoil=new net.minecraft.world.level.block.Block[1];
+        var matchedCells=new java.util.ArrayList<LargeMachineLayouts.Cell>();
         for(var cell:layout.cells()) {
             var pos=cell.at(worldPosition,front);
-            if(!matchesCell(cell,pos,ovenCoil)) {bindings.clear(this::release);return false;}
-            if(cell.role()!=MultiblockLayout.Role.AIR&&!cell.plainBlock())parts.put(pos,cell.role());
+            var matched=matchingCell(cell,pos,ovenCoil);
+            if(matched==null) {bindings.clear(this::release);return false;}
+            matchedCells.add(matched);
+            if(matched.role()!=MultiblockLayout.Role.AIR&&!matched.plainBlock())parts.put(pos,matched.role());
         }
         var repeatPlaced=new java.util.ArrayList<LargeMachineLayouts.Placed>();
         for(var repeat:layout.repeats()) {
-            var placed=LargeMachineLayouts.repeatCells(level,worldPosition,front,repeat,
-                    (cell,pos)->matchesCell(cell,pos,ovenCoil));
+            var matches=new java.util.HashMap<BlockPos,LargeMachineLayouts.Cell>();
+            var placed=LargeMachineLayouts.repeatCells(level,worldPosition,front,repeat,(cell,pos)->{
+                var matched=matchingCell(cell,pos,ovenCoil);
+                if(matched==null)return false;
+                matches.put(pos,matched);
+                return true;
+            });
             if(placed==null){bindings.clear(this::release);return false;}
-            repeatPlaced.addAll(placed);
-            for(var cell:placed)
-                if(cell.cell().role()!=MultiblockLayout.Role.AIR&&!cell.cell().plainBlock())parts.put(cell.pos(),cell.cell().role());
+            // Only complete repeat copies are committed, not the matched prefix of a failed copy.
+            for(var cell:placed) {
+                var matched=matches.get(cell.pos());
+                repeatPlaced.add(new LargeMachineLayouts.Placed(matched,cell.pos()));
+                if(matched.role()!=MultiblockLayout.Role.AIR&&!matched.plainBlock())parts.put(cell.pos(),matched.role());
+            }
         }
         boolean formed = bindings.update(parts,pos->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).canBind(worldPosition),
                 (pos,role)->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).bind(worldPosition,role),this::release);
         if (formed) {
-            com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front, layout.cells());
+            com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front, matchedCells);
             com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, repeatPlaced);
         }
         return formed;
     }
-    private boolean matchesCell(LargeMachineLayouts.Cell cell,BlockPos pos,net.minecraft.world.level.block.Block[] ovenCoil) {
-        if(!level.hasChunkAt(pos))return false;
-        if(cell.role()==MultiblockLayout.Role.AIR)return level.isEmptyBlock(pos);
-        if(matchesChoice(cell,cell.part(),cell.plain(),pos,ovenCoil))return true;
+    private LargeMachineLayouts.Cell matchingCell(LargeMachineLayouts.Cell cell,BlockPos pos,net.minecraft.world.level.block.Block[] ovenCoil) {
+        if(!level.hasChunkAt(pos))return null;
+        if(cell.role()==MultiblockLayout.Role.AIR)return level.isEmptyBlock(pos)?cell:null;
+        if(matchesChoice(cell,cell.part(),cell.plain(),pos,ovenCoil))return cell;
         for(var alternative:cell.alternatives()) {
             var choice = new LargeMachineLayouts.Cell(cell.right(),cell.up(),cell.back(),alternative.part(),
                     cell.role(),alternative.plain(),cell.design(),java.util.List.of());
-            if(matchesChoice(choice,alternative.part(),alternative.plain(),pos,ovenCoil))return true;
+            if(matchesChoice(choice,alternative.part(),alternative.plain(),pos,ovenCoil))return choice;
         }
-        return false;
+        return null;
     }
     private boolean matchesChoice(LargeMachineLayouts.Cell cell,int part,String plain,BlockPos pos,net.minecraft.world.level.block.Block[] ovenCoil) {
         if(plain!=null)return LargeMachineLayouts.matchesPlain(level,pos,plain);

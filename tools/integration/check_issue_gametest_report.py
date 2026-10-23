@@ -12,6 +12,11 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'machinechunkboundarytests.formedlargemachinepollingdoesnotloadexteriorneighbor',
+    'machinechunkboundarytests.unloadedautomaticioretainsstockthentransferstoloadedchest',
+    'multiblockalternativebindingtests.mixedfixedalternativesbindonlyactualpartsineitherorder',
+    'multiblockalternativebindingtests.mixedrepeatedalternativesignoreincompletecopyandreform',
+
     'machinemenuvaliditytests.basicmachinemenurequireslivenearbyowner',
     'machinemenuvaliditytests.bumbliarymenurequireslivenearbyowner',
     'machinemenuvaliditytests.advancedbumbliarymenurequireslivenearbyowner',
