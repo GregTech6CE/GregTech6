@@ -80,14 +80,15 @@ public final class FoodStatEvents {
 
     /**
      * GT6's tracker is a 1.7.10 extended property that is <em>not</em> copied on respawn, so dying clears
-     * every statistic; a non-death clone (dimension change) keeps them, which is what the port's persistent
-     * data already does - only the death case has to be made explicit, exactly like
-     * {@link PlayerRadiation} does for the dose.
+     * every statistic; a non-death clone keeps them. Both loaders copy only PlayerPersisted automatically,
+     * not our root food compound, so copy it explicitly just as {@link PlayerRadiation} copies its dose.
      */
     @SubscribeEvent
     public static void onClone(PlayerEvent.Clone event) {
         if (event.isWasDeath()) {
             PlayerFoodStats.clear(event.getEntity());
+        } else {
+            PlayerFoodStats.copyFrom(event.getOriginal(), event.getEntity());
         }
     }
 }
