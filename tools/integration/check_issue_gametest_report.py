@@ -12,6 +12,9 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'fusioncoverlifecycletests.fusiontimerchargesacrosswindowsandretainsprocessingafterload',
+    'fusioncoverlifecycletests.fusioncontrolsensorsstopandblockedoutputsconservejob',
+    'fusioncoverlifecycletests.fusioncoverclockandtransfersrespectinvalidandstoppedstates',
     'addonfluididentitytests.addonbindingkeepsbuiltinfluidregistryidentity',
     'addonfluididentitytests.legacybuiltinfluidsavesurvivesaddonmaterialbinding',
     'addonfluididentitytests.generatedaddonfluidsretaintheirownnamespace',
