@@ -2076,3 +2076,13 @@ Sensors null-NBT源登记可合法携带REV，生成器只为这组解析，避�
 
 - 机器式配方展示继续用 `AddonRecipes.Map.addDisplay` 和 `RecipeTable`：`RecipeTable` 已经按声明的槽数成为 JEI/EMI 分类，`addDisplay` 已经能加展示行。
 - 不新增 `RecipeDisplayContributor` / `RecipeDisplayCategory`。需要自定义分类或任意控件的附属直接依赖 JEI 或 EMI，SDK 不引入这两个查看器的类型。文档两份 `ADDON_API` 已写清这个边界。
+
+## 2026-10-23 / gt6-logic 批次 7 第 9a 条：内置机器 NBT 派生值收口
+
+- `BasicMachineBlockEntity.load` 末尾调用 `sanitizeForSpec()`；spec 尚未到达时置 `specDirty`，由 `setSpec()` 补调。
+- `gt.energy` clamp 到 `[0, inputMaximum()]`；`gt.parallel` clamp 到 `[1, spec.parallelLimit()]`；`gt.progress` clamp 到 `[0, mMaxProgress]`。
+- 没有 `pendingOutputs` 时清空 `mProgress`、`mMaxProgress`、`mMinEnergy` 和 `startupRequirement`，与现有「旧存档不虚构产物」的口径一致。
+- 有 `pendingOutputs` 且配方仍可解析时，用保存的 batch（`mParallelCount`，已钳制）重算 `MachineWorkCost`，写回 `mMinEnergy` 和 `mMaxProgress`。不再用剩余输入重跑并行搜索，因为任务开始时已经消耗过输入，重跑会低估 batch。
+- 有 `pendingOutputs` 但配方不可解析时，保留保存值并钳制（`mMinEnergy ∈ [0, inputMaximum()]`，`mMaxProgress ∈ [0, Long.MAX_VALUE/2]`）。这与卡片表格的「否则清零」不同：中途存档的任务若把 `mMinEnergy` 清零，剩余工作会免费完成；保留并钳制不会放宽成本，也不会丢掉已滚出的产物。
+- 该收口同时封掉 `/data merge block` 修改 `gt.min_energy`、`gt.parallel`、`gt.progress` 等字段的路径；不改 spec、不改配方平衡。
+- 验证：新增 `gregtech_nbt_sanitize` 命名空间的 `MachineNbtSanitizeTests` 两项（在制任务篡改、空闲篡改），Forge 与 NeoForge 各 2/2 required tests passed；`core:check`、两端 `compileJava`、`compileBootstrapGameTestJava`、`addonApiClosureCheck` 通过（各 146 个 API 类）。未做客户端玩法、专服、存档重启验证。
