@@ -13,6 +13,9 @@ import java.util.Objects;
  * {@code amount} on each part is a positive multiple of {@link GTValues#U}.
  * {@code divider} is stored as the composition divider. When {@code crucible} is true,
  * GregTech also adds one crucible reaction whose ratios are {@code amount / U} and whose yield is {@code divider}.
+ * Composition and crucible participation alone do not permit automatic machine decomposition;
+ * opt in with {@link MaterialDeclaration.Builder#centrifuge()} or
+ * {@link MaterialDeclaration.Builder#electrolyzer()}.
  */
 public record MaterialComposition(String material, long divider, List<Part> parts, boolean crucible) {
     public MaterialComposition {

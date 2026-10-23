@@ -22,7 +22,9 @@ public record MaterialDeclaration(
         boolean ores,
         List<String> oreByproducts,
         boolean polymer,
-        boolean wires
+        boolean wires,
+        boolean centrifuge,
+        boolean electrolyzer
 ) {
     public MaterialDeclaration {
         if (id < 0 || id >= 10_000) throw new IllegalArgumentException("Material ID must be 0..9999: " + id);
@@ -42,6 +44,15 @@ public record MaterialDeclaration(
             if (byproduct == null || !byproduct.matches("[A-Za-z][A-Za-z0-9_]*"))
                 throw new IllegalArgumentException("Use a material name for an ore byproduct of " + name);
         }
+    }
+
+    /** Compatibility constructor: existing declarations do not implicitly permit decomposition. */
+    public MaterialDeclaration(int id, String name, String displayName, int color,
+            int meltingPoint, int boilingPoint, float density, String formula,
+            boolean dust, boolean gas, boolean liquid, boolean metal, boolean ores,
+            List<String> oreByproducts, boolean polymer, boolean wires) {
+        this(id, name, displayName, color, meltingPoint, boilingPoint, density, formula,
+                dust, gas, liquid, metal, ores, oreByproducts, polymer, wires, false, false);
     }
 
     /** Declares a material by name. GregTech assigns the numeric id at startup. */
@@ -74,6 +85,8 @@ public record MaterialDeclaration(
         private List<String> oreByproducts = List.of();
         private boolean polymer;
         private boolean wires;
+        private boolean centrifuge;
+        private boolean electrolyzer;
 
         private Builder(int id, String name) {
             this.id = id;
@@ -119,6 +132,18 @@ public record MaterialDeclaration(
         /** {@code wireFine} requests only. This does not add the electric wire blocks. */
         public Builder wires() { wires = true; return this; }
 
+        /**
+         * Opts this material's separately declared composition into Centrifuge decomposition.
+         * Does not imply Electrolyzer permission or generate a missing dust/fluid form.
+         */
+        public Builder centrifuge() { centrifuge = true; return this; }
+
+        /**
+         * Opts this material's separately declared composition into Electrolyzer decomposition.
+         * Does not imply Centrifuge permission. Both opt-ins may be combined.
+         */
+        public Builder electrolyzer() { electrolyzer = true; return this; }
+
         public Builder oreByproducts(String... materials) {
             ores = true;
             if (materials == null || materials.length == 0)
@@ -129,7 +154,7 @@ public record MaterialDeclaration(
 
         public MaterialDeclaration build() {
             return new MaterialDeclaration(id, name, displayName, color, meltingPoint, boilingPoint, density,
-                    formula, dust, gas, liquid, metal, ores, oreByproducts, polymer, wires);
+                    formula, dust, gas, liquid, metal, ores, oreByproducts, polymer, wires, centrifuge, electrolyzer);
         }
     }
 }
