@@ -32,12 +32,13 @@ import net.minecraftforge.event.level.BlockEvent;
 @GameTestHolder("gregtech_issue_audit")
 @PrefixGameTestTemplate(false)
 public final class BuilderContainerTransactionTests {
-    public static final class PlacementListener {
+    // Forge ASM callback names use the nested simple name: keep this distinct from other fixtures.
+    public static final class BuilderContainerPlacementListener {
         final ServerPlayer player;
         boolean cancel;
         int calls;
-        PlacementListener(ServerPlayer player) { this.player = player; }
-        @SubscribeEvent public void placed(BlockEvent.EntityPlaceEvent event) {
+        BuilderContainerPlacementListener(ServerPlayer player) { this.player = player; }
+        @SubscribeEvent public void onBuilderContainerPlaced(BlockEvent.EntityPlaceEvent event) {
             if (event.getEntity() != player) return;
             calls++;
             if (cancel) event.setCanceled(true);
@@ -74,7 +75,7 @@ public final class BuilderContainerTransactionTests {
         player.getInventory().setItem(35, new ItemStack(Items.POWDER_SNOW_BUCKET));
         var supportBefore = h.getLevel().getBlockState(pos);
         var targetBefore = h.getLevel().getBlockState(pos.above());
-        var listener = new PlacementListener(player);
+        var listener = new BuilderContainerPlacementListener(player);
 //? if >=1.21.1 {
         /*net.neoforged.neoforge.common.NeoForge.EVENT_BUS.register(listener);
 *///?} else {
