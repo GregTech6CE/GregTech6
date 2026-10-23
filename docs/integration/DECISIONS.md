@@ -2052,3 +2052,46 @@ Sensors null-NBT源登记可合法携带REV，生成器只为这组解析，避�
 - 坩埚（Forge 树 `SmeltingCrucibleBlockEntity`、NeoForge 树 `SmeltingCrucibleEntity`）读写有符号能量缓冲，`heatCapacity` 为 `Long.MAX_VALUE`，`temperatureK` 返回自身开尔文；温度仍由下一个 tick 的 `ThermalStep` 从缓冲换算，写热量不直接改温度。大型坩埚控制器继承同一适配器。
 - 爆炸和冷却规则不变：超过容量的锅炉仍在下一个 tick 爆炸；坩埚的过热、熔毁和被动漂移仍走原 tick。
 - 验证：两端 `gregtech_heat_handler` 各 3/3 required tests passed；两端 `compileJava`、`compileBootstrapGameTestJava` 通过；`core`、Forge、NeoForge `addonApiClosureCheck` 通过（core 109、两端 140 个 API 类）。未做玩法、专服、存档重启验证。证据见 [gt6-logic-batch4-20261023.json](verification/gt6-logic-batch4-20261023.json)。
+
+## 2026-10-23 / gt6-logic 批次 5：行为机器客户端界面与渲染器
+
+- 新增 `BehaviorMachineClient`（`multiversion/src/api`，客户端 ServiceLoader，服务文件 `META-INF/services/com.gregtech.gregtech.api.addon.platform.BehaviorMachineClient`）：按机器类型提供 `Screen` 和 `BlockEntityRenderer`，返回 null 分别表示保留默认界面、没有额外绘制。服务端不加载这个入口。
+- 新增 `BehaviorMachineMenuView`，由 `BehaviorMachineMenu` 实现，暴露 `energy()`、`progress()`、`isOn(toggle)`、`tankAmount(tank)`、`tankFluid(tank)` 和 `containerId()`。`containerId()` 供自定义界面走默认界面的按钮点击路径。
+- 新增 `BehaviorMachineClientView`，由宿主方块实体实现，暴露 `addonId()`、`machineType()` 和同步状态的四类读方法。声明侧用 `BehaviorMachine.Builder.clientState(String...)` 列出要同步的 `BehaviorState` 键，最多 32 个；未声明的键读取抛出。同步只写这些键，随方块实体更新包发送，不复制整份行为状态。
+- 自定义 `Screen` 由 GT 套在默认容器界面上，物品槽和玩家物品栏仍由菜单处理；`Screen` 仍然是普通 `Screen`，不需要引用 GT 的菜单类。渲染器由 `BehaviorMachineRenderer` 按方块实体类型分发，`shouldRender` 对未声明渲染器的机器返回 false。
+- 闭包检查放宽到 `com/mojang/blaze3d/`：方块实体渲染器的 `render` 签名直接使用 `PoseStack`，这是 Minecraft 的公开渲染类型，不是 GT 内部实现。
+- 样例把 `sample_switch` 的 `armed` 键同步到客户端，并用客户端渲染器在机器上方画出红框。
+- 验证：`core:check` 通过；两端 `compileJava`、`compileAddonSample`、`addonApiClosureCheck` 通过（两端各 143 个 API 类）。未做客户端玩法、专服、存档重启验证。
+
+## 2026-10-23 / gt6-logic 批次 6：附属 sensor kind 注册
+
+- 新增 `AddonSensorContributor`（`multiversion/src/api`，ServiceLoader，服务文件 `META-INF/services/com.gregtech.gregtech.api.addon.platform.AddonSensorContributor`）。`AddonSensors.collect()` 在方块注册之前加载它；每个声明 kind 在附属自己的命名空间注册 `<addon>:sensor_<id>` 方块和方块物品，沿用现有 `SensorBlock` / `SensorBlockEntity` 与单一 `gt6ce:sensor` 方块实体类型。
+- `AddonSensor` 提供 `id`、`titleKey`、`unit`、`color`、`maximum`、`read(SensorContext)` 和可选的 `maximum(SensorContext)`。`unit` 限定为现有字模名，避免为每个附属单位新增贴图；方块状态、模型和显示名由附属提供。sensor id 在附属之间唯一，重复、非法 id、未知单位、越界颜色或负上限都在启动时失败。
+- `SensorBlockEntity.measure` 先走 addon 回调，再走内置 switch；显示单位、颜色、提示键和百分比上限都从声明读取。内置 21 种传感器的测量、比较器、存档和字模保持不变。
+- `gt6ce:sensor_recipes` 不为附属传感器生成配方。创造物品栏把附属传感器与内置传感器放在同一页。
+- 样例声明 `addon_sample:sensor_signal`，读取前方方块的 `GtSignalSource.gtSignal` 粗强度；`AddonSensorTests` 覆盖登记、读数、百分比模式和比较器输出。
+- 验证：`core:check` 通过；两端 `compileJava`、`compileAddonSample`、`addonApiClosureCheck` 通过（两端各 146 个 API 类）；Forge 与 NeoForge 的 `gregtech_sensor_source` 各 9/9 required tests passed。未做客户端玩法、专服、存档重启验证。
+
+## 2026-10-23 / gt6-logic 批次 7 第 8 条：配方查看器分类保持不做
+
+- 机器式配方展示继续用 `AddonRecipes.Map.addDisplay` 和 `RecipeTable`：`RecipeTable` 已经按声明的槽数成为 JEI/EMI 分类，`addDisplay` 已经能加展示行。
+- 不新增 `RecipeDisplayContributor` / `RecipeDisplayCategory`。需要自定义分类或任意控件的附属直接依赖 JEI 或 EMI，SDK 不引入这两个查看器的类型。文档两份 `ADDON_API` 已写清这个边界。
+
+## 2026-10-23 / gt6-logic 批次 7 第 9a 条：内置机器 NBT 派生值收口
+
+- `BasicMachineBlockEntity.load` 末尾调用 `sanitizeForSpec()`；spec 尚未到达时置 `specDirty`，由 `setSpec()` 补调。
+- `gt.energy` clamp 到 `[0, inputMaximum()]`；`gt.parallel` clamp 到 `[1, spec.parallelLimit()]`；`gt.progress` clamp 到 `[0, mMaxProgress]`。
+- 没有 `pendingOutputs` 时清空 `mProgress`、`mMaxProgress`、`mMinEnergy` 和 `startupRequirement`，与现有「旧存档不虚构产物」的口径一致。
+- 有 `pendingOutputs` 且配方仍可解析时，用保存的 batch（`mParallelCount`，已钳制）重算 `MachineWorkCost`，写回 `mMinEnergy` 和 `mMaxProgress`。不再用剩余输入重跑并行搜索，因为任务开始时已经消耗过输入，重跑会低估 batch。
+- 有 `pendingOutputs` 但配方不可解析时，保留保存值并钳制（`mMinEnergy ∈ [0, inputMaximum()]`，`mMaxProgress ∈ [0, Long.MAX_VALUE/2]`）。这与卡片表格的「否则清零」不同：中途存档的任务若把 `mMinEnergy` 清零，剩余工作会免费完成；保留并钳制不会放宽成本，也不会丢掉已滚出的产物。
+- 该收口同时封掉 `/data merge block` 修改 `gt.min_energy`、`gt.parallel`、`gt.progress` 等字段的路径；不改 spec、不改配方平衡。
+- 验证：新增 `gregtech_nbt_sanitize` 命名空间的 `MachineNbtSanitizeTests` 两项（在制任务篡改、空闲篡改），Forge 与 NeoForge 各 2/2 required tests passed；`core:check`、两端 `compileJava`、`compileBootstrapGameTestJava`、`addonApiClosureCheck` 通过（各 146 个 API 类）。未做客户端玩法、专服、存档重启验证。
+
+## 2026-10-23 / gt6-logic 批次 7 第 9b 条：内置机器调参 API
+
+- 新增 `MachineTuning` 和 `MachineTuningContributor`（`core/src/api`，ServiceLoader，服务文件 `META-INF/services/com.gregtech.gregtech.api.addon.MachineTuningContributor`）。`MachineTunings.collect()` 在 `BasicMachineDefinitions.specifications()` 中、`AddonMachineRuntime.install()` 之后、内置目录转成 spec 之前运行。
+- 键是 `machineName + tier`，与 `BasicMachineOriginalParams.find` 同键；只覆盖 `parallelLimit`、`energyIn`、`energyInMin`、`energyInMax`、`processingEfficiency`、`constantEnergy`、`cheapOverclocking`，其余字段保持内置值。
+- 冲突按字段判：同一 `(machineName, tier, field)` 被两个附属写成不同值时启动失败，并列出双方 addonId、字段和两个值；值相同则合并；同一附属重复声明同一字段失败。没有命中任何内置行的键也启动失败。
+- 合并后的值重新走 `BasicMachineSpec` 规范构造器；额外限制 `parallelLimit <= 65536` 和 `energyIn × parallelLimit` 不溢出 long。调过 `cheapOverclocking` 会把它标成 declared，调过能量范围会把 `energyRangeDeclared` 置真。
+- 补丁只在内存中，每次启动重算，不写存档；移除附属后恢复内置值。启动日志逐字段打印 `[gt6ce] tuning: ...`，并写出 `config/gt6ce-tuning.txt`。v1 不提供数据包形式。
+- 验证：`AddonDeclarationTypeContracts` 增加 22 条断言（记录校验、合并、冲突、上限、溢出、报告顺序）；新增 `gregtech_tuning` 命名空间的 `MachineTuningTests`，Forge 与 NeoForge 各 1/1 required tests passed；`core:check`、两端 `compileJava`、`compileBootstrapGameTestJava`、`addonApiClosureCheck` 通过（core 111、两端 148 个 API 类）。未做客户端玩法、专服、存档重启验证。

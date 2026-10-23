@@ -1,5 +1,7 @@
 package com.gregtech.gregtech.blockentity.sensor;
 
+import com.gregtech.gregtech.api.addon.platform.AddonSensor;
+import com.gregtech.gregtech.api.addon.platform.SensorContext;
 import com.gregtech.gregtech.api.energy.IEnergyBlock;
 import com.gregtech.gregtech.data.GregTechTags;
 import net.minecraft.core.BlockPos;
@@ -71,6 +73,7 @@ public class SensorBlockEntity extends BlockEntity {
     }
 
     private final Kind kind;
+    @javax.annotation.Nullable private final AddonSensor addon;
     private long value;
     private int signal; // 0..15
 
@@ -107,7 +110,9 @@ public class SensorBlockEntity extends BlockEntity {
 
     private final com.gregtech.gregtech.api.sensor.SensorAverage average = new com.gregtech.gregtech.api.sensor.SensorAverage();
     public com.gregtech.gregtech.api.sensor.SixCellDisplay.Glyph[] displayCells() {
-        return com.gregtech.gregtech.api.sensor.SixCellDisplay.sensor(value,mode,hexadecimal,com.gregtech.gregtech.api.sensor.SensorPanelRules.unit(kind.name()),com.gregtech.gregtech.api.sensor.SensorPanelRules.color(kind.name()));
+        String unit = addon != null ? addon.unit() : com.gregtech.gregtech.api.sensor.SensorPanelRules.unit(kind.name());
+        int color = addon != null ? addon.color() : com.gregtech.gregtech.api.sensor.SensorPanelRules.color(kind.name());
+        return com.gregtech.gregtech.api.sensor.SixCellDisplay.sensor(value,mode,hexadecimal,unit,color);
     }
     public String displayText() {
         String number = hexadecimal ? Long.toHexString(value).toUpperCase(java.util.Locale.ROOT) : Long.toString(value);
@@ -150,11 +155,19 @@ public class SensorBlockEntity extends BlockEntity {
 
     public SensorBlockEntity(BlockPos pos, BlockState state) {
         super(com.gregtech.gregtech.registry.GTBlockEntities.SENSOR.get(), pos, state);
-        this.kind = state.getBlock() instanceof com.gregtech.gregtech.block.sensor.SensorBlock sensor
-                ? sensor.kind() : Kind.FLUID;
+        if (state.getBlock() instanceof com.gregtech.gregtech.block.sensor.SensorBlock sensor) {
+            this.kind = sensor.kind() == null ? Kind.FLUID : sensor.kind();
+            this.addon = sensor.addon();
+        } else {
+            this.kind = Kind.FLUID;
+            this.addon = null;
+        }
     }
 
     public Kind kind() { return kind; }
+
+    /** The addon kind id, or the built-in enum name. */
+    public String kindName() { return addon != null ? addon.id() : kind.name(); }
     public long value() { return value; }
     public int signal() { return signal; }
 
@@ -181,7 +194,11 @@ public class SensorBlockEntity extends BlockEntity {
 
         long newValue = 0;
         long maximum = 0;
-        if (be.kind == Kind.TPS) {
+        if (be.addon != null) {
+            SensorContext context = new SensorContext(level, pos, target, facing);
+            newValue = be.addon.read(context);
+            maximum = be.addon.maximum(context);
+        } else if (be.kind == Kind.TPS) {
             newValue = be.tpsValue;
             maximum = TPS_MAX;
         } else if (target != null) {
@@ -377,21 +394,23 @@ public class SensorBlockEntity extends BlockEntity {
             }
         }
 
-        // Bulk storage exposes legal stacks to automation, but the meter must read its full count.
-        if (be.kind == Kind.ITEM && target instanceof com.gregtech.gregtech.blockentity.inventory.MassStorageBlockEntity storage) {
-            newValue = storage.stored(); maximum = storage.CAPACITY;
-        }
-        switch (be.kind) {
-            case LUMINOMETER -> {
-                newValue = level.getMaxLocalRawBrightness(pos.relative(facing.getOpposite())); maximum = 15;
+        if (be.addon == null) {
+            // Bulk storage exposes legal stacks to automation, but the meter must read its full count.
+            if (be.kind == Kind.ITEM && target instanceof com.gregtech.gregtech.blockentity.inventory.MassStorageBlockEntity storage) {
+                newValue = storage.stored(); maximum = storage.CAPACITY;
             }
-            case PLAYERCOUNTER -> {
-                if (level.getServer() != null) {
-                    newValue = level.getServer().getPlayerCount(); maximum = level.getServer().getMaxPlayers();
+            switch (be.kind) {
+                case LUMINOMETER -> {
+                    newValue = level.getMaxLocalRawBrightness(pos.relative(facing.getOpposite())); maximum = 15;
                 }
+                case PLAYERCOUNTER -> {
+                    if (level.getServer() != null) {
+                        newValue = level.getServer().getPlayerCount(); maximum = level.getServer().getMaxPlayers();
+                    }
+                }
+                case CHRONOMETER -> { newValue = com.gregtech.gregtech.api.sensor.SensorMeasurements.timeOfDayMinutes(level.getDayTime()); maximum = 1440; }
+                default -> {}
             }
-            case CHRONOMETER -> { newValue = com.gregtech.gregtech.api.sensor.SensorMeasurements.timeOfDayMinutes(level.getDayTime()); maximum = 1440; }
-            default -> {}
         }
         // sample clamps values to int; most maximum values remain long here, unlike
         // the original base sensor which binds both operands before evaluating modes.

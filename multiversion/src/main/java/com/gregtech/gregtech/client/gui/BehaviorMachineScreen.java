@@ -28,7 +28,7 @@ import java.util.List;
 //?}
 
 /** Draws a behavior machine from its declaration and the addon's GUI sheet. */
-public class BehaviorMachineScreen extends AbstractContainerScreen<BehaviorMachineMenu> implements FluidRecipeScreen {
+public class BehaviorMachineScreen extends BehaviorMachineHostScreen implements FluidRecipeScreen {
     @Override public FluidStack fluidAt(int mouseX, int mouseY) {
         for (int i = 0; i < declaration.fluids().size(); i++) {
             var tank = declaration.fluids().get(i);

@@ -36,5 +36,6 @@
   "block.addon_sample.item_pipe_restrictive_huge_pvc": "Restrictive Huge PVC Item Pipe",
   "block.addon_sample.sample_drum": "Sample Compressed Gas Drum",
   "block.addon_sample.sample_compressor": "Sample Gas Compressor",
-  "block.addon_sample.sample_boiler": "Sample Solid Boiler"
+  "block.addon_sample.sample_boiler": "Sample Solid Boiler",
+  "block.addon_sample.sensor_signal": "Signal Sensor"
 }

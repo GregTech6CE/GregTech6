@@ -74,6 +74,7 @@ public final class GregTechNeoForge {
         com.gregtech.gregtech.registry.GTZpmArtifacts.initialize();
         com.gregtech.gregtech.registry.GTLasers.registerAll();
         com.gregtech.gregtech.registry.GTSensors.registerAll();
+        com.gregtech.gregtech.platform.neoforge.machine.AddonSensorRegistration.register(modEventBus);
         com.gregtech.gregtech.registry.GTLongDistance.initialize();
         com.gregtech.gregtech.registry.GTTrackBlocks.registerAll();
         com.gregtech.gregtech.registry.GTEngines.registerAll();

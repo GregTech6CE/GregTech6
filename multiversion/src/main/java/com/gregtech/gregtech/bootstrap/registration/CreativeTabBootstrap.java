@@ -276,6 +276,9 @@ public class CreativeTabBootstrap implements InitializationStep {
             for (var entry : com.gregtech.gregtech.registry.GTSensors.all()) {
                 if (entry.isPresent()) event.accept(new net.minecraft.world.item.ItemStack(entry.get()));
             }
+            for (var entry : com.gregtech.gregtech.api.sensor.AddonSensors.blocks()) {
+                event.accept(new net.minecraft.world.item.ItemStack(entry.get()));
+            }
         }
         if (GTCreativeTabs.ENERGY_NODES_TAB != null
                 && event.getTabKey().equals(GTCreativeTabs.ENERGY_NODES_TAB.getKey())) {

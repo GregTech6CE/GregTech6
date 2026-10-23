@@ -1,8 +1,19 @@
 package com.gregtech.gregtech.api.sensor;
 
+import java.util.Set;
+
 /** Native-independent sensor layout, identity and sampling arithmetic. */
 public final class SensorPanelRules {
     private SensorPanelRules() {}
+
+    /** Unit glyph names that have a texture under {@code gt6ce:textures/block/overlays/characters/}. */
+    public static final Set<String> UNIT_GLYPHS = Set.of(
+            "liter", "eu", "scale", "kelvin", "ru", "ton", "gramm", "kilogramm", "kiloton",
+            "clock", "cubicmeter", "cubicdecameter", "gibbl", "lumin", "greg", "neutron", "lu");
+
+    public static boolean hasUnitGlyph(String unit) {
+        return unit != null && UNIT_GLYPHS.contains(unit);
+    }
 
     public static long tpsFromElapsed(long millis, int rate) {
         return millis > 0 ? rate * 100000L / millis : 2000L;

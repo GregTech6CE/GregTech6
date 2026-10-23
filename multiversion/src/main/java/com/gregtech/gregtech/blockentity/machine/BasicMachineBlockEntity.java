@@ -63,8 +63,12 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     private static final String NBT_PROGRESS = "gt.progress";
     private static final String NBT_MAX_PROGRESS = "gt.max_progress";
     private static final String NBT_FACE_CONFIG = "gt.face_config";
+    /** Upper bound for a saved job size that cannot be re-derived; keeps progress arithmetic bounded. */
+    private static final long MAX_SAVED_WORK = Long.MAX_VALUE / 2;
 
     private BasicMachineSpec spec;
+    /** A save loaded before this machine had a spec; sanitize once the spec arrives. */
+    private boolean specDirty;
     private RecipeMap recipeMap;
     private MachineItemHandler itemHandler;
 
@@ -245,6 +249,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             tanksOutput[i] = new FluidTankGT(8000)
                     .setOnChanged(() -> { setChanged(); mInventoryChanged = true; });
         }
+        if (specDirty) sanitizeForSpec();
     }
 
     private void checkTankCapacity(int idx, boolean isInput) {
@@ -259,6 +264,10 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     @Override public long gibblMaximum(int side) { return java.util.Arrays.stream(tanksInput).mapToLong(FluidTankGT::capacity).sum(); }
     public FluidTankGT[] getTanksOutput() { return tanksOutput; }
     public long getEnergyTick() { return mEnergy; }
+    /** Sanitized per-tick cost of the current job; 0 when idle. */
+    public long minimumEnergy() { return mMinEnergy; }
+    /** Clamped batch size of the current job. */
+    public int parallelCount() { return mParallelCount; }
 
     public double averageEnergyInput() {
         return level == null ? 0 : inputAverage.average(level.getGameTime());
@@ -1836,7 +1845,56 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 *///?} else {
         loadCovers(tag);
 //?}
+        sanitizeForSpec();
+    }
 
+    /** Re-derive or bound every value that a save or {@code /data merge block} could have forged. */
+    private void sanitizeForSpec() {
+        if (spec == null) { specDirty = true; return; }
+        specDirty = false;
+        mEnergy = clamp(mEnergy, 0, inputMaximum());
+        mParallelCount = (int) clamp(mParallelCount, 1, Math.max(1, spec.parallelLimit()));
+        if (pendingOutputs == null) {
+            mProgress = 0;
+            mMaxProgress = 0;
+            mMinEnergy = 0;
+            startupRequirement = 0;
+            return;
+        }
+        var savedCost = savedJobCost();
+        if (savedCost != null) {
+            mMinEnergy = savedCost.minimumPower();
+            mMaxProgress = savedCost.totalWork();
+        } else {
+            // The inputs of an in-progress job are already consumed, so its recipe may not be
+            // resolvable. Keep the saved cost bounded instead of zeroing it: a zero cost would
+            // let a reloaded job finish for free.
+            mMinEnergy = clamp(mMinEnergy, 0, inputMaximum());
+            mMaxProgress = clamp(mMaxProgress, 0, MAX_SAVED_WORK);
+        }
+        mProgress = clamp(mProgress, 0, mMaxProgress);
+        if (mMaxProgress <= 0) {
+            mProgress = 0;
+            startupRequirement = 0;
+        }
+    }
+
+    /** Recomputes the current job cost without consuming inputs or rolling outputs. */
+    @Nullable
+    private com.gregtech.gregtech.api.recipe.MachineWorkCost.Cost savedJobCost() {
+        if (recipeMap == null || itemHandler == null || level == null) return null;
+        Recipe recipe = findRecipeWithUsbPort();
+        if (recipe == null || !exclusivePairOrPlain(recipe)) return null;
+        // The saved batch is the one the job actually rolled; remaining inputs may already be
+        // partly consumed, so re-running the parallel search would understate the cost.
+        int parallel = Math.max(1, mParallelCount);
+        return com.gregtech.gregtech.api.recipe.MachineWorkCost.calculate(recipe.mEUt, recipe.mDuration, parallel,
+                parallelScalesDuration(), efficiency(), inputMinimum(), inputMaximum(),
+                cheapOverclocking(), usesTimeEnergy());
+    }
+
+    private static long clamp(long value, long minimum, long maximum) {
+        return Math.max(minimum, Math.min(maximum, value));
     }
 
     // ── Sided wrappers ────────────────────────────────────────────────────

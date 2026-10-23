@@ -153,6 +153,10 @@ def permitted(name, kind, api_names):
         return False
     if name.startswith('net/minecraft/'):
         return True
+    # Block entity renderers take a PoseStack and a vertex buffer, so an addon
+    # renderer names these Minecraft rendering types directly.
+    if name.startswith('com/mojang/blaze3d/'):
+        return True
     if kind == 'forge':
         return name.startswith('net/minecraftforge/')
     if kind == 'neoforge':

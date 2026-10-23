@@ -1,6 +1,7 @@
 package com.gregtech.gregtech.client.gui;
 
 import com.gregtech.gregtech.api.addon.BehaviorMachine;
+import com.gregtech.gregtech.api.addon.platform.BehaviorMachineMenuView;
 import com.gregtech.gregtech.blockentity.machine.BehaviorMachineBlockEntity;
 import com.gregtech.gregtech.registry.GTMenuTypes;
 import net.minecraft.core.BlockPos;
@@ -23,7 +24,7 @@ import net.minecraftforge.items.SlotItemHandler;
 //?}
 
 /** One menu for every behavior machine. Slot positions come from the declaration. */
-public class BehaviorMachineMenu extends AbstractContainerMenu {
+public class BehaviorMachineMenu extends AbstractContainerMenu implements BehaviorMachineMenuView {
     private static final int PLAYER_SLOTS = 36;
     private final BehaviorMachineBlockEntity machine;
     private final ContainerData data;
@@ -76,12 +77,13 @@ public class BehaviorMachineMenu extends AbstractContainerMenu {
 
     public BehaviorMachineBlockEntity machine() { return machine; }
     public int machineSlotCount() { return machineSlots; }
-    public int energy() { return data.get(0); }
-    public float progress() { return data.get(1) / 1000.0F; }
-    public boolean isOn(int toggle) { return (data.get(2) & (1 << toggle)) != 0; }
-    public int tankAmount(int tank) { return data.get(3 + tank); }
+    @Override public int energy() { return data.get(0); }
+    @Override public float progress() { return data.get(1) / 1000.0F; }
+    @Override public boolean isOn(int toggle) { return (data.get(2) & (1 << toggle)) != 0; }
+    @Override public int tankAmount(int tank) { return data.get(3 + tank); }
+    @Override public int containerId() { return containerId; }
 
-    public FluidStack tankFluid(int tank) {
+    @Override public FluidStack tankFluid(int tank) {
         int id = data.get(3 + machine.tanks() + tank);
         if (id < 0 || tankAmount(tank) <= 0) return FluidStack.EMPTY;
         var fluid = net.minecraft.core.registries.BuiltInRegistries.FLUID.byId(id);
