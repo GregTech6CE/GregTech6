@@ -349,6 +349,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             if (!FaceConfig.has(faceConfig.energyInputs(), dir)) continue;
             Direction absDir = relativeToAbsolute(dir);
             BlockPos adj = pos.relative(absDir);
+            if (!level.hasChunkAt(adj)) continue;
             BlockEntity be = level.getBlockEntity(adj);
 
 //? if >=1.21.1 {
@@ -374,6 +375,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             if (!FaceConfig.has(spec.auxiliaryFaceMask(), dir)) continue;
             Direction absDir = relativeToAbsolute(dir);
             BlockPos adj = pos.relative(absDir);
+            if (!level.hasChunkAt(adj)) continue;
             BlockEntity be = level.getBlockEntity(adj);
 //? if >=1.21.1 {
 /*            if (be instanceof com.gregtech.gregtech.api.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) continue;
@@ -1012,6 +1014,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         Direction absolute = relativeToAbsolute(relDir);
         if(isFaceShuttered(absolute))return;
         BlockPos adj = pos.relative(absolute);
+        if (!level.hasChunkAt(adj)) return;
         BlockEntity be = level.getBlockEntity(adj);
 
 //? if >=1.21.1 {
@@ -1055,6 +1058,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         Direction absolute = relativeToAbsolute(relDir);
         if(isFaceShuttered(absolute))return;
         BlockPos adj = pos.relative(absolute);
+        if (!level.hasChunkAt(adj)) return;
         BlockEntity be = level.getBlockEntity(adj);
 
 //? if >=1.21.1 {
@@ -1096,6 +1100,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         Direction absolute = relativeToAbsolute(relDir);
         if(isFaceShuttered(absolute))return;
         BlockPos adj = pos.relative(absolute);
+        if (!level.hasChunkAt(adj)) return;
         BlockEntity be = level.getBlockEntity(adj);
 
 //? if >=1.21.1 {
@@ -1148,6 +1153,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     /** Dedicated controllers may output beneath their structure rather than the main block. */
     protected IFluidHandler automaticFluidOutputTarget(Level level,BlockPos pos,Direction absolute) {
         BlockPos adj = pos.relative(absolute);
+        if (!level.hasChunkAt(adj)) return null;
         BlockEntity be = level.getBlockEntity(adj);
 
 //? if >=1.21.1 {
