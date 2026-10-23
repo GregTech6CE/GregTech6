@@ -1,0 +1,261 @@
+{
+  "baseline_head": "001962001172e4a18b06f1a3c27baa0739c04de1",
+  "original_snapshot": "3703e40308c8c030763fd6297dea8b210d2a77b1",
+  "w_snapshot": "607771f74acb0fe647f7e9412676e72094799545",
+  "fixed_status": "running; no pass claimed",
+  "existing_tool_shapeless_unchanged_from_head": true,
+  "baseline": {
+    "forge": {
+      "executed": 260,
+      "passed": 258,
+      "failed": [
+        {
+          "name": "twentyconversionsmatchonlytheirsourcevariant",
+          "namespace": "gregtech_issue_audit:test_empty",
+          "failure": {
+            "message": "No value present"
+          }
+        },
+        {
+          "name": "thirtysourcevariantitems",
+          "namespace": "gregtech_issue_audit:test_empty",
+          "failure": {
+            "message": "source subtype name"
+          }
+        }
+      ]
+    },
+    "neoforge": {
+      "executed": 251,
+      "passed": 249,
+      "failed": [
+        {
+          "name": "thirtysourcevariantitems",
+          "namespace": "gregtech_issue_audit:test_empty",
+          "failure": {
+            "message": "(-1240874, -60, -5785636) source subtype name"
+          }
+        },
+        {
+          "name": "twentyconversionsmatchonlytheirsourcevariant",
+          "namespace": "gregtech_issue_audit:test_empty",
+          "failure": {
+            "message": "(-1240835, -60, -5785255) No value present"
+          }
+        }
+      ]
+    }
+  },
+  "files": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/recipe/EquipmentCraftingCatalog.java",
+      "sha256": "124a9bd7f5bd8dc3525ce40c8d8cde7958fc7a29b6f146f13f1a62ec527fff40"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/lang/en_us.json",
+      "sha256": "5a7e8bcc83deae14eed72d74c7d404ae1cf72b8a22d82e6d81b34feb12e31513"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/models/item/spike_fancy.json",
+      "sha256": "17d7ebfe810bba7f28722c33f9fe113d8abafb8d83a08b7eb2e34bc9615d9eff"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/models/item/spike_metal.json",
+      "sha256": "17d7ebfe810bba7f28722c33f9fe113d8abafb8d83a08b7eb2e34bc9615d9eff"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/models/item/spike_omni_variant.json",
+      "sha256": "9a57eeb36cb655750095bf9b2d57f44805b5700b35d9c382d12cd294aeffb461"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/models/item/spike_sharp.json",
+      "sha256": "17d7ebfe810bba7f28722c33f9fe113d8abafb8d83a08b7eb2e34bc9615d9eff"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/models/item/spike_steel.json",
+      "sha256": "17d7ebfe810bba7f28722c33f9fe113d8abafb8d83a08b7eb2e34bc9615d9eff"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/models/item/spike_super.json",
+      "sha256": "17d7ebfe810bba7f28722c33f9fe113d8abafb8d83a08b7eb2e34bc9615d9eff"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/catalog_repairs/spike_fancy_gold_convert_to_falling.json",
+      "sha256": "70757030f463e268c1411ff560b31dcb4f4587c65493ba7e29725833b46b3236"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/catalog_repairs/spike_fancy_gold_convert_to_omni.json",
+      "sha256": "c111fb15e9a62705f8fc0ef6a2f9c42166c72ebac1337f879378b0b6c64e79be"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/catalog_repairs/spike_fancy_silver_convert_to_falling.json",
+      "sha256": "004896a8ce207b9e538288950a0a8d6967482cd36a84126ceb0a59510ada94fb"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/catalog_repairs/spike_fancy_silver_convert_to_omni.json",
+      "sha256": "fdcd0b2426800a9beaa5f9787b155c430261e6319af04e1efedfb6c28604835d"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/catalog_repairs/spike_metal_copper_convert_to_falling.json",
+      "sha256": "64d54e69e285a129237bac0e093cb3873e41256b20ef7fe1c55fd2ad994ea85b"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/catalog_repairs/spike_metal_copper_convert_to_omni.json",
+      "sha256": "de243e1a1f8687bfe1c96cf13422e87474e42234260ac86bbdaad216da60d833"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/catalog_repairs/spike_metal_lead_convert_to_falling.json",
+      "sha256": "20436d25d96512ffde3fe180209ddc0e451f9e07f30251e61916738d9962ad73"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/catalog_repairs/spike_metal_lead_convert_to_omni.json",
+      "sha256": "ba4339c8ef9ee0f5b0f5b75354f527010cbc9bbada13debb67fc7730b238a5c8"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/catalog_repairs/spike_sharp_steel_convert_to_falling.json",
+      "sha256": "767f0ab1ad96142654efa5fdaa48142858edcdc5004256d8408f2ee4ff8d6b8e"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/catalog_repairs/spike_sharp_steel_convert_to_omni.json",
+      "sha256": "eff3f8cd736e4ca563c375e3c5f70e203e64264ff2d1320e8987cf44a4d286cc"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/catalog_repairs/spike_sharp_titanium_convert_to_falling.json",
+      "sha256": "ac97e4287d51dd476baa4985c41fba5d9cd0992bec7f663acb1e56d9e4afe3a3"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/catalog_repairs/spike_sharp_titanium_convert_to_omni.json",
+      "sha256": "2e3010557c16b37e57b6893a6e151e16d441be98c64426bf969dc8469cc4220c"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/catalog_repairs/spike_steel_blue_steel_convert_to_falling.json",
+      "sha256": "4412044dd97026f0e777530b1445e65f7afe1b852448f137d0344aafea5639b0"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/catalog_repairs/spike_steel_blue_steel_convert_to_omni.json",
+      "sha256": "a628ec1addd128d28a6249c41c1dd6dee36b9dc70a27b80d08af248312e5e3b4"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/catalog_repairs/spike_steel_red_steel_convert_to_falling.json",
+      "sha256": "f87ed3241fcc53b182260585f8651c975a6c7388b11ce6d403613d499635c2bd"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/catalog_repairs/spike_steel_red_steel_convert_to_omni.json",
+      "sha256": "fa2f7e561b0fd2e37c267074d896c09396d390390f7c75da97d98ff615d4d21a"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/catalog_repairs/spike_super_adamantium_convert_to_falling.json",
+      "sha256": "4f384375782b1c73fe69be713c3cea3c65e98b69c87fa6ccf28a8febf4e9cbbd"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/catalog_repairs/spike_super_adamantium_convert_to_omni.json",
+      "sha256": "af16bb0b67bcebff5bc281b9abfa13ceec93d9ebed67de06d3271dff004c5b2c"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/catalog_repairs/spike_super_tungstensteel_convert_to_falling.json",
+      "sha256": "5c5b30e23dc295208b5bff5a0e9ac1a023767795bf8ecc1e0d4e2fb219774949"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/catalog_repairs/spike_super_tungstensteel_convert_to_omni.json",
+      "sha256": "d9fabe1233625461eb9470c664719dec39c86603817b4655919fdc0e4fb8b565"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/SpikeBlock.java",
+      "sha256": "0563ab6dcf21e6d09bea4c0ad939a105d3da240093db83835161ecc66bec5374"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/bootstrap/registration/OriginCreativeContents.java",
+      "sha256": "97ee2d5e18ee81dc13cb80e23de28aeb8b12a419d98b35721952acde59fe075d"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/SpikeBlockItem.java",
+      "sha256": "8204e8afcdf2676be8db8f6c09b05b51f224d268ee3dd10ac9595a730f72ac8a"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/recipe/SpikeConversionRecipe.java",
+      "sha256": "84679f7329d83b82eead35fdc6b6c9b674c1633910f779737b3a8f8309257fc8"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/recipe/ToolShapelessRecipe.java",
+      "sha256": "b0a8c632ef3881071ce9b64a73479abdd4fc8bebcbfa8ef6bbb7237f054a59f5"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTSpikes.java",
+      "sha256": "3211f60cb66c4e35f9b20d7adda2def2731e034eb62e8fbd326eda7bb6d5b9af"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/content/ToolBootstrap.java",
+      "sha256": "03d2b06ab0de92f280913ec7cc8eb80c17f8db764acf54e99bb1bc59fba097f0"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "sha256": "e2630dc4171202a5860505e01592a011c54016f83f13ef0862ee0ef00149070c"
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/SpikesClientSetup.java",
+      "sha256": "8af3ebb3d78182d8b51504e56aacb46d3bf3c015ae7e69a84cf0f0ccb81fde78"
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/recipe/NeoRecipeSerializers.java",
+      "sha256": "59ed189851c5805312126a05048134c48079cfab68c924b5bf87c8057901f8a9"
+    },
+    {
+      "path": "tools/localization/aliases.json",
+      "sha256": "ebc9a7f09b1a074864b9daafb88d9fea84a9a941f2d0c1b1a4983d98b84df8b8"
+    },
+    {
+      "path": "tools/localization/english_source.json",
+      "sha256": "d7d967af790b365b253e238073b2d7de655590410e3a6c002e58abdc86f79943"
+    },
+    {
+      "path": "work/references/gregtech6-original/src/main/java/gregapi/block/BlockBase.java",
+      "sha256": "9a5d3e32274fe807c910ccb7722e43226d90b434d18fd20d4fa40bcd5145f237"
+    },
+    {
+      "path": "work/references/gregtech6-original/src/main/java/gregapi/block/misc/BlockBaseSpike.java",
+      "sha256": "e4866643ed5d95731c09cee16a66bb6544f4054e87952d7b0aae55366284abf4"
+    },
+    {
+      "path": "work/references/gregtech6-original/src/main/java/gregapi/util/ST.java",
+      "sha256": "5ff16d9051e2744a66c711bd5f2581785ba8af7b2272fb1023a6d2f4ddb783a8"
+    },
+    {
+      "path": "work/references/gregtech6-original/src/main/java/gregtech/blocks/tool/BlockSpikeFancy.java",
+      "sha256": "0cd008aa9f5f364612be00c9513d116b56791ba8196276a0dc17d755fcff4a39"
+    },
+    {
+      "path": "work/references/gregtech6-original/src/main/java/gregtech/blocks/tool/BlockSpikeMetal.java",
+      "sha256": "08f9914494886673734f20519951bbd4f7d4f854fa552c64f92a5b35da1e038a"
+    },
+    {
+      "path": "work/references/gregtech6-original/src/main/java/gregtech/blocks/tool/BlockSpikeSharp.java",
+      "sha256": "1fec895db48163c8912dbbd8e27155251d888022c5745f020c42b02ad03eecdb"
+    },
+    {
+      "path": "work/references/gregtech6-original/src/main/java/gregtech/blocks/tool/BlockSpikeSteel.java",
+      "sha256": "3e69d6bfab3a0cc6067d1c2618e0c57a0b47b1e16d07ec9be3bd133d8ba661cd"
+    },
+    {
+      "path": "work/references/gregtech6-original/src/main/java/gregtech/blocks/tool/BlockSpikeSuper.java",
+      "sha256": "2f2bdad0fc77934cc327cd0358f7f61fa108b0fe984705a1d632ed91ff72fb6c"
+    },
+    {
+      "path": "work/references/gregtech6-original/src/main/java/gregtech/loaders/a/Loader_Blocks.java",
+      "sha256": "4215d81610616b406af400c98ddaee3b0d266cb187c9335d2d6a5dd851284abb"
+    },
+    {
+      "path": "work/validation/spike-delivery-baseline/forge-baseline.xml",
+      "sha256": "42b1cc8bc775e9cf5f943c22a8d0b3d706c52071aa53a846308218df74153c62"
+    },
+    {
+      "path": "work/validation/spike-delivery-baseline/neoforge-baseline.xml",
+      "sha256": "5612dc356c2ddc6f365b3ec2d15aec734c780c1f6c6bc45589b963dc11267b66"
+    }
+  ],
+  "final_local_validation": {
+    "forge": 260,
+    "neoforge": 251,
+    "status": "passed",
+    "receipt": "work/validation/spike-delivery-fixed/local-validation-receipt.md"
+  }
+}

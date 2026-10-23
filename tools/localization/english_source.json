@@ -55252,6 +55252,126 @@
     "tooltip.gt6ce.wire.damage_warning": {
       "source_key": "gt.lang.hazard.contact",
       "value": "Causes Damage when touched while active!"
+    },
+    "gt.block.spikes.metal.0": {
+      "source_key": "gt.block.spikes.metal.0",
+      "value": "Copper Wall Spike"
+    },
+    "gt.block.spikes.metal.6": {
+      "source_key": "gt.block.spikes.metal.6",
+      "value": "Copper Block Spike"
+    },
+    "gt.block.spikes.metal.7": {
+      "source_key": "gt.block.spikes.metal.7",
+      "value": "Falling Copper Spike Block"
+    },
+    "gt.block.spikes.metal.8": {
+      "source_key": "gt.block.spikes.metal.8",
+      "value": "Lead Wall Spike"
+    },
+    "gt.block.spikes.metal.14": {
+      "source_key": "gt.block.spikes.metal.14",
+      "value": "Lead Block Spike"
+    },
+    "gt.block.spikes.metal.15": {
+      "source_key": "gt.block.spikes.metal.15",
+      "value": "Falling Lead Spike Block"
+    },
+    "gt.block.spikes.steel.0": {
+      "source_key": "gt.block.spikes.steel.0",
+      "value": "Blue Steel Wall Spike"
+    },
+    "gt.block.spikes.steel.6": {
+      "source_key": "gt.block.spikes.steel.6",
+      "value": "Blue Steel Block Spike"
+    },
+    "gt.block.spikes.steel.7": {
+      "source_key": "gt.block.spikes.steel.7",
+      "value": "Falling Blue Steel Spike Block"
+    },
+    "gt.block.spikes.steel.8": {
+      "source_key": "gt.block.spikes.steel.8",
+      "value": "Red Steel Wall Spike"
+    },
+    "gt.block.spikes.steel.14": {
+      "source_key": "gt.block.spikes.steel.14",
+      "value": "Red Steel Block Spike"
+    },
+    "gt.block.spikes.steel.15": {
+      "source_key": "gt.block.spikes.steel.15",
+      "value": "Falling Red Steel Spike Block"
+    },
+    "gt.block.spikes.sharp.0": {
+      "source_key": "gt.block.spikes.sharp.0",
+      "value": "Steel Wall Spike"
+    },
+    "gt.block.spikes.sharp.6": {
+      "source_key": "gt.block.spikes.sharp.6",
+      "value": "Steel Block Spike"
+    },
+    "gt.block.spikes.sharp.7": {
+      "source_key": "gt.block.spikes.sharp.7",
+      "value": "Falling Steel Spike Block"
+    },
+    "gt.block.spikes.sharp.8": {
+      "source_key": "gt.block.spikes.sharp.8",
+      "value": "Titanium Wall Spike"
+    },
+    "gt.block.spikes.sharp.14": {
+      "source_key": "gt.block.spikes.sharp.14",
+      "value": "Titanium Block Spike"
+    },
+    "gt.block.spikes.sharp.15": {
+      "source_key": "gt.block.spikes.sharp.15",
+      "value": "Falling Titanium Spike Block"
+    },
+    "gt.block.spikes.fancy.0": {
+      "source_key": "gt.block.spikes.fancy.0",
+      "value": "Gold Wall Spike"
+    },
+    "gt.block.spikes.fancy.6": {
+      "source_key": "gt.block.spikes.fancy.6",
+      "value": "Gold Block Spike"
+    },
+    "gt.block.spikes.fancy.7": {
+      "source_key": "gt.block.spikes.fancy.7",
+      "value": "Falling Gold Spike Block"
+    },
+    "gt.block.spikes.fancy.8": {
+      "source_key": "gt.block.spikes.fancy.8",
+      "value": "Silver Wall Spike"
+    },
+    "gt.block.spikes.fancy.14": {
+      "source_key": "gt.block.spikes.fancy.14",
+      "value": "Silver Block Spike"
+    },
+    "gt.block.spikes.fancy.15": {
+      "source_key": "gt.block.spikes.fancy.15",
+      "value": "Falling Silver Spike Block"
+    },
+    "gt.block.spikes.super.0": {
+      "source_key": "gt.block.spikes.super.0",
+      "value": "Tungstensteel Wall Spike"
+    },
+    "gt.block.spikes.super.6": {
+      "source_key": "gt.block.spikes.super.6",
+      "value": "Tungstensteel Block Spike"
+    },
+    "gt.block.spikes.super.7": {
+      "source_key": "gt.block.spikes.super.7",
+      "value": "Falling Tungstensteel Spike Block"
+    },
+    "gt.block.spikes.super.8": {
+      "source_key": "gt.block.spikes.super.8",
+      "value": "Adamantium Wall Spike"
+    },
+    "gt.block.spikes.super.14": {
+      "source_key": "gt.block.spikes.super.14",
+      "value": "Adamantium Block Spike"
+    },
+    "gt.block.spikes.super.15": {
+      "source_key": "gt.block.spikes.super.15",
+      "value": "Falling Adamantium Spike Block"
     }
   }
 }

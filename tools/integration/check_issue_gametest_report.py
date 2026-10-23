@@ -12,6 +12,8 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'spikedeliveryaudittests.thirtysourcevariantitems',
+    'spikeconversionaudittests.twentyconversionsmatchonlytheirsourcevariant',
     'coverremovalupdatetests.crowbarremovaldetachesnativeleveroneverythinwireface',
     'coverremovalupdatetests.crowbarremovaldistinguishesmediumandfulldiameterpipesupport',
     'coverremovalupdatetests.removingnonsolidvalvepreservesunderlyingfullhostsupport',
