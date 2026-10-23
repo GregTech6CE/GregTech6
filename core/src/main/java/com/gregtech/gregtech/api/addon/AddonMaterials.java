@@ -316,6 +316,15 @@ public final class AddonMaterials {
         return owners == null ? List.of() : List.copyOf(owners);
     }
 
+    /**
+     * Registry namespace of this material's generated items and fluids: its declaring addon,
+     * or {@code gt6ce} for a built-in material. Multi-owner materials follow {@link #owner}.
+     */
+    public static String namespaceOf(GTMaterial material) {
+        String owner = owner(material);
+        return owner == null ? com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID : owner;
+    }
+
     public static List<AcceptedForm> acceptedForms() {
         return acceptedForms;
     }

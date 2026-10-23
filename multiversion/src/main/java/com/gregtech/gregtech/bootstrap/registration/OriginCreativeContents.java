@@ -112,7 +112,8 @@ public final class OriginCreativeContents {
                     || partItem.getBlock() instanceof com.gregtech.gregtech.block.machine.AddonFunctionalPartBlock);
             boolean addonDrum = item instanceof BlockItem drumItem
                     && drumItem.getBlock() instanceof com.gregtech.gregtech.block.machine.CompressedGasTankBlock;
-            if ((!itemId.getNamespace().equals("gt6ce") && !addonMachine && !addonPipe && !addonPart && !addonDrum)
+            boolean addonFluid = item instanceof com.gregtech.gregtech.platform.neoforge.fluid.FluidDisplayItem;
+            if ((!itemId.getNamespace().equals("gt6ce") && !addonMachine && !addonPipe && !addonPart && !addonDrum && !addonFluid)
                     || item instanceof MaterialFormItem || item instanceof CreativeTabIconItem) continue;
 *///?} else {
             var itemId = BuiltInRegistries.ITEM.getKey(item);
@@ -125,7 +126,8 @@ public final class OriginCreativeContents {
                     || partItem.getBlock() instanceof com.gregtech.gregtech.block.machine.AddonFunctionalPartBlock);
             boolean addonDrum = item instanceof BlockItem drumItem
                     && drumItem.getBlock() instanceof com.gregtech.gregtech.block.machine.CompressedGasTankBlock;
-            if((!itemId.getNamespace().equals("gt6ce") && !addonPipe && !addonPart && !addonDrum)||item instanceof MaterialFormItem||item instanceof CreativeTabIconItem)continue;
+            boolean addonFluid = item instanceof com.gregtech.gregtech.item.FluidItem;
+            if((!itemId.getNamespace().equals("gt6ce") && !addonPipe && !addonPart && !addonDrum && !addonFluid)||item instanceof MaterialFormItem||item instanceof CreativeTabIconItem)continue;
 //?}
             if(item instanceof BlockItem b && b.getBlock() instanceof MaterialBlockLike)continue;
             if(java.util.Set.of("fluid_spring","tap","fluid_funnel","cap_nozzle","nozzle","cure_all").contains(BuiltInRegistries.ITEM.getKey(item).getPath()))continue;

@@ -27,10 +27,21 @@ import java.util.Map;
 public final class GTFluidItems {
 //? if >=1.21.1 {
  /*private GTFluidItems(){}
- public static Item get(String field){var entry=RegisteredFluids.get(field);if(entry==null)return null;var item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce","fluid_item_"+RegisteredFluids.sanitizePath(entry.registryName())));return item==Items.AIR?null:item;}
+ public static Item get(String field){var entry=RegisteredFluids.get(field);if(entry==null)return null;var item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(GTFluids.namespace(entry),"fluid_item_"+RegisteredFluids.sanitizePath(entry.registryName())));return item==Items.AIR?null:item;}
 *///?} else {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.NAMESPACE);
+    private static final Map<String, DeferredRegister<Item>> ADDON_ITEMS = new LinkedHashMap<>();
+
+    /** Built-in display items stay on {@link #ITEMS}; an addon fluid uses that addon's namespace. */
+    public static DeferredRegister<Item> items(String namespace) {
+        if (GregTech.NAMESPACE.equals(namespace)) return ITEMS;
+        return ADDON_ITEMS.computeIfAbsent(namespace, id -> DeferredRegister.create(ForgeRegistries.ITEMS, id));
+    }
+
+    public static void registerAddonItems(net.minecraftforge.eventbus.api.IEventBus bus) {
+        for (DeferredRegister<Item> register : ADDON_ITEMS.values()) register.register(bus);
+    }
 
     private static final Map<String, RegistryObject<FluidItem>> BY_FIELD = new LinkedHashMap<>();
 
@@ -42,6 +53,11 @@ public final class GTFluidItems {
     private GTFluidItems() {}
 
     /** Binds a fluid item into the lookup map. Called by Loader_Fluids during registration. */
+    /** Every fluid display item, built-in and addon namespace alike. */
+    public static java.util.Collection<RegistryObject<FluidItem>> allEntries() {
+        return java.util.List.copyOf(BY_FIELD.values());
+    }
+
     public static void bindFluidItem(String field, RegistryObject<FluidItem> ro) {
         BY_FIELD.put(field, ro);
         var still=GTFluids.still(field); var flowing=GTFluids.flowing(field);

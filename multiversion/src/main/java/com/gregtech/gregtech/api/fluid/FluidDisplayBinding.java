@@ -42,10 +42,11 @@ public final class FluidDisplayBinding {
     public static ItemStack display(HolderLookup.Provider lookup, FluidStack fluid) {
         if (fluid.isEmpty()) return ItemStack.EMPTY;
         var fluidId = BuiltInRegistries.FLUID.getKey(fluid.getFluid());
-        net.minecraft.world.item.Item carrierItem = fluidId.getNamespace().equals("gt6ce")
-                ? BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "fluid_item_" + fluidId.getPath())) : null;
+        net.minecraft.world.item.Item carrierItem = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(
+                fluidId.getNamespace(), "fluid_item_" + fluidId.getPath()));
         if (!(carrierItem instanceof FluidDisplayItem))
-            for (var handle : com.gregtech.gregtech.platform.neoforge.fluid.FluidRegistries.ITEMS.getEntries()) {
+            for (var handle : com.gregtech.gregtech.platform.neoforge.fluid.FluidRegistries.allItems().toList()) {
+                if (!(handle.get() instanceof FluidDisplayItem)) continue;
                 carrierItem = handle.get();
                 break;
             }
@@ -60,7 +61,9 @@ public final class FluidDisplayBinding {
     public static FluidStack resolve(HolderLookup.Provider lookup, ItemStack stack) {
         if (!(stack.getItem() instanceof FluidDisplayItem carrierItem)) return FluidStack.EMPTY;
         if (hasPayload(stack)) return FluidStack.parseOptional(lookup, com.gregtech.gregtech.content.data.UsbDataMedia.tag(stack).getCompound(TAG));
-        var fluidId = ResourceLocation.fromNamespaceAndPath("gt6ce", RegisteredFluids.sanitizePath(carrierItem.fluidEntry().registryName()));
+        var itemId = BuiltInRegistries.ITEM.getKey(stack.getItem());
+        var fluidId = ResourceLocation.fromNamespaceAndPath(itemId.getNamespace(),
+                RegisteredFluids.sanitizePath(carrierItem.fluidEntry().registryName()));
         var fluid = BuiltInRegistries.FLUID.get(fluidId);
         return fluid == net.minecraft.world.level.material.Fluids.EMPTY ? FluidStack.EMPTY : new FluidStack(fluid, 1000);
     }
@@ -103,7 +106,9 @@ public final class FluidDisplayBinding {
     public static FluidStack resolve(ItemStack stack) {
         if (!(stack.getItem() instanceof FluidItem carrierItem)) return FluidStack.EMPTY;
         if (hasPayload(stack)) return FluidStack.loadFluidStackFromNBT(stack.getTag().getCompound(TAG));
-        var fluidId = ResourceLocation.fromNamespaceAndPath("gt6ce", RegisteredFluids.sanitizePath(carrierItem.fluidEntry().registryName()));
+        var itemId = ForgeRegistries.ITEMS.getKey(stack.getItem());
+        var fluidId = ResourceLocation.fromNamespaceAndPath(itemId.getNamespace(),
+                RegisteredFluids.sanitizePath(carrierItem.fluidEntry().registryName()));
         var fluid = ForgeRegistries.FLUIDS.getValue(fluidId);
         return fluid == null || fluid == net.minecraft.world.level.material.Fluids.EMPTY ? FluidStack.EMPTY : new FluidStack(fluid, 1000);
     }

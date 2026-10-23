@@ -143,9 +143,10 @@ public final class MaterialItemDefinitions {
 
     /**
      * Preserves prefix order, sorted material order, filtering and the treated-wood exception.
-     * Item ids are claimed by every core material before any addon material, so an addon
-     * material cannot take a base id away from the built-in directory. Addon collisions fail
-     * instead of receiving the numeric suffix.
+     * Core materials claim ids in the {@code gt6ce} namespace before any addon material, so the
+     * built-in directory keeps its ids. Addon materials claim the namespace of their owning addon
+     * ({@link AddonMaterials#namespaceOf}); a collision inside that namespace fails instead of
+     * receiving the numeric suffix.
      */
     public static List<Definition> all() {
         Set<String> seenIds = new HashSet<>();
@@ -177,7 +178,8 @@ public final class MaterialItemDefinitions {
         for (MaterialPrefix prefix : automatic) {
             for (GTMaterial material : GTMaterialRegistry.sortedMaterials()) {
                 if (!generates(prefix, material)) continue;
-                definitions.add(new Definition(claimed.get(material).get(prefix), prefix.getItemId(material), prefix, material));
+                definitions.add(new Definition(AddonMaterials.namespaceOf(material),
+                        claimed.get(material).get(prefix), prefix.getItemId(material), prefix, material));
             }
         }
         for (AddonMaterials.AcceptedForm form : AddonMaterials.acceptedForms()) {
@@ -185,7 +187,8 @@ public final class MaterialItemDefinitions {
             GTMaterial material = GTMaterialRegistry.get(form.materialName()).resolve();
             if (prefix == null || !material.isValid() || generates(prefix, material)) continue;
             if (!AddonMaterials.explicitPlateOrFoil(prefix, material)) continue;
-            definitions.add(new Definition(claimed.get(material).get(prefix), prefix.getItemId(material), prefix, material));
+            definitions.add(new Definition(AddonMaterials.namespaceOf(material),
+                    claimed.get(material).get(prefix), prefix.getItemId(material), prefix, material));
         }
         for (MaterialPrefix prefix : PrefixRegistry.addonPrefixes()) {
             for (GTMaterial material : GTMaterialRegistry.sortedMaterials()) {
@@ -230,7 +233,7 @@ public final class MaterialItemDefinitions {
 
     private static void claimPair(MaterialPrefix prefix, GTMaterial material, boolean core, Set<String> seenIds,
                                   Map<GTMaterial, Map<MaterialPrefix, String>> claimed) {
-        claimPair(prefix, material, core, seenIds, claimed, GregTechIdentity.MOD_ID);
+        claimPair(prefix, material, core, seenIds, claimed, AddonMaterials.namespaceOf(material));
     }
 
     private static void claimPair(MaterialPrefix prefix, GTMaterial material, boolean core, Set<String> seenIds,
