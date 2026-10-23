@@ -71,13 +71,19 @@ public class SensorBlock extends DirectionalBlock implements EntityBlock, com.gr
         if (com.gregtech.gregtech.api.tool.ToolInteractions.use(state, level, pos, player, hand, hit))
             return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
         if (hit.getDirection() != state.getValue(FACING) || !player.mayBuild() || !level.mayInteract(player,pos)) return net.minecraft.world.InteractionResult.PASS;
-        if (level.isClientSide) return net.minecraft.world.InteractionResult.SUCCESS;
-        if (!(level.getBlockEntity(pos) instanceof SensorBlockEntity sensor)) return net.minecraft.world.InteractionResult.PASS;
         var point = com.gregtech.gregtech.api.block.FaceCoordinates.pixels(hit.getDirection(),
                 hit.getLocation().x-pos.getX(), hit.getLocation().y-pos.getY(), hit.getLocation().z-pos.getZ());
         var held = player.getItemInHand(hand);
         boolean screwdriver = com.gregtech.gregtech.api.tool.GTToolHelper.matchesTool(held, com.gregtech.gregtech.api.tool.GTToolType.SCREWDRIVER);
         boolean reset = com.gregtech.gregtech.api.tool.GTToolHelper.matchesTool(held, com.gregtech.gregtech.api.tool.GTToolType.SOFT_HAMMER);
+        if (level.isClientSide) {
+            // Predict the click so the panel redraws in the same frame; the server's block-entity
+            // update then overwrites this state.
+            if (level.getBlockEntity(pos) instanceof SensorBlockEntity sensor)
+                sensor.control(point.x(), point.y(), screwdriver, reset);
+            return net.minecraft.world.InteractionResult.SUCCESS;
+        }
+        if (!(level.getBlockEntity(pos) instanceof SensorBlockEntity sensor)) return net.minecraft.world.InteractionResult.PASS;
         if (!sensor.control(point.x(), point.y(), screwdriver, reset)) return net.minecraft.world.InteractionResult.PASS;
         if (screwdriver || reset) com.gregtech.gregtech.api.tool.GTToolHelper.damageForUse(held,1,player);
         return net.minecraft.world.InteractionResult.CONSUME;

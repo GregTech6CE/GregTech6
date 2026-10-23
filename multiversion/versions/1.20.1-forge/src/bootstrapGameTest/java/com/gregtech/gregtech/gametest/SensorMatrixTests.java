@@ -272,7 +272,65 @@ public final class SensorMatrixTests {
     }
 
     // ---------------------------------------------------------------------------------------------
-    // 5) The twenty original GT6 crafting recipes (§109)
+    // 5) Controls redraw the display without waiting for the next sample
+    // ---------------------------------------------------------------------------------------------
+
+    /**
+     * The panel only measures every ten ticks, so a click that changed the mode or the threshold used
+     * to leave the old number on the display until the next measurement. The click itself now
+     * re-derives the reading from the last sample.
+     */
+    @GameTest(template = "test_empty", timeoutTicks = 200)
+    public static void aClickRedrawsTheDisplayImmediately(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos chestPos = at(0, 0, 0);
+        level.removeBlock(chestPos, false);
+        level.setBlock(chestPos, Blocks.CHEST.defaultBlockState(), 3);
+        helper.assertTrue(level.getBlockEntity(chestPos) instanceof ChestBlockEntity,
+                "the chest at " + chestPos + " has its block entity");
+        ((ChestBlockEntity) level.getBlockEntity(chestPos)).setItem(0, new ItemStack(Items.RAW_IRON, 4));
+
+        BlockPos sensorPos = at(1, 0, 0);
+        SensorBlockEntity meter = placeSensor(helper, "sensor_itemometer", sensorPos, Direction.EAST);
+        SensorBlockEntity.measure(level, sensorPos, level.getBlockState(sensorPos), meter);
+        helper.assertTrue(meter.value() == 4,
+                "the meter reads the four items, got " + meter.value());
+
+        // The client needs the last sample to predict a click in the same frame.
+        var update = meter.getUpdateTag();
+        helper.assertTrue(update.contains("gt.measured_value") && update.getLong("gt.measured_value") == 4
+                        && update.getLong("gt.measured_max") > 0,
+                "the update tag carries the last sample, got " + update);
+
+        // Screwdriver away from the buttons cycles the mode; twice reaches GREATER.
+        helper.assertTrue(meter.control(5, 5, true, false) && meter.control(5, 5, true, false),
+                "the screwdriver cycles the display mode");
+        helper.assertTrue("greater".equals(meter.displayCells()[0].texture()),
+                "the second click selects GREATER, got " + meter.displayCells()[0].texture());
+        helper.assertTrue(meter.value() == 0,
+                "GREATER shows its threshold at once, got " + meter.value());
+
+        // Bare hand on the +1 button: the threshold appears at once instead of ten ticks later.
+        helper.assertTrue(meter.control(13, 13, false, false), "the +1 button accepts the click");
+        helper.assertTrue(meter.value() == 1,
+                "the display follows the threshold immediately, got " + meter.value());
+        helper.assertTrue(meter.signal() == 15,
+                "4 > 1 drives redstone 15 immediately, got " + meter.signal());
+
+        // Six more cycles return to DISPLAY, which shows the last sample again.
+        for (int i = 0; i < 6; i++) {
+            helper.assertTrue(meter.control(5, 5, true, false), "mode cycle " + i + " is accepted");
+        }
+        helper.assertTrue(meter.displayCells()[0].texture() != null
+                        && !"greater".equals(meter.displayCells()[0].texture()),
+                "the display is back out of GREATER");
+        helper.assertTrue(meter.value() == 4,
+                "DISPLAY shows the last sample immediately, got " + meter.value());
+        helper.succeed();
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // 6) The twenty original GT6 crafting recipes (§109)
     // ---------------------------------------------------------------------------------------------
 
     /**
