@@ -816,7 +816,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
             for (Direction side : Direction.values()) {
                 if (!curState.getValue(FluidPipeBlock.propFor(side))) continue;
                 BlockPos neighborPos = current.worldPosition.relative(side);
-                if (visited.contains(neighborPos)) continue;
+                if (visited.contains(neighborPos) || !level.hasChunkAt(neighborPos)) continue;
                 BlockEntity be = level.getBlockEntity(neighborPos);
                 if (be instanceof FluidPipeBlockEntity neighborPipe) {
                     visited.add(neighborPos);
