@@ -73,6 +73,11 @@ public class SensorBlockEntity extends BlockEntity {
     private final Kind kind;
     private long value;
     private int signal; // 0..15
+
+    /** The last averaged sample and its maximum, so a click re-derives the display at once. */
+    private long measuredValue;
+    private long measuredMaximum;
+    private boolean hasMeasurement;
     private com.gregtech.gregtech.api.sensor.SensorControl.Mode mode = com.gregtech.gregtech.api.sensor.SensorControl.Mode.DISPLAY;
     private int threshold;
     private boolean hexadecimal;
@@ -127,9 +132,16 @@ public class SensorBlockEntity extends BlockEntity {
             if (change == 0) return false;
             threshold = Math.max(0, Math.min(hexadecimal ? 65535 : 9999, threshold + change));
         }
-        signal = 0;
+        if (hasMeasurement) {
+            var reading = com.gregtech.gregtech.api.sensor.SensorControl.evaluate(
+                    mode, measuredValue, measuredMaximum, threshold);
+            value = reading.displayed();
+            signal = reading.signal();
+        } else {
+            signal = 0;
+        }
         setChanged();
-        if (level != null) {
+        if (level != null && !level.isClientSide) {
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
             level.updateNeighborsAt(worldPosition, getBlockState().getBlock());
         }
@@ -384,6 +396,9 @@ public class SensorBlockEntity extends BlockEntity {
         // sample clamps values to int; most maximum values remain long here, unlike
         // the original base sensor which binds both operands before evaluating modes.
         newValue = be.average.sample(newValue);
+        be.measuredValue = newValue;
+        be.measuredMaximum = maximum;
+        be.hasMeasurement = true;
         be.setChanged();
         var reading = com.gregtech.gregtech.api.sensor.SensorControl.evaluate(be.mode, newValue, maximum, be.threshold);
         newValue = reading.displayed();
@@ -416,6 +431,10 @@ public class SensorBlockEntity extends BlockEntity {
         tag.putInt("gt.control_mode", mode.ordinal());
         tag.putInt("gt.threshold", threshold);
         tag.putBoolean("gt.hex", hexadecimal);
+        if (hasMeasurement) {
+            tag.putLong("gt.measured_value", measuredValue);
+            tag.putLong("gt.measured_max", measuredMaximum);
+        }
     }
 
     @Override
@@ -434,6 +453,11 @@ public class SensorBlockEntity extends BlockEntity {
         mode = com.gregtech.gregtech.api.sensor.SensorControl.Mode.values()[Math.max(0,Math.min(7,tag.getInt("gt.control_mode")))];
         threshold = Math.max(0,Math.min(65535,tag.getInt("gt.threshold")));
         hexadecimal = tag.getBoolean("gt.hex");
+        hasMeasurement = tag.contains("gt.measured_value");
+        if (hasMeasurement) {
+            measuredValue = tag.getLong("gt.measured_value");
+            measuredMaximum = tag.getLong("gt.measured_max");
+        }
         average.restore(tag.getIntArray("gt.average"),tag.getInt("gt.average_index"));
     }
 
