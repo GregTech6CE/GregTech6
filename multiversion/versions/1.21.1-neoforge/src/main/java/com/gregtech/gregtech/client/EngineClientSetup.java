@@ -80,6 +80,16 @@ public final class EngineClientSetup {
                 com.gregtech.gregtech.client.FunctionalPartRenderer::new);
         e.registerBlockEntityRenderer(GTBlockEntities.ADDON_ENERGY_PART.get(),
                 com.gregtech.gregtech.client.FunctionalPartRenderer::new);
+        com.gregtech.gregtech.client.BehaviorMachineClients.collect();
+        var behaviorTypes = new java.util.LinkedHashSet<net.minecraft.world.level.block.entity.BlockEntityType<?>>();
+        for (var holder : com.gregtech.gregtech.platform.neoforge.machine.BehaviorMachineRegistration.all()) {
+            var type = holder.get().blockEntityType();
+            if (type != null) behaviorTypes.add(type);
+        }
+        for (var type : behaviorTypes)
+            e.registerBlockEntityRenderer((net.minecraft.world.level.block.entity.BlockEntityType<
+                    net.minecraft.world.level.block.entity.BlockEntity>) (Object) type,
+                    com.gregtech.gregtech.client.BehaviorMachineRenderer::new);
         for (var h : GTEngines.all())
             if (h.get().engineType() == EngineType.STEAM)
                 e.registerBlockEntityRenderer(

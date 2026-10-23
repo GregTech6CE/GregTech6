@@ -24,7 +24,8 @@ import java.util.List;
 /** GT6 sensor panel block (fluid/item/energy/progress meters). */
 public class SensorBlock extends DirectionalBlock implements EntityBlock, com.gregtech.gregtech.api.tool.ToolInteractionTarget {
 
-    private final SensorBlockEntity.Kind kind;
+    @Nullable private final SensorBlockEntity.Kind kind;
+    @Nullable private final com.gregtech.gregtech.api.addon.platform.AddonSensor addon;
 
 //? if >=1.21.1 {
     /*@Override public com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
@@ -35,10 +36,25 @@ public class SensorBlock extends DirectionalBlock implements EntityBlock, com.gr
     public SensorBlock(SensorBlockEntity.Kind kind, Properties properties) {
         super(properties.noOcclusion());
         this.kind = kind;
+        this.addon = null;
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
     }
 
-    public SensorBlockEntity.Kind kind() { return kind; }
+    public SensorBlock(com.gregtech.gregtech.api.addon.platform.AddonSensor addon, Properties properties) {
+        super(properties.noOcclusion());
+        if (addon == null) throw new IllegalArgumentException("Missing addon sensor");
+        this.kind = null;
+        this.addon = addon;
+        registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
+    }
+
+    /** Null for an addon sensor. */
+    @Nullable public SensorBlockEntity.Kind kind() { return kind; }
+
+    /** Null for a built-in sensor. */
+    @Nullable public com.gregtech.gregtech.api.addon.platform.AddonSensor addon() { return addon; }
+
+    public String kindName() { return addon != null ? addon.id() : kind.name(); }
 
     @Override public net.minecraft.world.phys.shapes.VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos,
             net.minecraft.world.phys.shapes.CollisionContext context) {
@@ -140,6 +156,6 @@ public class SensorBlock extends DirectionalBlock implements EntityBlock, com.gr
 *///?} else {
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
 //?}
-        com.gregtech.gregtech.client.SensorTooltips.add(tooltip, kind.name());
+        com.gregtech.gregtech.client.SensorTooltips.add(tooltip, this);
     }
 }

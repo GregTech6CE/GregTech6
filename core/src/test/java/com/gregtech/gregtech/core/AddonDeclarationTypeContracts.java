@@ -74,6 +74,14 @@ public final class AddonDeclarationTypeContracts {
         var signaling = BehaviorMachine.builder(casing).energy(energy).gui(GUI).signalOutput(true).build();
         check(!open.signalOutput() && signaling.signalOutput(), "behavior signal output is declared");
         check(!signaling.equals(open), "behavior signal output is part of equality");
+        var syncing = BehaviorMachine.builder(casing).energy(energy).gui(GUI).clientState("armed").build();
+        check(open.clientState().isEmpty() && syncing.clientState().equals(List.of("armed")),
+                "behavior client state is declared");
+        check(!syncing.equals(open), "behavior client state is part of equality");
+        fails(() -> BehaviorMachine.builder(casing).energy(energy).gui(GUI).clientState("Armed").build(),
+                "client state key");
+        fails(() -> BehaviorMachine.builder(casing).energy(energy).gui(GUI).clientState("armed", "armed").build(),
+                "repeats client state");
         fails(() -> BehaviorMachine.builder(casing).energy(energy).gui(GUI)
                 .io(MachineIo.builder().itemAutoOutput(MachineFace.BOTTOM).build()).build(), "automatic face");
         fails(() -> BehaviorMachine.builder(casing).energy(energy).gui(GUI)

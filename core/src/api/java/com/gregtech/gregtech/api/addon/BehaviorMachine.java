@@ -62,12 +62,13 @@ public final class BehaviorMachine implements AddonMachine {
     private final MachineIo io;
     private final MachineFace gasValve;
     private final boolean signalOutput;
+    private final List<String> clientState;
 
     private BehaviorMachine(MachineCasing casing, EnergyInput energy, EnergyInput auxiliary, EnergyOutput output,
                             String blockEntityId, int guiWidth, int guiHeight, String gui, int energyX, int energyY,
                             List<ItemSlot> items, List<FluidSlot> fluids, List<Toggle> toggles, Progress progress,
                             int maxRange, List<String> recipeMaps, MachineIo io, MachineFace gasValve,
-                            boolean signalOutput) {
+                            boolean signalOutput, List<String> clientState) {
         this.casing = casing;
         this.energy = energy;
         this.auxiliary = auxiliary;
@@ -87,6 +88,7 @@ public final class BehaviorMachine implements AddonMachine {
         this.io = io;
         this.gasValve = gasValve;
         this.signalOutput = signalOutput;
+        this.clientState = clientState;
     }
 
     @Override public MachineCasing casing() { return casing; }
@@ -119,6 +121,9 @@ public final class BehaviorMachine implements AddonMachine {
 
     /** True when this machine may be read as a GT signal source by an adjacent signal wire. */
     public boolean signalOutput() { return signalOutput; }
+
+    /** Behavior state keys GregTech syncs to the client for a custom screen or renderer. */
+    public List<String> clientState() { return List.copyOf(clientState); }
 
     /** Registry path. An empty block entity id becomes {@code be_<id>}. */
     public String blockEntityPath() {
@@ -188,12 +193,12 @@ public final class BehaviorMachine implements AddonMachine {
                 && items.equals(that.items) && fluids.equals(that.fluids) && toggles.equals(that.toggles)
                 && progress.equals(that.progress) && recipeMaps.equals(that.recipeMaps)
                 && Objects.equals(io, that.io) && gasValve == that.gasValve
-                && signalOutput == that.signalOutput;
+                && signalOutput == that.signalOutput && clientState.equals(that.clientState);
     }
 
     @Override public int hashCode() {
         return Objects.hash(casing, energy, auxiliary, output, blockEntityId, guiWidth, guiHeight, gui, energyX, energyY,
-                items, fluids, toggles, progress, maxRange, recipeMaps, io, gasValve, signalOutput);
+                items, fluids, toggles, progress, maxRange, recipeMaps, io, gasValve, signalOutput, clientState);
     }
 
     public static Builder builder(MachineCasing casing) { return new Builder(casing); }
@@ -219,6 +224,7 @@ public final class BehaviorMachine implements AddonMachine {
         private final List<String> recipeMaps = new ArrayList<>();
         private MachineFace gasValve;
         private boolean signalOutput;
+        private final List<String> clientState = new ArrayList<>();
 
         private Builder(MachineCasing casing) { this.casing = casing; }
 
@@ -267,6 +273,15 @@ public final class BehaviorMachine implements AddonMachine {
             return this;
         }
 
+        /**
+         * Behavior state keys to sync to the client. A custom screen or renderer reads them through
+         * {@code BehaviorMachineClientView}. Keys match {@code [a-z0-9_.]{1,64}}. At most 32 keys.
+         */
+        public Builder clientState(String... keys) {
+            if (keys != null) for (String key : keys) clientState.add(key);
+            return this;
+        }
+
         public BehaviorMachine build() {
             if (casing == null) throw new IllegalArgumentException("Missing casing");
             if (io != null) {
@@ -311,6 +326,17 @@ public final class BehaviorMachine implements AddonMachine {
             }
             if (items.size() > 54 || fluids.size() > 8 || toggles.size() > 16)
                 throw new IllegalArgumentException("Behavior machine '" + id + "' has too many slots");
+            var seenClientKeys = new HashSet<String>();
+            var clientKeys = new ArrayList<String>();
+            for (String key : clientState) {
+                if (key == null || !key.matches("[a-z0-9_.]{1,64}"))
+                    throw new IllegalArgumentException("Invalid client state key for " + id + ": " + key);
+                if (!seenClientKeys.add(key))
+                    throw new IllegalArgumentException("Behavior machine '" + id + "' repeats client state '" + key + "'");
+                clientKeys.add(key);
+            }
+            if (clientKeys.size() > 32)
+                throw new IllegalArgumentException("Behavior machine '" + id + "' has more than 32 client state keys");
             for (FluidSlot fluid : fluids) {
                 if (fluid.capacity() < 1 || fluid.capacity() > 1_024_000_000)
                     throw new IllegalArgumentException("Invalid tank capacity for " + id);
@@ -354,7 +380,8 @@ public final class BehaviorMachine implements AddonMachine {
             return new BehaviorMachine(casing.resolve(machineType, true, tier), storedEnergy, storedAuxiliary, output,
                     blockEntity,
                     guiWidth, guiHeight, gui, energyX, energyY, List.copyOf(items), List.copyOf(fluids),
-                    List.copyOf(toggles), progress, maxRange, List.copyOf(mapNames), io, gasValve, signalOutput);
+                    List.copyOf(toggles), progress, maxRange, List.copyOf(mapNames), io, gasValve, signalOutput,
+                    List.copyOf(clientKeys));
         }
     }
 
