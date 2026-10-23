@@ -1,0 +1,17 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.large_crystal_chargers",
+  "contents": [
+    "item:gt6ce:large_crystal_charger_ulv",
+    "item:gt6ce:large_crystal_charger_lv",
+    "item:gt6ce:large_crystal_charger_mv",
+    "item:gt6ce:large_crystal_charger_hv",
+    "item:gt6ce:large_crystal_charger_ev",
+    "item:gt6ce:large_crystal_charger_iv",
+    "item:gt6ce:large_crystal_charger_luv",
+    "item:gt6ce:large_crystal_charger_zpm",
+    "item:gt6ce:large_crystal_charger_uv",
+    "item:gt6ce:large_crystal_charger_xv"
+  ],
+  "priority": 135
+}

@@ -285,7 +285,7 @@ public class CreativeTabBootstrap implements InitializationStep {
             for (var entry : com.gregtech.gregtech.registry.GTEnergyNodes.all()) {
                 if (entry.isPresent()) event.accept(new net.minecraft.world.item.ItemStack(entry.get()));
             }
-            for(var entry:com.gregtech.gregtech.registry.GTChemicalBatteries.all()) {
+            for(var entry:com.gregtech.gregtech.registry.GTChemicalBatteries.allRegistered()) {
                 var empty=new ItemStack(entry.get());event.accept(empty);
                 var charged=empty.copy();var battery=(com.gregtech.gregtech.item.ChemicalBatteryItem)charged.getItem();
                 battery.setCharge(charged,battery.spec().capacity());event.accept(charged);

@@ -50,6 +50,7 @@ public final class MachineRecipeBootstrap {
         register("StructuralPartRecipes", StructuralPartRecipes::register);
         register("MachineCasingRecipes", MachineCasingRecipes::register);
         register("CapsuleCellRecipes", CapsuleCellRecipes::register);
+        register("PowerCellRecipes", PowerCellRecipes::register);
         register("CapsuleCellRecipes.registerRecycling", CapsuleCellRecipes::registerRecycling);
         register("ImplosionRecipes", ImplosionRecipes::register);
         register("AnvilRecipeDefinitions", AnvilRecipeDefinitions::register);

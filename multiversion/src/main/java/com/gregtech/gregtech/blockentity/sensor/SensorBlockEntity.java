@@ -397,7 +397,7 @@ public class SensorBlockEntity extends BlockEntity {
         if (be.addon == null) {
             // Bulk storage exposes legal stacks to automation, but the meter must read its full count.
             if (be.kind == Kind.ITEM && target instanceof com.gregtech.gregtech.blockentity.inventory.MassStorageBlockEntity storage) {
-                newValue = storage.stored(); maximum = storage.CAPACITY;
+                newValue = storage.stored(); maximum = storage.baseCapacity();
             }
             switch (be.kind) {
                 case LUMINOMETER -> {

@@ -20,7 +20,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public final class ChemicalBatteryIdentityTests {
     @GameTest(template="test_empty")
     public static void canonicalBatteriesHaveRealItemEnergy(GameTestHelper h){
-        h.assertTrue(GTChemicalBatteries.all().size()==25&&GTChemicalBatteries.allRegistered().size()==25,"only 25 canonical batteries registered");
+        h.assertTrue(GTChemicalBatteries.all().size()==25&&GTChemicalBatteries.allRegistered().size()==37,"25 chemical batteries and 12 canonical energy crystals");
         for(var entry:GTChemicalBatteries.all()){
             var block=entry.get();var spec=block.spec();var item=(ChemicalBatteryItem)block.asItem();var stack=new ItemStack(item);
             h.assertTrue(ForgeRegistries.BLOCKS.getKey(block).equals(GregTech.id(spec.id())),"block uses its chemistry and tier identity");

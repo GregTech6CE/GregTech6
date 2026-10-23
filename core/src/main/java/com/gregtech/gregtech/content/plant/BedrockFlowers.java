@@ -26,6 +26,7 @@ public final class BedrockFlowers {
             a("flower_narcissus_sheldonia", 6, "platinum", false, null),
             a("flower_orechid", 7, "ore", false, null),
             a("flower_hexalily", 8, "hexorium", false, null),
+            a("flower_vindicator_flower", 9, "rare_earth", false, null),
             b("flower_sagebrush", 0, "arsenic", true, WoodMaterials.Acacia),
             b("flower_four_wing_saltbush", 1, "antimony", true, WoodMaterials.Acacia),
             b("flower_desert_trumpet", 2, "gold", true, null),

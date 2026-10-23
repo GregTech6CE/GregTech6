@@ -15,6 +15,10 @@ public final class BatteryBoxEnergy {
     private BlockPos transferPos;
 
     public BatteryBoxEnergy(List<ItemStack> inventory, long voltage) {
+        this(inventory, voltage, GregTechTags.Energy.EU);
+    }
+
+    public BatteryBoxEnergy(List<ItemStack> inventory, long voltage, GregTechTags.Tag type) {
         // Resolve each stack by its slot on every call, so replacements do not leave a stale item reference.
         var slots = java.util.stream.IntStream.range(0, inventory.size()).mapToObj(slot -> (BatteryBoxState.Battery) new BatteryBoxState.Battery() {
             private ItemStack stack() {
@@ -26,38 +30,46 @@ public final class BatteryBoxEnergy {
             }
 
             public boolean accepts() {
-                return BatteryBoxEnergy.accepts(stack());
+                return BatteryBoxEnergy.accepts(stack(), type);
             }
 
             public boolean canInject(long v) {
-                return energy().canEnergyInjection(stack(), GregTechTags.Energy.EU, v);
+                return energy().canEnergyInjection(stack(), type, v);
             }
 
             public boolean canExtract(long v) {
-                return energy().canEnergyExtraction(stack(), GregTechTags.Energy.EU, v);
+                return energy().canEnergyExtraction(stack(), type, v);
             }
 
             public long stored() {
-                return energy().getEnergyStored(stack(), GregTechTags.Energy.EU);
+                return energy().getEnergyStored(stack(), type);
             }
 
             public long capacity() {
-                return energy().getEnergyCapacity(stack(), GregTechTags.Energy.EU);
+                return energy().getEnergyCapacity(stack(), type);
             }
 
             public long extract(long v, long p) {
-                return energy().doEnergyExtraction(GregTechTags.Energy.EU, stack(), v, p, transferLevel, transferPos, true);
+                IItemEnergy item = energy();
+                ItemStack original = stack();
+                long extracted = item.doEnergyExtraction(type, original, v, p, transferLevel, transferPos, true);
+                inventory.set(slot, item.afterEnergyTransfer(original));
+                return extracted;
             }
 
             public long inject(long v, long p) {
-                return energy().doEnergyInjection(GregTechTags.Energy.EU, stack(), v, p, transferLevel, transferPos, true);
+                return energy().doEnergyInjection(type, stack(), v, p, transferLevel, transferPos, true);
             }
         }).toList();
         state = new BatteryBoxState(slots, voltage);
     }
 
     public static boolean accepts(ItemStack stack) {
-        return !stack.isEmpty() && stack.getItem() instanceof IItemEnergy energy && energy.isEnergyType(stack, GregTechTags.Energy.EU);
+        return accepts(stack, GregTechTags.Energy.EU);
+    }
+
+    public static boolean accepts(ItemStack stack, GregTechTags.Tag type) {
+        return !stack.isEmpty() && stack.getItem() instanceof IItemEnergy energy && energy.isEnergyType(stack, type);
     }
 
     public boolean canReceive() {

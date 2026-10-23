@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "gt6ce:block/energy/aneutronic_fusion_power_cell_empty"
+    }
+  }
+}

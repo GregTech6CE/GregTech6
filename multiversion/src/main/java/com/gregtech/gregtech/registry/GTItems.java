@@ -104,7 +104,7 @@ public final class GTItems {
             DeferredItem<Item> item = items(definition.namespace()).register(definition.itemId(), () ->
                     prefix==MaterialPrefix.coin?new com.gregtech.gregtech.item.CoinItem(new Item.Properties().stacksTo(64),material):com.gregtech.gregtech.content.recipe.MaterialArrowRules.isArrow(prefix, material)
                             ? new com.gregtech.gregtech.item.MaterialArrowItem(new Item.Properties().stacksTo(64),prefix,material)
-                            : new MaterialItem(new Item.Properties().stacksTo(64), prefix, material));
+                            : com.gregtech.gregtech.item.EnergyCrystalItem.createOrMaterial(prefix, material));
             bind(prefix, material, item);
             ALL.add(item);
         }

@@ -2640,6 +2640,16 @@ ITEMS.put("steam_turbine_trinitanium",new Entry("turbines",393));
 ITEMS.put("steam_turbine_graphene",new Entry("turbines",394));
 }
 public static Entry entry(String id) {
+    if (id.startsWith("item_barrel_")) for (var barrel : com.gregtech.gregtech.content.storage.ItemBarrelCatalog.ALL)
+        if (barrel.id().equals(id)) return new Entry("storage", barrel.originalId());
+    if (id.startsWith("crystal_charger_") || id.startsWith("large_crystal_charger_")) {
+        int tier = com.gregtech.gregtech.content.energy.BatteryBoxDefinitions.TIERS.indexOf(id.substring(id.lastIndexOf('_') + 1));
+        return new Entry("crystal_chargers", (id.startsWith("large_") ? 10140 : 10130) + tier);
+    }
+    if (id.equals("magic_field_absorber")) return new Entry("magical_energy_production", 10180);
+    if (id.equals("flower_vindicator_flower")) return new Entry("nature_foods", 9);
+    for (var cell : com.gregtech.gregtech.content.energy.PowerCellSpec.ALL)
+        if (cell.id().equals(id)) return new Entry("portable_power_cells", cell.originalId());
     for (int i = 0; i < com.gregtech.gregtech.content.energy.FluxRotaryCatalog.TIERS.size(); i++) {
         var tier = com.gregtech.gregtech.content.energy.FluxRotaryCatalog.TIERS.get(i);
         if (id.equals("flux_motor_" + tier.tier())) return new Entry("motors", 11021 + i);

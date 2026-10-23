@@ -1,0 +1,256 @@
+{
+  "date": "2026-10-24",
+  "scope": "machine tick overhead; no production/hazard rate changes",
+  "profiles": [
+    {
+      "file": "C:\\Dev\\性能分析\\2026-10-24--01.41.09.json",
+      "sha256": "599dfe840c9d86cfca2526b80afe99a4e423bc72c761a9f40f731ac163aa62b6",
+      "ticks": 204,
+      "blocks": 824,
+      "block_rate_sum_ms": 1.6921304595769342,
+      "method_traces": 0,
+      "groups": {
+        "gt6ce:steam_boiler": {
+          "count": 18,
+          "sum_ms": 0.38340539215686276,
+          "max_ms": 0.06380539215686275
+        },
+        "gt6ce:solid_burning_box": {
+          "count": 20,
+          "sum_ms": 0.3225946078431372,
+          "max_ms": 0.12144117647058823
+        },
+        "gt6ce:be_sluice_bronze": {
+          "count": 3,
+          "sum_ms": 0.01115343137254902,
+          "max_ms": 0.004086764705882353
+        },
+        "gt6ce:be_dryer_invar": {
+          "count": 2,
+          "sum_ms": 0.05067205882352941,
+          "max_ms": 0.04706813725490196
+        }
+      }
+    },
+    {
+      "file": "C:\\Dev\\性能分析\\2026-10-24--01.43.00.json",
+      "sha256": "a197998387fa923ffa3486fbc5041cbd52598f9c1cef49e97adbe1032f7f210e",
+      "ticks": 201,
+      "blocks": 823,
+      "block_rate_sum_ms": 1.9282206995326399,
+      "method_traces": 0,
+      "groups": {
+        "gt6ce:steam_boiler": {
+          "count": 18,
+          "sum_ms": 0.44271741293532335,
+          "max_ms": 0.0824726368159204
+        },
+        "gt6ce:solid_burning_box": {
+          "count": 20,
+          "sum_ms": 0.3836253731343283,
+          "max_ms": 0.11399004975124379
+        },
+        "gt6ce:be_sluice_bronze": {
+          "count": 3,
+          "sum_ms": 0.010234825870646766,
+          "max_ms": 0.00402139303482587
+        },
+        "gt6ce:be_dryer_invar": {
+          "count": 2,
+          "sum_ms": 0.092536815920398,
+          "max_ms": 0.08860845771144278
+        }
+      }
+    },
+    {
+      "file": "C:\\Dev\\性能分析\\2026-10-24--01.46.12.json",
+      "sha256": "381cd150ce9afa312a6a3c662a9ef27c42b7caabc5a896d2554f013bcd2e6415",
+      "ticks": 202,
+      "blocks": 824,
+      "block_rate_sum_ms": 1.7075679454380686,
+      "method_traces": 0,
+      "groups": {
+        "gt6ce:steam_boiler": {
+          "count": 18,
+          "sum_ms": 0.46423663366336637,
+          "max_ms": 0.08933762376237624
+        },
+        "gt6ce:solid_burning_box": {
+          "count": 20,
+          "sum_ms": 0.3165490099009901,
+          "max_ms": 0.04028366336633663
+        },
+        "gt6ce:be_sluice_bronze": {
+          "count": 3,
+          "sum_ms": 0.011098019801980198,
+          "max_ms": 0.004213366336633663
+        },
+        "gt6ce:be_dryer_invar": {
+          "count": 2,
+          "sum_ms": 0.006274752475247524,
+          "max_ms": 0.0033985148514851485
+        }
+      }
+    },
+    {
+      "file": "C:\\Dev\\性能分析\\2026-10-24--01.49.13.json",
+      "sha256": "9c7567705b0e46e7620a22b86865061dab507307406dbc4b8ccd018b9043d87f",
+      "ticks": 201,
+      "blocks": 822,
+      "block_rate_sum_ms": 3.1123646576069737,
+      "method_traces": 0,
+      "groups": {
+        "gt6ce:steam_boiler": {
+          "count": 18,
+          "sum_ms": 0.6985661691542289,
+          "max_ms": 0.1310766169154229
+        },
+        "gt6ce:solid_burning_box": {
+          "count": 20,
+          "sum_ms": 0.5469462686567165,
+          "max_ms": 0.1206407960199005
+        },
+        "gt6ce:be_sluice_bronze": {
+          "count": 3,
+          "sum_ms": 0.47108358208955226,
+          "max_ms": 0.46137910447761193
+        },
+        "gt6ce:be_dryer_invar": {
+          "count": 2,
+          "sum_ms": 0.26472089552238803,
+          "max_ms": 0.15433184079601991
+        }
+      }
+    }
+  ],
+  "original_references": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\Recipe.java",
+      "sha256": "8bb9a0bd00aa839a48a2c082281a988e9a796a540137d1cf50249d2250ad1c7e",
+      "authors": "GregTech-6 Team / Gregorius Techneticies",
+      "license": "LGPL-3.0-or-later; existing original-source notices retained",
+      "usage": "read-only behavioral reference, not a source import"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityBoilerTank.java",
+      "sha256": "3669a4447e3ef2fc2074470f3b272aa8796f3a0d785135bdcd151b07544553c3",
+      "authors": "GregTech-6 Team / Gregorius Techneticies",
+      "license": "LGPL-3.0-or-later; existing original-source notices retained",
+      "usage": "read-only behavioral reference, not a source import"
+    }
+  ],
+  "changed_sources": [
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "sha256": "2b2004afd6b11e742a6d161fc73a243980138b1544674b01fe887f2606ca15ec"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BoilerTankBlockEntity.java",
+      "sha256": "4f298083f722c1c63a7555bc1c889f652a0f35d3849ea192e2507580e6913ba2"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/SolidBurningBoxBlockEntity.java",
+      "sha256": "284da83db7dc6892c00c2fd9f7d20bdf59af3c72c780ac42c7de23c4f4b68c61"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java",
+      "sha256": "53a7c5a607a817e2dd29c40f8d018c7493068f7a23b2282f8c3bb5d6fcbbfd83"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java",
+      "sha256": "e37b71a023028f8e0a7de13788b4a6f0cf5e736c94a76b66d5ec3166f405629d"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/machine/AdjacentCapabilityCache.java",
+      "sha256": "b5da324a63978cb7bbc4c3cb5c2a5fd53d9bd2b3aa8822991fea3a886f55579f"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeInputs.java",
+      "sha256": "74a2481185666b2915f83dc73416a467e3103a3a71b50b4524211d087f4e8c28"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeMap.java",
+      "sha256": "915db04ce2a692a2c69ac6d45ff88dfee36dd5340d71f0a5f1af91467e2ed5be"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeLookupTable.java",
+      "sha256": "da58b8653f591e185f186e0fcc08dc006a71aa0897a9909b6cc07ba6b7feb1ec"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/recipe/MachineRecipeLifecycle.java",
+      "sha256": "321399d7bdf56bd6771553f8ccde7a7c99ea820c5f474a49043317d01b7bea36"
+    },
+    {
+      "path": "multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MachinePerformanceTests.java",
+      "sha256": "8df2b4f45af06989125e46228f8a15b18bcda14c7d0819530fdfd8b7e7786bd5"
+    }
+  ],
+  "boundaries": [
+    "No post-change profile from the user factory; no speedup percentage claimed",
+    "No client gauge rendering test or actual saved-world restart",
+    "Candidate cache holds no success/failure decisions; quantities/flags/dynamic context remain live",
+    "Registered row ingredient edits in place require RecipeMap.invalidateLookup(); public collection edits and tag reload invalidate automatically"
+  ],
+  "checks": {
+    "initial_dual_compile": "passed 3m24s",
+    "neoforge_initial_native": "7/7 passed; Gradle 2m38s",
+    "final_dual_native": "Forge 7/7 and NeoForge 7/7 passed; Gradle 3m25s; NeoForge tests 663.3ms",
+    "full_forge_test_source_attempt": "Failed on two pre-existing ChemicalBatteryTests calls to removed PortableBatterySpec.chemistry(); targeted final run compiled only MachinePerformanceTests using a temporary init script",
+    "final_log": "work/machine-performance-20261024/focused-tests.log"
+  },
+  "command": [
+    "./work/gradle-runtime/gradle-8.8/bin/gradle.bat",
+    "--offline",
+    "--no-daemon",
+    "--no-parallel",
+    "--max-workers=2",
+    "-I",
+    "work/emi-local.init.gradle",
+    "-I",
+    "work/user-build-20261023-repositories.init.gradle",
+    "-I",
+    "work/machine-performance-20261024/focused-tests.init.gradle",
+    "-PdirectCoreClasspath=true",
+    "-PgameTestNamespaces=gt6ce_machine_performance",
+    "-PgameTestDirectory=C:/Dev/GregTech6/work/machine-performance-20261024/forge-run",
+    "-PneoforgeGameTestDirectory=C:/Dev/GregTech6/work/machine-performance-20261024/neoforge-final-run",
+    "-PgameTestHeap=2g",
+    ":multiversion:1.20.1-forge:runGameTestServer",
+    ":multiversion:1.21.1-neoforge:runGameTestServer"
+  ],
+  "environment": {
+    "JAVA_HOME": "C:/Program Files/Java/jdk-21",
+    "JAVA17_HOME": "C:/Program Files/Java/jdk-17",
+    "JAVA21_HOME": "C:/Program Files/Java/jdk-21"
+  },
+  "verification_files": [
+    {
+      "sha256": "69ebfd6fc5191e16b675320fdb457a96018f7640888c67b070d849908073dff9",
+      "path": "work/machine-performance-20261024/compile.log"
+    },
+    {
+      "sha256": "76fb53cd473f00cf65e68f7a6f1bc3421b060a840be457ecb75208c2a3ec5ef3",
+      "path": "work/machine-performance-20261024/neoforge-tests.log"
+    },
+    {
+      "sha256": "db11515915c4a299078787c05fdc3b78e3de396c5fc10b356688c2c242e34899",
+      "path": "work/machine-performance-20261024/final-tests.log"
+    },
+    {
+      "sha256": "9fa47ca8505fd6c685c948180ed54412d85aea284bce23311446716b0171e3e1",
+      "path": "work/machine-performance-20261024/focused-tests.log"
+    },
+    {
+      "sha256": "a05b12e49c7f727455278ee757dd4b2dc5cfc3715b2b81d6121f28219a22c354",
+      "path": "work/machine-performance-20261024/focused-tests.init.gradle"
+    },
+    {
+      "sha256": "ea4b3ed88dbb879fc3b86b9bceca2961af8248069c6420a4136eba192ec7b9b7",
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/resources/data/gt6ce_machine_performance/structures/test_empty.nbt"
+    },
+    {
+      "sha256": "ea4b3ed88dbb879fc3b86b9bceca2961af8248069c6420a4136eba192ec7b9b7",
+      "path": "multiversion/versions/1.21.1-neoforge/src/bootstrapGameTest/resources/data/gt6ce_machine_performance/structure/test_empty.nbt"
+    }
+  ]
+}

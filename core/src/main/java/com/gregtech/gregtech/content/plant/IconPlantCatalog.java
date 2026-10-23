@@ -15,6 +15,7 @@ public final class IconPlantCatalog {private IconPlantCatalog(){}public static f
             "flower_pandanus_candelabrum", "flower_prince_s_plume", "flower_sagebrush",
             "flower_thlaspi_lereschianum", "flower_thompsons_locoweed",
             "flower_tufted_evening_primrose", "flower_tungstus", "flower_viola_calaminaria",
+            "flower_vindicator_flower",
             "fluid_spring",
             "gear", "gear_clockwise", "gear_counterclockwise",
             "gearbox", "gearbox_axle",
