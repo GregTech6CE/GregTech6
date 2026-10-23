@@ -15,6 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.phys.AABB;
@@ -31,8 +32,9 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 @PrefixGameTestTemplate(false)
 public final class MachineChunkBoundaryTests {
     private static void set(Level level, BlockPos pos, net.minecraft.world.level.block.state.BlockState state) {
-        // Do not let fixture neighbor notifications themselves read an unloaded exterior chunk.
-        level.setBlock(pos, state, 2);
+        // CLIENTS alone still propagates shapes through neighbors. The fixture already knows
+        // these full-cube machine/casing states; skip that vanilla shape walk, not loadedness checks.
+        level.setBlock(pos, state, Block.UPDATE_CLIENTS | Block.UPDATE_KNOWN_SHAPE);
     }
 
     private static BasicMachineBlockEntity place(GameTestHelper h, String name, BlockPos pos) {
