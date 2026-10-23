@@ -91,8 +91,8 @@ public final class StructureLayoutOverlayRuntime {
             return false;
         }
         for (var cell : allCells(layout)) {
-            if (cell.match() instanceof CellMatch.Block block && !registered(block.id())) {
-                warn(source + " uses unknown block '" + block.id() + "'");
+            if (!known(cell.match())) {
+                warn(source + " uses an unknown block in " + cell.match());
                 return false;
             }
         }
@@ -105,6 +105,14 @@ public final class StructureLayoutOverlayRuntime {
         var out = new ArrayList<>(layout.cells());
         for (var repeat : layout.repeats()) out.addAll(repeat.cells());
         return out;
+    }
+
+    private static boolean known(CellMatch match) {
+        if (match instanceof CellMatch.Block block) return registered(block.id());
+        if (match instanceof CellMatch.OneOf one) {
+            for (CellMatch member : one.members()) if (!known(member)) return false;
+        }
+        return true;
     }
 
     private static boolean registered(String id) {

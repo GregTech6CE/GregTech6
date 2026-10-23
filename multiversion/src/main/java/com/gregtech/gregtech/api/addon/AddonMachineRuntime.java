@@ -92,6 +92,18 @@ public final class AddonMachineRuntime {
         if (definition.kind() == com.gregtech.gregtech.api.machine.MachineControllerKind.BASIC
                 || parameters.cheapOverclockingSpecified())
             spec.cheapOverclocking(parameters.cheapOverclocking());
+        if (definition.auxiliaryEnergyType() != null) {
+            var tag = com.gregtech.gregtech.data.GregTechTags.Energy.ALL.stream()
+                    .filter(candidate -> candidate.getShortName().equalsIgnoreCase(definition.auxiliaryEnergyType()))
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalStateException("Addon '" + accepted.addonId()
+                            + "' machine '" + parameters.machineName() + "' uses unknown auxiliary energy type '"
+                            + definition.auxiliaryEnergyType() + "'"));
+            spec.auxiliaryEnergy(tag, definition.auxiliaryEnergyIn(), definition.auxiliaryEnergyMin(),
+                    definition.auxiliaryEnergyMax(), definition.auxiliaryEnergyCapacity(),
+                    definition.auxiliaryFaceMask());
+            if (definition.startupEnergy()) spec.startupEnergy(true);
+        }
         return spec.build();
     }
 }

@@ -22,10 +22,11 @@ public final class EnergyInput {
     private final long capacity;
     private final boolean anyPacket;
     private final boolean overload;
+    private final boolean dynamic;
 
     private EnergyInput(String type, long perTick, boolean rangeSpecified, long rangeMin, long rangeMax,
                         boolean facesSpecified, List<MachineFace> faces, boolean capacitySpecified, long capacity,
-                        boolean anyPacket, boolean overload) {
+                        boolean anyPacket, boolean overload, boolean dynamic) {
         this.type = type;
         this.perTick = perTick;
         this.rangeSpecified = rangeSpecified;
@@ -37,9 +38,13 @@ public final class EnergyInput {
         this.capacity = capacity;
         this.anyPacket = anyPacket;
         this.overload = overload;
+        this.dynamic = dynamic;
     }
 
     public String type() { return type; }
+
+    /** True when the input locks the energy type from the first accepted packet. {@code type()} is then {@code *}. */
+    public boolean dynamic() { return dynamic; }
 
     public long perTick() { return perTick; }
 
@@ -84,14 +89,14 @@ public final class EnergyInput {
 
     EnergyInput withFaces(List<MachineFace> resolved) {
         return new EnergyInput(type, perTick, rangeSpecified, rangeMin, rangeMax,
-                facesSpecified, List.copyOf(resolved), capacitySpecified, capacity, anyPacket, overload);
+                facesSpecified, List.copyOf(resolved), capacitySpecified, capacity, anyPacket, overload, dynamic);
     }
 
     /** Zero capacity is the behavior-machine default, whether or not the builder named it. */
     EnergyInput collapseDefaultCapacity() {
         if (capacity != 0) return this;
         return new EnergyInput(type, perTick, rangeSpecified, rangeMin, rangeMax,
-                facesSpecified, faces, false, 0, anyPacket, overload);
+                facesSpecified, faces, false, 0, anyPacket, overload, dynamic);
     }
 
     @Override public boolean equals(Object other) {
@@ -101,18 +106,18 @@ public final class EnergyInput {
                 && rangeMin == that.rangeMin && rangeMax == that.rangeMax
                 && facesSpecified == that.facesSpecified && capacitySpecified == that.capacitySpecified
                 && capacity == that.capacity && anyPacket == that.anyPacket && overload == that.overload
-                && type.equals(that.type) && faces.equals(that.faces);
+                && dynamic == that.dynamic && type.equals(that.type) && faces.equals(that.faces);
     }
 
     @Override public int hashCode() {
         return Objects.hash(type, perTick, rangeSpecified, rangeMin, rangeMax,
-                facesSpecified, faces, capacitySpecified, capacity, anyPacket, overload);
+                facesSpecified, faces, capacitySpecified, capacity, anyPacket, overload, dynamic);
     }
 
     public static Builder builder(String type, long perTick) { return new Builder(type, perTick); }
 
     public static final class Builder {
-        private final String type;
+        private String type;
         private final long perTick;
         private boolean rangeSpecified;
         private long rangeMin;
@@ -123,6 +128,7 @@ public final class EnergyInput {
         private long capacity;
         private boolean anyPacket;
         private boolean overload = true;
+        private boolean dynamic;
 
         private Builder(String type, long perTick) {
             this.type = type;
@@ -163,6 +169,16 @@ public final class EnergyInput {
         }
 
         /**
+         * Lock the energy type from the first accepted packet. Only a behavior machine's main input
+         * may use this; {@link #type()} becomes {@code *}.
+         */
+        public Builder anyType() {
+            dynamic = true;
+            type = "*";
+            return this;
+        }
+
+        /**
          * {@code false} refuses a packet outside the accepted window and does not overload.
          * The default is {@code true}: a packet above the maximum is consumed and overloads.
          * A recipe machine and a condition part reject {@code false}.
@@ -182,7 +198,7 @@ public final class EnergyInput {
             if (capacitySpecified && capacity < 0)
                 throw new IllegalArgumentException("Negative energy capacity");
             return new EnergyInput(type, perTick, rangeSpecified, rangeMin, rangeMax, facesSpecified,
-                    MachineFace.distinct(faces, "energy face"), capacitySpecified, capacity, anyPacket, overload);
+                    MachineFace.distinct(faces, "energy face"), capacitySpecified, capacity, anyPacket, overload, dynamic);
         }
     }
 }

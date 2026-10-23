@@ -2,6 +2,7 @@ package com.gregtech.gregtech.api.recipe;
 
 import java.util.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.material.Fluids;
 import com.gregtech.gregtech.api.addon.RecipeKeptInputs;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
@@ -53,7 +54,18 @@ public final class RecipeInputs {
         int[] retainedFluids = new int[remainingFluids.size()];
         for (int inputIndex = 0; inputIndex < recipe.mFluidInputs.length; inputIndex++) {
             var required = recipe.mFluidInputs[inputIndex];
-            if (required == null || required.isEmpty()) continue;
+            if (required == null) continue;
+            // Amount 0 is a presence-only catalyst: the tank must hold the fluid, nothing is drained.
+            if (required.getAmount() <= 0) {
+                if (required.getFluid() == Fluids.EMPTY) continue;
+                boolean present = false;
+                for (FluidStack available : remainingFluids) {
+                    if (!available.isEmpty() && available.isFluidEqual(required)) { present = true; break; }
+                }
+                if (!present) return null;
+                continue;
+            }
+            if (required.isEmpty()) continue;
             boolean catalyst = recipe.isCatalystFluidInput(inputIndex);
             long needed = RecipeKeptInputs.fluidDemand(catalyst, required.getAmount(), parallel);
             for (int tank = 0; tank < remainingFluids.size(); tank++) {

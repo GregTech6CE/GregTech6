@@ -13,6 +13,8 @@ import java.util.Objects;
 public final class RecipeMachine implements AddonMachine {
     private final MachineCasing casing;
     private final EnergyInput energy;
+    private final EnergyInput auxiliary;
+    private final boolean startupEnergy;
     private final MachineIo io;
     private final boolean largeRecipe;
     private final String recipeMap;
@@ -26,12 +28,15 @@ public final class RecipeMachine implements AddonMachine {
     private final boolean exclusiveOutputs;
     private final List<String> structureKeys;
 
-    private RecipeMachine(MachineCasing casing, EnergyInput energy, MachineIo io, boolean largeRecipe,
-                          String recipeMap, int parallel, int efficiency, boolean constantEnergy,
-                          boolean cheapOverclocking, boolean cheapOverclockingSpecified, int minimumLightAbove,
-                          boolean searchOutputTanks, boolean exclusiveOutputs, List<String> structureKeys) {
+    private RecipeMachine(MachineCasing casing, EnergyInput energy, EnergyInput auxiliary, boolean startupEnergy,
+                          MachineIo io, boolean largeRecipe, String recipeMap, int parallel, int efficiency,
+                          boolean constantEnergy, boolean cheapOverclocking, boolean cheapOverclockingSpecified,
+                          int minimumLightAbove, boolean searchOutputTanks, boolean exclusiveOutputs,
+                          List<String> structureKeys) {
         this.casing = casing;
         this.energy = energy;
+        this.auxiliary = auxiliary;
+        this.startupEnergy = startupEnergy;
         this.io = io;
         this.largeRecipe = largeRecipe;
         this.recipeMap = recipeMap;
@@ -48,6 +53,12 @@ public final class RecipeMachine implements AddonMachine {
 
     @Override public MachineCasing casing() { return casing; }
     public EnergyInput energy() { return energy; }
+
+    /** Second input. Its buffer is separate from {@link #energy}; null when the machine has none. */
+    public EnergyInput auxiliary() { return auxiliary; }
+
+    /** When true, a recipe's special value is charged from the auxiliary buffer before progress starts. */
+    public boolean startupEnergy() { return startupEnergy; }
 
     /** Null when item and fluid faces were left at the six-side default with no automatic face. */
     public MachineIo io() { return io; }
@@ -72,15 +83,16 @@ public final class RecipeMachine implements AddonMachine {
                 && constantEnergy == that.constantEnergy && cheapOverclocking == that.cheapOverclocking
                 && cheapOverclockingSpecified == that.cheapOverclockingSpecified
                 && minimumLightAbove == that.minimumLightAbove && searchOutputTanks == that.searchOutputTanks
-                && exclusiveOutputs == that.exclusiveOutputs && casing.equals(that.casing)
-                && energy.equals(that.energy) && Objects.equals(io, that.io)
+                && exclusiveOutputs == that.exclusiveOutputs && startupEnergy == that.startupEnergy
+                && casing.equals(that.casing) && energy.equals(that.energy)
+                && Objects.equals(auxiliary, that.auxiliary) && Objects.equals(io, that.io)
                 && recipeMap.equals(that.recipeMap) && structureKeys.equals(that.structureKeys);
     }
 
     @Override public int hashCode() {
-        return Objects.hash(casing, energy, io, largeRecipe, recipeMap, parallel, efficiency, constantEnergy,
-                cheapOverclocking, cheapOverclockingSpecified, minimumLightAbove, searchOutputTanks,
-                exclusiveOutputs, structureKeys);
+        return Objects.hash(casing, energy, auxiliary, startupEnergy, io, largeRecipe, recipeMap, parallel,
+                efficiency, constantEnergy, cheapOverclocking, cheapOverclockingSpecified, minimumLightAbove,
+                searchOutputTanks, exclusiveOutputs, structureKeys);
     }
 
     public static Builder builder(MachineCasing casing) { return new Builder(casing); }
@@ -88,6 +100,8 @@ public final class RecipeMachine implements AddonMachine {
     public static final class Builder {
         private final MachineCasing casing;
         private EnergyInput energy;
+        private EnergyInput auxiliary;
+        private boolean startupEnergy;
         private EnergyOutput energyOutput;
         private FuelOutput fuelOutput;
         private MachineIo io;
@@ -106,6 +120,13 @@ public final class RecipeMachine implements AddonMachine {
         private Builder(MachineCasing casing) { this.casing = casing; }
 
         public Builder energy(EnergyInput value) { energy = value; return this; }
+
+        /** Second input buffer. It needs faces, a positive capacity and a range or {@code anyPacket}. */
+        public Builder auxiliaryEnergy(EnergyInput value) { auxiliary = value; return this; }
+
+        /** Charge each recipe's {@code special} from the auxiliary buffer before progress starts. */
+        public Builder startupEnergy(boolean value) { startupEnergy = value; return this; }
+
         public Builder energyOutput(EnergyOutput value) { energyOutput = value; return this; }
         public Builder output(FuelOutput value) { fuelOutput = value; return this; }
         public Builder io(MachineIo value) { io = value; return this; }
@@ -139,6 +160,8 @@ public final class RecipeMachine implements AddonMachine {
             if (tier < 1)
                 throw new IllegalArgumentException("Invalid tier for " + id + ": " + tier);
             if (energy == null) throw new IllegalArgumentException("Missing energy type for " + id);
+            if (energy.dynamic())
+                throw new IllegalArgumentException("Recipe machine '" + id + "' cannot pick its energy type");
             if (energy.capacitySpecified())
                 throw new IllegalArgumentException("Recipe machine '" + id + "' cannot declare energy capacity");
             if (energy.anyPacket())
@@ -149,6 +172,33 @@ public final class RecipeMachine implements AddonMachine {
                 throw new IllegalArgumentException("Invalid energy per tick for " + id + ": " + energy.perTick());
             if (energy.rangeSpecified() && "TU".equalsIgnoreCase(energy.type()))
                 throw new IllegalArgumentException("TU machines cannot declare an energy range: " + id);
+            if (auxiliary != null) {
+                if (auxiliary.dynamic())
+                    throw new IllegalArgumentException("Recipe machine '" + id + "' auxiliary energy cannot pick its type");
+                if (!auxiliary.anyPacket() && !auxiliary.rangeSpecified())
+                    throw new IllegalArgumentException("Recipe machine '" + id
+                            + "' auxiliary energy needs a packet range or anyPacket");
+                if (auxiliary.perTick() < 1 || auxiliary.perTick() > 1_000_000_000_000L)
+                    throw new IllegalArgumentException("Invalid auxiliary energy per tick for " + id);
+                if (!auxiliary.capacitySpecified() || auxiliary.capacity() < 1)
+                    throw new IllegalArgumentException("Recipe machine '" + id
+                            + "' auxiliary energy capacity must be positive");
+                if (!auxiliary.facesSpecified() || auxiliary.faces().isEmpty())
+                    throw new IllegalArgumentException("Recipe machine '" + id + "' auxiliary energy needs a face");
+                if (auxiliary.rangeSpecified()
+                        && (auxiliary.perTick() < auxiliary.rangeMin() || auxiliary.perTick() > auxiliary.rangeMax()))
+                    throw new IllegalArgumentException("Recipe machine '" + id
+                            + "' auxiliary energy per tick must sit inside the packet range");
+                if (auxiliary.type().equalsIgnoreCase(energy.type())) {
+                    var mainFaces = energy.facesSpecified() ? energy.faces() : MachineFace.all();
+                    for (MachineFace face : auxiliary.faces())
+                        if (mainFaces.contains(face))
+                            throw new IllegalArgumentException("Recipe machine '" + id
+                                    + "' auxiliary energy overlaps an input face");
+                }
+            } else if (startupEnergy) {
+                throw new IllegalArgumentException("Recipe machine '" + id + "' startup energy needs auxiliary energy");
+            }
             var faces = energy.facesSpecified() ? energy.faces() : MachineFace.all();
             if (recipeMap == null || !recipeMap.matches("[a-z0-9_.]+"))
                 throw new IllegalArgumentException("Invalid recipe map name: " + recipeMap);
@@ -163,7 +213,8 @@ public final class RecipeMachine implements AddonMachine {
             }
             if (io != null && io.hasTarget() && !largeRecipe)
                 throw new IllegalArgumentException("IO targets require a large recipe machine: " + id);
-            return new RecipeMachine(casing.resolve(machineType, true, tier), energy.withFaces(faces), io,
+            return new RecipeMachine(casing.resolve(machineType, true, tier), energy.withFaces(faces),
+                    auxiliary == null ? null : auxiliary.withFaces(auxiliary.faces()), startupEnergy, io,
                     largeRecipe, recipeMap, parallel, efficiency, constantEnergy, cheapOverclocking,
                     cheapOverclockingSpecified, minimumLightAbove, searchOutputTanks, exclusiveOutputs, keys);
         }
