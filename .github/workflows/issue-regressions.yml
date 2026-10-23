@@ -60,7 +60,7 @@ jobs:
             -Dorg.gradle.java.installations.fromEnv=JAVA17_HOME,JAVA21_HOME \
             -Dorg.gradle.java.installations.auto-download=false \
             -PaddonSample=true \
-            -PgameTestNamespaces=gregtech_issue_audit \
+            -PgameTestNamespaces=gregtech_issue_audit,gregtech_cover_issues,gregtech_pipe_auto \
             -PgameTestHeap=3g \
             -PgameTestDirectory=build/issues-64-81-gametest \
             -PneoforgeGameTestDirectory=build/issues-64-81-gametest \

@@ -163,60 +163,51 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
 *///?} else {
 //?}
 
+    /** Original placement: the clicked support port, then compatible neighbors already open toward us.
+     * The initial placement state carries the support bit; validate it after the block entity and
+     * any item-restored covers exist. Ordinary neighbor updates never rewrite explicit ports.
+     */
     @Override
-    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState old, boolean moving) {
-        super.onPlace(state, level, pos, old, moving);
-        if (level.isClientSide || old.is(this)) return;
-        var next = state;
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state,
+                            net.minecraft.world.entity.LivingEntity placer, ItemStack stack) {
+        super.setPlacedBy(level, pos, state, placer, stack);
+        if (level.isClientSide || !(level.getBlockEntity(pos) instanceof SignalWireBlockEntity)) return;
+        var requested = level.getBlockState(pos);
+        if (!requested.is(this)) return;
+        for (var side : Direction.values()) if (requested.getValue(ElectricWireBlock.propFor(side))) {
+            if (!connectPlacedPort(level, pos, side, placer)) {
+                var current = level.getBlockState(pos);
+                if (current.is(this) && current.getValue(ElectricWireBlock.propFor(side)))
+                    level.setBlockAndUpdate(pos, current.setValue(ElectricWireBlock.propFor(side), false));
+            }
+        }
         for (var side : Direction.values()) {
             var neighbor = pos.relative(side);
             if (!level.hasChunkAt(neighbor)) continue;
-            if (!com.gregtech.gregtech.content.cover.CoverConnections.canConnect(level, pos, side)) continue;
             var other = level.getBlockState(neighbor);
-            if (other.getBlock() instanceof SignalWireBlock) {
-                next = next.setValue(ElectricWireBlock.propFor(side), true);
-                level.setBlockAndUpdate(neighbor, other.setValue(ElectricWireBlock.propFor(side.getOpposite()), true));
-            } else if (other.isSignalSource()
-                    || level.getBlockEntity(neighbor) instanceof com.gregtech.gregtech.api.signal.GtSignalSource) {
-                // A block-level source, or a block entity implementing GtSignalSource without
-                // overriding isSignalSource(). Conductors such as stone still only open by wire cutter.
-                next = next.setValue(ElectricWireBlock.propFor(side), true);
-            }
+            if (other.getBlock() instanceof SignalWireBlock
+                    && other.getValue(ElectricWireBlock.propFor(side.getOpposite())))
+                connectPlacedPort(level, pos, side, placer);
         }
-        level.setBlockAndUpdate(pos, next);
     }
 
-    /**
-     * A neighbour placed, replaced or removed after this wire: connect to a wire or signal source,
-     * and drop a connection whose neighbour was destroyed. A manual wire-cutter port to a
-     * non-source block stays open; only removal clears it.
-     */
-    @Override
-    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighbor,
-                                BlockPos neighborPos, boolean moving) {
-        super.neighborChanged(state, level, pos, neighbor, neighborPos, moving);
-        if (level.isClientSide || !level.hasChunkAt(neighborPos)) return;
-        var side = Direction.fromDelta(neighborPos.getX() - pos.getX(),
-                neighborPos.getY() - pos.getY(), neighborPos.getZ() - pos.getZ());
-        if (side == null) return;
-        var property = ElectricWireBlock.propFor(side);
-        var other = level.getBlockState(neighborPos);
-        boolean source = other.getBlock() instanceof SignalWireBlock || other.isSignalSource()
-                || level.getBlockEntity(neighborPos) instanceof com.gregtech.gregtech.api.signal.GtSignalSource;
-        if (source) {
-            if (!state.getValue(property)
-                    && com.gregtech.gregtech.content.cover.CoverConnections.canConnect(level, pos, side)) {
-                level.setBlockAndUpdate(pos, state.setValue(property, true));
-                if (other.getBlock() instanceof SignalWireBlock) {
-                    var opposite = ElectricWireBlock.propFor(side.getOpposite());
-                    if (!other.getValue(opposite)) {
-                        level.setBlockAndUpdate(neighborPos, other.setValue(opposite, true));
-                    }
-                }
-            }
-        } else if (state.getValue(property) && other.isAir()) {
-            level.setBlockAndUpdate(pos, state.setValue(property, false));
-        }
+    private boolean connectPlacedPort(Level level, BlockPos pos, Direction side,
+                                      net.minecraft.world.entity.LivingEntity placer) {
+        var neighbor = pos.relative(side);
+        if (!level.hasChunkAt(neighbor) || !level.getBlockState(pos).is(this)) return false;
+        if (placer instanceof Player player && (!player.mayBuild() || !level.mayInteract(player, pos)
+                || !level.mayInteract(player, neighbor))) return false;
+        if (!com.gregtech.gregtech.content.cover.CoverConnections.canConnect(level, pos, side)) return false;
+        // Original redstone connectors permit ordinary blocks and nonmatching connector types
+        // on the explicitly selected side; only matching signal wires receive reciprocal ports.
+        var current = level.getBlockState(pos);
+        if (!current.getValue(ElectricWireBlock.propFor(side)))
+            level.setBlockAndUpdate(pos, current.setValue(ElectricWireBlock.propFor(side), true));
+        var other = level.getBlockState(neighbor);
+        if (other.getBlock() instanceof SignalWireBlock
+                && !other.getValue(ElectricWireBlock.propFor(side.getOpposite())))
+            level.setBlockAndUpdate(neighbor, other.setValue(ElectricWireBlock.propFor(side.getOpposite()), true));
+        return true;
     }
 
     @Override

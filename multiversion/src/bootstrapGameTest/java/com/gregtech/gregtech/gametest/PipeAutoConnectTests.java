@@ -23,7 +23,7 @@ import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 //?}
 
-/** Opt-in pipe connection and signal-wire reconnection, with and without the wrench override. */
+/** Addon marker pipe opt-in stays unchanged; signal-wire ports are explicit placement/tool state. */
 @GameTestHolder("gregtech_pipe_auto")
 @PrefixGameTestTemplate(false)
 public final class PipeAutoConnectTests {
@@ -145,42 +145,51 @@ public final class PipeAutoConnectTests {
     }
 
     @GameTest(template = "test_empty", timeoutTicks = 40)
-    public static void signalWireConnectsToSourcePlacedAfter(GameTestHelper helper) {
+    public static void signalWireIgnoresUnselectedSourcePlacedAfter(GameTestHelper helper) {
         var pos = helper.absolutePos(new BlockPos(3, 6, 6));
         placeWire(helper, pos);
         helper.assertTrue(!wireOpen(helper, pos, Direction.EAST), "a lone wire starts closed");
         helper.getLevel().setBlockAndUpdate(pos.east(), SignalProbes.SOURCE.defaultBlockState());
-        helper.assertTrue(wireOpen(helper, pos, Direction.EAST), "block-entity source opens the wire");
+        helper.assertTrue(!wireOpen(helper, pos, Direction.EAST), "GtSignalSource compatibility does not open an unselected port");
         helper.succeed();
     }
 
     @GameTest(template = "test_empty", timeoutTicks = 40)
-    public static void signalWirePlacedAfterSourceConnects(GameTestHelper helper) {
+    public static void signalWireStatePlacementDoesNotInferSourcePorts(GameTestHelper helper) {
         var pos = helper.absolutePos(new BlockPos(3, 8, 6));
         helper.getLevel().setBlockAndUpdate(pos.east(), SignalProbes.SOURCE.defaultBlockState());
         placeWire(helper, pos);
-        helper.assertTrue(wireOpen(helper, pos, Direction.EAST), "placement finds the block-entity source");
+        helper.assertTrue(!wireOpen(helper, pos, Direction.EAST), "a closed blockstate is not rewritten from nearby signal sources");
         helper.succeed();
     }
 
     @GameTest(template = "test_empty", timeoutTicks = 40)
-    public static void signalWireClearsConnectionWhenSourceIsRemoved(GameTestHelper helper) {
+    public static void signalWireRetainsExplicitPortWhenSourceIsRemoved(GameTestHelper helper) {
         var pos = helper.absolutePos(new BlockPos(3, 10, 6));
         helper.getLevel().setBlockAndUpdate(pos.east(), SignalProbes.SOURCE.defaultBlockState());
-        placeWire(helper, pos);
-        helper.assertTrue(wireOpen(helper, pos, Direction.EAST), "source is connected");
+        // Seed the requested port before onPlace: a closed-state placement followed by an identical
+        // world-state write also exercises the separate recursive-onPlace stale-BE defect.
+        helper.getLevel().setBlockAndUpdate(pos,wireBlock().defaultBlockState().setValue(ElectricWireBlock.EAST,true));
+        var source=(SignalProbes.SignalProbeSourceBlockEntity)helper.getLevel().getBlockEntity(pos.east());
+        source.emitted=5*com.gregtech.gregtech.blockentity.energy.SignalWireBlockEntity.UNIT;
+        var wire=(com.gregtech.gregtech.blockentity.energy.SignalWireBlockEntity)helper.getLevel().getBlockEntity(pos);
+        helper.assertTrue(wire.getBlockState().equals(helper.getLevel().getBlockState(pos))
+                && wire.connected(Direction.EAST),"initial explicit port agrees in the world and block entity");
+        wire.setMode(0);wire.tickNetwork();
+        helper.assertTrue(wire.signal()>0&&wireOpen(helper,pos,Direction.EAST),"an explicitly open port reads the addon source");
         helper.getLevel().removeBlock(pos.east(), false);
-        helper.assertTrue(!wireOpen(helper, pos, Direction.EAST), "removing the source clears the port");
+        wire.setMode(0);wire.tickNetwork();
+        helper.assertTrue(wireOpen(helper,pos,Direction.EAST)&&wire.signal()==0,"source removal preserves the port while explicit recomputation clears power");
         helper.succeed();
     }
 
     @GameTest(template = "test_empty", timeoutTicks = 40)
-    public static void signalWiresConnectToEachOtherPlacedAfter(GameTestHelper helper) {
+    public static void signalWiresKeepUnselectedNeighborPortsClosed(GameTestHelper helper) {
         var pos = helper.absolutePos(new BlockPos(3, 12, 6));
         placeWire(helper, pos);
         placeWire(helper, pos.east());
-        helper.assertTrue(wireOpen(helper, pos, Direction.EAST), "first wire opens toward the second");
-        helper.assertTrue(wireOpen(helper, pos.east(), Direction.WEST), "second wire opens toward the first");
+        helper.assertTrue(!wireOpen(helper, pos, Direction.EAST), "first closed wire does not infer a new port");
+        helper.assertTrue(!wireOpen(helper, pos.east(), Direction.WEST), "second closed wire does not force its neighbor open");
         helper.succeed();
     }
 }

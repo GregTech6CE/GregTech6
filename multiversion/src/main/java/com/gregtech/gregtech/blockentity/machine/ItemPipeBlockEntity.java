@@ -672,7 +672,7 @@ public class ItemPipeBlockEntity extends BlockEntity
                                     neighborState.setValue(ItemPipeBlock.propFor(clickedFace), true));
                         }
                     }
-                } else if (isConnectableNeighbor(side)) {
+                } else if (isConnectableNeighbor(side) || isNativePlacementEndpoint(side)) {
                     connectOwnFace(side);
                 }
             }
@@ -716,6 +716,12 @@ public class ItemPipeBlockEntity extends BlockEntity
         BlockPos neighborPos = worldPosition.relative(side);
         return level.hasChunkAt(neighborPos)
                 && com.gregtech.gregtech.content.cover.CoverConnections.canConnect(level, worldPosition, side);
+    }
+
+    /** Ordinary capability endpoints connect only when explicitly clicked during placement. */
+    private boolean isNativePlacementEndpoint(Direction side) {
+        IItemHandler handler = itemHandlerAt(worldPosition.relative(side), side.getOpposite());
+        return handler != null && handler.getSlots() > 0;
     }
 
     private boolean isConnectableNeighbor(Direction side) {

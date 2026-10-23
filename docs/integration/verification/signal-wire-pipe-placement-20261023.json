@@ -1,0 +1,230 @@
+{
+  "status": "passed-local-full357; publication follows this local gate",
+  "baseline_commit": "61d6ab692480b10a33b6474aee47b2b52e0d0bfb",
+  "fixed_input_snapshot": {
+    "path": "work/validation/wire-pipe-placement-fixed/input-snapshot.txt",
+    "sha256": "54aacf5d7d67d21125259ec8b9f11862023b65f6a71a8fd515174512b1bac767"
+  },
+  "source_files": [
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/SignalWireBlock.java",
+      "sha256": "65714e87267e33c795b36170ba0c1d5cbd942606c132d1ecf6b3f050f7f7845e"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "sha256": "09d85cee8c7a3751bc45ab172dc78e5a1c16261f94a0ec50c20bddde96318c91"
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/energy/WireToolInteractions.java",
+      "sha256": "0a76ded638cc03ca8a3f93f5f31b329195244986bf7ca47760506e860ab8e3a6"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ElectricWireBlock.java",
+      "sha256": "866fc2c5efd16e60b2f6165a3cf0c5ca7e96be78e25b6d84b19eeb72058abaab"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ElectricWireBlockEntity.java",
+      "sha256": "7b91a59839f00dcd54bd20ccc4c89c391b5689f19df71a8bbff4e5667cedfa68"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/ItemPipeBlockEntity.java",
+      "sha256": "4d1124cc42c743aea254287d61f4a52df953c8b121b8ddc60570a8d37bab1c29"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/FluidPipeBlockEntity.java",
+      "sha256": "ae3d514c81a2c774c817de89ee160c3d7e6a33692ecbe11978c235d28260d61f"
+    },
+    {
+      "path": "docs/ADDON_API.md",
+      "sha256": "8fdc40801454b669f491b029a7ed550b0a9cd183308979fa04014bef5af97b0c"
+    },
+    {
+      "path": "docs/ADDON_API.zh-CN.md",
+      "sha256": "9fca78d08b6bc3b8433a2a82f818286dd5f8e13db2ae925e8af5d7f7f26801af"
+    },
+    {
+      "path": ".github/workflows/issue-regressions.yml",
+      "sha256": "55bc3437f9d6a205a7be20a12480a2382a9852eeb6b899227febfbb5d285c542"
+    },
+    {
+      "path": "tools/integration/check_issue_gametest_report.py",
+      "sha256": "71e0c04298c250cbb2e4c7614d789f584978c346895090771cbce94672726326"
+    },
+    {
+      "path": "tools/tests/test_issue_ci_evidence.py",
+      "sha256": "1869ff5203170f7ef056343281df9643cf82c053396130897424bb0a3da2ec8d"
+    },
+    {
+      "path": "multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/SignalWirePlacementCoverTests.java",
+      "sha256": "26aaf483c20337b7a0418d57d0d22bcc7cbd162bc88d6cdaf0c94588c05aa2da"
+    },
+    {
+      "path": "multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/PipePlacementEndpointTests.java",
+      "sha256": "1aa52151f05265676657870c84c31adfb8535d4564b788857842f78cc870261e"
+    },
+    {
+      "path": "multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/PipeAutoConnectTests.java",
+      "sha256": "dc9cfd1b625f6d0ece1d708dd3f2f10a71c306e4217537075e85255308454657"
+    },
+    {
+      "path": "multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CoverIssueTests.java",
+      "sha256": "ea59a9c30fea9242e0608fafe413a8e9b9090a98da47b9a2ec92aa9c3ad9b59c"
+    }
+  ],
+  "original_references": [
+    {
+      "path": "work/references/gregtech6-original/src/main/java/gregapi/tileentity/connectors/TileEntityBase09Connector.java",
+      "sha256": "7c77c0fd093e5ff5fb889ad7f3cf6e0b75f5f7390a637b1ce76a2252269526ff"
+    },
+    {
+      "path": "work/references/gregtech6-original/src/main/java/gregapi/tileentity/connectors/MultiTileEntityWireRedstone.java",
+      "sha256": "cd79da42bb5b24a211615bb25edb653995c867f7404928f40d8e6f73ca59ec15"
+    },
+    {
+      "path": "work/references/gregtech6-original/src/main/java/gregapi/tileentity/connectors/MultiTileEntityWireRedstoneInsulated.java",
+      "sha256": "4f93b8caf163e85f0560bfba5934bb42e76c39caf9a954c279cfcb10af49b8c2"
+    },
+    {
+      "path": "work/references/gregtech6-original/src/main/java/gregapi/cover/covers/AbstractCoverAttachmentTorch.java",
+      "sha256": "f06eb2fe7ea68c62d3bbc69083219970069acdb16ec21b6add0160c2b300c9fb"
+    },
+    {
+      "path": "work/references/gregtech6-w/src/main/java/gregapi/tileentity/connectors/TileEntityBase09Connector.java",
+      "sha256": "8d0e70435c65fce5e4e449dfb4a7a0a0173d8d5930249880832024ce854a2931"
+    },
+    {
+      "path": "work/references/gregtech6-w/src/main/java/gregapi/tileentity/connectors/MultiTileEntityWireRedstone.java",
+      "sha256": "49eba0a706997106b5f7e2ab8ecf4400f0c54ac5d6fca6159608cf64b827ad8a"
+    },
+    {
+      "path": "work/references/gregtech6-w/src/main/java/gregapi/tileentity/connectors/MultiTileEntityWireRedstoneInsulated.java",
+      "sha256": "aee9835fd6952c60b52fbdf06f8f84a98c437fadb1d168e2dc99a1b99117c15b"
+    },
+    {
+      "path": "work/references/gregtech6-w/src/main/java/gregapi/cover/covers/AbstractCoverAttachmentTorch.java",
+      "sha256": "478e55d5afcde2502802b54bf9b7b0d8199b7f77b57be70f340d342b1a0e5e97"
+    }
+  ],
+  "paired_case_baselined": false,
+  "paired_case": "SignalWirePlacementCoverTests.pairedSignalWiresStayDisconnectedAfterNativeCutter",
+  "fixed_final_snapshot": {
+    "path": "work/validation/wire-pipe-placement-fixed/final-snapshot.txt",
+    "sha256": "54aacf5d7d67d21125259ec8b9f11862023b65f6a71a8fd515174512b1bac767"
+  },
+  "source_snapshot_unchanged": true,
+  "baseline_reports": [
+    {
+      "path": "work/validation/wire-pipe-placement-baseline-retry/forge-baseline.xml",
+      "sha256": "4954eb55cba084fef43de6a3811595efb78e62e208927abd0a04e018013dfbec",
+      "cases": 182,
+      "failed": 12,
+      "errors": 0,
+      "skipped": 0,
+      "namespace_counts": {
+        "gregtech_issue_audit:test_empty": 164,
+        "gregtech_cover_issues:test_empty": 9,
+        "gregtech_pipe_auto:test_empty": 9
+      }
+    },
+    {
+      "path": "work/validation/wire-pipe-placement-baseline-retry/neoforge-baseline.xml",
+      "sha256": "dffe7eb98da4cbf3bbe15e81ad18a4c69142751423e4a195fd32dfa1dc7f9088",
+      "cases": 173,
+      "failed": 12,
+      "errors": 0,
+      "skipped": 0,
+      "namespace_counts": {
+        "gregtech_issue_audit:test_empty": 155,
+        "gregtech_cover_issues:test_empty": 9,
+        "gregtech_pipe_auto:test_empty": 9
+      }
+    }
+  ],
+  "fixed_reports": [
+    {
+      "path": "work/validation/wire-pipe-placement-fixed/forge-fixed.xml",
+      "sha256": "ca7ade8f6d3a30e54338e602e00122c9371e450c4cc0a91d5cf275944c843f07",
+      "cases": 183,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "namespace_counts": {
+        "gregtech_issue_audit:test_empty": 165,
+        "gregtech_cover_issues:test_empty": 9,
+        "gregtech_pipe_auto:test_empty": 9
+      }
+    },
+    {
+      "path": "work/validation/wire-pipe-placement-fixed/neoforge-fixed.xml",
+      "sha256": "ebbcb23e121199e4f556c2329614c89a9aa276b46fc08cd8b07828477a7d8a11",
+      "cases": 174,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "namespace_counts": {
+        "gregtech_issue_audit:test_empty": 156,
+        "gregtech_cover_issues:test_empty": 9,
+        "gregtech_pipe_auto:test_empty": 9
+      }
+    }
+  ],
+  "local_gate_checks": [
+    {
+      "path": "work/validation/wire-pipe-placement-fixed/dual-build.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "exit_code": 0
+    },
+    {
+      "path": "work/validation/wire-pipe-placement-fixed/python-guards.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "exit_code": 0
+    },
+    {
+      "path": "work/validation/wire-pipe-placement-fixed/remi.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "exit_code": 0
+    },
+    {
+      "path": "work/validation/wire-pipe-placement-fixed/package-check.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "exit_code": 0
+    },
+    {
+      "path": "work/validation/wire-pipe-placement-fixed/forge-gametest.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "exit_code": 0
+    },
+    {
+      "path": "work/validation/wire-pipe-placement-fixed/forge-report-check.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "exit_code": 0
+    },
+    {
+      "path": "work/validation/wire-pipe-placement-fixed/neoforge-gametest.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "exit_code": 0
+    },
+    {
+      "path": "work/validation/wire-pipe-placement-fixed/neoforge-report-check.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "exit_code": 0
+    }
+  ],
+  "legacy_namespaces_required": {
+    "gregtech_cover_issues": 9,
+    "gregtech_pipe_auto": 9
+  },
+  "baseline_coverage_note": "355 total, same12case identities fail perloader; paired case added only after baseline, fixed357 proves its requested behavior.",
+  "retained_port_fixture_correction": {
+    "first_failed_source_sha256": "c361fb7c30864c154d3a473dd3fec2e6610d4f411b365df549457e3fa641040e",
+    "corrected_source_sha256": "dc9cfd1b625f6d0ece1d708dd3f2f10a71c306e4217537075e85255308454657",
+    "preserved_first_evidence": "work/validation/wire-pipe-placement-baseline/retained-port-original",
+    "change": "Initial placement seeds EAST=true; world/BE state agreement prerequisite added. Source-read/removal/power assertions retained."
+  },
+  "scope_limits": [
+    "Pipe/EU cases invoke native BlockItem.place directly; signal cases use ServerPlayer.gameMode.useItemOn.",
+    "Explicit loss-of-source tests invalidate solved state before recomputation; not a separate natural-next-tick proof.",
+    "No blanket chunk unload/reload or multiplayer packet validation.",
+    "Cover support, adjacent-plate/branch rendering and graph guards are not repaired by this batch."
+  ]
+}

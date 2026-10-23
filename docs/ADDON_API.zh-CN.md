@@ -961,7 +961,7 @@ public final class MySourceBlockEntity extends BlockEntity implements GtSignalSo
 
 行为机器声明 `signalOutput(true)` 后，外壳方块实体已经实现 `GtSignalSource`，行为只需实现 `MachineBehavior.gtSignal`。未声明的行为机器不会被信号线读取。
 
-方块后放到线旁边时，线也会连上；信号源方块被移除时，这个端口会断开。方块实体实现 `GtSignalSource`、但方块本身没有覆盖 `Block#isSignalSource()` 时，也算信号源。用剪线钳手动接到非信号源方块的端口会保持打开，直到那个邻居被移除。
+红石导线遵循原版的显式端口规则：放置时尝试连接所点击的支撑面，其他方向只接入对面端口已经打开的相容导线；其余面使用剪线钳开关。实现 `GtSignalSource` 后，即使方块没有覆盖 `Block#isSignalSource()`，导线也能通过已打开的端口读取它，但不会因此自动打开无关面或重新打开被手动关闭的面。邻居信号变化和信号源移除都保留端口位；网络下次重新计算、确认没有信号源时清除信号。这修正了此前按邻接信号源自动开关端口的行为，不改变 `FluidPipeConnectable` 和 `ItemPipeConnectable` 的独立附属自动连接约定。
 
 只接收、不发出的方块，在方块实体上实现 `GtSignalReceiver`，或者把方块加进 `gt6ce:signal_wire_receivers` 方块标签。满足任一条件时，被强充能的实心方块不会被当成信号源。两个都满足时按接收端处理。这个标签出厂是空的，addon 在自己的数据包里追加：
 
