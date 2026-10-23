@@ -322,12 +322,12 @@ public final class ForgeDedicatedSmoke {
     private static void observeDieselCycle(ServerLevel level) {
         int offset=8;var be=diesel(level,offset);
         if("verify".equals(PHASE)||dieselCycleObserved||be.fuelTank().getAmount()!=0||be.getKuEnergy()<=0)return;
-        long expected=512;
+        long expected=448;
         if(be.getKuEnergy()!=expected)throw new IllegalStateException("One real mB diesel cycle: "+be.getKuEnergy()+" expected "+expected);
         if( be.getEnergyCapacity(com.gregtech.gregtech.data.GregTechTags.Energy.RU,null)<expected)throw new IllegalStateException("RU reservoir reports less than its full cycle");
         dieselCycleObserved=true;
         diesel(level,4).setStopped(true);
-        LOGGER.info("DIESEL_CYCLE_OBSERVED baseline=false ordinaryTick={} oneFuelMilliBucket=true storedEnergy={} originalRecipeEnergy=512",observedTicks,be.getKuEnergy());
+        LOGGER.info("DIESEL_CYCLE_OBSERVED baseline=false ordinaryTick={} oneFuelMilliBucket=true storedEnergy={} originalRecipeEnergy=448",observedTicks,be.getKuEnergy());
     }
 
     private static void verifyDieselOutput(ServerLevel level) {

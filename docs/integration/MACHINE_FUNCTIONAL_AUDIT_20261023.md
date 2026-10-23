@@ -199,3 +199,7 @@ Full local dual builds/core checks, 120 source/language/evidence guards, 486 REM
 | `check_issue_gametest_report.py` | `0fbf767061afef71452b7d37224f6ffaa522c201dc4d2a290255ad645e2b8fe8` |
 
 Native XML SHA256 values are Forge `44b8abf25de95d5f0ace7b852dbe89bef05fa9ffa250327cfc7eb3cbe847b497` and NeoForge `1cfb628524ee74ada6fd73726f3843c50228ca8aefbd605337960083aaac9fae`. Full local receipts, baseline failures and before/after snapshots are retained under ignored `work/validation/turbine-baseline-resumed/` and `work/validation/turbine-tool-partial-fuel-fixed/`. This documentation is appended after testing without changing executable files; exact-commit GitHub verification remains a separate publication/merge gate.
+
+## Fuel-engine intake: source-backed native verification
+
+The [fuel-engine intake audit](FUEL_ENGINE_INTAKE_AUDIT.md) isolates two reproduced defects: missing or incorrect source Engine fuel rows and the missing creative fluid-display first-use callback. The original-production baseline ran 379 cases (Forge194/NeoForge185), with exactly two failures on each loader; the corrected frozen tree passed all381 (Forge195/NeoForge186). Real sided intake, pipe placement/transfer, finite containers and machine/cover controls do not support a blanket shared-framework failure. The new independent oracle verifies all25 currently registered source fuels, exact energy and buffered CO2. Exhaust vent parity remains deferred; dedicated restart protocols were compiled, not executed. See the linked audit and provenance for evidence boundaries.

@@ -12,6 +12,16 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'fuelengineintaketests.originalenginefuelrowsproduceexactenergyandbufferedcarbondioxide',
+    'fuelengineintaketests.alleightdieselsacceptknownfuelonallsixfaceswithoutsimulationmutation',
+    'fuelengineintaketests.sourcefuelshaveregisteredrecipesandnativeintake',
+    'fuelengineintaketests.nativepipeplacementandtransferreacheachengineface',
+    'fuelengineintaketests.stoppedmodenbtandsidedcoverremainindependentoffueladmission',
+    'fuelengineintaketests.finiteportablecontainerusesitsnativeitemfirsttransfer',
+    'fuelengineintaketests.creativedisplayfuelcarrierfulldispatchcanrefuelengine',
+    'fuelengineintaketests.unrelatedwoodenbucketandwatercarrierdonotconsumeorfill',
+    'machinefluidframeworkcontroltests.registeredbathacceptsdieseldisplaycarrier',
+
     'coverplatesupporttests.blankcoveraddsoutlineandnativeleversupport',
     'coverplatesupporttests.coversupportisfacelocalandtorchremainsnonsolid',
     'electricwiregraphloadednesstests.wireconnectioncallbackskipsabsentsavedmaskneighbors',
