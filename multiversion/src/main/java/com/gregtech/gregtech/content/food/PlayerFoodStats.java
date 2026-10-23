@@ -74,6 +74,16 @@ public final class PlayerFoodStats {
         player.getPersistentData().remove(KEY);
     }
 
+    /** Copy only the food compound for a non-death clone; never share mutable NBT with the old player. */
+    public static void copyFrom(Player original, Player replacement) {
+        CompoundTag data = original.getPersistentData();
+        if (data.contains(KEY, net.minecraft.nbt.Tag.TAG_COMPOUND)) {
+            replacement.getPersistentData().put(KEY, data.getCompound(KEY).copy());
+        } else {
+            clear(replacement);
+        }
+    }
+
     /**
      * GT6 {@code EntityFoodTracker.tick()}: the effect (and overdose damage) pass every 50 ticks, the decay
      * pass every 100. GT6 runs both off {@code SERVER_TIME}, so the port gates on the level's game time.

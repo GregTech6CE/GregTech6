@@ -12,6 +12,12 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'foodcloneimmunitytests.nondeathrestorecopiesfoodstatswithoutaliasing',
+    'foodcloneimmunitytests.emptyoriginalclearsstaleclonefoodstats',
+    'foodcloneimmunitytests.deathrestorestillclearsfoodstatsanddose',
+    'foodcloneimmunitytests.reactorradiationrespectscreativeandarmorprotection',
+    'foodcloneimmunitytests.reactorradiationpreservesspeciesexclusionsandfallback',
+
     'machineioreservationtests.distinctfluidreservationsblockstartwithoutconsuminginputs',
     'machineioreservationtests.fluidreservationsmergesplitandrespectfullidentity',
     'machineioreservationtests.activeiteminputrespectsownwhitelistandblacklist',
