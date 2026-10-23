@@ -1,6 +1,7 @@
 {
   "type": "remi:group",
   "name": "emi.group.gt6ce.item_barrels",
+  "priority": 135,
   "contents": [
     "item:gt6ce:item_barrel_wood_lead",
     "item:gt6ce:item_barrel_wood_bismuth",
@@ -15,6 +16,5 @@
     "item:gt6ce:item_barrel_ironwood",
     "item:gt6ce:item_barrel_greatwood",
     "item:gt6ce:item_barrel_silverwood"
-  ],
-  "priority": 135
+  ]
 }

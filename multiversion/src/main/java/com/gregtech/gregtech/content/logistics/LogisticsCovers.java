@@ -113,8 +113,7 @@ public final class LogisticsCovers {
         displaySignals[face.ordinal()] = 0;
         displayVisuals[face.ordinal()] = 0;
         changed();
-        if (owner.getLevel() != null && !owner.getLevel().isClientSide)
-            owner.getLevel().updateNeighborsAt(owner.getBlockPos(), owner.getBlockState().getBlock());
+        com.gregtech.gregtech.content.cover.CoverWorldInteraction.removed(owner);
         return new ItemStack(result.getItem());
     }
 
