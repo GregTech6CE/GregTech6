@@ -12,6 +12,12 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'controlleroutputlifecycletests.distillationremoteitemsrespectownfilterandshutter',
+    'controlleroutputlifecycletests.cryoremoteitemsrespectownfilterandshutter',
+    'controlleroutputlifecycletests.implosionnativetickerclearsinvalidactivityandretainsjob',
+    'bedrockdrilloutputlifecycletests.intactdrillexportscompletednativeproduct',
+    'bedrockdrilloutputlifecycletests.brokendrillexportscompletedproductwithoutminingandresumesafterrepair',
+    'bedrockdrilloutputlifecycletests.removeddrillcannotexportpendingnativeproduct',
     'fusioncoverlifecycletests.fusiontimerchargesacrosswindowsandretainsprocessingafterload',
     'fusioncoverlifecycletests.fusioncontrolsensorsstopandblockedoutputsconservejob',
     'fusioncoverlifecycletests.fusioncoverclockandtransfersrespectinvalidandstoppedstates',

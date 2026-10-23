@@ -126,7 +126,11 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
     }
 
     public void tick() {
-        if (level == null || level.isClientSide || !isStructureOk()) return;
+        if (level == null || level.isClientSide || isRemoved() || !level.hasChunkAt(worldPosition)
+                || level.getBlockEntity(worldPosition) != this) return;
+        // Keep discovering/rebinding new shells even before they receive their first energy packet.
+        boolean formed = isStructureOk();
+        // GT6 exports already-mined stock before checking the shell for another drilling cycle.
         if (!output.getStackInSlot(0).isEmpty() && level.hasChunkAt(worldPosition.above())) {
 //? if >=1.21.1 {
             /*var target = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK, worldPosition.above(),
@@ -143,7 +147,7 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
             });
 //?}
         }
-        if (energy < WORK_ENERGY || !output.getStackInSlot(0).isEmpty()
+        if (!formed || energy < WORK_ENERGY || !output.getStackInSlot(0).isEmpty()
                 || lubricant.getFluidAmount() < com.gregtech.gregtech.content.multiblock.AdvancedControllerRules.DRILL_LUBRICANT) return;
         ItemStack product = nextProduct();
         if (product.isEmpty()) return;
