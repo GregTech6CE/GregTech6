@@ -1,10 +1,12 @@
 package com.gregtech.gregtech.api.material;
 
 import com.gregtech.gregtech.api.mod.ModData;
+import com.gregtech.gregtech.data.GregTechTags;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -53,6 +55,8 @@ public final class GTMaterial {
     /** GT6 {@code mOreProcessingMultiplier}. */
     private byte oreProcessingMultiplier = 1;
     private final Set<MaterialProperty> properties = EnumSet.noneOf(MaterialProperty.class);
+    /** GT6 {@code TagData} set: processing and compound contracts carried from {@code MT.java}. */
+    private final Set<GregTechTags.Tag> tags = new LinkedHashSet<>();
     private final Set<GTMaterial> reRegistrations = new HashSet<>();
     private final Set<GTMaterial> aliasesToThis = new HashSet<>();
     private GTMaterial targetRegistration;
@@ -208,6 +212,24 @@ public final class GTMaterial {
 
     public Set<MaterialProperty> getProperties() {
         return Collections.unmodifiableSet(properties);
+    }
+
+    public Set<GregTechTags.Tag> getTags() {
+        return Collections.unmodifiableSet(tags);
+    }
+
+    /** Adds GT6 {@code TagData} contracts; see {@code GregTechTags} for the id-stable constants. */
+    public GTMaterial tag(GregTechTags.Tag... values) {
+        if (values != null) {
+            for (GregTechTags.Tag value : values) {
+                if (value != null) tags.add(value);
+            }
+        }
+        return this;
+    }
+
+    public boolean hasTag(GregTechTags.Tag tag) {
+        return tags.contains(tag);
     }
 
     public Set<GTMaterial> getReRegistrations() {

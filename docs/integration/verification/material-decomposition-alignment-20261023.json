@@ -1,0 +1,79 @@
+{
+  "date": "2026-10-23",
+  "topic": "Generic decomposition admission, inputs, outputs and work parameters aligned with GT6 Loader_Recipes_Decomp (ALIGN-189..193)",
+  "branch": "fix/material-decomposition-alignment",
+  "base_commit": "f42ff8bae515b94ef172f4242a8c566b3734c3c9",
+  "worktree": "D:/Baobao/projects/dev/java/GregTech6CommunityEdition/GregTech6",
+  "source_roots": {
+    "original_mt": "D:/Baobao/projects/dev/java/cruciblecraft-template-1.21.1/gt6_code/gregtech6/src/main/java/gregapi/data/MT.java",
+    "original_mt_sha256": "926ac79117433c88f94db1793396fa7a6ced7e4247947a4e8e55dca8bce040b7",
+    "repository_copy": "work/gt6-ref/gregtech6/src/main/java/gregapi/data/MT.java",
+    "repository_copy_sha256": "926ac79117433c88f94db1793396fa7a6ced7e4247947a4e8e55dca8bce040b7",
+    "note": "The two MT.java copies are byte-identical; the generated tag table used the repository copy."
+  },
+  "changed_files": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/material/GTMaterial.java",
+      "sha256": "4efd8a22d0cc688976b404b561fc9753e91af51c91129ace3f4015d86be3d1d1"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/MaterialDefinitions.java",
+      "sha256": "811f43d5678c434917bbfcea997ed6f71954ee2de6ce40fa91349ecbd6d4321f"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/data/generated/MaterialProcessingTags.java",
+      "sha256": "843aaa2e26264c8318b5a9af7a51cab5f7dbd3720c8fe85621100fe2ca84fe1e"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/DecompositionRecipeLoader.java",
+      "sha256": "94a638973f5523559ffd93125f265506965a6746cb643e8e8b03154d1efdf21f"
+    },
+    {
+      "path": "core/src/test/java/com/gregtech/gregtech/core/MaterialBehaviorContracts.java",
+      "sha256": "c7aa2948e009d2291f1d1157fc987a982c250014b134a0417ea7ed352dfe478a"
+    },
+    {
+      "path": "tools/transpile_gt6_materials.py",
+      "sha256": "221904c12f114520fe6574cf644acbcb558cacdf8c7039fa1189bfad00e04ea2"
+    }
+  ],
+  "generation": {
+    "command": "python -I tools/transpile_gt6_materials.py --processing-only",
+    "result": "Emitted 494 material processing-tag rows",
+    "tag_counts": {
+      "DECOMPOSABLE_rows": 494,
+      "CENTRIFUGE_rows": 173,
+      "ELECTROLYSER_rows": 149
+    }
+  },
+  "validation": {
+    "environment": {
+      "gradle": "8.8",
+      "launcher_jdk": "17.0.20.1 (Eclipse Adoptium)",
+      "neoforge_toolchain_jdk": "21.0.6.7",
+      "java_home_env": "JAVA_HOME, JAVA17_HOME, JAVA21_HOME exported for the run"
+    },
+    "command": "./gradlew --no-daemon --console=plain :core:check :multiversion:1.20.1-forge:build :multiversion:1.21.1-neoforge:build",
+    "exit_code": 0,
+    "duration": "10m 48s",
+    "tasks": {
+      ":core:coreBehaviorContracts": "passed: 2809 assertions in 33 groups",
+      ":core:materialBehaviorContracts": "passed: 7966 assertions; includes the new decomposition-tag samples",
+      ":core:check": "passed",
+      ":multiversion:1.20.1-forge:build": "passed",
+      ":multiversion:1.21.1-neoforge:build": "passed",
+      ":multiversion:1.21.1-neoforge:addonApiClosureCheck": "passed: 148 API classes"
+    },
+    "log": "work/build-material-decomposition-20261023.log"
+  },
+  "not_validated": [
+    "No client, dedicated server, gameplay or saved-world run",
+    "No runtime recipe-table census; counts above are generated rows, not recipes accepted by RecipeMap.validate",
+    "No old-world migration check"
+  ],
+  "retained_differences": [
+    "Electrolyzer recipes omit the GT6 ST.tag(0) selector placeholder; the port keeps relaxed minimum inputs",
+    "One resolved fluid binding per material replaces separate liquid and gas input variants",
+    "blockDust inputs use the port's block form through GTBlocks"
+  ]
+}

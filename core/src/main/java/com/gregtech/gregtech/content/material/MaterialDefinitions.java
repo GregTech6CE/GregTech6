@@ -27,6 +27,7 @@ public final class MaterialDefinitions {
         GT6Materials.applyOreProcessing();
         MaterialModTags.apply();
         MaterialRegistryExtras.apply();
+        com.gregtech.gregtech.data.generated.MaterialProcessingTags.apply();
         MaterialCompositionData.apply();
         com.gregtech.gregtech.data.generated.MaterialDataFacts.apply();
         MaterialFormCorrections.apply();

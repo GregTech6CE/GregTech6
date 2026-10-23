@@ -1,5 +1,11 @@
 # 实现选择记录
 
+## 2026-10-23 / 通用分解按 GT6 标签准入，而不是按组成形状推断
+
+`GTMaterial` 增加 `GregTechTags.Tag` 集合（`tag` / `hasTag` / `getTags`），材料标签由 `MaterialProcessingTags` 生成表在 `MaterialDefinitions.link()` 中应用。表从原版 `MT.java` 的工厂名（`dcmp` / `cent` / `elec` 及其 gas/lqud 变体）、显式 `DECOMPOSABLE` / `CENTRIFUGE` / `ELECTROLYSER` 常量，以及 `alloySimple` / `alloyCentrifuge` / `alloyElectrolyzer` / `setAloy` / `uumAloy` 链式调用提取，并递归解析 MT 的辅助工厂；`transpile_gt6_materials.py --processing-only` 可单独重生成该表，源路径用 `GT6_MT_SOURCE` 指定。
+
+`DecompositionRecipeLoader` 改为只处理 `DECOMPOSABLE` 且带 `CENTRIFUGE` / `ELECTROLYSER` 的材料，恢复原版输入/输出/数值合同：流体输入存在时抑制固体入口；固体入口包含粉尘和 `divider % 9 == 0` 的块粉；常温以下组件走已注册流体，其余走 `mTargetPulver`；EU/t 为 `max(16, total*14/U)`，时长为 `ceil(total*292/U)`。组分解析失败时按原版丢弃该组分，不再整条跳过。选择器占位物品仍按现代配方最小输入放宽处理，见[分解合同核查](MATERIAL_DECOMPOSITION_AUDIT.md) ALIGN-189–193。
+
 ## 2026-10-23 / 附属材质形态与流体的注册命名空间
 
 附属材料的生成物品和流体改注册到 `AddonMaterials.owner` 的命名空间：多声明者取字母序最小的附属 id，`link()` 里新建的材料按 link 顺序追加。内置材料仍是 `gt6ce`；材质身份、tag、配方解析和翻译键不变。0.x 不提供旧 `gt6ce:` 物品 id 的存档重映射。流体显示物品随流体一起迁移，`FluidCatalog` 的全局路径查重保留；共享模型资源包按物品自身命名空间写 JSON，并把所有材质 owner 纳入 `getNamespaces`。

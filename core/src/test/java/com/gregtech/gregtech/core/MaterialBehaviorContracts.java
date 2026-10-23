@@ -7,6 +7,7 @@ import com.gregtech.gregtech.api.mod.ModData;
 import com.gregtech.gregtech.api.prefix.PrefixRegistry;
 import com.gregtech.gregtech.content.material.Materials;
 import com.gregtech.gregtech.data.GregTechConstants;
+import com.gregtech.gregtech.data.GregTechTags;
 import com.gregtech.gregtech.data.MaterialPrefix;
 import com.gregtech.gregtech.data.ModReferences;
 import com.gregtech.gregtech.data.generated.GT6Materials;
@@ -94,6 +95,7 @@ public final class MaterialBehaviorContracts {
         check(DEFINITIONS_SHA256.equals(MaterialCatalogSnapshot.sha256()), "Repeated init must not mutate or duplicate definitions");
         GTMaterialRegistry.postInit();
         check(POST_INIT_SHA256.equals(MaterialCatalogSnapshot.sha256()), "Full domain post-init must match the Community Edition snapshot");
+        assertDecompositionTagContracts();
         var sourceGrinding = com.gregtech.gregtech.content.recipe.ExternalOreProcessingRules.GRINDING;
         var wrought = GTMaterialRegistry.get("WroughtIron");
         var iron = GTMaterialRegistry.get("Iron");
@@ -395,6 +397,47 @@ public final class MaterialBehaviorContracts {
     private static long amountOf(List<CrucibleMaterialStack> contents, GTMaterial material) {
         return contents.stream().filter(s -> s.material == material).mapToLong(s -> s.amount).sum();
     }
+    /** MT.java processing tags, not a composition-shape heuristic, decide generic decomposition. */
+    private static void assertDecompositionTagContracts() {
+        GTMaterial alumina = GTMaterialRegistry.get("Alumina");
+        check(tagged(alumina, GregTechTags.Compounds.DECOMPOSABLE)
+                        && !tagged(alumina, GregTechTags.Processing.CENTRIFUGE)
+                        && !tagged(alumina, GregTechTags.Processing.ELECTROLYSER),
+                "MT 8008 Alumina is DECOMPOSABLE without a generic machine map");
+        GTMaterial rutile = GTMaterialRegistry.get("Rutile");
+        check(tagged(rutile, GregTechTags.Compounds.DECOMPOSABLE)
+                        && !tagged(rutile, GregTechTags.Processing.CENTRIFUGE)
+                        && !tagged(rutile, GregTechTags.Processing.ELECTROLYSER),
+                "MT 9192 Rutile has no generic electrolysis recipe");
+        GTMaterial bronze = GTMaterialRegistry.get("Bronze");
+        check(tagged(bronze, GregTechTags.Compounds.DECOMPOSABLE)
+                        && tagged(bronze, GregTechTags.Processing.CENTRIFUGE)
+                        && !tagged(bronze, GregTechTags.Processing.ELECTROLYSER),
+                "MT uumAloy grants Bronze centrifuge decomposition");
+        GTMaterial lazurite = GTMaterialRegistry.get("Lazurite");
+        check(tagged(lazurite, GregTechTags.Compounds.DECOMPOSABLE)
+                        && tagged(lazurite, GregTechTags.Processing.ELECTROLYSER)
+                        && !tagged(lazurite, GregTechTags.Processing.CENTRIFUGE),
+                "MT 1516 Lazurite grants electrolyzer decomposition");
+        GTMaterial saltWater = GTMaterialRegistry.get("Saltwater");
+        check(tagged(saltWater, GregTechTags.Compounds.DECOMPOSABLE)
+                        && tagged(saltWater, GregTechTags.Processing.ELECTROLYSER),
+                "MT 1143 SaltWater grants electrolyzer decomposition");
+        GTMaterial water = GTMaterialRegistry.get("Water");
+        check(tagged(water, GregTechTags.Compounds.DECOMPOSABLE)
+                        && !tagged(water, GregTechTags.Processing.CENTRIFUGE)
+                        && !tagged(water, GregTechTags.Processing.ELECTROLYSER),
+                "MT 1007 Water is decomposable without a generic machine map");
+        GTMaterial hydratedCoal = GTMaterialRegistry.get("HydratedCoal");
+        check(tagged(hydratedCoal, GregTechTags.Compounds.DECOMPOSABLE)
+                        && tagged(hydratedCoal, GregTechTags.Processing.CENTRIFUGE),
+                "MT mixdust helper chain grants Hydrated Coal centrifuge decomposition");
+    }
+
+    private static boolean tagged(GTMaterial material, GregTechTags.Tag tag) {
+        return material != null && material.hasTag(tag);
+    }
+
     private static void checkMobDropSourceBoundaries() {
         check(com.gregtech.gregtech.content.loot.MobDropRules.rareBound(0) == 144
                 && com.gregtech.gregtech.content.loot.MobDropRules.rareBound(3) == 135

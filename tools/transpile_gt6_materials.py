@@ -10,15 +10,20 @@ _native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
 from native_layout import native_path
 
 
+import os
 import re
 import sys
 import textwrap
-from modular_materials import write_catalog
+from modular_materials import JAVA, write_catalog
 from readable_data_names import readable_java
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SRC = ROOT.parent / "gregtech6-master/gregtech6-master/src/main/java/gregapi/data/MT.java"
+_SOURCE_CANDIDATES = (
+    ROOT / "work/gt6-ref/gregtech6/src/main/java/gregapi/data/MT.java",
+    ROOT.parent / "gregtech6-master/gregtech6-master/src/main/java/gregapi/data/MT.java",
+)
+SRC = Path(os.environ.get("GT6_MT_SOURCE") or next((p for p in _SOURCE_CANDIDATES if p.exists()), _SOURCE_CANDIDATES[-1]))
 OUT = native_path(ROOT / "src/main/java/com/gregtech/gregtech/data/generated")
 MODELS = native_path(ROOT / "src/main/resources/assets/gt6ce/models/item/material")
 TEXTURES = native_path(ROOT / "src/main/resources/assets/gt6ce/textures/item/material_icons")
@@ -1000,6 +1005,139 @@ def collect_materials(source: str) -> tuple[list[str], dict[str, tuple[str, str,
     return order, materials
 
 
+TAG_DECOMPOSABLE = "DECOMPOSABLE"
+TAG_CENTRIFUGE = "CENTRIFUGE"
+TAG_ELECTROLYSER = "ELECTROLYSER"
+TAG_TOKEN_RE = re.compile(r"\b(DECOMPOSABLE|CENTRIFUGE|ELECTROLYSER)\b")
+HELPER_BODY_RE = re.compile(
+    r"static\s+OreDictMaterial\s+(\w+)\s*\([^)]*\)\s*\{return\s+([^;]+);")
+
+
+def helper_bodies(source: str) -> dict[str, str]:
+    """Parameterized MT helper bodies; overloads share the same tag contract."""
+    return {match.group(1): match.group(2) for match in HELPER_BODY_RE.finditer(source)}
+
+
+def direct_tags(factory: str, code: str) -> set[str]:
+    """Tags granted by one factory call or helper body."""
+    code = code.split("//", 1)[0]
+    tags = set(TAG_TOKEN_RE.findall(code))
+    if factory.endswith("dcmp"):
+        tags.add(TAG_DECOMPOSABLE)
+    if factory.endswith("elec"):
+        tags.update((TAG_DECOMPOSABLE, TAG_ELECTROLYSER))
+    if factory.endswith("cent"):
+        tags.update((TAG_DECOMPOSABLE, TAG_CENTRIFUGE))
+    if factory.startswith(("alloy", "slloy", "clloy")) or factory in ALLOY_FACTORIES:
+        tags.add(TAG_DECOMPOSABLE)
+    if ".alloySimple(" in code:
+        tags.add(TAG_DECOMPOSABLE)
+    if any(call in code for call in (".alloyCentrifuge(", ".setAloy(", ".uumAloy(")):
+        tags.update((TAG_DECOMPOSABLE, TAG_CENTRIFUGE))
+    if ".alloyElectrolyzer(" in code:
+        tags.update((TAG_DECOMPOSABLE, TAG_ELECTROLYSER))
+    if TAG_CENTRIFUGE in tags or TAG_ELECTROLYSER in tags:
+        tags.add(TAG_DECOMPOSABLE)
+    return tags
+
+
+def resolve_helper_tags(name: str, bodies: dict[str, str], memo: dict[str, set[str]],
+                        seen: set[str] | None = None) -> set[str]:
+    if name in memo:
+        return memo[name]
+    seen = set() if seen is None else seen
+    if name in seen:
+        return set()
+    seen.add(name)
+    body = bodies.get(name)
+    if body is None:
+        return set()
+    tags = direct_tags(name, body)
+    base = re.match(r"\s*(\w+)\s*\(", body)
+    if base:
+        tags |= resolve_helper_tags(base.group(1), bodies, memo, seen)
+    memo[name] = tags
+    return tags
+
+
+def processing_tags_for(factory: str, full_line: str, bodies: dict[str, str],
+                        memo: dict[str, set[str]]) -> set[str]:
+    return direct_tags(factory, full_line) | resolve_helper_tags(factory, bodies, memo)
+
+
+def facade_groups(path: Path) -> dict[str, str]:
+    """Material field -> GT6Materials facade holder class."""
+    groups: dict[str, str] = {}
+    group = None
+    for line in path.read_text(encoding="utf-8").splitlines():
+        holder = re.match(r"\s*public static final class (Elements|Compounds|Ores|Stones|Woods) \{", line)
+        if holder:
+            group = holder.group(1)
+            continue
+        if group is None:
+            continue
+        field = re.match(r"\s*public static final GTMaterial (\w+)\s*=", line)
+        if field:
+            groups.setdefault(field.group(1), group)
+    return groups
+
+
+def build_processing_tags(source: str, facade: Path) -> list[str]:
+    bodies = helper_bodies(source)
+    memo: dict[str, set[str]] = {}
+    groups = facade_groups(facade)
+    per_field: dict[str, set[str]] = {}
+    for line in source.splitlines():
+        match = ASSIGN_RE.match(line)
+        if not match:
+            continue
+        field, factory = match.group(1), match.group(2)
+        per_field.setdefault(field, set()).update(processing_tags_for(factory, line, bodies, memo))
+
+    lines = [
+        "package com.gregtech.gregtech.data.generated;",
+        "",
+        "import com.gregtech.gregtech.data.GregTechTags;",
+        "",
+        "import static com.gregtech.gregtech.data.generated.GT6Materials.*;",
+        "",
+        "/**",
+        " * GT6 {@code TD.Compounds.DECOMPOSABLE} and {@code TD.Processing} map tags, extracted from",
+        " * {@code gregapi/data/MT.java}. Generated by tools/transpile_gt6_materials.py; do not edit by hand.",
+        " */",
+        "public final class MaterialProcessingTags {",
+        "    private MaterialProcessingTags() {}",
+        "",
+        "    public static void apply() {",
+    ]
+    emitted = 0
+    for field in sorted(per_field, key=lambda name: (groups.get(name, "~"), name)):
+        group = groups.get(field)
+        tags = per_field[field]
+        if group is None or not tags:
+            continue
+        refs: list[str] = []
+        if TAG_DECOMPOSABLE in tags:
+            refs.append("GregTechTags.Compounds.DECOMPOSABLE")
+        if TAG_CENTRIFUGE in tags:
+            refs.append("GregTechTags.Processing.CENTRIFUGE")
+        if TAG_ELECTROLYSER in tags:
+            refs.append("GregTechTags.Processing.ELECTROLYSER")
+        lines.append(f"        {group}.{field}.tag({', '.join(refs)});")
+        emitted += 1
+    lines += ["    }", "}", ""]
+    print(f"Emitted {emitted} material processing-tag rows")
+    return lines
+
+
+def write_processing_tags(source: str) -> None:
+    facade = JAVA / "data/generated/GT6Materials.java"
+    if not facade.exists():
+        raise FileNotFoundError(f"Material facade not found: {facade}")
+    dest = JAVA / "data/generated/MaterialProcessingTags.java"
+    dest.write_text("\n".join(build_processing_tags(source, facade)), encoding="utf-8")
+
+
 def infer_alias_symbol(full_line: str, symbols: dict[str, str]) -> str:
     meta = parse_metadata(full_line)
     components = meta.get("components", [])
@@ -1185,14 +1323,18 @@ def generate_material_models() -> int:
 def main() -> None:
     source = read_source()
     order, materials = collect_materials(source)
-    java, processing = split_ore_processing(generate_java(source, order, materials))
-    OUT.mkdir(parents=True, exist_ok=True)
-    out_file = OUT / "GT6Materials.java"
-    write_catalog(java)
-    (OUT / "MaterialOreProcessing.java").write_text(readable_java(processing), encoding="utf-8")
-    models = generate_material_models()
-    print(f"Parsed {len(materials)} raw entries, wrote {out_file}")
-    print(f"Created {models} shared material model JSON files")
+    processing_only = "--processing-only" in sys.argv
+    if not processing_only:
+        java, processing = split_ore_processing(generate_java(source, order, materials))
+        OUT.mkdir(parents=True, exist_ok=True)
+        out_file = OUT / "GT6Materials.java"
+        write_catalog(java)
+        (OUT / "MaterialOreProcessing.java").write_text(readable_java(processing), encoding="utf-8")
+        models = generate_material_models()
+        print(f"Parsed {len(materials)} raw entries, wrote {out_file}")
+        print(f"Created {models} shared material model JSON files")
+    write_processing_tags(source)
+    print(f"Source: {SRC}")
 
 
 if __name__ == "__main__":
