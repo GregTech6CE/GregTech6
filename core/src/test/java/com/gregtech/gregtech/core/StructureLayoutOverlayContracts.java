@@ -76,6 +76,17 @@ public final class StructureLayoutOverlayContracts {
         check(predicates.cells().get(0).match() instanceof CellMatch.AnyFluid, "any fluid");
         check(predicates.cells().get(1).match().toString().equals("anyfluid#minecraft:water"), "fluid tag");
         check(predicates.cells().get(2).match() instanceof CellMatch.AnyOpaque, "any opaque");
+        var alternatives = StructureLayoutDocuments.parse("scriptpress", """
+                {"cells":[{"right":1,"up":0,"back":0,"match":["steel_wall","implosion_compressor_wall"],"role":"casing"}]}""");
+        check(alternatives.cells().get(0).match() instanceof CellMatch.OneOf, "one-of match");
+        check(StructureLayoutDocuments.canonical(alternatives).contains("[\"steel_wall\",\"implosion_compressor_wall\"]"),
+                "one-of canonical array");
+        check(StructureLayoutDocuments.parse("scriptpress", StructureLayoutDocuments.canonical(alternatives)).equals(alternatives),
+                "one-of round trip");
+        var sharedAlternatives = AddonMachines.sharedLayout("test", alternatives);
+        check(sharedAlternatives.cells().get(0).alternatives().size() == 1
+                && sharedAlternatives.cells().get(0).alternatives().get(0).part() == 18023,
+                "shared layout keeps the alternative part");
         check(StructureLayoutDocuments.parse("scriptpress", StructureLayoutDocuments.canonical(predicates))
                 .equals(predicates), "predicate round trip");
         expectThrows(IllegalArgumentException.class, () -> StructureLayoutDocuments.parse("scriptpress",
@@ -98,6 +109,9 @@ public final class StructureLayoutOverlayContracts {
                         .cell(1, 0, 0, CellMatch.anyOpaque(), StructureRole.CASING).build())
                 .build();
         check(built.repeats().get(0).step() == -1, "builder repeat");
+        var longRepeat = LayoutRepeat.builder("drill", 1, 1, 384)
+                .cell(1, 0, 0, CellMatch.anyOpaque(), StructureRole.CASING).build();
+        check(longRepeat.max() == 384, "a repeat may exceed the old 64-copy cap");
         check(sharedRepeat.repeats().size() == 1 && sharedRepeat.cells().size() == 1, "shared repeat");
         check(SharedLargeMachineLayouts.cells("repeatpress").size() == 2, "repeat min expansion");
         System.out.println("structure layout overlay passed " + assertions);

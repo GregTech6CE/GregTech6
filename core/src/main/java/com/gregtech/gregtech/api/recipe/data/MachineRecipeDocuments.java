@@ -44,7 +44,7 @@ public final class MachineRecipeDocuments {
                 requiredLong(json, MachineRecipeFields.DURATION),
                 optionalLong(json, MachineRecipeFields.SPECIAL));
         for (var input : spec.itemInputs()) if (input.count() < 1) throw new IllegalArgumentException("count");
-        for (var input : spec.fluidInputs()) if (input.amount() < 1) throw new IllegalArgumentException("amount");
+        for (var input : spec.fluidInputs()) if (input.amount() < 0) throw new IllegalArgumentException("amount");
         for (var output : spec.itemOutputs()) {
             if (output.count() < 1) throw new IllegalArgumentException("count");
             if (output.chance() < 1) throw new IllegalArgumentException("chance");
@@ -116,6 +116,7 @@ public final class MachineRecipeDocuments {
             var fluid = requiredString(element, MachineRecipeFields.FLUID);
             checkId(fluid, MachineRecipeFields.FLUID);
             long amount = addition ? requiredLong(element, MachineRecipeFields.AMOUNT) : optionalAmount(element);
+            if (amount < 0) throw new IllegalArgumentException("amount");
             if (amount > MachineRecipeFields.MAX_AMOUNT) throw new IllegalArgumentException("amount");
             out.add(new FluidComponent(fluid, amount));
         }

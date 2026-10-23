@@ -21,9 +21,16 @@ public enum PrefixCondition {
     /** Does not carry the GregTech food flag. */
     NOT_FOOD,
     /** Not raw, cooked or rotten meat. */
-    NOT_MEAT;
+    NOT_MEAT,
+    /** The material is a metal. */
+    METAL,
+    /** The material can be molten ({@code MOLTEN}, or the {@code MELTING} flag set earlier). */
+    MOLTEN,
+    /** The material is an alloy. */
+    ALLOY;
 
     public boolean positive() {
-        return this == HAS_TOOL_STATS || this == SMITHABLE;
+        return this == HAS_TOOL_STATS || this == SMITHABLE
+                || this == METAL || this == MOLTEN || this == ALLOY;
     }
 }

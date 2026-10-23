@@ -292,9 +292,18 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
     private boolean matchesCell(LargeMachineLayouts.Cell cell,BlockPos pos,net.minecraft.world.level.block.Block[] ovenCoil) {
         if(!level.hasChunkAt(pos))return false;
         if(cell.role()==MultiblockLayout.Role.AIR)return level.isEmptyBlock(pos);
-        if(cell.plainBlock())return cell.matches(level,pos,level.getBlockState(pos));
-        var expected=cell.block();
-        if(cell.part()==18042 && "largeoven".equals(spec().machineName())) {
+        if(matchesChoice(cell,cell.part(),cell.plain(),pos,ovenCoil))return true;
+        for(var alternative:cell.alternatives()) {
+            var choice = new LargeMachineLayouts.Cell(cell.right(),cell.up(),cell.back(),alternative.part(),
+                    cell.role(),alternative.plain(),cell.design(),java.util.List.of());
+            if(matchesChoice(choice,alternative.part(),alternative.plain(),pos,ovenCoil))return true;
+        }
+        return false;
+    }
+    private boolean matchesChoice(LargeMachineLayouts.Cell cell,int part,String plain,BlockPos pos,net.minecraft.world.level.block.Block[] ovenCoil) {
+        if(plain!=null)return LargeMachineLayouts.matchesPlain(level,pos,plain);
+        var expected=com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(part);
+        if(part==18042 && "largeoven".equals(spec().machineName())) {
             if(ovenCoil[0]==null) {
                 ovenCoil[0]=level.getBlockState(pos).getBlock();
                 if(ovenCoil[0]!=expected&&ovenCoil[0]!=com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(18043))return false;
