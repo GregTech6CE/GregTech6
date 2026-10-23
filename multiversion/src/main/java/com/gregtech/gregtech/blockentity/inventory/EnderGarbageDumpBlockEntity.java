@@ -144,6 +144,14 @@ public class EnderGarbageDumpBlockEntity extends BlockEntity implements MenuProv
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory playerInv, Player player) {
-        return new GarbageDumpContainerMenu(containerId, playerInv, view);
+        return new GarbageDumpContainerMenu(containerId, playerInv, view) {
+            @Override
+            public boolean stillValid(Player player) {
+                return !isRemoved() && level != null && player.level() == level
+                        && level.getBlockEntity(worldPosition) == EnderGarbageDumpBlockEntity.this
+                        && player.distanceToSqr(worldPosition.getX() + .5,
+                                worldPosition.getY() + .5, worldPosition.getZ() + .5) <= 64;
+            }
+        };
     }
 }

@@ -12,6 +12,16 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'reactorcapacityordertests.fluidsensitivefillpreservesdefaultandmapcontracts',
+    'reactorcapacityordertests.reactorsteamexpansioncommitswholebatchesandsurvivessaveload',
+    'reactorcapacityordertests.reactorexportsoldhotcoolantbeforequeuedcoolingexactlyonce',
+    'reactorcapacityordertests.blockedreactoroutputsstilldestroyrodswithoutconsumingcoolant',
+    'worldgenwritecontracttests.nativeoriginwoodclassification',
+    'worldgenwritecontracttests.waterfaultinjectionpreservessurfacelevels',
+    'worldgenwritecontracttests.pitfaultinjectionpreservesattemptdepth',
+    'garbagemenuvaliditytests.garbagebinmenurequireslivenearbyowner',
+    'garbagemenuvaliditytests.garbagerecyclermenurequireslivenearbyowner',
+
     'handheldmetertests.electrometerreadsacceptedwirepowerthroughregistereditem',
     'handheldmetertests.tachometerreadsrealaxlestartuptransfer',
     'handheldmetertests.tachometerreportsgearboxsidesandtransferredpower',

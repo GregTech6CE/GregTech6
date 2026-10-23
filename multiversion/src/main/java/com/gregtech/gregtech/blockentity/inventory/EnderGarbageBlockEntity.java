@@ -79,7 +79,15 @@ public class EnderGarbageBlockEntity extends BlockEntity implements MenuProvider
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory playerInv, Player player) {
-        return new HopperContainerMenu(GTMenuTypes.forSlotCount(9), containerId, playerInv, inventory);
+        return new HopperContainerMenu(GTMenuTypes.forSlotCount(9), containerId, playerInv, inventory) {
+            @Override
+            public boolean stillValid(Player player) {
+                return !isRemoved() && level != null && player.level() == level
+                        && level.getBlockEntity(worldPosition) == EnderGarbageBlockEntity.this
+                        && player.distanceToSqr(worldPosition.getX() + .5,
+                                worldPosition.getY() + .5, worldPosition.getZ() + .5) <= 64;
+            }
+        };
     }
 
     // ── automation: insert only; fluids are voided straight into the dump ─
