@@ -12,6 +12,17 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'machineioreservationtests.distinctfluidreservationsblockstartwithoutconsuminginputs',
+    'machineioreservationtests.fluidreservationsmergesplitandrespectfullidentity',
+    'machineioreservationtests.activeiteminputrespectsownwhitelistandblacklist',
+    'machineioreservationtests.activeitemoutputandairejectionrespectownfilter',
+    'reciperemaindertests.registered_machining_remainders_and_blocking',
+    'reciperemaindertests.pulverized_remainder_ratios_and_floor',
+    'toolplacementtransactiontests.buildersixfacescommitexactlyonce',
+    'toolplacementtransactiontests.builderusesheadqualityandhitcoordinates',
+    'toolplacementtransactiontests.buildercancellationrollsbackworldstockandwear',
+    'toolplacementtransactiontests.drilltorchcancellationandcreativepreserveinventory',
+
     'bumblelifecycleissuetests.ordinarylifecyclepromotesloneprincess',
     'bumblelifecycleissuetests.advancedlifecyclepromotesloneprincess',
     'bumblelifecycleissuetests.deathclearsoldbeesbutpreservesunrelateditems',

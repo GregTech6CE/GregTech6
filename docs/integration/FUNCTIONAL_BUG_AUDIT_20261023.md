@@ -36,3 +36,18 @@ No broad fluid movement port; retain previously approved gas adaptation. No spec
 Issues65 (structure shape materials),68 (water assimilation/expansion) and69 (Xaero coloring) remain distinct open work; a map fix cannot prove terrain assimilation fixed. Earlier closed issues remain based on their earlier recorded evidence.
 
 Next passes cover recipes/material processing, remaining machine/transport transactions, covers/logistics, tools/plants/mobs, world generation, rendering/integration, and disk/client lifecycle boundaries. Cumulative ALIGN identifiers are not a count of unresolved bugs. Deliberate modern adaptations and missing features are tracked separately from confirmed defects.
+
+## Second verification batch: machine I/O, machining remains, tool placement
+
+This extends the first batch rather than marking the full coverage matrix complete.
+
+- Basic machine output planning now reserves both capacity and fluid identity in each initially empty tank. Previously different fluid outputs could reserve the same tank and consume inputs before becoming blocked; queued outputs were retained, so this is not described as material loss. Matching/split output reservations and component/tag identity are tested separately.
+- Active machine item input/output and air ejection use the same own-face cover policy as passive sided capabilities. Fluid auto-output remains unchanged because original source deliberately uses its raw tank path.
+- Existing lathe/cutter rows whose original handlers enable remains now return the exact pulverization target and quantized remainder. No new generic roller recipes or material table changes. Tests inspect actual registered rows, independent source-unit anchors, and the real cutter admission/flush with blocked remainder output.
+- Ordinary builder wand uses the clicked face/local hit coordinates and assembled head material quality, not a fixed upward placement/reach. Source-stock placement goes through the loader transaction so cancellation restores the world without consuming stock or tool wear.
+- Mining-drill torch placement similarly commits stock only after its own cancellable placement transaction succeeds. Creative stock/held drill identity/charge are preserved; placement listeners are removed after tests.
+- The first run additionally discovered that registered manual/button selector covers were absent from CoverItems admission. Those two exact IDs are now recognized; the strict USB/HDD test retains actual selected-file reads and reset behavior for all three selector types.
+
+Required selected native cases now total Forge29 and NeoForge25, including the earlier regressions. Ten new cases exercise real registered machines/items, current private transaction methods where explicitly stated, native server interactions and loader placement events. Fixture-driven transaction calls are not full natural production-chain evidence. Native compilation and execution are required by CI for the exact published commit; no pass is inferred from source inspection.
+
+Source chains include original `MultiTileEntityBasicMachine.canOutput/doInputItems/doOutputItems`, `RecipeMapHandlerPrefix` and enabled `Loader_Recipes_Handlers` rows, `OM.pulverize`, ordinary `Behavior_Builderwand` (not its Thaumcraft special branch), and registered drilling Torch behavior. Placement wrappers were checked against official Forge47.4.20 sources and NeoForge21.1.243 sources/userdev patches. Full optional-plugin protection compatibility remains outside these native cancellation tests.
