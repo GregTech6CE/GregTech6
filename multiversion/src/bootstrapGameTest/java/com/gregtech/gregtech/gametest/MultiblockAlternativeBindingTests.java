@@ -65,6 +65,29 @@ public final class MultiblockAlternativeBindingTests {
     }
 
     private static void exercise(GameTestHelper h, boolean repeated) {
+        // This isolated declaration is converted after registry bootstrap, so its plain block
+        // did not participate in PlainStructureBlocks.resolve(). Supply that exact resolution
+        // while the fixture runs, then restore the registry-boundary cache even on assertion failure.
+        final java.util.Map<String, net.minecraft.world.level.block.Block> resolved;
+        try {
+            var field = com.gregtech.gregtech.content.multiblock.PlainStructureBlocks.class.getDeclaredField("RESOLVED");
+            field.setAccessible(true);
+            @SuppressWarnings("unchecked")
+            var cache = (java.util.Map<String, net.minecraft.world.level.block.Block>) field.get(null);
+            resolved = cache;
+        } catch (ReflectiveOperationException failure) {
+            throw new AssertionError("Plain block fixture resolution unavailable", failure);
+        }
+        var previous = resolved.put("minecraft:stone", Blocks.STONE);
+        try {
+            exerciseResolved(h, repeated);
+        } finally {
+            if (previous == null) resolved.remove("minecraft:stone");
+            else resolved.put("minecraft:stone", previous);
+        }
+    }
+
+    private static void exerciseResolved(GameTestHelper h, boolean repeated) {
         for (boolean plainFirst : new boolean[]{false, true}) {
             var machine = controller(h, layout(plainFirst, repeated));
             var origin = machine.getBlockPos();
