@@ -131,12 +131,40 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
             if(other.getBlock() instanceof SignalWireBlock){
                 next=next.setValue(ElectricWireBlock.propFor(side),true);
                 level.setBlockAndUpdate(neighbor,other.setValue(ElectricWireBlock.propFor(side.getOpposite()),true));
-            } else if(other.isSignalSource()) {
-                // Conductors such as stone still carry strong power, but only a wire cutter opens that port.
+            } else if(other.isSignalSource() || level.getBlockEntity(neighbor) instanceof com.gregtech.gregtech.api.signal.GtSignalSource) {
+                // A block-level source, or a block entity implementing GtSignalSource without
+                // overriding isSignalSource(). Conductors such as stone still only open by wire cutter.
                 next=next.setValue(ElectricWireBlock.propFor(side),true);
             }
         }
         level.setBlockAndUpdate(pos,next);
+    }
+
+    /**
+     * A neighbour placed, replaced or removed after this wire: connect to a wire or signal source,
+     * and drop a connection whose neighbour was destroyed. A manual wire-cutter port to a
+     * non-source block stays open; only removal clears it.
+     */
+    @Override public void neighborChanged(BlockState state,Level level,BlockPos pos,Block neighbor,BlockPos neighborPos,boolean moving){
+        super.neighborChanged(state,level,pos,neighbor,neighborPos,moving);
+        if(level.isClientSide||!level.hasChunkAt(neighborPos))return;
+        var side=Direction.fromDelta(neighborPos.getX()-pos.getX(),neighborPos.getY()-pos.getY(),neighborPos.getZ()-pos.getZ());
+        if(side==null)return;
+        var property=ElectricWireBlock.propFor(side);
+        var other=level.getBlockState(neighborPos);
+        boolean source=other.getBlock() instanceof SignalWireBlock||other.isSignalSource()
+                ||level.getBlockEntity(neighborPos) instanceof com.gregtech.gregtech.api.signal.GtSignalSource;
+        if(source){
+            if(!state.getValue(property)&&com.gregtech.gregtech.content.cover.CoverConnections.canConnect(level,pos,side)){
+                level.setBlockAndUpdate(pos,state.setValue(property,true));
+                if(other.getBlock() instanceof SignalWireBlock){
+                    var opposite=ElectricWireBlock.propFor(side.getOpposite());
+                    if(!other.getValue(opposite))level.setBlockAndUpdate(neighborPos,other.setValue(opposite,true));
+                }
+            }
+        } else if(state.getValue(property)&&other.isAir()){
+            level.setBlockAndUpdate(pos,state.setValue(property,false));
+        }
     }
     @Override public boolean isSignalSource(BlockState state){return true;}
     @Override public boolean canConnectRedstone(BlockState state,BlockGetter level,BlockPos pos,Direction side){

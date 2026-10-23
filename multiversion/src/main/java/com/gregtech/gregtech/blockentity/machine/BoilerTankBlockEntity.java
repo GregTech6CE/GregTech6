@@ -45,7 +45,7 @@ import java.util.Random;
  * — both explode (GT6 hazard). Non-distilled water causes calcification (efficiency
  * loss); chisel it off at low pressure. Magnifying glass inspects calcification.</p>
  */
-public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements com.gregtech.gregtech.api.sensor.CompressionSensorSource {
+public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements com.gregtech.gregtech.api.sensor.CompressionSensorSource, com.gregtech.gregtech.api.machine.HeatHandler {
 
     private BoilerSpec spec;
     private long heat;
@@ -81,6 +81,47 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements com.gr
     @Override public long gibblMaximum(int side) { return steamTank.getCapacity(); }
     public BoilerSpec spec() { return spec; }
     public long storedHeat() { return heat; }
+
+    // ── HeatHandler: direct HU access that keeps the boiler's own overheat rule ──────────────
+
+    @Override public long heatStored() { return heat; }
+    @Override public long heatCapacity() { return spec == null ? 0 : spec.heatCapacity(); }
+    /** A boiler stores HU only; its tile temperature is the environment while heat is buffered. */
+    @Override public long temperatureK() { return com.gregtech.gregtech.data.GregTechConstants.DEF_ENV_TEMP; }
+
+    @Override public long insertHeat(long signedHU, boolean simulate) {
+        if (signedHU == 0 || spec == null) return 0;
+        if (signedHU > 0) {
+            long accepted = heat < 0 ? signedHU : Math.min(signedHU, Long.MAX_VALUE - heat);
+            if (!simulate && accepted > 0) {
+                heat += accepted;
+                cooldown = Math.max(cooldown, 32);
+                setChanged();
+            }
+            return accepted;
+        }
+        if (signedHU == Long.MIN_VALUE) return 0;
+        long removed = Math.min(Math.max(0, heat), -signedHU);
+        if (!simulate && removed > 0) {
+            heat -= removed;
+            setChanged();
+        }
+        return -removed;
+    }
+
+    @Override public long extractHeat(long signedHU, boolean simulate) {
+        if (signedHU == 0 || spec == null) return 0;
+        if (signedHU > 0) {
+            long removed = Math.min(Math.max(0, heat), signedHU);
+            if (!simulate && removed > 0) {
+                heat -= removed;
+                setChanged();
+            }
+            return removed;
+        }
+        if (signedHU == Long.MIN_VALUE) return 0;
+        return insertHeat(-signedHU, simulate);
+    }
     @Nullable public FluidTankGT waterTank() { return waterTank; }
     @Nullable public FluidTankGT steamTank() { return steamTank; }
     public short efficiency() { return efficiency; }

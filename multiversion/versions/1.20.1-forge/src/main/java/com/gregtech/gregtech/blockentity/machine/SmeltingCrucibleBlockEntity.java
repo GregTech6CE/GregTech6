@@ -66,7 +66,8 @@ import java.util.List;
  * <p>
  * 16 material units of internal storage, one top cache slot, HU input on the bottom face.
  */
-public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements ITileEntityCrucible, com.gregtech.gregtech.api.fluid.MoltenMaterialStorage {
+public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements ITileEntityCrucible, com.gregtech.gregtech.api.fluid.MoltenMaterialStorage,
+        com.gregtech.gregtech.api.machine.HeatHandler {
     public static final long MAX_AMOUNT = 16L * GTValues.U;
     public static final int CACHE_SLOT = 0;
     public static final int CACHE_SLOT_LIMIT = 64;
@@ -160,6 +161,37 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
 
     public long getEnergyBuffer() {
         return energyBuffer;
+    }
+
+    // ── HeatHandler: direct HU access into the signed buffer; the tick still owns conversion ──
+
+    @Override public long heatStored() { return energyBuffer; }
+    /** The crucible buffer is a long with no rated ceiling. */
+    @Override public long heatCapacity() { return Long.MAX_VALUE; }
+    @Override public long temperatureK() { return temperature; }
+
+    @Override public long insertHeat(long signedHU, boolean simulate) {
+        if (signedHU == 0) return 0;
+        if (signedHU > 0) {
+            long accepted = energyBuffer < 0 ? signedHU : Math.min(signedHU, Long.MAX_VALUE - energyBuffer);
+            if (!simulate && accepted > 0) addHeatEnergy(accepted);
+            return accepted;
+        }
+        if (signedHU == Long.MIN_VALUE) return 0;
+        long removed = Math.min(Math.max(0, energyBuffer), -signedHU);
+        if (!simulate && removed > 0) removeHeatEnergy(removed);
+        return -removed;
+    }
+
+    @Override public long extractHeat(long signedHU, boolean simulate) {
+        if (signedHU == 0) return 0;
+        if (signedHU > 0) {
+            long removed = Math.min(Math.max(0, energyBuffer), signedHU);
+            if (!simulate && removed > 0) removeHeatEnergy(removed);
+            return removed;
+        }
+        if (signedHU == Long.MIN_VALUE) return 0;
+        return insertHeat(-signedHU, simulate);
     }
 
     public List<CrucibleMaterialStack> getContentView() {

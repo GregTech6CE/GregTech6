@@ -247,9 +247,19 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
 //? if >=1.21.1 {
     /*@Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return switch(originalUse(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME,CONSUME_PARTIAL->net.minecraft.world.ItemInteractionResult.CONSUME;case FAIL->net.minecraft.world.ItemInteractionResult.FAIL;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
     @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return originalUse(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
-    @Override public void setPlacedBy(Level level,BlockPos pos,BlockState state,net.minecraft.world.entity.LivingEntity user,ItemStack stack){super.setPlacedBy(level,pos,state,user,stack);if(level.getBlockEntity(pos) instanceof ItemPipeBlockEntity pipe)pipe.autoConnectOnPlace(consumePlacementFace());}
 *///?} else {
 //?}
+
+    /** The block entity exists by now: connect the clicked face and everything already adjacent. */
+    @Override
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state,
+                            net.minecraft.world.entity.LivingEntity placer, ItemStack stack) {
+        super.setPlacedBy(level, pos, state, placer, stack);
+        if (level.isClientSide) return;
+        if (level.getBlockEntity(pos) instanceof ItemPipeBlockEntity pipe) {
+            pipe.autoConnectOnPlace(consumePlacementFace());
+        }
+    }
     private void printDebug(Player player, ItemPipeBlockEntity pipeEntity) {
         int itemCount = 0;
         for (int i = 0; i < pipeEntity.getSlots(); i++) {
@@ -264,10 +274,32 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
     @Override
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
         if (level.isClientSide || oldState.is(state.getBlock())) return;
-        Direction face = consumePlacementFace();
-        BlockEntity be = level.getBlockEntity(pos);
-        if (be instanceof ItemPipeBlockEntity pipe) {
-            pipe.autoConnectOnPlace(face);
+        // onPlace runs before the block entity is registered, so it cannot read this pipe's own
+        // state here. The placed-item path finishes in setPlacedBy; other paths reconnect on the
+        // first server tick.
+        if (level.getBlockEntity(pos) instanceof ItemPipeBlockEntity pipe) {
+            pipe.autoConnectOnPlace(null);
+        }
+    }
+
+    /** Repair a connection toward a neighbour that changed after this pipe was placed. */
+    @Override
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighbor,
+                                BlockPos neighborPos, boolean isMoving) {
+        super.neighborChanged(state, level, pos, neighbor, neighborPos, isMoving);
+        if (level.isClientSide) return;
+        Direction side = Direction.fromDelta(neighborPos.getX() - pos.getX(),
+                neighborPos.getY() - pos.getY(), neighborPos.getZ() - pos.getZ());
+        if (side != null && level.getBlockEntity(pos) instanceof ItemPipeBlockEntity pipe) {
+            pipe.tryConnectTo(side);
+        }
+    }
+
+    /** A wrench toggled one face: remember a manual disconnect so auto-connect leaves it alone. */
+    @Override
+    public void connectionToggled(Level level, BlockPos pos, Direction side, boolean connected) {
+        if (level.getBlockEntity(pos) instanceof ItemPipeBlockEntity pipe) {
+            pipe.setFaceManuallyDisconnected(side, !connected);
         }
     }
 
