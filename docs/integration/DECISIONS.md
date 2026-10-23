@@ -2086,3 +2086,12 @@ Sensors null-NBT源登记可合法携带REV，生成器只为这组解析，避�
 - 有 `pendingOutputs` 但配方不可解析时，保留保存值并钳制（`mMinEnergy ∈ [0, inputMaximum()]`，`mMaxProgress ∈ [0, Long.MAX_VALUE/2]`）。这与卡片表格的「否则清零」不同：中途存档的任务若把 `mMinEnergy` 清零，剩余工作会免费完成；保留并钳制不会放宽成本，也不会丢掉已滚出的产物。
 - 该收口同时封掉 `/data merge block` 修改 `gt.min_energy`、`gt.parallel`、`gt.progress` 等字段的路径；不改 spec、不改配方平衡。
 - 验证：新增 `gregtech_nbt_sanitize` 命名空间的 `MachineNbtSanitizeTests` 两项（在制任务篡改、空闲篡改），Forge 与 NeoForge 各 2/2 required tests passed；`core:check`、两端 `compileJava`、`compileBootstrapGameTestJava`、`addonApiClosureCheck` 通过（各 146 个 API 类）。未做客户端玩法、专服、存档重启验证。
+
+## 2026-10-23 / gt6-logic 批次 7 第 9b 条：内置机器调参 API
+
+- 新增 `MachineTuning` 和 `MachineTuningContributor`（`core/src/api`，ServiceLoader，服务文件 `META-INF/services/com.gregtech.gregtech.api.addon.MachineTuningContributor`）。`MachineTunings.collect()` 在 `BasicMachineDefinitions.specifications()` 中、`AddonMachineRuntime.install()` 之后、内置目录转成 spec 之前运行。
+- 键是 `machineName + tier`，与 `BasicMachineOriginalParams.find` 同键；只覆盖 `parallelLimit`、`energyIn`、`energyInMin`、`energyInMax`、`processingEfficiency`、`constantEnergy`、`cheapOverclocking`，其余字段保持内置值。
+- 冲突按字段判：同一 `(machineName, tier, field)` 被两个附属写成不同值时启动失败，并列出双方 addonId、字段和两个值；值相同则合并；同一附属重复声明同一字段失败。没有命中任何内置行的键也启动失败。
+- 合并后的值重新走 `BasicMachineSpec` 规范构造器；额外限制 `parallelLimit <= 65536` 和 `energyIn × parallelLimit` 不溢出 long。调过 `cheapOverclocking` 会把它标成 declared，调过能量范围会把 `energyRangeDeclared` 置真。
+- 补丁只在内存中，每次启动重算，不写存档；移除附属后恢复内置值。启动日志逐字段打印 `[gt6ce] tuning: ...`，并写出 `config/gt6ce-tuning.txt`。v1 不提供数据包形式。
+- 验证：`AddonDeclarationTypeContracts` 增加 22 条断言（记录校验、合并、冲突、上限、溢出、报告顺序）；新增 `gregtech_tuning` 命名空间的 `MachineTuningTests`，Forge 与 NeoForge 各 1/1 required tests passed；`core:check`、两端 `compileJava`、`compileBootstrapGameTestJava`、`addonApiClosureCheck` 通过（core 111、两端 148 个 API 类）。未做客户端玩法、专服、存档重启验证。

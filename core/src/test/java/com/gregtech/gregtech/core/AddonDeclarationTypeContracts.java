@@ -13,6 +13,8 @@ import com.gregtech.gregtech.api.addon.LayoutPart;
 import com.gregtech.gregtech.api.addon.MachineCasing;
 import com.gregtech.gregtech.api.addon.MachineFace;
 import com.gregtech.gregtech.api.addon.MachineIo;
+import com.gregtech.gregtech.api.addon.MachineTuning;
+import com.gregtech.gregtech.api.addon.MachineTuningRules;
 import com.gregtech.gregtech.api.addon.PartEnergyRules;
 import com.gregtech.gregtech.api.addon.PartSlotRules;
 import com.gregtech.gregtech.api.addon.PartSlots;
@@ -45,6 +47,7 @@ public final class AddonDeclarationTypeContracts {
         mainEnergy();
         functionalParts();
         partAdditions();
+        machineTuning();
         System.out.println("passed " + assertions);
     }
 
@@ -639,6 +642,56 @@ public final class AddonDeclarationTypeContracts {
 
     private static BehaviorMachine behavior(MachineCasing casing, EnergyInput energy) {
         return BehaviorMachine.builder(casing).energy(energy).gui(GUI).build();
+    }
+
+    private static void machineTuning() {
+        var tuning = new MachineTuning("crusher", 1, 4, 32L, 16L, 64L, 5000, false, true);
+        check(tuning.parallelLimit() == 4 && tuning.energyIn() == 32L && tuning.energyInMin() == 16L
+                && tuning.energyInMax() == 64L && tuning.processingEfficiency() == 5000
+                && !tuning.constantEnergy() && tuning.cheapOverclocking(), "machine tuning keeps declared fields");
+        fails(() -> new MachineTuning("Crusher", 1, 4, null, null, null, null, null, null), "machine name");
+        fails(() -> new MachineTuning("crusher", 0, 4, null, null, null, null, null, null), "tier");
+        fails(() -> new MachineTuning("crusher", 1, null, null, null, null, null, null, null), "Empty");
+        fails(() -> new MachineTuning("crusher", 1, 0, null, null, null, null, null, null), "parallel");
+        fails(() -> new MachineTuning("crusher", 1, null, -1L, null, null, null, null, null), "energy");
+        fails(() -> new MachineTuning("crusher", 1, null, null, 64L, 32L, null, null, null), "range");
+        fails(() -> new MachineTuning("crusher", 1, null, null, null, null, 0, null, null), "efficiency");
+
+        var key = new MachineTuningRules.Key("crusher", 1);
+        var merged = MachineTuningRules.merge(List.of(
+                new MachineTuningRules.Declared("aa",
+                        new MachineTuning("crusher", 1, 4, 32L, null, null, null, null, null)),
+                new MachineTuningRules.Declared("bb",
+                        new MachineTuning("crusher", 1, 4, null, 16L, 64L, null, null, true))));
+        var row = merged.get(key);
+        check(row != null && row.tuning().parallelLimit() == 4 && row.tuning().energyIn() == 32L
+                && row.tuning().energyInMin() == 16L && row.tuning().energyInMax() == 64L
+                && Boolean.TRUE.equals(row.tuning().cheapOverclocking())
+                && "aa".equals(row.owners().get("parallelLimit"))
+                && "bb".equals(row.owners().get("energyInMin")),
+                "machine tuning merges fields from two addons");
+        check(MachineTuningRules.describe(merged).equals(List.of(
+                "crusher/T1 parallelLimit=4 (aa)", "crusher/T1 energyIn=32 (aa)",
+                "crusher/T1 energyInMin=16 (bb)", "crusher/T1 energyInMax=64 (bb)",
+                "crusher/T1 cheapOverclocking=true (bb)")), "machine tuning report is deterministic");
+        fails(() -> MachineTuningRules.merge(List.of(
+                new MachineTuningRules.Declared("aa",
+                        new MachineTuning("crusher", 1, 4, null, null, null, null, null, null)),
+                new MachineTuningRules.Declared("bb",
+                        new MachineTuning("crusher", 1, 8, null, null, null, null, null, null)))),
+                IllegalStateException.class, "aa=4, bb=8");
+        fails(() -> MachineTuningRules.merge(List.of(
+                new MachineTuningRules.Declared("aa",
+                        new MachineTuning("crusher", 1, 4, null, null, null, null, null, null)),
+                new MachineTuningRules.Declared("aa",
+                        new MachineTuning("crusher", 1, 4, null, null, null, null, null, null)))),
+                IllegalStateException.class, "twice");
+        fails(() -> MachineTuningRules.merge(List.of(
+                new MachineTuningRules.Declared("aa",
+                        new MachineTuning("crusher", 1, 70_000, null, null, null, null, null, null)))),
+                IllegalStateException.class, "exceeds");
+        fails(() -> MachineTuningRules.checkEffectiveValues(key, Long.MAX_VALUE, 2),
+                IllegalStateException.class, "overflows");
     }
 
     private static void check(boolean condition, String message) {
