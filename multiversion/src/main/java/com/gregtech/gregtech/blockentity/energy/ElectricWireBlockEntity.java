@@ -117,7 +117,7 @@ public class ElectricWireBlockEntity extends BlockEntity implements IEnergyCondu
         if (clickedFace != null) {
             Direction toNeighbor = clickedFace.getOpposite();
             BlockPos neighborPos = worldPosition.relative(toNeighbor);
-            BlockEntity be = level.getBlockEntity(neighborPos);
+            BlockEntity be = canConnectOnPlacement(toNeighbor) ? level.getBlockEntity(neighborPos) : null;
             if (be instanceof ElectricWireBlockEntity neighborWire) {
                 BlockState state = getBlockState();
                 BlockState newState = state.setValue(ElectricWireBlock.propFor(toNeighbor), true);
@@ -128,11 +128,19 @@ public class ElectricWireBlockEntity extends BlockEntity implements IEnergyCondu
                     level.setBlockAndUpdate(neighborPos,
                             neighborState.setValue(ElectricWireBlock.propFor(clickedFace), true));
                 }
+            } else if (be != null) {
+                var endpoint = com.gregtech.gregtech.api.energy.EnergyBlockViews.view(be);
+                if (endpoint != null && (endpoint.isEnergyAcceptingFrom(GregTechTags.Energy.EU, clickedFace, true)
+                        || endpoint.isEnergyEmittingTo(GregTechTags.Energy.EU, clickedFace, true))) {
+                    BlockState state = getBlockState();
+                    level.setBlockAndUpdate(worldPosition, state.setValue(ElectricWireBlock.propFor(toNeighbor), true));
+                }
             }
         }
 
         // Then scan all 6 sides for adjacent wires already connected toward us
         for (Direction dir : Direction.values()) {
+            if (!canConnectOnPlacement(dir)) continue;
             BlockPos neighborPos = worldPosition.relative(dir);
             BlockEntity be = level.getBlockEntity(neighborPos);
             if (!(be instanceof ElectricWireBlockEntity neighborWire)) continue;
@@ -147,6 +155,11 @@ public class ElectricWireBlockEntity extends BlockEntity implements IEnergyCondu
         }
 
         onConnectionChanged();
+    }
+
+    private boolean canConnectOnPlacement(Direction side) {
+        return level != null && level.hasChunkAt(worldPosition.relative(side))
+                && com.gregtech.gregtech.content.cover.CoverConnections.canConnect(level, worldPosition, side);
     }
 
     @Override

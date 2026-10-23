@@ -93,6 +93,7 @@ tasks.named('check').configure { dependsOn addonApiClosureCheck }
     thermalBehaviorContracts: 'ThermalBehaviorContracts',
     machineSpecBehaviorContracts: 'MachineSpecBehaviorContracts',
     machineInputContracts: 'MachineInputContracts',
+    originalMaterialFluidUnitContracts: 'OriginalMaterialFluidUnitContracts',
     packetEnergyBufferContracts: 'PacketEnergyBufferContracts',
     pumpEnergyContracts: 'PumpEnergyContracts',
     radiationConsumableContracts: 'RadiationConsumableContracts'

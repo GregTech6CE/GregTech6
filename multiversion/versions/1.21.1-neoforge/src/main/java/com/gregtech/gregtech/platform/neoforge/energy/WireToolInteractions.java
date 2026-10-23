@@ -23,8 +23,9 @@ public final class WireToolInteractions {
         var neighborPos = pos.relative(connectionSide);
         if (!player.mayBuild() || !level.mayInteract(player, pos) || !level.hasChunkAt(neighborPos) || !level.mayInteract(player,
                 neighborPos)) return true;
-        if (level.isClientSide) return true;
         boolean connect = !state.getValue(ElectricWireBlock.propFor(connectionSide));
+        if (connect && !com.gregtech.gregtech.content.cover.CoverConnections.canConnect(level, pos, connectionSide)) return true;
+        if (level.isClientSide) return true;
         if (!level.setBlockAndUpdate(pos, state.setValue(ElectricWireBlock.propFor(connectionSide), connect))) return true;
         var neighborState = level.getBlockState(neighborPos);
         if (state.getBlock() instanceof ElectricWireBlock && neighborState.getBlock() instanceof ElectricWireBlock

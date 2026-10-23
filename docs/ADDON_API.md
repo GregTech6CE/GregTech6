@@ -1023,7 +1023,7 @@ public final class MySourceBlockEntity extends BlockEntity implements GtSignalSo
 
 When a behavior machine declares `signalOutput(true)`, the shell block entity already implements `GtSignalSource`; the behavior only implements `MachineBehavior.gtSignal`. An undeclared behavior machine is never read as a source.
 
-A wire also connects when a source appears next to it after placement, and it drops that port when the source block is removed. A block entity implementing `GtSignalSource` counts as a source even when its block does not override `Block#isSignalSource()`. A port opened with a wire cutter toward a block that is not a source stays open until that neighbour is removed.
+Signal-wire ports follow the original explicit connector rules: placement attempts the clicked support face and joins compatible neighboring wires only if their facing port is already open. Use a wire cutter to open or close other faces. Implementing `GtSignalSource` makes a block entity readable through an open port even if its block does not override `Block#isSignalSource()`; it does not open unrelated or manually closed ports. Neighbor power changes and source removal preserve those port bits; the signal clears when the network next recomputes without a source. This corrects the earlier automatic source-adjacency behavior. The separate `FluidPipeConnectable` and `ItemPipeConnectable` addon opt-ins are unchanged.
 
 A block that only receives power implements `GtSignalReceiver` on its block entity, or adds its block to the `gt6ce:signal_wire_receivers` block tag. Either one keeps a strongly powered solid block from being treated as a source. A block that matches both is a receiver. The tag ships empty; add entries from the addon's datapack:
 
