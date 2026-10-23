@@ -103,6 +103,7 @@ public final class CoverItems {
                 // attached but never dispatched before, because this list did not name them.
                 || id.equals("pressure_value") || id.equals("panel_asphalt") || id.startsWith("panel_concrete") || id.startsWith("panel_wood")
                 || id.contains("machine_switch") || id.contains("selector") && id.startsWith("redstone")
+                || id.equals("manual_selector") || id.equals("button_panel_selector")
                 || id.startsWith("activity_detector") || id.equals("energy_sensor")
                 || id.equals("progress_sensor") || id.equals("redstone_emitter")
                 || id.startsWith("auto_reboot_switch") || id.equals("cover_controller");
