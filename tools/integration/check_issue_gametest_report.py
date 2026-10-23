@@ -12,6 +12,11 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'addonfluididentitytests.addonbindingkeepsbuiltinfluidregistryidentity',
+    'addonfluididentitytests.legacybuiltinfluidsavesurvivesaddonmaterialbinding',
+    'addonfluididentitytests.generatedaddonfluidsretaintheirownnamespace',
+    'itempipeshuttertests.itempipeshutterblocksnativehopperpushandpull',
+    'itempipeshuttertests.itempipeshutterupdatespreviouslyobtainedsidehandlers',
     'heatsignedextractiontests.signedextractionconservesheatacrossnativeadapters',
     'heatsignedextractiontests.signedlargeboilerextractionpreservesstructuregate',
     'fluidpipeinspectiontests.fluidpipemagnifierskipsunloadedchunksandreportsloadednetwork',

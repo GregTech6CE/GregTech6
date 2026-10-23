@@ -880,8 +880,8 @@ public class ItemPipeBlockEntity extends BlockEntity
     }
 
     /**
-     * The pre-existing per-side view, unchanged: one {@link SideAwareItemHandler} per face, which
-     * records {@code lastReceivedFrom} on a successful insert.
+     * One external view per side, retaining {@link SideAwareItemHandler} backflow bookkeeping
+     * and checking the current shutter even when a caller retains the view across cover changes.
      *
      * <p><b>Deviation from the fluid-pipe template.</b> {@code FluidPipeBlockEntity:811-812} falls back
      * to {@code handler.cast()} for an ordinary face, because on that class the no-face handler and the
@@ -898,9 +898,9 @@ public class ItemPipeBlockEntity extends BlockEntity
 //?}
         return sideCaps.computeIfAbsent(side,
 //? if >=1.21.1 {
-                /*SideAwareItemHandler::new);
+                /*ExternalSideItemHandler::new);
 *///?} else {
-                s -> LazyOptional.of(() -> new SideAwareItemHandler(s)));
+                s -> LazyOptional.of(() -> new ExternalSideItemHandler(s)));
 //?}
     }
 
@@ -1013,6 +1013,27 @@ public class ItemPipeBlockEntity extends BlockEntity
         }
     }
 
+    /** External sided views consult the live shutter, including handles acquired before attachment.
+     * Internal componentItems access deliberately retains the ungated SideAwareItemHandler. */
+    private class ExternalSideItemHandler extends SideAwareItemHandler {
+        private final Direction side;
+
+        ExternalSideItemHandler(Direction side) {
+            super(side);
+            this.side = side;
+        }
+
+        @Override
+        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            return panels != null && panels.shuttered(side) ? stack : super.insertItem(slot, stack, simulate);
+        }
+
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            return panels != null && panels.shuttered(side) ? ItemStack.EMPTY : super.extractItem(slot, amount, simulate);
+        }
+    }
+
     // ── The face-aware view the item covers need ─────────────────────────────
 
     /**
@@ -1040,7 +1061,7 @@ public class ItemPipeBlockEntity extends BlockEntity
      * bypassed the host's own intercepts — the machine's retriever does too
      * ({@code BasicMachineBlockEntity:1553-1557}).</p>
      */
-    private class FaceItemHandler extends SideAwareItemHandler {
+    private class FaceItemHandler extends ExternalSideItemHandler {
         private final Direction side;
 
         FaceItemHandler(Direction side) {
