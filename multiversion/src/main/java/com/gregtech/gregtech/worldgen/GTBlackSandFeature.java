@@ -138,7 +138,7 @@ public class GTBlackSandFeature extends Feature<NoneFeatureConfiguration> {
      * it used to be the ore block entity).
      */
     private static boolean isSediment(BlockState state) {
-        if (state.is(BlockTags.DIRT) || state.is(BlockTags.SAND)
+        if (state.is(Blocks.DIRT) || state.is(Blocks.COARSE_DIRT) || state.is(BlockTags.SAND)
                 || state.is(Blocks.GRAVEL) || state.is(Blocks.CLAY)) {
             return true;
         }

@@ -40,21 +40,11 @@ import net.minecraftforge.fluids.FluidUtil;
 public final class BottleCrateRenderer implements BlockEntityRenderer<BottleCrateBlockEntity> {
     public BottleCrateRenderer(BlockEntityRendererProvider.Context context) {}
 
-    private static FluidStack fluid(ItemStack stack) {
-        if(stack.is(Items.GLASS_BOTTLE) || stack.is(BottleItem.emptyBottle().getItem())) return FluidStack.EMPTY;
-        if(stack.is(Items.EXPERIENCE_BOTTLE)) {
-            var jump=com.gregtech.gregtech.content.food.GTDrinks.fluidForField("Potion_Jump_1");
-            if(jump!=null) return new FluidStack(jump,250);
-        }
-        if(stack.getItem() instanceof BottleItem bottle && bottle.fluid()!=null) return new FluidStack(bottle.fluid(),250);
-        return FluidUtil.getFluidContained(stack).orElse(new FluidStack(Fluids.WATER,250));
-    }
-
     @Override public void render(BottleCrateBlockEntity crate,float partial,PoseStack pose,MultiBufferSource buffers,int light,int overlay) {
         var out=buffers.getBuffer(RenderType.entityCutout(TextureAtlas.LOCATION_BLOCKS));
         for(int slot=0;slot<9;slot++) {
             var stack=crate.items().getStackInSlot(slot); if(stack.isEmpty()) continue;
-            var fluid=fluid(stack); if(fluid.isEmpty()) continue;
+            var fluid=com.gregtech.gregtech.content.food.BottleContents.resolve(stack); if(fluid.isEmpty()) continue;
             var properties=IClientFluidTypeExtensions.of(fluid.getFluid());
             var texture=properties.getStillTexture(fluid); if(texture==null) continue;
             var sprite=CrucibleRenderSprites.resolve(texture);

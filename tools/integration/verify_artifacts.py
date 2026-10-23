@@ -361,6 +361,10 @@ def main():
         targets = {'forge': args.forge, 'neoforge': args.neoforge}
     repo = Path(__file__).resolve().parents[2]
     try:
+        from integration.check_sediment_worldgen_registration import check_source as check_sediment_source, check_jar as check_sediment_jar
+        check_sediment_source(repo)
+        for path in targets.values():
+            check_sediment_jar(path)
         language = synchronize(repo)
         properties = read_properties(repo / 'gradle.properties')
         core = compiled_core_hashes(repo / 'core/build/classes/java/main', repo / 'core/build/classes/java/api')

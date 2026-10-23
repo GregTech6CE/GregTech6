@@ -33,58 +33,13 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /**
- * GT6's Hand Crank ({@code MultiTileEntityCrank}, multi-tile {@code 32111},
- * {@code Loader_MultiTileEntities:2105}): a small attachment a player cranks by hand. It is a
- * <b>redstone lever that also turns</b> - GT6 never asks for a machine, so a crank bolted to a plain
- * wall just turns and pulses redstone (this is what the user report was about: the port used to answer
- * {@code message.gregtech.crank.no_target} instead).
+ * Hand crank (GT6 multi-tile 32111). Activation is latched to a player's last interaction,
+ * not a fixed pulse or gaze timer: MultiTileEntityCrank:72-112, UT.Entities:3142-3158.
+ * Every server tick each eligible operator supplies one potion-adjusted RU offer. A rejected
+ * offer does not stop motion/redstone or cause hunger. FACING is the handle side; its opposite
+ * is the mount and energy recipient. No stored energy or rotational decay exists here.
  *
- * <h2>GT6's behaviour, ported here</h2>
- * <ul>
- *   <li><b>Sides.</b> GT6 stores the mounting side in {@code NBT_FACING} ({@code mFacing}): the crank
- *       drives the block on that side ({@code MultiTileEntityCrank:193} {@code isEnergyEmittingTo} only
- *       answers for {@code aSide == mFacing}, {@code :78} emits into it) and its handle - the lit
- *       "front" texture - points the other way ({@code :144}: the front texture is drawn for
- *       {@code OPOS[mFacing]}, the axle for {@code mFacing}). {@link #FACING} is the <em>handle</em>
- *       side, i.e. GT6's {@code OPOS[mFacing]}: the block is placed with {@code ctx.getClickedFace()},
- *       hugs the block on {@code FACING.getOpposite()} with its shape ({@link #SHAPES}) and drives the
- *       block entity there - exactly vanilla's lever convention. So GT6's {@code mFacing} is this
- *       block's {@code FACING.getOpposite()}.</li>
- *   <li><b>Every click turns the crank.</b> {@code onBlockActivated3} ({@code :103-112}) sets
- *       {@code mActive}, updates the client and causes a block update, unconditionally and without
- *       looking for a machine; {@code onTick2} ({@code :72-96}) repeats that while somebody still
- *       targets the crank. {@link #use} does the same: it always turns, and it only tries to push the
- *       packet into a machine if there happens to be one.</li>
- *   <li><b>Redstone.</b> The original opposite-side query returns 15 towards the mounting
- *       block while active. The same block receives RU. The handle's neighbour is not powered.
- *       See {@link #isProvidingPower} and TileEntityBase06Covers:405-416.</li>
- *   <li><b>The packet.</b> One turn offers GT6's
- *       {@code -divup(8L * pot2Strength, pot1Weakness)} RU at {@code pot1Haste} packets
- *       ({@code :78}, strength {@code 2 + level}, weakness {@code 1 + level}), which is what
- *       {@link #use} inserts into the machine on {@code FACING.getOpposite()}; the player is only
- *       exhausted when the packet was accepted ({@code :78}), as in GT6.</li>
- * </ul>
- *
- * <h2>Port differences</h2>
- * <ul>
- *   <li><b>No tile entity.</b> GT6 keeps {@code mActive} in its tile entity and clears it on the next
- *       tick once no player targets the crank any more ({@code :74-96}), so the crank is active exactly
- *       as long as it is cranked. GT6 mirrors that flag into the block's own metadata for the client
- *       ({@code getDirectionData}, {@code :201}: {@code (mFacing &amp; 7) | (mActive ? 8 : 0)}), which is
- *       the block state {@link #ACTIVE} here. A click queues a pulse-ending tick after
- *       {@link #ACTIVE_TICKS}; that deadline is not tied to the current player target.</li>
- *   <li><b>One packet per click.</b> GT6 emits one packet per tick for every player that still targets
- *       the crank ({@code :76-80}, plus one for a villager standing in it, {@code :82-91}); the port
- *       keeps its one packet per right click and ignores villagers.</li>
- *   <li><b>No chat messages.</b> GT6 shows neither a "no machine here" nor a "machine is full" message;
- *       the port used to show {@code message.gregtech.crank.no_target} and
- *       {@code message.gregtech.crank.full} instead. Both are gone, so a wrong click says nothing and
- *       the only hint left is the tooltip.</li>
- *   <li><b>Sound.</b> GT6 plays {@code SFX.MC_MINECART} on the click and again at random while active
- *       ({@code :98}, {@code :108}); the port keeps its wooden crank knock.</li>
- *   <li><b>Animation.</b> The active block state uses GT6's {@code frontspin} and clockwise /
- *       counterclockwise axle sprites ({@code :125-129}).</li>
- * </ul>
+ * <p>The original villager-operated idle crank is not implemented by this player-duration fix.</p>
  */
 public class CrankBlock extends DirectionalBlock {
 
@@ -96,11 +51,8 @@ public class CrankBlock extends DirectionalBlock {
     /** GT6 {@code mActive} ({@code MultiTileEntityCrank:52}): the crank is being turned right now. */
     public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
 
-    /**
-     * Delay requested for a queued stop tick. Native tick de-duplication keeps an existing
-     * deadline when the same crank is clicked again; this is not a player-target timer.
-     */
-    public static final int ACTIVE_TICKS = com.gregtech.gregtech.content.tool.UtilityToolRules.CRANK_TICKS;
+    /** Poll operator eligibility every server tick, rather than end a ten-tick pulse. */
+    public static final int ACTIVE_TICKS = 1;
 
     /** GT6's redstone value while active ({@code MultiTileEntityCrank:116}). */
     public static final int ACTIVE_SIGNAL = com.gregtech.gregtech.content.tool.UtilityToolRules.CRANK_SIGNAL;
@@ -201,10 +153,34 @@ public class CrankBlock extends DirectionalBlock {
     /** GT6's {@code causeBlockUpdate} after the state changed, plus the end of the pulse. */
     @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (state.getValue(ACTIVE)) {
+        if (!state.getValue(ACTIVE)) return;
+        boolean active = false;
+        for (Player player : CrankInteractionEvents.operators(level, pos)) {
+            active = true;
+            offerEnergy(state, level, pos, player);
+            player.swing(InteractionHand.MAIN_HAND);
+        }
+        if (active) {
+            level.scheduleTick(pos, this, ACTIVE_TICKS);
+        } else {
             level.setBlock(pos, state.setValue(ACTIVE, false), Block.UPDATE_ALL);
             updateMountNeighbors(state, level, pos);
         }
+    }
+
+    private static void offerEnergy(BlockState state, ServerLevel level, BlockPos pos, Player player) {
+        Direction handle = state.getValue(FACING);
+        long size = com.gregtech.gregtech.content.tool.UtilityToolRules.crankSize(
+                effectLevel(player, net.minecraft.world.effect.MobEffects.DAMAGE_BOOST),
+                effectLevel(player, net.minecraft.world.effect.MobEffects.WEAKNESS));
+        BlockPos mount = pos.relative(handle.getOpposite());
+        if (!level.hasChunkAt(mount)) return;
+        var target = level.getBlockEntity(mount);
+        long accepted = EnergyBlockViews.view(target) == null ? 0 : EnergyTransfer.insertEnergyInto(
+                GregTechTags.Energy.RU, handle, size,
+                1 + effectLevel(player, net.minecraft.world.effect.MobEffects.DIG_SPEED), null, target);
+        if (accepted > 0) player.causeFoodExhaustion(0.025F *
+                (1 + effectLevel(player, net.minecraft.world.effect.MobEffects.DIG_SLOWDOWN)));
     }
 
     /** Like a vanilla lever, notify both the attachment and the block conducting its strong signal. */
@@ -231,28 +207,10 @@ public class CrankBlock extends DirectionalBlock {
         // Only the main hand drives the crank; processing the off hand would send a second packet.
         if (hand == net.minecraft.world.InteractionHand.OFF_HAND) return InteractionResult.PASS;
         if (!level.isClientSide) {
-            Direction handle = state.getValue(FACING);
-            Direction mounting = handle.getOpposite();
-            long strength = 2L + effectLevel(player, net.minecraft.world.effect.MobEffects.DAMAGE_BOOST);
-            long weakness = 1 + effectLevel(player, net.minecraft.world.effect.MobEffects.WEAKNESS);
-            long packetSize = com.gregtech.gregtech.content.tool.UtilityToolRules.crankSize((int)(strength - 2), (int)(weakness - 1));
-
-            // GT6 MultiTileEntityCrank:78/193: the packet goes into the block the crank is mounted on,
-            // i.e. the machine on the side opposite the handle. There is no machine on most cranks, and
-            // GT6 does not care - the crank turns either way.
-            long accepted = 0;
-            var target = level.getBlockEntity(pos.relative(mounting));
-            if (EnergyBlockViews.view(target) != null) {
-                accepted = EnergyTransfer.insertEnergyInto(GregTechTags.Energy.RU, handle, packetSize,
-                        1 + effectLevel(player, net.minecraft.world.effect.MobEffects.DIG_SPEED), null, target);
-            }
-            if (accepted > 0) player.causeFoodExhaustion(0.025F);
-
-            // GT6 MultiTileEntityCrank:103-112 and :93-96: every right click turns the crank, updates
-            // the clients and causes a block update - with or without a machine behind it. The neighbour
-            // update is vanilla's LeverBlock.updateNeighbours (LeverBlock:107): redstone dust and lamps
-            // only recompute their state when an update reaches them, and a second click on an already
-            // turning crank has no state change of its own to notify them.
+            // The event also records other interactions so clicking elsewhere releases the crank.
+            // Record here too for direct native block interactions (no loader event dispatch).
+            CrankInteractionEvents.target(player, pos);
+            // GT6 activation only latches mActive; RU starts on the next server tick.
             if (!state.getValue(ACTIVE)) {
                 level.setBlock(pos, state.setValue(ACTIVE, true), Block.UPDATE_ALL);
             }

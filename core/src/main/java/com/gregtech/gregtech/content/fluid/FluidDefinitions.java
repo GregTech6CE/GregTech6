@@ -11,6 +11,7 @@ public final class FluidDefinitions {
     private FluidDefinitions() {}
     public static void prepare() {
         FluidCatalog.bootstrap();
+        registerGoldenBottleFluids();
         // Loader_Fluids:618 creates ordinary mercury with L=144 mB per U.
         // This flag preserves the port's ordinary liquid entry alongside its molten ID;
         // the generic 1000 mB quantity used by MatterRecipeLoader is still an audited mismatch.
@@ -90,6 +91,23 @@ public final class FluidDefinitions {
         // ---- GT6 Loader_Fluids: FL.make() material-fluid binding ----
         bindMaterialFluids();
 
+    }
+
+    /** Original Loader_Fluids:606-610 (W:649-653), unconditional FL.create declarations. */
+    private static void registerGoldenBottleFluids() {
+        long base = FluidCatalog.FluidFlags.LIQUID | FluidCatalog.FluidFlags.SIMPLE
+                | FluidCatalog.FluidFlags.FOOD | FluidCatalog.FluidFlags.ENCHANTED_EFFECT;
+        for (String name : new String[]{"goldencarrotjuice", "potion.goldenapplejuice",
+                "potion.goldencider", "potion.idunsapplejuice", "potion.notchesbrew"}) {
+            long flags = base | (name.endsWith("cider") || name.endsWith("brew")
+                    ? FluidCatalog.FluidFlags.ALCOHOLIC | FluidCatalog.FluidFlags.CIDER
+                    : FluidCatalog.FluidFlags.JUICE | (name.equals("goldencarrotjuice")
+                            ? 0 : FluidCatalog.FluidFlags.FRUIT_JUICE));
+            if (FluidCatalog.get(name) == null)
+                FluidCatalog.registerDefinition(name, new FluidCatalog.FluidEntry(name,
+                        FluidCatalog.FluidTextureMode.DEDICATED, null, 0, false, true,
+                        false, 1000, 1000, 15, 300, flags));
+        }
     }
 
     /**
