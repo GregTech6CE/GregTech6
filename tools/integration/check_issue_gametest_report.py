@@ -12,6 +12,8 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'heatsignedextractiontests.signedextractionconservesheatacrossnativeadapters',
+    'heatsignedextractiontests.signedlargeboilerextractionpreservesstructuregate',
     'fluidpipeinspectiontests.fluidpipemagnifierskipsunloadedchunksandreportsloadednetwork',
     'hoppertransfercontracttests.queuehopperpullrespectsselecteditemstacklimit',
     'hoppertransfercontracttests.queuehopperpreserveslegacyoversizedcontents',

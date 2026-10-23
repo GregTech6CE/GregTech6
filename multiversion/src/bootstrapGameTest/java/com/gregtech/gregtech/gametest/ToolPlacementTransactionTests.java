@@ -88,17 +88,37 @@ public final class ToolPlacementTransactionTests {
     @GameTest(template = "test_empty")
     public static void builderSixFacesCommitExactlyOnce(GameTestHelper h) {
         var player = player(h);
-        var support = h.absolutePos(new BlockPos(4, 20, 4));
+        // test_empty is 1x1x1. Its clearing does not cover y=20 or the wand's source plane;
+        // natural stone there can be copied before the clicked cell. Isolate the entire native scan.
+        var support = new BlockPos(24_000_000, 200, 24_000_000);
+        int radius = Math.max(0, GTToolHelper.getHead(wand("Steel")).getToolQuality() + 1) + 1;
+        player.setPos(support.getX() - 2.5, support.getY() + 1, support.getZ() - 2.5);
+        record Saved(net.minecraft.world.level.block.state.BlockState state, net.minecraft.nbt.CompoundTag data) {}
+        var saved = new java.util.LinkedHashMap<BlockPos, Saved>();
         var listener = new PlacementListener(player);
         register(listener);
         try {
+            for (var pos : BlockPos.betweenClosed(support.offset(-radius, -radius, -radius),
+                    support.offset(radius, radius, radius))) {
+                var entity = h.getLevel().getBlockEntity(pos);
+//? if >=1.21.1 {
+/*                var data = entity == null ? null : entity.saveWithoutMetadata(h.getLevel().registryAccess());
+*///?} else {
+                var data = entity == null ? null : entity.saveWithoutMetadata();
+//?}
+                saved.put(pos.immutable(), new Saved(h.getLevel().getBlockState(pos), data));
+            }
             for (var face : Direction.values()) {
                 player.getInventory().clearContent();
                 var tool = wand("Steel");
                 player.setItemInHand(InteractionHand.MAIN_HAND, tool);
                 player.getInventory().setItem(35, new ItemStack(Items.STONE, 8));
+                for (var pos : saved.keySet()) {
+                    h.getLevel().removeBlockEntity(pos);
+                    h.getLevel().setBlock(pos, Blocks.AIR.defaultBlockState(),
+                            net.minecraft.world.level.block.Block.UPDATE_CLIENTS | net.minecraft.world.level.block.Block.UPDATE_KNOWN_SHAPE);
+                }
                 h.getLevel().setBlockAndUpdate(support, Blocks.STONE.defaultBlockState());
-                for (var side : Direction.values()) h.getLevel().setBlockAndUpdate(support.relative(side), Blocks.AIR.defaultBlockState());
                 int events = listener.calls;
                 click(player, support, face, .75);
                 h.assertTrue(h.getLevel().getBlockState(support.relative(face)).is(Blocks.STONE), "clicked face " + face);
@@ -110,8 +130,22 @@ public final class ToolPlacementTransactionTests {
             }
         } finally {
             unregister(listener);
-            h.getLevel().removeBlock(support, false);
-            for (var side : Direction.values()) h.getLevel().removeBlock(support.relative(side), false);
+            for (var entry : saved.entrySet()) {
+                var pos = entry.getKey(); var original = entry.getValue();
+                h.getLevel().removeBlockEntity(pos);
+                h.getLevel().setBlock(pos, Blocks.AIR.defaultBlockState(),
+                        net.minecraft.world.level.block.Block.UPDATE_CLIENTS | net.minecraft.world.level.block.Block.UPDATE_KNOWN_SHAPE);
+                h.getLevel().setBlock(pos, original.state(),
+                        net.minecraft.world.level.block.Block.UPDATE_CLIENTS | net.minecraft.world.level.block.Block.UPDATE_KNOWN_SHAPE);
+                var restored = h.getLevel().getBlockEntity(pos);
+                if (restored != null && original.data() != null) {
+//? if >=1.21.1 {
+/*                    restored.loadWithComponents(original.data(), h.getLevel().registryAccess());
+*///?} else {
+                    restored.load(original.data());
+//?}
+                }
+            }
         }
         h.succeed();
     }

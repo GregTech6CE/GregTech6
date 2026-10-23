@@ -79,7 +79,7 @@ public final class HeatExchangerBlockEntity extends GTEnergyBlockEntity implemen
             return removed;
         }
         if (signedHU == Long.MIN_VALUE) return 0;
-        return insertHeat(-signedHU, simulate);
+        return -insertHeat(-signedHU, simulate);
     }
     public void tick() {
         if (level == null || level.isClientSide) return;
