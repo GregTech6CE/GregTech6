@@ -108,7 +108,7 @@ public class FluidAttachmentBlock extends net.minecraft.world.level.block.Block 
             gas |= entry.gas();
             if (entry.materialKey() != null) acid = GTMaterialRegistry.get(entry.materialKey()).resolve().has(MaterialProperty.ACID);
         }
-        return gas == (spec.shape().equals("cap_nozzle") || spec.shape().equals("nozzle")) && (!acid || spec.acidProof());
+        return gas == spec.acceptsGas() && (!acid || spec.acidProof());
     }
 
     /** Native attachment entry point: explicit source tool access precedes ordinary capabilities. */
@@ -117,7 +117,7 @@ public class FluidAttachmentBlock extends net.minecraft.world.level.block.Block 
         var target = level.getBlockEntity(targetPos);
         if (target == null || target.isRemoved()) return null;
         if (target instanceof com.gregtech.gregtech.api.fluid.FluidToolTarget tools)
-            return tools.fluidToolHandler(side, spec.shape().equals("fluid_funnel") || spec.shape().equals("cap_nozzle"));
+            return tools.fluidToolHandler(side, spec.fillsTarget());
 //? if >=1.21.1 {
         /*return level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK, targetPos, side);
 *///?} else {
@@ -126,7 +126,7 @@ public class FluidAttachmentBlock extends net.minecraft.world.level.block.Block 
     }
 
     public IFluidHandler access(IFluidHandler tank) {
-        boolean funnel = spec.shape().equals("fluid_funnel") || spec.shape().equals("cap_nozzle");
+        boolean fillingTarget = spec.fillsTarget();
         return new IFluidHandler() {
 
             public int getTanks() {
@@ -142,19 +142,19 @@ public class FluidAttachmentBlock extends net.minecraft.world.level.block.Block 
             }
 
             public boolean isFluidValid(int slot, FluidStack fluid) {
-                return funnel && accepts(fluid) && tank.isFluidValid(slot, fluid);
+                return fillingTarget && accepts(fluid) && tank.isFluidValid(slot, fluid);
             }
 
             public int fill(FluidStack fluid, FluidAction action) {
-                return funnel && accepts(fluid) ? tank.fill(fluid, action) : 0;
+                return fillingTarget && accepts(fluid) ? tank.fill(fluid, action) : 0;
             }
 
             public FluidStack drain(FluidStack fluid, FluidAction action) {
-                return !funnel && accepts(fluid) ? tank.drain(fluid, action) : FluidStack.EMPTY;
+                return !fillingTarget && accepts(fluid) ? tank.drain(fluid, action) : FluidStack.EMPTY;
             }
 
             public FluidStack drain(int amount, FluidAction action) {
-                if (funnel || amount <= 0) return FluidStack.EMPTY;
+                if (fillingTarget || amount <= 0) return FluidStack.EMPTY;
                 for (int i = 0; i < tank.getTanks(); i++) {
                     var fluid = tank.getFluidInTank(i).copy();
                     if (!accepts(fluid)) continue;
@@ -210,7 +210,7 @@ public class FluidAttachmentBlock extends net.minecraft.world.level.block.Block 
     }
 *///?} else {
 //?}
-    /** GT6 tap click: 250 L water/ordinary liquid, 1000 L lava, one material unit of molten metal. */
+    /** Downward transfer currently uses 250 L by default, 1000 L lava or 144 L molten entries. */
     public static boolean pourBelow(Level level, BlockPos pos, IFluidHandler source) {
         var below = pos.below();
         if (!level.hasChunkAt(below)) return false;

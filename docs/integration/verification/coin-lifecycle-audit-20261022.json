@@ -1,0 +1,1032 @@
+{
+  "date": "2026-10-22",
+  "batch": 115,
+  "baseline": "042ff2957e34b557a5971fc681e22b01045d58de",
+  "previous_goal_turn": {
+    "classification": "progress",
+    "commit": "042ff2957"
+  },
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/placeables/MultiTileEntityCoin.java",
+      "raw_sha256": "70352995f5692abf8f874041a18c1bd2c476bfb1bdd5d4dea7b8fbb92952a719",
+      "lines": 476,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "raw_sha256": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9",
+      "lines": 256,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "raw_sha256": "78ef2ca64595500bb841faec8304dee0f3e276e14b54c62f494c3116c29ce0b7",
+      "lines": 307,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "raw_sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "lines": 2345,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/IMultiTileEntity.java",
+      "raw_sha256": "2fe844ae5e55bd906a2e74bda458b92f97d2ba057d4d5820da9fbc11faafcd09",
+      "lines": 368,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityBlockInternal.java",
+      "raw_sha256": "b30b0ca9b0e882d62ab23d9e7e8d2974798cf73441165e9168421766024ab7ed",
+      "lines": 136,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityRegistry.java",
+      "raw_sha256": "70fb3ce00e7036e343e253e0f9fd8401b05c3f4f4e16b88f1b3fb94c3b111e83",
+      "lines": 271,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityContainer.java",
+      "raw_sha256": "f4510156d77defe003a337266219ea794550b0720a3e81c37807a0ec29dda12e",
+      "lines": 37,
+      "notice_sha256": "63c517dd35b913cfc46d1f7881d524c83334db090a72278eefbb881a3ef42a1b"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "raw_sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "lines": 2243,
+      "notice_sha256": "6855675ee4a01a21169dd2a3ed5df729ac3198a4b2e3b869f91e1a45c79e6aca"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/tool/CoinGeometry.java",
+      "raw_sha256": "900ab87eba0d0b97e23b5df2300d23c45fbfbc3bccbfa414fb2bb32ddad8109a",
+      "lines": 190
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/misc/CoinPileBlockEntity.java",
+      "raw_sha256": "8d74850f69b94c8df3525ad727b79d6e029e322d09adecf84b015d53b6651520",
+      "lines": 414
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/CoinItemBakedModel.java",
+      "raw_sha256": "e60b66012daace67650b95a92aae3064acfa6a42a358d10f125dcefa1b3f2c2b",
+      "lines": 109
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/CoinItemRenderer.java",
+      "raw_sha256": "f22039f040487d628bebc1e0ee46dcf1f33b327786a9021a9612eb0724b7b7dd",
+      "lines": 54
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/CoinPileRenderer.java",
+      "raw_sha256": "3ffe107d6b49034ccc84abe76f336be1d1e966b067375212512fca8ef602b363",
+      "lines": 140
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/CoinClientSetup.java",
+      "raw_sha256": "b99daace54f9b2eec549dfc13817d1f982fdb1e42396b54b2ff2b887ada8bd0a",
+      "lines": 29
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/block/CoinPileRules.java",
+      "raw_sha256": "2eb82dac078603cb864500841370dbc9693bedc978f3ec45fc57ea8d1f7434a9",
+      "lines": 36
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/data/MaterialPrefix.java",
+      "raw_sha256": "484d31381d4291b85341ab3604f1c98829eecc834ec04e36d54d7912e911afdd",
+      "lines": 785
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialItemDefinitions.java",
+      "raw_sha256": "b4fd742f5e59e419a2cdaed2bf51960954bbecc5c33380aae9abd91cc2aff818",
+      "lines": 261
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/CoinItem.java",
+      "raw_sha256": "b01ac1c6f145c910db8eb39bc5624799c8a92f57e42ec87c9282cfac969e3ee4",
+      "lines": 124
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/CoinPileBlock.java",
+      "raw_sha256": "c8758130ed8a3b1264667e60b9707a7ce477b73c700158da1fbea0ad56fb2c00",
+      "lines": 245
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTCoinPiles.java",
+      "raw_sha256": "341a256d4d0ede9dfcc0913ca7044cce7b22bafc6d8abff526552f681f3e3bff",
+      "lines": 22
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "raw_sha256": "05409cc45a965be4efbcde15b420091d3222e6fe390069a0d58031e43faf9308",
+      "lines": 707
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTItems.java",
+      "raw_sha256": "b069563fc4cc86720652ffcef0ed5d0996b56e9c5c91d0cc85c0329ea0871ed8",
+      "lines": 187
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/MaterialClientModels.java",
+      "raw_sha256": "a2ae7e6b797f761c9f9dbe6610608766e3c6063271d55c48de482684f6920d9b",
+      "lines": 198
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/GregTechConfig.java",
+      "raw_sha256": "9030ec33cfb2c5858d1b57e12d459073dc9fd19a21703082fdec168e3dc01346",
+      "lines": 68
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/MaterialItem.java",
+      "raw_sha256": "2c7b01554d0900783cf90ae5610c1bca0e8a9d24385ba99f1f5a420491b9d2b1",
+      "lines": 155
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/RegisteredBlock.java",
+      "raw_sha256": "5e2ead8884bdf8955b76fde0d71d915e59ecb30306e59a7249a4f16f60659ec5",
+      "lines": 59
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/CoinMoldBlockEntity.java",
+      "raw_sha256": "545fab4eac8018471cbbde3e8fb4c3799565a094af1ece9f4e8e420603cc3336",
+      "lines": 246
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTDecorBlocks.java",
+      "raw_sha256": "9facc5d99806ac5ac82384deb7f0c2582e76fe5725b9504dc861be7d00f2c266",
+      "lines": 168
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "raw_sha256": "4f62bc352b16e6e4395538d1ef36cbcb395265ef5c3887ca6fd2c705fdce682f",
+      "lines": 824
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/GregTech.java",
+      "raw_sha256": "943e441f2cea7b32cf94c06b34958389934980efd5011cf5dd7c9ae2cf1d5394",
+      "lines": 110
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "raw_sha256": "a83787a7e2ca56b3b695b41f221cff2ee046880b09354fdf78b35bd2cc070a02",
+      "lines": 191
+    }
+  ],
+  "source_scope": "Selected coin registration/world placement, inherited pick/light, save/sync, item renderer dispatch, form amount and configuration consumers. Whole-file hashes record provenance; they do not certify every surrounding method or whole material catalog.",
+  "provenance": {
+    "authors": "GregTech-6 Team / Gregorius Techneticies",
+    "original_notice": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */",
+    "handling": "Reference tree read-only; original notices retained. No production algorithm, asset or license changes."
+  },
+  "excerpts": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/placeables/MultiTileEntityCoin.java",
+      "first_line": 451,
+      "last_line": 451,
+      "purpose": "Original coin explicitly returns water opacity.",
+      "text": "\t@Override public int getLightOpacity() {return LIGHT_OPACITY_WATER;}",
+      "sha256": "d6b6ca41bc0e89a3abd27407ae9d069aaeabb7d58baf9361f695734ce1b6e9f5"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "first_line": 245,
+      "last_line": 245,
+      "purpose": "Old water opacity constant is 3.",
+      "text": "\tpublic static final int LIGHT_OPACITY_NONE = 0, LIGHT_OPACITY_LEAVES = 1, LIGHT_OPACITY_WATER = 3, LIGHT_OPACITY_MAX = 255;",
+      "sha256": "74fdc3f93d68d3dac1276e5810f8b31e02fce6f814d4a42843a62152c9efac19"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "first_line": 266,
+      "last_line": 266,
+      "purpose": "Actual original world block delegates to the tile light interface.",
+      "text": "\t@Override public final int getLightOpacity(IBlockAccess aWorld, int aX, int aY, int aZ) {TileEntity aTileEntity = aWorld.getTileEntity(aX, aY, aZ); return aTileEntity instanceof IMTE_GetLightOpacity?((IMTE_GetLightOpacity)aTileEntity).getLightOpacity():mOpaque?LIGHT_OPACITY_MAX:LIGHT_OPACITY_NONE;}",
+      "sha256": "219e29a8142de08243eacc7082cc0fb6c49440834a4ead2494ca9ac867984b5d"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/CoinPileBlock.java",
+      "first_line": 92,
+      "last_line": 93,
+      "purpose": "Current coin uses dynamic non-occluding state.",
+      "text": "        super(properties.dynamicShape().noOcclusion());\n        registerDefaultState(this.stateDefinition.any().setValue(COINS, 0).setValue(FILL, 1));",
+      "sha256": "1744e7890b7d11e90606b3cd17ec8c594cb1f99703048270c18ab5f44b454b3a"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/CoinPileBlock.java",
+      "first_line": 109,
+      "last_line": 109,
+      "purpose": "Current fixed outline is not a full cube regardless of coin counters.",
+      "text": "        return Block.box(0, 0, 0, 16, 2, 16); // GT6's selected bounding box.",
+      "sha256": "e18f21bb293c45a5d27507f9e3b658f691cd9f2db3734e2dc3ecfa2f9657e7b4"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "first_line": 99,
+      "last_line": 99,
+      "purpose": "Coin world block family uses MultiTileEntityBlock, not the internal item block.",
+      "text": "\t\t, aMetalChips = MultiTileEntityBlock.getOrCreate(MD.GT.mID, \"iron\"         , Material.iron             , Block.soundTypeMetal, TOOL_shovel , 0, 0, 15, F, F)",
+      "sha256": "49828a325eaa56b4b87d97565e0366041365a2df710850ece30dad60c3d2f370"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "first_line": 2241,
+      "last_line": 2241,
+      "purpose": "Actual coin registration binds that world block family.",
+      "text": "\t\t\t\t\t\t\t\t\taRegistry.add(\"Coin\"                                                , \"Coins\"                               , 32700, 32700, MultiTileEntityCoin.class                               ,                 0, 64, aMetalChips    , null);",
+      "sha256": "8842d02f86854ecc3f1e5c99b7c2680f10d674e6696eed041d54e1f1106bec9d"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityBlockInternal.java",
+      "first_line": 97,
+      "last_line": 100,
+      "purpose": "Internal placement uses the registered world-block container.",
+      "text": "\t\taWorld.setBlock(aX, aY, aZ, aMTEContainer.mBlock, 15-aMTEContainer.mBlockMetaData, 2);\n\t\t// Make sure the Block has been set, yes I know setBlock has a true/false return value, but guess what, it is not reliable in 0.0001% of cases!\n\t\tif (aWorld.getBlock(aX, aY, aZ) != aMTEContainer.mBlock) {aWorld.setBlock(aX, aY, aZ, NB, 0, 0); return F;}\n\t\t// TileEntity should not refresh yet!",
+      "sha256": "edbb4186e289fe562b963684f35a624d244d647d78369852605348433b36634b"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "first_line": 250,
+      "last_line": 250,
+      "purpose": "Original player-aware pick delegates to IMTE_GetPickBlock.",
+      "text": "\t@Override public final ItemStack getPickBlock(MovingObjectPosition aTarget, World aWorld, int aX, int aY, int aZ, EntityPlayer aPlayer) {TileEntity aTileEntity = aWorld.getTileEntity(aX, aY, aZ); return aTileEntity instanceof IMTE_GetPickBlock?((IMTE_GetPickBlock)aTileEntity).getPickBlock(aTarget):null;}",
+      "sha256": "d006257935ad72df1e2b8b7bac3c5117cb06a6b9d107e7c58d072b54494a38b4"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "first_line": 252,
+      "last_line": 252,
+      "purpose": "Base coin pick writes item data before creating the stack.",
+      "text": "\t@Override public ItemStack getPickBlock(MovingObjectPosition aTarget) {MultiTileEntityRegistry tRegistry = MultiTileEntityRegistry.getRegistry(mMTERegistry); return tRegistry == null ? null : tRegistry.getItem(mMTEID, writeItemNBT(UT.NBT.make()));}",
+      "sha256": "69ddc4d045ac1d95327c081f0d82c17c5b7f390d3dcb1a6aa84b77968e4defb4"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/placeables/MultiTileEntityCoin.java",
+      "first_line": 97,
+      "last_line": 105,
+      "purpose": "Original picked item carries material, unique, die and recycling identity.",
+      "text": "\tpublic NBTTagCompound writeItemNBT(NBTTagCompound aNBT) {\n\t\taNBT = super.writeItemNBT(aNBT);\n\t\tOreDictMaterialStack.saveList(NBT_RECYCLING_MATS, aNBT, Arrays.asList(OM.stack(mMaterial, U9)));\n\t\tUT.NBT.setBoolean(aNBT, \"gt.coin.unique\", mIsUnique);\n\t\taNBT.setString(NBT_MATERIAL, mMaterial.toString());\n\t\tfor (int i = 0; i < mShape[0].length; i++) aNBT.setShort(\"gt.coin.shape.0.\"+i, (short)UT.Code.getBits(mShape[0][i]));\n\t\tfor (int i = 0; i < mShape[1].length; i++) aNBT.setShort(\"gt.coin.shape.1.\"+i, (short)UT.Code.getBits(mShape[1][i]));\n\t\treturn aNBT;\n\t}",
+      "sha256": "d7883f3cadfc5d4dbab8c75e3555cc45a50d5affbd05f4eb8d471bdf159bf50f"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTCoinPiles.java",
+      "first_line": 19,
+      "last_line": 20,
+      "purpose": "Current bare coin pile has a real BlockItem used by inherited pick.",
+      "text": "        GTBlocks.BLOCK_ITEMS.register(\"coin_pile\", () -> new net.minecraft.world.item.BlockItem(COIN_PILE.get(),\n                new net.minecraft.world.item.Item.Properties()));",
+      "sha256": "6301488fa84be59272ad399fe79c7427444052ce989b508e75ee24f0ee09fbac"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/misc/CoinPileBlockEntity.java",
+      "first_line": 368,
+      "last_line": 370,
+      "purpose": "Forge coin chunk update uses complete saved data.",
+      "text": "    public CompoundTag getUpdateTag() {\n        return saveWithoutMetadata();\n//?}",
+      "sha256": "d1accf4804e8bbb44ce6ba9d12872e6e06336660fe421400fdb06beb7cbd888a"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/misc/CoinPileBlockEntity.java",
+      "first_line": 374,
+      "last_line": 376,
+      "purpose": "Current update packet binds this block entity.",
+      "text": "    public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {\n        return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);\n    }",
+      "sha256": "bbc298583dd312fe006a0c5b41f8246999634c7a1a2ca2f85d7d21350042db32"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/misc/CoinPileBlockEntity.java",
+      "first_line": 389,
+      "last_line": 389,
+      "purpose": "Current world reads all cells with a bounded signed byte.",
+      "text": "            faces[face] = (byte) Math.max(0, Math.min(FACE_STACK_SIZE, tag.getByte(NBT_STACKSIZE + face)));",
+      "sha256": "192a81bec24f7b1ca0c71e6efa9239c57872578ca94bd042fc36cd5f15f1f09f"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/misc/CoinPileBlockEntity.java",
+      "first_line": 394,
+      "last_line": 394,
+      "purpose": "Forge native stack read restores its custom die data.",
+      "text": "        storeCoin(tag.contains(NBT_COIN) ? ItemStack.of(tag.getCompound(NBT_COIN)) : ItemStack.EMPTY);",
+      "sha256": "05eeee66bbfc8de1d753df3fbdeb67de2f0ea0e9e005934ee04ac1f73359ab26"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/misc/CoinPileBlockEntity.java",
+      "first_line": 392,
+      "last_line": 392,
+      "purpose": "Neo stack decoding is explicitly registry-aware.",
+      "text": "        /*storeCoin(tag.contains(NBT_COIN) ? ItemStack.parseOptional(lookup, tag.getCompound(NBT_COIN)) : ItemStack.EMPTY);",
+      "sha256": "5723c06292c5f5d5fb207f2795391a146b864cda2e94f019b96c9d8c803ae66b"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/misc/CoinPileBlockEntity.java",
+      "first_line": 407,
+      "last_line": 414,
+      "purpose": "World writes every cell and serializes the coin stack on both platforms.",
+      "text": "        for (int face = 0; face < FACES; face++) tag.putByte(NBT_STACKSIZE + face, faces[face]);\n//? if >=1.21.1 {\n        /*if (!coin.isEmpty()) tag.put(NBT_COIN, coin.save(lookup));\n*///?} else {\n        if (!coin.isEmpty()) tag.put(NBT_COIN, coin.save(new CompoundTag()));\n//?}\n    }\n}",
+      "sha256": "01de3fbc0474fe5b3f41da00baa1787d54c4dd7e0f49476c55383c8effaf276a"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/misc/CoinPileBlockEntity.java",
+      "first_line": 116,
+      "last_line": 119,
+      "purpose": "Loading the coin refreshes the cached decoded pattern.",
+      "text": "    private void storeCoin(ItemStack stack) {\n        coin = stack;\n        coinPattern = CoinGeometry.pattern(stack);\n    }",
+      "sha256": "dbc86c4d518429365d9f24ce6a5e91fabeb5cd9cc56eda61634296dde6ae6be0"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/placeables/MultiTileEntityCoin.java",
+      "first_line": 471,
+      "last_line": 472,
+      "purpose": "Original world and inventory rendering options are independent.",
+      "text": "\t\tALLOW_3D_COINS = ConfigsGT.CLIENT.get(ConfigCategories.general, \"use3DCoins\", ALLOW_3D_COINS);\n\t\tALLOW_3D_COINS_INV = ConfigsGT.CLIENT.get(ConfigCategories.general, \"use3DCoinsInv\", ALLOW_3D_COINS_INV);",
+      "sha256": "a7c6eef66f7f97e89a7424a37f70ecdb8f0c975004ffa1f59dc8b9f6b451eb9a"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/CoinItemBakedModel.java",
+      "first_line": 44,
+      "last_line": 45,
+      "purpose": "Default/stamped item dispatch has an actual model override.",
+      "text": "                return stack.getItem() instanceof CoinItem && CoinGeometry.hasCustomPattern(stack)\n                        ? custom : original;",
+      "sha256": "cfe0c5cc4741df0fd2d84eb26e71ab59634b3d405dbb584c8e586206b60adfad"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/MaterialClientModels.java",
+      "first_line": 108,
+      "last_line": 108,
+      "purpose": "Neo aliases coins to the wrapper as well.",
+      "text": "                models.put(ModelResourceLocation.inventory(entry.getId()),item instanceof com.gregtech.gregtech.item.CoinItem?new CoinItemBakedModel(model):model);",
+      "sha256": "e6fe204456d057f378df2d3c9a62d0e6ebe9136a3ef9ed32af180f3ddadb0433"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/CoinClientSetup.java",
+      "first_line": 12,
+      "last_line": 12,
+      "purpose": "Neo client world renderer is registered.",
+      "text": "        event.registerBlockEntityRenderer(GTBlockEntities.COIN_PILE.get(), CoinPileRenderer::new);",
+      "sha256": "0438b53a898dfb417ada6a30df628c0fc074ce7529ea7ba850d111cdab2fa22a"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/CoinClientSetup.java",
+      "first_line": 25,
+      "last_line": 25,
+      "purpose": "Neo item extensions supply the stack-aware renderer.",
+      "text": "                return CoinItemRenderer.instance();",
+      "sha256": "a23c7bf4f13f51b44d93f5e2bdd2739bac6c5dc90ec892aa2309cb216bdf7f80"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "first_line": 689,
+      "last_line": 689,
+      "purpose": "Forge client world renderer is registered.",
+      "text": "        event.registerBlockEntityRenderer(GTBlockEntities.COIN_PILE.get(), CoinPileRenderer::new);",
+      "sha256": "0438b53a898dfb417ada6a30df628c0fc074ce7529ea7ba850d111cdab2fa22a"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/MaterialPrefix.java",
+      "first_line": 613,
+      "last_line": 613,
+      "purpose": "Current material accounting retains the original one-ninth unit.",
+      "text": "            case \"coin\" -> GTValues.U9;",
+      "sha256": "06b5bcf6078dce9d7d154cdd616c9b940ab8fd59c93a8e0f3225f316bbeb3256"
+    }
+  ],
+  "native_excerpts": [
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/neo-BlockBehaviour.java",
+      "first_line": 292,
+      "last_line": 298,
+      "purpose": "Native Neo light path returns 0 for this non-occluding non-full outline.",
+      "text": "    protected int getLightBlock(BlockState p_60585_, BlockGetter p_60586_, BlockPos p_60587_) {\n        if (p_60585_.isSolidRender(p_60586_, p_60587_)) {\n            return p_60586_.getMaxLightLevel();\n        } else {\n            return p_60585_.propagatesSkylightDown(p_60586_, p_60587_) ? 0 : 1;\n        }\n    }",
+      "sha256": "921927949552f401caa699a5f093aead7f80d359916a5953afae3d623197b439"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/neo-BlockBehaviour.java",
+      "first_line": 381,
+      "last_line": 383,
+      "purpose": "Current outline plus empty fluid propagates skylight.",
+      "text": "    protected boolean propagatesSkylightDown(BlockState p_320652_, BlockGetter p_320953_, BlockPos p_320082_) {\n        return !Block.isShapeFullBlock(p_320652_.getShape(p_320953_, p_320082_)) && p_320652_.getFluidState().isEmpty();\n    }",
+      "sha256": "c22b01f6789992b91708a38bdc2415b6da3d2d354a34452a85f1ee7101bce535"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/neo-BlockBehaviour.java",
+      "first_line": 628,
+      "last_line": 635,
+      "purpose": "No-occlusion state cannot be solid-rendered.",
+      "text": "        public boolean isSolidRender(BlockGetter p_60805_, BlockPos p_60806_) {\n            if (this.cache != null) {\n                return this.cache.solidRender;\n            } else {\n                BlockState blockstate = this.asState();\n                return blockstate.canOcclude() ? Block.isShapeFullBlock(blockstate.getOcclusionShape(p_60805_, p_60806_)) : false;\n            }\n        }",
+      "sha256": "ba873d71de991f23ad909f4f6b75e3481a601dd64cf0e3cb903b69062afcef1c"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/neo-Block.java",
+      "first_line": 407,
+      "last_line": 409,
+      "purpose": "Native inherited Neo pick creates a bare block stack.",
+      "text": "    public ItemStack getCloneItemStack(LevelReader p_304395_, BlockPos p_49824_, BlockState p_49825_) {\n        return new ItemStack(this);\n    }",
+      "sha256": "1810d60715bef28dad1566eeafb17c73e28843cf254bf8f509e497d901ad7819"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/neo-IBlockExtension.java",
+      "first_line": 346,
+      "last_line": 348,
+      "purpose": "Neo player-aware pick delegates to the bare fallback.",
+      "text": "    default ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {\n        return self().getCloneItemStack(level, pos, state);\n    }",
+      "sha256": "ae656003fe1b2219a780d7bd932619022a76c5cda9537381b6c1979aac1ab685"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/neo-IBlockEntityExtension.java",
+      "first_line": 35,
+      "last_line": 40,
+      "purpose": "Neo BE packet receiver loads components and calls the subclass data reader.",
+      "text": "    default void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider lookupProvider) {\n        CompoundTag compoundtag = pkt.getTag();\n        if (!compoundtag.isEmpty()) {\n            self().loadWithComponents(compoundtag, lookupProvider);\n        }\n    }",
+      "sha256": "56c33a98f9ba67ecbaf331569be1aa678b6dd7d7c4a2786ddf4b27be66b05bd8"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/neo-IBlockEntityExtension.java",
+      "first_line": 49,
+      "last_line": 51,
+      "purpose": "Neo chunk update delegates to the same load contract.",
+      "text": "    default void handleUpdateTag(CompoundTag tag, HolderLookup.Provider lookupProvider) {\n        self().loadWithComponents(tag, lookupProvider);\n    }",
+      "sha256": "899834ef58a53db0fd51dbff26b25bdd898eb255e8e2b8747b5ab4d810d1ee44"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/forge-Block.javap.txt",
+      "first_line": 1032,
+      "last_line": 1038,
+      "purpose": "Forge inherited pick creates bare block stack.",
+      "text": "  public net.minecraft.world.item.ItemStack getCloneItemStack(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);\n    Code:\n       0: new           #679                // class net/minecraft/world/item/ItemStack\n       3: dup\n       4: aload_0\n       5: invokespecial #1044               // Method net/minecraft/world/item/ItemStack.\"<init>\":(Lnet/minecraft/world/level/ItemLike;)V\n       8: areturn",
+      "sha256": "e77a10aec6592bb57d01bbcadbad8a80ff939155783b8c5f9e3217f48d3e6293"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/forge-IForgeBlock.javap.txt",
+      "first_line": 166,
+      "last_line": 174,
+      "purpose": "Forge player-aware clone delegates to the bare fallback.",
+      "text": "  public default net.minecraft.world.item.ItemStack getCloneItemStack(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.phys.HitResult, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.entity.player.Player);\n    Code:\n       0: aload_0\n       1: invokeinterface #26,  1           // InterfaceMethod self:()Lnet/minecraft/world/level/block/Block;\n       6: aload_3\n       7: aload         4\n       9: aload_1\n      10: invokevirtual #202                // Method net/minecraft/world/level/block/Block.getCloneItemStack:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/item/ItemStack;\n      13: areturn",
+      "sha256": "bd7b42e9929b577714316842f2b96df8fcedd320129a804a00e1a8cecded0cd4"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/forge-BlockBehaviour.javap.txt",
+      "first_line": 340,
+      "last_line": 358,
+      "purpose": "Forge light branch returns 0 for transparent outline.",
+      "text": "  public int getLightBlock(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos);\n    Code:\n       0: aload_1\n       1: aload_2\n       2: aload_3\n       3: invokevirtual #470                // Method net/minecraft/world/level/block/state/BlockState.isSolidRender:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z\n       6: ifeq          16\n       9: aload_2\n      10: invokeinterface #473,  1          // InterfaceMethod net/minecraft/world/level/BlockGetter.getMaxLightLevel:()I\n      15: ireturn\n      16: aload_1\n      17: aload_2\n      18: aload_3\n      19: invokevirtual #476                // Method net/minecraft/world/level/block/state/BlockState.propagatesSkylightDown:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z\n      22: ifeq          29\n      25: iconst_0\n      26: goto          30\n      29: iconst_1\n      30: ireturn",
+      "sha256": "624473c6a7699dc14a57fb67926560e0f8c5f8f57082f02a3afda4256b211fad"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/forge-Block.javap.txt",
+      "first_line": 516,
+      "last_line": 531,
+      "purpose": "Forge light propagation uses shape and fluid membership.",
+      "text": "  public boolean propagatesSkylightDown(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos);\n    Code:\n       0: aload_1\n       1: aload_2\n       2: aload_3\n       3: invokevirtual #629                // Method net/minecraft/world/level/block/state/BlockState.getShape:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/shapes/VoxelShape;\n       6: invokestatic  #609                // Method isShapeFullBlock:(Lnet/minecraft/world/phys/shapes/VoxelShape;)Z\n       9: ifne          26\n      12: aload_1\n      13: invokevirtual #633                // Method net/minecraft/world/level/block/state/BlockState.getFluidState:()Lnet/minecraft/world/level/material/FluidState;\n      16: invokevirtual #636                // Method net/minecraft/world/level/material/FluidState.isEmpty:()Z\n      19: ifeq          26\n      22: iconst_1\n      23: goto          27\n      26: iconst_0\n      27: ireturn",
+      "sha256": "8a2624a4c034821d31f1db87fdbaca35ab67ce40ed95ce30599fabd2f56398d6"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/forge-BlockBehaviour$BlockStateBase.javap.txt",
+      "first_line": 571,
+      "last_line": 593,
+      "purpose": "Forge non-occluding dynamic state bypasses solid render.",
+      "text": "  public boolean isSolidRender(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos);\n    Code:\n       0: aload_0\n       1: getfield      #214                // Field cache:Lnet/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase$Cache;\n       4: ifnull        15\n       7: aload_0\n       8: getfield      #214                // Field cache:Lnet/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase$Cache;\n      11: getfield      #452                // Field net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase$Cache.solidRender:Z\n      14: ireturn\n      15: aload_0\n      16: invokevirtual #113                // Method asState:()Lnet/minecraft/world/level/block/state/BlockState;\n      19: astore_3\n      20: aload_3\n      21: invokevirtual #454                // Method net/minecraft/world/level/block/state/BlockState.canOcclude:()Z\n      24: ifeq          39\n      27: aload_3\n      28: aload_1\n      29: aload_2\n      30: invokevirtual #455                // Method net/minecraft/world/level/block/state/BlockState.getOcclusionShape:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/shapes/VoxelShape;\n      33: invokestatic  #459                // Method net/minecraft/world/level/block/Block.isShapeFullBlock:(Lnet/minecraft/world/phys/shapes/VoxelShape;)Z\n      36: goto          40\n      39: iconst_0\n      40: ireturn",
+      "sha256": "59ee6b382d34e8cbaeb0620efc4ba2ad2bc6e88d44553de92957fcc130b47e82"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/forge-IForgeBlockEntity.javap.txt",
+      "first_line": 26,
+      "last_line": 37,
+      "purpose": "Forge native packet invokes BlockEntity.load.",
+      "text": "  public default void onDataPacket(net.minecraft.network.Connection, net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket);\n    Code:\n       0: aload_2\n       1: invokevirtual #37                 // Method net/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket.getTag:()Lnet/minecraft/nbt/CompoundTag;\n       4: astore_3\n       5: aload_3\n       6: ifnull        19\n       9: aload_0\n      10: invokeinterface #20,  1           // InterfaceMethod self:()Lnet/minecraft/world/level/block/entity/BlockEntity;\n      15: aload_3\n      16: invokevirtual #23                 // Method net/minecraft/world/level/block/entity/BlockEntity.load:(Lnet/minecraft/nbt/CompoundTag;)V\n      19: return",
+      "sha256": "1fca5616fe30b7666ad0d712be3cb0c8a463d682c0d1f81f21dd6b16cca1c3de"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/forge-IForgeBlockEntity.javap.txt",
+      "first_line": 39,
+      "last_line": 45,
+      "purpose": "Forge native chunk tag invokes BlockEntity.load.",
+      "text": "  public default void handleUpdateTag(net.minecraft.nbt.CompoundTag);\n    Code:\n       0: aload_0\n       1: invokeinterface #20,  1           // InterfaceMethod self:()Lnet/minecraft/world/level/block/entity/BlockEntity;\n       6: aload_1\n       7: invokevirtual #23                 // Method net/minecraft/world/level/block/entity/BlockEntity.load:(Lnet/minecraft/nbt/CompoundTag;)V\n      10: return",
+      "sha256": "57549a32d90e0345a7cef2603925c4d03535fa013f7043d06258943ba681fb95"
+    }
+  ],
+  "native_evidence": [
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/Block.class",
+      "entry_sha256": "02e5ba8d458ab32234a2d8d73de3554dc0ffbbd4ee9e3d0ad41ef45a69f6f8de",
+      "javap_output": "work/coin-lifecycle-audit-20261022/forge-Block.javap.txt",
+      "javap_sha256": "865dda475e8745bb35abaf8e99b5bc7c112e86af340073e7defa73f179443199"
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour.class",
+      "entry_sha256": "33a73cccc684a0d41bb0f075c13b2cad5721b3d9e6402c85f3e965d83890a288",
+      "javap_output": "work/coin-lifecycle-audit-20261022/forge-BlockBehaviour.javap.txt",
+      "javap_sha256": "4f7a519524136790967ca9923c140ed4e36fef2481fa1c309e26ba277bbdece7"
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase.class",
+      "entry_sha256": "ec49ba5e67c5272060397ed4fccf512ab7e2cf965da8295db850321540ebaa70",
+      "javap_output": "work/coin-lifecycle-audit-20261022/forge-BlockBehaviour$BlockStateBase.javap.txt",
+      "javap_sha256": "90f3dd80da0c006166b80375279407de56d2db47b2b2103a0d06e853720834dd"
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraftforge/common/extensions/IForgeBlock.class",
+      "entry_sha256": "0ba102d7d6e4ee7d45950c91b20fdf9c6319c5e0cb75b75133b4caa065c788f0",
+      "javap_output": "work/coin-lifecycle-audit-20261022/forge-IForgeBlock.javap.txt",
+      "javap_sha256": "e506a76a14b6070370f30a55bb75acd6bd09e8906fd148b9cb1a4e2996c867ed"
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraftforge/common/extensions/IForgeBlockEntity.class",
+      "entry_sha256": "d44150d4c0a5ef2925e96c1fc4f26d86fbec42aaa5e64d024bd776078fc4350f",
+      "javap_output": "work/coin-lifecycle-audit-20261022/forge-IForgeBlockEntity.javap.txt",
+      "javap_sha256": "c71d7a1af9fa2d5b36645e774d4b31079cd5307dd03f01029eb6d542f3c22d1e"
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/entity/BlockEntity.class",
+      "entry_sha256": "ddc07e689dccf9953e41f35e2724a0d8752ab1a6ce98a7b77992a65fcab9848a",
+      "javap_output": "work/coin-lifecycle-audit-20261022/forge-BlockEntity.javap.txt",
+      "javap_sha256": "c66636018e2b616cbd6a0d0fb37026ee2c5fe60dae5d58812d71b02bb4f59fe9"
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/block/Block.java",
+      "entry_sha256": "fe57fd48e078ed5a72a3309ac63ac615aa4aed4d7e6cf0d52754b2c06fe27533",
+      "extracted_path": "work/coin-lifecycle-audit-20261022/neo-Block.java"
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour.java",
+      "entry_sha256": "410ae028d36585b6c210e853720ea3fb973154a4d7800a082d541293cf355014",
+      "extracted_path": "work/coin-lifecycle-audit-20261022/neo-BlockBehaviour.java"
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/neoforged/neoforge/common/extensions/IBlockExtension.java",
+      "entry_sha256": "2dea052b03b569b82ca728073ab4299282eb4bb9116637b9ee19ade36975e5a5",
+      "extracted_path": "work/coin-lifecycle-audit-20261022/neo-IBlockExtension.java"
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/neoforged/neoforge/common/extensions/IBlockEntityExtension.java",
+      "entry_sha256": "611205fdc0afec68787b55c499800eabf87c44a260667989c3a61b02454b9c1a",
+      "extracted_path": "work/coin-lifecycle-audit-20261022/neo-IBlockEntityExtension.java"
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/block/entity/BlockEntity.java",
+      "entry_sha256": "c278b134769eefd1033c7952a2a5d461efd4e3e7fbe2c2f7d864182a9aeece6d",
+      "extracted_path": "work/coin-lifecycle-audit-20261022/neo-BlockEntity.java"
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/client/Minecraft.java",
+      "entry_sha256": "30e779eb9476de64b63a7cd929b1af921c21bcdfe0396d3e61effacad34f2586",
+      "extracted_path": "work/coin-lifecycle-audit-20261022/neo-Minecraft.java"
+    }
+  ],
+  "resources": [
+    {
+      "path": "core/src/main/resources/assets/gt6ce/geometry/coin_shape.json",
+      "raw_sha256": "c5c16ae7ee3500c05907fdd2cb6ee127801de7eb5cf7290101dae43c03f0ff12"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/models/item/coin_minted.json",
+      "raw_sha256": "6258a65322271e2f18830259ea0c739d5a0dbda688ff5bffb103388532c0493d"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/models/item/coin_pile.json",
+      "raw_sha256": "1b81925d9694788fec0a4bb8affc9edee6048721921be18d06aa9bdb0dc462e1"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/blockstates/coin_pile.json",
+      "raw_sha256": "6ed1f114aaf22d6a813e359887affa6f7c3f10e6018aa26404535bd5564fa2b1"
+    }
+  ],
+  "readability": {
+    "baseline": "042ff2957e34b557a5971fc681e22b01045d58de",
+    "files": {
+      "multiversion/src/main/java/com/gregtech/gregtech/content/tool/CoinGeometry.java": {
+        "before_raw_sha256": "89dbfa8424447a925998fc3282af5bddbb7669f296d1a8d60a22d7bef56b3fed",
+        "after_raw_sha256": "900ab87eba0d0b97e23b5df2300d23c45fbfbc3bccbfa414fb2bb32ddad8109a",
+        "before_lines": 174,
+        "after_lines": 190,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1460,
+            "execution_sha256": "46909b08354cf4801ea784527841263c1bd2437f4e895d66a3a28165d6cb08cb",
+            "literal_positions_sha256": "beadcc9197c21323f533e1c2eb36852464ab395cbb0a5427c7a3098ace40581e",
+            "literal_count": 86
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1512,
+            "execution_sha256": "b1250a98908bdd0220d79d0ea510b4d2154eb37a567d618ff65f0072d136203b",
+            "literal_positions_sha256": "6403f25b33afd9d4ac4a98147603ff9b924369faae73e3fae93425a68d383d89",
+            "literal_count": 86
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/blockentity/misc/CoinPileBlockEntity.java": {
+        "before_raw_sha256": "540ab7dea60e2626a2d225d6853129b4504c13b61214437972329fc30b16d3d9",
+        "after_raw_sha256": "8d74850f69b94c8df3525ad727b79d6e029e322d09adecf84b015d53b6651520",
+        "before_lines": 407,
+        "after_lines": 414,
+        "comment_corrections": [
+          [
+            "handed to the player. GT6 skips the hand-over for creative players\n     * ({@code UT.Entities.hasInfiniteItems}) and just destroys the coin; the port always returns it.",
+            "returned to the caller. The block callback transfers it only after inventory admission,\n     * while creative players destroy it without receiving a coin, as in GT6."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1661,
+            "execution_sha256": "7c955567a5d9416508fe52c1f8818e343b87d1c9725ead2d48895f375afef81d",
+            "literal_positions_sha256": "9fda484b7c5a8c429157e20b18a131f7ca9599b6b4ba7f0706d27de921430d94",
+            "literal_count": 51
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1697,
+            "execution_sha256": "9022b007eae78d7ff17212859b548f0e6a1458625726a60344e2757a41db5310",
+            "literal_positions_sha256": "d7ec062628e318a637a61dba189a0bbe302d00798d97edac5e013607d6d9f76f",
+            "literal_count": 51
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/client/CoinItemBakedModel.java": {
+        "before_raw_sha256": "8a95383bfde378eb0127deff0460dbda7c5311d36ec5fae984f4f4651d2a391a",
+        "after_raw_sha256": "e60b66012daace67650b95a92aae3064acfa6a42a358d10f125dcefa1b3f2c2b",
+        "before_lines": 79,
+        "after_lines": 109,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 632,
+            "execution_sha256": "91100bb5d895dd8f8302568490d20d2b6c65707c67877faaa4d3b062dcf5bf3d",
+            "literal_positions_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "literal_count": 0
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 636,
+            "execution_sha256": "3ffcff2eefd4cf4835f03533f234f4a5aca314a6357773e0523f5bdbd18d59d1",
+            "literal_positions_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "literal_count": 0
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/client/CoinItemRenderer.java": {
+        "before_raw_sha256": "b5173ea671c5be5cf1e87d13b3224b82a7fcf682788f7cd68beaa2dc41a30881",
+        "after_raw_sha256": "f22039f040487d628bebc1e0ee46dcf1f33b327786a9021a9612eb0724b7b7dd",
+        "before_lines": 54,
+        "after_lines": 54,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 475,
+            "execution_sha256": "56ad21d3fe33f1d8f07b49355dda6f1e972cb754ad67f07503a4cc89f59746cd",
+            "literal_positions_sha256": "0ecfafccbd34e80d0578b7689fa2076c2fdf17aa8767f351b3d1e96600b7f38b",
+            "literal_count": 16
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 475,
+            "execution_sha256": "56ad21d3fe33f1d8f07b49355dda6f1e972cb754ad67f07503a4cc89f59746cd",
+            "literal_positions_sha256": "0ecfafccbd34e80d0578b7689fa2076c2fdf17aa8767f351b3d1e96600b7f38b",
+            "literal_count": 16
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/client/CoinPileRenderer.java": {
+        "before_raw_sha256": "959446f32cfb2a9b850331ba277d83fa63f9a53d24561f4e7f00916b850ed7a3",
+        "after_raw_sha256": "3ffe107d6b49034ccc84abe76f336be1d1e966b067375212512fca8ef602b363",
+        "before_lines": 137,
+        "after_lines": 140,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1428,
+            "execution_sha256": "2833b167165b5c650036c0b977067696a56353131d1ab0fa33722d3e5826188f",
+            "literal_positions_sha256": "8e9a4d25621ced468cfa88e9797f8bcf6149c7481a78be7d079ad4ca34188338",
+            "literal_count": 23
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1427,
+            "execution_sha256": "9f6d3037b53c38f05e405041ac5dcbb6fb18afdb6072b31f983d67fe512d8342",
+            "literal_positions_sha256": "3848c4d91ea03e8497dc5d151caf283a117d63cd09471d1dc740b3e217e31f1b",
+            "literal_count": 25
+          }
+        ]
+      },
+      "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/CoinClientSetup.java": {
+        "before_raw_sha256": "1e7ffff5e0215f1be3d94973af9a9b075014a864c54f93dad19a1c7f95cb71e4",
+        "after_raw_sha256": "b99daace54f9b2eec549dfc13817d1f982fdb1e42396b54b2ff2b887ada8bd0a",
+        "before_lines": 4,
+        "after_lines": 29,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "neoforge",
+            "tokens": 265,
+            "execution_sha256": "81b41072be186d3a043cda45786ba4ce5158d5276616de5f7f834600336e887a",
+            "literal_positions_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "literal_count": 0
+          }
+        ]
+      }
+    },
+    "controlled_local_identifier_renames": {
+      "multiversion/src/main/java/com/gregtech/gregtech/content/tool/CoinGeometry.java": {
+        "mapping": {
+          "b": "bounds"
+        },
+        "exact_identifier_token_counts": {
+          "b": 7
+        },
+        "original_source_positions": [
+          {
+            "before": "b",
+            "after": "bounds",
+            "before_line": 147,
+            "before_column": 13
+          },
+          {
+            "before": "b",
+            "after": "bounds",
+            "before_line": 148,
+            "before_column": 25
+          },
+          {
+            "before": "b",
+            "after": "bounds",
+            "before_line": 148,
+            "before_column": 32
+          },
+          {
+            "before": "b",
+            "after": "bounds",
+            "before_line": 148,
+            "before_column": 39
+          },
+          {
+            "before": "b",
+            "after": "bounds",
+            "before_line": 148,
+            "before_column": 46
+          },
+          {
+            "before": "b",
+            "after": "bounds",
+            "before_line": 148,
+            "before_column": 53
+          },
+          {
+            "before": "b",
+            "after": "bounds",
+            "before_line": 148,
+            "before_column": 60
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/client/CoinPileRenderer.java": {
+        "mapping": {
+          "b": "bounds"
+        },
+        "exact_identifier_token_counts": {
+          "b": 7
+        },
+        "original_source_positions": [
+          {
+            "before": "b",
+            "after": "bounds",
+            "before_line": 71,
+            "before_column": 68
+          },
+          {
+            "before": "b",
+            "after": "bounds",
+            "before_line": 73,
+            "before_column": 28
+          },
+          {
+            "before": "b",
+            "after": "bounds",
+            "before_line": 73,
+            "before_column": 49
+          },
+          {
+            "before": "b",
+            "after": "bounds",
+            "before_line": 74,
+            "before_column": 28
+          },
+          {
+            "before": "b",
+            "after": "bounds",
+            "before_line": 74,
+            "before_column": 49
+          },
+          {
+            "before": "b",
+            "after": "bounds",
+            "before_line": 75,
+            "before_column": 28
+          },
+          {
+            "before": "b",
+            "after": "bounds",
+            "before_line": 75,
+            "before_column": 49
+          }
+        ]
+      },
+      "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/CoinClientSetup.java": {
+        "mapping": {
+          "e": "event",
+          "v": "item"
+        },
+        "exact_identifier_token_counts": {
+          "e": 4,
+          "v": 4
+        },
+        "original_source_positions": [
+          {
+            "before": "e",
+            "after": "event",
+            "before_line": 4,
+            "before_column": 157
+          },
+          {
+            "before": "e",
+            "after": "event",
+            "before_line": 4,
+            "before_column": 160
+          },
+          {
+            "before": "e",
+            "after": "event",
+            "before_line": 4,
+            "before_column": 365
+          },
+          {
+            "before": "v",
+            "after": "item",
+            "before_line": 4,
+            "before_column": 412
+          },
+          {
+            "before": "v",
+            "after": "item",
+            "before_line": 4,
+            "before_column": 415
+          },
+          {
+            "before": "v",
+            "after": "item",
+            "before_line": 4,
+            "before_column": 431
+          },
+          {
+            "before": "v",
+            "after": "item",
+            "before_line": 4,
+            "before_column": 434
+          },
+          {
+            "before": "e",
+            "after": "event",
+            "before_line": 4,
+            "before_column": 530
+          }
+        ]
+      }
+    },
+    "proof_scope": "Complete ordered code, raw literal positions, other comments and Stonecutter directives; before identifiers normalized only at recorded exact local token occurrences."
+  },
+  "repack_probe": {
+    "scope": "Actual core repack versus exact original shuffle method body, with fixed equivalent Random adapters and one notification stub. Not native random scheduling, NBT, packets, rendering, expiry placement or saved-world execution.",
+    "seconds": 0.477,
+    "result": {
+      "cases": 4112,
+      "bounded_random_draws": 558109,
+      "totals_checked": 257,
+      "seeds": 16
+    },
+    "original_shuffle_body": "\n\t\tint tAmount = 0;\n\t\tfor (int i = 0; i < mCoinStackSizes.length; i++) {\n\t\t\ttAmount += mCoinStackSizes[i];\n\t\t\tmCoinStackSizes[i] = 0;\n\t\t}\n\t\twhile (tAmount > 0) {\n\t\t\tint tIndex = rng(mCoinStackSizes.length);\n\t\t\tif (mCoinStackSizes[tIndex] < COIN_STACKSIZE) {\n\t\t\t\tmCoinStackSizes[tIndex]++;\n\t\t\t\ttAmount--;\n\t\t\t}\n\t\t}\n\t\tupdateClientData();\n\t",
+    "original_path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/placeables/MultiTileEntityCoin.java",
+    "original_sha256": "70352995f5692abf8f874041a18c1bd2c476bfb1bdd5d4dea7b8fbb92952a719",
+    "inputs": [
+      {
+        "path": "core/src/main/java/com/gregtech/gregtech/block/CoinPileRules.java",
+        "sha256": "2eb82dac078603cb864500841370dbc9693bedc978f3ec45fc57ea8d1f7434a9"
+      },
+      {
+        "path": "work/coin-lifecycle-audit-20261022/SourceShuffle.java",
+        "sha256": "84ccd2383910b81ff4c399a9b57833267e0dab6fc104b694a2867b79b0a8bc39"
+      },
+      {
+        "path": "work/coin-lifecycle-audit-20261022/RepackProbe.java",
+        "sha256": "1ab9c4691c0080a9a3b5d2fbb25855a4f00c65c8b35053cc2206ab99076075e9"
+      }
+    ]
+  },
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "formal_findings_added": [
+    {
+      "id": "ALIGN-387",
+      "finding": "Coin pile opacity changed from explicit water opacity 3 to native outline-derived 0.",
+      "evidence": "Actual old world bridge delegates to the tile override; both native platform chains return 0 for the current fixed 16x2x16 outline, noOcclusion and empty fluid.",
+      "limit": "Source/native bytecode inference, not an actual light-engine query or world brightness comparison."
+    },
+    {
+      "id": "ALIGN-388",
+      "finding": "Ordinary coin pile pick returns the bare coin_pile BlockItem rather than a material/pattern-bearing coin.",
+      "evidence": "Old actual world block forwards pick to the inherited tile writer. Current direct Block subclass has no clone override; actual Forge and Neo interface defaults and Block fallback create a new stack of the registered bare block item.",
+      "limit": "Normal pick fallback only; no Ctrl-pick, external mods, client key press or saved world execution."
+    }
+  ],
+  "formal_findings_extended": [
+    {
+      "id": "ALIGN-004",
+      "scope": "Original independent use3DCoins and use3DCoinsInv client options lack a port consumer. Current default 3D is implemented; CFG remains deliberately deferred, not reported as a default-path failure."
+    }
+  ],
+  "already_implemented_or_rejected": [
+    "Current world save serializes all 16 cell counters and the real coin item; its custom data retains die/unique payload. Loading calls storeCoin and refreshes decoded pattern.",
+    "Coin chunk/update packet overrides exist. Real Forge packet/chunk defaults call load; Neo defaults call loadWithComponents and loadAdditional. This is source wiring, not live packet delivery/restart proof.",
+    "Forge and Neo actually register the world renderer and item extension. The model override distinguishes untagged/default and stamped items; neither entire platform is missing a coin renderer.",
+    "Current prefix coin amount is U9, as in original item recycling data. No missing amount finding.",
+    "Original internal registry item block does not extend the world block; actual placement swaps to the container MultiTileEntityBlock. Pick/opacity conclusions use that real world bridge.",
+    "All-zero flat world branch and Unique tooltip remain prior ALIGN-385/386; not duplicated here. Full material membership/cross-mod identity and native expiry lifecycle are not certified."
+  ],
+  "preparation_attempts": [
+    {
+      "result": "corrected helper preparation",
+      "detail": "Initial local rename matcher operated only on the comments/string scanner and matched no identifiers; now renames only exact identifier tokens in code gaps, with strict counts. Preview annotation occurrence guard was also corrected from one to two. No production mutation occurred until proof passed."
+    },
+    {
+      "result": "corrected final-check preparation",
+      "detail": "Unchanged issue-scope document has working-tree CRLF and Git LF; final comparison now uses normalized text instead of mismatched raw encodings. Source/resource/protected-material raw hashes still use exact bytes."
+    }
+  ],
+  "limits": [
+    "Six edited sources, local names/comment correction/spacing only; no gameplay, registry data, assets, API types or behavior change.",
+    "No Gradle, whole-mod compilation, GameTest, Minecraft world, actual rendering, restart, build, push or GitHub write.",
+    "4112 repack cases use an exact original body and equivalent bounded RNG adapters; not a full native lifecycle test.",
+    "388 cumulative records include already repaired items and policy differences, not an unresolved count or completion percentage. Full goal remains active."
+  ],
+  "root_revalidation": {
+    "baseline_git_sources": true,
+    "original_sources": 9,
+    "current_sources": 23,
+    "native_entries": 12,
+    "platform_views": 11,
+    "edited_sources": 6,
+    "lines_before": 855,
+    "lines_after": 936,
+    "native_hashes": true,
+    "probe_inputs": true,
+    "protected_materials": true,
+    "source_and_resource_hashes_current": true,
+    "all_source_and_native_excerpt_ranges_and_hashes_current": true,
+    "native_entry_hashes_current": true,
+    "platform_code_proof_reproduced": true,
+    "formal_rows_contiguous": 388,
+    "navigation_ledgers_linked": [
+      "PLAN",
+      "STATUS",
+      "DECISIONS",
+      "VERIFICATION",
+      "SOURCE_LAYOUT",
+      "ORIGINAL_ALIGNMENT_AUDIT"
+    ],
+    "issue_skip_cfg_and_combination_scope_unchanged_normalized_text": true
+  }
+}

@@ -1,6 +1,60 @@
 # 原版对齐与源码结构审计
 
-2026-10-21 续核：第八十九批核USB／HDD交换器，新增289非选择面板移除错误重置，132／172补复制声与模式通知；基本读写／保存已有。行为记录至ALIGN-289，共289条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是289个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
+2026-10-23 第一百三十批：新增433–436便携容器饮用、自接雨、装液堆叠和陶罐手持取源。11原／11当前、30引用、14原生条目、51源码目录及1881文件定位见[专题](PORTABLE_VESSEL_AUDIT.md)；四源237→351行、六完整代码视图／四生成输入保持，core／双版编译129秒通过。未改玩法或游戏验收，436不是待修数／完成率，全面目标继续。
+
+2026-10-23 第一百二十九批：新增430海／脏水倒空回调／创造策略、431木桶发射器入口、432炼药锅补满／消耗；171目录形态与两端能力已有。5原／6当前、18引用、13原生条目及三源486→568行、五完整代码视图／四生成输入见[专题](WOODEN_BUCKET_AUDIT.md)。core／双版编译138秒通过，未游戏验收；432不是待修数，全面目标继续。
+
+2026-10-22 第一百二十八批：30原行为类挂载定位排除未挂载／注释代码误报，新增429泡沫喷罐族未接；1229输入／55引用不是验收率。12原／13当前、24引用见[专题](ITEM_BEHAVIOR_OWNERSHIP_AUDIT.md)。五工具helper共用、两源866→832行和四完整视图／输入保持，双版编译117秒通过。未改玩法，429不是待修数，全面目标继续。
+
+2026-10-22 第一百二十七批：新增427手持电力计／转速计分派缺口、428盖革计停机清零时序，排除把oEnergy误当剩余储热。八原／17当前、31引用与两事件工件条目见[专题](INSTRUMENT_DISPATCH_AUDIT.md)。收尾共用、三源175→241行及六完整视图／输入保持，双版编译103秒通过，非游戏，428不是待修数，全面目标继续。
+
+2026-10-22 第一百二十六批：新增425盖革计堆叠、426遥控提示；132补手动遥控蜂鸣／点击缺口，003补四种直接英文消息。十原／14当前、40引用、四原生条目及四资源见[专题](HANDHELD_INSTRUMENTS_AUDIT.md)。三源422→381行和六完整视图保持，遥控包装移共享；双版编译73秒通过，非游戏，426不是待修数，全面目标继续。
+
+2026-10-22 第一百二十五批：新增422 Radaway重复扣量、423服用时间、424高剂量额外伤害请求；九原／16当前、48引用及18原生条目见[专题](RADIATION_CONSUMABLES_AUDIT.md)。食品属性表共用、五源170→256行及九完整视图保持，core／双版编译83秒通过。源推导非游戏，424不是待修数，全面目标继续。
+
+2026-10-22 第一百二十四批：新增420护甲计算、421普通耐久提示差异；六套24件已有，不重复报缺失。4原／13当前、32引用、十原生条目与104资源见[专题](HAZMAT_SUIT_AUDIT.md)；三源106→176行、五完整视图与路径抽取保持，双版／core编译80秒通过。有限伤害见证非游戏，421不是待修数，全面目标继续。
+
+2026-10-22 第一百二十三批：218再补20电池盒至82项；齿轮两类已有stack16另记。四源229→281行、六完整代码流及物性工厂对应，16原／14当前、18引用与三原生条目／三引用见[专题](BATTERY_GEAR_REGISTRATION_AUDIT.md)。core／双版编译76秒通过，未游戏／构建，无新编号，全面目标继续。
+
+2026-10-22 第一百二十二批：能源创建业务去重，两源215→269行，265token旧工厂／三完整剩余流受控对应。218补39项至62，未增加编号；24原／19当前、54引用及五原生条目见[专题](ENERGY_NODE_REGISTRATION_AUDIT.md)。core／双版编译2分21秒通过，非世界／默认离线验收，419不是待修数，全面目标继续。
+
+2026-10-22 第一百二十一批：新增416喷漆层、417放置开邻端、418Neo连接准入、419裸线火把／中继器资格，扩078。8原／29当前、38引用及八资源见[专题](SIGNAL_WIRE_CLIENT_AUDIT.md)。两压行源54→111行，三颜色表达式共用12行core，三完整平台流受控保持；含120双版／core首次编译79秒、最终增量26秒通过，非默认离线／CI或游戏验收。419不是待修数，全面目标继续。
+
+2026-10-22 第一百二十批：新增414魔法场吸收器独立设备缺失、415红石导线等强输入面策略差异。9原／16当前Java、32引用及两端Direction顺序见[专题](SIGNAL_WIRE_AUDIT.md)。四源446→670行，三个原数值表达式抽到23行core，七完整剩余视图保持，约0.505秒24716数值核验非原生网络。无整平台编译／游戏／构建，415不是待修数，全面goal继续。
+
+2026-10-22 第一百一十九批：重盘1229原／1826当前Java，零不透明目录不等于架构完成；112回执的341明确引用／91候选只作定位。沿注册及真实消费者新增413存储输入器缺口，143充电衣柜不重报。大容量存储交互共用，两源368→396行、两旧业务完整归一与三代码视图见[专题](STORAGE_INSERTER_AUDIT.md)。同版本缓存API适配下双版compileJava通过，非默认离线／CI或游戏验收，全面goal继续。
+
+2026-10-22 第一百一十八批：垃圾设备新增407–412物性、自身掉落、碰撞、遮光、创建提示和物品上限差异；13原／22当前、33引用、12原生条目／23引用与18资源见[专题](GARBAGE_PHYSICAL_AUDIT.md)。四源325→424行、14标识位置及七完整平台视图保持；原绘制盒对应不代表碰撞对应。无游戏／编译／构建，412不是未修数；默认RGB及全系统继续。
+
+2026-10-22 第一百一十七批：共享垃圾池新增396–406并扩139，14原／18当前、43引用、九原生条目／十二引用；原保存与相同标签合并已有，容量／数值政策不借整理更改。四源509→621行、70局部名及七完整代码视图保持，见[专题](GARBAGE_POOL_AUDIT.md)。快捷栏复制为源码与原生调用链见证，非游戏实测；406不是待修数，全面goal继续。
+
+2026-10-22 第一百一十六批：附件新增389–395排空、三明治、剂量、抗爆、经验、碰撞及裸ID分裂，扩132。16原／22当前、34引用、五原生条目／八引用；24材质／防酸对应，四源326→376行、七完整剩余视图及三新helper受控保持，见[专题](FLUID_ATTACHMENTS_AUDIT.md)。约0.51秒core元数据探针与6004源算术不是世界，395不是待修数，全面goal继续。
+
+2026-10-22 第一百一十五批：硬币新增387光照3→0、388普通选取裸堆，004扩两项3D配置。9原／23当前Java、4资源、12原生条目／14引用；保存、默认接收与两端客户端分派已有，见[专题](COIN_LIFECYCLE_AUDIT.md)。六源855→936行、22局部标识位置归一后11完整视图保持；约0.48秒4112重排条件对应原函数，不是原生世界验收。388不是待修数，全面goal继续。
+
+2026-10-22 第一百一十四批：铸币新增384自动锤绑定、385全零世界币平面分支、386Unique提示，扩132／139。9原／32当前Java、19资源、21引用；六源477→590行和11完整视图保持。默认32行／192物品盒、模具两层六盒与2097152位行转换见[专题](COIN_MINTING_AUDIT.md)。未把冗余准入、手持无限预算或原未完成GUI误报为缺项；386不是未修数，全面goal继续。
+
+2026-10-22 第一百一十三批：材料／硬币堆新增377–383并扩132，13原／19当前Java、17引用和201资源留痕；192模型、195引用与27偏移对应，六原图缺失不计字节通过。七旧540→646行加20行共用谓词，12旧平台视图与两新正文受控保持，见[专题](MATERIAL_PILES_AUDIT.md)。未改玩法／编译／游戏，383不是未修数，全面goal继续。
+
+2026-10-22 第一百一十二批：微型门新增370–376联动定义、放大镜、眼类准入、碰撞、遮光、提示和粒子差异，132／278扩具体入口。29原／14当前Java、12资源、四原生条目和19引用留痕；四源716→797行、七完整视图保持，短信号时序与13／12模型盒核对见[专题](MINI_PORTAL_AUDIT.md)。376不是未修数；真实跨维度、其余系统和全面goal继续。
+
+2026-10-22 第一百一十一批：材料轨新增367工具操作绑定、368检测框、369助推传播身份差异；两原／十当前Java、13引用和八原生条目核实。三源342→397行、五完整平台视图在四处私有标识更名归一后保持，已有轮询／基本信号另列，见[专题](RAIL_CONTROLS_AUDIT.md)。未改玩法／编译／游戏／构建，369条不是未修数，全面goal继续。
+
+2026-10-22 第一百一十批：道路／轨道新增364邻轨身份、365加载半径、366木材遮挡语义；4原／10当前Java、15视图、12资源和八原生条目核实。整段三道路方法16480 token按适配对应；五源1129→1353行并删两无普通引用私有方法，三完整／四受控剩余视图保持。40输入核心记录器及边界见[专题](STREETS_RAILS_AUDIT.md)。正式366不是待修数，全面goal继续。
+
+2026-10-22 第一百零九批：中心群系新增361树高随机量、362藤蔓／可可、363叶距初始化。原版官方JAR／Forge映射与补丁、两端六原生条目各自核实；3原／13当前Java、20视图。四源431→461行，删恒真条件下死分支，四完整／一受控剩余视图保持；144区块前后记录指纹与54水域名见[专题](CENTER_BIOMES_AUDIT.md)。正式363不是待修数，全面goal继续。
+
+2026-10-22 第一百零八批：完整核对Nexus／测试房两个generate方法体，列明适配后4883／2193有序token一致；144库存表达式逐槽一致、49设施调用仅去用户要求删除的证书。实际core探针48请求与原源坐标／参数一致；五源831→914行、七完整执行视图保持。见[专题](ORIGIN_FACILITIES_AUDIT.md)。没有新增正式差异，仍360条；原生内容／保存与全面goal继续。
+
+2026-10-22 第一百零七批：新增359地表道路／中心避让、360石层／小矿／泉的中心reset保护；10原／14当前Java、12资源、24视图。五源397→563行、八完整代码视图保持，289坐标仅布尔几何投影，已有基岩候选排除另列，见[专题](ORIGIN_PROTECTION_AUDIT.md)。正式360条不是待修数，全面goal继续。
+
+2026-10-22 第一百零六批：生成调度新增353–358七泉选择、泉／矿互斥、床岩网格选择、共享目录／维度成员、小型基岩矿标志及指示分布差异，004补配置消费者。10原／15当前Java、10资源、24视图，五源502→581行并删两无直接调用私有包装；六完整／两受控删除后视图保持，实际core探针和四原生条目见[专题](SPRING_BEDROCK_DISPATCH_AUDIT.md)。正式358条不是待修数量，特殊区域／地质及全面队列继续。
+
+2026-10-22 第一百零五批：液体泉新增345–352物性、启动、世界出液、外部方块查找、流体层亮度、喷漆范围、指示草调用与原生下界入口差异，139补泉眼后备宿主。14原／23当前Java（含1测试源）、24资源、44视图；七源742→908行、13完整代码流保持，见[专题](FLUID_SPRING_AUDIT.md)。正式352条含已修／政策，不是待修数量；生成概率／互斥及全面队列继续。
+
+2026-10-22 第一百零四批：新增339–344花盆碰撞／遮光、两种日用方块喷漆、灯笼扳手／固定亮度及花盆配方家族差异，139补灯笼原允许而当前无宿主。五源174→254行、另改一来源注释，六源11完整视图保持，见[专题](PLANT_LANTERN_AUDIT.md)。重新清点1229原版／1825当前Java并建立[引用筛查](verification/source-reference-screen-20261022.json)；引用数量不是覆盖率。正式记录至344条，含已修与保留政策，不是344个未修问题，全面目标继续。
+
+2026-10-22 续核：第一百零三批核高级按钮／曲柄，新增329–338设计、遥控、诊断、配置、持续驱动、能源查询、药水、默认物品、喷漆和扳手差异；132／139补具体入口。行为记录至ALIGN-338，共338条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是338个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
 
 本轮玩家反馈已修复 ALIGN-137 及 ALIGN-126 的大容量存储实例，并恢复普通流体管道的原版更新前两相调度；颜色拆分和定向验证见[反馈记录](verification/storage-direction-colors-20261020.md)。其余全面队列继续。
 
@@ -27,7 +81,7 @@
 | ALIGN-001 | 确认缺少小坩埚碰撞致死后的材料回收。现有烫伤不等于原版完整碰撞处理。 | `gregtech/tileentity/tools/MultiTileEntitySmeltery.java:622`：温度伤害致死后按实体种类加入肉、骨、铁、雪、火药等，带相应初始温度。 | 共享 `block/machine/SmeltingCrucibleBlock.entityInside` 两版本分支均只调用温度伤害；需另核查大坩埚对应规则，不能直接复用所有小坩埚数量。 |
 | ALIGN-002 | 材料箭仅保留了部分行为，命中过程未对齐。 | `gregtech/entities/projectiles/EntityArrow_Material.java:171–241`：读取箭的材料及附魔，处理魔法伤害、火焰、击退、抢夺、特殊生物与命中回调。 | 共享 `entity/MaterialArrowEntity` 目前只接材料基础伤害、塑料速度、寿命、拾取和保存，命中沿用现代 `AbstractArrow`；`MaterialArrowRules` 无原版命中规则。现代弓自身附魔不能证明箭材料附魔等价，需逐条查物品赋魔和事件路径。 |
 | ALIGN-003 | 确认存在未进入语言系统的提示。 | 原版提示／扫描来源需按具体行继续比对汉化补丁。 | `item/FuelRodItem:183–211` 直接拼接 Remaining、Self、Fuel、Tier、Durability 等；`item/behavior/BehaviorScanner:170–183` 拼接 Input、Output、Stored。单块热交换器放大镜也直接拼Input／Output，见[热交换器](HEAT_EXCHANGER_AUDIT.md)。语言文件格式自检不证明这些提示已汉化。大型换热器专用放大镜Input／Output／Empty与流体句子也直接拼接，见[大型换热器](LARGE_HEAT_EXCHANGER_AUDIT.md)。17997右键Structure Incomplete／Logic等也直接拼接，字段缺项另列254，见[物流状态](LOGISTICS_CORE_STATE_AUDIT.md)。 |
-| ALIGN-004 | 配置覆盖仍不完整；cfg收尾安排保留。当前三个声明中两个过载选项有效，日志选项无消费者。 | 原Config真实load/save与代表链包括石层／维度、生物掉落、材料工具／处理倍率；不是仅静态常量。 | 两版COMMON注册及原生加载／保存／缓存刷新已接通，MachineOverload实际读取两个默认false选项；logMaterials未读。代表族缺配置入口，133概率沿旧项，Nexus全开是项目政策；见[配置核查](CONFIGURATION_CONTRACT_AUDIT.md)，完整矩阵／磁盘／多人仍待核。 |
+| ALIGN-004 | 配置覆盖仍不完整；cfg收尾安排保留。当前三个声明中两个过载选项有效，日志选项无消费者。 | 原Config真实load/save与代表链包括石层／维度、生物掉落、材料工具／处理倍率；不是仅静态常量。 | 两版COMMON注册及原生加载／保存／缓存刷新已接通，MachineOverload实际读取两个默认false选项；logMaterials未读。代表族缺配置入口，133概率沿旧项，Nexus全开是项目政策；见[配置核查](CONFIGURATION_CONTRACT_AUDIT.md)，完整矩阵／磁盘／多人仍待核。  泉／床岩生成的Enabled、Probability、逐维度、Ore／指示物、无限油气开关也缺完整消费者，见[生成调度](SPRING_BEDROCK_DISPATCH_AUDIT.md)。 硬币原use3DCoins／use3DCoinsInv两个客户端开关也缺对应消费者，默认3D已有，见[生命周期](COIN_LIFECYCLE_AUDIT.md)。 |
 | ALIGN-005 | **结构问题已修复**，原先不是游戏缺标签。 | 前轮恢复的起火器配方集合应能被两版本消费。 | `EquipmentCraftingCatalog.TAGS` 已纳入起火器标签，NeoForge 由已有适配器读取共享内容，删除逐字节相同的版本资源副本。98 项目录由生成器重建并核对，源策略检查通过。 |
 | ALIGN-006 | 确认缺少 BURNING 材料属性对应的点火加成。 | `Behavior_FlintAndTinder:51,88` 判断 `FLAMMABLE` 或 `BURNING`；`MT:1275` 的 Blaze 带 `BURNING`。 | `BehaviorFlintAndTinder.useOn` 只读取 `FLAMMABLE`；当前材料属性没有 BURNING 路径。范围是材料点火概率，不是所有打火机失效。 |
 | ALIGN-007 | 确认工具的材料自动收集分支缺失。 | `MultiItemTool.canCollectDropsDirectly:217` 同时考虑工具种类、主材料和副材料 `AUTO_COLLECTING`；`MT:1272` 的 Basalz 有该属性。 | `GTToolHelper.canCollectMachineDrop` 只检查 `type.canCollect()` 和耐久；材料表未携带该属性。现有扳手直接收集能力仍然存在，不能判整类收集缺失。 |
@@ -36,7 +90,7 @@
 | ALIGN-010 | 确认工作属性表遗漏工厂继承，并混用字段名与材料名。影响部分材料的配方过滤和耗时。 | `MT:62,78,168–177,439,472,1056,1129`：食物工厂、低熔点金属工厂及显式属性。 | core 实际观察肉／奶酪／巧克力 FOOD、MORTAR 缺失，锡铅 FURNACE、MORTAR 缺失，盐／二氧化硅的显式属性未匹配。其他材料和最终配方全集未验证，见 [具体样本和调用路径](MATERIAL_PROCESSING_AUDIT.md)。 |
 | ALIGN-011 | 确认通用挤压注册未应用原版材料条件／锻造目标，输入前缀矩阵也较窄。 | `Loader_Recipes_Handlers:741–838` 的前缀矩阵、EXTRUDER／EXTRUDER_SIMPLE／fullforge；`RecipeMapHandlerPrefixForging` 的输出目标。 | `PartRecipeLoader` 只遍历四个输入前缀，对有效形态同时注册普通和低温路径，保留原材料输出。Rubber／Plastic 有专用路径，不包含在此判断中；未枚举最终 Minecraft 配方。 |
 | ALIGN-012 | 确认材料手册的处理目标遗漏复制继承。 | `OreDictMaterial.setAllToTheOutputOf:749–777`；`MT:1245–1246,1279–1280,1732`。 | 处理木／抛光木的目标、砖的禁用目标、烧结钨的压缩目标在侧表缺失。core 八次查询已记录；不能将展示错误直接推为所有对应机器错误。 |
-| ALIGN-013 | 确认通用配方部分条件不同。 | `Loader_Recipes_Handlers:79` 的 rockGt 研钵行不要求 MORTAR；`:217–233` 的压缩行排除 COATED，部分还排除 LAYERED。 | `MortarGrindingRecipes` 把 rockGt 也放进 MORTAR 过滤；`MaterialFormConversionRecipes` 缺少上述涂层／层状条件。材料实际形态和最终可见配方仍待枚举。 |
+| ALIGN-013 | 确认通用配方部分条件不同。 | `Loader_Recipes_Handlers:79` 的 rockGt 研钵行不要求 MORTAR；`:217–233` 的压缩行排除 COATED，部分还排除 LAYERED。 | `MortarGrindingRecipes` 把 rockGt 也放进 MORTAR 过滤；`MaterialFormConversionRecipes` 缺少上述涂层／层状条件。磨削七行同样缺COATED排除，rockGt额外STONE门控也未消费；材料实际形态和最终可见配方仍待枚举，见[磨削](MANUAL_GRINDING_AUDIT.md)。 |
 | ALIGN-014 | 确认部分通用加工固定耗时替代了原版材料工作性分支，也遗漏部分过滤条件。 | `Loader_Recipes_Handlers:262–319,371–393`；`RecipeMapHandlerPrefix.getCosts`。 | `PartRecipeLoader` 的轧制、杆拉细丝、卷弯、箔／轨道与车床方法使用固定时长。困难材料品质 3、1U 锭→板，原版参数算得 1024 tick，当前传 16；具体范围不包含已有独立工作性计算的 Welder 和物理导线入口。 |
 | ALIGN-015 | 确认车床／切割的部分材料余料未返回。 | 原版车床／切割行启用 pulverized remains，`RecipeMapHandlerPrefix:213–218` 按差额和粉碎目标返回。 | `PartRecipeLoader.roll`、`cut` 只输出主产物，如板→透镜、透镜→环、小板切割。锭／宝石→杆有专用余料但未按粉碎目标转换；不能扩大成所有加工都无副产物。 |
 | ALIGN-016 | 确认通用材料切割的冷却液矩阵、时长和品质用量倍率不同。 | `Loader_Recipes_Handlers:628–652` 实际循环前四种冷却液；`RecipeMapHandlerPrefix:218` 按品质+1缩放。 | 当前 `cut` 只注册水、基础时长与 `max(16,duration)` 水量；品质 3 的长杆水路线，原版参数为 64 tick／256 mB，当前 16 tick／16 mB。其他显式切割配方未全部核查。 |
@@ -104,7 +158,7 @@
 | ALIGN-075 | 确认可调齿轮箱输出轮次、份额和优先序不同。 | 原版有进展就继续，按 power/3 分配且每轮推进顺序。 | 当前最多三轮、按剩余输出面分配、tick 末推进一次；限量接收器吞吐可能不同，见 [报告](AXLE_GEARBOX_AUDIT.md)。 |
 | ALIGN-076 | 确认可调齿轮箱缺少通用开关／运行状态接口。 | 原版实现 SwitchableOnOff／RunningActively。 | 当前只实现 IEnergyBlock，MachineControl.find 返回 null；软锤手动停启仍存在，见 [报告](AXLE_GEARBOX_AUDIT.md)。 |
 | ALIGN-077 | 确认部分宿主的进度覆盖板未读取原指标；有些可用但读数语义不同。 | 原版分别返回安培、搬运次数乘 64、传输液量、发酵时间及对应上限。 | 管道／桶无专用进度接口，但 CoverProgress 会回退到内容物占比；不能写成完全不可安装或无读数，见 [补查](DISPLAY_METER_AUDIT.md) 和 [导线](ELECTRIC_WIRE_AUDIT.md)、[物品管道](ITEM_PIPE_AUDIT.md)、[流体管道](FLUID_PIPE_AUDIT.md)、[普通桶](BARREL_AUDIT.md)。17996普通进度覆盖板回退到剩余电量，刻后0／4096替代原范围255／256；专用进度／压强传感器已有正确接口，不合并误报，见[禁刷怪塔](VON_DA_GRAAGG_AUDIT.md)。 |
-| ALIGN-078 | 确认导线缺少建筑泡沫包覆与硬化绝缘。 | 原版连接器支持湿／干泡沫，导线硬化后免除接触电击。 | 当前导线没有包覆状态；硬化剂／去除剂只识别独立泡沫方块，见 [报告](ELECTRIC_WIRE_AUDIT.md)。 |
+| ALIGN-078 | 确认导线缺少建筑泡沫包覆与硬化绝缘。 | 原版连接器支持湿／干泡沫，导线硬化后免除接触电击。 | 当前导线没有包覆状态；硬化剂／去除剂只识别独立泡沫方块，见 [报告](ELECTRIC_WIRE_AUDIT.md)。 红石裸／绝缘线同继承原可发泡父类，当前也无该状态，扩此宿主而不重复编号，见[入口](SIGNAL_WIRE_CLIENT_AUDIT.md)。 |
 | ALIGN-079 | 确认物品管道库存槽数被当作单槽容量。 | 原版 NBT_INV_SIZE 创建多槽库存，每槽正常上限 64。 | 当前固定一个槽、槽上限 spec.invSize，涉及缓存种类及存档结构，见 [报告](ITEM_PIPE_AUDIT.md)。 |
 | ALIGN-080 | 确认物品管道吞吐限流缺失且计数单位不同。 | 原版每次成功搬运计一堆，扫描／发送检查每秒容量。 | 当前按物品数累加，仅保存和显示，无容量准入，见 [报告](ITEM_PIPE_AUDIT.md)。 |
 | ALIGN-081 | 确认物品管道改成逐段缓存转交。 | 原版每十 tick 扫描后从源库存直接交付出口。 | 当前每四 tick 向 firstHop 库存转交，堵塞／时序不同，见 [报告](ITEM_PIPE_AUDIT.md)。 |
@@ -158,14 +212,14 @@
 | ALIGN-129 | 确认苦力怕点火回调不同。 | 原版为服务端左键实体拦截。 | 当前多物品右键，起火工具 hurtEnemy；完整攻击效果未世界验证，见[报告](IGNITION_EXTINGUISHER_AUDIT.md)。 |
 | ALIGN-130 | 确认燃烧室点火／灭火工具分派不完整。 | 原版三类宿主识别两个工具钩子。 | Forge 缺随机工具点火接口，Neo 有该接口；两版都缺喷罐灭火接口，见[报告](IGNITION_EXTINGUISHER_AUDIT.md)。 |
 | ALIGN-131 | 确认原生点火返回零后错误兼容回退。 | 原版按目标类型选择原生或 ToolCompat，不以返回值切换。 | 当前零成本后仍点 TNT／相邻空气；已燃雷管可进入此路径，未世界复现，见[报告](IGNITION_EXTINGUISHER_AUDIT.md)。 |
-| ALIGN-132 | 确认部分物品／库存交互缺少反馈声音。 | 原版起火尝试、成功喷射／封装和瓶框成功取放分别主动发送声音。 | 当前对应回调未调用；雷管、自动点火器、书架取物等已有声音，不列为全局无声。见[工具报告](CONSUMABLE_FEEDBACK_AUDIT.md)及[瓶框补充](BOTTLE_BOOKSHELF_AUDIT.md)。颜色喷罐已有FIRE_EXTINGUISH占位调用，清漆仍缺专用物品层声，见[喷漆目标](PAINT_TARGETS_AUDIT.md)。USB／HDD持有U盘复制／清除缺原playClick，普通面板入口不补声，见[数据交换](USB_SWITCH_AUDIT.md)。 |
+| ALIGN-132 | 确认部分物品／库存交互缺少反馈声音。 | 原版起火尝试、成功喷射／封装和瓶框成功取放分别主动发送声音。 | 当前对应回调未调用；雷管、自动点火器、书架取物等已有声音，不列为全局无声。见[工具报告](CONSUMABLE_FEEDBACK_AUDIT.md)及[瓶框补充](BOTTLE_BOOKSHELF_AUDIT.md)。颜色喷罐已有FIRE_EXTINGUISH占位调用，清漆仍缺专用物品层声，见[喷漆目标](PAINT_TARGETS_AUDIT.md)。USB／HDD持有U盘复制／清除缺原playClick，普通面板入口不补声，见[数据交换](USB_SWITCH_AUDIT.md)。 高级按钮原手动脉冲有释放声且音高随活跃变化，当前仅固定按下声；见[按钮曲柄](BUTTON_CRANK_AUDIT.md)。  微型门客户端晚激活的portal专有声也未接；通用起火声不补此路径，见[微型门](MINI_PORTAL_AUDIT.md)。  材料堆沿柱取料的声音在原选中顶层、当前被点击底层，已有声而位置不同，见[材料堆](MATERIAL_PILES_AUDIT.md)。 原硬锤铸币成功播放random.anvil_land，当前模具播放ANVIL_USE；已有反馈但事件不同，见[铸币](COIN_MINTING_AUDIT.md)。 龙头空手向下方注液缺原喷射／水双声，通用转移函数不补；不排除目标自发声，见[附件](FLUID_ATTACHMENTS_AUDIT.md)。 |
 | ALIGN-133 | 确认原版起火概率配置未接入。 | `GT6_Main` 读取 1–100 的 `FlintAndSteelChance`，默认 30。 | GT 工具固定传默认 30；默认一致，配置收尾仍按先前安排延后，见[报告](CONSUMABLE_FEEDBACK_AUDIT.md)。 |
 | ALIGN-134 | 确认胶带创造预算及扣量与原版不同。 | 无限物品玩家使用整卷预算，成功不减剩余量。 | 当前传已存余量且成功照扣；大容量存储存在真实预算准入路径，见[报告](CONSUMABLE_FEEDBACK_AUDIT.md)。 |
 | ALIGN-135 | 确认部分零余量耗材未完成空形态转换。 | 喷罐／胶带在目标无反应后仍统一检查耗尽。 | 创造喷罐受非创造分支限制，胶带提前退出；非创造喷罐已对应，见[报告](CONSUMABLE_FEEDBACK_AUDIT.md)。有效目标还存在原先动作后清空、当前正余量准入的差异；实体零罐会清空但拒染色，保留防免费动作，见[消耗边界](PAINT_TARGETS_AUDIT.md)。 |
 | ALIGN-136 | 确认大容量存储缺少钳子取物与软锤清空入口。 | 原版分别处理背包转移／分批正面掉落及余料。 | 两版方块／实体及工具入口未补齐，提示仍列出这些操作；按钮和外部抽取不是替代，见[报告](MASS_STORAGE_CONTROL_AUDIT.md)。 |
 | ALIGN-137 | 2026-10-20 玩家反馈修复：自动下送／溢出执行已补齐。 | 位 1／4 切换、ticker、容量 +256、超额下送、底面输入门控及封装时模式切换已接入。 | NeoForge 定向运行验证真实活动扳手、下方箱子输出和溢出；其他存储工具／覆盖板问题另列，见[修复记录](verification/storage-direction-colors-20261020.md)。 |
 | ALIGN-138 | 确认大容量存储遗漏正面覆盖板门控。 | 原版任何正面覆盖板阻止普通取放，不透明板另隐藏显示。 | 普通装饰板的事件链仍 PASS 到按钮；渲染也缺可见性判断，未客户端验收，见[报告](STORAGE_COVER_BOUNDARY_AUDIT.md)。 |
-| ALIGN-139 | 确认部分宿主的覆盖板范围不同。 | 抽屉／保险箱禁正面，书架禁正背，瓶框禁所有面、大型涡轮禁正面，普通箱原本无 Coverable。 | 当前通用安装或箱子本体允许原禁用范围；不能混同大容量存储的“允许贴板后阻挡”。见[抽屉](STORAGE_COVER_BOUNDARY_AUDIT.md)、[保险箱](SAFE_LOCKER_AUDIT.md)、[书架／瓶框](BOTTLE_BOOKSHELF_AUDIT.md)和[箱子](CHEST_LOOT_AUDIT.md)。大型涡轮正面禁贴也未由后备host保留，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。 |
+| ALIGN-139 | 确认部分宿主的覆盖板范围不同。 | 抽屉／保险箱禁正面，书架禁正背，瓶框禁所有面、大型涡轮禁正面，普通箱原本无 Coverable。 | 当前通用安装或箱子本体允许原禁用范围；不能混同大容量存储的“允许贴板后阻挡”。见[抽屉](STORAGE_COVER_BOUNDARY_AUDIT.md)、[保险箱](SAFE_LOCKER_AUDIT.md)、[书架／瓶框](BOTTLE_BOOKSHELF_AUDIT.md)和[箱子](CHEST_LOOT_AUDIT.md)。大型涡轮正面禁贴也未由后备host保留，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。 采集袋／树洞原全侧禁贴，当前后备host对普通板仍准入，见[采集袋](SAP_BAG_AUDIT.md)。 高级按钮原全侧禁贴，当前后备宿主仍准入普通板；无实体曲柄不在此缺口内，见[按钮曲柄](BUTTON_CRANK_AUDIT.md)。  灯笼原全侧允许、当前无实体而没有宿主，属于反向缺口；花盆原禁贴则已有对应，见[花盆灯笼](PLANT_LANTERN_AUDIT.md)。  液体泉原04无覆盖宿主，当前后备宿主准入普通板，见[液体泉](FLUID_SPRING_AUDIT.md)。 铸币模具原全侧禁贴，当前后备宿主仍准入普通材料板，见[铸币](COIN_MINTING_AUDIT.md)。 末影垃圾桶原全侧禁贴，当前后备宿主没有对应排除；不套给回收器，见[垃圾池](GARBAGE_POOL_AUDIT.md)。 |
 | ALIGN-140 | 确认保险箱覆盖板操作遗漏宿主锁权限。 | 原版普通／工具覆盖板入口先调用 allowInteraction，检查认主或开锁。 | 当前事件提前消费，只有世界建造权限，没有 Safe 的锁门控；不等于世界保护失效或外部能力盗取内容，见[报告](SAFE_LOCKER_AUDIT.md)。 |
 | ALIGN-141 | 确认机械箱首次非正面普通右键不认主。 | 原版先 allowRightclick／allowInteraction 认主，随后限制 GUI 正面。 | 当前先非正面 PASS；现有背面不认主测试固定了不同合同，不作为对齐证据，见[报告](SAFE_LOCKER_AUDIT.md)。 |
 | ALIGN-142 | 确认保险箱和普通箱遗漏点击面邻块阻挡查询。 | 原版 Base04 普通入口查询 WD.obstructed；保险箱工具路径也查询。 | 当前锁／工具和普通箱顶面开盖条件不能补该查询；下半砖示例未运行，不推定所有方块缺失，见[保险箱](SAFE_LOCKER_AUDIT.md)和[箱子](CHEST_LOOT_AUDIT.md)。 |
@@ -198,7 +252,7 @@
 | ALIGN-169 | 确认自然蜂巢遗漏普通火焰消费／传播参数。 | 原实体两个接口均返回 300，GT 方块和 Forge 火焰调用有实际转发。 | 当前继承默认 FireBlock 映射且没有登记该方块；ignitedByLava 是另一入口，不能替代，见[报告](BUMBLE_HIVE_PHYSICAL_AUDIT.md)。 |
 | ALIGN-170 | 确认自然蜂巢遗漏末影龙破坏保护。 | 原 canEntityDestroy 拒绝 EntityDragon，旧 Forge 龙破坏链实际查询。 | 当前无覆写、immune／transparent 标签或专用事件补偿；限默认数据、允许生物破坏且无外部取消，未游戏复现，见[报告](BUMBLE_HIVE_PHYSICAL_AUDIT.md)。 |
 | ALIGN-171 | 确认养蜂寿命／配对倒计时存在条件性保存回退。 | 原养蜂箱继承 NeedsSaving 标记，全局每 20 tick 调 WD.mark 将区块标脏。 | 当前纯 tick 改字段无对应补偿，两版保存跳过干净区块；库存／开箱等变化仍可保存，正常 brood 切换不算全丢，见[报告](BUMBLE_PERSISTENCE_AUDIT.md)。 |
-| ALIGN-172 | 确认相邻库存变更通知的发送／接收链未完整接入。 | 原箱变更后六面广播，漏斗、筛粉漏斗、机器等实际消费。 | 当前正常 setChanged 的原生 onNeighborChange 不等于专用回调或普通 neighborChanged；现有 20／100 tick 等重试仍在，不能断言永久卡死，见[报告](INVENTORY_NOTIFICATION_AUDIT.md)。USB模式原直接markDirty匹配线缆的邻库，当前普通通知只置BasicMachine能源来源标志；自行再次查配方仍有，不报固定12tick延迟，见[交换器](USB_SWITCH_AUDIT.md)。 |
+| ALIGN-172 | 确认相邻库存变更通知的发送／接收链未完整接入。 | 原箱变更后六面广播，漏斗、筛粉漏斗、机器等实际消费；工作台onTick亦有明确广播。 | 当前正常 setChanged 的原生 onNeighborChange 不等于专用回调或普通 neighborChanged；现有 20／100 tick 等重试仍在，不能断言永久卡死，见[报告](INVENTORY_NOTIFICATION_AUDIT.md)。USB模式原直接markDirty匹配线缆的邻库，当前普通通知只置BasicMachine能源来源标志；自行再次查配方仍有，不报固定12tick延迟，见[交换器](USB_SWITCH_AUDIT.md)。工作台回调仅revision／标脏／输出信号，见[生命周期](WORKTABLE_LIFECYCLE_AUDIT.md)。Root广播亦有实际容器调用：浸洗／榨汁成功加工、搅拌盆灌液分支，见[开放容器](OPEN_VESSEL_AUDIT.md)。 |
 | ALIGN-173 | 确认共用菜单部分 shift 转出绕过自身库存回调，扩展至六类宿主。 | 原容器和槽明确设置库存变化标志。 | 槽许可通过、背包仅接纳部分且源堆非空时只通知 SlotItemHandler 的空容器；全部转空正常 setter。箱子、保险箱、抽屉、两种漏斗及垃圾桶同源；Queue 限合法末格／多件模式，工作台储物页、电池盒、垃圾场另有补偿或限制。Neo 合并已有堆另有入口，Forge 有例外，见[共用菜单核查](SHARED_MENU_AUDIT.md)。 |
 | ALIGN-174 | 确认灌木雨天加速额外受现代群系降雨判定限制。 | 原 Bush 在见天空时查询全局雨与高度 helper，没有降雪／干燥群系门控。 | 当前 Level.isRainingAt 还要求群系降水为 RAIN；合法手动种在降雪／干燥群系时可能少一次增长，普通降雨群系已有对应，见[报告](BERRY_BUSH_AUDIT.md)。 |
 | ALIGN-175 | 确认灌木屋下光照 helper 实际行为不同，原版截断可能属于历史缺陷，需明确取舍。 | 原 getLightLevel 在乘15前先把亮度转 long；普通原生亮度表0–14均小于1，实际满亮度才通过。 | 当前直接接受原始光照>9，10–14亦可生长。不在排版中盲目恢复原截断，第三方亮度表另有边界，见[报告](BERRY_BUSH_AUDIT.md)。 |
@@ -244,7 +298,7 @@
 | ALIGN-215 | 确认post反应的逐核心异常隔离边界缺失。 | 原GT_API_Proxy逐项catch回调Throwable、移相位表并记录后继续；不保证catch自身再抛或全部原tick。 | exchange／react在两端END无隔离，总线会重抛，给定E可中断后续核心；外部fill可达但原fill属普通tick，不能声称同一fill原被post保护。未注错／复现崩服，见[网络生命周期](NUCLEAR_NETWORK_LIFECYCLE_AUDIT.md)。 |
 | ALIGN-216 | 确认核棒行为接入由任意Item回调收窄为FuelRodItem＋固定Kind。 | 原IItemReactorRod被手动／自动准入、收发／反应／慢化真实消费，回调获得栈／槽／核心。 | 当前静态RodPhysics只读definition并按八Kind执行；public Rod构造器仍允许第47种参数棒，自行原生注册可用，但不是等价行为回调或支持SDK。未证明实际addon损坏，见[核扩展](NUCLEAR_EXTENSION_AUDIT.md)。 |
 | ALIGN-217 | 确认实现类路线自定义棒的耗尽产物受封闭目录限制。 | 原反应回调可直接改槽为自有产物，不强制内置目录。 | 新NUCLEAR棒life100／非慢化flux100≤max，product10001未进ALL，耗尽先byOriginal得null→EMPTY，外部原生注册B也不查；内置产物仍可工作，见[核扩展](NUCLEAR_EXTENSION_AUDIT.md)。 |
-| ALIGN-218 | 确认已核23种能源设备默认堆叠上限16→64。 | 原两太阳能、四泵、八大型涡轮、四大型发电机、17998避雷输出、17197大型换热器、17996禁刷怪塔、17999钻机及17997物流核心均注册stack16并被原Item消费。 | 当前对应plain BlockItem默认64；只核这23项，未实测库存，见[太阳能](SOLAR_PANEL_AUDIT.md)、[泵](ROTATIONAL_PUMP_AUDIT.md)、[涡轮](LARGE_TURBINE_AUDIT.md)、[避雷针](LIGHTNING_ROD_AUDIT.md)、[大型发电机](LARGE_DYNAMO_AUDIT.md)与[大型换热器](LARGE_HEAT_EXCHANGER_AUDIT.md)。17996原stack16、当前普通BlockItem64，已核能源设备扩为21项，见[禁刷怪塔](VON_DA_GRAAGG_AUDIT.md)。17999钻机原16、现64，已核能源设备扩为22项，见[钻机](BEDROCK_DRILL_AUDIT.md)。17997原16、两端实际普通BlockItem64，能源设备扩23项，见[物流状态](LOGISTICS_CORE_STATE_AUDIT.md)。 |
+| ALIGN-218 | 确认已核82项能源设备默认堆叠上限16→64。 | 原先两太阳能、四泵、八大型涡轮、四大型发电机及五特殊主控共23项；此前再核电／Flux电动机与发电机20、电／Flux磁铁10、电变压器9，再补10080–10099普通／大型电池盒20，均默认stack16并被原物品入口消费。 | 当前对应普通BlockItem默认64；此前39项按七具体类／继承及原生默认值核实，现有蒸汽涡轮stack16保留，限普通默认形态。见[39项矩阵与去重](ENERGY_NODE_REGISTRATION_AUDIT.md)、[太阳能](SOLAR_PANEL_AUDIT.md)、[泵](ROTATIONAL_PUMP_AUDIT.md)、[涡轮](LARGE_TURBINE_AUDIT.md)、[大型发电机](LARGE_DYNAMO_AUDIT.md)、[避雷针](LIGHTNING_ROD_AUDIT.md)、[大型换热器](LARGE_HEAT_EXCHANGER_AUDIT.md)、[禁刷怪塔](VON_DA_GRAAGG_AUDIT.md)、[钻机](BEDROCK_DRILL_AUDIT.md)与[物流状态](LOGISTICS_CORE_STATE_AUDIT.md)；二十电池盒及齿轮已有stack16的区别见[本批](BATTERY_GEAR_REGISTRATION_AUDIT.md)，不是全部能源设备或库存实测。 |
 | ALIGN-219 | 确认单块热交换器缺少原有只读运行／活动状态提供者。 | 原RunningActively继承相关接口，检测板读取mActive与热液准入，不要求原本不存在的开关。 | 当前BE／父类无MachineControl.Provider，fallback running／active=false；安装supportsSwitch门控另属既有110，possible近似沿111。换热本身仍工作，见[热交换器](HEAT_EXCHANGER_AUDIT.md)。 |
 | ALIGN-220 | 确认单块热交换器周围点火的目标／可燃准入不同。 | 原WD.fire(true)接受可燃地毯／无碰撞目标或有可燃邻居，排除无可燃邻居空气。 | 当前仅空位＋现代flame.canSurvive；石顶且无可燃邻居可放火、可燃地毯被先拒。需明确现代火险政策，不直接回退规则，见[热交换器](HEAT_EXCHANGER_AUDIT.md)。 |
 | ALIGN-221 | 确认玩家排液先被通用1000L行为接管，绕过设备专用整罐／顺序。 | 原工具先Behavior_Tool专用、成功即停，才到通用排液fallback。 | 当前GTToolItem先通用，cold2000时排1000并请求100耐久，原清2000／请求20；两端原生非PASS截断Block使用已追。hot-only专用成本另扩126，不代表所有工具入口，见[热交换器](HEAT_EXCHANGER_AUDIT.md)。大型蒸汽涡轮输入2000／水1000时也先排水，绕过输入优先专用清空，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。 |
@@ -296,7 +350,7 @@
 | ALIGN-267 | 确认储罐壁板温度计被坩埚接口截获为0。 | 原部件将非扳手／撬棍工具转主控，储罐报告实际流体温度。 | 当前壁板先匹配ITileEntityCrucible，非坩埚getter返回0；形成殷钢储罐蒸汽例原373K、现壁板0K，主阀仍373K。源推导未游戏截图，见[工具](TANK_TOOLS_RECIPES_AUDIT.md)。 |
 | ALIGN-268 | 确认竖直木主阀的正面选图不同。 | 原Base10按世界面FACES_TBS选front的top／bottom。 | 当前整模型转动使17001上／下正面仍取front/side，现存木图八变换不等价；不泛称25台都可见错图，见[客户端](TANK_CLIENT_AUDIT.md)。 |
 | ALIGN-269 | 确认主阀初次放置的竖直阈值不同。 | 原默认六面放置在pitch正／负65度才选上／下。 | 当前原生nearest视线取反，yaw0／pitch正负50度已选上下，原仍north；仅源样本，见[客户端](TANK_CLIENT_AUDIT.md)。 |
-| ALIGN-270 | 确认最后一个通用覆盖板的空快照未清客户端旧槽。 | 原receiveDataCovers有null清除及零ID替换路径。 | 当前服务端最后拆下后发送空tag，两版实际read因无字段提前返回，旧槽继续参与fallback渲染；需区分完整快照与部分NBT，见[客户端](TANK_CLIENT_AUDIT.md)。 |
+| ALIGN-270 | 最后一个通用覆盖板空快照：2026-10-22源码已修，游戏待验。 | 原receiveDataCovers有null清除及零ID替换路径。 | 原服务端最后拆下后发送空tag，两版read无字段提前返回；本轮完整快照保留gt.component_covers标记，空槽可清除，部分NBT仍忽略。见[客户端历史核对](TANK_CLIENT_AUDIT.md)及[修复](ISSUES_64_81_REVIEW_20261022.md)。 |
 | ALIGN-271 | 确认普通未喷漆材料方块的首次白漆被拒绝。 | 原class-container按材料填NBT_COLOR，殷钢17007实际DCDC96，白色paint成功。 | 当前PaintState初始／clear为FFFFFF，首次白色被相等判断拒绝；未喷漆显示仍回退材质色，不报全部变白，见[喷漆](PAINT_STATE_AUDIT.md)。 |
 | ALIGN-272 | 确认Neo喷漆物品主染色面最终alpha为0。 | 原普通BlockTextureDefault禁alpha，实际顶点提交255；Forge1.20.1相应ItemRenderer固定1。 | 正常红漆主阀保留BE数据，后置ItemPaintColorMixin清高八位，Neo实际ARGB解码及顶点乘法得到0；不泛称overlay／整物品全消失，未GPU实测，见[喷漆](PAINT_STATE_AUDIT.md)。 |
 | ALIGN-273 | 确认清漆剂未沿万能代理操作委托目标。 | 原WD.te识别ITileEntityDelegating，30255／30755的ALL模式返回出口邻格，再对目标removePaint。 | 当前PaintTargets.unpaint仅查本地；未喷漆代理后有红漆目标时，十二面向源样本原清目标、现无操作，未游戏实测，见[清漆](PAINT_TARGETS_AUDIT.md)。 |
@@ -304,7 +358,7 @@
 | ALIGN-275 | 确认扩展器原生覆盖板处理器查询丢失方向，阻止过滤器／主动组件安装。 | 原普通30000／30001具库存／流体及canTick接口，满足原过滤器、传送带和泵安装门槛。 | 默认及Mixin原生分支以null查询，而转发器exposes拒绝null；48有限安装分支。根复核否定初稿可正常装上的假设，见[入口](EXTENDER_CAPABILITIES_AUDIT.md)。 |
 | ALIGN-276 | 确认恢复后的原生覆盖板缺过滤／方向权限和主动组件tick。 | 原Base06最终库存权限及Extender流体入口问intercept；final onTick分派CoverData.tickPre。 | 限现有load恢复gt_cover_n：现谓词只看闸板，Mixin／fallback排除own getCover，ticker只panel链。不是普通安装成功，也不是实际搬运量测，见[恢复消费者](EXTENDER_CAPABILITIES_AUDIT.md)。 |
 | ALIGN-277 | 确认扩展器继承完整方块强信号传导，绕过自身路由。 | 原MTE方块将shouldCheckWeakPower交实体，继承Base01返回false；六普通身份弱／强输出0。 | 当前默认导体为true，SignalGetter合并六邻直接强信号，360有限分支旧合同0／现15；不是自身强输出，未游戏实测，见[原生入口](EXTENDER_SIGNALS_AUDIT.md)。 四过滤器同机制追加240条件，见[实例](FILTER_BLOCKS_AUDIT.md)。 |
-| ALIGN-278 | 确认万能桥原生比较器入口丢失原GT按面合同。 | 原Bridge按aSide读取反面incoming，MTE块保留方向参数。 | 内部GT有面查询仍在；原生比较器调用无面block入口，comparator(null)六面取最大，384水平投影300不同；不是旧MC引擎复现，见[比较器](EXTENDER_SIGNALS_AUDIT.md)。 |
+| ALIGN-278 | 确认万能桥原生比较器入口丢失原GT按面合同。 | 原Bridge按aSide读取反面incoming，MTE块保留方向参数。 | 内部GT有面查询仍在；原生比较器调用无面block入口，comparator(null)六面取最大，384水平投影300不同；不是旧MC引擎复现，见[比较器](EXTENDER_SIGNALS_AUDIT.md)。  微型门原生入口同样把六面缓存取最大，内部按面查询仍在；北2／南11投影原北读2现11，非世界复现，见[微型门](MINI_PORTAL_AUDIT.md)。 |
 | ALIGN-279 | 确认万能扩展器采样输出改成查询时实时重算。 | 原30255的onTick2保存In／Out／Comparator，输出读取字段。 | 当前previous字段仅通知判断，raw查询每次incoming；72有限转换中60弱／72比较器不同。保留循环保护，不泛称所有环路坏掉，见[采样](EXTENDER_SIGNALS_AUDIT.md)。 |
 | ALIGN-280 | 确认过滤器方块模板快捷复制／右键编辑操作缺失。 | 原普通三类型Shift复制首空模板，右键去NBT／通配或写入配置，流体展示空鼠标右键保持。 | 当前quickMoveStack恒EMPTY，右键PICKUP恒清模板；12复制／四右键源条件，保留幽灵槽防取出，不报整个GUI失效，见[菜单](FILTER_BLOCKS_AUDIT.md)。 |
 | ALIGN-281 | 确认前缀过滤器家族代表的周期展示未移植。 | 原mFilter与mCycle分离，%10==1从注册集合选代表，经Slot_Base.getStack读getStackInSlotGUI。 | 当前显示复制模板、无模板周期ticker；四相位源条件，不承诺原随机每次不同，也未验全部多前缀关系，见[展示](FILTER_BLOCKS_AUDIT.md)。 |
@@ -316,6 +370,153 @@
 | ALIGN-287 | 确认长距离导线过压烧毁缺原邻格点火尝试。 | 原scanWires(true)调用WD.burn(T,F)尝试中心／六邻，再显式设中心火。 | 当前重扫后只设已收集线位置为火；5000EU有效端点／4096耐压源分支成立。两边可提前终止，未报全网燃烧或持续火焰，见[危险分支](LONG_DISTANCE_LIFECYCLE_AUDIT.md)。 |
 | ALIGN-288 | 确认长距离活动不可用指示简化原目标对象／归属门槛。 | 原状态3要求mTarget对象及发送者条件，恢复坐标但未绑定时走普通历史。 | 当前known且live owner空即3并保持history，目标已加载但尚未解析亦会进入；128条件24状态／历史差异为源投影，非传输失效或实际重启验收，见[活动状态](LONG_DISTANCE_LIFECYCLE_AUDIT.md)。 |
 | ALIGN-289 | 确认USB／HDD移除非选择面板错误重置文件模式。 | 原selector移除设0，红石发射面板沿父类空移除保留mode。 | 当前宿主对全部PanelCover先setMode(0)，共享removed正确门控不能撤销；稳定手动选择＋发射面板64条件30不同，未游戏交互，见[交换器](USB_SWITCH_AUDIT.md)。 |
+| ALIGN-290 | 确认复制机混合U盘／数据线时的数据选择顺序不同。 | 原三个输入按槽位处理介质，首个非空线缆文件锁定数据，首个无NBT的U盘立即停止。 | 当前先查U盘动态提供者、失败后才查线缆；正常三槽可放两类，铁线缆＋铜U盘及空白U盘12有限条件6不同，未机器运行，见[材料数据链](MATERIAL_DATA_CHAIN_AUDIT.md)。 |
+| ALIGN-291 | 确认比较器／中继器画布图像映射未保留原powered目标。 | 原物品映射至powered_comparator／powered_repeater，方块身份写入USB／画布并供复制纹理读取。 | 当前mapped取两种现代方块默认状态，两版原生默认POWERED=false；属性经扫描／打印／渲染消费者保持，未像素／红石实测，见[可视文档](VISUAL_DOCUMENT_AUDIT.md)。 |
+| ALIGN-292 | 确认自动合成对无标签蓝图需求强制精确匹配附加数据。 | 原Recipe对无NBT需求忽略可用同种原料的额外NBT；普通输入GUI允许放入，统一物品保留NBT。 | 当前构造mExactItemInputs=true，经RecipeMap／RecipeInputs实际消费要求两版标签／组件完全相等；普通原料仅加名称的有限条件被拒绝，非自动插入或储液容器结论，未实际加工，见[蓝图与自动合成](BLUEPRINT_AUTOCRAFTING_AUDIT.md)。 |
+| ALIGN-293 | 已修复筛粉漏斗钳子取出目标与原内部余粉不同。 | 原钳子直接取mContent，普通输入／成品格保留；不足输出大小的余量本就锁定材料。 | 此前retrieve先取两格再取余粉；现独立retrieveFraction并立即重试，Jade显示模式／余量。双版编译通过、未实际加工或客户端画面验收，见[筛粉漏斗](DUST_FUNNEL_AUDIT.md)。 |
+| ALIGN-294 | 确认高级／充能工作台缺少集成电路铺格入口。 | 原30槽允许2～9号selector，并按编号铺零数量样品供制作。 | 当前电路物品已注册，但实体／菜单只许两种蓝图，pattern无编号分支；八源形状已提取，未实际点击，见[工作台](ADVANCED_WORKTABLE_AUDIT.md)。 |
+| ALIGN-295 | 确认工作台制作计划没有相邻可连接库存。 | 原计入ITileEntityConnectedInventory，并先于本地格扣料、尝试返还容器。 | 当前plan只复制台内71格、source和put只查本地数组；被动自动输入不替代制作取料，未实际加工，见[工作台](ADVANCED_WORKTABLE_AUDIT.md)。 |
+| ALIGN-296 | 确认工作台制作时没有从相邻储罐补充容器。 | 原consumeSlot验证完整回填，整份从ITileEntityConnectedTank扣液后保留装液样品。 | 当前使用原生余物并放回本地，制作链没有邻接补液；适用有效配方／可回填容器／足量未锁储罐，不泛称所有桶配方失败，见[工作台](ADVANCED_WORKTABLE_AUDIT.md)。 |
+| ALIGN-297 | 确认工作台同类工具比较额外要求头材料相同。 | 原equalTools对IItemGTContainerTool忽略NBT，源主材在GT.ToolStats。 | 当前同类物品按getHead相等及可用性匹配，改变储物工具替换／过滤；限定均可用且配方接受两材，普通物品严格比较不在此列，未工具实测，见[工作台](ADVANCED_WORKTABLE_AUDIT.md)。 |
+| ALIGN-298 | 确认工作台缺少五工具格的直接灌液路径。 | 原IFluidHandler／funnelFill模拟或替换16～20格容器，原流体漏斗实际调用。 | 当前父实体／充能子类无FluidToolTarget或五格填充实现，原生注册未补该流程；与296制作邻罐补液不同，不断言外部永不能增能力，见[工作台IO](WORKTABLE_IO_AUDIT.md)。 |
+| ALIGN-299 | 确认无限工具尖端参与时结果合并门控不同。 | 原持有堆非空且九格有gt:autocrafterinfinite时不再消耗／合并，十尖端有实际注册。 | 当前计划保留尖端，但菜单只检查身份／容量；限定有效配方和充足原料的八源码条件一项不同，未GUI实测，保留为政策差异，见[工作台IO](WORKTABLE_IO_AUDIT.md)。 |
+| ALIGN-300 | 确认工作台危险产物的原预览动作没有对应，危险政策待决。 | 原getCraftingOutput检查EXPLODES_IN_NONVANILLA_CRAFTING_GRID后调用explode(4)，Unstable实际声明该属性。 | 当前材料身份／形态与标签常量存在，但MaterialProperty及工作台无该消费；未验收实际Unstable配方或爆炸时序，不恢复危险，见[生命周期](WORKTABLE_LIFECYCLE_AUDIT.md)。 |
+| ALIGN-301 | 确认筛选台原单件工作格变为整组插入。 | 原getInventoryStackLimit为1，顶部ST.move实际按目标上限收取。 | 当前work复制全部手持、生存手持归零；保留取回／保存不报物品丢失，四数量条件为源码推导，见[筛选台](SIFTING_TABLE_AUDIT.md)。 |
+| ALIGN-302 | 确认筛选台缺少原被动物品进出入口。 | 原经06父类ISidedInventory开放13格，0匹配输入、1～12提取，六面可见。 | 当前实体仅work／outputs，无原生容器／handler／Forge能力，项目Neo注册也无对应；不是断言第三方永不能扩展或原能无人自动加工，见[筛选台](SIFTING_TABLE_AUDIT.md)。 |
+| ALIGN-303 | 确认筛选台操作者集合和继续操作条件不同。 | 原每5刻遍历按玩家最近点击的坐标表，普通6格／创造绕距离，无本处持续瞄准顶面检查。 | 当前仅最后UUID，附8格检查及5格顶面射线；不从人数推定实际倍产，普通药水公式另核相同，见[筛选台](SIFTING_TABLE_AUDIT.md)。 |
+| ALIGN-304 | 确认磨石普通掉落缺少剩余磨料携带。 | 原writeItemNBT2经06实际写入、04 getDrops交给注册物品，读取同一NBT_STATE。 | 当前世界gt.stone_uses存在，但Neo新物品／Forge默认loot及盖板白名单不复制它；限普通掉落，未收获／重启实测，见[磨削](MANUAL_GRINDING_AUDIT.md)。 |
+| ALIGN-305 | 确认磨削非空余粉的75%概率变默认必得。 | 原七磨削行chances(10000,7500)经Prefix生成和磨石getOutputs实际逐件抽取。 | 当前有余粉路线用无概率addRecipe1，真实rollOutputCount缺省10000；不扩至无第二产物行，最终配方表待验，见[磨削](MANUAL_GRINDING_AUDIT.md)。 |
+| ALIGN-306 | 确认GT电动工具漏过去附魔类型排除。 | 原ST.isGT_查IItemGT，实际电动工具经MultiItemTool／ItemBase属于该接口。 | 当前只排除GTToolItem，ElectricToolItem另继承TieredItem且有真实注册／赋魔入口；限带有效非诅咒附魔并进入交互，未施魔实测，见[磨削](MANUAL_GRINDING_AUDIT.md)。 |
+| ALIGN-307 | 确认磨石按手持身份重置点击的政策不同。 | 原非空物品共享块内mClickCount，没有上次物品比较。 | 当前lastHeld物品／标签或组件不同便归零；九次A换B时只算B第1次，保留现代重置不借排版恢复旧预累计，见[磨削](MANUAL_GRINDING_AUDIT.md)。 |
+| ALIGN-308 | 确认部分手作设备缺少原疲劳饥饿消耗倍率。 | 原三基础除数／去魔0.5再经UT.Entities.exhaust乘pot1Fatique，普通1及疲劳I–III的2／3／4。 | 当前直接causeFoodExhaustion，两版本机Player／FoodData不补倍率；限普通未封顶，非实际饥饿格或创造扣除结论，见[磨削](MANUAL_GRINDING_AUDIT.md)。搅拌／浸洗／榨汁三家族亦有同一原helper和当前直接调用，见[开放容器](OPEN_VESSEL_AUDIT.md)。 |
+| ALIGN-309 | 确认搅拌盆／浸洗盆自动输入缺少重复物品占格限制。 | 原canInsertItem2遇已有同物品时只放入原格，再查配方，木盆继承。 | 当前isItemValid只查输入范围和containsInput；限原生自动准入，原手动ST.move另核，见[开放容器](OPEN_VESSEL_AUDIT.md)。 |
+| ALIGN-310 | 确认盆类普通排液开放输入罐且不轮换产物。 | 原公开drain到产物专用查询，无指定流体时按SERVER_TIME/20换起点；手持容器可另取输入。 | 当前两drain遍历输出后输入、固定起点0；无产物而有1000输入水例原0现1000为源码推导，不报必卡管，榨汁无输入不套用，见[开放容器](OPEN_VESSEL_AUDIT.md)。 |
+| ALIGN-311 | 确认开放容器加工产物储量／物性门控未完整保留。 | 原非空产物罐查max(1000,1+next)及温度／轻质，按家族另查simple或gas。 | 当前只有juicer保留量门槛，SIMULATE fill不验证物性；限原门控生效状态，空罐旧分支、实际配方可达及危险结果未验，见[开放容器](OPEN_VESSEL_AUDIT.md)。 |
+| ALIGN-312 | 确认四种浸洗盆固体显示路径与选择范围不同。 | 原钢／木及桌式用材料blockDust平面，扫描6～0格。 | 当前仅mixing_bowl走材料面，Bath走renderStatic并选11～0；两端注册已追，不借排版隐藏额外产物，未客户端画面验收，见[开放容器](OPEN_VESSEL_AUDIT.md)。 |
+| ALIGN-313 | 确认绳子放置方向与挂接条件变窄。 | 自身六向声明／逆向放置由09基类消费；不透明上方块或任何上方绳子可支撑。 | 当前水平四向、侧面坚固或同块同向上方绳子；四支撑条件源核，精确不透明与加载未验，见[绳子脚手架](ROPE_SCAFFOLD_AUDIT.md)。 |
+| ALIGN-314 | 确认绳子顶端收获缺少原主动回收下段动作。 | 原生转发onBlockHarvested，顶端向下逐一核注册／身份／朝向后popOff给玩家。 | 当前无对应动作；独立墙面支撑的下段会留下，不泛称全部悬空链不掉落，未收获实测，见[绳子脚手架](ROPE_SCAFFOLD_AUDIT.md)。 |
+| ALIGN-315 | 确认脚手架设计1／2角柱碰撞由一像素变两像素。 | 原四个一像素全高角柱加两像素侧墙，设计1顶板按实体潜行／高度选择。 | 当前角柱两像素；同物理墙方向八角点源码并集不同，不直接等同朝向枚举，未原生形状／移动实测，见[绳子脚手架](ROPE_SCAFFOLD_AUDIT.md)。 |
+| ALIGN-316 | 确认完整顶板脚手架缺少当前覆盖板宿主入口。 | 原仅设计3允许普通covers，拒绝cover holders，设计改变检查有效性。 | 当前类／父类无EntityBlock／PanelCoverHost，项目事件／fallback要求实体宿主；不排除第三方扩展，未安装实测，见[绳子脚手架](ROPE_SCAFFOLD_AUDIT.md)。 |
+| ALIGN-317 | 确认绳子实体碰撞被注册属性关闭。 | 原细碰撞箱经方块转发和06默认收集，绳子未关闭该路径。 | 两版六绳使用noCollission、无碰撞覆写，原生返回空形状且盖板fallback不补；梯子和轮廓仍在，不报不能攀爬，见[绳子脚手架](ROPE_SCAFFOLD_AUDIT.md)。 |
+| ALIGN-318 | 确认世界最低格向下延伸会扣除未放出的绳子。 | 原循环不进入低于其最低高度0的目标，边界不扣物。 | 当前首目标min−1为可替换VOID_AIR、上段满足支撑，原生放置返回false仍扣1；保留现代负高度，非物品栏／世界实测，也不泛称原合法放置均检查返回值，见[绳子脚手架](ROPE_SCAFFOLD_AUDIT.md)。 |
+| ALIGN-319 | 确认普通／草／藤绳缺少原100可燃性。 | 注册参数经实例读入，07基类同时返回flammability／spread，方块真实转发。 | 当前六绳无覆写、原生火焰表无项目设置，默认0；其它三绳原本0，不报全六绳缺失或任意整合包恒0，未点火实测，见[工具物性](UTILITY_PHYSICS_AUDIT.md)。 |
+| ALIGN-320 | 确认六绳普通公开抗性1变0.5。 | 默认NBT读入mResistance，未待自身爆炸时由上下文方块查询直接转发1。 | 当前strength(.5,.5)经属性／构造／getter及上下文委托返回0.5，名义硬度仍0.5；不推算破坏概率或爆炸半径，未爆炸实测，见[工具物性](UTILITY_PHYSICS_AUDIT.md)。 |
+| ALIGN-321 | 确认脚手架原生支撑面与原版不同。 | 无覆盖板时顶面总支持，其余面仅设计3；顶面火把回退至该查询。 | 当前原生支撑取空上下文碰撞，设计2顶面CENTER／FULL缺失、设计1／2侧框外面FULL反而成立；112源码条件16不同，实际挂接／更新未验，见[工具物性](UTILITY_PHYSICS_AUDIT.md)。 |
+| ALIGN-322 | 确认橡胶树洞双产物合同被互斥化。 | 原孔同时返回树脂物品和250流体，袋及手动取液都消费两者。 | 当前item／fluid字段与分支二选一，橡胶只给物品；现有测试反而要求液体0，不作原版验收。见[采集袋](SAP_BAG_AUDIT.md)。 |
+| ALIGN-323 | 确认采集袋放置朝向依据不同。 | 原启用侧面和反向放置，由点击面取反并限水平。 | 当前继承玩家水平朝向反面，斜角点击可与邻树洞不一致；手动预设朝向采集不验证放置，见[采集袋](SAP_BAG_AUDIT.md)。 |
+| ALIGN-324 | 确认采集袋公开流体接口为当前扩展。 | 原私有8000槽允许手动取液，但06公开槽查询为null／空数组。 | 当前两版公开IFluidHandler，能直接灌排；不是原普通液体槽自然具有的管道行为，见[采集袋](SAP_BAG_AUDIT.md)。 |
+| ALIGN-325 | 确认采集袋满载外观缺口。 | 原mFull按物品／液体更新并切overlay_full。 | 当前isFull和内容同步已有，实际状态／模型只有facing及普通overlay；未运行画面，见[采集袋](SAP_BAG_AUDIT.md)。 |
+| ALIGN-326 | 确认采集袋外观材料与堆叠数不同。 | 原Leather经类容器派生颜色，64经注册和公开物品查询传递。 | 当前着色取Rubber，两版物品工厂落16；不以着色认定全部材料含量，见[采集袋](SAP_BAG_AUDIT.md)。 |
+| ALIGN-327 | 确认采集袋碰撞／普通公开抗性不同。 | 原实体碰撞null、忽略玩家放置碰撞；普通抗性3。 | 当前把选中盒作碰撞、strength(.5,.5)返回抗性0.5；四向名义盒子匹配不代替实际几何／爆炸验收，见[采集袋](SAP_BAG_AUDIT.md)。 |
+| ALIGN-328 | 确认树洞补充计时与树干条件不同。 | 原持续aTimer的600相位；树干停止使用非目标块且非目标meta。 | 当前仅空孔递增、精确木种匹配；阈值／除数已有，原宽松AND也属可疑政策，不随排版恢复，见[采集袋](SAP_BAG_AUDIT.md)。 |
+| ALIGN-329 | 确认高级按钮设计切换与资源缺口。 | 原7组94设计、凿子切换，类型索引保存／同步。 | 当前只有0/0八纹理，模型固定且无设计字段／凿子入口；四层模型不等于设计完整，见[按钮曲柄](BUTTON_CRANK_AUDIT.md)。 |
+| ALIGN-330 | 确认高级按钮未接遥控接口。 | 原remoteActivate切换并返回true保留绑定，灯模式也保留。 | 当前目标查实体／方块均有，但按钮均未实现RemoteActivatable；不能直接用press的成功值代替绑定合同，见[按钮曲柄](BUTTON_CRANK_AUDIT.md)。 |
+| ALIGN-331 | 确认高级按钮诊断与费用入口缺项。 | 放大镜报告发光反转并返回费用1。 | 当前status不含glowInverted，潜行软锤后也看不到该设置，放大镜排除扣费；原返回1不等于完整耐久点，见[按钮曲柄](BUTTON_CRANK_AUDIT.md)。 |
+| ALIGN-332 | 确认按钮配置越界／溢出政策不同。 | 原强度字节与时长直接读，long溢出自然变负。 | 当前读取限幅、时长越界回20；30合法强度相同、12边界3不同，不自动恢复异常值，见[按钮曲柄](BUTTON_CRANK_AUDIT.md)。 |
+| ALIGN-333 | 确认曲柄持续驱动改成按点击。 | 原每tick查同目标玩家，无人时单村民，点击只置活跃。 | 当前点击发包并排10tick停止，无持续／村民入口；原生重复任务不延后首截止，源码推导非游戏复现，见[按钮曲柄](BUTTON_CRANK_AUDIT.md)。 |
+| ALIGN-334 | 确认曲柄能源元数据接口未接入。 | 原实体公开RU类型、输出侧、额定／最小／最大16和提供量查询。 | 当前无实体、只向接收者推送且发送者null，EnergyBlockViews无源端可查；不报完全不能驱动或原被动抽取已工作，见[按钮曲柄](BUTTON_CRANK_AUDIT.md)。 |
+| ALIGN-335 | 确认曲柄遗漏原药水六位限制。 | 原pot将amplifier限0–63再派生因子。 | 当前effectLevel直接加1；力量amplifier200包原−528现−1624，core算术执行而非实体实测，普通4225组合相同，见[按钮曲柄](BUTTON_CRANK_AUDIT.md)。 |
+| ALIGN-336 | 确认默认按钮掉落写入完整默认配置。 | 原物品配置省略false、默认15／20／0。 | 当前掉落总封装GT6Button五字段，与默认创造物品数据不同；未实际库存堆叠，非默认配置不能乱清，见[按钮曲柄](BUTTON_CRANK_AUDIT.md)。 |
+| ALIGN-337 | 确认普通曲柄方块缺少喷漆入口。 | 原继承07paint／unpaint及颜色状态。 | 当前无实体，非Paintable目标／建筑色族／原版替换族；Iron基础染色已有，不等于玩家可喷漆，见[按钮曲柄](BUTTON_CRANK_AUDIT.md)。 |
+| ALIGN-338 | 确认曲柄未接GT扳手改朝向。 | 原继承09扳手选面、六合法面和朝向更新。 | 当前未实现ToolInteractionTarget，点击不调共用工具分派；六面放置不是放置后旋转，不泛化外部旋转工具，见[按钮曲柄](BUTTON_CRANK_AUDIT.md)。 |
+| ALIGN-339 | 确认花盆碰撞／选中框误用渲染边界。 | 原Covers→Root继承完整box及默认shrunkBox，MTE方块转发。 | 当前两段网格联合；四向单位格中心投影各3496／4096，非实际实体测试，见[花盆灯笼](PLANT_LANTERN_AUDIT.md)。 |
+| ALIGN-340 | 确认花盆遮光不同。 | 原明确LIGHT_OPACITY_WATER=3。 | 当前无覆盖、非完整形状及空流体经两版原生源码推得0；未调用实际光照API，见[花盆灯笼](PLANT_LANTERN_AUDIT.md)。 |
+| ALIGN-341 | 确认花盆／灯笼缺喷漆状态入口。 | 原继承Paintable且模型消费mRGBa。 | 当前无实体、非颜色族／替换族，PaintTargets拒绝；花盆陶瓷基础tint已有，见[花盆灯笼](PLANT_LANTERN_AUDIT.md)。 |
+| ALIGN-342 | 确认灯笼未接GT扳手调整。 | 原FacingSingle扳手与水平面准入。 | 当前只有放置及原生rotate／mirror，没有ToolInteractionTarget／GT分派；不泛化外部工具，见[花盆灯笼](PLANT_LANTERN_AUDIT.md)。 |
+| ALIGN-343 | 确认灯笼缺原固定表面亮度合同。 | 原两类纹理均选240恒定亮度，正面禁AO。 | 当前普通orientable模型；发光15、遮光0已有，实际像素未验，见[花盆灯笼](PLANT_LANTERN_AUDIT.md)。 |
+| ALIGN-344 | 确认花盆制作材料家族缩窄。 | 原ANY.Stone／ANY.Clay包含工厂赋予的各石／黏土成员。 | 当前规范Stone／Clay粉标签没有默认家族展开；完整活标签未枚举，外部包可扩，见[花盆灯笼](PLANT_LANTERN_AUDIT.md)。 |
+| ALIGN-345 | 确认泉眼物性配置不同。 | 原硬度−1，公开抗爆委托基岩。 | 当前八块strength(3,3)，无覆写；未挖掘／爆炸实测，不推算半径，见[液体泉](FLUID_SPRING_AUDIT.md)。 |
+| ALIGN-346 | 确认泉眼首次启动合同不同。 | 原全局20tick相位、上方非液体、激活当次直接尝试。 | 当前空气／可替换即活动，仍先roll；80源码条件投影非游戏，见[液体泉](FLUID_SPRING_AUDIT.md)。 |
+| ALIGN-347 | 确认泉眼缺原主动邻格补源／有限累加。 | 原同类源扫描水平邻格、有限流体累meta并主动tick。 | 当前只写正上方默认态，不否认自然流动，见[液体泉](FLUID_SPRING_AUDIT.md)。 |
+| ALIGN-348 | 确认旧／外部泉依赖流体与方块同键。 | 原字典及fluid.getBlock回退。 | 当前按流体键查块；自身七种可用，原生API允许独立block供应者，第三方未实测，见[液体泉](FLUID_SPRING_AUDIT.md)。 |
+| ALIGN-349 | 确认泉流体层缺原发光下限。 | 原BlockTextureFluid取luminosity×16与环境较大者。 | 当前只换UV／sprite，不更新亮度；不是世界照明缺失，像素未验，见[液体泉](FLUID_SPRING_AUDIT.md)。 |
+| ALIGN-350 | 确认泉眼喷漆范围被后备机制扩大。 | 原Base04paint／unpaint固定false。 | 当前实体Mixin接受GT颜色，主层取色被覆盖；未改政策，见[液体泉](FLUID_SPRING_AUDIT.md)。 |
+| ALIGN-351 | 确认自然液体泉未调用指示草分支。 | 原雕刻后六组地表草斑。 | 当前place返回carve，indicators没有生产调用；不泛化外部脚本，见[液体泉](FLUID_SPRING_AUDIT.md)。 |
+| ALIGN-352 | 确认缺少原生下界熔岩泉生成入口。 | 原GEN_NETHER概率100／间隔500。 | 当前两端只挂主世界且feature拒绝其它维度，目录lava间隔1000；可选外部维度另查，见[液体泉](FLUID_SPRING_AUDIT.md)。 |
+| ALIGN-353 | 确认七泉调度概率改变。 | 原依序尝试、首成功关闭后续资格。 | 当前先选种类再roll；合格独立理想模型任一泉2.964%→0.429%，非世界实测，见[调度](SPRING_BEDROCK_DISPATCH_AUDIT.md)。 |
+| ALIGN-354 | 确认泉与基岩矿缺原互斥协调。 | 原共同读取两标志、分别取消另一方资格。 | 当前两个阶段均可进入；真实core拟写入探针424位置相交，不当作实际覆盖数，见[调度](SPRING_BEDROCK_DISPATCH_AUDIT.md)。 |
+| ALIGN-355 | 确认基岩矿改为稀疏网格单选。 | 原逐区块逐注册项roll，可后续再尝试。 | 当前每16×16区块一候选、整数逆权重单选，非原概率模型，见[调度](SPRING_BEDROCK_DISPATCH_AUDIT.md)。 |
+| ALIGN-356 | 确认基岩矿目录／维度成员未完整保留。 | 原共享33进入主世界及下界，后者另7专属。 | 当前28／7；考虑别名后仍漏七共享材质，另有替换／概率变化，不否认其它矿生成，见[调度](SPRING_BEDROCK_DISPATCH_AUDIT.md)。 |
+| ALIGN-357 | 确认小型基岩矿标志在sink丢失。 | 原roll1／2写oreSmallBedrock。 | core发small=true，但平台只查普通ore_；上方小矿标志仍传，见[调度](SPRING_BEDROCK_DISPATCH_AUDIT.md)。 |
+| ALIGN-358 | 确认基岩指示物多尺度分布被简化。 | 原4／8／16层共28候选、花石共同取舍。 | 当前6花3石、候选在本区块，次数非成功数量，见[调度](SPRING_BEDROCK_DISPATCH_AUDIT.md)。 |
+| ALIGN-359 | 确认地表生成缺原道路／中心区域避让。 | 启用模块后，Pit／Rocks实际读checkForMajorWorldgen的两轴64格走廊与中心判定。 | 当前两入口无相应区域门控；(32,1024)原避让而Origin不处理，仍受生物群系／随机等其余条件限制，见[区域保护](ORIGIN_PROTECTION_AUDIT.md)。 |
+| ALIGN-360 | 确认石层／小型矿／泉缺原中心reset保护。 | 原先全reset；中心144区块置GENERATING_SPECIAL，三个生成器实际读它。 | 当前三入口无等价保护，后续Origin重写部分地形不替代不尝试生成；当前基岩矿网格已排除这144区块，不误报同类泄漏，见[区域保护](ORIGIN_PROTECTION_AUDIT.md)。 |
+| ALIGN-361 | 确认中心树木委托缺原内部树高随机量。 | 原WorldGenTrees再加nextInt(3)，普通／丛林成功生长高度界限4–8／9–13。 | 当前直接用调用值4–6／9–11，随机流亦不同；官方旧JAR及映射核实，非自然统计，见[中心群系](CENTER_BIOMES_AUDIT.md)。 |
+| ALIGN-362 | 确认中心丛林树缺原藤蔓／可可分支。 | 四源调用vinesGrow=true，原生成器按相应条件放附属物。 | 接口丢标志、原生只放原木／树叶；原可可有概率，不报每树必有，见[中心群系](CENTER_BIOMES_AUDIT.md)。 |
+| ALIGN-363 | 确认中心新树缺叶距初始化，有随机凋落风险。 | 原委托正常生成器，叶meta0–3与衰减标志分开。 | 当前两版默认叶距7且非持久，未补距离；默认后处理也不接管。后续邻更可补，不报所有叶必消失，实际世界待验，见[中心群系](CENTER_BIOMES_AUDIT.md)。 |
+| ALIGN-364 | 确认直轨速度门控扩大了邻轨身份范围。 | 原轴向相邻要求GT BlockBaseRail。 | 当前接收所有BaseRailBlock，原版邻轨可使0.5条纹轨返回上限0.4→0.5；非矿车实速，见[道路轨道](STREETS_RAILS_AUDIT.md)。 |
+| ALIGN-365 | 确认完整直轨加载半径17变16。 | 原doChunksNearChunkExist按17展开后逐块检查。 | 余数边界处少查外层区块；(0,64,8)差三块，高速轨上限可1→4，0.5轨无此数值变化，见[道路轨道](STREETS_RAILS_AUDIT.md)。 |
+| ALIGN-366 | 确认道路遮挡判定丢失独立木材语义。 | 原分别排除material wood与isWood。 | 两项被合成LOGS标志，默认木板可能当成隧道遮挡；130采样有限反例，不推任意标签环境，见[道路轨道](STREETS_RAILS_AUDIT.md)。 |
+| ALIGN-367 | 确认三类材料轨缺撬棍／助推轨软锤绑定。 | 原onToolClick切元数据／电源位，成功分别返回2000／10000。 | 三十轨包装没有工具目标／回调；已有工具helper不能替代消费者，道路条纹轨独立交互不算缺失，见[轨道控制](RAIL_CONTROLS_AUDIT.md)。 |
+| ALIGN-368 | 确认检测轨查询范围缩小。 | 原水平0.125–0.875，高度0–0.875。 | 原生水平0.2–0.8，高度0–0.8，检测和比较器共用；有限边缘包围盒有不同结果，非矿车实测，见[轨道控制](RAIL_CONTROLS_AUDIT.md)。 |
+| ALIGN-369 | 确认助推轨电源传播身份门槛扩大。 | 原要求邻块与本块为同一注册实例。 | 原生允许PoweredRailBlock同轴同激活类型，当前不同GT材料助推轨可传播；源码条件见证，非真实红石网络验收，见[轨道控制](RAIL_CONTROLS_AUDIT.md)。 |
+| ALIGN-370 | 确认17种联动微型门定义未移植。 | 原登记19种，其中17种在无依赖时隐藏且无配方。 | 当前只有下界／末地Target与注册，联动兼容待办，不报普通环境17故障，见[微型门](MINI_PORTAL_AUDIT.md)。 |
+| ALIGN-371 | 确认微型门缺独立放大镜诊断。 | 原报告目标坐标或No Target并返回费用1。 | 当前无对应工具目标；启用消息／覆盖板提示不能替代，见[微型门](MINI_PORTAL_AUDIT.md)。 |
+| ALIGN-372 | 确认末地微型门激活准入收窄。 | 原接受gemEnderEye矿辞成员。 | 当前只认Items.ENDER_EYE；属于扩展合同，不假定当前已装其它成员，见[微型门](MINI_PORTAL_AUDIT.md)。 |
+| ALIGN-373 | 确认微型门整块碰撞变为空。 | 原MTE块的实体回退及继承Root方法都返回完整立方体，未覆写为空。 | 当前注册noCollission，两端原生返回空形状；模型框架不能证明移动碰撞，见[微型门](MINI_PORTAL_AUDIT.md)。 |
+| ALIGN-374 | 确认微型门明确遮光值1变0。 | 原返回LIGHT_OPACITY_LEAVES，常量1。 | 当前getLightBlock返回0；实际世界光照及独立激活发光参数未验，见[微型门](MINI_PORTAL_AUDIT.md)。 |
+| ALIGN-375 | 确认微型门实际提示缺两项原信息。 | 原包括最近激活目标选择和区块加载器要求。 | 当前appendHoverText没有消费这两项，语言键存在不能代替提示入口，见[微型门](MINI_PORTAL_AUDIT.md)。 |
+| ALIGN-376 | 确认下界微型门缺原激活世界粒子。 | 原随机显示回调生成四个portal粒子。 | 当前无客户端动画回调／ticker；纹理动画已有，非全部动画缺失，见[微型门](MINI_PORTAL_AUDIT.md)。 |
+| ALIGN-377 | 确认可放置碎料堆32103未接入。 | 原有注册、潜行手放和消失放置三入口。 | 当前Kind及两种放置只接锭／板／宝石板，碎料物品本身存在，见[材料堆](MATERIAL_PILES_AUDIT.md)。 |
+| ALIGN-378 | 确认材料堆合并身份合同放宽。 | 原ST.equal核物品身份／元数据／NBT。 | 当前同resolve材料／前缀／数据可跨物品合并成首物品数量；柱匹配仍精确，不混同，见[材料堆](MATERIAL_PILES_AUDIT.md)。 |
+| ALIGN-379 | 确认空堆与拒绝点击合同不同。 | 原无效空堆点击移除，匹配满堆消耗交互。 | 当前独立空堆物品及空／满PASS允许后续原生操作；原空状态非绝不可能，见[材料堆](MATERIAL_PILES_AUDIT.md)。 |
+| ALIGN-380 | 确认两种堆的掉落查询会改真实库存。 | 原getDrops只构造列表。 | 当前查询即clearContents；未拆除的重复查询第二次为空，未复现第三方吞物，见[材料堆](MATERIAL_PILES_AUDIT.md)。 |
+| ALIGN-381 | 确认硬币堆硬度／抗性1／0变3／3。 | 原两实际属性覆写为1与0。 | 当前共用注册两端都调用strength(3,3)，不据工具声明猜最终采集，见[材料堆](MATERIAL_PILES_AUDIT.md)。 |
+| ALIGN-382 | 确认材料堆消失放置丢额外水成员。 | 原WD.irrelevant准入BlockWaterlike／可选Streams水。 | 当前只列Blocks.WATER；原硬币另走原生放置检查，不套此原调用，见[材料堆](MATERIAL_PILES_AUDIT.md)。 |
+| ALIGN-383 | 确认手动锭堆漏Botania信标让路条件。 | 原关联Botania自产材料、点击信标时跳过该分支。 | 当前无对应门控，属已关联物品前提的联动合同，不假定当前装有该模组，见[材料堆](MATERIAL_PILES_AUDIT.md)。 |
+| ALIGN-384 | 确认自动锤未接铸币模具目标。 | 原经TOOL_hammer传有限预算，模具顶面2000可铸币。 | 当前模具无PoweredToolTarget绑定，存在实体也跳过挖块，最后清工作量；源条件见证非KU世界复现，见[铸币](COIN_MINTING_AUDIT.md)。 |
+| ALIGN-385 | 确认全零世界币缺原平面渲染分支。 | 原每占用格一个盒，专用COIN_TOP／BOTTOM。 | 当前256像素盒及通用coin横面；专用纹理当前像素不同，非全部币／物品栏坏掉，见[铸币](COIN_MINTING_AUDIT.md)。 |
+| ALIGN-386 | 确认硬币提示漏Unique后缀。 | 原按mIsUnique附加材料行标识。 | 铸币仍保存标志，但物品及已核事件入口未显示；不是丢字段，见[铸币](COIN_MINTING_AUDIT.md)。 |
+| ALIGN-387 | 确认硬币堆遮光3变0。 | 原世界块委托实体LIGHT_OPACITY_WATER=3。 | 当前动态非遮蔽、固定非完整选框与空流体经两端原生规则得0；未光照实测，见[生命周期](COIN_LIFECYCLE_AUDIT.md)。 |
+| ALIGN-388 | 确认硬币堆普通选取返回裸堆物品。 | 原世界块经Base04写材料／币模／unique后构造硬币。 | 当前Block默认clone构造coin_pile BlockItem，未读取堆内硬币；两端接口默认委托已核，限普通后备链，见[生命周期](COIN_LIFECYCLE_AUDIT.md)。 |
+| ALIGN-389 | 确认附件缺持末影垃圾桶排空命令。 | 原龙头／喷嘴检查VOIDING_ITEMS，32709明确入集合。 | 当前只转原生容器交互，无此命令入口。见[附件](FLUID_ATTACHMENTS_AUDIT.md)。 |
+| ALIGN-390 | 确认龙头缺下方三明治液体配料入口。 | 原装瓶并按基础份数／4扣流体，调用addIngredient。 | 当前仅查普通流体能力，三明治有物品配料入口但无此接线。见[附件](FLUID_ATTACHMENTS_AUDIT.md)。 |
+| ALIGN-391 | 确认下方注液未保留全部材料单位剂量。 | 原非水FLUID_MAP成员按材料单位，牛奶1000L。 | 当前只熔岩1000／熔融144，其余250；条件源见证非实际注液。见[附件](FLUID_ATTACHMENTS_AUDIT.md)。 |
+| ALIGN-392 | 确认附件材质抗爆统一成6。 | 原24行按材质为3／5／6／10／100，正常getter读取配置。 | 当前24材质ID两端均0.5／6，20项抗爆不同；未模拟爆炸或改过载。见[附件](FLUID_ATTACHMENTS_AUDIT.md)。 |
+| ALIGN-393 | 确认龙头缺经验流体取经验分支。 | 原XP／Mob有无OpenBlocks时的默认换算。 | 当前空手只向下方注液；要求实际存在可排相应流体，未执行经验实体。见[附件](FLUID_ATTACHMENTS_AUDIT.md)。 |
+| ALIGN-394 | 确认附件新增原本没有的实体碰撞。 | 原Attachment返回null，世界块转发此接口。 | 当前默认hasCollision使用非空选框，覆盖板后备不消除；未行走实测。见[附件](FLUID_ATTACHMENTS_AUDIT.md)。 |
+| ALIGN-395 | 确认四个裸附件ID仍独立重复登记。 | 原相关四class共24项材质登记。 | 当前24材质之外另有4个裸Block／BlockItem构造，并非注册别名；可见／配方／迁移另核。见[附件](FLUID_ATTACHMENTS_AUDIT.md)。 |
+| ALIGN-396 | 确认垃圾桶缺原方块更新／本地时钟触发。 | 原实体timer模100为50或mBlockUpdated清空。 | 当前仅世界gameTime模100为50；仍受红石暂停。见[垃圾池](GARBAGE_POOL_AUDIT.md)。 |
+| ALIGN-397 | 确认红石暂停扩为拒绝自动物品输入。 | 原无覆盖板时canInsertItem2恒true。 | 当前insertOnly有信号退回；不泛化到菜单或流体。见[垃圾池](GARBAGE_POOL_AUDIT.md)。 |
+| ALIGN-398 | 确认回收器首项阻塞后续可接收资源。 | 原扫描所有可访问物品及流体池。 | 当前自动只提第0物品／首液；条件源码见证。见[垃圾池](GARBAGE_POOL_AUDIT.md)。 |
+| ALIGN-399 | 确认回收器自动输出节拍／液量变化。 | 原每tick尝试，流体迭代预算Long.MAX_VALUE受单次API和目标限制。 | 当前每10刻、一组物品及首液16000L；未测产线。见[垃圾池](GARBAGE_POOL_AUDIT.md)。 |
+| ALIGN-400 | 确认回收器被动物品／流体／龙头入口未接。 | 原虚拟库存、IFluidHandler和tap／nozzle直接查询池。 | 当前公共view只接菜单，默认与相关注册器不发布此能力；自身自动输出已有。见[垃圾池](GARBAGE_POOL_AUDIT.md)。 |
+| ALIGN-401 | 确认垃圾池新增有限保留和固定窗口政策。 | 原无不同条目数量上限。 | 当前两池各256，新增淘汰最旧、超限读取保留最早，物品GUI54槽；保护策略保留。见[垃圾池](GARBAGE_POOL_AUDIT.md)。 |
+| ALIGN-402 | 确认垃圾池物品／流体数量域不同。 | 原物品bind31饱和、流体long容量。 | 当前物品long、流体int饱和；政策差异未改。见[垃圾池](GARBAGE_POOL_AUDIT.md)。 |
+| ALIGN-403 | 确认回收器菜单有快捷栏交换复制路径。 | 真实池扣减须在所有取出路径提交。 | 显示副本经原生SWAP进空快捷栏，空setter未扣池；64＋64源见证，高优先级待游戏复现。见[垃圾池](GARBAGE_POOL_AUDIT.md)。 |
+| ALIGN-404 | 确认垃圾桶拆除主动散落缓冲。 | 原canDrop=false且keepSlot=false。 | 当前移除调用BlockContents.drop；限仍有内容路径，未全loot／爆炸实测。见[垃圾池](GARBAGE_POOL_AUDIT.md)。 |
+| ALIGN-405 | 确认垃圾池漏原内置回收器黑名单。 | 原32710明确加BLACKLIST且trash先拒绝。 | 当前非空即接收，没有对应内部成员过滤。见[垃圾池](GARBAGE_POOL_AUDIT.md)。 |
+| ALIGN-406 | 确认回收器缺向下方空气丢物路径。 | 原ST.move启用eject，ST.put向无碰撞空气放实体并扣物。 | 当前下方无BE提前返回；普通Y64条件源见证，非实体执行。见[垃圾池](GARBAGE_POOL_AUDIT.md)。 |
+| ALIGN-407 | 确认两垃圾设备物性与原声明不同。 | 桶0.5／6、回收器6／6，原基类实际读入。 | 两端3／3和8／1200；原生属性／getter已核，非采掘／爆炸实测。见[物性](GARBAGE_PHYSICAL_AUDIT.md)。 |
+| ALIGN-408 | 确认回收器默认自身掉落路径增加。 | 原getDrops空列表，世界MTE真实转发。 | 当前普通Block及内置loot包生成自身条目；限默认数据与采集条件，未破坏实测。见[物性](GARBAGE_PHYSICAL_AUDIT.md)。 |
+| ALIGN-409 | 确认垃圾桶碰撞沿用绘制外形。 | 原Root完整box、Covers实际添加，绘制盒另计。 | 当前原生碰撞取两盒SHAPE；16格源推导4096→3376，非实体/API执行。见[物性](GARBAGE_PHYSICAL_AUDIT.md)。 |
+| ALIGN-410 | 确认垃圾桶遮光3变为干0／含水1。 | 原覆写LIGHT_OPACITY_WATER常量3。 | 当前无专用覆写；按两端原生getter与含水FluidState推导，非照明实测。见[物性](GARBAGE_PHYSICAL_AUDIT.md)。 |
+| ALIGN-411 | 确认回收器缺红色管理员创建说明。 | 原三行用途后加ADMIN_ONLY_CREATION。 | 当前三行及共用tooltip没有补；不是原GUI权限缺失结论。见[物性](GARBAGE_PHYSICAL_AUDIT.md)。 |
+| ALIGN-412 | 确认两垃圾设备默认物品上限16→64。 | 注册aStackSize存于ClassContainer并供内部物品返回。 | 当前普通BlockItem未设stacksTo，双版默认64；限未改组件／NBT形式，政策未改。见[物性](GARBAGE_PHYSICAL_AUDIT.md)。 |
+| ALIGN-413 | 确认缺独立存储输入器与多目标扫描存入。 | 原32751有注册／配方，四向逐列找正面MassStorage，先已有内容后空目标，并按手持／背包规则存入。 | 当前注册及调用链无对应设备；单台MassStorage的背包存入已有，不能代替跨设备扫描。见[输入器](STORAGE_INSERTER_AUDIT.md)。 |
+| ALIGN-414 | 确认缺魔法场吸收器的独立注册／制作与发能流程。 | 原10180钯制设备有正式配方，上方原版龙蛋64QU、头颅1TU，另有可选暮色奖杯。 | 当前目录、实际注册与能源实体无对应设备；书籍提及不构成移植。见[专题](SIGNAL_WIRE_AUDIT.md)。 |
+| ALIGN-415 | 确认红石导线等强外部输入的输入面选择不同。 | 原优先上次mReceived，仅严格更大才改；同强保持原输入面。 | 当前重建inputSides并按原生枚举顺序取首个最大；抑制输出面可不同。为源码合同见证，未声称真实电路闪烁；防自锁策略未改。见[专题](SIGNAL_WIRE_AUDIT.md)。 |
+| ALIGN-416 | 确认绝缘红石导线喷漆层不同。 | 原外皮／端环取喷漆色，金属芯保留材料色。 | 当前外皮tint1固定0x604040，通用喷漆只覆盖芯tint0；默认色本身对应，见[专题](SIGNAL_WIRE_CLIENT_AUDIT.md)。 |
+| ALIGN-417 | 确认新线放置时打开邻线原闭端。 | 原非放置反面只接已打开的相容邻端。 | 当前onPlace遇邻SignalWireBlock把双方设true；保护检查仍有，限源码合同见证，见[专题](SIGNAL_WIRE_CLIENT_AUDIT.md)。 |
+| ALIGN-418 | 确认Neo剪线钳缺连接前覆盖板准入。 | 原connect检查两端interceptConnect，火把／中继器拒接。 | Forge有CoverConnections检查；Neo可打开被阻断邻端，见证本地面为空以排除面板配置。见[专题](SIGNAL_WIRE_CLIENT_AUDIT.md)。 |
+| ALIGN-419 | 确认裸红石线被排除火把／中继器安装资格。 | 原裸线继承Insulated，满足Torch父类准入；默认允许覆盖板。 | 当前attach链明确要求wire.insulated，拒绝三裸线；未据此判断全部时序，见[专题](SIGNAL_WIRE_CLIENT_AUDIT.md)。 |
+| ALIGN-420 | 确认防护服相同护甲点未保留旧特殊护甲减伤合同。 | 原ISpecialArmor按比例吸收，普通10HP、四件完好／无其它修正的护甲阶段剩8.4。 | 当前现代CombatRules、四点／零韧性约剩9.68；为源码见证，现代政策保留，不把原未消费参数8误当护甲点。见[专题](HAZMAT_SUIT_AUDIT.md)。 |
+| ALIGN-421 | 确认防护服普通悬停缺原耐久数字行。 | 原普通提示显示剩余／最大，完好也显示128／128。 | 当前只加防护说明；原生数字要求高级提示且已损坏，不等于耐久或条形显示缺失。见[专题](HAZMAT_SUIT_AUDIT.md)。 |
+| ALIGN-422 | 确认Radaway剂量被两条路径重复扣减。 | 原自有FoodStat只扣50，FoodsGT外来路径不重复接同一物品。 | 当前两版专用finishUsingItem扣50，完成事件持前置副本再消费共享表扣50；120例原70／现20为源码见证，非游戏。见[专题](RADIATION_CONSUMABLES_AUDIT.md)。 |
+| ALIGN-423 | 确认Radaway服用时间未保留16tick。 | 原零营养FoodStat取max(food×8,16)。 | 当前继承Item，两端实际食物默认均32tick；只限本药丸，不与制作配方耗时混同。见[专题](RADIATION_CONSUMABLES_AUDIT.md)。 |
+| ALIGN-424 | 确认严重辐射额外伤害请求与原无IC2回退不同。 | 原剂量≥100分支施加凋零等六药效，无独立hurt调用。 | 当前另每50tick请求1HP辐射伤害；既有移植政策保留，不等于保证最终额外扣血。见[专题](RADIATION_CONSUMABLES_AUDIT.md)。 |
+| ALIGN-425 | 确认普通手持盖革计堆叠上限不同。 | 原具体MultiItemRandomTools对10002默认返回64，普通无能源NBT／流体规格形态实际读取该值。 | 当前两版构造器明确stacksTo(1)，原生字段／组件消费已核；限此物品普通形态，未运行库存。见[专题](HANDHELD_INSTRUMENTS_AUDIT.md)。 |
+| ALIGN-426 | 确认远程启动器未接原范围／数量提示。 | 原行为提示循环调用getAdditionalToolTips，显示64方块／128m说明。 | 当前两端继承TechItem、物品tooltip键为空，行为提示只分派USB；中文老键未被消费，未改补丁文本或客户端实测。见[专题](HANDHELD_INSTRUMENTS_AUDIT.md)。 |
+| ALIGN-427 | 确认手持电力计／转速计未接原工具读数链。 | 原两件安装Behavior_Tool，电线／轴／齿轮箱等有专用读数分支。 | 当前注册和传感器制作已有，但通用物品到ItemBehaviors无对应分派；不把独立传感器或泛化右键状态报缺失。见[专题](INSTRUMENT_DISPATCH_AUDIT.md)。 |
+| ALIGN-428 | 确认盖革计停机后的立即读数策略不同。 | 原软锤／setStateOnOff只改mStopped，盖革计继续读oNeutronCounts直到正常刷新。 | 当前setStopped(true)立即清零所读neutrons；16例原16／现0为后续tick前的源码序列，保持现策略，不推广整个网络。见[专题](INSTRUMENT_DISPATCH_AUDIT.md)。 |
+| ALIGN-429 | 确认原放置泡沫喷罐族未接入。 | 原16色普通／带归属各全新／已用，共64形式，安装Behavior_Spray_Foam并支持模式与放置。 | 当前实际多物品／技术目录和分派缺此族；染色、去除、硬化及泡沫方块不是替代，导线包覆另列078。限源码合同，未执行注册／游戏，见[专题](ITEM_BEHAVIOR_OWNERSHIP_AUDIT.md)。 |
+| ALIGN-430 | 确认海水／脏水木桶倒空回调和创造策略不同。 | 原两内容物用Switch_Metadata，服务器潜行点击方块切空，无创造保留例外。 | 当前分支在use，创造保留满桶，onItemUseFirst无专用切空；保持策略未游戏，见[专题](WOODEN_BUCKET_AUDIT.md)。 |
+| ALIGN-431 | 确认木桶缺少原发射器装倒液入口。 | 原ItemBase注册分派，经MultiItem到Behavior_Bucket_Simple实际收放流体。 | 当前注册／父类无木桶行为，实际原生默认仅弹物品；流体能力不自动成为发射器行为，见[专题](WOODEN_BUCKET_AUDIT.md)。 |
+| ALIGN-432 | 确认木桶补满炼药锅及创造消耗策略不同。 | 原水位小于3即填满并切空，不豁免创造。 | 当前直接只接空锅，创造留满桶；Forge后备无映射，Neo整步容量1000／水位3亦拒绝1／2水位。源码及原生公式非世界实测，见[专题](WOODEN_BUCKET_AUDIT.md)。 |
+| ALIGN-433 | 确认瓷杯／陶罐／保温杯未接原饮用入口。 | 原三类实现饮用接口，父类按250L、登记饮料及单件／饥饿条件消费，杯／罐另有方块饮用面。 | 当前统一物品无对应use／完成回调及食物属性，方块只调容／搬液；现有瓶子饮用不是替代，见[专题](PORTABLE_VESSEL_AUDIT.md)。 |
+| ALIGN-434 | 确认六种开放便携容器未接自行接雨。 | 原杯／罐及四量杯启用父类600tick、天气／气候／顶部门控的接雨。 | 当前方块／实体无对应天气入口，实际EntityBlock默认无ticker；外部管路不替代自接雨，未天气世界实测，见[专题](PORTABLE_VESSEL_AUDIT.md)。 |
+| ALIGN-435 | 确认便携容器装液后未转单件上限。 | 原多重实体物品入口实际调用容器getMaxStackSize，有液体返回1。 | 当前51种仍取16／64固定值，原生处理器写Fluid／VESSEL_CONTENTS不改上限；不据此宣称复制漏洞，见[专题](PORTABLE_VESSEL_AUDIT.md)。 |
+| ALIGN-436 | 确认陶罐未接原手持视线取源入口。 | 原Jug允许canPickUpFluids，父类空气右键按视线与容量处理水源等分支。 | 当前通用BlockItem只有对处理器搬液，无相应use；不泛称机器取液失败，旧浇灌联动另待核，见[专题](PORTABLE_VESSEL_AUDIT.md)。 |
 
 可读性第二十六批：按要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 
@@ -388,6 +589,8 @@
 第八批展开大型锅炉参数／布局与共用 StructureGrid，坐标缩写改成 front／controller／center 对应的明确变量名。归一化声明的形参／局部变量改名后代码及字面量一致；两类独立编译通过，未调整坐标公式和玩法。
 
 ## 下一批工作
+
+第一百零三批完成按钮／曲柄调用链，新增329–338、扩132／139；七源12执行视图按受控局部改名后保持，普通模式／方向／基础模型已有，源调度和实际core算术分别取证，见[专题](BUTTON_CRANK_AUDIT.md)。接着结合全系统源码覆盖清单推进未核入口及可读性队列；实际持续操作、发光与附件生命周期、存档重启仍待验，不把本批数值和模型推导当整体验收。
 
 第七十七批完成25主阀制作声明／工具／说明入口核对，新增266–267，扩126／232／251／262，四源码七执行保持。继续最终标签／制作、附件物性筛选与完整模型／着色／覆盖板，再推进全部系统队列，不把六双语键或Jade入口当全客户端验收，见[专题](TANK_TOOLS_RECIPES_AUDIT.md)。
 

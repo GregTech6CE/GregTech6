@@ -1,0 +1,1199 @@
+{
+  "date": "2026-10-23",
+  "baseline": "2a5cf979bdde099f1daf80434d6a216209f28d3f",
+  "previous_goal_turn": "Progress: batch129 committed; upstream29 commits merged, pushed and both final jars delivered. No live previous build remains.",
+  "scope": "Finite portable vessel drink entry, rainfall and filled stack limit; capacity domain/adapters clarified without gameplay changes.",
+  "new_findings": [
+    433,
+    434,
+    435,
+    436
+  ],
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/tank/TileEntityBase08FluidContainer.java",
+      "raw_sha256": "a5405b9168124c4a95c63d395d5f8803684c631125c4eefda0546a5502d7fe48",
+      "lines": 429,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/tank/TileEntityBase09FluidContainerSmall.java",
+      "raw_sha256": "f6ee592de8188906d28e7f808900702b188a93cf94092dd5d790cec7594fabe7",
+      "lines": 44,
+      "notice_sha256": "63c517dd35b913cfc46d1f7881d524c83334db090a72278eefbb881a3ef42a1b"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/tank/TileEntityBase09FluidContainerSync.java",
+      "raw_sha256": "0d9bb9b3717e644711950045053e0e6edb5c64953e200c7758e2405a773d383a",
+      "lines": 59,
+      "notice_sha256": "63c517dd35b913cfc46d1f7881d524c83334db090a72278eefbb881a3ef42a1b"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/tank/TileEntityBase10FluidContainerSyncSmall.java",
+      "raw_sha256": "7c2009cc4bcdb1c6cd00d9241fb0e8876fd3c473322f879edd7e695d64944e57",
+      "lines": 44,
+      "notice_sha256": "63c517dd35b913cfc46d1f7881d524c83334db090a72278eefbb881a3ef42a1b"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tanks/MultiTileEntityJug.java",
+      "raw_sha256": "febf7260284110e2b834f0719972c0cb6ca38bd1e692be3c443560847e8321ff",
+      "lines": 93,
+      "notice_sha256": "accc18a4bf87847b3134c2814611b821dcb8c3083277f78c0f8f2cf8e6f05caf"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tanks/MultiTileEntityCup.java",
+      "raw_sha256": "bf4606bccdc779266051ca30166df05b8ca0d2536deb8de56cc7e06f3af28ea1",
+      "lines": 89,
+      "notice_sha256": "accc18a4bf87847b3134c2814611b821dcb8c3083277f78c0f8f2cf8e6f05caf"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tanks/MultiTileEntityThermos.java",
+      "raw_sha256": "b68352dcce8a1b7ab5932affa98b6c8ba9503463f9e84db169e98b703c950d89",
+      "lines": 75,
+      "notice_sha256": "accc18a4bf87847b3134c2814611b821dcb8c3083277f78c0f8f2cf8e6f05caf"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tanks/MultiTileEntityMeasuringPot.java",
+      "raw_sha256": "6afe841fd91cb557c75923a74fba5055ff003bba868bcacbf46ab10e8a1c07b0",
+      "lines": 148,
+      "notice_sha256": "accc18a4bf87847b3134c2814611b821dcb8c3083277f78c0f8f2cf8e6f05caf"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tanks/MultiTileEntityBarometerGasCylinder.java",
+      "raw_sha256": "64a4ac2d54d008ebe34de1fc6ab2e2a622119d1314127fa18c59194deefd5336",
+      "lines": 151,
+      "notice_sha256": "c635bd8e84f1d5b02a1299180479660a636e876419d763c9cd0714b9487e28b7"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityItemInternal.java",
+      "raw_sha256": "7e103a13f02097dcfd1c91334cb3da238b9f509ee4cbb584dfd7267bf26f8bb1",
+      "lines": 659,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "raw_sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "lines": 2243,
+      "notice_sha256": "6855675ee4a01a21169dd2a3ed5df729ac3198a4b2e3b869f91e1a45c79e6aca"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/fluid/PortableFluidContainerSpec.java",
+      "raw_sha256": "f2d02ed3bd9b167f59d772760bba5e836b394e6dbfc6cd17afc452a35ebf9292",
+      "lines": 123
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/tool/PortableCapacityRules.java",
+      "raw_sha256": "9648609a2be98bb63d430427fb2fd797a02757c147f522588035e72180dbcf78",
+      "lines": 47
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/tool/PortableContainerLimits.java",
+      "raw_sha256": "2689bacef593deef2e4e40fd104644be81eb8add7a033767f2523da40dd420ac",
+      "lines": 56
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/PortableFluidContainerItem.java",
+      "raw_sha256": "a3055f09e9f557dec4817beebe78c62528fe55905887132e2625ad87221995af",
+      "lines": 125
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/tool/PortableContainerBlock.java",
+      "raw_sha256": "9fd26abfdd12ec06fa2310b4e81f88e468bbbf0a8595d20dc7b7198e1a551436",
+      "lines": 77
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/PortableContainerBlockEntity.java",
+      "raw_sha256": "0002643f5bbc8f3f8be7943f720141e0f2b43e679903d89969366af5dfdcc557",
+      "lines": 117
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTToolBlocks.java",
+      "raw_sha256": "834d9a9a40a679a598ad11e97318652c85d23209964352a83094e5dd0bac6dba",
+      "lines": 366
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "raw_sha256": "9a701c7d7600ca0bdaab65dd7765862005f06c01cf38f6d90c347c3b3bffb3a5",
+      "lines": 713
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/BottleItem.java",
+      "raw_sha256": "76193b0d726283205e254f685ac6637eb8c8006db13b9ef31d1d55580ff7ffdf",
+      "lines": 116
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/fluid/FluidCapabilities.java",
+      "raw_sha256": "a2f5eb5fa0c1267133583859f8857f21768dc0b429a83eef4195481e45a7f1d1",
+      "lines": 37
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTFluidComponents.java",
+      "raw_sha256": "431b4058ebd14925a7057049b777ec7ec185f4df7f2db01f71f0e6c53b390b77",
+      "lines": 7
+    }
+  ],
+  "source_excerpts": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/tank/TileEntityBase08FluidContainer.java",
+      "anchor": "public void onTick2(",
+      "start_line": 114,
+      "end_line": 125,
+      "excerpt_sha256": "deea9848e32800073cf38a8fb097fbb6d3213e62f19de5e71993d265184cdede"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/tank/TileEntityBase08FluidContainer.java",
+      "anchor": "public boolean onBlockActivated3(",
+      "start_line": 142,
+      "end_line": 171,
+      "excerpt_sha256": "d3a2c0ea064a44a7d99176e3b6809cc193caf37192b6bb628efb375cbbdc5269"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/tank/TileEntityBase08FluidContainer.java",
+      "anchor": "public boolean onItemUseFirst(",
+      "start_line": 203,
+      "end_line": 270,
+      "excerpt_sha256": "1f7f94f11acdeeaae97d0645e6913007eeb170baa669c2ecdc25af870c11172a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/tank/TileEntityBase08FluidContainer.java",
+      "anchor": "public ItemStack onItemRightClick(",
+      "start_line": 274,
+      "end_line": 339,
+      "excerpt_sha256": "e7152d952b9640c95686736444c3fd5dbe924c1fe6ab173025d2249404be361d"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/tank/TileEntityBase08FluidContainer.java",
+      "anchor": "if (isDrinkable() && aStack.stackSize == 1",
+      "start_line": 337,
+      "end_line": 342,
+      "excerpt_sha256": "d2c66212fd624754bb3c7d4b042d00228ebe5d048886a7ef93581899c691a18b"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/tank/TileEntityBase08FluidContainer.java",
+      "anchor": "public ItemStack onEaten(",
+      "start_line": 352,
+      "end_line": 382,
+      "excerpt_sha256": "24c78cc93080034f75ea99e0fa17f8f5c4ab466e2e5484405396951fc98bf1c7"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/tank/TileEntityBase08FluidContainer.java",
+      "anchor": "public boolean isDrinkable()",
+      "start_line": 415,
+      "end_line": 429,
+      "excerpt_sha256": "fc5a06636147b309cef5a252de8c44bd6df25fc9c6fb4bf3bcecbcdd9af8e2e9"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityItemInternal.java",
+      "anchor": "public int getItemStackLimit(",
+      "start_line": 241,
+      "end_line": 249,
+      "excerpt_sha256": "0a474686a7d24127e0fe2dc24fb67158dc150694b6a757edf7c25563c06ebf32"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tanks/MultiTileEntityJug.java",
+      "anchor": "public class MultiTileEntityJug",
+      "start_line": 39,
+      "end_line": 40,
+      "excerpt_sha256": "561b1599d45e22a8bec0b8cc71536e2ae743d261f23f270bd3f3c26bd70689e1"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tanks/MultiTileEntityJug.java",
+      "anchor": "public boolean canWaterCrops()",
+      "start_line": 87,
+      "end_line": 91,
+      "excerpt_sha256": "763a5696e5eabea9c7f9d3639439ac2b0cc6c6bbb5894a7c4b825b1e864073af"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tanks/MultiTileEntityCup.java",
+      "anchor": "public class MultiTileEntityCup",
+      "start_line": 36,
+      "end_line": 37,
+      "excerpt_sha256": "8f8e87c602160bcb10824d59ce1ecea4cad9826ef228cb488450f9e1c89a1621"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tanks/MultiTileEntityCup.java",
+      "anchor": "public boolean canFillWithRain()",
+      "start_line": 84,
+      "end_line": 86,
+      "excerpt_sha256": "7ddeff082071d71fad0a88d260c438cb245717ee8b7be0a4170024a93d6c69f7"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tanks/MultiTileEntityThermos.java",
+      "anchor": "public class MultiTileEntityThermos",
+      "start_line": 46,
+      "end_line": 47,
+      "excerpt_sha256": "90ce27be6bbd94affe8c8faf586c3bfca89e292759898cdb4bccccc46cdfb50d"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tanks/MultiTileEntityMeasuringPot.java",
+      "anchor": "public boolean onBlockActivated3(",
+      "start_line": 73,
+      "end_line": 93,
+      "excerpt_sha256": "112b632985f551268f9d347a155aa41dde234e1d58ef2932e6738c0cb3f8dad5"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tanks/MultiTileEntityMeasuringPot.java",
+      "anchor": "public boolean canFillWithRain()",
+      "start_line": 144,
+      "end_line": 145,
+      "excerpt_sha256": "25b4f473a78923d5408e1ac6bc38eeb02f2954efb7902c38cb82e61c42fc4c73"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tanks/MultiTileEntityBarometerGasCylinder.java",
+      "anchor": "public boolean onBlockActivated3(",
+      "start_line": 74,
+      "end_line": 109,
+      "excerpt_sha256": "cb9ad2c2af44ed96afd484eb40d4d60efff3ed2f268db6afd93364039dd5b165"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/tool/PortableCapacityRules.java",
+      "anchor": "public static int adjust(",
+      "start_line": 19,
+      "end_line": 26,
+      "excerpt_sha256": "33e79789693505517439b64d557decd4cb9596bf109fd50d9b48f26238477916"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/tool/PortableCapacityRules.java",
+      "anchor": "private static int measuringPotStep(",
+      "start_line": 30,
+      "end_line": 46,
+      "excerpt_sha256": "493887eafaf5cf7e75d2cd8d17ac3035878b0a26bcf9e0aba93ff1ede4b345c2"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/tool/PortableContainerLimits.java",
+      "anchor": "private static final String KEY",
+      "start_line": 15,
+      "end_line": 23,
+      "excerpt_sha256": "66ccc1ef4538a8cbe82915b5d2d8a9918289de8f1b905138a21505c2efdd8d5c"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/tool/PortableContainerLimits.java",
+      "anchor": "public static int adjust(",
+      "start_line": 30,
+      "end_line": 40,
+      "excerpt_sha256": "9eb42dd90fed0b417cec9bc4b2822e22ca9f33c36c20c75f23423e6c73e29c9e"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/PortableFluidContainerItem.java",
+      "anchor": "public final class PortableFluidContainerItem",
+      "start_line": 31,
+      "end_line": 38,
+      "excerpt_sha256": "34100bf05dbbb49bb604324636e8e8cd5591f7863696d95a9b84ff577fc68c71"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/PortableFluidContainerItem.java",
+      "anchor": "public int fill(",
+      "start_line": 66,
+      "end_line": 78,
+      "excerpt_sha256": "50e32df7ad077a141d0b47d7cdb9eec310804b20d2a6b0c400c891fa226d9781"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/PortableFluidContainerItem.java",
+      "anchor": "public InteractionResult onItemUseFirst(",
+      "start_line": 101,
+      "end_line": 108,
+      "excerpt_sha256": "2514eca959b799624172d165a168192c0e2309038e9631a4e3efbf6a7ad6036c"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/tool/PortableContainerBlock.java",
+      "anchor": "public final class PortableContainerBlock",
+      "start_line": 21,
+      "end_line": 25,
+      "excerpt_sha256": "101ce021d501309a59c100f6137868b81babae3ad17b21e0641021f1c17a6628"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/tool/PortableContainerBlock.java",
+      "anchor": "if (level.getBlockEntity(pos) instanceof PortableContainerBlockEntity vessel) {",
+      "start_line": 47,
+      "end_line": 63,
+      "excerpt_sha256": "df4b7d36cde842f367a908a2915b46a5bca2f5da395867d10119e044f3ce6ec2"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/PortableContainerBlockEntity.java",
+      "anchor": "public boolean interact(",
+      "start_line": 77,
+      "end_line": 78,
+      "excerpt_sha256": "ffed43c8a48ac1b60a930438311481163f77cde977282c216ff33fc8bf8d64f7"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTToolBlocks.java",
+      "anchor": "for (var spec : com.gregtech.gregtech.api.fluid.PortableFluidContainerSpec.values())",
+      "start_line": 66,
+      "end_line": 72,
+      "excerpt_sha256": "28ba4ecce491b2da3f09d5c10a4a84480e81d23fba18dbe0680394fc04982d80"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/BottleItem.java",
+      "anchor": "public InteractionResultHolder<ItemStack> use(",
+      "start_line": 97,
+      "end_line": 116,
+      "excerpt_sha256": "0a6dbe70967d004ecd62837ab12887c6d8cca78373a17b63f36c604b4dc9e4dc"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/fluid/FluidCapabilities.java",
+      "anchor": "event.registerBlockEntity(Capabilities.FluidHandler.BLOCK",
+      "start_line": 23,
+      "end_line": 35,
+      "excerpt_sha256": "31ee4a103be731469ef03fc55a7f5fcae3d78efc914a29bd6992dd3c10459121"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTFluidComponents.java",
+      "anchor": "VESSEL_CONTENTS",
+      "start_line": 6,
+      "end_line": 6,
+      "excerpt_sha256": "0d1f404d94681c4e2896adeb56ca2e8ed43c67b797f475cd106c355928dd1d86"
+    }
+  ],
+  "native_contracts": {
+    "entries": [
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+        "entry": "net/minecraft/world/item/Item.class",
+        "entry_sha256": "b0e69c533ce7ea00deeeb5d369bcc71ca345fcaf380e3c136e178bd67d8b87a6",
+        "read_output": "work/portable-vessel-audit-20261023/forge-Item.javap.txt",
+        "read_output_sha256": "83dd1613da86768aa12cd9afa9b5d52396d0ffc7be9b339c96dd328f8b84304a"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+        "entry": "net/minecraft/world/item/Item$Properties.class",
+        "entry_sha256": "ef82809daf76d1556fc756f8071d069e31e0886f432b254af745804f0cef4036",
+        "read_output": "work/portable-vessel-audit-20261023/forge-Item$Properties.javap.txt",
+        "read_output_sha256": "6369f9b48f65e84ddea092b7da5c45404b6ee4adc3912eb5f9bd7dc5216fdedd"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+        "entry": "net/minecraft/world/item/ItemStack.class",
+        "entry_sha256": "152f7ece5f721ca26d54e4e5d4f93f0d821003ac3ebd4e86e56568a341e6bcd4",
+        "read_output": "work/portable-vessel-audit-20261023/forge-ItemStack.javap.txt",
+        "read_output_sha256": "e01d9e30d9cb4ab0bfc070ae24ee7c948e09e6150042a695526577c8bcb4e48e"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+        "entry": "net/minecraft/world/item/BlockItem.class",
+        "entry_sha256": "2b3e1defc87df357543458f44516b32b7519bb42746690fc24cee8ba6db4defc",
+        "read_output": "work/portable-vessel-audit-20261023/forge-BlockItem.javap.txt",
+        "read_output_sha256": "23dca7e5620102b67b271ef375ebb9ff97f2b059d60d882aa09480cadeb50401"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+        "entry": "net/minecraft/world/level/block/EntityBlock.class",
+        "entry_sha256": "c3e5296ecbaa0aa9cb5827347416365e43f425ce8aec5c213a9629aed95936e9",
+        "read_output": "work/portable-vessel-audit-20261023/forge-EntityBlock.javap.txt",
+        "read_output_sha256": "b9e92b7b6f10a98efaae356db697b5af9dc30792ff270d362ad93f75d172d85e"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-universal.jar",
+        "artifact_sha256": "3b203ea6105326b8a6d7bea8327c2793dbffbaa8e574c9c6626fe6d787591874",
+        "entry": "net/minecraftforge/common/extensions/IForgeItem.class",
+        "entry_sha256": "a0c08ad0e9e068f27ce2b3766bda0dbc4fa5a571ef980ef91419208d8f84ff33",
+        "read_output": "work/portable-vessel-audit-20261023/forge-IForgeItem.javap.txt",
+        "read_output_sha256": "75ff6f5ed8f31d0ec1646440f0d7083d001173f9c1f8fe47ffef3e532e14f2b7"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-universal.jar",
+        "artifact_sha256": "3b203ea6105326b8a6d7bea8327c2793dbffbaa8e574c9c6626fe6d787591874",
+        "entry": "net/minecraftforge/fluids/capability/templates/FluidHandlerItemStack.class",
+        "entry_sha256": "e63f509e19bf4776737f048b89bc409b5cfee8d9d14e01e38405a0d859fe76d3",
+        "read_output": "work/portable-vessel-audit-20261023/forge-FluidHandlerItemStack.javap.txt",
+        "read_output_sha256": "5d342fd2da8ced7afafff86f2068e1b78f460ee441483f7deec193d82ac09408"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+        "artifact_sha256": "9a99670ebf7e9f40ad66153a37f9d8c5b6406fdca9f07b83acdc52cb1842adb6",
+        "entry": "net/minecraft/world/item/Item.class",
+        "entry_sha256": "d4234cf5acb218b2056a38845170ec8266e16dc39ae0ed5fe5328cac153af462",
+        "read_output": "work/portable-vessel-audit-20261023/neo-Item.javap.txt",
+        "read_output_sha256": "c8ff2f95c5a75610d5622a4a073db0d974265914584d82cf37f0f3d52f50169c"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+        "artifact_sha256": "9a99670ebf7e9f40ad66153a37f9d8c5b6406fdca9f07b83acdc52cb1842adb6",
+        "entry": "net/minecraft/world/item/Item$Properties.class",
+        "entry_sha256": "35f8678fef22d0d45136b8f2e7250067f579e072b4bb2dc1bbf9c806c7b0748b",
+        "read_output": "work/portable-vessel-audit-20261023/neo-Item$Properties.javap.txt",
+        "read_output_sha256": "50088ca5c9394cf11821226ba825bd3e5a60c2c7d1732794b9c52f84bbc0770f"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+        "artifact_sha256": "9a99670ebf7e9f40ad66153a37f9d8c5b6406fdca9f07b83acdc52cb1842adb6",
+        "entry": "net/minecraft/world/item/ItemStack.class",
+        "entry_sha256": "072cd6887595d3f928a3a1a9605662ff547fe3201d6b6d713a43bfd2719f1a13",
+        "read_output": "work/portable-vessel-audit-20261023/neo-ItemStack.javap.txt",
+        "read_output_sha256": "547fa3a2b3dbfd09137b3743a51e012e83a8e7971b5f6ab039ba0cb4b8fb1056"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+        "artifact_sha256": "9a99670ebf7e9f40ad66153a37f9d8c5b6406fdca9f07b83acdc52cb1842adb6",
+        "entry": "net/minecraft/world/item/BlockItem.class",
+        "entry_sha256": "ac9287c03ef5b83a30aa2ec6ec6dd320219071f30a33c9ef433fdfb328b040f0",
+        "read_output": "work/portable-vessel-audit-20261023/neo-BlockItem.javap.txt",
+        "read_output_sha256": "d1bc75db013eddd3c446840bf3ca2b6d9490806afae5bb375deb79a54093db26"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+        "artifact_sha256": "9a99670ebf7e9f40ad66153a37f9d8c5b6406fdca9f07b83acdc52cb1842adb6",
+        "entry": "net/minecraft/world/level/block/EntityBlock.class",
+        "entry_sha256": "c8906ce68cf97d37b189cabde06f01d3a7fa65281059a5bdd24d8754b6f7996c",
+        "read_output": "work/portable-vessel-audit-20261023/neo-EntityBlock.javap.txt",
+        "read_output_sha256": "8ae9a0dcae25cba454917416f6fbe6785664b762b1467ecc564dd5d3fede49e0"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/21.1.243/ce384946fb5541fddf182e066ce1c01423d0b86d/neoforge-21.1.243-universal.jar",
+        "artifact_sha256": "0424e81c5948f08e529631c915c35bc38feffc24597ab3458bf7ecf0c0d83399",
+        "entry": "net/neoforged/neoforge/common/extensions/IItemExtension.class",
+        "entry_sha256": "d65a413962ab6bf6cf8c33119b010dd16fcf482c114b8ae8abe5c59da951b088",
+        "read_output": "work/portable-vessel-audit-20261023/neo-IItemExtension.javap.txt",
+        "read_output_sha256": "d937efaed3c1e741d59ce3b6aaddf21e1bcb4e8f919d90694322d09ffc9cc29f"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/21.1.243/ce384946fb5541fddf182e066ce1c01423d0b86d/neoforge-21.1.243-universal.jar",
+        "artifact_sha256": "0424e81c5948f08e529631c915c35bc38feffc24597ab3458bf7ecf0c0d83399",
+        "entry": "net/neoforged/neoforge/fluids/capability/templates/FluidHandlerItemStack.class",
+        "entry_sha256": "8e3dd72a9373d56b0c8424289c6bfb27e1e636f3cb5d4b34090ed2648db75b9a",
+        "read_output": "work/portable-vessel-audit-20261023/neo-FluidHandlerItemStack.javap.txt",
+        "read_output_sha256": "43d3b951d7262b52e20f59e1a8c40b9ed4e5fce909332af092bb500b3d5a2991"
+      }
+    ],
+    "scope": "Exact cached game and loader bytes read with javap; no game method executed."
+  },
+  "native_excerpts": [
+    {
+      "path": "work/portable-vessel-audit-20261023/forge-Item.javap.txt",
+      "anchor": "InteractionResultHolder<net.minecraft.world.item.ItemStack> use(",
+      "start_line": 164,
+      "end_line": 194,
+      "excerpt_sha256": "39b2a3f4f9d15dda637c9eb942829b3269685646a3af3f2a6b82108ab0a7e344"
+    },
+    {
+      "path": "work/portable-vessel-audit-20261023/neo-Item.javap.txt",
+      "anchor": "InteractionResultHolder<net.minecraft.world.item.ItemStack> use(",
+      "start_line": 182,
+      "end_line": 212,
+      "excerpt_sha256": "cae0544cae998b9a35c72ab7c1e8f2cbec130694cd14ff64b526d0ec5a5a60de"
+    },
+    {
+      "path": "work/portable-vessel-audit-20261023/forge-IForgeItem.javap.txt",
+      "anchor": "public default int getMaxStackSize(",
+      "start_line": 279,
+      "end_line": 284,
+      "excerpt_sha256": "e183d4808f5064836d790c967ebc7446f774378893d706625bcb348211591884"
+    },
+    {
+      "path": "work/portable-vessel-audit-20261023/neo-IItemExtension.javap.txt",
+      "anchor": "public default int getMaxStackSize(",
+      "start_line": 218,
+      "end_line": 228,
+      "excerpt_sha256": "1bab308523fb986537b611024680fae6df52ca121e008cffcb3ed22b1b9a7cbb"
+    },
+    {
+      "path": "work/portable-vessel-audit-20261023/forge-ItemStack.javap.txt",
+      "anchor": "public int getMaxStackSize()",
+      "start_line": 544,
+      "end_line": 550,
+      "excerpt_sha256": "89b399b6926f3317eece6a58c838dc845fde82a5110dcdb4a55400e1a996e490"
+    },
+    {
+      "path": "work/portable-vessel-audit-20261023/neo-ItemStack.javap.txt",
+      "anchor": "public int getMaxStackSize()",
+      "start_line": 627,
+      "end_line": 633,
+      "excerpt_sha256": "0258957b38f9e0d403163753353f95aedeb6a5c2a78e83e60b4afa782f763077"
+    },
+    {
+      "path": "work/portable-vessel-audit-20261023/forge-Item$Properties.javap.txt",
+      "anchor": "stacksTo(int)",
+      "start_line": 45,
+      "end_line": 59,
+      "excerpt_sha256": "0a85a2187d3da0fb15eae991c1e847db5d8ffd3e27633be3f9811315caba564b"
+    },
+    {
+      "path": "work/portable-vessel-audit-20261023/neo-Item$Properties.javap.txt",
+      "anchor": "stacksTo(int)",
+      "start_line": 33,
+      "end_line": 40,
+      "excerpt_sha256": "f1b43c9bab97ea0ab30d9c6ef14e881e152c7d6b4405b84455b6f4e6d4f3b882"
+    },
+    {
+      "path": "work/portable-vessel-audit-20261023/forge-FluidHandlerItemStack.javap.txt",
+      "anchor": "protected void setFluid(",
+      "start_line": 54,
+      "end_line": 81,
+      "excerpt_sha256": "ea645b9e24ed2c8cb3c8f4bcf917ad9e8fefd44ffbb3eda3212830cb0caa0217"
+    },
+    {
+      "path": "work/portable-vessel-audit-20261023/neo-FluidHandlerItemStack.javap.txt",
+      "anchor": "protected void setFluid(",
+      "start_line": 42,
+      "end_line": 52,
+      "excerpt_sha256": "cfc24928097bf47c574eabba337adf8099c1b64fadda59a0263a0e3a826f9f16"
+    },
+    {
+      "path": "work/portable-vessel-audit-20261023/forge-EntityBlock.javap.txt",
+      "anchor": "getTicker(",
+      "start_line": 5,
+      "end_line": 8,
+      "excerpt_sha256": "187d0d719a6aa484a9197f16a83658582fc4c9f42887d725da4b5597db3a62a9"
+    },
+    {
+      "path": "work/portable-vessel-audit-20261023/neo-EntityBlock.javap.txt",
+      "anchor": "getTicker(",
+      "start_line": 5,
+      "end_line": 8,
+      "excerpt_sha256": "187d0d719a6aa484a9197f16a83658582fc4c9f42887d725da4b5597db3a62a9"
+    }
+  ],
+  "current_locator": {
+    "roots": [
+      "core/src/api/java",
+      "core/src/main/java",
+      "multiversion/src/api/java",
+      "multiversion/src/main/java",
+      "multiversion/versions/1.20.1-forge/src/api/java",
+      "multiversion/versions/1.20.1-forge/src/main/java",
+      "multiversion/versions/1.21.1-neoforge/src/api/java",
+      "multiversion/versions/1.21.1-neoforge/src/main/java"
+    ],
+    "source_count": 1881,
+    "input_identity_sha256": "d73e2dee274223f0288eefb9bcb23067d1741056e4c9d0c931fb2c8e1fcc74ca",
+    "queries": {
+      "vessel_item_type": "\\bPortableFluidContainerItem\\b",
+      "vessel_entity_type": "\\bPortableContainerBlockEntity\\b",
+      "drink_dispatch": "\\bGTDrinks\\s*\\.\\s*drink\\s*\\(",
+      "weather_hooks": "\\b(?:canFillWithRain|isRainingAt|isRaining|handlePrecipitation)\\s*\\("
+    },
+    "matches": {
+      "vessel_item_type": [
+        {
+          "path": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeInputs.java",
+          "sha256": "764199c9a32a312b5aec9693b299c576624db2cf550daaadcc1ade4b232906e7",
+          "lines": [
+            90
+          ]
+        },
+        {
+          "path": "multiversion/src/main/java/com/gregtech/gregtech/client/CapsuleCellRenderer.java",
+          "sha256": "0b1bcb59a3a6401cd6217418b167f894cd7303fda2fd0d8f1c5963748fa35e0d",
+          "lines": [
+            17
+          ]
+        },
+        {
+          "path": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/FilterRules.java",
+          "sha256": "cc0c0fa2ec884259c185ac94f34955af37e1fecf92d6b72bba9aebc7f4dcaac3",
+          "lines": [
+            38
+          ]
+        },
+        {
+          "path": "multiversion/src/main/java/com/gregtech/gregtech/item/PortableFluidContainerItem.java",
+          "sha256": "a3055f09e9f557dec4817beebe78c62528fe55905887132e2625ad87221995af",
+          "lines": [
+            22,
+            25
+          ]
+        },
+        {
+          "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTToolBlocks.java",
+          "sha256": "834d9a9a40a679a598ad11e97318652c85d23209964352a83094e5dd0bac6dba",
+          "lines": [
+            296
+          ]
+        },
+        {
+          "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+          "sha256": "d0253e70bb72b66f114f575ba29f3895c90988878d22b8c92a2adfc978ef7053",
+          "lines": [
+            91
+          ]
+        },
+        {
+          "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/MaterialShellColors.java",
+          "sha256": "0077a3e68f6b3c6ea0bb8a751a4785a3a7dcbd62d0bc33c3e37a9ec54361c8bc",
+          "lines": [
+            26
+          ]
+        },
+        {
+          "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/fluid/FluidCapabilities.java",
+          "sha256": "a2f5eb5fa0c1267133583859f8857f21768dc0b429a83eef4195481e45a7f1d1",
+          "lines": [
+            30
+          ]
+        }
+      ],
+      "vessel_entity_type": [
+        {
+          "path": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/PortableContainerBlock.java",
+          "sha256": "9fd26abfdd12ec06fa2310b4e81f88e468bbbf0a8595d20dc7b7198e1a551436",
+          "lines": [
+            37,
+            39,
+            46,
+            67,
+            74
+          ]
+        },
+        {
+          "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/PortableContainerBlockEntity.java",
+          "sha256": "0002643f5bbc8f3f8be7943f720141e0f2b43e679903d89969366af5dfdcc557",
+          "lines": [
+            17,
+            24
+          ]
+        },
+        {
+          "path": "multiversion/src/main/java/com/gregtech/gregtech/client/CapsuleCellRenderer.java",
+          "sha256": "0b1bcb59a3a6401cd6217418b167f894cd7303fda2fd0d8f1c5963748fa35e0d",
+          "lines": [
+            13,
+            15
+          ]
+        },
+        {
+          "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverCapabilitiesMixin.java",
+          "sha256": "1f21144ede811a73d790e61bb82b27a18cea1cd5adf632ad5f036a62c703894b",
+          "lines": [
+            79
+          ]
+        },
+        {
+          "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+          "sha256": "9a701c7d7600ca0bdaab65dd7765862005f06c01cf38f6d90c347c3b3bffb3a5",
+          "lines": [
+            332,
+            334
+          ]
+        }
+      ],
+      "drink_dispatch": [
+        {
+          "path": "multiversion/src/main/java/com/gregtech/gregtech/item/BottleItem.java",
+          "sha256": "76193b0d726283205e254f685ac6637eb8c8006db13b9ef31d1d55580ff7ffdf",
+          "lines": [
+            95
+          ]
+        },
+        {
+          "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/item/FluidItem.java",
+          "sha256": "3442404044177318f250f1e870405c540daaa1b299791f4dc6dfa2ddedeff186",
+          "lines": [
+            70
+          ]
+        },
+        {
+          "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/fluid/FluidDisplayItem.java",
+          "sha256": "b84de74c17e613379086fd02689c2ac3831980621e2f27ff472e203e65671903",
+          "lines": [
+            62
+          ]
+        }
+      ],
+      "weather_hooks": [
+        {
+          "path": "multiversion/src/main/java/com/gregtech/gregtech/block/plant/BaleBlock.java",
+          "sha256": "d49cdf56038c9770e5c1bd8989257284ff0adedbb402fb024d4d838c1023b136",
+          "lines": [
+            54,
+            71
+          ]
+        },
+        {
+          "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/BushBlockEntity.java",
+          "sha256": "ec83c3aa9f88ee5aa38428942a800881ded79ea9f8ab601634395e5a169cff11",
+          "lines": [
+            121
+          ]
+        },
+        {
+          "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/EnergyNodeBlockEntity.java",
+          "sha256": "c85914e0ae9b509383c9323d85dba161baf4dbb53875f3581a63fca8c8a426c8",
+          "lines": [
+            529
+          ]
+        },
+        {
+          "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LargeCrucibleControllerBlockEntity.java",
+          "sha256": "fd70400f8bb549b8cca8451bcc524ffce9e6814297e0e95466af5a1deba05414",
+          "lines": [
+            154
+          ]
+        },
+        {
+          "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LightningRodControllerBlockEntity.java",
+          "sha256": "6c8cd108b140fdb05aa6070813645881885a22c755a5013b1c3756450ddea86e",
+          "lines": [
+            104
+          ]
+        },
+        {
+          "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/BumbliaryBlockEntity.java",
+          "sha256": "f05fdbd5e22c566488c8bb4d7fe4c7ec19df8b0d82cef8e808ee18f9ffe0ae65",
+          "lines": [
+            487
+          ]
+        },
+        {
+          "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/ProcessingToolBlockEntity.java",
+          "sha256": "9bd50c42d6dd52f65a8068b3be79d6a1415642baa447c1509d7d02ec4e47fdc4",
+          "lines": [
+            123
+          ]
+        },
+        {
+          "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverAttachmentBehaviors.java",
+          "sha256": "4ea78a6bdc348cc7ba1d2a645a6952032db761cb1e4f315f2c1d93fca3e97511",
+          "lines": [
+            151
+          ]
+        }
+      ]
+    },
+    "scope": "Comment/literal/import-masked locator only, not a count of audited or functioning systems."
+  },
+  "family": {
+    "specifications": [
+      [
+        "JUG",
+        "jug"
+      ],
+      [
+        "CUP",
+        "cup"
+      ],
+      [
+        "MEASURING_POT",
+        "measuring_pot"
+      ],
+      [
+        "THERMOS",
+        "thermos"
+      ],
+      [
+        "BAROMETER_GAS_CYLINDER",
+        "barometer_gas_cylinder"
+      ],
+      [
+        "MEASURING_POT_STAINLESS",
+        "measuring_pot_stainless_steel"
+      ],
+      [
+        "MEASURING_POT_TUNGSTEN",
+        "measuring_pot_tungsten"
+      ],
+      [
+        "MEASURING_POT_CARBIDE",
+        "measuring_pot_tantalum_hafnium_carbide"
+      ],
+      [
+        "GAS_CYLINDER_STAINLESS",
+        "barometer_gas_cylinder_stainless_steel"
+      ],
+      [
+        "GAS_CYLINDER_TUNGSTEN",
+        "barometer_gas_cylinder_tungsten"
+      ],
+      [
+        "GAS_CYLINDER_CARBIDE",
+        "barometer_gas_cylinder_tantalum_hafnium_carbide"
+      ],
+      [
+        "CELL_WAX",
+        "cell_wax"
+      ],
+      [
+        "CELL_WAX_BEE",
+        "cell_wax_bee"
+      ],
+      [
+        "CELL_WAX_PLANT",
+        "cell_wax_plant"
+      ],
+      [
+        "CELL_WAX_PARAFFIN",
+        "cell_wax_paraffin"
+      ],
+      [
+        "CELL_WAX_REFRACTORY",
+        "cell_wax_refractory"
+      ],
+      [
+        "CELL_WAX_MAGIC",
+        "cell_wax_magic"
+      ],
+      [
+        "CELL_WAX_AMNESIC",
+        "cell_wax_amnesic"
+      ],
+      [
+        "CELL_WAX_SOULFUL",
+        "cell_wax_soulful"
+      ],
+      [
+        "CELL_PLASTIC",
+        "cell_plastic"
+      ],
+      [
+        "CELL_TIN",
+        "cell_tin"
+      ],
+      [
+        "CELL_TIN_ALLOY",
+        "cell_tin_alloy"
+      ],
+      [
+        "CELL_INVAR",
+        "cell_invar"
+      ],
+      [
+        "CELL_GOLD",
+        "cell_gold"
+      ],
+      [
+        "CELL_ALUMINIUM",
+        "cell_aluminium"
+      ],
+      [
+        "CELL_STAINLESS_STEEL",
+        "cell_stainless_steel"
+      ],
+      [
+        "CELL_HSLA_TUNGSTEN_ALLOY",
+        "cell_hsla_tungsten_alloy"
+      ],
+      [
+        "CELL_TITANIUM",
+        "cell_titanium"
+      ],
+      [
+        "CELL_NETHERITE",
+        "cell_netherite"
+      ],
+      [
+        "CELL_TUNGSTEN_STEEL",
+        "cell_tungsten_steel"
+      ],
+      [
+        "CELL_TUNGSTEN_CARBIDE",
+        "cell_tungsten_carbide"
+      ],
+      [
+        "CELL_TUNGSTEN",
+        "cell_tungsten"
+      ],
+      [
+        "CELL_PALLADIUM",
+        "cell_palladium"
+      ],
+      [
+        "CELL_TANTALUM_HAFNIUM_CARBIDE",
+        "cell_tantalum_hafnium_carbide"
+      ],
+      [
+        "CELL_DESH",
+        "cell_desh"
+      ],
+      [
+        "CELL_WORKERS_ALLOY",
+        "cell_workers_alloy"
+      ],
+      [
+        "CELL_KREKNORITE",
+        "cell_kreknorite"
+      ],
+      [
+        "CELL_TRINITANIUM",
+        "cell_trinitanium"
+      ],
+      [
+        "CELL_ADAMANTIUM",
+        "cell_adamantium"
+      ],
+      [
+        "CELL_SYRMORITE",
+        "cell_syrmorite"
+      ],
+      [
+        "CELL_EFRINE",
+        "cell_efrine"
+      ],
+      [
+        "CELL_THAUMIUM",
+        "cell_thaumium"
+      ],
+      [
+        "CELL_VOID_METAL",
+        "cell_void_metal"
+      ],
+      [
+        "CELL_MANASTEEL",
+        "cell_manasteel"
+      ],
+      [
+        "CELL_TERRASTEEL",
+        "cell_terrasteel"
+      ],
+      [
+        "CELL_ELVEN_ELEMENTIUM",
+        "cell_elven_elementium"
+      ],
+      [
+        "CELL_GAIA_SPIRIT",
+        "cell_gaia_spirit"
+      ],
+      [
+        "CELL_DURANIUM",
+        "cell_duranium"
+      ],
+      [
+        "CELL_DRACONIUM",
+        "cell_draconium"
+      ],
+      [
+        "CELL_DRACONIUM_AWAKENED",
+        "cell_draconium_awakened"
+      ],
+      [
+        "CELL_INFINITY",
+        "cell_infinity"
+      ]
+    ],
+    "count": 51,
+    "capsules": 40,
+    "meaning": "Source enum/registration-loop inventory, not gameplay or every material/recipe acceptance."
+  },
+  "refactoring": {
+    "files": {
+      "core/src/main/java/com/gregtech/gregtech/api/fluid/PortableFluidContainerSpec.java": {
+        "before_raw_sha256": "5392e0e434ff67e5c58b7173eddfa0af39143f82b56a152599df948f9e7adc7f",
+        "after_raw_sha256": "f2d02ed3bd9b167f59d772760bba5e836b394e6dbfc6cd17afc452a35ebf9292",
+        "before_lines": 93,
+        "after_lines": 123,
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 1394,
+            "token_sha256": "879ada05c18cf52579d614faf4de1ea274403e504747a1d289d2ded03652c817"
+          }
+        ],
+        "local_names": {}
+      },
+      "core/src/main/java/com/gregtech/gregtech/content/tool/PortableCapacityRules.java": {
+        "before_raw_sha256": "bbc1f151502a30cae8568abe7142f506136dbfa2fd19881ef2f866eba58f16d8",
+        "after_raw_sha256": "9648609a2be98bb63d430427fb2fd797a02757c147f522588035e72180dbcf78",
+        "before_lines": 8,
+        "after_lines": 47,
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 168,
+            "token_sha256": "4ee32e5bdddfed48a93bb0f2bb7f80256526577186128f6eb2322db4dee20386"
+          }
+        ],
+        "local_names": {
+          "s": "spec",
+          "current": "currentCapacity",
+          "y": "hitY"
+        }
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/content/tool/PortableContainerLimits.java": {
+        "before_raw_sha256": "2da42ae7b34a6d1aab4ce7a6b484bb22c0b4a704b95532035d880f56792b262c",
+        "after_raw_sha256": "2689bacef593deef2e4e40fd104644be81eb8add7a033767f2523da40dd420ac",
+        "before_lines": 34,
+        "after_lines": 56,
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 210,
+            "token_sha256": "40d06e2bc06aa382d99017c6bdf752e4c21b5694bf4d206357788f3c8618f4e3"
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 257,
+            "token_sha256": "74a7efff5c95aa8c40574bf8231a00f9a882f31361cacf0380ead00c21c75451"
+          }
+        ],
+        "local_names": {
+          "s": "spec",
+          "y": "hitY",
+          "value": "limit"
+        }
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/item/PortableFluidContainerItem.java": {
+        "before_raw_sha256": "c2899194998a462d5dbe2fb7998997a5c2392c58348a6cb0f2ea8483eb0cb2af",
+        "after_raw_sha256": "a3055f09e9f557dec4817beebe78c62528fe55905887132e2625ad87221995af",
+        "before_lines": 102,
+        "after_lines": 125,
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 939,
+            "token_sha256": "193e2786029fd8f01ef211678ce863fd12a02fee934fb043a3bb87d3ce5e8061"
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 942,
+            "token_sha256": "d27ffbcaf150e90e0b61056f902ff435bc553aa52effa46ed53816582ef9ce1b"
+          }
+        ],
+        "local_names": {
+          "room": "availableCapacity"
+        }
+      }
+    },
+    "helpers": [
+      {
+        "platform": "core",
+        "method": "adjustmentStep",
+        "tokens": 22
+      },
+      {
+        "platform": "core",
+        "method": "measuringPotStep",
+        "tokens": 29
+      },
+      {
+        "platform": "core",
+        "method": "gasCylinderStep",
+        "tokens": 63
+      },
+      {
+        "platform": "forge",
+        "members": "KEY, constructor, adjustable",
+        "bodies": "match original platform declarations"
+      },
+      {
+        "platform": "neoforge",
+        "members": "KEY, constructor, adjustable",
+        "bodies": "match original platform declarations"
+      }
+    ],
+    "scope": "Exact ordered code/literals/comments after listed local names, one pure step-expression extraction and shared duplicate constants/constructor/forwarder. Native tag/component storage differences retained."
+  },
+  "compiled_inputs": [
+    {
+      "platform": "forge",
+      "current_path": "multiversion/src/main/java/com/gregtech/gregtech/content/tool/PortableContainerLimits.java",
+      "path": "multiversion/versions/1.20.1-forge/build/generated/stonecutter/main/java/com/gregtech/gregtech/content/tool/PortableContainerLimits.java",
+      "raw_sha256": "2689bacef593deef2e4e40fd104644be81eb8add7a033767f2523da40dd420ac"
+    },
+    {
+      "platform": "forge",
+      "current_path": "multiversion/src/main/java/com/gregtech/gregtech/item/PortableFluidContainerItem.java",
+      "path": "multiversion/versions/1.20.1-forge/build/generated/stonecutter/main/java/com/gregtech/gregtech/item/PortableFluidContainerItem.java",
+      "raw_sha256": "a3055f09e9f557dec4817beebe78c62528fe55905887132e2625ad87221995af"
+    },
+    {
+      "platform": "neoforge",
+      "current_path": "multiversion/src/main/java/com/gregtech/gregtech/content/tool/PortableContainerLimits.java",
+      "path": "multiversion/versions/1.21.1-neoforge/build/generated/stonecutter/main/java/com/gregtech/gregtech/content/tool/PortableContainerLimits.java",
+      "raw_sha256": "8eee7bfe0785a741883a8c712d23837e573d11e3a08db11da553e0f76da1f460"
+    },
+    {
+      "platform": "neoforge",
+      "current_path": "multiversion/src/main/java/com/gregtech/gregtech/item/PortableFluidContainerItem.java",
+      "path": "multiversion/versions/1.21.1-neoforge/build/generated/stonecutter/main/java/com/gregtech/gregtech/item/PortableFluidContainerItem.java",
+      "raw_sha256": "e0243ea048463f318e581434f29bd2a315eef81223e2618adff679153489bdd6"
+    }
+  ],
+  "compile": {
+    "status": "passed",
+    "duration_seconds": 117,
+    "log": "work/portable-vessel-audit-20261023/compile.log",
+    "log_sha256": "0bf88d0d539f5f7e6affb5813676ff0474e09b19568f1c6223c6aa43adb2c63c",
+    "tasks": [
+      "multiversion:1.20.1-forge:compileJava",
+      "multiversion:1.21.1-neoforge:compileJava"
+    ],
+    "temporary_adapter": "work/storage-inserter-audit-20261022/cached-api-classpath.gradle",
+    "temporary_adapter_sha256": "51a1ed5becc4b14c87f6eeef31d2c8fc984e02735ee630b3c292496c2798cdbe",
+    "cached_forge_artifacts": [
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/mezz/jei/jei-1.20.1-common-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-common-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/mezz/jei/jei-1.20.1-common-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-common-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "sha256": "7786d88e4ffd38f62d057b86eb56aa6a116037f2a4dbccb0aa77877b7dc8f4fd",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/mezz/jei/jei-1.20.1-forge-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-forge-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/mezz/jei/jei-1.20.1-forge-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-forge-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "sha256": "b50a6a64c629e51346deec045495ba932be2bcab4ffb5a46fe483df1e06c832a",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1-api.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1-api.jar",
+        "sha256": "268f4572a6297bcd38c176e9361ee245364bb255e1a74e0fec96a973ef1379c0",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1.jar",
+        "sha256": "a2df46e253e208d39576808509eb384b42d992ba77d1c3aec31b97611be6e64b",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/maven/modrinth/jade/11.13.2+forge_mapped_official_1.20.1/jade-11.13.2+forge_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/maven/modrinth/jade/11.13.2+forge_mapped_official_1.20.1/jade-11.13.2+forge_mapped_official_1.20.1.jar",
+        "sha256": "15030cb00590540a5a37bd6bd509df4c01116406dd7c1a760b55e81f83f2bd62",
+        "action": "copied existing exact-coordinate jar"
+      }
+    ],
+    "cached_neo_emi_api": {
+      "path": "C:/Dev/GregTech6/work/emi-maven/dev/emi/emi-neoforge/1.1.24+1.21.1/emi-neoforge-1.1.24+1.21.1-api.jar",
+      "sha256": "b3a8e23c5e59813f184423b94e37bb635867ddc9be2b68b3502fad7b9134779b"
+    },
+    "scope": "Actual dual compile with unchanged same-version local API adapter and four generated-input comparisons; not default offline/CI, game, old-save or full parity acceptance.",
+    "result": "BUILD SUCCESSFUL in 2m 9s",
+    "seconds": 129,
+    "additional_init": "work/emi-local.init.gradle",
+    "additional_init_sha256": "5f0bbdba936915000a7ed7741c2d2b7a051eb3e7fc502be5bd6e69788b1e043e",
+    "dependency_note": "Already cached upstream KubeJS/Rhino/Architectury dependencies are now required by the merged native source; production dependency declarations unchanged in this batch."
+  },
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "boundaries": {
+    "drink": "Only Cup/Jug/Thermos implement original drink interfaces; not all51 vessels are drinks.",
+    "rain": "Original Cup/Jug/four measuring-pot forms enable rain; closed cylinders/capsules are not falsely included.",
+    "stack": "Filled51 vessel forms use original1 versus current16/64; no inventory merge/automation executed.",
+    "jug_pickup": "Original Jug alone enables held right-click source pickup; current generic block item has no matching ray-trace use entry. Existing machine/container transfers are separate.",
+    "capacity": "Existing four/eight strict height bands, precise divide-by10 and clamp retained; native tag/component cleanup differences retained."
+  },
+  "not_run": [
+    "full tests",
+    "game startup",
+    "rain/drinking/inventory gameplay",
+    "save restart",
+    "new distribution jar",
+    "publication"
+  ],
+  "whole_goal_complete": false,
+  "root_revalidation": {
+    "sources": "11 original/11 current hashes and30 ranges match",
+    "native_contracts": "14 exact cached entries and12 read ranges match",
+    "locator": "1881 path/hash identities reproduce the raw-source navigation digest; not platform coverage",
+    "refactoring": "6 complete views,3 pure expression helpers and the shared members/signatures match controlled transformation",
+    "compiler_inputs": "4 exact generated input projections match current code",
+    "compile": "129s core/dual Java; local exact-version API inputs unchanged",
+    "protected_materials": "unchanged",
+    "documentation": "7 existing histories insertion-only; new report/receipt links resolve",
+    "formal_ids": "1..436 contiguous",
+    "new_findings": [
+      433,
+      434,
+      435,
+      436
+    ],
+    "gameplay_changed": false,
+    "gameplay_acceptance": false,
+    "whole_goal_complete": false
+  }
+}

@@ -12,12 +12,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.DoorBlock;
-import net.minecraft.world.level.block.LadderBlock;
-import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.TntBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
@@ -48,6 +44,9 @@ import java.util.Optional;
  * <p>Every class below is a pure function of its arguments: no GUI, no packet, no new block, and no
  * hidden state beyond the {@code gt.remaining} NBT GT6 itself stores on the consumable. Callers
  * (the item classes) are expected to put the returned stack back where it came from.</p>
+ *
+ * <p>Common permission, obstruction and vanilla ignition bodies live in
+ * {@link ManualToolBehaviorAccess}; these public helper methods remain as adapters.</p>
  *
  * <h2>What is in this file</h2>
  *
@@ -139,8 +138,6 @@ public final class ItemBehaviors {
 
     // ── GT6 helpers the behaviours share ─────────────────────────────────
 
-    /** GT6 {@code WD.obstructed} ({@code WD.java:127-148}) uses 1/8 and 1/4 pixel bands. */
-    private static final double PX_P_2 = 0.125D, PX_N_2 = 0.875D, PX_P_4 = 0.25D, PX_N_4 = 0.75D;
 
     /**
      * GT6 {@code WD.obstructed} ({@code WD.java:127-148}): whether the block <em>behind</em> the
@@ -162,43 +159,12 @@ public final class ItemBehaviors {
      *         refuse to act
      */
     public static boolean obstructed(Level level, BlockPos pos, Direction side) {
-//? if >=1.21.1 {
-        /*return ManualToolBehaviorAccess.obstructed(level,pos,side);
-*///?} else {
-        BlockPos neighbour = pos.relative(side);
-        if (!level.hasChunkAt(neighbour)) return false;
-        BlockState state = level.getBlockState(neighbour);
-        // WD.java:136 - these three are explicitly never obstructing.
-        if (state.getBlock() instanceof TrapDoorBlock
-                || state.getBlock() instanceof DoorBlock
-                || state.getBlock() instanceof LadderBlock) {
-            return false;
-        }
-        var shape = state.getCollisionShape(level, neighbour);
-        // WD.java:138 - no collision box at all means no obstruction.
-        if (shape.isEmpty()) return false;
-        AABB box = shape.bounds();
-        boolean spansX = box.maxX > PX_P_2 && box.minX < PX_N_2;
-        boolean spansY = box.maxY > PX_P_2 && box.minY < PX_N_2;
-        boolean spansZ = box.maxZ > PX_P_2 && box.minZ < PX_N_2;
-        return switch (side) {
-            case DOWN -> box.maxY > PX_N_4 && spansX && spansZ;
-            case UP -> box.minY < PX_P_4 && spansX && spansZ;
-            case NORTH -> box.maxZ > PX_N_4 && spansX && spansY;
-            case SOUTH -> box.minZ < PX_P_4 && spansX && spansY;
-            case WEST -> box.maxX > PX_N_4 && spansY && spansZ;
-            case EAST -> box.minX < PX_P_4 && spansY && spansZ;
-        };
-//?}
+        return ManualToolBehaviorAccess.obstructed(level, pos, side);
     }
 
     /** GT6 {@code UT.Entities.hasInfiniteItems} ({@code UT.java:3187-3189}): creative mode only. */
     public static boolean creative(@Nullable Player player) {
-//? if >=1.21.1 {
-        /*return ManualToolBehaviorAccess.creative(player);
-*///?} else {
-        return player != null && player.getAbilities().instabuild;
-//?}
+        return ManualToolBehaviorAccess.creative(player);
     }
 
     /**
@@ -209,12 +175,7 @@ public final class ItemBehaviors {
      * {@code true} rather than {@code false} for it.</p>
      */
     public static boolean mayEdit(Level level, @Nullable Player player, BlockPos pos) {
-//? if >=1.21.1 {
-        /*return ManualToolBehaviorAccess.mayEdit(level,player,pos);
-*///?} else {
-        if (player == null) return true;
-        return player.mayBuild() && level.mayInteract(player, pos);
-//?}
+        return ManualToolBehaviorAccess.mayEdit(level, player, pos);
     }
 
     /** Registry lookup by full id, e.g. {@code stack("gt6ce:duct_tape")}; empty when unknown. */
@@ -258,6 +219,9 @@ public final class ItemBehaviors {
                                 ItemStack stack, float hitX, float hitY, float hitZ) {
         String id = itemId(stack);
         if (id == null) return Outcome.refused(stack);
+        if (id.equals("electrometer") || id.equals("tachometer")) {
+            return BehaviorHandheldMeter.useOn(level, pos, player, stack, id.equals("electrometer"));
+        }
         if (id.equals("quicksilver_thermometer")) {
             return BehaviorThermometer.useOn(level, pos, player, stack);
         }
@@ -657,7 +621,7 @@ public final class ItemBehaviors {
     }
 
     /** GT6 {@code ToolCompat:206}: a TNT block ignited by a GT igniter costs one full unit. */
-    public static final long TNT_COST = 10000L;
+    public static final long TNT_COST = ManualToolBehaviorAccess.TNT_COST;
 
     /**
      * The vanilla half of GT6's {@code TOOL_igniter} ({@code ToolCompat.java:201-223}): a GT igniter
@@ -678,15 +642,7 @@ public final class ItemBehaviors {
      */
     public static boolean lightVanillaFire(Level level, @Nullable Player player, BlockPos pos, Direction side,
                                            ItemStack igniter) {
-//? if >=1.21.1 {
-        /*return ManualToolBehaviorAccess.lightVanillaFire(level,player,pos,side,igniter);
-*///?} else {
-        BlockPos target = pos.relative(side);
-        if (!level.hasChunkAt(target)) return false;
-        if (!level.isEmptyBlock(target)) return false;
-        if (!mayEdit(level, player, target)) return false;
-        return level.setBlock(target, BaseFireBlock.getState(level, target), 3);
-//?}
+        return ManualToolBehaviorAccess.lightVanillaFire(level, player, pos, side, igniter);
     }
 
     /**
@@ -697,14 +653,6 @@ public final class ItemBehaviors {
      * @return whether the block was TNT and got primed
      */
     public static boolean primeTnt(Level level, BlockPos pos, @Nullable Player player) {
-//? if >=1.21.1 {
-        /*return ManualToolBehaviorAccess.primeTnt(level,pos,player);
-*///?} else {
-        BlockState state = level.getBlockState(pos);
-        if (!(state.getBlock() instanceof TntBlock tnt)) return false;
-        tnt.onCaughtFire(state, level, pos, null, player);
-        level.removeBlock(pos, false);
-        return true;
-//?}
+        return ManualToolBehaviorAccess.primeTnt(level, pos, player);
     }
 }

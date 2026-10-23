@@ -37,9 +37,10 @@ public final class CoinItemBakedModel implements BakedModel {
         this.stamped = false;
         CoinItemBakedModel custom = new CoinItemBakedModel(bakedDefault, true);
         this.overrides = new ItemOverrides() {
+
             @Override
             public BakedModel resolve(@NotNull BakedModel original, @NotNull ItemStack stack,
-                                      @Nullable ClientLevel level, @Nullable LivingEntity entity, int seed) {
+                    @Nullable ClientLevel level, @Nullable LivingEntity entity, int seed) {
                 return stack.getItem() instanceof CoinItem && CoinGeometry.hasCustomPattern(stack)
                         ? custom : original;
             }
@@ -54,26 +55,55 @@ public final class CoinItemBakedModel implements BakedModel {
 
     @Override
     public @NotNull List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side,
-                                             @NotNull RandomSource random) {
+            @NotNull RandomSource random) {
         return stamped ? List.of() : bakedDefault.getQuads(state, side, random);
     }
 
     @Override
     public @NotNull List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side,
-                                             @NotNull RandomSource random, @NotNull ModelData data,
-                                             @Nullable RenderType renderType) {
+            @NotNull RandomSource random, @NotNull ModelData data,
+            @Nullable RenderType renderType) {
         return stamped ? List.of() : bakedDefault.getQuads(state, side, random, data, renderType);
     }
 
-    @Override public boolean useAmbientOcclusion() { return bakedDefault.useAmbientOcclusion(); }
-    @Override public boolean isGui3d() { return bakedDefault.isGui3d(); }
-    @Override public boolean usesBlockLight() { return bakedDefault.usesBlockLight(); }
-    @Override public boolean isCustomRenderer() { return stamped; }
-    @Override public @NotNull TextureAtlasSprite getParticleIcon() { return bakedDefault.getParticleIcon(); }
-    @Override public @NotNull ItemOverrides getOverrides() { return overrides; }
-    @Override public @NotNull ItemTransforms getTransforms() { return bakedDefault.getTransforms(); }
-    @Override public @NotNull ChunkRenderTypeSet getRenderTypes(@NotNull BlockState state, @NotNull RandomSource random,
-                                                                @NotNull ModelData data) {
+    @Override
+    public boolean useAmbientOcclusion() {
+        return bakedDefault.useAmbientOcclusion();
+    }
+
+    @Override
+    public boolean isGui3d() {
+        return bakedDefault.isGui3d();
+    }
+
+    @Override
+    public boolean usesBlockLight() {
+        return bakedDefault.usesBlockLight();
+    }
+
+    @Override
+    public boolean isCustomRenderer() {
+        return stamped;
+    }
+
+    @Override
+    public @NotNull TextureAtlasSprite getParticleIcon() {
+        return bakedDefault.getParticleIcon();
+    }
+
+    @Override
+    public @NotNull ItemOverrides getOverrides() {
+        return overrides;
+    }
+
+    @Override
+    public @NotNull ItemTransforms getTransforms() {
+        return bakedDefault.getTransforms();
+    }
+
+    @Override
+    public @NotNull ChunkRenderTypeSet getRenderTypes(@NotNull BlockState state, @NotNull RandomSource random,
+            @NotNull ModelData data) {
         return bakedDefault.getRenderTypes(state, random, data);
     }
 }

@@ -24,10 +24,14 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import java.util.*;
 
 public final class AutocraftingRecipes {
-    private AutocraftingRecipes() {}
+
+    private AutocraftingRecipes() {
+    }
 //? if >=1.21.1 {
-    /*public static final TagKey<Item> BLUEPRINTS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("gt6ce", "autocrafter/blueprints"));
-    public static final TagKey<Item> INFINITE = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("gt6ce", "autocrafter/infinite"));
+    /*public static final TagKey<Item> BLUEPRINTS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("gt6ce",
+            "autocrafter/blueprints"));
+    public static final TagKey<Item> INFINITE = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("gt6ce",
+            "autocrafter/infinite"));
 *///?} else {
     public static final TagKey<Item> BLUEPRINTS = TagKey.create(Registries.ITEM, new ResourceLocation("gt6ce", "autocrafter/blueprints"));
     public static final TagKey<Item> INFINITE = TagKey.create(Registries.ITEM, new ResourceLocation("gt6ce", "autocrafter/infinite"));
@@ -41,7 +45,7 @@ public final class AutocraftingRecipes {
         final CraftingRecipe anchor;
         final List<CraftingRecipe> allowed, recent = new ArrayList<>();
 //?}
-        final Map<ResourceLocation,Boolean> permissions = new HashMap<>();
+        final Map<ResourceLocation, Boolean> permissions = new HashMap<>();
 //? if >=1.21.1 {
         /*Cache(List<RecipeHolder<CraftingRecipe>> recipes) {
 *///?} else {
@@ -56,23 +60,26 @@ public final class AutocraftingRecipes {
                 var recipe = holder;
 //?}
                 if (!(recipe instanceof AutocraftableCraftingRecipe gt) || gt.isAutocraftableByGT())
-                    allowed.add(holder);
+                allowed.add(holder);
             }
         }
     }
-    private static final Map<RecipeManager,Cache> CACHES = new WeakHashMap<>();
+    private static final Map<RecipeManager, Cache> CACHES = new WeakHashMap<>();
 
     private static String id(ItemStack stack) {
         var id = BuiltInRegistries.ITEM.getKey(stack.getItem());
         return id.getNamespace().equals("gt6ce") ? id.getPath() : "";
     }
+
     public static boolean isProgram(ItemStack stack) {
         return !stack.isEmpty() && (id(stack).equals("blueprint") || UsbDataMedia.stickTier(stack) >= 1
                 || UsbDataMedia.cableTier(stack) >= 1 || stack.is(BLUEPRINTS));
     }
+
     private static boolean infinite(ItemStack stack) {
         return CraftingToolDefinitions.infinite(id(stack)) || stack.is(INFINITE);
     }
+
     public static ItemStack[] blueprint(Level level, BlockEntity machine, ItemStack program) {
         if (!isProgram(program)) return new ItemStack[0];
         var root = CraftingBlueprintData.itemData(program);
@@ -88,12 +95,13 @@ public final class AutocraftingRecipes {
         var data = root.contains("gt.usb.data", 10) ? root.getCompound("gt.usb.data") : null;
         return CraftingBlueprintData.read(level, data);
     }
+
     public static boolean containsInput(Level level, BlockEntity machine, ItemStack program, ItemStack stack) {
         for (ItemStack cell : blueprint(level, machine, program))
 //? if >=1.21.1 {
-            /*if (ItemStack.isSameItemSameComponents(cell, stack)) return true;
+        /*if (ItemStack.isSameItemSameComponents(cell, stack)) return true;
 *///?} else {
-            if (ItemStack.isSameItemSameTags(cell, stack)) return true;
+        if (ItemStack.isSameItemSameTags(cell, stack)) return true;
 //?}
         return false;
     }
@@ -101,7 +109,8 @@ public final class AutocraftingRecipes {
     private static boolean permitted(Level level, Cache cache, ResourceLocation id, CraftingRecipe recipe, ItemStack[] pattern) {
         if (recipe instanceof AutocraftableCraftingRecipe gt && !gt.isAutocraftableByGT()) return false;
         if (!(recipe instanceof AutocraftableCraftingRecipe)
-                && com.gregtech.gregtech.content.recipe.FormConversionCraftingRecipeInjector.disallowsPlainRecipe(recipe, level.registryAccess())) return false;
+                && com.gregtech.gregtech.content.recipe.FormConversionCraftingRecipeInjector.disallowsPlainRecipe(recipe,
+                        level.registryAccess())) return false;
         return cache.permissions.computeIfAbsent(id, unused -> {
             if (level.getServer() == null) return true;
 //? if >=1.21.1 {
@@ -130,7 +139,7 @@ public final class AutocraftingRecipes {
         ItemStack[] pattern = blueprint(level, machine, program);
         var grouped = AutocraftingRules.inputs(Arrays.asList(pattern), ItemStack::isEmpty,
                 s -> s.getItem() instanceof com.gregtech.gregtech.item.GTToolItem
-                        || s.getItem() instanceof com.gregtech.gregtech.item.ElectricToolItem,
+                || s.getItem() instanceof com.gregtech.gregtech.item.ElectricToolItem,
 //? if >=1.21.1 {
                 /*ItemStack::isSameItemSameComponents, AutocraftingRecipes::infinite);
 *///?} else {
@@ -138,8 +147,14 @@ public final class AutocraftingRecipes {
 //?}
         if (grouped == null || grouped.isEmpty()) return null;
         var owner = new AbstractContainerMenu(null, 0) {
-            public boolean stillValid(Player player) { return false; }
-            public ItemStack quickMoveStack(Player player, int slot) { return ItemStack.EMPTY; }
+
+            public boolean stillValid(Player player) {
+                return false;
+            }
+
+            public ItemStack quickMoveStack(Player player, int slot) {
+                return ItemStack.EMPTY;
+            }
         };
         var grid = new TransientCraftingContainer(owner, 3, 3);
         for (int i = 0; i < pattern.length; i++) grid.setItem(i, pattern[i].copy());
@@ -159,11 +174,17 @@ public final class AutocraftingRecipes {
 //? if >=1.21.1 {
             /*var candidate = holder.value();
             if (candidate.matches(grid.asCraftInput(), level)
-                    && permitted(level, cache, holder.id(), candidate, pattern)) { chosen = candidate; break; }
+                    && permitted(level, cache, holder.id(), candidate, pattern)) {
+                chosen = candidate;
+                break;
+            }
 *///?} else {
             var candidate = holder;
             if (candidate.matches(grid, level)
-                    && permitted(level, cache, candidate.getId(), candidate, pattern)) { chosen = candidate; break; }
+                    && permitted(level, cache, candidate.getId(), candidate, pattern)) {
+                chosen = candidate;
+                break;
+            }
 //?}
         }
         if (chosen == null) for (int i = 0; i < cache.allowed.size(); i++) {
@@ -217,4 +238,3 @@ public final class AutocraftingRecipes {
         return result;
     }
 }
-

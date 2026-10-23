@@ -51,7 +51,10 @@ public final class ScaffoldBlock extends ShapedToolBlock {
         registerDefaultState(defaultBlockState().setValue(DESIGN, 1));
     }
 
-    public com.gregtech.gregtech.api.material.GTMaterial material() { return material; }
+    public com.gregtech.gregtech.api.material.GTMaterial material() {
+        return material;
+    }
+
     /** Original scaffold inherits the facing-wrench row without extra instructions. */
     @Override
 //? if >=1.21.1 {
@@ -59,11 +62,18 @@ public final class ScaffoldBlock extends ShapedToolBlock {
 *///?} else {
     public void appendHoverText(ItemStack stack, @org.jetbrains.annotations.Nullable BlockGetter level,
 //?}
-                                List<net.minecraft.network.chat.Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {
+            List<net.minecraft.network.chat.Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {
         com.gregtech.gregtech.client.StorageBlockTooltips.facing(tooltip);
     }
-    @Override public int tintRgb() { return material.getColor(); }
-    private static boolean isScaffold(BlockState state) { return state.getBlock() instanceof ScaffoldBlock; }
+
+    @Override
+    public int tintRgb() {
+        return material.getColor();
+    }
+
+    private static boolean isScaffold(BlockState state) {
+        return state.getBlock() instanceof ScaffoldBlock;
+    }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -79,15 +89,15 @@ public final class ScaffoldBlock extends ShapedToolBlock {
 
     @Override
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighbor,
-                                BlockPos neighborPos, boolean movedByPiston) {
+            BlockPos neighborPos, boolean movedByPiston) {
         super.neighborChanged(state, level, pos, neighbor, neighborPos, movedByPiston);
         if (!level.isClientSide) level.scheduleTick(pos, this, 1);
     }
 
     @Override
     public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
-                                  net.minecraft.world.level.LevelAccessor level,
-                                  BlockPos pos, BlockPos neighborPos) {
+            net.minecraft.world.level.LevelAccessor level,
+            BlockPos pos, BlockPos neighborPos) {
         // Also called by chunk postprocessing for naturally generated scaffolds.
         level.scheduleTick(pos, this, 1);
         return super.updateShape(state, side, neighbor, level, pos, neighborPos);
@@ -102,7 +112,8 @@ public final class ScaffoldBlock extends ShapedToolBlock {
             level.removeBlock(pos, false);
             return;
         }
-        int design = com.gregtech.gregtech.content.tool.UtilityToolRules.scaffoldDesign(vertical,isScaffold(level.getBlockState(pos.above())),isScaffold(level.getBlockState(pos.below())));
+        int design = com.gregtech.gregtech.content.tool.UtilityToolRules.scaffoldDesign(vertical, isScaffold(level.getBlockState(pos.above())),
+                isScaffold(level.getBlockState(pos.below())));
         if (state.getValue(DESIGN) != design) level.setBlock(pos, state.setValue(DESIGN, design), Block.UPDATE_ALL);
     }
 
@@ -114,7 +125,9 @@ public final class ScaffoldBlock extends ShapedToolBlock {
 
     private boolean groundConnection(LevelReader level, BlockPos pos, Direction facing) {
         Direction first = facing.getAxis() == Direction.Axis.X ? Direction.EAST : Direction.NORTH;
-        for (Direction direction : new Direction[]{first, first.getOpposite()}) {
+        for (Direction direction : new Direction[]{
+                first, first.getOpposite()
+        }) {
             for (int distance = 1; distance < com.gregtech.gregtech.content.tool.UtilityToolRules.SCAFFOLD_SEARCH; distance++) {
                 BlockPos next = pos.relative(direction, distance);
                 if (!isScaffold(level.getBlockState(next))) break;
@@ -139,7 +152,7 @@ public final class ScaffoldBlock extends ShapedToolBlock {
             case 1 -> context instanceof EntityCollisionContext collision
                     && collision.getEntity() != null
                     && (collision.getEntity().isShiftKeyDown()
-                    || collision.getEntity().getY() < pos.getY() + 1)
+                            || collision.getEntity().getY() < pos.getY() + 1)
                     ? frame : Shapes.or(LEDGE, frame).optimize();
             case 2 -> frame;
             default -> Shapes.block();

@@ -1,0 +1,212 @@
+{
+  "date": "2026-10-21",
+  "local_parent": "ef2216d9b260ac163684d5728cfb577930797285",
+  "upstream_parent": "4b44836df794a0234cb47802ddc70a124957b7cf",
+  "incoming_commits": [
+    "4b44836df794a0234cb47802ddc70a124957b7cf Merge pull request #83 from SaltNya/addon/declaration-types",
+    "8a2ad194668eb81dc81d3040b2882ed985b94f01 Merge pull request #82 from SaltNya/machine/builtin-spec",
+    "c7cfd91bf6bc9e89517a4f4e043fec23a6c72cee feat: add uninstalled addon declaration types for later conversion",
+    "44b21c2c9c665a96b1f5b7bfbe393d2b03c8de04 merge: bring origin/main into builtin machine spec",
+    "066e83609640812e13813a9551d0584ec96d0dc1 refactor: fill builtin machine rules onto the spec at construction"
+  ],
+  "incoming_paths": [
+    {
+      "path": "core/build.gradle",
+      "worktree_sha256": "378be38066e822a349cb2c83ae399595cd4d4817420d3c6a7d15ea66c3da46de"
+    },
+    {
+      "path": "core/src/api/java/com/gregtech/gregtech/api/addon/AddonMachine.java",
+      "worktree_sha256": "3874c168af822393e0889fdc155b2d9800ecf902d6b1646319c79e0299c82bd0"
+    },
+    {
+      "path": "core/src/api/java/com/gregtech/gregtech/api/addon/BehaviorMachine.java",
+      "worktree_sha256": "4413e3e41d537c00546357937c8e2453723e02622b0f31de0e4d1f71cd7ea059"
+    },
+    {
+      "path": "core/src/api/java/com/gregtech/gregtech/api/addon/CellMatch.java",
+      "worktree_sha256": "2e375273efac7ef432f43c88675917a234ba046a39b65ae4fabc450cefded6b6"
+    },
+    {
+      "path": "core/src/api/java/com/gregtech/gregtech/api/addon/EnergyInput.java",
+      "worktree_sha256": "ba831f127cad360a035f0bc910c1155ccc9a606700305224cef31828b5327526"
+    },
+    {
+      "path": "core/src/api/java/com/gregtech/gregtech/api/addon/EnergyOutput.java",
+      "worktree_sha256": "dd8a34820093fa01f4021c1b52a9f3f2fd23a81e4e1a9e4d6a8a41283021a455"
+    },
+    {
+      "path": "core/src/api/java/com/gregtech/gregtech/api/addon/FuelGenerator.java",
+      "worktree_sha256": "100751d2ed096d3500d9b93d1c615a1f6ac0ce56eabac1857b5322146b0899a5"
+    },
+    {
+      "path": "core/src/api/java/com/gregtech/gregtech/api/addon/FuelOutput.java",
+      "worktree_sha256": "7af9bf4c98ca42102c709e42aadf39c028379a5b3dfd513f4a1ccc74cfb50bda"
+    },
+    {
+      "path": "core/src/api/java/com/gregtech/gregtech/api/addon/IoTarget.java",
+      "worktree_sha256": "cda5ba10d7c5dc599397b1376ec487ad607cfabf9d629237d152668632df14f0"
+    },
+    {
+      "path": "core/src/api/java/com/gregtech/gregtech/api/addon/LayoutCell.java",
+      "worktree_sha256": "07354b749877ecfd52f3c1d55664006a850921a6a04a8115d387c073ed47f5d9"
+    },
+    {
+      "path": "core/src/api/java/com/gregtech/gregtech/api/addon/LayoutPart.java",
+      "worktree_sha256": "27487e22ebc83ea2f2661b63b5959335cc1cffa890749b8c68b1e7ebfaae46be"
+    },
+    {
+      "path": "core/src/api/java/com/gregtech/gregtech/api/addon/MachineCasing.java",
+      "worktree_sha256": "25ba112de9c9cb520c096c95f684ccca44f984a0be81733424ac659e4cd859f6"
+    },
+    {
+      "path": "core/src/api/java/com/gregtech/gregtech/api/addon/MachineFace.java",
+      "worktree_sha256": "1889af10738a3df1ef2c09233eecf0ad5fecc8d8b3593cc5f13ab41d25de5c77"
+    },
+    {
+      "path": "core/src/api/java/com/gregtech/gregtech/api/addon/MachineIo.java",
+      "worktree_sha256": "04807f3b95cc45bc4aae63efe97cb1db70fee50a258e61603e2eead8fd29695f"
+    },
+    {
+      "path": "core/src/api/java/com/gregtech/gregtech/api/addon/RecipeMachine.java",
+      "worktree_sha256": "eef52f125bb07af8a650805e0da97904e2ae4f6370082ca29bdfd1a8054b12e6"
+    },
+    {
+      "path": "core/src/api/java/com/gregtech/gregtech/api/addon/RecipeTable.java",
+      "worktree_sha256": "92057019a628d670a408fb1696c6ad4d14894ad62ea62f563c0f3a8a00d11dba"
+    },
+    {
+      "path": "core/src/api/java/com/gregtech/gregtech/api/addon/StructureLayout.java",
+      "worktree_sha256": "122a8ff464984a5adff7f94faa25452996e84087e702f17c78a212d699357653"
+    },
+    {
+      "path": "core/src/test/java/com/gregtech/gregtech/core/AddonDeclarationTypeContracts.java",
+      "worktree_sha256": "d2c983d66b46c7642298c30b9ca612092ad600a69396d47dbe8c90fe75de9bf5"
+    },
+    {
+      "path": "multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BuiltinMachineSnapshotTests.java",
+      "worktree_sha256": "19c954773a0917698a8a0be52e156e2c3a42f883515a322c6fb41c470bfb9626"
+    },
+    {
+      "path": "multiversion/src/bootstrapGameTest/resources/builtin-machine-snapshot.txt",
+      "worktree_sha256": "74f99a50b8bc3ba7e3e393e1e197700930c613bade4756f60f6983b504f1adc5"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/machine/BasicMachineSpec.java",
+      "worktree_sha256": "65d946029a3d05d6c8271d7410a448b9e56fb707da225cec17b29236536c02ab"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java",
+      "worktree_sha256": "91b1b48b3e7766a44c49622817217d8a013b7e852023a756803d3387eff7ea50"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/CompactMatterFabricatorBlockEntity.java",
+      "worktree_sha256": "75a09c0a3630bd2f0190e74ece9a8e4395797e90e54f60d677a64dbd9c4527b4"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/CryoDistillationControllerBlockEntity.java",
+      "worktree_sha256": "61c9b2c73e11b36d053cbf79d3d1252a10bfd7510767d577ca16247d28f3a77d"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/DistillationTowerControllerBlockEntity.java",
+      "worktree_sha256": "60fabeb474509d1bf4ea777250c94f210e3a0214ed404747e700b5ce90e53c73"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/FusionReactorControllerBlockEntity.java",
+      "worktree_sha256": "6ee0f81ddff896fd3d98ba8407d2ff8842ebee24dff49bc1a3a7c885d0e9a6db"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/ImplosionCompressorControllerBlockEntity.java",
+      "worktree_sha256": "d0d80efad52bae9cc7fa0d0d92adae37c24e60c3631b131a8358539dc07318ee"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LargeRecipeMachineBlockEntity.java",
+      "worktree_sha256": "001a9817b54c40bece57ec27ed29fe08a0cc61d54d8d28b09955b38d0bd96ecf"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MatterFabricatorBlockEntity.java",
+      "worktree_sha256": "023237017cb80c01284ce4c30fd5bfce43d9ac152f87f2be05a744a8523b0043"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/AdvancedControllerTooltips.java",
+      "worktree_sha256": "b68843ef83c28eb4a148bc3de50ede3cb32be713c7431c9234d5fb4b50d95b69"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/BasicMachineSourceTooltips.java",
+      "worktree_sha256": "34053674a817c07f6e22636f20fc6bb94fa6a2bef8a14a2dfc14921926ee05b7"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/LargeRecipeMachineTooltips.java",
+      "worktree_sha256": "13e291c6f8f42fad81e049d9314223964eb64ac99802b62b53bfff322c1d0fc3"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/resources/data/gregtech_builtin_snapshot/structures/test_empty.nbt",
+      "worktree_sha256": "147ef3e2c39e8d261ff2287395af00d734ccd13b196abdea0c0334e11fdde075"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTIconSetBlocks.java",
+      "worktree_sha256": "bdd07cb9b3a033cb7b3f4113d363bc11da6e25399a7ec50866106f0311fecfbe"
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/bootstrapGameTest/resources/data/gregtech_builtin_snapshot/structure/test_empty.nbt",
+      "worktree_sha256": "ea4b3ed88dbb879fc3b86b9bceca2961af8248069c6420a4136eba192ec7b9b7"
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTRemainingIconBlocks.java",
+      "worktree_sha256": "d28b89f2491505d39e8b136c3c675a38fa77fcb1b2cbd7ce170955f2c90d358e"
+    }
+  ],
+  "local_only_paths_preserved": [
+    "core/src/main/java/com/gregtech/gregtech/content/data/MaterialDataRules.java",
+    "docs/integration/MATERIAL_DATA_CHAIN_AUDIT.md",
+    "docs/integration/ORIGINAL_ALIGNMENT_AUDIT.md",
+    "docs/integration/P3_NATIVE_USB_RELAYS_AUTO.md",
+    "docs/integration/PLAN.md",
+    "docs/integration/SOURCE_LAYOUT.md",
+    "docs/integration/SOURCE_READABILITY_INVENTORY.md",
+    "docs/integration/STATUS.md",
+    "docs/integration/VERIFICATION.md",
+    "docs/integration/verification/material-data-chain-audit-20261021.json",
+    "docs/integration/verification/user-dual-build-20261021.json",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/GTMaterialDataRecipes.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/MaterialDataViewerRecipes.java",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/content/recipe/MachineContextRecipes.java"
+  ],
+  "decisions": "Both complete parent line sequences remain, in order; automatic merge, no manual conflict resolution.",
+  "protected_material": {
+    "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java",
+    "sha256": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00"
+  },
+  "usb_recipe_lookup_unchanged": [
+    {
+      "platform": "forge",
+      "tokens": 325,
+      "sha256": "9c6b8c686785c135326a7e79bf367d02fbb3d2d586a2222474b59d065f421fec"
+    },
+    {
+      "platform": "neoforge",
+      "tokens": 177,
+      "sha256": "4cce4104db451ffe96b80a54e361365968070da818b64d8e551e8a48c4477785"
+    }
+  ],
+  "scope": {
+    "pr82": "Built-in processing, output-cell and adjacent-source values are stored in BasicMachineSpec; consumers read the spec. Snapshot fixtures added upstream.",
+    "pr83": "Sixteen new pure Java addon declaration types plus their contract source; conversion/installation into runtime remains later work."
+  },
+  "checks": [
+    "Clean merge index",
+    "Incoming blobs equal upstream",
+    "Local-only blobs equal local parent",
+    "Both parent decision sequences retained",
+    "Both USB lookup method token sequences retained",
+    "Protected material hash"
+  ],
+  "not_run": [
+    "New declaration contracts",
+    "Builtin machine runtime snapshot",
+    "Java/Gradle build",
+    "Game or saved-world restart",
+    "Push"
+  ],
+  "limits": "This is merge/content preservation evidence, not acceptance of all moved machine rules or the new addon API runtime.",
+  "goal_status": "active; visual-document original parity and readability audit continues after this baseline update"
+}

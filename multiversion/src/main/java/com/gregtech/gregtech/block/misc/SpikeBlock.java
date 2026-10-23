@@ -130,6 +130,26 @@ public final class SpikeBlock extends Block implements ToolInteractionTarget, co
     }
 //?}
 
+    /** Native placement starts as a primary-material WALL, then overlays item state properties.
+     * These identity readers intentionally exclude FACING and do not invent legacy-component reads. */
+    public static Mode itemMode(ItemStack stack) {
+        return MODE.getValue(itemProperty(stack, MODE.getName())).orElse(Mode.WALL);
+    }
+
+    public static boolean itemSecondary(ItemStack stack) {
+        return SECONDARY.getValue(itemProperty(stack, SECONDARY.getName())).orElse(false);
+    }
+
+    private static String itemProperty(ItemStack stack, String name) {
+//? if >=1.21.1 {
+        /*return stack.getOrDefault(net.minecraft.core.component.DataComponents.BLOCK_STATE,
+                net.minecraft.world.item.component.BlockItemStateProperties.EMPTY).properties().getOrDefault(name, "");
+*///?} else {
+        var state = stack.getTagElement("BlockStateTag");
+        return state == null ? "" : state.getString(name);
+//?}
+    }
+
     @Override public BlockState rotate(BlockState state, Rotation rotation) {
         return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }

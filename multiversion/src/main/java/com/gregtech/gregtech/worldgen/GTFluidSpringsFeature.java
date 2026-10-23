@@ -31,33 +31,29 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.List;
 
 /**
- * Port of GT6's {@code WorldgenFluidSpring} ({@code Loader_Worldgen:782-797}): the oil, gas,
- * geothermal water and lava springs at bedrock.
- *
- * <p>GT6 rolls one spring kind per chunk ({@code 1/probability}: oil 1/400, gas 1/200, geothermal
- * water 1/100, lava 1/200), refuses to run in chunks that carry bedrock ore, and then carves its
- * crater: the bottom seven layers become a shrinking square of the spring's block (oil, gas, water or
- * lava) with a stone/deepslate/deepslate-ish filler above it, and one spring tile entity is placed per
- * bedrock column with a 1/16 chance. Finally it plants up to six patches of indicator grass on the
- * surface so a player can prospect for the field.
- *
- * <p>The port keeps the whole algorithm; the dedicated grass-soil blocks stand in for GT6's grass
- * variants (yellow for gas and lava, brown for oil, plain green for geothermal water — GT6's
- * {@code mIndicatorType} 1/2/3).
+ * Modern overworld feature using the shared seven-kind spring catalog and crater writer.
+ * One kind is selected before its probability roll. The separate indicator helper is not
+ * invoked by placement; original dispatch, mutual exclusion and indicator contracts need
+ * independent verification rather than a claim that the whole algorithm is preserved.
  */
 public class GTFluidSpringsFeature extends Feature<NoneFeatureConfiguration> {
+
     /** One GT6 registration. */
     public record Spring(String name, String fluidId, String blockId, int probability, int indicatorType,
-                         int amount) {}
+            int amount) {
+    }
 
     /** {@code Loader_Worldgen:782-788} — the overworld springs, in GT6's order. */
-    public static final List<Spring> SPRINGS=FluidSpringRules.SPRINGS.stream().map(v->new Spring(v.name(),v.fluidId(),v.blockId(),v.probability(),v.indicatorType(),v.amount())).toList();
+    public static final List<Spring> SPRINGS = FluidSpringRules.SPRINGS.stream().map(v -> new Spring(v.name(), v.fluidId(), v.blockId(),
+            v.probability(), v.indicatorType(), v.amount())).toList();
 
     /** GT6's crater: seven layers below the filler ring, one spring per 16 bedrock columns. */
     public static final int CRATER_LAYERS = 7;
     public static final int SPRING_CHANCE = 16;
+
     /** GT6's {@code if (i > 2 && aRandom.nextInt(16) == 0)} gate inside the crater loop. */
     public static final int CRATER_SPRING_CHANCE = 16;
+
     /** GT6 plants six indicator patches. */
     public static final int INDICATOR_PATCHES = 6;
 
@@ -79,7 +75,7 @@ public class GTFluidSpringsFeature extends Feature<NoneFeatureConfiguration> {
         return carve(level, minX, minZ, spring, random);
     }
 
-    /** GT6 checks the chunk centre column for bedrock (and skips chunks with bedrock ore). */
+    /** Checks the modern bottom-centre block; original field mutual exclusion is not handled here. */
     public static boolean hasBedrock(WorldGenLevel level, int x, int z) {
         BlockState bottom = level.getBlockState(new BlockPos(x, level.getMinBuildHeight(), z));
         return bottom.is(Blocks.BEDROCK) || isBedrockOre(bottom);
@@ -91,6 +87,7 @@ public class GTFluidSpringsFeature extends Feature<NoneFeatureConfiguration> {
      * property; the previous registry-id prefix test ({@code "bedrock_ore"}) never matched any
      * registered block, so the check was dead.
      */
+
     private static boolean isBedrockOre(BlockState state) {
         return OreBlock.isBedrockOre(state);
     }
@@ -100,16 +97,30 @@ public class GTFluidSpringsFeature extends Feature<NoneFeatureConfiguration> {
      * where the space is free, the spring's block at layer {@code i} for {@code i &gt; 0}, and a
      * spring tile entity every 1/16 columns that sit on bedrock.
      */
+
     public static boolean carve(WorldGenLevel level, int minX, int minZ, Spring spring, RandomSource random) {
         BlockState fill = blockState(spring.blockId());
         if (fill == null) return false;
         Block filler = level.getLevel().dimension() == Level.NETHER ? Blocks.NETHERRACK : Blocks.DEEPSLATE;
         int base = level.getMinBuildHeight();
-        return FluidSpringRules.carve(minX,minZ,random::nextInt,new FluidSpringRules.CraterSink(){
-            public void filler(int x,int y,int z){BlockPos p=new BlockPos(x,base+y,z);if(!level.getBlockState(p).isSolidRender(level,p))level.setBlock(p,filler.defaultBlockState(),2);}
-            public void fluid(int x,int y,int z){level.setBlock(new BlockPos(x,base+y,z),fill,2);}
-            public boolean bedrock(int x,int z){return isBedrock(level,x,z);}
-            public boolean spring(int x,int z){return placeSpring(level,new BlockPos(x,base,z),spring);}
+        return FluidSpringRules.carve(minX, minZ, random::nextInt, new FluidSpringRules.CraterSink() {
+
+            public void filler(int x, int y, int z) {
+                BlockPos p = new BlockPos(x, base + y, z);
+                if (!level.getBlockState(p).isSolidRender(level, p)) level.setBlock(p, filler.defaultBlockState(), 2);
+            }
+
+            public void fluid(int x, int y, int z) {
+                level.setBlock(new BlockPos(x, base + y, z), fill, 2);
+            }
+
+            public boolean bedrock(int x, int z) {
+                return isBedrock(level, x, z);
+            }
+
+            public boolean spring(int x, int z) {
+                return placeSpring(level, new BlockPos(x, base, z), spring);
+            }
         });
     }
 
@@ -119,8 +130,8 @@ public class GTFluidSpringsFeature extends Feature<NoneFeatureConfiguration> {
 
     /** Places GT6's spring tile entity on a bedrock column. */
     public static boolean placeSpring(WorldGenLevel level, BlockPos pos, Spring spring) {
-        var variant=com.gregtech.gregtech.registry.GTFluidSprings.byFluid(spring.fluidId());
-        return variant!=null && level.setBlock(pos,variant.defaultBlockState(),2);
+        var variant = com.gregtech.gregtech.registry.GTFluidSprings.byFluid(spring.fluidId());
+        return variant != null && level.setBlock(pos, variant.defaultBlockState(), 2);
 
     }
 
@@ -153,6 +164,7 @@ public class GTFluidSpringsFeature extends Feature<NoneFeatureConfiguration> {
      * icon set carries those textures as {@code grassblock_yellow}, {@code grassblock_brown} and
      * {@code grassblock_normal}.
      */
+
     public static Block indicatorBlock(int indicatorType) {
         String id = switch (indicatorType) {
             case 1 -> "grassblock_yellow";
@@ -186,7 +198,7 @@ public class GTFluidSpringsFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     /** Registry key of the configured feature (data file {@code worldgen/configured_feature/gt_fluid_springs.json}). */
-    public static final ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> CONFIGURED =
-            ResourceKey.create(Registries.CONFIGURED_FEATURE,
-                    ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_fluid_springs"));
+    public static final ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ? >> CONFIGURED =
+    ResourceKey.create(Registries.CONFIGURED_FEATURE,
+            ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_fluid_springs"));
 }

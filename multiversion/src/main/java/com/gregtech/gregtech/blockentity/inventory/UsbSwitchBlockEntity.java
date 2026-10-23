@@ -241,8 +241,7 @@ public class UsbSwitchBlockEntity extends BlockEntity
         ItemStack cover = covers[side.ordinal()];
         if (cover.isEmpty()) return ItemStack.EMPTY;
         covers[side.ordinal()] = ItemStack.EMPTY;
-        // Currently every recognized panel resets the shared mode, beyond selectors (ALIGN-289).
-        if (PanelCover.of(cover) != null) setMode(0);
+        // The shared runtime resets selector covers only, not unrelated panels.
         setChanged();
         sync();
         return panels.removed(side, cover);

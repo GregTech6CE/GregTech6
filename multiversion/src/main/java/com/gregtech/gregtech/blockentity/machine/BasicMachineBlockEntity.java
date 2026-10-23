@@ -372,6 +372,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             if (!FaceConfig.has(faceConfig.energyInputs(), dir)) continue;
             Direction absDir = relativeToAbsolute(dir);
             BlockPos adj = pos.relative(absDir);
+            if (!level.hasChunkAt(adj)) continue;
             BlockEntity be = level.getBlockEntity(adj);
 
 //? if >=1.21.1 {
@@ -397,6 +398,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             if (!FaceConfig.has(spec.auxiliaryFaceMask(), dir)) continue;
             Direction absDir = relativeToAbsolute(dir);
             BlockPos adj = pos.relative(absDir);
+            if (!level.hasChunkAt(adj)) continue;
             BlockEntity be = level.getBlockEntity(adj);
 //? if >=1.21.1 {
 /*            if (be instanceof com.gregtech.gregtech.api.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) continue;
@@ -930,8 +932,10 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     /** Whether {@code parallel} runs of the recipe's fluid outputs fit into the output tanks. */
     private boolean fluidsFit(Recipe recipe, int parallel) {
         long[] free = new long[tanksOutput.length];
+        FluidStack[] reserved = new FluidStack[tanksOutput.length];
         for (int i = 0; i < tanksOutput.length; i++) {
             free[i] = Math.max(0, tanksOutput[i].capacity() - tanksOutput[i].getAmount());
+            reserved[i] = tanksOutput[i].isEmpty() ? FluidStack.EMPTY : tanksOutput[i].getFluid().copy();
         }
         for (var output : recipe.mFluidOutputs) {
             if (output == null || output.isEmpty()) continue;
@@ -939,11 +943,16 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             for (int pass = 0; pass < 2 && remaining > 0; pass++) {
                 for (int i = 0; i < tanksOutput.length && remaining > 0; i++) {
                     if (free[i] <= 0) continue;
-                    var fluid = tanksOutput[i].getFluid();
-                    boolean empty = tanksOutput[i].isEmpty();
+                    var fluid = reserved[i];
+                    boolean empty = fluid.isEmpty();
+//? if >=1.21.1 {
+/*                    if (empty ? pass == 0 : !FluidStack.isSameFluidSameComponents(fluid, output)) continue;
+*///?} else {
                     if (empty ? pass == 0 : !fluid.isFluidEqual(output)) continue;
+//?}
                     long take = Math.min(free[i], remaining);
                     free[i] -= take;
+                    if (empty && take > 0) reserved[i] = output.copy();
                     remaining -= take;
                 }
             }
@@ -966,10 +975,10 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     }
 
     /** Deduct only deliveries confirmed by the shared transfer engine. */
-    private void pushOutputItems(IItemHandler target) {
+    private void pushOutputItems(IItemHandler target, Direction side) {
         for (int slot = itemHandler.inputCount(); slot < itemHandler.getSlots(); slot++) {
             ItemStack offered = itemHandler.getStackInSlot(slot);
-            if (offered.isEmpty()) continue;
+            if (offered.isEmpty() || !allowsItemTraffic(side, offered, false)) continue;
             var result = com.gregtech.gregtech.content.transport.ItemPipeTransferAdapter.transfer(
                     offered.copy(), () -> target);
             if (result.accepted() > 0) itemHandler.extractItem(slot, result.accepted(), false);
@@ -1030,6 +1039,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         Direction absolute = relativeToAbsolute(relDir);
         if(isFaceShuttered(absolute))return;
         BlockPos adj = pos.relative(absolute);
+        if (!level.hasChunkAt(adj)) return;
         BlockEntity be = level.getBlockEntity(adj);
 
 //? if >=1.21.1 {
@@ -1052,8 +1062,9 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         for (int srcSlot = 0; srcSlot < source.getSlots(); srcSlot++) {
             ItemStack stack = source.getStackInSlot(srcSlot);
             if (stack.isEmpty()) continue;
-            if (!acceptsAutomaticInput(stack)) continue;
+            if (!acceptsAutomaticInput(stack) || !allowsItemTraffic(absolute, stack, true)) continue;
             for (int i = 0; i < inputCount; i++) {
+                if (!allowsItemTraffic(absolute, stack, true)) break;
                 ItemStack remaining = itemHandler.insertItem(i, stack.copy(), true);
                 int toTake = stack.getCount() - remaining.getCount();
                 if (toTake <= 0) continue;
@@ -1072,6 +1083,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         Direction absolute = relativeToAbsolute(relDir);
         if(isFaceShuttered(absolute))return;
         BlockPos adj = pos.relative(absolute);
+        if (!level.hasChunkAt(adj)) return;
         BlockEntity be = level.getBlockEntity(adj);
 
 //? if >=1.21.1 {
@@ -1087,11 +1099,13 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         int totalSlots = itemHandler.getSlots();
 
         if (target != null) {
-            pushOutputItems(target);
+            pushOutputItems(target, absolute);
         } else if (level.isEmptyBlock(adj)) {
             // Drop into air like a hopper
             for (int i = firstOutputSlot; i < totalSlots; i++) {
-                ItemStack extracted = itemHandler.extractItem(i, itemHandler.getStackInSlot(i).getCount(), false);
+                ItemStack offered = itemHandler.getStackInSlot(i);
+                if (!allowsItemTraffic(absolute, offered, false)) continue;
+                ItemStack extracted = itemHandler.extractItem(i, offered.getCount(), false);
                 if (extracted.isEmpty()) continue;
                 double x = adj.getX() + 0.5;
                 double y = adj.getY() + 0.5;
@@ -1111,6 +1125,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         Direction absolute = relativeToAbsolute(relDir);
         if(isFaceShuttered(absolute))return;
         BlockPos adj = pos.relative(absolute);
+        if (!level.hasChunkAt(adj)) return;
         BlockEntity be = level.getBlockEntity(adj);
 
 //? if >=1.21.1 {
@@ -1163,6 +1178,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     /** Dedicated controllers may output beneath their structure rather than the main block. */
     protected IFluidHandler automaticFluidOutputTarget(Level level,BlockPos pos,Direction absolute) {
         BlockPos adj = pos.relative(absolute);
+        if (!level.hasChunkAt(adj)) return null;
         BlockEntity be = level.getBlockEntity(adj);
 
 //? if >=1.21.1 {
@@ -1350,9 +1366,15 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     public boolean isEnergyAcceptingFrom(GregTechTags.Tag energyType, @Nullable Direction side, boolean theoretical) {
         if (!isEnergyType(energyType, side, false) || (!theoretical && controlStopped)) return false;
         if (side == null) return true;
-        int mask = auxTag != null && auxTag == energyType
-                ? spec.auxiliaryFaceMask() : faceConfig.energyInputs();
-        return FaceConfig.has(mask, relativeDir(side));
+        return (spec.energyType().equalsIgnoreCase(energyType.getShortName())
+                && FaceConfig.has(faceConfig.energyInputs(), relativeDir(side)))
+                || usesAuxiliaryInput(energyType, side);
+    }
+
+    /** Disjoint faces distinguish two inputs of the same type; unsided calls retain auxiliary priority. */
+    private boolean usesAuxiliaryInput(GregTechTags.Tag energyType, @Nullable Direction side) {
+        return auxTag != null && auxTag == energyType
+                && (side == null || FaceConfig.has(spec.auxiliaryFaceMask(), relativeDir(side)));
     }
 
     @Override
@@ -1365,7 +1387,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
                          long size, long amount, boolean doInject) {
         if (size==0 || size==Long.MIN_VALUE || amount<=0 || !isEnergyAcceptingFrom(energyType, side, false)) return 0;
         long sizeAbs = Math.abs(size);
-        if (auxTag != null && auxTag == energyType) {
+        if (usesAuxiliaryInput(energyType, side)) {
             if (sizeAbs < spec.auxiliaryEnergyMin()) return 0;
             if (sizeAbs > spec.auxiliaryEnergyMax()) {
                 if (doInject) explodeFromOvervoltage(sizeAbs, energyType);
@@ -1406,7 +1428,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     @Override
     public long getEnergyDemanded(GregTechTags.Tag energyType, @Nullable Direction side, long size) {
         if (size==0||size==Long.MIN_VALUE||!isEnergyAcceptingFrom(energyType, side, false)) return 0;
-        if (auxTag != null && auxTag == energyType)
+        if (usesAuxiliaryInput(energyType, side))
             return BasicMachineEnergy.demanded(auxEnergy, spec.auxiliaryEnergyCapacity(), size);
         return BasicMachineEnergy.demanded(mEnergy, inputMaximum(), size);
     }
@@ -1418,19 +1440,19 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     @Override
     public long getEnergySizeInputRecommended(GregTechTags.Tag energyType, @Nullable Direction side) {
-        if (auxTag != null && auxTag == energyType) return spec.auxiliaryEnergyIn();
+        if (usesAuxiliaryInput(energyType, side)) return spec.auxiliaryEnergyIn();
         return spec != null ? spec.energyIn() : 1;
     }
 
     @Override
     public long getEnergySizeInputMin(GregTechTags.Tag energyType, @Nullable Direction side) {
-        if (auxTag != null && auxTag == energyType) return spec.auxiliaryEnergyMin();
+        if (usesAuxiliaryInput(energyType, side)) return spec.auxiliaryEnergyMin();
         return spec != null ? spec.energyInMin() : 1;
     }
 
     @Override
     public long getEnergySizeInputMax(GregTechTags.Tag energyType, @Nullable Direction side) {
-        if (auxTag != null && auxTag == energyType) return spec.auxiliaryEnergyMax();
+        if (usesAuxiliaryInput(energyType, side)) return spec.auxiliaryEnergyMax();
         return spec != null ? inputMaximum() : 1;
     }
 
@@ -1807,6 +1829,13 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     // ── Sided wrappers ────────────────────────────────────────────────────
 
+    /** Own-face policy applies to active auto-I/O as well as passive capability traffic. */
+    private boolean allowsItemTraffic(Direction side, ItemStack stack, boolean inserting) {
+        return !isRemoved() && !isFaceShuttered(side)
+                && com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side), inserting)
+                && !coverBlocksItemTraffic(side) && coverFilterPermits(side, stack);
+    }
+
     private record SidedItemHandler(BasicMachineBlockEntity be, int relativeSide, IItemHandler inner, boolean canInsert, boolean canExtract)
             implements IItemHandler {
         @Override public int getSlots() { return inner.getSlots(); }
@@ -1818,23 +1847,20 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         // machine behaving exactly as before this batch.
         @Override public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
             Direction side = be.relativeToAbsolute(relativeSide);
-            return com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsItem(be.getCover(side),true) && canInsert && be.acceptsAutomaticInput(stack) && !be.isRemoved() && !be.isFaceShuttered(side)
-                    && !be.coverBlocksItemTraffic(side) && be.coverFilterPermits(side, stack)
+            return canInsert && be.acceptsAutomaticInput(stack) && be.allowsItemTraffic(side, stack, true)
                     ? inner.insertItem(slot, stack, simulate) : stack;
         }
         @Override public ItemStack extractItem(int slot, int amount, boolean simulate) {
             if (slot < be.inputSlots()) return ItemStack.EMPTY;
             Direction side = be.relativeToAbsolute(relativeSide);
             ItemStack existing = inner.getStackInSlot(slot);
-            return com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsItem(be.getCover(side),false) && canExtract && !be.isRemoved() && !be.isFaceShuttered(side)
-                    && !be.coverBlocksItemTraffic(side) && be.coverFilterPermits(side, existing)
+            return canExtract && be.allowsItemTraffic(side, existing, false)
                     ? inner.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
         }
         @Override public int getSlotLimit(int slot) { return inner.getSlotLimit(slot); }
         @Override public boolean isItemValid(int slot, ItemStack stack) {
             Direction side = be.relativeToAbsolute(relativeSide);
-            return com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsItem(be.getCover(side),true) && canInsert && be.acceptsAutomaticInput(stack) && !be.isRemoved() && !be.isFaceShuttered(side)
-                    && !be.coverBlocksItemTraffic(side) && be.coverFilterPermits(side, stack)
+            return canInsert && be.acceptsAutomaticInput(stack) && be.allowsItemTraffic(side, stack, true)
                     && inner.isItemValid(slot, stack);
         }
     }

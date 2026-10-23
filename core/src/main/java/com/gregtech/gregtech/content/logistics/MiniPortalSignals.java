@@ -52,16 +52,36 @@ public final class MiniPortalSignals {
         return previous != output[side];
     }
 
-    public int redstone(int side) { return redstone[side]; }
-    public int comparator(int side) { return comparator[side]; }
-    public int maximumComparator() { return Arrays.stream(comparator).max().orElse(0); }
-    public boolean consumeChanged() { boolean result = changed; changed = false; return result; }
+    public int redstone(int side) {
+        return redstone[side];
+    }
+
+    public int comparator(int side) {
+        return comparator[side];
+    }
+
+    public int maximumComparator() {
+        return Arrays.stream(comparator).max().orElse(0);
+    }
+
+    public boolean consumeChanged() {
+        boolean result = changed;
+        changed = false;
+        return result;
+    }
+
     public void clear() {
         changed |= Arrays.stream(redstone).anyMatch(value -> value != 0)
                 || Arrays.stream(comparator).anyMatch(value -> value != 0);
-        Arrays.fill(redstone, 0); Arrays.fill(comparator, 0);
-        Arrays.fill(incomingRedstone, -1); Arrays.fill(incomingComparator, -1);
-        Arrays.fill(redstoneWait, 0); Arrays.fill(comparatorWait, 0);
+        Arrays.fill(redstone, 0);
+        Arrays.fill(comparator, 0);
+        Arrays.fill(incomingRedstone, -1);
+        Arrays.fill(incomingComparator, -1);
+        Arrays.fill(redstoneWait, 0);
+        Arrays.fill(comparatorWait, 0);
     }
-    private static int clamp(int value) { return Math.max(0, Math.min(15, value)); }
+
+    private static int clamp(int value) {
+        return Math.max(0, Math.min(15, value));
+    }
 }

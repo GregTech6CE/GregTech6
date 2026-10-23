@@ -1,0 +1,1212 @@
+{
+  "date": "2026-10-22",
+  "batch": 97,
+  "baseline": "e7d676234547a0b9dae6bda0e5449b08b3a7d67b",
+  "previous_goal_turn": "Progress: e7d676234 recorded worktable lifecycle and preserved eight complete source views. No live process or blocker.",
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntitySiftingTable.java",
+      "sha256": "aa16e493f135dcc0722499d3cfc1970d05161b39e53241e11c65cab179081b3d",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "sha256": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "sha256": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "sha256": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/ST.java",
+      "sha256": "5ff16d9051e2744a66c711bd5f2581785ba8af7b2272fb1023a6d2f4ddb783a8",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java",
+      "sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/GT_API_Proxy.java",
+      "sha256": "e773eae6cd22825b3cd231cfb916040b52166af7653ccc8c9f994f5e53101819",
+      "authors": [],
+      "license_header": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "authors": [],
+      "license_header": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/RM.java",
+      "sha256": "c7cb07faef0235ace4bb26656fddaabfa10da6aa4a2689a7f4cdcaef10d366e6",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/c/Loader_Recipes_Ores.java",
+      "sha256": "b94dc194c7557f341ebacd895cc18c2fada8c5e4cd33b45784c971f921db4aa3",
+      "authors": [],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/tool/ManualWorkRules.java",
+      "sha256": "3e58e8bbe73b8d9e254e323b39c190b784b3652b089f8f30a22507d6d578a5bc",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/ManualToolBlockEntity.java",
+      "sha256": "328655cec646c692155b74aa1b9653c6504cc792e634f4e68c24efedbf2facd6",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "ccd7329d2ef98a4680afcadc96cb2b4113359049d522777447e8fabf148891d2",
+          "tokens": 2586
+        },
+        "neoforge": {
+          "sha256": "850520f2a20721e279f7adc1e007683f2ada1ec11cddcf4df00ff47d6eb20289",
+          "tokens": 2674
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/ManualToolBlock.java",
+      "sha256": "9eba0c066668ca623b7b77deeddfc634d080eaebaa37eca5b8b0f6645e2cb88a",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "8b0f4645cc16cfe07cbfb8a1dac33309ad156309270d41a552ff587f0c6f1f3a",
+          "tokens": 1207
+        },
+        "neoforge": {
+          "sha256": "350d03aeb7e6a655a18191266792440f1eb7e07843874beb9a6a267442ceca81",
+          "tokens": 1429
+        }
+      }
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTManualStations.java",
+      "sha256": "814eb95c770e5c62e86406b99fc5703268fdf79c9a096d8b3d5785c68cb0232f",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTToolBlocks.java",
+      "sha256": "6bf7985f7054bfa396e63161c56a0605315f2e2fc53eee3666df897df2680d62",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "a7f85fb0487c3dc23ace1b6af073693dc9b8c5f6c735372ae0c62d8f05838962",
+          "tokens": 4005
+        },
+        "neoforge": {
+          "sha256": "0fdb02e317c27b546a688728c56efc319d349eed4f811336bb702cc60f2c8c5b",
+          "tokens": 913
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "05409cc45a965be4efbcde15b420091d3222e6fe390069a0d58031e43faf9308",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "cd857ed2aa4e138090d32001a0777cfe38b90935fa1f5946eacec188a2f02d4d",
+          "tokens": 8033
+        },
+        "neoforge": {
+          "sha256": "98785c75a78501d4cc1232a887ac9bc9bfa79efde64e9ef84f79f88febaf3f66",
+          "tokens": 6299
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/inventory/NativeItemInventories.java",
+      "sha256": "ebf62dae2231b7ed89ccb93f75b4f483e697b5f42357c0372f30501a83776fba",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "2f5d0fc560d6a0e8e36af798302f4d67fde34887d9ffbdadcddc09363a826861",
+          "tokens": 135
+        },
+        "neoforge": {
+          "sha256": "de345a1e0faa3ebbe6caf5b274cf77d3d90b3047e82ee868f8ce333ee632604c",
+          "tokens": 116
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeMap.java",
+      "sha256": "b3401a8aa4dd1c1dbfe823bc8b152f7c99490b61b6db8b2c0bf16c70ab439a7a",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "644daac8ccb6d8a94483e935a39ae1c6a2925e99a49a453e4381dcc52a1f8a10",
+          "tokens": 9306
+        },
+        "neoforge": {
+          "sha256": "dc50b1bbe9a07a5b77df16dff2ff356f7384e7f62351105fce42075bea804ea4",
+          "tokens": 9312
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeInputs.java",
+      "sha256": "3dd41d01162170872d7e0e172f538118d0b6e2df8a5eec04e8d11ceb82ce1c16",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "f4fd32a3b489b5beda3864598a621d639a91abdbb7ed6a35db1913d7c71ea0b5",
+          "tokens": 791
+        },
+        "neoforge": {
+          "sha256": "472839942cd79850e0e8c0d8702a63b63ac2a041dfa61f43e62d1b1281e92255",
+          "tokens": 804
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/Recipe.java",
+      "sha256": "e6bf4941590236ac4851acce49d28a4e40df998f187733a91ca82447c4c467c6",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "bc44f45b51ac27bc2073a864bac6309366e51bdb17553a62e95853315881f25b",
+          "tokens": 1049
+        },
+        "neoforge": {
+          "sha256": "ad0c1c42c26808c8cde74696a4d5b9c96ddf499931546fb293775584bce0c8f8",
+          "tokens": 1051
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/data/MachineRecipeMaps.java",
+      "sha256": "88ea4001ad21f6c8892d346f20cfb8a0f86ad6844c9e72aecb33e8af46b12f7e",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "7f7d0cbe040892fe1e187d55a7afb04b5086256cb46dc9b4aa7beb12057e8b05",
+          "tokens": 4242
+        },
+        "neoforge": {
+          "sha256": "424319e8c378ab2380ad8ddb30d8a13f0a3c4b0c5650a0712ecd8a5f7b7d5a96",
+          "tokens": 3731
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/generated/GeneratedRecipeResolver.java",
+      "sha256": "cf6ed36f4fb4962b9163789f60c0e01780d3fd4985bcc464f3377a6dc821ed13",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "db4b73f38d7f4c8b78557fb9b7724048532ea3a9a8409f1d039aef6304225bab",
+          "tokens": 2966
+        },
+        "neoforge": {
+          "sha256": "9993e12c6ff5d1c00b090ea51d07992510b68c0184af6ecae48ed065ee572226",
+          "tokens": 2970
+        }
+      }
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageContainerCapabilities.java",
+      "sha256": "d6e62e69491d69f904307d82523a6e3e9c49f7fcccdda7ae0f6c1a040c4a74e0",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/data/MachineRecipeMapDefinitions.java",
+      "sha256": "107ffcf13019a3cc7a1bc7ea40776b7d528446121787b3b7e465fb8f6fa369d6",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTOresGen.java",
+      "sha256": "8ab7afc28555b28fd7d2626311ab789ae3243a6e5357d140b8d4ad70a7d72f9b",
+      "shared_platform_views": {}
+    }
+  ],
+  "readability": {
+    "baseline": "e7d676234547a0b9dae6bda0e5449b08b3a7d67b",
+    "files": {
+      "core/src/main/java/com/gregtech/gregtech/content/tool/ManualWorkRules.java": {
+        "before_raw_sha256": "43522f3062477305767f77e578d42c7ab78eb50026e3467f9e0ade1c8006f768",
+        "after_raw_sha256": "3e58e8bbe73b8d9e254e323b39c190b784b3652b089f8f30a22507d6d578a5bc",
+        "before_lines": 6,
+        "after_lines": 38,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 175,
+            "execution_sha256": "67d52e779f7b66a2368e2a40d88f03d7dd7683a5df00a65a8d05b12ba60a819e",
+            "literal_positions_sha256": "bd937839940ca125d62d267fa3b88eceeab960e891c7c99562129c19fb2a401f",
+            "literal_count": 26
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/ManualToolBlockEntity.java": {
+        "before_raw_sha256": "4ec880e5a918b278440e120e9ed988f1673556f7837bccfca6e1c4aa4ce4bbac",
+        "after_raw_sha256": "328655cec646c692155b74aa1b9653c6504cc792e634f4e68c24efedbf2facd6",
+        "before_lines": 326,
+        "after_lines": 359,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 2586,
+            "execution_sha256": "5d390d52b8164a1cf39a506bb0ae2f2ca08afba5dc8f89cf243fbe4db80da7b2",
+            "literal_positions_sha256": "f9374ea18ed330fcd6eb0e101e6f3e8f6c7116cc8cba80e11e8fbcc22770521d",
+            "literal_count": 70
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 2674,
+            "execution_sha256": "ad52c09008729420f420e8246a624776fff743b3805c0492620b2640ccef72cd",
+            "literal_positions_sha256": "2b67b8f7bb1b76047cb74ed4fc9201930d1acb6497245421783cf695002ac4f7",
+            "literal_count": 69
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/tool/ManualToolBlock.java": {
+        "before_raw_sha256": "139926e66f43de39cb60cf7fdae32c4bef1ec2fc3cca4ff0448c5f5fe88d06c6",
+        "after_raw_sha256": "9eba0c066668ca623b7b77deeddfc634d080eaebaa37eca5b8b0f6645e2cb88a",
+        "before_lines": 133,
+        "after_lines": 164,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1207,
+            "execution_sha256": "2dd228a7200659ce89989421f85bf0ec17309caa236b6246a98250b3c9939d8f",
+            "literal_positions_sha256": "83569945af39966aa4c18cc3df9e4a1a13094d43344513bd93bbafdb65229afe",
+            "literal_count": 24
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1429,
+            "execution_sha256": "66231be812e4803efb807a08d2cbd584d188f6b782cec2e76889c4d8b1c13d99",
+            "literal_positions_sha256": "25531d8fc32fe61b3a89d4d51024454e60f47cf57da735df7322018725b3b128",
+            "literal_count": 24
+          }
+        ]
+      },
+      "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTManualStations.java": {
+        "before_raw_sha256": "e466e2eff03cdd302386f0c2ca4b0fed08268d95e8b5008287037ef9fa5023b7",
+        "after_raw_sha256": "814eb95c770e5c62e86406b99fc5703268fdf79c9a096d8b3d5785c68cb0232f",
+        "before_lines": 29,
+        "after_lines": 121,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "neoforge",
+            "tokens": 1673,
+            "execution_sha256": "e5a6757949d91de4ce1249da4c57ac4bf53d406ea686153407a1ceac8b1a901b",
+            "literal_positions_sha256": "45f32d5a5331917f88ed4213b694a5ecdf8bd310d439863622bde2d672130cc4",
+            "literal_count": 58
+          }
+        ]
+      }
+    }
+  },
+  "formal_findings_added": [
+    "ALIGN-301",
+    "ALIGN-302",
+    "ALIGN-303"
+  ],
+  "source_registration": "aMat = ANY.Steel;           aRegistry.add(\"Sifting Table\"                                       , \"Misc Tool Blocks\"                    , 32702, 32720, MultiTileEntitySiftingTable.class                       ,                 0, 16, aUtilMetal     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   1.0F, NBT_RESISTANCE,   6.0F, NBT_RECIPEMAP, RM.Sifting     ), \"TdT\", \"WxW\", \"SPS\", 'P', OP.plateDouble.dat(ANY.Iron), 'S', OP.stickLong.dat(ANY.Iron), 'T', OP.screw.dat(ANY.Iron), 'W', OP.wireFine.dat(ANY.Iron));",
+  "source_mycelium_recipe": "RM.Sifting.addRecipe1(T, 16, 144, new long[] { 8000,  1000,  1000                                                               }, ST.make(Blocks.mycelium          ,  1, W)/*|*/, ST.make(Blocks.dirt  , 1, 1), ST.make(Blocks.brown_mushroom, 1, 0), ST.make(Blocks.red_mushroom, 1, 0));",
+  "current_mycelium_recipe_declaration": "r(\"Sifting\", 16, 144, ch(8000, 1000, 1000), sp(\"v:mycelium:1\"), NONE, NONE, sp(\"v:dirt:1\", \"v:brown_mushroom:1\", \"v:red_mushroom:1\"));",
+  "hand_input_source_projection": [
+    {
+      "held_count": 1,
+      "source_receives": 1,
+      "current_receives": 1,
+      "precondition": "Empty work slot, survival player, a matching accepted recipe; source arithmetic only."
+    },
+    {
+      "held_count": 2,
+      "source_receives": 1,
+      "current_receives": 2,
+      "precondition": "Empty work slot, survival player, a matching accepted recipe; source arithmetic only."
+    },
+    {
+      "held_count": 16,
+      "source_receives": 1,
+      "current_receives": 16,
+      "precondition": "Empty work slot, survival player, a matching accepted recipe; source arithmetic only."
+    },
+    {
+      "held_count": 64,
+      "source_receives": 1,
+      "current_receives": 64,
+      "precondition": "Empty work slot, survival player, a matching accepted recipe; source arithmetic only."
+    }
+  ],
+  "sided_slot_source_projection": [
+    {
+      "side": 0,
+      "slot": 0,
+      "source_visible": true,
+      "source_may_insert_matching": true,
+      "source_may_extract": false,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 0,
+      "slot": 1,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 0,
+      "slot": 2,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 0,
+      "slot": 3,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 0,
+      "slot": 4,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 0,
+      "slot": 5,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 0,
+      "slot": 6,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 0,
+      "slot": 7,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 0,
+      "slot": 8,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 0,
+      "slot": 9,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 0,
+      "slot": 10,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 0,
+      "slot": 11,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 0,
+      "slot": 12,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 1,
+      "slot": 0,
+      "source_visible": true,
+      "source_may_insert_matching": true,
+      "source_may_extract": false,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 1,
+      "slot": 1,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 1,
+      "slot": 2,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 1,
+      "slot": 3,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 1,
+      "slot": 4,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 1,
+      "slot": 5,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 1,
+      "slot": 6,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 1,
+      "slot": 7,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 1,
+      "slot": 8,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 1,
+      "slot": 9,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 1,
+      "slot": 10,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 1,
+      "slot": 11,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 1,
+      "slot": 12,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 2,
+      "slot": 0,
+      "source_visible": true,
+      "source_may_insert_matching": true,
+      "source_may_extract": false,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 2,
+      "slot": 1,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 2,
+      "slot": 2,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 2,
+      "slot": 3,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 2,
+      "slot": 4,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 2,
+      "slot": 5,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 2,
+      "slot": 6,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 2,
+      "slot": 7,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 2,
+      "slot": 8,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 2,
+      "slot": 9,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 2,
+      "slot": 10,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 2,
+      "slot": 11,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 2,
+      "slot": 12,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 3,
+      "slot": 0,
+      "source_visible": true,
+      "source_may_insert_matching": true,
+      "source_may_extract": false,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 3,
+      "slot": 1,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 3,
+      "slot": 2,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 3,
+      "slot": 3,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 3,
+      "slot": 4,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 3,
+      "slot": 5,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 3,
+      "slot": 6,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 3,
+      "slot": 7,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 3,
+      "slot": 8,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 3,
+      "slot": 9,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 3,
+      "slot": 10,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 3,
+      "slot": 11,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 3,
+      "slot": 12,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 4,
+      "slot": 0,
+      "source_visible": true,
+      "source_may_insert_matching": true,
+      "source_may_extract": false,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 4,
+      "slot": 1,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 4,
+      "slot": 2,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 4,
+      "slot": 3,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 4,
+      "slot": 4,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 4,
+      "slot": 5,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 4,
+      "slot": 6,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 4,
+      "slot": 7,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 4,
+      "slot": 8,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 4,
+      "slot": 9,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 4,
+      "slot": 10,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 4,
+      "slot": 11,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 4,
+      "slot": 12,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 5,
+      "slot": 0,
+      "source_visible": true,
+      "source_may_insert_matching": true,
+      "source_may_extract": false,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 5,
+      "slot": 1,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 5,
+      "slot": 2,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 5,
+      "slot": 3,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 5,
+      "slot": 4,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 5,
+      "slot": 5,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 5,
+      "slot": 6,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 5,
+      "slot": 7,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 5,
+      "slot": 8,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 5,
+      "slot": 9,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 5,
+      "slot": 10,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 5,
+      "slot": 11,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    },
+    {
+      "side": 5,
+      "slot": 12,
+      "source_visible": true,
+      "source_may_insert_matching": false,
+      "source_may_extract": true,
+      "current_builtin_handler": false
+    }
+  ],
+  "potion_source_projection": [
+    {
+      "haste_amplifier": -1,
+      "fatigue_amplifier": -1,
+      "source_increment": 1,
+      "current_increment": 1,
+      "source_threshold": 8,
+      "current_threshold": 8
+    },
+    {
+      "haste_amplifier": -1,
+      "fatigue_amplifier": 0,
+      "source_increment": 1,
+      "current_increment": 1,
+      "source_threshold": 12,
+      "current_threshold": 12
+    },
+    {
+      "haste_amplifier": -1,
+      "fatigue_amplifier": 1,
+      "source_increment": 1,
+      "current_increment": 1,
+      "source_threshold": 16,
+      "current_threshold": 16
+    },
+    {
+      "haste_amplifier": -1,
+      "fatigue_amplifier": 2,
+      "source_increment": 1,
+      "current_increment": 1,
+      "source_threshold": 20,
+      "current_threshold": 20
+    },
+    {
+      "haste_amplifier": 0,
+      "fatigue_amplifier": -1,
+      "source_increment": 2,
+      "current_increment": 2,
+      "source_threshold": 8,
+      "current_threshold": 8
+    },
+    {
+      "haste_amplifier": 0,
+      "fatigue_amplifier": 0,
+      "source_increment": 2,
+      "current_increment": 2,
+      "source_threshold": 12,
+      "current_threshold": 12
+    },
+    {
+      "haste_amplifier": 0,
+      "fatigue_amplifier": 1,
+      "source_increment": 2,
+      "current_increment": 2,
+      "source_threshold": 16,
+      "current_threshold": 16
+    },
+    {
+      "haste_amplifier": 0,
+      "fatigue_amplifier": 2,
+      "source_increment": 2,
+      "current_increment": 2,
+      "source_threshold": 20,
+      "current_threshold": 20
+    },
+    {
+      "haste_amplifier": 1,
+      "fatigue_amplifier": -1,
+      "source_increment": 3,
+      "current_increment": 3,
+      "source_threshold": 8,
+      "current_threshold": 8
+    },
+    {
+      "haste_amplifier": 1,
+      "fatigue_amplifier": 0,
+      "source_increment": 3,
+      "current_increment": 3,
+      "source_threshold": 12,
+      "current_threshold": 12
+    },
+    {
+      "haste_amplifier": 1,
+      "fatigue_amplifier": 1,
+      "source_increment": 3,
+      "current_increment": 3,
+      "source_threshold": 16,
+      "current_threshold": 16
+    },
+    {
+      "haste_amplifier": 1,
+      "fatigue_amplifier": 2,
+      "source_increment": 3,
+      "current_increment": 3,
+      "source_threshold": 20,
+      "current_threshold": 20
+    },
+    {
+      "haste_amplifier": 2,
+      "fatigue_amplifier": -1,
+      "source_increment": 4,
+      "current_increment": 4,
+      "source_threshold": 8,
+      "current_threshold": 8
+    },
+    {
+      "haste_amplifier": 2,
+      "fatigue_amplifier": 0,
+      "source_increment": 4,
+      "current_increment": 4,
+      "source_threshold": 12,
+      "current_threshold": 12
+    },
+    {
+      "haste_amplifier": 2,
+      "fatigue_amplifier": 1,
+      "source_increment": 4,
+      "current_increment": 4,
+      "source_threshold": 16,
+      "current_threshold": 16
+    },
+    {
+      "haste_amplifier": 2,
+      "fatigue_amplifier": 2,
+      "source_increment": 4,
+      "current_increment": 4,
+      "source_threshold": 20,
+      "current_threshold": 20
+    }
+  ],
+  "production_reference_inventory": {
+    "roots": [
+      "multiversion/src/main/java",
+      "multiversion/versions/1.20.1-forge/src/main/java",
+      "multiversion/versions/1.21.1-neoforge/src/main/java"
+    ],
+    "files_scanned": 1251,
+    "path_and_raw_sha256_inventory": "ef19cbee93fc2cd7b19ed39756c999c014cb243ef86219e9f65d273cb2189c7f",
+    "manual_type_references": [
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/ManualToolBlock.java",
+        "sha256": "9eba0c066668ca623b7b77deeddfc634d080eaebaa37eca5b8b0f6645e2cb88a"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/ManualToolBlockEntity.java",
+        "sha256": "328655cec646c692155b74aa1b9653c6504cc792e634f4e68c24efedbf2facd6"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+        "sha256": "05409cc45a965be4efbcde15b420091d3222e6fe390069a0d58031e43faf9308"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTToolBlocks.java",
+        "sha256": "6bf7985f7054bfa396e63161c56a0605315f2e2fc53eee3666df897df2680d62"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginFacilities.java",
+        "sha256": "7cafb8a5c15927e69e7f55e1e3c6f8bcb1b326469779cc4f76b503261a42c245"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonChunkRoomWorkshop.java",
+        "sha256": "5b704ca303a33ee569396c00583c9bb40dfe452aeb9a4cf67655e6858045c63c"
+      },
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTManualStations.java",
+        "sha256": "814eb95c770e5c62e86406b99fc5703268fdf79c9a096d8b3d5785c68cb0232f"
+      }
+    ],
+    "attach_capability_references": [],
+    "limit": "Reference discovery plus concrete class/registry inspection, not a runtime capability query or a proof about external mods."
+  },
+  "positive_scope": [
+    "Sifting map, one work field and twelve output fields, five-tick cadence, normal haste/fatigue thresholds, occupied-output blocking, sided manual retrieval, input/output/progress save and local drop hooks are present.",
+    "The source native ISidedInventory inheritance is through Base07 -> Base06 -> Base05, not merely thirteen declared slots. Current concrete class has no inventory interface/handler or Forge override; project Neo registry has no manual-tool provider.",
+    "Source operator collection uses per-player last-clicked block records; the current single UUID and top-face ray test are an actual different selection policy, not a claim that sifting never works."
+  ],
+  "limits": [
+    "Four hand counts, 78 source slot-role declarations and 16 ordinary potion conditions are source projections only; no Java target, handler, player or gameplay was executed.",
+    "Mycelium declarations show a concrete source/current vanilla input family, not acceptance of the final live recipe table. Full recipe priority, chance outputs, renderer, high amplifiers, permissions, foreign capabilities, native event cancellation and independent saved-world restart remain unverified.",
+    "No compile, Gradle, tests, game, build or push. Formatting only; keep installed work retrieval, creative handling and save safeguards. User material tables unchanged."
+  ],
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "root_revalidation": {
+    "date": "2026-10-22",
+    "original_sources": 12,
+    "current_sources": 15,
+    "shared_platform_views": 20,
+    "readability_files": 4,
+    "complete_code_views": 6,
+    "hand_input_conditions": 4,
+    "slot_role_conditions": 78,
+    "ordinary_potion_conditions": 16,
+    "reference_inventory_files": 1251,
+    "ledger_contiguous": [
+      1,
+      303
+    ],
+    "added_local_links": 13,
+    "protected_materials_unchanged": true,
+    "method": "Rehash actual sources/platform views, re-read native inventory inheritance, target stack-limit transfer, operator-record producer/consumer, maintained registries and full ordered code/literal/comment/directive proofs. Finite source projections and reference inventory only; no target execution or gameplay."
+  }
+}

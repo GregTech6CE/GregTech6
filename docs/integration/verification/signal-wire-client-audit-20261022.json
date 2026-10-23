@@ -1,0 +1,775 @@
+{
+  "date": "2026-10-22",
+  "batch": 121,
+  "baseline": "eeb0ec7698f925b3cd81204e1a4ec252624af1be",
+  "previous_goal_turn": {
+    "classification": "progress",
+    "commit": "eeb0ec769",
+    "evidence": "Signal-wire numeric extraction and missing generator/input-face audit committed."
+  },
+  "provenance": {
+    "authors": "GregTech-6 Team / Gregorius Techneticies",
+    "original_tree_read_only": true,
+    "license": "Original LGPL notices preserved; sharing current tint expressions imports no additional original implementation."
+  },
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/TileEntityBase09Connector.java",
+      "raw_sha256": "7c77c0fd093e5ff5fb889ad7f3cf6e0b75f5f7390a637b1ce76a2252269526ff",
+      "lines": 177,
+      "notice_sha256": "accc18a4bf87847b3134c2814611b821dcb8c3083277f78c0f8f2cf8e6f05caf"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/TileEntityBase10ConnectorRendered.java",
+      "raw_sha256": "4337cc83a2d68d44525e973faf3a7a4383bb56166562cc60f1bce77b8f9b0ad0",
+      "lines": 266,
+      "notice_sha256": "accc18a4bf87847b3134c2814611b821dcb8c3083277f78c0f8f2cf8e6f05caf"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/MultiTileEntityWireRedstoneInsulated.java",
+      "raw_sha256": "4f93b8caf163e85f0560bfba5934bb42e76c39caf9a954c279cfcb10af49b8c2",
+      "lines": 191,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/MultiTileEntityWireRedstone.java",
+      "raw_sha256": "cd79da42bb5b24a211615bb25edb653995c867f7404928f40d8e6f73ca59ec15",
+      "lines": 90,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/AbstractCoverAttachmentTorch.java",
+      "raw_sha256": "f06eb2fe7ea68c62d3bbc69083219970069acdb16ec21b6add0160c2b300c9fb",
+      "lines": 81,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/CoverRedstoneTorch.java",
+      "raw_sha256": "ef54cfcd0bf336cf0fc17e668e520a6efa815d3aed8cc24481c54e25241427f2",
+      "lines": 45,
+      "notice_sha256": "63c517dd35b913cfc46d1f7881d524c83334db090a72278eefbb881a3ef42a1b"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/CoverRedstoneRepeater.java",
+      "raw_sha256": "6d92b4dc06e0670838ee54cb4bb84664c79b6571e0cbc495784c41224b23089a",
+      "lines": 45,
+      "notice_sha256": "63c517dd35b913cfc46d1f7881d524c83334db090a72278eefbb881a3ef42a1b"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "raw_sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+      "lines": 496,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/energy/WireToolInteractions.java",
+      "raw_sha256": "d69a13cfcf1c72ffaa1c1f8f0d387d5797cf0ab5277e15f0ba3671418c774eca",
+      "lines": 46
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/SignalWireClientSetup.java",
+      "raw_sha256": "a05dd0bcb0590a875215900765debbe8dcbc6dd377af8769a7095529ff1ba921",
+      "lines": 65
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "raw_sha256": "ac446d756cf728ebe44289567abf894de8f10fdfe8ad383630d2239319957c01",
+      "lines": 823
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/SignalWireColors.java",
+      "raw_sha256": "20c5b7ca408c46dc66cc549a3d9afb8c380c24ce4ca56acc1253e2652cf769a4",
+      "lines": 12
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/energy/SignalWireBlock.java",
+      "raw_sha256": "c36ff964971ad6d83b9c549d3d93674aa1ab80d86f97980f1888416d169977c9",
+      "lines": 271
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/SignalWireBlockEntity.java",
+      "raw_sha256": "33af0f59c41b40f18215f0f437141e020cc3cb949f13ce0279a003b41b3575eb",
+      "lines": 303
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractions.java",
+      "raw_sha256": "98301fff608998c7bdc18b18308e5f836543a49971fb5838ce29c6f31e22cd99",
+      "lines": 111
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/PipeWireBakedModel.java",
+      "raw_sha256": "d7ddd47d482a9e638e06dc17dcf5b9548814e268a22567d5de6753bbdbeb1c6b",
+      "lines": 351
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockPaintColorMixin.java",
+      "raw_sha256": "7a3a13f288f0a3ba228bf8afeae49f1e5b6d58f704f1bf83e74e36114ca3e7a8",
+      "lines": 22
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/ItemPaintColorMixin.java",
+      "raw_sha256": "1f4ad5466b9ba341ab4f22fe0ac3d9e2638a47e07afd08954b47953489253697",
+      "lines": 29
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockEntityPaintMixin.java",
+      "raw_sha256": "9478638ce61d66b55c8a08bcbc225078d364b51e2983b2bebe11c292d6e22467",
+      "lines": 130
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/tool/PaintTargets.java",
+      "raw_sha256": "159494292df5ded9a992666701340f648db0b689a4d6ab27012fb34c55475381",
+      "lines": 78
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverConnections.java",
+      "raw_sha256": "67cee667a065adc067945627106ae8b144375587c301afdee73bebd66677438c",
+      "lines": 62
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "raw_sha256": "afd6d00235399a7a1b115cbab778d691997836a49e25e62a442a36c59a2733d9",
+      "lines": 122,
+      "notice_sha256": "6b964485ca4d9e5ee72497c1d3af5f8010a073f374688713394dba410fb30643"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "raw_sha256": "5ff60819301303ea2893b671701741e1523501f0ef4c575c10ec932de04f5493",
+      "lines": 164,
+      "notice_sha256": "6b964485ca4d9e5ee72497c1d3af5f8010a073f374688713394dba410fb30643"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverStorage.java",
+      "raw_sha256": "02f2cf2b0b84f3ed9eb16c266ad85e8d7d6be98b0b4e3909751878e34ef24046",
+      "lines": 116,
+      "notice_sha256": "6b964485ca4d9e5ee72497c1d3af5f8010a073f374688713394dba410fb30643"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "raw_sha256": "036d8a5039506f9a7678fe76e07362f9a8a81a09a47fed0824dae5e13a375403",
+      "lines": 309
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java",
+      "raw_sha256": "29a6eb369286918b8562adae2a5a3f415a9a48f80840a69aa9902ad4bb1ddf32",
+      "lines": 80,
+      "notice_sha256": "6b964485ca4d9e5ee72497c1d3af5f8010a073f374688713394dba410fb30643"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverInteraction.java",
+      "raw_sha256": "ee2bd64411bebbfd4de4078cd45c71590c18c2667282ed60441d5dd37f56e48b",
+      "lines": 87,
+      "notice_sha256": "6b964485ca4d9e5ee72497c1d3af5f8010a073f374688713394dba410fb30643"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/UtilityCoverInteraction.java",
+      "raw_sha256": "f1673e12160972691487af02e597f27fbdc5422d32994b4cf862aa379f200a49",
+      "lines": 100
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverInteraction.java",
+      "raw_sha256": "c96b22600c70b4c722ec4489cdc70e41dc73005158c4330c1a215fef7d78541e",
+      "lines": 100
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCover.java",
+      "raw_sha256": "bdb09e176d08f1b23ba0b420ebf9cb36c832bfe2d0dc5002092269db5727a2c3",
+      "lines": 54
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/MachineCoverSpec.java",
+      "raw_sha256": "568d8a2e452105e319b253d0cd768ba564e5f66106f905cd6d71385725f46615",
+      "lines": 96
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverRuntime.java",
+      "raw_sha256": "3ed9aeba571247804027cd2877d084b809890070104b49619465199a425a925f",
+      "lines": 180,
+      "notice_sha256": "6b964485ca4d9e5ee72497c1d3af5f8010a073f374688713394dba410fb30643"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverItems.java",
+      "raw_sha256": "323c9dc95c44fff89498bf3d1718aa0a94dfbcdbb5466326ed3cb8bdbddbedbd",
+      "lines": 174
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorSprayFoamHardener.java",
+      "raw_sha256": "a4dbbbb0c1e0afc0582ead7c97734aaa097811d779fbf9e2106ed92b3fae9419",
+      "lines": 86
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorSprayFoamRemover.java",
+      "raw_sha256": "8a6d8d1a09651638b7d3d2d1183f8ecbe4434a8780b9ce6acd338a0d96bf5346",
+      "lines": 91
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/PipeWireClientModels.java",
+      "raw_sha256": "17698cc1c70c3021628845498f23138da687149f86927ac4473720423ac6d4ed",
+      "lines": 142
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/GTMaterial.java",
+      "raw_sha256": "007ab5ae9d6bee7987522f1602b97255bcfe440a55fb0045d676019684b91f88",
+      "lines": 426
+    }
+  ],
+  "assets": [
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/resources/assets/gt6ce/models/block/signal_wire/wire_01_redalloy.json",
+      "raw_sha256": "bae09aa242b3b7dbf3dad9932e0d525b8a4ace8ae249f0bbf654d52cdeea4855",
+      "static_tints": [
+        0
+      ],
+      "scope": "Static model tint declaration; actual baked replacements are separately traced."
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/resources/assets/gt6ce/models/block/signal_wire/cable_01_redalloy.json",
+      "raw_sha256": "1ae9bfb4fc198bf8468aa0708e1e720da0b0e64e9a2c32abce57327c15eb7808",
+      "static_tints": [
+        1
+      ],
+      "scope": "Static model tint declaration; actual baked replacements are separately traced."
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/resources/assets/gt6ce/models/block/signal_wire/wire_01_signalum.json",
+      "raw_sha256": "bae09aa242b3b7dbf3dad9932e0d525b8a4ace8ae249f0bbf654d52cdeea4855",
+      "static_tints": [
+        0
+      ],
+      "scope": "Static model tint declaration; actual baked replacements are separately traced."
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/resources/assets/gt6ce/models/block/signal_wire/cable_01_signalum.json",
+      "raw_sha256": "1ae9bfb4fc198bf8468aa0708e1e720da0b0e64e9a2c32abce57327c15eb7808",
+      "static_tints": [
+        1
+      ],
+      "scope": "Static model tint declaration; actual baked replacements are separately traced."
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/resources/assets/gt6ce/models/block/signal_wire/wire_01_lumium.json",
+      "raw_sha256": "bae09aa242b3b7dbf3dad9932e0d525b8a4ace8ae249f0bbf654d52cdeea4855",
+      "static_tints": [
+        0
+      ],
+      "scope": "Static model tint declaration; actual baked replacements are separately traced."
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/resources/assets/gt6ce/models/block/signal_wire/cable_01_lumium.json",
+      "raw_sha256": "1ae9bfb4fc198bf8468aa0708e1e720da0b0e64e9a2c32abce57327c15eb7808",
+      "static_tints": [
+        1
+      ],
+      "scope": "Static model tint declaration; actual baked replacements are separately traced."
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "raw_sha256": "9a11fa5b224b5e4dfce0a242137db26795c0931e2fc33d0bd223f22b722949bf",
+      "paint_and_fallback_mixins_listed": true
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "raw_sha256": "4286c1ca895a299369fe5d617055752d83f8fd648c27a4bb650b6d04d3432542",
+      "paint_and_fallback_mixins_listed": true
+    }
+  ],
+  "excerpts": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/TileEntityBase09Connector.java",
+      "start_line": 70,
+      "end_line": 80,
+      "excerpt_sha256": "d763de7b2b94f9dfb9baa464bb9a1e07c7ab547d3ef3e84a7a1b188259e364f9",
+      "text": "\tpublic long onToolClick2(String aTool, long aRemainingDurability, long aQuality, Entity aPlayer, List<String> aChatReturn, IInventory aPlayerInventory, boolean aSneaking, ItemStack aStack, byte aSide, float aHitX, float aHitY, float aHitZ) {\n\t\tif (isClientSide()) return 0;\n\t\tif (aTool.equals(getFacingTool())) {\n\t\t\tbyte aTargetSide = UT.Code.getSideWrenching(aSide, aHitX, aHitY, aHitZ);\n\t\t\tDelegatorTileEntity<TileEntity> tDelegator = getAdjacentTileEntity(aTargetSide);\n\t\t\tif (tDelegator.mTileEntity instanceof ITileEntity && !((ITileEntity)tDelegator.mTileEntity).allowInteraction(aPlayer)) return 0;\n\t\t\treturn (connected(aTargetSide)?disconnect(aTargetSide, T):connect(aTargetSide, T))?10000:0;\n\t\t}\n\t\treturn 0;\n\t}\n\t"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/TileEntityBase09Connector.java",
+      "start_line": 82,
+      "end_line": 96,
+      "excerpt_sha256": "2ab4e61d3a0577c491fda43dd728b76de8ee2067030ec019421240960f8f60cc",
+      "text": "\tpublic boolean onPlaced(ItemStack aStack, EntityPlayer aPlayer, MultiTileEntityContainer aMTEContainer, World aWorld, int aX, int aY, int aZ, byte aSide, float aHitX, float aHitY, float aHitZ) {\n\t\tif (isServerSide()) {\n\t\t\taSide = OPOS[aSide];\n\t\t\tDelegatorTileEntity<TileEntity> tDelegator = getAdjacentTileEntity(aSide);\n\t\t\tif (tDelegator.mTileEntity instanceof ITileEntity && !((ITileEntity)tDelegator.mTileEntity).allowInteraction(aPlayer)) return T;\n\t\t\tconnect(aSide, T);\n\t\t\tfor (byte tSide : ALL_SIDES_VALID) {\n\t\t\t\ttDelegator = getAdjacentTileEntity(tSide);\n\t\t\t\tif (tDelegator.mTileEntity instanceof ITileEntityConnector && SIDES_VALID[tDelegator.mSideOfTileEntity] && UT.Code.haveOneCommonElement(((ITileEntityConnector)tDelegator.mTileEntity).getConnectorTypes(tDelegator.mSideOfTileEntity), getConnectorTypes(tSide))) {\n\t\t\t\t\tif (((ITileEntityConnector)tDelegator.mTileEntity).connected(tDelegator.mSideOfTileEntity)) connect(tSide, T);\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\treturn T;\n\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/TileEntityBase09Connector.java",
+      "start_line": 111,
+      "end_line": 153,
+      "excerpt_sha256": "02e520907e1443e5b0ad1dfe3f89df2aaf05798c92ec86da6824aa25916f5bae",
+      "text": "\tpublic boolean connect(byte aSide, boolean aNotify) {\n\t\tif (SIDES_INVALID[aSide]) return F;\n\t\tif (connected(aSide)) return T;\n\t\tif (hasCovers() && mCovers.mBehaviours[aSide] != null && mCovers.mBehaviours[aSide].interceptConnect(aSide, mCovers)) return F;\n\t\tDelegatorTileEntity<TileEntity> tDelegator = getAdjacentTileEntity(aSide);\n\t\tif (tDelegator.mTileEntity instanceof ITileEntityConnector) {\n\t\t\tif (tDelegator.mTileEntity instanceof ITileEntityCoverable && ((ITileEntityCoverable)tDelegator.mTileEntity).getCoverData() != null && ((ITileEntityCoverable)tDelegator.mTileEntity).getCoverData().mBehaviours[tDelegator.mSideOfTileEntity] != null && ((ITileEntityCoverable)tDelegator.mTileEntity).getCoverData().mBehaviours[tDelegator.mSideOfTileEntity].interceptConnect(tDelegator.mSideOfTileEntity, ((ITileEntityCoverable)tDelegator.mTileEntity).getCoverData())) return F;\n\t\t\tif (SIDES_VALID[tDelegator.mSideOfTileEntity] && UT.Code.haveOneCommonElement(((ITileEntityConnector)tDelegator.mTileEntity).getConnectorTypes(tDelegator.mSideOfTileEntity), getConnectorTypes(aSide))) {\n\t\t\t\tbyte oConnections = mConnections;\n\t\t\t\tmConnections |= SBIT[aSide];\n\t\t\t\tupdateClientData();\n\t\t\t\tcauseBlockUpdate();\n\t\t\t\tonConnectionChange(oConnections);\n\t\t\t\tcheckCoverValidity();\n\t\t\t\tdoEnetUpdate();\n\t\t\t\tif (aNotify) ((ITileEntityConnector)tDelegator.mTileEntity).connect(tDelegator.mSideOfTileEntity, F);\n\t\t\t\tif (hasMultiBlockMachineRelevantData()) ITileEntityMachineBlockUpdateable.Util.causeMachineUpdate(this, F);\n\t\t\t\treturn T;\n\t\t\t}\n\t\t\tif (this instanceof ITileEntityRedstoneWire) {\n\t\t\t\tbyte oConnections = mConnections;\n\t\t\t\tmConnections |= SBIT[aSide];\n\t\t\t\tupdateClientData();\n\t\t\t\tcauseBlockUpdate();\n\t\t\t\tonConnectionChange(oConnections);\n\t\t\t\tcheckCoverValidity();\n\t\t\t\tdoEnetUpdate();\n\t\t\t\tif (hasMultiBlockMachineRelevantData()) ITileEntityMachineBlockUpdateable.Util.causeMachineUpdate(this, F);\n\t\t\t\treturn T;\n\t\t\t}\n\t\t} else if (WD.air(tDelegator.mWorld, tDelegator.mX, tDelegator.mY, tDelegator.mZ) || WD.liquid(tDelegator.mWorld, tDelegator.mX, tDelegator.mY, tDelegator.mZ) || canConnect(aSide, tDelegator)) {\n\t\t\tbyte oConnections = mConnections;\n\t\t\tmConnections |= SBIT[aSide];\n\t\t\tupdateClientData();\n\t\t\tcauseBlockUpdate();\n\t\t\tonConnectionChange(oConnections);\n\t\t\tcheckCoverValidity();\n\t\t\tdoEnetUpdate();\n\t\t\tif (hasMultiBlockMachineRelevantData()) ITileEntityMachineBlockUpdateable.Util.causeMachineUpdate(this, F);\n\t\t\treturn T;\n\t\t}\n\t\treturn connected(aSide);\n\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/TileEntityBase10ConnectorRendered.java",
+      "start_line": 159,
+      "end_line": 186,
+      "excerpt_sha256": "d48e2df336e03f5c5d34c5229ba0da7d7e67e8f0a694a3008052c013dba33640",
+      "text": "\tpublic boolean applyFoam(byte aSide, Entity aPlayer, short[] aCFoamRGB, byte aVanillaColor, boolean aOwned) {\n\t\tif (mDiameter >= 1.0F || mFoam || mFoamDried || isClientSide() || !allowInteraction(aPlayer)) return F;\n\t\tmFoam = T; mFoamDried = F; mIsPainted = T; mOwnable = aOwned;\n\t\tif (mOwnable && aPlayer != null && !OWNERSHIP_RESET) mOwner = aPlayer.getUniqueID();\n\t\tmRGBa = UT.Code.getRGBInt(aCFoamRGB);\n\t\tupdateClientData();\n\t\treturn T;\n\t}\n\t\n\t@Override\n\tpublic boolean dryFoam(byte aSide, Entity aPlayer) {\n\t\tif (!mFoam || mFoamDried || isClientSide()) return F;\n\t\tmFoam = T; mFoamDried = T;\n\t\tupdateClientData();\n\t\treturn T;\n\t}\n\t\n\t@Override\n\tpublic boolean removeFoam(byte aSide, Entity aPlayer) {\n\t\tif (!mFoam || !mFoamDried || isClientSide() || !allowInteraction(aPlayer)) return F;\n\t\tmFoam = F; mFoamDried = F; mOwnable = F; mOwner = null;\n\t\tunpaint();\n\t\tupdateClientData();\n\t\treturn T;\n\t}\n\t\n\t@Override public float getExplosionResistance2() {return Math.max(mFoam ? (mFoamDried?BlocksGT.CFoam:BlocksGT.CFoamFresh).getExplosionResistance(null) : 0, super.getExplosionResistance2());}\n\t"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/MultiTileEntityWireRedstoneInsulated.java",
+      "start_line": 184,
+      "end_line": 185,
+      "excerpt_sha256": "62dad5b2f06bac5eade0552ccdeeda22a9f35e68a91e95d66ce67a49902f2cc9",
+      "text": "\t@Override public ITexture getTextureSide                (byte aSide, byte aConnections, float aDiameter, int aRenderPass) {return BlockTextureDefault.get(Textures.BlockIcons.INSULATION_FULL, isPainted()?mRGBa:UT.Code.getRGBInt(96, 64, 64));}\n\t@Override public ITexture getTextureConnected           (byte aSide, byte aConnections, float aDiameter, int aRenderPass) {return BlockTextureMulti.get(BlockTextureDefault.get(mMaterial, getIconIndexConnected(aSide, aConnections, aDiameter, aRenderPass), mIsGlowing), BlockTextureDefault.get(aDiameter<0.37F?Textures.BlockIcons.INSULATION_TINY:aDiameter<0.49F?Textures.BlockIcons.INSULATION_SMALL:aDiameter<0.74F?Textures.BlockIcons.INSULATION_MEDIUM:aDiameter<0.99F?Textures.BlockIcons.INSULATION_LARGE:Textures.BlockIcons.INSULATION_HUGE, isPainted()?mRGBa:UT.Code.getRGBInt(96, 64, 64)));}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/MultiTileEntityWireRedstone.java",
+      "start_line": 35,
+      "end_line": 37,
+      "excerpt_sha256": "752694c339af632e31ed1000cc2afc60c759f37e1821fd77d6152a5d7a7689ef",
+      "text": "public class MultiTileEntityWireRedstone extends MultiTileEntityWireRedstoneInsulated implements IMTE_GetLightValue {\n\tpublic byte mState = 0;\n\t"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/AbstractCoverAttachmentTorch.java",
+      "start_line": 34,
+      "end_line": 44,
+      "excerpt_sha256": "6836f9c6850606fd41a82825611fa3a4c34eceb2c04f198b13667f76bdf605ed",
+      "text": "public abstract class AbstractCoverAttachmentTorch extends AbstractCoverAttachment {\n\t@Override public boolean interceptCoverPlacement(byte aCoverSide, CoverData aData, Entity aPlayer) {return !(aData.mTileEntity instanceof MultiTileEntityWireRedstoneInsulated);}\n\t@Override public boolean interceptConnect(byte aCoverSide, CoverData aData) {return T;}\n\t\n\t@Override\n\tpublic void onCoverPlaced(byte aSide, CoverData aData, Entity aPlayer, ItemStack aCover) {\n\t\tif (((MultiTileEntityWireRedstoneInsulated)aData.mTileEntity).connected(aSide)) ((MultiTileEntityWireRedstoneInsulated)aData.mTileEntity).disconnect(aSide, T);\n\t\tif (aPlayer != null) UT.Sounds.send(SFX.MC_DIG_WOOD, 1.0F, -1.0F, aData.mTileEntity);\n\t}\n\t\n\t@Override"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/CoverRedstoneTorch.java",
+      "start_line": 30,
+      "end_line": 31,
+      "excerpt_sha256": "82076259059bf50f3c3727c23da7946222970219b3a21a371178ac4ea4d76df5",
+      "text": "public class CoverRedstoneTorch extends AbstractCoverAttachmentTorch {\n\t@Override public ITexture getCoverTextureSurface(byte aSide, CoverData aData) {return aData.mVisuals[aSide] == 0 ? sTextureFrontON : sTextureFrontOFF;}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/CoverRedstoneRepeater.java",
+      "start_line": 30,
+      "end_line": 31,
+      "excerpt_sha256": "71b75167e30d91ebab554166b974c927d0a4a7a0a19352c52b25547642731a9e",
+      "text": "public class CoverRedstoneRepeater extends AbstractCoverAttachmentTorch {\n\t@Override public ITexture getCoverTextureSurface(byte aSide, CoverData aData) {return aData.mVisuals[aSide] == 0 ? sTextureFrontON : sTextureFrontOFF;}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "start_line": 222,
+      "end_line": 232,
+      "excerpt_sha256": "7163ff202a2a479e88aa95f856775bfd3a5ad4a45a78f0d9ae9334988c5dc782",
+      "text": "\tpublic boolean allowCover(byte aSide, ICover aCover) {\n\t\treturn allowCovers(aSide);\n\t}\n\t\n\tpublic boolean allowCovers(byte aSide) {\n\t\treturn T;\n\t}\n\t\n\tpublic boolean allowCoverHolders(byte aSide) {\n\t\treturn T;\n\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "start_line": 284,
+      "end_line": 307,
+      "excerpt_sha256": "ce456624f7264e5820bf982783ec4fbf20f9fef3f75975a6cb95f4cbfb6bbccb",
+      "text": "\tpublic boolean setCoverItem(byte aSide, ItemStack aStack, Entity aPlayer, boolean aForce, boolean aBlockUpdate) {\n\t\tif (SIDES_INVALID[aSide] || (!allowCovers(aSide) && aStack != null)) return F;\n\t\tif (aStack == null && getCoverItem(aSide) == null) return F;\n\t\t\n\t\tif (mCovers == null) mCovers = CoverRegistry.coverdata(this, null);\n\t\t\n\t\tif (!aForce) {\n\t\t\tif (aStack == null) {\n\t\t\t\tif (mCovers.mBehaviours[aSide] != null && mCovers.mBehaviours[aSide].interceptCoverRemoval(aSide, mCovers, aPlayer)) return !checkIfCoversEmptyAndDeleteIfNeeded();\n\t\t\t} else {\n\t\t\t\tif (mCovers.mBehaviours[aSide] != null) return !checkIfCoversEmptyAndDeleteIfNeeded();\n\t\t\t\tICover tCover = CoverRegistry.get(aStack);\n\t\t\t\tif (tCover == null || !allowCover(aSide, tCover) || tCover.interceptCoverPlacement(aSide, mCovers, aPlayer)) return !checkIfCoversEmptyAndDeleteIfNeeded();\n\t\t\t}\n\t\t}\n\t\t\n\t\tif (mCovers.mBehaviours[aSide] != null) mCovers.mBehaviours[aSide].onCoverRemove(aSide, mCovers, aPlayer);\n\t\t\n\t\tmCovers.set(aSide, aStack);\n\t\t\n\t\tif (mCovers.mBehaviours[aSide] != null) mCovers.mBehaviours[aSide].onCoverPlaced(aSide, mCovers, aPlayer, aStack);\n\t\t\n\t\tif (aBlockUpdate) causeBlockUpdate();\n\t\t"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/energy/WireToolInteractions.java",
+      "start_line": 19,
+      "end_line": 43,
+      "excerpt_sha256": "79fabd6c8119a03f26d76d7fa3ef63d243ec960241781e8704884c47a1ad5517",
+      "text": "    public static boolean use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {\n        var heldTool = player.getItemInHand(hand);\n        if (!NeoToolBindings.isWireCutter(heldTool)) return false;\n        var connectionSide = com.gregtech.gregtech.platform.neoforge.transport.FluidPipeToolInteractions.selectedFace(hit);\n        var neighborPos = pos.relative(connectionSide);\n        if (!player.mayBuild() || !level.mayInteract(player, pos) || !level.hasChunkAt(neighborPos) || !level.mayInteract(player,\n                neighborPos)) return true;\n        if (level.isClientSide) return true;\n        boolean connect = !state.getValue(ElectricWireBlock.propFor(connectionSide));\n        if (!level.setBlockAndUpdate(pos, state.setValue(ElectricWireBlock.propFor(connectionSide), connect))) return true;\n        var neighborState = level.getBlockState(neighborPos);\n        if (state.getBlock() instanceof ElectricWireBlock && neighborState.getBlock() instanceof ElectricWireBlock\n                || state.getBlock() instanceof com.gregtech.gregtech.block.energy.SignalWireBlock\n                && neighborState.getBlock() instanceof com.gregtech.gregtech.block.energy.SignalWireBlock) {\n            level.setBlockAndUpdate(neighborPos, neighborState.setValue(ElectricWireBlock.propFor(connectionSide.getOpposite()), connect));\n            changed(level, neighborPos);\n        }\n        changed(level, pos);\n        level.playSound(null, pos, com.gregtech.gregtech.content.transport.fluid.FluidTransportRegistries.WRENCH.get(),\n                net.minecraft.sounds.SoundSource.BLOCKS, 1F, 1F);\n        NeoToolBindings.damageForUse(heldTool, 1, player);\n        return true;\n    }\n\n    private static void changed(Level level, BlockPos pos) {"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/SignalWireClientSetup.java",
+      "start_line": 20,
+      "end_line": 39,
+      "excerpt_sha256": "c9182a442b6e9e85378ccc6a9f8706a89245dbc07acd2316019bf0eb3035d204",
+      "text": "    private static int color(com.gregtech.gregtech.block.energy.SignalWireBlock block, int layer) {\n        return com.gregtech.gregtech.content.energy.SignalWireColors.tint(block.material(), layer);\n    }\n\n    @SubscribeEvent\n    public static void blocks(RegisterColorHandlersEvent.Block event) {\n        for (var wireEntry : GTSignalWires.all()) {\n            var block = wireEntry.get();\n            event.register((wireState, level, pos, layer) -> color(block, layer), block);\n        }\n    }\n\n    @SubscribeEvent\n    public static void items(RegisterColorHandlersEvent.Item event) {\n        for (var wireEntry : GTSignalWires.all()) {\n            var block = wireEntry.get();\n            event.register(ItemColorARGB.opaque((stack, layer) -> color(block, layer)), block.asItem());\n        }\n    }\n"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/SignalWireClientSetup.java",
+      "start_line": 41,
+      "end_line": 65,
+      "excerpt_sha256": "e19ca44202d26a3105f0dd2de0458f4bb4c8818312f204b975105876ee02d237",
+      "text": "    public static void models(ModelEvent.ModifyBakingResult event) {\n        var models = event.getModels();\n        ItemTransforms fallbackTransforms = ItemTransforms.NO_TRANSFORMS;\n        for (String fallbackPath : new String[]{\"iron_block\", \"stone\", \"dirt\"}) {\n            var model = models.get(ModelResourceLocation.inventory(ResourceLocation.withDefaultNamespace(fallbackPath)));\n            if (model != null && model.isGui3d() && model.getTransforms() != ItemTransforms.NO_TRANSFORMS) {\n                fallbackTransforms = model.getTransforms();\n                break;\n            }\n        }\n        var wireTexture = ResourceLocation.fromNamespaceAndPath(\"gt6ce\", \"block/material_icons/metallic/wire\");\n        var rubberTexture = ResourceLocation.fromNamespaceAndPath(\"gt6ce\", \"block/material_icons/rubber/pipeside\");\n        for (var wireEntry : GTSignalWires.all()) {\n            var block = wireEntry.get();\n            var model = (block.insulated()\n                    ? new PipeWireBakedModel(2, ResourceLocation.fromNamespaceAndPath(\"gt6ce\", \"block/iconsets/insulation_full\"),\n                            1, wireTexture, 0, 1, null)\n                    : new PipeWireBakedModel(1, wireTexture, 0, wireTexture, 0, 0, null)).itemTransforms(fallbackTransforms);\n            var blockId = BuiltInRegistries.BLOCK.getKey(block);\n            for (var wireState : block.getStateDefinition().getPossibleStates()) models.put(BlockModelShaper.stateToModelLocation(blockId, wireState),\n                    model);\n            models.put(ModelResourceLocation.inventory(blockId), model);\n        }\n    }\n}"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "start_line": 116,
+      "end_line": 118,
+      "excerpt_sha256": "34ebb24fa457d1fb9b601b7f8f56d8ae9c69518d4f81ad872962f947b232333c",
+      "text": "            if (entry.get() instanceof net.minecraft.world.item.BlockItem signalItem && signalItem.getBlock() instanceof com.gregtech.gregtech.block.energy.SignalWireBlock wire) {\n                event.register((stack,index)->com.gregtech.gregtech.content.energy.SignalWireColors.tint(wire.material(),index),signalItem);\n            } else if (entry.get() instanceof net.minecraft.world.item.BlockItem zpmItem && zpmItem.getBlock() instanceof com.gregtech.gregtech.block.energy.ZpmModuleBlock) {"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "start_line": 515,
+      "end_line": 519,
+      "excerpt_sha256": "52099c7027ec5e2cc60c94027011773595bb751f562620369b27b155f8a9d7f1",
+      "text": "        com.gregtech.gregtech.registry.GTSignalWires.all().forEach(entry -> {\n            var wire = entry.get();\n            event.register((state, level, pos, tintIndex) -> com.gregtech.gregtech.content.energy.SignalWireColors.tint(wire.material(),tintIndex), wire);\n        });\n        GTWires.all().forEach(entry -> {"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/SignalWireColors.java",
+      "start_line": 9,
+      "end_line": 11,
+      "excerpt_sha256": "bbc2a762dfe0d3e54ead5067048623d7b31f4ba91a503a1c09e9d2daa85a721c",
+      "text": "    public static int tint(GTMaterial material, int layer) {\n        return layer == 0 ? material.getColor() : layer == 1 ? 0x604040 : 0xFFFFFF;\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/GTMaterial.java",
+      "start_line": 112,
+      "end_line": 114,
+      "excerpt_sha256": "758bba064c48be353a518184442df1b97b1d78c68c982451acb9843f2188fe7e",
+      "text": "    public int getColor() {\n        return color;\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/energy/SignalWireBlock.java",
+      "start_line": 72,
+      "end_line": 74,
+      "excerpt_sha256": "77b6f0f15b2762dc27a61753c6ba41dc8e76f9769af39f7243084793463fe0ba",
+      "text": "    public GTMaterial material() {\n        return material;\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/energy/SignalWireBlock.java",
+      "start_line": 167,
+      "end_line": 186,
+      "excerpt_sha256": "81782f81abc1322312d6a034abfe7179b449eee4e85fb7f2ffecd1099bd214e9",
+      "text": "    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState old, boolean moving) {\n        super.onPlace(state, level, pos, old, moving);\n        if (level.isClientSide || old.is(this)) return;\n        var next = state;\n        for (var side : Direction.values()) {\n            var neighbor = pos.relative(side);\n            if (!level.hasChunkAt(neighbor)) continue;\n            if (!com.gregtech.gregtech.content.cover.CoverConnections.canConnect(level, pos, side)) continue;\n            var other = level.getBlockState(neighbor);\n            if (other.getBlock() instanceof SignalWireBlock) {\n                next = next.setValue(ElectricWireBlock.propFor(side), true);\n                level.setBlockAndUpdate(neighbor, other.setValue(ElectricWireBlock.propFor(side.getOpposite()), true));\n            } else if (other.isSignalSource()) {\n                // Conductors such as stone still carry strong power, but only a wire cutter opens that port.\n                next = next.setValue(ElectricWireBlock.propFor(side), true);\n            }\n        }\n        level.setBlockAndUpdate(pos, next);\n    }\n"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/energy/SignalWireBlock.java",
+      "start_line": 268,
+      "end_line": 270,
+      "excerpt_sha256": "9947cf87b1a99f243e1a84f743ecb4f96011a7f5ea3fef1de00d7d746bc0e61d",
+      "text": "    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {\n        return getShape(state, level, pos, CollisionContext.empty());\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/energy/SignalWireBlock.java",
+      "start_line": 118,
+      "end_line": 119,
+      "excerpt_sha256": "0ffa9e9a2a76b3b80e4473977562ec31a14ee437cbe5c0fa93292e8330d00456",
+      "text": "        if (com.gregtech.gregtech.platform.neoforge.energy.WireToolInteractions.use(state, level, pos, player, hand,\n                hit)) return InteractionResult.sidedSuccess(level.isClientSide);"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/energy/SignalWireBlock.java",
+      "start_line": 129,
+      "end_line": 130,
+      "excerpt_sha256": "7b74471d92036edd151cfd43b79f47546066ee7cada032910a9416c9b14a7913",
+      "text": "        if (ToolInteractions.use(state, level, pos, player, hand, hit)) return InteractionResult.sidedSuccess(level.isClientSide);\n        if (GTToolHelper.isScrewdriver(player.getItemInHand(hand))) {"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/PipeWireBakedModel.java",
+      "start_line": 196,
+      "end_line": 224,
+      "excerpt_sha256": "fb79a455d424e476258ef980fd440cdcf74c3d9cd4c458ddf34dd3ce65a510a4",
+      "text": "    private void capFace(List<BakedQuad> out, Direction dir, double[] box) {\n        if (capRing <= 0) {\n            face(out, dir, box, endTex, endTint);\n            return;\n        }\n        int a1, a2; // cross-section axis indices into the box array (0=x,1=y,2=z)\n        switch (dir.getAxis()) {\n            case X -> { a1 = 1; a2 = 2; }\n            case Y -> { a1 = 0; a2 = 2; }\n            default -> { a1 = 0; a2 = 1; }\n        }\n        double lo1 = box[a1], hi1 = box[a1 + 3], lo2 = box[a2], hi2 = box[a2 + 3];\n        double r = Math.min(capRing, Math.min(hi1 - lo1, hi2 - lo2) / 2.0);\n        if (r <= 0) {\n            face(out, dir, box, endTex, endTint);\n            return;\n        }\n        face(out, dir, sub(box, a1, lo1 + r, hi1 - r, a2, lo2 + r, hi2 - r), endTex, endTint);\n        face(out, dir, sub(box, a1, lo1, lo1 + r, a2, lo2, hi2), sideTex, sideTint);\n        face(out, dir, sub(box, a1, hi1 - r, hi1, a2, lo2, hi2), sideTex, sideTint);\n        face(out, dir, sub(box, a1, lo1 + r, hi1 - r, a2, lo2, lo2 + r), sideTex, sideTint);\n        face(out, dir, sub(box, a1, lo1 + r, hi1 - r, a2, hi2 - r, hi2), sideTex, sideTint);\n    }\n\n    private static double[] sub(double[] box, int a1, double lo1, double hi1,\n                                int a2, double lo2, double hi2) {\n        double[] b = box.clone();\n        b[a1] = lo1;\n        b[a1 + 3] = hi1;"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockPaintColorMixin.java",
+      "start_line": 17,
+      "end_line": 22,
+      "excerpt_sha256": "e8263a95d169360ebc41d4f74e3b0fb49f9f48631fb4d931510c2f16e272244d",
+      "text": "    private void gregtech$paint(BlockState state, BlockAndTintGetter level, BlockPos pos, int tint, CallbackInfoReturnable<Integer> callback) {\n        if (tint == 0 && level != null && pos != null && level.getBlockEntity(pos) instanceof Paintable paint\n                && paint.isPainted())\n            callback.setReturnValue(paint.getPaint());\n    }\n}"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/ItemPaintColorMixin.java",
+      "start_line": 17,
+      "end_line": 20,
+      "excerpt_sha256": "a8c720928a4a744498ae3e2ed63e549db5d2dbeb3b40b0f2ebb6eb416c71448e",
+      "text": "        if (tint != 0 || !(stack.getItem() instanceof BlockItem)) return;\n        CompoundTag data = stack.getOrDefault(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,\n                net.minecraft.world.item.component.CustomData.EMPTY).copyTag();\n        if (data != null && data.getBoolean(\"gt.painted\")) callback.setReturnValue(data.getInt(\"gt.color\") & 0xFFFFFF);"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/ItemPaintColorMixin.java",
+      "start_line": 24,
+      "end_line": 27,
+      "excerpt_sha256": "1354c6ceea71c6d886a32636cf007436e9ab7be18dd8374fdcd144732c22e140",
+      "text": "        if (tint != 0 || !(stack.getItem() instanceof BlockItem)) return;\n        CompoundTag data = stack.getTagElement(\"BlockEntityTag\");\n        if (data != null && data.getBoolean(\"gt.painted\")) callback.setReturnValue(data.getInt(\"gt.color\") & 0xFFFFFF);\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockEntityPaintMixin.java",
+      "start_line": 51,
+      "end_line": 55,
+      "excerpt_sha256": "45e3da902c84940dec5921ab132c96952473ecfac4bca7d63037058d4d9cda19",
+      "text": "    public boolean paint(int rgb) {\n        if (!gregtech$own() || !gregtech$paint.paint(rgb)) return false;\n        gregtech$changed();\n        return true;\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/tool/PaintTargets.java",
+      "start_line": 62,
+      "end_line": 66,
+      "excerpt_sha256": "294cc68fc0ec07ba948645e70e6ef84e344be7bcb2a530b34615a228790d56ed",
+      "text": "        if (level.getBlockEntity(pos) instanceof Paintable target) {\n            boolean changed = target.isPainted() ? target.mixPaint(PaintingRules.DYES.get(index).rgb())\n                    : target.paint(PaintingRules.DYES.get(index).rgb());\n            return changed ? PaintingRules.BLOCK_COST : 0;\n        }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverConnections.java",
+      "start_line": 12,
+      "end_line": 31,
+      "excerpt_sha256": "b403367f5671fd14d334acbc6557ef218434e53c36a967e52fd4ba4b23b170b9",
+      "text": "    public static boolean blocks(PanelCoverHost host, Direction side) {\n        var cover = host.getCover(side);\n        if (cover.isEmpty()) return false;\n        var id = CoverItems.behavior(cover);\n        if (host.panels().shuttered(side)) return true;\n        if (CoverItems.REDSTONE_TORCH.equals(id) || CoverItems.REDSTONE_REPEATER.equals(id)) return true;\n        var owner = host.coverOwner();\n        var level = owner.getLevel();\n        return CoverUtilityBehaviors.FILTER_ITEM.equals(id)\n                && owner instanceof com.gregtech.gregtech.blockentity.machine.ItemPipeBlockEntity\n                && level != null\n                && level.getBlockEntity(owner.getBlockPos().relative(side)) instanceof com.gregtech.gregtech.blockentity.machine.ItemPipeBlockEntity;\n    }\n\n    public static boolean canConnect(Level level, BlockPos pos, Direction side) {\n        return !(level.getBlockEntity(pos) instanceof PanelCoverHost host && blocks(host, side))\n                && !(level.getBlockEntity(pos.relative(side)) instanceof PanelCoverHost other && blocks(other, side.getOpposite()));\n    }\n\n    private static net.minecraft.world.level.block.state.properties.BooleanProperty property(BlockState state, Direction side) {"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverConnections.java",
+      "start_line": 55,
+      "end_line": 60,
+      "excerpt_sha256": "877a684d8ba5db1526a0bd76e4f916ee95e768d9f41dd78c91fb71fb3c84a6a1",
+      "text": "    public static void attached(PanelCoverHost host, Direction side) {\n        var id = CoverItems.behavior(host.getCover(side));\n        if (PanelCover.of(host.getCover(side)) == PanelCover.SHUTTER)\n            update(host, side, !host.panels().shuttered(side));\n        else if (CoverItems.REDSTONE_TORCH.equals(id) || CoverItems.REDSTONE_REPEATER.equals(id)\n                || CoverUtilityBehaviors.FILTER_ITEM.equals(id) && blocks(host, side)) update(host, side, false);"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractions.java",
+      "start_line": 39,
+      "end_line": 39,
+      "excerpt_sha256": "0b2a82f1ae7c45057c9b3dfc821cec0088210231baf13f4dd9208db577b8f9bf",
+      "text": "        if(!state.getValue(spec.connection().property(side))&&!com.gregtech.gregtech.content.cover.CoverConnections.canConnect(level,pos,side))return false;"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "start_line": 40,
+      "end_line": 56,
+      "excerpt_sha256": "fd9ee9be811ffe7fa5db10cec0b8902cec2850207602fffdce9e3ab329f93848",
+      "text": "    public boolean canAttach(Direction side,ItemStack stack){\n        if(!ComponentCoverRuntime.canAttach(host,side,stack))return false;\n        if(host.coverOwner() instanceof com.gregtech.gregtech.content.logistics.LogisticsCoverHost logistics&&!logistics.logisticsCovers().get(side).isEmpty())return false;\n        // GT6 logistics covers only attach to ITileEntityLogistics; ordinary machines and pipes\n        // must not accept them merely because they are registered cover items.\n        if(com.gregtech.gregtech.content.logistics.LogisticsCoverType.of(stack)!=null)\n            return host.coverOwner() instanceof com.gregtech.gregtech.content.logistics.LogisticsHost logistics\n                    && logistics.canLogistics(null);\n        var id=CoverItems.behavior(stack);\n        var candidateControl=control(side);\n        if(CoverItems.TAG_SELECTOR.equals(id))return candidateControl!=null&&candidateControl.supportsMode();\n        if(CoverItems.REDSTONE_TORCH.equals(id)||CoverItems.REDSTONE_REPEATER.equals(id))return host.coverOwner() instanceof com.gregtech.gregtech.blockentity.energy.SignalWireBlockEntity&&host.coverOwner().getBlockState().getBlock() instanceof com.gregtech.gregtech.block.energy.SignalWireBlock wire&&wire.insulated();\n        if(CoverAttachmentBehaviors.DRAIN.equals(id)||CoverAttachmentBehaviors.AIR_VENT.equals(id))return host.componentTicks()&&host.componentFluids(side)!=null&&host.componentFluids(side).getTanks()>0;\n        if(CoverUtilityBehaviors.FILTER_ITEM.equals(id)){\n            var owner=host.coverOwner();var level=owner.getLevel();\n            return host.componentItems(side)!=null&&!(owner instanceof com.gregtech.gregtech.blockentity.machine.ItemPipeBlockEntity&&level!=null&&level.getBlockEntity(owner.getBlockPos().relative(side)) instanceof com.gregtech.gregtech.blockentity.machine.ItemPipeBlockEntity);\n        }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverStorage.java",
+      "start_line": 52,
+      "end_line": 62,
+      "excerpt_sha256": "736dde409ba38d371316b624d5d484476971930772fa91cea6d8e93e5ee4d25c",
+      "text": "    public boolean attach(Direction side, ItemStack stack) {\n        if (stack.isEmpty() || !get(side).isEmpty() || !panels.canAttach(side,stack)\n                || !CoverItems.isCover(stack)) return false;\n        if (covers == null) {\n            covers = new ItemStack[6];\n            java.util.Arrays.fill(covers, ItemStack.EMPTY);\n        }\n        covers[side.ordinal()] = stack.copyWithCount(1);\n        panels.attached(side);\n        return true;\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "start_line": 61,
+      "end_line": 67,
+      "excerpt_sha256": "7e7f6f54cbe805dc89f91a847f7617a0f7e1e2b75efb5166dc45aac78c7affcf",
+      "text": "    public static boolean eligible(BlockEntity owner){\n        if(!ownClass(owner)||owner.getLevel()==null||owner.isRemoved())return false;\n        // Loose material piles use plates as contents, not as machine covers.\n        if(owner instanceof com.gregtech.gregtech.blockentity.misc.PileBlockEntity)return false;\n        // The active fallback service provides cover ticks even for otherwise passive GT storage.\n        return owner.getBlockState().getBlock() instanceof net.minecraft.world.level.block.EntityBlock;\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java",
+      "start_line": 65,
+      "end_line": 79,
+      "excerpt_sha256": "e366e49f408b48b0c916655393f7dc5f516a347d5f2494e8dbefae53d74adedc",
+      "text": "        var result = host instanceof com.gregtech.gregtech.content.logistics.LogisticsCoverHost logistics\n                ? com.gregtech.gregtech.content.logistics.LogisticsCoverInteraction.use(logistics,\n                        event.getLevel(), event.getEntity(), event.getHand(), hit.getDirection())\n                : InteractionResult.PASS;\n        if (result == InteractionResult.PASS)\n            result = ComponentCoverInteraction.use(host, event.getEntity(), event.getHand(), hit);\n        if (result == InteractionResult.PASS)\n            result = UtilityCoverInteraction.use(host, event.getEntity(), event.getHand(), hit);\n        if (result == InteractionResult.PASS)\n            result = PanelCoverInteraction.use(host, event.getEntity(), event.getHand(), hit, true);\n        if (result != InteractionResult.PASS) {\n            event.setCanceled(true);\n            event.setCancellationResult(result);\n        }\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "start_line": 259,
+      "end_line": 269,
+      "excerpt_sha256": "a0801bca52b6c58333bc06665fe4e27e06446e23635d64907de84597c079a65d",
+      "text": "    public boolean configure(Direction side,boolean cutter,boolean chisel){\n        var stack=host.getCover(side);var panel=PanelCover.of(stack);\n        var spec=MachineCoverSpec.of(stack);\n        if(panel==null){\n            if(spec==null||chisel||(cutter?!spec.detector():!spec.invertible()))return false;\n            if(server()){CoverStackData.putBoolean(stack,cutter?\"gt.cover.strong\":\"gt.cover.inverted\",!(cutter?MachineCoverSpec.strong(stack):MachineCoverSpec.inverted(stack)));changed();afterTick();}\n            return true;\n        }\n        if(chisel&&panel!=PanelCover.BUTTONS&&panel!=PanelCover.STATUS)return false;\n        if(!chisel&&(cutter?!panel.strongConfig():!panel.invertible()&&panel!=PanelCover.BUTTONS))return false;\n        if(!server())return true;"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/PipeWireClientModels.java",
+      "start_line": 113,
+      "end_line": 118,
+      "excerpt_sha256": "0803d84f42712f84c1218328ddfb3b982bc69c6658bb71c1db5ffa0b794d05ed",
+      "text": "        for (var entry : com.gregtech.gregtech.registry.GTSignalWires.all()) {\n            var block = entry.get();\n            replaced += replace(models, block, block.insulated()\n                    ? new PipeWireBakedModel(2, GregTech.id(\"block/iconsets/insulation_full\"), 1, WIRE_TEX, 0, 1, null)\n                    : new PipeWireBakedModel(1, WIRE_TEX, 0, WIRE_TEX, 0, 0, null));\n        }"
+    }
+  ],
+  "source_scope": "Named contracts and consumers, not full-file or full-system acceptance.",
+  "formal_findings_added": [
+    416,
+    417,
+    418,
+    419
+  ],
+  "formal_findings_extended": [
+    78
+  ],
+  "source_witnesses": {
+    "paint": "Painted insulated wire: original outer color becomes paint and core remains material; current outer tint1 remains 0x604040 and general paint hook replaces tint0 core.",
+    "placement": "Place onto a support from above, with an already placed, horizontally adjacent compatible wire whose facing port is closed: original skips that non-inward closed side; current opens both ends.",
+    "neoforge_cutter": "Click an empty face toward an adjacent insulated wire whose opposite face carries a torch/repeater cover, with both ports closed and loaded/permission checks passing. Neighbor gate is checked by original and Forge path, omitted by Neo WireToolInteractions. Cover on the neighbor avoids conflating local cover-tool configuration.",
+    "bare_cover_eligibility": "Bare class inherits MultiTileEntityWireRedstoneInsulated, accepted by original AbstractCoverAttachmentTorch; current PanelCoverRuntime explicitly requires wire.insulated()."
+  },
+  "excluded_false_positives": [
+    "Default unpainted 0x604040 insulation color matches original RGB(96,64,64).",
+    "Actual baked models expose core tint0 and insulation tint1; static item models alone are not the final model evidence.",
+    "SignalWireBlock.getCollisionShape explicitly supplies CollisionContext.empty(), so merely holding a cutter does not make its physical collision a full cube.",
+    "The foam gap extends existing ALIGN-078 to redstone wires; it is not a new claim that standalone foam or all spray tools are absent."
+  ],
+  "refactoring": {
+    "baseline": "eeb0ec7698f925b3cd81204e1a4ec252624af1be",
+    "files": {
+      "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/energy/WireToolInteractions.java": {
+        "before_raw_sha256": "5a9a85a01b36c38a04e441a7f192c2524b18b60295a6e1fb1cc82a530eb525da",
+        "after_raw_sha256": "d69a13cfcf1c72ffaa1c1f8f0d387d5797cf0ab5277e15f0ba3671418c774eca",
+        "before_lines": 27,
+        "after_lines": 46,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "neoforge",
+            "tokens": 497,
+            "execution_sha256": "62a620e4703987eaaadd046eefd4b4242b13c75c4b61e350b67f70d4bac7392c",
+            "literal_positions_sha256": "5b4546b771c5966692db1fbf12262f7eafd198035cefd6c9911208b62cd80bfc",
+            "literal_count": 3
+          }
+        ]
+      },
+      "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/SignalWireClientSetup.java": {
+        "before_raw_sha256": "d2bc186e52f38553d5169eb1bfaf64d99301b40f3c2c5ecd5e1164fa783c4c66",
+        "after_raw_sha256": "a05dd0bcb0590a875215900765debbe8dcbc6dd377af8769a7095529ff1ba921",
+        "before_lines": 27,
+        "after_lines": 65,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "neoforge",
+            "tokens": 609,
+            "execution_sha256": "5fd8a3f0499740ca6477039150f46998d6985b06ec02816331eef4b49f9f7a6f",
+            "literal_positions_sha256": "2dfd7cfa85c006a1b8f9f22540b09c36d0869b23f27e23239424c3b45948d4b5",
+            "literal_count": 17
+          }
+        ]
+      },
+      "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java": {
+        "before_raw_sha256": "4f62bc352b16e6e4395538d1ef36cbcb395265ef5c3887ca6fd2c705fdce682f",
+        "after_raw_sha256": "ac446d756cf728ebe44289567abf894de8f10fdfe8ad383630d2239319957c01",
+        "before_lines": 823,
+        "after_lines": 823,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 11638,
+            "execution_sha256": "f21d40387080ac9cf10519d89e88bfda577b44f0cc15163406ff4ae7e8fc4084",
+            "literal_positions_sha256": "20b3014b6c3223c0f2ad30d144a9d7ccb8cd4b220a38a85a72bf892d375f5a47",
+            "literal_count": 287
+          }
+        ]
+      }
+    },
+    "controlled_identifier_renames": {
+      "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/energy/WireToolInteractions.java": {
+        "mapping": {
+          "held": "heldTool",
+          "side": "connectionSide",
+          "neighbor": "neighborPos",
+          "other": "neighborState",
+          "wire": "electricWireEntity"
+        },
+        "occurrences": {
+          "held": 3,
+          "side": 5,
+          "neighbor": 6,
+          "other": 4,
+          "wire": 2
+        },
+        "collision_guards": "pass"
+      },
+      "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/SignalWireClientSetup.java": {
+        "mapping": {
+          "transforms": "fallbackTransforms",
+          "wire": "wireTexture",
+          "rubber": "rubberTexture",
+          "key": "blockId",
+          "path": "fallbackPath",
+          "entry": "wireEntry",
+          "state": "wireState"
+        },
+        "occurrences": {
+          "transforms": 3,
+          "wire": 4,
+          "rubber": 1,
+          "key": 3,
+          "path": 2,
+          "entry": 6,
+          "state": 3
+        },
+        "collision_guards": "pass"
+      }
+    },
+    "three_tint_extractions": [
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/SignalWireClientSetup.java",
+        "before": "return layer==0?block.material().getColor():layer==1?0x604040:0xFFFFFF;",
+        "after": "return com.gregtech.gregtech.content.energy.SignalWireColors.tint(block.material(),layer);"
+      },
+      {
+        "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+        "before": "index==0?wire.material().getColor():index==1?0x604040:0xFFFFFF",
+        "after": "com.gregtech.gregtech.content.energy.SignalWireColors.tint(wire.material(),index)"
+      },
+      {
+        "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+        "before": "tintIndex == 0 ? wire.material().getColor()\n                    : tintIndex == 1 ? 0x604040 : 0xFFFFFF",
+        "after": "com.gregtech.gregtech.content.energy.SignalWireColors.tint(wire.material(),tintIndex)"
+      }
+    ],
+    "new_core_helper": {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/SignalWireColors.java",
+      "raw_sha256": "20c5b7ca408c46dc66cc549a3d9afb8c380c24ce4ca56acc1253e2652cf769a4",
+      "complete_expected_tokens_sha256": "7262e6e70ccae2e07363b407791c19282af03e9e9e8d52badfd0d58fa04c75c2",
+      "domain": "Same ternary with lazy material.getColor only for layer0, no new paint/alpha behavior. Native material() is a side-effect-free field getter."
+    }
+  },
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "compile": {
+    "result": "Both platform compileJava and core compileJava passed",
+    "duration_reported": "26s",
+    "log": "work/signal-wire-client-audit-20261022/compile.log",
+    "log_sha256": "28559dc1289bf02dbc975e61d67f7d4f7232664d9302b7b0870f4290dcaf90ca",
+    "includes_previous_batch_120": true,
+    "temporary_adapter_path": "work/storage-inserter-audit-20261022/cached-api-classpath.gradle",
+    "temporary_adapter_sha256": "51a1ed5becc4b14c87f6eeef31d2c8fc984e02735ee630b3c292496c2798cdbe",
+    "cached_forge_artifacts": [
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/mezz/jei/jei-1.20.1-common-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-common-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/mezz/jei/jei-1.20.1-common-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-common-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "sha256": "7786d88e4ffd38f62d057b86eb56aa6a116037f2a4dbccb0aa77877b7dc8f4fd",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/mezz/jei/jei-1.20.1-forge-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-forge-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/mezz/jei/jei-1.20.1-forge-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-forge-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "sha256": "b50a6a64c629e51346deec045495ba932be2bcab4ffb5a46fe483df1e06c832a",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1-api.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1-api.jar",
+        "sha256": "268f4572a6297bcd38c176e9361ee245364bb255e1a74e0fec96a973ef1379c0",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1.jar",
+        "sha256": "a2df46e253e208d39576808509eb384b42d992ba77d1c3aec31b97611be6e64b",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/maven/modrinth/jade/11.13.2+forge_mapped_official_1.20.1/jade-11.13.2+forge_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/maven/modrinth/jade/11.13.2+forge_mapped_official_1.20.1/jade-11.13.2+forge_mapped_official_1.20.1.jar",
+        "sha256": "15030cb00590540a5a37bd6bd509df4c01116406dd7c1a760b55e81f83f2bd62",
+        "action": "copied existing exact-coordinate jar"
+      }
+    ],
+    "cached_neo_emi_api": {
+      "path": "C:/Dev/GregTech6/work/emi-maven/dev/emi/emi-neoforge/1.1.24+1.21.1/emi-neoforge-1.1.24+1.21.1-api.jar",
+      "sha256": "b3a8e23c5e59813f184423b94e37bb635867ddc9be2b68b3502fad7b9134779b"
+    },
+    "first_pass": {
+      "duration_reported": "1m 19s",
+      "log": "work/signal-wire-client-audit-20261022/compile-first.log",
+      "log_sha256": "c6fafd99f1a1a7b509f8ecd975f93f4065c3473450709d43b0c5b46fa3cbc2c9",
+      "reason_for_final_incremental_compile": "Preserve lazy material.getColor evaluation only for layer0, including nullable material for unrelated layers."
+    },
+    "limits": "Same-version local API file adapter reused unchanged; default offline metadata resolution/CI are not declared fixed. Production Gradle configuration unchanged."
+  },
+  "preparation_notes": [
+    "Global state/model names can also name import package segments; collision guards rejected preview-only mappings before any production write.",
+    "Proposed itemTransforms local collided with an existing method name; conservative guard caused a clearer fallbackTransforms name to be selected.",
+    "A cap-ring source query assumed the positive branch spelling; actual implementation uses capRing <= 0 and was read directly.",
+    "Several guessed source paths were absent; subsequent searches used actual file inventory, with no edits to those paths.",
+    "The first documentation patch used an inexact historical ALIGN-078 sentence and was rejected atomically; the actual row was read and a corrected patch applied.",
+    "A broad documentation count replacement affected eight historical sentences; exact HEAD lines were restored. Final checks require all unrelated historical lines unchanged."
+  ],
+  "verification_limits": {
+    "numeric_probe_added": false,
+    "GameTest": false,
+    "game": false,
+    "original_1710_game": false,
+    "world_restart": false,
+    "build": false,
+    "push": false,
+    "github_writes": false,
+    "whole_goal_complete": false
+  },
+  "root_revalidation": {
+    "current_original_and_resource_hashes": "match",
+    "excerpts": "match 38 exact current spans",
+    "refactoring": "three complete current native platform flows and helper match controlled normalization",
+    "lazy_material_color": "helper evaluates getColor only on layer0; native material() is direct field read",
+    "compile_logs_and_api_inputs": "match final 26s pass plus initial 79s pass",
+    "protected_materials": "unchanged",
+    "historical_docs": "all old lines unchanged except explicit ALIGN-078 extension",
+    "formal_ids": {
+      "contiguous": true,
+      "count": 419
+    },
+    "new_links": "resolve",
+    "production_build_configuration": "unchanged",
+    "whole_goal_complete": false
+  }
+}

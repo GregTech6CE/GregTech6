@@ -1,0 +1,811 @@
+{
+  "date": "2026-10-22",
+  "batch": 127,
+  "baseline": "9a3725f07896a637f71f3fe4cb3e8c0c315a6904",
+  "previous_goal_turn": {
+    "classification": "progress",
+    "commit": "9a3725f07",
+    "evidence": "Remote wrapper moved to shared source; 425/426 and bounded sound/localization additions committed."
+  },
+  "provenance": {
+    "original_tree_read_only": true,
+    "authors": "GregTech-6 Team / Gregorius Techneticies",
+    "license": "Original LGPL notices retained; native event bytecode only inspected."
+  },
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/MultiItemRandomTools.java",
+      "raw_sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+      "lines": 723,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/behaviors/Behavior_Tool.java",
+      "raw_sha256": "f41879dadcb2b4cf8b55c1156b903fc6e00e5dbb9644b1158869849be4b48daf",
+      "lines": 80,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/MultiTileEntityWireElectric.java",
+      "raw_sha256": "60dd3bf9147a220ab327a1aed3f0081382678eb0d6190e865e84e1b7dae89724",
+      "lines": 248,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/MultiTileEntityAxle.java",
+      "raw_sha256": "033cbb9dc03d4d2471cdcb544ac9c566337acf393f79c8e4cfc97eb3dac790f7",
+      "lines": 179,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/transformers/MultiTileEntityGearBox.java",
+      "raw_sha256": "8196babc3f0682d441cfbbdd3461cb55a6a10629709acef6bf869dac83cee5a6",
+      "lines": 441,
+      "notice_sha256": "6855675ee4a01a21169dd2a3ed5df729ac3198a4b2e3b869f91e1a45c79e6aca"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore.java",
+      "raw_sha256": "bd32b8373bbfd40fb447cb4ccc14ac5e2f737ae6a31ffc6635610d2ad6acc545",
+      "lines": 323,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore1x1.java",
+      "raw_sha256": "06614619f47aef22f7eefda3a5851b55869c3cbc8462f45bf3165fa3dbdbc779",
+      "lines": 356,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore2x2.java",
+      "raw_sha256": "0ae845889da1b5aa793c23bd5171a864c2f8c56e82efdadb94af5f880e358182",
+      "lines": 418,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java",
+      "raw_sha256": "b952ae9a57620fe446d404c106f7d04f1f569026bcaa04382add77ef99eb8e0c",
+      "lines": 141
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorInteraction.java",
+      "raw_sha256": "bbc9fce2dff2ddd9511ee5946128a887889f4fa4b6e18bdc4efb2fdde3278678",
+      "lines": 51
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorThermometer.java",
+      "raw_sha256": "21579a71feac4105d8c6c3e831991aed3eaa8935d950378184f57c5e28680823",
+      "lines": 49
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "raw_sha256": "aab379aa689ef4f83c62746d22ccca6bc511c6b323ca11e026ab6f215d1abff4",
+      "lines": 224
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/TechItem.java",
+      "raw_sha256": "16d7936a79b171cc6abefe40851d269d2c1d84b4ee397671eda069f684914f59",
+      "lines": 68
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "raw_sha256": "5988d830de0b678a5f35bb94e7d3cdb699c3bc84d22ef72bb6130f5839b5bd70",
+      "lines": 710
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolType.java",
+      "raw_sha256": "ab47b360347c3d19eac78c79cafd93415a44f3aa107e90b25df074ee99fe9457",
+      "lines": 93
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/GeigerCounterItem.java",
+      "raw_sha256": "d0957c285fa0970c1851741a2a45ef74e0e5ee028ee5aefd09cb4d5978f10620",
+      "lines": 30
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCoreBlockEntity.java",
+      "raw_sha256": "ef616196f083d493deca21f66563494540f49dba01e98fceeb9c72f094b0c44b",
+      "lines": 560
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorCoreBlock.java",
+      "raw_sha256": "934f3c2bfbaacaf1a61ea4b0f62ad7ff540eed1b534f65392a3957bbe9a25f6a",
+      "lines": 113
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ElectricWireBlockEntity.java",
+      "raw_sha256": "5c54700139f9644ff18b2d2e53b15d29f926c6eb933042b4254e3bf73fa9e1c2",
+      "lines": 335
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/AxleBlockEntity.java",
+      "raw_sha256": "650b38ea96b2f32933401f3f65017de5429bb0f43eb807f1fb9cb1f4e5b18f60",
+      "lines": 389
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/sensor/SensorBlockEntity.java",
+      "raw_sha256": "126d5b9d3026d627a1eb9a523818d1d8749a1e450bddd285a752866848e257ed",
+      "lines": 471
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/tool/ItemBehaviorCatalog.java",
+      "raw_sha256": "54b67d9c4b6cafa554afbe1f0c65c488dcf929c567ff1180603aa37e23b5b396",
+      "lines": 57
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/registry/GTMultiItemsGen.java",
+      "raw_sha256": "d4b794642713c208ad27ccd765a9dd9cbcdb13a7c568aec1e910f7ead3058611",
+      "lines": 1297
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/sensor/SensorCatalog.java",
+      "raw_sha256": "a4f43242d699a34ce417e8eb98e9f5e6d54a39f62f2f8ca89dd5ac63bc665afc",
+      "lines": 39
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/item/MultiBehaviorItem.java",
+      "raw_sha256": "3cbced618e3fd21dc1f7e1ff4b1359b4d444e8f1803762cf4bd479b1e2687dc5",
+      "lines": 66
+    }
+  ],
+  "source_excerpts": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/MultiItemRandomTools.java",
+      "anchor": "IL.Electro_Meter                   .set",
+      "start_line": 531,
+      "end_line": 532,
+      "excerpt_sha256": "6970d28a92fa5562527d146bff9c0a5a68645be38d882e0270d6dc18e125b6da"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/behaviors/Behavior_Tool.java",
+      "anchor": "public boolean onItemUseFirst(",
+      "start_line": 56,
+      "end_line": 68,
+      "excerpt_sha256": "2961479da2adfcd0c97d8cebc26705f1e92930259450f719d278fdb80453e8a9"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/MultiTileEntityWireElectric.java",
+      "anchor": "if (aTool.equals(TOOL_electrometer)",
+      "start_line": 136,
+      "end_line": 140,
+      "excerpt_sha256": "4759c026fb2439abe29641ae651c8399a9c97276be6069d7a651d456e177fad0"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/MultiTileEntityAxle.java",
+      "anchor": "if (aTool.equals(TOOL_tachometer)",
+      "start_line": 82,
+      "end_line": 86,
+      "excerpt_sha256": "02d92da1003f2a92e65b1e0e7cd4f8b50d7354f82505a174efa75ecd3df24840"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/transformers/MultiTileEntityGearBox.java",
+      "anchor": "if (aTool.equals(TOOL_tachometer)",
+      "start_line": 161,
+      "end_line": 165,
+      "excerpt_sha256": "e64042013946f835cbdf16a80dc2198d9526ab7f97ab2016456b4fa1d1c74a1b"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore.java",
+      "anchor": "if (aTool.equals(TOOL_softhammer))",
+      "start_line": 185,
+      "end_line": 196,
+      "excerpt_sha256": "1c33a5d952af1ca50aca7cfc07c1af8d588cb53a2f555c31fe6f5839f6db6fd9"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore.java",
+      "anchor": "boolean setStateOnOff(",
+      "start_line": 317,
+      "end_line": 317,
+      "excerpt_sha256": "e926dc1946dc18d3533b3b1ac0e4aedc0905c34ea7ee51a22acd0c3416db413f"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore1x1.java",
+      "anchor": "if (aTool.equals(TOOL_geigercounter))",
+      "start_line": 241,
+      "end_line": 247,
+      "excerpt_sha256": "a158aa078c1661b2399a3ea6f3190f4b186d620fafb4e2e41ee8849325306436"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore2x2.java",
+      "anchor": "if (aTool.equals(TOOL_geigercounter))",
+      "start_line": 269,
+      "end_line": 275,
+      "excerpt_sha256": "3950b75933ef72fa0ac435941adb9d0c2c963b5db168276c5ebecbe2978444d8"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore1x1.java",
+      "anchor": "long tEnergy = mEnergy;",
+      "start_line": 98,
+      "end_line": 108,
+      "excerpt_sha256": "f26dd2308208727b6435d58cac507686ec7a50c005438d7ca7adc409a7818169"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore1x1.java",
+      "anchor": "oNeutronCounts[0] = mNeutronCounts[0]",
+      "start_line": 84,
+      "end_line": 85,
+      "excerpt_sha256": "b6079f778aefde26280362ec2385d9e5eb254b475a50bb0171c38be0dc5ddda6"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore2x2.java",
+      "anchor": "oEnergy = mEnergy - tEnergy;",
+      "start_line": 126,
+      "end_line": 135,
+      "excerpt_sha256": "5e27fcaad4c48c3eee4f85cf2956bb43987d41c8d066cd39a1517b96e2dfe53e"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/registry/GTMultiItemsGen.java",
+      "anchor": "\"electrometer\", \"Electrometer\"",
+      "start_line": 133,
+      "end_line": 134,
+      "excerpt_sha256": "4c31e877d99916d5a55651cf42a633ce146e631f6c1e3b74de23c1de262e56e0"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/tool/ItemBehaviorCatalog.java",
+      "anchor": "new Entry(\"quicksilver_thermometer\"",
+      "start_line": 17,
+      "end_line": 20,
+      "excerpt_sha256": "a5d4c1a7ea9d5e05acb80246273a82203f8fea5f5d2728e6f28e1b344c96d94f"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "anchor": "BY_ID.put(id,ITEMS.register",
+      "start_line": 26,
+      "end_line": 26,
+      "excerpt_sha256": "5c5e4af75919a9f92ebbf18794172f9323c4c8e8c8bc3d7d0a57f9e0be636d15"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "anchor": "public InteractionResult onItemUseFirst(",
+      "start_line": 79,
+      "end_line": 94,
+      "excerpt_sha256": "bfc29c173248da1e204e56b8bf9858840ce27674a7b9229f82b21781ebd13ce0"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/item/MultiBehaviorItem.java",
+      "anchor": "public InteractionResult onItemUseFirst(",
+      "start_line": 20,
+      "end_line": 35,
+      "excerpt_sha256": "4a12c8b3a8fb1064b3b2f57fd6e4b67e3dc4f3adca76753623293a1facb3869c"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "anchor": "public static Outcome useOn(Level",
+      "start_line": 257,
+      "end_line": 277,
+      "excerpt_sha256": "cb6c387d001372a4147097dbc75ca17eb0dbef011632377400f9e6486d453cd9"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "anchor": "return Outcome.refused(stack);",
+      "start_line": 260,
+      "end_line": 261,
+      "excerpt_sha256": "4bf4bdffa89080577f2d3201f28262dbb98aeafe4c5a56f9ba9bf824532a7722"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolType.java",
+      "anchor": "public enum GTToolType",
+      "start_line": 11,
+      "end_line": 57,
+      "excerpt_sha256": "84542bb0667686944fc95812ba13e91e29ee3b605df8e7e8bc8fd5e06ce6d430"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/GeigerCounterItem.java",
+      "anchor": "public static Component reading(",
+      "start_line": 16,
+      "end_line": 22,
+      "excerpt_sha256": "0a200142014beaf58776daa2a67a05bebecda7fc4fd956f1499c69defefd2613"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCoreBlockEntity.java",
+      "anchor": "public void setStopped(",
+      "start_line": 118,
+      "end_line": 123,
+      "excerpt_sha256": "89912a5b27a32fe542b5f5e9a4b2f31eba446de85d38e9b8ad0b1f894714e0f6"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCoreBlockEntity.java",
+      "anchor": "MachineControls.switchable(this",
+      "start_line": 47,
+      "end_line": 49,
+      "excerpt_sha256": "9ab8abec55ca5b894da9e2880385309cea6360bf2e1bfd7ff09e14a531d0b323"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorInteraction.java",
+      "anchor": "if (GTToolHelper.matchesTool(held, GTToolType.SOFT_HAMMER))",
+      "start_line": 19,
+      "end_line": 22,
+      "excerpt_sha256": "66da0eccf548f015359f0ee6efc9efb82fd42dd0d3a8c0eb8dfe0367edfb8094"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCoreBlockEntity.java",
+      "anchor": "public void react()",
+      "start_line": 152,
+      "end_line": 168,
+      "excerpt_sha256": "683c608036eb05f58c194b3334e546733c0327082d96e0da522e7ca6d22e55ba"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorThermometer.java",
+      "anchor": "blockEntity instanceof ReactorCoreBlockEntity",
+      "start_line": 28,
+      "end_line": 30,
+      "excerpt_sha256": "91f674b3b794e4850b80600d4669fdc318a7b3bcf1f8b672e739cc93bda0fdea"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java",
+      "anchor": "public static void end(LevelTickEvent.Post",
+      "start_line": 46,
+      "end_line": 58,
+      "excerpt_sha256": "554dc0a0ad0af6bcc978147736f82f460846724905015e4eed6c3b937f0bc7b7"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java",
+      "anchor": "private static void finishTick(",
+      "start_line": 58,
+      "end_line": 68,
+      "excerpt_sha256": "276984f73ecb0cd55790b4339caa395fbd750fefc81f9f9fae7cd78a5fbd9bef"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/instrument-dispatch-audit-20261022/forge-LevelTickEvent.javap.txt",
+      "anchor": "final net.minecraft.world.level.Level level;",
+      "start_line": 3,
+      "end_line": 4,
+      "excerpt_sha256": "9c740a19028e2ec7984b59fdd24e03d52ff9144520fdf02f04779d26b76534f2"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/instrument-dispatch-audit-20261022/neo-LevelTickEvent.javap.txt",
+      "anchor": "final net.minecraft.world.level.Level level;",
+      "start_line": 5,
+      "end_line": 6,
+      "excerpt_sha256": "5660d3ef19acc5203afa0e4f835de988619c94f799412b8b5dc5dee2a81c211c"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/instrument-dispatch-audit-20261022/neo-LevelTickEvent.javap.txt",
+      "anchor": "public net.minecraft.world.level.Level getLevel()",
+      "start_line": 26,
+      "end_line": 31,
+      "excerpt_sha256": "1aac33a36ffd28e5c83a055754c2c8251fbf148d8488646faae0f084f1858770"
+    }
+  ],
+  "native_evidence": {
+    "entries": [
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-universal.jar",
+        "artifact_sha256": "3b203ea6105326b8a6d7bea8327c2793dbffbaa8e574c9c6626fe6d787591874",
+        "entry": "net/minecraftforge/event/TickEvent$LevelTickEvent.class",
+        "entry_sha256": "870a3e25de39a2ddfc123fc5888a97384c649cacd9d02f5aed08de3a0a748f16",
+        "read_output": "work/instrument-dispatch-audit-20261022/forge-LevelTickEvent.javap.txt",
+        "read_output_sha256": "71befd527f42bf7d7ba9c7a27396c9af5d43af67a423b322bb423f07339642aa"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/21.1.243/ce384946fb5541fddf182e066ce1c01423d0b86d/neoforge-21.1.243-universal.jar",
+        "artifact_sha256": "0424e81c5948f08e529631c915c35bc38feffc24597ab3458bf7ecf0c0d83399",
+        "entry": "net/neoforged/neoforge/event/tick/LevelTickEvent.class",
+        "entry_sha256": "398444d5423f3a0508f3efb3fd02973f81981e4d3e400932f334fce7aeb9c356",
+        "read_output": "work/instrument-dispatch-audit-20261022/neo-LevelTickEvent.javap.txt",
+        "read_output_sha256": "537ee9688b44a8292e12c3eb628b579628229f5858207c08f45d687ed2a3926f"
+      }
+    ],
+    "scope": "Actual native event field/getter inspection only, no event methods executed."
+  },
+  "meter_locator": {
+    "roots": [
+      "core/src/main/java",
+      "multiversion/src/main/java",
+      "multiversion/src/api/java",
+      "multiversion/versions/1.20.1-forge/src/main/java",
+      "multiversion/versions/1.20.1-forge/src/api/java",
+      "multiversion/versions/1.21.1-neoforge/src/main/java",
+      "multiversion/versions/1.21.1-neoforge/src/api/java"
+    ],
+    "production_java_files": 1766,
+    "matching_files": [
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/sensor/SensorCatalog.java",
+        "sha256": "a4f43242d699a34ce417e8eb98e9f5e6d54a39f62f2f8ca89dd5ac63bc665afc",
+        "matches": [
+          {
+            "line": 15,
+            "text": "new Entry(\"sensor_electrometer\",             \"ENERGY\",                    31015, \"electrometer\"),"
+          },
+          {
+            "line": 18,
+            "text": "new Entry(\"sensor_tachometer\",               \"TACHOMETER\",                31019, \"tachometer\"),"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/sensor/SensorPanelRules.java",
+        "sha256": "ce5f79308858b8746764ece62f5c5bbd70135621b73af0dc93a93bfa3b5c303c",
+        "matches": [
+          {
+            "line": 31,
+            "text": "case \"TACHOMETER\" -> \"ru\";"
+          },
+          {
+            "line": 53,
+            "text": "case \"TACHOMETER\", \"CHRONOMETER\", \"GEIGER\" -> 0x00FF00;"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/creative/SourceCreativeCatalog.java",
+        "sha256": "82c04e294915c49937e383b940b6800a623301dc1de7779506df9b73aac88987",
+        "matches": [
+          {
+            "line": 822,
+            "text": "ITEMS.put(\"electrometer\",new Entry(\"equipment\",118));"
+          },
+          {
+            "line": 2446,
+            "text": "ITEMS.put(\"tachometer\",new Entry(\"equipment\",119));"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/machine/OriginalMachineMaterialData.java",
+        "sha256": "c475bcb9feb7323b62ed96ca77c0e5a1320e2bd1e70dbadb8b5128b2f4e3510b",
+        "matches": [
+          {
+            "line": 318,
+            "text": "BLOCK_DATA.put(\"sensor_electrometer\", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.RedAlloy, 324324000L), part(ImportedMaterialData.Glass, 5837832000L), part(ImportedMaterialData.Cu, 648648000L), part(ImportedMaterialData.TinAlloy, 1297296000L)), 1, \"GT6 Loader_MultiTileEntities 31015 known CR.REV inputs\"));"
+          },
+          {
+            "line": 321,
+            "text": "BLOCK_DATA.put(\"sensor_tachometer\", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.RedAlloy, 324324000L), part(ImportedMaterialData.Glass, 5837832000L), part(ImportedMaterialData.Brass, 5189184000L), part(ImportedMaterialData.TinAlloy, 1297296000L)), 1, \"GT6 Loader_MultiTileEntities 31019 known CR.REV inputs\"));"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/generated/GTSensorRecipesGen.java",
+        "sha256": "421b926b3695c9c5390d558b215a36ba14869e9b594d144a8d51311495048c54",
+        "matches": [
+          {
+            "line": 35,
+            "text": "new Row(31015, \"Electrometer Sensor\", \"sensor_electrometer\", List.of(\"WGW\", \"YXY\", \"WPW\"), Map.ofEntries(Map.entry('B', \"mat:bolt@TinAlloy\"), Map.entry('C', \"item:minecraft:comparator\"), Map.entry('G', \"item:minecraft:glass\"), Map.entry('P', \"mat:plateDouble@TinAlloy\"), Map.entry('R', \"item:minecraft:redstone\"), Map.entry('W', \"mat:wireFine@RedAlloy\"), Map.entry('X', \"item:gt6ce:electrometer\"), Map.entry('Y', \"wire:1@Copper\"))),"
+          },
+          {
+            "line": 39,
+            "text": "new Row(31019, \"Tachometer Sensor\", \"sensor_tachometer\", List.of(\"WGW\", \"YXY\", \"WPW\"), Map.ofEntries(Map.entry('B', \"mat:bolt@TinAlloy\"), Map.entry('C', \"item:minecraft:comparator\"), Map.entry('G', \"item:minecraft:glass\"), Map.entry('P', \"mat:plateDouble@TinAlloy\"), Map.entry('R', \"item:minecraft:redstone\"), Map.entry('W', \"mat:wireFine@RedAlloy\"), Map.entry('X', \"item:gt6ce:tachometer\"), Map.entry('Y', \"mat:gearGt@Brass\"))),"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/OriginalSurvivalRecipes.java",
+        "sha256": "f68a3935d0426b3883c3b61b691074b40852f94f0c336787d684390dbc050f4c",
+        "matches": [
+          {
+            "line": 208,
+            "text": "new Row(\"sensor_electrometer\", 1, ImportedMaterialData.TinAlloy, \"WGW|YXY|WPW\", Map.of('G', \"item:minecraft:glass\", 'P', \"mat:plateDouble@TinAlloy\", 'W', \"mat:wireFine@RedAlloy\", 'X', \"item:gt6ce:electrometer\", 'Y', \"wire:1@Copper\")),"
+          },
+          {
+            "line": 209,
+            "text": "new Row(\"sensor_tachometer\", 1, ImportedMaterialData.TinAlloy, \"WGW|YXY|WPW\", Map.of('G', \"item:minecraft:glass\", 'P', \"mat:plateDouble@TinAlloy\", 'W', \"mat:wireFine@RedAlloy\", 'X', \"item:gt6ce:tachometer\", 'Y', \"mat:gearGt@Brass\")),"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/SourceBlockProperties.java",
+        "sha256": "7d2defd50583dd887a8f8002c14aef06045c160c6fcc54054ea75426a67769b1",
+        "matches": [
+          {
+            "line": 54,
+            "text": "BLOCKS.put(\"sensor_electrometer\", new Params(31015,\"pickaxe\",null,1,true));"
+          },
+          {
+            "line": 57,
+            "text": "BLOCKS.put(\"sensor_tachometer\", new Params(31019,\"pickaxe\",null,1,true));"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/UtilityCraftingRows.java",
+        "sha256": "7ec13a01219677ccea9f941e63a6eea50c4182dde914f5553348189e45029ec3",
+        "matches": [
+          {
+            "line": 38,
+            "text": "rows.add(new OriginalSurvivalRecipes.Row(\"electrometer\",1,GTMaterialRegistry.get(\"SteelGalvanized\"),\"TXT|PCP|TdT\","
+          },
+          {
+            "line": 40,
+            "text": "rows.add(new OriginalSurvivalRecipes.Row(\"tachometer\",1,GTMaterialRegistry.get(\"Brass\"),\"TXT|PCP|TdT\","
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/registry/GTMultiItemsGen.java",
+        "sha256": "d4b794642713c208ad27ccd765a9dd9cbcdb13a7c568aec1e910f7ead3058611",
+        "matches": [
+          {
+            "line": 133,
+            "text": "\"electrometer\", \"Electrometer\", \"randomtools\", \"T\","
+          },
+          {
+            "line": 134,
+            "text": "\"tachometer\", \"Tachometer\", \"randomtools\", \"T\","
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/sensor/SensorBlockEntity.java",
+        "sha256": "126d5b9d3026d627a1eb9a523818d1d8749a1e450bddd285a752866848e257ed",
+        "matches": [
+          {
+            "line": 33,
+            "text": "THERMOMETER, TACHOMETER, WEIGHTOMETRIC, BUCKETOMETER,"
+          },
+          {
+            "line": 244,
+            "text": "case TACHOMETER -> {"
+          }
+        ]
+      }
+    ],
+    "scope": "Locator only. Item factory and complete ItemBehaviors dispatch/GTToolType checked separately; zero filenames alone does not prove absence."
+  },
+  "formal_findings_added": [
+    427,
+    428
+  ],
+  "findings": [
+    {
+      "id": 427,
+      "contract": "Original Electrometer10003 and Tachometer10004 install Behavior_Tool tool dispatch; electric wire reports mWattageLast EU/t, axle reports mTransferredLast RU/t and gearbox has its dedicated handler.",
+      "current": "Both own IDs are registered and used in sensor crafting, but actual generic Item callbacks reach ItemBehaviors.useOn, which has no corresponding branches and refuses unrecognized IDs; no matching own meter factory or GTToolType exists.",
+      "scope": "Missing built-in handheld measurement dispatch, not missing item identities, recipe declarations, independent placed sensors or all generic machine right-click status. No third-party extension or game acceptance."
+    },
+    {
+      "id": 428,
+      "contract": "Original soft-hammer and setStateOnOff mutate mStopped only; Geiger subsequently reads oNeutronCounts until the normal refresh changes it.",
+      "current": "ReactorInteraction soft hammer calls setStopped; stop=true immediately zeroes neutrons and Geiger reads that array.",
+      "bounded_witness": {
+        "before": "One-rod snapshot has16 neutrons and is running. Invoke stop, then read before a further tick/refresh.",
+        "original_read": 16,
+        "current_read": 0,
+        "status": "Source operation sequence, not a game reproduction or a claim about the entire later network cycle."
+      },
+      "status": "Recorded stop/read timing policy difference; unchanged."
+    }
+  ],
+  "false_positive_rejected": {
+    "candidate": "Thermometer should read storedHeat instead of lastHeat for reactor.",
+    "original": "Both original core sizes set oEnergy=mEnergy-tEnergy around reaction/divider, before cooling; thermometer reports oEnergy. It is produced heat, not residual mEnergy.",
+    "current": "lastHeat is current produced heat after heatDivider; storedHeat is the separate accumulator. Current thermometer lastHeat is the corresponding category.",
+    "decision": "Do not replace it with storedHeat or add a missing-remaining-heat defect. Full formulas/localized labels and optional coolant cases not all accepted."
+  },
+  "existing_and_limits": {
+    "sensors": "Placed sensor catalog/consumers remain separate from handheld tools; data getter availability does not provide item dispatch.",
+    "neutron_scope": "Only immediate stop-read is confirmed; full running sample phase, delegation and loaded-world scheduling continue.",
+    "temperature_scope": "Existing085/267 host gaps are not superseded by one working reactor branch."
+  },
+  "refactoring": {
+    "files": {
+      "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java": {
+        "before_raw_sha256": "3358de3deafd8e021e8d3a9f7fffc269c0289c1b1ea2b755bec93dab9bc260b9",
+        "after_raw_sha256": "b952ae9a57620fe446d404c106f7d04f1f569026bcaa04382add77ef99eb8e0c",
+        "before_lines": 89,
+        "after_lines": 141,
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1086,
+            "token_sha256": "072a6cf0d55383669943b52bcbe5e9ff295e03e86d95279a720cfa793b45bcf6"
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1089,
+            "token_sha256": "cfa3b4cd8a3628e343a2f5628db5da8bdfab67f7b410bdec3eef75b6e6994706"
+          }
+        ],
+        "local_names": {
+          "c": "coreEntry",
+          "i": "rodSlot",
+          "l": "levelKey",
+          "counts": "neutronCounts",
+          "emit": "neutronEmissions",
+          "mods": "rodModeration",
+          "mod": "isModerated",
+          "x": "localX",
+          "z": "localZ",
+          "nx": "neighborX",
+          "nz": "neighborZ"
+        },
+        "rename_counts": {
+          "c": 44,
+          "i": 22,
+          "l": 1,
+          "counts": 4,
+          "emit": 3,
+          "mods": 3,
+          "x": 3,
+          "z": 3,
+          "nx": 4,
+          "nz": 4,
+          "mod": 5
+        }
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorInteraction.java": {
+        "before_raw_sha256": "e062a87ddbd1eee9fc4936403b4a819582a2b58809d47de2feee51adf8383c90",
+        "after_raw_sha256": "bbc9fce2dff2ddd9511ee5946128a887889f4fa4b6e18bdc4efb2fdde3278678",
+        "before_lines": 39,
+        "after_lines": 51,
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 584,
+            "token_sha256": "b708f1b0d00b96e993d8f679ebb8f51aab58f0b3c86a3b8b5c0b8400e07a7bc8"
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 586,
+            "token_sha256": "41d2f4cda2e6b6300e77d9481d1532e603f577953e0f2198d5dc7932047a949f"
+          }
+        ],
+        "local_names": {
+          "out": "removedRod",
+          "local": "localHit"
+        },
+        "rename_counts": {
+          "out": 4,
+          "local": 3
+        }
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorThermometer.java": {
+        "before_raw_sha256": "fe3232c9602cd2c1bc2ed4b8097ab74c52660b2b5fcf76bf971ba1253acbfdae",
+        "after_raw_sha256": "21579a71feac4105d8c6c3e831991aed3eaa8935d950378184f57c5e28680823",
+        "before_lines": 47,
+        "after_lines": 49,
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 462,
+            "token_sha256": "70f43bd8d71dd87e6051b2508c80362f2f809673efcf59cfbe7b89e045d6ac6e"
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 462,
+            "token_sha256": "70f43bd8d71dd87e6051b2508c80362f2f809673efcf59cfbe7b89e045d6ac6e"
+          }
+        ],
+        "local_names": {
+          "target": "blockEntity",
+          "entry": "fluidEntry"
+        },
+        "rename_counts": {
+          "target": 8,
+          "entry": 3
+        }
+      }
+    },
+    "scope": "Complete ordered platform flows after exact world-end body extraction and explicitly listed local names; no reactor or instrument rule changed.",
+    "tick_extraction": {
+      "old_complete_bodies_compared": 2,
+      "native_adapters": 2,
+      "sequence": "Remove pending, return if absent, filter loaded/unremoved, sort position, exchange at19/20, then react all.",
+      "level_access": "Forge event.level is a final field; actual Neo event.getLevel reads its final level field, confirmed separately from universal bytecode.",
+      "scope": "Phase and client guards remain in wrappers. No unload hook, safety change or interval adjustment."
+    }
+  },
+  "compiled_inputs": [
+    {
+      "platform": "forge",
+      "current_path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java",
+      "path": "multiversion/versions/1.20.1-forge/build/generated/stonecutter/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java",
+      "raw_sha256": "b952ae9a57620fe446d404c106f7d04f1f569026bcaa04382add77ef99eb8e0c"
+    },
+    {
+      "platform": "forge",
+      "current_path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorInteraction.java",
+      "path": "multiversion/versions/1.20.1-forge/build/generated/stonecutter/main/java/com/gregtech/gregtech/content/nuclear/ReactorInteraction.java",
+      "raw_sha256": "bbc9fce2dff2ddd9511ee5946128a887889f4fa4b6e18bdc4efb2fdde3278678"
+    },
+    {
+      "platform": "forge",
+      "current_path": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorThermometer.java",
+      "path": "multiversion/versions/1.20.1-forge/build/generated/stonecutter/main/java/com/gregtech/gregtech/item/behavior/BehaviorThermometer.java",
+      "raw_sha256": "21579a71feac4105d8c6c3e831991aed3eaa8935d950378184f57c5e28680823"
+    },
+    {
+      "platform": "neoforge",
+      "current_path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java",
+      "path": "multiversion/versions/1.21.1-neoforge/build/generated/stonecutter/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java",
+      "raw_sha256": "20e106e1f53e148a58db53b80cf3b0133f10a464301e225e41e3208d39172fa3"
+    },
+    {
+      "platform": "neoforge",
+      "current_path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorInteraction.java",
+      "path": "multiversion/versions/1.21.1-neoforge/build/generated/stonecutter/main/java/com/gregtech/gregtech/content/nuclear/ReactorInteraction.java",
+      "raw_sha256": "62fea1bc82d1c26a11ab8d1bf487e3cb0dad302eb22f2d3642c1ffbe65830a9a"
+    },
+    {
+      "platform": "neoforge",
+      "current_path": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorThermometer.java",
+      "path": "multiversion/versions/1.21.1-neoforge/build/generated/stonecutter/main/java/com/gregtech/gregtech/item/behavior/BehaviorThermometer.java",
+      "raw_sha256": "21579a71feac4105d8c6c3e831991aed3eaa8935d950378184f57c5e28680823"
+    }
+  ],
+  "compile": {
+    "status": "passed",
+    "duration_seconds": 103,
+    "log": "work/instrument-dispatch-audit-20261022/compile.log",
+    "log_sha256": "cbec0ee465277cf2396790a9c739019a301ac6639cac8b1f4b4c2c1d12dece4a",
+    "tasks": [
+      "multiversion:1.20.1-forge:compileJava",
+      "multiversion:1.21.1-neoforge:compileJava"
+    ],
+    "temporary_adapter": "work/storage-inserter-audit-20261022/cached-api-classpath.gradle",
+    "temporary_adapter_sha256": "51a1ed5becc4b14c87f6eeef31d2c8fc984e02735ee630b3c292496c2798cdbe",
+    "cached_forge_artifacts": [
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/mezz/jei/jei-1.20.1-common-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-common-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/mezz/jei/jei-1.20.1-common-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-common-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "sha256": "7786d88e4ffd38f62d057b86eb56aa6a116037f2a4dbccb0aa77877b7dc8f4fd",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/mezz/jei/jei-1.20.1-forge-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-forge-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/mezz/jei/jei-1.20.1-forge-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-forge-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "sha256": "b50a6a64c629e51346deec045495ba932be2bcab4ffb5a46fe483df1e06c832a",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1-api.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1-api.jar",
+        "sha256": "268f4572a6297bcd38c176e9361ee245364bb255e1a74e0fec96a973ef1379c0",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1.jar",
+        "sha256": "a2df46e253e208d39576808509eb384b42d992ba77d1c3aec31b97611be6e64b",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/maven/modrinth/jade/11.13.2+forge_mapped_official_1.20.1/jade-11.13.2+forge_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/maven/modrinth/jade/11.13.2+forge_mapped_official_1.20.1/jade-11.13.2+forge_mapped_official_1.20.1.jar",
+        "sha256": "15030cb00590540a5a37bd6bd509df4c01116406dd7c1a760b55e81f83f2bd62",
+        "action": "copied existing exact-coordinate jar"
+      }
+    ],
+    "cached_neo_emi_api": {
+      "path": "C:/Dev/GregTech6/work/emi-maven/dev/emi/emi-neoforge/1.1.24+1.21.1/emi-neoforge-1.1.24+1.21.1-api.jar",
+      "sha256": "b3a8e23c5e59813f184423b94e37bb635867ddc9be2b68b3502fad7b9134779b"
+    },
+    "scope": "Same-version local API adapter and six generated actual input checks; production Gradle unchanged, not default offline/CI or game acceptance."
+  },
+  "preparation_correction": "Preview showed global mod rename could change the api.mod package segment. Before production write, restrict that name to the exchange method and guard every other rename against member/package positions; api.mod remains intact.",
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "gameplay_changes": false,
+  "game_launched": false,
+  "jar_built": false,
+  "github_writes": false,
+  "goal_status": "active",
+  "whole_goal_complete": false,
+  "root_revalidation": {
+    "source_identities": "8 original/17 current match",
+    "source_spans": "31 exact ranges match",
+    "event_native_evidence": "2 actual entries and immutable level fields/getter match",
+    "meter_locator": "Matching source hashes unchanged; locator alone not absence proof",
+    "refactoring": "6 full ordered views; both old tick bodies and native wrappers match controlled normalization; api.mod intact",
+    "compile_inputs": "6 actual generated compiler inputs equal current projected tokens",
+    "compile": "103s dual compile and exact local API input identities match",
+    "protected_materials": "unchanged",
+    "historical_docs": "Prior lines preserved, insertions only",
+    "formal_ids": {
+      "contiguous": true,
+      "count": 428,
+      "new": [
+        427,
+        428
+      ]
+    },
+    "new_links": "resolve",
+    "production_build_configuration": "unchanged",
+    "gameplay_acceptance": false,
+    "whole_goal_complete": false
+  }
+}

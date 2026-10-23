@@ -40,8 +40,11 @@ import javax.annotation.Nullable;
 public class EnderGarbageBlockEntity extends BlockEntity implements MenuProvider, com.gregtech.gregtech.api.inventory.BlockContents {
 
     private final ItemStackHandler inventory = new ItemStackHandler(9) {
+
         @Override
-        protected void onContentsChanged(int slot) { setChanged(); }
+        protected void onContentsChanged(int slot) {
+            setChanged();
+        }
     };
 
     public EnderGarbageBlockEntity(BlockPos pos, BlockState state) {
@@ -58,11 +61,11 @@ public class EnderGarbageBlockEntity extends BlockEntity implements MenuProvider
     private void dumpToGarbage() {
         if (level == null) return;
         GarbageData garbage = GarbageData.get(level);
-        for (int i = 0; i < inventory.getSlots(); i++) {
-            ItemStack stack = inventory.getStackInSlot(i);
+        for (int slotIndex = 0; slotIndex < inventory.getSlots(); slotIndex++) {
+            ItemStack stack = inventory.getStackInSlot(slotIndex);
             if (stack.isEmpty()) continue;
             garbage.trash(stack);
-            inventory.setStackInSlot(i, ItemStack.EMPTY);
+            inventory.setStackInSlot(slotIndex, ItemStack.EMPTY);
         }
     }
 
@@ -76,28 +79,75 @@ public class EnderGarbageBlockEntity extends BlockEntity implements MenuProvider
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory playerInv, Player player) {
-        return new HopperContainerMenu(GTMenuTypes.forSlotCount(9), containerId, playerInv, inventory);
+        return new HopperContainerMenu(GTMenuTypes.forSlotCount(9), containerId, playerInv, inventory) {
+            @Override
+            public boolean stillValid(Player player) {
+                return !isRemoved() && level != null && player.level() == level
+                        && level.getBlockEntity(worldPosition) == EnderGarbageBlockEntity.this
+                        && player.distanceToSqr(worldPosition.getX() + .5,
+                                worldPosition.getY() + .5, worldPosition.getZ() + .5) <= 64;
+            }
+        };
     }
 
     // ── automation: insert only; fluids are voided straight into the dump ─
 
     private final IItemHandler insertOnly = new IItemHandler() {
-        @Override public int getSlots() { return inventory.getSlots(); }
-        @Override public ItemStack getStackInSlot(int slot) { return inventory.getStackInSlot(slot); }
-        @Override public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+
+        @Override
+        public int getSlots() {
+            return inventory.getSlots();
+        }
+
+        @Override
+        public ItemStack getStackInSlot(int slot) {
+            return inventory.getStackInSlot(slot);
+        }
+
+        @Override
+        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
             if (level != null && level.hasNeighborSignal(worldPosition)) return stack;
             return inventory.insertItem(slot, stack, simulate);
         }
-        @Override public ItemStack extractItem(int slot, int amount, boolean simulate) { return ItemStack.EMPTY; }
-        @Override public int getSlotLimit(int slot) { return inventory.getSlotLimit(slot); }
-        @Override public boolean isItemValid(int slot, ItemStack stack) { return true; }
+
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            return ItemStack.EMPTY;
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return inventory.getSlotLimit(slot);
+        }
+
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            return true;
+        }
     };
 
     private final IFluidHandler fluidVoid = new IFluidHandler() {
-        @Override public int getTanks() { return 1; }
-        @Override public FluidStack getFluidInTank(int tank) { return FluidStack.EMPTY; }
-        @Override public int getTankCapacity(int tank) { return Integer.MAX_VALUE; }
-        @Override public boolean isFluidValid(int tank, FluidStack stack) { return true; }
+
+        @Override
+        public int getTanks() {
+            return 1;
+        }
+
+        @Override
+        public FluidStack getFluidInTank(int tank) {
+            return FluidStack.EMPTY;
+        }
+
+        @Override
+        public int getTankCapacity(int tank) {
+            return Integer.MAX_VALUE;
+        }
+
+        @Override
+        public boolean isFluidValid(int tank, FluidStack stack) {
+            return true;
+        }
+
         @Override
         public int fill(FluidStack resource, FluidAction action) {
             if (resource == null || resource.isEmpty()) return 0;
@@ -105,13 +155,26 @@ public class EnderGarbageBlockEntity extends BlockEntity implements MenuProvider
             if (action.execute()) GarbageData.get(level).trash(resource.copy());
             return resource.getAmount();
         }
-        @Override public FluidStack drain(FluidStack resource, FluidAction action) { return FluidStack.EMPTY; }
-        @Override public FluidStack drain(int maxDrain, FluidAction action) { return FluidStack.EMPTY; }
+
+        @Override
+        public FluidStack drain(FluidStack resource, FluidAction action) {
+            return FluidStack.EMPTY;
+        }
+
+        @Override
+        public FluidStack drain(int maxDrain, FluidAction action) {
+            return FluidStack.EMPTY;
+        }
     };
 
 //? if >=1.21.1 {
-    /*public IItemHandler itemHandler(){return isRemoved()?null:insertOnly;}
-    public IFluidHandler fluidHandler(){return isRemoved()?null:fluidVoid;}
+    /*public IItemHandler itemHandler() {
+        return isRemoved() ? null : insertOnly;
+    }
+
+    public IFluidHandler fluidHandler() {
+        return isRemoved() ? null : fluidVoid;
+    }
     // ── NBT ──────────────────────────────────────────────────────────────
 *///?} else {
     private final LazyOptional<IItemHandler> itemCap = LazyOptional.of(() -> insertOnly);
@@ -120,8 +183,8 @@ public class EnderGarbageBlockEntity extends BlockEntity implements MenuProvider
 
     @Override
 //? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
+    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.saveAdditional(tag, lookup);
         tag.put("Inventory", inventory.serializeNBT(lookup));
 *///?} else {
     public <T> @org.jetbrains.annotations.NotNull LazyOptional<T> getCapability(
@@ -134,9 +197,9 @@ public class EnderGarbageBlockEntity extends BlockEntity implements MenuProvider
 
     @Override
 //? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-        if (tag.contains("Inventory")) inventory.deserializeNBT(lookup,tag.getCompound("Inventory"));
+    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.loadAdditional(tag, lookup);
+        if (tag.contains("Inventory")) inventory.deserializeNBT(lookup, tag.getCompound("Inventory"));
 *///?} else {
     public void invalidateCaps() {
         super.invalidateCaps();
@@ -158,7 +221,9 @@ public class EnderGarbageBlockEntity extends BlockEntity implements MenuProvider
         if (tag.contains("Inventory")) inventory.deserializeNBT(tag.getCompound("Inventory"));
 //?}
     }
-    @Override public void dropContents() {
+
+    @Override
+    public void dropContents() {
         if (level == null || level.isClientSide) return;
         com.gregtech.gregtech.api.inventory.BlockContents.drop(this, inventory);
         setChanged();

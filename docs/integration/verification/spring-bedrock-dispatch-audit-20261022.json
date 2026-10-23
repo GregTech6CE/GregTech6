@@ -1,0 +1,1360 @@
+{
+  "date": "2026-10-22",
+  "batch": 106,
+  "baseline": "b453cf590d10b29397b4bd81ef37908e4ce5e49a",
+  "previous_goal_turn": "progress: b453cf590 added source-backed spring contracts and seven production readability changes; current sources revalidated.",
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/worldgen/GT6WorldGenerator.java",
+      "sha256": "d7be7c6edff03e702c9b9c0414b740a98ca1975847f8f857459e75691191377b",
+      "lines": 185,
+      "notices": [
+        "Copyright (c) 2021 GregTech-6 Team",
+        "@author Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/worldgen/WorldgenObject.java",
+      "sha256": "8122967665f694cb38b7f4fe30292204958dabfb3cc19c040bf0305f4d80b197",
+      "lines": 81,
+      "notices": [
+        "Copyright (c) 2021 GregTech-6 Team",
+        "@author Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/worldgen/WorldgenOresBedrock.java",
+      "sha256": "cfd42311493c2e18283bcaf286df8bd0e3ae0924a07be178b0dee273c0d03a1a",
+      "lines": 231,
+      "notices": [
+        "Copyright (c) 2021 GregTech-6 Team",
+        "@author Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/WorldgenFluidSpring.java",
+      "sha256": "5720adf268be3ed5626212485ed6a179e2875918862d40efc417627e6b77befe",
+      "lines": 107,
+      "notices": [
+        "Copyright (c) 2025 GregTech-6 Team",
+        "@author Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_Worldgen.java",
+      "sha256": "ebd09b9af84bf8e275ffbe856a706d0206a51fd8869a6b3a39ceddbb321c550a",
+      "lines": 931,
+      "notices": [
+        "Copyright (c) 2026 GregTech-6 Team",
+        "@author Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "lines": 2345,
+      "notices": [
+        "Copyright (c) 2025 GregTech-6 Team",
+        "@author Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/config/Config.java",
+      "sha256": "2a042710713454d905ab456a0ef3879e81d32670d4bd230445ea0d152e708eb7",
+      "lines": 179,
+      "notices": [
+        "Copyright (c) 2023 GregTech-6 Team",
+        "@author Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/GT_API.java",
+      "sha256": "e6413cff3c97bbe73d5aa202b1c6a750d9bdce2df97cbf26a5a77acb79d225ce",
+      "lines": 901,
+      "notices": [
+        "Copyright (c) 2025 GregTech-6 Team",
+        "@author Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/MT.java",
+      "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2",
+      "lines": 4118,
+      "notices": [
+        "Copyright (c) 2026 GregTech-6 Team",
+        "@author Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/WD.java",
+      "sha256": "c8335988b7bd9dbf44df6790d867ac6cfe2e6414793abb0cdd14c32cd342f095",
+      "lines": 1056,
+      "notices": [
+        "Copyright (c) 2025 GregTech-6 Team",
+        "@author Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/MineralWorldgenRules.java",
+      "sha256": "f2060e59fa476caf5cb5735d60da66f2bcca135956a01e1fbb15773f38a9f31a",
+      "lines": 97
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/GTBedrockOres.java",
+      "sha256": "ca7703ea4225ccea71bec11f24a69890d32d3e84d2a6b91d7a91a1a3b6023bea",
+      "lines": 65
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTBedrockOreFeature.java",
+      "sha256": "e39317f6ae022fb3b9c1a2219395665c3fcaa012a66c5bae91f043bf5c9cb768",
+      "lines": 175
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOreBlockResolver.java",
+      "sha256": "ca7b211a4f7dd8cacbd7668ba9c77209b5fd6e0a14dd00e15f3b6d15aaa213d5",
+      "lines": 226
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTBedrockOreDimensions.java",
+      "sha256": "8a65769617f10bd65ba0f31de88fa075645f0ba12faa11ba32703c9b715119f0",
+      "lines": 18
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/FluidSpringRules.java",
+      "sha256": "e6b1ef09920722bcf0be7c1452c354dc04170792177bc7e3320b7e7dfc529ac2",
+      "lines": 65
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/material/Materials.java",
+      "sha256": "d73635bac396ecc1a4ba5ee2253de90b6733c048d02d0f0fc51fa9bf41afacdf",
+      "lines": 806
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/material/generated/ElementMaterials.java",
+      "sha256": "af266c5d80c6e3541d57d9ca3d188f168e312ca8c6bd1adf06ee4fb2aa9a17f2",
+      "lines": 186
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+      "sha256": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210",
+      "lines": 583
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTFluidSpringsFeature.java",
+      "sha256": "f86a8f280ec327d0b1e19be3b1cd1feb0fb6c1cbbec02b657932eb5055e040bc",
+      "lines": 204
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTFeatures.java",
+      "sha256": "3933f9f08920aa729d65bb82b06da2fc9d1e84c1fe691aa8540a4e05859d144f",
+      "lines": 169
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/OreBlock.java",
+      "sha256": "4ea7f5146c1f0eaae94b4eda9a7b10bba214e12992b6726259d8ab022cd82f0f",
+      "lines": 337
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/GregTechConfig.java",
+      "sha256": "9030ec33cfb2c5858d1b57e12d459073dc9fd19a21703082fdec168e3dc01346",
+      "lines": 68
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlocks.java",
+      "sha256": "07d9f2ae7a1ffec7a346198dce60b21aeb44f98f9586155e8021ebde14130c39",
+      "lines": 215
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/bootstrap/content/BlockBootstrap.java",
+      "sha256": "628646643f7936df0930be6fa9cca4e053368a89f560da7b6b7939b0c1ea6d0d",
+      "lines": 156
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/data/gt6ce/forge/biome_modifier/gt_overworld_ores.json",
+      "sha256": "e3f34c56c6c28d4d7e9a6cd5963170984819d1638d57ad6c7050c8cb1eef40ab",
+      "lines": 11
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/data/gt6ce/forge/biome_modifier/gt_nether_bedrock_ores.json",
+      "sha256": "ca45210a5f0ca03188e9e59697074a75bec49dafbc23d499b09e3422c91e8d16",
+      "lines": 8
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/data/gt6ce/forge/biome_modifier/gt_fluid_springs.json",
+      "sha256": "6e51d7b0ecaff0fa908e39294439d1297d71ae0e42367f90889e8a0a70a557d5",
+      "lines": 8
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/data/gt6ce/neoforge/biome_modifier/gt_overworld_ores.json",
+      "sha256": "fd99b095d3df7c219f48e53df9a5ed3f4b411a9bb2ca25b8875d87b59bda85ba",
+      "lines": 11
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/data/gt6ce/neoforge/biome_modifier/gt_nether_bedrock_ores.json",
+      "sha256": "f8b15be98594c0115a8602819e39cb8d3c8cd30169a7ecc552b2e0fadf3267bd",
+      "lines": 8
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/data/gt6ce/neoforge/biome_modifier/gt_fluid_springs.json",
+      "sha256": "4e83eb4c3b55095c168f3259e7f563515ba199b1490848ffeff4e79eb2240d32",
+      "lines": 8
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/worldgen/configured_feature/gt_bedrock_ores.json",
+      "sha256": "c12d57a76bf6629e67339106141ef0f2bac1357689d7b42d000bb11bce57de42",
+      "lines": 4
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/worldgen/configured_feature/gt_fluid_springs.json",
+      "sha256": "e4e53232a1a56f09be364c6e9b131ab79001cc3fa961b35011d6e37c83481d6d",
+      "lines": 4
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/worldgen/placed_feature/gt_bedrock_ores.json",
+      "sha256": "79afe3698b575fbad67524032d315a19a1a039a9d005fc9039c2d4fbd73c5be3",
+      "lines": 4
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/worldgen/placed_feature/gt_fluid_springs.json",
+      "sha256": "c9272a336eb8e7625df4335f3cb62630caae0ff6bb0786589346bb0c4e351d97",
+      "lines": 4
+    }
+  ],
+  "excerpts": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/worldgen/GT6WorldGenerator.java",
+      "start": 75,
+      "text": "\t\t\t\t// Yes, it has to be looped twice in a row, this cannot be optimized into one Loop!\n\t\t\t\tfor (WorldgenObject tWorldGen : mGenNormal) tWorldGen.reset(mWorld, tChunk, mDimType, mMinX, mMinZ, mMaxX, mMaxZ, mRandom, tBiomes, tBiomeNames);\n\t\t\t\tfor (WorldgenObject tWorldGen : mGenNormal) if (tWorldGen.enabled(mWorld, mDimType)) {\n\t\t\t\t\ttry {\n\t\t\t\t\t\ttWorldGen.generate(mWorld, tChunk, mDimType, mMinX, mMinZ, mMaxX, mMaxZ, mRandom, tBiomes, tBiomeNames);\n\t\t\t\t\t} catch (Throwable e) {\n\t\t\t\t\t\te.printStackTrace(ERR);\n\t\t\t\t\t}\n\t\t\t\t\tif (tChunk.lastSaveTime == Long.MAX_VALUE) {\n\t\t\t\t\t\ttChunk.hasEntities = tChunk.isModified = F;\n\t\t\t\t\t\tthrow new RuntimeException(\"A corrupted Chunk was found while generating at (X: \" + mMinX + \" Z: \" + mMinZ + \"), please try loading the World again to see if this specific Chunk consistently corrupts, and >>>ONLY<<< if it does so, please report this to Greg.\");\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\t\n\t\t\t\tif (mGenLargeOres != null && !mGenLargeOres.isEmpty()) {\n\t\t\t\t\tint tMaxWeight = 0;\n\t\t\t\t\tList<WorldgenOresLarge> tList = new ArrayListNoNulls<>();"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/worldgen/GT6WorldGenerator.java",
+      "start": 126,
+      "text": "\t\tcase DIM_NETHER   : generate(new WorldGenContainer(GEN_NETHER, ORE_NETHER, DIM_NETHER, aWorld, aX, aZ)); return;\n\t\tcase DIM_END      : generate(new WorldGenContainer(GEN_END   , ORE_END   , DIM_END   , aWorld, aX, aZ)); return;"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/worldgen/WorldgenObject.java",
+      "start": 51,
+      "text": "\t\tfor (List<WorldgenObject> aList : aLists) aList.add(this);\n\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/worldgen/WorldgenObject.java",
+      "start": 59,
+      "text": "\tpublic boolean enabled(World aWorld, int aDimType) {\n\t\tif (mInvalid) return F;\n\t\tBoolean tAllowed = mDimEnabled.get(aWorld.provider.dimensionId);\n\t\tif (tAllowed != null) return tAllowed && mEnabled;\n\t\tboolean tValue = getConfigFile().get(mCategory+\".dim\", aWorld.provider.getDimensionName().replaceAll(\" \", \"_\"), T);\n\t\tmDimEnabled.put(aWorld.provider.dimensionId, tValue);\n\t\treturn tValue && mEnabled;\n\t}\n\t"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/worldgen/WorldgenOresBedrock.java",
+      "start": 136,
+      "text": "\tpublic void reset(World aWorld, Chunk aChunk, int aDimType, int aMinX, int aMinZ, int aMaxX, int aMaxZ, Random aRandom, BiomeGenBase[][] aBiomes, Set<String> aBiomeNames) {\n\t\tGENERATED_NO_BEDROCK_ORE = CAN_GENERATE_BEDROCK_ORE = T;\n\t}\n\t"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/worldgen/WorldgenOresBedrock.java",
+      "start": 141,
+      "text": "\tpublic boolean generate(World aWorld, Chunk aChunk, int aDimType, int aMinX, int aMinZ, int aMaxX, int aMaxZ, Random aRandom, BiomeGenBase[][] aBiomes, Set<String> aBiomeNames) {\n\t\tif (GENERATING_SPECIAL || !CAN_GENERATE_BEDROCK_ORE || aRandom.nextInt(mProbability) != 0) return F;\n\t\tif (!generateVein(mMaterial, aWorld, aDimType, aMinX, aMinZ, aRandom)) return F;\n\t\t\n\t\tGENERATED_NO_BEDROCK_ORE = F;\n\t\t\n\t\tif ((mIndicatorRocks || mIndicatorFlowers) && (!GENERATE_STREETS || aWorld.provider.dimensionId != 0 || (Math.abs(aMinX) >= 64 && Math.abs(aMaxX) >= 64 && Math.abs(aMinZ) >= 64 && Math.abs(aMaxZ) >= 64))) { "
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/worldgen/WorldgenOresBedrock.java",
+      "start": 190,
+      "text": "\t\t\t\tcase 1: case 2: BlocksGT.oreSmallBedrock.placeBlock(aWorld, aMinX+tX, 0, aMinZ+tZ, SIDE_UNKNOWN, (aMaterial == ANY.Hexorium ? UT.Code.select(MT.HexoriumBlack, ANY.Hexorium.mToThis.toArray(ZL_MATERIAL)) : aMaterial).mID, null, F, T); break;\n\t\t\t\t}\n\t\t\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/worldgen/WorldgenOresBedrock.java",
+      "start": 155,
+      "text": "\t\t\tfor (int tD = 4; tD <= 16; tD *= 2) try {for (int i = 0; i < tD; i++) {\n\t\t\t\tint tX = aMinX+aRandom.nextInt(tD*2)+8-tD, tZ = aMinZ+aRandom.nextInt(tD*2)+8-tD;\n\t\t\t\tfor (int tY = tMaxHeight; tY > tMinHeight; tY--) {\n\t\t\t\t\tBlock tContact = aWorld.getBlock(tX, tY, tZ);\n\t\t\t\t\tif (tContact.getMaterial().isLiquid() || tContact == Blocks.farmland) break;\n\t\t\t\t\tif (!tContact.isOpaqueCube() || tContact.isWood(aWorld, tX, tY, tZ) || tContact.isLeaves(aWorld, tX, tY, tZ)) continue;\n\t\t\t\t\tif (!WD.easyRep(aWorld, tX, tY+1, tZ)) break;\n\t\t\t\t\tif (tFlowers && tContact != Blocks.dirt && (!tRocks || aRandom.nextInt(4) > 0)) {\n\t\t\t\t\t\tWD.set(aWorld, tX, tY+1, tZ, mFlower, mFlowerMeta, 0);\n\t\t\t\t\t\tif (mFlower.canBlockStay(aWorld, tX, tY+1, tZ)) break;\n\t\t\t\t\t\tWD.set(aWorld, tX, tY+1, tZ, NB, 0, 0);\n\t\t\t\t\t}\n\t\t\t\t\tif (tRocks && (tContact.getMaterial() == Material.grass || tContact.getMaterial() == Material.ground || tContact.getMaterial() == Material.sand || tContact.getMaterial() == Material.rock)) {\n\t\t\t\t\t\ttRegistry.mBlock.placeBlock(aWorld, tX, tY+1, tZ, SIDE_UNKNOWN, (short)32757, ST.save(NBT_VALUE, tRock), F, T);\n\t\t\t\t\t\tbreak;\n\t\t\t\t\t}\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t}} catch(Throwable e) {\n\t\t\t\tERR.println(tD);\n\t\t\t\te.printStackTrace(ERR);"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/WorldgenFluidSpring.java",
+      "start": 62,
+      "text": "\t\tif (GENERATING_SPECIAL || !WorldgenOresBedrock.GENERATED_NO_BEDROCK_ORE || !WorldgenOresBedrock.CAN_GENERATE_BEDROCK_ORE || aRandom.nextInt(mProbability) != 0) return F;\n\t\t\n\t\tWorldgenOresBedrock.CAN_GENERATE_BEDROCK_ORE = F;\n\t\t\n\t\tBlock tBlock = WD.block(aWorld, aMinX+8, 0, aMinZ+8);\n\t\tif (tBlock != BlocksGT.oreBedrock && tBlock != BlocksGT.oreSmallBedrock && !WD.bedrock(tBlock)) return F;\n\t\t\n\t\ttBlock = (aDimType == DIM_NETHER ? Blocks.netherrack : IL.EtFu_Deepslate.block());\n\t\tif (ST.invalid(tBlock)) tBlock = Blocks.stone;\n\t\t"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "start": 966,
+      "text": "\t, GEN_FLOOR[]           = new List[] {GEN_OVERWORLD, GEN_GT, GEN_PFAA, GEN_ENVM, GEN_ENVM_GT, GEN_A97, GEN_A97_GT, GEN_EREBUS, GEN_BETWEENLANDS, GEN_ATUM, GEN_MARS, GEN_DEEPDARK, GEN_TFC, GEN_NETHER, GEN_MOON, GEN_TWILIGHT, GEN_ALFHEIM, GEN_TROPICS, GEN_CANDY, GEN_CW2_AquaCavern, GEN_CW2_AquaCavern_GT, GEN_CW2_Caveland, GEN_CW2_Caveland_GT, GEN_CW2_Cavenia, GEN_CW2_Cavenia_GT, GEN_CW2_Cavern, GEN_CW2_Cavern_GT, GEN_CW2_Caveworld, GEN_CW2_Caveworld_GT}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/config/Config.java",
+      "start": 41,
+      "text": "\tprivate boolean mUsesDefaultsInNames = T;"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/config/Config.java",
+      "start": 117,
+      "text": "\tpublic int get(Object aCategory, String aName, long aDefault) {\n\t\tif (UT.Code.stringInvalid(aName)) return UT.Code.bindInt(aDefault);\n\t\tProperty tProperty = mConfig.get(aCategory.toString().replaceAll(\"\\\\|\", \"_\"), (aName+(mUsesDefaultsInNames?\"_\"+UT.Code.bindInt(aDefault):\"\")).replaceAll(\"\\\\|\", \"_\"), UT.Code.bindInt(aDefault));\n\t\tint rResult = tProperty.getInt(UT.Code.bindInt(aDefault));\n\t\tif (Abstract_Mod.sFinalized >= Abstract_Mod.sModCountUsingGTAPI && mSaveOnEdit && !tProperty.wasRead()) mConfig.save();\n\t\treturn rResult;\n\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/GT_API.java",
+      "start": 291,
+      "text": "\t\tConfigsGT.WORLDGEN      = new Config(\"WorldGenerationNew.cfg\");"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_Worldgen.java",
+      "start": 56,
+      "text": "\t\ttInfiniteOil = ConfigsGT.WORLDGEN.get(ConfigCategories.general, \"GenerateInfiniteOilSources\", T),\n\t\ttInfiniteGas = ConfigsGT.WORLDGEN.get(ConfigCategories.general, \"GenerateInfiniteGasSources\", T);"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTFluidSpringsFeature.java",
+      "start": 69,
+      "text": "        Spring spring = SPRINGS.get(random.nextInt(SPRINGS.size()));\n        // GT6: `aRandom.nextInt(mProbability) != 0` → return.\n        if (random.nextInt(spring.probability()) != 0) return false;\n        int minX = context.origin().getX() & ~15;\n        int minZ = context.origin().getZ() & ~15;\n        if (!hasBedrock(level, minX + 8, minZ + 8)) return false;\n        return carve(level, minX, minZ, spring, random);\n    }\n"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTFluidSpringsFeature.java",
+      "start": 81,
+      "text": "        return bottom.is(Blocks.BEDROCK) || isBedrockOre(bottom);\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTBedrockOreFeature.java",
+      "start": 41,
+      "text": "        if (Math.floorMod(chunkPos.x, 16) != 8 || Math.floorMod(chunkPos.z, 16) != 8) return false;\n\n        // Use this port's dimension table for its weighted grid selection.\n        Random gridRandom = gridRandom(level, chunkPos);\n        GTBedrockOres.BedrockOre pick = select(level, gridRandom);"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTBedrockOreFeature.java",
+      "start": 138,
+      "text": "            public boolean bedrock(int x, int y, int z, boolean small) {\n                return GTOreBlockResolver.placeBedrockOre(level, new BlockPos(x, y, z), material);\n            }\n"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOreBlockResolver.java",
+      "start": 219,
+      "text": "    public static boolean placeBedrockOre(WorldGenLevel level, BlockPos pos, GTMaterial material) {\n        if (!level.getBlockState(pos).is(Blocks.BEDROCK) || material == null) return false;\n        String materialName = material.getName().toLowerCase();\n        Block found = lookup(\"ore_\" + materialName);\n        if (!(found instanceof OreBlock ore)) return false;\n        return level.setBlock(pos, ore.stateFor(OreHostStone.BEDROCK), 2);\n    }\n}"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/OreBlock.java",
+      "start": 161,
+      "text": "    public boolean isSmall() {\n        return \"oreSmall\".equals(prefix.getName());\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/bootstrap/content/BlockBootstrap.java",
+      "start": 96,
+      "text": "        boolean isOre = \"ore\".equals(prefix.getName()) || \"oreSmall\".equals(prefix.getName());\n        BlockBehaviour.Properties properties = BlockBehaviour.Properties.of()\n                .mapColor(com.gregtech.gregtech.block.BlockPrefixPresentation.mapColor(prefix))\n                .strength(prefix.computeHardness(material), prefix.computeResistance(material))\n                .sound(com.gregtech.gregtech.block.BlockPrefixPresentation.soundType(prefix));\n        if (!prefix.falling() && !prefix.isCrate()) {\n            properties = properties.requiresCorrectToolForDrops();\n        }\n        if (prefix.falling()) {\n            return MaterialBlock.falling(properties, prefix, material);\n        }\n        if (isOre) {\n            return new OreBlock(properties, prefix, material);\n        }\n        return new MaterialBlock(properties, prefix, material);"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTBedrockOreFeature.java",
+      "start": 69,
+      "text": "                for (int attempt = 0; attempt < 6; attempt++) {\n                    int x = centerX + random.nextInt(7) - 3;\n                    int z = centerZ + random.nextInt(7) - 3;\n                    int y = level.getHeight(Heightmap.Types.WORLD_SURFACE_WG, x, z);\n                    cursor.set(x, y, z);\n                    if (!level.getBlockState(cursor).isAir()) continue;\n                    BlockState ground = level.getBlockState(cursor.below());\n                    if (!ground.is(Blocks.GRASS_BLOCK) && !ground.is(Blocks.DIRT) && !ground.is(Blocks.SAND)\n                            && !ground.is(Blocks.PODZOL) && !ground.is(Blocks.COARSE_DIRT)) continue;\n                    if (!flowerState.canSurvive(level, cursor)) continue;\n                    level.setBlock(new BlockPos(x, y, z), flowerState, 2);\n                }\n            }\n        }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTBedrockOreFeature.java",
+      "start": 84,
+      "text": "        for (int attempt = 0; attempt < 3; attempt++) {\n            GTRockPlacement.placeRock(level,\n                    centerX + random.nextInt(9) - 4, centerZ + random.nextInt(9) - 4,\n                    pick.material(), true);\n        }\n        return true;\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/MineralWorldgenRules.java",
+      "start": 35,
+      "text": "    public static long bedrockWeight(int chance) {\n        return Math.max(1, 1_000_000L / Math.max(1, chance));\n    }"
+    }
+  ],
+  "native_evidence": [
+    {
+      "platform": "neoforge",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/levelgen/GenerationStep.java",
+      "entry_sha256": "cef2a5ecdd6bc41edb2f8d101a3773b676edaa0e8a255fc83f3edddd128e55dc",
+      "excerpts": [
+        "        SURFACE_STRUCTURES(\"surface_structures\"),\n        STRONGHOLDS(\"strongholds\"),\n        UNDERGROUND_ORES(\"underground_ores\"),\n        UNDERGROUND_DECORATION(\"underground_decoration\"),\n        FLUID_SPRINGS(\"fluid_springs\"),\n        VEGETAL_DECORATION(\"vegetal_decoration\"),\n        TOP_LAYER_MODIFICATION(\"top_layer_modification\");\n\n        public static final Codec<GenerationStep.Decoration> CODEC = StringRepresentable.fromEnum(GenerationStep.Decoration::values);\n        private final String name;",
+        "        STRONGHOLDS(\"strongholds\"),\n        UNDERGROUND_ORES(\"underground_ores\"),\n        UNDERGROUND_DECORATION(\"underground_decoration\"),\n        FLUID_SPRINGS(\"fluid_springs\"),\n        VEGETAL_DECORATION(\"vegetal_decoration\"),\n        TOP_LAYER_MODIFICATION(\"top_layer_modification\");\n\n        public static final Codec<GenerationStep.Decoration> CODEC = StringRepresentable.fromEnum(GenerationStep.Decoration::values);\n        private final String name;\n"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/chunk/ChunkGenerator.java",
+      "entry_sha256": "163597f9f04a3a117ebc748bb3425a5017d9551edf1dbd8bcb32d8393166c8f1",
+      "excerpts": [
+        "            try {\n                Registry<PlacedFeature> registry1 = p_223087_.registryAccess().registryOrThrow(Registries.PLACED_FEATURE);\n                int i1 = Math.max(GenerationStep.Decoration.values().length, j);\n\n                for (int k = 0; k < i1; k++) {\n                    int l = 0;\n                    if (p_223089_.shouldGenerateStructures()) {\n                        for (Structure structure : map.getOrDefault(k, Collections.emptyList())) {\n                            worldgenrandom.setFeatureSeed(i, l, k);\n                            Supplier<String> supplier = () -> registry.getResourceKey(structure).map(Object::toString).orElseGet(structure::toString);",
+        "                            try {\n                                p_223087_.setCurrentlyGenerating(supplier1);\n                                placedfeature.placeWithBiomeCheck(p_223087_, this, worldgenrandom, blockpos);\n                            } catch (Exception exception1) {\n                                CrashReport crashreport2 = CrashReport.forThrowable(exception1, \"Feature placement\");\n                                crashreport2.addCategory(\"Feature\").setDetail(\"Description\", supplier1::get);\n                                throw new ReportedException(crashreport2);\n                            }\n                        }\n                    }"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/levelgen/GenerationStep$Decoration.class",
+      "entry_sha256": "b630ffc29ff221dd67b44e337cdf6cb3fe5753ae06e1d4c34d5ecbc4beed5d86",
+      "javap_output": "work/spring-dispatch-audit-20261022/forge-generation-step.javap.txt",
+      "javap_sha256": "e5823e8313405b0beecb6dc027f7c8cbc097fccd842090bddea0a909d5fd35d3",
+      "excerpts": [
+        "        90: new           #2                  // class net/minecraft/world/level/levelgen/GenerationStep$Decoration\n        93: dup\n        94: ldc           #112                // String UNDERGROUND_ORES\n        96: bipush        6\n        98: ldc           #114                // String underground_ores\n       100: invokespecial #96                 // Method \"<init>\":(Ljava/lang/String;ILjava/lang/String;)V\n       103: putstatic     #81                 // Field UNDERGROUND_ORES:Lnet/minecraft/world/level/levelgen/GenerationStep$Decoration;\n       106: new           #2                  // class net/minecraft/world/level/levelgen/GenerationStep$Decoration\n       109: dup\n       110: ldc           #115                // String UNDERGROUND_DECORATION\n       112: bipush        7\n       114: ldc           #117                // String underground_decoration\n       116: invokespecial #96                 // Method \"<init>\":(Ljava/lang/String;ILjava/lang/String;)V\n       119: putstatic     #83                 // Field UNDERGROUND_DECORATION:Lnet/minecraft/world/level/levelgen/GenerationStep$Decoration;\n       122: new           #2                  // class net/minecraft/world/level/levelgen/GenerationStep$Decoration\n       125: dup\n       126: ldc           #118                // String FLUID_SPRINGS",
+        "       106: new           #2                  // class net/minecraft/world/level/levelgen/GenerationStep$Decoration\n       109: dup\n       110: ldc           #115                // String UNDERGROUND_DECORATION\n       112: bipush        7\n       114: ldc           #117                // String underground_decoration\n       116: invokespecial #96                 // Method \"<init>\":(Ljava/lang/String;ILjava/lang/String;)V\n       119: putstatic     #83                 // Field UNDERGROUND_DECORATION:Lnet/minecraft/world/level/levelgen/GenerationStep$Decoration;\n       122: new           #2                  // class net/minecraft/world/level/levelgen/GenerationStep$Decoration\n       125: dup\n       126: ldc           #118                // String FLUID_SPRINGS\n       128: bipush        8\n       130: ldc           #120                // String fluid_springs\n       132: invokespecial #96                 // Method \"<init>\":(Ljava/lang/String;ILjava/lang/String;)V\n       135: putstatic     #85                 // Field FLUID_SPRINGS:Lnet/minecraft/world/level/levelgen/GenerationStep$Decoration;\n       138: new           #2                  // class net/minecraft/world/level/levelgen/GenerationStep$Decoration\n       141: dup\n       142: ldc           #121                // String VEGETAL_DECORATION",
+        "       196: invokeinterface #568,  2          // InterfaceMethod net/minecraft/core/RegistryAccess.registryOrThrow:(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/core/Registry;\n       201: astore        15\n       203: invokestatic  #661                // Method net/minecraft/world/level/levelgen/GenerationStep$Decoration.values:()[Lnet/minecraft/world/level/levelgen/GenerationStep$Decoration;\n       206: arraylength\n       207: iload         14\n       209: invokestatic  #666                // Method java/lang/Math.max:(II)I\n       212: istore        16\n       214: iconst_0\n       215: istore        17\n       217: iload         17\n       219: iload         16\n       221: if_icmpge     719\n       224: iconst_0\n       225: istore        18\n       227: aload_3\n       228: invokevirtual #669                // Method net/minecraft/world/level/StructureManager.shouldGenerateStructures:()Z\n       231: ifeq          399",
+        "       647: aload         10\n       649: aload         6\n       651: invokevirtual #817                // Method net/minecraft/world/level/levelgen/placement/PlacedFeature.placeWithBiomeCheck:(Lnet/minecraft/world/level/WorldGenLevel;Lnet/minecraft/world/level/chunk/ChunkGenerator;Lnet/minecraft/util/RandomSource;Lnet/minecraft/core/BlockPos;)Z\n       654: pop\n       655: goto          707\n       658: astore        27\n       660: aload         27\n       662: ldc_w         #718                // String Feature placement\n       665: invokestatic  #724                // Method net/minecraft/CrashReport.forThrowable:(Ljava/lang/Throwable;Ljava/lang/String;)Lnet/minecraft/CrashReport;\n       668: astore        28\n       670: aload         28\n       672: ldc_w         #726                // String Feature\n       675: invokevirtual #730                // Method net/minecraft/CrashReport.addCategory:(Ljava/lang/String;)Lnet/minecraft/CrashReportCategory;\n       678: ldc_w         #732                // String Description\n       681: aload         26\n       683: dup\n       684: invokestatic  #737                // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/chunk/ChunkGenerator.class",
+      "entry_sha256": "5a37afe50934158c0e0bd514688a93fc8100d676b1fe42f646228b3f87498256",
+      "javap_output": "work/spring-dispatch-audit-20261022/forge-generation-step.javap.txt",
+      "javap_sha256": "e5823e8313405b0beecb6dc027f7c8cbc097fccd842090bddea0a909d5fd35d3",
+      "excerpts": [
+        "        90: new           #2                  // class net/minecraft/world/level/levelgen/GenerationStep$Decoration\n        93: dup\n        94: ldc           #112                // String UNDERGROUND_ORES\n        96: bipush        6\n        98: ldc           #114                // String underground_ores\n       100: invokespecial #96                 // Method \"<init>\":(Ljava/lang/String;ILjava/lang/String;)V\n       103: putstatic     #81                 // Field UNDERGROUND_ORES:Lnet/minecraft/world/level/levelgen/GenerationStep$Decoration;\n       106: new           #2                  // class net/minecraft/world/level/levelgen/GenerationStep$Decoration\n       109: dup\n       110: ldc           #115                // String UNDERGROUND_DECORATION\n       112: bipush        7\n       114: ldc           #117                // String underground_decoration\n       116: invokespecial #96                 // Method \"<init>\":(Ljava/lang/String;ILjava/lang/String;)V\n       119: putstatic     #83                 // Field UNDERGROUND_DECORATION:Lnet/minecraft/world/level/levelgen/GenerationStep$Decoration;\n       122: new           #2                  // class net/minecraft/world/level/levelgen/GenerationStep$Decoration\n       125: dup\n       126: ldc           #118                // String FLUID_SPRINGS",
+        "       106: new           #2                  // class net/minecraft/world/level/levelgen/GenerationStep$Decoration\n       109: dup\n       110: ldc           #115                // String UNDERGROUND_DECORATION\n       112: bipush        7\n       114: ldc           #117                // String underground_decoration\n       116: invokespecial #96                 // Method \"<init>\":(Ljava/lang/String;ILjava/lang/String;)V\n       119: putstatic     #83                 // Field UNDERGROUND_DECORATION:Lnet/minecraft/world/level/levelgen/GenerationStep$Decoration;\n       122: new           #2                  // class net/minecraft/world/level/levelgen/GenerationStep$Decoration\n       125: dup\n       126: ldc           #118                // String FLUID_SPRINGS\n       128: bipush        8\n       130: ldc           #120                // String fluid_springs\n       132: invokespecial #96                 // Method \"<init>\":(Ljava/lang/String;ILjava/lang/String;)V\n       135: putstatic     #85                 // Field FLUID_SPRINGS:Lnet/minecraft/world/level/levelgen/GenerationStep$Decoration;\n       138: new           #2                  // class net/minecraft/world/level/levelgen/GenerationStep$Decoration\n       141: dup\n       142: ldc           #121                // String VEGETAL_DECORATION",
+        "       196: invokeinterface #568,  2          // InterfaceMethod net/minecraft/core/RegistryAccess.registryOrThrow:(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/core/Registry;\n       201: astore        15\n       203: invokestatic  #661                // Method net/minecraft/world/level/levelgen/GenerationStep$Decoration.values:()[Lnet/minecraft/world/level/levelgen/GenerationStep$Decoration;\n       206: arraylength\n       207: iload         14\n       209: invokestatic  #666                // Method java/lang/Math.max:(II)I\n       212: istore        16\n       214: iconst_0\n       215: istore        17\n       217: iload         17\n       219: iload         16\n       221: if_icmpge     719\n       224: iconst_0\n       225: istore        18\n       227: aload_3\n       228: invokevirtual #669                // Method net/minecraft/world/level/StructureManager.shouldGenerateStructures:()Z\n       231: ifeq          399",
+        "       647: aload         10\n       649: aload         6\n       651: invokevirtual #817                // Method net/minecraft/world/level/levelgen/placement/PlacedFeature.placeWithBiomeCheck:(Lnet/minecraft/world/level/WorldGenLevel;Lnet/minecraft/world/level/chunk/ChunkGenerator;Lnet/minecraft/util/RandomSource;Lnet/minecraft/core/BlockPos;)Z\n       654: pop\n       655: goto          707\n       658: astore        27\n       660: aload         27\n       662: ldc_w         #718                // String Feature placement\n       665: invokestatic  #724                // Method net/minecraft/CrashReport.forThrowable:(Ljava/lang/Throwable;Ljava/lang/String;)Lnet/minecraft/CrashReport;\n       668: astore        28\n       670: aload         28\n       672: ldc_w         #726                // String Feature\n       675: invokevirtual #730                // Method net/minecraft/CrashReport.addCategory:(Ljava/lang/String;)Lnet/minecraft/CrashReportCategory;\n       678: ldc_w         #732                // String Description\n       681: aload         26\n       683: dup\n       684: invokestatic  #737                // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;"
+      ]
+    }
+  ],
+  "readability": {
+    "baseline": "b453cf590d10b29397b4bd81ef37908e4ce5e49a",
+    "files": {
+      "core/src/main/java/com/gregtech/gregtech/worldgen/MineralWorldgenRules.java": {
+        "before_raw_sha256": "12ebea918eb868df0e7c93b10a3bfad30c785c99473428d3832eb3965d065429",
+        "after_raw_sha256": "f2060e59fa476caf5cb5735d60da66f2bcca135956a01e1fbb15773f38a9f31a",
+        "before_lines": 33,
+        "after_lines": 97,
+        "comment_corrections": [
+          [
+            "Exact original shared mineral-region, pylon and bedrock shape decisions.",
+            "Shared mineral and bedrock geometry helpers; platform sinks own block identity and placement."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 919,
+            "execution_sha256": "c6683cdfad9eeac45a6e328b8de76d178ad522c3a8b2087c4e8e6ddce2a32a26",
+            "literal_positions_sha256": "af176dbb2a9c231303091d18ef2745ef63d73100689d4e34d1d3908550f6ff42",
+            "literal_count": 78
+          }
+        ]
+      },
+      "core/src/main/java/com/gregtech/gregtech/worldgen/GTBedrockOres.java": {
+        "before_raw_sha256": "2cff5b44a3b3816f5ebddac811502e61b5ed35730016f55788832958e834651c",
+        "after_raw_sha256": "ca7703ea4225ccea71bec11f24a69890d32d3e84d2a6b91d7a91a1a3b6023bea",
+        "before_lines": 64,
+        "after_lines": 65,
+        "comment_corrections": [
+          [
+            "/**\n * Bedrock ore deposits (GT6 {@code WorldgenOresBedrock}, {@code Loader_Worldgen:725-770}).\n * {@code chance} is the GT6 rarity divisor (bigger = rarer); the indicator flower grows\n * on the surface above the deposit (GT6 BlockFlowersA/B, real-world indicator plants) and is\n * {@code null} for the Nether deposits, which GT6 registers without a flower.\n */",
+            "/**\n * Current port catalogs for weighted bedrock selection, not the complete original registration lists.\n * Original shared-floor membership and per-row attempts require separate dispatch logic.\n */"
+          ],
+          [
+            "The Nether deposits (GT6 {@code Loader_Worldgen:758-764}). GT6 registers these without an",
+            "The seven Nether-specific rows ({@code Loader_Worldgen:758-764}), registered without an"
+          ]
+        ],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 794,
+            "execution_sha256": "e6f0231305b7eae4a72d955fe07b169be8035b64be1fe1acfd110134bf53a760",
+            "literal_positions_sha256": "65cb436d9059ae1805675cf57f9512c04ac207c79459e0a1d4695b0a6a4842df",
+            "literal_count": 98
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTBedrockOreFeature.java": {
+        "before_raw_sha256": "25a586df9334cb6cad4e8eb8e954901608a715eb132b1b5b59cdb3ecd1b5efba",
+        "after_raw_sha256": "e39317f6ae022fb3b9c1a2219395665c3fcaa012a66c5bae91f043bf5c9cb768",
+        "before_lines": 174,
+        "after_lines": 175,
+        "comment_corrections": [
+          [
+            "/**\n * Bedrock ore deposits (GT6 {@code WorldgenOresBedrock}): one weighted deposit per\n * 16x16-chunk grid cell, sitting in the deepest layers above bedrock, with indicator\n * flowers (real-world ore-indicator plants) on the surface above it.\n */",
+            "/**\n * This port selects one weighted deposit per 16x16-chunk grid cell. The shared geometry\n * writer delegates block placement here; original per-row dispatch and field exclusion are\n * separate contracts, not consequences of using the original shape bounds.\n */"
+          ],
+          [
+            "GT6 registers separate overworld and nether tables and gates them by dimension.",
+            "Use this port's dimension table for its weighted grid selection."
+          ],
+          [
+            "has a breakable core.",
+            "has a large core block."
+          ],
+          [
+            "block sideways on a 1-in-7 roll per axis, dropping small ores on two thirds of the steps.",
+            "block in at most one of four directions on each seven-way roll, with small ore on two thirds of interior steps."
+          ],
+          [
+            "Weighted pick — weight inversely proportional to the GT6 rarity divisor, inside the table of\n     * the level's dimension (the port generates bedrock ores in the Overworld and the Nether).",
+            "Weighted pick with integer inverse-rarity weights in this port's dimension table."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1185,
+            "execution_sha256": "a62ef5ea5fef05c2550d1b74f390f929aba6d339c2d5916e6a11fae2991bed81",
+            "literal_positions_sha256": "e5b255c952437cd67d04e24ae4da3673bfc4ee6a69f9a33abb7bd133cbfb86fa",
+            "literal_count": 26
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1180,
+            "execution_sha256": "5446e77f5474bf5be933febfdef4aca0f0afbcb87010678af94f5baff1269832",
+            "literal_positions_sha256": "b798b3547b0b98ed46e2ebf961c6c5fedf5ba306a6576ff3f4522e75dcbc863b",
+            "literal_count": 27
+          }
+        ],
+        "removed_private_source": "    /** A small ore inside the bedrock floor (GT6's {@code oreSmallBedrock}). */\n    private static boolean placeSmallBedrockOre(WorldGenLevel level, BlockPos pos, GTMaterial material) {\n        // The port keeps one ore block per material and records the background on the block entity.\n        return GTOreBlockResolver.placeBedrockOre(level, pos, material);\n    }\n\n    /** One sprinkle block above the blob: a small ore in whatever stone is there. */\n    private static boolean placeSprinkle(WorldGenLevel level, int x, int y, int z, GTMaterial material) {\n        if (level.isOutsideBuildHeight(y)) return false;\n        return GTOreBlockResolver.placeOre(level, new BlockPos(x, y, z), material, true);\n    }\n\n",
+        "removed_source_sha256": "28fb2d8383b9cba0256b334a255e46a93d8cafa69fa2ab6ecd6d2ae9503c2830",
+        "comparison_contract": "All remaining ordered code tokens match after explicitly removing two private wrappers; other files compare their complete original code."
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOreBlockResolver.java": {
+        "before_raw_sha256": "2770693c6194e1eba94d16db395f02c7175a2bdf6166cf558f5520cdc7a5e0f7",
+        "after_raw_sha256": "ca7b211a4f7dd8cacbd7668ba9c77209b5fd6e0a14dd00e15f3b6d15aaa213d5",
+        "before_lines": 215,
+        "after_lines": 226,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1063,
+            "execution_sha256": "cc795db12cb326ea890a189847150091367389a1fe1871fe224825d3246d3514",
+            "literal_positions_sha256": "a6c6810e5b2f82083c09c9406c6e54db039a8d067f5c17578c5a29bbbb54242c",
+            "literal_count": 8
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1163,
+            "execution_sha256": "1b8fe087115558b19656881db1c73c83a1253cf2b0fb2d39505c2a2aecf9d9ec",
+            "literal_positions_sha256": "e284877515be82ac739c6f9077c960bd08c06ddfde117078734fd8c086fff152",
+            "literal_count": 10
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTBedrockOreDimensions.java": {
+        "before_raw_sha256": "f7565d8827ed89b462996ed9adad357e0387ebda49197b50bb276984945bb64d",
+        "after_raw_sha256": "8a65769617f10bd65ba0f31de88fa075645f0ba12faa11ba32703c9b715119f0",
+        "before_lines": 16,
+        "after_lines": 18,
+        "comment_corrections": [
+          [
+            "Forge dimension boundary for the shared, unchanged bedrock-ore tables.",
+            "Native dimension boundary for this port's shared bedrock-ore tables."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 99,
+            "execution_sha256": "d5003a91db52a0abc24aa500f3264bf7e12239625fdd37cad59343d0bc75d693",
+            "literal_positions_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "literal_count": 0
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 99,
+            "execution_sha256": "d5003a91db52a0abc24aa500f3264bf7e12239625fdd37cad59343d0bc75d693",
+            "literal_positions_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "literal_count": 0
+          }
+        ]
+      }
+    }
+  },
+  "removed_private_reference_discovery": {
+    "scope": "Tracked Java, Python, Gradle/Kotlin source, excluding docs and scratch; names in comments and strings included.",
+    "occurrences": [
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTBedrockOreFeature.java",
+        "line": 141,
+        "text": "private static boolean placeSmallBedrockOre(WorldGenLevel level, BlockPos pos, GTMaterial material) {"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTBedrockOreFeature.java",
+        "line": 147,
+        "text": "private static boolean placeSprinkle(WorldGenLevel level, int x, int y, int z, GTMaterial material) {"
+      }
+    ],
+    "limits": "Does not rule out external reflection; these are private non-API wrappers."
+  },
+  "formal_findings_added": [
+    353,
+    354,
+    355,
+    356,
+    357,
+    358
+  ],
+  "formal_findings_extended": [
+    4
+  ],
+  "original_shared_floor_rows": [
+    {
+      "line": 725,
+      "name": "ore.bedrock.diamond",
+      "enabled": "T",
+      "chance": 128000,
+      "material": "Diamond",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 726,
+      "name": "ore.bedrock.tungstate",
+      "enabled": "T",
+      "chance": 96000,
+      "material": "Tungstate",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 727,
+      "name": "ore.bedrock.ferberite",
+      "enabled": "T",
+      "chance": 96000,
+      "material": "Ferberite",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 728,
+      "name": "ore.bedrock.wolframite",
+      "enabled": "T",
+      "chance": 96000,
+      "material": "Wolframite",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 729,
+      "name": "ore.bedrock.stolzite",
+      "enabled": "T",
+      "chance": 96000,
+      "material": "Stolzite",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 730,
+      "name": "ore.bedrock.scheelite",
+      "enabled": "T",
+      "chance": 96000,
+      "material": "Scheelite",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 731,
+      "name": "ore.bedrock.huebnerite",
+      "enabled": "T",
+      "chance": 96000,
+      "material": "Huebnerite",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 732,
+      "name": "ore.bedrock.russelite",
+      "enabled": "T",
+      "chance": 96000,
+      "material": "Russellite",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 733,
+      "name": "ore.bedrock.pinalite",
+      "enabled": "T",
+      "chance": 96000,
+      "material": "Pinalite",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 734,
+      "name": "ore.bedrock.uraninite",
+      "enabled": "T",
+      "chance": 60000,
+      "material": "Uraninite",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 735,
+      "name": "ore.bedrock.pitchblende",
+      "enabled": "T",
+      "chance": 60000,
+      "material": "Pitchblende",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 736,
+      "name": "ore.bedrock.gold.a",
+      "enabled": "T",
+      "chance": 32000,
+      "material": "Au",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 737,
+      "name": "ore.bedrock.gold.b",
+      "enabled": "T",
+      "chance": 32000,
+      "material": "Au",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 738,
+      "name": "ore.bedrock.cooperite",
+      "enabled": "T",
+      "chance": 16000,
+      "material": "Cooperite",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 739,
+      "name": "ore.bedrock.copper",
+      "enabled": "T",
+      "chance": 16000,
+      "material": "Cu",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 740,
+      "name": "ore.bedrock.monazite",
+      "enabled": "T",
+      "chance": 16000,
+      "material": "Monazite",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 741,
+      "name": "ore.bedrock.powellite",
+      "enabled": "T",
+      "chance": 14000,
+      "material": "Powellite",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 742,
+      "name": "ore.bedrock.bastnasite",
+      "enabled": "T",
+      "chance": 8000,
+      "material": "Bastnasite",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 743,
+      "name": "ore.bedrock.stibnite",
+      "enabled": "T",
+      "chance": 8000,
+      "material": "Arsenopyrite",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 744,
+      "name": "ore.bedrock.redstone",
+      "enabled": "T",
+      "chance": 7000,
+      "material": "Redstone",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 745,
+      "name": "ore.bedrock.vanadium",
+      "enabled": "T",
+      "chance": 6000,
+      "material": "V2O5",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 746,
+      "name": "ore.bedrock.galena",
+      "enabled": "T",
+      "chance": 6000,
+      "material": "Galena",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 747,
+      "name": "ore.bedrock.coal",
+      "enabled": "T",
+      "chance": 5000,
+      "material": "Coal",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 748,
+      "name": "ore.bedrock.graphite",
+      "enabled": "T",
+      "chance": 5000,
+      "material": "Graphite",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 749,
+      "name": "ore.bedrock.stibnite",
+      "enabled": "T",
+      "chance": 4000,
+      "material": "Stibnite",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 750,
+      "name": "ore.bedrock.hematite",
+      "enabled": "T",
+      "chance": 4000,
+      "material": "Fe2O3",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 751,
+      "name": "ore.bedrock.sphalerite",
+      "enabled": "T",
+      "chance": 3000,
+      "material": "Sphalerite",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 752,
+      "name": "ore.bedrock.smithsonite",
+      "enabled": "T",
+      "chance": 3000,
+      "material": "Smithsonite",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 753,
+      "name": "ore.bedrock.pentlandite",
+      "enabled": "T",
+      "chance": 3000,
+      "material": "Pentlandite",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 754,
+      "name": "ore.bedrock.saltpeter",
+      "enabled": "T",
+      "chance": 3000,
+      "material": "Niter",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 755,
+      "name": "ore.bedrock.bauxite",
+      "enabled": "T",
+      "chance": 2000,
+      "material": "Bauxite",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 756,
+      "name": "ore.bedrock.cassiterite",
+      "enabled": "T",
+      "chance": 2000,
+      "material": "Cassiterite",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 757,
+      "name": "ore.bedrock.chalcopyrite",
+      "enabled": "T",
+      "chance": 2000,
+      "material": "Chalcopyrite",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    }
+  ],
+  "original_nether_exclusive_rows": [
+    {
+      "line": 758,
+      "name": "ore.bedrock.voidquartz",
+      "enabled": "T",
+      "chance": 4000,
+      "material": "VoidQuartz",
+      "lists": [
+        "GEN_NETHER"
+      ]
+    },
+    {
+      "line": 759,
+      "name": "ore.bedrock.glowstone",
+      "enabled": "T",
+      "chance": 4000,
+      "material": "Glowstone",
+      "lists": [
+        "GEN_NETHER"
+      ]
+    },
+    {
+      "line": 760,
+      "name": "ore.bedrock.gloomstone",
+      "enabled": "T",
+      "chance": 4000,
+      "material": "Gloomstone",
+      "lists": [
+        "GEN_NETHER"
+      ]
+    },
+    {
+      "line": 761,
+      "name": "ore.bedrock.efrine",
+      "enabled": "T",
+      "chance": 2000,
+      "material": "Efrine",
+      "lists": [
+        "GEN_NETHER"
+      ]
+    },
+    {
+      "line": 762,
+      "name": "ore.bedrock.netherquartz",
+      "enabled": "T",
+      "chance": 2000,
+      "material": "NetherQuartz",
+      "lists": [
+        "GEN_NETHER"
+      ]
+    },
+    {
+      "line": 763,
+      "name": "ore.bedrock.firestone",
+      "enabled": "T",
+      "chance": 8000,
+      "material": "Firestone",
+      "lists": [
+        "GEN_NETHER"
+      ]
+    },
+    {
+      "line": 764,
+      "name": "ore.bedrock.ancientdebris",
+      "enabled": "T",
+      "chance": 4000,
+      "material": "AncientDebris",
+      "lists": [
+        "GEN_NETHER",
+        "GEN_MARS"
+      ]
+    }
+  ],
+  "original_floor_dimension_array": "GEN_OVERWORLD, GEN_GT, GEN_PFAA, GEN_ENVM, GEN_ENVM_GT, GEN_A97, GEN_A97_GT, GEN_EREBUS, GEN_BETWEENLANDS, GEN_ATUM, GEN_MARS, GEN_DEEPDARK, GEN_TFC, GEN_NETHER, GEN_MOON, GEN_TWILIGHT, GEN_ALFHEIM, GEN_TROPICS, GEN_CANDY, GEN_CW2_AquaCavern, GEN_CW2_AquaCavern_GT, GEN_CW2_Caveland, GEN_CW2_Caveland_GT, GEN_CW2_Cavenia, GEN_CW2_Cavenia_GT, GEN_CW2_Cavern, GEN_CW2_Cavern_GT, GEN_CW2_Caveworld, GEN_CW2_Caveworld_GT",
+  "current_tables": {
+    "OVERWORLD": [
+      {
+        "name": "diamond",
+        "material": "Diamond",
+        "chance": 128000
+      },
+      {
+        "name": "tungstate",
+        "material": "Tungstate",
+        "chance": 96000
+      },
+      {
+        "name": "ferberite",
+        "material": "Ferberite",
+        "chance": 96000
+      },
+      {
+        "name": "wolframite",
+        "material": "Wolframite",
+        "chance": 96000
+      },
+      {
+        "name": "stolzite",
+        "material": "Stolzite",
+        "chance": 96000
+      },
+      {
+        "name": "scheelite",
+        "material": "Scheelite",
+        "chance": 96000
+      },
+      {
+        "name": "huebnerite",
+        "material": "Huebnerite",
+        "chance": 96000
+      },
+      {
+        "name": "russellite",
+        "material": "Russellite",
+        "chance": 96000
+      },
+      {
+        "name": "pinalite",
+        "material": "Pinalite",
+        "chance": 96000
+      },
+      {
+        "name": "uraninite",
+        "material": "Uraninite",
+        "chance": 60000
+      },
+      {
+        "name": "pitchblende",
+        "material": "Pitchblende",
+        "chance": 60000
+      },
+      {
+        "name": "gold_a",
+        "material": "Gold",
+        "chance": 32000
+      },
+      {
+        "name": "gold_b",
+        "material": "Gold",
+        "chance": 32000
+      },
+      {
+        "name": "cooperite",
+        "material": "Cooperite",
+        "chance": 16000
+      },
+      {
+        "name": "copper",
+        "material": "Copper",
+        "chance": 16000
+      },
+      {
+        "name": "monazite",
+        "material": "Monazite",
+        "chance": 16000
+      },
+      {
+        "name": "powellite",
+        "material": "Powellite",
+        "chance": 14000
+      },
+      {
+        "name": "bastnasite",
+        "material": "Bastnasite",
+        "chance": 8000
+      },
+      {
+        "name": "arsenopyrite",
+        "material": "Arsenopyrite",
+        "chance": 8000
+      },
+      {
+        "name": "redstone",
+        "material": "Redstone",
+        "chance": 7000
+      },
+      {
+        "name": "vanadium",
+        "material": "VanadiumPentoxide",
+        "chance": 6000
+      },
+      {
+        "name": "galena",
+        "material": "Galena",
+        "chance": 6000
+      },
+      {
+        "name": "coal",
+        "material": "Coal",
+        "chance": 5000
+      },
+      {
+        "name": "graphite",
+        "material": "Graphite",
+        "chance": 5000
+      },
+      {
+        "name": "stibnite",
+        "material": "Stibnite",
+        "chance": 4000
+      },
+      {
+        "name": "zinc",
+        "material": "Zinc",
+        "chance": 4000
+      },
+      {
+        "name": "nickel",
+        "material": "Nickel",
+        "chance": 4000
+      },
+      {
+        "name": "alpine_copper",
+        "material": "Chalcopyrite",
+        "chance": 4000
+      }
+    ],
+    "NETHER": [
+      {
+        "name": "voidquartz",
+        "material": "VoidQuartz",
+        "chance": 4000
+      },
+      {
+        "name": "glowstone",
+        "material": "Glowstone",
+        "chance": 4000
+      },
+      {
+        "name": "gloomstone",
+        "material": "Gloomstone",
+        "chance": 4000
+      },
+      {
+        "name": "efrine",
+        "material": "Efrine",
+        "chance": 2000
+      },
+      {
+        "name": "netherquartz",
+        "material": "NetherQuartz",
+        "chance": 2000
+      },
+      {
+        "name": "firestone",
+        "material": "Firestone",
+        "chance": 8000
+      },
+      {
+        "name": "ancientdebris",
+        "material": "AncientDebris",
+        "chance": 4000
+      }
+    ]
+  },
+  "missing_shared_floor_material_rows_after_aliases": [
+    {
+      "line": 750,
+      "name": "ore.bedrock.hematite",
+      "enabled": "T",
+      "chance": 4000,
+      "material": "Fe2O3",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 751,
+      "name": "ore.bedrock.sphalerite",
+      "enabled": "T",
+      "chance": 3000,
+      "material": "Sphalerite",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 752,
+      "name": "ore.bedrock.smithsonite",
+      "enabled": "T",
+      "chance": 3000,
+      "material": "Smithsonite",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 753,
+      "name": "ore.bedrock.pentlandite",
+      "enabled": "T",
+      "chance": 3000,
+      "material": "Pentlandite",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 754,
+      "name": "ore.bedrock.saltpeter",
+      "enabled": "T",
+      "chance": 3000,
+      "material": "Niter",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 755,
+      "name": "ore.bedrock.bauxite",
+      "enabled": "T",
+      "chance": 2000,
+      "material": "Bauxite",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    },
+    {
+      "line": 756,
+      "name": "ore.bedrock.cassiterite",
+      "enabled": "T",
+      "chance": 2000,
+      "material": "Cassiterite",
+      "lists": [
+        "GEN_FLOOR"
+      ]
+    }
+  ],
+  "material_aliases_used": {
+    "Au": "Gold",
+    "Cu": "Copper",
+    "V2O5": "VanadiumPentoxide"
+  },
+  "ideal_spring_selection": {
+    "meaning": "Independent uniform-roll model for an eligible entry with source defaults, valid floor and no earlier ore/special claim. Not measured world density.",
+    "rows": [
+      {
+        "index": 0,
+        "chance": 400,
+        "old_first_success": "1/400",
+        "current_kind_then_roll": "1/2800"
+      },
+      {
+        "index": 1,
+        "chance": 400,
+        "old_first_success": "399/160000",
+        "current_kind_then_roll": "1/2800"
+      },
+      {
+        "index": 2,
+        "chance": 400,
+        "old_first_success": "159201/64000000",
+        "current_kind_then_roll": "1/2800"
+      },
+      {
+        "index": 3,
+        "chance": 400,
+        "old_first_success": "63521199/25600000000",
+        "current_kind_then_roll": "1/2800"
+      },
+      {
+        "index": 4,
+        "chance": 200,
+        "old_first_success": "25344958401/5120000000000",
+        "current_kind_then_roll": "1/1400"
+      },
+      {
+        "index": 5,
+        "chance": 100,
+        "old_first_success": "5043646721799/512000000000000",
+        "current_kind_then_roll": "1/700"
+      },
+      {
+        "index": 6,
+        "chance": 200,
+        "old_first_success": "499321025458101/102400000000000000",
+        "current_kind_then_roll": "1/1400"
+      }
+    ],
+    "original_any": "3035115933837901/102400000000000000",
+    "current_any": "3/700",
+    "original_percent": 2.9639804041385753,
+    "current_percent": 0.42857142857142855
+  },
+  "core_probe": {
+    "result": {
+      "ore_write_intent_positions": 841,
+      "fluid_write_intent_positions": 556,
+      "overlapping_positions": 424,
+      "small_bedrock_requests": 36
+    },
+    "source": {
+      "path": "C:/Dev/GregTech6/work/spring-dispatch-audit-20261022/WriterProbe.java",
+      "sha256": "ba1464fcca686f2b71d9893efb4b4c987658f93489c11776af02f89648e4c626",
+      "lines": 42
+    },
+    "source_text": "import com.gregtech.gregtech.worldgen.FluidSpringRules;\nimport com.gregtech.gregtech.worldgen.MineralWorldgenRules;\nimport java.util.HashSet;\nimport java.util.Set;\n\n/** Records real core write intents. It does not simulate Minecraft blocks or placement permission. */\npublic final class WriterProbe {\n    private record Cell(int x, int y, int z) {}\n\n    public static void main(String[] args) {\n        Set<Cell> ore = new HashSet<>();\n        Set<Cell> fluid = new HashSet<>();\n        MineralWorldgenRules.bedrockVein(0, 0, -64, 64, bound -> 0, new MineralWorldgenRules.VeinSink() {\n            public boolean isBedrockFloor(int x, int y, int z) { return true; }\n            public void prepareStone(int x, int y, int z) {}\n            public boolean bedrock(int x, int y, int z, boolean small) { return true; }\n            public boolean ore(int x, int y, int z, boolean small) { ore.add(new Cell(x, y, z)); return true; }\n        });\n        FluidSpringRules.carve(0, 0, bound -> 0, new FluidSpringRules.CraterSink() {\n            public void filler(int x, int y, int z) {}\n            public void fluid(int x, int y, int z) { fluid.add(new Cell(x, -64 + y, z)); }\n            public boolean bedrock(int x, int z) { return false; }\n            public boolean spring(int x, int z) { return false; }\n        });\n        Set<Cell> overlap = new HashSet<>(ore);\n        overlap.retainAll(fluid);\n        int[] smallRequests = {0};\n        MineralWorldgenRules.bedrockVein(0, 0, -64, 64, bound -> bound == 6 ? 1 : 0,\n                new MineralWorldgenRules.VeinSink() {\n                    public boolean isBedrockFloor(int x, int y, int z) { return true; }\n                    public void prepareStone(int x, int y, int z) {}\n                    public boolean bedrock(int x, int y, int z, boolean small) {\n                        if (small) smallRequests[0]++;\n                        return true;\n                    }\n                    public boolean ore(int x, int y, int z, boolean small) { return true; }\n                });\n        System.out.printf(\"{\\\"ore_write_intent_positions\\\":%d,\\\"fluid_write_intent_positions\\\":%d,\"\n                + \"\\\"overlapping_positions\\\":%d,\\\"small_bedrock_requests\\\":%d}%n\",\n                ore.size(), fluid.size(), overlap.size(), smallRequests[0]);\n    }\n}\n",
+    "inputs": "Core writers only; minX/minZ=0, floor=-64, tailLimit=64; zero bounded callbacks for overlap, six-way callbacks return1 for small requests; spring-head creation declined to isolate body write intents.",
+    "meaning": "Executes two actual core classes after standalone javac. It records proposed coordinates and flags, not accepted Minecraft block writes or real world damage.",
+    "compiled_sources": [
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/MineralWorldgenRules.java",
+        "sha256": "f2060e59fa476caf5cb5735d60da66f2bcca135956a01e1fbb15773f38a9f31a",
+        "lines": 97
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/FluidSpringRules.java",
+        "sha256": "e6b1ef09920722bcf0be7c1452c354dc04170792177bc7e3320b7e7dfc529ac2",
+        "lines": 65
+      }
+    ],
+    "compiler": "C:/Program Files/Java/jdk-17/bin/javac.exe",
+    "result_bytes_sha256": "ba955f0eb3f4f0704daf8e76b191d80e8eeed44bcfd0f4f31c231242ea0b819b"
+  },
+  "positive_scope": [
+    "Original GEN_FLOOR is an array including native Nether and Overworld, not a single Overworld list.",
+    "Seven Nether-exclusive rows match their source defaults; they do not replace the shared-floor rows.",
+    "Gold/Copper/Vanadium aliases are accounted for; duplicate gold records have distinct original identities and flowers.",
+    "Original config uses default-qualified property names; identical category text alone does not establish a probability-key collision.",
+    "Modern lowest-height and dimension-key adaptation retained; original global flags must not be copied blindly into the current scheduler."
+  ],
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "limits": [
+    "No full mod compilation, Gradle, GameTest, native world execution, rendered world, save restart, build or push.",
+    "Only two pure core writers and the logging probe were compiled/run; no native Block or Feature instance was executed.",
+    "The probability fractions assume source defaults and independent uniform rolls in a qualified entry; they are not measured per-world densities.",
+    "Private-method discovery excludes arbitrary external reflection; the deleted methods were private non-API wrappers.",
+    "Native stage order was read from actual Forge bytecode and Neo sources, not tested in a generated world."
+  ],
+  "root_revalidation": {
+    "source_and_asset_hashes": "all archived original/current inputs match",
+    "protected_materials": "both unchanged",
+    "ledger": "358 unique contiguous rows; not unresolved count",
+    "topic_links": "all resolve",
+    "code_proof": "Six complete code views retained; two feature views retain the remaining tokens after the two explicit private deletions. No public signature/strategy change.",
+    "probe_sources": "Two exact current core hashes and full logger source retained; only write intents observed",
+    "catalog": "Default shared floor 33 rows into both vanilla dimensions; 7 additional Nether-specific rows versus current28/7. Gold/Copper/Vanadium aliases handled.",
+    "native_limits": "Enum and consumer bytecode/source only; no native Feature instance or game run"
+  }
+}

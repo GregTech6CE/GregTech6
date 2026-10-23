@@ -1,0 +1,1663 @@
+{
+  "date": "2026-10-22",
+  "batch": 113,
+  "baseline": "5a5f92e921a3a411a3f040f23fe517686f2d0349",
+  "previous_goal_turn": {
+    "classification": "progress",
+    "commit": "5a5f92e92"
+  },
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/misc/MultiTileEntityPlaceable.java",
+      "raw_sha256": "7ea61518347070dece7ab08fe06d149ce76bd8d51bac1815c63456de9bb9bd64",
+      "lines": 139,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/placeables/MultiTileEntityIngot.java",
+      "raw_sha256": "6f16e72f818a6d8dfbf30ca71da955cfc6646d9c965ab809a69be036e0c4623f",
+      "lines": 137,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/placeables/MultiTileEntityPlate.java",
+      "raw_sha256": "2d48a38e6b437821ab1644196b91d10c0be3b49af932443deb57748bd8a43411",
+      "lines": 70,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/placeables/MultiTileEntityPlateGem.java",
+      "raw_sha256": "937cc0d8795bf0d4690c857a1d932621c3d07de5c74d9da0e5db554a68f5f6e9",
+      "lines": 70,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/placeables/MultiTileEntityScrap.java",
+      "raw_sha256": "9fc3e10b6befa338e23b2a91157ede23f88c4f65bd40fc4e1e095ae9a8c3dfb7",
+      "lines": 59,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/placeables/MultiTileEntityCoin.java",
+      "raw_sha256": "70352995f5692abf8f874041a18c1bd2c476bfb1bdd5d4dea7b8fbb92952a719",
+      "lines": 476,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/GT_Proxy.java",
+      "raw_sha256": "c18681468cfff643c77fa0371fe142599c7063b42f57ae74db653a19b9fdda3c",
+      "lines": 440,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/GT_API_Proxy.java",
+      "raw_sha256": "e773eae6cd22825b3cd231cfb916040b52166af7653ccc8c9f994f5e53101819",
+      "lines": 1628,
+      "notice_sha256": "6855675ee4a01a21169dd2a3ed5df729ac3198a4b2e3b869f91e1a45c79e6aca"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "raw_sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "lines": 2243,
+      "notice_sha256": "6855675ee4a01a21169dd2a3ed5df729ac3198a4b2e3b869f91e1a45c79e6aca"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/WD.java",
+      "raw_sha256": "c8335988b7bd9dbf44df6790d867ac6cfe2e6414793abb0cdd14c32cd342f095",
+      "lines": 1056,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/ST.java",
+      "raw_sha256": "5ff16d9051e2744a66c711bd5f2581785ba8af7b2272fb1023a6d2f4ddb783a8",
+      "lines": 1402,
+      "notice_sha256": "6855675ee4a01a21169dd2a3ed5df729ac3198a4b2e3b869f91e1a45c79e6aca"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "raw_sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "lines": 2345,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java",
+      "raw_sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+      "lines": 3476,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/block/MaterialPileRules.java",
+      "raw_sha256": "89f04c2203f8fb2695cb0288ba768d713cafde00cf0b9f9fdcf8eff5b2fade6b",
+      "lines": 55
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/block/CoinPileRules.java",
+      "raw_sha256": "2eb82dac078603cb864500841370dbc9693bedc978f3ec45fc57ea8d1f7434a9",
+      "lines": 36
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMaterialPiles.java",
+      "raw_sha256": "a66991f3a7d110f680038cb77db2e658fde2033bc50e64dd53bc1886a9f50288",
+      "lines": 37
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTCoinPiles.java",
+      "raw_sha256": "341a256d4d0ede9dfcc0913ca7044cce7b22bafc6d8abff526552f681f3e3bff",
+      "lines": 22
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/PileItemExpireHandler.java",
+      "raw_sha256": "2886b0d863331cb58670d0c81563d743d5b321e0c4ab66445274b87bf78533c8",
+      "lines": 92
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/CoinItemExpireHandler.java",
+      "raw_sha256": "ebe5987b743b78a61af8b268c6777310027418d7028635484852729716854470",
+      "lines": 104
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/PileBlock.java",
+      "raw_sha256": "e31f5f48f7857539044eee6e20fa62f5cecaae595433f06fcafc6f2b3d880627",
+      "lines": 300
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/PilePlacementChecks.java",
+      "raw_sha256": "a037bd62e8c9218110db9c8dde8b3ccd24dd70c639ab10d2a6f6cec64bb18d7c",
+      "lines": 20
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/misc/PileBlockEntity.java",
+      "raw_sha256": "b0a15bfe704689d6fbeec9b7b13d02e0df828af5ba1af4eba53eda335cd9ea19",
+      "lines": 316
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/misc/CoinPileBlockEntity.java",
+      "raw_sha256": "540ab7dea60e2626a2d225d6853129b4504c13b61214437972329fc30b16d3d9",
+      "lines": 407
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/CoinPileBlock.java",
+      "raw_sha256": "c8758130ed8a3b1264667e60b9707a7ce477b73c700158da1fbea0ad56fb2c00",
+      "lines": 245
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/CoinItem.java",
+      "raw_sha256": "b01ac1c6f145c910db8eb39bc5624799c8a92f57e42ec87c9282cfac969e3ee4",
+      "lines": 124
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/tool/CoinGeometry.java",
+      "raw_sha256": "89dbfa8424447a925998fc3282af5bddbb7669f296d1a8d60a22d7bef56b3fed",
+      "lines": 174
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/CoinPileRenderer.java",
+      "raw_sha256": "959446f32cfb2a9b850331ba277d83fa63f9a53d24561f4e7f00916b850ed7a3",
+      "lines": 137
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/RegisteredBlock.java",
+      "raw_sha256": "5e2ead8884bdf8955b76fde0d71d915e59ecb30306e59a7249a4f16f60659ec5",
+      "lines": 59
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "raw_sha256": "05409cc45a965be4efbcde15b420091d3222e6fe390069a0d58031e43faf9308",
+      "lines": 707
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/data/BlockHarvestPolicy.java",
+      "raw_sha256": "049e96dbead037754ac0d397005597ac00dd41ede9901d2999bc173faf4a44fa",
+      "lines": 90
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTDecorBlocks.java",
+      "raw_sha256": "9facc5d99806ac5ac82384deb7f0c2582e76fe5725b9504dc861be7d00f2c266",
+      "lines": 168
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "raw_sha256": "a83787a7e2ca56b3b695b41f221cff2ee046880b09354fdf78b35bd2cc070a02",
+      "lines": 191
+    }
+  ],
+  "tool_references": [
+    {
+      "path": "tools/generate_pile_assets.py",
+      "raw_sha256": "5d951f927fa97dcbaa07fe273493c4bebd9832650fc47b5ef039b81ab4796a45",
+      "lines": 290
+    }
+  ],
+  "scope": "Common material pile and ordinary coin pile placement, merge/drop callbacks, registration and expiry predicates reviewed. Full files hashed for provenance; all custom coin patterns, coin placement-engine admission, lifecycle and render behavior are not certified.",
+  "provenance": {
+    "authors": "GregTech-6 Team / Gregorius Techneticies",
+    "original_notice": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */",
+    "handling": "Source references read-only; original Java notices preserved; current six texture hashes are not represented as a live original-byte comparison."
+  },
+  "excerpts": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "first_line": 2040,
+      "last_line": 2040,
+      "purpose": "Original scrap placeable registration 32103.",
+      "text": "\t\taRegistry.add(\"Scrap\"                                               , \"Untyped\"                             , 32103, 32764, MultiTileEntityScrap.class                              ,                 0, 64, aUtilMetal     , null);",
+      "sha256": "22afc6af78a5c0133203cdc00961fc098c79dcaf071d7cf6feb20683e3440033"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/GT_Proxy.java",
+      "first_line": 325,
+      "last_line": 328,
+      "purpose": "Original manual scrap placement.",
+      "text": "\t\t\t\t\t\t\tif (tData.mPrefix == OP.scrapGt) {\n\t\t\t\t\t\t\t\tif (MultiTileEntityRegistry.getRegistry(\"gt.multitileentity\").getItem(32103, ST.save(NBT_VALUE, aStack)).tryPlaceItemIntoWorld(aEvent.entityPlayer, aEvent.world, aEvent.x, aEvent.y, aEvent.z, (byte)aEvent.face, 0.5F, 0.5F, 0.5F)) {\n\t\t\t\t\t\t\t\t\tST.use(aEvent.entityPlayer, aStack, aStack.stackSize); aEvent.setCanceled(T);\n\t\t\t\t\t\t\t\t}",
+      "sha256": "68bda6b5bd745a372b226bb0b01966e820fc1fedf6c894a96f685e2628317129"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/GT_API_Proxy.java",
+      "first_line": 1471,
+      "last_line": 1471,
+      "purpose": "Original expiry scrap placement.",
+      "text": "\t\t\t\t\tif (tData.mPrefix == OP.scrapGt                             ) for (byte[] tOff : CUBE_3) if (WD.irrelevant(aEvent.entity.worldObj, aX+tOff[0], aY+tOff[1], aZ+tOff[2]) && tRegistry.mBlock.placeBlock(aEvent.entity.worldObj, aX+tOff[0], aY+tOff[1], aZ+tOff[2], SIDE_TOP, (short)32103, ST.save(NBT_VALUE, aStack), T, F)) {aStack.stackSize = 0; aEvent.extraLife = 0; aEvent.entityItem.setDead(); aEvent.setCanceled(T); return;}",
+      "sha256": "6d764558522a4b1e617c0b9ceeca54091c0754cf009baeac116ebd6c83e794aa"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/misc/MultiTileEntityPlaceable.java",
+      "first_line": 77,
+      "last_line": 113,
+      "purpose": "Original identity-based merge, empty removal, consumed clicks and top-pile decrement.",
+      "text": "\tpublic boolean onBlockActivated2(EntityPlayer aPlayer, byte aSide, float aHitX, float aHitY, float aHitZ) {\n\t\tif (isClientSide()) return T;\n\t\tItemStack aStack = aPlayer.getCurrentEquippedItem();\n\t\tif (ST.invalid(mStack) || mStack.stackSize <= 0) return setToAir();\n\t\tif (ST.equal(aStack, mStack)) {\n\t\t\tif (mStack.stackSize >= 64) return T;\n\t\t\tif (mStack.stackSize + aStack.stackSize > 64) {\n\t\t\t\taStack.stackSize -= (64-mStack.stackSize);\n\t\t\t\tmStack.stackSize = 64;\n\t\t\t\tmSize = ST.size(mStack);\n\t\t\t\tupdateClientData();\n\t\t\t\tplayCollect();\n\t\t\t\treturn T;\n\t\t\t}\n\t\t\tmStack.stackSize += aStack.stackSize;\n\t\t\tmSize = ST.size(mStack);\n\t\t\tupdateClientData();\n\t\t\taStack.stackSize = 0;\n\t\t\tplayCollect();\n\t\t\treturn T;\n\t\t}\n\t\tif (ST.give(aPlayer, ST.amount(1, mStack), T, worldObj, xCoord+0.5, yCoord+0.5, zCoord+0.5)) {\n\t\t\tMultiTileEntityPlaceable tSelected = this;\n\t\t\tfor (int i = 1; i < 255; i++) {\n\t\t\t\tTileEntity tTileEntity = getTileEntityAtSideAndDistance(SIDE_UP, i);\n\t\t\t\tif (tTileEntity instanceof MultiTileEntityPlaceable && ST.equal(mStack, ((MultiTileEntityPlaceable)tTileEntity).mStack)) {\n\t\t\t\t\ttSelected = (MultiTileEntityPlaceable)tTileEntity;\n\t\t\t\t} else break;\n\t\t\t}\n\t\t\ttSelected.playCollect();\n\t\t\tif (--tSelected.mStack.stackSize <= 0) return tSelected.setToAir();\n\t\t\ttSelected.mSize = ST.size(tSelected.mStack);\n\t\t\ttSelected.updateClientData();\n\t\t\treturn T;\n\t\t};\n\t\treturn T;\n\t}",
+      "sha256": "8936b9eaf52cfa7ebebda621e3ee49f152603feccb92fd4c223914c3ce16f47e"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/ST.java",
+      "first_line": 92,
+      "last_line": 94,
+      "purpose": "Original identity/meta/NBT equality, not material equivalence.",
+      "text": "\tpublic static boolean equal (ItemStack aStack1, ItemStack aStack2) {return equal(aStack1, aStack2, F);}\n\tpublic static boolean equal (ItemStack aStack1, ItemStack aStack2, boolean aIgnoreNBT) {return aStack1 != null && aStack2 != null && equal_(aStack1, aStack2, aIgnoreNBT);}\n\tpublic static boolean equal_(ItemStack aStack1, ItemStack aStack2, boolean aIgnoreNBT) {return item_(aStack1) == item_(aStack2) && equal(meta_(aStack1), meta_(aStack2)) && (aIgnoreNBT || (((nbt_(aStack1) == null) == (nbt_(aStack2) == null)) && (nbt_(aStack1) == null || nbt_(aStack1).equals(nbt_(aStack2)))));}",
+      "sha256": "cbd0daba2e634bb63fe2fe9e2873d3f06a7e7af4c69e149082084e3f13f16222"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/misc/PileBlockEntity.java",
+      "first_line": 160,
+      "last_line": 171,
+      "purpose": "Current material-resolved and data-equality merge gate.",
+      "text": "    public boolean canAccept(ItemStack held) {\n        if (held.isEmpty() || prefixOf(held) != kind.prefix()) return false;\n        if (stored.isEmpty()) return true;\n        GTMaterial heldMaterial = materialOf(held);\n        GTMaterial storedMaterial = materialOf(stored);\n        return heldMaterial != null && storedMaterial != null && heldMaterial.resolve() == storedMaterial.resolve()\n//? if >=1.21.1 {\n                /*&& held.getComponentsPatch().equals(stored.getComponentsPatch());\n*///?} else {\n                && java.util.Objects.equals(held.getTag(), stored.getTag());\n//?}\n    }",
+      "sha256": "689674796e97b13d3b295ac692770d497073bfd50dfb1041bf6df625afacb577"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/misc/MultiTileEntityPlaceable.java",
+      "first_line": 72,
+      "last_line": 74,
+      "purpose": "Original material drop calculation does not clear mStack.",
+      "text": "\tpublic ArrayListNoNulls<ItemStack> getDrops(int aFortune, boolean aSilkTouch) {\n\t\treturn ST.arraylist(mStack);\n\t}",
+      "sha256": "68a3576d7d67815fd3642c221f0bb7621da932acab7ef0c9f8d63f23b1e433d2"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/placeables/MultiTileEntityCoin.java",
+      "first_line": 112,
+      "last_line": 123,
+      "purpose": "Original coin drop calculation does not clear its counters.",
+      "text": "\tpublic ArrayListNoNulls<ItemStack> getDrops(int aFortune, boolean aSilkTouch) {\n\t\tArrayListNoNulls<ItemStack> rList = ST.arraylist();\n\t\tshort tCoinAmount = 0;\n\t\tfor (int i = 0; i < mCoinStackSizes.length; i++) tCoinAmount += mCoinStackSizes[i];\n\t\twhile (tCoinAmount > 0) {\n\t\t\tbyte tStackAmount = (byte)Math.min(64, tCoinAmount);\n\t\t\trList.add(getCoin(tStackAmount, MultiTileEntityRegistry.getRegistry(getMultiTileEntityRegistryID()), getMultiTileEntityID()));\n\t\t\ttCoinAmount -= tStackAmount;\n\t\t}\n\t\treturn rList;\n\t}\n\t",
+      "sha256": "0a47fc80098ba5b0f3e0ec9e4b34736986a0fa38a946994e1d73780e2a1f8709"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/PileBlock.java",
+      "first_line": 273,
+      "last_line": 281,
+      "purpose": "Current material drop getter clears inventory.",
+      "text": "    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {\n        List<ItemStack> drops = new ArrayList<>();\n        if (builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof PileBlockEntity pile) {\n            drops.addAll(pile.contents());\n            pile.clearContents();\n        }\n        return drops;\n    }\n",
+      "sha256": "2d4c11882233c7e5c3ff82364fbd7c47d0010e01d41088addca1a59b71959368"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/CoinPileBlock.java",
+      "first_line": 232,
+      "last_line": 240,
+      "purpose": "Current coin drop getter clears inventory.",
+      "text": "    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {\n        List<ItemStack> drops = new ArrayList<>();\n        if (builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof CoinPileBlockEntity pile) {\n            drops.addAll(pile.contents());\n            pile.clearContents();\n        }\n        return drops;\n    }\n",
+      "sha256": "6518700359dd05eef2f90cf6c497081cdcd99f63167f2fb6e4fc84c205089278"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/placeables/MultiTileEntityCoin.java",
+      "first_line": 462,
+      "last_line": 463,
+      "purpose": "Original coin hardness 1 and resistance 0.",
+      "text": "\t@Override public float getBlockHardness() {return 1;}\n\t@Override public float getExplosionResistance2() {return 0;}",
+      "sha256": "ab763cda6a3b1110d202ed78d85ad6d241c9626995234d749a1ba2d3b8b96ab5"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTCoinPiles.java",
+      "first_line": 18,
+      "last_line": 18,
+      "purpose": "Current coin strength(3,3); not an assertion about final hand/tool drops.",
+      "text": "                () -> new CoinPileBlock(BlockBehaviour.Properties.of().mapColor(MapColor.GOLD).strength(3, 3).requiresCorrectToolForDrops().sound(SoundType.METAL).noOcclusion()));",
+      "sha256": "efa06235797fcc661ac9f0b263c632273d41f349d609600cf165d92bb981b3ed"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/WD.java",
+      "first_line": 685,
+      "last_line": 685,
+      "purpose": "Original material expiry admits WD.anywater.",
+      "text": "\tpublic static boolean irrelevant(World aWorld, int aX, int aY, int aZ, Block aBlock) {return air(aWorld, aX, aY, aZ, aBlock) || aBlock == Blocks.vine || aBlock == Blocks.snow_layer || aBlock == Blocks.fire || grass(aWorld, aX, aY, aZ) || anywater(aBlock);}",
+      "sha256": "8677685a334e0382e4c3280713dea63b9117d62bf5c53103cbeeda446eb594f7"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/WD.java",
+      "first_line": 668,
+      "last_line": 668,
+      "purpose": "Original waterlike and Streams water membership.",
+      "text": "\tpublic static boolean anywater(Block aBlock) {return aBlock instanceof BlockWaterlike || water(aBlock) || waterstream(aBlock);}",
+      "sha256": "6804e59f88574c2304cd4277a0c44720844acf520dfdf86c3a0107ae416cd739"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/GT_Proxy.java",
+      "first_line": 310,
+      "last_line": 314,
+      "purpose": "Original Botania own-material beacon bypass for manual pile placement.",
+      "text": "\t\t\t\t\t\t\tif (tData.mPrefix == OP.ingot) if (!MD.BOTA.mLoaded || tData.mMaterial.mMaterial.mOriginalMod != MD.BOTA || Blocks.beacon != aEvent.world.getBlock(aEvent.x, aEvent.y, aEvent.z)) {\n\t\t\t\t\t\t\t\tif (MultiTileEntityRegistry.getRegistry(\"gt.multitileentity\").getItem(32084, ST.save(NBT_VALUE, aStack)).tryPlaceItemIntoWorld(aEvent.entityPlayer, aEvent.world, aEvent.x, aEvent.y, aEvent.z, (byte)aEvent.face, 0.5F, 0.5F, 0.5F)) {\n\t\t\t\t\t\t\t\t\tST.use(aEvent.entityPlayer, aStack, aStack.stackSize); aEvent.setCanceled(T);\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}",
+      "sha256": "d47923c8c63ab638e85d1cf00b2a9f9b5c382591d79a49b98c7461d8b6a5b5a9"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/PilePlacementHandler.java",
+      "first_line": 58,
+      "last_line": 105,
+      "purpose": "Actual current manual placement entry has no Botania/beacon exception.",
+      "text": "    public static InteractionResult tryPlace(Level level, Player player, InteractionHand hand, BlockHitResult hit) {\n        // GT6 uses the current equipped item, and only enters this branch while sneaking.\n        if (hand != InteractionHand.MAIN_HAND || !player.isShiftKeyDown()) return InteractionResult.PASS;\n        ItemStack held = player.getItemInHand(hand);\n        if (held.isEmpty() || held.getItem() instanceof BlockItem\n                || PileBlockEntity.materialOf(held) == null) return InteractionResult.PASS;\n\n        var rockResult = com.gregtech.gregtech.item.RockItemPlacement.place(\n                new net.minecraft.world.item.context.UseOnContext(player, hand, hit));\n        if (rockResult != InteractionResult.PASS) return rockResult;\n\n        var prefix = PileBlockEntity.prefixOf(held);\n        PileBlock.Kind kind;\n        if (prefix == PileBlock.Kind.INGOT.prefix()) kind = PileBlock.Kind.INGOT;\n        else if (prefix == PileBlock.Kind.PLATE.prefix()) kind = PileBlock.Kind.PLATE;\n        else if (prefix == PileBlock.Kind.GEM_PLATE.prefix()) kind = PileBlock.Kind.GEM_PLATE;\n        else return InteractionResult.PASS;\n\n        BlockPlaceContext context = new BlockPlaceContext(level, player, hand, held, hit);\n        BlockPos target = context.getClickedPos();\n        if (!context.canPlace() || !level.isInWorldBounds(target)\n                || !level.getWorldBorder().isWithinBounds(target)\n                || !player.mayBuild() || !level.mayInteract(player, target)\n                || !player.mayUseItemAt(target, context.getClickedFace(), held)) return InteractionResult.PASS;\n\n        BlockState state = kind.block().defaultBlockState();\n        if (!state.canSurvive(level, target)) return InteractionResult.PASS;\n        if (level.isClientSide) return InteractionResult.SUCCESS;\n        if (!level.setBlock(target, state, Block.UPDATE_ALL)) return InteractionResult.PASS;\n\n        if (!(level.getBlockEntity(target) instanceof PileBlockEntity pile)) {\n            level.removeBlock(target, false);\n            return InteractionResult.PASS;\n        }\n        int moved = pile.add(held);\n        if (moved == 0) {\n            level.removeBlock(target, false);\n            return InteractionResult.PASS;\n        }\n\n        SoundType sound = state.getSoundType(level, target, player);\n        level.playSound(player, target, sound.getPlaceSound(), SoundSource.BLOCKS,\n                (sound.getVolume() + 1) / 2, sound.getPitch() * .8F);\n        level.gameEvent(player, GameEvent.BLOCK_PLACE, target);\n        // ST.use in GT6 leaves creative inventory untouched after creating the stocked pile.\n        if (!player.getAbilities().instabuild) held.shrink(moved);\n        return InteractionResult.CONSUME;\n    }",
+      "sha256": "547db5d706e9369c3c2095b1450992bfb080238589fe3fa9c373f94da0c9fc5b"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/PileBlock.java",
+      "first_line": 211,
+      "last_line": 216,
+      "purpose": "Current pickup sound is at clicked position, not selected top pile.",
+      "text": "        PileBlockEntity target = topOfColumn(level, pos, pile);\n        ItemStack taken = target.take(1);\n        if (taken.isEmpty()) return InteractionResult.PASS;\n        if (!player.getInventory().add(taken)) player.drop(taken, false);\n        playCollect(level, pos);\n        if (target.isEmpty()) level.removeBlock(target.getBlockPos(), false);",
+      "sha256": "54dc359249d58e23b6d3a3f5577b2c29fe63316f9758c8c361525c98532759de"
+    }
+  ],
+  "geometry": {
+    "kind": "Static source-expression/resource comparison, no Minecraft or Java execution.",
+    "models": [
+      {
+        "form": "ingot",
+        "counts": "1..64",
+        "models": 64,
+        "all_ordered_box_coordinates_match": true,
+        "original_source": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/placeables/MultiTileEntityIngot.java"
+      },
+      {
+        "form": "plate",
+        "counts": "1..64",
+        "models": 64,
+        "all_ordered_box_coordinates_match": true,
+        "original_source": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/placeables/MultiTileEntityPlate.java"
+      },
+      {
+        "form": "gem_plate",
+        "counts": "1..64",
+        "models": 64,
+        "all_ordered_box_coordinates_match": true,
+        "original_source": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/placeables/MultiTileEntityPlateGem.java"
+      }
+    ],
+    "model_count": 192,
+    "blockstate_files": 3,
+    "references_including_empty": 195,
+    "textures_byte_identical": 0,
+    "texture_comparisons": [
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/placeables/ingot/sides.png",
+        "raw_sha256": "c15a59ebd63b49c5a4e031fc1f84f3efd66ca5d4770e4cf3ffad6fe7dbaf3156",
+        "status": "reference_png_missing_in_current_original_tree",
+        "expected_source_glob": "assets/*/textures/blocks/machines/placeables/ingot/sides.png"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/placeables/ingot/top.png",
+        "raw_sha256": "30088271d7b7eef72f1778139dea109942cfec536218dd30e66feb846589fb9b",
+        "status": "reference_png_missing_in_current_original_tree",
+        "expected_source_glob": "assets/*/textures/blocks/machines/placeables/ingot/top.png"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/placeables/plate/sides.png",
+        "raw_sha256": "4b8045e02d7f7c2af3136ea1cab4b8032f6271c4b4d719f8183bf28f403f7db6",
+        "status": "reference_png_missing_in_current_original_tree",
+        "expected_source_glob": "assets/*/textures/blocks/machines/placeables/plate/sides.png"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/placeables/plate/top.png",
+        "raw_sha256": "ea1db3d6c20ff3d18b588a9bc9c71a51bb3a361d528ea1a8385e18e33bc9f9d6",
+        "status": "reference_png_missing_in_current_original_tree",
+        "expected_source_glob": "assets/*/textures/blocks/machines/placeables/plate/top.png"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/placeables/plategem/sides.png",
+        "raw_sha256": "fbe0854aa49345595159f1cc41b998765ec66d7733990ccf3315b9128bbecebb",
+        "status": "reference_png_missing_in_current_original_tree",
+        "expected_source_glob": "assets/*/textures/blocks/machines/placeables/plateGem/sides.png"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/placeables/plategem/top.png",
+        "raw_sha256": "ea87db37aa367b54b98f4bcb33f460ef55b92f628a80364c8907941c61b963b4",
+        "status": "reference_png_missing_in_current_original_tree",
+        "expected_source_glob": "assets/*/textures/blocks/machines/placeables/plateGem/top.png"
+      }
+    ],
+    "resources": [
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_1.json",
+        "raw_sha256": "5961e8ff9c7b8772a823b78e49dc8478b09f02a7b9d39caedd8410dcd2df7982"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_2.json",
+        "raw_sha256": "0210d008ed928e95eaae77dc099fbb70ebc07971af331d1600f30cbee0d6d1fc"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_3.json",
+        "raw_sha256": "d458a1eca0b7bd911b1d50fab19a0c5a884785942a55480ad38f7e5f8ee9ff88"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_4.json",
+        "raw_sha256": "97f693abda33cc3ac2697659f029af168087219fc79f1b4572cf1e250fb4e922"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_5.json",
+        "raw_sha256": "64ad398e5c49601e224f7ab343de3276e831b4010fca7cb46141aa7fd3d4d6d9"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_6.json",
+        "raw_sha256": "961e81a4fc384e7dff25bb134da00598e82a3437e2129e6b85326dba076cb811"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_7.json",
+        "raw_sha256": "6e959940119d32227d2bce06532dec6a4a94eacb13d1978e933e65b62d2ef82a"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_8.json",
+        "raw_sha256": "1013abbf5b8d81dabb519016d8c4ab338f7865529690f6c1b10b2b8cd08c8a88"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_9.json",
+        "raw_sha256": "a08359c98fd57a284ad7fd9635ae4a8593adc6349a73d4e15a87047e260e72c1"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_10.json",
+        "raw_sha256": "a1902247a9509b406ade6aff3bcd4bd0627bed842b0f5c1bbab2bd347143c5a2"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_11.json",
+        "raw_sha256": "15555ff4ce395d3f8d81c40c100342490543efb38799080d8cb871bd708d1702"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_12.json",
+        "raw_sha256": "b05b593e864b336c989eb2fcc65435777bfdbce6e8522c579faafb143bdb15a1"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_13.json",
+        "raw_sha256": "36390452c73dce9062b58ae39b8e8f91b1f1062ff833e0d788bb1c58df486898"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_14.json",
+        "raw_sha256": "bcaf46e7d9b76853aeab799ec21f2be68929f569da42efec6f23999ff73c80d3"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_15.json",
+        "raw_sha256": "e2f21472db7f8cec572579038e9021b6937ad1a951daeaf7de3d7d7c743aba0c"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_16.json",
+        "raw_sha256": "1b15fa28ecea487129c3694351d40aee57a40d57469fba1c0ec06e477d2cd96a"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_17.json",
+        "raw_sha256": "0bdd8bf5f1a8783a578d3a18384f51ecb99c3458927fc4ff23d78c5b15414231"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_18.json",
+        "raw_sha256": "8308eec2879fb4f4e9845224838160e06649e261f5a8e18b0818e681ae83b3b6"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_19.json",
+        "raw_sha256": "8079cd0766ce91e6d3154096c20694c8b26aab3fb343485df8bf904fb867ffc5"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_20.json",
+        "raw_sha256": "3e1b93ed35d80c75b7e106134066705b78261d52c77048c1e22a4b8f5a25c4e0"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_21.json",
+        "raw_sha256": "5f23a3f5f724773f8508f0b0e2b4a2995d3669a7ce804004a6865d51fcd9ea91"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_22.json",
+        "raw_sha256": "839f54ffdbc75c21799f60d97348b82095d9f3263b9603ebd31b72b5a5f96fbd"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_23.json",
+        "raw_sha256": "a0ef47c0db7b1bba081396896d4e4d244282308aff3a0993339e6fa487b16a30"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_24.json",
+        "raw_sha256": "070109681224ad521fd47bcf0c85a3b946f83de16f4440315df9762a3fba0ed6"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_25.json",
+        "raw_sha256": "1bb37934b2d2eb5289d4f12524caf438f6ba8fa1e732750bcbe3fcea65973332"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_26.json",
+        "raw_sha256": "17bf52a5da176714ce52dd0252744874fcd27c82879b76cfb93cc4a17dc0d14f"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_27.json",
+        "raw_sha256": "cbb94cc46be6dd88b16ef6663ee36d9db0e76510923afdafaf38f8aed3500e8b"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_28.json",
+        "raw_sha256": "70e53474c133428ff26f921b085e090e1a4523eb64f7a4c1c9b5dba9d1c3c818"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_29.json",
+        "raw_sha256": "32056c52fab13c9ed0278f2ebd6c9db34d5e825e1f2b81df0eb4e1589b488f21"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_30.json",
+        "raw_sha256": "7bcbf3fcf4af46e6c556743f14d47b9d15bafda88d450b877e2d052efd674163"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_31.json",
+        "raw_sha256": "f52085ee6ebfd4215b5fdc5cfbcc89e7f4b8a6baefeffc64bbd4ff9a0363c866"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_32.json",
+        "raw_sha256": "ee20554675d939e1ab730bb1d636508f93d3c534657f95c196730b154356301e"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_33.json",
+        "raw_sha256": "2a065ff981589169915e333c5233a68eac01702d3a23604262a8facd21074bd8"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_34.json",
+        "raw_sha256": "23b280b4e395fac36603b8b1e207aa501a363ef6d6bca6f1b5c445eb889410f5"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_35.json",
+        "raw_sha256": "f9a09e1bf0db20c4066acb32a5881a12e6e0ff984fa9db834dbcf8ee907a8aef"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_36.json",
+        "raw_sha256": "d9820f5cc1fa14a97b7259466599d370907675b00a00e4903b1c0da1655ea77d"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_37.json",
+        "raw_sha256": "0a27baca8bffe26c2817655178e6aa138d3d19d2ea20c7952c30e7c5c350cdb1"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_38.json",
+        "raw_sha256": "c7c2ef11d86019cb94c3710d58d43a5778828b0c36b80b2c003b3b68f500e42e"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_39.json",
+        "raw_sha256": "2d2ef6e09a88035ab4cb6870862f112960fb23907eb08d264faa3221931204eb"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_40.json",
+        "raw_sha256": "95261c0e3770aa206c80116256a1251b05cde76819c9568f8b29f1b76534c9a2"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_41.json",
+        "raw_sha256": "5cf81f037bf0e91c11fd9319c943bf8a020f66766e17632673d1a42c4e4fc4e2"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_42.json",
+        "raw_sha256": "6a1b70e969a70c861c390fabfd686326c5638605c89f60f1e12aec5fe7a043c1"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_43.json",
+        "raw_sha256": "2684a4b71040b82ef4ef4531fecea5b1a609a9fd529c4feb4cb51111fe43a5d8"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_44.json",
+        "raw_sha256": "a3f5317a5fa6e93046687903d4a30fa48b24cf2f831baccb43ca53db250f6a3b"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_45.json",
+        "raw_sha256": "1369967f8921a41641eb4a20ba7a8a4f6111482baaf4a52fe9762562970b51df"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_46.json",
+        "raw_sha256": "a2d11da77474ddc8f828a758da21d48d885a43448099f87fbf8e11984a55b45c"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_47.json",
+        "raw_sha256": "91681d6bef57bb42e9919ce50b8cc29bd09b19809d9550e9004d9288140455f7"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_48.json",
+        "raw_sha256": "b1b1423c89cc520a222e5790cba2659ef3b088ac0031f471472f51df45253faa"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_49.json",
+        "raw_sha256": "34094df6220565485b3cc8bac2c51fe45aa1e599ebd431738e3e9a56d2ac6850"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_50.json",
+        "raw_sha256": "0795996074221404eb7711207c3a26197a3f4ca8284c2f6db1c83ca59ae33a2c"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_51.json",
+        "raw_sha256": "1b0f0692f43c06435506f6d8dbeac5d0c883cabe09482d535c842122f6628162"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_52.json",
+        "raw_sha256": "f49ab2a28dd5a6d49944b55fde8b494234abeef991ecc47b71bf0b4b377a5d6a"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_53.json",
+        "raw_sha256": "28269ea47e145763550ce80696f60996f6527a8ea0cfb28c19e645bd05a5bd34"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_54.json",
+        "raw_sha256": "37fdb64fbb74328b3334d7101f4e35bf14befee7b24c28d654d75164f92d51fe"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_55.json",
+        "raw_sha256": "8dae005452049ab91d39f9c9d4a1510398c9a52ad12bbed6b663a33b558f9586"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_56.json",
+        "raw_sha256": "cf29b378f2a49df610dfb37544d71dd248bccd71c979df6723f4f1dfa9b6309d"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_57.json",
+        "raw_sha256": "be9e6b25accd7dc14291375c458093b8ae8c4c06700cb58e34c566f2ca2b7932"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_58.json",
+        "raw_sha256": "2339a3ba5e3b0f06b75bc652701a84b7625490db3f28fd56f5a43f4d514b841e"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_59.json",
+        "raw_sha256": "70e29656452ce8516d02bd8a01f9f2b988324147ffc84b9a92341222c6eca140"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_60.json",
+        "raw_sha256": "5f7d2a12119bd84aea9b088ac3e58a5ef9e1f11b37e9b7546b22949b778c4981"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_61.json",
+        "raw_sha256": "2118713e6e90265eea6be85e60f63d5555c0d13c06d5e1285bc5c98ced8a0332"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_62.json",
+        "raw_sha256": "c695bd446431c9fc2e9d067dd97ebfb9c540df5685b39e23272ccf619554eedc"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_63.json",
+        "raw_sha256": "54450357824cfdd6ce6bb10727de9f3be3fa95cce77d5bf5b55efac55d978b84"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/ingot_64.json",
+        "raw_sha256": "ce955ac82a81664a3f4a4bf121e6ff3cdf4cef8d814799fc9aaf23987991ceb8"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_1.json",
+        "raw_sha256": "54301a32fb97adfebc4507f3b32adf653256b914113948ba4e9ba2da537b98a8"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_2.json",
+        "raw_sha256": "a1154a814d3e21b2ff79047e9559facade341f95758131100950725e860f567b"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_3.json",
+        "raw_sha256": "7fcd6c9bcdf055a7bbfa1fd320a25bb0be4ecfd66dfa9fe740b9ed7a447ebf12"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_4.json",
+        "raw_sha256": "a5de29adbc17986e4119237d365ae14f1cc0742bb5326c48383dde622de10128"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_5.json",
+        "raw_sha256": "78bb731f3645581bd0e870cafa17af0bd99dd2ffb8d5ba086d8384550eba95de"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_6.json",
+        "raw_sha256": "50cf5670af039f18a35ac758c4f6513e38fbce9110a74a295e3308d48ada14c1"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_7.json",
+        "raw_sha256": "f3336cc2156a317ac2b9df2ed64e0705bfb384055602d4a10d727e5ff5f85708"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_8.json",
+        "raw_sha256": "362a608594b09f643cddd23e8586318a9e8445f631e654222c82636b74a26f9d"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_9.json",
+        "raw_sha256": "6c4d3c7cf5c7cf8b946f5983ad3690aff5f283bb219a3711305b48a61095b76b"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_10.json",
+        "raw_sha256": "c7b3dd8850e208d92292839c375ecb52b5ec5b75af6fae3e77a1a094e1951a8f"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_11.json",
+        "raw_sha256": "e07543cfb6496da5b0d0f7b6fd4639a17e0d45d376978490fd43ddaf64355076"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_12.json",
+        "raw_sha256": "8a407dafae503d8d10455621b76f34fd226df7e60328f07281ed5f8e210ee919"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_13.json",
+        "raw_sha256": "3e1c56608d3605d96e73315b1a042f035d52b1285713f009891245cfd1d6469c"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_14.json",
+        "raw_sha256": "5906dd5efe46997612ea32c7d70bac892cede75c25fab3055ebc0f3c50caeb37"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_15.json",
+        "raw_sha256": "aba7d91d1733ab50e69e92f01ef6a730a3232a35e0b05a99bdfbc363cb2882d5"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_16.json",
+        "raw_sha256": "513dae8271f88dacae08ebb0635bce9449ec3527bfa4bde1964570465f2de76c"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_17.json",
+        "raw_sha256": "d9d0cde6a07b50a1a127f3c79b8ef69195283aa2a5ab2f696f17995aa82c5915"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_18.json",
+        "raw_sha256": "efcde2a94c0705ab773e844aa6f57c9b68525155108f0cfbecd5778ebe477833"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_19.json",
+        "raw_sha256": "56111c3f74bd50d3e68228d32cbc49a32513311a909cdef31357658a86208e3f"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_20.json",
+        "raw_sha256": "13b436bb5aa271ad540493967e6f0a1a1039e2be359dc45556ef65c4e554cf74"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_21.json",
+        "raw_sha256": "663ca10453a24832bbecdb3e6cd609bd1d76e80a8adb73511e27077ecfec726d"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_22.json",
+        "raw_sha256": "0031892345da3a15823b8d84ae508b54264a10fa91550ff044fab7e011f9b195"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_23.json",
+        "raw_sha256": "a7babbd4c34fbb6a1250575fccb803d829e11bdf8a7a13cbcad07567e34e756e"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_24.json",
+        "raw_sha256": "9808234da0e4c2dc9de0243924bf1f7639505c2df7b5daa9ede4f0c73ce82b4f"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_25.json",
+        "raw_sha256": "baa6743d9e9dd6b44846c66f2c12d6f030c8dadc37e3275be377f8e2490f6635"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_26.json",
+        "raw_sha256": "e9997e0b25ad82594ab52a3274b6d052979df672912f6583c6d064a57221057b"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_27.json",
+        "raw_sha256": "1e616eea903ee4e375a4214ab4bcec2e7e9714ec439be987a689733e44a708a0"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_28.json",
+        "raw_sha256": "f7fce624a8dc06e827a77838cf17a0fb2b9cf5e4a2b03889114a7be0fdd2390f"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_29.json",
+        "raw_sha256": "220374ef13732ddbba38b5818739ebfbd0331709a05194e61f36435a4a444fed"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_30.json",
+        "raw_sha256": "1b3467640034f47620adce2bb6bc2f1aecf422bbfd1a2ad6d5e18ef6380b3643"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_31.json",
+        "raw_sha256": "75d617c46205a8de72b7825bfc96976837d47e3b4199baf47c80004b4f06a2ad"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_32.json",
+        "raw_sha256": "7f46d92f797c4186b5e25f74e55ac264107b22c77843fbefb2422b345858d5ba"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_33.json",
+        "raw_sha256": "53a356ce672291969c6d175873675659fa22e26c75fbf072fa0f6eace5e3444b"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_34.json",
+        "raw_sha256": "473f5189f199c2246c18e0f9453aa269f90213b4c8ae0326d54a441d33fdb468"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_35.json",
+        "raw_sha256": "2288c646bc28efa95980048701d3c9110808428dc36257de0a661630f9e48a14"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_36.json",
+        "raw_sha256": "7b56841dc89b1b2ca6b03df394395a869047265dd497fe64c95e8b1fa99555d5"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_37.json",
+        "raw_sha256": "e23747e249ccf461f6baf242156b0318f1eebe2391b09d51ddcb63a67da51138"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_38.json",
+        "raw_sha256": "083647d25616b4cbaa52018b8ec78e7ce9707d855036a51c06286235f81e9e81"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_39.json",
+        "raw_sha256": "fc9835bf5ad087e19827d650af03656a9cc42ef22fdf5d9b702f50a5bac24391"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_40.json",
+        "raw_sha256": "a346b017cbcc1767650521779f54dec2d1b46fae3f9eb27f84b18c86ad8337e3"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_41.json",
+        "raw_sha256": "45336e7fa46cb8c34536609b8bedd747d4a4c39dc5234c86fa51935c7dbd8672"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_42.json",
+        "raw_sha256": "dcf9e815666e7d73c1745afb2ddc1b6d185be1b585613073d337bafdfdce2cb9"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_43.json",
+        "raw_sha256": "c584d1f4244cfbc3f8c3907b909c5267f6ead10857a4e2e98bd9707236773a0d"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_44.json",
+        "raw_sha256": "6c2eb7cda527be968141af7f68b8bf19fb3490fbd53989a3ae97c414338e7ebe"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_45.json",
+        "raw_sha256": "02cc1bc68400932ec4f5bc2b285bf469d3b466a2a9e0e6732fcd83855e34a022"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_46.json",
+        "raw_sha256": "5a3ef50efae63357dd112fdbf9b5314aebcf2efaca0f6c10818f3c0b579ec210"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_47.json",
+        "raw_sha256": "79559dce7b6e9e9a973def0e34f3b4ec4cd61c0a357778a786c78e792762bd32"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_48.json",
+        "raw_sha256": "265d33ca4bca1bba23a21a688cda6d8dbe989874550f2dd373010b9a186809cd"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_49.json",
+        "raw_sha256": "124930b9635d9a3c6f16e9a53277b5e73e4f98761397954f86d6ad78a07f7022"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_50.json",
+        "raw_sha256": "9662486af787f33a678276c00403227e464388dc05fd1ba9ccd074068d7454a6"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_51.json",
+        "raw_sha256": "15c73b17941ce16a35aa9a77f79c65d4b6da15cdc5de645655e386f17ed0df18"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_52.json",
+        "raw_sha256": "9283abfe8dd6a825d2eeae08591bfe12bf6f41d87231c6003a27429388d1b035"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_53.json",
+        "raw_sha256": "2441c7e3353694e6e89ad2394b6b697e9a0c61b240c8a019f9dc1c9e94d08e1d"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_54.json",
+        "raw_sha256": "0d8c796905e238ba84a28a9503325ee2a24ac9826a9745ee46210fb432e1c70e"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_55.json",
+        "raw_sha256": "edcdb230be79f4039f4e2a1d7b22a3899b6876c9530636544843389093273a04"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_56.json",
+        "raw_sha256": "cd37a3a091c0e0ef30ed140c495ab5ab4aa3a38ca547f95ba25b8280932d34d6"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_57.json",
+        "raw_sha256": "978664ca94f20b10b5af52825bf2d96d88e0695c22bafbc96e128a659b7520a0"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_58.json",
+        "raw_sha256": "bbda0eb99e19d305796cc37a438ba68b484291e97f1870f0fc51875705872de6"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_59.json",
+        "raw_sha256": "fed58c4d80f2546311f98fc8b38f42322b3b6bbe40b06287bc8ce0b5e055c1a5"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_60.json",
+        "raw_sha256": "d7753d8dadfe4b38f6d5ffe3dbb94b94d9f43c0848dc4a60d736d65ec9b8feef"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_61.json",
+        "raw_sha256": "c7ae0f8ee361dd6893cd5173856fc3e773dc162ff9198e23bbb184d86ef47b30"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_62.json",
+        "raw_sha256": "bbde925dadba0ef491c4ff7c05ac76bfe2baa6218dd0da5b6065c7f1d153c4b2"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_63.json",
+        "raw_sha256": "28c3185ddb3bd0d41107d92e6cda99a7472b74f5db839eec36776080a0f0aa17"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/plate_64.json",
+        "raw_sha256": "248751fee4ea1409c084d128a858d587358b23f24a5d2031a3392293a70d15b3"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_1.json",
+        "raw_sha256": "5cc0168d3bbe32479ebb204a04252d4681a7ed3c0afaaee6eb9d89c9688cd447"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_2.json",
+        "raw_sha256": "98de39c75f67a2f43c7d104c7d9564b972dd2bbf9219c1ecffb308813a9ab2bc"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_3.json",
+        "raw_sha256": "3892b0717dbf8770f9f52f2fa607d006d2bde94c611b4dd8cbee5f1d50d0c712"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_4.json",
+        "raw_sha256": "b4717b586ed53e9ac202fdf52cf64ad0e124b862309d89bb3db28ce55b8c02e4"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_5.json",
+        "raw_sha256": "747f83ac4c076703ec8111d464251a003e63abefff4e443bc20d21f5ea83bea7"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_6.json",
+        "raw_sha256": "f484f3a1da77c5ac469a6327d7ecaefcb18a441657dfce3b29c1f424f5de7320"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_7.json",
+        "raw_sha256": "5910abeff69dc9c7970e0f8c04ca92539db303e3c67b5cf818b722d45b145554"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_8.json",
+        "raw_sha256": "95a28d51564ea3b5cc52ab6068087621f06dd9708e6f4f96ca4b2b73f5750c39"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_9.json",
+        "raw_sha256": "5584dcba26c09ddd072a0f3a50b44575dd923142d1995016eba69752b3280528"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_10.json",
+        "raw_sha256": "a3e82d8c2de86db9e03ca53f1e92e4cc4b84950e837a7b8b6ce716ae291fd483"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_11.json",
+        "raw_sha256": "418c9f0ce9b2b1aa5048fe99b780b31c264dbf919b9f9a3646a5d06e7935bd10"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_12.json",
+        "raw_sha256": "11f074a7f0094aca8b2a318b98202790c052efe09125c78e427b1539058d057d"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_13.json",
+        "raw_sha256": "b48da0d92c3f10008ee1f68d118c5b8fbff42e214b174c4ba127aa68274d9bce"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_14.json",
+        "raw_sha256": "221526d3d8a555abf9dfde4d8527a260c2138e5a182ec063eb598dfe375d1626"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_15.json",
+        "raw_sha256": "4c843b0d4cb24faa1bd4a410c66660104864a685975f88a8004a2cc32f1d4328"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_16.json",
+        "raw_sha256": "d8aa51ffdb194292add35614066065ce5211e97d89a84fc1f11e08cbec58fc6e"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_17.json",
+        "raw_sha256": "cd6863d75bb651326e61ac538118870d948cef687f4aa701eb99ec0cc226bfbb"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_18.json",
+        "raw_sha256": "9c9ea00cf5d8a98fbc2cfd099dd9ea295b046a5d61ddf7c0e79cedf4843c61dc"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_19.json",
+        "raw_sha256": "4eaa6992c023301f07aaf7be3280833586732858e0dbdaab305780ebd2029d56"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_20.json",
+        "raw_sha256": "81986c394b98ba29731b0ed6f053de2b6ef816420db5f8ba907aa69cbcec02e9"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_21.json",
+        "raw_sha256": "a410f3d160a09ac864f25b6e6ec3525b910dd6a87abbf8ceed98cf525ccbe39e"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_22.json",
+        "raw_sha256": "5fa9072a787cf8f4388e10de89e1d5957f6972a7d6bea76155546e8ee75e1a34"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_23.json",
+        "raw_sha256": "020bdc608ff6c81dedc165e823ad9ac667b68e41c0299a080749c1b6f5866def"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_24.json",
+        "raw_sha256": "fc5d531a0767ff37272ce56de9c7cddc047a8a3b2d4bf5e0d509c4bfc12b8b44"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_25.json",
+        "raw_sha256": "8f0f2bbd7836f80a135b5756d82d14f2db4996e4956a3b9d7dc61ae264baecd0"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_26.json",
+        "raw_sha256": "99e3a5bfd80a6bb0d0b77f710f3ad1a9b1bb401d1ceb4383b829916928d9a30f"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_27.json",
+        "raw_sha256": "00410135d0cb4717fe550804e582fdc4425e35019a4c053e8de9483bff990925"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_28.json",
+        "raw_sha256": "dfa60d6ce59814f4fc14317219e5b1224077cae1b9f973fa90f2ba77a08b7fae"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_29.json",
+        "raw_sha256": "6cad024215ad074aced71477b4209f61323b33b6edf21bc8a6b69f3c082ee1ac"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_30.json",
+        "raw_sha256": "7817118df9aed1343ca517ef13b1b54ec451a0a80684b7aabf766d2326e0a654"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_31.json",
+        "raw_sha256": "3af34fcb09e7dce27cb7f5b0fef9defc57531557d61db325ca0d2f5bbaf43ad2"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_32.json",
+        "raw_sha256": "576263689b27789bd955d286642a5f6c2ef8c8c35faf4f34d24cac76f1ef6c90"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_33.json",
+        "raw_sha256": "cbccb1ef7eacbdb0e6d8f99ba6330f40db23983ff5dc8980034d6c4cea331974"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_34.json",
+        "raw_sha256": "4d839830f09e1df052c307ae77b88536d0b73bea8699f864241e1e84b4f086d3"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_35.json",
+        "raw_sha256": "03a875c61bfd13c443599f8aa62ba9647a67454d8d83b0e9d1f63776f72f42f9"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_36.json",
+        "raw_sha256": "a37e9b73e8480038a11fe9349946283c4961ecd920116d93b6ffed5933c170e8"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_37.json",
+        "raw_sha256": "4a052d98b94f7a6597c75d759fc149212ce416d4e278385fc9703406d48162ed"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_38.json",
+        "raw_sha256": "f015334b6b27a108efdb986052b7cfde1ab188c8cebb3fa9e4c975c0c23f7f05"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_39.json",
+        "raw_sha256": "d5b1e5d8ebb500e6535a3f8afe9ac8ead2c7bb6bda00a201bcb1a8e5cace40ca"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_40.json",
+        "raw_sha256": "a972fea59aec54fb1c7e3296ecbf3da16960dc4a6e604488a2024f84d1989686"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_41.json",
+        "raw_sha256": "4c30733accf35dd145030ff14b1b9f13ba9afb2ef62d614fe57065755a7cf77d"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_42.json",
+        "raw_sha256": "d50b4f1fc0d965d3362363e29bd1abbea46dcf3d396d255ce192509feff1b1dd"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_43.json",
+        "raw_sha256": "f0a120e0d50265b9c17d6a68e0de7a9e31e973edb5810824499763b2eb1278e7"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_44.json",
+        "raw_sha256": "32fb7311e9d268a8afc7fbce796a4dd82cf9f19f50c30cb0cc681a7959f99899"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_45.json",
+        "raw_sha256": "6aa4846d158f14471c0f1fc45b643db3b148185e3fde32ae6b2637d0fb877e0e"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_46.json",
+        "raw_sha256": "d7c76a2f7e437e2e0fd9edafdb56c55df7fae1d9ba6b8758f478de0f335e9211"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_47.json",
+        "raw_sha256": "0e4682ab8f92118a62c41a17a0433e5dd32fb06ffde9affc8a789e62210d46c7"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_48.json",
+        "raw_sha256": "21ecca7b6a24556ae4835109455059055d5ba9f19680869422dbee4d0e8f5258"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_49.json",
+        "raw_sha256": "d604300e90b986e599eea8c871e7bcc5e1ea4e4d5a248d185f78591927b0a3bc"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_50.json",
+        "raw_sha256": "0b2794ba3543cf993c65a5278b55c79ab8dc02e76a772475c4ba5a79e548290d"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_51.json",
+        "raw_sha256": "05136125537c8ebc866ecaa6de851d61bb22d8170cb3241ad9fe057c9f4dde69"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_52.json",
+        "raw_sha256": "3372554799bcb39a963551cff36a58ebcb0249274b05a076621848f798e6fea9"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_53.json",
+        "raw_sha256": "a396f0b8a125d60557648d40eec57d3670a1cc6f7486c46b454849971b6d9461"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_54.json",
+        "raw_sha256": "a37e0efe956f9b24270c468654daa01adf22761f013239430b077378c5fc445c"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_55.json",
+        "raw_sha256": "ff6bc32c9ebce176cdd15d71b3ce13ff083d72379289db0e885ea819f128e5fd"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_56.json",
+        "raw_sha256": "36d548cd308aea302d5d8f06281499ca5a219348a9add1bae9403c30f340ff84"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_57.json",
+        "raw_sha256": "66c37aa21b2c435b0629e55b5066971cbe6b42be26bcf4ccdae0088667288b46"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_58.json",
+        "raw_sha256": "1befb65c9b5dee45440605b25aef8fd5e154c49448399ce98ec661bb53e400c0"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_59.json",
+        "raw_sha256": "8a1551e3ddeeba0482eea1fec1919986e3ac71ab5349ca13628c2c581de89a7a"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_60.json",
+        "raw_sha256": "0d6fe422f135e023e95a46aa23fd455499a69bf72fc82a107e7e3d7fa7a61dac"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_61.json",
+        "raw_sha256": "b97909abf836339fec4035f43ad0237ea58c168404fd8081c7eb7f29163a1cd2"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_62.json",
+        "raw_sha256": "3350cd899df4072b30cfd1789d7b2b4070b08c219dfefcf1b7ca8a5ff82d8b08"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_63.json",
+        "raw_sha256": "cb200c0d4c26ba611c49c454d60a997938498719bcea15b8e111a19efe2f1c0a"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/models/block/decoration/pile/gem_plate_64.json",
+        "raw_sha256": "9f95f393624868b5b292600c309593229b3c18771d69aa31123fad765ac9e1b3"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/blockstates/ingot_pile.json",
+        "raw_sha256": "156d45324dd11258ef0f03063eb136e4131c695995d742e54d5720312aa82dfa"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/blockstates/plate_pile.json",
+        "raw_sha256": "78224bfa03cd5d9f20a3ee9a4097b7cf853e72387f0fbde0fe72a8e6491adc27"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/blockstates/plate_gem_pile.json",
+        "raw_sha256": "1c34b02bfd1a91a02ef60ad828cf968b81a26635b4278233d6fd8b2af2af4dfe"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/placeables/ingot/sides.png",
+        "raw_sha256": "c15a59ebd63b49c5a4e031fc1f84f3efd66ca5d4770e4cf3ffad6fe7dbaf3156",
+        "status": "reference_png_missing_in_current_original_tree",
+        "expected_source_glob": "assets/*/textures/blocks/machines/placeables/ingot/sides.png"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/placeables/ingot/top.png",
+        "raw_sha256": "30088271d7b7eef72f1778139dea109942cfec536218dd30e66feb846589fb9b",
+        "status": "reference_png_missing_in_current_original_tree",
+        "expected_source_glob": "assets/*/textures/blocks/machines/placeables/ingot/top.png"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/placeables/plate/sides.png",
+        "raw_sha256": "4b8045e02d7f7c2af3136ea1cab4b8032f6271c4b4d719f8183bf28f403f7db6",
+        "status": "reference_png_missing_in_current_original_tree",
+        "expected_source_glob": "assets/*/textures/blocks/machines/placeables/plate/sides.png"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/placeables/plate/top.png",
+        "raw_sha256": "ea1db3d6c20ff3d18b588a9bc9c71a51bb3a361d528ea1a8385e18e33bc9f9d6",
+        "status": "reference_png_missing_in_current_original_tree",
+        "expected_source_glob": "assets/*/textures/blocks/machines/placeables/plate/top.png"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/placeables/plategem/sides.png",
+        "raw_sha256": "fbe0854aa49345595159f1cc41b998765ec66d7733990ccf3315b9128bbecebb",
+        "status": "reference_png_missing_in_current_original_tree",
+        "expected_source_glob": "assets/*/textures/blocks/machines/placeables/plateGem/sides.png"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/placeables/plategem/top.png",
+        "raw_sha256": "ea87db37aa367b54b98f4bcb33f460ef55b92f628a80364c8907941c61b963b4",
+        "status": "reference_png_missing_in_current_original_tree",
+        "expected_source_glob": "assets/*/textures/blocks/machines/placeables/plateGem/top.png"
+      }
+    ],
+    "cube_offsets": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        -1,
+        0
+      ],
+      [
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        -1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        -1,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        -1,
+        -1
+      ],
+      [
+        0,
+        -1,
+        1
+      ],
+      [
+        -1,
+        -1,
+        0
+      ],
+      [
+        1,
+        -1,
+        0
+      ],
+      [
+        0,
+        1,
+        -1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        -1,
+        1,
+        0
+      ],
+      [
+        1,
+        1,
+        0
+      ],
+      [
+        -1,
+        0,
+        -1
+      ],
+      [
+        1,
+        0,
+        1
+      ],
+      [
+        1,
+        0,
+        -1
+      ],
+      [
+        -1,
+        0,
+        1
+      ],
+      [
+        -1,
+        -1,
+        -1
+      ],
+      [
+        1,
+        -1,
+        1
+      ],
+      [
+        1,
+        -1,
+        -1
+      ],
+      [
+        -1,
+        -1,
+        1
+      ],
+      [
+        -1,
+        1,
+        -1
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        -1
+      ],
+      [
+        -1,
+        1,
+        1
+      ]
+    ],
+    "limits": "Empty model mats are a port addition, only their references checked. No material tint, glowing rendering, pixels, native collision or saved-world test."
+  },
+  "native_evidence": [
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour$Properties.class",
+      "entry_sha256": "7b379ccb00fa99762c6961f9e94d2258c994c12c59a46aa4789ee5851ed3eb52",
+      "javap_output": "work/mini-portal-audit-20261022/forge-BlockBehaviour$Properties.javap.txt",
+      "javap_sha256": "7ac86268ff86932e5c8cb6737878da61b2fe46dc71bd3c8a222b82d468171cc4"
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour.java",
+      "entry_sha256": "410ae028d36585b6c210e853720ea3fb973154a4d7800a082d541293cf355014",
+      "extracted_path": "work/mini-portal-audit-20261022/BlockBehaviour.java"
+    }
+  ],
+  "native_scope": "Actual Forge Properties and Neo BlockBehaviour strength/property consumers reused by hash. No running mod or native-world execution.",
+  "readability": {
+    "baseline": "5a5f92e921a3a411a3f040f23fe517686f2d0349",
+    "files": {
+      "core/src/main/java/com/gregtech/gregtech/block/MaterialPileRules.java": {
+        "before_raw_sha256": "199c4e1c0927c09a5603708970e6f7f81a055e2dccd6fab92c02de43070788d7",
+        "after_raw_sha256": "89f04c2203f8fb2695cb0288ba768d713cafde00cf0b9f9fdcf8eff5b2fade6b",
+        "before_lines": 8,
+        "after_lines": 55,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 430,
+            "execution_sha256": "0a7e86ae57e34e2f698038e25bd234457653df29d8b24b23f7d64f76286eb045",
+            "literal_positions_sha256": "638b8b1c09c6647cc1096096ca9b4dd3cc7fe930f561c08bca44a73ad24f8ded",
+            "literal_count": 94
+          }
+        ]
+      },
+      "core/src/main/java/com/gregtech/gregtech/block/CoinPileRules.java": {
+        "before_raw_sha256": "b9ee90933a46131cc9cbc90d5500bb14aa60bb1b251cd11714b7de65d38120e3",
+        "after_raw_sha256": "2eb82dac078603cb864500841370dbc9693bedc978f3ec45fc57ea8d1f7434a9",
+        "before_lines": 9,
+        "after_lines": 36,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 313,
+            "execution_sha256": "a11bc572de262b2b023f68b8d41cb455ccbfbf560059ecdea7b2da0e33a8e9ec",
+            "literal_positions_sha256": "d7fa817edb392783635b31db2dbf58a36e4c72b0828a6dc91b573e62e9c2bdce",
+            "literal_count": 24
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMaterialPiles.java": {
+        "before_raw_sha256": "e9600cb32610474615e60a8837d6987bfca1f1524f2945ea1d97e8aef32db025",
+        "after_raw_sha256": "a66991f3a7d110f680038cb77db2e658fde2033bc50e64dd53bc1886a9f50288",
+        "before_lines": 3,
+        "after_lines": 37,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 312,
+            "execution_sha256": "bd0df0ffe236594de16f1abd53c1709457e7687c675c2e47e472bfe918f893e2",
+            "literal_positions_sha256": "123ccaedf8fb124c7016efc587940aaf65f9b3f1985c9d3bb4852ddc378cb2d4",
+            "literal_count": 5
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 312,
+            "execution_sha256": "bd0df0ffe236594de16f1abd53c1709457e7687c675c2e47e472bfe918f893e2",
+            "literal_positions_sha256": "123ccaedf8fb124c7016efc587940aaf65f9b3f1985c9d3bb4852ddc378cb2d4",
+            "literal_count": 5
+          }
+        ],
+        "identifier_changes": {
+          "private_helper": "reg -> registerPile, four declaration/call tokens",
+          "private_local": "b -> registered, three tokens in the private registration method",
+          "contract": "Complete ordered code comparison after these seven exact identifier substitutions; literals/comments protected."
+        }
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/registry/GTCoinPiles.java": {
+        "before_raw_sha256": "97279f3c5b97fce9cabe09d96f8b7b5467ac999e9d567febbe20f712d79357b5",
+        "after_raw_sha256": "341a256d4d0ede9dfcc0913ca7044cce7b22bafc6d8abff526552f681f3e3bff",
+        "before_lines": 3,
+        "after_lines": 22,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 202,
+            "execution_sha256": "6ddb2b97e4617e5ed2c7590a5047f94839a3808194401081852de8f0d2b34eeb",
+            "literal_positions_sha256": "16404f309c0c7c50b7c1de9877239455c14d47478c439464619de2d4516be56a",
+            "literal_count": 4
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 202,
+            "execution_sha256": "6ddb2b97e4617e5ed2c7590a5047f94839a3808194401081852de8f0d2b34eeb",
+            "literal_positions_sha256": "16404f309c0c7c50b7c1de9877239455c14d47478c439464619de2d4516be56a",
+            "literal_count": 4
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/misc/PileItemExpireHandler.java": {
+        "before_raw_sha256": "2635352b14b05f61ceffc0e225219ce0c0dc8b0adf1ff98c51bf23ae865a6ea8",
+        "after_raw_sha256": "2886b0d863331cb58670d0c81563d743d5b321e0c4ab66445274b87bf78533c8",
+        "before_lines": 103,
+        "after_lines": 92,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 625,
+            "execution_sha256": "62fc2631e5a5a80a562f2de4b5ae066a79395dc211bd48ffea6ab2b8628ee836",
+            "literal_positions_sha256": "126a182cc582b433fdb8ed52e7401fbb1c5f7dbad6f2ae452269ec47c69639b1",
+            "literal_count": 5
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 609,
+            "execution_sha256": "ddd6aac7496f9312e952bb34e50736852d57a1abdd4434d7f6bec2a17765e51f",
+            "literal_positions_sha256": "d6d3d7286da19aa5aca4e4ce4995d5a94ecb2969a7b7fa2c83a300658591326b",
+            "literal_count": 5
+          }
+        ],
+        "controlled_extraction": {
+          "removed_private_predicate": "    /** GT6 {@code WD.irrelevant}: air, vine, snow layer, fire, grass/fern or water. */\n    private static boolean isIrrelevant(BlockState state) {\n        return state.isAir() || state.is(Blocks.VINE) || state.is(Blocks.SNOW)\n                || state.is(Blocks.FIRE) || state.is(Blocks.SOUL_FIRE)\n//? if >=1.21.1 {\n                /*|| state.is(Blocks.SHORT_GRASS) || state.is(Blocks.TALL_GRASS)\n*///?} else {\n                || state.is(Blocks.GRASS) || state.is(Blocks.TALL_GRASS)\n//?}\n                || state.is(Blocks.FERN) || state.is(Blocks.LARGE_FERN) || state.is(Blocks.WATER);\n    }",
+          "removed_sha256": "09c279516436601fe3e9e9e3d914139a916cca5e8629fdaa7768e2636d0e857d",
+          "call_substitution": "One isIrrelevant(state) call -> PilePlacementChecks.canReplaceForExpiry(state); remove its now-unused Blocks import.",
+          "contract": "Compare every remaining ordered token after explicit extraction and one call qualification; helper body independently compared below."
+        }
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/misc/CoinItemExpireHandler.java": {
+        "before_raw_sha256": "171b74eaff270ccad4137c83a74cefdad99e49932945bd89dce98bfe58c5b969",
+        "after_raw_sha256": "ebe5987b743b78a61af8b268c6777310027418d7028635484852729716854470",
+        "before_lines": 115,
+        "after_lines": 104,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 654,
+            "execution_sha256": "147b7a49136e8799897f7645dc1e752db5545adb2840a6838227dc3c9550e1f9",
+            "literal_positions_sha256": "c287fb1e8eac2f566cc68fd154f4d34b97ac9cda4e5dd35fec2b7bc02a1a7329",
+            "literal_count": 23
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 638,
+            "execution_sha256": "8865938f7920f4baa2eb80abdf8ee173aec5750faf84f903ef7921ea2439c473",
+            "literal_positions_sha256": "18a6a936d7cd40beaefb33b539fdf4d094afdbe1c6fe46814b1cf5bdc608da62",
+            "literal_count": 23
+          }
+        ],
+        "controlled_extraction": {
+          "removed_private_predicate": "    /** GT6 WD.irrelevant: air, vine, snow layer, fire, grass/fern or water. */\n    private static boolean isIrrelevant(BlockState state) {\n        return state.isAir() || state.is(Blocks.VINE) || state.is(Blocks.SNOW)\n                || state.is(Blocks.FIRE) || state.is(Blocks.SOUL_FIRE)\n//? if >=1.21.1 {\n                /*|| state.is(Blocks.SHORT_GRASS) || state.is(Blocks.TALL_GRASS)\n*///?} else {\n                || state.is(Blocks.GRASS) || state.is(Blocks.TALL_GRASS)\n//?}\n                || state.is(Blocks.FERN) || state.is(Blocks.LARGE_FERN) || state.is(Blocks.WATER);\n    }",
+          "removed_sha256": "20489e8df544115859e3cb32847623d1f8b59a7271dc009bf8dc4ed973c44787",
+          "call_substitution": "One isIrrelevant(state) call -> PilePlacementChecks.canReplaceForExpiry(state); remove its now-unused Blocks import.",
+          "contract": "Compare every remaining ordered token after explicit extraction and one call qualification; helper body independently compared below."
+        }
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/misc/PileBlock.java": {
+        "before_raw_sha256": "b0a6ac9a9759dc891679de139bf06cf48386f1c78a13faf8a2fb88c1151e58e3",
+        "after_raw_sha256": "e31f5f48f7857539044eee6e20fa62f5cecaae595433f06fcafc6f2b3d880627",
+        "before_lines": 299,
+        "after_lines": 300,
+        "comment_corrections": [
+          [
+            "<p>The port's pile is an ordinary block with its own block item, while GT6's pile <em>is</em> the\n * material stack item; everything below follows from that and is noted at the code that needs it:</p>",
+            "<p>The port exposes standalone empty pile block items. GT6 normally wraps a material stack in\n * its registered multi-tile item; ordinary interactions and drops use that stored stack.\n * The following port differences require separate parity decisions:</p>"
+          ],
+          [
+            "snap into existing piles ({@code GT_API_Proxy.java:1468-1470}). The port keeps GT6's three block\n * ids and adds that behaviour through {@link PileBlockEntity}.",
+            "form new piles when they expire ({@code GT_API_Proxy.java:1468-1470}). The port keeps the three material pile\n * kinds and adds that behaviour through {@link PileBlockEntity}."
+          ],
+          [
+            "highest pile above the clicked one that carries the very same stack, which is where GT6 keeps\n     * the stack size of the whole column.",
+            "highest pile above the clicked one that carries the very same stack. The original decrements\n     * that selected pile's own stack; it does not store one aggregate count for the whole column."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1311,
+            "execution_sha256": "0b024478e8e697d0e0737cbea8dae9e64411c7e4eee79f02d7a0c4e3133075d0",
+            "literal_positions_sha256": "7939d5f69f6dbd881f0dcf40e5574d464c45cf46a9faa0f4b3d48a7db021b5e5",
+            "literal_count": 21
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1481,
+            "execution_sha256": "43832a4aed4befdae4afc7d3f4f59f05d5c3b6e4bc2dc6d272938ca52c8a4340",
+            "literal_positions_sha256": "7b08a8cffac37a6fb361fec604279d393be39e7c4988cefe817fbb4a29cd9780",
+            "literal_count": 21
+          }
+        ]
+      }
+    },
+    "new_helper": {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/PilePlacementChecks.java",
+      "raw_sha256": "a037bd62e8c9218110db9c8dde8b3ccd24dd70c639ab10d2a6f6cec64bb18d7c",
+      "lines": 20,
+      "visibility": "package-private class and static method, both consumers in same package",
+      "comparison": "Full ordered predicate body matches both removed methods in both platform views; two source consumers and two helper views."
+    }
+  },
+  "formal_findings_added": [
+    {
+      "id": "ALIGN-377",
+      "finding": "Original scrapGt placeable 32103 has no current pile kind, manual placement or expiry binding.",
+      "scope": "Scrap items themselves exist. Missing placed pile consumer, not all scrap recipes/items."
+    },
+    {
+      "id": "ALIGN-378",
+      "finding": "Material-pile merge accepts equal resolved material/prefix/data across different item identities.",
+      "scope": "Original ST.equal checks item identity/meta/NBT. Current held items can increase stored first-item count even if identities differ; unification policy differs. Same-column comparison still uses exact native stack equality."
+    },
+    {
+      "id": "ALIGN-379",
+      "finding": "Standalone empty piles and refused-click handling preserve a different interaction contract.",
+      "scope": "Current empty pile block items are exposed; empty/full refused material clicks return PASS. Old invalid-empty click removes the block and full matching click consumes. Not a claim that an empty original multi-tile can never be created by commands."
+    },
+    {
+      "id": "ALIGN-380",
+      "finding": "Both pile getDrops implementations mutate the live stored contents during drop calculation.",
+      "scope": "Original methods only construct/return drops. Current clearContents means a repeated query before removal returns nothing. Intended duplication prevention does not make this a pure query. No third-party query or survival item-loss reproduction claimed."
+    },
+    {
+      "id": "ALIGN-381",
+      "finding": "Coin pile hardness/resistance changed from 1/0 to 3/3.",
+      "scope": "Actual shared registration is called by both platform initialization paths. requiresCorrectToolForDrops also present, but no unproven claim about final empty-hand harvesting."
+    },
+    {
+      "id": "ALIGN-382",
+      "finding": "Material-pile expiry replacement water membership is narrower than original WD.irrelevant.",
+      "scope": "Original admits BlockWaterlike and optional Streams water; current exact Blocks.WATER test does not. New helper also serves coins, but original coin placement uses canPlaceEntityOnSide and is not falsely described as a WD.irrelevant call."
+    },
+    {
+      "id": "ALIGN-383",
+      "finding": "Manual ingot-pile placement lacks original Botania-own-material beacon bypass.",
+      "scope": "Conditional integration contract when that external item has a recognized material/prefix. No assertion that Botania is installed in this test pack."
+    }
+  ],
+  "formal_findings_extended": [
+    {
+      "id": "ALIGN-132",
+      "scope": "Material pile pickup plays at clicked base position; original top-of-column branch plays at selected top pile."
+    }
+  ],
+  "positive_scope": [
+    "Three material forms and coin pile are shared real registrations; Forge GTDecorBlocks fields are references, not extra registrations.",
+    "All 192 nonempty material model ordered boxes match original switch expressions, three state files have 195 correct model references, and all 27 expiry offsets preserve order.",
+    "Ingot/plate outline ceil-layer and collision floor-layer formulas, exact same-stack upward walk limit, basic gt.value world persistence and update packets exist; not a native persistence/physics test.",
+    "Coin top-only 4x4 interactions, 16 per cell, 256 total, creative insertion/deletion behavior and split-to-64 drop construction exist; original uses the same random repacking strategy.",
+    "Old material expiry already places a new pile in an irrelevant block; it does not merge into existing piles. A misleading source comment was corrected instead of adding a false gap."
+  ],
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "preparation_attempts": [
+    {
+      "result": "failed static parser preparation",
+      "detail": "Leading source whitespace in a numeric expression was rejected by Python AST; expression stripping fixed, no production change."
+    },
+    {
+      "result": "missing evidence",
+      "detail": "Six expected reference PNGs absent from current original tree; current hashes preserved, original byte comparison remains unverified. Models/references/offset checks completed."
+    },
+    {
+      "result": "failed excerpt metadata validation",
+      "detail": "A terminal blank source line was excluded by splitlines-based endpoint counting; endpoints now use the original selected line count and match current source."
+    }
+  ],
+  "limits": [
+    "No gameplay change: formatting, seven private/local identifier substitutions, two exact predicate extractions and three source-comment corrections only.",
+    "No Gradle, Java compilation, GameTest, game, render, saved-world restart, build, push, issue comment or closure.",
+    "Coin custom pattern/catalog/config/tooltip parity and native placement/lifecycle still require review; full system audit remains incomplete.",
+    "383 formal records include repaired/policy items, not an unresolved count or percent. Goal active."
+  ],
+  "root_revalidation": {
+    "baseline_and_git_original_text": true,
+    "readability_reproduced": true,
+    "old_platform_views": 12,
+    "helper_views": 2,
+    "helper_body_comparisons": 4,
+    "edited_existing_sources": 7,
+    "added_source": 1,
+    "lines_before": 540,
+    "lines_after": 666,
+    "original_sources": 13,
+    "current_sources": 19,
+    "geometry_resources_hashed": 201,
+    "native_hashes": true,
+    "protected_materials": true,
+    "formal_ids_contiguous": 383,
+    "six_ledger_navigation_links": true,
+    "source_tool_excerpt_resource_hashes": true,
+    "new_helper_hash": true,
+    "extended_row_link": true
+  }
+}

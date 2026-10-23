@@ -30,25 +30,30 @@ import java.util.Map;
  */
 public final class GTTreeHoles {
 //? if >=1.21.1 {
-    /*private static final List<DeferredHolder<Block,? extends Block>> ALL = new ArrayList<>();
-    private static final Map<WoodSpecies, DeferredHolder<Block,TreeHoleBlock>> HOLES = new LinkedHashMap<>();
+    /*private static final List<DeferredHolder<Block, ? extends Block>> ALL = new ArrayList<>();
+    private static final Map<WoodSpecies, DeferredHolder<Block, TreeHoleBlock>> HOLES = new LinkedHashMap<>();
 *///?} else {
     private static final List<RegistryObject<? extends Block>> ALL = new ArrayList<>();
     private static final Map<WoodSpecies, RegistryObject<TreeHoleBlock>> HOLES = new LinkedHashMap<>();
 //?}
 
-    private GTTreeHoles() {}
+    private GTTreeHoles() {
+    }
 
 //? if >=1.21.1 {
-    /*public static List<DeferredHolder<Block,? extends Block>> all() { return Collections.unmodifiableList(ALL); }
+    /*public static List<DeferredHolder<Block, ? extends Block>> all() {
+        return Collections.unmodifiableList(ALL);
+    }
 *///?} else {
-    public static List<RegistryObject<? extends Block>> all() { return Collections.unmodifiableList(ALL); }
+    public static List<RegistryObject<? extends Block>> all() {
+        return Collections.unmodifiableList(ALL);
+    }
 //?}
 
     public static List<Block> blocks() {
         List<Block> out = new ArrayList<>();
 //? if >=1.21.1 {
-        /*for (DeferredHolder<Block,? extends Block> entry : ALL) if (entry.isBound()) out.add(entry.get());
+        /*for (DeferredHolder<Block, ? extends Block> entry : ALL) if (entry.isBound()) out.add(entry.get());
 *///?} else {
         for (RegistryObject<? extends Block> entry : ALL) if (entry.isPresent()) out.add(entry.get());
 //?}
@@ -58,7 +63,7 @@ public final class GTTreeHoles {
     /** The hole block of a species, or {@code null} for species GT6 has no hole for. */
     public static TreeHoleBlock hole(WoodSpecies species) {
 //? if >=1.21.1 {
-        /*DeferredHolder<Block,TreeHoleBlock> entry = HOLES.get(species);
+        /*DeferredHolder<Block, TreeHoleBlock> entry = HOLES.get(species);
         return entry == null || !entry.isBound() ? null : entry.get();
 *///?} else {
         RegistryObject<TreeHoleBlock> entry = HOLES.get(species);
@@ -74,12 +79,12 @@ public final class GTTreeHoles {
 
     private static void hole(String id, WoodSpecies species, String yield) {
 //? if >=1.21.1 {
-        /*DeferredHolder<Block,TreeHoleBlock> block = GTBlocks.BLOCKS.register(id, () -> new TreeHoleBlock(species, yield,
+        /*DeferredHolder<Block, TreeHoleBlock> block = GTBlocks.BLOCKS.register(id, () -> new TreeHoleBlock(species, yield,
 *///?} else {
         RegistryObject<TreeHoleBlock> block = GTBlocks.BLOCKS.register(id, () -> new TreeHoleBlock(species, yield,
 //?}
                 BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(2.0f, 3.0f)
-                        .sound(SoundType.WOOD).noOcclusion()));
+        .sound(SoundType.WOOD).noOcclusion()));
         GTBlocks.BLOCK_ITEMS.register(id, () -> new BlockItem(block.get(), new Item.Properties()));
         ALL.add(block);
         HOLES.put(species, block);

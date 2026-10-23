@@ -221,7 +221,7 @@ public class FluidTankGT implements IFluidHandler {
     public int fill(FluidStack resource, FluidAction action) {
         if (resource.isEmpty()) return 0;
         if (fluid.isEmpty()) {
-            int accepted = bindInt(Math.min(resource.getAmount(), capacity()));
+            int accepted = bindInt(Math.min(resource.getAmount(), capacity(resource)));
             if (accepted <= 0) return 0;
             if (action.execute()) {
                 fluid = resource.copy();
@@ -236,7 +236,7 @@ public class FluidTankGT implements IFluidHandler {
 *///?} else {
         if (!fluid.isFluidEqual(resource)) return 0;
 //?}
-        int accepted = bindInt(Math.min(resource.getAmount(), capacity() - getAmount()));
+        int accepted = bindInt(Math.min(resource.getAmount(), capacity(resource) - getAmount()));
         if (accepted <= 0) return 0;
         if (action.execute()) {
             storage.setAmount(getAmount() + accepted);

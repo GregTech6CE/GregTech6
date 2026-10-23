@@ -1,0 +1,468 @@
+{
+  "date": "2026-10-22",
+  "batch": 111,
+  "baseline": "04386f1c49059fab04b14deee110ac1dad7cc3a0",
+  "previous_goal_turn": {
+    "classification": "progress",
+    "commit": "04386f1c4"
+  },
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/misc/BlockBaseRail.java",
+      "raw_sha256": "41a37b148908e80c69666e8fbf47db9ea0afd8bf2938b4e9a93037d6aca85a2c",
+      "lines": 345,
+      "notice": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/a/Loader_Rails.java",
+      "raw_sha256": "b870301fca62e84351a499e344a6e5e49ae8a23dc2f19ddbe679ad0dd0637f02",
+      "lines": 159,
+      "notice": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTTrackBlocks.java",
+      "raw_sha256": "fe80df7298933a8a45cd0e33e35e074065c6e3ec7d545320bc921fb3d6f46849",
+      "lines": 135
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/TrackBlock.java",
+      "raw_sha256": "d76fc296046b8cf89d75bab10425c562fc1a9094bd5376ae17f578cd7a6b7802",
+      "lines": 193
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/RoadStripeRailBlock.java",
+      "raw_sha256": "1c4ba2e5e9bfa9ed7c2c0eaac99ec121424eb548ba38d9ad5b1e793702f1546d",
+      "lines": 127
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "raw_sha256": "ce185e389023571915282f6ee52793a18e9f0e2ee33cce1085b857274010a044",
+      "lines": 336
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java",
+      "raw_sha256": "597867a457c5e291bb1179bbb31b90737f807d95adb65670fc01c8be17c8daff",
+      "lines": 611
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractions.java",
+      "raw_sha256": "98301fff608998c7bdc18b18308e5f836543a49971fb5838ce29c6f31e22cd99",
+      "lines": 111
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractionTarget.java",
+      "raw_sha256": "2944dfba01fc6d45286ad5654084662e23de125eb00f5ca65353cd40f4e42fab",
+      "lines": 17
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "raw_sha256": "39aa688e0f5c16ae00e313f4abec426e7ada8148361dd5c6ff2f10037a31856d",
+      "lines": 86,
+      "notice": "/* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later.\n * Native adaptation of Behavior_Tool and ITileEntityMultiBlockController.Util. */"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java",
+      "raw_sha256": "29a6eb369286918b8562adae2a5a3f415a9a48f80840a69aa9902ad4bb1ddf32",
+      "lines": 80,
+      "notice": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/NeoToolBindings.java",
+      "raw_sha256": "727657f5fda4b49ac80a1ee157a7ade8235ccba880d499a2b43ad9bceea0f0ba",
+      "lines": 69
+    }
+  ],
+  "source_scope": "Full-file hashes archived for provenance; listed excerpts and consumers are the reviewed scope, not certification of every surrounding feature.",
+  "excerpts": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/misc/BlockBaseRail.java",
+      "first_line": 139,
+      "last_line": 155,
+      "purpose": "Old explicit soft-hammer and crowbar operations; return costs and actual metadata formula.",
+      "text": "\tpublic long onToolClick(String aTool, long aRemainingDurability, long aQuality, Entity aPlayer, List<String> aChatReturn, IInventory aPlayerInventory, boolean aSneaking, ItemStack aStack, World aWorld, byte aSide, int aX, int aY, int aZ, float aHitX, float aHitY, float aHitZ) {\n\t\tif (!aWorld.isRemote) {\n\t\t\tif (aTool.equals(TOOL_softhammer) && mPowerRail) {\n\t\t\t\taWorld.isRemote = T;\n\t\t\t\tboolean tResult = aWorld.setBlock(aX, aY, aZ, this, WD.meta(aWorld, aX, aY, aZ) ^ 8, 0);\n\t\t\t\taWorld.isRemote = F;\n\t\t\t\treturn tResult?10000:0;\n\t\t\t}\n\t\t\tif (aTool.equals(TOOL_crowbar)) {\n\t\t\t\tbyte aMeta = WD.meta(aWorld, aX, aY, aZ);\n\t\t\t\taWorld.isRemote = T;\n\t\t\t\tboolean tResult = aWorld.setBlock(aX, aY, aZ, this, isPowered() ? (aMeta+1) % 10 : ((aMeta/8) * 8) + (((aMeta%8)+1) % 6), 0);\n\t\t\t\taWorld.isRemote = F;\n\t\t\t\treturn tResult?2000:0;\n\t\t\t}\n\t\t}\n\t\treturn ToolCompat.onToolClick(this, aTool, aRemainingDurability, aQuality, aPlayer, aChatReturn, aPlayerInventory, aSneaking, aStack, aWorld, aSide, aX, aY, aZ, aHitX, aHitY, aHitZ);",
+      "sha256": "94387730403defe2d09755702a19c99337defd3774ad3fe0a6aa6172038400f6"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/misc/BlockBaseRail.java",
+      "first_line": 173,
+      "last_line": 188,
+      "purpose": "Old same registered block identity and powered-bit propagation gate.",
+      "text": "\tprotected boolean func_150057_a(World aWorld, int aX, int aY, int aZ, boolean p_150057_5_, int p_150057_6_, int p_150057_7_) {\n\t\tif (aWorld.getBlock(aX, aY, aZ) == this) {\n\t\t\tint j1 = WD.meta(aWorld, aX, aY, aZ);\n\t\t\tint k1 = j1 & 7;\n\t\t\t\n\t\t\tif (p_150057_7_ == 1 && (k1 == 0 || k1 == 4 || k1 == 5)) return F;\n\t\t\tif (p_150057_7_ == 0 && (k1 == 1 || k1 == 2 || k1 == 3)) return F;\n\t\t\t\n\t\t\tif ((j1 & 8) != 0) {\n\t\t\t\tif (aWorld.isBlockIndirectlyGettingPowered(aX, aY, aZ)) return T;\n\t\t\t\treturn func_150058_a(aWorld, aX, aY, aZ, j1, p_150057_5_, p_150057_6_ + 1);\n\t\t\t}\n\t\t}\n\t\treturn F;\n\t}\n\t",
+      "sha256": "306c3a66949968c6745e8910ad7e8d5d0a09bd6d15679f201609e629a2aa992c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/misc/BlockBaseRail.java",
+      "first_line": 211,
+      "last_line": 275,
+      "purpose": "Old detector polling, bounds, signals and comparator routing.",
+      "text": "\t@Override public int tickRate(World aWorld) {return 20;}\n\t@Override public boolean canProvidePower() {return mDetectorRail;}\n\t\n\t@Override\n\tpublic void onEntityCollidedWithBlock(World aWorld, int aX, int aY, int aZ, Entity aEntity) {\n\t\tif (mDetectorRail && !aWorld.isRemote) {\n\t\t\tint l = WD.meta(aWorld, aX, aY, aZ);\n\t\t\tif ((l & 8) == 0) func_150054_a(aWorld, aX, aY, aZ, l);\n\t\t}\n\t}\n\t\n\t@Override\n\tpublic void updateTick(World aWorld, int aX, int aY, int aZ, Random aRandom) {\n\t\tif (mDetectorRail && !aWorld.isRemote) {\n\t\t\tint l = WD.meta(aWorld, aX, aY, aZ);\n\t\t\tif ((l & 8) != 0) func_150054_a(aWorld, aX, aY, aZ, l);\n\t\t}\n\t}\n\t\n\t@Override public int isProvidingWeakPower  (IBlockAccess aWorld, int aX, int aY, int aZ, int aSide) {return mDetectorRail ? (WD.meta(aWorld, aX, aY, aZ) & 8) != 0 ? 15 : 0 : 0;}\n\t@Override public int isProvidingStrongPower(IBlockAccess aWorld, int aX, int aY, int aZ, int aSide) {return mDetectorRail ? (WD.meta(aWorld, aX, aY, aZ) & 8) == 0 ? 0 : (aSide == 1 ? 15 : 0) : 0;}\n\t\n\tprivate void func_150054_a(World aWorld, int aX, int aY, int aZ, int aMetaData) {\n\t\tboolean flag = (aMetaData & 8) != 0;\n\t\tboolean flag1 = F;\n\t\t@SuppressWarnings(\"unchecked\")\n\t\tList<EntityMinecart> list = aWorld.getEntitiesWithinAABB(EntityMinecart.class, AxisAlignedBB.getBoundingBox(aX + 0.125, aY, aZ + 0.125, aX + 0.875, aY + 0.875, aZ + 0.875));\n\t\t\n\t\tif (!list.isEmpty()) flag1 = T;\n\t\tif (flag1 && !flag) {\n\t\t\taWorld.setBlockMetadataWithNotify(aX, aY, aZ, aMetaData | 8, 3);\n\t\t\taWorld.notifyBlocksOfNeighborChange(aX, aY, aZ, this);\n\t\t\taWorld.notifyBlocksOfNeighborChange(aX, aY - 1, aZ, this);\n\t\t\taWorld.markBlockRangeForRenderUpdate(aX, aY, aZ, aX, aY, aZ);\n\t\t}\n\t\tif (!flag1 && flag) {\n\t\t\taWorld.setBlockMetadataWithNotify(aX, aY, aZ, aMetaData & 7, 3);\n\t\t\taWorld.notifyBlocksOfNeighborChange(aX, aY, aZ, this);\n\t\t\taWorld.notifyBlocksOfNeighborChange(aX, aY - 1, aZ, this);\n\t\t\taWorld.markBlockRangeForRenderUpdate(aX, aY, aZ, aX, aY, aZ);\n\t\t}\n\t\tif (flag1) aWorld.scheduleBlockUpdate(aX, aY, aZ, this, tickRate(aWorld));\n\t\taWorld.func_147453_f(aX, aY, aZ, this);\n\t}\n\t\n\t@Override\n\tpublic void onBlockAdded(World p_149726_1_, int p_149726_2_, int p_149726_3_, int p_149726_4_) {\n\t\tsuper.onBlockAdded(p_149726_1_, p_149726_2_, p_149726_3_, p_149726_4_);\n\t\tif (mDetectorRail) func_150054_a(p_149726_1_, p_149726_2_, p_149726_3_, p_149726_4_, p_149726_1_.getBlockMetadata(p_149726_2_, p_149726_3_, p_149726_4_));\n\t}\n\t\n\t@Override public boolean hasComparatorInputOverride() {return mDetectorRail;}\n\t\n\t@Override\n\tpublic int getComparatorInputOverride(World aWorld, int aX, int aY, int aZ, int aSide) {\n\t\tif (mDetectorRail && (WD.meta(aWorld, aX, aY, aZ) & 8) > 0) {\n\t\t\t@SuppressWarnings(\"unchecked\")\n\t\t\tList<EntityMinecartCommandBlock> list = aWorld.getEntitiesWithinAABB(EntityMinecartCommandBlock.class, AxisAlignedBB.getBoundingBox(aX + 0.125, aY, aZ + 0.125, aX + 0.875, aY + 0.875, aZ + 0.875));\n\t\t\tif (list.size() > 0) return list.get(0).func_145822_e().func_145760_g();\n\t\t\t@SuppressWarnings(\"unchecked\")\n\t\t\tList<EntityMinecart> list1 = aWorld.selectEntitiesWithinAABB(EntityMinecart.class, AxisAlignedBB.getBoundingBox(aX + 0.125, aY, aZ + 0.125, aX + 0.875, aY + 0.875, aZ + 0.875), IEntitySelector.selectInventories);\n\t\t\tif (list1.size() > 0) return Container.calcRedstoneFromInventory((IInventory)list1.get(0));\n\t\t}\n\t\treturn 0;\n\t}",
+      "sha256": "d70e59eed87c3bdde45102f3c160972b24c77179d75c63ee3911a6b89f3373ea"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/a/Loader_Rails.java",
+      "first_line": 41,
+      "last_line": 72,
+      "purpose": "Thirty family-first old registrations; not current registration order.",
+      "text": "\t\tBlocksGT.RailAluminium               = new BlockBaseRail(null, \"gt.block.rail.aluminium\"               , \"Aluminium Track\"               , F, F, 0.20F,  6, MT.Al             .mToolQuality-1, Textures.BlockIcons.RAIL_STRAIGHT_ALUMINIUM      , Textures.BlockIcons.RAIL_TURNED_ALUMINIUM);\n\t\tBlocksGT.RailBronze                  = new BlockBaseRail(null, \"gt.block.rail.bronze\"                  , \"Bronze Track\"                  , F, F, 0.30F,  8, MT.Bronze         .mToolQuality-1, Textures.BlockIcons.RAIL_STRAIGHT_BRONZE         , Textures.BlockIcons.RAIL_TURNED_BRONZE);\n\t\tBlocksGT.RailMagnalium               = new BlockBaseRail(null, \"gt.block.rail.magnalium\"               , \"Magnalium Track\"               , F, F, 0.60F, 12, MT.Magnalium      .mToolQuality-1, Textures.BlockIcons.RAIL_STRAIGHT_MAGNALIUM      , Textures.BlockIcons.RAIL_TURNED_MAGNALIUM);\n\t\tBlocksGT.RailSteel                   = new BlockBaseRail(null, \"gt.block.rail.steel\"                   , \"Steel Track\"                   , F, F, 0.60F, 12, MT.Steel          .mToolQuality-1, Textures.BlockIcons.RAIL_STRAIGHT_STEEL          , Textures.BlockIcons.RAIL_TURNED_STEEL);\n\t\tBlocksGT.RailStainlessSteel          = new BlockBaseRail(null, \"gt.block.rail.stainlesssteel\"          , \"Stainless Steel Track\"         , F, F, 0.80F, 10, MT.StainlessSteel .mToolQuality-1, Textures.BlockIcons.RAIL_STRAIGHT_STAINLESSSTEEL , Textures.BlockIcons.RAIL_TURNED_STAINLESSSTEEL);\n\t\tBlocksGT.RailTungsten                = new BlockBaseRail(null, \"gt.block.rail.tungsten\"                , \"Tungsten Track\"                , F, F, 1.00F, 20, MT.W              .mToolQuality-1, Textures.BlockIcons.RAIL_STRAIGHT_TUNGSTEN       , Textures.BlockIcons.RAIL_TURNED_TUNGSTEN);\n\t\tBlocksGT.RailTitanium                = new BlockBaseRail(null, \"gt.block.rail.titanium\"                , \"Titanium Track\"                , F, F, 1.20F, 16, MT.Ti             .mToolQuality-1, Textures.BlockIcons.RAIL_STRAIGHT_TITANIUM       , Textures.BlockIcons.RAIL_TURNED_TITANIUM);\n\t\tBlocksGT.RailTungstenSteel           = new BlockBaseRail(null, \"gt.block.rail.tungstensteel\"           , \"Tungstensteel Track\"           , F, F, 1.40F, 20, MT.TungstenSteel  .mToolQuality-1, Textures.BlockIcons.RAIL_STRAIGHT_TUNGSTENSTEEL  , Textures.BlockIcons.RAIL_TURNED_TUNGSTENSTEEL);\n\t\tBlocksGT.RailTungstenCarbide         = new BlockBaseRail(null, \"gt.block.rail.tungstencarbide\"         , \"Tungstencarbide Track\"         , F, F, 1.60F, 24, MT.TungstenCarbide.mToolQuality-1, Textures.BlockIcons.RAIL_STRAIGHT_TUNGSTENCARBIDE, Textures.BlockIcons.RAIL_TURNED_TUNGSTENCARBIDE);\n\t\tBlocksGT.RailAdamantium              = new BlockBaseRail(null, \"gt.block.rail.adamantium\"              , \"Adamantium Track\"              , F, F, 4.00F,100, MT.Ad             .mToolQuality-1, Textures.BlockIcons.RAIL_STRAIGHT_ADAMANTIUM     , Textures.BlockIcons.RAIL_TURNED_ADAMANTIUM);\n\t\t\n\t\tBlocksGT.RailAluminiumBooster        = new BlockBaseRail(null, \"gt.block.rail.booster.aluminium\"       , \"Aluminium Booster Track\"       , T, F, 0.20F,  6, MT.Al             .mToolQuality-1, Textures.BlockIcons.RAIL_BOOSTER_ALUMINIUM       , Textures.BlockIcons.RAIL_BOOSTER_ACTIVE_ALUMINIUM);\n\t\tBlocksGT.RailBronzeBooster           = new BlockBaseRail(null, \"gt.block.rail.booster.bronze\"          , \"Bronze Booster Track\"          , T, F, 0.30F,  8, MT.Bronze         .mToolQuality-1, Textures.BlockIcons.RAIL_BOOSTER_BRONZE          , Textures.BlockIcons.RAIL_BOOSTER_ACTIVE_BRONZE);\n\t\tBlocksGT.RailMagnaliumBooster        = new BlockBaseRail(null, \"gt.block.rail.booster.magnalium\"       , \"Magnalium Booster Track\"       , T, F, 0.60F, 12, MT.Magnalium      .mToolQuality-1, Textures.BlockIcons.RAIL_BOOSTER_MAGNALIUM       , Textures.BlockIcons.RAIL_BOOSTER_ACTIVE_MAGNALIUM);\n\t\tBlocksGT.RailSteelBooster            = new BlockBaseRail(null, \"gt.block.rail.booster.steel\"           , \"Steel Booster Track\"           , T, F, 0.60F, 12, MT.Steel          .mToolQuality-1, Textures.BlockIcons.RAIL_BOOSTER_STEEL           , Textures.BlockIcons.RAIL_BOOSTER_ACTIVE_STEEL);\n\t\tBlocksGT.RailStainlessSteelBooster   = new BlockBaseRail(null, \"gt.block.rail.booster.stainlesssteel\"  , \"Stainless Steel Booster Track\" , T, F, 0.80F, 10, MT.StainlessSteel .mToolQuality-1, Textures.BlockIcons.RAIL_BOOSTER_STAINLESSSTEEL  , Textures.BlockIcons.RAIL_BOOSTER_ACTIVE_STAINLESSSTEEL);\n\t\tBlocksGT.RailTungstenBooster         = new BlockBaseRail(null, \"gt.block.rail.booster.tungsten\"        , \"Tungsten Booster Track\"        , T, F, 1.00F, 20, MT.W              .mToolQuality-1, Textures.BlockIcons.RAIL_BOOSTER_TUNGSTEN        , Textures.BlockIcons.RAIL_BOOSTER_ACTIVE_TUNGSTEN);\n\t\tBlocksGT.RailTitaniumBooster         = new BlockBaseRail(null, \"gt.block.rail.booster.titanium\"        , \"Titanium Booster Track\"        , T, F, 1.20F, 16, MT.Ti             .mToolQuality-1, Textures.BlockIcons.RAIL_BOOSTER_TITANIUM        , Textures.BlockIcons.RAIL_BOOSTER_ACTIVE_TITANIUM);\n\t\tBlocksGT.RailTungstenSteelBooster    = new BlockBaseRail(null, \"gt.block.rail.booster.tungstensteel\"   , \"Tungstensteel Booster Track\"   , T, F, 1.40F, 20, MT.TungstenSteel  .mToolQuality-1, Textures.BlockIcons.RAIL_BOOSTER_TUNGSTENSTEEL   , Textures.BlockIcons.RAIL_BOOSTER_ACTIVE_TUNGSTENSTEEL);\n\t\tBlocksGT.RailTungstenCarbideBooster  = new BlockBaseRail(null, \"gt.block.rail.booster.tungstencarbide\" , \"Tungstencarbide Booster Track\" , T, F, 1.60F, 24, MT.TungstenCarbide.mToolQuality-1, Textures.BlockIcons.RAIL_BOOSTER_TUNGSTENCARBIDE , Textures.BlockIcons.RAIL_BOOSTER_ACTIVE_TUNGSTENCARBIDE);\n\t\tBlocksGT.RailAdamantiumBooster       = new BlockBaseRail(null, \"gt.block.rail.booster.adamantium\"      , \"Adamantium Booster Track\"      , T, F, 4.00F,100, MT.Ad             .mToolQuality-1, Textures.BlockIcons.RAIL_BOOSTER_ADAMANTIUM      , Textures.BlockIcons.RAIL_BOOSTER_ACTIVE_ADAMANTIUM);\n\t\t\n\t\tBlocksGT.RailAluminiumDetector       = new BlockBaseRail(null, \"gt.block.rail.detector.aluminium\"      , \"Aluminium Detector Track\"      , F, T, 0.20F,  6, MT.Al             .mToolQuality-1, Textures.BlockIcons.RAIL_DETECTOR_ALUMINIUM      , Textures.BlockIcons.RAIL_DETECTOR_ACTIVE_ALUMINIUM);\n\t\tBlocksGT.RailBronzeDetector          = new BlockBaseRail(null, \"gt.block.rail.detector.bronze\"         , \"Bronze Detector Track\"         , F, T, 0.30F,  8, MT.Bronze         .mToolQuality-1, Textures.BlockIcons.RAIL_DETECTOR_BRONZE         , Textures.BlockIcons.RAIL_DETECTOR_ACTIVE_BRONZE);\n\t\tBlocksGT.RailMagnaliumDetector       = new BlockBaseRail(null, \"gt.block.rail.detector.magnalium\"      , \"Magnalium Detector Track\"      , F, T, 0.60F, 12, MT.Magnalium      .mToolQuality-1, Textures.BlockIcons.RAIL_DETECTOR_MAGNALIUM      , Textures.BlockIcons.RAIL_DETECTOR_ACTIVE_MAGNALIUM);\n\t\tBlocksGT.RailSteelDetector           = new BlockBaseRail(null, \"gt.block.rail.detector.steel\"          , \"Steel Detector Track\"          , F, T, 0.60F, 12, MT.Steel          .mToolQuality-1, Textures.BlockIcons.RAIL_DETECTOR_STEEL          , Textures.BlockIcons.RAIL_DETECTOR_ACTIVE_STEEL);\n\t\tBlocksGT.RailStainlessSteelDetector  = new BlockBaseRail(null, \"gt.block.rail.detector.stainlesssteel\" , \"Stainless Steel Detector Track\", F, T, 0.80F, 10, MT.StainlessSteel .mToolQuality-1, Textures.BlockIcons.RAIL_DETECTOR_STAINLESSSTEEL , Textures.BlockIcons.RAIL_DETECTOR_ACTIVE_STAINLESSSTEEL);\n\t\tBlocksGT.RailTungstenDetector        = new BlockBaseRail(null, \"gt.block.rail.detector.tungsten\"       , \"Tungsten Detector Track\"       , F, T, 1.00F, 20, MT.W              .mToolQuality-1, Textures.BlockIcons.RAIL_DETECTOR_TUNGSTEN       , Textures.BlockIcons.RAIL_DETECTOR_ACTIVE_TUNGSTEN);\n\t\tBlocksGT.RailTitaniumDetector        = new BlockBaseRail(null, \"gt.block.rail.detector.titanium\"       , \"Titanium Detector Track\"       , F, T, 1.20F, 16, MT.Ti             .mToolQuality-1, Textures.BlockIcons.RAIL_DETECTOR_TITANIUM       , Textures.BlockIcons.RAIL_DETECTOR_ACTIVE_TITANIUM);\n\t\tBlocksGT.RailTungstenSteelDetector   = new BlockBaseRail(null, \"gt.block.rail.detector.tungstensteel\"  , \"Tungstensteel Detector Track\"  , F, T, 1.40F, 20, MT.TungstenSteel  .mToolQuality-1, Textures.BlockIcons.RAIL_DETECTOR_TUNGSTENSTEEL  , Textures.BlockIcons.RAIL_DETECTOR_ACTIVE_TUNGSTENSTEEL);\n\t\tBlocksGT.RailTungstenCarbideDetector = new BlockBaseRail(null, \"gt.block.rail.detector.tungstencarbide\", \"Tungstencarbide Detector Track\", F, T, 1.60F, 24, MT.TungstenCarbide.mToolQuality-1, Textures.BlockIcons.RAIL_DETECTOR_TUNGSTENCARBIDE, Textures.BlockIcons.RAIL_DETECTOR_ACTIVE_TUNGSTENCARBIDE);\n\t\tBlocksGT.RailAdamantiumDetector      = new BlockBaseRail(null, \"gt.block.rail.detector.adamantium\"     , \"Adamantium Detector Track\"     , F, T, 4.00F,100, MT.Ad             .mToolQuality-1, Textures.BlockIcons.RAIL_DETECTOR_ADAMANTIUM     , Textures.BlockIcons.RAIL_DETECTOR_ACTIVE_ADAMANTIUM);",
+      "sha256": "adf6971c82a8e03fa5095bd3ed0280059255743dc5dca848740cfde88389c6a1"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "first_line": 81,
+      "last_line": 178,
+      "purpose": "Current item-first and useOn paths; no crowbar/soft-hammer rail handler.",
+      "text": "    /** GT6 crucible shovel scrape — runs on server via {@code onItemUseFirst} before {@code Block#use}. */\n    @Override\n    public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {\n        // Original Behavior_Tool takes priority over the ordinary builder plane copy.\n        var multiblock = com.gregtech.gregtech.api.multiblock.MultiblockTools.use(context);\n        if (multiblock.consumesAction()) return multiblock;\n        // §108: GT6's TOOL_plunger and TOOL_igniter clicks are onItemUseFirst behaviours as well, so\n        // they run before Block#use (Behavior_Plunger_Fluid:49-62, Behavior_FlintAndTinder:45-61).\n        if (!context.getLevel().isClientSide()) {\n            BlockPos clicked = context.getClickedPos();\n            float hx = (float) (context.getClickLocation().x - clicked.getX());\n            float hy = (float) (context.getClickLocation().y - clicked.getY());\n            float hz = (float) (context.getClickLocation().z - clicked.getZ());\n            if (toolType == GTToolType.PLUNGER\n                    && com.gregtech.gregtech.item.behavior.BehaviorPlungerFluid.plungeFluid(\n                            context.getLevel(), clicked, context.getPlayer(), stack,\n                            com.gregtech.gregtech.item.behavior.BehaviorPlungerFluid.COSTS)) {\n                return InteractionResult.SUCCESS;\n            }\n            if (toolType == GTToolType.FLINT_AND_TINDER\n                    && com.gregtech.gregtech.item.behavior.BehaviorFlintAndTinder.useOn(\n                            context.getLevel(), clicked, context.getClickedFace(), context.getPlayer(),\n                            stack,\n                            com.gregtech.gregtech.item.behavior.BehaviorFlintAndTinder.DEFAULT_FLINT_CHANCE,\n                            context.getLevel().getRandom(), hx, hy, hz).acted()) {\n                return InteractionResult.SUCCESS;\n            }\n            // §110: the builder's wand is a tool, not a multi-item, so its click lands here as well\n            // (GT6 hangs Behavior_Builderwand on TOOL_builderwand, GT_Tool_Builderwand:62).\n            if (toolType == GTToolType.BUILDER_WAND\n                    && com.gregtech.gregtech.item.behavior.BehaviorBuilderWand.useOn(\n                            context.getLevel(), clicked, context.getClickedFace(), context.getPlayer(),\n                            stack, hx, hy, hz).acted()) {\n                return InteractionResult.SUCCESS;\n            }\n        }\n        if (!isCrucibleShovelType()) {\n            return InteractionResult.PASS;\n        }\n        if (context.getClickedFace() != Direction.UP) {\n            return InteractionResult.PASS;\n        }\n        BlockPos pos = context.getClickedPos();\n\n//? if >=1.21.1 {\n/*        if (!(context.getLevel().getBlockEntity(pos) instanceof SmeltingCrucibleEntity crucible)) {\n*///?} else {\n        if (!(context.getLevel().getBlockEntity(pos) instanceof SmeltingCrucibleBlockEntity crucible)) {\n//?}\n\n            return InteractionResult.PASS;\n        }\n        if (context.getLevel().isClientSide()) {\n            return crucible.canHandleUse(context.getPlayer(), context.getHand())\n                    ? InteractionResult.SUCCESS : InteractionResult.PASS;\n        }\n        BlockHitResult hit = new BlockHitResult(\n                context.getClickLocation(), context.getClickedFace(), pos, context.isInside());\n        InteractionResult result = crucible.tryUse(context.getPlayer(), context.getHand(), hit);\n        return result != InteractionResult.PASS ? result : InteractionResult.PASS;\n    }\n\n    /** Screwdriver shift-right-click: client skips Block.use when sneaking, so delegate back via useOn. */\n    @Override\n    public InteractionResult useOn(UseOnContext context) {\n        if (toolType == GTToolType.AXE || toolType == GTToolType.DOUBLE_AXE || toolType == GTToolType.SAW) {\n            return GTToolHelper.isUsable(context.getItemInHand())\n                    ? com.gregtech.gregtech.item.behavior.BehaviorPlaceWoodworkingSupplies.use(context)\n                    : InteractionResult.PASS;\n        }\n        if (toolType != GTToolType.SCREWDRIVER) {\n            return InteractionResult.PASS;\n        }\n        BlockState state = context.getLevel().getBlockState(context.getClickedPos());\n//? if >=1.21.1 {\n/*\n        if (state.getBlock() instanceof com.gregtech.gregtech.api.tool.ScrewdriverUseTarget) {\n\n*///?} else {\n        if (state.getBlock() instanceof HopperBlock || state.getBlock() instanceof QueueHopperBlock\n                || state.getBlock() instanceof com.gregtech.gregtech.block.energy.SignalWireBlock) {\n//?}\n            Player player = context.getPlayer();\n            InteractionHand hand = context.getHand();\n            BlockHitResult hit = new BlockHitResult(\n                    context.getClickLocation(), context.getClickedFace(),\n                    context.getClickedPos(), context.isInside());\n\n//? if >=1.21.1 {\n/*            return ((com.gregtech.gregtech.api.tool.ScrewdriverUseTarget)state.getBlock()).useScrewdriver(state,context.getLevel(),context.getClickedPos(),player,hand,hit);\n*///?} else {\n            return state.use(context.getLevel(), player, hand, hit);\n//?}\n\n        }\n        return InteractionResult.PASS;\n    }\n",
+      "sha256": "bb8aaec53d2b12daf06ad84860884799a7716821a022d25cca358967c2189f07"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "first_line": 26,
+      "last_line": 43,
+      "purpose": "Early delegate only builder/magnifying tools and a block-entity target.",
+      "text": "\n    public static InteractionResult use(UseOnContext context) {\n        var stack = context.getItemInHand();\n        boolean builder = GTToolHelper.matchesTool(stack, GTToolType.BUILDER_WAND);\n        if (!builder && !GTToolHelper.matchesTool(stack, GTToolType.MAGNIFYING_GLASS)) return InteractionResult.PASS;\n        var level = context.getLevel();\n        var player = context.getPlayer();\n        if (level.isClientSide || player == null || !level.hasChunkAt(context.getClickedPos())) return InteractionResult.PASS;\n        if (!(level.getBlockEntity(context.getClickedPos()) instanceof MultiblockToolTarget target)) return InteractionResult.PASS;\n        var messages = new ArrayList<Component>();\n        long cost = target.useMultiblockTool(context, messages);\n        messages.forEach(message -> player.sendSystemMessage(message));\n        if (cost <= 0) return InteractionResult.PASS;\n        GTToolHelper.damageForToolClickReturn(stack, cost, player,\n                context.getHand() == net.minecraft.world.InteractionHand.OFF_HAND ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND);\n        level.playSound(null, context.getClickedPos(), builder ? SoundEvents.EXPERIENCE_ORB_PICKUP : SoundEvents.VILLAGER_YES,\n                SoundSource.PLAYERS, 1, 1);\n        return InteractionResult.SUCCESS;",
+      "sha256": "dd06ed63dcfb5a4f9ad73b6781954e8d1e912afe7a3b162ccead66cefdf84656"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractions.java",
+      "first_line": 27,
+      "last_line": 28,
+      "purpose": "Generic tool description requires ToolInteractionTarget.",
+      "text": "    public static ToolInteractionSpec describe(BlockState state, ItemStack tool) {\n        return state.getBlock() instanceof ToolInteractionTarget target ? target.toolInteraction(state, tool) : null;",
+      "sha256": "1da429cd5dc605b2674d8ca5d4fe45743527803c4416ff16a043003813f5a003"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java",
+      "first_line": 43,
+      "last_line": 45,
+      "purpose": "Cover event requires a PanelCoverHost block entity.",
+      "text": "    public static void use(PlayerInteractEvent.RightClickBlock event) {\n        if (!(event.getLevel().getBlockEntity(event.getPos()) instanceof PanelCoverHost host)) return;\n        var held = event.getEntity().getItemInHand(event.getHand());",
+      "sha256": "c1b7ddf3ab219f9354a5bd6511954814fd1da620d87abef507d161de81fe0d92"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/TrackBlock.java",
+      "first_line": 97,
+      "last_line": 193,
+      "purpose": "Three inherited native rail classes; no GT tool binding.",
+      "text": "    }\n\n    /** GT6's plain track ({@code Loader_Rails:41-50}). */\n    public static final class Straight extends RailBlock {\n//? if >=1.21.1 {\n        /*@Override\n        public com.mojang.serialization.MapCodec<RailBlock> codec() {\n            return com.mojang.serialization.MapCodec.unit(this);\n        }\n*///?} else {\n//?}\n        private final float speed;\n\n        public Straight(Properties properties, float speed) {\n            super(properties);\n            this.speed = speed;\n        }\n\n        @Override\n        public float getRailMaxSpeed(BlockState state, Level level, BlockPos pos,\n                @Nullable AbstractMinecart cart) {\n            return railSpeed(speed, state, level, pos);\n        }\n\n        @Override\n        public void onMinecartPass(BlockState state, Level level, BlockPos pos, AbstractMinecart cart) {\n            applySpeedToCart(speed, state, level, pos, cart);\n        }\n    }\n\n    /**\n     * GT6's booster track ({@code Loader_Rails:52-61}, {@code mPowerRail = true}). Powered: doubles\n     * a moving cart, or pushes a standing one away from the solid block it faces. Unpowered: brakes\n     * the cart to half speed and stops it below 0.03.\n     */\n    public static final class Booster extends PoweredRailBlock {\n//? if >=1.21.1 {\n        /*@Override\n        public com.mojang.serialization.MapCodec<PoweredRailBlock> codec() {\n            return com.mojang.serialization.MapCodec.unit(this);\n        }\n*///?} else {\n//?}\n        private final float speed;\n\n        public Booster(Properties properties, float speed) {\n            super(properties, true);\n            this.speed = speed;\n        }\n\n        @Override\n        public float getRailMaxSpeed(BlockState state, Level level, BlockPos pos,\n                @Nullable AbstractMinecart cart) {\n            return railSpeed(speed, state, level, pos);\n        }\n\n        @Override\n        public void onMinecartPass(BlockState state, Level level, BlockPos pos, AbstractMinecart cart) {\n            if (cart == null) return;\n            applySpeedToCart(speed, state, level, pos, cart);\n            moveCart(cart, state, level, pos, state.getValue(PoweredRailBlock.POWERED));\n        }\n\n    }\n\n    /**\n     * GT6's detector track ({@code Loader_Rails:63-72}). GT6 keeps the cart's momentum and only\n     * reports the cart through redstone/comparator. This adapter inherits the native detector;\n     * its detection bounds and extension hooks require separate parity checks.\n     */\n    public static final class Detector extends DetectorRailBlock {\n//? if >=1.21.1 {\n        /*@Override\n        public com.mojang.serialization.MapCodec<DetectorRailBlock> codec() {\n            return com.mojang.serialization.MapCodec.unit(this);\n        }\n*///?} else {\n//?}\n        private final float speed;\n\n        public Detector(Properties properties, float speed) {\n            super(properties);\n            this.speed = speed;\n        }\n\n        @Override\n        public float getRailMaxSpeed(BlockState state, Level level, BlockPos pos,\n                @Nullable AbstractMinecart cart) {\n            return railSpeed(speed, state, level, pos);\n        }\n\n        @Override\n        public void onMinecartPass(BlockState state, Level level, BlockPos pos, AbstractMinecart cart) {\n            applySpeedToCart(speed, state, level, pos, cart);\n        }\n    }\n}",
+      "sha256": "2924c0f6663c4aa2a873a3ef303ebc75a906fc60904d68e9d48d1b79c6107a1e"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/rail-controls-audit-20261022/PoweredRailBlock.java",
+      "first_line": 121,
+      "last_line": 144,
+      "purpose": "Neo native rail type, axis/activator gates and neighbor power recursion.",
+      "text": "    protected boolean isSameRailWithPower(Level p_55226_, BlockPos p_55227_, boolean p_55228_, int p_55229_, RailShape p_55230_) {\n        BlockState blockstate = p_55226_.getBlockState(p_55227_);\n        if (!(blockstate.getBlock() instanceof PoweredRailBlock other)) {\n            return false;\n        } else {\n            RailShape railshape = other.getRailDirection(blockstate, p_55226_, p_55227_, null);\n            if (p_55230_ != RailShape.EAST_WEST\n                || railshape != RailShape.NORTH_SOUTH && railshape != RailShape.ASCENDING_NORTH && railshape != RailShape.ASCENDING_SOUTH) {\n                if (p_55230_ != RailShape.NORTH_SOUTH\n                    || railshape != RailShape.EAST_WEST && railshape != RailShape.ASCENDING_EAST && railshape != RailShape.ASCENDING_WEST) {\n                    if (isActivatorRail() != other.isActivatorRail()) {\n                        return false;\n                    } else {\n                        return p_55226_.hasNeighborSignal(p_55227_) ? true : other.findPoweredRailSignal(p_55226_, p_55227_, blockstate, p_55228_, p_55229_ + 1);\n                    }\n                } else {\n                    return false;\n                }\n            } else {\n                return false;\n            }\n        }\n    }\n",
+      "sha256": "8a54fe0cebedfcd8ad8148a6ba7a5dc2589154cc6e10e830d9d9d4b69386a560"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/rail-controls-audit-20261022/DetectorRailBlock.java",
+      "first_line": 174,
+      "last_line": 183,
+      "purpose": "Neo native smaller search box shared by detection/comparators.",
+      "text": "    private AABB getSearchBB(BlockPos p_52471_) {\n        double d0 = 0.2;\n        return new AABB(\n            (double)p_52471_.getX() + 0.2,\n            (double)p_52471_.getY(),\n            (double)p_52471_.getZ() + 0.2,\n            (double)(p_52471_.getX() + 1) - 0.2,\n            (double)(p_52471_.getY() + 1) - 0.2,\n            (double)(p_52471_.getZ() + 1) - 0.2\n        );",
+      "sha256": "1d4144c16307627f500af1fbd2d887e1b9340ee3a6e4fe1be06b4607a0b8cc5d"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/rail-controls-audit-20261022/DetectorRailBlock.java",
+      "first_line": 57,
+      "last_line": 130,
+      "purpose": "Neo native poll, signal and neighbor notification paths.",
+      "text": "    }\n\n    @Override\n    protected void entityInside(BlockState p_52458_, Level p_52459_, BlockPos p_52460_, Entity p_52461_) {\n        if (!p_52459_.isClientSide) {\n            if (!p_52458_.getValue(POWERED)) {\n                this.checkPressed(p_52459_, p_52460_, p_52458_);\n            }\n        }\n    }\n\n    @Override\n    protected void tick(BlockState p_221060_, ServerLevel p_221061_, BlockPos p_221062_, RandomSource p_221063_) {\n        if (p_221060_.getValue(POWERED)) {\n            this.checkPressed(p_221061_, p_221062_, p_221060_);\n        }\n    }\n\n    @Override\n    protected int getSignal(BlockState p_52449_, BlockGetter p_52450_, BlockPos p_52451_, Direction p_52452_) {\n        return p_52449_.getValue(POWERED) ? 15 : 0;\n    }\n\n    @Override\n    protected int getDirectSignal(BlockState p_52478_, BlockGetter p_52479_, BlockPos p_52480_, Direction p_52481_) {\n        if (!p_52478_.getValue(POWERED)) {\n            return 0;\n        } else {\n            return p_52481_ == Direction.UP ? 15 : 0;\n        }\n    }\n\n    private void checkPressed(Level p_52433_, BlockPos p_52434_, BlockState p_52435_) {\n        if (this.canSurvive(p_52435_, p_52433_, p_52434_)) {\n            boolean flag = p_52435_.getValue(POWERED);\n            boolean flag1 = false;\n            List<AbstractMinecart> list = this.getInteractingMinecartOfType(p_52433_, p_52434_, AbstractMinecart.class, p_153125_ -> true);\n            if (!list.isEmpty()) {\n                flag1 = true;\n            }\n\n            if (flag1 && !flag) {\n                BlockState blockstate = p_52435_.setValue(POWERED, Boolean.valueOf(true));\n                p_52433_.setBlock(p_52434_, blockstate, 3);\n                this.updatePowerToConnected(p_52433_, p_52434_, blockstate, true);\n                p_52433_.updateNeighborsAt(p_52434_, this);\n                p_52433_.updateNeighborsAt(p_52434_.below(), this);\n                p_52433_.setBlocksDirty(p_52434_, p_52435_, blockstate);\n            }\n\n            if (!flag1 && flag) {\n                BlockState blockstate1 = p_52435_.setValue(POWERED, Boolean.valueOf(false));\n                p_52433_.setBlock(p_52434_, blockstate1, 3);\n                this.updatePowerToConnected(p_52433_, p_52434_, blockstate1, false);\n                p_52433_.updateNeighborsAt(p_52434_, this);\n                p_52433_.updateNeighborsAt(p_52434_.below(), this);\n                p_52433_.setBlocksDirty(p_52434_, p_52435_, blockstate1);\n            }\n\n            if (flag1) {\n                p_52433_.scheduleTick(p_52434_, this, 20);\n            }\n\n            p_52433_.updateNeighbourForOutputSignal(p_52434_, this);\n        }\n    }\n\n    protected void updatePowerToConnected(Level p_52473_, BlockPos p_52474_, BlockState p_52475_, boolean p_52476_) {\n        RailState railstate = new RailState(p_52473_, p_52474_, p_52475_);\n\n        for (BlockPos blockpos : railstate.getConnections()) {\n            BlockState blockstate = p_52473_.getBlockState(blockpos);\n            p_52473_.neighborChanged(blockstate, blockpos, blockstate.getBlock(), p_52474_, false);\n        }",
+      "sha256": "30bb2d9fb5d44015aa317962f20bac78cc0ba6cb7b44f3c5f44c0f6ef0b6c0c8"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/rail-controls-audit-20261022/DetectorRailBlock.java",
+      "first_line": 146,
+      "last_line": 172,
+      "purpose": "Neo native command/cart/container comparator paths.",
+      "text": "    @Override\n    protected boolean hasAnalogOutputSignal(BlockState p_52442_) {\n        return true;\n    }\n\n    @Override\n    protected int getAnalogOutputSignal(BlockState p_52454_, Level p_52455_, BlockPos p_52456_) {\n        if (p_52454_.getValue(POWERED)) {\n            List<MinecartCommandBlock> list = this.getInteractingMinecartOfType(p_52455_, p_52456_, MinecartCommandBlock.class, p_153123_ -> true);\n            if (!list.isEmpty()) {\n                return list.get(0).getCommandBlock().getSuccessCount();\n            }\n\n            List<AbstractMinecart> carts = this.getInteractingMinecartOfType(p_52455_, p_52456_, AbstractMinecart.class, e -> e.isAlive());\n            if (!carts.isEmpty() && carts.get(0).getComparatorLevel() > -1) return carts.get(0).getComparatorLevel();\n            List<AbstractMinecart> list1 = carts.stream().filter(EntitySelector.CONTAINER_ENTITY_SELECTOR).collect(java.util.stream.Collectors.toList());\n            if (!list1.isEmpty()) {\n                return AbstractContainerMenu.getRedstoneSignalFromContainer((Container)list1.get(0));\n            }\n        }\n\n        return 0;\n    }\n\n    private <T extends AbstractMinecart> List<T> getInteractingMinecartOfType(Level p_52437_, BlockPos p_52438_, Class<T> p_52439_, Predicate<Entity> p_52440_) {\n        return p_52437_.getEntitiesOfClass(p_52439_, this.getSearchBB(p_52438_), p_52440_);\n    }",
+      "sha256": "64a01e4ae4728d9e8b2f1d7c729b6a0b1d36bc0ea42f2277a77e8e98e1a9ca8a"
+    }
+  ],
+  "native_evidence": [
+    {
+      "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/block/BaseRailBlock.java",
+      "entry_sha256": "06cfc7d51de6364da5f0cb28127f1dc24070630b790694714428a7e2f914ec18",
+      "extracted_path": "work/rail-controls-audit-20261022/BaseRailBlock.java",
+      "extracted_sha256": "06cfc7d51de6364da5f0cb28127f1dc24070630b790694714428a7e2f914ec18"
+    },
+    {
+      "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/block/RailBlock.java",
+      "entry_sha256": "30f5b013d943a2a6aaabdc9a31f6452db308ccb43ebfbbb31659210007b57e9f",
+      "extracted_path": "work/rail-controls-audit-20261022/RailBlock.java",
+      "extracted_sha256": "30f5b013d943a2a6aaabdc9a31f6452db308ccb43ebfbbb31659210007b57e9f"
+    },
+    {
+      "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/block/PoweredRailBlock.java",
+      "entry_sha256": "6edf4bde632f0376cf436d9bae72eab82f6c549f2e1115df2a3b12a500d1ec8d",
+      "extracted_path": "work/rail-controls-audit-20261022/PoweredRailBlock.java",
+      "extracted_sha256": "6edf4bde632f0376cf436d9bae72eab82f6c549f2e1115df2a3b12a500d1ec8d"
+    },
+    {
+      "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/block/DetectorRailBlock.java",
+      "entry_sha256": "c155b1cb3acfcc3503cdb3b1d700bcc6bd2730859bbcf89ff8a8722401b98f5a",
+      "extracted_path": "work/rail-controls-audit-20261022/DetectorRailBlock.java",
+      "extracted_sha256": "c155b1cb3acfcc3503cdb3b1d700bcc6bd2730859bbcf89ff8a8722401b98f5a"
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/BaseRailBlock.class",
+      "entry_sha256": "04166c10a596331600d12ec7ad70701da55c2323adfedf817945f38a8d885b59",
+      "javap_output": "work/rail-controls-audit-20261022/forge-BaseRailBlock.javap.txt",
+      "javap_sha256": "52bbd8b563636d06348dbea3b218a68d5ea7dbb07e750140dbacc2ed95b34d8f"
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/PoweredRailBlock.class",
+      "entry_sha256": "8af1b30b46a4067321653c2c206598b4ef9509734f12d8ead8692d0a65e96c7d",
+      "javap_output": "work/rail-controls-audit-20261022/forge-PoweredRailBlock.javap.txt",
+      "javap_sha256": "1d3594548155dc77d50b31bd45de112c30f87605d1f04ef889a68590e22463c3"
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/DetectorRailBlock.class",
+      "entry_sha256": "beae6a0737da1fdc9053828f15835d38dab79aac909234ce1a94633961259608",
+      "javap_output": "work/rail-controls-audit-20261022/forge-DetectorRailBlock.javap.txt",
+      "javap_sha256": "5c3a3052c77a71eb5f32f8995d752011007baa4b52ba56861da68951e4071c1a"
+    },
+    {
+      "artifact": "work/center-biomes-audit-20261022/minecraft-1.7.10-client.jar",
+      "artifact_sha256": "a4fc2284657544e0f4bcc964f927c2fda3e3a205178ed1d5d58883aaf9780cce",
+      "entry": "aje.class",
+      "entry_sha256": "28f426fbab9273378e6f638759ed8b552f71fffcfcbe994ec26400699307c07a",
+      "javap_output": "work/rail-controls-audit-20261022/old-BlockRailBase.javap.txt",
+      "javap_sha256": "0a79bb22f01df12b93ac527da4e94ada90b30e02f2822f6231e7f1d7b1095a04"
+    }
+  ],
+  "old_mapping_references": [
+    {
+      "path": "work/center-biomes-audit-20261022/joined.srg",
+      "raw_sha256": "43d4376110b2638213d3096f80f8395c076eb05b58d6c0dbd22c0d999b37a357",
+      "line": 10164,
+      "text": "MD: aje/e ()Z net/minecraft/block/BlockRailBase/func_150050_e ()Z"
+    },
+    {
+      "path": "work/center-biomes-audit-20261022/methods.csv",
+      "raw_sha256": "63de115ead3e848e529de81e81ada9dff694e50fb5c6d92ec1e9037fe50ca191",
+      "line": 3996,
+      "text": "func_150050_e,isPowered,2,Returns true if the block is power related rail."
+    }
+  ],
+  "official_old_artifact_provenance": "verification/center-biomes-audit-20261022.json",
+  "rail_shape_search": {
+    "roots": [
+      "core/src/main/java",
+      "multiversion/src/main/java",
+      "multiversion/versions/1.20.1-forge/src/main/java",
+      "multiversion/versions/1.21.1-neoforge/src/main/java"
+    ],
+    "pattern": "BaseRailBlock|RAIL_SHAPE|RailShape",
+    "matching_files": [
+      "multiversion/src/main/java/com/gregtech/gregtech/block/misc/RoadStripeRailBlock.java",
+      "multiversion/src/main/java/com/gregtech/gregtech/block/misc/TrackBlock.java",
+      "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/HopperBlockEntity.java",
+      "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/QueueHopperBlockEntity.java",
+      "multiversion/src/main/java/com/gregtech/gregtech/mixin/WaterPlacementMixin.java",
+      "multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginWorld.java",
+      "multiversion/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonData.java"
+    ],
+    "limit": "Search screen plus reviewed tool entry points; not proof about arbitrary third-party hooks or reflection."
+  },
+  "readability": {
+    "baseline": "04386f1c49059fab04b14deee110ac1dad7cc3a0",
+    "files": {
+      "multiversion/src/main/java/com/gregtech/gregtech/registry/GTTrackBlocks.java": {
+        "before_raw_sha256": "93795541f5e186d46f2b86215a12880751432640262ec033a8475de48becd942",
+        "after_raw_sha256": "fe80df7298933a8a45cd0e33e35e074065c6e3ec7d545320bc921fb3d6f46849",
+        "before_lines": 127,
+        "after_lines": 135,
+        "comment_corrections": [
+          [
+            "Everything GT6 registers, in GT6's order.",
+            "The thirty material tracks in this port's registration order."
+          ],
+          [
+            "the booster recipe uses as its \"G\" ingredient. Order is GT6's registration order.",
+            "the booster recipe uses as its \"G\" ingredient. This port registers the three families per material."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 703,
+            "execution_sha256": "024697dbbe92bdc1cd8d4b8bab3fa74b9977c6387745dffa55f4a34c8c38f58f",
+            "literal_positions_sha256": "bf35fb238542c0345b3b7a97a4d16b728a1950f6a5ab5c5626993dd6f8b334e3",
+            "literal_count": 10
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 709,
+            "execution_sha256": "59c18dced675e7afe5059e99688697e943e4dea36fc9854c919728c8da12d24a",
+            "literal_positions_sha256": "80933e3e4acb0a1835ed7a8e8f1649610602d6f5d5985d3282d5518ad0b18ca2",
+            "literal_count": 10
+          }
+        ],
+        "identifier_changes": {
+          "private_helper": "add -> registerTrack",
+          "code_occurrences": 4,
+          "excluded": "Member calls such as TRACKS.add, string literals and comments are untouched."
+        },
+        "comparison_contract": "Full ordered code comparison after exactly four private helper declaration/call identifier substitutions; other sources compare their entire original code."
+      },
+      "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/NeoToolBindings.java": {
+        "before_raw_sha256": "b81e6457e2c4b232027f749fdbc783dee0bbde11fa82bb57bb5285c4cf78854c",
+        "after_raw_sha256": "727657f5fda4b49ac80a1ee157a7ade8235ccba880d499a2b43ad9bceea0f0ba",
+        "before_lines": 22,
+        "after_lines": 69,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "neoforge",
+            "tokens": 413,
+            "execution_sha256": "0e142f81f695f5a47aedba99a4b98eff9a9d929e6fea0342b977b6ed683b559f",
+            "literal_positions_sha256": "67e6c0d51fafc2dd89fc6e5b21e45378541cacbe0ac34793ca3b1e4915d1368a",
+            "literal_count": 1
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/misc/TrackBlock.java": {
+        "before_raw_sha256": "bc4a4903bfc211b01cb13ba517878c2201f7c61aac19ee63ee0b4055ff34c5c6",
+        "after_raw_sha256": "d76fc296046b8cf89d75bab10425c562fc1a9094bd5376ae17f578cd7a6b7802",
+        "before_lines": 193,
+        "after_lines": 193,
+        "comment_corrections": [
+          [
+            "reports the cart through redstone/comparator, which is what vanilla's\n     * {@link DetectorRailBlock} does, so only the speed is added here.",
+            "reports the cart through redstone/comparator. This adapter inherits the native detector;\n     * its detection bounds and extension hooks require separate parity checks."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1037,
+            "execution_sha256": "bd8136140ae35155cd6d4f4bd37e15913a3ed2d24b60abbd41cf052a7f34351a",
+            "literal_positions_sha256": "ebb8dc442be61f5c43099a4473c2453d9152faeda8533a952060249a46f81b53",
+            "literal_count": 16
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1133,
+            "execution_sha256": "a28d83235657f8b7981a95717162d3cc6b692c16eb3962df3af6ca88fefdaa87",
+            "literal_positions_sha256": "ebb8dc442be61f5c43099a4473c2453d9152faeda8533a952060249a46f81b53",
+            "literal_count": 16
+          }
+        ]
+      }
+    }
+  },
+  "formal_findings_added": [
+    {
+      "id": "ALIGN-367",
+      "finding": "Material rail crowbar and booster soft-hammer operations are not bound in the port.",
+      "scope": "Thirty GTTrackBlocks rails. RoadStripeRailBlock has its own reflector-tool behavior and is excluded. Tool identification/cost helpers exist; this is a missing consumer binding.",
+      "old_crowbar_expression": "isPowered() ? (aMeta+1) % 10 : ((aMeta/8) * 8) + (((aMeta%8)+1) % 6)",
+      "old_success_costs": {
+        "soft_hammer": 10000,
+        "crowbar": 2000
+      },
+      "boundary": "Old temporary World.isRemote mutation is recorded, not proposed as a safe modern implementation."
+    },
+    {
+      "id": "ALIGN-368",
+      "finding": "Inherited detector query box is smaller than the old GT box.",
+      "old_box_relative_to_block": [
+        0.125,
+        0.0,
+        0.125,
+        0.875,
+        0.875,
+        0.875
+      ],
+      "native_box_relative_to_block": [
+        0.2,
+        0.0,
+        0.2,
+        0.8,
+        0.8,
+        0.8
+      ],
+      "finite_geometry": {
+        "entity_box": [
+          -0.83,
+          0.0625,
+          0.01,
+          0.15,
+          0.7625,
+          0.99
+        ],
+        "old_intersects": true,
+        "native_intersects": false,
+        "kind": "Mathematical AABB input; no live minecart/world execution."
+      },
+      "scope": "Both cart detection and comparator searches use their respective box."
+    },
+    {
+      "id": "ALIGN-369",
+      "finding": "Inherited booster power propagation permits different registered GT material rails.",
+      "old_gate": "neighborBlock == this",
+      "native_gate": "PoweredRailBlock instance plus axis and isActivatorRail compatibility",
+      "witness": "Different-material GT boosters A/B on a compatible axis within depth; B powered externally/already powered, A not directly powered. Old identity gate rejects B; native neighbor-signal branch accepts B.",
+      "boundary": "Source/bytecode decision witness, not a measured redstone world or arbitrary network simulation."
+    }
+  ],
+  "positive_scope": [
+    "Detector powered polling at 20 ticks and weak 15 / direct UP 15 paths exist in both selected modern native implementations.",
+    "Command minecart priority and ordinary container comparator routes exist; native mod-cart comparator extension is not reported as a missing feature.",
+    "Registry contains three rail families for ten materials, using plain BlockItems. Current material-first order differs from old family-first order; no UI sorting bug inferred solely from this.",
+    "NeoToolBindings.isTool intentionally delegates the interaction-tool predicate while craftKind uses GTToolHelper.isTool before its GTToolItem cast; no cast defect inferred from the facade name."
+  ],
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "limits": [
+    "No gameplay change: formatting, private helper rename and three documented comment corrections only.",
+    "No Gradle, Java compilation, GameTest, game, rendering, save restart, build or push.",
+    "No issue comments/closures. Skip #71–74; #66 CFG later; #68/#69 remain one map issue.",
+    "369 formal alignment records include repaired items/policies and are not an unresolved count or a completion percentage. Full audit goal stays active."
+  ],
+  "root_revalidation": {
+    "baseline_and_git_originals": true,
+    "readability_proof_reproduced": true,
+    "complete_platform_views": 5,
+    "source_totals": {
+      "original": 2,
+      "current": 10
+    },
+    "edited_sources": 3,
+    "lines_before": 342,
+    "lines_after": 397,
+    "native_artifact_entry_and_disassembly_hashes": true,
+    "native_entries": 8,
+    "protected_material_hashes": true,
+    "finite_geometry_only": true,
+    "formal_ids_contiguous": 369,
+    "five_ledger_links": true,
+    "source_and_excerpt_hashes": true
+  },
+  "preparation_attempts": [
+    {
+      "check": "All five ledgers link the topic Markdown directly.",
+      "result": "failed: VERIFICATION intentionally links the JSON receipt instead; no production defect.",
+      "resolution": "Check each ledger links either the existing topic or receipt; passed."
+    }
+  ]
+}

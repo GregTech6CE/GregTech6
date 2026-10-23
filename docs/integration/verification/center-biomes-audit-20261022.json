@@ -1,0 +1,1058 @@
+{
+  "date": "2026-10-22",
+  "batch": 109,
+  "baseline": "de8c12896224f0daa069026d4ddd4ca2579cab58",
+  "previous_goal_turn": {
+    "classification": "progress",
+    "commit": "de8c12896"
+  },
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/center/WorldgenCenterBiomes.java",
+      "raw_sha256": "948e24ca9b41b189d11b9c4ac0a20881443d68184d12cb56e4a74c8e01b2d8d6",
+      "source_sha256": "948e24ca9b41b189d11b9c4ac0a20881443d68184d12cb56e4a74c8e01b2d8d6",
+      "lines": 282,
+      "notice": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */",
+      "authors": [
+        "Gregorius Techneticies"
+      ]
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "raw_sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "source_sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "lines": 2345,
+      "notice": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */",
+      "authors": [
+        "Gregorius Techneticies"
+      ]
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/metatype/BlockStones.java",
+      "raw_sha256": "aafdf56ce4b3720b314cf62fa031712b697df2bd0b7666bedc479dfe5cb9216f",
+      "source_sha256": "aafdf56ce4b3720b314cf62fa031712b697df2bd0b7666bedc479dfe5cb9216f",
+      "lines": 744,
+      "notice": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */",
+      "authors": []
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceCenterBiomes.java",
+      "raw_sha256": "3ff3c1d4614869752c52ae8c38b1a501cfdf452824b04518b41b673a521e8afd",
+      "source_sha256": "3ff3c1d4614869752c52ae8c38b1a501cfdf452824b04518b41b673a521e8afd",
+      "lines": 253,
+      "repository_path": "core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceCenterBiomes.java",
+      "source_views": [
+        {
+          "platform": "core",
+          "ordered_code_sha256": "ba602bfc6ed6f1163047c52f3a8b44d66ce7975797102559ffd8a1b76a4076c1"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginBiomeNames.java",
+      "raw_sha256": "a08425e15bf05cdbfefe40ea8e648a7a7fc3f9262b29dff0eaa6313538d7e9b5",
+      "source_sha256": "a08425e15bf05cdbfefe40ea8e648a7a7fc3f9262b29dff0eaa6313538d7e9b5",
+      "lines": 67,
+      "repository_path": "core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginBiomeNames.java",
+      "source_views": [
+        {
+          "platform": "core",
+          "ordered_code_sha256": "9ef31c7c145c829dc699851a3ef80420966c1aecaae707257381ed9419e2e1a2"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTWorldgenBiomes.java",
+      "raw_sha256": "002a7c8a6321a437be10f80deda19f36219a9f9d4a90f3ae8140eae27bb3dde4",
+      "source_sha256": "002a7c8a6321a437be10f80deda19f36219a9f9d4a90f3ae8140eae27bb3dde4",
+      "lines": 121,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTWorldgenBiomes.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "53f51c461bf31cadd2eea9d808664887c055704df3d134272b111a513d714c3b"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "53f51c461bf31cadd2eea9d808664887c055704df3d134272b111a513d714c3b"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/block/BlackSandDefinitions.java",
+      "raw_sha256": "0f44edb2235dc1c978632d38072487fb3c87ed11f352940434ebaae439fd9dcf",
+      "source_sha256": "0f44edb2235dc1c978632d38072487fb3c87ed11f352940434ebaae439fd9dcf",
+      "lines": 20,
+      "repository_path": "core/src/main/java/com/gregtech/gregtech/block/BlackSandDefinitions.java",
+      "source_views": [
+        {
+          "platform": "core",
+          "ordered_code_sha256": "f6dab2e0567431e348b7653627036c1fe7bb480b1c59c6c011a2754abdaccf3d"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginWorld.java",
+      "raw_sha256": "b3e28f5a15734b9419310f713634924c1e89ce87efef370fa80553acf31feb3d",
+      "source_sha256": "b3e28f5a15734b9419310f713634924c1e89ce87efef370fa80553acf31feb3d",
+      "lines": 58,
+      "repository_path": "core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginWorld.java",
+      "source_views": [
+        {
+          "platform": "core",
+          "ordered_code_sha256": "85ae88d56a64dd5902876079b1ab7d5a4ebcbb8209e0eb9b9b4c9c3bdffe14e7"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginSupport.java",
+      "raw_sha256": "d0abdca975885ea4117b8998968a62ea0ef80e669bbeb0c71f6c82a608846efb",
+      "source_sha256": "d0abdca975885ea4117b8998968a62ea0ef80e669bbeb0c71f6c82a608846efb",
+      "lines": 125,
+      "repository_path": "core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginSupport.java",
+      "source_views": [
+        {
+          "platform": "core",
+          "ordered_code_sha256": "485952a3eb686f545c949384c64b981fd5af24a26a3379799dc7826f75d7b073"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/block/stone/StoneVariant.java",
+      "raw_sha256": "ddcb6c831fb263afd801c489460495186c0bbf42f238063e5214d779674e05ae",
+      "source_sha256": "ddcb6c831fb263afd801c489460495186c0bbf42f238063e5214d779674e05ae",
+      "lines": 64,
+      "repository_path": "core/src/main/java/com/gregtech/gregtech/block/stone/StoneVariant.java",
+      "source_views": [
+        {
+          "platform": "core",
+          "ordered_code_sha256": "afcaaeccfb9984ce122fc3f870d884a01fc203b0022247250792da3ce87c1000"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginWorld.java",
+      "raw_sha256": "103c41523322071b04ad0ea7d5d7045231b601a66f76c7d3bd68194aaf24f314",
+      "source_sha256": "103c41523322071b04ad0ea7d5d7045231b601a66f76c7d3bd68194aaf24f314",
+      "lines": 288,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginWorld.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "1e55a876e4effbac88180b7888e9c2d820650fe1331bd256bc863869bd6f489a"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "9f736b8de291aef0b52d1df1e4ed77af9be9ade419b660b581eede11d7f870f2"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOriginFeature.java",
+      "raw_sha256": "c1cd5d4b76fb1d062021e369149be9803a1a3d785b13fa87eb69e3a3a2e68b49",
+      "source_sha256": "c1cd5d4b76fb1d062021e369149be9803a1a3d785b13fa87eb69e3a3a2e68b49",
+      "lines": 61,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOriginFeature.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "5fdbdc3886be92bc62463155bbfb9a64fb7236aae491cca3040834117b41553d"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "5fdbdc3886be92bc62463155bbfb9a64fb7236aae491cca3040834117b41553d"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/FixedConstructionColor.java",
+      "raw_sha256": "6b58c9eed1b292305a59d5a38a982806469cc22c0ff50bda913b4130cac8fd1e",
+      "source_sha256": "6b58c9eed1b292305a59d5a38a982806469cc22c0ff50bda913b4130cac8fd1e",
+      "lines": 42,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FixedConstructionColor.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "03e55c2e628ec2ae238e6eb7591b95370683cda011f1b5634b6e955068b499ab"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "03e55c2e628ec2ae238e6eb7591b95370683cda011f1b5634b6e955068b499ab"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/FixedConstructionBlocks.java",
+      "raw_sha256": "ebadd86f9c5e6a68f61a07f967b86a70f62855bb473a91a624b350b08aa134d0",
+      "source_sha256": "4d89bb541b6d71e348f681a5a1f0bfdae8a28ec485750d7708d953ad22ec0f06",
+      "lines": 58,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FixedConstructionBlocks.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "62f00905c8ef5111ab5cc1ef06c481efb6a02a64dc17ec918ff08d5d8c11e64d"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "62f00905c8ef5111ab5cc1ef06c481efb6a02a64dc17ec918ff08d5d8c11e64d"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTConstructionVariants.java",
+      "raw_sha256": "63fa87fcfa3f65d2233d19349f16ca361050ce7476faf5f7c859e9c9e2ed0977",
+      "source_sha256": "63fa87fcfa3f65d2233d19349f16ca361050ce7476faf5f7c859e9c9e2ed0977",
+      "lines": 93,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTConstructionVariants.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "f8e3d56232b9f2b47f40779b9b75da1179c098dab7591cb39f0cd7f1c5e8852a"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "a345fdbc39ab514586be19ef39d8ab52f35d32fa823807aed1df4eba7633fba3"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTConstructionBlocks.java",
+      "raw_sha256": "8ec2e4bb6019cb17711ce859ce065e2c2695fa623e614fcf70b3c7d7f3e2ac2b",
+      "source_sha256": "8447255b603bfbe3da96e95f3330e79cb1c152939867f19ef30c839c00333ab6",
+      "lines": 90,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTConstructionBlocks.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "d27b8a4a931b1827502b74f2705cb4a98035dcdca3a8db5c6f90f7051a7f41ba"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "d27b8a4a931b1827502b74f2705cb4a98035dcdca3a8db5c6f90f7051a7f41ba"
+        }
+      ]
+    }
+  ],
+  "excerpts": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/center/WorldgenCenterBiomes.java",
+      "start_line": 132,
+      "end_line": 137,
+      "text": "\t\t\t\t\t\t\n\t\t\t\t\t\tnew WorldGenTrees(F, 4+aRandom.nextInt(3), 1, 1, F).generate(aWorld, aRandom, aMinX+ 4, mHeight+1, aMinZ+ 4);\n\t\t\t\t\t\tnew WorldGenTrees(F, 4+aRandom.nextInt(3), 1, 1, F).generate(aWorld, aRandom, aMinX+12, mHeight+1, aMinZ+ 4);\n\t\t\t\t\t\tnew WorldGenTrees(F, 4+aRandom.nextInt(3), 1, 1, F).generate(aWorld, aRandom, aMinX+ 4, mHeight+1, aMinZ+12);\n\t\t\t\t\t\tnew WorldGenTrees(F, 4+aRandom.nextInt(3), 1, 1, F).generate(aWorld, aRandom, aMinX+12, mHeight+1, aMinZ+12);\n\t\t\t\t\t}",
+      "excerpt_sha256": "583c94f26c84ed95b78c9cb4adc15dd784c7f39a59b53ebd4c17fb738b1f1f4e"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/center/WorldgenCenterBiomes.java",
+      "start_line": 270,
+      "end_line": 275,
+      "text": "\t\t\t\t\t\t\n\t\t\t\t\t\tnew WorldGenTrees(F, 9+aRandom.nextInt(3), 3, 3, T).generate(aWorld, aRandom, aMinX+ 4, mHeight+1, aMinZ+ 4);\n\t\t\t\t\t\tnew WorldGenTrees(F, 9+aRandom.nextInt(3), 3, 3, T).generate(aWorld, aRandom, aMinX+12, mHeight+1, aMinZ+ 4);\n\t\t\t\t\t\tnew WorldGenTrees(F, 9+aRandom.nextInt(3), 3, 3, T).generate(aWorld, aRandom, aMinX+ 4, mHeight+1, aMinZ+12);\n\t\t\t\t\t\tnew WorldGenTrees(F, 9+aRandom.nextInt(3), 3, 3, T).generate(aWorld, aRandom, aMinX+12, mHeight+1, aMinZ+12);\n\t\t\t\t\t}",
+      "excerpt_sha256": "8f2eb3543ae661fce686e65ec122f6856f6e4b13e49eb7f10107172faf2cde8b"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/center/WorldgenCenterBiomes.java",
+      "start_line": 244,
+      "end_line": 252,
+      "text": "\t\t\t\t\t\tArrays.fill(aChunk.getBiomeArray(), (byte)BiomeGenBase.jungle.biomeID);\n\t\t\t\t\t\tif (IL.EtFu_Dirt.exists()) {\n\t\t\t\t\t\t\tBlock tBlock = IL.EtFu_Dirt.block();\n\t\t\t\t\t\t\tfor (int i = 0; i < 16; i++) for (int j = 0; j < 16; j++) {\n\t\t\t\t\t\t\t\tfor (int k = 1; k < 64; k++) WD.set(aChunk, i, mHeight+k, j, NB, 0);\n\t\t\t\t\t\t\t\tWD.set(aChunk, i, mHeight  , j, Blocks.grass, 0);\n\t\t\t\t\t\t\t\tWD.set(aChunk, i, mHeight-1, j, tBlock, 0);\n\t\t\t\t\t\t\t\tWD.set(aChunk, i, mHeight-2, j, tBlock, 0);\n\t\t\t\t\t\t\t\tWD.set(aChunk, i, mHeight-3, j, tBlock, 0);",
+      "excerpt_sha256": "eb8a5bab4ef7d9cb45d80260016b8ee814643b286dcec534696e94ee2c643fbc"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "start_line": 253,
+      "end_line": 253,
+      "text": "\t, BIOMES_INFINITE_WATER = new BiomeNameSet(BiomeGenBase.ocean, BiomeGenBase.frozenOcean, BiomeGenBase.deepOcean, BiomeGenBase.beach, BiomeGenBase.coldBeach, BiomeGenBase.stoneBeach, BiomeGenBase.mushroomIslandShore, \"Coral Reef\", \"Kelp Forest\", \"Mangrove\", \"Ocean Oil Field\", \"Improved Oceans\", \"Tropical Ocean\", \"rwg_oceanIce\", \"rwg_oceanCold\", \"rwg_oceanTemperate\", \"rwg_oceanHot\", \"rwg_oceanWet\", \"rwg_oceanOasis\", \"Ice Ocean\", \"Cold Ocean\", \"Temperate Ocean\", \"Hot Ocean\", \"Wet Ocean\", \"Ocean Oasis\", \"Tropical Beach\", BiomeGenBase.river, BiomeGenBase.frozenRiver, \"Lush River\", \"Estuary\", \"Twilight Stream\", \"Tropical River\", \"Riparian Zone\", \"Sandstone Canyon\", \"Sandstone Canyon 2\", \"Creek Bed\", \"rwg_riverIce\", \"Ice River\", \"rwg_riverCold\", \"Cold River\", \"rwg_riverTemperate\", \"Temperate River\", \"rwg_riverHot\", \"Hot River\", \"rwg_riverWet\", \"Wet River\", \"rwg_riverOasis\", \"River Oasis\", \"Tropical Lake\", \"Twilight Lake\", \"Lake\", \"Oasis\", \"Woodland Lake\", \"Woodland Lake Edge\")",
+      "excerpt_sha256": "38c76e226be73008936c3c2a5e2b646bc9b1f7c79cedfb6af82a20951214d0ee"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/metatype/BlockStones.java",
+      "start_line": 71,
+      "end_line": 80,
+      "text": "\tpublic static final byte\n\tSTONE =  0, SMOTH =  7,\n\tCOBBL =  1, MCOBL =  2,\n\tBRICK =  3, CRACK =  4, MBRIK =  5, SBRIK = 12, QBRIK = 15,\n\tCHISL =  6, WINDA = 13, WINDB = 14,\n\tRNFBR =  8, RSTBR =  9,\n\tTILES = 10, STILE = 11;\n\t\n\tpublic static final byte[]\n\t//NO_MAPPINGS     = {STONE, COBBL, MCOBL, BRICK, CRACK, MBRIK, CHISL, SMOTH, RNFBR, RSTBR, TILES, STILE, SBRIK, WINDA, WINDB, QBRIK}",
+      "excerpt_sha256": "cb0fece202b9f5ca994e32c508cda8ab6e2e9ca316e660ccc076e240ef4211dd"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginSupport.java",
+      "start_line": 8,
+      "end_line": 11,
+      "text": "    public static final boolean T = true, F = false;\n    public static final int SIDE_Y_NEG = 0, SIDE_Y_POS = 1, SIDE_Z_NEG = 2, SIDE_Z_POS = 3, SIDE_X_NEG = 4, SIDE_X_POS = 5;\n    public static final int DYE_INDEX_Black = 0, DYE_INDEX_Red = 1, DYE_INDEX_Blue = 4, DYE_INDEX_LightGray = 7,\n            DYE_INDEX_Gray = 8, DYE_INDEX_LightBlue = 12, DYE_INDEX_White = 15, DYE_INDEX_Yellow = 11, DYE_INDEX_Green = 2;",
+      "excerpt_sha256": "f0d643e0d6b5716292c270c5f8b39844ab21b5cf92132b0bc54b7685b37756e2"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginWorld.java",
+      "start_line": 43,
+      "end_line": 47,
+      "text": "    default void tree(int x, int y, int z, int wood, int height, java.util.Random random) {\n        throw new UnsupportedOperationException(\"tree\");\n    }\n\n    default void litter(int x, int y, int z, int legacyId, boolean flint) {",
+      "excerpt_sha256": "a4c7ae2158c38049ff032e9b4ce8b88ebb9ead3039cd59e010fb5ba9d3256ff1"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceCenterBiomes.java",
+      "start_line": 225,
+      "end_line": 237,
+      "text": "                        aWorld.biome(aChunk, \"jungle\");\n\n                        OriginWorld.Block tBlock = Blocks.coarse_dirt;\n                        for (int i = 0; i < 16; i++) for (int j = 0; j < 16; j++) {\n                            for (int k = 1; k < aWorld.maxY() - mHeight; k++) set(aChunk, i, mHeight + k, j, NB, 0);\n                            set(aChunk, i, mHeight, j, Blocks.grass, 0);\n                            set(aChunk, i, mHeight - 1, j, tBlock, 0);\n                            set(aChunk, i, mHeight - 2, j, tBlock, 0);\n                            set(aChunk, i, mHeight - 3, j, tBlock, 0);\n                            set(aChunk, i, mHeight - 4, j, tBlock, 0);\n                            set(aChunk, i, mHeight - 5, j, tBlock, 0);\n                            for (int k = aWorld.minY() + 1; k < mHeight - 5; k++) set(aChunk, i, k, j, k < 32 ? BlocksGT.Komatiite : BlocksGT.Basalt,\n                                    aRandom.nextBoolean() ? 2 : 0);",
+      "excerpt_sha256": "64776e1e97ac7349bccdd5ab359ae86dc6b2973c70c9b2a47ac08055835d6fc2"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginWorld.java",
+      "start_line": 243,
+      "end_line": 275,
+      "text": "    @Override\n    public void tree(int x, int y, int z, int wood, int treeHeight, java.util.Random random) {\n        var log = switch (wood) {\n            case 1 -> Blocks.SPRUCE_LOG;\n            case 2 -> Blocks.BIRCH_LOG;\n            case 3 -> Blocks.JUNGLE_LOG;\n            default -> Blocks.OAK_LOG;\n        };\n        var leaves = switch (wood) {\n            case 1 -> Blocks.SPRUCE_LEAVES;\n            case 2 -> Blocks.BIRCH_LEAVES;\n            case 3 -> Blocks.JUNGLE_LEAVES;\n            default -> Blocks.OAK_LEAVES;\n        };\n        for (int yy = y + treeHeight - 3; yy <= y + treeHeight; yy++) {\n            int offset = yy - (y + treeHeight), radius = 1 - offset / 2;\n            for (int xx = x - radius; xx <= x + radius; xx++) for (int zz = z - radius; zz <= z + radius; zz++) {\n                if (Math.abs(xx - x) == radius && Math.abs(zz - z) == radius && (random.nextInt(2) == 0 || offset == 0)) continue;\n                if (canWrite(xx, yy, zz)) level.setBlock(new BlockPos(xx, yy, zz), leaves.defaultBlockState(), 2);\n            }\n        }\n        for (int yy = y; yy < y + treeHeight; yy++) if (canWrite(x, yy, z)) level.setBlock(new BlockPos(x, yy, z), log.defaultBlockState(), 2);\n    }\n\n    @Override\n    public void litter(int x, int y, int z, int legacyId, boolean flint) {\n        if (!canWrite(x, y, z)) return;\n        var pos = new BlockPos(x, y, z);\n        if (legacyId == 32756) level.setBlock(pos, com.gregtech.gregtech.registry.GTBlocks.TWIGS.get().defaultBlockState(), 2);\n        else com.gregtech.gregtech.worldgen.GTRockPlacement.place(level, pos, flint ? null : \"Stone\", flint ? \"minecraft:flint\" : null, false);\n    }\n\n    @Override",
+      "excerpt_sha256": "136546e40978f3192e315419295d7054169292d193296c1687cec88f6acc43bb"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginWorld.java",
+      "start_line": 86,
+      "end_line": 109,
+      "text": "        if (blockId.equals(\"source:sands\")) blockId = \"gt6ce:\" + com.gregtech.gregtech.block.BlackSandDefinitions.IDS.get(key.metadata % 3);\n        if (blockId.equals(\"source:diggables\")) blockId = \"gt6ce:\" + new String[]{\n            \"mud\", \"clay_brown\", \"turf\", \"clay_red\", \"clay_yellow\", \"clay_blue\", \"clay_white\"\n        }[key.metadata];\n        if (blockId.equals(\"source:glowtus\")) blockId = \"gt6ce:glowtus_\" + DyeColor.byId(15 - key.metadata).getName();\n        if (blockId.equals(\"source:flower\")) blockId = \"minecraft:\" + new String[]{\n            \"poppy\", \"blue_orchid\", \"allium\", \"azure_bluet\", \"red_tulip\", \"orange_tulip\", \"white_tulip\", \"pink_tulip\", \"oxeye_daisy\"\n        }[key.metadata % 9];\n        if (blockId.equals(\"minecraft:short_grass\") && !BuiltInRegistries.BLOCK.containsKey(id(blockId))) blockId = \"minecraft:grass\";\n        if (blockId.equals(\"minecraft:sand\") && key.metadata == 1) blockId = \"minecraft:red_sand\";\n        if (blockId.equals(\"minecraft:dirt\") && key.metadata == 2) blockId = \"minecraft:podzol\";\n        if (blockId.startsWith(\"gt6ce:stone_\")) blockId += \"_\" + StoneVariant.byMeta(key.metadata).registrySuffix();\n        if (blockId.equals(\"source:stained_terracotta\")) blockId = \"minecraft:\" + DyeColor.byId(15 - key.metadata).getName() + \"_terracotta\";\n        if (blockId.equals(\"minecraft:sandstone\")) blockId = switch (key.metadata) {\n            case 1 -> \"minecraft:chiseled_sandstone\";\n            case 2 -> \"minecraft:cut_sandstone\";\n            default -> blockId;\n        };\n        ResourceLocation location = id(blockId);\n        if (!BuiltInRegistries.BLOCK.containsKey(location)) throw new IllegalStateException(\"Missing original origin block: \" + blockId);\n        BlockState state = BuiltInRegistries.BLOCK.get(location).defaultBlockState();\n        if (state.is(net.minecraft.world.level.block.Blocks.SNOW)) state = state.setValue(net.minecraft.world.level.block.SnowLayerBlock.LAYERS,\n                key.metadata + 1);\n        if (state.hasProperty(ConcreteBlock.COLOR) || state.getBlock() instanceof com.gregtech.gregtech.block.misc.FixedConstructionColor)",
+      "excerpt_sha256": "930734d6c17596d94207f497d892a5a00e65ecdffc62645faac7aa6d53f0b21b"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginWorld.java",
+      "start_line": 109,
+      "end_line": 114,
+      "text": "        if (state.hasProperty(ConcreteBlock.COLOR) || state.getBlock() instanceof com.gregtech.gregtech.block.misc.FixedConstructionColor)\n            state = com.gregtech.gregtech.block.misc.FixedConstructionColor.recolor(state, DyeColor.byId(15 - key.metadata));\n        if (key.side >= 0) state = state.setValue(CFoamSlabBlock.FACING, Direction.from3DDataValue(key.side));\n        if (state.getBlock() instanceof RoadStripeRailBlock) state = state\n                .setValue(RoadStripeRailBlock.SHAPE, (key.metadata & 1) == 0 ? RailShape.NORTH_SOUTH : RailShape.EAST_WEST)\n                .setValue(RoadStripeRailBlock.REFLECTOR, (key.metadata & 8) != 0);",
+      "excerpt_sha256": "fe3870dd626a483c100dbee04501f4700f96d9d25d3dfc565eb2aa7e916f0709"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/FixedConstructionColor.java",
+      "start_line": 18,
+      "end_line": 26,
+      "text": "    static BlockState recolor(BlockState state, DyeColor color) {\n        Block block = com.gregtech.gregtech.registry.GTConstructionVariants.coloredBlock(state.getBlock(), color);\n        if (block == null) return state.hasProperty(ConcreteBlock.COLOR) ? state.setValue(ConcreteBlock.COLOR, color) : state;\n        BlockState result = block.defaultBlockState();\n        for (var property : state.getProperties())\n            result = copy(result, state, property);\n        return result;\n    }\n",
+      "excerpt_sha256": "599d37cf4f1fbc7bcbefac02767bb654b5446dd4a4a8cc5701df1cebdced9b73"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTConstructionVariants.java",
+      "start_line": 51,
+      "end_line": 56,
+      "text": "            case \"cfoam_slab\" -> new FixedConstructionBlocks.FoamSlab(color, properties);\n            case \"glass_clear\", \"glass_glow\" -> new FixedConstructionBlocks.Glass(color, family.equals(\"glass_glow\"), properties);\n            case \"glass_clear_slab\", \"glass_glow_slab\" -> new FixedConstructionBlocks.GlassSlab(color, family.equals(\"glass_glow_slab\"), properties);\n            default -> throw new IllegalArgumentException(\"Unknown construction family \" + family);\n        };\n    }",
+      "excerpt_sha256": "05e420dbe5cfc6fbf763aa31ac8a34e55c52bb46d62bcff75e751e9331ec0dbc"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/block/stone/StoneVariant.java",
+      "start_line": 8,
+      "end_line": 15,
+      "text": "    COBBLE(1, \"cobble\", \"Cobblestone\"),\n    COBBLE_MOSSY(2, \"cobble_mossy\", \"Mossy Cobblestone\"),\n    BRICKS(3, \"bricks\", \"Bricks\"),\n    BRICKS_CRACKED(4, \"bricks_cracked\", \"Cracked Bricks\"),\n    BRICKS_MOSSY(5, \"bricks_mossy\", \"Mossy Bricks\"),\n    BRICKS_CHISELED(6, \"bricks_chiseled\", \"Chiseled Bricks\"),\n    SMOOTH(7, \"smooth\", \"Smooth\"),\n    BRICKS_REINFORCED(8, \"bricks_reinforced\", \"Reinforced Bricks\"),",
+      "excerpt_sha256": "36134e2976c84873ff4bc722732be4d93599db03edfd680c4bc6b5d9819cf42b"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginBiomeNames.java",
+      "start_line": 64,
+      "end_line": 67,
+      "text": "    public static boolean water(String path) {\n        return WATER.contains(path.toLowerCase(java.util.Locale.ROOT).replaceAll(\"[^a-z0-9]\", \"\"));\n    }\n}",
+      "excerpt_sha256": "df6acdcda2525a011f77a3bcc4c3281e388916df7abc64293f97bff0bffa1c15"
+    }
+  ],
+  "complete_method_body_comparison": {
+    "baseline_method": {
+      "ordered_tokens": 3912,
+      "ordered_code_sha256": "3ddf9d74408ac5a2e04d0be45af23a5fd32eb92aa71bfcb30175c6ef20caca57"
+    },
+    "current_reduced_method": {
+      "ordered_tokens": 3669,
+      "ordered_code_sha256": "06b5bea6ee822b34c0367397f799978b0645ba5e3e2cfd3befa2e2f240fd6a2d"
+    },
+    "adaptation_counts": {
+      "biome_operations": 12,
+      "river_placement_guards": 2,
+      "foundation_boundaries": 10,
+      "clearing_boundaries": 10,
+      "tree_delegates": 12,
+      "litter_delegates": 3
+    },
+    "original_tree_requests": [
+      {
+        "minimum_height_expression": "4+aRandom.nextInt(3)",
+        "wood_meta": 1,
+        "leaf_meta": 1,
+        "vines": false,
+        "x": "aMinX+ 4",
+        "y": "mHeight+1",
+        "z": "aMinZ+ 4"
+      },
+      {
+        "minimum_height_expression": "4+aRandom.nextInt(3)",
+        "wood_meta": 1,
+        "leaf_meta": 1,
+        "vines": false,
+        "x": "aMinX+12",
+        "y": "mHeight+1",
+        "z": "aMinZ+ 4"
+      },
+      {
+        "minimum_height_expression": "4+aRandom.nextInt(3)",
+        "wood_meta": 1,
+        "leaf_meta": 1,
+        "vines": false,
+        "x": "aMinX+ 4",
+        "y": "mHeight+1",
+        "z": "aMinZ+12"
+      },
+      {
+        "minimum_height_expression": "4+aRandom.nextInt(3)",
+        "wood_meta": 1,
+        "leaf_meta": 1,
+        "vines": false,
+        "x": "aMinX+12",
+        "y": "mHeight+1",
+        "z": "aMinZ+12"
+      },
+      {
+        "minimum_height_expression": "4+aRandom.nextInt(3)",
+        "wood_meta": 0,
+        "leaf_meta": 0,
+        "vines": false,
+        "x": "aMinX+ 4",
+        "y": "mHeight+1",
+        "z": "aMinZ+ 4"
+      },
+      {
+        "minimum_height_expression": "4+aRandom.nextInt(3)",
+        "wood_meta": 2,
+        "leaf_meta": 2,
+        "vines": false,
+        "x": "aMinX+12",
+        "y": "mHeight+1",
+        "z": "aMinZ+ 4"
+      },
+      {
+        "minimum_height_expression": "4+aRandom.nextInt(3)",
+        "wood_meta": 2,
+        "leaf_meta": 2,
+        "vines": false,
+        "x": "aMinX+ 4",
+        "y": "mHeight+1",
+        "z": "aMinZ+12"
+      },
+      {
+        "minimum_height_expression": "4+aRandom.nextInt(3)",
+        "wood_meta": 0,
+        "leaf_meta": 0,
+        "vines": false,
+        "x": "aMinX+12",
+        "y": "mHeight+1",
+        "z": "aMinZ+12"
+      },
+      {
+        "minimum_height_expression": "9+aRandom.nextInt(3)",
+        "wood_meta": 3,
+        "leaf_meta": 3,
+        "vines": true,
+        "x": "aMinX+ 4",
+        "y": "mHeight+1",
+        "z": "aMinZ+ 4"
+      },
+      {
+        "minimum_height_expression": "9+aRandom.nextInt(3)",
+        "wood_meta": 3,
+        "leaf_meta": 3,
+        "vines": true,
+        "x": "aMinX+12",
+        "y": "mHeight+1",
+        "z": "aMinZ+ 4"
+      },
+      {
+        "minimum_height_expression": "9+aRandom.nextInt(3)",
+        "wood_meta": 3,
+        "leaf_meta": 3,
+        "vines": true,
+        "x": "aMinX+ 4",
+        "y": "mHeight+1",
+        "z": "aMinZ+12"
+      },
+      {
+        "minimum_height_expression": "9+aRandom.nextInt(3)",
+        "wood_meta": 3,
+        "leaf_meta": 3,
+        "vines": true,
+        "x": "aMinX+12",
+        "y": "mHeight+1",
+        "z": "aMinZ+12"
+      }
+    ],
+    "source_water_names": [
+      "Coral Reef",
+      "Kelp Forest",
+      "Mangrove",
+      "Ocean Oil Field",
+      "Improved Oceans",
+      "Tropical Ocean",
+      "rwg_oceanIce",
+      "rwg_oceanCold",
+      "rwg_oceanTemperate",
+      "rwg_oceanHot",
+      "rwg_oceanWet",
+      "rwg_oceanOasis",
+      "Ice Ocean",
+      "Cold Ocean",
+      "Temperate Ocean",
+      "Hot Ocean",
+      "Wet Ocean",
+      "Ocean Oasis",
+      "Tropical Beach",
+      "Lush River",
+      "Estuary",
+      "Twilight Stream",
+      "Tropical River",
+      "Riparian Zone",
+      "Sandstone Canyon",
+      "Sandstone Canyon 2",
+      "Creek Bed",
+      "rwg_riverIce",
+      "Ice River",
+      "rwg_riverCold",
+      "Cold River",
+      "rwg_riverTemperate",
+      "Temperate River",
+      "rwg_riverHot",
+      "Hot River",
+      "rwg_riverWet",
+      "Wet River",
+      "rwg_riverOasis",
+      "River Oasis",
+      "Tropical Lake",
+      "Twilight Lake",
+      "Lake",
+      "Oasis",
+      "Woodland Lake",
+      "Woodland Lake Edge"
+    ],
+    "supplemental_vanilla_names": [
+      "Ocean",
+      "Frozen Ocean",
+      "Deep Ocean",
+      "Beach",
+      "Cold Beach",
+      "Stone Beach",
+      "Mushroom Island Shore",
+      "River",
+      "Frozen River"
+    ],
+    "normalized_water_names": [
+      "beach",
+      "coldbeach",
+      "coldocean",
+      "coldriver",
+      "coralreef",
+      "creekbed",
+      "deepocean",
+      "estuary",
+      "frozenocean",
+      "frozenriver",
+      "hotocean",
+      "hotriver",
+      "iceocean",
+      "iceriver",
+      "improvedoceans",
+      "kelpforest",
+      "lake",
+      "lushriver",
+      "mangrove",
+      "mushroomislandshore",
+      "oasis",
+      "ocean",
+      "oceanoasis",
+      "oceanoilfield",
+      "riparianzone",
+      "river",
+      "riveroasis",
+      "rwgoceancold",
+      "rwgoceanhot",
+      "rwgoceanice",
+      "rwgoceanoasis",
+      "rwgoceantemperate",
+      "rwgoceanwet",
+      "rwgrivercold",
+      "rwgriverhot",
+      "rwgriverice",
+      "rwgriveroasis",
+      "rwgrivertemperate",
+      "rwgriverwet",
+      "sandstonecanyon",
+      "sandstonecanyon2",
+      "stonebeach",
+      "temperateocean",
+      "temperateriver",
+      "tropicalbeach",
+      "tropicallake",
+      "tropicalocean",
+      "tropicalriver",
+      "twilightlake",
+      "twilightstream",
+      "wetocean",
+      "wetriver",
+      "woodlandlake",
+      "woodlandlakeedge"
+    ],
+    "water_name_table_exact": true,
+    "limits": [
+      "Body comparison permits listed API/height/optional-block adaptations, not equivalence of native tree execution.",
+      "River placement global guards are omitted for the native water adapter; their old flag implementation was not copied.",
+      "The dropped leaf metadata is equal to wood metadata in these 12 source calls; the true vines flag in four calls is a separate lost contract."
+    ]
+  },
+  "core_probe": {
+    "method": "Four actual current core source files, a baseline copy with exactly two class/constructor name substitutions, and recording probe. No native world.",
+    "seconds": 0.988,
+    "compile_command": [
+      "C:/Program Files/Java/jdk-17/bin/javac.exe",
+      "-encoding",
+      "UTF-8",
+      "-d",
+      "work\\center-biomes-audit-20261022\\classes",
+      "core\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\center\\OriginWorld.java",
+      "core\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\center\\OriginSupport.java",
+      "core\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\center\\SourceCenterBiomes.java",
+      "core\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\center\\OriginBiomeNames.java",
+      "work\\center-biomes-audit-20261022\\BeforeSourceCenterBiomes.java",
+      "work\\center-biomes-audit-20261022\\CenterProbe.java"
+    ],
+    "run_command": [
+      "C:/Program Files/Java/jdk-17/bin/java.exe",
+      "-cp",
+      "work\\center-biomes-audit-20261022\\classes",
+      "com.gregtech.gregtech.worldgen.center.CenterProbe",
+      "work\\center-biomes-audit-20261022\\water-names.txt"
+    ],
+    "compiled_sources": [
+      {
+        "path": "core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginWorld.java",
+        "raw_sha256": "b3e28f5a15734b9419310f713634924c1e89ce87efef370fa80553acf31feb3d"
+      },
+      {
+        "path": "core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginSupport.java",
+        "raw_sha256": "d0abdca975885ea4117b8998968a62ea0ef80e669bbeb0c71f6c82a608846efb"
+      },
+      {
+        "path": "core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceCenterBiomes.java",
+        "raw_sha256": "3ff3c1d4614869752c52ae8c38b1a501cfdf452824b04518b41b673a521e8afd"
+      },
+      {
+        "path": "core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginBiomeNames.java",
+        "raw_sha256": "a08425e15bf05cdbfefe40ea8e648a7a7fc3f9262b29dff0eaa6313538d7e9b5"
+      },
+      {
+        "path": "work/center-biomes-audit-20261022/BeforeSourceCenterBiomes.java",
+        "raw_sha256": "eff8e47e585e8009d214e1b8053694bfea8db33c51ed2c22062657c67c3c9dab"
+      },
+      {
+        "path": "work/center-biomes-audit-20261022/CenterProbe.java",
+        "raw_sha256": "4ebe22184402caae4d19e27a8a15039ce4338920bdb7a67e17d8b39c4c343442"
+      }
+    ],
+    "output": "CHUNKS 144\r\nWRITES 12061584\r\nTREE_REQUESTS 176\r\nLITTER_REQUESTS 778\r\nBIOMES {badlands=4, desert=15, forest=4, jungle=20, plains=25, river=48, snowy_plains=4, snowy_taiga=20, swamp=4}\r\nWATER_NAMES 54\r\nOUTSIDE_REJECTED true\r\n",
+    "probe_source": "package com.gregtech.gregtech.worldgen.center;\n\nimport java.nio.file.*;\nimport java.util.*;\n\n/** Compares actual before/after planners with a bounded recording delegate, not a game world. */\npublic final class CenterProbe {\n    private static final class Recorder implements OriginWorld {\n        final int minX,minZ;\n        long fingerprint=0xcbf29ce484222325L, writes;\n        int lowest=Integer.MAX_VALUE, highest=Integer.MIN_VALUE, litter;\n        String biome,spawn;\n        final List<String> trees=new ArrayList<>();\n        Recorder(int x,int z){minX=x;minZ=z;}\n        void value(long value){fingerprint=(fingerprint^value)*0x100000001b3L;}\n        public int minY(){return -64;}\n        public int maxY(){return 320;}\n        public boolean canWrite(int x,int y,int z){return x>=minX&&x<minX+16&&z>=minZ&&z<minZ+16&&y>=-64&&y<320;}\n        public Block getBlock(int x,int y,int z){return OriginSupport.NB;}\n        public boolean setBlock(int x,int y,int z,Block block,int metadata,int flags){\n            if(!canWrite(x,y,z))return false;\n            value(1);value(x);value(y);value(z);value(block.id().hashCode());value(metadata);value(flags);value(block.slabSide());\n            writes++;lowest=Math.min(lowest,y);highest=Math.max(highest,y);return true;\n        }\n        public Biome getBiomeGenForCoords(int x,int z){return new Biome(\"plains\",\"Plains\");}\n        public boolean isInfiniteWaterBiome(String name){return false;}\n        public void setSpawnLocation(int x,int y,int z){spawn=x+\",\"+y+\",\"+z;value(2);value(x);value(y);value(z);}\n        public void biome(Chunk chunk,String name){biome=name;value(3);value(name.hashCode());}\n        public void tree(int x,int y,int z,int wood,int height,Random random){\n            trees.add(x+\",\"+y+\",\"+z+\",\"+wood+\",\"+height);value(4);value(x);value(y);value(z);value(wood);value(height);\n        }\n        public void litter(int x,int y,int z,int legacy,boolean flint){\n            litter++;value(5);value(x);value(y);value(z);value(legacy);value(flint?1:0);\n        }\n        public void sign(int x,int y,int z,int side,int flags,String... lines){throw new AssertionError(\"Unexpected sign\");}\n        public void beacon(int x,int y,int z,String primary,String secondary){throw new AssertionError(\"Unexpected beacon\");}\n        public void clearNonPlayerEntities(int x,int y,int z,int xx,int yy,int zz){throw new AssertionError(\"Unexpected entities\");}\n    }\n    public static void main(String[] args)throws Exception{\n        var before=new BeforeSourceCenterBiomes(66);\n        var after=new SourceCenterBiomes(66);\n        int chunks=0,trees=0,litter=0;\n        long writes=0;\n        var biomes=new TreeMap<String,Integer>();\n        for(int x=-96;x<=80;x+=16)for(int z=-96;z<=80;z+=16){\n            Recorder a=new Recorder(x,z),b=new Recorder(x,z);\n            long seed=((long)(x>>4)&0xffffffffL)|(((long)(z>>4)&0xffffffffL)<<32);\n            boolean oldResult=before.generate(a,new OriginWorld.Chunk(a,x,z),x,z,new Random(seed));\n            boolean newResult=after.generate(b,new OriginWorld.Chunk(b,x,z),x,z,new Random(seed));\n            if(oldResult!=newResult||a.fingerprint!=b.fingerprint||a.writes!=b.writes||a.lowest!=b.lowest||a.highest!=b.highest\n                ||a.litter!=b.litter||!a.trees.equals(b.trees)||!Objects.equals(a.biome,b.biome)||!Objects.equals(a.spawn,b.spawn))\n                throw new AssertionError(\"Before/after requests differ at \"+x+\",\"+z);\n            if(!newResult)throw new AssertionError(\"Centre chunk declined\");\n            chunks++;writes+=b.writes;trees+=b.trees.size();litter+=b.litter;biomes.merge(b.biome,1,Integer::sum);\n        }\n        var outside=new Recorder(96,96);\n        if(after.generate(outside,new OriginWorld.Chunk(outside,96,96),96,96,new Random(0))||outside.writes!=0)\n            throw new AssertionError(\"Outside centre accepted\");\n        int names=0;\n        for(String name:Files.readAllLines(Path.of(args[0]))){\n            if(!OriginBiomeNames.water(name)||!OriginBiomeNames.water(name.toUpperCase(Locale.ROOT))\n                ||!OriginBiomeNames.water(String.join(\"_\",name.split(\"\"))))throw new AssertionError(\"Water alias lost: \"+name);\n            names++;\n        }\n        if(OriginBiomeNames.water(\"river_valley\"))throw new AssertionError(\"Unlisted name guessed\");\n        System.out.println(\"CHUNKS \"+chunks);\n        System.out.println(\"WRITES \"+writes);\n        System.out.println(\"TREE_REQUESTS \"+trees);\n        System.out.println(\"LITTER_REQUESTS \"+litter);\n        System.out.println(\"BIOMES \"+biomes);\n        System.out.println(\"WATER_NAMES \"+names);\n        System.out.println(\"OUTSIDE_REJECTED true\");\n    }\n}\n",
+    "baseline_clone_source": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\npackage com.gregtech.gregtech.worldgen.center;\nimport static com.gregtech.gregtech.worldgen.center.OriginSupport.*;\n/** Original Gregorius Techneticies geometry; platform operations use OriginWorld. */\npublic final class BeforeSourceCenterBiomes {\n    private final int mHeight;\n    private static final boolean GENERATE_STREETS=true, GENERATE_NEXUS=true, GENERATE_TESTING=true;\n    public BeforeSourceCenterBiomes(int height) { mHeight=height; }\n    public boolean generate(OriginWorld aWorld, OriginWorld.Chunk aChunk, int aMinX, int aMinZ, java.util.Random aRandom) {\n\t\tif (aMinX >= -96 && aMinX <= 80 && aMinZ >= -96 && aMinZ <= 80) {\n\t\t\tif (GENERATE_STREETS && aMinX >= -32 && aMinX <= 16 && aMinZ >= -32 && aMinZ <= 16) {\n\t\t\t\taWorld.biome(aChunk, \"river\");\n\t\t\t\treturn T;\n\t\t\t}\n\t\t\tif (GENERATE_NEXUS && aMinX == 16 && aMinZ == -48) {\n\t\t\t\taWorld.biome(aChunk, \"plains\");\n\t\t\t\treturn T;\n\t\t\t}\n\t\t\tif (GENERATE_TESTING && (aMinX == 32 || aMinX == 48) && (aMinZ == -32 || aMinZ == -48)) {\n\t\t\t\taWorld.biome(aChunk, \"plains\");\n\t\t\t\treturn T;\n\t\t\t}\n\t\t\tif (aMinX == -16 || aMinX == 0 || aMinZ == -16 || aMinZ == 0) {\n\t\t\t\taWorld.biome(aChunk, \"river\");\n\t\t\t\tfor (int i = 0; i < 16; i++) for (int j = 0; j < 16; j++) {\n\t\t\t\t\tfor (int k = -3; k < aWorld.maxY()-mHeight; k++) set(aChunk, i, mHeight+k, j, NB, 0);\n\t\t\t\t\tset(aChunk, i, mHeight-4, j, BlocksGT.River, 0);\n\t\t\t\t\tset(aChunk, i, mHeight-5, j, BlocksGT.River, 0);\n\t\t\t\t\tset(aChunk, i, mHeight-6, j, BlocksGT.River, 0);\n\t\t\t\t\tset(aChunk, i, mHeight-7, j, BlocksGT.Sands, aMinX < 0 ? aMinZ < 0 ? 0 : 1 : aMinZ < 0 ? 2 : 0);\n\t\t\t\t\tset(aChunk, i, mHeight-8, j, Blocks.gravel, 1);\n\t\t\t\t\tset(aChunk, i, mHeight-9, j, Blocks.clay, 0);\n\t\t\t\t\tset(aChunk, i, mHeight-10, j, Blocks.clay, 0);\n\t\t\t\t\tfor (int k = aWorld.minY()+1; k < mHeight-10; k++) set(aChunk, i, k, j, Blocks.stone, 1);\n\t\t\t\t}\n\t\t\t\taWorld.setSpawnLocation(0, mHeight+5, 0);\n\t\t\t\treturn T;\n\t\t\t}\n\t\t\tif (aMinX < 0) {\n\t\t\t\tif (aMinZ < 0) {\n\t\t\t\t\tif ((aMinX == -80 || aMinX == -64) && (aMinZ == -80 || aMinZ == -64)) {\n\t\t\t\t\t\taWorld.biome(aChunk, \"snowy_plains\");\n\t\t\t\t\t\tfor (int i = 0; i < 16; i++) for (int j = 0; j < 16; j++) {\n\t\t\t\t\t\t\tfor (int k = 1; k < aWorld.maxY()-mHeight; k++) set(aChunk, i, mHeight+k, j, NB, 0);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight  , j, Blocks.ice, 0);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-1, j, Blocks.packed_ice, 0);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-2, j, Blocks.packed_ice, 0);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-3, j, Blocks.packed_ice, 0);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-4, j, Blocks.packed_ice, 0);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-5, j, Blocks.packed_ice, 0);\n\t\t\t\t\t\t\tfor (int k = aWorld.minY()+1; k < mHeight-5; k++) set(aChunk, i, k, j, k < 32 ? BlocksGT.SchistGreen : BlocksGT.SchistBlue, aRandom.nextBoolean()?2:0);\n\t\t\t\t\t\t}\n\t\t\t\t\t} else {\n\t\t\t\t\t\taWorld.biome(aChunk, \"snowy_taiga\");\n\t\t\t\t\t\tfor (int i = 0; i < 16; i++) for (int j = 0; j < 16; j++) {\n\t\t\t\t\t\t\tfor (int k = 2; k < aWorld.maxY()-mHeight; k++) set(aChunk, i, mHeight+k, j, NB, 0);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight+1, j, Blocks.snow_layer, aRandom.nextInt(2));\n\t\t\t\t\t\t\tset(aChunk, i, mHeight  , j, Blocks.dirt, 2);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-1, j, Blocks.dirt, 2);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-2, j, Blocks.dirt, 2);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-3, j, Blocks.dirt, 2);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-4, j, Blocks.dirt, 2);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-5, j, Blocks.dirt, 2);\n\t\t\t\t\t\t\tfor (int k = aWorld.minY()+1; k < mHeight-5; k++) set(aChunk, i, k, j, Blocks.mossy_cobblestone, 0);\n\t\t\t\t\t\t}\n\n\t\t\t\t\t\tset(aChunk,  4, mHeight+1,  4, NB, aRandom.nextInt(2));\n\t\t\t\t\t\tset(aChunk, 12, mHeight+1,  4, NB, aRandom.nextInt(2));\n\t\t\t\t\t\tset(aChunk,  4, mHeight+1, 12, NB, aRandom.nextInt(2));\n\t\t\t\t\t\tset(aChunk, 12, mHeight+1, 12, NB, aRandom.nextInt(2));\n\n\t\t\t\t\t\taWorld.tree(aMinX+ 4, mHeight+1, aMinZ+ 4, 1, 4+aRandom.nextInt(3), aRandom);\n\t\t\t\t\t\taWorld.tree(aMinX+12, mHeight+1, aMinZ+ 4, 1, 4+aRandom.nextInt(3), aRandom);\n\t\t\t\t\t\taWorld.tree(aMinX+ 4, mHeight+1, aMinZ+12, 1, 4+aRandom.nextInt(3), aRandom);\n\t\t\t\t\t\taWorld.tree(aMinX+12, mHeight+1, aMinZ+12, 1, 4+aRandom.nextInt(3), aRandom);\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\tif ((aMinX == -80 || aMinX == -64) && (aMinZ == 48 || aMinZ == 64)) {\n\t\t\t\t\t\taWorld.biome(aChunk, \"forest\");\n\t\t\t\t\t\tfor (int i = 0; i < 16; i++) for (int j = 0; j < 16; j++) {\n\t\t\t\t\t\t\tfor (int k = 1; k < aWorld.maxY()-mHeight; k++) set(aChunk, i, mHeight+k, j, NB, 0);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight  , j, Blocks.grass, 0);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-1, j, Blocks.dirt, 0);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-2, j, Blocks.dirt, 0);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-3, j, Blocks.dirt, 0);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-4, j, Blocks.dirt, 0);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-5, j, Blocks.dirt, 0);\n\t\t\t\t\t\t\tfor (int k = aWorld.minY()+1; k < mHeight-5; k++) set(aChunk, i, k, j, k < 32 ? BlocksGT.Kimberlite : BlocksGT.Quartzite, aRandom.nextBoolean()?2:0);\n\t\t\t\t\t\t}\n\t\t\t\t\t\tset(aChunk,  6, mHeight+1,  6, Blocks.pumpkin, 0);\n\t\t\t\t\t\tset(aChunk, 10, mHeight+1,  6, Blocks.pumpkin, 0);\n\t\t\t\t\t\tset(aChunk,  6, mHeight+1, 10, Blocks.pumpkin, 0);\n\t\t\t\t\t\tset(aChunk, 10, mHeight+1, 10, Blocks.pumpkin, 0);\n\n\t\t\t\t\t\taWorld.tree(aMinX+ 4, mHeight+1, aMinZ+ 4, 0, 4+aRandom.nextInt(3), aRandom);\n\t\t\t\t\t\taWorld.tree(aMinX+12, mHeight+1, aMinZ+ 4, 2, 4+aRandom.nextInt(3), aRandom);\n\t\t\t\t\t\taWorld.tree(aMinX+ 4, mHeight+1, aMinZ+12, 2, 4+aRandom.nextInt(3), aRandom);\n\t\t\t\t\t\taWorld.tree(aMinX+12, mHeight+1, aMinZ+12, 0, 4+aRandom.nextInt(3), aRandom);\n\t\t\t\t\t} else {\n\n\t\t\t\t\t\taWorld.biome(aChunk, \"plains\");\n\t\t\t\t\t\tfor (int i = 0; i < 16; i++) for (int j = 0; j < 16; j++) {\n\t\t\t\t\t\t\tfor (int k = 1; k < aWorld.maxY()-mHeight; k++) set(aChunk, i, mHeight+k, j, NB, 0);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight  , j, Blocks.grass, 0);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-1, j, Blocks.dirt, 0);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-2, j, BlocksGT.Diggables, 1);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-3, j, BlocksGT.Diggables, 3);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-4, j, BlocksGT.Diggables, 4);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-5, j, BlocksGT.Diggables, 5);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-6, j, BlocksGT.Diggables, 6);\n\t\t\t\t\t\t\tfor (int k = aWorld.minY()+1; k < mHeight-6; k++) set(aChunk, i, k, j, k < 32 ? BlocksGT.Limestone : BlocksGT.Marble, aRandom.nextBoolean()?2:0);\n\t\t\t\t\t\t\tswitch(aRandom.nextInt(60)) {\n\t\t\t\t\t\t\tcase  0: case  1: case  2: aWorld.litter(aMinX+i, mHeight+1, aMinZ+j, 32757, true); break;\n\t\t\t\t\t\t\tcase  3: case  4: case  5: aWorld.litter(aMinX+i, mHeight+1, aMinZ+j, 32757, false); break;\n\t\t\t\t\t\t\tcase  6: case  7: case  8: aWorld.litter(aMinX+i, mHeight+1, aMinZ+j, 32756, false); break;\n\t\t\t\t\t\t\tcase  9: case 10: case 11: case 12: case 13: case 14: set(aChunk, i, mHeight+1, j, Blocks.tallgrass, 1); break;\n\t\t\t\t\t\t\tcase 15: set(aChunk, i, mHeight+1, j, Blocks.yellow_flower, 0); break;\n\t\t\t\t\t\t\tcase 16: set(aChunk, i, mHeight+1, j, Blocks.red_flower, 0); break;\n\t\t\t\t\t\t\tcase 17: set(aChunk, i, mHeight+1, j, Blocks.red_flower, 1); break;\n\t\t\t\t\t\t\tcase 18: set(aChunk, i, mHeight+1, j, Blocks.red_flower, 2); break;\n\t\t\t\t\t\t\tcase 19: set(aChunk, i, mHeight+1, j, Blocks.red_flower, 3); break;\n\t\t\t\t\t\t\tcase 20: set(aChunk, i, mHeight+1, j, Blocks.red_flower, 4); break;\n\t\t\t\t\t\t\tcase 21: set(aChunk, i, mHeight+1, j, Blocks.red_flower, 5); break;\n\t\t\t\t\t\t\tcase 22: set(aChunk, i, mHeight+1, j, Blocks.red_flower, 6); break;\n\t\t\t\t\t\t\tcase 23: set(aChunk, i, mHeight+1, j, Blocks.red_flower, 7); break;\n\t\t\t\t\t\t\tcase 24: set(aChunk, i, mHeight+1, j, Blocks.red_flower, 8); break;\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tif (aMinZ < 0) {\n\t\t\t\t\tif ((aMinX == 48 || aMinX == 64) && (aMinZ == -80 || aMinZ == -64)) {\n\t\t\t\t\t\taWorld.biome(aChunk, \"badlands\");\n\t\t\t\t\t\tfor (int i = 0; i < 16; i++) for (int j = 0; j < 16; j++) {\n\t\t\t\t\t\t\tfor (int k = 1; k < aWorld.maxY()-mHeight; k++) set(aChunk, i, mHeight+k, j, NB, 0);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight  , j, Blocks.sand, 1);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-1, j, Blocks.sand, 1);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-2, j, Blocks.sand, 1);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-3, j, Blocks.sand, 1);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-4, j, Blocks.sand, 1);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-5, j, Blocks.sand, 1);\n\t\t\t\t\t\t\tfor (int k = aWorld.minY()+1; k < mHeight-5; k++) set(aChunk, i, k, j, Blocks.hardened_clay, 0);\n\t\t\t\t\t\t}\n\t\t\t\t\t\tfor (int i = 1; i <= 3; i++) {\n\t\t\t\t\t\t\tset(aChunk,  4, mHeight+i,  4, Blocks.cactus, 0);\n\t\t\t\t\t\t\tset(aChunk, 12, mHeight+i,  4, Blocks.cactus, 0);\n\t\t\t\t\t\t\tset(aChunk,  4, mHeight+i, 12, Blocks.cactus, 0);\n\t\t\t\t\t\t\tset(aChunk, 12, mHeight+i, 12, Blocks.cactus, 0);\n\t\t\t\t\t\t}\n\t\t\t\t\t} else {\n\t\t\t\t\t\taWorld.biome(aChunk, \"desert\");\n\t\t\t\t\t\tfor (int i = 0; i < 16; i++) for (int j = 0; j < 16; j++) {\n\t\t\t\t\t\t\tfor (int k = 1; k < aWorld.maxY()-mHeight; k++) set(aChunk, i, mHeight+k, j, NB, 0);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight  , j, Blocks.sand, 0);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-1, j, Blocks.sand, 0);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-2, j, Blocks.sand, 0);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-3, j, Blocks.sand, 0);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-4, j, Blocks.sand, 0);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-5, j, Blocks.sand, 0);\n\t\t\t\t\t\t\tfor (int k = aWorld.minY()+1; k < mHeight-5; k++) set(aChunk, i, k, j, Blocks.sandstone, 0);\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\tif ((aMinX == 48 || aMinX == 64) && (aMinZ == 48 || aMinZ == 64)) {\n\t\t\t\t\t\taWorld.biome(aChunk, \"swamp\");\n\t\t\t\t\t\tfor (int i = 0; i < 16; i++) for (int j = 0; j < 16; j++) {\n\t\t\t\t\t\t\tfor (int k = 1; k < aWorld.maxY()-mHeight; k++) set(aChunk, i, mHeight+k, j, NB, 0);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight  , j, Blocks.water, 0);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-1, j, BlocksGT.Diggables, 0);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-2, j, BlocksGT.Diggables, 0);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-3, j, BlocksGT.Diggables, 2);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-4, j, BlocksGT.Diggables, 2);\n\t\t\t\t\t\t\tset(aChunk, i, mHeight-5, j, BlocksGT.Diggables, 2);\n\t\t\t\t\t\t\tfor (int k = aWorld.minY()+1; k < mHeight-5; k++) set(aChunk, i, k, j, k < 32 ? BlocksGT.GraniteRed : BlocksGT.GraniteBlack, aRandom.nextBoolean()?2:0);\n\t\t\t\t\t\t\tif (aRandom.nextInt(8) == 0) set(aChunk, i, mHeight+1, j, BlocksGT.Glowtus, aRandom.nextInt(16));\n\t\t\t\t\t\t}\n\t\t\t\t\t\tset(aChunk,  4, mHeight+1,  4, Blocks.waterlily, 0);\n\t\t\t\t\t\tset(aChunk, 12, mHeight+1,  4, Blocks.waterlily, 0);\n\t\t\t\t\t\tset(aChunk,  4, mHeight+1, 12, Blocks.waterlily, 0);\n\t\t\t\t\t\tset(aChunk, 12, mHeight+1, 12, Blocks.waterlily, 0);\n\t\t\t\t\t} else {\n\t\t\t\t\t\taWorld.biome(aChunk, \"jungle\");\n\t\t\t\t\t\tif (T) {\n\t\t\t\t\t\t\tOriginWorld.Block tBlock = Blocks.coarse_dirt;\n\t\t\t\t\t\t\tfor (int i = 0; i < 16; i++) for (int j = 0; j < 16; j++) {\n\t\t\t\t\t\t\t\tfor (int k = 1; k < aWorld.maxY()-mHeight; k++) set(aChunk, i, mHeight+k, j, NB, 0);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight  , j, Blocks.grass, 0);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-1, j, tBlock, 0);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-2, j, tBlock, 0);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-3, j, tBlock, 0);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-4, j, tBlock, 0);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-5, j, tBlock, 0);\n\t\t\t\t\t\t\t\tfor (int k = aWorld.minY()+1; k < mHeight-5; k++) set(aChunk, i, k, j, k < 32 ? BlocksGT.Komatiite : BlocksGT.Basalt, aRandom.nextBoolean()?2:0);\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t} else {\n\t\t\t\t\t\t\tfor (int i = 0; i < 16; i++) for (int j = 0; j < 16; j++) {\n\t\t\t\t\t\t\t\tfor (int k = 1; k < aWorld.maxY()-mHeight; k++) set(aChunk, i, mHeight+k, j, NB, 0);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight  , j, Blocks.grass, 0);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-1, j, Blocks.dirt, 1);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-2, j, Blocks.dirt, 1);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-3, j, Blocks.dirt, 1);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-4, j, Blocks.dirt, 1);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-5, j, Blocks.dirt, 1);\n\t\t\t\t\t\t\t\tfor (int k = aWorld.minY()+1; k < mHeight-5; k++) set(aChunk, i, k, j, k < 32 ? BlocksGT.Komatiite : BlocksGT.Basalt, aRandom.nextBoolean()?2:0);\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t\tset(aChunk, 6+aRandom.nextInt(4), mHeight+1, 6+aRandom.nextInt(4), Blocks.melon_block, 0);\n\n\t\t\t\t\t\taWorld.tree(aMinX+ 4, mHeight+1, aMinZ+ 4, 3, 9+aRandom.nextInt(3), aRandom);\n\t\t\t\t\t\taWorld.tree(aMinX+12, mHeight+1, aMinZ+ 4, 3, 9+aRandom.nextInt(3), aRandom);\n\t\t\t\t\t\taWorld.tree(aMinX+ 4, mHeight+1, aMinZ+12, 3, 9+aRandom.nextInt(3), aRandom);\n\t\t\t\t\t\taWorld.tree(aMinX+12, mHeight+1, aMinZ+12, 3, 9+aRandom.nextInt(3), aRandom);\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t\treturn T;\n\t\t}\n\t\treturn F;\n\t}\n}\n",
+    "water_aliases_from_original": [
+      "beach",
+      "coldbeach",
+      "coldocean",
+      "coldriver",
+      "coralreef",
+      "creekbed",
+      "deepocean",
+      "estuary",
+      "frozenocean",
+      "frozenriver",
+      "hotocean",
+      "hotriver",
+      "iceocean",
+      "iceriver",
+      "improvedoceans",
+      "kelpforest",
+      "lake",
+      "lushriver",
+      "mangrove",
+      "mushroomislandshore",
+      "oasis",
+      "ocean",
+      "oceanoasis",
+      "oceanoilfield",
+      "riparianzone",
+      "river",
+      "riveroasis",
+      "rwgoceancold",
+      "rwgoceanhot",
+      "rwgoceanice",
+      "rwgoceanoasis",
+      "rwgoceantemperate",
+      "rwgoceanwet",
+      "rwgrivercold",
+      "rwgriverhot",
+      "rwgriverice",
+      "rwgriveroasis",
+      "rwgrivertemperate",
+      "rwgriverwet",
+      "sandstonecanyon",
+      "sandstonecanyon2",
+      "stonebeach",
+      "temperateocean",
+      "temperateriver",
+      "tropicalbeach",
+      "tropicallake",
+      "tropicalocean",
+      "tropicalriver",
+      "twilightlake",
+      "twilightstream",
+      "wetocean",
+      "wetriver",
+      "woodlandlake",
+      "woodlandlakeedge"
+    ],
+    "limits": [
+      "Compares counters, ordered 64-bit rolling fingerprints, biome/spawn names and complete tree request lists on 144 chunk inputs with seed derived from their chunk coordinates.",
+      "The recording tree delegate does not grow native trees or consume RNG; fingerprints alone are finite evidence, not a general equivalence proof.",
+      "Native tree behavior differences are established separately from artifact bytecode/source, not by this recorder."
+    ]
+  },
+  "readability": {
+    "baseline": "de8c12896224f0daa069026d4ddd4ca2579cab58",
+    "files": {
+      "core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceCenterBiomes.java": {
+        "before_raw_sha256": "a46e2ba397cce0630c66e28cd99cae56f5ad1c0b54ce7ec1c46b84f69de1b446",
+        "after_raw_sha256": "3ff3c1d4614869752c52ae8c38b1a501cfdf452824b04518b41b673a521e8afd",
+        "before_lines": 239,
+        "after_lines": 253,
+        "comment_corrections": [
+          [
+            "Original Gregorius Techneticies geometry; platform operations use OriginWorld.",
+            "Shared centre-biome layout adapted from Gregorius Techneticies; native tree and block-state effects are delegated."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 3762,
+            "execution_sha256": "ba602bfc6ed6f1163047c52f3a8b44d66ce7975797102559ffd8a1b76a4076c1",
+            "literal_positions_sha256": "cb5d84b9ce070e9c1a5a0c7a99c173176b40fcdd19c71a3a6ee20377a602abee",
+            "literal_count": 453
+          }
+        ],
+        "controlled_removal": {
+          "original_conditional_source": "if (T) {\n\t\t\t\t\t\t\tOriginWorld.Block tBlock = Blocks.coarse_dirt;\n\t\t\t\t\t\t\tfor (int i = 0; i < 16; i++) for (int j = 0; j < 16; j++) {\n\t\t\t\t\t\t\t\tfor (int k = 1; k < aWorld.maxY()-mHeight; k++) set(aChunk, i, mHeight+k, j, NB, 0);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight  , j, Blocks.grass, 0);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-1, j, tBlock, 0);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-2, j, tBlock, 0);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-3, j, tBlock, 0);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-4, j, tBlock, 0);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-5, j, tBlock, 0);\n\t\t\t\t\t\t\t\tfor (int k = aWorld.minY()+1; k < mHeight-5; k++) set(aChunk, i, k, j, k < 32 ? BlocksGT.Komatiite : BlocksGT.Basalt, aRandom.nextBoolean()?2:0);\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t} else {\n\t\t\t\t\t\t\tfor (int i = 0; i < 16; i++) for (int j = 0; j < 16; j++) {\n\t\t\t\t\t\t\t\tfor (int k = 1; k < aWorld.maxY()-mHeight; k++) set(aChunk, i, mHeight+k, j, NB, 0);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight  , j, Blocks.grass, 0);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-1, j, Blocks.dirt, 1);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-2, j, Blocks.dirt, 1);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-3, j, Blocks.dirt, 1);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-4, j, Blocks.dirt, 1);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-5, j, Blocks.dirt, 1);\n\t\t\t\t\t\t\t\tfor (int k = aWorld.minY()+1; k < mHeight-5; k++) set(aChunk, i, k, j, k < 32 ? BlocksGT.Komatiite : BlocksGT.Basalt, aRandom.nextBoolean()?2:0);\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}",
+          "removed_inactive_source": "\n\t\t\t\t\t\t\tfor (int i = 0; i < 16; i++) for (int j = 0; j < 16; j++) {\n\t\t\t\t\t\t\t\tfor (int k = 1; k < aWorld.maxY()-mHeight; k++) set(aChunk, i, mHeight+k, j, NB, 0);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight  , j, Blocks.grass, 0);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-1, j, Blocks.dirt, 1);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-2, j, Blocks.dirt, 1);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-3, j, Blocks.dirt, 1);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-4, j, Blocks.dirt, 1);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-5, j, Blocks.dirt, 1);\n\t\t\t\t\t\t\t\tfor (int k = aWorld.minY()+1; k < mHeight-5; k++) set(aChunk, i, k, j, k < 32 ? BlocksGT.Komatiite : BlocksGT.Basalt, aRandom.nextBoolean()?2:0);\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t",
+          "kept_active_source": "\n\t\t\t\t\t\t\tOriginWorld.Block tBlock = Blocks.coarse_dirt;\n\t\t\t\t\t\t\tfor (int i = 0; i < 16; i++) for (int j = 0; j < 16; j++) {\n\t\t\t\t\t\t\t\tfor (int k = 1; k < aWorld.maxY()-mHeight; k++) set(aChunk, i, mHeight+k, j, NB, 0);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight  , j, Blocks.grass, 0);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-1, j, tBlock, 0);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-2, j, tBlock, 0);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-3, j, tBlock, 0);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-4, j, tBlock, 0);\n\t\t\t\t\t\t\t\tset(aChunk, i, mHeight-5, j, tBlock, 0);\n\t\t\t\t\t\t\t\tfor (int k = aWorld.minY()+1; k < mHeight-5; k++) set(aChunk, i, k, j, k < 32 ? BlocksGT.Komatiite : BlocksGT.Basalt, aRandom.nextBoolean()?2:0);\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t",
+          "reason": "OriginSupport.T is a public static final compile-time true constant; the modern coarse-dirt branch is always selected."
+        },
+        "comparison_contract": "Compare all remaining ordered code tokens after replacing the compile-time true conditional with its active body; other files compare their entire original code."
+      },
+      "core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginBiomeNames.java": {
+        "before_raw_sha256": "ac0fcac33e0fb335affe4458ed4d7f0fd4bc3fbf7214661a7f2688ca91d09d46",
+        "after_raw_sha256": "a08425e15bf05cdbfefe40ea8e648a7a7fc3f9262b29dff0eaa6313538d7e9b5",
+        "before_lines": 63,
+        "after_lines": 67,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 189,
+            "execution_sha256": "9ef31c7c145c829dc699851a3ef80420966c1aecaae707257381ed9419e2e1a2",
+            "literal_positions_sha256": "93271adb5f034c6b48da18f2ff725442ee9fcaa5ec234f64f2aefa118cabf16b",
+            "literal_count": 56
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTWorldgenBiomes.java": {
+        "before_raw_sha256": "1ef1a45a45cde7ca9b7044ec979696ea4343819057b6be9c1cf746e3cc408818",
+        "after_raw_sha256": "002a7c8a6321a437be10f80deda19f36219a9f9d4a90f3ae8140eae27bb3dde4",
+        "before_lines": 121,
+        "after_lines": 121,
+        "comment_corrections": [
+          [
+            "GT6 {@code BIOMES_RIVER} (plus the 1.20.1 oceans that count as rivers here).",
+            "GT6 {@code BIOMES_RIVER}, mapped to modern river IDs."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 856,
+            "execution_sha256": "53f51c461bf31cadd2eea9d808664887c055704df3d134272b111a513d714c3b",
+            "literal_positions_sha256": "a02534a98e19e3008aed6d5cfc014be5b1bcda01b251e94348b304eed1962ad1",
+            "literal_count": 65
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 856,
+            "execution_sha256": "53f51c461bf31cadd2eea9d808664887c055704df3d134272b111a513d714c3b",
+            "literal_positions_sha256": "a02534a98e19e3008aed6d5cfc014be5b1bcda01b251e94348b304eed1962ad1",
+            "literal_count": 65
+          }
+        ]
+      },
+      "core/src/main/java/com/gregtech/gregtech/block/BlackSandDefinitions.java": {
+        "before_raw_sha256": "71311f5a9961efacf74051cb4b6049363f0b8c23b6007198e7a00fd3863167c3",
+        "after_raw_sha256": "0f44edb2235dc1c978632d38072487fb3c87ed11f352940434ebaae439fd9dcf",
+        "before_lines": 8,
+        "after_lines": 20,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 113,
+            "execution_sha256": "f6dab2e0567431e348b7653627036c1fe7bb480b1c59c6c011a2754abdaccf3d",
+            "literal_positions_sha256": "f7326a4561cf30c6f4c6a9f15e67b331b57a43486e29b943b6b32da0e0d86db9",
+            "literal_count": 12
+          }
+        ]
+      }
+    }
+  },
+  "formal_findings_added": [
+    "ALIGN-361",
+    "ALIGN-362",
+    "ALIGN-363"
+  ],
+  "official_downloads": [
+    {
+      "url": "https://raw.githubusercontent.com/MinecraftForge/FML/1.7.10/conf/joined.srg",
+      "path": "work/center-biomes-audit-20261022/joined.srg",
+      "sha256": "43d4376110b2638213d3096f80f8395c076eb05b58d6c0dbd22c0d999b37a357"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/MinecraftForge/FML/1.7.10/conf/fields.csv",
+      "path": "work/center-biomes-audit-20261022/fields.csv",
+      "sha256": "1d0d123cd80df147d613dc32c265e19daa594608ced33aa3b485162b2e5f6ade"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/MinecraftForge/FML/1.7.10/conf/methods.csv",
+      "path": "work/center-biomes-audit-20261022/methods.csv",
+      "sha256": "63de115ead3e848e529de81e81ada9dff694e50fb5c6d92ec1e9037fe50ca191"
+    },
+    {
+      "url": "https://launcher.mojang.com/v1/objects/e80d9b3bf5085002218d4be59e668bac718abbc6/client.jar",
+      "path": "work/center-biomes-audit-20261022/minecraft-1.7.10-client.jar",
+      "sha1": "e80d9b3bf5085002218d4be59e668bac718abbc6",
+      "sha256": "a4fc2284657544e0f4bcc964f927c2fda3e3a205178ed1d5d58883aaf9780cce"
+    }
+  ],
+  "official_forge_patches": [
+    {
+      "url": "https://raw.githubusercontent.com/MinecraftForge/MinecraftForge/1.7.10/patches/minecraft/net/minecraft/world/gen/feature/WorldGenTrees.java.patch",
+      "sha256": "324efd7edd81dc206aace13c862a722fc33c5fbdb0f18f93a42381726c7cda23",
+      "bytes": 5840,
+      "path": "C:/Dev/GregTech6/work/center-biomes-audit-20261022/WorldGenTrees.java.patch",
+      "hunks": [
+        "@@ -2,10 +2,12 @@",
+        "@@ -62,7 +64,7 @@",
+        "@@ -83,9 +85,10 @@",
+        "@@ -110,7 +113,7 @@",
+        "@@ -123,7 +126,7 @@",
+        "@@ -163,24 +166,24 @@",
+        "@@ -228,7 +231,7 @@"
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/MinecraftForge/MinecraftForge/1.7.10/patches/minecraft/net/minecraft/block/BlockLeaves.java.patch",
+      "sha256": "62efad506568227190b828e1bf5fbc14d357e1b16f88000e4ec14af0040c81ba",
+      "bytes": 6646,
+      "path": "C:/Dev/GregTech6/work/center-biomes-audit-20261022/BlockLeaves.java.patch",
+      "hunks": [
+        "@@ -2,6 +2,7 @@",
+        "@@ -15,8 +16,9 @@",
+        "@@ -82,10 +84,10 @@",
+        "@@ -127,9 +129,9 @@",
+        "@@ -236,40 +238,7 @@",
+        "@@ -281,13 +250,7 @@",
+        "@@ -318,4 +281,67 @@"
+      ]
+    }
+  ],
+  "old_field_names": {
+    "field_76533_a": "minTreeHeight",
+    "field_76531_b": "vinesGrow",
+    "field_76532_c": "metaWood",
+    "field_76530_d": "metaLeaves",
+    "field_150395_bd": "vine",
+    "field_150375_by": "cocoa"
+  },
+  "version_metadata": {
+    "path": "C:/Dev/GregTech6/work/center-biomes-audit-20261022/mojang-1.7.10-version.json",
+    "raw_sha256": "265c7e47aad4c74f6085a49667d3a828f48d63f484def2ae70b5e426e5b7cba6",
+    "source_sha256": "265c7e47aad4c74f6085a49667d3a828f48d63f484def2ae70b5e426e5b7cba6",
+    "lines": 1
+  },
+  "native_tree_and_leaf_evidence": {
+    "old": [
+      {
+        "artifact": "C:/Dev/GregTech6/work/center-biomes-audit-20261022/minecraft-1.7.10-client.jar",
+        "artifact_sha256": "a4fc2284657544e0f4bcc964f927c2fda3e3a205178ed1d5d58883aaf9780cce",
+        "entry": "asq.class",
+        "entry_sha256": "4f790cdb9b3407e181e05bab23d211682fdcd1fdaadf37aa4a3d127d13d3a370",
+        "mapped_class": "WorldGenTrees",
+        "javap_output": "C:/Dev/GregTech6/work/center-biomes-audit-20261022/asq.javap.txt",
+        "javap_sha256": "c4df71218ed39a42cddba8ea9e9a5186d3774a8738f6d509ecbf9ab88c1fe9cc",
+        "verified_byte_offsets": {
+          "constructor": "a=minTreeHeight at 7; b=vinesGrow at 24",
+          "height": "generate 0..10 adds nextInt(3) to minTreeHeight",
+          "vines": "generate 524 and 719 gate the two vine sections on b",
+          "cocoa": "generate 1004..1116 under the enabled vine branch; field ajn.by maps to cocoa"
+        }
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/work/center-biomes-audit-20261022/minecraft-1.7.10-client.jar",
+        "artifact_sha256": "a4fc2284657544e0f4bcc964f927c2fda3e3a205178ed1d5d58883aaf9780cce",
+        "entry": "alt.class",
+        "entry_sha256": "7e422d749bdc584511ed5f9e5658a21c39e7e54c80b1a8236db0d62e53e76b20",
+        "mapped_class": "BlockLeaves",
+        "javap_output": "C:/Dev/GregTech6/work/center-biomes-audit-20261022/alt.javap.txt",
+        "javap_sha256": "67d38a7d7bc2b8965ddd9986e60ef5b794815f4731c3d1cb0199d7f377f2e3e1",
+        "verified_byte_offsets": {
+          "randomTick": "18..30 requires metadata bit 8 and rejects bit 4; generated leaf metadata 0..3 does not initially request decay"
+        }
+      }
+    ],
+    "forge": [
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+        "entry": "net/minecraft/world/level/block/LeavesBlock.class",
+        "entry_sha256": "80cc7b42f5d4c2614a80ebfac75ceaf32b9846019030a35e5a974715ba9ac703",
+        "javap_output": "work/center-biomes-audit-20261022/forge-LeavesBlock.javap.txt",
+        "javap_sha256": "96a9797a4f645564e8221cb9ad706d82bbc8a5473d60c70529d9c3d276ed8f7c"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+        "entry": "net/minecraft/server/level/WorldGenRegion.class",
+        "entry_sha256": "7812f15df307ddd0cdcae8ef08223a716a624de00f3e512c0f49239920d10db9",
+        "javap_output": "work/center-biomes-audit-20261022/forge-WorldGenRegion.javap.txt",
+        "javap_sha256": "75f4620099b5884be1dd3907a4721e114e147f2fca05c211d8b8b5fe017ba5a0"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+        "entry": "net/minecraft/world/level/chunk/LevelChunk.class",
+        "entry_sha256": "2d74f57e549e8e190bfcc83771ff3b97042638ed10e8aaa0e45e8728f5d7c13e",
+        "javap_output": "work/center-biomes-audit-20261022/forge-LevelChunk.javap.txt",
+        "javap_sha256": "7fbe0b0ac8b4c7c6fff52b1fed9304ed217dafc7ed38556aadaca83e2fff5878"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+        "entry": "net/minecraft/world/level/block/Blocks.class",
+        "entry_sha256": "c016a8740140b711b10e93b64ec46cd19d8cf481f365c3ed89adf0831ee7b64b",
+        "javap_output": "work/center-biomes-audit-20261022/forge-Blocks.javap.txt",
+        "javap_sha256": "10bbdbad09f94693f531e940bfb1901eebc8f4b56b3ecdbebe62142bf0126939"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+        "entry": "net/minecraft/world/level/block/state/BlockBehaviour$Properties.class",
+        "entry_sha256": "7b379ccb00fa99762c6961f9e94d2258c994c12c59a46aa4789ee5851ed3eb52",
+        "javap_output": "work/center-biomes-audit-20261022/forge-BlockBehaviour$Properties.javap.txt",
+        "javap_sha256": "dff5439bf8946fb5492189b1be8c356b778911682d7341363735c9bc2b8282ad"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+        "entry": "net/minecraft/world/level/levelgen/feature/TreeFeature.class",
+        "entry_sha256": "554d195d83fb39d23ccb292d41e1a46f5d40412d7b145d0ee8206ce0858aa9ca",
+        "javap_output": "work/center-biomes-audit-20261022/forge-TreeFeature.javap.txt",
+        "javap_sha256": "15ad7ef3aab0a74dffcc2dd266e6bd9b3c9d729b7bd3cbeeff9e1547bb2d4c57"
+      }
+    ],
+    "neoforge": [
+      {
+        "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+        "entry": "net/minecraft/world/level/block/LeavesBlock.java",
+        "entry_sha256": "7132037d164ea0075414e4400bfb5d1c64e0334259a2c5f888ef660d918aa06e"
+      },
+      {
+        "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+        "entry": "net/minecraft/server/level/WorldGenRegion.java",
+        "entry_sha256": "c82bbf42a6a25f3c72471effc503fac01a3de0fefbf0824ddd15e6c4708b9d93"
+      },
+      {
+        "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+        "entry": "net/minecraft/world/level/chunk/LevelChunk.java",
+        "entry_sha256": "c014a13e2ef391901113b080362ad6db4bdd4a65c7ad47b8c6aecd8bd89b6223"
+      },
+      {
+        "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+        "entry": "net/minecraft/world/level/levelgen/feature/TreeFeature.java",
+        "entry_sha256": "18ad5de3ceb89b4e080a7ea8d3088abac6dd75845369ddf1838c86cde6a95c33"
+      },
+      {
+        "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+        "entry": "net/minecraft/world/level/block/Blocks.java",
+        "entry_sha256": "c38a694404ba0e0317f744f368ae9a3a44a8bd95f03f3ac65ec9bc78d5d96a58"
+      },
+      {
+        "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+        "entry": "net/minecraft/world/level/block/state/BlockBehaviour.java",
+        "entry_sha256": "410ae028d36585b6c210e853720ea3fb973154a4d7800a082d541293cf355014"
+      }
+    ],
+    "forge_default_predicate_verbose": {
+      "path": "C:/Dev/GregTech6/work/center-biomes-audit-20261022/forge-properties-verbose.javap.txt",
+      "raw_sha256": "b04da0ec4ddb7a38ff23a7f836b8b992359c448d7c40735648636fc632889b4d",
+      "source_sha256": "8366c50909c303144f2d7d0af8477a0d25af2e6508cba9e10e0e90b42fc729a9",
+      "lines": 2175
+    },
+    "postprocess_chain": "Leaf factories do not override false hasPostProcess; region writes only mark true predicates, and LevelChunk processes that marked list. NativeOriginWorld.tree has no distance calculation.",
+    "scope": "Static native artifact/source chain for the repository targets 47.4.20 and 21.1.243. Random-tick timing and actual world survival are not executed."
+  },
+  "configuration_sources": [
+    {
+      "path": "C:/Dev/GregTech6/gradle.properties",
+      "raw_sha256": "bda40333a44f3deba675e19d7d2a7529c0d2e145c3abfa741988cc48319af56c",
+      "source_sha256": "bda40333a44f3deba675e19d7d2a7529c0d2e145c3abfa741988cc48319af56c",
+      "lines": 89
+    },
+    {
+      "path": "C:/Dev/GregTech6/gradle/platform-neoforge.gradle",
+      "raw_sha256": "c4eb8699a475b272e1eb3e19b827e11bcf33842084156041008182697b1475ff",
+      "source_sha256": "80fa281c11c1cde7ff161009fad2a8160f339a0837fd49b56f269165e89bc51b",
+      "lines": 212
+    }
+  ],
+  "height_range_projection": {
+    "ordinary_old": [
+      4,
+      8
+    ],
+    "ordinary_current": [
+      4,
+      6
+    ],
+    "jungle_old": [
+      9,
+      13
+    ],
+    "jungle_current": [
+      9,
+      11
+    ],
+    "method": "Finite arithmetic bounds from the caller min-height expression and official old generator addition; successful growth gates remain separate."
+  },
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "limits": [
+    "The three native tree behavior gaps are documented, not fixed by source formatting.",
+    "No whole-mod Gradle, Java compile, GameTest, game, render, world restart, jar build, push or GitHub message.",
+    "No claim that every generated leaf disappears: later neighbour updates or another mod can initialize distance.",
+    "No percentage of the full original mod is inferred from this batch or from the numbered differences."
+  ],
+  "root_revalidation": {
+    "remaining_ordered_code_and_literals": true,
+    "other_comments_and_directives": true,
+    "explicit_inactive_removal": true,
+    "original_body_correspondence": true,
+    "source_water_names": true,
+    "bounded_before_after_probe": true,
+    "native_artifact_hashes": true,
+    "protected_material_hashes": true,
+    "native_gameplay_acceptance": false,
+    "goal_complete": false,
+    "current_archived_raw_hashes": true,
+    "formal_ids_contiguous": true
+  }
+}

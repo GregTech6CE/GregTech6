@@ -1,0 +1,1151 @@
+{
+  "date": "2026-10-22",
+  "batch": 110,
+  "baseline": "fa884366267833b0adf989621d7aec186ce2dfdc",
+  "previous_goal_turn": {
+    "classification": "progress",
+    "commit": "fa8843662"
+  },
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/center/WorldgenStreets.java",
+      "raw_sha256": "988f8650904cdd280ccbe022e5bdebd9a8a96fbe9cd891aa137bfe3bf148f42f",
+      "source_sha256": "988f8650904cdd280ccbe022e5bdebd9a8a96fbe9cd891aa137bfe3bf148f42f",
+      "lines": 890,
+      "notice": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */",
+      "authors": [
+        "Gregorius Techneticies"
+      ]
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/misc/BlockBaseRail.java",
+      "raw_sha256": "41a37b148908e80c69666e8fbf47db9ea0afd8bf2938b4e9a93037d6aca85a2c",
+      "source_sha256": "41a37b148908e80c69666e8fbf47db9ea0afd8bf2938b4e9a93037d6aca85a2c",
+      "lines": 345,
+      "notice": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */",
+      "authors": [
+        "Gregorius Techneticies"
+      ]
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/blocks/BlockRailRoad.java",
+      "raw_sha256": "3a21218c167db83e7e5b78eae51287d920b5cdadb8692d4af18db3221b9f393e",
+      "source_sha256": "3a21218c167db83e7e5b78eae51287d920b5cdadb8692d4af18db3221b9f393e",
+      "lines": 138,
+      "notice": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */",
+      "authors": [
+        "Gregorius Techneticies"
+      ]
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/a/Loader_Rails.java",
+      "raw_sha256": "b870301fca62e84351a499e344a6e5e49ae8a23dc2f19ddbe679ad0dd0637f02",
+      "source_sha256": "b870301fca62e84351a499e344a6e5e49ae8a23dc2f19ddbe679ad0dd0637f02",
+      "lines": 159,
+      "notice": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */",
+      "authors": []
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceStreets.java",
+      "raw_sha256": "1e8cfed04894466d5451f67419c678b72d78207e5c9335bbea5727a68ab38dfb",
+      "source_sha256": "1e8cfed04894466d5451f67419c678b72d78207e5c9335bbea5727a68ab38dfb",
+      "lines": 963,
+      "repository_path": "core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceStreets.java",
+      "source_views": [
+        {
+          "platform": "core",
+          "ordered_code_sha256": "54fba98f9a3e82958dbcb7e6699ed614cbd9e99d89deb77da3ad3eb4af9261c9"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/transport/TrackCatalog.java",
+      "raw_sha256": "5a0d46d18582ad70a562dd4216c17f696d140e274337de99e70ac7b25ae95e64",
+      "source_sha256": "5a0d46d18582ad70a562dd4216c17f696d140e274337de99e70ac7b25ae95e64",
+      "lines": 44,
+      "repository_path": "core/src/main/java/com/gregtech/gregtech/content/transport/TrackCatalog.java",
+      "source_views": [
+        {
+          "platform": "core",
+          "ordered_code_sha256": "1600ed04d09603b39ee9c909a3492db6e4f04a5333564a09dacc63212cd98056"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/transport/TrackMotionRules.java",
+      "raw_sha256": "c44af8ad2371f30d75828148acb8e7c29dc867b832a6ac1d7ebf3a25a966f523",
+      "source_sha256": "c44af8ad2371f30d75828148acb8e7c29dc867b832a6ac1d7ebf3a25a966f523",
+      "lines": 26,
+      "repository_path": "core/src/main/java/com/gregtech/gregtech/content/transport/TrackMotionRules.java",
+      "source_views": [
+        {
+          "platform": "core",
+          "ordered_code_sha256": "a73d64a69eb8297d94ba3eac1ebbd7d7b08a4994548a5558e27b95fc19d05ef7"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/TrackBlock.java",
+      "raw_sha256": "bc4a4903bfc211b01cb13ba517878c2201f7c61aac19ee63ee0b4055ff34c5c6",
+      "source_sha256": "bc4a4903bfc211b01cb13ba517878c2201f7c61aac19ee63ee0b4055ff34c5c6",
+      "lines": 193,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/TrackBlock.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "bd8136140ae35155cd6d4f4bd37e15913a3ed2d24b60abbd41cf052a7f34351a"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "a28d83235657f8b7981a95717162d3cc6b692c16eb3962df3af6ca88fefdaa87"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/RoadStripeRailBlock.java",
+      "raw_sha256": "1c4ba2e5e9bfa9ed7c2c0eaac99ec121424eb548ba38d9ad5b1e793702f1546d",
+      "source_sha256": "1c4ba2e5e9bfa9ed7c2c0eaac99ec121424eb548ba38d9ad5b1e793702f1546d",
+      "lines": 127,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/RoadStripeRailBlock.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "cffddbc979873daccda7124512618e7da65808b17241d0e1cc213334294ef505"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "04740533d0c85148a092b6491920c52de66c762f9cf292a0afcf9e74348c5f76"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginWorld.java",
+      "raw_sha256": "b3e28f5a15734b9419310f713634924c1e89ce87efef370fa80553acf31feb3d",
+      "source_sha256": "b3e28f5a15734b9419310f713634924c1e89ce87efef370fa80553acf31feb3d",
+      "lines": 58,
+      "repository_path": "core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginWorld.java",
+      "source_views": [
+        {
+          "platform": "core",
+          "ordered_code_sha256": "85ae88d56a64dd5902876079b1ab7d5a4ebcbb8209e0eb9b9b4c9c3bdffe14e7"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginSupport.java",
+      "raw_sha256": "d0abdca975885ea4117b8998968a62ea0ef80e669bbeb0c71f6c82a608846efb",
+      "source_sha256": "d0abdca975885ea4117b8998968a62ea0ef80e669bbeb0c71f6c82a608846efb",
+      "lines": 125,
+      "repository_path": "core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginSupport.java",
+      "source_views": [
+        {
+          "platform": "core",
+          "ordered_code_sha256": "485952a3eb686f545c949384c64b981fd5af24a26a3379799dc7826f75d7b073"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginWorld.java",
+      "raw_sha256": "103c41523322071b04ad0ea7d5d7045231b601a66f76c7d3bd68194aaf24f314",
+      "source_sha256": "103c41523322071b04ad0ea7d5d7045231b601a66f76c7d3bd68194aaf24f314",
+      "lines": 288,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginWorld.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "1e55a876e4effbac88180b7888e9c2d820650fe1331bd256bc863869bd6f489a"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "9f736b8de291aef0b52d1df1e4ed77af9be9ade419b660b581eede11d7f870f2"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOriginFeature.java",
+      "raw_sha256": "c1cd5d4b76fb1d062021e369149be9803a1a3d785b13fa87eb69e3a3a2e68b49",
+      "source_sha256": "c1cd5d4b76fb1d062021e369149be9803a1a3d785b13fa87eb69e3a3a2e68b49",
+      "lines": 61,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOriginFeature.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "5fdbdc3886be92bc62463155bbfb9a64fb7236aae491cca3040834117b41553d"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "5fdbdc3886be92bc62463155bbfb9a64fb7236aae491cca3040834117b41553d"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/SharedDecorBlocks.java",
+      "raw_sha256": "15932068d3fc15bff550664fd369d184035320fe970ebb9e102729f9896f4116",
+      "source_sha256": "15932068d3fc15bff550664fd369d184035320fe970ebb9e102729f9896f4116",
+      "lines": 37,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/registry/SharedDecorBlocks.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "aa3ca04a4a9b9ef95d9dcf7cc0479ca3f1feee9751d77ad42fa6652263bfb74c"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "aa3ca04a4a9b9ef95d9dcf7cc0479ca3f1feee9751d77ad42fa6652263bfb74c"
+        }
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/railroad.json",
+      "raw_sha256": "341644da9404147bb9cfbebbbeb6f8cb792b2fd12642b8cbb2392b8cf8d91d09",
+      "source_sha256": "341644da9404147bb9cfbebbbeb6f8cb792b2fd12642b8cbb2392b8cf8d91d09",
+      "lines": 16,
+      "content": {
+        "variants": {
+          "shape=north_south,reflector=false": {
+            "model": "gt6ce:block/decoration/railroad"
+          },
+          "shape=east_west,reflector=false": {
+            "model": "gt6ce:block/decoration/railroad",
+            "y": 90
+          },
+          "shape=ascending_north,reflector=false": {
+            "model": "gt6ce:block/decoration/railroad_raised_ne"
+          },
+          "shape=ascending_east,reflector=false": {
+            "model": "gt6ce:block/decoration/railroad_raised_ne",
+            "y": 90
+          },
+          "shape=ascending_south,reflector=false": {
+            "model": "gt6ce:block/decoration/railroad_raised_sw"
+          },
+          "shape=ascending_west,reflector=false": {
+            "model": "gt6ce:block/decoration/railroad_raised_sw",
+            "y": 90
+          },
+          "shape=north_south,reflector=true": {
+            "model": "gt6ce:block/decoration/railroad_reflector"
+          },
+          "shape=east_west,reflector=true": {
+            "model": "gt6ce:block/decoration/railroad_reflector",
+            "y": 90
+          },
+          "shape=ascending_north,reflector=true": {
+            "model": "gt6ce:block/decoration/railroad_reflector_raised_ne"
+          },
+          "shape=ascending_east,reflector=true": {
+            "model": "gt6ce:block/decoration/railroad_reflector_raised_ne",
+            "y": 90
+          },
+          "shape=ascending_south,reflector=true": {
+            "model": "gt6ce:block/decoration/railroad_reflector_raised_sw"
+          },
+          "shape=ascending_west,reflector=true": {
+            "model": "gt6ce:block/decoration/railroad_reflector_raised_sw",
+            "y": 90
+          }
+        }
+      }
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/railroad.json",
+      "raw_sha256": "48b4ce46fb52594ddd2e354762140c7bd6641683f720ac13730c71ecd92c6f30",
+      "source_sha256": "25f3cfed706b22b66a2764c8ab2aac53e83d27fa879ffdef1bbf5105cf57997a",
+      "lines": 6,
+      "content": {
+        "parent": "minecraft:item/generated",
+        "textures": {
+          "layer0": "gt6ce:block/decoration/railroad_stripe"
+        }
+      }
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/block/decoration/railroad.json",
+      "raw_sha256": "e3608e38f1028cdd28c75419d275ce20f462f51dc09e46972d98b2d80935c35a",
+      "source_sha256": "e3608e38f1028cdd28c75419d275ce20f462f51dc09e46972d98b2d80935c35a",
+      "lines": 1,
+      "content": {
+        "parent": "minecraft:block/rail_flat",
+        "render_type": "minecraft:cutout",
+        "textures": {
+          "rail": "gt6ce:block/decoration/railroad_stripe"
+        }
+      }
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/block/decoration/railroad_raised_ne.json",
+      "raw_sha256": "b234d62cf30cd34c9c596bf5173488f66e16047b12427f8cb4d5593dc9f6fe90",
+      "source_sha256": "b234d62cf30cd34c9c596bf5173488f66e16047b12427f8cb4d5593dc9f6fe90",
+      "lines": 1,
+      "content": {
+        "parent": "minecraft:block/template_rail_raised_ne",
+        "render_type": "minecraft:cutout",
+        "textures": {
+          "rail": "gt6ce:block/decoration/railroad_stripe"
+        }
+      }
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/block/decoration/railroad_raised_sw.json",
+      "raw_sha256": "5aee7b6e18186172184a108d970806971e8bdbb84c844654c8c8cd56b70e2b57",
+      "source_sha256": "5aee7b6e18186172184a108d970806971e8bdbb84c844654c8c8cd56b70e2b57",
+      "lines": 1,
+      "content": {
+        "parent": "minecraft:block/template_rail_raised_sw",
+        "render_type": "minecraft:cutout",
+        "textures": {
+          "rail": "gt6ce:block/decoration/railroad_stripe"
+        }
+      }
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/block/decoration/railroad_reflector.json",
+      "raw_sha256": "9ef095459789d6d467142a4c034d7064f12e61fe64c7aac200071f693c797017",
+      "source_sha256": "9ef095459789d6d467142a4c034d7064f12e61fe64c7aac200071f693c797017",
+      "lines": 1,
+      "content": {
+        "parent": "minecraft:block/rail_flat",
+        "render_type": "minecraft:cutout",
+        "textures": {
+          "rail": "gt6ce:block/decoration/railroad_reflector"
+        }
+      }
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/block/decoration/railroad_reflector_raised_ne.json",
+      "raw_sha256": "a7c0a8464119df63e730a31df6d76e913dd1094bf30d7a481cd34c2d2e888f00",
+      "source_sha256": "a7c0a8464119df63e730a31df6d76e913dd1094bf30d7a481cd34c2d2e888f00",
+      "lines": 1,
+      "content": {
+        "parent": "minecraft:block/template_rail_raised_ne",
+        "render_type": "minecraft:cutout",
+        "textures": {
+          "rail": "gt6ce:block/decoration/railroad_reflector"
+        }
+      }
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/block/decoration/railroad_reflector_raised_sw.json",
+      "raw_sha256": "e83f17ed4b26dcb9717a6c7a83dbe90a1a3148714230a8dd7c56edaf7a00594a",
+      "source_sha256": "e83f17ed4b26dcb9717a6c7a83dbe90a1a3148714230a8dd7c56edaf7a00594a",
+      "lines": 1,
+      "content": {
+        "parent": "minecraft:block/template_rail_raised_sw",
+        "render_type": "minecraft:cutout",
+        "textures": {
+          "rail": "gt6ce:block/decoration/railroad_reflector"
+        }
+      }
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/block/decoration/railroad_reflector.png",
+      "raw_sha256": "af59034caf20132777cc65b44bbdd8dbd0ebec97e970c7012d44d7292d36fa0c",
+      "binary": true
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/block/decoration/railroad_stripe.png",
+      "raw_sha256": "d4e518cce679be151e3e0a7b39378111d6e99c5ba798f5b68e17259f908f3947",
+      "binary": true
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/data/minecraft/tags/blocks/logs.json",
+      "raw_sha256": "f23ae4efc39ec217b964c78018f947d50c3d0348faed47f8f58104430660843a",
+      "source_sha256": "f23ae4efc39ec217b964c78018f947d50c3d0348faed47f8f58104430660843a",
+      "lines": 17,
+      "content": {
+        "replace": false,
+        "values": [
+          "gt6ce:log_blue_mahoe",
+          "gt6ce:log_bluespruce",
+          "gt6ce:log_cinnamon",
+          "gt6ce:log_coconut",
+          "gt6ce:log_ebony",
+          "gt6ce:log_hazel",
+          "gt6ce:log_maple",
+          "gt6ce:log_pine",
+          "gt6ce:log_rainbowood",
+          "gt6ce:log_rubber",
+          "gt6ce:log_white_mahoe",
+          "gt6ce:log_willow"
+        ]
+      }
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/data/minecraft/tags/block/logs.json",
+      "raw_sha256": "f23ae4efc39ec217b964c78018f947d50c3d0348faed47f8f58104430660843a",
+      "source_sha256": "f23ae4efc39ec217b964c78018f947d50c3d0348faed47f8f58104430660843a",
+      "lines": 17,
+      "content": {
+        "replace": false,
+        "values": [
+          "gt6ce:log_blue_mahoe",
+          "gt6ce:log_bluespruce",
+          "gt6ce:log_cinnamon",
+          "gt6ce:log_coconut",
+          "gt6ce:log_ebony",
+          "gt6ce:log_hazel",
+          "gt6ce:log_maple",
+          "gt6ce:log_pine",
+          "gt6ce:log_rainbowood",
+          "gt6ce:log_rubber",
+          "gt6ce:log_white_mahoe",
+          "gt6ce:log_willow"
+        ]
+      }
+    }
+  ],
+  "excerpts": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/misc/BlockBaseRail.java",
+      "start_line": 278,
+      "end_line": 291,
+      "text": "\tpublic float getRailMaxSpeed(World aWorld, EntityMinecart aCart, int aX, int aY, int aZ) {\n\t\tswitch(WD.meta(aWorld, aX, aY, aZ) & 7) {\n\t\tcase  0:\n\t\t\tif (WD.block(aWorld, aX  , aY, aZ+1) instanceof BlockBaseRail && (WD.meta(aWorld, aX  , aY, aZ+1) & 7) == 0\n\t\t\t&&  WD.block(aWorld, aX  , aY, aZ-1) instanceof BlockBaseRail && (WD.meta(aWorld, aX  , aY, aZ-1) & 7) == 0) return aWorld.doChunksNearChunkExist(aX, aY, aZ, 17) ? mSpeed : Math.min(mSpeed, 1.0F);\n\t\tcase  1:\n\t\t\tif (WD.block(aWorld, aX+1, aY, aZ  ) instanceof BlockBaseRail && (WD.meta(aWorld, aX+1, aY, aZ  ) & 7) == 1\n\t\t\t&&  WD.block(aWorld, aX-1, aY, aZ  ) instanceof BlockBaseRail && (WD.meta(aWorld, aX-1, aY, aZ  ) & 7) == 1) return aWorld.doChunksNearChunkExist(aX, aY, aZ, 17) ? mSpeed : Math.min(mSpeed, 1.0F);\n\t\tdefault:\n\t\t\treturn Math.min(mSpeed, 0.4F);\n\t\t}\n\t}\n\t\n\t@Override",
+      "excerpt_sha256": "e2dae8a50ad63b65520ed49578e3640b87c9f4d86fa61124913f2a8811213a1d"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/blocks/BlockRailRoad.java",
+      "start_line": 100,
+      "end_line": 115,
+      "text": "\tpublic void onMinecartPass(World aWorld, EntityMinecart aCart, int aX, int aY, int aZ) {\n\t\tdouble tMotion = Math.sqrt(aCart.motionX*aCart.motionX + aCart.motionZ*aCart.motionZ);\n\t\tif (tMotion > 0.01) {\n\t\t\taCart.motionX *= 2;\n\t\t\taCart.motionZ *= 2;\n\t\t} else {\n\t\t\tbyte tRailMeta = WD.meta(7, aWorld, aX, aY, aZ);\n\t\t\tif (tRailMeta == 1) {\n\t\t\t\t\t if (aWorld.getBlock(aX-1, aY, aZ).isNormalCube(aWorld, aX-1, aY, aZ)) aCart.motionX = +0.02;\n\t\t\t\telse if (aWorld.getBlock(aX+1, aY, aZ).isNormalCube(aWorld, aX+1, aY, aZ)) aCart.motionX = -0.02;\n\t\t\t} else if (tRailMeta == 0) {\n\t\t\t\t\t if (aWorld.getBlock(aX, aY, aZ-1).isNormalCube(aWorld, aX, aY, aZ-1)) aCart.motionZ = +0.02;\n\t\t\t\telse if (aWorld.getBlock(aX, aY, aZ+1).isNormalCube(aWorld, aX, aY, aZ+1)) aCart.motionZ = -0.02;\n\t\t\t}\n\t\t}\n\t}",
+      "excerpt_sha256": "4357e4707918204fe3e0817b3f84bab94665e805d66edba7c974e50cae047850"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/blocks/BlockRailRoad.java",
+      "start_line": 92,
+      "end_line": 98,
+      "text": "\tpublic long onToolClick(String aTool, long aRemainingDurability, long aQuality, Entity aPlayer, List<String> aChatReturn, IInventory aPlayerInventory, boolean aSneaking, ItemStack aStack, World aWorld, byte aSide, int aX, int aY, int aZ, float aHitX, float aHitY, float aHitZ) {\n\t\tif (!aWorld.isRemote) if (aTool.equals(TOOL_crowbar) || aTool.equals(TOOL_chisel) || aTool.equals(TOOL_shears) || aTool.equals(TOOL_scissors) || aTool.equals(TOOL_knife)) {\n\t\t\treturn aWorld.setBlock(aX, aY, aZ, this, WD.meta(aWorld, aX, aY, aZ) ^ 8, 0)?1000:0;\n\t\t}\n\t\treturn ToolCompat.onToolClick(this, aTool, aRemainingDurability, aQuality, aPlayer, aChatReturn, aPlayerInventory, aSneaking, aStack, aWorld, aSide, aX, aY, aZ, aHitX, aHitY, aHitZ);\n\t}\n\t",
+      "excerpt_sha256": "5df10d8af88a19d79193f3c8f20aa369efc0c063c406c5164651e066c413c088"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/center/WorldgenStreets.java",
+      "start_line": 367,
+      "end_line": 377,
+      "text": "\t\t\t\tfor (int tOpaqueCount = 0, i = -16; i < 16; i++) for (int j = 0; j < 16; j++) {\n\t\t\t\t\tBlock tBlock = aWorld.getBlock(i, mHeight+9, aMinZ+j);\n\t\t\t\t\tif (tBlock.getMaterial().isLiquid() || WD.anywater(tBlock) || (WD.opq(tBlock) && tBlock.getMaterial() != Material.wood && !tBlock.isWood(aWorld, i, mHeight+9, aMinZ+j) && !tBlock.isLeaves(aWorld, i, mHeight+9, aMinZ+j))) {\n\t\t\t\t\t\tif (tOpaqueCount++ > 128) {\n\t\t\t\t\t\t\treturn generateRoadX(aWorld, aMinZ, F, F, T, F, F);\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\taBiomeNames = new HashSetNoNulls<>(aBiomeNames);\n\t\t\t\tfor (int i = aMinZ; i <= aMaxZ; i++) for (int j = (aMinZ < 0 ? 0 : -16), k = (aMinZ < 0 ? 16 : 0); j < k; j++) {\n\t\t\t\t\tBiomeGenBase tBiome = aWorld.getBiomeGenForCoords(j, i);",
+      "excerpt_sha256": "a4fb78930476bebde40a8d3c80afb38a8cc3f69811ddad43c3dec9d9ade6ebf4"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/center/WorldgenStreets.java",
+      "start_line": 444,
+      "end_line": 451,
+      "text": "\t\t\tif (aKillSky) {\n\t\t\t\tfor (int j = -13; j < 13; j++) for (int k = 2; k < 64; k++) aWorld.setBlock(j, mHeight+k, aMinZ+i, NB, 0, 0);\n\t\t\t} else {\n\t\t\t\tfor (int j = -12; j < 12; j++) for (int k = 2; k <  7; k++) aWorld.setBlock(j, mHeight+k, aMinZ+i, NB, 0, 0);\n\t\t\t}\n\t\t\tfor (int j = -12; j < 2; j++) {\n\t\t\t\taWorld.setBlock(j, mHeight+1, aMinZ+i, NB, 0, 0);\n\t\t\t\tif (aLand) {",
+      "excerpt_sha256": "3e21fbc283d8018840cf2acbc2ea672412a34c1375f436bd8df12961cb2dccfe"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/a/Loader_Rails.java",
+      "start_line": 39,
+      "end_line": 42,
+      "text": "\t\tBlocksGT.RailRoad                    = new BlockRailRoad(null, \"gt.block.rail.road\"                    , \"Road Stripe\"                         , 0.50F, 20,                                 0, Textures.BlockIcons.RAIL_ROAD_STRIPE             , Textures.BlockIcons.RAIL_ROAD_REFLECTOR);\n\t\t\n\t\tBlocksGT.RailAluminium               = new BlockBaseRail(null, \"gt.block.rail.aluminium\"               , \"Aluminium Track\"               , F, F, 0.20F,  6, MT.Al             .mToolQuality-1, Textures.BlockIcons.RAIL_STRAIGHT_ALUMINIUM      , Textures.BlockIcons.RAIL_TURNED_ALUMINIUM);\n\t\tBlocksGT.RailBronze                  = new BlockBaseRail(null, \"gt.block.rail.bronze\"                  , \"Bronze Track\"                  , F, F, 0.30F,  8, MT.Bronze         .mToolQuality-1, Textures.BlockIcons.RAIL_STRAIGHT_BRONZE         , Textures.BlockIcons.RAIL_TURNED_BRONZE);",
+      "excerpt_sha256": "21b1521f2db5f3a5d344846c21040dee5620ee30b80ff93d18b8e8965a216e87"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/TrackBlock.java",
+      "start_line": 65,
+      "end_line": 82,
+      "text": "    static float railSpeed(float speed, BlockState state, Level level, BlockPos pos) {\n        RailShape shape = state.getValue(((BaseRailBlock) state.getBlock()).getShapeProperty());\n        boolean straight = switch (shape) {\n            case NORTH_SOUTH -> sameAxis(level, pos.north(), RailShape.NORTH_SOUTH)\n            && sameAxis(level, pos.south(), RailShape.NORTH_SOUTH);\n            case EAST_WEST -> sameAxis(level, pos.east(), RailShape.EAST_WEST)\n            && sameAxis(level, pos.west(), RailShape.EAST_WEST);\n            default -> false;\n        };\n        return com.gregtech.gregtech.content.transport.TrackCatalog.speed(speed, straight,\n                level.hasChunksAt(pos.offset(-16, 0, -16), pos.offset(16, 0, 16)));\n    }\n\n    private static boolean sameAxis(Level level, BlockPos pos, RailShape shape) {\n        BlockState state = level.getBlockState(pos);\n        return state.getBlock() instanceof BaseRailBlock rail\n                && state.getValue(rail.getShapeProperty()) == shape;\n    }",
+      "excerpt_sha256": "f2615b45a07c40082d8221b9a358d9ce018e4dfb6674871de5f875172c3e4731"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/RoadStripeRailBlock.java",
+      "start_line": 95,
+      "end_line": 103,
+      "text": "    @Override\n    public void onMinecartPass(BlockState state, Level level, BlockPos pos, AbstractMinecart cart) {\n        TrackBlock.applySpeedToCart(0.5F, state, level, pos, cart);\n        TrackBlock.moveCart(cart, state, level, pos, true);\n    }\n\n    private static boolean isToggleTool(ItemStack tool) {\n        return GTToolHelper.matchesTool(tool, GTToolType.CROWBAR)\n        || GTToolHelper.matchesTool(tool, GTToolType.CHISEL)",
+      "excerpt_sha256": "919ebe9daffd07ea138e4aed77d0ce0b8f9c91381646408f8dda808aca805828"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginWorld.java",
+      "start_line": 66,
+      "end_line": 69,
+      "text": "        return new OriginWorld.Block(BuiltInRegistries.BLOCK.getKey(state.getBlock()).toString(), -1,\n                state.isSolidRender(level, pos), !state.getFluidState().isEmpty(), state.is(BlockTags.LOGS),\n                state.is(BlockTags.LEAVES), state.getFluidState().is(FluidTags.WATER));\n    }",
+      "excerpt_sha256": "89ce22cf14ecb277ad580dc558832f41b7953fac83e56a697cb28719fbfc9636"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginWorld.java",
+      "start_line": 112,
+      "end_line": 115,
+      "text": "        if (state.getBlock() instanceof RoadStripeRailBlock) state = state\n                .setValue(RoadStripeRailBlock.SHAPE, (key.metadata & 1) == 0 ? RailShape.NORTH_SOUTH : RailShape.EAST_WEST)\n                .setValue(RoadStripeRailBlock.REFLECTOR, (key.metadata & 8) != 0);\n        if (state.is(Blocks.END_PORTAL_FRAME)) state = state",
+      "excerpt_sha256": "8c90f45bd667f92497837c87a3801851f135c42b406e982196f3a7e4932d43e4"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOriginFeature.java",
+      "start_line": 42,
+      "end_line": 49,
+      "text": "            // segment's biomes so modern independent half chunks choose the same bridge mode.\n            boolean northSouth = minX == -16 || minX == 0;\n            for (int along = 0; along < 16; along++) for (int across = -16; across < 16; across++)\n                biomes.add(world.getBiomeGenForCoords(northSouth ? across : minX + along,\n                        northSouth ? minZ + along : across).biomeName());\n        }\n        var planChunk = new OriginWorld.Chunk(world, minX, minZ);\n        boolean placed = center && new SourceCenterBiomes(height).generate(world, planChunk, minX, minZ,",
+      "excerpt_sha256": "a0e9a8530b5aa7241ee813f7aab7a96489fce6339df522047550f4eb4463fdc3"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceStreets.java",
+      "start_line": 306,
+      "end_line": 316,
+      "text": "                for (int tOpaqueCount = 0, i = -16; i < 16; i++) for (int j = 0; j < 16; j++) {\n                    OriginWorld.Block tBlock = aWorld.getBlock(i, mHeight + 9, aMinZ + j);\n                    if (tBlock.liquid() || anywater(tBlock) || (opq(tBlock) && !tBlock.wood() && !tBlock.wood() && !tBlock.leaves())) {\n                        if (tOpaqueCount++ > 128) {\n                            return generateRoadX(aWorld, aMinZ, F, F, T, F, F);\n                        }\n                    }\n                }\n                aBiomeNames = new java.util.HashSet<>(aBiomeNames);\n                for (int i = aMinZ; i <= aMaxZ; i++) for (int j = (aMinZ < 0 ? 0 : -16), k = (aMinZ < 0 ? 16 : 0); j < k; j++) {\n                    OriginWorld.Biome tBiome = aWorld.getBiomeGenForCoords(j, i);",
+      "excerpt_sha256": "6ba1c82d3a21cfdc23cbd1b1868e873a3b5ca171e17fcb83ab0bffa5a6903efb"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceStreets.java",
+      "start_line": 396,
+      "end_line": 404,
+      "text": "            if (aKillSky) {\n                for (int j = -13; j < 13; j++) for (int k = 2; k < 64; k++) aWorld.setBlock(j, mHeight + k, aMinZ + i, NB, 0, 0);\n            } else {\n                for (int j = -12; j < 12; j++) for (int k = 2; k <  7; k++) aWorld.setBlock(j, mHeight + k, aMinZ + i, NB, 0, 0);\n            }\n            for (int j = -12; j < 2; j++) {\n                aWorld.setBlock(j, mHeight + 1, aMinZ + i, NB, 0, 0);\n                if (aLand) {\n                    set(aWorld, j, mHeight - 2, aMinZ + i, Blocks.cobblestone, 0, 0, T);",
+      "excerpt_sha256": "eaad029f46ee4a214953e7c45f455329d735fe300f63e03bead79cc871efb062"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/transport/TrackCatalog.java",
+      "start_line": 41,
+      "end_line": 44,
+      "text": "    public static float speed(float materialSpeed, boolean straight, boolean loaded) {\n        return !straight ? Math.min(materialSpeed, .4F) : loaded ? materialSpeed : Math.min(materialSpeed, 1F);\n    }\n}",
+      "excerpt_sha256": "4a8dee098d3cead13c135ed3b56245d30a8e6f932ef73c49329c430be0af2774"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/SharedDecorBlocks.java",
+      "start_line": 27,
+      "end_line": 30,
+      "text": "        RAILROAD = RegisteredBlock.register(\"railroad\",\n                () -> new RoadStripeRailBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(.35F, 20F).sound(SoundType.METAL)));\n        GREG_LANTERN = RegisteredBlock.register(\"greg_lantern\",\n                () -> new GregLanternBlock(BlockBehaviour.Properties.of()",
+      "excerpt_sha256": "8d3fd8b26d17bba8eba21e5f305e940998f27a5b176569f6a40e598f8dee5619"
+    }
+  ],
+  "complete_source_comparison": {
+    "complete_tail_ordered_tokens": 16480,
+    "tail_sha256": "32352fcf153583221d358c835506bf8de035ffef5776433df8a9e6a6f885baf7",
+    "scope": "Whole generate tail, including generateRoadX and generateRoadZ, after the enumerated platform substitutions. Native predicate meaning is not presumed equivalent.",
+    "adaptation_counts": {
+      "beacon_delegates": 4,
+      "entity_cleanup_delegates": 2,
+      "foundation_start": 1,
+      "descending_floor": 28,
+      "footing_offsets": 28,
+      "removed_old_force_load_writes": 8
+    },
+    "material_catalog_original": [
+      [
+        "aluminium",
+        "0.20",
+        "6"
+      ],
+      [
+        "bronze",
+        "0.30",
+        "8"
+      ],
+      [
+        "magnalium",
+        "0.60",
+        "12"
+      ],
+      [
+        "steel",
+        "0.60",
+        "12"
+      ],
+      [
+        "stainlesssteel",
+        "0.80",
+        "10"
+      ],
+      [
+        "tungsten",
+        "1.00",
+        "20"
+      ],
+      [
+        "titanium",
+        "1.20",
+        "16"
+      ],
+      [
+        "tungstensteel",
+        "1.40",
+        "20"
+      ],
+      [
+        "tungstencarbide",
+        "1.60",
+        "24"
+      ],
+      [
+        "adamantium",
+        "4.00",
+        "100"
+      ]
+    ],
+    "material_catalog_current": [
+      [
+        "Aluminium",
+        "0.20",
+        "6",
+        "Silver"
+      ],
+      [
+        "Bronze",
+        "0.30",
+        "8",
+        "Silver"
+      ],
+      [
+        "Magnalium",
+        "0.60",
+        "12",
+        "Silver"
+      ],
+      [
+        "Steel",
+        "0.60",
+        "12",
+        "Gold"
+      ],
+      [
+        "StainlessSteel",
+        "0.80",
+        "10",
+        "Gold"
+      ],
+      [
+        "Tungsten",
+        "1.00",
+        "20",
+        "Electrum"
+      ],
+      [
+        "Titanium",
+        "1.20",
+        "16",
+        "Electrum"
+      ],
+      [
+        "Tungstensteel",
+        "1.40",
+        "20",
+        "Platinum"
+      ],
+      [
+        "TungstenCarbide",
+        "1.60",
+        "24",
+        "Platinum"
+      ],
+      [
+        "Adamantium",
+        "4.00",
+        "100",
+        "Osmium"
+      ]
+    ],
+    "radius_projection": {
+      "remainder_pairs": 256,
+      "different_pairs": 60,
+      "witness_position": [
+        0,
+        64,
+        8
+      ],
+      "current_chunks": [
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "original_chunks": [
+        [
+          -2,
+          -1
+        ],
+        [
+          -2,
+          0
+        ],
+        [
+          -2,
+          1
+        ],
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "only_original": [
+        [
+          -2,
+          -1
+        ],
+        [
+          -2,
+          0
+        ],
+        [
+          -2,
+          1
+        ]
+      ]
+    },
+    "limits": [
+      "Full tail correspondence is after platform substitutions, including collapse of old material-wood and isWood to one native wood flag; this is audited as a difference.",
+      "Integer chunk sets are a source-derived coordinate calculation, not real chunk loading or minecart motion."
+    ]
+  },
+  "core_probe": {
+    "seconds": 0.986,
+    "compile_command": [
+      "C:/Program Files/Java/jdk-17/bin/javac.exe",
+      "-encoding",
+      "UTF-8",
+      "-d",
+      "work\\streets-rails-audit-20261022\\classes",
+      "core\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\center\\OriginWorld.java",
+      "core\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\center\\OriginSupport.java",
+      "core\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\center\\SourceStreets.java",
+      "core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\transport\\TrackCatalog.java",
+      "core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\transport\\TrackMotionRules.java",
+      "work\\streets-rails-audit-20261022\\BeforeSourceStreets.java",
+      "work\\streets-rails-audit-20261022\\RoadProbe.java"
+    ],
+    "run_command": [
+      "C:/Program Files/Java/jdk-17/bin/java.exe",
+      "-cp",
+      "work\\streets-rails-audit-20261022\\classes",
+      "com.gregtech.gregtech.worldgen.center.RoadProbe"
+    ],
+    "compiled_sources": [
+      {
+        "path": "core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginWorld.java",
+        "raw_sha256": "b3e28f5a15734b9419310f713634924c1e89ce87efef370fa80553acf31feb3d"
+      },
+      {
+        "path": "core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginSupport.java",
+        "raw_sha256": "d0abdca975885ea4117b8998968a62ea0ef80e669bbeb0c71f6c82a608846efb"
+      },
+      {
+        "path": "core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceStreets.java",
+        "raw_sha256": "1e8cfed04894466d5451f67419c678b72d78207e5c9335bbea5727a68ab38dfb"
+      },
+      {
+        "path": "core/src/main/java/com/gregtech/gregtech/content/transport/TrackCatalog.java",
+        "raw_sha256": "5a0d46d18582ad70a562dd4216c17f696d140e274337de99e70ac7b25ae95e64"
+      },
+      {
+        "path": "core/src/main/java/com/gregtech/gregtech/content/transport/TrackMotionRules.java",
+        "raw_sha256": "c44af8ad2371f30d75828148acb8e7c29dc867b832a6ac1d7ebf3a25a966f523"
+      },
+      {
+        "path": "work/streets-rails-audit-20261022/BeforeSourceStreets.java",
+        "raw_sha256": "6707adf2898d85a24e283e764e93808a4c99eb9fc2beee8d0d696bb97416c27b"
+      },
+      {
+        "path": "work/streets-rails-audit-20261022/RoadProbe.java",
+        "raw_sha256": "3bb9abe666a87ee4e292994fbadd687a73cabc027d4e0ed9324e902a021c5766"
+      }
+    ],
+    "probe_source": "package com.gregtech.gregtech.worldgen.center;\n\nimport com.gregtech.gregtech.content.transport.TrackCatalog;\nimport java.util.*;\n\n/** Bounded command recorder; it does not implement a native Minecraft world or minecart. */\npublic final class RoadProbe {\n    private record Pos(int x,int y,int z) {}\n    private record Placed(String id,int metadata,int side) {}\n    private static final class Terrain {\n        final int axis,mode,opaque;\n        final Map<Pos,OriginWorld.Block> sampleLayer=new HashMap<>();\n        Terrain(int axis,int mode,int opaque){this.axis=axis;this.mode=mode;this.opaque=opaque;}\n    }\n    private static final class Recorder implements OriginWorld {\n        final int minX,minZ;\n        final Terrain terrain;\n        long fingerprint=0xcbf29ce484222325L,writes;\n        int signs,beacons,cleans;\n        Placed roof;\n        Recorder(int x,int z,Terrain terrain){minX=x;minZ=z;this.terrain=terrain;}\n        void value(long value){fingerprint=(fingerprint^value)*0x100000001b3L;}\n        public int minY(){return -64;}\n        public int maxY(){return 320;}\n        public boolean canWrite(int x,int y,int z){return x>=minX&&x<minX+16&&z>=minZ&&z<minZ+16&&y>=-64&&y<320;}\n        public Block getBlock(int x,int y,int z){\n            if(y==75){\n                var existing=terrain.sampleLayer.get(new Pos(x,y,z));\n                if(existing!=null)return existing;\n                int across=terrain.axis==0?x:z,along=terrain.axis==0?z:x;\n                if((terrain.mode==2||terrain.mode==3||terrain.mode==4)&&across>=-16&&across<16&&along>=512&&along<528\n                    &&(across+16)*16+along-512<terrain.opaque)\n                    return new Block(terrain.mode==2?\"minecraft:stone\":\"minecraft:oak_planks\",-1,true,false,terrain.mode==4,false,false);\n            }\n            return y<=64?new Block(\"minecraft:stone\"):OriginSupport.NB;\n        }\n        public boolean setBlock(int x,int y,int z,Block block,int metadata,int flags){\n            if(!canWrite(x,y,z))return false;\n            value(1);value(x);value(y);value(z);value(block.id().hashCode());value(metadata);value(flags);value(block.slabSide());writes++;\n            if(y==75)terrain.sampleLayer.put(new Pos(x,y,z),block);\n            if(y==73&&(terrain.axis==0?x==5&&z==518:x==518&&z==5))roof=new Placed(block.id(),metadata,block.slabSide());\n            return true;\n        }\n        public Biome getBiomeGenForCoords(int x,int z){return new Biome(terrain.mode==1?\"ocean\":\"plains\",terrain.mode==1?\"Ocean\":\"Plains\");}\n        public boolean isInfiniteWaterBiome(String name){return name.equals(\"ocean\");}\n        public void setSpawnLocation(int x,int y,int z){value(2);value(x);value(y);value(z);}\n        public void sign(int x,int y,int z,int side,int flags,String... lines){\n            if(!canWrite(x,y,z))return;signs++;value(3);value(x);value(y);value(z);value(side);value(flags);for(String line:lines)value(line.hashCode());\n        }\n        public void beacon(int x,int y,int z,String primary,String secondary){\n            if(!canWrite(x,y,z))return;beacons++;value(4);value(x);value(y);value(z);value(primary.hashCode());value(secondary.hashCode());\n        }\n        public void clearNonPlayerEntities(int x,int y,int z,int xx,int yy,int zz){cleans++;value(5);value(x);value(y);value(z);value(xx);value(yy);value(zz);}\n    }\n    private static int cases;\n    private static long writes;\n    private static int beacons;\n    private static Placed compare(int x,int z,int callX,int callZ,Terrain beforeTerrain,Terrain afterTerrain){\n        var before=new BeforeSourceStreets(66,true,true,true,true);\n        var after=new SourceStreets(66,true,true,true,true);\n        var a=new Recorder(x,z,beforeTerrain);var b=new Recorder(x,z,afterTerrain);\n        var names=Set.of(afterTerrain.mode==1?\"ocean\":\"plains\");\n        boolean oldResult=before.generate(a,callX,callZ,callX+15,callZ+15,names);\n        boolean newResult=after.generate(b,callX,callZ,callX+15,callZ+15,names);\n        if(oldResult!=newResult||!newResult||a.fingerprint!=b.fingerprint||a.writes!=b.writes||a.signs!=b.signs||a.beacons!=b.beacons||a.cleans!=b.cleans||!Objects.equals(a.roof,b.roof))\n            throw new AssertionError(\"Before/after road requests differ at \"+x+\",\"+z);\n        cases++;writes+=b.writes;beacons+=b.beacons;return b.roof;\n    }\n    public static void main(String[] args){\n        for(int x:new int[]{-32,-16,0,16})for(int z:new int[]{-32,-16,0,16})\n            compare(x,z,-16,-16,new Terrain(0,0,0),new Terrain(0,0,0));\n        for(int axis=0;axis<2;axis++)for(int mode=0;mode<5;mode++){\n            var a=new Terrain(axis,mode,mode>=3?130:512);var b=new Terrain(axis,mode,mode>=3?130:512);\n            Placed roof=null;\n            for(int cross:new int[]{-16,0}){\n                int x=axis==0?cross:512,z=axis==0?512:cross;\n                var result=compare(x,z,x,z,a,b);if(result!=null)roof=result;\n            }\n            if(mode==2||mode==3){if(roof==null||!roof.id.equals(\"gt6ce:concrete\")||roof.metadata!=15)throw new AssertionError(\"Tunnel roof missing\");}\n            else if(roof==null||!roof.id.equals(\"minecraft:air\"))throw new AssertionError(\"Open road roof not clear\");\n            System.out.println(\"MODE \"+axis+\" \"+mode+\" \"+roof.id+\" \"+roof.metadata);\n        }\n        for(int axis=0;axis<2;axis++)for(int count:new int[]{129,130}){\n            int x=axis==0?0:512,z=axis==0?512:0;\n            var roof=compare(x,z,x,z,new Terrain(axis,2,count),new Terrain(axis,2,count));\n            if(roof==null||!roof.id.equals(count==130?\"gt6ce:concrete\":\"minecraft:air\"))throw new AssertionError(\"Opaque threshold changed\");\n        }\n        if(TrackCatalog.speed(.5F,false,true)!=.4F||TrackCatalog.speed(.5F,true,true)!=.5F)throw new AssertionError(\"Rail family witness failed\");\n        if(TrackCatalog.speed(4F,true,false)!=1F||TrackCatalog.speed(4F,true,true)!=4F)throw new AssertionError(\"Load radius witness failed\");\n        System.out.println(\"CASES \"+cases);\n        System.out.println(\"WRITES \"+writes);\n        System.out.println(\"BEACON_REQUESTS \"+beacons);\n        System.out.println(\"FAMILY_CAPS \"+TrackCatalog.speed(.5F,false,true)+\" \"+TrackCatalog.speed(.5F,true,true));\n        System.out.println(\"RADIUS_CAPS \"+TrackCatalog.speed(4F,true,false)+\" \"+TrackCatalog.speed(4F,true,true));\n    }\n}\n",
+    "baseline_clone_source": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\npackage com.gregtech.gregtech.worldgen.center;\n\nimport static com.gregtech.gregtech.worldgen.center.OriginSupport.*;\n\n/** Original GT6 geometry, adapted by tools/import_origin_worldgen.py; platform effects use OriginWorld.\n * @author Gregorius Techneticies (original geometry)\n */\npublic final class BeforeSourceStreets {\n    public final int mHeight;\n    private final boolean GENERATE_BEACON, GENERATE_BIOMES, GENERATE_NEXUS, GENERATE_TESTING;\n    public BeforeSourceStreets(int height, boolean beacon, boolean biomes, boolean nexus, boolean testing) {\n        mHeight=height; GENERATE_BEACON=beacon; GENERATE_BIOMES=biomes;\n        GENERATE_NEXUS=nexus; GENERATE_TESTING=testing;\n    }\n    public boolean generate(OriginWorld aWorld, int aMinX, int aMinZ,\n                            int aMaxX, int aMaxZ, java.util.Set<String> aBiomeNames) {\n\t\tif (aMinX == -16 || aMinX == 0) {\n\t\t\tif (aMinZ == -16 || aMinZ == 0) {\n\t\t\t\tfor (int i = -32; i < 32; i++) for (int j = -32; j < 32; j++) {\n\t\t\t\t\tfor (int k = 2; k < 64; k++) aWorld.setBlock(i, mHeight+k, j, NB, 0, 0);\n\t\t\t\t\tfor (int k = aWorld.minY()+1; k < mHeight; k++) aWorld.setBlock(i, k, j, BlocksGT.Concrete, DYE_INDEX_Gray, 0);\n\n\t\t\t\t\taWorld.setBlock(i, mHeight-1, j, BlocksGT.Concrete, DYE_INDEX_Gray, 0);\n\t\t\t\t\tif (i <= -29 || j <= -29 || i >= 28 || j >= 28) {\n\t\t\t\t\t\tif (inside(-12, 11, i) || inside(-12, 11, j)) {\n\t\t\t\t\t\t\taWorld.setBlock(i, mHeight  , j, BlocksGT.Asphalt, i == -31 || j == -31 || i == 30 || j == 30 ? DYE_INDEX_White : DYE_INDEX_Gray, 0);\n\t\t\t\t\t\t\taWorld.setBlock(i, mHeight+1, j, NB, 0, 0);\n\t\t\t\t\t\t} else {\n\t\t\t\t\t\t\taWorld.setBlock(i, mHeight  , j, BlocksGT.Concrete, DYE_INDEX_Gray, 0);\n\t\t\t\t\t\t\tif (!GENERATE_BIOMES && (i == -32 || j == -32 || i == 31 || j == 31) && (!GENERATE_NEXUS || i < 0 || i == 31 || j != -32) && (!GENERATE_TESTING || j > 0 || i != 31 || j == -32)) {\n\t\t\t\t\t\t\t\taWorld.setBlock(i, mHeight+1, j, even(i, 1, j)?BlocksGT.CFoam:BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\t\t\t\taWorld.setBlock(i, mHeight+2, j, even(i, 2, j)?BlocksGT.CFoam:BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\t\t\t\taWorld.setBlock(i, mHeight+3, j, even(i, 3, j)?BlocksGT.CFoam:BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\t\t\t\taWorld.setBlock(i, mHeight+4, j, even(i, 4, j)?BlocksGT.CFoam:BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\t\t\t\taWorld.setBlock(i, mHeight+5, j, even(i, 5, j)?BlocksGT.CFoam:BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\t\t\t} else {\n\t\t\t\t\t\t\t\taWorld.setBlock(i, mHeight+1, j, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t} else {\n\t\t\t\t\t\tif (inside(-12, 11, i) && inside(-12, 11, j)) {\n\t\t\t\t\t\t\taWorld.setBlock(i, mHeight  , j, BlocksGT.Concrete, DYE_INDEX_Gray, 0);\n\t\t\t\t\t\t\taWorld.setBlock(i, mHeight+1, j, inside(-11, 10, i) && inside(-11, 10, j) ? BlocksGT.Concrete : BlocksGT.CFoam, DYE_INDEX_LightGray, 0);\n\t\t\t\t\t\t} else {\n\t\t\t\t\t\t\taWorld.setBlock(i, mHeight  , j, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\t\t\t\t\taWorld.setBlock(i, mHeight+1, j, NB, 0, 0);\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\n\n\t\t\t\taWorld.setBlock(-32, mHeight+1, - 1, BlocksGT.Concrete, DYE_INDEX_Blue, 0);\n\t\t\t\taWorld.setBlock(-31, mHeight+1, - 1, BlocksGT.Concrete, DYE_INDEX_Blue, 0);\n\t\t\t\taWorld.setBlock(-32, mHeight+1,   0, BlocksGT.Concrete, DYE_INDEX_Blue, 0);\n\t\t\t\taWorld.setBlock(-31, mHeight+1,   0, BlocksGT.Concrete, DYE_INDEX_Blue, 0);\n\t\t\t\taWorld.setBlock(-32, mHeight+2, - 1, BlocksGT.Concrete, DYE_INDEX_Blue, 0);\n\t\t\t\taWorld.setBlock(-31, mHeight+2, - 1, BlocksGT.Concrete, DYE_INDEX_Blue, 0);\n\t\t\t\taWorld.setBlock(-32, mHeight+2,   0, BlocksGT.Concrete, DYE_INDEX_Blue, 0);\n\t\t\t\taWorld.setBlock(-31, mHeight+2,   0, BlocksGT.Concrete, DYE_INDEX_Blue, 0);\n\t\t\t\taWorld.setBlock(-32, mHeight+3, - 1, BlocksGT.Concrete, DYE_INDEX_Blue, 0);\n\t\t\t\taWorld.setBlock(-31, mHeight+3, - 1, BlocksGT.Concrete, DYE_INDEX_Blue, 0);\n\t\t\t\taWorld.setBlock(-32, mHeight+3,   0, BlocksGT.Concrete, DYE_INDEX_Blue, 0);\n\t\t\t\taWorld.setBlock(-31, mHeight+3,   0, BlocksGT.Concrete, DYE_INDEX_Blue, 0);\n\t\t\t\taWorld.setBlock(-32, mHeight+4, - 1, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);\n\t\t\t\taWorld.setBlock(-31, mHeight+4, - 1, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);\n\t\t\t\taWorld.setBlock(-32, mHeight+4,   0, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);\n\t\t\t\taWorld.setBlock(-31, mHeight+4,   0, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);\n\t\t\t\taWorld.setBlock(-32, mHeight+1, - 2, BlocksGT.FOAM_SLABS[SIDE_Z_POS], DYE_INDEX_White, 0);\n\t\t\t\taWorld.setBlock(-31, mHeight+1, - 2, BlocksGT.FOAM_SLABS[SIDE_Z_POS], DYE_INDEX_Red, 0);\n\t\t\t\taWorld.setBlock(-30, mHeight+1, - 1, BlocksGT.FOAM_SLABS[SIDE_X_NEG], DYE_INDEX_White, 0);\n\t\t\t\taWorld.setBlock(-30, mHeight+1,   0, BlocksGT.FOAM_SLABS[SIDE_X_NEG], DYE_INDEX_Red, 0);\n\t\t\t\taWorld.setBlock(-31, mHeight+1,   1, BlocksGT.FOAM_SLABS[SIDE_Z_NEG], DYE_INDEX_White, 0);\n\t\t\t\taWorld.setBlock(-32, mHeight+1,   1, BlocksGT.FOAM_SLABS[SIDE_Z_NEG], DYE_INDEX_Red, 0);\n\t\t\t\ttry {\n\t\t\t\taWorld.sign( -30, mHeight+3, 0, SIDE_X_POS, 0\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-4096, +95))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-3584, +95))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-3072, +95))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-2560, +95))\n\t\t\t\t);\n\t\t\t\taWorld.sign( -30, mHeight+2, 0, SIDE_X_POS, 0\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-2048, +95))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-1536, +95))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-1024, +95))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(- 512, +95))\n\t\t\t\t);\n\n\t\t\t\taWorld.sign( -30, mHeight+3, -1, SIDE_X_POS, 0\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-4096, -96))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-3584, -96))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-3072, -96))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-2560, -96))\n\t\t\t\t);\n\t\t\t\taWorld.sign( -30, mHeight+2, -1, SIDE_X_POS, 0\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-2048, -96))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-1536, -96))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-1024, -96))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(- 512, -96))\n\t\t\t\t);\n\t\t\t\t} catch(Throwable e) {e.printStackTrace(System.err);}\n\n\n\t\t\t\taWorld.setBlock( 31, mHeight+1, - 1, BlocksGT.Concrete, DYE_INDEX_Red, 0);\n\t\t\t\taWorld.setBlock( 30, mHeight+1, - 1, BlocksGT.Concrete, DYE_INDEX_Red, 0);\n\t\t\t\taWorld.setBlock( 31, mHeight+1,   0, BlocksGT.Concrete, DYE_INDEX_Red, 0);\n\t\t\t\taWorld.setBlock( 30, mHeight+1,   0, BlocksGT.Concrete, DYE_INDEX_Red, 0);\n\t\t\t\taWorld.setBlock( 31, mHeight+2, - 1, BlocksGT.Concrete, DYE_INDEX_Red, 0);\n\t\t\t\taWorld.setBlock( 30, mHeight+2, - 1, BlocksGT.Concrete, DYE_INDEX_Red, 0);\n\t\t\t\taWorld.setBlock( 31, mHeight+2,   0, BlocksGT.Concrete, DYE_INDEX_Red, 0);\n\t\t\t\taWorld.setBlock( 30, mHeight+2,   0, BlocksGT.Concrete, DYE_INDEX_Red, 0);\n\t\t\t\taWorld.setBlock( 31, mHeight+3, - 1, BlocksGT.Concrete, DYE_INDEX_Red, 0);\n\t\t\t\taWorld.setBlock( 30, mHeight+3, - 1, BlocksGT.Concrete, DYE_INDEX_Red, 0);\n\t\t\t\taWorld.setBlock( 31, mHeight+3,   0, BlocksGT.Concrete, DYE_INDEX_Red, 0);\n\t\t\t\taWorld.setBlock( 30, mHeight+3,   0, BlocksGT.Concrete, DYE_INDEX_Red, 0);\n\t\t\t\taWorld.setBlock( 31, mHeight+4, - 1, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);\n\t\t\t\taWorld.setBlock( 30, mHeight+4, - 1, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);\n\t\t\t\taWorld.setBlock( 31, mHeight+4,   0, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);\n\t\t\t\taWorld.setBlock( 30, mHeight+4,   0, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);\n\t\t\t\taWorld.setBlock( 31, mHeight+1, - 2, BlocksGT.FOAM_SLABS[SIDE_Z_POS], DYE_INDEX_Red, 0);\n\t\t\t\taWorld.setBlock( 30, mHeight+1, - 2, BlocksGT.FOAM_SLABS[SIDE_Z_POS], DYE_INDEX_White, 0);\n\t\t\t\taWorld.setBlock( 29, mHeight+1, - 1, BlocksGT.FOAM_SLABS[SIDE_X_POS], DYE_INDEX_Red, 0);\n\t\t\t\taWorld.setBlock( 29, mHeight+1,   0, BlocksGT.FOAM_SLABS[SIDE_X_POS], DYE_INDEX_White, 0);\n\t\t\t\taWorld.setBlock( 30, mHeight+1,   1, BlocksGT.FOAM_SLABS[SIDE_Z_NEG], DYE_INDEX_Red, 0);\n\t\t\t\taWorld.setBlock( 31, mHeight+1,   1, BlocksGT.FOAM_SLABS[SIDE_Z_NEG], DYE_INDEX_White, 0);\n\t\t\t\ttry {\n\t\t\t\taWorld.sign(  29, mHeight+3,   0, SIDE_X_NEG, 0\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+4095, +95))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+3583, +95))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+3071, +95))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+2559, +95))\n\t\t\t\t);\n\t\t\t\taWorld.sign(  29, mHeight+2,   0, SIDE_X_NEG, 0\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+2047, +95))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+1535, +95))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+1023, +95))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+ 511, +95))\n\t\t\t\t);\n\n\t\t\t\taWorld.sign(  29, mHeight+3, - 1, SIDE_X_NEG, 0\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+4095, -96))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+3583, -96))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+3071, -96))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+2559, -96))\n\t\t\t\t);\n\t\t\t\taWorld.sign(  29, mHeight+2, - 1, SIDE_X_NEG, 0\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+2047, -96))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+1535, -96))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+1023, -96))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+ 511, -96))\n\t\t\t\t);\n\t\t\t\t} catch(Throwable e) {e.printStackTrace(System.err);}\n\n\n\t\t\t\taWorld.setBlock(- 1, mHeight+1, -32, BlocksGT.Concrete, DYE_INDEX_Yellow, 0);\n\t\t\t\taWorld.setBlock(- 1, mHeight+1, -31, BlocksGT.Concrete, DYE_INDEX_Yellow, 0);\n\t\t\t\taWorld.setBlock(  0, mHeight+1, -32, BlocksGT.Concrete, DYE_INDEX_Yellow, 0);\n\t\t\t\taWorld.setBlock(  0, mHeight+1, -31, BlocksGT.Concrete, DYE_INDEX_Yellow, 0);\n\t\t\t\taWorld.setBlock(- 1, mHeight+2, -32, BlocksGT.Concrete, DYE_INDEX_Yellow, 0);\n\t\t\t\taWorld.setBlock(- 1, mHeight+2, -31, BlocksGT.Concrete, DYE_INDEX_Yellow, 0);\n\t\t\t\taWorld.setBlock(  0, mHeight+2, -32, BlocksGT.Concrete, DYE_INDEX_Yellow, 0);\n\t\t\t\taWorld.setBlock(  0, mHeight+2, -31, BlocksGT.Concrete, DYE_INDEX_Yellow, 0);\n\t\t\t\taWorld.setBlock(- 1, mHeight+3, -32, BlocksGT.Concrete, DYE_INDEX_Yellow, 0);\n\t\t\t\taWorld.setBlock(- 1, mHeight+3, -31, BlocksGT.Concrete, DYE_INDEX_Yellow, 0);\n\t\t\t\taWorld.setBlock(  0, mHeight+3, -32, BlocksGT.Concrete, DYE_INDEX_Yellow, 0);\n\t\t\t\taWorld.setBlock(  0, mHeight+3, -31, BlocksGT.Concrete, DYE_INDEX_Yellow, 0);\n\t\t\t\taWorld.setBlock(- 1, mHeight+4, -32, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);\n\t\t\t\taWorld.setBlock(- 1, mHeight+4, -31, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);\n\t\t\t\taWorld.setBlock(  0, mHeight+4, -32, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);\n\t\t\t\taWorld.setBlock(  0, mHeight+4, -31, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);\n\t\t\t\taWorld.setBlock(- 2, mHeight+1, -32, BlocksGT.FOAM_SLABS[SIDE_X_POS], DYE_INDEX_White, 0);\n\t\t\t\taWorld.setBlock(- 2, mHeight+1, -31, BlocksGT.FOAM_SLABS[SIDE_X_POS], DYE_INDEX_Red, 0);\n\t\t\t\taWorld.setBlock(- 1, mHeight+1, -30, BlocksGT.FOAM_SLABS[SIDE_Z_NEG], DYE_INDEX_White, 0);\n\t\t\t\taWorld.setBlock(  0, mHeight+1, -30, BlocksGT.FOAM_SLABS[SIDE_Z_NEG], DYE_INDEX_Red, 0);\n\t\t\t\taWorld.setBlock(  1, mHeight+1, -31, BlocksGT.FOAM_SLABS[SIDE_X_NEG], DYE_INDEX_White, 0);\n\t\t\t\taWorld.setBlock(  1, mHeight+1, -32, BlocksGT.FOAM_SLABS[SIDE_X_NEG], DYE_INDEX_Red, 0);\n\t\t\t\ttry {\n\t\t\t\taWorld.sign(   0, mHeight+3, -30, SIDE_Z_POS, 0\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+95, -4096))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+95, -3584))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+95, -3072))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+95, -2560))\n\t\t\t\t);\n\t\t\t\taWorld.sign(   0, mHeight+2, -30, SIDE_Z_POS, 0\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+95, -2048))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+95, -1536))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+95, -1024))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+95, - 512))\n\t\t\t\t);\n\n\t\t\t\taWorld.sign( - 1, mHeight+3, -30, SIDE_Z_POS, 0\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-96, -4096))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-96, -3584))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-96, -3072))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-96, -2560))\n\t\t\t\t);\n\t\t\t\taWorld.sign( - 1, mHeight+2, -30, SIDE_Z_POS, 0\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-96, -2048))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-96, -1536))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-96, -1024))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-96, - 512))\n\t\t\t\t);\n\t\t\t\t} catch(Throwable e) {e.printStackTrace(System.err);}\n\n\n\t\t\t\taWorld.setBlock(- 1, mHeight+1,  31, BlocksGT.Concrete, DYE_INDEX_Green, 0);\n\t\t\t\taWorld.setBlock(- 1, mHeight+1,  30, BlocksGT.Concrete, DYE_INDEX_Green, 0);\n\t\t\t\taWorld.setBlock(  0, mHeight+1,  31, BlocksGT.Concrete, DYE_INDEX_Green, 0);\n\t\t\t\taWorld.setBlock(  0, mHeight+1,  30, BlocksGT.Concrete, DYE_INDEX_Green, 0);\n\t\t\t\taWorld.setBlock(- 1, mHeight+2,  31, BlocksGT.Concrete, DYE_INDEX_Green, 0);\n\t\t\t\taWorld.setBlock(- 1, mHeight+2,  30, BlocksGT.Concrete, DYE_INDEX_Green, 0);\n\t\t\t\taWorld.setBlock(  0, mHeight+2,  31, BlocksGT.Concrete, DYE_INDEX_Green, 0);\n\t\t\t\taWorld.setBlock(  0, mHeight+2,  30, BlocksGT.Concrete, DYE_INDEX_Green, 0);\n\t\t\t\taWorld.setBlock(- 1, mHeight+3,  31, BlocksGT.Concrete, DYE_INDEX_Green, 0);\n\t\t\t\taWorld.setBlock(- 1, mHeight+3,  30, BlocksGT.Concrete, DYE_INDEX_Green, 0);\n\t\t\t\taWorld.setBlock(  0, mHeight+3,  31, BlocksGT.Concrete, DYE_INDEX_Green, 0);\n\t\t\t\taWorld.setBlock(  0, mHeight+3,  30, BlocksGT.Concrete, DYE_INDEX_Green, 0);\n\t\t\t\taWorld.setBlock(- 1, mHeight+4,  31, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);\n\t\t\t\taWorld.setBlock(- 1, mHeight+4,  30, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);\n\t\t\t\taWorld.setBlock(  0, mHeight+4,  31, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);\n\t\t\t\taWorld.setBlock(  0, mHeight+4,  30, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);\n\t\t\t\taWorld.setBlock(- 2, mHeight+1,  31, BlocksGT.FOAM_SLABS[SIDE_X_POS], DYE_INDEX_Red, 0);\n\t\t\t\taWorld.setBlock(- 2, mHeight+1,  30, BlocksGT.FOAM_SLABS[SIDE_X_POS], DYE_INDEX_White, 0);\n\t\t\t\taWorld.setBlock(- 1, mHeight+1,  29, BlocksGT.FOAM_SLABS[SIDE_Z_POS], DYE_INDEX_Red, 0);\n\t\t\t\taWorld.setBlock(  0, mHeight+1,  29, BlocksGT.FOAM_SLABS[SIDE_Z_POS], DYE_INDEX_White, 0);\n\t\t\t\taWorld.setBlock(  1, mHeight+1,  30, BlocksGT.FOAM_SLABS[SIDE_X_NEG], DYE_INDEX_Red, 0);\n\t\t\t\taWorld.setBlock(  1, mHeight+1,  31, BlocksGT.FOAM_SLABS[SIDE_X_NEG], DYE_INDEX_White, 0);\n\t\t\t\ttry {\n\t\t\t\taWorld.sign(   0, mHeight+3,  29, SIDE_Z_NEG, 0\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+95, +4095))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+95, +3583))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+95, +3071))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+95, +2559))\n\t\t\t\t);\n\t\t\t\taWorld.sign(   0, mHeight+2,  29, SIDE_Z_NEG, 0\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+95, +2047))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+95, +1535))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+95, +1023))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(+95, + 511))\n\t\t\t\t);\n\n\t\t\t\taWorld.sign( - 1, mHeight+3,  29, SIDE_Z_NEG, 0\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-96, +4095))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-96, +3583))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-96, +3071))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-96, +2559))\n\t\t\t\t);\n\t\t\t\taWorld.sign( - 1, mHeight+2,  29, SIDE_Z_NEG, 0\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-96, +2047))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-96, +1535))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-96, +1023))\n\t\t\t\t, text(aWorld.getBiomeGenForCoords(-96, + 511))\n\t\t\t\t);\n\t\t\t\t} catch(Throwable e) {e.printStackTrace(System.err);}\n\n\t\t\t\tif (GENERATE_BEACON) {\n\t\t\t\t\tfor (int i = -5; i < 5; i++) for (int j = -5; j < 5; j++) set(aWorld, i, mHeight-3, j, Blocks.iron_block, 0, 0);\n\t\t\t\t\tfor (int i = -4; i < 4; i++) for (int j = -4; j < 4; j++) set(aWorld, i, mHeight-2, j, Blocks.iron_block, 0, 0);\n\t\t\t\t\tfor (int i = -3; i < 3; i++) for (int j = -3; j < 3; j++) set(aWorld, i, mHeight-1, j, Blocks.iron_block, 0, 0);\n\t\t\t\t\tfor (int i = -2; i < 2; i++) for (int j = -2; j < 2; j++) set(aWorld, i, mHeight  , j, Blocks.iron_block, 0, 0);\n\n\n\t\t\t\t\taWorld.beacon(-1, mHeight+1, -1, \"speed\", \"speed\");\n\n\t\t\t\t\taWorld.beacon(-1, mHeight+1, 0, \"haste\", \"haste\");\n\n\t\t\t\t\taWorld.beacon(0, mHeight+1, -1, \"strength\", \"strength\");\n\n\t\t\t\t\taWorld.beacon(0, mHeight+1, 0, \"resistance\", \"regeneration\");\n\t\t\t\t}\n\n\t\t\t\taWorld.setSpawnLocation(0, mHeight+5, 0);\n\t\t\t\treturn T;\n\t\t\t}\n\t\t\tif (aMinZ < -96 || aMinZ > 80) {\n\n\n\n\n\n\t\t\t\tfor (int tOpaqueCount = 0, i = -16; i < 16; i++) for (int j = 0; j < 16; j++) {\n\t\t\t\t\tOriginWorld.Block tBlock = aWorld.getBlock(i, mHeight+9, aMinZ+j);\n\t\t\t\t\tif (tBlock.liquid() || anywater(tBlock) || (opq(tBlock) && !tBlock.wood() && !tBlock.wood() && !tBlock.leaves())) {\n\t\t\t\t\t\tif (tOpaqueCount++ > 128) {\n\t\t\t\t\t\t\treturn generateRoadX(aWorld, aMinZ, F, F, T, F, F);\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\taBiomeNames = new java.util.HashSet<>(aBiomeNames);\n\t\t\t\tfor (int i = aMinZ; i <= aMaxZ; i++) for (int j = (aMinZ < 0 ? 0 : -16), k = (aMinZ < 0 ? 16 : 0); j < k; j++) {\n\t\t\t\t\tOriginWorld.Biome tBiome = aWorld.getBiomeGenForCoords(j, i);\n\t\t\t\t\tif (tBiome != null) aBiomeNames.add(tBiome.biomeName());\n\t\t\t\t}\n\t\t\t\tfor (String tName : aBiomeNames) if (aWorld.isInfiniteWaterBiome(tName)) {\n\t\t\t\t\treturn generateRoadX(aWorld, aMinZ, F, T, F, T, T);\n\t\t\t\t}\n\t\t\t\treturn generateRoadX(aWorld, aMinZ, T, T, F, F, T);\n\t\t\t}\n\t\t\treturn aMinZ != -32 && aMinZ != 16 && generateRoadX(aWorld, aMinZ, F, F, F, T, !GENERATE_BIOMES);\n\t\t}\n\t\tif (aMinZ == -16 || aMinZ == 0) {\n\t\t\tif (aMinX < -96 || aMinX > 80) {\n\n\n\n\n\n\t\t\t\tfor (int tOpaqueCount = 0, i = -16; i < 16; i++) for (int j = 0; j < 16; j++) {\n\t\t\t\t\tOriginWorld.Block tBlock = aWorld.getBlock(aMinX+j, mHeight+9, i);\n\t\t\t\t\tif (tBlock.liquid() || anywater(tBlock) || (opq(tBlock) && !tBlock.wood() && !tBlock.wood() && !tBlock.leaves())) {\n\t\t\t\t\t\tif (tOpaqueCount++ > 128) {\n\t\t\t\t\t\t\treturn generateRoadZ(aWorld, aMinX, F, F, T, F, F);\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\taBiomeNames = new java.util.HashSet<>(aBiomeNames);\n\t\t\t\tfor (int i = aMinX; i <= aMaxX; i++) for (int j = (aMinZ < 0 ? 0 : -16), k = (aMinZ < 0 ? 16 : 0); j < k; j++) {\n\t\t\t\t\tOriginWorld.Biome tBiome = aWorld.getBiomeGenForCoords(i, j);\n\t\t\t\t\tif (tBiome != null) aBiomeNames.add(tBiome.biomeName());\n\t\t\t\t}\n\t\t\t\tfor (String tName : aBiomeNames) if (aWorld.isInfiniteWaterBiome(tName)) {\n\t\t\t\t\treturn generateRoadZ(aWorld, aMinX, F, T, F, T, T);\n\t\t\t\t}\n\t\t\t\treturn generateRoadZ(aWorld, aMinX, T, T, F, F, T);\n\t\t\t}\n\t\t\treturn aMinX != -32 && aMinX != 16 && generateRoadZ(aWorld, aMinX, F, F, F, T, !GENERATE_BIOMES);\n\t\t}\n\t\treturn F;\n\t}\n\n\t@SuppressWarnings(\"unchecked\")\n\tpublic final boolean generateRoadX(OriginWorld aWorld, int aMinZ, boolean aLand, boolean aKillSky, boolean aTunnel, boolean aBridge, boolean aSideWalls) {\n\t\tfor (int i = 0; i < 16; i++) {\n\t\t\tif (aLand) {\n\t\t\t\tfor (int j = mHeight+1; j > aWorld.minY(); j--) if (!opq(aWorld, -13, j, aMinZ+i, T, T)) set(aWorld, -13, j, aMinZ+i, Blocks.gravel, 1, 0, T); else break;\n\t\t\t\tfor (int j = mHeight+1; j > aWorld.minY(); j--) if (!opq(aWorld,  12, j, aMinZ+i, T, T)) set(aWorld,  12, j, aMinZ+i, Blocks.gravel, 1, 0, T); else break;\n\t\t\t\tfor (int j = mHeight  ; j > aWorld.minY(); j--) if (!opq(aWorld, -14, j, aMinZ+i, T, T)) set(aWorld, -14, j, aMinZ+i, Blocks.gravel, 1, 0, T); else break;\n\t\t\t\tfor (int j = mHeight  ; j > aWorld.minY(); j--) if (!opq(aWorld,  13, j, aMinZ+i, T, T)) set(aWorld,  13, j, aMinZ+i, Blocks.gravel, 1, 0, T); else break;\n\t\t\t\tfor (int j = mHeight-1; j > aWorld.minY(); j--) if (!opq(aWorld, -15, j, aMinZ+i, T, T)) set(aWorld, -15, j, aMinZ+i, Blocks.gravel, 1, 0, T); else break;\n\t\t\t\tfor (int j = mHeight-1; j > aWorld.minY(); j--) if (!opq(aWorld,  14, j, aMinZ+i, T, T)) set(aWorld,  14, j, aMinZ+i, Blocks.gravel, 1, 0, T); else break;\n\t\t\t\tfor (int j = mHeight-2; j > aWorld.minY(); j--) if (!opq(aWorld, -16, j, aMinZ+i, T, T)) set(aWorld, -16, j, aMinZ+i, Blocks.gravel, 1, 0, T); else break;\n\t\t\t\tfor (int j = mHeight-2; j > aWorld.minY(); j--) if (!opq(aWorld,  15, j, aMinZ+i, T, T)) set(aWorld,  15, j, aMinZ+i, Blocks.gravel, 1, 0, T); else break;\n\t\t\t}\n\t\t\tif (aTunnel) {\n\t\t\t\tfor (int j = -12; j < 12; j++)\n\t\t\t\taWorld.setBlock(  j, mHeight+7, aMinZ+i, BlocksGT.Concrete, DYE_INDEX_White, 0);\n\t\t\t\tfor (int j = 0; j < 7; j++) {\n\t\t\t\taWorld.setBlock(-13, mHeight+j, aMinZ+i, BlocksGT.Concrete, j == 3 ? DYE_INDEX_LightGray : DYE_INDEX_White, 0);\n\t\t\t\taWorld.setBlock( 12, mHeight+j, aMinZ+i, BlocksGT.Concrete, j == 3 ? DYE_INDEX_LightGray : DYE_INDEX_White, 0);\n\t\t\t\t}\n\t\t\t}\n\t\t\tif (aBridge) {\n\t\t\t\tset(aWorld, -13, mHeight  , aMinZ+i, BlocksGT.Concrete, DYE_INDEX_Gray, 0, T);\n\t\t\t\tset(aWorld,  12, mHeight  , aMinZ+i, BlocksGT.Concrete, DYE_INDEX_Gray, 0, T);\n\t\t\t\taWorld.setBlock(-13, mHeight+1, aMinZ+i, BlocksGT.Concrete, DYE_INDEX_Gray, 0);\n\t\t\t\taWorld.setBlock( 12, mHeight+1, aMinZ+i, BlocksGT.Concrete, DYE_INDEX_Gray, 0);\n\t\t\t}\n\t\t\tif (aKillSky) {\n\t\t\t\tfor (int j = -13; j < 13; j++) for (int k = 2; k < 64; k++) aWorld.setBlock(j, mHeight+k, aMinZ+i, NB, 0, 0);\n\t\t\t} else {\n\t\t\t\tfor (int j = -12; j < 12; j++) for (int k = 2; k <  7; k++) aWorld.setBlock(j, mHeight+k, aMinZ+i, NB, 0, 0);\n\t\t\t}\n\t\t\tfor (int j = -12; j < 2; j++) {\n\t\t\t\taWorld.setBlock(j, mHeight+1, aMinZ+i, NB, 0, 0);\n\t\t\t\tif (aLand) {\n\t\t\t\tset(aWorld, j, mHeight-2, aMinZ+i, Blocks.cobblestone, 0, 0, T);\n\t\t\t\taWorld.setBlock(j, mHeight-1, aMinZ+i, Blocks.gravel, 1, 0);\n\t\t\t\tfor (int k = mHeight-3; k > aWorld.minY(); k--) if (!opq(aWorld, j, k, aMinZ+i, T, T)) set(aWorld, j, k, aMinZ+i, Blocks.cobblestone, 0, 0, T); else break;\n\t\t\t\t} else {\n\t\t\t\tset(aWorld, j, mHeight-1, aMinZ+i, BlocksGT.Concrete, DYE_INDEX_Gray, 0, T);\n\t\t\t\t}\n\t\t\t}\n\t\t\tfor (int j = 1; j < 12; j++) {\n\t\t\t\taWorld.setBlock(j, mHeight+1, aMinZ+i, NB, 0, 0);\n\t\t\t\tif (aLand) {\n\t\t\t\tset(aWorld, j, mHeight-2, aMinZ+i, Blocks.cobblestone, 0, 0, T);\n\t\t\t\taWorld.setBlock(j, mHeight-1, aMinZ+i, Blocks.gravel, 1, 0);\n\t\t\t\tfor (int k = mHeight-3; k > aWorld.minY(); k--) if (!opq(aWorld, j, k, aMinZ+i, T, T)) set(aWorld, j, k, aMinZ+i, Blocks.cobblestone, 0, 0, T); else break;\n\t\t\t\t} else {\n\t\t\t\tset(aWorld, j, mHeight-1, aMinZ+i, BlocksGT.Concrete, DYE_INDEX_Gray, 0, T);\n\t\t\t\t}\n\t\t\t}\n\n\t\t\taWorld.setBlock(-12, mHeight  , aMinZ+i, BlocksGT.Asphalt, DYE_INDEX_Gray, 0); aWorld.setBlock(-12, mHeight+1, aMinZ+i, BlocksGT.FOAM_SLABS[SIDE_X_NEG], DYE_INDEX_LightGray, 0);\n\t\t\taWorld.setBlock(-11, mHeight  , aMinZ+i, BlocksGT.Asphalt, DYE_INDEX_Gray, 0); aWorld.setBlock(-11, mHeight+1, aMinZ+i, BlocksGT.RailRoad, 0, 0);\n\t\t\taWorld.setBlock(-10, mHeight  , aMinZ+i, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\taWorld.setBlock(- 9, mHeight  , aMinZ+i, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\taWorld.setBlock(- 8, mHeight  , aMinZ+i, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\taWorld.setBlock(- 7, mHeight  , aMinZ+i, BlocksGT.Asphalt, DYE_INDEX_Gray, 0); aWorld.setBlock(- 7, mHeight+1, aMinZ+i, BlocksGT.RailRoad, ((i+2) / 4) % 2 == 0 ? 8 : 0, 0);\n\t\t\taWorld.setBlock(- 6, mHeight  , aMinZ+i, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\taWorld.setBlock(- 5, mHeight  , aMinZ+i, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\taWorld.setBlock(- 4, mHeight  , aMinZ+i, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\taWorld.setBlock(- 3, mHeight  , aMinZ+i, BlocksGT.Asphalt, DYE_INDEX_Gray, 0); aWorld.setBlock(- 3, mHeight+1, aMinZ+i, BlocksGT.RailRoad, 0, 0);\n\t\t\taWorld.setBlock(- 2, mHeight  , aMinZ+i, BlocksGT.Asphalt, DYE_INDEX_Gray, 0); aWorld.setBlock(- 2, mHeight+1, aMinZ+i, BlocksGT.FOAM_SLABS[SIDE_X_POS], DYE_INDEX_LightGray, 0);\n\n\t\t\tif (aLand) {\n\t\t\tset(aWorld, - 1, mHeight-1, aMinZ+i, Blocks.cobblestone, 0, 0, T);\n\t\t\tset(aWorld, - 1, mHeight  , aMinZ+i, Blocks.gravel, 1, 0, F);\n\t\t\tset(aWorld, - 1, mHeight+1, aMinZ+i, Blocks.gravel, 1, 0, F);\n\t\t\tset(aWorld,   0, mHeight-1, aMinZ+i, Blocks.cobblestone, 0, 0, T);\n\t\t\tset(aWorld,   0, mHeight  , aMinZ+i, Blocks.gravel, 1, 0, F);\n\t\t\tset(aWorld,   0, mHeight+1, aMinZ+i, Blocks.gravel, 1, 0, F);\n\t\t\tfor (int j = mHeight-2; j > aWorld.minY(); j--) if (!opq(aWorld, - 1, j, aMinZ+i, T, T)) set(aWorld, - 1, j, aMinZ+i, Blocks.cobblestone, 0, 0, T); else break;\n\t\t\tfor (int j = mHeight-2; j > aWorld.minY(); j--) if (!opq(aWorld,   0, j, aMinZ+i, T, T)) set(aWorld,   0, j, aMinZ+i, Blocks.cobblestone, 0, 0, T); else break;\n\t\t\t} else {\n\t\t\tset(aWorld, - 1, mHeight-1, aMinZ+i, BlocksGT.Concrete, DYE_INDEX_Gray, 0, T);\n\t\t\tset(aWorld, - 1, mHeight  , aMinZ+i, BlocksGT.Concrete, DYE_INDEX_Gray, 0, F);\n\t\t\tset(aWorld, - 1, mHeight+1, aMinZ+i, BlocksGT.Concrete, DYE_INDEX_Gray, 0, F);\n\t\t\tset(aWorld,   0, mHeight-1, aMinZ+i, BlocksGT.Concrete, DYE_INDEX_Gray, 0, T);\n\t\t\tset(aWorld,   0, mHeight  , aMinZ+i, BlocksGT.Concrete, DYE_INDEX_Gray, 0, F);\n\t\t\tset(aWorld,   0, mHeight+1, aMinZ+i, BlocksGT.Concrete, DYE_INDEX_Gray, 0, F);\n\t\t\t}\n\n\t\t\taWorld.setBlock(  1, mHeight  , aMinZ+i, BlocksGT.Asphalt, DYE_INDEX_Gray, 0); aWorld.setBlock(  1, mHeight+1, aMinZ+i, BlocksGT.FOAM_SLABS[SIDE_X_NEG], DYE_INDEX_LightGray, 0);\n\t\t\taWorld.setBlock(  2, mHeight  , aMinZ+i, BlocksGT.Asphalt, DYE_INDEX_Gray, 0); aWorld.setBlock(  2, mHeight+1, aMinZ+i, BlocksGT.RailRoad, 0, 0);\n\t\t\taWorld.setBlock(  3, mHeight  , aMinZ+i, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\taWorld.setBlock(  4, mHeight  , aMinZ+i, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\taWorld.setBlock(  5, mHeight  , aMinZ+i, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\taWorld.setBlock(  6, mHeight  , aMinZ+i, BlocksGT.Asphalt, DYE_INDEX_Gray, 0); aWorld.setBlock(  6, mHeight+1, aMinZ+i, BlocksGT.RailRoad, ((i+2) / 4) % 2 == 0 ? 8 : 0, 0);\n\t\t\taWorld.setBlock(  7, mHeight  , aMinZ+i, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\taWorld.setBlock(  8, mHeight  , aMinZ+i, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\taWorld.setBlock(  9, mHeight  , aMinZ+i, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\taWorld.setBlock( 10, mHeight  , aMinZ+i, BlocksGT.Asphalt, DYE_INDEX_Gray, 0); aWorld.setBlock( 10, mHeight+1, aMinZ+i, BlocksGT.RailRoad, 0, 0);\n\t\t\taWorld.setBlock( 11, mHeight  , aMinZ+i, BlocksGT.Asphalt, DYE_INDEX_Gray, 0); aWorld.setBlock( 11, mHeight+1, aMinZ+i, BlocksGT.FOAM_SLABS[SIDE_X_POS], DYE_INDEX_LightGray, 0);\n\t\t}\n\n\t\tif (aTunnel) {\n\t\t\taWorld.setBlock(-13, mHeight+3, aMinZ+ 1, Blocks.glowstone, 0, 0);\n\t\t\taWorld.setBlock( 12, mHeight+3, aMinZ+ 1, Blocks.glowstone, 0, 0);\n\t\t\taWorld.setBlock(-13, mHeight+3, aMinZ+ 6, Blocks.glowstone, 0, 0);\n\t\t\taWorld.setBlock( 12, mHeight+3, aMinZ+ 6, Blocks.glowstone, 0, 0);\n\t\t\taWorld.setBlock(-13, mHeight+3, aMinZ+ 9, Blocks.glowstone, 0, 0);\n\t\t\taWorld.setBlock( 12, mHeight+3, aMinZ+ 9, Blocks.glowstone, 0, 0);\n\t\t\taWorld.setBlock(-13, mHeight+3, aMinZ+14, Blocks.glowstone, 0, 0);\n\t\t\taWorld.setBlock( 12, mHeight+3, aMinZ+14, Blocks.glowstone, 0, 0);\n\t\t}\n\t\tif (aSideWalls) {\n\t\t\tfor (int i =  0; i <  8; i++) {OriginWorld.Block tBlock = block(aWorld,  13, mHeight+4, aMinZ+i, T); if (tBlock.liquid() || opq(tBlock)) {for (int j = 0; j <  8; j++) for (int k = 2; k < 6; k++) set(aWorld,  12, mHeight+k, aMinZ+j, even(0, k, j)?BlocksGT.CFoam:BlocksGT.Concrete, DYE_INDEX_LightGray, 0, T); break;}}\n\t\t\tfor (int i =  0; i <  8; i++) {OriginWorld.Block tBlock = block(aWorld, -14, mHeight+4, aMinZ+i, T); if (tBlock.liquid() || opq(tBlock)) {for (int j = 0; j <  8; j++) for (int k = 2; k < 6; k++) set(aWorld, -13, mHeight+k, aMinZ+j, even(1, k, j)?BlocksGT.CFoam:BlocksGT.Concrete, DYE_INDEX_LightGray, 0, T); break;}}\n\t\t\tfor (int i =  8; i < 16; i++) {OriginWorld.Block tBlock = block(aWorld,  13, mHeight+4, aMinZ+i, T); if (tBlock.liquid() || opq(tBlock)) {for (int j = 8; j < 16; j++) for (int k = 2; k < 6; k++) set(aWorld,  12, mHeight+k, aMinZ+j, even(0, k, j)?BlocksGT.CFoam:BlocksGT.Concrete, DYE_INDEX_LightGray, 0, T); break;}}\n\t\t\tfor (int i =  8; i < 16; i++) {OriginWorld.Block tBlock = block(aWorld, -14, mHeight+4, aMinZ+i, T); if (tBlock.liquid() || opq(tBlock)) {for (int j = 8; j < 16; j++) for (int k = 2; k < 6; k++) set(aWorld, -13, mHeight+k, aMinZ+j, even(1, k, j)?BlocksGT.CFoam:BlocksGT.Concrete, DYE_INDEX_LightGray, 0, T); break;}}\n\t\t}\n\n\t\tif (aMinZ >> 9 != (aMinZ-16) >> 9) {\n\t\t\tfor (int i = 5; i < 11; i++) for (int j = 1; j < 6; j++) {\n\t\t\tset(aWorld, -13, mHeight+j, aMinZ+i, BlocksGT.Concrete, i == 5 || i == 10 || j == 1 || j == 5 ? aTunnel ? DYE_INDEX_Black : DYE_INDEX_White : aMinZ < 0 ? DYE_INDEX_Yellow : DYE_INDEX_Green, 0, j == 1);\n\t\t\tset(aWorld,  12, mHeight+j, aMinZ+i, BlocksGT.Concrete, i == 5 || i == 10 || j == 1 || j == 5 ? aTunnel ? DYE_INDEX_Black : DYE_INDEX_White : aMinZ < 0 ? DYE_INDEX_Yellow : DYE_INDEX_Green, 0, j == 1);\n\t\t\t}\n\t\t\taWorld.sign( -12, mHeight+3, aMinZ+7, SIDE_X_POS, 0, \"\", \"X: -1\", \"Z: \" + ((aMinZ-16) >> 9), \"\");\n\t\t\taWorld.sign( -12, mHeight+3, aMinZ+8, SIDE_X_POS, 0, \"\", \"X: -1\", \"Z: \" + ( aMinZ     >> 9), \"\");\n\t\t\taWorld.sign(  11, mHeight+3, aMinZ+7, SIDE_X_NEG, 0, \"\", \"X: 0\" , \"Z: \" + ((aMinZ-16) >> 9), \"\");\n\t\t\taWorld.sign(  11, mHeight+3, aMinZ+8, SIDE_X_NEG, 0, \"\", \"X: 0\" , \"Z: \" + ( aMinZ     >> 9), \"\");\n\n\t\t\taWorld.setBlock(-13, mHeight+1, aMinZ+ 5, Blocks.glowstone, 0, 0);\n\t\t\taWorld.setBlock(-13, mHeight+1, aMinZ+10, Blocks.glowstone, 0, 0);\n\t\t\taWorld.setBlock(-13, mHeight+5, aMinZ+ 5, Blocks.glowstone, 0, 0);\n\t\t\taWorld.setBlock(-13, mHeight+5, aMinZ+10, Blocks.glowstone, 0, 0);\n\t\t\taWorld.setBlock( 12, mHeight+1, aMinZ+ 5, Blocks.glowstone, 0, 0);\n\t\t\taWorld.setBlock( 12, mHeight+1, aMinZ+10, Blocks.glowstone, 0, 0);\n\t\t\taWorld.setBlock( 12, mHeight+5, aMinZ+ 5, Blocks.glowstone, 0, 0);\n\t\t\taWorld.setBlock( 12, mHeight+5, aMinZ+10, Blocks.glowstone, 0, 0);\n\t\t}\n\t\tif (aMinZ >> 9 != (aMinZ+16) >> 9) {\n\t\t\taWorld.setBlock(- 2, mHeight+1, aMinZ+0, BlocksGT.FOAM_SLABS[SIDE_X_POS], DYE_INDEX_White, 0);\n\t\t\taWorld.setBlock(- 2, mHeight+1, aMinZ+1, BlocksGT.FOAM_SLABS[SIDE_X_POS], DYE_INDEX_Red, 0);\n\t\t\taWorld.setBlock(- 2, mHeight+1, aMinZ+2, NB, 0, 0);\n\t\t\taWorld.setBlock(- 1, mHeight+1, aMinZ+2, BlocksGT.FOAM_SLABS[SIDE_Z_NEG], DYE_INDEX_White, 0);\n\t\t\taWorld.setBlock(  0, mHeight+1, aMinZ+2, BlocksGT.FOAM_SLABS[SIDE_Z_NEG], DYE_INDEX_Red, 0);\n\t\t\taWorld.setBlock(  1, mHeight+1, aMinZ+2, NB, 0, 0);\n\t\t\taWorld.setBlock(  1, mHeight+1, aMinZ+1, BlocksGT.FOAM_SLABS[SIDE_X_NEG], DYE_INDEX_White, 0);\n\t\t\taWorld.setBlock(  1, mHeight+1, aMinZ+0, BlocksGT.FOAM_SLABS[SIDE_X_NEG], DYE_INDEX_Red, 0);\n\n\t\t\tfor (int i = 2; i < 14; i++) {\n\t\t\taWorld.setBlock(- 1, mHeight  , aMinZ+i, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\taWorld.setBlock(  0, mHeight  , aMinZ+i, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\t}\n\t\t\tfor (int i = 3; i < 13; i++) {\n\t\t\taWorld.setBlock(- 2, mHeight+1, aMinZ+i, NB, 0, 0);\n\t\t\taWorld.setBlock(- 1, mHeight+1, aMinZ+i, NB, 0, 0);\n\t\t\taWorld.setBlock(  0, mHeight+1, aMinZ+i, NB, 0, 0);\n\t\t\taWorld.setBlock(  1, mHeight+1, aMinZ+i, NB, 0, 0);\n\t\t\t}\n\n\t\t\taWorld.setBlock(- 2, mHeight+1, aMinZ+15, BlocksGT.FOAM_SLABS[SIDE_X_POS], DYE_INDEX_Red, 0);\n\t\t\taWorld.setBlock(- 2, mHeight+1, aMinZ+14, BlocksGT.FOAM_SLABS[SIDE_X_POS], DYE_INDEX_White, 0);\n\t\t\taWorld.setBlock(- 2, mHeight+1, aMinZ+13, NB, 0, 0);\n\t\t\taWorld.setBlock(- 1, mHeight+1, aMinZ+13, BlocksGT.FOAM_SLABS[SIDE_Z_POS], DYE_INDEX_Red, 0);\n\t\t\taWorld.setBlock(  0, mHeight+1, aMinZ+13, BlocksGT.FOAM_SLABS[SIDE_Z_POS], DYE_INDEX_White, 0);\n\t\t\taWorld.setBlock(  1, mHeight+1, aMinZ+13, NB, 0, 0);\n\t\t\taWorld.setBlock(  1, mHeight+1, aMinZ+14, BlocksGT.FOAM_SLABS[SIDE_X_NEG], DYE_INDEX_Red, 0);\n\t\t\taWorld.setBlock(  1, mHeight+1, aMinZ+15, BlocksGT.FOAM_SLABS[SIDE_X_NEG], DYE_INDEX_White, 0);\n\n\t\t\tif (aTunnel) {\n\t\t\t\tfor (int i = 0; i < 7; i++) {\n\t\t\t\t\taWorld.setBlock(-1, mHeight+i, aMinZ+ 0, BlocksGT.Concrete, i == 3 ? DYE_INDEX_LightGray : DYE_INDEX_White, 0);\n\t\t\t\t\taWorld.setBlock(-1, mHeight+i, aMinZ+ 1, BlocksGT.Concrete, i == 3 ? DYE_INDEX_LightGray : DYE_INDEX_White, 0);\n\t\t\t\t\taWorld.setBlock( 0, mHeight+i, aMinZ+ 0, BlocksGT.Concrete, i == 3 ? DYE_INDEX_LightGray : DYE_INDEX_White, 0);\n\t\t\t\t\taWorld.setBlock( 0, mHeight+i, aMinZ+ 1, BlocksGT.Concrete, i == 3 ? DYE_INDEX_LightGray : DYE_INDEX_White, 0);\n\t\t\t\t\taWorld.setBlock(-1, mHeight+i, aMinZ+14, BlocksGT.Concrete, i == 3 ? DYE_INDEX_LightGray : DYE_INDEX_White, 0);\n\t\t\t\t\taWorld.setBlock(-1, mHeight+i, aMinZ+15, BlocksGT.Concrete, i == 3 ? DYE_INDEX_LightGray : DYE_INDEX_White, 0);\n\t\t\t\t\taWorld.setBlock( 0, mHeight+i, aMinZ+14, BlocksGT.Concrete, i == 3 ? DYE_INDEX_LightGray : DYE_INDEX_White, 0);\n\t\t\t\t\taWorld.setBlock( 0, mHeight+i, aMinZ+15, BlocksGT.Concrete, i == 3 ? DYE_INDEX_LightGray : DYE_INDEX_White, 0);\n\t\t\t\t}\n\t\t\t}\n\t\t} else {\n\t\t\tif (aTunnel) {\n\t\t\t\tfor (int i = 0; i < 7; i++) {\n\t\t\t\t\taWorld.setBlock(-1, mHeight+i, aMinZ+ 7, BlocksGT.Concrete, i == 3 ? DYE_INDEX_LightGray : DYE_INDEX_White, 0);\n\t\t\t\t\taWorld.setBlock(-1, mHeight+i, aMinZ+ 8, BlocksGT.Concrete, i == 3 ? DYE_INDEX_LightGray : DYE_INDEX_White, 0);\n\t\t\t\t\taWorld.setBlock( 0, mHeight+i, aMinZ+ 7, BlocksGT.Concrete, i == 3 ? DYE_INDEX_LightGray : DYE_INDEX_White, 0);\n\t\t\t\t\taWorld.setBlock( 0, mHeight+i, aMinZ+ 8, BlocksGT.Concrete, i == 3 ? DYE_INDEX_LightGray : DYE_INDEX_White, 0);\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\n\t\tif (aBridge) {\n\t\t\tfor (int i = 6; i <= 9; i++) {\n\t\t\t\tfor (int j = -9; j <= -6; j++) {\n\t\t\t\t\taWorld.setBlock(j, mHeight-2, aMinZ+i, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\taWorld.setBlock(j, mHeight-3, aMinZ+i, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t}\n\t\t\t\tfor (int j = 5; j <= 8; j++) {\n\t\t\t\t\taWorld.setBlock(j, mHeight-2, aMinZ+i, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\taWorld.setBlock(j, mHeight-3, aMinZ+i, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t}\n\t\t\t}\n\t\t\tfor (int k = mHeight-4; k > aWorld.minY(); k--) if (!(opq(aWorld, -10, k, aMinZ+10, T, T) && opq(aWorld, -5, k, aMinZ+10, T, T) && opq(aWorld, -10, k, aMinZ+5, T, T) && opq(aWorld, -5, k, aMinZ+5, T, T))) {\n\t\t\t\taWorld.setBlock( -7, k, aMinZ+7, BlocksGT.Concrete, DYE_INDEX_Gray, 0);\n\t\t\t\taWorld.setBlock( -8, k, aMinZ+8, BlocksGT.Concrete, DYE_INDEX_Gray, 0);\n\t\t\t\taWorld.setBlock( -7, k, aMinZ+8, BlocksGT.Concrete, DYE_INDEX_Gray, 0);\n\t\t\t\taWorld.setBlock( -8, k, aMinZ+7, BlocksGT.Concrete, DYE_INDEX_Gray, 0);\n\t\t\t} else {\n\t\t\t\tfor (int i = 6; i <= 9; i++) for (int j = -9; j <= -6; j++) {\n\t\t\t\t\tif (k>aWorld.minY()+(-3)) aWorld.setBlock(j, k+3, aMinZ+i, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\tif (k>aWorld.minY()+(-2)) aWorld.setBlock(j, k+2, aMinZ+i, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\tif (k>aWorld.minY()+(-1)) aWorld.setBlock(j, k+1, aMinZ+i, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\tif (k>aWorld.minY()+(0)) aWorld.setBlock(j, k  , aMinZ+i, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\tif (k>aWorld.minY()+(+1)) aWorld.setBlock(j, k-1, aMinZ+i, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\tif (k>aWorld.minY()+(+2)) aWorld.setBlock(j, k-2, aMinZ+i, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\tif (k>aWorld.minY()+(+3)) aWorld.setBlock(j, k-3, aMinZ+i, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t}\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\tfor (int k = mHeight-4; k > aWorld.minY(); k--) if (!(opq(aWorld, 9, k, aMinZ+10, T, T) && opq(aWorld, 4, k, aMinZ+10, T, T) && opq(aWorld, 9, k, aMinZ+5, T, T) && opq(aWorld, 4, k, aMinZ+5, T, T))) {\n\t\t\t\taWorld.setBlock(  6, k, aMinZ+7, BlocksGT.Concrete, DYE_INDEX_Gray, 0);\n\t\t\t\taWorld.setBlock(  7, k, aMinZ+8, BlocksGT.Concrete, DYE_INDEX_Gray, 0);\n\t\t\t\taWorld.setBlock(  6, k, aMinZ+8, BlocksGT.Concrete, DYE_INDEX_Gray, 0);\n\t\t\t\taWorld.setBlock(  7, k, aMinZ+7, BlocksGT.Concrete, DYE_INDEX_Gray, 0);\n\t\t\t} else {\n\t\t\t\tfor (int i = 6; i <= 9; i++) for (int j = 5; j <= 8; j++) {\n\t\t\t\t\tif (k>aWorld.minY()+(-3)) aWorld.setBlock(j, k+3, aMinZ+i, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\tif (k>aWorld.minY()+(-2)) aWorld.setBlock(j, k+2, aMinZ+i, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\tif (k>aWorld.minY()+(-1)) aWorld.setBlock(j, k+1, aMinZ+i, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\tif (k>aWorld.minY()+(0)) aWorld.setBlock(j, k  , aMinZ+i, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\tif (k>aWorld.minY()+(+1)) aWorld.setBlock(j, k-1, aMinZ+i, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\tif (k>aWorld.minY()+(+2)) aWorld.setBlock(j, k-2, aMinZ+i, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\tif (k>aWorld.minY()+(+3)) aWorld.setBlock(j, k-3, aMinZ+i, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t}\n\t\t\t\tbreak;\n\t\t\t}\n\t\t}\n\n\t\t// Kill every living thing close by except Players.\n\t\taWorld.clearNonPlayerEntities(-16, mHeight, aMinZ, +16, mHeight+8, aMinZ+16);\n\t\treturn T;\n\t}\n\n\t@SuppressWarnings(\"unchecked\")\n\tpublic final boolean generateRoadZ(OriginWorld aWorld, int aMinX, boolean aLand, boolean aKillSky, boolean aTunnel, boolean aBridge, boolean aSideWalls) {\n\t\tfor (int i = 0; i < 16; i++) {\n\t\t\tif (aLand) {\n\t\t\t\tfor (int j = mHeight+1; j > aWorld.minY(); j--) if (!opq(aWorld, aMinX+i, j, -13, T, T)) set(aWorld, aMinX+i, j, -13, Blocks.gravel, 1, 0, T); else break;\n\t\t\t\tfor (int j = mHeight+1; j > aWorld.minY(); j--) if (!opq(aWorld, aMinX+i, j,  12, T, T)) set(aWorld, aMinX+i, j,  12, Blocks.gravel, 1, 0, T); else break;\n\t\t\t\tfor (int j = mHeight  ; j > aWorld.minY(); j--) if (!opq(aWorld, aMinX+i, j, -14, T, T)) set(aWorld, aMinX+i, j, -14, Blocks.gravel, 1, 0, T); else break;\n\t\t\t\tfor (int j = mHeight  ; j > aWorld.minY(); j--) if (!opq(aWorld, aMinX+i, j,  13, T, T)) set(aWorld, aMinX+i, j,  13, Blocks.gravel, 1, 0, T); else break;\n\t\t\t\tfor (int j = mHeight-1; j > aWorld.minY(); j--) if (!opq(aWorld, aMinX+i, j, -15, T, T)) set(aWorld, aMinX+i, j, -15, Blocks.gravel, 1, 0, T); else break;\n\t\t\t\tfor (int j = mHeight-1; j > aWorld.minY(); j--) if (!opq(aWorld, aMinX+i, j,  14, T, T)) set(aWorld, aMinX+i, j,  14, Blocks.gravel, 1, 0, T); else break;\n\t\t\t\tfor (int j = mHeight-2; j > aWorld.minY(); j--) if (!opq(aWorld, aMinX+i, j, -16, T, T)) set(aWorld, aMinX+i, j, -16, Blocks.gravel, 1, 0, T); else break;\n\t\t\t\tfor (int j = mHeight-2; j > aWorld.minY(); j--) if (!opq(aWorld, aMinX+i, j,  15, T, T)) set(aWorld, aMinX+i, j,  15, Blocks.gravel, 1, 0, T); else break;\n\t\t\t}\n\t\t\tif (aTunnel) {\n\t\t\t\tfor (int j = -12; j < 12; j++)\n\t\t\t\taWorld.setBlock(aMinX+i, mHeight+7,   j, BlocksGT.Concrete, DYE_INDEX_White, 0);\n\t\t\t\tfor (int j = 0; j < 7; j++) {\n\t\t\t\taWorld.setBlock(aMinX+i, mHeight+j, -13, BlocksGT.Concrete, j == 3 ? DYE_INDEX_LightGray : DYE_INDEX_White, 0);\n\t\t\t\taWorld.setBlock(aMinX+i, mHeight+j,  12, BlocksGT.Concrete, j == 3 ? DYE_INDEX_LightGray : DYE_INDEX_White, 0);\n\t\t\t\t}\n\t\t\t}\n\t\t\tif (aBridge) {\n\t\t\t\tset(aWorld, aMinX+i, mHeight  , -13, BlocksGT.Concrete, DYE_INDEX_Gray, 0, T);\n\t\t\t\tset(aWorld, aMinX+i, mHeight  ,  12, BlocksGT.Concrete, DYE_INDEX_Gray, 0, T);\n\t\t\t\taWorld.setBlock(aMinX+i, mHeight+1, -13, BlocksGT.Concrete, DYE_INDEX_Gray, 0);\n\t\t\t\taWorld.setBlock(aMinX+i, mHeight+1,  12, BlocksGT.Concrete, DYE_INDEX_Gray, 0);\n\t\t\t}\n\t\t\tif (aKillSky) {\n\t\t\t\tfor (int j = -13; j < 13; j++) for (int k = 2; k < 32; k++) aWorld.setBlock(aMinX+i, mHeight+k, j, NB, 0, 0);\n\t\t\t} else {\n\t\t\t\tfor (int j = -12; j < 12; j++) for (int k = 2; k <  7; k++) aWorld.setBlock(aMinX+i, mHeight+k, j, NB, 0, 0);\n\t\t\t}\n\t\t\tfor (int j = -12; j < 2; j++) {\n\t\t\t\taWorld.setBlock(aMinX+i, mHeight+1, j, NB, 0, 0);\n\t\t\t\tif (aLand) {\n\t\t\t\tset(aWorld, aMinX+i, mHeight-2, j, Blocks.cobblestone, 0, 0, T);\n\t\t\t\taWorld.setBlock(aMinX+i, mHeight-1, j, Blocks.gravel, 1, 0);\n\t\t\t\tfor (int k = mHeight-3; k > aWorld.minY(); k--) if (!opq(aWorld, aMinX+i, k, j, T, T)) set(aWorld, aMinX+i, k, j, Blocks.cobblestone, 0, 0, T); else break;\n\t\t\t\t} else {\n\t\t\t\tset(aWorld, aMinX+i, mHeight-1, j, BlocksGT.Concrete, DYE_INDEX_Gray, 0, T);\n\t\t\t\t}\n\t\t\t}\n\t\t\tfor (int j = 1; j < 12; j++) {\n\t\t\t\taWorld.setBlock(aMinX+i, mHeight+1, j, NB, 0, 0);\n\t\t\t\tif (aLand) {\n\t\t\t\tset(aWorld, aMinX+i, mHeight-2, j, Blocks.cobblestone, 0, 0, T);\n\t\t\t\taWorld.setBlock(aMinX+i, mHeight-1, j, Blocks.gravel, 1, 0);\n\t\t\t\tfor (int k = mHeight-3; k > aWorld.minY(); k--) if (!opq(aWorld, aMinX+i, k, j, T, T)) set(aWorld, aMinX+i, k, j, Blocks.cobblestone, 0, 0, T); else break;\n\t\t\t\t} else {\n\t\t\t\tset(aWorld, aMinX+i, mHeight-1, j, BlocksGT.Concrete, DYE_INDEX_Gray, 0, T);\n\t\t\t\t}\n\t\t\t}\n\n\t\t\taWorld.setBlock(aMinX+i, mHeight  , -12, BlocksGT.Asphalt, DYE_INDEX_Gray, 0); aWorld.setBlock(aMinX+i, mHeight+1, -12, BlocksGT.FOAM_SLABS[SIDE_Z_NEG], DYE_INDEX_LightGray, 0);\n\t\t\taWorld.setBlock(aMinX+i, mHeight  , -11, BlocksGT.Asphalt, DYE_INDEX_Gray, 0); aWorld.setBlock(aMinX+i, mHeight+1, -11, BlocksGT.RailRoad, 1, 0);\n\t\t\taWorld.setBlock(aMinX+i, mHeight  , -10, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\taWorld.setBlock(aMinX+i, mHeight  , - 9, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\taWorld.setBlock(aMinX+i, mHeight  , - 8, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\taWorld.setBlock(aMinX+i, mHeight  , - 7, BlocksGT.Asphalt, DYE_INDEX_Gray, 0); aWorld.setBlock(aMinX+i, mHeight+1, - 7, BlocksGT.RailRoad, ((i+2) / 4) % 2 == 0 ? 9 : 1, 0);\n\t\t\taWorld.setBlock(aMinX+i, mHeight  , - 6, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\taWorld.setBlock(aMinX+i, mHeight  , - 5, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\taWorld.setBlock(aMinX+i, mHeight  , - 4, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\taWorld.setBlock(aMinX+i, mHeight  , - 3, BlocksGT.Asphalt, DYE_INDEX_Gray, 0); aWorld.setBlock(aMinX+i, mHeight+1, - 3, BlocksGT.RailRoad, 1, 0);\n\t\t\taWorld.setBlock(aMinX+i, mHeight  , - 2, BlocksGT.Asphalt, DYE_INDEX_Gray, 0); aWorld.setBlock(aMinX+i, mHeight+1, - 2, BlocksGT.FOAM_SLABS[SIDE_Z_POS], DYE_INDEX_LightGray, 0);\n\n\t\t\tif (aLand) {\n\t\t\tset(aWorld, aMinX+i, mHeight-1, - 1, Blocks.cobblestone, 0, 0, T);\n\t\t\tset(aWorld, aMinX+i, mHeight  , - 1, Blocks.gravel, 1, 0, F);\n\t\t\tset(aWorld, aMinX+i, mHeight+1, - 1, Blocks.gravel, 1, 0, F);\n\t\t\tset(aWorld, aMinX+i, mHeight-1,   0, Blocks.cobblestone, 0, 0, T);\n\t\t\tset(aWorld, aMinX+i, mHeight  ,   0, Blocks.gravel, 1, 0, F);\n\t\t\tset(aWorld, aMinX+i, mHeight+1,   0, Blocks.gravel, 1, 0, F);\n\t\t\tfor (int j = mHeight-2; j > aWorld.minY(); j--) if (!opq(aWorld, aMinX+i, j, - 1, T, T)) set(aWorld, aMinX+i, j, - 1, Blocks.cobblestone, 0, 0, T); else break;\n\t\t\tfor (int j = mHeight-2; j > aWorld.minY(); j--) if (!opq(aWorld, aMinX+i, j,   0, T, T)) set(aWorld, aMinX+i, j,   0, Blocks.cobblestone, 0, 0, T); else break;\n\t\t\t} else {\n\t\t\tset(aWorld, aMinX+i, mHeight-1, - 1, BlocksGT.Concrete, DYE_INDEX_Gray, 0, T);\n\t\t\tset(aWorld, aMinX+i, mHeight  , - 1, BlocksGT.Concrete, DYE_INDEX_Gray, 0, F);\n\t\t\tset(aWorld, aMinX+i, mHeight+1, - 1, BlocksGT.Concrete, DYE_INDEX_Gray, 0, F);\n\t\t\tset(aWorld, aMinX+i, mHeight-1,   0, BlocksGT.Concrete, DYE_INDEX_Gray, 0, T);\n\t\t\tset(aWorld, aMinX+i, mHeight  ,   0, BlocksGT.Concrete, DYE_INDEX_Gray, 0, F);\n\t\t\tset(aWorld, aMinX+i, mHeight+1,   0, BlocksGT.Concrete, DYE_INDEX_Gray, 0, F);\n\t\t\t}\n\n\t\t\taWorld.setBlock(aMinX+i, mHeight  ,   1, BlocksGT.Asphalt, DYE_INDEX_Gray, 0); aWorld.setBlock(aMinX+i, mHeight+1,   1, BlocksGT.FOAM_SLABS[SIDE_Z_NEG], DYE_INDEX_LightGray, 0);\n\t\t\taWorld.setBlock(aMinX+i, mHeight  ,   2, BlocksGT.Asphalt, DYE_INDEX_Gray, 0); aWorld.setBlock(aMinX+i, mHeight+1,   2, BlocksGT.RailRoad, 1, 0);\n\t\t\taWorld.setBlock(aMinX+i, mHeight  ,   3, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\taWorld.setBlock(aMinX+i, mHeight  ,   4, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\taWorld.setBlock(aMinX+i, mHeight  ,   5, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\taWorld.setBlock(aMinX+i, mHeight  ,   6, BlocksGT.Asphalt, DYE_INDEX_Gray, 0); aWorld.setBlock(aMinX+i, mHeight+1,   6, BlocksGT.RailRoad, ((i+2) / 4) % 2 == 0 ? 9 : 1, 0);\n\t\t\taWorld.setBlock(aMinX+i, mHeight  ,   7, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\taWorld.setBlock(aMinX+i, mHeight  ,   8, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\taWorld.setBlock(aMinX+i, mHeight  ,   9, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\taWorld.setBlock(aMinX+i, mHeight  ,  10, BlocksGT.Asphalt, DYE_INDEX_Gray, 0); aWorld.setBlock(aMinX+i, mHeight+1,  10, BlocksGT.RailRoad, 1, 0);\n\t\t\taWorld.setBlock(aMinX+i, mHeight  ,  11, BlocksGT.Asphalt, DYE_INDEX_Gray, 0); aWorld.setBlock(aMinX+i, mHeight+1,  11, BlocksGT.FOAM_SLABS[SIDE_Z_POS], DYE_INDEX_LightGray, 0);\n\t\t}\n\n\t\tif (aTunnel) {\n\t\t\taWorld.setBlock(aMinX+ 1, mHeight+3, -13, Blocks.glowstone, 0, 0);\n\t\t\taWorld.setBlock(aMinX+ 1, mHeight+3,  12, Blocks.glowstone, 0, 0);\n\t\t\taWorld.setBlock(aMinX+ 6, mHeight+3, -13, Blocks.glowstone, 0, 0);\n\t\t\taWorld.setBlock(aMinX+ 6, mHeight+3,  12, Blocks.glowstone, 0, 0);\n\t\t\taWorld.setBlock(aMinX+ 9, mHeight+3, -13, Blocks.glowstone, 0, 0);\n\t\t\taWorld.setBlock(aMinX+ 9, mHeight+3,  12, Blocks.glowstone, 0, 0);\n\t\t\taWorld.setBlock(aMinX+14, mHeight+3, -13, Blocks.glowstone, 0, 0);\n\t\t\taWorld.setBlock(aMinX+14, mHeight+3,  12, Blocks.glowstone, 0, 0);\n\t\t}\n\t\tif (aSideWalls) {\n\t\t\tfor (int i =  0; i <  8; i++) {OriginWorld.Block tBlock = block(aWorld, aMinX+i, mHeight+4,  13, T); if (tBlock.liquid() || opq(tBlock)) {for (int j = 0; j <  8; j++) for (int k = 2; k < 6; k++) set(aWorld, aMinX+j, mHeight+k,  12, even(0, k, j)?BlocksGT.CFoam:BlocksGT.Concrete, DYE_INDEX_LightGray, 0, T); break;}}\n\t\t\tfor (int i =  0; i <  8; i++) {OriginWorld.Block tBlock = block(aWorld, aMinX+i, mHeight+4, -14, T); if (tBlock.liquid() || opq(tBlock)) {for (int j = 0; j <  8; j++) for (int k = 2; k < 6; k++) set(aWorld, aMinX+j, mHeight+k, -13, even(1, k, j)?BlocksGT.CFoam:BlocksGT.Concrete, DYE_INDEX_LightGray, 0, T); break;}}\n\t\t\tfor (int i =  8; i < 16; i++) {OriginWorld.Block tBlock = block(aWorld, aMinX+i, mHeight+4,  13, T); if (tBlock.liquid() || opq(tBlock)) {for (int j = 8; j < 16; j++) for (int k = 2; k < 6; k++) set(aWorld, aMinX+j, mHeight+k,  12, even(0, k, j)?BlocksGT.CFoam:BlocksGT.Concrete, DYE_INDEX_LightGray, 0, T); break;}}\n\t\t\tfor (int i =  8; i < 16; i++) {OriginWorld.Block tBlock = block(aWorld, aMinX+i, mHeight+4, -14, T); if (tBlock.liquid() || opq(tBlock)) {for (int j = 8; j < 16; j++) for (int k = 2; k < 6; k++) set(aWorld, aMinX+j, mHeight+k, -13, even(1, k, j)?BlocksGT.CFoam:BlocksGT.Concrete, DYE_INDEX_LightGray, 0, T); break;}}\n\t\t}\n\n\t\tif (aMinX >> 9 != (aMinX-16) >> 9) {\n\t\t\tfor (int i = 5; i < 11; i++) for (int j = 1; j < 6; j++) {\n\t\t\tset(aWorld, aMinX+i, mHeight+j, -13, BlocksGT.Concrete, i == 5 || i == 10 || j == 1 || j == 5 ? aTunnel ? DYE_INDEX_Black : DYE_INDEX_White : aMinX < 0 ? DYE_INDEX_Blue : DYE_INDEX_Red, 0, j == 1);\n\t\t\tset(aWorld, aMinX+i, mHeight+j,  12, BlocksGT.Concrete, i == 5 || i == 10 || j == 1 || j == 5 ? aTunnel ? DYE_INDEX_Black : DYE_INDEX_White : aMinX < 0 ? DYE_INDEX_Blue : DYE_INDEX_Red, 0, j == 1);\n\t\t\t}\n\t\t\taWorld.sign( aMinX+7, mHeight+3, -12, SIDE_Z_POS, 0, \"\", \"X: \" + ((aMinX-16) >> 9), \"Z: -1\", \"\");\n\t\t\taWorld.sign( aMinX+8, mHeight+3, -12, SIDE_Z_POS, 0, \"\", \"X: \" + ( aMinX     >> 9), \"Z: -1\", \"\");\n\t\t\taWorld.sign( aMinX+7, mHeight+3,  11, SIDE_Z_NEG, 0, \"\", \"X: \" + ((aMinX-16) >> 9), \"Z: 0\" , \"\");\n\t\t\taWorld.sign( aMinX+8, mHeight+3,  11, SIDE_Z_NEG, 0, \"\", \"X: \" + ( aMinX     >> 9), \"Z: 0\" , \"\");\n\n\t\t\taWorld.setBlock(aMinX+ 5, mHeight+1, -13, Blocks.glowstone, 0, 0);\n\t\t\taWorld.setBlock(aMinX+10, mHeight+1, -13, Blocks.glowstone, 0, 0);\n\t\t\taWorld.setBlock(aMinX+ 5, mHeight+5, -13, Blocks.glowstone, 0, 0);\n\t\t\taWorld.setBlock(aMinX+10, mHeight+5, -13, Blocks.glowstone, 0, 0);\n\t\t\taWorld.setBlock(aMinX+ 5, mHeight+1,  12, Blocks.glowstone, 0, 0);\n\t\t\taWorld.setBlock(aMinX+10, mHeight+1,  12, Blocks.glowstone, 0, 0);\n\t\t\taWorld.setBlock(aMinX+ 5, mHeight+5,  12, Blocks.glowstone, 0, 0);\n\t\t\taWorld.setBlock(aMinX+10, mHeight+5,  12, Blocks.glowstone, 0, 0);\n\t\t}\n\t\tif (aMinX >> 9 != (aMinX+16) >> 9) {\n\t\t\taWorld.setBlock(aMinX+0, mHeight+1, - 2, BlocksGT.FOAM_SLABS[SIDE_Z_POS], DYE_INDEX_White, 0);\n\t\t\taWorld.setBlock(aMinX+1, mHeight+1, - 2, BlocksGT.FOAM_SLABS[SIDE_Z_POS], DYE_INDEX_Red, 0);\n\t\t\taWorld.setBlock(aMinX+2, mHeight+1, - 2, NB, 0, 0);\n\t\t\taWorld.setBlock(aMinX+2, mHeight+1, - 1, BlocksGT.FOAM_SLABS[SIDE_X_NEG], DYE_INDEX_White, 0);\n\t\t\taWorld.setBlock(aMinX+2, mHeight+1,   0, BlocksGT.FOAM_SLABS[SIDE_X_NEG], DYE_INDEX_Red, 0);\n\t\t\taWorld.setBlock(aMinX+2, mHeight+1,   1, NB, 0, 0);\n\t\t\taWorld.setBlock(aMinX+1, mHeight+1,   1, BlocksGT.FOAM_SLABS[SIDE_Z_NEG], DYE_INDEX_White, 0);\n\t\t\taWorld.setBlock(aMinX+0, mHeight+1,   1, BlocksGT.FOAM_SLABS[SIDE_Z_NEG], DYE_INDEX_Red, 0);\n\n\t\t\tfor (int i = 2; i < 14; i++) {\n\t\t\taWorld.setBlock(aMinX+i, mHeight  , - 1, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\taWorld.setBlock(aMinX+i, mHeight  ,   0, BlocksGT.Asphalt, DYE_INDEX_Gray, 0);\n\t\t\t}\n\t\t\tfor (int i = 3; i < 13; i++) {\n\t\t\taWorld.setBlock(aMinX+i, mHeight+1, - 2, NB, 0, 0);\n\t\t\taWorld.setBlock(aMinX+i, mHeight+1, - 1, NB, 0, 0);\n\t\t\taWorld.setBlock(aMinX+i, mHeight+1,   0, NB, 0, 0);\n\t\t\taWorld.setBlock(aMinX+i, mHeight+1,   1, NB, 0, 0);\n\t\t\t}\n\n\t\t\taWorld.setBlock(aMinX+15, mHeight+1, - 2, BlocksGT.FOAM_SLABS[SIDE_Z_POS], DYE_INDEX_Red, 0);\n\t\t\taWorld.setBlock(aMinX+14, mHeight+1, - 2, BlocksGT.FOAM_SLABS[SIDE_Z_POS], DYE_INDEX_White, 0);\n\t\t\taWorld.setBlock(aMinX+13, mHeight+1, - 2, NB, 0, 0);\n\t\t\taWorld.setBlock(aMinX+13, mHeight+1, - 1, BlocksGT.FOAM_SLABS[SIDE_X_POS], DYE_INDEX_Red, 0);\n\t\t\taWorld.setBlock(aMinX+13, mHeight+1,   0, BlocksGT.FOAM_SLABS[SIDE_X_POS], DYE_INDEX_White, 0);\n\t\t\taWorld.setBlock(aMinX+13, mHeight+1,   1, NB, 0, 0);\n\t\t\taWorld.setBlock(aMinX+14, mHeight+1,   1, BlocksGT.FOAM_SLABS[SIDE_Z_NEG], DYE_INDEX_Red, 0);\n\t\t\taWorld.setBlock(aMinX+15, mHeight+1,   1, BlocksGT.FOAM_SLABS[SIDE_Z_NEG], DYE_INDEX_White, 0);\n\n\t\t\tif (aTunnel) {\n\t\t\t\tfor (int i = 0; i < 7; i++) {\n\t\t\t\t\taWorld.setBlock(aMinX+ 0, mHeight+i, -1, BlocksGT.Concrete, i == 3 ? DYE_INDEX_LightGray : DYE_INDEX_White, 0);\n\t\t\t\t\taWorld.setBlock(aMinX+ 0, mHeight+i,  0, BlocksGT.Concrete, i == 3 ? DYE_INDEX_LightGray : DYE_INDEX_White, 0);\n\t\t\t\t\taWorld.setBlock(aMinX+ 1, mHeight+i, -1, BlocksGT.Concrete, i == 3 ? DYE_INDEX_LightGray : DYE_INDEX_White, 0);\n\t\t\t\t\taWorld.setBlock(aMinX+ 1, mHeight+i,  0, BlocksGT.Concrete, i == 3 ? DYE_INDEX_LightGray : DYE_INDEX_White, 0);\n\t\t\t\t\taWorld.setBlock(aMinX+14, mHeight+i, -1, BlocksGT.Concrete, i == 3 ? DYE_INDEX_LightGray : DYE_INDEX_White, 0);\n\t\t\t\t\taWorld.setBlock(aMinX+14, mHeight+i,  0, BlocksGT.Concrete, i == 3 ? DYE_INDEX_LightGray : DYE_INDEX_White, 0);\n\t\t\t\t\taWorld.setBlock(aMinX+15, mHeight+i, -1, BlocksGT.Concrete, i == 3 ? DYE_INDEX_LightGray : DYE_INDEX_White, 0);\n\t\t\t\t\taWorld.setBlock(aMinX+15, mHeight+i,  0, BlocksGT.Concrete, i == 3 ? DYE_INDEX_LightGray : DYE_INDEX_White, 0);\n\t\t\t\t}\n\t\t\t}\n\t\t} else {\n\t\t\tif (aTunnel) {\n\t\t\t\tfor (int i = 0; i < 7; i++) {\n\t\t\t\t\taWorld.setBlock(aMinX+ 7, mHeight+i, -1, BlocksGT.Concrete, i == 3 ? DYE_INDEX_LightGray : DYE_INDEX_White, 0);\n\t\t\t\t\taWorld.setBlock(aMinX+ 7, mHeight+i,  0, BlocksGT.Concrete, i == 3 ? DYE_INDEX_LightGray : DYE_INDEX_White, 0);\n\t\t\t\t\taWorld.setBlock(aMinX+ 8, mHeight+i, -1, BlocksGT.Concrete, i == 3 ? DYE_INDEX_LightGray : DYE_INDEX_White, 0);\n\t\t\t\t\taWorld.setBlock(aMinX+ 8, mHeight+i,  0, BlocksGT.Concrete, i == 3 ? DYE_INDEX_LightGray : DYE_INDEX_White, 0);\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\n\t\tif (aBridge) {\n\t\t\tfor (int i = 6; i <= 9; i++) {\n\t\t\t\tfor (int j = -9; j <= -6; j++) {\n\t\t\t\t\taWorld.setBlock(aMinX+i, mHeight-2, j, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\taWorld.setBlock(aMinX+i, mHeight-3, j, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t}\n\t\t\t\tfor (int j = 5; j <= 8; j++) {\n\t\t\t\t\taWorld.setBlock(aMinX+i, mHeight-2, j, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\taWorld.setBlock(aMinX+i, mHeight-3, j, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t}\n\t\t\t}\n\t\t\tfor (int k = mHeight-4; k > aWorld.minY(); k--) if (!(opq(aWorld, aMinX+10, k, -10, T, T) && opq(aWorld, aMinX+10, k, -5, T, T) && opq(aWorld, aMinX+5, k, -10, T, T) && opq(aWorld, aMinX+5, k, -5, T, T))) {\n\t\t\t\taWorld.setBlock(aMinX+7, k,  -7, BlocksGT.Concrete, DYE_INDEX_Gray, 0);\n\t\t\t\taWorld.setBlock(aMinX+8, k,  -8, BlocksGT.Concrete, DYE_INDEX_Gray, 0);\n\t\t\t\taWorld.setBlock(aMinX+7, k,  -8, BlocksGT.Concrete, DYE_INDEX_Gray, 0);\n\t\t\t\taWorld.setBlock(aMinX+8, k,  -7, BlocksGT.Concrete, DYE_INDEX_Gray, 0);\n\t\t\t} else {\n\t\t\t\tfor (int i = 6; i <= 9; i++) for (int j = -9; j <= -6; j++) {\n\t\t\t\t\tif (k>aWorld.minY()+(-3)) aWorld.setBlock(aMinX+i, k+3, j, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\tif (k>aWorld.minY()+(-2)) aWorld.setBlock(aMinX+i, k+2, j, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\tif (k>aWorld.minY()+(-1)) aWorld.setBlock(aMinX+i, k+1, j, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\tif (k>aWorld.minY()+(0)) aWorld.setBlock(aMinX+i, k  , j, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\tif (k>aWorld.minY()+(+1)) aWorld.setBlock(aMinX+i, k-1, j, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\tif (k>aWorld.minY()+(+2)) aWorld.setBlock(aMinX+i, k-2, j, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\tif (k>aWorld.minY()+(+3)) aWorld.setBlock(aMinX+i, k-3, j, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t}\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\tfor (int k = mHeight-4; k > aWorld.minY(); k--) if (!(opq(aWorld, aMinX+10, k, 9, T, T) && opq(aWorld, aMinX+10, k, 4, T, T) && opq(aWorld, aMinX+5, k, 9, T, T) && opq(aWorld, aMinX+5, k, 4, T, T))) {\n\t\t\t\taWorld.setBlock(aMinX+7, k,   6, BlocksGT.Concrete, DYE_INDEX_Gray, 0);\n\t\t\t\taWorld.setBlock(aMinX+8, k,   7, BlocksGT.Concrete, DYE_INDEX_Gray, 0);\n\t\t\t\taWorld.setBlock(aMinX+7, k,   7, BlocksGT.Concrete, DYE_INDEX_Gray, 0);\n\t\t\t\taWorld.setBlock(aMinX+8, k,   6, BlocksGT.Concrete, DYE_INDEX_Gray, 0);\n\t\t\t} else {\n\t\t\t\tfor (int i = 6; i <= 9; i++) for (int j = 5; j <= 8; j++) {\n\t\t\t\t\tif (k>aWorld.minY()+(-3)) aWorld.setBlock(aMinX+i, k+3, j, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\tif (k>aWorld.minY()+(-2)) aWorld.setBlock(aMinX+i, k+2, j, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\tif (k>aWorld.minY()+(-1)) aWorld.setBlock(aMinX+i, k+1, j, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\tif (k>aWorld.minY()+(0)) aWorld.setBlock(aMinX+i, k  , j, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\tif (k>aWorld.minY()+(+1)) aWorld.setBlock(aMinX+i, k-1, j, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\tif (k>aWorld.minY()+(+2)) aWorld.setBlock(aMinX+i, k-2, j, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t\tif (k>aWorld.minY()+(+3)) aWorld.setBlock(aMinX+i, k-3, j, BlocksGT.Concrete, DYE_INDEX_LightGray, 0);\n\t\t\t\t}\n\t\t\t\tbreak;\n\t\t\t}\n\t\t}\n\n\t\t// Kill every living thing close by except Players.\n\t\taWorld.clearNonPlayerEntities(aMinX, mHeight, -16, aMinX+16, mHeight+8, +16);\n\t\treturn T;\n\t}\n}\n",
+    "output": "MODE 0 0 minecraft:air 0\r\nMODE 0 1 minecraft:air 0\r\nMODE 0 2 gt6ce:concrete 15\r\nMODE 0 3 gt6ce:concrete 15\r\nMODE 0 4 minecraft:air 0\r\nMODE 1 0 minecraft:air 0\r\nMODE 1 1 minecraft:air 0\r\nMODE 1 2 gt6ce:concrete 15\r\nMODE 1 3 gt6ce:concrete 15\r\nMODE 1 4 minecraft:air 0\r\nCASES 40\r\nWRITES 963156\r\nBEACON_REQUESTS 4\r\nFAMILY_CAPS 0.4 0.5\r\nRADIUS_CAPS 1.0 4.0\r\n",
+    "limits": [
+      "40 finite generation inputs compare actual before/after core using rolling fingerprints/counters, delegate text and a recorded roof sample; not a native world.",
+      "The recorder only persists the tunnel sampling layer; other reads return synthetic ground/air. Writes contain repeated coordinates.",
+      "Cap values execute actual TrackCatalog with booleans derived from separately reviewed native/original predicates; no real minecart or chunk load is run."
+    ]
+  },
+  "readability": {
+    "baseline": "fa884366267833b0adf989621d7aec186ce2dfdc",
+    "files": {
+      "core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceStreets.java": {
+        "before_raw_sha256": "8cea451d838761f62c9957a8603d20600f6eee907c675875cea9a0cf7452dba8",
+        "after_raw_sha256": "1e8cfed04894466d5451f67419c678b72d78207e5c9335bbea5727a68ab38dfb",
+        "before_lines": 822,
+        "after_lines": 963,
+        "comment_corrections": [
+          [
+            "Original GT6 geometry, adapted by tools/import_origin_worldgen.py; platform effects use OriginWorld.",
+            "Shared road layout adapted from GT6; native reads, state conversion and chunk clipping are separate contracts."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 16597,
+            "execution_sha256": "54fba98f9a3e82958dbcb7e6699ed614cbd9e99d89deb77da3ad3eb4af9261c9",
+            "literal_positions_sha256": "62d892911742fa81e23ec7229b2a74361723e17184050f24886fb85ac815e4ad",
+            "literal_count": 2075
+          }
+        ]
+      },
+      "core/src/main/java/com/gregtech/gregtech/content/transport/TrackCatalog.java": {
+        "before_raw_sha256": "2a8f03731eb80e821ee08e7af2c32a9640e2e1b40a58d760ed8fee44eca6236e",
+        "after_raw_sha256": "5a0d46d18582ad70a562dd4216c17f696d140e274337de99e70ac7b25ae95e64",
+        "before_lines": 9,
+        "after_lines": 44,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 329,
+            "execution_sha256": "1600ed04d09603b39ee9c909a3492db6e4f04a5333564a09dacc63212cd98056",
+            "literal_positions_sha256": "54d6d4acc00c644a42fd3b8a25c72d47de2073ab74844e580a5a41759af12e3d",
+            "literal_count": 42
+          }
+        ]
+      },
+      "core/src/main/java/com/gregtech/gregtech/content/transport/TrackMotionRules.java": {
+        "before_raw_sha256": "b061efbcd8d523d32fbec9ecdb466504799181d553415249b32a120be23afe59",
+        "after_raw_sha256": "c44af8ad2371f30d75828148acb8e7c29dc867b832a6ac1d7ebf3a25a966f523",
+        "before_lines": 11,
+        "after_lines": 26,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 234,
+            "execution_sha256": "a73d64a69eb8297d94ba3eac1ebbd7d7b08a4994548a5558e27b95fc19d05ef7",
+            "literal_positions_sha256": "773771def3572e8bf1a123f9eb66e1a5ea9691cb002d5822b0a609e7a004afa7",
+            "literal_count": 16
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/misc/TrackBlock.java": {
+        "before_raw_sha256": "6d01fc227910c02fdceef65af00bd16c85a1161d1293f6571c57a4a43018c322",
+        "after_raw_sha256": "bc4a4903bfc211b01cb13ba517878c2201f7c61aac19ee63ee0b4055ff34c5c6",
+        "before_lines": 182,
+        "after_lines": 193,
+        "comment_corrections": [
+          [
+            "a straight run whose both neighbours are rails of the same axis,",
+            "a straight run whose both neighbours are original GT base rails of the same axis,"
+          ],
+          [
+            "Port difference (closed in §115):",
+            "Speed-cap adapter:"
+          ],
+          [
+            "GT6's straight-run rule for one rail position.",
+            "Current straight-run adapter; native rail membership and load radius differ from the old GT contract."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1037,
+            "execution_sha256": "bd8136140ae35155cd6d4f4bd37e15913a3ed2d24b60abbd41cf052a7f34351a",
+            "literal_positions_sha256": "ebb8dc442be61f5c43099a4473c2453d9152faeda8533a952060249a46f81b53",
+            "literal_count": 16
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1133,
+            "execution_sha256": "a28d83235657f8b7981a95717162d3cc6b692c16eb3962df3af6ca88fefdaa87",
+            "literal_positions_sha256": "ebb8dc442be61f5c43099a4473c2453d9152faeda8533a952060249a46f81b53",
+            "literal_count": 16
+          }
+        ],
+        "removed_private_helper": "        private static boolean solid(Level level, BlockPos pos) {\n            BlockState state = level.getBlockState(pos);\n            return state.isRedstoneConductor(level, pos);\n        }\n",
+        "removed_source_sha256": "e9655e78a72cc81dd6ab625d2dc1c21235a45d492569de86fb6a2b92ca88a9af",
+        "comparison_contract": "All remaining ordered tokens after explicit removal of the private solid helper; only the declaration contains that identifier in the complete owning source. Arbitrary external reflection is not ruled out."
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/misc/RoadStripeRailBlock.java": {
+        "before_raw_sha256": "bca521ca150a0e5fafd985c2ad849e800e0378a20e811b80f54d9c1d1d33f7c1",
+        "after_raw_sha256": "1c4ba2e5e9bfa9ed7c2c0eaac99ec121424eb548ba38d9ad5b1e793702f1546d",
+        "before_lines": 105,
+        "after_lines": 127,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 835,
+            "execution_sha256": "cffddbc979873daccda7124512618e7da65808b17241d0e1cc213334294ef505",
+            "literal_positions_sha256": "269c9a5a225b9ff66901f9ffa15905cdc40011a03adaef4209a13c804aae69c1",
+            "literal_count": 5
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 988,
+            "execution_sha256": "04740533d0c85148a092b6491920c52de66c762f9cf292a0afcf9e74348c5f76",
+            "literal_positions_sha256": "3068cca7196895f1580054503ae7be7d3b2b2f9f6c90e0a45f66c83dcdfcadba",
+            "literal_count": 5
+          }
+        ],
+        "removed_private_helper": "    private static boolean solid(Level level, BlockPos pos) {\n        return level.getBlockState(pos).isRedstoneConductor(level, pos);\n    }\n",
+        "removed_source_sha256": "3ad6fca296b4fe8951f4d46bfc5d16ec38d6ac60722635a362044e6072d666af",
+        "comparison_contract": "All remaining ordered tokens after explicit removal of the private solid helper; only the declaration contains that identifier in the complete owning source. Arbitrary external reflection is not ruled out."
+      }
+    }
+  },
+  "native_evidence": [
+    {
+      "artifact": "work/center-biomes-audit-20261022/minecraft-1.7.10-client.jar",
+      "artifact_sha256": "a4fc2284657544e0f4bcc964f927c2fda3e3a205178ed1d5d58883aaf9780cce",
+      "entry": "ahb.class",
+      "entry_sha256": "e682175e53be8972a6d04dff07da5780467754a7ffce2e396643c102893fd58a",
+      "javap_output": "work/streets-rails-audit-20261022/old-World.javap.txt",
+      "javap_sha256": "fbef1098b75e803373f06a588f17a6bfa9c02549801f71c9643b07761bac54bd"
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/LevelReader.class",
+      "entry_sha256": "2248d369d11abc38dcafebcc176ed4242db7201b146ab32eb896ff5f45e8ece2",
+      "javap_output": "work/streets-rails-audit-20261022/forge-LevelReader.javap.txt",
+      "javap_sha256": "8fe5e5ec4f5c434aa8432b5bd87f30065b9b7e687e610aef9fe4a49c2d4448a0"
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/RailBlock.class",
+      "entry_sha256": "30bcaaa35bf43889543eba6e5623045481bd5aeafb13daf0daba3251ba0a7ede",
+      "javap_output": "work/streets-rails-audit-20261022/forge-RailBlock.javap.txt",
+      "javap_sha256": "880e4496b7692458538430569be711a8ba2a78c664500d88a9a4b8efc9063cf0"
+    },
+    {
+      "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/LevelReader.java",
+      "entry_sha256": "32c040fc993d62321ba564e8770aeae7814a69e209f50c4895b1f3dc489b66f1"
+    },
+    {
+      "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/block/RailBlock.java",
+      "entry_sha256": "30f5b013d943a2a6aaabdc9a31f6452db308ccb43ebfbbb31659210007b57e9f"
+    },
+    {
+      "artifact": "work/center-biomes-audit-20261022/minecraft-1.7.10-client.jar",
+      "artifact_sha256": "a4fc2284657544e0f4bcc964f927c2fda3e3a205178ed1d5d58883aaf9780cce",
+      "entry": "aom.class",
+      "entry_sha256": "053739fd3372e2a651422c56f067e341ab0dac5179fb03ad38aeef6f15ed36ef",
+      "javap_output": "work/streets-rails-audit-20261022/old-BlockWood.javap.txt",
+      "javap_sha256": "fb674214055e52ede9c4a55dc5f623050a0de77218a6023e998c95eeef4cb844"
+    },
+    {
+      "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/data/tags/VanillaBlockTagsProvider.java",
+      "entry_sha256": "d49b7741a8b55c7f99e43b018705eba8f1449f138c9334bef5066977e2a30186"
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/data/tags/VanillaBlockTagsProvider.class",
+      "entry_sha256": "7019b854f88006448e4df7113ab5af89fad7aba8b00dcbc42e6e5b1a38982265",
+      "javap_output": "work/streets-rails-audit-20261022/forge-VanillaBlockTagsProvider.javap.txt",
+      "javap_sha256": "2d65d49dcb834c17a245e81f263ebfcb9eace27a0482a5c63488a7d1f91d51d2"
+    }
+  ],
+  "old_mapping_references": [
+    {
+      "path": "C:/Dev/GregTech6/work/center-biomes-audit-20261022/joined.srg",
+      "raw_sha256": "43d4376110b2638213d3096f80f8395c076eb05b58d6c0dbd22c0d999b37a357",
+      "source_sha256": "43d4376110b2638213d3096f80f8395c076eb05b58d6c0dbd22c0d999b37a357",
+      "lines": 22006
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/center-biomes-audit-20261022/fields.csv",
+      "raw_sha256": "1d0d123cd80df147d613dc32c265e19daa594608ced33aa3b485162b2e5f6ade",
+      "source_sha256": "1d0d123cd80df147d613dc32c265e19daa594608ced33aa3b485162b2e5f6ade",
+      "lines": 4317
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/center-biomes-audit-20261022/methods.csv",
+      "raw_sha256": "63de115ead3e848e529de81e81ada9dff694e50fb5c6d92ec1e9037fe50ca191",
+      "source_sha256": "63de115ead3e848e529de81e81ada9dff694e50fb5c6d92ec1e9037fe50ca191",
+      "lines": 4224
+    }
+  ],
+  "official_old_artifact_provenance": "docs/integration/verification/center-biomes-audit-20261022.json",
+  "neo_default_logs_transitive_blocks": [
+    "ACACIA_LOG",
+    "ACACIA_WOOD",
+    "BIRCH_LOG",
+    "BIRCH_WOOD",
+    "CHERRY_LOG",
+    "CHERRY_WOOD",
+    "CRIMSON_HYPHAE",
+    "CRIMSON_STEM",
+    "DARK_OAK_LOG",
+    "DARK_OAK_WOOD",
+    "JUNGLE_LOG",
+    "JUNGLE_WOOD",
+    "MANGROVE_LOG",
+    "MANGROVE_WOOD",
+    "OAK_LOG",
+    "OAK_WOOD",
+    "SPRUCE_LOG",
+    "SPRUCE_WOOD",
+    "STRIPPED_ACACIA_LOG",
+    "STRIPPED_ACACIA_WOOD",
+    "STRIPPED_BIRCH_LOG",
+    "STRIPPED_BIRCH_WOOD",
+    "STRIPPED_CHERRY_LOG",
+    "STRIPPED_CHERRY_WOOD",
+    "STRIPPED_CRIMSON_HYPHAE",
+    "STRIPPED_CRIMSON_STEM",
+    "STRIPPED_DARK_OAK_LOG",
+    "STRIPPED_DARK_OAK_WOOD",
+    "STRIPPED_JUNGLE_LOG",
+    "STRIPPED_JUNGLE_WOOD",
+    "STRIPPED_MANGROVE_LOG",
+    "STRIPPED_MANGROVE_WOOD",
+    "STRIPPED_OAK_LOG",
+    "STRIPPED_OAK_WOOD",
+    "STRIPPED_SPRUCE_LOG",
+    "STRIPPED_SPRUCE_WOOD",
+    "STRIPPED_WARPED_HYPHAE",
+    "STRIPPED_WARPED_STEM",
+    "WARPED_HYPHAE",
+    "WARPED_STEM"
+  ],
+  "forge_default_tag_closure": {
+    "logs": [
+      "ACACIA_LOG",
+      "ACACIA_WOOD",
+      "BIRCH_LOG",
+      "BIRCH_WOOD",
+      "CHERRY_LOG",
+      "CHERRY_WOOD",
+      "CRIMSON_HYPHAE",
+      "CRIMSON_STEM",
+      "DARK_OAK_LOG",
+      "DARK_OAK_WOOD",
+      "JUNGLE_LOG",
+      "JUNGLE_WOOD",
+      "MANGROVE_LOG",
+      "MANGROVE_WOOD",
+      "OAK_LOG",
+      "OAK_WOOD",
+      "SPRUCE_LOG",
+      "SPRUCE_WOOD",
+      "STRIPPED_ACACIA_LOG",
+      "STRIPPED_ACACIA_WOOD",
+      "STRIPPED_BIRCH_LOG",
+      "STRIPPED_BIRCH_WOOD",
+      "STRIPPED_CHERRY_LOG",
+      "STRIPPED_CHERRY_WOOD",
+      "STRIPPED_CRIMSON_HYPHAE",
+      "STRIPPED_CRIMSON_STEM",
+      "STRIPPED_DARK_OAK_LOG",
+      "STRIPPED_DARK_OAK_WOOD",
+      "STRIPPED_JUNGLE_LOG",
+      "STRIPPED_JUNGLE_WOOD",
+      "STRIPPED_MANGROVE_LOG",
+      "STRIPPED_MANGROVE_WOOD",
+      "STRIPPED_OAK_LOG",
+      "STRIPPED_OAK_WOOD",
+      "STRIPPED_SPRUCE_LOG",
+      "STRIPPED_SPRUCE_WOOD",
+      "STRIPPED_WARPED_HYPHAE",
+      "STRIPPED_WARPED_STEM",
+      "WARPED_HYPHAE",
+      "WARPED_STEM"
+    ],
+    "planks": [
+      "ACACIA_PLANKS",
+      "BAMBOO_PLANKS",
+      "BIRCH_PLANKS",
+      "CHERRY_PLANKS",
+      "CRIMSON_PLANKS",
+      "DARK_OAK_PLANKS",
+      "JUNGLE_PLANKS",
+      "MANGROVE_PLANKS",
+      "OAK_PLANKS",
+      "SPRUCE_PLANKS",
+      "WARPED_PLANKS"
+    ],
+    "method": "Native compiled tag-builder statements and transitive BlockTags references; not runtime mod/datapack tags."
+  },
+  "formal_findings_added": [
+    "ALIGN-364",
+    "ALIGN-365",
+    "ALIGN-366"
+  ],
+  "positive_scope": [
+    "All three road methods, not just sample positions, correspond after enumerated API/height substitutions.",
+    "Ten rail material identity/speed/resistance declarations correspond to original normal-track rows after case normalization.",
+    "Worldgen metadata axis/reflector conversion and model variants cover generated stripe states; texture files exist.",
+    "The two half-chunk terrain sampling plane is above the tunnel roof; the bounded sequential-half probe does not support a false road-mode inconsistency claim."
+  ],
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "limits": [
+    "Returned rail caps are not final observed cart speed. Native entity integration and actual world loading remain untested.",
+    "Wood witness uses default vanilla/GT tag definitions. Datapacks or mods may change membership; no universal claim for every installation.",
+    "The two private helpers have no ordinary owner-source references beyond their declarations; arbitrary reflective access is not excluded.",
+    "No full Gradle/mod compile, GameTest, game, render, saved-world restart, build, push or GitHub message."
+  ],
+  "root_revalidation": {
+    "full_remaining_ordered_code": true,
+    "literal_positions_comments_directives": true,
+    "explicit_private_removal": true,
+    "full_original_road_tail": true,
+    "catalog_declarations": true,
+    "bounded_core_probe": true,
+    "native_hashes": true,
+    "material_hashes": true,
+    "native_gameplay_acceptance": false,
+    "goal_complete": false,
+    "archived_raw_hashes": true,
+    "formal_ids_contiguous": true,
+    "diff_check": true
+  }
+}

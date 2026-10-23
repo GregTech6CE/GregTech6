@@ -15,46 +15,10 @@ import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 
-/**
- * GT6 Builder's Wand ({@code gregtech.items.behaviors.Behavior_Builderwand}, hung on the
- * {@code TOOL_builderwand} tool by {@code GT_Tool_Builderwand:62}).
- *
- * <p>GT6's click handler ({@code Behavior_Builderwand:82-135}) takes the clicked block, then walks the
- * <b>plane perpendicular to the clicked face</b> through that block — the axis of the clicked face
- * stays at offset 0, the other two axes span {@code -tDist..+tDist}
- * ({@code :89-91}) — and for every position that already holds <em>the same block and metadata</em>
- * ({@code :92}) it takes a matching block out of the player's inventory ({@code :97-117}) and places
- * it with {@code tryPlaceItemIntoWorld(..., SIDE_TOP, 0.5F, 0.25F, 0.5F)} ({@code :123}).</p>
- *
- * <h2>The two details that decide the port's behaviour</h2>
- *
- * <ul>
- *   <li><b>The placement side is hardcoded {@code SIDE_TOP}</b> and GT6's {@code SIDE_TOP} is
- *       {@code 1} ({@code CS.java:517}), which is vanilla's {@code Direction.UP}. Vanilla's
- *       {@code ItemBlock.onItemUse} moves an occupied position by the side's offset, so the wand
- *       places its copy <em>on top of</em> each matching block — the plane it walks is the support
- *       layer, the copy lands one block higher. (GT6's own permission double-check at {@code :95} uses
- *       {@code OFF[aSide]}, the clicked face, so the original is inconsistent with itself here; the
- *       <em>effective</em> behaviour is the one implemented, because that is what the placement call
- *       does.)</li>
- *   <li><b>The reach is {@code getPrimaryMaterial(stack).mToolQuality + 1}</b> ({@code :86}). The
- *       port registers one item per tool kind with no material ({@code registry/GTToolItems:24}), so
- *       the number cannot be derived from a stack; {@link #REACH} fixes it to the value the wand's own
- *       default head material produces — {@code GT_Tool_Builderwand:52} falls back to
- *       {@code MT.Heliodor}, and GT6's gem family carries {@code qual(3, …)} ({@code MT.java:210}) —
- *       i.e. {@code 3 + 1 = 4}, a 9×9 plane.</li>
- * </ul>
- *
- * <p><b>Not ported:</b> the Thaumcraft branch ({@code :49-79}) that builds a glass jar around a
- * {@code thaumcraft.api.nodes.INode} — the port has no Thaumcraft.</p>
+/** Ordinary GT6 builder plane: material-quality reach and placement on the clicked face.
+ * Multiblock building is dispatched by GTToolItem before this behavior.
  */
 public final class BehaviorBuilderWand {
-
-    /**
-     * Half-width of the plane the wand walks, in blocks: GT6 {@code :86-91}
-     * ({@code primaryMaterial.mToolQuality + 1}). See the class javadoc for why it is a constant here.
-     */
-    public static final int REACH = 4;
 
     private BehaviorBuilderWand() {}
 
@@ -83,15 +47,17 @@ public final class BehaviorBuilderWand {
         }
         BlockState clicked = level.getBlockState(pos);
 //? if >=1.21.1 {
-        /*if (clicked.isAir()) return ManualToolBehaviorAccess.Outcome.refused(wand);
+        /*if (clicked.isAir() || !com.gregtech.gregtech.api.tool.GTToolHelper.isUsable(wand)) return ManualToolBehaviorAccess.Outcome.refused(wand);
 *///?} else {
-        if (clicked.isAir()) return ItemBehaviors.Outcome.refused(wand);
+        if (clicked.isAir() || !com.gregtech.gregtech.api.tool.GTToolHelper.isUsable(wand)) return ItemBehaviors.Outcome.refused(wand);
 //?}
 
+        int reach = Math.max(0, com.gregtech.gregtech.api.tool.GTToolHelper.getHead(wand).getToolQuality() + 1);
         boolean placedAny = false;
-        for (int dx = step(side, Direction.Axis.X, -REACH); dx <= step(side, Direction.Axis.X, REACH); dx++) {
-            for (int dy = step(side, Direction.Axis.Y, -REACH); dy <= step(side, Direction.Axis.Y, REACH); dy++) {
-                for (int dz = step(side, Direction.Axis.Z, -REACH); dz <= step(side, Direction.Axis.Z, REACH); dz++) {
+        placementLoop:
+        for (int dx = step(side, Direction.Axis.X, -reach); dx <= step(side, Direction.Axis.X, reach); dx++) {
+            for (int dy = step(side, Direction.Axis.Y, -reach); dy <= step(side, Direction.Axis.Y, reach); dy++) {
+                for (int dz = step(side, Direction.Axis.Z, -reach); dz <= step(side, Direction.Axis.Z, reach); dz++) {
                     BlockPos target = pos.offset(dx, dy, dz);
                     if (!level.hasChunkAt(target)) continue;
                     // GT6 :92 - only positions already holding the very same block (and meta) count.
@@ -105,21 +71,18 @@ public final class BehaviorBuilderWand {
                     if (!ItemBehaviors.mayEdit(level, player, target.relative(side))) continue;
 //?}
 
-                    ItemStack source = findSourceBlock(player, clicked);
-                    if (source.isEmpty()) break;   // GT6 runs out of matching blocks and stops the plane
-                    if (!placeOnTop(level, player, target, source)) continue;
+                    if (!com.gregtech.gregtech.api.tool.GTToolHelper.isUsable(wand)) break placementLoop;
+                    int sourceSlot = findSourceBlock(player, clicked);
+                    if (sourceSlot < 0) break;   // GT6 runs out of matching blocks and stops the plane
+                    if (!place(level, player, target, side, sourceSlot, wand, hitX, hitY, hitZ)) continue;
 //? if >=1.21.1 {
                     /*if (!ManualToolBehaviorAccess.creative(player)) {
 *///?} else {
                     if (!ItemBehaviors.creative(player)) {
 //?}
-                        // The placement already consumed one block; GT6 :124-129 only skips the damage
-                        // and restores the count in creative (`UT.Entities.hasInfiniteItems`).
-//? if >=1.21.1 {
-                        /*wand.hurtAndBreak(1,player,net.minecraft.world.entity.EquipmentSlot.MAINHAND);
-*///?} else {
-                        wand.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(InteractionHand.MAIN_HAND));
-//?}
+                        com.gregtech.gregtech.api.tool.GTToolHelper.damageForUse(wand, 1, player,
+                                player.getOffhandItem() == wand ? net.minecraft.world.entity.EquipmentSlot.OFFHAND
+                                        : net.minecraft.world.entity.EquipmentSlot.MAINHAND);
                     }
                     placedAny = true;
                 }
@@ -143,37 +106,87 @@ public final class BehaviorBuilderWand {
      * <p>GT6 scans {@code player.inventory.mainInventory} from the end backwards, which in 1.7.10
      * means the main grid first and the hotbar last; 1.20.1 puts the hotbar at 0-8 and the main grid at
      * 9-35, so the same order is {@code 35 → 0}. A stack qualifies when its block is the clicked block
-     * ({@code ST.block(tStack) == aBlock}); GT6 additionally demands metadata equality, which in the
-     * port is the block's own state — state-rich blocks such as the ores carry their variant in the
-     * item's {@code BlockStateTag} and {@code BlockItem.place} reads it back, so the block test is the
-     * one applied here.</p>
+     * ({@code ST.block(tStack) == aBlock}). Ore host/broken and spike material/mode identity is now encoded in item state
+     * rather than separate source blocks, so compare those identity properties explicitly. Placement
+     * orientation remains the item's responsibility; do not compare arbitrary placement states.</p>
      */
-    private static ItemStack findSourceBlock(Player player, BlockState clicked) {
+    private static int findSourceBlock(Player player, BlockState clicked) {
         for (int slot = 35; slot >= 0; slot--) {
             ItemStack candidate = player.getInventory().getItem(slot);
             if (candidate.isEmpty()) continue;
             if (!(candidate.getItem() instanceof BlockItem blockItem)) continue;
-            if (blockItem.getBlock() == clicked.getBlock()) return candidate;
+            if (blockItem.getBlock() != clicked.getBlock()) continue;
+            if (clicked.getBlock() instanceof com.gregtech.gregtech.block.OreBlock
+                    && (com.gregtech.gregtech.block.OreBlock.stoneOfStack(candidate)
+                            != com.gregtech.gregtech.block.OreBlock.stoneOf(clicked)
+                    || com.gregtech.gregtech.block.OreBlock.isBrokenStack(candidate)
+                            != com.gregtech.gregtech.block.OreBlock.isBroken(clicked))) continue;
+            if (clicked.getBlock() instanceof com.gregtech.gregtech.block.misc.SpikeBlock
+                    && (com.gregtech.gregtech.block.misc.SpikeBlock.itemMode(candidate)
+                            != clicked.getValue(com.gregtech.gregtech.block.misc.SpikeBlock.MODE)
+                    || com.gregtech.gregtech.block.misc.SpikeBlock.itemSecondary(candidate)
+                            != clicked.getValue(com.gregtech.gregtech.block.misc.SpikeBlock.SECONDARY))) continue;
+            return slot;
         }
-        return ItemStack.EMPTY;
+        return -1;
     }
 
-    /**
-     * Places a copy of {@code source} on top of {@code target}, the position GT6 reaches by passing
-     * {@code SIDE_TOP} to {@code tryPlaceItemIntoWorld} ({@code :123}).
-     *
-     * <p>1.20.1's equivalent of that call is the item's own {@code BlockItem.place} with a
-     * {@link BlockPlaceContext} built the same way vanilla builds it from a
-     * {@code BlockHitResult} — that context resolves "clicked position + face" into the final
-     * placement position, keeps block-specific placement rules (facing, waterlogging, …) and consumes
-     * the stack itself, so the caller must not shrink it again.</p>
-     */
-    private static boolean placeOnTop(Level level, Player player, BlockPos target, ItemStack source) {
-        BlockHitResult hit = new BlockHitResult(
-                new Vec3(target.getX() + 0.5D, target.getY() + 0.25D, target.getZ() + 0.5D),
-                Direction.UP, target, false);
-        BlockPlaceContext context = new BlockPlaceContext(player, InteractionHand.MAIN_HAND, source, hit);
-        InteractionResult result = ((BlockItem) source.getItem()).place(context);
-        return result.consumesAction();
+    private static boolean isNativeEmptyBucket(ItemStack stack) {
+        if (stack.getCount() != 1) return false;
+        var bucket = new ItemStack(net.minecraft.world.item.Items.BUCKET);
+//? if >=1.21.1 {
+        /*return ItemStack.isSameItemSameComponents(stack, bucket);
+*///?} else {
+        return ItemStack.isSameItemSameTags(stack, bucket);
+//?}
+    }
+
+    /** The copied source owns the loader transaction, not the held wand. */
+    private static boolean place(Level level, Player player, BlockPos support, Direction side,
+                                 int sourceSlot, ItemStack wand, float hitX, float hitY, float hitZ) {
+        ItemStack source = player.getInventory().getItem(sourceSlot);
+        InteractionHand hand = player.getOffhandItem() == wand ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
+        ItemStack copy = source.copy();
+        BlockHitResult hit = new BlockHitResult(new Vec3(support.getX() + hitX,
+                support.getY() + hitY, support.getZ() + hitZ), side, support, false);
+        var use = new net.minecraft.world.item.context.UseOnContext(level, player, hand, copy, hit);
+        BlockPos destination = new BlockPlaceContext(use).getClickedPos();
+        if (!level.hasChunkAt(destination) || !ManualToolBehaviorAccess.mayEdit(level, player, destination)) return false;
+        // ItemStack.useOn captures snapshots and returns only after cancellation/rollback.
+        // Calling BlockItem.place directly would skip that boundary in onItemUseFirst.
+        // Vanilla SolidBucketItem writes its container to the real context hand, even though
+        // the placement stack is a copy. Neo also writes the copy there in creative mode.
+        // Do not pre-swap hands: all native interaction/protection callbacks still run normally.
+        boolean solidBucket = source.is(net.minecraft.world.item.Items.POWDER_SNOW_BUCKET)
+                && source.getItem().getClass() == net.minecraft.world.item.SolidBucketItem.class;
+        ItemStack returnedContainer = ItemStack.EMPTY;
+        InteractionResult result;
+        try {
+            result = copy.useOn(use);
+        } finally {
+            ItemStack after = player.getItemInHand(hand);
+            if (solidBucket && after != wand) {
+                if (after == copy) {
+                    player.setItemInHand(hand, wand); // Native Neo creative replacement.
+                } else if (isNativeEmptyBucket(after)) {
+                    returnedContainer = after;
+                    player.setItemInHand(hand, wand);
+                }
+                // Unknown listener/mod replacements are not ours to overwrite or reinterpret.
+            }
+        }
+        if (!result.consumesAction()) return false; // Canceled native container is discarded too.
+        if (!player.getAbilities().instabuild) {
+            source.shrink(Math.max(0, source.getCount() - copy.getCount()));
+            if (!returnedContainer.isEmpty()) {
+                if (source.isEmpty() && player.getInventory().getItem(sourceSlot).isEmpty()) {
+                    player.getInventory().setItem(sourceSlot, returnedContainer);
+                } else if (!player.addItem(returnedContainer)) {
+                    player.drop(returnedContainer, false);
+                }
+            }
+        }
+        player.getInventory().setChanged();
+        return true;
     }
 }

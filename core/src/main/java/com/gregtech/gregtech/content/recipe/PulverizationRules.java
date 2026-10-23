@@ -6,7 +6,10 @@ import java.math.BigInteger;
 
 /** OM.pulverize:370-371 uses UT.Code.units(input, U, targetPerUnit, false). */
 public final class PulverizationRules {
-    private PulverizationRules() {}
+
+    private PulverizationRules() {
+    }
+
     public static long amount(long input, long targetPerUnit) {
         if (input <= 0 || targetPerUnit <= 0) return 0;
         if (targetPerUnit == GTValues.U) return input;

@@ -2,12 +2,10 @@ package com.gregtech.gregtech.integration.jade;
 
 import com.gregtech.gregtech.api.fluid.FluidTankGT;
 import com.gregtech.gregtech.api.machine.BasicMachineSpec;
-import com.gregtech.gregtech.block.machine.BasicMachineBlock;
 import com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
 *///?} else {
@@ -49,6 +47,7 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
         if (spec == null) return;
 
         tag.putString(NBT_NAME, spec.id());
+        tag.putString(NBT_NAME + "_key", accessor.getBlock().getDescriptionId());
         tag.putInt(NBT_TIER, spec.tier());
         tag.putString(NBT_UNIT, spec.energyType());
         tag.putLong(NBT_STORED, be.getEnergyTick());
@@ -78,7 +77,13 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
                 FluidStack fs = tanksIn[i].getFluid();
                 if (!fs.isEmpty()) {
                     CompoundTag ft = new CompoundTag();
+                    // Retain the legacy fallback for older clients; new clients resolve the stack locally.
                     ft.putString("name", fs.getDisplayName().getString());
+//? if >=1.21.1 {
+                    /*ft.put("stack", fs.save(accessor.getLevel().registryAccess()));
+*///?} else {
+                    ft.put("stack", fs.writeToNBT(new CompoundTag()));
+//?}
                     ft.putInt("amount", fs.getAmount());
                     ft.putLong("cap", tanksIn[i].getCapacity());
                     tag.put(NBT_FLUID_PREFIX_IN + i, ft);
@@ -90,7 +95,13 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
                 FluidStack fs = tanksOut[i].getFluid();
                 if (!fs.isEmpty()) {
                     CompoundTag ft = new CompoundTag();
+                    // Retain the legacy fallback for older clients; new clients resolve the stack locally.
                     ft.putString("name", fs.getDisplayName().getString());
+//? if >=1.21.1 {
+                    /*ft.put("stack", fs.save(accessor.getLevel().registryAccess()));
+*///?} else {
+                    ft.put("stack", fs.writeToNBT(new CompoundTag()));
+//?}
                     ft.putInt("amount", fs.getAmount());
                     ft.putLong("cap", tanksOut[i].getCapacity());
                     tag.put(NBT_FLUID_PREFIX_OUT + i, ft);
@@ -104,7 +115,7 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
         CompoundTag data = accessor.getServerData();
         if (!data.contains(NBT_NAME, CompoundTag.TAG_STRING)) return;
 
-        String name = data.getString(NBT_NAME);
+        Component name = JadeText.translated(data, NBT_NAME + "_key", NBT_NAME);
         int tier = data.getInt(NBT_TIER);
         tooltip.add(Component.translatable("jade.gt6ce.basic_machine.label", name, tier));
 
@@ -142,12 +153,20 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
             for (boolean isInput : new boolean[]{true, false}) {
             CompoundTag ft = data.getCompound((isInput ? NBT_FLUID_PREFIX_IN : NBT_FLUID_PREFIX_OUT) + i);
             if (!ft.isEmpty()) {
-                String fName = ft.getString("name");
+                Component fName = Component.literal(ft.getString("name"));
+                if (ft.contains("stack", CompoundTag.TAG_COMPOUND)) {
+//? if >=1.21.1 {
+                    /*FluidStack fluid = FluidStack.parseOptional(accessor.getLevel().registryAccess(), ft.getCompound("stack"));
+*///?} else {
+                    FluidStack fluid = FluidStack.loadFluidStackFromNBT(ft.getCompound("stack"));
+//?}
+                    if (!fluid.isEmpty()) fName = fluid.getDisplayName();
+                }
                 int amount = ft.getInt("amount");
                 long cap = ft.getLong("cap");
-                int pct = cap > 0 ? (int) Math.min(100, amount * 100 / cap) : 0;
-                String type = isInput ? Component.translatable("jade.gt6ce.basic_machine.fluid_in").getString()
-                                      : Component.translatable("jade.gt6ce.basic_machine.fluid_out").getString();
+                int pct = cap > 0 ? (int) Math.min(100, amount * 100L / cap) : 0;
+                Component type = Component.translatable(isInput ? "jade.gt6ce.basic_machine.fluid_in"
+                        : "jade.gt6ce.basic_machine.fluid_out");
                 tooltip.add(Component.translatable("jade.gt6ce.basic_machine.fluid",
                         type, fName, format(amount), format(cap), Integer.toString(pct)));
             }

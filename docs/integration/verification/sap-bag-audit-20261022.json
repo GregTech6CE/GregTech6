@@ -1,0 +1,1245 @@
+{
+  "date": "2026-10-22",
+  "batch": 102,
+  "baseline": "75ed5e22419c6f9d540a544251acd80da5fab893",
+  "previous_goal_turn": {
+    "classification": "progress",
+    "evidence_commit": "75ed5e224",
+    "scope": "Eight confirmed GitHub issue fixes; dual compilation passed."
+  },
+  "scope": "Sap bag, three tree-hole yields/refill and native registration/render/cover consumers; not every tree or fluid API.",
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntitySapBag.java",
+      "sha256": "a79bd506e6458ed3ce84c0b1b6962203a4608fc7ecf8bc0551e0c4b73a32a95d",
+      "lines": 200,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/misc/MultiTileEntityTreeHole.java",
+      "sha256": "08e8ab208fcfcee0eb360699e2bb830e079e2392777fca98ef6d12a8550238fb",
+      "lines": 118,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/plants/MultiTileEntityResinHoleRubber.java",
+      "sha256": "3d8f9aba35fdda5ef25d1059f410360c3d7ef87c384b6336235935acf521ece6",
+      "lines": 102,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/plants/MultiTileEntitySapHoleMaple.java",
+      "sha256": "a5682de7ac018f6fa2aba60c59219618b1fa8858dc7de6bcea74a05c2643092b",
+      "lines": 89,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/plants/MultiTileEntitySapHoleRainbowood.java",
+      "sha256": "d54b899c4bdee7af1f0b0fc9a17daddfc53d311ab527fbcac66610abe89fd96c",
+      "lines": 85,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/ITileEntityTreeHole.java",
+      "sha256": "51c892d556be378bed06f21640de55966af49919bd14c6f58f45ceb65f9d3b79",
+      "lines": 33,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "lines": 2243,
+      "authors": [],
+      "license_header": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java",
+      "sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+      "lines": 1011,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "sha256": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+      "lines": 189,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+      "lines": 496,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "sha256": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+      "lines": 117,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "sha256": "4470fc88dede52de55ba387e963d95243ec33ef287ae4f917ce73d874bcede2b",
+      "lines": 62,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+      "lines": 98,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "sha256": "78ef2ca64595500bb841faec8304dee0f3e276e14b54c62f494c3116c29ce0b7",
+      "lines": 307,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityRegistry.java",
+      "sha256": "70fb3ce00e7036e343e253e0f9fd8401b05c3f4f4e16b88f1b3fb94c3b111e83",
+      "lines": 271,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityClassContainer.java",
+      "sha256": "ea006ef8b03ffd30044da0bb044dfcc8227f37712becd555f7bc5a9747f3af8a",
+      "lines": 55,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityItemInternal.java",
+      "sha256": "7e103a13f02097dcfd1c91334cb3da238b9f509ee4cbb584dfd7267bf26f8bb1",
+      "lines": 659,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    }
+  ],
+  "current_inputs": [
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/SapBagBlockEntity.java",
+      "sha256": "347c0b130e7e140ed05a3d6bcc72c0476293ad8fd23b56933de025057ba0fb65",
+      "lines": 230
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/tool/SapBagBlock.java",
+      "sha256": "972221277aace7e9a59024572828651559b975891f081e6151b11da9d9caf28d",
+      "lines": 115
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/wood/TreeHoleBlock.java",
+      "sha256": "c7422cd0dadd73998954955e1828a8847a24aa8911bb5e2e180904dc54c7d293",
+      "lines": 182
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTTreeHoles.java",
+      "sha256": "f0621b533947a0650de1dc62a8d27516f1cca54e624bdbc7ad7095f6f71e8533",
+      "lines": 92
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/TreeHoleBlockEntity.java",
+      "sha256": "47e37556be45e5988ba6d1c0ce156f4f149e4d2a0bfa41e230ef7e052f282f0c",
+      "lines": 159
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/TreeSpeciesRules.java",
+      "sha256": "4c68cc75a62c28a8d0517f32ca812c414a77f90229d1f89d43016a45eb99bbf4",
+      "lines": 46
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/tool/ShapedToolBlock.java",
+      "sha256": "a7ffce4a52bba3166f5d01a0c2e311168e070a07715f264609cbaa57142e02fc",
+      "lines": 129
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/tool/OriginalToolShapes.java",
+      "sha256": "12b33c6bf1c32b524672248511ad5e26b546c5b2f110a32e4debc6c21d867eb3",
+      "lines": 29
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/tool/UtilityToolRules.java",
+      "sha256": "2f3869af3dade4578fe1fb6687a0fa281251225438425313a945a97a12346acd",
+      "lines": 48
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTToolBlocks.java",
+      "sha256": "dad59a320f31f9821754a8d20124c6f72f719fb3b5fd40edc7f3fc7affd11990",
+      "lines": 366
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "05409cc45a965be4efbcde15b420091d3222e6fe390069a0d58031e43faf9308",
+      "lines": 707
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTManualStations.java",
+      "sha256": "814eb95c770e5c62e86406b99fc5703268fdf79c9a096d8b3d5785c68cb0232f",
+      "lines": 121
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageContainerCapabilities.java",
+      "sha256": "d6e62e69491d69f904307d82523a6e3e9c49f7fcccdda7ae0f6c1a040c4a74e0",
+      "lines": 72
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java",
+      "sha256": "4184c560d23498d1eb02c72d2171de2d04b80110aada399e852e81d9e2cc4905",
+      "lines": 305
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/fluid/HandContainerTransfer.java",
+      "sha256": "c7ad78bce0ac36e2fcbd560de4e52015b076973eef22f0a7ff90598a3cd1d451",
+      "lines": 46
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "sha256": "afd6d00235399a7a1b115cbab778d691997836a49e25e62a442a36c59a2733d9",
+      "lines": 122
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverCapabilitiesMixin.java",
+      "sha256": "1f21144ede811a73d790e61bb82b27a18cea1cd5adf632ad5f036a62c703894b",
+      "lines": 113
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "sha256": "5ff60819301303ea2893b671701741e1523501f0ef4c575c10ec932de04f5493",
+      "lines": 164
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverStorage.java",
+      "sha256": "02f2cf2b0b84f3ed9eb16c266ad85e8d7d6be98b0b4e3909751878e34ef24046",
+      "lines": 116
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverRuntime.java",
+      "sha256": "3ed9aeba571247804027cd2877d084b809890070104b49619465199a425a925f",
+      "lines": 180
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "sha256": "036d8a5039506f9a7678fe76e07362f9a8a81a09a47fed0824dae5e13a375403",
+      "lines": 309
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCover.java",
+      "sha256": "bdb09e176d08f1b23ba0b420ebf9cb36c832bfe2d0dc5002092269db5727a2c3",
+      "lines": 54
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/SapBagTests.java",
+      "sha256": "aec32c66cb8aa25a8a52aaefbe97f00f99f94a6ef915e3c9acfc9a76108de552",
+      "lines": 251
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/sap_bag.json",
+      "sha256": "03d1a456daae19b8a3f71540e3141f73a4c045c8d570d3f8973192346f5fc3af",
+      "lines": 20
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/sap_bag.json",
+      "sha256": "9d2539846857a96f2958b7970169c157398ac706eb8d75e9129783c225e56bf3",
+      "lines": 1
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/resources/assets/gt6ce/models/block/tool/sap_bag.json",
+      "sha256": "c4789f6bbb30817027e7980c146576df577112e0095d067062483d6c65516e95",
+      "lines": 100
+    }
+  ],
+  "current_source_views": [
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/SapBagBlockEntity.java",
+      "platform": "forge",
+      "source_view_sha256": "1accc8a0813a7151e3f3882db67da3cdf438b35a5cdf2f7841b1c1adaccdca9f",
+      "execution_sha256": "ce33f567c18db1b02eaa60cfdf17c1220942462469d51a312ed9f4d7bc084622",
+      "tokens": 1119,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/SapBagBlockEntity.java",
+      "platform": "neoforge",
+      "source_view_sha256": "ad19b02b936104a83f0dbe83febc8153aed4ca0b3394cbffa8dd470b0fa0d04b",
+      "execution_sha256": "d0951061c2362459c75dca6a23ff0e948a49931ffd309b1d84340b5ea9ea2594",
+      "tokens": 1092,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/SapBagBlock.java",
+      "platform": "forge",
+      "source_view_sha256": "8d6652daf184e673714131e5d1843cb1107e2861f67995d78f9f088f9a2f2396",
+      "execution_sha256": "adcb62d11e810392e859d814bfcea404253b7c1b5217b097f45a56c00c35a35e",
+      "tokens": 794,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/SapBagBlock.java",
+      "platform": "neoforge",
+      "source_view_sha256": "58db0cd7a0b97fff931c5ece13857b6f90485c8bbb320cce542faef9ff8f8050",
+      "execution_sha256": "a1905a6d00663030d14fc4c3b5c5d66bad10fb30d3c49d097da788a93b6bd608",
+      "tokens": 799,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/wood/TreeHoleBlock.java",
+      "platform": "forge",
+      "source_view_sha256": "b8c3fb2508652cb5d575f5ceea635da44e0ca8d766dbd234b77e75f95fb1f8a6",
+      "execution_sha256": "cc24a0b0ed84570d429fdc707e036d9447b151ef65ce31e112c5fa823943f572",
+      "tokens": 1049,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/wood/TreeHoleBlock.java",
+      "platform": "neoforge",
+      "source_view_sha256": "5e7fb606bb49a3bb1a5e99b7a2cfba8c1c4fee13e2182985809dc67cbea989a4",
+      "execution_sha256": "ef418c347ff4c9db95522adc93d28f9c0165125f0ff2f37ea8a2f916d96f58f9",
+      "tokens": 1244,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTTreeHoles.java",
+      "platform": "forge",
+      "source_view_sha256": "2fd201c287b91b7bc5e9f70b2f47b1999da77aa941ed3d2370e09a495061f31f",
+      "execution_sha256": "2d4dd020f09fbf9961757f930641602a169d2619353cadc4561bebbbcfccee48",
+      "tokens": 492,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTTreeHoles.java",
+      "platform": "neoforge",
+      "source_view_sha256": "4c6250eb4c1aacc5af0c738e750e6e7fa78551d3c17eeef5c16b4aa2b6387de0",
+      "execution_sha256": "4e5cdb799709f9ca6b7494ab7b8afb6b30583a6f16fb3142c0a0fee8b2b45b40",
+      "tokens": 506,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/TreeHoleBlockEntity.java",
+      "platform": "forge",
+      "source_view_sha256": "47e37556be45e5988ba6d1c0ce156f4f149e4d2a0bfa41e230ef7e052f282f0c",
+      "execution_sha256": "fe357030cae52481ad2abd66c7cc8bcbbe037a7a4b9a367414fda85fe510e3f7",
+      "tokens": 1579,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/TreeHoleBlockEntity.java",
+      "platform": "neoforge",
+      "source_view_sha256": "47e37556be45e5988ba6d1c0ce156f4f149e4d2a0bfa41e230ef7e052f282f0c",
+      "execution_sha256": "fe357030cae52481ad2abd66c7cc8bcbbe037a7a4b9a367414fda85fe510e3f7",
+      "tokens": 1579,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/worldgen/TreeSpeciesRules.java",
+      "platform": "core",
+      "source_view_sha256": "4c68cc75a62c28a8d0517f32ca812c414a77f90229d1f89d43016a45eb99bbf4",
+      "execution_sha256": "d83e5843f98c0cf685bfbe348380b4aec6b084318c7899efc01151aab81302bf",
+      "tokens": 213,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/ShapedToolBlock.java",
+      "platform": "forge",
+      "source_view_sha256": "beba4847e3c22891940996532d2a01f1d2a6e63cb68354806d5cc73d11776b7f",
+      "execution_sha256": "05630b93c751a1aca7eeaec38d2f22f7e18122f207342344d499c064e2e5fa6d",
+      "tokens": 906,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/ShapedToolBlock.java",
+      "platform": "neoforge",
+      "source_view_sha256": "32213e20749d6792954ee41ae94a1a6af72b5c948fcdba9ab30afd8ccfb324b4",
+      "execution_sha256": "cdd86242329ce03985f2b7ea66c221f804e1d849ee6fa2d52e4ba83c03625081",
+      "tokens": 1110,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/tool/OriginalToolShapes.java",
+      "platform": "core",
+      "source_view_sha256": "c686f8dd035d938f10c1a1258a7a8bbf14234baabd7d30b5f7433097ba9e7313",
+      "execution_sha256": "bb547a7b284fb6e7c94316d337513d3faa2dd1b351f7f91ba0385e399cd3add6",
+      "tokens": 1164,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/tool/UtilityToolRules.java",
+      "platform": "core",
+      "source_view_sha256": "2f3869af3dade4578fe1fb6687a0fa281251225438425313a945a97a12346acd",
+      "execution_sha256": "a94078ec1a8913fa1813d9cf4ee08b28731b73912f16611ce7f86dceef73d353",
+      "tokens": 312,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTToolBlocks.java",
+      "platform": "forge",
+      "source_view_sha256": "0293060ca001b1675a4b7aa8023eaa39e30d90cffaef084e75fc0f1edca353b7",
+      "execution_sha256": "f66618d95c147f6556c59789bc5e5fa6270322ee868f8692891522b344b5069e",
+      "tokens": 4005,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTToolBlocks.java",
+      "platform": "neoforge",
+      "source_view_sha256": "b7b0bdf3131f5e23458a63ff523bc2479d72969666ec5dcb896083f56280cebb",
+      "execution_sha256": "94589e1b75f6a7bac4893d3b4fa81731ba69457215f0030a7360eca68dfb009f",
+      "tokens": 913,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "forge",
+      "source_view_sha256": "cd857ed2aa4e138090d32001a0777cfe38b90935fa1f5946eacec188a2f02d4d",
+      "execution_sha256": "824338cb3c41523ff9f4816f0068e606780dba5e59860951ffe2bd792ab8be0b",
+      "tokens": 8033,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "neoforge",
+      "source_view_sha256": "98785c75a78501d4cc1232a887ac9bc9bfa79efde64e9ef84f79f88febaf3f66",
+      "execution_sha256": "21b9ab5226365d8bc28304f547860d7539e233db605b7e35487353871cd4717e",
+      "tokens": 6299,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTManualStations.java",
+      "platform": "neoforge",
+      "source_view_sha256": "814eb95c770e5c62e86406b99fc5703268fdf79c9a096d8b3d5785c68cb0232f",
+      "execution_sha256": "e5a6757949d91de4ce1249da4c57ac4bf53d406ea686153407a1ceac8b1a901b",
+      "tokens": 1673,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageContainerCapabilities.java",
+      "platform": "neoforge",
+      "source_view_sha256": "d6e62e69491d69f904307d82523a6e3e9c49f7fcccdda7ae0f6c1a040c4a74e0",
+      "execution_sha256": "4275ca448144ead89ac1d4e7a729e61dfb0bfca70011b91ea3c20a0526587bc3",
+      "tokens": 902,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java",
+      "platform": "forge",
+      "source_view_sha256": "180005d80f65bc8743eaf43840fe6a47bf9e559a43415b5fa771b308b24e00f4",
+      "execution_sha256": "b6da4ca9b6fd90b53d1b19297d22b469fb83f185adb7bbb6733503d5dc0463c6",
+      "tokens": 1504,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java",
+      "platform": "neoforge",
+      "source_view_sha256": "a28f1d74cbd6161b22f3b4ab8bbc8d7484d4eef2e9f21d5821656ff7954b8f2c",
+      "execution_sha256": "ee04a2395e84edfdd211cd11a9304d033ee9792a53645bca8d4ef2ef06b23e05",
+      "tokens": 1527,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/HandContainerTransfer.java",
+      "platform": "forge",
+      "source_view_sha256": "2e028cb34d0cf7ff728dc93af14587b57ba1c37addf7fec6ca456e3df290fafd",
+      "execution_sha256": "8e1e6d2c2c40869197df74f306a1cca6a0e6d0b2172f6d56c146d6d981ead20a",
+      "tokens": 366,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/HandContainerTransfer.java",
+      "platform": "neoforge",
+      "source_view_sha256": "48d16b3426683871554394f4664acee5d974d7bb68eeb55ecba97eb58d2adb6b",
+      "execution_sha256": "9dbfd4b004e1337acd5096dd6f38817c13d079bb212ba4efb7aa3e17d3d1dc33",
+      "tokens": 368,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "platform": "forge",
+      "source_view_sha256": "e24f795ad736c83b2f6dce086fbed48d837be4a058aeb328419e5fee5728a544",
+      "execution_sha256": "d6dee75d83ca152f75000777e026b15f8a65a056bbc8bf42842fb65eb0d848cd",
+      "tokens": 812,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "platform": "neoforge",
+      "source_view_sha256": "73a46b5d7f458323121f4457cbede985ecbde249a82769afb425a40fd5a07960",
+      "execution_sha256": "3fd4ed3cbd9550ec97603ade80d0f0b2fc18f4ba3ee895905d4d7f0fc92f813d",
+      "tokens": 905,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverCapabilitiesMixin.java",
+      "platform": "forge",
+      "source_view_sha256": "c91934f98f9c9332870824dfabc7d169a4619dce4e8aa3ea6888006dd2f5d528",
+      "execution_sha256": "d2cad0c9c5f97231c774c5790d5d792bb496578a6722d18dbb08757c6bf4dbc5",
+      "tokens": 943,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverCapabilitiesMixin.java",
+      "platform": "neoforge",
+      "source_view_sha256": "55809219070bdab26eb73abc53e456642f8912e9badbfa24ba00c27ac8082bc4",
+      "execution_sha256": "8e98e3d78ad63761feacf5ce07d9b1070b15d73b25df0c05bee6dd980c4826c0",
+      "tokens": 343,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "platform": "forge",
+      "source_view_sha256": "efd9ec9b7989a677380bbd11086d1d71ca07f98819e0547b0bc3521d2208f453",
+      "execution_sha256": "b3228fe53f70e7fd6dc14f802ae7fcde3be5c6430d2d7ed56942e4d081e57a53",
+      "tokens": 1351,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "platform": "neoforge",
+      "source_view_sha256": "14f00b7223b53c45b273fffe0959887109877e89fccd4d5df7a9c1545978eb1a",
+      "execution_sha256": "5b0e0eccfe2e88766c7a08cf4619edadb0942ffc95fa563bbac320dc67b50dc0",
+      "tokens": 1397,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverStorage.java",
+      "platform": "forge",
+      "source_view_sha256": "15530d931bc1d7a25ea9badfde385fe32ddecea7b43efb7722b835170976f52b",
+      "execution_sha256": "b2b198f437ecf1ebfb558c5f7d9cc1e1f5a80405768ad125f2448788065dfaa9",
+      "tokens": 648,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverStorage.java",
+      "platform": "neoforge",
+      "source_view_sha256": "1bb263ea515be60a71860e66a1e27d262584ab922f391f9375ad6b153e08285b",
+      "execution_sha256": "c63238e015b615d4a8d1f24a57ddae6318706a303261a9ed0a2589b121b52e3f",
+      "tokens": 669,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverRuntime.java",
+      "platform": "forge",
+      "source_view_sha256": "90aaf1d96a26123ab3b9d894aa19ca3c65d57cfc01da0af0703e6c62e1f2eb21",
+      "execution_sha256": "c62ab607b36e70da3bf4ba5037f4bf576b3a17af84bdc04e7bd67d6af2f1b384",
+      "tokens": 1506,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverRuntime.java",
+      "platform": "neoforge",
+      "source_view_sha256": "20be436cbf15cedb04085c445516c390201896499ca58f4c65e90045d3778718",
+      "execution_sha256": "8afd48e6a8af4d536c1fe99b2bc2b61b27ac70fd79d95921968009763b60defc",
+      "tokens": 1526,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "platform": "forge",
+      "source_view_sha256": "3627059c88f254672fd0a10de3316e0f16842b35131e0c44a66c0c3e796ac6c2",
+      "execution_sha256": "e0bd57c7f517e4a2f70b9f6c76273e832440faf2bb1d88c950bdb8bede463192",
+      "tokens": 3948,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "platform": "neoforge",
+      "source_view_sha256": "f3572a20b53f60baf1b07dd006a8bbe2443b743d854902403725642e9cdd159c",
+      "execution_sha256": "78c667a4afb1a89cac50a3649ae186aab430fddac8d78424911806a8c7dab202",
+      "tokens": 3957,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCover.java",
+      "platform": "forge",
+      "source_view_sha256": "88dd113ca6bacd5eede627a4cfd41d67e30ec3340f4b6bece92a86ea2391e87a",
+      "execution_sha256": "b8c539ea5ea10ae26186951daa2f942073b0264b1fd6970e2c99b37aa136b9ef",
+      "tokens": 298,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCover.java",
+      "platform": "neoforge",
+      "source_view_sha256": "ca3c419b2f329dcd42a6c3c22a6b58649250d45f003bdedbc0400c49b1eb7792",
+      "execution_sha256": "7c4e036887137410b16255b6a2c8919bdb65d109c07b70c55b424cb339a33709",
+      "tokens": 297,
+      "method": "source projection, not Java compilation"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/SapBagTests.java",
+      "platform": "forge",
+      "source_view_sha256": "f829cde5fbbe85d6591dfd11991be14e05ff7e18b90bc8d2214cb53ae5a8464d",
+      "execution_sha256": "304dab00d7bc211db4165831944b52acd86003a3e6962fbe3997f8dd3a9e56b4",
+      "tokens": 2326,
+      "method": "source projection, not Java compilation"
+    }
+  ],
+  "source_excerpts": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntitySapBag.java",
+      "line_start": 80,
+      "line_end": 103,
+      "sha256": "43acd47abae4a9b87b3b1ae557d36800e7a5df78c01312449d5e9e4b7da48a10",
+      "text": "\tpublic void onTick2(long aTimer, boolean aIsServerSide) {\n\t\tsuper.onTick2(aTimer, aIsServerSide);\n\t\tif (aIsServerSide) {\n\t\t\tDelegatorTileEntity<TileEntity> tDelegator = getAdjacentTileEntity(mFacing);\n\t\t\tif (tDelegator.mTileEntity instanceof ITileEntityTreeHole) {\n\t\t\t\tif (((ITileEntityTreeHole)tDelegator.mTileEntity).hasResin(tDelegator.mSideOfTileEntity)) {\n\t\t\t\t\tif (((ITileEntityTreeHole)tDelegator.mTileEntity).extractResin(tDelegator.mSideOfTileEntity)) {\n\t\t\t\t\t\tmTank.fill(((ITileEntityTreeHole)tDelegator.mTileEntity).getResinFluid(tDelegator.mSideOfTileEntity), T);\n\t\t\t\t\t\taddStackToSlot(0, ((ITileEntityTreeHole)tDelegator.mTileEntity).getResinItem(tDelegator.mSideOfTileEntity));\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t\tboolean tFull = mFull;\n\t\t\tmFull = (mTank.has() || slotHas(0));\n\t\t\tif (tFull != mFull) updateClientData();\n\t\t}\n\t}\n\t\n\t@Override\n\tpublic boolean onBlockActivated3(EntityPlayer aPlayer, byte aSide, float aHitX, float aHitY, float aHitZ) {\n\t\tif (isServerSide()) {\n\t\t\tif (ST.add(aPlayer, slot(0), T)) {\n\t\t\t\tslotKill(0);\n\t\t\t\treturn T;"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntitySapBag.java",
+      "line_start": 99,
+      "line_end": 117,
+      "sha256": "ed325f4ddd1f6d9f667310fa3df684d6b3c6aa527450914623d49d948cd8b658",
+      "text": "\tpublic boolean onBlockActivated3(EntityPlayer aPlayer, byte aSide, float aHitX, float aHitY, float aHitZ) {\n\t\tif (isServerSide()) {\n\t\t\tif (ST.add(aPlayer, slot(0), T)) {\n\t\t\t\tslotKill(0);\n\t\t\t\treturn T;\n\t\t\t}\n\t\t\tItemStack aStack = aPlayer.getCurrentEquippedItem(), tStack;\n\t\t\tif (aStack != null) if ((tStack = FL.fill(mTank, ST.amount(1, aStack), T, T, T, T)) != null) {\n\t\t\t\taStack.stackSize--;\n\t\t\t\tST.give(aPlayer, tStack, T);\n\t\t\t\treturn T;\n\t\t\t}\n\t\t}\n\t\treturn T;\n\t}\n\t\n\t@Override\n\tpublic boolean breakBlock() {\n\t\tGarbageGT.trash(mTank);"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntitySapBag.java",
+      "line_start": 132,
+      "line_end": 158,
+      "sha256": "56a0a56e52b7a492de60df41bd9e08dd33b6b73c69fd98e0bf330735615ecc6d",
+      "text": "\tpublic ITexture getTexture2(Block aBlock, int aRenderPass, byte aSide, boolean[] aShouldSideBeRendered) {\n\t\treturn (aSide != mFacing && SIDES_TOP_HORIZONTAL[aSide]) || aShouldSideBeRendered[aSide] ? BlockTextureMulti.get(BlockTextureDefault.get(sColoreds[FACES_TBS[aSide]], mRGBa), BlockTextureDefault.get((mFull?sOverlaysFull:sOverlays)[FACES_TBS[aSide]])) : null;\n\t}\n\t\n\t// Icons\n\tpublic static IIconContainer sColoreds[] = new IIconContainer[] {\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/tools/sapbag/colored/bottom\"),\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/tools/sapbag/colored/top\"),\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/tools/sapbag/colored/side\"),\n\t}, sOverlays[] = new IIconContainer[] {\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/tools/sapbag/overlay/bottom\"),\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/tools/sapbag/overlay/top\"),\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/tools/sapbag/overlay/side\"),\n\t}, sOverlaysFull[] = new IIconContainer[] {\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/tools/sapbag/overlay_full/bottom\"),\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/tools/sapbag/overlay_full/top\"),\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/tools/sapbag/overlay_full/side\"),\n\t};\n\t\n\t@Override public AxisAlignedBB getCollisionBoundingBoxFromPool() {return null;}\n\t\n\t@Override\n\tpublic AxisAlignedBB getSelectedBoundingBoxFromPool() {\n\t\tswitch(mFacing) {\n\t\tcase SIDE_Z_NEG: return box(PX_P[ 5], PX_P[ 0], PX_P[ 0], PX_N[ 5], PX_N[ 9], PX_N[10]);\n\t\tcase SIDE_Z_POS: return box(PX_P[ 5], PX_P[ 0], PX_P[10], PX_N[ 5], PX_N[ 9], PX_N[ 0]);\n\t\tcase SIDE_X_NEG: return box(PX_P[ 0], PX_P[ 0], PX_P[ 5], PX_N[10], PX_N[ 9], PX_N[ 5]);"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntitySapBag.java",
+      "line_start": 151,
+      "line_end": 153,
+      "sha256": "7d5f0f8667911bdaa8500ed0005da4cbcb1e67f6f7cc813ee022b554abe68700",
+      "text": "\t@Override public AxisAlignedBB getCollisionBoundingBoxFromPool() {return null;}\n\t\n\t@Override"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntitySapBag.java",
+      "line_start": 184,
+      "line_end": 200,
+      "sha256": "e51de4dc810e4013c5253554a77569bc65baf89e768140ad28242d6295514348",
+      "text": "\t@Override public boolean allowCovers            (byte aSide) {return F;}\n\t@Override public boolean attachCoversFirst      (byte aSide) {return F;}\n\t@Override public boolean isObstructingBlockAt   (byte aSide) {return aSide == mFacing;}\n\t@Override public boolean checkObstruction(EntityPlayer aPlayer, byte aSide, float aHitX, float aHitY, float aHitZ) {return F;}\n\t@Override public boolean useSidePlacementRotation       () {return T;}\n\t@Override public boolean useInversePlacementRotation    () {return T;}\n\t@Override public int getLightOpacity() {return LIGHT_OPACITY_NONE;}\n\t@Override public byte getDefaultSide() {return SIDE_FRONT;}\n\t@Override public boolean[] getValidSides() {return SIDES_HORIZONTAL;}\n\t@Override public boolean isUsingWrenchingOverlay(ItemStack aStack, byte aSide) {return F;}\n\t@Override public boolean canDrop(int aInventorySlot) {return T;}\n\t@Override public byte getVisualData() {return (byte)(mFull ? 1 : 0);}\n\t@Override public void setVisualData(byte aData) {mFull = (aData != 0);}\n\t@Override public boolean ignorePlayerCollisionWhenPlacing() {return T;}\n\t\n\t@Override public String getTileEntityName() {return \"gt.multitileentity.sapbag\";}\n}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/misc/MultiTileEntityTreeHole.java",
+      "line_start": 74,
+      "line_end": 98,
+      "sha256": "ce83f859daa029e60392705117e121ac08e5a9c924fed4cc1ab2bcc3ca4ca663",
+      "text": "\tpublic boolean onBlockActivated3(EntityPlayer aPlayer, byte aSide, float aHitX, float aHitY, float aHitZ) {\n\t\tif (aSide != mFacing) return F;\n\t\tItemStack aStack = aPlayer.getCurrentEquippedItem();\n\t\tif (aStack != null && aStack.getItem() instanceof ItemBlock) return F;\n\t\tif (isServerSide() && hasResin(aSide)) {\n\t\t\tItemStack tResin = getResinItem(aSide), tStack = FL.fill(getResinFluid(aSide), ST.amount(1, aStack), T, T, T, T);\n\t\t\tif ((tStack != null || tResin != null) && extractResin(aSide)) {\n\t\t\t\tif (tResin != null) {\n\t\t\t\t\tST.give(aPlayer, tResin, T);\n\t\t\t\t}\n\t\t\t\tassert aStack != null;\n\t\t\t\tif (tStack != null) {\n\t\t\t\t\taStack.stackSize--;\n\t\t\t\t\tST.give(aPlayer, tStack, T);\n\t\t\t\t}\n\t\t\t}\n\t\t\treturn T;\n\t\t}\n\t\treturn T;\n\t}\n\t\n\t@Override public boolean unpaint() {return F;}\n\t@Override public boolean isPainted() {return F;}\n\t@Override public boolean paint(int aRGB) {return F;}\n\t@Override public int getPaint() {return UNCOLORED;}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/misc/MultiTileEntityTreeHole.java",
+      "line_start": 112,
+      "line_end": 118,
+      "sha256": "5fe3d609c2a6d5da057eff640f499be3300c6f1f7fe64cf8c1867707d9669b2c",
+      "text": "\t@Override public boolean allowCovers(byte aSide) {return F;}\n\t@Override public byte getDefaultSide() {return SIDE_BACK;}\n\t@Override public boolean[] getValidSides() {return SIDES_HORIZONTAL;}\n\t@Override public boolean isUsingWrenchingOverlay(ItemStack aStack, byte aSide) {return F;}\n\t@Override public boolean showInCreative() {return F;}\n\t@Override public boolean canDrop(int aInventorySlot) {return F;}\n}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/plants/MultiTileEntityResinHoleRubber.java",
+      "line_start": 97,
+      "line_end": 99,
+      "sha256": "4a148c6d10c9970e2dfe13bb296ce8aba5b200cb0cf6deb7f691d32517476807",
+      "text": "\t@Override public ItemStack getResinItem(byte aSide) {return IL.IC2_Resin.get(1, IL.Resin.get(1));}\n\t@Override public FluidStack getResinFluid(byte aSide) {return FL.Resin_Rubber.make(250);}\n\t@Override public ITexture getTexture2(Block aBlock, int aRenderPass, byte aSide, boolean[] aShouldSideBeRendered) {return aShouldSideBeRendered[aSide] ? aSide != mFacing ? BlockTextureCopied.get(BlocksGT.LogA, SIDE_ANY, 0) : BlockTextureDefault.get(mHasResin?Textures.BlockIcons.LOG_RESIN_RUBBER:Textures.BlockIcons.LOG_HOLE_RUBBER) : null;}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/plants/MultiTileEntityResinHoleRubber.java",
+      "line_start": 65,
+      "line_end": 76,
+      "sha256": "b52d7e1379a4f204c8fcb737983fe0f2b4d9ceeced30fe683d938e5a59bdb18a",
+      "text": "\tpublic void onTick2(long aTimer, boolean aIsServerSide) {\n\t\tsuper.onTick2(aTimer, aIsServerSide);\n\t\tif (aIsServerSide) {\n\t\t\tif (!mHasResin && aTimer % 600 == 0) {\n\t\t\t\tint tTreeHeight = yCoord+1, tLeavesCount = 0;\n\t\t\t\tfor (int i = 1; i < 10; i++) {\n\t\t\t\t\tif (getBlockAtSideAndDistance(SIDE_TOP, i) != BlocksGT.LogA && getMetaDataAtSideAndDistance(SIDE_TOP, i) != 0) break;\n\t\t\t\t\ttTreeHeight++;\n\t\t\t\t}\n\t\t\t\tif (checkLeaves(xCoord, tTreeHeight  , zCoord)) tLeavesCount++;\n\t\t\t\tif (checkLeaves(xCoord, tTreeHeight+1, zCoord)) tLeavesCount++;\n\t\t\t\tfor (int i = -1; i <= 1; i++) for (int j = -1; j <= 1; j++) if (i != 0 || j != 0) {"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/plants/MultiTileEntitySapHoleMaple.java",
+      "line_start": 84,
+      "line_end": 86,
+      "sha256": "4cfb44e57c2e07813f9e641c011f30c1441377f7cf48b0b9d89bd67040f3b751",
+      "text": "\t@Override public ItemStack getResinItem(byte aSide) {return null;}\n\t@Override public FluidStack getResinFluid(byte aSide) {return FL.Sap_Maple.make(250);}\n\t@Override public ITexture getTexture2(Block aBlock, int aRenderPass, byte aSide, boolean[] aShouldSideBeRendered) {return aShouldSideBeRendered[aSide] ? aSide != mFacing ? BlockTextureCopied.get(BlocksGT.LogA, SIDE_ANY, 1) : BlockTextureDefault.get(mHasResin?Textures.BlockIcons.LOG_SAP_MAPLE:Textures.BlockIcons.LOG_HOLE_MAPLE) : null;}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/plants/MultiTileEntitySapHoleMaple.java",
+      "line_start": 42,
+      "line_end": 53,
+      "sha256": "64933b891576d5cf358a6c650c8c2e0ab6a3083455b58dc23ba142bc73a5c00c",
+      "text": "\tpublic void onTick2(long aTimer, boolean aIsServerSide) {\n\t\tsuper.onTick2(aTimer, aIsServerSide);\n\t\tif (aIsServerSide) {\n\t\t\tif (!mHasResin && aTimer % 600 == 0) {\n\t\t\t\tint tTreeHeight = yCoord+1, tLeavesCount = 0;\n\t\t\t\tfor (int i = 1; i < 12; i++) {\n\t\t\t\t\tif (getBlockAtSideAndDistance(SIDE_TOP, i) != BlocksGT.LogA && getMetaDataAtSideAndDistance(SIDE_TOP, i) != 1) break;\n\t\t\t\t\ttTreeHeight++;\n\t\t\t\t}\n\t\t\t\tfor (int i = -1; i <= 1; i++) for (int j = -1; j <= 1; j++) {\n\t\t\t\t\tif (checkLeaves(xCoord+i, tTreeHeight+1, zCoord+j)) tLeavesCount++;\n\t\t\t\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/plants/MultiTileEntitySapHoleRainbowood.java",
+      "line_start": 80,
+      "line_end": 82,
+      "sha256": "e1daf683cce22be465310a1764e59a8c685ceb1abbdf7a2ef7119f7e8184dc5d",
+      "text": "\t@Override public ItemStack getResinItem(byte aSide) {return null;}\n\t@Override public FluidStack getResinFluid(byte aSide) {return FL.Sap_Rainbow.make(250);}\n\t@Override public ITexture getTexture2(Block aBlock, int aRenderPass, byte aSide, boolean[] aShouldSideBeRendered) {return aShouldSideBeRendered[aSide] ? aSide != mFacing ? BlockTextureCopied.get(BlocksGT.LogB, SIDE_ANY, 3) : BlockTextureDefault.get(mHasResin?Textures.BlockIcons.LOG_SAP_RAINBOWOOD:Textures.BlockIcons.LOG_HOLE_RAINBOWOOD) : null;}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/plants/MultiTileEntitySapHoleRainbowood.java",
+      "line_start": 41,
+      "line_end": 52,
+      "sha256": "e58c4e572e3e303d1f234d02d44d34fd365a448ec6c2bc49d63292bddddcab4b",
+      "text": "\tpublic void onTick2(long aTimer, boolean aIsServerSide) {\n\t\tsuper.onTick2(aTimer, aIsServerSide);\n\t\tif (aIsServerSide) {\n\t\t\tif (!mHasResin && aTimer % 600 == 0) {\n\t\t\t\tint tTreeHeight = yCoord+1, tLeavesCount = 0;\n\t\t\t\tfor (int i = 1; i < 12; i++) {\n\t\t\t\t\tif (getBlockAtSideAndDistance(SIDE_TOP, i) != BlocksGT.LogB && getMetaDataAtSideAndDistance(SIDE_TOP, i) != 3) break;\n\t\t\t\t\ttTreeHeight++;\n\t\t\t\t}\n\t\t\t\t\n\t\t\t\tfor (int i = -2; i <= 2; i++) for (int j = -2; j <= 2; j++) {\n\t\t\t\t\tif (checkLeaves(xCoord+i, tTreeHeight+2, zCoord+j)) tLeavesCount++;"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "line_start": 2221,
+      "line_end": 2221,
+      "sha256": "d984571e1052148b5fb03c9ab67eede919f6369bb23927a2177bf53211def64b",
+      "text": "\t\taMat = MT.Leather;          aRegistry.add(\"Resin/Sap Bag\"                                       , \"Misc Tool Blocks\"                    , 32736, 32720, MultiTileEntitySapBag.class                             ,                 0, 64, aUtilWool      , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   3.0F, NBT_TANK_CAPACITY, 8000), \"SSS\", \"LsL\", \"LLL\", 'L', OD.craftingLeather, 'S', OD.stickAnyWood); IL.Bag_Sap_Resin.set(aRegistry.getItem());"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "line_start": 378,
+      "line_end": 380,
+      "sha256": "6f7d509f3d7ba8acb2256dcdc90299c2e192dbf2dfe948cf9cf62253e22133ff",
+      "text": "\tprotected IFluidTank getFluidTankFillable2(byte aSide, FluidStack aFluidToFill) {return null;}\n\tprotected IFluidTank getFluidTankDrainable2(byte aSide, FluidStack aFluidToDrain) {return null;}\n\tprotected IFluidTank[] getFluidTanks2(byte aSide) {return ZL_FT;}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "line_start": 72,
+      "line_end": 76,
+      "sha256": "d62169664fd794beddc55c0c8c44a7ce659d142d739c702768221d2ab51f6c36",
+      "text": "\tpublic boolean onPlaced(ItemStack aStack, EntityPlayer aPlayer, MultiTileEntityContainer aMTEContainer, World aWorld, int aX, int aY, int aZ, byte aSide, float aHitX, float aHitY, float aHitZ) {\n\t\tmFacing = useSidePlacementRotation(aStack, aPlayer, aWorld, aX, aY, aZ, aSide, aHitX, aHitY, aHitZ)?useInversePlacementRotation(aStack, aPlayer, aWorld, aX, aY, aZ, aSide, aHitX, aHitY, aHitZ)?getValidSides()[OPOS[aSide]]?OPOS[aSide]:getDefaultSide():getValidSides()[aSide]?aSide:getDefaultSide():(useInversePlacementRotation(aStack, aPlayer, aWorld, aX, aY, aZ, aSide, aHitX, aHitY, aHitZ)?UT.Code.getOppositeSideForPlayerPlacing(aPlayer, mFacing, getValidSides()):UT.Code.getSideForPlayerPlacing(aPlayer, mFacing, getValidSides()));\n\t\tonFacingChange(SIDE_UNKNOWN);\n\t\tcheckCoverValidity();\n\t\tdoEnetUpdate();"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityClassContainer.java",
+      "line_start": 41,
+      "line_end": 54,
+      "sha256": "3e621700ca2396efb36e1c2ee671390692a2283f4970de34094a4b5cb3afcdf7",
+      "text": "\tpublic MultiTileEntityClassContainer(int aID, int aCreativeTabID, Class<? extends TileEntity> aClass, int aBlockMetaData, int aStackSize, MultiTileEntityBlock aBlock, NBTTagCompound aParameters) {\n\t\tif (!IMultiTileEntity.class.isAssignableFrom(aClass)) throw new IllegalArgumentException(\"MultiTileEntities must implement the Interface IMultiTileEntity!\");\n\t\tmBlockMetaData = (byte)aBlockMetaData;\n\t\tmStackSize = (byte)aStackSize;\n\t\tmParameters = aParameters==null?UT.NBT.make():aParameters;\n\t\tmHidden = mParameters.getBoolean(NBT_HIDDEN);\n\t\tmID = (short)aID;\n\t\tmCreativeTabID = (short)aCreativeTabID;\n\t\tmBlock = aBlock;\n\t\tmClass = aClass;\n\t\tif (mParameters.hasKey(NBT_MATERIAL) && !mParameters.hasKey(NBT_COLOR)) mParameters.setInteger(NBT_COLOR, UT.Code.getRGBInt(OreDictMaterial.get(mParameters.getString(NBT_MATERIAL)).fRGBaSolid));\n\t\ttry {mCanonicalTileEntity = aClass.newInstance();} catch (Throwable e) {throw new IllegalArgumentException(e);}\n\t\tif (mCanonicalTileEntity instanceof IMultiTileEntity) ((IMultiTileEntity)mCanonicalTileEntity).initFromNBT(mParameters, mID, (short)-1);\n\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityItemInternal.java",
+      "line_start": 241,
+      "line_end": 250,
+      "sha256": "520de3a8b3ecf24dc2771579b9193aacd888fa26549309496e286c7a3f6216a5",
+      "text": "\tpublic int getItemStackLimit(ItemStack aStack) {\n\t\tMultiTileEntityClassContainer tContainer = mBlock.mMultiTileEntityRegistry.getClassContainer(aStack);\n\t\tif (tContainer == null) return 1;\n\t\tMultiTileEntityContainer tTileEntityContainer = mBlock.mMultiTileEntityRegistry.getNewTileEntityContainer(aStack);\n\t\tif (tTileEntityContainer != null && tTileEntityContainer.mTileEntity instanceof IMTE_GetMaxStackSize) {\n\t\t\treturn UT.Code.bindStack(((IMTE_GetMaxStackSize)tTileEntityContainer.mTileEntity).getMaxStackSize(aStack, tContainer.mStackSize));\n\t\t}\n\t\treturn tContainer.mStackSize;\n\t}\n\t"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/SapBagBlockEntity.java",
+      "line_start": 81,
+      "line_end": 114,
+      "sha256": "a1a143075860b03e94928442b344a7b4ea4108558ff25901508c454faf560df4",
+      "text": "    public void collect() {\n        if (level == null || level.isClientSide) return;\n        BlockState state = getBlockState();\n        if (!(state.getBlock() instanceof com.gregtech.gregtech.block.tool.SapBagBlock)) return;\n        // GT6's bag faces the block it hangs on (getAdjacentTileEntity(mFacing)).\n        Direction facing = state.getValue(net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING);\n        BlockPos neighbour = worldPosition.relative(facing);\n        if (!level.hasChunkAt(neighbour)) return;\n        if (!(level.getBlockState(neighbour).getBlock() instanceof TreeHoleBlock hole)) return;\n        BlockState holeState = level.getBlockState(neighbour);\n        if (!holeState.getValue(TreeHoleBlock.RESIN) || holeState.getValue(TreeHoleBlock.FACING) != facing.getOpposite()) return;\n        // GT6 extractResin(): empty the hole, then take its yield.\n        level.setBlock(neighbour, holeState.setValue(TreeHoleBlock.RESIN, false), 3);\n        if (hole.yieldsItem()) {\n            ItemStack resin = hole.resinItem();\n            if (!resin.isEmpty()) {\n                if (stored.isEmpty()) {\n                    setStored(resin);\n//? if >=1.21.1 {\n                /*} else if (ItemStack.isSameItemSameComponents(stored, resin)\n*///?} else {\n                } else if (ItemStack.isSameItemSameTags(stored, resin)\n//?}\n                        && stored.getCount() + resin.getCount() <= Math.min(64, stored.getMaxStackSize())) {\n                    stored.grow(resin.getCount());\n                    contentsChanged();\n                }\n            }\n        } else {\n            tank.fill(hole.resinFluid(), FluidAction.EXECUTE);\n            setChanged();\n        }\n    }\n"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/TreeHoleBlockEntity.java",
+      "line_start": 35,
+      "line_end": 45,
+      "sha256": "3793d167e5c9cf9a94dad8187e305b090dd31ca383fd38d42c7e7d5bcbec436c",
+      "text": "    public void tick() {\n        if (level == null || level.isClientSide) return;\n        BlockState state = getBlockState();\n        if (!(state.getBlock() instanceof TreeHoleBlock hole)) return;\n        if (state.getValue(TreeHoleBlock.RESIN)) return;\n        if (++timer % CHECK_INTERVAL != 0) return;\n        refresh(hole.species());\n    }\n\n    /**\n     * One GT6 refill check. Public so the GameTest can drive it without ticking 600 times, and so a"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/TreeHoleBlockEntity.java",
+      "line_start": 89,
+      "line_end": 94,
+      "sha256": "c80f298124c881ba413700ac593644f75a2560024824f3295d38ab8721f63b09",
+      "text": "        int limit = species == WoodSpecies.RUBBER ? 10 : 12;\n        for (int i = 1; i < limit; i++) {\n            if (!level.getBlockState(pos.above(i)).is(log)) break;\n            top++;\n        }\n        int count = 0;"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTTreeHoles.java",
+      "line_start": 75,
+      "line_end": 77,
+      "sha256": "2d703ed7bfd89a42506e4abeb701c375631b04c670f856da7642669d5e4b4df7",
+      "text": "        hole(\"resin_hole_rubber\", WoodSpecies.RUBBER, \"item:gt6ce:rubber_resin\");\n        hole(\"tapped_maple\", WoodSpecies.MAPLE, \"fluid:gt6ce:maplesap\");\n        hole(\"tapped_rainbowood\", WoodSpecies.RAINBOWOOD, \"fluid:gt6ce:rainbowsap\");"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/tool/ShapedToolBlock.java",
+      "line_start": 62,
+      "line_end": 66,
+      "sha256": "660acb4473615ef5822177fb719e7d13ad8dbbaea83f4d600cae370723181916",
+      "text": "    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {\n        if (toolId.equals(\"advanced_button\")) return Shapes.empty();\n        if (toolId.equals(\"scaffold\")) return Block.box(0, 14, 0, 16, 16, 16);\n        return getShape(state, level, pos, context);\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/tool/ShapedToolBlock.java",
+      "line_start": 74,
+      "line_end": 76,
+      "sha256": "83201301323a54f20320ae787df64c657a80768c1aae03f63c731eb6bce452f5",
+      "text": "    public BlockState getStateForPlacement(BlockPlaceContext context) {\n        return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTManualStations.java",
+      "line_start": 84,
+      "line_end": 87,
+      "sha256": "b67e15901adbe845621bb2ee8f71f7cb64bbe247a309c1745921637d02507a90",
+      "text": "        SAP_BAG = GTBlocks.BLOCKS.register(\"sap_bag\", () -> new SapBagBlock(\"sap_bag\",\n                BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(.5f, .5f).sound(SoundType.WOOL)));\n        SHAPED.add((DeferredHolder) SAP_BAG);\n        item(\"sap_bag\", SAP_BAG);"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTToolBlocks.java",
+      "line_start": 280,
+      "line_end": 281,
+      "sha256": "0995328732714a8c79e504ce9f92889193322e5f4248ebd970a7a32d9884fd2b",
+      "text": "        SAP_BAG = simple(\"sap_bag\",\n                BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5f, 0.5f).sound(SoundType.WOOL));"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "line_start": 61,
+      "line_end": 67,
+      "sha256": "7e7f6f54cbe805dc89f91a847f7617a0f7e1e2b75efb5166dc45aac78c7affcf",
+      "text": "    public static boolean eligible(BlockEntity owner){\n        if(!ownClass(owner)||owner.getLevel()==null||owner.isRemoved())return false;\n        // Loose material piles use plates as contents, not as machine covers.\n        if(owner instanceof com.gregtech.gregtech.blockentity.misc.PileBlockEntity)return false;\n        // The active fallback service provides cover ticks even for otherwise passive GT storage.\n        return owner.getBlockState().getBlock() instanceof net.minecraft.world.level.block.EntityBlock;\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "line_start": 93,
+      "line_end": 98,
+      "sha256": "6aafde6dbcbb1c3ffde9ac194d8af17cc741093c7fb26963b1630b3025def394",
+      "text": "    @Override public boolean attachCover(Direction side,ItemStack stack){\n        if(!componentTicks())return false;\n        boolean attached=gregtechComponentStorage(true).attach(side,stack);\n        if(attached)ComponentCoverFallback.track((BlockEntity)(Object)this);\n        return attached;\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "line_start": 60,
+      "line_end": 66,
+      "sha256": "56b3cb1a9bc9d077855631a17f06206d71b326ad23cdbd8bb206143a72eea6e7",
+      "text": "        var panel=PanelCover.of(stack);if(panel==null)return CoverItems.isCover(stack);\n        var c=control(side);\n        if(panel.selector())return c!=null&&c.supportsMode();\n        if(panel==PanelCover.PROGRESS)return c!=null&&c.supportsProgress();\n        if(panel==PanelCover.STATUS)return c!=null&&c.supportsSwitch();\n        if(panel.energy())return energy(side)!=null;\n        return true;"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageContainerCapabilities.java",
+      "line_start": 30,
+      "line_end": 31,
+      "sha256": "25b986bb2c9eb0b93db42b642ee169c567a7db58e619279f123a85023d77b865",
+      "text": "                net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK, GTBlockEntities.SAP_BAG.get(),\n                (blockEntity, side) -> blockEntity);"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/SapBagTests.java",
+      "line_start": 164,
+      "line_end": 164,
+      "sha256": "67b5819ae4145fccea6505a750584bea086d2123e47974e621db03bf287c3463",
+      "text": "                if (rubber.tank().getAmount() != 0) problems.add(\"the rubber hole must not fill the tank\");"
+    }
+  ],
+  "native_evidence_reused": [
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour$Properties.class",
+      "entry_sha256": "7b379ccb00fa99762c6961f9e94d2258c994c12c59a46aa4789ee5851ed3eb52",
+      "javap_output": "work/rope-scaffold-audit-20261022/BlockBehaviour$Properties-forge.javap.txt",
+      "javap_sha256": "7ac86268ff86932e5c8cb6737878da61b2fe46dc71bd3c8a222b82d468171cc4",
+      "reused_prior_batch_output": true,
+      "excerpts": [
+        "strength(float, float);\n    Code:\n         0: aload_0\n         1: fload_1\n         2: invokevirtual #296                // Method destroyTime:(F)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;\n         5: fload_2\n         6: invokevirtual #298                // Method explosionResistance:(F)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;\n         9: areturn\n",
+        "explosionResistance(float);\n    Code:\n         0: aload_0\n         1: fconst_0\n         2: fload_1\n         3: invokestatic  #366                // Method java/lang/Math.max:(FF)F\n         6: putfield      #233                // Field explosionResistance:F\n         9: aload_0\n        10: areturn\n"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraftforge/common/extensions/IForgeBlock.class",
+      "entry_sha256": "0ba102d7d6e4ee7d45950c91b20fdf9c6319c5e0cb75b75133b4caa065c788f0",
+      "javap_output": "work/tank-hazards-audit-20261021/forge-IForgeBlock.javap.txt",
+      "javap_sha256": "61020cd4fe7386e91cb3c2cb57188e9df2f2d3e0862362b176107ad7598c7f93",
+      "reused_prior_batch_output": true,
+      "excerpts": [
+        "getExplosionResistance(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.level.Explosion);\n    Code:\n         0: aload_0\n         1: invokeinterface #26,  1           // InterfaceMethod self:()Lnet/minecraft/world/level/block/Block;\n         6: invokevirtual #195                // Method net/minecraft/world/level/block/Block.getExplosionResistance:()F\n         9: freturn\n"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/Block.class",
+      "entry_sha256": "02e5ba8d458ab32234a2d8d73de3554dc0ffbbd4ee9e3d0ad41ef45a69f6f8de",
+      "javap_output": "work/utility-physics-audit-20261022/Block-forge.javap.txt",
+      "javap_sha256": "551d56f69cbe811695f738f06267efcca5e4933f5f66539bd802d0fcee48928f",
+      "reused_prior_batch_output": true,
+      "excerpts": [
+        "public float getExplosionResistance();\n    Code:\n         0: aload_0\n         1: getfield      #914                // Field explosionResistance:F\n         4: freturn\n"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/ExplosionDamageCalculator.class",
+      "entry_sha256": "2024f960717e6046305019253fcd1c7a6eba7ca85aecd41d4a3ac9cc796ba1a7",
+      "javap_output": "work/utility-physics-audit-20261022/ExplosionDamageCalculator-forge.javap.txt",
+      "javap_sha256": "27313e45226e6109aafe64dadddc2850270b530e89d31239b31d770985c07758",
+      "reused_prior_batch_output": true,
+      "excerpts": [
+        "public java.util.Optional<java.lang.Float> getBlockExplosionResistance(net.minecraft.world.level.Explosion, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.material.FluidState);\n    Code:\n         0: aload         4\n         2: invokevirtual #20                 // Method net/minecraft/world/level/block/state/BlockState.isAir:()Z\n         5: ifeq          22\n         8: aload         5\n        10: invokevirtual #25                 // Method net/minecraft/world/level/material/FluidState.isEmpty:()Z\n        13: ifeq          22\n        16: invokestatic  #31                 // Method java/util/Optional.empty:()Ljava/util/Optional;\n        19: goto          47\n        22: aload         4\n        24: aload_2\n        25: aload_3\n        26: aload_1\n        27: invokevirtual #35                 // Method net/minecraft/world/level/block/state/BlockState.getExplosionResistance:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/Explosion;)F\n        30: aload         5\n        32: aload_2\n        33: aload_3\n        34: aload_1\n        35: invokevirtual #36                 // Method net/minecraft/world/level/material/FluidState.getExplosionResistance:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/Explosion;)F\n        38: invokestatic  #42                 // Method java/lang/Math.max:(FF)F\n        41: invokestatic  #48                 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;\n        44: invokestatic  #52                 // Method java/util/Optional.of:(Ljava/lang/Object;)Ljava/util/Optional;\n        47: areturn\n"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraftforge/common/extensions/IForgeBlockState.class",
+      "entry_sha256": "4932dc7f069fe4c963a2ce0358fa68edc4d2e9e483e44d85f3de0584471e4b60",
+      "javap_output": "work/utility-physics-audit-20261022/IForgeBlockState-forge.javap.txt",
+      "javap_sha256": "b808fbe4d2a0ab2e2f9607bb6634d9650780ab5bfb19fd2b857630e65be64802",
+      "reused_prior_batch_output": true,
+      "excerpts": [
+        "getExplosionResistance(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.level.Explosion);\n    Code:\n         0: aload_0\n         1: invokeinterface #21,  1           // InterfaceMethod self:()Lnet/minecraft/world/level/block/state/BlockState;\n         6: invokevirtual #25                 // Method net/minecraft/world/level/block/state/BlockState.getBlock:()Lnet/minecraft/world/level/block/Block;\n         9: aload_0\n        10: invokeinterface #21,  1           // InterfaceMethod self:()Lnet/minecraft/world/level/block/state/BlockState;\n        15: aload_1\n        16: aload_2\n        17: aload_3\n        18: invokevirtual #106                // Method net/minecraft/world/level/block/Block.getExplosionResistance:(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/Explosion;)F\n        21: freturn\n"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour.java",
+      "entry_sha256": "410ae028d36585b6c210e853720ea3fb973154a4d7800a082d541293cf355014",
+      "excerpts": [
+        "public BlockBehaviour.Properties strength(float p_60914_, float p_60915_) {\n            return this.destroyTime(p_60914_).explosionResistance(p_60915_);\n        }",
+        "public BlockBehaviour.Properties explosionResistance(float p_155957_) {\n            this.explosionResistance = Math.max(0.0F, p_155957_);\n            return this;\n        }"
+      ],
+      "reused_prior_batch_output": true
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/block/Block.java",
+      "entry_sha256": "fe57fd48e078ed5a72a3309ac63ac615aa4aed4d7e6cf0d52754b2c06fe27533",
+      "excerpts": [
+        "public float getExplosionResistance() {\n        return this.explosionResistance;\n    }"
+      ],
+      "reused_prior_batch_output": true
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/neoforged/neoforge/common/extensions/IBlockExtension.java",
+      "entry_sha256": "2dea052b03b569b82ca728073ab4299282eb4bb9116637b9ee19ade36975e5a5",
+      "excerpts": [
+        "default float getExplosionResistance(BlockState state, BlockGetter level, BlockPos pos, Explosion explosion) {\n        return self().getExplosionResistance();\n    }"
+      ],
+      "reused_prior_batch_output": true
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/neoforged/neoforge/common/extensions/IBlockStateExtension.java",
+      "entry_sha256": "0ca55c4ed6929e848270097a6c8932a5dd9626ef93b80e6c51ff5f3dd23548f1",
+      "excerpts": [
+        "default float getExplosionResistance(BlockGetter level, BlockPos pos, Explosion explosion) {\n        return self().getBlock().getExplosionResistance(self(), level, pos, explosion);\n    }"
+      ],
+      "reused_prior_batch_output": true
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/ExplosionDamageCalculator.java",
+      "entry_sha256": "55d578414477349fb222d753da3fe43ea7f7faade96690cf622e6428b5fece88",
+      "excerpts": [
+        "public Optional<Float> getBlockExplosionResistance(Explosion p_46099_, BlockGetter p_46100_, BlockPos p_46101_, BlockState p_46102_, FluidState p_46103_) {\n        return p_46102_.isAir() && p_46103_.isEmpty()\n            ? Optional.empty()\n            : Optional.of(Math.max(p_46102_.getExplosionResistance(p_46100_, p_46101_, p_46099_), p_46103_.getExplosionResistance(p_46100_, p_46101_, p_46099_)));\n    }"
+      ],
+      "reused_prior_batch_output": true
+    }
+  ],
+  "native_reuse_receipt_sha256": "a18c7a7f1e6ff1f8e6932249dcddc26df1d3f6c3f6cc75bab51b8a3dfd0788bc",
+  "readability": {
+    "baseline": "75ed5e22419c6f9d540a544251acd80da5fab893",
+    "files": {
+      "multiversion/src/main/java/com/gregtech/gregtech/blockentity/SapBagBlockEntity.java": {
+        "before_raw_sha256": "afa7f3d1e7fbef48c6c60130d5278926c185a5e82022b35cc77154f4bb03b002",
+        "after_raw_sha256": "347c0b130e7e140ed05a3d6bcc72c0476293ad8fd23b56933de025057ba0fb65",
+        "before_lines": 197,
+        "after_lines": 230,
+        "comment_corrections": [
+          [
+            "<p>GT6's tile entity checks the block it faces every tick: if that neighbour is a tree hole with\n * resin, it extracts the resin, fills its 8000 mB tank with the sap fluid and puts the resin item\n * into its single slot (the rubber hole yields an item instead of a fluid). Right-clicking hands out",
+            "<p>This port checks the facing tree hole every server tick, keeping an 8000 mB tank and one item\n * slot. Registered holes select one yield kind here; the original rubber hole provides both an\n * item and a fluid. Right-clicking hands out"
+          ],
+          [
+            "IFluidHandler (GT6's bag is a plain tank, so pipes can drain it)",
+            "Port IFluidHandler extension (original public tank lookup does not expose the bag tank)"
+          ],
+          [
+            "/** True when the bag holds anything (GT6's {@code mFull}, used for its full overlay). */",
+            "/** GT6's {@code mFull} condition; the current block model does not consume this value. */"
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1119,
+            "execution_sha256": "ce33f567c18db1b02eaa60cfdf17c1220942462469d51a312ed9f4d7bc084622",
+            "literal_positions_sha256": "666023130cfce4774ed8ea6de1b0c543aa1309f85fe640730600a60cfd0479bc",
+            "literal_count": 7
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1092,
+            "execution_sha256": "d0951061c2362459c75dca6a23ff0e948a49931ffd309b1d84340b5ea9ea2594",
+            "literal_positions_sha256": "0620c910df415305bcded98acaeef8975c35ff5f86bb9f3c942bc8c80a68cb85",
+            "literal_count": 7
+          }
+        ],
+        "before_normalized_sha256": "c39e3e52b6e7fc2ddda9f7867831d1b4cbc151707093f00bd6db0368c4c2dee1",
+        "after_normalized_sha256": "347c0b130e7e140ed05a3d6bcc72c0476293ad8fd23b56933de025057ba0fb65"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/tool/SapBagBlock.java": {
+        "before_raw_sha256": "f1518e28751ebc801bc34a4abdfc09b09f9c4d26f755755164541a193283b85f",
+        "after_raw_sha256": "972221277aace7e9a59024572828651559b975891f081e6151b11da9d9caf28d",
+        "before_lines": 114,
+        "after_lines": 115,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 794,
+            "execution_sha256": "adcb62d11e810392e859d814bfcea404253b7c1b5217b097f45a56c00c35a35e",
+            "literal_positions_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "literal_count": 0
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 799,
+            "execution_sha256": "a1905a6d00663030d14fc4c3b5c5d66bad10fb30d3c49d097da788a93b6bd608",
+            "literal_positions_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "literal_count": 0
+          }
+        ],
+        "before_normalized_sha256": "e9d455e62380b88b6aad9ef1aeeceb2f2d6109f90bb701ff102a023a56d704aa",
+        "after_normalized_sha256": "972221277aace7e9a59024572828651559b975891f081e6151b11da9d9caf28d"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/wood/TreeHoleBlock.java": {
+        "before_raw_sha256": "cbdbebc00250ff5f22b989113fc63f0472fbc264163aa30a33236f9ac1c2a22e",
+        "after_raw_sha256": "c7422cd0dadd73998954955e1828a8847a24aa8911bb5e2e180904dc54c7d293",
+        "before_lines": 160,
+        "after_lines": 182,
+        "comment_corrections": [
+          [
+            " * Right-clicking a filled hole hands out the resin item (rubber) or fills the held container with\n * the sap fluid (maple/rainbowood); breaking it drops the log it was cut into.",
+            " * This port's right-click branch selects the resin item (rubber) or sap fluid (maple/rainbowood);\n * the original rubber hole can provide both. Breaking a hole drops its source log."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1049,
+            "execution_sha256": "cc24a0b0ed84570d429fdc707e036d9447b151ef65ce31e112c5fa823943f572",
+            "literal_positions_sha256": "ae658de9ed592eaec06bb028765383d28f9c9b278ee7e183a3f47dfb75d85084",
+            "literal_count": 7
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1244,
+            "execution_sha256": "ef418c347ff4c9db95522adc93d28f9c0165125f0ff2f37ea8a2f916d96f58f9",
+            "literal_positions_sha256": "46c3a4700ec0a5adcce89292438c695fac1848805faad3f98fd5815ea2dea52a",
+            "literal_count": 7
+          }
+        ],
+        "before_normalized_sha256": "79bb567b0c1c0ea3338d0de5398eecfafc1d0059f221ab0329611eb822aad46b",
+        "after_normalized_sha256": "c7422cd0dadd73998954955e1828a8847a24aa8911bb5e2e180904dc54c7d293"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/registry/GTTreeHoles.java": {
+        "before_raw_sha256": "3e4960b7c8de7b74d1a5ac69598bf0ee0f529b6808302341bee95cb42e7a09a2",
+        "after_raw_sha256": "f0621b533947a0650de1dc62a8d27516f1cca54e624bdbc7ad7095f6f71e8533",
+        "before_lines": 87,
+        "after_lines": 92,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 492,
+            "execution_sha256": "2d4dd020f09fbf9961757f930641602a169d2619353cadc4561bebbbcfccee48",
+            "literal_positions_sha256": "fe52b00a7a0a0dd72c9ac15fd2b87c4d77b34200c17f1c72becf44264b082ea2",
+            "literal_count": 8
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 506,
+            "execution_sha256": "4e5cdb799709f9ca6b7494ab7b8afb6b30583a6f16fb3142c0a0fee8b2b45b40",
+            "literal_positions_sha256": "5ec7fc03f1683f86d5ea7c81a311553861a379f45e7fb8710dc9d4c66c7aef0b",
+            "literal_count": 8
+          }
+        ],
+        "before_normalized_sha256": "44c3c0617d7451aba2295a8165894c7d4016cd6c081749e1dcf21babd8b8b77a",
+        "after_normalized_sha256": "f0621b533947a0650de1dc62a8d27516f1cca54e624bdbc7ad7095f6f71e8533"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/blockentity/TreeHoleBlockEntity.java": {
+        "before_raw_sha256": "9169cdeaf99d2d7f3236875fb12cc2b84af52f526f57f81bd6f3703f2dc05793",
+        "after_raw_sha256": "47e37556be45e5988ba6d1c0ce156f4f149e4d2a0bfa41e230ef7e052f282f0c",
+        "before_lines": 152,
+        "after_lines": 159,
+        "comment_corrections": [
+          [
+            "<p>Every 600 ticks (30 s) a still-empty hole walks up its own trunk, counts the leaves of the tree\n * at the exact positions GT6 lists for that species, and rolls",
+            "<p>Every 600 ticks spent empty, the port walks up its native species trunk, counts its leaves\n * at the species canopy positions, and rolls"
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1579,
+            "execution_sha256": "fe357030cae52481ad2abd66c7cc8bcbbe037a7a4b9a367414fda85fe510e3f7",
+            "literal_positions_sha256": "0daf1b94d18da3987a01a3128403f50403880ae3ef75c7a4ff0582e8e464e1ec",
+            "literal_count": 82
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1579,
+            "execution_sha256": "fe357030cae52481ad2abd66c7cc8bcbbe037a7a4b9a367414fda85fe510e3f7",
+            "literal_positions_sha256": "0daf1b94d18da3987a01a3128403f50403880ae3ef75c7a4ff0582e8e464e1ec",
+            "literal_count": 82
+          }
+        ],
+        "before_normalized_sha256": "1f66519bf5d6c65fe2a1a611aaee68aa401092466d9f7052db404050b85fd32c",
+        "after_normalized_sha256": "47e37556be45e5988ba6d1c0ce156f4f149e4d2a0bfa41e230ef7e052f282f0c"
+      },
+      "core/src/main/java/com/gregtech/gregtech/worldgen/TreeSpeciesRules.java": {
+        "before_raw_sha256": "2a99ef7820db05fd484cb378349d5a25daf610a62f32999a6a6b29cbe716d4a7",
+        "after_raw_sha256": "4c68cc75a62c28a8d0517f32ca812c414a77f90229d1f89d43016a45eb99bbf4",
+        "before_lines": 38,
+        "after_lines": 46,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 213,
+            "execution_sha256": "d83e5843f98c0cf685bfbe348380b4aec6b084318c7899efc01151aab81302bf",
+            "literal_positions_sha256": "49c598d8f16b13e5bd5db11ff122a913e74910a494d5ad17a7eb979f760f665e",
+            "literal_count": 17
+          }
+        ],
+        "before_normalized_sha256": "2a99ef7820db05fd484cb378349d5a25daf610a62f32999a6a6b29cbe716d4a7",
+        "after_normalized_sha256": "4c68cc75a62c28a8d0517f32ca812c414a77f90229d1f89d43016a45eb99bbf4"
+      }
+    }
+  },
+  "formal_findings_added": [
+    322,
+    323,
+    324,
+    325,
+    326,
+    327,
+    328
+  ],
+  "formal_findings_extended": [
+    139
+  ],
+  "nominal_bounds_source_projection": {
+    "original": {
+      "north": [
+        5,
+        0,
+        0,
+        11,
+        7,
+        6
+      ],
+      "south": [
+        5,
+        0,
+        10,
+        11,
+        7,
+        16
+      ],
+      "west": [
+        0,
+        0,
+        5,
+        6,
+        7,
+        11
+      ],
+      "east": [
+        10,
+        0,
+        5,
+        16,
+        7,
+        11
+      ]
+    },
+    "current": {
+      "north": [
+        5,
+        0,
+        0,
+        11,
+        7,
+        6
+      ],
+      "east": [
+        10,
+        0,
+        5,
+        16,
+        7,
+        11
+      ],
+      "south": [
+        5,
+        0,
+        10,
+        11,
+        7,
+        16
+      ],
+      "west": [
+        0,
+        0,
+        5,
+        6,
+        7,
+        11
+      ]
+    },
+    "model_children_checked": [
+      "colored",
+      "overlay"
+    ],
+    "actual_shape_or_placement_api_executed": false
+  },
+  "positive_scope": [
+    "8000 default capacity",
+    "250 per maple/rainbowood tap",
+    "one stored item slot and item-first manual retrieval",
+    "normal breaking trashes tank and drops stored item",
+    "normal-world save/load and explicit client data paths present",
+    "three native species and original threshold/divisor constants present"
+  ],
+  "test_source_conflict": {
+    "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/SapBagTests.java",
+    "claim": "Rubber collection asserts an empty fluid tank, contradicting original getResinFluid and bag dual collection.",
+    "test_run_this_batch": false
+  },
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "limits": [
+    "Source and nominal coordinate comparison, not live gameplay, render or collision verification.",
+    "No functional fixes in this batch; five misleading comments corrected and six files reformatted.",
+    "Full execution tokens, literal positions, other comments and Stonecutter directives retained in all 11 maintained views.",
+    "No Gradle, Java compilation, tests, game, build or push in this batch; previous issue-build evidence is kept separate.",
+    "No source snapshot modified; original author and LGPL headers archived. Native evidence reused and byte hashes revalidated.",
+    "Full inventory situations, transaction failures, neighboring mods, saved-world restart and all tree/worldgen contracts remain unverified."
+  ]
+}

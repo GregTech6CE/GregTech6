@@ -1,0 +1,386 @@
+{
+  "date": "2026-10-22",
+  "batch": 93,
+  "baseline": "e5d1846b7",
+  "previous_goal_turn": "Progress: e5d1846b7 recorded blueprint matching and readable source. Advanced-worktable follow-up was read-only before the user prioritized the dust funnel.",
+  "user_scope": "Fix reported tiny-to-small mixed-material stalling against original logic; show current output mode in Jade.",
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityDustFunnel.java",
+      "sha256": "62406bd934a0c67a0338b4c3afa17dda74fd5d4699b446604f9f4de91311372d",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "authors": [],
+      "license_header": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/OP.java",
+      "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/OM.java",
+      "sha256": "3c2cc710d62373460d1854f60a7383ec0a5b7969877dbbcb3f5c9b5a0b4c5cbb",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/ST.java",
+      "sha256": "5ff16d9051e2744a66c711bd5f2581785ba8af7b2272fb1023a6d2f4ddb783a8",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/DustFunnelBlock.java",
+      "sha256": "0293c320aa96319143d6a1ebae0d24aedec45fc894c2e89b41f8d5223913bb9e"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/DustFunnelBlockEntity.java",
+      "sha256": "4d231199682b60a42485da8d7894bfbaa8d52dba7ec2d7c4e2aefc40857344ec"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/DustFunnelJadeProvider.java",
+      "sha256": "0bd54f5ee7e0836c8eee3c4321eec4087a481ec72c78f590b39586b1432bc418"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/GTJadePlugin.java",
+      "sha256": "d5f118c5dcede1edf178436e937f1205c24eb2fdf157b6b0a411ab43378dc6d4"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/tool/UtilityToolRules.java",
+      "sha256": "f64dc9b8f3653481035a7a5e55f2f5026a8bf74c45e6a2002937e8d0e052de5b"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/data/MaterialPrefix.java",
+      "sha256": "484d31381d4291b85341ab3604f1c98829eecc834ec04e36d54d7912e911afdd"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/machine/crucible/CrucibleInputRules.java",
+      "sha256": "0223ef99957bb2ee84c15495be772a9393be0b6cafcb98bb790fa8dc52e51408"
+    },
+    {
+      "path": "core/src/api/java/com/gregtech/gregtech/api/material/GTValues.java",
+      "sha256": "66c91ba87fce752eb5565a060d2a67229bb0ef37c6f1decbe8451b8faf22fb60"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/machine/crucible/CrucibleItemInput.java",
+      "sha256": "c431802126d4fc95c434d7933ceb1e6093390052654eed67e2490be418fc7521"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/util/OM.java",
+      "sha256": "29175267d4c327e24b03dfa3253dfd7782d3a4bc298d953acae997cc8f085251"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/inventory/NativeItemInventories.java",
+      "sha256": "ebf62dae2231b7ed89ccb93f75b4f483e697b5f42357c0372f30501a83776fba"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java",
+      "sha256": "597867a457c5e291bb1179bbb31b90737f807d95adb65670fc01c8be17c8daff"
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageContainerCapabilities.java",
+      "sha256": "d6e62e69491d69f904307d82523a6e3e9c49f7fcccdda7ae0f6c1a040c4a74e0"
+    }
+  ],
+  "formal_findings_added": [
+    {
+      "id": "ALIGN-293",
+      "status": "fixed",
+      "issue": "Pincers took output/input buffers before the fractional reservoir."
+    }
+  ],
+  "preserved_code_ranges": {
+    "forge": [
+      {
+        "range": "dust classification",
+        "tokens": 115,
+        "sha256": "6d55e8484e42cf54ff49167fd8bef192e48a525498a2b36038fb097ff5a97dcd"
+      },
+      {
+        "range": "mode amounts, form lookup and material admission",
+        "tokens": 268,
+        "sha256": "e2130b63c3e1c2926ec2c4ca57174eb6cae5a9e025b6214195f22e7018db018f"
+      },
+      {
+        "range": "material conversion and downward delivery",
+        "tokens": 482,
+        "sha256": "88350127bc5120b913ac6f9a54f4a1c411f4cae0fcaa560259877c2e9a95ee1a"
+      },
+      {
+        "range": "process save and restore",
+        "tokens": 160,
+        "sha256": "2e581b4536722ad2435c8177bb183d402d8c78ec3ae33f514e27d192360591d6"
+      }
+    ],
+    "neoforge": [
+      {
+        "range": "dust classification",
+        "tokens": 115,
+        "sha256": "6d55e8484e42cf54ff49167fd8bef192e48a525498a2b36038fb097ff5a97dcd"
+      },
+      {
+        "range": "mode amounts, form lookup and material admission",
+        "tokens": 268,
+        "sha256": "e2130b63c3e1c2926ec2c4ca57174eb6cae5a9e025b6214195f22e7018db018f"
+      },
+      {
+        "range": "material conversion and downward delivery",
+        "tokens": 482,
+        "sha256": "166ac14df514a5f078863ed518f6342add4298463f5a4d5b01ae420ea8d158ff"
+      },
+      {
+        "range": "process save and restore",
+        "tokens": 160,
+        "sha256": "2e581b4536722ad2435c8177bb183d402d8c78ec3ae33f514e27d192360591d6"
+      }
+    ]
+  },
+  "generated_platform_inputs": [
+    {
+      "version": "1.20.1-forge",
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/DustFunnelBlock.java",
+      "generated": "multiversion/versions/1.20.1-forge/build/generated/stonecutter/main/java/com/gregtech/gregtech/block/tool/DustFunnelBlock.java",
+      "generated_sha256": "0293c320aa96319143d6a1ebae0d24aedec45fc894c2e89b41f8d5223913bb9e",
+      "tokens": 1053
+    },
+    {
+      "version": "1.20.1-forge",
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/DustFunnelBlockEntity.java",
+      "generated": "multiversion/versions/1.20.1-forge/build/generated/stonecutter/main/java/com/gregtech/gregtech/blockentity/tool/DustFunnelBlockEntity.java",
+      "generated_sha256": "4d231199682b60a42485da8d7894bfbaa8d52dba7ec2d7c4e2aefc40857344ec",
+      "tokens": 2297
+    },
+    {
+      "version": "1.20.1-forge",
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/DustFunnelJadeProvider.java",
+      "generated": "multiversion/versions/1.20.1-forge/build/generated/stonecutter/main/java/com/gregtech/gregtech/integration/jade/DustFunnelJadeProvider.java",
+      "generated_sha256": "0bd54f5ee7e0836c8eee3c4321eec4087a481ec72c78f590b39586b1432bc418",
+      "tokens": 488
+    },
+    {
+      "version": "1.20.1-forge",
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/GTJadePlugin.java",
+      "generated": "multiversion/versions/1.20.1-forge/build/generated/stonecutter/main/java/com/gregtech/gregtech/integration/jade/GTJadePlugin.java",
+      "generated_sha256": "d5f118c5dcede1edf178436e937f1205c24eb2fdf157b6b0a411ab43378dc6d4",
+      "tokens": 900
+    },
+    {
+      "version": "1.21.1-neoforge",
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/DustFunnelBlock.java",
+      "generated": "multiversion/versions/1.21.1-neoforge/build/generated/stonecutter/main/java/com/gregtech/gregtech/block/tool/DustFunnelBlock.java",
+      "generated_sha256": "8e80973b27cdefa78a582a68e3770438769a1bbf38380fd999fedf1108766ccd",
+      "tokens": 1304
+    },
+    {
+      "version": "1.21.1-neoforge",
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/DustFunnelBlockEntity.java",
+      "generated": "multiversion/versions/1.21.1-neoforge/build/generated/stonecutter/main/java/com/gregtech/gregtech/blockentity/tool/DustFunnelBlockEntity.java",
+      "generated_sha256": "5a36e23d038878c3c66a87a3c1fc52751dc64c9822e7c85498749d17cca61b1a",
+      "tokens": 2155
+    },
+    {
+      "version": "1.21.1-neoforge",
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/DustFunnelJadeProvider.java",
+      "generated": "multiversion/versions/1.21.1-neoforge/build/generated/stonecutter/main/java/com/gregtech/gregtech/integration/jade/DustFunnelJadeProvider.java",
+      "generated_sha256": "0bd54f5ee7e0836c8eee3c4321eec4087a481ec72c78f590b39586b1432bc418",
+      "tokens": 488
+    },
+    {
+      "version": "1.21.1-neoforge",
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/GTJadePlugin.java",
+      "generated": "multiversion/versions/1.21.1-neoforge/build/generated/stonecutter/main/java/com/gregtech/gregtech/integration/jade/GTJadePlugin.java",
+      "generated_sha256": "ac6cfd43d59364568f7b5ccc4daa6cc19457cfe2224f8e1495e5223eabd691ea",
+      "tokens": 902
+    }
+  ],
+  "compiled_classes": [
+    {
+      "version": "1.20.1-forge",
+      "path": "multiversion/versions/1.20.1-forge/build/classes/java/main/com/gregtech/gregtech/block/tool/DustFunnelBlock.class",
+      "sha256": "ead684c1afe2bc3e9467857e4fe93469a14b29ee014e752fdd49d6b376e05e58",
+      "major": 61
+    },
+    {
+      "version": "1.20.1-forge",
+      "path": "multiversion/versions/1.20.1-forge/build/classes/java/main/com/gregtech/gregtech/blockentity/tool/DustFunnelBlockEntity.class",
+      "sha256": "dfa1ac50ee0d01ef1ec485d542be45929c1c9f4b350ddcbdebf5b4dc0532d857",
+      "major": 61
+    },
+    {
+      "version": "1.20.1-forge",
+      "path": "multiversion/versions/1.20.1-forge/build/classes/java/main/com/gregtech/gregtech/integration/jade/DustFunnelJadeProvider.class",
+      "sha256": "f8618457f4ba8a59795c42f6ff7fea1ee1f5df7a8eb8d06a5e9e215e10006243",
+      "major": 61
+    },
+    {
+      "version": "1.20.1-forge",
+      "path": "multiversion/versions/1.20.1-forge/build/classes/java/main/com/gregtech/gregtech/integration/jade/GTJadePlugin.class",
+      "sha256": "b7005a1ea29a0312041c91d5b920666e64e1bd3467f33bd53d630b318661d71f",
+      "major": 61
+    },
+    {
+      "version": "1.21.1-neoforge",
+      "path": "multiversion/versions/1.21.1-neoforge/build/classes/java/main/com/gregtech/gregtech/block/tool/DustFunnelBlock.class",
+      "sha256": "d308f09005305528a488e1c42a8c6a17921c7c9bb7011fa196a4a798b0db3b75",
+      "major": 65
+    },
+    {
+      "version": "1.21.1-neoforge",
+      "path": "multiversion/versions/1.21.1-neoforge/build/classes/java/main/com/gregtech/gregtech/blockentity/tool/DustFunnelBlockEntity.class",
+      "sha256": "5c40ea7a6cd692b7e14008f8f97f91d9afc39044452adc0faa59919b974788d7",
+      "major": 65
+    },
+    {
+      "version": "1.21.1-neoforge",
+      "path": "multiversion/versions/1.21.1-neoforge/build/classes/java/main/com/gregtech/gregtech/integration/jade/DustFunnelJadeProvider.class",
+      "sha256": "53254de274910a5985e30004d6a130e36e45c6a06697dab47b02fb7ea2e9bb2c",
+      "major": 65
+    },
+    {
+      "version": "1.21.1-neoforge",
+      "path": "multiversion/versions/1.21.1-neoforge/build/classes/java/main/com/gregtech/gregtech/integration/jade/GTJadePlugin.class",
+      "sha256": "101eff8f725fc38921f312baee2683a3bffb15ef7df7ce41689cebcf3ff0197d",
+      "major": 65
+    }
+  ],
+  "language": {
+    "en_us": {
+      "path": "core/src/main/resources/assets/gt6ce/lang/en_us.json",
+      "sha256": "22b457eebef8f2eea9df0cb6590d1192c626969bfdbecf985d3d8f28ac22fc28",
+      "new_keys": [
+        "jade.gt6ce.dust_funnel.fraction",
+        "jade.gt6ce.dust_funnel.fraction_hint",
+        "jade.gt6ce.dust_funnel.mode",
+        "jade.gt6ce.dust_funnel.size.0",
+        "jade.gt6ce.dust_funnel.size.1",
+        "jade.gt6ce.dust_funnel.size.2",
+        "jade.gt6ce.dust_funnel.size.3",
+        "jade.gt6ce.dust_funnel.size.4"
+      ],
+      "old_key_values_unchanged": true,
+      "duplicate_keys": false,
+      "format_arguments": {
+        "jade.gt6ce.dust_funnel.fraction": [
+          "%1$s",
+          "%2$s"
+        ],
+        "jade.gt6ce.dust_funnel.fraction_hint": [],
+        "jade.gt6ce.dust_funnel.mode": [
+          "%s"
+        ],
+        "jade.gt6ce.dust_funnel.size.0": [],
+        "jade.gt6ce.dust_funnel.size.1": [],
+        "jade.gt6ce.dust_funnel.size.2": [],
+        "jade.gt6ce.dust_funnel.size.3": [],
+        "jade.gt6ce.dust_funnel.size.4": []
+      }
+    },
+    "zh_cn": {
+      "path": "core/src/main/resources/assets/gt6ce/lang/zh_cn.json",
+      "sha256": "9fde3bab081cd65e464a5d918fdc9ff92ab910c4660fd8311c7ba73a4e710cb4",
+      "new_keys": [
+        "jade.gt6ce.dust_funnel.fraction",
+        "jade.gt6ce.dust_funnel.fraction_hint",
+        "jade.gt6ce.dust_funnel.mode",
+        "jade.gt6ce.dust_funnel.size.0",
+        "jade.gt6ce.dust_funnel.size.1",
+        "jade.gt6ce.dust_funnel.size.2",
+        "jade.gt6ce.dust_funnel.size.3",
+        "jade.gt6ce.dust_funnel.size.4"
+      ],
+      "old_key_values_unchanged": true,
+      "duplicate_keys": false,
+      "format_arguments": {
+        "jade.gt6ce.dust_funnel.fraction": [
+          "%1$s",
+          "%2$s"
+        ],
+        "jade.gt6ce.dust_funnel.fraction_hint": [],
+        "jade.gt6ce.dust_funnel.mode": [
+          "%s"
+        ],
+        "jade.gt6ce.dust_funnel.size.0": [],
+        "jade.gt6ce.dust_funnel.size.1": [],
+        "jade.gt6ce.dust_funnel.size.2": [],
+        "jade.gt6ce.dust_funnel.size.3": [],
+        "jade.gt6ce.dust_funnel.size.4": []
+      }
+    }
+  },
+  "source_derived_examples": [
+    {
+      "tiny_inputs": 1,
+      "small_outputs": 0,
+      "remainder_72nds": 8
+    },
+    {
+      "tiny_inputs": 2,
+      "small_outputs": 0,
+      "remainder_72nds": 16
+    },
+    {
+      "tiny_inputs": 3,
+      "small_outputs": 1,
+      "remainder_72nds": 6
+    },
+    {
+      "tiny_inputs": 9,
+      "small_outputs": 4,
+      "remainder_72nds": 0
+    },
+    {
+      "tiny_inputs": 64,
+      "small_outputs": 28,
+      "remainder_72nds": 8
+    }
+  ],
+  "example_limit": "Integer unit derivation only; no actual world, inventory or processing run.",
+  "source_policy": [
+    "Retain one-material reservoir and fractional material conservation; no automatic flushing or cross-material mixing.",
+    "Retain mode 0 blockDust from the original class and its registration; wiki default-dust claim differs from this source snapshot.",
+    "Retain existing side capabilities and crucible extension; global inventory notification ALIGN-172 is not fixed here."
+  ],
+  "compile": {
+    "tasks": [
+      ":multiversion:1.20.1-forge:compileJava",
+      ":multiversion:1.21.1-neoforge:compileJava"
+    ],
+    "result": "success",
+    "elapsed": "2m 15s",
+    "log_sha256": "7f8ea331f6a3ea39279405d88be4185754961b2ba0a272fe88d5b5a3fcce5c44",
+    "log": "work/dust-funnel-compile-20261022.log"
+  },
+  "protected_materials": {
+    "WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "ledger_contiguous": [
+    1,
+    293
+  ],
+  "limits": [
+    "No complete tests, client/Jade screenshots, gameplay reproduction, native inventory integration, world restart, jar build or push.",
+    "Compile and source checks do not establish that all mixed-material production lines are now accepted."
+  ],
+  "root_revalidation": {
+    "source_and_class_hashes": 26,
+    "added_local_links": 10,
+    "method": "Rehash actual reference/current sources and compiled classes, and check every added local documentation link; separate source preservation from intended gameplay changes."
+  }
+}

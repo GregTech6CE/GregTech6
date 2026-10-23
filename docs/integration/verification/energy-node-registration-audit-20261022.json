@@ -1,0 +1,1311 @@
+{
+  "date": "2026-10-22",
+  "batch": 122,
+  "baseline": "48576f18e66dddfe1e1eee0148ffe5356eb1449e",
+  "previous_goal_turn": {
+    "classification": "progress",
+    "commit": "48576f18e",
+    "evidence": "Shared signal tint policy, expanded native code and four source-backed findings committed."
+  },
+  "provenance": {
+    "authors": "GregTech-6 Team / Gregorius Techneticies",
+    "original_tree_read_only": true,
+    "license": "Original LGPL notices retained; current registry business extraction imports no new original implementation."
+  },
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityClassContainer.java",
+      "raw_sha256": "ea006ef8b03ffd30044da0bb044dfcc8227f37712becd555f7bc5a9747f3af8a",
+      "lines": 55,
+      "notice_sha256": "c635bd8e84f1d5b02a1299180479660a636e876419d763c9cd0714b9487e28b7"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityItemInternal.java",
+      "raw_sha256": "7e103a13f02097dcfd1c91334cb3da238b9f509ee4cbb584dfd7267bf26f8bb1",
+      "lines": 659,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityRegistry.java",
+      "raw_sha256": "70fb3ce00e7036e343e253e0f9fd8401b05c3f4f4e16b88f1b3fb94c3b111e83",
+      "lines": 271,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java",
+      "raw_sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+      "lines": 1011,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase02AdjacentTEBuffer.java",
+      "raw_sha256": "428885bd6d436be6fefaef3bcd70fdd883a29ae329bb4d0826ddaf152eaef00f",
+      "lines": 173,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "raw_sha256": "f3d52213bf41c3132a37e6f838719db85c85ac94e48b9f24b932a1996688489d",
+      "lines": 166,
+      "notice_sha256": "accc18a4bf87847b3134c2814611b821dcb8c3083277f78c0f8f2cf8e6f05caf"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "raw_sha256": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9",
+      "lines": 256,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "raw_sha256": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+      "lines": 189,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "raw_sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+      "lines": 496,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "raw_sha256": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+      "lines": 117,
+      "notice_sha256": "c635bd8e84f1d5b02a1299180479660a636e876419d763c9cd0714b9487e28b7"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "raw_sha256": "4470fc88dede52de55ba387e963d95243ec33ef287ae4f917ce73d874bcede2b",
+      "lines": 62,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "raw_sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+      "lines": 98,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/energy/TileEntityBase10EnergyConverter.java",
+      "raw_sha256": "52cb409c7d35a8731338527301e09c8b779548e1851d5fe7fe91242fd25b9c44",
+      "lines": 180,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/energy/TileEntityBase11Bidirectional.java",
+      "raw_sha256": "e03bb5ec9205a3e9526782cf9fd145c2ee85d3a0e8632fad953674bd23202062",
+      "lines": 95,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/energy/TileEntityBase11Bipolar.java",
+      "raw_sha256": "1c7c50eb72bff3bbff7a00075354e362c94552b2564836ead20dde9db6093a0c",
+      "lines": 67,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/energy/TileEntityBase11Motor.java",
+      "raw_sha256": "debce53cfd8ccea8a4ff5da9bade918c0ba0f1be3bc88786d5b2dd530e78b6d8",
+      "lines": 113,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "raw_sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "lines": 2243,
+      "notice_sha256": "6855675ee4a01a21169dd2a3ed5df729ac3198a4b2e3b869f91e1a45c79e6aca"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/converters/MultiTileEntityDynamoElectric.java",
+      "raw_sha256": "eac85bb43a7f9e54f295eb4ffcde1682413c60643b1d73948a3c23bec58ca9ef",
+      "lines": 63,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/converters/MultiTileEntityDynamoFlux.java",
+      "raw_sha256": "5e93977844849505b905d776ecb9e42d60e59df3bf257edd393f84f221e2d9f0",
+      "lines": 64,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/converters/MultiTileEntityMagnetElectric.java",
+      "raw_sha256": "56064498ce55e12a87325fcf8be3bf12be04efb721ceef88e28f3fcc70a75c89",
+      "lines": 58,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/converters/MultiTileEntityMagnetFlux.java",
+      "raw_sha256": "99e76b79b2a740378d17460934affd8053e534adb1265a962c3347356f3a7bce",
+      "lines": 58,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/converters/MultiTileEntityMotorElectric.java",
+      "raw_sha256": "59bf671a3ae48806ed6a31d3bf9febd4be17d68851eb2626376cf074701aa8a9",
+      "lines": 73,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/converters/MultiTileEntityMotorFlux.java",
+      "raw_sha256": "15f47e6aec9ba27cf834ab9d1531ecf45c3817cd5270ea8a93d17389554cee76",
+      "lines": 73,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/transformers/MultiTileEntityTransformerElectric.java",
+      "raw_sha256": "4f82fe03faa362df6df7bddfbb4017fb94096a73dc70097f39c50acde1f977b5",
+      "lines": 61,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java",
+      "raw_sha256": "afe136cb11358ebcd7210e990b2815bbf9c83bd34c91f3e0515fe21815463286",
+      "lines": 179
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/EnergyNodeDefinitions.java",
+      "raw_sha256": "ed146e888149edb8c2fffaa4b9dd0a9b8b90fe07e8a37958ebe37185cbf0a537",
+      "lines": 90
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/FluxRotaryCatalog.java",
+      "raw_sha256": "495309150dcdab810a2ec5e6b9877c3ecb0f6606b140dda8f16b0c48d2e457ea",
+      "lines": 32,
+      "notice_sha256": "4568e7f421f48e19c110fe9bf6bcdb17de42c425df3939170f614b56682513ee"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/MagnetMachineDefinitions.java",
+      "raw_sha256": "94895981c92304174ee4fd4f9ffe07e3af8c38616fc4b327bc68476282b2edf4",
+      "lines": 60,
+      "notice_sha256": "b8b42846c9698cb676531b8a17feea70b4c31137e250b4b53c24e2c5535a4cec"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/OriginalSteamTurbines.java",
+      "raw_sha256": "597727c3b18f3749cf6b16b3cdd56b08518b09e6d430b89e0ced72c2af08eeb4",
+      "lines": 52,
+      "notice_sha256": "dad08d6fc2c691ca98a1214e43ec92d0969509f24d3f98018bcc53b1db53bbaa"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/OriginalRotaryConverter.java",
+      "raw_sha256": "4f5d31a304cdc1ec73bb3ca7d0ef391d5861e7a340d7f559c690490deb8b1e74",
+      "lines": 130,
+      "notice_sha256": "bee2c4699e2813e6ea1f8fd97f346b83b14e9b9582e7ccd01b7c3a426615cf09"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/OriginalThermalConverter.java",
+      "raw_sha256": "93c6e272726dab841eae624ad90686a1690f058242d97790a0f66d39c88f2ded",
+      "lines": 56,
+      "notice_sha256": "a025b02a3541f802c1ba2c9dccc61fb8b7a550284f5bba0ab8f709c466f32847"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/energy/EnergyNodeSpec.java",
+      "raw_sha256": "f1c241bbe59ee6e6c5b7565472d72ca140a55f672d7d82fe1ff97da918ae65e0",
+      "lines": 129
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/MachineBlockBootstrap.java",
+      "raw_sha256": "b421bde641834b50ad763f586dbcf5f484bdb30b0131d2735d4efbb0f20bd477",
+      "lines": 53
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "raw_sha256": "a83787a7e2ca56b3b695b41f221cff2ee046880b09354fdf78b35bd2cc070a02",
+      "lines": 191
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "raw_sha256": "05409cc45a965be4efbcde15b420091d3222e6fe390069a0d58031e43faf9308",
+      "lines": 707
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/energy/EnergyNodeBlock.java",
+      "raw_sha256": "a2beda8d582254a0eb37f6e6c664f2ff9040127bd1e60cd7b4a9cbf640acfb5a",
+      "lines": 367
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/energy/OriginalMotorBlock.java",
+      "raw_sha256": "725b7326d5891236dc64718f6faa5bd1a46862f367a28c5eca88902c933fde8b",
+      "lines": 49,
+      "notice_sha256": "94a2083b1a2c7be988eb96399418e1a638d2883122d5892b2dd7c6fa9631ce6f"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/energy/OriginalHeaterBlock.java",
+      "raw_sha256": "c06010f65327ff124f9de8dea655ca190e0d81e1d591dcf96c1b5d43164447aa",
+      "lines": 33,
+      "notice_sha256": "e35f63f756bd43e8c2935fed87cbae37a637ef9e38a7a400c38e419e7833a877"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/energy/RotaryConverterBlock.java",
+      "raw_sha256": "0c718d43cc622d1cc6c858811044366ebc4f64d6044b5df98f5e1d5b5d450ec1",
+      "lines": 21,
+      "notice_sha256": "335174aaa6140e6a6ca52fd9e4046fec13a6f3be648b6f860740b687513c4602"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/energy/BatteryBoxBlock.java",
+      "raw_sha256": "18b03fa0d2ef7811ebe18545c9c64754df53acbf39070693ffde43dc2bb8fd2b",
+      "lines": 25
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/energy/ElectricTransformerBlock.java",
+      "raw_sha256": "70d45b29c149b6817336e1cb88a9121c064aa12a262abc1609d732bfb95db798",
+      "lines": 18
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/energy/SolarPanelBlock.java",
+      "raw_sha256": "7e4931160be08fde5fd9305f911643df5b3a41c920fd0450340613a2f3af9e73",
+      "lines": 42
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/energy/MagnetMachineBlock.java",
+      "raw_sha256": "89ecd8bb1b8b04d9cb1bd71c00e3fab295f0f883715f1e0607c49de313206a20",
+      "lines": 75
+    }
+  ],
+  "source_scope": "Only selected contracts; original hierarchy paths checked for inheritance/stack overrides, not declared fully audited.",
+  "excerpts": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 849,
+      "end_line": 849,
+      "excerpt_sha256": "4d259f88ecd8b5f1652dc6008c02745f6e2d3caa2045dd3acf4f3a9def38922c",
+      "text": "\t\taMat = MT.DATA.Electric_T[1];   aRegistry.add(\"Electric Motor (\"                          +VN[1]+\")\", \"Motors\"                              , 10021, 10021, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT,   32, NBT_OUTPUT,   16, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.EU, NBT_ENERGY_EMITTED, TD.Energy.RU), \"TIT\", \"CMC\", \"TGd\", 'M', OP.casingMachineDouble.dat(aMat), 'G', OP.gearGt.dat(aMat), 'T', OP.screw.dat(aMat), 'I', OP.stickLong.dat(MT.IronMagnetic         ), 'C', OP.wireGt01.dat(ANY.Cu)); // TODO: Temp Recipes"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 850,
+      "end_line": 850,
+      "excerpt_sha256": "83c9e5b9b9df0ff063177401f4fb11ca9a227ec68d72b4d377665dd05bbe736d",
+      "text": "\t\taMat = MT.DATA.Electric_T[2];   aRegistry.add(\"Electric Motor (\"                          +VN[2]+\")\", \"Motors\"                              , 10022, 10021, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT,  128, NBT_OUTPUT,   64, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.EU, NBT_ENERGY_EMITTED, TD.Energy.RU), \"TIT\", \"CMC\", \"TGd\", 'M', OP.casingMachineDouble.dat(aMat), 'G', OP.gearGt.dat(aMat), 'T', OP.screw.dat(aMat), 'I', OP.stickLong.dat(MT.SteelMagnetic        ), 'C', OP.wireGt02.dat(ANY.Cu));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 851,
+      "end_line": 851,
+      "excerpt_sha256": "821ae446ba843c90dd0b41694e90f9edea86ee5d0d75531265328590eb4200f1",
+      "text": "\t\taMat = MT.DATA.Electric_T[3];   aRegistry.add(\"Electric Motor (\"                          +VN[3]+\")\", \"Motors\"                              , 10023, 10021, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT,  512, NBT_OUTPUT,  256, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.EU, NBT_ENERGY_EMITTED, TD.Energy.RU), \"TIT\", \"CMC\", \"TGd\", 'M', OP.casingMachineDouble.dat(aMat), 'G', OP.gearGt.dat(aMat), 'T', OP.screw.dat(aMat), 'I', OP.stickLong.dat(MT.SteelMagnetic        ), 'C', OP.wireGt04.dat(MT.AnnealedCopper));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 852,
+      "end_line": 852,
+      "excerpt_sha256": "30e8b6b0f166c27dc15e8eb69bfa6d90ec46b6ec5bbde5f01a27fa100460241f",
+      "text": "\t\taMat = MT.DATA.Electric_T[4];   aRegistry.add(\"Electric Motor (\"                          +VN[4]+\")\", \"Motors\"                              , 10024, 10021, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT, 2048, NBT_OUTPUT, 1024, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.EU, NBT_ENERGY_EMITTED, TD.Energy.RU), \"TIT\", \"CMC\", \"TGd\", 'M', OP.casingMachineDouble.dat(aMat), 'G', OP.gearGt.dat(aMat), 'T', OP.screw.dat(aMat), 'I', OP.stickLong.dat(MT.NeodymiumMagnetic    ), 'C', OP.wireGt08.dat(MT.AnnealedCopper));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 853,
+      "end_line": 853,
+      "excerpt_sha256": "a5c39308ad166851ad9927536a8d581b9d5784432c619f722c0748f1b861f04f",
+      "text": "\t\taMat = MT.DATA.Electric_T[5];   aRegistry.add(\"Electric Motor (\"                          +VN[5]+\")\", \"Motors\"                              , 10025, 10021, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT, 8192, NBT_OUTPUT, 4096, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.EU, NBT_ENERGY_EMITTED, TD.Energy.RU), \"TIT\", \"CMC\", \"TGd\", 'M', OP.casingMachineDouble.dat(aMat), 'G', OP.gearGt.dat(aMat), 'T', OP.screw.dat(aMat), 'I', OP.stickLong.dat(MT.NeodymiumMagnetic    ), 'C', OP.wireGt16.dat(MT.AnnealedCopper));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 856,
+      "end_line": 856,
+      "excerpt_sha256": "916f62b33986f9d6c57d56c5a9f6db9f5b78cf372545aa40b25d84a420ccf807",
+      "text": "\t\taMat = MT.DATA.Flux_T[1];       aRegistry.add(\"Flux Motor (\"                    +aMat.getLocal()+\")\", \"Motors\"                              , 11021, 10021, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT,  128, NBT_OUTPUT,   16, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.RF, NBT_ENERGY_EMITTED, TD.Energy.RU), \"GMG\", 'M', aRegistry.getItem(10021), 'G', OP.gearGt.dat(aMat));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 857,
+      "end_line": 857,
+      "excerpt_sha256": "5c05496841385f739409fe9201c0d8cc684f9ecb1948474beff2729700bf7c13",
+      "text": "\t\taMat = MT.DATA.Flux_T[2];       aRegistry.add(\"Flux Motor (\"                    +aMat.getLocal()+\")\", \"Motors\"                              , 11022, 10021, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT,  512, NBT_OUTPUT,   64, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.RF, NBT_ENERGY_EMITTED, TD.Energy.RU), \"GMG\", 'M', aRegistry.getItem(10022), 'G', OP.gearGt.dat(aMat));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 858,
+      "end_line": 858,
+      "excerpt_sha256": "1239bbfd89f7422f13b8ec8c22eeea89a8aed80c6c07717a62228b9d0d23a536",
+      "text": "\t\taMat = MT.DATA.Flux_T[3];       aRegistry.add(\"Flux Motor (\"                    +aMat.getLocal()+\")\", \"Motors\"                              , 11023, 10021, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT, 2048, NBT_OUTPUT,  256, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.RF, NBT_ENERGY_EMITTED, TD.Energy.RU), \"GMG\", 'M', aRegistry.getItem(10023), 'G', OP.gearGt.dat(aMat));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 859,
+      "end_line": 859,
+      "excerpt_sha256": "491454a60519807f1fdf100d88764898cd7aa9c50f9c2150668e50d196382ada",
+      "text": "\t\taMat = MT.DATA.Flux_T[4];       aRegistry.add(\"Flux Motor (\"                    +aMat.getLocal()+\")\", \"Motors\"                              , 11024, 10021, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT, 8192, NBT_OUTPUT, 1024, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.RF, NBT_ENERGY_EMITTED, TD.Energy.RU), \"GMG\", 'M', aRegistry.getItem(10024), 'G', OP.gearGt.dat(aMat));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 860,
+      "end_line": 860,
+      "excerpt_sha256": "e9db8d825b0679cc8a9513406da9fab8dbd258c44c6f450be82993c20264adbf",
+      "text": "\t\taMat = MT.DATA.Flux_T[5];       aRegistry.add(\"Flux Motor (\"                    +aMat.getLocal()+\")\", \"Motors\"                              , 11025, 10021, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT,32768, NBT_OUTPUT, 4096, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.RF, NBT_ENERGY_EMITTED, TD.Energy.RU), \"GMG\", 'M', aRegistry.getItem(10025), 'G', OP.gearGt.dat(aMat));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 865,
+      "end_line": 865,
+      "excerpt_sha256": "8db35b443d86ebc45c865fe45084b6fe000402a8c7f7b739325332e7e4f39702",
+      "text": "\t\taMat = MT.DATA.Electric_T[1];   aRegistry.add(\"Electromagnet (\"                           +VN[1]+\")\", \"Magnets\"                             , 10031, 10031, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT,   32, NBT_OUTPUT,   16, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.EU, NBT_ENERGY_EMITTED, TD.Energy.MU), \"CxC\", \"CMC\", \"CwC\", 'M', OP.casingMachine.dat(aMat), 'C', OP.wireGt01.dat(ANY.Cu));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 866,
+      "end_line": 866,
+      "excerpt_sha256": "c5b8ca241b5e8615cd0b35765a11183e16306cf882d53a26d91ef05603eb6183",
+      "text": "\t\taMat = MT.DATA.Electric_T[2];   aRegistry.add(\"Electromagnet (\"                           +VN[2]+\")\", \"Magnets\"                             , 10032, 10031, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT,  128, NBT_OUTPUT,   64, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.EU, NBT_ENERGY_EMITTED, TD.Energy.MU), \"CxC\", \"CMC\", \"CwC\", 'M', OP.casingMachine.dat(aMat), 'C', OP.wireGt02.dat(ANY.Cu));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 867,
+      "end_line": 867,
+      "excerpt_sha256": "0b1e617d8f01e0f16c7b6f79ef392dc995bb0f7be135fd68f1f0bbcb3ba05e88",
+      "text": "\t\taMat = MT.DATA.Electric_T[3];   aRegistry.add(\"Electromagnet (\"                           +VN[3]+\")\", \"Magnets\"                             , 10033, 10031, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT,  512, NBT_OUTPUT,  256, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.EU, NBT_ENERGY_EMITTED, TD.Energy.MU), \"CxC\", \"CMC\", \"CwC\", 'M', OP.casingMachine.dat(aMat), 'C', OP.wireGt04.dat(MT.AnnealedCopper));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 868,
+      "end_line": 868,
+      "excerpt_sha256": "3b90c7373a880b6a54b436b89e3ccf610505ab5f4a118c11ce6b46b887d91157",
+      "text": "\t\taMat = MT.DATA.Electric_T[4];   aRegistry.add(\"Electromagnet (\"                           +VN[4]+\")\", \"Magnets\"                             , 10034, 10031, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT, 2048, NBT_OUTPUT, 1024, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.EU, NBT_ENERGY_EMITTED, TD.Energy.MU), \"CxC\", \"CMC\", \"CwC\", 'M', OP.casingMachine.dat(aMat), 'C', OP.wireGt08.dat(MT.AnnealedCopper));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 869,
+      "end_line": 869,
+      "excerpt_sha256": "480b2a6448dd0ec808de038571bbaf5b8fbaf39806df0d7e95ea488ef95156e1",
+      "text": "\t\taMat = MT.DATA.Electric_T[5];   aRegistry.add(\"Electromagnet (\"                           +VN[5]+\")\", \"Magnets\"                             , 10035, 10031, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT, 8192, NBT_OUTPUT, 4096, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.EU, NBT_ENERGY_EMITTED, TD.Energy.MU), \"CxC\", \"CMC\", \"CwC\", 'M', OP.casingMachine.dat(aMat), 'C', OP.wireGt16.dat(MT.AnnealedCopper));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 872,
+      "end_line": 872,
+      "excerpt_sha256": "f233d29d5e7286805b564a94273ed878e7daf388879adf2d600f8d8beb4de7fd",
+      "text": "\t\taMat = MT.DATA.Flux_T[1];       aRegistry.add(\"Flux Magnet (\"                   +aMat.getLocal()+\")\", \"Magnets\"                             , 11031, 10031, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT,  128, NBT_OUTPUT,   16, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.RF, NBT_ENERGY_EMITTED, TD.Energy.MU), \"SSS\", \"SMS\", \"SSS\", 'M', aRegistry.getItem(10031), 'S', OP.stickLong.dat(aMat));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 873,
+      "end_line": 873,
+      "excerpt_sha256": "2b8b6af64574728be80dc3602dffb1370550415f260f28dcd1cedd9b23cf6cfd",
+      "text": "\t\taMat = MT.DATA.Flux_T[2];       aRegistry.add(\"Flux Magnet (\"                   +aMat.getLocal()+\")\", \"Magnets\"                             , 11032, 10031, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT,  512, NBT_OUTPUT,   64, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.RF, NBT_ENERGY_EMITTED, TD.Energy.MU), \"SSS\", \"SMS\", \"SSS\", 'M', aRegistry.getItem(10032), 'S', OP.stickLong.dat(aMat));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 874,
+      "end_line": 874,
+      "excerpt_sha256": "9d8ff5a5e85402a10fccf17f82da5f52071b480c252ee1ef8572c89d919f385b",
+      "text": "\t\taMat = MT.DATA.Flux_T[3];       aRegistry.add(\"Flux Magnet (\"                   +aMat.getLocal()+\")\", \"Magnets\"                             , 11033, 10031, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT, 2048, NBT_OUTPUT,  256, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.RF, NBT_ENERGY_EMITTED, TD.Energy.MU), \"SSS\", \"SMS\", \"SSS\", 'M', aRegistry.getItem(10033), 'S', OP.stickLong.dat(aMat));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 875,
+      "end_line": 875,
+      "excerpt_sha256": "445d2be12a47045656a7f807eee1f86ae5e7b65975b9330fe02b5e57ec010341",
+      "text": "\t\taMat = MT.DATA.Flux_T[4];       aRegistry.add(\"Flux Magnet (\"                   +aMat.getLocal()+\")\", \"Magnets\"                             , 11034, 10031, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT, 8192, NBT_OUTPUT, 1024, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.RF, NBT_ENERGY_EMITTED, TD.Energy.MU), \"SSS\", \"SMS\", \"SSS\", 'M', aRegistry.getItem(10034), 'S', OP.stickLong.dat(aMat));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 876,
+      "end_line": 876,
+      "excerpt_sha256": "8c2f002365ac1689d15878c52da7057660f54a8650ed7b5e744ce83bc294c04a",
+      "text": "\t\taMat = MT.DATA.Flux_T[5];       aRegistry.add(\"Flux Magnet (\"                   +aMat.getLocal()+\")\", \"Magnets\"                             , 11035, 10031, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT,32768, NBT_OUTPUT, 4096, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.RF, NBT_ENERGY_EMITTED, TD.Energy.MU), \"SSS\", \"SMS\", \"SSS\", 'M', aRegistry.getItem(10035), 'S', OP.stickLong.dat(aMat));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 881,
+      "end_line": 881,
+      "excerpt_sha256": "585c37c9d2a28f706fcde0132058301479c90a6096827f2ebe1e7c0b5370783c",
+      "text": "\t\taMat = MT.DATA.Electric_T[0];   aRegistry.add(\"Transformer (\"+VN[0]+\"-\"+VN[1]+\")\"                   , \"Transformers\"                        , 10040, 10041, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT, V[1], NBT_OUTPUT, V[0], NBT_MULTIPLIER, V[1]/V[0], NBT_WASTE_ENERGY, F, NBT_ENERGY_ACCEPTED, TD.Energy.EU, NBT_ENERGY_EMITTED, TD.Energy.EU), \"WIW\", \"XMx\", \"WIW\", 'M', OP.casingMachine.dat(aMat), 'W', OP.wireGt01.dat(ANY.Cu), 'X', OP.wireGt04.dat(ANY.Cu), 'I', OP.plateDouble.dat(ANY.Iron));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 882,
+      "end_line": 882,
+      "excerpt_sha256": "d386072c656025528bf587eda3c54e7c5c3455282e076990ee0cdca0951c234b",
+      "text": "\t\taMat = MT.DATA.Electric_T[1];   aRegistry.add(\"Transformer (\"+VN[1]+\"-\"+VN[2]+\")\"                   , \"Transformers\"                        , 10041, 10041, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT, V[2], NBT_OUTPUT, V[1], NBT_MULTIPLIER, V[2]/V[1], NBT_WASTE_ENERGY, F, NBT_ENERGY_ACCEPTED, TD.Energy.EU, NBT_ENERGY_EMITTED, TD.Energy.EU), \"WIW\", \"XMx\", \"WIW\", 'M', OP.casingMachine.dat(aMat), 'W', OP.wireGt01.dat(ANY.Cu), 'X', OP.wireGt04.dat(ANY.Cu), 'I', OP.plateDouble.dat(ANY.Iron));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 883,
+      "end_line": 883,
+      "excerpt_sha256": "aae5de0482d39f29b2b65ee50727cd99364e2458ba996538c59e66f61765716b",
+      "text": "\t\taMat = MT.DATA.Electric_T[2];   aRegistry.add(\"Transformer (\"+VN[2]+\"-\"+VN[3]+\")\"                   , \"Transformers\"                        , 10042, 10041, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT, V[3], NBT_OUTPUT, V[2], NBT_MULTIPLIER, V[3]/V[2], NBT_WASTE_ENERGY, F, NBT_ENERGY_ACCEPTED, TD.Energy.EU, NBT_ENERGY_EMITTED, TD.Energy.EU), \"WIW\", \"XMx\", \"WIW\", 'M', OP.casingMachine.dat(aMat), 'W', OP.wireGt01.dat(ANY.Cu), 'X', OP.wireGt04.dat(ANY.Cu), 'I', OP.plateDouble.dat(ANY.Iron));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 884,
+      "end_line": 884,
+      "excerpt_sha256": "2b5fedc46ea6a9a190be80f06adddfcab12f00d4ecd06570a2b9b0aaeb980320",
+      "text": "\t\taMat = MT.DATA.Electric_T[3];   aRegistry.add(\"Transformer (\"+VN[3]+\"-\"+VN[4]+\")\"                   , \"Transformers\"                        , 10043, 10041, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT, V[4], NBT_OUTPUT, V[3], NBT_MULTIPLIER, V[4]/V[3], NBT_WASTE_ENERGY, F, NBT_ENERGY_ACCEPTED, TD.Energy.EU, NBT_ENERGY_EMITTED, TD.Energy.EU), \"WIW\", \"XMx\", \"WIW\", 'M', OP.casingMachine.dat(aMat), 'W', OP.wireGt01.dat(MT.AnnealedCopper), 'X', OP.wireGt04.dat(MT.AnnealedCopper), 'I', OP.plateDouble.dat(ANY.Iron));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 885,
+      "end_line": 885,
+      "excerpt_sha256": "3692e05bb4edb11c1d2178cf50d3269f4b88017d6d8206da71fc2bbb84a8894b",
+      "text": "\t\taMat = MT.DATA.Electric_T[4];   aRegistry.add(\"Transformer (\"+VN[4]+\"-\"+VN[5]+\")\"                   , \"Transformers\"                        , 10044, 10041, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT, V[5], NBT_OUTPUT, V[4], NBT_MULTIPLIER, V[5]/V[4], NBT_WASTE_ENERGY, F, NBT_ENERGY_ACCEPTED, TD.Energy.EU, NBT_ENERGY_EMITTED, TD.Energy.EU), \"WIW\", \"XMx\", \"WIW\", 'M', OP.casingMachine.dat(aMat), 'W', OP.wireGt01.dat(MT.AnnealedCopper), 'X', OP.wireGt04.dat(MT.AnnealedCopper), 'I', OP.plateDouble.dat(ANY.Iron));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 886,
+      "end_line": 886,
+      "excerpt_sha256": "4d5f2bf5fa1d542b4d9a9fa41504d132f7eb2a6b6cfc03e464dafa3ab529a4b6",
+      "text": "\t\taMat = MT.DATA.Electric_T[5];   aRegistry.add(\"Transformer (\"+VN[5]+\"-\"+VN[6]+\")\"                   , \"Transformers\"                        , 10045, 10041, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT, V[6], NBT_OUTPUT, V[5], NBT_MULTIPLIER, V[6]/V[5], NBT_WASTE_ENERGY, F, NBT_ENERGY_ACCEPTED, TD.Energy.EU, NBT_ENERGY_EMITTED, TD.Energy.EU), \"WIW\", \"XMx\", \"WIW\", 'M', OP.casingMachine.dat(aMat), 'W', OP.wireGt01.dat(MT.AnnealedCopper), 'X', OP.wireGt04.dat(MT.AnnealedCopper), 'I', OP.plateDouble.dat(ANY.Iron));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 887,
+      "end_line": 887,
+      "excerpt_sha256": "4c05c9ec934092e7d52aec9dd2a3402accf9adf8006f3b04a92017ac7c53cf19",
+      "text": "\t\taMat = MT.DATA.Electric_T[6];   aRegistry.add(\"Transformer (\"+VN[6]+\"-\"+VN[7]+\")\"                   , \"Transformers\"                        , 10046, 10041, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT, V[7], NBT_OUTPUT, V[6], NBT_MULTIPLIER, V[7]/V[6], NBT_WASTE_ENERGY, F, NBT_ENERGY_ACCEPTED, TD.Energy.EU, NBT_ENERGY_EMITTED, TD.Energy.EU), \"WIW\", \"XMx\", \"WIW\", 'M', OP.casingMachine.dat(aMat), 'W', OP.wireGt01.dat(MT.AnnealedCopper), 'X', OP.wireGt04.dat(MT.AnnealedCopper), 'I', OP.plateDouble.dat(ANY.Iron));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 888,
+      "end_line": 888,
+      "excerpt_sha256": "85fa65b52db01845457f3163f0704183c8dfdbcfc2fab8ed3768994af119e0e7",
+      "text": "\t\taMat = MT.DATA.Electric_T[7];   aRegistry.add(\"Transformer (\"+VN[7]+\"-\"+VN[8]+\")\"                   , \"Transformers\"                        , 10047, 10041, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT, V[8], NBT_OUTPUT, V[7], NBT_MULTIPLIER, V[8]/V[7], NBT_WASTE_ENERGY, F, NBT_ENERGY_ACCEPTED, TD.Energy.EU, NBT_ENERGY_EMITTED, TD.Energy.EU), \"WIW\", \"XMx\", \"WIW\", 'M', OP.casingMachine.dat(aMat), 'W', OP.wireGt01.dat(MT.AnnealedCopper), 'X', OP.wireGt04.dat(MT.AnnealedCopper), 'I', OP.plateDouble.dat(ANY.Iron));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 889,
+      "end_line": 889,
+      "excerpt_sha256": "00846a564a942ce29d171de961a65ba75a83d81739b154aa94b130c080b747a4",
+      "text": "\t\taMat = MT.DATA.Electric_T[8];   aRegistry.add(\"Transformer (\"+VN[8]+\"-\"+VN[9]+\")\"                   , \"Transformers\"                        , 10048, 10041, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT, V[9], NBT_OUTPUT, V[8], NBT_MULTIPLIER, V[9]/V[8], NBT_WASTE_ENERGY, F, NBT_ENERGY_ACCEPTED, TD.Energy.EU, NBT_ENERGY_EMITTED, TD.Energy.EU), \"WIW\", \"XMx\", \"WIW\", 'M', OP.casingMachine.dat(aMat), 'W', OP.wireGt01.dat(MT.AnnealedCopper), 'X', OP.wireGt04.dat(MT.AnnealedCopper), 'I', OP.plateDouble.dat(ANY.Iron));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 946,
+      "end_line": 946,
+      "excerpt_sha256": "bb031a5dafe1a312fc9e9566e01895a2b3acd5a326c262f273829098054bab0c",
+      "text": "\t\taMat = MT.DATA.Electric_T[1];   aRegistry.add(\"Electric Dynamo (\"                         +VN[1]+\")\", \"Dynamos\"                             , 10111, 10111, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT,   32, NBT_OUTPUT,   22, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.RU, NBT_ENERGY_EMITTED, TD.Energy.EU), \"TGT\", \"CMC\", \"TId\", 'M', OP.casingMachineDouble.dat(aMat), 'T', OP.screw.dat(aMat), 'G', OP.gearGt.dat(aMat), 'I', OP.stickLong.dat(MT.IronMagnetic     ), 'C', OP.wireGt01.dat(ANY.Cu));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 947,
+      "end_line": 947,
+      "excerpt_sha256": "451e2235c5bdd1b8ac94426116fe15e3dfca2567cb42e4fefd7e3f08e5fe7f8d",
+      "text": "\t\taMat = MT.DATA.Electric_T[2];   aRegistry.add(\"Electric Dynamo (\"                         +VN[2]+\")\", \"Dynamos\"                             , 10112, 10111, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT,  128, NBT_OUTPUT,   88, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.RU, NBT_ENERGY_EMITTED, TD.Energy.EU), \"TGT\", \"CMC\", \"TId\", 'M', OP.casingMachineDouble.dat(aMat), 'T', OP.screw.dat(aMat), 'G', OP.gearGt.dat(aMat), 'I', OP.stickLong.dat(MT.SteelMagnetic    ), 'C', OP.wireGt02.dat(ANY.Cu));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 948,
+      "end_line": 948,
+      "excerpt_sha256": "dc554c4ddd0862770e7f9e04b45869f99d3218f3839334a6e736934d92a5dbde",
+      "text": "\t\taMat = MT.DATA.Electric_T[3];   aRegistry.add(\"Electric Dynamo (\"                         +VN[3]+\")\", \"Dynamos\"                             , 10113, 10111, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT,  512, NBT_OUTPUT,  352, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.RU, NBT_ENERGY_EMITTED, TD.Energy.EU), \"TGT\", \"CMC\", \"TId\", 'M', OP.casingMachineDouble.dat(aMat), 'T', OP.screw.dat(aMat), 'G', OP.gearGt.dat(aMat), 'I', OP.stickLong.dat(MT.SteelMagnetic    ), 'C', OP.wireGt04.dat(MT.AnnealedCopper));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 949,
+      "end_line": 949,
+      "excerpt_sha256": "bb48f025eb56b36baf36515e26193bb2660a6c467181c0aabf78535c54d5375f",
+      "text": "\t\taMat = MT.DATA.Electric_T[4];   aRegistry.add(\"Electric Dynamo (\"                         +VN[4]+\")\", \"Dynamos\"                             , 10114, 10111, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT, 2048, NBT_OUTPUT, 1408, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.RU, NBT_ENERGY_EMITTED, TD.Energy.EU), \"TGT\", \"CMC\", \"TId\", 'M', OP.casingMachineDouble.dat(aMat), 'T', OP.screw.dat(aMat), 'G', OP.gearGt.dat(aMat), 'I', OP.stickLong.dat(MT.NeodymiumMagnetic), 'C', OP.wireGt08.dat(MT.AnnealedCopper));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 950,
+      "end_line": 950,
+      "excerpt_sha256": "e566623635a50a1c168e7251ac15c960460b339f45b217fe4040214b00b171d0",
+      "text": "\t\taMat = MT.DATA.Electric_T[5];   aRegistry.add(\"Electric Dynamo (\"                         +VN[5]+\")\", \"Dynamos\"                             , 10115, 10111, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT, 8192, NBT_OUTPUT, 5632, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.RU, NBT_ENERGY_EMITTED, TD.Energy.EU), \"TGT\", \"CMC\", \"TId\", 'M', OP.casingMachineDouble.dat(aMat), 'T', OP.screw.dat(aMat), 'G', OP.gearGt.dat(aMat), 'I', OP.stickLong.dat(MT.NeodymiumMagnetic), 'C', OP.wireGt16.dat(MT.AnnealedCopper));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 953,
+      "end_line": 953,
+      "excerpt_sha256": "0c45285ecc48422b44c9aaf7dd9e7b7af179f9631cb2529db46a8b06b80b2962",
+      "text": "\t\taMat = MT.DATA.Flux_T[1];       aRegistry.add(\"Flux Dynamo (\"                   +aMat.getLocal()+\")\", \"Dynamos\"                             , 11111, 10111, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT,   32, NBT_OUTPUT,   88, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.RU, NBT_ENERGY_EMITTED, TD.Energy.RF), \"SMS\", \"SGS\", 'M', aRegistry.getItem(10111), 'G', OP.gearGt.dat(aMat), 'S', OP.stickLong.dat(aMat));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 954,
+      "end_line": 954,
+      "excerpt_sha256": "b282b0ff2a7edbe3d8ecbf1d34a44ce83d4ecfdbb6f8885146ee1259a46006ec",
+      "text": "\t\taMat = MT.DATA.Flux_T[2];       aRegistry.add(\"Flux Dynamo (\"                   +aMat.getLocal()+\")\", \"Dynamos\"                             , 11112, 10111, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT,  128, NBT_OUTPUT,  352, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.RU, NBT_ENERGY_EMITTED, TD.Energy.RF), \"SMS\", \"SGS\", 'M', aRegistry.getItem(10112), 'G', OP.gearGt.dat(aMat), 'S', OP.stickLong.dat(aMat));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 955,
+      "end_line": 955,
+      "excerpt_sha256": "08c34b7893f214c47d5072c6e0adc31158571e89b4bf0a55e15cec07d0700023",
+      "text": "\t\taMat = MT.DATA.Flux_T[3];       aRegistry.add(\"Flux Dynamo (\"                   +aMat.getLocal()+\")\", \"Dynamos\"                             , 11113, 10111, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT,  512, NBT_OUTPUT, 1408, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.RU, NBT_ENERGY_EMITTED, TD.Energy.RF), \"SMS\", \"SGS\", 'M', aRegistry.getItem(10113), 'G', OP.gearGt.dat(aMat), 'S', OP.stickLong.dat(aMat));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 956,
+      "end_line": 956,
+      "excerpt_sha256": "1c8f0369d05c56a3923f9e4f1437ac30146cc4f91d332881b8f961f372ffab0f",
+      "text": "\t\taMat = MT.DATA.Flux_T[4];       aRegistry.add(\"Flux Dynamo (\"                   +aMat.getLocal()+\")\", \"Dynamos\"                             , 11114, 10111, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT, 2048, NBT_OUTPUT, 5632, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.RU, NBT_ENERGY_EMITTED, TD.Energy.RF), \"SMS\", \"SGS\", 'M', aRegistry.getItem(10114), 'G', OP.gearGt.dat(aMat), 'S', OP.stickLong.dat(aMat));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 957,
+      "end_line": 957,
+      "excerpt_sha256": "5dbb22fca5958db6dfa4307cff1aca615d7710c99339519d75d4f2d0d0c7422d",
+      "text": "\t\taMat = MT.DATA.Flux_T[5];       aRegistry.add(\"Flux Dynamo (\"                   +aMat.getLocal()+\")\", \"Dynamos\"                             , 11115, 10111, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT, 8192, NBT_OUTPUT,22528, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.RU, NBT_ENERGY_EMITTED, TD.Energy.RF), \"SMS\", \"SGS\", 'M', aRegistry.getItem(10115), 'G', OP.gearGt.dat(aMat), 'S', OP.stickLong.dat(aMat));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityClassContainer.java",
+      "start_line": 41,
+      "end_line": 46,
+      "excerpt_sha256": "7e213bcdda06282e374821d1a3fc359c9b61e257ffa1de650295c31a34866e08",
+      "text": "\tpublic MultiTileEntityClassContainer(int aID, int aCreativeTabID, Class<? extends TileEntity> aClass, int aBlockMetaData, int aStackSize, MultiTileEntityBlock aBlock, NBTTagCompound aParameters) {\n\t\tif (!IMultiTileEntity.class.isAssignableFrom(aClass)) throw new IllegalArgumentException(\"MultiTileEntities must implement the Interface IMultiTileEntity!\");\n\t\tmBlockMetaData = (byte)aBlockMetaData;\n\t\tmStackSize = (byte)aStackSize;\n\t\tmParameters = aParameters==null?UT.NBT.make():aParameters;\n\t\tmHidden = mParameters.getBoolean(NBT_HIDDEN);"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityRegistry.java",
+      "start_line": 148,
+      "end_line": 150,
+      "excerpt_sha256": "9adf193244c83831b199fc40c67707dec96551f9407edb1f6227e89ccace591a",
+      "text": "\tpublic ItemStack add(String aLocalised, String aCategoricalName, int aID, int aCreativeTabID, Class<? extends TileEntity> aClass, int aBlockMetaData, int aStackSize, MultiTileEntityBlock aBlock, NBTTagCompound aParameters, Object... aRecipe) {\n\t\treturn add(aLocalised, aCategoricalName, new MultiTileEntityClassContainer(aID, aCreativeTabID, aClass, aBlockMetaData, aStackSize, aBlock, aParameters), aRecipe);\n\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityItemInternal.java",
+      "start_line": 241,
+      "end_line": 250,
+      "excerpt_sha256": "520de3a8b3ecf24dc2771579b9193aacd888fa26549309496e286c7a3f6216a5",
+      "text": "\tpublic int getItemStackLimit(ItemStack aStack) {\n\t\tMultiTileEntityClassContainer tContainer = mBlock.mMultiTileEntityRegistry.getClassContainer(aStack);\n\t\tif (tContainer == null) return 1;\n\t\tMultiTileEntityContainer tTileEntityContainer = mBlock.mMultiTileEntityRegistry.getNewTileEntityContainer(aStack);\n\t\tif (tTileEntityContainer != null && tTileEntityContainer.mTileEntity instanceof IMTE_GetMaxStackSize) {\n\t\t\treturn UT.Code.bindStack(((IMTE_GetMaxStackSize)tTileEntityContainer.mTileEntity).getMaxStackSize(aStack, tContainer.mStackSize));\n\t\t}\n\t\treturn tContainer.mStackSize;\n\t}\n\t"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java",
+      "start_line": 143,
+      "end_line": 171,
+      "excerpt_sha256": "b4dfa483236c606954b1547ae55e5f373c31551a7b04f3723de11a4dcaf79731",
+      "text": "    private static EnergyNodeBlock createBlock(EnergyNodeSpec spec) {\n        BlockBehaviour.Properties props = BlockBehaviour.Properties.of()\n                .mapColor(MapColor.METAL)\n                .strength(4.0f, 4.0f)\n                .requiresCorrectToolForDrops();\n        if (spec.kind() == EnergyNodeSpec.Kind.SOLAR) props = props.noOcclusion();\n        if (com.gregtech.gregtech.content.energy.OriginalSteamTurbines.handles(spec))\n            return new com.gregtech.gregtech.block.energy.OriginalMotorBlock(spec, props);\n        if (com.gregtech.gregtech.content.energy.OriginalThermalConverter.handles(spec))\n            return com.gregtech.gregtech.content.energy.OriginalThermalConverter.cooler(spec)\n                    ? new com.gregtech.gregtech.block.energy.RotaryConverterBlock(spec, props)\n                    : new com.gregtech.gregtech.block.energy.OriginalHeaterBlock(spec, props);\n        if (com.gregtech.gregtech.content.energy.OriginalRotaryConverter.handles(spec))\n            return com.gregtech.gregtech.content.energy.OriginalRotaryConverter.motor(spec)\n                    ? new com.gregtech.gregtech.block.energy.OriginalMotorBlock(spec, props)\n                    : new com.gregtech.gregtech.block.energy.RotaryConverterBlock(spec, props);\n        return spec.kind() == EnergyNodeSpec.Kind.MAGNET\n                ? new MagnetMachineBlock(spec, props)\n                : spec.batterySlots() > 0\n                    ? new com.gregtech.gregtech.block.energy.BatteryBoxBlock(spec, props)\n                    : spec.id().startsWith(\"transformer_\")\n                        ? new com.gregtech.gregtech.block.energy.ElectricTransformerBlock(spec, props)\n                        : spec.kind() == EnergyNodeSpec.Kind.SOLAR\n                            ? new com.gregtech.gregtech.block.energy.SolarPanelBlock(spec, props)\n                            : new EnergyNodeBlock(spec, props);\n    }\n\n    private static Item.Properties itemProperties(EnergyNodeSpec spec) {\n        return com.gregtech.gregtech.content.energy.OriginalSteamTurbines.handles(spec)"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java",
+      "start_line": 170,
+      "end_line": 173,
+      "excerpt_sha256": "48f98c5414aafdadd7801e35bf8aa9f594a8d721e3d03fb2c3e4eaa6959bc7b4",
+      "text": "    private static Item.Properties itemProperties(EnergyNodeSpec spec) {\n        return com.gregtech.gregtech.content.energy.OriginalSteamTurbines.handles(spec)\n                ? new Item.Properties().stacksTo(16) : new Item.Properties();\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java",
+      "start_line": 175,
+      "end_line": 178,
+      "excerpt_sha256": "7f1e4bf598ef40f6bbb0df3469a83f0d15bb17473fc7df5f437e4c27ace40d2e",
+      "text": "    private static void registerSpecifications() {\n        com.gregtech.gregtech.content.energy.EnergyNodeDefinitions.specifications().forEach(GTEnergyNodes::add);\n        com.gregtech.gregtech.content.energy.MagnetMachineDefinitions.specifications().forEach(GTEnergyNodes::add);\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/EnergyNodeDefinitions.java",
+      "start_line": 19,
+      "end_line": 29,
+      "excerpt_sha256": "368332f11279e2b1d67e03665f3b29f68d27b547b852d54e78ba7ecbe3c5b02e",
+      "text": "        record Tier(String name, long inputRate, GTMaterial material) {\n        }\n        Tier[] tiers = {\n                new Tier(\"lv\", 32,   Materials.SteelGalvanized),\n                new Tier(\"mv\", 128,  Materials.Aluminium),\n                new Tier(\"hv\", 512,  Materials.StainlessSteel),\n                new Tier(\"ev\", 2048, Materials.Chromium),\n                new Tier(\"iv\", 8192, Materials.Titanium),\n        };\n\n        // Electric motors: EU in → RU out at half rate (GT6 10021-10025)"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/EnergyNodeDefinitions.java",
+      "start_line": 50,
+      "end_line": 64,
+      "excerpt_sha256": "249dbc1261bd588af8a3faaacf737175e5c193d3210d4df02ddbdecfdcf8ddcf",
+      "text": "        record Step(String name, long inputRate, long outputRate, GTMaterial material) {\n        }\n        Step[] steps = {\n                new Step(\"ulv_lv\",  32,      8,      Materials.TinAlloy),\n                new Step(\"lv_mv\",   128,     32,     Materials.SteelGalvanized),\n                new Step(\"mv_hv\",   512,     128,    Materials.Aluminium),\n                new Step(\"hv_ev\",   2048,    512,    Materials.StainlessSteel),\n                new Step(\"ev_iv\",   8192,    2048,   Materials.Chromium),\n                new Step(\"iv_luv\",  32768,   8192,   Materials.Titanium),\n                new Step(\"luv_zpm\", 131072,  32768,  Materials.Iridium),\n                new Step(\"zpm_uv\",  524288,  131072, Materials.OsmiumElemental),\n                new Step(\"uv_xv\",   2097152, 524288, Materials.Trinitanium),\n        };\n        for (Step step : steps) {\n            result.add(EnergyNodeSpec.builder(\"transformer_\" + step.name(), step.material())"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/FluxRotaryCatalog.java",
+      "start_line": 14,
+      "end_line": 18,
+      "excerpt_sha256": "7f789eb876bbf53cff72d0ce397425674c127fe799bf50eb02e3ac1ebb8100dd",
+      "text": "    public static final List<Tier> TIERS = List.of(\n            new Tier(\"lv\", Materials.Lead, 32), new Tier(\"mv\", Materials.Invar, 128),\n            new Tier(\"hv\", Materials.Electrum, 512), new Tier(\"ev\", Materials.EnderiumBase, 2048),\n            new Tier(\"iv\", Materials.Enderium, 8192));\n    public static List<EnergyNodeSpec> specifications() {"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/MagnetMachineDefinitions.java",
+      "start_line": 15,
+      "end_line": 15,
+      "excerpt_sha256": "c6d0cd2b8382039535efd27f7c29ad576852ec67db62ab3113482245fd5df82e",
+      "text": "    private static final String[] TIERS = {\"lv\", \"mv\", \"hv\", \"ev\", \"iv\"};"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/OriginalSteamTurbines.java",
+      "start_line": 37,
+      "end_line": 37,
+      "excerpt_sha256": "520433f69bbfda65e1fa85bd674ec385cc8e001e129b72258b74ca0bd2427c21",
+      "text": "    public static boolean handles(EnergyNodeSpec spec) { return spec.kind()==EnergyNodeSpec.Kind.TURBINE && spec.id().startsWith(\"steam_turbine_\"); }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/MachineBlockBootstrap.java",
+      "start_line": 25,
+      "end_line": 25,
+      "excerpt_sha256": "7f054df4e758d66f966ae39c6b8ba1087833ff3fbe074b082401d1fd8604ddf9",
+      "text": "        GTEnergyNodes.registerAll();"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "start_line": 106,
+      "end_line": 106,
+      "excerpt_sha256": "7ee9d065af06b79a2d2b23a6ba4f56086ec112056a5c42ab14524a20cf7e1ec8",
+      "text": "        com.gregtech.gregtech.registry.GTEnergyNodes.register(modEventBus);"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/garbage-physical-audit-20261022/neo-Item.java",
+      "start_line": 464,
+      "end_line": 464,
+      "excerpt_sha256": "b9900b266f60766ef2741914192950e68c13ce8673e5dc8a279cc02cf0a827b1",
+      "text": "            return this.components == null ? DataComponents.COMMON_ITEM_COMPONENTS : COMPONENT_INTERNER.intern(this.components.build());"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/coin-lifecycle-audit-20261022/neo-BlockBehaviour.java",
+      "start_line": 1110,
+      "end_line": 1112,
+      "excerpt_sha256": "8ef918c7f497b61f89ec6ee582c026373de803c4cd46252d5fb714f93cf308b8",
+      "text": "        public BlockBehaviour.Properties strength(float p_60914_, float p_60915_) {\n            return this.destroyTime(p_60914_).explosionResistance(p_60915_);\n        }"
+    }
+  ],
+  "native_evidence": [
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour.java",
+      "entry_sha256": "410ae028d36585b6c210e853720ea3fb973154a4d7800a082d541293cf355014",
+      "extracted_path": "work/coin-lifecycle-audit-20261022/neo-BlockBehaviour.java",
+      "reused_from": "docs/integration/verification/coin-lifecycle-audit-20261022.json",
+      "revalidated": true
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour$Properties.class",
+      "entry_sha256": "7b379ccb00fa99762c6961f9e94d2258c994c12c59a46aa4789ee5851ed3eb52",
+      "javap_output": "work/mini-portal-audit-20261022/forge-BlockBehaviour$Properties.javap.txt",
+      "javap_sha256": "7ac86268ff86932e5c8cb6737878da61b2fe46dc71bd3c8a222b82d468171cc4",
+      "reused_from": "docs/integration/verification/fluid-attachments-audit-20261022.json",
+      "revalidated": true
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/item/Item$Properties.class",
+      "entry_sha256": "ef82809daf76d1556fc756f8071d069e31e0886f432b254af745804f0cef4036",
+      "javap_output": "work/garbage-physical-audit-20261022/forge-Item$Properties.javap.txt",
+      "javap_sha256": "3913faab1d497a343cf15c26692ba50ab1b95bbc9010404d8fd8d99b0e695989"
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/item/Item.java",
+      "entry_sha256": "d176c58aee3e1698000514bf00f01ddf495f7dcd8c89fb2acd832391aae1be48",
+      "extracted_path": "work/garbage-physical-audit-20261022/neo-Item.java"
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/core/component/DataComponents.java",
+      "entry_sha256": "933a4881379b8bf9a86e42bceda93d846a58d8ce9939e46dc95a70f91cab1998",
+      "extracted_path": "work/garbage-physical-audit-20261022/neo-DataComponents.java"
+    }
+  ],
+  "reused_native_excerpts": [
+    {
+      "path": "C:/Dev/GregTech6/work/mini-portal-audit-20261022/forge-BlockBehaviour$Properties.javap.txt",
+      "start_line": 352,
+      "end_line": 367,
+      "excerpt_sha256": "267d6a61bd93a4aae051b95bb94ea7878f37c4af403e67c2aed23ce141f772ca",
+      "text": "  public net.minecraft.world.level.block.state.BlockBehaviour$Properties strength(float, float);\n    Code:\n         0: aload_0\n         1: fload_1\n         2: invokevirtual #296                // Method destroyTime:(F)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;\n         5: fload_2\n         6: invokevirtual #298                // Method explosionResistance:(F)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;\n         9: areturn\n\n  public net.minecraft.world.level.block.state.BlockBehaviour$Properties instabreak();\n    Code:\n         0: aload_0\n         1: fconst_0\n         2: invokevirtual #303                // Method strength:(F)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;\n         5: areturn\n"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/garbage-physical-audit-20261022/forge-Item$Properties.javap.txt",
+      "start_line": 19,
+      "end_line": 42,
+      "excerpt_sha256": "a6a7cdbdc172fbe059ec40e9797c743aedd060e3b381733424667645261d392f",
+      "text": "  public net.minecraft.world.item.Item$Properties();\n    Code:\n       0: aload_0\n       1: invokespecial #27                 // Method java/lang/Object.\"<init>\":()V\n       4: aload_0\n       5: bipush        64\n       7: putfield      #29                 // Field maxStackSize:I\n      10: aload_0\n      11: getstatic     #34                 // Field net/minecraft/world/item/Rarity.COMMON:Lnet/minecraft/world/item/Rarity;\n      14: putfield      #36                 // Field rarity:Lnet/minecraft/world/item/Rarity;\n      17: aload_0\n      18: getstatic     #41                 // Field net/minecraft/world/flag/FeatureFlags.VANILLA_SET:Lnet/minecraft/world/flag/FeatureFlagSet;\n      21: putfield      #43                 // Field requiredFeatures:Lnet/minecraft/world/flag/FeatureFlagSet;\n      24: aload_0\n      25: iconst_1\n      26: putfield      #45                 // Field canRepair:Z\n      29: return\n\n  public net.minecraft.world.item.Item$Properties food(net.minecraft.world.food.FoodProperties);\n    Code:\n       0: aload_0\n       1: aload_1\n       2: putfield      #51                 // Field foodProperties:Lnet/minecraft/world/food/FoodProperties;\n       5: aload_0"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/garbage-physical-audit-20261022/neo-DataComponents.java",
+      "start_line": 233,
+      "end_line": 240,
+      "excerpt_sha256": "9726d283717cce7f255a572a3f73113e5bc0919af382950239d7a8f99f8b93c4",
+      "text": "    public static final DataComponentMap COMMON_ITEM_COMPONENTS = DataComponentMap.builder()\n        .set(MAX_STACK_SIZE, 64)\n        .set(LORE, ItemLore.EMPTY)\n        .set(ENCHANTMENTS, ItemEnchantments.EMPTY)\n        .set(REPAIR_COST, 0)\n        .set(ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.EMPTY)\n        .set(RARITY, Rarity.COMMON)\n        .build();"
+    }
+  ],
+  "original_inheritance_no_stack_override": {
+    "gregtech/tileentity/energy/converters/MultiTileEntityMotorElectric.java": [
+      "gregtech/tileentity/energy/converters/MultiTileEntityMotorElectric.java",
+      "gregapi/tileentity/energy/TileEntityBase11Motor.java",
+      "gregapi/tileentity/energy/TileEntityBase10EnergyConverter.java",
+      "gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "gregapi/tileentity/base/TileEntityBase02AdjacentTEBuffer.java",
+      "gregapi/tileentity/base/TileEntityBase01Root.java"
+    ],
+    "gregtech/tileentity/energy/converters/MultiTileEntityMotorFlux.java": [
+      "gregtech/tileentity/energy/converters/MultiTileEntityMotorFlux.java",
+      "gregapi/tileentity/energy/TileEntityBase11Motor.java",
+      "gregapi/tileentity/energy/TileEntityBase10EnergyConverter.java",
+      "gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "gregapi/tileentity/base/TileEntityBase02AdjacentTEBuffer.java",
+      "gregapi/tileentity/base/TileEntityBase01Root.java"
+    ],
+    "gregtech/tileentity/energy/converters/MultiTileEntityDynamoElectric.java": [
+      "gregtech/tileentity/energy/converters/MultiTileEntityDynamoElectric.java",
+      "gregapi/tileentity/energy/TileEntityBase10EnergyConverter.java",
+      "gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "gregapi/tileentity/base/TileEntityBase02AdjacentTEBuffer.java",
+      "gregapi/tileentity/base/TileEntityBase01Root.java"
+    ],
+    "gregtech/tileentity/energy/converters/MultiTileEntityDynamoFlux.java": [
+      "gregtech/tileentity/energy/converters/MultiTileEntityDynamoFlux.java",
+      "gregapi/tileentity/energy/TileEntityBase10EnergyConverter.java",
+      "gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "gregapi/tileentity/base/TileEntityBase02AdjacentTEBuffer.java",
+      "gregapi/tileentity/base/TileEntityBase01Root.java"
+    ],
+    "gregtech/tileentity/energy/converters/MultiTileEntityMagnetElectric.java": [
+      "gregtech/tileentity/energy/converters/MultiTileEntityMagnetElectric.java",
+      "gregapi/tileentity/energy/TileEntityBase11Bipolar.java",
+      "gregapi/tileentity/energy/TileEntityBase10EnergyConverter.java",
+      "gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "gregapi/tileentity/base/TileEntityBase02AdjacentTEBuffer.java",
+      "gregapi/tileentity/base/TileEntityBase01Root.java"
+    ],
+    "gregtech/tileentity/energy/converters/MultiTileEntityMagnetFlux.java": [
+      "gregtech/tileentity/energy/converters/MultiTileEntityMagnetFlux.java",
+      "gregapi/tileentity/energy/TileEntityBase11Bipolar.java",
+      "gregapi/tileentity/energy/TileEntityBase10EnergyConverter.java",
+      "gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "gregapi/tileentity/base/TileEntityBase02AdjacentTEBuffer.java",
+      "gregapi/tileentity/base/TileEntityBase01Root.java"
+    ],
+    "gregtech/tileentity/energy/transformers/MultiTileEntityTransformerElectric.java": [
+      "gregtech/tileentity/energy/transformers/MultiTileEntityTransformerElectric.java",
+      "gregapi/tileentity/energy/TileEntityBase11Bidirectional.java",
+      "gregapi/tileentity/energy/TileEntityBase10EnergyConverter.java",
+      "gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "gregapi/tileentity/base/TileEntityBase02AdjacentTEBuffer.java",
+      "gregapi/tileentity/base/TileEntityBase01Root.java"
+    ]
+  },
+  "stack_limit_matrix": [
+    {
+      "original_id": 10021,
+      "current_id": "gt6ce:electric_motor_lv",
+      "original_class": "MultiTileEntityMotorElectric",
+      "loader_line": 849,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 10022,
+      "current_id": "gt6ce:electric_motor_mv",
+      "original_class": "MultiTileEntityMotorElectric",
+      "loader_line": 850,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 10023,
+      "current_id": "gt6ce:electric_motor_hv",
+      "original_class": "MultiTileEntityMotorElectric",
+      "loader_line": 851,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 10024,
+      "current_id": "gt6ce:electric_motor_ev",
+      "original_class": "MultiTileEntityMotorElectric",
+      "loader_line": 852,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 10025,
+      "current_id": "gt6ce:electric_motor_iv",
+      "original_class": "MultiTileEntityMotorElectric",
+      "loader_line": 853,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 11021,
+      "current_id": "gt6ce:flux_motor_lv",
+      "original_class": "MultiTileEntityMotorFlux",
+      "loader_line": 856,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 11022,
+      "current_id": "gt6ce:flux_motor_mv",
+      "original_class": "MultiTileEntityMotorFlux",
+      "loader_line": 857,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 11023,
+      "current_id": "gt6ce:flux_motor_hv",
+      "original_class": "MultiTileEntityMotorFlux",
+      "loader_line": 858,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 11024,
+      "current_id": "gt6ce:flux_motor_ev",
+      "original_class": "MultiTileEntityMotorFlux",
+      "loader_line": 859,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 11025,
+      "current_id": "gt6ce:flux_motor_iv",
+      "original_class": "MultiTileEntityMotorFlux",
+      "loader_line": 860,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 10031,
+      "current_id": "gt6ce:electromagnet_lv",
+      "original_class": "MultiTileEntityMagnetElectric",
+      "loader_line": 865,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 10032,
+      "current_id": "gt6ce:electromagnet_mv",
+      "original_class": "MultiTileEntityMagnetElectric",
+      "loader_line": 866,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 10033,
+      "current_id": "gt6ce:electromagnet_hv",
+      "original_class": "MultiTileEntityMagnetElectric",
+      "loader_line": 867,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 10034,
+      "current_id": "gt6ce:electromagnet_ev",
+      "original_class": "MultiTileEntityMagnetElectric",
+      "loader_line": 868,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 10035,
+      "current_id": "gt6ce:electromagnet_iv",
+      "original_class": "MultiTileEntityMagnetElectric",
+      "loader_line": 869,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 11031,
+      "current_id": "gt6ce:flux_magnet_lv",
+      "original_class": "MultiTileEntityMagnetFlux",
+      "loader_line": 872,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 11032,
+      "current_id": "gt6ce:flux_magnet_mv",
+      "original_class": "MultiTileEntityMagnetFlux",
+      "loader_line": 873,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 11033,
+      "current_id": "gt6ce:flux_magnet_hv",
+      "original_class": "MultiTileEntityMagnetFlux",
+      "loader_line": 874,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 11034,
+      "current_id": "gt6ce:flux_magnet_ev",
+      "original_class": "MultiTileEntityMagnetFlux",
+      "loader_line": 875,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 11035,
+      "current_id": "gt6ce:flux_magnet_iv",
+      "original_class": "MultiTileEntityMagnetFlux",
+      "loader_line": 876,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 10040,
+      "current_id": "gt6ce:transformer_ulv_lv",
+      "original_class": "MultiTileEntityTransformerElectric",
+      "loader_line": 881,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 10041,
+      "current_id": "gt6ce:transformer_lv_mv",
+      "original_class": "MultiTileEntityTransformerElectric",
+      "loader_line": 882,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 10042,
+      "current_id": "gt6ce:transformer_mv_hv",
+      "original_class": "MultiTileEntityTransformerElectric",
+      "loader_line": 883,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 10043,
+      "current_id": "gt6ce:transformer_hv_ev",
+      "original_class": "MultiTileEntityTransformerElectric",
+      "loader_line": 884,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 10044,
+      "current_id": "gt6ce:transformer_ev_iv",
+      "original_class": "MultiTileEntityTransformerElectric",
+      "loader_line": 885,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 10045,
+      "current_id": "gt6ce:transformer_iv_luv",
+      "original_class": "MultiTileEntityTransformerElectric",
+      "loader_line": 886,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 10046,
+      "current_id": "gt6ce:transformer_luv_zpm",
+      "original_class": "MultiTileEntityTransformerElectric",
+      "loader_line": 887,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 10047,
+      "current_id": "gt6ce:transformer_zpm_uv",
+      "original_class": "MultiTileEntityTransformerElectric",
+      "loader_line": 888,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 10048,
+      "current_id": "gt6ce:transformer_uv_xv",
+      "original_class": "MultiTileEntityTransformerElectric",
+      "loader_line": 889,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 10111,
+      "current_id": "gt6ce:electric_dynamo_lv",
+      "original_class": "MultiTileEntityDynamoElectric",
+      "loader_line": 946,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 10112,
+      "current_id": "gt6ce:electric_dynamo_mv",
+      "original_class": "MultiTileEntityDynamoElectric",
+      "loader_line": 947,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 10113,
+      "current_id": "gt6ce:electric_dynamo_hv",
+      "original_class": "MultiTileEntityDynamoElectric",
+      "loader_line": 948,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 10114,
+      "current_id": "gt6ce:electric_dynamo_ev",
+      "original_class": "MultiTileEntityDynamoElectric",
+      "loader_line": 949,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 10115,
+      "current_id": "gt6ce:electric_dynamo_iv",
+      "original_class": "MultiTileEntityDynamoElectric",
+      "loader_line": 950,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 11111,
+      "current_id": "gt6ce:flux_dynamo_lv",
+      "original_class": "MultiTileEntityDynamoFlux",
+      "loader_line": 953,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 11112,
+      "current_id": "gt6ce:flux_dynamo_mv",
+      "original_class": "MultiTileEntityDynamoFlux",
+      "loader_line": 954,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 11113,
+      "current_id": "gt6ce:flux_dynamo_hv",
+      "original_class": "MultiTileEntityDynamoFlux",
+      "loader_line": 955,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 11114,
+      "current_id": "gt6ce:flux_dynamo_ev",
+      "original_class": "MultiTileEntityDynamoFlux",
+      "loader_line": 956,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    },
+    {
+      "original_id": 11115,
+      "current_id": "gt6ce:flux_dynamo_iv",
+      "original_class": "MultiTileEntityDynamoFlux",
+      "loader_line": 957,
+      "original_registered_stack_limit": 16,
+      "current_default_plain_stack_limit": 64
+    }
+  ],
+  "stack_limit_scope": {
+    "new_devices": 39,
+    "previously_recorded": 23,
+    "new_cumulative_named_scope": 62,
+    "limits": "Default plain item forms only; not item-component overrides, charged batteries, all energy devices or actual inventory execution. Existing steam turbine item stacksTo(16) is preserved."
+  },
+  "formal_findings_added": [],
+  "formal_findings_extended": [
+    218
+  ],
+  "refactoring": {
+    "baseline": "48576f18e66dddfe1e1eee0148ffe5356eb1449e",
+    "files": {
+      "multiversion/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java": {
+        "before_raw_sha256": "390ed71c0c3398836de5588a81f81e8a06c6112e154d5c9c809bd0bfc021e507",
+        "after_raw_sha256": "afe136cb11358ebcd7210e990b2815bbf9c83bd34c91f3e0515fe21815463286",
+        "before_lines": 127,
+        "after_lines": 179,
+        "views": [
+          {
+            "platform": "forge",
+            "factory_tokens": 265,
+            "factory_sha256": "76f7e37fc04bbdb55a5fa7346b2ee22ff368a03495ac63e5ba320594a7743bb0",
+            "remaining_tokens": 518,
+            "remaining_sha256": "35a50daba492a1cde2519775943b4cb0ed8fe3247dab272b47477f9d1de4e2ff"
+          },
+          {
+            "platform": "neoforge",
+            "factory_tokens": 265,
+            "factory_sha256": "76f7e37fc04bbdb55a5fa7346b2ee22ff368a03495ac63e5ba320594a7743bb0",
+            "remaining_tokens": 816,
+            "remaining_sha256": "e8459e198699c71116ada6f07c5e5ba6f9256436a6a99587ed75f18c033bc4e6"
+          }
+        ],
+        "exact_extractions": [
+          "node BlockBehaviour properties and ordered specialized class factory",
+          "steam-turbine-only item stack16 properties",
+          "EnergyNodeDefinitions then MagnetMachineDefinitions registration order"
+        ],
+        "normalizations": [
+          "Qualified block class names denote the existing imports.",
+          "Neo var props is the concrete Properties result of Properties.of; Forge already uses that explicit type.",
+          "strength integer/float 4 arguments both bind to the native float,float overload with exact value 4.",
+          "Neo overbroad completeness comment corrected; all other comments preserved."
+        ]
+      },
+      "core/src/main/java/com/gregtech/gregtech/content/energy/EnergyNodeDefinitions.java": {
+        "before_raw_sha256": "6b8afc634fd848a8be26be8fc5fa0828873c1990ed4c95a0f63534bc6c8e182c",
+        "after_raw_sha256": "ed146e888149edb8c2fffaa4b9dd0a9b8b90fe07e8a37958ebe37185cbf0a537",
+        "before_lines": 88,
+        "after_lines": 90,
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 961,
+            "sha256": "1660741e694510fd5aa673e8c77bd88dd36f7f316a4b11936602e72d0269d10d"
+          }
+        ],
+        "scoped_record_names": [
+          {
+            "before": "record Tier(String name, long v, GTMaterial mat)",
+            "after": "record Tier(String name, long inputRate, GTMaterial material)",
+            "occurrences": 1
+          },
+          {
+            "before": "tiers[i].v()",
+            "after": "tiers[i].inputRate()",
+            "occurrences": 4
+          },
+          {
+            "before": "tiers[i].mat()",
+            "after": "tiers[i].material()",
+            "occurrences": 2
+          },
+          {
+            "before": "record Step(String name, long hi, long lo, GTMaterial mat)",
+            "after": "record Step(String name, long inputRate, long outputRate, GTMaterial material)",
+            "occurrences": 1
+          },
+          {
+            "before": "s.hi()",
+            "after": "s.inputRate()",
+            "occurrences": 2
+          },
+          {
+            "before": "s.lo()",
+            "after": "s.outputRate()",
+            "occurrences": 1
+          },
+          {
+            "before": "s.mat()",
+            "after": "s.material()",
+            "occurrences": 1
+          }
+        ],
+        "local_names": {
+          "s": 7,
+          "motorOut": 2,
+          "dynamoOut": 2
+        }
+      }
+    },
+    "scope": "Complete two projected registries after exact factory/item/catalog extraction; full core definitions after listed local-only names. No raw-byte equivalence claim."
+  },
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "compile": {
+    "result": "core and both native compileJava passed",
+    "duration_reported": "2m 21s",
+    "log": "work/energy-node-registration-audit-20261022/compile.log",
+    "log_sha256": "de6a438e3073e7f7be85f1bec956584d2eb8638de88bd87d5193b009384e5e03",
+    "temporary_adapter_path": "work/storage-inserter-audit-20261022/cached-api-classpath.gradle",
+    "temporary_adapter_sha256": "51a1ed5becc4b14c87f6eeef31d2c8fc984e02735ee630b3c292496c2798cdbe",
+    "cached_forge_artifacts": [
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/mezz/jei/jei-1.20.1-common-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-common-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/mezz/jei/jei-1.20.1-common-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-common-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "sha256": "7786d88e4ffd38f62d057b86eb56aa6a116037f2a4dbccb0aa77877b7dc8f4fd",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/mezz/jei/jei-1.20.1-forge-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-forge-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/mezz/jei/jei-1.20.1-forge-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-forge-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "sha256": "b50a6a64c629e51346deec045495ba932be2bcab4ffb5a46fe483df1e06c832a",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1-api.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1-api.jar",
+        "sha256": "268f4572a6297bcd38c176e9361ee245364bb255e1a74e0fec96a973ef1379c0",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1.jar",
+        "sha256": "a2df46e253e208d39576808509eb384b42d992ba77d1c3aec31b97611be6e64b",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/maven/modrinth/jade/11.13.2+forge_mapped_official_1.20.1/jade-11.13.2+forge_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/maven/modrinth/jade/11.13.2+forge_mapped_official_1.20.1/jade-11.13.2+forge_mapped_official_1.20.1.jar",
+        "sha256": "15030cb00590540a5a37bd6bd509df4c01116406dd7c1a760b55e81f83f2bd62",
+        "action": "copied existing exact-coordinate jar"
+      }
+    ],
+    "cached_neo_emi_api": {
+      "path": "C:/Dev/GregTech6/work/emi-maven/dev/emi/emi-neoforge/1.1.24+1.21.1/emi-neoforge-1.1.24+1.21.1-api.jar",
+      "sha256": "b3a8e23c5e59813f184423b94e37bb635867ddc9be2b68b3502fad7b9134779b"
+    },
+    "limits": "Same-version cached API files supplied by unchanged temporary adapter. Production build configuration unchanged; default offline dependency metadata and CI are not declared fixed."
+  },
+  "preparation_notes": [
+    "Preview formatter changed Javadoc indentation; exact comment text was restored before production writes.",
+    "First factory comparison rejected Neo var versus Forge concrete Properties; actual expression type and native float strength overload are explicitly normalized.",
+    "The initial matrix class assumption reused electric classes for RF variants; actual Loader class assignments rejected that assumption, and all three Flux class chains were added before recording a finding."
+  ],
+  "verification_limits": {
+    "mirror_tests_added": false,
+    "GameTest": false,
+    "game": false,
+    "original_game": false,
+    "world_restart": false,
+    "build": false,
+    "push": false,
+    "github_writes": false,
+    "whole_goal_complete": false
+  },
+  "root_revalidation": {
+    "sources_and_native_artifacts": "match current bytes",
+    "source_excerpts": "54 current exact spans plus three reused native spans match",
+    "refactoring": "both 265-token factories, two exact helper bodies and all remaining native/core flows match",
+    "stack_matrix": "39 unique old/new identities; default16->64, explicit cumulative62",
+    "historical_docs": "only ALIGN-218 intentionally rewritten; other old lines preserved",
+    "protected_materials": "unchanged",
+    "compile_log_and_exact_inputs": "match",
+    "formal_ids": {
+      "contiguous": true,
+      "count": 419,
+      "new_ids": []
+    },
+    "new_links": "resolve",
+    "production_build_configuration": "unchanged",
+    "whole_goal_complete": false
+  }
+}

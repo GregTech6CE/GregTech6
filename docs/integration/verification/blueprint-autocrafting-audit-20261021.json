@@ -1,0 +1,801 @@
+{
+  "date": "2026-10-22",
+  "started_date": "2026-10-21",
+  "batch": 92,
+  "baseline": "a7d43d86bae2e48dce15342b92fcb6057a821500",
+  "previous_goal_turn": "Progress: a7d43d86b committed verified visual-document findings/readability, preserving user materials.",
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/recipes/maps/RecipeMapAutocrafting.java",
+      "sha256": "76c79b611b286bfbe331f516fed22ce7877b366ceb656a56749a9d8aab9a04e9",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2024 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/recipes/maps/RecipeMapScannerVisuals.java",
+      "sha256": "eb79301ab2ffd0c7320d94f414699aeadfead0972156ce02cdfff030a707a135",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2024 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/recipes/maps/RecipeMapPrinter.java",
+      "sha256": "84a1536f4865fa03c9670c529078fdbfaf273a531be331d1919e8f856d67508c",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2024 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/recipes/Recipe.java",
+      "sha256": "8bb9a0bd00aa839a48a2c082281a988e9a796a540137d1cf50249d2250ad1c7e",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java",
+      "sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/ST.java",
+      "sha256": "5ff16d9051e2744a66c711bd5f2581785ba8af7b2272fb1023a6d2f4ddb783a8",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/IL.java",
+      "sha256": "2924d17cd74f1057b3ca9851bb5373e9652cf912175929040787cdceaab49c43",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_Books.java",
+      "sha256": "a4a79476ee1a757d478ad2ed100c862e8501b056dc87fae4b75413a7df622d79",
+      "authors": [],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/MultiItemRandomTools.java",
+      "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+      "authors": [],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/MultiItemTool.java",
+      "sha256": "d9f1417dc1e13538b89470445fd83d1bccd6a61e19aaacb9b03d0ee48b4cb0ac",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/recipes/ICraftingRecipeGT.java",
+      "sha256": "59e2725a0a832970fb6c82b2a25e9d31377a87fbadcf628a7619bd4eec79c519",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/load/LoaderOreDictReRegistrations.java",
+      "sha256": "d34719309a5ddf5bd7fc01c0462b57af52b4cf980a69fae4d4042c2ab78b07ef",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/tools/MultiTileEntityAdvancedCraftingTable.java",
+      "sha256": "730747ed9b5c401c6128ec09a481c9b0bcbc68c186c46f231afb07b4bf8231d0",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/oredict/OreDictManager.java",
+      "sha256": "41376372c077030142a6e95385a74f9dde79c3b15d9a4de95cff99f371b44801",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/OM.java",
+      "sha256": "3c2cc710d62373460d1854f60a7383ec0a5b7969877dbbcb3f5c9b5a0b4c5cbb",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/machines/MultiTileEntityBasicMachine.java",
+      "sha256": "1798706545c33c801735ac5fb56b0ae37a8b6e3b7819f40f41183a2057b0c860",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/gui/ContainerCommonBasicMachine.java",
+      "sha256": "be68939d7c9696058b8ae030b4b3cbf7536da5d15038adc2ceaf860340fcf2a9",
+      "authors": [],
+      "license_header": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/gui/Slot_Base.java",
+      "sha256": "6b9aef5b84287570587518a7383de81d8ed1ed543a9e49c700755beb8d0f426f",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/gui/Slot_Normal.java",
+      "sha256": "bcf1b8dd35ae32d2d6f910fcf8ec554fa8540383ea1f7f4a94a37c926daedaf6",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "sha256": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "sha256": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "sha256": "4470fc88dede52de55ba387e963d95243ec33ef287ae4f917ce73d874bcede2b",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/recipe/AutocraftingRules.java",
+      "sha256": "f7c49915b56bdd5e1966736e6407e6b7b46c9082e37db272bd9969ece25affb6",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/data/CraftingBlueprintData.java",
+      "sha256": "f288d82a9a67a745fbfe784b7e728ee79da00b70a785ae00b75fa9b1c3cacb40",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "37c8b290da11f12ff76b5466843b6fab57b069c1329c8294d09dd2cd7d13ebff",
+          "tokens": 553
+        },
+        "neoforge": {
+          "sha256": "3402d05405849171279784e06087a34ac78030ea5110dd5fda543e938772277b",
+          "tokens": 575
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/BlueprintRecipes.java",
+      "sha256": "de867e351e02d28e6436a13ec7c2af4f9d33f3f6949ef71bd6e5ecf148254871",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "b907927a815e7a411fd92f860cea28ecb9e826fb77a31f46e05bb65d524ac074",
+          "tokens": 1268
+        },
+        "neoforge": {
+          "sha256": "484762efbebb4c135911dbc228dfb92b338924f7c3c810a7ded0f6ee9c653d12",
+          "tokens": 1309
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/AutocraftingRecipes.java",
+      "sha256": "f1a6735d738673d17fed19f4d029f17ca8dbd539b26412007bf5e55fcf97edd2",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "284caf0e922de1f02f1698edea63ac8a21f59be54cd30fbc9f056741d88357b7",
+          "tokens": 1845
+        },
+        "neoforge": {
+          "sha256": "ed62f0336dbce9b49aa35177a3597b0c102f1dff8d71b728b377f861c8ca388a",
+          "tokens": 1881
+        }
+      }
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/recipe/AutocraftableCraftingRecipe.java",
+      "sha256": "5ae49c0e7fb637203a0fc2318f7fc13c30eb94d72108b9310e5b5431cf2c0fcf",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/tool/CraftingToolDefinitions.java",
+      "sha256": "0ca2d9a3a723e50346e6ef3907f9f2ecac66cc23aa45d5bd408f43b97e151476",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/data/MachineRecipeMapDefinitions.java",
+      "sha256": "107ffcf13019a3cc7a1bc7ea40776b7d528446121787b3b7e465fb8f6fa369d6",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/data/MachineRecipeMaps.java",
+      "sha256": "88ea4001ad21f6c8892d346f20cfb8a0f86ad6844c9e72aecb33e8af46b12f7e",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "7f7d0cbe040892fe1e187d55a7afb04b5086256cb46dc9b4aa7beb12057e8b05",
+          "tokens": 4242
+        },
+        "neoforge": {
+          "sha256": "424319e8c378ab2380ad8ddb30d8a13f0a3c4b0c5650a0712ecd8a5f7b7d5a96",
+          "tokens": 3731
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeMap.java",
+      "sha256": "b3401a8aa4dd1c1dbfe823bc8b152f7c99490b61b6db8b2c0bf16c70ab439a7a",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "644daac8ccb6d8a94483e935a39ae1c6a2925e99a49a453e4381dcc52a1f8a10",
+          "tokens": 9306
+        },
+        "neoforge": {
+          "sha256": "dc50b1bbe9a07a5b77df16dff2ff356f7384e7f62351105fce42075bea804ea4",
+          "tokens": 9312
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeInputs.java",
+      "sha256": "3dd41d01162170872d7e0e172f538118d0b6e2df8a5eec04e8d11ceb82ce1c16",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "f4fd32a3b489b5beda3864598a621d639a91abdbb7ed6a35db1913d7c71ea0b5",
+          "tokens": 791
+        },
+        "neoforge": {
+          "sha256": "472839942cd79850e0e8c0d8702a63b63ac2a041dfa61f43e62d1b1281e92255",
+          "tokens": 804
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/Recipe.java",
+      "sha256": "e6bf4941590236ac4851acce49d28a4e40df998f187733a91ca82447c4c467c6",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "bc44f45b51ac27bc2073a864bac6309366e51bdb17553a62e95853315881f25b",
+          "tokens": 1049
+        },
+        "neoforge": {
+          "sha256": "ad0c1c42c26808c8cde74696a4d5b9c96ddf499931546fb293775584bce0c8f8",
+          "tokens": 1051
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java",
+      "sha256": "91b1b48b3e7766a44c49622817217d8a013b7e852023a756803d3387eff7ea50",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "79208118983f5870dbf9969360c833f4bfc5b233788b1667e02cecdaea34e4bf",
+          "tokens": 14996
+        },
+        "neoforge": {
+          "sha256": "cc8d333d9cd95d0b16f4f29f204da268d93e749aa274a703f77fc0b0b40686a4",
+          "tokens": 14677
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/BasicMachineContainerMenu.java",
+      "sha256": "da75d07a59631f4cc19047c7bf235766269018f4c82b23cc4027757b0de4c925",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "05cb4dbe25a9da1f0273237e5137ad3554ab40cc20c8225b9261b6eb3d198a84",
+          "tokens": 1909
+        },
+        "neoforge": {
+          "sha256": "2dbc4514d9a1b319fd7e3d8145750048c8bdb2a0b22d0ab840d85676e01a9f78",
+          "tokens": 1945
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/data/UsbDataMedia.java",
+      "sha256": "3c06c5e9f2a573ab299fe996c2425e12621efe4a72efcb2ba42be45ca4f7cbae",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "aa2ad2af06c60eae5232262bc3c24b3d384b0f06990bec7156ad03e9706a362b",
+          "tokens": 886
+        },
+        "neoforge": {
+          "sha256": "b7c4e566f3544c4fbcfa85b73d736dbd5be77c9ea9a6a1565fdc739e1bc6b198",
+          "tokens": 1038
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/data/UsbDataCable.java",
+      "sha256": "aec7939b98cea4e6e325cf237a1351021324341995493037f19f99fc985f0010",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "cce3e9eaf0b26e7752531f2d30a364c4a2d1786e0c40f1ecdcc0527bd97fb55b",
+          "tokens": 432
+        },
+        "neoforge": {
+          "sha256": "98b95ce2d65538588fe02037bb67942745f7e22d62be03c2a3f7915c980d6ee4",
+          "tokens": 433
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "sha256": "ce185e389023571915282f6ee52793a18e9f0e2ee33cce1085b857274010a044",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "0646215fca4af99eb82127a971d3d312b3ffdc9542977419bcb498cdda28d775",
+          "tokens": 2017
+        },
+        "neoforge": {
+          "sha256": "25665f0b0e4dc9dc6a821d07044fc0fbf95cb702f0e69da4b391d74af2d6de4e",
+          "tokens": 1964
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/PocketToolItem.java",
+      "sha256": "35961eb9efae5bbad4530f871e7bc51a5ae5f545d8bf22c5105d2889663e63d9",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "c26a8ad87cd5f0c32cff4f306f0b4f675ee2af86a112ec03f8979ba8556d2770",
+          "tokens": 1627
+        },
+        "neoforge": {
+          "sha256": "91243132389a446d91d78d8daf31135402e3cc51de743bec7dc56c5767915b81",
+          "tokens": 1653
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/ElectricToolItem.java",
+      "sha256": "3e99973cba6df5e355fb88e0e2c2a700223dd6515602b366296a8d7020efd603",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "c9861434b83408b22c91f20350de54fc605242b5b5d3abd6c8bc59326461134b",
+          "tokens": 4083
+        },
+        "neoforge": {
+          "sha256": "bb04025047cb6d98e1c46a421c16e9495af681d811bba8ef3572c06a5057d2d2",
+          "tokens": 4319
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/FormConversionCraftingRecipeInjector.java",
+      "sha256": "df314d9f413d1b2d14e09ac227126b34ecc59853f48786f6e4f2b8108084ba81",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "8ba05642cd3bef198784d2d2f8635cd91417606fd3eb98faf6a740f3cb9e6645",
+          "tokens": 2572
+        },
+        "neoforge": {
+          "sha256": "8ca77ef6ce0518a2b4aef79537e7dbe83e082ad73bcf3f0be785373454ae7d65",
+          "tokens": 3204
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/AdvancedCraftingTableBlockEntity.java",
+      "sha256": "d75309bf4b5b3e40ddc6494b65802f4906ee716dcf62de571d2a3baf600b7e13",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "e24537a97a60b17227d64f876a55ed3c5a260815aa977036f8870a46e6a81d60",
+          "tokens": 3788
+        },
+        "neoforge": {
+          "sha256": "66ca5bbfa10574cf4f8b10a82da00f699c391b9aeaafc24fdf8d4ad9df664301",
+          "tokens": 3786
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/AdvancedCraftingMenu.java",
+      "sha256": "45a8fb937127698021e98c25ce63c8a064b912cacea3c2bf94dbeb06989e6b5d",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "dd33e3d4b15d5093a7716bbe99970b9893089bb6c691573bc5bc97c6e4ee74b0",
+          "tokens": 1588
+        },
+        "neoforge": {
+          "sha256": "c47a37e90abdc15cce7c7baf645b72aa8cc87206f1a3553956c7865d73eb7c3b",
+          "tokens": 1590
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/GTMaterialDataRecipes.java",
+      "sha256": "d0fb1757ce57c20d106c9e76a7c51a233635c4209d671cdbbf067815f297f07d",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "cb26db93221e0d9a750be6756c4d26bf21728f305ef14f480b7fafb219279fe9",
+          "tokens": 3762
+        },
+        "neoforge": {
+          "sha256": "0a8ae311e5427b9a8ea6f51032b576c94205e0c6011999926ee710817d17e82b",
+          "tokens": 3859
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/GTMainRecipes.java",
+      "sha256": "22bc2ef2b04fa551d0a3a6e05c433fe0467b31ccd2f94f7a12ca2d15791ad7b9",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "5365b610d3ca8018364f0a95bc25f3672ff058bb9ae4aaad2b717abea31f91ad",
+          "tokens": 1909
+        },
+        "neoforge": {
+          "sha256": "de0683d3880e1ac471f7bd6c8063b5ded92b4e1f99a56965c3d368dae15164b2",
+          "tokens": 1927
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "sha256": "aab379aa689ef4f83c62746d22ccca6bc511c6b323ca11e026ab6f215d1abff4",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "8ad7a5ae4577833e37929f86f4a118d4601b1b989c1ff69b3963d93fa6e7d913",
+          "tokens": 1699
+        },
+        "neoforge": {
+          "sha256": "7ed36804a194579cf48e62db341b75c16f07ef0c842faca627043db39a61def6",
+          "tokens": 1148
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/SlotInput.java",
+      "sha256": "37501958e25c0216486de238581d632f8f33d61363679369f912088b6a0db731",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "13432778f4dcf03859b07add8ca398a0961fca586596d11a777e0793dc07bcfe",
+          "tokens": 89
+        },
+        "neoforge": {
+          "sha256": "3f39d0d532fe687b956e26fcd30cabea431a0b09f8cf585202b6b73f651be589",
+          "tokens": 93
+        }
+      }
+    }
+  ],
+  "punchcard_scope_scan": {
+    "original": {
+      "java_files": 1229,
+      "scope_paths": [
+        "C:/Dev/gregtech6-master/gregtech6-master/src/main/java"
+      ],
+      "inventory_sha256": "acb57764d561e1292f44f4c503879b547eb1933ab21611494956bfd403f77f9b",
+      "raw_matching_files": [
+        {
+          "path": "gregapi/data/IL.java",
+          "sha256": "2924d17cd74f1057b3ca9851bb5373e9652cf912175929040787cdceaab49c43"
+        },
+        {
+          "path": "gregapi/recipes/maps/RecipeMapPrinter.java",
+          "sha256": "84a1536f4865fa03c9670c529078fdbfaf273a531be331d1919e8f856d67508c"
+        },
+        {
+          "path": "gregtech/GT6_Main.java",
+          "sha256": "a7dca874bef8dd25c9f98d64ddd372f081faf17899d5053156d4f78f4b3499ed"
+        },
+        {
+          "path": "gregtech/old/Loader_MachineRecipes.java",
+          "sha256": "9bab549add3335925de65d1676f4dda45717da99e41d8b1222287dc2cc134241"
+        }
+      ],
+      "active_identifier_files": [
+        {
+          "path": "gregapi/data/IL.java",
+          "identifiers": [
+            "Paper_Punch_Card_Empty",
+            "Paper_Punch_Card_Encoded"
+          ],
+          "sha256": "2924d17cd74f1057b3ca9851bb5373e9652cf912175929040787cdceaab49c43"
+        },
+        {
+          "path": "gregapi/recipes/maps/RecipeMapPrinter.java",
+          "identifiers": [
+            "Paper_Punch_Card_Empty",
+            "Paper_Punch_Card_Encoded"
+          ],
+          "sha256": "84a1536f4865fa03c9670c529078fdbfaf273a531be331d1919e8f856d67508c"
+        }
+      ],
+      "method": "Hash every selected production/API Java input; tokenize only raw matches, excluding comments and string literals for active identifiers. No registration code executed."
+    },
+    "current": {
+      "java_files": 1824,
+      "scope_paths": [
+        "C:/Dev/GregTech6/core/src/main/java",
+        "C:/Dev/GregTech6/core/src/api/java",
+        "C:/Dev/GregTech6/multiversion/src/main/java",
+        "C:/Dev/GregTech6/multiversion/src/api/java",
+        "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java",
+        "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java"
+      ],
+      "inventory_sha256": "37e838141c3cbe63fb1ac10e2513e8190cacb2d98bbf276abfca1fe52f3ffa86",
+      "raw_matching_files": [
+        {
+          "path": "core/src/main/java/com/gregtech/gregtech/content/book/ColoredBookRules.java",
+          "sha256": "f033dfe3ba56f188bf9538f0ec1f1bf15c968d42b442174651549a2d8bda6ffb"
+        },
+        {
+          "path": "core/src/main/java/com/gregtech/gregtech/content/book/GTBooksGen.java",
+          "sha256": "e14325111872e906353a00c557f000884013a40dedbff3fcebf808979d1b9dd7"
+        }
+      ],
+      "active_identifier_files": [],
+      "method": "Hash every selected production/API Java input; tokenize only raw matches, excluding comments and string literals for active identifiers. No registration code executed."
+    }
+  },
+  "readability": {
+    "baseline": "a7d43d86bae2e48dce15342b92fcb6057a821500",
+    "files": {
+      "core/src/main/java/com/gregtech/gregtech/content/recipe/AutocraftingRules.java": {
+        "before_raw_sha256": "fa8bec1be5200716caa7da9f3b9665f49db6366cef3b0522d78befd99e29f470",
+        "after_raw_sha256": "f7c49915b56bdd5e1966736e6407e6b7b46c9082e37db272bd9969ece25affb6",
+        "before_lines": 84,
+        "after_lines": 95,
+        "comment_corrections": [
+          [
+            "Source blueprint cell aggregation, before native crafting and item-container handling.",
+            "Shared blueprint aggregation and optimization; native recipe selection and container lookup stay at the platform boundary."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 1074,
+            "execution_sha256": "4d13e823e45ead9d541f4e661fef8cdccd6aa2f7b0dfe65804b27e4d923551fe",
+            "literal_positions_sha256": "20a8df70f37c0a572c3fc691ad3b4968bca6a476b9595ff9134aeafe4b926e22",
+            "literal_count": 27
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/content/data/CraftingBlueprintData.java": {
+        "before_raw_sha256": "18ec91d47128a84aa581deee86b0dc51e85b4f328bc6ec29e551fb788cf530f3",
+        "after_raw_sha256": "f288d82a9a67a745fbfe784b7e728ee79da00b70a785ae00b75fa9b1c3cacb40",
+        "before_lines": 79,
+        "after_lines": 83,
+        "comment_corrections": [
+          [
+            "LGPL-3.0-or-later. Existing port blueprint lists remain readable.",
+            "LGPL-3.0-or-later. Recognizes keyed grids and earlier list layouts; entries use native version serializers."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 553,
+            "execution_sha256": "9fef932c909f147fe77d54739eddd0ae69ab34db10618eb6dca244e7f505032e",
+            "literal_positions_sha256": "4c8c06516e47d2584f64a5395cf2b584e15b44f18b7fac904200958d5fe3683f",
+            "literal_count": 13
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 575,
+            "execution_sha256": "27e11bbf9425f36231280464d6f974f9eaee3fa1267f263d3f27afd1ca116254",
+            "literal_positions_sha256": "aed9f4aa07f7eb5259471e37364fd158a37fa1a98b90bb974b5e23a1da0b1d5c",
+            "literal_count": 13
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/BlueprintRecipes.java": {
+        "before_raw_sha256": "1366c58ac13b0557303057ee97ef7bdfc6a8f1be4ba129c7f39443cb60076106",
+        "after_raw_sha256": "de867e351e02d28e6436a13ec7c2af4f9d33f3f6949ef71bd6e5ecf148254871",
+        "before_lines": 130,
+        "after_lines": 151,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1268,
+            "execution_sha256": "63fb50945f8a17b989040e19d422b0a982a17e7c1302a2d5f0cd669b170f69df",
+            "literal_positions_sha256": "e3f5def14b9bed6f00eb5ede60669c44f32913837e6966f85290edeedc3b5e12",
+            "literal_count": 41
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1309,
+            "execution_sha256": "8151f72d9e99c5caf84c0014bf496265aa3aa95d05e9d412271c11ac8fd8e95e",
+            "literal_positions_sha256": "d92fdab582ae4ad6f9a720958930fbe98d0553ef0e8f462a62cbf90b1eeddf2b",
+            "literal_count": 41
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/AutocraftingRecipes.java": {
+        "before_raw_sha256": "b81653b8e85358064f0e2ee52afd40cad2d436c388f717e946bee5509911530d",
+        "after_raw_sha256": "f1a6735d738673d17fed19f4d029f17ca8dbd539b26412007bf5e55fcf97edd2",
+        "before_lines": 220,
+        "after_lines": 240,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1845,
+            "execution_sha256": "1a3f141ff3bb23ef281c171f94db44dcd9c918372e7bb0fa17952e07a1ed1b6a",
+            "literal_positions_sha256": "97f591aa3888b0d0dbc57c0ba283614e06e71987301dbe17d3023266f9c5817a",
+            "literal_count": 32
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1881,
+            "execution_sha256": "5dfb5c11830f5980e5310261ced1b8507a88cf8f3194334354e56fe5abc819e3",
+            "literal_positions_sha256": "7f7056eaca9dd9d72ea34e14bb995234f8ffb34fa99ae2600739f1fe8afd35c3",
+            "literal_count": 32
+          }
+        ]
+      }
+    }
+  },
+  "source_derived_count_examples": [
+    {
+      "input_counts": {
+        "A": 2
+      },
+      "output_counts": {
+        "B": 4
+      },
+      "source_and_current": {
+        "A": 1,
+        "B": 2,
+        "duration": 512
+      }
+    },
+    {
+      "input_counts": {
+        "A": 2,
+        "R_infinite": 1
+      },
+      "output_counts": {
+        "B": 4
+      },
+      "source_and_current": {
+        "A": 1,
+        "R_consumed": 0,
+        "R_presence": 1,
+        "B": 2,
+        "duration": 512
+      }
+    },
+    {
+      "input_counts": {
+        "A": 1
+      },
+      "output_counts": {
+        "B": 1,
+        "A_returned": 1
+      },
+      "source_and_current": {
+        "A_consumed": 0,
+        "A_presence": 1,
+        "B": 1,
+        "duration": 1024
+      }
+    }
+  ],
+  "example_limit": "Three manually source-derived parameter examples, not executed original/current Java or actual registered crafting recipes; no exhaustive optimization equivalence claim.",
+  "formal_findings_added": [
+    "ALIGN-292"
+  ],
+  "ledger_last_id": "ALIGN-292",
+  "nbt_matching_contract": {
+    "conditions": [
+      {
+        "required_tag": "absent",
+        "available_tag": "absent",
+        "source_accepts": true,
+        "current_accepts": true
+      },
+      {
+        "required_tag": "absent",
+        "available_tag": "extra display name only",
+        "source_accepts": true,
+        "current_accepts": false
+      },
+      {
+        "required_tag": "X",
+        "available_tag": "X",
+        "source_accepts": true,
+        "current_accepts": true
+      },
+      {
+        "required_tag": "X",
+        "available_tag": "different X",
+        "source_accepts": false,
+        "current_accepts": false
+      }
+    ],
+    "preconditions": [
+      "Same item identity after source unification, sufficient counts, qualified autocraftable crafting recipe.",
+      "No earlier matching static machine recipe; valid program, powered idle machine and output space.",
+      "Ordinary non-container items; extra tag is only a custom display name, not stored contents.",
+      "Manually loaded ordinary GUI inputs; source automation containsInput has its own strict filter and is not claimed to differ."
+    ],
+    "scope": "Untagged recipe specimens permit extra input NBT in the source matcher; current exact-input flag rejects extra tags/components. Finite source-guard comparison, not live NBT or crafting tests.",
+    "fixed": false
+  },
+  "punchcard_conclusion": "Original manual calls it an unfinished idea; no explicit built-in binding found. Enumerators/printer stub alone do not prove a missing completed default gameplay feature. External enum binding remains possible.",
+  "preserved_boundaries": [
+    "Original zero-sized inputs are valid and still require a matching specimen; current uses an explicit retained one-item catalyst.",
+    "Program slot, keyed grid plus earlier port list format, native cache/filter, per-cell container lookup and shared optimization are present; not complete gameplay or compatibility acceptance.",
+    "Advanced-table blueprint slot limit is one in both implementations; do not infer normal-GUI loss of a whole stack from new ItemStack alone.",
+    "Source program data and modern names/components remain distinct from old-world migration; immutable copy/update protections are retained."
+  ],
+  "limits": [
+    "Source analysis only; no target Java initialization, native decompilation, Gradle, tests, game, build or push.",
+    "No full crafting corpus, reload lifecycle, custom recipe remainders, external items/tags/permissions, all tools/keys, manual blueprint interactions, independent saved-world restart or legacy item-ID migration acceptance.",
+    "Whitespace plus two scope explanations only; no gameplay or user material changes."
+  ],
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "root_revalidation": {
+    "date": "2026-10-22",
+    "original_sources": 24,
+    "current_sources": 25,
+    "shared_platform_views": 42,
+    "readability_files": 4,
+    "complete_code_views": 7,
+    "scanned_original_java": 1229,
+    "scanned_current_java": 1824,
+    "ledger_contiguous": [
+      1,
+      292
+    ],
+    "added_local_links": 11,
+    "protected_materials_unchanged": true,
+    "method": "Rehash actual sources/platform views and scope manifests; compare baseline snapshots, complete ordered code, raw literal positions, comments/directives; trace ordinary GUI, tag-preserving unification and final machine matcher. Four source conditions, not target Java or gameplay tests."
+  }
+}

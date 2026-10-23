@@ -23,9 +23,9 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Bedrock ore deposits (GT6 {@code WorldgenOresBedrock}): one weighted deposit per
- * 16x16-chunk grid cell, sitting in the deepest layers above bedrock, with indicator
- * flowers (real-world ore-indicator plants) on the surface above it.
+ * This port selects one weighted deposit per 16x16-chunk grid cell. The shared geometry
+ * writer delegates block placement here; original per-row dispatch and field exclusion are
+ * separate contracts, not consequences of using the original shape bounds.
  */
 public class GTBedrockOreFeature extends Feature<NoneFeatureConfiguration> {
 
@@ -40,7 +40,7 @@ public class GTBedrockOreFeature extends Feature<NoneFeatureConfiguration> {
         // One candidate origin per 16x16-chunk cell.
         if (Math.floorMod(chunkPos.x, 16) != 8 || Math.floorMod(chunkPos.z, 16) != 8) return false;
 
-        // GT6 registers separate overworld and nether tables and gates them by dimension.
+        // Use this port's dimension table for its weighted grid selection.
         Random gridRandom = gridRandom(level, chunkPos);
         GTBedrockOres.BedrockOre pick = select(level, gridRandom);
         if (pick == null) return false;
@@ -101,14 +101,14 @@ public class GTBedrockOreFeature extends Feature<NoneFeatureConfiguration> {
      *   <li>The chunk needs bedrock at its centre column (GT6 checks {@code (minX+8, 0, minZ+8)}).</li>
      *   <li>Bedrock core: the 6x6 area {@code x/z = 5..10} at y=0 gets a large ore on a 1-in-6 roll
      *       and a small one on 2-in-6, and one large ore is forced in the middle so a deposit always
-     *       has a breakable core.</li>
+     *       has a large core block.</li>
      *   <li>"Muffin" blob: layers y=1..6, each a square ring of GT6's own bounds
      *       ({@code tD1 = 5,4,2,1,0,2,5}, {@code tD2 = 11,12,14,15,16,14,11}) — so the vein is widest
      *       in the middle (the full 16x16 chunk at y=4). The first vein of a chunk replaces the stone
      *       around it with deepslate first (GT6's {@code GENERATED_NO_BEDROCK_ORE} flag); each block
      *       then rolls 1-in-6 for a full ore and 2-in-6 for a small one.</li>
      *   <li>Sprinkle: up to eight random walks from the blob up to the water level, drifting one
-     *       block sideways on a 1-in-7 roll per axis, dropping small ores on two thirds of the steps.</li>
+     *       block in at most one of four directions on each seven-way roll, with small ore on two thirds of interior steps.</li>
      * </ol>
      *
      * <p>Port deviation: GT6's {@code GENERATED_NO_BEDROCK_ORE} flag (only the first vein of a chunk
@@ -117,19 +117,32 @@ public class GTBedrockOreFeature extends Feature<NoneFeatureConfiguration> {
      *
      * @return true when at least one ore block was placed
      */
+
     public static boolean placeVein(WorldGenLevel level, RandomSource random, int minX, int minZ,
-                                    GTMaterial material) {
-        if(material==null)return false;
-        return MineralWorldgenRules.bedrockVein(minX,minZ,level.getMinBuildHeight(),level.getSeaLevel(),random::nextInt,new MineralWorldgenRules.VeinSink(){
-            public boolean isBedrockFloor(int x,int y,int z){return level.getBlockState(new BlockPos(x,y,z)).is(Blocks.BEDROCK);}
+            GTMaterial material) {
+        if (material == null) return false;
+        return MineralWorldgenRules.bedrockVein(minX, minZ, level.getMinBuildHeight(), level.getSeaLevel(), random::nextInt,
+                new MineralWorldgenRules.VeinSink() {
+
+            public boolean isBedrockFloor(int x, int y, int z) {
+                return level.getBlockState(new BlockPos(x, y, z)).is(Blocks.BEDROCK);
+            }
+
             public void prepareStone(int x, int y, int z) {
                 // WorldgenOresBedrock.generateVein replaces the entire muffin before rolling ores.
                 BlockState host = level.getLevel().dimension() == net.minecraft.world.level.Level.NETHER
                         ? Blocks.NETHERRACK.defaultBlockState() : Blocks.DEEPSLATE.defaultBlockState();
                 level.setBlock(new BlockPos(x, y, z), host, 2);
             }
-            public boolean bedrock(int x,int y,int z,boolean small){return GTOreBlockResolver.placeBedrockOre(level,new BlockPos(x,y,z),material);}
-            public boolean ore(int x,int y,int z,boolean small){if(level.isOutsideBuildHeight(y))return false;return GTOreBlockResolver.placeOre(level,new BlockPos(x,y,z),material,small);}
+
+            public boolean bedrock(int x, int y, int z, boolean small) {
+                return GTOreBlockResolver.placeBedrockOre(level, new BlockPos(x, y, z), material);
+            }
+
+            public boolean ore(int x, int y, int z, boolean small) {
+                if (level.isOutsideBuildHeight(y)) return false;
+                return GTOreBlockResolver.placeOre(level, new BlockPos(x, y, z), material, small);
+            }
         });
     }
 
@@ -137,22 +150,10 @@ public class GTBedrockOreFeature extends Feature<NoneFeatureConfiguration> {
     public static final int[] MUFFIN_INNER = MineralWorldgenRules.MUFFIN_INNER;
     public static final int[] MUFFIN_OUTER = MineralWorldgenRules.MUFFIN_OUTER;
 
-    /** A small ore inside the bedrock floor (GT6's {@code oreSmallBedrock}). */
-    private static boolean placeSmallBedrockOre(WorldGenLevel level, BlockPos pos, GTMaterial material) {
-        // The port keeps one ore block per material and records the background on the block entity.
-        return GTOreBlockResolver.placeBedrockOre(level, pos, material);
-    }
-
-    /** One sprinkle block above the blob: a small ore in whatever stone is there. */
-    private static boolean placeSprinkle(WorldGenLevel level, int x, int y, int z, GTMaterial material) {
-        if (level.isOutsideBuildHeight(y)) return false;
-        return GTOreBlockResolver.placeOre(level, new BlockPos(x, y, z), material, true);
-    }
-
     /**
-     * Weighted pick — weight inversely proportional to the GT6 rarity divisor, inside the table of
-     * the level's dimension (the port generates bedrock ores in the Overworld and the Nether).
+     * Weighted pick with integer inverse-rarity weights in this port's dimension table.
      */
+
     private static GTBedrockOres.BedrockOre select(WorldGenLevel level, Random random) {
         List<GTBedrockOres.BedrockOre> table = GTBedrockOreDimensions.forDimension(level.getLevel().dimension());
         long total = 0;

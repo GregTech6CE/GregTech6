@@ -1,0 +1,724 @@
+{
+  "date": "2026-10-23",
+  "started": "2026-10-22",
+  "baseline": "c430c3f4780577ecb73d029604606eb138d0a3ef",
+  "scope": "Wooden bucket family registration, discard callback, dispenser dispatch and cauldron fill; no original or current game method executed.",
+  "previous_goal_turn": "Progress: issue78 original source trace reconfirmed; batch128 already committed. Full goal remains active.",
+  "new_findings": [
+    430,
+    431,
+    432
+  ],
+  "gameplay_changed": false,
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/MultiItemRandomTools.java",
+      "raw_sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+      "lines": 723,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/behaviors/Behavior_Bucket_Simple.java",
+      "raw_sha256": "ee8d4395793f7d192c2b257af293fb019f01319e29baf73aecb0437ee200178f",
+      "lines": 221,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/behaviors/Behavior_Switch_Metadata.java",
+      "raw_sha256": "955ba5ba6967b5eee72f5782181d2f11e4498b1796081cb47714b2b41a7c7a44",
+      "lines": 78,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/ItemBase.java",
+      "raw_sha256": "2102f104c10b9cd952924f0d071fe44c5fe71c41d3d70f05b269ca67ca3617f5",
+      "lines": 129,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/MultiItem.java",
+      "raw_sha256": "eff4a22e1d6e3277e93a3d34519111f514d61954c2a5b3bfaf90aca88660901d",
+      "lines": 552,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/tool/WoodenBucketCatalog.java",
+      "raw_sha256": "062530f3f74e3df2d6f515b7f30d9e5a338b3e0af046a4906ceed36d0ded4d4f",
+      "lines": 76
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/WoodenBucketItem.java",
+      "raw_sha256": "16210d513a4b0d7f2dfcf8fec145d6a5817f53f0bcaedf9ccb985bcb9c839cbb",
+      "lines": 255
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "raw_sha256": "95e975c9b51f95a3444ab500381eb792b63cc3d3a8d0361c439443726cd7523e",
+      "lines": 237
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/TechItem.java",
+      "raw_sha256": "16d7936a79b171cc6abefe40851d269d2c1d84b4ee397671eda069f684914f59",
+      "lines": 68
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTProjectiles.java",
+      "raw_sha256": "9a8086eb41f5d24f621a9ee4bb7722bcba42f9a9c8453a328910a7de97baf3fd",
+      "lines": 64
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/fluid/FluidCapabilities.java",
+      "raw_sha256": "a2f5eb5fa0c1267133583859f8857f21768dc0b429a83eef4195481e45a7f1d1",
+      "lines": 37
+    }
+  ],
+  "source_excerpts": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/MultiItemRandomTools.java",
+      "anchor": "OreDictMaterial[] tBucketMaterials",
+      "start_line": 304,
+      "end_line": 328,
+      "excerpt_sha256": "b633382f12f2ff901a431557d03cdef59754ea8738bac619b6ef2f97b1148b95"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/behaviors/Behavior_Bucket_Simple.java",
+      "anchor": "public ItemStack onDispense(",
+      "start_line": 65,
+      "end_line": 119,
+      "excerpt_sha256": "0bdea6787506f4dbbf1b6840468748ff858d17391bdcacaa8c65dd54b2c07a90"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/behaviors/Behavior_Bucket_Simple.java",
+      "anchor": "public boolean onItemUseFirst(",
+      "start_line": 185,
+      "end_line": 200,
+      "excerpt_sha256": "c148f3baae4f354fdb1b84d392bebc303f5fe531d72a0879f991c5f83be747cf"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/behaviors/Behavior_Switch_Metadata.java",
+      "anchor": "public boolean onItemUseFirst(",
+      "start_line": 59,
+      "end_line": 78,
+      "excerpt_sha256": "622fb5817ba479ba81926b4e42cc6bdfbd3109565ba38eb53485b0f37a17d762"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/ItemBase.java",
+      "anchor": "BlockDispenser.dispenseBehaviorRegistry.putObject",
+      "start_line": 68,
+      "end_line": 69,
+      "excerpt_sha256": "b0126f1c41d6cd9e6f207755295d39fb94ce73b382a3a94cc94ed3e843fd700b"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/ItemBase.java",
+      "anchor": "public static class GT_Item_Dispense",
+      "start_line": 96,
+      "end_line": 101,
+      "excerpt_sha256": "05df712df6971a0de5ea8fbf821824639e6e46ff078df37e39f3a4e7f9ddcd4e"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/MultiItem.java",
+      "anchor": "public ItemStack onDispense(",
+      "start_line": 129,
+      "end_line": 134,
+      "excerpt_sha256": "7484721c97ac0c765d7d3c9466e327545097aeb9e9170f1ad80f42253ad53818"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/tool/WoodenBucketCatalog.java",
+      "anchor": "public static final List<Band> BANDS",
+      "start_line": 27,
+      "end_line": 63,
+      "excerpt_sha256": "032983f061b54a0b8e0f691c369e9d58f17a033ac4a371cb99d90f71a16b496a"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/WoodenBucketItem.java",
+      "anchor": "public InteractionResult onItemUseFirst(",
+      "start_line": 107,
+      "end_line": 136,
+      "excerpt_sha256": "5dd0f43f932acb318f19b212d589c1162beeb8f94a6c76bfcef80ec2592e2e81"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/WoodenBucketItem.java",
+      "anchor": "public InteractionResultHolder<ItemStack> use(",
+      "start_line": 134,
+      "end_line": 160,
+      "excerpt_sha256": "1cc954a83f586f3dc92433201dba071eb4c1885b64d125b8b82d1661f6a23935"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/WoodenBucketItem.java",
+      "anchor": "public net.minecraftforge.common.capabilities.ICapabilityProvider initCapabilities(",
+      "start_line": 175,
+      "end_line": 190,
+      "excerpt_sha256": "0a053ce7f7b1a11c27e23562c6dc7470cb357d3fe9d9d9a3c6c5e914463d68ae"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/WoodenBucketItem.java",
+      "anchor": "public int fill(",
+      "start_line": 226,
+      "end_line": 238,
+      "excerpt_sha256": "43737fdf12c094e1437e132733309b5e745ecdd6b3b6784af2e7e9b64a231dba"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/WoodenBucketItem.java",
+      "anchor": "public FluidStack drain(int maximum",
+      "start_line": 245,
+      "end_line": 254,
+      "excerpt_sha256": "9bc1d842cc893613e52626fbc4f597641a3b15137a00a97c404aec250133454c"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "anchor": "        registerWoodenBuckets();",
+      "start_line": 187,
+      "end_line": 189,
+      "excerpt_sha256": "95a0a858a2f2d2d9a4d4d8442f193c5fe03de647bcdbaeee2dd41925c235421c"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "anchor": "private static void registerWoodenBuckets(",
+      "start_line": 221,
+      "end_line": 227,
+      "excerpt_sha256": "acedb196ef1e71dd4083e28bdbc71e2ec039495bf3f9123275d3f92e6668c97c"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "anchor": "private static void registerPaintSprays(",
+      "start_line": 229,
+      "end_line": 237,
+      "excerpt_sha256": "429f01b1d5fc27084c628817cac16cf4f64a06111471befb9d8f2a4638147b3e"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTProjectiles.java",
+      "anchor": "DispenserBlock.registerBehavior",
+      "start_line": 53,
+      "end_line": 64,
+      "excerpt_sha256": "ea3b20fe10e2f1eb0b17acc41a12f0135c915ff60a6e13568b3ca639e06abd57"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/fluid/FluidCapabilities.java",
+      "anchor": "event.registerItem(Capabilities.FluidHandler.ITEM",
+      "start_line": 18,
+      "end_line": 23,
+      "excerpt_sha256": "d9428f7ee5550c1be3a2100e0786d861a500918b4f1ca4542e4bd0d2fa67ee08"
+    }
+  ],
+  "native_contracts": {
+    "entries": [
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+        "entry": "net/minecraft/world/level/block/DispenserBlock.class",
+        "entry_sha256": "88105929de176639018f367299b428ade8cefd5051dddcbfd16e14e2fd3c713b",
+        "read_output": "work/wooden-bucket-audit-20261022/forge-DispenserBlock.javap.txt",
+        "read_output_sha256": "70f9666e8284c627e26e92c234e347cd7938619c15bfbd1b3c2480aa06a3f4ea"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+        "entry": "net/minecraft/core/dispenser/DefaultDispenseItemBehavior.class",
+        "entry_sha256": "bf8bc691b82508c907051ba0fe7e6e0185ea81281d00455df169e703a6a5312f",
+        "read_output": "work/wooden-bucket-audit-20261022/forge-DefaultDispenseItemBehavior.javap.txt",
+        "read_output_sha256": "0078107da2e05128cc506f9a54b69d1c0aebd97fc99dfe4feca1c25a4138ad38"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+        "entry": "net/minecraft/world/level/block/AbstractCauldronBlock.class",
+        "entry_sha256": "912fcdd4ff71f75a9d0943b1c6812b8bab1ee72e1286bfb991d2a381bce68402",
+        "read_output": "work/wooden-bucket-audit-20261022/forge-AbstractCauldronBlock.javap.txt",
+        "read_output_sha256": "d2f410649d3e814edffc3da110a70438ae4b476244fea323384c3b3d42206c0a"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+        "entry": "net/minecraft/core/cauldron/CauldronInteraction.class",
+        "entry_sha256": "098a9049012fa98a2c3f9d5eb1f0c9b5f9291618cb7f18d51e9ffe77652cb79a",
+        "read_output": "work/wooden-bucket-audit-20261022/forge-CauldronInteraction.javap.txt",
+        "read_output_sha256": "22b6ab3fa5f1011f1e4d7acc9915497b6ff8884c378c8f1f4fcc45a4c8d18ac9"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-universal.jar",
+        "artifact_sha256": "3b203ea6105326b8a6d7bea8327c2793dbffbaa8e574c9c6626fe6d787591874",
+        "entry": "net/minecraftforge/fluids/FluidUtil.class",
+        "entry_sha256": "eb711d189a79ec9211f1e7f669b6186cea3826b9968001930983cbde5bbf12c2",
+        "read_output": "work/wooden-bucket-audit-20261022/forge-FluidUtil.javap.txt",
+        "read_output_sha256": "cc44aae8512d3aa76986573c7384d4e8182bc45d189bab62cef04879818e4749"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+        "artifact_sha256": "9a99670ebf7e9f40ad66153a37f9d8c5b6406fdca9f07b83acdc52cb1842adb6",
+        "entry": "net/minecraft/world/level/block/DispenserBlock.class",
+        "entry_sha256": "d62ce18f8ed9b55e2f2a9445c0a6a303f3c49af0c975ffa581da23625af74c46",
+        "read_output": "work/wooden-bucket-audit-20261022/neo-DispenserBlock.javap.txt",
+        "read_output_sha256": "b71a55b5c1c5c677e27888f2a44cdeeb046e83be2acc0e866ebf1fdc16acbe94"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+        "artifact_sha256": "9a99670ebf7e9f40ad66153a37f9d8c5b6406fdca9f07b83acdc52cb1842adb6",
+        "entry": "net/minecraft/core/dispenser/DefaultDispenseItemBehavior.class",
+        "entry_sha256": "3fdee0986a39061992c185f329c7c213bbe7c968e26d721fa27a9d654c030e35",
+        "read_output": "work/wooden-bucket-audit-20261022/neo-DefaultDispenseItemBehavior.javap.txt",
+        "read_output_sha256": "149b5c9b81d040c3dec78d61b054a1cd7d619c9943ea0748dd9661dd5cead9ce"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+        "artifact_sha256": "9a99670ebf7e9f40ad66153a37f9d8c5b6406fdca9f07b83acdc52cb1842adb6",
+        "entry": "net/minecraft/world/level/block/AbstractCauldronBlock.class",
+        "entry_sha256": "39cc274728d12d6426d11b4e05c3d57c04b3db2d5f600af6186184ae66c6855e",
+        "read_output": "work/wooden-bucket-audit-20261022/neo-AbstractCauldronBlock.javap.txt",
+        "read_output_sha256": "d3e962f4867a266d2a485f6b122ce91a63315121f9a637db1f0bfa51dbed6e1e"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+        "artifact_sha256": "9a99670ebf7e9f40ad66153a37f9d8c5b6406fdca9f07b83acdc52cb1842adb6",
+        "entry": "net/minecraft/core/cauldron/CauldronInteraction.class",
+        "entry_sha256": "b8794fc1c9f1b7957aad1665f2822648b981cdc06a1d88b9a8165e9b9341e540",
+        "read_output": "work/wooden-bucket-audit-20261022/neo-CauldronInteraction.javap.txt",
+        "read_output_sha256": "f5fd52e687d9fd61f9a4eafd30530fe844f732b15ffc0e8cb40d1e5396031b15"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/21.1.243/ce384946fb5541fddf182e066ce1c01423d0b86d/neoforge-21.1.243-universal.jar",
+        "artifact_sha256": "0424e81c5948f08e529631c915c35bc38feffc24597ab3458bf7ecf0c0d83399",
+        "entry": "net/neoforged/neoforge/fluids/FluidUtil.class",
+        "entry_sha256": "ae3a4a3b3799aa5ba1c587b7563cf99bc0911dfd76d37596df7f061e89c7b418",
+        "read_output": "work/wooden-bucket-audit-20261022/neo-FluidUtil.javap.txt",
+        "read_output_sha256": "9ae20eb421af59b86a398888b640269ed8a9e5419097eb0aef57568207bed983"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/21.1.243/ce384946fb5541fddf182e066ce1c01423d0b86d/neoforge-21.1.243-universal.jar",
+        "artifact_sha256": "0424e81c5948f08e529631c915c35bc38feffc24597ab3458bf7ecf0c0d83399",
+        "entry": "net/neoforged/neoforge/fluids/CauldronFluidContent.class",
+        "entry_sha256": "17bf6c6acba50c089c635c112281fbf8f2a7c5dcb28fd55a425c4459b64e17d7",
+        "read_output": "work/wooden-bucket-audit-20261022/neo-CauldronFluidContent.javap.txt",
+        "read_output_sha256": "bbae1d4a76d6b6d6cee297e0c9c1f785af65d3acfd8703467d395ce80537458b"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/21.1.243/ce384946fb5541fddf182e066ce1c01423d0b86d/neoforge-21.1.243-universal.jar",
+        "artifact_sha256": "0424e81c5948f08e529631c915c35bc38feffc24597ab3458bf7ecf0c0d83399",
+        "entry": "net/neoforged/neoforge/fluids/capability/wrappers/CauldronWrapper.class",
+        "entry_sha256": "90ca8c445c7d3660bfcfe2f01ba8094bc87b2d3e7f634f173fd458fa9b05dab0",
+        "read_output": "work/wooden-bucket-audit-20261022/neo-CauldronWrapper.javap.txt",
+        "read_output_sha256": "04f697d43dd458722de5628f88304f9d673602863a1fab9ed2f544017d9320b9"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/21.1.243/ce384946fb5541fddf182e066ce1c01423d0b86d/neoforge-21.1.243-universal.jar",
+        "artifact_sha256": "0424e81c5948f08e529631c915c35bc38feffc24597ab3458bf7ecf0c0d83399",
+        "entry": "net/neoforged/neoforge/internal/RegistrationEvents.class",
+        "entry_sha256": "6d5d37884a87ea50bd501b2084e1b2f7053424024c6fe5873f9e85658b56e1cc",
+        "read_output": "work/wooden-bucket-audit-20261022/neo-RegistrationEvents.javap.txt",
+        "read_output_sha256": "dc97e90f5bed33010791c153fb206488c68e66978eb36a354320860247b77b81"
+      }
+    ],
+    "scope": "Actual mapped game/loader bytecode reading only. No dispenser, cauldron, fluid or item game method executed."
+  },
+  "native_excerpts": [
+    {
+      "path": "work/wooden-bucket-audit-20261022/forge-DispenserBlock.javap.txt",
+      "anchor": "getDispenseMethod(",
+      "start_line": 127,
+      "end_line": 135,
+      "excerpt_sha256": "651002ac52ecacb279746f36850eed35456e80ff85631bd0034aa8eed2f87fc1"
+    },
+    {
+      "path": "work/wooden-bucket-audit-20261022/neo-DispenserBlock.javap.txt",
+      "anchor": "getDispenseMethod(",
+      "start_line": 166,
+      "end_line": 180,
+      "excerpt_sha256": "88662345ca063f35ab118aa74c953c5451fa2916cb9affd7183f6d3902810e4c"
+    },
+    {
+      "path": "work/wooden-bucket-audit-20261022/forge-DefaultDispenseItemBehavior.javap.txt",
+      "anchor": "protected net.minecraft.world.item.ItemStack execute(",
+      "start_line": 30,
+      "end_line": 55,
+      "excerpt_sha256": "d44d00ae7f0c0824848893b209033c4acab941e869fe0c0d51d69cc4b843be79"
+    },
+    {
+      "path": "work/wooden-bucket-audit-20261022/neo-DefaultDispenseItemBehavior.javap.txt",
+      "anchor": "protected net.minecraft.world.item.ItemStack execute(",
+      "start_line": 32,
+      "end_line": 56,
+      "excerpt_sha256": "1ce6f42d57132da4aa90472961e716d6b967c5331691e5b3da3a478220741bf7"
+    },
+    {
+      "path": "work/wooden-bucket-audit-20261022/forge-AbstractCauldronBlock.javap.txt",
+      "anchor": "public net.minecraft.world.InteractionResult use(",
+      "start_line": 62,
+      "end_line": 84,
+      "excerpt_sha256": "bc5f5fdca2494b308420b42cf93db72b1ff6c823a1394c593f5a3bf8d509d6eb"
+    },
+    {
+      "path": "work/wooden-bucket-audit-20261022/neo-AbstractCauldronBlock.javap.txt",
+      "anchor": "protected net.minecraft.world.ItemInteractionResult useItemOn(",
+      "start_line": 64,
+      "end_line": 82,
+      "excerpt_sha256": "b6b26397647ef3a147ef6748ca2e21a3c0102f7b8a0fa01595c810c263f9fd0e"
+    },
+    {
+      "path": "work/wooden-bucket-audit-20261022/forge-FluidUtil.javap.txt",
+      "anchor": "getFluidHandler(net.minecraft.world.level.Level",
+      "start_line": 434,
+      "end_line": 455,
+      "excerpt_sha256": "50ffca676f36e1c4b4894b5259f489af5187bbd374a8b6babaf6d843a8524c71"
+    },
+    {
+      "path": "work/wooden-bucket-audit-20261022/neo-FluidUtil.javap.txt",
+      "anchor": "getFluidHandler(net.minecraft.world.level.Level",
+      "start_line": 461,
+      "end_line": 470,
+      "excerpt_sha256": "c908814a17176d41712252b3f79b0c0dba79b8da4d923e9ff06a0d53407cc859"
+    },
+    {
+      "path": "work/wooden-bucket-audit-20261022/neo-CauldronFluidContent.javap.txt",
+      "anchor": "public static void init(",
+      "start_line": 75,
+      "end_line": 100,
+      "excerpt_sha256": "3da2e12c2ff36c60760ada7d2ee08d2acc54ffb1d5d0a19f8b5194f10f5f4078"
+    },
+    {
+      "path": "work/wooden-bucket-audit-20261022/neo-CauldronFluidContent.javap.txt",
+      "anchor": "public static void registerCapabilities(",
+      "start_line": 228,
+      "end_line": 260,
+      "excerpt_sha256": "85491a2afc2c4f0be64feacfab61030e8eba8efb94e6d12040081ccb177365d6"
+    },
+    {
+      "path": "work/wooden-bucket-audit-20261022/neo-CauldronWrapper.javap.txt",
+      "anchor": "public int fill(",
+      "start_line": 127,
+      "end_line": 209,
+      "excerpt_sha256": "72fbee3caee68a07193387d80029642df0de2c3389e8110fb13dffc35a1fabac"
+    },
+    {
+      "path": "work/wooden-bucket-audit-20261022/neo-FluidUtil.javap.txt",
+      "anchor": "private static net.neoforged.neoforge.fluids.FluidStack tryFluidTransfer_Internal(",
+      "start_line": 389,
+      "end_line": 423,
+      "excerpt_sha256": "fbecec6d6ae4e6e953501fadd5c822e12869dc69946b76a4e0d3fbd312800eea"
+    }
+  ],
+  "family": {
+    "bands": [
+      [
+        "copper",
+        "Copper",
+        "2000"
+      ],
+      [
+        "tin",
+        "Tin",
+        "2100"
+      ],
+      [
+        "zinc",
+        "Zinc",
+        "2200"
+      ],
+      [
+        "lead",
+        "Lead",
+        "2300"
+      ],
+      [
+        "bismuth",
+        "Bismuth",
+        "2400"
+      ],
+      [
+        "brass",
+        "Brass",
+        "2500"
+      ],
+      [
+        "bronze",
+        "Bronze",
+        "2600"
+      ],
+      [
+        "bismuth_bronze",
+        "BismuthBronze",
+        "2700"
+      ],
+      [
+        "gold",
+        "Gold",
+        "2800"
+      ]
+    ],
+    "contents": [
+      [
+        "empty",
+        "0"
+      ],
+      [
+        "water",
+        "1"
+      ],
+      [
+        "milk",
+        "2"
+      ],
+      [
+        "latex",
+        "3"
+      ],
+      [
+        "creosote",
+        "4"
+      ],
+      [
+        "sea_water",
+        "5"
+      ],
+      [
+        "rubber_sap",
+        "6"
+      ],
+      [
+        "spruce_resin",
+        "7"
+      ],
+      [
+        "honey",
+        "8"
+      ],
+      [
+        "dirty_water",
+        "9"
+      ],
+      [
+        "lubricant",
+        "10"
+      ],
+      [
+        "spoiled_milk",
+        "11"
+      ],
+      [
+        "maple_sap",
+        "12"
+      ],
+      [
+        "rainbow_sap",
+        "13"
+      ],
+      [
+        "soy_milk",
+        "14"
+      ],
+      [
+        "glue",
+        "15"
+      ],
+      [
+        "spectral_dew",
+        "16"
+      ],
+      [
+        "seed_oil",
+        "17"
+      ],
+      [
+        "poison",
+        "18"
+      ]
+    ],
+    "forms": 171,
+    "meaning": "Source catalog/loop count, not a live registry or every recipe/asset acceptance."
+  },
+  "cauldron_arithmetic": {
+    "total_amount": 1000,
+    "max_level": 3,
+    "gcd": 1,
+    "amount_per_integral_step": 1000,
+    "levels_per_integral_step": 3,
+    "fill_acceptance_by_existing_level": {
+      "0": 1000,
+      "1": 0,
+      "2": 0,
+      "3": 0
+    },
+    "meaning": "Direct arithmetic reading of cached Neo CauldronWrapper.fill; no native method execution."
+  },
+  "refactoring": {
+    "scope": "Whitespace-only bucket catalog/adapter; two complete family loops extracted at the same call position/order. No item, capability, fluid or interaction policy changed.",
+    "files": {
+      "core/src/main/java/com/gregtech/gregtech/content/tool/WoodenBucketCatalog.java": {
+        "before_raw_sha256": "5c06fe627f9a886e9d59022c0af0acd737f03e55354b8260415785ccdeae7996",
+        "after_raw_sha256": "062530f3f74e3df2d6f515b7f30d9e5a338b3e0af046a4906ceed36d0ded4d4f",
+        "before_lines": 51,
+        "after_lines": 76,
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 662,
+            "token_sha256": "6049d33718ca3373c0ce44f3e2425823914f56796f67280409be06f0e08037ee"
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/item/WoodenBucketItem.java": {
+        "before_raw_sha256": "6fe70e4af506fe9779f4532de6e146070fdfbd5674e668b04cc5960c658956bb",
+        "after_raw_sha256": "16210d513a4b0d7f2dfcf8fec145d6a5817f53f0bcaedf9ccb985bcb9c839cbb",
+        "before_lines": 211,
+        "after_lines": 255,
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 2127,
+            "token_sha256": "91428b921b3b419fb84f7328156fddfddd35febc0ce70ddd05be76ceed772701"
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1949,
+            "token_sha256": "9196610c9d64b8ed889796380c2e102d7d79acf622894c0b4a6cb966f3798789"
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java": {
+        "before_raw_sha256": "aab379aa689ef4f83c62746d22ccca6bc511c6b323ca11e026ab6f215d1abff4",
+        "after_raw_sha256": "95e975c9b51f95a3444ab500381eb792b63cc3d3a8d0361c439443726cd7523e",
+        "before_lines": 224,
+        "after_lines": 237,
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1489,
+            "token_sha256": "5eb38273015eea2d899ab05db0c184ef277ac7bad831c7698e956c7914c3b808"
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 938,
+            "token_sha256": "494a96ebe5fae2041722f2002695b9fb4d5262536729c87fce2d167c6167e5df"
+          }
+        ]
+      }
+    },
+    "helpers": [
+      {
+        "platform": "forge",
+        "method": "registerWoodenBuckets",
+        "tokens": 95,
+        "token_sha256": "8e8a6459e5c0ae39b783561a4e9aea6fb057019122f61a46e807333ac0e293f2"
+      },
+      {
+        "platform": "forge",
+        "method": "registerPaintSprays",
+        "tokens": 123,
+        "token_sha256": "b2c81f7d21d542c6679ae767d0cdb860b56afa206df1666f968d2f0366a93859"
+      },
+      {
+        "platform": "neoforge",
+        "method": "registerWoodenBuckets",
+        "tokens": 95,
+        "token_sha256": "8e8a6459e5c0ae39b783561a4e9aea6fb057019122f61a46e807333ac0e293f2"
+      },
+      {
+        "platform": "neoforge",
+        "method": "registerPaintSprays",
+        "tokens": 123,
+        "token_sha256": "b2c81f7d21d542c6679ae767d0cdb860b56afa206df1666f968d2f0366a93859"
+      }
+    ]
+  },
+  "compiled_inputs": [
+    {
+      "platform": "forge",
+      "current_path": "multiversion/src/main/java/com/gregtech/gregtech/item/WoodenBucketItem.java",
+      "path": "multiversion/versions/1.20.1-forge/build/generated/stonecutter/main/java/com/gregtech/gregtech/item/WoodenBucketItem.java",
+      "raw_sha256": "16210d513a4b0d7f2dfcf8fec145d6a5817f53f0bcaedf9ccb985bcb9c839cbb"
+    },
+    {
+      "platform": "forge",
+      "current_path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "path": "multiversion/versions/1.20.1-forge/build/generated/stonecutter/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "raw_sha256": "95e975c9b51f95a3444ab500381eb792b63cc3d3a8d0361c439443726cd7523e"
+    },
+    {
+      "platform": "neoforge",
+      "current_path": "multiversion/src/main/java/com/gregtech/gregtech/item/WoodenBucketItem.java",
+      "path": "multiversion/versions/1.21.1-neoforge/build/generated/stonecutter/main/java/com/gregtech/gregtech/item/WoodenBucketItem.java",
+      "raw_sha256": "da0f6606185825b09ffd2408dec9b708bd8815f946fd3f62c26ea9aed506d75a"
+    },
+    {
+      "platform": "neoforge",
+      "current_path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "path": "multiversion/versions/1.21.1-neoforge/build/generated/stonecutter/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "raw_sha256": "a76bb54ac2e222e95e21357447913f3d282f469bfb78d08a10e94c00fefb28e1"
+    }
+  ],
+  "compile": {
+    "status": "passed",
+    "duration_seconds": 117,
+    "log": "work/wooden-bucket-audit-20261022/compile.log",
+    "log_sha256": "044a3637d6f01d76d37b27b4e9852f8e51ac00657385fa6c7be38b56adb2ac4d",
+    "tasks": [
+      "multiversion:1.20.1-forge:compileJava",
+      "multiversion:1.21.1-neoforge:compileJava"
+    ],
+    "temporary_adapter": "work/storage-inserter-audit-20261022/cached-api-classpath.gradle",
+    "temporary_adapter_sha256": "51a1ed5becc4b14c87f6eeef31d2c8fc984e02735ee630b3c292496c2798cdbe",
+    "cached_forge_artifacts": [
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/mezz/jei/jei-1.20.1-common-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-common-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/mezz/jei/jei-1.20.1-common-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-common-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "sha256": "7786d88e4ffd38f62d057b86eb56aa6a116037f2a4dbccb0aa77877b7dc8f4fd",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/mezz/jei/jei-1.20.1-forge-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-forge-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/mezz/jei/jei-1.20.1-forge-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-forge-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "sha256": "b50a6a64c629e51346deec045495ba932be2bcab4ffb5a46fe483df1e06c832a",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1-api.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1-api.jar",
+        "sha256": "268f4572a6297bcd38c176e9361ee245364bb255e1a74e0fec96a973ef1379c0",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1.jar",
+        "sha256": "a2df46e253e208d39576808509eb384b42d992ba77d1c3aec31b97611be6e64b",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/maven/modrinth/jade/11.13.2+forge_mapped_official_1.20.1/jade-11.13.2+forge_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/maven/modrinth/jade/11.13.2+forge_mapped_official_1.20.1/jade-11.13.2+forge_mapped_official_1.20.1.jar",
+        "sha256": "15030cb00590540a5a37bd6bd509df4c01116406dd7c1a760b55e81f83f2bd62",
+        "action": "copied existing exact-coordinate jar"
+      }
+    ],
+    "cached_neo_emi_api": {
+      "path": "C:/Dev/GregTech6/work/emi-maven/dev/emi/emi-neoforge/1.1.24+1.21.1/emi-neoforge-1.1.24+1.21.1-api.jar",
+      "sha256": "b3a8e23c5e59813f184423b94e37bb635867ddc9be2b68b3502fad7b9134779b"
+    },
+    "scope": "Actual dual compile with unchanged same-version local API adapter and four generated-input comparisons; not default offline/CI, game, old-save or full parity acceptance.",
+    "result": "BUILD SUCCESSFUL in 2m 18s",
+    "seconds": 138
+  },
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "not_run": [
+    "game startup",
+    "dispenser/cauldron player interaction",
+    "world/save restart",
+    "full tests",
+    "distribution JAR at this audit stage"
+  ],
+  "whole_goal_complete": false,
+  "root_revalidation": {
+    "original_and_current_sources": "5/6 exact hashes match",
+    "source_and_native_excerpts": "18+12 ranges match",
+    "native_entries": "13 exact jar/entry/read identities checked during recording",
+    "whole_source_views": "5 complete views; 2 extracted family bodies checked on both platforms",
+    "compiled_inputs": "4 exact generated source projections",
+    "protected_materials": "unchanged",
+    "historical_docs": "insertion only",
+    "formal_ids": "1..432 contiguous",
+    "gameplay_acceptance": false,
+    "whole_goal_complete": false
+  }
+}

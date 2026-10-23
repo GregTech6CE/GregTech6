@@ -1,0 +1,924 @@
+{
+  "date": "2026-10-22",
+  "batch": 107,
+  "baseline": "ff8c9fac0b94a2853c47665c5d172611e6e5ba7d",
+  "previous_goal_turn": {
+    "classification": "progress",
+    "commit": "ff8c9fac0"
+  },
+  "user_issue_scope": {
+    "skipped": [
+      71,
+      72,
+      73,
+      74
+    ],
+    "cfg_deferred": [
+      66
+    ],
+    "one_problem": [
+      68,
+      69
+    ],
+    "github_comments_or_closures": false
+  },
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/worldgen/WorldgenObject.java",
+      "raw_sha256": "8122967665f694cb38b7f4fe30292204958dabfb3cc19c040bf0305f4d80b197",
+      "source_sha256": "8122967665f694cb38b7f4fe30292204958dabfb3cc19c040bf0305f4d80b197",
+      "lines": 81,
+      "notice": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */",
+      "authors": [
+        "Gregorius Techneticies"
+      ]
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/worldgen/GT6WorldGenerator.java",
+      "raw_sha256": "d7be7c6edff03e702c9b9c0414b740a98ca1975847f8f857459e75691191377b",
+      "source_sha256": "d7be7c6edff03e702c9b9c0414b740a98ca1975847f8f857459e75691191377b",
+      "lines": 185,
+      "notice": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */",
+      "authors": [
+        "Gregorius Techneticies"
+      ]
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/center/WorldgenCenterBiomes.java",
+      "raw_sha256": "948e24ca9b41b189d11b9c4ac0a20881443d68184d12cb56e4a74c8e01b2d8d6",
+      "source_sha256": "948e24ca9b41b189d11b9c4ac0a20881443d68184d12cb56e4a74c8e01b2d8d6",
+      "lines": 282,
+      "notice": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */",
+      "authors": [
+        "Gregorius Techneticies"
+      ]
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/WorldgenPit.java",
+      "raw_sha256": "b6ea19ef4a8136f9dd247c212daaccd6c3808875481ed7b643316a907e5de2bc",
+      "source_sha256": "b6ea19ef4a8136f9dd247c212daaccd6c3808875481ed7b643316a907e5de2bc",
+      "lines": 132,
+      "notice": "/**\n * Copyright (c) 2022 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */",
+      "authors": [
+        "Gregorius Techneticies"
+      ]
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/WorldgenRocks.java",
+      "raw_sha256": "3c4101e25ce8c12d3990f1f4afda751314cbe3e5633a499ad23aadb2be5716fc",
+      "source_sha256": "3c4101e25ce8c12d3990f1f4afda751314cbe3e5633a499ad23aadb2be5716fc",
+      "lines": 66,
+      "notice": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */",
+      "authors": [
+        "Gregorius Techneticies"
+      ]
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/WorldgenStoneLayers.java",
+      "raw_sha256": "b39bd97d31d6aa7a386cc5c9579461337ef980ecf3e0a0294b35116ebaa5c57c",
+      "source_sha256": "b39bd97d31d6aa7a386cc5c9579461337ef980ecf3e0a0294b35116ebaa5c57c",
+      "lines": 203,
+      "notice": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */",
+      "authors": [
+        "Gregorius Techneticies"
+      ]
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/worldgen/WorldgenOresSmall.java",
+      "raw_sha256": "c5586c0258a28ba3c77bcc9243972577294eb88f9f64faacc3c9c2f75dcf272d",
+      "source_sha256": "c5586c0258a28ba3c77bcc9243972577294eb88f9f64faacc3c9c2f75dcf272d",
+      "lines": 64,
+      "notice": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */",
+      "authors": [
+        "Gregorius Techneticies"
+      ]
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/WorldgenFluidSpring.java",
+      "raw_sha256": "5720adf268be3ed5626212485ed6a179e2875918862d40efc417627e6b77befe",
+      "source_sha256": "5720adf268be3ed5626212485ed6a179e2875918862d40efc417627e6b77befe",
+      "lines": 107,
+      "notice": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */",
+      "authors": [
+        "Gregorius Techneticies"
+      ]
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_Worldgen.java",
+      "raw_sha256": "ebd09b9af84bf8e275ffbe856a706d0206a51fd8869a6b3a39ceddbb321c550a",
+      "source_sha256": "ebd09b9af84bf8e275ffbe856a706d0206a51fd8869a6b3a39ceddbb321c550a",
+      "lines": 931,
+      "notice": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */",
+      "authors": [
+        "Gregorius Techneticies"
+      ]
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/center/WorldgenStreets.java",
+      "raw_sha256": "988f8650904cdd280ccbe022e5bdebd9a8a96fbe9cd891aa137bfe3bf148f42f",
+      "source_sha256": "988f8650904cdd280ccbe022e5bdebd9a8a96fbe9cd891aa137bfe3bf148f42f",
+      "lines": 890,
+      "notice": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */",
+      "authors": [
+        "Gregorius Techneticies"
+      ]
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginWorld.java",
+      "raw_sha256": "b3e28f5a15734b9419310f713634924c1e89ce87efef370fa80553acf31feb3d",
+      "source_sha256": "b3e28f5a15734b9419310f713634924c1e89ce87efef370fa80553acf31feb3d",
+      "lines": 58,
+      "repository_path": "core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginWorld.java",
+      "source_views": [
+        {
+          "platform": "core",
+          "ordered_code_sha256": "85ae88d56a64dd5902876079b1ab7d5a4ebcbb8209e0eb9b9b4c9c3bdffe14e7"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginSupport.java",
+      "raw_sha256": "d0abdca975885ea4117b8998968a62ea0ef80e669bbeb0c71f6c82a608846efb",
+      "source_sha256": "d0abdca975885ea4117b8998968a62ea0ef80e669bbeb0c71f6c82a608846efb",
+      "lines": 125,
+      "repository_path": "core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginSupport.java",
+      "source_views": [
+        {
+          "platform": "core",
+          "ordered_code_sha256": "485952a3eb686f545c949384c64b981fd5af24a26a3379799dc7826f75d7b073"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOriginFeature.java",
+      "raw_sha256": "c1cd5d4b76fb1d062021e369149be9803a1a3d785b13fa87eb69e3a3a2e68b49",
+      "source_sha256": "c1cd5d4b76fb1d062021e369149be9803a1a3d785b13fa87eb69e3a3a2e68b49",
+      "lines": 61,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOriginFeature.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "5fdbdc3886be92bc62463155bbfb9a64fb7236aae491cca3040834117b41553d"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "5fdbdc3886be92bc62463155bbfb9a64fb7236aae491cca3040834117b41553d"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginWorld.java",
+      "raw_sha256": "103c41523322071b04ad0ea7d5d7045231b601a66f76c7d3bd68194aaf24f314",
+      "source_sha256": "103c41523322071b04ad0ea7d5d7045231b601a66f76c7d3bd68194aaf24f314",
+      "lines": 288,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginWorld.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "1e55a876e4effbac88180b7888e9c2d820650fe1331bd256bc863869bd6f489a"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "9f736b8de291aef0b52d1df1e4ed77af9be9ade419b660b581eede11d7f870f2"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/OriginSpawnEvents.java",
+      "raw_sha256": "b1e722d9cc045e47a0aa3da3496c43a9667eed93d7bf1711ef1bee9bf8253a43",
+      "source_sha256": "b1e722d9cc045e47a0aa3da3496c43a9667eed93d7bf1711ef1bee9bf8253a43",
+      "lines": 31,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/OriginSpawnEvents.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "bffaf740e5636dc5944fd990d63659d0f0e35cc13113a967e3e28f447d11f61a"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "911b201c23b69c64a082fac8e6d4b275d00fc5f9fef47ff40b7661e63e6f836f"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceCenterBiomes.java",
+      "raw_sha256": "a46e2ba397cce0630c66e28cd99cae56f5ad1c0b54ce7ec1c46b84f69de1b446",
+      "source_sha256": "222db8042441facd15613583657536e3557b152d171e901d3e3edd934401bc31",
+      "lines": 239,
+      "repository_path": "core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceCenterBiomes.java",
+      "source_views": [
+        {
+          "platform": "core",
+          "ordered_code_sha256": "529d4ac516e6cc16603aa2810eebcb0bdb852802021e1aa68847b2543adabe83"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceStreets.java",
+      "raw_sha256": "8cea451d838761f62c9957a8603d20600f6eee907c675875cea9a0cf7452dba8",
+      "source_sha256": "4a6ad8d1c6d39654a38804b37bbb5c9fb55a10cb6d7f21061c677fed8632a6f7",
+      "lines": 822,
+      "repository_path": "core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceStreets.java",
+      "source_views": [
+        {
+          "platform": "core",
+          "ordered_code_sha256": "54fba98f9a3e82958dbcb7e6699ed614cbd9e99d89deb77da3ad3eb4af9261c9"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTPitFeature.java",
+      "raw_sha256": "f8880ae3c8d8d8454dce08d00c5b412ba60022b33b25c75b7f8371ed82c199d8",
+      "source_sha256": "d820575d2095e96b8d8d342f8af8cdee1478e3029a1cf871f33b663015c90d42",
+      "lines": 189,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTPitFeature.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "18737f14067f191a583415c93b8a959336842c118d1196df3ff6440083caa65a"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "aae915e9031b534872da7d6e1faa72fa7a950b424e55af5deaed99bb352ba222"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTRocksFeature.java",
+      "raw_sha256": "208e1d097bd5493114bf57402b1d9048129c8bb81e7c02a45eafcbf6d7590299",
+      "source_sha256": "0624d80204ae608f25ce43540a69a578ea1066724b8a534519ba8e8f46f9fbf4",
+      "lines": 174,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTRocksFeature.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "d974e55115120d0eee8fef1b206201233fb0ea6cab3553b2bbb5302f8983ef87"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "ecaa3da35c7a2177c710f3af278fffa4d2033552fadae3b36443ba0265a575c9"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTStoneLayerFeature.java",
+      "raw_sha256": "5f68ac559acc98b30ebbced582e8b44d0d16505b91e3bcaa582d66819fcdab4c",
+      "source_sha256": "a65618325c8d1a7f0cf16b0e4835b096fbfbc6f2d72b0ac348508e6e0d91d854",
+      "lines": 252,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTStoneLayerFeature.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "6759a74879a3609288c4d27d7051dd175e875569ad7228ef426cf73c4fd21c1a"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "b6c86df0741d9b8ddfc54484c661d0a07848afb647a5cf80907be2a1ee9f0732"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTSmallOreFeature.java",
+      "raw_sha256": "4ae9f0d4bb60f4422f79bed7f7272d04c4ceaf7c5829c328ce25acd263bfc3c4",
+      "source_sha256": "2ec70b27c82d8bbf9b20b628e45183315fa641fc0a6302f5dbd243b3c41f1956",
+      "lines": 61,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTSmallOreFeature.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "7e81a03ba69450ea8d433ddb2c379ee7f57f63bb2e3f7fe25fa06c5b908d0fd0"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "7e81a03ba69450ea8d433ddb2c379ee7f57f63bb2e3f7fe25fa06c5b908d0fd0"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTFluidSpringsFeature.java",
+      "raw_sha256": "f86a8f280ec327d0b1e19be3b1cd1feb0fb6c1cbbec02b657932eb5055e040bc",
+      "source_sha256": "f86a8f280ec327d0b1e19be3b1cd1feb0fb6c1cbbec02b657932eb5055e040bc",
+      "lines": 204,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTFluidSpringsFeature.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "cf16f0ff774eb6c305d166d6bdd11b7270886806df56f1afdb29e1189c673c93"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "7510166e0125cd79596397e3dbcae8b1845035e36a20ea690f113232eaf1d8ea"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTBedrockOreFeature.java",
+      "raw_sha256": "e39317f6ae022fb3b9c1a2219395665c3fcaa012a66c5bae91f043bf5c9cb768",
+      "source_sha256": "e39317f6ae022fb3b9c1a2219395665c3fcaa012a66c5bae91f043bf5c9cb768",
+      "lines": 175,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTBedrockOreFeature.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "a62ef5ea5fef05c2550d1b74f390f929aba6d339c2d5916e6a11fae2991bed81"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "5446e77f5474bf5be933febfdef4aca0f0afbcb87010678af94f5baff1269832"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTFeatures.java",
+      "raw_sha256": "3933f9f08920aa729d65bb82b06da2fc9d1e84c1fe691aa8540a4e05859d144f",
+      "source_sha256": "99570bd0bf6bd42ecb5083872798a818fe27a744b799f38cbd5864f1af39fbec",
+      "lines": 169,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTFeatures.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "17a012fc8ea077e542f31933d86bb68f03df81db99c90bf751018f4166b326b9"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "683eb8e770e925ad80f4d0f25a4bfb246740fca2e2e58c0de871a57de3694d84"
+        }
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/data/gt6ce/forge/biome_modifier/gt_rocks.json",
+      "raw_sha256": "1d4a87da30af9b73014b658bb3f81fb0cecc6387302f9270eb8ed6c314f003f4",
+      "source_sha256": "1d4a87da30af9b73014b658bb3f81fb0cecc6387302f9270eb8ed6c314f003f4",
+      "lines": 8,
+      "content": {
+        "type": "forge:add_features",
+        "biomes": "#minecraft:is_overworld",
+        "features": [
+          "gt6ce:gt_rocks"
+        ],
+        "step": "vegetal_decoration"
+      }
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/data/gt6ce/forge/biome_modifier/gt_pits.json",
+      "raw_sha256": "53ca50378fb2793b320c945eef0e059f35b9b763cf34ba4bd594059797ca6f4c",
+      "source_sha256": "53ca50378fb2793b320c945eef0e059f35b9b763cf34ba4bd594059797ca6f4c",
+      "lines": 8,
+      "content": {
+        "type": "forge:add_features",
+        "biomes": "#minecraft:is_overworld",
+        "features": [
+          "gt6ce:gt_pits"
+        ],
+        "step": "top_layer_modification"
+      }
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/data/gt6ce/forge/biome_modifier/gt_overworld_ores.json",
+      "raw_sha256": "e3f34c56c6c28d4d7e9a6cd5963170984819d1638d57ad6c7050c8cb1eef40ab",
+      "source_sha256": "e3f34c56c6c28d4d7e9a6cd5963170984819d1638d57ad6c7050c8cb1eef40ab",
+      "lines": 11,
+      "content": {
+        "type": "forge:add_features",
+        "biomes": "#minecraft:is_overworld",
+        "features": [
+          "gt6ce:gt_stone_layers",
+          "gt6ce:gt_ore_veins",
+          "gt6ce:gt_small_ores",
+          "gt6ce:gt_bedrock_ores"
+        ],
+        "step": "underground_ores"
+      }
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/data/gt6ce/forge/biome_modifier/gt_fluid_springs.json",
+      "raw_sha256": "6e51d7b0ecaff0fa908e39294439d1297d71ae0e42367f90889e8a0a70a557d5",
+      "source_sha256": "6e51d7b0ecaff0fa908e39294439d1297d71ae0e42367f90889e8a0a70a557d5",
+      "lines": 8,
+      "content": {
+        "type": "forge:add_features",
+        "biomes": "#minecraft:is_overworld",
+        "features": [
+          "gt6ce:gt_fluid_springs"
+        ],
+        "step": "underground_decoration"
+      }
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/data/gt6ce/forge/biome_modifier/zz_gt_origin.json",
+      "raw_sha256": "5d42a6cf98f7b2c720f498522f0318e7525c5e33d1d09913b20120bb9716642a",
+      "source_sha256": "0400a02fd3958397ac50648a557bc9fd762c42069c14a342126dee5750387e12",
+      "lines": 8,
+      "content": {
+        "type": "forge:add_features",
+        "biomes": "#minecraft:is_overworld",
+        "features": [
+          "gt6ce:gt_origin"
+        ],
+        "step": "top_layer_modification"
+      }
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/data/gt6ce/neoforge/biome_modifier/gt_rocks.json",
+      "raw_sha256": "020b2c098b44957074a63571d926dda802b5c99ee131940f6f843fb99c414a1e",
+      "source_sha256": "020b2c098b44957074a63571d926dda802b5c99ee131940f6f843fb99c414a1e",
+      "lines": 8,
+      "content": {
+        "type": "neoforge:add_features",
+        "biomes": "#minecraft:is_overworld",
+        "features": [
+          "gt6ce:gt_rocks"
+        ],
+        "step": "vegetal_decoration"
+      }
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/data/gt6ce/neoforge/biome_modifier/gt_pits.json",
+      "raw_sha256": "5aa40371a6c25d405d4f1509c916d5dee582dc62faebf10d2663484c092094ed",
+      "source_sha256": "5aa40371a6c25d405d4f1509c916d5dee582dc62faebf10d2663484c092094ed",
+      "lines": 8,
+      "content": {
+        "type": "neoforge:add_features",
+        "biomes": "#minecraft:is_overworld",
+        "features": [
+          "gt6ce:gt_pits"
+        ],
+        "step": "top_layer_modification"
+      }
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/data/gt6ce/neoforge/biome_modifier/gt_overworld_ores.json",
+      "raw_sha256": "fd99b095d3df7c219f48e53df9a5ed3f4b411a9bb2ca25b8875d87b59bda85ba",
+      "source_sha256": "fd99b095d3df7c219f48e53df9a5ed3f4b411a9bb2ca25b8875d87b59bda85ba",
+      "lines": 11,
+      "content": {
+        "type": "neoforge:add_features",
+        "biomes": "#minecraft:is_overworld",
+        "features": [
+          "gt6ce:gt_stone_layers",
+          "gt6ce:gt_ore_veins",
+          "gt6ce:gt_small_ores",
+          "gt6ce:gt_bedrock_ores"
+        ],
+        "step": "underground_ores"
+      }
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/data/gt6ce/neoforge/biome_modifier/gt_fluid_springs.json",
+      "raw_sha256": "4e83eb4c3b55095c168f3259e7f563515ba199b1490848ffeff4e79eb2240d32",
+      "source_sha256": "4e83eb4c3b55095c168f3259e7f563515ba199b1490848ffeff4e79eb2240d32",
+      "lines": 8,
+      "content": {
+        "type": "neoforge:add_features",
+        "biomes": "#minecraft:is_overworld",
+        "features": [
+          "gt6ce:gt_fluid_springs"
+        ],
+        "step": "underground_decoration"
+      }
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/data/gt6ce/neoforge/biome_modifier/zz_gt_origin.json",
+      "raw_sha256": "bef33f1ca81f9765991a83772d17ecd311705309a405748951eac4bb9a426a20",
+      "source_sha256": "4c7c12ff25ae9b4f301971a128df6539380365dc49b070e59565a3c5394c5da0",
+      "lines": 8,
+      "content": {
+        "type": "neoforge:add_features",
+        "biomes": "#minecraft:is_overworld",
+        "features": [
+          "gt6ce:gt_origin"
+        ],
+        "step": "top_layer_modification"
+      }
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/worldgen/configured_feature/gt_origin.json",
+      "raw_sha256": "b9e54b1823e48a3b1030a5326cc366a24838072944f73480f9e52225c2a56dc0",
+      "source_sha256": "02a4453b83e7aa5afc84041e74188ed296f84ec5341fd352bff7050769651c68",
+      "lines": 4,
+      "content": {
+        "type": "gt6ce:gt_origin",
+        "config": {}
+      }
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/worldgen/placed_feature/gt_origin.json",
+      "raw_sha256": "b6759adc96594b01816ee653755aa6bc5c29621f17d9722707be4f603f6fd33e",
+      "source_sha256": "0c3441e1ab912ff878e14d21827b5a25f86583cc6636f9887e4c41dbf11af0c8",
+      "lines": 4,
+      "content": {
+        "feature": "gt6ce:gt_origin",
+        "placement": []
+      }
+    }
+  ],
+  "excerpts": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/worldgen/WorldgenObject.java",
+      "start_line": 70,
+      "end_line": 77,
+      "text": "\tpublic boolean checkForMajorWorldgen(World aWorld, int aMinX, int aMinZ, int aMaxX, int aMaxZ) {\n\t\tif (aWorld.provider.dimensionId == DIM_OVERWORLD) {\n\t\t\tif (GENERATE_STREETS && (Math.abs(aMinX) < 64 || Math.abs(aMaxX) < 64 || Math.abs(aMinZ) < 64 || Math.abs(aMaxZ) < 64)) return T;\n\t\t\tif (GENERATE_BIOMES && aMinX >= -96 && aMinX <= 80 && aMinZ >= -96 && aMinZ <= 80) return T;\n\t\t}\n\t\treturn F;\n\t}\n\t",
+      "excerpt_sha256": "fc8672f289956d2436d37b405feae4c6e54c3c1010c4f0dcc0288e186d6f5976"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/worldgen/GT6WorldGenerator.java",
+      "start_line": 73,
+      "end_line": 83,
+      "text": "\t\t\t\tGENERATING_SPECIAL = F;\n\t\t\t\t\n\t\t\t\t// Yes, it has to be looped twice in a row, this cannot be optimized into one Loop!\n\t\t\t\tfor (WorldgenObject tWorldGen : mGenNormal) tWorldGen.reset(mWorld, tChunk, mDimType, mMinX, mMinZ, mMaxX, mMaxZ, mRandom, tBiomes, tBiomeNames);\n\t\t\t\tfor (WorldgenObject tWorldGen : mGenNormal) if (tWorldGen.enabled(mWorld, mDimType)) {\n\t\t\t\t\ttry {\n\t\t\t\t\t\ttWorldGen.generate(mWorld, tChunk, mDimType, mMinX, mMinZ, mMaxX, mMaxZ, mRandom, tBiomes, tBiomeNames);\n\t\t\t\t\t} catch (Throwable e) {\n\t\t\t\t\t\te.printStackTrace(ERR);\n\t\t\t\t\t}\n\t\t\t\t\tif (tChunk.lastSaveTime == Long.MAX_VALUE) {",
+      "excerpt_sha256": "c4c186fac71990d6fd13daf95a7b009eeffefe09186ae3ac197f685c7552af02"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/center/WorldgenCenterBiomes.java",
+      "start_line": 62,
+      "end_line": 68,
+      "text": "\t@Override\n\tpublic void reset(World aWorld, Chunk aChunk, int aDimType, int aMinX, int aMinZ, int aMaxX, int aMaxZ, Random aRandom, BiomeGenBase[][] aBiomes, Set<String> aBiomeNames) {\n\t\tif (GENERATE_BIOMES && aDimType == DIM_OVERWORLD && aMinX >= -96 && aMinX <= 80 && aMinZ >= -96 && aMinZ <= 80) GENERATING_SPECIAL = T;\n\t}\n\t\n\t@Override\n\tpublic boolean generate(World aWorld, Chunk aChunk, int aDimType, int aMinX, int aMinZ, int aMaxX, int aMaxZ, Random aRandom, BiomeGenBase[][] aBiomes, Set<String> aBiomeNames) {",
+      "excerpt_sha256": "9f7921718cef3e8484c18b70bb762d13b947b981906ab1be67c235f4ee8daf64"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/WorldgenPit.java",
+      "start_line": 55,
+      "end_line": 61,
+      "text": "\t@Override\n\tpublic boolean generate(World aWorld, Chunk aChunk, int aDimType, int aMinX, int aMinZ, int aMaxX, int aMaxZ, Random aRandom, BiomeGenBase[][] aBiomes, Set<String> aBiomeNames) {\n\t\tif (checkForMajorWorldgen(aWorld, aMinX, aMinZ, aMaxX, aMaxZ)) return F;\n\t\tif (aRandom.nextInt(mDivider) > mChance || !(BIOMES_PLAINS.contains(aBiomes[7][7].biomeName) || BIOMES_SAVANNA.contains(aBiomes[7][7].biomeName))) return F;\n\t\t\n\t\tint tX = aMinX-16, tZ = aMinZ-16, tUpperBound = WD.waterLevel(aWorld)+16, tLowerBound = WD.waterLevel(aWorld)-8;\n\t\tfor (int i = 0; i < 48; i++) for (int j = 0; j < 48; j++) if (SHAPE[i][j]) {",
+      "excerpt_sha256": "dfb055b1e510188364eaba6455dc239d045a25bac44d5afc3388d75b9f5747bf"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/WorldgenRocks.java",
+      "start_line": 51,
+      "end_line": 57,
+      "text": "\t@Override\n\tpublic int canGenerate(World aWorld, Chunk aChunk, int aDimType, int aMinX, int aMinZ, int aMaxX, int aMaxZ, Random aRandom, BiomeGenBase[][] aBiomes, Set<String> aBiomeNames) {\n\t\tif (checkForMajorWorldgen(aWorld, aMinX, aMinZ, aMaxX, aMaxZ)) return 0;\n\t\tfor (String tName : aBiomeNames) if (BIOMES_DESERT.contains(tName) || BIOMES_MESA.contains(tName) || BIOMES_TAIGA.contains(tName) || BIOMES_SWAMP.contains(tName) || BIOMES_SAVANNA.contains(tName) || BIOMES_PLAINS.contains(tName) || BIOMES_WOODS.contains(tName) || BIOMES_MOUNTAINS.contains(tName) || BIOMES_WASTELANDS.contains(tName)) return mAmount;\n\t\treturn 0;\n\t}\n\t",
+      "excerpt_sha256": "2fb38bd450bfe85b15f6bdd41db7e3dbec2c25d787ebbf5cc2bc17f2b476cbe7"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/WorldgenStoneLayers.java",
+      "start_line": 57,
+      "end_line": 63,
+      "text": "\t@Override\n\tpublic boolean generate(World aWorld, Chunk aChunk, int aDimType, int aMinX, int aMinZ, int aMaxX, int aMaxZ, Random aRandom, BiomeGenBase[][] aBiomes, Set<String> aBiomeNames) {\n\t\tif (GENERATING_SPECIAL) return F;\n\t\t\n\t\t//final boolean tSlime = (aChunk.getRandomWithSeed(987234911L).nextInt(10) == 0);\n\t\tfinal NoiseGenerator tNoise = new NoiseGenerator(aWorld);\n\t\tfinal ExtendedBlockStorage[] aStorages = aChunk.getBlockStorageArray();",
+      "excerpt_sha256": "1d2d37b5756e5021cb5eba0c44a5991a88ab286f5c4b73992f4d2e6b6656e8fb"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/worldgen/WorldgenOresSmall.java",
+      "start_line": 58,
+      "end_line": 64,
+      "text": "\t@Override\n\tpublic boolean generate(World aWorld, Chunk aChunk, int aDimType, int aMinX, int aMinZ, int aMaxX, int aMaxZ, Random aRandom, BiomeGenBase[][] aBiomes, Set<String> aBiomeNames) {\n\t\tif (GENERATING_SPECIAL) return F;\n\t\tfor (int i = 0, j = Math.max(1, mAmount/2 + aRandom.nextInt(1+mAmount)/2); i < j; i++) WD.setSmallOre(aWorld, aMinX+aRandom.nextInt(16), mMinY+aRandom.nextInt(Math.max(1, mMaxY-mMinY)), aMinZ+aRandom.nextInt(16), mMaterial.mID);\n\t\treturn T;\n\t}\n}",
+      "excerpt_sha256": "5c2f7ab318c0fba4bff541903e3693bbdc7acd6767b45e59d5106b93726c110d"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/WorldgenFluidSpring.java",
+      "start_line": 60,
+      "end_line": 66,
+      "text": "\t@Override\n\tpublic boolean generate(World aWorld, Chunk aChunk, int aDimType, int aMinX, int aMinZ, int aMaxX, int aMaxZ, Random aRandom, BiomeGenBase[][] aBiomes, Set<String> aBiomeNames) {\n\t\tif (GENERATING_SPECIAL || !WorldgenOresBedrock.GENERATED_NO_BEDROCK_ORE || !WorldgenOresBedrock.CAN_GENERATE_BEDROCK_ORE || aRandom.nextInt(mProbability) != 0) return F;\n\t\t\n\t\tWorldgenOresBedrock.CAN_GENERATE_BEDROCK_ORE = F;\n\t\t\n\t\tBlock tBlock = WD.block(aWorld, aMinX+8, 0, aMinZ+8);",
+      "excerpt_sha256": "ff664875e3a90070369bdffa7b478f560f72725c2ebcda46c88ff9076c8abf3f"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_Worldgen.java",
+      "start_line": 646,
+      "end_line": 651,
+      "text": "\t\tnew WorldgenCenterBiomes    (\"center.biomes\"           , F, GEN_OVERWORLD, GEN_GT, GEN_PFAA, GEN_TFC);\n\t\tnew WorldgenStreets         (\"center.streets\"          , F, GEN_OVERWORLD, GEN_GT, GEN_PFAA, GEN_TFC);\n\t\tnew WorldgenNexus           (\"center.nexus\"            , F, GEN_OVERWORLD, GEN_GT, GEN_PFAA, GEN_TFC);\n\t\tnew WorldgenBeacon          (\"center.beacon\"           , F, GEN_OVERWORLD, GEN_GT, GEN_PFAA, GEN_TFC);\n\t\tnew WorldgenTesting         (\"center.testing\"          , F, GEN_OVERWORLD, GEN_GT, GEN_PFAA, GEN_TFC);\n\t\t",
+      "excerpt_sha256": "5bfa87333feb658e56f3958b00a9e2f5cddb9ff48bb88d04e3ecea9f69d6242d"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/center/WorldgenStreets.java",
+      "start_line": 649,
+      "end_line": 652,
+      "text": "\t\t// Kill every living thing close by except Players.\n\t\tfor (EntityLivingBase tEntity : (List<EntityLivingBase>)aWorld.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(-16, mHeight, aMinZ, +16, mHeight+8, aMinZ+16))) if (!(tEntity instanceof EntityPlayer)) tEntity.setDead();\n\t\treturn T;\n\t}",
+      "excerpt_sha256": "b4e23bef29f7edbc2feb05270966b16dd57f56f5be2bf9d79654ecd16877e48c"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOriginFeature.java",
+      "start_line": 30,
+      "end_line": 40,
+      "text": "        boolean plaza = minX >= -32 && minX <= 16 && minZ >= -32 && minZ <= 16;\n        boolean nexus = minX == 16 && minZ == -48;\n        boolean road = minX == -16 || minX == 0 || minZ == -16 || minZ == 0;\n        boolean center = minX >= -96 && minX <= 80 && minZ >= -96 && minZ <= 80;\n        boolean testing = (minX == 32 || minX == 48) && (minZ == -32 || minZ == -48);\n        if (!center && !plaza && !nexus && !road) return false;\n        // WD.waterLevel() is 62 in GT6, while the modern sea-level parameter is 63.\n        int height = level.getSeaLevel() + 3;\n        NativeOriginWorld world = new NativeOriginWorld(level, chunk, height);\n        var biomes = new HashSet<String>();\n        if (road && !plaza) {",
+      "excerpt_sha256": "a7968b4d3106024f4e2f6a6cbf5eca0d544b24e93d517bfc1701e093cec1ef93"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTPitFeature.java",
+      "start_line": 70,
+      "end_line": 88,
+      "text": "    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {\n        WorldGenLevel level = context.level();\n        RandomSource random = context.random();\n        if (level.getLevel().dimension() != Level.OVERWORLD) return false;\n        int minX = context.origin().getX() & ~15;\n        int minZ = context.origin().getZ() & ~15;\n        // GT6 checks the biome of the chunk centre only (aBiomes[7][7]).\n        if (!pitBiome(biomeId(level, minX + 8, minZ + 8))) return false;\n        if (random.nextInt(DIVIDER) > CHANCE - 1) return false;\n        Pit pit = PITS.get(random.nextInt(PITS.size()));\n        BlockState fill = blockState(pit.blockId());\n        if (fill == null) return false;\n\n        int anchorX = minX - 16;\n        int anchorZ = minZ - 16;\n        int upper = level.getSeaLevel() + ABOVE_SEA;\n        int lower = level.getSeaLevel() - BELOW_SEA;\n        boolean placed = false;\n        for (int i = 0; i < GTPitShape.SIZE; i++) {",
+      "excerpt_sha256": "19de3420be1b197f315fd6716fcb261c7ac097e3317a151125eed90dba3f98a0"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTRocksFeature.java",
+      "start_line": 65,
+      "end_line": 78,
+      "text": "    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {\n        WorldGenLevel level = context.level();\n        RandomSource random = context.random();\n        if (level.getLevel().dimension() != Level.OVERWORLD) return false;\n        int minX = context.origin().getX() & ~15;\n        int minZ = context.origin().getZ() & ~15;\n        Set<ResourceLocation> biomes = GTWorldgenBiomes.chunkBiomes(level, minX, minZ);\n        if (!GTWorldgenBiomes.anyOf(biomes, GTWorldgenBiomes.ROCK_BIOMES)) return false;\n\n        // GT6 marks its target cells first and rolls per marked cell afterwards.\n        boolean[][] targets = new boolean[16][16];\n        for (int i = 0; i < AMOUNT; i++) {\n            targets[random.nextInt(16)][random.nextInt(16)] = true;\n        }",
+      "excerpt_sha256": "b0d19d90833dc30b37f143f08ef3e093ce76fcd31691646c6ad3fcf3313e4f3b"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTStoneLayerFeature.java",
+      "start_line": 74,
+      "end_line": 93,
+      "text": "    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {\n        if (!GTWorldgenDefaults.STONE_LAYERS) return false;\n        WorldGenLevel level = context.level();\n        RandomSource random = context.random();\n        BlockPos origin = context.origin();\n\n        Layer[] layers = layers();\n        Map<ContactKey, List<Ore>> contacts = contacts();\n        GTCellNoise noise = NOISE_BY_SEED.computeIfAbsent(level.getSeed(), GTCellNoise::new);\n        int listSize = layers.length;\n\n        int chunkMinX = origin.getX() & ~15;\n        int chunkMinZ = origin.getZ() & ~15;\n        boolean placedAny = false;\n        BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();\n        Layer[] scan = new Layer[7];\n\n        for (int dx = 0; dx < 16; dx++) {\n            int x = chunkMinX + dx;\n            for (int dz = 0; dz < 16; dz++) {",
+      "excerpt_sha256": "2544fbea91050df9dca40cabc273eaab3bf5e92c7d8e79f852c23cbe3d4cb9b0"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTSmallOreFeature.java",
+      "start_line": 26,
+      "end_line": 50,
+      "text": "    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {\n        WorldGenLevel level = context.level();\n        RandomSource random = context.random();\n        BlockPos origin = context.origin();\n        int minX = origin.getX() & ~15;\n        int minZ = origin.getZ() & ~15;\n\n        // Per-dimension tables (GT6 GEN_OVERWORLD / GEN_NETHER / GEN_END).\n        java.util.List<SmallOre> ores;\n        net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> dim = level.getLevel().dimension();\n        if (dim == net.minecraft.world.level.Level.NETHER) {\n            ores = GTOreVeins.activeNetherSmallOres();\n        } else if (dim == net.minecraft.world.level.Level.END) {\n            ores = GTOreVeins.activeEndSmallOres();\n        } else {\n            ores = GTOreVeins.activeOverworldSmallOres();\n        }\n\n        boolean placedAny = false;\n        BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();\n        for (SmallOre ore : ores) {\n            // Y range stretched into the extended [-64,112] band in the Overworld only.\n            int minY = GTWorldgenScale.remapY(level, ore.minY());\n            int maxY = Mth.clamp(GTWorldgenScale.remapY(level, ore.maxY()), minY + 1, level.getMaxBuildHeight() - 1);\n            int attempts = Math.max(1, ore.amount() / 2 + random.nextInt(1 + ore.amount()) / 2);",
+      "excerpt_sha256": "70feee28d1044a77d588c1edeaac116b9e34d04240b1e296cf909756a57bef07"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTFluidSpringsFeature.java",
+      "start_line": 65,
+      "end_line": 76,
+      "text": "    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {\n        WorldGenLevel level = context.level();\n        RandomSource random = context.random();\n        if (level.getLevel().dimension() != Level.OVERWORLD) return false;\n        Spring spring = SPRINGS.get(random.nextInt(SPRINGS.size()));\n        // GT6: `aRandom.nextInt(mProbability) != 0` → return.\n        if (random.nextInt(spring.probability()) != 0) return false;\n        int minX = context.origin().getX() & ~15;\n        int minZ = context.origin().getZ() & ~15;\n        if (!hasBedrock(level, minX + 8, minZ + 8)) return false;\n        return carve(level, minX, minZ, spring, random);\n    }",
+      "excerpt_sha256": "e85c6d28fbb05440b210a568a3b7039cba5481ce14f37786f201dfde50687787"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTBedrockOreFeature.java",
+      "start_line": 37,
+      "end_line": 48,
+      "text": "    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {\n        WorldGenLevel level = context.level();\n        ChunkPos chunkPos = new ChunkPos(context.origin());\n        // One candidate origin per 16x16-chunk cell.\n        if (Math.floorMod(chunkPos.x, 16) != 8 || Math.floorMod(chunkPos.z, 16) != 8) return false;\n\n        // Use this port's dimension table for its weighted grid selection.\n        Random gridRandom = gridRandom(level, chunkPos);\n        GTBedrockOres.BedrockOre pick = select(level, gridRandom);\n        if (pick == null) return false;\n\n        int centerX = chunkPos.getMinBlockX() + 4 + gridRandom.nextInt(8);",
+      "excerpt_sha256": "40c341471ab567afd6d3236e1b313660b1398c6dbe68426947ace112efe9f317"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginWorld.java",
+      "start_line": 56,
+      "end_line": 67,
+      "text": "    @Override\n    public boolean canWrite(int x, int y, int z) {\n        return (x >> 4) == chunk.x && (z >> 4) == chunk.z && !level.isOutsideBuildHeight(y);\n    }\n\n    @Override\n    public OriginWorld.Block getBlock(int x, int y, int z) {\n        if (level.isOutsideBuildHeight(y) || !level.hasChunk(x >> 4, z >> 4)) return OriginSupport.NB;\n        BlockPos pos = new BlockPos(x, y, z);\n        BlockState state = level.getBlockState(pos);\n        return new OriginWorld.Block(BuiltInRegistries.BLOCK.getKey(state.getBlock()).toString(), -1,\n                state.isSolidRender(level, pos), !state.getFluidState().isEmpty(), state.is(BlockTags.LOGS),",
+      "excerpt_sha256": "cdedbb084878055ca61d142ab3919c8f46b87751e467c588846a6f0efd372dbf"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginWorld.java",
+      "start_line": 235,
+      "end_line": 243,
+      "text": "    @Override\n    public void biome(OriginWorld.Chunk planChunk, String name) {\n        var key = net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.BIOME, id(\"minecraft:\" + name));\n        var biome = level.registryAccess().registryOrThrow(net.minecraft.core.registries.Registries.BIOME).getHolderOrThrow(key);\n        level.getChunk(chunk.x, chunk.z).fillBiomesFromNoise((x, y, z, sampler) -> biome,\n                level.getLevel().getChunkSource().randomState().sampler());\n    }\n\n    @Override",
+      "excerpt_sha256": "44307edfa393c3d25dc909bf12d33cb8efca41e384d6a9146e12b90498b72245"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginWorld.java",
+      "start_line": 222,
+      "end_line": 229,
+      "text": "    @Override\n    public void clearNonPlayerEntities(int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {\n        AABB box = new AABB(Math.max(minX, chunk.getMinBlockX()), minY, Math.max(minZ, chunk.getMinBlockZ()),\n                Math.min(maxX, chunk.getMinBlockX() + 16), maxY, Math.min(maxZ, chunk.getMinBlockZ() + 16));\n        onServer(() -> level.getLevel().getEntitiesOfClass(LivingEntity.class, box,\n                entity -> !(entity instanceof Player)).forEach(LivingEntity::discard));\n    }\n",
+      "excerpt_sha256": "fde69975179c1c67133d413e875f34e88c7907fa02dc96640765f5a1f71d10b4"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/OriginSpawnEvents.java",
+      "start_line": 24,
+      "end_line": 31,
+      "text": "    @SubscribeEvent\n    public static void createSpawn(LevelEvent.CreateSpawnPosition event) {\n        if (event.getLevel() instanceof ServerLevel level && level.dimension() == Level.OVERWORLD) {\n            level.setDefaultSpawnPos(new BlockPos(0, level.getSeaLevel() + 8, 0), 0);\n            event.setCanceled(true);\n        }\n    }\n}",
+      "excerpt_sha256": "17ebf5773d3a3a74829a76f6ae1b951f0d7a302f5c109858c809cfd2c9eec1ae"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceCenterBiomes.java",
+      "start_line": 53,
+      "end_line": 56,
+      "text": "\t\t\t\t}\n\t\t\t\taWorld.setSpawnLocation(0, mHeight+5, 0);\n\t\t\t\treturn T;\n\t\t\t}",
+      "excerpt_sha256": "ceddfef9cd962f6eb093c36594a1060170517f63bd021a35b02a2af0316cee89"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTFeatures.java",
+      "start_line": 153,
+      "end_line": 156,
+      "text": "    public static final RegistryObject<Feature<NoneFeatureConfiguration>> ORIGIN =\n//?}\n            FEATURES.register(\"gt_origin\", GTOriginFeature::new);\n",
+      "excerpt_sha256": "b6ffdaa05081815cd54fabad5ea37be9915bb66b0c18114e57bf725040129cd1"
+    }
+  ],
+  "native_evidence": [
+    {
+      "platform": "neoforge",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/levelgen/GenerationStep.java",
+      "entry_sha256": "cef2a5ecdd6bc41edb2f8d101a3773b676edaa0e8a255fc83f3edddd128e55dc",
+      "excerpts": [
+        "        SURFACE_STRUCTURES(\"surface_structures\"),\n        STRONGHOLDS(\"strongholds\"),\n        UNDERGROUND_ORES(\"underground_ores\"),\n        UNDERGROUND_DECORATION(\"underground_decoration\"),\n        FLUID_SPRINGS(\"fluid_springs\"),\n        VEGETAL_DECORATION(\"vegetal_decoration\"),\n        TOP_LAYER_MODIFICATION(\"top_layer_modification\");\n\n        public static final Codec<GenerationStep.Decoration> CODEC = StringRepresentable.fromEnum(GenerationStep.Decoration::values);\n        private final String name;",
+        "        STRONGHOLDS(\"strongholds\"),\n        UNDERGROUND_ORES(\"underground_ores\"),\n        UNDERGROUND_DECORATION(\"underground_decoration\"),\n        FLUID_SPRINGS(\"fluid_springs\"),\n        VEGETAL_DECORATION(\"vegetal_decoration\"),\n        TOP_LAYER_MODIFICATION(\"top_layer_modification\");\n\n        public static final Codec<GenerationStep.Decoration> CODEC = StringRepresentable.fromEnum(GenerationStep.Decoration::values);\n        private final String name;\n"
+      ],
+      "origin_phase_excerpt": "        UNDERGROUND_ORES(\"underground_ores\"),\n        UNDERGROUND_DECORATION(\"underground_decoration\"),\n        VEGETAL_DECORATION(\"vegetal_decoration\"),\n        TOP_LAYER_MODIFICATION(\"top_layer_modification\");",
+      "revalidated_from_receipt": "docs/integration/verification/spring-bedrock-dispatch-audit-20261022.json"
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/chunk/ChunkGenerator.java",
+      "entry_sha256": "163597f9f04a3a117ebc748bb3425a5017d9551edf1dbd8bcb32d8393166c8f1",
+      "excerpts": [
+        "            try {\n                Registry<PlacedFeature> registry1 = p_223087_.registryAccess().registryOrThrow(Registries.PLACED_FEATURE);\n                int i1 = Math.max(GenerationStep.Decoration.values().length, j);\n\n                for (int k = 0; k < i1; k++) {\n                    int l = 0;\n                    if (p_223089_.shouldGenerateStructures()) {\n                        for (Structure structure : map.getOrDefault(k, Collections.emptyList())) {\n                            worldgenrandom.setFeatureSeed(i, l, k);\n                            Supplier<String> supplier = () -> registry.getResourceKey(structure).map(Object::toString).orElseGet(structure::toString);",
+        "                            try {\n                                p_223087_.setCurrentlyGenerating(supplier1);\n                                placedfeature.placeWithBiomeCheck(p_223087_, this, worldgenrandom, blockpos);\n                            } catch (Exception exception1) {\n                                CrashReport crashreport2 = CrashReport.forThrowable(exception1, \"Feature placement\");\n                                crashreport2.addCategory(\"Feature\").setDetail(\"Description\", supplier1::get);\n                                throw new ReportedException(crashreport2);\n                            }\n                        }\n                    }"
+      ],
+      "revalidated_from_receipt": "docs/integration/verification/spring-bedrock-dispatch-audit-20261022.json"
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/levelgen/GenerationStep$Decoration.class",
+      "entry_sha256": "b630ffc29ff221dd67b44e337cdf6cb3fe5753ae06e1d4c34d5ecbc4beed5d86",
+      "javap_output": "work/spring-dispatch-audit-20261022/forge-generation-step.javap.txt",
+      "javap_sha256": "e5823e8313405b0beecb6dc027f7c8cbc097fccd842090bddea0a909d5fd35d3",
+      "excerpts": [
+        "        90: new           #2                  // class net/minecraft/world/level/levelgen/GenerationStep$Decoration\n        93: dup\n        94: ldc           #112                // String UNDERGROUND_ORES\n        96: bipush        6\n        98: ldc           #114                // String underground_ores\n       100: invokespecial #96                 // Method \"<init>\":(Ljava/lang/String;ILjava/lang/String;)V\n       103: putstatic     #81                 // Field UNDERGROUND_ORES:Lnet/minecraft/world/level/levelgen/GenerationStep$Decoration;\n       106: new           #2                  // class net/minecraft/world/level/levelgen/GenerationStep$Decoration\n       109: dup\n       110: ldc           #115                // String UNDERGROUND_DECORATION\n       112: bipush        7\n       114: ldc           #117                // String underground_decoration\n       116: invokespecial #96                 // Method \"<init>\":(Ljava/lang/String;ILjava/lang/String;)V\n       119: putstatic     #83                 // Field UNDERGROUND_DECORATION:Lnet/minecraft/world/level/levelgen/GenerationStep$Decoration;\n       122: new           #2                  // class net/minecraft/world/level/levelgen/GenerationStep$Decoration\n       125: dup\n       126: ldc           #118                // String FLUID_SPRINGS",
+        "       106: new           #2                  // class net/minecraft/world/level/levelgen/GenerationStep$Decoration\n       109: dup\n       110: ldc           #115                // String UNDERGROUND_DECORATION\n       112: bipush        7\n       114: ldc           #117                // String underground_decoration\n       116: invokespecial #96                 // Method \"<init>\":(Ljava/lang/String;ILjava/lang/String;)V\n       119: putstatic     #83                 // Field UNDERGROUND_DECORATION:Lnet/minecraft/world/level/levelgen/GenerationStep$Decoration;\n       122: new           #2                  // class net/minecraft/world/level/levelgen/GenerationStep$Decoration\n       125: dup\n       126: ldc           #118                // String FLUID_SPRINGS\n       128: bipush        8\n       130: ldc           #120                // String fluid_springs\n       132: invokespecial #96                 // Method \"<init>\":(Ljava/lang/String;ILjava/lang/String;)V\n       135: putstatic     #85                 // Field FLUID_SPRINGS:Lnet/minecraft/world/level/levelgen/GenerationStep$Decoration;\n       138: new           #2                  // class net/minecraft/world/level/levelgen/GenerationStep$Decoration\n       141: dup\n       142: ldc           #121                // String VEGETAL_DECORATION",
+        "       196: invokeinterface #568,  2          // InterfaceMethod net/minecraft/core/RegistryAccess.registryOrThrow:(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/core/Registry;\n       201: astore        15\n       203: invokestatic  #661                // Method net/minecraft/world/level/levelgen/GenerationStep$Decoration.values:()[Lnet/minecraft/world/level/levelgen/GenerationStep$Decoration;\n       206: arraylength\n       207: iload         14\n       209: invokestatic  #666                // Method java/lang/Math.max:(II)I\n       212: istore        16\n       214: iconst_0\n       215: istore        17\n       217: iload         17\n       219: iload         16\n       221: if_icmpge     719\n       224: iconst_0\n       225: istore        18\n       227: aload_3\n       228: invokevirtual #669                // Method net/minecraft/world/level/StructureManager.shouldGenerateStructures:()Z\n       231: ifeq          399",
+        "       647: aload         10\n       649: aload         6\n       651: invokevirtual #817                // Method net/minecraft/world/level/levelgen/placement/PlacedFeature.placeWithBiomeCheck:(Lnet/minecraft/world/level/WorldGenLevel;Lnet/minecraft/world/level/chunk/ChunkGenerator;Lnet/minecraft/util/RandomSource;Lnet/minecraft/core/BlockPos;)Z\n       654: pop\n       655: goto          707\n       658: astore        27\n       660: aload         27\n       662: ldc_w         #718                // String Feature placement\n       665: invokestatic  #724                // Method net/minecraft/CrashReport.forThrowable:(Ljava/lang/Throwable;Ljava/lang/String;)Lnet/minecraft/CrashReport;\n       668: astore        28\n       670: aload         28\n       672: ldc_w         #726                // String Feature\n       675: invokevirtual #730                // Method net/minecraft/CrashReport.addCategory:(Ljava/lang/String;)Lnet/minecraft/CrashReportCategory;\n       678: ldc_w         #732                // String Description\n       681: aload         26\n       683: dup\n       684: invokestatic  #737                // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;"
+      ],
+      "origin_phase_excerpt": [
+        "       142: ldc           #121                // String VEGETAL_DECORATION\n       144: bipush        9\n       146: ldc           #123                // String vegetal_decoration\n       148: invokespecial #96                 // Method \"<init>\":(Ljava/lang/String;ILjava/lang/String;)V\n       151: putstatic     #87                 // Field VEGETAL_DECORATION:Lnet/minecraft/world/level/levelgen/GenerationStep$Decoration;",
+        "       158: ldc           #124                // String TOP_LAYER_MODIFICATION\n       160: bipush        10\n       162: ldc           #126                // String top_layer_modification\n       164: invokespecial #96                 // Method \"<init>\":(Ljava/lang/String;ILjava/lang/String;)V\n       167: putstatic     #89                 // Field TOP_LAYER_MODIFICATION:Lnet/minecraft/world/level/levelgen/GenerationStep$Decoration;"
+      ],
+      "revalidated_from_receipt": "docs/integration/verification/spring-bedrock-dispatch-audit-20261022.json"
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/chunk/ChunkGenerator.class",
+      "entry_sha256": "5a37afe50934158c0e0bd514688a93fc8100d676b1fe42f646228b3f87498256",
+      "javap_output": "work/spring-dispatch-audit-20261022/forge-generation-step.javap.txt",
+      "javap_sha256": "e5823e8313405b0beecb6dc027f7c8cbc097fccd842090bddea0a909d5fd35d3",
+      "excerpts": [
+        "        90: new           #2                  // class net/minecraft/world/level/levelgen/GenerationStep$Decoration\n        93: dup\n        94: ldc           #112                // String UNDERGROUND_ORES\n        96: bipush        6\n        98: ldc           #114                // String underground_ores\n       100: invokespecial #96                 // Method \"<init>\":(Ljava/lang/String;ILjava/lang/String;)V\n       103: putstatic     #81                 // Field UNDERGROUND_ORES:Lnet/minecraft/world/level/levelgen/GenerationStep$Decoration;\n       106: new           #2                  // class net/minecraft/world/level/levelgen/GenerationStep$Decoration\n       109: dup\n       110: ldc           #115                // String UNDERGROUND_DECORATION\n       112: bipush        7\n       114: ldc           #117                // String underground_decoration\n       116: invokespecial #96                 // Method \"<init>\":(Ljava/lang/String;ILjava/lang/String;)V\n       119: putstatic     #83                 // Field UNDERGROUND_DECORATION:Lnet/minecraft/world/level/levelgen/GenerationStep$Decoration;\n       122: new           #2                  // class net/minecraft/world/level/levelgen/GenerationStep$Decoration\n       125: dup\n       126: ldc           #118                // String FLUID_SPRINGS",
+        "       106: new           #2                  // class net/minecraft/world/level/levelgen/GenerationStep$Decoration\n       109: dup\n       110: ldc           #115                // String UNDERGROUND_DECORATION\n       112: bipush        7\n       114: ldc           #117                // String underground_decoration\n       116: invokespecial #96                 // Method \"<init>\":(Ljava/lang/String;ILjava/lang/String;)V\n       119: putstatic     #83                 // Field UNDERGROUND_DECORATION:Lnet/minecraft/world/level/levelgen/GenerationStep$Decoration;\n       122: new           #2                  // class net/minecraft/world/level/levelgen/GenerationStep$Decoration\n       125: dup\n       126: ldc           #118                // String FLUID_SPRINGS\n       128: bipush        8\n       130: ldc           #120                // String fluid_springs\n       132: invokespecial #96                 // Method \"<init>\":(Ljava/lang/String;ILjava/lang/String;)V\n       135: putstatic     #85                 // Field FLUID_SPRINGS:Lnet/minecraft/world/level/levelgen/GenerationStep$Decoration;\n       138: new           #2                  // class net/minecraft/world/level/levelgen/GenerationStep$Decoration\n       141: dup\n       142: ldc           #121                // String VEGETAL_DECORATION",
+        "       196: invokeinterface #568,  2          // InterfaceMethod net/minecraft/core/RegistryAccess.registryOrThrow:(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/core/Registry;\n       201: astore        15\n       203: invokestatic  #661                // Method net/minecraft/world/level/levelgen/GenerationStep$Decoration.values:()[Lnet/minecraft/world/level/levelgen/GenerationStep$Decoration;\n       206: arraylength\n       207: iload         14\n       209: invokestatic  #666                // Method java/lang/Math.max:(II)I\n       212: istore        16\n       214: iconst_0\n       215: istore        17\n       217: iload         17\n       219: iload         16\n       221: if_icmpge     719\n       224: iconst_0\n       225: istore        18\n       227: aload_3\n       228: invokevirtual #669                // Method net/minecraft/world/level/StructureManager.shouldGenerateStructures:()Z\n       231: ifeq          399",
+        "       647: aload         10\n       649: aload         6\n       651: invokevirtual #817                // Method net/minecraft/world/level/levelgen/placement/PlacedFeature.placeWithBiomeCheck:(Lnet/minecraft/world/level/WorldGenLevel;Lnet/minecraft/world/level/chunk/ChunkGenerator;Lnet/minecraft/util/RandomSource;Lnet/minecraft/core/BlockPos;)Z\n       654: pop\n       655: goto          707\n       658: astore        27\n       660: aload         27\n       662: ldc_w         #718                // String Feature placement\n       665: invokestatic  #724                // Method net/minecraft/CrashReport.forThrowable:(Ljava/lang/Throwable;Ljava/lang/String;)Lnet/minecraft/CrashReport;\n       668: astore        28\n       670: aload         28\n       672: ldc_w         #726                // String Feature\n       675: invokevirtual #730                // Method net/minecraft/CrashReport.addCategory:(Ljava/lang/String;)Lnet/minecraft/CrashReportCategory;\n       678: ldc_w         #732                // String Description\n       681: aload         26\n       683: dup\n       684: invokestatic  #737                // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;"
+      ],
+      "revalidated_from_receipt": "docs/integration/verification/spring-bedrock-dispatch-audit-20261022.json"
+    }
+  ],
+  "readability": {
+    "baseline": "ff8c9fac0b94a2853c47665c5d172611e6e5ba7d",
+    "files": {
+      "core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginWorld.java": {
+        "before_raw_sha256": "c7a94d42afa656f3b9cf93de88a0974ae6ba203c041bab9bf43df1ae91788fe1",
+        "after_raw_sha256": "b3e28f5a15734b9419310f713634924c1e89ce87efef370fa80553acf31feb3d",
+        "before_lines": 27,
+        "after_lines": 58,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 420,
+            "execution_sha256": "85ae88d56a64dd5902876079b1ab7d5a4ebcbb8209e0eb9b9b4c9c3bdffe14e7",
+            "literal_positions_sha256": "064ed24915f67c955ad24714d5d3a1287a5b38636be2229cddcf5820f0bf9110",
+            "literal_count": 7
+          }
+        ]
+      },
+      "core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginSupport.java": {
+        "before_raw_sha256": "3ea1510430b88715545fc7c78905083c08dd56c15ec7039e7aef824c4ac945ed",
+        "after_raw_sha256": "d0abdca975885ea4117b8998968a62ea0ef80e669bbeb0c71f6c82a608846efb",
+        "before_lines": 70,
+        "after_lines": 125,
+        "comment_corrections": [
+          [
+            "Source constants and WD helpers required by the two origin generators; no game dependency.",
+            "Source constants and WD helpers used by shared origin layouts; no game dependency."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 1525,
+            "execution_sha256": "485952a3eb686f545c949384c64b981fd5af24a26a3379799dc7826f75d7b073",
+            "literal_positions_sha256": "cbeb053fc7d8bb226bb845beb49140e5042f365d188b1172f84ad8b5f74b8ca3",
+            "literal_count": 123
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOriginFeature.java": {
+        "before_raw_sha256": "22be083a3dbba90fd470b571dab7218fe0875fc2fd49bbed585de84d461a87a9",
+        "after_raw_sha256": "c1cd5d4b76fb1d062021e369149be9803a1a3d785b13fa87eb69e3a3a2e68b49",
+        "before_lines": 56,
+        "after_lines": 61,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 693,
+            "execution_sha256": "5fdbdc3886be92bc62463155bbfb9a64fb7236aae491cca3040834117b41553d",
+            "literal_positions_sha256": "b55d5ce26ac5e44b40115f69ce891637ab05bc76fa966544b6995f205f3f715a",
+            "literal_count": 31
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 693,
+            "execution_sha256": "5fdbdc3886be92bc62463155bbfb9a64fb7236aae491cca3040834117b41553d",
+            "literal_positions_sha256": "b55d5ce26ac5e44b40115f69ce891637ab05bc76fa966544b6995f205f3f715a",
+            "literal_count": 31
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginWorld.java": {
+        "before_raw_sha256": "7729334502f0a6bd420f9bf88f21ee265238a90764fcd1288ae3adea2a59e738",
+        "after_raw_sha256": "103c41523322071b04ad0ea7d5d7045231b601a66f76c7d3bd68194aaf24f314",
+        "before_lines": 215,
+        "after_lines": 288,
+        "comment_corrections": [
+          [
+            "Native effects for GT6's complete origin layouts. Never writes or forces loads outside this chunk.",
+            "Native adapter for origin layouts. Block writes stay in this chunk; reads may inspect loaded neighbours."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 3139,
+            "execution_sha256": "1e55a876e4effbac88180b7888e9c2d820650fe1331bd256bc863869bd6f489a",
+            "literal_positions_sha256": "d6a7da26fdbbcd75bc51b82d12bce73b1b5a13d47e3d80d7d01646933c64f8e7",
+            "literal_count": 123
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 3125,
+            "execution_sha256": "9f736b8de291aef0b52d1df1e4ed77af9be9ade419b660b581eede11d7f870f2",
+            "literal_positions_sha256": "9d3c9ff4c7188119f87525268cee08802aa04d6188c80179cbe6b3672dee42c1",
+            "literal_count": 123
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/OriginSpawnEvents.java": {
+        "before_raw_sha256": "74c0bac2f4f35b84227f1b8e61a272cbd27fe14e9b97c30b944c88edffea6b85",
+        "after_raw_sha256": "b1e722d9cc045e47a0aa3da3496c43a9667eed93d7bf1711ef1bee9bf8253a43",
+        "before_lines": 29,
+        "after_lines": 31,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 169,
+            "execution_sha256": "bffaf740e5636dc5944fd990d63659d0f0e35cc13113a967e3e28f447d11f61a",
+            "literal_positions_sha256": "ead41e8136355e3a36b84a4227477147f02ac444a73fa00dc76afea59a27ebbd",
+            "literal_count": 4
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 169,
+            "execution_sha256": "911b201c23b69c64a082fac8e6d4b275d00fc5f9fef47ff40b7661e63e6f836f",
+            "literal_positions_sha256": "ead41e8136355e3a36b84a4227477147f02ac444a73fa00dc76afea59a27ebbd",
+            "literal_count": 4
+          }
+        ]
+      }
+    }
+  },
+  "formal_findings_added": [
+    "ALIGN-359",
+    "ALIGN-360"
+  ],
+  "geometry_projection": {
+    "method": "Source-extracted Boolean expressions; module flags true, Overworld chunk minima on a 16-block grid. Not Java/native feature execution.",
+    "expressions": {
+      "street": "GENERATE_STREETS && (Math.abs(aMinX) < 64 || Math.abs(aMaxX) < 64 || Math.abs(aMinZ) < 64 || Math.abs(aMaxZ) < 64)",
+      "center": "GENERATE_BIOMES && aMinX >= -96 && aMinX <= 80 && aMinZ >= -96 && aMinZ <= 80",
+      "current_entry": {
+        "center": "minX >= -96 && minX <= 80 && minZ >= -96 && minZ <= 80",
+        "road": "minX == -16 || minX == 0 || minZ == -16 || minZ == 0",
+        "plaza": "minX >= -32 && minX <= 16 && minZ >= -32 && minZ <= 16",
+        "nexus": "minX == 16 && minZ == -48"
+      }
+    },
+    "bounded_grid": [
+      -128,
+      128,
+      16
+    ],
+    "rows": 289,
+    "old_surface_excluded": 224,
+    "old_center_flag": 144,
+    "current_origin_entry": 164,
+    "old_surface_excluded_but_no_origin_entry": 60,
+    "witness": {
+      "min_x": 32,
+      "min_z": 1024,
+      "old_surface_excluded": true,
+      "old_center_flag": false,
+      "current_origin_entry": false
+    },
+    "center_weighted_bedrock_candidates": 0
+  },
+  "positive_scope": [
+    "Native canWrite limits block mutation to current chunk and actual height bounds.",
+    "Native biome operation actually fills this chunk biome palette; it is not a stub.",
+    "Spawn seaLevel+8 equals plan height seaLevel+3 plus source +5.",
+    "Road entity cleanup in both sources targets living non-player entities; no false all-entity finding.",
+    "Current weighted bedrock grid rejects all 144 center chunks, so no current bedrock centre leak is claimed."
+  ],
+  "limits": [
+    "Missing guards are source-entry contracts, not proof every random attempt produces a surviving visible error.",
+    "Origin can rewrite earlier terrain; same-stage ordering of pits and origin is not proved by zz filename.",
+    "No global mutable flag was added to parallel native generation.",
+    "No gameplay/config values, IDs, assets or generation results intentionally changed.",
+    "No Gradle, Java compile, GameTest, game, world restart, build, push, GitHub comment or issue close."
+  ],
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "root_revalidation": {
+    "complete_ordered_tokens": true,
+    "literal_positions": true,
+    "other_comments_and_directives": true,
+    "baseline_files": true,
+    "native_artifact_and_entry_hashes": true,
+    "material_raw_hashes": true,
+    "gameplay_acceptance": false,
+    "goal_complete": false
+  }
+}

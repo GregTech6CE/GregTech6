@@ -7,6 +7,7 @@ import com.gregtech.gregtech.GregTech;
 import com.gregtech.gregtech.api.fluid.GTWaterParity;
 //?}
 import com.gregtech.gregtech.data.RegisteredFluids;
+import com.gregtech.gregtech.api.fluid.FluidPhysicalProperties;
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
@@ -51,6 +52,14 @@ import java.util.function.Consumer;
 /** GT6 fluid registry holder — DeferredRegisters and lookup maps populated by {@code Loader_Fluids}. */
 //?}
 public final class GTFluids {
+    private static final java.util.Set<FluidType> NON_LIQUID_TYPES =
+            java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>());
+
+    /** Identity-scoped: never infer phase from negative density or affect another mod's fluids. */
+    public static boolean isNonLiquidType(FluidType type) {
+        return NON_LIQUID_TYPES.contains(type);
+    }
+
 //? if >=1.21.1 {
     /*public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, "gt6ce");
     public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(BuiltInRegistries.FLUID, "gt6ce");
@@ -118,15 +127,15 @@ public final class GTFluids {
     public static FluidType createFluidType(RegisteredFluids.FluidEntry entry) {
 //? if >=1.21.1 {
         /*boolean water = com.gregtech.gregtech.api.fluid.GTWaterParity.isWorldWater(entry.registryName());
-        var properties = FluidType.Properties.create().density(entry.density() != 0 ? entry.density() : water ? 1000 : entry.gas() ? 1 : entry.textureMode() == RegisteredFluids.FluidTextureMode.GENERIC_MOLTEN ? 3000 : 1000)
-                .viscosity(entry.viscosity() != 0 ? entry.viscosity() : water ? 1000 : entry.gas() ? 200 : entry.textureMode() == RegisteredFluids.FluidTextureMode.GENERIC_MOLTEN ? 6000 : 1000)
+        var properties = FluidType.Properties.create().density(water ? 1000 : FluidPhysicalProperties.density(entry))
+                .viscosity(water ? 1000 : FluidPhysicalProperties.viscosity(entry))
                 .temperature(entry.temperature()).lightLevel(entry.luminosity()).canConvertToSource(water).supportsBoating(water).canHydrate(water).canSwim(water).canDrown(water);
 *///?} else {
         final boolean worldWater = GTWaterParity.isWorldWater(entry.registryName());
         FluidType.Properties properties = worldWater ? waterProperties()
                 : FluidType.Properties.create()
-                        .density(fluidDensity(entry))
-                        .viscosity(fluidViscosity(entry))
+                        .density(FluidPhysicalProperties.density(entry))
+                        .viscosity(FluidPhysicalProperties.viscosity(entry))
                         .lightLevel(entry.luminosity())
                         .temperature(entry.temperature())
                         .canConvertToSource(false)
@@ -137,7 +146,10 @@ public final class GTFluids {
                         .fallDistanceModifier(0.0F)
                         .motionScale(0.007D);
 //?}
-        return new FluidType(properties) {
+        boolean nonLiquid = FluidPhysicalProperties.nonLiquid(entry);
+        if (nonLiquid) properties.canPushEntity(false).motionScale(0.0D)
+                .fallDistanceModifier(1.0F).canExtinguish(false).canSwim(false).canDrown(false);
+        FluidType type = new FluidType(properties) {
 //? if >=1.21.1 {
             /*@Override public net.minecraft.network.chat.Component getDescription() { return GTFluidType.describe(entry, sanitizePath(entry.registryName())); }
             @Override public net.minecraft.network.chat.Component getDescription(FluidStack stack) { return getDescription(); }
@@ -174,6 +186,8 @@ public final class GTFluids {
             }
 //?}
         };
+        if (nonLiquid) NON_LIQUID_TYPES.add(type);
+        return type;
     }
 //? if >=1.21.1 {
     /*public static int fluidTemperature(RegisteredFluids.FluidEntry entry) { return entry.temperature(); }
@@ -302,20 +316,6 @@ public final class GTFluids {
     }
 
     // ==================== fluid properties ====================
-
-    private static int fluidDensity(RegisteredFluids.FluidEntry entry) {
-        if (entry.density() != 0) return entry.density();
-        if (entry.textureMode() == RegisteredFluids.FluidTextureMode.GENERIC_MOLTEN) return 3000;
-        if (entry.gas()) return 1;
-        return 1000;
-    }
-
-    private static int fluidViscosity(RegisteredFluids.FluidEntry entry) {
-        if (entry.viscosity() != 0) return entry.viscosity();
-        if (entry.textureMode() == RegisteredFluids.FluidTextureMode.GENERIC_MOLTEN) return 6000;
-        if (entry.gas()) return 200;
-        return 1000;
-    }
 
     public static int fluidTemperature(RegisteredFluids.FluidEntry entry) {
         return entry.temperature();

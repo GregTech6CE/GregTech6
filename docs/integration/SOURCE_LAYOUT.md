@@ -1,6 +1,60 @@
 # 当前源码导航与命名约定
 
+2026-10-23：core PortableFluidContainerSpec定义51规格，PortableCapacityRules.adjustmentStep分派到量杯／计压瓶的严格高度分档。共享PortableContainerLimits只共用KEY／构造器／adjustable委托，容量数据仍分别适配标签／组件；PortableFluidContainerItem处理能力／准入／点击搬液，BlockEntity只存同一容器物品。四源整理及433–436实际入口缺口见[专题](PORTABLE_VESSEL_AUDIT.md)。
+
+2026-10-23：core WoodenBucketCatalog只定义箍／内容物目录；共享WoodenBucketItem负责变体、交互和1000L物品能力。GTMultiItems.registerWoodenBuckets／registerPaintSprays拥有各自唯一家族遍历，调用点／顺序不变，事件注册与平台类型保留。方法展开、完整投影和430–432差异见[木桶核对](WOODEN_BUCKET_AUDIT.md)。
+
+2026-10-22：共享item/behavior/ManualToolBehaviorAccess拥有权限、创造、遮挡、原版点火／TNT五个实际helper；ItemBehaviors保持公有委托与物品分派。两个Ignitable接口及Outcome记录仍分别保留，Forge点火目标不换身份。只读`tools/integration/inventory_original_item_behaviors.py --original <原src/main/java> --output <JSON>`排除注释／import，分开代码与反射线索，不据计数判移植完成；30类导航与泡沫喷罐429见[行为盘点](ITEM_BEHAVIOR_OWNERSHIP_AUDIT.md)。
+
+2026-10-22：共享ReactorNetwork.finishTick处理pending取出／已加载筛选／排序／相位交换和逐核反应，end只适配两端事件与阶段门控。ReactorInteraction处理软锤、流体、钳取和插棒；BehaviorThermometer读产热，GeigerCounterItem读neutrons。GTMultiItems的通用物品经ItemBehaviors分派，现有电力计／转速计尚无专用手持入口，不能用SensorBlockEntity的独立显示替代，见[仪表分派](INSTRUMENT_DISPATCH_AUDIT.md)。
+
+2026-10-22：共享item/RemoteActivatorItem提供原生回调包装，Neo工厂实际使用，Forge仍由GTMultiItems内部通用物品经ItemBehaviors分派；两者转给共享BehaviorRemote。后者维护每维度坐标列表、范围和目标保留协议，RemoteActivatable只定义目标合同，原生数据读写仍各自适配。GeigerCounterItem读取ReactorCoreBlockEntity状态；包装共享与待核采样时序分别说明，见[手持仪表](HANDHELD_INSTRUMENTS_AUDIT.md)。
+
+2026-10-22：core FoodStatisticRows存六统计数据，NutritionRules管0–127夹取／数值效果；原生GTFoodStatsGen.build共用表装载，两个resolveItem只做注册表查询，GTFoodStats提供物品身份查询。FoodStatEvents消费完成前物品副本，RadawayItem另有专用回调，PlayerRadiation管持久剂量／症状，ReactorRadiation管外来暴露／防护。数据行与调用次数不可混同，现存422–424见[辐射消耗品](RADIATION_CONSUMABLES_AUDIT.md)。
+
+2026-10-22：core HazmatSuitCatalog定义六套；GTRadiationProtection注册24件，Forge经GTFuelRods触发初始化，Neo经材料注册触发。RadiationSuitItem.texturePath共用槽位／路径，原生返回类型留薄入口；GTHazmat读取八组物品标签，护甲计算仍由原生ArmorItem处理。路径共用、减伤／提示差异和证据见[防护服核查](HAZMAT_SUIT_AUDIT.md)。
+
+2026-10-22：GTGearboxes.machineProperties共用木／金属物性，仅gearbox调用者追加noOcclusion；两个物品入口仍明确stack16。core BatteryBoxDefinitions给20盒身份／四或十六槽，BatteryBoxBlock只给0..2指示状态和面板红石；运行仍由BatteryBoxEnergy／BatteryBoxState负责。四源整理、堆叠扩围和双版编译见[核查](BATTERY_GEAR_REGISTRATION_AUDIT.md)。
+
+2026-10-22：共享 `registry/GTEnergyNodes.java` 的createBlock／itemProperties／registerSpecifications统一两版创建策略；各自ALL、注册类型／订阅、能力和反应堆时机保留。core `content/energy/EnergyNodeDefinitions.java`只定义规格，局部档位字段改为inputRate／outputRate／material，固定值表保留。三完整流、39项堆叠扩围和双版编译见[注册核查](ENERGY_NODE_REGISTRATION_AUDIT.md)。
+
+2026-10-22：core `content/energy/SignalWireColors.java`只给默认染色三元规则，Forge GregTechClient的物品／方块与Neo SignalWireClientSetup共用，BlockPaintColorMixin仍独立处理喷漆。Neo WireToolInteractions／SignalWireClientSetup展开，42局部名称明确，三完整流与含120双版编译见[客户端核查](SIGNAL_WIRE_CLIENT_AUDIT.md)。覆盖板准入和裸线继承资格分别追真实消费者，未在整理时改变策略。
+
+2026-10-22：`MassStorageBlock.interact`现在共用手持／按钮／背包交互，`isUnpackingTool`保留NeoToolBindings与Forge GTToolHelper边界，原生use入口只转换返回值。Neo `GTMetalChests`注册和查找方法展开，m／w／b改明确局部名，两源368→396行；完整旧业务归一、剩余代码和双版编译范围见[存储输入器与去重](STORAGE_INSERTER_AUDIT.md)。当前单台存入不等于原32751的跨设备扫描，后者登记413待移植。
+
+2026-10-22：GarbageStorageRules、GarbageData和两类垃圾实体四源509→621行，存取／保留／平台能力逐操作展开；70处e／f／t／c／i等改明确名称，包含Stonecutter非活动代码，并防止新名称捕获。原本保存能力、相同标签合并及首屏淘汰政策说明更正，七完整视图保持，见[专题](GARBAGE_POOL_AUDIT.md)／[回执](verification/garbage-pool-audit-20261022.json)。没有改变存储策略或菜单行为，其余职责拆分与全系统继续。
+
+2026-10-22：FluidAttachmentSpec集中acceptsGas／fillsTarget角色查询，平台附件三处复用；FluidToolTarget中继逐操作展开并明确handler，保留重新取目标语义。四源326→376行、26局部标识出现位置、五调用及三个helper与七剩余代码视图受控证明见[专题](FLUID_ATTACHMENTS_AUDIT.md)／[回执](verification/fluid-attachments-audit-20261022.json)。旧公开类型／签名保留，新增只读查询，不改变物性、传输、配方或ID。
+
+2026-10-22：硬币几何缓存、保存实体、物品模型／绘制器和Neo客户端注册六源855→936行；b／e／v改明确局部名称，22出现位置列明，11完整平台代码视图保持。原始注释与取币回调实际合同分别处理，见[生命周期专题](COIN_LIFECYCLE_AUDIT.md)及[回执](verification/coin-lifecycle-audit-20261022.json)。玩法、注册、资源与API类型未改，其余标准化继续。
+
+铸币：core `CoinStampPattern`保存两面16行及unique，原生`CoinMoldBlockEntity`接单格库存／配置与输出，`CoinMoldBlock`接手动点击；`CoinMoldRenderer`用`CoinMoldGeometry.CONTENT`。世界币／物品币分别走`CoinPileRenderer`与`CoinItemBakedModel`／`CoinItemRenderer`，`CoinGeometry`处理默认及实际tag位图。自动锤另走`PoweredToolTarget`，模具手动strike存在不代表自动接通，见[铸币核查](COIN_MINTING_AUDIT.md)。
+
+可放置材料堆：core `MaterialPileRules`给64上限、层高和27消失偏移，`CoinPileRules`给4×4币格／重排数学；共享`GTMaterialPiles`／`GTCoinPiles`实际登记，两版调用同一注册。普通`PileBlockEntity`存单物品，硬币实体存16格与实际币型；两个ExpireHandler共用`PilePlacementChecks`的当前原生谓词。手动放置、材料合并、掉落查询和渲染模型是不同入口，见[材料堆](MATERIAL_PILES_AUDIT.md)。
+
+微型门：core `MiniPortalSignals`管理六面待收信号与超时，共享`DungeonPortalBlockEntity`做最近跨维度目标／相对邻居和保存，继承`CapabilityRelayBlockEntity`／`EnergyRelayBlockEntity`接物品、流体与能源。实际两种方块在`GTDungeonBlocks`，Neo能力在`StorageContainerCapabilities`；类名中的Dungeon是历史名称，地牢原版传送门房间另走`worldgen/dungeon`。模型、碰撞、按面比较器和工具入口须分别核对，见[微型门](MINI_PORTAL_AUDIT.md)。
+
+工具形状边界：共享`ShapedToolBlock`负责静态轮廓、旋转与扳手入口，`ScaffoldBlock`另覆写动态碰撞／轮廓；`CoverCollisionMixin`的选中和移动碰撞注入已经展开。原生挂接另走getBlockSupportShape／SupportType，绳子的可燃性和抗性则来自实际注册属性，不能用这些轮廓替代，见[物性与承托](UTILITY_PHYSICS_AUDIT.md)。
+
+绳子／脚手架：core `UtilityToolRules`保存六绳材料行、支撑搜索上限与设计公式；共享`RopeBlock`接水平放置、延伸／支撑、梯子，`ScaffoldBlock`接四设计、碰撞和计划更新。Forge `GTToolBlocks`、Neo `GTManualStations`实际注册；碰撞要另查Properties，覆盖板还需PanelCoverHost，见[核查](ROPE_SCAFFOLD_AUDIT.md)。
+
+开放手作容器：core `OpenVesselRules`列七身份与容量／气候／准入；共享`ProcessingToolBlockEntity`负责物品与产物／输入液、预检、手工及电动处理和保存，`ProcessingToolBlock`接原生调用，`ProcessingToolRenderer`绘制内容。自动排液和手持取液角色不能混同，实际两端能力／渲染入口见[核查](OPEN_VESSEL_AUDIT.md)。
+
+磨削制作：共享`SharpeningRecipes`／`MortarGrindingRecipes`声明路线与粉碎余量，core `PulverizationRules`做防溢出的单位换算；`ManualToolBlockEntity`实际扣料、抽取和给予产物。`GTElectricItems`创建独立ElectricToolItem身份，去魔时不能用GTToolItem代替全部GT工具判定；磨料世界／物品保存与原生消耗见[专题](MANUAL_GRINDING_AUDIT.md)。
+
+手工筛选台：core `ManualWorkRules`定义周期／正常药水门槛；共享`ManualToolBlockEntity`负责输入、十二产物、单操作者及保存，`ManualToolBlock`接原生交互／tick／拆除。Forge的`GTToolBlocks`和Neo的`GTManualStations`分别注册；不能从实体字段推定自动化能力，见[核查](SIFTING_TABLE_AUDIT.md)。
+
 此文描述 `main` 的 Stonecutter 结构。原版行为差异见 [原版对齐审计](ORIGINAL_ALIGNMENT_AUDIT.md)；目录整理不代表全部功能已经对齐。
+
+工作台生命周期：块类onRemove调用实体本地dropContents，`BlockContents`／`GTItemDrops`清槽并按真实堆叠输出；`BlockLootPack`只给默认块物品，`CoverDrops`另筛覆盖板数据。世界Inventory／Modes、物品数据与虚拟预览要分别追，四源已展开，见[生命周期](WORKTABLE_LIFECYCLE_AUDIT.md)。
+
+工作台边界续：`ChargingCraftingTableBlockEntity`负责五格逐包注入与FE入口，`AdvancedCraftingScreen`只画背景／蓝图／提示，`AdvancedCraftingRecipeReload`提供generation。流体附件先问`FluidToolTarget`再问能力，不能从物品能力推断五格灌液已有；无限尖端保留在实体计划，结果合并门控在菜单，见[注液与点击](WORKTABLE_IO_AUDIT.md)。
+
+高级／充能工作台：core `AdvancedCraftingRules`只给本地布局和搜索次序；共享实体负责蓝图、原生配方、余物计划与提交，`AdvancedCraftingMenu`处理真实／虚拟格地址及玩家点击。Neo `CraftingTableCapabilities`独立注册物品／充能能力，`AdvancedCraftingRecipeReload`给重载generation。四源已展开，本地数组与相邻资源是不同合同，见[专题](ADVANCED_WORKTABLE_AUDIT.md)。
+
+筛粉漏斗：共享`DustFunnelBlockEntity`分别保存输入／输出格与单材料内部余量，`retrieveFraction`专供钳子清余粉，通用`retrieve`保留空手／拆除取物顺序。`DustFunnelJadeProvider`通过服务端数据展示实际模式与余量，`GTJadePlugin`同时接两端注册，见[专题](DUST_FUNNEL_AUDIT.md)。
+
+蓝图／自动合成：core的`AutocraftingRules`负责九格分组、抵消和约分；共享`CraftingBlueprintData`处理键式／先前列表布局与原生序列化，`BlueprintRecipes`接扫描／打印。`AutocraftingRecipes`选原生合成配方并构造机器Recipe，最终还由`RecipeInputs`验证实际库存；高级工作台负责写入，机器实体负责独立程序槽。四源已展开，工具／NBT、程序与库存不得混为同一匹配阶段，见[专题](BLUEPRINT_AUTOCRAFTING_AUDIT.md)。
 
 禁刷怪塔17996的纯数值／唯一布局在core的`VonDaGraaggRules`；共享原生BE负责验证与供能，`VonDaGraaggSpawnInhibitor`负责刷怪事件，`ControllerStructureLayouts`的本机预览委托core而不再重复63格。实际消费者及可读性边界见[专题](VON_DA_GRAAGG_AUDIT.md)。
 
@@ -35,6 +89,10 @@
 ## 先按层找代码
 
 USB／HDD：core `UsbDataRules`给键名、内置ID／级别和模式范围；共享`UsbDataMedia`只读写物品文件，Neo副本必须显式store。`UsbSwitchBlockEntity`管理槽位／mode／覆盖板／保存，`UsbDataCable`按相邻面读`UsbDataPort`；菜单不替代实体，`BasicMachineBlock`普通邻居更新也不等于配方库存标志。实际消费者与缺口见[数据交换专题](USB_SWITCH_AUDIT.md)。
+
+材料数据配方：core `MaterialDataRules`保留功率／时长与形态数量，`MaterialDataFacts`给来源准入／优先表；共享`GTMaterialDataRecipes`生成实际输入的数据配方，`MaterialDataViewerRecipes`另登记fake展示行。`BasicMachineBlockEntity`先直接查表／提供者再查端口，Neo后者在`MachineContextRecipes`，不是同一槽位循环。四源已展开，当前选择次序差异及既有功能见[材料数据链](MATERIAL_DATA_CHAIN_AUDIT.md)。
+
+可视文档：`BlueprintRecipes.register`串接画布／蓝图／普通书籍地图；`VisualDocumentRecipes`负责实际配方，`VisualDocumentData`负责NBT／组件转换。`CanvasRecipes`扫描和打印，`CanvasData`在图像注册名／属性与原生状态间转换，最后由`PanelCoverRenderer`委托`CanvasCoverRenderer`。四源已展开，原映射meta与现代默认状态必须分别追查，见[可视文档](VISUAL_DOCUMENT_AUDIT.md)。
 
 长距离传输：core的`LongDistanceLink`管理记住位置／对象与认领，`LongDistanceNetwork`给扫描和历史投影；原生适配仍在`block/misc/LongDistEndpointBlockEntity`与`LongDistanceTransformerBlockEntity`，负责世界观察、载入／工具及发火消费者。注册统一走`GTLongDistance`，管道端点能力在Neo `LongDistanceCapabilities`和共享转发基类。过压策略与独立烧线分支、保存位置与运行对象须分开看，见[长距离续核](LONG_DISTANCE_LIFECYCLE_AUDIT.md)。
 
@@ -395,3 +453,5 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 物流网络的物理扫描与坐标快照在`LogisticsNetwork`，安装物及显示数据在`LogisticsCovers`，线的持久化／原生同步在`LogisticsWireBlockEntity`；能力代理的目标选择在`ExtenderSpec`／`RelayRoutingRules`和原生`ExtenderBlockEntity`／`CapabilityRelayBlockEntity`，不等于物流节点委托。五源码已展开并保留执行，见[网络与生命周期核查](LOGISTICS_NETWORK_AUDIT.md)。
 
 物流线客户端：共享`LogisticsWireBlock`维护连接与形状，`LogisticsCoverRenderer`消费安装物和CPU刻度；Neo的`LogisticsRegistries`／`LogisticsClientSetup`分别处理原生注册和渲染订阅。图集目录源位于core资源assets/minecraft/atlases/blocks.json，模型loader改写在multiversion/build.gradle；局部class没有注册或原维护JSON仍写forge并不直接代表缺实现。四源已展开并保留执行，见[客户端核查](LOGISTICS_CLIENT_AUDIT.md)。
+
+红石导线：core `content/energy/SignalWireCatalog.java` 给三材料族，`SignalWireRules.java` 只给现有损耗／比较器／原版输出三数值表达式。共享 `registry/GTSignalWires.java` 注册六项；`block/energy/SignalWireBlock.java` 管原生连接／形状与工具，`blockentity/energy/SignalWireBlockEntity.java` 管组件采样、传播、输入面、瞬态保存与世界通知。core `api/signal` 在 `src/api/java`，不要按其它旧api路径猜位置。魔法场吸收器缺口及平值策略见[核查](SIGNAL_WIRE_AUDIT.md)；不能把书籍提及当成注册。

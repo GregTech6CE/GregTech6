@@ -1,5 +1,43 @@
 # 活动源码结构与可读性盘点
 
+2026-10-22 第一百一十七批：共享垃圾池与两类实体、core标量规则四源509→621行；逐操作展开，70名称出现受控替换，非活动Stonecutter体与活动体一并整理。防名称冲突后七完整平台代码视图保持，五组说明纠错，见[专题](GARBAGE_POOL_AUDIT.md)和[回执](verification/garbage-pool-audit-20261022.json)。运行策略／数据键未改，标准化继续。
+
+2026-10-22 第一百一十六批：四份流体附件源326→376行，重复角色判断下沉core，FluidToolTarget中继逐操作展开，t／funnel改明确局部名；三个helper、五调用、七完整剩余平台视图有受控证明。见[专题](FLUID_ATTACHMENTS_AUDIT.md)及[回执](verification/fluid-attachments-audit-20261022.json)。不是重新引入旧loader命名，也没有借整理修复玩法；其余大职责／重复和全系统继续。
+
+2026-10-22 第一百零六批：五份矿物core／目录、床岩feature／维度边界及矿石解析器502→581行；删除两个仅剩声明的私有包装，保留已对齐表格，展开核心循环及平台回调。四源六视图完整相同，另两视图在显式去除私有段后剩余相同，删除源码、引用范围与限制随[回执](verification/spring-bedrock-dispatch-audit-20261022.json)归档。不是所有原token原封不动，也不改变生成策略，见[专题](SPRING_BEDROCK_DISPATCH_AUDIT.md)。
+
+2026-10-22 第一百零五批：FluidSpringRules、GTFluidSprings、FluidSpringBlock／Entity、FluidSpringClient／BakedModel及GTFluidSpringsFeature七源742→908行；展开循环、变体工厂、旧状态、服务器门控与模型分派，保留原已清楚的数组排版。13完整代码流、字面量位置／其余注释／条件保持，明确amount是roll边界及未移植的原分支，未改玩法，见[液体泉](FLUID_SPRING_AUDIT.md)。下文引用筛查为第一百零四批快照，不能当新增本批后的完整覆盖率；大职责、重复方法和全系统队列继续。
+
+2026-10-22 第一百零四批：花盆、灯笼、共享装饰工厂、RegisteredBlock及Neo装饰入口五源174→254行，私有reg和局部v／b明确命名；另纠正GTToolBlocks采集袋来源ID。六源11完整代码／字面量／其余注释／指令证明保持，未改玩法，见[专题](PLANT_LANTERN_AUDIT.md)。
+
+本批重建当前维护输入：core API 62、core主代码498、共享API 14、共享主代码1048、Forge专有73、Neo专有130，共1825份Java，活动路径无loader／loaders／a／b／c目录。下文2026-10-20的1790份及密度数据保留历史边界。新增[回执引用筛查](../../tools/integration/inventory_audit_references.py)及[结果](verification/source-reference-screen-20261022.json)：98份audit回执匹配292原文件摘要，另123注册class无匹配引用；不表示已核全文件或未移植123项，不能换算完成率。支持嵌套路径键／历史摘要，避免误列已引用过的反应堆等入口。
+
+第一百零三批按钮／曲柄七源903→902行、三局部名及五组说明更正，12完整代码视图保持，见[报告](BUTTON_CRANK_AUDIT.md)；第一百零二批采集袋／树洞六源748→824行、五处说明更正，11完整视图保持，见[报告](SAP_BAG_AUDIT.md)。两批均未将整理当作玩法修复。大职责拆分、其它压行、方法级平台业务重复和全系统消费者仍继续。
+
+2026-10-22 第一百零一批：共享ShapedToolBlock、CoverCollisionMixin两源107→164行，展开形状旋转、方向工具／两版交互和选择／碰撞注入。四完整代码token906／1110、378／378，字面量位置25／25、9／9、全部注释和Stonecutter指令保持；没有更改物性、碰撞、注入点或用户材料。见[专题](UTILITY_PHYSICS_AUDIT.md)和[回执](verification/utility-physics-audit-20261022.json)。
+
+2026-10-22 第一百批：UtilityToolRules、RopeBlock、ScaffoldBlock、GTToolBlocks四源606→769行，材料逐行、方法／放置／更新与注册展开；七完整代码token为312、1112／1362、1544／1546、4005／913，字面量位置34、29／29、69／69、159／37及指令保持。一条过时Neo注册说明有意修正，其余注释保持，未改玩法或用户材料。见[专题](ROPE_SCAFFOLD_AUDIT.md)与[回执](verification/rope-scaffold-audit-20261022.json)。
+
+2026-10-22 第九十九批：OpenVesselRules／ProcessingToolBlockEntity／ProcessingToolBlock／ProcessingToolRenderer四源450→706行，七配置逐行，分开加工、交互、流体、保存和绘制；七完整代码478、4133／4030、794／804、681／683及字面量位置39、58／58、7／7、41／41、全部注释／指令保持。未改309–312或其它玩法，用户材料不动，见[专题](OPEN_VESSEL_AUDIT.md)和[回执](verification/open-vessel-audit-20261022.json)。
+
+2026-10-22 第九十八批：SharpeningRecipes／MortarGrindingRecipes／core PulverizationRules／GTElectricItems四源294→331行，保留已有配方表分组，展开短方法、工厂赋值与参数缩进；七完整代码995／994、871／870、126、311／333及字面量位置80／80、45／45、3、6／6、全部注释／指令保持。未改304–308或其它玩法，用户材料不动，见[专题](MANUAL_GRINDING_AUDIT.md)和[回执](verification/manual-grinding-audit-20261022.json)。
+
+2026-10-22 第九十七批：ManualWorkRules／ManualToolBlockEntity／ManualToolBlock／Neo GTManualStations四源494→682行，展开公式、交互、保存／版本回调与注册循环；六完整代码175、2586／2674、1207／1429、1673，字面量位置26、70／69、24／24、58及注释／指令保持。未改301–303或其它玩法，用户材料不动，见[专题](SIFTING_TABLE_AUDIT.md)和[回执](verification/sifting-table-audit-20261022.json)。
+
+2026-10-22 第九十六批：AdvancedCraftingTableBlock／ChargingCraftingTableBlock／BlockContents／BlockLootPack四源257→343行，展开交互、拆除、版本回调与战利品生成；八完整代码1088／1348、210／206、247／249、1094／1153及字面量位置／注释／指令保持。纯排版，危险与172通知只记审计，用户材料不动，见[专题](WORKTABLE_LIFECYCLE_AUDIT.md)和[回执](verification/worktable-lifecycle-audit-20261022.json)。
+
+2026-10-22 第九十五批：ChargingCraftingTableBlockEntity／AdvancedCraftingScreen／AdvancedCraftingRecipeReload三源153→292行，展开充能、能力生命周期、绘制与重载；六完整代码1018／860、578／572、118／118，原始字面量位置／注释／版本指令保持。只排版，298／299另列真实合同，用户材料不动，见[专题](WORKTABLE_IO_AUDIT.md)和[回执](verification/worktable-io-audit-20261022.json)。
+
+2026-10-22 第九十四批：AdvancedCraftingRules／AdvancedCraftingTableBlockEntity／AdvancedCraftingMenu／Neo CraftingTableCapabilities四源415→817行，分开缓存、计划、提交、余物和能力事件；六完整代码441、3788／3786、1588／1590、216及字面量位置／其余注释／指令保持。三条说明不再过强归因原版，未改玩法或用户材料，见[专题](ADVANCED_WORKTABLE_AUDIT.md)和[回执](verification/advanced-worktable-audit-20261022.json)。
+
+2026-10-22 第九十三批：筛粉漏斗分开“内部余粉”和“普通两格”的取出职责，上方吸入复用`accepts`；新增独立Jade提供者，避免展示逻辑挤入方块实体。这是用户授权的功能修复293，不能当作完整代码等价排版；原换算／存档等保留路径另核，见[专题](DUST_FUNNEL_AUDIT.md)。
+
+2026-10-22 第九十二批：AutocraftingRules／CraftingBlueprintData／BlueprintRecipes／AutocraftingRecipes四源513→569行，分开格数据、配方参数与原生选择分支。七完整有序代码1074、553／575、1268／1309、1845／1881及字面量位置／其余注释／条件保持；仅修正两条说明范围，292另记实际差异。用户材料不动，见[专题](BLUEPRINT_AUTOCRAFTING_AUDIT.md)和[回执](verification/blueprint-autocrafting-audit-20261021.json)。
+
+2026-10-21 第九十一批：VisualDocumentData／VisualDocumentRecipes／CanvasRecipes／CanvasData四源397→564行，分开输入／配方、图像状态及Neo组件转换，保留数组参数分组；八完整代码及字面量／其余注释／条件保持。只修正过强映射说明，291另记实际差异，未改玩法与用户材料，见[专题](VISUAL_DOCUMENT_AUDIT.md)和[回执](verification/visual-document-audit-20261021.json)。
+
+2026-10-21 第九十批：MaterialDataRules／GTMaterialDataRecipes／MaterialDataViewerRecipes／Neo MachineContextRecipes四源677→768行；保留已清楚的数组排版，展开紧凑参数、循环与注册。六完整代码308、3762／3859、738／738、315及字面量／其余注释／版本指令保持，修正覆盖计数、复制回退说明与不存在的mUSBTier引用。实际选择顺序差异另记290，未改玩法或用户材料，见[专题](MATERIAL_DATA_CHAIN_AUDIT.md)和[回执](verification/material-data-chain-audit-20261021.json)。
+
 2026-10-20，基线 `36833296c`，读取当时含本轮排版的工作区。共 2253 个追踪且存在的 Java 文件，其中 1790 个活动生产／API 输入；其他 463 个属于测试、示例等，不能把数量差直接当重复或缺失。
 
 | 输入层 | 文件数 |

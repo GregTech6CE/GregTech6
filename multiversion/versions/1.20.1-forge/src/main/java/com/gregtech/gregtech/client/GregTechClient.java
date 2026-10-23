@@ -114,7 +114,7 @@ public final class GregTechClient {
                 .filter(ro -> ro!=null && ro.isPresent()).map(ro -> ro.get()).collect(java.util.stream.Collectors.toSet());
         GTBlocks.BLOCK_ITEMS.getEntries().forEach(entry -> {
             if (entry.get() instanceof net.minecraft.world.item.BlockItem signalItem && signalItem.getBlock() instanceof com.gregtech.gregtech.block.energy.SignalWireBlock wire) {
-                event.register((stack,index)->index==0?wire.material().getColor():index==1?0x604040:0xFFFFFF,signalItem);
+                event.register((stack,index)->com.gregtech.gregtech.content.energy.SignalWireColors.tint(wire.material(),index),signalItem);
             } else if (entry.get() instanceof net.minecraft.world.item.BlockItem zpmItem && zpmItem.getBlock() instanceof com.gregtech.gregtech.block.energy.ZpmModuleBlock) {
                 event.register((stack,index)->com.gregtech.gregtech.content.energy.ZpmEnergy.stored(stack)>0?0xFFDD00:0x806E00,zpmItem);
             } else if (entry.get() instanceof net.minecraft.world.item.BlockItem zpmItem && zpmItem.getBlock() instanceof com.gregtech.gregtech.block.energy.ZpmDischargerBlock) {
@@ -514,8 +514,7 @@ public final class GregTechClient {
                 .forEach(entry -> event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? entry.get().material().getColor() : 0xFFFFFF, entry.get()));
         com.gregtech.gregtech.registry.GTSignalWires.all().forEach(entry -> {
             var wire = entry.get();
-            event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? wire.material().getColor()
-                    : tintIndex == 1 ? 0x604040 : 0xFFFFFF, wire);
+            event.register((state, level, pos, tintIndex) -> com.gregtech.gregtech.content.energy.SignalWireColors.tint(wire.material(),tintIndex), wire);
         });
         GTWires.all().forEach(entry -> {
             if (entry.isPresent()) {

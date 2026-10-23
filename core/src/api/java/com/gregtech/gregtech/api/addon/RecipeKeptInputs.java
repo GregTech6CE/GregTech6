@@ -51,11 +51,12 @@ public final class RecipeKeptInputs {
     }
 
     /**
-     * Negative amounts are rejected. An amount of 0 is a presence-only catalyst and is accepted;
-     * a positive amount may still be marked in {@code keptFluidInputs} to check without draining.
+     * Native stack representatives must stay positive so their fluid identity survives copying.
+     * Textual zero-mB inputs are normalized before this boundary and use separate presence indexes;
+     * positive retained quantities use {@code keptFluidInputs}.
      */
     public static void requirePositiveFluid(int amount, int index) {
-        if (amount >= 0) return;
+        if (amount > 0) return;
         throw new IllegalArgumentException("Fluid input " + index + " has amount " + amount);
     }
 

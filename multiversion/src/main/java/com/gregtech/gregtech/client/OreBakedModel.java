@@ -171,7 +171,12 @@ public final class OreBakedModel implements IDynamicBakedModel {
         List<BakedQuad> source = template.getQuads(null, side, RandomSource.create(42L));
         List<BakedQuad> out = new ArrayList<>(source.size() * 2);
         for (BakedQuad quad : source) {
-            out.add(retexture(quad, base, -1));
+            // Vanilla deepslate is a column: its ends use a different texture from its sides.
+            // Bedrock veins prepare vertical deepslate, so their ore tops must use that end too.
+            TextureAtlasSprite faceBase = !broken && stone.equals(OreHostStone.DEEPSLATE.id())
+                    && quad.getDirection().getAxis() == Direction.Axis.Y
+                    ? sprite(ResourceLocation.fromNamespaceAndPath("minecraft", "block/deepslate_top")) : base;
+            out.add(retexture(quad, faceBase, -1));
             out.add(retexture(quad, overlay, 0));
         }
         return out;

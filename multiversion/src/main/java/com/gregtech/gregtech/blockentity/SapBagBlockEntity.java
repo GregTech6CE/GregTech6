@@ -27,13 +27,14 @@ import org.jetbrains.annotations.Nullable;
  * GT6's sap bag ({@code MultiTileEntitySapBag}): a bag hung on the side of a tree hole that empties
  * the hole into itself.
  *
- * <p>GT6's tile entity checks the block it faces every tick: if that neighbour is a tree hole with
- * resin, it extracts the resin, fills its 8000 mB tank with the sap fluid and puts the resin item
- * into its single slot (the rubber hole yields an item instead of a fluid). Right-clicking hands out
+ * <p>This port checks the facing tree hole every server tick, keeping an 8000 mB tank and one item
+ * slot. Registered holes select one yield kind here; the original rubber hole provides both an
+ * item and a fluid. Right-clicking hands out
  * the stored item first and then fills whatever container the player holds. Breaking the bag loses
  * the tank contents, exactly like GT6's {@code GarbageGT.trash(mTank)}.
  */
 public class SapBagBlockEntity extends BlockEntity implements IFluidHandler {
+
     /** GT6 {@code new FluidTankGT(8000)} — 32 taps of 250 mB. */
     public static final long CAPACITY = com.gregtech.gregtech.content.tool.UtilityToolRules.SAP_CAPACITY;
 
@@ -48,26 +49,31 @@ public class SapBagBlockEntity extends BlockEntity implements IFluidHandler {
         super(GTBlockEntities.SAP_BAG.get(), pos, state);
     }
 
-    public FluidTankGT tank() { return tank; }
+    public FluidTankGT tank() {
+        return tank;
+    }
 
-    public ItemStack stored() { return stored; }
+    public ItemStack stored() {
+        return stored;
+    }
 
     public void setStored(ItemStack stack) {
         stored = stack == null ? ItemStack.EMPTY : stack;
         contentsChanged();
     }
+
     private void contentsChanged() {
         setChanged();
         if (level != null && !level.isClientSide) level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
     }
 
-    /** True when the bag holds anything (GT6's {@code mFull}, used for its full overlay). */
+    /** GT6's {@code mFull} condition; the current block model does not consume this value. */
     public boolean isFull() {
         return tank.getAmount() > 0 || !stored.isEmpty();
     }
 
     public static <T extends SapBagBlockEntity> void serverTick(net.minecraft.world.level.Level level,
-                                                               BlockPos pos, BlockState state, T be) {
+            BlockPos pos, BlockState state, T be) {
         be.collect();
     }
 
@@ -108,10 +114,10 @@ public class SapBagBlockEntity extends BlockEntity implements IFluidHandler {
 
     @Override
 //? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-        tank.readFromNBT(tag,lookup);
-        stored = ItemStack.parseOptional(lookup,tag.getCompound("stored"));
+    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.loadAdditional(tag, lookup);
+        tank.readFromNBT(tag, lookup);
+        stored = ItemStack.parseOptional(lookup, tag.getCompound("stored"));
 *///?} else {
     public void load(CompoundTag tag) {
         super.load(tag);
@@ -122,9 +128,9 @@ public class SapBagBlockEntity extends BlockEntity implements IFluidHandler {
 
     @Override
 //? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-        tank.writeToNBT(tag,lookup);
+    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.saveAdditional(tag, lookup);
+        tank.writeToNBT(tag, lookup);
         if (!stored.isEmpty()) tag.put("stored", stored.saveOptional(lookup));
 *///?} else {
     protected void saveAdditional(CompoundTag tag) {
@@ -151,33 +157,55 @@ public class SapBagBlockEntity extends BlockEntity implements IFluidHandler {
     }
 //? if >=1.21.1 {
 
-    /*@Override public void handleUpdateTag(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup){loadAdditional(tag,lookup);}
-    @Override public void onDataPacket(net.minecraft.network.Connection connection,ClientboundBlockEntityDataPacket packet,net.minecraft.core.HolderLookup.Provider lookup){if(packet.getTag()!=null)loadAdditional(packet.getTag(),lookup);}
+    /*@Override
+    public void handleUpdateTag(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        loadAdditional(tag, lookup);
+    }
+
+    @Override
+    public void onDataPacket(net.minecraft.network.Connection connection, ClientboundBlockEntityDataPacket packet,
+            net.minecraft.core.HolderLookup.Provider lookup) {
+        if (packet.getTag() != null) loadAdditional(packet.getTag(), lookup);
+    }
 *///?} else {
 //?}
 
-    // ── IFluidHandler (GT6's bag is a plain tank, so pipes can drain it) ──────────────────────
+    // ── Port IFluidHandler extension (original public tank lookup does not expose the bag tank) ──────────────────────
 
     @Override
-    public int getTanks() { return 1; }
+    public int getTanks() {
+        return 1;
+    }
 
     @Override
-    public @NotNull FluidStack getFluidInTank(int tank) { return this.tank.getFluid(); }
+    public @NotNull FluidStack getFluidInTank(int tank) {
+        return this.tank.getFluid();
+    }
 
     @Override
-    public int getTankCapacity(int tank) { return FluidTankGT.bindInt(CAPACITY); }
+    public int getTankCapacity(int tank) {
+        return FluidTankGT.bindInt(CAPACITY);
+    }
 
     @Override
-    public boolean isFluidValid(int tank, @NotNull FluidStack stack) { return this.tank.isFluidValid(tank, stack); }
+    public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
+        return this.tank.isFluidValid(tank, stack);
+    }
 
     @Override
-    public int fill(FluidStack resource, FluidAction action) { return tank.fill(resource, action); }
+    public int fill(FluidStack resource, FluidAction action) {
+        return tank.fill(resource, action);
+    }
 
     @Override
-    public @NotNull FluidStack drain(FluidStack resource, FluidAction action) { return tank.drain(resource, action); }
+    public @NotNull FluidStack drain(FluidStack resource, FluidAction action) {
+        return tank.drain(resource, action);
+    }
 
     @Override
-    public @NotNull FluidStack drain(int maxDrain, FluidAction action) { return tank.drain(maxDrain, action); }
+    public @NotNull FluidStack drain(int maxDrain, FluidAction action) {
+        return tank.drain(maxDrain, action);
+    }
 
 //? if >=1.21.1 {
 //?} else {
@@ -192,6 +220,11 @@ public class SapBagBlockEntity extends BlockEntity implements IFluidHandler {
         super.invalidateCaps();
         handler.invalidate();
     }
-    @Override public void reviveCaps() { super.reviveCaps(); handler = LazyOptional.of(() -> this); }
+
+    @Override
+    public void reviveCaps() {
+        super.reviveCaps();
+        handler = LazyOptional.of(() -> this);
+    }
 //?}
 }

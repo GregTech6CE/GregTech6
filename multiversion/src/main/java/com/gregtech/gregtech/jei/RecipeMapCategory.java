@@ -81,31 +81,34 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
         for(int i=0;i<fluids.length;i++) {
             var fluid=fluids[i];
             if(fluid==null||fluid.getFluid()==net.minecraft.world.level.material.Fluids.EMPTY) continue;
-            boolean catalyst=input&&fluid.getAmount()<=0;
-            var shown=catalyst?new FluidStack(fluid.getFluid(),1):fluid;
+            boolean presence=input&&recipe.isPresenceFluidInput(i);
+            boolean catalyst=input&&(presence||recipe.isCatalystFluidInput(i));
+            var fluidRole=catalyst?RecipeIngredientRole.CATALYST:role;
+            var shown=fluid;
             var point=MachineGuiLayout.fluid(input,i);
 //? if >=1.21.1 {
             /*var display=FluidDisplayBinding.display(net.minecraft.client.Minecraft.getInstance().level.registryAccess(),shown);
 *///?} else {
             var display=FluidDisplayBinding.display(shown);
 //?}
-            var fluidSlot=builder.addSlot(role,point.x(),point.y()).setSlotName(role.name()+"_fluid_"+i);
+            var fluidSlot=builder.addSlot(fluidRole,point.x(),point.y()).setSlotName(fluidRole.name()+"_fluid_"+i);
             if (input) {
                 var containers = com.gregtech.gregtech.api.fluid.FluidContainerDisplayBinding.containers(shown);
-                if (!containers.isEmpty()) builder.addInvisibleIngredients(role).addItemStacks(containers);
+                if (!containers.isEmpty()) builder.addInvisibleIngredients(fluidRole).addItemStacks(containers);
             }
             if(!display.isEmpty()) fluidSlot.addItemStack(display).addTooltipCallback((view,tooltip)->
-                    tooltip.add(catalyst?Component.translatable("gt6ce.jei.catalyst")
-                            :Component.translatable("gt6ce.fluid.amount",fluid.getAmount())));
+                    tooltip.add(Component.translatable("gt6ce.fluid.amount",presence ? 0 : fluid.getAmount())));
 //? if >=1.21.1 {
             /*else fluidSlot.addIngredient(NeoForgeTypes.FLUID_STACK,shown).setFluidRenderer(Math.max(1000,shown.getAmount()),false,16,16);
-            builder.addInvisibleIngredients(role).addIngredient(NeoForgeTypes.FLUID_STACK,shown);
+            builder.addInvisibleIngredients(fluidRole).addIngredient(NeoForgeTypes.FLUID_STACK,shown);
 *///?} else {
             else fluidSlot.addIngredient(ForgeTypes.FLUID_STACK,shown).setFluidRenderer(Math.max(1000,shown.getAmount()),false,16,16);
-            builder.addInvisibleIngredients(role).addIngredient(ForgeTypes.FLUID_STACK,shown);
+            builder.addInvisibleIngredients(fluidRole).addIngredient(ForgeTypes.FLUID_STACK,shown);
 //?}
+            if(catalyst) fluidSlot.addTooltipCallback((view,tooltip)->tooltip.add(Component.translatable(
+                    presence ? "gt6ce.jei.fluid_presence" : "gt6ce.jei.catalyst")));
             // Generic creative proxies still find all compatible fluid variants via U/R.
-            if(!display.isEmpty()) builder.addInvisibleIngredients(role).addItemStack(new ItemStack(display.getItem()));
+            if(!display.isEmpty()) builder.addInvisibleIngredients(fluidRole).addItemStack(new ItemStack(display.getItem()));
         }
     }
     @Override public void draw(Recipe recipe,IRecipeSlotsView slots,GuiGraphics graphics,double mouseX,double mouseY) {

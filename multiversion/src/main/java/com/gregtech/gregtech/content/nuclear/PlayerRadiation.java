@@ -23,9 +23,12 @@ import net.minecraftforge.fml.common.Mod;
 //?}
 public final class PlayerRadiation {
     private static final String KEY = "gt6ce.radiation";
+
     /** Dose from which the symptoms turn lethal in GT6 (wither instead of poison). */
     public static final int SEVERE_DOSE = 100;
-    private PlayerRadiation() {}
+
+    private PlayerRadiation() {
+    }
 
     public static int dose(Player player) {
         return Math.max(0, Math.min(127, player.getPersistentData().getInt(KEY)));
@@ -33,7 +36,7 @@ public final class PlayerRadiation {
 
     public static void change(Player player, long amount) {
         // Clamp the delta before addition so even third-party callers cannot overflow it.
-        int value = com.gregtech.gregtech.content.food.NutritionRules.change(dose(player),amount);
+        int value = com.gregtech.gregtech.content.food.NutritionRules.change(dose(player), amount);
         if (value == 0) player.getPersistentData().remove(KEY);
         else player.getPersistentData().putInt(KEY, value);
     }
@@ -46,7 +49,7 @@ public final class PlayerRadiation {
             // GT6 leaves the actual damage to IC2 (DamageSources.getRadioactiveDamage); the port has no
             // IC2, so the severe stage of its own dose tracker deals it - which is also what gives
             // GTDamageTypes.RADIATION ("was irradiated") its call site. One point per symptom tick
-            // (every 50 ticks), i.e. 2 HP per 2.5 s on top of the vanilla effects below.
+            // (every 50 ticks): requests 1 HP per 2.5 s; actual damage still follows the damage pipeline.
             player.hurt(com.gregtech.gregtech.damage.GTDamageTypes.radiation(player.level()), 1.0F);
         }
         if (value < 50) return;
@@ -55,25 +58,30 @@ public final class PlayerRadiation {
         /*for (var effect : java.util.List.of(MobEffects.CONFUSION,
                 MobEffects.HUNGER, MobEffects.MOVEMENT_SLOWDOWN, MobEffects.DIG_SLOWDOWN, MobEffects.WEAKNESS)) {
 *///?} else {
-        for (var effect : new net.minecraft.world.effect.MobEffect[] {MobEffects.CONFUSION,
-                MobEffects.HUNGER, MobEffects.MOVEMENT_SLOWDOWN, MobEffects.DIG_SLOWDOWN, MobEffects.WEAKNESS}) {
+        for (var effect : new net.minecraft.world.effect.MobEffect[] {
+            MobEffects.CONFUSION,
+            MobEffects.HUNGER, MobEffects.MOVEMENT_SLOWDOWN, MobEffects.DIG_SLOWDOWN, MobEffects.WEAKNESS
+        }) {
 //?}
             player.addEffect(new MobEffectInstance(effect, 100, amplifier));
         }
     }
 
 //? if >=1.21.1 {
-    /*@SubscribeEvent public static void tick(PlayerTickEvent.Post event) {
+    /*@SubscribeEvent
+    public static void tick(PlayerTickEvent.Post event) {
         if (!event.getEntity().level().isClientSide
                 && event.getEntity().level().getGameTime() % 50 == 0) applySymptoms(event.getEntity());
 *///?} else {
-    @SubscribeEvent public static void tick(TickEvent.PlayerTickEvent event) {
+    @SubscribeEvent
+    public static void tick(TickEvent.PlayerTickEvent event) {
         if (event.phase == TickEvent.Phase.END && !event.player.level().isClientSide
                 && event.player.level().getGameTime() % 50 == 0) applySymptoms(event.player);
 //?}
     }
 
-    @SubscribeEvent public static void clonePlayer(PlayerEvent.Clone event) {
+    @SubscribeEvent
+    public static void clonePlayer(PlayerEvent.Clone event) {
         event.getEntity().getPersistentData().remove(KEY);
         if (!event.isWasDeath()) change(event.getEntity(), dose(event.getOriginal()));
     }

@@ -20,20 +20,27 @@ import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 /** Original automatic-tool and data-switch casing colors on the actual registered blocks. */
 @EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class AutomaticToolClientColors {
-    private AutomaticToolClientColors() {}
+
+    private AutomaticToolClientColors() {
+    }
+
     private static int rgb(Block block, int layer) {
         if (layer != 0) return 0xffffff;
-        String id=BuiltInRegistries.BLOCK.getKey(block).getPath();
+        String id = BuiltInRegistries.BLOCK.getKey(block).getPath();
         if (id.equals("advanced_button")) return Materials.TinAlloy.getColor();
         if (id.equals("dust_funnel")) return Materials.Steel.getColor();
         if (block instanceof com.gregtech.gregtech.block.inventory.UsbSwitchBlock) return Materials.SteelGalvanized.getColor();
         return AutomaticToolRules.material(AutomaticToolRules.profile(BuiltInRegistries.BLOCK.getKey(block).getPath())).getColor();
     }
+
     private static java.util.List<Block> blocks() {
         var result = new java.util.ArrayList<Block>();
         var ids = new java.util.ArrayList<String>();
         AutomaticToolRules.ALL.forEach(spec -> ids.add(spec.id()));
-        ids.add("usb_switch"); ids.add("hdd_switch"); ids.add("advanced_button"); ids.add("dust_funnel");
+        ids.add("usb_switch");
+        ids.add("hdd_switch");
+        ids.add("advanced_button");
+        ids.add("dust_funnel");
 //? if >=1.21.1 {
         /*for (String id : ids) result.add(BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", id)));
 *///?} else {

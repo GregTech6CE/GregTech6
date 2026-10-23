@@ -26,13 +26,27 @@ public final class AdvancedButtonBlockEntity extends BlockEntity {
         super(GTBlockEntities.ADVANCED_BUTTON.get(), pos, state);
     }
 
-    public int strength() { return strength; }
-    public boolean isLampMode() { return lampMode; }
-    public boolean isActive() { return active; }
-    public boolean isInverted() { return inverted; }
-    public long maxLength() { return maxLength; }
+    public int strength() {
+        return strength;
+    }
 
-    /** GT6 remoteActivate uses the same state transition without a click sound. */
+    public boolean isLampMode() {
+        return lampMode;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public boolean isInverted() {
+        return inverted;
+    }
+
+    public long maxLength() {
+        return maxLength;
+    }
+
+    /** Local press transition; the original remote-activation adapter is not connected. */
     public boolean press() {
         if (lampMode) return false;
         if (maxLength > 0) {
@@ -63,12 +77,12 @@ public final class AdvancedButtonBlockEntity extends BlockEntity {
     }
 
     public void adjustLength(int increment) {
-        maxLength = com.gregtech.gregtech.content.tool.UtilityToolRules.buttonLength(maxLength,increment);
+        maxLength = com.gregtech.gregtech.content.tool.UtilityToolRules.buttonLength(maxLength, increment);
         refresh(false);
     }
 
     public void adjustStrength(int increment) {
-        strength = com.gregtech.gregtech.content.tool.UtilityToolRules.buttonStrength(strength,increment);
+        strength = com.gregtech.gregtech.content.tool.UtilityToolRules.buttonStrength(strength, increment);
         refresh(true);
     }
 
@@ -97,9 +111,9 @@ public final class AdvancedButtonBlockEntity extends BlockEntity {
         Component polarity = Component.translatable("message.gt6ce.advanced_button.polarity."
                 + (inverted ? "inverted" : "normal"));
         return maxLength > 0
-                ? Component.translatable("message.gt6ce.advanced_button.status_timed",
-                        mode, strength, maxLength, polarity)
-                : Component.translatable("message.gt6ce.advanced_button.status", mode, strength, polarity);
+        ? Component.translatable("message.gt6ce.advanced_button.status_timed",
+                mode, strength, maxLength, polarity)
+        : Component.translatable("message.gt6ce.advanced_button.status", mode, strength, polarity);
     }
 
     private void refresh(boolean neighbors) {
@@ -108,13 +122,13 @@ public final class AdvancedButtonBlockEntity extends BlockEntity {
         BlockState oldState = getBlockState();
         if (!(oldState.getBlock() instanceof AdvancedButtonBlock)) return;
         BlockState newState = oldState.setValue(AdvancedButtonBlock.ACTIVE, active)
-                .setValue(AdvancedButtonBlock.LIT, active != glowInverted);
+        .setValue(AdvancedButtonBlock.LIT, active != glowInverted);
         if (oldState != newState) level.setBlock(worldPosition, newState, Block.UPDATE_ALL);
         else level.sendBlockUpdated(worldPosition, oldState, oldState, Block.UPDATE_CLIENTS);
         if (neighbors) {
             level.updateNeighborsAt(worldPosition, oldState.getBlock());
             level.updateNeighborsAt(worldPosition.relative(oldState.getValue(AdvancedButtonBlock.FACING)
-                    .getOpposite()), oldState.getBlock());
+            .getOpposite()), oldState.getBlock());
         }
     }
 
@@ -141,8 +155,8 @@ public final class AdvancedButtonBlockEntity extends BlockEntity {
 
     @Override
 //? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
+    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.saveAdditional(tag, lookup);
 *///?} else {
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
@@ -154,8 +168,8 @@ public final class AdvancedButtonBlockEntity extends BlockEntity {
 
     @Override
 //? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
+    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.loadAdditional(tag, lookup);
 *///?} else {
     public void load(CompoundTag tag) {
         super.load(tag);
@@ -173,19 +187,32 @@ public final class AdvancedButtonBlockEntity extends BlockEntity {
     }
 
 //? if >=1.21.1 {
-    /*@Override public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) { return saveWithoutMetadata(lookup); }
-    @Override public void handleUpdateTag(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup){loadAdditional(tag,lookup);}
+    /*@Override
+    public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
+        return saveWithoutMetadata(lookup);
+    }
+
+    @Override
+    public void handleUpdateTag(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        loadAdditional(tag, lookup);
+    }
 *///?} else {
-    @Override public CompoundTag getUpdateTag() { return saveWithoutMetadata(); }
+    @Override
+    public CompoundTag getUpdateTag() {
+        return saveWithoutMetadata();
+    }
 //?}
-    @Override public @Nullable ClientboundBlockEntityDataPacket getUpdatePacket() {
+    @Override
+    public @Nullable ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }
 //? if >=1.21.1 {
-    /*@Override public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet,net.minecraft.core.HolderLookup.Provider lookup) {
-        if (packet.getTag() != null) loadAdditional(packet.getTag(),lookup);
+    /*@Override
+    public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet, net.minecraft.core.HolderLookup.Provider lookup) {
+        if (packet.getTag() != null) loadAdditional(packet.getTag(), lookup);
 *///?} else {
-    @Override public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet) {
+    @Override
+    public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet) {
         if (packet.getTag() != null) load(packet.getTag());
 //?}
     }

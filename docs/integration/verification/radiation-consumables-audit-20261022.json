@@ -1,0 +1,912 @@
+{
+  "date": "2026-10-22",
+  "batch": 125,
+  "baseline": "0ea1ec71dcaae5016e261fe3621523106b541fea",
+  "previous_goal_turn": {
+    "classification": "progress",
+    "evidence": "Issue #78 original/current source hashes rechecked; confirmed 16..64 Sky Stone count, excluding it from fixes. Pending batch 124 validated and committed as 0ea1ec71d before this batch."
+  },
+  "provenance": {
+    "original_tree_read_only": true,
+    "authors": "GregTech-6 Team / Gregorius Techneticies",
+    "license": "Original LGPL notices retained; native implementation read only, not imported into production."
+  },
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/MultiItemFood.java",
+      "raw_sha256": "bc66d27a6428a3d62e3000b6bae4c8b0f1a775dad00d139bff507b201acd6598",
+      "lines": 995,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/MultiItemRandom.java",
+      "raw_sha256": "02f685214eac048d3bbdb7b7967c2c75ce1d3b8d5acd5d774772c7888dd4eb38",
+      "lines": 440,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/food/FoodStat.java",
+      "raw_sha256": "13bf9e026acb33571344f0a17eb849b8acda18eec0ac75e65bc71383d268f8ad",
+      "lines": 204,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/player/EntityFoodTracker.java",
+      "raw_sha256": "550e9511a8753ae4514463e942b84eb0a7f51ec6c5cfbc607ce11f04036dcdad",
+      "lines": 208,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/GT_API_Proxy.java",
+      "raw_sha256": "e773eae6cd22825b3cd231cfb916040b52166af7653ccc8c9f994f5e53101819",
+      "lines": 1628,
+      "notice_sha256": "6855675ee4a01a21169dd2a3ed5df729ac3198a4b2e3b869f91e1a45c79e6aca"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "raw_sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "lines": 2345,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java",
+      "raw_sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+      "lines": 3476,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/RM.java",
+      "raw_sha256": "c7cb07faef0235ace4bb26656fddaabfa10da6aa4a2689a7f4cdcaef10d366e6",
+      "lines": 1178,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/c/Loader_Recipes_Food.java",
+      "raw_sha256": "dc9162de4c889164383b30d4a665fabba052ad67dd7840a0241bf740665e6b82",
+      "lines": 832,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/data/generated/GTFoodStatsGen.java",
+      "raw_sha256": "c42a5679e3c89fdace56778d81b72361a62a89e8377d295ed973cc601891f4fe",
+      "lines": 39
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorRadiation.java",
+      "raw_sha256": "b524062f214f4c312e6cd2f12bc3be69365d4e53d7837c922890f01906792297",
+      "lines": 56
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/PlayerRadiation.java",
+      "raw_sha256": "e2afca571f48f1a1d01d1c57c43218cf0c8cb1ad6eb0770f7ab811d79d42aea8",
+      "lines": 88
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/RadawayItem.java",
+      "raw_sha256": "83d8c36bd066bebe1b73c99b0224d1218cc8efd5c5f3eb60264389d74ea5d29e",
+      "lines": 27
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/TechItem.java",
+      "raw_sha256": "16d7936a79b171cc6abefe40851d269d2c1d84b4ee397671eda069f684914f59",
+      "lines": 68
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/food/GTFoodStats.java",
+      "raw_sha256": "8204a92786a8ed259230fa90d2a3343fe5838412dc6025819939ecf6dc8414bc",
+      "lines": 64
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/food/FoodStatEvents.java",
+      "raw_sha256": "e3d2e17f59f4735e66d7309d2eb0a9d355f505f78a2e45149f158c96dc2f3ed5",
+      "lines": 93
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/food/GTFoodItems.java",
+      "raw_sha256": "33195e936ece617650d086dc396d7a149b25723c33b8891dd4933e54d21f8a05",
+      "lines": 256
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "raw_sha256": "aab379aa689ef4f83c62746d22ccca6bc511c6b323ca11e026ab6f215d1abff4",
+      "lines": 224
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/RadiationMedicineRecipes.java",
+      "raw_sha256": "566638cefcacb8838635f2d81d89175517085a7be06e40a4cdd946f5361f36da",
+      "lines": 69
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/food/NutritionRules.java",
+      "raw_sha256": "95d9a991a80a26009cae9482a620b73429dda12f6d5626ab7e195e3d20b25b21",
+      "lines": 46
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/food/FoodStatisticRows.java",
+      "raw_sha256": "72e3cd0611c71a8d06a853b34ac1dd222187ebced803891eb131b33624bd0b38",
+      "lines": 258
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/generated/GTFoodItemsGen.java",
+      "raw_sha256": "b751b8a0e476ca43b6cc16dfe919aef7f22eda5329857e68b0c04b4707f917ed",
+      "lines": 875
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/registry/GTMultiItemsGen.java",
+      "raw_sha256": "d4b794642713c208ad27ccd765a9dd9cbcdb13a7c568aec1e910f7ead3058611",
+      "lines": 1297
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/DeferredRegistrySubmission.java",
+      "raw_sha256": "e46df82fbff29df6f097e228f47e12c6c9a521cc94237301047c6bd6ad7b1689",
+      "lines": 33
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "raw_sha256": "a83787a7e2ca56b3b695b41f221cff2ee046880b09354fdf78b35bd2cc070a02",
+      "lines": 191
+    }
+  ],
+  "source_excerpts": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/MultiItemFood.java",
+      "anchor": "addItem(31001",
+      "start_line": 911,
+      "end_line": 917,
+      "excerpt_sha256": "7ca863c092eaa24ceae665bff0ddebf24daea15190026f77fe0c6c2834b05be6"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/MultiItemRandom.java",
+      "anchor": "getMaxItemUseDuration(",
+      "start_line": 106,
+      "end_line": 111,
+      "excerpt_sha256": "e348941f51ffde1bc487aa1af7903021eb53ba2bee17a72aecc0cb36edda4d9c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/MultiItemRandom.java",
+      "anchor": "tStat.onEaten(this",
+      "start_line": 319,
+      "end_line": 322,
+      "excerpt_sha256": "8f3f0bb02dc6ce6d6b88a83579ab0263a7c4b192a63e02ff055c7016ffab6733"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/food/FoodStat.java",
+      "anchor": "if (mRadiation",
+      "start_line": 164,
+      "end_line": 173,
+      "excerpt_sha256": "f27a76ff30c77d692289d8fbbb198d98c0c8a0272d7924f866339da25cc93008"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/food/FoodStat.java",
+      "anchor": "for (int i = 3; i < mPotionEffects",
+      "start_line": 157,
+      "end_line": 159,
+      "excerpt_sha256": "5617cc6ac28194aeb40aa4b4720a5ef0421766b6a18d9671e4ecd0da7ad6bfc4"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/player/EntityFoodTracker.java",
+      "anchor": "void changeRadiation",
+      "start_line": 77,
+      "end_line": 78,
+      "excerpt_sha256": "d7fcf4e93d8832686775eb97970ac217dd8aaa8cf2ea2123d25f494f32fbed24"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/player/EntityFoodTracker.java",
+      "anchor": "if (tTracker.mRadiation >= 100)",
+      "start_line": 114,
+      "end_line": 143,
+      "excerpt_sha256": "64d22d53e621df22ba8ebb8ef17234d021c701c81885a8e184f4818f8c1170d5"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/player/EntityFoodTracker.java",
+      "anchor": "//if (tTracker.mRadiation > 0)",
+      "start_line": 193,
+      "end_line": 195,
+      "excerpt_sha256": "5ef7b758e7ee5c184ca72ec482fac6b803778f9ab807fa761f31849b3e64fdf2"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/GT_API_Proxy.java",
+      "anchor": "public void onItemUseFinish(",
+      "start_line": 996,
+      "end_line": 1010,
+      "excerpt_sha256": "fcc849c1e35000a70fea9c9362c373ff3b0d9490ca81f05c4790e2bd33e34695"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "anchor": "class FoodsGT",
+      "start_line": 1592,
+      "end_line": 1600,
+      "excerpt_sha256": "a2d78a8629746fab8362fdc5f410f15b3b296dad078e7bfa1a69a47b1230b8d8"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "anchor": "ID_RADIATION = -2",
+      "start_line": 1575,
+      "end_line": 1576,
+      "excerpt_sha256": "4a37412849d135fc6157257e9450b89f7025543ac4641e72034a2d4286652019"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/RM.java",
+      "anchor": "if (!(aStack.getItem() instanceof MultiItemRandom))",
+      "start_line": 776,
+      "end_line": 777,
+      "excerpt_sha256": "e356cfec979a9c26560ab30ec3674e97ade6d73d0664a948ee953bcfb71ad1fa"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java",
+      "anchor": "public static boolean applyRadioactivity(",
+      "start_line": 3033,
+      "end_line": 3047,
+      "excerpt_sha256": "942d890858534f7015ab3c764fb63c179d4f7f1c37ebcff862e1cff4a1e27c5c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/c/Loader_Recipes_Food.java",
+      "anchor": "if (!ST.isGT(aEvent.mStack)) FoodsGT.put",
+      "start_line": 135,
+      "end_line": 136,
+      "excerpt_sha256": "aea4e19f3493fd2e9a5140ad626965aaef46cd080a7804ceb4273431555f2d60"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/RadawayItem.java",
+      "anchor": "public RadawayItem()",
+      "start_line": 13,
+      "end_line": 23,
+      "excerpt_sha256": "5309df647a40e431fa0a8d55c54592b5f7abe8b9e58fcef4c078b1e8f2888603"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/RadawayItem.java",
+      "anchor": "public ItemStack finishUsingItem(",
+      "start_line": 22,
+      "end_line": 27,
+      "excerpt_sha256": "08b00d05d10f50e30f6fe983d52f278de139f0728611069e497cb7a3c1dfc4f3"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/TechItem.java",
+      "anchor": "public class TechItem",
+      "start_line": 6,
+      "end_line": 22,
+      "excerpt_sha256": "e67823c0812703e03d885a3d6a46c573814886d7f905c1477621620d82f4c0ed"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/food/FoodStatEvents.java",
+      "anchor": "public static void onItemUseFinish(",
+      "start_line": 41,
+      "end_line": 66,
+      "excerpt_sha256": "6a5d76f2b34ba96efa296ccf44a407d705e82718b53f8a10243b5a8c99c4040e"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/food/GTFoodStats.java",
+      "anchor": "for (Row row : GTFoodStatsGen.ROWS)",
+      "start_line": 40,
+      "end_line": 46,
+      "excerpt_sha256": "b45c27897bb0b40f16f1e395d2f2210682e3225dac631f31c6a7d15f78d51647"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/food/GTFoodStats.java",
+      "anchor": "public static int[] stats(",
+      "start_line": 51,
+      "end_line": 54,
+      "excerpt_sha256": "eaec31a8b5de8ff6c2178ea2aa51c43b726a236c06cd437771029fc0193b9168"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/food/FoodStatisticRows.java",
+      "anchor": "new Row(\"gt6ce:radaway\"",
+      "start_line": 190,
+      "end_line": 190,
+      "excerpt_sha256": "dc803dbd2d7184568eaf391fafd79221a6893b74e862f03424e1c54f852f94b7"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/data/generated/GTFoodStatsGen.java",
+      "anchor": "private static List<GTFoodStats.Row> build(",
+      "start_line": 17,
+      "end_line": 30,
+      "excerpt_sha256": "0f1f7ab35788ec8d80c02539bf85dbb9ae27e438226e943ffdca52fe36801a11"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/PlayerRadiation.java",
+      "anchor": "public static void applySymptoms(",
+      "start_line": 44,
+      "end_line": 63,
+      "excerpt_sha256": "f799fc93f706fd21f36769375c0f5dae0cef834f1928780096be51a6727594d3"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/PlayerRadiation.java",
+      "anchor": "public static void change(",
+      "start_line": 37,
+      "end_line": 43,
+      "excerpt_sha256": "24a1bcf2a765b9284651e5dce523a3c9a2cdf395ada7b1a9730c9a6299e8b9e5"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/PlayerRadiation.java",
+      "anchor": "public static void tick(PlayerTickEvent.Post",
+      "start_line": 72,
+      "end_line": 80,
+      "excerpt_sha256": "6a55065a985ede60c5b455f4bb5f447d4449e9ea244fca58a904551a28355cfa"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/PlayerRadiation.java",
+      "anchor": "public static void clonePlayer(",
+      "start_line": 83,
+      "end_line": 88,
+      "excerpt_sha256": "fe32687d511fcc7f803e3a84543a52106f7763f963f5b9d7b1d98b19ccc0c76f"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorRadiation.java",
+      "anchor": "public static boolean apply(",
+      "start_line": 24,
+      "end_line": 41,
+      "excerpt_sha256": "ec95b5ab33af63e27221f4b7761679cd1c4eb0030c0a94c9710b1853001b5645"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/food/NutritionRules.java",
+      "anchor": "public static int change(",
+      "start_line": 11,
+      "end_line": 14,
+      "excerpt_sha256": "4af607be229fcc95aa49d786828ad975bf01905aed10f0fe9d7bc9f8e4180c16"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "anchor": "case \"radaway\" ->",
+      "start_line": 167,
+      "end_line": 167,
+      "excerpt_sha256": "7887194bb203fa12180b545c0fae5fad56d03d8ba0b492963608ab35bd5073d7"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/registry/GTMultiItemsGen.java",
+      "anchor": "\"radaway\", \"Radaway\"",
+      "start_line": 571,
+      "end_line": 571,
+      "excerpt_sha256": "61dcb97aedf046af66026fd7da7b4779cd0137c0b1619504c25578c84b584701"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/generated/GTFoodItemsGen.java",
+      "anchor": "new FoodNutritionRows.Entry(\"radaway\"",
+      "start_line": 747,
+      "end_line": 749,
+      "excerpt_sha256": "5ce5d0312bd959669fd55e1080b30ef96bcc4c678dabb5a5daf8f55c26569d48"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/RadiationMedicineRecipes.java",
+      "anchor": "GTMaterialRegistry.get(\"Iodine\")",
+      "start_line": 32,
+      "end_line": 33,
+      "excerpt_sha256": "e86b642cdd2c2a02b70ea342e3c180300da9ccb218d2d312716224ad26632dac"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/DeferredRegistrySubmission.java",
+      "anchor": "GTMultiItems.register(bus)",
+      "start_line": 20,
+      "end_line": 20,
+      "excerpt_sha256": "30f09523ff6808080bded169cfd5345b4ad893c23708410b8b42dbf9188e7b52"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "anchor": "GTMultiItems.register(modEventBus)",
+      "start_line": 92,
+      "end_line": 92,
+      "excerpt_sha256": "e74d9eec32c40c33951303ed48f614ee667cd17d477eed9b5ce2d2e9ee477d6a"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/hazmat-suit-audit-20261022/forge-LivingEntity.javap.txt",
+      "anchor": "protected void completeUsingItem();",
+      "start_line": 8699,
+      "end_line": 8757,
+      "excerpt_sha256": "75c1102dff815b85fa6a2dd81c4467f5f31a926703458f9c67bdbef698171275"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/hazmat-suit-audit-20261022/neo-LivingEntity.java",
+      "anchor": "protected void completeUsingItem()",
+      "start_line": 3195,
+      "end_line": 3212,
+      "excerpt_sha256": "4e55be355e2eed200b48fa894dc10e696ce5d5022215835ef5578d4f27258e79"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/radiation-consumables-audit-20261022/forge-ForgeEventFactory.javap.txt",
+      "anchor": "public static net.minecraft.world.item.ItemStack onItemUseFinish(",
+      "start_line": 534,
+      "end_line": 553,
+      "excerpt_sha256": "83998d0f816327894d965a525b06e52542eabfe17191eaf047aada1239efe9e1"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/radiation-consumables-audit-20261022/neo-EventHooks.javap.txt",
+      "anchor": "public static net.minecraft.world.item.ItemStack onItemUseFinish(",
+      "start_line": 601,
+      "end_line": 620,
+      "excerpt_sha256": "ad1c26b66ad635fb97bb1b794737b5baec651272a66f275b5964e84b0f2ee7f7"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/radiation-consumables-audit-20261022/forge-LivingEntityUseItemEvent.javap.txt",
+      "anchor": "public net.minecraft.world.item.ItemStack getItem()",
+      "start_line": 20,
+      "end_line": 24,
+      "excerpt_sha256": "c7778338a7bb6db7a75cb71ae88a4e8f5c7796308bd6f67898380492f8468b49"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/radiation-consumables-audit-20261022/neo-LivingEntityUseItemEvent.javap.txt",
+      "anchor": "public net.minecraft.world.item.ItemStack getItem()",
+      "start_line": 36,
+      "end_line": 40,
+      "excerpt_sha256": "a7ed8b493e0278c44984758dffe08b0542e563c4bd57c3f350efca6c218be15e"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/radiation-consumables-audit-20261022/neo-LivingEntityUseItemEvent$Finish.javap.txt",
+      "anchor": "public net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent$Finish(",
+      "start_line": 5,
+      "end_line": 15,
+      "excerpt_sha256": "46ab2bb0798bf6f833d09334e32d02650afd1c8c5d49a9e51e9afa60427865b4"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/radiation-consumables-audit-20261022/forge-LivingEntityUseItemEvent$Finish.javap.txt",
+      "anchor": "public net.minecraftforge.event.entity.living.LivingEntityUseItemEvent$Finish(",
+      "start_line": 5,
+      "end_line": 15,
+      "excerpt_sha256": "94f642a7e8d82d24b83824f9f283947c1299da2b309947f3209f5d83a0bd2616"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/radiation-consumables-audit-20261022/forge-Item.javap.txt",
+      "anchor": "public int getUseDuration(",
+      "start_line": 396,
+      "end_line": 412,
+      "excerpt_sha256": "b10e911018df53418d38276d4ee4fcdf9633b6cd5d0abdbf8da6c8e36c4c2fc7"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/radiation-consumables-audit-20261022/neo-Item.javap.txt",
+      "anchor": "public int getUseDuration(",
+      "start_line": 453,
+      "end_line": 465,
+      "excerpt_sha256": "89a5a24fc70dcebbd48ba0b53ffa5b5ce8426dc1a03a889575150b6688c69e8f"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/radiation-consumables-audit-20261022/forge-FoodProperties$Builder.javap.txt",
+      "anchor": "public net.minecraft.world.food.FoodProperties$Builder();",
+      "start_line": 15,
+      "end_line": 22,
+      "excerpt_sha256": "f6fadbf7415a441dca89df18c304dc4c5786c5f51a9a29b9c4a4c9997a20c4ee"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/radiation-consumables-audit-20261022/forge-FoodProperties$Builder.javap.txt",
+      "anchor": "public net.minecraft.world.food.FoodProperties build();",
+      "start_line": 91,
+      "end_line": 103,
+      "excerpt_sha256": "e18ccdac1ea8a9d391610cb5aea8c4d9495651146c47c38f522f17d44025021c"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/radiation-consumables-audit-20261022/neo-FoodProperties$Builder.javap.txt",
+      "anchor": "public net.minecraft.world.food.FoodProperties$Builder();",
+      "start_line": 15,
+      "end_line": 29,
+      "excerpt_sha256": "f4bfc42fa50f1870ea3429bbe33d9cd9ed83ccc95ab6f1404f2b9d42b5b06462"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/radiation-consumables-audit-20261022/neo-FoodProperties.javap.txt",
+      "anchor": "public int eatDurationTicks();",
+      "start_line": 45,
+      "end_line": 52,
+      "excerpt_sha256": "58ec523d76e719ec58b6daa177d79d8be1d893c41e8760ea5af680cb81e4973d"
+    }
+  ],
+  "native_evidence": {
+    "entries": [
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+        "entry": "net/minecraft/world/item/Item.class",
+        "entry_sha256": "b0e69c533ce7ea00deeeb5d369bcc71ca345fcaf380e3c136e178bd67d8b87a6",
+        "read_output": "work/radiation-consumables-audit-20261022/forge-Item.javap.txt",
+        "read_output_sha256": "83dd1613da86768aa12cd9afa9b5d52396d0ffc7be9b339c96dd328f8b84304a"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+        "entry": "net/minecraft/world/food/FoodProperties.class",
+        "entry_sha256": "34087bd9d941e91c77b5ca21320944a9dd5207e9c4ed16683b361430b59267bf",
+        "read_output": "work/radiation-consumables-audit-20261022/forge-FoodProperties.javap.txt",
+        "read_output_sha256": "388913e6f367bf2b96715c55878de1d046645be1f9fa7732b900fa3ff230a751"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+        "entry": "net/minecraft/world/food/FoodProperties$Builder.class",
+        "entry_sha256": "1403694fda726a0e01926629e4d7af4f8aaaafca97a39ff09e180b52b00b27f2",
+        "read_output": "work/radiation-consumables-audit-20261022/forge-FoodProperties$Builder.javap.txt",
+        "read_output_sha256": "796616f3331e0196f7d67ebda42d45867bc7b28f0cfd974310193b08dfe85782"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+        "entry": "net/minecraft/world/item/Item.java",
+        "entry_sha256": "d176c58aee3e1698000514bf00f01ddf495f7dcd8c89fb2acd832391aae1be48",
+        "read_output": "work/radiation-consumables-audit-20261022/neo-Item.java",
+        "read_output_sha256": "d176c58aee3e1698000514bf00f01ddf495f7dcd8c89fb2acd832391aae1be48"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+        "entry": "net/minecraft/world/food/FoodProperties.java",
+        "entry_sha256": "ef976916585311b989455466d43cd03490c379c77cfd6a1a4d9e15fb9fd1b95d",
+        "read_output": "work/radiation-consumables-audit-20261022/neo-FoodProperties.java",
+        "read_output_sha256": "ef976916585311b989455466d43cd03490c379c77cfd6a1a4d9e15fb9fd1b95d"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+        "entry": "net/minecraft/world/item/ItemStack.class",
+        "entry_sha256": "152f7ece5f721ca26d54e4e5d4f93f0d821003ac3ebd4e86e56568a341e6bcd4",
+        "read_output": "work/hazmat-suit-audit-20261022/forge-ItemStack.javap.txt",
+        "read_output_sha256": "e01d9e30d9cb4ab0bfc070ae24ee7c948e09e6150042a695526577c8bcb4e48e",
+        "reused_from": "docs/integration/verification/hazmat-suit-audit-20261022.json"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+        "entry": "net/minecraft/world/item/ItemStack.java",
+        "entry_sha256": "b35770a757f0c62a88276a38c36763d26e204d1a6210ea3fcac71a53526bc389",
+        "read_output": "work/hazmat-suit-audit-20261022/neo-ItemStack.java",
+        "read_output_sha256": "b35770a757f0c62a88276a38c36763d26e204d1a6210ea3fcac71a53526bc389",
+        "reused_from": "docs/integration/verification/hazmat-suit-audit-20261022.json"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+        "entry": "net/minecraft/world/entity/LivingEntity.class",
+        "entry_sha256": "4d5d832b434153c4bbaed608b6d742730c0864830f283424f153bcb0ee5b4cab",
+        "read_output": "work/hazmat-suit-audit-20261022/forge-LivingEntity.javap.txt",
+        "read_output_sha256": "4b002318fb5fa46243dac4468b58d58e505eea2d25befd9eb4721363533dbf1e",
+        "reused_from": "docs/integration/verification/hazmat-suit-audit-20261022.json"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+        "entry": "net/minecraft/world/entity/LivingEntity.java",
+        "entry_sha256": "1bbe1b37d6f73eadefdcdfe6f5822106e410fbc80d20c163a4eb5feefb317731",
+        "read_output": "work/hazmat-suit-audit-20261022/neo-LivingEntity.java",
+        "read_output_sha256": "1bbe1b37d6f73eadefdcdfe6f5822106e410fbc80d20c163a4eb5feefb317731",
+        "reused_from": "docs/integration/verification/hazmat-suit-audit-20261022.json"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-universal.jar",
+        "artifact_sha256": "3b203ea6105326b8a6d7bea8327c2793dbffbaa8e574c9c6626fe6d787591874",
+        "entry": "net/minecraftforge/event/ForgeEventFactory.class",
+        "entry_sha256": "75c2fec6bc1bdc376ff966df4568413e7144245bd6a62d91c19a92cffe7216a9",
+        "read_output": "work/radiation-consumables-audit-20261022/forge-ForgeEventFactory.javap.txt",
+        "read_output_sha256": "74e8a550e0abd22906e5baa623c81a5d1cac6a50a3068dde701406f9e25a5dfc"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-universal.jar",
+        "artifact_sha256": "3b203ea6105326b8a6d7bea8327c2793dbffbaa8e574c9c6626fe6d787591874",
+        "entry": "net/minecraftforge/event/entity/living/LivingEntityUseItemEvent.class",
+        "entry_sha256": "3f17a1113abab8de3573e5692df8f75524b88e2983b6d3d31c2ed2bf4e9bb8ae",
+        "read_output": "work/radiation-consumables-audit-20261022/forge-LivingEntityUseItemEvent.javap.txt",
+        "read_output_sha256": "e31b3e5f672555fa4f3965b3419b6eef8c4d12459be8b07d60bf62cf0ad974ae"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/21.1.243/ce384946fb5541fddf182e066ce1c01423d0b86d/neoforge-21.1.243-universal.jar",
+        "artifact_sha256": "0424e81c5948f08e529631c915c35bc38feffc24597ab3458bf7ecf0c0d83399",
+        "entry": "net/neoforged/neoforge/event/EventHooks.class",
+        "entry_sha256": "f810377f87c95c04bb4de7a7ac68e8f4862f9ca33a34cc74e067e65e2a92d66b",
+        "read_output": "work/radiation-consumables-audit-20261022/neo-EventHooks.javap.txt",
+        "read_output_sha256": "f2889c9058aa7bd81f9369ea5075ec833a37f1c142938a546b89476e5028b813"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/21.1.243/ce384946fb5541fddf182e066ce1c01423d0b86d/neoforge-21.1.243-universal.jar",
+        "artifact_sha256": "0424e81c5948f08e529631c915c35bc38feffc24597ab3458bf7ecf0c0d83399",
+        "entry": "net/neoforged/neoforge/event/entity/living/LivingEntityUseItemEvent.class",
+        "entry_sha256": "5ddee29a35b47ac564a4a6692c454f3de1c35d6cbcc0ea217ca82995a6a13a0d",
+        "read_output": "work/radiation-consumables-audit-20261022/neo-LivingEntityUseItemEvent.javap.txt",
+        "read_output_sha256": "de9946c05dfc6f8b136d03267250d3d1706276b08a6849f59d9340f76b606173"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/21.1.243/ce384946fb5541fddf182e066ce1c01423d0b86d/neoforge-21.1.243-universal.jar",
+        "artifact_sha256": "0424e81c5948f08e529631c915c35bc38feffc24597ab3458bf7ecf0c0d83399",
+        "entry": "net/neoforged/neoforge/event/entity/living/LivingEntityUseItemEvent$Finish.class",
+        "entry_sha256": "05d3a54c583d52a7b053eca11e41bdc2ad6f8a97603d48f08fbaead96c765c97",
+        "read_output": "work/radiation-consumables-audit-20261022/neo-LivingEntityUseItemEvent$Finish.javap.txt",
+        "read_output_sha256": "b76a2179b90b8232840442fa07fff74612a626fc8fa6efcf2cd60a7948928b87"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+        "artifact_sha256": "9a99670ebf7e9f40ad66153a37f9d8c5b6406fdca9f07b83acdc52cb1842adb6",
+        "entry": "net/minecraft/world/item/Item.class",
+        "entry_sha256": "d4234cf5acb218b2056a38845170ec8266e16dc39ae0ed5fe5328cac153af462",
+        "read_output": "work/radiation-consumables-audit-20261022/neo-Item.javap.txt",
+        "read_output_sha256": "c8ff2f95c5a75610d5622a4a073db0d974265914584d82cf37f0f3d52f50169c"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+        "artifact_sha256": "9a99670ebf7e9f40ad66153a37f9d8c5b6406fdca9f07b83acdc52cb1842adb6",
+        "entry": "net/minecraft/world/food/FoodProperties.class",
+        "entry_sha256": "35d82b68dade1ebd56b75c8fd486307aeefdb7cd476861256982041ca8485831",
+        "read_output": "work/radiation-consumables-audit-20261022/neo-FoodProperties.javap.txt",
+        "read_output_sha256": "f7b6ec26cb2739cb015520ba2ca24208d373205c2abc050f0dfeac0cc34f7bfe"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+        "artifact_sha256": "9a99670ebf7e9f40ad66153a37f9d8c5b6406fdca9f07b83acdc52cb1842adb6",
+        "entry": "net/minecraft/world/food/FoodProperties$Builder.class",
+        "entry_sha256": "3f05c68ffeea9b549bc26f0ce438b2188f030d4a6973fd183b2cb7a54e26f9ce",
+        "read_output": "work/radiation-consumables-audit-20261022/neo-FoodProperties$Builder.javap.txt",
+        "read_output_sha256": "5ccc5a6cdfbe5e2e900595dec4dfb8bc6369445e493f9b24bdf2b7dae6bd9c80"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-universal.jar",
+        "artifact_sha256": "3b203ea6105326b8a6d7bea8327c2793dbffbaa8e574c9c6626fe6d787591874",
+        "entry": "net/minecraftforge/event/entity/living/LivingEntityUseItemEvent$Finish.class",
+        "entry_sha256": "387f7b03638b445e43b9c18035965e3384cbc8a74cc296c50319e33ff285996e",
+        "read_output": "work/radiation-consumables-audit-20261022/forge-LivingEntityUseItemEvent$Finish.javap.txt",
+        "read_output_sha256": "d5c768356a39353ffac25c7ed401cf3eab8cb250c5788e212cf93718421d9146"
+      }
+    ],
+    "prior_receipt": {
+      "path": "docs/integration/verification/hazmat-suit-audit-20261022.json",
+      "sha256": "19998f15bf9bd06c5ea7bd35d8c385d113b0846c33cbc4b997b6b5de2a102604"
+    },
+    "scope": "Native source/bytecode inspection only; not execution of an item or event.",
+    "discarded_source_reads": {
+      "reason": "The downloaded NeoForge sources include since=1.21.5 API text despite 21.1.243 path. Do not use them to prove 1.21.1 dispatch. Replaced with actual universal.jar bytecode and its 21.1.243/1.21.1 manifest.",
+      "files": [
+        {
+          "artifact": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/21.1.243/7c3c8a58e626916d133b20bc249e1a7e5f1a306b/neoforge-21.1.243-sources.jar",
+          "artifact_sha256": "c11c83b344cb92ce9e815db2ed4b53fd7770b97098d5ebd10edde28595c12af0",
+          "entry": "net/neoforged/neoforge/event/EventHooks.java",
+          "entry_sha256": "83f577d8c146b0bb80e359054cc490829b3664ffbaf3b61a2cb141c6d2cc61ff",
+          "read_output": "work/radiation-consumables-audit-20261022/neo-EventHooks.java",
+          "read_output_sha256": "83f577d8c146b0bb80e359054cc490829b3664ffbaf3b61a2cb141c6d2cc61ff"
+        },
+        {
+          "artifact": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/21.1.243/7c3c8a58e626916d133b20bc249e1a7e5f1a306b/neoforge-21.1.243-sources.jar",
+          "artifact_sha256": "c11c83b344cb92ce9e815db2ed4b53fd7770b97098d5ebd10edde28595c12af0",
+          "entry": "net/neoforged/neoforge/event/entity/living/LivingEntityUseItemEvent.java",
+          "entry_sha256": "801218a1703087c7ad27fb87bca150e0607a59433d25eca2b27c38c06026576a",
+          "read_output": "work/radiation-consumables-audit-20261022/neo-LivingEntityUseItemEvent.java",
+          "read_output_sha256": "801218a1703087c7ad27fb87bca150e0607a59433d25eca2b27c38c06026576a"
+        }
+      ]
+    },
+    "neo_event_artifact_manifest": {
+      "entry": "META-INF/MANIFEST.MF",
+      "sha256": "9a5c87c5e31a94212c3be3c64d8db879a8ebc4b05c4150305b702e8112c253e8",
+      "implementation_version": "21.1.243",
+      "minecraft_version": "1.21.1"
+    }
+  },
+  "formal_findings_added": [
+    422,
+    423,
+    424
+  ],
+  "findings": [
+    {
+      "id": 422,
+      "contract": "Base GT6 Radaway dose reduction is -50 once via FoodStat.onEaten; own MultiItemRandom food is not added by RM.crop to FoodsGT.",
+      "current": "Both registered RadawayItem paths use finishUsingItem -50, then the native completion event receives the pre-consumption copy and FoodStatEvents applies the generated radaway row -50 again.",
+      "bounded_witness": {
+        "initial_dose": 120,
+        "original_final_dose": 70,
+        "current_after_item": 70,
+        "current_after_event": 20,
+        "assumptions": "Server player, registered own Radaway, no third-party event replacement/cancellation or dose changes during completion. Arithmetic/source dispatch trace only."
+      },
+      "status": "Confirmed source path; not a game reproduction. No gameplay fix in this readability batch."
+    },
+    {
+      "id": 423,
+      "contract": "Original MultiItemRandom uses max(foodLevel*8,16), so zero-food Radaway takes16 ticks.",
+      "current": "RadawayItem/TechItem inherit native Item duration; Forge Builder is not fast and selects32; actual Neo Builder eatSeconds1.6 with eatDurationTicks*20 also32.",
+      "scope": "Only Radaway is confirmed; do not claim all food durations. Canner/Boxinator recipe durations are unrelated.",
+      "status": "Confirmed inherited source/bytecode path; no stopwatch/game execution or gameplay edit."
+    },
+    {
+      "id": 424,
+      "contract": "For no IC2 radiation effect ID (<0), original severe radiation branch applies wither plus five debuffs, without a separate damage call in that branch.",
+      "current": "PlayerRadiation applies matching fallback debuffs and independently requests radiation hurt1.0F when dose>=100 every50 game ticks.",
+      "scope": "Additional explicit damage attempt, not guaranteed final HP loss. Invulnerability, effect ticks, armor, event changes and damage pipeline not executed.",
+      "status": "Recorded intentional port policy difference; retained. IC2-installed behavior is not covered."
+    }
+  ],
+  "existing_and_excluded": {
+    "dose_range": "0..127 clamped; no natural radiation decay in original/current.",
+    "armor_exemption": "Previously recorded210 creative/IronGolem issue not duplicated; ReactorRadiation formatting preserves guards.",
+    "medicine_effects": "Original optional IC2 effect removal is distinct from dose reduction; no claim that original Radaway clears fallback poison/wither.",
+    "source_generator": "Old extractor documents separate original statistics routes and emits a managed native view, not the current shared binding; not executed.",
+    "full_scope": "All food, IC2 integrations, hazard consumers, saves and game execution remain incomplete."
+  },
+  "refactoring": {
+    "files": {
+      "multiversion/src/main/java/com/gregtech/gregtech/data/generated/GTFoodStatsGen.java": {
+        "before_raw_sha256": "c03d11d525ed5a2bd4f032d3ff9a7c6e1b8ea16426b879a13147617a8161513f",
+        "after_raw_sha256": "c42a5679e3c89fdace56778d81b72361a62a89e8377d295ed973cc601891f4fe",
+        "before_lines": 12,
+        "after_lines": 39,
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 258,
+            "token_sha256": "f38322755db44f5d3564641e0a4c2ab33d885d7931ff4d3292e436b30a6e424c"
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 258,
+            "token_sha256": "f38322755db44f5d3564641e0a4c2ab33d885d7931ff4d3292e436b30a6e424c"
+          }
+        ],
+        "local_names": {}
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorRadiation.java": {
+        "before_raw_sha256": "01b32f56792e44ad88d0e6368be69168755a177d99368e25f358017851db28d5",
+        "after_raw_sha256": "b524062f214f4c312e6cd2f12bc3be69365d4e53d7837c922890f01906792297",
+        "before_lines": 45,
+        "after_lines": 56,
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 526,
+            "token_sha256": "94d5c02959cf5e94ec905abf032952b95fec822a26c214d5a5def801ea69308b"
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 553,
+            "token_sha256": "203856c10df7dfe17173accdeee1ec2a7721501940fe8bc16df26c9ebc5708da"
+          }
+        ],
+        "local_names": {}
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/PlayerRadiation.java": {
+        "before_raw_sha256": "b56ebd1839c541cca17463df8b3cd7198cf00dc4ef78779d0c64d373bdf39aa1",
+        "after_raw_sha256": "e2afca571f48f1a1d01d1c57c43218cf0c8cb1ad6eb0770f7ab811d79d42aea8",
+        "before_lines": 80,
+        "after_lines": 88,
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 533,
+            "token_sha256": "fb0b0bd17e4d7a3ff9bba1f494f0eb15ee7330cd34c8e7b4171d6a263fa72069"
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 528,
+            "token_sha256": "e164e2c15feb323477497645e2b6011a7083d68ea78dfd13268311bc56d54ffb"
+          }
+        ],
+        "local_names": {}
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/item/RadawayItem.java": {
+        "before_raw_sha256": "f8bca58b5bfb6f898e15ba6fe5a5674e092ed3ceba057665dc2d76ba659bbd65",
+        "after_raw_sha256": "83d8c36bd066bebe1b73c99b0224d1218cc8efd5c5f3eb60264389d74ea5d29e",
+        "before_lines": 25,
+        "after_lines": 27,
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 182,
+            "token_sha256": "2049274949a1a08c344815f043073da2bbda83903ccf844bc5f408b77b68eb7d"
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 182,
+            "token_sha256": "3f9f3c63e77759004bf54784a638e914cd294216f5c30227ff9fbf14386d6400"
+          }
+        ],
+        "local_names": {}
+      },
+      "core/src/main/java/com/gregtech/gregtech/content/food/NutritionRules.java": {
+        "before_raw_sha256": "fde86633be75507b7119a3a3eaf605d5dae2b37c01c640b8a57463877658f4f0",
+        "after_raw_sha256": "95d9a991a80a26009cae9482a620b73429dda12f6d5626ab7e195e3d20b25b21",
+        "before_lines": 8,
+        "after_lines": 46,
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 413,
+            "token_sha256": "a305664a3c89a9159ce2604c3bc2041404cbb611c6738a643b0427ca42e1b4cd"
+          }
+        ],
+        "local_names": {
+          "r": 12
+        }
+      }
+    },
+    "scope": "Full ordered tokens, literal positions and comments; only catalog build extraction and listed local names normalized.",
+    "catalog_extraction": {
+      "old_loops": 2,
+      "lookup_adapters": 2,
+      "row_order_missing_id_collection_and_null_air_guards": "unchanged",
+      "public_static_initialization_order": "unchanged"
+    }
+  },
+  "comment_correction": {
+    "path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/PlayerRadiation.java",
+    "before": "(every 50 ticks), i.e. 2 HP per 2.5 s on top of the vanilla effects below.",
+    "after": "(every 50 ticks): requests 1 HP per 2.5 s; actual damage still follows the damage pipeline.",
+    "reason": "1.0F is a1HP request, not2HP; no damage code changed."
+  },
+  "compile": {
+    "status": "passed",
+    "duration_seconds": 83,
+    "tasks": [
+      "core:compileJava",
+      "multiversion:1.20.1-forge:compileJava",
+      "multiversion:1.21.1-neoforge:compileJava"
+    ],
+    "log": "work/radiation-consumables-audit-20261022/compile.log",
+    "log_sha256": "5ac00a932dfc06a61d1a31e6947b5371fb59c41d139060b9edc4a3cbb5aa8916",
+    "temporary_adapter": "work/storage-inserter-audit-20261022/cached-api-classpath.gradle",
+    "temporary_adapter_sha256": "51a1ed5becc4b14c87f6eeef31d2c8fc984e02735ee630b3c292496c2798cdbe",
+    "cached_forge_artifacts": [
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/mezz/jei/jei-1.20.1-common-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-common-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/mezz/jei/jei-1.20.1-common-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-common-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "sha256": "7786d88e4ffd38f62d057b86eb56aa6a116037f2a4dbccb0aa77877b7dc8f4fd",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/mezz/jei/jei-1.20.1-forge-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-forge-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/mezz/jei/jei-1.20.1-forge-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-forge-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "sha256": "b50a6a64c629e51346deec045495ba932be2bcab4ffb5a46fe483df1e06c832a",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1-api.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1-api.jar",
+        "sha256": "268f4572a6297bcd38c176e9361ee245364bb255e1a74e0fec96a973ef1379c0",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1.jar",
+        "sha256": "a2df46e253e208d39576808509eb384b42d992ba77d1c3aec31b97611be6e64b",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/maven/modrinth/jade/11.13.2+forge_mapped_official_1.20.1/jade-11.13.2+forge_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/maven/modrinth/jade/11.13.2+forge_mapped_official_1.20.1/jade-11.13.2+forge_mapped_official_1.20.1.jar",
+        "sha256": "15030cb00590540a5a37bd6bd509df4c01116406dd7c1a760b55e81f83f2bd62",
+        "action": "copied existing exact-coordinate jar"
+      }
+    ],
+    "cached_neo_emi_api": {
+      "path": "C:/Dev/GregTech6/work/emi-maven/dev/emi/emi-neoforge/1.1.24+1.21.1/emi-neoforge-1.1.24+1.21.1-api.jar",
+      "sha256": "b3a8e23c5e59813f184423b94e37bb635867ddc9be2b68b3502fad7b9134779b"
+    },
+    "production_build_configuration_changed": false,
+    "scope": "Exact version cached API adapter; not default offline/CI, game, package or source compatibility with another dependency version."
+  },
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "gameplay_changes": false,
+  "game_launched": false,
+  "jar_built": false,
+  "github_writes": false,
+  "preparation_corrections": [
+    "Preview initially kept an extra else branch due marker matching; whole-flow proof rejected it before production writes.",
+    "Neo standalone sources.jar candidate included later-version API text; rejected as1.21.1 evidence and replaced by actual21.1.243 universal bytecode plus manifest.",
+    "Actual Neo Item/FoodProperties/Builder bytecode additionally confirms the mapped source duration."
+  ],
+  "whole_goal_complete": false,
+  "goal_status": "active",
+  "root_revalidation": {
+    "all_sources_and_48_spans": "match",
+    "native_18_entries": "exact artifact, entry and read-output hashes match",
+    "refactoring": "nine complete views, two old loops and two lookup adapters match controlled normalization",
+    "history": "all historical documentation lines retained",
+    "formal_findings": {
+      "contiguous": true,
+      "count": 424,
+      "new": [
+        422,
+        423,
+        424
+      ]
+    },
+    "compile": "same source hashes and cached API inputs as83s pass",
+    "protected_materials": "unchanged",
+    "production_java_scope": "only listed five sources",
+    "new_document_links": "resolve",
+    "production_gradle": "unchanged",
+    "gameplay_acceptance": false,
+    "whole_goal_complete": false
+  }
+}

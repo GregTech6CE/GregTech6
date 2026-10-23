@@ -1,0 +1,1003 @@
+{
+  "date": "2026-10-22",
+  "batch": 117,
+  "baseline": "00c5b814b88793e56245a0fcefb5baa3cdeea95e",
+  "previous_goal_turn": {
+    "classification": "progress",
+    "commit": "00c5b814b"
+  },
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/inventories/MultiTileEntityEnderGarbageBin.java",
+      "raw_sha256": "b6ae781187ca65def5cfbeec586fa52dffbfc8c355e720639145bf5aca587b24",
+      "lines": 149,
+      "notice_sha256": "36e3d024041926fe48f5024ea2175f63dcd6ec92fdc33bcfecf357b4bb27e51d"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/inventories/MultiTileEntityEnderGarbageDump.java",
+      "raw_sha256": "3de85a8940f78692d4c73c9aa66328f1147c0794f5b7dcc1423c0558292268d3",
+      "lines": 171,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "raw_sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "lines": 2345,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/GT_API_Proxy.java",
+      "raw_sha256": "e773eae6cd22825b3cd231cfb916040b52166af7653ccc8c9f994f5e53101819",
+      "lines": 1628,
+      "notice_sha256": "6855675ee4a01a21169dd2a3ed5df729ac3198a4b2e3b869f91e1a45c79e6aca"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase02AdjacentTEBuffer.java",
+      "raw_sha256": "428885bd6d436be6fefaef3bcd70fdd883a29ae329bb4d0826ddaf152eaef00f",
+      "lines": 173,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "raw_sha256": "f3d52213bf41c3132a37e6f838719db85c85ac94e48b9f24b932a1996688489d",
+      "lines": 166,
+      "notice_sha256": "accc18a4bf87847b3134c2814611b821dcb8c3083277f78c0f8f2cf8e6f05caf"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "raw_sha256": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9",
+      "lines": 256,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "raw_sha256": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+      "lines": 189,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "raw_sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+      "lines": 496,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "raw_sha256": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+      "lines": 117,
+      "notice_sha256": "c635bd8e84f1d5b02a1299180479660a636e876419d763c9cd0714b9487e28b7"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/ST.java",
+      "raw_sha256": "5ff16d9051e2744a66c711bd5f2581785ba8af7b2272fb1023a6d2f4ddb783a8",
+      "lines": 1402,
+      "notice_sha256": "6855675ee4a01a21169dd2a3ed5df729ac3198a4b2e3b869f91e1a45c79e6aca"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/FL.java",
+      "raw_sha256": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3",
+      "lines": 1144,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/fluid/FluidTankGT.java",
+      "raw_sha256": "9e9c1500fb947048cc8ddcd4a19f44561d6d1278e2208381936b1ad483b25d7d",
+      "lines": 363,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "raw_sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "lines": 2243,
+      "notice_sha256": "6855675ee4a01a21169dd2a3ed5df729ac3198a4b2e3b869f91e1a45c79e6aca"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/storage/GarbageStorageRules.java",
+      "raw_sha256": "f5fa4636f298ae4afe228e839ac9290244c0e546daf3f1cf0f95f1d433bfb50f",
+      "lines": 26
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/world/GarbageData.java",
+      "raw_sha256": "a6c224f9b73804211d5ac93ec729c6fb2f6dd8261582b447f66d099e33bf1a2c",
+      "lines": 223
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageBlockEntity.java",
+      "raw_sha256": "419af4b8c6f9eb5d6d180d26ad01cfd7e8980c59606a4bf34f1f8605d071d847",
+      "lines": 223
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageDumpBlockEntity.java",
+      "raw_sha256": "9421548646f4e51be007a89e3518fc07885a2a56240aae2c13c560ca4908fe02",
+      "lines": 149
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/EnderGarbageBlock.java",
+      "raw_sha256": "ce735f79021b6a4f04c296479ad658fe0a34ecfd25bf0f74b81840a872aaf895",
+      "lines": 129
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/EnderGarbageDumpBlock.java",
+      "raw_sha256": "fb6e37ba7378fcbbabf07cefd5e81de39905e07a0193d47ced28f945d9031a3b",
+      "lines": 107
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/GarbageDumpContainerMenu.java",
+      "raw_sha256": "273c1cff1910c61ae2b51010177f0afa8600b71ceac031c760a06f616c3afeed",
+      "lines": 49
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/HopperContainerMenu.java",
+      "raw_sha256": "f2362d223fe7f7a95cbf63c9de344f520965df8ed77734ca11e849ea7c8a9c71",
+      "lines": 123
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+      "raw_sha256": "4ac2cbe64ceaf7ca8011899f170aa6de5c05e248f673f06f6226dcc27d393cc9",
+      "lines": 109
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "raw_sha256": "05409cc45a965be4efbcde15b420091d3222e6fe390069a0d58031e43faf9308",
+      "lines": 707
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/inventory/BlockContents.java",
+      "raw_sha256": "3a0a536ca3edaae2b5a0c79c72b0e59e6f0a5c0fa2f4fbcfdd3d4aeb679b6f5f",
+      "lines": 28
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "raw_sha256": "5ff60819301303ea2893b671701741e1523501f0ef4c575c10ec932de04f5493",
+      "lines": 164,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "raw_sha256": "afd6d00235399a7a1b115cbab778d691997836a49e25e62a442a36c59a2733d9",
+      "lines": 122,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/FallbackCoverHost.java",
+      "raw_sha256": "254524b21a4f3220d7a6716369254fd3b4788d4f3e94a411e9cc70fbb212447c",
+      "lines": 25,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "raw_sha256": "c3d92ed4a1bbda0f8863ca4d54af585fdd6d8cd4ca38f5c4bf3f41abc8451ea9",
+      "lines": 62
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTStorage.java",
+      "raw_sha256": "4eefb889c50fd513b84e4751774a47ead8870d379c1f2bb295e7abfe96a4ae94",
+      "lines": 206
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTStorageContainers.java",
+      "raw_sha256": "a587a6138eaee75e03dc20ba09b54a99e14cbbfbc85eebac29903f1bc2b992b9",
+      "lines": 40
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageContainerCapabilities.java",
+      "raw_sha256": "d6e62e69491d69f904307d82523a6e3e9c49f7fcccdda7ae0f6c1a040c4a74e0",
+      "lines": 72
+    }
+  ],
+  "source_scope": "Selected bin/dump intake, output, shared pool, persistence, removal and real native menu setter/eligibility paths. Whole-file hashes are provenance, not all methods/resources/recipes/world certification.",
+  "provenance": {
+    "authors": "GregTech-6 Team / Gregorius Techneticies",
+    "original_notice": "/**\n * Copyright (c) 2024 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */",
+    "handling": "Read-only original source tree, notices retained. Production changes are spacing, controlled names and factual comment corrections; no gameplay policy or menu fix applied."
+  },
+  "excerpts": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/inventories/MultiTileEntityEnderGarbageBin.java",
+      "first_line": 74,
+      "last_line": 74,
+      "purpose": "Old bin timer also responds to block changes.",
+      "text": "\t\tif (aIsServerSide && (aTimer % 100 == 50 || mBlockUpdated) && !hasRedstoneIncoming()) GarbageGT.trash(getInventory());",
+      "sha256": "54bcc0860bd2b3fa08b958e63f9710fc81a4e75ce7702db8ceea48c208018a4a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "first_line": 223,
+      "last_line": 223,
+      "purpose": "Actual neighbor callback sets the old trigger.",
+      "text": "\t\tmBlockUpdated = T;",
+      "sha256": "def1ec1fa9a878951466c37cbc03a5d0d1b231e78b1dd7050da4b8e79bec7bd9"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "first_line": 122,
+      "last_line": 122,
+      "purpose": "Old tick receives entity-local timer, not global level time.",
+      "text": "\t\t\tif (!isDead()) onTick(mTimer, tIsServerSide);",
+      "sha256": "2a2f40b5eea1ae2b6a7aa02716c01128e27507cd8802b1982b4134bad18872dc"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "first_line": 201,
+      "last_line": 201,
+      "purpose": "Cover tick forwards the same local timer to bin override.",
+      "text": "\t\tonTick2(aTimer, aIsServerSide);",
+      "sha256": "e50e3dd80648f5fadaddf599e3f93fc9ebc729c26e7378e6d4ea288a338c4c1a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "first_line": 375,
+      "last_line": 375,
+      "purpose": "Default old sided inventory exposes the complete virtual dump size.",
+      "text": "\tpublic int[] getAccessibleSlotsFromSide2(byte aSide) {return UT.Code.getAscendingArray(getSizeInventory());}",
+      "sha256": "4a37bd5272f52b0b63aef5f393e991371d3439d4f6e30249497192b3810621c0"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageBlockEntity.java",
+      "first_line": 56,
+      "last_line": 58,
+      "purpose": "Current bin only uses world-time cadence and power gate.",
+      "text": "        if (!com.gregtech.gregtech.content.storage.GarbageStorageRules.binDue(level.getGameTime())) return;\n        if (level.hasNeighborSignal(pos)) return;\n        bin.dumpToGarbage();",
+      "sha256": "807c75e1d94f83ffc8806b8c3df0283ce3c6ac2b99109ab6eb6025a56f8c6bc8"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/inventories/MultiTileEntityEnderGarbageBin.java",
+      "first_line": 109,
+      "last_line": 110,
+      "purpose": "Old un-covered bin insertion is always allowed; extraction refused.",
+      "text": "\t@Override public boolean canInsertItem2(int aSlot, ItemStack aStack, byte aSide) {return T;}\n\t@Override public boolean canExtractItem2(int aSlot, ItemStack aStack, byte aSide) {return F;}",
+      "sha256": "1f2767db89fc3b1a3bcce649c9cfc60f6e687880d4cd63f17dd561884b4d5fa4"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageBlockEntity.java",
+      "first_line": 101,
+      "last_line": 102,
+      "purpose": "Current automatic item insertion is rejected when powered.",
+      "text": "            if (level != null && level.hasNeighborSignal(worldPosition)) return stack;\n            return inventory.insertItem(slot, stack, simulate);",
+      "sha256": "0d9d85d434f362883088d5dbd4212d708b0552ed748cdc75c6a7f76b7c078fc1"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/inventories/MultiTileEntityEnderGarbageDump.java",
+      "first_line": 69,
+      "last_line": 79,
+      "purpose": "Original dump attempts downward output each server tick.",
+      "text": "\tpublic void onTick2(long aTimer, boolean aIsServerSide) {\n\t\tsuper.onTick2(aTimer, aIsServerSide);\n\t\tif (aIsServerSide) {\n\t\t\tDelegatorTileEntity<TileEntity> tDelegate = getAdjacentTileEntity(SIDE_BOTTOM, T, F);\n\t\t\tif (!(tDelegate.mTileEntity instanceof MultiTileEntityEnderGarbageBin)) {\n\t\t\t\tif (!GarbageGT.GARBAGE_ITEMS.isEmpty()) ST.move(delegator(SIDE_BOTTOM), tDelegate);\n\t\t\t\tif (!GarbageGT.GARBAGE_FLUIDS.isEmpty()) if (tDelegate.mTileEntity instanceof IFluidHandler) FL.move_(GarbageGT.GARBAGE_FLUIDS, tDelegate);\n\t\t\t}\n\t\t}\n\t}\n\t",
+      "sha256": "00f074028ff15bd00f73369e1c4df7b326598754ee84c9e085ae5bb08e719db7"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/ST.java",
+      "first_line": 455,
+      "last_line": 455,
+      "purpose": "Original default item move permits ejection and transfers up to 64.",
+      "text": "\tpublic static int move(DelegatorTileEntity aFrom, DelegatorTileEntity aTo) {return move(aFrom, aTo, null, F, F, F, T, 64, 1, 64, 1);}",
+      "sha256": "c57ee20d625727e2956ccda75dd6c5823d05d241408cdb57366f0ca8c3e25082"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/ST.java",
+      "first_line": 457,
+      "last_line": 480,
+      "purpose": "Original move overload scans all eligible source slots until a destination accepts.",
+      "text": "\tpublic static int move(DelegatorTileEntity aFrom, DelegatorTileEntity aTo, ItemStackSet<ItemStackContainer> aFilter, boolean aIgnoreSideFrom, boolean aIgnoreSideTo, boolean aInvertFilter, boolean aEjectItems, int aMaxSize, int aMinSize, int aMaxMove, int aMinMove) {\n\t\tif (!(aFrom.mTileEntity instanceof IInventory)) return 0;\n\t\taFrom = getPotentialDoubleChest(aFrom);\n\t\tint[] aSlotsFrom = (!aIgnoreSideFrom && aFrom.mTileEntity instanceof ISidedInventory ? ((ISidedInventory)aFrom.mTileEntity).getAccessibleSlotsFromSide(aFrom.mSideOfTileEntity) : UT.Code.getAscendingArray(((IInventory)aFrom.mTileEntity).getSizeInventory()));\n\t\tif (!(aTo.mTileEntity instanceof IInventory)) return put(aFrom, aSlotsFrom, aTo, aFilter, aIgnoreSideFrom, aInvertFilter, aEjectItems, aMaxMove, aMinMove);\n\t\taTo = getPotentialDoubleChest(aTo);\n\t\tint[] aSlotsTo   = (!aIgnoreSideTo   && aTo  .mTileEntity instanceof ISidedInventory ? ((ISidedInventory)aTo  .mTileEntity).getAccessibleSlotsFromSide(aTo  .mSideOfTileEntity) : UT.Code.getAscendingArray(((IInventory)aTo  .mTileEntity).getSizeInventory()));\n\t\t\n\t\tfor (int aSlotFrom : aSlotsFrom) {\n\t\t\tItemStack aStackFrom = ((IInventory)aFrom.mTileEntity).getStackInSlot(aSlotFrom);\n\t\t\tif (aStackFrom == null || aStackFrom.stackSize < aMinMove || (aFilter != null && aFilter.contains(aStackFrom, T) == aInvertFilter) || !canTake((IInventory)aFrom.mTileEntity, aIgnoreSideFrom ? SIDE_ANY : aFrom.mSideOfTileEntity, aFrom.mSideOfTileEntity, aSlotFrom, aStackFrom)) continue;\n\t\t\tfor (int aSlotTo : aSlotsTo) {\n\t\t\t\tItemStack aStackTo = ((IInventory)aTo.mTileEntity).getStackInSlot(aSlotTo);\n\t\t\t\tint tMovable = Math.min(aMaxMove, canPut((IInventory)aTo.mTileEntity, aIgnoreSideTo ? SIDE_ANY : aTo.mSideOfTileEntity, aTo.mSideOfTileEntity, aSlotTo, aStackFrom, aStackTo, Math.min(aMaxSize, aStackFrom.getMaxStackSize())));\n\t\t\t\tif (tMovable < aMinMove || tMovable + (aStackTo == null ? 0 : aStackTo.stackSize) < aMinSize) continue;\n\t\t\t\t// Actually Moving the Stack\n\t\t\t\treturn move_((IInventory)aFrom.mTileEntity, (IInventory)aTo.mTileEntity, aStackFrom, aStackTo, aSlotFrom, aSlotTo, tMovable);\n\t\t\t}\n\t\t}\n\t\treturn 0;\n\t}\n\t\n\t\n\t@SuppressWarnings(\"rawtypes\")",
+      "sha256": "a1fb2d7bfe06335a9a312474ead7053b0a79d4948e465de764ba74b37b44ceb6"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageDumpBlockEntity.java",
+      "first_line": 93,
+      "last_line": 96,
+      "purpose": "Current dump runs every ten world ticks and requires lower block entity.",
+      "text": "        if (!com.gregtech.gregtech.content.storage.GarbageStorageRules.dumpDue(level.getGameTime())) return;\n        BlockEntity below = level.getBlockEntity(pos.below());\n        // never feed garbage back into a bin (it would loop forever)\n        if (below == null || below instanceof EnderGarbageBlockEntity) return;",
+      "sha256": "1ef95636120867505da8e24d45eb27985d929b2fcca6a2142251c1bb0f3bf99e"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageDumpBlockEntity.java",
+      "first_line": 104,
+      "last_line": 113,
+      "purpose": "Current automatic item transfer only considers pool index zero.",
+      "text": "            ItemStack taken = garbage.extractItem(0, 64, true);\n//? if >=1.21.1 {\n            /*if (!taken.isEmpty()) {\n*///?} else {\n            if (taken.isEmpty()) return;\n//?}\n            ItemStack leftover = ItemHandlerHelper.insertItemStacked(itemTarget, taken.copy(), false);\n            int moved = taken.getCount() - leftover.getCount();\n            if (moved > 0) garbage.extractItem(0, moved, false);\n//? if >=1.21.1 {",
+      "sha256": "200766a5960d8b7dcd658f856ee3ec86217661e6dc4443045b016bbe67d66d4b"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageDumpBlockEntity.java",
+      "first_line": 123,
+      "last_line": 131,
+      "purpose": "Current automatic fluid transfer only offers first fluid and 16000 L.",
+      "text": "            FluidStack available = garbage.drain(16000, true);\n//? if >=1.21.1 {\n            /*if (!available.isEmpty()) {\n*///?} else {\n            if (available.isEmpty()) return;\n//?}\n            int filled = fluidTarget.fill(available, IFluidHandler.FluidAction.EXECUTE);\n            if (filled > 0) garbage.drain(filled, false);\n//? if >=1.21.1 {",
+      "sha256": "be74a64f1dca45f37dfda6b46de2b85ea42414e90c9297222b26dc9338a8d010"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/FL.java",
+      "first_line": 852,
+      "last_line": 852,
+      "purpose": "Original fluid iterable default budget is Long.MAX_VALUE.",
+      "text": "\tpublic static long move_(@SuppressWarnings(\"rawtypes\") Iterable aFrom, @SuppressWarnings(\"rawtypes\") DelegatorTileEntity aTo) {return move_(aFrom, aTo, Long.MAX_VALUE);}",
+      "sha256": "9188e47b6184cdc32b1c60f390292c3cf54d95b1bb73248a9e8e0f8e1a127baa"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/FL.java",
+      "first_line": 854,
+      "last_line": 854,
+      "purpose": "Original iterable visits every eligible tank, not only the first fluid.",
+      "text": "\tpublic static long move_(@SuppressWarnings(\"rawtypes\") Iterable aFrom, @SuppressWarnings(\"rawtypes\") DelegatorTileEntity aTo, long aMaxMoved) {if (aMaxMoved <= 0) return 0; long rAmount = 0; for (Object tFrom : aFrom) if (tFrom instanceof IFluidTank) rAmount += move_((IFluidTank)tFrom, aTo, aMaxMoved-rAmount); return rAmount;}",
+      "sha256": "323999c2cde378510df627cdd81a7e45301871834c7f57f34b54350f23a2cd9f"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/inventories/MultiTileEntityEnderGarbageDump.java",
+      "first_line": 86,
+      "last_line": 95,
+      "purpose": "Original dump selects requested fluid or first available through native handler.",
+      "text": "\tprotected IFluidTank getFluidTankDrainable2(byte aSide, FluidStack aFluidToDrain) {\n\t\tif (aFluidToDrain == null) {\n\t\t\tfor (int i = 0; i < GarbageGT.GARBAGE_FLUIDS.size(); i++) if (GarbageGT.GARBAGE_FLUIDS.get(i).has()) return GarbageGT.GARBAGE_FLUIDS.get(i);\n\t\t} else {\n\t\t\tfor (int i = 0; i < GarbageGT.GARBAGE_FLUIDS.size(); i++) if (GarbageGT.GARBAGE_FLUIDS.get(i).contains(aFluidToDrain)) return GarbageGT.GARBAGE_FLUIDS.get(i);\n\t\t}\n\t\treturn null;\n\t}\n\t\n\t@Override",
+      "sha256": "199ac42ee2c665493c62d6d1c329b2a49098d213285e5a4e1e15dbca8096254c"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageDumpBlockEntity.java",
+      "first_line": 37,
+      "last_line": 37,
+      "purpose": "Current dump is only a menu provider, without direct item/fluid handler exposure.",
+      "text": "public class EnderGarbageDumpBlockEntity extends BlockEntity implements MenuProvider {",
+      "sha256": "99614f4ec06b43843ad2f19b2108f90493676ea13646e4df01a5e7cbb9690792"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/world/GarbageData.java",
+      "first_line": 56,
+      "last_line": 63,
+      "purpose": "Current dimensions share one overworld SavedData.",
+      "text": "        return server.overworld().getDataStorage()\n//? if >=1.21.1 {\n        /*.computeIfAbsent(new SavedData.Factory<>(GarbageData::new, GarbageData::load, net.minecraft.util.datafix.DataFixTypes.LEVEL), NAME);\n*///?} else {\n                .computeIfAbsent(GarbageData::load, GarbageData::new, NAME);\n//?}\n    }\n",
+      "sha256": "42150e207b648ce8ea1a7f0bf3befe5e5b388b9b0c00cb3d6f54801ca2652747"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "first_line": 1460,
+      "last_line": 1472,
+      "purpose": "Original static pool already persists both item and fluid lists.",
+      "text": "\t\tpublic static void onServerSave(File aSaveLocation) {\n\t\t\tFile aTargetFile = new File(new File(aSaveLocation, \"gregtech\"), \"endergarbage.items.dat\");\n\t\t\tif (!aTargetFile.exists()) {try {aTargetFile.createNewFile();} catch (Throwable e) {e.printStackTrace(ERR);}}\n\t\t\tNBTTagCompound aNBT = UT.NBT.make();\n\t\t\tfor (int i = 0; i < GARBAGE_ITEMS.size(); i++) ST.save(aNBT, \"\"+i, GARBAGE_ITEMS.get(i));\n\t\t\ttry {CompressedStreamTools.write(aNBT, aTargetFile);} catch (Throwable e) {e.printStackTrace(ERR);}\n\t\t\t\n\t\t\taTargetFile = new File(new File(aSaveLocation, \"gregtech\"), \"endergarbage.fluids.dat\");\n\t\t\tif (!aTargetFile.exists()) {try {aTargetFile.createNewFile();} catch (Throwable e) {e.printStackTrace(ERR);}}\n\t\t\taNBT = UT.NBT.make();\n\t\t\tfor (int i = 0; i < GARBAGE_FLUIDS.size(); i++) GARBAGE_FLUIDS.get(i).writeToNBT(aNBT, \"\"+i);\n\t\t\ttry {CompressedStreamTools.write(aNBT, aTargetFile);} catch (Throwable e) {e.printStackTrace(ERR);}\n\t\t}",
+      "sha256": "08213fde4dcfe4f160f48746d3e5911fb2a13846dcf0314ca66e90cfc2c63ed8"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "first_line": 1474,
+      "last_line": 1485,
+      "purpose": "Original pool has an actual load path too.",
+      "text": "\t\tpublic static void onServerLoad(File aSaveLocation) {\n\t\t\tGARBAGE_ITEMS.clear();\n\t\t\tFile aTargetFile = new File(new File(aSaveLocation, \"gregtech\"), \"endergarbage.items.dat\");\n\t\t\tif (aTargetFile.exists()) {\n\t\t\t\tNBTTagCompound aNBT = UT.NBT.make();\n\t\t\t\ttry {aNBT = CompressedStreamTools.read(aTargetFile);} catch (Throwable e) {e.printStackTrace(ERR);}\n\t\t\t\tfor (int i = 0; i < Integer.MAX_VALUE; i++) {\n\t\t\t\t\tif (!aNBT.hasKey(\"\"+i)) break;\n\t\t\t\t\tItemStack aStack = ST.load(aNBT, \"\"+i);\n\t\t\t\t\tif (aStack == null || aStack.stackSize <= 0 || BLACKLIST.contains(aStack, T)) continue;\n\t\t\t\t\tGARBAGE_ITEMS.add(aStack);\n\t\t\t\t}",
+      "sha256": "b38c1dbbd18da590492a3baf13ef8142fe97055e1e1dce730b18abc3005d4821"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/GT_API_Proxy.java",
+      "first_line": 198,
+      "last_line": 198,
+      "purpose": "Original proxy invokes save, rather than unused helper only.",
+      "text": "\t\t\tGarbageGT.onServerSave(mSaveLocation);",
+      "sha256": "6e33e8424488de20661d6e33a011b52cc7a993464a29bacaa12fc167e7fbbf78"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/GT_API_Proxy.java",
+      "first_line": 207,
+      "last_line": 207,
+      "purpose": "Original proxy invokes load.",
+      "text": "\t\t\tGarbageGT.onServerLoad(mSaveLocation);",
+      "sha256": "cf038f37eab1a2e7fc267e2a24fdc7551ec3dcb2c4396671f2445f329952989b"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/world/GarbageData.java",
+      "first_line": 107,
+      "last_line": 111,
+      "purpose": "Current new-identity retention drops oldest entries.",
+      "text": "    private static void trim(List<?> entries) {\n        while (entries.size() >= MAX_ENTRIES) {\n            entries.remove(0);\n        }\n    }",
+      "sha256": "2904511b96cff071629f125e3009de69e1de07bbfa9b709491b725a34c6b16f1"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/world/GarbageData.java",
+      "first_line": 173,
+      "last_line": 173,
+      "purpose": "Existing oversized data load retains earliest entries instead.",
+      "text": "            if (data.items.size() >= MAX_ENTRIES) break;",
+      "sha256": "5f3970c3fc647ab520a7c95a8d63c2f4ee1416e732e3898e6a2647ba0bc3fc6f"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "first_line": 1376,
+      "last_line": 1380,
+      "purpose": "Original tagged item amount saturates at int max; untagged branch uses the same clamp.",
+      "text": "\t\t\tif (aStack.hasTagCompound()) {\n\t\t\t\tfor (ItemStack tGarbage : GARBAGE_ITEMS) if (ST.equal(aStack, tGarbage)) {\n\t\t\t\t\ttGarbage.stackSize = UT.Code.bind31((long)tGarbage.stackSize + (long)aStack.stackSize);\n\t\t\t\t\treturn aStack.stackSize;\n\t\t\t\t}",
+      "sha256": "f5e0b410a89163f4b88e773690fe92c079dcd3b18a521a9b5a2e9b5e982da1a2"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/world/GarbageData.java",
+      "first_line": 74,
+      "last_line": 74,
+      "purpose": "Current item pool uses a long count.",
+      "text": "                entry.count += stack.getCount();",
+      "sha256": "dcbcfbb540c05f7719127e85763f96c9a0c4ada7e59912a02f1f25befcb9ba49"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "first_line": 1428,
+      "last_line": 1428,
+      "purpose": "Original pooled fluid amount has long capacity.",
+      "text": "\t\t\tGARBAGE_FLUIDS.add(new FluidTankGT(aFluid, aAmount, Long.MAX_VALUE).setPreventDraining().setVoidExcess());",
+      "sha256": "3a809c859e04742b69fb16ce64e0409d2218734f1bd53daa9032c9f5ebb524cf"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/fluid/FluidTankGT.java",
+      "first_line": 114,
+      "last_line": 129,
+      "purpose": "Old preventDraining preserves empty identity, rather than preventing all extraction.",
+      "text": "\tpublic FluidStack drain(int aDrained, boolean aDoDrain) {\n\t\tif (isEmpty() || aDrained <= 0) return null;\n\t\tif (mAmount < aDrained) aDrained = (int)mAmount;\n\t\tFluidStack rFluid = new FluidStack(mFluid, aDrained);\n\t\tif (aDoDrain) {\n\t\t\tmAmount -= aDrained;\n\t\t\tif (mAmount <= 0) {\n\t\t\t\tif (mPreventDraining) {\n\t\t\t\t\tmAmount = 0;\n\t\t\t\t} else {\n\t\t\t\t\tsetEmpty();\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\treturn rFluid;\n\t}",
+      "sha256": "43255f4da7095fc8be9a69fe2513768bc3cf5bdd5f259b22b2c001013b11fc36"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/world/GarbageData.java",
+      "first_line": 92,
+      "last_line": 92,
+      "purpose": "Current fluid pool saturates through the int merge helper.",
+      "text": "                storedFluid.setAmount(com.gregtech.gregtech.content.storage.GarbageStorageRules.fluidMerge(storedFluid.getAmount(),",
+      "sha256": "037d77bfe5595c2a7912d0454ac6114f96f0c46887cc3da0d3b3dde064783c78"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/world/GarbageData.java",
+      "first_line": 123,
+      "last_line": 124,
+      "purpose": "Displayed item is a copy, not the live pool counter.",
+      "text": "        return entry.template.copyWithCount(com.gregtech.gregtech.content.storage.GarbageStorageRules.take(entry.count, Integer.MAX_VALUE,\n                entry.template.getMaxStackSize()));",
+      "sha256": "21ad2e0908a0a81143f4427df4dc5769b2bb16d85201b0d5619e3f44d1ab26f5"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageDumpBlockEntity.java",
+      "first_line": 71,
+      "last_line": 73,
+      "purpose": "Current virtual view setter is deliberately no-op.",
+      "text": "        public void setStackInSlot(int slot, ItemStack stack) {\n            /* read-only view */\n        }",
+      "sha256": "f121ae4939e2c7c6e8e6b984d223a336880491429e6e9dce133df80d504865f9"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/gui/HopperContainerMenu.java",
+      "first_line": 65,
+      "last_line": 65,
+      "purpose": "Dump GUI uses the actual unmodified native SlotItemHandler.",
+      "text": "            addSlot(new SlotItemHandler(inventory, index++, position.x(), position.y()));",
+      "sha256": "82409deba20fdf6372c16c5b71c985712a55c179a0f1b4832dc9e4624f7ebe81"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/gui/GarbageDumpContainerMenu.java",
+      "first_line": 36,
+      "last_line": 48,
+      "purpose": "Custom shift handling calls extract; ordinary SWAP is not overridden.",
+      "text": "    public ItemStack quickMoveStack(Player player, int index) {\n        if (index >= slotCount()) return ItemStack.EMPTY; // no inserting trash here\n        Slot slot = slots.get(index);\n        if (!(slot instanceof SlotItemHandler handlerSlot) || !slot.hasItem()) return ItemStack.EMPTY;\n        ItemStack taken = handlerSlot.getItemHandler().extractItem(index, 64, false);\n        if (taken.isEmpty()) return ItemStack.EMPTY;\n        if (!player.getInventory().add(taken) && !taken.isEmpty() && !player.level().isClientSide) {\n            // inventory full: put the rest back on the garbage pile\n            com.gregtech.gregtech.world.GarbageData.get(player.level()).trash(taken);\n        }\n        broadcastChanges();\n        return ItemStack.EMPTY;\n    }",
+      "sha256": "bf9222a455f67c8e3cb65611850e3b58f9a693ff9c8c4f422e5f38d24eda2470"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/inventories/MultiTileEntityEnderGarbageBin.java",
+      "first_line": 143,
+      "last_line": 143,
+      "purpose": "Old bin suppresses loose inventory drops.",
+      "text": "\t@Override public boolean canDrop(int aInventorySlot) {return F;}",
+      "sha256": "42167ddd59c776e4078dfcb2e2a42d1e0a359e9cf4784ef9a599a89a089c451a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "first_line": 124,
+      "last_line": 124,
+      "purpose": "Old bin also inherits no inventory packing into dropped block item.",
+      "text": "\tpublic          boolean keepSlot (int aSlot) {return F;}",
+      "sha256": "a8e92dfc4ebe497526329ee2d6f8bf33920bc6e8f23001069ab65ea7df90b3f9"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageBlockEntity.java",
+      "first_line": 220,
+      "last_line": 220,
+      "purpose": "Current bin actively scatters remaining buffer on removal.",
+      "text": "        com.gregtech.gregtech.api.inventory.BlockContents.drop(this, inventory);",
+      "sha256": "705089933bc88abe8f3a1803c13809995cfeff6b8197578fb97f98737f2bc7a2"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "first_line": 1375,
+      "last_line": 1375,
+      "purpose": "Old garbage intake refuses blacklisted item stacks.",
+      "text": "\t\t\tif (ST.invalid(aStack) || aStack.stackSize <= 0 || ST.meta_(aStack) == W || BLACKLIST.contains(aStack, T)) return 0;",
+      "sha256": "2b5a2403f096d679a5fe44c755d1e5257f8f70d20864c38bbcca069c41b41066"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "first_line": 2231,
+      "last_line": 2231,
+      "purpose": "Original admin dump is an explicit internal blacklist member.",
+      "text": "\t\taMat = ANY.Steel;           aRegistry.add(\"Ender Garbage Dump\"                                  , \"Misc Tool Blocks\"                    , 32710, 32720, MultiTileEntityEnderGarbageDump.class                   , aMat.mToolQuality, 16, aMachine       , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F)); ItemsGT.DEBUG_ITEMS.add(aRegistry.getItem()); ItemsGT.ILLEGAL_DROPS.add(aRegistry.getItem()); GarbageGT.BLACKLIST.add(aRegistry.getItem());",
+      "sha256": "51028015acc5b8df67354254fc87c445d22edcd19179dd030a27328d577b4bda"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/world/GarbageData.java",
+      "first_line": 66,
+      "last_line": 70,
+      "purpose": "Current intake has no corresponding debug dump blacklist.",
+      "text": "    public void trash(ItemStack stack) {\n        if (stack == null || stack.isEmpty()) return;\n        for (Entry entry : items) {\n//? if >=1.21.1 {\n            /*if (ItemStack.isSameItemSameComponents(entry.template, stack)) {",
+      "sha256": "6ab6180885b18e1f3583c1075c722450dc6efa8f701c0ad928d583244343cb3f"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/ST.java",
+      "first_line": 760,
+      "last_line": 772,
+      "purpose": "Old downward-air fallback places a dropped item and subtracts original stock.",
+      "text": "\t\t\tif (aEjectItems) for (int aSlotFrom : aSlotsFrom) {\n\t\t\t\tItemStack aStackFrom = aFrom.mTileEntity.getStackInSlot(aSlotFrom);\n\t\t\t\tif (aStackFrom != null && aMinMove <= aStackFrom.stackSize && (aFilter == null || aFilter.contains(aStackFrom, T) != aInvertFilter) && canTake(aFrom.mTileEntity, aIgnoreSideFrom ? SIDE_ANY : aFrom.mSideOfTileEntity, aFrom.mSideOfTileEntity, aSlotFrom, aStackFrom)) {\n\t\t\t\t\t// Actually Moving the Stack\n\t\t\t\t\tItemStack tStack = amount(Math.min(aStackFrom.stackSize, aMaxMove), aStackFrom);\n\t\t\t\t\tplace(aTo.mWorld, aTo.mX+0.5, aTo.mY+0.5, aTo.mZ+0.5, tStack);\n\t\t\t\t\taFrom.mTileEntity.decrStackSize(aSlotFrom, tStack.stackSize);\n\t\t\t\t\taFrom.mTileEntity.markDirty();\n\t\t\t\t\tWD.mark(aFrom);\n\t\t\t\t\treturn tStack.stackSize;\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+      "sha256": "84e5df5378d28011640a4ed1f86db0a7008afe5bb21c9c41e86ca691b005f64d"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/inventories/MultiTileEntityEnderGarbageBin.java",
+      "first_line": 107,
+      "last_line": 107,
+      "purpose": "Old garbage bin forbids covers.",
+      "text": "\t@Override public boolean allowCovers            (byte aSide) {return F;}",
+      "sha256": "14782ee115d7795e84433631c58767dc943ffd0cce825831ffa2ef5a225860ae"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "first_line": 61,
+      "last_line": 67,
+      "purpose": "Generic fallback has no corresponding bin prohibition.",
+      "text": "    public static boolean eligible(BlockEntity owner){\n        if(!ownClass(owner)||owner.getLevel()==null||owner.isRemoved())return false;\n        // Loose material piles use plates as contents, not as machine covers.\n        if(owner instanceof com.gregtech.gregtech.blockentity.misc.PileBlockEntity)return false;\n        // The active fallback service provides cover ticks even for otherwise passive GT storage.\n        return owner.getBlockState().getBlock() instanceof net.minecraft.world.level.block.EntityBlock;\n    }",
+      "sha256": "7e7f6f54cbe805dc89f91a847f7617a0f7e1e2b75efb5166dc45aac78c7affcf"
+    }
+  ],
+  "native_evidence": [
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/inventory/AbstractContainerMenu.class",
+      "entry_sha256": "4e6b9c7bd35cac672e491957afbda2ce565c509be9f0f1acddf8496554ac301a",
+      "javap_output": "work/garbage-pool-audit-20261022/forge-AbstractContainerMenu.javap.txt",
+      "javap_sha256": "f325e66506d2023a8a9cb14b89543c052e70de66783f2e4c53d9c5f835763a60"
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/inventory/Slot.class",
+      "entry_sha256": "31d0ae00785872909de5d946f3c11081524a93eff5fc6012ad5a173d15d01549",
+      "javap_output": "work/garbage-pool-audit-20261022/forge-Slot.javap.txt",
+      "javap_sha256": "2ffd51375c5902af588f0221ba3e185f5687a1add559545a809578a95b8a12c0"
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraftforge/items/SlotItemHandler.class",
+      "entry_sha256": "1b04f6629aed979c90eace4f1437de6760eb70c1a50b92b20a712607fd1f0afa",
+      "javap_output": "work/garbage-pool-audit-20261022/forge-SlotItemHandler.javap.txt",
+      "javap_sha256": "b20672d0c16fe4e1b3220cec423c95b6eb53176eb50faa5384fe8e546a91adf7"
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraftforge/common/capabilities/CapabilityProvider.class",
+      "entry_sha256": "91d7ff7fd801cbbd2f2db9da73b522660a9f449aca0a5c6ff7b90155116d483b",
+      "javap_output": "work/garbage-pool-audit-20261022/forge-CapabilityProvider.javap.txt",
+      "javap_sha256": "6b80d94f6160e21068eae0324006d3e480da74827f9d040069a7b7575caeb5e9"
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/entity/BlockEntity.class",
+      "entry_sha256": "ddc07e689dccf9953e41f35e2724a0d8752ab1a6ce98a7b77992a65fcab9848a",
+      "javap_output": "work/garbage-pool-audit-20261022/forge-BlockEntity.javap.txt",
+      "javap_sha256": "c66636018e2b616cbd6a0d0fb37026ee2c5fe60dae5d58812d71b02bb4f59fe9"
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/inventory/AbstractContainerMenu.java",
+      "entry_sha256": "1ecb13a9c33aba83666b229558278871ff28c76c477cfe96c13124ae55de232d",
+      "extracted_path": "work/garbage-pool-audit-20261022/neo-AbstractContainerMenu.java"
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/inventory/Slot.java",
+      "entry_sha256": "8e384c39b105493d097603cc29d3ba971f27e7d9c35e480889b6b2021ec720b3",
+      "extracted_path": "work/garbage-pool-audit-20261022/neo-Slot.java"
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/neoforged/neoforge/items/SlotItemHandler.java",
+      "entry_sha256": "872fe32c96263fcda22c36922255d07f678a29677920869353f3a05358201f10",
+      "extracted_path": "work/garbage-pool-audit-20261022/neo-SlotItemHandler.java"
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/block/entity/BlockEntity.java",
+      "entry_sha256": "c278b134769eefd1033c7952a2a5d461efd4e3e7fbe2c2f7d864182a9aeece6d",
+      "extracted_path": "work/garbage-pool-audit-20261022/neo-BlockEntity.java"
+    }
+  ],
+  "native_excerpts": [
+    {
+      "path": "C:/Dev/GregTech6/work/garbage-pool-audit-20261022/neo-AbstractContainerMenu.java",
+      "first_line": 439,
+      "last_line": 451,
+      "purpose": "Empty-hotbar SWAP sets player item then clears slot through setter, rather than remove().",
+      "text": "        } else if (p_150433_ == ClickType.SWAP && (p_150432_ >= 0 && p_150432_ < 9 || p_150432_ == 40)) {\n            ItemStack itemstack2 = inventory.getItem(p_150432_);\n            Slot slot5 = this.slots.get(p_150431_);\n            ItemStack itemstack7 = slot5.getItem();\n            if (!itemstack2.isEmpty() || !itemstack7.isEmpty()) {\n                if (itemstack2.isEmpty()) {\n                    if (slot5.mayPickup(p_150434_)) {\n                        inventory.setItem(p_150432_, itemstack7);\n                        slot5.onSwapCraft(itemstack7.getCount());\n                        slot5.setByPlayer(ItemStack.EMPTY);\n                        slot5.onTake(p_150434_, itemstack7);\n                    }\n                } else if (itemstack7.isEmpty()) {",
+      "sha256": "112f563a328afbe46245ec9bef6a61ce880d274916072737096bcef99c79aca9"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/garbage-pool-audit-20261022/neo-SlotItemHandler.java",
+      "first_line": 39,
+      "last_line": 42,
+      "purpose": "Native slot setter routes to modifiable handler setter.",
+      "text": "    public void set(ItemStack stack) {\n        ((IItemHandlerModifiable) this.getItemHandler()).setStackInSlot(index, stack);\n        this.setChanged();\n    }",
+      "sha256": "0dad0e6a71fe9b29ffffbf4df667e98bdbf31ee9b85c24d9bc4a91e15701f643"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/garbage-pool-audit-20261022/neo-SlotItemHandler.java",
+      "first_line": 65,
+      "last_line": 67,
+      "purpose": "Native eligibility uses simulated extraction.",
+      "text": "    public boolean mayPickup(Player playerIn) {\n        return !this.getItemHandler().extractItem(index, 1, true).isEmpty();\n    }",
+      "sha256": "1a151b9bc5274d567971db3c16e1820145a26be32c0ab6ed8328318eab00895a"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/garbage-pool-audit-20261022/neo-Slot.java",
+      "first_line": 57,
+      "last_line": 64,
+      "purpose": "Slot setByPlayer forwards to set on Neo.",
+      "text": "    public void setByPlayer(ItemStack p_270152_) {\n        this.setByPlayer(p_270152_, this.getItem());\n    }\n\n    public void setByPlayer(ItemStack p_299990_, ItemStack p_299965_) {\n        this.set(p_299990_);\n    }\n",
+      "sha256": "65262b38f2e051070f5d044d09f34f635fc4dcada4e903f1f17722b6efe68386"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/garbage-pool-audit-20261022/neo-Slot.java",
+      "first_line": 41,
+      "last_line": 43,
+      "purpose": "onTake only marks the slot changed.",
+      "text": "    public void onTake(Player p_150645_, ItemStack p_150646_) {\n        this.setChanged();\n    }",
+      "sha256": "b15d94fb8b52b7e6df7ec1c47130e7605efa75c63febbb09df2d942093317bd4"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/garbage-pool-audit-20261022/neo-Slot.java",
+      "first_line": 35,
+      "last_line": 36,
+      "purpose": "Generic native swap callback has no extraction side effect.",
+      "text": "    protected void onSwapCraft(int p_40237_) {\n    }",
+      "sha256": "c4347e4be9c0d8e10727b428f6e127ec32aa4e4b890829c4999121f3153090e2"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/garbage-pool-audit-20261022/forge-AbstractContainerMenu.javap.txt",
+      "first_line": 1245,
+      "last_line": 1290,
+      "purpose": "Actual Forge bytecode follows the same empty-hotbar setter path.",
+      "text": "    1094: getstatic     #714                // Field net/minecraft/world/inventory/ClickType.SWAP:Lnet/minecraft/world/inventory/ClickType;\n    1097: if_acmpne     1380\n    1100: aload_0\n    1101: getfield      #75                 // Field slots:Lnet/minecraft/core/NonNullList;\n    1104: iload_1\n    1105: invokevirtual #276                // Method net/minecraft/core/NonNullList.get:(I)Ljava/lang/Object;\n    1108: checkcast     #223                // class net/minecraft/world/inventory/Slot\n    1111: astore        6\n    1113: aload         5\n    1115: iload_2\n    1116: invokevirtual #716                // Method net/minecraft/world/entity/player/Inventory.getItem:(I)Lnet/minecraft/world/item/ItemStack;\n    1119: astore        7\n    1121: aload         6\n    1123: invokevirtual #280                // Method net/minecraft/world/inventory/Slot.getItem:()Lnet/minecraft/world/item/ItemStack;\n    1126: astore        8\n    1128: aload         7\n    1130: invokevirtual #561                // Method net/minecraft/world/item/ItemStack.isEmpty:()Z\n    1133: ifeq          1144\n    1136: aload         8\n    1138: invokevirtual #561                // Method net/minecraft/world/item/ItemStack.isEmpty:()Z\n    1141: ifne          1377\n    1144: aload         7\n    1146: invokevirtual #561                // Method net/minecraft/world/item/ItemStack.isEmpty:()Z\n    1149: ifeq          1200\n    1152: aload         6\n    1154: aload         4\n    1156: invokevirtual #648                // Method net/minecraft/world/inventory/Slot.mayPickup:(Lnet/minecraft/world/entity/player/Player;)Z\n    1159: ifeq          1377\n    1162: aload         5\n    1164: iload_2\n    1165: aload         8\n    1167: invokevirtual #719                // Method net/minecraft/world/entity/player/Inventory.setItem:(ILnet/minecraft/world/item/ItemStack;)V\n    1170: aload         6\n    1172: aload         8\n    1174: invokevirtual #582                // Method net/minecraft/world/item/ItemStack.getCount:()I\n    1177: invokevirtual #722                // Method net/minecraft/world/inventory/Slot.onSwapCraft:(I)V\n    1180: aload         6\n    1182: getstatic     #88                 // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;\n    1185: invokevirtual #618                // Method net/minecraft/world/inventory/Slot.setByPlayer:(Lnet/minecraft/world/item/ItemStack;)V\n    1188: aload         6\n    1190: aload         4\n    1192: aload         8\n    1194: invokevirtual #726                // Method net/minecraft/world/inventory/Slot.onTake:(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;)V\n    1197: goto          1377\n    1200: aload         8\n    1202: invokevirtual #561                // Method net/minecraft/world/item/ItemStack.isEmpty:()Z",
+      "sha256": "a5dc725913503bc4cfbb146b60338cbbf4207c546a80ec3ff9604208b58befe0"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/garbage-pool-audit-20261022/forge-SlotItemHandler.javap.txt",
+      "first_line": 49,
+      "last_line": 60,
+      "purpose": "Actual Forge native setter invokes setStackInSlot.",
+      "text": "  public void set(net.minecraft.world.item.ItemStack);\n    Code:\n       0: aload_0\n       1: invokevirtual #49                 // Method getItemHandler:()Lnet/minecraftforge/items/IItemHandler;\n       4: checkcast     #57                 // class net/minecraftforge/items/IItemHandlerModifiable\n       7: aload_0\n       8: getfield      #22                 // Field index:I\n      11: aload_1\n      12: invokeinterface #61,  3           // InterfaceMethod net/minecraftforge/items/IItemHandlerModifiable.setStackInSlot:(ILnet/minecraft/world/item/ItemStack;)V\n      17: aload_0\n      18: invokevirtual #65                 // Method setChanged:()V\n      21: return",
+      "sha256": "eef22a218dcf0f22253272a1e87aad703b615850f7ba0c77fc7f28745948a562"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/garbage-pool-audit-20261022/forge-SlotItemHandler.javap.txt",
+      "first_line": 155,
+      "last_line": 168,
+      "purpose": "Forge eligibility simulates extraction rather than consuming.",
+      "text": "  public boolean mayPickup(net.minecraft.world.entity.player.Player);\n    Code:\n       0: aload_0\n       1: invokevirtual #49                 // Method getItemHandler:()Lnet/minecraftforge/items/IItemHandler;\n       4: aload_0\n       5: getfield      #22                 // Field index:I\n       8: iconst_1\n       9: iconst_1\n      10: invokeinterface #112,  4          // InterfaceMethod net/minecraftforge/items/IItemHandler.extractItem:(IIZ)Lnet/minecraft/world/item/ItemStack;\n      15: invokevirtual #35                 // Method net/minecraft/world/item/ItemStack.isEmpty:()Z\n      18: ifne          25\n      21: iconst_1\n      22: goto          26\n      25: iconst_0",
+      "sha256": "c6c4231ace20e2b67f812606812fcda871e2eac5a630d9aae3ed86c6f6a2ce73"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/garbage-pool-audit-20261022/forge-Slot.javap.txt",
+      "first_line": 92,
+      "last_line": 97,
+      "purpose": "Forge setByPlayer forwards to virtual set.",
+      "text": "  public void setByPlayer(net.minecraft.world.item.ItemStack);\n    Code:\n       0: aload_0\n       1: aload_1\n       2: invokevirtual #91                 // Method set:(Lnet/minecraft/world/item/ItemStack;)V\n       5: return",
+      "sha256": "8431baee6b96177256d5cf03b1b246690bb259c94ba04f92e94b08f22aa41f04"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/garbage-pool-audit-20261022/forge-Slot.javap.txt",
+      "first_line": 61,
+      "last_line": 66,
+      "purpose": "Forge onTake likewise does not remove the pool item.",
+      "text": "  public void onTake(net.minecraft.world.entity.player.Player, net.minecraft.world.item.ItemStack);\n    Code:\n       0: aload_0\n       1: invokevirtual #67                 // Method setChanged:()V\n       4: return\n",
+      "sha256": "3540343b86cbde7d952588471c12814b8bada5ca5e2c013a3af0baced27e1113"
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/garbage-pool-audit-20261022/forge-CapabilityProvider.javap.txt",
+      "first_line": 245,
+      "last_line": 263,
+      "purpose": "Forge default capabilities query registered providers; a public view getter does not expose itself.",
+      "text": "  public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(net.minecraftforge.common.capabilities.Capability<T>, net.minecraft.core.Direction);\n    Code:\n       0: aload_0\n       1: invokevirtual #137                // Method getCapabilities:()Lnet/minecraftforge/common/capabilities/CapabilityDispatcher;\n       4: astore_3\n       5: aload_0\n       6: getfield      #51                 // Field valid:Z\n       9: ifeq          16\n      12: aload_3\n      13: ifnonnull     22\n      16: invokestatic  #170                // Method net/minecraftforge/common/util/LazyOptional.empty:()Lnet/minecraftforge/common/util/LazyOptional;\n      19: goto          28\n      22: aload_3\n      23: aload_1\n      24: aload_2\n      25: invokevirtual #172                // Method net/minecraftforge/common/capabilities/CapabilityDispatcher.getCapability:(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;\n      28: areturn\n\n  private static net.minecraftforge.common.capabilities.ICapabilityProvider lambda$gatherCapabilities$2();",
+      "sha256": "09df1e88287169415954c5621909ee5caa140998d6b015b899cd22be2bc2298f"
+    }
+  ],
+  "readability": {
+    "baseline": "00c5b814b88793e56245a0fcefb5baa3cdeea95e",
+    "files": {
+      "core/src/main/java/com/gregtech/gregtech/content/storage/GarbageStorageRules.java": {
+        "before_raw_sha256": "21da276cc20e1fbaea0490259943c9d384d967bc35e9dca9030187331b58a5cc",
+        "after_raw_sha256": "f5fa4636f298ae4afe228e839ac9290244c0e546daf3f1cf0f95f1d433bfb50f",
+        "before_lines": 3,
+        "after_lines": 26,
+        "comment_corrections": [
+          [
+            "Original bounded persistent dump and transfer schedule.",
+            "Port retention limits, GUI window and transfer schedule."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 138,
+            "execution_sha256": "3d8e81fdf9a2c5114ea4ecee41f0a3873874669b00fe27263de63328a018039e",
+            "literal_positions_sha256": "aa352dfc0203c3f0c0d8b9be9bea71467ce2dd366a68fa4bbf9dfdd36cf4eba0",
+            "literal_count": 6
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/world/GarbageData.java": {
+        "before_raw_sha256": "42d5ff7ad2344babcfda28416d1d7369197a48647ba9d10d57fc686f7482cff9",
+        "after_raw_sha256": "a6c224f9b73804211d5ac93ec729c6fb2f6dd8261582b447f66d099e33bf1a2c",
+        "before_lines": 217,
+        "after_lines": 223,
+        "comment_corrections": [
+          [
+            " * Unlike GT6's static lists this survives restarts as world SavedData.",
+            " * GT6 also saves its static pools through GarbageGT server save/load hooks.\n * This port stores the server-wide pools in overworld SavedData."
+          ],
+          [
+            "     * <p>A pile merges by {@link ItemStack#isSameItemSameTags}, so a stack carrying per-instance NBT\n     * (a used tool, a charged battery, a bee's random genome) never merges with anything: every trashed\n     * stack became a <em>new</em> permanent entry. Nothing else removes an entry - the only removal\n     * path is {@link #extractItem} draining that exact pile to zero - so the list grew with every\n     * NBT-carrying stack the Ender Garbage Bin ever voided, in the heap and in the world save alike.\n     * Past this cap the oldest pile is dropped, which bounds the dump while leaving the behaviour for\n     * every dump a player can actually reach through the container (it shows 54 piles) unchanged.</p>",
+            "     * <p>Equal item/tag or component combinations merge; distinct combinations use separate entries.\n     * Adding a new entry at this cap discards the oldest pile, including one visible in the first\n     * 54 GUI slots. This is the port's bounded retention policy, rather than an original GT6 limit.\n     * The original pool also persists, but does not impose this entry cap.</p>"
+          ],
+          [
+            "One merged garbage pile: an item template (count 1) plus an unbounded count.",
+            "One merged garbage pile: an item template (count 1) plus a long count."
+          ],
+          [
+            "ItemStack.save clamps Count to a byte, so the real count is kept beside it",
+            "Keep the pool count separately; the saved item template represents one item"
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1137,
+            "execution_sha256": "d7d489688d16d26e802667be8b49bca87be101238e37dcdf5e9cd06e3fc4aab6",
+            "literal_positions_sha256": "f37f1303d2ec5ed9ad299e51682a3820af39655ae718f46dd48cce8e79e496e8",
+            "literal_count": 19
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1180,
+            "execution_sha256": "90d22424d27706a5cda24ffa3892424641e48096ea04c8f23194ef541e4f894b",
+            "literal_positions_sha256": "aaaf1d307d69078aae7b6af554c3f77c47d63e06e6d3536b77eb94f437d8ddf1",
+            "literal_count": 19
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageBlockEntity.java": {
+        "before_raw_sha256": "4f61612ddaf1e96fe17f3ee42e340d9a222c00c697d936fe0fbe8c2a8449b8e8",
+        "after_raw_sha256": "419af4b8c6f9eb5d6d180d26ad01cfd7e8980c59606a4bf34f1f8605d071d847",
+        "before_lines": 166,
+        "after_lines": 223,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1141,
+            "execution_sha256": "3325fa5b8d35eecf4b1beb028e41ecbe334277a1520cf9a24afc7def393f4fa3",
+            "literal_positions_sha256": "3568b1829d9c4b7fb6ae510da88ffa8200409343d6b14e5dfac0368c1f7e26fc",
+            "literal_count": 10
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1033,
+            "execution_sha256": "256ae6c0f8524d16c779959721674d8d87a663af48c0ff2d8a84f30af970e7f1",
+            "literal_positions_sha256": "cd777269e1ae283f8bf95bceb9e1939217328355e963506557e32208d7c3a035",
+            "literal_count": 10
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageDumpBlockEntity.java": {
+        "before_raw_sha256": "c5c83bd7ff122ce439c240ccc02dcc6550b17ad3db86764a6f6c3899553ffa33",
+        "after_raw_sha256": "9421548646f4e51be007a89e3518fc07885a2a56240aae2c13c560ca4908fe02",
+        "before_lines": 123,
+        "after_lines": 149,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 775,
+            "execution_sha256": "8cea48e3858baf2f927b99426cbf0e7e271b4985b49e01f4d079a3fb855d0e78",
+            "literal_positions_sha256": "f247cb30f604f5c9d865a74a60962d86a8492874f455bf16187de3e34bc84d7a",
+            "literal_count": 8
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 812,
+            "execution_sha256": "f3e260515cdd1d06293eee5258f7af70f1c64f28c774744d4d92de8d89690fef",
+            "literal_positions_sha256": "4b14e9579461c526a979a95ad1b9d719570bf06ce09efcad236d50e6b75b0e10",
+            "literal_count": 8
+          }
+        ]
+      }
+    },
+    "controlled_local_identifier_renames": {
+      "multiversion/src/main/java/com/gregtech/gregtech/world/GarbageData.java": {
+        "mapping": {
+          "e": "entry",
+          "f": "storedFluid",
+          "t": "savedTag",
+          "c": "compound",
+          "i": "fluidIndex"
+        },
+        "exact_identifier_token_counts_including_stonecutter_code": {
+          "e": 18,
+          "f": 20,
+          "t": 5,
+          "c": 9,
+          "i": 5
+        },
+        "new_names_absent_from_original_code": true
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageBlockEntity.java": {
+        "mapping": {
+          "i": "slotIndex"
+        },
+        "exact_identifier_token_counts_including_stonecutter_code": {
+          "i": 5
+        },
+        "new_names_absent_from_original_code": true
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageDumpBlockEntity.java": {
+        "mapping": {
+          "target": "itemTarget",
+          "tank": "fluidTarget"
+        },
+        "exact_identifier_token_counts_including_stonecutter_code": {
+          "target": 4,
+          "tank": 4
+        },
+        "new_names_absent_from_original_code": true
+      }
+    },
+    "scope": "Full ordered code and literal positions after recorded local-name normalization, including inactive Stonecutter code; other comments/directives retained. No algorithm or data/schema changes."
+  },
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "formal_findings_added": [
+    {
+      "id": "ALIGN-396",
+      "finding": "Bin uses only world-time modulo; original entity-local cadence also flushes on block update."
+    },
+    {
+      "id": "ALIGN-397",
+      "finding": "Powered bin rejects automatic item insertion; original only pauses trashing while insertion remains permitted."
+    },
+    {
+      "id": "ALIGN-398",
+      "finding": "Automatic dump only offers first item/fluid, so an unsuitable head blocks a later acceptable candidate."
+    },
+    {
+      "id": "ALIGN-399",
+      "finding": "Dump output cadence/budget changed: every server tick and unrestricted fluid iteration to every ten ticks, one item and 16000 L first fluid."
+    },
+    {
+      "id": "ALIGN-400",
+      "finding": "Dump passive item/fluid and tap/nozzle exports are not bound; GUI extraction/own downward tick do not replace them."
+    },
+    {
+      "id": "ALIGN-401",
+      "finding": "Each item/fluid pool is independently capped at 256 identities with earliest eviction; item GUI view is fixed at 54. Original has no identity cap. Existing oversized load keeps earliest instead; preserve protective policy pending explicit redesign."
+    },
+    {
+      "id": "ALIGN-402",
+      "finding": "Amount domains changed: original item counters int-saturate and fluid pools use long capacity; current item count is long and fluids int-saturate."
+    },
+    {
+      "id": "ALIGN-403",
+      "finding": "Source-reachable empty-hotbar SWAP copies the displayed pool stack without decreasing real stock because the view setter is no-op. High priority; no native world reproduction."
+    },
+    {
+      "id": "ALIGN-404",
+      "finding": "Bin removal actively scatters local buffer, while original canDrop=false and keepSlot=false do not return it this way."
+    },
+    {
+      "id": "ALIGN-405",
+      "finding": "Original internal admin-dump blacklist is absent from current global intake."
+    },
+    {
+      "id": "ALIGN-406",
+      "finding": "Original dump can eject items into collision-free air below through ST.put; current lower-null check stops before any attempt."
+    }
+  ],
+  "formal_findings_extended": [
+    {
+      "id": "ALIGN-139",
+      "scope": "Original bin all-side cover prohibition is not retained by generic fallback admission. Dump does not override this old prohibition, so do not extend to dump."
+    }
+  ],
+  "source_witnesses": [
+    {
+      "finding": "ALIGN-398",
+      "conditions": "Pool holds stone then iron; lower valid inventory rejects stone and accepts iron, with room for 64. Old scans beyond first candidate; current only offers pool index zero. Fluid variant: first fluid rejected, second accepted; old iterable continues, current only offers first."
+    },
+    {
+      "finding": "ALIGN-403",
+      "conditions": "Server dump menu, pool slot zero has 64 ordinary stackable items; target hotbar slot empty. viewItem returns a 64-item copy, mayPickup simulates successfully, vanilla SWAP puts it into hotbar and calls slot setter with empty; no-op view setter and ordinary onTake leave pool at 64.",
+      "derived_counts": {
+        "pool_before": 64,
+        "player_hotbar_before": 0,
+        "pool_after": 64,
+        "player_hotbar_after": 64
+      },
+      "limit": "Ordered source/actual native consumer inference, not executed menu/game/network test."
+    },
+    {
+      "finding": "ALIGN-401",
+      "conditions": "Adding a 257th distinct identity removes entry zero, including a first-page entry. No original trim. Existing oversized port data load stops after earliest 256; source policy difference, no actual saved-world test."
+    },
+    {
+      "finding": "ALIGN-402",
+      "conditions": "One more litre after Integer.MAX_VALUE: old long-capacity pool can hold 2147483648, current fluidMerge retains 2147483647. Conversely current item long can retain more than original int-saturated count; no overflow gameplay exploit claimed."
+    },
+    {
+      "finding": "ALIGN-406",
+      "conditions": "Below at ordinary y=64 is air and has no block entity; original ST.move enables ejection and ST.put passes collision-free branch, current returns at below==null. No dropped entity execution."
+    }
+  ],
+  "already_implemented_or_rejected": [
+    "Original GarbageGT static lists already save/load both pools, and GT_API_Proxy calls those methods. Persistence is not a newly added feature, contrary to the old source comment.",
+    "Current dimensions share server.overworld SavedData; no per-dimension partition finding. Real disk save/restart not tested.",
+    "Identical item tags/components can merge; per-instance NBT does not automatically make every stack unmergeable. Comment corrected.",
+    "Bin fluid input is immediate into pool and pauses with redstone in both sources; item insertion difference is not generalized to fluid acceptance.",
+    "Dump refusal to return output directly into a bin exists in both implementations.",
+    "Current shift-click menu explicitly extracts and re-trashes remainder; do not call every menu path duplicating. SWAP uses a distinct inherited path.",
+    "Bounded retention, int/long choices and new GUI are policy differences, not instructions to remove protection or restore unsafe growth."
+  ],
+  "preparation_attempts": [
+    {
+      "result": "corrected rename preparation before production write",
+      "detail": "Preview f→fluid collided with existing trash(FluidStack fluid) parameter. Renamed to storedFluid instead and added an absent-name/injective-map guard for each platform before alpha-renaming. Preview never applied in colliding form."
+    },
+    {
+      "result": "corrected reference selection preparation",
+      "detail": "Generic old ST.move loop head matched multiple methods; the exact full default overload is now selected. Both old tagged/untagged clamp branches exist; quote now includes the unique tagged branch context."
+    }
+  ],
+  "limits": [
+    "No Java compiler, standalone execution probe, Gradle, whole-mod compile, GameTest, Minecraft, menu packets, entity movement, actual disk restart, rendering, build, push or GitHub write.",
+    "Actual cached Forge/Neo bytecode/source consumers reviewed; no running Minecraft behavior claimed.",
+    "Physical properties/models, exact GUI permissions, complete original garbage ingress consumers, resource/recipe catalogs and other systems continue.",
+    "406 cumulative formal records include repaired items and retained policies, not unresolved count or completion percentage. Full goal remains active."
+  ],
+  "root_revalidation": {
+    "baseline_git_sources": true,
+    "readability_proof": true,
+    "edited_sources": 4,
+    "platform_views": 7,
+    "original_sources": 14,
+    "current_sources": 18,
+    "native_entries": 9,
+    "lines_before": 509,
+    "lines_after": 621,
+    "controlled_identifier_occurrences": 70,
+    "new_name_collision_guards": true,
+    "protected_materials": true,
+    "source_hashes_current": true,
+    "source_and_native_excerpt_ranges_and_hashes_current": true,
+    "native_artifacts_entries_and_outputs_current": true,
+    "full_code_proof_reproduced": true,
+    "formal_rows_contiguous": 406,
+    "navigation_ledgers_linked": [
+      "PLAN",
+      "STATUS",
+      "DECISIONS",
+      "VERIFICATION",
+      "SOURCE_LAYOUT",
+      "SOURCE_READABILITY_INVENTORY",
+      "ORIGINAL_ALIGNMENT_AUDIT"
+    ],
+    "new_name_collision_guards_reproduced": true,
+    "issue_scope_unchanged_normalized_text": true,
+    "native_ui_path_source_only": true
+  }
+}

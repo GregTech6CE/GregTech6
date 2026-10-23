@@ -1,0 +1,792 @@
+{
+  "date": "2026-10-22",
+  "batch": 114,
+  "baseline": "8ad2bc490cb6e7839776ac281bb4f936e29e33a9",
+  "previous_goal_turn": {
+    "classification": "progress",
+    "commit": "8ad2bc490"
+  },
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityMoldCoinage.java",
+      "raw_sha256": "9e8cce8493f692242870fe00f0d43d7c08d0eccab68e47ca41243bb166c90aa3",
+      "lines": 263,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/placeables/MultiTileEntityCoin.java",
+      "raw_sha256": "70352995f5692abf8f874041a18c1bd2c476bfb1bdd5d4dea7b8fbb92952a719",
+      "lines": 476,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/autotools/MultiTileEntityAutoToolHammer.java",
+      "raw_sha256": "f47df299bf216988e91ccb84220c607e033a17f0b5140459c55e5b7873b38871",
+      "lines": 180,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/behaviors/Behavior_Tool.java",
+      "raw_sha256": "f41879dadcb2b4cf8b55c1156b903fc6e00e5dbb9644b1158869849be4b48daf",
+      "lines": 80,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/tools/early/GT_Tool_HardHammer.java",
+      "raw_sha256": "ff2d994d5cca3b0a74d7e98e3ed66676b03161444c487112d0fb14152ee9d0cf",
+      "lines": 141,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java",
+      "raw_sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+      "lines": 3476,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "raw_sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "lines": 2345,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "raw_sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "lines": 2243,
+      "notice_sha256": "6855675ee4a01a21169dd2a3ed5df729ac3198a4b2e3b869f91e1a45c79e6aca"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/old/Textures.java",
+      "raw_sha256": "2c89ed8e110dffe1c33c86c1e5707fa1f2b70ea3490d5d2d67a5305c8eca9d0c",
+      "lines": 920,
+      "notice_sha256": "6855675ee4a01a21169dd2a3ed5df729ac3198a4b2e3b869f91e1a45c79e6aca"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/tool/CoinStampPattern.java",
+      "raw_sha256": "1b213247ae13c6883d8423fa04624131e978aca6cc03c79f0be155c6d505d135",
+      "lines": 33
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/tool/CoinMoldGeometry.java",
+      "raw_sha256": "d92feaf33347a837286d68ed259c13bff7c0f29d77779dc0f2ff9b321f93dbc2",
+      "lines": 11
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/CoinMoldBlockEntity.java",
+      "raw_sha256": "545fab4eac8018471cbbde3e8fb4c3799565a094af1ece9f4e8e420603cc3336",
+      "lines": 246
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/CoinMoldRenderer.java",
+      "raw_sha256": "994daf680b87047c7a9599b01218ad6f8a048ef953172e5635c3d7da21df9b1c",
+      "lines": 41
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/AutoHammerBlockEntity.java",
+      "raw_sha256": "58a54ce5ab4b5da9086ab7e89cb83dfdc7c55099b4e7ee979e06447f585a1584",
+      "lines": 102
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/CoinMoldBlock.java",
+      "raw_sha256": "0a12c01ba7932f23af60ddb6d6e03dfb5798f2edc73b0aa1157dc5f598479f39",
+      "lines": 157
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/tool/CoinGeometry.java",
+      "raw_sha256": "89dbfa8424447a925998fc3282af5bddbb7669f296d1a8d60a22d7bef56b3fed",
+      "lines": 174
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/CoinPileRenderer.java",
+      "raw_sha256": "959446f32cfb2a9b850331ba277d83fa63f9a53d24561f4e7f00916b850ed7a3",
+      "lines": 137
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/CoinItem.java",
+      "raw_sha256": "b01ac1c6f145c910db8eb39bc5624799c8a92f57e42ec87c9282cfac969e3ee4",
+      "lines": 124
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/CoinItemRenderer.java",
+      "raw_sha256": "b5173ea671c5be5cf1e87d13b3224b82a7fcf682788f7cd68beaa2dc41a30881",
+      "lines": 54
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/CoinItemBakedModel.java",
+      "raw_sha256": "8a95383bfde378eb0127deff0460dbda7c5311d36ec5fae984f4f4651d2a391a",
+      "lines": 79
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/MaterialItem.java",
+      "raw_sha256": "2c7b01554d0900783cf90ae5610c1bca0e8a9d24385ba99f1f5a420491b9d2b1",
+      "lines": 155
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/MaterialTooltips.java",
+      "raw_sha256": "8d760cc655af21650befb747940e5e9a65550f22b138d194a943dfa087f14e6b",
+      "lines": 384
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/MaterialTooltipHandler.java",
+      "raw_sha256": "d114eed8c74ed1baf43e338fbab1efab1aa2667e623a4874ba819e7faca20d3c",
+      "lines": 46
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/CommonBlockTooltips.java",
+      "raw_sha256": "660474c0bba3c3124c2bfb26d0efcac8b0c289a03c6be6d5425324cdfff88cbb",
+      "lines": 140,
+      "notice_sha256": "51a1b8c60512f0d8846b4b91d78cc7b661e1198f5066bf3ec0fce922b87f5ffc"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/material/MaterialEquivalence.java",
+      "raw_sha256": "863ea4b895ac28ac45f3dcb551f5ea6abedf239208c5d5050fa256b33d158707",
+      "lines": 61
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTItems.java",
+      "raw_sha256": "b069563fc4cc86720652ffcef0ed5d0996b56e9c5c91d0cc85c0329ea0871ed8",
+      "lines": 187
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java",
+      "raw_sha256": "597867a457c5e291bb1179bbb31b90737f807d95adb65670fc01c8be17c8daff",
+      "lines": 611
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/PoweredToolTarget.java",
+      "raw_sha256": "c2a86ec5da53f9652e437e7f281d18e2bb5e8773c56d36a5c6003a2febde208b",
+      "lines": 9
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "raw_sha256": "5ff60819301303ea2893b671701741e1523501f0ef4c575c10ec932de04f5493",
+      "lines": 164,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "raw_sha256": "afd6d00235399a7a1b115cbab778d691997836a49e25e62a442a36c59a2733d9",
+      "lines": 122,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverStorage.java",
+      "raw_sha256": "02f2cf2b0b84f3ed9eb16c266ad85e8d7d6be98b0b4e3909751878e34ef24046",
+      "lines": 116,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverRuntime.java",
+      "raw_sha256": "3ed9aeba571247804027cd2877d084b809890070104b49619465199a425a925f",
+      "lines": 180,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "raw_sha256": "036d8a5039506f9a7678fe76e07362f9a8a81a09a47fed0824dae5e13a375403",
+      "lines": 309
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverItems.java",
+      "raw_sha256": "323c9dc95c44fff89498bf3d1718aa0a94dfbcdbb5466326ed3cb8bdbddbedbd",
+      "lines": 174
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTToolBlocks.java",
+      "raw_sha256": "834d9a9a40a679a598ad11e97318652c85d23209964352a83094e5dd0bac6dba",
+      "lines": 366
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/data/MaterialPrefix.java",
+      "raw_sha256": "484d31381d4291b85341ab3604f1c98829eecc834ec04e36d54d7912e911afdd",
+      "lines": 785
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialItemDefinitions.java",
+      "raw_sha256": "b4fd742f5e59e419a2cdaed2bf51960954bbecc5c33380aae9abd91cc2aff818",
+      "lines": 261
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/addon/AddonMaterials.java",
+      "raw_sha256": "c459fbec1bdccd76700c14f463ce5e850b50d8881979568be60a248a1f9c4d7a",
+      "lines": 679
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/cover/MaterialCoverRules.java",
+      "raw_sha256": "21c61c8bcef765548a66ad544a34bd88e46c99638e686eabec7eb022b744fa09",
+      "lines": 42
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTManualStations.java",
+      "raw_sha256": "814eb95c770e5c62e86406b99fc5703268fdf79c9a096d8b3d5785c68cb0232f",
+      "lines": 121
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageContainerCapabilities.java",
+      "raw_sha256": "d6e62e69491d69f904307d82523a6e3e9c49f7fcccdda7ae0f6c1a040c4a74e0",
+      "lines": 72
+    }
+  ],
+  "source_scope": "Listed minting, hand/powered tool, default die, rendering and tooltip consumers reviewed. Full hashes are provenance, not certification of all surrounding functions or native lifecycle.",
+  "provenance": {
+    "authors": "GregTech-6 Team / Gregorius Techneticies",
+    "original_notice": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */",
+    "handling": "Read-only original sources; Java notices retained; no assets changed or live original PNG byte-equivalence claim."
+  },
+  "resources": [
+    {
+      "path": "multiversion/src/main/resources/assets/gt6ce/models/block/tool/coin_mold.json",
+      "raw_sha256": "5ed0b5d163cc201db5c5c929b94c45e1ff3bc12e37b075d9fd25e7fe5b0707a9"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/blockstates/coin_mold.json",
+      "raw_sha256": "d9339eb003947dabe75d109e9c31a191dabe26a4877e8e4bc14184530b7bfe3d"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/models/item/coin_mold.json",
+      "raw_sha256": "f00d7cd839c396d25245f503201d539dbd6e2fe456fda4a72890431727d0bf9f"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/models/item/coin_minted.json",
+      "raw_sha256": "6258a65322271e2f18830259ea0c739d5a0dbda688ff5bffb103388532c0493d"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/geometry/coin_shape.json",
+      "raw_sha256": "c5c16ae7ee3500c05907fdd2cb6ee127801de7eb5cf7290101dae43c03f0ff12"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/textures/block/iconsets/coin.png",
+      "raw_sha256": "fb000ae641ba3347ad15b0475afa763b3637505cd787443731d49fe15b5a78dc"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/textures/block/iconsets/coin_bottom.png",
+      "raw_sha256": "9eb1f42424827629f96477d4bf611b2901a89fdab883f75630de6ba85d3d90b8"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/textures/block/iconsets/coin_side.png",
+      "raw_sha256": "f0900eae18da874622af7ee7a598197173457833753c012b4088f3003680e1b3"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/textures/block/iconsets/coin_top.png",
+      "raw_sha256": "2b3e6ea2eed2eb66ce9d0c825227180a4cf99e8e3d4f1c2babbed02bf0e29269"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/tools/mold_coinage/colored/bottom.png",
+      "raw_sha256": "99fa529d58845f2d92c980c558058ed646a3753603e30f23914f7a9bed8f580b"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/tools/mold_coinage/colored/hole.png",
+      "raw_sha256": "27033b7f29973a1aca7cf6c575eeb2f5d1b4acb65da59350ad7a9b7910b105eb"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/tools/mold_coinage/colored/side.png",
+      "raw_sha256": "99fa529d58845f2d92c980c558058ed646a3753603e30f23914f7a9bed8f580b"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/tools/mold_coinage/colored/top.png",
+      "raw_sha256": "99fa529d58845f2d92c980c558058ed646a3753603e30f23914f7a9bed8f580b"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/tools/mold_coinage/overlay/bottom.png",
+      "raw_sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/tools/mold_coinage/overlay/hole.png",
+      "raw_sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/tools/mold_coinage/overlay/side.png",
+      "raw_sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/tools/mold_coinage/overlay/top.png",
+      "raw_sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "raw_sha256": "9a11fa5b224b5e4dfce0a242137db26795c0931e2fc33d0bd223f22b722949bf"
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "raw_sha256": "4286c1ca895a299369fe5d617055752d83f8fd648c27a4bb650b6d04d3432542"
+    }
+  ],
+  "excerpts": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/autotools/MultiTileEntityAutoToolHammer.java",
+      "first_line": 86,
+      "last_line": 93,
+      "purpose": "Old auto hammer supplies finite budget to the mold tool callback.",
+      "text": "\t\t\t\tif (IBlockToolable.Util.onToolClick(TOOL_hammer, mEnergy * 10, mQuality, null, null, null, F, null, tD.mWorld, tD.mSideOfTileEntity, tD.mX, tD.mY, tD.mZ, 0.5F, 0.5F, 0.5F) > 0) {\n\t\t\t\t\tmSendSound = 1;\n\t\t\t\t} else {\n\t\t\t\t\tif (!(tD.mTileEntity instanceof ITileEntityAnvil) || !((ITileEntityAnvil)tD.mTileEntity).isAnvil(tD.mSideOfTileEntity)) {\n\t\t\t\t\t\tBlock tBlock = tD.mWorld.getBlock(tD.mX, tD.mY, tD.mZ);\n\t\t\t\t\t\tbyte tMetaData = (byte)tD.mWorld.getBlockMetadata(tD.mX, tD.mY, tD.mZ);\n\t\t\t\t\t\t\n\t\t\t\t\t\tif (GT_Tool_HardHammer.INSTANCE.isMinableBlock(tBlock, tMetaData)) {",
+      "sha256": "e021098e3cc643b8df79add5e2e1a34462ed06d68a49aa87665e1536a724a08e"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityMoldCoinage.java",
+      "first_line": 132,
+      "last_line": 145,
+      "purpose": "Old top-side minting, threshold 2000 and low-budget return.",
+      "text": "\t\tif (aTool.equals(TOOL_hammer) && SIDES_TOP[aSide]) {\n\t\t\tif (aRemainingDurability >= 2000) {\n\t\t\t\tOreDictItemData tData = OM.anyassociation(slot(0));\n\t\t\t\tif (tData != null && tData.mPrefix == OP.plateTiny) {\n\t\t\t\t\tslot(0, MultiTileEntityCoin.getCoin(slot(0).stackSize, tData.mMaterial.mMaterial, mIsUnique, mShape));\n\t\t\t\t\treturn 2000;\n\t\t\t\t}\n\t\t\t\treturn 0;\n\t\t\t}\n\t\t\tUT.Sounds.send(SFX.MC_BREAK, this, F);\n\t\t\treturn aRemainingDurability;\n\t\t}\n\t\treturn super.onToolClick2(aTool, aRemainingDurability, aQuality, aPlayer, aChatReturn, aPlayerInventory, aSneaking, aStack, aSide, aHitX, aHitY, aHitZ);\n\t}",
+      "sha256": "a809352acc2578524845f64582486a3a877efa313354ff91f740c585dfff1292"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/AutoHammerBlockEntity.java",
+      "first_line": 56,
+      "last_line": 61,
+      "purpose": "Current powered target gate; mining fallback also requires no entity.",
+      "text": "        boolean success = entity instanceof PoweredToolTarget tool && tool.usePoweredHammer(facing().getOpposite(),\n                com.gregtech.gregtech.content.tool.AutomaticToolRules.hammerBudget(energy), quality()) > 0;\n        var state = level.getBlockState(target);\n        if (!success && entity == null && state.is(BlockTags.MINEABLE_WITH_PICKAXE)) {\n            float hardness = state.getDestroySpeed(level, target);\n            int needed = state.is(BlockTags.NEEDS_DIAMOND_TOOL) ? 3 : state.is(BlockTags.NEEDS_IRON_TOOL) ? 2 : state.is(BlockTags.NEEDS_STONE_TOOL)",
+      "sha256": "cb97c1f8c6088584bda6ad06e08413f307d62f4b5b2bc0149bd62d4b690490e3"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/CoinMoldBlockEntity.java",
+      "first_line": 28,
+      "last_line": 28,
+      "purpose": "Final mold entity extends BlockEntity and has no powered-tool binding.",
+      "text": "public final class CoinMoldBlockEntity extends BlockEntity {",
+      "sha256": "bfc374ad4531f7a19c655e277109762e9dfe98fc922a8e05ee0ca9babbff367c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/tools/early/GT_Tool_HardHammer.java",
+      "first_line": 133,
+      "last_line": 133,
+      "purpose": "Actual hand hammer behavior registration.",
+      "text": "\t\taItem.addItemBehavior(aID, new Behavior_Tool(TOOL_hammer    , SFX.MC_ANVIL_LAND, 100, T, SFX.RANDOM_PITCH));",
+      "sha256": "94f74bae38d0a5a9831fac3af301ba2976efdb90ae1a2bc452aa600fea936025"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/behaviors/Behavior_Tool.java",
+      "first_line": 60,
+      "last_line": 60,
+      "purpose": "Hand tool passes unlimited abstract budget; do not invent a manual reserve failure.",
+      "text": "\t\tlong tDamage = IBlockToolable.Util.onToolClick(mToolName, Long.MAX_VALUE, (aItem instanceof MultiItemTool ? ((MultiItemTool)aItem).getHarvestLevel(aStack, mToolName) : 1), aPlayer, tChatReturn, aPlayer==null?null:aPlayer.inventory, aPlayer!=null&&aPlayer.isSneaking(), aStack, aWorld, aSide, aX, aY, aZ, aHitX, aHitY, aHitZ);",
+      "sha256": "5c180dd2b4230f054bfcfd7768ddcb5b26fa0c108d5c2e1f75b0b4637c5fe77e"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityMoldCoinage.java",
+      "first_line": 110,
+      "last_line": 127,
+      "purpose": "Original plate input criterion and manual retrieval.",
+      "text": "\tpublic boolean onBlockActivated3(EntityPlayer aPlayer, byte aSide, float aHitX, float aHitY, float aHitZ) {\n\t\tif (isServerSide() && SIDES_TOP_HORIZONTAL[aSide]) {\n\t\t\tItemStack tOutputStack = slot(0);\n\t\t\tItemStack aStack = aPlayer.getCurrentEquippedItem();\n\t\t\tif (tOutputStack == null) {\n\t\t\t\tOreDictItemData tData = OM.anyassociation(aStack);\n\t\t\t\tif (tData != null && tData.mPrefix == OP.plateTiny) {\n\t\t\t\t\tif (!UT.Entities.hasInfiniteItems(aPlayer)) aStack.stackSize--;\n\t\t\t\t\tslot(0, ST.amount(1, aStack));\n\t\t\t\t\tUT.Sounds.send(SFX.MC_CLICK, this, F);\n\t\t\t\t\treturn T;\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tif (ST.add(aPlayer, tOutputStack, F)) slotKill(0);\n\t\t\t}\n\t\t}\n\t\treturn F;\n\t}",
+      "sha256": "dee55dcbb01544279edb41f40af9787cd5cefe865dcc0f3e7036e0e4f4a8a769"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/CoinMoldBlockEntity.java",
+      "first_line": 62,
+      "last_line": 67,
+      "purpose": "Current extra output-registration guard.",
+      "text": "    public static boolean acceptsPlate(ItemStack stack) {\n        if (stack.isEmpty()) return false;\n        MaterialEquivalence.Form form = MaterialEquivalence.form(stack);\n        return form != null && form.prefix() == MaterialPrefix.plateTiny\n        && !GTItems.getStack(MaterialPrefix.coin, form.material(), 1).isEmpty();\n    }",
+      "sha256": "f6de67acb2636d5c57b94190539372a59d544d89f2233268a1389f84c34c0210"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/MaterialPrefix.java",
+      "first_line": 302,
+      "last_line": 304,
+      "purpose": "Automatic tiny plate validator implies coin validator.",
+      "text": "    private static boolean gt6Coin(GTMaterial m) {\n        return plateTiny.isValidFor(m) || GT6_COIN_METALS.contains(m.getName());\n    }",
+      "sha256": "460515dd0433a5ad288da84da7b5dc309ced171b2fbc09712ebc48bb49c3df42"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/MaterialItemDefinitions.java",
+      "first_line": 255,
+      "last_line": 260,
+      "purpose": "Same automatic generation gate, with only a full-plate WoodTreated exception.",
+      "text": "    private static boolean generates(MaterialPrefix prefix, GTMaterial material) {\n        if (material.resolve() != material) return false;\n        if (!prefix.isValidFor(material)) return false;\n        // Original Loader_Woods binds this plate to the placeable treated plank block.\n        return prefix != MaterialPrefix.plate || !material.getName().equals(\"WoodTreated\");\n    }",
+      "sha256": "a10d5e0f4ce30e6712a1e4c00fe2b6c1a6eca30e3805c7af64387b8b92cd8e42"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/placeables/MultiTileEntityCoin.java",
+      "first_line": 349,
+      "last_line": 361,
+      "purpose": "All-zero world die disables 3D even with default config enabled.",
+      "text": "\t\t\t\t\tmUseNormalRendering = ALLOW_3D_COINS;\n\t\t\t\t\tif (mUseNormalRendering) {\n\t\t\t\t\t\tmUseNormalRendering = F;\n\t\t\t\t\t\tfor (boolean[][] tShape2 : mShape) {\n\t\t\t\t\t\t\tfor (boolean[] tShape1 : tShape2) {\n\t\t\t\t\t\t\t\tfor (boolean tValue : tShape1) {\n\t\t\t\t\t\t\t\t\tif (tValue) {mUseNormalRendering = T; break;}\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\tif (mUseNormalRendering) break;\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tif (mUseNormalRendering) break;\n\t\t\t\t\t\t}\n\t\t\t\t\t}",
+      "sha256": "de3aaad39017c6769526c3d5c5db8a670f68bc652931b5065b04d21193e93908"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/placeables/MultiTileEntityCoin.java",
+      "first_line": 429,
+      "last_line": 436,
+      "purpose": "Flat world coin uses dedicated COIN_TOP/COIN_BOTTOM.",
+      "text": "\t\t\tif (!mUseNormalRendering && mUseWorldRendering) {\n\t\t\t\tmTextures[1] = BlockTextureDefault.get(Textures.BlockIcons.COIN_TOP     , mMaterial==null?UNCOLOURED:mMaterial.fRGBaSolid, F, F, T, !mUseNormalRendering);\n\t\t\t\tmTextures[0] = BlockTextureDefault.get(Textures.BlockIcons.COIN_BOTTOM  , mMaterial==null?UNCOLOURED:mMaterial.fRGBaSolid, F, F, T, !mUseNormalRendering);\n\t\t\t} else {\n\t\t\t\tmTextures[0] = mTextures[1] = BlockTextureDefault.get(Textures.BlockIcons.COIN, mMaterial==null?UNCOLOURED:mMaterial.fRGBaSolid, F, F, T, !mUseNormalRendering);\n\t\t\t}\n\t\t\tmTextures[2] = mTextures[3] = mTextures[4] = mTextures[5] = BlockTextureDefault.get(Textures.BlockIcons.COIN_SIDE, mMaterial==null?UNCOLOURED:mMaterial.fRGBaSolid, F, F, T, !mUseNormalRendering);\n\t\t}",
+      "sha256": "e8962a4e6187c1f46f598c9eac8903875d917179f4a0495d00a60fd82c6d436d"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/CoinPileRenderer.java",
+      "first_line": 40,
+      "last_line": 47,
+      "purpose": "Current world loop has no flat-die branch.",
+      "text": "            var out = buffers.getBuffer(RenderType.entityCutout(pass == 0 ? TEXTURE : SIDE_TEXTURE));\n            for (int face = 0; face < 16; face++) {\n                int count = pile.faceCount(face);\n                if (count == 0) continue;\n                float cellX = (face / 4) / 4.0F;\n                float cellZ = (face % 4) / 4.0F;\n                pose.pushPose();\n                pose.translate(cellX, 0, cellZ);",
+      "sha256": "cec06be0f4caeb4dd7b635cfdcea0b088f3131baa7a4a96cb114818b7ab624bf"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/placeables/MultiTileEntityCoin.java",
+      "first_line": 143,
+      "last_line": 146,
+      "purpose": "Original Unique suffix plus separate old config instructions.",
+      "text": "\t\taList.add(LH.Chat.CYAN + mMaterial.getLocal() + (mIsUnique?\" (Unique)\":\"\"));\n\t\taList.add(LH.Chat.DGRAY + LH.get(\"gt.tooltip.coins.1\"));\n\t\taList.add(LH.Chat.DGRAY + LH.get(\"gt.tooltip.coins.2\"));\n\t\taList.add(LH.Chat.DGRAY + LH.get(\"gt.tooltip.coins.3\"));",
+      "sha256": "559b4da5fd4c08574ea17b032efc148a161a43210ccd5dba7d6378f1c4a38aaa"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/CoinItem.java",
+      "first_line": 54,
+      "last_line": 60,
+      "purpose": "Current coin material line and inherited material tooltip only.",
+      "text": "        tooltip.add(com.gregtech.gregtech.api.material.MaterialPresentation.name(getMaterial())\n                .copy().withStyle(net.minecraft.ChatFormatting.AQUA));\n//? if >=1.21.1 {\n        /*super.appendHoverText(stack, context, tooltip, flag);\n*///?} else {\n        super.appendHoverText(stack, level, tooltip, flag);\n    }",
+      "sha256": "027e0fe85132ebd524bf847b6532a12edd6fc84581945fc3e473f82956073bc6"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityMoldCoinage.java",
+      "first_line": 248,
+      "last_line": 248,
+      "purpose": "Original mold rejects all covers.",
+      "text": "\t@Override public boolean allowCovers            (byte aSide) {return F;}",
+      "sha256": "14782ee115d7795e84433631c58767dc943ffd0cce825831ffa2ef5a225860ae"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "first_line": 61,
+      "last_line": 67,
+      "purpose": "Current fallback excludes loose material piles but permits this mold.",
+      "text": "    public static boolean eligible(BlockEntity owner){\n        if(!ownClass(owner)||owner.getLevel()==null||owner.isRemoved())return false;\n        // Loose material piles use plates as contents, not as machine covers.\n        if(owner instanceof com.gregtech.gregtech.blockentity.misc.PileBlockEntity)return false;\n        // The active fallback service provides cover ticks even for otherwise passive GT storage.\n        return owner.getBlockState().getBlock() instanceof net.minecraft.world.level.block.EntityBlock;\n    }",
+      "sha256": "7e7f6f54cbe805dc89f91a847f7617a0f7e1e2b75efb5166dc45aac78c7affcf"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "first_line": 93,
+      "last_line": 97,
+      "purpose": "Fallback cover attachment routes to storage when eligible.",
+      "text": "    @Override public boolean attachCover(Direction side,ItemStack stack){\n        if(!componentTicks())return false;\n        boolean attached=gregtechComponentStorage(true).attach(side,stack);\n        if(attached)ComponentCoverFallback.track((BlockEntity)(Object)this);\n        return attached;",
+      "sha256": "7cfbae6dece080f571c42f442e1367fc959f3f13336eff2db0069af9cab2395a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityMoldCoinage.java",
+      "first_line": 89,
+      "last_line": 90,
+      "purpose": "Source explicitly says mold selection is not functional.",
+      "text": "\t\taList.add(Chat.CYAN     + LH.get(LH.RECIPES_MOLD_SELECT) + \" (Doesn't work right now)\");\n\t\taList.add(Chat.ORANGE   + LH.get(LH.NO_GUI_CLICK_TO_INTERACT)   + \" (\" + LH.get(LH.FACE_TOP) + \")\");",
+      "sha256": "4c9521d2edf133984affba86605833a915b6c2e5af41c7051227d941f713b8b2"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "first_line": 2208,
+      "last_line": 2208,
+      "purpose": "Original bound manual-hammer sound is random.anvil_land.",
+      "text": "\t\t, MC_ANVIL_LAND         = \"random.anvil_land\"",
+      "sha256": "11b125bffc34b6b7793662b53eb719e5c29f9cc61f25ef582dbed239a66f4d51"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/tool/CoinMoldBlock.java",
+      "first_line": 77,
+      "last_line": 77,
+      "purpose": "Current successful manual mint explicitly plays anvil use, not land.",
+      "text": "                level.playSound(null, pos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 0.7F, 1.2F);",
+      "sha256": "be77ab8d9145776be6d1c7fb848c2fbee37dc4ab37d6043328d768cbec01f4da"
+    }
+  ],
+  "readability": {
+    "baseline": "8ad2bc490cb6e7839776ac281bb4f936e29e33a9",
+    "files": {
+      "core/src/main/java/com/gregtech/gregtech/content/tool/CoinStampPattern.java": {
+        "before_raw_sha256": "aedd904b5b9abcd3e1afdf8c88e0f7c40a178886c332c6b8692d3ed42100a743",
+        "after_raw_sha256": "1b213247ae13c6883d8423fa04624131e978aca6cc03c79f0be155c6d505d135",
+        "before_lines": 8,
+        "after_lines": 33,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 241,
+            "execution_sha256": "68176313cfdfbefe4613c2b2975efc1e6cf49b6e60f749a62934fc3bee5d826e",
+            "literal_positions_sha256": "76a6ed1f872fd1306cbed921feb8d437b531f9a5473a1c66378e34bdaed618d2",
+            "literal_count": 9
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/content/tool/CoinMoldGeometry.java": {
+        "before_raw_sha256": "7b157064b7f221c5e33971022dc196339dafbb2ec38920602fc086fc0329cd59",
+        "after_raw_sha256": "d92feaf33347a837286d68ed259c13bff7c0f29d77779dc0f2ff9b321f93dbc2",
+        "before_lines": 9,
+        "after_lines": 11,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 68,
+            "execution_sha256": "2e1a0e6322efbf9141420d351e089f201222b0d675ee0f5bf13c5bd88e174c86",
+            "literal_positions_sha256": "80da572572ce1ef217191904cc564928c9826467ae9633d889314e54e9cbfe83",
+            "literal_count": 12
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 68,
+            "execution_sha256": "2e1a0e6322efbf9141420d351e089f201222b0d675ee0f5bf13c5bd88e174c86",
+            "literal_positions_sha256": "80da572572ce1ef217191904cc564928c9826467ae9633d889314e54e9cbfe83",
+            "literal_count": 12
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/CoinMoldBlockEntity.java": {
+        "before_raw_sha256": "e1682dd64b94f3312e5a4f274150258bac65783c3d89f4c7b0c8a846ddf7ecd8",
+        "after_raw_sha256": "545fab4eac8018471cbbde3e8fb4c3799565a094af1ece9f4e8e420603cc3336",
+        "before_lines": 214,
+        "after_lines": 246,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1335,
+            "execution_sha256": "433a2f2d3e4612df157c727f61b6d507eaaff08e4fb74986ff83c11bd07f7b76",
+            "literal_positions_sha256": "29c1abc33bd1bb55fcc1b61ab05c151fa97af7e6d681e67570f2da4dcb90d997",
+            "literal_count": 26
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1351,
+            "execution_sha256": "50cec9b1ef7ca13d07cfe74374a4ae3843b3c22e9bf936cbe96cc12528a2b725",
+            "literal_positions_sha256": "bc13e71a486438e310fe2564e0f5071a515d8fe9c3fe30d4bbbc0a3fdf093c96",
+            "literal_count": 26
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/client/CoinMoldRenderer.java": {
+        "before_raw_sha256": "a7b60d5e1279239909e7a96945775cfda870c48323f4ac743cbc14f2dd4a3828",
+        "after_raw_sha256": "994daf680b87047c7a9599b01218ad6f8a048ef953172e5635c3d7da21df9b1c",
+        "before_lines": 36,
+        "after_lines": 41,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 288,
+            "execution_sha256": "a94d07614f3fbd85e0378120b7df4254edfcf896df0527e13d670be740a68b4b",
+            "literal_positions_sha256": "09643f1d00cd9b43d6949636f6f93cef866faccb7ed6857cd93ceb9b020d1529",
+            "literal_count": 4
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 295,
+            "execution_sha256": "6f586efa22ff18e798edc8b636259da2ec8fce17f8378b6a8b42a98783829450",
+            "literal_positions_sha256": "ec19b0d8cd051e09e16adf4a65c015b0fd276b6fa0a7cb0d8c4d9d54b0167116",
+            "literal_count": 6
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/misc/AutoHammerBlockEntity.java": {
+        "before_raw_sha256": "6d7b101b05b50bacb774c8fa9de8b2a5c5b4a08352d431559288946dfc68df9d",
+        "after_raw_sha256": "58a54ce5ab4b5da9086ab7e89cb83dfdc7c55099b4e7ee979e06447f585a1584",
+        "before_lines": 60,
+        "after_lines": 102,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 757,
+            "execution_sha256": "20bf53d242b11e7112f571ce528df173029a7f70d1ea8c0fd7eaeb42ce03ba88",
+            "literal_positions_sha256": "65fff9a8638de7ffde3ee86cdde497ad49a9396c771d1e876da4b972864dd960",
+            "literal_count": 19
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 783,
+            "execution_sha256": "5d763d47e3f4ff281a790fa88d1af16353fd60855229043827dba7eabbaab8a0",
+            "literal_positions_sha256": "0766f44966dfdf8558ebc76fa44ea972f2e3130cb0e76c7ee76bb825a3de28a4",
+            "literal_count": 19
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/tool/CoinMoldBlock.java": {
+        "before_raw_sha256": "a294f0a7679a58a77200af6e98b10fe7d4577165343b92ee219dbdb1cb1a461d",
+        "after_raw_sha256": "0a12c01ba7932f23af60ddb6d6e03dfb5798f2edc73b0aa1157dc5f598479f39",
+        "before_lines": 150,
+        "after_lines": 157,
+        "comment_corrections": [
+          [
+            "GT6 coinage mold: one tiny plate in, top-face hard-hammer strike, one metal coin out.",
+            "GT6 coinage mold: one tiny plate in, top-face hard-hammer strike, one coin out."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1101,
+            "execution_sha256": "a6304fec9f50a2efc48d1ad000405011ddf2092d9272914140296686ec43e051",
+            "literal_positions_sha256": "ff140025baa22dd352a88c9c27d199d106cf8d6e51d640298ba184f7e3c18668",
+            "literal_count": 22
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1187,
+            "execution_sha256": "5fdf69873dd6be25e387162978aea8fdad81cc7a5781cfc6078dfa29c9ebb69f",
+            "literal_positions_sha256": "048c0c90244cab1fe9a78ddf2e3cbf2202e2e2245676386365a5f53e3b8930c5",
+            "literal_count": 22
+          }
+        ]
+      }
+    }
+  },
+  "core_probe": {
+    "scope": "Actual current core, baseline class-name-only clone, exact old getBits/getBitsS bodies with T=true stub; each row visits all 65536 signed-short bit patterns. Not all 2^512 combined dies or native NBT/item/component execution.",
+    "seconds": 1.046,
+    "result": {
+      "row_samples": 65536,
+      "row_roundtrips": 2097152,
+      "explicit_blank_rows": 32
+    },
+    "original_getBits_body": "\n\t\t\tlong rBits = 0;\n\t\t\tfor (int i = 0; i < 64 && i < aBits.length; i++) if (aBits[i]) rBits |= (1 << i);\n\t\t\treturn rBits;\n\t\t",
+    "original_getBitsS_body": "\n\t\t\tboolean[] rBits = new boolean[16];\n\t\t\tfor (int i = 0; i < rBits.length; i++) if ((aBits & (1 << i)) != 0) rBits[i] = T;\n\t\t\treturn rBits;\n\t\t",
+    "inputs": [
+      {
+        "path": "core/src/main/java/com/gregtech/gregtech/content/tool/CoinStampPattern.java",
+        "sha256": "1b213247ae13c6883d8423fa04624131e978aca6cc03c79f0be155c6d505d135"
+      },
+      {
+        "path": "work/coin-minting-audit-20261022/BaselineCoinStampPattern.java",
+        "sha256": "76999274e1732694b79149cb64aa6094613533849c268a30878f93f015d7d900"
+      },
+      {
+        "path": "work/coin-minting-audit-20261022/SourceBits.java",
+        "sha256": "d88b22e1f9a13288ff666e125980d65bd604351549dd9e3270b1a4a5449a1f50"
+      },
+      {
+        "path": "work/coin-minting-audit-20261022/PatternProbe.java",
+        "sha256": "e0da30fb6f670ce118d01ee85d3f70b172d60ad3076f04e2f1c8c4f2705d09bc"
+      }
+    ]
+  },
+  "static_geometry": {
+    "mold_children": {
+      "colored": 6,
+      "overlay": 6
+    },
+    "all_ordered_mold_boxes_match_original": true,
+    "dynamic_content_matches_original_pass": 2,
+    "default_die_rows_match_original": 32,
+    "default_inventory_boxes_match_original_3d_expression": 192,
+    "decoded_current_coin_sprites": {
+      "coin": {
+        "size": [
+          16,
+          16
+        ],
+        "rgba_sha256": "8d892295b7c6c1757d86896abf97c049ee3168ae188d35f58232967b870ff2ba"
+      },
+      "coin_top": {
+        "size": [
+          128,
+          128
+        ],
+        "rgba_sha256": "ea6fba94a5e3f6d899f502b975ff7cd5b0eb0c34fa9109db86073ea368eb8693"
+      },
+      "coin_bottom": {
+        "size": [
+          128,
+          128
+        ],
+        "rgba_sha256": "ea6fba94a5e3f6d899f502b975ff7cd5b0eb0c34fa9109db86073ea368eb8693"
+      },
+      "coin_side": {
+        "size": [
+          16,
+          16
+        ],
+        "rgba_sha256": "1da7c477ce6cb15f5a1d1643efb0ade6288f287f03d00518d59f211863390125"
+      }
+    },
+    "limit": "Raw composite-child data only, not loader execution, material tint, pixel rendering or shader validation."
+  },
+  "tooltip_event_screen": {
+    "roots": [
+      "core/src/main/java",
+      "multiversion/src/main/java",
+      "multiversion/versions/1.20.1-forge/src/main/java",
+      "multiversion/versions/1.21.1-neoforge/src/main/java"
+    ],
+    "pattern": "ItemTooltipEvent",
+    "matching_files": [
+      "multiversion/src/main/java/com/gregtech/gregtech/client/BedrockFlowerTooltips.java",
+      "multiversion/src/main/java/com/gregtech/gregtech/client/CommonBlockTooltipHandler.java",
+      "multiversion/src/main/java/com/gregtech/gregtech/client/FluidDisplayTooltips.java",
+      "multiversion/src/main/java/com/gregtech/gregtech/client/MaterialTooltipHandler.java"
+    ],
+    "scope": "Material handler skips this form; common handler is block-item only, flower and fluid handlers select other identities. No Unique text compensation in these selected consumers; no claim about arbitrary external mods."
+  },
+  "formal_findings_added": [
+    {
+      "id": "ALIGN-384",
+      "finding": "Automatic hammer cannot mint with the coin mold because its powered-tool target binding is absent.",
+      "witness": "Mold contains a normal iron tiny plate; hammer above targets its top with reverse stroke and stored work 200 accumulated without overvoltage. Old callback budget 2000 mints; current mold is not PoweredToolTarget, entity-present mining fallback is skipped, stored work clears.",
+      "limit": "Source decision witness, no world or KU network execution."
+    },
+    {
+      "id": "ALIGN-385",
+      "finding": "All-zero die world coins do not retain the old flat branch and dedicated front/back sprites.",
+      "scope": "Old all-zero shape disables normal 3D world rendering regardless of default enabled setting. Current pixelBoxes yields 256 cells and world loop binds generic coin sprite to both horizontal sides. Current coin_top/coin_bottom decode to different pixels from coin. Default nonblank die and inventory mode are not reported wholly broken."
+    },
+    {
+      "id": "ALIGN-386",
+      "finding": "Coin Unique state is persisted by the mint path but omitted from the original coin material tooltip suffix.",
+      "scope": "Actual CoinItem and inherited material tooltip plus four selected event handlers; not loss of the unique data itself."
+    }
+  ],
+  "formal_findings_extended": [
+    {
+      "id": "ALIGN-139",
+      "scope": "Coin mold original allowCovers=false; eligible fallback and ordinary material plate admission have no corresponding host rejection. Both mixin manifests register the host mixin. No attachment world test."
+    },
+    {
+      "id": "ALIGN-132",
+      "scope": "Successful manual mint originally plays bound hard-hammer random.anvil_land; current mold explicitly plays ANVIL_USE. Feedback exists but event differs; no audio playback validation."
+    }
+  ],
+  "rejected_or_bounded_findings": [
+    "No ordinary generated tiny-plate failure inferred solely from the extra coin-output guard: same automatic validator generates coin too. Forced foreign association/ungenerated forms remain a compatibility boundary, not a demonstrated current pack failure.",
+    "No manual low-durability preflight defect inferred from the mold 2000 threshold: original actual hard-hammer Behavior_Tool passes Long.MAX_VALUE; finite threshold matters to the automatic tool caller.",
+    "No missing functional mold-selection GUI inferred: original tooltip explicitly says it does not work.",
+    "Both outer pattern storage and complete all-zero 32-row output exist. Native NBT/components and save/reload are source reviewed, not executed."
+  ],
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "preparation_attempts": [
+    {
+      "result": "failed model-shape inspection preparation",
+      "detail": "Initial reader assumed top-level elements; mold is composite and ordered boxes were subsequently read/validated from both children."
+    },
+    {
+      "result": "failed excerpt selection preparation",
+      "detail": "Tiny-plate predicate occurs in manual and tool paths; selection now starts at the unique manual callback signature."
+    }
+  ],
+  "limits": [
+    "Formatting and one corrected metal-only comment, no gameplay/data/API behavior change.",
+    "No Gradle, whole-mod compilation, GameTest, game, rendering, saved-world restart, build, push, issue comment or closure.",
+    "Client 3D config, full recipe-viewer/catalog, native transfers/lifecycle and remaining systems continue; no full completion claim.",
+    "386 formal records include repaired items/policy, not unresolved count or percentage. Goal active."
+  ],
+  "root_revalidation": {
+    "baseline_and_git_source": true,
+    "readability_proof_reproduced": true,
+    "platform_views": 11,
+    "edited_sources": 6,
+    "lines_before": 477,
+    "lines_after": 590,
+    "original_sources": 9,
+    "current_sources": 32,
+    "resources": 19,
+    "protected_materials": true,
+    "probe_inputs_current": true,
+    "source_and_resource_hashes_current": true,
+    "excerpt_text_ranges_and_hashes_current": true,
+    "formal_rows_contiguous": 386,
+    "navigation_ledgers_linked": [
+      "PLAN",
+      "STATUS",
+      "DECISIONS",
+      "VERIFICATION",
+      "SOURCE_LAYOUT",
+      "ORIGINAL_ALIGNMENT_AUDIT"
+    ],
+    "readability_proof_reproduced_at_final_check": true
+  }
+}

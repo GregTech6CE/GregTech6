@@ -25,15 +25,16 @@ import net.minecraft.world.entity.Entity;
  */
 public class DungeonPortalBlockEntity extends com.gregtech.gregtech.blockentity.EnergyRelayBlockEntity
 //? if >=1.21.1 {
-        /*implements com.gregtech.gregtech.item.behavior.ManualToolBehaviorAccess.Ignitable,
-        com.gregtech.gregtech.item.behavior.Extinguishable {
+/*implements com.gregtech.gregtech.item.behavior.ManualToolBehaviorAccess.Ignitable,
+com.gregtech.gregtech.item.behavior.Extinguishable {
 *///?} else {
-        implements com.gregtech.gregtech.item.behavior.ItemBehaviors.Ignitable,
-        com.gregtech.gregtech.item.behavior.BehaviorSprayExtinguisher.Extinguishable {
+implements com.gregtech.gregtech.item.behavior.ItemBehaviors.Ignitable,
+com.gregtech.gregtech.item.behavior.BehaviorSprayExtinguisher.Extinguishable {
 //?}
 
     /** GT6's {@code NBT_KEY} ({@code gregapi/data/CS.java:1169}), legacy key data retained for old saves. */
     public static final String NBT_KEY = GTDungeonKeyItem.NBT_KEY;
+
     /** GT6's {@code NBT_ACTIVE} ({@code CS.java:1172}). */
     public static final String NBT_ACTIVE = "gt.active";
 
@@ -70,28 +71,32 @@ public class DungeonPortalBlockEntity extends com.gregtech.gregtech.blockentity.
 
     /** Legacy key activation was a port invention; the source uses igniters/Ender Eyes. */
     @Deprecated
-    public boolean useKey(long keyId) { return false; }
+    public boolean useKey(long keyId) {
+        return false;
+    }
 
     /** MultiTileEntityMiniPortalNether:116-128: all GT igniters toggle; extinguishers close. */
     @Override
     public long onIgnite(Level world, BlockPos pos, net.minecraft.core.Direction side,
-                         @Nullable net.minecraft.world.entity.player.Player player,
-                         net.minecraft.world.item.ItemStack igniter, boolean sneaking,
-                         float hitX, float hitY, float hitZ) {
+            @Nullable net.minecraft.world.entity.player.Player player,
+            net.minecraft.world.item.ItemStack igniter, boolean sneaking,
+            float hitX, float hitY, float hitZ) {
         if (world.isClientSide || !(getBlockState().getBlock() instanceof DungeonPortalBlock block)
                 || block.target() != DungeonPortalBlock.Target.NETHER) return 0L;
-        if (active) deactivate(); else activate();
+        if (active) deactivate();
+        else activate();
         var remote = linkedPortal();
         if (remote != null && player != null) player.displayClientMessage(net.minecraft.network.chat.Component.literal(
                 "X: " + remote.worldPosition.getX() + "   Y: " + remote.worldPosition.getY()
                         + "   Z: " + remote.worldPosition.getZ()), false);
         return 10000L;
     }
+
     @Override
     public long onExtinguish(Level world, BlockPos pos, net.minecraft.core.Direction side,
-                            @Nullable net.minecraft.world.entity.player.Player player,
-                            net.minecraft.world.item.ItemStack can, boolean sneaking,
-                            float hitX, float hitY, float hitZ) {
+            @Nullable net.minecraft.world.entity.player.Player player,
+            net.minecraft.world.item.ItemStack can, boolean sneaking,
+            float hitX, float hitY, float hitZ) {
         if (world.isClientSide || !(getBlockState().getBlock() instanceof DungeonPortalBlock block)
                 || block.target() != DungeonPortalBlock.Target.NETHER) return 0L;
         deactivate();
@@ -128,13 +133,13 @@ public class DungeonPortalBlockEntity extends com.gregtech.gregtech.blockentity.
     private void clearLinkedSignals() {
         var remote = linkedPortal();
         if (remote != null && level instanceof ServerLevel server)
-            remote.signals.disconnect(server.getServer().getTickCount());
+        remote.signals.disconnect(server.getServer().getTickCount());
     }
 
     @Override
 //? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
+    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.saveAdditional(tag, lookup);
 *///?} else {
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
@@ -145,8 +150,8 @@ public class DungeonPortalBlockEntity extends com.gregtech.gregtech.blockentity.
 
     @Override
 //? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
+    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.loadAdditional(tag, lookup);
 *///?} else {
     public void load(CompoundTag tag) {
         super.load(tag);
@@ -171,7 +176,7 @@ public class DungeonPortalBlockEntity extends com.gregtech.gregtech.blockentity.
     private void addToPortalList() {
         if (level instanceof ServerLevel server && active) {
             ACTIVE.computeIfAbsent(getBlockState().getBlock(), block -> new LinkedHashSet<>())
-                    .add(GlobalPos.of(server.dimension(), worldPosition.immutable()));
+            .add(GlobalPos.of(server.dimension(), worldPosition.immutable()));
         }
     }
 
@@ -196,7 +201,7 @@ public class DungeonPortalBlockEntity extends com.gregtech.gregtech.blockentity.
      */
     @Nullable
     private static GlobalPos findTarget(BlockPos origin, boolean fromOverworld, Block block, ServerLevel target,
-                                        int factor, int margin) {
+            int factor, int margin) {
         Set<GlobalPos> portals = ACTIVE.get(block);
         if (portals == null || portals.isEmpty()) return null;
         GlobalPos best = null;
@@ -238,9 +243,21 @@ public class DungeonPortalBlockEntity extends com.gregtech.gregtech.blockentity.
         if (portal == null || portal.level == null) return null;
         return new Target(portal.worldPosition.relative(side.getOpposite()), side, portal.level);
     }
-    @Override protected boolean supportsEnergy() { return true; }
-    @Override protected boolean supportsItems() { return true; }
-    @Override protected boolean supportsFluids() { return true; }
+
+    @Override
+    protected boolean supportsEnergy() {
+        return true;
+    }
+
+    @Override
+    protected boolean supportsItems() {
+        return true;
+    }
+
+    @Override
+    protected boolean supportsFluids() {
+        return true;
+    }
 
     @Nullable
     public DungeonPortalBlockEntity linkedPortal() {
@@ -257,9 +274,11 @@ public class DungeonPortalBlockEntity extends com.gregtech.gregtech.blockentity.
     public int signal(net.minecraft.core.Direction query) {
         return active ? signals.redstone(query.getOpposite().ordinal()) : 0;
     }
+
     public int comparator(net.minecraft.core.Direction output) {
         return !active ? 0 : output == null ? signals.maximumComparator() : signals.comparator(output.ordinal());
     }
+
     private int incoming(net.minecraft.core.Direction side, boolean comparator) {
         BlockPos pos = worldPosition.relative(side);
         if (level == null || !level.hasChunkAt(pos)) return 0;
@@ -272,6 +291,7 @@ public class DungeonPortalBlockEntity extends com.gregtech.gregtech.blockentity.
         }
         return level.getSignal(pos, side);
     }
+
     public void tickRelay() {
         if (!(level instanceof ServerLevel server)) return;
         long tick = server.getServer().getTickCount();
@@ -287,13 +307,17 @@ public class DungeonPortalBlockEntity extends com.gregtech.gregtech.blockentity.
             level.updateNeighbourForOutputSignal(worldPosition, getBlockState().getBlock());
         }
     }
-    @Override public void onLoad() {
+
+    @Override
+    public void onLoad() {
         super.onLoad();
         if (active) addToPortalList();
         if (level != null && !level.isClientSide && getBlockState().getValue(DungeonPortalBlock.ACTIVE) != active)
             level.setBlock(worldPosition, getBlockState().setValue(DungeonPortalBlock.ACTIVE, active), Block.UPDATE_CLIENTS);
     }
-    @Override public void onChunkUnloaded() {
+
+    @Override
+    public void onChunkUnloaded() {
         // Source onChunkUnload disables the relay; never load chunks or change remote terrain.
         clearLinkedSignals();
         active = false;
@@ -302,7 +326,10 @@ public class DungeonPortalBlockEntity extends com.gregtech.gregtech.blockentity.
         setChanged();
         super.onChunkUnloaded();
     }
+
     /** Kept only for source compatibility with the superseded port API. Mini portals do not move entities. */
     @Deprecated @Nullable
-    public static Entity teleport(ServerLevel level, BlockPos pos, Entity entity) { return null; }
+    public static Entity teleport(ServerLevel level, BlockPos pos, Entity entity) {
+        return null;
+    }
 }

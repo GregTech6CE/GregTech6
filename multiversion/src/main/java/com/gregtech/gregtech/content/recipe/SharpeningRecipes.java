@@ -38,8 +38,10 @@ import java.util.List;
  * </p>
  */
 public final class SharpeningRecipes {
+
     /** One registered sharpening row, for tests and reports. */
-    public record Entry(String route, RecipeMap map, Recipe recipe) {}
+    public record Entry(String route, RecipeMap map, Recipe recipe) {
+    }
 
     private static final List<Entry> ENTRIES = new ArrayList<>();
     private static final List<String> SKIPPED = List.of(
@@ -74,11 +76,16 @@ public final class SharpeningRecipes {
 
     private static boolean registered;
 
-    private SharpeningRecipes() {}
+    private SharpeningRecipes() {
+    }
 
-    public static List<Entry> entries() { return Collections.unmodifiableList(ENTRIES); }
+    public static List<Entry> entries() {
+        return Collections.unmodifiableList(ENTRIES);
+    }
 
-    public static List<String> skipped() { return SKIPPED; }
+    public static List<String> skipped() {
+        return SKIPPED;
+    }
 
     public static int register() {
         if (registered) throw new IllegalStateException("Sharpening recipes registered twice");
@@ -100,7 +107,7 @@ public final class SharpeningRecipes {
     }
 
     private static void sharpen(GTMaterial material, String inName, int inAmount, String outName, int outCount,
-                                long multiplier, boolean pulverizedRemains) {
+            long multiplier, boolean pulverizedRemains) {
         MaterialPrefix in = com.gregtech.gregtech.api.prefix.PrefixRegistry.byName(inName);
         MaterialPrefix out = com.gregtech.gregtech.api.prefix.PrefixRegistry.byName(outName);
         if (in == null || out == null) return;

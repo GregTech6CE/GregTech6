@@ -27,6 +27,12 @@ SPECIES = ["rubber", "maple", "rainbowood", "willow", "blue_mahoe",
            "hazel", "cinnamon", "coconut", "bluespruce",
            "pine", "ebony", "white_mahoe"]
 NEW_SPECIES = ["hazel", "cinnamon", "coconut", "bluespruce"]
+SAPLING_TEXTURES = {
+    "blue_mahoe": "gt6ce:block/iconsets/sapling_small_bluemahoe",
+    "pine": "minecraft:block/spruce_sapling",
+    "ebony": "minecraft:block/dark_oak_sapling",
+    "white_mahoe": "minecraft:block/birch_sapling",
+}
 
 written = []
 
@@ -54,14 +60,16 @@ def sapling_blockstate(species):
 
 
 for species in SPECIES:
+    texture = SAPLING_TEXTURES.get(species, "gt6ce:block/iconsets/sapling_small_%s" % species)
     write_json(os.path.join(ASSETS, "blockstates", "leaves_%s.json" % species), leaves_blockstate(species))
     write_json(os.path.join(ASSETS, "blockstates", "sapling_%s.json" % species), sapling_blockstate(species))
     write_json(os.path.join(ASSETS, "models", "block", "wood", "sapling_%s.json" % species),
                {"parent": "minecraft:block/cross",
-                "textures": {"cross": "gt6ce:block/iconsets/sapling_small_%s" % species}})
+                "render_type": "minecraft:cutout",
+                "textures": {"cross": texture}})
     write_json(os.path.join(ASSETS, "models", "item", "sapling_%s.json" % species),
                {"parent": "minecraft:item/generated",
-                "textures": {"layer0": "gt6ce:block/iconsets/sapling_small_%s" % species}})
+                "textures": {"layer0": texture}})
 
 print("species: %d (new: %s)" % (len(SPECIES), ", ".join(NEW_SPECIES)))
 print("wrote %d files" % len(written))

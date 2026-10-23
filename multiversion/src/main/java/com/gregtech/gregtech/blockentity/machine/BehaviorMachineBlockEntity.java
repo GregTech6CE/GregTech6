@@ -92,6 +92,7 @@ import javax.annotation.Nonnull;
 //?}
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -136,6 +137,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     private boolean powered;
     private final PartBindings<BlockPos, MultiblockLayout.Role> structureBindings = new PartBindings<>();
     private boolean formed;
+    private boolean checkingStructure;
     private List<EnergyPart> energyParts = List.of();
     private List<BoundPart> boundParts = List.of();
     private Map<String, Integer> repeatCounts = Map.of();
@@ -327,7 +329,9 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         var tags = mainInputTags();
         for (Direction side : Direction.values()) {
             if (!accepts(side)) continue;
-            BlockEntity neighbor = level.getBlockEntity(pos.relative(side));
+            BlockPos neighborPos = pos.relative(side);
+            if (!level.hasChunkAt(neighborPos)) continue;
+            BlockEntity neighbor = level.getBlockEntity(neighborPos);
             IEnergyBlock source = EnergyBlockViews.view(neighbor);
             if (source == null) continue;
             for (var tag : tags) {
@@ -354,7 +358,9 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         long cap = declaration.auxiliary().capacity();
         for (Direction side : Direction.values()) {
             if (!auxiliaryFace(side)) continue;
-            BlockEntity neighbor = level.getBlockEntity(pos.relative(side));
+            BlockPos neighborPos = pos.relative(side);
+            if (!level.hasChunkAt(neighborPos)) continue;
+            BlockEntity neighbor = level.getBlockEntity(neighborPos);
             IEnergyBlock source = EnergyBlockViews.view(neighbor);
             if (source == null || !source.isEnergyEmittingTo(auxiliaryTag, side.getOpposite(), false)) continue;
             long offered = source.getEnergyOffered(auxiliaryTag, side.getOpposite(), size);
@@ -1197,6 +1203,24 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     }
 
     private void refreshStructure() {
+        if (checkingStructure) return;
+        checkingStructure = true;
+        formed = false; // Reentrant port requests must never observe the previous successful check.
+        try {
+            if (level == null || isRemoved()) {
+                structureBindings.clear(this::releaseStructure);
+                energyParts = List.of();
+                boundParts = List.of();
+                repeatCounts = Map.of();
+                return;
+            }
+            refreshStructureNow();
+        } finally {
+            checkingStructure = false;
+        }
+    }
+
+    private void refreshStructureNow() {
         var layout = LargeMachineLayouts.layout(declaration.casing().machineType());
         if (layout == null) {
             formed = true;
@@ -1221,35 +1245,46 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         Direction front = getBlockState().hasProperty(HorizontalDirectionalBlock.FACING)
                 ? getBlockState().getValue(HorizontalDirectionalBlock.FACING) : Direction.NORTH;
         var parts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
+        var matchedCells = new ArrayList<LargeMachineLayouts.Cell>();
         for (var cell : layout.cells()) {
             BlockPos cellPos = cell.at(worldPosition, front);
-            if (!matchesCell(cell, cellPos)) {
+            var matched = matchingCell(cell, cellPos);
+            if (matched == null) {
                 structureBindings.clear(this::releaseStructure);
                 return false;
             }
-            if (cell.role() != MultiblockLayout.Role.AIR && !cell.plainBlock())
-                parts.put(cellPos, cell.role());
+            matchedCells.add(matched);
+            if (matched.role() != MultiblockLayout.Role.AIR && !matched.plainBlock())
+                parts.put(cellPos, matched.role());
         }
         var repeatPlaced = new ArrayList<LargeMachineLayouts.Placed>();
         var counts = new LinkedHashMap<String, Integer>();
         for (var repeat : layout.repeats()) {
-            var placed = LargeMachineLayouts.repeatCells(level, worldPosition, front, repeat, this::matchesCell);
+            var matches = new HashMap<BlockPos, LargeMachineLayouts.Cell>();
+            var placed = LargeMachineLayouts.repeatCells(level, worldPosition, front, repeat, (cell, pos) -> {
+                var matched = matchingCell(cell, pos);
+                if (matched == null) return false;
+                matches.put(pos, matched);
+                return true;
+            });
             if (placed == null) {
                 structureBindings.clear(this::releaseStructure);
                 return false;
             }
             counts.put(repeat.key(), placed.size() / repeat.cells().size());
-            repeatPlaced.addAll(placed);
-            for (var cell : placed)
-                if (cell.cell().role() != MultiblockLayout.Role.AIR && !cell.cell().plainBlock())
-                    parts.put(cell.pos(), cell.cell().role());
+            for (var cell : placed) {
+                var matched = matches.get(cell.pos());
+                repeatPlaced.add(new LargeMachineLayouts.Placed(matched, cell.pos()));
+                if (matched.role() != MultiblockLayout.Role.AIR && !matched.plainBlock())
+                    parts.put(cell.pos(), matched.role());
+            }
         }
         boolean claimed = structureBindings.update(parts,
                 pos -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).canBind(worldPosition),
                 (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
                 this::releaseStructure);
         if (!claimed) return false;
-        com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front, layout.cells());
+        com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front, matchedCells);
         com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, repeatPlaced);
         var found = new ArrayList<EnergyPart>();
         var bound = new ArrayList<BoundPart>();
@@ -1268,13 +1303,15 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         return true;
     }
 
-    private boolean matchesCell(LargeMachineLayouts.Cell cell, BlockPos cellPos) {
-        if (!level.hasChunkAt(cellPos)) return false;
-        if (cell.role() == MultiblockLayout.Role.AIR) return level.isEmptyBlock(cellPos);
-        if (matchesChoice(cell.part(), cell.plain(), cellPos)) return true;
+    private LargeMachineLayouts.Cell matchingCell(LargeMachineLayouts.Cell cell, BlockPos cellPos) {
+        if (!level.hasChunkAt(cellPos)) return null;
+        if (cell.role() == MultiblockLayout.Role.AIR) return level.isEmptyBlock(cellPos) ? cell : null;
+        if (matchesChoice(cell.part(), cell.plain(), cellPos)) return cell;
         for (var alternative : cell.alternatives())
-            if (matchesChoice(alternative.part(), alternative.plain(), cellPos)) return true;
-        return false;
+            if (matchesChoice(alternative.part(), alternative.plain(), cellPos))
+                return new LargeMachineLayouts.Cell(cell.right(), cell.up(), cell.back(), alternative.part(),
+                        cell.role(), alternative.plain(), cell.design(), List.of());
+        return null;
     }
 
     private boolean matchesChoice(int part, String plain, BlockPos cellPos) {
@@ -1573,7 +1610,11 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
 
     // ── Structure ports ──────────────────────────────────────────────────
 
-    @Override public boolean isStructureOk() { return formed; }
+    @Override public boolean isStructureOk() {
+        if (checkingStructure) return false;
+        refreshStructure();
+        return formed;
+    }
 
     private static boolean itemInput(MultiblockLayout.Role role) {
         return role == MultiblockLayout.Role.ITEM_IO || role == MultiblockLayout.Role.ITEM_FLUID_IO

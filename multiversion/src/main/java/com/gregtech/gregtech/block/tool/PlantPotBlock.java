@@ -18,11 +18,12 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 /**
- * GT6's universal plant pot ({@code MultiTileEntityPlantPot}). The mesh and collision shape come
- * from the two original render passes in {@link ShapedToolBlock}; its top is a full 16x16 surface.
- * GT6 allows every plant only on that top face, independent of the plant's normal soil type.
+ * Universal plant pot with top-only plant support, independent of the plant's normal soil type.
+ * {@link ShapedToolBlock} also uses the original two render bounds for this port's collision and
+ * outline; the original plant pot instead inherits a full-cube collision and selection box.
  */
 public final class PlantPotBlock extends ShapedToolBlock {
+
     public PlantPotBlock(Properties properties) {
         super("plant_pot", properties);
     }
@@ -30,11 +31,11 @@ public final class PlantPotBlock extends ShapedToolBlock {
     @Override
 //? if >=1.21.1 {
     /*public net.neoforged.neoforge.common.util.TriState canSustainPlant(BlockState state, BlockGetter level, BlockPos pos,
-                                   Direction facing, BlockState plantable) {
-        return facing==Direction.UP?net.neoforged.neoforge.common.util.TriState.TRUE:net.neoforged.neoforge.common.util.TriState.FALSE;
+            Direction facing, BlockState plantable) {
+        return facing == Direction.UP ? net.neoforged.neoforge.common.util.TriState.TRUE : net.neoforged.neoforge.common.util.TriState.FALSE;
 *///?} else {
     public boolean canSustainPlant(BlockState state, BlockGetter level, BlockPos pos,
-                                   Direction facing, IPlantable plantable) {
+            Direction facing, IPlantable plantable) {
         return facing == Direction.UP;
 //?}
     }
@@ -47,11 +48,11 @@ public final class PlantPotBlock extends ShapedToolBlock {
 
     @Override
 //? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack,net.minecraft.world.item.Item.TooltipContext context,
+    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
 *///?} else {
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level,
 //?}
-                                List<Component> tooltip, TooltipFlag flag) {
+            List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Component.translatable("gt.multitileentity.plantpot.tooltip.1")
                 .withStyle(net.minecraft.ChatFormatting.AQUA));
     }

@@ -1,0 +1,792 @@
+{
+  "date": "2026-10-22",
+  "batch": 100,
+  "baseline": "3462d774ac74a8c5370b8774f122ceb2c79ec445",
+  "previous_goal_turn": "Progress: 3462d774a recorded open-vessel contracts and preserved seven complete code views. No live process or blocker.",
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityRope.java",
+      "sha256": "dd0654c88cf26d3d68056ebfc721f2d67e240f8fcc76f0f0f15a8854dbf68e1e",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityScaffold.java",
+      "sha256": "7ab23ba87480eb72976d9774f574344935dfa6178517b3ff470bfc9b53a8c9ba",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "sha256": "78ef2ca64595500bb841faec8304dee0f3e276e14b54c62f494c3116c29ce0b7",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java",
+      "sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "sha256": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "sha256": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "sha256": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "sha256": "4470fc88dede52de55ba387e963d95243ec33ef287ae4f917ce73d874bcede2b",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/WD.java",
+      "sha256": "c8335988b7bd9dbf44df6790d867ac6cfe2e6414793abb0cdd14c32cd342f095",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/ST.java",
+      "sha256": "5ff16d9051e2744a66c711bd5f2581785ba8af7b2272fb1023a6d2f4ddb783a8",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java",
+      "sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "authors": [],
+      "license_header": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/tool/UtilityToolRules.java",
+      "sha256": "2f3869af3dade4578fe1fb6687a0fa281251225438425313a945a97a12346acd",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/RopeBlock.java",
+      "sha256": "5514bf114532fc1314c8ae0a6f59ea0330c40281f4621b59e2e7d05c37e91f6e",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "1851f44e56e2b2db379f116a236ae287c0c9d99f0d2a8aa5e5ceedcdd5f0c39a",
+          "tokens": 1112
+        },
+        "neoforge": {
+          "sha256": "174a5539b621b48c819d287dd0b83c8506cd4da2821bf47a6a686f601d98ca78",
+          "tokens": 1362
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/ScaffoldBlock.java",
+      "sha256": "959652c0127b3d3567708ea9a0bad921182cf5cfe35dd8bbe7c37d0291fa7811",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "b0ecfd3bc611928303b52f2dcccc50a4fdc4b83944c87bb9d84e2f31297fccc1",
+          "tokens": 1544
+        },
+        "neoforge": {
+          "sha256": "0ef260205738b32f0a6ba7b1be9f798ff6b6c2e79878917dccf4621cc1f8285b",
+          "tokens": 1546
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTToolBlocks.java",
+      "sha256": "dad59a320f31f9821754a8d20124c6f72f719fb3b5fd40edc7f3fc7affd11990",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "0293060ca001b1675a4b7aa8023eaa39e30d90cffaef084e75fc0f1edca353b7",
+          "tokens": 4005
+        },
+        "neoforge": {
+          "sha256": "b7b0bdf3131f5e23458a63ff523bc2479d72969666ec5dcb896083f56280cebb",
+          "tokens": 913
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/ShapedToolBlock.java",
+      "sha256": "460497b261e19ceb862dd35c563a7281d66e0add2f97f81778d9942b513ad620",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "91c6367b2e0f6fe883532090a5c6990970cd59736bd2c54b3d3fa892360f04ba",
+          "tokens": 906
+        },
+        "neoforge": {
+          "sha256": "3786671b1767b110faaae588043b880a223ce692886e7ae8451b88edf9e8bf3b",
+          "tokens": 1110
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "05409cc45a965be4efbcde15b420091d3222e6fe390069a0d58031e43faf9308",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "cd857ed2aa4e138090d32001a0777cfe38b90935fa1f5946eacec188a2f02d4d",
+          "tokens": 8033
+        },
+        "neoforge": {
+          "sha256": "98785c75a78501d4cc1232a887ac9bc9bfa79efde64e9ef84f79f88febaf3f66",
+          "tokens": 6299
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java",
+      "sha256": "b2317aec9b0452b16456829eda4da89032f124210baafc4e8255701bfb59a7d5",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "3c63b81a35dc90a0f8d4093895224b552e5183370380ba5286cb5a2797a8b187",
+          "tokens": 453
+        },
+        "neoforge": {
+          "sha256": "4060aa78bc22dd3030fc6b03335c82e5a5ca9f7ede73ff71eb9e58e9f9461ec3",
+          "tokens": 453
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "sha256": "d68ff86788c61cad3aa370502c918034902a9193dcf0049d2f1fe3c6a78ce4d4",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "e54b9cc082b3474f59ad30bc579b2d3d0d591a21135967b01a8b1e295efcb5de",
+          "tokens": 1338
+        },
+        "neoforge": {
+          "sha256": "20e3bcd6856082f1186ee7fc19d818583c8a05f62f2633cd04e6aeb03a976283",
+          "tokens": 1384
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverInteraction.java",
+      "sha256": "c96b22600c70b4c722ec4489cdc70e41dc73005158c4330c1a215fef7d78541e",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "120bd77dadf304d5418db0b64328a700195858511a156b7d99b1d008052b136c",
+          "tokens": 873
+        },
+        "neoforge": {
+          "sha256": "2561f6ee2466ed57c8405a9ca32d92e6323b95b54612293d4fa604e3231f4a90",
+          "tokens": 895
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverWorldInteraction.java",
+      "sha256": "5d929adfc96f42c71d26c040e6609b9333ffc1ef762d088045a55af3a5327aca",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "c7b3e52cbc60734ab86b18e857dbc95572cf3fafe839fc6a0dc29285e0b810ba",
+          "tokens": 513
+        },
+        "neoforge": {
+          "sha256": "c7b3e52cbc60734ab86b18e857dbc95572cf3fafe839fc6a0dc29285e0b810ba",
+          "tokens": 513
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverCollisionMixin.java",
+      "sha256": "ffed5c2ef5a850d584b5224ec06e8c8142c70565353b97c98bc1b86ab493df56",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "a7ca8decc4551f6c913ab87e8732d4fd6cbfaf4b117f01bc09444f0c9500006a",
+          "tokens": 378
+        },
+        "neoforge": {
+          "sha256": "a7ca8decc4551f6c913ab87e8732d4fd6cbfaf4b117f01bc09444f0c9500006a",
+          "tokens": 378
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/data/BlockLootPack.java",
+      "sha256": "b3c9953adcc80fed879752980d7da9ff4d38c5a8a333eb6ddb9e734f25a11363",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "138ffbb0853955e07978fc7592f684c5f8619ae24d4eac995a58156713551d54",
+          "tokens": 1094
+        },
+        "neoforge": {
+          "sha256": "061bfdc0f71ff99229b31c1164b8ec23fd3e27deb34ba92a4f3c7ecafeb44483",
+          "tokens": 1153
+        }
+      }
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTManualStations.java",
+      "sha256": "814eb95c770e5c62e86406b99fc5703268fdf79c9a096d8b3d5785c68cb0232f",
+      "shared_platform_views": {}
+    }
+  ],
+  "native_evidence": [
+    {
+      "platform": "neoforge",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour.java",
+      "entry_sha256": "410ae028d36585b6c210e853720ea3fb973154a4d7800a082d541293cf355014",
+      "excerpts": [
+        "protected VoxelShape getCollisionShape(BlockState p_60572_, BlockGetter p_60573_, BlockPos p_60574_, CollisionContext p_60575_) {\n        return this.hasCollision ? p_60572_.getShape(p_60573_, p_60574_) : Shapes.empty();\n    }",
+        "public BlockBehaviour.Properties noCollission() {\n            this.hasCollision = false;\n            this.canOcclude = false;\n            return this;\n        }",
+        "public boolean canBeReplaced() {\n            return this.replaceable;\n        }",
+        "public boolean hasBlockEntity() {\n            return this.getBlock() instanceof EntityBlock;\n        }"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/Level.java",
+      "entry_sha256": "47ff78754901fad8a193669d28b260e836b1ac32ff06c7614c9900f0a5f8da7c",
+      "excerpts": [
+        "public boolean setBlock(BlockPos p_46605_, BlockState p_46606_, int p_46607_, int p_46608_) {\n        if (this.isOutsideBuildHeight(p_46605_)) {\n            return false;\n        } else if (!this.isClientSide && this.isDebug()) {\n            return false;\n        } else {\n            LevelChunk levelchunk = this.getChunkAt(p_46605_);\n            Block block = p_46606_.getBlock();\n\n            p_46605_ = p_46605_.immutable(); // Forge - prevent mutable BlockPos leaks\n            net.neoforged.neoforge.common.util.BlockSnapshot blockSnapshot = null;\n            if (this.captureBlockSnapshots && !this.isClientSide) {\n                 blockSnapshot = net.neoforged.neoforge.common.util.BlockSnapshot.create(this.dimension, this, p_46605_, p_46607_);\n                 this.capturedBlockSnapshots.add(blockSnapshot);\n            }\n\n            BlockState old = getBlockState(p_46605_);\n            int oldLight = old.getLightEmission(this, p_46605_);\n            int oldOpacity = old.getLightBlock(this, p_46605_);\n\n            BlockState blockstate = levelchunk.setBlockState(p_46605_, p_46606_, (p_46607_ & 64) != 0);\n            if (blockstate == null) {\n                if (blockSnapshot != null) this.capturedBlockSnapshots.remove(blockSnapshot);\n                return false;\n            } else {\n                BlockState blockstate1 = this.getBlockState(p_46605_);\n\n                if (blockSnapshot == null) { // Don't notify clients or update physics while capturing blockstates\n                    this.markAndNotifyBlock(p_46605_, levelchunk, blockstate, p_46606_, p_46607_, p_46608_);\n                }\n\n                return true;\n            }\n        }\n    }",
+        "public boolean setBlockAndUpdate(BlockPos p_46598_, BlockState p_46599_) {\n        return this.setBlock(p_46598_, p_46599_, 3);\n    }",
+        "public BlockState getBlockState(BlockPos p_46732_) {\n        if (this.isOutsideBuildHeight(p_46732_)) {\n            return Blocks.VOID_AIR.defaultBlockState();\n        } else {\n            LevelChunk levelchunk = this.getChunk(SectionPos.blockToSectionCoord(p_46732_.getX()), SectionPos.blockToSectionCoord(p_46732_.getZ()));\n            return levelchunk.getBlockState(p_46732_);\n        }\n    }",
+        "public boolean setBlock(BlockPos p_46601_, BlockState p_46602_, int p_46603_) {\n        return this.setBlock(p_46601_, p_46602_, p_46603_, 512);\n    }"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/block/Blocks.java",
+      "entry_sha256": "c38a694404ba0e0317f744f368ae9a3a44a8bd95f03f3ac65ec9bc78d5d96a58",
+      "excerpts": [
+        "public static final Block VOID_AIR = register(\"void_air\", new AirBlock(BlockBehaviour.Properties.of().replaceable().noCollission().noLootTable().air()));"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/block/HorizontalDirectionalBlock.java",
+      "entry_sha256": "98f62d1a775d0ed61920737f41c8706208c3a2b98d40b40af0f0f62698d458f2",
+      "excerpts": [
+        "public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/block/state/properties/BlockStateProperties.java",
+      "entry_sha256": "567de4c1da591117871888466674f43640ca119ef79153d22f23fd9b2f401ba8",
+      "excerpts": [
+        "public static final DirectionProperty HORIZONTAL_FACING = DirectionProperty.create(\"facing\", Direction.Plane.HORIZONTAL);"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour.class",
+      "entry_sha256": "33a73cccc684a0d41bb0f075c13b2cad5721b3d9e6402c85f3e965d83890a288",
+      "javap_output": "work/rope-scaffold-audit-20261022/BlockBehaviour-forge.javap.txt",
+      "javap_sha256": "a1e2188951987f35b0a0dd596900422aa96c8cd981b5c97331d02f442b8a3332",
+      "excerpts": [
+        "public net.minecraft.world.phys.shapes.VoxelShape getCollisionShape(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.phys.shapes.CollisionContext);\r\n    Code:\r\n         0: aload_0\r\n         1: getfield      #71                 // Field hasCollision:Z\r\n         4: ifeq          16\r\n         7: aload_1\r\n         8: aload_2\r\n         9: aload_3\r\n        10: invokevirtual #439                // Method net/minecraft/world/level/block/state/BlockState.getShape:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/shapes/VoxelShape;\r\n        13: goto          19\r\n        16: invokestatic  #462                // Method net/minecraft/world/phys/shapes/Shapes.empty:()Lnet/minecraft/world/phys/shapes/VoxelShape;\r\n        19: areturn"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour$Properties.class",
+      "entry_sha256": "7b379ccb00fa99762c6961f9e94d2258c994c12c59a46aa4789ee5851ed3eb52",
+      "javap_output": "work/rope-scaffold-audit-20261022/BlockBehaviour$Properties-forge.javap.txt",
+      "javap_sha256": "7ac86268ff86932e5c8cb6737878da61b2fe46dc71bd3c8a222b82d468171cc4",
+      "excerpts": [
+        "public net.minecraft.world.level.block.state.BlockBehaviour$Properties noCollission();\r\n    Code:\r\n         0: aload_0\r\n         1: iconst_0\r\n         2: putfield      #110                // Field hasCollision:Z\r\n         5: aload_0\r\n         6: iconst_0\r\n         7: putfield      #140                // Field canOcclude:Z\r\n        10: aload_0\r\n        11: areturn"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase.class",
+      "entry_sha256": "ec49ba5e67c5272060397ed4fccf512ab7e2cf965da8295db850321540ebaa70",
+      "javap_output": "work/rope-scaffold-audit-20261022/BlockBehaviour$BlockStateBase-forge.javap.txt",
+      "javap_sha256": "b15972268a1fc92e4027b40d65540ec687d77c9c3d41623cc8ee44c8aae4dc57",
+      "excerpts": [
+        "public boolean canBeReplaced();\r\n    Code:\r\n         0: aload_0\r\n         1: getfield      #189                // Field replaceable:Z\r\n         4: ireturn",
+        "public boolean hasBlockEntity();\r\n    Code:\r\n         0: aload_0\r\n         1: invokevirtual #255                // Method getBlock:()Lnet/minecraft/world/level/block/Block;\r\n         4: instanceof    #823                // class net/minecraft/world/level/block/EntityBlock\r\n         7: ireturn"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/Level.class",
+      "entry_sha256": "7c9e12d688e4f41c34c54489b5a7bb9893cbd2396cdac6cc3e42a6e607003d5f",
+      "javap_output": "work/rope-scaffold-audit-20261022/Level-forge.javap.txt",
+      "javap_sha256": "99304f0da6337fd3e21605c221d4e9d1cb8ab902366e9eb17e0906501d8679a4",
+      "excerpts": [
+        "public boolean setBlockAndUpdate(net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);\r\n    Code:\r\n         0: aload_0\r\n         1: aload_1\r\n         2: aload_2\r\n         3: iconst_3\r\n         4: invokevirtual #545                // Method setBlock:(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z\r\n         7: ireturn",
+        "public net.minecraft.world.level.block.state.BlockState getBlockState(net.minecraft.core.BlockPos);\r\n    Code:\r\n         0: aload_0\r\n         1: aload_1\r\n         2: invokevirtual #338                // Method isOutsideBuildHeight:(Lnet/minecraft/core/BlockPos;)Z\r\n         5: ifeq          15\r\n         8: getstatic     #691                // Field net/minecraft/world/level/block/Blocks.VOID_AIR:Lnet/minecraft/world/level/block/Block;\r\n        11: invokevirtual #694                // Method net/minecraft/world/level/block/Block.defaultBlockState:()Lnet/minecraft/world/level/block/state/BlockState;\r\n        14: areturn\r\n        15: aload_0\r\n        16: aload_1\r\n        17: invokevirtual #357                // Method net/minecraft/core/BlockPos.getX:()I\r\n        20: invokestatic  #371                // Method net/minecraft/core/SectionPos.blockToSectionCoord:(I)I\r\n        23: aload_1\r\n        24: invokevirtual #361                // Method net/minecraft/core/BlockPos.getZ:()I\r\n        27: invokestatic  #371                // Method net/minecraft/core/SectionPos.blockToSectionCoord:(I)I\r\n        30: invokevirtual #375                // Method getChunk:(II)Lnet/minecraft/world/level/chunk/LevelChunk;\r\n        33: astore_2\r\n        34: aload_2\r\n        35: aload_1\r\n        36: invokevirtual #695                // Method net/minecraft/world/level/chunk/LevelChunk.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;\r\n        39: areturn",
+        "public boolean setBlock(net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, int, int);\r\n    Code:\r\n         0: aload_0\r\n         1: aload_1\r\n         2: invokevirtual #338                // Method isOutsideBuildHeight:(Lnet/minecraft/core/BlockPos;)Z\r\n         5: ifeq          10\r\n         8: iconst_0\r\n         9: ireturn\r\n        10: aload_0\r\n        11: getfield      #267                // Field isClientSide:Z\r\n        14: ifne          26\r\n        17: aload_0\r\n        18: invokevirtual #422                // Method isDebug:()Z\r\n        21: ifeq          26\r\n        24: iconst_0\r\n        25: ireturn\r\n        26: aload_0\r\n        27: aload_1\r\n        28: invokevirtual #424                // Method getChunkAt:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/chunk/LevelChunk;\r\n        31: astore        5\r\n        33: aload_2\r\n        34: invokevirtual #430                // Method net/minecraft/world/level/block/state/BlockState.getBlock:()Lnet/minecraft/world/level/block/Block;\r\n        37: astore        6\r\n        39: aload_1\r\n        40: invokevirtual #434                // Method net/minecraft/core/BlockPos.immutable:()Lnet/minecraft/core/BlockPos;\r\n        43: astore_1\r\n        44: aconst_null\r\n        45: astore        7\r\n        47: aload_0\r\n        48: getfield      #201                // Field captureBlockSnapshots:Z\r\n        51: ifeq          83\r\n        54: aload_0\r\n        55: getfield      #267                // Field isClientSide:Z\r\n        58: ifne          83\r\n        61: aload_0\r\n        62: getfield      #265                // Field dimension:Lnet/minecraft/resources/ResourceKey;\r\n        65: aload_0\r\n        66: aload_1\r\n        67: iload_3\r\n        68: invokestatic  #439                // Method net/minecraftforge/common/util/BlockSnapshot.create:(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;I)Lnet/minecraftforge/common/util/BlockSnapshot;\r\n        71: astore        7\r\n        73: aload_0\r\n        74: getfield      #208                // Field capturedBlockSnapshots:Ljava/util/ArrayList;\r\n        77: aload         7\r\n        79: invokevirtual #443                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z\r\n        82: pop\r\n        83: aload_0\r\n        84: aload_1\r\n        85: invokevirtual #449                // Method getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;\r\n        88: astore        8\r\n        90: aload         8\r\n        92: aload_0\r\n        93: aload_1\r\n        94: invokevirtual #453                // Method net/minecraft/world/level/block/state/BlockState.getLightEmission:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)I\r\n        97: istore        9\r\n        99: aload         8\r\n       101: aload_0\r\n       102: aload_1\r\n       103: invokevirtual #456                // Method net/minecraft/world/level/block/state/BlockState.getLightBlock:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)I\r\n       106: istore        10\r\n       108: aload         5\r\n       110: aload_1\r\n       111: aload_2\r\n       112: iload_3\r\n       113: bipush        64\r\n       115: iand\r\n       116: ifeq          123\r\n       119: iconst_1\r\n       120: goto          124\r\n       123: iconst_0\r\n       124: invokevirtual #460                // Method net/minecraft/world/level/chunk/LevelChunk.setBlockState:(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Z)Lnet/minecraft/world/level/block/state/BlockState;\r\n       127: astore        11\r\n       129: aload         11\r\n       131: ifnonnull     151\r\n       134: aload         7\r\n       136: ifnull        149\r\n       139: aload_0\r\n       140: getfield      #208                // Field capturedBlockSnapshots:Ljava/util/ArrayList;\r\n       143: aload         7\r\n       145: invokevirtual #463                // Method java/util/ArrayList.remove:(Ljava/lang/Object;)Z\r\n       148: pop\r\n       149: iconst_0\r\n       150: ireturn\r\n       151: aload_0\r\n       152: aload_1\r\n       153: invokevirtual #449                // Method getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;\r\n       156: astore        12\r\n       158: aload         7\r\n       160: ifnonnull     176\r\n       163: aload_0\r\n       164: aload_1\r\n       165: aload         5\r\n       167: aload         11\r\n       169: aload_2\r\n       170: iload_3\r\n       171: iload         4\r\n       173: invokevirtual #467                // Method markAndNotifyBlock:(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/chunk/LevelChunk;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/state/BlockState;II)V\r\n       176: iconst_1\r\n       177: ireturn",
+        "public boolean setBlock(net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, int);\r\n    Code:\r\n         0: aload_0\r\n         1: aload_1\r\n         2: aload_2\r\n         3: iload_3\r\n         4: sipush        512\r\n         7: invokevirtual #416                // Method setBlock:(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;II)Z\r\n        10: ireturn"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/Blocks.class",
+      "entry_sha256": "c016a8740140b711b10e93b64ec46cd19d8cf481f365c3ed89adf0831ee7b64b",
+      "javap_output": "work/rope-scaffold-audit-20261022/Blocks-forge.javap.txt",
+      "javap_sha256": "b15f280ed48719485324e74099807fa33ef97f9dd3c427c78a8c150540bfdb62",
+      "excerpts": [
+        "30653: ldc_w         #5916              // String void_air\r\n      30656: new           #1683              // class net/minecraft/world/level/block/AirBlock\r\n      30659: dup\r\n      30660: invokestatic  #1128              // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.of:()Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;\r\n      30663: invokevirtual #1686              // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.replaceable:()Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;\r\n      30666: invokevirtual #1357              // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.noCollission:()Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;\r\n      30669: invokevirtual #1689              // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.noLootTable:()Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;\r\n      30672: invokevirtual #1691              // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.air:()Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;\r\n      30675: invokespecial #1692              // Method net/minecraft/world/level/block/AirBlock.\"<init>\":(Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)V\r\n      30678: invokestatic  #1694              // Method register:(Ljava/lang/String;Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/world/level/block/Block;\r\n      30681: putstatic     #5918              // Field VOID_AIR:Lnet/minecraft/world/level/block/Block;"
+      ]
+    }
+  ],
+  "readability": {
+    "baseline": "3462d774ac74a8c5370b8774f122ceb2c79ec445",
+    "files": {
+      "core/src/main/java/com/gregtech/gregtech/content/tool/UtilityToolRules.java": {
+        "before_raw_sha256": "f64dc9b8f3653481035a7a5e55f2f5026a8bf74c45e6a2002937e8d0e052de5b",
+        "after_raw_sha256": "2f3869af3dade4578fe1fb6687a0fa281251225438425313a945a97a12346acd",
+        "before_lines": 9,
+        "after_lines": 48,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 312,
+            "execution_sha256": "a94078ec1a8913fa1813d9cf4ee08b28731b73912f16611ce7f86dceef73d353",
+            "literal_positions_sha256": "7c6f94318400439acca90e54e6ef794a78e36066b9624cbb4a5aa2574d520401",
+            "literal_count": 34
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/tool/RopeBlock.java": {
+        "before_raw_sha256": "bdaa2f1114e7160369670f429cb1237a4e5f7ff054b42b25ebd38b1d53bd0f45",
+        "after_raw_sha256": "5514bf114532fc1314c8ae0a6f59ea0330c40281f4621b59e2e7d05c37e91f6e",
+        "before_lines": 149,
+        "after_lines": 174,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1112,
+            "execution_sha256": "8f178f4658fad68e4df4b635a0c2913e5ccb65b5cdc3698186e1fb602e2d4b81",
+            "literal_positions_sha256": "2984a4efb85da1eb8c82caa023e056200e60dca62e641748be9f01ca7ed81ec1",
+            "literal_count": 29
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1362,
+            "execution_sha256": "baa6bc8c09bcb3934fa43b4590286c29ad559934dc502be902cdfa9f846eba60",
+            "literal_positions_sha256": "2d26d6da1e467c1fb579d8e195c0667ad32cb3182c46daed95662b8dff644fe0",
+            "literal_count": 29
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/tool/ScaffoldBlock.java": {
+        "before_raw_sha256": "2111b3c7a783da0e34950896890fda02cc55c2d5c25bc4dbf5889f96cc200127",
+        "after_raw_sha256": "959652c0127b3d3567708ea9a0bad921182cf5cfe35dd8bbe7c37d0291fa7811",
+        "before_lines": 168,
+        "after_lines": 181,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1544,
+            "execution_sha256": "ee6e14b72a958fa9f3ca63abb08b5c1abf31b814524c103cf7d19f153f516988",
+            "literal_positions_sha256": "3f51f2a44be3c85aeda70637f184fe790305b2da7efbfe39e5e93b92c8c28284",
+            "literal_count": 69
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1546,
+            "execution_sha256": "12869d26aa4c5c8ac06364565a4dd9bffd91000bf201c30b7a60366e515fa213",
+            "literal_positions_sha256": "ceca47383fa802949f5fe8821b3aff113f0fb65f5a01bcb271d8aaf73e00deb2",
+            "literal_count": 69
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/registry/GTToolBlocks.java": {
+        "before_raw_sha256": "6bf7985f7054bfa396e63161c56a0605315f2e2fc53eee3666df897df2680d62",
+        "after_raw_sha256": "dad59a320f31f9821754a8d20124c6f72f719fb3b5fd40edc7f3fc7affd11990",
+        "before_lines": 280,
+        "after_lines": 366,
+        "comment_corrections": [
+          [
+            "Original three mining charges; remaining tool-block families are separate pending ports.",
+            "Mining charges, portable containers and fluid attachments; manual stations register separately."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 4005,
+            "execution_sha256": "f66618d95c147f6556c59789bc5e5fa6270322ee868f8692891522b344b5069e",
+            "literal_positions_sha256": "2579aef3847b0821f5dc45e7025b8925fce646d82059d63bf24bd1b91831982a",
+            "literal_count": 159
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 913,
+            "execution_sha256": "94589e1b75f6a7bac4893d3b4fa81731ba69457215f0030a7360eca68dfb009f",
+            "literal_positions_sha256": "03a00d61fb5244d2f4692529340310444fda2fbe942b72e47ca813abb99f723c",
+            "literal_count": 37
+          }
+        ]
+      }
+    }
+  },
+  "formal_findings_added": [
+    "ALIGN-313",
+    "ALIGN-314",
+    "ALIGN-315",
+    "ALIGN-316",
+    "ALIGN-317",
+    "ALIGN-318"
+  ],
+  "source_rope_registrations": [
+    "aMat = MT.Brown;            aRegistry.add(\"Rope\"                                                , \"Ropes\"                               , 32011, 32011, MultiTileEntityRope.class                               ,                 0, 64, aUtilWool      , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   1.0F, NBT_FLAMMABILITY,100),  \" S\",  \"SS\",  \"Sq\", 'S', \"cropHemp\");                   IL.Rope        .set(aRegistry.getItem(), null, \"rope\");",
+    "aMat = MT.White;            aRegistry.add(\"Silk Rope\"                                           , \"Ropes\"                               , 32012, 32011, MultiTileEntityRope.class                               ,                 0, 64, aUtilWool      , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   1.0F                      ),  \" S\",  \"SS\",  \"Sq\", 'S', Items.string);                 IL.Rope_Silk   .set(aRegistry.getItem(), null, \"rope\");",
+    "aMat = MT.Yellow;           aRegistry.add(\"Grass Rope\"                                          , \"Ropes\"                               , 32013, 32011, MultiTileEntityRope.class                               ,                 0, 64, aUtilWool      , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   1.0F, NBT_FLAMMABILITY,100), \" GG\", \"GGG\", \"GGq\", 'G', OD.itemGrassDry);              IL.Rope_Grass  .set(aRegistry.getItem(), null, \"rope\");",
+    "aMat = MT.Green;            aRegistry.add(\"Vine Rope\"                                           , \"Ropes\"                               , 32108, 32011, MultiTileEntityRope.class                               ,                 0, 64, aUtilWool      , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   1.0F, NBT_FLAMMABILITY,100),  \" V\",  \"VV\",  \"Vb\", 'V', Blocks.vine);                  IL.Rope_Vine   .set(aRegistry.getItem(), null, \"rope\");",
+    "aMat = ANY.Plastic;         aRegistry.add(\"Plastic Rope\"                                        , \"Ropes\"                               , 32014, 32011, MultiTileEntityRope.class                               ,                 0, 64, aUtilWool      , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   1.0F                      ),  \" P\",  \"PP\",  \"Pq\", 'P', OP.wireFine.dat(ANY.Plastic)); IL.Rope_Plastic.set(aRegistry.getItem(), null, \"rope\");",
+    "aMat = ANY.Steel;           aRegistry.add(\"Steel Rope\"                                          , \"Ropes\"                               , 32112, 32011, MultiTileEntityRope.class                               ,                 0, 64, aUtilWool      , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   1.0F                      ),  \" P\",  \"PP\",  \"Px\", 'P', OP.wireFine.dat(ANY.Steel));   IL.Rope_Steel  .set(aRegistry.getItem(), null, \"rope\");"
+  ],
+  "current_rope_identities": [
+    [
+      "rope",
+      "Brown"
+    ],
+    [
+      "rope_silk",
+      "White"
+    ],
+    [
+      "rope_grass",
+      "Yellow"
+    ],
+    [
+      "rope_vine",
+      "Green"
+    ],
+    [
+      "rope_plastic",
+      "Plastic"
+    ],
+    [
+      "rope_steel",
+      "Steel"
+    ]
+  ],
+  "support_source_projection": [
+    {
+      "case": "opaque_block_above",
+      "source_supported_without_wall": true,
+      "current_supported_without_wall": false
+    },
+    {
+      "case": "same_rope_same_facing_above",
+      "source_supported_without_wall": true,
+      "current_supported_without_wall": true
+    },
+    {
+      "case": "other_rope_material_above",
+      "source_supported_without_wall": true,
+      "current_supported_without_wall": false
+    },
+    {
+      "case": "same_rope_other_facing_above",
+      "source_supported_without_wall": true,
+      "current_supported_without_wall": false
+    }
+  ],
+  "top_rope_harvest_source_projection": {
+    "precondition": "No rope above the harvested segment; lower segments have the same identity/facing and independently sturdy wall support.",
+    "source_lower_segments_explicitly_removed": true,
+    "current_lower_segments_keep_support": true,
+    "limit": "Source/native callback reasoning, not an actual harvest or a claim all free-hanging chains fail to cascade."
+  },
+  "scaffold_corner_source_projection": [
+    {
+      "physical_frame_wall": "north",
+      "design": 1,
+      "point_pixels": [
+        1.5,
+        8,
+        14.5
+      ],
+      "source_corner_width_pixels": 1,
+      "current_corner_width_pixels": 2,
+      "source_contains_point": false,
+      "current_contains_point": true
+    },
+    {
+      "physical_frame_wall": "north",
+      "design": 2,
+      "point_pixels": [
+        1.5,
+        8,
+        14.5
+      ],
+      "source_corner_width_pixels": 1,
+      "current_corner_width_pixels": 2,
+      "source_contains_point": false,
+      "current_contains_point": true
+    },
+    {
+      "physical_frame_wall": "south",
+      "design": 1,
+      "point_pixels": [
+        1.5,
+        8,
+        1.5
+      ],
+      "source_corner_width_pixels": 1,
+      "current_corner_width_pixels": 2,
+      "source_contains_point": false,
+      "current_contains_point": true
+    },
+    {
+      "physical_frame_wall": "south",
+      "design": 2,
+      "point_pixels": [
+        1.5,
+        8,
+        1.5
+      ],
+      "source_corner_width_pixels": 1,
+      "current_corner_width_pixels": 2,
+      "source_contains_point": false,
+      "current_contains_point": true
+    },
+    {
+      "physical_frame_wall": "west",
+      "design": 1,
+      "point_pixels": [
+        14.5,
+        8,
+        1.5
+      ],
+      "source_corner_width_pixels": 1,
+      "current_corner_width_pixels": 2,
+      "source_contains_point": false,
+      "current_contains_point": true
+    },
+    {
+      "physical_frame_wall": "west",
+      "design": 2,
+      "point_pixels": [
+        14.5,
+        8,
+        1.5
+      ],
+      "source_corner_width_pixels": 1,
+      "current_corner_width_pixels": 2,
+      "source_contains_point": false,
+      "current_contains_point": true
+    },
+    {
+      "physical_frame_wall": "east",
+      "design": 1,
+      "point_pixels": [
+        1.5,
+        8,
+        1.5
+      ],
+      "source_corner_width_pixels": 1,
+      "current_corner_width_pixels": 2,
+      "source_contains_point": false,
+      "current_contains_point": true
+    },
+    {
+      "physical_frame_wall": "east",
+      "design": 2,
+      "point_pixels": [
+        1.5,
+        8,
+        1.5
+      ],
+      "source_corner_width_pixels": 1,
+      "current_corner_width_pixels": 2,
+      "source_contains_point": false,
+      "current_contains_point": true
+    }
+  ],
+  "scaffold_design_source_projection": [
+    {
+      "vertical": false,
+      "above_scaffold": false,
+      "below_scaffold": false,
+      "source_design": 0,
+      "current_design": 0
+    },
+    {
+      "vertical": false,
+      "above_scaffold": false,
+      "below_scaffold": true,
+      "source_design": 0,
+      "current_design": 0
+    },
+    {
+      "vertical": false,
+      "above_scaffold": true,
+      "below_scaffold": false,
+      "source_design": 0,
+      "current_design": 0
+    },
+    {
+      "vertical": false,
+      "above_scaffold": true,
+      "below_scaffold": true,
+      "source_design": 0,
+      "current_design": 0
+    },
+    {
+      "vertical": true,
+      "above_scaffold": false,
+      "below_scaffold": false,
+      "source_design": 3,
+      "current_design": 3
+    },
+    {
+      "vertical": true,
+      "above_scaffold": false,
+      "below_scaffold": true,
+      "source_design": 1,
+      "current_design": 1
+    },
+    {
+      "vertical": true,
+      "above_scaffold": true,
+      "below_scaffold": false,
+      "source_design": 2,
+      "current_design": 2
+    },
+    {
+      "vertical": true,
+      "above_scaffold": true,
+      "below_scaffold": true,
+      "source_design": 2,
+      "current_design": 2
+    }
+  ],
+  "minimum_height_source_projection": {
+    "precondition": "Server survival interaction on a rope at the level minimum, same rope held; target one block lower, upper rope satisfies its survival check.",
+    "current_target_offset_from_minimum": -1,
+    "outside_state": "VOID_AIR, replaceable",
+    "current_set_block_result": false,
+    "current_held_items_spent": 1,
+    "source_lower_boundary_spent": 0,
+    "limit": "Source/native boundary derivation only; no placed world, packet, inventory or survival reachability test."
+  },
+  "positive_scope": [
+    "All six current ropes have explicit ladder overrides and actual native registrations. Scaffold design choice, 1..255 support-search bound, ladder exclusion for design3 and empty-world update hooks exist.",
+    "No wall-supported lower-rope removal callback replaces the original top harvest action; do not infer free-hanging native neighbor-update chains never fall.",
+    "Native noCollission disables default entity collision while the outline/getShape and ladder API remain independent. Cover collision fallback returns the original shape without a block-entity host.",
+    "Current normal placement uses modern world limits; retain negative-height support. The minimum boundary finding concerns the unchecked first downward target and ignored failed placement, not a recommendation to restore y>=0."
+  ],
+  "limits": [
+    "Four support roles, eight corner point comparisons, eight design declarations and one lower-boundary case are source projections only, not geometry queries, player motion, block updates or a real inventory/harvest test.",
+    "Two native cached artifacts/ten entries and five read-only javap class outputs only; no target class initialization, compile, Gradle, test, game, build or push.",
+    "Rope/scaffold physical property registrations, flammability, exact support opacity, chunk-load boundaries, permissions, texture/rendered dimensions, crafting, cover lifecycle and independent saved-world restart remain incomplete.",
+    "Four production files retain all code/literal positions and directives; one stale Neo registry description is corrected. User material tables and all gameplay stay unchanged."
+  ],
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "root_revalidation": {
+    "date": "2026-10-22",
+    "original_sources": 15,
+    "current_sources": 13,
+    "shared_platform_views": 22,
+    "readability_files": 4,
+    "complete_code_views": 7,
+    "rope_identities": 6,
+    "source_support_conditions": 4,
+    "source_harvest_scenario": 1,
+    "source_corner_point_comparisons": 8,
+    "source_design_combinations": 8,
+    "source_minimum_height_scenario": 1,
+    "native_artifacts": 2,
+    "native_entries": 10,
+    "read_only_javap_class_outputs": 5,
+    "ledger_contiguous": [
+      1,
+      318
+    ],
+    "added_local_links": 16,
+    "protected_materials_unchanged": true,
+    "method": "Rehash original/current/platform/native entry and raw javap evidence, verify snapshots and full code/literal positions/comments/directives, trace rope native registration/collision and harvest consumers, scaffold boxes and cover-host gating, and both native world-height placement wrappers. No target class, geometry API, player, inventory, handler or game execution."
+  }
+}

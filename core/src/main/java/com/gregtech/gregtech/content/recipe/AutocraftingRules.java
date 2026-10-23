@@ -6,27 +6,38 @@ import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
-/** Source blueprint cell aggregation, before native crafting and item-container handling. */
+/** Shared blueprint aggregation and optimization; native recipe selection and container lookup stay at the platform boundary. */
 public final class AutocraftingRules {
-    private AutocraftingRules() {}
+
+    private AutocraftingRules() {
+    }
     public static final String BLUEPRINT_KEY = "gt.blueprint.craft";
     public static final String LEGACY_KEY = "gt.CraftingPattern";
     public static final int CELLS = 9, SLOT_X = 80, SLOT_Y = 43;
     public static final long DURATION = 1024, POWER = 16;
-    public record Input<T>(T sample, int count, boolean retained) {}
-    public record Amount<T>(T sample, int count) {}
-    public record Plan<T>(List<Input<T>> inputs, List<Amount<T>> outputs, long duration) {}
+
+    public record Input<T>(T sample, int count, boolean retained) {
+    }
+
+    public record Amount<T>(T sample, int count) {
+    }
+
+    public record Plan<T>(List<Input<T>> inputs, List<Amount<T>> outputs, long duration) {
+    }
 
     /** The source rejects hand tools and retains infinite inputs as a presence requirement. */
     public static <T> List<Input<T>> inputs(List<T> blueprint, Predicate<T> empty,
-            Predicate<T> handTool, BiPredicate<T,T> same, Predicate<T> infinite) {
+            Predicate<T> handTool, BiPredicate<T, T> same, Predicate<T> infinite) {
         if (blueprint.size() != CELLS) return null;
         for (T cell : blueprint) if (!empty.test(cell) && handTool.test(cell)) return null;
         var result = new ArrayList<Input<T>>();
         for (T cell : blueprint) {
             if (empty.test(cell)) continue;
             int index = -1;
-            for (int i = 0; i < result.size(); i++) if (same.test(result.get(i).sample(), cell)) { index = i; break; }
+            for (int i = 0; i < result.size(); i++) if (same.test(result.get(i).sample(), cell)) {
+                index = i;
+                break;
+            }
             if (index < 0) result.add(new Input<>(cell, 1, infinite.test(cell)));
             else {
                 Input<T> old = result.get(index);
@@ -38,7 +49,7 @@ public final class AutocraftingRules {
 
     /** Recipe:904-939: ignore zero-size catalysts when deriving the optimization bound. */
     public static <T> Plan<T> optimize(List<Input<T>> inputs, List<Amount<T>> outputs,
-            BiPredicate<T,T> same) {
+            BiPredicate<T, T> same) {
         var in = new ArrayList<Input<T>>();
         var out = new ArrayList<>(outputs);
         int limit = (int)(DURATION / 16);

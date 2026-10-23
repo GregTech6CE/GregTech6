@@ -40,21 +40,26 @@ import java.util.List;
  * pattern and the block entity packet synchronizes it together with the face counts.</p>
  */
 public class CoinPileBlockEntity extends BlockEntity {
+
     /** GT6's sixteen faces: {@code mCoinStackSizes = new byte[16]} ({@code MultiTileEntityCoin.java:71}). */
     public static final int FACES = com.gregtech.gregtech.block.CoinPileRules.FACES;
+
     /**
      * GT6's per-face cap: {@code private static final byte COIN_STACKSIZE = 16}
      * ({@code MultiTileEntityCoin.java:74}), used by the add ({@code :167}) and the item merge
      * ({@code :201}, {@code :217}).
      */
     public static final int FACE_STACK_SIZE = com.gregtech.gregtech.block.CoinPileRules.PER_FACE;
+
     /**
      * The legacy coarse fill state has four values. The block entity renderer itself draws all
      * sixteen exact per-face heights from GT6 ({@code MultiTileEntityCoin.java:385}).
      */
     public static final int MAX_FILL = 4;
+
     /** GT6's per-face key prefix ({@code MultiTileEntityCoin.java:81} and {@code :93}). */
     public static final String NBT_STACKSIZE = "gt.coin.stacksize.";
+
     /**
      * The coin this pile is made of - the port's stand-in for GT6's {@code gt.material} ({@code :83},
      * {@code :90}), which the port's coin item already carries as its registry identity.
@@ -75,7 +80,7 @@ public class CoinPileBlockEntity extends BlockEntity {
      * coordinates clamped into {@code [0, 0.99)}.
      */
     public static int faceAt(double hitX, double hitZ) {
-        return com.gregtech.gregtech.block.CoinPileRules.faceAt(hitX,hitZ);
+        return com.gregtech.gregtech.block.CoinPileRules.faceAt(hitX, hitZ);
     }
 
     private static int faceAxis(double value) {
@@ -104,7 +109,9 @@ public class CoinPileBlockEntity extends BlockEntity {
     }
 
     /** The shape is decoded only when this pile's coin changes, never on every render frame. */
-    public CoinGeometry.MintPattern coinPattern() { return coinPattern; }
+    public CoinGeometry.MintPattern coinPattern() {
+        return coinPattern;
+    }
 
     private void storeCoin(ItemStack stack) {
         coin = stack;
@@ -210,7 +217,7 @@ public class CoinPileBlockEntity extends BlockEntity {
         // the total and the 16-per-cell cap invariant also gives the same varied pile silhouette.
         if (level != null) {
             int total = total();
-            com.gregtech.gregtech.block.CoinPileRules.repack(faces,total,level.random::nextInt);
+            com.gregtech.gregtech.block.CoinPileRules.repack(faces, total, level.random::nextInt);
         }
         setChanged();
         syncState();
@@ -219,8 +226,8 @@ public class CoinPileBlockEntity extends BlockEntity {
 
     /**
      * GT6's take branch ({@code MultiTileEntityCoin.java:159-165}): one coin off the clicked face,
-     * handed to the player. GT6 skips the hand-over for creative players
-     * ({@code UT.Entities.hasInfiniteItems}) and just destroys the coin; the port always returns it.
+     * returned to the caller. The block callback transfers it only after inventory admission,
+     * while creative players destroy it without receiving a coin, as in GT6.
      * The last coin taken clears the pile's kind, which is what GT6's {@code setBlockToAir()} amounts
      * to ({@code :174-176}).
      *
@@ -370,8 +377,8 @@ public class CoinPileBlockEntity extends BlockEntity {
 
     @Override
 //? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
+    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.loadAdditional(tag, lookup);
 *///?} else {
     public void load(CompoundTag tag) {
         super.load(tag);
@@ -382,7 +389,7 @@ public class CoinPileBlockEntity extends BlockEntity {
             faces[face] = (byte) Math.max(0, Math.min(FACE_STACK_SIZE, tag.getByte(NBT_STACKSIZE + face)));
         }
 //? if >=1.21.1 {
-        /*storeCoin(tag.contains(NBT_COIN) ? ItemStack.parseOptional(lookup,tag.getCompound(NBT_COIN)) : ItemStack.EMPTY);
+        /*storeCoin(tag.contains(NBT_COIN) ? ItemStack.parseOptional(lookup, tag.getCompound(NBT_COIN)) : ItemStack.EMPTY);
 *///?} else {
         storeCoin(tag.contains(NBT_COIN) ? ItemStack.of(tag.getCompound(NBT_COIN)) : ItemStack.EMPTY);
 //?}
@@ -391,8 +398,8 @@ public class CoinPileBlockEntity extends BlockEntity {
     /** GT6 writes the sixteen {@code gt.coin.stacksize.<i>} bytes ({@code MultiTileEntityCoin.java:93}). */
     @Override
 //? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
+    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.saveAdditional(tag, lookup);
 *///?} else {
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
