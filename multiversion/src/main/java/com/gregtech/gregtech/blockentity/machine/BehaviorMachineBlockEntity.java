@@ -10,6 +10,7 @@ import com.gregtech.gregtech.api.addon.MachineFace;
 import com.gregtech.gregtech.api.addon.PartEnergyRules;
 import com.gregtech.gregtech.api.addon.BehaviorRangeRules;
 import com.gregtech.gregtech.api.addon.BehaviorMachineHosts;
+import com.gregtech.gregtech.api.addon.platform.BehaviorMachineClientView;
 import com.gregtech.gregtech.api.addon.platform.BehaviorState;
 //? if >=1.21.1 {
 /*import com.gregtech.gregtech.api.addon.platform.EnergyBlock;
@@ -48,7 +49,9 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -101,7 +104,8 @@ import java.util.UUID;
 /** Shell block entity. The addon behavior never sees this class. */
 public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlock, MenuProvider,
         com.gregtech.gregtech.api.fluid.CompressedGasReceiver, ITileEntityCrucible,
-        com.gregtech.gregtech.api.multiblock.MultiblockPortOwner, com.gregtech.gregtech.api.signal.GtSignalSource {
+        com.gregtech.gregtech.api.multiblock.MultiblockPortOwner, com.gregtech.gregtech.api.signal.GtSignalSource,
+        BehaviorMachineClientView {
     private final BehaviorMachine declaration;
     private final AddonMachines.AcceptedBehavior accepted;
     private final MachineBehavior behavior;
@@ -145,6 +149,8 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     private int itemsLeft;
     @Nullable private UUID placerId;
     private String placerName = "";
+    private final java.util.Set<String> clientKeys;
+    private boolean clientStateDirty;
 
     public BehaviorMachineBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -168,6 +174,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         this.auxiliaryTag = declaration.auxiliary() == null ? null : GregTechTags.Energy.ALL.stream()
                 .filter(tag -> tag.getShortName().equalsIgnoreCase(declaration.auxiliary().type()))
                 .findFirst().orElseThrow();
+        this.clientKeys = java.util.Set.copyOf(declaration.clientState());
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, BehaviorMachineBlockEntity machine) {
@@ -183,6 +190,18 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         return com.gregtech.gregtech.api.signal.GtSignalCarrier.clamp(behavior.gtSignal(context, side));
     }
     public BehaviorState state() { return state; }
+
+    @Override public String addonId() { return accepted.addonId(); }
+    @Override public String machineType() { return declaration.casing().machineType(); }
+    @Override public int getInt(String key) { requireClientKey(key); return state.getInt(key); }
+    @Override public long getLong(String key) { requireClientKey(key); return state.getLong(key); }
+    @Override public boolean getBoolean(String key) { requireClientKey(key); return state.getBoolean(key); }
+    @Override public String getString(String key) { requireClientKey(key); return state.getString(key); }
+
+    private void requireClientKey(String key) {
+        if (!clientKeys.contains(key))
+            throw new IllegalArgumentException("Behavior machine client state is not declared: " + key);
+    }
     public ItemStackHandler inventory() { return items; }
     public IItemHandler items() { return pipeItems; }
     public IFluidHandler fluids() { return pipeFluids; }
@@ -321,6 +340,10 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         BlockState state = getBlockState();
         if (state.getValue(BehaviorMachineBlock.RUNNING) != powered || state.getValue(BehaviorMachineBlock.LIT) != working)
             level.setBlock(pos, state.setValue(BehaviorMachineBlock.RUNNING, powered).setValue(BehaviorMachineBlock.LIT, working), 3);
+        if (clientStateDirty) {
+            clientStateDirty = false;
+            level.sendBlockUpdated(pos, state, state, Block.UPDATE_CLIENTS);
+        }
     }
 
     private void pollEnergy(Level level, BlockPos pos) {
@@ -937,6 +960,70 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
 //?}
     }
 
+//? if >=1.21.1 {
+/*    @Override public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return writeClientState(new CompoundTag());
+    }
+
+    @Override public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider registries) {
+        readClientState(tag);
+    }
+
+    @Override public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket packet,
+                                      HolderLookup.Provider lookup) {
+        if (packet.getTag() != null) readClientState(packet.getTag());
+    }
+*///?} else {
+    @Override public CompoundTag getUpdateTag() {
+        return writeClientState(new CompoundTag());
+    }
+
+    @Override public void handleUpdateTag(CompoundTag tag) {
+        readClientState(tag);
+    }
+
+    @Override public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket packet) {
+        if (packet.getTag() != null) readClientState(packet.getTag());
+    }
+//?}
+
+    @Override public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return clientKeys.isEmpty() ? null : ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    private CompoundTag writeClientState(CompoundTag tag) {
+        CompoundTag ints = new CompoundTag();
+        CompoundTag longs = new CompoundTag();
+        CompoundTag bools = new CompoundTag();
+        CompoundTag strings = new CompoundTag();
+        for (String key : clientKeys) {
+            Integer integer = state.ints.get(key);
+            if (integer != null) ints.putInt(key, integer);
+            Long value = state.longs.get(key);
+            if (value != null) longs.putLong(key, value);
+            Boolean flag = state.bools.get(key);
+            if (flag != null) bools.putBoolean(key, flag);
+            String text = state.strings.get(key);
+            if (text != null) strings.putString(key, text);
+        }
+        tag.put("i", ints);
+        tag.put("l", longs);
+        tag.put("b", bools);
+        tag.put("s", strings);
+        return tag;
+    }
+
+    private void readClientState(CompoundTag tag) {
+        CompoundTag ints = tag.getCompound("i");
+        for (String key : ints.getAllKeys()) if (clientKeys.contains(key)) state.ints.put(key, ints.getInt(key));
+        CompoundTag longs = tag.getCompound("l");
+        for (String key : longs.getAllKeys()) if (clientKeys.contains(key)) state.longs.put(key, longs.getLong(key));
+        CompoundTag bools = tag.getCompound("b");
+        for (String key : bools.getAllKeys()) if (clientKeys.contains(key)) state.bools.put(key, bools.getBoolean(key));
+        CompoundTag strings = tag.getCompound("s");
+        for (String key : strings.getAllKeys()) if (clientKeys.contains(key)) state.strings.put(key, strings.getString(key));
+    }
+
     private boolean breakOne(BlockPos target) {
         if (level == null || level.isClientSide || !(level instanceof ServerLevel server) || target == null) return false;
         int dx = target.getX() - worldPosition.getX();
@@ -1525,16 +1612,32 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         final Map<String, ItemStack> items = new LinkedHashMap<>();
 
         @Override public int getInt(String key) { return ints.getOrDefault(check(key), 0); }
-        @Override public void setInt(String key, int value) { ints.put(check(key), value); setChanged(); }
+        @Override public void setInt(String key, int value) {
+            String checked = check(key);
+            Integer previous = ints.put(checked, value);
+            if (previous == null || previous != value) clientChanged(checked);
+            setChanged();
+        }
         @Override public long getLong(String key) { return longs.getOrDefault(check(key), 0L); }
-        @Override public void setLong(String key, long value) { longs.put(check(key), value); setChanged(); }
+        @Override public void setLong(String key, long value) {
+            String checked = check(key);
+            Long previous = longs.put(checked, value);
+            if (previous == null || previous != value) clientChanged(checked);
+            setChanged();
+        }
         @Override public boolean getBoolean(String key) { return bools.getOrDefault(check(key), false); }
-        @Override public void setBoolean(String key, boolean value) { bools.put(check(key), value); setChanged(); }
+        @Override public void setBoolean(String key, boolean value) {
+            String checked = check(key);
+            Boolean previous = bools.put(checked, value);
+            if (previous == null || previous != value) clientChanged(checked);
+            setChanged();
+        }
         @Override public String getString(String key) { return strings.getOrDefault(check(key), ""); }
         @Override public void setString(String key, String value) {
             if (value == null) throw new IllegalArgumentException("null behavior string");
             if (value.length() > 256) throw new IllegalArgumentException("behavior string is too long");
-            strings.put(check(key), value);
+            String checked = check(key);
+            if (!value.equals(strings.put(checked, value))) clientChanged(checked);
             setChanged();
         }
         @Override public ItemStack item(String key) {
@@ -1546,6 +1649,9 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             if (stack == null || stack.isEmpty()) items.remove(checked);
             else items.put(checked, stack.copy());
             setChanged();
+        }
+        private void clientChanged(String key) {
+            if (clientKeys.contains(key)) clientStateDirty = true;
         }
 
 //? if >=1.21.1 {

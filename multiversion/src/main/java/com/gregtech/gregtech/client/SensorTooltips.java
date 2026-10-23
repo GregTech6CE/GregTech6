@@ -2,7 +2,9 @@
  * Original MultiTileEntitySensor.addToolTips; descriptions supplied by the shared catalog. */
 package com.gregtech.gregtech.client;
 
+import com.gregtech.gregtech.api.addon.platform.AddonSensor;
 import com.gregtech.gregtech.api.sensor.SensorCatalog;
+import com.gregtech.gregtech.block.sensor.SensorBlock;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import java.util.List;
@@ -10,7 +12,15 @@ import java.util.List;
 public final class SensorTooltips {
     private SensorTooltips() {}
     public static void add(List<Component> lines, String kind) {
-        var key = SensorCatalog.byKind(kind).descriptionKey();
+        addDescription(lines, SensorCatalog.byKind(kind).descriptionKey());
+    }
+
+    public static void add(List<Component> lines, SensorBlock block) {
+        AddonSensor addon = block.addon();
+        addDescription(lines, addon != null ? addon.titleKey() : SensorCatalog.byKind(block.kindName()).descriptionKey());
+    }
+
+    private static void addDescription(List<Component> lines, String key) {
         if (CommonBlockTooltips.containsKey(lines, key)) return;
         lines.add(Component.translatable(key).withStyle(ChatFormatting.AQUA));
         lines.add(Component.translatable("gt.lang.nogui.rightclick.interact").withStyle(ChatFormatting.GOLD));

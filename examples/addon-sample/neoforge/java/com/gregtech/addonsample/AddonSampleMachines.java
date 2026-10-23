@@ -299,6 +299,7 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
             .energy(EnergyInput.builder("EU", 32).anyType().build())
             .gui("addon_sample:textures/gui/machine.png")
             .signalOutput(true)
+            .clientState("armed")
             .build();
 
     /** Water only from the top. A saved {@code shut} flag refuses the next energy packet. */

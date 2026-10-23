@@ -691,6 +691,15 @@ public final class GregTechClient {
         LayoutPartClients.collect();
         event.registerBlockEntityRenderer(GTBlockEntities.ADDON_FUNCTIONAL_PART.get(), FunctionalPartRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.ADDON_ENERGY_PART.get(), FunctionalPartRenderer::new);
+        BehaviorMachineClients.collect();
+        var behaviorTypes = new java.util.LinkedHashSet<net.minecraft.world.level.block.entity.BlockEntityType<?>>();
+        for (var holder : com.gregtech.gregtech.registry.BehaviorMachineRegistration.all()) {
+            var type = holder.get().blockEntityType();
+            if (type != null) behaviorTypes.add(type);
+        }
+        for (var type : behaviorTypes)
+            event.registerBlockEntityRenderer((net.minecraft.world.level.block.entity.BlockEntityType<
+                    net.minecraft.world.level.block.entity.BlockEntity>) (Object) type, BehaviorMachineRenderer::new);
         MaterialFluidVisuals.bootstrap();
         MaterialFluidVisuals.linkAllMoltenMaterials();
         event.registerBlockEntityRenderer(GTBlockEntities.SMELTING_CRUCIBLE.get(), SmeltingCrucibleRenderer::new);
@@ -810,7 +819,17 @@ public final class GregTechClient {
             MenuScreens.register(GTMenuTypes.ADVANCED_CRAFTING.get(),com.gregtech.gregtech.client.gui.AdvancedCraftingScreen::new);
             MenuScreens.register(GTMenuTypes.GARBAGE_DUMP.get(), HopperScreen::new);
             MenuScreens.register(GTMenuTypes.BASIC_MACHINE.get(), BasicMachineScreen::new);
-            MenuScreens.register(GTMenuTypes.BEHAVIOR_MACHINE.get(), com.gregtech.gregtech.client.gui.BehaviorMachineScreen::new);
+            MenuScreens.register(GTMenuTypes.BEHAVIOR_MACHINE.get(),
+                    (MenuScreens.ScreenConstructor<com.gregtech.gregtech.client.gui.BehaviorMachineMenu,
+                            com.gregtech.gregtech.client.gui.BehaviorMachineHostScreen>) (menu, inventory, title) -> {
+                        var machine = menu.machine();
+                        net.minecraft.client.gui.screens.Screen custom = BehaviorMachineClients.screen(
+                                menu, machine.addonId(), machine.machineType(), inventory, title);
+                        return custom != null
+                                ? new com.gregtech.gregtech.client.gui.BehaviorMachineCustomScreen(
+                                        menu, inventory, title, custom)
+                                : new com.gregtech.gregtech.client.gui.BehaviorMachineScreen(menu, inventory, title);
+                    });
             MenuScreens.register(GTMenuTypes.PART.get(), com.gregtech.gregtech.client.gui.PartScreen::new);
             MenuScreens.register(GTMenuTypes.FILTER.get(),com.gregtech.gregtech.client.gui.FilterScreen::new);
             MenuScreens.register(GTMenuTypes.USB_SWITCH.get(), com.gregtech.gregtech.client.gui.DataSwitchScreen::new);

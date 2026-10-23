@@ -1,0 +1,29 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "addon_sample:block/sensor_signal"
+    },
+    "facing=east": {
+      "model": "addon_sample:block/sensor_signal",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "addon_sample:block/sensor_signal",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "addon_sample:block/sensor_signal",
+      "y": 270
+    },
+    "facing=up": {
+      "model": "addon_sample:block/sensor_signal",
+      "x": 270,
+      "y": 180
+    },
+    "facing=down": {
+      "model": "addon_sample:block/sensor_signal",
+      "x": 90,
+      "y": 180
+    }
+  }
+}
