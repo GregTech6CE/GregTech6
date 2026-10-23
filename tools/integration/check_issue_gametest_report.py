@@ -12,6 +12,12 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'fuelengineintaketests.exhaustventsbygasphaseandemptycollisionnotbuoyancyoraironly',
+    'aluminiumweldingaudittests.aluminium_original_easy_welding_registered_costs',
+    'aluminiumweldingaudittests.furnace_rotor_original_fixed_duration',
+    'aluminiumweldingaudittests.welding_base_display_and_work_contract',
+    'aluminiumweldingaudittests.inherited_flags_aliases_and_hard_control',
+    'aluminiumweldingaudittests.source_simple_capsules_use_registered_forms_and_retained_molds',
     'fuelengineintaketests.originalenginefuelrowsproduceexactenergyandbufferedcarbondioxide',
     'fuelengineintaketests.alleightdieselsacceptknownfuelonallsixfaceswithoutsimulationmutation',
     'fuelengineintaketests.sourcefuelshaveregisteredrecipesandnativeintake',
@@ -225,13 +231,26 @@ LEGACY_CASE_NAMESPACES = {
 }
 
 
+API_CONTRACT_CASES = {
+    'addonenergyaccesstests.energyresultspreserveunitsandbufferownership',
+    'addonenergyaccesstests.energyvalidationrunsbeforehostmutation',
+    'addoninventoryaccesstests.partadapterisolateslegacyreferences',
+    'addoninventoryaccesstests.snapshotaccesspreservesmachinestorage',
+    'addonrecipeapitests.builderkeepsconstructorsemanticsandownsitsarguments',
+    'addonrecipeapitests.dynamicproviderscannotmutateinventoryorlaterqueries',
+    'addonrecipeapitests.reciperowsowntheirarraysandstacks',
+}
+
+
 def expected_namespace(identity):
+    if identity in API_CONTRACT_CASES:
+        return 'gt6ce_api_contracts:test_empty'
     return LEGACY_CASE_NAMESPACES.get(identity, 'gregtech_issue_audit:test_empty')
 
 
 EXPECTED = {
-    'forge': {'openissueregressiontests.' + method for method in FORGE_METHODS} | {GAS_CASE} | FUNCTIONAL_CASES | FORGE_ONLY_CASES | set(LEGACY_CASE_NAMESPACES),
-    'neoforge': {GAS_CASE} | FUNCTIONAL_CASES | set(LEGACY_CASE_NAMESPACES),
+    'forge': {'openissueregressiontests.' + method for method in FORGE_METHODS} | {GAS_CASE} | FUNCTIONAL_CASES | FORGE_ONLY_CASES | set(LEGACY_CASE_NAMESPACES) | API_CONTRACT_CASES,
+    'neoforge': {GAS_CASE} | FUNCTIONAL_CASES | set(LEGACY_CASE_NAMESPACES) | API_CONTRACT_CASES,
 }
 
 

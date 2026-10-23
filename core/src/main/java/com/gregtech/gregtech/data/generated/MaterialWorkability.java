@@ -83,18 +83,79 @@ public final class MaterialWorkability {
                 "quartzite", "redquartz", "redstone", "sio2", "smokeyquartz", "sodalite", "sunnyquartz",
                 "voidquartz", "zanite");
 
+    private static final Set<String> POSITIVE_FURNACE = Set.of("1000:fermium", "1010:mendelevium", "1020:nobelium", "1050:dubnium", "1060:seaborgium", "1070:bohrium",
+                "1080:hassium", "110:sodium", "1120:copernicium", "1140:flerovium", "1148:flerovium298",
+                "120:magnesium", "130:aluminium", "190:potassium", "200:calcium", "300:zinc", "30:lithium",
+                "310:gallium", "31:lithium6", "330:arsenic", "370:rubidium", "380:strontium", "480:cadmium",
+                "490:indium", "500:tin", "510:antimony", "520:tellurium", "550:caesium", "560:barium",
+                "570:lanthanium", "580:cerium", "630:europium", "700:ytterbium", "8000:silicondioxide",
+                "800:mercury", "8105:whiteendsand", "8106:blackendsand", "810:thallium", "8199:hardplastic",
+                "820:lead", "8236:waxbee", "8237:waxrefractory", "8238:waxparaffin", "8239:waxplant",
+                "8240:waxmagic", "8280:waxamnesic", "8281:waxsoulful", "830:bismuth", "840:polonium",
+                "850:astatine", "870:francium", "880:radium", "930:neptunium", "940:plutonium", "942:plutonium240",
+                "943:plutonium241", "945:plutonium243", "946:plutonium238", "947:plutonium239", "980:californium",
+                "990:einsteinium");
+    private static final Set<String> POSITIVE_SOFT = Set.of("8604:goldinductive");
+    private static final Set<String> POSITIVE_MORTAR = Set.of("1000:fermium", "1010:mendelevium", "1020:nobelium", "1050:dubnium", "1060:seaborgium", "1070:bohrium",
+                "1080:hassium", "110:sodium", "1120:copernicium", "1140:flerovium", "1148:flerovium298",
+                "120:magnesium", "130:aluminium", "190:potassium", "200:calcium", "300:zinc", "30:lithium",
+                "310:gallium", "31:lithium6", "330:arsenic", "370:rubidium", "380:strontium", "480:cadmium",
+                "490:indium", "500:tin", "510:antimony", "520:tellurium", "550:caesium", "560:barium",
+                "570:lanthanium", "580:cerium", "630:europium", "700:ytterbium", "800:mercury",
+                "8019:sodiumnitrate", "8026:tungstentrioxide", "810:thallium", "8199:hardplastic", "8200:ashes",
+                "8201:darkashes", "8202:volcanicashes", "8203:sylvite", "8204:salt", "8205:potassiumnitrate",
+                "8207:phosphate", "820:lead", "8236:waxbee", "8237:waxrefractory", "8238:waxparaffin",
+                "8239:waxplant", "8240:waxmagic", "8242:iodinesalt", "8243:silveriodide", "8274:calciumsulfate",
+                "8280:waxamnesic", "8281:waxsoulful", "830:bismuth", "840:polonium", "8422:dominicanamber",
+                "8458:bluephosphorus", "8459:redphosphorus", "8460:whitephosphorus", "8469:goldenamber",
+                "850:astatine", "8604:goldinductive", "8637:hslasteel", "870:francium", "8803:castiron",
+                "880:radium", "9104:hematite", "9107:calcite", "9126:pyrolusite", "9143:vanadiummagnetite",
+                "9243:claybrick", "930:neptunium", "940:plutonium", "942:plutonium240", "943:plutonium241",
+                "945:plutonium243", "946:plutonium238", "947:plutonium239", "980:californium", "990:einsteinium");
+    private static final Set<String> POSITIVE_EXTRUDER_SIMPLE = Set.of("1000:fermium", "1010:mendelevium", "1020:nobelium", "1050:dubnium", "1060:seaborgium", "1070:bohrium",
+                "1080:hassium", "110:sodium", "1120:copernicium", "1140:flerovium", "1148:flerovium298",
+                "120:magnesium", "130:aluminium", "190:potassium", "200:calcium", "290:copper", "300:zinc",
+                "30:lithium", "310:gallium", "31:lithium6", "320:germanium", "330:arsenic", "370:rubidium",
+                "380:strontium", "480:cadmium", "490:indium", "500:tin", "510:antimony", "520:tellurium",
+                "550:caesium", "560:barium", "570:lanthanium", "580:cerium", "630:europium", "700:ytterbium",
+                "8001:glass", "800:mercury", "810:thallium", "8196:teflon", "8197:pvc", "8198:bakelite",
+                "8199:hardplastic", "820:lead", "8217:rubber", "8218:plastic", "8235:wax", "8236:waxbee",
+                "8237:waxrefractory", "8238:waxparaffin", "8239:waxplant", "8240:waxmagic", "8266:asphalt",
+                "8280:waxamnesic", "8281:waxsoulful", "830:bismuth", "840:polonium", "850:astatine", "8610:bronze",
+                "8612:bismuthbronze", "8614:arseniccopper", "8615:arsenicbronze", "8620:brass", "8621:cobaltbrass",
+                "8640:annealedcopper", "8657:purplealloy", "8658:electrotinealloy", "8659:bluealloy",
+                "8660:redalloy", "8665:magnalium", "8667:tinalloy", "8668:batteryalloy", "8669:solderingalloy",
+                "8672:ironwood", "8700:aluminiumbrass", "8708:signalum", "8709:lumium", "870:francium",
+                "8804:mingrade", "880:radium", "9103:asbestos", "930:neptunium", "940:plutonium",
+                "942:plutonium240", "943:plutonium241", "945:plutonium243", "946:plutonium238", "947:plutonium239",
+                "9778:tofu", "9779:soylentgreen", "9780:cheese", "9783:chocolate", "980:californium",
+                "990:einsteinium");
+
+    /** Positive-only source corrections, not an exhaustive eligibility oracle. */
+    private static boolean positive(GTMaterial material, Set<String> keys) {
+        if (material == null) return false;
+        material = material.resolve();
+        if (com.gregtech.gregtech.api.addon.AddonMaterials.owns(material)) return false;
+        return keys.contains(material.getId() + ":" + normalize(material.getName()));
+    }
+
+    /** Missing source evidence is UNKNOWN, not a prohibition for unresolved or addon materials. */
+    public static boolean hasProvenSimpleExtrusion(GTMaterial material) {
+        return positive(material, POSITIVE_EXTRUDER_SIMPLE);
+    }
+
     public static boolean isSoft(GTMaterial material) {
-        return material != null && SOFT.contains(normalize(material.getName()));
+        return positive(material, POSITIVE_SOFT) || material != null && SOFT.contains(normalize(material.getName()));
     }
 
     public static boolean isFurnace(GTMaterial material) {
-        return material != null && FURNACE.contains(normalize(material.getName()));
+        return positive(material, POSITIVE_FURNACE) || material != null && FURNACE.contains(normalize(material.getName()));
     }
 
     /** GT6 {@code TD.Processing.MORTAR}: the material can be ground by a mortar. */
     public static boolean isMortarGrindable(GTMaterial material) {
         // MT.wood/woodnormal grant MORTAR in their factory, outside declaration flags.
-        return material != null && (material.has(MaterialProperty.WOOD)
+        return positive(material, POSITIVE_MORTAR) || material != null && (material.has(MaterialProperty.WOOD)
                 || MORTAR.contains(normalize(material.getName())));
     }
 

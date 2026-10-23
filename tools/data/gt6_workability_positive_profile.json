@@ -1,0 +1,3869 @@
+{
+  "schema": 1,
+  "semantics": "positive-only additive corrections; absent identity or flag means UNKNOWN, never a prohibition",
+  "sources": [
+    {
+      "path": "work/references/gregtech6-original/src/main/java/gregapi/data/MT.java",
+      "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2"
+    },
+    {
+      "path": "work/references/gregtech6-w/src/main/java/gregapi/data/MT.java",
+      "sha256": "9530c229de3483ab7be300c49ce1e08e44bcabfe9bdebd7844becefbd4782728"
+    }
+  ],
+  "rows": [
+    {
+      "id": 30,
+      "canonical_name": "Lithium",
+      "source_name": "Lithium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 553,
+          "literal_origin_line": 385,
+          "factory": "alkali",
+          "factory_path": [
+            "alkali",
+            "metal"
+          ],
+          "factory_melting_argument": 453,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 560,
+          "literal_origin_line": 392,
+          "factory": "alkali",
+          "factory_path": [
+            "alkali",
+            "metal"
+          ],
+          "factory_melting_argument": 453,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 31,
+      "canonical_name": "Lithium-6",
+      "source_name": "Lithium-6",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 554,
+          "literal_origin_line": 386,
+          "factory": "alkali",
+          "factory_path": [
+            "alkali",
+            "metal"
+          ],
+          "factory_melting_argument": 453,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 561,
+          "literal_origin_line": 393,
+          "factory": "alkali",
+          "factory_path": [
+            "alkali",
+            "metal"
+          ],
+          "factory_melting_argument": 453,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 110,
+      "canonical_name": "Sodium",
+      "source_name": "Sodium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 567,
+          "literal_origin_line": 399,
+          "factory": "alkali",
+          "factory_path": [
+            "alkali",
+            "metal"
+          ],
+          "factory_melting_argument": 370,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 574,
+          "literal_origin_line": 406,
+          "factory": "alkali",
+          "factory_path": [
+            "alkali",
+            "metal"
+          ],
+          "factory_melting_argument": 370,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 120,
+      "canonical_name": "Magnesium",
+      "source_name": "Magnesium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 568,
+          "literal_origin_line": 400,
+          "factory": "alkaline",
+          "factory_path": [
+            "alkaline",
+            "metal"
+          ],
+          "factory_melting_argument": 923,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 575,
+          "literal_origin_line": 407,
+          "factory": "alkaline",
+          "factory_path": [
+            "alkaline",
+            "metal"
+          ],
+          "factory_melting_argument": 923,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 130,
+      "canonical_name": "Aluminium",
+      "source_name": "Aluminium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 569,
+          "literal_origin_line": 401,
+          "factory": "posttrans",
+          "factory_path": [
+            "posttrans",
+            "metal"
+          ],
+          "factory_melting_argument": 933,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 576,
+          "literal_origin_line": 408,
+          "factory": "posttrans",
+          "factory_path": [
+            "posttrans",
+            "metal"
+          ],
+          "factory_melting_argument": 933,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 190,
+      "canonical_name": "Potassium",
+      "source_name": "Potassium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 575,
+          "literal_origin_line": 407,
+          "factory": "alkali",
+          "factory_path": [
+            "alkali",
+            "metal"
+          ],
+          "factory_melting_argument": 336,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 582,
+          "literal_origin_line": 414,
+          "factory": "alkali",
+          "factory_path": [
+            "alkali",
+            "metal"
+          ],
+          "factory_melting_argument": 336,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 200,
+      "canonical_name": "Calcium",
+      "source_name": "Calcium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 576,
+          "literal_origin_line": 408,
+          "factory": "alkaline",
+          "factory_path": [
+            "alkaline",
+            "metal"
+          ],
+          "factory_melting_argument": 1115,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 583,
+          "literal_origin_line": 415,
+          "factory": "alkaline",
+          "factory_path": [
+            "alkaline",
+            "metal"
+          ],
+          "factory_melting_argument": 1115,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 290,
+      "canonical_name": "Copper",
+      "source_name": "Copper",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 586,
+          "literal_origin_line": 418,
+          "factory": "noblemetal",
+          "factory_path": [
+            "noblemetal",
+            "precmetal",
+            "transmetal",
+            "metal"
+          ],
+          "factory_melting_argument": 1357,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 593,
+          "literal_origin_line": 425,
+          "factory": "noblemetal",
+          "factory_path": [
+            "noblemetal",
+            "precmetal",
+            "transmetal",
+            "metal"
+          ],
+          "factory_melting_argument": 1357,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 300,
+      "canonical_name": "Zinc",
+      "source_name": "Zinc",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 587,
+          "literal_origin_line": 419,
+          "factory": "transmetal",
+          "factory_path": [
+            "transmetal",
+            "metal"
+          ],
+          "factory_melting_argument": 692,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 594,
+          "literal_origin_line": 426,
+          "factory": "transmetal",
+          "factory_path": [
+            "transmetal",
+            "metal"
+          ],
+          "factory_melting_argument": 692,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 310,
+      "canonical_name": "Gallium",
+      "source_name": "Gallium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 588,
+          "literal_origin_line": 420,
+          "factory": "posttrans",
+          "factory_path": [
+            "posttrans",
+            "metal"
+          ],
+          "factory_melting_argument": 302,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 595,
+          "literal_origin_line": 427,
+          "factory": "posttrans",
+          "factory_path": [
+            "posttrans",
+            "metal"
+          ],
+          "factory_melting_argument": 302,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 320,
+      "canonical_name": "Germanium",
+      "source_name": "Germanium",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 589,
+          "literal_origin_line": 421,
+          "factory": "metalloid",
+          "factory_path": [
+            "metalloid"
+          ],
+          "factory_melting_argument": 1211,
+          "factory_effect_lines": [
+            63,
+            85
+          ]
+        },
+        "w": {
+          "declaration_line": 596,
+          "literal_origin_line": 428,
+          "factory": "metalloid",
+          "factory_path": [
+            "metalloid"
+          ],
+          "factory_melting_argument": 1211,
+          "factory_effect_lines": [
+            69,
+            91
+          ]
+        }
+      }
+    },
+    {
+      "id": 330,
+      "canonical_name": "Arsenic",
+      "source_name": "Arsenic",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 590,
+          "literal_origin_line": 422,
+          "factory": "metalloid",
+          "factory_path": [
+            "metalloid"
+          ],
+          "factory_melting_argument": 887,
+          "factory_effect_lines": [
+            63,
+            85
+          ]
+        },
+        "w": {
+          "declaration_line": 597,
+          "literal_origin_line": 429,
+          "factory": "metalloid",
+          "factory_path": [
+            "metalloid"
+          ],
+          "factory_melting_argument": 887,
+          "factory_effect_lines": [
+            69,
+            91
+          ]
+        }
+      }
+    },
+    {
+      "id": 370,
+      "canonical_name": "Rubidium",
+      "source_name": "Rubidium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 594,
+          "literal_origin_line": 426,
+          "factory": "alkali",
+          "factory_path": [
+            "alkali",
+            "metal"
+          ],
+          "factory_melting_argument": 312,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 601,
+          "literal_origin_line": 433,
+          "factory": "alkali",
+          "factory_path": [
+            "alkali",
+            "metal"
+          ],
+          "factory_melting_argument": 312,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 380,
+      "canonical_name": "Strontium",
+      "source_name": "Strontium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 595,
+          "literal_origin_line": 427,
+          "factory": "alkaline",
+          "factory_path": [
+            "alkaline",
+            "metal"
+          ],
+          "factory_melting_argument": 1050,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 602,
+          "literal_origin_line": 434,
+          "factory": "alkaline",
+          "factory_path": [
+            "alkaline",
+            "metal"
+          ],
+          "factory_melting_argument": 1050,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 480,
+      "canonical_name": "Cadmium",
+      "source_name": "Cadmium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 605,
+          "literal_origin_line": 437,
+          "factory": "transmetal",
+          "factory_path": [
+            "transmetal",
+            "metal"
+          ],
+          "factory_melting_argument": 594,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 612,
+          "literal_origin_line": 444,
+          "factory": "transmetal",
+          "factory_path": [
+            "transmetal",
+            "metal"
+          ],
+          "factory_melting_argument": 594,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 490,
+      "canonical_name": "Indium",
+      "source_name": "Indium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 606,
+          "literal_origin_line": 438,
+          "factory": "posttrans",
+          "factory_path": [
+            "posttrans",
+            "metal"
+          ],
+          "factory_melting_argument": 429,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 613,
+          "literal_origin_line": 445,
+          "factory": "posttrans",
+          "factory_path": [
+            "posttrans",
+            "metal"
+          ],
+          "factory_melting_argument": 429,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 500,
+      "canonical_name": "Tin",
+      "source_name": "Tin",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 607,
+          "literal_origin_line": 439,
+          "factory": "posttrans",
+          "factory_path": [
+            "posttrans",
+            "metal"
+          ],
+          "factory_melting_argument": 505,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 614,
+          "literal_origin_line": 446,
+          "factory": "posttrans",
+          "factory_path": [
+            "posttrans",
+            "metal"
+          ],
+          "factory_melting_argument": 505,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 510,
+      "canonical_name": "Antimony",
+      "source_name": "Antimony",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 608,
+          "literal_origin_line": 440,
+          "factory": "metalloid",
+          "factory_path": [
+            "metalloid"
+          ],
+          "factory_melting_argument": 903,
+          "factory_effect_lines": [
+            63,
+            85
+          ]
+        },
+        "w": {
+          "declaration_line": 615,
+          "literal_origin_line": 447,
+          "factory": "metalloid",
+          "factory_path": [
+            "metalloid"
+          ],
+          "factory_melting_argument": 903,
+          "factory_effect_lines": [
+            69,
+            91
+          ]
+        }
+      }
+    },
+    {
+      "id": 520,
+      "canonical_name": "Tellurium",
+      "source_name": "Tellurium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 609,
+          "literal_origin_line": 441,
+          "factory": "metalloid",
+          "factory_path": [
+            "metalloid"
+          ],
+          "factory_melting_argument": 722,
+          "factory_effect_lines": [
+            63,
+            85
+          ]
+        },
+        "w": {
+          "declaration_line": 616,
+          "literal_origin_line": 448,
+          "factory": "metalloid",
+          "factory_path": [
+            "metalloid"
+          ],
+          "factory_melting_argument": 722,
+          "factory_effect_lines": [
+            69,
+            91
+          ]
+        }
+      }
+    },
+    {
+      "id": 550,
+      "canonical_name": "Caesium",
+      "source_name": "Caesium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 612,
+          "literal_origin_line": 444,
+          "factory": "alkali",
+          "factory_path": [
+            "alkali",
+            "metal"
+          ],
+          "factory_melting_argument": 301,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 619,
+          "literal_origin_line": 451,
+          "factory": "alkali",
+          "factory_path": [
+            "alkali",
+            "metal"
+          ],
+          "factory_melting_argument": 301,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 560,
+      "canonical_name": "Barium",
+      "source_name": "Barium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 613,
+          "literal_origin_line": 445,
+          "factory": "alkaline",
+          "factory_path": [
+            "alkaline",
+            "metal"
+          ],
+          "factory_melting_argument": 1000,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 620,
+          "literal_origin_line": 452,
+          "factory": "alkaline",
+          "factory_path": [
+            "alkaline",
+            "metal"
+          ],
+          "factory_melting_argument": 1000,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 570,
+      "canonical_name": "Lanthanium",
+      "source_name": "Lanthanium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 614,
+          "literal_origin_line": 446,
+          "factory": "lanthanide",
+          "factory_path": [
+            "lanthanide",
+            "metal"
+          ],
+          "factory_melting_argument": 1193,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 621,
+          "literal_origin_line": 453,
+          "factory": "lanthanide",
+          "factory_path": [
+            "lanthanide",
+            "metal"
+          ],
+          "factory_melting_argument": 1193,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 580,
+      "canonical_name": "Cerium",
+      "source_name": "Cerium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 615,
+          "literal_origin_line": 447,
+          "factory": "lanthanide",
+          "factory_path": [
+            "lanthanide",
+            "metal"
+          ],
+          "factory_melting_argument": 1068,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 622,
+          "literal_origin_line": 454,
+          "factory": "lanthanide",
+          "factory_path": [
+            "lanthanide",
+            "metal"
+          ],
+          "factory_melting_argument": 1068,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 630,
+      "canonical_name": "Europium",
+      "source_name": "Europium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 620,
+          "literal_origin_line": 452,
+          "factory": "lanthanide",
+          "factory_path": [
+            "lanthanide",
+            "metal"
+          ],
+          "factory_melting_argument": 1099,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 627,
+          "literal_origin_line": 459,
+          "factory": "lanthanide",
+          "factory_path": [
+            "lanthanide",
+            "metal"
+          ],
+          "factory_melting_argument": 1099,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 700,
+      "canonical_name": "Ytterbium",
+      "source_name": "Ytterbium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 627,
+          "literal_origin_line": 459,
+          "factory": "lanthanide",
+          "factory_path": [
+            "lanthanide",
+            "metal"
+          ],
+          "factory_melting_argument": 1097,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 634,
+          "literal_origin_line": 466,
+          "factory": "lanthanide",
+          "factory_path": [
+            "lanthanide",
+            "metal"
+          ],
+          "factory_melting_argument": 1097,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 800,
+      "canonical_name": "Mercury",
+      "source_name": "Mercury",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 638,
+          "literal_origin_line": 470,
+          "factory": "precmetal",
+          "factory_path": [
+            "precmetal",
+            "transmetal",
+            "metal"
+          ],
+          "factory_melting_argument": 234,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 645,
+          "literal_origin_line": 477,
+          "factory": "precmetal",
+          "factory_path": [
+            "precmetal",
+            "transmetal",
+            "metal"
+          ],
+          "factory_melting_argument": 234,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 810,
+      "canonical_name": "Thallium",
+      "source_name": "Thallium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 639,
+          "literal_origin_line": 471,
+          "factory": "posttrans",
+          "factory_path": [
+            "posttrans",
+            "metal"
+          ],
+          "factory_melting_argument": 577,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 646,
+          "literal_origin_line": 478,
+          "factory": "posttrans",
+          "factory_path": [
+            "posttrans",
+            "metal"
+          ],
+          "factory_melting_argument": 577,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 820,
+      "canonical_name": "Lead",
+      "source_name": "Lead",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 640,
+          "literal_origin_line": 472,
+          "factory": "posttrans",
+          "factory_path": [
+            "posttrans",
+            "metal"
+          ],
+          "factory_melting_argument": 600,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 647,
+          "literal_origin_line": 479,
+          "factory": "posttrans",
+          "factory_path": [
+            "posttrans",
+            "metal"
+          ],
+          "factory_melting_argument": 600,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 830,
+      "canonical_name": "Bismuth",
+      "source_name": "Bismuth",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 641,
+          "literal_origin_line": 473,
+          "factory": "posttrans",
+          "factory_path": [
+            "posttrans",
+            "metal"
+          ],
+          "factory_melting_argument": 544,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 648,
+          "literal_origin_line": 480,
+          "factory": "posttrans",
+          "factory_path": [
+            "posttrans",
+            "metal"
+          ],
+          "factory_melting_argument": 544,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 840,
+      "canonical_name": "Polonium",
+      "source_name": "Polonium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 642,
+          "literal_origin_line": 474,
+          "factory": "posttrans",
+          "factory_path": [
+            "posttrans",
+            "metal"
+          ],
+          "factory_melting_argument": 527,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 649,
+          "literal_origin_line": 481,
+          "factory": "posttrans",
+          "factory_path": [
+            "posttrans",
+            "metal"
+          ],
+          "factory_melting_argument": 527,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 850,
+      "canonical_name": "Astatine",
+      "source_name": "Astatine",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 643,
+          "literal_origin_line": 475,
+          "factory": "metalloid",
+          "factory_path": [
+            "metalloid"
+          ],
+          "factory_melting_argument": 575,
+          "factory_effect_lines": [
+            63,
+            85
+          ]
+        },
+        "w": {
+          "declaration_line": 650,
+          "literal_origin_line": 482,
+          "factory": "metalloid",
+          "factory_path": [
+            "metalloid"
+          ],
+          "factory_melting_argument": 575,
+          "factory_effect_lines": [
+            69,
+            91
+          ]
+        }
+      }
+    },
+    {
+      "id": 870,
+      "canonical_name": "Francium",
+      "source_name": "Francium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 645,
+          "literal_origin_line": 477,
+          "factory": "alkali",
+          "factory_path": [
+            "alkali",
+            "metal"
+          ],
+          "factory_melting_argument": 300,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 652,
+          "literal_origin_line": 484,
+          "factory": "alkali",
+          "factory_path": [
+            "alkali",
+            "metal"
+          ],
+          "factory_melting_argument": 300,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 880,
+      "canonical_name": "Radium",
+      "source_name": "Radium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 646,
+          "literal_origin_line": 478,
+          "factory": "alkaline",
+          "factory_path": [
+            "alkaline",
+            "metal"
+          ],
+          "factory_melting_argument": 973,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 653,
+          "literal_origin_line": 485,
+          "factory": "alkaline",
+          "factory_path": [
+            "alkaline",
+            "metal"
+          ],
+          "factory_melting_argument": 973,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 930,
+      "canonical_name": "Neptunium",
+      "source_name": "Neptunium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 653,
+          "literal_origin_line": 485,
+          "factory": "actinide",
+          "factory_path": [
+            "actinide",
+            "metal"
+          ],
+          "factory_melting_argument": 917,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 660,
+          "literal_origin_line": 492,
+          "factory": "actinide",
+          "factory_path": [
+            "actinide",
+            "metal"
+          ],
+          "factory_melting_argument": 917,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 940,
+      "canonical_name": "Plutonium",
+      "source_name": "Plutonium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 654,
+          "literal_origin_line": 486,
+          "factory": "actinide",
+          "factory_path": [
+            "actinide",
+            "metal"
+          ],
+          "factory_melting_argument": 912,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 661,
+          "literal_origin_line": 493,
+          "factory": "actinide",
+          "factory_path": [
+            "actinide",
+            "metal"
+          ],
+          "factory_melting_argument": 912,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 942,
+      "canonical_name": "Plutonium-240",
+      "source_name": "Plutonium-240",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 655,
+          "literal_origin_line": 487,
+          "factory": "actinide",
+          "factory_path": [
+            "actinide",
+            "metal"
+          ],
+          "factory_melting_argument": 912,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 662,
+          "literal_origin_line": 494,
+          "factory": "actinide",
+          "factory_path": [
+            "actinide",
+            "metal"
+          ],
+          "factory_melting_argument": 912,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 943,
+      "canonical_name": "Plutonium-241",
+      "source_name": "Plutonium-241",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 656,
+          "literal_origin_line": 488,
+          "factory": "actinide",
+          "factory_path": [
+            "actinide",
+            "metal"
+          ],
+          "factory_melting_argument": 912,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 663,
+          "literal_origin_line": 495,
+          "factory": "actinide",
+          "factory_path": [
+            "actinide",
+            "metal"
+          ],
+          "factory_melting_argument": 912,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 945,
+      "canonical_name": "Plutonium-243",
+      "source_name": "Plutonium-243",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 657,
+          "literal_origin_line": 489,
+          "factory": "actinide",
+          "factory_path": [
+            "actinide",
+            "metal"
+          ],
+          "factory_melting_argument": 912,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 664,
+          "literal_origin_line": 496,
+          "factory": "actinide",
+          "factory_path": [
+            "actinide",
+            "metal"
+          ],
+          "factory_melting_argument": 912,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 946,
+      "canonical_name": "Plutonium-238",
+      "source_name": "Plutonium-238",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 658,
+          "literal_origin_line": 490,
+          "factory": "actinide",
+          "factory_path": [
+            "actinide",
+            "metal"
+          ],
+          "factory_melting_argument": 912,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 665,
+          "literal_origin_line": 497,
+          "factory": "actinide",
+          "factory_path": [
+            "actinide",
+            "metal"
+          ],
+          "factory_melting_argument": 912,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 947,
+      "canonical_name": "Plutonium-239",
+      "source_name": "Plutonium-239",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 659,
+          "literal_origin_line": 491,
+          "factory": "actinide",
+          "factory_path": [
+            "actinide",
+            "metal"
+          ],
+          "factory_melting_argument": 912,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 666,
+          "literal_origin_line": 498,
+          "factory": "actinide",
+          "factory_path": [
+            "actinide",
+            "metal"
+          ],
+          "factory_melting_argument": 912,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 980,
+      "canonical_name": "Californium",
+      "source_name": "Californium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 665,
+          "literal_origin_line": 497,
+          "factory": "actinide",
+          "factory_path": [
+            "actinide",
+            "metal"
+          ],
+          "factory_melting_argument": 1173,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 672,
+          "literal_origin_line": 504,
+          "factory": "actinide",
+          "factory_path": [
+            "actinide",
+            "metal"
+          ],
+          "factory_melting_argument": 1173,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 990,
+      "canonical_name": "Einsteinium",
+      "source_name": "Einsteinium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 666,
+          "literal_origin_line": 498,
+          "factory": "actinide",
+          "factory_path": [
+            "actinide",
+            "metal"
+          ],
+          "factory_melting_argument": 1133,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 673,
+          "literal_origin_line": 505,
+          "factory": "actinide",
+          "factory_path": [
+            "actinide",
+            "metal"
+          ],
+          "factory_melting_argument": 1133,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 1000,
+      "canonical_name": "Fermium",
+      "source_name": "Fermium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 667,
+          "literal_origin_line": 499,
+          "factory": "actinide",
+          "factory_path": [
+            "actinide",
+            "metal"
+          ],
+          "factory_melting_argument": 1125,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 674,
+          "literal_origin_line": 506,
+          "factory": "actinide",
+          "factory_path": [
+            "actinide",
+            "metal"
+          ],
+          "factory_melting_argument": 1125,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 1010,
+      "canonical_name": "Mendelevium",
+      "source_name": "Mendelevium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 668,
+          "literal_origin_line": 500,
+          "factory": "actinide",
+          "factory_path": [
+            "actinide",
+            "metal"
+          ],
+          "factory_melting_argument": 1100,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 675,
+          "literal_origin_line": 507,
+          "factory": "actinide",
+          "factory_path": [
+            "actinide",
+            "metal"
+          ],
+          "factory_melting_argument": 1100,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 1020,
+      "canonical_name": "Nobelium",
+      "source_name": "Nobelium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 669,
+          "literal_origin_line": 501,
+          "factory": "actinide",
+          "factory_path": [
+            "actinide",
+            "metal"
+          ],
+          "factory_melting_argument": 1100,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 676,
+          "literal_origin_line": 508,
+          "factory": "actinide",
+          "factory_path": [
+            "actinide",
+            "metal"
+          ],
+          "factory_melting_argument": 1100,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 1050,
+      "canonical_name": "Dubnium",
+      "source_name": "Dubnium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 672,
+          "literal_origin_line": 504,
+          "factory": "transmetal",
+          "factory_path": [
+            "transmetal",
+            "metal"
+          ],
+          "factory_melting_argument": 1000,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 679,
+          "literal_origin_line": 511,
+          "factory": "transmetal",
+          "factory_path": [
+            "transmetal",
+            "metal"
+          ],
+          "factory_melting_argument": 1000,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 1060,
+      "canonical_name": "Seaborgium",
+      "source_name": "Seaborgium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 673,
+          "literal_origin_line": 505,
+          "factory": "transmetal",
+          "factory_path": [
+            "transmetal",
+            "metal"
+          ],
+          "factory_melting_argument": 1000,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 680,
+          "literal_origin_line": 512,
+          "factory": "transmetal",
+          "factory_path": [
+            "transmetal",
+            "metal"
+          ],
+          "factory_melting_argument": 1000,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 1070,
+      "canonical_name": "Bohrium",
+      "source_name": "Bohrium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 674,
+          "literal_origin_line": 506,
+          "factory": "transmetal",
+          "factory_path": [
+            "transmetal",
+            "metal"
+          ],
+          "factory_melting_argument": 1000,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 681,
+          "literal_origin_line": 513,
+          "factory": "transmetal",
+          "factory_path": [
+            "transmetal",
+            "metal"
+          ],
+          "factory_melting_argument": 1000,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 1080,
+      "canonical_name": "Hassium",
+      "source_name": "Hassium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 675,
+          "literal_origin_line": 507,
+          "factory": "transmetal",
+          "factory_path": [
+            "transmetal",
+            "metal"
+          ],
+          "factory_melting_argument": 1000,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 682,
+          "literal_origin_line": 514,
+          "factory": "transmetal",
+          "factory_path": [
+            "transmetal",
+            "metal"
+          ],
+          "factory_melting_argument": 1000,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 1120,
+      "canonical_name": "Copernicium",
+      "source_name": "Copernicium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 679,
+          "literal_origin_line": 511,
+          "factory": "transmetal",
+          "factory_path": [
+            "transmetal",
+            "metal"
+          ],
+          "factory_melting_argument": 150,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 686,
+          "literal_origin_line": 518,
+          "factory": "transmetal",
+          "factory_path": [
+            "transmetal",
+            "metal"
+          ],
+          "factory_melting_argument": 150,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 1140,
+      "canonical_name": "Flerovium",
+      "source_name": "Flerovium",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 681,
+          "literal_origin_line": 513,
+          "factory": "posttrans",
+          "factory_path": [
+            "posttrans",
+            "metal"
+          ],
+          "factory_melting_argument": 340,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 688,
+          "literal_origin_line": 520,
+          "factory": "posttrans",
+          "factory_path": [
+            "posttrans",
+            "metal"
+          ],
+          "factory_melting_argument": 340,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 1148,
+      "canonical_name": "Flerovium-298",
+      "source_name": "Flerovium-298",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 682,
+          "literal_origin_line": 514,
+          "factory": "posttrans",
+          "factory_path": [
+            "posttrans",
+            "metal"
+          ],
+          "factory_melting_argument": 340,
+          "factory_effect_lines": [
+            62
+          ]
+        },
+        "w": {
+          "declaration_line": 689,
+          "literal_origin_line": 521,
+          "factory": "posttrans",
+          "factory_path": [
+            "posttrans",
+            "metal"
+          ],
+          "factory_melting_argument": 340,
+          "factory_effect_lines": [
+            68
+          ]
+        }
+      }
+    },
+    {
+      "id": 8000,
+      "canonical_name": "Silicon Dioxide",
+      "source_name": "Silicon Dioxide",
+      "flags": [
+        "FURNACE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1056,
+          "literal_origin_line": 1056,
+          "factory": "oredustdcmp",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1063,
+          "literal_origin_line": 1063,
+          "factory": "oredustdcmp",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8001,
+      "canonical_name": "Glass",
+      "source_name": "Glass",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1057,
+          "literal_origin_line": 1057,
+          "factory": "gemcent",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1064,
+          "literal_origin_line": 1064,
+          "factory": "gemcent",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8019,
+      "canonical_name": "Sodium Nitrate",
+      "source_name": "Sodium Nitrate",
+      "flags": [
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1130,
+          "literal_origin_line": 1130,
+          "factory": "oredustelec",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1137,
+          "literal_origin_line": 1137,
+          "factory": "oredustelec",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8026,
+      "canonical_name": "Tungsten Trioxide",
+      "source_name": "Tungsten Trioxide",
+      "flags": [
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1077,
+          "literal_origin_line": 1077,
+          "factory": "oredustdcmp",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1084,
+          "literal_origin_line": 1084,
+          "factory": "oredustdcmp",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8105,
+      "canonical_name": "White End Sand",
+      "source_name": "White End Sand",
+      "flags": [
+        "FURNACE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1620,
+          "literal_origin_line": 1620,
+          "factory": "dust",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1627,
+          "literal_origin_line": 1627,
+          "factory": "dust",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8106,
+      "canonical_name": "Black End Sand",
+      "source_name": "Black End Sand",
+      "flags": [
+        "FURNACE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1621,
+          "literal_origin_line": 1621,
+          "factory": "dust",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1628,
+          "literal_origin_line": 1628,
+          "factory": "dust",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8196,
+      "canonical_name": "Teflon",
+      "source_name": "Teflon",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1303,
+          "literal_origin_line": 1303,
+          "factory": "create",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1310,
+          "literal_origin_line": 1310,
+          "factory": "create",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8197,
+      "canonical_name": "PVC",
+      "source_name": "PVC",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1304,
+          "literal_origin_line": 1304,
+          "factory": "create",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1311,
+          "literal_origin_line": 1311,
+          "factory": "create",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8198,
+      "canonical_name": "Bakelite",
+      "source_name": "Bakelite",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1305,
+          "literal_origin_line": 1305,
+          "factory": "create",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1312,
+          "literal_origin_line": 1312,
+          "factory": "create",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8199,
+      "canonical_name": "Hard Plastic",
+      "source_name": "Hard Plastic",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1306,
+          "literal_origin_line": 1306,
+          "factory": "create",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1313,
+          "literal_origin_line": 1313,
+          "factory": "create",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8200,
+      "canonical_name": "Ashes",
+      "source_name": "Ashes",
+      "flags": [
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1228,
+          "literal_origin_line": 1228,
+          "factory": "dust",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1235,
+          "literal_origin_line": 1235,
+          "factory": "dust",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8201,
+      "canonical_name": "Dark Ashes",
+      "source_name": "Dark Ashes",
+      "flags": [
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1229,
+          "literal_origin_line": 1229,
+          "factory": "dust",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1236,
+          "literal_origin_line": 1236,
+          "factory": "dust",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8202,
+      "canonical_name": "Volcanic Ashes",
+      "source_name": "Volcanic Ashes",
+      "flags": [
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1230,
+          "literal_origin_line": 1230,
+          "factory": "dustcent",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1237,
+          "literal_origin_line": 1237,
+          "factory": "dustcent",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8203,
+      "canonical_name": "Sylvite",
+      "source_name": "Sylvite",
+      "flags": [
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1147,
+          "literal_origin_line": 1147,
+          "factory": "oredustdcmp",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1154,
+          "literal_origin_line": 1154,
+          "factory": "oredustdcmp",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8204,
+      "canonical_name": "Salt",
+      "source_name": "Salt",
+      "flags": [
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1129,
+          "literal_origin_line": 1129,
+          "factory": "oredustdcmp",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1136,
+          "literal_origin_line": 1136,
+          "factory": "oredustdcmp",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8205,
+      "canonical_name": "Potassium Nitrate",
+      "source_name": "Potassium Nitrate",
+      "flags": [
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1148,
+          "literal_origin_line": 1148,
+          "factory": "oredustelec",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1155,
+          "literal_origin_line": 1155,
+          "factory": "oredustelec",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8207,
+      "canonical_name": "Phosphate",
+      "source_name": "Phosphate",
+      "flags": [
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1074,
+          "literal_origin_line": 1074,
+          "factory": "oredustelec",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1081,
+          "literal_origin_line": 1081,
+          "factory": "oredustelec",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8217,
+      "canonical_name": "Rubber",
+      "source_name": "Rubber",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1301,
+          "literal_origin_line": 1301,
+          "factory": "create",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1308,
+          "literal_origin_line": 1308,
+          "factory": "create",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8218,
+      "canonical_name": "Plastic",
+      "source_name": "Plastic",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1302,
+          "literal_origin_line": 1302,
+          "factory": "create",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1309,
+          "literal_origin_line": 1309,
+          "factory": "create",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8235,
+      "canonical_name": "Wax",
+      "source_name": "Wax",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1262,
+          "literal_origin_line": 1262,
+          "factory": "wax",
+          "factory_path": [
+            "wax"
+          ],
+          "factory_melting_argument": null,
+          "factory_effect_lines": [
+            167
+          ]
+        },
+        "w": {
+          "declaration_line": 1269,
+          "literal_origin_line": 1269,
+          "factory": "wax",
+          "factory_path": [
+            "wax"
+          ],
+          "factory_melting_argument": null,
+          "factory_effect_lines": [
+            173
+          ]
+        }
+      }
+    },
+    {
+      "id": 8236,
+      "canonical_name": "WaxBee",
+      "source_name": "WaxBee",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1263,
+          "literal_origin_line": 1263,
+          "factory": "wax",
+          "factory_path": [
+            "wax"
+          ],
+          "factory_melting_argument": null,
+          "factory_effect_lines": [
+            167
+          ]
+        },
+        "w": {
+          "declaration_line": 1270,
+          "literal_origin_line": 1270,
+          "factory": "wax",
+          "factory_path": [
+            "wax"
+          ],
+          "factory_melting_argument": null,
+          "factory_effect_lines": [
+            173
+          ]
+        }
+      }
+    },
+    {
+      "id": 8237,
+      "canonical_name": "WaxRefractory",
+      "source_name": "WaxRefractory",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1264,
+          "literal_origin_line": 1264,
+          "factory": "wax",
+          "factory_path": [
+            "wax"
+          ],
+          "factory_melting_argument": null,
+          "factory_effect_lines": [
+            167
+          ]
+        },
+        "w": {
+          "declaration_line": 1271,
+          "literal_origin_line": 1271,
+          "factory": "wax",
+          "factory_path": [
+            "wax"
+          ],
+          "factory_melting_argument": null,
+          "factory_effect_lines": [
+            173
+          ]
+        }
+      }
+    },
+    {
+      "id": 8238,
+      "canonical_name": "WaxParaffin",
+      "source_name": "WaxParaffin",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1265,
+          "literal_origin_line": 1265,
+          "factory": "wax",
+          "factory_path": [
+            "wax"
+          ],
+          "factory_melting_argument": null,
+          "factory_effect_lines": [
+            167
+          ]
+        },
+        "w": {
+          "declaration_line": 1272,
+          "literal_origin_line": 1272,
+          "factory": "wax",
+          "factory_path": [
+            "wax"
+          ],
+          "factory_melting_argument": null,
+          "factory_effect_lines": [
+            173
+          ]
+        }
+      }
+    },
+    {
+      "id": 8239,
+      "canonical_name": "WaxPlant",
+      "source_name": "WaxPlant",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1266,
+          "literal_origin_line": 1266,
+          "factory": "wax",
+          "factory_path": [
+            "wax"
+          ],
+          "factory_melting_argument": null,
+          "factory_effect_lines": [
+            167
+          ]
+        },
+        "w": {
+          "declaration_line": 1273,
+          "literal_origin_line": 1273,
+          "factory": "wax",
+          "factory_path": [
+            "wax"
+          ],
+          "factory_melting_argument": null,
+          "factory_effect_lines": [
+            173
+          ]
+        }
+      }
+    },
+    {
+      "id": 8240,
+      "canonical_name": "WaxMagic",
+      "source_name": "WaxMagic",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1267,
+          "literal_origin_line": 1267,
+          "factory": "wax",
+          "factory_path": [
+            "wax"
+          ],
+          "factory_melting_argument": null,
+          "factory_effect_lines": [
+            167
+          ]
+        },
+        "w": {
+          "declaration_line": 1274,
+          "literal_origin_line": 1274,
+          "factory": "wax",
+          "factory_path": [
+            "wax"
+          ],
+          "factory_melting_argument": null,
+          "factory_effect_lines": [
+            173
+          ]
+        }
+      }
+    },
+    {
+      "id": 8242,
+      "canonical_name": "Iodine Salt",
+      "source_name": "Iodine Salt",
+      "flags": [
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1146,
+          "literal_origin_line": 1146,
+          "factory": "oredustelec",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1153,
+          "literal_origin_line": 1153,
+          "factory": "oredustelec",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8243,
+      "canonical_name": "Silver Iodide",
+      "source_name": "Silver Iodide",
+      "flags": [
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1051,
+          "literal_origin_line": 1051,
+          "factory": "oredustelec",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1058,
+          "literal_origin_line": 1058,
+          "factory": "oredustelec",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8266,
+      "canonical_name": "Asphalt",
+      "source_name": "Asphalt",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1311,
+          "literal_origin_line": 1311,
+          "factory": "dust",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1318,
+          "literal_origin_line": 1318,
+          "factory": "dust",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8274,
+      "canonical_name": "Calcium Sulfate",
+      "source_name": "Calcium Sulfate",
+      "flags": [
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1105,
+          "literal_origin_line": 1105,
+          "factory": "dustdcmp",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1112,
+          "literal_origin_line": 1112,
+          "factory": "dustdcmp",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8280,
+      "canonical_name": "WaxAmnesic",
+      "source_name": "WaxAmnesic",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1268,
+          "literal_origin_line": 1268,
+          "factory": "wax",
+          "factory_path": [
+            "wax"
+          ],
+          "factory_melting_argument": null,
+          "factory_effect_lines": [
+            167
+          ]
+        },
+        "w": {
+          "declaration_line": 1275,
+          "literal_origin_line": 1275,
+          "factory": "wax",
+          "factory_path": [
+            "wax"
+          ],
+          "factory_melting_argument": null,
+          "factory_effect_lines": [
+            173
+          ]
+        }
+      }
+    },
+    {
+      "id": 8281,
+      "canonical_name": "WaxSoulful",
+      "source_name": "WaxSoulful",
+      "flags": [
+        "EXTRUDER_SIMPLE",
+        "FURNACE",
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1269,
+          "literal_origin_line": 1269,
+          "factory": "wax",
+          "factory_path": [
+            "wax"
+          ],
+          "factory_melting_argument": null,
+          "factory_effect_lines": [
+            167
+          ]
+        },
+        "w": {
+          "declaration_line": 1276,
+          "literal_origin_line": 1276,
+          "factory": "wax",
+          "factory_path": [
+            "wax"
+          ],
+          "factory_melting_argument": null,
+          "factory_effect_lines": [
+            173
+          ]
+        }
+      }
+    },
+    {
+      "id": 8422,
+      "canonical_name": "Dominican Amber",
+      "source_name": "Dominican Amber",
+      "flags": [
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1441,
+          "literal_origin_line": 1441,
+          "factory": "valgem",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1448,
+          "literal_origin_line": 1448,
+          "factory": "valgem",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8458,
+      "canonical_name": "Blue Phosphorus",
+      "source_name": "Blue Phosphorus",
+      "flags": [
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1295,
+          "literal_origin_line": 1295,
+          "factory": "cent",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1302,
+          "literal_origin_line": 1302,
+          "factory": "cent",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8459,
+      "canonical_name": "Red Phosphorus",
+      "source_name": "Red Phosphorus",
+      "flags": [
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1296,
+          "literal_origin_line": 1296,
+          "factory": "cent",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1303,
+          "literal_origin_line": 1303,
+          "factory": "cent",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8460,
+      "canonical_name": "White Phosphorus",
+      "source_name": "White Phosphorus",
+      "flags": [
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1297,
+          "literal_origin_line": 1297,
+          "factory": "cent",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1304,
+          "literal_origin_line": 1304,
+          "factory": "cent",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8469,
+      "canonical_name": "Golden Amber",
+      "source_name": "Golden Amber",
+      "flags": [
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1440,
+          "literal_origin_line": 1440,
+          "factory": "valgem",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1447,
+          "literal_origin_line": 1447,
+          "factory": "valgem",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8604,
+      "canonical_name": "GoldInductive",
+      "source_name": "GoldInductive",
+      "flags": [
+        "MORTAR",
+        "SOFT"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1695,
+          "literal_origin_line": 1695,
+          "factory": "slloymachine",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1702,
+          "literal_origin_line": 1702,
+          "factory": "slloymachine",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8610,
+      "canonical_name": "Bronze",
+      "source_name": "Bronze",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1705,
+          "literal_origin_line": 1705,
+          "factory": "clloymachine",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1712,
+          "literal_origin_line": 1712,
+          "factory": "clloymachine",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8612,
+      "canonical_name": "Bismuth Bronze",
+      "source_name": "Bismuth Bronze",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1707,
+          "literal_origin_line": 1707,
+          "factory": "clloymachine",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1714,
+          "literal_origin_line": 1714,
+          "factory": "clloymachine",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8614,
+      "canonical_name": "Arsenic Copper",
+      "source_name": "Arsenic Copper",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1709,
+          "literal_origin_line": 1709,
+          "factory": "clloymachine",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1716,
+          "literal_origin_line": 1716,
+          "factory": "clloymachine",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8615,
+      "canonical_name": "Arsenic Bronze",
+      "source_name": "Arsenic Bronze",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1710,
+          "literal_origin_line": 1710,
+          "factory": "clloymachine",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1717,
+          "literal_origin_line": 1717,
+          "factory": "clloymachine",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8620,
+      "canonical_name": "Brass",
+      "source_name": "Brass",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1700,
+          "literal_origin_line": 1700,
+          "factory": "clloymachine",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1707,
+          "literal_origin_line": 1707,
+          "factory": "clloymachine",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8621,
+      "canonical_name": "Cobalt Brass",
+      "source_name": "Cobalt Brass",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1701,
+          "literal_origin_line": 1701,
+          "factory": "clloymachine",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1708,
+          "literal_origin_line": 1708,
+          "factory": "clloymachine",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8637,
+      "canonical_name": "HSLA-Steel",
+      "source_name": "HSLA-Steel",
+      "flags": [
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1721,
+          "literal_origin_line": 1721,
+          "factory": "alloymachine",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1728,
+          "literal_origin_line": 1728,
+          "factory": "alloymachine",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8640,
+      "canonical_name": "Annealed Copper",
+      "source_name": "Annealed Copper",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1656,
+          "literal_origin_line": 1656,
+          "factory": "metalmachnd",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1663,
+          "literal_origin_line": 1663,
+          "factory": "metalmachnd",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8657,
+      "canonical_name": "Purple Alloy",
+      "source_name": "Purple Alloy",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1746,
+          "literal_origin_line": 1746,
+          "factory": "clloy",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1753,
+          "literal_origin_line": 1753,
+          "factory": "clloy",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8658,
+      "canonical_name": "Electrotine Alloy",
+      "source_name": "Electrotine Alloy",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1750,
+          "literal_origin_line": 1750,
+          "factory": "clloy",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1757,
+          "literal_origin_line": 1757,
+          "factory": "clloy",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8659,
+      "canonical_name": "Blue Alloy",
+      "source_name": "Blue Alloy",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1745,
+          "literal_origin_line": 1745,
+          "factory": "clloy",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1752,
+          "literal_origin_line": 1752,
+          "factory": "clloy",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8660,
+      "canonical_name": "Red Alloy",
+      "source_name": "Red Alloy",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1744,
+          "literal_origin_line": 1744,
+          "factory": "clloy",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1751,
+          "literal_origin_line": 1751,
+          "factory": "clloy",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8665,
+      "canonical_name": "Magnalium",
+      "source_name": "Magnalium",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1758,
+          "literal_origin_line": 1758,
+          "factory": "alloymachine",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1765,
+          "literal_origin_line": 1765,
+          "factory": "alloymachine",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8667,
+      "canonical_name": "Tin Alloy",
+      "source_name": "Tin Alloy",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1761,
+          "literal_origin_line": 1761,
+          "factory": "clloymachine",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1768,
+          "literal_origin_line": 1768,
+          "factory": "clloymachine",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8668,
+      "canonical_name": "Battery Alloy",
+      "source_name": "Battery Alloy",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1762,
+          "literal_origin_line": 1762,
+          "factory": "alloy",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1769,
+          "literal_origin_line": 1769,
+          "factory": "alloy",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8669,
+      "canonical_name": "Soldering Alloy",
+      "source_name": "Soldering Alloy",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1763,
+          "literal_origin_line": 1763,
+          "factory": "clloy",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1770,
+          "literal_origin_line": 1770,
+          "factory": "clloy",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8672,
+      "canonical_name": "Ironwood",
+      "source_name": "Ironwood",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1764,
+          "literal_origin_line": 1764,
+          "factory": "alloymachine",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1771,
+          "literal_origin_line": 1771,
+          "factory": "alloymachine",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8700,
+      "canonical_name": "Aluminium Brass",
+      "source_name": "Aluminium Brass",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1784,
+          "literal_origin_line": 1784,
+          "factory": "clloymachine",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1791,
+          "literal_origin_line": 1791,
+          "factory": "clloymachine",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8708,
+      "canonical_name": "Signalum",
+      "source_name": "Signalum",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1791,
+          "literal_origin_line": 1791,
+          "factory": "clloymachine",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1798,
+          "literal_origin_line": 1798,
+          "factory": "clloymachine",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8709,
+      "canonical_name": "Lumium",
+      "source_name": "Lumium",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1792,
+          "literal_origin_line": 1792,
+          "factory": "clloymachine",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1799,
+          "literal_origin_line": 1799,
+          "factory": "clloymachine",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8803,
+      "canonical_name": "Cast Iron",
+      "source_name": "Cast Iron",
+      "flags": [
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1726,
+          "literal_origin_line": 1726,
+          "factory": "alloymachnd",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1733,
+          "literal_origin_line": 1733,
+          "factory": "alloymachnd",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 8804,
+      "canonical_name": "Mingrade",
+      "source_name": "Mingrade",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1747,
+          "literal_origin_line": 1747,
+          "factory": "clloy",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1754,
+          "literal_origin_line": 1754,
+          "factory": "clloy",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 9103,
+      "canonical_name": "Asbestos",
+      "source_name": "Asbestos",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1235,
+          "literal_origin_line": 1235,
+          "factory": "oredustelec",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1242,
+          "literal_origin_line": 1242,
+          "factory": "oredustelec",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 9104,
+      "canonical_name": "Hematite",
+      "source_name": "Hematite",
+      "flags": [
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1094,
+          "literal_origin_line": 1094,
+          "factory": "oredustdcmp",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1101,
+          "literal_origin_line": 1101,
+          "factory": "oredustdcmp",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 9107,
+      "canonical_name": "Calcite",
+      "source_name": "Calcite",
+      "flags": [
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1108,
+          "literal_origin_line": 1108,
+          "factory": "oredustdcmp",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1115,
+          "literal_origin_line": 1115,
+          "factory": "oredustdcmp",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 9126,
+      "canonical_name": "Pyrolusite",
+      "source_name": "Pyrolusite",
+      "flags": [
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1090,
+          "literal_origin_line": 1090,
+          "factory": "oredustdcmp",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1097,
+          "literal_origin_line": 1097,
+          "factory": "oredustdcmp",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 9143,
+      "canonical_name": "Vanadium Magnetite",
+      "source_name": "Vanadium Magnetite",
+      "flags": [
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 3743,
+          "literal_origin_line": 3743,
+          "factory": "oredustcent",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 3837,
+          "literal_origin_line": 3837,
+          "factory": "oredustcent",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 9243,
+      "canonical_name": "Clay Brick",
+      "source_name": "Clay Brick",
+      "flags": [
+        "MORTAR"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1280,
+          "literal_origin_line": 1280,
+          "factory": "create",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1287,
+          "literal_origin_line": 1287,
+          "factory": "create",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 9778,
+      "canonical_name": "Tofu",
+      "source_name": "Tofu",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1331,
+          "literal_origin_line": 1331,
+          "factory": "dustfood",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1338,
+          "literal_origin_line": 1338,
+          "factory": "dustfood",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 9779,
+      "canonical_name": "Soylent Green",
+      "source_name": "Soylent Green",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1332,
+          "literal_origin_line": 1332,
+          "factory": "dustfood",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1339,
+          "literal_origin_line": 1339,
+          "factory": "dustfood",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 9780,
+      "canonical_name": "Cheese",
+      "source_name": "Cheese",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1333,
+          "literal_origin_line": 1333,
+          "factory": "orefood",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1340,
+          "literal_origin_line": 1340,
+          "factory": "orefood",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    },
+    {
+      "id": 9783,
+      "canonical_name": "Chocolate",
+      "source_name": "Chocolate",
+      "flags": [
+        "EXTRUDER_SIMPLE"
+      ],
+      "evidence": {
+        "original": {
+          "declaration_line": 1336,
+          "literal_origin_line": 1336,
+          "factory": "mixfood",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        },
+        "w": {
+          "declaration_line": 1343,
+          "literal_origin_line": 1343,
+          "factory": "mixfood",
+          "factory_path": [],
+          "factory_melting_argument": null,
+          "factory_effect_lines": []
+        }
+      }
+    }
+  ]
+}

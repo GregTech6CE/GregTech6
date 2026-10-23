@@ -97,7 +97,9 @@ public final class WelderFamilyRecipes {
         long units = Math.max(unitsIn, row.outUnits());
         // Easy pass: GT6 passes the duration explicitly (16 ticks per material unit, :335-348).
         // Hard pass: RecipeMapHandlerPrefix#getCosts with multiplier 64 (:320-332).
-        long easyTicks = 16L * unitsIn / com.gregtech.gregtech.api.material.GTValues.U;
+        // Original easy rotor passes explicit16*4, not16*(4+ring1/4).
+        long easyTicks = row.output() == MaterialPrefix.rotor ? 64L
+                : 16L * unitsIn / com.gregtech.gregtech.api.material.GTValues.U;
         long hardTicks = Math.max(1, (units * 64L * (material.getToolQuality() + 1)
                 + com.gregtech.gregtech.api.material.GTValues.U - 1) / com.gregtech.gregtech.api.material.GTValues.U);
         long ticks = easyHeatable ? Math.max(1, easyTicks) : hardTicks;

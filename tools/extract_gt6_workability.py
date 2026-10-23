@@ -14,9 +14,10 @@ generated name tables instead of inventing a new material property.
 
 Usage: python tools/extract_gt6_workability.py --source <MT.java> --check
 
-The legacy algorithm does not propagate factory flags and uses field-name keys
-(ALIGN-010). Check mode proves the existing table can be reproduced, not that its
-material membership is complete. This source generator writes directly to core.
+The legacy tables remain stable; a reviewed, source-hash-pinned positive profile adds
+proven inherited/canonical-identity flags (ALIGN-010). Missing profile entries remain
+unknown, not forbidden. This is not a complete effective-flag evaluator. Check mode
+proves deterministic output, not completeness. This source generator writes to core.
 """
 
 from __future__ import annotations
@@ -27,6 +28,7 @@ from pathlib import Path
 import re
 
 from generator_output import write_or_check
+from workability_positive_profile import load_positive_profile
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT_JAVA = ROOT / "core/src/main/java/com/gregtech/gregtech/data/generated/MaterialWorkability.java"
@@ -67,7 +69,9 @@ def main() -> None:
     parser.add_argument("--output", type=Path, default=OUT_JAVA)
     parser.add_argument("--report", type=Path, help="Optional extraction report; historical reports are not overwritten by default")
     parser.add_argument("--check", action="store_true", help="Compare requested outputs without writing")
+    parser.add_argument("--positive-profile", type=Path, default=Path(__file__).with_name("data") / "gt6_workability_positive_profile.json", help="Reviewed additive source identity/flag evidence; missing entries remain unknown")
     args = parser.parse_args()
+    positive = load_positive_profile(args.positive_profile, args.source)
     if any(path is not None and path.resolve() == args.source.resolve() for path in (args.output, args.report)):
         parser.error("Outputs must not overwrite the original source")
     if args.report is not None and args.report.resolve() == args.output.resolve():
@@ -139,18 +143,33 @@ def main() -> None:
         f"    private static final Set<String> FOOD = Set.of({_literals(sorted(flags['FOOD']))});",
         f"    private static final Set<String> CRYSTALLISABLE = Set.of({_literals(sorted(flags['CRYSTALLISABLE']))});",
         "",
+        *[f"    private static final Set<String> POSITIVE_{flag} = Set.of({_literals(keys)});" for flag, keys in positive.items()],
+        "",
+        "    /** Positive-only source corrections, not an exhaustive eligibility oracle. */",
+        "    private static boolean positive(GTMaterial material, Set<String> keys) {",
+        "        if (material == null) return false;",
+        "        material = material.resolve();",
+        "        if (com.gregtech.gregtech.api.addon.AddonMaterials.owns(material)) return false;",
+        '        return keys.contains(material.getId() + ":" + normalize(material.getName()));',
+        "    }",
+        "",
+        "    /** Missing source evidence is UNKNOWN, not a prohibition for unresolved or addon materials. */",
+        "    public static boolean hasProvenSimpleExtrusion(GTMaterial material) {",
+        "        return positive(material, POSITIVE_EXTRUDER_SIMPLE);",
+        "    }",
+        "",
         "    public static boolean isSoft(GTMaterial material) {",
-        "        return material != null && SOFT.contains(normalize(material.getName()));",
+        "        return positive(material, POSITIVE_SOFT) || material != null && SOFT.contains(normalize(material.getName()));",
         "    }",
         "",
         "    public static boolean isFurnace(GTMaterial material) {",
-        "        return material != null && FURNACE.contains(normalize(material.getName()));",
+        "        return positive(material, POSITIVE_FURNACE) || material != null && FURNACE.contains(normalize(material.getName()));",
         "    }",
         "",
         "    /** GT6 {@code TD.Processing.MORTAR}: the material can be ground by a mortar. */",
         "    public static boolean isMortarGrindable(GTMaterial material) {",
         "        // MT.wood/woodnormal grant MORTAR in their factory, outside declaration flags.",
-        "        return material != null && (material.has(MaterialProperty.WOOD)",
+        "        return positive(material, POSITIVE_MORTAR) || material != null && (material.has(MaterialProperty.WOOD)",
         "                || MORTAR.contains(normalize(material.getName())));",
         "    }",
         "",
@@ -188,6 +207,8 @@ def main() -> None:
 
     report = {
         "source": str(args.source.resolve()),
+        "positiveIdentityCorrections": positive,
+        "positiveProfileSemantics": "missing entries remain unknown, never a prohibition",
         "soft": sorted(soft.values()),
         "furnace": sorted(furnace.values()),
         "easyWorkable": [soft.get(k) or furnace[k] for k in easy],

@@ -10,7 +10,7 @@ import unittest
 import xml.etree.ElementTree as ET
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'integration'))
-from check_issue_gametest_report import check, EXPECTED, LEGACY_CASE_NAMESPACES, expected_namespace
+from check_issue_gametest_report import check, EXPECTED, LEGACY_CASE_NAMESPACES, API_CONTRACT_CASES, expected_namespace
 import verify_artifacts
 from verify_artifacts import required_forge_mixin_mappings
 
@@ -48,7 +48,7 @@ class IssueEvidenceTests(unittest.TestCase):
         repo = Path(__file__).resolve().parents[2]
         workflow = (repo / '.github/workflows/issue-regressions.yml').read_text()
         self.assertIn('-PaddonSample=true', workflow)
-        self.assertIn('-PgameTestNamespaces=gregtech_issue_audit,gregtech_cover_issues,gregtech_pipe_auto', workflow)
+        self.assertIn('-PgameTestNamespaces=gregtech_issue_audit,gregtech_cover_issues,gregtech_pipe_auto,gt6ce_api_contracts', workflow)
         # The fixture deliberately depends on a registered SDK consumer, not a synthetic block.
         fixture = (repo / 'multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BehaviorStructureSafetyTests.java').read_text()
         self.assertIn('"addon_sample", "irrigator"', fixture)
@@ -66,6 +66,49 @@ class IssueEvidenceTests(unittest.TestCase):
     def test_issue_namespace_cannot_impersonate_legacy_methods(self):
         with self.assertRaisesRegex(ValueError, 'did not execute'):
             self.verify(self.report('forge', namespace='gregtech_issue_audit:test_empty'), 'forge')
+
+    def test_each_addon_api_case_must_execute_on_both_loaders(self):
+        for platform in EXPECTED:
+            for identity in API_CONTRACT_CASES:
+                root = self.report(platform)
+                suite = root.find('testsuite')
+                for case in list(suite):
+                    if (case.get('classname') == expected_namespace(identity)
+                            and case.get('name') == identity.split('.', 1)[1]):
+                        suite.remove(case)
+                with self.subTest(platform=platform, identity=identity), self.assertRaisesRegex(ValueError, 'did not execute'):
+                    self.verify(root, platform)
+
+    def test_old_namespaces_alone_cannot_pass_the_extended_gate(self):
+        for platform in EXPECTED:
+            root = self.report(platform)
+            suite = root.find('testsuite')
+            for case in list(suite):
+                if case.get('classname') == 'gt6ce_api_contracts:test_empty':
+                    suite.remove(case)
+            with self.subTest(platform=platform), self.assertRaisesRegex(ValueError, 'did not execute'):
+                self.verify(root, platform)
+
+    def test_issue_namespace_cannot_impersonate_addon_api_methods(self):
+        for platform in EXPECTED:
+            root = self.report(platform)
+            for case in root.iter('testcase'):
+                if case.get('classname') == 'gt6ce_api_contracts:test_empty':
+                    case.set('classname', 'gregtech_issue_audit:test_empty')
+            with self.subTest(platform=platform), self.assertRaisesRegex(ValueError, 'did not execute'):
+                self.verify(root, platform)
+
+    def test_addon_api_failures_errors_and_skips_are_not_accepted(self):
+        for platform in EXPECTED:
+            for identity in API_CONTRACT_CASES:
+                for result in ('failure', 'error', 'skipped'):
+                    root = self.report(platform)
+                    case = next(case for case in root.iter('testcase')
+                                if case.get('classname') == expected_namespace(identity)
+                                and case.get('name') == identity.split('.', 1)[1])
+                    ET.SubElement(case, result, message='addon API contract did not pass')
+                    with self.subTest(platform=platform, identity=identity, result=result), self.assertRaisesRegex(ValueError, 'failure/error/skipped'):
+                        self.verify(root, platform)
 
     def test_empty_report_rejected(self):
         with self.assertRaisesRegex(ValueError, 'did not execute'):

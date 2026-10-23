@@ -40,7 +40,7 @@ import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 //?}
 
-/** Ignored, UNCOMPILED native regression draft; never substitutes mock recipe maps/engine subclasses. */
+/** Native registered-engine regressions; never substitutes mock recipe maps or engine subclasses. */
 @GameTestHolder("gregtech_issue_audit")
 @PrefixGameTestTemplate(false)
 public final class FuelEngineIntakeTests {
@@ -306,6 +306,33 @@ public final class FuelEngineIntakeTests {
                 h.assertTrue(be.fuelTank().isEmpty()&&be.getKuEnergy()==rate*ticks&&be.exhaustTank().getAmount()==1,
                     "actual registered engine converts one mB to exact cycle credit and retained CO2 "+key);
             }
+        }
+        h.succeed();
+    }
+
+    @GameTest(template="test_empty")
+    public static void exhaustVentsByGasPhaseAndEmptyCollisionNotBuoyancyOrAirOnly(GameTestHelper h) {
+        try(var f=new Fixture(h,128)) {
+            var be=engine(f,engines().get(0),Direction.NORTH);var rear=f.center.south();
+            var co2=fuel(h,"CarbonDioxide",1);
+            h.assertTrue(GTFluids.isGas(co2),"actual registered CO2 is gas by phase");
+            com.mojang.logging.LogUtils.getLogger().info("[fuel-audit] CO2 native id={} gas={} density={} lighterThanAir={}",
+                BuiltInRegistries.FLUID.getKey(co2.getFluid()),GTFluids.isGas(co2),co2.getFluid().getFluidType().getDensity(co2),co2.getFluid().getFluidType().isLighterThanAir());
+            // Original WD.hasCollide: opaque OR any collision bounding box. A narrow
+            // glass pane is still a barrier, not an excuse to vent through non-full blocks.
+            f.set(rear,Blocks.GLASS_PANE.defaultBlockState());
+            h.assertTrue(!h.getLevel().getBlockState(rear).getCollisionShape(h.getLevel(),rear).isEmpty(),"non-full-shape collision barrier fixture");
+            be.exhaustTank().fill(co2,FluidAction.EXECUTE);
+            KineticDieselEngineBlockEntity.serverTick(h.getLevel(),f.center,be.getBlockState(),be);
+            h.assertTrue(be.exhaustTank().getAmount()==1,"any collision shape retains exhaust");
+            f.set(rear,Blocks.AIR.defaultBlockState());
+            KineticDieselEngineBlockEntity.serverTick(h.getLevel(),f.center,be.getBlockState(),be);
+            h.assertTrue(be.exhaustTank().isEmpty(),"gas exhaust vents to open air regardless of buoyancy");
+            f.set(rear.below(),Blocks.DIRT.defaultBlockState());f.set(rear,Blocks.DANDELION.defaultBlockState());
+            h.assertTrue(!h.getLevel().getBlockState(rear).isAir()&&h.getLevel().getBlockState(rear).getCollisionShape(h.getLevel(),rear).isEmpty(),"non-air empty-collision flower fixture");
+            be.exhaustTank().fill(co2,FluidAction.EXECUTE);
+            KineticDieselEngineBlockEntity.serverTick(h.getLevel(),f.center,be.getBlockState(),be);
+            h.assertTrue(be.exhaustTank().isEmpty(),"source also vents past non-air empty-collision targets");
         }
         h.succeed();
     }
