@@ -1,0 +1,230 @@
+{
+  "status": "passed-local-full363; no GPU verification; publication is separate",
+  "base_commit": "9c9528e4ed1c7a8b99dcc71cb7ffff63d9dfd837",
+  "source_files": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/cover/CoverRenderGeometry.java",
+      "sha256": "25fd683934c9015fee7220da4ee1c5ee26150d9127ac6916488e605fe3465cd8"
+    },
+    {
+      "path": "core/src/test/java/com/gregtech/gregtech/core/CoverRenderGeometryContracts.java",
+      "sha256": "028f59d1bd42e42f175c6f3c5106b69b2d2996bc8b7d8e328b41c1d4a0165b44"
+    },
+    {
+      "path": "core/src/test/java/com/gregtech/gregtech/core/CoreBehaviorContracts.java",
+      "sha256": "5514760962593745382fc5b44519f28d9cabb96d325e5b67165a6759783ea792"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/cover/CoverPlateGeometry.java",
+      "sha256": "48f557caf13588d39362f065bc1f1004214d86f5bd2ac3ba5145b2853c5a71e6"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/ArmRenderHelper.java",
+      "sha256": "0f586fc35d18311c28abd98272c62754dc1b6aed20f31a531d48f387bebd9d0a"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/CoverSurfaceRenderer.java",
+      "sha256": "08d737278345fc6a3bb7b33605575fc24c159ca3b594334186aac39fe9b2ae25"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverWorldInteraction.java",
+      "sha256": "e05e049e4826e14730ff7e1729a2ca7d636d79c6124e31004622f2dcf3ee961e"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverCollisionMixin.java",
+      "sha256": "306f2c0e5c72de257c515b7fadbca834d802d0dd3d13df380dbd20f48e40eff2"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyNet.java",
+      "sha256": "90e4a02c82198603458bbd1396b041a8cab57652cc0beda59c9ba3d085f1c6fb"
+    },
+    {
+      "path": "multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CoverPlateSupportTests.java",
+      "sha256": "33eca58aaad6f213682a3e89f51680c2f7dbf5a056025b7120a67c46d27f2f31"
+    },
+    {
+      "path": "multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ElectricWireGraphLoadednessTests.java",
+      "sha256": "5255b04e1348808312fbab5ddc23d8491e7d8077b24b95ff58b459c578aa289c"
+    },
+    {
+      "path": "tools/integration/check_issue_gametest_report.py",
+      "sha256": "6b986def315f49e9fac56c57ccbc21bf5a2c680b12f99d171142db6684d48e4d"
+    }
+  ],
+  "geometry_provenance": {
+    "work/references/gregtech6-original/src/main/java/gregapi/cover/ICover.java": "fb7e24cd269f453d6a944ccbb0768a41644229b0083971e66dd2006e93e22547",
+    "work/references/gregtech6-w/src/main/java/gregapi/cover/ICover.java": "d5639a5df0b31c9fb9256c2405380439f430e9e83ed737df156c66a79d3bc174",
+    "work/references/gregtech6-original/src/main/java/gregapi/data/CS.java": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+    "work/references/gregtech6-w/src/main/java/gregapi/data/CS.java": "cc8051f7ab2c17e28a6c5d690267a39ebb5ce35cc112ceeb5e055d4e7be9fda7",
+    "work/references/gregtech6-original/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+    "work/references/gregtech6-w/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java": "0eb25afaddd6f443ee2da958542140aac1259bbb4ccd96a57e1827c19020311f",
+    "work/references/gregtech6-original/src/main/java/gregapi/cover/covers/AbstractCoverDefault.java": "9a8913fdd2cd2358790d4aef90d11d5aac0087c6eb5eb9f13615656d9151e7fd",
+    "work/references/gregtech6-w/src/main/java/gregapi/cover/covers/AbstractCoverDefault.java": "2b8e85fd54ad97d35704eb8ba81bedcc2af72b7405a9d2bde58ffd7c2429c99c",
+    "work/references/gregtech6-original/src/main/java/gregapi/cover/covers/AbstractCoverAttachmentTorch.java": "f06eb2fe7ea68c62d3bbc69083219970069acdb16ec21b6add0160c2b300c9fb",
+    "work/references/gregtech6-w/src/main/java/gregapi/cover/covers/AbstractCoverAttachmentTorch.java": "478e55d5afcde2502802b54bf9b7b0d8199b7f77b57be70f340d342b1a0e5e97",
+    "work/references/gregtech6-original/src/main/java/gregapi/cover/covers/CoverPressureValve.java": "b686320794365c0c6f49cdd486b73ad331706aa3158f25df711f80678a9bf025",
+    "work/references/gregtech6-w/src/main/java/gregapi/cover/covers/CoverPressureValve.java": "ac60758d21765f5c870520f4cb320247e23603569fa87a6a379f9819e1bd62e5",
+    "core/src/main/java/com/gregtech/gregtech/content/cover/CoverPlateGeometry.java": "48f557caf13588d39362f065bc1f1004214d86f5bd2ac3ba5145b2853c5a71e6",
+    "multiversion/src/main/java/com/gregtech/gregtech/client/PipeWireBakedModel.java": "ee138bf0fa0d04292d79fe17fb70d1b3abfd6f48d25815bf5e852fd32d7beb51"
+  },
+  "pure_core": {
+    "assertions": 5355,
+    "class": "com.gregtech.gregtech.core.CoverRenderGeometryContracts",
+    "hook": "CoreBehaviorContracts.verify call through normal core check",
+    "receipt": {
+      "path": "work/cover-render-overlap-audit/core-contract-receipt.json",
+      "sha256": "d4915f0f21698e45d5a8fd7b91ef2aef659fdae82e15916cb1a2433a40219d62"
+    },
+    "scope": "Actual Java geometry; not game/GPU",
+    "initial_full_core_execution": {
+      "log": {
+        "path": "work/validation/cover-support-render-fixed/dual-build.log",
+        "sha256": "d159685fc7fe8d652aa54bf8472797d1173f3dfd14e3a1d45d7e838113a30ac8"
+      },
+      "combined_assertions": 8164,
+      "groups": 34
+    },
+    "retry_core_task": "UP-TO-DATE: geometry source unchanged after native fixture-only correction"
+  },
+  "stub_emitter": {
+    "scope": "Actual old/new ArmRenderHelper Java vertex emission with minimal API stubs, both loader branches; pure geometry and source wiring checks. Not Minecraft/GPU/client visual validation.",
+    "results": {
+      "forge": {
+        "assertions": 29017,
+        "full_cover_masks": 64,
+        "adjacent_pairs": 12,
+        "holder_wire_overlap_before": 24,
+        "holder_wire_overlap_after": 0,
+        "adjacent_plate_overlap_before": 48,
+        "adjacent_plate_overlap_after": 0,
+        "all_mask_plate_overlap_before": 768,
+        "all_mask_plate_overlap_after": 0
+      },
+      "neoforge": {
+        "assertions": 29017,
+        "full_cover_masks": 64,
+        "adjacent_pairs": 12,
+        "holder_wire_overlap_before": 24,
+        "holder_wire_overlap_after": 0,
+        "adjacent_plate_overlap_before": 48,
+        "adjacent_plate_overlap_after": 0,
+        "all_mask_plate_overlap_before": 768,
+        "all_mask_plate_overlap_after": 0
+      }
+    },
+    "sources": {
+      "work/cover-render-overlap-audit/baseline/ArmRenderHelper.java": "034f5c35ed37819e6cfc1c8d8171bab0e6fa56c0f94f503855b46efbe8b814c2",
+      "work/cover-render-overlap-audit/baseline/CoverSurfaceRenderer.java": "95b48daa49524e1de7d5a9111f7c6c8309f99b5c4e34cbd85db7128e33f1e861",
+      "core/src/main/java/com/gregtech/gregtech/content/cover/CoverPlateGeometry.java": "48f557caf13588d39362f065bc1f1004214d86f5bd2ac3ba5145b2853c5a71e6",
+      "work/cover-render-overlap-audit/candidate/multiversion/src/main/java/com/gregtech/gregtech/client/ArmRenderHelper.java": "0f586fc35d18311c28abd98272c62754dc1b6aed20f31a531d48f387bebd9d0a",
+      "work/cover-render-overlap-audit/candidate/core/src/main/java/com/gregtech/gregtech/content/cover/CoverRenderGeometry.java": "25fd683934c9015fee7220da4ee1c5ee26150d9127ac6916488e605fe3465cd8",
+      "work/cover-render-overlap-audit/candidate/multiversion/src/main/java/com/gregtech/gregtech/client/CoverSurfaceRenderer.java": "08d737278345fc6a3bb7b33605575fc24c159ca3b594334186aac39fe9b2ae25"
+    },
+    "patch_sha256": "544bcece901223b255c416b4ab72302dba36260f82214ef0e17d5755c425d26c"
+  },
+  "surface_coverage": {
+    "masks": 64,
+    "exposed_boundary_patches": 3456,
+    "uncovered": 0,
+    "scope": "Independent mathematical boundary coverage; unchanged front art projected for coverage only. Not actual vertex-emitter or GPU validation."
+  },
+  "initial_fixture_failure": {
+    "forge": {
+      "total": 186,
+      "passed": 185,
+      "failures": 1
+    },
+    "neoforge": "not run",
+    "reason": "Full-diameter huge pipe already supplies support; nonsolid valve must not erase underlying native support. Corrected fixture uses medium negative and huge positive controls.",
+    "test_before": {
+      "path": "work/cover-support-audit/fixture-retry/CoverPlateSupportTests.before.java",
+      "sha256": "c84f2f4b868b69b2a0cdbc87554fae24101385df472366d8e9587b109818eeff"
+    },
+    "receipt": {
+      "path": "work/validation/cover-support-render-fixed/failed-receipt.md",
+      "sha256": "41858bf4fc337708488f6d6ebd3a43d5a47ff47ce2398619c8c0a4354fa258cd"
+    },
+    "xml": {
+      "path": "work/validation/cover-support-render-fixed/forge-fixed.xml",
+      "sha256": "4497750986abb41a3ee7ebd36c67115324ea90b4edf549d1c1036b95ed25dc23"
+    },
+    "pre_fix_baseline": false
+  },
+  "native_cases": [
+    "coverplatesupporttests.blankcoveraddsoutlineandnativeleversupport",
+    "coverplatesupporttests.coversupportisfacelocalandtorchremainsnonsolid",
+    "electricwiregraphloadednesstests.wireconnectioncallbackskipsabsentsavedmaskneighbors"
+  ],
+  "limitations": [
+    "New three shared native cases are fixed-only; no pre-fix native baseline.",
+    "Graph test explicitly invokes native graph callbacks at remote FULL chunks, not a natural onLoad event, saved-NBT reload, actual chunk unloading, process restart or natural partial BLOCK_TICKING scenario.",
+    "Auxiliary EnergyNet graph is not the real EU routing engine.",
+    "Lever canSurvive after cover removal is checked; automatic neighbor-update destruction/drop is not claimed.",
+    "Stub vertex emission and mathematical coverage are not a Minecraft client, atlas, GPU or screenshot test.",
+    "Physical plate and torch bounds are unchanged; internal holder-to-holder intersections can remain inside the host core.",
+    "Only the three declared regression namespaces were selected; passing 363 cases is not proof of all registered tests or all gameplay scenarios."
+  ],
+  "input_snapshot": {
+    "path": "work/validation/cover-support-render-fixed-retry/input-snapshot.txt",
+    "sha256": "8a6c591092fa9be52c4c48effe02b1fa2de2581d576054a56f88bfa7597b188e"
+  },
+  "native": {
+    "forge": {
+      "cases": 186,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "xml": {
+        "path": "work/validation/cover-support-render-fixed-retry/forge-fixed.xml",
+        "sha256": "b0ab23e12205ce7d877db0b3a3c00f9b49e44c333b50c89c8e44eaabbee4f3ed"
+      }
+    },
+    "neoforge": {
+      "cases": 177,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "xml": {
+        "path": "work/validation/cover-support-render-fixed-retry/neoforge-fixed.xml",
+        "sha256": "64ae32c0ab3f4ef577e8f127a188a26514b6f1914830d92ac703725691ecaec7"
+      }
+    }
+  },
+  "terminal_receipt": {
+    "path": "work/validation/cover-support-render-fixed-retry/local-validation-receipt.md",
+    "sha256": "f2d0cd22963b8737b7d57389ef43034b11b83e9b9fd9ccc8b6e2d0b295eb31a0"
+  },
+  "final_snapshot": {
+    "path": "work/validation/cover-support-render-fixed-retry/final-snapshot.txt",
+    "sha256": "8a6c591092fa9be52c4c48effe02b1fa2de2581d576054a56f88bfa7597b188e"
+  },
+  "local_gate": {
+    "completed_utc": "2026-10-23T16:50:11.837473+00:00",
+    "native_cases": 363,
+    "namespaces": [
+      "gregtech_issue_audit",
+      "gregtech_cover_issues",
+      "gregtech_pipe_auto"
+    ],
+    "addon_sample": true,
+    "python_guards": 122,
+    "remi_checked": 486,
+    "packaged_shared_classes_each": 1012,
+    "sdk_core_api_classes": 111,
+    "sdk_native_api_classes_each": 37,
+    "all_processes_terminated": true,
+    "input_final_snapshots_byte_identical": true,
+    "tracked_diff_sha256": "4efdf03c8a4e90fb6cea8a6fd34fa4431d9e4d9dd0181a97c1c4af3b4a17eb2e",
+    "stage_exit_codes": {
+      "dual-build": 0,
+      "python-guards": 0,
+      "remi": 0,
+      "package-check": 0,
+      "forge-gametest": 0,
+      "forge-report-check": 0,
+      "neoforge-gametest": 0,
+      "neoforge-report-check": 0
+    },
+    "scope": "Exact frozen executable tree; selected native regression namespaces, not all registered tests or GPU/client rendering; no claim about later GitHub CI."
+  }
+}

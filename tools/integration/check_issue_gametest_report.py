@@ -12,6 +12,10 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'coverplatesupporttests.blankcoveraddsoutlineandnativeleversupport',
+    'coverplatesupporttests.coversupportisfacelocalandtorchremainsnonsolid',
+    'electricwiregraphloadednesstests.wireconnectioncallbackskipsabsentsavedmaskneighbors',
+
     'signalwireplacementcovertests.pairedsignalwiresstaydisconnectedafternativecutter',
     'signalwireplacementcovertests.signalwireplacementhonorsexplicitneighborports',
     'signalwireplacementcovertests.signalwireportssurviveneighborpowerandremoval',

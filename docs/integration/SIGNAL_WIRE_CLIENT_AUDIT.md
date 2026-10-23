@@ -65,3 +65,39 @@ Neo默认颜色方法与Forge物品／方块两个重复三元表达式集中为
 ### 范围限制
 
 红石线放置、剪线钳、覆盖板使用真实 `ServerPlayer.gameMode.useItemOn`；物品管／流体管／EU线例直接调用注册物品的原生 `BlockItem.place`，验证放置回调与消耗，但不是完整网络包路径。测试使用隔离高位夹具，结束恢复方块与实体状态。显式失源例使用模式失效后立即重算，不据此宣称独立的自然下一tick时序证明；也未据已加载邻居守卫宣称所有跨区块加载／卸载场景已验证。覆盖板选框／承托面、相邻板片及支管渲染、其他网络图保护留在下一有界批次，没有夹带进本批修复。
+
+## 2026-10-23：覆盖板选框、承托面与同方块板片重叠
+
+用户报告裸红色合金线上空白覆盖板不能放拉杆、支杆与线纹理重叠，以及**同一方块相邻面**的两块覆盖板纹理重叠。本批区分实体碰撞、鼠标选框和方块承托：原代码已有覆盖板碰撞箱并集，但普通选框和原生承托／缓存的 `isFaceSturdy` 没有动态加入覆盖板，不能把问题统称为“完全没有碰撞”。现在普通选框包含实际覆盖板；完整覆盖面提供相应面的承托，其他方向不变。按两份原树的 `isSolid` 约定，火把／中继器及压力阀不额外提供实体承托，但也不删除宿主本来就有的完整支撑面。渲染判断通过有 `finally` 恢复的重入保护查询底层宿主形状，避免覆盖板扩展选框后把细线误认为整块、反而隐藏板片与支杆。
+
+新增原生测试包括裸线／绝缘线各六面通过真实 `ServerPlayer.gameMode.useItemOn` 安装空白覆盖板和拉杆，检查准确消耗、两种碰撞查询、偏轴选框、承托形状及各 `SupportType`，并验证移除覆盖板后支撑与选框恢复、拉杆 `canSurvive` 变为false。另保留方向隔离、火把／压力阀不支撑拉杆、石头以及完整大管支撑的对照。后者不是已观察到自然更新后拉杆自动掉落的声明。这些新例只在固定版执行，**没有本批生产修复前的原生失败基线**。
+
+### 渲染几何与证据边界
+
+两份原 `ICover.BOXES_HOLDERS` 都把支杆横向面内缩 `CS.PX_OFFSET=0.005` 方块单位；当前曾漏掉该偏移，恰好与两像素裸线的侧面共面。新增渲染专用几何恢复偏移，并按原规则隐藏朝向同方块完整覆盖面／完整宿主面的板片侧面；火把、中继器和压力阀不是完整纹理面，不会抹掉周围空隙。仅恢复原规则仍会留下相邻板片第三轴边缘的小面积重叠，因此另外按固定方向顺序分配板片背衬交叠区域。这是现代确定性网格修复，**不声称原版网格本来完全无重叠**。
+
+物理 `CoverPlateGeometry.plate/holder`、两像素板厚和火把碰撞范围均保持字节不变。外向贴图仍覆盖完整面；背衬裁剪继续按实际坐标取UV，不拉伸贴图；原火把绘制和外向图层代码不变。新的纯Java核心合同纳入既有 `CoreBehaviorContracts`，实际执行5,355条断言，遍历64种完整覆盖面组合、12对相邻面、支杆偏移、面保留、物理边界和无空洞／重复体积的区域分配。
+
+另外保留旧／新实际顶点输出代码在最小API桩下的两端分支检查，每端29,017条断言：六方向支杆与裸线共面区域24→0，12对相邻板片48→0，64组合累计板片共面区域768→0。独立区域检查覆盖3,456个外露边界小面，包含未改的完整外向贴图；投影贴图仅用于覆盖检查。**这些是源码、纯几何和桩API顶点输出证据，不是Minecraft客户端／GPU画面验收**。支杆在宿主中心内部相交仍可能存在；没有泛称任意宿主、阀门或所有附件完全无相交。原生服务端通过也不能替代实际截图。
+
+纯几何合同可在仓库根目录用Java17复现，不需要游戏客户端：
+
+```sh
+mkdir -p /tmp/gt6-cover-geometry-contracts
+javac -d /tmp/gt6-cover-geometry-contracts \
+  core/src/main/java/com/gregtech/gregtech/content/cover/CoverPlateGeometry.java \
+  core/src/main/java/com/gregtech/gregtech/content/cover/CoverRenderGeometry.java \
+  core/src/test/java/com/gregtech/gregtech/core/CoverRenderGeometryContracts.java
+java -cp /tmp/gt6-cover-geometry-contracts \
+  com.gregtech.gregtech.core.CoverRenderGeometryContracts
+```
+
+### 附带图读取守卫与本地验证
+
+EU线 `onLoad → onConnectionChanged → EnergyNet.onConnectionChange` 的辅助图建边在读取相邻实体前增加 `hasChunkAt` 守卫。新增原生例在正／负边界的远端FULL区块显式调用真实注册／连接回调，验证未加载邻块不被带起、已有的显式端口意图不被清除，再显式加载相向邻线并检查可达性及同区块垂直连接。实际EU传输不使用这个辅助图；该例不是自然 `onLoad`、实际卸载重载、NBT重启或部分BLOCK_TICKING世界的证明。
+
+首次固定版Forge执行186例，185通过、1项夹具错误：压力阀负向对照选了本来就完整支撑的huge管，错误要求阀门消除宿主支撑。保留原测试、XML和日志后，仅改用medium管做“不增加支撑”负例，并增加huge管“已有支撑不消失”正例；生产代码未为错误断言让步。首次Neo未运行；不能把这次失败当作修复前基线。
+
+最终在基线 `9c9528e4ed1c7a8b99dcc71cb7ffff63d9dfd837` 加本批冻结改动上完成完整双端构建、打包／SDK检查、122项Python守卫及486项REMI检查；两端各验证1,012个共享类，SDK含111个核心API类及各37个原生API类。首次完整核心执行合计8,164条断言／34组，其中5,355条为本批几何合同；仅改原生夹具后的重跑核心任务为UP-TO-DATE，不虚报第二次重新执行。随后Forge **186/186**、Neo **177/177**，合计**363项原生回归全部通过**，零失败／错误／跳过；两端严格身份检查通过，八个阶段退出码均为0，进程已结束。
+
+输入／结束源码快照字节相同，SHA-256均为 `8a6c591092fa9be52c4c48effe02b1fa2de2581d576054a56f88bfa7597b188e`。最终Forge XML为 `b0ab23e12205ce7d877db0b3a3c00f9b49e44c333b50c89c8e44eaabbee4f3ed`，Neo XML为 `64ae32c0ab3f4ef577e8f127a188a26514b6f1914830d92ac703725691ecaec7`；逐文件源码、原树与几何证据哈希、失败夹具和最终阶段摘要见[363项本地验证与几何来源回执](verification/cover-support-render-20261023.json)。服务端只选择 `gregtech_issue_audit`、`gregtech_cover_issues`、`gregtech_pipe_auto` 三个命名空间；此结果不等于所有已注册测试、所有玩法或客户端GPU验收，也不冒称后续提交的GitHub CI结果。

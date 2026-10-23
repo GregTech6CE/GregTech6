@@ -99,6 +99,7 @@ public final class EnergyNet {
             if (!state.getValue(connectionProps[i])) continue;
             Direction dir = Direction.from3DDataValue(i);
             BlockPos nbPos = pos.relative(dir);
+            if (!level.hasChunkAt(nbPos)) continue;
             BlockEntity nbBe = level.getBlockEntity(nbPos);
             if (nbBe instanceof IEnergyConductor) {
                 edges.add(nbPos.immutable());
