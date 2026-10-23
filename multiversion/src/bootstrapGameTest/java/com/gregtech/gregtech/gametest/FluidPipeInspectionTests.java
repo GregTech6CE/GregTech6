@@ -161,10 +161,11 @@ public final class FluidPipeInspectionTests {
             first = place(h, origin, block.defaultBlockState().setValue(FluidPipeBlock.EAST, true), 100);
             touched.add(edge);
             second = place(h, edge, block.defaultBlockState().setValue(FluidPipeBlock.WEST, true).setValue(FluidPipeBlock.EAST, true), 200);
-            // Placement's existing auto-connect scans load neighbors, regardless
-            // of connection bits. Do not alter that separate production policy:
-            // wait for the actual native exterior unload before inspecting.
-            h.assertTrue(h.getLevel().hasChunkAt(outside), "native placement scan loaded exterior before lifecycle wait");
+            // Establish a real exterior lifecycle independently of placement's
+            // auto-connect policy (which now correctly skips absent neighbors).
+            // This FULL/UNKNOWN load adds no persistent or forced ticket.
+            h.getLevel().getChunk(outsideChunk.x, outsideChunk.z);
+            h.assertTrue(h.getLevel().hasChunkAt(outside), "explicit native exterior load precedes lifecycle wait");
             player = new FakePlayer(h.getLevel(), new GameProfile(UUID.randomUUID(), "PipeInspector")) {
                 @Override public void sendSystemMessage(Component message) { messages.add(message.getString()); }
             };
@@ -190,6 +191,9 @@ public final class FluidPipeInspectionTests {
             second = (FluidPipeBlockEntity) h.getLevel().getBlockEntity(edge);
             h.assertTrue(first != null && second != null && first != oldFirst && second != oldSecond
                     && !first.isRemoved() && !second.isRemoved(), "native reload creates fresh saved pipe entities");
+            h.assertTrue(first.getBlockState().getValue(FluidPipeBlock.EAST)
+                    && second.getBlockState().getValue(FluidPipeBlock.WEST)
+                    && second.getBlockState().getValue(FluidPipeBlock.EAST), "saved connected path still reaches the absent exterior");
             inspect(h, origin, player);
             h.assertTrue(!h.getLevel().hasChunkAt(outside), "inspection does not load the unavailable connected chunk");
             assertReport(h, messages, 300);
