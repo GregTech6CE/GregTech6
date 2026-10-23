@@ -56,10 +56,9 @@ public class OreProcessingRecipeLoader implements InitializationStep {
 
     /**
      * GT6 {@code Loader_Recipes_Ores:383} {@code tSluice = {10000, 300, 300, 300, 300, 300, 300,
-     * 300, 300}} for the eight outputs of a sluice recipe: the purified ore itself and seven
-     * byproduct fines at 3 % each (GT6's ninth entry is unused — the recipe has eight outputs).
+     * 300, 300}} for nine outputs: one purified primary and eight independent 3% byproduct slots.
      */
-    private static final long[] SLUICE_CHANCES = {CHANCE_100, 300, 300, 300, 300, 300, 300, 300};
+    private static final long[] SLUICE_CHANCES = {CHANCE_100, 300, 300, 300, 300, 300, 300, 300, 300};
 
     private static final FluidStack WATER_MB = new FluidStack(Fluids.WATER, 1000);
 
@@ -77,6 +76,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         processWashing();
         processPurifiedRoutes();
         processSluiceRoutes();
+        processReviewedFollowonRoutes();
         processByproductList();
         processRecycling();
     }
@@ -152,7 +152,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         long smeltAmount = material.getTargetSmeltingAmount();
         GTMaterial smeltTarget = material.getTargetSmeltingMaterial();
         if (smeltTarget == null || !smeltTarget.isValid() || smeltAmount <= 0) return;
-        if (!material.has(MaterialProperty.MELTING)) return;
+        if (!OreSourcePolicy.furnaceInput(material)) return;
 
         ItemStack smeltOutput = OM.dustOrIngot(smeltTarget, smeltAmount);
         if (smeltOutput.isEmpty()) {
@@ -162,6 +162,10 @@ public class OreProcessingRecipeLoader implements InitializationStep {
 
         for (ItemStack input : possibleInputs) {
             if (!input.isEmpty()) {
+                // Only the native oreRaw form is covered by the later source listener.
+                // Shared block/vanilla ore callers keep their existing fallback behavior.
+                if (OreSourcePolicy.usesReviewedFurnaceListener(material)
+                        && input.getItem() == mat(MaterialPrefix.oreRaw, material, 1).getItem()) continue;
                 MachineRecipeMaps.add_smelting(input, smeltOutput.copy(), 0.0f, true, false, false);
             }
         }
@@ -285,7 +289,10 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         if (out.isEmpty()) return;
         long quality = Math.max(1, material.getToolQuality() + 1);
         // GT6 crusher has two guaranteed primary outputs; hammer has one.
-        MachineRecipeMaps.Crusher.addRecipe1(true, EU_TIER, 128L * count * quality, oreInput, out, out.copy());
+        if (ReviewedCinnabarFacts.supports(material)
+                && oreInput.getItem()==mat(MaterialPrefix.oreRaw,material,1).getItem()) {
+            SourceOreFollowonRows.rawCrusher(material,ReviewedCinnabarFacts.INSTANCE);
+        } else MachineRecipeMaps.Crusher.addRecipe1(true, EU_TIER, 128L * count * quality, oreInput, out, out.copy());
         MachineRecipeMaps.Hammer.addRecipe1(true, EU_TIER, 32L * count * quality, oreInput, out.copy());
         // Sifting is for DUST_ORE prefixes, not ordinary raw/stone ores.
         registerSmelting(material, oreInput);
@@ -330,6 +337,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
             pulverizeOne(MaterialPrefix.crushedCentrifugedTiny, material, 1, MaterialPrefix.dustTiny, U9);
             // crushedPurifiedTiny → dustTiny
             pulverizeOne(MaterialPrefix.crushedPurifiedTiny, material, 1, MaterialPrefix.dustTiny, U9);
+            if (ReviewedCinnabarFacts.supports(material)) SourceOreFollowonRows.shredder(material,ReviewedCinnabarFacts.INSTANCE);
         }
     }
 
@@ -344,7 +352,9 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         if (input.isEmpty()) return;
         ItemStack output = stackFor(outputPref, material, outAmount);
         if (output.isEmpty()) return;
-        MachineRecipeMaps.pulverizing(input, output);
+        if (ReviewedCinnabarFacts.supports(material)) {
+            MachineRecipeMaps.Crusher.addRecipe1(true,16,64,new long[]{10000,1000,1000},input,output,ItemStack.EMPTY,ItemStack.EMPTY);
+        } else MachineRecipeMaps.pulverizing(input, output);
     }
 
     /**
@@ -361,7 +371,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         if (output.isEmpty()) return;
         ItemStack multiOut = amount(outCount, output);
         MachineRecipeMaps.Crusher .addRecipe1(true, EU_TIER, 32, input, multiOut);
-        MachineRecipeMaps.Shredder.addRecipe1(true, EU_TIER, 32, input, multiOut);
+        if (!ReviewedCinnabarFacts.supports(material)) MachineRecipeMaps.Shredder.addRecipe1(true, EU_TIER, 32, input, multiOut);
     }
 
     // ========================================================================
@@ -395,6 +405,10 @@ public class OreProcessingRecipeLoader implements InitializationStep {
                 }
             }
 
+            if (ReviewedCinnabarFacts.supports(material)) {
+                SourceOreFollowonRows.centrifuge(material,ReviewedCinnabarFacts.INSTANCE);
+                continue; // original Bath branch above remains unchanged; replace only owned generic centrifuge
+            }
             // ── Centrifuge: crushedPurified → crushedCentrifuged + second byproduct ──
             if (MaterialPrefix.crushedCentrifuged.isValidFor(material)) {
                 ItemStack crushedPurified = mat(MaterialPrefix.crushedPurified, material, 1);
@@ -434,8 +448,8 @@ public class OreProcessingRecipeLoader implements InitializationStep {
             ItemStack purifiedTiny = mat(MaterialPrefix.crushedPurifiedTiny, material, 1);
             if (purified.isEmpty() || purifiedTiny.isEmpty()) continue;
 
-            // GT6 orders the byproducts non-magnetic first, then magnetic (Loader_Recipes_Ores:389-393).
-            List<GTMaterial> byProds = magnetOrder(material.getByProducts());
+            // Source selects only the opposite magnetic class (Loader_Recipes_Ores:389-393).
+            List<GTMaterial> byProds = OreSourcePolicy.magneticCandidates(material);
 
             // ── Magnetic Separator ────────────────────────────────────────────
             ItemStack centrifuged = mat(MaterialPrefix.crushedCentrifuged, material, 1);
@@ -474,12 +488,12 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         ItemStack gem = mat(MaterialPrefix.gem, material, 1);
         ItemStack dust = mat(MaterialPrefix.dust, material, 1);
         if (gem.isEmpty() || dust.isEmpty()) return null;
-        // GT6 scales the rarer grades by the gem's stack value: 8x, 4x, 2x, then plain 1x.
-        ItemStack legendary = mat(MaterialPrefix.gemLegendary, material, 8);
-        ItemStack exquisite = mat(MaterialPrefix.gemExquisite, material, 4);
-        ItemStack flawless = mat(MaterialPrefix.gemFlawless, material, 2);
-        ItemStack flawed = mat(MaterialPrefix.gemFlawed, material, 2);
-        ItemStack chipped = mat(MaterialPrefix.gemChipped, material, 4);
+        // Source overload uses one rare grade; 8/4/2 ordinary gems are only missing-grade fallbacks.
+        ItemStack legendary = gradeOrGem(MaterialPrefix.gemLegendary, material, 1, gem, 8);
+        ItemStack exquisite = gradeOrGem(MaterialPrefix.gemExquisite, material, 1, gem, 4);
+        ItemStack flawless = gradeOrGem(MaterialPrefix.gemFlawless, material, 1, gem, 2);
+        ItemStack flawed = gradeOrGem(MaterialPrefix.gemFlawed, material, 2, gem, 1);
+        ItemStack chipped = gradeOrGem(MaterialPrefix.gemChipped, material, 4, gem, 1);
         if (legendary.isEmpty() || exquisite.isEmpty() || flawless.isEmpty()
                 || flawed.isEmpty() || chipped.isEmpty()) return null;
         return new ItemStack[]{legendary, exquisite, flawless, gem, flawed, chipped, dust};
@@ -494,7 +508,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
      * and the Large Sluice with an empty recipe map.
      * <p>
      * {@code Loader_Recipes_Ores:415-420}: a crushed ore plus 900 mB of any water variant
-     * (water, mineral water, distilled water, spectral dew) yields one purified ore plus seven
+     * (water, mineral water, distilled water, spectral dew) yields one purified ore plus eight
      * byproduct fines of 9 each, in 144 ticks; the tiny crushed ore form takes 100 mB and 16
      * ticks and yields the same set at 1 each. Both are registered for every water variant, and
      * left-over water leaves the machine as GT6's {@code FL.Sluice} fluid.
@@ -512,6 +526,9 @@ public class OreProcessingRecipeLoader implements InitializationStep {
             if (!material.isValid() || !MaterialPrefix.crushed.isValidFor(material)) continue;
 
             ItemStack crushed = mat(MaterialPrefix.crushed, material, 1);
+            if (!SourceOreInputForms.allowGeneratedInput(material,MaterialPrefix.crushed,crushed,
+                    material.getId()==8221&&material.getName().equals("Wood")
+                    ?SourceOreInputForms.Evidence.NO:SourceOreInputForms.Evidence.UNKNOWN))continue;
             ItemStack crushedTiny = mat(MaterialPrefix.crushedTiny, material, 1);
             ItemStack purified = mat(MaterialPrefix.crushedPurified, material, 1);
             ItemStack purifiedTiny = mat(MaterialPrefix.crushedPurifiedTiny, material, 1);
@@ -519,17 +536,17 @@ public class OreProcessingRecipeLoader implements InitializationStep {
                 continue;
             }
 
-            // GT6 takes the first seven byproducts in registration order and falls back to the
+            // GT6 takes the first eight byproducts in registration order and falls back to the
             // material itself when there are fewer (Loader_Recipes_Ores:416).
             List<GTMaterial> byProds = material.getByProducts();
-            ItemStack[] fines9 = new ItemStack[7];
-            ItemStack[] fines1 = new ItemStack[7];
+            ItemStack[] fines9 = new ItemStack[8];
+            ItemStack[] fines1 = new ItemStack[8];
             boolean complete = true;
-            for (int i = 0; i < 7; i++) {
+            for (int i = 0; i < 8; i++) {
                 GTMaterial product = i < byProds.size() && byProds.get(i) != null && byProds.get(i).isValid()
                         ? byProds.get(i) : material;
-                fines9[i] = mat(MaterialPrefix.crushedPurifiedTiny, product, 9);
-                fines1[i] = mat(MaterialPrefix.crushedPurifiedTiny, product, 1);
+                fines9[i] = purifiedTinyOrDust(product, 9);
+                fines1[i] = purifiedTinyOrDust(product, 1);
                 complete &= !fines9[i].isEmpty() && !fines1[i].isEmpty();
             }
             if (!complete) continue;
@@ -538,14 +555,28 @@ public class OreProcessingRecipeLoader implements InitializationStep {
                 MachineRecipeMaps.Sluice.addRecipe1(true, EU_TIER, 144, SLUICE_CHANCES,
                         crushed, water, sluice900.copy(), purified,
                         fines9[0].copy(), fines9[1].copy(), fines9[2].copy(), fines9[3].copy(),
-                        fines9[4].copy(), fines9[5].copy(), fines9[6].copy());
+                        fines9[4].copy(), fines9[5].copy(), fines9[6].copy(), fines9[7].copy());
             }
             for (FluidStack water : water100) {
                 MachineRecipeMaps.Sluice.addRecipe1(true, EU_TIER, 16, SLUICE_CHANCES,
                         crushedTiny, water, sluice100.copy(), purifiedTiny,
                         fines1[0].copy(), fines1[1].copy(), fines1[2].copy(), fines1[3].copy(),
-                        fines1[4].copy(), fines1[5].copy(), fines1[6].copy());
+                        fines1[4].copy(), fines1[5].copy(), fines1[6].copy(), fines1[7].copy());
             }
+        }
+    }
+
+    /** Bounded reviewed source profile; shared row algorithms; unknown inputs retain legacy routes. */
+    private void processReviewedFollowonRoutes() {
+        var seen=java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<GTMaterial,Boolean>());
+        for(var alias:GTMaterialRegistry.allMaterials()) {
+            var material=alias.resolve();
+            if(!seen.add(material)||!ReviewedCinnabarFacts.supports(material))continue;
+            var facts=ReviewedCinnabarFacts.INSTANCE;
+            SourceOreFollowonRows.petrotheum(material,facts);
+            SourceOreFollowonRows.cracking(material,ReviewedCinnabarFacts.sourceWaxes(),facts);
+            // Explicit source Ores184-187 identity is carried by this reviewed profile, not every gemstone.
+            SourceOreFollowonRows.cryotheumBath(material,facts);
         }
     }
 
@@ -564,29 +595,26 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         return GTFluids.stack(field, mb);
     }
 
-    /** Byproducts ordered the way GT6's magnetic separator consumes them. */
-    private static List<GTMaterial> magnetOrder(List<GTMaterial> byProds) {
-        List<GTMaterial> ordered = new ArrayList<>();
-        for (GTMaterial byProduct : byProds) {
-            if (byProduct != null && byProduct.isValid() && !byProduct.has(MaterialProperty.MAGNETIC)) ordered.add(byProduct);
-        }
-        for (GTMaterial byProduct : byProds) {
-            if (byProduct != null && byProduct.isValid() && byProduct.has(MaterialProperty.MAGNETIC)) ordered.add(byProduct);
-        }
-        return ordered;
+    /** OreDictPrefix.mat(material,replacement,count): fallback count is not multiplied. */
+    private static ItemStack gradeOrGem(MaterialPrefix prefix, GTMaterial material, int count,
+                                       ItemStack gem, int fallbackCount) {
+        return SourceGemGradeResolver.gradeOrGem(prefix, material, count, gem, fallbackCount);
     }
 
     /** {@code count} tiny centrifuged ore of the byproduct at {@code index}, else of {@code fallback}. */
     private static ItemStack byProductCentrifugedTiny(List<GTMaterial> byProds, int index, int count,
                                                      GTMaterial fallback) {
-        if (index < byProds.size()) {
-            GTMaterial byProduct = byProds.get(index);
-            if (byProduct != null && byProduct.isValid()) {
-                ItemStack stack = mat(MaterialPrefix.crushedCentrifugedTiny, byProduct, count);
-                if (!stack.isEmpty()) return stack;
-            }
-        }
-        return mat(MaterialPrefix.crushedCentrifugedTiny, fallback, count);
+        GTMaterial product = index < byProds.size() ? byProds.get(index) : fallback;
+        return refinedTinyOrDust(product, count);
+    }
+    /** Original OM343-353: purifiedTiny -> refinedTiny -> dustTiny, same material/count. */
+    private static ItemStack purifiedTinyOrDust(GTMaterial material, int count) {
+        ItemStack result = SourceOreInputForms.reviewedOreOutput(MaterialPrefix.crushedPurifiedTiny, material, count);
+        return result.isEmpty() ? refinedTinyOrDust(material, count) : result;
+    }
+    private static ItemStack refinedTinyOrDust(GTMaterial material, int count) {
+        ItemStack result = SourceOreInputForms.reviewedOreOutput(MaterialPrefix.crushedCentrifugedTiny, material, count);
+        return result.isEmpty() ? mat(MaterialPrefix.dustTiny, material, count) : result;
     }
 
     // ========================================================================

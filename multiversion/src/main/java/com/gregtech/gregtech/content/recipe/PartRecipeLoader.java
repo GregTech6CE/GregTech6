@@ -317,7 +317,9 @@ public class PartRecipeLoader implements InitializationStep {
         GTMaterial target = m.getTargetSmeltingMaterial();
         long amount = m.getTargetSmeltingAmount();
         if (target == null || !target.isValid() || amount <= 0) return;
-        if (!m.has(MaterialProperty.MELTING)) return;
+        if (!OreSourcePolicy.furnaceInput(m)) return;
+        // The later source listener owns exact forms, amount and cooking metadata.
+        if (OreSourcePolicy.usesReviewedFurnaceListener(m)) return;
 
         ItemStack output = OM.dustOrIngot(target, amount);
         if (output.isEmpty()) output = OM.gem(target, amount);
