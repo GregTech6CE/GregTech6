@@ -23,8 +23,10 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.RegistryObject;
 //?}
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /** SPDX-License-Identifier: LGPL-3.0-or-later. Installs the Forge fluid and recipe entry. */
@@ -119,17 +121,31 @@ public final class AddonLoaderServices {
         @Override public void addDynamic(AddonRecipes.Dynamic provider) {
             if (provider == null) throw new IllegalArgumentException("dynamic recipe provider");
             map.addDynamicRecipes((items, fluids) -> {
-                AddonRecipes.Line line = provider.find(items, fluids);
+                AddonRecipes.Line line = provider.find(itemSnapshot(items), fluidSnapshot(fluids));
                 return line == null ? null : recipe(line);
             });
         }
 
         @Override public AddonRecipes.Line find(List<ItemStack> items, List<FluidStack> fluids,
                                                  boolean needsOutputs, int inputSlots, int outputSlots) {
-            Recipe recipe = map.findRecipe(items == null ? List.of() : items, fluids == null ? List.of() : fluids,
+            Recipe recipe = map.findRecipe(itemSnapshot(items), fluidSnapshot(fluids),
                     needsOutputs, inputSlots, outputSlots);
             return recipe == null ? null : line(recipe);
         }
+    }
+
+    private static List<ItemStack> itemSnapshot(List<ItemStack> stacks) {
+        if (stacks == null || stacks.isEmpty()) return List.of();
+        List<ItemStack> copy = new ArrayList<>(stacks.size());
+        for (ItemStack stack : stacks) copy.add(stack == null ? null : stack.copy());
+        return Collections.unmodifiableList(copy);
+    }
+
+    private static List<FluidStack> fluidSnapshot(List<FluidStack> stacks) {
+        if (stacks == null || stacks.isEmpty()) return List.of();
+        List<FluidStack> copy = new ArrayList<>(stacks.size());
+        for (FluidStack stack : stacks) copy.add(stack == null ? null : stack.copy());
+        return Collections.unmodifiableList(copy);
     }
 
     private static Recipe recipe(AddonRecipes.Line line) {
@@ -145,8 +161,9 @@ public final class AddonLoaderServices {
                 throw new IllegalArgumentException("Fluid input " + i + " is empty");
             RecipeKeptInputs.requirePositiveFluid(stack.getAmount(), i);
         }
-        long[] chances = new long[line.outputChances().length];
-        for (int i = 0; i < chances.length; i++) chances[i] = line.outputChances()[i];
+        int[] outputChances = line.outputChances();
+        long[] chances = new long[outputChances.length];
+        for (int i = 0; i < chances.length; i++) chances[i] = outputChances[i];
         return new Recipe(inputs, line.itemOutputs(), null, chances,
                 fluidInputs, line.fluidOutputs(), line.duration(), line.euPerTick(), line.special())
                 .withCatalystInputs(line.keptInputs())

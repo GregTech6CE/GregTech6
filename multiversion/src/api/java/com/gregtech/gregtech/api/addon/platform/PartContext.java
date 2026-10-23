@@ -20,6 +20,16 @@ import javax.annotation.Nullable;
  * and while a bound controller is calling back into the same behavior.
  */
 public interface PartContext {
+    /** Unified snapshot reads and explicit writes for this part's inventory. */
+    default InventoryAccess inventoryAccess() {
+        return BehaviorAccess.inventory(this::slots, this::item, this::setItem);
+    }
+
+    /** Unified snapshot reads and mB operations for this part's tanks. */
+    default FluidAccess fluidAccess() {
+        return BehaviorAccess.fluids(this::tanks, this::fluid, this::tankCapacity, this::fill, this::drain);
+    }
+
     Level level();
 
     BlockPos pos();
@@ -31,6 +41,7 @@ public interface PartContext {
 
     int slots();
 
+    /** Detached stack in GT's part host. Prefer {@link #inventoryAccess()} for uniform bounds checking. */
     ItemStack item(int slot);
 
     /**
@@ -41,7 +52,10 @@ public interface PartContext {
 
     int tanks();
 
-    /** Empty when this part has no tank at {@code tank}, or that tank is empty. */
+    /**
+     * Legacy tank view; do not modify the returned stack. Empty for an absent/empty tank.
+     * Use {@link #fluidAccess()} for a guaranteed detached snapshot and uniform bounds checking.
+     */
     FluidStack fluid(int tank);
 
     int tankCapacity(int tank);

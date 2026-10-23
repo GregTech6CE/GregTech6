@@ -57,17 +57,17 @@ public final class AddonSampleParts implements LayoutPartContributor {
             int slot = slotOf(hit);
             if (slot < 0) return false;
             ItemStack held = player.getItemInHand(hand);
-            ItemStack stored = context.item(slot);
+            ItemStack stored = context.inventoryAccess().snapshot(slot);
             if (held.isEmpty()) {
                 if (stored.isEmpty()) return false;
-                context.setItem(slot, ItemStack.EMPTY);
+                context.inventoryAccess().set(slot, ItemStack.EMPTY);
                 if (!player.getInventory().add(stored)) player.drop(stored, false);
                 return true;
             }
             if (powerOf(held) == 0 || !stored.isEmpty()) return false;
             ItemStack one = held.copy();
             one.setCount(1);
-            context.setItem(slot, one);
+            context.inventoryAccess().set(slot, one);
             if (!player.getAbilities().instabuild) held.shrink(1);
             return true;
         }
@@ -82,14 +82,14 @@ public final class AddonSampleParts implements LayoutPartContributor {
 
         @Override public void onSlotsChanged(PartContext context, int slot) {
             int sum = 0;
-            for (int index = 0; index < context.slots(); index++) sum += powerOf(context.item(index));
+            for (int index = 0; index < context.slots(); index++) sum += powerOf(context.inventoryAccess().snapshot(index));
             context.state().setInt("power", sum);
         }
 
         @Override public List<Component> describe(PartContext context) {
             int filled = 0;
             for (int index = 0; index < context.slots(); index++)
-                if (!context.item(index).isEmpty()) filled++;
+                if (!context.inventoryAccess().snapshot(index).isEmpty()) filled++;
             var lines = new ArrayList<Component>();
             lines.add(Component.literal(filled + "/" + context.slots()));
             lines.add(Component.literal("power " + context.state().getInt("power")));

@@ -6,11 +6,9 @@ java {
     toolchain.languageVersion = JavaLanguageVersion.of(17)
 }
 
-sourceSets {
-    api {
-        java.srcDir 'src/api/java'
-    }
-}
+// Java already assigns src/api/java to the custom source set; adding it again
+// visits the same tree twice when packaging API sources.
+sourceSets { api }
 
 dependencies {
     implementation sourceSets.api.output
@@ -89,6 +87,7 @@ tasks.named('check').configure { dependsOn addonApiClosureCheck }
 [
     coreBehaviorContracts: 'CoreBehaviorContracts',
     addonDeclarationTypeContracts: 'AddonDeclarationTypeContracts',
+    addonEnergyTransferContracts: 'AddonEnergyTransferContracts',
     materialBehaviorContracts: 'MaterialBehaviorContracts',
     materialDecompositionContracts: 'MaterialDecompositionContracts',
     thermalBehaviorContracts: 'ThermalBehaviorContracts',

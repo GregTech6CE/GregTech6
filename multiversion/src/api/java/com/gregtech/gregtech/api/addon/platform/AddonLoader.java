@@ -15,6 +15,7 @@ public final class AddonLoader {
 
     private AddonLoader() {}
 
+    /** GT bootstrap only. Addons must not install or replace the host implementation. */
     public static synchronized void bind(Services implementation) {
         if (implementation == null) throw new IllegalArgumentException("addon loader services");
         if (services != null) throw new IllegalStateException("GregTech addon loader API is already installed");
@@ -26,6 +27,7 @@ public final class AddonLoader {
         return services;
     }
 
+    /** GT implementation contract; addon consumers use {@link AddonFluids} and {@link AddonRecipes}. */
     public interface Services {
         /** Null when {@code name} is not a registered GregTech fluid field. */
         FluidStack fluid(String name, AddonFluids.Kind kind, int millibuckets);
