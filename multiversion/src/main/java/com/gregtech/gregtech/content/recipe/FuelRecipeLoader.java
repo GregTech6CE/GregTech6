@@ -28,8 +28,8 @@ public class FuelRecipeLoader implements InitializationStep {
 
     @Override
     public void run() {
+        registerEngineFuels();
         for(var row:com.gregtech.gregtech.content.recipe.OriginalFuelRecipeRows.ROWS)switch(row.kind()){
-            case "engine"->engine(row.eut(),row.duration(),row.input());
             case "burn"->burn(row.eut(),row.duration(),row.input());
             case "gas"->gas(row.eut(),row.duration(),row.input(),row.amount(),rowFluid(row.output(),row.outputAmount()),rowFluid(row.output2(),row.output2Amount()));
             case "hot"->hot(row);
@@ -41,14 +41,28 @@ public class FuelRecipeLoader implements InitializationStep {
 
     private static FluidStack rowFluid(String key,int amount){return key==null?null:key.equals("water")?water(amount):make(key,amount);}
 
-    private void engine(long eut, long duration, String key) {
-        FluidStack in = make(key, 1);
-        if (in == null) { skipped++; return; }
-        FluidStack exhaust = co2(1);
-        if (exhaust != null) {
-            record(FuelRecipeMaps.Engine.addRecipe0(true, -eut, duration, in, exhaust, RecipeMap.ZL_IS));
-        } else {
-            record(FuelRecipeMaps.Engine.addRecipe0(true, -eut, duration, in, RecipeMap.ZL_FS));
+    private void registerEngineFuels() {
+        // Exact prepared catalog identity preserves dedicated and generated aliases without
+        // mistaking a legacy registry name (ethanol/nitrofuel) for a Java field key.
+        var seen=java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<net.minecraft.world.level.material.Fluid,Boolean>());
+        var entries=new java.util.TreeMap<>(com.gregtech.gregtech.data.RegisteredFluids.all());
+        for(var row:OriginalEngineFuelRows.ROWS) {
+            boolean resolved=false;
+            for(var entry:entries.entrySet()) {
+                var definition=entry.getValue();
+                boolean matches=row.category()!=0 ? definition.hasFlag(row.category())
+                    : row.registryNames().contains(definition.registryName());
+                if(!matches)continue;
+                FluidStack in=make(entry.getKey(),1);
+                if(in==null)continue;
+                resolved=true;
+                if(!seen.add(in.getFluid()))continue;
+                FluidStack exhaust=co2(1);
+                // Source's declared output is required; never silently turn it into fuel voiding.
+                if(exhaust==null){skipped++;continue;}
+                record(FuelRecipeMaps.Engine.addRecipe0(true,-row.eut(),row.duration(),in,exhaust,RecipeMap.ZL_IS));
+            }
+            if(!resolved)skipped++;
         }
     }
 

@@ -419,12 +419,12 @@ public final class NeoForgeDedicatedSmoke {
     private static void observeDieselCycle(ServerLevel level) {
         int offset=DIESEL_BASELINE?4:8;var be=diesel(level,offset);
         if(DIESEL_READ_ONLY||dieselCycleObserved||be.fuelTank().getAmount()!=0||be.getKuEnergy()<=0)return;
-        long expected=DIESEL_BASELINE?32:512;
+        long expected=DIESEL_BASELINE?32:448;
         if(be.getKuEnergy()!=expected)throw new IllegalStateException("One real mB diesel cycle: "+be.getKuEnergy()+" expected "+expected);
         if(!DIESEL_BASELINE && be.getEnergyCapacity(com.gregtech.gregtech.data.GregTechTags.Energy.RU,null)<expected)throw new IllegalStateException("RU reservoir reports less than its full cycle");
         dieselCycleObserved=true;
         if(DIESEL_BASELINE)be.setStopped(true);
-        LOGGER.info("DIESEL_CYCLE_OBSERVED baseline={} ordinaryTick={} oneFuelMilliBucket=true storedEnergy={} originalRecipeEnergy=512",DIESEL_BASELINE,observedTicks,be.getKuEnergy());
+        LOGGER.info("DIESEL_CYCLE_OBSERVED baseline={} ordinaryTick={} oneFuelMilliBucket=true storedEnergy={} originalRecipeEnergy=448",DIESEL_BASELINE,observedTicks,be.getKuEnergy());
     }
 
     private static void verifyDieselOutput(ServerLevel level) {

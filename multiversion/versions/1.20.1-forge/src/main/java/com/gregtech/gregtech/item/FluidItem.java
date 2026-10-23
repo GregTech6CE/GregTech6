@@ -31,6 +31,12 @@ public class FluidItem extends Item {
         this.fluidEntry = fluidEntry;
     }
 
+    @Override
+    public net.minecraft.world.InteractionResult onItemUseFirst(ItemStack stack,
+            net.minecraft.world.item.context.UseOnContext context) {
+        return com.gregtech.gregtech.api.fluid.FluidDisplayInteraction.useFirst(stack, context);
+    }
+
     public RegisteredFluids.FluidEntry fluidEntry() {
         return fluidEntry;
     }
