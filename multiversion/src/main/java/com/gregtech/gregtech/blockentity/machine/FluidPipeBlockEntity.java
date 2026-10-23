@@ -561,7 +561,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
                                     neighborState.setValue(FluidPipeBlock.propFor(clickedFace), true));
                         }
                     }
-                } else if (isConnectableNeighbor(side)) {
+                } else if (isConnectableNeighbor(side) || isNativePlacementEndpoint(side)) {
                     connectOwnFace(side);
                 }
             }
@@ -605,6 +605,20 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         BlockPos neighborPos = worldPosition.relative(side);
         return level.hasChunkAt(neighborPos)
                 && com.gregtech.gregtech.content.cover.CoverConnections.canConnect(level, worldPosition, side);
+    }
+
+    /** Ordinary capability endpoints connect only when explicitly clicked during placement. */
+    private boolean isNativePlacementEndpoint(Direction side) {
+        BlockPos target = worldPosition.relative(side);
+        if (level == null || !level.hasChunkAt(target)) return false;
+//? if >=1.21.1 {
+        /*IFluidHandler handler = level.getCapability(Capabilities.FluidHandler.BLOCK, target, side.getOpposite());
+*///?} else {
+        BlockEntity entity = level.getBlockEntity(target);
+        IFluidHandler handler = entity == null ? null
+                : entity.getCapability(ForgeCapabilities.FLUID_HANDLER, side.getOpposite()).orElse(null);
+//?}
+        return handler != null && handler.getTanks() > 0;
     }
 
     private boolean isConnectableNeighbor(Direction side) {

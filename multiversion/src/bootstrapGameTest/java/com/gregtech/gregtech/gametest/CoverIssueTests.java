@@ -274,7 +274,11 @@ public final class CoverIssueTests {
         wire.setMode(15);wire.tickNetwork();host.panels().afterTick();
         h.assertTrue(wire.output(Direction.NORTH)==0&&wire.output(Direction.SOUTH)==15,"wire signal, not machine state, drives attachments");
         var bare=(PanelCoverHost)(Object)place(h,site(127),GTSignalWires.all().stream().map(r->r.get()).filter(b->!b.insulated()).findFirst().orElseThrow());
-        h.assertTrue(!bare.attachCover(Direction.NORTH,new ItemStack(Items.REDSTONE_TORCH)),"bare wire rejects insulated-only torch");
+        h.assertTrue(bare.attachCover(Direction.NORTH,new ItemStack(Items.REDSTONE_TORCH))&&bare.attachCover(Direction.SOUTH,new ItemStack(Items.REPEATER)),"bare redstone wire inherits both attachment types too");
+        var bareWire=(SignalWireBlockEntity)bare.coverOwner();bare.panels().afterTick();
+        h.assertTrue(!bareWire.connected(Direction.NORTH)&&!bareWire.connected(Direction.SOUTH)&&bareWire.output(Direction.NORTH)==15&&bareWire.output(Direction.SOUTH)==0,"bare attachments disconnect their ports and use the unpowered wire signal");
+        bareWire.setMode(15);bareWire.tickNetwork();bare.panels().afterTick();
+        h.assertTrue(bareWire.output(Direction.NORTH)==0&&bareWire.output(Direction.SOUTH)==15,"bare attachments follow the powered wire signal");
         var pipe=(FluidPipeBlockEntity)host(h,site(132),"pipe_huge_steel");var side=Direction.EAST;
         h.assertTrue(pipe.attachCover(side,cover(PanelCover.SHUTTER.id)),"fluid pipe accepts shutter");
         pipe.panels().configure(side,false,false);

@@ -12,6 +12,37 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'coverplatesupporttests.blankcoveraddsoutlineandnativeleversupport',
+    'coverplatesupporttests.coversupportisfacelocalandtorchremainsnonsolid',
+    'electricwiregraphloadednesstests.wireconnectioncallbackskipsabsentsavedmaskneighbors',
+
+    'signalwireplacementcovertests.pairedsignalwiresstaydisconnectedafternativecutter',
+    'signalwireplacementcovertests.signalwireplacementhonorsexplicitneighborports',
+    'signalwireplacementcovertests.signalwireportssurviveneighborpowerandremoval',
+    'signalwireplacementcovertests.bareandinsulatedsignalwiresacceptnativetorchcovers',
+    'signalwireplacementcovertests.signalplacementandcutterrespectneighbortorchblocker',
+
+    'pipeplacementendpointtests.itempipeplacementconnectsclickedchestonly',
+    'pipeplacementendpointtests.fluidpipeplacementconnectsclickednativetankonly',
+    'pipeplacementendpointtests.electricwirenativeplacementconnectssupportreciprocally',
+    'pipeplacementendpointtests.electricwireplacementrespectsnativeeufaces',
+    'pipeplacementendpointtests.fluidplacementpreservesshuttersandmanualdisconnects',
+    'pipeplacementendpointtests.itemplacementpreservesshuttersandmanualdisconnects',
+
+    'turbineplungerprioritytests.nativeplungersneakingoffhandpreservessteampriority',
+    'turbineplungerprioritytests.nativeplungerpurgessteambeforerealcondensate',
+    'turbineplungerprioritytests.nativeplungerpurgesrealcondensateatoriginalwear',
+    'turbineplungerprioritytests.emptysteamturbineplungerdoesnotspendwear',
+    'turbineplungerprioritytests.nonturbinetankkeepsgenericthousandmbplunger',
+    'gasturbinepartialfueltests.minimumoperationalhydrogenbatchreachesrealdynamo',
+    'gasturbinepartialfueltests.fractionalpartialhydrogenbatchroundswithoutcreatingenergy',
+    'gasturbinepartialfueltests.belowminimumhydrogenbatchretainsheatwithoutru',
+    'gasturbinepartialfueltests.emptygasturbinecreatesnoenergyorexhaust',
+    'gasturbinepartialfueltests.fullhydrogenbatchpreservesmaximumoutputrate',
+    'gasturbinepartialfueltests.blockedpartialgaspulsesurvivesfreshentityloadandtransfersonce',
+    'aluminafluidunitcontracttests.scaledaluminaroutesuseexactsourceunits',
+    'aluminafluidunitcontracttests.sourceunittokenskeepnativeidentityandlegacysemantics',
+    'aluminafluidquantitytests.specializedaluminausesoriginalfluidcoefficients',
     'materialdecompositionpolicytests.genericelectrolysisrequiresandretainsselectorzero',
     'materialdecompositionpolicytests.unflaggedaluminaandsaltdonotautodecompose',
     'materialdecompositionpolicytests.decompositionmapsfollowexplicitmaterialprocessing',
@@ -162,9 +193,35 @@ FORGE_ONLY_CASES = {
     'covercapabilitylifetimetests.fallbackreentrantnewersourcesurvivesstaleouterlookup',
 }
 GAS_CASE = 'gasmotionregressiontests.gasusesairmotionwithoutremovinghazards'
+LEGACY_CASE_NAMESPACES = {
+    'coverissuetests.solarhasnowaterandcoverplatehasdepth': 'gregtech_cover_issues:test_empty',
+    'coverissuetests.coretickinputanddisplaydirection': 'gregtech_cover_issues:test_empty',
+    'coverissuetests.logisticsstorageandcoveredwirestaydisconnected': 'gregtech_cover_issues:test_empty',
+    'coverissuetests.heldtoolsconfigurenativedetectorandremovalresets': 'gregtech_cover_issues:test_empty',
+    'coverissuetests.selectorsfallbacksignalsandlatchedcoverstop': 'gregtech_cover_issues:test_empty',
+    'coverissuetests.helditemworkbenchstaysopenandharvestretainscover': 'gregtech_cover_issues:test_empty',
+    'coverissuetests.wireonlytorchandshuttersgatepipes': 'gregtech_cover_issues:test_empty',
+    'coverissuetests.itemfiltersignorecomponentsanddecorationsuseheldchisel': 'gregtech_cover_issues:test_empty',
+    'coverissuetests.drainbulkexperiencewalkandfilterconnectionboundary': 'gregtech_cover_issues:test_empty',
+    'pipeautoconnecttests.fluidpipeconnectstoconnectableblockplacedafter': 'gregtech_pipe_auto:test_empty',
+    'pipeautoconnecttests.fluidpipeplacedafterconnectableblockconnects': 'gregtech_pipe_auto:test_empty',
+    'pipeautoconnecttests.itempipeautoconnectsinbothorders': 'gregtech_pipe_auto:test_empty',
+    'pipeautoconnecttests.wrenchdisconnectsurvivesneighbourchanges': 'gregtech_pipe_auto:test_empty',
+    'pipeautoconnecttests.placementscanrepairshalfconnection': 'gregtech_pipe_auto:test_empty',
+    'pipeautoconnecttests.signalwireignoresunselectedsourceplacedafter': 'gregtech_pipe_auto:test_empty',
+    'pipeautoconnecttests.signalwirestateplacementdoesnotinfersourceports': 'gregtech_pipe_auto:test_empty',
+    'pipeautoconnecttests.signalwireretainsexplicitportwhensourceisremoved': 'gregtech_pipe_auto:test_empty',
+    'pipeautoconnecttests.signalwireskeepunselectedneighborportsclosed': 'gregtech_pipe_auto:test_empty',
+}
+
+
+def expected_namespace(identity):
+    return LEGACY_CASE_NAMESPACES.get(identity, 'gregtech_issue_audit:test_empty')
+
+
 EXPECTED = {
-    'forge': {'openissueregressiontests.' + method for method in FORGE_METHODS} | {GAS_CASE} | FUNCTIONAL_CASES | FORGE_ONLY_CASES,
-    'neoforge': {GAS_CASE} | FUNCTIONAL_CASES,
+    'forge': {'openissueregressiontests.' + method for method in FORGE_METHODS} | {GAS_CASE} | FUNCTIONAL_CASES | FORGE_ONLY_CASES | set(LEGACY_CASE_NAMESPACES),
+    'neoforge': {GAS_CASE} | FUNCTIONAL_CASES | set(LEGACY_CASE_NAMESPACES),
 }
 
 
@@ -188,7 +245,7 @@ def check(path, platform='forge'):
             test_class, method = identity.split('.', 1)
             # Mojang's JUnit reporter uses the template resource as classname,
             # and PrefixGameTestTemplate(false) leaves a bare method name.
-            if name == method and classname == 'gregtech_issue_audit:test_empty':
+            if name == method and classname == expected_namespace(identity):
                 found.add(identity)
             elif name == method and classname.endswith(test_class):
                 found.add(identity)

@@ -1,0 +1,446 @@
+{
+  "scope": "eight existing Coal-only Alumina rows; only four fluid tokens per row change",
+  "source_unit": 648648000,
+  "generated_baseline_sha256": "f9e541855f9773c596fcd7c1150f733379b64a0492c605a5308b82b231ce7c25",
+  "generated_sha256": "ef3cc4c7153e52c2da31bb79ee9a7745d1f708207ce354979d99d0da7804ec10",
+  "row_count": 8,
+  "new_token_count": 32,
+  "sources": [
+    {
+      "reference": "gregtech6-original",
+      "files": [
+        {
+          "path": "src/main/java/gregtech/loaders/c/Loader_Recipes_Chem.java",
+          "sha256": "92b3aff4549ad511b1e6fe5a24219f230ac581569d8666adc80266d2e4fdcf5c"
+        },
+        {
+          "path": "src/main/java/gregapi/data/CS.java",
+          "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+        }
+      ]
+    },
+    {
+      "reference": "gregtech6-w",
+      "files": [
+        {
+          "path": "src/main/java/gregtech/loaders/c/Loader_Recipes_Chem.java",
+          "sha256": "7c0fab70c9e8234aa341341e86ddf96eed88ef39334876cb58bca303323c69e9"
+        },
+        {
+          "path": "src/main/java/gregapi/data/CS.java",
+          "sha256": "cc8051f7ab2c17e28a6c5d690267a39ebb5ce35cc112ceeb5e055d4e7be9fda7"
+        }
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "key": [
+        "blockDust",
+        1,
+        "dust",
+        30,
+        6144
+      ],
+      "source_line": 291,
+      "source_call": "T,16,6144,OP.blockDust.mat(tMat,1),OP.dust.mat(MT.Al2O3,30),FL.array(MT.Na3AlF6.liquid(U24,T),MT.AlF3.liquid(U12,T)),FL.array(MT.CO2.gas(U*27,F),MT.F.gas(7*U80,F)),OM.dust(MT.Al,U*12)",
+      "fluids": [
+        {
+          "material": "Na3AlF6",
+          "selector": "liquid",
+          "expression": "U24",
+          "source_units": 27027000,
+          "round": "up",
+          "old_token": "m:Na3AlF6:42",
+          "new_token": "mu:Na3AlF6:liquid:27027000:up"
+        },
+        {
+          "material": "AlF3",
+          "selector": "liquid",
+          "expression": "U12",
+          "source_units": 54054000,
+          "round": "up",
+          "old_token": "m:AlF3:83",
+          "new_token": "mu:AlF3:liquid:54054000:up"
+        },
+        {
+          "material": "CO2",
+          "selector": "gas",
+          "expression": "U*27",
+          "source_units": 17513496000,
+          "round": "down",
+          "old_token": "m:CO2:27000",
+          "new_token": "mu:CO2:gas:17513496000:down"
+        },
+        {
+          "material": "F",
+          "selector": "gas",
+          "expression": "7*U80",
+          "source_units": 56756700,
+          "round": "down",
+          "old_token": "m:F:84",
+          "new_token": "mu:F:gas:56756700:down"
+        }
+      ],
+      "old_line": "        r(\"Electrolyzer\", 16, 6144, null, sp(\"i:blockDust:Coal:1\", \"i:dust:Al2O3:30\"), sp(\"m:Na3AlF6:42\", \"m:AlF3:83\"), sp(\"m:CO2:27000\", \"m:F:84\"), sp(\"omd:Al:12000\"));",
+      "new_line": "        r(\"Electrolyzer\", 16, 6144, null, sp(\"i:blockDust:Coal:1\", \"i:dust:Al2O3:30\"), sp(\"mu:Na3AlF6:liquid:27027000:up\", \"mu:AlF3:liquid:54054000:up\"), sp(\"mu:CO2:gas:17513496000:down\", \"mu:F:gas:56756700:down\"), sp(\"omd:Al:12000\"));"
+    },
+    {
+      "key": [
+        "blockDust",
+        1,
+        "ingot",
+        30,
+        6144
+      ],
+      "source_line": 292,
+      "source_call": "T,16,6144,OP.blockDust.mat(tMat,1),OP.ingot.mat(MT.Al2O3,30),FL.array(MT.Na3AlF6.liquid(U24,T),MT.AlF3.liquid(U12,T)),FL.array(MT.CO2.gas(U*27,F),MT.F.gas(7*U80,F)),OM.dust(MT.Al,U*12)",
+      "fluids": [
+        {
+          "material": "Na3AlF6",
+          "selector": "liquid",
+          "expression": "U24",
+          "source_units": 27027000,
+          "round": "up",
+          "old_token": "m:Na3AlF6:42",
+          "new_token": "mu:Na3AlF6:liquid:27027000:up"
+        },
+        {
+          "material": "AlF3",
+          "selector": "liquid",
+          "expression": "U12",
+          "source_units": 54054000,
+          "round": "up",
+          "old_token": "m:AlF3:83",
+          "new_token": "mu:AlF3:liquid:54054000:up"
+        },
+        {
+          "material": "CO2",
+          "selector": "gas",
+          "expression": "U*27",
+          "source_units": 17513496000,
+          "round": "down",
+          "old_token": "m:CO2:27000",
+          "new_token": "mu:CO2:gas:17513496000:down"
+        },
+        {
+          "material": "F",
+          "selector": "gas",
+          "expression": "7*U80",
+          "source_units": 56756700,
+          "round": "down",
+          "old_token": "m:F:84",
+          "new_token": "mu:F:gas:56756700:down"
+        }
+      ],
+      "old_line": "        r(\"Electrolyzer\", 16, 6144, null, sp(\"i:blockDust:Coal:1\", \"i:ingot:Al2O3:30\"), sp(\"m:Na3AlF6:42\", \"m:AlF3:83\"), sp(\"m:CO2:27000\", \"m:F:84\"), sp(\"omd:Al:12000\"));",
+      "new_line": "        r(\"Electrolyzer\", 16, 6144, null, sp(\"i:blockDust:Coal:1\", \"i:ingot:Al2O3:30\"), sp(\"mu:Na3AlF6:liquid:27027000:up\", \"mu:AlF3:liquid:54054000:up\"), sp(\"mu:CO2:gas:17513496000:down\", \"mu:F:gas:56756700:down\"), sp(\"omd:Al:12000\"));"
+    },
+    {
+      "key": [
+        "dust",
+        3,
+        "dust",
+        10,
+        2048
+      ],
+      "source_line": 293,
+      "source_call": "T,16,2048,OP.dust.mat(tMat,3),OP.dust.mat(MT.Al2O3,10),FL.array(MT.Na3AlF6.liquid(U72,T),MT.AlF3.liquid(U36,T)),FL.array(MT.CO2.gas(U*9,F),MT.F.gas(7*U240,F)),OM.dust(MT.Al,U*4)",
+      "fluids": [
+        {
+          "material": "Na3AlF6",
+          "selector": "liquid",
+          "expression": "U72",
+          "source_units": 9009000,
+          "round": "up",
+          "old_token": "m:Na3AlF6:14",
+          "new_token": "mu:Na3AlF6:liquid:9009000:up"
+        },
+        {
+          "material": "AlF3",
+          "selector": "liquid",
+          "expression": "U36",
+          "source_units": 18018000,
+          "round": "up",
+          "old_token": "m:AlF3:28",
+          "new_token": "mu:AlF3:liquid:18018000:up"
+        },
+        {
+          "material": "CO2",
+          "selector": "gas",
+          "expression": "U*9",
+          "source_units": 5837832000,
+          "round": "down",
+          "old_token": "m:CO2:9000",
+          "new_token": "mu:CO2:gas:5837832000:down"
+        },
+        {
+          "material": "F",
+          "selector": "gas",
+          "expression": "7*U240",
+          "source_units": 18918900,
+          "round": "down",
+          "old_token": "m:F:28",
+          "new_token": "mu:F:gas:18918900:down"
+        }
+      ],
+      "old_line": "        r(\"Electrolyzer\", 16, 2048, null, sp(\"i:dust:Coal:3\", \"i:dust:Al2O3:10\"), sp(\"m:Na3AlF6:14\", \"m:AlF3:28\"), sp(\"m:CO2:9000\", \"m:F:28\"), sp(\"omd:Al:4000\"));",
+      "new_line": "        r(\"Electrolyzer\", 16, 2048, null, sp(\"i:dust:Coal:3\", \"i:dust:Al2O3:10\"), sp(\"mu:Na3AlF6:liquid:9009000:up\", \"mu:AlF3:liquid:18018000:up\"), sp(\"mu:CO2:gas:5837832000:down\", \"mu:F:gas:18918900:down\"), sp(\"omd:Al:4000\"));"
+    },
+    {
+      "key": [
+        "dust",
+        3,
+        "ingot",
+        10,
+        2048
+      ],
+      "source_line": 294,
+      "source_call": "T,16,2048,OP.dust.mat(tMat,3),OP.ingot.mat(MT.Al2O3,10),FL.array(MT.Na3AlF6.liquid(U72,T),MT.AlF3.liquid(U36,T)),FL.array(MT.CO2.gas(U*9,F),MT.F.gas(7*U240,F)),OM.dust(MT.Al,U*4)",
+      "fluids": [
+        {
+          "material": "Na3AlF6",
+          "selector": "liquid",
+          "expression": "U72",
+          "source_units": 9009000,
+          "round": "up",
+          "old_token": "m:Na3AlF6:14",
+          "new_token": "mu:Na3AlF6:liquid:9009000:up"
+        },
+        {
+          "material": "AlF3",
+          "selector": "liquid",
+          "expression": "U36",
+          "source_units": 18018000,
+          "round": "up",
+          "old_token": "m:AlF3:28",
+          "new_token": "mu:AlF3:liquid:18018000:up"
+        },
+        {
+          "material": "CO2",
+          "selector": "gas",
+          "expression": "U*9",
+          "source_units": 5837832000,
+          "round": "down",
+          "old_token": "m:CO2:9000",
+          "new_token": "mu:CO2:gas:5837832000:down"
+        },
+        {
+          "material": "F",
+          "selector": "gas",
+          "expression": "7*U240",
+          "source_units": 18918900,
+          "round": "down",
+          "old_token": "m:F:28",
+          "new_token": "mu:F:gas:18918900:down"
+        }
+      ],
+      "old_line": "        r(\"Electrolyzer\", 16, 2048, null, sp(\"i:dust:Coal:3\", \"i:ingot:Al2O3:10\"), sp(\"m:Na3AlF6:14\", \"m:AlF3:28\"), sp(\"m:CO2:9000\", \"m:F:28\"), sp(\"omd:Al:4000\"));",
+      "new_line": "        r(\"Electrolyzer\", 16, 2048, null, sp(\"i:dust:Coal:3\", \"i:ingot:Al2O3:10\"), sp(\"mu:Na3AlF6:liquid:9009000:up\", \"mu:AlF3:liquid:18018000:up\"), sp(\"mu:CO2:gas:5837832000:down\", \"mu:F:gas:18918900:down\"), sp(\"omd:Al:4000\"));"
+    },
+    {
+      "key": [
+        "dustTiny",
+        27,
+        "dust",
+        10,
+        2048
+      ],
+      "source_line": 295,
+      "source_call": "T,16,2048,OP.dustTiny.mat(tMat,27),OP.dust.mat(MT.Al2O3,10),FL.array(MT.Na3AlF6.liquid(U72,T),MT.AlF3.liquid(U36,T)),FL.array(MT.CO2.gas(U*9,F),MT.F.gas(7*U240,F)),OM.dust(MT.Al,U*4)",
+      "fluids": [
+        {
+          "material": "Na3AlF6",
+          "selector": "liquid",
+          "expression": "U72",
+          "source_units": 9009000,
+          "round": "up",
+          "old_token": "m:Na3AlF6:14",
+          "new_token": "mu:Na3AlF6:liquid:9009000:up"
+        },
+        {
+          "material": "AlF3",
+          "selector": "liquid",
+          "expression": "U36",
+          "source_units": 18018000,
+          "round": "up",
+          "old_token": "m:AlF3:28",
+          "new_token": "mu:AlF3:liquid:18018000:up"
+        },
+        {
+          "material": "CO2",
+          "selector": "gas",
+          "expression": "U*9",
+          "source_units": 5837832000,
+          "round": "down",
+          "old_token": "m:CO2:9000",
+          "new_token": "mu:CO2:gas:5837832000:down"
+        },
+        {
+          "material": "F",
+          "selector": "gas",
+          "expression": "7*U240",
+          "source_units": 18918900,
+          "round": "down",
+          "old_token": "m:F:28",
+          "new_token": "mu:F:gas:18918900:down"
+        }
+      ],
+      "old_line": "        r(\"Electrolyzer\", 16, 2048, null, sp(\"i:dustTiny:Coal:27\", \"i:dust:Al2O3:10\"), sp(\"m:Na3AlF6:14\", \"m:AlF3:28\"), sp(\"m:CO2:9000\", \"m:F:28\"), sp(\"omd:Al:4000\"));",
+      "new_line": "        r(\"Electrolyzer\", 16, 2048, null, sp(\"i:dustTiny:Coal:27\", \"i:dust:Al2O3:10\"), sp(\"mu:Na3AlF6:liquid:9009000:up\", \"mu:AlF3:liquid:18018000:up\"), sp(\"mu:CO2:gas:5837832000:down\", \"mu:F:gas:18918900:down\"), sp(\"omd:Al:4000\"));"
+    },
+    {
+      "key": [
+        "dustTiny",
+        27,
+        "ingot",
+        10,
+        2048
+      ],
+      "source_line": 296,
+      "source_call": "T,16,2048,OP.dustTiny.mat(tMat,27),OP.ingot.mat(MT.Al2O3,10),FL.array(MT.Na3AlF6.liquid(U72,T),MT.AlF3.liquid(U36,T)),FL.array(MT.CO2.gas(U*9,F),MT.F.gas(7*U240,F)),OM.dust(MT.Al,U*4)",
+      "fluids": [
+        {
+          "material": "Na3AlF6",
+          "selector": "liquid",
+          "expression": "U72",
+          "source_units": 9009000,
+          "round": "up",
+          "old_token": "m:Na3AlF6:14",
+          "new_token": "mu:Na3AlF6:liquid:9009000:up"
+        },
+        {
+          "material": "AlF3",
+          "selector": "liquid",
+          "expression": "U36",
+          "source_units": 18018000,
+          "round": "up",
+          "old_token": "m:AlF3:28",
+          "new_token": "mu:AlF3:liquid:18018000:up"
+        },
+        {
+          "material": "CO2",
+          "selector": "gas",
+          "expression": "U*9",
+          "source_units": 5837832000,
+          "round": "down",
+          "old_token": "m:CO2:9000",
+          "new_token": "mu:CO2:gas:5837832000:down"
+        },
+        {
+          "material": "F",
+          "selector": "gas",
+          "expression": "7*U240",
+          "source_units": 18918900,
+          "round": "down",
+          "old_token": "m:F:28",
+          "new_token": "mu:F:gas:18918900:down"
+        }
+      ],
+      "old_line": "        r(\"Electrolyzer\", 16, 2048, null, sp(\"i:dustTiny:Coal:27\", \"i:ingot:Al2O3:10\"), sp(\"m:Na3AlF6:14\", \"m:AlF3:28\"), sp(\"m:CO2:9000\", \"m:F:28\"), sp(\"omd:Al:4000\"));",
+      "new_line": "        r(\"Electrolyzer\", 16, 2048, null, sp(\"i:dustTiny:Coal:27\", \"i:ingot:Al2O3:10\"), sp(\"mu:Na3AlF6:liquid:9009000:up\", \"mu:AlF3:liquid:18018000:up\"), sp(\"mu:CO2:gas:5837832000:down\", \"mu:F:gas:18918900:down\"), sp(\"omd:Al:4000\"));"
+    },
+    {
+      "key": [
+        "dustSmall",
+        6,
+        "dust",
+        5,
+        1024
+      ],
+      "source_line": 297,
+      "source_call": "T,16,1024,OP.dustSmall.mat(tMat,6),OP.dust.mat(MT.Al2O3,5),FL.array(MT.Na3AlF6.liquid(U144,T),MT.AlF3.liquid(U72,T)),FL.array(MT.CO2.gas(U2*9,F),MT.F.gas(7*U480,F)),OM.dust(MT.Al,U*2)",
+      "fluids": [
+        {
+          "material": "Na3AlF6",
+          "selector": "liquid",
+          "expression": "U144",
+          "source_units": 4504500,
+          "round": "up",
+          "old_token": "m:Na3AlF6:7",
+          "new_token": "mu:Na3AlF6:liquid:4504500:up"
+        },
+        {
+          "material": "AlF3",
+          "selector": "liquid",
+          "expression": "U72",
+          "source_units": 9009000,
+          "round": "up",
+          "old_token": "m:AlF3:14",
+          "new_token": "mu:AlF3:liquid:9009000:up"
+        },
+        {
+          "material": "CO2",
+          "selector": "gas",
+          "expression": "U2*9",
+          "source_units": 2918916000,
+          "round": "down",
+          "old_token": "m:CO2:4500",
+          "new_token": "mu:CO2:gas:2918916000:down"
+        },
+        {
+          "material": "F",
+          "selector": "gas",
+          "expression": "7*U480",
+          "source_units": 9459450,
+          "round": "down",
+          "old_token": "m:F:14",
+          "new_token": "mu:F:gas:9459450:down"
+        }
+      ],
+      "old_line": "        r(\"Electrolyzer\", 16, 1024, null, sp(\"i:dustSmall:Coal:6\", \"i:dust:Al2O3:5\"), sp(\"m:Na3AlF6:7\", \"m:AlF3:14\"), sp(\"m:CO2:4500\", \"m:F:14\"), sp(\"omd:Al:2000\"));",
+      "new_line": "        r(\"Electrolyzer\", 16, 1024, null, sp(\"i:dustSmall:Coal:6\", \"i:dust:Al2O3:5\"), sp(\"mu:Na3AlF6:liquid:4504500:up\", \"mu:AlF3:liquid:9009000:up\"), sp(\"mu:CO2:gas:2918916000:down\", \"mu:F:gas:9459450:down\"), sp(\"omd:Al:2000\"));"
+    },
+    {
+      "key": [
+        "dustSmall",
+        6,
+        "ingot",
+        5,
+        1024
+      ],
+      "source_line": 298,
+      "source_call": "T,16,1024,OP.dustSmall.mat(tMat,6),OP.ingot.mat(MT.Al2O3,5),FL.array(MT.Na3AlF6.liquid(U144,T),MT.AlF3.liquid(U72,T)),FL.array(MT.CO2.gas(U2*9,F),MT.F.gas(7*U480,F)),OM.dust(MT.Al,U*2)",
+      "fluids": [
+        {
+          "material": "Na3AlF6",
+          "selector": "liquid",
+          "expression": "U144",
+          "source_units": 4504500,
+          "round": "up",
+          "old_token": "m:Na3AlF6:7",
+          "new_token": "mu:Na3AlF6:liquid:4504500:up"
+        },
+        {
+          "material": "AlF3",
+          "selector": "liquid",
+          "expression": "U72",
+          "source_units": 9009000,
+          "round": "up",
+          "old_token": "m:AlF3:14",
+          "new_token": "mu:AlF3:liquid:9009000:up"
+        },
+        {
+          "material": "CO2",
+          "selector": "gas",
+          "expression": "U2*9",
+          "source_units": 2918916000,
+          "round": "down",
+          "old_token": "m:CO2:4500",
+          "new_token": "mu:CO2:gas:2918916000:down"
+        },
+        {
+          "material": "F",
+          "selector": "gas",
+          "expression": "7*U480",
+          "source_units": 9459450,
+          "round": "down",
+          "old_token": "m:F:14",
+          "new_token": "mu:F:gas:9459450:down"
+        }
+      ],
+      "old_line": "        r(\"Electrolyzer\", 16, 1024, null, sp(\"i:dustSmall:Coal:6\", \"i:ingot:Al2O3:5\"), sp(\"m:Na3AlF6:7\", \"m:AlF3:14\"), sp(\"m:CO2:4500\", \"m:F:14\"), sp(\"omd:Al:2000\"));",
+      "new_line": "        r(\"Electrolyzer\", 16, 1024, null, sp(\"i:dustSmall:Coal:6\", \"i:ingot:Al2O3:5\"), sp(\"mu:Na3AlF6:liquid:4504500:up\", \"mu:AlF3:liquid:9009000:up\"), sp(\"mu:CO2:gas:2918916000:down\", \"mu:F:gas:9459450:down\"), sp(\"omd:Al:2000\"));"
+    }
+  ]
+}

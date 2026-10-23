@@ -10,17 +10,17 @@ import unittest
 import xml.etree.ElementTree as ET
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'integration'))
-from check_issue_gametest_report import check, EXPECTED
+from check_issue_gametest_report import check, EXPECTED, LEGACY_CASE_NAMESPACES, expected_namespace
 import verify_artifacts
 from verify_artifacts import required_forge_mixin_mappings
 
 
 class IssueEvidenceTests(unittest.TestCase):
-    def report(self, platform, namespace='gregtech_issue_audit:test_empty', failure=False):
+    def report(self, platform, namespace=None, failure=False):
         root = ET.Element('testsuite')
         suite = ET.SubElement(root, 'testsuite')
         for identity in EXPECTED[platform]:
-            case = ET.SubElement(suite, 'testcase', classname=namespace, name=identity.split('.', 1)[1])
+            case = ET.SubElement(suite, 'testcase', classname=namespace or expected_namespace(identity), name=identity.split('.', 1)[1])
         if failure:
             ET.SubElement(case, 'failure', message='real gameplay failure')
         return root
@@ -48,10 +48,24 @@ class IssueEvidenceTests(unittest.TestCase):
         repo = Path(__file__).resolve().parents[2]
         workflow = (repo / '.github/workflows/issue-regressions.yml').read_text()
         self.assertIn('-PaddonSample=true', workflow)
-        self.assertIn('-PgameTestNamespaces=gregtech_issue_audit', workflow)
+        self.assertIn('-PgameTestNamespaces=gregtech_issue_audit,gregtech_cover_issues,gregtech_pipe_auto', workflow)
         # The fixture deliberately depends on a registered SDK consumer, not a synthetic block.
         fixture = (repo / 'multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BehaviorStructureSafetyTests.java').read_text()
         self.assertIn('"addon_sample", "irrigator"', fixture)
+
+    def test_each_legacy_namespace_must_execute(self):
+        for namespace in set(LEGACY_CASE_NAMESPACES.values()):
+            root = self.report('forge')
+            suite = root.find('testsuite')
+            for case in list(suite):
+                if case.get('classname') == namespace:
+                    suite.remove(case)
+            with self.subTest(namespace=namespace), self.assertRaisesRegex(ValueError, 'did not execute'):
+                self.verify(root, 'forge')
+
+    def test_issue_namespace_cannot_impersonate_legacy_methods(self):
+        with self.assertRaisesRegex(ValueError, 'did not execute'):
+            self.verify(self.report('forge', namespace='gregtech_issue_audit:test_empty'), 'forge')
 
     def test_empty_report_rejected(self):
         with self.assertRaisesRegex(ValueError, 'did not execute'):

@@ -48,7 +48,8 @@ public final class PanelCoverRuntime {
         var id=CoverItems.behavior(stack);
         var candidateControl=control(side);
         if(CoverItems.TAG_SELECTOR.equals(id))return candidateControl!=null&&candidateControl.supportsMode();
-        if(CoverItems.REDSTONE_TORCH.equals(id)||CoverItems.REDSTONE_REPEATER.equals(id))return host.coverOwner() instanceof com.gregtech.gregtech.blockentity.energy.SignalWireBlockEntity&&host.coverOwner().getBlockState().getBlock() instanceof com.gregtech.gregtech.block.energy.SignalWireBlock wire&&wire.insulated();
+        // Original bare redstone wire inherits the insulated host class too; both accept these attachments.
+        if(CoverItems.REDSTONE_TORCH.equals(id)||CoverItems.REDSTONE_REPEATER.equals(id))return host.coverOwner() instanceof com.gregtech.gregtech.blockentity.energy.SignalWireBlockEntity&&host.coverOwner().getBlockState().getBlock() instanceof com.gregtech.gregtech.block.energy.SignalWireBlock;
         if(CoverAttachmentBehaviors.DRAIN.equals(id)||CoverAttachmentBehaviors.AIR_VENT.equals(id))return host.componentTicks()&&host.componentFluids(side)!=null&&host.componentFluids(side).getTanks()>0;
         if(CoverUtilityBehaviors.FILTER_ITEM.equals(id)){
             var owner=host.coverOwner();var level=owner.getLevel();

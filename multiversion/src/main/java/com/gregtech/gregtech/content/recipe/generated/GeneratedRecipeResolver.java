@@ -308,9 +308,47 @@ public final class GeneratedRecipeResolver {
             case "w" -> new FluidStack(Fluids.WATER, Integer.parseInt(parts[1]));
             case "f" -> named(parts[1], Integer.parseInt(parts[2]));
             case "m" -> materialFluid(parts[1], Integer.parseInt(parts[2]));
+            case "mu" -> sourceMaterialFluid(spec.split(":", -1));
             case "fr" -> byRegistryName(parts[1], Integer.parseInt(parts[2]));
             default -> null;
         };
+    }
+
+    /** Additive original-U grammar; legacy m tokens and public materialFluid remain unchanged. */
+    private static FluidStack sourceMaterialFluid(String[] parts) {
+        if (parts.length != 5 || !parts[3].matches("[0-9]+")
+                || !("up".equals(parts[4]) || "down".equals(parts[4]))) return null;
+        long sourceAmount;
+        try {
+            sourceAmount = Long.parseLong(parts[3]);
+        } catch (NumberFormatException invalidAmount) {
+            return null;
+        }
+        GTMaterial material = material(parts[1]);
+        if (material == null || !material.resolve().isValid()) return null;
+        material = material.resolve();
+        var binding = com.gregtech.gregtech.content.recipe.OriginalMaterialFluidUnits
+                .binding(material.getName(), material.getId(), parts[2]);
+        if (binding == null) return null;
+        int amount = com.gregtech.gregtech.content.recipe.OriginalMaterialFluidUnits.millibuckets(
+                sourceAmount, binding.referenceSourceUnits(), binding.referenceMillibuckets(),
+                "up".equals(parts[4]));
+        // None of the migrated source calls is a zero-volume catalyst. Do not invent 1 mB.
+        if (amount <= 0) return null;
+        var entry = RegisteredFluids.get(binding.fluidField());
+        if (entry == null || !binding.registryName().equals(entry.registryName())
+                || !"gt6ce".equals(GTFluids.namespace(entry))) return null;
+        String boundName = entry.materialKey() != null ? entry.materialKey()
+                : RegisteredFluids.boundMaterial(entry.registryName());
+        if (boundName == null) return null;
+        GTMaterial bound = GTMaterialRegistry.get(boundName).resolve();
+        if (!bound.isValid() || bound.getId() != binding.materialId()
+                || !bound.getName().equals(binding.materialName())) return null;
+        FluidStack stack = named(binding.fluidField(), amount);
+        if (stack == null || stack.isEmpty()) return null;
+        var nativeId = net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(stack.getFluid());
+        return nativeId != null && "gt6ce".equals(nativeId.getNamespace())
+                && binding.registryName().equals(nativeId.getPath()) ? stack : null;
     }
 
     /** field key by raw 1.7.10 registry name ("nitrofuel", "gas.natural", ...). */

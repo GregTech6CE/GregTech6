@@ -202,9 +202,19 @@ public class ElectricWireBlock extends Block implements EntityBlock, SimpleWater
     @Override
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
         if (level.isClientSide || oldState.is(state.getBlock())) return;
-        Direction face = consumePlacementFace();
+        // Native onPlace may run before this wire's block entity is installed.
+        // Keep the clicked face for the post-installation BlockItem callback.
         BlockEntity be = level.getBlockEntity(pos);
-        if (be instanceof ElectricWireBlockEntity wire) wire.autoConnectOnPlace(face);
+        if (be instanceof ElectricWireBlockEntity wire) wire.autoConnectOnPlace(null);
+    }
+
+    @Override
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state,
+                            @Nullable LivingEntity placer, ItemStack stack) {
+        super.setPlacedBy(level, pos, state, placer, stack);
+        if (level.isClientSide) return;
+        Direction face = consumePlacementFace();
+        if (level.getBlockEntity(pos) instanceof ElectricWireBlockEntity wire) wire.autoConnectOnPlace(face);
     }
 
     @Override
