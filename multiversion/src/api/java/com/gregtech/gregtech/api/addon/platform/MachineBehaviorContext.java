@@ -15,6 +15,16 @@ import net.minecraftforge.fluids.FluidStack;
 
 /** The placed machine a behavior reads and writes. Valid during the callbacks on {@link MachineBehavior}. */
 public interface MachineBehaviorContext {
+    /** Unified snapshot reads and explicit writes for this machine's inventory. */
+    default InventoryAccess inventoryAccess() {
+        return BehaviorAccess.inventory(this::itemSlots, this::item, this::setItem);
+    }
+
+    /** Unified snapshot reads and mB operations for this machine's tanks. */
+    default FluidAccess fluidAccess() {
+        return BehaviorAccess.fluids(this::tanks, this::fluid, this::capacity, this::fill, this::drain);
+    }
+
     Level level();
 
     BlockPos pos();
@@ -25,6 +35,11 @@ public interface MachineBehaviorContext {
 
     int itemSlots();
 
+    /**
+     * Legacy read: returns the live inventory stack. Mutating it directly does not guarantee
+     * save/synchronization notifications; use {@link #setItem(int, ItemStack)} for writes.
+     * Prefer {@link #inventoryAccess()} for snapshot reads and explicit inventory operations.
+     */
     ItemStack item(int slot);
 
     void setItem(int slot, ItemStack stack);
@@ -46,6 +61,9 @@ public interface MachineBehaviorContext {
 
     /** Removes up to {@code amount} mB. Returns the fluid that left the tank. */
     FluidStack drain(int tank, int amount, boolean simulate);
+
+    /** Energy operations with explicit packet/unit results and ownership of transferred energy. */
+    default MachineEnergy energyAccess() { return MachineEnergy.of(this); }
 
     /**
      * Energy stored in the main input, in the machine's energy unit.
@@ -72,16 +90,18 @@ public interface MachineBehaviorContext {
 
     /**
      * Pushes {@code amount} packets of {@code size} out of the declared output faces.
-     * Spends {@code size} for each packet a neighbor accepts and returns how many packets left.
-     * A request above the declared maximum throws.
+     * Spends {@code abs(size)} energy units for each packet a neighbor accepts.
+     * Returns the number of accepted packets, not remaining packets or energy units.
+     * A request above the declared maximum throws. Prefer {@link #energyAccess()} for a typed result.
      */
     long emit(long size, long amount);
 
     /**
      * Sends {@code amount} packets of {@code size} to the block entity at {@code target},
      * entering it through {@code side}. It uses the declared output type and packet limits,
-     * spends this machine's stored energy for each packet the target accepts, and returns how
-     * many packets left. The declared output faces are not used. A null {@code side} means no
+     * spends {@code abs(size)} stored energy units for each packet the target accepts, and returns
+     * the accepted packet count, not remaining packets or energy units. The declared output
+     * faces are not used. A null {@code side} means no
      * side. A request above the declared maximum throws, as {@link #emit(long, long)} does.
      * A target in an unloaded chunk, without a block entity, or with no energy receiver accepts
      * nothing. The target is looked up for this call only and is not kept.
@@ -91,8 +111,9 @@ public interface MachineBehaviorContext {
     /**
      * Charges a bound two-way part from the controller channel and arms {@code amount}
      * packets of {@code size}. The part emits them from its own faces on its next server tick.
-     * Returns the amount the part stored. This does not spend {@link #energy()}; the behavior
-     * keeps its own accounting. Returns 0 when the part is missing, is not a two-way part,
+     * Returns energy units stored, not a packet count; a partial packet may fit.
+     * This does not spend {@link #energy()}; the behavior keeps its own accounting and must
+     * debit exactly these returned units from its source. Returns 0 when the part is missing, is not a two-way part,
      * or its output type differs from {@code type}. A request the part's output declaration
      * rejects throws.
      */
@@ -100,8 +121,9 @@ public interface MachineBehaviorContext {
 
     /**
      * Moves up to {@code amount} packets of {@code size} from this machine's stored energy
-     * into the named bound part and arms it. The part emits on its own tick. Returns the amount
-     * moved out of this machine. This does not require the machine to declare output faces,
+     * into the named bound part and arms it. The part emits on its own tick. Returns energy
+     * units moved out of this machine, not a packet count; a partial packet may fit.
+     * This does not require the machine to declare output faces,
      * but a machine whose stored energy has a declared type only feeds a matching part.
      * A request the part's output declaration rejects throws.
      */

@@ -118,7 +118,8 @@ jobs:
           subprocess.run([sys.executable, 'tools/integration/verify_addon_api.py',
                           '--jar', str(sdk), '--output', str(report.with_name('addon-api.json'))], check=True)
           shutil.copyfile(sdk, destination / sdk.name)
-          native_sdks = list(pathlib.Path(os.environ['SDK_DIR']).glob(os.environ['SDK_GLOB']))
+          native_sdks = [p for p in pathlib.Path(os.environ['SDK_DIR']).glob(os.environ['SDK_GLOB'])
+                         if not p.stem.endswith(('-sources', '-javadoc'))]
           if len(native_sdks) != 1:
               raise SystemExit(f'Expected one isolated loader SDK, found {native_sdks}')
           native_sdk = native_sdks[0]
@@ -126,6 +127,10 @@ jobs:
                           '--jar', str(native_sdk), '--loader', os.environ['LOADER'],
                           '--output', str(report.with_name('addon-sdk-' + os.environ['LOADER'] + '.json'))], check=True)
           shutil.copyfile(native_sdk, destination / native_sdk.name)
+          for classifier in ('sources', 'javadoc'):
+              attachment = native_sdk.with_name(native_sdk.stem + '-' + classifier + '.jar')
+              if attachment.is_file():
+                  shutil.copyfile(attachment, destination / attachment.name)
           (destination / 'build-commit.txt').write_text(os.environ['GITHUB_SHA'] + '\n', encoding='utf-8')
           PY
       - name: Upload packaging evidence without mod binaries

@@ -18,6 +18,7 @@ public final class AddonPlatform {
 
     private AddonPlatform() {}
 
+    /** GT bootstrap only. Addons must not install or replace the host implementation. */
     public static synchronized void bind(Services implementation) {
         if (implementation == null) throw new IllegalArgumentException("addon platform services");
         if (services != null) throw new IllegalStateException("GregTech addon platform API is already installed");
@@ -29,6 +30,7 @@ public final class AddonPlatform {
         return services;
     }
 
+    /** GT implementation contract; addon consumers use the items, tools and energy facades. */
     public interface Services {
         ItemStack stack(String prefix, String material, int count);
 

@@ -120,10 +120,6 @@ public record MaterialDeclaration(
         public Builder ores() { ores = true; return this; }
 
         /**
-         * Ore-processing byproducts, in GregTech's order. The first is the wash byproduct.
-         * Calling this also turns {@link #ores()} on.
-         */
-        /**
          * Plate and foil requests only. This does not add double plates, dense plates, rods or an ingot.
          * A metal that already generates those forms does not need it.
          */
@@ -144,6 +140,10 @@ public record MaterialDeclaration(
          */
         public Builder electrolyzer() { electrolyzer = true; return this; }
 
+        /**
+         * Ore-processing byproducts, in GregTech's order. The first is the wash byproduct.
+         * Calling this also turns {@link #ores()} on.
+         */
         public Builder oreByproducts(String... materials) {
             ores = true;
             if (materials == null || materials.length == 0)
