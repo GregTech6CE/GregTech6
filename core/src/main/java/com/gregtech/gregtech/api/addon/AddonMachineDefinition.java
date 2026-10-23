@@ -18,8 +18,22 @@ public record AddonMachineDefinition(
         MachineControllerKind kind,
         int efficiency,
         boolean constantEnergy,
-        List<String> structureKeys
+        List<String> structureKeys,
+        String auxiliaryEnergyType,
+        long auxiliaryEnergyIn,
+        long auxiliaryEnergyMin,
+        long auxiliaryEnergyMax,
+        long auxiliaryEnergyCapacity,
+        int auxiliaryFaceMask,
+        boolean startupEnergy
 ) {
+    /** Older declarations without a second input. */
+    public AddonMachineDefinition(BasicMachineParameters parameters, String recipeMapName,
+                                  MachineControllerKind kind, int efficiency, boolean constantEnergy,
+                                  List<String> structureKeys) {
+        this(parameters, recipeMapName, kind, efficiency, constantEnergy, structureKeys,
+                null, 0, 0, 0, 0, 0, false);
+    }
     public AddonMachineDefinition {
         Objects.requireNonNull(parameters, "parameters");
         if (recipeMapName == null || !recipeMapName.matches("[a-z0-9_.]+"))
@@ -33,6 +47,16 @@ public record AddonMachineDefinition(
         for (String key : structureKeys) {
             if (key == null || !key.matches("[a-z0-9_.]+"))
                 throw new IllegalArgumentException("Invalid structure key for " + parameters.id() + ": " + key);
+        }
+        if (auxiliaryEnergyType != null) {
+            if (!auxiliaryEnergyType.matches("[A-Za-z]+"))
+                throw new IllegalArgumentException("Invalid auxiliary energy type for " + parameters.id());
+            if (auxiliaryEnergyIn < 1 || auxiliaryEnergyMin < 1 || auxiliaryEnergyMax < auxiliaryEnergyMin
+                    || auxiliaryEnergyCapacity < 1 || auxiliaryFaceMask == 0)
+                throw new IllegalArgumentException("Invalid auxiliary energy for " + parameters.id());
+        } else if (startupEnergy || auxiliaryEnergyIn != 0 || auxiliaryEnergyMin != 0 || auxiliaryEnergyMax != 0
+                || auxiliaryEnergyCapacity != 0 || auxiliaryFaceMask != 0) {
+            throw new IllegalArgumentException("Auxiliary energy fields need a type: " + parameters.id());
         }
     }
 }

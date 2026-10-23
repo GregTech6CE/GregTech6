@@ -109,6 +109,8 @@ public final class SharedLargeMachineParts {private SharedLargeMachineParts(){}
         if (name == null) return -1;
         if (name.equals("air")) return 0;
         for (Part part : DEFINITIONS) if (part.name().equals(name)) return part.originalId();
+        var original = OriginalMultiblockPartData.byPath(name);
+        if (original.isPresent()) return original.get().originalId();
         return switch (name) {
             case "tank_wall" -> 18002;
             case "tank_wall_dense" -> 18022;

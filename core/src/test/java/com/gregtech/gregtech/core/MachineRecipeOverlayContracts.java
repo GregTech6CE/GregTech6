@@ -64,6 +64,13 @@ public final class MachineRecipeOverlayContracts {
                 "item_inputs":[{"item":"minecraft:apple"}],"item_outputs":[{"item":"minecraft:emerald"}],
                 "eu_per_tick":0,"duration":1}""");
         check(annotated.equals(defaults), "root annotations ignored on addition");
+        var catalyst = MachineRecipeDocuments.addition("""
+                {"map":"gt.recipe.crusher","item_inputs":[{"item":"minecraft:apple"}],
+                "fluid_inputs":[{"fluid":"minecraft:water","amount":0}],
+                "item_outputs":[{"item":"minecraft:emerald"}],"eu_per_tick":0,"duration":1}""");
+        check(catalyst.fluidInputs().equals(List.of(new FluidComponent("minecraft:water", 0))), "0 mB catalyst input");
+        check(MachineRecipeDocuments.addition(MachineRecipeDocuments.canonical(catalyst)).equals(catalyst),
+                "0 mB catalyst round trip");
         check(MachineRecipeDocuments.removal("{\"_kubejs_changed_marker\":true,\"map\":\"gt.recipe.crusher\",\"clear\":true}").clear(),
                 "root annotations ignored on removal");
     }
