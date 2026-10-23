@@ -73,7 +73,11 @@ public final class WoodenBucketTransactionTests {
 
     @GameTest(template = "test_empty")
     public static void waterDoesNotReplaceLavaOrPowderSnow(GameTestHelper h) {
+//? if >=1.21.1 {
+        /*var player = h.makeMockPlayer(GameType.SURVIVAL);
+*///?} else {
         var player = h.makeMockSurvivalPlayer();
+//?}
         BlockPos pos = h.absolutePos(new BlockPos(1, 2, 1));
         for (var before : new BlockState[]{Blocks.LAVA_CAULDRON.defaultBlockState(),
                 Blocks.POWDER_SNOW_CAULDRON.defaultBlockState().setValue(LayeredCauldronBlock.LEVEL, 1)}) {
