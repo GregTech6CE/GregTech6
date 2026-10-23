@@ -31,6 +31,7 @@ public record MachineBlockBootstrap(IEventBus bus) implements InitializationStep
         GTStorage.registerAll();
         GTLootChests.registerAll();
         GTSensors.registerAll();
+        com.gregtech.gregtech.registry.AddonSensorRegistration.register(bus);
         GTToolBlocks.registerAll();
         GTMiscBlocks.registerAll();
         GTWoods.registerAll();

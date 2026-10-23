@@ -13,7 +13,7 @@ public final class AddonSampleShutdown {
 
     @SubscribeEvent
     public static void started(ServerStartedEvent event) {
-        var dust = ForgeRegistries.ITEMS.getValue(new ResourceLocation("gt6ce", "dust_ammoniumnitrate"));
+        var dust = ForgeRegistries.ITEMS.getValue(new ResourceLocation("addon_sample", "dust_ammoniumnitrate"));
         boolean dustOk = dust != null && dust != Items.AIR;
         System.out.println("[addon-sample] dust_ammoniumnitrate=" + dustOk);
         if (!dustOk) throw new IllegalStateException("sample material items were not registered");

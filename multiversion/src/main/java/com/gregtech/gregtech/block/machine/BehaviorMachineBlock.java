@@ -87,6 +87,9 @@ public class BehaviorMachineBlock extends GTFacingMachineBlock implements Entity
 
     public void setBeType(Supplier<BlockEntityType<?>> supplier) { this.beType = supplier; }
 
+    /** The type assigned after registration, or null before it. */
+    @Nullable public BlockEntityType<?> blockEntityType() { return beType.get(); }
+
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING, LIT, RUNNING);
