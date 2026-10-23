@@ -12,6 +12,10 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'behaviorstructuresafetytests.behaviormixedalternativesbindactualfixedandrepeatedparts',
+    'behaviorstructuresafetytests.behaviorretainedportrejectsbrokenstructurebeforetickandrebinds',
+    'behaviorstructuresafetytests.behaviorenergypollingdoesnotloadremoteborderneighbor',
+
     'fluidpresencerecipetests.presenceusesoriginaltankswithoutreservation',
     'fluidpresencerecipetests.addonpresencesurvivesreadaddfindroundtrip',
     'fluidpresencerecipetests.presencecollisiondoesnotbecomeconsumablestock',
