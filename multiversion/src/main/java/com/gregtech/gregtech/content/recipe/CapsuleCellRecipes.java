@@ -41,7 +41,9 @@ public final class CapsuleCellRecipes {
         return count;
     }
     public static boolean simpleExtrusion(PortableFluidContainerSpec spec) {
-        return spec.id().startsWith("cell_wax")||switch(spec.id()) {
+        // Keep legacy/extension choices; the imported source profile supplies positive evidence only.
+        return com.gregtech.gregtech.data.generated.MaterialWorkability.hasProvenSimpleExtrusion(spec.material())
+                || spec.id().startsWith("cell_wax")||switch(spec.id()) {
             case "cell_plastic","cell_tin","cell_tin_alloy","cell_aluminium"->true;default->false;
         };
     }

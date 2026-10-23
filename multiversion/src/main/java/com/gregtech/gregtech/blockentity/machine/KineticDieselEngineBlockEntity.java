@@ -144,6 +144,7 @@ public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implem
         if (exhaustTank.isEmpty() || level == null) return;
         Direction facing = facing();
         BlockPos front = worldPosition.relative(facing.getOpposite());
+        if (!level.hasChunkAt(front)) return;
         var be = level.getBlockEntity(front);
         if (be != null) {
 //? if >=1.21.1 {
@@ -165,8 +166,9 @@ public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implem
         }
         FluidStack exhaustFluid = exhaustTank.getFluid();
         if (!exhaustFluid.isEmpty()
-                && exhaustFluid.getFluid().getFluidType().isLighterThanAir()
-                && level.isEmptyBlock(front)) {
+                && com.gregtech.gregtech.registry.GTFluids.isGas(exhaustFluid)
+                && !level.getBlockState(front).isSolidRender(level, front)
+                && level.getBlockState(front).getCollisionShape(level, front).isEmpty()) {
             exhaustTank.setEmpty();
         }
     }
