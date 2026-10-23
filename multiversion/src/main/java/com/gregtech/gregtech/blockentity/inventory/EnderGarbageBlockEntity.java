@@ -80,6 +80,7 @@ public class EnderGarbageBlockEntity extends BlockEntity implements MenuProvider
     @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory playerInv, Player player) {
         return new HopperContainerMenu(GTMenuTypes.forSlotCount(9), containerId, playerInv, inventory) {
+            @Override protected void inventorySlotChanged(int index) { EnderGarbageBlockEntity.this.setChanged(); }
             @Override
             public boolean stillValid(Player player) {
                 return !isRemoved() && level != null && player.level() == level

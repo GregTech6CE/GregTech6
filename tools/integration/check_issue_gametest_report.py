@@ -12,6 +12,14 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'menuslotnotificationtests.drawerquickmovesdirtynativechunk',
+    'menuslotnotificationtests.metalchestquickmovesdirtynativechunk',
+    'menuslotnotificationtests.safequickmovesdirtynativechunk',
+    'menuslotnotificationtests.garbagebinquickmovesdirtynativechunk',
+    'menuslotnotificationtests.hopperquickmovesdirtynativechunk',
+    'menuslotnotificationtests.queuehopperquickmovesdirtynativechunk',
+    'menuslotnotificationtests.hoppermenupartialwithdrawalwakescompaction',
+    'menuslotnotificationtests.queuemenupartialwithdrawalwakescascade',
     'menulifetimecapacitytests.behaviormenurequiresliveownerandnativereach',
     'menulifetimecapacitytests.batterymenusrequirelivenearbyowners',
     'menulifetimecapacitytests.drawercapacityqueriespreservelegacyoverflow',
