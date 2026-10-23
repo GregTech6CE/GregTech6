@@ -69,7 +69,16 @@ public record BasicMachineSpec(
          * the thirteen original controllers and the fusion reactor. Distillation towers stay false
          * and keep their own tank cap.
          */
-        boolean unlimitedOutputTanks
+        boolean unlimitedOutputTanks,
+        /** Second input. Null when the machine has none. */
+        String auxiliaryEnergyType,
+        long auxiliaryEnergyIn,
+        long auxiliaryEnergyMin,
+        long auxiliaryEnergyMax,
+        long auxiliaryEnergyCapacity,
+        int auxiliaryFaceMask,
+        /** Charge a recipe's special value from the auxiliary buffer before progress starts. */
+        boolean startupEnergy
 ) {
     public BasicMachineSpec {
         if (id == null || !id.matches("[a-z0-9/._-]+"))
@@ -93,6 +102,15 @@ public record BasicMachineSpec(
             throw new IllegalArgumentException("Invalid processing efficiency for " + id);
         if (minimumLightAbove < 0 || minimumLightAbove > 15)
             throw new IllegalArgumentException("Invalid light requirement for " + id + ": " + minimumLightAbove);
+        if (auxiliaryEnergyType != null) {
+            requireEnergy(auxiliaryEnergyType);
+            if (auxiliaryEnergyIn < 1 || auxiliaryEnergyMin < 1 || auxiliaryEnergyMax < auxiliaryEnergyMin
+                    || auxiliaryEnergyCapacity < 1 || auxiliaryFaceMask == 0)
+                throw new IllegalArgumentException("Invalid auxiliary energy for " + id);
+        } else if (startupEnergy || auxiliaryEnergyIn != 0 || auxiliaryEnergyMin != 0 || auxiliaryEnergyMax != 0
+                || auxiliaryEnergyCapacity != 0 || auxiliaryFaceMask != 0) {
+            throw new IllegalArgumentException("Auxiliary energy fields need a type: " + id);
+        }
         constructionMaterials = List.copyOf(constructionMaterials);
         structureKeys = List.copyOf(structureKeys == null ? List.of() : structureKeys);
         energySources = List.copyOf(energySources == null ? List.of() : energySources);
@@ -131,7 +149,8 @@ public record BasicMachineSpec(
                 builtInParallelScalesDuration(machineName, tier, energyType),
                 builtInEnergySources(machineName),
                 builtInSuppressSideAutoInput(machineName),
-                builtInUnlimitedOutputTanks(machineName));
+                builtInUnlimitedOutputTanks(machineName),
+                null, 0, 0, 0, 0, 0, false);
     }
 
     /**
@@ -317,6 +336,13 @@ public record BasicMachineSpec(
         private IoTarget itemInputSource;
         private IoTarget fluidInputSource;
         private boolean energyRangeDeclared;
+        private GregTechTags.Tag auxiliaryEnergy;
+        private long auxiliaryEnergyIn;
+        private long auxiliaryEnergyMin;
+        private long auxiliaryEnergyMax;
+        private long auxiliaryEnergyCapacity;
+        private int auxiliaryFaceMask;
+        private boolean startupEnergy;
 
         private Builder(String id, GTMaterial casing) {
             this.id = id; material = casing; machineType = id;
@@ -325,6 +351,13 @@ public record BasicMachineSpec(
         public Builder machineType(String value) { machineType = value; return this; }
         public Builder recipes(RecipeMap value) { recipes = value; return this; }
         public Builder energy(GregTechTags.Tag type, long inputPerTick) { energy = type; energyIn = inputPerTick; return this; }
+        public Builder auxiliaryEnergy(GregTechTags.Tag type, long perTick, long min, long max, long capacity, int faceMask) {
+            auxiliaryEnergy = type; auxiliaryEnergyIn = perTick;
+            auxiliaryEnergyMin = min; auxiliaryEnergyMax = max;
+            auxiliaryEnergyCapacity = capacity; auxiliaryFaceMask = faceMask;
+            return this;
+        }
+        public Builder startupEnergy(boolean value) { startupEnergy = value; return this; }
         public Builder energyOutput(long outputPerTick) { energyOut = outputPerTick; return this; }
         /** GT6 {@code NBT_INPUT_MIN} / {@code NBT_INPUT_MAX}: the accepted input range. */
         public Builder energyRange(long inputMin, long inputMax) {
@@ -399,7 +432,10 @@ public record BasicMachineSpec(
                     energyRangeDeclared, resolvedParallel,
                     gt6ce ? builtInEnergySources(machineType) : List.of(),
                     gt6ce && builtInSuppressSideAutoInput(machineType),
-                    gt6ce && builtInUnlimitedOutputTanks(machineType));
+                    gt6ce && builtInUnlimitedOutputTanks(machineType),
+                    auxiliaryEnergy == null ? null : auxiliaryEnergy.getShortName(),
+                    auxiliaryEnergyIn, auxiliaryEnergyMin, auxiliaryEnergyMax, auxiliaryEnergyCapacity,
+                    auxiliaryFaceMask, startupEnergy);
         }
     }
 

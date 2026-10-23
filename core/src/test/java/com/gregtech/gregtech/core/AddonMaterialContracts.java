@@ -89,6 +89,7 @@ public final class AddonMaterialContracts {
             case "prefixcase" -> prefixCase();
             case "prefixmiss" -> prefixMissing();
             case "prefixcond" -> prefixCondition();
+            case "prefixexclude" -> prefixExclude();
             case "byproducts" -> byproducts();
             case "reads" -> reads();
             default -> throw new IllegalArgumentException("Unknown scenario: " + args[0]);
@@ -648,6 +649,31 @@ public final class AddonMaterialContracts {
                 List.of(new PrefixDeclaration("missingBlank", "", " Blank", 1, "item/missing",
                         List.of("NotAMaterial"), Set.of())));
         expectThrows("unknown material", "NotAMaterial");
+    }
+
+    private static void prefixExclude() throws Exception {
+        prepare();
+        AddonMaterials.submit("aa_exclude", List.of(), List.of(), null, List.of(), List.of(), List.of(), List.of(),
+                List.of(new PrefixDeclaration("metalBit", "", " Metal Bit", 1, "item/metal_bit",
+                                List.of(), Set.of(PrefixCondition.METAL), List.of("Iron", "Gold")),
+                        new PrefixDeclaration("alloyBit", "", " Alloy Bit", 1, "item/alloy_bit",
+                                List.of(), Set.of(PrefixCondition.ALLOY)),
+                        new PrefixDeclaration("moltenBit", "", " Molten Bit", 1, "item/molten_bit",
+                                List.of(), Set.of(PrefixCondition.MOLTEN))));
+        GTMaterialRegistry.init();
+        MaterialPrefix metal = PrefixRegistry.byName("metalBit");
+        check(metal != null && metal.isValidFor(GTMaterialRegistry.get("Copper")), "copper is selected as a metal");
+        check(!metal.isValidFor(GTMaterialRegistry.get("Iron")), "iron is excluded by name");
+        check(!metal.isValidFor(GTMaterialRegistry.get("Gold")), "gold is excluded by name");
+        MaterialPrefix alloy = PrefixRegistry.byName("alloyBit");
+        check(alloy != null && alloy.isValidFor(GTMaterialRegistry.get("Steel")), "steel is an alloy");
+        check(!alloy.isValidFor(GTMaterialRegistry.get("Copper")), "copper is not an alloy");
+        MaterialPrefix molten = PrefixRegistry.byName("moltenBit");
+        check(molten != null && molten.isValidFor(GTMaterialRegistry.get("Carbon")), "carbon is molten");
+        int metalItems = 0;
+        for (var definition : MaterialItemDefinitions.all()) if (definition.prefix() == metal) metalItems++;
+        check(metalItems > 0, "exclusions still leave metal items");
+        check(ITEM_ID_SHA256.equals(coreAutomaticFingerprint()), "condition prefixes do not change built-in item ids");
     }
 
     private static void prefixCondition() throws Exception {

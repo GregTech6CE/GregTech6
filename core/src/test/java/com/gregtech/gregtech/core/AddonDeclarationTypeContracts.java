@@ -339,6 +339,32 @@ public final class AddonDeclarationTypeContracts {
                 .auxiliaryEnergy(EnergyInput.builder("HU", 32).anyPacket().faces(MachineFace.FRONT).build()).build(),
                 "positive");
 
+        var dynamic = BehaviorMachine.builder(casing("quantum")).energy(
+                EnergyInput.builder("EU", 32).anyType().build()).gui(GUI).build();
+        check(dynamic.energy().dynamic() && dynamic.energy().type().equals("*"), "a behavior main input can pick its type");
+        fails(() -> recipe(EnergyInput.builder("EU", 32).anyType().build()), "pick its energy type");
+        fails(() -> BehaviorMachine.builder(casing("quantum")).energy(eu(32)).gui(GUI)
+                .auxiliaryEnergy(EnergyInput.builder("HU", 32).anyType().anyPacket().capacity(1_000)
+                        .faces(MachineFace.TOP).build()).build(), "auxiliary energy cannot pick");
+
+        var recipeAux = RecipeMachine.builder(casing("auxpress")).energy(eu(32))
+                .auxiliaryEnergy(EnergyInput.builder("LU", 16).anyPacket().capacity(8_000)
+                        .faces(MachineFace.BACK).build())
+                .startupEnergy(true).recipeMap("aa.recipe.press").build();
+        check(recipeAux.auxiliary() != null && recipeAux.auxiliary().type().equals("LU")
+                && recipeAux.startupEnergy() && recipeAux.auxiliary().capacity() == 8_000,
+                "a recipe machine keeps its second input and startup flag");
+        fails(() -> RecipeMachine.builder(casing("auxpress")).energy(eu(32)).startupEnergy(true)
+                .recipeMap("aa.recipe.press").build(), "needs auxiliary energy");
+        fails(() -> RecipeMachine.builder(casing("auxpress")).energy(eu(32))
+                .auxiliaryEnergy(EnergyInput.builder("LU", 16).capacity(8_000)
+                        .faces(MachineFace.BACK).build())
+                .recipeMap("aa.recipe.press").build(), "anyPacket");
+        fails(() -> RecipeMachine.builder(casing("auxpress")).energy(eu(32))
+                .auxiliaryEnergy(EnergyInput.builder("EU", 16).anyPacket().capacity(8_000)
+                        .faces(MachineFace.FRONT).build())
+                .recipeMap("aa.recipe.press").build(), "overlaps an input face");
+
         var over = PartEnergyRules.admit(0, 1_000, 300, 2, 64, 256, false);
         check(over.overload() && over.packets() == 2, "an oversized packet overloads and is consumed");
         var small = PartEnergyRules.admit(0, 1_000, 32, 1, 64, 256, false);

@@ -71,6 +71,12 @@ public final class GT6CEMachinesEvent implements KubeEvent {
 
     private static CellMatch match(Object value) {
         if (value instanceof CellMatch parsed) return parsed;
+        if (value instanceof java.util.List<?> list) {
+            if (list.isEmpty()) throw new IllegalArgumentException("Missing structure part");
+            var members = new java.util.ArrayList<CellMatch>();
+            for (Object element : list) members.add(match(element));
+            return members.size() == 1 ? members.get(0) : CellMatch.oneOf(members);
+        }
         return CellMatch.parse(String.valueOf(value));
     }
 

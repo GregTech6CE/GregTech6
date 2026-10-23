@@ -54,7 +54,19 @@ public final class AddonLoaderServices {
         }
 
         @Override public boolean gas(net.minecraft.world.level.material.Fluid fluid) {
-            return com.gregtech.gregtech.api.fluid.FluidHazards.isGas(fluid);
+            return fluid != null && com.gregtech.gregtech.api.fluid.FluidHazards.isGas(fluid);
+        }
+
+        @Override public boolean acid(net.minecraft.world.level.material.Fluid fluid) {
+            return fluid != null && com.gregtech.gregtech.api.fluid.FluidHazards.isAcid(fluid);
+        }
+
+        @Override public boolean plasma(net.minecraft.world.level.material.Fluid fluid) {
+            return fluid != null && com.gregtech.gregtech.api.fluid.FluidHazards.isPlasma(fluid);
+        }
+
+        @Override public boolean magic(net.minecraft.world.level.material.Fluid fluid) {
+            return fluid != null && com.gregtech.gregtech.api.fluid.FluidHazards.isMagic(fluid);
         }
     }
 
@@ -129,7 +141,9 @@ public final class AddonLoaderServices {
         FluidStack[] fluidInputs = line.fluidInputs();
         for (int i = 0; i < fluidInputs.length; i++) {
             FluidStack stack = fluidInputs[i];
-            RecipeKeptInputs.requirePositiveFluid(stack == null || stack.isEmpty() ? 0 : stack.getAmount(), i);
+            if (stack == null || stack.getFluid() == Fluids.EMPTY)
+                throw new IllegalArgumentException("Fluid input " + i + " is empty");
+            RecipeKeptInputs.requirePositiveFluid(stack.getAmount(), i);
         }
         long[] chances = new long[line.outputChances().length];
         for (int i = 0; i < chances.length; i++) chances[i] = line.outputChances()[i];
