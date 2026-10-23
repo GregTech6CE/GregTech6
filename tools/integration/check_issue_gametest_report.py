@@ -12,6 +12,12 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'machinemenuvaliditytests.basicmachinemenurequireslivenearbyowner',
+    'machinemenuvaliditytests.bumbliarymenurequireslivenearbyowner',
+    'machinemenuvaliditytests.advancedbumbliarymenurequireslivenearbyowner',
+    'machinemenuvaliditytests.hoppermenurequireslivenearbyowner',
+    'machinemenuvaliditytests.queuehoppermenurequireslivenearbyowner',
+
     'machineauxiliaryroutingtests.sametypeauxiliaryusesdisjointfacesandconservesbuffers',
     'machineauxiliaryroutingtests.differenttypeauxiliaryretainstypeandfaceisolation',
     'builderspikevarianttests.spikematerialsskipmismatchedstock',
