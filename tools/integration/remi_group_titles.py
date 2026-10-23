@@ -59,6 +59,14 @@ def headings(root, language):
     for group, labels in LABELS.items():
         path = group if group.startswith("decor_") or group in {"fluid_item", "real_fluids", "safe", "key_safe", "heat_exchanger", "heat_exchanger_dense", "boiler_main_barometer"} else "functional_" + group
         result["emi.group.gt6ce." + path] = labels[1 if chinese else 0]
+    # Catalog-only families use explicit generic UI vocabulary, not invented
+    # original item names. Keep their existing public translation keys stable.
+    for group, labels in {
+        "energy_crystals": ("Energy Crystals", "能量水晶"),
+        "item_barrels": ("Item Barrels", "储物桶"),
+        "large_crystal_chargers": ("Large Crystal Chargers", "大型晶体充能器"),
+    }.items():
+        result["emi.group.gt6ce." + group] = labels[1 if chinese else 0]
     # Transport groups must show only size/type, never the chosen copper/brass.
     try:
         from .generate_remi_material_groups import transport_groups

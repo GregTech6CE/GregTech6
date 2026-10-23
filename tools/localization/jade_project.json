@@ -430,6 +430,46 @@
     "message.gt6ce.reactor.stopped": {
       "english": "Stopped",
       "value": "已停止"
+    },
+    "config.jade.plugin_gt6ce.magic_field_absorber": {
+      "english": "Magic Field Absorber",
+      "value": "魔法力场吸收器"
+    },
+    "jade.gt6ce.engine.diesel.empty": {
+      "english": "Empty",
+      "value": "空"
+    },
+    "jade.gt6ce.engine.diesel.exhaust": {
+      "english": "Exhaust: %1$s / %2$s L",
+      "value": "排出流体：%1$s / %2$s L"
+    },
+    "jade.gt6ce.engine.diesel.faces": {
+      "english": "RU output: %1$s | Automatic exhaust: %2$s",
+      "value": "RU 输出：%1$s | 自动排气：%2$s"
+    },
+    "jade.gt6ce.engine.diesel.fuel": {
+      "english": "Fuel: %1$s / %2$s L",
+      "value": "燃料：%1$s / %2$s L"
+    },
+    "jade.gt6ce.engine.diesel.output": {
+      "english": "Rated output: %1$s RU/t | Current: %2$s RU/t | Remaining fuel energy: %3$s RU",
+      "value": "额定输出：%1$s RU/t | 当前：%2$s RU/t | 剩余燃料能量：%3$s RU"
+    },
+    "jade.gt6ce.engine.diesel.running": {
+      "english": "Status: emitting",
+      "value": "状态：输出中"
+    },
+    "jade.gt6ce.engine.diesel.waiting": {
+      "english": "Status: waiting for fuel or exhaust space",
+      "value": "状态：等待燃料或排气空间"
+    },
+    "jade.gt6ce.magic_field_absorber.idle": {
+      "english": "No supported trophy above, or switched off",
+      "value": "顶部没有有效战利品，或已关机"
+    },
+    "jade.gt6ce.magic_field_absorber.output": {
+      "english": "Output: %s %s/t (%s)",
+      "value": "输出：%s %s/t（%s）"
     }
   },
   "reference_asset": "https://github.com/TeamNED/GregTech6-Translation-Groupware/releases/download/6.17.06-alpha.5/GregTech.lang",

@@ -12,6 +12,44 @@ from localization import (ROOT, LANG_PATH, CONFIG_PATH, read_json, synchronize, 
 
 
 class StandardChineseTests(unittest.TestCase):
+    def test_new_energy_storage_names_keep_original_registration_bindings(self):
+        aliases = read_json(ROOT / CONFIG_PATH / 'aliases.json')
+        tiers = ('ulv', 'lv', 'mv', 'hv', 'ev', 'iv', 'luv', 'zpm', 'uv', 'xv')
+        expected = {}
+        for stem, base in [('crystal_charger', 10130), ('large_crystal_charger', 10140)]:
+            for tier, suffix in enumerate(tiers):
+                expected['block.gt6ce.' + stem + '_' + suffix] = base + tier
+        forms = ('gem_chipped', 'gem_flawed', 'gem', 'gem_flawless', 'gem_exquisite', 'gem_legendary')
+        for material, base in [('energiumred', 14500), ('energiumcyan', 14510)]:
+            for tier, form in enumerate(forms):
+                for kind in ('item', 'block'):
+                    expected[kind + '.gt6ce.' + form + '_' + material] = base + tier
+        for suffix, ident in {'wood_lead': 6998, 'wood_bismuth': 6992, 'wood_bronze': 6991,
+                              'wood_brass': 6990, 'wood_treated': 6999, 'skyroot': 6983,
+                              'weedwood': 6989, 'livingwood': 6988, 'dreamwood': 6987,
+                              'shimmerwood': 6986, 'ironwood': 6997, 'greatwood': 6985,
+                              'silverwood': 6984}.items():
+            expected['block.gt6ce.item_barrel_' + suffix] = ident
+        for name, ident in {'magic_field_absorber': 10180, 'power_cell_empty': 14700,
+                            'power_cell_hydrogen': 14701, 'aneutronic_fusion_power_cell_empty': 14600,
+                            'aneutronic_fusion_power_cell_helium_3': 14601}.items():
+            expected['block.gt6ce.' + name] = ident
+        for key, ident in expected.items():
+            with self.subTest(key=key):
+                self.assertEqual(aliases[key], 'gt.multitileentity.' + str(ident))
+        self.assertEqual(aliases['tooltip.gt6ce.bedrock_flower.deposit.rare_earth'], 'gt.material.RareEarth')
+
+    def test_new_catalog_group_titles_are_explicit_bilingual_ui_labels(self):
+        from integration.remi_group_titles import headings
+        for lang, values in [('en_us', ('Energy Crystals', 'Item Barrels', 'Large Crystal Chargers')),
+                             ('zh_cn', ('能量水晶', '储物桶', '大型晶体充能器'))]:
+            language = read_json(ROOT / LANG_PATH / (lang + '.json'))
+            derived = headings(ROOT, language)
+            for suffix, value in zip(('energy_crystals', 'item_barrels', 'large_crystal_chargers'), values):
+                key = 'emi.group.gt6ce.' + suffix
+                self.assertEqual(derived[key], value)
+                self.assertEqual(language[key], value)
+
     def test_import_preflight_checks_proposed_values_without_changing_accepted_files(self):
         with tempfile.TemporaryDirectory(dir=ROOT/'work') as folder:
             repo=Path(folder);config=repo/CONFIG_PATH;config.mkdir(parents=True)

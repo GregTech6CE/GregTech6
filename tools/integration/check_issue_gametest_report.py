@@ -12,6 +12,15 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'coverremovalupdatetests.crowbarremovaldetachesnativeleveroneverythinwireface',
+    'coverremovalupdatetests.crowbarremovaldistinguishesmediumandfulldiameterpipesupport',
+    'coverremovalupdatetests.removingnonsolidvalvepreservesunderlyingfullhostsupport',
+
+    'signalcoverbehaviortests.nativetorchandrepeaterstrongrelaythroughsolid',
+    'signalcoverbehaviortests.nativeattachmentdustconnectionsandnotifications',
+    'signalcoverbehaviortests.nativeuncoveredwirefeedbackandattachmentintakecontrols',
+    'crystalchargerinteractiontests.nativechargerinsertionkeepsenergyandinteractionguards',
+    'crystalchargerinteractiontests.nativecrystalinsertionusesluandpreservescharge',
     'fuelengineintaketests.exhaustventsbygasphaseandemptycollisionnotbuoyancyoraironly',
     'aluminiumweldingaudittests.aluminium_original_easy_welding_registered_costs',
     'aluminiumweldingaudittests.furnace_rotor_original_fixed_duration',
@@ -242,15 +251,45 @@ API_CONTRACT_CASES = {
 }
 
 
+ENERGY_STORAGE_CASE_NAMESPACES = {
+    'crystalbarreltests.barrels_use_actual_small_capacity_and_persistence': 'gt6ce_crystal_barrel:test_empty',
+    'crystalbarreltests.canonical_crystals_and_survival_recipes': 'gt6ce_crystal_barrel:test_empty',
+    'crystalbarreltests.charger_uses_shared_lu_buffer_and_faces': 'gt6ce_crystal_barrel:test_empty',
+    'dieselenginerepairtests.fuelcyclefrontonlyandheavygasexhaustinallorientations': 'gt6ce_diesel_repair:test_empty',
+    'dieselenginerepairtests.taprecoversfuelafterexhaustandjadereportsdiesel': 'gt6ce_diesel_repair:test_empty',
+    'legacyenergydevicetests.absorber_trophies_output_faces_and_switch': 'gt6ce_legacy_energy:test_empty',
+    'legacyenergydevicetests.fuel_cell_survival_and_empty_shell': 'gt6ce_legacy_energy:test_empty',
+    'legacyenergydevicetests.kilogibblometer_reads_real_large_boiler_through_shell': 'gt6ce_legacy_energy:test_empty',
+    'machineperformancetests.boilerkeepsproductionandpersistentstatewithcompactclientdata': 'gt6ce_machine_performance:test_empty',
+    'machineperformancetests.cachedcandidateskeepprioritycountsflagsoutputsandreloadlive': 'gt6ce_machine_performance:test_empty',
+    'machineperformancetests.dynamicprovidersarenotsuppressedbycachedmisses': 'gt6ce_machine_performance:test_empty',
+    'machineperformancetests.fullinputwakesimmediatelyandmachinekeepsitsprocessingrate': 'gt6ce_machine_performance:test_empty',
+    'machineperformancetests.matchingreservescatalystsandsplitinputswithoutmutatingsnapshots': 'gt6ce_machine_performance:test_empty',
+    'machineperformancetests.neighbourcachefollowsrotationremovalandreplacement': 'gt6ce_machine_performance:test_empty',
+    'machineperformancetests.unchangedtankwritesdonotnotifybutrealtransfersdo': 'gt6ce_machine_performance:test_empty',
+}
+
+
+COVER_REMOVAL_CASE_NAMESPACES = {
+    'coverremovalupdatetests.crowbarremovaldetachesnativeleveroneverythinwireface': 'gregtech_issue_audit:cover_removal_empty',
+    'coverremovalupdatetests.crowbarremovaldistinguishesmediumandfulldiameterpipesupport': 'gregtech_issue_audit:cover_removal_empty',
+    'coverremovalupdatetests.removingnonsolidvalvepreservesunderlyingfullhostsupport': 'gregtech_issue_audit:cover_removal_empty',
+}
+
+
 def expected_namespace(identity):
+    if identity in COVER_REMOVAL_CASE_NAMESPACES:
+        return COVER_REMOVAL_CASE_NAMESPACES[identity]
+    if identity in ENERGY_STORAGE_CASE_NAMESPACES:
+        return ENERGY_STORAGE_CASE_NAMESPACES[identity]
     if identity in API_CONTRACT_CASES:
         return 'gt6ce_api_contracts:test_empty'
     return LEGACY_CASE_NAMESPACES.get(identity, 'gregtech_issue_audit:test_empty')
 
 
 EXPECTED = {
-    'forge': {'openissueregressiontests.' + method for method in FORGE_METHODS} | {GAS_CASE} | FUNCTIONAL_CASES | FORGE_ONLY_CASES | set(LEGACY_CASE_NAMESPACES) | API_CONTRACT_CASES,
-    'neoforge': {GAS_CASE} | FUNCTIONAL_CASES | set(LEGACY_CASE_NAMESPACES) | API_CONTRACT_CASES,
+    'forge': {'openissueregressiontests.' + method for method in FORGE_METHODS} | {GAS_CASE} | FUNCTIONAL_CASES | FORGE_ONLY_CASES | set(LEGACY_CASE_NAMESPACES) | API_CONTRACT_CASES | set(ENERGY_STORAGE_CASE_NAMESPACES),
+    'neoforge': {GAS_CASE} | FUNCTIONAL_CASES | set(LEGACY_CASE_NAMESPACES) | API_CONTRACT_CASES | set(ENERGY_STORAGE_CASE_NAMESPACES),
 }
 
 

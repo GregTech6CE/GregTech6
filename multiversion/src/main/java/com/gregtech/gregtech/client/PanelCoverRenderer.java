@@ -59,7 +59,9 @@ public final class PanelCoverRenderer {
         if((CoverItems.REDSTONE_TORCH.equals(behavior)||CoverItems.REDSTONE_REPEATER.equals(behavior))
                 &&host.coverOwner() instanceof com.gregtech.gregtech.blockentity.energy.SignalWireBlockEntity wire) {
             boolean torch=CoverItems.REDSTONE_TORCH.equals(behavior);
-            boolean lit=torch?wire.signal()<=0:wire.signal()>0;
+            // Network signal is server-only; POWER is the synchronized wire state.
+            boolean powered=wire.getBlockState().getValue(com.gregtech.gregtech.block.energy.SignalWireBlock.POWER)>0;
+            boolean lit=torch?!powered:powered;
             String path="block/machines/covers/"+(torch?"redstonetorch/":"redstonerepeater/")+(lit?"on/":"off/");
             CoverSurfaceRenderer.torch(pose,buffers.getBuffer(RenderType.cutout()),side,
                     ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce",path+"side")),

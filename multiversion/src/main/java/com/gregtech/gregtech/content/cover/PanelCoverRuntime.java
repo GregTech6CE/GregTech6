@@ -118,6 +118,7 @@ public final class PanelCoverRuntime {
             if(panel!=null&&panel.selector()||CoverItems.TAG_SELECTOR.equals(CoverItems.behavior(stack)))c.setMode(0);
         }
         refreshStopped();changed();afterTick();decorativeSound(stack);
+        CoverWorldInteraction.removed(host.coverOwner());
         return stack.isEmpty()?ItemStack.EMPTY:new ItemStack(stack.getItem());
     }
     /** Original CoverTextureSimple uses its wood/stone dig sound for both actions. */

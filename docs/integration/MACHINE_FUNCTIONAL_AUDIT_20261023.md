@@ -207,3 +207,13 @@ The [fuel-engine intake audit](FUEL_ENGINE_INTAKE_AUDIT.md) isolates two reprodu
 ## Aluminium workability and liquid-engine exhaust
 
 See [Aluminium audit](ALUMINIUM_WORKABILITY_AUDIT.md) and [fuel/exhaust audit](FUEL_ENGINE_INTAKE_AUDIT.md). Integrated upstream addon API changes and added its seven native contract cases per loader to the strict CI gate. Local full407 cases pass (Forge208, NeoForge199); remote CI remains separately required.
+
+## Upstream energy/storage integration and cover interactions
+
+Integrated babf6744b while preserving fuel and Aluminium fixes. Retained upstream diesel actual-accepted exhaust transfer, Neo block-only capability access and tick changes, plus original opaque-block exhaust guard. Added all15 upstream native cases per loader to the strict gate.
+
+Fixed crystal charger right-click admission to use the node energy type (LU), retaining the EU-only helper compatibility. Both native baselines failed valid LU insertion and passed wrong-energy/offhand/spectator controls; all pass after the bounded fix.
+
+Source guards: added63 independently source-verified localization aliases,10 scoped Jade declarations and3 generic EMI headings; restored exact pressure-sensor naming. Generated resource ordering synchronized without removing entries.
+
+See [signal cover audit](SIGNAL_COVER_BEHAVIOR_AUDIT.md) and [removal audit](COVER_REMOVAL_UPDATE_AUDIT.md). Final local453 gate passes (Forge231/Neo222),137guards,491REMI,1023shared package classes and SDK112core/46native. Remote CI remains separately required.

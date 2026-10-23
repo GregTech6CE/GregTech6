@@ -10,9 +10,15 @@ import unittest
 import xml.etree.ElementTree as ET
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'integration'))
-from check_issue_gametest_report import check, EXPECTED, LEGACY_CASE_NAMESPACES, API_CONTRACT_CASES, expected_namespace
+from check_issue_gametest_report import check, EXPECTED, LEGACY_CASE_NAMESPACES, API_CONTRACT_CASES, ENERGY_STORAGE_CASE_NAMESPACES, COVER_REMOVAL_CASE_NAMESPACES, expected_namespace
 import verify_artifacts
 from verify_artifacts import required_forge_mixin_mappings
+
+
+LU_INTERACTION_CASES = {
+    'crystalchargerinteractiontests.nativechargerinsertionkeepsenergyandinteractionguards',
+    'crystalchargerinteractiontests.nativecrystalinsertionusesluandpreservescharge',
+}
 
 
 class IssueEvidenceTests(unittest.TestCase):
@@ -31,6 +37,33 @@ class IssueEvidenceTests(unittest.TestCase):
             ET.ElementTree(root).write(path)
             check(path, platform)
 
+    def test_cover_removal_requires_exact_dedicated_template(self):
+        self.assertEqual(len(COVER_REMOVAL_CASE_NAMESPACES), 3)
+        for platform in EXPECTED:
+            self.assertTrue(set(COVER_REMOVAL_CASE_NAMESPACES) <= EXPECTED[platform])
+            self.verify(self.report(platform), platform)
+            for identity in COVER_REMOVAL_CASE_NAMESPACES:
+                for wrong in ('gregtech_issue_audit:test_empty', 'gt6ce:cover_removal_empty'):
+                    root = self.report(platform)
+                    case = next(c for c in root.iter('testcase') if c.get('name') == identity.split('.', 1)[1])
+                    case.set('classname', wrong)
+                    with self.subTest(platform=platform, identity=identity, wrong=wrong), self.assertRaisesRegex(ValueError, 'did not execute'):
+                        self.verify(root, platform)
+
+    def test_each_cover_removal_case_and_real_outcome_remains_required(self):
+        for platform in EXPECTED:
+            for identity in COVER_REMOVAL_CASE_NAMESPACES:
+                for outcome in ('missing', 'failure', 'error', 'skipped'):
+                    root = self.report(platform)
+                    suite = root.find('testsuite')
+                    case = next(c for c in suite if c.get('name') == identity.split('.', 1)[1])
+                    if outcome == 'missing':
+                        suite.remove(case)
+                    else:
+                        ET.SubElement(case, outcome, message='real result')
+                    with self.subTest(platform=platform, identity=identity, outcome=outcome), self.assertRaises(ValueError):
+                        self.verify(root, platform)
+
     def test_real_mojang_template_classname_and_bare_method_format(self):
         for platform in EXPECTED:
             with self.subTest(platform=platform):
@@ -48,7 +81,7 @@ class IssueEvidenceTests(unittest.TestCase):
         repo = Path(__file__).resolve().parents[2]
         workflow = (repo / '.github/workflows/issue-regressions.yml').read_text()
         self.assertIn('-PaddonSample=true', workflow)
-        self.assertIn('-PgameTestNamespaces=gregtech_issue_audit,gregtech_cover_issues,gregtech_pipe_auto,gt6ce_api_contracts', workflow)
+        self.assertIn('-PgameTestNamespaces=gregtech_issue_audit,gregtech_cover_issues,gregtech_pipe_auto,gt6ce_api_contracts,gt6ce_crystal_barrel,gt6ce_diesel_repair,gt6ce_legacy_energy,gt6ce_machine_performance', workflow)
         # The fixture deliberately depends on a registered SDK consumer, not a synthetic block.
         fixture = (repo / 'multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BehaviorStructureSafetyTests.java').read_text()
         self.assertIn('"addon_sample", "irrigator"', fixture)
@@ -107,6 +140,86 @@ class IssueEvidenceTests(unittest.TestCase):
                                 if case.get('classname') == expected_namespace(identity)
                                 and case.get('name') == identity.split('.', 1)[1])
                     ET.SubElement(case, result, message='addon API contract did not pass')
+                    with self.subTest(platform=platform, identity=identity, result=result), self.assertRaisesRegex(ValueError, 'failure/error/skipped'):
+                        self.verify(root, platform)
+
+    def test_each_energy_storage_case_must_execute_on_both_loaders(self):
+        for platform in EXPECTED:
+            for identity in ENERGY_STORAGE_CASE_NAMESPACES:
+                root = self.report(platform)
+                suite = root.find('testsuite')
+                for case in list(suite):
+                    if (case.get('classname') == expected_namespace(identity)
+                            and case.get('name') == identity.split('.', 1)[1]):
+                        suite.remove(case)
+                with self.subTest(platform=platform, identity=identity), self.assertRaisesRegex(ValueError, 'did not execute'):
+                    self.verify(root, platform)
+
+    def test_each_energy_storage_namespace_must_execute_on_both_loaders(self):
+        for platform in EXPECTED:
+            for namespace in set(ENERGY_STORAGE_CASE_NAMESPACES.values()):
+                root = self.report(platform)
+                suite = root.find('testsuite')
+                for case in list(suite):
+                    if case.get('classname') == namespace:
+                        suite.remove(case)
+                with self.subTest(platform=platform, namespace=namespace), self.assertRaisesRegex(ValueError, 'did not execute'):
+                    self.verify(root, platform)
+
+    def test_issue_namespace_cannot_impersonate_energy_storage_methods(self):
+        for platform in EXPECTED:
+            root = self.report(platform)
+            for case in root.iter('testcase'):
+                if case.get('classname') in ENERGY_STORAGE_CASE_NAMESPACES.values():
+                    case.set('classname', 'gregtech_issue_audit:test_empty')
+            with self.subTest(platform=platform), self.assertRaisesRegex(ValueError, 'did not execute'):
+                self.verify(root, platform)
+
+    def test_energy_storage_failures_errors_and_skips_are_not_accepted(self):
+        for platform in EXPECTED:
+            for identity in ENERGY_STORAGE_CASE_NAMESPACES:
+                for result in ('failure', 'error', 'skipped'):
+                    root = self.report(platform)
+                    case = next(case for case in root.iter('testcase')
+                                if case.get('classname') == expected_namespace(identity)
+                                and case.get('name') == identity.split('.', 1)[1])
+                    ET.SubElement(case, result, message='energy/storage contract did not pass')
+                    with self.subTest(platform=platform, identity=identity, result=result), self.assertRaisesRegex(ValueError, 'failure/error/skipped'):
+                        self.verify(root, platform)
+
+    def test_each_native_lu_interaction_case_must_execute_on_both_loaders(self):
+        for platform in EXPECTED:
+            self.assertTrue(LU_INTERACTION_CASES <= EXPECTED[platform])
+            for identity in LU_INTERACTION_CASES:
+                root = self.report(platform)
+                suite = root.find('testsuite')
+                for case in list(suite):
+                    if (case.get('classname') == expected_namespace(identity)
+                            and case.get('name') == identity.split('.', 1)[1]):
+                        suite.remove(case)
+                with self.subTest(platform=platform, identity=identity), self.assertRaisesRegex(ValueError, 'did not execute'):
+                    self.verify(root, platform)
+
+    def test_other_namespace_cannot_impersonate_native_lu_interaction(self):
+        for platform in EXPECTED:
+            for identity in LU_INTERACTION_CASES:
+                root = self.report(platform)
+                case = next(case for case in root.iter('testcase')
+                            if case.get('classname') == expected_namespace(identity)
+                            and case.get('name') == identity.split('.', 1)[1])
+                case.set('classname', 'gt6ce_crystal_barrel:test_empty')
+                with self.subTest(platform=platform, identity=identity), self.assertRaisesRegex(ValueError, 'did not execute'):
+                    self.verify(root, platform)
+
+    def test_native_lu_interaction_failures_errors_and_skips_are_not_accepted(self):
+        for platform in EXPECTED:
+            for identity in LU_INTERACTION_CASES:
+                for result in ('failure', 'error', 'skipped'):
+                    root = self.report(platform)
+                    case = next(case for case in root.iter('testcase')
+                                if case.get('classname') == expected_namespace(identity)
+                                and case.get('name') == identity.split('.', 1)[1])
+                    ET.SubElement(case, result, message='native LU block interaction did not pass')
                     with self.subTest(platform=platform, identity=identity, result=result), self.assertRaisesRegex(ValueError, 'failure/error/skipped'):
                         self.verify(root, platform)
 

@@ -248,9 +248,14 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
 
     /** Actual energy-item capacity; filled chemical cells are crafting ingredients, not batteries. */
     public static long batteryCapacityOf(net.minecraft.world.item.ItemStack stack) {
-        return com.gregtech.gregtech.content.energy.BatteryBoxEnergy.accepts(stack)
+        return batteryCapacityOf(stack, GregTechTags.Energy.EU);
+    }
+
+    /** Battery interaction must use the host's channel (EU boxes or LU crystal chargers). */
+    public static long batteryCapacityOf(net.minecraft.world.item.ItemStack stack, GregTechTags.Tag type) {
+        return com.gregtech.gregtech.content.energy.BatteryBoxEnergy.accepts(stack, type)
                 ? ((com.gregtech.gregtech.api.energy.item.IItemEnergy)stack.getItem())
-                    .getEnergyCapacity(stack, GregTechTags.Energy.EU) : 0;
+                    .getEnergyCapacity(stack, type) : 0;
     }
 
     public boolean installBattery(net.minecraft.world.item.ItemStack stack) {

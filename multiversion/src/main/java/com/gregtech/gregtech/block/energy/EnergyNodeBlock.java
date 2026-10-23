@@ -239,7 +239,7 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
         }
         // Battery boxes: install complete energy items, crowbar removes, GUI otherwise
         if (node.isBatteryBox()) {
-            if (EnergyNodeBlockEntity.batteryCapacityOf(held) > 0) {
+            if (EnergyNodeBlockEntity.batteryCapacityOf(held, node.spec().inType()) > 0) {
                 if (!level.isClientSide && node.installBattery(held)) {
                     if (!player.getAbilities().instabuild) held.shrink(1);
                 }

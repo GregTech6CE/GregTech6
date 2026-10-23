@@ -217,7 +217,16 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
 
     @Override
     public boolean canConnectRedstone(BlockState state, BlockGetter level, BlockPos pos, Direction side) {
-        return side != null && state.getValue(ElectricWireBlock.propFor(side.getOpposite()));
+        if (side == null) return false;
+        var face = side.getOpposite();
+        // Attachment placement deliberately closes the wire port. That blocks
+        // wire-network intake, not vanilla dust connecting to the cover output.
+        if (level.getBlockEntity(pos) instanceof com.gregtech.gregtech.content.cover.PanelCoverHost host) {
+            var cover = com.gregtech.gregtech.content.cover.CoverItems.behavior(host.getCover(face));
+            if (com.gregtech.gregtech.content.cover.CoverItems.REDSTONE_TORCH.equals(cover)
+                    || com.gregtech.gregtech.content.cover.CoverItems.REDSTONE_REPEATER.equals(cover)) return true;
+        }
+        return state.getValue(ElectricWireBlock.propFor(face));
     }
 
     @Override

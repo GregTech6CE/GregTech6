@@ -44,6 +44,17 @@ public final class CoverWorldInteraction {
         return level!=null && net.minecraft.world.level.block.Block.isFaceFull(
                 underlyingOutline(owner),side);
     }
+    /** Cover storage changes do not replace the block state, so vanilla needs an explicit shape update.
+     * Let neighboring blocks decide their own survival and drops; full-size hosts still support them.
+     */
+    public static void removed(net.minecraft.world.level.block.entity.BlockEntity owner) {
+        var level = owner.getLevel();
+        var pos = owner.getBlockPos();
+        if (level == null || level.isClientSide || level.getBlockEntity(pos) != owner) return;
+        var state = owner.getBlockState();
+        state.updateNeighbourShapes(level, pos, net.minecraft.world.level.block.Block.UPDATE_ALL);
+        level.updateNeighborsAt(pos, state.getBlock());
+    }
     public static void walk(Level level,BlockPos pos,Entity entity){
         if(!(level.getBlockEntity(pos) instanceof PanelCoverHost host)||!ComponentCoverFallback.ownClass(host.coverOwner()))return;
         var id=CoverItems.behavior(host.getCover(Direction.UP));

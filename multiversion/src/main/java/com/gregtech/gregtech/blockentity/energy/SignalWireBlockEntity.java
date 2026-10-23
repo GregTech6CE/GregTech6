@@ -111,9 +111,18 @@ public final class SignalWireBlockEntity extends BlockEntity implements MachineC
     }
 
     public int output(Direction side) {
-        if (SAMPLING.get() || level == null || isRemoved()) return 0;
+        if (level == null || isRemoved()) return 0;
+        // GT6 attachment outputs are stored post-tick cover signals, not the wire's
+        // transient network value. Keep torch/repeater outputs visible through
+        // vanilla conductors while sampling, without relaxing other feedback guards.
         if ((Object) this instanceof com.gregtech.gregtech.content.cover.PanelCoverHost host
-                && !host.getCover(side).isEmpty()) return host.panels().signal(side);
+                && !host.getCover(side).isEmpty()) {
+            var cover = com.gregtech.gregtech.content.cover.CoverItems.behavior(host.getCover(side));
+            boolean attachment = com.gregtech.gregtech.content.cover.CoverItems.REDSTONE_TORCH.equals(cover)
+                    || com.gregtech.gregtech.content.cover.CoverItems.REDSTONE_REPEATER.equals(cover);
+            return !SAMPLING.get() || attachment ? host.panels().signal(side) : 0;
+        }
+        if (SAMPLING.get()) return 0;
         if (signal <= 0 || side == received || !connected(side)) return 0;
         var pos = worldPosition.relative(side);
         if (!level.hasChunkAt(pos)) return 0;
