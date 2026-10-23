@@ -55,7 +55,7 @@ public enum ElectricToolAssembly {
     }
     public ToolShapedRecipe recipe(GTMaterial material,ItemStack battery,String suffix) {
         if(!(battery.getItem() instanceof com.gregtech.gregtech.item.ChemicalBatteryItem energy)
-                ||energy.spec().tier()!=definition().tier())return null;
+                ||energy.spec().energyType()!=com.gregtech.gregtech.data.GregTechTags.Energy.EU||energy.spec().tier()!=definition().tier())return null;
         if (!validMaterial(material) || GTItems.getStack(head,material,1).isEmpty()) return null;
         var ingredients=NonNullList.withSize(9,Ingredient.EMPTY);
         for(int i=0;i<9;i++) {

@@ -50,6 +50,25 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
         tag.putLong(NBT_OUT_RATE, ms.outputRate());
         tag.putInt(NBT_EFF, ms.efficiency());
 
+        if (be instanceof KineticDieselEngineBlockEntity diesel) {
+            tag.putBoolean(NBT_ENABLED, !diesel.isStopped());
+            tag.putBoolean("gt_diesel_emitting", diesel.isEmitting());
+            tag.putLong("gt_diesel_fuel_capacity", diesel.fuelTank().getCapacity());
+            tag.putLong("gt_diesel_exhaust_capacity", diesel.exhaustTank().getCapacity());
+            tag.putString("gt_diesel_front", accessor.getBlockState().getValue(EngineBlock.FACING).getName());
+            tag.putString("gt_diesel_rear", accessor.getBlockState().getValue(EngineBlock.FACING).getOpposite().getName());
+            var fuel = diesel.fuelTank().getFluid();
+            var exhaust = diesel.exhaustTank().getFluid();
+//? if >=1.21.1 {
+            /*if (!fuel.isEmpty()) tag.put("gt_diesel_fuel", fuel.save(accessor.getLevel().registryAccess()));
+            if (!exhaust.isEmpty()) tag.put("gt_diesel_exhaust", exhaust.save(accessor.getLevel().registryAccess()));
+*///?} else {
+            if (!fuel.isEmpty()) tag.put("gt_diesel_fuel", fuel.writeToNBT(new CompoundTag()));
+            if (!exhaust.isEmpty()) tag.put("gt_diesel_exhaust", exhaust.writeToNBT(new CompoundTag()));
+//?}
+            return;
+        }
+
         switch (type) {
             case ELECTRIC -> {
                 ElectricEngineSpec spec = block.engineSpec(ElectricEngineSpec.class);
@@ -109,6 +128,26 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
         int eff = data.getInt(NBT_EFF);
 
         tooltip.add(Component.translatable("jade.gt6ce.engine.title", name));
+        if ("diesel".equals(type)) {
+            tooltip.add(Component.translatable("jade.gt6ce.engine.diesel.output", format(outRate),
+                    format(data.getBoolean("gt_diesel_emitting") ? outRate : 0), format(stored)));
+            for (String tank : new String[]{"fuel", "exhaust"}) {
+//? if >=1.21.1 {
+                /*var fluid = net.neoforged.neoforge.fluids.FluidStack.parseOptional(accessor.getLevel().registryAccess(), data.getCompound("gt_diesel_" + tank));
+*///?} else {
+                var fluid = net.minecraftforge.fluids.FluidStack.loadFluidStackFromNBT(data.getCompound("gt_diesel_" + tank));
+//?}
+                Component content = fluid.isEmpty() ? Component.translatable("jade.gt6ce.engine.diesel.empty")
+                        : fluid.getDisplayName().copy().append(" " + format(fluid.getAmount()) + " L");
+                tooltip.add(Component.translatable("jade.gt6ce.engine.diesel." + tank, content,
+                        format(data.getLong("gt_diesel_" + tank + "_capacity"))));
+            }
+            tooltip.add(Component.translatable("jade.gt6ce.engine.diesel.faces",
+                    JadeText.direction(data.getString("gt_diesel_front")), JadeText.direction(data.getString("gt_diesel_rear"))));
+            tooltip.add(Component.translatable(!data.getBoolean(NBT_ENABLED) ? "jade.gt6ce.engine.status.off"
+                    : data.getBoolean("gt_diesel_emitting") ? "jade.gt6ce.engine.diesel.running" : "jade.gt6ce.engine.diesel.waiting"));
+            return;
+        }
         tooltip.add(Component.translatable("jade.gt6ce.engine.in", format(inRate), "steam".equals(type)
                 ? Component.translatable("jade.gt6ce.engine.input.steam") : Component.literal(inUnit)));
 

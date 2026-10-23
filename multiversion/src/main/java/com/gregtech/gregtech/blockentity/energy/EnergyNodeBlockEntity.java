@@ -134,7 +134,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
         }
         if (isBatteryBox()) {
             batteries=net.minecraft.core.NonNullList.withSize(spec.batterySlots(),net.minecraft.world.item.ItemStack.EMPTY);
-            batteryEnergy = new com.gregtech.gregtech.content.energy.BatteryBoxEnergy(batteries, spec.inputRate());
+            batteryEnergy = new com.gregtech.gregtech.content.energy.BatteryBoxEnergy(batteries, spec.inputRate(), spec.inType());
             if(!(batteryCovers instanceof java.util.EnumMap))batteryCovers=new java.util.EnumMap<>(Direction.class);
         }
         if(isElectricTransformer()){transformerControl=new com.gregtech.gregtech.content.energy.ElectricTransformerControl(this::setChanged);if(!(batteryCovers instanceof java.util.EnumMap))batteryCovers=new java.util.EnumMap<>(Direction.class);}
@@ -272,7 +272,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
     private long capacity() {
         if (isBatteryBox()) {
             long sum = 0;
-            for (var b : batteries) sum += batteryCapacityOf(b);
+            for (var b : batteries) if (b.getItem() instanceof com.gregtech.gregtech.api.energy.item.IItemEnergy item) sum += item.getEnergyCapacity(b, spec.inType());
             return sum;
         }
         return hasOriginalConverter() || isSteamConverter() ? spec.inputRate() * 2 : spec.capacity();
@@ -325,7 +325,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
         @Override public int getSlotLimit(int slot) { checkSlot(slot); return 1; }
         @Override public boolean isItemValid(int slot, net.minecraft.world.item.ItemStack stack) {
             checkSlot(slot);
-            return isBatteryBox() && com.gregtech.gregtech.content.energy.BatteryBoxEnergy.accepts(stack);
+            return isBatteryBox() && com.gregtech.gregtech.content.energy.BatteryBoxEnergy.accepts(stack, spec.inType());
         }
     };
 
@@ -896,7 +896,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
     }
 
     @Override public java.util.Collection<GregTechTags.Tag> getEnergyCapacitorTypes(@Nullable Direction side) {
-        return isSolar()?List.of():isBatteryBox()?List.of(GregTechTags.Energy.EU):super.getEnergyCapacitorTypes(side);
+        return isSolar()?List.of():isBatteryBox()?List.of(spec.inType()):super.getEnergyCapacitorTypes(side);
     }
 
     @Override

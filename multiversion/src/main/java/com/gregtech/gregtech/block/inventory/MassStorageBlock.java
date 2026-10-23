@@ -235,6 +235,8 @@ public class MassStorageBlock extends HorizontalDirectionalBlock implements Enti
 //?}
     }
 
+    public long capacity() { return com.gregtech.gregtech.content.storage.OriginalStorageTooltipData.MASS_CAPACITY; }
+
     private boolean interact(BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hit) {
         // both hands fire use(); handling the off hand double-triggers

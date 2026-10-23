@@ -29,7 +29,7 @@ import net.minecraftforge.gametest.*;
 public final class ChemicalBatteryTests {
     private static ChemicalBatteryBlock block(ChemicalBatterySpec.Chemistry chemistry,int tier){
         return GTChemicalBatteries.all().stream().map(net.minecraftforge.registries.RegistryObject::get)
-                .filter(b->b.spec().chemistry()==chemistry&&b.spec().tier()==tier).findFirst().orElseThrow();
+                .filter(b->b.spec() instanceof ChemicalBatterySpec chemical && chemical.chemistry()==chemistry&&b.spec().tier()==tier).findFirst().orElseThrow();
     }
     private static ChemicalBatteryItem item(ChemicalBatterySpec.Chemistry chemistry,int tier){return (ChemicalBatteryItem)block(chemistry,tier).asItem();}
     private static TransientCraftingContainer grid(){return new TransientCraftingContainer(new AbstractContainerMenu(null,0){
@@ -41,7 +41,7 @@ public final class ChemicalBatteryTests {
         h.assertTrue(GTChemicalBatteries.all().size()==25,"5 chemistries x 5 tiers");
         long[] multipliers={2000,4000,4000,64000,128000};int[] heights={8,11,11,11,13},insets={5,5,4,3,2};
         for(var entry:GTChemicalBatteries.all()) {
-            var block=entry.get();var spec=block.spec();var state=block.defaultBlockState();
+            var block=entry.get();var spec=(ChemicalBatterySpec)block.spec();var state=block.defaultBlockState();
             h.assertTrue(spec.capacity()==(8L<<(spec.tier()*2))*multipliers[spec.chemistry().ordinal()],"original capacity "+spec.id());
             h.assertTrue(spec.display(0)==0&&spec.display(1)==1&&spec.display(spec.capacity()-1)==spec.scale()-1&&spec.display(spec.capacity())==spec.scale(),"GT6 display reserves empty/full marks");
             var bounds=state.getShape(h.getLevel(),h.absolutePos(BlockPos.ZERO)).bounds();
@@ -96,7 +96,7 @@ public final class ChemicalBatteryTests {
     @GameTest(template="test_empty")
     public static void originalRecipesConsumeCellsAndReturnCutter(GameTestHelper h){
         for(var entry:GTChemicalBatteries.all()) {
-            var spec=entry.get().spec();var id=GregTech.id("chemical_batteries/"+spec.id());
+            var spec=(ChemicalBatterySpec)entry.get().spec();var id=GregTech.id("chemical_batteries/"+spec.id());
             var recipe=(ToolShapedRecipe)h.getLevel().getRecipeManager().byKey(id).orElseThrow();var grid=grid();
             int cutter=-1,cells=0;String[] expectedCells={"lead_acid_cell_filled","alkaline_button_cell_filled","nickel_cadmium_cell_filled","lithium_cobalt_cell_filled","lithium_manganese_cell_filled"};
             for(int y=0;y<recipe.getHeight();y++)for(int x=0;x<recipe.getWidth();x++) {

@@ -111,7 +111,9 @@ public class SolidBurningBoxBlockEntity extends GTFacingMachineBlockEntity imple
         if (level.isClientSide) {
             return;
         }
-        be.tickServer();
+        be.beginMachineChanges();
+        try { be.tickServer(); }
+        finally { be.endMachineChanges(); }
     }
 
 //? if >=1.21.1 {
@@ -119,6 +121,8 @@ public class SolidBurningBoxBlockEntity extends GTFacingMachineBlockEntity imple
 *///?} else {
     private void tickServer() {
 //?}
+        long oldEnergy = energy;
+        boolean wasBurning = burning;
         long rate = spec.outputRate();
         if (burning) {
             if (energy >= rate) {
@@ -139,7 +143,7 @@ public class SolidBurningBoxBlockEntity extends GTFacingMachineBlockEntity imple
             energy = 0;
         }
         setMachineLit(burning);
-        setChanged();
+        if (oldEnergy != energy || wasBurning != burning) markMachineDataChanged();
     }
 
     private boolean isFrontIgnited() {

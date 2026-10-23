@@ -129,6 +129,7 @@ public class RecipeMap {
 
     // ── Recipe storage ───────────────────────────────────────────────────
     public final Collection<Recipe> mRecipeList;
+    private final RecipeLookupTable lookupTable;
     /** Index: input {@link Item} -> recipes using it as an input. */
     public final Map<Item, Collection<Recipe>> mRecipeItemMap = new HashMap<>();
     public final Map<String, Collection<Recipe>> mRecipeFluidMap = new HashMap<>();
@@ -225,7 +226,8 @@ public class RecipeMap {
                      int aMinimalInputs,
                      boolean aNeedsOutputs, boolean aCombinePower,
                      boolean aUseBucketSizeIn, boolean aUseBucketSizeOut) {
-        mRecipeList = (aRecipeList != null) ? aRecipeList : new HashSet<>();
+        lookupTable = new RecipeLookupTable((aRecipeList != null) ? aRecipeList : new HashSet<>());
+        mRecipeList = lookupTable;
         mNameInternal = aNameInternal;
         mNameLocal = aNameLocal;
         mGUIPath = aGUIPath.endsWith(".png") ? aGUIPath : aGUIPath + ".png";
@@ -759,12 +761,21 @@ public class RecipeMap {
         for (var item : items) { if (inputItems.size() >= inputSlotCount) break; inputItems.add(item); }
         var inputFluids = new ArrayList<FluidStack>();
         for (var fluid : fluids) inputFluids.add(fluid == null ? FluidStack.EMPTY : fluid);
-        for(int pass=0;pass<2;pass++) for (Recipe r : mRecipeList) {
-            if (!r.mEnabled || r.mFakeRecipe || !supportsFluidPresence(r)) continue;
-            boolean exact=java.util.Arrays.stream(r.mInputs).allMatch(required->inputItems.stream().anyMatch(available->required.is(available.getItem())));
-            if((pass==0)!=exact)continue;
-            if (needsOutputs && r.mNeedsEmptyOutput && !allOutputSlotsEmpty(items, inputSlotCount, outputSlotCount)) continue;
-            if (RecipeInputs.consume(r, inputItems, inputFluids, 1) != null) return r;
+        var matcher = new RecipeInputs.Matcher(inputItems, inputFluids);
+        boolean emptyOutputs = !needsOutputs || allOutputSlotsEmpty(items, inputSlotCount, outputSlotCount);
+        // Preserve the existing exact-item pass and collection order. HashSet index iteration must
+        // never choose a different recipe when two rows accept the same input.
+        var candidates = lookupTable.candidates(inputItems, inputFluids);
+        for (Recipe r : candidates.exact()) {
+            if (!r.mEnabled || r.mFakeRecipe || !supportsFluidPresence(r) || !exactItems(r, inputItems)) continue;
+            if (needsOutputs && r.mNeedsEmptyOutput && !emptyOutputs) continue;
+            if (matcher.matches(r, 1)) return r;
+        }
+        // Material aliases, legacy colour alternatives and tag-derived forms retain the full fallback.
+        for (Recipe r : candidates.alternatives()) {
+            if (!r.mEnabled || r.mFakeRecipe || !supportsFluidPresence(r) || exactItems(r, inputItems)) continue;
+            if (needsOutputs && r.mNeedsEmptyOutput && !emptyOutputs) continue;
+            if (matcher.matches(r, 1)) return r;
         }
         // GT6's subclass overrides run only when the table had no answer, exactly like GT6's
         // `if (rRecipe != null) return rRecipe;` guards at the top of those findRecipe() bodies.
@@ -773,7 +784,7 @@ public class RecipeMap {
             if (dynamic != null && dynamic.mEnabled && !dynamic.mFakeRecipe && supportsFluidPresence(dynamic)) {
                 if (needsOutputs && dynamic.mNeedsEmptyOutput
                         && !allOutputSlotsEmpty(items, inputSlotCount, outputSlotCount)) return null;
-                if (RecipeInputs.consume(dynamic, inputItems, inputFluids, 1) != null) return dynamic;
+                if (matcher.matches(dynamic, 1)) return dynamic;
             }
         }
         if (mContextRecipes != null && level != null) {
@@ -781,10 +792,22 @@ public class RecipeMap {
             if (dynamic != null && dynamic.mEnabled && !dynamic.mFakeRecipe && supportsFluidPresence(dynamic)
                     && (!needsOutputs || !dynamic.mNeedsEmptyOutput
                             || allOutputSlotsEmpty(items, inputSlotCount, outputSlotCount))
-                    && RecipeInputs.consume(dynamic, inputItems, inputFluids, 1) != null) return dynamic;
+                    && matcher.matches(dynamic, 1)) return dynamic;
         }
         return null;
     }
+
+    static boolean exactItems(Recipe recipe, List<ItemStack> inputs) {
+        for (var required : recipe.mInputs) {
+            boolean found = false;
+            for (var available : inputs) if (required.is(available.getItem())) { found = true; break; }
+            if (!found) return false;
+        }
+        return true;
+    }
+
+    /** Call after mutating the ingredients of an already registered row in place. */
+    public void invalidateLookup() { lookupTable.invalidate(); }
 
     @javax.annotation.Nullable
     private Recipe firstDynamicRecipe(List<ItemStack> inputItems, List<FluidStack> inputFluids) {

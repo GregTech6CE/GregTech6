@@ -98,6 +98,7 @@ public final class MaterialClientModels {
 
 //?}
         for (var entry : GTItems.allEntries()) {
+            if (entry.get() instanceof com.gregtech.gregtech.item.EnergyCrystalItem) continue;
 //? if >=1.21.1 {
             /*com.gregtech.gregtech.api.material.MaterialFormItem item = (com.gregtech.gregtech.api.material.MaterialFormItem) entry.get();
             if (item.getPrefix().isAddon()) continue;
@@ -141,6 +142,7 @@ public final class MaterialClientModels {
     /*@SubscribeEvent
     public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
         for (var entry : GTItems.allEntries()) {
+            if (entry.get() instanceof com.gregtech.gregtech.item.EnergyCrystalItem) continue;
             com.gregtech.gregtech.api.material.MaterialFormItem item = (com.gregtech.gregtech.api.material.MaterialFormItem) entry.get();
             event.register(ItemColorARGB.opaque((stack, layer) -> layer == 0 ? item.getTintColor() : 0xFFFFFF), entry.get());
 *///?} else {

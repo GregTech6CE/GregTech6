@@ -2,7 +2,7 @@ package com.gregtech.gregtech.item;
 
 import com.gregtech.gregtech.api.energy.item.IItemEnergy;
 import com.gregtech.gregtech.block.energy.ChemicalBatteryBlock;
-import com.gregtech.gregtech.content.energy.ChemicalBatterySpec;
+import com.gregtech.gregtech.content.energy.PortableBatterySpec;
 import com.gregtech.gregtech.data.GregTechTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
@@ -13,10 +13,10 @@ import net.minecraft.network.chat.Component;
 import java.util.List;
 
 /** A passive placed battery and the very same charged inventory item (TileEntityBase08Battery). */
-public final class ChemicalBatteryItem extends BlockItem implements IItemEnergy {
+public class ChemicalBatteryItem extends BlockItem implements IItemEnergy {
     public static final String CHARGE="gt.charge";
     public ChemicalBatteryItem(ChemicalBatteryBlock block){super(block,new Properties().stacksTo(16));}
-    public ChemicalBatterySpec spec(){return ((ChemicalBatteryBlock)getBlock()).spec();}
+    public PortableBatterySpec spec(){return ((ChemicalBatteryBlock)getBlock()).spec();}
 //? if >=1.21.1 {
     /*public long stored(ItemStack stack){return Math.max(0,Math.min(spec().capacity(),com.gregtech.gregtech.platform.neoforge.StackCustomData.read(stack).getLong(CHARGE)));}
 *///?} else {
@@ -41,7 +41,7 @@ public final class ChemicalBatteryItem extends BlockItem implements IItemEnergy 
     @Override public InteractionResult place(BlockPlaceContext ctx){
         return ctx.getPlayer()!=null&&ctx.getPlayer().isShiftKeyDown()?super.place(ctx):InteractionResult.PASS;
     }
-    @Override public boolean isEnergyType(ItemStack s,GregTechTags.Tag type){return type==GregTechTags.Energy.EU;}
+    @Override public boolean isEnergyType(ItemStack s,GregTechTags.Tag type){return type==spec().energyType();}
     @Override public long getEnergyCapacity(ItemStack s,GregTechTags.Tag type){return isEnergyType(s,type)?spec().capacity():0;}
     @Override public long getEnergyStored(ItemStack s,GregTechTags.Tag type){return isEnergyType(s,type)?stored(s):0;}
     @Override public boolean canEnergyInjection(ItemStack stack,GregTechTags.Tag type,long size){
@@ -72,7 +72,7 @@ public final class ChemicalBatteryItem extends BlockItem implements IItemEnergy 
     }
     @Override public boolean isBarVisible(ItemStack stack){return stored(stack)>0;}
     @Override public int getBarWidth(ItemStack stack){return (int)(13*stored(stack)/spec().capacity());}
-    @Override public int getBarColor(ItemStack stack){return spec().chemistry().color;}
+    @Override public int getBarColor(ItemStack stack){return spec().color();}
 //? if >=1.21.1 {
     /*@Override public void appendHoverText(ItemStack stack,Item.TooltipContext context,List<Component> tip,TooltipFlag flags){
         super.appendHoverText(stack,context,tip,flags);
@@ -80,7 +80,7 @@ public final class ChemicalBatteryItem extends BlockItem implements IItemEnergy 
     @Override public void appendHoverText(ItemStack stack,@javax.annotation.Nullable Level level,List<Component> tip,TooltipFlag flags){
         super.appendHoverText(stack,level,tip,flags);
 //?}
-        tip.add(Component.translatable("tooltip.gt6ce.electric_tool.energy",stored(stack),spec().capacity()));
+        tip.add(Component.translatable("tooltip.gt6ce.portable_battery.energy",stored(stack),spec().capacity(),spec().energyType().getShortName()));
         tip.add(Component.translatable("tooltip.gt6ce.chemical_battery.packet",spec().minimumPacket(),spec().maximumPacket()));
         tip.add(Component.translatable("tooltip.gt6ce.chemical_battery.place"));
     }

@@ -78,7 +78,7 @@ public final class GregTechClient {
         event.register((stack,tint)->((com.gregtech.gregtech.block.plant.BushBlock)((net.minecraft.world.item.BlockItem)stack.getItem()).getBlock()).inventoryColour(tint),
                 java.util.Arrays.stream(com.gregtech.gregtech.registry.GTBushes.allBlocks()).map(Block::asItem).toArray(net.minecraft.world.item.Item[]::new));
         com.gregtech.gregtech.registry.GTChemicalBatteries.allRegistered().forEach(entry->
-                event.register((stack,index)->index==0?entry.get().spec().chemistry().color:0xFFFFFF,entry.get().asItem()));
+                event.register((stack,index)->index==0?entry.get().spec().tint(((com.gregtech.gregtech.item.ChemicalBatteryItem)stack.getItem()).stored(stack)):0xFFFFFF,entry.get().asItem()));
         java.util.stream.Stream.concat(com.gregtech.gregtech.registry.GTMiscBlocks.ADVANCED_CRAFTING_TABLES.stream(),com.gregtech.gregtech.registry.GTMiscBlocks.CHARGING_CRAFTING_TABLES.stream()).forEach(entry -> event.register((stack,index) -> index==0?entry.get().material().getColor():0xFFFFFF,entry.get().asItem()));
         com.gregtech.gregtech.registry.GTStorage.BOTTLE_CRATES.forEach(entry -> event.register((stack,index) -> index == 0 ? entry.get().tintRgb() : 0xFFFFFF, entry.get().asItem()));
         com.gregtech.gregtech.registry.GTStorage.DRAWERS.forEach(entry -> event.register((stack,index) -> index == 0 ? entry.get().material().getColor() : 0xFFFFFF, entry.get().asItem()));
@@ -95,7 +95,7 @@ public final class GregTechClient {
                 event.register((stack, tintIndex) -> tintIndex == 0 ? rod.tintRgb() : 0xFFFFFF, rod);
             } else if (entry.get() instanceof com.gregtech.gregtech.item.ElectricToolItem electric) {
                 event.register(electric::tint, electric);
-            } else if (entry.get() instanceof com.gregtech.gregtech.api.material.MaterialFormItem materialItem) {
+            } else if (entry.get() instanceof com.gregtech.gregtech.api.material.MaterialFormItem materialItem && !(entry.get() instanceof com.gregtech.gregtech.item.EnergyCrystalItem)) {
                 event.register((stack, tintIndex) -> tintIndex == 0 ? materialItem.getTintColor() : 0xFFFFFF, entry.get());
             }
         });

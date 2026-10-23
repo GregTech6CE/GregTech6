@@ -24,8 +24,14 @@ public enum EnergyBufferJadeProvider implements IBlockComponentProvider, IServer
 
     @Override
     public void appendServerData(CompoundTag tag, BlockAccessor accessor) {
+        if (accessor.getBlockEntity() instanceof com.gregtech.gregtech.blockentity.energy.PowerCellBlockEntity cell) {
+            tag.putString(NBT_UNIT, "EU");
+            tag.putLong(NBT_STORED, cell.stored());
+            tag.putLong(NBT_CAPACITY, cell.spec().capacity());
+            return;
+        }
         if(accessor.getBlockEntity() instanceof com.gregtech.gregtech.blockentity.energy.ChemicalBatteryBlockEntity battery) {
-            tag.putString(NBT_UNIT,"EU");tag.putLong(NBT_STORED,battery.stored());tag.putLong(NBT_CAPACITY,battery.spec().capacity());
+            tag.putString(NBT_UNIT,battery.spec().energyType().getShortName());tag.putLong(NBT_STORED,battery.stored());tag.putLong(NBT_CAPACITY,battery.spec().capacity());
             return;
         }
         if (!(accessor.getBlockEntity() instanceof IEnergyBlock energy)) {

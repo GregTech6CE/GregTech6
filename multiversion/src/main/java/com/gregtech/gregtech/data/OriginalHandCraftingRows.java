@@ -28,6 +28,8 @@ import java.util.*;
 public final class OriginalHandCraftingRows {
     private OriginalHandCraftingRows() {}
     public static void add(Map<ResourceLocation, byte[]> data) {
+        legacyEnergyDevices(data);
+        crystalChargersAndItemBarrels(data);
         rods(data);
         woodenBuckets(data);
         addAxles(data);
@@ -37,6 +39,70 @@ public final class OriginalHandCraftingRows {
         int circuit = circuits(data), cell = cells(data), store = storage(data);
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original native hand crafting: gearboxes={} transformers={} rotation-engines={} pumps={} wire={} pipes={} anvils={} bars={} circuits={} cells={} storage={}",
                 gearboxes, transformers, engines, pumps, wire, pipe, anvil, bar, circuit, cell, store);
+    }
+
+    /** Original crystal chargers and the wooden variants of MultiTileEntityMassStorage. */
+    private static void crystalChargersAndItemBarrels(Map<ResourceLocation, byte[]> recipes) {
+        for (int tier = 0; tier < 10; tier++) {
+            var material = com.gregtech.gregtech.content.energy.BatteryBoxDefinitions.material(tier);
+            String suffix = com.gregtech.gregtech.content.energy.BatteryBoxDefinitions.TIERS.get(tier);
+            for (boolean large : new boolean[]{false, true}) {
+                String path = (large ? "large_crystal_charger_" : "crystal_charger_") + suffix;
+                ItemStack casing = large ? new ItemStack(BuiltInRegistries.ITEM.get(id("crystal_charger_" + suffix)))
+                        : GTBlocks.getStack(BlockMaterialPrefix.casingMachine, material);
+                int added = register(recipes, "energy/" + path, new String[]{"FCF", "FCF", "PMP"},
+                        Map.of('F', Ingredient.of(tech("compact_force_field_emitter_" + (tier == 9 ? "puv1" : suffix))),
+                                'C', Ingredient.of(ItemTags.create(id("circuits_tier_" + tier + "_plus"))),
+                                'P', Ingredient.of(tech("crystal_processor_emerald")), 'M', Ingredient.of(casing)),
+                        new ItemStack(BuiltInRegistries.ITEM.get(id(path))));
+                if (added != 1) throw new IllegalStateException("Missing crystal charger ingredients: " + path);
+            }
+        }
+        for (var spec : com.gregtech.gregtech.content.storage.ItemBarrelCatalog.ALL) {
+            Ingredient plank = spec.material().equals("Wood") ? Ingredient.of(ItemTags.PLANKS)
+                    : powerCellForm(MaterialPrefix.plate, spec.material());
+            Ingredient bands = spec.band().equals("MagicIron")
+                    ? Ingredient.of(java.util.stream.Stream.of("Manasteel", "Thaumium", "DarkThaumium", "SpectreIron", "FierySteel", "MeteoflameSteel")
+                            .map(name -> GTItems.getStack(MaterialPrefix.stickLong, com.gregtech.gregtech.api.material.GTMaterialRegistry.get(name)))
+                            .filter(stack -> !stack.isEmpty()))
+                    : powerCellForm(MaterialPrefix.stickLong, spec.band());
+            int added = register(recipes, "storage/" + spec.id(), new String[]{"rCs", "PSP", "PSP"},
+                    Map.of('r', requiredTool(GTToolType.SOFT_HAMMER), 's', requiredTool(GTToolType.SAW),
+                            'C', Ingredient.of(Tags.Items.CHESTS_WOODEN), 'P', plank, 'S', bands),
+                    new ItemStack(BuiltInRegistries.ITEM.get(id(spec.id()))));
+            if (added != 1) throw new IllegalStateException("Missing item barrel ingredients: " + spec.id());
+        }
+    }
+
+    /** Loader_MultiTileEntities 10180, 14700 and 14600. */
+    private static void legacyEnergyDevices(Map<ResourceLocation, byte[]> recipes) {
+        int added = register(recipes, "energy/power_cell_empty", new String[]{"ACA", "FPF", "ACA"},
+                Map.of('A', powerCellForm(MaterialPrefix.itemCasing, "Aluminium"),
+                        'C', Ingredient.of(ItemTags.create(id("circuits_tier_4_plus"))),
+                        'F', Ingredient.of(ItemTags.create(id("technology/any_plastic_foil"))),
+                        'P', powerCellForm(MaterialPrefix.foil, "Platinum")),
+                new ItemStack(BuiltInRegistries.ITEM.get(id("power_cell_empty"))));
+        added += register(recipes, "energy/aneutronic_fusion_power_cell_empty", new String[]{"VPV", "GFG", "VGV"},
+                Map.of('V', powerCellForm(MaterialPrefix.plateGemTiny, "Vibranium"),
+                        'P', Ingredient.of(tech("crystal_processor_ruby")),
+                        'F', Ingredient.of(tech("compact_force_field_emitter_iv")),
+                        'G', powerCellForm(MaterialPrefix.foil, "Graphene")),
+                new ItemStack(BuiltInRegistries.ITEM.get(id("aneutronic_fusion_power_cell_empty"))));
+        var palladium = com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Palladium");
+        added += register(recipes, "energy/magic_field_absorber", new String[]{"GOG", "LBL", "CMC"},
+                Map.of('M', Ingredient.of(GTBlocks.getStack(BlockMaterialPrefix.casingMachine, palladium)),
+                        'C', Ingredient.of(tech("circuit_magic")),
+                        'G', powerCellForm(MaterialPrefix.wireFine, "Gold"),
+                        'O', powerCellForm(MaterialPrefix.plate, "Obsidian"),
+                        'L', powerCellForm(MaterialPrefix.gem, "Lapis"),
+                        'B', Ingredient.of(Items.BEACON)), new ItemStack(GTLegacyEnergyDevices.MAGIC_FIELD_ABSORBER.get()));
+        if (added != 3) throw new IllegalStateException("Missing original portable cell / magic absorber crafting ingredients");
+    }
+
+    private static Ingredient powerCellForm(MaterialPrefix prefix, String material) {
+        var stack = GTItems.getStack(prefix, com.gregtech.gregtech.api.material.GTMaterialRegistry.get(material));
+        if (stack.isEmpty()) throw new IllegalStateException("Missing energy-device form: " + prefix.getName() + "/" + material);
+        return com.gregtech.gregtech.recipe.CraftingMaterialForms.ingredient(stack);
     }
 
     /** GT6 Loader_Recipes_Handlers:418-419: an ingot or billet and a file produce one rod. */
