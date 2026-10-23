@@ -38,12 +38,15 @@ public class DrawerQuadBlockEntity extends BlockEntity implements BlockContents 
 //?}
     private final ItemStackHandler inventory = new ItemStackHandler(SLOT_COUNT) {
         @Override protected void onContentsChanged(int slot) {
-            if (loading) return;
-            refillLegacyOverflow();
-            setChanged();
-            if (level != null && !level.isClientSide) level.updateNeighbourForOutputSignal(worldPosition, getBlockState().getBlock());
+            inventoryChanged();
         }
     };
+    private void inventoryChanged() {
+        if (loading) return;
+        refillLegacyOverflow();
+        setChanged();
+        if (level != null && !level.isClientSide) level.updateNeighbourForOutputSignal(worldPosition, getBlockState().getBlock());
+    }
     public DrawerQuadBlockEntity(BlockPos pos, BlockState state) {
         super(com.gregtech.gregtech.registry.GTBlockEntities.DRAWER_QUAD.get(), pos, state);
     }
@@ -80,13 +83,16 @@ public class DrawerQuadBlockEntity extends BlockEntity implements BlockContents 
         return new HopperContainerMenu(GTMenuTypes.forSlotCount(PAGE_SIZE), id, playerInventory,
                 view(IntStream.range(page * PAGE_SIZE, (page + 1) * PAGE_SIZE).toArray())) {
             @Override protected net.minecraft.world.inventory.Slot createInventorySlot(IItemHandler handler, int index, int x, int y) {
-                return new SlotItemHandler(handler, index, x, y) {
+                return new InventorySlot(handler, index, x, y) {
                     @Override public int getMaxStackSize(ItemStack stack) {
                         // Forge's default probes by clearing/restoring this slot, which would
                         // consume real legacy overflow during a supposedly read-only query.
                         return Math.min(stack.getMaxStackSize(), handler.getSlotLimit(index));
                     }
                 };
+            }
+            @Override protected void inventorySlotChanged(int index) {
+                DrawerQuadBlockEntity.this.inventoryChanged();
             }
             @Override public boolean stillValid(Player player) {
                 return !isRemoved() && level != null && level.getBlockEntity(worldPosition) == DrawerQuadBlockEntity.this

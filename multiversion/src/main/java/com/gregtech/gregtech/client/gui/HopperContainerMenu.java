@@ -68,7 +68,25 @@ public class HopperContainerMenu extends AbstractContainerMenu {
 
     /** Called during construction: overrides must use these parameters, not subclass fields. */
     protected Slot createInventorySlot(IItemHandler handler, int index, int x, int y) {
-        return new SlotItemHandler(handler, index, x, y);
+        return new InventorySlot(handler, index, x, y);
+    }
+
+    /** Server providers forward live-stack changes to their normal inventory notification path. */
+    protected void inventorySlotChanged(int index) {}
+
+    protected class InventorySlot extends SlotItemHandler {
+        private final int inventoryIndex;
+
+        protected InventorySlot(IItemHandler handler, int index, int x, int y) {
+            super(handler, index, x, y);
+            inventoryIndex = index;
+        }
+
+        @Override public void setChanged() {
+            super.setChanged();
+            // Native merges can mutate the handler's live stack without calling its setter.
+            HopperContainerMenu.this.inventorySlotChanged(inventoryIndex);
+        }
     }
 
     private void addPlayerInventory(Inventory playerInv, int yOffset) {

@@ -296,6 +296,39 @@ public final class MenuLifetimeCapacityTests {
             h.assertTrue(menu.getCarried().getCount() == 2 && drawer.items().getStackInSlot(0).isEmpty(),
                     "ordinary non-overflow withdrawal remains correct");
         }
+        // Independent legacy fixture: no carried stock from the preceding scenarios is discarded
+        // inside this conservation measurement. Partial quick-move now notifies/refills the owner.
+        try (var f = new Fixture(h, 5)) {
+            var drawer = (DrawerQuadBlockEntity) f.place(block("gt6ce", "drawer_quad").defaultBlockState());
+            var legacy = new CompoundTag();
+            var compartments = new ListTag();
+            for (int page = 0; page < 4; page++) {
+                var entry = new CompoundTag();
+                entry.put("item", saveItem(h, new ItemStack(Items.STONE)));
+                entry.putLong("count", 4096);
+                compartments.add(entry);
+            }
+            legacy.put("gt.compartments", compartments);
+            load(h, drawer, legacy);
+            var menu = f.keep(drawer.createMenu(0, 1, f.player.getInventory()));
+            for (int slot = 0; slot < 36; slot++) f.player.getInventory().setItem(slot, new ItemStack(Items.DIRT, 64));
+            f.player.getInventory().setItem(8, new ItemStack(Items.STONE, 63));
+            h.assertTrue(menu.stillValid(f.player) && drawerTotal(h, drawer) == 16384
+                    && drawer.items().getStackInSlot(0).getCount() == 64, "fresh migrated drawer starts with16384 before partial shift");
+            int totalBefore = drawerTotal(h, drawer) + f.player.getInventory().getItem(8).getCount();
+            menu.clicked(0, 0, ClickType.QUICK_MOVE, f.player);
+            h.assertTrue(menu.getCarried().isEmpty() && f.player.getInventory().getItem(8).is(Items.STONE)
+                    && f.player.getInventory().getItem(8).getCount() == 64 && drawerTotal(h, drawer) == 16383,
+                    "partial shift gains exactly one stone and consumes exactly one migrated item");
+            h.assertTrue(drawerTotal(h, drawer) + f.player.getInventory().getItem(8).getCount() == totalBefore,
+                    "partial shift conserves player plus visible and overflow stock");
+            for (int slot = 0; slot < drawer.items().getSlots(); slot++)
+                h.assertTrue(drawer.items().getStackInSlot(slot).is(Items.STONE) && drawer.items().getStackInSlot(slot).getCount() == 64,
+                        "real change notification refills the source without disturbing other drawer slots");
+            for (int slot = 0; slot < 36; slot++) if (slot != 8)
+                h.assertTrue(f.player.getInventory().getItem(slot).is(Items.DIRT) && f.player.getInventory().getItem(slot).getCount() == 64,
+                        "partial legacy shift leaves unrelated player items unchanged");
+        }
         h.succeed();
     }
 
