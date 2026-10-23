@@ -101,7 +101,7 @@ import java.util.UUID;
 /** Shell block entity. The addon behavior never sees this class. */
 public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlock, MenuProvider,
         com.gregtech.gregtech.api.fluid.CompressedGasReceiver, ITileEntityCrucible,
-        com.gregtech.gregtech.api.multiblock.MultiblockPortOwner {
+        com.gregtech.gregtech.api.multiblock.MultiblockPortOwner, com.gregtech.gregtech.api.signal.GtSignalSource {
     private final BehaviorMachine declaration;
     private final AddonMachines.AcceptedBehavior accepted;
     private final MachineBehavior behavior;
@@ -176,6 +176,12 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
 
     public BehaviorMachine declaration() { return declaration; }
     public AddonMachines.AcceptedBehavior accepted() { return accepted; }
+
+    @Override
+    public long gtSignal(int side) {
+        if (level == null || level.isClientSide || !declaration.signalOutput() || side < 0 || side > 5) return 0;
+        return com.gregtech.gregtech.api.signal.GtSignalCarrier.clamp(behavior.gtSignal(context, side));
+    }
     public BehaviorState state() { return state; }
     public ItemStackHandler inventory() { return items; }
     public IItemHandler items() { return pipeItems; }

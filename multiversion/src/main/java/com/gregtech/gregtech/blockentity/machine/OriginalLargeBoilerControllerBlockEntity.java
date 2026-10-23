@@ -50,7 +50,8 @@ import java.util.List;
  * Their wall material and rated output are fixed by the placed controller item.
  */
 public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBlockEntity
-        implements MultiblockPortOwner, com.gregtech.gregtech.api.multiblock.MultiblockToolTarget, com.gregtech.gregtech.api.sensor.CompressionSensorSource {
+        implements MultiblockPortOwner, com.gregtech.gregtech.api.multiblock.MultiblockToolTarget, com.gregtech.gregtech.api.sensor.CompressionSensorSource,
+        com.gregtech.gregtech.api.machine.HeatHandler {
     private static final int WATER_CAPACITY = com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerParameters.WATER_CAPACITY;
     private static final int HU_PER_WATER = com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerParameters.HU_PER_WATER;
     private static final int STEAM_PER_WATER = com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerParameters.STEAM_PER_WATER;
@@ -77,6 +78,46 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
 
     public OriginalLargeBoilerSpecs.Variant variant() { return variant; }
     public long storedHeat() { return heat; }
+
+    // ── HeatHandler: input keeps the structure gate, output is a plain drain ────────────────
+
+    @Override public long heatStored() { return heat; }
+    @Override public long heatCapacity() { return variant.heatCapacity(); }
+    @Override public long temperatureK() { return com.gregtech.gregtech.data.GregTechConstants.DEF_ENV_TEMP; }
+
+    @Override public long insertHeat(long signedHU, boolean simulate) {
+        if (signedHU == 0 || !isStructureOk()) return 0;
+        if (signedHU > 0) {
+            long accepted = heat < 0 ? signedHU : Math.min(signedHU, Long.MAX_VALUE - heat);
+            if (!simulate && accepted > 0) {
+                heat += accepted;
+                cooldown = Math.max(cooldown, 32);
+                setChanged();
+            }
+            return accepted;
+        }
+        if (signedHU == Long.MIN_VALUE) return 0;
+        long removed = Math.min(Math.max(0, heat), -signedHU);
+        if (!simulate && removed > 0) {
+            heat -= removed;
+            setChanged();
+        }
+        return -removed;
+    }
+
+    @Override public long extractHeat(long signedHU, boolean simulate) {
+        if (signedHU == 0) return 0;
+        if (signedHU > 0) {
+            long removed = Math.min(Math.max(0, heat), signedHU);
+            if (!simulate && removed > 0) {
+                heat -= removed;
+                setChanged();
+            }
+            return removed;
+        }
+        if (signedHU == Long.MIN_VALUE) return 0;
+        return insertHeat(-signedHU, simulate);
+    }
     public long waterAmount() { return water.getAmount(); }
     @Override public long gibblValue(int side) { return steam.getAmount(); }
     @Override public long gibblMaximum(int side) { return steam.getCapacity(); }

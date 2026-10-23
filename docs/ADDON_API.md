@@ -33,10 +33,13 @@ Legacy contributors still load from an installed GregTech jar. They are deprecat
   - [Structure layout datapacks](#structure-layout-datapacks)
   - [Recipe tables](#recipe-tables)
   - [Recipe machines](#recipe-machines)
+  - [Machine controls](#machine-controls)
+  - [Heat](#heat)
   - [Behavior machines](#behavior-machines)
   - [Fuel generators](#fuel-generators)
   - [Pipes](#pipes)
   - [Compressed gas tanks](#compressed-gas-tanks)
+- [Sensor sources](#sensor-sources)
 - [Signal wires](#signal-wires)
 - [Scope](#scope)
 - [Versioning and compatibility](#versioning-and-compatibility)
@@ -673,6 +676,43 @@ Two blocks may share a machine type when they are the same addon and agree on th
 
 JEI catalysts and the multiblock preview follow the registered machine list. A large machine with a layout is included in the preview. The crafting recipe is the addon's own datapack. GregTech does not generate one. An addon large machine uses the default port path. Built-in name branches stay in place for built-in machines.
 
+### Machine controls
+
+`MachineControl` is in the SDK. A block entity that implements `MachineControl.Provider` returns a control for a face; `MachineControl.find(entity, side)` resolves it and returns `null` when that face has none. Relays resolve the target on every operation, so do not cache the control beyond the call.
+
+```java
+var control = MachineControl.find(level.getBlockEntity(pos), side);
+if (control != null && control.available()) {
+    boolean on = control.enabled();
+    long energy = control.energy();
+    long capacity = control.energyCapacity();
+    long perTick = control.progressPerTick();
+}
+```
+
+`enabled()`/`setEnabled(boolean)`, `running()`, `active()`, `progress()` and `progressMax()` are the switch and progress surface. `energy()` is the buffered energy, `energyCapacity()` its ceiling, and `progressPerTick()` the work the next active tick adds (0 while idle). These three are read-only.
+
+`supportsWrite()` is `false` on built-in machines and `setProgress`/`setEnergy` return `false`: API version 0 does not let an addon rewrite a built-in machine's buffer or progress. An addon that supplies its own control should keep the same split and answer `supportsWrite()` from its own checks.
+
+`externalSignal(side)` and `setExternalSignal(side, level)` are a control input, not a state write, so they work even while `supportsWrite()` is false. The level is 0–15 and is saved with the machine. It is combined with that face's cover signal (the larger value wins) before the cover's `allows` gate runs, so an external controller can stop or start a machine through a redstone switch cover on that face. A value outside 0–15 is rejected.
+
+### Heat
+
+`HeatHandler` is in the SDK at `com.gregtech.gregtech.api.machine`. A block entity that implements it exposes a signed HU buffer directly. `TemperatureSource` (under Sensor sources) stays the read-only temperature interface; use `HeatHandler` when the addon also writes heat.
+
+```java
+if (level.getBlockEntity(pos) instanceof HeatHandler heat) {
+    long stored = heat.heatStored();       // signed: cooling is negative
+    long capacity = heat.heatCapacity();   // Long.MAX_VALUE when unbounded
+    long accepted = heat.insertHeat(8_000, true);
+    long removed = heat.extractHeat(2_000, false);
+}
+```
+
+Amounts are signed heat units: a positive value heats and a negative value cools. Both setters return the signed amount actually accepted or removed. `simulate` must not change state and returns what the executed call would return. `temperatureK()` is never negative; machines that do not model temperature (boilers and heat exchangers) report the environment temperature, while the crucible reports its own Kelvin.
+
+The adapters are the single-block and original large boilers, the single-block and large heat exchangers, and both crucible trees. Each keeps its own rules: an unformed large boiler refuses input, an overfilled boiler still explodes on its next tick, and a crucible still converts stored HU into Kelvin on its next tick. Writing heat is a direct bypass of the machine's normal energy input, not a new processing path.
+
 ### Behavior machines
 
 Return each `BehaviorMachine` from `addonMachines()`. Also list a `BehaviorMachineContributor` in `META-INF/services/com.gregtech.gregtech.api.addon.platform.BehaviorMachineContributor`. That interface lives in the loader API because `FluidStack` differs between Forge and NeoForge. `machineTypes()` must include every behavior machine type this addon declares. GregTech calls `create` once for each placed block entity. A missing factory fails startup and names the addon and the machine type.
@@ -774,6 +814,14 @@ A behavior machine is not a recipe machine. GregTech does not look up a row, spe
 
 `recipeMaps(String... names)` lists machine tables or fuel tables. The block becomes a JEI and EMI catalyst for each name. A name is a table this addon declared, or a built-in table such as `gt.recipe.compressor` or `gt.recipe.fuels.engine`. Another addon's table is unknown. An unknown name fails startup and names the addon and the machine. A repeated name, or a name outside `[a-z0-9_.]+`, fails at `build()`. Leaving this unset adds no catalyst, so the lists already built from recipe machines and fuel generators stay as they are. The names do not make GregTech run the table.
 
+`signalOutput(true)` lets the machine act as a GT signal source. The behavior implements `gtSignal(context, side)` and returns a strength in `GtSignalCarrier.UNIT` units; `side` is `Direction.ordinal()`, the direction from the wire toward this block. The default returns 0. A machine without `signalOutput` keeps the block's `isSignalSource` false and does not change any existing signal network. The wire still clamps the result to `[0, 15 * UNIT]`.
+
+```java
+@Override public long gtSignal(MachineBehaviorContext context, int side) {
+    return context.state().getBoolean("armed") ? 15L * GtSignalCarrier.UNIT : 0;
+}
+```
+
 The sample solid boiler lists a fuel table with one item input and one item output. Coal becomes charcoal, 16 EU per tick for 20 ticks. The behavior finds the row, spends the coal, puts the charcoal in the output slot, then each burn tick calls `generate` and `emit` from the top. The counters `left`, `eu` and `burn` live in `BehaviorState`. There is no new shell field. A fuel row stores produced energy as a negative `euPerTick`, under Recipe tables. `generate` takes a positive amount, so the behavior negates that stored value.
 
 ```java
@@ -851,6 +899,10 @@ A fluid row becomes seven blocks, tiny through nonuple. An item row becomes six,
 
 Crafting, welder rows and material recovery use the built-in pipe rules. A material with no `plateCurved` skips the shaped recipe and the welder row. The addon ships `block.<namespace>.<path>` translations. GregTech emits a placeholder blockstate; the dynamic pipe model replaces it. These rows are not built-in pipes.
 
+A block that implements `FluidPipeConnectable` or `ItemPipeConnectable` needs no wrench: a pipe connects to it when the pipe is placed against it, when the block is placed next to an existing pipe, and after a chunk reload. Implement the interface on the block or on its block entity; `side` is the face of that block facing the pipe, and `false` leaves the face closed. This is opt-in, so built-in machines and existing pipes keep their current connections.
+
+A pipe remembers every face a wrench closed and saves that mask with the block. Automatic connection leaves those faces alone across neighbour changes, chunk reloads and saved-world restarts; using the wrench to reconnect clears the mark. Automatic connection only completes a missing link: it never disconnects a face, and two pipes still need one side to point at the other before they join.
+
 ### Compressed gas tanks
 
 `AddonMachineContributor.compressedGasTanks()` returns `CompressedGasTankDeclaration`s. The id is a lower-case registry path. The material must already be registered. Capacity is absolute millibuckets, from 1 to 1,024,000,000. It is not a compression multiplier. Gas proof is always true. Acid, plasma and magic proof are the pressure rating. The temperature ceiling is the material melting point, resolved when machines install.
@@ -869,6 +921,10 @@ A compressor is a behavior machine. `pushCompressedGas` lives on the behavior co
 `AddonFluids.gas` reports whether a fluid is a gas. An empty fluid is false. `AddonFluids.acid`, `AddonFluids.plasma` and `AddonFluids.magic` report acid, plasma and magic fluids; each has `Fluid` and `FluidStack` overloads, and null or empty is false. Temperature still comes from the fluid's own `getTemperature`.
 
 The block id is `<addon>:<id>`. Hardness is 1, blast resistance is 6, and the item stacks to 16. The creative tab files a class whose name contains Tank under fluid containers. GregTech emits an iron-block model, which an addon may replace. The display name is `block.<addon>.<id>`. The tooltip keys are `gt6ce.tank.compressed.store` and `gt6ce.tank.compressed.compressor`. Neither key is an original GT6 translation, so the shared Chinese file keeps the English text. An invalid stored fluid is emptied on tick. There is no fermentation and no auto output. The large valve multiblock is not included.
+
+## Sensor sources
+
+`ProgressSensorSource`, `CompressionSensorSource` and `TemperatureSource` are in the SDK. A block entity that implements them is read by GregTech's progress, compressed-gas and thermometer sensor panels. Every `side` is `Direction.ordinal()`. `TemperatureSource` supplies both `temperatureK(side)` and `maximumK(side)`; the maximum drives percentage and scale modes. There is no entry for registering a new sensor kind; the existing kinds are fixed.
 
 ## Signal wires
 
@@ -892,6 +948,10 @@ public final class MySourceBlockEntity extends BlockEntity implements GtSignalSo
 }
 ```
 
+When a behavior machine declares `signalOutput(true)`, the shell block entity already implements `GtSignalSource`; the behavior only implements `MachineBehavior.gtSignal`. An undeclared behavior machine is never read as a source.
+
+A wire also connects when a source appears next to it after placement, and it drops that port when the source block is removed. A block entity implementing `GtSignalSource` counts as a source even when its block does not override `Block#isSignalSource()`. A port opened with a wire cutter toward a block that is not a source stays open until that neighbour is removed.
+
 A block that only receives power implements `GtSignalReceiver` on its block entity, or adds its block to the `gt6ce:signal_wire_receivers` block tag. Either one keeps a strongly powered solid block from being treated as a source. A block that matches both is a receiver. The tag ships empty; add entries from the addon's datapack:
 
 ```json
@@ -907,7 +967,7 @@ Vanilla dispensers (including droppers), hoppers, pistons, TNT, note blocks, tra
 - `AddonItems.stack(prefix, material, count)`, `AddonItems.composition(stack)` for the prefix and material units of an item, `AddonItems.selectorTag(n)` for programmed circuit 0..24, and `AddonFluids` for a GregTech fluid field name (`DistW`, not a material name). Still and flowing are separate. `AddonFluids.gas`, `acid`, `plasma` and `magic` report the fluid classes.
 - `AddonRecipes` on a map that already exists: add, display, collision, item-input check, dynamic provider and find. A null add means the map rejected the row. `keptInputs` names item inputs that stay in the machine, and `keptFluidInputs` names fluid inputs that stay. A 0 mB fluid input is a presence-only catalyst.
 - `AddonMachineContributor` recipe machines and large recipe machines, including `searchOutputTanks`, `exclusiveOutputs`, `EnergyInput.range(min, max)`, `auxiliaryEnergy` and `startupEnergy`, and one optional cell each for item output, fluid output, item input and fluid input on a large recipe machine. An undeclared large machine is not half to double its nominal input. Energy is a short name such as `EU`. A multiblock names a GregTech part, a casing, an energy part, or a functional part from `layoutParts()`. A condition part is `energyInput` plus `condition`. A large recipe machine does not run while a bound condition part is unsatisfied, and a layout with none is unchanged. GregTech registers the machine and the part in the addon's namespace. Layout roles are `StructureRole`. A cell may also name a block id or a `#` block tag; that cell is only a `CASING`, and it is not bound. `fluidPipes()` and `itemPipes()` add one material row each; GregTech expands them into the built-in sizes in the addon's namespace.
-- `BehaviorMachine` plus the loader's `BehaviorMachineContributor`, `MachineBehavior`, `MachineBehaviorContext` and `BehaviorState`. GregTech owns the shell. The addon does not subclass it and does not touch NBT. `io(MachineIo)` limits item and fluid faces the way a recipe machine does; leaving it unset keeps every face open. `acceptsEnergy` can refuse one injected packet after the face and buffer checks. `recipeMaps` names machine or fuel maps and makes the block a JEI and EMI catalyst; the behavior still does the work. A fuel row read by `find` stores produced energy as a negative `euPerTick`. `EnergyInput.capacity`, `emit`, `emitTo`, `generate`, `setCapacity`, `onTool`, `onUse`, `maxRange`, `breakBlock` and `collectItems` are part of that shell. A layout with the same machine name makes `structureFormed()`, `parts()`, `energyParts()` and `conditionsMet()` available. `parts()` is the bound addon parts. `energyParts()` is the energy view of that list. `charge`, `setOutput` and `stop` write an output part. `charge` also fills a condition part. `tick` still runs when a condition part is short. The main input may be omitted when the machine emits, and it may declare `range`, `anyPacket()`, `anyType()` or `overload(false)`. GregTech ports on the behavior structure forward items, fluids and energy. `EnergyOutput.minSize` defaults to 1, and `allowNegative()` is only for KU and RU. `auxiliaryEnergy` stores a second input as `gt.aux_energy`. `energy(type)` and `consume(type, amount)` use only that buffer. GregTech stores a changed capacity as `gt.capacity`. The part stores its own buffer.
+- `BehaviorMachine` plus the loader's `BehaviorMachineContributor`, `MachineBehavior`, `MachineBehaviorContext` and `BehaviorState`. GregTech owns the shell. The addon does not subclass it and does not touch NBT. `io(MachineIo)` limits item and fluid faces the way a recipe machine does; leaving it unset keeps every face open. `acceptsEnergy` can refuse one injected packet after the face and buffer checks. `recipeMaps` names machine or fuel maps and makes the block a JEI and EMI catalyst; the behavior still does the work. A fuel row read by `find` stores produced energy as a negative `euPerTick`. `EnergyInput.capacity`, `emit`, `emitTo`, `generate`, `setCapacity`, `onTool`, `onUse`, `maxRange`, `breakBlock` and `collectItems` are part of that shell. `signalOutput(true)` makes the block a GT signal source, and the behavior's `gtSignal` supplies the strength. A layout with the same machine name makes `structureFormed()`, `parts()`, `energyParts()` and `conditionsMet()` available. `parts()` is the bound addon parts. `energyParts()` is the energy view of that list. `charge`, `setOutput` and `stop` write an output part. `charge` also fills a condition part. `tick` still runs when a condition part is short. The main input may be omitted when the machine emits, and it may declare `range`, `anyPacket()`, `anyType()` or `overload(false)`. GregTech ports on the behavior structure forward items, fluids and energy. `EnergyOutput.minSize` defaults to 1, and `allowNegative()` is only for KU and RU. `auxiliaryEnergy` stores a second input as `gt.aux_energy`. `energy(type)` and `consume(type, amount)` use only that buffer. GregTech stores a changed capacity as `gt.capacity`. The part stores its own buffer.
 - A functional structure part declares `slots`, `tanks`, `gui`, `tick`, `use` or `field` on `LayoutPart` and pairs the name with `LayoutPartContributor`. GregTech owns the block entity. Slots save as `gt.part_slots`, tanks as `gt.part_tanks` and fields as `gt.part_fields`. `gui` opens a menu of that part only. A part with no energy role uses `gt6ce:addon_functional_part`. A part that also has an energy role stays on `gt6ce:addon_energy_part`. The addon does not subclass the block entity. A `LayoutPartClient` may return a block-entity renderer for the synced `PartClientView`. `PartContext.crucible()` reads the bound controller's material, amount and temperature without removing anything. A layout cell may name `design` for a GregTech part whose original texture index includes that number. Forming writes `gt.design` and breaking restores the previous value. A plain block, a tag, air, an addon part, or a part with no designs fails when the layout is installed.
 - `RecipeTable.fuel` and `FuelGenerator`. A fuel map joins JEI, EMI and the datapack overlay. A generator burns fluid and emits up to its declared amperes, defaulting to one packet per tick, from the front, the back, or 1 to 8 blocks behind. A multiblock layout may name a GregTech part or a casing from `layoutParts()`.
 - `compressedGasTanks()`. Ordinary insertion is closed. `pushCompressedGas` fills an adjacent compressed-gas receiver: a drum on any side, or a behavior machine on its `gasValve` face. A fuel generator pulls at most 1000 mB per tick from one.
@@ -915,7 +975,7 @@ Vanilla dispensers (including droppers), hoppers, pistons, TNT, note blocks, tra
 - `EnergyBlock` for an addon energy block. `AddonEnergy` runs GregTech's packet gate. EU cable insert and extract accept this interface. Axles, laser fiber, relays, long-distance transformers, and built-in injection or extraction resolve neighbors through `EnergyBlockViews`, so they also see this interface. Scanner, Jade and cover readouts still see only GregTech's own energy blocks.
 - `AddonTool`: `SPADE`, `UNIVERSAL_SPADE`, `MAGNIFYING_GLASS`, `SCREWDRIVER`, `SOFT_HAMMER`, `WRENCH`, `MONKEY_WRENCH`, `HARD_HAMMER`, `WIRE_CUTTER` and `SAW`, plus `AddonTools.matches`, `isMagnifyingGlass` and `damageForUse`. Matching uses GregTech's tool table. The rest of that table stays inside GregTech.
 - Datapack types `gt6ce:machine` and `gt6ce:machine_removal` on maps that already exist. KubeJS can add and remove those static rows, and a startup script can declare `kubejs:` recipe tables, recipe machines, fuel generators, casings, layouts and energy parts. `data/<namespace>/gt6ce_layouts/<machineType>.json` can replace an addon or script layout on reload. It cannot change a built-in controller.
-- `GtSignalCarrier`, `GtSignalSource`, `GtSignalReceiver`, `CropScanSource`, and the empty `gt6ce:signal_wire_receivers` block tag.
+- `MachineControl`, `HeatHandler`, `GtSignalCarrier`, `GtSignalSource`, `GtSignalReceiver`, `FluidPipeConnectable`, `ItemPipeConnectable`, `CropScanSource`, `ProgressSensorSource`, `CompressionSensorSource`, `TemperatureSource`, and the empty `gt6ce:signal_wire_receivers` block tag.
 
 These stay closed. `BasicMachineBlock` and `BasicMachineBlockEntity` are GregTech's machine implementation; an addon machine is data, not a subclass. `Recipe.mRecipeList` is the internal row list; production code uses the `AddonRecipes.Line` returned by `add`. `GTMaterial`, `GTMaterialRegistry` and the material sentinels are replaced by `GregTechMaterials`. `GregTechTags` is replaced by energy short names. `MachineRecipeMaps` fields are replaced by `AddonRecipes.map(name)`. `MaterialPrefix` constants are replaced by prefix name strings. The full tool catalog stays inside GregTech.
 

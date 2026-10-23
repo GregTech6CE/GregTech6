@@ -115,6 +115,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         return 10000;
     }
     private boolean controlStopped;
+    /** External control input per absolute direction, 0–15; persisted with the machine. */
+    private final byte[] externalSignals = new byte[6];
     private boolean adjacentEnergySourcesChanged = true;
     private Direction adjacentEnergyFacing;
     private int adjacentEnergyInputs = -1;
@@ -157,8 +159,29 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         public boolean active(){return available()&&mActive;}
         public long progress(){return available()?(successful?1:mProgress):0;}
         public long progressMax(){return available()?(successful?1:mMaxProgress):0;}
+        public long energy(){return available()?mEnergy:0;}
+        public long energyCapacity(){return available()?inputMaximum():0;}
+        public long progressPerTick(){return available()&&mActive?Math.min(inputMaximum(),mEnergy):0;}
+        public int externalSignal(Direction side){
+            return available()&&side!=null?externalSignals[side.ordinal()]&15:0;
+        }
+        public boolean setExternalSignal(Direction side,int level){
+            if(!available()||side==null||level<0||level>15)return false;
+            if(externalSignals[side.ordinal()]==(byte)level)return true;
+            externalSignals[side.ordinal()]=(byte)level;
+            setChanged();
+            return true;
+        }
     };
     @Override public com.gregtech.gregtech.api.machine.MachineControl machineControl(Direction side){return control;}
+    private int packedExternalSignals(){
+        int packed=0;
+        for(int i=0;i<6;i++)packed|=(externalSignals[i]&15)<<(4*i);
+        return packed;
+    }
+    private void unpackExternalSignals(int packed){
+        for(int i=0;i<6;i++)externalSignals[i]=(byte)((packed>>>(4*i))&15);
+    }
     private boolean mInventoryChanged = true; // inventory changed, re-check recipe
     private Recipe mCurrentRecipe;  // the recipe currently being processed
 
@@ -682,7 +705,9 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             if(cover==null||cover.detector())continue;
             controlled=true;
             var neighbor=worldPosition.relative(side);
-            int signal=level.hasChunkAt(neighbor)?level.getSignal(neighbor,side):0;
+            // An external control input feeds the same face gate as the cover's redstone reading.
+            int signal=Math.max(level.hasChunkAt(neighbor)?level.getSignal(neighbor,side):0,
+                    externalSignals[side.ordinal()]&15);
             allowed=cover.allows(state,signal,MachineCoverSpec.inverted(stack),coverTicks);
         }
         if(controlled&&controlStopped==allowed){controlStopped=!allowed;setChanged();updateAdjacentToggleableEnergySources();}
@@ -1554,6 +1579,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
         if(sourceRequiresIgnition())tag.putByte(com.gregtech.gregtech.content.machine.OriginalBasicMachineRules.IGNITION_NBT,(byte)sourceIgnitionTicks);
         tag.putBoolean("gt.control_stopped",controlStopped);
+        tag.putInt("gt.external_signals",packedExternalSignals());
         tag.putLong("gt.cover_ticks",coverTicks);
         if (itemHandler != null)
 
@@ -1739,6 +1765,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         }
         sourceIgnitionTicks=Math.max(0,tag.getByte(com.gregtech.gregtech.content.machine.OriginalBasicMachineRules.IGNITION_NBT));
         controlStopped=tag.getBoolean("gt.control_stopped");
+        unpackExternalSignals(tag.getInt("gt.external_signals"));
         adjacentEnergySourcesChanged();
         coverTicks=Math.max(0,tag.getLong("gt.cover_ticks"));successful=false;workPossible=false;mInventoryChanged=true;
         if (tag.contains(NBT_ENERGY)) mEnergy = tag.getLong(NBT_ENERGY);

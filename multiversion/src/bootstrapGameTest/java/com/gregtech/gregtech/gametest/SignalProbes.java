@@ -1,9 +1,13 @@
 package com.gregtech.gregtech.gametest;
 
 import com.gregtech.gregtech.api.mod.GregTechIdentity;
+import com.gregtech.gregtech.api.sensor.TemperatureSource;
 import com.gregtech.gregtech.api.signal.GtSignalReceiver;
 import com.gregtech.gregtech.api.signal.GtSignalSource;
+import com.gregtech.gregtech.api.transport.FluidPipeConnectable;
+import com.gregtech.gregtech.api.transport.ItemPipeConnectable;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -32,6 +36,8 @@ public final class SignalProbes {
     public static Block SOURCE;
     public static Block RECEIVER;
     public static Block TAGGED;
+    public static Block FLUID_CONNECTABLE;
+    public static Block ITEM_CONNECTABLE;
     public static BlockEntityType<?> TYPE;
 
     private SignalProbes() {}
@@ -43,9 +49,13 @@ public final class SignalProbes {
             SOURCE = new SignalProbeBlock(true);
             RECEIVER = new SignalProbeBlock(false);
             TAGGED = new Block(BlockBehaviour.Properties.of());
+            FLUID_CONNECTABLE = new PipeProbeBlock(true, false);
+            ITEM_CONNECTABLE = new PipeProbeBlock(false, true);
             helper.register(id("signal_probe_source"), SOURCE);
             helper.register(id("signal_probe_receiver"), RECEIVER);
             helper.register(id("signal_probe_tagged"), TAGGED);
+            helper.register(id("pipe_probe_fluid"), FLUID_CONNECTABLE);
+            helper.register(id("pipe_probe_item"), ITEM_CONNECTABLE);
         });
         event.register(Registries.BLOCK_ENTITY_TYPE, helper -> {
             if (TYPE != null) return;
@@ -78,9 +88,33 @@ public final class SignalProbes {
         }
     }
 
-    static final class SignalProbeSourceBlockEntity extends BlockEntity implements GtSignalSource {
+    /** Opt-in pipe connection with no block entity; one face type per probe. */
+    static final class PipeProbeBlock extends Block implements FluidPipeConnectable, ItemPipeConnectable {
+        private final boolean fluid;
+        private final boolean item;
+
+        PipeProbeBlock(boolean fluid, boolean item) {
+            super(BlockBehaviour.Properties.of());
+            this.fluid = fluid;
+            this.item = item;
+        }
+
+        @Override
+        public boolean canConnectFluidPipe(Direction side) {
+            return fluid;
+        }
+
+        @Override
+        public boolean canConnectItemPipe(Direction side) {
+            return item;
+        }
+    }
+
+    static final class SignalProbeSourceBlockEntity extends BlockEntity implements GtSignalSource, TemperatureSource {
         long emitted;
         int queriedSide = Integer.MIN_VALUE;
+        long temperature;
+        long maximum;
 
         SignalProbeSourceBlockEntity(BlockPos pos, BlockState state) {
             super(TYPE, pos, state);
@@ -90,6 +124,16 @@ public final class SignalProbes {
         public long gtSignal(int side) {
             queriedSide = side;
             return emitted;
+        }
+
+        @Override
+        public long temperatureK(int side) {
+            return temperature;
+        }
+
+        @Override
+        public long maximumK(int side) {
+            return maximum;
         }
     }
 

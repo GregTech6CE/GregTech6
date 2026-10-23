@@ -3,6 +3,7 @@ GT6CEStartupEvents.machines(event => {
     .title('KubeJS Press')
     .gui('gt6ce:textures/gui/machines/press')
     .inputItems(1)
+    .inputFluids(1)
     .outputItems(1)
     .minimalInputItems(1)
     .minimalInputs(1)
@@ -16,7 +17,7 @@ GT6CEStartupEvents.machines(event => {
 
   event.addLayout(event.layout('largepress')
     .cell(1, 0, 0, event.match('press_casing'), event.role('casing'))
-    .cell(0, 0, 1, event.match('tank_wall'), event.role('energy_input'))
+    .cell(0, 0, 1, ['tank_wall', 'implosion_compressor_wall'], event.role('energy_input'))
     .cell(-1, 0, 0, event.match('press_emitter'), event.role('energy_output'))
     .build())
 

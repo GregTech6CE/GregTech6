@@ -81,8 +81,11 @@ public final class ToolInteractions {
             var otherSpec = describe(other, player.getItemInHand(hand));
             boolean matching = otherSpec != null && otherSpec.connection() == spec.connection();
             if (!level.setBlockAndUpdate(pos, next)) return true;
+            if (state.getBlock() instanceof ToolInteractionTarget toggled) toggled.connectionToggled(level, pos, side, connect);
             if (matching) {
                 level.setBlockAndUpdate(otherPos, other.setValue(spec.connection().property(side.getOpposite()), connect));
+                if (other.getBlock() instanceof ToolInteractionTarget otherTarget)
+                    otherTarget.connectionToggled(level, otherPos, side.getOpposite(), connect);
                 changed(level, otherPos);
             }
             changed(level, pos);
