@@ -159,7 +159,12 @@ public final class SpikeBlock extends Block implements ToolInteractionTarget, co
     }
 
     @Override public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean moved) {
-        if (state.getValue(MODE) == Mode.FALLING) level.scheduleTick(pos, this, 2);
+        if (state.getValue(MODE) == Mode.FALLING) {
+            level.scheduleTick(pos, this, 2);
+            if (!level.isClientSide && !oldState.is(this))
+                level.playSound(null, pos, net.minecraft.sounds.SoundEvents.ANVIL_LAND,
+                        net.minecraft.sounds.SoundSource.BLOCKS, 1.0F, 2.0F);
+        }
         super.onPlace(state, level, pos, oldState, moved);
     }
 

@@ -1,0 +1,18 @@
+{
+  "type": "gt6ce:spike_conversion",
+  "ingredients": [
+    {
+      "item": "gt6ce:spike_metal"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:spike_metal",
+    "count": 1,
+    "nbt": {
+      "BlockStateTag": {
+        "mode": "omni",
+        "secondary": "false"
+      }
+    }
+  }
+}

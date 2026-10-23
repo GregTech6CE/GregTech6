@@ -33,6 +33,9 @@ public record ToolBootstrap(IEventBus bus) implements InitializationStep {
     public static final RegistryObject<RecipeSerializer<GTToolHeadRecipe>> TOOL_HEAD =
             RECIPE_SERIALIZERS.register("tool_head", () -> GTToolRecipeSerializers.HEAD);
 
+    public static final RegistryObject<RecipeSerializer<com.gregtech.gregtech.recipe.SpikeConversionRecipe>> SPIKE_CONVERSION =
+            RECIPE_SERIALIZERS.register("spike_conversion", () -> com.gregtech.gregtech.recipe.SpikeConversionRecipe.SERIALIZER);
+
     public static final RegistryObject<RecipeSerializer<com.gregtech.gregtech.recipe.ToolShapelessRecipe>> TOOL_SHAPELESS =
             RECIPE_SERIALIZERS.register("tool_shapeless", () -> com.gregtech.gregtech.recipe.ToolShapelessRecipe.SERIALIZER);
     public static final RegistryObject<RecipeSerializer<com.gregtech.gregtech.recipe.ToolShapedRecipe>> TOOL_SHAPED =

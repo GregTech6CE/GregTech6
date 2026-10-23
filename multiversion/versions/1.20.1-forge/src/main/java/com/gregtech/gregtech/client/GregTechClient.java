@@ -764,6 +764,11 @@ public final class GregTechClient {
 
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
+        event.enqueueWork(() -> com.gregtech.gregtech.registry.GTSpikes.all().forEach(entry ->
+                net.minecraft.client.renderer.item.ItemProperties.register(entry.get().asItem(),
+                        net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "spike_omni"),
+                        (stack, level, entity, seed) -> com.gregtech.gregtech.block.misc.SpikeBlock.itemMode(stack)
+                                == com.gregtech.gregtech.block.misc.SpikeBlock.Mode.WALL ? 0 : 1)));
         event.enqueueWork(()->com.gregtech.gregtech.registry.GTChemicalBatteries.allRegistered().forEach(entry->
                 net.minecraft.client.renderer.item.ItemProperties.register(entry.get().asItem(),
                         net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","battery_charge"),
