@@ -32,6 +32,12 @@ public interface AddonMaterialContributor {
     /** Smelting results for this addon's own materials. Omitted materials still melt into themselves. */
     default List<SmeltingTargetDeclaration> smeltingTargets() { return List.of(); }
 
+    /**
+     * Crucible smelting targets to drop, including built-in ones. Applied after every addon's
+     * smelting targets. Use this for ores that must not melt into a metal.
+     */
+    default List<SmeltingTargetRemoval> smeltingTargetRemovals() { return List.of(); }
+
     /** Explicit crucible alloy rows, in addition to composition-derived rows. */
     default List<CrucibleReactionDeclaration> crucibleReactions() { return List.of(); }
 

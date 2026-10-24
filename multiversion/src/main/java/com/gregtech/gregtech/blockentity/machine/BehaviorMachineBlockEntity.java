@@ -187,7 +187,8 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     @Override
     public long gtSignal(int side) {
         if (level == null || level.isClientSide || !declaration.signalOutput() || side < 0 || side > 5) return 0;
-        return com.gregtech.gregtech.api.signal.GtSignalCarrier.clamp(behavior.gtSignal(context, side));
+        return com.gregtech.gregtech.api.signal.GtSignalCarrier.clamp(
+                behavior.gtSignal(context, Direction.from3DDataValue(side)));
     }
     public BehaviorState state() { return state; }
 
@@ -226,7 +227,9 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     @Override
     public boolean fillMoldAtSide(ITileEntityMold mold, int crucibleSide, int moldSide) {
         if (mold == null) return false;
-        return behavior.fillMoldAtSide(context, moldTarget(mold), crucibleSide, moldSide);
+        if (crucibleSide < 0 || crucibleSide > 5 || moldSide < 0 || moldSide > 5) return false;
+        return behavior.fillMoldAtSide(context, moldTarget(mold),
+                Direction.from3DDataValue(crucibleSide), Direction.from3DDataValue(moldSide));
     }
 
     @Override

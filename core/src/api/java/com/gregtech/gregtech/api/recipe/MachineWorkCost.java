@@ -26,7 +26,11 @@ public final class MachineWorkCost {
                 minimumInput, maximumInput, cheapOverclocking, false);
     }
 
-    /** GT6 BasicMachine:766-773: ordinary parallel batches scale power; TU keeps recipe time. */
+    /**
+     * GT6 BasicMachine:766-773: ordinary parallel batches scale power; TU keeps recipe time.
+     * Returns null when these inputs have no representable cost. That is a refused calculation,
+     * not a missing lookup: items and fluids use an empty stack, materials use {@code invalid()}.
+     */
     public static Cost calculate(long recipePower, long duration, int parallel, boolean scaleDuration,
                                  int efficiency, long minimumInput, long maximumInput,
                                  boolean cheapOverclocking, boolean timeEnergy) {

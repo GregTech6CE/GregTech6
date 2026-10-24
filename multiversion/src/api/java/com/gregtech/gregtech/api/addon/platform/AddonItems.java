@@ -7,7 +7,12 @@ import net.minecraft.world.item.ItemStack;
 
 /** SPDX-License-Identifier: LGPL-3.0-or-later */
 
-/** GregTech material forms and programmed circuits as item stacks. An unknown prefix or material is an empty stack. */
+/**
+ * GregTech material forms and programmed circuits as item stacks.
+ * An unknown prefix or material is {@link ItemStack#EMPTY}, never null.
+ * A selector outside 0..24, or one that is not registered, throws {@link IllegalArgumentException},
+ * the same exception {@link AddonRecipes#map(String)} throws for an unknown map.
+ */
 public final class AddonItems {
     private AddonItems() {}
 
@@ -33,7 +38,7 @@ public final class AddonItems {
         SelectorTags.require(n);
         ItemStack stack = AddonPlatform.services().selectorTag(n);
         if (stack == null || stack.isEmpty())
-            throw new IllegalStateException("Selector tag " + n + " is not registered");
+            throw new IllegalArgumentException("Selector tag " + n + " is not registered");
         return stack;
     }
 }
