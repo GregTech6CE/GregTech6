@@ -230,10 +230,59 @@ public final class ToolPlacementTransactionTests {
         h.succeed();
     }
 
-    @GameTest(template = "test_empty")
+    @GameTest(template = "torch_placement_empty", timeoutTicks = 160)
     public static void drillTorchCancellationAndCreativePreserveInventory(GameTestHelper h) {
+        var owned = new java.util.HashSet<BlockPos>();
+        h.forEveryBlockInStructure(local -> owned.add(h.absolutePos(local)));
+        h.startSequence().thenWaitUntil(() -> {
+            for (var local : BlockPos.betweenClosed(new BlockPos(1, 1, 1), new BlockPos(7, 7, 7))) {
+                var at = h.absolutePos(local);
+                h.assertTrue(owned.contains(at), "torch chamber is inside dedicated nine-cube fixture");
+                h.assertTrue(h.getLevel().areEntitiesLoaded(net.minecraft.world.level.ChunkPos.asLong(at))
+                                && h.getLevel().isPositionEntityTicking(at),
+                        "waiting for loaded/ticking torch chamber: " + at);
+            }
+        }).thenExecute(() -> {
+            // Only readiness retries: setup and all three native transaction cycles execute once.
+            var low = h.absolutePos(new BlockPos(1, 1, 1));
+            var high = h.absolutePos(new BlockPos(7, 7, 7));
+            int quiet = net.minecraft.world.level.block.Block.UPDATE_CLIENTS
+                    | net.minecraft.world.level.block.Block.UPDATE_KNOWN_SHAPE;
+            try {
+                for (var at : BlockPos.betweenClosed(low, high)) {
+                    boolean shell = at.getX() == low.getX() || at.getX() == high.getX()
+                            || at.getY() == low.getY() || at.getY() == high.getY()
+                            || at.getZ() == low.getZ() || at.getZ() == high.getZ();
+                    h.getLevel().setBlock(at, (shell ? Blocks.STONE : Blocks.AIR).defaultBlockState(), quiet);
+                }
+                // Discard only ambient setup drops; no item cleanup occurs during/after transactions.
+                var chamber = new net.minecraft.world.phys.AABB(low.getX(), low.getY(), low.getZ(),
+                        high.getX() + 1, high.getY() + 1, high.getZ() + 1);
+                h.getLevel().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class, chamber)
+                        .forEach(net.minecraft.world.entity.item.ItemEntity::discard);
+                for (var initial : new net.minecraft.world.level.block.Block[]{Blocks.AIR, Blocks.WATER, Blocks.LAVA}) {
+                    torchCycle(h, initial);
+                    h.assertTrue(h.getLevel().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,
+                            chamber).isEmpty(), "no loose refund anywhere in chamber after " + initial);
+                }
+            } finally {
+                for (var at : BlockPos.betweenClosed(low, high))
+                    h.getLevel().setBlock(at, Blocks.AIR.defaultBlockState(), quiet);
+            }
+            h.succeed();
+        });
+    }
+
+    private static int torchCount(ServerPlayer player) {
+        return java.util.stream.IntStream.range(0, player.getInventory().getContainerSize())
+                .map(slot -> { var stack = player.getInventory().getItem(slot);
+                    return stack.is(Items.TORCH) ? stack.getCount() : 0; }).sum();
+    }
+
+    private static void torchCycle(GameTestHelper h, net.minecraft.world.level.block.Block initial) {
         var player = player(h);
-        var pos = h.absolutePos(new BlockPos(4, 20, 4));
+        var pos = h.absolutePos(new BlockPos(4, 3, 4));
+        player.setPos(pos.getX() - 2, pos.getY() + 1, pos.getZ() - 2);
         var drill = GTElectricItems.get("electric_mining_drill").assembled(GTMaterialRegistry.get("Steel"), 10000);
 //? if >=1.21.1 {
         /*com.gregtech.gregtech.platform.neoforge.StackCustomData.update(drill, tag -> tag.putLong("gt.charge", 1000));
@@ -246,29 +295,40 @@ public final class ToolPlacementTransactionTests {
         register(listener);
         try {
             h.getLevel().setBlockAndUpdate(pos, Blocks.STONE.defaultBlockState());
+            // Adversarial native proof: removeBlock preserves a liquid's legacy block, not air.
+            h.getLevel().setBlock(pos.above(), initial.defaultBlockState(),
+                    net.minecraft.world.level.block.Block.UPDATE_CLIENTS | net.minecraft.world.level.block.Block.UPDATE_KNOWN_SHAPE);
             h.getLevel().removeBlock(pos.above(), false);
+            h.assertTrue(h.getLevel().getBlockState(pos.above()).is(initial),
+                    "native removeBlock retains seeded air/water/lava before explicit fixture clearing");
+            h.getLevel().setBlockAndUpdate(pos.above(), Blocks.AIR.defaultBlockState());
+            h.assertTrue(h.getLevel().isEmptyBlock(pos.above()) && h.getLevel().getFluidState(pos.above()).isEmpty(),
+                    "owned destination is explicitly dry air before native interaction");
             listener.cancel = true;
             click(player, pos, Direction.UP, 1);
             h.assertTrue(listener.calls == 1 && h.getLevel().isEmptyBlock(pos.above()), "torch event denied and world restored");
             h.assertTrue(player.getInventory().getItem(35).getCount() == 8, "canceled torch stock retained");
+            h.assertTrue(torchCount(player) == 8, "cancellation retains exactly eight torches across all slots");
             h.assertTrue(h.getLevel().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,
                     new net.minecraft.world.phys.AABB(pos).inflate(2)).isEmpty(), "no loose torch refund or duplication");
             listener.cancel = false;
             click(player, pos, Direction.UP, 1);
             h.assertTrue(listener.calls == 2 && h.getLevel().getBlockState(pos.above()).is(Blocks.TORCH), "one accepted event, no recursion/double placement");
             h.assertTrue(player.getInventory().getItem(35).getCount() == 7, "successful torch costs exactly one");
-            h.getLevel().removeBlock(pos.above(), false);
+            h.assertTrue(torchCount(player) == 7, "successful placement leaves exactly seven torches across all slots");
+            h.getLevel().setBlockAndUpdate(pos.above(), Blocks.AIR.defaultBlockState());
             player.setGameMode(GameType.CREATIVE);
             click(player, pos, Direction.UP, 1);
             h.assertTrue(listener.calls == 3 && player.getInventory().getItem(35).getCount() == 7, "creative placement keeps torch stock");
+            h.assertTrue(torchCount(player) == 7, "creative placement leaves exactly seven torches across all slots");
             long charge = ((com.gregtech.gregtech.item.ElectricToolItem) drill.getItem()).getEnergyStored(drill,
                     com.gregtech.gregtech.data.GregTechTags.Energy.EU);
             h.assertTrue(charge == 1000 && player.getMainHandItem() == drill, "held drill identity/charge unchanged");
         } finally {
             unregister(listener);
-            h.getLevel().removeBlock(pos.above(), false);
-            h.getLevel().removeBlock(pos, false);
+            h.getLevel().setBlockAndUpdate(pos.above(), Blocks.AIR.defaultBlockState());
+            h.getLevel().setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+            player.getInventory().clearContent();
         }
-        h.succeed();
     }
 }
