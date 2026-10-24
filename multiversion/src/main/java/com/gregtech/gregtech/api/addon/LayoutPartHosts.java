@@ -25,9 +25,9 @@ public final class LayoutPartHosts {
             try {
                 id = contributor.addonId();
             } catch (RuntimeException | Error failure) {
-                throw new IllegalStateException("Part contributor failed: " + contributor.getClass().getName(), failure);
+                throw AddonFailures.of("Part contributor failed: " + contributor.getClass().getName(), failure);
             }
-            if (id == null || id.isBlank())
+            if (!AddonNames.isAddonId(id))
                 throw new IllegalStateException("Part contributor has no addon id: " + contributor.getClass().getName());
             if (CONTRIBUTORS.putIfAbsent(id, contributor) != null)
                 throw new IllegalStateException("Addon '" + id + "' registered two part factories");
@@ -35,7 +35,7 @@ public final class LayoutPartHosts {
             try {
                 parts = contributor.partNames();
             } catch (RuntimeException | Error failure) {
-                throw new IllegalStateException("Addon '" + id + "' part factory failed", failure);
+                throw AddonFailures.of("Addon '" + id + "' part factory failed", failure);
             }
             names.put(id, parts == null ? Set.of() : Set.copyOf(parts));
         }
@@ -46,7 +46,12 @@ public final class LayoutPartHosts {
         LayoutPartContributor contributor = CONTRIBUTORS.get(addonId);
         if (contributor == null)
             throw new IllegalStateException("Addon '" + addonId + "' structure part '" + partName + "' has no part factory");
-        PartBehavior behavior = contributor.create(partName);
+        PartBehavior behavior;
+        try {
+            behavior = contributor.create(partName);
+        } catch (RuntimeException | Error failure) {
+            throw AddonFailures.of("Addon '" + addonId + "' structure part '" + partName + "' part factory failed", failure);
+        }
         if (behavior == null)
             throw new IllegalStateException("Addon '" + addonId + "' structure part '" + partName + "' has no part factory");
         return behavior;

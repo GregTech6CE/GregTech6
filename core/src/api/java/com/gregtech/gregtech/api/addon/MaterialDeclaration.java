@@ -29,7 +29,7 @@ public record MaterialDeclaration(
     public MaterialDeclaration {
         if (id < 0 || id >= 10_000) throw new IllegalArgumentException("Material ID must be 0..9999: " + id);
         Objects.requireNonNull(name, "Material name");
-        if (!name.matches("[A-Za-z][A-Za-z0-9_]*"))
+        if (!AddonNames.matches(AddonNames.MATERIAL, name))
             throw new IllegalArgumentException("Use a stable, readable material name: " + name);
         Objects.requireNonNull(displayName, "Material display name");
         if (displayName.isBlank() || (color & 0xFF00_0000) != 0)
@@ -41,7 +41,7 @@ public record MaterialDeclaration(
         if (!ores && !oreByproducts.isEmpty())
             throw new IllegalArgumentException("Ore byproducts require ores: " + name);
         for (String byproduct : oreByproducts) {
-            if (byproduct == null || !byproduct.matches("[A-Za-z][A-Za-z0-9_]*"))
+            if (!AddonNames.matches(AddonNames.MATERIAL, byproduct))
                 throw new IllegalArgumentException("Use a material name for an ore byproduct of " + name);
         }
     }

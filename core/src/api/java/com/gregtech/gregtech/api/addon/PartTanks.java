@@ -1,6 +1,5 @@
 package com.gregtech.gregtech.api.addon;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -60,19 +59,13 @@ public final class PartTanks {
         public Builder capacity(int millibuckets) { capacitySpecified = true; capacity = millibuckets; return this; }
 
         public Builder insert(MachineFace... faces) {
-            insertFaces = MachineFace.distinct(listed(faces), "insert face");
+            insertFaces = MachineFace.distinct(MachineFace.listed(faces), "insert face");
             return this;
         }
 
         public Builder extract(MachineFace... faces) {
-            extractFaces = MachineFace.distinct(listed(faces), "extract face");
+            extractFaces = MachineFace.distinct(MachineFace.listed(faces), "extract face");
             return this;
-        }
-
-        private static List<MachineFace> listed(MachineFace[] faces) {
-            var list = new ArrayList<MachineFace>();
-            if (faces != null) for (MachineFace face : faces) list.add(face);
-            return list;
         }
 
         public PartTanks build() {

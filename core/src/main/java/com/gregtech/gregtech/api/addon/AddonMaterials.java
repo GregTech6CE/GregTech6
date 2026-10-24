@@ -117,7 +117,7 @@ public final class AddonMaterials {
             try {
                 submit(contributor.addonId(), contributor.materials(), contributor.forms(), contributor::link);
             } catch (RuntimeException | Error failure) {
-                throw new IllegalStateException("Addon material contributor failed: "
+                throw AddonFailures.of("Addon material contributor failed: "
                         + contributor.getClass().getName(), failure);
             }
         }
@@ -131,7 +131,7 @@ public final class AddonMaterials {
                         oreDeclarations(declarations), contributor.oreVeins(), contributor.smallOres(),
                         formTags(declarations));
             } catch (RuntimeException | Error failure) {
-                throw new IllegalStateException("Addon material contributor failed: "
+                throw AddonFailures.of("Addon material contributor failed: "
                         + contributor.getClass().getName(), failure);
             }
         }
@@ -254,8 +254,7 @@ public final class AddonMaterials {
                                              List<SmallOreDeclaration> smallOres,
                                              List<FormTag> formTags) {
         if (closed) throw new IllegalStateException("Addon material queue is closed: " + addonId);
-        if (addonId == null || !addonId.matches("[a-z][a-z0-9_]{1,63}"))
-            throw new IllegalArgumentException("Invalid addon mod ID: " + addonId);
+        AddonNames.requireAddonId(addonId);
         if (addonId.equals("gt6ce") || addonId.equals("gregtech6") || addonId.equals("minecraft"))
             throw new IllegalArgumentException("Addon mod ID is reserved: " + addonId);
         if (QUEUE.containsKey(addonId))
@@ -461,7 +460,7 @@ public final class AddonMaterials {
             try {
                 submission.link.run();
             } catch (RuntimeException | Error failure) {
-                throw new IllegalStateException("Addon '" + submission.addonId + "' material link failed", failure);
+                throw AddonFailures.of("Addon '" + submission.addonId + "' material link failed", failure);
             }
             for (GTMaterial created : GTMaterialRegistry.allMaterials()) {
                 if (before.contains(created)) continue;

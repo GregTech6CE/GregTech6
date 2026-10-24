@@ -40,8 +40,7 @@ public final class MachinePerformanceTests {
                 fluids, new FluidStack[0], 20, 1, 0);
     }
     private static void remove(RecipeMap map) {
-        RecipeMap.RECIPE_MAPS.remove(map.mNameInternal);
-        RecipeMap.RECIPE_MAP_LIST.remove(map);
+        RecipeMap.unregister(map);
     }
     private static FluidStack water(int n) { return new FluidStack(Fluids.WATER, n); }
     private static Block block(String id) { return BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gt6ce:" + id)); }

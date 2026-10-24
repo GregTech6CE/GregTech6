@@ -15,9 +15,9 @@ public record SmeltingTargetDeclaration(String material, String target, long amo
     public SmeltingTargetDeclaration {
         Objects.requireNonNull(material, "material");
         Objects.requireNonNull(target, "target");
-        if (!material.matches("[A-Za-z][A-Za-z0-9_]*"))
+        if (!AddonNames.matches(AddonNames.MATERIAL, material))
             throw new IllegalArgumentException("Use a material name: " + material);
-        if (!target.matches("[A-Za-z][A-Za-z0-9_]*"))
+        if (!AddonNames.matches(AddonNames.MATERIAL, target))
             throw new IllegalArgumentException("Use a material name: " + target);
         if (amount <= 0) throw new IllegalArgumentException("Smelting amount must be positive: " + material);
     }

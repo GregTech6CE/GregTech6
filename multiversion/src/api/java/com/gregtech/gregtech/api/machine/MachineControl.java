@@ -3,7 +3,10 @@ package com.gregtech.gregtech.api.machine;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
+import javax.annotation.Nullable;
+
 /**
+ * SPDX-License-Identifier: LGPL-3.0-or-later.
  * Optional machine controls. Relays resolve the target on every operation, never cache a machine.
  * This boundary currently exposes running/active state but has no explicit work-possible
  * or just-completed state; callers must not infer full original detector support from it.
@@ -76,15 +79,24 @@ public interface MachineControl {
         return 0;
     }
 
+    /**
+     * Applies {@code mode} when {@link #supportsMode()} is true.
+     * Returns the mode now in effect, which may be clamped. Returns 0 when modes are not supported.
+     */
     default int setMode(int mode) {
         return 0;
     }
 
     boolean enabled();
+
     boolean setEnabled(boolean enabled);
+
     boolean running();
+
     boolean active();
+
     long progress();
+
     long progressMax();
 
     interface Provider {
@@ -92,6 +104,7 @@ public interface MachineControl {
         MachineControl machineControl(Direction side);
     }
 
+    @Nullable
     static MachineControl find(BlockEntity entity, Direction side) {
         return entity instanceof Provider provider && !entity.isRemoved() ? provider.machineControl(side) : null;
     }

@@ -1,11 +1,11 @@
 package com.gregtech.gregtech.api.addon;
 
-/** Shared checks for ore-vein and small-ore declarations. */
+/** SPDX-License-Identifier: LGPL-3.0-or-later. Shared checks for ore-vein and small-ore declarations. */
 final class WorldgenNames {
     private WorldgenNames() {}
 
     static String check(String name, String kind) {
-        if (name == null || !name.matches("[a-z][a-z0-9_]{0,63}"))
+        if (!AddonNames.matches(AddonNames.LOWER_PATH, name))
             throw new IllegalArgumentException(kind + " name must be a lower-case built-in style name: " + name);
         return name;
     }
@@ -16,7 +16,7 @@ final class WorldgenNames {
     }
 
     static String material(String owner, String name) {
-        if (name == null || !name.matches("[A-Za-z][A-Za-z0-9_]*"))
+        if (!AddonNames.matches(AddonNames.MATERIAL, name))
             throw new IllegalArgumentException("'" + owner + "' material name is invalid: " + name);
         return name;
     }

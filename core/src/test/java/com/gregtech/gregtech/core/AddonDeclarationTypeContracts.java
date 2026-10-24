@@ -5,6 +5,7 @@ import com.gregtech.gregtech.api.addon.BehaviorMachine;
 import com.gregtech.gregtech.api.addon.CellMatch;
 import com.gregtech.gregtech.api.addon.EnergyInput;
 import com.gregtech.gregtech.api.addon.EnergyOutput;
+import com.gregtech.gregtech.api.addon.EnergyType;
 import com.gregtech.gregtech.api.addon.FuelGenerator;
 import com.gregtech.gregtech.api.addon.FuelOutput;
 import com.gregtech.gregtech.api.addon.IoTarget;
@@ -20,7 +21,10 @@ import com.gregtech.gregtech.api.addon.PartSlotRules;
 import com.gregtech.gregtech.api.addon.PartSlots;
 import com.gregtech.gregtech.api.addon.PartTankRules;
 import com.gregtech.gregtech.api.addon.PartTanks;
+import com.gregtech.gregtech.api.addon.PrefixDeclaration;
 import com.gregtech.gregtech.api.addon.AddonMachines;
+import com.gregtech.gregtech.api.energy.GTVoltageTiers;
+import com.gregtech.gregtech.api.material.GTValues;
 import com.gregtech.gregtech.api.kubejs.StructureLayoutDocuments;
 import com.gregtech.gregtech.content.multiblock.PartDesigns;
 import com.gregtech.gregtech.api.addon.RecipeMachine;
@@ -58,6 +62,7 @@ public final class AddonDeclarationTypeContracts {
         var fuel = fuelPacket();
         var io = MachineIo.builder().itemInputs(MachineFace.FRONT).build();
 
+        fails(() -> RecipeMachine.builder(casing).energy(null), "Missing energy");
         fails(() -> RecipeMachine.builder(casing).energy(energy).recipeMap("aa.recipe.press")
                 .energyOutput(emitted).build(), "energy output");
         fails(() -> RecipeMachine.builder(casing).energy(energy).recipeMap("aa.recipe.press")
@@ -143,6 +148,24 @@ public final class AddonDeclarationTypeContracts {
         check(stored.energy().capacitySpecified() && stored.energy().capacity() == 32_000, "behavior capacity is stored");
         check(stored.energy().facesSpecified() && stored.energy().faces().equals(List.of(MachineFace.LEFT, MachineFace.RIGHT)),
                 "behavior faces stay in the written order");
+        var flipped = behavior(casing("buffer"), EnergyInput.builder("RU", 32).capacity(32_000)
+                .faces(MachineFace.RIGHT, MachineFace.LEFT).build());
+        check(stored.equals(flipped) && stored.hashCode() == flipped.hashCode(),
+                "energy faces compare without order");
+        check(EnergyInput.builder("eu", 32).build().type().equals(EnergyType.EU)
+                && EnergyType.signedDirection("ku") && EnergyType.time("tu"),
+                "known energy names are canonical and case-insensitive");
+        GTVoltageTiers.VOLTAGES[0] = 1;
+        GTVoltageTiers.NAMES[1] = "nope";
+        check(GTVoltageTiers.tierMax(8) == 0 && "LV".equals(GTVoltageTiers.nameOf(32)),
+                "mutating the public voltage copies does not change lookups");
+        GTVoltageTiers.VOLTAGES[0] = 8;
+        GTVoltageTiers.NAMES[1] = "LV";
+        var cube = PrefixDeclaration.block("sampleCasing", "", " Sample Casing", 8 * GTValues.U, "cube",
+                "block/sample_casing", "storage_blocks/sample_casing", List.of("Iron"));
+        var inferred = PrefixDeclaration.block("sampleCasing", "", " Sample Casing", 8 * GTValues.U,
+                "block/sample_casing", "storage_blocks/sample_casing", List.of("Iron"));
+        check(cube.equals(inferred), "the block prefix overload without shape is cube");
         fails(() -> behavior(casing("press"), eu(0)), "per tick");
         check(behavior(casing("press"), eu(1_000_000_000_000L)).energy().perTick() == 1_000_000_000_000L,
                 "behavior per tick allows 1e12");
@@ -204,6 +227,10 @@ public final class AddonDeclarationTypeContracts {
         fails(() -> FuelOutput.builder("RU", 32).behind(9).build(), "1..8");
         check(FuelOutput.builder("RU", 32).build().front() && FuelOutput.builder("RU", 32).back().build().back(),
                 "fuel output defaults to the front and can name the back");
+        check(FuelOutput.builder("ru", 32).build().type().equals(EnergyType.RU)
+                && FuelOutput.builder("RU", 32).build().placement() == FuelOutput.Placement.FRONT
+                && FuelOutput.builder("RU", 32).behind(3).build().placement() == FuelOutput.Placement.BEHIND,
+                "fuel output canonicalizes the type and names the placement");
         check(FuelOutput.builder("RU", 32).behind(1).build().behind() == 1
                         && FuelOutput.builder("RU", 32).behind(FuelGenerator.MAX_BEHIND).build().behind()
                         == FuelGenerator.MAX_BEHIND,
@@ -213,9 +240,9 @@ public final class AddonDeclarationTypeContracts {
                         && !fuel.casing().tierSpecified() && fuel.casing().machineType().equals("turbine"),
                 "fuel defaults");
         fails(() -> FuelGenerator.builder(casing("turbine")).fuelMap("aa.fuel.solid").output(fuelPacket())
-                .tank(0).build(), "parameters");
+                .tank(0).build(), "tank capacity");
         fails(() -> FuelGenerator.builder(casing("turbine")).fuelMap("aa.fuel.solid").output(fuelPacket())
-                .tank(FuelGenerator.MAX_TANK + 1).build(), "parameters");
+                .tank(FuelGenerator.MAX_TANK + 1).build(), "tank capacity");
     }
 
     private static void tables() {
@@ -232,6 +259,8 @@ public final class AddonDeclarationTypeContracts {
                 "a fuel table gui is not a behavior texture");
         fails(() -> RecipeTable.machine("press").title("Press").gui("gui").inputItems(-1).build(), "Negative");
         fails(() -> RecipeTable.machine("Press").title("Press").gui("gui").build(), "recipe map");
+        fails(() -> RecipeTable.machine("press").gui("gui").build(), "title");
+        fails(() -> RecipeTable.machine("press").title("Press").build(), "gui");
         fails(() -> BehaviorMachine.builder(casing("press")).energy(eu(32)).gui("not-a-png").build(), "gui texture");
     }
 
@@ -245,6 +274,10 @@ public final class AddonDeclarationTypeContracts {
         check(glass.match().equals(CellMatch.parse("minecraft:glass")), "a block id parses as a block");
         check(CellMatch.parse("air").equals(CellMatch.air()) && CellMatch.part("air").equals(CellMatch.air()),
                 "air is its own match");
+        check(CellMatch.parse("anyfluid").equals(CellMatch.anyFluid())
+                && CellMatch.part("anyfluid").equals(CellMatch.anyFluid())
+                && CellMatch.part("anyopaque").equals(CellMatch.anyOpaque()),
+                "reserved cell names are the same from parse and part");
         check(CellMatch.parse("#c:glass_blocks").equals(CellMatch.tag("c:glass_blocks")), "a hash parses as a tag");
         check(CellMatch.parse("tank_wall").equals(CellMatch.part("tank_wall")), "other names stay part names");
         fails(() -> CellMatch.parse("#nope"), "block name");
@@ -266,7 +299,7 @@ public final class AddonDeclarationTypeContracts {
         fails(() -> LayoutPart.builder("sample_wall", "Steel").build(), "hardness");
         fails(() -> LayoutPart.builder("sample_wall", "Steel").hardness(6.0F)
                 .energyOutput(EnergyOutput.builder("eu-1", 32, 1).faces(MachineFace.BACK).build(), 1).build(),
-                "invalid");
+                "Invalid energy type");
         fails(() -> LayoutPart.builder("sample_emitter", "Steel").hardness(6.0F)
                 .energyOutput(emitted(), 0).build(), "positive");
         var emitter = LayoutPart.builder("sample_emitter", "Steel").hardness(6.0F).texture("block/sample_emitter")
