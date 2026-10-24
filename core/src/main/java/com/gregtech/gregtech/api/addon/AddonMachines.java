@@ -92,7 +92,7 @@ public final class AddonMachines {
             try {
                 accept(contributor.addonId(), contributor.recipeMaps(), contributor.machines(), contributor.layouts(), List.of());
             } catch (RuntimeException | Error failure) {
-                throw new IllegalStateException("Addon machine contributor failed: " + safeId(contributor)
+                throw AddonFailures.of("Addon machine contributor failed: " + safeId(contributor)
                         + " (" + contributor.getClass().getName() + ")", failure);
             }
         }
@@ -114,7 +114,7 @@ public final class AddonMachines {
                         generators, contributor.layoutParts(), contributor.fluidPipes(), contributor.itemPipes(),
                         contributor.compressedGasTanks());
             } catch (RuntimeException | Error failure) {
-                throw new IllegalStateException("Addon machine contributor failed: " + safeMachineId(contributor)
+                throw AddonFailures.of("Addon machine contributor failed: " + safeMachineId(contributor)
                         + " (" + contributor.getClass().getName() + ")", failure);
             }
         }
@@ -215,7 +215,7 @@ public final class AddonMachines {
         try {
             String id = contributor.addonId();
             return id == null ? contributor.getClass().getName() : id;
-        } catch (RuntimeException | Error ignored) {
+        } catch (RuntimeException ignored) {
             return contributor.getClass().getName();
         }
     }
@@ -317,8 +317,7 @@ public final class AddonMachines {
                                              List<FluidPipeDeclaration> fluidPipes, List<ItemPipeDeclaration> itemPipes,
                                              List<CompressedGasTankDeclaration> tanks) {
         if (installed) throw new IllegalStateException("Addon machine queue is closed: " + addonId);
-        if (addonId == null || !addonId.matches("[a-z][a-z0-9_]{1,63}"))
-            throw new IllegalArgumentException("Invalid addon mod ID: " + addonId);
+        AddonNames.requireAddonId(addonId);
         if (addonId.equals("gt6ce") || addonId.equals("gregtech6") || addonId.equals("minecraft"))
             throw new IllegalArgumentException("Addon mod ID is reserved: " + addonId);
         if (QUEUE.containsKey(addonId))
@@ -907,7 +906,7 @@ public final class AddonMachines {
         try {
             String id = contributor.addonId();
             return id == null ? contributor.getClass().getName() : id;
-        } catch (RuntimeException | Error ignored) {
+        } catch (RuntimeException ignored) {
             return contributor.getClass().getName();
         }
     }

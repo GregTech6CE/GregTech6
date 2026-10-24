@@ -85,15 +85,19 @@ public class RecipeMap {
     }
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public static final Map<String, RecipeMap> RECIPE_MAPS = new LinkedHashMap<>();
-    public static final List<RecipeMap> RECIPE_MAP_LIST = new ArrayList<>();
+    private static final Map<String, RecipeMap> RECIPE_MAPS_INTERNAL = new LinkedHashMap<>();
+    private static final List<RecipeMap> RECIPE_MAP_LIST_INTERNAL = new ArrayList<>();
+    /** Read-only view. Use {@link #unregister(RecipeMap)} / {@link #restore(RecipeMap)} to change it. */
+    public static final Map<String, RecipeMap> RECIPE_MAPS = Collections.unmodifiableMap(RECIPE_MAPS_INTERNAL);
+    /** Read-only view of every registered map, in registration order. */
+    public static final List<RecipeMap> RECIPE_MAP_LIST = Collections.unmodifiableList(RECIPE_MAP_LIST_INTERNAL);
 
     /**
      * Rows {@link #make} dropped because optimizing cancelled them down to nothing (GT6 keeps such a
      * row; see the note in {@code make}). Reported by {@code StoneExtrusionTests} as evidence that no
      * degenerate row reaches a recipe map.
      */
-    public static int COLLAPSED_RECIPES_DROPPED = 0;
+    private static int collapsedRecipesDropped;
 
     private static final List<String> COLLAPSED_SAMPLES = new ArrayList<>();
 
@@ -243,10 +247,36 @@ public class RecipeMap {
         mUseBucketSizeIn   = aUseBucketSizeIn;
         mUseBucketSizeOut  = aUseBucketSizeOut;
 
-        if (RECIPE_MAPS.containsKey(mNameInternal))
+        if (RECIPE_MAPS_INTERNAL.containsKey(mNameInternal))
             throw new IllegalArgumentException("Duplicate RecipeMap key: " + mNameInternal);
-        RECIPE_MAPS.put(mNameInternal, this);
-        RECIPE_MAP_LIST.add(this);
+        RECIPE_MAPS_INTERNAL.put(mNameInternal, this);
+        RECIPE_MAP_LIST_INTERNAL.add(this);
+    }
+
+    /** Number of rows {@link #make} dropped as empty after optimization. */
+    public static int collapsedRecipesDropped() {
+        return collapsedRecipesDropped;
+    }
+
+    /** Drops a map from the registry. Tests use this so the public views stay read-only. */
+    public static RecipeMap unregister(String name) {
+        RecipeMap map = RECIPE_MAPS_INTERNAL.remove(name);
+        if (map != null) RECIPE_MAP_LIST_INTERNAL.remove(map);
+        return map;
+    }
+
+    /** Drops {@code map} from the registry when it is the map stored under its name. */
+    public static void unregister(RecipeMap map) {
+        if (map != null && RECIPE_MAPS_INTERNAL.remove(map.mNameInternal, map))
+            RECIPE_MAP_LIST_INTERNAL.remove(map);
+    }
+
+    /** Puts a previously unregistered map back. */
+    public static void restore(RecipeMap map) {
+        if (map == null) return;
+        if (RECIPE_MAPS_INTERNAL.putIfAbsent(map.mNameInternal, map) != null)
+            throw new IllegalArgumentException("Duplicate RecipeMap key: " + map.mNameInternal);
+        RECIPE_MAP_LIST_INTERNAL.add(map);
     }
 
     @Override
@@ -480,7 +510,7 @@ public class RecipeMap {
         int tRealOutputsAfterOptimize = tFluidOutputs.length;
         for (ItemStack s : tOutputs) if (!empty(s)) tRealOutputsAfterOptimize++;
         if (tInputs.length + tFluidInputs.length <= 0 || tRealOutputsAfterOptimize <= 0 && aEUt >= 0) {
-            COLLAPSED_RECIPES_DROPPED++;
+            collapsedRecipesDropped++;
             tLastMakeCollapsed = true;
             if (COLLAPSED_SAMPLES.size() < 64) {
                 COLLAPSED_SAMPLES.add(Arrays.toString(aInputs) + " -> " + Arrays.toString(aOutputs));

@@ -6,8 +6,8 @@ import java.util.Objects;
 
 /**
  * One fuel-generator packet and where it leaves. This is not an {@link EnergyOutput}:
- * the packet is a single per-tick amount, and the position is the front, the back, or
- * a fixed distance behind the front.
+ * the packet is a single per-tick amount, and the position is {@link Placement#FRONT},
+ * {@link Placement#BACK}, or {@link Placement#BEHIND}.
  */
 public final class FuelOutput {
     private final String type;
@@ -34,6 +34,15 @@ public final class FuelOutput {
 
     /** Zero when the packet leaves the front or the back face. Otherwise 1 through {@link FuelGenerator#MAX_BEHIND}. */
     public int behind() { return behind; }
+
+    /** Front, back, or a distance behind the front. */
+    public enum Placement { FRONT, BACK, BEHIND }
+
+    public Placement placement() {
+        if (front) return Placement.FRONT;
+        if (back) return Placement.BACK;
+        return Placement.BEHIND;
+    }
 
     @Override public boolean equals(Object other) {
         if (this == other) return true;
@@ -67,8 +76,7 @@ public final class FuelOutput {
         public Builder behind(int distance) { front = false; back = false; behind = distance; return this; }
 
         public FuelOutput build() {
-            if (type == null || type.isBlank())
-                throw new IllegalArgumentException("Missing fuel output type");
+            String resolved = EnergyType.require(type, "Missing fuel output type");
             if (perTick < 1 || perTick > 1_000_000_000_000L)
                 throw new IllegalArgumentException("Fuel output per tick out of range: " + perTick);
             if (!front && !back) {
@@ -78,7 +86,7 @@ public final class FuelOutput {
             } else if (behind != 0) {
                 throw new IllegalArgumentException("Adjacent fuel output has no distance");
             }
-            return new FuelOutput(type, perTick, front, back, behind);
+            return new FuelOutput(resolved, perTick, front, back, behind);
         }
     }
 }

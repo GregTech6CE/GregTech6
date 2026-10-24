@@ -13,13 +13,13 @@ import java.util.Objects;
 public record CrucibleReactionRemoval(String output, List<String> inputs) {
     public CrucibleReactionRemoval {
         Objects.requireNonNull(output, "output");
-        if (!output.matches("[A-Za-z][A-Za-z0-9_]*"))
+        if (!AddonNames.matches(AddonNames.MATERIAL, output))
             throw new IllegalArgumentException("Use a material name: " + output);
         Objects.requireNonNull(inputs, "inputs");
         var copied = new ArrayList<String>(inputs.size());
         for (String input : inputs) {
             Objects.requireNonNull(input, "input");
-            if (!input.matches("[A-Za-z][A-Za-z0-9_]*"))
+            if (!AddonNames.matches(AddonNames.MATERIAL, input))
                 throw new IllegalArgumentException("Use a material name: " + input);
             copied.add(input);
         }

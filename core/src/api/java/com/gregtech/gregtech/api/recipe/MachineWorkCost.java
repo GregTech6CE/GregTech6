@@ -2,7 +2,7 @@ package com.gregtech.gregtech.api.recipe;
 
 import java.math.BigInteger;
 
-/** Recipe work costs and bounded progress arithmetic; machine adapters own job transitions. */
+/** SPDX-License-Identifier: LGPL-3.0-or-later. Recipe work costs and bounded progress arithmetic; machine adapters own job transitions. */
 public final class MachineWorkCost {
     public record Cost(long minimumPower, long totalWork) {}
 

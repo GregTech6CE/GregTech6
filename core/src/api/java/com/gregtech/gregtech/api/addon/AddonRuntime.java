@@ -7,20 +7,17 @@ package com.gregtech.gregtech.api.addon;
  * Calls made before that fail immediately. There is one implementation, so this is not a service loader.
  */
 public final class AddonRuntime {
-    private static Services services;
+    private static final InstalledService<Services> INSTALLED = new InstalledService<>();
 
     private AddonRuntime() {}
 
     /** GT bootstrap only. Addons must not install or replace the host implementation. */
-    public static synchronized void bind(Services implementation) {
-        if (implementation == null) throw new IllegalArgumentException("addon services");
-        if (services != null) throw new IllegalStateException("GregTech addon API is already installed");
-        services = implementation;
+    public static void bind(Services implementation) {
+        INSTALLED.bind(implementation, "addon services", "GregTech addon API is already installed");
     }
 
-    public static synchronized Services services() {
-        if (services == null) throw new IllegalStateException("GregTech addon API is not installed");
-        return services;
+    public static Services services() {
+        return INSTALLED.get("GregTech addon API is not installed");
     }
 
     /**

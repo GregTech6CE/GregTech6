@@ -13,7 +13,7 @@ import java.util.Objects;
 public record CrucibleReactionDeclaration(String output, long yield, List<Part> parts) {
     public CrucibleReactionDeclaration {
         Objects.requireNonNull(output, "output");
-        if (!output.matches("[A-Za-z][A-Za-z0-9_]*"))
+        if (!AddonNames.matches(AddonNames.MATERIAL, output))
             throw new IllegalArgumentException("Use a material name: " + output);
         if (yield <= 0) throw new IllegalArgumentException("Crucible yield must be positive: " + output);
         Objects.requireNonNull(parts, "parts");
@@ -27,7 +27,7 @@ public record CrucibleReactionDeclaration(String output, long yield, List<Part> 
     public record Part(String material, long ratio) {
         public Part {
             Objects.requireNonNull(material, "material");
-            if (!material.matches("[A-Za-z][A-Za-z0-9_]*"))
+            if (!AddonNames.matches(AddonNames.MATERIAL, material))
                 throw new IllegalArgumentException("Use a material name: " + material);
             if (ratio <= 0) throw new IllegalArgumentException("Crucible ratio must be positive: " + material);
         }

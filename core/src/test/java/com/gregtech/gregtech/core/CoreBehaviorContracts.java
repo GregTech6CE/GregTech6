@@ -762,6 +762,12 @@ public final class CoreBehaviorContracts {
     /** Original HazardDamageTests.java:208-222 tier boundaries and signed magnitude. */
     private static void voltageGoldens() {
         equal(8, GTVoltageTiers.VOLTAGES[0], "ULV volts");
+        GTVoltageTiers.VOLTAGES[0] = 1;
+        GTVoltageTiers.NAMES[1] = "nope";
+        equal(0, GTVoltageTiers.tierMax(8), "mutating the public voltage copy does not change lookups");
+        check("LV".equals(GTVoltageTiers.nameOf(32)), "mutating the public name copy does not change lookups");
+        GTVoltageTiers.VOLTAGES[0] = 8;
+        GTVoltageTiers.NAMES[1] = "LV";
         equal(32, GTVoltageTiers.VOLTAGES[1], "LV volts");
         equal(512, GTVoltageTiers.VOLTAGES[3], "HV volts");
         equal(8192, GTVoltageTiers.VOLTAGES[5], "IV volts");

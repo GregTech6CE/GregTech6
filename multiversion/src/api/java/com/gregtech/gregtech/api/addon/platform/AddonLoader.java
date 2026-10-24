@@ -5,26 +5,24 @@ package com.gregtech.gregtech.api.addon.platform;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
 //?}
+import com.gregtech.gregtech.api.addon.InstalledService;
 import net.minecraft.world.level.material.Fluid;
 
 /** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /** Loader entry for types whose signatures differ between Forge and NeoForge. GregTech installs it once. */
 public final class AddonLoader {
-    private static Services services;
+    private static final InstalledService<Services> INSTALLED = new InstalledService<>();
 
     private AddonLoader() {}
 
     /** GT bootstrap only. Addons must not install or replace the host implementation. */
-    public static synchronized void bind(Services implementation) {
-        if (implementation == null) throw new IllegalArgumentException("addon loader services");
-        if (services != null) throw new IllegalStateException("GregTech addon loader API is already installed");
-        services = implementation;
+    public static void bind(Services implementation) {
+        INSTALLED.bind(implementation, "addon loader services", "GregTech addon loader API is already installed");
     }
 
-    public static synchronized Services services() {
-        if (services == null) throw new IllegalStateException("GregTech addon loader API is not installed");
-        return services;
+    public static Services services() {
+        return INSTALLED.get("GregTech addon loader API is not installed");
     }
 
     /** GT implementation contract; addon consumers use {@link AddonFluids} and {@link AddonRecipes}. */

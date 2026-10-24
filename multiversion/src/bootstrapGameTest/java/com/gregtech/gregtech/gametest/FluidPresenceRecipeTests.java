@@ -39,8 +39,7 @@ public final class FluidPresenceRecipeTests {
                 1, 1, 0, 4, 0, 0, 1, true, false, false, false);
     }
     private static void remove(RecipeMap map) {
-        RecipeMap.RECIPE_MAPS.remove(map.mNameInternal);
-        RecipeMap.RECIPE_MAP_LIST.remove(map);
+        RecipeMap.unregister(map);
     }
 
     @GameTest(template = "test_empty")
@@ -124,7 +123,7 @@ public final class FluidPresenceRecipeTests {
     public static void unsupportedDirectFuelMapsFailClosed(GameTestHelper h) {
         for (String suffix : new String[]{"burn", "gas", "fluidbed", "engine", "hot"}) {
             String name = "gt.recipe.fuels." + suffix;
-            var registered = RecipeMap.RECIPE_MAPS.remove(name);
+            var registered = RecipeMap.unregister(name);
             RecipeMap probe = null;
             try {
                 probe = new RecipeMap(new ArrayList<>(), name, "Presence boundary test", "test",
@@ -141,7 +140,7 @@ public final class FluidPresenceRecipeTests {
                         "rejected provider does not shadow ordinary fallback " + name);
             } finally {
                 if (probe != null) remove(probe);
-                if (registered != null) RecipeMap.RECIPE_MAPS.put(name, registered);
+                if (registered != null) RecipeMap.restore(registered);
             }
         }
         var custom = new RecipeMap(new ArrayList<>(), "gt.recipe.fuels.hot_custom_presence", "Custom fuel", "test",

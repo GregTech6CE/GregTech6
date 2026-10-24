@@ -208,7 +208,6 @@ public final class BehaviorMachine implements AddonMachine {
         private EnergyInput energy;
         private EnergyInput auxiliary;
         private EnergyOutput output;
-        private FuelOutput fuelOutput;
         private MachineIo io;
         private String blockEntityId = "";
         private int guiWidth = 176;
@@ -238,7 +237,10 @@ public final class BehaviorMachine implements AddonMachine {
         }
 
         public Builder energyOutput(EnergyOutput value) { output = value; return this; }
-        public Builder output(FuelOutput value) { fuelOutput = value; return this; }
+        public Builder output(FuelOutput value) {
+            if (value != null) throw new IllegalArgumentException("Behavior machines cannot declare fuel output");
+            return this;
+        }
         public Builder io(MachineIo value) { io = value; return this; }
         public Builder blockEntityId(String value) { blockEntityId = value; return this; }
         public Builder gui(String texture) { gui = texture; return this; }
@@ -291,11 +293,9 @@ public final class BehaviorMachine implements AddonMachine {
                         || io.fluidAutoInput() != null || io.fluidAutoOutput() != null)
                     throw new IllegalArgumentException("Behavior machines cannot declare an automatic face");
             }
-            if (fuelOutput != null)
-                throw new IllegalArgumentException("Behavior machines cannot declare fuel output");
             String id = casing.id();
             String machineType = casing.machineType() == null ? id.replace('/', '_') : casing.machineType();
-            if (!machineType.matches("[a-z0-9_]+"))
+            if (!AddonNames.matches(AddonNames.MACHINE_TYPE, machineType))
                 throw new IllegalArgumentException("Invalid machine type for " + id + ": " + machineType);
             int tier = casing.tierSpecified() ? casing.tier() : 1;
             if (tier < 1 || tier > 255)
@@ -318,7 +318,7 @@ public final class BehaviorMachine implements AddonMachine {
             var seenMaps = new HashSet<String>();
             var mapNames = new ArrayList<String>();
             for (String name : recipeMaps) {
-                if (name == null || !name.matches("[a-z0-9_.]+"))
+                if (!AddonNames.matches(AddonNames.RECIPE_MAP, name))
                     throw new IllegalArgumentException("Invalid recipe map for " + id + ": " + name);
                 if (!seenMaps.add(name))
                     throw new IllegalArgumentException("Behavior machine '" + id + "' repeats recipe map '" + name + "'");
@@ -416,7 +416,7 @@ public final class BehaviorMachine implements AddonMachine {
         var auxFaces = auxiliary.facesSpecified() ? auxiliary.faces() : List.<MachineFace>of();
         if (!auxiliary.facesSpecified() || auxFaces.isEmpty())
             throw new IllegalArgumentException("Behavior machine '" + id + "' auxiliary energy needs a face");
-        boolean sameType = main != null && auxiliary.type().equalsIgnoreCase(main.type());
+        boolean sameType = main != null && EnergyType.same(auxiliary.type(), main.type());
         var mainFaces = main == null ? List.<MachineFace>of() : main.faces();
         for (MachineFace face : auxFaces) {
             if (sameType && mainFaces.contains(face))

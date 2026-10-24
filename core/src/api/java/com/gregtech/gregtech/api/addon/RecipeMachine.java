@@ -102,8 +102,6 @@ public final class RecipeMachine implements AddonMachine {
         private EnergyInput energy;
         private EnergyInput auxiliary;
         private boolean startupEnergy;
-        private EnergyOutput energyOutput;
-        private FuelOutput fuelOutput;
         private MachineIo io;
         private boolean largeRecipe;
         private String recipeMap;
@@ -119,16 +117,30 @@ public final class RecipeMachine implements AddonMachine {
 
         private Builder(MachineCasing casing) { this.casing = casing; }
 
-        public Builder energy(EnergyInput value) { energy = value; return this; }
+        public Builder energy(EnergyInput value) {
+            if (value == null) throw new IllegalArgumentException("Missing energy");
+            energy = value;
+            return this;
+        }
 
         /** Second input buffer. It needs faces, a positive capacity and a range or {@code anyPacket}. */
-        public Builder auxiliaryEnergy(EnergyInput value) { auxiliary = value; return this; }
+        public Builder auxiliaryEnergy(EnergyInput value) {
+            if (value == null) throw new IllegalArgumentException("Missing auxiliary energy");
+            auxiliary = value;
+            return this;
+        }
 
         /** Charge each recipe's {@code special} from the auxiliary buffer before progress starts. */
         public Builder startupEnergy(boolean value) { startupEnergy = value; return this; }
 
-        public Builder energyOutput(EnergyOutput value) { energyOutput = value; return this; }
-        public Builder output(FuelOutput value) { fuelOutput = value; return this; }
+        public Builder energyOutput(EnergyOutput value) {
+            if (value != null) throw new IllegalArgumentException("Recipe machines cannot declare energy output");
+            return this;
+        }
+        public Builder output(FuelOutput value) {
+            if (value != null) throw new IllegalArgumentException("Recipe machines cannot declare fuel output");
+            return this;
+        }
         public Builder io(MachineIo value) { io = value; return this; }
         public Builder basic() { largeRecipe = false; return this; }
         public Builder largeRecipe() { largeRecipe = true; return this; }
@@ -148,13 +160,9 @@ public final class RecipeMachine implements AddonMachine {
 
         public RecipeMachine build() {
             if (casing == null) throw new IllegalArgumentException("Missing casing");
-            if (energyOutput != null)
-                throw new IllegalArgumentException("Recipe machines cannot declare energy output");
-            if (fuelOutput != null)
-                throw new IllegalArgumentException("Recipe machines cannot declare fuel output");
             String id = casing.id();
             String machineType = casing.machineType() == null ? id : casing.machineType();
-            if (!machineType.matches("[a-z0-9_]+"))
+            if (!AddonNames.matches(AddonNames.MACHINE_TYPE, machineType))
                 throw new IllegalArgumentException("Invalid machine type for " + id + ": " + machineType);
             int tier = casing.tierSpecified() ? casing.tier() : 1;
             if (tier < 1)
@@ -170,7 +178,7 @@ public final class RecipeMachine implements AddonMachine {
                 throw new IllegalArgumentException("Recipe machine '" + id + "' cannot disable overload");
             if (energy.perTick() < 0)
                 throw new IllegalArgumentException("Invalid energy per tick for " + id + ": " + energy.perTick());
-            if (energy.rangeSpecified() && "TU".equalsIgnoreCase(energy.type()))
+            if (energy.rangeSpecified() && EnergyType.time(energy.type()))
                 throw new IllegalArgumentException("TU machines cannot declare an energy range: " + id);
             if (auxiliary != null) {
                 if (auxiliary.dynamic())
@@ -189,7 +197,7 @@ public final class RecipeMachine implements AddonMachine {
                         && (auxiliary.perTick() < auxiliary.rangeMin() || auxiliary.perTick() > auxiliary.rangeMax()))
                     throw new IllegalArgumentException("Recipe machine '" + id
                             + "' auxiliary energy per tick must sit inside the packet range");
-                if (auxiliary.type().equalsIgnoreCase(energy.type())) {
+                if (EnergyType.same(auxiliary.type(), energy.type())) {
                     var mainFaces = energy.facesSpecified() ? energy.faces() : MachineFace.all();
                     for (MachineFace face : auxiliary.faces())
                         if (mainFaces.contains(face))
@@ -200,15 +208,17 @@ public final class RecipeMachine implements AddonMachine {
                 throw new IllegalArgumentException("Recipe machine '" + id + "' startup energy needs auxiliary energy");
             }
             var faces = energy.facesSpecified() ? energy.faces() : MachineFace.all();
-            if (recipeMap == null || !recipeMap.matches("[a-z0-9_.]+"))
+            if (!AddonNames.matches(AddonNames.RECIPE_MAP, recipeMap))
                 throw new IllegalArgumentException("Invalid recipe map name: " + recipeMap);
-            if (parallel < 1 || efficiency < 1 || efficiency > 100_000)
-                throw new IllegalArgumentException("Invalid machine parameters for " + id);
+            if (parallel < 1)
+                throw new IllegalArgumentException("Invalid parallel for " + id + ": " + parallel);
+            if (efficiency < 1 || efficiency > 100_000)
+                throw new IllegalArgumentException("Invalid efficiency for " + id + ": " + efficiency);
             if (minimumLightAbove < 0 || minimumLightAbove > 15)
                 throw new IllegalArgumentException("Invalid light requirement for " + id + ": " + minimumLightAbove);
             var keys = List.copyOf(structureKeys == null ? List.of() : structureKeys);
             for (String key : keys) {
-                if (key == null || !key.matches("[a-z0-9_.]+"))
+                if (!AddonNames.matches(AddonNames.RECIPE_MAP, key))
                     throw new IllegalArgumentException("Invalid structure key for " + id + ": " + key);
             }
             if (io != null && io.hasTarget() && !largeRecipe)

@@ -140,7 +140,7 @@ public final class FusionCoverLifecycleTests {
                     var entity=h.getLevel().getBlockEntity(p);
                     if(entity!=null&&original.data()!=null)load(h,entity,original.data());
                 }
-            } finally { RecipeMap.RECIPE_MAPS.remove(map.mNameInternal,map);RecipeMap.RECIPE_MAP_LIST.remove(map); }
+            } finally { RecipeMap.unregister(map); }
         }
     }
 
