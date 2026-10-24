@@ -373,3 +373,21 @@ tasks.named('check').configure { dependsOn fluidSlotAmountOverlayChecks }
     }
     tasks.named('check').configure { dependsOn contract }
 }
+
+// Fixed-phase source-form contract; actual native map/reload proofs remain separate.
+tasks.register('siftingGemFormContracts', JavaExec) {
+    description = 'Checks bounded per-prefix Ice source facts and legacy form retention.'
+    group = 'verification'
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'com.gregtech.gregtech.core.SiftingGemFormContracts'
+    javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
+    def marker = layout.buildDirectory.file('reports/contracts/siftingGemFormContracts.passed')
+    outputs.file(marker)
+    doFirst { marker.get().asFile.delete() }
+    doLast {
+        marker.get().asFile.parentFile.mkdirs()
+        marker.get().asFile.setText("SiftingGemFormContracts: passed\n", 'UTF-8')
+    }
+}
+tasks.named('check').configure { dependsOn siftingGemFormContracts }

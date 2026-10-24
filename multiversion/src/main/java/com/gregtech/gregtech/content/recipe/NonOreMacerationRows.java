@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 //?}
 import java.util.*;
-/** only the OPL maceration/washing producer is eligible for this ledger. */
+/** Exact OPL maceration/washing and purified Sifting producers only; no other map rows are inferred. */
 public final class NonOreMacerationRows {
  private NonOreMacerationRows(){}
  private static final DormantOreRows ROWS=new DormantOreRows();

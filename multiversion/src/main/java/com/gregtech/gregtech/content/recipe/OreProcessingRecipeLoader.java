@@ -472,6 +472,8 @@ public class OreProcessingRecipeLoader implements InitializationStep {
      * recipes at all.
      */
     private void processPurifiedRoutes() {
+        // Deduplicate only reviewed dormant Sifting definitions, never other producers or UNKNOWN rows.
+        var reviewedSiftingSeen=java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<GTMaterial,Boolean>());
         for (GTMaterial mat : GTMaterialRegistry.allMaterials()) {
             GTMaterial material = mat.resolve();
             if (!material.isValid()) continue;
@@ -507,11 +509,20 @@ public class OreProcessingRecipeLoader implements InitializationStep {
             if (!MaterialPrefix.gem.isValidFor(material)) continue;
             ItemStack[] outputs = gemRouteOutputs(material);
             if (outputs == null) continue;
-            MachineRecipeMaps.Sifting.addRecipe1(true, EU_TIER, 144, SIFT_GEM_CHANCES,
-                    purified, outputs[0], outputs[1], outputs[2], outputs[3], outputs[4], outputs[5], outputs[6]);
-            MachineRecipeMaps.Sifting.addRecipe1(true, EU_TIER, 16, SIFT_GEM_CHANCES_TINY,
-                    purifiedTiny, outputs[0].copy(), outputs[1].copy(), outputs[2].copy(),
-                    outputs[3].copy(), outputs[4].copy(), outputs[5].copy(), outputs[6].copy());
+            if(NonOreMacerationRows.reviewed(material)) {
+                if(!reviewedSiftingSeen.add(material))continue;
+                NonOreMacerationRows.register(material,MaterialPrefix.crushedPurified,"sifting/purified",MachineRecipeMaps.Sifting,
+                        true,purified,outputs,SIFT_GEM_CHANCES,null,144,EU_TIER);
+                NonOreMacerationRows.register(material,MaterialPrefix.crushedPurifiedTiny,"sifting/purifiedTiny",MachineRecipeMaps.Sifting,
+                        true,purifiedTiny,outputs,SIFT_GEM_CHANCES_TINY,null,16,EU_TIER);
+            } else {
+                // Supported startup/material overrides retain original direct admission order.
+                MachineRecipeMaps.Sifting.addRecipe1(true, EU_TIER, 144, SIFT_GEM_CHANCES,
+                        purified, outputs[0], outputs[1], outputs[2], outputs[3], outputs[4], outputs[5], outputs[6]);
+                MachineRecipeMaps.Sifting.addRecipe1(true, EU_TIER, 16, SIFT_GEM_CHANCES_TINY,
+                        purifiedTiny, outputs[0].copy(), outputs[1].copy(), outputs[2].copy(),
+                        outputs[3].copy(), outputs[4].copy(), outputs[5].copy(), outputs[6].copy());
+            }
         }
     }
 

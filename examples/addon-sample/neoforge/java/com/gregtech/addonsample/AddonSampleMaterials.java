@@ -53,8 +53,15 @@ public final class AddonSampleMaterials implements AddonMaterialContributor {
     }
 
     @Override public List<MaterialFormRequest> forms() {
-        return List.of(new MaterialFormRequest("SampleRubber", "plate"), new MaterialFormRequest("SampleRubber", "foil"),
-                new MaterialFormRequest("Bakelite", "crushed"));
+        var requests=new java.util.ArrayList<>(List.of(new MaterialFormRequest("SampleRubber", "plate"), new MaterialFormRequest("SampleRubber", "foil"),
+                new MaterialFormRequest("Bakelite", "crushed")));
+        String namespaces=System.getProperty("neoforge.enabledGameTestNamespaces",System.getProperty("forge.enabledGameTestNamespaces",""));
+        if(namespaces.equals("gregtech_nonore_ice_startup_grade_audit")) {
+            requests.add(new MaterialFormRequest("Ice","gemLegendary"));
+            requests.add(new MaterialFormRequest("Ice","gemExquisite"));
+            requests.add(new MaterialFormRequest("Ice","gemFlawless"));
+        }
+        return List.copyOf(requests);
     }
 
     @Override public List<OreVeinDeclaration> oreVeins() {
