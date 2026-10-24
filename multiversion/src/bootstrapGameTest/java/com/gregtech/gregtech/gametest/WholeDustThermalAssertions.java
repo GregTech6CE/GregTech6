@@ -9,6 +9,11 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.ItemStack;
 import java.util.*;
+//? if >=1.21.1 {
+/*import net.neoforged.neoforge.fluids.FluidStack;
+*///?} else {
+import net.minecraftforge.fluids.FluidStack;
+//?}
 
 /** Ignored SAME-batch actual-map whole-dust census. No new source profile/namespace or map mutation.
  * Original MT410/414 -> refractmetal/transmetal -> metal62: FURNACE only<=1200;
@@ -41,7 +46,7 @@ final class WholeDustThermalAssertions {
     &&entry!=null&&entry.temperature()==expected.temperature;
    System.out.println("[whole-dust-thermal-facts] "+expected.name+" canonical="+canonical+" ordinary="+ordinary+" unchanged="+unchanged
     +" melting="+material.getMeltingPoint()+" density="+material.getDensity()+" target="+material.getTargetSmeltingMaterial()
-    +" amount="+material.getTargetSmeltingAmount()+" fluid="+fluid+" sourceSmelterTicks="+expected.ticks);
+    +" amount="+material.getTargetSmeltingAmount()+" fluid="+fluidText(fluid)+" sourceSmelterTicks="+expected.ticks);
    for(var map:new RecipeMap[]{MachineRecipeMaps.Melter,MachineRecipeMaps.Smelter}){
     String label=expected.name+"/"+(map==MachineRecipeMaps.Melter?"Melter":"Smelter");
     var rows=map.mRecipeList.stream().filter(r->r.mInputs.length==1&&r.mInputs[0].is(input.getItem())
@@ -64,6 +69,7 @@ final class WholeDustThermalAssertions {
    }
   }
  }
- private static String describe(Recipe r){return "items="+Arrays.toString(r.mOutputs)+" fluids="+Arrays.toString(r.mFluidOutputs)
+ private static String fluidText(FluidStack fluid){return fluid==null||fluid.isEmpty()?"empty":BuiltInRegistries.FLUID.getKey(fluid.getFluid())+"x"+fluid.getAmount();}
+ private static String describe(Recipe r){return "items="+Arrays.toString(r.mOutputs)+" fluids="+Arrays.stream(r.mFluidOutputs).map(WholeDustThermalAssertions::fluidText).toList()
   +" ticks="+r.mDuration+" eut="+r.mEUt;}
 }
