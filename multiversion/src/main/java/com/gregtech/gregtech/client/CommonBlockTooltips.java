@@ -32,7 +32,7 @@ public final class CommonBlockTooltips {
     private static final String UNCOVER = "gt.lang.use.crowbar.to.uncover";
     private static final String ENCHANT = "gt.lang.enchantment.bonus";
     private static final Component HAND_HARVEST = Component.literal("Hand-Harvestable").withStyle(ChatFormatting.DARK_GRAY);
-    private static final Set<String> OLD_HARVEST = Set.of(HARVEST,
+    private static final Set<String> OLD_HARVEST = Set.of(HARVEST, "tooltip.gt6ce.ore.hand_harvest_preferred",
             "tooltip.gt6ce.machine.harvest_wrench", "tooltip.gt6ce.machine.harvest_wrench_short",
             "tooltip.gt6ce.machine.harvest_axe", "tooltip.gt6ce.machine.harvest_shears",
             "tooltip.gt6ce.machine.harvest.tool_label", "tooltip.gt6ce.machine.hand_harvest",
@@ -46,6 +46,7 @@ public final class CommonBlockTooltips {
         if (!BuiltInRegistries.BLOCK.getKey(block).getNamespace().equals("gt6ce")) return;
         boolean flammable = lines.stream().anyMatch(line -> containsAnyKey(line, FLAME_KEYS));
         var state = block.defaultBlockState();
+        var ore = com.gregtech.gregtech.data.OreHostPhysics.itemParams(stack);
         for (var side : Direction.values())
             flammable |= state.getFlammability(EmptyBlockGetter.INSTANCE, BlockPos.ZERO, side) > 0;
         // Native tooltip events include the item name at index0. Keep player names/lore intact.
@@ -61,11 +62,17 @@ public final class CommonBlockTooltips {
             rows.add(Component.translatable(ENCHANT).withStyle(ChatFormatting.DARK_GRAY));
         if (hasAttachedCover(stack) && !containsKey(lines, UNCOVER))
             rows.add(Component.translatable(UNCOVER).withStyle(ChatFormatting.DARK_GRAY));
-        if (blast != null) rows.add(blast);
+        if (ore.isPresent()) TooltipHelper.appendBlastResistance(ore.get().resistance(), rows);
+        else if (blast != null) rows.add(blast);
         else if (!containsKey(lines, "gt.lang.blastresistance"))
             TooltipHelper.appendBlastResistance(block.getExplosionResistance(), rows);
-        // One policy drives the datagen tags, actual harvest event and visible tool/level.
-        rows.add(harvestLine(block));
+        // Display actual source drop policy for reviewed ore states, not the old LH adventure-exempt flag.
+        // Preferred shovel remains visible, but hand-droppable sediment must not advertise a mandatory tier.
+        rows.add(ore.isPresent() ? (!ore.get().requiresToolForDrops()
+                ? Component.translatable("tooltip.gt6ce.ore.hand_harvest_preferred",
+                    Component.translatable(OriginalBlockTooltipRules.harvestToolKey(ore.get().tool())).withStyle(ChatFormatting.WHITE))
+                    .withStyle(ChatFormatting.DARK_GRAY)
+                : harvestLine(BlockHarvestPolicy.Tool.valueOf(ore.get().tool()), false, ore.get().harvest())) : harvestLine(block));
         int insertion = lines.size();
         for (int i = 0; i < lines.size(); i++) if (containsAnyKey(lines.get(i),
                 Set.of("tooltip.gt6ce.contained_materials", "tooltip.gt6ce.f3h_hint"))) {
@@ -75,8 +82,10 @@ public final class CommonBlockTooltips {
     }
 
     public static Component harvestLine(Block block) {
-        String toolKey = OriginalBlockTooltipRules.harvestToolKey(BlockHarvestPolicy.tool(block).name());
-        boolean hand = BlockHarvestPolicy.handHarvestable(block);
+        return harvestLine(BlockHarvestPolicy.tool(block), BlockHarvestPolicy.handHarvestable(block), BlockHarvestPolicy.level(block));
+    }
+    private static Component harvestLine(BlockHarvestPolicy.Tool tool, boolean hand, int level) {
+        String toolKey = OriginalBlockTooltipRules.harvestToolKey(tool.name());
         if (hand) {
             // LH hardcodes these two English phrases; the source patch has no translation keys.
             MutableComponent row = HAND_HARVEST.copy();
@@ -87,7 +96,6 @@ public final class CommonBlockTooltips {
         MutableComponent row = Component.translatable(HARVEST).withStyle(ChatFormatting.DARK_GRAY)
                 .append(": ").append(toolKey == null ? Component.literal("Unknown").withStyle(ChatFormatting.WHITE)
                         : Component.translatable(toolKey).withStyle(ChatFormatting.WHITE));
-        int level = BlockHarvestPolicy.level(block);
         if (toolKey != null && OriginalBlockTooltipRules.showHarvestLevel(level)) {
             var tier = Component.literal(" (" + level).withStyle(ChatFormatting.WHITE);
             String material = OriginalBlockTooltipRules.harvestTierMaterial(level);

@@ -215,21 +215,10 @@ public final class MaterialPrefix {
     private static final Predicate<GTMaterial> GT6_PROJECTILES = m -> MaterialForms.has(m, "PROJECTILES");
     private static final Predicate<GTMaterial> HAS_TOOL_HEAD = m ->
             m.has(MaterialProperty.TOOL_HEAD) && (HAS_INGOT.test(m) || HAS_GEM.test(m));
-    /**
-     * GT6's tool-head conditions are written over the material *type*, not over tool quality:
-     * {@code OP.java:239-247} gives sword blades and the pickaxe/shovel/spade/axe/hoe/sense/plow heads
-     * to {@code typemin(1)} — i.e. to every material the original registers, stone included, which is
-     * where GT6's knapped stone tools come from — and the hammer to
-     * {@code And(typemin(1), Or(BOUNCY, STRETCHY, WOOD, qualmin(1)))}.
-     *
-     * <p>The port registers material items from {@code MaterialProperty} values instead, so it reads
-     * {@code typemin(1)}/{\@code qualmin(1)} as "the material has tool stats"
-     * ({@link GTMaterial#getToolQuality()} ≥ 1, which the original's stone materials carry through
-     * {@code .qual(1, …)}, e.g. {@code MT.java:1631 Stone}, {@code :3833 Blackstone}). Taking
-     * {@code typemin(1)} literally would add a sword blade to dirt, water and every other non-material
-     * (~25k items) — documented deviation, §24 of {@code docs/PORTING_REMAINING_2026-09-14.md}.</p>
-     */
-    private static final Predicate<GTMaterial> GT6_TOOL_HEAD = m -> m.getToolQuality() >= 1;
+    /** Source typemin tests tool types, not quality. Correct only the reviewed qual(long)
+     * cohort here; preserve legacy IDs elsewhere pending separate tool-form migration proof. */
+    private static final Predicate<GTMaterial> GT6_TOOL_HEAD =
+            com.gregtech.gregtech.content.material.ReviewedSingleArgumentToolTypes::allowsLegacyQualityFallback;
     /** GT6 OP:247 also accepts wood and Rubber (MT:1301: type 1, BOUNCY/STRETCHY, quality 0). */
     private static final Predicate<GTMaterial> GT6_HAMMER = GT6_TOOL_HEAD
             .or(m -> m.has(MaterialProperty.WOOD) || m.getName().equals("Rubber"));

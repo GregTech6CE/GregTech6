@@ -89,6 +89,7 @@ tasks.named('check').configure { dependsOn addonApiClosureCheck }
     addonDeclarationTypeContracts: 'AddonDeclarationTypeContracts',
     addonEnergyTransferContracts: 'AddonEnergyTransferContracts',
     materialBehaviorContracts: 'MaterialBehaviorContracts',
+    materialQualityContracts: 'MaterialQualityContracts',
     materialDecompositionContracts: 'MaterialDecompositionContracts',
     materialWorkabilityContracts: 'MaterialWorkabilityContracts',
     thermalBehaviorContracts: 'ThermalBehaviorContracts',
@@ -97,6 +98,7 @@ tasks.named('check').configure { dependsOn addonApiClosureCheck }
     originalMaterialFluidUnitContracts: 'OriginalMaterialFluidUnitContracts',
     packetEnergyBufferContracts: 'PacketEnergyBufferContracts',
     pumpEnergyContracts: 'PumpEnergyContracts',
+    oreHostPhysicsContracts: 'SourceOreHostPhysicsContracts',
     radiationConsumableContracts: 'RadiationConsumableContracts'
 ].each { taskName, entryPoint ->
     def contract = tasks.register(taskName, JavaExec) {

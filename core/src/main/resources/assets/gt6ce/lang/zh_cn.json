@@ -1,4 +1,5 @@
 {
+  "tooltip.gt6ce.ore.hand_harvest_preferred": "可徒手采集；使用%s更快",
   "bc.trigger.gregapi.energy.air.capacity.empty": "空的 (ENERGY.AIR)",
   "bc.trigger.gregapi.energy.air.capacity.full": "满的 (ENERGY.AIR)",
   "bc.trigger.gregapi.energy.air.capacity.notfull": "不满的 (ENERGY.AIR)",

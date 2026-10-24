@@ -315,6 +315,8 @@ public class OreBlock extends Block implements MaterialBlockLike {
     public float getExplosionResistance(BlockState state, BlockGetter level, BlockPos pos,
                                         net.minecraft.world.level.Explosion explosion) {
         if (isBedrockOre(state)) return 3600000.0F;
+        var source = com.gregtech.gregtech.data.OreHostPhysics.params(state);
+        if (source.isPresent()) return source.get().resistance();
         float resistance = super.getExplosionResistance(state, level, pos, explosion);
         return isBroken(state) ? resistance * 0.5F : resistance;
     }
@@ -332,6 +334,7 @@ public class OreBlock extends Block implements MaterialBlockLike {
     public float getDestroyProgress(BlockState state, Player player, BlockGetter level, BlockPos pos) {
         if (isBedrockOre(state)) return 0.0F;
         float progress = super.getDestroyProgress(state, player, level, pos);
-        return isBroken(state) ? progress * 2.0F : progress;
+        return com.gregtech.gregtech.data.OreHostPhysics.params(state).isPresent() ? progress
+                : isBroken(state) ? progress * 2.0F : progress;
     }
 }
