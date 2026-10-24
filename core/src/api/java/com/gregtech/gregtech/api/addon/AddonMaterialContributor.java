@@ -1,9 +1,10 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 import java.util.List;
 
 /**
- * SPDX-License-Identifier: LGPL-3.0-or-later.
  * Early material entry discovered with {@link java.util.ServiceLoader}.
  * List this class in {@code META-INF/services/com.gregtech.gregtech.api.addon.AddonMaterialContributor}.
  * GregTech loads it while materials are still open. Return pure data.

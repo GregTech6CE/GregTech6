@@ -1,0 +1,1003 @@
+{
+  "scope": "reviewed original builtin ORES property only; external registrations and omitted identities remain UNKNOWN",
+  "reviewed_evidence_sha256": "6c4bd00e92467b80cda2c521d9da678b19d8b59f32c3278552879512dcdc7ec0",
+  "sources": {
+    "gregtech6-original": {
+      "commit": "3703e40308c8c030763fd6297dea8b210d2a77b1",
+      "MT.java_sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2"
+    },
+    "gregtech6-w": {
+      "commit": "607771f74acb0fe647f7e9412676e72094799545",
+      "MT.java_sha256": "9530c229de3483ab7be300c49ce1e08e44bcabfe9bdebd7844becefbd4782728"
+    }
+  },
+  "coverage": {
+    "NO": 53,
+    "UNKNOWN": 1,
+    "YES": 0
+  },
+  "rows": [
+    {
+      "id": 8366,
+      "name": "ArcaneCompound",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1481,
+          "symbol": "ArcaneCompound",
+          "factory": "dust"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1488,
+          "symbol": "ArcaneCompound",
+          "factory": "dust"
+        }
+      }
+    },
+    {
+      "id": 8198,
+      "name": "Bakelite",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1305,
+          "symbol": "Bakelite"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1312,
+          "symbol": "Bakelite"
+        }
+      }
+    },
+    {
+      "id": 8418,
+      "name": "Bamboo",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1248,
+          "symbol": "Bamboo",
+          "factory": "wood"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1255,
+          "symbol": "Bamboo",
+          "factory": "wood"
+        }
+      }
+    },
+    {
+      "id": 8275,
+      "name": "Bark",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1243,
+          "symbol": "Bark",
+          "factory": "dust"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1250,
+          "symbol": "Bark",
+          "factory": "dust"
+        }
+      }
+    },
+    {
+      "id": 8106,
+      "name": "BlackEndSand",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1621,
+          "symbol": "EndSandBlack"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1628,
+          "symbol": "EndSandBlack"
+        }
+      }
+    },
+    {
+      "id": 8620,
+      "name": "Brass",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1700,
+          "symbol": "Brass",
+          "factory": "clloymachine"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1707,
+          "symbol": "Brass",
+          "factory": "clloymachine"
+        }
+      }
+    },
+    {
+      "id": 8610,
+      "name": "Bronze",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1705,
+          "symbol": "Bronze",
+          "factory": "clloymachine"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1712,
+          "symbol": "Bronze",
+          "factory": "clloymachine"
+        }
+      }
+    },
+    {
+      "id": 8501,
+      "name": "Concrete",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1632,
+          "symbol": "Concrete"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1639,
+          "symbol": "Concrete"
+        }
+      }
+    },
+    {
+      "id": 8290,
+      "name": "Dreamwood",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1252,
+          "symbol": "Dreamwood",
+          "factory": "wood"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1259,
+          "symbol": "Dreamwood",
+          "factory": "wood"
+        }
+      }
+    },
+    {
+      "id": 8751,
+      "name": "Duranium",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1840,
+          "symbol": "DuraniumAlloy",
+          "factory": "alloymachine"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1847,
+          "symbol": "DuraniumAlloy",
+          "factory": "alloymachine"
+        }
+      }
+    },
+    {
+      "id": 9191,
+      "name": "Eclogite",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 3843,
+          "symbol": "Eclogite"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 3939,
+          "symbol": "Eclogite"
+        }
+      }
+    },
+    {
+      "id": 8504,
+      "name": "Endstone",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1635,
+          "symbol": "Endstone"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1642,
+          "symbol": "Endstone"
+        }
+      }
+    },
+    {
+      "id": 8035,
+      "name": "FerricOxyhydroxide",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1097,
+          "symbol": "FeO3H3",
+          "factory": "dustdcmp"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1104,
+          "symbol": "FeO3H3",
+          "factory": "dustdcmp"
+        }
+      }
+    },
+    {
+      "id": 8698,
+      "name": "Fireleaf",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1768,
+          "symbol": "Fireleaf",
+          "factory": "alloymachine"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1775,
+          "symbol": "Fireleaf",
+          "factory": "alloymachine"
+        }
+      }
+    },
+    {
+      "id": 9712,
+      "name": "FishRaw",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1321,
+          "symbol": "FishRaw",
+          "factory": "meat"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1328,
+          "symbol": "FishRaw",
+          "factory": "meat"
+        }
+      }
+    },
+    {
+      "id": 8002,
+      "name": "Flint",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1058,
+          "symbol": "Flint",
+          "factory": "cent"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1065,
+          "symbol": "Flint",
+          "factory": "cent"
+        }
+      }
+    },
+    {
+      "id": 90,
+      "name": "Fluorine",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 397,
+          "symbol": "F",
+          "factory": "fluorine -> diatomicgas -> diatomic -> nonmetal -> element -> create"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 404,
+          "symbol": "F",
+          "factory": "fluorine -> diatomicgas -> diatomic -> nonmetal -> element -> create"
+        }
+      }
+    },
+    {
+      "id": 8606,
+      "name": "GildedIron",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1697,
+          "symbol": "GildedIron",
+          "factory": "slloymachine"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1704,
+          "symbol": "GildedIron",
+          "factory": "slloymachine"
+        }
+      }
+    },
+    {
+      "id": 9175,
+      "name": "Graphene",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1535,
+          "symbol": "Graphene",
+          "factory": "dcmp"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1542,
+          "symbol": "Graphene",
+          "factory": "dcmp"
+        }
+      }
+    },
+    {
+      "id": 8296,
+      "name": "Greatwood",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1254,
+          "symbol": "Greatwood",
+          "factory": "wood"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1261,
+          "symbol": "Greatwood",
+          "factory": "wood"
+        }
+      }
+    },
+    {
+      "id": 8199,
+      "name": "HardPlastic",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1306,
+          "symbol": "Polycarbonate"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1313,
+          "symbol": "Polycarbonate"
+        }
+      }
+    },
+    {
+      "id": 8522,
+      "name": "Holystone",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 3804,
+          "symbol": "Holystone"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 3900,
+          "symbol": "Holystone"
+        }
+      }
+    },
+    {
+      "id": 9802,
+      "name": "Ice",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1013,
+          "symbol": "Ice"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1020,
+          "symbol": "Ice"
+        }
+      }
+    },
+    {
+      "id": 8644,
+      "name": "IronCompressed",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1725,
+          "symbol": "IronCompressed",
+          "factory": "alloymachnd"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1732,
+          "symbol": "IronCompressed",
+          "factory": "alloymachnd"
+        }
+      }
+    },
+    {
+      "id": 8645,
+      "name": "IronMagnetic",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1727,
+          "symbol": "IronMagnetic",
+          "factory": "metalmachnd"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1734,
+          "symbol": "IronMagnetic",
+          "factory": "metalmachnd"
+        }
+      }
+    },
+    {
+      "id": 8241,
+      "name": "Leather",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1313,
+          "symbol": "Leather",
+          "factory": "create"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1320,
+          "symbol": "Leather",
+          "factory": "create"
+        }
+      }
+    },
+    {
+      "id": 9189,
+      "name": "Limestone",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 3821,
+          "symbol": "Limestone"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 3917,
+          "symbol": "Limestone"
+        }
+      }
+    },
+    {
+      "id": 8289,
+      "name": "Livingwood",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1251,
+          "symbol": "Livingwood",
+          "factory": "wood"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1258,
+          "symbol": "Livingwood",
+          "factory": "wood"
+        }
+      }
+    },
+    {
+      "id": 8506,
+      "name": "Marble",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 3820,
+          "symbol": "Marble"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 3916,
+          "symbol": "Marble"
+        }
+      }
+    },
+    {
+      "id": 9700,
+      "name": "MeatRaw",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1318,
+          "symbol": "MeatRaw",
+          "factory": "meat"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1325,
+          "symbol": "MeatRaw",
+          "factory": "meat"
+        }
+      }
+    },
+    {
+      "id": 8650,
+      "name": "MeteoricSteel",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1738,
+          "symbol": "MeteoricSteel",
+          "factory": "alloymachine"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1745,
+          "symbol": "MeteoricSteel",
+          "factory": "alloymachine"
+        }
+      }
+    },
+    {
+      "id": 8647,
+      "name": "NeodymiumMagnetic",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1729,
+          "symbol": "NeodymiumMagnetic",
+          "factory": "metalmachnd"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1736,
+          "symbol": "NeodymiumMagnetic",
+          "factory": "metalmachnd"
+        }
+      }
+    },
+    {
+      "id": 8502,
+      "name": "Netherrack",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1633,
+          "symbol": "Netherrack"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1640,
+          "symbol": "Netherrack"
+        }
+      }
+    },
+    {
+      "id": 8214,
+      "name": "Obsidian",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1636,
+          "symbol": "Obsidian",
+          "factory": "elec"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1643,
+          "symbol": "Obsidian",
+          "factory": "elec"
+        }
+      }
+    },
+    {
+      "id": 8218,
+      "name": "Plastic",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1302,
+          "symbol": "Plastic"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1309,
+          "symbol": "Plastic"
+        }
+      }
+    },
+    {
+      "id": 8197,
+      "name": "PVC",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1304,
+          "symbol": "PVC"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1311,
+          "symbol": "PVC"
+        }
+      }
+    },
+    {
+      "id": 8509,
+      "name": "Redrock",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 3815,
+          "symbol": "Redrock"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 3911,
+          "symbol": "Redrock"
+        }
+      }
+    },
+    {
+      "id": 8104,
+      "name": "RedSand",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1619,
+          "symbol": "RedSand"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1626,
+          "symbol": "RedSand"
+        }
+      }
+    },
+    {
+      "id": 8217,
+      "name": "Rubber",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1301,
+          "symbol": "Rubber"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1308,
+          "symbol": "Rubber"
+        }
+      }
+    },
+    {
+      "id": 8100,
+      "name": "Sand",
+      "source_ores": "UNKNOWN",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1618,
+          "symbol": "Sand"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1625,
+          "symbol": "Sand"
+        }
+      }
+    },
+    {
+      "id": 8414,
+      "name": "Shimmerwood",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1253,
+          "symbol": "Shimmerwood",
+          "factory": "wood"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1260,
+          "symbol": "Shimmerwood",
+          "factory": "wood"
+        }
+      }
+    },
+    {
+      "id": 8297,
+      "name": "Silverwood",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1255,
+          "symbol": "Silverwood",
+          "factory": "wood"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1262,
+          "symbol": "Silverwood",
+          "factory": "wood"
+        }
+      }
+    },
+    {
+      "id": 8291,
+      "name": "Skyroot",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1249,
+          "symbol": "Skyroot",
+          "factory": "wood"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1256,
+          "symbol": "Skyroot",
+          "factory": "wood"
+        }
+      }
+    },
+    {
+      "id": 9801,
+      "name": "Snow",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1012,
+          "symbol": "Snow"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1019,
+          "symbol": "Snow"
+        }
+      }
+    },
+    {
+      "id": 8673,
+      "name": "Steeleaf",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1765,
+          "symbol": "Steeleaf",
+          "factory": "alloymachine"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1772,
+          "symbol": "Steeleaf",
+          "factory": "alloymachine"
+        }
+      }
+    },
+    {
+      "id": 8651,
+      "name": "SteelGalvanized",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1731,
+          "symbol": "SteelGalvanized",
+          "factory": "clloymachine"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1738,
+          "symbol": "SteelGalvanized",
+          "factory": "clloymachine"
+        }
+      }
+    },
+    {
+      "id": 8646,
+      "name": "SteelMagnetic",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1728,
+          "symbol": "SteelMagnetic",
+          "factory": "metalmachnd"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1735,
+          "symbol": "SteelMagnetic",
+          "factory": "metalmachnd"
+        }
+      }
+    },
+    {
+      "id": 8196,
+      "name": "Teflon",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1303,
+          "symbol": "Teflon"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1310,
+          "symbol": "Teflon"
+        }
+      }
+    },
+    {
+      "id": 8752,
+      "name": "Tritanium",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1841,
+          "symbol": "TritaniumAlloy",
+          "factory": "alloymachine"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1848,
+          "symbol": "TritaniumAlloy",
+          "factory": "alloymachine"
+        }
+      }
+    },
+    {
+      "id": 8027,
+      "name": "TungsticAcid",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1078,
+          "symbol": "H2WO4",
+          "factory": "dustdcmp"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1085,
+          "symbol": "H2WO4",
+          "factory": "dustdcmp"
+        }
+      }
+    },
+    {
+      "id": 8286,
+      "name": "Weedwood",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1250,
+          "symbol": "Weedwood",
+          "factory": "wood"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1257,
+          "symbol": "Weedwood",
+          "factory": "wood"
+        }
+      }
+    },
+    {
+      "id": 8105,
+      "name": "WhiteEndSand",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1620,
+          "symbol": "EndSandWhite"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1627,
+          "symbol": "EndSandWhite"
+        }
+      }
+    },
+    {
+      "id": 8221,
+      "name": "Wood",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1244,
+          "symbol": "Wood"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1251,
+          "symbol": "Wood"
+        }
+      }
+    },
+    {
+      "id": 8224,
+      "name": "WoodRubber",
+      "source_ores": "NO",
+      "references": {
+        "gregtech6-original": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1247,
+          "symbol": "WoodRubber"
+        },
+        "gregtech6-w": {
+          "path": "src/main/java/gregapi/data/MT.java",
+          "line": 1254,
+          "symbol": "WoodRubber"
+        }
+      }
+    }
+  ]
+}

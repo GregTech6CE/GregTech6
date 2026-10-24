@@ -1,8 +1,8 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon.platform;
 
 import net.minecraft.core.BlockPos;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /** One energy part in a formed behavior-machine structure. */
 public interface EnergyPart {

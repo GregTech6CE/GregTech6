@@ -1,7 +1,8 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 /**
- * SPDX-License-Identifier: LGPL-3.0-or-later.
  * Fixed filters for an addon prefix. An addon cannot pass its own predicate.
  */
 public enum PrefixCondition {

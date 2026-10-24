@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon.platform;
 
 import java.util.function.BiConsumer;
@@ -11,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 //?}
 
-/** SPDX-License-Identifier: LGPL-3.0-or-later. Shared adapters, not an addon entry point. */
+/** Shared adapters, not an addon entry point. */
 final class BehaviorAccess {
     private BehaviorAccess() {}
 

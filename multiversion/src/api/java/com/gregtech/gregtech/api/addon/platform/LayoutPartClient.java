@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon.platform;
 
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -5,8 +7,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 
 import javax.annotation.Nullable;
 import java.util.Set;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * Client renderers for one addon's functional parts. List this class in

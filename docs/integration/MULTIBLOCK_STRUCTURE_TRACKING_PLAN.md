@@ -10,7 +10,7 @@
 - 调用点不只有 tick。`MultiblockPortBlockEntity` 的能量接收判断、注入、流体 fill/drain、工具流体入口，以及 `MultiblockJadeProvider`、各控制器方块的交互，都会直接调它。一个能量包至少触发两次完整扫描。[ALIGN-232](LARGE_TURBINE_AUDIT.md) 量过：35 格涡轮做 20 次流体查询，需要 700 次格子校验和 700 次 bind。
 - 有些调用点把它当"命令"用：`TankControllerBlock.toolStateChanged:59`、`OriginalLargeBoilerControllerBlock.toolStateChanged:68`、`LogisticsCoreControllerBlock.toolStateChanged:91` 丢弃返回值，只为在扳手旋转后强制重扫。
 - 有些调用点在客户端执行：`TankControllerBlock.use:71` 和 `OriginalLargeBoilerControllerBlock.use:82` 在客户端扫描客户端世界，靠结果返回 `SUCCESS`，否则拿桶的客户端预测会出错。
-- `LargeMachineLayouts.repeatCells` 在 `max < 0` 时从第 0 层一直走到 `LargeMachineLayouts.MAX_REPEATS`（即 `LayoutRepeat.MAX_COPIES` = 1024）或世界高度，每次检查都重走一遍。
+- `LargeMachineLayouts.repeatCells` 在 `max < 0` 时从第 0 层一直走到 `LargeMachineLayouts.MAX_REPEATS`（1024）或世界高度，每次检查都重走一遍。`LayoutRepeat` 里没有对应常量，只有 `build()` 中 `max > 1024` 的校验。
 - `BehaviorMachineBlockEntity.refreshStructure` 先把 `formed` 设为 false 再扫描，用来挡住扫描过程中端口重入查询。这个问题只是因为扫描发生在查询调用栈里才会出现。
 - 部件绑定是瞬态的：`MultiblockPortBlockEntity` 的 `controller`/`role` 不写存档（类注释："Transient binding is rebuilt after chunk load"），`onLoad` 还会把 `CRUCIBLE_FORMED` 复位为 false。设计号相关的 `gt.design`、`gt.design_held`、`gt.design_saved` 写进存档。
 - 区块卸载时两个版本的 `LevelChunk.clearAllBlockEntities` 都先调用 `onChunkUnloaded` 再调用 `setRemoved`。现在大部分控制器在 `setRemoved` 里 `bindings.clear(this::release)`，所以控制器区块卸载时会去改其他已加载区块里的部件：`release` 会 `restoreStructureDesign()`（`sendBlockUpdated`），`updateCrucibleVisual(false)` 会 `setBlock(..., 3)`。
@@ -80,12 +80,33 @@ non-sealed interface Custom extends StructureDefinition {
 
 **足迹一致性检查**：测试构建里，`Custom` 扫描期间记录所有 `getBlockState`/`getBlockEntity`/`hasChunkAt` 的坐标，断言全部落在声明的足迹内。手写足迹和手写扫描一旦对不上，测试直接失败。
 
+**投影一致性检查**：足迹检查只能证明"读的坐标都在足迹里"，不能证明投影判断没有漏掉变化。某格用了 `BLOCK` 投影，而扫描体实际读了方块属性，变化就会被静默放过。所以测试构建的审计模式里再加一条：每当 `onChanged` 判定某格"等价、不标脏"时，立即对该 tracker 跑一次整段扫描，断言结果和缓存的 `formed` 一致。正式构建不跑。
+
+### 足迹收紧
+
+可重复组和避雷针杆柱的足迹会随结构生长变化。收紧后的足迹**由扫描结果推导，不由运行时读取记录推导**：
+
+- `Layout` 家族：固定格 + 每个可重复组已匹配的层 + 完整的下一层（生长前沿），即 `LayoutStructures.of(layout, origin, front, matchedLayers, true)`。扫描体把各组匹配到的层数交给 tracker。
+- 避雷针：底座 + 已匹配的 `rodLength` 段 + 下一段。
+- 固定格家族不收紧。
+
+不用"记录扫描实际读了哪些格子"来收紧，原因有两条：
+
+1. 正确性会挂在 `Level.getBlockState`/`getBlockEntity` 的注入上。别的模组改写方块访问路径、或者扫描体改用别的读取方式，都会让记录少记，结果是静默漏掉失效，而且测试里复现不出来。
+2. `hasChunkAt` 返回 false 时扫描不读方块状态，这一格既进不了收紧后的足迹，它所在的区块也进不了覆盖区块集合。那个区块之后加载时找不到 tracker，机器停在 `BROKEN` 直到安全网。
+
+读取记录（`StructureScanProbe` 和三个探针 mixin）只用于测试构建的足迹审计。正式构建里探针入口都要先检查 `activeScans == 0` 再做任何事，`getBlockEntity` 的 HEAD/RETURN 也一样，不能每次都查 `ThreadLocal`。`pause`/`resume` 要能扛住中间抛出的异常，可以改用"进入时记深度、退出时恢复到这个深度"的写法。
+
+`Footprint` 是否使用稠密数组按密度判断（例如 `包围盒体积 ≤ 8 × 格子数`），不按体积上限判断。否则两个相距很远的格子也会分配几 MB 的数组。
+
 ### 新增类
 
 位置：`multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/tracking/`。
 
 - `StructureTracker`：每台服务端控制器一个。保存 `state`（`UNKNOWN`、`FORMED`、`BROKEN`、`SUSPENDED`）、`dirty`、布局代数 `epoch`、足迹、包围盒和覆盖区块集合。`formed()` 是 O(1) 字段读取。提供 `invalidate()`（标脏并入队）。
 - `StructureWatchIndex`：每个 `ServerLevel` 一份。`Long2ObjectMap<SectionWatch>` 以 `SectionPos.asLong()` 为键，`SectionWatch` 只是一个 tracker 列表（通常一两个）。登记按包围盒覆盖的区段做，不逐坐标登记。命中后由 tracker 用"偏移 → 格号"的稠密数组判断该坐标是否在足迹内。可重复组的生长前沿变化时只更新包围盒。
+  - **数据挂在 `ServerLevel` 上**（mixin 注入字段），不放进以 `Level` 为键的全局静态 `WeakHashMap`。全局表有两个问题：一是值通过 tracker、方块实体间接强引用着键，弱引用永远不会生效，清理全靠 `LevelEvent.Unload`；二是单人游戏里客户端线程也可能访问它，而 `WeakHashMap.get` 内部会调用 `expungeStaleEntries()` 改表，和服务端线程并发就会损坏表。
+  - **所有入口只在服务端执行**。客户端方块实体也会走 `onChunkUnloaded`、`setRemoved`，`StructureTracking.onChunkUnloaded/unloading/onRemoved` 这类入口第一行就要判断 `level.isClientSide` 并返回。
 - `StructureScheduler`：每个世界一个脏队列。在 `LevelTickEvent` 的 END/Post 阶段处理，写法照 `FluidPipeTickPhases` 的双版本事件注册，但优先级设为 `EventPriority.LOWEST`，尽量排在其他 END 处理器之后。排在它后面的写入会顺延到下一 tick 处理；在"失效语义"下这仍然安全，因为相关 tracker 的 `formed` 已经是 false。世界卸载时清空。
 
 ### Mixin
@@ -114,7 +135,7 @@ non-sealed interface Custom extends StructureDefinition {
 
 `CrucibleInteractionHandler:61` 等事件处理器要先确认在哪一端执行再归类。
 
-**客户端同步**：`formed` 只在状态边沿变化时通过方块实体更新包同步（`sendBlockUpdated` + `getUpdateTag`/`onDataPacket`）。这个键只放在更新包里，不进 `saveAdditional`，符合合同 6。客户端的 `isStructureOk()` 返回同步值。区块初次发送给客户端时，服务端 tracker 可能还是 `UNKNOWN`，客户端先收到 false，之后靠边沿更新包补正。这个窗口里客户端拿桶点击会按未成型预测，场景 13 要覆盖"刚进入区块就点击"。
+**客户端同步**：`formed` 只在状态边沿变化时通过方块实体更新包同步（`sendBlockUpdated` + `getUpdateTag`/`onDataPacket`）。`getUpdatePacket` 不要为此变成无条件返回数据包：以前不需要同步的方块实体（例如没有 `clientKeys` 的行为机）应该只对 `TrackedMultiblock` 发包，其余照旧返回 null，否则每次 `sendBlockUpdated` 都会多发一个方块实体包。这个键只放在更新包里，不进 `saveAdditional`，符合合同 6。客户端的 `isStructureOk()` 返回同步值。区块初次发送给客户端时，服务端 tracker 可能还是 `UNKNOWN`，客户端先收到 false，之后靠边沿更新包补正。这个窗口里客户端拿桶点击会按未成型预测，场景 13 要覆盖"刚进入区块就点击"。
 
 ### 控制器生命周期
 
@@ -123,6 +144,7 @@ non-sealed interface Custom extends StructureDefinition {
 - `onChunkUnloaded` 设置 `unloading` 标志并注销监视；随后的 `setRemoved` 看到这个标志时什么也不释放。只有不带这个标志的 `setRemoved`（控制器真正被拆除）才释放认领。`LightningRodControllerBlockEntity` 和 `LogisticsCoreControllerBlockEntity` 已经覆写了 `onChunkUnloaded`，其余控制器照着补。
 - 朝向变化时重算足迹并标脏。
 - 部件内部影响匹配的数据变化（不经过方块状态的）由部件调用 `StructureWatchIndex.touch`。
+- `TrackedMultiblock.structureFormedChanged(boolean)` 只能改瞬态字段，不能改会写进存档的状态，也不能改世界。它会在 `LevelChunk.setBlockState` 的注入点里同步调用，也会在区块卸载、存档之前调用（见"区块加载状态"）。
 - 方块实体的 `onLoad` 时机晚于 `ChunkEvent.Load`：1.20.1 Forge 里区块加载时方块实体先进入 `Level.freshBlockEntities`，到下一次 `tickBlockEntities` 开头才调用 `onLoad()`。1.21.1 NeoForge 的顺序需要单独核对。所以任何在区块加载时刻按"有没有 tracker"做的判断都不可靠，必须用 `getBlockEntity(pos) instanceof` 控制器类型，或者推迟到 `onLoad` 之后。
 
 ### 失效语义
@@ -140,12 +162,15 @@ non-sealed interface Custom extends StructureDefinition {
 - 扫描前，调度器先按 tracker 的覆盖区块集合检查一次加载状态。有任何一个未加载就设为 `SUSPENDED`，`formed` 为 false，不调用 `scanStructure()`，认领保留。
 - `ChunkEvent.Load` 触发时 `hasChunkAt` 不一定已经返回 true。每个世界维护一个"已收到 Load、但 `hasChunkAt` 仍为 false"的区块小集合，每 tick 检查一次，区块变为可用时再把覆盖它的 tracker 标脏，然后移出集合。成本只和正在加载的区块数有关，`SUSPENDED` 不需要等安全网才恢复。
 - `ChunkEvent.Unload` 时把覆盖该区块的 tracker 设为 `SUSPENDED`，同时把该区块移出上面的集合。
+- 所有让 `formed` 从 true 变为 false 的路径都要发客户端同步，包括 `ChunkEvent.Unload` 导致的 `SUSPENDED`。否则控制器区块仍加载时，客户端会一直认为机器已成型。
+- **待核对的事件顺序**：Forge 1.20.1 的 `ChunkMap.scheduleUnload` 应该是先发 `ChunkEvent.Unload`、再保存区块、最后才 `level.unload`（方块实体的 `onChunkUnloaded`、`setRemoved` 在这一步）。如果确实如此，控制器自己所在的区块卸载时，会先经由 `ChunkEvent.Unload` 被设为 `SUSPENDED` 并调用 `structureFormedChanged(false)`，然后才存档，之后才看到 `unloading` 标志。上面那条"`structureFormedChanged` 不改存档状态"的约束就是为了这个。两个版本的顺序都要对照源码确认，并用真实卸载的测试固定下来（场景 26）。
 
 ### 调度与预算
 
 - 阶段 1 的 `scanStructure()` 不可中断，所以预算按"足迹格数估算"计，不按匹配次数计。
 - **已成型且脏的 tracker 不受预算限制**，在当 tick 末必须处理完。停机在变化发生时已经同步完成（见"失效语义"），这条通道保证的是"变化后结论仍为成型"的机器最多只停到当 tick 末。
 - 预算只用来限制全量扫描：`UNKNOWN`、`epoch` 变化、读档或区块加载带来的批量检查。初始取每个世界每 tick 20 000 格，用测试场景调整。
+- **公平性**：预算队列先进先出。每 tick 至少处理队首的一个 tracker，即使它的成本超过整份预算；遇到第一个放不下的就停止，留到下一 tick，不能 `continue` 去处理后面更小的。否则足迹超过预算的 tracker 永远轮不到，中等大小的 tracker 在队列繁忙时也会被小 tracker 一直插队。
 
 ### 重扫时的认领步骤
 
@@ -157,10 +182,16 @@ non-sealed interface Custom extends StructureDefinition {
 
 - 在现有的 `StructureLayoutLifecycle.tags`（`TagsUpdatedEvent` 且 `shouldUpdateStaticData()`）里，`StructureLayoutOverlayRuntime.apply` 之后递增全局 `epoch`。**每次都递增**，不只在 overlay 变化时：附属布局里的 `#tag` 和 `anyfluid#tag` 格（`PlainStructureBlocks.matches:48–59`）会随 tag 变化，而 `LargeMachineLayouts.forget` 只清掉 overlay 涉及的机器。内置布局只按部件号和方块身份匹配，不受 tag 影响。
 - tracker 的 `epoch` 落后时按脏处理，在预算内逐步重扫。
+- **和合同 3 的关系**：如果只是"`epoch` 落后就入队"，重扫之前 `formed` 仍是 true，端口会按旧布局继续工作几个 tick，这和合同 3 的严格语义冲突。规则改为：
+  - 递增 `epoch` 时，判定条件可能改变的 tracker 同步失效（`formed` 置 false 并入队）。范围是：overlay 这次涉及的机器，以及布局里含 `#tag`、`anyfluid#tag` 格的机器。这些机器在 `/reload` 后会停机，直到预算轮到它们。
+  - 其他 tracker 只标记 `epoch` 落后，`formed` 保持不变，按预算重扫，作为兜底。内置布局不受 tag 影响，结论不会变。
+  - 如果觉得"`/reload` 后部分机器停机几个 tick"不可接受，另一个办法是在 DECISIONS 里把 `/reload` 记为合同 3 的例外。二选一，不能两边都不写。
 
 ### 安全网
 
 周期 600 tick，按位置哈希错开相位。`FORMED` 和非 `FORMED` 两种状态都兜：`FORMED` 防止漏掉破坏，`BROKEN`/`SUSPENDED` 防止漏掉补全和区块恢复（原版兜的是后者）。按 200 台机器、每台 100 格估算，平均每 tick 约 33 次格子检查。
+
+tracker 在创建时按相位放进 600 个桶中的一个，每 tick 只取当前相位的桶，不要每 tick 遍历全部 tracker 再比较相位。
 
 ### 回滚开关
 
@@ -197,7 +228,7 @@ non-sealed interface Custom extends StructureDefinition {
 | 物流核心 | 固定框架 + CPU 计数聚合，认领策略 `PER_CELL` |
 | 大型坩埚 | 固定格 |
 | 大型烤炉 | 线圈同类约束（替代现在的 `ovenCoil[0]`） |
-| 基岩钻机 | 支撑和地面是结构；矿物候选是否移到运行逻辑待定（见文末） |
+| 基岩钻机 | 支撑固定格；地面 9 格只要求基岩类方块，矿物列表移到运行逻辑（见文末「待定决策」第 1 条） |
 
 无法表达的家族留在 `Custom`，但仍受足迹一致性检查约束。
 
@@ -284,6 +315,7 @@ non-sealed interface Custom extends StructureDefinition {
 ## 阶段 4：收尾
 
 - 删除 `legacy` 开关和已迁移家族的旧整段扫描（`Custom` 家族保留自己的扫描方法）。
+- 探针 mixin（`LevelStructureProbeMixin`、`ServerChunkCacheStructureProbeMixin`）只在测试构建里注册，或者在正式构建里保持零开销门控。到时候 `Custom` 家族只剩少数几个，可以评估是否改成只在 gametest 的 mixin 配置里启用。
 - 放大镜改为由结构定义推导的诊断扫描：不提前停止，列出全部错误格。它和运行时检查分开。JEI 和结构预览也从同一份定义推导。
 - 更新 [ADDON_API](../ADDON_API.md) 的 Structures 一节：结构检查时机、附属部件何时调用 `touch`、认领争用语义的变化。
 - 在 [DECISIONS](DECISIONS.md) 记录区块卸载语义、认领表寿命规则和预算数值。
@@ -360,13 +392,18 @@ non-sealed interface Custom extends StructureDefinition {
 
 ## 待定决策
 
-1. **基岩钻机的矿物候选**：是否从结构匹配移到运行逻辑。需要先对照原版 GT6 的成型条件确认，否则会改变玩家可见的成型判定。
+1. **基岩钻机的矿物候选**：对照原版 `checkStructure2` 后选移到运行逻辑。地面 9 格在结构里只要求基岩类方块，矿物列表不是成型条件，改在每个钻井周期读取；成型判定、矿物分支概率和绑定都不变。依据见 [BEDROCK_DRILL_AUDIT](BEDROCK_DRILL_AUDIT.md) 末节和 [DECISIONS](DECISIONS.md)（2026-10-24）。迁移随阶段 2 的家族迁移一起做。
 2. **逐格认领**：等阶段 3 的 `ATOMIC` 认领表稳定后，再决定焦炉和物流核心是否开启 `PER_CELL`。
 3. **预算数值**：初始每个世界每 tick 20 000 格估算，用场景 12 调整。
 
 已定：区块卸载期间 `formed` 为 false、停机、保留认领；认领表条目寿命跟随部件区块，控制器卸载期间不可抢占，主人已加载时用预留表保住认领；相关变化同步失效（合同 3 的严格语义），接受"合法替换也停机到 tick 末"的代价；安全网 600 tick、按位置错开相位、两种状态都兜。
 
-待核对：1.21.1 NeoForge 里方块实体 `onLoad` 与 `ChunkEvent.Load` 的先后顺序。
+已定（#101 复查后补充）：收紧足迹由扫描结果推导，读取记录只用于测试审计；预算队列先进先出，每 tick 至少处理队首一个；`/reload` 时判定条件可能改变的机器同步失效（如果改为把 `/reload` 记为合同 3 的例外，需要在 DECISIONS 里写明）。
+
+待核对：
+
+- 1.21.1 NeoForge 里方块实体 `onLoad` 与 `ChunkEvent.Load` 的先后顺序。
+- 两个版本里 `ChunkEvent.Unload`、区块保存、方块实体 `onChunkUnloaded`/`setRemoved` 三者的先后顺序。
 
 2026-10-24 部分结论（卡 52 批次 5）：Forge 1.20.1 的 `ChunkEvent.Unload` 只在区块 holder 真正释放时发出。被 `setChunkForced`（`ENTITY_TICKING`，31 级票据）压住的邻近区块可以 `getChunkNow == null`、`hasChunkAt == false`，但不发 `ChunkEvent.Unload`；距离 0 的 `PLAYER` region 票据同样有传播，外壳要放到 16 个区块外才会真正释放。控制器区块无票据卸载时的顺序在 Forge 和 NeoForge 上一致：`ChunkEvent.Unload → onChunkUnloaded → setRemoved`，两条真实卸载测试两个平台都通过。方块实体 `onLoad` 与 `ChunkEvent.Load` 的先后、以及区块保存与这两者的相对顺序仍未单独测量。
 

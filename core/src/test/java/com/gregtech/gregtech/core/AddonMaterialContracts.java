@@ -235,8 +235,12 @@ public final class AddonMaterialContracts {
         check(named.isValid() && named.getId() == GTMaterialRegistry.ADDON_ID_START + 1, "name order places FromNumber first");
         check(numbered.isValid() && numbered.getId() == GTMaterialRegistry.ADDON_ID_START, "the deprecated builder does not keep 7777");
         check(!GTMaterialRegistry.get(7777).isValid(), "7777 is not registered");
-        check(warnings.stream().anyMatch(message -> message.contains("7777") && message.contains("FromNumber")),
-                "the deprecated builder logs the ignored id");
+        check(MaterialDeclaration.builder(7, "Probe").build().id() == 0,
+                "the deprecated builder stores no numeric id");
+        check(warnings.stream().noneMatch(message -> message.contains("7777")),
+                "the deprecated builder no longer reports a stored id");
+        check(warnings.stream().anyMatch(message -> message.contains("7778") && message.contains("ZCanonical")),
+                "a canonical declaration id is still reported as ignored");
         check(warnings.stream().noneMatch(message -> message.contains("NamedDust")), "the name builder does not warn");
     }
 
@@ -674,7 +678,9 @@ public final class AddonMaterialContracts {
                         new PrefixDeclaration("alloyBit", "", " Alloy Bit", GTValues.U, "item/alloy_bit",
                                 List.of(), Set.of(PrefixCondition.ALLOY)),
                         new PrefixDeclaration("moltenBit", "", " Molten Bit", GTValues.U, "item/molten_bit",
-                                List.of(), Set.of(PrefixCondition.MOLTEN))));
+                                List.of(), Set.of(PrefixCondition.MOLTEN)),
+                        new PrefixDeclaration("overlapBit", "", " Overlap Bit", GTValues.U, "item/overlap_bit",
+                                List.of("Iron", "Copper"), Set.of(), List.of("Iron"))));
         GTMaterialRegistry.init();
         MaterialPrefix metal = PrefixRegistry.byName("metalBit");
         check(metal != null && metal.isValidFor(GTMaterialRegistry.get("Copper")), "copper is selected as a metal");
@@ -685,6 +691,11 @@ public final class AddonMaterialContracts {
         check(!alloy.isValidFor(GTMaterialRegistry.get("Copper")), "copper is not an alloy");
         MaterialPrefix molten = PrefixRegistry.byName("moltenBit");
         check(molten != null && molten.isValidFor(GTMaterialRegistry.get("Carbon")), "carbon is molten");
+        MaterialPrefix overlap = PrefixRegistry.byName("overlapBit");
+        check(overlap != null && overlap.isValidFor(GTMaterialRegistry.get("Copper")),
+                "an explicit list overlapping the exclusions keeps the other material");
+        check(!overlap.isValidFor(GTMaterialRegistry.get("Iron")),
+                "an excluded material wins over the explicit list");
         int metalItems = 0;
         for (var definition : MaterialItemDefinitions.all()) if (definition.prefix() == metal) metalItems++;
         check(metalItems > 0, "exclusions still leave metal items");
@@ -875,7 +886,10 @@ public final class AddonMaterialContracts {
         @Override public List<MaterialDeclaration> materials() {
             return List.of(
                     MaterialDeclaration.builder("NamedDust").dust().build(),
-                    MaterialDeclaration.builder(7777, "FromNumber").dust().build());
+                    MaterialDeclaration.builder(7777, "FromNumber").dust().build(),
+                    new MaterialDeclaration(7778, "ZCanonical", "ZCanonical", 0xFFFFFF,
+                            300, 1000, 1f, "", true, false, false, false, false, List.of(),
+                            false, false, false, false));
         }
 
         @Override public List<MaterialFormRequest> forms() { return List.of(); }

@@ -1,11 +1,12 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon.platform;
 
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
-
+/** Platform checks against GregTech's tool table; names come from {@link AddonTool}. */
 public final class AddonTools {
     private AddonTools() {}
 

@@ -1,4 +1,5 @@
-/* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later.
+/* SPDX-License-Identifier: LGPL-3.0-or-later
+ * GregTech-6 Team / Gregorius Techneticies.
  * Domain boundary for original gregapi.tileentity.data.ITileEntityGibbl. */
 package com.gregtech.gregtech.api.sensor;
 
@@ -7,6 +8,9 @@ package com.gregtech.gregtech.api.sensor;
  * {@code side} is {@code Direction.ordinal()}. This core type cannot name {@code Direction}.
  */
 public interface CompressionSensorSource {
+    /** Stored compressed volume in milligibbl; implementations sum fluid tank amounts in millibuckets. */
     long gibblValue(int side);
+
+    /** Upper bound in the same unit as {@link #gibblValue(int)}. */
     long gibblMaximum(int side);
 }

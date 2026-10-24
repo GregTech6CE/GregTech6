@@ -27,6 +27,7 @@ Some public Java members exist only so GT6CE's separate source sets can initiali
   - [World generation](#world-generation)
   - [Crucible](#crucible)
 - [Machines](#machines)
+  - [Conventions](#conventions)
   - [Registering machines](#registering-machines)
   - [Casings](#casings)
   - [Energy](#energy)
@@ -152,7 +153,7 @@ This uses the existing GT recipe system, not a parallel addon recipe registry. C
 
 Prefer `AddonRecipes.Line.builder()` for named fields. It offers `itemInputs`, `itemOutputs`, `fluidInputs`, `fluidOutputs`, `duration`, `euPerTick`, `special`, `outputChances`, `keptInputs`, `keptFluidInputs` and `presenceFluidInputs`, followed by `build()`. Stack and index setters accept varargs, replace that field, and copy their arguments immediately. Omitted fields mean no inputs or outputs, one tick, zero power/special value, certain item outputs, and no kept/presence inputs. `build()` applies the same validation as the constructors. Reusing a builder creates independent rows; do not share its mutable builder between threads.
 
-`AddonRecipes.Line` is a class with five constructors. Each constructor checks that every input amount is positive, on every thread. `Line.read` is the only entry that keeps an empty slot from a row already stored. `Line` is an immutable snapshot: construction and accessors copy every array and stack. Editing `line.itemInputs()[0]`, a returned chance array or the original builder input does not edit the recipe. Construct a new row to express changed data; replacing a registered recipe still uses the existing removal/registration mechanisms. `Map.find` does not consume or modify the supplied input lists or stacks. The five existing constructors remain available:
+`AddonRecipes.Line` is a class with five constructors. Each constructor checks that every input amount is positive, on every thread. `Line.read` is the only entry that keeps an empty slot from a row already stored. `Line` is an immutable snapshot: construction and accessors copy every array and stack. Rows compare by value: two separately built rows with the same item stacks (item, count and native data), fluid stacks (fluid, amount and native data), scalars and index arrays are equal and have the same hash code. Editing `line.itemInputs()[0]`, a returned chance array or the original builder input does not edit the recipe. Construct a new row to express changed data; replacing a registered recipe still uses the existing removal/registration mechanisms. `Map.find` does not consume or modify the supplied input lists or stacks. The five existing constructors remain available:
 
 - `Line(ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs, FluidStack[] fluidOutputs, long duration, long euPerTick, long special)`
 - `Line(..., int[] outputChances)`
@@ -421,6 +422,37 @@ public List<CrucibleReactionRemoval> crucibleRemovals() {
 
 Declare machines, structures, recipe tables, pipes and tanks through `AddonMachineContributor`. The first sections describe the shared building blocks; the later ones describe each template.
 
+### Conventions
+
+Two calls with the same root can measure different things. `MachineBehaviorContext` names them apart from their units:
+
+| Call | Unit |
+| --- | --- |
+| `capacity()` | stored-energy cap |
+| `capacity(int)` / `tankCapacity(int)` | tank capacity in mB |
+| `energy()` | main buffer |
+| `energy(String)` / `auxiliaryEnergy(String)` | named auxiliary buffer |
+| `emit(long size, long amount)` | accepted packet count |
+| `emit(String type, long size, long amount)` / `emitToPart` | accepted energy units |
+
+Boolean direction is split too. `simulate` means true does not execute (`FluidAccess`, `InventoryAccess`, `HeatHandler`, `MachineBehavior.acceptFluid`, the context `fill` and `drain`); `execute` means true does execute (`AddonPlatform.Services.inject` and `extract`).
+
+Directions come in two vocabularies. `MachineFace` is machine-relative (`BOTTOM` through `BACK`); `Direction` is the world side. `canInsert`, `canFill`, `acceptsEnergy`, `onTool` and `gasValve` use `MachineFace`. `gtSignal`, `fillMoldAtSide` and `pushCompressedGas` use `Direction`. `CrucibleMold`, `GtSignalSource`, `ProgressSensorSource`, `CompressionSensorSource` and `TemperatureSource` are core types that cannot name `Direction`, so their `side` is `Direction.ordinal()`.
+
+The three machine templates do not share their rules:
+
+| | Machine type | Tier | Energy |
+| --- | --- | --- | --- |
+| `RecipeMachine` | id as written; `/` is invalid | at least 1, no upper bound | `energy(null)` throws |
+| `BehaviorMachine` | `/` becomes `_` | 1 to 255 | may omit the main input when it emits |
+| `FuelGenerator` | id as written; `/` is invalid | must be unset | `energy(non-null)` throws |
+
+Builder conventions differ as well:
+
+- `BehaviorMachine.Builder.recipeMaps`, `clientState`, `item`, `fluid` and `toggle` append. `MachineIo` face setters, `RecipeMachine.Builder.structureKeys` and `AddonRecipes.Line.Builder` field setters replace.
+- A required field is often reported by `build()`, not by its setter: `LayoutPart` hardness, `PartTanks` capacity, `BehaviorMachine` gui, `RecipeMachine` energy and recipeMap, `FuelGenerator` fuelMap and output.
+- Sentinels: `rangeSpecified`, `capacitySpecified`, `facesSpecified`, `tierSpecified`, `cheapOverclockingSpecified`, `hardnessSpecified`, `stackSpecified`; `LayoutCell.design = -1`, `LayoutRepeat.max = -1`, `FluidPipeDeclaration.maxTemperature = 0` (melting point x 1.25), `MaterialDeclaration.id = 0`, `EnergyType.ANY = "*"`.
+
 ### Registering machines
 
 List an `AddonMachineContributor` in `META-INF/services/com.gregtech.gregtech.api.addon.AddonMachineContributor`. GregTech loads that file with its own class loader after materials are initialized and before it registers machine blocks. Return pure data from `addonMachines()`, `structureLayouts()`, `layoutParts()` and `recipeTables()`. Do not register blocks yourself. `fluidPipes()`, `itemPipes()` and `compressedGasTanks()` stay on this contributor. Pipes and compressed drums are in the sections of those names.
@@ -479,7 +511,7 @@ Energy coming in is an `EnergyInput`. Energy leaving a behavior machine, or an e
 
 `EnergyInput.builder(type, perTick)` and `FuelOutput.builder(type, perTick)` take the short name, such as `EU` or `RU`. Builders canonicalize known names through `EnergyType` (`"eu"` becomes `"EU"`). `EnergyType.EU`, `RU`, `KU`, `HU`, `CU`, `LU`, `MU`, `NU`, `QU`, `TU`, `AU`, `RF`, `MJ` and `STEAM` are the constants. `EnergyType.same` and `EnergyType.signedDirection` ignore case. The name must match `[A-Za-z][A-Za-z0-9_]{0,15}` except `EnergyType.ANY` (`*`). Startup still resolves it through the same energy-tag lookup. Built-in energy short names and their packet semantics (`size` × `amount`) are:
 
-- `EU` (Electric Energy — packet `size` is voltage, `amount` is amperage; see `GTVoltageTiers`. `VOLTAGES` and `NAMES` are copies; mutating them does not change lookups)
+- `EU` (Electric Energy — packet `size` is voltage, `amount` is amperage; see `GTVoltageTiers`. `VOLTAGES` and `NAMES` are copies; mutating them does not change lookups. `tierMax` returns `VOLTAGES.length` for a voltage above the table, so clamp it before using it as an index)
 - `RU` (Rotation Energy — `size` is speed, `amount` is power)
 - `KU` (Kinetic Energy, linear push/pull — `size` is push/pull stroke, `amount` is power)
 - `HU` (Heat Energy — `size` is 1, `amount` is heat)
@@ -502,9 +534,9 @@ The nominal amount is not one range. A recipe machine's `perTick` is at least 0 
 
 A single-block recipe machine that does not declare a range accepts half to double its nominal input. TU accepts 1 to 16. A large recipe machine that does not declare a range does not use half to double. It uses the built-in large-machine rule: 1 to 16 for TU, 1 to 4096 for HU, and 512 to 4096 for every other type, including EU and RU. Built-in distillation towers, the implosion compressor and matter fabricators keep the limits on their own classes. A behavior machine's main input that leaves the range unset uses half to double `perTick` at startup, and TU is 1 to 16. That matches an undeclared single-block recipe machine. It does not match a large recipe machine. A declared main range uses those bounds. `anyPacket()` has no maximum. An auxiliary input uses the range it declares, or no range when it calls `anyPacket()`.
 
-A packet larger than the maximum is consumed and then follows the overload rule. With the default settings that does not destroy the machine. A recipe whose power is below the minimum is still selected. `MachineWorkCost` charges four times as much when the power on hand is below the minimum. The buffer cap is the maximum. The item tooltip, Jade, and the machine shown as a JEI or EMI catalyst all read that minimum and maximum. The recipe page still shows the recipe cost, not this range. An addon energy part does not report the controller's minimum and maximum. An output part accepts nothing. A condition part reports the range on its own input. Two blocks that share a machine type must declare the same range. Both leaving it unset counts as the same range.
+A packet larger than the maximum is consumed and then follows the overload rule. With the default settings that does not destroy the machine. A recipe whose power is below the minimum is still selected. GregTech charges four times as much when the power on hand is below the minimum. The buffer cap is the maximum. The item tooltip, Jade, and the machine shown as a JEI or EMI catalyst all read that minimum and maximum. The recipe page still shows the recipe cost, not this range. An addon energy part does not report the controller's minimum and maximum. An output part accepts nothing. A condition part reports the range on its own input. Two blocks that share a machine type must declare the same range. Both leaving it unset counts as the same range.
 
-Faces are `MachineFace`: `BOTTOM`, `TOP`, `RIGHT`, `FRONT`, `LEFT`, `BACK`. `index()` and `bit()` are the mask positions. A face list on a new declaration rejects a repeated face. `faces()` keeps the written order. Two declarations with the same faces in a different order are equal.
+Faces are `MachineFace`: `BOTTOM`, `TOP`, `RIGHT`, `FRONT`, `LEFT`, `BACK`. `index()` and `bit()` are the mask positions. A face list on a new declaration rejects a repeated face. `faces()` keeps the written order. Two declarations with the same faces in a different order are equal. `EnergyInput.capacity(0)` on a behavior machine is the same as leaving capacity unset once the machine is built.
 
 `EnergyInput.faces` does not follow `MachineIo`, and the default is not the same on the two templates. On a recipe machine, leaving faces unset is all six, including when the machine also sets `MachineIo`. An empty list is allowed and means there is no energy-input face. On a behavior machine, leaving faces unset is every face except the front. An empty list fails. Setting `MachineIo` does not change these faces.
 
@@ -762,6 +794,11 @@ int capacityMb = tanks.capacity(0);
 
 Legacy reads retain their original ownership for existing addons: machine `item(slot)` can be a live stack while machine `fluid(tank)` is detached; part `item(slot)` is detached while part `fluid(tank)` can be live. Never modify those legacy results to change storage; write through the host or use the new views. `BehaviorState.item(key)` is also detached; persist a changed copy with `setItem(key, stack)`.
 
+| Legacy call | Machine context | Part context |
+| --- | --- | --- |
+| `item(slot)` | live stack | detached copy |
+| `setItem(slot, stack)` | stores a copy; null clears; does not cut to the slot limit | stores a copy; an out-of-range slot throws; count is cut to the slot limit |
+
 #### Explicit energy accounting
 
 `MachineBehaviorContext.energyAccess()` returns `MachineEnergy`. Its names distinguish owned-buffer transfers from externally accounted supplies. Existing energy methods remain callable; the new view adapts them without changing declared channels, faces, packet windows or overload behavior. It executes immediately and has no simulation mode.
@@ -859,7 +896,7 @@ The behavior block entity stays an addon `EnergyBlock`. It does not also impleme
 
 `onUse(context, player, hand)` runs on the server after that tool check, an unhandled wrench, and a fluid container, and before the menu. Return true to handle the click. The default returns false and the menu opens.
 
-`maxRange(int)` is the cube half-extent for world actions. It is 0 to `BehaviorRangeRules.LIMIT`, which is 32. The default is 0, and both world methods then do nothing. Distance is Chebyshev: the largest of the three axis gaps. The machine block itself is outside that cube.
+`maxRange(int)` is the cube half-extent for world actions. It is 0 to 32. The default is 0, and both world methods then do nothing. Distance is Chebyshev: the largest of the three axis gaps. The machine block itself is outside that cube.
 
 `breakBlock(pos)` breaks one block and puts `Block.getDrops` into the output slots. It returns false, and leaves the block, when the chunk is not loaded, the block is air or has negative destroy speed, the drops do not fit, or this tick already broke a block. Before the block is removed, GregTech posts the loader break event with the player who placed the machine. An online placer is used as that player. Otherwise a platform fake player stands on the machine and carries the saved profile, or a fixed profile when the machine was not placed by a player. A cancelled event returns false. The scan index belongs to the behavior. `BehaviorState` already saves it, so a miner resumes after a restart. One successful break is allowed per tick.
 
@@ -884,7 +921,7 @@ A behavior machine is not a recipe machine. GregTech does not look up a row, spe
 
 `signalOutput(true)` lets the machine act as a GT signal source. The behavior implements `gtSignal(context, side)` and returns a strength in `GtSignalCarrier.UNIT` units; `side` is a `Direction`, the direction from the wire toward this block. The default returns 0. A machine without `signalOutput` keeps the block's `isSignalSource` false and does not change any existing signal network. The wire still clamps the result to `[0, 15 * UNIT]`.
 
-`clientState(keys...)` lists behavior state keys GregTech syncs to the client. Only the declared keys are sent, a missing key reads as zero, false or an empty string, and a key that was not declared throws. At most 32 keys. A client-only `BehaviorMachineClient`, listed in `META-INF/services/com.gregtech.gregtech.api.addon.platform.BehaviorMachineClient`, supplies a screen and a block entity renderer per machine type. `screen` returns null to keep the default GUI; a returned `Screen` is hosted over the menu, so item slots and the player inventory stay usable, and it reads `energy`, `progress`, `isOn`, `tankAmount`, `tankFluid` and `containerId` through `BehaviorMachineMenuView`. `renderer` returns null when the machine has no extra drawing; it reads the synced state through `BehaviorMachineClientView`. Both run on the client only, so a server without the addon's client half still starts.
+`clientState(keys...)` lists behavior state keys GregTech syncs to the client. Only the declared keys are sent, a missing key reads as zero, false or an empty string, and a key that was not declared throws. At most 32 keys. A client-only `BehaviorMachineClient`, listed in `META-INF/services/com.gregtech.gregtech.api.addon.platform.BehaviorMachineClient`, supplies a screen and a block entity renderer per machine type. Override `screen(machineType, menu, inventory, title)`; the older `screen(menu, inventory, title)` is deprecated and kept for existing clients. `screen` returns null to keep the default GUI; a returned `Screen` is hosted over the menu, so item slots and the player inventory stay usable, and it reads `energy`, `progress`, `isOn`, `tankAmount`, `tankFluid` and `containerId` through `BehaviorMachineMenuView`. `renderer` returns null when the machine has no extra drawing; it reads the synced state through `BehaviorMachineClientView`. Both run on the client only, so a server without the addon's client half still starts.
 
 ```java
 @Override public long gtSignal(MachineBehaviorContext context, int side) {
@@ -1043,13 +1080,23 @@ Vanilla dispensers (including droppers), hoppers, pistons, TNT, note blocks, tra
 - A functional structure part declares `slots`, `tanks`, `gui`, `tick`, `use` or `field` on `LayoutPart` and pairs the name with `LayoutPartContributor`. GregTech owns the block entity. Slots save as `gt.part_slots`, tanks as `gt.part_tanks` and fields as `gt.part_fields`. `gui` opens a menu of that part only. A part with no energy role uses `gt6ce:addon_functional_part`. A part that also has an energy role stays on `gt6ce:addon_energy_part`. The addon does not subclass the block entity. A `LayoutPartClient` may return a block-entity renderer for the synced `PartClientView`. `PartContext.crucible()` reads the bound controller's material, amount and temperature without removing anything. A layout cell may name `design` for a GregTech part whose original texture index includes that number. Forming writes `gt.design` and breaking restores the previous value. A plain block, a tag, air, an addon part, or a part with no designs fails when the layout is installed.
 - `RecipeTable.fuel` and `FuelGenerator`. A fuel map joins JEI, EMI and the datapack overlay. A generator burns fluid and emits up to its declared amperes, defaulting to one packet per tick, from the front, the back, or 1 to 8 blocks behind. A multiblock layout may name a GregTech part or a casing from `layoutParts()`.
 - `compressedGasTanks()`. Ordinary insertion is closed. `pushCompressedGas` fills an adjacent compressed-gas receiver: a drum on any side, or a behavior machine on its `gasValve` face. A fuel generator pulls at most 1000 mB per tick from one.
-- `GTValues`, `GTVoltageTiers`, `BasicMachineEnergy` and `MachineWorkCost`.
+- `GTValues` and `GTVoltageTiers`.
 - `EnergyBlock` for an addon energy block. `AddonEnergy` runs GregTech's packet gate. EU cable insert and extract accept this interface. Axles, laser fiber, relays, long-distance transformers, and built-in injection or extraction resolve neighbors through `EnergyBlockViews`, so they also see this interface. Scanner, Jade and cover readouts still see only GregTech's own energy blocks.
 - `AddonTool`: `SPADE`, `UNIVERSAL_SPADE`, `MAGNIFYING_GLASS`, `SCREWDRIVER`, `SOFT_HAMMER`, `WRENCH`, `MONKEY_WRENCH`, `HARD_HAMMER`, `WIRE_CUTTER` and `SAW`, plus `AddonTools.matches`, `isMagnifyingGlass` and `damageForUse`. Matching uses GregTech's tool table. The rest of that table stays inside GregTech.
 - Datapack types `gt6ce:machine` and `gt6ce:machine_removal` on maps that already exist. KubeJS can add and remove those static rows, and a startup script can declare `kubejs:` recipe tables, recipe machines, fuel generators, casings, layouts and energy parts. `data/<namespace>/gt6ce_layouts/<machineType>.json` can replace an addon or script layout on reload. It cannot change a built-in controller.
 - `MachineControl`, `HeatHandler`, `GtSignalCarrier`, `GtSignalSource`, `GtSignalReceiver`, `FluidPipeConnectable`, `ItemPipeConnectable`, `CropScanSource`, `ProgressSensorSource`, `CompressionSensorSource`, `TemperatureSource`, `AddonSensorContributor`, `AddonSensor`, `SensorContext`, `MachineTuningContributor`, `MachineTuning`, `BehaviorMachineClient`, `BehaviorMachineClientView`, `BehaviorMachineMenuView`, and the empty `gt6ce:signal_wire_receivers` block tag.
 
 These stay closed. `BasicMachineBlock` and `BasicMachineBlockEntity` are GregTech's machine implementation; an addon machine is data, not a subclass. `Recipe.mRecipeList` is the internal row list; production code uses the `AddonRecipes.Line` returned by `add`. `GTMaterial`, `GTMaterialRegistry` and the material sentinels are replaced by `GregTechMaterials`. `GregTechTags` is replaced by energy short names. `MachineRecipeMaps` fields are replaced by `AddonRecipes.map(name)`. `MaterialPrefix` constants are replaced by prefix name strings. The full tool catalog stays inside GregTech.
+
+### Internal types
+
+These classes live in the SDK because GregTech's own machine code uses them. They are not an addon contract: methods, arguments, NBT keys and numeric rules may change without notice. Do not call them from an addon.
+
+`RecipeKeptInputs`, `PartEnergyRules`, `BehaviorEnergyRules`, `BehaviorRangeRules`, `BehaviorRecipeCatalysts`, `AddonOverclock`, `MachineWorkCost`, `BasicMachineEnergy`, `InstalledService`, `AddonFailures`.
+
+### SDK packages
+
+The SDK is `com.gregtech.gregtech.api.*` from `core/src/api/java` plus `com.gregtech.gregtech.api.addon.platform.*` from `multiversion/src/api/java`. GregTech's own implementation also uses `com.gregtech.gregtech.api.*` under `core/src/main` and `multiversion/src/main`, with no path overlap. A package name alone does not tell you whether a type is in the SDK; read the SDK jar or its Javadoc. `AddonPlatform` holds loader-neutral entries. A method whose signature names a loader fluid type is in `AddonLoader`.
 
 API version 0 includes crucible compositions, smelting targets and alloy rows, behavior-machine crucible callbacks, a read-only crucible view for bound parts, remote energy emission from a behavior machine to a saved coordinate, and still reads an old numeric material id as a built-in material, writing the name the next time that block or item is saved. It does **not** promise solid fuel, energy conversion, moving the built-in engines onto this template, arbitrary GUI widgets beyond a full `Screen` hosted over the menu, wireless compute parts, crucible blocks, writing a crucible's temperature or contents, melting an arbitrary non-GregTech item, datapack crucible rows, datapack-created recipe maps without a contributor, datapack reloads of the material table, one binary for both loaders, or a complete old GregAPI replacement. Only the documented entries are the compatibility surface. Use [the voltage guide](VOLTAGE_TIERS.md) rather than GT5/GTCE tier labels.
 
@@ -1069,9 +1116,9 @@ Mark a doomed entry with `@Deprecated(since = "0.N", forRemoval = true)` and `@A
 
 ### API changes
 
-2026-10-24, API **0** / mod **0.0.0**: added `InventoryAccess`, `FluidAccess`, `MachineEnergy`, `EnergyTransfer`, `Line.builder()`, and matching SDK source/Javadoc artifacts. Existing context methods and recipe constructors remain available. `Line` array accessors now return defensive copies: callers that previously modified returned arrays must construct a new row instead. Recipe lookup no longer exposes caller-owned lists/stacks to dynamic providers. No existing machine storage format or declared energy channel was migrated by this change.
+2026-10-24, API **0** / mod **0.0.0**: added `InventoryAccess`, `FluidAccess`, `MachineEnergy`, `EnergyTransfer`, `Line.builder()`, and matching SDK source/Javadoc artifacts. Existing context methods and recipe constructors remain available. `Line` array accessors now return defensive copies: callers that previously modified returned arrays must construct a new row instead. Recipe lookup no longer exposes caller-owned lists/stacks to dynamic providers. No existing machine storage format or declared energy channel was migrated by this change. The public size/UV constants on `BehaviorMachine`, `SelectorTags.MIN`/`MAX`, `FuelGenerator.MAX_BEHIND`/`MAX_AMPERES`/`MAX_TANK`, `PartTanks.MAX_CAPACITY` and `CompressedGasTankDeclaration.MAX_CAPACITY` are no longer compile-time constants. Addons compiled against this SDK read these fields from the runtime. Binaries compiled against an earlier SDK that exposed them as compile-time constants retain their already-inlined values until they are recompiled; updating the runtime alone cannot replace those copies. Source that used them as `switch` case labels or annotation arguments no longer compiles.
 
-Corrections inside this baseline, named here because they change a documented entry: `PrefixDeclaration.amount` is GregTech units, the same unit as `MaterialComposition.Part.amount` (`GTValues.U` is one ingot; 8U is `8 * GTValues.U`; a bare `8` is rejected). `AddonFluids.fluid` and `still` return `FluidStack.EMPTY` for an unknown field, the same absence as `AddonItems.stack`. `AddonItems.selectorTag` throws `IllegalArgumentException` when the circuit is missing, the same exception as `AddonRecipes.map`. An unknown material is still `GregTechMaterials.invalid()`. `MachineWorkCost.calculate` returns null and `RecipeKeptInputs.settle` returns `-1` when the operation does not apply; those are not missing lookups. `MachineBehavior.gtSignal` and `fillMoldAtSide` take a `Direction`. `SensorContext.side` is a `Direction`. `GtSignalSource`, the three sensor sources and `CrucibleMold.fillMold` stay on `Direction.ordinal()` because the core SDK cannot name a Minecraft type. `MachineFace` stays the machine-relative face. A null `MachineFace` on `canInsert` or `canFill` is still the menu or an unsided handler. `AddonRecipes.Line` is a class. Its constructors always require positive input amounts. `Line.read` is the stored-row path that may keep an empty slot. The array accessors return copies. A callback `RuntimeException` is wrapped as `IllegalStateException` and leaves `FAILED`; an `Error` is rethrown unchanged and also leaves `FAILED`. Energy short names go through `EnergyType`. Face lists compare as a set. `FuelOutput.placement()` is `FRONT`, `BACK` or `BEHIND`. `MachineBehaviorContext` aliases are `auxiliaryEnergy`, `emitToPart` and `tankCapacity`. `addonId()` matches `[a-z][a-z0-9_]{1,63}`.
+Corrections inside this baseline, named here because they change a documented entry: `PrefixDeclaration.amount` is GregTech units, the same unit as `MaterialComposition.Part.amount` (`GTValues.U` is one ingot; 8U is `8 * GTValues.U`; a bare `8` is rejected). `AddonFluids.fluid` and `still` return `FluidStack.EMPTY` for an unknown field, the same absence as `AddonItems.stack`. `AddonItems.selectorTag` throws `IllegalArgumentException` when the circuit is missing, the same exception as `AddonRecipes.map`. An unknown material is still `GregTechMaterials.invalid()`. `MachineBehavior.gtSignal` and `fillMoldAtSide` take a `Direction`. `SensorContext.side` is a `Direction`. `GtSignalSource`, the three sensor sources and `CrucibleMold.fillMold` stay on `Direction.ordinal()` because the core SDK cannot name a Minecraft type. `MachineFace` stays the machine-relative face. A null `MachineFace` on `canInsert` or `canFill` is still the menu or an unsided handler. `AddonRecipes.Line` is a class. Its constructors always require positive input amounts. `Line.read` is the stored-row path that may keep an empty slot. The array accessors return copies. A callback failure other than an `Error`, including a checked exception escaping through a sneaky throw, is wrapped as `IllegalStateException` and leaves `FAILED`; an `Error` is rethrown unchanged and also leaves `FAILED`. Rows compare by value after this baseline: item stacks by item, count and native data; fluid stacks by fluid, amount and native data. Energy short names go through `EnergyType`. Face lists compare as a set. `FuelOutput.placement()` is `FRONT`, `BACK` or `BEHIND`. `MachineBehaviorContext` aliases are `auxiliaryEnergy`, `emitToPart` and `tankCapacity`. `addonId()` matches `[a-z][a-z0-9_]{1,63}`.
 
 API **0** is the GT6CE development baseline and includes all the capabilities below. The following 1–7 labels describe imported upstream development, not GT6CE releases or runtime feature requirements.
 

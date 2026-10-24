@@ -1,6 +1,6 @@
-package com.gregtech.gregtech.api.signal;
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
 
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
+package com.gregtech.gregtech.api.signal;
 
 /**
  * A block entity that stores GT6 fractional redstone.

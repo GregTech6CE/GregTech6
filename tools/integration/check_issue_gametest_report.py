@@ -283,6 +283,7 @@ LEGACY_CASE_NAMESPACES = {
 
 
 API_CONTRACT_CASES = {
+    'addonrecipeapitests.reciperowscomparebyvalue',
     'addonenergyaccesstests.energyresultspreserveunitsandbufferownership',
     'addonenergyaccesstests.energyvalidationrunsbeforehostmutation',
     'addoninventoryaccesstests.partadapterisolateslegacyreferences',
@@ -571,6 +572,10 @@ def check(path, platform='forge'):
         classname = case.get('classname', '').lower()
         for identity in candidates_by_tail.get(name.rsplit('.', 1)[-1], ()):
             test_class, method = identity.split('.', 1)
+            if identity == 'addonrecipeapitests.reciperowscomparebyvalue':
+                if name == method and classname == 'gt6ce_api_contracts:test_empty':
+                    found.add(identity)
+                continue
             if identity in STRUCTURE_TRACKING_CASE_NAMESPACES:
                 if name == method and classname == STRUCTURE_TRACKING_CASE_NAMESPACES[identity]:
                     found.add(identity)

@@ -1,8 +1,8 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 import java.util.List;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * Built-in machine overrides for one addon. List this class in

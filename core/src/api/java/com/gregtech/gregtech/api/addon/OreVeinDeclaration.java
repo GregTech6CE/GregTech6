@@ -1,7 +1,8 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 /**
- * SPDX-License-Identifier: LGPL-3.0-or-later.
  * One large ore vein, with the same fields as a built-in {@code OreVein}.
  * Heights are the pre-remap values used by the built-in tables. The overworld generator stretches them.
  * The nether has no large-vein generator, so {@code minecraft:the_nether} is rejected.

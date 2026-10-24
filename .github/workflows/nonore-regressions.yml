@@ -1,0 +1,73 @@
+name: Isolated nonore input regressions
+
+on:
+  push:
+    branches: ['main', 'fix/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: nonore-regressions-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  nonore-isolated:
+    name: ${{ matrix.loader }} isolated nonore regressions
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - loader: forge
+            node: 1.20.1-forge
+          - loader: neoforge
+            node: 1.21.1-neoforge
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install JDK 21 toolchain
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - run: echo "JAVA21_HOME=$JAVA_HOME" >> "$GITHUB_ENV"
+      - name: Install JDK 17 launcher
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - run: echo "JAVA17_HOME=$JAVA_HOME" >> "$GITHUB_ENV"
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Check isolated evidence gates
+        run: python -X utf8 -m unittest tools.tests.test_nonore_cohort_checker tools.tests.test_nonore_stop_checker tools.tests.test_nonore_dust_comparator tools.tests.test_nonore_restoring_checker tools.tests.test_nonore_ci_contract
+      - name: Run fixed isolated profiles sequentially
+        # Development GameTestServer only. No dedicated-server EULA acceptance.
+        run: |
+          chmod +x gradlew
+          python -u -X utf8 tools/integration/run_nonore_profiles.py --loader ${{ matrix.loader }}
+      - name: Preserve all isolated evidence, including failure receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.loader }}-nonore-regressions-${{ github.sha }}
+          include-hidden-files: true
+          if-no-files-found: error
+          path: |
+            work/nonore-ci/**/invocation.json
+            work/nonore-ci/**/native.xml
+            work/nonore-ci/**/native.exit
+            work/nonore-ci/**/native.log
+            work/nonore-ci/**/check.log
+            work/nonore-ci/**/logs/**
+            work/nonore-ci/**/.nonore-*.json
+            work/nonore-ci/**/.nonore-*-used
+            work/nonore-ci/**/.nonore-stop-used

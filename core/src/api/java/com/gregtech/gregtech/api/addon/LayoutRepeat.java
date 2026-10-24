@@ -1,11 +1,11 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * A group of layers that repeats as a whole. The key names the group for
@@ -56,9 +56,10 @@ public final class LayoutRepeat {
 
     public List<LayoutCell> cells() { return List.copyOf(cells); }
 
-    /** Absolute {@code up} of {@code cell} in copy {@code copy}. */
+    /** Absolute {@code up} of {@code cell} in copy {@code copy}, rejecting a coordinate that does not fit in an int. */
     public int absoluteUp(LayoutCell cell, int copy) {
-        return up + step * (cell.up() + copy * height);
+        return Math.addExact(up, Math.multiplyExact(step,
+                Math.addExact(cell.up(), Math.multiplyExact(copy, height))));
     }
 
     @Override public boolean equals(Object other) {
@@ -66,6 +67,11 @@ public final class LayoutRepeat {
         if (!(other instanceof LayoutRepeat that)) return false;
         return up == that.up && min == that.min && max == that.max && step == that.step
                 && key.equals(that.key) && cells.equals(that.cells);
+    }
+
+    @Override public String toString() {
+        return "LayoutRepeat[key=" + key + ", up=" + up + ", min=" + min + ", max=" + max
+                + ", step=" + step + ", height=" + height + ", cells=" + cells.size() + "]";
     }
 
     @Override public int hashCode() { return Objects.hash(key, up, min, max, step, cells); }

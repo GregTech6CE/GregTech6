@@ -1,8 +1,8 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 import java.util.Objects;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * One large-recipe input or output cell. The origin is rejected and each component
@@ -42,6 +42,10 @@ public final class IoTarget {
         if (this == other) return true;
         if (!(other instanceof IoTarget that)) return false;
         return right == that.right && up == that.up && back == that.back && receiver == that.receiver;
+    }
+
+    @Override public String toString() {
+        return "IoTarget[at=" + right + "/" + up + "/" + back + ", receiver=" + receiver + "]";
     }
 
     @Override public int hashCode() {
