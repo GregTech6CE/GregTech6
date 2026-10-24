@@ -1,0 +1,11 @@
+{
+  "scope": "Exactly one modern ore host drop-policy clarification for six reviewed sediment modes; not an original GT6/TeamNED sentence and no generic tooltip namespace exception.",
+  "authorization": "Requested ore-processing/source alignment; reviewed accurate modern hand-harvest display. This intentionally distinguishes actual drop permission from old LH adventure-exempt tooltip wording.",
+  "evidence": "docs/integration/ORE_HOST_PHYSICS_SOURCE_CORRECTION.md; source Material.sand is tool-not-required while old adventure exemption is false. Optional faster-tool argument reuses existing localized shovel label.",
+  "values": {
+    "tooltip.gt6ce.ore.hand_harvest_preferred": {
+      "english": "Hand-harvestable; %s is faster",
+      "value": "可徒手采集；使用%s更快"
+    }
+  }
+}

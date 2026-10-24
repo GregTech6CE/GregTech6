@@ -69,7 +69,7 @@ jobs:
           tools.tests.test_instrument_translations tools.tests.test_recipe_translations
           tools.tests.test_issue76_sapling_assets tools.tests.test_localization_coverage
           tools.tests.test_identity_localization tools.tests.test_numbered_language
-          tools.tests.test_material_names tools.tests.test_creative_language
+          tools.tests.test_material_names tools.tests.test_material_quality_import tools.tests.test_ore_host_tooltip_localization tools.tests.test_creative_language
           tools.tests.test_delivery_language tools.tests.test_native_layout tools.tests.test_gearbox_item_roots
       - name: Check Reliable EMI grouping resources
         run: python -X utf8 tools/integration/generate_remi_material_groups.py --check

@@ -86,5 +86,12 @@ public final class BlockHarvestPolicy {
   if(block instanceof MaterialBlockLike m && tool(block)==Tool.PICKAXE) return m.prefix().harvestLevel(m.material());
   return 0;
  }
+ /** State-sensitive source ore policy; unrelated blocks retain their existing contract. */
+ public static int level(net.minecraft.world.level.block.state.BlockState state) {
+  return OreHostPhysics.params(state).map(SourceOreHostPhysics.Params::harvest).orElseGet(()->level(state.getBlock()));
+ }
+ public static Tool tool(net.minecraft.world.level.block.state.BlockState state) {
+  return OreHostPhysics.params(state).map(p->Tool.valueOf(p.tool())).orElseGet(()->tool(state.getBlock()));
+ }
  public static String tag(Tool tool) { return BlockHarvestNames.tag(tool.name()); }
 }

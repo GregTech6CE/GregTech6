@@ -10,7 +10,7 @@ import unittest
 import xml.etree.ElementTree as ET
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'integration'))
-from check_issue_gametest_report import check, EXPECTED, LEGACY_CASE_NAMESPACES, API_CONTRACT_CASES, ENERGY_STORAGE_CASE_NAMESPACES, COVER_REMOVAL_CASE_NAMESPACES, ORE_SOURCE_CASES, ORE_FOLLOWON_CASE_NAMESPACES, MATERIAL_PHASE_CASE_NAMESPACES, POSITIVE_ORE_CENTRIFUGE_CASE_NAMESPACES, NEXT_ORE_CENTRIFUGE_CASE_NAMESPACES, expected_namespace
+from check_issue_gametest_report import check, EXPECTED, LEGACY_CASE_NAMESPACES, API_CONTRACT_CASES, ENERGY_STORAGE_CASE_NAMESPACES, COVER_REMOVAL_CASE_NAMESPACES, ORE_SOURCE_CASES, ORE_FOLLOWON_CASE_NAMESPACES, MATERIAL_PHASE_CASE_NAMESPACES, POSITIVE_ORE_CENTRIFUGE_CASE_NAMESPACES, NEXT_ORE_CENTRIFUGE_CASE_NAMESPACES, QUALITY_PHYSICS_CASE_NAMESPACES, expected_namespace
 import verify_artifacts
 from verify_artifacts import required_forge_mixin_mappings
 
@@ -75,6 +75,49 @@ class IssueEvidenceTests(unittest.TestCase):
             path = Path(folder) / 'report.xml'
             ET.ElementTree(root).write(path)
             check(path, platform)
+
+    def test_owned_builder_cases_require_exact_dedicated_template(self):
+        identities = {
+            'toolplacementtransactiontests.builderusesheadqualityandhitcoordinates',
+            'toolplacementtransactiontests.buildercancellationrollsbackworldstockandwear',
+        }
+        namespace = 'gregtech_issue_audit:builder_placement_empty'
+        for platform in EXPECTED:
+            self.assertTrue(identities <= EXPECTED[platform])
+            self.verify(self.report(platform), platform)
+            for identity in identities:
+                self.assertEqual(namespace, expected_namespace(identity))
+                for wrong in ('gregtech_issue_audit:test_empty', 'gregtech_issue_audit:torch_placement_empty',
+                              'gt6ce:builder_placement_empty'):
+                    root = self.report(platform)
+                    case = next(c for c in root.iter('testcase') if c.get('name') == identity.split('.', 1)[1])
+                    case.set('classname', wrong)
+                    with self.subTest(platform=platform, identity=identity, namespace=wrong):
+                        with self.assertRaisesRegex(ValueError, 'did not execute'):
+                            self.verify(root, platform)
+        self.assertEqual('gregtech_issue_audit:test_empty',
+                         expected_namespace('toolplacementtransactiontests.buildersixfacescommitexactlyonce'))
+        self.assertEqual('gregtech_issue_audit:torch_placement_empty',
+                         expected_namespace('toolplacementtransactiontests.drilltorchcancellationandcreativepreserveinventory'))
+
+    def test_owned_builder_cases_cannot_be_missing_or_fail(self):
+        identities = {
+            'toolplacementtransactiontests.builderusesheadqualityandhitcoordinates',
+            'toolplacementtransactiontests.buildercancellationrollsbackworldstockandwear',
+        }
+        for platform in EXPECTED:
+            for identity in identities:
+                for outcome in ('missing', 'failure', 'error', 'skipped'):
+                    root = self.report(platform)
+                    suite = root.find('testsuite')
+                    case = next(c for c in suite if c.get('name') == identity.split('.', 1)[1])
+                    if outcome == 'missing':
+                        suite.remove(case)
+                    else:
+                        ET.SubElement(case, outcome, message='real builder placement outcome')
+                    with self.subTest(platform=platform, identity=identity, outcome=outcome):
+                        with self.assertRaises(ValueError):
+                            self.verify(root, platform)
 
     def test_cover_removal_requires_exact_dedicated_template(self):
         self.assertEqual(len(COVER_REMOVAL_CASE_NAMESPACES), 3)
@@ -479,6 +522,38 @@ class IssueEvidenceTests(unittest.TestCase):
         self.assertIn('method = "setFluidTypeHeight"', source)
         self.assertIn('remap = false', source)
 
+
+
+class QualityPhysicsEvidenceTests(unittest.TestCase):
+    def report(self, platform, mutation=None):
+        root=ET.Element('testsuite')
+        for identity in sorted(EXPECTED[platform]):
+            ET.SubElement(root,'testcase',classname=expected_namespace(identity),name=identity.split('.',1)[1])
+        if mutation: mutation(root)
+        with tempfile.TemporaryDirectory() as directory:
+            path=Path(directory)/'report.xml'; ET.ElementTree(root).write(path); check(path,platform)
+    def test_seven_exact_cases_and_two_templates(self):
+        self.assertEqual(len(QUALITY_PHYSICS_CASE_NAMESPACES),7)
+        self.assertEqual(set(QUALITY_PHYSICS_CASE_NAMESPACES.values()),{'gregtech_ore_source_audit:test_empty','gregtech_ore_source_audit:ore_host_physics_owned'})
+        for platform in EXPECTED: self.report(platform)
+    def test_every_new_case_requires_exact_template_and_bare_name(self):
+        for platform in EXPECTED:
+            for identity in QUALITY_PHYSICS_CASE_NAMESPACES:
+                for wrong in ['gregtech_issue_audit:test_empty',identity.split('.',1)[0],'gregtech_ore_source_audit:wrong_template']:
+                    def mutate(root):
+                        next(n for n in root if n.get('name')==identity.split('.',1)[1]).set('classname',wrong)
+                    with self.assertRaises(ValueError): self.report(platform,mutate)
+                def prefixed(root):
+                    next(n for n in root if n.get('name')==identity.split('.',1)[1]).set('name',identity)
+                with self.assertRaises(ValueError): self.report(platform,prefixed)
+    def test_every_new_case_required_no_duplicate_substitute(self):
+        for platform in EXPECTED:
+            for identity in QUALITY_PHYSICS_CASE_NAMESPACES:
+                def remove(root): root.remove(next(n for n in root if n.get('name')==identity.split('.',1)[1]))
+                with self.assertRaises(ValueError): self.report(platform,remove)
+                def duplicate(root):
+                    row=next(n for n in root if n.get('name')==identity.split('.',1)[1]);other=next(n for n in root if n.get('name')!=row.get('name'));row.attrib.update(other.attrib)
+                with self.assertRaises(ValueError): self.report(platform,duplicate)
 
 if __name__ == '__main__':
     unittest.main()

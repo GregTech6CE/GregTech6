@@ -396,7 +396,17 @@ POSITIVE_ORE_CENTRIFUGE_CASE_NAMESPACES = {
 FUNCTIONAL_CASES |= set(POSITIVE_ORE_CENTRIFUGE_CASE_NAMESPACES)
 
 
+QUALITY_PHYSICS_CASE_NAMESPACES = {'orehostphysicstests.actualstatehardnessandcontextualblastfollowliteralsourcehosts': 'gregtech_ore_source_audit:ore_host_physics_owned', 'orehostphysicstests.unreviewedhostsandnonoredenseclasseskeepexistingphysics': 'gregtech_ore_source_audit:ore_host_physics_owned', 'orehostharvesttests.nativeplayerharvesthonorssmallbrokenoffsetsandhostminimum': 'gregtech_ore_source_audit:ore_host_physics_owned', 'orehostharvesttests.nativedestroyprogressuseshardnessoncewithoutlegacybrokenmultiplier': 'gregtech_ore_source_audit:ore_host_physics_owned', 'orehostharvesttests.commonitemtooltipreadshostbrokenstateandhideslowtier': 'gregtech_ore_source_audit:ore_host_physics_owned', 'orequalitymetadatatests.reviewedharvestqualitypreservesnativeorelevelsandlegacyforms': 'gregtech_ore_source_audit:test_empty', 'orequalitymetadatatests.bauxiteandscheelitequalityscaleacceptedcrusherhammerwork': 'gregtech_ore_source_audit:test_empty'}
+FUNCTIONAL_CASES |= set(QUALITY_PHYSICS_CASE_NAMESPACES)
+
 def expected_namespace(identity):
+    if identity in {
+        "toolplacementtransactiontests.builderusesheadqualityandhitcoordinates",
+        "toolplacementtransactiontests.buildercancellationrollsbackworldstockandwear",
+    }:
+        return "gregtech_issue_audit:builder_placement_empty"
+    if identity in QUALITY_PHYSICS_CASE_NAMESPACES:
+        return QUALITY_PHYSICS_CASE_NAMESPACES[identity]
     if identity == "toolplacementtransactiontests.drilltorchcancellationandcreativepreserveinventory":
         return "gregtech_issue_audit:torch_placement_empty"
     if identity in NEXT_ORE_CENTRIFUGE_CASE_NAMESPACES:
@@ -459,6 +469,10 @@ def check(path, platform='forge'):
         classname = case.get('classname', '').lower()
         for identity in expected:
             test_class, method = identity.split('.', 1)
+            if identity in QUALITY_PHYSICS_CASE_NAMESPACES:
+                if name == method and classname == QUALITY_PHYSICS_CASE_NAMESPACES[identity]:
+                    found.add(identity)
+                continue
             if identity in NEXT_ORE_CENTRIFUGE_CASE_NAMESPACES:
                 if name == method and classname == NEXT_ORE_CENTRIFUGE_CASE_NAMESPACES[identity]:
                     found.add(identity)

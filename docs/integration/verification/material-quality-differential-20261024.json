@@ -1,0 +1,1281 @@
+{
+  "definitions": {
+    "rows": 155935,
+    "before_sha256": "ea0a8bfb8be3a4d0999a5c3fcc97f96b65c80951edd6c73228786dfb7407b359",
+    "after_sha256": "9dd543e019f6352f64023be930ba999d763beeaec1ef2e1b7cb70bfd9eb6d20e",
+    "changed_material_rows": [
+      {
+        "identity": "8333:Redstone",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "8340:Nikolite",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "8802:TantalumHafniumCarbide",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          2
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9003:BasalticMineralSand",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9004:GraniticMineralSand",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9104:Hematite",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9105:Bauxite",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          2
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9106:BrownLimonite",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9109:Realgar",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9111:Chalcopyrite",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9113:Chromite",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9115:Cobaltite",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9118:Garnierite",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9120:Ilmenite",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          2
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9122:Magnetite",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9125:Pyrite",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9128:Scheelite",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          3
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9133:Tungstate",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          3
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9137:YellowLimonite",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9145:Pentlandite",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9192:Rutile",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          2
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9193:Stolzite",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          3
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9194:Ferberite",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          3
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9195:Huebnerite",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          3
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9196:Russellite",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          3
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9197:Pinalite",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          3
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9198:DiduraniumTrioxide",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          4
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9199:DuraniumHexafluoride",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          4
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9200:DuraniumHexachloride",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          4
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9201:DuraniumHexabromide",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          4
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9202:DuraniumHexaiodide",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          4
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9203:DuraniumHexaastatide",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          4
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9204:TritaniumDioxide",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          4
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9205:TritaniumHexafluoride",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          4
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9206:TritaniumHexachloride",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          4
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9207:TritaniumHexabromide",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          4
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9208:TritaniumHexaiodide",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          4
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9209:TritaniumHexaastatide",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          4
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9216:Arsenopyrite",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9217:Wolframite",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          3
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      }
+    ],
+    "all_form_alias_prefix_other_rows_identical": true,
+    "normalizing_only_reviewed_quality_and_durability_reproduces_baseline": true
+  },
+  "post-init": {
+    "rows": 155935,
+    "before_sha256": "d0409357008b5805d5ae2fb45b7cc7b7fe283b7537e762d2be74fb2301483f40",
+    "after_sha256": "bb41a81162be04fc7e7a64f3f7be0dc224551ea8ebfb71c80fffad3e39fbbfac",
+    "changed_material_rows": [
+      {
+        "identity": "8333:Redstone",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "8340:Nikolite",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "8802:TantalumHafniumCarbide",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          2
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9003:BasalticMineralSand",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9004:GraniticMineralSand",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9104:Hematite",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9105:Bauxite",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          2
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9106:BrownLimonite",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9109:Realgar",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9111:Chalcopyrite",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9113:Chromite",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9115:Cobaltite",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9118:Garnierite",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9120:Ilmenite",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          2
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9122:Magnetite",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9125:Pyrite",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9128:Scheelite",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          3
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9133:Tungstate",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          3
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9137:YellowLimonite",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9145:Pentlandite",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9192:Rutile",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          2
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9193:Stolzite",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          3
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9194:Ferberite",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          3
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9195:Huebnerite",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          3
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9196:Russellite",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          3
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9197:Pinalite",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          3
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9198:DiduraniumTrioxide",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          4
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9199:DuraniumHexafluoride",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          4
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9200:DuraniumHexachloride",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          4
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9201:DuraniumHexabromide",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          4
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9202:DuraniumHexaiodide",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          4
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9203:DuraniumHexaastatide",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          4
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9204:TritaniumDioxide",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          4
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9205:TritaniumHexafluoride",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          4
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9206:TritaniumHexachloride",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          4
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9207:TritaniumHexabromide",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          4
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9208:TritaniumHexaiodide",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          4
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9209:TritaniumHexaastatide",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          4
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9216:Arsenopyrite",
+        "fields": [
+          21
+        ],
+        "quality": [
+          0,
+          0
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      },
+      {
+        "identity": "9217:Wolframite",
+        "fields": [
+          19,
+          21
+        ],
+        "quality": [
+          0,
+          3
+        ],
+        "durability": [
+          0,
+          1
+        ]
+      }
+    ],
+    "all_form_alias_prefix_other_rows_identical": true,
+    "normalizing_only_reviewed_quality_and_durability_reproduces_baseline": true
+  },
+  "item_ids": {
+    "count": 56085,
+    "sha256": "c3360a6cdc2ac4aa396b7a9bb778f11663171afb4e949709c65f3903f25a5fef",
+    "exactly_identical": true
+  },
+  "source_sha256": {
+    "work/material-quality-audit/candidate/core/src/main/java/com/gregtech/gregtech/api/material/GTMaterial.java": "bdf728381e3e6a368dd0c3576a982fc7a15f58e976de3e2d3f5297c4426e99bf",
+    "work/material-quality-audit/candidate/core/src/main/java/com/gregtech/gregtech/content/material/generated/OreMaterials.java": "2e39fde41082d407ccd8ad78f69b05166c8794d92125d160cb53578278c4c129",
+    "work/material-quality-audit/candidate/core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "d2fd299146dfe0e003dcf2e1cd8535811713616092bcb157fc60446fd1cc532c",
+    "work/ore-generation-audit/quality-prefix-review/ReviewedSingleArgumentToolTypes.java": "09d9cda71c8d962a7c2a079dd43e7f87512592afc32ce79d2cb9f94f099a12d9",
+    "work/ore-generation-audit/quality-prefix-review/MaterialPrefix.java": "30899a7524628416d30dff8dec2c3f5146917585ace0f56f76e4fef9ad065711",
+    "work/ore-generation-audit/quality-prefix-review/ReviewedToolTypeContracts.java": "75ebc520eb00bc6a70de05f4b8dd835b14864c9fe3d5d52be8883d6aafe9c993"
+  },
+  "kind": "Isolated cached-core JVM probe, not Gradle/full native test",
+  "tool_type_contract_exit": 0,
+  "source_provenance": {
+    "gregtech6-original": {
+      "head": "3703e40308c8c030763fd6297dea8b210d2a77b1",
+      "files": {
+        "src/main/java/gregapi/data/MT.java": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2",
+        "src/main/java/gregapi/oredict/OreDictMaterial.java": "768707d5eeeb6b60f0c5d0a24b39ab50f6f173a29a40f0fa3365308cf0688371",
+        "src/main/java/gregapi/oredict/OreDictMaterialCondition.java": "de90358be7c2a29806d24645e8322bdda798605269bc229c8a426593c7175471",
+        "src/main/java/gregapi/util/UT.java": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+        "src/main/java/gregapi/data/OP.java": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e",
+        "src/main/java/gregtech/loaders/a/Loader_Ores.java": "0d150de60a9a67c32469f3fe60b995a8a06862bd5f7a54e9c35aa270aa294e0d"
+      }
+    },
+    "gregtech6-w": {
+      "head": "607771f74acb0fe647f7e9412676e72094799545",
+      "files": {
+        "src/main/java/gregapi/data/MT.java": "9530c229de3483ab7be300c49ce1e08e44bcabfe9bdebd7844becefbd4782728",
+        "src/main/java/gregapi/oredict/OreDictMaterial.java": "e3f8e07e4a3f3c3ddbfe7d35b2f6813c1bee14064bd365c47dafa04a750b3b10",
+        "src/main/java/gregapi/oredict/OreDictMaterialCondition.java": "de90358be7c2a29806d24645e8322bdda798605269bc229c8a426593c7175471",
+        "src/main/java/gregapi/util/UT.java": "a911854747ee9a788cc7b8a0f7f720d6e7711874b96406df380503eea3e6bc0a",
+        "src/main/java/gregapi/data/OP.java": "ba9c0d28d1d24992107592f0eb4c02f6f77e0d0dbeaaee1f34fd0f853e77d42e",
+        "src/main/java/gregtech/loaders/a/Loader_Ores.java": "1cb4aecd477a2c50f71059e42baed911998d543ba63c8b90fb8004803bd3f334"
+      }
+    }
+  },
+  "native_status": "LOCAL FULL663 PASS; historical cached graph/SDK controls remain separate; no remote CI/merge claim",
+  "supported_explicit_form_controls": {
+    "kind": "Six fresh isolated core ServiceLoader runs with contributor compiled against published SDK only; not native registration",
+    "outcomes": {
+      "Bauxite/toolHeadPickaxe": "rejected in baseline and candidate",
+      "Bauxite/dust": "accepted once in baseline and candidate",
+      "TantalumHafniumCarbide/toolHeadPickaxe": "accepted once in baseline and candidate with type0 and explicit TOOL_HEAD"
+    },
+    "report_sha256": "649bdd739fa60da1fdaa819fcf7f603b2556022fbc7cb2bb8982d6e3551db215",
+    "contract_scope": [
+      "docs/ADDON_API.md:315 material tool statistics read-only",
+      "docs/ADDON_API.md:1052 GTMaterial and GTMaterialRegistry are closed internals",
+      "docs/ADDON_API.md:1054 only documented compatibility surface"
+    ],
+    "internal_setter_controls": "Quality-only Java-public internal setter differs; outside SDK contract, not used to broaden guard"
+  },
+  "local_native_verification": {
+    "receipt": "work/validation/ore-quality-physics-fixed-retry/local-validation-receipt.md",
+    "base_head": "6135f4b83c3a32948cc2551471ce0f1fa6b7afb7",
+    "scope": "Frozen base plus reviewed joint quality/physics, scoped localization provenance, owned builder fixtures; not base HEAD alone",
+    "forge": {
+      "passed": 336,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "duration": "8m50s",
+      "native_exit": 0,
+      "strict_exit": 0,
+      "xml_sha256": "d502fab380f350dc453ce9ad1ceee1569079888ec79fa4938f72e276057dcca2"
+    },
+    "neoforge": {
+      "passed": 327,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "duration": "4m32s",
+      "native_exit": 0,
+      "strict_exit": 0,
+      "xml_sha256": "2f3de747bf6eb680176aaeec6a77b13297700db966f5b86b3d18f2ae89635d4a"
+    },
+    "input_final_snapshots_identical": true,
+    "quality_assertions": 969,
+    "physics_assertions": 421,
+    "python_tests": 182,
+    "remi_groups": 491,
+    "shared_classes_per_loader": 1045,
+    "sdk_classes": {
+      "core": 118,
+      "native_per_loader": 46
+    },
+    "packaged_mixin_refmap_guards": "PASS without exemptions",
+    "earlier_fixed_attempt": "Stopped at localization provenance before native execution; exact four-file project-translation fix dc8b67cfd57c6ecdbd25ba60e50f486f5509e6d2b2e1a66b76399fdaee1f54da, not fabricated TeamNED provenance",
+    "cold_restart_rerun": false
+  }
+}

@@ -460,6 +460,22 @@ def parse_metadata(full_line: str) -> dict:
             int(qual_m.group(3)),
             int(qual_m.group(4)),
         )
+    # Preserve source call order. A single numeric argument is harvest quality,
+    # not a replacement for factory/inherited tool type, speed or durability.
+    # Material-copy qual(OtherMaterial) and unsupported expressions stay explicit;
+    # do not silently reinterpret them as numeric/default-zero quality.
+    meta["qual_calls"] = []
+    meta["unresolved_qual_calls"] = []
+    for args in find_chained_call_args(full_line, "qual"):
+        single = re.fullmatch(r"\s*([+-]?\d+)[lL]?\s*", args)
+        full = re.fullmatch(r"\s*(\d+)\s*,\s*([\d.]+)\s*,\s*(\d+)\s*,\s*(\d+)\s*", args)
+        if single:
+            meta["qual_calls"].append(("harvest", int(single.group(1))))
+        elif full:
+            meta["qual_calls"].append(("stats", (int(full.group(1)), float(full.group(2)),
+                                                 int(full.group(3)), int(full.group(4)))))
+        else:
+            meta["unresolved_qual_calls"].append(args.strip())
     for method in ("uumAloy", "uumMcfg", "setMcfg", "setAloy", "mcfg"):
         for args in find_chained_call_args(full_line, method):
             meta["components"].extend(parse_component_args(args))
@@ -635,11 +651,16 @@ def emit_metadata_suffix(field: str, meta: dict, symbols: dict[str, str]) -> str
     if tooltip:
         escaped = tooltip.replace("\\", "\\\\").replace('"', '\\"')
         suffix += f'.setTooltipChemical("{escaped}")'
-    qual = meta.get("qual")
-    if qual:
-        tool_types, speed, durability, quality = qual
-        speed_text = f"{speed:g}" if speed == int(speed) else str(speed)
-        suffix += f".setToolStats({tool_types}, {speed_text}F, {durability}, {quality})"
+    calls = meta.get("qual_calls")
+    if calls is None:  # Older programmatic metadata callers retain their existing contract.
+        calls = [("stats", meta["qual"])] if meta.get("qual") else []
+    for kind, value in calls:
+        if kind == "harvest":
+            suffix += f".setToolQuality({value})"
+        else:
+            tool_types, speed, durability, quality = value
+            speed_text = f"{speed:g}" if speed == int(speed) else str(speed)
+            suffix += f".setToolStats({tool_types}, {speed_text}F, {durability}, {quality})"
     return suffix
 
 

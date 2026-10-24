@@ -280,6 +280,8 @@ public final class GTToolHelper {
     }
 
     public static boolean canEffectiveHarvest(ItemStack stack, BlockState state) {
+        var oreDecision=com.gregtech.gregtech.data.OreHostHarvest.effectiveDecision(stack,state);
+        if(oreDecision.isPresent())return oreDecision.get();
         if (!isUsable(stack)) {
             return false;
         }
@@ -295,6 +297,8 @@ public final class GTToolHelper {
     }
 
     public static boolean isCorrectToolForDrops(ItemStack stack, BlockState state) {
+        var oreDecision=com.gregtech.gregtech.data.OreHostHarvest.decision(stack,state);
+        if(oreDecision.isPresent())return oreDecision.get();
         if (isSpecialHarvestTool(stack, state)) return true;
         if (!isUsable(stack)) {
             return false;
@@ -434,6 +438,8 @@ public final class GTToolHelper {
     }
 
     public static int requiredHarvestLevel(BlockState state) {
+        var ore=com.gregtech.gregtech.data.OreHostPhysics.params(state);
+        if(ore.isPresent())return ore.get().harvest();
         if (state.getBlock() instanceof com.gregtech.gregtech.block.misc.SpikeBlock)
             return com.gregtech.gregtech.data.SpikeHarvestPolicy.level(state);
         int materialLevel=com.gregtech.gregtech.data.BlockHarvestPolicy.level(state.getBlock());

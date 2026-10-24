@@ -150,84 +150,154 @@ public final class ToolPlacementTransactionTests {
         h.succeed();
     }
 
-    @GameTest(template = "test_empty")
+    @GameTest(template = "builder_placement_empty", timeoutTicks = 160)
     public static void builderUsesHeadQualityAndHitCoordinates(GameTestHelper h) {
-        var player = player(h);
-        var origin = h.absolutePos(new BlockPos(4, 20, 4));
-        int low = GTMaterialRegistry.get("Wood").getToolQuality() + 1;
-        int high = GTMaterialRegistry.get("Steel").getToolQuality() + 1;
-        h.assertTrue(low < high, "fixture has unequal real material qualities");
-        try {
-            for (String material : new String[]{"Wood", "Steel"}) {
-                player.getInventory().clearContent();
-                player.setItemInHand(InteractionHand.MAIN_HAND, wand(material));
-                player.getInventory().setItem(35, new ItemStack(Items.STONE, 8));
-                for (int x : new int[]{0, low, high, high + 1}) {
-                    h.getLevel().setBlockAndUpdate(origin.offset(x, 0, 0), Blocks.STONE.defaultBlockState());
-                    h.getLevel().removeBlock(origin.offset(x, 1, 0), false);
+        runInOwnedBuilderFixture(h, origin -> {
+            var player = player(h);
+            player.setPos(origin.getX() - 2, origin.getY() + 1, origin.getZ() - 2);
+            int low = GTMaterialRegistry.get("Wood").getToolQuality() + 1;
+            int high = GTMaterialRegistry.get("Steel").getToolQuality() + 1;
+            h.assertTrue(low < high, "fixture has unequal real material qualities");
+            try {
+                for (String material : new String[]{"Wood", "Steel"}) {
+                    player.getInventory().clearContent();
+                    player.setItemInHand(InteractionHand.MAIN_HAND, wand(material));
+                    player.getInventory().setItem(35, new ItemStack(Items.STONE, 8));
+                    for (int x : new int[]{0, low, high, high + 1}) {
+                        h.getLevel().setBlockAndUpdate(origin.offset(x, 0, 0), Blocks.STONE.defaultBlockState());
+                        h.getLevel().setBlockAndUpdate(origin.offset(x, 1, 0), Blocks.AIR.defaultBlockState());
+                    }
+                    click(player, origin, Direction.UP, 1);
+                    h.assertTrue(h.getLevel().getBlockState(origin.offset(low, 1, 0)).is(Blocks.STONE), "inclusive low edge");
+                    h.assertTrue(h.getLevel().getBlockState(origin.offset(high, 1, 0)).is(Blocks.STONE) == material.equals("Steel"), "material-dependent high edge");
+                    h.assertTrue(h.getLevel().isEmptyBlock(origin.offset(high + 1, 1, 0)), "outside high edge excluded");
+                    h.assertTrue(player.getInventory().getItem(35).getCount() == (material.equals("Steel") ? 5 : 6), "plane exact count");
                 }
-                click(player, origin, Direction.UP, 1);
-                h.assertTrue(h.getLevel().getBlockState(origin.offset(low, 1, 0)).is(Blocks.STONE), "inclusive low edge");
-                h.assertTrue(h.getLevel().getBlockState(origin.offset(high, 1, 0)).is(Blocks.STONE) == material.equals("Steel"), "material-dependent high edge");
-                h.assertTrue(h.getLevel().isEmptyBlock(origin.offset(high + 1, 1, 0)), "outside high edge excluded");
-                h.assertTrue(player.getInventory().getItem(35).getCount() == (material.equals("Steel") ? 5 : 6), "plane exact count");
+            } finally {
+                for (int x : new int[]{0, low, high, high + 1}) for (int y = 0; y <= 1; y++) h.getLevel().setBlockAndUpdate(origin.offset(x, y, 0), Blocks.AIR.defaultBlockState());
             }
-        } finally {
-            for (int x : new int[]{0, low, high, high + 1}) for (int y = 0; y <= 1; y++) h.getLevel().removeBlock(origin.offset(x, y, 0), false);
-        }
-        try {
-            player.getInventory().clearContent();
-            player.setItemInHand(InteractionHand.MAIN_HAND, wand("Steel"));
-            player.getInventory().setItem(35, new ItemStack(Items.OAK_SLAB, 2));
-            h.getLevel().setBlockAndUpdate(origin, Blocks.OAK_SLAB.defaultBlockState().setValue(SlabBlock.TYPE, SlabType.TOP));
-            click(player, origin, Direction.EAST, .8);
-            var placed = h.getLevel().getBlockState(origin.east());
-            h.assertTrue(placed.is(Blocks.OAK_SLAB) && placed.getValue(SlabBlock.TYPE) == SlabType.TOP, "original local hit height reaches BlockItem");
-        } finally {
-            h.getLevel().removeBlock(origin, false);
-            h.getLevel().removeBlock(origin.east(), false);
-        }
-        h.succeed();
+            try {
+                player.getInventory().clearContent();
+                player.setItemInHand(InteractionHand.MAIN_HAND, wand("Steel"));
+                player.getInventory().setItem(35, new ItemStack(Items.OAK_SLAB, 2));
+                h.getLevel().setBlockAndUpdate(origin, Blocks.OAK_SLAB.defaultBlockState().setValue(SlabBlock.TYPE, SlabType.TOP));
+                click(player, origin, Direction.EAST, .8);
+                var placed = h.getLevel().getBlockState(origin.east());
+                h.assertTrue(placed.is(Blocks.OAK_SLAB) && placed.getValue(SlabBlock.TYPE) == SlabType.TOP, "original local hit height reaches BlockItem");
+            } finally {
+                h.getLevel().setBlockAndUpdate(origin, Blocks.AIR.defaultBlockState());
+                h.getLevel().setBlockAndUpdate(origin.east(), Blocks.AIR.defaultBlockState());
+            }
+        });
     }
 
-    @GameTest(template = "test_empty")
+    @GameTest(template = "builder_placement_empty", timeoutTicks = 160)
     public static void builderCancellationRollsBackWorldStockAndWear(GameTestHelper h) {
-        var player = player(h);
-        var pos = h.absolutePos(new BlockPos(4, 20, 4));
-        var tool = wand("Steel");
-        player.setItemInHand(InteractionHand.MAIN_HAND, tool);
-        player.getInventory().setItem(35, new ItemStack(Items.STONE, 8));
-        var listener = new PlacementListener(player);
-        listener.cancel = true;
-        register(listener);
-        try {
-            h.getLevel().setBlockAndUpdate(pos, Blocks.STONE.defaultBlockState());
-            h.getLevel().removeBlock(pos.east(), false);
-            click(player, pos, Direction.EAST, .5);
-            h.assertTrue(listener.calls == 1, "cancellation event delivered exactly once");
-            h.assertTrue(h.getLevel().isEmptyBlock(pos.east()), "canceled world placement restored");
-            h.assertTrue(player.getInventory().getItem(35).getCount() == 8 && tool.getDamageValue() == 0, "canceled stock and wear unchanged");
-            h.assertTrue(h.getLevel().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,
-                    new net.minecraft.world.phys.AABB(pos).inflate(2)).isEmpty(), "cancellation creates no loose item refund");
-            listener.cancel = false;
-            click(player, pos, Direction.EAST, .5);
-            h.assertTrue(listener.calls == 2 && player.getInventory().getItem(35).getCount() == 7 && tool.getDamageValue() == 1,
-                    "retry commits one placement and one cost");
-            h.getLevel().setBlockAndUpdate(pos.east(), Blocks.BEDROCK.defaultBlockState());
-            click(player, pos, Direction.EAST, .5);
-            h.assertTrue(listener.calls == 2 && player.getInventory().getItem(35).getCount() == 7 && tool.getDamageValue() == 1,
-                    "blocked destination consumes neither source nor wear");
-            h.getLevel().removeBlock(pos.east(), false);
-            player.setGameMode(GameType.CREATIVE);
-            click(player, pos, Direction.EAST, .5);
-            h.assertTrue(listener.calls == 3 && player.getInventory().getItem(35).getCount() == 7 && tool.getDamageValue() == 1,
-                    "creative builder preserves source and wear");
-        } finally {
-            unregister(listener);
-            h.getLevel().removeBlock(pos.east(), false);
-            h.getLevel().removeBlock(pos, false);
+        runInOwnedBuilderFixture(h, pos -> {
+            var player = player(h);
+            player.setPos(pos.getX() - 2, pos.getY() + 1, pos.getZ() - 2);
+            var tool = wand("Steel");
+            player.setItemInHand(InteractionHand.MAIN_HAND, tool);
+            player.getInventory().setItem(35, new ItemStack(Items.STONE, 8));
+            var listener = new PlacementListener(player);
+            listener.cancel = true;
+            register(listener);
+            try {
+                h.getLevel().setBlockAndUpdate(pos, Blocks.STONE.defaultBlockState());
+                h.getLevel().setBlockAndUpdate(pos.east(), Blocks.AIR.defaultBlockState());
+                click(player, pos, Direction.EAST, .5);
+                h.assertTrue(listener.calls == 1, "cancellation event delivered exactly once");
+                h.assertTrue(h.getLevel().isEmptyBlock(pos.east()), "canceled world placement restored");
+                h.assertTrue(player.getInventory().getItem(35).getCount() == 8 && tool.getDamageValue() == 0, "canceled stock and wear unchanged");
+                h.assertTrue(h.getLevel().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,
+                        new net.minecraft.world.phys.AABB(pos).inflate(2)).isEmpty(), "cancellation creates no loose item refund");
+                listener.cancel = false;
+                click(player, pos, Direction.EAST, .5);
+                h.assertTrue(listener.calls == 2 && player.getInventory().getItem(35).getCount() == 7 && tool.getDamageValue() == 1,
+                        "retry commits one placement and one cost");
+                h.getLevel().setBlockAndUpdate(pos.east(), Blocks.BEDROCK.defaultBlockState());
+                click(player, pos, Direction.EAST, .5);
+                h.assertTrue(listener.calls == 2 && player.getInventory().getItem(35).getCount() == 7 && tool.getDamageValue() == 1,
+                        "blocked destination consumes neither source nor wear");
+                h.getLevel().setBlockAndUpdate(pos.east(), Blocks.AIR.defaultBlockState());
+                player.setGameMode(GameType.CREATIVE);
+                click(player, pos, Direction.EAST, .5);
+                h.assertTrue(listener.calls == 3 && player.getInventory().getItem(35).getCount() == 7 && tool.getDamageValue() == 1,
+                        "creative builder preserves source and wear");
+            } finally {
+                unregister(listener);
+                h.getLevel().setBlockAndUpdate(pos.east(), Blocks.AIR.defaultBlockState());
+                h.getLevel().setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+            }
+        });
+    }
+
+    /** Owns both full scan planes and their destinations; never retries transaction assertions. */
+    private static void runInOwnedBuilderFixture(GameTestHelper h, java.util.function.Consumer<BlockPos> body) {
+        int radius = Math.max(Math.max(0, GTToolHelper.getHead(wand("Wood")).getToolQuality() + 1),
+                Math.max(0, GTToolHelper.getHead(wand("Steel")).getToolQuality() + 1));
+        // Current source qualities: Wood=0 (reach 1), Steel=2 (reach 3).
+        // +/-radius covers UP and EAST source planes. EAST adds +1 X; the quality test
+        // additionally probes X=radius+1. One further shell cell gives size (11,10,10).
+        var origin = h.absolutePos(new BlockPos(radius + 2, radius + 2, radius + 2));
+        var low = origin.offset(-radius - 1, -radius - 1, -radius - 1);
+        var high = origin.offset(radius + 2, radius + 1, radius + 1);
+        var owned = new java.util.HashSet<BlockPos>();
+        h.forEveryBlockInStructure(local -> owned.add(h.absolutePos(local)));
+        for (var at : BlockPos.betweenClosed(low, high)) {
+            h.assertTrue(owned.contains(at), "complete builder chamber is inside dedicated fixture: " + at);
+            h.assertTrue(!at.equals(h.absolutePos(BlockPos.ZERO)), "builder chamber excludes structure controller");
         }
-        h.succeed();
+        h.startSequence().thenWaitUntil(() -> {
+            for (var at : BlockPos.betweenClosed(low, high)) {
+                h.assertTrue(h.getLevel().areEntitiesLoaded(net.minecraft.world.level.ChunkPos.asLong(at))
+                                && h.getLevel().isPositionEntityTicking(at),
+                        "waiting for loaded/ticking builder chamber: " + at);
+            }
+        }).thenExecute(() -> {
+            int quiet = net.minecraft.world.level.block.Block.UPDATE_CLIENTS
+                    | net.minecraft.world.level.block.Block.UPDATE_KNOWN_SHAPE;
+            try {
+                for (var at : BlockPos.betweenClosed(low, high)) {
+                    boolean shell = at.getX() == low.getX() || at.getX() == high.getX()
+                            || at.getY() == low.getY() || at.getY() == high.getY()
+                            || at.getZ() == low.getZ() || at.getZ() == high.getZ();
+                    h.getLevel().setBlock(at, (shell ? Blocks.STONE : Blocks.AIR).defaultBlockState(), quiet);
+                }
+                // Adversarial pre-clear witnesses for the two old source-plane assumptions.
+                h.getLevel().setBlock(origin.west(), Blocks.STONE.defaultBlockState(), quiet);
+                h.getLevel().setBlock(origin.below(), Blocks.STONE.defaultBlockState(), quiet);
+                h.assertTrue(h.getLevel().getBlockState(origin.west()).is(Blocks.STONE)
+                                && h.getLevel().getBlockState(origin.below()).is(Blocks.STONE),
+                        "extra matching source cells exist before explicit isolation");
+                var liquidPositions = new BlockPos[]{origin.offset(radius + 1, 1, 0), origin.east()};
+                var liquids = new net.minecraft.world.level.block.Block[]{Blocks.WATER, Blocks.LAVA};
+                for (int i = 0; i < liquidPositions.length; i++) {
+                    var at = liquidPositions[i];
+                    h.getLevel().setBlock(at, liquids[i].defaultBlockState(), quiet);
+                    h.getLevel().removeBlock(at, false);
+                    h.assertTrue(h.getLevel().getBlockState(at).is(liquids[i]),
+                            "removeBlock preserves seeded liquid before explicit builder clearing");
+                }
+                // All scan sources, destinations and the outside-radius guard are dry, not
+                // merely the few cells each transaction subsequently prepares as its supports.
+                for (var at : BlockPos.betweenClosed(low.offset(1, 1, 1), high.offset(-1, -1, -1))) {
+                    h.getLevel().setBlock(at, Blocks.AIR.defaultBlockState(), quiet);
+                    h.assertTrue(h.getLevel().isEmptyBlock(at) && h.getLevel().getFluidState(at).isEmpty(),
+                            "complete builder interior is explicit dry air: " + at);
+                }
+                var chamber = new net.minecraft.world.phys.AABB(low.getX(), low.getY(), low.getZ(),
+                        high.getX() + 1, high.getY() + 1, high.getZ() + 1);
+                // Only ambient setup drops; transaction-time refund assertions remain unfiltered.
+                h.getLevel().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class, chamber)
+                        .forEach(net.minecraft.world.entity.item.ItemEntity::discard);
+                body.accept(origin);
+            } finally {
+                for (var at : BlockPos.betweenClosed(low, high))
+                    h.getLevel().setBlock(at, Blocks.AIR.defaultBlockState(), quiet);
+            }
+            h.succeed();
+        });
     }
 
     @GameTest(template = "torch_placement_empty", timeoutTicks = 160)

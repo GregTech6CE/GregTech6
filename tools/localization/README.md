@@ -115,3 +115,14 @@ EU/t、RU/t 保留原单位，方向参数复用既有 `jade.gt6ce.direction.*`�
 同步器只接受这四个精确键，检查英文原句、缺键、格式参数以及原文／别名／
 CrucibleCraft／Jade 绑定冲突，并独立报告 `project_instrument_translations`。
 未配置此项目映射的夹具仍按既有规则运行；不得用它翻译其它 message 或 tooltip。
+
+## 矿石宿主采集提示（2026-10-24）
+
+`ore_host_project.json` 只记录 `tooltip.gt6ce.ore.hand_harvest_preferred` 一个项目界面键，
+用于已核验的沙、红沙、砂砾矿石普通／小型六种状态。原版 `Material.sand` 无需正确工具即可掉落，
+但旧 LH 提示使用另一个 adventure-exempt 标志；此句是准确表达掉落条件的现代界面修正，
+不冒充原版或 TeamNED 译文。原始压缩来源、别名和既有项目翻译不变。
+采集工具类型、等级及能量仍可决定有效挖掘速度，不能把“更快”误写为强制掉落条件。
+同步器仅允许此精确键，核对英文原句、缺键、格式参数，拒绝覆盖原文／别名／
+已采用译文／Jade／仪表／配方项目映射；单独报告 `project_ore_host_translations`，
+不开放其它 tooltip 或 ore 命名空间。

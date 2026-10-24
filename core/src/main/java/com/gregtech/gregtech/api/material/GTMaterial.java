@@ -340,6 +340,15 @@ public final class GTMaterial {
         return this;
     }
 
+    /** GT6 {@code qual(long)}: change harvest quality without inventing tool types or speed.
+     * Like the source delegating qual overload, existing durability is clamped to at least one.
+     * Source tool-generation flags are handled by the separate material form policy.
+     */
+    public GTMaterial setToolQuality(int toolQuality) {
+        return setToolStats(Math.max(0, Math.min(3, this.toolTypes)), this.toolSpeed,
+                Math.max(1L, this.toolDurability), Math.max(0, Math.min(15, toolQuality)));
+    }
+
     /** GT6 {@code setFurnaceBurnTime}. */
     public GTMaterial setFurnaceBurnTime(long burnTime) {
         this.furnaceBurnTime = Math.max(0L, burnTime);
