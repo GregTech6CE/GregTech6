@@ -10,7 +10,7 @@ import unittest
 import xml.etree.ElementTree as ET
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'integration'))
-from check_issue_gametest_report import check, EXPECTED, LEGACY_CASE_NAMESPACES, API_CONTRACT_CASES, ENERGY_STORAGE_CASE_NAMESPACES, COVER_REMOVAL_CASE_NAMESPACES, ORE_SOURCE_CASES, ORE_FOLLOWON_CASE_NAMESPACES, MATERIAL_PHASE_CASE_NAMESPACES, POSITIVE_ORE_CENTRIFUGE_CASE_NAMESPACES, NEXT_ORE_CENTRIFUGE_CASE_NAMESPACES, QUALITY_PHYSICS_CASE_NAMESPACES, ORE_SHREDDER_CASE_NAMESPACES, expected_namespace
+from check_issue_gametest_report import check, EXPECTED, LEGACY_CASE_NAMESPACES, API_CONTRACT_CASES, ENERGY_STORAGE_CASE_NAMESPACES, COVER_REMOVAL_CASE_NAMESPACES, ORE_SOURCE_CASES, ORE_FOLLOWON_CASE_NAMESPACES, MATERIAL_PHASE_CASE_NAMESPACES, POSITIVE_ORE_CENTRIFUGE_CASE_NAMESPACES, NEXT_ORE_CENTRIFUGE_CASE_NAMESPACES, QUALITY_PHYSICS_CASE_NAMESPACES, ORE_SHREDDER_CASE_NAMESPACES, STRUCTURE_TRACKING_CASE_NAMESPACES, expected_namespace
 import verify_artifacts
 from verify_artifacts import required_forge_mixin_mappings
 
@@ -130,7 +130,73 @@ ORE_SHREDDER_CASES = (
 )
 
 
+STRUCTURE_TRACKING_CASES = (
+    'structuretrackingtests.idleandportqueriesscanonlyinlegacy',
+    'structuretrackingtests.brokenshellunformsatendoftickandrepairs',
+    'structuretrackingtests.fiftycelleditsevaluateeachmachineonce',
+    'structuretrackingtests.repeatlayeraddsanddropsthemiddle',
+    'structuretrackingtests.removingonecontrollerletstheotherform',
+    'structuretrackingtests.shellunloadstopsandreloadkeepscontents',
+    'structuretrackingtests.epochreloadfollowsthenewlayoutandtag',
+    'structuretrackingtests.wrenchandfacingrechecktankboilerandlogistics',
+    'structuretrackingtests.pistonpushesaplaincasingoutofthelayout',
+    'structuretrackingtests.nolayoutformsonthefirstqueryandalayoutcheckscells',
+    'structuretrackingtests.twohundredmachinessharethecellbudget',
+    'structuretrackingtests.bucketclickfollowsthesyncedformedbit',
+    'structuretrackingtests.controllerunloaddoesnotchangeloadedparts',
+    'structuretrackingtests.pendingchunkbecomesavailablewithoutthesafetynet',
+    'structuretrackingtests.sectionmaskwatchesindexespast31',
+    'structuretrackingtests.satisfiedcrucibleformandfluidleveldonotdirty',
+    'structuretrackingtests.exhaustedbudgetstillrepairsaformedmachinethistick',
+    'structuretrackingtests.safetyrescandoesnotbindormarkchunks',
+)
+
+
 class IssueEvidenceTests(unittest.TestCase):
+    def test_structure_tracking_exact_identities_and_native_template(self):
+        expected = STRUCTURE_TRACKING_CASES
+        self.assertEqual(set(expected), set(STRUCTURE_TRACKING_CASE_NAMESPACES))
+        self.assertEqual(len(expected), 18)
+        for platform in EXPECTED:
+            self.assertTrue(set(expected) <= EXPECTED[platform])
+            self.verify(self.report(platform), platform)
+            for identity in expected:
+                self.assertEqual('gt6ce_structure_tracking:test_empty', expected_namespace(identity))
+                for wrong in ('gregtech_issue_audit:test_empty', 'gt6ce_structure_tracking:wrong_template',
+                              'gt6ce:test_empty', 'com.gregtech.gregtech.gametest.StructureTrackingTests'):
+                    root = self.report(platform)
+                    case = next(c for c in root.iter('testcase') if c.get('name') == identity.split('.', 1)[1])
+                    case.set('classname', wrong)
+                    with self.subTest(platform=platform, identity=identity, namespace=wrong):
+                        with self.assertRaisesRegex(ValueError, 'did not execute'):
+                            self.verify(root, platform)
+
+    def test_structure_tracking_missing_or_nonpassing_cases_rejected(self):
+        for platform in EXPECTED:
+            for identity in STRUCTURE_TRACKING_CASES:
+                for outcome in ('missing', 'failure', 'error', 'skipped'):
+                    root = self.report(platform)
+                    suite = root.find('testsuite')
+                    case = next(c for c in suite if c.get('name') == identity.split('.', 1)[1])
+                    if outcome == 'missing':
+                        suite.remove(case)
+                    else:
+                        ET.SubElement(case, outcome, message='real structure tracking outcome')
+                    with self.subTest(platform=platform, identity=identity, outcome=outcome):
+                        with self.assertRaises(ValueError):
+                            self.verify(root, platform)
+
+    def test_structure_tracking_qualified_or_suffix_names_cannot_spoof_native_case(self):
+        for platform in EXPECTED:
+            for identity in STRUCTURE_TRACKING_CASES:
+                for wrong_name in (identity, 'forged.' + identity):
+                    root = self.report(platform)
+                    case = next(c for c in root.iter('testcase') if c.get('name') == identity.split('.', 1)[1])
+                    case.set('name', wrong_name)
+                    with self.subTest(platform=platform, identity=identity, name=wrong_name):
+                        with self.assertRaisesRegex(ValueError, 'did not execute'):
+                            self.verify(root, platform)
+
     def report(self, platform, namespace=None, failure=False):
         root = ET.Element('testsuite')
         suite = ET.SubElement(root, 'testsuite')

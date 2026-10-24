@@ -1,6 +1,6 @@
 # Six-form ore Shredder source alignment
 
-2026-10-24. **The pre-integration full795 fixed gate passed: Forge402 + NeoForge393, zero failures/errors/skips.** Both targeted baselines reproduced66 new output failures per loader. Integration with subsequent main PR #101 requires a separate831-case gate and remains pending.
+2026-10-24. **The pre-integration full795 fixed gate passed: Forge402 + NeoForge393, zero failures/errors/skips.** Both targeted baselines reproduced66 new output failures per loader. Integration with subsequent main PR #101 also passed its separate831-case gate, recorded below.
 
 ## Eleven materials, six rows each
 
@@ -52,8 +52,14 @@ Evidence: `work/validation/ore-shredder-baseline/local-validation-receipt.md` an
 
 The strict66-case checker group retains all663 previous identities and template bindings, including owned builder fixtures. Missing/failed/errored/skipped/wrong-template or spoofed qualified names reject the new cases; selection is not reduced. The optional indexing change only preselects candidate identities by final method-name segment and then executes the **unchanged matching predicates**, including historical legacy suffix behavior. Its rebased proof compared154 real XML reports,8155 singleton/seeded variants and10 full synthetic controls; a permanent collision/legacy-suffix regression checks that both identities sharing a method remain necessary. The36-test candidate suite passed; synthetic reports are not native795 evidence.
 
-The pre-integration full795 gate passed with dual/core builds,184 Python guards,491 REMI groups,1045 shared packaged classes per loader and SDK118 core +46 native; actual physics JAR/refmap guards passed. Use the repository Gradle wrapper and the full namespace/toolchain configuration in `.github/workflows/issue-regressions.yml`, then the public `tools/integration/check_issue_gametest_report.py` for each platform. The full checker deliberately rejects a128-case targeted report. No integrated831 pass, remote-CI recovery or merge is claimed here.
+The pre-integration full795 gate passed with dual/core builds,184 Python guards,491 REMI groups,1045 shared packaged classes per loader and SDK118 core +46 native; actual physics JAR/refmap guards passed. Use the repository Gradle wrapper and the full namespace/toolchain configuration in `.github/workflows/issue-regressions.yml`, then the public `tools/integration/check_issue_gametest_report.py` for each platform. The full checker deliberately rejects a128-case targeted report. The integrated831 local result is recorded below; remote CI and merge remain separate.
 
 ## Pre-integration receipt
 
 Evidence: `work/validation/ore-shredder-fixed/local-validation-receipt.md`. Forge402 in10m52s, XML SHA256 `63340457b8e9a1f149957f8388d3b94ecf0b8e2510eb9472f32dfd4667948c82`; Neo393 in4m49s, XML `63688cdca812f8caeba30f450b7f168237f59af0c6e3e2caf65bfc54bc0f92b8`. Native/strict checks exited0. Runtime/test inputs remained fixed; the audit document was the only added non-runtime file. New upstream `4dc02e6ca` structure tracking is not certified by this result.
+
+## PR #101 integrated verification
+
+Upstream `4dc02e6ca` structure-query/scan separation was preserved and merged with this change at `b497f11b9`. The evidence checker now explicitly requires all18 newly selected `gt6ce_structure_tracking:test_empty` cases per loader while retaining the optimized matcher and all795 earlier identities. No client formed-sync candidate or isolated tag probe is included.
+
+Full local gate passed **Forge420/420 + NeoForge411/411 =831**, zero failures/errors/skips and native/strict exits0; durations9m44s/4m16s. Dual/core,187 Python guards,491 REMI groups,actual physics/package/mixin/refmap guards passed;1045 shared classes per loader and SDK118 core+46 native. Input/final runtime/test snapshots were identical. Evidence: `work/validation/ore-shredder-pr101-integrated/local-validation-receipt.md`. Forge XML SHA256 `208a870647a69e4701ea8bba16f331c99a540820add28785f75115e3bdb7101d`; Neo `94ff3b0904e2ece9194aa75673b7af313e15d17e0c987b7718f4fdb80ce557e4`. This supersedes the older795 runtime proof for the integrated tree, without claiming all client-rendering/architecture paths are covered.

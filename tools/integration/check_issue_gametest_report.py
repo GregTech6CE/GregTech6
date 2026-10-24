@@ -470,7 +470,31 @@ ORE_SHREDDER_CASE_NAMESPACES = {
 }
 FUNCTIONAL_CASES |= set(ORE_SHREDDER_CASE_NAMESPACES)
 
+STRUCTURE_TRACKING_CASE_NAMESPACES = {
+    'structuretrackingtests.idleandportqueriesscanonlyinlegacy': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.brokenshellunformsatendoftickandrepairs': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.fiftycelleditsevaluateeachmachineonce': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.repeatlayeraddsanddropsthemiddle': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.removingonecontrollerletstheotherform': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.shellunloadstopsandreloadkeepscontents': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.epochreloadfollowsthenewlayoutandtag': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.wrenchandfacingrechecktankboilerandlogistics': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.pistonpushesaplaincasingoutofthelayout': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.nolayoutformsonthefirstqueryandalayoutcheckscells': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.twohundredmachinessharethecellbudget': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.bucketclickfollowsthesyncedformedbit': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.controllerunloaddoesnotchangeloadedparts': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.pendingchunkbecomesavailablewithoutthesafetynet': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.sectionmaskwatchesindexespast31': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.satisfiedcrucibleformandfluidleveldonotdirty': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.exhaustedbudgetstillrepairsaformedmachinethistick': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.safetyrescandoesnotbindormarkchunks': 'gt6ce_structure_tracking:test_empty',
+}
+FUNCTIONAL_CASES |= set(STRUCTURE_TRACKING_CASE_NAMESPACES)
+
 def expected_namespace(identity):
+    if identity in STRUCTURE_TRACKING_CASE_NAMESPACES:
+        return STRUCTURE_TRACKING_CASE_NAMESPACES[identity]
     if identity in ORE_SHREDDER_CASE_NAMESPACES:
         return ORE_SHREDDER_CASE_NAMESPACES[identity]
     if identity in {
@@ -547,6 +571,10 @@ def check(path, platform='forge'):
         classname = case.get('classname', '').lower()
         for identity in candidates_by_tail.get(name.rsplit('.', 1)[-1], ()):
             test_class, method = identity.split('.', 1)
+            if identity in STRUCTURE_TRACKING_CASE_NAMESPACES:
+                if name == method and classname == STRUCTURE_TRACKING_CASE_NAMESPACES[identity]:
+                    found.add(identity)
+                continue
             if identity in ORE_SHREDDER_CASE_NAMESPACES:
                 if name == method and classname == ORE_SHREDDER_CASE_NAMESPACES[identity]:
                     found.add(identity)
