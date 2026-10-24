@@ -1,8 +1,8 @@
 package gregtech.recipe;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.tool.GTToolType;
 import gregtech.data.MaterialPrefix;
 import gregtech.item.GTToolItem;
 import net.minecraft.resources.ResourceLocation;
@@ -33,7 +33,7 @@ public final class GTFlintAndTinderRecipe extends GTToolPatternRecipe {
     @Override
     protected GTMaterial classify(ItemStack stack, char letter, @Nullable GTMaterial material) {
         if (letter != 'T') return super.classify(stack, letter, material);
-        var form = gregtech.api.material.MaterialEquivalence.form(stack);
+        var form = gregtech.internal.material.MaterialEquivalence.form(stack);
         if (form == null) return null;
         MaterialPrefix prefix = form.prefix();
         if (prefix != MaterialPrefix.gem && prefix != MaterialPrefix.gemChipped

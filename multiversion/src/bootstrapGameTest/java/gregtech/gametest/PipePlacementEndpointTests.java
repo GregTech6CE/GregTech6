@@ -107,7 +107,7 @@ public final class PipePlacementEndpointTests {
             var laser = BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "co2_laser_lv"));
             h.assertTrue(laser instanceof gregtech.block.energy.LaserConverterBlock, "registered EU laser endpoint");
             f.set(f.center, laser.defaultBlockState().setValue(gregtech.block.energy.LaserConverterBlock.FACING, Direction.NORTH));
-            var endpoint = gregtech.api.energy.EnergyBlockViews.view(h.getLevel().getBlockEntity(f.center));
+            var endpoint = gregtech.internal.energy.EnergyBlockViews.view(h.getLevel().getBlockEntity(f.center));
             var eu = gregtech.data.GregTechTags.Energy.EU;
             h.assertTrue(endpoint != null && endpoint.isEnergyAcceptingFrom(eu, Direction.SOUTH, true)
                     && !endpoint.isEnergyAcceptingFrom(eu, Direction.NORTH, true)

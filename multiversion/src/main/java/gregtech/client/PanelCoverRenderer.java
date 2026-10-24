@@ -81,7 +81,7 @@ public final class PanelCoverRenderer {
             CoverSurfaceRenderer.attachment(host.coverOwner(),side,pose,vertices,ArmRenderHelper.getSprite(ResourceLocation.parse(spec.texture())),fallbackLight,spec.tint());
             CoverSurfaceRenderer.draw(pose,vertices,side,ArmRenderHelper.getSprite(ResourceLocation.parse(spec.texture())),fallbackLight,0,spec.tint());return true;
         }
-        if(stack.getItem() instanceof gregtech.api.material.MaterialFormItem material){
+        if(stack.getItem() instanceof gregtech.internal.material.MaterialFormItem material){
             var stone=MaterialCoverRules.stoneTextures(material.getPrefix().getName(),material.getMaterial().getName());
             if(!stone.isEmpty()){
                 var vertices=buffers.getBuffer(RenderType.cutout());

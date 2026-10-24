@@ -1,17 +1,17 @@
 package gregtech.registry;
 
 //? if >=1.21.1 {
-/*import gregtech.api.fluid.FluidVisualPolicy;
+/*import gregtech.internal.fluid.FluidVisualPolicy;
 *///?} else {
 import gregtech.GregTech;
-import gregtech.api.fluid.GTWaterParity;
+import gregtech.internal.fluid.GTWaterParity;
 //?}
-import gregtech.api.addon.AddonMaterials;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.mod.GregTechIdentity;
+import gregtech.internal.addon.AddonMaterials;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.mod.GregTechIdentity;
 import gregtech.data.RegisteredFluids;
-import gregtech.api.fluid.FluidPhysicalProperties;
+import gregtech.internal.fluid.FluidPhysicalProperties;
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
@@ -184,7 +184,7 @@ public final class GTFluids {
 //?}
     public static FluidType createFluidType(RegisteredFluids.FluidEntry entry) {
 //? if >=1.21.1 {
-        /*boolean water = gregtech.api.fluid.GTWaterParity.isWorldWater(entry.registryName());
+        /*boolean water = gregtech.internal.fluid.GTWaterParity.isWorldWater(entry.registryName());
         var properties = FluidType.Properties.create().density(water ? 1000 : FluidPhysicalProperties.density(entry))
                 .viscosity(water ? 1000 : FluidPhysicalProperties.viscosity(entry))
                 .temperature(entry.temperature()).lightLevel(entry.luminosity()).canConvertToSource(water).supportsBoating(water).canHydrate(water).canSwim(water).canDrown(water);
@@ -402,7 +402,7 @@ public final class GTFluids {
 
     /** Raw color for grayscale templates; client rendering uses FluidAppearance for texture-aware tint. */
     public static int resolveTint(RegisteredFluids.FluidEntry entry) {
-        return gregtech.api.fluid.FluidVisualPolicy.rawTint(entry);
+        return gregtech.internal.fluid.FluidVisualPolicy.rawTint(entry);
     }
 //?}
 }

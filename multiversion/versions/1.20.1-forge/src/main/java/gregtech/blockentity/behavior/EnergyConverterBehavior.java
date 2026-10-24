@@ -1,7 +1,7 @@
 package gregtech.blockentity.behavior;
 
-import gregtech.api.energy.EnergyTransfer;
-import gregtech.api.energy.IEnergyBlock;
+import gregtech.internal.energy.EnergyTransfer;
+import gregtech.internal.energy.IEnergyBlock;
 import gregtech.data.GregTechTags;
 import gregtech.util.GTEnergySides;
 import net.minecraft.core.Direction;

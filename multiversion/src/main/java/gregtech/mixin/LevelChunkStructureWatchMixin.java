@@ -1,8 +1,8 @@
 package gregtech.mixin;
 
-import gregtech.api.multiblock.tracking.SectionWatchMask;
-import gregtech.api.multiblock.tracking.StructureChunkWatch;
-import gregtech.api.multiblock.tracking.StructureWatchIndex;
+import gregtech.internal.multiblock.tracking.SectionWatchMask;
+import gregtech.internal.multiblock.tracking.StructureChunkWatch;
+import gregtech.internal.multiblock.tracking.StructureWatchIndex;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.state.BlockState;

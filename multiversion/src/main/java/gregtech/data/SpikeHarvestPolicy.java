@@ -1,6 +1,6 @@
 package gregtech.data;
 
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.block.misc.SpikeBlock;
 import net.minecraft.world.level.block.state.BlockState;
 

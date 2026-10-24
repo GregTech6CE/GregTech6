@@ -2,7 +2,7 @@
  * Original converter trinary activity texture selection. */
 package gregtech.block.energy;
 
-import gregtech.api.energy.EnergyNodeSpec;
+import gregtech.internal.energy.EnergyNodeSpec;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;

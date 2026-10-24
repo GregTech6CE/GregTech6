@@ -1,10 +1,10 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.multiblock.MultiblockLayout;
-import gregtech.api.multiblock.MultiblockPortOwner;
-import gregtech.api.multiblock.PartBindings;
-import gregtech.api.fluid.FluidTankGT;
-import gregtech.api.inventory.BlockContents;
+import gregtech.internal.multiblock.MultiblockLayout;
+import gregtech.internal.multiblock.MultiblockPortOwner;
+import gregtech.internal.multiblock.PartBindings;
+import gregtech.internal.fluid.FluidTankGT;
+import gregtech.internal.inventory.BlockContents;
 import gregtech.block.machine.LogisticsCoreControllerBlock;
 import gregtech.blockentity.GTEnergyBlockEntity;
 import gregtech.content.logistics.LogisticsHost;
@@ -36,7 +36,7 @@ import java.util.List;
 
 /** GT6 Logistics Core structure, EU input, network discovery and private 108-slot buffers. */
 public final class LogisticsCoreControllerBlockEntity extends GTEnergyBlockEntity
-implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, gregtech.api.multiblock.tracking.TrackedMultiblock {
+implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, gregtech.internal.multiblock.tracking.TrackedMultiblock {
     public static final int BUFFER_SLOTS = LogisticsCoreStructure.MAX_STORAGE_CPU_COUNT;
     public static final int TANK_CAPACITY = 16_000;
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();
@@ -67,11 +67,11 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, gregtech.api.
         super(GTBlockEntities.LOGISTICS_CORE.get(), pos, state);
     }
 
-    @Override public gregtech.api.multiblock.tracking.StructureDefinition structureDefinition() {
-        return gregtech.api.multiblock.tracking.CustomStructures.logistics(this);
+    @Override public gregtech.internal.multiblock.tracking.StructureDefinition structureDefinition() {
+        return gregtech.internal.multiblock.tracking.CustomStructures.logistics(this);
     }
     @Override public boolean isStructureOk() {
-        return gregtech.api.multiblock.tracking.StructureTracking.query(this);
+        return gregtech.internal.multiblock.tracking.StructureTracking.query(this);
     }
     @Override public void structureFormedChanged(boolean formed) {
         if (!formed) {
@@ -97,20 +97,20 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, gregtech.api.
             });
         }
         if (!level.isClientSide) {
-            var claimed = gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, candidates, 0,
+            var claimed = gregtech.internal.multiblock.tracking.StructureClaims.update(this, true, bindings, candidates, 0,
                     pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part
                     && part.canBind(worldPosition),
                     (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
                     this::releasePart);
-            if (claimed == gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED) return unbind();
+            if (claimed == gregtech.internal.multiblock.tracking.StructureClaims.Result.FAILED) return unbind();
         }
         processors = found;
         return true;
     }
 
     private boolean unbind() {
-        gregtech.api.multiblock.tracking.StructureClaims.runQuiet(() -> bindings.clear(this::releasePart));
-        gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
+        gregtech.internal.multiblock.tracking.StructureClaims.runQuiet(() -> bindings.clear(this::releasePart));
+        gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
         processors = null;
         network = LogisticsNetwork.Snapshot.empty();
         return false;
@@ -125,19 +125,19 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, gregtech.api.
     @Override
     public void onLoad() {
         super.onLoad();
-        if (level != null && !level.isClientSide) gregtech.api.multiblock.tracking.StructureTracking.attach(this);
+        if (level != null && !level.isClientSide) gregtech.internal.multiblock.tracking.StructureTracking.attach(this);
     }
 
     @Override
     public void setRemoved() {
-        if (!gregtech.api.multiblock.tracking.StructureTracking.unloading(this)) unbind();
-        gregtech.api.multiblock.tracking.StructureTracking.onRemoved(this);
+        if (!gregtech.internal.multiblock.tracking.StructureTracking.unloading(this)) unbind();
+        gregtech.internal.multiblock.tracking.StructureTracking.onRemoved(this);
         super.setRemoved();
     }
 
     @Override
     public void onChunkUnloaded() {
-        gregtech.api.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
+        gregtech.internal.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
         super.onChunkUnloaded();
     }
 
@@ -390,7 +390,7 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, gregtech.api.
 
     private long injectEU(long size, long amount, boolean execute) {
         var plan = gregtech.content.logistics.LogisticsCorePowerRules.inject(energy, energyCapacity(), size, amount, execute);
-        if (plan.explode()) gregtech.api.energy.MachineOverload.explode(this, 6);
+        if (plan.explode()) gregtech.internal.energy.MachineOverload.explode(this, 6);
         else if (execute && plan.accepted() > 0) {
             energy = plan.energy();
             setChanged();

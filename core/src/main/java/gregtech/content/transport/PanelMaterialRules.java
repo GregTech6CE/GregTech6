@@ -3,6 +3,7 @@
 package gregtech.content.transport;
 
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.data.MaterialGroups;
 import gregtech.data.MaterialPrefix;
 import java.util.*;

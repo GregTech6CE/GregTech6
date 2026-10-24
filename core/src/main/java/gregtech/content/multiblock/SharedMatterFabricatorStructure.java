@@ -1,6 +1,6 @@
 package gregtech.content.multiblock;
 
-import gregtech.api.multiblock.StructureGrid.Role;
+import gregtech.internal.multiblock.StructureGrid.Role;
 import java.util.*;
 
 /** GT6 MultiTileEntityMatterFabricator: 97 walls, 26 coils, 16 vents and 9 processors. */

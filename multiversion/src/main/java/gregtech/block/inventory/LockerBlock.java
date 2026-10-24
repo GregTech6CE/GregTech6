@@ -1,6 +1,6 @@
 package gregtech.block.inventory;
 
-import gregtech.api.GTWaterloggable;
+import gregtech.internal.GTWaterloggable;
 import gregtech.blockentity.inventory.LockerBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -37,9 +37,9 @@ public class LockerBlock extends HorizontalDirectionalBlock implements EntityBlo
     }
 *///?} else {
 //?}
-    private final gregtech.api.material.GTMaterial material;
+    private final gregtech.internal.material.GTMaterial material;
 
-    public gregtech.api.material.GTMaterial material() {
+    public gregtech.internal.material.GTMaterial material() {
         return material;
     }
 
@@ -47,7 +47,7 @@ public class LockerBlock extends HorizontalDirectionalBlock implements EntityBlo
         this(gregtech.content.material.Materials.StainlessSteel, properties);
     }
 
-    public LockerBlock(gregtech.api.material.GTMaterial material, Properties properties) {
+    public LockerBlock(gregtech.internal.material.GTMaterial material, Properties properties) {
         super(properties);
         this.material = material;
         registerDefaultState(defaultBlockState()

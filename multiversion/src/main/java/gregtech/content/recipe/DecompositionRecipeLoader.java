@@ -1,14 +1,14 @@
 package gregtech.content.recipe;
 
-import gregtech.api.machine.crucible.CrucibleMath;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialComponent;
-import gregtech.api.material.MaterialProperty;
-import gregtech.api.material.MaterialStackItemHelper;
-import gregtech.api.prefix.BlockMaterialPrefix;
-import gregtech.api.recipe.Recipe;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.machine.crucible.CrucibleMath;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialComponent;
+import gregtech.internal.material.MaterialProperty;
+import gregtech.internal.material.MaterialStackItemHelper;
+import gregtech.internal.prefix.BlockMaterialPrefix;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.bootstrap.InitializationStep;
 import gregtech.content.recipe.generated.GeneratedRecipeResolver;
 import gregtech.data.MachineRecipeMaps;

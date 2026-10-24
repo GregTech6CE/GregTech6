@@ -16,13 +16,13 @@ public final class ElectricWrenchHarvest {
         Block block=state.getBlock();
         if (block instanceof gregtech.block.machine.FluidPipeBlock pipe) {
             var texture=pipe.spec().material().getTextureSet();
-            if (texture==gregtech.api.material.MaterialTextureSet.WOOD
-                    || texture==gregtech.api.material.MaterialTextureSet.RUBBER) return false;
+            if (texture==gregtech.internal.material.MaterialTextureSet.WOOD
+                    || texture==gregtech.internal.material.MaterialTextureSet.RUBBER) return false;
         }
         if (block instanceof gregtech.block.machine.ItemPipeBlock pipe) {
             var texture=pipe.spec().material().getTextureSet();
-            if (texture==gregtech.api.material.MaterialTextureSet.WOOD
-                    || texture==gregtech.api.material.MaterialTextureSet.RUBBER) return false;
+            if (texture==gregtech.internal.material.MaterialTextureSet.WOOD
+                    || texture==gregtech.internal.material.MaterialTextureSet.RUBBER) return false;
         }
         return state.is(WRENCH) || state.is(MONKEY_WRENCH)
 //? if >=1.21.1 {

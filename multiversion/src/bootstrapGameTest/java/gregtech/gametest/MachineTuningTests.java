@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
 import gregtech.api.addon.MachineTuning;
-import gregtech.api.addon.MachineTuningRules;
+import gregtech.internal.addon.MachineTuningRules;
 import gregtech.content.machine.BasicMachineCatalog;
 import gregtech.content.machine.BasicMachineDefinitions;
 import net.minecraft.gametest.framework.GameTest;

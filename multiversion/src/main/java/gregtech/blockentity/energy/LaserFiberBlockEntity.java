@@ -1,6 +1,6 @@
 package gregtech.blockentity.energy;
 
-import gregtech.api.energy.EnergyBlockViews;
+import gregtech.internal.energy.EnergyBlockViews;
 import gregtech.block.energy.ElectricWireBlock;
 import gregtech.blockentity.GTEnergyBlockEntity;
 import gregtech.data.GregTechTags;

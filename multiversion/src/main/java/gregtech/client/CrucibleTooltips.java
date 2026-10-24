@@ -2,8 +2,8 @@
  * MultiTileEntitySmeltery.addToolTips. Common harvest/blast/material rows are appended once by shared handlers. */
 package gregtech.client;
 
-import gregtech.api.machine.CrucibleSpec;
-import gregtech.api.machine.crucible.CrucibleHazards;
+import gregtech.internal.machine.CrucibleSpec;
+import gregtech.internal.machine.crucible.CrucibleHazards;
 import gregtech.content.multiblock.OriginalLargeCrucibleParameters;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

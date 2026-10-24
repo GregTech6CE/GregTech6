@@ -52,11 +52,11 @@ public final class FluidItemOverrideList extends ItemOverrides {
         }
         RegisteredFluids.FluidEntry flEntry = fluidItem.fluidEntry();
         ResourceLocation texKey;
-        if(gregtech.api.fluid.FluidDisplayBinding.hasPayload(stack)) {
+        if(gregtech.internal.fluid.FluidDisplayBinding.hasPayload(stack)) {
 //? if >=1.21.1 {
-            /*var actual=gregtech.api.fluid.FluidDisplayBinding.resolveCurrent(stack);
+            /*var actual=gregtech.internal.fluid.FluidDisplayBinding.resolveCurrent(stack);
 *///?} else {
-            var actual=gregtech.api.fluid.FluidDisplayBinding.resolve(stack);
+            var actual=gregtech.internal.fluid.FluidDisplayBinding.resolve(stack);
 //?}
             texKey=actual.isEmpty()?resolveTextureKey(flEntry):IClientFluidTypeExtensions.of(actual.getFluid()).getStillTexture(actual);
         } else texKey=resolveTextureKey(flEntry);

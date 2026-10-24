@@ -1,7 +1,7 @@
 package gregtech.platform.neoforge.logistics;
 
 @net.neoforged.fml.common.EventBusSubscriber(
-        modid = gregtech.api.mod.GregTechIdentity.MOD_ID,
+        modid = gregtech.internal.mod.GregTechIdentity.MOD_ID,
         bus = net.neoforged.fml.common.EventBusSubscriber.Bus.MOD)
 public final class LongDistanceCapabilities {
     private LongDistanceCapabilities() {}

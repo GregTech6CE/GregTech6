@@ -1,9 +1,9 @@
 package gregtech.block.misc;
 
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.ToolInteractionSpec;
-import gregtech.api.tool.ToolInteractionTarget;
-import gregtech.api.tool.ToolInteractions;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.ToolInteractionSpec;
+import gregtech.internal.tool.ToolInteractionTarget;
+import gregtech.internal.tool.ToolInteractions;
 import gregtech.block.machine.MachineRotationType;
 import gregtech.content.material.Materials;
 import gregtech.damage.GTDamageTypes;
@@ -58,7 +58,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * choice and wall/omni/falling shape; named blockstate properties preserve those in 1.20.1.
  * Worldgen's existing default {@code spike_steel} state is omni, as GT6's mob farm uses meta 6/14.
  */
-public final class SpikeBlock extends Block implements ToolInteractionTarget, gregtech.api.block.StatefulBlockLoot {
+public final class SpikeBlock extends Block implements ToolInteractionTarget, gregtech.internal.block.StatefulBlockLoot {
     @Override public java.util.List<String> lootStateProperties(){return java.util.List.of("mode","secondary");}
     public enum Family { METAL, STEEL, SHARP, FANCY, SUPER }
     public enum Mode implements StringRepresentable {
@@ -100,7 +100,7 @@ public final class SpikeBlock extends Block implements ToolInteractionTarget, gr
             case SHARP -> secondary ? Materials.Titanium.getColor() : Materials.Steel.getColor();
             case FANCY -> secondary ? Materials.Silver.getColor() : Materials.Gold.getColor();
             case SUPER -> secondary ? Materials.Adamantium.getColor()
-                    : gregtech.api.material.GTMaterialRegistry.get("TungstenSteel").getColor();
+                    : gregtech.internal.material.GTMaterialRegistry.get("TungstenSteel").getColor();
         };
     }
 

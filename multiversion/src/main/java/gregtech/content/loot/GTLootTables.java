@@ -2,7 +2,7 @@ package gregtech.content.loot;
 
 import gregtech.content.book.GTBooks;
 import gregtech.content.book.GTMaterialDictionary;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.content.recipe.generated.GeneratedRecipeResolver;
 import gregtech.content.recipe.generated.GTLootGen;
 import net.minecraft.resources.ResourceLocation;

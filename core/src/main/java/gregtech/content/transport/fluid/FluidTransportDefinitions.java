@@ -1,8 +1,8 @@
 package gregtech.content.transport.fluid;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.machine.PipeSpec;
-import gregtech.api.machine.TankSpec;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.machine.PipeSpec;
+import gregtech.internal.machine.TankSpec;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -116,7 +116,7 @@ public final class FluidTransportDefinitions {
                         family.maxTemperature > 0 ? family.maxTemperature
                                 : (long) (family.material.getMeltingPoint() * 1.25D),
                         family.flammability));
-        result.addAll(gregtech.api.addon.AddonPipes.addonFluidSpecs());
+        result.addAll(gregtech.internal.addon.AddonPipes.addonFluidSpecs());
         return List.copyOf(result);
     }
     public static List<TankSpec> tanks() {

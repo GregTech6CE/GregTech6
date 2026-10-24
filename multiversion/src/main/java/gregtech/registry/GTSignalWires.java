@@ -1,6 +1,6 @@
 package gregtech.registry;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.block.energy.SignalWireBlock;
 import gregtech.content.material.Materials;
 import net.minecraft.world.item.*;

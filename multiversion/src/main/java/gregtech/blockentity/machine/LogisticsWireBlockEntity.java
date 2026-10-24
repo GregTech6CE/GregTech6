@@ -1,7 +1,7 @@
 package gregtech.blockentity.machine;
 
 //? if >=1.21.1 {
-/*import gregtech.api.transport.PipeConnections;
+/*import gregtech.internal.transport.PipeConnections;
 *///?} else {
 import gregtech.block.energy.ElectricWireBlock;
 //?}

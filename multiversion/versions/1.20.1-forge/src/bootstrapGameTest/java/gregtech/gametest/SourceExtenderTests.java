@@ -79,9 +79,9 @@ public final class SourceExtenderTests {
         h.assertTrue(fluids.fill(new FluidStack(net.minecraft.world.level.material.Fluids.WATER,100),FluidAction.EXECUTE)==0,"recursive tank relay terminates");h.succeed();
     }
     @GameTest(template="test_blueprint_empty") public static void sourceToolsAndCrafting(GameTestHelper h){
-        var steel=gregtech.content.material.Materials.Steel;var wood=gregtech.api.material.GTMaterialRegistry.get("Wood");
-        var wrench=gregtech.item.GTToolItem.create(gregtech.api.tool.GTToolType.WRENCH,steel,wood);
-        var monkey=gregtech.item.GTToolItem.create(gregtech.api.tool.GTToolType.MONKEY_WRENCH,steel,wood);
+        var steel=gregtech.content.material.Materials.Steel;var wood=gregtech.internal.material.GTMaterialRegistry.get("Wood");
+        var wrench=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.WRENCH,steel,wood);
+        var monkey=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.MONKEY_WRENCH,steel,wood);
         for(var spec:ExtenderSpec.values()){
             var block=GTMiscBlocks.SOURCE_EXTENDERS.get(spec).get();var state=block.defaultBlockState();
             h.assertTrue(new ItemStack(block).getMaxStackSize()==16,"source stack size 16");
@@ -102,7 +102,7 @@ public final class SourceExtenderTests {
             for(int y=0;y<shaped.getHeight();y++)for(int x=0;x<shaped.getWidth();x++){
                 var ingredient=shaped.getIngredients().get(x+y*shaped.getWidth());if(ingredient.isEmpty())continue;
                 var input=ingredient.getItems()[0].copy();
-                if(input.getItem() instanceof gregtech.item.GTToolItem)input=gregtech.item.GTToolItem.create(gregtech.api.tool.GTToolHelper.getType(input),steel,wood);
+                if(input.getItem() instanceof gregtech.item.GTToolItem)input=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolHelper.getType(input),steel,wood);
                 grid.setItem(x+y*3,input);
             }
             h.assertTrue(shaped.matches(grid,h.getLevel()),"source pattern can actually be crafted: "+spec.id);
@@ -115,18 +115,18 @@ public final class SourceExtenderTests {
     @GameTest(template="test_blueprint_empty") public static void doubleFacingToolExecutionAndSavedState(GameTestHelper h){
         var block=GTMiscBlocks.SOURCE_EXTENDERS.get(ExtenderSpec.COMBINED).get();h.setBlock(CENTER,block);
         var absolute=h.absolutePos(CENTER);var player=h.makeMockPlayer();
-        var material=gregtech.content.material.Materials.Steel;var wood=gregtech.api.material.GTMaterialRegistry.get("Wood");
-        var wrench=gregtech.item.GTToolItem.create(gregtech.api.tool.GTToolType.WRENCH,material,wood);
-        var monkey=gregtech.item.GTToolItem.create(gregtech.api.tool.GTToolType.MONKEY_WRENCH,material,wood);
+        var material=gregtech.content.material.Materials.Steel;var wood=gregtech.internal.material.GTMaterialRegistry.get("Wood");
+        var wrench=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.WRENCH,material,wood);
+        var monkey=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.MONKEY_WRENCH,material,wood);
         for(var side:Direction.values()){
             var state=h.getLevel().getBlockState(absolute);var before=state.getValue(SourceExtenderBlock.SECONDARY);
             player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,wrench);
             var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(absolute).add(side.getStepX()*.5,side.getStepY()*.5,side.getStepZ()*.5),side,absolute,false);
-            gregtech.api.tool.ToolInteractions.use(state,h.getLevel(),absolute,player,net.minecraft.world.InteractionHand.MAIN_HAND,hit);
+            gregtech.internal.tool.ToolInteractions.use(state,h.getLevel(),absolute,player,net.minecraft.world.InteractionHand.MAIN_HAND,hit);
             state=h.getLevel().getBlockState(absolute);
             h.assertTrue(state.getValue(SourceExtenderBlock.FACING)==side&&state.getValue(SourceExtenderBlock.SECONDARY)==before,"wrench changes only main face: "+side);
             player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,monkey);
-            gregtech.api.tool.ToolInteractions.use(state,h.getLevel(),absolute,player,net.minecraft.world.InteractionHand.MAIN_HAND,hit);
+            gregtech.internal.tool.ToolInteractions.use(state,h.getLevel(),absolute,player,net.minecraft.world.InteractionHand.MAIN_HAND,hit);
             state=h.getLevel().getBlockState(absolute);
             h.assertTrue(state.getValue(SourceExtenderBlock.FACING)==side&&state.getValue(SourceExtenderBlock.SECONDARY)==side,"monkey wrench changes only secondary face: "+side);
             var tag=net.minecraft.nbt.NbtUtils.writeBlockState(state);

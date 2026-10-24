@@ -28,7 +28,7 @@ import java.util.WeakHashMap;
 
 //? if >=1.21.1 {
 /*/^* NeoForge1.21 equivalent of GT6's MOB_SPAWN_INHIBITORS list. ^/
-@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID)
+@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID)
 *///?} else {
 /** Forge 1.20 equivalent of GT6's MOB_SPAWN_INHIBITORS list. */
 @Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)

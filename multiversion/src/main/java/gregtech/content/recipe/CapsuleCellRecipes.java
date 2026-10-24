@@ -1,7 +1,7 @@
 package gregtech.content.recipe;
 
-import gregtech.api.fluid.PortableFluidContainerSpec;
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.fluid.PortableFluidContainerSpec;
+import gregtech.internal.recipe.Recipe;
 import gregtech.data.*;
 import gregtech.registry.*;
 import net.minecraft.resources.ResourceLocation;
@@ -48,7 +48,7 @@ public final class CapsuleCellRecipes {
         };
     }
     /** RecipeMapHandlerPrefixForging.getCosts / OreDictMaterial.getWeight, at 96 GU/t. */
-    public static long hotExtrusionTicks(gregtech.api.material.GTMaterial material,long units) {
+    public static long hotExtrusionTicks(gregtech.internal.material.GTMaterial material,long units) {
         return ExtrusionWorkRules.hotExtrusionTicks(material,units);
     }
 

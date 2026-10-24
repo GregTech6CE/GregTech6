@@ -1,8 +1,8 @@
 package gregtech.content.transport;
 
 import gregtech.content.material.Materials;
-import gregtech.api.machine.ItemPipeSpec;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.machine.ItemPipeSpec;
+import gregtech.internal.material.GTMaterial;
 import gregtech.data.generated.GT6Materials;
 import gregtech.registry.*;
 
@@ -13,12 +13,12 @@ public final class ItemPipeDefinitions {
     // ==================== Item Pipes ====================
 
     public static void register() {
-        gregtech.api.addon.AddonMachines.collectContributors();
+        gregtech.internal.addon.AddonMachines.collectContributors();
         for (ItemPipeCatalog.ItemPipeMat mat : ItemPipeCatalog.mats()) {
             for (ItemPipeSpec.ItemPipeSize size : ItemPipeSpec.ItemPipeSize.values()) {
                 String sizeKey = size.name().toLowerCase();
                 String id = "item_pipe_" + sizeKey + "_" + mat.idSuffix();
-                String owner = gregtech.api.addon.AddonPipes.owner(id);
+                String owner = gregtech.internal.addon.AddonPipes.owner(id);
                 if (owner != null) {
                     gregtech.registry.AddonPipeRegistration.queueItem(
                             owner, id, mat.material(), size, mat.stepSize(), mat.invSize(), true);

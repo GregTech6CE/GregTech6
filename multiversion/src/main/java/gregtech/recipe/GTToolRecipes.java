@@ -1,5 +1,5 @@
 package gregtech.recipe;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolType;
 import gregtech.content.tool.ManualToolRecipeCatalog;
 import gregtech.data.MaterialPrefix;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -37,7 +37,7 @@ public final class GTToolRecipes {
     public static MaterialPrefix headPrefix(GTToolType type){return ManualToolRecipeCatalog.headPrefix(type.definition());}
     public static Map<GTToolType,List<Pattern>> allShaped(){return adapt(ManualToolRecipeCatalog.allShaped());}
     public static Map<GTToolType,List<Pattern>> allHeads(){return adapt(ManualToolRecipeCatalog.allHeads());}
-    private static Map<GTToolType,List<Pattern>> adapt(Map<gregtech.api.tool.ToolDefinition,List<ManualToolRecipeCatalog.Pattern>> source){Map<GTToolType,List<Pattern>> out=new LinkedHashMap<>();source.forEach((key,value)->out.put(GTToolType.valueOf(key.name()),value.stream().map(GTToolRecipes::adapt).toList()));return Map.copyOf(out);}
+    private static Map<GTToolType,List<Pattern>> adapt(Map<gregtech.internal.tool.ToolDefinition,List<ManualToolRecipeCatalog.Pattern>> source){Map<GTToolType,List<Pattern>> out=new LinkedHashMap<>();source.forEach((key,value)->out.put(GTToolType.valueOf(key.name()),value.stream().map(GTToolRecipes::adapt).toList()));return Map.copyOf(out);}
     public static boolean isHeadAssembly(GTToolType type){return ManualToolRecipeCatalog.isHeadAssembly(type.definition());}
     public static boolean isWoodenRollingPin(GTToolType type,Pattern pattern){
         return type==GTToolType.ROLLING_PIN&&pattern.forms().get('P')==MaterialPrefix.plate;

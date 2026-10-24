@@ -4,7 +4,7 @@ package gregtech.content.cover;
 /*import gregtech.platform.neoforge.NeoToolBindings;
 import gregtech.platform.neoforge.transport.FluidPipeToolInteractions;
 *///?} else {
-import gregtech.api.tool.*;
+import gregtech.internal.tool.*;
 //?}
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;

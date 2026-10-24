@@ -1,6 +1,6 @@
 package gregtech.mixin;
 
-import gregtech.api.fluid.WaterFamilyIdentity;
+import gregtech.internal.fluid.WaterFamilyIdentity;
 import net.minecraft.world.level.block.AmethystClusterBlock;
 //? if >=1.21.1 {
 /*import net.minecraft.world.level.block.BarrierBlock;

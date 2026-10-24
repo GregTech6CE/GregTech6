@@ -1,15 +1,15 @@
 package gregtech.core;
 
-import gregtech.api.kubejs.KubeJsLoadOrder;
-import gregtech.api.recipe.data.FluidComponent;
-import gregtech.api.recipe.data.JsonMaps;
-import gregtech.api.recipe.data.ItemComponent;
-import gregtech.api.recipe.data.ItemResult;
-import gregtech.api.recipe.data.MachineRecipeDocuments;
-import gregtech.api.recipe.data.MachineRecipeFields;
-import gregtech.api.recipe.data.MachineRecipeMatch;
-import gregtech.api.recipe.data.MachineRecipeRemovalSpec;
-import gregtech.api.recipe.data.MachineRecipeScript;
+import gregtech.internal.kubejs.KubeJsLoadOrder;
+import gregtech.internal.recipe.data.FluidComponent;
+import gregtech.internal.recipe.data.JsonMaps;
+import gregtech.internal.recipe.data.ItemComponent;
+import gregtech.internal.recipe.data.ItemResult;
+import gregtech.internal.recipe.data.MachineRecipeDocuments;
+import gregtech.internal.recipe.data.MachineRecipeFields;
+import gregtech.internal.recipe.data.MachineRecipeMatch;
+import gregtech.internal.recipe.data.MachineRecipeRemovalSpec;
+import gregtech.internal.recipe.data.MachineRecipeScript;
 
 import java.util.List;
 

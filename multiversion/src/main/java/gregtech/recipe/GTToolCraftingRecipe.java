@@ -1,6 +1,6 @@
 package gregtech.recipe;
 
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolType;
 import gregtech.item.GTToolItem;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -28,7 +28,7 @@ public final class GTToolCraftingRecipe extends GTToolPatternRecipe {
 
     @Override
     protected ItemStack assembleFrom(Match match) {
-        return GTToolItem.create(type, match.material(),GTToolRecipes.isWoodenRollingPin(type,pattern)?gregtech.api.material.GTMaterialRegistry.get("Wood"):type==GTToolType.POCKET_MULTITOOL?gregtech.api.material.GTMaterialRegistry.get("Blue"):match.handle());
+        return GTToolItem.create(type, match.material(),GTToolRecipes.isWoodenRollingPin(type,pattern)?gregtech.internal.material.GTMaterialRegistry.get("Wood"):type==GTToolType.POCKET_MULTITOOL?gregtech.internal.material.GTMaterialRegistry.get("Blue"):match.handle());
     }
 
     @Override

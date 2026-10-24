@@ -1,6 +1,6 @@
 package gregtech.content.recipe;
 
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.recipe.Recipe;
 import gregtech.content.bumble.BumbleBeeType;
 import gregtech.content.bumble.GTBumbleSpecies;
 import gregtech.content.material.Materials;
@@ -30,7 +30,7 @@ import java.util.List;
  * GT6's <b>Bumblelyzer</b> - the port of {@code RecipeMapBumblelyzer.findRecipe}
  * ({@code gregapi/recipes/maps/RecipeMapBumblelyzer.java:51-74}), installed on
  * {@link MachineRecipeMaps#Bumblelyzer} through {@link
- * gregtech.api.recipe.RecipeMap#dynamicRecipes}.
+ * gregtech.internal.recipe.RecipeMap#dynamicRecipes}.
  *
  * <p>The original is a {@code RecipeMap} subclass whose {@code findRecipe} builds a row from the
  * <em>identity</em> of the bee in the input slots, which no static table can express: a living bee of

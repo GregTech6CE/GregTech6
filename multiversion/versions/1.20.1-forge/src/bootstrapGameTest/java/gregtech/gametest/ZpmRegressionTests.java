@@ -23,13 +23,13 @@ public final class ZpmRegressionTests {
         h.assertTrue(z.inventory().insertItem(0,module,false).isEmpty(),"artifact inserts");
         z.tick();h.assertTrue(z.totalEnergy()==ZpmEnergy.CAPACITY,"disconnected output retains energy across buffering");
         h.assertTrue(z.doEnergyInjection(GregTechTags.Energy.QU,Direction.WEST,131072,1,true)==0,"cannot recharge artifact or converter");
-        var receiverBlock=gregtech.api.machine.MachineRegistry.basicMachines().get(0).get();
+        var receiverBlock=gregtech.internal.machine.MachineRegistry.basicMachines().get(0).get();
         h.setBlock(pos.east(),receiverBlock);
         var receiver=(gregtech.blockentity.machine.BasicMachineBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(pos.east()));
-        receiver.setSpec(gregtech.api.machine.BasicMachineSpec.builder("zpm_test",receiverBlock.basicSpec().material())
+        receiver.setSpec(gregtech.internal.machine.BasicMachineSpec.builder("zpm_test",receiverBlock.basicSpec().material())
                 .machineType(receiverBlock.basicSpec().machineName()).energy(GregTechTags.Energy.EU,ZpmEnergy.PACKET)
                 .recipes(receiverBlock.basicSpec().recipeMap())
-                .faces(gregtech.api.energy.FaceConfig.ALL_SIDES).build());
+                .faces(gregtech.internal.energy.FaceConfig.ALL_SIDES).build());
         z.tick();h.assertTrue(receiver.getEnergyTick()==ZpmEnergy.PACKET&&z.totalEnergy()==ZpmEnergy.CAPACITY-ZpmEnergy.PACKET,"front converts exactly one QU packet to EU");
         z.toggleStopped();long before=z.totalEnergy();z.tick();h.assertTrue(z.totalEnergy()==before,"stop prevents emission");
         var drops=z.getBlockState().getBlock().getDrops(z.getBlockState(),new net.minecraft.world.level.storage.loot.LootParams.Builder(h.getLevel())

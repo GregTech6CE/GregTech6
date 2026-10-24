@@ -1,8 +1,9 @@
 package gregtech.gametest;
 
 import gregtech.api.recipe.*;
-import gregtech.api.fluid.FluidTankGT;
-import gregtech.api.machine.AdjacentCapabilityCache;
+import gregtech.internal.recipe.*;
+import gregtech.internal.fluid.FluidTankGT;
+import gregtech.internal.machine.AdjacentCapabilityCache;
 import gregtech.blockentity.machine.*;
 import gregtech.registry.GTFluids;
 import net.minecraft.core.*;
@@ -213,10 +214,10 @@ public final class MachinePerformanceTests {
             var machine = (BasicMachineBlockEntity) h.getBlockEntity(pos);
             var source = (net.minecraft.world.Container) h.getBlockEntity(pos.above());
             var target = (net.minecraft.world.Container) h.getBlockEntity(pos.below());
-            machine.setSpec(gregtech.api.machine.BasicMachineSpec.builder("performance_fixture", block.basicSpec().material())
+            machine.setSpec(gregtech.internal.machine.BasicMachineSpec.builder("performance_fixture", block.basicSpec().material())
                     .machineType("sluice").energy(gregtech.data.GregTechTags.Energy.TU, 1).energyRange(1, 1)
                     .processingEfficiency(10000).parallel(1).recipes(map)
-                    .faces(new gregtech.api.energy.FaceConfig(63, 63, 63, 63, 0, 0, 1, 0, -1, -1)).build());
+                    .faces(new gregtech.internal.energy.FaceConfig(63, 63, 63, 63, 0, 0, 1, 0, -1, -1)).build());
             map.add(new Recipe(new ItemStack[]{new ItemStack(Items.COBBLESTONE)}, new ItemStack[]{new ItemStack(Items.STICK, 4)},
                     null, null, new FluidStack[0], new FluidStack[0], 4, 1, 0));
             for (int i = 0; i < machine.inputSlots(); i++) machine.inventory().setStackInSlot(i, new ItemStack(Items.DIRT, 64));

@@ -27,11 +27,11 @@ import java.util.List;
 public final class ColoredBookItem extends WrittenBookItem {
     private final ColoredBookRules.Variant variant;
     public ColoredBookItem(ColoredBookRules.Variant variant){super(new Item.Properties().stacksTo(64));this.variant=variant;
-        var parts=new java.util.ArrayList<gregtech.api.material.MaterialComponent>();
-        parts.add(gregtech.api.material.MaterialComponent.of(gregtech.content.material.Materials.Paper,gregtech.api.material.GTValues.U*(variant.large()?6:3)));
-        if(variant.emblem().equals("bronze"))parts.add(gregtech.api.material.MaterialComponent.of(gregtech.content.material.Materials.Bronze,gregtech.api.material.GTValues.U/9));
-        if(variant.emblem().equals("radiation"))parts.add(gregtech.api.material.MaterialComponent.of(gregtech.content.material.Materials.Technetium,gregtech.api.material.GTValues.U/9));
-        gregtech.api.material.ItemMaterialRegistry.register(this,new gregtech.api.material.ItemComposition(null,parts,"GT6 MultiItemBooks",true));
+        var parts=new java.util.ArrayList<gregtech.internal.material.MaterialComponent>();
+        parts.add(gregtech.internal.material.MaterialComponent.of(gregtech.content.material.Materials.Paper,gregtech.api.material.GTValues.U*(variant.large()?6:3)));
+        if(variant.emblem().equals("bronze"))parts.add(gregtech.internal.material.MaterialComponent.of(gregtech.content.material.Materials.Bronze,gregtech.api.material.GTValues.U/9));
+        if(variant.emblem().equals("radiation"))parts.add(gregtech.internal.material.MaterialComponent.of(gregtech.content.material.Materials.Technetium,gregtech.api.material.GTValues.U/9));
+        gregtech.internal.material.ItemMaterialRegistry.register(this,new gregtech.internal.material.ItemComposition(null,parts,"GT6 MultiItemBooks",true));
     }
     public ColoredBookRules.Variant variant(){return variant;}
 //? if >=1.21.1 {

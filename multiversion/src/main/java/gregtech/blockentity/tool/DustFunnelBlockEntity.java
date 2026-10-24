@@ -1,7 +1,7 @@
 package gregtech.blockentity.tool;
 
-import gregtech.api.machine.crucible.CrucibleItemInput;
-import gregtech.api.machine.crucible.CrucibleMaterialStack;
+import gregtech.internal.machine.crucible.CrucibleItemInput;
+import gregtech.internal.machine.crucible.CrucibleMaterialStack;
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity;
 *///?} else {
@@ -36,7 +36,7 @@ import java.util.List;
 public class DustFunnelBlockEntity extends BlockEntity {
 
     private int mode;
-    private gregtech.api.material.GTMaterial material;
+    private gregtech.internal.material.GTMaterial material;
     private long amount;
     private boolean inventoryChanged = true;
     private final ItemStackHandler buffer = new ItemStackHandler(2) {
@@ -54,11 +54,11 @@ public class DustFunnelBlockEntity extends BlockEntity {
     }
 
     public static boolean isDust(ItemStack stack) {
-        var form = gregtech.api.material.MaterialEquivalence.form(stack);
+        var form = gregtech.internal.material.MaterialEquivalence.form(stack);
         if (form != null && gregtech.content.tool.UtilityToolRules.dust(form.prefix().getName())) return true;
         return stack.getItem() instanceof net.minecraft.world.item.BlockItem item
                 && item.getBlock() instanceof gregtech.block.MaterialBlockLike block
-                && block.prefix() == gregtech.api.prefix.BlockMaterialPrefix.blockDust;
+                && block.prefix() == gregtech.internal.prefix.BlockMaterialPrefix.blockDust;
     }
 
     /** @return how many items were taken from the held stack */
@@ -92,7 +92,7 @@ public class DustFunnelBlockEntity extends BlockEntity {
     public long retainedAmount() { return amount; }
     public boolean needsMoreDust() { return amount > 0 && amount < outputAmount(); }
     @Nullable
-    public gregtech.api.material.GTMaterial retainedMaterial() { return material; }
+    public gregtech.internal.material.GTMaterial retainedMaterial() { return material; }
 
     public void cycleMode(boolean reverse) {
         mode = Math.floorMod(mode + (reverse ? -1 : 1), 5);
@@ -103,8 +103,8 @@ public class DustFunnelBlockEntity extends BlockEntity {
             : outputPrefix().getMaterialWeight(); }
     private MaterialPrefix outputPrefix() { return new MaterialPrefix[]{MaterialPrefix.dust, MaterialPrefix.dust,
             MaterialPrefix.dustSmall, MaterialPrefix.dustTiny, MaterialPrefix.dustDiv72}[mode]; }
-    private ItemStack output(gregtech.api.material.GTMaterial mat) {
-        return mode == 0 ? gregtech.registry.GTBlocks.getStack(gregtech.api.prefix.BlockMaterialPrefix.blockDust, mat)
+    private ItemStack output(gregtech.internal.material.GTMaterial mat) {
+        return mode == 0 ? gregtech.registry.GTBlocks.getStack(gregtech.internal.prefix.BlockMaterialPrefix.blockDust, mat)
                 : gregtech.registry.GTItems.getStack(outputPrefix(), mat, 1);
     }
     public ItemStack modeIcon() { return output(gregtech.content.material.Materials.Iron); }
@@ -120,7 +120,7 @@ public class DustFunnelBlockEntity extends BlockEntity {
         boolean transfer = funnel.inventoryChanged || level.getGameTime() % 100 == 0;
         funnel.inventoryChanged = false;
         if (transfer && funnel.buffer.getStackInSlot(0).isEmpty()) {
-            var above = gregtech.api.inventory.NativeItemInventories.at(level, pos.above(), Direction.DOWN);
+            var above = gregtech.internal.inventory.NativeItemInventories.at(level, pos.above(), Direction.DOWN);
             if (above != null) for (int slot = 0; slot < above.getSlots(); slot++) {
                 var offered = above.extractItem(slot, 64, true);
                 if (!funnel.accepts(offered)) continue;
@@ -150,7 +150,7 @@ public class DustFunnelBlockEntity extends BlockEntity {
             }
         }
         if (!transfer || funnel.buffer.getStackInSlot(1).isEmpty()) return;
-        var below = gregtech.api.inventory.NativeItemInventories.at(level, pos.below(), Direction.UP);
+        var below = gregtech.internal.inventory.NativeItemInventories.at(level, pos.below(), Direction.UP);
         var output = funnel.buffer.getStackInSlot(1);
         if (below != null) {
             ItemStack remaining = output.copy();
@@ -243,7 +243,7 @@ public class DustFunnelBlockEntity extends BlockEntity {
     private void loadProcess(CompoundTag tag) {
         if (buffer.getSlots() != 2) { var input = buffer.getStackInSlot(0).copy(); buffer.setSize(2); buffer.setStackInSlot(0, input); }
         mode = Math.floorMod(tag.getInt("gt.mode"), 5); amount = Math.max(0, tag.getLong("gt.amount"));
-        material = amount > 0 ? gregtech.api.material.GTMaterialRegistry.get(tag.getString("gt.material")) : null;
+        material = amount > 0 ? gregtech.internal.material.GTMaterialRegistry.get(tag.getString("gt.material")) : null;
         inventoryChanged = true;
     }
 }

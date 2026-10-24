@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.mod.GregTechIdentity;
+import gregtech.internal.mod.GregTechIdentity;
 import gregtech.api.sensor.TemperatureSource;
 import gregtech.api.signal.GtSignalReceiver;
 import gregtech.api.signal.GtSignalSource;

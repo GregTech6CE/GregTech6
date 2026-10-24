@@ -7,8 +7,8 @@ import net.minecraft.gametest.framework.*;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.GameType;
-import gregtech.api.tool.*;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.tool.*;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.item.GTToolItem;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.gametest.GameTestHolder;

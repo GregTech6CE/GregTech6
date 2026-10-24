@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.content.book.GTMaterialDictionary;
 import gregtech.content.book.GTMaterialRecipes;
 import gregtech.content.material.Materials;

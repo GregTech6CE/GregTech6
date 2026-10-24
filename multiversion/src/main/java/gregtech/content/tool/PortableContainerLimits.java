@@ -1,12 +1,12 @@
 package gregtech.content.tool;
 //? if >=1.21.1 {
-/*import gregtech.api.fluid.PortableFluidContainerSpec;
+/*import gregtech.internal.fluid.PortableFluidContainerSpec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.component.CustomData;
 *///?} else {
 
-import gregtech.api.fluid.PortableFluidContainerSpec;
+import gregtech.internal.fluid.PortableFluidContainerSpec;
 import net.minecraft.world.item.ItemStack;
 
 /** Original measuring-pot / barometer-cylinder hit bands and persistent gt.mode capacity. */

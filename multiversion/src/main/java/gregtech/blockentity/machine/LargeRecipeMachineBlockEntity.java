@@ -1,12 +1,12 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.multiblock.*;
-import gregtech.api.multiblock.tracking.LayoutStructures;
-import gregtech.api.multiblock.tracking.StructureClaims;
-import gregtech.api.multiblock.tracking.StructureDefinition;
-import gregtech.api.multiblock.tracking.StructureTracking;
-import gregtech.api.multiblock.tracking.StructureScanProbe;
-import gregtech.api.multiblock.tracking.TrackedMultiblock;
+import gregtech.internal.multiblock.*;
+import gregtech.internal.multiblock.tracking.LayoutStructures;
+import gregtech.internal.multiblock.tracking.StructureClaims;
+import gregtech.internal.multiblock.tracking.StructureDefinition;
+import gregtech.internal.multiblock.tracking.StructureTracking;
+import gregtech.internal.multiblock.tracking.StructureScanProbe;
+import gregtech.internal.multiblock.tracking.TrackedMultiblock;
 import gregtech.content.multiblock.LargeMachineLayouts;
 import gregtech.data.GregTechTags;
 import net.minecraft.core.*;
@@ -79,7 +79,7 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         if (level == null || !level.hasChunkAt(pos)) return null;
         var be = level.getBlockEntity(pos);
 //? if >=1.21.1 {
-/*        if (be instanceof gregtech.api.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) return null;
+/*        if (be instanceof gregtech.internal.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) return null;
         if (be == null) return null;
         return level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK, pos, face);
 *///?} else {
@@ -92,7 +92,7 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         if (level == null || !level.hasChunkAt(pos)) return null;
         var be = level.getBlockEntity(pos);
 //? if >=1.21.1 {
-/*        if (be instanceof gregtech.api.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) return null;
+/*        if (be instanceof gregtech.internal.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) return null;
         if (be == null) return null;
         return level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK, pos, face);
 *///?} else {
@@ -194,11 +194,11 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         if (level == null || level.isClientSide || spec() == null || isRemoved()) return;
         for (var source : energySourceCells()) {
             var pos = sourcePosition(source.right(), source.up(), source.back());
-            if (level.hasChunkAt(pos)) gregtech.api.machine.AdjacentEnergyControl.update(level.getBlockEntity(pos),
+            if (level.hasChunkAt(pos)) gregtech.internal.machine.AdjacentEnergyControl.update(level.getBlockEntity(pos),
                     spec().energyTag(), energySourceFace(source.face()), machineControl(null).enabled());
         }
     }
-    @Override public void setSpec(gregtech.api.machine.BasicMachineSpec spec) {
+    @Override public void setSpec(gregtech.internal.machine.BasicMachineSpec spec) {
         super.setSpec(spec);
         if(sourceUnlimitedOutputs())for(var tank:getTanksOutput())tank.setCapacity(Long.MAX_VALUE);
     }

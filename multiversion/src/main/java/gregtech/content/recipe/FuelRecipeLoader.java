@@ -1,6 +1,6 @@
 package gregtech.content.recipe;
 
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.data.FuelRecipeMaps;
 import gregtech.bootstrap.InitializationStep;
 import gregtech.registry.GTFluids;
@@ -101,7 +101,7 @@ public class FuelRecipeLoader implements InitializationStep {
         }
     }
 
-    private void record(gregtech.api.recipe.Recipe recipe) {
+    private void record(gregtech.internal.recipe.Recipe recipe) {
         if (recipe == null) rejected++;
         else added++;
     }

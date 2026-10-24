@@ -5,7 +5,7 @@ package gregtech.client;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.energy.WireSpec;
+import gregtech.internal.energy.WireSpec;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 

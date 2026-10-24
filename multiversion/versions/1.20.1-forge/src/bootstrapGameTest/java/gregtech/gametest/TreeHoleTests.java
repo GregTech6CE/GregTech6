@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolType;
 import gregtech.block.wood.TreeHoleBlock;
 import gregtech.block.wood.WoodSpecies;
 import gregtech.blockentity.TreeHoleBlockEntity;

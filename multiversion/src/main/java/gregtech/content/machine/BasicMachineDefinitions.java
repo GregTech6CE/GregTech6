@@ -1,10 +1,10 @@
 package gregtech.content.machine;
 
-import gregtech.api.addon.MachineTuningRules;
-import gregtech.api.machine.BasicMachineParameters;
-import gregtech.api.machine.BasicMachineSpec;
+import gregtech.internal.addon.MachineTuningRules;
+import gregtech.internal.machine.BasicMachineParameters;
+import gregtech.internal.machine.BasicMachineSpec;
 
-import gregtech.api.energy.FaceConfig;
+import gregtech.internal.energy.FaceConfig;
 
 import gregtech.data.MachineRecipeMaps;
 
@@ -20,7 +20,7 @@ public final class BasicMachineDefinitions {
  public static List<BasicMachineSpec> specifications() {
 
 
-  gregtech.api.addon.AddonMachineRuntime.install();
+  gregtech.internal.addon.AddonMachineRuntime.install();
   MachineTunings.collect();
 
   var result = new java.util.ArrayList<BasicMachineSpec>();
@@ -38,7 +38,7 @@ public final class BasicMachineDefinitions {
 *///?} else {
 //?}
 
-  result.addAll(gregtech.api.addon.AddonMachineRuntime.specs());
+  result.addAll(gregtech.internal.addon.AddonMachineRuntime.specs());
   MachineTunings.requireMatched(matched);
   return List.copyOf(result);
 
@@ -49,7 +49,7 @@ public final class BasicMachineDefinitions {
 
   var spec = raw(p);
 
-  gregtech.api.addon.RegisteredMachineIndex.bind(spec);
+  gregtech.internal.addon.RegisteredMachineIndex.bind(spec);
 
   return spec;
 
@@ -83,7 +83,7 @@ public final class BasicMachineDefinitions {
           base.auxiliaryEnergyMax(), base.auxiliaryEnergyCapacity(), base.auxiliaryFaceMask(),
           base.startupEnergy());
   logApplied(applied, base, tuned);
-  gregtech.api.addon.RegisteredMachineIndex.bind(tuned);
+  gregtech.internal.addon.RegisteredMachineIndex.bind(tuned);
   return tuned;
  }
 

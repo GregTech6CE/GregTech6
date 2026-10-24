@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.fluid.PortableFluidContainerSpec;
+import gregtech.internal.fluid.PortableFluidContainerSpec;
 import gregtech.content.tool.PortableContainerLimits;
 import gregtech.blockentity.tool.PortableContainerBlockEntity;
 import net.minecraft.core.BlockPos;

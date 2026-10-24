@@ -60,7 +60,7 @@ public class FuelRodItem extends net.minecraft.world.item.BlockItem {
     public int tier() { return tier; }
     public int maxHealth() { return maxHealth; }
     public int tintRgb() {
-        if(definition!=null)return gregtech.api.material.GTMaterialRegistry.get(definition.material()).getColor();
+        if(definition!=null)return gregtech.internal.material.GTMaterialRegistry.get(definition.material()).getColor();
         var material = switch (fuelType) {
             case U_235 -> gregtech.content.material.Materials.Uranium235;
             case U_238 -> gregtech.content.material.Materials.Uranium;

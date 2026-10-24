@@ -1,6 +1,6 @@
 package gregtech.item.behavior;
 
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -31,7 +31,7 @@ public final class ToolPlantHarvest {
         else if (state.is(Blocks.TALL_GRASS) || state.is(Blocks.LARGE_FERN))
             count = 2 + level.random.nextInt(1 + fortune) + level.random.nextInt(1 + fortune);
         else if (state.is(Blocks.DEAD_BUSH)) {
-            var dead = gregtech.api.material.GTMaterialRegistry.get("WoodDead");
+            var dead = gregtech.internal.material.GTMaterialRegistry.get("WoodDead");
             Block.popResource(level, pos, gregtech.registry.GTItems.getStack(
                     gregtech.data.MaterialPrefix.stick, dead, 1 + level.random.nextInt(2 + fortune)));
             return;

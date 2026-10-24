@@ -1,6 +1,6 @@
 package gregtech.block.inventory;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**

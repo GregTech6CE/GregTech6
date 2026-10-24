@@ -1,7 +1,7 @@
 package gregtech.block.wood;
 
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 import gregtech.content.material.Materials;
 import gregtech.content.material.generated.WoodMaterials;
 import gregtech.data.MaterialPrefix;
@@ -74,7 +74,7 @@ public final class FallenLogBlock extends RotatedPillarBlock {
         if (output.isEmpty()) return InteractionResult.PASS;
         if (level.isClientSide) return InteractionResult.SUCCESS;
         if (!level.removeBlock(pos, false)) return InteractionResult.FAIL;
-        gregtech.api.fluid.HandContainerTransfer.give(player, output);
+        gregtech.internal.fluid.HandContainerTransfer.give(player, output);
         // GT6 BlockTreeLog1 returns a tool-click cost of 1000, which the
         // port's shared tool-cost conversion translates to ten durability.
         GTToolHelper.damageForToolClickReturn(tool, 1000L, player);

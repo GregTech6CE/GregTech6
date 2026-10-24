@@ -2,7 +2,7 @@
  * Adapted from MultiTileEntityHopper and MultiTileEntityQueueHopper.addToolTips. */
 package gregtech.client;
 
-import gregtech.api.machine.HopperSpec;
+import gregtech.internal.machine.HopperSpec;
 import gregtech.content.storage.OriginalStorageTooltipData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.Tag;

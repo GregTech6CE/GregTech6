@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.worldgen.GTOreBlockResolver;
 import gregtech.worldgen.GTOreVeins;
 import gregtech.worldgen.GTStoneLayersGen;

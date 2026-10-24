@@ -1,8 +1,8 @@
 package gregtech.registry;
 
-import gregtech.api.machine.BasicMachineSpec;
-import gregtech.api.machine.MachineRegistry;
-import gregtech.api.machine.MachineSpec;
+import gregtech.internal.machine.BasicMachineSpec;
+import gregtech.internal.machine.MachineRegistry;
+import gregtech.internal.machine.MachineSpec;
 import gregtech.block.machine.BasicMachineBlock;
 import gregtech.block.machine.GTMachineBlockItem;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;

@@ -1,6 +1,6 @@
 package gregtech.gametest;
-import gregtech.api.material.MaterialFormItem;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.material.MaterialFormItem;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.block.machine.BasicMachineBlock;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.data.MachineRecipeMaps;
@@ -38,9 +38,9 @@ public final class OreSourceControlTests {
         absent(h,MachineRecipeMaps.Furnace,"Cinnabar","Source Cinnabar FURNACE absent despite setSmelting adding MELTING");
         // Source OP/OM selects registered unification targets. Native RecipeMap canonicalizes Copper ingots.
         var copperOut=new ItemStack(net.minecraft.world.item.Items.COPPER_INGOT,1);
-        var copperForm=gregtech.api.material.MaterialEquivalence.form(copperOut);
+        var copperForm=gregtech.internal.material.MaterialEquivalence.form(copperOut);
         h.assertTrue(copperForm!=null&&copperForm.prefix()==gregtech.data.MaterialPrefix.ingot
-                &&copperForm.material()==gregtech.api.material.GTMaterialRegistry.get("Copper").resolve(),
+                &&copperForm.material()==gregtech.internal.material.GTMaterialRegistry.get("Copper").resolve(),
                 "explicit minecraft:copper_ingot is registered ingot/Copper, not an arbitrary alias");
         OreSourceDifferentialTests.row(h,"MT418 Copper explicit FURNACE; Furnace oreRaw fixed U",MachineRecipeMaps.Furnace,
                 OreSourceDifferentialTests.s("oreRaw","Copper",1),new FluidStack[0],

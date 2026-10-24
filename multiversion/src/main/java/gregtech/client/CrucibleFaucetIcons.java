@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.api.material.MaterialTextureSet;
+import gregtech.internal.material.MaterialTextureSet;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 

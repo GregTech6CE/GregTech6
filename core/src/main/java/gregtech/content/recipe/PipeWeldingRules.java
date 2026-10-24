@@ -1,7 +1,7 @@
 package gregtech.content.recipe;
 
-import gregtech.api.machine.PipeSpec;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.machine.PipeSpec;
+import gregtech.internal.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.data.MaterialPrefix;
 import gregtech.data.generated.MaterialWorkability;

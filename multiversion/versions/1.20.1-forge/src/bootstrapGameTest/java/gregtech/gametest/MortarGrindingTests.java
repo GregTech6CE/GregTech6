@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialEquivalence;
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialEquivalence;
+import gregtech.internal.recipe.Recipe;
 import gregtech.content.recipe.MortarGrindingRecipes;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.data.MaterialPrefix;
@@ -65,9 +65,9 @@ public final class MortarGrindingTests {
     }
 
     private static GTMaterial firstMortarMaterial(String prefixName, boolean requireBrittle) {
-        MaterialPrefix prefix = gregtech.api.prefix.PrefixRegistry.byName(prefixName);
+        MaterialPrefix prefix = gregtech.internal.prefix.PrefixRegistry.byName(prefixName);
         if (prefix == null) return null;
-        MaterialPrefix dust = gregtech.api.prefix.PrefixRegistry.byName("dust");
+        MaterialPrefix dust = gregtech.internal.prefix.PrefixRegistry.byName("dust");
         for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
             if (!material.isValid() || !MaterialWorkability.isMortarGrindable(material)) continue;
             if (requireBrittle && !MaterialWorkability.isBrittle(material) && !MaterialWorkability.isFood(material)) {
@@ -89,7 +89,7 @@ public final class MortarGrindingTests {
                 "crushedCentrifuged", "billet", "chunkGt", "round", "bolt", "screw", "wireFine")) {
             GTMaterial material = firstMortarMaterial(row, false);
             if (material == null) continue;
-            MaterialPrefix prefix = gregtech.api.prefix.PrefixRegistry.byName(row);
+            MaterialPrefix prefix = gregtech.internal.prefix.PrefixRegistry.byName(row);
             ItemStack input = GTItems.getStack(prefix, material, 1);
             if (input.isEmpty()) continue;
             checked++;
@@ -103,8 +103,8 @@ public final class MortarGrindingTests {
     /** GT6's gem ladder: a row only exists when the material has no finer gem form, or is brittle/food. */
     @GameTest(template = "test_empty", timeoutTicks = 400)
     public static void gemLadderFollowsTheOriginalConditions(GameTestHelper helper) {
-        MaterialPrefix gemFlawed = gregtech.api.prefix.PrefixRegistry.byName("gemFlawed");
-        MaterialPrefix gem = gregtech.api.prefix.PrefixRegistry.byName("gem");
+        MaterialPrefix gemFlawed = gregtech.internal.prefix.PrefixRegistry.byName("gemFlawed");
+        MaterialPrefix gem = gregtech.internal.prefix.PrefixRegistry.byName("gem");
         helper.assertTrue(gemFlawed != null && gem != null, "gem prefixes exist");
 
         GTMaterial guarded = null;

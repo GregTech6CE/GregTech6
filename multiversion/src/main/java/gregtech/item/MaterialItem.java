@@ -1,17 +1,17 @@
 package gregtech.item;
 //? if >=1.21.1 {
 
-/*import gregtech.api.material.GTMaterial;
+/*import gregtech.internal.material.GTMaterial;
 *///?} else {
 //?}
-import gregtech.api.material.MaterialPresentation;
+import gregtech.internal.material.MaterialPresentation;
 //? if >=1.21.1 {
 //?} else {
 
 import gregtech.GregTech;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 //?}
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterialRegistry;
 //? if >=1.21.1 {
 //?} else {
 import gregtech.client.MaterialTooltips;
@@ -39,7 +39,7 @@ import java.util.List;
  * This matches the GregTech Modern approach on 1.20.1: no MetaItem / stack-tag material payload.
  */
 //?}
-public class MaterialItem extends Item implements gregtech.api.material.MaterialFormItem {
+public class MaterialItem extends Item implements gregtech.internal.material.MaterialFormItem {
     private final MaterialPrefix prefix;
     private final GTMaterial material;
 
@@ -54,7 +54,7 @@ public class MaterialItem extends Item implements gregtech.api.material.Material
     public GTMaterial getMaterial() { return material; }
 
     public static GTMaterial getMaterial(ItemStack stack) {
-        return stack.getItem() instanceof gregtech.api.material.MaterialFormItem item ? item.getMaterial() : GTMaterialRegistry.get("NULL");
+        return stack.getItem() instanceof gregtech.internal.material.MaterialFormItem item ? item.getMaterial() : GTMaterialRegistry.get("NULL");
 *///?} else {
     public MaterialPrefix getPrefix() {
         return prefix;
@@ -69,7 +69,7 @@ public class MaterialItem extends Item implements gregtech.api.material.Material
 
     /** Resolves material from the registered item type, never from stack NBT. */
     public static GTMaterial getMaterial(ItemStack stack) {
-        return stack.getItem() instanceof gregtech.api.material.MaterialFormItem materialItem
+        return stack.getItem() instanceof gregtech.internal.material.MaterialFormItem materialItem
                 ? materialItem.getMaterial()
                 : GTMaterialRegistry.get("NULL");
     }
@@ -78,18 +78,18 @@ public class MaterialItem extends Item implements gregtech.api.material.Material
 //?}
     public static MaterialPrefix getPrefix(ItemStack stack) {
 //? if >=1.21.1 {
-        /*return stack.getItem() instanceof gregtech.api.material.MaterialFormItem item ? item.getPrefix() : null;
+        /*return stack.getItem() instanceof gregtech.internal.material.MaterialFormItem item ? item.getPrefix() : null;
 *///?} else {
-        return stack.getItem() instanceof gregtech.api.material.MaterialFormItem materialItem ? materialItem.getPrefix() : null;
+        return stack.getItem() instanceof gregtech.internal.material.MaterialFormItem materialItem ? materialItem.getPrefix() : null;
 //?}
     }
 
     public static boolean isMaterialItem(ItemStack stack, MaterialPrefix prefix, GTMaterial material) {
 //? if >=1.21.1 {
-        /*return stack.getItem() instanceof gregtech.api.material.MaterialFormItem item
+        /*return stack.getItem() instanceof gregtech.internal.material.MaterialFormItem item
                 && item.getPrefix() == prefix && item.getMaterial().resolve() == material.resolve();
 *///?} else {
-        if (!(stack.getItem() instanceof gregtech.api.material.MaterialFormItem materialItem)) return false;
+        if (!(stack.getItem() instanceof gregtech.internal.material.MaterialFormItem materialItem)) return false;
         return materialItem.getPrefix() == prefix && materialItem.getMaterial().resolve() == material.resolve();
 //?}
     }
@@ -99,7 +99,7 @@ public class MaterialItem extends Item implements gregtech.api.material.Material
                                               net.minecraft.world.entity.Entity target) {
         if (!player.level().isClientSide && !player.getAbilities().instabuild
                 && target instanceof net.minecraft.world.entity.LivingEntity
-                && stack.getItem() instanceof gregtech.api.material.MaterialFormItem form
+                && stack.getItem() instanceof gregtech.internal.material.MaterialFormItem form
                 && form.getPrefix().hasEmptyAmmunitionForm()) stack.shrink(1);
         return false;
     }

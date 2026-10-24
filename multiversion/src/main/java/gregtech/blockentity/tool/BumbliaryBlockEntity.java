@@ -124,7 +124,7 @@ import java.util.List;
  * </ul>
  */
 public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
-        gregtech.api.inventory.BlockContents {
+        gregtech.internal.inventory.BlockContents {
 
     // ── GT6's NBT keys (CS.java:1175, 1230, 1251) ───────────────────────────────────────────────
     /** GT6's {@code NBT_PROGRESS}: the queen's remaining life. */
@@ -719,7 +719,7 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
     @Override
     public void dropContents() {
         if (level == null || level.isClientSide) return;
-        for (ItemStack stack : breakDrops()) gregtech.api.inventory.BlockContents.drop(this, stack);
+        for (ItemStack stack : breakDrops()) gregtech.internal.inventory.BlockContents.drop(this, stack);
     }
 
     @Override

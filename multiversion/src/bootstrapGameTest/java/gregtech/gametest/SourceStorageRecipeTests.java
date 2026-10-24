@@ -1,7 +1,8 @@
 package gregtech.gametest;
 
 import gregtech.api.material.*;
-import gregtech.api.recipe.RecipeInputs;
+import gregtech.internal.material.*;
+import gregtech.internal.recipe.RecipeInputs;
 import gregtech.content.recipe.*;
 import gregtech.item.GTToolItem;
 import net.minecraft.gametest.framework.*;
@@ -65,7 +66,7 @@ public final class SourceStorageRecipeTests {
                     "actual selected-pile rounding conserves storage material "+entry.getValue()+" "+row.getKey());
             var unsafe=result.copy();stored(unsafe);
             h.assertTrue(!ItemMaterialRegistry.canRecover(unsafe) && RecipeInputs.consume(recovery,List.of(unsafe),List.of(),1)==null
-                    && gregtech.api.machine.crucible.CrucibleItemInput.parse(unsafe).isEmpty(),"stored/configured storage blocks cannot be recycled");
+                    && gregtech.internal.machine.crucible.CrucibleItemInput.parse(unsafe).isEmpty(),"stored/configured storage blocks cannot be recycled");
         }
         h.assertTrue(cases.size()==6,"five native families plus platinum merge case");h.succeed();
     }

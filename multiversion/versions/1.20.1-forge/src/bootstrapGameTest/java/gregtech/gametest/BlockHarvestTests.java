@@ -38,7 +38,7 @@ public final class BlockHarvestTests {
   var pos=h.absolutePos(new BlockPos(1,2,1)); h.getLevel().setBlock(pos,block.defaultBlockState(),3);
   var player=net.minecraftforge.common.util.FakePlayerFactory.getMinecraft(h.getLevel());
   player.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
-  var wrench=gregtech.item.GTToolItem.create(gregtech.api.tool.GTToolType.WRENCH,gregtech.content.material.Materials.Steel,gregtech.api.material.GTMaterialRegistry.get("Wood"));
+  var wrench=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.WRENCH,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
   player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,wrench);
   h.assertTrue(block.defaultBlockState().canHarvestBlock(h.getLevel(),pos,player),"Wrench can harvest axle");
   h.assertTrue(player.gameMode.destroyBlock(pos),"Actual survival break succeeds");
@@ -53,8 +53,8 @@ public final class BlockHarvestTests {
   var wood=ForgeRegistries.BLOCKS.getValue(new net.minecraft.resources.ResourceLocation("gt6ce","wood_barrel"));
   h.assertTrue(wood.defaultBlockState().is(net.minecraft.tags.BlockTags.MINEABLE_WITH_AXE),"Wood barrel axe tag");
   var wire=ForgeRegistries.BLOCKS.getValues().stream().filter(b->b instanceof gregtech.block.energy.ElectricWireBlock).findFirst().orElseThrow();
-  var cutter=gregtech.item.GTToolItem.create(gregtech.api.tool.GTToolType.WIRE_CUTTER,gregtech.content.material.Materials.Steel,gregtech.api.material.GTMaterialRegistry.get("Wood"));
-  h.assertTrue(gregtech.api.tool.GTToolHelper.isCorrectToolForDrops(cutter,wire.defaultBlockState()),"Wire cutter recognized");h.succeed();
+  var cutter=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.WIRE_CUTTER,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
+  h.assertTrue(gregtech.internal.tool.GTToolHelper.isCorrectToolForDrops(cutter,wire.defaultBlockState()),"Wire cutter recognized");h.succeed();
  }
  @GameTest(template="test_empty") public static void barrelKeepsFluidWithoutSpillingToNeighbor(GameTestHelper h) {
   var block=gregtech.registry.GTTanks.WOOD_BARREL.get();

@@ -1,7 +1,7 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.energy.EnergyBlockViews;
-import gregtech.api.energy.IEnergyBlock;
+import gregtech.internal.energy.EnergyBlockViews;
+import gregtech.internal.energy.IEnergyBlock;
 import gregtech.blockentity.GTEnergyBlockEntity;
 import gregtech.block.machine.OriginalLightningRodControllerBlock;
 import gregtech.content.multiblock.LargeMachineParts;
@@ -14,8 +14,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.*;
 
 /** Original five solid layers plus rod pillar; a strike stores 18000 packets of 32768 EU. */
-public class LightningRodControllerBlockEntity extends GTEnergyBlockEntity implements gregtech.api.multiblock.StructureController,
-        gregtech.api.multiblock.tracking.TrackedMultiblock {
+public class LightningRodControllerBlockEntity extends GTEnergyBlockEntity implements gregtech.internal.multiblock.StructureController,
+        gregtech.internal.multiblock.tracking.TrackedMultiblock {
     public static final long PACKET = gregtech.content.multiblock.AdvancedControllerRules.LIGHTNING_PACKET,
             ENERGY_CAPACITY = gregtech.content.multiblock.AdvancedControllerRules.LIGHTNING_CAPACITY;
     private static final Set<LightningRodControllerBlockEntity> LOADED = Collections.newSetFromMap(new WeakHashMap<>());
@@ -31,29 +31,29 @@ public class LightningRodControllerBlockEntity extends GTEnergyBlockEntity imple
         super.onLoad();
         if (level != null && !level.isClientSide) {
             LOADED.add(this);
-            gregtech.api.multiblock.tracking.StructureTracking.attach(this);
+            gregtech.internal.multiblock.tracking.StructureTracking.attach(this);
         }
     }
 
     @Override
     public void setRemoved() {
         LOADED.remove(this);
-        gregtech.api.multiblock.tracking.StructureTracking.onRemoved(this);
+        gregtech.internal.multiblock.tracking.StructureTracking.onRemoved(this);
         super.setRemoved();
     }
 
     @Override
     public void onChunkUnloaded() {
         LOADED.remove(this);
-        gregtech.api.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
+        gregtech.internal.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
         super.onChunkUnloaded();
     }
 
-    @Override public gregtech.api.multiblock.tracking.StructureDefinition structureDefinition() {
-        return gregtech.api.multiblock.tracking.CustomStructures.lightning(this);
+    @Override public gregtech.internal.multiblock.tracking.StructureDefinition structureDefinition() {
+        return gregtech.internal.multiblock.tracking.CustomStructures.lightning(this);
     }
     @Override public boolean isStructureOk() {
-        return gregtech.api.multiblock.tracking.StructureTracking.query(this);
+        return gregtech.internal.multiblock.tracking.StructureTracking.query(this);
     }
     @Override
     public boolean scanStructure() {

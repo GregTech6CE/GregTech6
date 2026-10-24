@@ -1,6 +1,6 @@
 package gregtech.registration;
 
-import gregtech.api.machine.PistonEngineState;
+import gregtech.internal.machine.PistonEngineState;
 
 public final class PistonEngineContracts {
     public static void main(String[] args) {
@@ -38,9 +38,9 @@ public final class PistonEngineContracts {
         System.out.println("PASS GT6 electric/flux piston conversion, mode, sign, simulation and storage contracts");
     }
     private static void sideDispatchContract() {
-        var port = (gregtech.api.energy.IEnergyBlock) java.lang.reflect.Proxy.newProxyInstance(
+        var port = (gregtech.internal.energy.IEnergyBlock) java.lang.reflect.Proxy.newProxyInstance(
                 PistonEngineContracts.class.getClassLoader(),
-                new Class<?>[]{gregtech.api.energy.IEnergyBlock.class}, (proxy, method, args) -> {
+                new Class<?>[]{gregtech.internal.energy.IEnergyBlock.class}, (proxy, method, args) -> {
                     return switch (method.getName()) {
                         case "isEnergyType", "hasEnergySurface" -> true;
                         case "isEnergyAcceptingFrom", "isEnergyEmittingTo" -> args[1] == net.minecraft.core.Direction.SOUTH;
@@ -50,12 +50,12 @@ public final class PistonEngineContracts {
                     };
                 });
         var eu = gregtech.data.GregTechTags.Energy.EU;
-        check(gregtech.api.energy.EnergyBlockDefaults.doEnergyInjection(
+        check(gregtech.internal.energy.EnergyBlockDefaults.doEnergyInjection(
                 port, eu, net.minecraft.core.Direction.NORTH, 1, 1, true) == 0,
                 "wrong-side undervoltage must not consume a packet");
-        check(gregtech.api.energy.EnergyBlockDefaults.doEnergyInjection(
+        check(gregtech.internal.energy.EnergyBlockDefaults.doEnergyInjection(
                 port, eu, net.minecraft.core.Direction.SOUTH, 32, 1, true) == 1, "valid side must inject");
-        check(gregtech.api.energy.EnergyBlockDefaults.doEnergyExtraction(
+        check(gregtech.internal.energy.EnergyBlockDefaults.doEnergyExtraction(
                 port, eu, net.minecraft.core.Direction.NORTH, 32, 1, true) == 0, "wrong-side extraction");
     }
     private static void check(boolean valid, String message) { if (!valid) throw new AssertionError(message); }

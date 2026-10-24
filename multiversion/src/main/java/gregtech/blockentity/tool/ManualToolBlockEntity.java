@@ -1,7 +1,7 @@
 package gregtech.blockentity.tool;
 
-import gregtech.api.recipe.Recipe;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.data.MachineRecipeMaps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -206,7 +206,7 @@ public class ManualToolBlockEntity extends BlockEntity {
     }
 
     private static int abrasiveUses(ItemStack stack) {
-        if (stack.getItem() instanceof gregtech.api.material.MaterialFormItem item && item.getPrefix().getName().equals("stone")) {
+        if (stack.getItem() instanceof gregtech.internal.material.MaterialFormItem item && item.getPrefix().getName().equals("stone")) {
             return gregtech.content.tool.ManualWorkRules.abrasiveUses(item.getMaterial().getName());
         }
 //? if >=1.21.1 {

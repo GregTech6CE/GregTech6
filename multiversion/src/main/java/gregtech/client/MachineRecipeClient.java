@@ -29,7 +29,7 @@ import net.minecraftforge.server.ServerLifecycleHooks;
 
 /** Dedicated clients apply the synced markers locally, then let JEI and EMI re-read the maps. */
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, value = Dist.CLIENT)
+/*@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, value = Dist.CLIENT)
 *///?} else {
 @Mod.EventBusSubscriber(modid = GregTech.MODID, value = Dist.CLIENT)
 //?}

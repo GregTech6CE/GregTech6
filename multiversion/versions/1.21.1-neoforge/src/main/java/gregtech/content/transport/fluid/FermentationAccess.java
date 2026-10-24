@@ -1,7 +1,7 @@
 package gregtech.content.transport.fluid;
 
 import net.neoforged.neoforge.fluids.FluidStack;
-import gregtech.api.fluid.FluidHazards;
+import gregtech.internal.fluid.FluidHazards;
 
 /** NeoForge fermenter lookup, bound by bootstrap after recipe maps and selector items are available. */
 public final class FermentationAccess {
@@ -33,7 +33,7 @@ public final class FermentationAccess {
             for (var recipe : gregtech.data.MachineRecipeMaps.Fermenter.mRecipeList) {
                 if (!recipe.mEnabled || recipe.mFakeRecipe) continue;
                 if (recipe.mInputs.length != 1
-                        || !gregtech.api.recipe.RecipeInputs.matches(recipe.mInputs[0], item)) continue;
+                        || !gregtech.internal.recipe.RecipeInputs.matches(recipe.mInputs[0], item)) continue;
                 if (recipe.mFluidInputs.length != 1 || recipe.mFluidOutputs.length == 0) continue;
                 // Barrel conversion cannot preserve a presence-only input while replacing its tank.
                 if (recipe.isPresenceFluidInput(0)) continue;

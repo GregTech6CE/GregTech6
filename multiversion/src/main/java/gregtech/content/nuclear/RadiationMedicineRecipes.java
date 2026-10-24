@@ -1,7 +1,9 @@
 package gregtech.content.nuclear;
 
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.data.MaterialPrefix;
 import gregtech.registry.*;

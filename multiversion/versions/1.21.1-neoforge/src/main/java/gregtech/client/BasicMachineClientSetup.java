@@ -5,7 +5,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.*;
-@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD,value=Dist.CLIENT)
+@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD,value=Dist.CLIENT)
 public final class BasicMachineClientSetup {
  private BasicMachineClientSetup(){}
  @SubscribeEvent public static void screens(RegisterMenuScreensEvent event){event.register(BasicMachineRegistries.MENU.get(),BasicMachineScreen::new);event.register(BasicMachineRegistries.BEHAVIOR_MENU.get(),(net.minecraft.client.gui.screens.MenuScreens.ScreenConstructor<gregtech.client.gui.BehaviorMachineMenu,gregtech.client.gui.BehaviorMachineHostScreen>)(menu,inventory,title)->{var machine=menu.machine();net.minecraft.client.gui.screens.Screen custom=BehaviorMachineClients.screen(menu,machine.addonId(),machine.machineType(),inventory,title);return custom!=null?new gregtech.client.gui.BehaviorMachineCustomScreen(menu,inventory,title,custom):new gregtech.client.gui.BehaviorMachineScreen(menu,inventory,title);});event.register(BasicMachineRegistries.PART_MENU.get(),gregtech.client.gui.PartScreen::new);}

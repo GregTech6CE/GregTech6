@@ -1,5 +1,5 @@
 package gregtech.data;
-import gregtech.api.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolHelper;
 import gregtech.item.ElectricToolItem;
 import gregtech.item.GTToolItem;
 import java.util.Optional;

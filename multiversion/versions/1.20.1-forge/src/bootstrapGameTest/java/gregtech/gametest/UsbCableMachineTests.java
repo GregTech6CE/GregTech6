@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
-import gregtech.api.machine.MachineRegistry;
-import gregtech.api.recipe.RecipeInputs;
+import gregtech.internal.machine.MachineRegistry;
+import gregtech.internal.recipe.RecipeInputs;
 import gregtech.blockentity.inventory.UsbSwitchBlockEntity;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.book.GTMaterialDictionary;

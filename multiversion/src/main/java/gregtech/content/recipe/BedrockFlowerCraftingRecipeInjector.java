@@ -7,8 +7,8 @@ import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.tool.GTToolType;
 import gregtech.content.plant.BedrockFlowers;
 import gregtech.data.MaterialPrefix;
 

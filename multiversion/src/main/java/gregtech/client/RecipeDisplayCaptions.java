@@ -1,8 +1,8 @@
 package gregtech.client;
 
-import gregtech.api.recipe.Recipe;
-import gregtech.api.recipe.RecipeMap;
-import gregtech.api.recipe.RecipePowerStats;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.recipe.RecipeMap;
+import gregtech.internal.recipe.RecipePowerStats;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 
@@ -12,7 +12,7 @@ public final class RecipeDisplayCaptions {
     private RecipeDisplayCaptions() {}
     public static void draw(GuiGraphics graphics, RecipeMap map, Recipe recipe) {
         var stats = RecipePowerStats.of(recipe, map.mPower);
-        var visibility=gregtech.api.recipe.RecipeCaptionVisibility.of(recipe.mEUt,map.mCombinePower,map.mShowVoltageAmperage);
+        var visibility=gregtech.internal.recipe.RecipeCaptionVisibility.of(recipe.mEUt,map.mCombinePower,map.mShowVoltageAmperage);
         if (recipe.mEUt != 0) {
             caption(graphics, Component.translatable(stats.generating() ? "gt6ce.jei.gain" : "gt6ce.jei.costs", stats.costs().toString(), ENERGY_UNIT), 86);
             if (visibility.usage())

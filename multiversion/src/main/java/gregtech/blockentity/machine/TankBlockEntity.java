@@ -1,16 +1,16 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.fluid.FluidHazards;
-import gregtech.api.fluid.FluidTankGT;
-import gregtech.api.machine.TankSpec;
+import gregtech.internal.fluid.FluidHazards;
+import gregtech.internal.fluid.FluidTankGT;
+import gregtech.internal.machine.TankSpec;
 //? if >=1.21.1 {
 /*import gregtech.content.transport.fluid.FermentationAccess;
 import gregtech.content.transport.fluid.FermentationAccess.Recipe;
-import gregtech.api.fluid.BarrelFermentationRules;
+import gregtech.internal.fluid.BarrelFermentationRules;
 
 *///?} else {
-import gregtech.api.recipe.Recipe;
-import gregtech.api.recipe.RecipeInputs;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.recipe.RecipeInputs;
 //?}
 import gregtech.block.machine.FluidPipeBlock;
 import gregtech.block.machine.TankBlock;
@@ -254,7 +254,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
 *///?} else {
         FluidStack in = fermentRecipe.mFluidInputs[0];
         FluidStack out = fermentRecipe.mFluidOutputs[0];
-        long produced = gregtech.api.fluid.BarrelFermentationRules.output(out.getAmount(),tank.getAmount(),in.getAmount());
+        long produced = gregtech.internal.fluid.BarrelFermentationRules.output(out.getAmount(),tank.getAmount(),in.getAmount());
 //?}
         tank.setFluid(new FluidStack(out.getFluid(), (int) Math.min(Math.max(1, produced), tank.getCapacity())));
         resetSeal();
@@ -266,7 +266,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
     /*public static long sealedDuration(Recipe recipe,long amount){return BarrelFermentationRules.duration(recipe.power(),recipe.duration(),amount,recipe.input().getAmount());}
 *///?} else {
     public static long sealedDuration(Recipe recipe, long amount) {
-        return gregtech.api.fluid.BarrelFermentationRules.duration(recipe.mEUt,recipe.mDuration,amount,recipe.mFluidInputs[0].getAmount());
+        return gregtech.internal.fluid.BarrelFermentationRules.duration(recipe.mEUt,recipe.mDuration,amount,recipe.mFluidInputs[0].getAmount());
     }
 //?}
 

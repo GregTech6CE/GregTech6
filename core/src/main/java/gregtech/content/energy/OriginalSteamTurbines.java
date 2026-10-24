@@ -2,8 +2,8 @@
  * Loader_MultiTileEntities1512..1548 and MultiTileEntityTurbineSteam. */
 package gregtech.content.energy;
 
-import gregtech.api.energy.EnergyNodeSpec;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.energy.EnergyNodeSpec;
+import gregtech.internal.material.GTMaterial;
 import gregtech.content.material.Materials;
 import gregtech.content.transport.TransportCraftingCatalog.Input;
 import gregtech.content.transport.TransportCraftingCatalog.Row;

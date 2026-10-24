@@ -1,6 +1,6 @@
 package gregtech.content.book;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.content.recipe.generated.GTAlloyTable;
 
 import java.util.ArrayList;

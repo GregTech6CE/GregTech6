@@ -1,9 +1,9 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.fluid.FluidPort;
-import gregtech.api.multiblock.MultiblockLayout;
-import gregtech.api.multiblock.MultiblockPortOwner;
-import gregtech.api.multiblock.PartBindings;
+import gregtech.internal.fluid.FluidPort;
+import gregtech.internal.multiblock.MultiblockLayout;
+import gregtech.internal.multiblock.MultiblockPortOwner;
+import gregtech.internal.multiblock.PartBindings;
 import gregtech.content.multiblock.LargeMachineLayouts;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -20,7 +20,7 @@ import java.util.LinkedHashMap;
 
 /** Multiblock fuel generator. The structure is an existing large-machine layout of GregTech parts. */
 public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements MultiblockPortOwner,
-        gregtech.api.multiblock.tracking.TrackedMultiblock {
+        gregtech.internal.multiblock.tracking.TrackedMultiblock {
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();
 
     public FuelTurbineBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -38,11 +38,11 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
         return LargeMachineLayouts.cells(declaration().casing().machineType());
     }
 
-    @Override public gregtech.api.multiblock.tracking.StructureDefinition structureDefinition() {
-        return gregtech.api.multiblock.tracking.CustomStructures.fuel(this);
+    @Override public gregtech.internal.multiblock.tracking.StructureDefinition structureDefinition() {
+        return gregtech.internal.multiblock.tracking.CustomStructures.fuel(this);
     }
     @Override public boolean isStructureOk() {
-        return gregtech.api.multiblock.tracking.StructureTracking.query(this);
+        return gregtech.internal.multiblock.tracking.StructureTracking.query(this);
     }
     @Override public void structureFormedChanged(boolean now) { formed = now; }
     @Override
@@ -54,7 +54,7 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
         var layout = LargeMachineLayouts.cells(declaration().casing().machineType());
         if (layout == null) {
             bindings.clear(this::release);
-            gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
+            gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
             formed = false;
             return false;
         }
@@ -64,21 +64,21 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
             BlockPos pos = cell.at(worldPosition, front);
             if (!level.hasChunkAt(pos)) {
                 bindings.clear(this::release);
-                gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
+                gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
                 formed = false;
                 return false;
             }
             if (cell.role() == MultiblockLayout.Role.AIR) {
                 if (level.isEmptyBlock(pos)) continue;
                 bindings.clear(this::release);
-                gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
+                gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
                 formed = false;
                 return false;
             }
             if (cell.plainBlock()) {
                 if (!cell.matches(level, pos, level.getBlockState(pos))) {
                     bindings.clear(this::release);
-                    gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
+                    gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
                     formed = false;
                     return false;
                 }
@@ -87,19 +87,19 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
             if (level.getBlockState(pos).getBlock() != cell.block()
                     || !(level.getBlockEntity(pos) instanceof gregtech.blockentity.machine.MultiblockPortBlockEntity)) {
                 bindings.clear(this::release);
-                gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
+                gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
                 formed = false;
                 return false;
             }
             parts.put(pos, cell.role());
         }
-        var claimed = gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, parts,
+        var claimed = gregtech.internal.multiblock.tracking.StructureClaims.update(this, true, bindings, parts,
                 fuelDesignHash(layout),
                 pos -> ((gregtech.blockentity.machine.MultiblockPortBlockEntity) level.getBlockEntity(pos)).canBind(worldPosition),
                 (pos, role) -> ((gregtech.blockentity.machine.MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
                 this::release);
-        formed = claimed != gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
-        if (claimed == gregtech.api.multiblock.tracking.StructureClaims.Result.APPLIED)
+        formed = claimed != gregtech.internal.multiblock.tracking.StructureClaims.Result.FAILED;
+        if (claimed == gregtech.internal.multiblock.tracking.StructureClaims.Result.APPLIED)
             gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front, layout);
         return formed;
     }
@@ -118,16 +118,16 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
 
     @Override public void onLoad() {
         super.onLoad();
-        if (level != null && !level.isClientSide) gregtech.api.multiblock.tracking.StructureTracking.attach(this);
+        if (level != null && !level.isClientSide) gregtech.internal.multiblock.tracking.StructureTracking.attach(this);
     }
     @Override public void onChunkUnloaded() {
-        gregtech.api.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
+        gregtech.internal.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
         super.onChunkUnloaded();
     }
     @Override
     public void setRemoved() {
-        if (!gregtech.api.multiblock.tracking.StructureTracking.unloading(this)) bindings.clear(this::release);
-        gregtech.api.multiblock.tracking.StructureTracking.onRemoved(this);
+        if (!gregtech.internal.multiblock.tracking.StructureTracking.unloading(this)) bindings.clear(this::release);
+        gregtech.internal.multiblock.tracking.StructureTracking.onRemoved(this);
         super.setRemoved();
     }
 
@@ -139,7 +139,7 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
     public net.minecraft.nbt.CompoundTag getUpdateTag() {
         net.minecraft.nbt.CompoundTag tag = super.getUpdateTag();
 //?}
-        gregtech.api.multiblock.tracking.ClientFormedSync.write(this, tag);
+        gregtech.internal.multiblock.tracking.ClientFormedSync.write(this, tag);
         return tag;
     }
 
@@ -151,7 +151,7 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
     public void handleUpdateTag(net.minecraft.nbt.CompoundTag tag) {
         super.handleUpdateTag(tag);
 //?}
-        gregtech.api.multiblock.tracking.ClientFormedSync.read(this, tag);
+        gregtech.internal.multiblock.tracking.ClientFormedSync.read(this, tag);
     }
 
     @Override

@@ -1,7 +1,7 @@
 /* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later. Original IDs 10130..10149. */
 package gregtech.content.energy;
 
-import gregtech.api.energy.EnergyNodeSpec;
+import gregtech.internal.energy.EnergyNodeSpec;
 import gregtech.data.GregTechTags;
 import java.util.ArrayList;
 import java.util.List;

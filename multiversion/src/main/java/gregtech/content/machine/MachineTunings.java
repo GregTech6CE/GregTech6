@@ -2,7 +2,7 @@ package gregtech.content.machine;
 
 import gregtech.api.addon.MachineTuning;
 import gregtech.api.addon.MachineTuningContributor;
-import gregtech.api.addon.MachineTuningRules;
+import gregtech.internal.addon.MachineTuningRules;
 
 import javax.annotation.Nullable;
 import java.io.IOException;

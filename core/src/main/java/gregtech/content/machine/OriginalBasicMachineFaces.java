@@ -1,7 +1,7 @@
 /* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later.
  * Generated from the original Basic Machines registrations by tools/generate_basic_machine_face_defaults.py. */
 package gregtech.content.machine;
-import gregtech.api.energy.MachineFaceMasks;
+import gregtech.internal.energy.MachineFaceMasks;
 public final class OriginalBasicMachineFaces {
     private OriginalBasicMachineFaces() {}
     public static MachineFaceMasks defaults(String name) {return switch(name) {

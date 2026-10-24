@@ -1,9 +1,9 @@
 package gregtech.block.tool;
 
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.ToolInteractions;
-import gregtech.api.tool.ToolInteractionSpec;
-import gregtech.api.tool.ToolInteractionTarget;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.ToolInteractions;
+import gregtech.internal.tool.ToolInteractionSpec;
+import gregtech.internal.tool.ToolInteractionTarget;
 import gregtech.blockentity.tool.ManualToolBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -93,7 +93,7 @@ public class ManualToolBlock extends net.minecraft.world.level.block.HorizontalD
     public int tint(int index) {
         if (kind == ManualToolBlockEntity.Kind.MORTAR) {
             if (index == 0) return gregtech.content.material.Materials.Ceramic.getColor();
-            if (index == 1) return gregtech.api.material.GTMaterialRegistry.get(pestleMaterial).resolve().getColor();
+            if (index == 1) return gregtech.internal.material.GTMaterialRegistry.get(pestleMaterial).resolve().getColor();
         }
 //? if >=1.21.1 {
         /*return index == 0 ? gregtech.registry.GTManualStations.tintOf(kind) : 0xFFFFFF;

@@ -7,12 +7,12 @@ package gregtech.jei;
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.machine.BasicMachineRegistries;
 *///?} else {
-import gregtech.api.machine.MachineRegistry;
+import gregtech.internal.machine.MachineRegistry;
 //?}
 
 
 
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.recipe.RecipeMap;
 
 import gregtech.data.MachineRecipeMaps;
 

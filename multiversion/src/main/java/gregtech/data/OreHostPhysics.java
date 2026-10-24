@@ -1,8 +1,8 @@
 package gregtech.data;
 
-import gregtech.api.addon.AddonMaterials;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.prefix.BlockMaterialPrefix;
+import gregtech.internal.addon.AddonMaterials;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.prefix.BlockMaterialPrefix;
 import gregtech.block.OreBlock;
 import gregtech.registry.GTBlocks;
 import java.util.Optional;
@@ -23,7 +23,7 @@ public final class OreHostPhysics {
   if(material.resolve()!=material || !GTMaterialRegistry.isCoreMaterial(material)
       || AddonMaterials.owns(material)) return Optional.empty();
   // Explosive resistance special rules need separately reviewed material provenance.
-  if(material.has(gregtech.api.material.MaterialProperty.EXPLOSIVE))return Optional.empty();
+  if(material.has(gregtech.internal.material.MaterialProperty.EXPLOSIVE))return Optional.empty();
   if(!BuiltInRegistries.BLOCK.getKey(block).getNamespace().equals("gt6ce")) return Optional.empty();
   var canonical=GTBlocks.getObject(prefix,material);
 //? if >=1.21.1 {

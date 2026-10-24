@@ -1,7 +1,8 @@
 package gregtech.gametest;
 
 import gregtech.api.machine.*;
-import gregtech.api.tool.*;
+import gregtech.internal.machine.*;
+import gregtech.internal.tool.*;
 import gregtech.block.machine.*;
 import gregtech.blockentity.machine.*;
 import gregtech.content.material.Materials;
@@ -66,7 +67,7 @@ public final class NewIssueMachineTests {
         for(var material:List.of(Materials.CoalCoke,Materials.LigniteCoke,Materials.PetroleumCoke)) {
             for(var prefix:List.of(MaterialPrefix.dust,MaterialPrefix.dustSmall,MaterialPrefix.dustTiny,MaterialPrefix.gem)) {
                 var coke=GTItems.getStack(prefix,material,1);if(coke.isEmpty())continue;
-                var burn=FurnaceFuelHelper.burnOne(coke,7500).orElseThrow(()->new IllegalStateException("Coke rejected: "+material.getName()+"/"+prefix.getName()+" burnTime="+material.getFurnaceBurnTime()+" composition="+gregtech.api.material.ItemMaterialRegistry.get(coke)));
+                var burn=FurnaceFuelHelper.burnOne(coke,7500).orElseThrow(()->new IllegalStateException("Coke rejected: "+material.getName()+"/"+prefix.getName()+" burnTime="+material.getFurnaceBurnTime()+" composition="+gregtech.internal.material.ItemMaterialRegistry.get(coke)));
                 h.assertTrue(burn.heatUnits()>0&&burn.byproduct()!=null&&!burn.byproduct().isEmpty(),"source coke has HU and ash");tested++;
             }
         }

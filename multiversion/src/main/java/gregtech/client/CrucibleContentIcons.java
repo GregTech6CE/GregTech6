@@ -5,8 +5,8 @@ import gregtech.content.material.Materials;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.MaterialTextureSet;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.MaterialTextureSet;
 import net.minecraft.resources.ResourceLocation;
 
 /**

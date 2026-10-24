@@ -1,7 +1,8 @@
 package gregtech.content.recipe;
 
 import gregtech.api.material.*;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.material.*;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.data.*;
 import gregtech.bootstrap.InitializationStep;
 import gregtech.registry.GTFluids;
@@ -190,7 +191,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
             int baseMultiplier = Math.max(1, Math.min(64,
                     material.getOreMultiplier() * material.getOreProcessingMultiplier()));
 
-            ItemStack oreBlock = blockStack(gregtech.api.prefix.BlockMaterialPrefix.ore, material);
+            ItemStack oreBlock = blockStack(gregtech.internal.prefix.BlockMaterialPrefix.ore, material);
             if (!oreBlock.isEmpty()) {
                 registerOreEntryRecipes(material, oreBlock, baseMultiplier);
             }
@@ -301,7 +302,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
     }
 
     /** ItemStack of the registered ore block ({@code ore_<material>} / {@code ore_small_<material>}), or EMPTY. */
-    private static ItemStack blockStack(gregtech.api.prefix.BlockMaterialPrefix prefix, GTMaterial material) {
+    private static ItemStack blockStack(gregtech.internal.prefix.BlockMaterialPrefix prefix, GTMaterial material) {
         if (prefix == null) return ItemStack.EMPTY;
 //? if >=1.21.1 {
         /*net.minecraft.world.level.block.Block block = net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(
@@ -362,7 +363,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
             // Preserve the legacy Crusher row; only the reviewed Shredder producer is retired.
             MachineRecipeMaps.Crusher.addRecipe1(true,16,64,new long[]{10000,1000,1000},input,output,ItemStack.EMPTY,ItemStack.EMPTY);
         } else if (NonOreMacerationRows.reviewed(material)) {
-            for (var map : new gregtech.api.recipe.RecipeMap[]{MachineRecipeMaps.Crusher,MachineRecipeMaps.Shredder})
+            for (var map : new gregtech.internal.recipe.RecipeMap[]{MachineRecipeMaps.Crusher,MachineRecipeMaps.Shredder})
                 NonOreMacerationRows.register(material,inputPref,"maceration/"+inputPref.getName(),map,true,input,
                         new ItemStack[]{output,ItemStack.EMPTY,ItemStack.EMPTY},new long[]{10000,1000,1000},null,64,16);
         } else MachineRecipeMaps.pulverizing(input, output);
@@ -382,7 +383,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         if (output.isEmpty()) return;
         ItemStack multiOut = amount(outCount, output);
         if (NonOreMacerationRows.reviewed(material)) {
-            for (var map : new gregtech.api.recipe.RecipeMap[]{MachineRecipeMaps.Crusher,MachineRecipeMaps.Shredder})
+            for (var map : new gregtech.internal.recipe.RecipeMap[]{MachineRecipeMaps.Crusher,MachineRecipeMaps.Shredder})
                 NonOreMacerationRows.register(material,inputPref,"maceration/"+inputPref.getName(),map,true,input,
                         new ItemStack[]{multiOut},null,null,32,EU_TIER);
             return;

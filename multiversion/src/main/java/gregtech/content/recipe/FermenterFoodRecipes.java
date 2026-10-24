@@ -1,6 +1,6 @@
 package gregtech.content.recipe;
 
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.data.RegisteredFluids;
 import gregtech.registry.GTFluids;

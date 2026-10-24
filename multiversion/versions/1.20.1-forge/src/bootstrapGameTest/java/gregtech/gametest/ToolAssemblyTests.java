@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.block.stone.StoneType;
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 import gregtech.content.material.Materials;
 import gregtech.data.MaterialPrefix;
 import gregtech.recipe.GTFlintAndTinderRecipe;
@@ -253,7 +253,7 @@ public final class ToolAssemblyTests {
         // A rock that carries GT6's STONE property (ANY.Stone, Loader_Tools:272).
         GTMaterial granite = null;
         for (StoneType type : StoneType.values()) {
-            if (type.material().has(gregtech.api.material.MaterialProperty.STONE)) {
+            if (type.material().has(gregtech.internal.material.MaterialProperty.STONE)) {
                 granite = type.material();
                 break;
             }

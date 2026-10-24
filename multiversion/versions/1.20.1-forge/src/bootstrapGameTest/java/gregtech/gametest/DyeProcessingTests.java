@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.recipe.RecipeInputs;
+import gregtech.internal.recipe.RecipeInputs;
 import gregtech.content.recipe.DyeProcessingRecipes;
 import gregtech.data.MachineRecipeMaps;
 import net.minecraft.gametest.framework.*;

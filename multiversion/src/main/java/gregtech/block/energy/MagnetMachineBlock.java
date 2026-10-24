@@ -1,12 +1,12 @@
 package gregtech.block.energy;
 
-import gregtech.api.energy.EnergyNodeSpec;
+import gregtech.internal.energy.EnergyNodeSpec;
 
 
 //? if >=1.21.1 {
 //?} else {
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.ToolInteractionSpec;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.ToolInteractionSpec;
 //?}
 import gregtech.blockentity.energy.EnergyNodeBlockEntity;
 import net.minecraft.core.BlockPos;

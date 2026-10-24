@@ -5,9 +5,9 @@ package gregtech.content.recipe;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.content.food.GTFoodItems;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.data.MaterialPrefix;

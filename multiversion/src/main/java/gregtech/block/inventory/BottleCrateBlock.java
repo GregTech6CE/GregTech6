@@ -25,18 +25,18 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /** GT6 bottle crate: nine X/Z cells, whole-stack interaction and inventory-preserving drops. */
-public class BottleCrateBlock extends HorizontalDirectionalBlock implements EntityBlock, gregtech.api.tool.ToolInteractionTarget {
+public class BottleCrateBlock extends HorizontalDirectionalBlock implements EntityBlock, gregtech.internal.tool.ToolInteractionTarget {
 
 //? if >=1.21.1 {
     /*@Override protected com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
 *///?} else {
 //?}
-    private final gregtech.api.material.GTMaterial material;
+    private final gregtech.internal.material.GTMaterial material;
     private final String woodTexture;
     public BottleCrateBlock(Properties properties) {
         this(null, "gt6ce:block/iconsets/planks_treated", properties);
     }
-    public BottleCrateBlock(gregtech.api.material.GTMaterial material,
+    public BottleCrateBlock(gregtech.internal.material.GTMaterial material,
                             String woodTexture, Properties properties) {
         super(properties);
         this.material = material;
@@ -48,14 +48,14 @@ public class BottleCrateBlock extends HorizontalDirectionalBlock implements Enti
     public int tintRgb() { return metal() ? material.getColor() : 0xFFFFFF; }
     public String frameTexture() {
         return metal() ? "gt6ce:block/material_icons/"
-                + gregtech.api.material.MaterialIconDefinitions.resolveTextureSet(material).folder()
-                + "/" + gregtech.api.prefix.BlockMaterialPrefix.casingMachine.getTextureFileName()
+                + gregtech.internal.material.MaterialIconDefinitions.resolveTextureSet(material).folder()
+                + "/" + gregtech.internal.prefix.BlockMaterialPrefix.casingMachine.getTextureFileName()
                 : woodTexture;
     }
 
-    @Override public gregtech.api.tool.ToolInteractionSpec toolInteraction(BlockState state,ItemStack tool) {
-        return gregtech.api.tool.GTToolHelper.isMachineWrench(tool)
-                ? gregtech.api.tool.ToolInteractionSpec.facing(FACING,gregtech.block.machine.MachineRotationType.HORIZONTAL) : null;
+    @Override public gregtech.internal.tool.ToolInteractionSpec toolInteraction(BlockState state,ItemStack tool) {
+        return gregtech.internal.tool.GTToolHelper.isMachineWrench(tool)
+                ? gregtech.internal.tool.ToolInteractionSpec.facing(FACING,gregtech.block.machine.MachineRotationType.HORIZONTAL) : null;
     }
     @Override public int getFlammability(BlockState state,BlockGetter level,BlockPos pos,Direction face) { return metal() ? 0 : 150; }
     @Override public int getFireSpreadSpeed(BlockState state,BlockGetter level,BlockPos pos,Direction face) { return metal() ? 0 : 150; }
@@ -104,7 +104,7 @@ public class BottleCrateBlock extends HorizontalDirectionalBlock implements Enti
 //?}
                                  InteractionHand hand, BlockHitResult hit) {
         if (hand != InteractionHand.MAIN_HAND || !(level.getBlockEntity(pos) instanceof BottleCrateBlockEntity crate)) return InteractionResult.PASS;
-        if (gregtech.api.tool.ToolInteractions.use(state, level, pos, player, hand, hit))
+        if (gregtech.internal.tool.ToolInteractions.use(state, level, pos, player, hand, hit))
             return InteractionResult.sidedSuccess(level.isClientSide);
         if (level.isClientSide) return InteractionResult.SUCCESS;
         int slot = slotAt(pos, hit);

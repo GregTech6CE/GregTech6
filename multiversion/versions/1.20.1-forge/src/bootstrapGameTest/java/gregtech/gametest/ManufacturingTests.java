@@ -1,7 +1,8 @@
 package gregtech.gametest;
 
 import gregtech.api.recipe.*;
-import gregtech.api.tool.*;
+import gregtech.internal.recipe.*;
+import gregtech.internal.tool.*;
 import gregtech.content.recipe.*;
 import gregtech.data.*;
 import gregtech.item.*;
@@ -27,7 +28,7 @@ public final class ManufacturingTests {
     }
     private static ItemStack usable(ItemStack stack) {
         if(stack.getItem() instanceof GTToolItem)return GTToolItem.create(GTToolHelper.getType(stack),gregtech.content.material.Materials.Steel,
-                gregtech.api.material.GTMaterialRegistry.get("Wood"));
+                gregtech.internal.material.GTMaterialRegistry.get("Wood"));
         return stack.copy();
     }
     @GameTest(template="test_blueprint_empty")
@@ -129,7 +130,7 @@ public final class ManufacturingTests {
     }
     @GameTest(template="test_blueprint_empty")
     public static void plasticChemistryKeepsCatalystAndFeedsForming(GameTestHelper h) {
-        var plastic=gregtech.api.material.GTMaterialRegistry.get("Plastic");
+        var plastic=gregtech.internal.material.GTMaterialRegistry.get("Plastic");
         var powder=GTItems.getStack(MaterialPrefix.dust,plastic,1);
         var reaction=MachineRecipeMaps.Mixer.mRecipeList.stream().filter(r->r.mOutputs.length==1&&r.mOutputs[0].is(powder.getItem())&&r.mInputs.length==1).findFirst().orElseThrow();
         h.assertTrue(reaction.isCatalystInput(0),"original MgCl2 catalyst is retained");

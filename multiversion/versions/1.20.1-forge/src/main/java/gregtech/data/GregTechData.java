@@ -1,6 +1,6 @@
 package gregtech.data;
 
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.prefix.PrefixRegistry;
 
 /**
  * One-shot bootstrap for GT6-style data tables (CS, TD, OP, RM, ...).

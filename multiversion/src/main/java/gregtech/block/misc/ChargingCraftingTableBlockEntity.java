@@ -1,7 +1,8 @@
 package gregtech.block.misc;
 
 import gregtech.api.energy.*;
-import gregtech.api.energy.item.IItemEnergy;
+import gregtech.internal.energy.*;
+import gregtech.internal.energy.item.IItemEnergy;
 import gregtech.data.GregTechTags;
 import net.minecraft.core.*;
 import net.minecraft.world.item.ItemStack;

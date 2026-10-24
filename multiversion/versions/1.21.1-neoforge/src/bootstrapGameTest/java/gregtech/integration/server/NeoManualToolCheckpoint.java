@@ -1,7 +1,7 @@
 package gregtech.integration.server;
 
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 import gregtech.content.material.Materials;
 import gregtech.content.material.generated.WoodMaterials;
 import gregtech.data.MaterialPrefix;
@@ -22,7 +22,7 @@ import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import java.util.*;
 
 /** Opt-in grouped native tool crafting/component/network checkpoint; excluded from production jars. */
-@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID,value=Dist.DEDICATED_SERVER)
+@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID,value=Dist.DEDICATED_SERVER)
 public final class NeoManualToolCheckpoint {
  private NeoManualToolCheckpoint(){}
  private static void require(boolean ok,String message){if(!ok)throw new IllegalStateException("Manual tool checkpoint: "+message);}
@@ -61,17 +61,17 @@ public final class NeoManualToolCheckpoint {
   require(net.minecraft.core.registries.BuiltInRegistries.ITEM.containsKey(id),"registered equipment/input "+id);
   return new ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(id));
  }
- private static ItemStack equipmentForm(MaterialPrefix prefix,gregtech.api.material.GTMaterial material) {
+ private static ItemStack equipmentForm(MaterialPrefix prefix,gregtech.internal.material.GTMaterial material) {
   var result=GTItems.getStack(prefix,material,1);require(!result.isEmpty(),"equipment form "+prefix+" / "+material);return result;
  }
  public static Map<String,ItemStack> steamEngineCrafting(ServerLevel level) {
   int checked=0;
   Map<String,ItemStack> selected=new HashMap<>();
   for(var entry:gregtech.content.energy.EngineCatalog.all()) {
-   boolean strong=entry.spec() instanceof gregtech.api.machine.StrongSteamEngineSpec;
-   String id;gregtech.api.material.GTMaterial material;
-   if(strong) {var spec=(gregtech.api.machine.StrongSteamEngineSpec)entry.spec();id=spec.id();material=spec.material();}
-   else if(entry.spec() instanceof gregtech.api.machine.SteamEngineSpec spec) {id=spec.id();material=spec.material();}
+   boolean strong=entry.spec() instanceof gregtech.internal.machine.StrongSteamEngineSpec;
+   String id;gregtech.internal.material.GTMaterial material;
+   if(strong) {var spec=(gregtech.internal.machine.StrongSteamEngineSpec)entry.spec();id=spec.id();material=spec.material();}
+   else if(entry.spec() instanceof gregtech.internal.machine.SteamEngineSpec spec) {id=spec.id();material=spec.material();}
    else continue;
    var plate=equipmentForm(strong?MaterialPrefix.plateDense:MaterialPrefix.plateDouble,material);
    var rod=equipmentForm(MaterialPrefix.stick,material);
@@ -169,11 +169,11 @@ public final class NeoManualToolCheckpoint {
   rotary=rotaryHandler.getContainer();require(industrial.test(rotary),"original LubRoCant alias accepted");
   int checked=0;
   for(var entry:gregtech.content.energy.EngineCatalog.all()) {
-   if(!(entry.spec() instanceof gregtech.api.machine.DieselEngineSpec spec))continue;
+   if(!(entry.spec() instanceof gregtech.internal.machine.DieselEngineSpec spec))continue;
    String id=spec.id();var material=spec.material();
    var plate=equipmentForm(MaterialPrefix.plateCurved,material);var rod=equipmentForm(MaterialPrefix.stick,material);
    var gear=equipmentForm(MaterialPrefix.gearGt,material);var small=equipmentForm(MaterialPrefix.gearGtSmall,material);
-   var casing=gregtech.registry.GTBlocks.getStack(gregtech.api.prefix.BlockMaterialPrefix.casingMachineDouble,material);require(!casing.isEmpty(),"diesel original double casing "+id);
+   var casing=gregtech.registry.GTBlocks.getStack(gregtech.internal.prefix.BlockMaterialPrefix.casingMachineDouble,material);require(!casing.isEmpty(),"diesel original double casing "+id);
    var actual=recipe(level,"engines/"+id);
    for(var ingredient:actual.getIngredients())if(ingredient!=Ingredient.EMPTY)require(ingredient.getItems().length>0,"diesel ingredient closure "+id);
    for(var lubricant:List.of(bottle,cell,rotary)) {
@@ -312,11 +312,11 @@ public final class NeoManualToolCheckpoint {
   require(network(recipe(level,"logistics/blank_cover"),level).matches(blankInput,level),"blank cover packet round trip");
   com.mojang.logging.LogUtils.getLogger().info("ROUTING_CRAFTING_CHECKPOINT_SUCCESS woodPipe=true sawWear=100 softHammerWear=100 blankCover=true filterCover=true itemFilterMachine=true resetFresh=true motor=true conveyor=true network=true");
  }
- private static gregtech.api.energy.WireSpec wireSpec(ItemStack stack) {
+ private static gregtech.internal.energy.WireSpec wireSpec(ItemStack stack) {
   require(stack.getItem() instanceof net.minecraft.world.item.BlockItem,"wire recipe result/input is block item");
   var block=((net.minecraft.world.item.BlockItem)stack.getItem()).getBlock();
-  require(block instanceof gregtech.api.energy.WireMaterialLike,"wire recipe uses real conductor metadata");
-  return ((gregtech.api.energy.WireMaterialLike)block).spec();
+  require(block instanceof gregtech.internal.energy.WireMaterialLike,"wire recipe uses real conductor metadata");
+  return ((gregtech.internal.energy.WireMaterialLike)block).spec();
  }
  private static void manufacturingCrafting(ServerLevel level) {
   int wires=0;
@@ -325,12 +325,12 @@ public final class NeoManualToolCheckpoint {
    String id=file.substring(0,file.length()-5);
    var actual=recipe(level,id);require(actual instanceof ShapelessRecipe,"retained shapeless wire recipe "+id);
    var inputs=new ArrayList<ItemStack>(Collections.nCopies(9,ItemStack.EMPTY));
-   long inputAmount=0;gregtech.api.energy.WireSpec family=null;int slot=0;
+   long inputAmount=0;gregtech.internal.energy.WireSpec family=null;int slot=0;
    for(var ingredient:actual.getIngredients()) {
     require(ingredient.getItems().length>0,"resolved wire ingredient "+id);
     var stack=ingredient.getItems()[0].copyWithCount(1);inputs.set(slot++,stack);
     if(stack.getItem() instanceof net.minecraft.world.item.BlockItem item
-        && item.getBlock() instanceof gregtech.api.energy.WireMaterialLike wire) {
+        && item.getBlock() instanceof gregtech.internal.energy.WireMaterialLike wire) {
      var spec=wire.spec();
      if(family!=null)require(family.id().equals(spec.id()) && family.material().resolve()==spec.material().resolve(),"single conductor family "+id);
      family=spec;inputAmount+=spec.materialAmount();

@@ -1,10 +1,10 @@
 package gregtech.recipe;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialEquivalence;
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialEquivalence;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 import gregtech.content.material.Materials;
 import gregtech.content.tool.ManualToolRecipeCatalog;
 import gregtech.content.tool.OriginalToolMaterials;
@@ -174,12 +174,12 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
     protected boolean acceptsMaterial(GTMaterial material) {
         if (material == null || !material.isValid()) return false;
         if (GTToolRecipes.isWoodenRollingPin(type,pattern))
-            return material.has(gregtech.api.material.MaterialProperty.WOOD)
-                    && !material.has(gregtech.api.material.MaterialProperty.ANTIMATTER);
+            return material.has(gregtech.internal.material.MaterialProperty.WOOD)
+                    && !material.has(gregtech.internal.material.MaterialProperty.ANTIMATTER);
         var gate = pattern.gate();
         if (gate.onlyMaterial() != null && !gate.onlyMaterial().equals(material.getName())) return false;
         // GT6's ANY.Stone (Loader_Tools:272) is the set of materials carrying the STONE property.
-        if (gate.onlyStone() && !material.has(gregtech.api.material.MaterialProperty.STONE)) {
+        if (gate.onlyStone() && !material.has(gregtech.internal.material.MaterialProperty.STONE)) {
             return false;
         }
         // The early rows take any rock (a stone never has a tool-head form), and a fixed tool material
@@ -279,12 +279,12 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
 
     private static boolean fits(GTToolType type, GTToolRecipes.Pattern pattern, GTMaterial material) {
         if (GTToolRecipes.isWoodenRollingPin(type,pattern)
-                && !material.has(gregtech.api.material.MaterialProperty.WOOD)) return false;
+                && !material.has(gregtech.internal.material.MaterialProperty.WOOD)) return false;
         var gate = pattern.gate();
         if (gate.toolMaterial() != null) return true;
         if (gate.onlyMaterial() != null && !gate.onlyMaterial().equals(material.getName())) return false;
         // GT6's ANY.Stone (Loader_Tools:272) is the set of materials carrying the STONE property.
-        if (gate.onlyStone() && !material.has(gregtech.api.material.MaterialProperty.STONE)) {
+        if (gate.onlyStone() && !material.has(gregtech.internal.material.MaterialProperty.STONE)) {
             return false;
         }
         if (!gate.skipHeadGate() && (!type.canUseHead(material) || !OriginalToolMaterials.acceptsHead(type.definition(), material))) return false;
@@ -351,7 +351,7 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
             var sticks=new java.util.ArrayList<ItemStack>();
             sticks.add(new ItemStack(net.minecraft.world.item.Items.STICK));
             for(var material:GTMaterialRegistry.allMaterials()) {
-                if(!material.has(gregtech.api.material.MaterialProperty.WOOD))continue;
+                if(!material.has(gregtech.internal.material.MaterialProperty.WOOD))continue;
                 var stack=GTItems.getStack(MaterialPrefix.stick,material,1);
                 if(!stack.isEmpty())sticks.add(stack);
             }

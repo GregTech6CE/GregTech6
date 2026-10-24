@@ -18,7 +18,7 @@
  */
 
 package gregtech.item;
-import gregtech.api.tool.*;
+import gregtech.internal.tool.*;
 import gregtech.registry.GTToolItems;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.UseOnContext;
@@ -51,7 +51,7 @@ public final class PocketToolItem extends GTToolItem {
  }
  @Override public InteractionResult useOn(UseOnContext context){if(activeType()==GTToolType.SAW)return gregtech.item.behavior.BehaviorPlaceWoodworkingSupplies.use(context);if(activeType()==GTToolType.SCREWDRIVER){var state=context.getLevel().getBlockState(context.getClickedPos());
 //? if >=1.21.1 {
-/*    if(state.getBlock() instanceof gregtech.api.tool.ScrewdriverUseTarget target){var hit=new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(),context.getClickedFace(),context.getClickedPos(),context.isInside());return target.useScrewdriver(state,context.getLevel(),context.getClickedPos(),context.getPlayer(),context.getHand(),hit);}}
+/*    if(state.getBlock() instanceof gregtech.internal.tool.ScrewdriverUseTarget target){var hit=new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(),context.getClickedFace(),context.getClickedPos(),context.isInside());return target.useScrewdriver(state,context.getLevel(),context.getClickedPos(),context.getPlayer(),context.getHand(),hit);}}
 *///?} else {
     if(state.getBlock() instanceof gregtech.block.machine.HopperBlock||state.getBlock() instanceof gregtech.block.machine.QueueHopperBlock||state.getBlock() instanceof gregtech.block.energy.SignalWireBlock){var hit=new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(),context.getClickedFace(),context.getClickedPos(),context.isInside());return state.use(context.getLevel(),context.getPlayer(),context.getHand(),hit);}}
 //?}

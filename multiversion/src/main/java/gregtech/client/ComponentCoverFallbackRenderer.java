@@ -37,9 +37,9 @@ import net.minecraftforge.api.distmarker.Dist;
 
 /** Cover rendering for native GT hosts tracked by the fallback lifecycle. */
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, value = Dist.CLIENT)
+/*@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, value = Dist.CLIENT)
 *///?} else {
-@Mod.EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, value = Dist.CLIENT)
 //?}
 public final class ComponentCoverFallbackRenderer {
 

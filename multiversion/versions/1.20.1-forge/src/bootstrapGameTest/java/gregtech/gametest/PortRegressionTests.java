@@ -1,8 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.api.fluid.FluidDisplayBinding;
+import gregtech.internal.fluid.FluidDisplayBinding;
 import gregtech.api.material.*;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.material.*;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.content.material.Materials;
 import gregtech.content.tool.AnvilWorkInputs;
 import gregtech.data.*;
@@ -49,7 +50,7 @@ public final class PortRegressionTests {
             helper.setBlock(origin, entry.getKey());
             for (var cell : entry.getValue().entrySet()) helper.setBlock(origin.offset(cell.getKey()), cell.getValue());
             var entity = helper.getLevel().getBlockEntity(helper.absolutePos(origin));
-            helper.assertTrue(entity instanceof gregtech.api.multiblock.StructureController, "controller exposes common status");
+            helper.assertTrue(entity instanceof gregtech.internal.multiblock.StructureController, "controller exposes common status");
             helper.assertTrue(gregtech.content.multiblock.ControllerStructureLayouts.matches(entity), "every preview part matches validation");
             helper.assertTrue(StructureTestSupport.ok((net.minecraft.world.level.block.entity.BlockEntity)entity), "controller uses shared geometry");
             var broken = entry.getValue().entrySet().stream()
@@ -140,20 +141,20 @@ public final class PortRegressionTests {
     }
     @GameTest(template="test_blueprint_empty")
     public static void recipePowerDisplay(GameTestHelper helper) {
-        var recipe = new gregtech.api.recipe.Recipe(null, null, null, null, null, null, 192, 32, 0);
-        var stats = gregtech.api.recipe.RecipePowerStats.of(recipe, 1);
+        var recipe = new gregtech.internal.recipe.Recipe(null, null, null, null, null, null, 192, 32, 0);
+        var stats = gregtech.internal.recipe.RecipePowerStats.of(recipe, 1);
         helper.assertTrue(stats.costs().longValueExact() == 6144 && stats.usage().longValueExact() == 32
                 && stats.tier().longValueExact() == 32 && stats.power() == 1
                 && stats.time() == 192 && stats.timeUnit().equals("ticks"), "original five-line example");
-        helper.assertTrue(gregtech.api.recipe.RecipePowerStats.of(recipe, 4).tier().longValueExact() == 8,
+        helper.assertTrue(gregtech.internal.recipe.RecipePowerStats.of(recipe, 4).tier().longValueExact() == 8,
                 "tier is usage divided by map power");
         for (long ticks : new long[]{1199, 1200, 35999, 36000}) {
-            var timed = new gregtech.api.recipe.Recipe(null, null, null, null, null, null, ticks, -32, 0);
-            var view = gregtech.api.recipe.RecipePowerStats.of(timed, 1);
+            var timed = new gregtech.internal.recipe.Recipe(null, null, null, null, null, null, ticks, -32, 0);
+            var view = gregtech.internal.recipe.RecipePowerStats.of(timed, 1);
             helper.assertTrue(view.generating() && view.time() == (ticks < 1200 ? ticks : ticks < 36000 ? ticks / 20 : ticks / 1200), "generation and original time thresholds");
         }
-        var huge = new gregtech.api.recipe.Recipe(null, null, null, null, null, null, Long.MAX_VALUE, Long.MIN_VALUE, 0);
-        helper.assertTrue(gregtech.api.recipe.RecipePowerStats.of(huge, 1).costs().signum() > 0, "energy costs do not overflow");
+        var huge = new gregtech.internal.recipe.Recipe(null, null, null, null, null, null, Long.MAX_VALUE, Long.MIN_VALUE, 0);
+        helper.assertTrue(gregtech.internal.recipe.RecipePowerStats.of(huge, 1).costs().signum() > 0, "energy costs do not overflow");
         helper.succeed();
     }
 
@@ -178,7 +179,7 @@ public final class PortRegressionTests {
         helper.succeed();
     }
 
-    private static gregtech.api.recipe.Recipe recipeUsing(gregtech.api.recipe.RecipeMap map, Item item) {
+    private static gregtech.internal.recipe.Recipe recipeUsing(gregtech.internal.recipe.RecipeMap map, Item item) {
         return map.mRecipeList.stream().filter(r -> r.mEnabled && !r.mFakeRecipe && r.mInputs.length == 1
                 && r.mInputs[0].getItem() == item).findFirst().orElseThrow(() -> new IllegalStateException("Missing recipe: " + map + " / " + item));
     }
@@ -186,14 +187,14 @@ public final class PortRegressionTests {
     @GameTest(template="test_blueprint_empty")
     public static void outputChances(GameTestHelper helper) {
         var output = new ItemStack(Items.BRICK, 2);
-        var recipe = new gregtech.api.recipe.Recipe(null, new ItemStack[]{output}, null,
+        var recipe = new gregtech.internal.recipe.Recipe(null, new ItemStack[]{output}, null,
                 new long[]{5000}, null, null, 64, 16, 0);
         int[] rolls = {0, 4999, 5000, 9999};
         var index = new java.util.concurrent.atomic.AtomicInteger();
         helper.assertTrue(recipe.rollOutputCount(0, 2, bound -> rolls[index.getAndIncrement()]) == 2
                 && index.get() == 4 && output.getCount() == 2, "per-item independent chance across parallel operations, without mutating recipe");
         helper.assertTrue(recipe.rollOutputCount(0, 1, bound -> 9999) == 0, "failed roll does not produce guaranteed output");
-        var certain = new gregtech.api.recipe.Recipe(null, new ItemStack[]{output}, null,
+        var certain = new gregtech.internal.recipe.Recipe(null, new ItemStack[]{output}, null,
                 null, null, null, 64, 16, 0);
         helper.assertTrue(certain.rollOutputCount(0, 3, bound -> { throw new AssertionError("guaranteed output needs no RNG"); }) == 6, "guaranteed output scales with parallel count");
         helper.succeed();
@@ -328,12 +329,12 @@ public final class PortRegressionTests {
     }
     @GameTest(template="test_blueprint_empty")
     public static void recipeInputsAreConserved(GameTestHelper helper) {
-        var recipe=new gregtech.api.recipe.Recipe(new ItemStack[]{new ItemStack(Items.APPLE,2),new ItemStack(Items.APPLE,2)},
+        var recipe=new gregtech.internal.recipe.Recipe(new ItemStack[]{new ItemStack(Items.APPLE,2),new ItemStack(Items.APPLE,2)},
                 new ItemStack[]{new ItemStack(Items.GOLDEN_APPLE)},null,null,
                 new net.minecraftforge.fluids.FluidStack[]{new net.minecraftforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.WATER,200)},null,16,16,0);
         var water=new net.minecraftforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.WATER,100);
-        helper.assertTrue(gregtech.api.recipe.RecipeInputs.consume(recipe,List.of(new ItemStack(Items.APPLE,3)),List.of(water,water),1)==null,"one stack cannot satisfy duplicate ingredients twice");
-        var result=gregtech.api.recipe.RecipeInputs.consume(recipe,List.of(new ItemStack(Items.APPLE,3),new ItemStack(Items.APPLE)),List.of(water,water),1);
+        helper.assertTrue(gregtech.internal.recipe.RecipeInputs.consume(recipe,List.of(new ItemStack(Items.APPLE,3)),List.of(water,water),1)==null,"one stack cannot satisfy duplicate ingredients twice");
+        var result=gregtech.internal.recipe.RecipeInputs.consume(recipe,List.of(new ItemStack(Items.APPLE,3),new ItemStack(Items.APPLE)),List.of(water,water),1);
         helper.assertTrue(result!=null && result.items().stream().allMatch(ItemStack::isEmpty) && result.fluids().stream().allMatch(net.minecraftforge.fluids.FluidStack::isEmpty),"ingredients can span slots and fluid tanks");
         helper.assertTrue(water.getAmount()==100,"simulation preserves source inputs");
         helper.succeed();
@@ -481,19 +482,19 @@ public final class PortRegressionTests {
     }
     @GameTest(template="test_blueprint_empty")
     public static void pendingOutputsSurvivePartialFlushAndReload(GameTestHelper helper) {
-        var recipe=new gregtech.api.recipe.Recipe(new ItemStack[]{new ItemStack(Items.APPLE)},
+        var recipe=new gregtech.internal.recipe.Recipe(new ItemStack[]{new ItemStack(Items.APPLE)},
                 new ItemStack[]{new ItemStack(Items.DIAMOND,4)},null,null,null,
                 new net.minecraftforge.fluids.FluidStack[]{new net.minecraftforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.WATER,1000)},16,16,0);
-        var pending=gregtech.api.recipe.MachineWorkOutputs.roll(recipe,1,bound->0);
+        var pending=gregtech.internal.recipe.MachineWorkOutputs.roll(recipe,1,bound->0);
         var inventory=new net.minecraftforge.items.ItemStackHandler(1);
         inventory.setStackInSlot(0,new ItemStack(Items.DIAMOND,63));
-        var tank=new gregtech.api.fluid.FluidTankGT(500);
-        helper.assertTrue(!pending.flush(inventory,0,new gregtech.api.fluid.FluidTankGT[]{tank}),"partial output remains pending");
+        var tank=new gregtech.internal.fluid.FluidTankGT(500);
+        helper.assertTrue(!pending.flush(inventory,0,new gregtech.internal.fluid.FluidTankGT[]{tank}),"partial output remains pending");
         helper.assertTrue(inventory.getStackInSlot(0).getCount()==64 && tank.getFluidInTank(0).getAmount()==500,"only available capacity is filled");
-        pending=gregtech.api.recipe.MachineWorkOutputs.load(pending.save());
+        pending=gregtech.internal.recipe.MachineWorkOutputs.load(pending.save());
         inventory.setStackInSlot(0,ItemStack.EMPTY);
         tank.drain(500,net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);
-        helper.assertTrue(pending.flush(inventory,0,new gregtech.api.fluid.FluidTankGT[]{tank}),"saved remainder completes after space is freed");
+        helper.assertTrue(pending.flush(inventory,0,new gregtech.internal.fluid.FluidTankGT[]{tank}),"saved remainder completes after space is freed");
         helper.assertTrue(inventory.getStackInSlot(0).getCount()==3 && tank.getFluidInTank(0).getAmount()==500,"reload neither duplicates nor discards pending output");
         helper.succeed();
     }
@@ -508,13 +509,13 @@ public final class PortRegressionTests {
         var absolute=helper.absolutePos(pos);
         var machine=(gregtech.blockentity.machine.BasicMachineBlockEntity)helper.getLevel().getBlockEntity(absolute);
         machine.inventory().setStackInSlot(0,new ItemStack(Items.APPLE,17));
-        var recipe=new gregtech.api.recipe.Recipe(new ItemStack[]{new ItemStack(Items.APPLE)},new ItemStack[]{new ItemStack(Items.DIAMOND,4)},null,null,null,null,16,16,0);
+        var recipe=new gregtech.internal.recipe.Recipe(new ItemStack[]{new ItemStack(Items.APPLE)},new ItemStack[]{new ItemStack(Items.DIAMOND,4)},null,null,null,null,16,16,0);
         recipe.mOutputs[0].getOrCreateTag().putBoolean("pending_work_test",true);
         // Distinguish this operation from tagged drops left by previous GameTest world runs.
         recipe.mOutputs[0].getOrCreateTag().putUUID("pending_work_test_run",java.util.UUID.randomUUID());
         var data=machine.saveWithoutMetadata();
         data.putLong("gt.progress",16); data.putLong("gt.max_progress",16);
-        data.put("gt.pending_outputs",gregtech.api.recipe.MachineWorkOutputs.roll(recipe,1,bound->0).save());
+        data.put("gt.pending_outputs",gregtech.internal.recipe.MachineWorkOutputs.roll(recipe,1,bound->0).save());
         machine.load(data);
         var drops=net.minecraft.world.level.block.Block.getDrops(machine.getBlockState(),helper.getLevel(),absolute,machine);
         helper.assertTrue(drops.size()==1,"machine has one packed block drop");

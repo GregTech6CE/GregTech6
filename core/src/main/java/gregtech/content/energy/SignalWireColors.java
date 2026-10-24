@@ -1,6 +1,6 @@
 package gregtech.content.energy;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 
 /** Existing unpainted signal-wire tints; paint overrides and native alpha stay in their renderers. */
 public final class SignalWireColors {

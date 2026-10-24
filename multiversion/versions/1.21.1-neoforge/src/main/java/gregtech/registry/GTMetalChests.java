@@ -22,7 +22,7 @@ public final class GTMetalChests {
         return out;
     }
 
-    public static MetalChestBlock chest(gregtech.api.material.GTMaterial material, boolean wood) {
+    public static MetalChestBlock chest(gregtech.internal.material.GTMaterial material, boolean wood) {
         for (var chestEntry : wood ? WOOD : METAL) if (chestEntry.get().material() == material) return chestEntry.get();
         throw new IllegalArgumentException("No chest for " + material.getName());
     }

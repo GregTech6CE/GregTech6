@@ -2,7 +2,7 @@
  * Adapted from MultiTileEntityItemInternal.addInformation, ItemBlockBase and LH.getToolTipHarvest. */
 package gregtech.client;
 
-import gregtech.api.block.OriginalBlockTooltipRules;
+import gregtech.internal.block.OriginalBlockTooltipRules;
 import gregtech.block.BookShelfBlock;
 import gregtech.content.cover.CoverItems;
 import gregtech.data.BlockHarvestPolicy;

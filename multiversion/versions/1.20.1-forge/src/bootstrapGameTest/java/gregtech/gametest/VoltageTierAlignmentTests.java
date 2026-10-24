@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.api.energy.EnergyNodeSpec;
-import gregtech.api.machine.BasicMachineSpec;
-import gregtech.api.machine.MachineRegistry;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.energy.EnergyNodeSpec;
+import gregtech.internal.machine.BasicMachineSpec;
+import gregtech.internal.machine.MachineRegistry;
+import gregtech.internal.material.GTMaterial;
 import gregtech.content.material.Materials;
 import gregtech.data.GregTechConstants;
 import gregtech.data.MachineRecipeIngredients;

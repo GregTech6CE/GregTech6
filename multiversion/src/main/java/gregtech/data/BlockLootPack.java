@@ -1,6 +1,6 @@
 package gregtech.data;
 
-import gregtech.api.material.MaterialEquivalence;
+import gregtech.internal.material.MaterialEquivalence;
 import gregtech.block.MaterialBlockLike;
 import gregtech.item.MaterialItem;
 import net.minecraft.network.chat.Component;
@@ -26,9 +26,9 @@ import java.util.*;
 
 /** Registry-driven built-in datapack: avoids thousands of tiny processResources files. */
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+/*@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 *///?} else {
-@Mod.EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 //?}
 public final class BlockLootPack extends AbstractPackResources {
     private Map<ResourceLocation, byte[]> resources;
@@ -88,7 +88,7 @@ public final class BlockLootPack extends AbstractPackResources {
             // Supply vanilla loot only. Blocks overriding getDrops retain their specialized NBT/drop behavior.
             // GT6 spike metadata distinguished the two materials and wall/omni/falling mode. Copy
             // those properties into BlockStateTag so mining a configured spike does not erase them.
-            Map<String, Object> entry = block instanceof gregtech.api.block.StatefulBlockLoot stateful
+            Map<String, Object> entry = block instanceof gregtech.internal.block.StatefulBlockLoot stateful
 //? if >=1.21.1 {
             /*// Version-specific branch.
                     ? Map.of("type", "minecraft:item", "name", BuiltInRegistries.ITEM.getKey(block.asItem()).toString(),

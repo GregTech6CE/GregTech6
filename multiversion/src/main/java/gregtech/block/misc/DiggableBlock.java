@@ -5,7 +5,7 @@ package gregtech.block.misc;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.content.material.Materials;
 import gregtech.data.MaterialPrefix;
 import gregtech.registry.GTItems;

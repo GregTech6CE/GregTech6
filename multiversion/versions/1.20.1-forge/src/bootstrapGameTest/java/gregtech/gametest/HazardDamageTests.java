@@ -3,7 +3,7 @@ package gregtech.gametest;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import gregtech.api.energy.GTVoltageTiers;
-import gregtech.api.energy.WireSpec;
+import gregtech.internal.energy.WireSpec;
 import gregtech.block.energy.ElectricWireBlock;
 import gregtech.block.machine.FluidPipeBlock;
 import gregtech.blockentity.energy.ElectricWireBlockEntity;
@@ -347,7 +347,7 @@ public final class HazardDamageTests {
                 "an ordinary ingot does not burn its holder");
 
         ItemStack hot = gregtech.registry.GTItems.getStack(MaterialPrefix.ingotHot,
-                gregtech.api.material.GTMaterialRegistry.get("Iron"));
+                gregtech.internal.material.GTMaterialRegistry.get("Iron"));
         helper.assertTrue(!hot.isEmpty(), "an iron hot ingot item exists");
         helper.assertTrue(GTEntityHelper.heatDamageFromItem(hot) == 3.0F,
                 "heatDamageFromItem reads the prefix, got " + GTEntityHelper.heatDamageFromItem(hot));

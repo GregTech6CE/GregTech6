@@ -5,9 +5,9 @@ package gregtech.event;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.machine.GTMachineBlock;
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.machine.GTMachineBlock;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 import gregtech.blockentity.machine.CrucibleFaucetBlockEntity;
 import gregtech.blockentity.machine.MoldBasinBlockEntity;
 import gregtech.blockentity.machine.MoldBlockEntity;
@@ -45,7 +45,7 @@ import net.minecraftforge.fml.common.Mod;
  * Handles interactions with smeltery components (mold, basin, faucet, crossing).
  */
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID)
+/*@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID)
 *///?} else {
 @Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 //?}

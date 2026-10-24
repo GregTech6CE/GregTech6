@@ -75,8 +75,9 @@ elif mode == 'current':
         if '/gametest/' in path:
             write(path, content.encode('utf-8'))
     write('CurrentMaterialRoleProbe.java', b'''import gregtech.api.material.*;
-import gregtech.api.mod.ModData;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.material.*;
+import gregtech.internal.mod.ModData;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.platform.neoforge.gametest.SharedMaterialBootstrapGameTests;
 public final class CurrentMaterialRoleProbe {
  public static void main(String[] args) throws Exception {

@@ -1,6 +1,7 @@
 package gregtech.integration.jade;
 
 import gregtech.api.machine.*;
+import gregtech.internal.machine.*;
 import gregtech.block.machine.EngineBlock;
 import gregtech.blockentity.machine.*;
 import gregtech.data.GregTechTags;
@@ -45,7 +46,7 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
         tag.putString(NBT_TYPE, type.name().toLowerCase(Locale.ROOT));
         tag.putString(NBT_NAME, ms.id());
         tag.putString(NBT_NAME + "_key", block.getDescriptionId());
-        tag.putLong(NBT_STORED, be.getEnergyStored(type == gregtech.api.machine.EngineType.DIESEL
+        tag.putLong(NBT_STORED, be.getEnergyStored(type == gregtech.internal.machine.EngineType.DIESEL
                 ? GregTechTags.Energy.RU : GregTechTags.Energy.KU, null));
         tag.putLong(NBT_OUT_RATE, ms.outputRate());
         tag.putInt(NBT_EFF, ms.efficiency());

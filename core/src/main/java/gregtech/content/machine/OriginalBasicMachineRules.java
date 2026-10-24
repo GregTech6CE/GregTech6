@@ -2,7 +2,7 @@
  * Original MultiTileEntityBasicMachine and 247 Basic Machines registrations. */
 package gregtech.content.machine;
 
-import gregtech.api.energy.MachineFaceMasks;
+import gregtech.internal.energy.MachineFaceMasks;
 import gregtech.data.BasicMachineOriginalParams;
 import java.util.List;
 import java.util.Set;

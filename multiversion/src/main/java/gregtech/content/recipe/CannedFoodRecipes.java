@@ -3,8 +3,8 @@ package gregtech.content.recipe;
 
 import gregtech.data.*;
 import gregtech.registry.*;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.prefix.PrefixRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;

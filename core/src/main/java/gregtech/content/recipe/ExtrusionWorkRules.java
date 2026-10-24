@@ -1,6 +1,6 @@
 package gregtech.content.recipe;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.api.material.GTValues;
 
 /** Original RecipeMapHandlerPrefixForging / material weight calculation at 96 GU/t. */

@@ -1,7 +1,7 @@
 package gregtech.content.recipe;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.addon.AddonMaterials;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.addon.AddonMaterials;
 /** Bounded baseline ORES-property proof. Not a universal recipe or external-form prohibition.
  * 53 reviewed negatives from54 target-link candidates; Sand and all other identities UNKNOWN.
  * Evidence: docs/integration/nonore-input-source-profile.json; paired declaration references and source hashes.

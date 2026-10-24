@@ -1,6 +1,6 @@
 package gregtech.data;
 
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.recipe.RecipeMap;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -52,8 +52,8 @@ public class FuelRecipeMaps {
     public static final java.util.List<RecipeMap> FUEL_MAP_LIST = java.util.List.of(
             FluidBed, Burn, Gas, Hot, Plasma, Engine, Turbine, Magic);
 
-    private static gregtech.api.recipe.RecipeMap fromDefinition(gregtech.api.recipe.RecipeMapSpec spec) {
-        var map=new gregtech.api.recipe.RecipeMap(null,spec.mNameInternal,spec.mNameLocal,spec.mGUIPath,
+    private static gregtech.internal.recipe.RecipeMap fromDefinition(gregtech.internal.recipe.RecipeMapSpec spec) {
+        var map=new gregtech.internal.recipe.RecipeMap(null,spec.mNameInternal,spec.mNameLocal,spec.mGUIPath,
                 spec.mInputItemsCount,spec.mOutputItemsCount,spec.mMinimalInputItems,
                 spec.mInputFluidCount,spec.mOutputFluidCount,spec.mMinimalInputFluids,spec.mMinimalInputs,
                 spec.mNeedsOutputs,spec.mCombinePower,spec.mUseBucketSizeIn,spec.mUseBucketSizeOut);

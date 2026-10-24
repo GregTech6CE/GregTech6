@@ -1,9 +1,9 @@
 package gregtech.item;
 
 import gregtech.GregTech;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialProperty;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialProperty;
 import gregtech.data.RegisteredFluids;
 import gregtech.registry.GTFluidType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -34,7 +34,7 @@ public class FluidItem extends Item {
     @Override
     public net.minecraft.world.InteractionResult onItemUseFirst(ItemStack stack,
             net.minecraft.world.item.context.UseOnContext context) {
-        return gregtech.api.fluid.FluidDisplayInteraction.useFirst(stack, context);
+        return gregtech.internal.fluid.FluidDisplayInteraction.useFirst(stack, context);
     }
 
     public RegisteredFluids.FluidEntry fluidEntry() {
@@ -43,8 +43,8 @@ public class FluidItem extends Item {
 
     @Override
     public Component getName(ItemStack stack) {
-        if (gregtech.api.fluid.FluidDisplayBinding.hasPayload(stack)) {
-            var fluid = gregtech.api.fluid.FluidDisplayBinding.resolve(stack);
+        if (gregtech.internal.fluid.FluidDisplayBinding.hasPayload(stack)) {
+            var fluid = gregtech.internal.fluid.FluidDisplayBinding.resolve(stack);
             if (!fluid.isEmpty()) {
                 // entryForFluid, not FluidStack#getDisplayName: the three world waters report vanilla
                 // water's FluidType (see GTWorldWaterFluid), so their type description is "Water" and
@@ -86,16 +86,16 @@ public class FluidItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-        var actual = gregtech.api.fluid.FluidDisplayBinding.resolve(stack);
-        long amount = gregtech.api.fluid.FluidDisplayBinding.hasPayload(stack) ? actual.getAmount() : 0;
+        var actual = gregtech.internal.fluid.FluidDisplayBinding.resolve(stack);
+        long amount = gregtech.internal.fluid.FluidDisplayBinding.hasPayload(stack) ? actual.getAmount() : 0;
         tooltip.addAll(GTFluidType.describeTooltip(actual, amount, flag.isAdvanced()));
     }
 
     @Override
     public boolean isFoil(ItemStack stack) {
         var entry = fluidEntry;
-        if (gregtech.api.fluid.FluidDisplayBinding.hasPayload(stack)) {
-            var actual = gregtech.api.fluid.FluidDisplayBinding.resolve(stack);
+        if (gregtech.internal.fluid.FluidDisplayBinding.hasPayload(stack)) {
+            var actual = gregtech.internal.fluid.FluidDisplayBinding.resolve(stack);
             entry = actual.isEmpty() ? null : gregtech.registry.GTFluids.entryForFluid(actual.getFluid());
             if (entry == null) return false;
         }
@@ -131,12 +131,12 @@ public class FluidItem extends Item {
         }
 
         private Fluid resolveFluid() {
-            var fluid = gregtech.api.fluid.FluidDisplayBinding.resolve(container);
+            var fluid = gregtech.internal.fluid.FluidDisplayBinding.resolve(container);
             return fluid.isEmpty() ? null : fluid.getFluid();
         }
 
         private FluidStack contents(int amount) {
-            var fluid = gregtech.api.fluid.FluidDisplayBinding.resolve(container);
+            var fluid = gregtech.internal.fluid.FluidDisplayBinding.resolve(container);
             if (!fluid.isEmpty()) fluid.setAmount(amount);
             return fluid;
         }
@@ -179,7 +179,7 @@ public class FluidItem extends Item {
         @Override
         public FluidStack drain(FluidStack resource, FluidAction action) {
             Fluid resolvedFluid = resolveFluid();
-            if (resolvedFluid == null || !gregtech.api.fluid.FluidDisplayBinding.resolve(container).isFluidEqual(
+            if (resolvedFluid == null || !gregtech.internal.fluid.FluidDisplayBinding.resolve(container).isFluidEqual(
                     resource)) return FluidStack.EMPTY;
             return drain(resource.getAmount(), action);
         }

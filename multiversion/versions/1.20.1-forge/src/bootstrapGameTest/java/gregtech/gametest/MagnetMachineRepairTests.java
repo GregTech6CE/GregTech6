@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.api.energy.EnergyNodeSpec;
+import gregtech.internal.energy.EnergyNodeSpec;
 import gregtech.block.energy.EnergyNodeBlock;
 import gregtech.block.energy.MagnetMachineBlock;
 import gregtech.blockentity.energy.EnergyNodeBlockEntity;

@@ -1,12 +1,13 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.energy.EnergyTransfer;
+import gregtech.internal.energy.EnergyTransfer;
 import gregtech.api.machine.*;
-import gregtech.api.fluid.FluidTankGT;
-import gregtech.api.recipe.Recipe;
-import gregtech.api.recipe.RecipeMap;
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.machine.*;
+import gregtech.internal.fluid.FluidTankGT;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.recipe.RecipeMap;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 import gregtech.block.machine.BurningBoxBlock;
 import gregtech.blockentity.machine.GTFacingMachineBlockEntity;
 import gregtech.data.GregTechTags;
@@ -57,9 +58,9 @@ import static gregtech.data.FuelRecipeMaps.*;
  * All emit HU upward. Dense versions multiply output rate by 4x.</p>
  */
 //? if >=1.21.1 {
-/*public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements gregtech.item.behavior.ManualToolBehaviorAccess.Ignitable,gregtech.api.tool.PoweredToolTarget {
+/*public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements gregtech.item.behavior.ManualToolBehaviorAccess.Ignitable,gregtech.internal.tool.PoweredToolTarget {
 *///?} else {
-public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements gregtech.api.tool.PoweredToolTarget {
+public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements gregtech.internal.tool.PoweredToolTarget {
 //?}
 
     private static final int FLAME_RANGE = 2;
@@ -371,7 +372,7 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
         // Wrench: rotate facing
         if (GTToolHelper.matchesTool(held, GTToolType.WRENCH)
                 || GTToolHelper.matchesTool(held, GTToolType.MONKEY_WRENCH)) {
-            Direction target = gregtech.api.tool.ToolInteractions.selectedFace(hit);
+            Direction target = gregtech.internal.tool.ToolInteractions.selectedFace(hit);
             if (burning && target != getFrontFacing()) return InteractionResult.SUCCESS;
 //? if >=1.21.1 {
             /*if (!target.getAxis().isHorizontal()) return InteractionResult.SUCCESS;
@@ -382,7 +383,7 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
                 GTToolHelper.damageForToolClickReturn(held,10000L,player);
             }
 *///?} else {
-            gregtech.api.tool.ToolInteractions.use(getBlockState(), level, worldPosition, player, hand, hit);
+            gregtech.internal.tool.ToolInteractions.use(getBlockState(), level, worldPosition, player, hand, hit);
 //?}
             return InteractionResult.CONSUME;
         }

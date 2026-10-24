@@ -1,7 +1,7 @@
 package gregtech.integration.client;
 
-import gregtech.api.tool.GTToolType;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.tool.GTToolType;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.item.GTToolItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;

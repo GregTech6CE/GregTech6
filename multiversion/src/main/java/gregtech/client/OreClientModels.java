@@ -5,7 +5,7 @@ package gregtech.client;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.material.MaterialTextureSet;
+import gregtech.internal.material.MaterialTextureSet;
 import gregtech.block.OreBlock;
 import gregtech.registry.GTBlocks;
 import com.mojang.logging.LogUtils;
@@ -45,7 +45,7 @@ import java.util.Map;
  * {@code ""} variant.
  */
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+/*@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 *///?} else {
 @Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 //?}

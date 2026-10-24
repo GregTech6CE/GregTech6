@@ -139,9 +139,9 @@ public final class LogisticsCoreTests {
     public static void ceilingFloorAndWrenchUseTheSixFaceStructure(GameTestHelper helper) {
         var block = (LogisticsCoreControllerBlock) GTLasers.LOGISTICS_CORE.get();
         var wrench = gregtech.item.GTToolItem.create(
-                gregtech.api.tool.GTToolType.WRENCH,
+                gregtech.internal.tool.GTToolType.WRENCH,
                 gregtech.content.material.Materials.Steel,
-                gregtech.api.material.GTMaterialRegistry.get("Wood"));
+                gregtech.internal.material.GTMaterialRegistry.get("Wood"));
         for (Direction side : Direction.values())
             helper.assertTrue(block.toolInteraction(block.defaultBlockState(), wrench)
                     .allows(block.defaultBlockState(), side), "wrench selects " + side + " on original six-faced core");

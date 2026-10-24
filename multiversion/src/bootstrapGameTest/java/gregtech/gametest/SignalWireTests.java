@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
 import gregtech.api.machine.MachineControl;
-import gregtech.api.tool.*;
+import gregtech.internal.tool.*;
 import gregtech.block.energy.*;
 import gregtech.blockentity.energy.SignalWireBlockEntity;
 import gregtech.content.material.Materials;
@@ -143,7 +143,7 @@ public final class SignalWireTests {
 *///?} else {
         var player=h.makeMockPlayer();
 //?}
-        var tool=GTToolItem.create(gregtech.api.tool.GTToolType.WIRE_CUTTER,Materials.Steel,gregtech.api.material.GTMaterialRegistry.get("Wood"));
+        var tool=GTToolItem.create(gregtech.internal.tool.GTToolType.WIRE_CUTTER,Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
         player.setItemInHand(InteractionHand.MAIN_HAND,tool);
         for(var side:Direction.values()){
             var other=place(h,pos.relative(side),block("Signalum",true));

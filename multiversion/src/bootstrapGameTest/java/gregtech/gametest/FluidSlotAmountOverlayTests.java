@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.fluid.FluidSlotAmountOverlay;
+import gregtech.internal.fluid.FluidSlotAmountOverlay;
 import gregtech.client.gui.SlotFluid;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

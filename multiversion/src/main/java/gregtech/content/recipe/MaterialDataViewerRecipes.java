@@ -3,7 +3,8 @@
 package gregtech.content.recipe;
 
 import gregtech.api.material.*;
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.material.*;
+import gregtech.internal.recipe.Recipe;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.data.generated.MaterialDataFacts;
 import net.minecraft.core.registries.BuiltInRegistries;

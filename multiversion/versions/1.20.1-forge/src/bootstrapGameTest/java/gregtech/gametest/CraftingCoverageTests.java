@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
-import gregtech.api.recipe.Recipe;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.registry.GTTechnological;
 import gregtech.registry.GTToolItems;
 import net.minecraft.core.registries.Registries;

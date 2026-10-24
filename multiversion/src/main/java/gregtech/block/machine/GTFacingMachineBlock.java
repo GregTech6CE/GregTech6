@@ -1,11 +1,11 @@
 package gregtech.block.machine;
 
-import gregtech.api.tool.ToolInteractionSpec;
-import gregtech.api.tool.ToolInteractionTarget;
-import gregtech.api.machine.GTMachineBlock;
-import gregtech.api.machine.MachineSpec;
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.ToolInteractionSpec;
+import gregtech.internal.tool.ToolInteractionTarget;
+import gregtech.internal.machine.GTMachineBlock;
+import gregtech.internal.machine.MachineSpec;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;

@@ -1,7 +1,7 @@
 package gregtech.client;
 
-import gregtech.api.machine.PipeGeometry;
-import gregtech.api.machine.PipeModelData;
+import gregtech.internal.machine.PipeGeometry;
+import gregtech.internal.machine.PipeModelData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;

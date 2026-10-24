@@ -5,13 +5,13 @@ package gregtech.client;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.machine.CrucibleSpec;
+import gregtech.internal.machine.CrucibleSpec;
 
 //? if >=1.21.1 {
 //?} else {
-import gregtech.api.machine.MachineRegistry;
+import gregtech.internal.machine.MachineRegistry;
 //?}
-import gregtech.api.material.MaterialTextureSet;
+import gregtech.internal.material.MaterialTextureSet;
 import gregtech.block.machine.CrucibleCrossingBlock;
 import gregtech.block.machine.CrucibleFaucetBlock;
 import gregtech.block.machine.MoldBasinBlock;
@@ -44,7 +44,7 @@ import java.util.function.Function;
 
 /** Mold basin / mold / crossing / faucet hull models (same texture-set sharing as smelting crucibles). */
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD,value=Dist.CLIENT)
+/*@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD,value=Dist.CLIENT)
 *///?} else {
 @Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 //?}

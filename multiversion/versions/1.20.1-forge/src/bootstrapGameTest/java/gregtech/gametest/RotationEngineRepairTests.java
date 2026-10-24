@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.machine.MachineRegistry;
+import gregtech.internal.machine.MachineRegistry;
 import gregtech.block.machine.EngineBlock;
 import gregtech.blockentity.GTEnergyBlockEntity;
 import gregtech.blockentity.machine.KineticRotationEngineBlockEntity;
@@ -23,7 +23,7 @@ public final class RotationEngineRepairTests {
 
     private static EngineBlock block(String id) {
         return MachineRegistry.rotationEngines().stream().map(registered -> registered.get())
-                .filter(block -> block.engineSpec(gregtech.api.machine.RotationEngineSpec.class)
+                .filter(block -> block.engineSpec(gregtech.internal.machine.RotationEngineSpec.class)
                         .id().equals(id))
                 .findFirst().orElseThrow();
     }

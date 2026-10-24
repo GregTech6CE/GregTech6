@@ -49,7 +49,7 @@ import java.util.Map;
  * {@link FluidItemOverrideList}. That list lazily resolves the correct fluid
  * sprite at <em>render time</em> (not bake time), so the atlas is always ready.
  ^/
-@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 *///?} else {
 /**
  * Registers the shared fluid_item model and aliases all {@link FluidItem} models.
@@ -134,8 +134,8 @@ public final class FluidItemClientModels {
             if(!(entry.get() instanceof FluidDisplayItem item)) continue;
             event.register((stack,layer) -> {
                 if(layer!=0) return 0xFFFFFF;
-                if(gregtech.api.fluid.FluidDisplayBinding.hasPayload(stack)) {
-                    var actual=gregtech.api.fluid.FluidDisplayBinding.resolveCurrent(stack);
+                if(gregtech.internal.fluid.FluidDisplayBinding.hasPayload(stack)) {
+                    var actual=gregtech.internal.fluid.FluidDisplayBinding.resolveCurrent(stack);
                     if(!actual.isEmpty()) return net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions.of(actual.getFluid()).getTintColor(actual);
                 }
                 return FluidAppearance.appearance(item.fluidEntry()).tint();
@@ -144,7 +144,7 @@ public final class FluidItemClientModels {
     }
     @SubscribeEvent
     public static void setup(net.neoforged.fml.event.lifecycle.FMLClientSetupEvent event) {
-        gregtech.api.fluid.FluidDisplayBinding.setClientLookup(() -> {
+        gregtech.internal.fluid.FluidDisplayBinding.setClientLookup(() -> {
             var client=net.minecraft.client.Minecraft.getInstance();
             if(client.level!=null) return client.level.registryAccess();
             return client.getConnection()==null?null:client.getConnection().registryAccess();

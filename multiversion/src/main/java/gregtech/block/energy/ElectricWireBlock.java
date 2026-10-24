@@ -1,17 +1,17 @@
 package gregtech.block.energy;
 
 //? if >=1.21.1 {
-/*import gregtech.api.tool.GTToolHelper;
+/*import gregtech.internal.tool.GTToolHelper;
 *///?} else {
 //?}
-import gregtech.api.tool.ToolInteractions;
-import gregtech.api.tool.ToolInteractionSpec;
-import gregtech.api.tool.ToolInteractionTarget;
-import gregtech.api.energy.WireSpec;
+import gregtech.internal.tool.ToolInteractions;
+import gregtech.internal.tool.ToolInteractionSpec;
+import gregtech.internal.tool.ToolInteractionTarget;
+import gregtech.internal.energy.WireSpec;
 
 //? if >=1.21.1 {
 //?} else {
-import gregtech.api.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolHelper;
 //?}
 import gregtech.blockentity.energy.ElectricWireBlockEntity;
 import gregtech.util.GTEntityHelper;
@@ -30,7 +30,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import gregtech.api.GTWaterloggable;
+import gregtech.internal.GTWaterloggable;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
@@ -50,9 +50,9 @@ import java.util.Map;
 
 /** GT6 electric wire block with pipe-style 6-way BooleanProperty connections and dynamic thickness. */
 //? if >=1.21.1 {
-/*public class ElectricWireBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, gregtech.api.energy.WireMaterialLike, ToolInteractionTarget {
+/*public class ElectricWireBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, gregtech.internal.energy.WireMaterialLike, ToolInteractionTarget {
 *///?} else {
-public class ElectricWireBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget, gregtech.api.energy.WireMaterialLike {
+public class ElectricWireBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget, gregtech.internal.energy.WireMaterialLike {
 //?}
     public static final BooleanProperty UP    = BooleanProperty.create("up");
     public static final BooleanProperty DOWN  = BooleanProperty.create("down");
@@ -160,10 +160,10 @@ public class ElectricWireBlock extends Block implements EntityBlock, SimpleWater
         VoxelShape shape = Shapes.box(min, min, min, max, max, max);
         for (Direction dir : Direction.values()) {
             if (!state.getValue(propFor(dir))) continue;
-            double n = gregtech.api.machine.PipeGeometry.wireHalfOf(
+            double n = gregtech.internal.machine.PipeGeometry.wireHalfOf(
                     level.getBlockState(pos.relative(dir)));
-            double[] box = gregtech.api.machine.PipeGeometry.armBox(dir, half, n);
-            if (box != null) shape = Shapes.or(shape, gregtech.api.machine.PipeGeometry.boxShape(box));
+            double[] box = gregtech.internal.machine.PipeGeometry.armBox(dir, half, n);
+            if (box != null) shape = Shapes.or(shape, gregtech.internal.machine.PipeGeometry.boxShape(box));
         }
         return shape;
     }

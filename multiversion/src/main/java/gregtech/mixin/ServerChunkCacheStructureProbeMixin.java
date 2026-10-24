@@ -1,6 +1,6 @@
 package gregtech.mixin;
 
-import gregtech.api.multiblock.tracking.StructureScanProbe;
+import gregtech.internal.multiblock.tracking.StructureScanProbe;
 import net.minecraft.server.level.ServerChunkCache;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

@@ -1,10 +1,10 @@
 package gregtech.content.material.generated;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.MaterialProperty;
-import gregtech.api.material.MaterialTextureSet;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.MaterialProperty;
+import gregtech.internal.material.MaterialTextureSet;
 import gregtech.data.GregTechConstants;
-import static gregtech.api.material.MaterialFactories.*;
+import static gregtech.internal.material.MaterialFactories.*;
 
 /** Generated from GT6 material definitions. Regenerate with tools/transpile_gt6_materials.py. */
 public final class CompoundMaterials {

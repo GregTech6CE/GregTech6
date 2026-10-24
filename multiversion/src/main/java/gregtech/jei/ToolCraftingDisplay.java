@@ -1,6 +1,6 @@
 package gregtech.jei;
 import gregtech.recipe.ToolShapedRecipe;
-import gregtech.api.fluid.FluidContainerDisplayBinding;
+import gregtech.internal.fluid.FluidContainerDisplayBinding;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.ICraftingGridHelper;
 import mezz.jei.api.recipe.IFocusGroup;

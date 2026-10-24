@@ -1,6 +1,6 @@
 package gregtech.core;
 import gregtech.content.machine.OriginalBasicMachineRules;
-import gregtech.api.energy.MachineFaceMasks;
+import gregtech.internal.energy.MachineFaceMasks;
 import gregtech.api.recipe.MachineWorkCost;
 import java.io.*;
 import java.nio.charset.StandardCharsets;

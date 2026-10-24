@@ -1,7 +1,8 @@
 package gregtech.content.tool;
 
 import gregtech.api.material.*;
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.material.*;
+import gregtech.internal.recipe.Recipe;
 import gregtech.data.*;
 import gregtech.registry.GTItems;
 import net.minecraft.world.item.ItemStack;

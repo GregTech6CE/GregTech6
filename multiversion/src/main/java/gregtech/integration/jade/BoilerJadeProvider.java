@@ -1,6 +1,6 @@
 package gregtech.integration.jade;
 
-import gregtech.api.machine.BoilerSpec;
+import gregtech.internal.machine.BoilerSpec;
 import gregtech.block.machine.BoilerTankBlock;
 import gregtech.blockentity.machine.BoilerTankBlockEntity;
 import net.minecraft.nbt.CompoundTag;

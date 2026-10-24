@@ -1,6 +1,6 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.machine.MachineSpec;
+import gregtech.internal.machine.MachineSpec;
 import gregtech.block.machine.GTFacingMachineBlock;
 import gregtech.blockentity.GTEnergyBlockEntity;
 import gregtech.data.GregTechConstants;

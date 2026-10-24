@@ -1,7 +1,7 @@
 package gregtech.block.machine;
 
-import gregtech.api.machine.BasicMachineSpec;
-import gregtech.api.machine.MachineSpec;
+import gregtech.internal.machine.BasicMachineSpec;
+import gregtech.internal.machine.MachineSpec;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;

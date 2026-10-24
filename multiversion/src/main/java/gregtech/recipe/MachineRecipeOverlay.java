@@ -1,15 +1,15 @@
 package gregtech.recipe;
 
-import gregtech.api.material.MaterialDisplayBinding;
-import gregtech.api.recipe.Recipe;
-import gregtech.api.recipe.RecipeMap;
-import gregtech.api.recipe.data.FluidComponent;
-import gregtech.api.recipe.data.ItemComponent;
-import gregtech.api.recipe.data.ItemResult;
-import gregtech.api.recipe.data.MachineRecipeFields;
-import gregtech.api.recipe.data.MachineRecipeMatch;
-import gregtech.api.recipe.data.MachineRecipeRemovalSpec;
-import gregtech.api.recipe.data.MachineRecipeSpec;
+import gregtech.internal.material.MaterialDisplayBinding;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.recipe.RecipeMap;
+import gregtech.internal.recipe.data.FluidComponent;
+import gregtech.internal.recipe.data.ItemComponent;
+import gregtech.internal.recipe.data.ItemResult;
+import gregtech.internal.recipe.data.MachineRecipeFields;
+import gregtech.internal.recipe.data.MachineRecipeMatch;
+import gregtech.internal.recipe.data.MachineRecipeRemovalSpec;
+import gregtech.internal.recipe.data.MachineRecipeSpec;
 import gregtech.compat.CompatRecipes;
 import gregtech.content.recipe.ExternalOreProcessing;
 import com.mojang.logging.LogUtils;
@@ -240,12 +240,12 @@ public final class MachineRecipeOverlay {
 
     private static void add(RecipeMap map, ItemStack[] items, ItemStack[] outputs, long[] chances,
             FluidStack[] fluidInputs, FluidStack[] fluidOutputs, MachineRecipeSpec spec, Tally tally) {
-        if (gregtech.api.addon.ExclusiveOutputMaps.enabled(map)
-                && !gregtech.api.addon.ExclusiveOutputRules.isPair(outputs.length,
-                gregtech.api.addon.ExclusiveOutputMaps.nonEmptyItems(outputs))) {
+        if (gregtech.internal.addon.ExclusiveOutputMaps.enabled(map)
+                && !gregtech.internal.addon.ExclusiveOutputRules.isPair(outputs.length,
+                gregtech.internal.addon.ExclusiveOutputMaps.nonEmptyItems(outputs))) {
             tally.rejected++;
             problem(spec.map() + " exclusive outputs need exactly 2 item outputs: "
-                    + gregtech.api.addon.ExclusiveOutputMaps.nonEmptyItems(outputs));
+                    + gregtech.internal.addon.ExclusiveOutputMaps.nonEmptyItems(outputs));
             return;
         }
         var copiedOutputs = new ItemStack[outputs.length];

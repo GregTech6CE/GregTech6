@@ -1,5 +1,5 @@
 package gregtech.block;
-import gregtech.api.prefix.BlockMaterialPrefix;
+import gregtech.internal.prefix.BlockMaterialPrefix;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.block.SoundType;
 /** Minecraft presentation boundary for the shared original prefix fields. */

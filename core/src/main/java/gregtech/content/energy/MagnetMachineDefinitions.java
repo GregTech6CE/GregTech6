@@ -2,8 +2,8 @@
  * Loader_MultiTileEntities 10031..10035 / 11031..11035 and TileEntityBase11Bipolar. */
 package gregtech.content.energy;
 
-import gregtech.api.energy.EnergyNodeSpec;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.energy.EnergyNodeSpec;
+import gregtech.internal.material.GTMaterial;
 import gregtech.content.material.Materials;
 import gregtech.data.GregTechTags;
 

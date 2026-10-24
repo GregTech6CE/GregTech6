@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.fluid.FluidTankGT;
+import gregtech.internal.fluid.FluidTankGT;
 import gregtech.blockentity.machine.OriginalLargeBoilerControllerBlockEntity;
 import gregtech.content.multiblock.OriginalLargeBoilerSpecs;
 import gregtech.registry.GTFluids;

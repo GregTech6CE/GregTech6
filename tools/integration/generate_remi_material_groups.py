@@ -18,8 +18,8 @@ JAVA = ROOT / "core/src/main/java/gregtech"
 ASSETS = ROOT / "core/src/main/resources/assets/gt6ce"
 
 def additional_prefixes():
-    items = (JAVA / "api/material/MaterialItemDefinitions.java").read_text(encoding="utf-8")
-    blocks = (JAVA / "api/prefix/BlockMaterialPrefix.java").read_text(encoding="utf-8")
+    items = (JAVA / "internal/material/MaterialItemDefinitions.java").read_text(encoding="utf-8")
+    blocks = (JAVA / "internal/prefix/BlockMaterialPrefix.java").read_text(encoding="utf-8")
     # Tool heads are components, not the finished tools with independent stack data.
     candidates = items.split("return List.of(", 1)[1].split(");", 1)[0]
     yield from (p for p in dict.fromkeys(re.findall(r"MaterialPrefix\.(\w+)", candidates)) if p not in PREFIXES)

@@ -1,6 +1,7 @@
 package gregtech.integration.client;
 
 import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.content.recipe.GTMaterialDataRecipes;
 import gregtech.data.MachineRecipeMaps;
 import dev.emi.emi.api.EmiApi;

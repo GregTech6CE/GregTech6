@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
 import gregtech.GregTechConfig;
-import gregtech.api.energy.MachineOverload;
-import gregtech.api.fluid.FluidTankGT;
+import gregtech.internal.energy.MachineOverload;
+import gregtech.internal.fluid.FluidTankGT;
 import gregtech.block.energy.*;
 import gregtech.block.misc.*;
 import gregtech.blockentity.energy.EnergyNodeBlockEntity;
@@ -88,8 +88,8 @@ public final class MachineExplosionReviewTests {
         for (var cell : OriginalLargeBoilerSpecs.LAYOUT.cells()) {
             var at = cell.at(p, Direction.NORTH);
             if (at.equals(p)) continue;
-            var b = cell.role() == gregtech.api.multiblock.MultiblockLayout.Role.AIR ? Blocks.AIR
-                    : cell.role() == gregtech.api.multiblock.MultiblockLayout.Role.HEAT_INPUT ? GTMultiblocks.HEAT_TRANSMITTER.get() : boiler.variant().wall();
+            var b = cell.role() == gregtech.internal.multiblock.MultiblockLayout.Role.AIR ? Blocks.AIR
+                    : cell.role() == gregtech.internal.multiblock.MultiblockLayout.Role.HEAT_INPUT ? GTMultiblocks.HEAT_TRANSMITTER.get() : boiler.variant().wall();
             world.setBlockAndUpdate(at, b.defaultBlockState());
         }
         h.assertTrue(StructureTestSupport.ok(boiler), "actual large boiler shell forms");

@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialProperty;
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialProperty;
+import gregtech.internal.recipe.Recipe;
 import gregtech.content.material.Materials;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.data.MaterialPrefix;
@@ -78,7 +78,7 @@ public final class CrucibleTemperatureTests {
                         + " expected " + pigIron.getMeltingPoint());
 
         // Wrought iron itself is the input of the steel reaction (GT6 MT.java:3348).
-        var steelReaction = gregtech.api.machine.crucible.CrucibleReactions.allRecipes().stream()
+        var steelReaction = gregtech.internal.machine.crucible.CrucibleReactions.allRecipes().stream()
                 .filter(r -> r.output().resolve() == Materials.Steel.resolve())
                 .findFirst().orElse(null);
         helper.assertTrue(steelReaction != null, "the crucible has a Steel reaction");

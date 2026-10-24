@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.api.tool.*;
+import gregtech.internal.tool.*;
 import gregtech.registry.GTElectricItems;
 import gregtech.data.GregTechTags;
 import net.minecraft.core.*;

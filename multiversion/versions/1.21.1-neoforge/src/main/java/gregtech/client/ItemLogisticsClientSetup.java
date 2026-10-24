@@ -14,7 +14,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.*;
 /** Original material tint, six-facing hopper geometry, pipe shape and covers. */
-@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD,value=Dist.CLIENT)
+@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD,value=Dist.CLIENT)
 public final class ItemLogisticsClientSetup {
  private ItemLogisticsClientSetup(){}
  private static ResourceLocation id(String path){return ResourceLocation.fromNamespaceAndPath("gt6ce",path);}

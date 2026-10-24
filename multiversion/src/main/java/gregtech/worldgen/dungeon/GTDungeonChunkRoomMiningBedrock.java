@@ -4,7 +4,7 @@ package gregtech.worldgen.dungeon;
 /*import gregtech.registry.*;
 *///?} else {
 //?}
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.block.misc.BarsBlock;
 import gregtech.block.tool.DynamiteBlock;
 import gregtech.block.tool.ShapedToolBlock;

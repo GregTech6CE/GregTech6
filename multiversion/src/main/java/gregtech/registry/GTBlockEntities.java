@@ -30,7 +30,7 @@ import gregtech.block.machine.QueueHopperBlock;
 import gregtech.block.machine.SmeltingCrucibleBlock;
 import gregtech.block.machine.SolidBurningBoxBlock;
 import gregtech.block.machine.TankBlock;
-import gregtech.api.machine.MachineRegistry;
+import gregtech.internal.machine.MachineRegistry;
 import net.minecraft.world.level.block.Block;
 //?}
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -117,7 +117,7 @@ public final class GTBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.block.misc.DungeonPortalBlockEntity>> DUNGEON_PORTAL=BLOCK_ENTITIES.register("dungeon_portal",()->BlockEntityType.Builder.of(gregtech.block.misc.DungeonPortalBlockEntity::new,GTDungeonBlocks.PORTAL_NETHER.get(),GTDungeonBlocks.PORTAL_END.get()).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.blockentity.energy.LaserConverterBlockEntity>> LASER_CONVERTER=BLOCK_ENTITIES.register("laser_converter",()->BlockEntityType.Builder.of(gregtech.blockentity.energy.LaserConverterBlockEntity::new,GTLasers.all().stream().map(java.util.function.Supplier::get).filter(b->b instanceof gregtech.block.energy.LaserConverterBlock).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.blockentity.energy.LaserFiberBlockEntity>> LASER_FIBER=BLOCK_ENTITIES.register("laser_fiber",()->BlockEntityType.Builder.of(gregtech.blockentity.energy.LaserFiberBlockEntity::new,GTLasers.LASER_FIBER_WIRE.get()).build(null));
-    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.blockentity.sensor.SensorBlockEntity>> SENSOR=BLOCK_ENTITIES.register("sensor",()->{var blocks=new java.util.ArrayList<net.minecraft.world.level.block.Block>();for(var holder:GTSensors.all())blocks.add(holder.get());for(var holder:gregtech.api.sensor.AddonSensors.blocks())blocks.add(holder.get());return BlockEntityType.Builder.of(gregtech.blockentity.sensor.SensorBlockEntity::new,blocks.toArray(net.minecraft.world.level.block.Block[]::new)).build(null);});
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.blockentity.sensor.SensorBlockEntity>> SENSOR=BLOCK_ENTITIES.register("sensor",()->{var blocks=new java.util.ArrayList<net.minecraft.world.level.block.Block>();for(var holder:GTSensors.all())blocks.add(holder.get());for(var holder:gregtech.internal.sensor.AddonSensors.blocks())blocks.add(holder.get());return BlockEntityType.Builder.of(gregtech.blockentity.sensor.SensorBlockEntity::new,blocks.toArray(net.minecraft.world.level.block.Block[]::new)).build(null);});
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.block.misc.LongDistEndpointBlockEntity>> LONG_DIST_ENDPOINT=BLOCK_ENTITIES.register("long_dist_endpoint",()->BlockEntityType.Builder.of(gregtech.block.misc.LongDistEndpointBlockEntity::new,GTLongDistance.block("long_dist_endpoint_item"),GTLongDistance.block("long_dist_endpoint_fluid")).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.block.misc.LongDistanceTransformerBlockEntity>> LONG_DIST_TRANSFORMER=BLOCK_ENTITIES.register("long_dist_transformer",()->BlockEntityType.Builder.of(gregtech.block.misc.LongDistanceTransformerBlockEntity::new,GTLongDistance.transformers()).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.blockentity.machine.BoilerTankBlockEntity>> STEAM_BOILER=BLOCK_ENTITIES.register("steam_boiler",()->BlockEntityType.Builder.of(gregtech.blockentity.machine.BoilerTankBlockEntity::new,GTBoilers.all().stream().map(DeferredHolder::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
@@ -399,7 +399,7 @@ public final class GTBlockEntities {
             BLOCK_ENTITY_TYPES.register("sensor", () -> {
                 var blocks = new java.util.ArrayList<gregtech.block.sensor.SensorBlock>();
                 for (var holder : GTSensors.all()) if (holder.isPresent()) blocks.add(holder.get());
-                for (var holder : gregtech.api.sensor.AddonSensors.blocks()) {
+                for (var holder : gregtech.internal.sensor.AddonSensors.blocks()) {
                     if (holder.get() instanceof gregtech.block.sensor.SensorBlock sensor)
                         blocks.add(sensor);
                 }

@@ -14,7 +14,7 @@ import gregtech.api.addon.RecipeMachine;
 import gregtech.api.addon.RecipeTable;
 import gregtech.api.addon.StructureLayout;
 import gregtech.api.addon.StructureRole;
-import gregtech.api.kubejs.KubeJsMachineDeclarations;
+import gregtech.internal.kubejs.KubeJsMachineDeclarations;
 import dev.latvian.mods.kubejs.event.KubeEvent;
 
 import java.util.Locale;

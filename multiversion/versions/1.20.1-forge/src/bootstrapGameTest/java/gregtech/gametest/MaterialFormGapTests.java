@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.data.MaterialPrefix;
 import gregtech.data.generated.MaterialForms;
 import gregtech.registry.GTItems;
@@ -60,7 +60,7 @@ public final class MaterialFormGapTests {
             Map.entry("GEMS", m -> MaterialForms.has(m, "GEMS")),
             Map.entry("INGOTS", m -> MaterialForms.has(m, "INGOTS")),
             Map.entry("INGOTS_HOT", m -> MaterialForms.has(m, "INGOTS_HOT")
-                    && m.has(gregtech.api.material.MaterialProperty.SMITHABLE)
+                    && m.has(gregtech.internal.material.MaterialProperty.SMITHABLE)
                     && m.getMeltingPoint() >= 800),
             Map.entry("PLATES", m -> MaterialForms.has(m, "PLATES")
                     && (MaterialForms.has(m, "INGOTS") || !MaterialForms.has(m, "GEMS"))),

@@ -1,7 +1,7 @@
 package gregtech.content.cover;
 
-import gregtech.api.fluid.FluidHazards;
-import gregtech.api.fluid.FluidTankGT;
+import gregtech.internal.fluid.FluidHazards;
+import gregtech.internal.fluid.FluidTankGT;
 import gregtech.content.logistics.FilterRules;
 import gregtech.registry.GTFluids;
 import gregtech.util.GTEntityHelper;
@@ -347,7 +347,7 @@ public final class CoverUtilityBehaviors {
 //?}
         if (tag == null || !tag.contains(FILTER_FLUID_KEY)) return FluidStack.EMPTY;
 //? if >=1.21.1 {
-        /*FluidStack stored = gregtech.api.fluid.FluidStackNbt.read(lookup,tag.getCompound(FILTER_FLUID_KEY));
+        /*FluidStack stored = gregtech.internal.fluid.FluidStackNbt.read(lookup,tag.getCompound(FILTER_FLUID_KEY));
 *///?} else {
         FluidStack stored = FluidStack.loadFluidStackFromNBT(tag.getCompound(FILTER_FLUID_KEY));
 //?}

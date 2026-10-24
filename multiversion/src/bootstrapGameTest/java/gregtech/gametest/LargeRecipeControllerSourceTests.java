@@ -1,5 +1,5 @@
 package gregtech.gametest;
-import gregtech.api.multiblock.MultiblockLayout.Role;
+import gregtech.internal.multiblock.MultiblockLayout.Role;
 import gregtech.block.machine.BasicMachineBlock;
 import gregtech.block.energy.EnergyNodeBlock;
 import gregtech.blockentity.machine.*;

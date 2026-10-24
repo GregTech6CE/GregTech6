@@ -1,6 +1,6 @@
 /* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later. Source boiler tool and structure rules. */
 package gregtech.content.multiblock;
-import gregtech.api.multiblock.StructureGrid;
+import gregtech.internal.multiblock.StructureGrid;
 import java.util.*;
 
 /** Original five boiler variants, rated capacities and geometry. */

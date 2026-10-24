@@ -1,6 +1,6 @@
 package gregtech.block.inventory;
 
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.content.storage.ItemBarrelCatalog;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

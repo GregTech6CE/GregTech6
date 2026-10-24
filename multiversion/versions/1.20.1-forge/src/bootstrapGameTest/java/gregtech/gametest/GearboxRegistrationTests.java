@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.tool.GTToolType;
 import gregtech.content.material.Materials;
 import gregtech.content.material.generated.WoodMaterials;
 import gregtech.content.recipe.HandToolCraftingRecipeInjector;

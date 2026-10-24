@@ -1,7 +1,7 @@
 package gregtech.data;
 
 import com.google.gson.Gson;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.AbstractPackResources;
@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Set;
 
 /** Original wood dictionary patterns over shared catalogs; native data-pack reload and codecs. */
-@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public final class WoodCraftingRecipePack extends AbstractPackResources {
     private static final Gson GSON=new Gson();
 
@@ -62,7 +62,7 @@ public final class WoodCraftingRecipePack extends AbstractPackResources {
         if(spec.startsWith("item:"))return new net.minecraft.world.item.ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse(spec.substring(5))));
         if(spec.startsWith("material:")){
             String[] parts=spec.split(":",3);
-            return gregtech.registry.GTItems.getStack(prefix(parts[1]),gregtech.api.material.GTMaterialRegistry.get(parts[2]),1);
+            return gregtech.registry.GTItems.getStack(prefix(parts[1]),gregtech.internal.material.GTMaterialRegistry.get(parts[2]),1);
         }
         return gregtech.content.recipe.WoodCraftingRecipeInjector.resolve(spec);
     }

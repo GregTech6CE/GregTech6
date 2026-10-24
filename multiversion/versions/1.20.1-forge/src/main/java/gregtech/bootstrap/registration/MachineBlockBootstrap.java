@@ -1,6 +1,6 @@
 package gregtech.bootstrap.registration;
 
-import gregtech.api.machine.MachineRegistry;
+import gregtech.internal.machine.MachineRegistry;
 import gregtech.bootstrap.InitializationStep;
 import gregtech.registry.*;
 import net.minecraftforge.eventbus.api.IEventBus;

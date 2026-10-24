@@ -1,7 +1,7 @@
 package gregtech.data;
 
 import gregtech.api.material.GTValues;
-import gregtech.api.material.MaterialEquivalence;
+import gregtech.internal.material.MaterialEquivalence;
 import gregtech.block.MaterialBlockLike;
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.fluid.FluidDisplayItem;import net.minecraft.network.chat.Component;
@@ -30,9 +30,9 @@ import java.util.*;
 
 /** Registry-driven built-in datapack: avoids thousands of tiny processResources files. */
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD)
+/*@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD)
 *///?} else {
-@Mod.EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID,bus=Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID,bus=Mod.EventBusSubscriber.Bus.MOD)
 //?}
 public final class MaterialTagPack extends AbstractPackResources {
     private Map<ResourceLocation,byte[]> resources;
@@ -154,7 +154,7 @@ public final class MaterialTagPack extends AbstractPackResources {
                         +MaterialEquivalence.materialName(form.material()),id.toString());
             } else {
                 // Vanilla-unified items (minecraft:iron_block, ...) carry a material without a prefix.
-                var data=gregtech.api.material.ItemMaterialRegistry.explicit(item).orElse(null);
+                var data=gregtech.internal.material.ItemMaterialRegistry.explicit(item).orElse(null);
                 if(data!=null&&data.components().size()==1) {
                     var material=data.components().get(0).material().resolve();
                     if(material.isValid()) {
@@ -206,7 +206,7 @@ public final class MaterialTagPack extends AbstractPackResources {
                 String bound=fluidItem.fluidEntry().materialKey();
                 if(bound==null) bound=RegisteredFluids.boundMaterial(fluidItem.fluidEntry().registryName());
                 if(bound!=null) {
-                    var material=gregtech.api.material.GTMaterialRegistry.get(bound);
+                    var material=gregtech.internal.material.GTMaterialRegistry.get(bound);
                     if(material!=null&&material.isValid()) {
                         String name=MaterialEquivalence.materialName(material);
 //? if >=1.21.1 {
@@ -281,7 +281,7 @@ public final class MaterialTagPack extends AbstractPackResources {
                         && ironMaterials.contains(pipe.spec().material().resolve()) && !pipe.spec().size().restrictive())
 //? if >=1.21.1 {
                     /*add(tags,"gt6ce","item","pipe_"+pipe.spec().size().name().toLowerCase(java.util.Locale.ROOT)+"/any_iron_or_steel",id.toString());
-                if(block instanceof gregtech.api.energy.WireMaterialLike wire) {
+                if(block instanceof gregtech.internal.energy.WireMaterialLike wire) {
 *///?} else {
                     add(tags,"gt6ce","items","pipe_"+pipe.spec().size().name().toLowerCase(java.util.Locale.ROOT)+"/any_iron_or_steel",id.toString());
                 if(block instanceof gregtech.block.energy.ElectricWireBlock wire) {
@@ -424,7 +424,7 @@ public final class MaterialTagPack extends AbstractPackResources {
                 tags.computeIfAbsent(tag,k->new TreeSet<>()).add(id);
         }
         // Common spelling aliases used by Forge 1.20 packs. References keep datapack additions shared.
-        var aliases=gregtech.api.material.MaterialTagAliases.ALTERNATE_SPELLINGS;
+        var aliases=gregtech.internal.material.MaterialTagAliases.ALTERNATE_SPELLINGS;
         for(var path:new ArrayList<>(tags.keySet())) for(var alias:aliases.entrySet()) {
             String suffix="/"+alias.getKey()+".json";
             if(path.startsWith("forge:")&&path.endsWith(suffix)) {
@@ -477,16 +477,16 @@ public final class MaterialTagPack extends AbstractPackResources {
 
     /** Owned items and explicitly registered compositions only. Tag-derived data must not re-enter this pack. */
     private static MaterialEquivalence.Form registeredForm(Item item) {
-        if (item instanceof gregtech.api.material.MaterialFormItem materialItem)
+        if (item instanceof gregtech.internal.material.MaterialFormItem materialItem)
             return new MaterialEquivalence.Form(materialItem.getPrefix(), materialItem.getMaterial().resolve());
-        var data = gregtech.api.material.ItemMaterialRegistry.explicit(item).orElse(null);
+        var data = gregtech.internal.material.ItemMaterialRegistry.explicit(item).orElse(null);
         if (data == null || data.prefix() == null || data.components().size() != 1
                 || data.amount() != data.prefix().getMaterialWeight()) return null;
         return new MaterialEquivalence.Form(data.prefix(), data.material().resolve());
     }
 
     /** Aggregate tag value list for one material (forms + its blocks). */
-    private static void addMaterial(Map<String,Set<String>> target,gregtech.api.material.GTMaterial material,String value) {
+    private static void addMaterial(Map<String,Set<String>> target,gregtech.internal.material.GTMaterial material,String value) {
         if(material==null||!material.isValid())return;
         target.computeIfAbsent(MaterialEquivalence.materialName(material),k->new TreeSet<>()).add(value);
     }

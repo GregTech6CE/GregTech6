@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
-import gregtech.api.fluid.FluidHazards;
-import gregtech.api.machine.PipeSpec;
+import gregtech.internal.fluid.FluidHazards;
+import gregtech.internal.machine.PipeSpec;
 import gregtech.block.machine.FluidPipeBlock;
 import gregtech.blockentity.machine.FluidPipeBlockEntity;
 import gregtech.blockentity.machine.TankBlockEntity;

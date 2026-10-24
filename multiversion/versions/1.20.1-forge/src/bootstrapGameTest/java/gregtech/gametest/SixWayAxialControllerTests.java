@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
-import gregtech.api.energy.FaceConfig;
-import gregtech.api.machine.BasicMachineSpec;
-import gregtech.api.machine.MachineRegistry;
+import gregtech.internal.energy.FaceConfig;
+import gregtech.internal.machine.BasicMachineSpec;
+import gregtech.internal.machine.MachineRegistry;
 import gregtech.blockentity.machine.AxialGeneratorBlockEntity;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.blockentity.machine.LargeDynamoControllerBlockEntity;

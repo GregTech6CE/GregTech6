@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
-import gregtech.api.tool.*;
-import gregtech.api.transport.PipeConnections;
+import gregtech.internal.tool.*;
+import gregtech.internal.transport.PipeConnections;
 import gregtech.content.logistics.*;
 import gregtech.registry.GTTechnological;
 import net.minecraft.core.*;
@@ -24,7 +24,7 @@ public final class NeoCoverToolBoundaryTests {
         level.setBlockAndUpdate(pos,block.defaultBlockState());level.setBlockAndUpdate(neighbor,block.defaultBlockState());
         var host=(LogisticsCoverHost)level.getBlockEntity(pos);
         var cutter=gregtech.item.GTToolItem.create(GTToolType.WIRE_CUTTER,
-                gregtech.content.material.Materials.Steel,gregtech.api.material.GTMaterialRegistry.get("Wood"));
+                gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
         var player=net.neoforged.neoforge.common.util.FakePlayerFactory.getMinecraft(level);
         player.gameMode.changeGameModeForPlayer(net.minecraft.world.level.GameType.SURVIVAL);
         player.setItemInHand(InteractionHand.MAIN_HAND,cutter);

@@ -21,7 +21,7 @@ import gregtech.block.tool.DynamiteBlock;
 import gregtech.content.tool.DynamiteSubstrates;
 import gregtech.registry.GTElectricItems;
 import gregtech.registry.GTToolBlocks;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.block.misc.PileBlock;
 import gregtech.blockentity.misc.PileBlockEntity;
 import gregtech.registry.GTItems;

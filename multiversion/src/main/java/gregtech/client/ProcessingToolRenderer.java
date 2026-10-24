@@ -35,11 +35,11 @@ public final class ProcessingToolRenderer implements BlockEntityRenderer<Process
         if (stack.isEmpty()) return;
         if (bowl) {
             // MultiTileEntityMixingBowl:402-408: a blockDust top face, never the ingredient's item model.
-            var material = gregtech.api.material.ItemMaterialRegistry.get(stack)
-                    .map(gregtech.api.material.ItemComposition::material)
-                    .orElse(gregtech.api.material.MaterialSentinels.Invalid).resolve();
+            var material = gregtech.internal.material.ItemMaterialRegistry.get(stack)
+                    .map(gregtech.internal.material.ItemComposition::material)
+                    .orElse(gregtech.internal.material.MaterialSentinels.Invalid).resolve();
             var set = material.isValid() ? MaterialIcons.resolveTextureSet(material)
-                    : gregtech.api.material.MaterialTextureSet.METALLIC;
+                    : gregtech.internal.material.MaterialTextureSet.METALLIC;
             var texture = CrucibleContentIcons.blockIcon(set, "blockdust", false);
             int tint = material.isValid() ? material.getColor() | 0xFF000000 : 0xFF808080;
             SmeltingCrucibleRenderer.drawTop(pose, buffers, texture, tint, topY, .125f, .125f, .875f, .875f, light);

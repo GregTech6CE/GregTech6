@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolType;
 import gregtech.recipe.*;
 import com.google.gson.JsonObject;
 import io.netty.buffer.Unpooled;

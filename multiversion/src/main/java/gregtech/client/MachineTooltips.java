@@ -5,22 +5,22 @@ package gregtech.client;
 /*
 
 
-import gregtech.api.machine.MachineSpec;
-import gregtech.api.machine.BasicMachineSpec;
+import gregtech.internal.machine.MachineSpec;
+import gregtech.internal.machine.BasicMachineSpec;
 *///?} else {
 import gregtech.GregTech;
 //?}
 
-import gregtech.api.energy.FaceConfig;
+import gregtech.internal.energy.FaceConfig;
 
 //? if >=1.21.1 {
 /**///?} else {
-import gregtech.api.machine.BasicMachineSpec;
-import gregtech.api.machine.MachineSpec;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.machine.BasicMachineSpec;
+import gregtech.internal.machine.MachineSpec;
+import gregtech.internal.material.GTMaterial;
 //?}
 
-import gregtech.api.material.MaterialChemistry.WeightedMaterial;
+import gregtech.internal.material.MaterialChemistry.WeightedMaterial;
 import gregtech.data.MachineRecipeMaps;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -39,7 +39,7 @@ public final class MachineTooltips {
             AdvancedControllerTooltips.append(spec,tooltip);return;
         }
         if(gregtech.content.multiblock.OriginalLargeRecipeMachineData.handles(spec.machineName())
-                || spec.controllerKind()==gregtech.api.machine.MachineControllerKind.LARGE_RECIPE) {
+                || spec.controllerKind()==gregtech.internal.machine.MachineControllerKind.LARGE_RECIPE) {
             if(!CommonBlockTooltips.containsKey(tooltip,"gt.lang.recipes")) LargeRecipeMachineTooltips.append(spec,tooltip);
             return;
         }

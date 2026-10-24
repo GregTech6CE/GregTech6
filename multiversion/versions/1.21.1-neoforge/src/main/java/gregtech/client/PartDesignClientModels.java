@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.api.mod.GregTechIdentity;
+import gregtech.internal.mod.GregTechIdentity;
 import gregtech.content.multiblock.PartDesigns;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.block.BlockModelShaper;

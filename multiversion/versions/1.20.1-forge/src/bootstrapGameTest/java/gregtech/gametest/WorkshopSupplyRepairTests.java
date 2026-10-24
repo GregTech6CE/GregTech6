@@ -81,8 +81,8 @@ public final class WorkshopSupplyRepairTests {
             h.assertTrue(candidates.length>0,"required original ingredient resolves in slot "+slot);
             var stack=candidates[0].copy();
             if(stack.getItem() instanceof gregtech.item.GTToolItem) stack=gregtech.item.GTToolItem.create(
-                    gregtech.api.tool.GTToolHelper.getType(stack),gregtech.content.material.Materials.Steel,
-                    gregtech.api.material.GTMaterialRegistry.get("Wood"));
+                    gregtech.internal.tool.GTToolHelper.getType(stack),gregtech.content.material.Materials.Steel,
+                    gregtech.internal.material.GTMaterialRegistry.get("Wood"));
             grid.setItem(slot,stack);
         }
         for(String glue:new String[]{"glue_bottle","tar_bottle","green_slime_bottle","pink_slime_bottle","blue_slime_bottle"}) {

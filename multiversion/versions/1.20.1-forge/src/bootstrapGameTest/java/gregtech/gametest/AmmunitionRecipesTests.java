@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialEquivalence;
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialEquivalence;
+import gregtech.internal.recipe.Recipe;
 import gregtech.content.recipe.PressAmmunitionRecipes;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.data.MaterialPrefix;
@@ -25,7 +25,7 @@ import java.util.List;
 @PrefixGameTestTemplate(false)
 public final class AmmunitionRecipesTests {
 
-    private static Recipe route(gregtech.api.recipe.RecipeMap map, ItemStack input, ItemStack mold,
+    private static Recipe route(gregtech.internal.recipe.RecipeMap map, ItemStack input, ItemStack mold,
                                 ItemStack output) {
         for (Recipe recipe : map.mRecipeList) {
             if (!contains(recipe.mInputs, input)) continue;

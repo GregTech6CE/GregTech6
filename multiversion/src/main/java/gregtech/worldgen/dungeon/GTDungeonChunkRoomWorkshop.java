@@ -4,10 +4,10 @@ package gregtech.worldgen.dungeon;
 /*import gregtech.registry.*;
 import gregtech.platform.neoforge.smeltery.SmelteryRegistries;
 *///?} else {
-import gregtech.api.machine.MachineRegistry;
+import gregtech.internal.machine.MachineRegistry;
 //?}
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 import gregtech.content.book.GTBooks;
 import gregtech.block.machine.MoldBlock;
 import gregtech.block.stone.StoneType;
@@ -200,7 +200,7 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
             var hammer = GTToolHelper.write(GTToolItems.empty(GTToolType.HARD_HAMMER),
                     GT6Materials.Compounds.VanadiumSteel, GT6Materials.Woods.Spruce);
 //? if >=1.21.1 {
-            /*gregtech.api.tool.GTToolEnchantments.apply(hammer, data.level.registryAccess());
+            /*gregtech.internal.tool.GTToolEnchantments.apply(hammer, data.level.registryAccess());
 *///?}
             materialAnvil.setDungeonHammer(hammer);
         }

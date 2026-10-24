@@ -2,8 +2,8 @@ package gregtech.gametest;
 
 import gregtech.GregTech;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.ItemMaterialRegistry;
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.material.ItemMaterialRegistry;
+import gregtech.internal.recipe.Recipe;
 import gregtech.content.material.Materials;
 import gregtech.content.recipe.DiggableRecipes;
 import gregtech.data.MachineRecipeMaps;
@@ -38,7 +38,7 @@ public final class DiggableRecipesTests {
         return item == null ? ItemStack.EMPTY : new ItemStack(item, count);
     }
 
-    private static Recipe find(gregtech.api.recipe.RecipeMap map, ItemStack... items) {
+    private static Recipe find(gregtech.internal.recipe.RecipeMap map, ItemStack... items) {
         return map.findRecipe(List.of(items), List.of(), false, items.length, map.mOutputItemsCount);
     }
 
@@ -141,7 +141,7 @@ public final class DiggableRecipesTests {
         h.succeed();
     }
 
-    private static void assertClayBallForms(GameTestHelper h, gregtech.api.material.GTMaterial material,
+    private static void assertClayBallForms(GameTestHelper h, gregtech.internal.material.GTMaterial material,
                                             ItemStack ball, String name) {
         ItemStack plate = GTItems.getStack(MaterialPrefix.plate, material);
         ItemStack dust = GTItems.getStack(MaterialPrefix.dust, material);
@@ -175,7 +175,7 @@ public final class DiggableRecipesTests {
             h.assertTrue(outputs(find(MachineRecipeMaps.Generifier, block), new ItemStack(Blocks.CLAY))
                             && outputs(find(MachineRecipeMaps.Generifier, ball), new ItemStack(Items.CLAY_BALL)),
                     row.block() + " and its ball generify toward vanilla clay");
-            h.assertTrue(!gregtech.api.material.MaterialEquivalence.matches(
+            h.assertTrue(!gregtech.internal.material.MaterialEquivalence.matches(
                             new ItemStack(Blocks.CLAY), block),
                     row.block() + " keeps its own material in ordinary recipes");
             h.assertTrue(block.is(ItemTags.create(GregTech.id("oredict/block_clay")))

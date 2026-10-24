@@ -3,7 +3,9 @@
 package gregtech.content.transport;
 
 import gregtech.api.machine.*;
+import gregtech.internal.machine.*;
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.data.*;
 import gregtech.data.generated.GT6Materials;
 import java.util.*;

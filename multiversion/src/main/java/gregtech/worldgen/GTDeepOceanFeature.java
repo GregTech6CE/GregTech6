@@ -1,6 +1,6 @@
 package gregtech.worldgen;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.block.OreHostStone;
 import gregtech.block.stone.GTStoneBlock;
 import gregtech.block.stone.StoneType;
@@ -102,7 +102,7 @@ public class GTDeepOceanFeature extends Feature<NoneFeatureConfiguration> {
                                      String oreMaterial, RandomSource random) {
         BlockState stone = blockState(prismarine);
         if (stone == null) return false;
-        GTMaterial ore = gregtech.api.material.GTMaterialRegistry.get(oreMaterial);
+        GTMaterial ore = gregtech.internal.material.GTMaterialRegistry.get(oreMaterial);
         boolean placed = false;
         for (Tier tier : TIERS) {
             for (int l = tier.fromL(); l < tier.toL() + 1; l++) {

@@ -16,9 +16,9 @@ import net.minecraftforge.fml.common.Mod;
  * machine-recipe baseline is restored, so a datapack reload cannot freeze the previous tag expansion.
  */
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID)
+/*@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID)
 *///?} else {
-@Mod.EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID)
+@Mod.EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID)
 //?}
 
 public final class ExternalOreRecipeLifecycle {
@@ -27,6 +27,6 @@ public final class ExternalOreRecipeLifecycle {
     public static void stopped(ServerStoppedEvent event) {
         ExternalOreProcessing.clear();
         gregtech.content.recipe.NonOreMacerationRows.clear();
-        gregtech.api.material.MaterialDisplayBinding.invalidate();
+        gregtech.internal.material.MaterialDisplayBinding.invalidate();
     }
 }

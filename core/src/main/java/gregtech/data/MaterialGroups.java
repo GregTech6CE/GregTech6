@@ -1,8 +1,8 @@
 package gregtech.data;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialProperty;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialProperty;
 import gregtech.data.generated.GT6Materials;
 import gregtech.data.ImportedMaterialData;
 
@@ -124,7 +124,7 @@ public class MaterialGroups {
         WoodTreated.addReRegistrationToThis(GT6Materials.Woods.WoodTreated, GT6Materials.Woods.WoodPolished);
         WoodUntreated.addReRegistrationToThis(GT6Materials.Woods.Greatwood, GT6Materials.Woods.Silverwood, GT6Materials.Woods.Livingwood, GT6Materials.Woods.Dreamwood, GT6Materials.Woods.Shimmerwood, GT6Materials.Woods.Magic, GT6Materials.Woods.Tainted, GT6Materials.Woods.Witchwood, GT6Materials.Woods.Rainbowood, GT6Materials.Woods.WoodRubber, GT6Materials.Woods.Weedwood, GT6Materials.Woods.Skyroot, GT6Materials.Woods.Bamboo, GT6Materials.Woods.Wood, GT6Materials.Woods.Peanutwood);
         // MT.woodnormal registers these families in its factory, before ANY.init's explicit rows.
-        for (var material : gregtech.api.material.MaterialFactories.normalWoods()) {
+        for (var material : gregtech.internal.material.MaterialFactories.normalWoods()) {
             Wood.addReRegistrationToThis(material);
             WoodPlastic.addReRegistrationToThis(material);
             WoodNormal.addReRegistrationToThis(material);

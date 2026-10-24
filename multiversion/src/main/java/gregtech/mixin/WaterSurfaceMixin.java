@@ -1,6 +1,6 @@
 package gregtech.mixin;
 
-import gregtech.api.fluid.WaterFamilyIdentity;
+import gregtech.internal.fluid.WaterFamilyIdentity;
 import net.minecraft.world.level.block.WaterlilyBlock;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;

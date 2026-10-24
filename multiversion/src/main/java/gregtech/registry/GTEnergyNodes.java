@@ -1,6 +1,6 @@
 package gregtech.registry;
 
-import gregtech.api.energy.EnergyNodeSpec;
+import gregtech.internal.energy.EnergyNodeSpec;
 //? if >=1.21.1 {
 /*import gregtech.block.energy.*;
 import net.minecraft.core.registries.Registries;
@@ -8,7 +8,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 *///?} else {
-import gregtech.api.energy.EnergyNodeSpec.Kind;
+import gregtech.internal.energy.EnergyNodeSpec.Kind;
 import gregtech.block.energy.EnergyNodeBlock;
 import gregtech.block.energy.MagnetMachineBlock;
 import gregtech.block.energy.ReactorCasingBlock;

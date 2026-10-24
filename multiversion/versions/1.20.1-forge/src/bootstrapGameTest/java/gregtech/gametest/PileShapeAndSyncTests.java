@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.block.misc.PileBlock;
 import gregtech.block.misc.PileItemExpireHandler;
 import gregtech.block.misc.PilePlacementHandler;

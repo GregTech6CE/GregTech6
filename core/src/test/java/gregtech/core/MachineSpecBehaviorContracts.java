@@ -1,12 +1,12 @@
 package gregtech.core;
 
-import gregtech.api.machine.CrucibleSpec;
-import gregtech.api.machine.MachineSpec;
-import gregtech.api.machine.crucible.ThermalStep;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.machine.CrucibleSpec;
+import gregtech.internal.machine.MachineSpec;
+import gregtech.internal.machine.crucible.ThermalStep;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
-import gregtech.api.mod.ModData;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.mod.ModData;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.content.material.Materials;
 import gregtech.content.material.generated.CompoundMaterials;
 import gregtech.data.MaterialGroups;
@@ -26,7 +26,7 @@ public final class MachineSpecBehaviorContracts {
         MaterialGroups.Glowstone.getClass();
         GTMaterialRegistry.init();
         GTMaterialRegistry.postInit();
-        assertions += gregtech.api.material.MaterialNameContracts.verify();
+        assertions += gregtech.internal.material.MaterialNameContracts.verify();
 
         brickHeater();
         ceramicCrucibleAndMold();
@@ -106,8 +106,8 @@ public final class MachineSpecBehaviorContracts {
                 && faces.energyInputs()==63 && faces.energyOutputs()==0,
                 "17101 inherits original any-side IO/energy defaults; formation still gates ports");
         check(faces.itemAutoInput()==-1 && faces.fluidAutoInput()==-1
-                && faces.itemAutoOutput()==gregtech.api.energy.MachineFaceMasks.BACK
-                && faces.fluidAutoOutput()==gregtech.api.energy.MachineFaceMasks.BACK,
+                && faces.itemAutoOutput()==gregtech.internal.energy.MachineFaceMasks.BACK
+                && faces.fluidAutoOutput()==gregtech.internal.energy.MachineFaceMasks.BACK,
                 "17101 only declares back automatic outputs; no fabricated left automatic input");
         check(distillation.energyIn()==512 && distillation.energyInMin()==1 && distillation.energyInMax()==1024
                 && distillation.energyType().equals("HU"),"17101 original explicit heat input range");
@@ -143,7 +143,7 @@ public final class MachineSpecBehaviorContracts {
             check(gregtech.content.energy.OriginalAdjacentEnergyRules.respondsToAdjacent(spec),
                     "source twenty electric/flux thermal registrations all WASTE_ENERGY=T "+spec.id());
         check(!gregtech.content.energy.OriginalAdjacentEnergyRules.respondsToAdjacent(null), "no adjacent source contract without an imported spec");
-        var unsupported = gregtech.api.energy.EnergyNodeSpec.builder("fixture_generic_hu_source",
+        var unsupported = gregtech.internal.energy.EnergyNodeSpec.builder("fixture_generic_hu_source",
                 gregtech.content.material.Materials.StainlessSteel)
                 .texture("fixture").names("Fixture", "Fixture").capacity(64)
                 .input(gregtech.data.GregTechTags.Energy.EU,32)
@@ -276,22 +276,22 @@ public final class MachineSpecBehaviorContracts {
     }
 
     private static void originalBlastTooltips() {
-        var terrible = gregtech.api.block.OriginalBlockTooltipRules.BlastRating.TERRIBLE;
-        var ghast = gregtech.api.block.OriginalBlockTooltipRules.BlastRating.GHAST;
-        var creeper = gregtech.api.block.OriginalBlockTooltipRules.BlastRating.CREEPER;
-        var tnt = gregtech.api.block.OriginalBlockTooltipRules.BlastRating.TNT;
-        var dynamite = gregtech.api.block.OriginalBlockTooltipRules.BlastRating.DYNAMITE;
-        check(gregtech.api.block.OriginalBlockTooltipRules.blastRating(3.99) == terrible, "Original below4 warning");
-        for (double value : new double[]{4, 7, 11.99}) check(gregtech.api.block.OriginalBlockTooltipRules.blastRating(value) == ghast, "Original ghast tooltip at " + value);
-        for (double value : new double[]{12, 15.99}) check(gregtech.api.block.OriginalBlockTooltipRules.blastRating(value) == creeper, "Original creeper tooltip at " + value);
-        for (double value : new double[]{16, 40}) check(gregtech.api.block.OriginalBlockTooltipRules.blastRating(value) == tnt, "Original TNT tooltip at " + value);
-        for (double value : new double[]{40.01, 3329, 3330, 3600000}) check(gregtech.api.block.OriginalBlockTooltipRules.blastRating(value) == dynamite, "Absent IC2 compat must not invent a nuclear warning at " + value);
-        check(gregtech.api.block.OriginalBlockTooltipRules.blastRating(3330, true, false)
-                == gregtech.api.block.OriginalBlockTooltipRules.BlastRating.IC2_NUKE_UNPROTECTED, "Original IC2 conditional warning");
-        check(gregtech.api.block.OriginalBlockTooltipRules.blastRating(3330, true, true) == dynamite, "Original IC2 whitelist branch");
-        check(gregtech.api.block.OriginalBlockTooltipRules.blastNumber(6.99).equals("6.9"), "Original decimal truncation");
-        check(!gregtech.api.block.OriginalBlockTooltipRules.showMultitileBlast(3.99), "MTE item suppresses blast line below4");
-        check(gregtech.api.block.OriginalBlockTooltipRules.showMultitileBlast(4), "MTE blast boundary4 is visible");
+        var terrible = gregtech.internal.block.OriginalBlockTooltipRules.BlastRating.TERRIBLE;
+        var ghast = gregtech.internal.block.OriginalBlockTooltipRules.BlastRating.GHAST;
+        var creeper = gregtech.internal.block.OriginalBlockTooltipRules.BlastRating.CREEPER;
+        var tnt = gregtech.internal.block.OriginalBlockTooltipRules.BlastRating.TNT;
+        var dynamite = gregtech.internal.block.OriginalBlockTooltipRules.BlastRating.DYNAMITE;
+        check(gregtech.internal.block.OriginalBlockTooltipRules.blastRating(3.99) == terrible, "Original below4 warning");
+        for (double value : new double[]{4, 7, 11.99}) check(gregtech.internal.block.OriginalBlockTooltipRules.blastRating(value) == ghast, "Original ghast tooltip at " + value);
+        for (double value : new double[]{12, 15.99}) check(gregtech.internal.block.OriginalBlockTooltipRules.blastRating(value) == creeper, "Original creeper tooltip at " + value);
+        for (double value : new double[]{16, 40}) check(gregtech.internal.block.OriginalBlockTooltipRules.blastRating(value) == tnt, "Original TNT tooltip at " + value);
+        for (double value : new double[]{40.01, 3329, 3330, 3600000}) check(gregtech.internal.block.OriginalBlockTooltipRules.blastRating(value) == dynamite, "Absent IC2 compat must not invent a nuclear warning at " + value);
+        check(gregtech.internal.block.OriginalBlockTooltipRules.blastRating(3330, true, false)
+                == gregtech.internal.block.OriginalBlockTooltipRules.BlastRating.IC2_NUKE_UNPROTECTED, "Original IC2 conditional warning");
+        check(gregtech.internal.block.OriginalBlockTooltipRules.blastRating(3330, true, true) == dynamite, "Original IC2 whitelist branch");
+        check(gregtech.internal.block.OriginalBlockTooltipRules.blastNumber(6.99).equals("6.9"), "Original decimal truncation");
+        check(!gregtech.internal.block.OriginalBlockTooltipRules.showMultitileBlast(3.99), "MTE item suppresses blast line below4");
+        check(gregtech.internal.block.OriginalBlockTooltipRules.showMultitileBlast(4), "MTE blast boundary4 is visible");
     }
 
     private static void originalHarvestProperties() {
@@ -347,11 +347,11 @@ public final class MachineSpecBehaviorContracts {
         }
         check(properties.get("axle_wood_4").handHarvestable(), "Empty CR.REV source axle retains original harvest metadata");
         check(properties.get("energy_storage_xv").sourceId() == 10099, "Broken source recipe does not discard legal machine metadata");
-        check(!gregtech.api.block.OriginalBlockTooltipRules.showHarvestLevel(1)
-                && gregtech.api.block.OriginalBlockTooltipRules.showHarvestLevel(2), "Original LH harvest level visibility boundary");
+        check(!gregtech.internal.block.OriginalBlockTooltipRules.showHarvestLevel(1)
+                && gregtech.internal.block.OriginalBlockTooltipRules.showHarvestLevel(2), "Original LH harvest level visibility boundary");
         for (String[] tier : new String[][]{{"2", "iron"}, {"3", "diamond"}, {"4", "netherite"}, {"5", "adamantium"}, {"15", "infinity"}})
-            check(gregtech.api.block.OriginalBlockTooltipRules.harvestTierMaterial(Integer.parseInt(tier[0])).equals(tier[1]), "Source harvest tier name " + tier[0]);
-        check(gregtech.api.block.OriginalBlockTooltipRules.harvestTierMaterial(14) == null, "Source tiers6..14 have no invented reference material");
+            check(gregtech.internal.block.OriginalBlockTooltipRules.harvestTierMaterial(Integer.parseInt(tier[0])).equals(tier[1]), "Source harvest tier name " + tier[0]);
+        check(gregtech.internal.block.OriginalBlockTooltipRules.harvestTierMaterial(14) == null, "Source tiers6..14 have no invented reference material");
     }
 
     private static void originalStorageMaterialsAndTooltips() {
@@ -495,10 +495,10 @@ public final class MachineSpecBehaviorContracts {
         check(juicer.hardness() == 1 && juicer.resistance() == 5, "Original ceramic juicer physical properties");
     }
 
-    private static void composition(gregtech.api.material.ItemComposition data, java.util.Map<String, Long> expected) {
-        var wanted = new java.util.HashMap<gregtech.api.material.GTMaterial, Long>();
+    private static void composition(gregtech.internal.material.ItemComposition data, java.util.Map<String, Long> expected) {
+        var wanted = new java.util.HashMap<gregtech.internal.material.GTMaterial, Long>();
         expected.forEach((name, amount) -> wanted.put(GTMaterialRegistry.get(name), amount));
-        var actual = new java.util.HashMap<gregtech.api.material.GTMaterial, Long>();
+        var actual = new java.util.HashMap<gregtech.internal.material.GTMaterial, Long>();
         data.components().forEach(part -> actual.put(part.material(), part.amount()));
         check(actual.equals(wanted), "Original components for " + data.source() + ": " + actual + " expected " + wanted);
     }
@@ -546,11 +546,11 @@ public final class MachineSpecBehaviorContracts {
                         "Original fixed battery output and source hint chain " + tier + "/" + size);
             }
         }
-        check(gregtech.api.energy.EnergyGate.gateInjection(gregtech.data.GregTechTags.Energy.EU,
+        check(gregtech.internal.energy.EnergyGate.gateInjection(gregtech.data.GregTechTags.Energy.EU,
                         true, 3, gregtech.content.energy.OriginalEnergyDeviceTooltipData.batteryInputMinimum(8), 7,
                         () -> { throw new AssertionError("ULV packet below4 must never reach storage"); }) == 7,
                 "Original ULV under-voltage packet is consumed without storing");
-        check(gregtech.api.energy.EnergyGate.gateInjection(gregtech.data.GregTechTags.Energy.EU,
+        check(gregtech.internal.energy.EnergyGate.gateInjection(gregtech.data.GregTechTags.Energy.EU,
                         true, 4, gregtech.content.energy.OriginalEnergyDeviceTooltipData.batteryInputMinimum(8), 7,
                         () -> 5) == 5, "Original ULV4 packet reaches storage callback");
         var nodes = gregtech.content.energy.EnergyNodeDefinitions.specifications();
@@ -575,7 +575,7 @@ public final class MachineSpecBehaviorContracts {
                                 && normal.outputFaceKey().equals("gt.lang.face.any.but.front"),
                         "Source converter range/efficiency/fixed face labels/Monkey Wrench " + transformers);
                 transformers++;
-            } else if (spec.kind() == gregtech.api.energy.EnergyNodeSpec.Kind.SOLAR) {
+            } else if (spec.kind() == gregtech.internal.energy.EnergyNodeSpec.Kind.SOLAR) {
                 long output = solar == 0 ? 8 : 16;
                 var profile = gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(spec, false);
                 check(profile.input() == null && profile.output().minimum() == output / 8
@@ -891,7 +891,7 @@ public final class MachineSpecBehaviorContracts {
 
     private static void ceramicCrucibleAndMold() {
         // Original Loader_MultiTileEntities uses the shared ceramic material statistics.
-        var ceramic = gregtech.api.machine.InitialSmelteryDefinitions.ceramicCrucible();
+        var ceramic = gregtech.internal.machine.InitialSmelteryDefinitions.ceramicCrucible();
         check(ceramic.id().equals("smelting_crucible_ceramic") && ceramic.gt6MetaId() == 1005,
                 "Original ceramic registry path and meta");
         check(ceramic.material() == GTMaterialRegistry.get(8225), "Same full shared material identity");
@@ -908,7 +908,7 @@ public final class MachineSpecBehaviorContracts {
         near(ceramic.thermalMassKg(), 673.9273528141471D, "Independent original7U shell mass");
 
         // Original Loader_MultiTileEntities registers the ceramic mold with5U and its own hardness.
-        var mold = gregtech.api.machine.InitialSmelteryDefinitions.ceramicMold();
+        var mold = gregtech.internal.machine.InitialSmelteryDefinitions.ceramicMold();
         check(mold.id().equals("mold_ceramic") && mold.gt6MetaId() == 1055, "Original mold path and meta offset");
         check(mold.material() == ceramic.material() && mold.hullDensity() == ceramic.hullDensity(),
                 "Mold companion uses the same canonical material density");
@@ -928,10 +928,10 @@ public final class MachineSpecBehaviorContracts {
     }
 
     private static void chargedCrucibleHeatRequirement() {
-        var ceramic = gregtech.api.machine.InitialSmelteryDefinitions.ceramicCrucible();
+        var ceramic = gregtech.internal.machine.InitialSmelteryDefinitions.ceramicCrucible();
         // Decimal expected values were calculated independently from Java float32 source densities.
-        double copperKg = gregtech.api.material.MaterialMass.kilograms(Materials.Copper, 3 * GTValues.U);
-        double tinKg = gregtech.api.material.MaterialMass.kilograms(Materials.Tin, GTValues.U);
+        double copperKg = gregtech.internal.material.MaterialMass.kilograms(Materials.Copper, 3 * GTValues.U);
+        double tinKg = gregtech.internal.material.MaterialMass.kilograms(Materials.Tin, GTValues.U);
         near(copperKg, 2986.6666763956573D, "Original three copper units mass");
         near(tinKg, 809.6666857781968D, "Original one tin unit mass");
         double chargedKg = ceramic.thermalMassKg() + copperKg + tinKg;
@@ -941,7 +941,7 @@ public final class MachineSpecBehaviorContracts {
     }
 
     private static void originalSmelteryParametersAndShapes() {
-        var definitions = gregtech.api.machine.OriginalSmelteryDefinitions.all();
+        var definitions = gregtech.internal.machine.OriginalSmelteryDefinitions.all();
         check(definitions.size() == 195, "39 original vessels with four source companions each");
         long u = GTValues.U;
         composition(gregtech.content.machine.MachineConstructionMaterials.block("smelting_crucible_stone").orElseThrow(), java.util.Map.of("Stone",63*u));
@@ -950,18 +950,18 @@ public final class MachineSpecBehaviorContracts {
         composition(gregtech.content.machine.MachineConstructionMaterials.block("smelting_crucible_quartz").orElseThrow(), java.util.Map.of("SiliconDioxide",7*u));
         composition(gregtech.content.machine.MachineConstructionMaterials.block("smelting_crucible_carbon").orElseThrow(), java.util.Map.of("Graphene",7*u));
         check(gregtech.content.machine.MachineConstructionMaterials.block("smelting_crucible_basalt").isEmpty(), "OP.stone.mAmount=-1 supplies no positive source REV quantity");
-        var stone = gregtech.api.machine.OriginalSmelteryDefinitions.get(1000);
+        var stone = gregtech.internal.machine.OriginalSmelteryDefinitions.get(1000);
         near(stone.smeltingThermalMassKg(),777.7777769999999D,"Stone vessel heats7U while construction contains63U");
-        var steel = gregtech.api.machine.OriginalSmelteryDefinitions.get(1022);
+        var steel = gregtech.internal.machine.OriginalSmelteryDefinitions.get(1022);
         check(steel.meltDownTemperatureK()==2557,"Source long cast truncates2046*1.25 instead of rounding to2558K");
-        check(gregtech.api.machine.OriginalSmelteryDefinitions.get(1051).hardness()==1F
-                && gregtech.api.machine.OriginalSmelteryDefinitions.get(1701).blastResistance()==5F,
+        check(gregtech.internal.machine.OriginalSmelteryDefinitions.get(1051).hardness()==1F
+                && gregtech.internal.machine.OriginalSmelteryDefinitions.get(1701).blastResistance()==5F,
                 "Basalt mold/faucet own source physical NBT does not inherit15/15 vessel parameters");
-        check(gregtech.api.machine.SmelteryCompanionDefinitions.copy(
-                gregtech.api.machine.OriginalSmelteryDefinitions.get(1001),"mold_basalt",50,5*u)
-                ==gregtech.api.machine.OriginalSmelteryDefinitions.get(1051),
+        check(gregtech.internal.machine.SmelteryCompanionDefinitions.copy(
+                gregtech.internal.machine.OriginalSmelteryDefinitions.get(1001),"mold_basalt",50,5*u)
+                ==gregtech.internal.machine.OriginalSmelteryDefinitions.get(1051),
                 "Forge compatibility registry entry point uses the exact original companion record");
-        check(gregtech.api.machine.OriginalSmelteryDefinitions.get(1041).meltingPointK()==1873,"HSLA canonical source melting point");
+        check(gregtech.internal.machine.OriginalSmelteryDefinitions.get(1041).meltingPointK()==1873,"HSLA canonical source melting point");
         int positive=0;
         for(var spec:definitions) {
             var policy=gregtech.data.SourceBlockProperties.block(spec.id()).orElseThrow();
@@ -974,17 +974,17 @@ public final class MachineSpecBehaviorContracts {
         check(positive==155,"155 positive original quantities;40 nonpositive stone-prefix results remain undefined");
         var large=CrucibleSpec.of("large_crucible_fixture",Materials.Ceramic,0,5,5,false,100*u);
         near(large.smeltingThermalMassKg(),9627.533611630674D,"Large vessel keeps100U heat capacity");
-        var shapes=gregtech.api.machine.crucible.MoldShapes.recipes();
-        check(gregtech.api.machine.crucible.MoldShapes.recipe(0)==null,"Unselected mold has no cast recipe");
-        check(gregtech.api.machine.crucible.MoldShapes.recipe(1<<30).itemPrefix()==gregtech.data.MaterialPrefix.nugget
-                && gregtech.api.machine.crucible.MoldShapes.requiredMaterialUnits(1<<30)==0,"Legacy high bits retain source nugget fallback but never consume material");
-        check(gregtech.api.machine.crucible.MoldShapes.requiredMaterialUnits((1<<30)|1)==GTValues.U9,
+        var shapes=gregtech.internal.machine.crucible.MoldShapes.recipes();
+        check(gregtech.internal.machine.crucible.MoldShapes.recipe(0)==null,"Unselected mold has no cast recipe");
+        check(gregtech.internal.machine.crucible.MoldShapes.recipe(1<<30).itemPrefix()==gregtech.data.MaterialPrefix.nugget
+                && gregtech.internal.machine.crucible.MoldShapes.requiredMaterialUnits(1<<30)==0,"Legacy high bits retain source nugget fallback but never consume material");
+        check(gregtech.internal.machine.crucible.MoldShapes.requiredMaterialUnits((1<<30)|1)==GTValues.U9,
                 "Unknown one-cell cavity consumes one nugget regardless of legacy high bits");
-        check(gregtech.api.machine.crucible.MoldShapes.requiredMaterialUnits(0x1ffffff)==u,"Full25-cell plate uses1U");
+        check(gregtech.internal.machine.crucible.MoldShapes.requiredMaterialUnits(0x1ffffff)==u,"Full25-cell plate uses1U");
         int ingot=0b00000_11111_11111_11111_00000;
-        check(gregtech.api.machine.crucible.MoldShapes.recipe(ingot).itemPrefix()==gregtech.data.MaterialPrefix.ingot,
+        check(gregtech.internal.machine.crucible.MoldShapes.recipe(ingot).itemPrefix()==gregtech.data.MaterialPrefix.ingot,
                 "Pinned original three-row ingot shape");
-        check(gregtech.api.machine.crucible.MoldShapes.requiredMaterialUnits(ingot|(1<<30))==u,"Known ingot shape ignores extra legacy bits");
+        check(gregtech.internal.machine.crucible.MoldShapes.requiredMaterialUnits(ingot|(1<<30))==u,"Known ingot shape ignores extra legacy bits");
     }
 
     private static void near(double actual, double expected, String message) {
@@ -1027,6 +1027,6 @@ public final class MachineSpecBehaviorContracts {
         long u=gregtech.api.material.GTValues.U;
         composition(gregtech.content.machine.OriginalMachineMaterialData.find("largemassfab",1).orElseThrow(),java.util.Map.of("Osmium",128*u,"Titanium",32*u,"NetherStar",8*u,"Lead",36*u));
         var harvest=gregtech.data.SourceBlockProperties.basics().get("largemassfab/1");
-        check(harvest.sourceId()==17199&&harvest.tool().equals("wrench")&&!harvest.handHarvestable()&&harvest.material().resolve()==gregtech.api.material.GTMaterialRegistry.get("Pb"),"Original17199 source harvest identity and lead hull");
+        check(harvest.sourceId()==17199&&harvest.tool().equals("wrench")&&!harvest.handHarvestable()&&harvest.material().resolve()==gregtech.internal.material.GTMaterialRegistry.get("Pb"),"Original17199 source harvest identity and lead hull");
     }
 }

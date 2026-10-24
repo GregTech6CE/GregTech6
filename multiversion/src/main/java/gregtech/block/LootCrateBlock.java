@@ -1,7 +1,7 @@
 package gregtech.block;
 
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 
 //? if >=1.21.1 {
 //?} else {

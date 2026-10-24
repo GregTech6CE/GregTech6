@@ -7,7 +7,7 @@ import gregtech.content.recipe.BatteryCellRecipeRows.Fill;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.recipe.Recipe;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.registry.GTTechnological;
 import net.minecraft.world.item.Item;
@@ -97,7 +97,7 @@ public final class BatteryCellRecipes {
 
     /** The electrolyte: the material's own fluid phase (1 U = 1000 mB), like the transpiled GT6 rows. */
     private static FluidStack electrolyte(String materialName, int mb) {
-        var material = gregtech.api.material.GTMaterialRegistry.get(materialName);
+        var material = gregtech.internal.material.GTMaterialRegistry.get(materialName);
         if (material != null && material.isValid()) {
             FluidStack stack = gregtech.content.recipe.generated.GeneratedRecipeResolver
                     .materialFluid(material.getName(), mb);

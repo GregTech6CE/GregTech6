@@ -1,8 +1,8 @@
 package gregtech.platform.neoforge.smeltery;
 
-import gregtech.api.machine.ManualToolRules;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.machine.ManualToolRules;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.data.MaterialPrefix;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
@@ -17,14 +17,14 @@ import net.minecraft.world.item.component.CustomData;
 public final class SmelteryToolItem extends gregtech.item.GTToolItem {
     public enum Kind { CHISEL, PINCERS }
     private final Kind kind;
-    public SmelteryToolItem(Kind kind) { super(new Properties().stacksTo(1),gregtech.api.tool.GTToolType.valueOf(kind.name())); this.kind = kind; }
+    public SmelteryToolItem(Kind kind) { super(new Properties().stacksTo(1),gregtech.internal.tool.GTToolType.valueOf(kind.name())); this.kind = kind; }
     public Kind kind() { return kind; }
     public ItemStack assemble(GTMaterial head, GTMaterial handle) {
         if(head==null||!head.isValid()||handle==null||!handle.isValid()||head.getToolTypes()<(kind==Kind.CHISEL?2:1)||(kind==Kind.CHISEL&&!MaterialPrefix.toolHeadChisel.isValidFor(head)))return ItemStack.EMPTY;
-        return gregtech.api.tool.GTToolHelper.write(new ItemStack(this),head,handle);
+        return gregtech.internal.tool.GTToolHelper.write(new ItemStack(this),head,handle);
     }
     public static boolean matches(ItemStack stack, Kind kind) {
-        if (!gregtech.api.tool.GTToolHelper.matchesTool(stack,gregtech.api.tool.GTToolType.valueOf(kind.name())) || !stack.has(DataComponents.MAX_DAMAGE)) return false;
+        if (!gregtech.internal.tool.GTToolHelper.matchesTool(stack,gregtech.internal.tool.GTToolType.valueOf(kind.name())) || !stack.has(DataComponents.MAX_DAMAGE)) return false;
         var data = stack.get(DataComponents.CUSTOM_DATA);
         if (data == null || !data.copyTag().contains("GT.ToolStats")) return false;
         var stats = data.copyTag().getCompound("GT.ToolStats");

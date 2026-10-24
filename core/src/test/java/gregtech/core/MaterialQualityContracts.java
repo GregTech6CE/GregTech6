@@ -1,8 +1,9 @@
 package gregtech.core;
 
 import gregtech.api.material.*;
-import gregtech.api.mod.ModData;
-import gregtech.api.prefix.BlockMaterialPrefix;
+import gregtech.internal.material.*;
+import gregtech.internal.mod.ModData;
+import gregtech.internal.prefix.BlockMaterialPrefix;
 import gregtech.data.MaterialPrefix;
 
 /** Pinned original MT numeric qual(long) rows; no broad quality inference or recipe rewrite. */

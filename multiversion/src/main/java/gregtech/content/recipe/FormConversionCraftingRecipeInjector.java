@@ -6,16 +6,16 @@ import gregtech.data.OriginalCraftingJson;
 *///?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.content.recipe.FormConversionSelector;
 import gregtech.content.recipe.OriginalFormConversions;
 import gregtech.content.recipe.OriginalFormConversions.Conversion;
 import gregtech.recipe.CraftingMaterialForms;
-import gregtech.api.material.MaterialUnification;
-import gregtech.api.prefix.BlockMaterialPrefix;
-import gregtech.api.prefix.BlockPrefixRegistry;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.material.MaterialUnification;
+import gregtech.internal.prefix.BlockMaterialPrefix;
+import gregtech.internal.prefix.BlockPrefixRegistry;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.data.MaterialPrefix;
 import gregtech.registry.GTBlocks;
 import gregtech.registry.GTItems;
@@ -240,7 +240,7 @@ public final class FormConversionCraftingRecipeInjector {
 *///?} else {
     private static int registerPipeSizes(List<Recipe<?>> recipes) {
 //?}
-        java.util.Map<String, java.util.Map<gregtech.api.machine.PipeSpec.PipeSize,
+        java.util.Map<String, java.util.Map<gregtech.internal.machine.PipeSpec.PipeSize,
                 net.minecraft.world.item.Item>> families = new java.util.LinkedHashMap<>();
 //? if >=1.21.1 {
         /*for (var holder : gregtech.content.transport.fluid.FluidTransportRegistries.pipes()) {
@@ -251,15 +251,15 @@ public final class FormConversionCraftingRecipeInjector {
 //?}
             var spec = holder.get().spec();
             families.computeIfAbsent(spec.material().getName(), ignored -> new java.util.EnumMap<>(
-                    gregtech.api.machine.PipeSpec.PipeSize.class))
+                    gregtech.internal.machine.PipeSpec.PipeSize.class))
                     .put(spec.size(), holder.get().asItem());
         }
         int added = 0;
         for (var family : families.entrySet()) {
-            added += pipe(recipes, family, gregtech.api.machine.PipeSpec.PipeSize.QUADRUPLE,
-                    gregtech.api.machine.PipeSpec.PipeSize.MEDIUM, 4);
-            added += pipe(recipes, family, gregtech.api.machine.PipeSpec.PipeSize.NONUPLE,
-                    gregtech.api.machine.PipeSpec.PipeSize.SMALL, 9);
+            added += pipe(recipes, family, gregtech.internal.machine.PipeSpec.PipeSize.QUADRUPLE,
+                    gregtech.internal.machine.PipeSpec.PipeSize.MEDIUM, 4);
+            added += pipe(recipes, family, gregtech.internal.machine.PipeSpec.PipeSize.NONUPLE,
+                    gregtech.internal.machine.PipeSpec.PipeSize.SMALL, 9);
         }
         return added;
     }
@@ -270,10 +270,10 @@ public final class FormConversionCraftingRecipeInjector {
     private static int pipe(List<Recipe<?>> recipes,
 //?}
                             java.util.Map.Entry<String, java.util.Map<
-                                    gregtech.api.machine.PipeSpec.PipeSize,
+                                    gregtech.internal.machine.PipeSpec.PipeSize,
                                     net.minecraft.world.item.Item>> family,
-                            gregtech.api.machine.PipeSpec.PipeSize from,
-                            gregtech.api.machine.PipeSpec.PipeSize to, int count) {
+                            gregtech.internal.machine.PipeSpec.PipeSize from,
+                            gregtech.internal.machine.PipeSpec.PipeSize to, int count) {
         var big = family.getValue().get(from);
         var small = family.getValue().get(to);
         if (big == null || small == null) return 0;

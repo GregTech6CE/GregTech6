@@ -5,11 +5,11 @@ package gregtech.client;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.machine.ItemPipeSpec;
-import gregtech.api.machine.PipeSpec;
-import gregtech.api.machine.TankSpec;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.MaterialTextureSet;
+import gregtech.internal.machine.ItemPipeSpec;
+import gregtech.internal.machine.PipeSpec;
+import gregtech.internal.machine.TankSpec;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.MaterialTextureSet;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 
@@ -23,7 +23,7 @@ public final class TankTooltips {
     // === Tank Tooltips ===
 
     public static void appendTank(TankSpec spec, List<Component> tooltip) {
-        appendTankState(spec, new gregtech.api.fluid.FluidTankGT(spec.capacity()), false, 0, tooltip);
+        appendTankState(spec, new gregtech.internal.fluid.FluidTankGT(spec.capacity()), false, 0, tooltip);
     }
 
 //? if >=1.21.1 {
@@ -35,7 +35,7 @@ public final class TankTooltips {
     public static void appendTank(TankSpec spec, net.minecraft.world.item.ItemStack stack, List<Component> tooltip) {
         var data = stack.getTagElement("BlockEntityTag");
 //?}
-        var tank = new gregtech.api.fluid.FluidTankGT(spec.capacity());
+        var tank = new gregtech.internal.fluid.FluidTankGT(spec.capacity());
 //? if >=1.21.1 {
         /*if (data != null && data.contains("gt.tank")) tank.readFromNBT(data.getCompound("gt.tank"), lookup == null
                 ? net.minecraft.core.RegistryAccess.fromRegistryOfRegistries(net.minecraft.core.registries.BuiltInRegistries.REGISTRY) : lookup);
@@ -46,7 +46,7 @@ public final class TankTooltips {
                 data == null ? 0 : data.getLong("gt.sealed_time"), tooltip);
     }
 
-    private static void appendTankState(TankSpec spec, gregtech.api.fluid.FluidTankGT tank,
+    private static void appendTankState(TankSpec spec, gregtech.internal.fluid.FluidTankGT tank,
                                         boolean sealed, long sealedTime, List<Component> tooltip) {
         GTMaterial mat = spec.material();
 
@@ -57,7 +57,7 @@ public final class TankTooltips {
         } else {
             tooltip.add(Component.literal(formatLargeNumber(tank.getAmount()) + " L of ")
                     .append(fluid.getDisplayName())
-                    .append(Component.literal(" (" + (gregtech.api.fluid.FluidHazards.isGas(fluid.getFluid())
+                    .append(Component.literal(" (" + (gregtech.internal.fluid.FluidHazards.isGas(fluid.getFluid())
                             ? "Gaseous" : "Liquid") + "); Max: " + formatLargeNumber(tank.capacity()) + " L)"))
                     .withStyle(ChatFormatting.AQUA));
         }

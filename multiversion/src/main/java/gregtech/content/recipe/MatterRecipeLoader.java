@@ -1,8 +1,9 @@
 package gregtech.content.recipe;
 
 import gregtech.api.material.*;
-import gregtech.api.prefix.BlockMaterialPrefix;
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.material.*;
+import gregtech.internal.prefix.BlockMaterialPrefix;
+import gregtech.internal.recipe.Recipe;
 import gregtech.data.*;
 import gregtech.registry.*;
 import gregtech.bootstrap.InitializationStep;
@@ -60,7 +61,7 @@ public final class MatterRecipeLoader implements InitializationStep {
             case "blockGem" -> GTBlocks.getStack(BlockMaterialPrefix.blockGem,material);
             case "blockIngot" -> GTBlocks.getStack(BlockMaterialPrefix.blockIngot,material);
             default -> {
-                var prefix=gregtech.api.prefix.PrefixRegistry.all().stream().filter(p->p.getName().equals(form)).findFirst().orElse(null);
+                var prefix=gregtech.internal.prefix.PrefixRegistry.all().stream().filter(p->p.getName().equals(form)).findFirst().orElse(null);
                 yield prefix==null?ItemStack.EMPTY:GTItems.getStack(prefix,material,1);
             }
         };

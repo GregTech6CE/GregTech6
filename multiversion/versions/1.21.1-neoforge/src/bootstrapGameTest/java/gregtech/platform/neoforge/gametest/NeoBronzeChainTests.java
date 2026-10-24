@@ -1,7 +1,7 @@
 package gregtech.platform.neoforge.gametest;
 
-import gregtech.api.machine.crucible.CrucibleItemInput;
-import gregtech.api.machine.crucible.CrucibleMaterialStack;
+import gregtech.internal.machine.crucible.CrucibleItemInput;
+import gregtech.internal.machine.crucible.CrucibleMaterialStack;
 import gregtech.api.material.GTValues;
 import gregtech.content.material.Materials;
 import gregtech.data.MaterialPrefix;
@@ -46,7 +46,7 @@ public final class NeoBronzeChainTests {
         actor.getInventory().selected = 8;
         Player player = actor;
         List<ItemStack> minedCharges = harvestRawCharges(helper, actor);
-        var wood = gregtech.api.material.GTMaterialRegistry.get("Wood");
+        var wood = gregtech.internal.material.GTMaterialRegistry.get("Wood");
         var chisel = SmelteryRegistries.CHISEL.get().assemble(Materials.Steel, wood);
         var pincers = SmelteryRegistries.PINCERS.get().assemble(Materials.Steel, wood);
         helper.assertTrue(!chisel.isEmpty() && !pincers.isEmpty() && !player.isCreative(), "Real assembled steel tools must consume wear");
@@ -120,8 +120,8 @@ public final class NeoBronzeChainTests {
         menu.getSlot(5).set(new ItemStack(Items.STICK));
         menu.clicked(0, 0, net.minecraft.world.inventory.ClickType.PICKUP, actor);
         ItemStack pick = menu.getCarried().copy();
-        helper.assertTrue(gregtech.api.tool.GTToolHelper.isUsable(pick)
-                && gregtech.api.tool.GTToolHelper.getHead(pick) == Materials.Flint,
+        helper.assertTrue(gregtech.internal.tool.GTToolHelper.isUsable(pick)
+                && gregtech.internal.tool.GTToolHelper.getHead(pick) == Materials.Flint,
                 "Real workbench result must produce the starter flint pick");
         for (int slot = 1; slot <= 9; slot++) helper.assertTrue(menu.getSlot(slot).getItem().isEmpty(), "Workbench consumed actual inputs");
         menu.setCarried(ItemStack.EMPTY);
@@ -131,7 +131,7 @@ public final class NeoBronzeChainTests {
             var material = i == 3 ? Materials.Tin : Materials.Copper;
             BlockPos relative = new BlockPos(6 + i, 1, 3), absolute = helper.absolutePos(relative);
             var block = gregtech.registry.GTBlocks.getObject(
-                    gregtech.api.prefix.BlockMaterialPrefix.ore, material);
+                    gregtech.internal.prefix.BlockMaterialPrefix.ore, material);
             helper.assertTrue(block != null, "Registered actual raw ore block exists");
             helper.setBlock(relative.below(), Blocks.STONE);
             helper.setBlock(relative, block.get());
@@ -170,7 +170,7 @@ public final class NeoBronzeChainTests {
                     .findFirst().orElseThrow();
             // Recipe registration intentionally unifies copper to vanilla's copper ingot.
             var outputForm = display.mOutputs.length == 1
-                    ? gregtech.api.material.MaterialEquivalence.form(display.mOutputs[0]) : null;
+                    ? gregtech.internal.material.MaterialEquivalence.form(display.mOutputs[0]) : null;
             helper.assertTrue(display.mFakeRecipe && display.mOutputs.length==1
                     && outputForm != null && outputForm.prefix() == MaterialPrefix.ingot
                     && outputForm.material() == material.resolve() && display.mOutputs[0].getCount()==1

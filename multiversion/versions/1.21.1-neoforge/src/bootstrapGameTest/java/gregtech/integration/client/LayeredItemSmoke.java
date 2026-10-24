@@ -1,6 +1,6 @@
 package gregtech.integration.client;
 
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.item.MaterialItem;
 import gregtech.data.MaterialPrefix;
 import gregtech.registry.GTElectricItems;

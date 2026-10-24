@@ -1,9 +1,9 @@
 package gregtech.block.machine;
 
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.ToolInteractionSpec;
-import gregtech.api.tool.ToolInteractionTarget;
-import gregtech.api.tool.ToolInteractions;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.ToolInteractionSpec;
+import gregtech.internal.tool.ToolInteractionTarget;
+import gregtech.internal.tool.ToolInteractions;
 import gregtech.blockentity.machine.OriginalLargeBoilerControllerBlockEntity;
 import gregtech.content.multiblock.OriginalLargeBoilerSpecs;
 import gregtech.registry.GTBlockEntities;
@@ -65,7 +65,7 @@ public final class OriginalLargeBoilerControllerBlock extends HorizontalDirectio
     }
     @Override public void toolStateChanged(Level level, BlockPos pos, BlockState state) {
         if (level.getBlockEntity(pos) instanceof OriginalLargeBoilerControllerBlockEntity boiler)
-            gregtech.api.multiblock.tracking.StructureTracking.invalidate(boiler);
+            gregtech.internal.multiblock.tracking.StructureTracking.invalidate(boiler);
     }
 //? if >=1.21.1 {
     /*private InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,

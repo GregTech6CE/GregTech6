@@ -28,7 +28,7 @@ import net.minecraftforge.server.ServerLifecycleHooks;
  * A formed machine reads the layout again on its next structure check.
  */
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID)
+/*@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID)
 *///?} else {
 @Mod.EventBusSubscriber(modid = GregTech.MODID)
 //?}
@@ -41,7 +41,7 @@ public final class StructureLayoutLifecycle {
         var server = ServerLifecycleHooks.getCurrentServer();
         if (server == null) return;
         StructureLayoutOverlayRuntime.apply(server);
-        gregtech.api.multiblock.tracking.StructureEpoch.bump();
+        gregtech.internal.multiblock.tracking.StructureEpoch.bump();
         PacketSyncStructureLayouts.send(server);
     }
 
@@ -49,7 +49,7 @@ public final class StructureLayoutLifecycle {
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void started(ServerStartedEvent event) {
         StructureLayoutOverlayRuntime.apply(event.getServer());
-        gregtech.api.multiblock.tracking.StructureEpoch.bump();
+        gregtech.internal.multiblock.tracking.StructureEpoch.bump();
     }
 
     @SubscribeEvent

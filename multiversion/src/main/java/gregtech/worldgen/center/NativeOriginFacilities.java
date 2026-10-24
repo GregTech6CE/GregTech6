@@ -86,7 +86,7 @@ public final class NativeOriginFacilities {
             for (int slot = 0; slot < Math.min(drawer.items().getSlots(), OriginTestInventory.ROWS.size()); slot++) {
                 var stack = NativeOriginItems.stack(OriginTestInventory.ROWS.get(slot));
 //? if >=1.21.1 {
-                /*gregtech.api.tool.GTToolEnchantments.apply(stack, level.registryAccess());
+                /*gregtech.internal.tool.GTToolEnchantments.apply(stack, level.registryAccess());
 *///?}
                 drawer.items().setStackInSlot(slot, stack);
             }

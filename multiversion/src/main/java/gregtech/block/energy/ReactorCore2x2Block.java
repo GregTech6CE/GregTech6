@@ -1,6 +1,6 @@
 package gregtech.block.energy;
 
-import gregtech.api.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolHelper;
 import gregtech.content.nuclear.ReactorPorts;
 
 import gregtech.blockentity.energy.ReactorCore2x2BlockEntity;
@@ -32,7 +32,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /** Four-rod core with a directional hot-fluid outlet. */
-public class ReactorCore2x2Block extends HorizontalDirectionalBlock implements EntityBlock, gregtech.api.tool.ToolInteractionTarget {
+public class ReactorCore2x2Block extends HorizontalDirectionalBlock implements EntityBlock, gregtech.internal.tool.ToolInteractionTarget {
 //? if >=1.21.1 {
     /*@Override public com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
 *///?} else {
@@ -107,7 +107,7 @@ public class ReactorCore2x2Block extends HorizontalDirectionalBlock implements E
             net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,
             net.minecraft.world.level.block.state.BlockState next, boolean moving) {
         if (!state.is(next.getBlock()) && !level.isClientSide
-                && level.getBlockEntity(pos) instanceof gregtech.api.inventory.BlockContents contents) {
+                && level.getBlockEntity(pos) instanceof gregtech.internal.inventory.BlockContents contents) {
             contents.dropContents();
             level.updateNeighbourForOutputSignal(pos, this);
         }
@@ -125,7 +125,7 @@ public class ReactorCore2x2Block extends HorizontalDirectionalBlock implements E
         ReactorPorts.saveItemState(stack, state);
         return java.util.List.of(stack);
     }
-    @Override public gregtech.api.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+    @Override public gregtech.internal.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return ReactorPorts.tool(tool);
     }
 //? if >=1.21.1 {

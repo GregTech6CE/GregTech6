@@ -2,16 +2,16 @@ package gregtech.block.machine;
 
 
 
-import gregtech.api.machine.BasicMachineSpec;
+import gregtech.internal.machine.BasicMachineSpec;
 
-import gregtech.api.machine.MachineSpec;
+import gregtech.internal.machine.MachineSpec;
 
 
 
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.NeoToolBindings;
 *///?} else {
-import gregtech.api.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolHelper;
 //?}
 
 
@@ -323,7 +323,7 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements EntityBlo
 //? if >=1.21.1 {
 /*            if (NeoToolBindings.matches(held,"crowbar")) {
 *///?} else {
-            if (GTToolHelper.matchesTool(held, gregtech.api.tool.GTToolType.CROWBAR)) {
+            if (GTToolHelper.matchesTool(held, gregtech.internal.tool.GTToolType.CROWBAR)) {
 //?}
 
 
@@ -395,7 +395,7 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements EntityBlo
 //? if >=1.21.1 {
 /*                if (NeoToolBindings.matches(held,"screwdriver")
 *///?} else {
-                if (GTToolHelper.matchesTool(held, gregtech.api.tool.GTToolType.SCREWDRIVER)
+                if (GTToolHelper.matchesTool(held, gregtech.internal.tool.GTToolType.SCREWDRIVER)
 //?}
 
 
@@ -411,7 +411,7 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements EntityBlo
 //? if >=1.21.1 {
 /*                if (NeoToolBindings.matches(held,"soft_hammer")
 *///?} else {
-                if (GTToolHelper.matchesTool(held, gregtech.api.tool.GTToolType.SOFT_HAMMER)
+                if (GTToolHelper.matchesTool(held, gregtech.internal.tool.GTToolType.SOFT_HAMMER)
 //?}
 
 
@@ -660,7 +660,7 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements EntityBlo
 
         if (!state.is(next.getBlock()) && !level.isClientSide
 
-                && level.getBlockEntity(pos) instanceof gregtech.api.inventory.BlockContents contents) {
+                && level.getBlockEntity(pos) instanceof gregtech.internal.inventory.BlockContents contents) {
 
             // Source BasicMachine.breakBlock releases stopped adjacent sources before removing the controller.
 

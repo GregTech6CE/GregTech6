@@ -1,6 +1,6 @@
 package gregtech.blockentity.inventory;
 
-import gregtech.api.inventory.MassStorageMaterialForms;
+import gregtech.internal.inventory.MassStorageMaterialForms;
 
 //? if >=1.21.1 {
 //?} else {
@@ -41,11 +41,11 @@ import java.util.List;
 public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctTape.Tapeable {
 //?}
     public static final long CAPACITY = gregtech.content.storage.OriginalStorageTooltipData.MASS_CAPACITY;
-    private final gregtech.api.inventory.BulkStorageState<ItemStack> storage =
+    private final gregtech.internal.inventory.BulkStorageState<ItemStack> storage =
 //? if >=1.21.1 {
-            /*new gregtech.api.inventory.BulkStorageState<>(CAPACITY, ItemStack::isSameItemSameComponents, stack -> stack.copyWithCount(1));
+            /*new gregtech.internal.inventory.BulkStorageState<>(CAPACITY, ItemStack::isSameItemSameComponents, stack -> stack.copyWithCount(1));
 *///?} else {
-            new gregtech.api.inventory.BulkStorageState<>(CAPACITY, ItemStack::isSameItemSameTags, stack -> stack.copyWithCount(1));
+            new gregtech.internal.inventory.BulkStorageState<>(CAPACITY, ItemStack::isSameItemSameTags, stack -> stack.copyWithCount(1));
 //?}
     private int mode;
     private boolean inventoryChanged = true;

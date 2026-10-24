@@ -1,9 +1,9 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.machine.CrucibleSpec;
-import gregtech.api.machine.ITileEntityCrucible;
-import gregtech.api.machine.ITileEntityMold;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.machine.CrucibleSpec;
+import gregtech.internal.machine.ITileEntityCrucible;
+import gregtech.internal.machine.ITileEntityMold;
+import gregtech.internal.material.GTMaterial;
 import gregtech.block.machine.CrucibleCrossingBlock;
 import gregtech.data.GregTechConstants;
 import gregtech.registry.GTBlockEntities;

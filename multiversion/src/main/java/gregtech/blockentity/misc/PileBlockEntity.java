@@ -1,7 +1,7 @@
 package gregtech.blockentity.misc;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.ItemMaterialRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.ItemMaterialRegistry;
 import gregtech.block.misc.PileBlock;
 import gregtech.data.MaterialPrefix;
 import gregtech.item.MaterialItem;
@@ -130,7 +130,7 @@ public class PileBlockEntity extends BlockEntity {
     public static MaterialPrefix prefixOf(ItemStack stack) {
         MaterialPrefix prefix = MaterialItem.getPrefix(stack);
         if (prefix != null) return prefix;
-        return ItemMaterialRegistry.get(stack).map(gregtech.api.material.ItemComposition::prefix).orElse(null);
+        return ItemMaterialRegistry.get(stack).map(gregtech.internal.material.ItemComposition::prefix).orElse(null);
     }
 
     /**
@@ -141,9 +141,9 @@ public class PileBlockEntity extends BlockEntity {
     @Nullable
     public static GTMaterial materialOf(ItemStack stack) {
         if (stack.isEmpty()) return null;
-        if (stack.getItem() instanceof gregtech.api.material.MaterialFormItem materialItem) return materialItem.getMaterial();
+        if (stack.getItem() instanceof gregtech.internal.material.MaterialFormItem materialItem) return materialItem.getMaterial();
         return ItemMaterialRegistry.get(stack)
-                .map(gregtech.api.material.ItemComposition::material)
+                .map(gregtech.internal.material.ItemComposition::material)
                 .filter(GTMaterial::isValid)
                 .orElse(null);
     }

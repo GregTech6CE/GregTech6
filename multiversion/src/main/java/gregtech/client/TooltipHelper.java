@@ -5,7 +5,7 @@ package gregtech.client;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.energy.FaceConfig;
+import gregtech.internal.energy.FaceConfig;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -128,8 +128,8 @@ public final class TooltipHelper {
     // ── Blast resistance ────────────────────────────────────────────────
 
     public static void appendBlastResistance(float resistance, List<Component> tooltip) {
-        if (!gregtech.api.block.OriginalBlockTooltipRules.showMultitileBlast(resistance)) return;
-        var rating = gregtech.api.block.OriginalBlockTooltipRules.blastRating(resistance);
+        if (!gregtech.internal.block.OriginalBlockTooltipRules.showMultitileBlast(resistance)) return;
+        var rating = gregtech.internal.block.OriginalBlockTooltipRules.blastRating(resistance);
         ChatFormatting color = switch (rating) {
             case TERRIBLE, GHAST -> ChatFormatting.RED;
             case CREEPER -> ChatFormatting.YELLOW;
@@ -137,7 +137,7 @@ public final class TooltipHelper {
             case IC2_NUKE_UNPROTECTED -> ChatFormatting.AQUA;
         };
         tooltip.add(Component.translatable("gt.lang.blastresistance").withStyle(ChatFormatting.WHITE)
-                .append(Component.literal(gregtech.api.block.OriginalBlockTooltipRules.blastNumber(resistance))
+                .append(Component.literal(gregtech.internal.block.OriginalBlockTooltipRules.blastNumber(resistance))
                         .withStyle(ChatFormatting.GOLD))
                 .append(Component.literal(" "))
                 .append(Component.translatable(rating.key()).withStyle(color)));

@@ -1,6 +1,6 @@
 package gregtech.platform.neoforge.machine;
 
-import gregtech.api.addon.AddonMachines;
+import gregtech.internal.addon.AddonMachines;
 import gregtech.block.machine.FuelGeneratorBlock;
 import gregtech.blockentity.machine.FuelGeneratorBlockEntity;
 import net.minecraft.core.registries.Registries;

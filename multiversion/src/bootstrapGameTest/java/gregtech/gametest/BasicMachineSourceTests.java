@@ -2,7 +2,7 @@ package gregtech.gametest;
 import gregtech.block.machine.BasicMachineBlock;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.machine.OriginalBasicMachineRules;
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.recipe.Recipe;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.*;

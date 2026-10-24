@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.recipe.Recipe;
 import gregtech.blockentity.tool.ProcessingToolBlockEntity;
 import gregtech.data.MachineRecipeMaps;
 import net.minecraft.core.*;

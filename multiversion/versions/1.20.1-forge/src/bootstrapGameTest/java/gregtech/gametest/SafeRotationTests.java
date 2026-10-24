@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.tool.*;
+import gregtech.internal.tool.*;
 import gregtech.block.inventory.SafeBlock;
 import gregtech.blockentity.inventory.SafeBlockEntity;
 import gregtech.content.material.Materials;
@@ -26,7 +26,7 @@ public final class SafeRotationTests {
         var level=h.getLevel(); var pos=h.absolutePos(new BlockPos(1,1,1));
         var block=GTStorage.SAFE.get(); level.setBlock(pos,block.defaultBlockState(),3);
         var safe=(SafeBlockEntity)level.getBlockEntity(pos); var player=h.makeMockPlayer();
-        var tool=GTToolItem.create(GTToolType.WRENCH,Materials.Steel,gregtech.api.material.GTMaterialRegistry.get("Wood"));
+        var tool=GTToolItem.create(GTToolType.WRENCH,Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
         player.setItemInHand(InteractionHand.MAIN_HAND,tool);
         var spec=ToolInteractions.describe(safe.getBlockState(),tool);
         h.assertTrue(spec!=null && spec.facing().getPossibleValues().size()==6,"safe declares a six-face wrench operation");
@@ -66,7 +66,7 @@ public final class SafeRotationTests {
         }
         level.setBlock(pos,block.defaultBlockState(),3);
         var safe=(SafeBlockEntity)level.getBlockEntity(pos); safe.setKeyId(771);
-        var tool=GTToolItem.create(GTToolType.WRENCH,Materials.Steel,gregtech.api.material.GTMaterialRegistry.get("Wood"));
+        var tool=GTToolItem.create(GTToolType.WRENCH,Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
         player.setItemInHand(InteractionHand.MAIN_HAND,tool);
         var hit=new BlockHitResult(Vec3.atCenterOf(pos).add(0,.5,0),Direction.UP,pos,false);
         block.use(safe.getBlockState(),level,pos,player,InteractionHand.MAIN_HAND,hit);

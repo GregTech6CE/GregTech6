@@ -2,11 +2,11 @@ package gregtech.client;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.client.event.ScreenEvent;
 import net.neoforged.bus.api.SubscribeEvent;
-@net.neoforged.fml.common.EventBusSubscriber(modid=gregtech.api.mod.GregTechIdentity.MOD_ID,value=net.neoforged.api.distmarker.Dist.CLIENT)
+@net.neoforged.fml.common.EventBusSubscriber(modid=gregtech.internal.mod.GregTechIdentity.MOD_ID,value=net.neoforged.api.distmarker.Dist.CLIENT)
 *///?} else {
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-@net.minecraftforge.fml.common.Mod.EventBusSubscriber(modid=gregtech.api.mod.GregTechIdentity.MOD_ID,value=net.minecraftforge.api.distmarker.Dist.CLIENT)
+@net.minecraftforge.fml.common.Mod.EventBusSubscriber(modid=gregtech.internal.mod.GregTechIdentity.MOD_ID,value=net.minecraftforge.api.distmarker.Dist.CLIENT)
 //?}
 public final class EmiWidgetInputEvents {
 //? if >=1.21.1 {

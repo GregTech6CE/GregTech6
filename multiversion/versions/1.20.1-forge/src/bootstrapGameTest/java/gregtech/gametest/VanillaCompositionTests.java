@@ -1,5 +1,6 @@
 package gregtech.gametest;
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.item.*;
 import net.minecraftforge.gametest.*;
@@ -26,8 +27,8 @@ public final class VanillaCompositionTests {
         pick.setDamageValue(pick.getMaxDamage()/2);
         var worn=ItemMaterialRegistry.get(pick).orElseThrow();
         h.assertTrue(units(worn,"Iron")==units(data,"Iron")/2,"Damaged tools do not recover a fresh tool's metal");
-        h.assertTrue(gregtech.api.machine.crucible.CrucibleItemInput.parse(pick).size()==2,"Crucible reads both components");
-        h.assertTrue(gregtech.api.machine.FurnaceFuelValue.getBurnValue(new ItemStack(Items.IRON_PICKAXE))==0,"Wood handle cannot make iron equipment furnace fuel");
+        h.assertTrue(gregtech.internal.machine.crucible.CrucibleItemInput.parse(pick).size()==2,"Crucible reads both components");
+        h.assertTrue(gregtech.internal.machine.FurnaceFuelValue.getBurnValue(new ItemStack(Items.IRON_PICKAXE))==0,"Wood handle cannot make iron equipment furnace fuel");
         h.assertTrue(units(ItemMaterialRegistry.get(new ItemStack(Items.CLAY)).orElseThrow(),"Clay")==GTValues.U*4,"Clay block four units");
         h.assertTrue(units(ItemMaterialRegistry.get(new ItemStack(Items.STONE)).orElseThrow(),"Stone")==GTValues.U*9,"Stone block nine units");
         h.assertTrue(units(ItemMaterialRegistry.get(new ItemStack(Items.RAW_IRON_BLOCK)).orElseThrow(),"Iron")==GTValues.U*18,"Raw block nine two-unit raw ores");
@@ -35,9 +36,9 @@ public final class VanillaCompositionTests {
     }
     @GameTest(template="test_empty") public static void containersNeverLoseStoredContentsToRecovery(GameTestHelper h) {
         var chest=new ItemStack(Items.CHEST);
-        h.assertTrue(!gregtech.api.machine.crucible.CrucibleItemInput.parse(chest).isEmpty(),"Empty chest has recoverable wood");
+        h.assertTrue(!gregtech.internal.machine.crucible.CrucibleItemInput.parse(chest).isEmpty(),"Empty chest has recoverable wood");
         chest.getOrCreateTag().put("BlockEntityTag",new net.minecraft.nbt.CompoundTag());
-        h.assertTrue(gregtech.api.machine.crucible.CrucibleItemInput.parse(chest).isEmpty(),"NBT container rejected by crucible");
+        h.assertTrue(gregtech.internal.machine.crucible.CrucibleItemInput.parse(chest).isEmpty(),"NBT container rejected by crucible");
         h.assertTrue(!ItemMaterialRegistry.canRecover(new ItemStack(Items.COD_BUCKET)),"Live fish and filled bucket are not bulk ingredients");
         h.succeed();
     }
@@ -45,7 +46,7 @@ public final class VanillaCompositionTests {
         var recipes=gregtech.content.recipe.VanillaRecoveryRecipes.recipes();
         h.assertTrue(recipes.size()>100,"Broad vanilla recovery coverage");
         for(var r:recipes){
-            h.assertTrue(gregtech.api.recipe.RecipeInputs.consume(r,Arrays.asList(r.mInputs),List.of(),1)!=null,"Fresh recipe executes");
+            h.assertTrue(gregtech.internal.recipe.RecipeInputs.consume(r,Arrays.asList(r.mInputs),List.of(),1)!=null,"Fresh recipe executes");
             var available=new HashMap<GTMaterial,Long>();
             for(var c:ItemMaterialRegistry.get(r.mInputs[0]).orElseThrow().components()){
                 var target=c.material().getTargetPulverMaterial();
@@ -53,16 +54,16 @@ public final class VanillaCompositionTests {
                 available.merge(target,amount,Long::sum);
             }
             for(var out:r.mOutputs){
-                var form=gregtech.api.material.MaterialEquivalence.form(out);
+                var form=gregtech.internal.material.MaterialEquivalence.form(out);
                 h.assertTrue(form!=null,"Output retains a known material composition, including vanilla targets");
                 long remaining=available.getOrDefault(form.material(),0L)-form.prefix().getMaterialWeight()*out.getCount();
                 h.assertTrue(remaining>=0,"Recovery conserves each material");available.put(form.material(),remaining);
             }
             var unsafe=r.mInputs[0].copy();unsafe.getOrCreateTag().put("BlockEntityTag",new net.minecraft.nbt.CompoundTag());
-            h.assertTrue(gregtech.api.recipe.RecipeInputs.consume(r,List.of(unsafe),List.of(),1)==null,"No NBT inventory shredded");
+            h.assertTrue(gregtech.internal.recipe.RecipeInputs.consume(r,List.of(unsafe),List.of(),1)==null,"No NBT inventory shredded");
             if(r.mInputs[0].isDamageableItem()){
                 var worn=r.mInputs[0].copy();worn.setDamageValue(1);
-                h.assertTrue(gregtech.api.recipe.RecipeInputs.consume(r,List.of(worn),List.of(),1)==null,"Fixed-output recipe rejects worn tools; crucible handles scaled recovery");
+                h.assertTrue(gregtech.internal.recipe.RecipeInputs.consume(r,List.of(worn),List.of(),1)==null,"Fixed-output recipe rejects worn tools; crucible handles scaled recovery");
             }
         }
         h.succeed();
@@ -72,15 +73,15 @@ public final class VanillaCompositionTests {
         h.assertTrue(recipes.size()==26,"Four minecarts and nine modern chest boats/rafts, two directions");
         for(int i=0;i<recipes.size();i+=2){
             var box=recipes.get(i);var unbox=recipes.get(i+1);
-            h.assertTrue(gregtech.api.recipe.RecipeInputs.consume(box,Arrays.asList(box.mInputs),List.of(),1)!=null,"Box executes");
-            h.assertTrue(gregtech.api.recipe.RecipeInputs.consume(unbox,Arrays.asList(box.mOutputs),List.of(),1)!=null,"Unbox executes");
+            h.assertTrue(gregtech.internal.recipe.RecipeInputs.consume(box,Arrays.asList(box.mInputs),List.of(),1)!=null,"Box executes");
+            h.assertTrue(gregtech.internal.recipe.RecipeInputs.consume(unbox,Arrays.asList(box.mOutputs),List.of(),1)!=null,"Unbox executes");
             h.assertTrue(ItemStack.isSameItemSameTags(unbox.mOutputs[0],box.mInputs[0])&&ItemStack.isSameItemSameTags(unbox.mOutputs[1],box.mInputs[1]),"Cargo and shell return unchanged");
             var stored=unbox.mInputs[0].copy();stored.getOrCreateTag().put("EntityTag",new net.minecraft.nbt.CompoundTag());
-            h.assertTrue(gregtech.api.recipe.RecipeInputs.consume(unbox,List.of(stored),List.of(),1)==null,"Entity inventory is not erased");
+            h.assertTrue(gregtech.internal.recipe.RecipeInputs.consume(unbox,List.of(stored),List.of(),1)==null,"Entity inventory is not erased");
         }
         h.succeed();
     }
-    private static long units(gregtech.api.material.ItemComposition data,String material){
+    private static long units(gregtech.internal.material.ItemComposition data,String material){
         return data.components().stream().filter(c->c.material().getName().equals(material)).mapToLong(MaterialComponent::amount).sum();
     }
 

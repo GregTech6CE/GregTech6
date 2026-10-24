@@ -1,17 +1,17 @@
 package gregtech.block.machine;
 
-import gregtech.api.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolHelper;
 //? if >=1.21.1 {
-/*import gregtech.api.tool.ToolInteractions;
+/*import gregtech.internal.tool.ToolInteractions;
 *///?} else {
 //?}
-import gregtech.api.tool.ToolInteractionSpec;
-import gregtech.api.tool.ToolInteractionTarget;
+import gregtech.internal.tool.ToolInteractionSpec;
+import gregtech.internal.tool.ToolInteractionTarget;
 //? if >=1.21.1 {
-/*import gregtech.api.transport.PipeConnections;
+/*import gregtech.internal.transport.PipeConnections;
 import gregtech.platform.neoforge.NeoToolBindings;
 *///?} else {
-import gregtech.api.tool.ToolInteractions;
+import gregtech.internal.tool.ToolInteractions;
 import gregtech.block.energy.ElectricWireBlock;
 //?}
 import gregtech.blockentity.machine.LogisticsWireBlockEntity;

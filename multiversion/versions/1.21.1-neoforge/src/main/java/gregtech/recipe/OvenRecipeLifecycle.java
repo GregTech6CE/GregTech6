@@ -13,7 +13,7 @@ import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import java.util.*;
 
 /** Original furnace/oven bridge over the actual loaded Native recipes, including datapack reload. */
-@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID)
+@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID)
 public final class OvenRecipeLifecycle {
     private OvenRecipeLifecycle() {}
     private static final Map<RecipeManager, Set<RecipeHolder<?>>> APPLIED = new WeakHashMap<>();

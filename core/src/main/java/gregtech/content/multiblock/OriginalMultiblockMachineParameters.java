@@ -1,9 +1,9 @@
 package gregtech.content.multiblock;
-import gregtech.api.machine.BasicMachineParameters;
-import gregtech.api.energy.MachineFaceMasks;
+import gregtech.internal.machine.BasicMachineParameters;
+import gregtech.internal.energy.MachineFaceMasks;
 import gregtech.content.material.Materials;
-import gregtech.api.material.MaterialChemistry.WeightedMaterial;
-import static gregtech.api.energy.MachineFaceMasks.*;
+import gregtech.internal.material.MaterialChemistry.WeightedMaterial;
+import static gregtech.internal.energy.MachineFaceMasks.*;
 import java.util.List;
 /** Original dedicated-controller parameters omitted from the general basic-machine catalog. */
 public final class OriginalMultiblockMachineParameters {

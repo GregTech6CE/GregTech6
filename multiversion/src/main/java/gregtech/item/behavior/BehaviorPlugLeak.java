@@ -37,7 +37,7 @@ public final class BehaviorPlugLeak {
 //?}
   boolean liquid=!level.getFluidState(target).isEmpty();for(var side:Direction.values())liquid|=!level.getFluidState(target.relative(side)).isEmpty();if(!liquid)return InteractionResult.PASS;
   for(int slot=player.getInventory().items.size()-1;slot>=0;slot--){
-   var stock=player.getInventory().items.get(slot);if(!(stock.getItem() instanceof BlockItem blockItem)||stock.isEmpty()||stock.getItem() instanceof gregtech.api.material.MaterialFormItem)continue;
+   var stock=player.getInventory().items.get(slot);if(!(stock.getItem() instanceof BlockItem blockItem)||stock.isEmpty()||stock.getItem() instanceof gregtech.internal.material.MaterialFormItem)continue;
    var block=blockItem.getBlock();var state=block.defaultBlockState();var id=net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(block);
    if(state.hasBlockEntity()||block instanceof InfestedBlock||!state.canOcclude()||state.getDestroySpeed(level,target)<0||state.is(BlockTags.NEEDS_DIAMOND_TOOL)||id.getNamespace().equals("thaumcraft")||!(state.is(BlockTags.MINEABLE_WITH_PICKAXE)||state.is(BlockTags.MINEABLE_WITH_SHOVEL)))continue;
    boolean valuable=false;for(String tag:new String[]{"forge:ores","forge:storage_blocks","c:ores","c:storage_blocks"})valuable|=state.is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK,net.minecraft.resources.ResourceLocation.parse(tag)));if(valuable)continue;

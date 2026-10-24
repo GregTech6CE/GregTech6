@@ -1,7 +1,7 @@
 package gregtech.block.energy;
 
-import gregtech.api.energy.EnergyBlockViews;
-import gregtech.api.tool.*;
+import gregtech.internal.energy.EnergyBlockViews;
+import gregtech.internal.tool.*;
 import gregtech.data.GregTechTags;
 import net.minecraft.core.*;
 import net.minecraft.world.*;

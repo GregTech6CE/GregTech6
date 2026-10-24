@@ -3,7 +3,7 @@ package gregtech.block.energy;
 import gregtech.block.misc.AutoToolBlock;
 import gregtech.blockentity.energy.LaserConverterBlockEntity;
 import gregtech.content.energy.LaserSpec;
-import gregtech.api.tool.ToolInteractions;
+import gregtech.internal.tool.ToolInteractions;
 import net.minecraft.core.*;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;

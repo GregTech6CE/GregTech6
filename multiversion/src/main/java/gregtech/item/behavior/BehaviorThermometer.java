@@ -1,6 +1,6 @@
 package gregtech.item.behavior;
 
-import gregtech.api.machine.ITileEntityCrucible;
+import gregtech.internal.machine.ITileEntityCrucible;
 import gregtech.blockentity.machine.BoilerTankBlockEntity;
 import gregtech.blockentity.machine.MoldBasinBlockEntity;
 import gregtech.blockentity.machine.MoldBlockEntity;

@@ -1,6 +1,6 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.addon.AddonMachines;
+import gregtech.internal.addon.AddonMachines;
 import gregtech.api.addon.BehaviorEnergyRules;
 import gregtech.api.addon.EnergyOutput;
 import gregtech.api.addon.BehaviorMachine;
@@ -9,7 +9,7 @@ import gregtech.api.addon.CrucibleMold;
 import gregtech.api.addon.MachineFace;
 import gregtech.api.addon.PartEnergyRules;
 import gregtech.api.addon.BehaviorRangeRules;
-import gregtech.api.addon.BehaviorMachineHosts;
+import gregtech.internal.addon.BehaviorMachineHosts;
 import gregtech.api.addon.platform.BehaviorMachineClientView;
 import gregtech.api.addon.platform.BehaviorState;
 //? if >=1.21.1 {
@@ -22,16 +22,16 @@ import gregtech.api.addon.platform.PartBehavior;
 import gregtech.api.addon.platform.PartContext;
 import gregtech.api.addon.platform.MachineBehavior;
 import gregtech.api.addon.platform.MachineBehaviorContext;
-import gregtech.api.multiblock.MultiblockLayout;
-import gregtech.api.multiblock.PartBindings;
+import gregtech.internal.multiblock.MultiblockLayout;
+import gregtech.internal.multiblock.PartBindings;
 import gregtech.content.multiblock.LargeMachineLayouts;
-import gregtech.api.energy.EnergyBlockViews;
-import gregtech.api.energy.FaceConfig;
-import gregtech.api.energy.IEnergyBlock;
+import gregtech.internal.energy.EnergyBlockViews;
+import gregtech.internal.energy.FaceConfig;
+import gregtech.internal.energy.IEnergyBlock;
 import gregtech.api.machine.BasicMachineEnergy;
-import gregtech.api.machine.ITileEntityCrucible;
-import gregtech.api.machine.ITileEntityMold;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.machine.ITileEntityCrucible;
+import gregtech.internal.machine.ITileEntityMold;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.block.machine.BehaviorMachineBlock;
 import gregtech.client.gui.BehaviorMachineMenu;
 import gregtech.data.GregTechTags;
@@ -103,9 +103,9 @@ import java.util.UUID;
 
 /** Shell block entity. The addon behavior never sees this class. */
 public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlock, MenuProvider,
-        gregtech.api.fluid.CompressedGasReceiver, ITileEntityCrucible,
-        gregtech.api.multiblock.MultiblockPortOwner, gregtech.api.signal.GtSignalSource,
-        BehaviorMachineClientView, gregtech.api.multiblock.tracking.TrackedMultiblock {
+        gregtech.internal.fluid.CompressedGasReceiver, ITileEntityCrucible,
+        gregtech.internal.multiblock.MultiblockPortOwner, gregtech.api.signal.GtSignalSource,
+        BehaviorMachineClientView, gregtech.internal.multiblock.tracking.TrackedMultiblock {
     private final BehaviorMachine declaration;
     private final AddonMachines.AcceptedBehavior accepted;
     private final MachineBehavior behavior;
@@ -329,7 +329,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     }
 
     public boolean structureFormed() {
-        if (gregtech.api.multiblock.tracking.StructureTrackingMode.legacy()) return formed;
+        if (gregtech.internal.multiblock.tracking.StructureTrackingMode.legacy()) return formed;
         return isStructureOk();
     }
 
@@ -338,7 +338,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         itemsLeft = BehaviorRangeRules.ITEMS_PER_TICK;
         pollEnergy(level, pos);
         pollAuxiliary(level, pos);
-        if (gregtech.api.multiblock.tracking.StructureTrackingMode.legacy()) refreshStructure();
+        if (gregtech.internal.multiblock.tracking.StructureTrackingMode.legacy()) refreshStructure();
         else formed = isStructureOk();
         powered = stored > 0;
         working = false;
@@ -496,7 +496,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         long sent = 0;
         for (MachineFace face : output.faces()) {
             if (left <= 0) break;
-            long used = gregtech.api.energy.EnergyTransfer.emitEnergyToSide(
+            long used = gregtech.internal.energy.EnergyTransfer.emitEnergyToSide(
                     energyOutTag, world(face), size, left, this);
             sent += used;
             left -= used;
@@ -523,7 +523,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         long magnitude = output.allowNegative() ? Math.abs(size) : size;
         long packets = Math.min(amount, Math.max(0, stored) / magnitude);
         if (packets <= 0) return 0;
-        long sent = gregtech.api.energy.EnergyTransfer.insertEnergyInto(
+        long sent = gregtech.internal.energy.EnergyTransfer.insertEnergyInto(
                 energyOutTag, side, size, packets, this, receiver);
         if (sent > 0) {
             stored -= Math.multiplyExact(magnitude, sent);
@@ -744,7 +744,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
                 any, input.overload(), any || input.rangeSpecified());
         if (!takePacket(decision.packets(), decision.overload(), energy, side, size, amount)) return 0;
         if (decision.overload()) {
-            if (doInject) gregtech.api.energy.MachineOverload.apply(this, Math.abs(size), energy);
+            if (doInject) gregtech.internal.energy.MachineOverload.apply(this, Math.abs(size), energy);
             return decision.packets();
         }
         if (doInject && decision.packets() > 0) {
@@ -765,7 +765,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
                 anyPacket ? 1 : auxiliary.rangeMin(), anyPacket ? Long.MAX_VALUE : auxiliary.rangeMax(), anyPacket);
         if (!takePacket(decision.packets(), decision.overload(), energy, side, size, amount)) return 0;
         if (decision.overload()) {
-            if (doInject) gregtech.api.energy.MachineOverload.apply(this, Math.abs(size), energy);
+            if (doInject) gregtech.internal.energy.MachineOverload.apply(this, Math.abs(size), energy);
             return decision.packets();
         }
         if (doInject && decision.packets() > 0) {
@@ -1017,7 +1017,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         tag.put("l", longs);
         tag.put("b", bools);
         tag.put("s", strings);
-        gregtech.api.multiblock.tracking.ClientFormedSync.write(this, tag);
+        gregtech.internal.multiblock.tracking.ClientFormedSync.write(this, tag);
         return tag;
     }
 
@@ -1030,7 +1030,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         for (String key : bools.getAllKeys()) if (clientKeys.contains(key)) state.bools.put(key, bools.getBoolean(key));
         CompoundTag strings = tag.getCompound("s");
         for (String key : strings.getAllKeys()) if (clientKeys.contains(key)) state.strings.put(key, strings.getString(key));
-        gregtech.api.multiblock.tracking.ClientFormedSync.read(this, tag);
+        gregtech.internal.multiblock.tracking.ClientFormedSync.read(this, tag);
     }
 
     private boolean breakOne(BlockPos target) {
@@ -1254,7 +1254,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             if (face == null || stack == null || stack.isEmpty() || level == null) return 0;
             BlockPos target = worldPosition.relative(face);
             if (!level.hasChunkAt(target)) return 0;
-            if (!(level.getBlockEntity(target) instanceof gregtech.api.fluid.CompressedGasReceiver receiver))
+            if (!(level.getBlockEntity(target) instanceof gregtech.internal.fluid.CompressedGasReceiver receiver))
                 return 0;
             return receiver.receiveCompressedGas(face.getOpposite(), stack);
         }
@@ -1262,7 +1262,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
 
     @Override public int receiveCompressedGas(Direction side, FluidStack stack) {
         if (!valveFace(side) || stack == null || stack.isEmpty()
-                || !gregtech.api.fluid.FluidHazards.isGas(stack.getFluid())) return 0;
+                || !gregtech.internal.fluid.FluidHazards.isGas(stack.getFluid())) return 0;
         FluidStack remaining = stack.copy();
         int stored = 0;
         for (Tank tank : tanks) {
@@ -1281,7 +1281,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         if (!valveFace(side) || amount <= 0) return FluidStack.EMPTY;
         for (Tank tank : tanks) {
             FluidStack preview = tank.drain(amount, true);
-            if (preview.isEmpty() || !gregtech.api.fluid.FluidHazards.isGas(preview.getFluid())) continue;
+            if (preview.isEmpty() || !gregtech.internal.fluid.FluidHazards.isGas(preview.getFluid())) continue;
             if (!execute) return preview;
             FluidStack taken = tank.drain(amount, false);
             if (!taken.isEmpty()) setChanged();
@@ -1307,12 +1307,12 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         return expected == actual;
     }
 
-    @Override public gregtech.api.multiblock.tracking.StructureDefinition structureDefinition() {
-        return gregtech.api.multiblock.tracking.LayoutStructures.behavior(this);
+    @Override public gregtech.internal.multiblock.tracking.StructureDefinition structureDefinition() {
+        return gregtech.internal.multiblock.tracking.LayoutStructures.behavior(this);
     }
 
     @Override public boolean isStructureOk() {
-        return gregtech.api.multiblock.tracking.StructureTracking.query(this);
+        return gregtech.internal.multiblock.tracking.StructureTracking.query(this);
     }
 
     @Override public boolean scanStructure() {
@@ -1363,7 +1363,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             var matched = matchingCell(cell, cellPos);
             if (matched == null) {
                 structureBindings.clear(this::releaseStructure);
-                gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
+                gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
                 return false;
             }
             matchedCells.add(matched);
@@ -1382,7 +1382,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             });
             if (placed == null) {
                 structureBindings.clear(this::releaseStructure);
-                gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
+                gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
                 return false;
             }
             counts.put(repeat.key(), placed.size() / repeat.cells().size());
@@ -1393,13 +1393,13 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
                     parts.put(cell.pos(), matched.role());
             }
         }
-        var claimed = gregtech.api.multiblock.tracking.StructureClaims.update(this, true, structureBindings, parts,
+        var claimed = gregtech.internal.multiblock.tracking.StructureClaims.update(this, true, structureBindings, parts,
                 behaviorDesignHash(matchedCells, repeatPlaced),
                 pos -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).canBind(worldPosition),
                 (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
                 this::releaseStructure);
-        if (claimed == gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED) return false;
-        if (claimed == gregtech.api.multiblock.tracking.StructureClaims.Result.APPLIED) {
+        if (claimed == gregtech.internal.multiblock.tracking.StructureClaims.Result.FAILED) return false;
+        if (claimed == gregtech.internal.multiblock.tracking.StructureClaims.Result.APPLIED) {
             gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front, matchedCells);
             gregtech.content.multiblock.StructureDesigns.apply(level, repeatPlaced);
         }
@@ -1428,7 +1428,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     }
 
     private LargeMachineLayouts.Cell matchingCell(LargeMachineLayouts.Cell cell, BlockPos cellPos) {
-        gregtech.api.multiblock.tracking.StructureScanProbe.matcher();
+        gregtech.internal.multiblock.tracking.StructureScanProbe.matcher();
         if (!level.hasChunkAt(cellPos)) return null;
         if (cell.role() == MultiblockLayout.Role.AIR) return level.isEmptyBlock(cellPos) ? cell : null;
         if (matchesChoice(cell.part(), cell.plain(), cellPos)) return cell;
@@ -1454,18 +1454,18 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     @Override public void onLoad() {
         super.onLoad();
         if (level != null && !level.isClientSide)
-            gregtech.api.multiblock.tracking.StructureTracking.attach(this);
+            gregtech.internal.multiblock.tracking.StructureTracking.attach(this);
     }
 
     @Override public void onChunkUnloaded() {
-        gregtech.api.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
+        gregtech.internal.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
         super.onChunkUnloaded();
     }
 
     @Override public void setRemoved() {
-        if (!gregtech.api.multiblock.tracking.StructureTracking.unloading(this))
+        if (!gregtech.internal.multiblock.tracking.StructureTracking.unloading(this))
             structureBindings.clear(this::releaseStructure);
-        gregtech.api.multiblock.tracking.StructureTracking.onRemoved(this);
+        gregtech.internal.multiblock.tracking.StructureTracking.onRemoved(this);
         energyParts = List.of();
         boundParts = List.of();
         repeatCounts = Map.of();

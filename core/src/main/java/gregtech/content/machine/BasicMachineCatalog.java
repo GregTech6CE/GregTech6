@@ -1,13 +1,13 @@
 package gregtech.content.machine;
 
 import gregtech.content.material.Materials;
-import gregtech.api.energy.MachineFaceMasks;
-import gregtech.api.machine.BasicMachineParameters;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.MaterialChemistry.WeightedMaterial;
+import gregtech.internal.energy.MachineFaceMasks;
+import gregtech.internal.machine.BasicMachineParameters;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.MaterialChemistry.WeightedMaterial;
 import gregtech.data.ImportedMaterialData;
 
-import static gregtech.api.energy.MachineFaceMasks.*;
+import static gregtech.internal.energy.MachineFaceMasks.*;
 
 import java.util.*;
 
@@ -245,7 +245,7 @@ public final class BasicMachineCatalog {
                 // Preserve the shipped registry identity while correcting the original iron casing.
                 if (def.name().equals("melter")) id = "melter_stainless_steel";
                 int tierNumber = t + def.tierBase();
-                if(def.name().equals("massfab"))mat=gregtech.api.material.GTMaterialRegistry.get("Osmiridium");
+                if(def.name().equals("massfab"))mat=gregtech.internal.material.GTMaterialRegistry.get("Osmiridium");
                 // Original GT6 per-machine/per-tier registration values; the synthetic
                 // tables below remain only as the fallback for machines GT6 has no
                 // "Basic Machines" row for (the large* batch machines).
@@ -288,7 +288,7 @@ public final class BasicMachineCatalog {
                 var energyType = gregtech.data.GregTechTags.Energy.ALL.stream()
                         .filter(type -> type.getShortName().equals(energyName)).findFirst().orElseThrow();
                 result.add(BasicMachineParameters.builder(name + "_osmiridium_t" + tier,
-                        gregtech.api.material.GTMaterialRegistry.get("Osmiridium"))
+                        gregtech.internal.material.GTMaterialRegistry.get("Osmiridium"))
                         .machineType(name)
 
                         .energy(energyType, energyIn).tier(tier)
@@ -301,7 +301,7 @@ public final class BasicMachineCatalog {
                         .constructionMaterials(OriginalMachineMaterialData.weights(name, tier)).build());
             }
         }
-        return gregtech.api.definition.DefinitionCatalog.validated(result, BasicMachineParameters::id);
+        return gregtech.internal.definition.DefinitionCatalog.validated(result, BasicMachineParameters::id);
     }
 
     /** Per-machine MachineFaceMasks matching original GT6 {@code Loader_MultiTileEntities} NBT side bitmasks.

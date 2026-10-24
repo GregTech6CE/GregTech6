@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.ItemMaterialRegistry;
-import gregtech.api.machine.crucible.CrucibleItemInput;
+import gregtech.internal.material.ItemMaterialRegistry;
+import gregtech.internal.machine.crucible.CrucibleItemInput;
 import gregtech.block.OreBlock;
 import gregtech.block.OreHostStone;
 import gregtech.blockentity.machine.BedrockDrillControllerBlockEntity;

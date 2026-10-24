@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.api.energy.FaceConfig;
-import gregtech.api.machine.BasicMachineSpec;
-import gregtech.api.machine.MachineRegistry;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.energy.FaceConfig;
+import gregtech.internal.machine.BasicMachineSpec;
+import gregtech.internal.machine.MachineRegistry;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.cover.CoverItems;
 import gregtech.content.cover.CoverUtilityBehaviors;
@@ -479,7 +479,7 @@ public final class CoverBehaviorTests {
         helper.assertTrue(air != null && air.isPresent(),
                 "gt6ce:netherair is registered, got " + air);
         var fluid = air.get();
-        helper.assertTrue(gregtech.api.fluid.FluidHazards.isGas(fluid),
+        helper.assertTrue(gregtech.internal.fluid.FluidHazards.isGas(fluid),
                 "the valve only vents gases (CoverPressureValve:57), got " + fluid);
         long temperature = CoverUtilityBehaviors.fluidTemperature(fluid);
         helper.assertTrue(temperature > 320L,
@@ -504,8 +504,8 @@ public final class CoverBehaviorTests {
         helper.assertTrue(CoverUtilityBehaviors.tickPressureValve(level, pos, Direction.EAST, tank, 5),
                 "the valve acted on a full tank of gas with open air in front");
         float expected = before - Math.max(1.0F, Math.min(
-                gregtech.api.fluid.FluidHazards.PIPE_TEMPERATURE_CAP,
-                (gregtech.api.fluid.FluidHazards.PIPE_TEMPERATURE_MULTIPLIER
+                gregtech.internal.fluid.FluidHazards.PIPE_TEMPERATURE_CAP,
+                (gregtech.internal.fluid.FluidHazards.PIPE_TEMPERATURE_MULTIPLIER
                         * (temperature - 300L)) / 50.0F));
         // The valve's entity half is a Level.getEntitiesOfClass query, and a chunk this test only
         // setBlock()ed into is invisible to it: a test chunk's entity sections keep the default HIDDEN
@@ -516,8 +516,8 @@ public final class CoverBehaviorTests {
         // and the very two constants it feeds it, on a golem standing in front of the valve.
         helper.assertTrue(gregtech.util.GTEntityHelper.applyTemperatureDamage(golem,
                         temperature,
-                        gregtech.api.fluid.FluidHazards.PIPE_TEMPERATURE_MULTIPLIER,
-                        gregtech.api.fluid.FluidHazards.PIPE_TEMPERATURE_CAP),
+                        gregtech.internal.fluid.FluidHazards.PIPE_TEMPERATURE_MULTIPLIER,
+                        gregtech.internal.fluid.FluidHazards.PIPE_TEMPERATURE_CAP),
                 "the valve's damage call reaches a golem standing in front of it");
         helper.assertTrue(Math.abs(golem.getHealth() - expected) < 0.001F,
                 "the escaping " + temperature + " K gas deals " + (before - expected)

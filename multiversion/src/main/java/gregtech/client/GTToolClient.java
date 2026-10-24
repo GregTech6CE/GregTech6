@@ -4,8 +4,8 @@ package gregtech.client;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 import gregtech.item.GTToolItem;
 import gregtech.registry.GTToolItems;
 //? if >=1.21.1 {
@@ -21,7 +21,7 @@ import net.minecraftforge.fml.common.Mod;
 //?}
 
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+/*@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 *///?} else {
 @Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 //?}
@@ -31,7 +31,7 @@ public final class GTToolClient {
 //? if >=1.21.1 {
     /*@SubscribeEvent
     public static void setup(net.neoforged.fml.event.lifecycle.FMLClientSetupEvent event) {
-        gregtech.api.tool.GTToolEnchantments.setClientLookup(() -> {
+        gregtech.internal.tool.GTToolEnchantments.setClientLookup(() -> {
             var client = net.minecraft.client.Minecraft.getInstance();
             var connection = client.getConnection();
             return connection == null ? null : connection.registryAccess();

@@ -20,9 +20,9 @@ final class EmiCatalogRepair {
             if (!stack.getId().getNamespace().equals("gt6ce")) continue;
             var item = stack.getItemStack();
 //? if >=1.21.1 {
-            /*var fluid = gregtech.api.fluid.FluidDisplayBinding.resolveCurrent(item);
+            /*var fluid = gregtech.internal.fluid.FluidDisplayBinding.resolveCurrent(item);
 *///?} else {
-            var fluid = gregtech.api.fluid.FluidDisplayBinding.resolve(item);
+            var fluid = gregtech.internal.fluid.FluidDisplayBinding.resolve(item);
 //?}
             sorted.add(fluid.isEmpty() ? stack : new FluidDisplayEmiStack(
 //? if >=1.21.1 {
@@ -41,9 +41,9 @@ final class EmiCatalogRepair {
             if (stack.getId().getNamespace().equals("gt6ce")) continue;
             var item = stack.getItemStack();
 //? if >=1.21.1 {
-            /*var fluid = gregtech.api.fluid.FluidDisplayBinding.resolveCurrent(item);
+            /*var fluid = gregtech.internal.fluid.FluidDisplayBinding.resolveCurrent(item);
 *///?} else {
-            var fluid = gregtech.api.fluid.FluidDisplayBinding.resolve(item);
+            var fluid = gregtech.internal.fluid.FluidDisplayBinding.resolve(item);
 //?}
             if (fluid.isEmpty()) continue;
             extras.put(stack, new FluidDisplayEmiStack(

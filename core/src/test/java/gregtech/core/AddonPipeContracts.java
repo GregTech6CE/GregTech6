@@ -1,14 +1,14 @@
 package gregtech.core;
 
-import gregtech.api.addon.AddonMachines;
-import gregtech.api.addon.AddonPipes;
+import gregtech.internal.addon.AddonMachines;
+import gregtech.internal.addon.AddonPipes;
 import gregtech.api.addon.FluidPipeDeclaration;
 import gregtech.api.addon.ItemPipeDeclaration;
-import gregtech.api.machine.ItemPipeSpec;
-import gregtech.api.machine.PipeSpec;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.mod.ModData;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.machine.ItemPipeSpec;
+import gregtech.internal.machine.PipeSpec;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.mod.ModData;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.content.transport.ItemPipeCatalog;
 import gregtech.content.transport.fluid.FluidTransportDefinitions;
 import gregtech.data.ModReferences;

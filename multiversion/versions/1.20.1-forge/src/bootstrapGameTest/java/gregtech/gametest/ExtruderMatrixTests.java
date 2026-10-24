@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialEquivalence;
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialEquivalence;
+import gregtech.internal.recipe.Recipe;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.data.MaterialPrefix;
 import gregtech.content.recipe.PartRecipeLoader;
@@ -89,7 +89,7 @@ public final class ExtruderMatrixTests {
                 new String[]{"swordblade", "toolHeadRawSword"},
                 new String[]{"hammerhead", "toolHeadHammer"},
                 new String[]{"filehead", "toolHeadFile"})) {
-            MaterialPrefix prefix = gregtech.api.prefix.PrefixRegistry.byName(pair[1]);
+            MaterialPrefix prefix = gregtech.internal.prefix.PrefixRegistry.byName(pair[1]);
             ItemStack output = GTItems.getStack(prefix, steel, 1);
             helper.assertTrue(!output.isEmpty(), "port has the " + pair[1] + " form");
             helper.assertTrue(route(index, ingot, "extruder_shape_" + pair[0], output) != null,
@@ -100,7 +100,7 @@ public final class ExtruderMatrixTests {
 
         // blockSolid is 9U, so GT6 scales the input to nine ingots (Loader_Recipes_Handlers:812).
         ItemStack block = gregtech.registry.GTBlocks.getStack(
-                gregtech.api.prefix.BlockMaterialPrefix.blockSolid, steel);
+                gregtech.internal.prefix.BlockMaterialPrefix.blockSolid, steel);
         helper.assertTrue(!block.isEmpty(), "steel has a solid block form");
         Recipe blockRoute = route(index, ingot, "extruder_shape_block", block);
         helper.assertTrue(blockRoute != null, "hot mold extrudes a solid steel block");

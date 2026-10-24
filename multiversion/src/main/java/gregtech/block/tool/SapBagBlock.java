@@ -74,10 +74,10 @@ public class SapBagBlock extends ShapedToolBlock implements EntityBlock {
             if (!player.addItem(stored)) player.drop(stored, false);
             return InteractionResult.CONSUME;
         }
-        var filled = gregtech.api.fluid.HandContainerTransfer.prepare(player.getItemInHand(hand), bag.tank().getFluid(), false);
+        var filled = gregtech.internal.fluid.HandContainerTransfer.prepare(player.getItemInHand(hand), bag.tank().getFluid(), false);
         if (filled == null) return InteractionResult.PASS;
         bag.drain(filled.amount(), IFluidHandler.FluidAction.EXECUTE);
-        gregtech.api.fluid.HandContainerTransfer.replaceOne(player, hand, filled.container());
+        gregtech.internal.fluid.HandContainerTransfer.replaceOne(player, hand, filled.container());
         return InteractionResult.CONSUME;
     }
 

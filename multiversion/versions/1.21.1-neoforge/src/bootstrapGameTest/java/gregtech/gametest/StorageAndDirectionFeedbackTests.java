@@ -1,7 +1,8 @@
 package gregtech.gametest;
 
 import gregtech.api.recipe.*;
-import gregtech.api.tool.*;
+import gregtech.internal.recipe.*;
+import gregtech.internal.tool.*;
 import gregtech.block.machine.FluidPipeBlock;
 import gregtech.block.misc.*;
 import gregtech.blockentity.CFoamBlockEntity;
@@ -41,7 +42,7 @@ public final class StorageAndDirectionFeedbackTests {
         var toolItem = BuiltInRegistries.ITEM.stream().filter(item -> item instanceof gregtech.item.GTToolItem tool
                 && tool.toolType() == GTToolType.MONKEY_WRENCH).findFirst().orElseThrow();
         var tool = GTToolHelper.write(new ItemStack(toolItem), gregtech.content.material.Materials.Steel,
-                gregtech.api.material.GTMaterialRegistry.get("Wood"));
+                gregtech.internal.material.GTMaterialRegistry.get("Wood"));
         actor.setItemInHand(InteractionHand.MAIN_HAND, tool);
         var state = h.getLevel().getBlockState(pos);
         state.useItemOn(tool, h.getLevel(), actor, InteractionHand.MAIN_HAND,

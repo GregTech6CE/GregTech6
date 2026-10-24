@@ -1,19 +1,19 @@
 package gregtech.block.machine;
 
-import gregtech.api.tool.ToolInteractionSpec;
-import gregtech.api.tool.ToolInteractionTarget;
-import gregtech.api.GTWaterloggable;
-import gregtech.api.energy.FaceConfig;
-import gregtech.api.machine.ElectricEngineSpec;
-import gregtech.api.machine.EngineType;
-import gregtech.api.machine.FluxEngineSpec;
-import gregtech.api.machine.GTMachineBlock;
-import gregtech.api.machine.MachineSpec;
-import gregtech.api.machine.RotationEngineSpec;
-import gregtech.api.machine.SteamEngineData;
+import gregtech.internal.tool.ToolInteractionSpec;
+import gregtech.internal.tool.ToolInteractionTarget;
+import gregtech.internal.GTWaterloggable;
+import gregtech.internal.energy.FaceConfig;
+import gregtech.internal.machine.ElectricEngineSpec;
+import gregtech.internal.machine.EngineType;
+import gregtech.internal.machine.FluxEngineSpec;
+import gregtech.internal.machine.GTMachineBlock;
+import gregtech.internal.machine.MachineSpec;
+import gregtech.internal.machine.RotationEngineSpec;
+import gregtech.internal.machine.SteamEngineData;
 import gregtech.content.material.generated.WoodMaterials;
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 import gregtech.blockentity.machine.EngineBaseBlockEntity;
 import gregtech.blockentity.machine.KineticDieselEngineBlockEntity;
 import gregtech.blockentity.machine.KineticElectricEngineBlockEntity;
@@ -58,15 +58,15 @@ import java.util.function.Supplier;
 
 /** KU generator engine block. 6-directional facing (DirectionalBlock), no GUI. */
 public class EngineBlock extends DirectionalBlock implements EntityBlock, GTMachineBlock, SimpleWaterloggedBlock, ToolInteractionTarget,
-        gregtech.api.machine.PipeGeometry.FluidConnectorGeometry {
+        gregtech.internal.machine.PipeGeometry.FluidConnectorGeometry {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
     @Override
     public double fluidConnectorHalf(BlockState state, Direction face) {
-        if (engineType() != EngineType.STEAM) return gregtech.api.machine.PipeGeometry.NONE;
+        if (engineType() != EngineType.STEAM) return gregtech.internal.machine.PipeGeometry.NONE;
         Direction front = state.getValue(FACING);
-        if (face == front) return gregtech.api.machine.PipeGeometry.NONE;
-        return gregtech.api.machine.PipeGeometry.virtual(face == front.getOpposite() ? 4 : 2);
+        if (face == front) return gregtech.internal.machine.PipeGeometry.NONE;
+        return gregtech.internal.machine.PipeGeometry.virtual(face == front.getOpposite() ? 4 : 2);
     }
 
     private static final Map<Direction, VoxelShape> SHAPES = new EnumMap<>(Direction.class);
@@ -135,7 +135,7 @@ public class EngineBlock extends DirectionalBlock implements EntityBlock, GTMach
                 yield 0xFFFFFF;
             }
             case ROTATION -> engineSpec(RotationEngineSpec.class).tintRgb();
-            case DIESEL -> engineSpec(gregtech.api.machine.DieselEngineSpec.class).tintRgb();
+            case DIESEL -> engineSpec(gregtech.internal.machine.DieselEngineSpec.class).tintRgb();
         };
     }
 
@@ -321,9 +321,9 @@ public class EngineBlock extends DirectionalBlock implements EntityBlock, GTMach
                 if (!level.isClientSide) {
                     if (engine instanceof KineticDieselEngineBlockEntity diesel) {
                         player.sendSystemMessage(Component.translatable("jade.gt6ce.engine.diesel.fuel",
-                                gregtech.api.multiblock.MultiblockTools.tankContent(diesel.fuelTank(), "Empty"), diesel.fuelTank().getCapacity()));
+                                gregtech.internal.multiblock.MultiblockTools.tankContent(diesel.fuelTank(), "Empty"), diesel.fuelTank().getCapacity()));
                         player.sendSystemMessage(Component.translatable("jade.gt6ce.engine.diesel.exhaust",
-                                gregtech.api.multiblock.MultiblockTools.tankContent(diesel.exhaustTank(), "Empty"), diesel.exhaustTank().getCapacity()));
+                                gregtech.internal.multiblock.MultiblockTools.tankContent(diesel.exhaustTank(), "Empty"), diesel.exhaustTank().getCapacity()));
                     } else if (engine instanceof KineticSteamEngineBlockEntity steam) {
                         player.sendSystemMessage(
                                 Component.literal(steam.statusDescription()));

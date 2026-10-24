@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.recipe.Recipe;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.data.MaterialPrefix;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.registry.GTItems;
@@ -34,7 +34,7 @@ public final class OreSourceDifferentialTests {
         try {
             if(form.equals("blockDust")) {
                 var blockMaterial=GTMaterialRegistry.get(material);
-                var blockPrefix=gregtech.api.prefix.BlockMaterialPrefix.blockDust;
+                var blockPrefix=gregtech.internal.prefix.BlockMaterialPrefix.blockDust;
                 var id=net.minecraft.resources.ResourceLocation.parse("gt6ce:"+blockPrefix.getBlockId(blockMaterial.resolve()));
                 var block=net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(id);
                 if(block==net.minecraft.world.level.block.Blocks.AIR)throw new AssertionError("Missing required source block form "+id);

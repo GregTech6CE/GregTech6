@@ -1,7 +1,7 @@
 package gregtech.block.machine;
 
-import gregtech.api.machine.BasicMachineSpec;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.machine.BasicMachineSpec;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.blockentity.machine.FusionReactorControllerBlockEntity;
 import gregtech.data.*;
 import gregtech.registry.GTBlockEntities;

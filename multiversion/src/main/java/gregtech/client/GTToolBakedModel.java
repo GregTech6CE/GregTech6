@@ -1,9 +1,9 @@
 package gregtech.client;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.data.MaterialPrefix;
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 import gregtech.item.GTToolItem;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -72,7 +72,7 @@ public final class GTToolBakedModel implements BakedModel {
             var spec=electric.definition();String body=switch(spec.name()){case "Drill"->"handle_electric_drill";case "Mixer"->"handle_electric_mixer";case "Trimmer"->"handle_electric_trimmer";case "BuzzSaw"->"handle_buzzsaw";default->"power_unit_"+spec.tierName();};
             var out=new ArrayList<BakedQuad>();appendIconsetQuads(out,ToolIconSets.icon(body),0,direction,random,renderType);
             if(java.util.Set.of("Drill","Mixer","Trimmer").contains(spec.name()))appendIconsetQuads(out,ToolIconSets.icon("tip_electric_"+spec.name().toLowerCase(java.util.Locale.ROOT)),1,direction,random,renderType);
-            else appendMaterialQuads(out,electric.headMaterial(stack),gregtech.api.prefix.PrefixRegistry.byName(spec.headPrefix()),1,direction,random,renderType);
+            else appendMaterialQuads(out,electric.headMaterial(stack),gregtech.internal.prefix.PrefixRegistry.byName(spec.headPrefix()),1,direction,random,renderType);
             return out;
         }
         GTToolType type = ((GTToolItem)stack.getItem()).toolType();

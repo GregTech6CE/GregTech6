@@ -1,7 +1,8 @@
 package gregtech.gametest;
 
 import gregtech.api.material.*;
-import gregtech.api.recipe.RecipeInputs;
+import gregtech.internal.material.*;
+import gregtech.internal.recipe.RecipeInputs;
 import gregtech.blockentity.machine.TankBlockEntity;
 import gregtech.content.transport.fluid.CheapWoodBarrelCatalog;
 import gregtech.content.transport.TransportCraftingCatalog;

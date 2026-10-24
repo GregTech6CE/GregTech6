@@ -1,6 +1,6 @@
 package gregtech.content.recipe;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.addon.AddonMaterials;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.addon.AddonMaterials;
 import gregtech.registry.GTFluids;
 import net.minecraft.core.registries.BuiltInRegistries;
 //? if >=1.21.1 {

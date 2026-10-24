@@ -1,9 +1,9 @@
 package gregtech.block.inventory;
 
-import gregtech.api.GTWaterloggable;
+import gregtech.internal.GTWaterloggable;
 //? if >=1.21.1 {
-/*import gregtech.api.inventory.MassStorageFace;
-import gregtech.api.material.GTMaterial;
+/*import gregtech.internal.inventory.MassStorageFace;
+import gregtech.internal.material.GTMaterial;
 *///?} else {
 //?}
 import gregtech.blockentity.inventory.MassStorageBlockEntity;
@@ -83,13 +83,13 @@ public class MassStorageBlock extends Block implements EntityBlock, SimpleWaterl
 public class MassStorageBlock extends HorizontalDirectionalBlock implements EntityBlock, SimpleWaterloggedBlock {
 
     @Nullable
-    private final gregtech.api.material.GTMaterial material;
+    private final gregtech.internal.material.GTMaterial material;
 
     public MassStorageBlock(Properties properties) {
         this(null, properties);
     }
 
-    public MassStorageBlock(@Nullable gregtech.api.material.GTMaterial material, Properties properties) {
+    public MassStorageBlock(@Nullable gregtech.internal.material.GTMaterial material, Properties properties) {
         super(properties);
         this.material = material;
 //?}
@@ -131,7 +131,7 @@ public class MassStorageBlock extends HorizontalDirectionalBlock implements Enti
 
     /** GT6 casing material of this variant (drives the tint), null for the legacy block. */
     @Nullable
-    public gregtech.api.material.GTMaterial material() { return material; }
+    public gregtech.internal.material.GTMaterial material() { return material; }
 
 //?}
     @Override
@@ -246,17 +246,17 @@ public class MassStorageBlock extends HorizontalDirectionalBlock implements Enti
         ItemStack held = player.getItemInHand(hand);
         if (store.isPacked() && isUnpackingTool(held)) {
             if (!level.isClientSide && store.unseal())
-                gregtech.api.tool.GTToolHelper.damageForToolClickReturn(held, 1000, player);
+                gregtech.internal.tool.GTToolHelper.damageForToolClickReturn(held, 1000, player);
             return true;
         }
         if (useStorageModeTool(store, player, held)) return true;
         if (store.isPacked()) return false;
         if (hit.getDirection() != state.getValue(FACING)) return false;
-        double x = gregtech.api.inventory.MassStorageFace.x(state.getValue(FACING),
+        double x = gregtech.internal.inventory.MassStorageFace.x(state.getValue(FACING),
                 hit.getLocation().x - pos.getX(), hit.getLocation().z - pos.getZ());
         double y = 16 * (1 - (hit.getLocation().y - pos.getY()));
-        if (!gregtech.api.inventory.MassStorageFace.active(x, y)) return false;
-        int requested = gregtech.api.inventory.MassStorageFace.withdrawal(x, y);
+        if (!gregtech.internal.inventory.MassStorageFace.active(x, y)) return false;
+        int requested = gregtech.internal.inventory.MassStorageFace.withdrawal(x, y);
         // The six buttons take priority even if the player is holding an item.
         if (requested > 0 && store.stored() > 0) {
             if (!level.isClientSide) {
@@ -289,7 +289,7 @@ public class MassStorageBlock extends HorizontalDirectionalBlock implements Enti
             return true;
         }
         if (!level.isClientSide && !store.template().isEmpty()
-                && gregtech.api.inventory.MassStorageFace.depositInventory(x, y)) {
+                && gregtech.internal.inventory.MassStorageFace.depositInventory(x, y)) {
             for (ItemStack stack : player.getInventory().items) {
                 int inserted = store.insert(stack);
                 if (inserted > 0 && !player.getAbilities().instabuild) stack.shrink(inserted);
@@ -303,17 +303,17 @@ public class MassStorageBlock extends HorizontalDirectionalBlock implements Enti
 //? if >=1.21.1 {
         /*return (gregtech.platform.neoforge.NeoToolBindings.matches(held,"scissors") || gregtech.platform.neoforge.NeoToolBindings.matches(held,"knife"));
 *///?} else {
-        return (gregtech.api.tool.GTToolHelper.matchesTool(held,
-                gregtech.api.tool.GTToolType.SCISSORS)
-                || gregtech.api.tool.GTToolHelper.matchesTool(held,
-                gregtech.api.tool.GTToolType.KNIFE));
+        return (gregtech.internal.tool.GTToolHelper.matchesTool(held,
+                gregtech.internal.tool.GTToolType.SCISSORS)
+                || gregtech.internal.tool.GTToolHelper.matchesTool(held,
+                gregtech.internal.tool.GTToolType.KNIFE));
 //?}
     }
 
     private static boolean useStorageModeTool(MassStorageBlockEntity store, Player player, ItemStack held) {
-        boolean monkey = gregtech.api.tool.GTToolHelper.isMonkeyWrench(held);
-        boolean cutter = gregtech.api.tool.GTToolHelper.isWireCutter(held);
-        boolean screw = gregtech.api.tool.GTToolHelper.isScrewdriver(held);
+        boolean monkey = gregtech.internal.tool.GTToolHelper.isMonkeyWrench(held);
+        boolean cutter = gregtech.internal.tool.GTToolHelper.isWireCutter(held);
+        boolean screw = gregtech.internal.tool.GTToolHelper.isScrewdriver(held);
         if (!monkey && !cutter && !screw) return false;
         if (!player.level().isClientSide) {
             String key;
@@ -328,7 +328,7 @@ public class MassStorageBlock extends HorizontalDirectionalBlock implements Enti
                 key = store.resetsFilter() ? "message.gt6ce.storage.filter_reset" : "message.gt6ce.storage.filter_keep";
             }
             player.displayClientMessage(net.minecraft.network.chat.Component.translatable(key), true);
-            gregtech.api.tool.GTToolHelper.damageForToolClickReturn(held, 10000, player);
+            gregtech.internal.tool.GTToolHelper.damageForToolClickReturn(held, 10000, player);
         }
         return true;
     }

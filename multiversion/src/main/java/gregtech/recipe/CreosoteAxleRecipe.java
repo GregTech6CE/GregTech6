@@ -6,7 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import gregtech.GregTech;
 //?}
-import gregtech.api.fluid.FluidDisplayBinding;
+import gregtech.internal.fluid.FluidDisplayBinding;
 //? if >=1.21.1 {
 //?} else {
 import gregtech.item.FluidItem;

@@ -1,6 +1,6 @@
 package gregtech.content.multiblock;
 
-import gregtech.api.multiblock.StructureGrid;
+import gregtech.internal.multiblock.StructureGrid;
 import java.util.*;
 
 /** Original 25-wall hollow structure; one air cell and controller omitted. */

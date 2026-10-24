@@ -252,9 +252,9 @@ public final class CrankDurationAuditTests {
                 .filter(b -> b instanceof gregtech.block.machine.BasicMachineBlock).findFirst().orElseThrow();
         h.getLevel().setBlock(mount, block.defaultBlockState(), 3);
         var receiver = new CountingReceiver(h.getLevel().getBlockEntity(mount));
-        receiver.setSpec(gregtech.api.machine.BasicMachineSpec.builder("crank_duration_receiver", block.basicSpec().material())
+        receiver.setSpec(gregtech.internal.machine.BasicMachineSpec.builder("crank_duration_receiver", block.basicSpec().material())
                 .machineType("test").energy(gregtech.data.GregTechTags.Energy.RU, 16)
-                .recipes(block.basicSpec().recipeMap()).faces(gregtech.api.energy.FaceConfig.ALL_SIDES).build());
+                .recipes(block.basicSpec().recipeMap()).faces(gregtech.internal.energy.FaceConfig.ALL_SIDES).build());
         h.getLevel().setBlockEntity(receiver);
         var p = f.player(false);
         f.click(p, f.crank);

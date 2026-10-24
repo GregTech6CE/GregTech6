@@ -17,9 +17,9 @@ final class LootFeedbackChecks {
         var stack = sample.copyWithCount(1);
         if (stack.getItem() instanceof gregtech.item.GTToolItem tool
                 && tool.toolType().requiresHeadAssembly()) {
-            gregtech.api.tool.GTToolHelper.write(stack,
-                gregtech.api.material.GTMaterialRegistry.get("Steel"),
-                gregtech.api.material.GTMaterialRegistry.get("Spruce"));
+            gregtech.internal.tool.GTToolHelper.write(stack,
+                gregtech.internal.material.GTMaterialRegistry.get("Steel"),
+                gregtech.internal.material.GTMaterialRegistry.get("Spruce"));
         }
         return stack;
     }

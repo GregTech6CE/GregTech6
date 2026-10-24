@@ -1,8 +1,8 @@
 package gregtech.content.recipe;
 
 import gregtech.content.recipe.ImplosionRecipeRows.Gem;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.recipe.Recipe;
 import gregtech.data.*;
 import gregtech.registry.*;
 import net.minecraft.world.item.*;

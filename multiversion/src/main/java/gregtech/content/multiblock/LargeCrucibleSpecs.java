@@ -1,7 +1,7 @@
 package gregtech.content.multiblock;
 
-import gregtech.api.machine.CrucibleSpec;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.machine.CrucibleSpec;
+import gregtech.internal.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.content.material.Materials;
 import gregtech.registry.GTMultiblocks;
@@ -24,7 +24,7 @@ public final class LargeCrucibleSpecs {
         }
     }
 
-    private static final List<Variant> VARIANTS = OriginalLargeCrucibleParameters.DEFINITIONS.stream().map(d -> new Variant(d.originalId(), d.path(), gregtech.api.material.GTMaterialRegistry.get(d.material()), d.wallId(), d.hardness(), d.acidProof())).toList();
+    private static final List<Variant> VARIANTS = OriginalLargeCrucibleParameters.DEFINITIONS.stream().map(d -> new Variant(d.originalId(), d.path(), gregtech.internal.material.GTMaterialRegistry.get(d.material()), d.wallId(), d.hardness(), d.acidProof())).toList();
 
     /** Compatibility callers use the sole original stainless-steel vessel. */
     public static final Variant LEGACY = byOriginalId(17302);

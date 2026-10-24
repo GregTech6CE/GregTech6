@@ -1,12 +1,12 @@
 package gregtech.block;
 //? if >=1.21.1 {
 //?} else {
-import gregtech.api.material.MaterialPresentation;
+import gregtech.internal.material.MaterialPresentation;
 //?}
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 //? if >=1.21.1 {
-/*import gregtech.api.material.MaterialPresentation;
+/*import gregtech.internal.material.MaterialPresentation;
 *///?} else {
 import gregtech.block.stone.StoneMaterialWeights;
 import gregtech.block.stone.StoneVariant;

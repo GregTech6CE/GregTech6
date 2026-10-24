@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.api.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 

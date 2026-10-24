@@ -24,7 +24,7 @@ UNICODE_ESCAPE = re.compile(r'u+([0-9a-fA-F]{4})')
 SURROGATE_PAIR = re.compile(r'([\ud800-\udbff])([\udc00-\udfff])')
 PLATFORM_REFERENCE = re.compile(
     r'\b(?:net\s*\.\s*(?:minecraft|minecraftforge|neoforged)'
-    r'|com\s*\.\s*gregtech\s*\.\s*gregtech\s*\.\s*platform)\s*\.')
+    r'|gregtech\s*\.\s*platform)\s*\.')
 
 
 def java_unicode(source):
@@ -92,6 +92,14 @@ def boundary_errors(path, source, *, core=False, parsed=None):
     view = java_source_view(source) if parsed is None else parsed
     code, literals = view.code, view.literals
     errors = []
+    relative = '/' + path.as_posix()
+    if '/src/api/java/' in relative and re.search(
+            r'\bgregtech\s*\.\s*(?:internal|content|registry|block|blockentity|item|data|platform)\s*\.', code):
+        errors.append('Public SDK must not depend on implementation or game content: ' + str(path))
+    legacy = {'GregTechMaterialContributor.java', 'GregTechMachineContributor.java',
+              'AddonMachineDefinition.java', 'AddonMachineLayout.java'}
+    if '/src/main/java/gregtech/api/' in relative and path.name not in legacy:
+        errors.append('Main implementation belongs outside the public api package: ' + str(path))
     if ('gametest' in path.parts or path.name == 'JeiMachineIndexTests.java'
             or re.search(r'\b(?:\w+\s*\.\s*)+gametest\s*\.', code)
             or re.search(r'@\s*(?:\w+\s*\.\s*)*(?:GameTest|GameTestHolder|GameTestGenerator)\b', code)):

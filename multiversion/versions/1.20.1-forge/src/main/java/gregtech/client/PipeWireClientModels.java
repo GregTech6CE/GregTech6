@@ -1,9 +1,9 @@
 package gregtech.client;
 
 import gregtech.GregTech;
-import gregtech.api.machine.ItemPipeSpec;
-import gregtech.api.machine.PipeSpec;
-import gregtech.api.energy.WireSpec;
+import gregtech.internal.machine.ItemPipeSpec;
+import gregtech.internal.machine.PipeSpec;
+import gregtech.internal.energy.WireSpec;
 import gregtech.block.energy.AxleBlock;
 import gregtech.block.energy.ElectricWireBlock;
 import gregtech.block.machine.FluidPipeBlock;

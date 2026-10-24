@@ -1,6 +1,6 @@
 package gregtech.block.machine;
 
-import gregtech.api.machine.BoilerSpec;
+import gregtech.internal.machine.BoilerSpec;
 import gregtech.blockentity.machine.BoilerTankBlockEntity;
 import gregtech.registry.GTBlockEntities;
 import net.minecraft.ChatFormatting;
@@ -34,18 +34,18 @@ import java.util.List;
  * material-tinted textures); HU in from any face, steam out the top.
  * The front face shows a pressure gauge; rotate with a wrench.
  */
-public class BoilerTankBlock extends Block implements EntityBlock, gregtech.api.tool.ToolInteractionTarget,
-        gregtech.api.machine.PipeGeometry.FluidConnectorGeometry {
+public class BoilerTankBlock extends Block implements EntityBlock, gregtech.internal.tool.ToolInteractionTarget,
+        gregtech.internal.machine.PipeGeometry.FluidConnectorGeometry {
 
     /** Original boilers retain a full-width attachment surface; they do not use the engine's tiny outlets. */
     @Override
     public double fluidConnectorHalf(BlockState state, Direction face) {
-        return gregtech.api.machine.PipeGeometry.virtual(8);
+        return gregtech.internal.machine.PipeGeometry.virtual(8);
     }
 
-    @Override public gregtech.api.tool.ToolInteractionSpec toolInteraction(BlockState state,ItemStack tool) {
-        return gregtech.api.tool.GTToolHelper.isMachineWrench(tool)
-                ? gregtech.api.tool.ToolInteractionSpec.facing(FACING,MachineRotationType.HORIZONTAL) : null;
+    @Override public gregtech.internal.tool.ToolInteractionSpec toolInteraction(BlockState state,ItemStack tool) {
+        return gregtech.internal.tool.GTToolHelper.isMachineWrench(tool)
+                ? gregtech.internal.tool.ToolInteractionSpec.facing(FACING,MachineRotationType.HORIZONTAL) : null;
     }
     /** Source boiler collision bounds are inset two pixels so touching entities enter its heat surface. */
     @Override public net.minecraft.world.phys.shapes.VoxelShape getCollisionShape(BlockState state,BlockGetter level,BlockPos pos,

@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.machine.MachineRegistry;
+import gregtech.internal.machine.MachineRegistry;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.client.gui.*;
 import gregtech.network.PacketSyncFluids;

@@ -1,14 +1,14 @@
 package gregtech.data;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.MaterialProperty;
-import gregtech.api.prefix.BlockMaterialPrefix;
+import gregtech.internal.material.MaterialProperty;
+import gregtech.internal.prefix.BlockMaterialPrefix;
 import gregtech.data.MaterialPrefix;
 import gregtech.data.generated.MaterialForms;
-import gregtech.api.prefix.PrefixRegistry;
-import gregtech.api.prefix.BlockMaterialPrefix.SoundType;
-import gregtech.api.prefix.BlockMaterialPrefix.MapColor;
+import gregtech.internal.prefix.PrefixRegistry;
+import gregtech.internal.prefix.BlockMaterialPrefix.SoundType;
+import gregtech.internal.prefix.BlockMaterialPrefix.MapColor;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

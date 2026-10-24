@@ -25,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /** Multiblock tank controller (3x3x3 or 5x5x5). Size is determined by the block variant. */
-public class TankControllerBlock extends DirectionalBlock implements EntityBlock, gregtech.api.tool.ToolInteractionTarget {
+public class TankControllerBlock extends DirectionalBlock implements EntityBlock, gregtech.internal.tool.ToolInteractionTarget {
     private final int size;
     @Nullable private final TankValveSpec valveSpec;
 
@@ -49,15 +49,15 @@ public class TankControllerBlock extends DirectionalBlock implements EntityBlock
     }
 
     @Override
-    public gregtech.api.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
-        return gregtech.api.tool.GTToolHelper.isMachineWrench(tool)
-                ? gregtech.api.tool.ToolInteractionSpec.facing(FACING, MachineRotationType.ALL) : null;
+    public gregtech.internal.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+        return gregtech.internal.tool.GTToolHelper.isMachineWrench(tool)
+                ? gregtech.internal.tool.ToolInteractionSpec.facing(FACING, MachineRotationType.ALL) : null;
     }
 
     @Override
     public void toolStateChanged(Level level, BlockPos pos, BlockState state) {
         if (level.getBlockEntity(pos) instanceof MultiblockTankControllerBlockEntity tank)
-            gregtech.api.multiblock.tracking.StructureTracking.invalidate(tank);
+            gregtech.internal.multiblock.tracking.StructureTracking.invalidate(tank);
     }
 //? if >=1.21.1 {
     /*private net.minecraft.world.InteractionResult interact(BlockState state, Level level, BlockPos pos,
@@ -67,7 +67,7 @@ public class TankControllerBlock extends DirectionalBlock implements EntityBlock
 //?}
             net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
             net.minecraft.world.phys.BlockHitResult hit) {
-        if (gregtech.api.tool.ToolInteractions.use(state, level, pos, player, hand, hit))
+        if (gregtech.internal.tool.ToolInteractions.use(state, level, pos, player, hand, hit))
             return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
         if (level.getBlockEntity(pos) instanceof MultiblockTankControllerBlockEntity tank && tank.isStructureOk()) {
             if (level.isClientSide) return net.minecraft.world.InteractionResult.SUCCESS;

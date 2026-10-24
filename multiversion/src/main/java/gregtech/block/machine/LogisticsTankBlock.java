@@ -1,6 +1,6 @@
 package gregtech.block.machine;
 
-import gregtech.api.machine.TankSpec;
+import gregtech.internal.machine.TankSpec;
 import gregtech.blockentity.machine.LogisticsTankBlockEntity;
 import gregtech.blockentity.machine.TankBlockEntity;
 import gregtech.registry.GTBlockEntities;

@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.machine.BoilerSpec;
+import gregtech.internal.machine.BoilerSpec;
 import gregtech.api.machine.HeatHandler;
 import gregtech.blockentity.machine.BoilerTankBlockEntity;
 import gregtech.registry.GTFluids;

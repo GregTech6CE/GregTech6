@@ -5,7 +5,7 @@ package gregtech.client;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.block.FaceGridSlab;
+import gregtech.internal.block.FaceGridSlab;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -37,7 +37,7 @@ import net.minecraftforge.fml.common.Mod;
  * GT6 block-highlight wrench grid for slab placement, burning-box facing, and pipe connections.
  */
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
+/*@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
 *///?} else {
 @Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 //?}
@@ -129,10 +129,10 @@ public final class SlabPlacementOverlayRenderer {
         return stack.getItem() instanceof BlockItem item && item.getBlock() instanceof FaceGridSlab;
     }
 
-    private static gregtech.api.tool.ToolInteractionSpec interaction(BlockState state, Player player) {
-        var main = gregtech.api.tool.ToolInteractions.describe(state, player.getMainHandItem());
+    private static gregtech.internal.tool.ToolInteractionSpec interaction(BlockState state, Player player) {
+        var main = gregtech.internal.tool.ToolInteractions.describe(state, player.getMainHandItem());
         if (main != null || !player.getMainHandItem().isEmpty()) return main;
-        var offhand = gregtech.api.tool.ToolInteractions.describe(state, player.getOffhandItem());
+        var offhand = gregtech.internal.tool.ToolInteractions.describe(state, player.getOffhandItem());
         // Empty-hand machine interaction can open a GUI before the offhand is tried.
         return offhand != null && offhand.connection() != null ? offhand : null;
     }

@@ -1,6 +1,6 @@
 package gregtech.content.multiblock;
 
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterialRegistry;
 import net.minecraft.world.level.block.Block;
 
 import java.util.LinkedHashMap;

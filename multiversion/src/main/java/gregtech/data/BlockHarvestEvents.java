@@ -1,6 +1,6 @@
 package gregtech.data;
 
-import gregtech.api.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolHelper;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -13,9 +13,9 @@ import net.minecraftforge.fml.common.Mod;
 
 /** Forge hook for GT utility tools, which have no vanilla TieredItem equivalent. */
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID)
+/*@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID)
 *///?} else {
-@Mod.EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID)
+@Mod.EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID)
 //?}
 public final class BlockHarvestEvents {
  @SubscribeEvent public static void harvest(PlayerEvent.HarvestCheck event) {

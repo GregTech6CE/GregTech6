@@ -1,7 +1,7 @@
 package gregtech.client;
 
-import gregtech.api.material.MaterialIconDefinitions;
-import gregtech.api.material.MaterialTextureSet;
+import gregtech.internal.material.MaterialIconDefinitions;
+import gregtech.internal.material.MaterialTextureSet;
 import gregtech.block.MaterialBlockLike;
 import gregtech.block.machine.BasicMachineBlock;
 import gregtech.item.CreativeTabIconItem;
@@ -38,9 +38,9 @@ import java.util.*;
  * The geometry loader delegates to ModelBaker's existing cache instead of baking 56,000 copies.
  */
 //? if >=1.21.1 {
-/*@net.neoforged.fml.common.EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, bus = net.neoforged.fml.common.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+/*@net.neoforged.fml.common.EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, bus = net.neoforged.fml.common.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 *///?} else {
-@net.minecraftforge.fml.common.Mod.EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, bus = net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@net.minecraftforge.fml.common.Mod.EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, bus = net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 //?}
 public final class SharedInventoryModelPack extends AbstractPackResources {
     private Map<ResourceLocation, byte[]> resources;
@@ -78,7 +78,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
     @SubscribeEvent
     public static void loaders(ModelEvent.RegisterGeometryLoaders event) {
 //? if >=1.21.1 {
-        /*event.register(ResourceLocation.fromNamespaceAndPath(gregtech.api.mod.GregTechIdentity.MOD_ID, "shared_inventory"),
+        /*event.register(ResourceLocation.fromNamespaceAndPath(gregtech.internal.mod.GregTechIdentity.MOD_ID, "shared_inventory"),
                 (net.neoforged.neoforge.client.model.geometry.IGeometryLoader<Reference>)
                         (json, context) -> new Reference(ResourceLocation.parse(json.get("parent").getAsString())));
 *///?} else {
@@ -97,7 +97,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         emitAddonBlockPrefixes(result);
         for (var item : BuiltInRegistries.ITEM) {
             ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
-            if (item instanceof gregtech.api.material.MaterialFormItem material && material.getPrefix().isAddon()) {
+            if (item instanceof gregtech.internal.material.MaterialFormItem material && material.getPrefix().isAddon()) {
                 result.put(itemModel(id), MaterialIconDefinitions.addonItemModel(material.getPrefix()).getBytes(StandardCharsets.UTF_8));
                 continue;
             }
@@ -113,7 +113,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
                         ("{\"parent\":\"gt6ce:" + model + "\"}").getBytes(StandardCharsets.UTF_8));
                 continue;
             }
-            boolean materialForm = item instanceof gregtech.api.material.MaterialFormItem material
+            boolean materialForm = item instanceof gregtech.internal.material.MaterialFormItem material
                     && !material.getPrefix().isAddon();
 //? if >=1.21.1 {
             /*boolean fluidDisplay = item instanceof gregtech.platform.neoforge.fluid.FluidDisplayItem;
@@ -124,7 +124,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             if (SharedInventoryModelPack.class.getResource("/assets/" + id.getNamespace()
                     + "/models/item/" + id.getPath() + ".json") != null) continue;
             ResourceLocation parent = null;
-            if (item instanceof gregtech.api.material.MaterialFormItem material) {
+            if (item instanceof gregtech.internal.material.MaterialFormItem material) {
                 parent = MaterialIcons.sharedModelLocation(MaterialIcons.resolveTextureSet(material.getMaterial()), material.getPrefix());
 //? if >=1.21.1 {
             /*} else if (item instanceof gregtech.platform.neoforge.fluid.FluidDisplayItem) {
@@ -340,7 +340,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         if (type != PackType.CLIENT_RESOURCES) return Set.of();
         var names = new HashSet<String>();
         names.add("gt6ce");
-        for (var prefix : gregtech.api.prefix.PrefixRegistry.addonPrefixes())
+        for (var prefix : gregtech.internal.prefix.PrefixRegistry.addonPrefixes())
             names.add(prefix.itemNamespace());
         for (var part : gregtech.registry.GTMultiblocks.addonParts())
             names.add(part.block().getId().getNamespace());
@@ -348,8 +348,8 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             if (block instanceof gregtech.block.machine.CompressedGasTankBlock)
                 names.add(BuiltInRegistries.BLOCK.getKey(block).getNamespace());
         names.addAll(gregtech.registry.AddonPipeRegistration.namespaces());
-        for (var material : gregtech.api.material.GTMaterialRegistry.allMaterials())
-            names.addAll(gregtech.api.addon.AddonMaterials.owners(material));
+        for (var material : gregtech.internal.material.GTMaterialRegistry.allMaterials())
+            names.addAll(gregtech.internal.addon.AddonMaterials.owners(material));
         return Set.copyOf(names);
     }
 

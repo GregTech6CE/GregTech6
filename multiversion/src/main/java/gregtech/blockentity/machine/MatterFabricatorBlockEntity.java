@@ -1,7 +1,7 @@
 package gregtech.blockentity.machine;
 
 import gregtech.content.multiblock.*;
-import gregtech.api.multiblock.MultiblockLayout.Role;
+import gregtech.internal.multiblock.MultiblockLayout.Role;
 import gregtech.data.GregTechTags;
 import net.minecraft.core.*;
 import net.minecraft.world.level.block.*;

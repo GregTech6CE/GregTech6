@@ -85,7 +85,7 @@ public class WoodLeavesBlock extends LeavesBlock {
 *///?} else {
         if(tool.canPerformAction(net.minecraftforge.common.ToolActions.SHEARS_HARVEST)
 //?}
-                || gregtech.api.tool.GTToolHelper.matchesTool(tool,gregtech.api.tool.GTToolType.SCISSORS)
+                || gregtech.internal.tool.GTToolHelper.matchesTool(tool,gregtech.internal.tool.GTToolType.SCISSORS)
 //? if >=1.21.1 {
                 /*|| net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(builder.getLevel().registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT).getOrThrow(net.minecraft.world.item.enchantment.Enchantments.SILK_TOUCH),tool)>0)
 *///?} else {

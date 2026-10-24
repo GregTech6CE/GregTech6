@@ -297,6 +297,6 @@ public final class CoverAttachmentBehaviors {
      * {@link #drainsAt} on the cover tick is what it is meant for.</p>
      */
     private static boolean isGas(Fluid fluid) {
-        return gregtech.api.fluid.FluidHazards.isGas(fluid);
+        return gregtech.internal.fluid.FluidHazards.isGas(fluid);
     }
 }

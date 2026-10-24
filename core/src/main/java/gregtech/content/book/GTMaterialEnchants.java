@@ -1,7 +1,7 @@
 package gregtech.content.book;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.content.recipe.generated.GTEnchantmentTable;
 import gregtech.content.recipe.generated.GTMaterialFields;
 

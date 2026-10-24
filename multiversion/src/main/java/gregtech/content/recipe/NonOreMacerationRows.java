@@ -1,7 +1,7 @@
 package gregtech.content.recipe;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.recipe.Recipe;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.data.MaterialPrefix;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
@@ -18,7 +18,7 @@ public final class NonOreMacerationRows {
  private static NonOreContinuationEvidence.Snapshot startup;
  public static void begin(){
   if(startup!=null)throw new IllegalStateException("Nonore definitions initialized twice");
-  startup=NonOreContinuationEvidence.startupSnapshot(gregtech.api.material.GTMaterialRegistry.allMaterials());
+  startup=NonOreContinuationEvidence.startupSnapshot(gregtech.internal.material.GTMaterialRegistry.allMaterials());
  }
  public static boolean reviewed(GTMaterial material){
   if(startup==null)throw new IllegalStateException("Nonore definitions not initialized");

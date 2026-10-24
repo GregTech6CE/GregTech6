@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialEquivalence;
-import gregtech.api.recipe.Recipe;
-import gregtech.api.recipe.RecipeInputs;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialEquivalence;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.recipe.RecipeInputs;
 import gregtech.content.recipe.TreatedWoodRecipes;
 import gregtech.content.recipe.VanillaWoodProcessingRecipes;
 import gregtech.data.MachineRecipeMaps;

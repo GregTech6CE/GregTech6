@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 
 /** GT6 Filter block — pipe-insertable item/fluid filter. */
 public class FilterBlock extends net.minecraft.world.level.block.DirectionalBlock implements net.minecraft.world.level.block.EntityBlock,
-        gregtech.api.tool.ToolInteractionTarget {
+        gregtech.internal.tool.ToolInteractionTarget {
     public static final net.minecraft.world.level.block.state.properties.DirectionProperty SECONDARY =
             net.minecraft.world.level.block.state.properties.DirectionProperty.create("secondary");
     public static final net.minecraft.world.level.block.state.properties.BooleanProperty SECONDARY_SET =
@@ -75,14 +75,14 @@ public class FilterBlock extends net.minecraft.world.level.block.DirectionalBloc
     public net.minecraft.world.InteractionResult use(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
             net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
 //?}
-        if (gregtech.api.tool.ToolInteractions.use(state, level, pos, player, hand,
+        if (gregtech.internal.tool.ToolInteractions.use(state, level, pos, player, hand,
                 hit)) return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
         var tool = player.getItemInHand(hand);
-        if (gregtech.api.tool.GTToolHelper.isScrewdriver(tool) || gregtech.api.tool.GTToolHelper.isSoftHammer(tool)) {
+        if (gregtech.internal.tool.GTToolHelper.isScrewdriver(tool) || gregtech.internal.tool.GTToolHelper.isSoftHammer(tool)) {
             if (!level.isClientSide && level.getBlockEntity(pos) instanceof FilterBlockEntity filter) {
-                if (gregtech.api.tool.GTToolHelper.isSoftHammer(tool)) filter.clearFilter();
+                if (gregtech.internal.tool.GTToolHelper.isSoftHammer(tool)) filter.clearFilter();
                 else filter.toggleMode();
-                gregtech.api.tool.GTToolHelper.damageForUse(tool, 1, player);
+                gregtech.internal.tool.GTToolHelper.damageForUse(tool, 1, player);
                 player.displayClientMessage(net.minecraft.network.chat.Component.translatable(filter.blacklist() ? "gt6ce.filter.blacklist"
                         : "gt6ce.filter.whitelist"), true);
             }
@@ -99,16 +99,16 @@ public class FilterBlock extends net.minecraft.world.level.block.DirectionalBloc
     }
 
     @Override
-    public gregtech.api.tool.ToolInteractionSpec toolInteraction(BlockState state, net.minecraft.world.item.ItemStack tool) {
-        var property = gregtech.api.tool.GTToolHelper.isMonkeyWrench(tool) ? SECONDARY
-                : gregtech.api.tool.GTToolHelper.isMachineWrench(tool) ? FACING : null;
-        return property == null ? null : gregtech.api.tool.ToolInteractionSpec.facing(property,
+    public gregtech.internal.tool.ToolInteractionSpec toolInteraction(BlockState state, net.minecraft.world.item.ItemStack tool) {
+        var property = gregtech.internal.tool.GTToolHelper.isMonkeyWrench(tool) ? SECONDARY
+                : gregtech.internal.tool.GTToolHelper.isMachineWrench(tool) ? FACING : null;
+        return property == null ? null : gregtech.internal.tool.ToolInteractionSpec.facing(property,
                 gregtech.block.machine.MachineRotationType.ALL);
     }
 
     @Override
     public void toolStateChanged(net.minecraft.world.level.Level level, BlockPos pos, BlockState state,
-            gregtech.api.tool.ToolInteractionSpec operation) {
+            gregtech.internal.tool.ToolInteractionSpec operation) {
         if (operation.facing() == SECONDARY && !state.getValue(SECONDARY_SET)) level.setBlockAndUpdate(pos, state.setValue(SECONDARY_SET, true));
     }
 

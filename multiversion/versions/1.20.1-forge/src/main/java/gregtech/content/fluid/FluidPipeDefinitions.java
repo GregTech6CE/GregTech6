@@ -5,9 +5,9 @@ import gregtech.registry.GTFluidPipes;
 public final class FluidPipeDefinitions {
     private FluidPipeDefinitions() {}
     public static void register() {
-        gregtech.api.addon.AddonMachines.collectContributors();
+        gregtech.internal.addon.AddonMachines.collectContributors();
         for (var spec : FluidTransportDefinitions.pipes()) {
-            String owner = gregtech.api.addon.AddonPipes.owner(spec.id());
+            String owner = gregtech.internal.addon.AddonPipes.owner(spec.id());
             if (owner == null) {
                 var block = GTFluidPipes.register(spec);
                 if (spec.id().equals("pipe_medium_steel")) GTFluidPipes.PIPE_MEDIUM_STEEL = block;

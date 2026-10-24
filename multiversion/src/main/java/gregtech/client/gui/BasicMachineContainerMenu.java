@@ -1,6 +1,6 @@
 package gregtech.client.gui;
 
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.data.MachineRecipeMaps;
 
@@ -87,7 +87,7 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
         this.blockEntity = null;
         this.viewer = playerInv.player;
         this.machineName = buf != null ? buf.readUtf() : "default";
-        this.recipeMap = gregtech.api.addon.RegisteredMachineIndex.recipeMap(machineName);
+        this.recipeMap = gregtech.internal.addon.RegisteredMachineIndex.recipeMap(machineName);
         this.progressData = new SimpleContainerData(1);
         addDataSlots(progressData);
         int totalMachineSlots = recipeMap.mInputItemsCount + recipeMap.mOutputItemsCount
@@ -163,7 +163,7 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
 //?}
 
         for(int i=0;i<count;i++) {
-            var point=gregtech.api.recipe.MachineGuiLayout.item(input,i,count,fluids);
+            var point=gregtech.internal.recipe.MachineGuiLayout.item(input,i,count,fluids);
             addSlot(input ? new SlotInput(inv, start + i, point.x(), point.y(), this::inventorySlotChanged)
                     : new SlotOutput(inv, start + i, point.x(), point.y(), this::inventorySlotChanged));
         }
@@ -173,13 +173,13 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
         int baseIndex = recipeMap.mInputItemsCount + recipeMap.mOutputItemsCount;
         // Input fluid slots (left, X=53/35/17, Y from bottom up: 63, 45, 27)
         for (int i = 0; i < recipeMap.mInputFluidCount; i++) {
-            var point=gregtech.api.recipe.MachineGuiLayout.fluid(true,i);
+            var point=gregtech.internal.recipe.MachineGuiLayout.fluid(true,i);
             int x=point.x(),y=point.y();
             addSlot(new SlotFluid(dummy, baseIndex + i, x, y, i, true));
         }
         // Output fluid slots (right, X=107/125/143, Y from bottom up)
         for (int i = 0; i < recipeMap.mOutputFluidCount; i++) {
-            var point=gregtech.api.recipe.MachineGuiLayout.fluid(false,i);
+            var point=gregtech.internal.recipe.MachineGuiLayout.fluid(false,i);
             int x=point.x(),y=point.y();
             addSlot(new SlotFluid(dummy, baseIndex + recipeMap.mInputFluidCount + i, x, y, i, false));
         }

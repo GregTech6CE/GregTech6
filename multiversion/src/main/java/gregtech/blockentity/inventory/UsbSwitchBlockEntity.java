@@ -1,6 +1,6 @@
 package gregtech.blockentity.inventory;
 
-import gregtech.api.data.UsbDataPort;
+import gregtech.internal.data.UsbDataPort;
 import gregtech.api.machine.MachineControl;
 import gregtech.block.inventory.UsbSwitchBlock;
 import gregtech.client.gui.DataSwitchMenu;

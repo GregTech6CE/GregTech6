@@ -3,7 +3,7 @@ import gregtech.blockentity.GTEnergyBlockEntity;
 import gregtech.block.energy.ZpmDischargerBlock;
 import gregtech.content.energy.ZpmEnergy;
 import gregtech.data.GregTechTags;
-import gregtech.api.energy.EnergyTransfer;
+import gregtech.internal.energy.EnergyTransfer;
 import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
@@ -21,7 +21,7 @@ public final class ZpmDischargerBlockEntity extends GTEnergyBlockEntity implemen
     private long buffer;
     private boolean stopped;
     private boolean emitted;
-    private final gregtech.api.machine.MachineControl control=gregtech.api.machine.MachineControls.switchable(this,
+    private final gregtech.api.machine.MachineControl control=gregtech.internal.machine.MachineControls.switchable(this,
             ()->!this.stopped,value->{this.stopped=!value;setChanged();},()->getBlockState().getValue(ZpmDischargerBlock.ACTIVE),()->emitted);
     @Override public gregtech.api.machine.MachineControl machineControl(Direction side){return control;}
     private int tick;

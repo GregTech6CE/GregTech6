@@ -1,7 +1,7 @@
 package gregtech.util;
 
 import gregtech.api.energy.GTVoltageTiers;
-import gregtech.api.material.ItemMaterialRegistry;
+import gregtech.internal.material.ItemMaterialRegistry;
 import gregtech.damage.GTDamageTypes;
 import gregtech.damage.GTHazmat;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -72,10 +72,10 @@ public final class GTEntityHelper {
         // ones; the port keeps material items off ItemMaterialRegistry (their prefix lives on the
         // MaterialItem instance), so both paths are needed here.
         gregtech.data.MaterialPrefix prefix =
-                stack.getItem() instanceof gregtech.api.material.MaterialFormItem materialItem
+                stack.getItem() instanceof gregtech.internal.material.MaterialFormItem materialItem
                         ? materialItem.getPrefix()
                         : ItemMaterialRegistry.get(stack)
-                                .map(gregtech.api.material.ItemComposition::prefix).orElse(null);
+                                .map(gregtech.internal.material.ItemComposition::prefix).orElse(null);
         return prefix == null ? 0.0F : prefix.heatDamage();
     }
 

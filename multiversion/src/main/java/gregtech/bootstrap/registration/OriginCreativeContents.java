@@ -1,7 +1,7 @@
 package gregtech.bootstrap.registration;
 
 import gregtech.content.creative.*;
-import gregtech.api.material.MaterialFormItem;
+import gregtech.internal.material.MaterialFormItem;
 import gregtech.block.MaterialBlockLike;
 import gregtech.item.*;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -88,7 +88,7 @@ public final class OriginCreativeContents {
     }
     public static synchronized Map<String,List<ItemStack>> pages() {
 //? if >=1.21.1 {
-        /*var lookup = gregtech.api.tool.GTToolEnchantments.currentLookup();
+        /*var lookup = gregtech.internal.tool.GTToolEnchantments.currentLookup();
         var enchantmentRegistry = lookup == null ? null : lookup.lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT);
         if (pages != null && pagesEnchantmentRegistry == enchantmentRegistry) return pages;
 *///?} else {
@@ -164,7 +164,7 @@ public final class OriginCreativeContents {
             if(item instanceof gregtech.item.PanelItemView panel&&!panel.panelSpec().canonical())continue;
             var page=result.get(family(item));
             if(item instanceof GTToolItem tool) {
-                var type=tool.toolType(); var head=type==gregtech.api.tool.GTToolType.GEM_PICK?gregtech.content.material.Materials.Diamond:gregtech.content.material.Materials.Steel;
+                var type=tool.toolType(); var head=type==gregtech.internal.tool.GTToolType.GEM_PICK?gregtech.content.material.Materials.Diamond:gregtech.content.material.Materials.Steel;
                 page.add(GTToolItem.create(type,head,type.requiresHeadAssembly()?gregtech.content.material.generated.WoodMaterials.Wood:head));
             } else if(item instanceof ElectricToolItem electric) {
                 page.add(electric.assembled(gregtech.content.material.Materials.Steel,electric.getEnergyCapacity(new ItemStack(item),gregtech.data.GregTechTags.Energy.EU)));

@@ -1,6 +1,6 @@
 package gregtech.block.machine;
 
-import gregtech.api.machine.BasicMachineSpec;
+import gregtech.internal.machine.BasicMachineSpec;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.blockentity.machine.DistillationTowerControllerBlockEntity;
 import net.minecraft.core.BlockPos;

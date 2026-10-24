@@ -1,11 +1,11 @@
 package gregtech.content.book;
-import gregtech.api.material.MaterialPresentation;
+import gregtech.internal.material.MaterialPresentation;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.MaterialProperty;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.material.MaterialProperty;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.data.MaterialPrefix;
 import gregtech.registry.GTItems;
 import net.minecraft.nbt.CompoundTag;
@@ -126,7 +126,7 @@ public final class GTMaterialDictionary {
     public static List<String> pages(GTMaterial material){return GTMaterialDictionaryPages.pages(material,GTMaterialDictionary::forms,GTMaterialDictionary::ore);}
     private static String forms(GTMaterial material) {
         List<String> names = new ArrayList<>();
-        for (MaterialPrefix form : gregtech.api.prefix.PrefixRegistry.all()) {
+        for (MaterialPrefix form : gregtech.internal.prefix.PrefixRegistry.all()) {
             if (!form.isValidFor(material)) continue;
             if (GTItems.getStack(form, material, 1).isEmpty()) continue;
             names.add(form.getName());
@@ -142,7 +142,7 @@ public final class GTMaterialDictionary {
     private static String ore(GTMaterial material) {
         // The port's ore blocks are blocks (BlockMaterialPrefix.ore), the raw ore is an item.
         ItemStack ore = gregtech.registry.GTBlocks.getStack(
-                gregtech.api.prefix.BlockMaterialPrefix.ore, material);
+                gregtech.internal.prefix.BlockMaterialPrefix.ore, material);
         ItemStack raw = GTItems.getStack(MaterialPrefix.oreRaw, material, 1);
         if (ore.isEmpty() && raw.isEmpty()) return null;
         StringBuilder out = new StringBuilder();

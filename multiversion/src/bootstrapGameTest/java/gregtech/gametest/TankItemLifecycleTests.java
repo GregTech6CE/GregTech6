@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
-import gregtech.api.material.ItemMaterialRegistry;
-import gregtech.api.machine.crucible.CrucibleItemInput;
-import gregtech.api.recipe.RecipeInputs;
+import gregtech.internal.material.ItemMaterialRegistry;
+import gregtech.internal.machine.crucible.CrucibleItemInput;
+import gregtech.internal.recipe.RecipeInputs;
 import gregtech.block.machine.TankBlock;
 import gregtech.blockentity.machine.TankBlockEntity;
 import gregtech.blockentity.machine.LogisticsTankBlockEntity;
@@ -177,7 +177,7 @@ public final class TankItemLifecycleTests {
         setItemData(legacy, state);
         // Place a legacy complete payload through BlockItem, rather than a synthetic NBT round trip.
         tank = place(h, p, pos, legacy);
-        h.assertTrue(((gregtech.api.tool.Paintable) (Object) tank).paint(0x123456), "actual native tank paint");
+        h.assertTrue(((gregtech.internal.tool.Paintable) (Object) tank).paint(0x123456), "actual native tank paint");
         h.assertTrue(tank.attachCover(Direction.NORTH, item(PanelCover.PROGRESS.id)), "native barrel accepts progress panel");
         h.assertTrue(tank.panels().configure(Direction.NORTH, false, false), "screwdriver inverts progress panel");
         h.assertTrue(MachineCoverSpec.inverted(tank.getCover(Direction.NORTH)), "panel is inverted before harvest");
@@ -196,7 +196,7 @@ public final class TankItemLifecycleTests {
                 "nonempty native persistent data is preserved");
 //?}
         h.assertTrue(MachineCoverSpec.inverted(tank.getCover(Direction.NORTH)), "configured cover retained once");
-        var painted = (gregtech.api.tool.Paintable) (Object) tank;
+        var painted = (gregtech.internal.tool.Paintable) (Object) tank;
         h.assertTrue(painted.isPainted() && painted.getPaint() == 0x123456, "actual paint flag and RGB survive replacement");
         tank.getFluidTank().drain(4321, FluidAction.EXECUTE);
         drop = harvest(h, p, tank);

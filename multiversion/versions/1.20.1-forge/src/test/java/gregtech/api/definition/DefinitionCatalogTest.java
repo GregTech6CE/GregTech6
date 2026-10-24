@@ -1,5 +1,7 @@
 package gregtech.api.definition;
 
+import gregtech.internal.definition.DefinitionCatalog;
+
 import java.util.ArrayList;
 import java.util.List;
 

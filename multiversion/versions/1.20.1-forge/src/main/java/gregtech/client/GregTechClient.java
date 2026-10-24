@@ -23,10 +23,10 @@ import gregtech.block.machine.HopperBlockItem;
 import gregtech.block.machine.ItemPipeBlock;
 import gregtech.block.machine.QueueHopperBlock;
 import gregtech.block.machine.QueueHopperBlockItem;
-import gregtech.api.machine.EngineType;
-import gregtech.api.machine.MachineRegistry;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.machine.EngineType;
+import gregtech.internal.machine.MachineRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.client.gui.BasicMachineScreen;
 import gregtech.client.gui.HopperScreen;
 import gregtech.item.FluidItem;
@@ -38,8 +38,8 @@ import gregtech.registry.GTBlockEntities;
 import gregtech.item.MaterialItem;
 import gregtech.registry.GTBlocks;
 import gregtech.registry.GTFluidItems;
-import gregtech.api.fluid.FluidRenderLayers;
-import gregtech.api.fluid.WaterMixinStatus;
+import gregtech.internal.fluid.FluidRenderLayers;
+import gregtech.internal.fluid.WaterMixinStatus;
 import net.minecraftforge.registries.RegistryObject;
 import gregtech.registry.GTItems;
 import gregtech.registry.GTItemPipes;
@@ -95,12 +95,12 @@ public final class GregTechClient {
                 event.register((stack, tintIndex) -> tintIndex == 0 ? rod.tintRgb() : 0xFFFFFF, rod);
             } else if (entry.get() instanceof gregtech.item.ElectricToolItem electric) {
                 event.register(electric::tint, electric);
-            } else if (entry.get() instanceof gregtech.api.material.MaterialFormItem materialItem && !(entry.get() instanceof gregtech.item.EnergyCrystalItem)) {
+            } else if (entry.get() instanceof gregtech.internal.material.MaterialFormItem materialItem && !(entry.get() instanceof gregtech.item.EnergyCrystalItem)) {
                 event.register((stack, tintIndex) -> tintIndex == 0 ? materialItem.getTintColor() : 0xFFFFFF, entry.get());
             }
         });
         for (var entry : gregtech.registry.GTItems.addonEntries()) {
-            if (entry.get() instanceof gregtech.api.material.MaterialFormItem materialItem)
+            if (entry.get() instanceof gregtech.internal.material.MaterialFormItem materialItem)
                 event.register((stack, tintIndex) -> tintIndex == 0 ? materialItem.getTintColor() : 0xFFFFFF, entry.get());
         }
         gregtech.registry.GTMiscBlocks.all().forEach(entry -> {
@@ -118,7 +118,7 @@ public final class GregTechClient {
             } else if (entry.get() instanceof net.minecraft.world.item.BlockItem zpmItem && zpmItem.getBlock() instanceof gregtech.block.energy.ZpmModuleBlock) {
                 event.register((stack,index)->gregtech.content.energy.ZpmEnergy.stored(stack)>0?0xFFDD00:0x806E00,zpmItem);
             } else if (entry.get() instanceof net.minecraft.world.item.BlockItem zpmItem && zpmItem.getBlock() instanceof gregtech.block.energy.ZpmDischargerBlock) {
-                event.register((stack,index)->index==0?gregtech.api.material.GTMaterialRegistry.get("Osmiridium").getColor():0xFFDD00,zpmItem);
+                event.register((stack,index)->index==0?gregtech.internal.material.GTMaterialRegistry.get("Osmiridium").getColor():0xFFDD00,zpmItem);
             } else if (entry.get() instanceof net.minecraft.world.item.BlockItem laserItem && laserItem.getBlock() instanceof gregtech.block.energy.LaserConverterBlock laser) {
                 event.register((stack, tintIndex) -> tintIndex == 0 ? laser.spec().tint() : 0xFFFFFF, laserItem);
             } else if (entry.get() instanceof net.minecraft.world.item.BlockItem coreItem
@@ -291,8 +291,8 @@ public final class GregTechClient {
                 .forEach(fluidItem -> {
                     event.register((stack, t) -> {
                         if(t!=0) return 0xFFFFFF;
-                        if(gregtech.api.fluid.FluidDisplayBinding.hasPayload(stack)) {
-                            var actual=gregtech.api.fluid.FluidDisplayBinding.resolve(stack);
+                        if(gregtech.internal.fluid.FluidDisplayBinding.hasPayload(stack)) {
+                            var actual=gregtech.internal.fluid.FluidDisplayBinding.resolve(stack);
                             if(!actual.isEmpty()) return net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions.of(actual.getFluid()).getTintColor(actual);
                         }
                         return FluidAppearance.appearance(fluidItem.fluidEntry()).tint();
@@ -318,7 +318,7 @@ public final class GregTechClient {
             } else if (block instanceof gregtech.block.energy.ZpmModuleBlock) {
                 event.register((state,world,pos,index)->state.getValue(gregtech.block.energy.ZpmModuleBlock.CHARGE)>0?0xFFDD00:0x806E00,block);
             } else if (block instanceof gregtech.block.energy.ZpmDischargerBlock) {
-                event.register((state,world,pos,index)->index==0?gregtech.api.material.GTMaterialRegistry.get("Osmiridium").getColor():state.getValue(gregtech.block.energy.ZpmDischargerBlock.ACTIVE)?0xFFDD00:0x804000,block);
+                event.register((state,world,pos,index)->index==0?gregtech.internal.material.GTMaterialRegistry.get("Osmiridium").getColor():state.getValue(gregtech.block.energy.ZpmDischargerBlock.ACTIVE)?0xFFDD00:0x804000,block);
             } else if (block instanceof gregtech.block.energy.LaserConverterBlock laser) {
                 event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? laser.spec().tint() : 0xFFFFFF, block);
             } else if (block instanceof gregtech.block.machine.LogisticsCoreControllerBlock) {
@@ -402,7 +402,7 @@ public final class GregTechClient {
         event.register((state, level, pos, tintIndex) -> {
             if (tintIndex != 0 || level == null || pos == null) return 0xFFFFFF;
             if (level.getBlockEntity(pos) instanceof gregtech.blockentity.RockBlockEntity rock) {
-                var material = gregtech.api.material.GTMaterialRegistry.get(rock.getMaterial());
+                var material = gregtech.internal.material.GTMaterialRegistry.get(rock.getMaterial());
                 if (material != null && material.resolve().isValid()) {
                     return material.resolve().getColor();
                 }
@@ -738,7 +738,7 @@ public final class GregTechClient {
         event.registerBlockEntityRenderer(GTBlockEntities.COKE_OVEN.get(), MachineCoverRenderer::new);
 
         // Cover plates on basic machine faces
-        for (var blockRO : gregtech.api.machine.MachineRegistry.basicMachines()) {
+        for (var blockRO : gregtech.internal.machine.MachineRegistry.basicMachines()) {
             if (!blockRO.isPresent()) continue;
             BlockEntityType<?> beType = blockRO.get().beType();
             if (beType == null) continue;
@@ -748,8 +748,8 @@ public final class GregTechClient {
         }
 
         // Engine BERs — heat-colored core overlay
-        var steamEngines = gregtech.api.machine.MachineRegistry.steamEngines();
-        var strongSteamEngines = gregtech.api.machine.MachineRegistry.strongSteamEngines();
+        var steamEngines = gregtech.internal.machine.MachineRegistry.steamEngines();
+        var strongSteamEngines = gregtech.internal.machine.MachineRegistry.strongSteamEngines();
         for (var blockRO : steamEngines) {
             event.registerBlockEntityRenderer(
                     (BlockEntityType<KineticSteamEngineBlockEntity>) (Object) blockRO.get().getBeType(),
@@ -804,7 +804,7 @@ public final class GregTechClient {
                 throw new IllegalStateException("GT world fluid is missing its registered fluid: "
                         + registration.getKey());
             }
-            if (gregtech.api.fluid.GTWaterParity.isWorldWater(registration.getKey())
+            if (gregtech.internal.fluid.GTWaterParity.isWorldWater(registration.getKey())
                     && (!Fluids.WATER.isSame(fluid) || !fluid.isSame(Fluids.WATER))) {
                 throw new IllegalStateException("GT world water does not merge with vanilla water: "
                         + registration.getKey() + ". Check gregtech.mixins.json and water registration.");

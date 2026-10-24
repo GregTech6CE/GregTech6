@@ -4,15 +4,15 @@ package gregtech.client;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.material.MaterialTextureSet;
+import gregtech.internal.material.MaterialTextureSet;
 //? if >=1.21.1 {
-/*import gregtech.api.prefix.PrefixRegistry;
+/*import gregtech.internal.prefix.PrefixRegistry;
 *///?} else {
 //?}
 import gregtech.data.MaterialPrefix;
 //? if >=1.21.1 {
 //?} else {
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.prefix.PrefixRegistry;
 //?}
 import gregtech.item.MaterialItem;
 //? if >=1.21.1 {
@@ -51,7 +51,7 @@ import java.util.IdentityHashMap;
 
 //? if >=1.21.1 {
 /*/^* Material inventory models and tint; this subscriber is never loaded on a dedicated server. ^/
-@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 *///?} else {
 /**
  * Maps each material item to a shared icon model ({@code models/item/material/{textureSet}/{prefix}.json}).
@@ -100,7 +100,7 @@ public final class MaterialClientModels {
         for (var entry : GTItems.allEntries()) {
             if (entry.get() instanceof gregtech.item.EnergyCrystalItem) continue;
 //? if >=1.21.1 {
-            /*gregtech.api.material.MaterialFormItem item = (gregtech.api.material.MaterialFormItem) entry.get();
+            /*gregtech.internal.material.MaterialFormItem item = (gregtech.internal.material.MaterialFormItem) entry.get();
             if (item.getPrefix().isAddon()) continue;
             BakedModel model = resolveSharedModel(models, item);
             if (model == null) {
@@ -108,7 +108,7 @@ public final class MaterialClientModels {
             } else {
                 models.put(ModelResourceLocation.inventory(entry.getId()),item instanceof gregtech.item.CoinItem?new CoinItemBakedModel(model):model);
 *///?} else {
-            if (!(entry.get() instanceof gregtech.api.material.MaterialFormItem materialItem)
+            if (!(entry.get() instanceof gregtech.internal.material.MaterialFormItem materialItem)
                     || materialItem.getPrefix().isAddon()) {
                 continue;
             }
@@ -143,10 +143,10 @@ public final class MaterialClientModels {
     public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
         for (var entry : GTItems.allEntries()) {
             if (entry.get() instanceof gregtech.item.EnergyCrystalItem) continue;
-            gregtech.api.material.MaterialFormItem item = (gregtech.api.material.MaterialFormItem) entry.get();
+            gregtech.internal.material.MaterialFormItem item = (gregtech.internal.material.MaterialFormItem) entry.get();
             event.register(ItemColorARGB.opaque((stack, layer) -> layer == 0 ? item.getTintColor() : 0xFFFFFF), entry.get());
 *///?} else {
-    private static BakedModel resolveSharedModel(Map<ResourceLocation, BakedModel> models, gregtech.api.material.MaterialFormItem materialItem) {
+    private static BakedModel resolveSharedModel(Map<ResourceLocation, BakedModel> models, gregtech.internal.material.MaterialFormItem materialItem) {
         MaterialTextureSet primary = MaterialIcons.resolveTextureSet(materialItem.getMaterial());
         BakedModel model = lookupModel(models, primary, materialItem.getPrefix());
         if (model != null) {
@@ -159,7 +159,7 @@ public final class MaterialClientModels {
 //?}
 
 //? if >=1.21.1 {
-    /*private static BakedModel resolveSharedModel(Map<ModelResourceLocation, BakedModel> models, gregtech.api.material.MaterialFormItem item) {
+    /*private static BakedModel resolveSharedModel(Map<ModelResourceLocation, BakedModel> models, gregtech.internal.material.MaterialFormItem item) {
         MaterialTextureSet primary = MaterialIcons.resolveTextureSet(item.getMaterial());
         BakedModel model = lookupModel(models, primary, item.getPrefix());
         if (model != null) return model;

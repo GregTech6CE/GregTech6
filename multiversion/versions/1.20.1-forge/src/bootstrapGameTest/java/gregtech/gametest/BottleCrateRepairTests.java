@@ -124,8 +124,8 @@ public final class BottleCrateRepairTests {
     public static void wrenchRotatesFrameWithoutMovingInventoryAndWoodBurns(GameTestHelper h) {
         var pos=h.absolutePos(new BlockPos(1,1,1)); var crate=place(h,pos); var player=h.makeMockSurvivalPlayer();
         crate.items().setStackInSlot(8,new ItemStack(Items.GLASS_BOTTLE,9));
-        var tool=gregtech.item.GTToolItem.create(gregtech.api.tool.GTToolType.WRENCH,
-                gregtech.content.material.Materials.Steel,gregtech.api.material.GTMaterialRegistry.get("Wood"));
+        var tool=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.WRENCH,
+                gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
         player.setItemInHand(InteractionHand.MAIN_HAND,tool);
         for(var face:Direction.Plane.HORIZONTAL) {
             var hit=new BlockHitResult(Vec3.atCenterOf(pos).add(face.getStepX()*.5,0,face.getStepZ()*.5),face,pos,false);

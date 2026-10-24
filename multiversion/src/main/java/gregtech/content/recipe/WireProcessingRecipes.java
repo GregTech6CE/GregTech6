@@ -1,7 +1,9 @@
 package gregtech.content.recipe;
 
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.block.energy.ElectricWireBlock;
 import gregtech.data.*;
 import gregtech.registry.*;

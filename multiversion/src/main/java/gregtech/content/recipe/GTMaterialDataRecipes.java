@@ -1,11 +1,11 @@
 package gregtech.content.recipe;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.ItemMaterialRegistry;
-import gregtech.api.material.MaterialProperty;
-import gregtech.api.recipe.Recipe;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.ItemMaterialRegistry;
+import gregtech.internal.material.MaterialProperty;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.content.book.GTMaterialDictionary;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.data.MaterialPrefix;
@@ -118,7 +118,7 @@ public final class GTMaterialDataRecipes {
         for (GTMaterial raw : GTMaterialRegistry.allMaterials()) {
             GTMaterial material = raw.resolve();
             if (!material.isValid() || material.getId() <= 0 || !seen.add(material)) continue;
-            if (gregtech.api.prefix.PrefixRegistry.all().stream().anyMatch(prefix ->
+            if (gregtech.internal.prefix.PrefixRegistry.all().stream().anyMatch(prefix ->
                     gregtech.data.generated.MaterialDataFacts.scannable(prefix)
                             && !GTItems.getStack(prefix, material, 1).isEmpty())) scannable++;
             if (!GTMaterialDictionary.bookStack(material).isEmpty()) printable++;
@@ -192,7 +192,7 @@ public final class GTMaterialDataRecipes {
 //?}
 
         CompoundTag data = new CompoundTag();
-        gregtech.api.material.StoredMaterial.writeName(data, NBT_REPLICATOR_DATA, material);
+        gregtech.internal.material.StoredMaterial.writeName(data, NBT_REPLICATOR_DATA, material);
         tag.put(NBT_USB_DATA, data);
         tag.putByte(NBT_USB_TIER, (byte) USB_TIER);
 
@@ -344,7 +344,7 @@ public final class GTMaterialDataRecipes {
                 continue;
             }
             CompoundTag data = new CompoundTag();
-            gregtech.api.material.StoredMaterial.writeName(data, NBT_REPLICATOR_DATA, material);
+            gregtech.internal.material.StoredMaterial.writeName(data, NBT_REPLICATOR_DATA, material);
             driveTag.put(slotDataKey(slot), data);
             driveTag.putByte(slotTierKey(slot), (byte) DRIVE_FILE_TIER);
             tag.put(NBT_USB_DRIVE, driveTag);
@@ -375,7 +375,7 @@ public final class GTMaterialDataRecipes {
     @Nullable
     private static GTMaterial materialOf(CompoundTag data) {
         if (data == null || !data.contains(NBT_REPLICATOR_DATA)) return null;
-        GTMaterial material = gregtech.api.material.StoredMaterial.read(data, NBT_REPLICATOR_DATA);
+        GTMaterial material = gregtech.internal.material.StoredMaterial.read(data, NBT_REPLICATOR_DATA);
         return material.isValid() ? material : null;
     }
 

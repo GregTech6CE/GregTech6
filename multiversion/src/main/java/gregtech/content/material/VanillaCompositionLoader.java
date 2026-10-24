@@ -2,6 +2,7 @@ package gregtech.content.material;
 
 import com.google.gson.*;
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 //? if >=1.21.1 {
@@ -36,8 +37,8 @@ public final class VanillaCompositionLoader {
                     components.add(MaterialComponent.of(material, part.getValue().getAsLong()));
                 }
                 var previous = ItemMaterialRegistry.base(item);
-                var prefix = previous.map(gregtech.api.material.ItemComposition::prefix).orElse(null);
-                ItemMaterialRegistry.register(item, new gregtech.api.material.ItemComposition(prefix, components,
+                var prefix = previous.map(gregtech.internal.material.ItemComposition::prefix).orElse(null);
+                ItemMaterialRegistry.register(item, new gregtech.internal.material.ItemComposition(prefix, components,
                         row.get("source").getAsString(), row.get("recoverable").getAsBoolean()));
             }
             if (!errors.isEmpty()) throw new IllegalStateException("Unresolved vanilla materials: " + errors);

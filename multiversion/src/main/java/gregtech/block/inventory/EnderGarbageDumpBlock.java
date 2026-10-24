@@ -1,6 +1,6 @@
 package gregtech.block.inventory;
 
-import gregtech.api.GTWaterloggable;
+import gregtech.internal.GTWaterloggable;
 import gregtech.blockentity.inventory.EnderGarbageDumpBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

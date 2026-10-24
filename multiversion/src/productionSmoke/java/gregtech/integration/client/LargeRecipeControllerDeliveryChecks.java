@@ -1,6 +1,6 @@
 package gregtech.integration.client;
 import com.google.gson.JsonObject;
-import gregtech.api.material.ItemMaterialRegistry;
+import gregtech.internal.material.ItemMaterialRegistry;
 import gregtech.block.machine.BasicMachineBlock;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.client.CommonBlockTooltips;

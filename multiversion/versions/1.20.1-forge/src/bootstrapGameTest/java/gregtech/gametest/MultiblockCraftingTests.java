@@ -133,7 +133,7 @@ public final class MultiblockCraftingTests {
     @GameTest(template = "test_empty")
     public static void everyMultiblockIngredientResolves(GameTestHelper helper) {
         List<String> unresolved = new ArrayList<>();
-        var steel = gregtech.api.material.GTMaterialRegistry.get("StainlessSteel");
+        var steel = gregtech.internal.material.GTMaterialRegistry.get("StainlessSteel");
         for (MultiblockCraftingRecipes.Entry entry : MultiblockCraftingRecipes.ENTRIES) {
             for (var pair : entry.keys().entrySet()) {
                 Object ingredient = MachineRecipeIngredients.resolve(pair.getValue(), steel, 1);

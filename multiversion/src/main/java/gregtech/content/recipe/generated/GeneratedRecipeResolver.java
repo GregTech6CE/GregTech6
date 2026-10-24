@@ -1,10 +1,10 @@
 package gregtech.content.recipe.generated;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialStackItemHelper;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialStackItemHelper;
 import gregtech.api.material.GTValues;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.data.RegisteredFluids;
 import gregtech.data.MaterialPrefix;
 import gregtech.data.MachineRecipeMaps;
@@ -140,7 +140,7 @@ public final class GeneratedRecipeResolver {
             return;
         }
 
-        var candidate = new gregtech.api.recipe.Recipe(
+        var candidate = new gregtech.internal.recipe.Recipe(
                 inputs.toArray(RecipeMap.ZL_IS), outputs.toArray(RecipeMap.ZL_IS),
                 null, chances, fIn.toArray(RecipeMap.ZL_FS), fOut.toArray(RecipeMap.ZL_FS), dur, eut, 0);
         for (int index = 0; index < itemIn.length; index++) {
@@ -219,8 +219,8 @@ public final class GeneratedRecipeResolver {
                     // GT6's block forms (OP.blockGem/blockIngot/blockPlate/…, crateGt*) are blocks in the
                     // port (BlockPrefixRegistry), so an item-prefix miss falls through to them instead of
                     // dropping the recipe row.
-                    gregtech.api.prefix.BlockMaterialPrefix block =
-                            gregtech.api.prefix.BlockPrefixRegistry.byName(parts[1]);
+                    gregtech.internal.prefix.BlockMaterialPrefix block =
+                            gregtech.internal.prefix.BlockPrefixRegistry.byName(parts[1]);
                     if (block == null) return null;
                     ItemStack stack = gregtech.registry.GTBlocks.getStack(block, material);
                     if (stack.isEmpty()) return null;
@@ -445,7 +445,7 @@ public final class GeneratedRecipeResolver {
 
     private static MaterialPrefix prefix(String name) {
         if (PREFIXES.isEmpty()) {
-            for (MaterialPrefix prefix : gregtech.api.prefix.PrefixRegistry.all()) {
+            for (MaterialPrefix prefix : gregtech.internal.prefix.PrefixRegistry.all()) {
                 PREFIXES.put(prefix.getName(), prefix);
             }
         }

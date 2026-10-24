@@ -6,13 +6,13 @@ import gregtech.content.material.Materials;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.prefix.BlockMaterialPrefix;
-import gregtech.api.prefix.BlockPrefixRegistry;
+import gregtech.internal.prefix.BlockMaterialPrefix;
+import gregtech.internal.prefix.BlockPrefixRegistry;
 import gregtech.data.MaterialPrefix;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.block.stone.StoneType;
 import gregtech.block.stone.StoneVariant;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolType;
 import gregtech.data.generated.GT6Materials;
 import gregtech.item.CreativeTabIconItem;
 import gregtech.item.GTToolItem;

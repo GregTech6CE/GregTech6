@@ -23,7 +23,7 @@ import net.minecraft.world.inventory.CraftingContainer;
 /** Original BlockBaseSpike meta6↔7 and meta14↔15, not arbitrary item-ID shapeless crafting.
  * A dedicated serializer avoids changing the established tool_shapeless wire contract. */
 public final class SpikeConversionRecipe extends ShapelessRecipe
-        implements gregtech.api.recipe.AutocraftableCraftingRecipe {
+        implements gregtech.internal.recipe.AutocraftableCraftingRecipe {
 //? if >=1.21.1 {
     /*private final ShapelessRecipe base;
 *///?}

@@ -38,7 +38,7 @@ public final class ChemicalBatteryIdentityTests {
         var stack=new ItemStack(item);item.setCharge(stack,98765);var p=new BlockPos(1,2,1);h.setBlock(p,block);
         var pos=h.absolutePos(p);block.setPlacedBy(h.getLevel(),pos,block.defaultBlockState(),null,stack);
         var be=(ChemicalBatteryBlockEntity)h.getBlockEntity(p);
-        h.assertTrue(be.stored()==98765&&!((Object)be instanceof gregtech.api.energy.IEnergyBlock),"placed battery is passive and charged");
+        h.assertTrue(be.stored()==98765&&!((Object)be instanceof gregtech.internal.energy.IEnergyBlock),"placed battery is passive and charged");
         h.getLevel().destroyBlock(pos,true);
         var drops=h.getLevel().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new AABB(pos).inflate(.8));
         h.assertTrue(drops.stream().filter(e->e.getItem().is(item)&&item.stored(e.getItem())==98765).count()==1,"exactly one real charged drop");h.succeed();

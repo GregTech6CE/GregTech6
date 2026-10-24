@@ -1,6 +1,6 @@
 package gregtech.content.transport.fluid;
 
-import gregtech.api.machine.TankSpec;
+import gregtech.internal.machine.TankSpec;
 import gregtech.content.material.Materials;
 
 /** Fixed specification of the original logistics barrel (multi-tile 32072). */

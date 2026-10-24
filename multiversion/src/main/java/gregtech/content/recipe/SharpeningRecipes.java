@@ -4,12 +4,12 @@ package gregtech.content.recipe;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.MaterialProperty;
-import gregtech.api.recipe.Recipe;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.material.MaterialProperty;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.data.MaterialPrefix;
 import gregtech.registry.GTItems;
@@ -108,8 +108,8 @@ public final class SharpeningRecipes {
 
     private static void sharpen(GTMaterial material, String inName, int inAmount, String outName, int outCount,
             long multiplier, boolean pulverizedRemains) {
-        MaterialPrefix in = gregtech.api.prefix.PrefixRegistry.byName(inName);
-        MaterialPrefix out = gregtech.api.prefix.PrefixRegistry.byName(outName);
+        MaterialPrefix in = gregtech.internal.prefix.PrefixRegistry.byName(inName);
+        MaterialPrefix out = gregtech.internal.prefix.PrefixRegistry.byName(outName);
         if (in == null || out == null) return;
         ItemStack input = GTItems.getStack(in, material, inAmount);
         ItemStack output = GTItems.getStack(out, material, outCount);

@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 
 /** GT6 Advanced Crafting Table — crafting with inventory cache and recipe memory. */
 public class AdvancedCraftingTableBlock extends HorizontalDirectionalBlock implements EntityBlock,
-        gregtech.api.tool.ToolInteractionTarget {
+        gregtech.internal.tool.ToolInteractionTarget {
 //? if >=1.21.1 {
     /*@Override
     protected com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec() {
@@ -22,13 +22,13 @@ public class AdvancedCraftingTableBlock extends HorizontalDirectionalBlock imple
     }
 *///?} else {
 //?}
-    private final gregtech.api.material.GTMaterial material;
+    private final gregtech.internal.material.GTMaterial material;
 
-    public gregtech.api.material.GTMaterial material() {
+    public gregtech.internal.material.GTMaterial material() {
         return material;
     }
 
-    public AdvancedCraftingTableBlock(gregtech.api.material.GTMaterial material, Properties properties) {
+    public AdvancedCraftingTableBlock(gregtech.internal.material.GTMaterial material, Properties properties) {
         super(properties);
         this.material = material;
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
@@ -49,8 +49,8 @@ public class AdvancedCraftingTableBlock extends HorizontalDirectionalBlock imple
     }
 
     @Override
-    public gregtech.api.tool.ToolInteractionSpec toolInteraction(BlockState state, net.minecraft.world.item.ItemStack tool) {
-        return gregtech.api.tool.GTToolHelper.isMachineWrench(tool) ? gregtech.api.tool.ToolInteractionSpec.facing(FACING,
+    public gregtech.internal.tool.ToolInteractionSpec toolInteraction(BlockState state, net.minecraft.world.item.ItemStack tool) {
+        return gregtech.internal.tool.GTToolHelper.isMachineWrench(tool) ? gregtech.internal.tool.ToolInteractionSpec.facing(FACING,
                 gregtech.block.machine.MachineRotationType.HORIZONTAL) : null;
     }
 //? if >=1.21.1 {
@@ -63,12 +63,12 @@ public class AdvancedCraftingTableBlock extends HorizontalDirectionalBlock imple
         if (hand != net.minecraft.world.InteractionHand.MAIN_HAND
                 || !(level.getBlockEntity(pos) instanceof AdvancedCraftingTableBlockEntity table)) return net.minecraft.world.InteractionResult.PASS;
         var tool = player.getItemInHand(hand);
-        if (gregtech.api.tool.GTToolHelper.isMonkeyWrench(tool) || gregtech.api.tool.GTToolHelper.isScrewdriver(tool)) {
+        if (gregtech.internal.tool.GTToolHelper.isMonkeyWrench(tool) || gregtech.internal.tool.GTToolHelper.isScrewdriver(tool)) {
             if (!level.isClientSide && player.mayBuild() && level.mayInteract(player, pos)) {
                 boolean upper = hit.getDirection() == Direction.UP;
-                boolean filter = gregtech.api.tool.GTToolHelper.isScrewdriver(tool);
+                boolean filter = gregtech.internal.tool.GTToolHelper.isScrewdriver(tool);
                 table.toggleMode(upper, filter);
-                gregtech.api.tool.GTToolHelper.damageForToolClickReturn(tool, 10000, player);
+                gregtech.internal.tool.GTToolHelper.damageForToolClickReturn(tool, 10000, player);
                 boolean enabled = (table.modes() & (filter ? (upper ? 4 : 8) : (upper ? 1 : 2))) != 0;
                 player.displayClientMessage(net.minecraft.network.chat.Component.translatable(filter ? "message.gt6ce.crafting.filter"
                         : "message.gt6ce.crafting.access", upper ? "4×4" : "9×4",
@@ -76,7 +76,7 @@ public class AdvancedCraftingTableBlock extends HorizontalDirectionalBlock imple
             }
             return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
         }
-        if (gregtech.api.tool.ToolInteractions.use(state, level, pos, player, hand,
+        if (gregtech.internal.tool.ToolInteractions.use(state, level, pos, player, hand,
                 hit)) return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
         boolean upper = hit.getDirection() == Direction.UP;
         if (!upper && hit.getDirection().getAxis() != state.getValue(FACING).getAxis()) return net.minecraft.world.InteractionResult.PASS;

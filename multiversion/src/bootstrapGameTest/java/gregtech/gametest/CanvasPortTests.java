@@ -1,6 +1,7 @@
 package gregtech.gametest;
 
 import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.cover.*;
 import gregtech.content.data.*;
@@ -35,7 +36,7 @@ public final class CanvasPortTests {
         for(var variant:CanvasRules.VARIANTS){
             var canvas=item(variant.path());
             h.assertTrue(CanvasData.isCanvas(canvas)&&CoverItems.isCover(canvas),"all sixteen identities are real covers");
-            var material=gregtech.api.material.ItemMaterialRegistry.get(canvas).orElseThrow();h.assertTrue(material.material().getName().equals("Paper")&&material.amount()==gregtech.api.material.GTValues.U,"canvas retains original one-unit paper composition");
+            var material=gregtech.internal.material.ItemMaterialRegistry.get(canvas).orElseThrow();h.assertTrue(material.material().getName().equals("Paper")&&material.amount()==gregtech.api.material.GTValues.U,"canvas retains original one-unit paper composition");
             String field=variant.name().replace(" Canvas","").replace(" ","");
             for(String category:List.of("Water","Flower","Chemical")){
                 var dye=GTFluids.stack("Dye_"+category+"_"+field,144);

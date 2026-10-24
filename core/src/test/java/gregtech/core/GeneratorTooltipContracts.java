@@ -1,6 +1,7 @@
 package gregtech.core;
 
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.content.machine.MachineConstructionMaterials;
 import gregtech.content.multiblock.OriginalGeneratorTooltipData;
 import gregtech.content.multiblock.OriginalGeneratorTooltipData.Kind;

@@ -1,12 +1,12 @@
 package gregtech.gametest;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialEquivalence;
-import gregtech.api.material.MaterialUnification;
-import gregtech.api.prefix.BlockMaterialPrefix;
-import gregtech.api.recipe.Recipe;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialEquivalence;
+import gregtech.internal.material.MaterialUnification;
+import gregtech.internal.prefix.BlockMaterialPrefix;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.content.recipe.MaterialFormConversionRecipes;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.data.MaterialPrefix;

@@ -4,7 +4,7 @@ import gregtech.content.transport.*;
 import gregtech.content.recipe.PipeRecipes;
 import gregtech.block.machine.ItemPipeBlock;
 import gregtech.blockentity.machine.*;
-import gregtech.api.tool.ScrewdriverUseTarget;
+import gregtech.internal.tool.ScrewdriverUseTarget;
 import gregtech.content.cover.CoverUtilityBehaviors;
 import net.minecraft.core.*;import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;import net.minecraft.world.item.*;
@@ -14,7 +14,7 @@ import net.neoforged.api.distmarker.Dist;import net.neoforged.bus.api.SubscribeE
 import net.neoforged.fml.common.EventBusSubscriber;import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;import net.neoforged.neoforge.capabilities.Capabilities;
 /** Opt-in real native capabilities/ticks/component persistence checkpoint, excluded from the jar. */
-@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID,value=Dist.DEDICATED_SERVER)
+@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID,value=Dist.DEDICATED_SERVER)
 public final class NeoItemLogisticsCheckpoint {
  private NeoItemLogisticsCheckpoint(){}
  private static ServerLevel world;private static int ticks;private static boolean finished;

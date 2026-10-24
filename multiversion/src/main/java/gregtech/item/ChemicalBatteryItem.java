@@ -1,6 +1,6 @@
 package gregtech.item;
 
-import gregtech.api.energy.item.IItemEnergy;
+import gregtech.internal.energy.item.IItemEnergy;
 import gregtech.block.energy.ChemicalBatteryBlock;
 import gregtech.content.energy.PortableBatterySpec;
 import gregtech.data.GregTechTags;

@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.recipe.Recipe;
 import gregtech.data.MachineRecipeMaps;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -97,7 +97,7 @@ public final class CombProcessingTests {
         h.assertTrue(honey, "it yields 100 mB of honey: " + java.util.Arrays.toString(recipe.mFluidOutputs));
         ItemStack wax = gregtech.registry.GTItems.getStack(
                 gregtech.data.MaterialPrefix.dust,
-                gregtech.api.material.GTMaterialRegistry.get("WaxBee"), 1);
+                gregtech.internal.material.GTMaterialRegistry.get("WaxBee"), 1);
         h.assertTrue(!wax.isEmpty(), "the port registers bee wax (" + wax + ")");
         boolean sawWax = false;
         for (ItemStack out : recipe.mOutputs) {

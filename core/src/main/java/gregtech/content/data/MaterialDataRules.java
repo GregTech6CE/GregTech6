@@ -29,7 +29,7 @@ public final class MaterialDataRules {
         SOLID, LIQUID, GAS
     }
 
-    public static AmbientPhase ambientPhase(gregtech.api.material.GTMaterial material) {
+    public static AmbientPhase ambientPhase(gregtech.internal.material.GTMaterial material) {
         if (material.getMeltingPoint() > ENVIRONMENT_KELVIN) return AmbientPhase.SOLID;
         return material.getBoilingPoint() <= ENVIRONMENT_KELVIN ? AmbientPhase.GAS : AmbientPhase.LIQUID;
     }

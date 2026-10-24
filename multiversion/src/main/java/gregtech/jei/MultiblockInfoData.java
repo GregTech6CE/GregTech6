@@ -2,7 +2,7 @@ package gregtech.jei;
 
 
 
-import gregtech.api.multiblock.*;
+import gregtech.internal.multiblock.*;
 
 import gregtech.content.multiblock.BoilerStructure;
 
@@ -65,7 +65,7 @@ public static List<Info> recipes() {
 //? if >=1.21.1 {
 /*        for(var entry:gregtech.platform.neoforge.machine.BasicMachineRegistries.all()) {
 *///?} else {
-        for(var entry:gregtech.api.machine.MachineRegistry.basicMachines()) {
+        for(var entry:gregtech.internal.machine.MachineRegistry.basicMachines()) {
 //?}
 
 

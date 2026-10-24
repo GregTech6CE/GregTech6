@@ -26,14 +26,14 @@ public final class FilterRules {
     public static String prefix(ItemStack candidateStack) {
         if (candidateStack.isEmpty())
             return "";
-        if (candidateStack.getItem() instanceof gregtech.api.material.MaterialFormItem formItem)
+        if (candidateStack.getItem() instanceof gregtech.internal.material.MaterialFormItem formItem)
             return formItem.getPrefix().getName();
 //? if >=1.21.1 {
-        /*if (candidateStack.getItem() instanceof gregtech.api.inventory.ContainerShapeLike formItem
+        /*if (candidateStack.getItem() instanceof gregtech.internal.inventory.ContainerShapeLike formItem
                 && formItem.shapeId().equals("cell"))
             return "capcellcon";
         if (candidateStack.getItem() instanceof BlockItem formItem
-                && formItem.getBlock() instanceof gregtech.api.inventory.PipeFormLike pipeForm)
+                && formItem.getBlock() instanceof gregtech.internal.inventory.PipeFormLike pipeForm)
             return pipePrefix(pipeForm.pipeSizeName());
 *///?} else {
         if (candidateStack.getItem() instanceof gregtech.item.PortableFluidContainerItem formItem

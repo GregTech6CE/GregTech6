@@ -2,8 +2,8 @@ package gregtech.content.energy;
 
 import gregtech.content.material.Materials;
 import gregtech.content.material.generated.WoodMaterials;
-import gregtech.api.energy.AxleSpec;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.energy.AxleSpec;
+import gregtech.internal.material.GTMaterial;
 import java.util.List;
 import java.util.ArrayList;
 /** Thirteen original material families, each with four axle sizes; runtime behavior is separate. */

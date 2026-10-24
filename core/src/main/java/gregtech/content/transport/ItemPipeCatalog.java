@@ -1,6 +1,6 @@
 package gregtech.content.transport;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ public final class ItemPipeCatalog {
     public static List<ItemPipeMat> mats() {
         var rows = new ArrayList<ItemPipeMat>();
         java.util.Collections.addAll(rows, ITEM_PIPE_MATS);
-        for (var line : gregtech.api.addon.AddonPipes.itemLines())
+        for (var line : gregtech.internal.addon.AddonPipes.itemLines())
             rows.add(new ItemPipeMat(line.idSuffix(), line.material(), line.stepSize(), line.invSize()));
         return List.copyOf(rows);
     }

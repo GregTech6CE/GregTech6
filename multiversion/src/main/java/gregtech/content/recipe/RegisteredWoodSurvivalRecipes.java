@@ -3,6 +3,7 @@ import gregtech.data.*;
 import gregtech.registry.GTWoods;
 import gregtech.block.wood.WoodSpecies;
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.content.plant.WoodSlabCatalog;
 import net.minecraft.world.item.ItemStack;
 /** GT6 default log/beam sawing applied to the currently registered GT tree families.
@@ -27,16 +28,16 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
    ItemMaterialRegistry.register(GTWoods.beam(species).asItem(),null,material,8*GTValues.U);
   }
   for(var wood:NaturalWoodCraftingRows.SPECIES){
-   var material=gregtech.api.material.GTMaterialRegistry.get(wood.material());
-   var bark=gregtech.api.material.GTMaterialRegistry.get(wood.barkMaterial());
+   var material=gregtech.internal.material.GTMaterialRegistry.get(wood.material());
+   var bark=gregtech.internal.material.GTMaterialRegistry.get(wood.barkMaterial());
    long unit=gregtech.api.material.GTValues.U;
-   var components=java.util.List.of(gregtech.api.material.MaterialComponent.of(material,5*unit),
-           gregtech.api.material.MaterialComponent.of(bark,unit));
+   var components=java.util.List.of(gregtech.internal.material.MaterialComponent.of(material,5*unit),
+           gregtech.internal.material.MaterialComponent.of(bark,unit));
    // WoodEntry:175-176 upgrades the original generic 4U log to 5U wood + 1U bark,
    // or 6U of the same material for rotten/mossy wood. PlankEntry contributes 1U.
-   gregtech.api.material.ItemMaterialRegistry.register(item("gt6ce:log_"+wood.kind(),1).getItem(),
-           new gregtech.api.material.ItemComposition(null,components,"GT6 WoodEntry Log1",true));
-   gregtech.api.material.ItemMaterialRegistry.register(item("gt6ce:planks_"+wood.kind(),1).getItem(),MaterialPrefix.plate,material,unit);
+   gregtech.internal.material.ItemMaterialRegistry.register(item("gt6ce:log_"+wood.kind(),1).getItem(),
+           new gregtech.internal.material.ItemComposition(null,components,"GT6 WoodEntry Log1",true));
+   gregtech.internal.material.ItemMaterialRegistry.register(item("gt6ce:planks_"+wood.kind(),1).getItem(),MaterialPrefix.plate,material,unit);
   }
  }
  public static int register(){
@@ -63,10 +64,10 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
  /** Loader_Recipes_Woods:296-304: half a unit of wood, or petrify nine slabs. */
  private void slabUses(String wood){
   String name=gregtech.content.plant.WoodSlabCatalog.material(wood);
-  var material=gregtech.api.material.GTMaterialRegistry.get(name);
+  var material=gregtech.internal.material.GTMaterialRegistry.get(name);
   var slab=item("gt6ce:slab_"+wood,1);
   pulverize(item("gt6ce:planks_"+wood,1),wood,GTValues.U);
-  gregtech.api.material.ItemMaterialRegistry.register(slab.getItem(),null,material,
+  gregtech.internal.material.ItemMaterialRegistry.register(slab.getItem(),null,material,
           gregtech.api.material.GTValues.U/2);
   var dust=MortarGrindingRecipes.pulverize(material,gregtech.api.material.GTValues.U/2);
   // pulverizing registers both the crusher and the shredder, as in the original helper.

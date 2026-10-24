@@ -35,16 +35,16 @@ public final class SmelteryFireHelper {
 
     /** Original vapor effects use the material boiling point, before the thermal step. */
     public static void vaporize(Level level, BlockPos pos,
-            gregtech.api.machine.crucible.CrucibleHazards.Profile profile,
-            gregtech.api.machine.crucible.CrucibleProcess.Vapor vapor) {
+            gregtech.internal.machine.crucible.CrucibleHazards.Profile profile,
+            gregtech.internal.machine.crucible.CrucibleProcess.Vapor vapor) {
         if (level == null || level.isClientSide) return;
         gasDamage(level, pos, profile, vapor.material().getBoilingPoint());
         igniteAttempts(level, pos, profile,
-                gregtech.api.machine.crucible.CrucibleHazards.vaporFireAttempts(
+                gregtech.internal.machine.crucible.CrucibleHazards.vaporFireAttempts(
                         vapor.material().getBoilingPoint(), vapor.amount()));
     }
     private static void gasDamage(Level level, BlockPos pos,
-            gregtech.api.machine.crucible.CrucibleHazards.Profile profile, long temperature) {
+            gregtech.internal.machine.crucible.CrucibleHazards.Profile profile, long temperature) {
         if (temperature < 320) return;
         int r = profile.range();
         AABB area = new AABB(pos.getX()-r, pos.getY()-1, pos.getZ()-r,
@@ -53,11 +53,11 @@ public final class SmelteryFireHelper {
             gregtech.util.GTEntityHelper.applyTemperatureDamage(entity, temperature, profile.temperatureMultiplier());
     }
     public static void crucibleMeltdown(Level level, BlockPos pos,
-            gregtech.api.machine.crucible.CrucibleHazards.Profile profile, long temperature) {
+            gregtech.internal.machine.crucible.CrucibleHazards.Profile profile, long temperature) {
         if (level == null || level.isClientSide) return;
         gasDamage(level, pos, profile, temperature);
         igniteAttempts(level, pos, profile,
-                gregtech.api.machine.crucible.CrucibleHazards.meltdownFireAttempts(temperature));
+                gregtech.internal.machine.crucible.CrucibleHazards.meltdownFireAttempts(temperature));
         // 1.7.10 flowing_lava metadata1 maps to modern LiquidBlock.LEVEL1.
         var lava = Blocks.LAVA.defaultBlockState().setValue(net.minecraft.world.level.block.LiquidBlock.LEVEL, 1);
         if (profile.largeVessel()) {
@@ -66,9 +66,9 @@ public final class SmelteryFireHelper {
         } else level.setBlock(pos, lava, 3);
     }
     private static void igniteAttempts(Level level, BlockPos pos,
-            gregtech.api.machine.crucible.CrucibleHazards.Profile profile, int attempts) {
+            gregtech.internal.machine.crucible.CrucibleHazards.Profile profile, int attempts) {
         for (int i=0; i<attempts; i++) {
-            var target = gregtech.api.machine.crucible.CrucibleHazards.fireTarget(profile, level.random::nextInt);
+            var target = gregtech.internal.machine.crucible.CrucibleHazards.fireTarget(profile, level.random::nextInt);
             igniteAt(level, pos.offset(target.x(), target.y(), target.z()), target.checkFlammability());
         }
     }
@@ -80,7 +80,7 @@ public final class SmelteryFireHelper {
         var block = state.getBlock();
         if (state.getFluidState().is(net.minecraft.tags.FluidTags.LAVA)
                 || block instanceof net.minecraft.world.level.block.BaseFireBlock
-                || state.is(gregtech.api.fluid.PipeIgnition.PROTECTED)) return false;
+                || state.is(gregtech.internal.fluid.PipeIgnition.PROTECTED)) return false;
         if (!(block instanceof net.minecraft.world.level.block.CarpetBlock)
                 && !state.getCollisionShape(level, pos).isEmpty()) return false;
         for (var face : net.minecraft.core.Direction.values())

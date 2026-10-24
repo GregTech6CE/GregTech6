@@ -1,12 +1,12 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.machine.CrucibleSpec;
-import gregtech.api.machine.ITileEntityCrucible;
-import gregtech.api.machine.ITileEntityMold;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.machine.CrucibleSpec;
+import gregtech.internal.machine.ITileEntityCrucible;
+import gregtech.internal.machine.ITileEntityMold;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
-import gregtech.api.prefix.BlockMaterialPrefix;
+import gregtech.internal.prefix.BlockMaterialPrefix;
 import gregtech.block.machine.MoldBasinBlock;
 import gregtech.data.GregTechConstants;
 import gregtech.data.GregTechTags;
@@ -96,7 +96,7 @@ public class MoldBasinBlockEntity extends BlockEntity implements ITileEntityMold
     private void tickServer() {
         // Update temperature toward environment
         long envTemp = environmentTemperature();
-        temperature=gregtech.api.machine.crucible.MoldCastingRules.cool(temperature,envTemp);
+        temperature=gregtech.internal.machine.crucible.MoldCastingRules.cool(temperature,envTemp);
 
         // Clear empty content
         if (contentAmount <= 0) {
@@ -304,7 +304,7 @@ public class MoldBasinBlockEntity extends BlockEntity implements ITileEntityMold
 
     /** Consume exactly one casting charge; preserve the remainder and its temperature. */
     public long consumeContent(long required) {
-        long consumed = gregtech.api.machine.crucible.MoldCastingRules.castingAmount(contentAmount, required);
+        long consumed = gregtech.internal.machine.crucible.MoldCastingRules.castingAmount(contentAmount, required);
         if (contentMaterial == null || consumed == 0) return 0;
         contentAmount -= consumed;
         if (contentAmount == 0) {
@@ -349,7 +349,7 @@ public class MoldBasinBlockEntity extends BlockEntity implements ITileEntityMold
         if (!solidOutput.isEmpty()) return 0; // Solid output not yet extracted
         if (!isMoldInputSide(side)) return 0;
         // GT6: acid melts reject non-acid-proof basins
-        if (!spec().acidProof() && material.has(gregtech.api.material.MaterialProperty.ACID)) return 0;
+        if (!spec().acidProof() && material.has(gregtech.internal.material.MaterialProperty.ACID)) return 0;
 
         long required = getMoldRequiredMaterialUnits();
         if (required <= 0) return 0;

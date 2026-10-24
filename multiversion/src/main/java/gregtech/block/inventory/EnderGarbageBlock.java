@@ -1,6 +1,6 @@
 package gregtech.block.inventory;
 
-import gregtech.api.GTWaterloggable;
+import gregtech.internal.GTWaterloggable;
 import gregtech.blockentity.inventory.EnderGarbageBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -137,7 +137,7 @@ public class EnderGarbageBlock extends Block implements EntityBlock, SimpleWater
             net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,
             net.minecraft.world.level.block.state.BlockState next, boolean moving) {
         if (!state.is(next.getBlock()) && !level.isClientSide
-                && level.getBlockEntity(pos) instanceof gregtech.api.inventory.BlockContents contents) {
+                && level.getBlockEntity(pos) instanceof gregtech.internal.inventory.BlockContents contents) {
             contents.dropContents();
             level.updateNeighbourForOutputSignal(pos, this);
         }

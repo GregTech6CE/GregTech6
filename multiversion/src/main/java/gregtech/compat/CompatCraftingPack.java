@@ -1,8 +1,8 @@
 package gregtech.compat;
 
 import com.google.gson.Gson;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.content.compat.CompatSpecs;
 import gregtech.registry.GTItems;
 //? if >=1.21.1 {
@@ -58,9 +58,9 @@ import java.util.Set;
  * after the recipe manager has applied every pack.
  */
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+/*@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 *///?} else {
-@Mod.EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 //?}
 public final class CompatCraftingPack extends AbstractPackResources {
     private static final Gson GSON = new Gson();
@@ -253,10 +253,10 @@ public final class CompatCraftingPack extends AbstractPackResources {
 
 //? if >=1.21.1 {
     /*/^* Game bus. Runs after the recipe manager because NeoForge appends these listeners to the reload. ^/
-    @EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID)
+    @EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID)
 *///?} else {
     /** Game bus. Runs after the recipe manager because Forge appends these listeners to the reload. */
-    @Mod.EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+    @Mod.EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 //?}
     static final class Removals {
         private Removals() {}

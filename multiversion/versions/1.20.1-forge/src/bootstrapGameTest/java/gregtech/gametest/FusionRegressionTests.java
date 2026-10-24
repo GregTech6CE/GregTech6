@@ -1,8 +1,10 @@
 package gregtech.gametest;
 
 import gregtech.api.machine.*;
-import gregtech.api.multiblock.MultiblockLayout.Role;
+import gregtech.internal.machine.*;
+import gregtech.internal.multiblock.MultiblockLayout.Role;
 import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.block.machine.BasicMachineBlock;
 import gregtech.blockentity.machine.*;
 import gregtech.content.multiblock.*;

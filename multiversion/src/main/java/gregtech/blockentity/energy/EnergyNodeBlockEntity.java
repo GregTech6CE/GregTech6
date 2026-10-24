@@ -1,9 +1,9 @@
 package gregtech.blockentity.energy;
 
-import gregtech.api.energy.EnergyNodeSpec;
-import gregtech.api.energy.EnergyTransfer;
-import gregtech.api.energy.IEnergyBlock;
-import gregtech.api.fluid.FluidTankGT;
+import gregtech.internal.energy.EnergyNodeSpec;
+import gregtech.internal.energy.EnergyTransfer;
+import gregtech.internal.energy.IEnergyBlock;
+import gregtech.internal.fluid.FluidTankGT;
 import gregtech.blockentity.GTEnergyBlockEntity;
 import gregtech.data.GregTechTags;
 import net.minecraft.core.BlockPos;
@@ -40,7 +40,7 @@ import java.util.List;
  * storage cabinets (EU buffer). Inputs on every face except the front; output
  * packets of {@code outputRate} leave through the front (FACING).
  */
-public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregtech.api.machine.AdjacentEnergyControl.Provider, gregtech.api.inventory.BlockContents, gregtech.api.machine.MachineControl.Provider, gregtech.content.cover.PanelCoverHost {
+public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregtech.internal.machine.AdjacentEnergyControl.Provider, gregtech.internal.inventory.BlockContents, gregtech.api.machine.MachineControl.Provider, gregtech.content.cover.PanelCoverHost {
 
     private java.util.Map<Direction,net.minecraft.world.item.ItemStack> batteryCovers=new java.util.EnumMap<>(Direction.class);
     private gregtech.content.cover.PanelCoverRuntime batteryPanels;
@@ -226,7 +226,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
 
     public static boolean isRotorItem(net.minecraft.world.item.ItemStack stack) {
         return !stack.isEmpty()
-                && stack.getItem() instanceof gregtech.api.material.MaterialFormItem mat
+                && stack.getItem() instanceof gregtech.internal.material.MaterialFormItem mat
                 && mat.getPrefix() == gregtech.data.MaterialPrefix.rotor;
     }
 
@@ -254,7 +254,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
     /** Battery interaction must use the host's channel (EU boxes or LU crystal chargers). */
     public static long batteryCapacityOf(net.minecraft.world.item.ItemStack stack, GregTechTags.Tag type) {
         return gregtech.content.energy.BatteryBoxEnergy.accepts(stack, type)
-                ? ((gregtech.api.energy.item.IItemEnergy)stack.getItem())
+                ? ((gregtech.internal.energy.item.IItemEnergy)stack.getItem())
                     .getEnergyCapacity(stack, type) : 0;
     }
 
@@ -277,7 +277,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
     private long capacity() {
         if (isBatteryBox()) {
             long sum = 0;
-            for (var b : batteries) if (b.getItem() instanceof gregtech.api.energy.item.IItemEnergy item) sum += item.getEnergyCapacity(b, spec.inType());
+            for (var b : batteries) if (b.getItem() instanceof gregtech.internal.energy.item.IItemEnergy item) sum += item.getEnergyCapacity(b, spec.inType());
             return sum;
         }
         return hasOriginalConverter() || isSteamConverter() ? spec.inputRate() * 2 : spec.capacity();
@@ -607,7 +607,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
 
     private void rotaryOverload(long size, GregTechTags.Tag type) {
         if (magnetOverloads < 100) { buffer = 0; magnetOverloads++; setChanged(); return; }
-        gregtech.api.energy.MachineOverload.apply(this, size, type);
+        gregtech.internal.energy.MachineOverload.apply(this, size, type);
         setChanged();
     }
 
@@ -808,7 +808,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
             if(size==Long.MIN_VALUE || !isEnergyAcceptingFrom(energyType,side,false))return 0;
             return batteryEnergy.inject(Math.abs(size),Long.MAX_VALUE,false);
         }
-        long magnitude = gregtech.api.energy.EnergyPackets.magnitude(size, energyType == GregTechTags.Energy.RU);
+        long magnitude = gregtech.internal.energy.EnergyPackets.magnitude(size, energyType == GregTechTags.Energy.RU);
         if (!acceptsEnergyInput() || energyType != spec.inType() || magnitude == 0) return 0;
         if ((isMagnet() || isElectricTransformer()) && !isEnergyAcceptingFrom(energyType, side, false)) return 0;
         if ((isRotationTransformer() || isElectricTransformer()) && !isEnergyAcceptingFrom(energyType, side, false)) return 0;
@@ -859,7 +859,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
             if (doInject && accepted > 0) { buffer += magnitude * accepted; setChanged(); }
             return accepted;
         }
-        long magnitude = gregtech.api.energy.EnergyPackets.magnitude(size, energyType == GregTechTags.Energy.RU);
+        long magnitude = gregtech.internal.energy.EnergyPackets.magnitude(size, energyType == GregTechTags.Energy.RU);
         if (!acceptsEnergyInput() || energyType != spec.inType() || amount <= 0 || magnitude == 0) return 0;
         if ((isMagnet() || isElectricTransformer()) && !isEnergyAcceptingFrom(energyType, side, false)) return 0;
         if ((isMagnet() || isElectricTransformer()) && magnitude > getEnergySizeInputMax(energyType, side)) {
@@ -868,7 +868,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
         }
         if ((isRotationTransformer() || isElectricTransformer()) && !isEnergyAcceptingFrom(energyType, side, false)) return 0;
         long space = Math.max(0, capacity() - buffer);
-        long accepted = gregtech.api.energy.EnergyPackets.fitting(amount, space, magnitude);
+        long accepted = gregtech.internal.energy.EnergyPackets.fitting(amount, space, magnitude);
         if (doInject && accepted > 0) {
             if (isRotationTransformer()) rotationNegativeInput = size < 0;
             buffer += accepted * magnitude;
@@ -921,9 +921,9 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
     private void batteryOvervoltage(long packet) {
         if (level == null || level.isClientSide) return;
         if (gregtech.GregTechConfig.breakByOverload()) dropContents();
-        gregtech.api.energy.MachineOverload.apply(this, packet, spec.inType());
+        gregtech.internal.energy.MachineOverload.apply(this, packet, spec.inType());
     }
-    @Override public gregtech.api.machine.AdjacentEnergyControl adjacentEnergyControl() {
+    @Override public gregtech.internal.machine.AdjacentEnergyControl adjacentEnergyControl() {
         if (!hasOriginalConverter() || !gregtech.content.energy.OriginalAdjacentEnergyRules.respondsToAdjacent(spec)) return null;
         return enabled -> {
             // Source waste-energy converters use the same stopped state for manual and adjacent requests.
@@ -1244,11 +1244,11 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
     }
     @Override public void dropContents() {
         if (level == null || level.isClientSide) return;
-        if(!gregtech.content.cover.CoverDrops.retained(this))for(var cover:batteryCovers.values())gregtech.api.inventory.BlockContents.drop(this,cover);
+        if(!gregtech.content.cover.CoverDrops.retained(this))for(var cover:batteryCovers.values())gregtech.internal.inventory.BlockContents.drop(this,cover);
         if(!batteryCovers.isEmpty())batteryCovers.clear();
-        for (var battery : batteries) gregtech.api.inventory.BlockContents.drop(this, battery);
+        for (var battery : batteries) gregtech.internal.inventory.BlockContents.drop(this, battery);
         batteries.clear();
-        gregtech.api.inventory.BlockContents.drop(this, rotor); rotor = net.minecraft.world.item.ItemStack.EMPTY;
+        gregtech.internal.inventory.BlockContents.drop(this, rotor); rotor = net.minecraft.world.item.ItemStack.EMPTY;
         setChanged();
     }
 }

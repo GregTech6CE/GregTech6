@@ -1,6 +1,6 @@
 package gregtech.content.recipe;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.data.MaterialPrefix;
 
 /** Gregorius Techneticies' GT6 Loader_Items:167-168 and EntityArrow_Material:108,178. */

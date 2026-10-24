@@ -1,6 +1,6 @@
 package gregtech.integration.gameplay;
 
-import gregtech.api.mod.GregTechIdentity;
+import gregtech.internal.mod.GregTechIdentity;
 import com.mojang.logging.LogUtils;
 import net.minecraft.gametest.framework.GameTestInfo;
 import net.minecraft.gametest.framework.GlobalTestReporter;

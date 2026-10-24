@@ -2,8 +2,8 @@
  * MultiTileEntityMold/Basin/Faucet/Crossing.addToolTips, with native saved item shape data. */
 package gregtech.client;
 
-import gregtech.api.machine.CrucibleSpec;
-import gregtech.api.machine.crucible.MoldShapes;
+import gregtech.internal.machine.CrucibleSpec;
+import gregtech.internal.machine.crucible.MoldShapes;
 import gregtech.block.machine.MoldItemData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

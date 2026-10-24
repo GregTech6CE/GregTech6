@@ -13,13 +13,13 @@ import com.google.gson.JsonPrimitive;
 /**///?} else {
 import com.google.gson.JsonSyntaxException;
 //?}
-import gregtech.api.recipe.data.MachineRecipeDocuments;
+import gregtech.internal.recipe.data.MachineRecipeDocuments;
 //? if >=1.21.1 {
-/*import gregtech.api.recipe.data.MachineRecipeFields;
+/*import gregtech.internal.recipe.data.MachineRecipeFields;
 *///?} else {
 //?}
-import gregtech.api.recipe.data.MachineRecipeRemovalSpec;
-import gregtech.api.recipe.data.MachineRecipeSpec;
+import gregtech.internal.recipe.data.MachineRecipeRemovalSpec;
+import gregtech.internal.recipe.data.MachineRecipeSpec;
 //? if >=1.21.1 {
 /*import com.mojang.serialization.DataResult;
 import com.mojang.serialization.DynamicOps;

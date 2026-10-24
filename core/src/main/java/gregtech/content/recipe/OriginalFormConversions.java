@@ -8,7 +8,7 @@ public final class OriginalFormConversions {
     private OriginalFormConversions() {}
     public record Conversion(String input, int inputCount, String output, int outputCount, boolean single) {}
     public record Form(String prefix, String material) {
-        public Form { prefix = gregtech.api.prefix.PrefixRegistry.sourceName(prefix); }
+        public Form { prefix = gregtech.internal.prefix.PrefixRegistry.sourceName(prefix); }
     }
     public static final Form UNKNOWN = new Form("", "");
     public static final List<Conversion> FIXED = List.of(

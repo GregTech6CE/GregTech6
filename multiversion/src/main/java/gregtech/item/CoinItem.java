@@ -1,6 +1,6 @@
 package gregtech.item;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.blockentity.misc.CoinPileBlockEntity;
 import gregtech.data.MaterialPrefix;
 //? if >=1.21.1 {
@@ -51,7 +51,7 @@ public final class CoinItem extends MaterialItem {
     public void appendHoverText(ItemStack stack, @org.jetbrains.annotations.Nullable Level level,
 //?}
             java.util.List<net.minecraft.network.chat.Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {
-        tooltip.add(gregtech.api.material.MaterialPresentation.name(getMaterial())
+        tooltip.add(gregtech.internal.material.MaterialPresentation.name(getMaterial())
                 .copy().withStyle(net.minecraft.ChatFormatting.AQUA));
 //? if >=1.21.1 {
         /*super.appendHoverText(stack, context, tooltip, flag);

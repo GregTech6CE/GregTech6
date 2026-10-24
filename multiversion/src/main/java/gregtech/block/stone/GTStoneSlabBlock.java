@@ -1,19 +1,19 @@
 package gregtech.block.stone;
 //? if >=1.21.1 {
 //?} else {
-import gregtech.api.material.MaterialPresentation;
+import gregtech.internal.material.MaterialPresentation;
 //?}
 
 //? if >=1.21.1 {
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.GTWaterloggable;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.GTWaterloggable;
+import gregtech.internal.material.GTMaterial;
 //? if >=1.21.1 {
 //?} else {
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 //?}
 import gregtech.registry.GTBlocks;
 import net.minecraft.core.BlockPos;
@@ -52,7 +52,7 @@ import java.util.List;
 import java.util.Map;
 
 /** GT6-style oriented stone half-block (any axis, including vertical). */
-public final class GTStoneSlabBlock extends Block implements SimpleWaterloggedBlock, gregtech.api.block.FaceGridSlab {
+public final class GTStoneSlabBlock extends Block implements SimpleWaterloggedBlock, gregtech.internal.block.FaceGridSlab {
     public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
 
     private static final Map<Direction, VoxelShape> SHAPES = new EnumMap<>(Direction.class);

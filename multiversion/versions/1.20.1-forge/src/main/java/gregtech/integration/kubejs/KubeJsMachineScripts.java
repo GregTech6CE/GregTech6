@@ -1,7 +1,7 @@
 package gregtech.integration.kubejs;
 
-import gregtech.api.kubejs.KubeJsLoadOrder;
-import gregtech.api.kubejs.KubeJsMachineDeclarations;
+import gregtech.internal.kubejs.KubeJsLoadOrder;
+import gregtech.internal.kubejs.KubeJsMachineDeclarations;
 import dev.latvian.mods.kubejs.KubeJS;
 import dev.latvian.mods.kubejs.script.ScriptType;
 

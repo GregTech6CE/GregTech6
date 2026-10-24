@@ -1,12 +1,12 @@
 package gregtech.block.machine;
 
-import gregtech.api.machine.CrucibleSpec;
+import gregtech.internal.machine.CrucibleSpec;
 //? if >=1.21.1 {
 //?} else {
-import gregtech.api.machine.GTMachineBlock;
+import gregtech.internal.machine.GTMachineBlock;
 //?}
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity;
 import gregtech.platform.neoforge.smeltery.SmelteryRegistries;

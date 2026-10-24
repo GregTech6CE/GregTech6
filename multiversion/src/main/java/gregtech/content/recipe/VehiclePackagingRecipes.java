@@ -1,5 +1,5 @@
 package gregtech.content.recipe;
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.recipe.Recipe;
 import gregtech.data.MachineRecipeMaps;
 import net.minecraft.world.item.ItemStack;
 import java.util.*;

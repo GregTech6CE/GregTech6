@@ -1,6 +1,6 @@
 package gregtech.block.misc;
 
-import gregtech.api.inventory.BlockContents;
+import gregtech.internal.inventory.BlockContents;
 import gregtech.client.gui.HopperContainerMenu;
 import gregtech.registry.GTMenuTypes;
 import net.minecraft.core.*;
@@ -193,9 +193,9 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
     /** Ordinary inputs use exact tags; GT tools additionally require matching heads and usable state. */
     private static boolean same(ItemStack a, ItemStack b) {
         if (a.isEmpty() || b.isEmpty() || a.getItem() != b.getItem()) return false;
-        if (a.getItem() instanceof gregtech.item.GTToolItem) return gregtech.api.tool.GTToolHelper.isUsable(a)
-                && gregtech.api.tool.GTToolHelper.isUsable(b)
-                && gregtech.api.tool.GTToolHelper.getHead(a) == gregtech.api.tool.GTToolHelper.getHead(b);
+        if (a.getItem() instanceof gregtech.item.GTToolItem) return gregtech.internal.tool.GTToolHelper.isUsable(a)
+                && gregtech.internal.tool.GTToolHelper.isUsable(b)
+                && gregtech.internal.tool.GTToolHelper.getHead(a) == gregtech.internal.tool.GTToolHelper.getHead(b);
 //? if >=1.21.1 {
         /*return ItemStack.isSameItemSameComponents(a, b);
 *///?} else {

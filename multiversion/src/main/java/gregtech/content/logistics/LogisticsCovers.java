@@ -1,8 +1,8 @@
 package gregtech.content.logistics;
 
-import gregtech.api.inventory.BlockContents;
+import gregtech.internal.inventory.BlockContents;
 //? if >=1.21.1 {
-/*import gregtech.api.transport.PipeConnections;
+/*import gregtech.internal.transport.PipeConnections;
 import net.minecraft.core.HolderLookup;
 *///?} else {
 import gregtech.block.energy.ElectricWireBlock;

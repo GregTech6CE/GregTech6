@@ -2,7 +2,7 @@
  * LGPL-3.0-or-later. Original specialized multiblock controllers and their registered defaults. */
 package gregtech.content.multiblock;
 import java.util.List;
-import gregtech.api.energy.MachineFaceMasks;
+import gregtech.internal.energy.MachineFaceMasks;
 public final class OriginalLargeRecipeMachineData {
     private OriginalLargeRecipeMachineData() {}
     public enum Face { UP, DOWN, LEFT, RIGHT, FRONT }

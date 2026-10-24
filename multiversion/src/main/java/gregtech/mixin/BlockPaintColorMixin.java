@@ -1,6 +1,6 @@
 package gregtech.mixin;
 
-import gregtech.api.tool.Paintable;
+import gregtech.internal.tool.Paintable;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockAndTintGetter;

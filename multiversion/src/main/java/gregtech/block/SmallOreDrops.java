@@ -1,6 +1,6 @@
 package gregtech.block;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.data.MaterialPrefix;
 import gregtech.registry.GTItems;
 import net.minecraft.core.BlockPos;

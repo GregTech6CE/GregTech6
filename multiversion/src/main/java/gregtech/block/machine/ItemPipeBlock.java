@@ -1,12 +1,12 @@
 package gregtech.block.machine;
 
-import gregtech.api.tool.ToolInteractions;
-import gregtech.api.tool.ToolInteractionSpec;
-import gregtech.api.tool.ToolInteractionTarget;
-import gregtech.api.machine.ItemPipeSpec;
-import gregtech.api.material.MaterialTextureSet;
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.ToolInteractions;
+import gregtech.internal.tool.ToolInteractionSpec;
+import gregtech.internal.tool.ToolInteractionTarget;
+import gregtech.internal.machine.ItemPipeSpec;
+import gregtech.internal.material.MaterialTextureSet;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 import gregtech.blockentity.machine.ItemPipeBlockEntity;
 import gregtech.content.cover.CoverItems;
 import gregtech.content.cover.PanelCoverInteraction;
@@ -22,7 +22,7 @@ import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import gregtech.api.GTWaterloggable;
+import gregtech.internal.GTWaterloggable;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
@@ -43,7 +43,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 /** GT6 item pipe block with wrench-toggleable I/O and thin-cross collision shape. */
-public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget, gregtech.api.inventory.PipeFormLike {
+public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget, gregtech.internal.inventory.PipeFormLike {
     public static final BooleanProperty UP    = BooleanProperty.create("up");
     public static final BooleanProperty DOWN  = BooleanProperty.create("down");
     public static final BooleanProperty NORTH = BooleanProperty.create("north");
@@ -138,10 +138,10 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
         VoxelShape shape = Shapes.box(min, min, min, max, max, max);
         for (Direction dir : Direction.values()) {
             if (!state.getValue(propFor(dir))) continue;
-            double n = gregtech.api.machine.PipeGeometry.pipeHalfOf(
+            double n = gregtech.internal.machine.PipeGeometry.pipeHalfOf(
                     level.getBlockState(pos.relative(dir)));
-            double[] box = gregtech.api.machine.PipeGeometry.armBox(dir, half, n);
-            if (box != null) shape = Shapes.or(shape, gregtech.api.machine.PipeGeometry.boxShape(box));
+            double[] box = gregtech.internal.machine.PipeGeometry.armBox(dir, half, n);
+            if (box != null) shape = Shapes.or(shape, gregtech.internal.machine.PipeGeometry.boxShape(box));
         }
         return shape;
     }

@@ -1,7 +1,8 @@
 package gregtech.content.recipe;
 
-import gregtech.api.machine.ItemPipeSpec;
+import gregtech.internal.machine.ItemPipeSpec;
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.content.transport.*;
 import gregtech.content.transport.fluid.FluidTransportDefinitions;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -15,7 +16,7 @@ public final class TransportMaterialRegistration {
     private static final Set<Item> RECOVERY_ITEMS=Collections.newSetFromMap(new IdentityHashMap<>());
     public static Set<Item> recoveryItems(){return Collections.unmodifiableSet(RECOVERY_ITEMS);}
     private static void bind(String id,ItemComposition data){
-        String key=gregtech.api.addon.AddonPipes.namespace(id)+":"+id;
+        String key=gregtech.internal.addon.AddonPipes.namespace(id)+":"+id;
         var item=BuiltInRegistries.ITEM.get(ResourceLocation.parse(key));
         if(item==Items.AIR)throw new IllegalStateException("Missing native transport material item "+key);
         ItemMaterialRegistry.register(item,data); RECOVERY_ITEMS.add(item);

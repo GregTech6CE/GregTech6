@@ -2,7 +2,8 @@ package gregtech.recipe;
 
 import com.google.gson.*;
 import gregtech.api.material.*;
-import gregtech.api.prefix.*;
+import gregtech.internal.material.*;
+import gregtech.internal.prefix.*;
 import gregtech.block.*;
 import gregtech.block.energy.ElectricWireBlock;
 import gregtech.content.recipe.OriginalFormConversions;
@@ -39,7 +40,7 @@ public final class CraftingMaterialForms {
             String canonical = MaterialEquivalence.materialName(material);
             materials.put(canonical, name);
             materials.put(material.getName().toLowerCase(Locale.ROOT), name);
-            String alternate = gregtech.api.material.MaterialTagAliases.ALTERNATE_SPELLINGS.get(canonical);
+            String alternate = gregtech.internal.material.MaterialTagAliases.ALTERNATE_SPELLINGS.get(canonical);
             if (alternate != null) materials.put(alternate, name);
         }
         materialNames = Map.copyOf(materials);
@@ -203,7 +204,7 @@ public final class CraftingMaterialForms {
     }
 
     public static boolean replaces(CraftingRecipe recipe, RegistryAccess access) {
-        if (recipe instanceof gregtech.api.recipe.AutocraftableCraftingRecipe) return false;
+        if (recipe instanceof gregtech.internal.recipe.AutocraftableCraftingRecipe) return false;
         boolean shapeless = recipe instanceof ShapelessRecipe;
         if (!shapeless && !(recipe instanceof ShapedRecipe)) return false;
         var cells = new ArrayList<Form>();

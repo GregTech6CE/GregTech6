@@ -15,9 +15,9 @@ import net.minecraftforge.fml.common.Mod;
 
 /** New-world spawn agrees with the original Nexus instead of vanilla's distant terrain search. */
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID)
+/*@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID)
 *///?} else {
-@Mod.EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID)
+@Mod.EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID)
 //?}
 public final class OriginSpawnEvents {
 

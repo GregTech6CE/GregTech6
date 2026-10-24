@@ -121,9 +121,9 @@ public class GTWorldFluidBlock extends LiquidBlock {
             BlockState neighbor = level.getBlockState(pos.relative(face));
             if (!(neighbor.getBlock() instanceof net.minecraft.world.level.block.BaseFireBlock)
                     && !neighbor.getFluidState().is(FluidTags.LAVA)) continue;
-            gregtech.api.fluid.PipeIgnition.igniteNeighbors(level, pos);
+            gregtech.internal.fluid.PipeIgnition.igniteNeighbors(level, pos);
             for (int i = 0; i < 3; i++)
-                gregtech.api.fluid.PipeIgnition.igniteNeighbors(level,
+                gregtech.internal.fluid.PipeIgnition.igniteNeighbors(level,
                         pos.offset(random.nextInt(9)-4, random.nextInt(9)-4, random.nextInt(9)-4));
             level.setBlock(pos, Blocks.FIRE.defaultBlockState(), 3);
             return;

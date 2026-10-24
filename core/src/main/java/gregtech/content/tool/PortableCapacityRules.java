@@ -1,6 +1,6 @@
 package gregtech.content.tool;
 
-import gregtech.api.fluid.PortableFluidContainerSpec;
+import gregtech.internal.fluid.PortableFluidContainerSpec;
 
 /** Source measuring-pot/barometer bands and clamp, shared by both storage adapters. */
 public final class PortableCapacityRules {

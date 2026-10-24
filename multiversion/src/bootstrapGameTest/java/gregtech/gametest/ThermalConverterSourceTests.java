@@ -1,7 +1,8 @@
 package gregtech.gametest;
 
 import gregtech.api.material.*;
-import gregtech.api.recipe.RecipeInputs;
+import gregtech.internal.material.*;
+import gregtech.internal.recipe.RecipeInputs;
 import gregtech.block.energy.*;
 import gregtech.blockentity.energy.EnergyNodeBlockEntity;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
@@ -146,7 +147,7 @@ public final class ThermalConverterSourceTests {
                         "original heater14+1/3U hull yields57 quarter dust piles");
             checkCrucible(h,result);
             var unsafe = result.copy(); stored(unsafe);
-            h.assertTrue(RecipeInputs.consume(recovery,List.of(unsafe),List.of(),1) == null && gregtech.api.machine.crucible.CrucibleItemInput.parse(unsafe).isEmpty(),"stored thermal machine survives recycling guard");
+            h.assertTrue(RecipeInputs.consume(recovery,List.of(unsafe),List.of(),1) == null && gregtech.internal.machine.crucible.CrucibleItemInput.parse(unsafe).isEmpty(),"stored thermal machine survives recycling guard");
             if (description.output().contains("flux_")) {
                 stored(stacks.get(4));
                 h.assertTrue(!recipe.matches(grid(stacks),h.getLevel()) && !decoded.matches(grid(stacks),h.getLevel()),"charged or configured base converter cannot be consumed by RF upgrade");

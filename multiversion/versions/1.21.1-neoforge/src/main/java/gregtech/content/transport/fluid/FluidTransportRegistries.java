@@ -1,6 +1,6 @@
 package gregtech.content.transport.fluid;
-import gregtech.api.machine.TankSpec;
-import gregtech.api.machine.PipeSpec;
+import gregtech.internal.machine.TankSpec;
+import gregtech.internal.machine.PipeSpec;
 import gregtech.block.machine.TankBlock;
 import gregtech.block.machine.FluidPipeBlock;
 import gregtech.blockentity.machine.TankBlockEntity;
@@ -22,7 +22,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import java.util.List;
 import java.util.ArrayList;
 /** NeoForge registration and capabilities for the shared ordinary tank/pipe catalog. */
-@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public final class FluidTransportRegistries {
     private FluidTransportRegistries() {}
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks("gt6ce");
@@ -49,7 +49,7 @@ public final class FluidTransportRegistries {
     public static List<DeferredBlock<FluidPipeBlock>> pipes() { return List.copyOf(PIPES); }
 
     public static void register(IEventBus bus) {
-        gregtech.api.addon.AddonMachines.collectContributors();
+        gregtech.internal.addon.AddonMachines.collectContributors();
         for (TankSpec spec : FluidTransportDefinitions.tanks()) {
             var block = BLOCKS.register(spec.id(), () -> new TankBlock(spec, TankBlock.defaultProperties(spec)));
             TANKS.add(block);
@@ -59,7 +59,7 @@ public final class FluidTransportRegistries {
             if (spec.id().equals("drum_steel")) DRUM_STEEL = block;
         }
         for (PipeSpec spec : FluidTransportDefinitions.pipes()) {
-            String owner = gregtech.api.addon.AddonPipes.owner(spec.id());
+            String owner = gregtech.internal.addon.AddonPipes.owner(spec.id());
             if (owner != null) {
                 gregtech.registry.AddonPipeRegistration.queueFluid(owner, spec);
                 continue;

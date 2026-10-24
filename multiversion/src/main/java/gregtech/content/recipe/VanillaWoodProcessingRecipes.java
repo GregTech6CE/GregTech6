@@ -3,6 +3,7 @@ package gregtech.content.recipe;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.data.MaterialPrefix;
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.content.plant.WoodSlabCatalog;
 import net.minecraft.world.item.ItemStack;
 

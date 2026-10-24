@@ -63,7 +63,7 @@ public final class DrawerRepairTests {
     @GameTest(template="test_empty")
     public static void monkeyWrenchAndRotatingSidedAutomationInvalidateCapabilities(GameTestHelper h) {
         var drawer=place(h); var pos=drawer.getBlockPos(); var player=h.makeMockSurvivalPlayer();
-        var tool=gregtech.item.GTToolItem.create(gregtech.api.tool.GTToolType.MONKEY_WRENCH,Materials.Steel,gregtech.api.material.GTMaterialRegistry.get("Wood"));
+        var tool=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.MONKEY_WRENCH,Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
         player.setItemInHand(InteractionHand.MAIN_HAND,tool);
         var old=drawer.getCapability(ForgeCapabilities.ITEM_HANDLER,Direction.UP);
         h.assertTrue(old.orElseThrow(IllegalStateException::new).getSlots()==144,"default any-side access");
@@ -115,9 +115,9 @@ public final class DrawerRepairTests {
             var grid=new TransientCraftingContainer(new CraftingMenu(1,player.getInventory()),3,3);
             for(int slot:new int[]{0,2,6,8}) grid.setItem(slot,new ItemStack(GTStorage.chest(spec.material())));
             for(int slot:new int[]{1,3,5,7}) grid.setItem(slot,GTItems.getStack(MaterialPrefix.screw,spec.material(),1));
-            grid.setItem(4,gregtech.item.GTToolItem.create(gregtech.api.tool.GTToolType.SCREWDRIVER,Materials.Steel,gregtech.api.material.GTMaterialRegistry.get("Wood")));
+            grid.setItem(4,gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.SCREWDRIVER,Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood")));
             h.assertTrue(((net.minecraft.world.item.crafting.CraftingRecipe)recipe).matches(grid,h.getLevel()) && recipe.getResultItem(h.getLevel().registryAccess()).is(block.asItem()),"same-material four chests and screws recipe "+spec.suffix());
-            var wrench=gregtech.item.GTToolItem.create(gregtech.api.tool.GTToolType.WRENCH,Materials.Steel,gregtech.api.material.GTMaterialRegistry.get("Wood"));
+            var wrench=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.WRENCH,Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
             h.assertTrue(gregtech.data.BlockHarvestPolicy.tool(block)==gregtech.data.BlockHarvestPolicy.Tool.WRENCH,"wrench harvest");
             var drops=net.minecraft.world.level.block.Block.getDrops(block.defaultBlockState(),h.getLevel(),pos,h.getLevel().getBlockEntity(pos),player,wrench);
             h.assertTrue(drops.stream().anyMatch(s->s.is(block.asItem())),"self drop for "+spec.suffix());
@@ -127,7 +127,7 @@ public final class DrawerRepairTests {
     @GameTest(template="test_empty")
     public static void workshopPartsMatchOriginalRandomWritesAcrossFourPages(GameTestHelper h) {
         var origin=h.absolutePos(BlockPos.ZERO);var pos=h.absolutePos(new BlockPos(1,1,1));
-        var mats=new gregtech.api.material.GTMaterial[]{Materials.StainlessSteel,Materials.Bronze,Materials.Invar,Materials.Brass};
+        var mats=new gregtech.internal.material.GTMaterial[]{Materials.StainlessSteel,Materials.Bronze,Materials.Invar,Materials.Brass};
         var forms=new MaterialPrefix[]{MaterialPrefix.stick,MaterialPrefix.ingot,MaterialPrefix.plate,MaterialPrefix.plateCurved,MaterialPrefix.screw,MaterialPrefix.ring,MaterialPrefix.gearGt,MaterialPrefix.gearGtSmall};
         int[] bases={32,32,32,16,16,8,1,8},bounds={33,33,33,49,49,25,4,25};
         for(long seed=0;seed<96;seed++) {

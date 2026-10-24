@@ -1,7 +1,7 @@
 package gregtech.data;
 
 import com.google.gson.Gson;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.data.MaterialPrefix;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.Set;
 
 /** Full original shaped/head/assembly recipes over shared tool patterns; reloadable and network synchronized. */
-@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public final class ManualToolRecipePack extends AbstractPackResources {
     private static final Gson GSON=new Gson();
 
@@ -53,10 +53,10 @@ public final class ManualToolRecipePack extends AbstractPackResources {
     private synchronized Map<ResourceLocation,byte[]> data(){
         if(resources!=null)return resources;
         Map<ResourceLocation,byte[]> generated=new HashMap<>();int shaped=0,heads=0,assemblies=0;List<String> without=new ArrayList<>();
-        for(var type:gregtech.api.tool.GTToolType.values()){
+        for(var type:gregtech.internal.tool.GTToolType.values()){
           var patterns=gregtech.recipe.GTToolRecipes.shaped(type);
           for(int i=0;i<patterns.size();i++){if(!gregtech.recipe.GTToolPatternRecipe.hasMaterials(type,patterns.get(i)))continue;add(generated,"tools/"+type.id()+(i==0?"":"_"+i),"tool_crafting",type.id(),i);shaped++;}
-          boolean assembly=type.requiresHeadAssembly()||type==gregtech.api.tool.GTToolType.MAGNIFYING_GLASS;
+          boolean assembly=type.requiresHeadAssembly()||type==gregtech.internal.tool.GTToolType.MAGNIFYING_GLASS;
           if(assembly){add(generated,"tools/"+type.id()+"_assembly","tool_assembly",type.id(),0);assemblies++;}
           if(patterns.isEmpty()&&!assembly)without.add(type.id());
           var headPatterns=gregtech.recipe.GTToolRecipes.heads(type);
@@ -64,7 +64,7 @@ public final class ManualToolRecipePack extends AbstractPackResources {
         }
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original manual tool datapack: {} shaped tools, {} head+handle assemblies, {} heads; original table without manual row: {}",shaped,assemblies,heads,without);
         int powered=0;
-        for(var material:gregtech.api.material.GTMaterialRegistry.allMaterials())for(var spec:gregtech.content.tool.ElectricToolAssembly.values()){
+        for(var material:gregtech.internal.material.GTMaterialRegistry.allMaterials())for(var spec:gregtech.content.tool.ElectricToolAssembly.values()){
          java.util.List<net.minecraft.world.item.ItemStack> batteries=new ArrayList<>();
          for(var entry:gregtech.registry.GTChemicalBatteries.all())if(entry.get().spec().tier()==spec.definition().tier())batteries.add(new net.minecraft.world.item.ItemStack(entry.get().asItem()));
          for(var battery:batteries){if(spec.recipe(material,battery,"")==null)continue;

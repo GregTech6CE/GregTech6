@@ -1,6 +1,6 @@
 package gregtech.block.inventory;
 
-import gregtech.api.GTWaterloggable;
+import gregtech.internal.GTWaterloggable;
 import gregtech.blockentity.inventory.DrawerQuadBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -29,15 +29,15 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /** GT6 Quad Drawer block — front-face quadrants address the four compartments. */
-public class DrawerQuadBlock extends DirectionalBlock implements EntityBlock, SimpleWaterloggedBlock, gregtech.api.tool.ToolInteractionTarget {
+public class DrawerQuadBlock extends DirectionalBlock implements EntityBlock, SimpleWaterloggedBlock, gregtech.internal.tool.ToolInteractionTarget {
 
-    private final gregtech.api.material.GTMaterial material;
-    public gregtech.api.material.GTMaterial material() { return material; }
+    private final gregtech.internal.material.GTMaterial material;
+    public gregtech.internal.material.GTMaterial material() { return material; }
 //? if >=1.21.1 {
     /*@Override protected com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
 *///?} else {
 //?}
-    public DrawerQuadBlock(gregtech.api.material.GTMaterial material, Properties properties) {
+    public DrawerQuadBlock(gregtech.internal.material.GTMaterial material, Properties properties) {
         super(properties);
         this.material = material;
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH).setValue(GTWaterloggable.WATERLOGGED, false));
@@ -78,9 +78,9 @@ public class DrawerQuadBlock extends DirectionalBlock implements EntityBlock, Si
     public static int quadrant(Direction facing, BlockPos pos, Vec3 hit) {
         return gregtech.content.storage.ContainerStorageRules.quadrant(facing.ordinal(),hit.x-pos.getX(),hit.y-pos.getY(),hit.z-pos.getZ());
     }
-    @Override public gregtech.api.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
-        return gregtech.api.tool.GTToolHelper.isMachineWrench(tool)
-                ? gregtech.api.tool.ToolInteractionSpec.facing(FACING, gregtech.block.machine.MachineRotationType.ALL) : null;
+    @Override public gregtech.internal.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+        return gregtech.internal.tool.GTToolHelper.isMachineWrench(tool)
+                ? gregtech.internal.tool.ToolInteractionSpec.facing(FACING, gregtech.block.machine.MachineRotationType.ALL) : null;
     }
 //? if >=1.21.1 {
     /*@Override public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return switch(interact(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME,CONSUME_PARTIAL->net.minecraft.world.ItemInteractionResult.CONSUME;case FAIL->net.minecraft.world.ItemInteractionResult.FAIL;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
@@ -92,15 +92,15 @@ public class DrawerQuadBlock extends DirectionalBlock implements EntityBlock, Si
                                            InteractionHand hand, BlockHitResult hit) {
         if (hand != InteractionHand.MAIN_HAND || !(level.getBlockEntity(pos) instanceof DrawerQuadBlockEntity drawer)) return InteractionResult.PASS;
         ItemStack tool = player.getItemInHand(hand);
-        if (gregtech.api.tool.GTToolHelper.isMonkeyWrench(tool)) {
+        if (gregtech.internal.tool.GTToolHelper.isMonkeyWrench(tool)) {
             if (!level.isClientSide) {
                 drawer.toggleSidedAccess();
-                gregtech.api.tool.GTToolHelper.damageForToolClickReturn(tool,10000,player);
+                gregtech.internal.tool.GTToolHelper.damageForToolClickReturn(tool,10000,player);
                 player.displayClientMessage(Component.translatable(drawer.sidedAccess() ? "message.gt6ce.drawer.sided" : "message.gt6ce.drawer.anywhere"),true);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
-        if (gregtech.api.tool.ToolInteractions.use(state,level,pos,player,hand,hit)) return InteractionResult.sidedSuccess(level.isClientSide);
+        if (gregtech.internal.tool.ToolInteractions.use(state,level,pos,player,hand,hit)) return InteractionResult.sidedSuccess(level.isClientSide);
         if (hit.getDirection() != state.getValue(FACING)) return InteractionResult.PASS;
         int page = quadrant(state.getValue(FACING), pos, hit.getLocation());
         if (!level.isClientSide) player.openMenu(new net.minecraft.world.SimpleMenuProvider(
@@ -120,7 +120,7 @@ public class DrawerQuadBlock extends DirectionalBlock implements EntityBlock, Si
             net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,
             net.minecraft.world.level.block.state.BlockState next, boolean moving) {
         if (!state.is(next.getBlock()) && !level.isClientSide
-                && level.getBlockEntity(pos) instanceof gregtech.api.inventory.BlockContents contents) {
+                && level.getBlockEntity(pos) instanceof gregtech.internal.inventory.BlockContents contents) {
             contents.dropContents();
             level.updateNeighbourForOutputSignal(pos, this);
         }

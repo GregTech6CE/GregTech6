@@ -1,11 +1,11 @@
 package gregtech.blockentity.energy;
 
-import gregtech.api.energy.AxleSpec;
-import gregtech.api.energy.EnergyBlockViews;
-import gregtech.api.energy.EnergyNet;
-import gregtech.api.energy.EnergyTransfer;
-import gregtech.api.energy.IEnergyBlock;
-import gregtech.api.energy.IEnergyConductor;
+import gregtech.internal.energy.AxleSpec;
+import gregtech.internal.energy.EnergyBlockViews;
+import gregtech.internal.energy.EnergyNet;
+import gregtech.internal.energy.EnergyTransfer;
+import gregtech.internal.energy.IEnergyBlock;
+import gregtech.internal.energy.IEnergyConductor;
 import gregtech.block.energy.AxleBlock;
 import gregtech.data.GregTechTags;
 //? if >=1.21.1 {
@@ -67,7 +67,7 @@ public class AxleBlockEntity extends BlockEntity implements IEnergyConductor, IE
         super.onLoad();
         if (level != null && level.isClientSide) {
             requestModelDataUpdate();
-            gregtech.api.machine.PipeModelData.refreshCrossChunkNeighbors(level, worldPosition);
+            gregtech.internal.machine.PipeModelData.refreshCrossChunkNeighbors(level, worldPosition);
         }
         if (!initialized && level != null && !level.isClientSide) {
             initialized = true;
@@ -377,12 +377,12 @@ public class AxleBlockEntity extends BlockEntity implements IEnergyConductor, IE
         float[] halves = new float[6];
         for (Direction d : Direction.values()) {
             halves[d.ordinal()] = level == null
-                    ? (float) gregtech.api.machine.PipeGeometry.NONE
-                    : (float) gregtech.api.machine.PipeGeometry.axleHalfOf(
+                    ? (float) gregtech.internal.machine.PipeGeometry.NONE
+                    : (float) gregtech.internal.machine.PipeGeometry.axleHalfOf(
                             level.getBlockState(worldPosition.relative(d)));
         }
         return ModelData.builder()
-                .with(gregtech.api.machine.PipeModelData.NEIGHBOR_HALVES, halves)
+                .with(gregtech.internal.machine.PipeModelData.NEIGHBOR_HALVES, halves)
                 .with(ROTATION,rotationDir)
                 .build();
     }

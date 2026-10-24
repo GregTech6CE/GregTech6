@@ -1,7 +1,7 @@
 package gregtech.integration.client;
 
 import com.google.gson.JsonObject;
-import gregtech.api.material.ItemMaterialRegistry;
+import gregtech.internal.material.ItemMaterialRegistry;
 import gregtech.block.machine.BasicMachineBlock;
 import gregtech.client.CommonBlockTooltips;
 import gregtech.content.multiblock.OriginalControllerTooltipData;

@@ -1,7 +1,7 @@
 /* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later.
  * ImplosionCompressor/FusionReactor/MatterFabricator.addToolTips plus original parent rows. */
 package gregtech.client;
-import gregtech.api.machine.BasicMachineSpec;
+import gregtech.internal.machine.BasicMachineSpec;
 import gregtech.content.multiblock.OriginalAdvancedControllerData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

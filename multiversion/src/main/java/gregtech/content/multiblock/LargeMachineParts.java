@@ -1,5 +1,5 @@
 package gregtech.content.multiblock;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.registry.GTMultiblocks;
 import gregtech.registry.RegisteredBlock;
 import net.minecraft.world.level.block.Block;

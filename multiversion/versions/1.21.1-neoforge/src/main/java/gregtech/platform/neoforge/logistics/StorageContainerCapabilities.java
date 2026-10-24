@@ -4,7 +4,7 @@ import gregtech.registry.GTBlockEntities;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.bus.api.SubscribeEvent;
 
-@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public final class StorageContainerCapabilities {
     @SubscribeEvent
     public static void capabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) {

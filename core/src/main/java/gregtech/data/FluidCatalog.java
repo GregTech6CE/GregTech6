@@ -1,8 +1,8 @@
 package gregtech.data;
 
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.MaterialProperty;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.MaterialProperty;
 
 
 
@@ -1035,7 +1035,7 @@ public class FluidCatalog {
         for (String field : MOLTEN_FACTORY_FIELDS) {
             FluidEntry entry = REGISTRY.get(field);
             if (entry == null || entry.materialKey() == null) continue;
-            GTMaterial material = gregtech.api.material.GTMaterialRegistry
+            GTMaterial material = gregtech.internal.material.GTMaterialRegistry
                     .get(entry.materialKey()).resolve();
             if (!material.isValid()) continue;
             int melting = material.getMeltingPoint();
@@ -1073,7 +1073,7 @@ public class FluidCatalog {
     }
 
     private static int moltenTint(GTMaterial material) {
-        return gregtech.api.fluid.FluidTintRules.moltenTint(material);
+        return gregtech.internal.fluid.FluidTintRules.moltenTint(material);
     }
 
     private static boolean hasRegistryName(String registryName) {

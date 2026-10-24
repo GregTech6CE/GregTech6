@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
-import gregtech.api.energy.FaceConfig;
-import gregtech.api.machine.BasicMachineSpec;
-import gregtech.api.multiblock.MultiblockLayout;
-import gregtech.api.recipe.Recipe;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.energy.FaceConfig;
+import gregtech.internal.machine.BasicMachineSpec;
+import gregtech.internal.multiblock.MultiblockLayout;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.blockentity.machine.*;
 import gregtech.content.cover.*;
 import gregtech.content.multiblock.*;

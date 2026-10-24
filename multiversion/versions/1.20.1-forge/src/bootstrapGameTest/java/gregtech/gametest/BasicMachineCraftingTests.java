@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.machine.MachineRegistry;
+import gregtech.internal.machine.MachineRegistry;
 import gregtech.data.BasicMachineCraftingRecipes;
 import gregtech.data.BasicMachineRecipePack;
 import gregtech.data.MachineRecipeIngredients;

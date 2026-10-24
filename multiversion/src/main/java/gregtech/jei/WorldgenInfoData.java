@@ -5,7 +5,7 @@ package gregtech.jei;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.worldgen.GTOreVeins;
 import gregtech.worldgen.GTStoneLayersGen;
 import gregtech.worldgen.GTWorldgenScale;
@@ -119,7 +119,7 @@ public class WorldgenInfoData {
             }
             List<GTMaterial> ores = new ArrayList<>();
             for (GTStoneLayersGen.OreDef ore : def.ores()) {
-                GTMaterial material = gregtech.api.material.GTMaterialRegistry.get(ore.material());
+                GTMaterial material = gregtech.internal.material.GTMaterialRegistry.get(ore.material());
                 if (material != null && material.resolve().isValid()) ores.add(material.resolve());
             }
             String key = display + "/" + ores.stream().map(GTMaterial::getName).sorted().toList();

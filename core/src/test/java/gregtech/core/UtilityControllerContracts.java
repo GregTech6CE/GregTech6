@@ -1,6 +1,7 @@
 package gregtech.core;
 
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.content.machine.MachineConstructionMaterials;
 import gregtech.content.multiblock.OriginalUtilityControllerData;
 import gregtech.data.SourceBlockProperties;
@@ -45,10 +46,10 @@ final class UtilityControllerContracts {
             check(range==expected && gregtech.content.multiblock.VonDaGraaggRules.range(energy,false)==0,
                     "Original byte range boundary and broken tower " + energy);
         }
-        var raw=gregtech.api.sensor.SensorControl.evaluate(
-                gregtech.api.sensor.SensorControl.Mode.DISPLAY,255,256,0);
-        var percent=gregtech.api.sensor.SensorControl.evaluate(
-                gregtech.api.sensor.SensorControl.Mode.PERCENT,255,256,0);
+        var raw=gregtech.internal.sensor.SensorControl.evaluate(
+                gregtech.internal.sensor.SensorControl.Mode.DISPLAY,255,256,0);
+        var percent=gregtech.internal.sensor.SensorControl.evaluate(
+                gregtech.internal.sensor.SensorControl.Mode.PERCENT,255,256,0);
         check(raw.displayed()==255 && percent.displayed()==99,"Raw range and percentage remain distinct selectable readings");
         return assertions;
     }

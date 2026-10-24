@@ -1,6 +1,6 @@
 package gregtech.core;
 
-import gregtech.api.addon.AddonMaterials;
+import gregtech.internal.addon.AddonMaterials;
 import gregtech.api.addon.AddonMaterialContributor;
 import gregtech.api.addon.MaterialDeclaration;
 import gregtech.api.addon.MaterialFormRequest;
@@ -10,17 +10,17 @@ import gregtech.api.addon.CrucibleReactionDeclaration;
 import gregtech.api.addon.CrucibleReactionRemoval;
 import gregtech.api.addon.MaterialComposition;
 import gregtech.api.addon.SmeltingTargetDeclaration;
-import gregtech.api.machine.crucible.CrucibleMaterialStack;
-import gregtech.api.machine.crucible.CrucibleInputRules;
-import gregtech.api.machine.crucible.CrucibleProcess;
-import gregtech.api.machine.crucible.CrucibleReactions;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.machine.crucible.CrucibleMaterialStack;
+import gregtech.internal.machine.crucible.CrucibleInputRules;
+import gregtech.internal.machine.crucible.CrucibleProcess;
+import gregtech.internal.machine.crucible.CrucibleReactions;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.MaterialDefinition;
-import gregtech.api.material.MaterialProperty;
-import gregtech.api.mod.ModData;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.material.MaterialDefinition;
+import gregtech.internal.material.MaterialProperty;
+import gregtech.internal.mod.ModData;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.data.ModReferences;
 import gregtech.data.MaterialPrefix;
 

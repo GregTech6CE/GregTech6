@@ -26,7 +26,7 @@ public final class ToolAssemblyEmiRecipe implements EmiRecipe {
     public ToolAssemblyEmiRecipe(EmiRecipeCategory category, ToolAssemblyCatalog.ToolAssemblyInfo info) {
         this.category = category;
         this.info = info;
-        int material = gregtech.api.tool.GTToolHelper.getHead(info.output()).getId();
+        int material = gregtech.internal.tool.GTToolHelper.getHead(info.output()).getId();
         this.id = ResourceLocation.fromNamespaceAndPath("gt6ce", "/tool_assembly/" + info.type().id() + "/" + material);
         this.slots = info.inputs().stream().map(options -> (EmiIngredient) new MachineEmiIngredient(options.stream().map(EmiStack::of).toList(), 1)).toList();
         var consumed = new ArrayList<EmiIngredient>();

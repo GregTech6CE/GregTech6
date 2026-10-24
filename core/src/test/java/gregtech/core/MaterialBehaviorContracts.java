@@ -1,10 +1,11 @@
 package gregtech.core;
 
-import gregtech.api.machine.crucible.CrucibleMaterialStack;
-import gregtech.api.machine.crucible.CrucibleReactions;
+import gregtech.internal.machine.crucible.CrucibleMaterialStack;
+import gregtech.internal.machine.crucible.CrucibleReactions;
 import gregtech.api.material.*;
-import gregtech.api.mod.ModData;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.material.*;
+import gregtech.internal.mod.ModData;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.content.material.Materials;
 import gregtech.data.GregTechConstants;
 import gregtech.data.MaterialPrefix;
@@ -80,7 +81,7 @@ public final class MaterialBehaviorContracts {
         ModReferences.UNKNOWN.getClass();
         gregtech.data.MaterialGroups.Glowstone.getClass();
         GTMaterialRegistry.init();
-        for(var type:gregtech.api.tool.ToolDefinition.values())
+        for(var type:gregtech.internal.tool.ToolDefinition.values())
             check(gregtech.content.tool.OriginalToolFlags.of(type.name())!=null,"Every native Nexus tool has its source classification: "+type);
         for(var tool:gregtech.content.tool.ElectricToolCatalog.ALL)
             check(gregtech.content.tool.OriginalToolFlags.of(tool.original())!=null,"Every powered Nexus tool has its source classification: "+tool.id());
@@ -158,7 +159,7 @@ public final class MaterialBehaviorContracts {
     private static void validateRecipeMapPresentation() throws Exception {
         var maps=new ArrayList<>(gregtech.data.MachineRecipeMapDefinitions.all());
         for(var field:gregtech.data.FuelRecipeMapDefinitions.class.getFields())
-            if(field.getType()==gregtech.api.recipe.RecipeMapSpec.class)maps.add((gregtech.api.recipe.RecipeMapSpec)field.get(null));
+            if(field.getType()==gregtech.internal.recipe.RecipeMapSpec.class)maps.add((gregtech.internal.recipe.RecipeMapSpec)field.get(null));
         var expected=new HashMap<String,String[]>();
         try(var stream=MaterialBehaviorContracts.class.getResourceAsStream("/recipe-map-presentation-source.tsv");
                 var reader=new java.io.BufferedReader(new java.io.InputStreamReader(stream,java.nio.charset.StandardCharsets.UTF_8))) {
@@ -170,11 +171,11 @@ public final class MaterialBehaviorContracts {
             check(map.mViewerAllowed==Boolean.parseBoolean(source[1])&&map.mShowVoltageAmperage==Boolean.parseBoolean(source[2]),"original NEI flags "+map.mNameInternal);
         }
         check(expected.isEmpty(),"no source presentation map omitted");
-        var one=gregtech.api.recipe.RecipeCaptionVisibility.of(1,false,false);
+        var one=gregtech.internal.recipe.RecipeCaptionVisibility.of(1,false,false);
         check(!one.usage()&&!one.tier()&&!one.power(),"source one-unit informational recipes omit voltage/usage");
-        var generator=gregtech.api.recipe.RecipeCaptionVisibility.of(-32,false,false);
+        var generator=gregtech.internal.recipe.RecipeCaptionVisibility.of(-32,false,false);
         check(generator.usage()&&!generator.tier()&&!generator.power(),"source hidden voltage still shows non-unit generation rate");
-        var unspecified=gregtech.api.recipe.RecipeCaptionVisibility.of(0,false,true);
+        var unspecified=gregtech.internal.recipe.RecipeCaptionVisibility.of(0,false,true);
         check(!unspecified.usage()&&unspecified.tier()&&!unspecified.power(),"source zero-power tier unspecified only if flag allows it");
     }
 
@@ -252,23 +253,23 @@ public final class MaterialBehaviorContracts {
                         && MaterialPrefix.nugget.getMaterialWeight() == 72072000L
                         && MaterialPrefix.dustDiv72.getMaterialWeight() == 9009000L,
                 "Original item form weights must retain exact GT6 fractions");
-        var rawCopper = gregtech.api.machine.crucible.CrucibleInputRules.materialItem(copper, MaterialPrefix.oreRaw);
-        var rawTin = gregtech.api.machine.crucible.CrucibleInputRules.materialItem(tin, MaterialPrefix.oreRaw);
+        var rawCopper = gregtech.internal.machine.crucible.CrucibleInputRules.materialItem(copper, MaterialPrefix.oreRaw);
+        var rawTin = gregtech.internal.machine.crucible.CrucibleInputRules.materialItem(tin, MaterialPrefix.oreRaw);
         check(rawCopper.material == copper && rawCopper.amount == GTValues.U
                 && rawTin.material == tin && rawTin.amount == GTValues.U,
                 "Original smeltery raw Cu/Sn each admit one U, separate from oreRaw shell weight two U");
-        var copperPreview = gregtech.api.machine.crucible.CrucibleInputRules.smeltingPreview(copper, MaterialPrefix.oreRaw);
-        var tinPreview = gregtech.api.machine.crucible.CrucibleInputRules.smeltingPreview(tin, MaterialPrefix.oreRaw);
+        var copperPreview = gregtech.internal.machine.crucible.CrucibleInputRules.smeltingPreview(copper, MaterialPrefix.oreRaw);
+        var tinPreview = gregtech.internal.machine.crucible.CrucibleInputRules.smeltingPreview(tin, MaterialPrefix.oreRaw);
         check(copperPreview != null && copperPreview.material()==copper && copperPreview.amount()==GTValues.U && copperPreview.temperatureK()==1357,
                 "Raw copper display agrees with actual one-ingot payload at 1357K");
         check(tinPreview != null && tinPreview.material()==tin && tinPreview.amount()==GTValues.U && tinPreview.temperatureK()==505,
                 "Raw tin display agrees with actual one-ingot payload at 505K");
-        check(gregtech.api.machine.crucible.CrucibleInputRules.ore(copper,9).amount==9*GTValues.U,
+        check(gregtech.internal.machine.crucible.CrucibleInputRules.ore(copper,9).amount==9*GTValues.U,
                 "Raw copper block is nine actual raw charges, not eighteen melted ingots");
         var rawCharges = stacks(copper, rawCopper.amount*3, tin, rawTin.amount);
-        gregtech.api.machine.crucible.CrucibleProcess.process(rawCharges,1356,293,true,true);
+        gregtech.internal.machine.crucible.CrucibleProcess.process(rawCharges,1356,293,true,true);
         check(amountOf(rawCharges,bronze)==0, "Actual raw Cu/Sn charges cannot alloy before 1357K");
-        gregtech.api.machine.crucible.CrucibleProcess.process(rawCharges,1357,1356,false,true);
+        gregtech.internal.machine.crucible.CrucibleProcess.process(rawCharges,1357,1356,false,true);
         check(rawCharges.size()==1 && amountOf(rawCharges,bronze)==4*GTValues.U,
                 "Three admitted raw copper and one tin charge form exactly four U bronze");
         check(GregTechConstants.C == 273 && GregTechConstants.DEF_ENV_TEMP == 293 && GregTechConstants.L == 144,
@@ -377,7 +378,7 @@ public final class MaterialBehaviorContracts {
                 "Air-blown steel below 2046K cannot consume either reagent");
         // Exercise the actual phase order: air must react before gas removal.
         var steelCharge = stacks(wrought, 3 * GTValues.U, air, GTValues.U);
-        gregtech.api.machine.crucible.CrucibleProcess.process(steelCharge, 2046, 2045, true, true);
+        gregtech.internal.machine.crucible.CrucibleProcess.process(steelCharge, 2046, 2045, true, true);
         check(steelCharge.size() == 2 && amountOf(steelCharge, steel) == GTValues.U
                         && amountOf(steelCharge, wrought) == 2 * GTValues.U && amountOf(steelCharge, air) == 0,
                 "One U air converts one U wrought iron to steel and retains two U excess wrought iron");

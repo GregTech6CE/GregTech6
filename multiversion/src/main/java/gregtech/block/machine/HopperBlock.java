@@ -1,9 +1,9 @@
 package gregtech.block.machine;
 
-import gregtech.api.tool.ToolInteractionSpec;
-import gregtech.api.tool.ToolInteractionTarget;
-import gregtech.api.machine.HopperSpec;
-import gregtech.api.tool.GTToolHelper;
+import gregtech.internal.tool.ToolInteractionSpec;
+import gregtech.internal.tool.ToolInteractionTarget;
+import gregtech.internal.machine.HopperSpec;
+import gregtech.internal.tool.GTToolHelper;
 import gregtech.blockentity.machine.HopperBlockEntity;
 import gregtech.registry.GTBlockEntities;
 import net.minecraft.core.BlockPos;
@@ -43,7 +43,7 @@ import javax.annotation.Nullable;
 
 /** GT6 hopper block ({@code MultiTileEntityHopper}). Parallel-slot inventory, 6-way facing output. */
 //? if >=1.21.1 {
-/*public class HopperBlock extends DirectionalBlock implements EntityBlock, ToolInteractionTarget, gregtech.api.tool.ScrewdriverUseTarget {
+/*public class HopperBlock extends DirectionalBlock implements EntityBlock, ToolInteractionTarget, gregtech.internal.tool.ScrewdriverUseTarget {
 *///?} else {
 public class HopperBlock extends DirectionalBlock implements EntityBlock, ToolInteractionTarget {
 //?}

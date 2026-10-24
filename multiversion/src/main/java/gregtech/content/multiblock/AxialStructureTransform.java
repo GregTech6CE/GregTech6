@@ -1,6 +1,6 @@
 package gregtech.content.multiblock;
 
-import gregtech.api.multiblock.*;
+import gregtech.internal.multiblock.*;
 import net.minecraft.core.*;
 
 /** Six-axis Minecraft coordinate boundary over shared source geometry/port roles. */

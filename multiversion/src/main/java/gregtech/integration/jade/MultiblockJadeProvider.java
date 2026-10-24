@@ -1,7 +1,7 @@
 package gregtech.integration.jade;
 
-import gregtech.api.energy.IEnergyBlock;
-import gregtech.api.multiblock.StructureController;
+import gregtech.internal.energy.IEnergyBlock;
+import gregtech.internal.multiblock.StructureController;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.data.GregTechTags;
 import net.minecraft.nbt.CompoundTag;

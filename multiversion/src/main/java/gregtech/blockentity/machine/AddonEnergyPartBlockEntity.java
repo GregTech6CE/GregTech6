@@ -7,9 +7,9 @@ import gregtech.api.addon.LayoutPart;
 import gregtech.api.addon.MachineFace;
 import gregtech.api.addon.PartEnergyRules;
 import gregtech.api.addon.platform.PartClientView;
-import gregtech.api.energy.EnergyTransfer;
+import gregtech.internal.energy.EnergyTransfer;
 import gregtech.api.machine.BasicMachineEnergy;
-import gregtech.api.multiblock.MultiblockLayout;
+import gregtech.internal.multiblock.MultiblockLayout;
 import gregtech.block.machine.AddonEnergyPartBlock;
 import gregtech.data.GregTechTags;
 import net.minecraft.core.BlockPos;
@@ -361,7 +361,7 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity
         var decision = PartEnergyRules.admit(inputStored, input().capacity(), size, amount,
                 input().rangeMin(), input().rangeMax(), false);
         if (decision.overload()) {
-            if (execute) gregtech.api.energy.MachineOverload.apply(this, Math.abs(size), type);
+            if (execute) gregtech.internal.energy.MachineOverload.apply(this, Math.abs(size), type);
             return decision.packets();
         }
         if (!execute || decision.packets() <= 0) return decision.packets();

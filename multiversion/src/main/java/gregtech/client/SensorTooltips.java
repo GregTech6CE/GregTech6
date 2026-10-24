@@ -3,7 +3,7 @@
 package gregtech.client;
 
 import gregtech.api.addon.platform.AddonSensor;
-import gregtech.api.sensor.SensorCatalog;
+import gregtech.internal.sensor.SensorCatalog;
 import gregtech.block.sensor.SensorBlock;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

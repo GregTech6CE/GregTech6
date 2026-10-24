@@ -1,7 +1,7 @@
 package gregtech.bootstrap.content;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.MaterialItemDefinitions;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.MaterialItemDefinitions;
 import gregtech.data.MaterialPrefix;
 import gregtech.item.CoinItem;
 import gregtech.item.MaterialItem;

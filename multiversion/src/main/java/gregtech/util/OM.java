@@ -1,7 +1,7 @@
 package gregtech.util;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.MaterialStackItemHelper;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.MaterialStackItemHelper;
 import gregtech.data.MaterialPrefix;
 import net.minecraft.world.item.ItemStack;
 

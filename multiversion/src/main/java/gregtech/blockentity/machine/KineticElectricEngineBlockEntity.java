@@ -1,7 +1,7 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.energy.FaceConfig;
-import gregtech.api.machine.ElectricEngineSpec;
+import gregtech.internal.energy.FaceConfig;
+import gregtech.internal.machine.ElectricEngineSpec;
 import gregtech.data.GregTechTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;

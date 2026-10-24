@@ -50,7 +50,7 @@ final class LongDistanceRuntimeSmoke {
             var b=block(spec.id());require(b instanceof LongDistPipeBlock,"missing live line "+spec.id());
             var line=(LongDistPipeBlock)b;
             require(line.maximumTemperature()==spec.maximumTemperature()&&line.maximumVoltage()==spec.voltage(),"wrong native limits "+spec.id());
-            if(spec.kind().equals("FLUID_PIPE"))require(gregtech.api.material.GTMaterialRegistry.get(spec.material()).getMeltingPoint()==spec.maximumTemperature(),"source material melting value differs "+spec.id());
+            if(spec.kind().equals("FLUID_PIPE"))require(gregtech.internal.material.GTMaterialRegistry.get(spec.material()).getMeltingPoint()==spec.maximumTemperature(),"source material melting value differs "+spec.id());
             require(gregtech.bootstrap.registration.OriginCreativeContents.family(b.asItem()).equals("long_distance_transport"),"wrong creative family "+spec.id());
             require(gregtech.data.BlockHarvestPolicy.level(b)==3&&gregtech.data.BlockHarvestPolicy.tool(b)==(line.isWire()?gregtech.data.BlockHarvestPolicy.Tool.CUTTER:gregtech.data.BlockHarvestPolicy.Tool.WRENCH),"wrong source harvest "+spec.id());
             level.setBlock(start,b.defaultBlockState(),3);
@@ -153,11 +153,11 @@ final class LongDistanceRuntimeSmoke {
         for(var name:ENDPOINTS){
             var b=block(name);var stack=new ItemStack(b);require(stack.getMaxStackSize()==16,"source endpoint stack limit "+name);
             var state=b.defaultBlockState();level.setBlock(pos,state,3);
-            var wrench=gregtech.item.GTToolItem.create(gregtech.api.tool.GTToolType.WRENCH,gregtech.content.material.Materials.Steel,gregtech.api.material.GTMaterialRegistry.get("Spruce"));
+            var wrench=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.WRENCH,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Spruce"));
             actor.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,wrench);
             for(var direction:Direction.values()){
                 var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(pos),direction,pos,false);
-                state=level.getBlockState(pos);var target=(gregtech.api.tool.ToolInteractionTarget)b;
+                state=level.getBlockState(pos);var target=(gregtech.internal.tool.ToolInteractionTarget)b;
                 var spec=target.toolInteraction(state,wrench);require(spec!=null&&spec.allows(state,direction),"missing native rotation spec "+name+" "+direction);
                 if(b instanceof LongDistEndpointBlock endpoint)endpoint.interact(state,level,pos,actor,net.minecraft.world.InteractionHand.MAIN_HAND,hit);else ((LongDistanceTransformerBlock)b).interact(state,level,pos,actor,net.minecraft.world.InteractionHand.MAIN_HAND,hit);
                 state=level.getBlockState(pos);require(state.getValue(spec.facing())==direction&&spec.activeFaces(state)==1<<direction.ordinal(),"wrench did not rotate native block and overlay declaration "+name+" "+direction);turns++;
@@ -170,12 +170,12 @@ final class LongDistanceRuntimeSmoke {
                 require(placed.getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.FACING)==expected,"wrong source placement pitch "+name+" "+pitch);placements++;
             }
             actor.setXRot(0);
-            for(var type:java.util.List.of(gregtech.api.tool.GTToolType.SOFT_HAMMER,gregtech.api.tool.GTToolType.MAGNIFYING_GLASS)){
-                var tool=gregtech.item.GTToolItem.create(type,gregtech.content.material.Materials.Steel,gregtech.api.material.GTMaterialRegistry.get("Spruce"));actor.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,tool);
+            for(var type:java.util.List.of(gregtech.internal.tool.GTToolType.SOFT_HAMMER,gregtech.internal.tool.GTToolType.MAGNIFYING_GLASS)){
+                var tool=gregtech.item.GTToolItem.create(type,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Spruce"));actor.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,tool);
                 if(b instanceof LongDistEndpointBlock endpoint)endpoint.interact(state,level,pos,actor,net.minecraft.world.InteractionHand.MAIN_HAND,hit);else ((LongDistanceTransformerBlock)b).interact(state,level,pos,actor,net.minecraft.world.InteractionHand.MAIN_HAND,hit);
-                require(tool.getDamageValue()==(type==gregtech.api.tool.GTToolType.SOFT_HAMMER?100:1),"wrong source tool-click cost "+name+" "+type);
+                require(tool.getDamageValue()==(type==gregtech.internal.tool.GTToolType.SOFT_HAMMER?100:1),"wrong source tool-click cost "+name+" "+type);
                 var control=gregtech.api.machine.MachineControl.find(level.getBlockEntity(pos),null);require(control!=null&&control.enabled(),"soft reset toggles endpoint off "+name);
-                if(type==gregtech.api.tool.GTToolType.SOFT_HAMMER)soft++;else inspect++;
+                if(type==gregtech.internal.tool.GTToolType.SOFT_HAMMER)soft++;else inspect++;
             }
             var original=level.getBlockEntity(pos);gregtech.api.machine.MachineControl.find(original,null).setEnabled(false);
             if(original instanceof LongDistanceTransformerBlockEntity transformer){

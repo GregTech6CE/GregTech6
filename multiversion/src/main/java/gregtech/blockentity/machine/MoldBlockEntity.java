@@ -1,12 +1,12 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.machine.CrucibleSpec;
-import gregtech.api.machine.crucible.MoldShapes;
-import gregtech.api.machine.ITileEntityCrucible;
-import gregtech.api.machine.ITileEntityMold;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.prefix.BlockMaterialPrefix;
+import gregtech.internal.machine.CrucibleSpec;
+import gregtech.internal.machine.crucible.MoldShapes;
+import gregtech.internal.machine.ITileEntityCrucible;
+import gregtech.internal.machine.ITileEntityMold;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.prefix.BlockMaterialPrefix;
 import gregtech.data.MaterialPrefix;
 import gregtech.block.machine.MoldBlock;
 import gregtech.data.GregTechConstants;
@@ -106,7 +106,7 @@ public class MoldBlockEntity extends BlockEntity implements ITileEntityMold {
     private void tickServer() {
         // Update temperature toward environment
         long envTemp = environmentTemperature();
-        temperature = gregtech.api.machine.crucible.MoldCastingRules.cool(temperature, envTemp);
+        temperature = gregtech.internal.machine.crucible.MoldCastingRules.cool(temperature, envTemp);
 
         // Clear empty content
         if (contentAmount <= 0) {
@@ -221,7 +221,7 @@ public class MoldBlockEntity extends BlockEntity implements ITileEntityMold {
         if (basin == null) return;
         GTMaterial basinMat = basin.getMoldContentMaterial();
         long required = getMoldRequiredMaterialUnits();
-        if (basinMat == null || gregtech.api.machine.crucible.MoldCastingRules.castingAmount(
+        if (basinMat == null || gregtech.internal.machine.crucible.MoldCastingRules.castingAmount(
                 basin.getMoldContentAmount(), required) == 0) return;
 
         // Produce shaped output from basin content + mold shape — cools gradually
@@ -430,7 +430,7 @@ public class MoldBlockEntity extends BlockEntity implements ITileEntityMold {
     private boolean tryPickupFromBasin(Player player, MoldBasinBlockEntity basin, boolean usingPincers) {
         GTMaterial basinMat = basin.getMoldContentMaterial();
         long required = getMoldRequiredMaterialUnits();
-        if (basinMat == null || gregtech.api.machine.crucible.MoldCastingRules.castingAmount(
+        if (basinMat == null || gregtech.internal.machine.crucible.MoldCastingRules.castingAmount(
                 basin.getMoldContentAmount(), required) == 0) return false;
         if (basin.getTemperature() >= basinMat.getMeltingPoint()) return false;
 
@@ -515,7 +515,7 @@ public class MoldBlockEntity extends BlockEntity implements ITileEntityMold {
         if (material == null) return 0;
         if (!isMoldInputSide(side)) return 0;
         // GT6: acid melts reject non-acid-proof molds
-        if (!spec().acidProof() && material.has(gregtech.api.material.MaterialProperty.ACID)) return 0;
+        if (!spec().acidProof() && material.has(gregtech.internal.material.MaterialProperty.ACID)) return 0;
 
         // Mold-basin stacking: redirect fill to basin below if present
         MoldBasinBlockEntity basin = getBasinBelow();
@@ -527,7 +527,7 @@ public class MoldBlockEntity extends BlockEntity implements ITileEntityMold {
         if (!solidOutput.isEmpty()) return 0; // Solid output not yet extracted
 
         long required = getMoldRequiredMaterialUnits();
-        long accepted = gregtech.api.machine.crucible.MoldCastingRules.acceptedAmount(
+        long accepted = gregtech.internal.machine.crucible.MoldCastingRules.acceptedAmount(
                 material, amount, required, spec().acidProof(), contentMaterial != null || !solidOutput.isEmpty());
         if (accepted > 0) {
             contentMaterial = material;

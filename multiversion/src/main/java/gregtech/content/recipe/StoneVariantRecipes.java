@@ -1,6 +1,6 @@
 package gregtech.content.recipe;
 
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.recipe.Recipe;
 import gregtech.block.stone.StoneType;
 import gregtech.block.stone.StoneVariant;
 import gregtech.data.MachineRecipeMaps;

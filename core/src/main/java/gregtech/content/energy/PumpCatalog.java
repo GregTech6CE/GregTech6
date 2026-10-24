@@ -1,8 +1,8 @@
 package gregtech.content.energy;
 
 import gregtech.content.material.Materials;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.machine.PumpSpec;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.machine.PumpSpec;
 
 public final class PumpCatalog {
     private PumpCatalog() {}

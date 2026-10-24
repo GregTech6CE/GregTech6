@@ -1,11 +1,11 @@
 package gregtech.block.energy;
 
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.ToolInteractions;
-import gregtech.api.tool.ToolInteractionSpec;
-import gregtech.api.tool.ToolInteractionTarget;
-import gregtech.api.GTWaterloggable;
-import gregtech.api.energy.EnergyNodeSpec;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.ToolInteractions;
+import gregtech.internal.tool.ToolInteractionSpec;
+import gregtech.internal.tool.ToolInteractionTarget;
+import gregtech.internal.GTWaterloggable;
+import gregtech.internal.energy.EnergyNodeSpec;
 import gregtech.blockentity.energy.EnergyNodeBlockEntity;
 import net.minecraft.world.InteractionResult;
 //? if >=1.21.1 {
@@ -37,16 +37,16 @@ import java.util.List;
 
 /** GT6 energy-net node block (motor/dynamo/transformer/turbine/solar/storage). */
 public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget,
-        gregtech.api.machine.PipeGeometry.FluidConnectorGeometry {
+        gregtech.internal.machine.PipeGeometry.FluidConnectorGeometry {
 
     private final EnergyNodeSpec spec;
 
     @Override
     public double fluidConnectorHalf(BlockState state, Direction face) {
-        if (spec.kind() != EnergyNodeSpec.Kind.TURBINE) return gregtech.api.machine.PipeGeometry.NONE;
+        if (spec.kind() != EnergyNodeSpec.Kind.TURBINE) return gregtech.internal.machine.PipeGeometry.NONE;
         Direction front = state.getValue(FACING);
-        if (face == front) return gregtech.api.machine.PipeGeometry.NONE;
-        return gregtech.api.machine.PipeGeometry.virtual(face.getAxis() == front.getAxis() ? 4 : 2);
+        if (face == front) return gregtech.internal.machine.PipeGeometry.NONE;
+        return gregtech.internal.machine.PipeGeometry.virtual(face.getAxis() == front.getAxis() ? 4 : 2);
     }
 
 //? if >=1.21.1 {
@@ -215,7 +215,7 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
-        if (node.isTurbine() && GTToolHelper.matchesTool(held, gregtech.api.tool.GTToolType.PLUNGER)) {
+        if (node.isTurbine() && GTToolHelper.matchesTool(held, gregtech.internal.tool.GTToolType.PLUNGER)) {
             if (!level.isClientSide) {
                 long removed = node.purgeTurbineSteam();
                 if (removed > 0) GTToolHelper.damageForToolClickReturn(held, removed, player);
@@ -228,7 +228,7 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
             /*if (node.hasRotor() && gregtech.platform.neoforge.NeoToolBindings.matches(held,"crowbar")) {
 *///?} else {
             if (node.hasRotor() && GTToolHelper.matchesTool(held,
-                    gregtech.api.tool.GTToolType.CROWBAR)) {
+                    gregtech.internal.tool.GTToolType.CROWBAR)) {
 //?}
                 if (!level.isClientSide) {
                     ItemStack removed = node.removeRotor();
@@ -249,7 +249,7 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
             /*if (gregtech.platform.neoforge.NeoToolBindings.matches(held,"crowbar")) {
 *///?} else {
             if (GTToolHelper.matchesTool(held,
-                    gregtech.api.tool.GTToolType.CROWBAR)) {
+                    gregtech.internal.tool.GTToolType.CROWBAR)) {
 //?}
                 if (!level.isClientSide) {
                     ItemStack removed = node.removeBattery();
@@ -358,7 +358,7 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
             net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,
             net.minecraft.world.level.block.state.BlockState next, boolean moving) {
         if (!state.is(next.getBlock()) && !level.isClientSide
-                && level.getBlockEntity(pos) instanceof gregtech.api.inventory.BlockContents contents) {
+                && level.getBlockEntity(pos) instanceof gregtech.internal.inventory.BlockContents contents) {
             contents.dropContents();
             level.updateNeighbourForOutputSignal(pos, this);
         }

@@ -1,8 +1,8 @@
 package gregtech.registry;
 
-import gregtech.api.energy.EnergyNodeSpec;
+import gregtech.internal.energy.EnergyNodeSpec;
 import gregtech.content.energy.GearboxCatalog.Tier;
-import gregtech.api.energy.GearboxSpec;
+import gregtech.internal.energy.GearboxSpec;
 import gregtech.block.energy.EnergyNodeBlock;
 import gregtech.block.energy.GearboxBlock;
 import net.minecraft.world.item.BlockItem;

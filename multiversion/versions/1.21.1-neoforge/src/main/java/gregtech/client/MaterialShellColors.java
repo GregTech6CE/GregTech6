@@ -9,7 +9,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 
 /** World shell colors for portable containers and fluid attachments. */
-@EventBusSubscriber(modid=gregtech.api.mod.GregTechIdentity.MOD_ID, bus=EventBusSubscriber.Bus.MOD, value=Dist.CLIENT)
+@EventBusSubscriber(modid=gregtech.internal.mod.GregTechIdentity.MOD_ID, bus=EventBusSubscriber.Bus.MOD, value=Dist.CLIENT)
 public final class MaterialShellColors {
     private MaterialShellColors() {}
     @SubscribeEvent

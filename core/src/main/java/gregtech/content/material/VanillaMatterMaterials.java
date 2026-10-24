@@ -1,5 +1,6 @@
 package gregtech.content.material;
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 /** Descriptive matter for modern vanilla items absent from GT6; no fabricated chemistry or generated ore/forms. */
 public final class VanillaMatterMaterials {
     private VanillaMatterMaterials() {}

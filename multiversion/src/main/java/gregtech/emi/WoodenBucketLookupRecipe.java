@@ -1,5 +1,5 @@
 package gregtech.emi;
-import gregtech.api.fluid.FluidContainerDisplayBinding;
+import gregtech.internal.fluid.FluidContainerDisplayBinding;
 import gregtech.item.WoodenBucketItem;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.*;

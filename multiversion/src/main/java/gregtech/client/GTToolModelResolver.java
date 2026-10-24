@@ -1,9 +1,9 @@
 package gregtech.client;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.MaterialTextureSet;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.MaterialTextureSet;
 import gregtech.data.MaterialPrefix;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.prefix.PrefixRegistry;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;

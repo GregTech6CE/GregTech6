@@ -21,7 +21,7 @@ public final class GTStorage {
             new java.util.ArrayList<>();
     public static RegistryObject<gregtech.block.inventory.DrawerQuadBlock> DRAWER_QUAD;
     public static final java.util.List<RegistryObject<gregtech.block.inventory.DrawerQuadBlock>> DRAWERS = new java.util.ArrayList<>();
-    public static gregtech.block.inventory.DrawerQuadBlock drawer(gregtech.api.material.GTMaterial material) {
+    public static gregtech.block.inventory.DrawerQuadBlock drawer(gregtech.internal.material.GTMaterial material) {
         for (var entry : DRAWERS) if (entry.get().material() == material) return entry.get();
         throw new IllegalArgumentException("No drawer for " + material.getName());
     }
@@ -34,7 +34,7 @@ public final class GTStorage {
     public static RegistryObject<gregtech.block.inventory.SafeBlock> SAFE;
     public static final java.util.List<RegistryObject<gregtech.block.inventory.SafeBlock>> SAFES = new java.util.ArrayList<>();
     public static final java.util.List<RegistryObject<gregtech.block.inventory.SafeBlock>> KEY_SAFES = new java.util.ArrayList<>();
-    public static gregtech.block.inventory.SafeBlock safe(gregtech.api.material.GTMaterial material, boolean keyLocked) {
+    public static gregtech.block.inventory.SafeBlock safe(gregtech.internal.material.GTMaterial material, boolean keyLocked) {
         for (var entry : keyLocked ? KEY_SAFES : SAFES) if (entry.get().material() == material) return entry.get();
         throw new IllegalArgumentException("No safe for " + material.getName());
     }
@@ -48,13 +48,13 @@ public final class GTStorage {
     public static final java.util.List<RegistryObject<gregtech.block.inventory.MetalChestBlock>> REINFORCED_WOOD_CHESTS =
             new java.util.ArrayList<>();
 
-    public static gregtech.block.inventory.MetalChestBlock reinforcedChest(gregtech.api.material.GTMaterial material) {
+    public static gregtech.block.inventory.MetalChestBlock reinforcedChest(gregtech.internal.material.GTMaterial material) {
         for (var entry : REINFORCED_WOOD_CHESTS) if (entry.get().material() == material) return entry.get();
         throw new IllegalArgumentException("No reinforced wooden chest for " + material.getName());
     }
 
     /** Registered chest of the requested material, for world generation and content definitions. */
-    public static gregtech.block.inventory.MetalChestBlock chest(gregtech.api.material.GTMaterial material) {
+    public static gregtech.block.inventory.MetalChestBlock chest(gregtech.internal.material.GTMaterial material) {
         for (var entry : METAL_CHESTS) {
             var chest = entry.get();
             if (chest.material() == material) return chest;

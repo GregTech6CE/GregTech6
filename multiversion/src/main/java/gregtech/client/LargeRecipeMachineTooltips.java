@@ -1,7 +1,7 @@
 /* Copyright (c) 2025 GregTech-6 Team; Gregorius Techneticies; LGPL-3.0-or-later.
  * Adapted from the twelve original processing controllers and MultiTileEntityBasicMachine.addToolTips. */
 package gregtech.client;
-import gregtech.api.machine.BasicMachineSpec;
+import gregtech.internal.machine.BasicMachineSpec;
 import gregtech.content.multiblock.OriginalLargeRecipeMachineData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

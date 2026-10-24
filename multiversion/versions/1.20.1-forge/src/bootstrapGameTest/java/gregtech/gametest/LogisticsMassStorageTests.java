@@ -9,8 +9,8 @@ import gregtech.content.logistics.LogisticsCoverType;
 import gregtech.content.material.Materials;
 import gregtech.data.BlockHarvestPolicy;
 import gregtech.data.GregTechTags;
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 import gregtech.item.GTToolItem;
 import gregtech.registry.GTBlockEntities;
 import gregtech.registry.GTIconSetBlocks;
@@ -77,9 +77,9 @@ public final class LogisticsMassStorageTests {
         var player = net.minecraftforge.common.util.FakePlayerFactory.getMinecraft(helper.getLevel());
         player.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
         ItemStack lowWrench = GTToolItem.create(GTToolType.WRENCH, Materials.Steel,
-                gregtech.api.material.GTMaterialRegistry.get("Wood"));
+                gregtech.internal.material.GTMaterialRegistry.get("Wood"));
         ItemStack highWrench = GTToolItem.create(GTToolType.WRENCH, spec.material(),
-                gregtech.api.material.GTMaterialRegistry.get("Wood"));
+                gregtech.internal.material.GTMaterialRegistry.get("Wood"));
         helper.assertTrue(GTToolHelper.getHarvestLevel(lowWrench) < BlockHarvestPolicy.level(block)
                         && GTToolHelper.getHarvestLevel(highWrench) >= BlockHarvestPolicy.level(block),
                 "the selected storage material distinguishes the two wrench tiers");

@@ -1,6 +1,6 @@
 package gregtech.jei;
 
-import gregtech.api.multiblock.*;
+import gregtech.internal.multiblock.*;
 import gregtech.content.multiblock.BoilerStructure;
 import gregtech.registry.GTMultiblocks;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;

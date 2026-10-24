@@ -20,7 +20,7 @@ final class EmiMachineSmoke {
         var manager = dev.emi.emi.api.EmiApi.getRecipeManager();
         var nativeRecipes = manager.getRecipes().stream()
                 .filter(r -> r instanceof gregtech.emi.MachineEmiRecipe).toList();
-        long expected = gregtech.api.recipe.RecipeMap.RECIPE_MAP_LIST.stream()
+        long expected = gregtech.internal.recipe.RecipeMap.RECIPE_MAP_LIST.stream()
                 .flatMap(m -> m.mRecipeList.stream()).filter(r -> r.mEnabled && !r.mHidden).count();
         if (nativeRecipes.size() != expected) return null; // EMI reload runs on its own thread.
         for (String machine : new String[]{"rollingmill", "extruder"}) {
@@ -62,7 +62,7 @@ final class EmiMachineSmoke {
                     .filter(r -> r.getOutputs().stream().anyMatch(s -> s.getId().getPath().startsWith("plate_"))).count();
             if (plates == 0) throw new IllegalStateException("EMI missing plate recipes in " + machine);
         }
-        long expected = gregtech.api.recipe.RecipeMap.RECIPE_MAP_LIST.stream()
+        long expected = gregtech.internal.recipe.RecipeMap.RECIPE_MAP_LIST.stream()
                 .flatMap(m -> m.mRecipeList.stream()).filter(r -> r.mEnabled && !r.mHidden).count();
         if (recipes.stream().filter(r -> r instanceof gregtech.emi.MachineEmiRecipe).count() != expected) throw new IllegalStateException("EMI omitted enabled machine recipes");
         com.mojang.logging.LogUtils.getLogger().info("EMI_MACHINE_SMOKE_SUCCESS {} registered recipes; rolling mill and extruder plate outputs present", recipes.size());

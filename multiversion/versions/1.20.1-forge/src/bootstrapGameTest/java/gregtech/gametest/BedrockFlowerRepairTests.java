@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
 import gregtech.api.material.GTValues;
-import gregtech.api.material.ItemMaterialRegistry;
+import gregtech.internal.material.ItemMaterialRegistry;
 import gregtech.block.plant.BedrockFlowerBlock;
 import gregtech.block.plant.BedrockHexalilyBlock;
 import gregtech.content.plant.BedrockFlowers;

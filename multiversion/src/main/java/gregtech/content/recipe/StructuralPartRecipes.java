@@ -1,7 +1,7 @@
 package gregtech.content.recipe;
 
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.recipe.Recipe;
 import gregtech.content.multiblock.LargeMachineParts;
 import gregtech.data.*;
 import gregtech.registry.*;

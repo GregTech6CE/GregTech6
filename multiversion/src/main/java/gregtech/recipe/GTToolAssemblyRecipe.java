@@ -1,10 +1,10 @@
 package gregtech.recipe;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.MaterialEquivalence;
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
-import gregtech.api.tool.ToolAssemblyRules;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.MaterialEquivalence;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
+import gregtech.internal.tool.ToolAssemblyRules;
 import gregtech.content.material.Materials;
 import gregtech.data.MaterialPrefix;
 import gregtech.item.GTToolItem;
@@ -134,7 +134,7 @@ public final class GTToolAssemblyRecipe extends ShapelessRecipe {
                 && gregtech.content.tool.OriginalToolMaterials.acceptsAssemblyHead(type.definition(), Materials.Steel)) {
             return Materials.Steel;
         }
-        for (var candidate : gregtech.api.material.GTMaterialRegistry.allMaterials()) {
+        for (var candidate : gregtech.internal.material.GTMaterialRegistry.allMaterials()) {
             if (prefix != null && prefix.isValidFor(candidate) && type.canUseHead(candidate)
                     && gregtech.content.tool.OriginalToolMaterials.acceptsAssemblyHead(type.definition(), candidate)) return candidate;
         }

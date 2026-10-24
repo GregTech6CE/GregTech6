@@ -1,14 +1,14 @@
 package gregtech.gametest;
 
-import gregtech.api.energy.FaceConfig;
-import gregtech.api.multiblock.tracking.StructureScheduler;
-import gregtech.api.machine.BasicMachineSpec;
+import gregtech.internal.energy.FaceConfig;
+import gregtech.internal.multiblock.tracking.StructureScheduler;
+import gregtech.internal.machine.BasicMachineSpec;
 //? if >=1.21.1 {
 /**///?} else {
-import gregtech.api.machine.MachineRegistry;
+import gregtech.internal.machine.MachineRegistry;
 //?}
-import gregtech.api.recipe.Recipe;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.block.machine.FuelGeneratorBlock;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.blockentity.machine.FuelGeneratorBlockEntity;

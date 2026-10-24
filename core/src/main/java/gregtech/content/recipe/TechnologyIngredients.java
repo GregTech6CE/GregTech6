@@ -1,6 +1,6 @@
 package gregtech.content.recipe;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.data.MaterialGroups;
 import gregtech.data.MaterialPrefix;
 import java.util.List;

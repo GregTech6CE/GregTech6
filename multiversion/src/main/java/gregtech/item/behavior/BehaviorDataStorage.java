@@ -1,6 +1,6 @@
 package gregtech.item.behavior;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.content.recipe.GTMaterialDataRecipes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -65,11 +65,11 @@ public final class BehaviorDataStorage {
         gregtech.content.cover.CanvasData.tooltip(data,lines);
         if(gregtech.content.data.VisualDocumentData.tooltip(data,lines,allDetails))return;
         if (data == null || !data.contains(GTMaterialDataRecipes.NBT_REPLICATOR_DATA)) return;
-        GTMaterial material = gregtech.api.material.StoredMaterial
+        GTMaterial material = gregtech.internal.material.StoredMaterial
                 .read(data, GTMaterialDataRecipes.NBT_REPLICATOR_DATA);
         if (!material.isValid()) return;
         String name = material.getLocalName();
-        if (!material.has(gregtech.api.material.MaterialProperty.UUM)) {
+        if (!material.has(gregtech.internal.material.MaterialProperty.UUM)) {
             lines.add(Component.translatable("gt.tooltip.usb.material_data", name)
                     .withStyle(ChatFormatting.AQUA)
                     .append(Component.translatable("gt.tooltip.usb.not_replicable")
@@ -85,7 +85,7 @@ public final class BehaviorDataStorage {
         lines.add(Component.translatable("gt.tooltip.usb.material_data", name)
                 .withStyle(ChatFormatting.AQUA));
         lines.add(Component.translatable("gt.tooltip.usb.replicable_hint").withStyle(ChatFormatting.AQUA));
-        boolean antimatter = material.has(gregtech.api.material.MaterialProperty.ANTIMATTER);
+        boolean antimatter = material.has(gregtech.internal.material.MaterialProperty.ANTIMATTER);
         lines.add(body(antimatter ? "gt.tooltip.usb.neutral_antimatter" : "gt.tooltip.usb.neutral_matter",
                 String.valueOf(material.getNeutrons()), ChatFormatting.YELLOW));
         lines.add(body(antimatter ? "gt.tooltip.usb.charged_antimatter" : "gt.tooltip.usb.charged_matter",

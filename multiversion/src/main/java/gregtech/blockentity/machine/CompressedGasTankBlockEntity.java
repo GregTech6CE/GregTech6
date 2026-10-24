@@ -1,7 +1,7 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.fluid.FluidHazards;
-import gregtech.api.fluid.FluidTankGT;
+import gregtech.internal.fluid.FluidHazards;
+import gregtech.internal.fluid.FluidTankGT;
 import gregtech.block.machine.CompressedGasTankBlock;
 import gregtech.registry.GTFluids;
 import net.minecraft.core.BlockPos;
@@ -31,7 +31,7 @@ import javax.annotation.Nullable;
  * {@link #fillCompressed} is the compressor path. Drain is open, so a fuel machine can take the gas.
  */
 public class CompressedGasTankBlockEntity extends BlockEntity implements IFluidHandler,
-        gregtech.api.fluid.CompressedGasReceiver {
+        gregtech.internal.fluid.CompressedGasReceiver {
     private final FluidTankGT tank;
 
 //? if >=1.21.1 {

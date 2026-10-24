@@ -4,9 +4,9 @@ package gregtech.registry;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 //? if >=1.21.1 {
-/*import gregtech.api.material.MaterialItemDefinitions;
+/*import gregtech.internal.material.MaterialItemDefinitions;
 *///?} else {
 //?}
 import gregtech.data.MaterialPrefix;

@@ -1,6 +1,6 @@
 package gregtech.content.multiblock;
 
-import gregtech.api.multiblock.MultiblockLayout;
+import gregtech.internal.multiblock.MultiblockLayout;
 import gregtech.registry.GTMultiblocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;

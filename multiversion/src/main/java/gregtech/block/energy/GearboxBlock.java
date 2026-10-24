@@ -1,10 +1,10 @@
 package gregtech.block.energy;
 
-import gregtech.api.energy.GearboxSpec;
+import gregtech.internal.energy.GearboxSpec;
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.NeoToolBindings;
 *///?} else {
-import gregtech.api.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolHelper;
 //?}
 import gregtech.blockentity.energy.GearboxBlockEntity;
 import gregtech.data.MaterialPrefix;

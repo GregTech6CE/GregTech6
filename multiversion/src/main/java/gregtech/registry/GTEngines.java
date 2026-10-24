@@ -1,6 +1,7 @@
 package gregtech.registry;
 //? if >=1.21.1 {
 /*import gregtech.api.machine.*;
+import gregtech.internal.machine.*;
 import gregtech.block.machine.EngineBlock;
 import gregtech.blockentity.machine.*;
 import gregtech.content.energy.EngineCatalog;
@@ -142,6 +143,7 @@ public final class GTEngines {
 }
 *///?} else {
 import gregtech.api.machine.*;
+import gregtech.internal.machine.*;
 
 public final class GTEngines {
     private GTEngines() {}

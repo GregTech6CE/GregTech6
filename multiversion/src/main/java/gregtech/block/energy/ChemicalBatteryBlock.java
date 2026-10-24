@@ -38,7 +38,7 @@ public final class ChemicalBatteryBlock extends Block implements EntityBlock {
 //? if >=1.21.1 {
         /*if(!gregtech.platform.neoforge.NeoToolBindings.matches(tool,"magnifying_glass"))
 *///?} else {
-        if(!gregtech.api.tool.GTToolHelper.matchesTool(tool,gregtech.api.tool.GTToolType.MAGNIFYING_GLASS))
+        if(!gregtech.internal.tool.GTToolHelper.matchesTool(tool,gregtech.internal.tool.GTToolType.MAGNIFYING_GLASS))
 //?}
             return net.minecraft.world.InteractionResult.PASS;
         if(!level.isClientSide&&level.getBlockEntity(pos) instanceof ChemicalBatteryBlockEntity be) {
@@ -46,7 +46,7 @@ public final class ChemicalBatteryBlock extends Block implements EntityBlock {
 //? if >=1.21.1 {
             /*gregtech.platform.neoforge.NeoToolBindings.damageForUse(tool,1,player,
 *///?} else {
-            gregtech.api.tool.GTToolHelper.damageForToolClickReturn(tool,1,player,
+            gregtech.internal.tool.GTToolHelper.damageForToolClickReturn(tool,1,player,
 //?}
                     hand==net.minecraft.world.InteractionHand.MAIN_HAND?net.minecraft.world.entity.EquipmentSlot.MAINHAND:net.minecraft.world.entity.EquipmentSlot.OFFHAND);
         }

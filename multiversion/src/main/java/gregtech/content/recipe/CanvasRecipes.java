@@ -1,7 +1,7 @@
 /* GregTech-6 Team visual scan/print and canvas bath recipes, LGPL-3.0-or-later. */
 package gregtech.content.recipe;
 
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.recipe.Recipe;
 import gregtech.content.cover.*;
 import gregtech.content.data.*;
 import gregtech.data.MachineRecipeMaps;

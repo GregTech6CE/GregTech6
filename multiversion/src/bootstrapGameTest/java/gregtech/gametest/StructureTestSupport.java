@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.api.multiblock.tracking.StructureScanProbe;
-import gregtech.api.multiblock.tracking.StructureScheduler;
-import gregtech.api.multiblock.tracking.StructureTracking;
-import gregtech.api.multiblock.tracking.TrackedMultiblock;
+import gregtech.internal.multiblock.tracking.StructureScanProbe;
+import gregtech.internal.multiblock.tracking.StructureScheduler;
+import gregtech.internal.multiblock.tracking.StructureTracking;
+import gregtech.internal.multiblock.tracking.TrackedMultiblock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 /** Same-tick structure assertions scan once, then read the tracker. A scan already on the stack stays closed. */

@@ -1,6 +1,6 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.multiblock.*;
+import gregtech.internal.multiblock.*;
 import gregtech.blockentity.GTEnergyBlockEntity;
 import gregtech.data.GregTechTags;
 import net.minecraft.core.*;
@@ -21,9 +21,9 @@ import java.util.*;
 /** Transient binding is rebuilt after chunk load; no duplicated inventory or heat is stored here. */
 public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
         gregtech.content.logistics.LogisticsCoverHost,
-        gregtech.api.machine.ITileEntityCrucible,
-        gregtech.api.multiblock.BoundMachinePort,
-        gregtech.api.fluid.FluidToolTarget, MultiblockToolTarget {
+        gregtech.internal.machine.ITileEntityCrucible,
+        gregtech.internal.multiblock.BoundMachinePort,
+        gregtech.internal.fluid.FluidToolTarget, MultiblockToolTarget {
     private final gregtech.content.logistics.LogisticsCovers covers =
             new gregtech.content.logistics.LogisticsCovers(this, this);
     private BlockPos controller;
@@ -65,10 +65,10 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
     }
     /** Original part funnel/tap access checks the formed controller, not transport role bits. */
     @Override public IFluidHandler fluidToolHandler(Direction side,boolean filling) {
-        return gregtech.api.fluid.FluidToolTarget.relay(()->{
+        return gregtech.internal.fluid.FluidToolTarget.relay(()->{
             var host=owner();
             if(host==null||!host.isStructureOk())return null;
-            if(host instanceof gregtech.api.fluid.FluidToolTarget tools)
+            if(host instanceof gregtech.internal.fluid.FluidToolTarget tools)
                 return tools.fluidToolHandler(side,filling);
             // Preserve existing access for controllers whose original tool path is not ported yet.
 //? if >=1.21.1 {
@@ -83,8 +83,8 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
                                            List<net.minecraft.network.chat.Component> messages) {
         if(level==null||level.isClientSide||isRemoved())return 0;
         var held=context.getItemInHand();
-        if(!gregtech.api.tool.GTToolHelper.matchesTool(held,gregtech.api.tool.GTToolType.BUILDER_WAND)
-                &&!gregtech.api.tool.GTToolHelper.matchesTool(held,gregtech.api.tool.GTToolType.MAGNIFYING_GLASS))return 0;
+        if(!gregtech.internal.tool.GTToolHelper.matchesTool(held,gregtech.internal.tool.GTToolType.BUILDER_WAND)
+                &&!gregtech.internal.tool.GTToolHelper.matchesTool(held,gregtech.internal.tool.GTToolType.MAGNIFYING_GLASS))return 0;
         var host=owner();
         if(host==null) {
             messages.add(net.minecraft.network.chat.Component.literal(MultiblockToolRules.NO_CONTROLLER));
@@ -133,17 +133,17 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
     }
 
     public void bind(BlockPos owner,MultiblockLayout.Role role) {
-        gregtech.api.multiblock.tracking.StructureScanProbe.onBind();
-        gregtech.api.multiblock.tracking.StructureScanProbe.pause();
+        gregtech.internal.multiblock.tracking.StructureScanProbe.onBind();
+        gregtech.internal.multiblock.tracking.StructureScanProbe.pause();
         try {
             this.controller=owner.immutable(); this.role=role;
 //? if >=1.21.1 {
-            /*updateCrucibleVisual(owner() instanceof gregtech.api.multiblock.CrucibleStructureOwner);
+            /*updateCrucibleVisual(owner() instanceof gregtech.internal.multiblock.CrucibleStructureOwner);
 *///?} else {
             updateCrucibleVisual(owner() instanceof LargeCrucibleControllerBlockEntity);
 //?}
         } finally {
-            gregtech.api.multiblock.tracking.StructureScanProbe.resume();
+            gregtech.internal.multiblock.tracking.StructureScanProbe.resume();
         }
     }
     @Override public void onLoad() {
@@ -160,18 +160,18 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
     }
     public void release(BlockPos owner) {
         if (owner.equals(controller)) {
-            gregtech.api.multiblock.tracking.StructureScanProbe.onRelease();
-            gregtech.api.multiblock.tracking.StructureScanProbe.pause();
+            gregtech.internal.multiblock.tracking.StructureScanProbe.onRelease();
+            gregtech.internal.multiblock.tracking.StructureScanProbe.pause();
             try {
                 controller = null;
                 role = null;
                 updateCrucibleVisual(false);
                 restoreStructureDesign();
             } finally {
-                gregtech.api.multiblock.tracking.StructureScanProbe.resume();
+                gregtech.internal.multiblock.tracking.StructureScanProbe.resume();
             }
             if (level instanceof net.minecraft.server.level.ServerLevel server)
-                gregtech.api.multiblock.tracking.StructureWatchIndex.onPortReleased(server, worldPosition, owner);
+                gregtech.internal.multiblock.tracking.StructureWatchIndex.onPortReleased(server, worldPosition, owner);
         }
     }
     @Override public boolean canLogistics(Direction side) {
@@ -182,19 +182,19 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
     }
     /** GT6 crucible's middle wall serves faucets and molds; upper wall serves hand access. */
 //? if >=1.21.1 {
-    /*public gregtech.api.multiblock.CrucibleStructureOwner crucibleController() {
+    /*public gregtech.internal.multiblock.CrucibleStructureOwner crucibleController() {
 *///?} else {
     public LargeCrucibleControllerBlockEntity crucibleController() {
 //?}
         var host = owner();
 //? if >=1.21.1 {
-        /*return host instanceof gregtech.api.multiblock.CrucibleStructureOwner crucible ? crucible : null;
+        /*return host instanceof gregtech.internal.multiblock.CrucibleStructureOwner crucible ? crucible : null;
 *///?} else {
         return host instanceof LargeCrucibleControllerBlockEntity crucible ? crucible : null;
 //?}
     }
     public boolean isCrucibleUpperPort() { return role == MultiblockLayout.Role.ITEM_FLUID_IO && crucibleController() != null; }
-    @Override public boolean fillMoldAtSide(gregtech.api.machine.ITileEntityMold mold,
+    @Override public boolean fillMoldAtSide(gregtech.internal.machine.ITileEntityMold mold,
                                              int crucibleSide, int moldSide) {
         var crucible = crucibleController();
         return role == MultiblockLayout.Role.CRUCIBLE && crucible != null && crucible.isStructureOk()

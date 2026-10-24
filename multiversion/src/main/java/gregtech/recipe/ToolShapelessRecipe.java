@@ -4,7 +4,7 @@ package gregtech.recipe;
 //?} else {
 import com.google.gson.JsonObject;
 //?}
-import gregtech.api.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolHelper;
 import gregtech.item.GTToolItem;
 import gregtech.content.recipe.FormConversionSelector;
 //? if >=1.21.1 {
@@ -33,7 +33,7 @@ import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.level.Level;
 
 /** Original CR shapeless rows: ordinary GT tool container crafting wears and returns the tool. */
-public final class ToolShapelessRecipe extends ShapelessRecipe implements gregtech.api.recipe.AutocraftableCraftingRecipe {
+public final class ToolShapelessRecipe extends ShapelessRecipe implements gregtech.internal.recipe.AutocraftableCraftingRecipe {
     private final boolean autocraftable, requireEmptyFluidContainers;
     private final FormConversionSelector formSelector;
     private final String conversionInput, conversionMaterial;
@@ -99,10 +99,10 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements gregte
             if (!stack.isEmpty() && !conversionInput.isEmpty()
                     && !CraftingMaterialForms.matches(conversionInput, conversionMaterial, stack)) return false;
 //? if >=1.21.1 {
-            /*if (requireEmptyFluidContainers && (gregtech.api.material.ItemMaterialRegistry.hasStoredContents(stack)
+            /*if (requireEmptyFluidContainers && (gregtech.internal.material.ItemMaterialRegistry.hasStoredContents(stack)
                     || net.neoforged.neoforge.fluids.FluidUtil.getFluidContained(stack).filter(f -> !f.isEmpty()).isPresent())) return false;
 *///?} else {
-            if (requireEmptyFluidContainers && (gregtech.api.material.ItemMaterialRegistry.hasStoredContents(stack)
+            if (requireEmptyFluidContainers && (gregtech.internal.material.ItemMaterialRegistry.hasStoredContents(stack)
                     || net.minecraftforge.fluids.FluidUtil.getFluidContained(stack).filter(f -> !f.isEmpty()).isPresent())) return false;
 //?}
             if (stack.getItem() instanceof GTToolItem && !GTToolHelper.isUsable(stack)) return false;

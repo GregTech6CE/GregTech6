@@ -1,6 +1,6 @@
 package gregtech.client;
 import gregtech.content.transport.fluid.FluidTransportRegistries;
-import gregtech.api.machine.PipeGeometry;
+import gregtech.internal.machine.PipeGeometry;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
@@ -15,7 +15,7 @@ import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import java.util.Locale;
 /** Original dynamic thin-to-thick pipe geometry, cover plates and material tint, client only. */
-@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD,value=Dist.CLIENT)
+@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD,value=Dist.CLIENT)
 public final class FluidTransportClientSetup {
     private FluidTransportClientSetup() {}
     private static ResourceLocation id(String path){return ResourceLocation.fromNamespaceAndPath("gt6ce",path);}

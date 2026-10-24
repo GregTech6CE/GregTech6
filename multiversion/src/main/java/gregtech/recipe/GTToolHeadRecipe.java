@@ -1,6 +1,6 @@
 package gregtech.recipe;
 
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolType;
 import gregtech.data.MaterialPrefix;
 import gregtech.registry.GTItems;
 import net.minecraft.resources.ResourceLocation;

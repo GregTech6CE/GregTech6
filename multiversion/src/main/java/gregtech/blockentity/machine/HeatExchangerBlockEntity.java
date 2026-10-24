@@ -2,10 +2,10 @@
  * MultiTileEntityGeneratorHotFluid: buffered fuel, top HU and front cooled fluid. */
 package gregtech.blockentity.machine;
 
-import gregtech.api.energy.EnergyTransfer;
-import gregtech.api.fluid.*;
-import gregtech.api.recipe.Recipe;
-import gregtech.api.tool.*;
+import gregtech.internal.energy.EnergyTransfer;
+import gregtech.internal.fluid.*;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.tool.*;
 import gregtech.blockentity.GTEnergyBlockEntity;
 import gregtech.block.machine.HeatExchangerBlock;
 import gregtech.content.multiblock.HeatExchangerRules;
@@ -129,8 +129,8 @@ public final class HeatExchangerBlockEntity extends GTEnergyBlockEntity implemen
         }
         if (GTToolHelper.matchesTool(held, GTToolType.MAGNIFYING_GLASS)) {
             if (!level.isClientSide) {
-                player.displayClientMessage(Component.literal("Input: ").append(gregtech.api.multiblock.MultiblockTools.tankContent(hot, "Empty")), false);
-                player.displayClientMessage(Component.literal("Output: ").append(gregtech.api.multiblock.MultiblockTools.tankContent(cold, "Empty")), false);
+                player.displayClientMessage(Component.literal("Input: ").append(gregtech.internal.multiblock.MultiblockTools.tankContent(hot, "Empty")), false);
+                player.displayClientMessage(Component.literal("Output: ").append(gregtech.internal.multiblock.MultiblockTools.tankContent(cold, "Empty")), false);
                 GTToolHelper.damageForUse(held, 1, player);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);

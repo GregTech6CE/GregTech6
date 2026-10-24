@@ -2,6 +2,7 @@
 package gregtech.item;
 
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.content.tool.WoodenBucketCatalog;
 import gregtech.content.tool.WoodenBucketCatalog.Band;
 import gregtech.content.tool.WoodenBucketCatalog.Content;

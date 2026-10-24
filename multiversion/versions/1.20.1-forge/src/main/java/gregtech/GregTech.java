@@ -1,6 +1,6 @@
 package gregtech;
 
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.bootstrap.InitializationStep;
 import gregtech.bootstrap.content.*;
 import gregtech.bootstrap.registration.*;
@@ -19,15 +19,15 @@ import net.minecraftforge.eventbus.api.IEventBus;
 
 @Mod(GregTech.MODID)
 public class GregTech {
-    public static final String MODID = gregtech.api.mod.GregTechIdentity.MOD_ID;
-    public static final String NAMESPACE = gregtech.api.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+    public static final String MODID = gregtech.internal.mod.GregTechIdentity.MOD_ID;
+    public static final String NAMESPACE = gregtech.internal.mod.GregTechIdentity.REGISTRY_NAMESPACE;
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public GregTech(FMLJavaModLoadingContext context) {
         gregtech.internal.addon.AddonCoreServices.bind();
         gregtech.internal.addon.AddonPlatformServices.bind();
         gregtech.internal.addon.AddonLoaderServices.bind();
-        gregtech.api.mod.ModData.bindPresence(id -> net.minecraftforge.fml.ModList.get().isLoaded(
+        gregtech.internal.mod.ModData.bindPresence(id -> net.minecraftforge.fml.ModList.get().isLoaded(
                 NAMESPACE.equals(id) ? MODID : id));
         GTMaterialRegistry.setLogSink((warning, message) -> {
             if (warning) LOGGER.warn(message); else LOGGER.info(message);
@@ -80,16 +80,16 @@ public class GregTech {
             gregtech.content.recipe.MachineRecipeBootstrap.load();
             gregtech.api.addon.GregTechAddons.dispatchRecipesReady(
                     new gregtech.api.addon.GregTechAddon.Context("forge", "1.20.1"));
-            gregtech.api.addon.ExclusiveOutputMaps.audit();
+            gregtech.internal.addon.ExclusiveOutputMaps.audit();
             gregtech.content.multiblock.PlainStructureBlocks.resolve();
             LOGGER.info("GT addon API {} ready: {}", gregtech.api.addon.GregTechAddons.API_VERSION,
                     gregtech.api.addon.GregTechAddons.registeredIds());
             // Rows that RecipeMap.make cancelled down to nothing and dropped; a non-zero value is
             // expected whenever an optimized table contains an input that cancels against its own output.
-            var collapsed = gregtech.api.recipe.RecipeMap.collapsedSamples();
+            var collapsed = gregtech.internal.recipe.RecipeMap.collapsedSamples();
             LOGGER.info("Recipe tables: {} rows dropped as collapsed by optimization, per map {}, e.g. {}",
-                    gregtech.api.recipe.RecipeMap.collapsedRecipesDropped(),
-                    gregtech.api.recipe.RecipeMap.collapsedByMap(),
+                    gregtech.internal.recipe.RecipeMap.collapsedRecipesDropped(),
+                    gregtech.internal.recipe.RecipeMap.collapsedByMap(),
                     collapsed.subList(0, Math.min(8, collapsed.size())));
 
             long itemCount = ForgeRegistries.ITEMS.getKeys().stream()

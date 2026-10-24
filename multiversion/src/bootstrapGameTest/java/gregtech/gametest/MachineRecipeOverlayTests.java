@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
-import gregtech.api.machine.BasicMachineSpec;
+import gregtech.internal.machine.BasicMachineSpec;
 //? if >=1.21.1 {
 /**///?} else {
-import gregtech.api.machine.MachineRegistry;
+import gregtech.internal.machine.MachineRegistry;
 //?}
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.recipe.Recipe;
 //? if >=1.21.1 {
 /*import gregtech.blockentity.machine.BasicMachineBlockEntity;
 *///?} else {
@@ -114,12 +114,12 @@ public final class MachineRecipeOverlayTests {
 //?}
         var furnace = MachineRecipeMaps.Furnace;
         var ids = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech_machine_overlay", "furnace_probe");
-        var clear = gregtech.api.recipe.data.MachineRecipeDocuments.removal(
+        var clear = gregtech.internal.recipe.data.MachineRecipeDocuments.removal(
                 mode == 1 ? "{\"map\":\"" + furnace.mNameInternal + "\",\"clear\":true}"
                         : removal(furnace.mNameInternal, "minecraft:structure_void", 1));
-        var removed = gregtech.api.recipe.data.MachineRecipeDocuments.removal(
+        var removed = gregtech.internal.recipe.data.MachineRecipeDocuments.removal(
                 removal(furnace.mNameInternal, "minecraft:jigsaw", 1));
-        var added = gregtech.api.recipe.data.MachineRecipeDocuments.addition(
+        var added = gregtech.internal.recipe.data.MachineRecipeDocuments.addition(
                 addition(furnace.mNameInternal, "minecraft:structure_void", "minecraft:nether_star"));
 //? if >=1.21.1 {
 /*        var rows = new ArrayList<net.minecraft.world.item.crafting.RecipeHolder<?>>(server.getRecipeManager().getRecipes());
@@ -247,7 +247,7 @@ public final class MachineRecipeOverlayTests {
         helper.succeed();
     }
 
-    private static void assertOverlay(GameTestHelper helper, gregtech.api.recipe.RecipeMap crusher, Recipe victim, Item removedInput) {
+    private static void assertOverlay(GameTestHelper helper, gregtech.internal.recipe.RecipeMap crusher, Recipe victim, Item removedInput) {
         helper.assertTrue(!crusher.mRecipeList.contains(victim), "the datapack removal unlinked the matched row");
         helper.assertTrue(recipesWith(crusher, removedInput) == 0, "the exact input removal leaves no row of that item");
         var heart = crusher.findRecipe(List.of(new ItemStack(Items.HEART_OF_THE_SEA)), List.of(), false, 1, 12);
@@ -258,7 +258,7 @@ public final class MachineRecipeOverlayTests {
         helper.assertTrue(soil != null && soil.mOutputs[0].is(Items.DIAMOND), "soul soil expands from minecraft:soul_fire_base_blocks");
     }
 
-    private static Recipe uniqueInput(gregtech.api.recipe.RecipeMap map) {
+    private static Recipe uniqueInput(gregtech.internal.recipe.RecipeMap map) {
         for (var recipe : map.mRecipeList) {
             var input = onlyInput(recipe);
             if (input == null || input.getCount() != 1) continue;
@@ -278,7 +278,7 @@ public final class MachineRecipeOverlayTests {
         return found;
     }
 
-    private static int recipesWith(gregtech.api.recipe.RecipeMap map, Item item) {
+    private static int recipesWith(gregtech.internal.recipe.RecipeMap map, Item item) {
         int count = 0;
         for (var recipe : map.mRecipeList)
             for (var stack : recipe.mInputs)

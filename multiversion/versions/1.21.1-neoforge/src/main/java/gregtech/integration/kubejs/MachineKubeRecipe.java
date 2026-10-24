@@ -1,6 +1,6 @@
 package gregtech.integration.kubejs;
 
-import gregtech.api.recipe.data.MachineRecipeScript;
+import gregtech.internal.recipe.data.MachineRecipeScript;
 import dev.latvian.mods.kubejs.error.KubeRuntimeException;
 import dev.latvian.mods.kubejs.recipe.KubeRecipe;
 import dev.latvian.mods.kubejs.recipe.component.RecipeValidationContext;

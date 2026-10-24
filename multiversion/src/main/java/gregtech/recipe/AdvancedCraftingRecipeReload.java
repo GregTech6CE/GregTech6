@@ -2,9 +2,9 @@ package gregtech.recipe;
 
 /** Invalidates both successful and empty worktable previews after a server datapack reload. */
 //? if >=1.21.1 {
-/*@net.neoforged.fml.common.EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID)
+/*@net.neoforged.fml.common.EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID)
 *///?} else {
-@net.minecraftforge.fml.common.Mod.EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID)
+@net.minecraftforge.fml.common.Mod.EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID)
 //?}
 public final class AdvancedCraftingRecipeReload {
     private static volatile long generation;

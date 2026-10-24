@@ -1,6 +1,6 @@
 package gregtech.item;
 
-import gregtech.api.prefix.BlockMaterialPrefix;
+import gregtech.internal.prefix.BlockMaterialPrefix;
 import gregtech.data.MaterialPrefix;
 import net.minecraft.world.item.Item;
 

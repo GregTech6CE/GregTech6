@@ -1,7 +1,7 @@
 package gregtech.integration.client;
 
 import com.google.gson.JsonObject;
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.recipe.Recipe;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.jei.RecipeMapCategory;
 import gregtech.recipe.MachineRecipeOverlay;
@@ -52,9 +52,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Bootstrap sources stay out of the production jar.
  */
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, value = Dist.CLIENT)
+/*@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, value = Dist.CLIENT)
 *///?} else {
-@Mod.EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 //?}
 public final class MachineOverlayViewerSmoke {
     private static final boolean ENABLED = Boolean.getBoolean("gregtech.integration.machineOverlayViewerSmoke");

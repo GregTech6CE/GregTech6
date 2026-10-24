@@ -91,25 +91,25 @@ public final class ClientModelContracts {
         var gas = ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/fluid/gas");
         var molten = ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/metallic/molten");
         var available = new java.util.HashSet<>(java.util.Set.of(fluid, gas, molten));
-        var plasma = gregtech.api.fluid.FluidTexturePolicy.Kind.PLASMA.standard();
+        var plasma = gregtech.internal.fluid.FluidTexturePolicy.Kind.PLASMA.standard();
         available.add(plasma);
-        if (!gregtech.api.fluid.FluidTexturePolicy.select(preferred,
-                gregtech.api.fluid.FluidTexturePolicy.Kind.PLASMA, available::contains).equals(plasma))
+        if (!gregtech.internal.fluid.FluidTexturePolicy.select(preferred,
+                gregtech.internal.fluid.FluidTexturePolicy.Kind.PLASMA, available::contains).equals(plasma))
             throw new AssertionError("Plasma has its own fallback category");
-        if (gregtech.api.fluid.FluidTexturePolicy.kind(new gregtech.data.RegisteredFluids.FluidEntry("molten.copper"))
-                != gregtech.api.fluid.FluidTexturePolicy.Kind.MOLTEN
-                || gregtech.api.fluid.FluidTexturePolicy.kind(new gregtech.data.RegisteredFluids.FluidEntry("oxygen").withGas())
-                != gregtech.api.fluid.FluidTexturePolicy.Kind.GAS)
+        if (gregtech.internal.fluid.FluidTexturePolicy.kind(new gregtech.data.RegisteredFluids.FluidEntry("molten.copper"))
+                != gregtech.internal.fluid.FluidTexturePolicy.Kind.MOLTEN
+                || gregtech.internal.fluid.FluidTexturePolicy.kind(new gregtech.data.RegisteredFluids.FluidEntry("oxygen").withGas())
+                != gregtech.internal.fluid.FluidTexturePolicy.Kind.GAS)
             throw new AssertionError("Actual registry entries must classify by phase");
-        if (!gregtech.api.fluid.FluidTexturePolicy.select(preferred, false, false, available::contains).equals(fluid)
-                || !gregtech.api.fluid.FluidTexturePolicy.select(preferred, false, true, available::contains).equals(gas)
-                || !gregtech.api.fluid.FluidTexturePolicy.select(preferred, true, false, available::contains).equals(molten))
+        if (!gregtech.internal.fluid.FluidTexturePolicy.select(preferred, false, false, available::contains).equals(fluid)
+                || !gregtech.internal.fluid.FluidTexturePolicy.select(preferred, false, true, available::contains).equals(gas)
+                || !gregtech.internal.fluid.FluidTexturePolicy.select(preferred, true, false, available::contains).equals(molten))
             throw new AssertionError("Missing fluid sprite must use the appropriate standard texture");
         available.add(preferred);
-        if (!gregtech.api.fluid.FluidTexturePolicy.select(preferred, false, false, available::contains).equals(preferred))
+        if (!gregtech.internal.fluid.FluidTexturePolicy.select(preferred, false, false, available::contains).equals(preferred))
             throw new AssertionError("Resource-pack dedicated sprite must override fallback");
         available.clear();
-        if (!gregtech.api.fluid.FluidTexturePolicy.select(preferred, false, false, available::contains)
+        if (!gregtech.internal.fluid.FluidTexturePolicy.select(preferred, false, false, available::contains)
                 .equals(ResourceLocation.withDefaultNamespace("block/water_still")))
             throw new AssertionError("Missing standard texture needs final vanilla fallback");
     }
@@ -118,10 +118,10 @@ public final class ClientModelContracts {
         // Verify the geometry policy used by the item renderer; atlas baking needs a Forge client.
         int count = 0;
         for (var dir : net.minecraft.core.Direction.values()) {
-            if (!gregtech.api.machine.PipeGeometry.itemConnected(dir)) continue;
+            if (!gregtech.internal.machine.PipeGeometry.itemConnected(dir)) continue;
             count++;
-            var bounds = gregtech.api.machine.PipeGeometry.armBox(dir, 2,
-                    gregtech.api.machine.PipeGeometry.NONE);
+            var bounds = gregtech.internal.machine.PipeGeometry.armBox(dir, 2,
+                    gregtech.internal.machine.PipeGeometry.NONE);
             if (bounds == null || (dir == net.minecraft.core.Direction.SOUTH ? bounds[5] != 16
                     : dir != net.minecraft.core.Direction.NORTH || bounds[2] != 0))
                 throw new AssertionError("Inventory connector must reach both block boundaries");

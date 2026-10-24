@@ -1,6 +1,6 @@
 package gregtech.emi;
 
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.jei.RecipeMachines;
 import dev.emi.emi.api.EmiEntrypoint;
 import dev.emi.emi.api.EmiPlugin;
@@ -24,7 +24,7 @@ public final class GregTechEMIPlugin implements EmiPlugin {
 
     @Override
     public void register(EmiRegistry registry) {
-        gregtech.api.fluid.FluidContainerDisplayBinding.invalidate();
+        gregtech.internal.fluid.FluidContainerDisplayBinding.invalidate();
         FluidScreenStackProvider.register(registry);
         WoodenBucketLookupRecipe.register(registry);
         registry.addRecipeHandler(gregtech.registry.GTMenuTypes.ADVANCED_CRAFTING.get(),new AdvancedCraftingEmiHandler());
@@ -32,15 +32,15 @@ public final class GregTechEMIPlugin implements EmiPlugin {
             if(table instanceof gregtech.block.misc.AdvancedCraftingTableBlock)
                 registry.addWorkstation(dev.emi.emi.api.recipe.VanillaEmiRecipeCategories.CRAFTING,EmiStack.of(new ItemStack(table)));
         EmiCatalogRepair.apply();
-        for(var item:gregtech.api.recipe.UsbRecipeDisplayBinding.sticks())
+        for(var item:gregtech.internal.recipe.UsbRecipeDisplayBinding.sticks())
             registry.setDefaultComparison(item,dev.emi.emi.api.stack.Comparison.compareData(
-                    stack->gregtech.api.recipe.UsbRecipeDisplayBinding.subtype(stack.getItemStack())));
+                    stack->gregtech.internal.recipe.UsbRecipeDisplayBinding.subtype(stack.getItemStack())));
         ToolAssemblyEmiRecipe.register(registry);
         LootEmiRecipe.register(registry);
         StructureEmiRecipe.register(registry);
         WorldgenEmiRecipe.register(registry);
         // Rebuild aliases from this reload's compositions before creating ingredient templates.
-        gregtech.api.material.MaterialDisplayBinding.invalidate();
+        gregtech.internal.material.MaterialDisplayBinding.invalidate();
         var machines = RecipeMachines.collect();
         var ingredients = new MachineEmiIngredients();
         long started = System.nanoTime();

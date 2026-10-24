@@ -1,9 +1,9 @@
 package gregtech.data.generated;
 
-import gregtech.api.addon.AddonMaterials;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialProperty;
-import static gregtech.api.material.MaterialProperty.*;
+import gregtech.internal.addon.AddonMaterials;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialProperty;
+import static gregtech.internal.material.MaterialProperty.*;
 
 /** Generated from Gregorius Techneticies' LGPL-3.0-or-later MT/OreDictMaterial policy.
  * Regenerate with tools/integration/extract_material_decomposition.py. */

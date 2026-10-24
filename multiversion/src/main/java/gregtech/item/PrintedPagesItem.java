@@ -8,7 +8,7 @@ import java.util.List;
 public final class PrintedPagesItem extends TechItem {
     public PrintedPagesItem(boolean many,Item.Properties properties) {
         super(many?"Many Printed Pages":"Printed Pages",properties);
-        gregtech.api.material.ItemMaterialRegistry.register(this,new gregtech.api.material.ItemComposition(null,List.of(gregtech.api.material.MaterialComponent.of(gregtech.content.material.Materials.Paper,gregtech.api.material.GTValues.U*(many?6:3))),"GT6 Printed Pages",true));
+        gregtech.internal.material.ItemMaterialRegistry.register(this,new gregtech.internal.material.ItemComposition(null,List.of(gregtech.internal.material.MaterialComponent.of(gregtech.content.material.Materials.Paper,gregtech.api.material.GTValues.U*(many?6:3))),"GT6 Printed Pages",true));
     }
 //? if >=1.21.1 {
     /*@Override public void appendHoverText(ItemStack stack,Item.TooltipContext context,List<Component> tooltip,TooltipFlag flag) {

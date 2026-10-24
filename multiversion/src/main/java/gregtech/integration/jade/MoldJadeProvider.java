@@ -1,8 +1,8 @@
 package gregtech.integration.jade;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.machine.ITileEntityMold;
-import gregtech.api.prefix.BlockMaterialPrefix;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.machine.ITileEntityMold;
+import gregtech.internal.prefix.BlockMaterialPrefix;
 import gregtech.data.MaterialPrefix;
 import gregtech.blockentity.machine.MoldBasinBlockEntity;
 import gregtech.blockentity.machine.MoldBlockEntity;

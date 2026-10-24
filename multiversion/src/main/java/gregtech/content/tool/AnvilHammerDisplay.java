@@ -1,7 +1,8 @@
 package gregtech.content.tool;
 
 import gregtech.api.material.*;
-import gregtech.api.tool.*;
+import gregtech.internal.material.*;
+import gregtech.internal.tool.*;
 import gregtech.item.GTToolItem;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;

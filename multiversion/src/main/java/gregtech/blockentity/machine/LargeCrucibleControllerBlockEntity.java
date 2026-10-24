@@ -1,12 +1,12 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.machine.crucible.CrucibleMaterialStack;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.machine.crucible.CrucibleMaterialStack;
+import gregtech.internal.material.GTMaterial;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.MaterialProperty;
-import gregtech.api.multiblock.MultiblockLayout;
-import gregtech.api.multiblock.MultiblockPortOwner;
-import gregtech.api.multiblock.PartBindings;
+import gregtech.internal.material.MaterialProperty;
+import gregtech.internal.multiblock.MultiblockLayout;
+import gregtech.internal.multiblock.MultiblockPortOwner;
+import gregtech.internal.multiblock.PartBindings;
 import gregtech.block.machine.LargeCrucibleControllerBlock;
 import gregtech.content.material.Materials;
 import gregtech.content.multiblock.LargeCrucibleSpecs;
@@ -43,9 +43,9 @@ import java.util.Map;
 
 /** GT6 MultiTileEntityCrucible: 3x3x3 open vessel, per-material wall, shared smelting engine. */
 //? if >=1.21.1 {
-/*public final class LargeCrucibleControllerBlockEntity extends gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity implements gregtech.api.multiblock.CrucibleStructureOwner, gregtech.api.multiblock.tracking.TrackedMultiblock {
+/*public final class LargeCrucibleControllerBlockEntity extends gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity implements gregtech.internal.multiblock.CrucibleStructureOwner, gregtech.internal.multiblock.tracking.TrackedMultiblock {
 *///?} else {
-public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBlockEntity implements MultiblockPortOwner, gregtech.api.multiblock.tracking.TrackedMultiblock {
+public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBlockEntity implements MultiblockPortOwner, gregtech.internal.multiblock.tracking.TrackedMultiblock {
 //?}
     public static final long MAX_AMOUNT = gregtech.content.multiblock.OriginalLargeCrucibleParameters.CAPACITY_UNITS;
     private static final long MB_UNIT = GTValues.U / 144L;
@@ -84,8 +84,8 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
     @Override public long getMeltDownLimitK() {
         return gregtech.content.multiblock.OriginalLargeCrucibleParameters.meltDownTemperatureK(variant.material().getMeltingPoint());
     }
-    @Override protected gregtech.api.machine.crucible.CrucibleHazards.Profile hazardProfile() {
-        return gregtech.api.machine.crucible.CrucibleHazards.LARGE;
+    @Override protected gregtech.internal.machine.crucible.CrucibleHazards.Profile hazardProfile() {
+        return gregtech.internal.machine.crucible.CrucibleHazards.LARGE;
     }
     @Override protected AABB itemSuctionArea() {
         return new AABB(worldPosition.getX() - 0.5D, worldPosition.getY() + 0.125D,
@@ -100,15 +100,15 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
 
     @Override public void onLoad() {
         super.onLoad();
-        if (level != null && !level.isClientSide) gregtech.api.multiblock.tracking.StructureTracking.attach(this);
+        if (level != null && !level.isClientSide) gregtech.internal.multiblock.tracking.StructureTracking.attach(this);
     }
     @Override public void onChunkUnloaded() {
-        gregtech.api.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
+        gregtech.internal.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
         super.onChunkUnloaded();
     }
     @Override public void setRemoved() {
-        if (!gregtech.api.multiblock.tracking.StructureTracking.unloading(this)) bindings.clear(this::release);
-        gregtech.api.multiblock.tracking.StructureTracking.onRemoved(this);
+        if (!gregtech.internal.multiblock.tracking.StructureTracking.unloading(this)) bindings.clear(this::release);
+        gregtech.internal.multiblock.tracking.StructureTracking.onRemoved(this);
         super.setRemoved();
     }
 
@@ -118,24 +118,24 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
         return state.hasProperty(property) && state.getValue(property);
     }
 
-    @Override public gregtech.api.multiblock.tracking.StructureDefinition structureDefinition() {
-        return gregtech.api.multiblock.tracking.CustomStructures.crucible(this);
+    @Override public gregtech.internal.multiblock.tracking.StructureDefinition structureDefinition() {
+        return gregtech.internal.multiblock.tracking.CustomStructures.crucible(this);
     }
     @Override public boolean isStructureOk() {
-        return gregtech.api.multiblock.tracking.StructureTracking.query(this);
+        return gregtech.internal.multiblock.tracking.StructureTracking.query(this);
     }
     @Override public boolean scanStructure() {
         if (level != null && level.isClientSide) return isFormedForRendering();
         boolean formed = checkStructure();
         if (level != null && !isRemoved()) {
-            gregtech.api.multiblock.tracking.StructureScanProbe.pause();
+            gregtech.internal.multiblock.tracking.StructureScanProbe.pause();
             try {
                 var property = gregtech.block.machine.MultiblockPortBlock.CRUCIBLE_FORMED;
                 var state = level.getBlockState(worldPosition);
                 if (state.hasProperty(property) && state.getValue(property) != formed)
                     level.setBlock(worldPosition, state.setValue(property, formed), 3);
             } finally {
-                gregtech.api.multiblock.tracking.StructureScanProbe.resume();
+                gregtech.internal.multiblock.tracking.StructureScanProbe.resume();
             }
         }
         return formed;
@@ -156,15 +156,15 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
         Map<BlockPos, MultiblockLayout.Role> candidates = new LinkedHashMap<>(24);
         for(var cell:gregtech.content.multiblock.SharedLargeCrucibleStructure.CELLS){
             BlockPos pos=worldPosition.offset(cell.x(),cell.y(),cell.z());
-            if(!level.hasChunkAt(pos)){bindings.clear(this::release);gregtech.api.multiblock.tracking.StructureClaims.cleared(this);return false;}
-            if(cell.air()){if(!level.getBlockState(pos).isAir()){bindings.clear(this::release);gregtech.api.multiblock.tracking.StructureClaims.cleared(this);return false;}continue;}
-            if(!(level.getBlockState(pos).getBlock() == wall)){bindings.clear(this::release);gregtech.api.multiblock.tracking.StructureClaims.cleared(this);return false;}
+            if(!level.hasChunkAt(pos)){bindings.clear(this::release);gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);return false;}
+            if(cell.air()){if(!level.getBlockState(pos).isAir()){bindings.clear(this::release);gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);return false;}continue;}
+            if(!(level.getBlockState(pos).getBlock() == wall)){bindings.clear(this::release);gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);return false;}
             candidates.put(pos,MultiblockLayout.Role.valueOf(cell.role().name()));
         }
-        return gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, candidates, 0,
+        return gregtech.internal.multiblock.tracking.StructureClaims.update(this, true, bindings, candidates, 0,
                 pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port && port.canBind(worldPosition),
                 (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
-                this::release) != gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
+                this::release) != gregtech.internal.multiblock.tracking.StructureClaims.Result.FAILED;
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, LargeCrucibleControllerBlockEntity be) {
@@ -301,7 +301,7 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
             if (generated != null) return generated;
             for (var entry : RegisteredFluids.all().entrySet()) {
                 if (entry.getValue().gas()) continue;
-                if (gregtech.api.fluid.FluidVisualPolicy.material(entry.getValue()).resolve() != material.resolve()) continue;
+                if (gregtech.internal.fluid.FluidVisualPolicy.material(entry.getValue()).resolve() != material.resolve()) continue;
                 FluidStack found = GTFluids.stack(entry.getKey(), 1);
                 if (found != null) return found;
             }
@@ -324,12 +324,12 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
             if (tank != 0 || stack.isEmpty()) return false;
             var entry = GTFluids.entryForFluid(stack.getFluid());
             if (entry == null || entry.gas()) return false;
-            GTMaterial material = gregtech.api.fluid.FluidVisualPolicy.material(entry);
+            GTMaterial material = gregtech.internal.fluid.FluidVisualPolicy.material(entry);
             return material.isValid() && (variant.acidProof() || !material.has(MaterialProperty.ACID));
         }
         @Override public int fill(FluidStack resource, FluidAction action) {
             if (!isStructureOk() || !isFluidValid(0, resource)) return 0;
-            GTMaterial material = gregtech.api.fluid.FluidVisualPolicy.material(
+            GTMaterial material = gregtech.internal.fluid.FluidVisualPolicy.material(
                     GTFluids.entryForFluid(resource.getFluid()));
             long units = (long) resource.getAmount() * MB_UNIT;
             if (units > MAX_AMOUNT - getCrucibleContentAmount()) return 0;

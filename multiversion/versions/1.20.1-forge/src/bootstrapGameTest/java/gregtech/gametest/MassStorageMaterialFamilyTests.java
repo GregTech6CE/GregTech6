@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
-import gregtech.api.inventory.MassStorageMaterialForms;
+import gregtech.internal.inventory.MassStorageMaterialForms;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.content.material.Materials;
 import gregtech.data.MaterialPrefix;
 import gregtech.registry.GTItems;

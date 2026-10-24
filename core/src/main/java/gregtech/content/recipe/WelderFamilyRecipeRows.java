@@ -1,13 +1,13 @@
 package gregtech.content.recipe;
 import gregtech.data.MaterialPrefix;
-import gregtech.api.prefix.BlockMaterialPrefix;
+import gregtech.internal.prefix.BlockMaterialPrefix;
 import java.util.List;
 /** Original WelderFamilyRecipes parameters; native stack/registry construction stays in the platforms. */
 public final class WelderFamilyRecipeRows {
     private WelderFamilyRecipeRows(){}
     public record Row(MaterialPrefix input, int inCount, MaterialPrefix second, int secondCount,
                        int circuit, MaterialPrefix output,
-                       gregtech.api.prefix.BlockMaterialPrefix blockOutput) {
+                       gregtech.internal.prefix.BlockMaterialPrefix blockOutput) {
         static Row of(MaterialPrefix input, int inCount, int circuit, MaterialPrefix output) {
             return new Row(input, inCount, null, 0, circuit, output, null);
         }
@@ -16,7 +16,7 @@ public final class WelderFamilyRecipeRows {
             return new Row(input, inCount, second, secondCount, circuit, output, null);
         }
         static Row block(MaterialPrefix input, int inCount, int circuit,
-                         gregtech.api.prefix.BlockMaterialPrefix output) {
+                         gregtech.internal.prefix.BlockMaterialPrefix output) {
             return new Row(input, inCount, null, 0, circuit, null, output);
         }
         long inUnits() {

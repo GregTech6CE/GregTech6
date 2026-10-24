@@ -1,7 +1,7 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.machine.HopperSpec;
-import gregtech.api.machine.ITileEntityAdjacentInventoryUpdatable;
+import gregtech.internal.machine.HopperSpec;
+import gregtech.internal.machine.ITileEntityAdjacentInventoryUpdatable;
 import gregtech.block.machine.QueueHopperBlock;
 import gregtech.client.gui.HopperContainerMenu;
 import gregtech.registry.GTBlockEntities;

@@ -1,9 +1,9 @@
 package gregtech.data;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialProperty;
-import gregtech.api.material.MaterialTextureSet;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialProperty;
+import gregtech.internal.material.MaterialTextureSet;
 
 /**
  * Anti-materials (anti-matter elements and particles), analogous to GregTech {@code AM.java}.

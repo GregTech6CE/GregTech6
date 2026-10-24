@@ -7,8 +7,8 @@ package gregtech.jei;
 import gregtech.GregTech;
 //?}
 
-import gregtech.api.recipe.Recipe;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.recipe.RecipeMap;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -103,22 +103,22 @@ public final class GregTechJEIPlugin implements IModPlugin {
     }
 
     @Override public void registerItemSubtypes(mezz.jei.api.registration.ISubtypeRegistration registration) {
-        for(var item:gregtech.api.recipe.UsbRecipeDisplayBinding.sticks())
-            registration.registerSubtypeInterpreter(item,(stack,context)->gregtech.api.recipe.UsbRecipeDisplayBinding.subtype(stack));
+        for(var item:gregtech.internal.recipe.UsbRecipeDisplayBinding.sticks())
+            registration.registerSubtypeInterpreter(item,(stack,context)->gregtech.internal.recipe.UsbRecipeDisplayBinding.subtype(stack));
 
 //? if >=1.21.1 {
 /*        for(var entry:gregtech.platform.neoforge.fluid.FluidRegistries.allItems().toList()) if(entry.isBound())
-            registration.registerSubtypeInterpreter(entry.get(),(stack,context) -> gregtech.api.fluid.FluidDisplayBinding.subtype(net.minecraft.client.Minecraft.getInstance().level.registryAccess(),stack));
+            registration.registerSubtypeInterpreter(entry.get(),(stack,context) -> gregtech.internal.fluid.FluidDisplayBinding.subtype(net.minecraft.client.Minecraft.getInstance().level.registryAccess(),stack));
 *///?} else {
         for(var entry:gregtech.registry.GTFluidItems.allEntries()) if(entry.isPresent())
-            registration.registerSubtypeInterpreter(entry.get(),(stack,context) -> gregtech.api.fluid.FluidDisplayBinding.subtype(stack));
+            registration.registerSubtypeInterpreter(entry.get(),(stack,context) -> gregtech.internal.fluid.FluidDisplayBinding.subtype(stack));
 //?}
 
     }
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        gregtech.api.fluid.FluidContainerDisplayBinding.invalidate();
+        gregtech.internal.fluid.FluidContainerDisplayBinding.invalidate();
         long started = System.nanoTime();
         int shown = 0;
         try {

@@ -5,7 +5,7 @@ package gregtech.content.recipe;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.recipe.Recipe;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.registry.GTTechnological;
 import net.minecraft.resources.ResourceLocation;
@@ -88,7 +88,7 @@ public final class LaserEmitterRecipes {
     /** The material's gas phase, registered either as a dedicated fluid or under its material name. */
     private static FluidStack gas(String materialName, int mb) {
         // GTGeneratedChem resolves a material's gas exactly like the transpiled GT6 rows do
-        var material = gregtech.api.material.GTMaterialRegistry.get(materialName);
+        var material = gregtech.internal.material.GTMaterialRegistry.get(materialName);
         if (material != null && material.isValid()) {
             FluidStack stack = gregtech.content.recipe.generated.GeneratedRecipeResolver.materialFluid(material.getName(), mb);
             if (stack != null) return stack;

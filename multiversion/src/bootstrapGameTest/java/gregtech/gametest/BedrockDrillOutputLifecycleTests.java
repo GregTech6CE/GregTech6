@@ -209,7 +209,7 @@ public final class BedrockDrillOutputLifecycleTests {
             f.resources(32768, 100);
             h.assertTrue(f.output.getStackInSlot(0).isEmpty(), "broken shell cannot spend the next fully funded cycle");
             h.getLevel().setBlock(head, LargeMachineParts.block(18103).defaultBlockState(), FLAGS);
-            gregtech.api.multiblock.tracking.StructureScheduler.flush(h.getLevel());
+            gregtech.internal.multiblock.tracking.StructureScheduler.flush(h.getLevel());
             tick(h, f.drill);
             h.assertTrue(StructureTestSupport.ok(f.drill) && f.output.getStackInSlot(0).getCount() == 1,
                     "repair reforms the real shell and resumes native mining");

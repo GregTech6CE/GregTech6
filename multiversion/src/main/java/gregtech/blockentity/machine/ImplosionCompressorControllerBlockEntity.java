@@ -1,8 +1,8 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.multiblock.*;
-import gregtech.api.machine.BasicMachineSpec;
-import gregtech.api.energy.FaceConfig;
+import gregtech.internal.multiblock.*;
+import gregtech.internal.machine.BasicMachineSpec;
+import gregtech.internal.energy.FaceConfig;
 import gregtech.content.material.Materials;
 import gregtech.data.*;
 import gregtech.registry.*;
@@ -21,7 +21,7 @@ import java.util.*;
 
 /** GT6 implosion: 25 dense tungstensteel walls, one air cell, timed explosive recipes. */
 public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockEntity implements MultiblockPortOwner,
-        gregtech.api.multiblock.tracking.TrackedMultiblock {
+        gregtech.internal.multiblock.tracking.TrackedMultiblock {
     private final PartBindings<BlockPos,MultiblockLayout.Role> bindings=new PartBindings<>();
     public static final MultiblockLayout LAYOUT=MultiblockLayout.fromShared(gregtech.content.multiblock.SharedImplosionStructure.LAYOUT);
 //? if >=1.21.1 {
@@ -37,11 +37,11 @@ public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockE
         BasicMachineBlockEntity.serverTick(level,pos,state,machine);
     }
     @Override protected boolean structureComplete() { return isStructureOk(); }
-    @Override public gregtech.api.multiblock.tracking.StructureDefinition structureDefinition() {
-        return gregtech.api.multiblock.tracking.CustomStructures.implosion(this);
+    @Override public gregtech.internal.multiblock.tracking.StructureDefinition structureDefinition() {
+        return gregtech.internal.multiblock.tracking.CustomStructures.implosion(this);
     }
     @Override public boolean isStructureOk() {
-        return gregtech.api.multiblock.tracking.StructureTracking.query(this);
+        return gregtech.internal.multiblock.tracking.StructureTracking.query(this);
     }
     @Override public boolean scanStructure() {
         if(level==null || isRemoved()) return false;
@@ -52,24 +52,24 @@ public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockE
             if(!level.getBlockState(pos).is(GTMultiblocks.IMPLOSION_COMPRESSOR_WALL.get()) || !(level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity)) return false;
             candidates.put(pos,role);return true;
         });
-        if(!valid) { bindings.clear(this::release); gregtech.api.multiblock.tracking.StructureClaims.cleared(this); return false; }
-        return gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, candidates, 0,
+        if(!valid) { bindings.clear(this::release); gregtech.internal.multiblock.tracking.StructureClaims.cleared(this); return false; }
+        return gregtech.internal.multiblock.tracking.StructureClaims.update(this, true, bindings, candidates, 0,
                 pos->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).canBind(worldPosition),
                 (pos,role)->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).bind(worldPosition,role),this::release)
-                != gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
+                != gregtech.internal.multiblock.tracking.StructureClaims.Result.FAILED;
     }
     private void release(BlockPos pos) { if(level!=null&&level.hasChunkAt(pos)&&level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part) part.release(worldPosition); }
     @Override public void onLoad() {
         super.onLoad();
-        if (level != null && !level.isClientSide) gregtech.api.multiblock.tracking.StructureTracking.attach(this);
+        if (level != null && !level.isClientSide) gregtech.internal.multiblock.tracking.StructureTracking.attach(this);
     }
     @Override public void onChunkUnloaded() {
-        gregtech.api.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
+        gregtech.internal.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
         super.onChunkUnloaded();
     }
     @Override public void setRemoved() {
-        if (!gregtech.api.multiblock.tracking.StructureTracking.unloading(this)) bindings.clear(this::release);
-        gregtech.api.multiblock.tracking.StructureTracking.onRemoved(this);
+        if (!gregtech.internal.multiblock.tracking.StructureTracking.unloading(this)) bindings.clear(this::release);
+        gregtech.internal.multiblock.tracking.StructureTracking.onRemoved(this);
         super.setRemoved();
     }
     @Override public IFluidHandler portFluids(MultiblockLayout.Role role) { return null; }

@@ -16,13 +16,13 @@ final class HeatExchangerContracts {
             check(cell.right()==expected[0]&&cell.up()==expected[1]&&cell.back()==expected[2]
                     &&cell.part()==(i<8||i==12?18024:18101),"Original explicit builder call order at index "+i);
         }
-        check(gregtech.api.multiblock.MultiblockToolRules.inBuilderReach(-1,1,1),
+        check(gregtech.internal.multiblock.MultiblockToolRules.inBuilderReach(-1,1,1),
                 "Builder reaches the corner of its source three by three by three cube");
-        check(!gregtech.api.multiblock.MultiblockToolRules.inBuilderReach(0,0,2),
+        check(!gregtech.internal.multiblock.MultiblockToolRules.inBuilderReach(0,0,2),
                 "Clicking a shell edge cannot repair the opposite edge two blocks away");
-        check(gregtech.api.multiblock.MultiblockToolRules.amount(9999).equals("9999")
-                &&gregtech.api.multiblock.MultiblockToolRules.amount(10000).equals("10_000")
-                &&gregtech.api.multiblock.MultiblockToolRules.amount(Long.MAX_VALUE).equals("9_223_372_036_854_775_807"),
+        check(gregtech.internal.multiblock.MultiblockToolRules.amount(9999).equals("9999")
+                &&gregtech.internal.multiblock.MultiblockToolRules.amount(10000).equals("10_000")
+                &&gregtech.internal.multiblock.MultiblockToolRules.amount(Long.MAX_VALUE).equals("9_223_372_036_854_775_807"),
                 "Tank diagnostics preserve the original grouping threshold and full long amount");
         check(HeatExchangerRules.tapTank(0)==0,"Empty output permits draining unused hot fuel");
         check(HeatExchangerRules.tapTank(1)==1,"Even one unit of output prevents selecting the input");

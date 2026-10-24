@@ -5,8 +5,8 @@ package gregtech.client;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.machine.CrucibleSpec;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.machine.CrucibleSpec;
+import gregtech.internal.material.GTMaterial;
 import gregtech.blockentity.machine.MoldBasinBlockEntity;
 import gregtech.blockentity.machine.MoldBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;

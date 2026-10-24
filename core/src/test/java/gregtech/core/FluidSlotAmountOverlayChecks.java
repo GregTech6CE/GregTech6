@@ -1,6 +1,6 @@
 package gregtech.core;
 
-import gregtech.api.fluid.FluidSlotAmountOverlay;
+import gregtech.internal.fluid.FluidSlotAmountOverlay;
 
 /** Pure presentation contracts, not a GPU/client visual test. */
 public final class FluidSlotAmountOverlayChecks {

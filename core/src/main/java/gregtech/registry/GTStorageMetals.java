@@ -1,7 +1,7 @@
 package gregtech.registry;
 
 import gregtech.content.material.Materials;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.data.generated.GT6Materials;
 
 import java.util.List;

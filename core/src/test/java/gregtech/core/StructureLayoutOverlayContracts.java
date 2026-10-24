@@ -1,12 +1,12 @@
 package gregtech.core;
 
-import gregtech.api.addon.AddonMachines;
+import gregtech.internal.addon.AddonMachines;
 import gregtech.api.addon.CellMatch;
 import gregtech.api.addon.LayoutRepeat;
 import gregtech.api.addon.StructureLayout;
 import gregtech.api.addon.StructureRole;
-import gregtech.api.kubejs.StructureLayoutDocuments;
-import gregtech.api.multiblock.StructureGrid;
+import gregtech.internal.kubejs.StructureLayoutDocuments;
+import gregtech.internal.multiblock.StructureGrid;
 import gregtech.content.multiblock.SharedLargeMachineLayouts;
 
 import java.util.List;

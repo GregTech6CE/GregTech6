@@ -5,7 +5,7 @@ package gregtech.recipe;
 import com.google.gson.JsonObject;
 import gregtech.GregTech;
 //?}
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolType;
 //? if >=1.21.1 {
 /*import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;

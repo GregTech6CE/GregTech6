@@ -326,7 +326,7 @@ public final class TrackTests {
         h.assertTrue(rail.getIngredients().stream().anyMatch(ingredient -> ingredient.getItems().length > 0
                         && ingredient.getItems()[0].is(gregtech.registry.GTItems
                         .getStack(gregtech.data.MaterialPrefix.railGt,
-                                gregtech.api.material.GTMaterialRegistry.get("Iron"), 1)
+                                gregtech.internal.material.GTMaterialRegistry.get("Iron"), 1)
                         .getItem())),
                 "it is built from GT6's iron rail items, not vanilla iron ingots");
 

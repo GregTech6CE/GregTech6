@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
-import gregtech.api.machine.BasicMachineSpec;
-import gregtech.api.machine.MachineRegistry;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.machine.BasicMachineSpec;
+import gregtech.internal.machine.MachineRegistry;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.cover.CoverAttachmentBehaviors;
 import gregtech.content.cover.CoverItems;
@@ -85,7 +85,7 @@ public final class CoverAttachmentTests {
                 "Cover attachment", "cover_attachment", 1, 1, 1, 1, 1, 0, 1, false, false, false, false);
         machine.setSpec(BasicMachineSpec.builder("cover_attachment_test", block.basicSpec().material())
                 .machineType("test").energy(GregTechTags.Energy.EU, 32).recipes(recipes)
-                .faces(gregtech.api.energy.FaceConfig.ALL_SIDES).build());
+                .faces(gregtech.internal.energy.FaceConfig.ALL_SIDES).build());
         return machine;
     }
 

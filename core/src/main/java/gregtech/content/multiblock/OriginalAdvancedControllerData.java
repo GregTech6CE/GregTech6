@@ -2,9 +2,9 @@
  * Original 17110/17198/17199 registrations and their inherited BasicMachine defaults. */
 package gregtech.content.multiblock;
 
-import gregtech.api.energy.MachineFaceMasks;
-import gregtech.api.machine.BasicMachineParameters;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.energy.MachineFaceMasks;
+import gregtech.internal.machine.BasicMachineParameters;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.content.machine.OriginalMachineMaterialData;
 import gregtech.data.BasicMachineOriginalParams;
 import java.util.List;

@@ -28,13 +28,13 @@ public final class GTMiscBlocks {
     // N9: Crafting Tables (2)
     public static RegistryObject<AdvancedCraftingTableBlock> ADVANCED_CRAFTING_TABLE;
     public static final List<RegistryObject<AdvancedCraftingTableBlock>> ADVANCED_CRAFTING_TABLES=new ArrayList<>();
-    public static AdvancedCraftingTableBlock advancedCraftingTable(gregtech.api.material.GTMaterial material){
+    public static AdvancedCraftingTableBlock advancedCraftingTable(gregtech.internal.material.GTMaterial material){
         for(var table:ADVANCED_CRAFTING_TABLES)if(table.get().material()==material)return table.get();
         throw new IllegalArgumentException("No crafting table for "+material.getName());
     }
     public static RegistryObject<ChargingCraftingTableBlock> CHARGING_CRAFTING_TABLE;
     public static final List<RegistryObject<ChargingCraftingTableBlock>> CHARGING_CRAFTING_TABLES=new ArrayList<>();
-    public static ChargingCraftingTableBlock chargingCraftingTable(gregtech.api.material.GTMaterial material){
+    public static ChargingCraftingTableBlock chargingCraftingTable(gregtech.internal.material.GTMaterial material){
         for(var table:CHARGING_CRAFTING_TABLES)if(table.get().material()==material)return table.get();
         throw new IllegalArgumentException("No charging crafting table for "+material.getName());
     }

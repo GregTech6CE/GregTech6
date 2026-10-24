@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.machine.crucible.CrucibleMaterialStack;
+import gregtech.internal.machine.crucible.CrucibleMaterialStack;
 import gregtech.api.material.GTValues;
 import gregtech.blockentity.machine.LargeCrucibleControllerBlockEntity;
 import gregtech.blockentity.machine.MultiblockPortBlockEntity;
@@ -93,7 +93,7 @@ public final class LargeCrucibleControllerTests {
                 "bottom wall accepts heat");
         helper.assertTrue(!middle.getEnergyTypes(Direction.EAST).contains(GregTechTags.Energy.HU),
                 "middle wall is for casting, not heat");
-        helper.assertTrue(upper.isCrucibleUpperPort() && be.portItems(gregtech.api.multiblock.MultiblockLayout.Role.ITEM_FLUID_IO) != null,
+        helper.assertTrue(upper.isCrucibleUpperPort() && be.portItems(gregtech.internal.multiblock.MultiblockLayout.Role.ITEM_FLUID_IO) != null,
                 "upper wall provides the input cache");
         helper.assertTrue(bottom.doInject(GregTechTags.Energy.HU, Direction.EAST, 2048, 5, true) == 5,
                 "bottom wall forwards HU packets");
@@ -118,7 +118,7 @@ public final class LargeCrucibleControllerTests {
         be.load(tag);
         helper.assertTrue(be.addMaterialStacks(List.of(CrucibleMaterialStack.of(Materials.Iron, GTValues.U)),
                 be.getTemperature()), "hot iron enters material storage");
-        var port = be.portFluids(gregtech.api.multiblock.MultiblockLayout.Role.ITEM_FLUID_IO);
+        var port = be.portFluids(gregtech.internal.multiblock.MultiblockLayout.Role.ITEM_FLUID_IO);
         var molten = GTFluids.stack("GenMolten_" + Materials.Iron.getName(), 1);
         helper.assertTrue(molten != null, "generated molten iron exists");
         helper.assertTrue(port.getFluidInTank(0).getAmount() == 144, "one iron unit is 144 mB");
@@ -145,7 +145,7 @@ public final class LargeCrucibleControllerTests {
         var bottom = (MultiblockPortBlockEntity) helper.getBlockEntity(CENTER.offset(1, 0, 0));
         helper.assertTrue(bottom.doInject(GregTechTags.Energy.HU, Direction.EAST, 2048, 5, true) == 5,
                 "formed bottom wall accepts buffered heat");
-        var upper = be.portItems(gregtech.api.multiblock.MultiblockLayout.Role.ITEM_FLUID_IO);
+        var upper = be.portItems(gregtech.internal.multiblock.MultiblockLayout.Role.ITEM_FLUID_IO);
         helper.assertTrue(upper.insertItem(0, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.IRON_INGOT),
                 false).isEmpty(), "formed upper wall accepts an iron ingot into the cache");
         var saved = be.saveWithoutMetadata();

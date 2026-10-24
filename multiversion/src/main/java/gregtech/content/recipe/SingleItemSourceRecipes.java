@@ -2,6 +2,7 @@
 package gregtech.content.recipe;
 
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.data.*;
 import gregtech.registry.GTFluids;
 import gregtech.registry.GTItems;

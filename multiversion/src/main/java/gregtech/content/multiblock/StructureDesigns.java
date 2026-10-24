@@ -12,7 +12,7 @@ public final class StructureDesigns {
     private StructureDesigns() {}
 
     public static void apply(Level level, BlockPos origin, Direction front, List<LargeMachineLayouts.Cell> cells) {
-        gregtech.api.multiblock.tracking.StructureClaims.runQuiet(() -> applyNow(level, origin, front, cells));
+        gregtech.internal.multiblock.tracking.StructureClaims.runQuiet(() -> applyNow(level, origin, front, cells));
     }
 
     private static void applyNow(Level level, BlockPos origin, Direction front, List<LargeMachineLayouts.Cell> cells) {
@@ -27,7 +27,7 @@ public final class StructureDesigns {
 
     /** Writes designs on repeat copies that the structure check already resolved. */
     public static void apply(Level level, List<LargeMachineLayouts.Placed> placed) {
-        gregtech.api.multiblock.tracking.StructureClaims.runQuiet(() -> applyNow(level, placed));
+        gregtech.internal.multiblock.tracking.StructureClaims.runQuiet(() -> applyNow(level, placed));
     }
 
     private static void applyNow(Level level, List<LargeMachineLayouts.Placed> placed) {

@@ -2,7 +2,7 @@
  * Adapted from manual station and MultiTileEntityBoilerTank.addToolTips. */
 package gregtech.content.machine;
 
-import gregtech.api.machine.BoilerSpec;
+import gregtech.internal.machine.BoilerSpec;
 
 /** Original functional tooltip choices and arithmetic; no native rendering/storage types. */
 public final class OriginalFunctionalTooltipData {

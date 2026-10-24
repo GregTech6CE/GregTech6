@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.energy.EnergyNet;
+import gregtech.internal.energy.EnergyNet;
 import gregtech.block.energy.ElectricWireBlock;
 import gregtech.blockentity.energy.ElectricWireBlockEntity;
 import gregtech.content.recipe.OvenRecipeBridge;

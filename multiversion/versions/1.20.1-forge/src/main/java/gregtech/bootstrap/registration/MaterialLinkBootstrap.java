@@ -1,6 +1,6 @@
 package gregtech.bootstrap.registration;
 
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.bootstrap.InitializationStep;
 
 public record MaterialLinkBootstrap() implements InitializationStep {

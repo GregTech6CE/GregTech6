@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
-import gregtech.api.recipe.Recipe;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.block.stone.GTStoneBlock;
 import gregtech.block.stone.StoneType;
 import gregtech.block.stone.StoneVariant;
@@ -207,10 +207,10 @@ public final class StoneExtrusionTests {
         // Control: an ordinary row survives optimization.
         ItemStack dust = gregtech.registry.GTItems.getStack(
                 gregtech.data.MaterialPrefix.dust,
-                gregtech.api.material.GTMaterialRegistry.get("Rubber"), 1);
+                gregtech.internal.material.GTMaterialRegistry.get("Rubber"), 1);
         ItemStack ingot = gregtech.registry.GTItems.getStack(
                 gregtech.data.MaterialPrefix.ingot,
-                gregtech.api.material.GTMaterialRegistry.get("Rubber"), 1);
+                gregtech.internal.material.GTMaterialRegistry.get("Rubber"), 1);
         helper.assertTrue(!dust.isEmpty() && !ingot.isEmpty(), "rubber dust and ingot exist");
         helper.assertTrue(RecipeMap.make(true, new ItemStack[]{dust.copy(), mold("extruder_shape_ingot")},
                 new ItemStack[]{ingot.copy()}, null, null, null, null, 64, 16, 0) != null,

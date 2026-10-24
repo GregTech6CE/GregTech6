@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.GTWaterloggable;
+import gregtech.internal.GTWaterloggable;
 import gregtech.block.machine.*;
 import gregtech.block.energy.*;
 import net.minecraft.core.*;

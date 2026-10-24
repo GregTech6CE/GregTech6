@@ -1,6 +1,6 @@
 package gregtech.core;
 
-import gregtech.api.fluid.FluidPhysicalProperties;
+import gregtech.internal.fluid.FluidPhysicalProperties;
 import gregtech.content.fluid.FluidDefinitions;
 import gregtech.data.FluidCatalog;
 
@@ -8,8 +8,8 @@ import gregtech.data.FluidCatalog;
 public final class FluidPhysicalPropertiesChecks {
     private static int assertions;
     public static void main(String[] args) {
-        gregtech.api.mod.ModData.bindPresence(id -> false);
-        gregtech.api.material.GTMaterialRegistry.init();
+        gregtech.internal.mod.ModData.bindPresence(id -> false);
+        gregtech.internal.material.GTMaterialRegistry.init();
         verify();
         System.out.println("FluidPhysicalPropertiesChecks passed");
     }

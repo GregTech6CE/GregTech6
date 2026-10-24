@@ -1,7 +1,7 @@
 package gregtech.block.misc;
 
 import gregtech.blockentity.CapabilityRelayBlockEntity;
-import gregtech.api.fluid.FluidDisplayBinding;
+import gregtech.internal.fluid.FluidDisplayBinding;
 import gregtech.content.logistics.LogisticsItemFilter;
 import gregtech.content.logistics.LogisticsSemiFilteredItem;
 import net.minecraft.core.*;

@@ -1,6 +1,6 @@
 package gregtech.content.multiblock;
 
-import gregtech.api.multiblock.StructureGrid;
+import gregtech.internal.multiblock.StructureGrid;
 
 /** Shared parameters for bedrock drills and lightning rod output. */
 public final class AdvancedControllerRules {

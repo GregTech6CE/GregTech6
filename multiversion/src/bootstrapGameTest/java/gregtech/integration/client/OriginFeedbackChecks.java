@@ -82,28 +82,28 @@ public final class OriginFeedbackChecks {
         }
         receipt.addProperty("crankNativeSignalChecks",checks);
         // Actual native tool stack enchantment, not a tooltip/table-only assertion.
-        var knife=gregtech.item.GTToolItem.create(gregtech.api.tool.GTToolType.KNIFE,
+        var knife=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.KNIFE,
                 gregtech.content.material.Materials.Flint,gregtech.content.material.generated.WoodMaterials.Wood);
 //? if >=1.21.1 {
-        /*gregtech.api.tool.GTToolEnchantments.apply(knife,server.registryAccess());
+        /*gregtech.internal.tool.GTToolEnchantments.apply(knife,server.registryAccess());
         var fire=server.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT).getOrThrow(net.minecraft.world.item.enchantment.Enchantments.FIRE_ASPECT);
         require(knife.getOrDefault(net.minecraft.core.component.DataComponents.ENCHANTMENTS,net.minecraft.world.item.enchantment.ItemEnchantments.EMPTY).getLevel(fire)==1,"Flint knife real Fire Aspect missing");
 *///?} else {
         require(net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(net.minecraft.world.item.enchantment.Enchantments.FIRE_ASPECT,knife)==1,"Flint knife real Fire Aspect missing");
 //?}
         receipt.addProperty("flintKnifeFireAspect",1);
-        var materials=gregtech.api.material.GTMaterialRegistry.class;
-        var iron=gregtech.api.material.GTMaterialRegistry.get("Iron");
-        var wrought=gregtech.api.material.GTMaterialRegistry.get("WroughtIron");
-        var steel=gregtech.api.material.GTMaterialRegistry.get("Steel");
-        var air=gregtech.api.material.GTMaterialRegistry.get("Air");
-        var contents=new java.util.ArrayList<gregtech.api.machine.crucible.CrucibleMaterialStack>();
-        contents.add(gregtech.api.machine.crucible.CrucibleMaterialStack.of(iron,gregtech.api.material.GTValues.U));
-        require(!gregtech.api.machine.crucible.CrucibleReactions.react(contents,wrought.getMeltingPoint()-1),"Iron purified too cold");
-        require(gregtech.api.machine.crucible.CrucibleReactions.react(contents,wrought.getMeltingPoint())&&contents.size()==1&&contents.get(0).material==wrought,"Iron -> wrought reaction missing");
-        require(!gregtech.api.machine.crucible.CrucibleReactions.react(contents,steel.getMeltingPoint()),"Wrought iron became steel without air");
-        contents.add(gregtech.api.machine.crucible.CrucibleMaterialStack.of(air,gregtech.api.material.GTValues.U));
-        require(gregtech.api.machine.crucible.CrucibleReactions.react(contents,steel.getMeltingPoint())&&contents.size()==1&&contents.get(0).material==steel&&contents.get(0).amount==gregtech.api.material.GTValues.U,"Air steel yield mismatch");
+        var materials=gregtech.internal.material.GTMaterialRegistry.class;
+        var iron=gregtech.internal.material.GTMaterialRegistry.get("Iron");
+        var wrought=gregtech.internal.material.GTMaterialRegistry.get("WroughtIron");
+        var steel=gregtech.internal.material.GTMaterialRegistry.get("Steel");
+        var air=gregtech.internal.material.GTMaterialRegistry.get("Air");
+        var contents=new java.util.ArrayList<gregtech.internal.machine.crucible.CrucibleMaterialStack>();
+        contents.add(gregtech.internal.machine.crucible.CrucibleMaterialStack.of(iron,gregtech.api.material.GTValues.U));
+        require(!gregtech.internal.machine.crucible.CrucibleReactions.react(contents,wrought.getMeltingPoint()-1),"Iron purified too cold");
+        require(gregtech.internal.machine.crucible.CrucibleReactions.react(contents,wrought.getMeltingPoint())&&contents.size()==1&&contents.get(0).material==wrought,"Iron -> wrought reaction missing");
+        require(!gregtech.internal.machine.crucible.CrucibleReactions.react(contents,steel.getMeltingPoint()),"Wrought iron became steel without air");
+        contents.add(gregtech.internal.machine.crucible.CrucibleMaterialStack.of(air,gregtech.api.material.GTValues.U));
+        require(gregtech.internal.machine.crucible.CrucibleReactions.react(contents,steel.getMeltingPoint())&&contents.size()==1&&contents.get(0).material==steel&&contents.get(0).amount==gregtech.api.material.GTValues.U,"Air steel yield mismatch");
         receipt.addProperty("originalCrucibleReactionChecks",4);
         var pages=gregtech.bootstrap.registration.OriginCreativeContents.pages();
         require(pages.get("tool_blocks").stream().anyMatch(stack->stack.getItem()==crank.asItem()),"Crank missing from original tool-block page");
@@ -119,8 +119,8 @@ public final class OriginFeedbackChecks {
 //?}
         actor.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);actor.moveTo(4.5,140,4.5,0,0);actor.getInventory().clearContent();int gunChecks=0;
         var material=gregtech.content.material.Materials.Steel;
-        for(var type:java.util.List.of(gregtech.api.tool.GTToolType.PISTOL,gregtech.api.tool.GTToolType.CARBINE,gregtech.api.tool.GTToolType.RIFLE)){
-            var stack=gregtech.item.GTToolItem.create(type,material,gregtech.api.material.GTMaterialRegistry.get("Spruce"));var gun=(gregtech.item.GunToolItem)stack.getItem();
+        for(var type:java.util.List.of(gregtech.internal.tool.GTToolType.PISTOL,gregtech.internal.tool.GTToolType.CARBINE,gregtech.internal.tool.GTToolType.RIFLE)){
+            var stack=gregtech.item.GTToolItem.create(type,material,gregtech.internal.material.GTMaterialRegistry.get("Spruce"));var gun=(gregtech.item.GunToolItem)stack.getItem();
             actor.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,stack);actor.getInventory().setItem(9,gregtech.registry.GTItems.getStack(gun.definition().ammunition(),gregtech.content.material.Materials.Lead,32));
             require(gun.reload(stack,actor),"Gun cannot reload: "+type);var loaded=gun.ammunition(stack,level);require(loaded.getCount()==gun.definition().magazine()&&actor.getInventory().getItem(9).getCount()==32-loaded.getCount(),"Gun ammo not conserved: "+type);gunChecks+=2;
             var target=net.minecraft.world.entity.EntityType.ZOMBIE.create(level);target.moveTo(4.5,140,9.5);target.setNoAi(true);level.addFreshEntity(target);float health=target.getHealth();
@@ -146,11 +146,11 @@ public final class OriginFeedbackChecks {
 //?}
             require(recipe.matches(grid,level),"Source tool representative inputs do not match: "+kind);
             var assembled=recipe.assemble(grid,level.registryAccess());
-            require(!assembled.isEmpty()&&assembled.getItem()==gregtech.registry.GTToolItems.get(gregtech.api.tool.GTToolType.valueOf(kind.toUpperCase(java.util.Locale.ROOT))),"Source tool assembly returns the wrong item: "+kind);
+            require(!assembled.isEmpty()&&assembled.getItem()==gregtech.registry.GTToolItems.get(gregtech.internal.tool.GTToolType.valueOf(kind.toUpperCase(java.util.Locale.ROOT))),"Source tool assembly returns the wrong item: "+kind);
             craftingRows++;
         }
         receipt.addProperty("nexusGunAndPocketCraftingRows",craftingRows);
-        var pocket=gregtech.item.GTToolItem.create(gregtech.api.tool.GTToolType.POCKET_MULTITOOL,material,material);pocket.setDamageValue(123);
+        var pocket=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.POCKET_MULTITOOL,material,material);pocket.setDamageValue(123);
         actor.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,pocket);actor.setShiftKeyDown(true);int modes=0;var pos=new BlockPos(4,139,4);var prior=level.getBlockState(pos);level.setBlock(pos,Blocks.STONE.defaultBlockState(),3);
         try{for(int i=0;i<8;i++){var before=actor.getMainHandItem();var item=(gregtech.item.PocketToolItem)before.getItem();
             var context=new net.minecraft.world.item.context.UseOnContext(actor,net.minecraft.world.InteractionHand.MAIN_HAND,new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(pos),Direction.UP,pos,false));
@@ -189,7 +189,7 @@ public final class OriginFeedbackChecks {
         var colors=new JsonObject();
         for(var spec:gregtech.content.tool.UtilityToolRules.ROPES) {
             var stack=new ItemStack(BuiltInRegistries.ITEM.get(id(spec.id())));
-            checkTint(minecraft,stack,gregtech.api.material.GTMaterialRegistry.get(spec.material()).getColor(),colors);
+            checkTint(minecraft,stack,gregtech.internal.material.GTMaterialRegistry.get(spec.material()).getColor(),colors);
             checkModel(minecraft,stack,true);ropes++;
         }
         for(String name:java.util.List.of("filter_items","filter_fluids","filter_items_fluids","filter_oredict")) {

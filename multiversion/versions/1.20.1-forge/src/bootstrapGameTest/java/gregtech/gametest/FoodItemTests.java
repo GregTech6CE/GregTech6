@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.recipe.Recipe;
 import gregtech.content.food.FoodStatEvents;
 import gregtech.content.food.GTFoodItems;
 import gregtech.content.food.GTFoodStats;

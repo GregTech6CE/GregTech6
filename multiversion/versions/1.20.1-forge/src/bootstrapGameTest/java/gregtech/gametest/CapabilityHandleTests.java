@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.machine.MachineRegistry;
+import gregtech.internal.machine.MachineRegistry;
 import gregtech.block.machine.GTFacingMachineBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

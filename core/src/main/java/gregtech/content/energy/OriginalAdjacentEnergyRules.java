@@ -2,7 +2,7 @@
  * LGPL-3.0-or-later. Source EnergyConverter.setAdjacentOnOff and DistillationTower requests. */
 package gregtech.content.energy;
 
-import gregtech.api.energy.EnergyNodeSpec;
+import gregtech.internal.energy.EnergyNodeSpec;
 import java.util.List;
 import java.util.ArrayList;
 

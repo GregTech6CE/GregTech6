@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.tool.GTToolHelper;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.tool.GTToolHelper;
 import gregtech.content.book.BookShelfVariants;
 import gregtech.content.material.Materials;
 import gregtech.data.MaterialPrefix;

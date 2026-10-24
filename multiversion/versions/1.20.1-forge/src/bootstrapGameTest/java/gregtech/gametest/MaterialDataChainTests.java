@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
-import gregtech.api.machine.MachineRegistry;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.recipe.Recipe;
-import gregtech.api.recipe.RecipeInputs;
+import gregtech.internal.machine.MachineRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.recipe.RecipeInputs;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.book.GTMaterialDictionary;
 import gregtech.content.recipe.GTMaterialDataRecipes;

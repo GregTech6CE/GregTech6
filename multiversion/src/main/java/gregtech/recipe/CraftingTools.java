@@ -19,9 +19,9 @@ public final class CraftingTools {
 //?}
         return id != null && id.getNamespace().equals("gt6ce") ? id.getPath() : "";
     }
-    public static boolean matches(ItemStack stack, gregtech.api.tool.GTToolType kind) {
+    public static boolean matches(ItemStack stack, gregtech.internal.tool.GTToolType kind) {
         return CraftingToolDefinitions.matches(id(stack),kind.id())
-            || gregtech.api.tool.GTToolHelper.matchesTool(stack,kind);
+            || gregtech.internal.tool.GTToolHelper.matchesTool(stack,kind);
     }
     public static boolean infinite(ItemStack stack) { return CraftingToolDefinitions.infinite(id(stack)); }
     private static boolean hasToolItem(com.google.gson.JsonElement json) {

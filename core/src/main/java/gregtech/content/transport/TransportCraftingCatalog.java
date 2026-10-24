@@ -3,7 +3,9 @@
 package gregtech.content.transport;
 
 import gregtech.api.machine.*;
+import gregtech.internal.machine.*;
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.content.transport.fluid.FluidTransportDefinitions;
 import java.util.*;
 
@@ -17,7 +19,7 @@ public final class TransportCraftingCatalog {
     private static Input tag(String id){return new Input("tag",id,null);}
     private static Input tool(String id){return item("gt6ce:tool_"+id);}
     private static Row shaped(String path,List<String> pattern,Map<Character,Input> key,String output,boolean empty){return new Row(path,pattern,key,idOf(output),1,false,empty);}
-    private static String idOf(String path){return gregtech.api.addon.AddonPipes.namespace(path)+":"+path;}
+    private static String idOf(String path){return gregtech.internal.addon.AddonPipes.namespace(path)+":"+path;}
     private static Row plain(String path,String output,GTMaterial material,PipeSpec.PipeSize size){
         var pattern=switch(size){case TINY->List.of("sP ","wzh");case SMALL->List.of(" P ","wzh");case MEDIUM->List.of("PPP","wzh");default->List.of("PPP","wzh","PPP");};
         return shaped("pipe/"+path,pattern,Map.of('P',form(size==PipeSpec.PipeSize.HUGE?"plateDouble":"plateCurved",material),

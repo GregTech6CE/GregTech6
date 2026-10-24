@@ -18,9 +18,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import org.slf4j.Logger;
 //? if >=1.21.1 {
-/*@net.neoforged.fml.common.EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, value = net.neoforged.api.distmarker.Dist.CLIENT)
+/*@net.neoforged.fml.common.EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, value = net.neoforged.api.distmarker.Dist.CLIENT)
 *///?} else {
-@net.minecraftforge.fml.common.Mod.EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, value = net.minecraftforge.api.distmarker.Dist.CLIENT, bus = net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus.FORGE)
+@net.minecraftforge.fml.common.Mod.EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, value = net.minecraftforge.api.distmarker.Dist.CLIENT, bus = net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus.FORGE)
 //?}
 /** Opt-in fresh normal-world preflight. Bootstrap sources never enter the production jar. */
 public final class WorldCreationSmoke {
@@ -159,7 +159,7 @@ public final class WorldCreationSmoke {
                     if (gregtech.recipe.CraftingMaterialForms.canonical(named) != named)
                         throw new IllegalStateException("Stack metadata was discarded");
                     var iron = gregtech.registry.GTItems.getStack(gregtech.data.MaterialPrefix.ingot,
-                            gregtech.api.material.GTMaterialRegistry.get("Iron"),3);
+                            gregtech.internal.material.GTMaterialRegistry.get("Iron"),3);
                     var canonical = gregtech.recipe.CraftingMaterialForms.canonical(iron);
                     if (!canonical.is(Items.IRON_INGOT) || canonical.getCount() != 3)
                         throw new IllegalStateException("Known iron form no longer unifies");

@@ -18,7 +18,7 @@ import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 //?}
 
 /** Original automatic-tool and data-switch casing colors on the actual registered blocks. */
-@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class AutomaticToolClientColors {
 
     private AutomaticToolClientColors() {

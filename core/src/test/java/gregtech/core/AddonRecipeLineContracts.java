@@ -2,7 +2,7 @@ package gregtech.core;
 
 import gregtech.api.addon.RecipeKeptInputs;
 import gregtech.api.addon.SelectorTags;
-import gregtech.api.recipe.RecipeCatalystInputs;
+import gregtech.internal.recipe.RecipeCatalystInputs;
 
 /** Kept item and fluid inputs, and programmed-circuit numbers. No Minecraft types. */
 public final class AddonRecipeLineContracts {

@@ -145,12 +145,12 @@ public class TreeHoleBlock extends HorizontalDirectionalBlock implements EntityB
             ItemStack resin = resinItem();
             if (resin.isEmpty()) return InteractionResult.PASS;
             if (!level.setBlock(pos, state.setValue(RESIN, false), 3)) return InteractionResult.PASS;
-            gregtech.api.fluid.HandContainerTransfer.give(player, resin);
+            gregtech.internal.fluid.HandContainerTransfer.give(player, resin);
         } else {
-            var filled = gregtech.api.fluid.HandContainerTransfer.prepare(player.getItemInHand(hand), resinFluid(), true);
+            var filled = gregtech.internal.fluid.HandContainerTransfer.prepare(player.getItemInHand(hand), resinFluid(), true);
             if (filled == null) return InteractionResult.PASS;
             if (!level.setBlock(pos, state.setValue(RESIN, false), 3)) return InteractionResult.PASS;
-            gregtech.api.fluid.HandContainerTransfer.replaceOne(player, hand, filled.container());
+            gregtech.internal.fluid.HandContainerTransfer.replaceOne(player, hand, filled.container());
         }
         return InteractionResult.CONSUME;
     }

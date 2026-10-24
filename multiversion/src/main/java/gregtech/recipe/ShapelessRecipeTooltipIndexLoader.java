@@ -22,7 +22,7 @@ import net.minecraftforge.fml.common.Mod;
 
 /** Rebuilds shapeless tooltip index when recipes reload (client + dedicated server). */
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID)
+/*@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID)
 *///?} else {
 @Mod.EventBusSubscriber(modid = GregTech.MODID)
 //?}
@@ -46,7 +46,7 @@ public final class ShapelessRecipeTooltipIndexLoader {
         ShapelessRecipeTooltipIndex.rebuild(server.getRecipeManager(), server.registryAccess());
     }
 
-    @EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, value = Dist.CLIENT)
+    @EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, value = Dist.CLIENT)
 *///?} else {
     @Mod.EventBusSubscriber(modid = GregTech.MODID, value = Dist.CLIENT)
 //?}

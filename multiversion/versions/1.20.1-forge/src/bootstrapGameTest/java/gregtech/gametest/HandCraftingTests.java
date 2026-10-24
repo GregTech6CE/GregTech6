@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolHelper;
 import gregtech.item.GTToolItem;
 import gregtech.item.TechItem;
 import gregtech.registry.GTTechnological;
@@ -114,7 +114,7 @@ public final class HandCraftingTests {
         if (stack.getItem() instanceof GTToolItem) {
             return GTToolItem.create(GTToolHelper.getType(stack),
                     gregtech.content.material.Materials.Steel,
-                    gregtech.api.material.GTMaterialRegistry.get("Wood"));
+                    gregtech.internal.material.GTMaterialRegistry.get("Wood"));
         }
         return stack.copy();
     }
@@ -388,7 +388,7 @@ public final class HandCraftingTests {
                 "UV robot arm moves a stack every 2 ticks");
 
         // ... and the machine accepts them on a face, which is what makes them covers.
-        var block = gregtech.api.machine.MachineRegistry.basicMachines().get(0).get();
+        var block = gregtech.internal.machine.MachineRegistry.basicMachines().get(0).get();
         BlockPos pos = new BlockPos(4, 3, 4);
         h.setBlock(pos, Blocks.AIR);
         h.setBlock(pos, block);
@@ -424,7 +424,7 @@ public final class HandCraftingTests {
             ItemStack empty = stack(row[0]);
             h.assertTrue(!empty.isEmpty(), "empty cell is registered: " + row[0]);
             int found = 0;
-            for (gregtech.api.recipe.Recipe recipe
+            for (gregtech.internal.recipe.Recipe recipe
                     : gregtech.data.MachineRecipeMaps.Canner.mRecipeList) {
                 if (recipe.mInputs.length == 0 || !recipe.mInputs[0].is(empty.getItem())) continue;
                 found++;

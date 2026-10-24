@@ -70,12 +70,12 @@ final class CanvasDeliveryChecks {
             var item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",path));
             require(gregtech.data.MachineRecipeMaps.Printer.mRecipeList.stream().anyMatch(r->r.mFakeRecipe&&r.mOutputs.length==1&&r.mOutputs[0].is(item)&&r.mEUt==16&&r.mDuration==(path.equals("printed_pages")?512:1024)),"source printer viewer row "+path);
         }
-        var iron=gregtech.api.material.GTMaterialRegistry.get(260).resolve();
+        var iron=gregtech.internal.material.GTMaterialRegistry.get(260).resolve();
         var dataStick=gregtech.content.recipe.GTMaterialDataRecipes.withMaterialData(new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce","usb3_stick"))),iron);
         var matter=java.util.List.of(gregtech.registry.GTFluids.stack("MatterNeutral",(int)iron.getNeutrons()),gregtech.registry.GTFluids.stack("MatterCharged",(int)iron.getProtons()));
         var replication=gregtech.data.MachineRecipeMaps.Replicator.findRecipe(java.util.List.of(dataStick),matter,false,3,3);
         require(replication!=null&&replication.mEUt==1&&replication.mDuration==(iron.getProtons()+iron.getNeutrons())*256L&&!replication.mCanBeBuffered,"installed original molecular work fields");
-        require(!gregtech.api.material.GTMaterialRegistry.get(8214).has(gregtech.api.material.MaterialProperty.UUM),"installed obsidian source gate");
+        require(!gregtech.internal.material.GTMaterialRegistry.get(8214).has(gregtech.internal.material.MaterialProperty.UUM),"installed obsidian source gate");
         var mercury=gregtech.registry.GTFluids.stack("GenLiquid_Mercury",1000);
         require(mercury!=null&&!mercury.isEmpty()&&BuiltInRegistries.FLUID.getKey(mercury.getFluid()).getPath().equals("mercury"),"installed ordinary mercury liquid");
         int electricalRows=0;

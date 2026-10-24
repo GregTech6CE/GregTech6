@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.multiblock.MultiblockLayout;
+import gregtech.internal.multiblock.MultiblockLayout;
 import gregtech.block.machine.OriginalLargeBoilerControllerBlock;
 import gregtech.blockentity.machine.MultiblockPortBlockEntity;
 import gregtech.blockentity.machine.OriginalLargeBoilerControllerBlockEntity;

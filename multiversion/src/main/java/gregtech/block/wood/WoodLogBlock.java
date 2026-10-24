@@ -1,7 +1,7 @@
 package gregtech.block.wood;
 
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 import gregtech.content.material.Materials;
 import gregtech.data.MaterialPrefix;
 import gregtech.registry.GTItems;
@@ -87,7 +87,7 @@ public class WoodLogBlock extends RotatedPillarBlock {
             BlockState beam = GTWoods.beam(species).defaultBlockState()
                     .setValue(WoodBeamBlock.AXIS, state.getValue(AXIS));
             if (!level.setBlock(pos, beam, 3)) return InteractionResult.FAIL;
-            gregtech.api.fluid.HandContainerTransfer.give(player, output);
+            gregtech.internal.fluid.HandContainerTransfer.give(player, output);
             GTToolHelper.damageForToolClickReturn(stack, axe ? 500L : 1000L, player);
             return InteractionResult.CONSUME;
         }

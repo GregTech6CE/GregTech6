@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.prefix.BlockMaterialPrefix;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.prefix.BlockMaterialPrefix;
 import gregtech.data.MaterialPrefix;
 import gregtech.data.generated.MaterialForms;
 import gregtech.registry.GTBlocks;
@@ -49,7 +49,7 @@ public final class PrefixConditionParityTests {
      */
     private static boolean registerable(GTMaterial material) {
         return material != null && material.isValid()
-                && !material.has(gregtech.api.material.MaterialProperty.HIDDEN);
+                && !material.has(gregtech.internal.material.MaterialProperty.HIDDEN);
     }
 
     /** Every material GT6 gives an ore to must have an ore block (and a small ore) in the port. */

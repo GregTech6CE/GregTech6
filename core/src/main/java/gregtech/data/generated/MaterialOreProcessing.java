@@ -1,5 +1,5 @@
 package gregtech.data.generated;
-import gregtech.api.material.MaterialProperty;
+import gregtech.internal.material.MaterialProperty;
 import gregtech.data.GregTechConstants;
 import static gregtech.data.generated.GT6Materials.*;
 

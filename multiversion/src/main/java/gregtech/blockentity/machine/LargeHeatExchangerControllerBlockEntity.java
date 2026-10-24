@@ -2,14 +2,14 @@
  * Source LargeHeatExchanger settings, fluid storage and eight-outlet cycle. */
 package gregtech.blockentity.machine;
 
-import gregtech.api.energy.EnergyTransfer;
-import gregtech.api.fluid.FluidTankGT;
-import gregtech.api.fluid.HeatExchangerData;
+import gregtech.internal.energy.EnergyTransfer;
+import gregtech.internal.fluid.FluidTankGT;
+import gregtech.internal.fluid.HeatExchangerData;
 import gregtech.content.multiblock.HeatExchangerRules;
-import gregtech.api.fluid.FluidPort;
-import gregtech.api.multiblock.*;
-import gregtech.api.recipe.Recipe;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.fluid.FluidPort;
+import gregtech.internal.multiblock.*;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.blockentity.GTEnergyBlockEntity;
 import gregtech.content.multiblock.LargeMachineParts;
 import gregtech.data.*;
@@ -32,8 +32,8 @@ import java.util.*;
 /** Original two-layer heat exchanger, hot-fluid recipes and eight upward heat outlets. */
 public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity implements MultiblockPortOwner, MultiblockToolTarget, IFluidHandler,
         gregtech.api.machine.HeatHandler,
-        gregtech.api.fluid.FluidToolTarget, gregtech.api.machine.MachineControl.Provider,
-        gregtech.api.multiblock.tracking.TrackedMultiblock {
+        gregtech.internal.fluid.FluidToolTarget, gregtech.api.machine.MachineControl.Provider,
+        gregtech.internal.multiblock.tracking.TrackedMultiblock {
     public static final int RATE = gregtech.content.multiblock.OriginalGeneratorParameters.HEAT_EXCHANGER_RATE;
     private long heat, activityHistory;
     private boolean active, structureOkay;
@@ -90,7 +90,7 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
         var facing = gregtech.block.machine.LargeHeatExchangerControllerBlock.FACING;
         if (level != null && !level.isClientSide && getBlockState().getValue(facing) != Direction.DOWN)
             level.setBlock(worldPosition, getBlockState().setValue(facing, Direction.DOWN), 3);
-        if (level != null && !level.isClientSide) gregtech.api.multiblock.tracking.StructureTracking.attach(this);
+        if (level != null && !level.isClientSide) gregtech.internal.multiblock.tracking.StructureTracking.attach(this);
     }
 
     public HeatExchangerRules.Settings settings() {
@@ -202,11 +202,11 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
         super(GTBlockEntities.LARGE_HEAT_EXCHANGER.get(), pos, state);
     }
 
-    @Override public gregtech.api.multiblock.tracking.StructureDefinition structureDefinition() {
-        return gregtech.api.multiblock.tracking.CustomStructures.exchanger(this);
+    @Override public gregtech.internal.multiblock.tracking.StructureDefinition structureDefinition() {
+        return gregtech.internal.multiblock.tracking.CustomStructures.exchanger(this);
     }
     @Override public boolean isStructureOk() {
-        return gregtech.api.multiblock.tracking.StructureTracking.query(this);
+        return gregtech.internal.multiblock.tracking.StructureTracking.query(this);
     }
     @Override
     public boolean scanStructure() {
@@ -225,10 +225,10 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
             candidateParts.put(partPos, MultiblockLayout.Role.valueOf(cell.role().name()));
         }
         // Source checkAndSetTarget binds each valid cell even when another cell is missing.
-        var claimedParts = gregtech.api.multiblock.tracking.StructureClaims.update(this, completeStructure, bindings, candidateParts, 0,
+        var claimedParts = gregtech.internal.multiblock.tracking.StructureClaims.update(this, completeStructure, bindings, candidateParts, 0,
                 partPosition -> level.getBlockEntity(partPosition) instanceof MultiblockPortBlockEntity part && part.canBind(worldPosition),
                 (partPosition, partRole) -> ((MultiblockPortBlockEntity) level.getBlockEntity(partPosition)).bind(worldPosition, partRole), this::release);
-        boolean formed = completeStructure && claimedParts != gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
+        boolean formed = completeStructure && claimedParts != gregtech.internal.multiblock.tracking.StructureClaims.Result.FAILED;
         if (structureOkay != formed) {
             structureOkay = formed;
             syncToClient();
@@ -246,15 +246,15 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
     public long useMultiblockTool(net.minecraft.world.item.context.UseOnContext context,
             List<net.minecraft.network.chat.Component> messages) {
         if (level == null || level.isClientSide || isRemoved() || !containsToolPosition(context.getClickedPos())) return 0;
-        if (gregtech.api.tool.GTToolHelper.matchesTool(context.getItemInHand(),
-                gregtech.api.tool.GTToolType.BUILDER_WAND)) {
+        if (gregtech.internal.tool.GTToolHelper.matchesTool(context.getItemInHand(),
+                gregtech.internal.tool.GTToolType.BUILDER_WAND)) {
             for (var cell : gregtech.content.multiblock.SharedHeatExchangerStructure.CELLS)
                 MultiblockTools.build(context, worldPosition.offset(cell.right(), cell.up(), cell.back()), LargeMachineParts.block(cell.part()));
-            gregtech.api.multiblock.tracking.StructureTracking.invalidate(this);
+            gregtech.internal.multiblock.tracking.StructureTracking.invalidate(this);
             return MultiblockToolRules.BUILDER_COST;
         }
-        if (gregtech.api.tool.GTToolHelper.matchesTool(context.getItemInHand(),
-                gregtech.api.tool.GTToolType.MAGNIFYING_GLASS)) {
+        if (gregtech.internal.tool.GTToolHelper.matchesTool(context.getItemInHand(),
+                gregtech.internal.tool.GTToolType.MAGNIFYING_GLASS)) {
             messages.addAll(magnifyingGlassMessages());
             return MultiblockToolRules.MAGNIFIER_COST;
         }
@@ -282,13 +282,13 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
     }
 
     @Override public void onChunkUnloaded() {
-        gregtech.api.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
+        gregtech.internal.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
         super.onChunkUnloaded();
     }
     @Override
     public void setRemoved() {
-        if (!gregtech.api.multiblock.tracking.StructureTracking.unloading(this)) bindings.clear(this::release);
-        gregtech.api.multiblock.tracking.StructureTracking.onRemoved(this);
+        if (!gregtech.internal.multiblock.tracking.StructureTracking.unloading(this)) bindings.clear(this::release);
+        gregtech.internal.multiblock.tracking.StructureTracking.onRemoved(this);
         super.setRemoved();
     }
 
@@ -341,7 +341,7 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
     }
 
     private void burnFuel() {
-        var result = gregtech.api.fluid.HotFluidFuelCycle.charge(settings, hot, cold, heat, activityHistory, lastRecipe);
+        var result = gregtech.internal.fluid.HotFluidFuelCycle.charge(settings, hot, cold, heat, activityHistory, lastRecipe);
         heat = result.heat();
         lastRecipe = result.recipe();
         active = result.active();

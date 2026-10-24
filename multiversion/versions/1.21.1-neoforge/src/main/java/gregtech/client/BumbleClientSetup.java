@@ -4,7 +4,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.*;
-@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD,value=Dist.CLIENT)
+@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD,value=Dist.CLIENT)
 public final class BumbleClientSetup {
  private BumbleClientSetup(){}
  @SubscribeEvent public static void screens(RegisterMenuScreensEvent event){event.register(gregtech.registry.GTMenuTypes.BUMBLIARY.get(),gregtech.client.gui.BumbliaryScreen::new);event.register(gregtech.registry.GTMenuTypes.ADVANCED_BUMBLIARY.get(),gregtech.client.gui.BumbliaryScreen::new);}

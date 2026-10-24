@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
-import gregtech.api.energy.EnergyPackets;
-import gregtech.api.machine.crucible.CrucibleMath;
+import gregtech.internal.energy.EnergyPackets;
+import gregtech.internal.machine.crucible.CrucibleMath;
 import gregtech.api.material.GTValues;
 import gregtech.api.recipe.MachineWorkCost;
 import net.minecraft.gametest.framework.GameTest;

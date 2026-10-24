@@ -1,6 +1,6 @@
 package gregtech.block.tool;
 
-import gregtech.api.tool.*;
+import gregtech.internal.tool.*;
 import gregtech.block.machine.MachineRotationType;
 import gregtech.content.tool.OriginalToolShapes;
 import net.minecraft.core.*;

@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.fluid.FluidTankGT;
+import gregtech.internal.fluid.FluidTankGT;
 import gregtech.block.machine.TankControllerBlock;
 import gregtech.blockentity.machine.MultiblockTankControllerBlockEntity;
 import gregtech.client.CommonBlockTooltips;

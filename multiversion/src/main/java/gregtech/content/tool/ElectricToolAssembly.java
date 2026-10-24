@@ -5,7 +5,8 @@ package gregtech.content.tool;
 import gregtech.GregTech;
 //?}
 import gregtech.api.material.*;
-import gregtech.api.tool.*;
+import gregtech.internal.material.*;
+import gregtech.internal.tool.*;
 import gregtech.content.material.Materials;
 import gregtech.data.MaterialPrefix;
 import gregtech.item.ElectricToolItem;
@@ -41,7 +42,7 @@ public enum ElectricToolAssembly {
     private final String[] rows;
     ElectricToolAssembly(String id) {
         this.id=id;var spec=ElectricToolCatalog.get(id);
-        this.head=gregtech.api.prefix.PrefixRegistry.byName(spec.headPrefix());
+        this.head=gregtech.internal.prefix.PrefixRegistry.byName(spec.headPrefix());
         this.rows=spec.rows().toArray(String[]::new);
     }
     public ElectricToolCatalog.Definition definition(){return ElectricToolCatalog.get(id);}

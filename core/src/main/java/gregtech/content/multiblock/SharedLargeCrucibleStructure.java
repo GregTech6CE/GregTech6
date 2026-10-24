@@ -1,5 +1,5 @@
 package gregtech.content.multiblock;
-import java.util.*;import gregtech.api.multiblock.StructureGrid;
+import java.util.*;import gregtech.internal.multiblock.StructureGrid;
 /** Controller at 0,0,0; 24 walls and two required air cells of the original open vessel. */
 public final class SharedLargeCrucibleStructure {
  private SharedLargeCrucibleStructure(){}

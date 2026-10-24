@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.state.BlockState;
 /** Extender/bridge state for covers, routed capabilities, machine controls and signals. */
 public class ExtenderBlockEntity extends gregtech.blockentity.EnergyRelayBlockEntity
         implements gregtech.api.machine.MachineControl.Provider,
-        gregtech.content.cover.PanelCoverHost, gregtech.api.inventory.BlockContents {
+        gregtech.content.cover.PanelCoverHost, gregtech.internal.inventory.BlockContents {
     private static final gregtech.content.logistics.RelayVisitSet<ExtenderBlockEntity> CONTROLS =
             new gregtech.content.logistics.RelayVisitSet<>();
     private static final gregtech.content.logistics.RelayVisitSet<ExtenderBlockEntity> SIGNALS =
@@ -50,7 +50,7 @@ public class ExtenderBlockEntity extends gregtech.blockentity.EnergyRelayBlockEn
     @Override
     public void dropContents() {
         for (var side : Direction.values()) {
-            if (!gregtech.content.cover.CoverDrops.retained(this)) gregtech.api.inventory.BlockContents.drop(this,
+            if (!gregtech.content.cover.CoverDrops.retained(this)) gregtech.internal.inventory.BlockContents.drop(this,
                     getCover(side));
             covers[side.ordinal()] = net.minecraft.world.item.ItemStack.EMPTY;
         }

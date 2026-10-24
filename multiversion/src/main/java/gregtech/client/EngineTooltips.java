@@ -5,9 +5,10 @@ package gregtech.client;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.energy.FaceConfig;
+import gregtech.internal.energy.FaceConfig;
 import gregtech.api.machine.*;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.machine.*;
+import gregtech.internal.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.block.machine.EngineBlock;
 import net.minecraft.ChatFormatting;
@@ -65,14 +66,14 @@ public final class EngineTooltips {
         // Material name
         GTMaterial mat = resolveMaterial(block, type);
         if (mat != null && mat.isValid()) {
-            tooltip.add(gregtech.api.material.MaterialPresentation.name(mat).copy().withStyle(ChatFormatting.YELLOW));
+            tooltip.add(gregtech.internal.material.MaterialPresentation.name(mat).copy().withStyle(ChatFormatting.YELLOW));
 
             // The shared material registry supplies source composition in F3+H.
 
         }
 
         // Footer
-        tooltip.add(Component.literal(gregtech.api.mod.GregTechIdentity.MOD_NAME).withStyle(ChatFormatting.BLUE));
+        tooltip.add(Component.literal(gregtech.internal.mod.GregTechIdentity.MOD_NAME).withStyle(ChatFormatting.BLUE));
     }
 
     // ========================================================================
@@ -270,7 +271,7 @@ public final class EngineTooltips {
             case FLUX     -> block.engineSpec(FluxEngineSpec.class).material();
             case STEAM    -> block.engineSpec(SteamEngineData.class).material();
             case ROTATION -> block.engineSpec(RotationEngineSpec.class).material();
-            case DIESEL   -> block.engineSpec(gregtech.api.machine.DieselEngineSpec.class).material();
+            case DIESEL   -> block.engineSpec(gregtech.internal.machine.DieselEngineSpec.class).material();
         };
     }
 }

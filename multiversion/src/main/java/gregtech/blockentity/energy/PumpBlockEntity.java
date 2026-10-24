@@ -1,7 +1,7 @@
 package gregtech.blockentity.energy;
 
-import gregtech.api.fluid.FluidTankGT;
-import gregtech.api.machine.PumpSpec;
+import gregtech.internal.fluid.FluidTankGT;
+import gregtech.internal.machine.PumpSpec;
 import gregtech.block.energy.PumpBlock;
 import gregtech.blockentity.GTEnergyBlockEntity;
 import gregtech.data.GregTechTags;

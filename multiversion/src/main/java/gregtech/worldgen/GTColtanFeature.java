@@ -1,6 +1,6 @@
 package gregtech.worldgen;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.content.material.generated.OreMaterials;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -50,7 +50,7 @@ public class GTColtanFeature extends Feature<NoneFeatureConfiguration> {
 
     /** GT6's material table for one scatter roll. */
     public static GTMaterial materialFor(int roll) {
-        return gregtech.api.material.GTMaterialRegistry.get(MineralWorldgenRules.coltanMaterial(roll));
+        return gregtech.internal.material.GTMaterialRegistry.get(MineralWorldgenRules.coltanMaterial(roll));
     }
 
     /** GT6's count: {@code max(1, amount/2 + rand(1 + amount)/2)}. */

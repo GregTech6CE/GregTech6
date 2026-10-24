@@ -1,6 +1,6 @@
 package gregtech.blockentity;
 
-import gregtech.api.fluid.FluidTankGT;
+import gregtech.internal.fluid.FluidTankGT;
 import gregtech.block.wood.TreeHoleBlock;
 import gregtech.registry.GTBlockEntities;
 import net.minecraft.core.BlockPos;

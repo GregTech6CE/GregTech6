@@ -2,7 +2,7 @@ package gregtech.gametest;
 
 import gregtech.block.energy.EnergyNodeBlock;
 import gregtech.blockentity.energy.EnergyNodeBlockEntity;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.data.MaterialPrefix;
 import gregtech.data.GregTechTags;
 import gregtech.item.ChemicalBatteryItem;

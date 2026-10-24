@@ -1,6 +1,6 @@
 package gregtech.platform.neoforge.energy;
 import gregtech.registry.*;import gregtech.blockentity.machine.*;import net.neoforged.bus.api.SubscribeEvent;import net.neoforged.fml.common.EventBusSubscriber;import net.neoforged.neoforge.capabilities.*;
-@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD)
 public final class EngineCapabilities {private EngineCapabilities(){}@SubscribeEvent @SuppressWarnings({"unchecked","rawtypes"})public static void register(RegisterCapabilitiesEvent event){
  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,GTBlockEntities.PUMP.get(),(be,side)->be.fluidHandler(side));
  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,GTBlockEntities.LOGISTICS_TANK.get(),(be,side)->be.capabilityHandler(side));

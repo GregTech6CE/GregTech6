@@ -1,8 +1,8 @@
 package gregtech.content.material;
 
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.ItemMaterialRegistry;
-import gregtech.api.material.VanillaUnificationDefinitions;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.ItemMaterialRegistry;
+import gregtech.internal.material.VanillaUnificationDefinitions;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;

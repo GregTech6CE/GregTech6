@@ -32,9 +32,9 @@ import net.minecraftforge.fml.common.Mod;
 //?}
 
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid=gregtech.api.mod.GregTechIdentity.MOD_ID)
+/*@EventBusSubscriber(modid=gregtech.internal.mod.GregTechIdentity.MOD_ID)
 *///?} else {
-@Mod.EventBusSubscriber(modid=gregtech.api.mod.GregTechIdentity.MOD_ID)
+@Mod.EventBusSubscriber(modid=gregtech.internal.mod.GregTechIdentity.MOD_ID)
 //?}
 public final class ComponentCoverEvents {
     private ComponentCoverEvents() {}
@@ -43,11 +43,11 @@ public final class ComponentCoverEvents {
     public static void use(PlayerInteractEvent.RightClickBlock event) {
         if (!(event.getLevel().getBlockEntity(event.getPos()) instanceof PanelCoverHost host)) return;
         var held = event.getEntity().getItemInHand(event.getHand());
-        boolean crowbar = gregtech.api.tool.GTToolHelper.matchesTool(held,
-                gregtech.api.tool.GTToolType.CROWBAR);
+        boolean crowbar = gregtech.internal.tool.GTToolHelper.matchesTool(held,
+                gregtech.internal.tool.GTToolType.CROWBAR);
         var hit = event.getHitVec();
         if (CoverItems.isCover(held) || crowbar)
-            hit = hit.withDirection(gregtech.api.tool.ToolInteractions.selectedFace(hit));
+            hit = hit.withDirection(gregtech.internal.tool.ToolInteractions.selectedFace(hit));
         if (host.coverOwner() instanceof gregtech.blockentity.misc.PileBlockEntity pile
                 && pile.canAccept(held)) {
             // Allow the normal pile callback while sneaking, without bypassing protection events.

@@ -22,8 +22,8 @@ import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
-import gregtech.api.energy.EnergyBlockViews;
-import gregtech.api.energy.IEnergyBlock;
+import gregtech.internal.energy.EnergyBlockViews;
+import gregtech.internal.energy.IEnergyBlock;
 import gregtech.data.GregTechTags;
 import java.util.*;
 /** Resolves a remote transformer and applies packet limits, line loss and native overload effects. */
@@ -46,7 +46,7 @@ public class LongDistanceTransformerBlockEntity extends gregtech.blockentity.GTE
     private boolean stopped;
     private long observedVersion = Long.MIN_VALUE;
     private final gregtech.content.logistics.LongDistanceLink<BlockPos, LongDistanceTransformerBlockEntity> link;
-    private final gregtech.api.machine.MachineControl control = gregtech.api.machine.MachineControls.switchable(this,
+    private final gregtech.api.machine.MachineControl control = gregtech.internal.machine.MachineControls.switchable(this,
             () -> !stopped, value -> setStopped(!value), () -> active, () -> active);
 
     @Override
@@ -209,7 +209,7 @@ public class LongDistanceTransformerBlockEntity extends gregtech.blockentity.GTE
             var receiver = receiver();
             if (receiver == null) return 0;
             if (magnitude > voltage() * 2) {
-                if (execute) gregtech.api.energy.MachineOverload.apply(this, magnitude, type);
+                if (execute) gregtech.internal.energy.MachineOverload.apply(this, magnitude, type);
                 return amount;
             }
             if (magnitude < voltage() / 2) return amount;
@@ -224,7 +224,7 @@ public class LongDistanceTransformerBlockEntity extends gregtech.blockentity.GTE
             long output = magnitude - loss(distance);
             if (output <= 0 || output < receiver.voltage() / 2) return 0;
             if (output > receiver.voltage() * 2) {
-                if (execute) gregtech.api.energy.MachineOverload.apply(receiver, output, type);
+                if (execute) gregtech.internal.energy.MachineOverload.apply(receiver, output, type);
                 return amount;
             }
             if (!execute) return amount;

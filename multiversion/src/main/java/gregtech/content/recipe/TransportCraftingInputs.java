@@ -1,7 +1,7 @@
 package gregtech.content.recipe;
 
 import com.google.gson.*;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.content.transport.TransportCraftingCatalog;
 import gregtech.registry.GTItems;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -20,7 +20,7 @@ public final class TransportCraftingInputs {
             return item==Items.AIR?Ingredient.EMPTY:Ingredient.of(item);
         }
         if(input.kind().equals("casing")) {
-            var prefix=input.name().equals("casingMachineDouble") ? gregtech.api.prefix.BlockMaterialPrefix.casingMachineDouble : gregtech.api.prefix.BlockMaterialPrefix.casingMachine;
+            var prefix=input.name().equals("casingMachineDouble") ? gregtech.internal.prefix.BlockMaterialPrefix.casingMachineDouble : gregtech.internal.prefix.BlockMaterialPrefix.casingMachine;
             var material=input.material();
             var materials=material.getId()<0?material.getReRegistrations():Set.of(material);
             var stacks=materials.stream().map(m -> gregtech.registry.GTBlocks.getStack(prefix,m)).filter(stack -> !stack.isEmpty()).toList();

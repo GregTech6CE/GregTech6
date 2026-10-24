@@ -21,8 +21,8 @@ public final class LongDistanceBlockItem extends BlockItem {
         super.appendHoverText(stack, level, tooltip, flag);
 //?}
         if (!spec.material().isEmpty()) tooltip.add(Component.translatable("tooltip.gt6ce.long_distance.material",
-                gregtech.api.material.MaterialPresentation.name(
-                        gregtech.api.material.GTMaterialRegistry.get(spec.material()))).withStyle(ChatFormatting.GRAY));
+                gregtech.internal.material.MaterialPresentation.name(
+                        gregtech.internal.material.GTMaterialRegistry.get(spec.material()))).withStyle(ChatFormatting.GRAY));
         if (spec.kind().endsWith("ENDPOINT") || spec.kind().equals("TRANSFORMER")) {
             tooltip.add(Component.translatable("tooltip.gt6ce.long_distance.wrench").withStyle(ChatFormatting.DARK_GRAY));
             tooltip.add(Component.translatable("tooltip.gt6ce.long_distance.reset").withStyle(ChatFormatting.DARK_GRAY));

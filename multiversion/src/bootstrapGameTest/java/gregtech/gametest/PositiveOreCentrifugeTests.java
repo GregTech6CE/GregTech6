@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.api.addon.AddonMaterials;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialFormItem;
-import gregtech.api.material.ItemMaterialRegistry;
+import gregtech.internal.addon.AddonMaterials;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialFormItem;
+import gregtech.internal.material.ItemMaterialRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import java.util.Locale;

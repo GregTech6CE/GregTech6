@@ -16,10 +16,10 @@ import net.minecraft.world.phys.BlockHitResult;
 import java.util.List;
 
 /** Shared placement, wrench, stop switch and stored-content drops for axial generators. */
-public abstract class AxialGeneratorBlock extends DirectionalBlock implements EntityBlock, gregtech.api.tool.ToolInteractionTarget {
-    @Override public gregtech.api.tool.ToolInteractionSpec toolInteraction(BlockState state,ItemStack tool) {
-        return gregtech.api.tool.GTToolHelper.isMachineWrench(tool)
-                ? gregtech.api.tool.ToolInteractionSpec.facing(FACING,MachineRotationType.ALL) : null;
+public abstract class AxialGeneratorBlock extends DirectionalBlock implements EntityBlock, gregtech.internal.tool.ToolInteractionTarget {
+    @Override public gregtech.internal.tool.ToolInteractionSpec toolInteraction(BlockState state,ItemStack tool) {
+        return gregtech.internal.tool.GTToolHelper.isMachineWrench(tool)
+                ? gregtech.internal.tool.ToolInteractionSpec.facing(FACING,MachineRotationType.ALL) : null;
     }
     private final AxialGeneratorDefinitions.Grade grade;
     protected AxialGeneratorBlock(AxialGeneratorDefinitions.Grade grade,Properties properties) {
@@ -45,15 +45,15 @@ public abstract class AxialGeneratorBlock extends DirectionalBlock implements En
                 if(!level.isClientSide)machine.toggleStopped();return InteractionResult.sidedSuccess(level.isClientSide);
             }
             var held=player.getItemInHand(hand);
-            if(gregtech.api.tool.GTToolHelper.matchesTool(held,gregtech.api.tool.GTToolType.SOFT_HAMMER)) {
+            if(gregtech.internal.tool.GTToolHelper.matchesTool(held,gregtech.internal.tool.GTToolType.SOFT_HAMMER)) {
                 if(!level.isClientSide) {
                     machine.toggleStopped();
-                    gregtech.api.tool.GTToolHelper.damageForToolClickReturn(held,10000,player,hand==InteractionHand.MAIN_HAND?net.minecraft.world.entity.EquipmentSlot.MAINHAND:net.minecraft.world.entity.EquipmentSlot.OFFHAND);
+                    gregtech.internal.tool.GTToolHelper.damageForToolClickReturn(held,10000,player,hand==InteractionHand.MAIN_HAND?net.minecraft.world.entity.EquipmentSlot.MAINHAND:net.minecraft.world.entity.EquipmentSlot.OFFHAND);
                 }
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
-            if(machine instanceof gregtech.blockentity.machine.LargeTurbineControllerBlockEntity turbine && gregtech.api.tool.GTToolHelper.matchesTool(held,gregtech.api.tool.GTToolType.PLUNGER)) {
-                if(!level.isClientSide)gregtech.api.tool.GTToolHelper.damageForToolClickReturn(held,turbine.purgeFluid(),player,hand==InteractionHand.MAIN_HAND?net.minecraft.world.entity.EquipmentSlot.MAINHAND:net.minecraft.world.entity.EquipmentSlot.OFFHAND);
+            if(machine instanceof gregtech.blockentity.machine.LargeTurbineControllerBlockEntity turbine && gregtech.internal.tool.GTToolHelper.matchesTool(held,gregtech.internal.tool.GTToolType.PLUNGER)) {
+                if(!level.isClientSide)gregtech.internal.tool.GTToolHelper.damageForToolClickReturn(held,turbine.purgeFluid(),player,hand==InteractionHand.MAIN_HAND?net.minecraft.world.entity.EquipmentSlot.MAINHAND:net.minecraft.world.entity.EquipmentSlot.OFFHAND);
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
 //? if >=1.21.1 {

@@ -1,12 +1,12 @@
 package gregtech.integration.gameplay;
 
 import gregtech.GregTech;
-import gregtech.api.machine.crucible.CrucibleItemInput;
-import gregtech.api.machine.crucible.CrucibleMaterialStack;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.machine.crucible.CrucibleItemInput;
+import gregtech.internal.machine.crucible.CrucibleMaterialStack;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolType;
 import gregtech.block.machine.GTFacingMachineBlock;
 import gregtech.blockentity.machine.MoldBlockEntity;
 import gregtech.blockentity.machine.SmeltingCrucibleBlockEntity;

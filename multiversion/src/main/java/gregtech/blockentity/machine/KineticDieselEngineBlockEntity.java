@@ -1,8 +1,8 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.energy.FaceConfig;
-import gregtech.api.fluid.FluidTankGT;
-import gregtech.api.machine.DieselEngineSpec;
+import gregtech.internal.energy.FaceConfig;
+import gregtech.internal.fluid.FluidTankGT;
+import gregtech.internal.machine.DieselEngineSpec;
 import gregtech.data.FuelRecipeMaps;
 import gregtech.data.GregTechTags;
 import net.minecraft.core.BlockPos;
@@ -26,9 +26,9 @@ import javax.annotation.Nullable;
 
 /** Liquid-fuel → RU motor. Preserves complete FM.Engine cycle credit and original one-packet waste semantics. */
 public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implements gregtech.api.machine.MachineControl.Provider,
-        gregtech.api.fluid.FluidToolTarget {
+        gregtech.internal.fluid.FluidToolTarget {
     protected boolean emitted;
-    private final gregtech.api.machine.MachineControl control=gregtech.api.machine.MachineControls.switchable(this,
+    private final gregtech.api.machine.MachineControl control=gregtech.internal.machine.MachineControls.switchable(this,
             ()->!isStopped(),value->setStopped(!value),this::isActive,()->emitted);
     @Override public gregtech.api.machine.MachineControl machineControl(Direction side){return control;}
     DieselEngineSpec spec;
@@ -110,9 +110,9 @@ public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implem
         if (be.spec == null) return;
         long beforeEmission=be.kuEnergy;
         if(be.kuEnergy >= be.outputRate() && be.outputRate()>0) {
-            gregtech.api.energy.EnergyTransfer.emitEnergyToNetwork(
+            gregtech.internal.energy.EnergyTransfer.emitEnergyToNetwork(
                     GregTechTags.Energy.RU,be.outputRate(),1,be);
-            be.kuEnergy=gregtech.api.machine.LiquidFuelCycle.afterEmission(be.kuEnergy,be.outputRate());
+            be.kuEnergy=gregtech.internal.machine.LiquidFuelCycle.afterEmission(be.kuEnergy,be.outputRate());
             be.setChanged();
         }
         be.emitted=be.kuEnergy<beforeEmission;
@@ -131,8 +131,8 @@ public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implem
 
     void burnFuel() {
         if (level == null) return;
-        if (gregtech.api.machine.LiquidFuelCycle.needsFuel(kuEnergy, outputRate(), stopped)) active = false;
-        while(gregtech.api.machine.LiquidFuelCycle.needsFuel(kuEnergy,outputRate(),stopped) && !fuelTank.isEmpty()) {
+        if (gregtech.internal.machine.LiquidFuelCycle.needsFuel(kuEnergy, outputRate(), stopped)) active = false;
+        while(gregtech.internal.machine.LiquidFuelCycle.needsFuel(kuEnergy,outputRate(),stopped) && !fuelTank.isEmpty()) {
             var tankFluid=fuelTank.getFluid();
             var recipe=FuelRecipeMaps.Engine.findRecipe(java.util.Collections.emptyList(),java.util.List.of(tankFluid),false,0,0);
             if (recipe == null) {
@@ -142,13 +142,13 @@ public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implem
             }
             if(recipe.mFluidInputs==null || recipe.mFluidInputs.length!=1 || recipe.mFluidInputs[0]==null)return;
             int amount=recipe.mFluidInputs[0].getAmount();
-            long energy=gregtech.api.machine.LiquidFuelCycle.recipeEnergy(recipe.mEUt,recipe.mDuration);
+            long energy=gregtech.internal.machine.LiquidFuelCycle.recipeEnergy(recipe.mEUt,recipe.mDuration);
             if(amount<=0 || energy<=0)return;
             var requested=tankFluid.copy();requested.setAmount(amount);
             if(fuelTank.drain(requested,IFluidHandler.FluidAction.SIMULATE).getAmount()!=amount)return;
             var exhaust=recipe.mFluidOutputs!=null && recipe.mFluidOutputs.length>0?recipe.mFluidOutputs[0]:null;
             if(exhaust!=null && !exhaust.isEmpty() && exhaustTank.fill(exhaust,IFluidHandler.FluidAction.SIMULATE)!=exhaust.getAmount())return;
-            long credited=gregtech.api.machine.LiquidFuelCycle.credit(kuEnergy,energy);
+            long credited=gregtech.internal.machine.LiquidFuelCycle.credit(kuEnergy,energy);
             if(fuelTank.drain(requested,IFluidHandler.FluidAction.EXECUTE).getAmount()!=amount)throw new IllegalStateException("Diesel fuel drain changed after simulation");
             if(exhaust!=null && !exhaust.isEmpty())exhaustTank.fill(exhaust,IFluidHandler.FluidAction.EXECUTE);
             kuEnergy=credited;
@@ -176,7 +176,7 @@ public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implem
         }
         FluidStack exhaust = exhaustTank.getFluid();
         if (!exhaust.isEmpty()
-                && gregtech.api.fluid.FluidHazards.isGas(exhaust.getFluid())
+                && gregtech.internal.fluid.FluidHazards.isGas(exhaust.getFluid())
                 && !level.getBlockState(targetPos).isSolidRender(level, targetPos)
                 && level.getBlockState(targetPos).getCollisionShape(level, targetPos).isEmpty()) {
             exhaustTank.setEmpty();
@@ -187,7 +187,7 @@ public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implem
     @Override
     public IFluidHandler fluidToolHandler(Direction side, boolean filling) {
         if (isRemoved()) return null;
-        return filling ? new gregtech.api.fluid.FluidPort(new DieselFluidHandler(this), true, false) : tap;
+        return filling ? new gregtech.internal.fluid.FluidPort(new DieselFluidHandler(this), true, false) : tap;
     }
 
     private final IFluidHandler tap = new IFluidHandler() {

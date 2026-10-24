@@ -5,10 +5,10 @@ import gregtech.content.material.Materials;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialProperty;
-import gregtech.api.material.MaterialTextureSet;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialProperty;
+import gregtech.internal.material.MaterialTextureSet;
 import gregtech.data.RegisteredFluids;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
@@ -98,7 +98,7 @@ public final class MaterialFluidVisuals {
     private static Appearance genericMolten(GTMaterial material) {
         GTMaterial resolved = material.resolve();
         MaterialTextureSet set = MaterialIcons.resolveTextureSet(resolved);
-        int color = gregtech.api.fluid.FluidVisualPolicy.moltenTint(resolved);
+        int color = gregtech.internal.fluid.FluidVisualPolicy.moltenTint(resolved);
         return new Appearance(
                 CrucibleContentIcons.blockIcon(set, "molten", false),
                 CrucibleContentIcons.blockIcon(set, "molten", true),

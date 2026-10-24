@@ -1,13 +1,13 @@
 package gregtech.registry;
 
 import gregtech.GregTech;
-import gregtech.api.machine.CrucibleSpec;
-import gregtech.api.machine.MachineSpec;
-import gregtech.api.machine.MachineRegistry;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.machine.CrucibleSpec;
+import gregtech.internal.machine.MachineSpec;
+import gregtech.internal.machine.MachineRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.ItemMaterialRegistry;
+import gregtech.internal.material.ItemMaterialRegistry;
 import gregtech.block.energy.ElectricWireBlock;
 import gregtech.block.machine.*;
 import net.minecraft.world.level.block.Block;
@@ -27,7 +27,7 @@ public final class GTMaterialRegistration {
         // Material items carry their identity on the Item instance. Fuel/ash and recovery
         // consumers use the same composition registry as block items and vanilla forms.
         for (var holder : GTItems.allEntries()) {
-            if (holder.isPresent() && holder.get() instanceof gregtech.api.material.MaterialFormItem item) {
+            if (holder.isPresent() && holder.get() instanceof gregtech.internal.material.MaterialFormItem item) {
                 ItemMaterialRegistry.register(holder.get(), item.getPrefix(), item.getMaterial());
                 count++;
             }

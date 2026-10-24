@@ -5,13 +5,13 @@ package gregtech.data;
 import gregtech.GregTech;
 //?}
 import gregtech.content.recipe.ElectricalCraftingRules;
-import gregtech.api.machine.PipeSpec;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialEquivalence;
-import gregtech.api.prefix.BlockMaterialPrefix;
+import gregtech.internal.machine.PipeSpec;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialEquivalence;
+import gregtech.internal.prefix.BlockMaterialPrefix;
 //? if >=1.21.1 {
-/*import gregtech.api.energy.WireMaterialLike;
+/*import gregtech.internal.energy.WireMaterialLike;
 *///?} else {
 import gregtech.block.energy.ElectricWireBlock;
 //?}
@@ -406,7 +406,7 @@ public final class MachineRecipeIngredients {
 *///?} else {
         for (Item item : ForgeRegistries.ITEMS.getValues()) {
 //?}
-            if (item instanceof gregtech.api.material.MaterialFormItem materialItem) {
+            if (item instanceof gregtech.internal.material.MaterialFormItem materialItem) {
                 GTMaterial material = materialItem.getMaterial();
                 if (material != null && material.isValid()) {
                     index.computeIfAbsent(materialItem.getPrefix(), k -> new HashMap<>()).put(material, item);
@@ -494,7 +494,7 @@ public final class MachineRecipeIngredients {
     }
 
     private static MaterialPrefix prefix(String name) {
-        for (MaterialPrefix candidate : gregtech.api.prefix.PrefixRegistry.all()) {
+        for (MaterialPrefix candidate : gregtech.internal.prefix.PrefixRegistry.all()) {
             if (candidate.getName().equals(name)) return candidate;
         }
         return null;

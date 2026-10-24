@@ -1,10 +1,10 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.energy.EnergyBlockViews;
-import gregtech.api.energy.IEnergyBlock;
-import gregtech.api.fluid.FluidPort;
-import gregtech.api.multiblock.*;
-import gregtech.api.recipe.FluidFuelBatch;
+import gregtech.internal.energy.EnergyBlockViews;
+import gregtech.internal.energy.IEnergyBlock;
+import gregtech.internal.fluid.FluidPort;
+import gregtech.internal.multiblock.*;
+import gregtech.internal.recipe.FluidFuelBatch;
 import gregtech.blockentity.GTEnergyBlockEntity;
 import gregtech.content.multiblock.AxialStructureTransform;
 import gregtech.data.*;
@@ -29,7 +29,7 @@ import java.util.*;
 
 /** GT6 gas turbines: solid 3x3x4 structure, front fuel and bottom exhaust. */
 public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity implements MultiblockPortOwner, IFluidHandler,
-        gregtech.api.machine.MachineControl.Provider, gregtech.api.multiblock.tracking.TrackedMultiblock {
+        gregtech.api.machine.MachineControl.Provider, gregtech.internal.multiblock.tracking.TrackedMultiblock {
     public static final int INPUT_MAX = 12288, OUTPUT_MAX = 8192; // Legacy lowest-grade constants.
 
     public gregtech.content.multiblock.GasTurbineDefinitions.Grade grade() {
@@ -41,7 +41,7 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
     private boolean converting, emitted;
     private boolean rotorFormed, rotorActive;
     private final gregtech.api.machine.MachineControl control =
-            gregtech.api.machine.MachineControls.switchable(this,
+            gregtech.internal.machine.MachineControls.switchable(this,
                     () -> !this.stopped,
                     value -> {
                         this.stopped = !value;
@@ -111,11 +111,11 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
         setChanged();
     }
 
-    @Override public gregtech.api.multiblock.tracking.StructureDefinition structureDefinition() {
-        return gregtech.api.multiblock.tracking.CustomStructures.gasTurbine(this);
+    @Override public gregtech.internal.multiblock.tracking.StructureDefinition structureDefinition() {
+        return gregtech.internal.multiblock.tracking.CustomStructures.gasTurbine(this);
     }
     @Override public boolean isStructureOk() {
-        return gregtech.api.multiblock.tracking.StructureTracking.query(this);
+        return gregtech.internal.multiblock.tracking.StructureTracking.query(this);
     }
     @Override public boolean scanStructure() {
         if (level == null || isRemoved()) return false;
@@ -125,15 +125,15 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
             if (!level.hasChunkAt(pos) || !grade().accepts(level.getBlockState(pos).getBlock())
                     || !(level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity)) {
                 bindings.clear(this::release);
-                gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
+                gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
                 return false;
             }
             parts.put(pos, AxialStructureTransform.role(front(), cell.right(), cell.up(), cell.back(), true));
         }
-        return gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, parts, 0,
+        return gregtech.internal.multiblock.tracking.StructureClaims.update(this, true, bindings, parts, 0,
                 p -> ((MultiblockPortBlockEntity) level.getBlockEntity(p)).canBind(worldPosition),
                 (p, r) -> ((MultiblockPortBlockEntity) level.getBlockEntity(p)).bind(worldPosition, r), this::release)
-                != gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
+                != gregtech.internal.multiblock.tracking.StructureClaims.Result.FAILED;
     }
 
     private void release(BlockPos pos) {
@@ -143,16 +143,16 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
 
     @Override public void onLoad() {
         super.onLoad();
-        if (level != null && !level.isClientSide) gregtech.api.multiblock.tracking.StructureTracking.attach(this);
+        if (level != null && !level.isClientSide) gregtech.internal.multiblock.tracking.StructureTracking.attach(this);
     }
     @Override public void onChunkUnloaded() {
-        gregtech.api.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
+        gregtech.internal.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
         super.onChunkUnloaded();
     }
     @Override
     public void setRemoved() {
-        if (!gregtech.api.multiblock.tracking.StructureTracking.unloading(this)) bindings.clear(this::release);
-        gregtech.api.multiblock.tracking.StructureTracking.onRemoved(this);
+        if (!gregtech.internal.multiblock.tracking.StructureTracking.unloading(this)) bindings.clear(this::release);
+        gregtech.internal.multiblock.tracking.StructureTracking.onRemoved(this);
         super.setRemoved();
     }
 
@@ -370,8 +370,8 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
         stopped = tag.getBoolean("gt.stopped");
         rotorFormed = tag.getBoolean("gt.rotor_formed");
         rotorActive = rotorFormed && tag.getBoolean("gt.rotor_active");
-        gregtech.api.fluid.NativeMachineTankData.restore(fuel, tag.getCompound("gt.tank"), lookup);
-        for (int i = 0; i < 3; i++) gregtech.api.fluid.NativeMachineTankData.restore(exhaust[i], tag.getCompound("gt.exhaust" + i),
+        gregtech.internal.fluid.NativeMachineTankData.restore(fuel, tag.getCompound("gt.tank"), lookup);
+        for (int i = 0; i < 3; i++) gregtech.internal.fluid.NativeMachineTankData.restore(exhaust[i], tag.getCompound("gt.exhaust" + i),
                 lookup);
 *///?} else {
     @Override

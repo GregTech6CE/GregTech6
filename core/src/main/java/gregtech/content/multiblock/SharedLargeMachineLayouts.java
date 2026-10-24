@@ -1,6 +1,6 @@
 package gregtech.content.multiblock;
 import gregtech.api.addon.LayoutRepeat;
-import gregtech.api.multiblock.StructureGrid.Role;import java.util.*;
+import gregtech.internal.multiblock.StructureGrid.Role;import java.util.*;
 /** Original GT6 large-machine coordinates and material-part IDs; no Minecraft registry. */
 public final class SharedLargeMachineLayouts {private SharedLargeMachineLayouts(){}
     /** One accepted block for a cell. {@code plain} is a block id, tag or predicate; null means a part id. */

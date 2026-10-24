@@ -1,7 +1,7 @@
 package gregtech.client;
 
-import gregtech.api.tool.ToolInteractionSpec;
-import gregtech.api.tool.ToolInteractions;
+import gregtech.internal.tool.ToolInteractionSpec;
+import gregtech.internal.tool.ToolInteractions;
 import gregtech.util.GTPlacementCode;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

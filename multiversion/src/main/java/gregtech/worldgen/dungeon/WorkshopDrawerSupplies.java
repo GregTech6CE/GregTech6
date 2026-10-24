@@ -5,6 +5,7 @@ package gregtech.worldgen.dungeon;
 *///?} else {
 //?}
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.data.MaterialPrefix;
 import gregtech.content.material.Materials;
 import gregtech.registry.*;

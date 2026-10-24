@@ -2,17 +2,17 @@ package gregtech.block.machine;
 
 //? if >=1.21.1 {
 //?} else {
-import gregtech.api.tool.ToolInteractions;
-import gregtech.api.tool.ToolInteractionSpec;
-import gregtech.api.tool.ToolInteractionTarget;
+import gregtech.internal.tool.ToolInteractions;
+import gregtech.internal.tool.ToolInteractionSpec;
+import gregtech.internal.tool.ToolInteractionTarget;
 //?}
-import gregtech.api.GTWaterloggable;
-import gregtech.api.machine.PipeSpec;
-import gregtech.api.material.MaterialTextureSet;
+import gregtech.internal.GTWaterloggable;
+import gregtech.internal.machine.PipeSpec;
+import gregtech.internal.material.MaterialTextureSet;
 //? if >=1.21.1 {
 //?} else {
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 //?}
 import gregtech.blockentity.machine.FluidPipeBlockEntity;
 import gregtech.content.cover.CoverItems;
@@ -58,15 +58,15 @@ import java.util.Map;
 
 /** GT6 fluid pipe block with wrench-toggleable connections and thin-cross collision shape. */
 //? if >=1.21.1 {
-/*public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, gregtech.api.tool.ToolInteractionTarget, gregtech.api.inventory.PipeFormLike {
-    public static final BooleanProperty UP    = gregtech.api.transport.PipeConnections.UP;
-    public static final BooleanProperty DOWN  = gregtech.api.transport.PipeConnections.DOWN;
-    public static final BooleanProperty NORTH = gregtech.api.transport.PipeConnections.NORTH;
-    public static final BooleanProperty SOUTH = gregtech.api.transport.PipeConnections.SOUTH;
-    public static final BooleanProperty WEST  = gregtech.api.transport.PipeConnections.WEST;
-    public static final BooleanProperty EAST  = gregtech.api.transport.PipeConnections.EAST;
+/*public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, gregtech.internal.tool.ToolInteractionTarget, gregtech.internal.inventory.PipeFormLike {
+    public static final BooleanProperty UP    = gregtech.internal.transport.PipeConnections.UP;
+    public static final BooleanProperty DOWN  = gregtech.internal.transport.PipeConnections.DOWN;
+    public static final BooleanProperty NORTH = gregtech.internal.transport.PipeConnections.NORTH;
+    public static final BooleanProperty SOUTH = gregtech.internal.transport.PipeConnections.SOUTH;
+    public static final BooleanProperty WEST  = gregtech.internal.transport.PipeConnections.WEST;
+    public static final BooleanProperty EAST  = gregtech.internal.transport.PipeConnections.EAST;
 *///?} else {
-public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget, gregtech.api.inventory.PipeFormLike {
+public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget, gregtech.internal.inventory.PipeFormLike {
     public static final BooleanProperty UP    = BooleanProperty.create("up");
     public static final BooleanProperty DOWN  = BooleanProperty.create("down");
     public static final BooleanProperty NORTH = BooleanProperty.create("north");
@@ -98,10 +98,10 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
 
     @Override
 //? if >=1.21.1 {
-    /*public gregtech.api.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
-        return gregtech.api.tool.GTToolHelper.isMachineWrench(tool)
-            ? gregtech.api.tool.ToolInteractionSpec.connections(
-                gregtech.api.tool.ToolInteractionSpec.ConnectionKind.FLUID) : null;
+    /*public gregtech.internal.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+        return gregtech.internal.tool.GTToolHelper.isMachineWrench(tool)
+            ? gregtech.internal.tool.ToolInteractionSpec.connections(
+                gregtech.internal.tool.ToolInteractionSpec.ConnectionKind.FLUID) : null;
 *///?} else {
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return GTToolHelper.isMachineWrench(tool)
@@ -197,11 +197,11 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
         VoxelShape shape = Shapes.box(min, min, min, max, max, max);
         for (Direction dir : Direction.values()) {
             if (!state.getValue(propFor(dir))) continue;
-            double n = gregtech.api.machine.PipeGeometry.fluidNeighborHalf(
+            double n = gregtech.internal.machine.PipeGeometry.fluidNeighborHalf(
                     level.getBlockState(pos.relative(dir)), dir);
-            double[] box = gregtech.api.machine.PipeGeometry.armBox(dir, half, n);
-            if (box == null) box = gregtech.api.machine.PipeGeometry.stubBox(dir, half, n);
-            if (box != null) shape = Shapes.or(shape, gregtech.api.machine.PipeGeometry.boxShape(box));
+            double[] box = gregtech.internal.machine.PipeGeometry.armBox(dir, half, n);
+            if (box == null) box = gregtech.internal.machine.PipeGeometry.stubBox(dir, half, n);
+            if (box != null) shape = Shapes.or(shape, gregtech.internal.machine.PipeGeometry.boxShape(box));
         }
         return shape;
     }

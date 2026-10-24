@@ -1,14 +1,14 @@
 package gregtech.core;
 
-import gregtech.api.definition.DefinitionCatalog;
-import gregtech.api.fluid.FluidPipeChannels;
-import gregtech.api.fluid.FluidPipeSafety;
-import gregtech.api.energy.EnergyPackets;
+import gregtech.internal.definition.DefinitionCatalog;
+import gregtech.internal.fluid.FluidPipeChannels;
+import gregtech.internal.fluid.FluidPipeSafety;
+import gregtech.internal.energy.EnergyPackets;
 import gregtech.api.energy.GTVoltageTiers;
-import gregtech.api.machine.crucible.CrucibleMath;
-import gregtech.api.material.AtomicProperties;
+import gregtech.internal.machine.crucible.CrucibleMath;
+import gregtech.internal.material.AtomicProperties;
 import gregtech.api.material.GTValues;
-import gregtech.api.multiblock.PartBindings;
+import gregtech.internal.multiblock.PartBindings;
 import gregtech.api.recipe.MachineWorkCost;
 
 import java.util.ArrayList;
@@ -133,7 +133,7 @@ public final class CoreBehaviorContracts {
         }
         var external = gregtech.content.recipe.ExternalOreProcessingRules.EXTERNAL_FORMS;
         equal(13, external.size(), "thirteen typed external forms");
-        for (var form : external) check(!gregtech.api.material.MaterialItemDefinitions.candidatePrefixes().contains(form),
+        for (var form : external) check(!gregtech.internal.material.MaterialItemDefinitions.candidatePrefixes().contains(form),
                 "external metadata creates no GT-owned items " + form.getName());
         // OM:370-371 / UT.Code.units:1677-1687, target amount multiplies the input then floors.
         equal(972_972_000L, gregtech.content.recipe.PulverizationRules.amount(1_945_944_000L, 324_324_000L), "three input units at a half-unit pulver target");
@@ -234,10 +234,10 @@ public final class CoreBehaviorContracts {
         equal(-1, gregtech.content.recipe.MaterialWashingRules.cell(0, -.1, 0).y(), "washing floors negative Y after the quarter offset");
         equal(0, gregtech.content.recipe.MaterialWashingRules.cell(0, .25, 0).y(), "washing includes the exact quarter-block boundary");
         var iron = gregtech.content.material.generated.ElementMaterials.Iron;
-        var noByproducts = gregtech.api.material.GTMaterialRegistry.createMaterial(-1, "WashingEmptyFixture", "Washing Empty Fixture", 0);
+        var noByproducts = gregtech.internal.material.GTMaterialRegistry.createMaterial(-1, "WashingEmptyFixture", "Washing Empty Fixture", 0);
         check(gregtech.content.recipe.MaterialWashingRules.byproductMaterial(noByproducts, 0) == noByproducts,
                 "source byproduct selection falls back to the input when none exist");
-        var weighted = gregtech.api.material.GTMaterialRegistry.createMaterial(-1, "WashingFixture", "Washing Fixture", 0)
+        var weighted = gregtech.internal.material.GTMaterialRegistry.createMaterial(-1, "WashingFixture", "Washing Fixture", 0)
                 .ores(iron, iron, gregtech.content.material.generated.ElementMaterials.Copper);
         check(gregtech.content.recipe.MaterialWashingRules.byproductMaterial(weighted, 1) == iron, "source byproduct duplicates preserve selection weight");
         check(gregtech.content.recipe.MaterialWashingRules.byproductMaterial(weighted, 2)
@@ -251,7 +251,7 @@ public final class CoreBehaviorContracts {
             check(!taggedForms.get(i).getName().toLowerCase(java.util.Locale.ROOT).contains("block"),
                     "common form tags exclude storage blocks " + taggedNames[i]);
         }
-        var aliases = gregtech.api.material.MaterialTagAliases.ALTERNATE_SPELLINGS;
+        var aliases = gregtech.internal.material.MaterialTagAliases.ALTERNATE_SPELLINGS;
         equal(7, aliases.size(), "established spellings and restored recipe-material aliases");
         check("osmium".equals(aliases.get("osmium_elemental")), "elemental osmium recipe-tag alias");
         check("ad".equals(aliases.get("adamantium")), "adamantium recipe-tag alias");
@@ -279,24 +279,24 @@ public final class CoreBehaviorContracts {
                 "raw chunks crush to exactly three tiny crushed ores");
         check(rows.get(3).map().equals("Sifting") && rows.get(3).output() == gregtech.data.MaterialPrefix.dust && rows.get(3).count() == 3,
                 "pebbles finish in the sifter with three dust, not the crusher");
-        for (var row : rows) check(!gregtech.api.material.MaterialItemDefinitions.candidatePrefixes().contains(row.input()),
+        for (var row : rows) check(!gregtech.internal.material.MaterialItemDefinitions.candidatePrefixes().contains(row.input()),
                 "optional source prefix never creates a GT-owned item " + row.input().getName());
         check(gregtech.content.recipe.ExternalOreProcessingRules.allows(
                 gregtech.content.material.generated.ElementMaterials.Iron), "ordinary source material accepts prefix processing");
         check(!gregtech.content.recipe.ExternalOreProcessingRules.allows(
-                gregtech.api.material.MaterialSentinels.Invalid), "invalid material cannot create an external ore route");
+                gregtech.internal.material.MaterialSentinels.Invalid), "invalid material cannot create an external ore route");
     }
 
     private static void explosiveStorageSourceSamples() {
         // Original PrefixBlock :399 and :540, OP weights 9/16/64 units, MT :1309-1310 flags.
         gregtech.data.MaterialPrefixes.bootstrap();
         var material = gregtech.content.material.generated.CompoundMaterials.Dynamite;
-        check(material.has(gregtech.api.material.MaterialProperty.EXPLOSIVE)
-                && material.has(gregtech.api.material.MaterialProperty.FLAMMABLE), "source dynamite has both reaction flags");
-        var prefixes = new gregtech.api.prefix.BlockMaterialPrefix[]{
-                gregtech.api.prefix.BlockMaterialPrefix.blockDust,
-                gregtech.api.prefix.BlockMaterialPrefix.crateGtDust,
-                gregtech.api.prefix.BlockMaterialPrefix.crateGt64Dust};
+        check(material.has(gregtech.internal.material.MaterialProperty.EXPLOSIVE)
+                && material.has(gregtech.internal.material.MaterialProperty.FLAMMABLE), "source dynamite has both reaction flags");
+        var prefixes = new gregtech.internal.prefix.BlockMaterialPrefix[]{
+                gregtech.internal.prefix.BlockMaterialPrefix.blockDust,
+                gregtech.internal.prefix.BlockMaterialPrefix.crateGtDust,
+                gregtech.internal.prefix.BlockMaterialPrefix.crateGt64Dust};
         float[] ignition = {4.5F, 8F, 32F}, chain = {6.3F, 11.2F, 44.8F};
         for (int i = 0; i < prefixes.length; i++) {
             check(Math.abs(gregtech.content.hazard.MaterialBlockHazards.ignitionPower(prefixes[i], material) - ignition[i]) < .0001F,
@@ -306,7 +306,7 @@ public final class CoreBehaviorContracts {
         }
         check(gregtech.content.hazard.MaterialBlockHazards.chainPower(prefixes[0], gregtech.content.material.generated.ElementMaterials.Iron) == 0,
                 "ordinary metal dust storage does not explode");
-        check(gregtech.content.hazard.MaterialBlockHazards.chainPower(gregtech.api.prefix.BlockMaterialPrefix.ore, material) == 0,
+        check(gregtech.content.hazard.MaterialBlockHazards.chainPower(gregtech.internal.prefix.BlockMaterialPrefix.ore, material) == 0,
                 "ore registration does not inherit storage reactions");
     }
 
@@ -395,7 +395,7 @@ public final class CoreBehaviorContracts {
                 "source external raw chunks retain the oreRaw alternate grid position");
         check(!gregtech.content.recipe.OriginalFormConversions.selector(sourceChunk).matches(9,0,1),
                 "raw chunk availability never overrides the first oreRaw result");
-        check(gregtech.api.material.MaterialItemDefinitions.candidatePrefixes().stream()
+        check(gregtech.internal.material.MaterialItemDefinitions.candidatePrefixes().stream()
                 .noneMatch(prefix -> prefix.getName().equals("rawOreChunk")), "source external chunk prefix gets no fabricated GT item");
         equal(60, gregtech.content.recipe.OriginalFormConversions.FIXED.size(), "all fixed source constructors retained");
     }
@@ -635,7 +635,7 @@ public final class CoreBehaviorContracts {
         };
         var specs = gregtech.content.transport.fluid.FluidTransportDefinitions.pipes();
         equal(280, specs.size(), "40 original materials in seven sizes");
-        Map<String, gregtech.api.machine.PipeSpec> byId = new java.util.HashMap<>();
+        Map<String, gregtech.internal.machine.PipeSpec> byId = new java.util.HashMap<>();
         for (var spec : specs) check(byId.put(spec.id(), spec) == null, "unique pipe registry ID");
         String[] sizes = {"tiny", "small", "medium", "large", "huge", "quadruple", "nonuple"};
         long[] multiples = {1, 2, 6, 12, 24, 6, 2};
@@ -658,7 +658,7 @@ public final class CoreBehaviorContracts {
             }
         }
         var steel = byId.get("pipe_medium_steel");
-        var explicit = gregtech.api.machine.PipeSpec.of("custom", steel.material(), steel.size(),
+        var explicit = gregtech.internal.machine.PipeSpec.of("custom", steel.material(), steel.size(),
                 200, true, false, false, true, 345);
         equal(345, explicit.maxTemperature(), "factory preserves explicit limit instead of recomputing it");
     }

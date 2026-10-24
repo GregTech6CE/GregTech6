@@ -1,9 +1,11 @@
 package gregtech.core;
 
 import gregtech.api.addon.*;
+import gregtech.internal.addon.*;
 import gregtech.api.material.*;
-import gregtech.api.mod.ModData;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.material.*;
+import gregtech.internal.mod.ModData;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.data.ModReferences;
 import gregtech.data.generated.MaterialWorkability;
 import java.net.URL;

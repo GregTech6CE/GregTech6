@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.tool.*;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.tool.*;
 import gregtech.data.BlockHarvestPolicy;
 import gregtech.item.GTToolItem;
 import net.minecraft.core.*;

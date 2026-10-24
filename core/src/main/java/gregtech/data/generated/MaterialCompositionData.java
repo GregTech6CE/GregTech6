@@ -1,10 +1,10 @@
 package gregtech.data.generated;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.MaterialComponent;
-import gregtech.api.material.MaterialChemistry;
+import gregtech.internal.material.MaterialComponent;
+import gregtech.internal.material.MaterialChemistry;
 
 /** Auto-generated from GT6 MT.java composition chains. */
 public final class MaterialCompositionData {

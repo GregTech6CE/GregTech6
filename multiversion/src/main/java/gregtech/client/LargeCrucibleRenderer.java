@@ -57,7 +57,7 @@ public final class LargeCrucibleRenderer implements BlockEntityRenderer<LargeCru
         var out = buffers.getBuffer(net.minecraft.client.renderer.RenderType.cutout());
         int tint = be.variant().material().getColor();
 //? if >=1.21.1 {
-        /*if (be.isMeltDownWarning()) tint = gregtech.api.machine.crucible.CrucibleHullTint.meltdownRgb(tint);
+        /*if (be.isMeltDownWarning()) tint = gregtech.internal.machine.crucible.CrucibleHullTint.meltdownRgb(tint);
 *///?} else {
         if (be.isMeltDownWarning()) tint = CrucibleBlockBakedModel.meltdownRgb(tint);
 //?}

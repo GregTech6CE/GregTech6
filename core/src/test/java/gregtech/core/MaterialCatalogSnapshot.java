@@ -1,7 +1,8 @@
 package gregtech.core;
 
 import gregtech.api.material.*;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.material.*;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.data.MaterialPrefix;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

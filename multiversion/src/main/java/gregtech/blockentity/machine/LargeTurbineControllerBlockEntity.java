@@ -1,7 +1,7 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.fluid.FluidPort;
-import gregtech.api.multiblock.MultiblockLayout;
+import gregtech.internal.fluid.FluidPort;
+import gregtech.internal.multiblock.MultiblockLayout;
 import gregtech.registry.*;
 import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
@@ -160,7 +160,7 @@ public class LargeTurbineControllerBlockEntity extends AxialGeneratorBlockEntity
     }
 
     private static void readTank(FluidTank tank, CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        gregtech.api.fluid.NativeMachineTankData.restore(tank, tag, lookup);
+        gregtech.internal.fluid.NativeMachineTankData.restore(tank, tag, lookup);
     }
 
     @Override

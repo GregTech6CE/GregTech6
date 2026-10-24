@@ -1,10 +1,10 @@
 package gregtech.registry;
 
-import gregtech.api.fluid.FluidHazards;
-import gregtech.api.fluid.FluidVisualPolicy;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialStackItemHelper;
+import gregtech.internal.fluid.FluidHazards;
+import gregtech.internal.fluid.FluidVisualPolicy;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialStackItemHelper;
 import gregtech.content.fluid.OriginalFluidDisplayRules;
 import gregtech.content.fluid.OriginalFluidDisplayRules.*;
 import gregtech.data.FuelRecipeMaps;

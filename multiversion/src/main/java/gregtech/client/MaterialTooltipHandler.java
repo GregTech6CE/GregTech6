@@ -5,7 +5,7 @@ package gregtech.client;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.material.ItemMaterialRegistry;
+import gregtech.internal.material.ItemMaterialRegistry;
 import gregtech.item.MaterialItem;
 import gregtech.block.MaterialBlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -22,7 +22,7 @@ import net.minecraftforge.fml.common.Mod;
 //?}
 
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, value = Dist.CLIENT)
+/*@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, value = Dist.CLIENT)
 *///?} else {
 @Mod.EventBusSubscriber(modid = GregTech.MODID, value = Dist.CLIENT)
 //?}
@@ -33,10 +33,10 @@ public final class MaterialTooltipHandler {
     public static void onItemTooltip(ItemTooltipEvent event) {
         ItemStack stack = event.getItemStack();
         if (stack.isEmpty()) return;
-        var form = gregtech.api.material.MaterialEquivalence.form(stack);
+        var form = gregtech.internal.material.MaterialEquivalence.form(stack);
         if (form != null && gregtech.content.recipe.MaterialWashingRules.row(form.prefix()) != null)
             event.getToolTip().add(net.minecraft.network.chat.Component.translatable("gt.behaviour.washing"));
-        if (stack.getItem() instanceof gregtech.api.material.MaterialFormItem
+        if (stack.getItem() instanceof gregtech.internal.material.MaterialFormItem
                 || stack.getItem() instanceof MaterialBlockItem blockItem && blockItem.material() != null) {
             return;
         }

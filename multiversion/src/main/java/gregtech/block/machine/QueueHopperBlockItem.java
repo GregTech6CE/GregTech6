@@ -1,6 +1,6 @@
 package gregtech.block.machine;
 
-import gregtech.api.machine.HopperSpec;
+import gregtech.internal.machine.HopperSpec;
 import gregtech.client.HopperTooltips;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;

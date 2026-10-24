@@ -19,7 +19,8 @@
 
 package gregtech.item;
 import gregtech.api.material.*;
-import gregtech.api.tool.*;
+import gregtech.internal.material.*;
+import gregtech.internal.tool.*;
 import gregtech.content.tool.*;
 import gregtech.data.MaterialPrefix;
 import gregtech.registry.GTItems;
@@ -46,7 +47,7 @@ public final class GunToolItem extends GTToolItem {
  public GunToolItem(Properties properties,GTToolType type){super(properties,type);}
  public GunRules.Definition definition(){return GunRules.of(toolType().id());}
 //? if >=1.21.1 {
- /*public ItemStack ammunition(ItemStack gun,Level level){var lookup=level!=null?level.registryAccess():gregtech.api.fluid.FluidDisplayBinding.currentLookup();return lookup==null?ItemStack.EMPTY:ItemStack.parseOptional(lookup,gregtech.platform.neoforge.StackCustomData.read(gun).getCompound("gt.ammo"));}
+ /*public ItemStack ammunition(ItemStack gun,Level level){var lookup=level!=null?level.registryAccess():gregtech.internal.fluid.FluidDisplayBinding.currentLookup();return lookup==null?ItemStack.EMPTY:ItemStack.parseOptional(lookup,gregtech.platform.neoforge.StackCustomData.read(gun).getCompound("gt.ammo"));}
  private void magazine(ItemStack gun,ItemStack ammo,Level level){gregtech.platform.neoforge.StackCustomData.update(gun,t->{if(ammo.isEmpty())t.remove("gt.ammo");else t.put("gt.ammo",ammo.save(level.registryAccess()));});}
 *///?} else {
  public ItemStack ammunition(ItemStack gun,Level level){return gun.hasTag()?ItemStack.of(gun.getTag().getCompound("gt.ammo")):ItemStack.EMPTY;}
@@ -134,7 +135,7 @@ public final class GunToolItem extends GTToolItem {
   }
  }
  private static void giveScrap(ServerLevel level,BlockPos pos,net.minecraft.world.level.block.state.BlockState state){
-  var data=gregtech.api.material.ItemMaterialRegistry.get(new ItemStack(state.getBlock()));
+  var data=gregtech.internal.material.ItemMaterialRegistry.get(new ItemStack(state.getBlock()));
   if(data.isPresent())for(var component:data.get().components()){long amount=component.amount()/gregtech.api.material.GTValues.U72;while(amount>0){int count=(int)Math.min(64,amount);Block.popResource(level,pos,GTItems.getStack(MaterialPrefix.scrapGt,component.material(),count));amount-=count;}}
  }
  private boolean hit(ItemStack gun,ItemStack ammo,Player shooter,Entity target,long power,Vec3 direction,int fire){

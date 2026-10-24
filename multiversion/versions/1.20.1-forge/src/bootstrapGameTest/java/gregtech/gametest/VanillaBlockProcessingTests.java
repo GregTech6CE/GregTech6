@@ -1,6 +1,7 @@
 package gregtech.gametest;
 
 import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.content.recipe.*;
 import gregtech.data.MachineRecipeMaps;
 import net.minecraft.gametest.framework.*;
@@ -70,12 +71,12 @@ public final class VanillaBlockProcessingTests {
     }
     @GameTest(template="test_empty")
     public static void compositionAgreesWithDebarkingAndModernQuartzRecovery(GameTestHelper h) {
-        var log=gregtech.api.material.ItemMaterialRegistry.get(new ItemStack(Items.OAK_LOG)).orElseThrow();
-        var stripped=gregtech.api.material.ItemMaterialRegistry.get(new ItemStack(Items.STRIPPED_OAK_LOG)).orElseThrow();
+        var log=gregtech.internal.material.ItemMaterialRegistry.get(new ItemStack(Items.OAK_LOG)).orElseThrow();
+        var stripped=gregtech.internal.material.ItemMaterialRegistry.get(new ItemStack(Items.STRIPPED_OAK_LOG)).orElseThrow();
         long u=gregtech.api.material.GTValues.U;
         h.assertTrue(log.components().stream().mapToLong(c->c.amount()).sum()==9*u,"GT6 raw wood plus bark mass");
         h.assertTrue(stripped.components().stream().mapToLong(c->c.amount()).sum()==8*u,"Debarking removes exactly one unit");
-        var quartz=gregtech.api.material.ItemMaterialRegistry.get(new ItemStack(Items.QUARTZ_STAIRS)).orElseThrow();
+        var quartz=gregtech.internal.material.ItemMaterialRegistry.get(new ItemStack(Items.QUARTZ_STAIRS)).orElseThrow();
         h.assertTrue(quartz.amount()==4*u,"Shredder/crucible cannot restore legacy six-quartz stair yield");
         h.succeed();
     }

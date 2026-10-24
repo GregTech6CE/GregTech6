@@ -1,5 +1,5 @@
 package gregtech.block.machine;
-import gregtech.api.machine.MachineSpec;
+import gregtech.internal.machine.MachineSpec;
 import net.minecraft.world.item.*;
 import net.minecraft.network.chat.Component;
 import java.util.List;

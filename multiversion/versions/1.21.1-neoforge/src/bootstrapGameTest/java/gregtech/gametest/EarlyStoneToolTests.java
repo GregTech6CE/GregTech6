@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 import gregtech.data.MaterialPrefix;
 import gregtech.registry.GTItems;
 import net.minecraft.gametest.framework.GameTest;

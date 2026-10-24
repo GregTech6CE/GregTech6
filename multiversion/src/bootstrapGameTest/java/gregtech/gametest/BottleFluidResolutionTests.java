@@ -49,7 +49,7 @@ public final class BottleFluidResolutionTests {
    var entry=GTFluids.entryForFluid(fluid);
    h.assertTrue(entry!=null && entry.registryName().equals(names[i]),"source fluid identity "+keys[i]);
    var expected=RegisteredFluids.fluidTexture(names[i]);
-   var visual=gregtech.api.fluid.FluidVisualPolicy.select(entry,expected::equals);
+   var visual=gregtech.internal.fluid.FluidVisualPolicy.select(entry,expected::equals);
    h.assertTrue(visual.texture().equals(expected) && visual.tint()==0xFFFFFFFF,"named original sprite and no double tint "+keys[i]);
    if(i>0)h.assertTrue(entry.temperature()==300 && entry.luminosity()==15 && entry.viscosity()==1000 && entry.glint(),"source golden drink properties");
   }

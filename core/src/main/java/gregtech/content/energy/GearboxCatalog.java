@@ -1,7 +1,8 @@
 package gregtech.content.energy;
 
 import gregtech.api.energy.*;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.energy.*;
+import gregtech.internal.material.GTMaterial;
 import gregtech.content.material.Materials;
 import gregtech.content.material.generated.WoodMaterials;
 import gregtech.data.GregTechTags;

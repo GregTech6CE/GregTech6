@@ -1,8 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.api.addon.AddonMaterials;
+import gregtech.internal.addon.AddonMaterials;
 import gregtech.api.material.*;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.material.*;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.data.MaterialPrefix;
 import net.minecraft.core.registries.BuiltInRegistries;

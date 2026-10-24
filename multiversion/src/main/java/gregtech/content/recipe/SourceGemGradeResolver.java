@@ -1,8 +1,8 @@
 package gregtech.content.recipe;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.ItemMaterialRegistry;
-import gregtech.api.material.MaterialEquivalence;
-import gregtech.api.addon.AddonMaterials;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.ItemMaterialRegistry;
+import gregtech.internal.material.MaterialEquivalence;
+import gregtech.internal.addon.AddonMaterials;
 import gregtech.data.MaterialPrefix;
 import gregtech.registry.GTItems;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -31,7 +31,7 @@ public final class SourceGemGradeResolver {
             var form=MaterialEquivalence.form(stack);
             if(form==null||form.prefix()!=prefix||form.material()!=material) continue;
             if(!external.isEmpty()&&external.getItem()!=item) {
-                gregtech.api.material.GTMaterialRegistry.warn(
+                gregtech.internal.material.GTMaterialRegistry.warn(
                         "Unknown source grade target (multiple external mappings), retaining legacy selection: "
                         +prefix.getName()+"/"+material.getName());
                 return canonical.isEmpty() ? copyAmount(ordinaryGem,fallbackCount) : canonical;

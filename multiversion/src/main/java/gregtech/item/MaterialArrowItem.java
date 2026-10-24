@@ -1,8 +1,8 @@
 package gregtech.item;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.MaterialFormItem;
-import gregtech.api.material.MaterialPresentation;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.MaterialFormItem;
+import gregtech.internal.material.MaterialPresentation;
 import gregtech.client.MaterialTooltips;
 import gregtech.data.MaterialPrefix;
 import gregtech.entity.MaterialArrowEntity;

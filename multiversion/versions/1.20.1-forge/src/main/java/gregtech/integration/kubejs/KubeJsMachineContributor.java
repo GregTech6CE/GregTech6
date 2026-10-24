@@ -5,7 +5,7 @@ import gregtech.api.addon.AddonMachineContributor;
 import gregtech.api.addon.LayoutPart;
 import gregtech.api.addon.RecipeTable;
 import gregtech.api.addon.StructureLayout;
-import gregtech.api.kubejs.KubeJsMachineDeclarations;
+import gregtech.internal.kubejs.KubeJsMachineDeclarations;
 
 import java.util.List;
 

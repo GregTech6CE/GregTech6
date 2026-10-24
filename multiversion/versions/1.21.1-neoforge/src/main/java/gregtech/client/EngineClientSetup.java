@@ -1,14 +1,14 @@
 package gregtech.client;
 
 import gregtech.registry.*;
-import gregtech.api.machine.EngineType;
+import gregtech.internal.machine.EngineType;
 import gregtech.blockentity.machine.*;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.api.distmarker.Dist;
 
-@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID,
+@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID,
         bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class EngineClientSetup {
     private EngineClientSetup() {}

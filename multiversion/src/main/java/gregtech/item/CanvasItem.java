@@ -6,7 +6,7 @@ import java.util.List;
 import net.minecraft.network.chat.Component;
 public final class CanvasItem extends TechItem {
     private final CanvasRules.Variant variant;
-    public CanvasItem(CanvasRules.Variant variant) { super(variant.name(),new Item.Properties().stacksTo(64));this.variant=variant;gregtech.api.material.ItemMaterialRegistry.register(this,null,gregtech.api.material.GTMaterialRegistry.get("Paper"),gregtech.api.material.GTValues.U); }
+    public CanvasItem(CanvasRules.Variant variant) { super(variant.name(),new Item.Properties().stacksTo(64));this.variant=variant;gregtech.internal.material.ItemMaterialRegistry.register(this,null,gregtech.internal.material.GTMaterialRegistry.get("Paper"),gregtech.api.material.GTValues.U); }
     public CanvasRules.Variant variant() { return variant; }
 //? if >=1.21.1 {
     /*@Override public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {

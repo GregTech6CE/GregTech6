@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.api.tool.*;
+import gregtech.internal.tool.*;
 import gregtech.block.energy.EnergyNodeBlock;
 import gregtech.blockentity.energy.EnergyNodeBlockEntity;
 import gregtech.content.cover.*;

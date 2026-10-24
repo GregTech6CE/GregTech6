@@ -2,6 +2,7 @@ package gregtech.integration.client;
 
 import com.google.gson.*;
 import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.data.*;
 import gregtech.jei.RecipeMapCategory;
 import net.minecraft.client.Minecraft;

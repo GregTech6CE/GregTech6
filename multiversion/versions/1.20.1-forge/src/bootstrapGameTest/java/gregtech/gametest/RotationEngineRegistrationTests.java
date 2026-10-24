@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.api.machine.MachineRegistry;
-import gregtech.api.machine.RotationEngineSpec;
-import gregtech.api.prefix.BlockMaterialPrefix;
+import gregtech.internal.machine.MachineRegistry;
+import gregtech.internal.machine.RotationEngineSpec;
+import gregtech.internal.prefix.BlockMaterialPrefix;
 import gregtech.content.material.Materials;
 import gregtech.data.MaterialPrefix;
 import gregtech.registry.GTAxles;
@@ -78,9 +78,9 @@ public final class RotationEngineRegistrationTests {
             var example = ingredient.getItems()[0].copy();
             if (example.getItem() instanceof gregtech.item.GTToolItem)
                 example = gregtech.item.GTToolItem.create(
-                        gregtech.api.tool.GTToolHelper.getType(example),
-                        gregtech.api.material.GTMaterialRegistry.get("Steel"),
-                        gregtech.api.material.GTMaterialRegistry.get("Wood"));
+                        gregtech.internal.tool.GTToolHelper.getType(example),
+                        gregtech.internal.material.GTMaterialRegistry.get("Steel"),
+                        gregtech.internal.material.GTMaterialRegistry.get("Wood"));
             grid.setItem(i, example);
         }
         var bottle = ForgeRegistries.ITEMS.getValue(GregTech.id("lubricant_bottle"));

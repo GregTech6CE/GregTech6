@@ -1,10 +1,10 @@
 package gregtech.worldgen.center;
 
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.tool.GTToolType;
 import gregtech.item.GTToolItem;
 import gregtech.item.ElectricToolItem;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.registry.GTItems;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -59,12 +59,12 @@ public final class NativeOriginItems {
                 long capacity = (8L << (2 * tier)) * 1000;
                 var stack = item.assembled(head, capacity);
 //? if >=1.21.1 {
-                /*gregtech.api.tool.GTToolHelper.write(stack, head, handle);
+                /*gregtech.internal.tool.GTToolHelper.write(stack, head, handle);
                 stack.remove(net.minecraft.core.component.DataComponents.MAX_DAMAGE);
                 stack.remove(net.minecraft.core.component.DataComponents.DAMAGE);
                 gregtech.platform.neoforge.StackCustomData.update(stack, tag -> tag.putLong("gt.charge", capacity));
 *///?} else {
-                gregtech.api.tool.GTToolHelper.write(stack, head, handle);
+                gregtech.internal.tool.GTToolHelper.write(stack, head, handle);
                 stack.getOrCreateTag().putLong("gt.charge", capacity);
 //?}
                 return stack;

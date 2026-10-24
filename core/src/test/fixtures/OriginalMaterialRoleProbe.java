@@ -1,6 +1,6 @@
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialProperty;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialProperty;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.block.stone.StoneType;
 import gregtech.platform.neoforge.gametest.SharedMaterialBootstrapGameTests;
 import java.util.Locale;

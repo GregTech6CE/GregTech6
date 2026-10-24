@@ -201,9 +201,9 @@ def leak_class():
     strings = [
         'com/example/Leak',
         'java/lang/Object',
-        'gregtech/api/material/GTMaterial',
+        'gregtech/internal/material/GTMaterial',
         'leak',
-        'Lgregtech/api/material/GTMaterial;',
+        'Lgregtech/internal/material/GTMaterial;',
     ]
     entries = [(1, text.encode('utf-8')) for text in strings]
     entries.append((7, (1).to_bytes(2, 'big')))
@@ -227,10 +227,10 @@ def leak_class():
 
 def self_check():
     names = referenced(leak_class())
-    if 'gregtech/api/material/GTMaterial' not in names:
+    if 'gregtech/internal/material/GTMaterial' not in names:
         raise SystemExit('closure self-check did not read the internal field type')
     allowed = {'com/example/Leak'}
-    if permitted('gregtech/api/material/GTMaterial', 'core', allowed):
+    if permitted('gregtech/internal/material/GTMaterial', 'core', allowed):
         raise SystemExit('closure self-check allowed an internal type')
     if not permitted('java/lang/Object', 'core', allowed):
         raise SystemExit('closure self-check rejected the JDK')
@@ -240,7 +240,7 @@ def self_check():
         raise SystemExit('closure self-check rejected Minecraft on Forge')
     if permitted('net/neoforged/neoforge/fluids/FluidStack', 'forge', allowed):
         raise SystemExit('closure self-check allowed NeoForge inside the Forge API')
-    internal = 'gregtech/api/material/GTMaterial'
+    internal = 'gregtech/internal/material/GTMaterial'
     for descriptor in ('Ljava/util/List<L' + internal + ';>;',
                        '<T:L' + internal + ';>Ljava/lang/Object;',
                        '<Legacy:L' + internal + ';>Ljava/lang/Object;'):

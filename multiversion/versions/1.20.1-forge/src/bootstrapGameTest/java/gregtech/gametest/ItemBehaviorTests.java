@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
-import gregtech.api.machine.BasicMachineSpec;
-import gregtech.api.machine.MachineRegistry;
-import gregtech.api.recipe.RecipeMap;
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.machine.BasicMachineSpec;
+import gregtech.internal.machine.MachineRegistry;
+import gregtech.internal.recipe.RecipeMap;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 import gregtech.blockentity.CFoamBlockEntity;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.data.GregTechTags;
@@ -164,7 +164,7 @@ public final class ItemBehaviorTests {
                 "Item behaviour", "item_behavior", 1, 1, 1, 1, 1, 0, 1, false, false, false, false);
         machine.setSpec(BasicMachineSpec.builder("item_behavior_test", block.basicSpec().material())
                 .machineType("test").energy(GregTechTags.Energy.EU, 32).recipes(recipes)
-                .faces(gregtech.api.energy.FaceConfig.ALL_SIDES).build());
+                .faces(gregtech.internal.energy.FaceConfig.ALL_SIDES).build());
         return machine;
     }
 

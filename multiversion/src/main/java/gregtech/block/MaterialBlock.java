@@ -1,19 +1,19 @@
 package gregtech.block;
 //? if >=1.21.1 {
 //?} else {
-import gregtech.api.material.MaterialPresentation;
+import gregtech.internal.material.MaterialPresentation;
 //?}
 
 //? if >=1.21.1 {
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.material.GTMaterial;
-import gregtech.api.prefix.BlockMaterialPrefix;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.prefix.BlockMaterialPrefix;
 //? if >=1.21.1 {
 //?} else {
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 //?}
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;

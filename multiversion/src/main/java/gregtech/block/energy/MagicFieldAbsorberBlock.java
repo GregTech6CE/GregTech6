@@ -1,6 +1,6 @@
 package gregtech.block.energy;
 
-import gregtech.api.tool.*;
+import gregtech.internal.tool.*;
 import gregtech.block.machine.MachineRotationType;
 import gregtech.blockentity.energy.MagicFieldAbsorberBlockEntity;
 import gregtech.registry.GTBlockEntities;

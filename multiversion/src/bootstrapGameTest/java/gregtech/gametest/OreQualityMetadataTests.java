@@ -1,8 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.api.addon.AddonMaterials;
+import gregtech.internal.addon.AddonMaterials;
 import gregtech.api.material.*;
-import gregtech.api.prefix.BlockMaterialPrefix;
+import gregtech.internal.material.*;
+import gregtech.internal.prefix.BlockMaterialPrefix;
 import gregtech.block.MaterialBlockLike;
 import gregtech.data.BlockHarvestPolicy;
 import gregtech.data.MachineRecipeMaps;

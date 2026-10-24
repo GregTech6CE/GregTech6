@@ -124,7 +124,7 @@ final class CokeOvenRuntimeSmoke {
     private static String diagnostic(net.minecraft.server.level.ServerLevel level,int i) {
         var machine=oven(level,i);var recipe=machine.recipeMap().findRecipe(java.util.List.of(machine.inventory().getStackInSlot(0)),java.util.List.of(),false,1,9);
         int parallel;
-        try {var method=BasicMachineBlockEntity.class.getDeclaredMethod("computeParallel",gregtech.api.recipe.Recipe.class);method.setAccessible(true);parallel=(int)method.invoke(machine,recipe);}
+        try {var method=BasicMachineBlockEntity.class.getDeclaredMethod("computeParallel",gregtech.internal.recipe.Recipe.class);method.setAccessible(true);parallel=(int)method.invoke(machine,recipe);}
         catch(Exception e){throw new IllegalStateException(e);}
 //? if >=1.21.1 {
         /*return "parallel="+parallel+", ignition="+machine.saveWithoutMetadata(level.registryAccess()).getInt("gt.coke_ignition")+", running="+machine.isRunning()+", cost="+(recipe==null?null:gregtech.api.recipe.MachineWorkCost.calculate(recipe.mEUt,recipe.mDuration,parallel,false,10000,1,16,false,true))+", input="+machine.inventory().getStackInSlot(0)+", progress="+machine.machineControl(null).progress()+"/"+machine.machineControl(null).progressMax()+", structure="+StructureTestSupport.ok(machine)+", energy="+machine.getEnergyTick()+", recipe="+(recipe==null?"null":"power="+recipe.mEUt+", ticks="+recipe.mDuration+", outputs="+java.util.Arrays.toString(recipe.mOutputs)+", fluids="+java.util.Arrays.toString(recipe.mFluidOutputs));
@@ -156,7 +156,7 @@ final class CokeOvenRuntimeSmoke {
         var tag=new CompoundTag();tag.put("gt.items",old.serializeNBT());
 //?}
         var creosote=GTFluids.still("Oil_Creosote").get();
-        var tank=new gregtech.api.fluid.FluidTankGT(16000);tank.fill(new FluidStack(creosote,12000),IFluidHandler.FluidAction.EXECUTE);
+        var tank=new gregtech.internal.fluid.FluidTankGT(16000);tank.fill(new FluidStack(creosote,12000),IFluidHandler.FluidAction.EXECUTE);
 //? if >=1.21.1 {
         /*var saved=new CompoundTag();tank.writeToNBT(saved,level.registryAccess());tag.put("gt.output",saved);tag.putLong("gt.heat",512);
         var entity=new CokeOvenControllerBlockEntity(BlockPos.ZERO,GTMultiblocks.COKE_OVEN_MAIN.get().defaultBlockState());entity.loadAdditional(tag,level.registryAccess());

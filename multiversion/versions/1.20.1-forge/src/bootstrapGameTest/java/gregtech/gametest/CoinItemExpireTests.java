@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.block.misc.CoinItemExpireHandler;
 import gregtech.blockentity.misc.CoinPileBlockEntity;
 import gregtech.data.MaterialPrefix;

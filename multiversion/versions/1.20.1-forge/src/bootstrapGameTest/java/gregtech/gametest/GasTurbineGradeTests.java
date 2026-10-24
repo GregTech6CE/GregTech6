@@ -44,11 +44,11 @@ public final class GasTurbineGradeTests {
             machine.load(machine.saveWithoutMetadata());int remaining=machine.getFluidInTank(0).getAmount();machine.tick();
             h.assertTrue(machine.getFluidInTank(0).getAmount()==remaining,"blocked output survives reload without consuming more fuel");
             var target=pos.relative(front.getOpposite(),4);
-            var block=gregtech.api.machine.MachineRegistry.basicMachines().iterator().next().get();h.setBlock(target,block);
+            var block=gregtech.internal.machine.MachineRegistry.basicMachines().iterator().next().get();h.setBlock(target,block);
             var receiver=(BasicMachineBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(target));
-            receiver.setSpec(gregtech.api.machine.BasicMachineSpec.builder("graded_turbine_receiver",block.basicSpec().material())
+            receiver.setSpec(gregtech.internal.machine.BasicMachineSpec.builder("graded_turbine_receiver",block.basicSpec().material())
                     .machineType("test").energy(GregTechTags.Energy.RU,grade.outputMaximum()).recipes(block.basicSpec().recipeMap())
-                    .faces(gregtech.api.energy.FaceConfig.ALL_SIDES).build());
+                    .faces(gregtech.internal.energy.FaceConfig.ALL_SIDES).build());
             machine.toggleStopped();machine.tick();
             h.assertTrue(receiver.getEnergyTick()==grade.outputMaximum()&&machine.getEnergyStored(GregTechTags.Energy.RU,null)==0,"grade output reaches rear receiver in each facing");
             h.setBlock(target,Blocks.AIR);
@@ -62,7 +62,7 @@ public final class GasTurbineGradeTests {
     }
     @GameTest(template="test_blueprint_empty")
     public static void newWallsHaveOriginalWeldingRecipes(GameTestHelper h) {
-        var material=gregtech.api.material.GTMaterialRegistry.get("Adamantium");
+        var material=gregtech.internal.material.GTMaterialRegistry.get("Adamantium");
         for(var prefix:new gregtech.data.MaterialPrefix[]{MaterialPrefix.ingot,MaterialPrefix.plate,MaterialPrefix.plateDense})
             h.assertTrue(!GTItems.getStack(prefix,material).isEmpty(),"original Adamantium form exists: "+prefix.getName());
         var adamantiumDust=GTItems.getStack(MaterialPrefix.dust,material);

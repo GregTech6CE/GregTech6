@@ -1,8 +1,8 @@
 package gregtech.registry;
 
-import gregtech.api.machine.MachineSpec;
-import gregtech.api.machine.TankSpec;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.machine.MachineSpec;
+import gregtech.internal.machine.TankSpec;
+import gregtech.internal.material.GTMaterial;
 import gregtech.block.machine.TankBlock;
 import gregtech.block.machine.GTMachineBlockItem;
 import net.minecraft.world.item.Item;
@@ -44,7 +44,7 @@ public final class GTTanks {
         GTBlocks.BLOCK_ITEMS.register(id,
                 () -> new GTMachineBlockItem(block.get(), new Item.Properties().stacksTo(16), new MachineSpec(
                         id, material.getLocalName(), material.getColor(), 0, 0,
-                        gregtech.api.machine.MachineTextures.BURNING_SOLID, hardness, blastResistance)));
+                        gregtech.internal.machine.MachineTextures.BURNING_SOLID, hardness, blastResistance)));
         return block;
     }
 
@@ -59,7 +59,7 @@ public final class GTTanks {
         GTBlocks.BLOCK_ITEMS.register(id,
                 () -> new GTMachineBlockItem(block.get(), new Item.Properties().stacksTo(16), new MachineSpec(
                         id, "Logistics Tank", material.getColor(), 0, 0,
-                        gregtech.api.machine.MachineTextures.BURNING_SOLID,
+                        gregtech.internal.machine.MachineTextures.BURNING_SOLID,
                         1.0F, 10.0F)));
         return block;
     }

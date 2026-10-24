@@ -1,8 +1,8 @@
 package gregtech.block.misc;
 
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
-import gregtech.api.material.MaterialEquivalence;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
+import gregtech.internal.material.MaterialEquivalence;
 import gregtech.data.MaterialPrefix;
 //? if >=1.21.1 {
 /*import gregtech.registry.GTConstructionBlocks;

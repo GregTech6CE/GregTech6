@@ -172,7 +172,7 @@ public final class ComponentCoverRuntime {
             rest = insert(to, extracted, target, false);
             if (!rest.isEmpty()) {
                 rest = insert(from, rest, slot, false);
-                if (!rest.isEmpty()) gregtech.api.inventory.BlockContents.drop(owner, rest);
+                if (!rest.isEmpty()) gregtech.internal.inventory.BlockContents.drop(owner, rest);
             }
             return; // Original conveyor/arm moves one group per operation.
         }

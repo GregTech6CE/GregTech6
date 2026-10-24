@@ -1,8 +1,8 @@
 package gregtech.item.behavior;
 
-import gregtech.api.energy.IEnergyBlock;
+import gregtech.internal.energy.IEnergyBlock;
 import gregtech.api.machine.MachineControl;
-import gregtech.api.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolHelper;
 import gregtech.data.BlockHarvestPolicy;
 import gregtech.data.GregTechTags;
 import net.minecraft.core.BlockPos;

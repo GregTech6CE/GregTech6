@@ -1,7 +1,7 @@
 package gregtech.gametest;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.recipe.Recipe;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.content.recipe.DormantOreRows;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -55,7 +55,7 @@ public final class NonOreDormantOwnershipTests {
    h.assertTrue(lookup(map,Items.APPLE)==null&&lookup(map,Items.STICK)==startup&&ledger.definitionCount()==2,"deactivate retains definitions and independent rows");
    // Narrow same-instance lifecycle contract, NOT a fake ServerStoppedEvent or real new-world claim.
    ledger.clear();ledger.clear();
-   var nextSnapshot=java.util.Collections.<gregtech.api.material.GTMaterial>emptySet();
+   var nextSnapshot=java.util.Collections.<gregtech.internal.material.GTMaterial>emptySet();
    h.assertTrue(ledger.reconcile(nextSnapshot::contains)==0&&lookup(map,Items.APPLE)==null,
       "new empty eligibility snapshot cannot retain prior activation");
    var laterSnapshot=java.util.Set.of(material);

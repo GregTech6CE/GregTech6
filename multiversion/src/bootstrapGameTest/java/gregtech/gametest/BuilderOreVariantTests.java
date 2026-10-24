@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 import gregtech.block.OreBlock;
 import gregtech.block.OreHostStone;
 import gregtech.registry.GTToolItems;

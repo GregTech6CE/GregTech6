@@ -52,7 +52,7 @@ public final class SignalWireBlockEntity extends BlockEntity implements MachineC
         super.onLoad();
         if (level != null && level.isClientSide) {
             requestModelDataUpdate();
-            gregtech.api.machine.PipeModelData.refreshCrossChunkNeighbors(level, worldPosition);
+            gregtech.internal.machine.PipeModelData.refreshCrossChunkNeighbors(level, worldPosition);
         }
     }
 
@@ -74,10 +74,10 @@ public final class SignalWireBlockEntity extends BlockEntity implements MachineC
             }
 
 //? if >=1.21.1 {
-        /*return net.neoforged.neoforge.client.model.data.ModelData.builder().with(gregtech.api.machine.PipeModelData.NEIGHBOR_HALVES,
+        /*return net.neoforged.neoforge.client.model.data.ModelData.builder().with(gregtech.internal.machine.PipeModelData.NEIGHBOR_HALVES,
                 halves).build();
 *///?} else {
-        return net.minecraftforge.client.model.data.ModelData.builder().with(gregtech.api.machine.PipeModelData.NEIGHBOR_HALVES,
+        return net.minecraftforge.client.model.data.ModelData.builder().with(gregtech.internal.machine.PipeModelData.NEIGHBOR_HALVES,
                 halves).build();
 //?}
 

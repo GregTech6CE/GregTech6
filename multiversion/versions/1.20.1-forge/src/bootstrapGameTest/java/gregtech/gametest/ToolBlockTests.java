@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.recipe.Recipe;
 import gregtech.block.tool.DynamiteBlock;
 import gregtech.block.tool.RopeBlock;
 import gregtech.content.material.Materials;

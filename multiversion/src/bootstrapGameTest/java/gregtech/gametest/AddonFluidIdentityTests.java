@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
-import gregtech.api.addon.AddonMaterials;
+import gregtech.internal.addon.AddonMaterials;
 import gregtech.api.addon.platform.AddonFluids;
-import gregtech.api.fluid.FluidDisplayBinding;
-import gregtech.api.fluid.FluidTankGT;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.fluid.FluidDisplayBinding;
+import gregtech.internal.fluid.FluidTankGT;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.data.RegisteredFluids;
 import gregtech.registry.GTFluidItems;
 import net.minecraft.core.registries.BuiltInRegistries;

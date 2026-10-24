@@ -1,8 +1,8 @@
 package gregtech.registration;
 
-import gregtech.api.inventory.BulkStorageState;
-import gregtech.api.multiblock.HollowTankStructure;
-import gregtech.api.sensor.SensorPanelGeometry;
+import gregtech.internal.inventory.BulkStorageState;
+import gregtech.internal.multiblock.HollowTankStructure;
+import gregtech.internal.sensor.SensorPanelGeometry;
 import net.minecraft.core.*;
 import java.util.*;
 
@@ -14,13 +14,13 @@ public final class RebuildStateContracts {
     private static void recipeLayout() {
         // Exercise real recipe-map dimensions against the shared GT6 container coordinates.
         var ignored=gregtech.data.MachineRecipeMaps.Crusher;
-        for(var map:gregtech.api.recipe.RecipeMap.RECIPE_MAP_LIST) {
-            var points=new java.util.ArrayList<gregtech.api.recipe.MachineGuiLayout.Point>();
+        for(var map:gregtech.internal.recipe.RecipeMap.RECIPE_MAP_LIST) {
+            var points=new java.util.ArrayList<gregtech.internal.recipe.MachineGuiLayout.Point>();
             for(boolean input:new boolean[]{true,false}) {
                 int count=input?map.mInputItemsCount:map.mOutputItemsCount;
-                for(int i=0;i<count;i++) points.add(gregtech.api.recipe.MachineGuiLayout.item(input,i,count,map.mInputFluidCount+map.mOutputFluidCount));
+                for(int i=0;i<count;i++) points.add(gregtech.internal.recipe.MachineGuiLayout.item(input,i,count,map.mInputFluidCount+map.mOutputFluidCount));
                 int fluids=input?map.mInputFluidCount:map.mOutputFluidCount;
-                for(int i=0;i<fluids;i++) points.add(gregtech.api.recipe.MachineGuiLayout.fluid(input,i));
+                for(int i=0;i<fluids;i++) points.add(gregtech.internal.recipe.MachineGuiLayout.fluid(input,i));
             }
             for(int i=0;i<points.size();i++) {
                 var p=points.get(i);
@@ -36,7 +36,7 @@ public final class RebuildStateContracts {
         check(gregtech.content.tool.AnvilRecipeDefinitions.duration(unit/4,2)==48,"GT6 quality scaling");
     }
     private static void partBindings() {
-        var bindings=new gregtech.api.multiblock.PartBindings<Integer,String>();
+        var bindings=new gregtech.internal.multiblock.PartBindings<Integer,String>();
         var claimed=new java.util.HashMap<Integer,String>();
         check(bindings.update(java.util.Map.of(1,"water",2,"water"),p->true,claimed::put,claimed::remove),"initial binding");
         check(!bindings.update(java.util.Map.of(3,"steam",4,"steam"),p->p!=4,claimed::put,claimed::remove)&&claimed.isEmpty(),"failed claim is atomic and releases old structure");
@@ -53,12 +53,12 @@ public final class RebuildStateContracts {
     }
     private static void displayOrientation() {
         for (Direction face : Direction.values()) {
-            var rotation = gregtech.api.block.DisplayFaceOrientation.rotation(face);
+            var rotation = gregtech.internal.block.DisplayFaceOrientation.rotation(face);
             var normal = new org.joml.Vector3f(0,0,1).rotate(rotation);
             check(normal.distance(face.getStepX(),face.getStepY(),face.getStepZ()) < .00001f,
                     "display normal faces outward: " + face);
             var right = new org.joml.Vector3f(.25f,0,0).rotate(rotation);
-            var uv = gregtech.api.block.FaceCoordinates.pixels(face,.5+right.x,.5+right.y,.5+right.z);
+            var uv = gregtech.internal.block.FaceCoordinates.pixels(face,.5+right.x,.5+right.y,.5+right.z);
             check(Math.abs(uv.x()-12)<.0001 && Math.abs(uv.y()-8)<.0001,
                     "display reads left to right on " + face);
         }
@@ -132,20 +132,20 @@ public final class RebuildStateContracts {
     private static void storageFace() {
         int[] expected = {8,64,4,32,1,16};
         int i = 0;
-        for (var button : gregtech.api.inventory.MassStorageFace.BUTTONS) {
+        for (var button : gregtech.internal.inventory.MassStorageFace.BUTTONS) {
             check(button.amount() == expected[i++], "GT6 six button ordering");
             for (Direction facing : new Direction[]{Direction.NORTH,Direction.SOUTH,Direction.WEST,Direction.EAST}) {
                 double u = (button.left()+1)/16.0;
                 double x = facing == Direction.NORTH ? 1-u : u;
                 double z = facing == Direction.EAST ? 1-u : u;
-                double actual = gregtech.api.inventory.MassStorageFace.x(facing,x,z);
-                check(gregtech.api.inventory.MassStorageFace.withdrawal(actual,button.top()+1) == button.amount(), "all four fronts match rendered buttons");
+                double actual = gregtech.internal.inventory.MassStorageFace.x(facing,x,z);
+                check(gregtech.internal.inventory.MassStorageFace.withdrawal(actual,button.top()+1) == button.amount(), "all four fronts match rendered buttons");
             }
         }
-        check(gregtech.api.inventory.MassStorageFace.withdrawal(8,10) == 0, "icon does not withdraw");
-        check(gregtech.api.inventory.MassStorageFace.withdrawal(2,8.5) == 0, "button row gap does not withdraw");
-        check(gregtech.api.inventory.MassStorageFace.withdrawal(8,2) == 0, "count display does not withdraw");
-        check(!gregtech.api.inventory.MassStorageFace.active(.9,7), "outer border excluded");
+        check(gregtech.internal.inventory.MassStorageFace.withdrawal(8,10) == 0, "icon does not withdraw");
+        check(gregtech.internal.inventory.MassStorageFace.withdrawal(2,8.5) == 0, "button row gap does not withdraw");
+        check(gregtech.internal.inventory.MassStorageFace.withdrawal(8,2) == 0, "count display does not withdraw");
+        check(!gregtech.internal.inventory.MassStorageFace.active(.9,7), "outer border excluded");
         var storage = new BulkStorageState<String>(1000,String::equals,s -> s);
         storage.insert("item",1000,false);
         for (int count : expected) {
@@ -156,43 +156,43 @@ public final class RebuildStateContracts {
         check(storage.extract(64,false) == 3 && storage.count() == 0,"insufficient stock returns remaining amount");
     }
     private static void sensorControls() {
-        var modes = gregtech.api.sensor.SensorControl.Mode.values();
+        var modes = gregtech.internal.sensor.SensorControl.Mode.values();
         int[] signal = {0,7,15,0,0,15,0,15};
         for (int i = 0; i < modes.length; i++)
-            check(gregtech.api.sensor.SensorControl.evaluate(modes[i],50,100,40).signal() == signal[i],"sensor mode " + modes[i]);
-        check(gregtech.api.sensor.SensorControl.evaluate(modes[1],1,0,0).signal() == 0,"zero maximum safe");
-        check(gregtech.api.sensor.SensorControl.evaluate(modes[1],Long.MAX_VALUE,Long.MAX_VALUE,0).signal() == 15,"percentage multiplication cannot overflow");
-        check(gregtech.api.sensor.SensorControl.thresholdChange(10,7,false) == -100,"decimal decrement");
-        check(gregtech.api.sensor.SensorControl.thresholdChange(13,10,true) == 16,"hex increment");
-        check(gregtech.api.sensor.SensorControl.thresholdChange(11.5,10,true) == 0,"threshold button gap");
-        var average = new gregtech.api.sensor.SensorAverage();
+            check(gregtech.internal.sensor.SensorControl.evaluate(modes[i],50,100,40).signal() == signal[i],"sensor mode " + modes[i]);
+        check(gregtech.internal.sensor.SensorControl.evaluate(modes[1],1,0,0).signal() == 0,"zero maximum safe");
+        check(gregtech.internal.sensor.SensorControl.evaluate(modes[1],Long.MAX_VALUE,Long.MAX_VALUE,0).signal() == 15,"percentage multiplication cannot overflow");
+        check(gregtech.internal.sensor.SensorControl.thresholdChange(10,7,false) == -100,"decimal decrement");
+        check(gregtech.internal.sensor.SensorControl.thresholdChange(13,10,true) == 16,"hex increment");
+        check(gregtech.internal.sensor.SensorControl.thresholdChange(11.5,10,true) == 0,"threshold button gap");
+        var average = new gregtech.internal.sensor.SensorAverage();
         average.resize(2);
         check(average.sample(100) == 50 && average.sample(200) == 150,"original zero-filled average");
-        var restored = new gregtech.api.sensor.SensorAverage();
+        var restored = new gregtech.internal.sensor.SensorAverage();
         restored.restore(average.values(),average.index());
         check(restored.sample(300) == average.sample(300),"averaging survives reload");
-        check(gregtech.api.sensor.SensorMeasurements.timeOfDayMinutes(0) == 360,"clock starts at 6AM");
-        check(gregtech.api.sensor.SensorMeasurements.timeOfDayMinutes(18000) == 0,"clock midnight wrap");
+        check(gregtech.internal.sensor.SensorMeasurements.timeOfDayMinutes(0) == 360,"clock starts at 6AM");
+        check(gregtech.internal.sensor.SensorMeasurements.timeOfDayMinutes(18000) == 0,"clock midnight wrap");
     }
     private static void glyphs() {
-        for (var cell : gregtech.api.sensor.SixCellDisplay.storage(0,1000000))
+        for (var cell : gregtech.internal.sensor.SixCellDisplay.storage(0,1000000))
             check(cell != null && cell.texture().equals("0"), "empty storage shows 000000");
-        var cells=gregtech.api.sensor.SixCellDisplay.storage(42,1000000);
+        var cells=gregtech.internal.sensor.SixCellDisplay.storage(42,1000000);
         check(cells.length==6&&cells[0].texture().equals("0")&&cells[3].texture().equals("0")&&cells[4].texture().equals("4")&&cells[5].texture().equals("2"),"six-cell storage leading zeroes");
-        cells=gregtech.api.sensor.SixCellDisplay.storage(1000000,1000000);
+        cells=gregtech.internal.sensor.SixCellDisplay.storage(1000000,1000000);
         check(cells[0]==null&&cells[1].texture().equals("1")&&cells[4].texture().equals("percent")&&cells[5]==null&&cells[1].rgb()==0xFF0000,"full storage red percent display");
-        cells=gregtech.api.sensor.SixCellDisplay.sensor(0xabcd,gregtech.api.sensor.SensorControl.Mode.DISPLAY,true,"ru",0x00FF00);
+        cells=gregtech.internal.sensor.SixCellDisplay.sensor(0xabcd,gregtech.internal.sensor.SensorControl.Mode.DISPLAY,true,"ru",0x00FF00);
         check(cells[0].texture().equals("hex")&&cells[1].texture().equals("0xa")&&cells[4].texture().equals("0xd")&&cells[5].texture().equals("ru"),"original hexadecimal sprites and unit cell");
-        check(gregtech.api.sensor.SixCellDisplay.TILE_UV==.125f,"sample one tile from GT6's repeated glyph sheet");
+        check(gregtech.internal.sensor.SixCellDisplay.TILE_UV==.125f,"sample one tile from GT6's repeated glyph sheet");
     }
     private static void boiler() {
         var layout=gregtech.content.multiblock.BoilerStructure.LAYOUT;
-        var counts=new java.util.EnumMap<gregtech.api.multiblock.MultiblockLayout.Role,Integer>(gregtech.api.multiblock.MultiblockLayout.Role.class);
+        var counts=new java.util.EnumMap<gregtech.internal.multiblock.MultiblockLayout.Role,Integer>(gregtech.internal.multiblock.MultiblockLayout.Role.class);
         for(var cell:layout.cells()) counts.merge(cell.role(),1,Integer::sum);
-        check(layout.cells().size()==36&&counts.get(gregtech.api.multiblock.MultiblockLayout.Role.HEAT_INPUT)==9&&counts.get(gregtech.api.multiblock.MultiblockLayout.Role.FLUID_INPUT)==9&&counts.get(gregtech.api.multiblock.MultiblockLayout.Role.FLUID_OUTPUT)==17&&counts.get(gregtech.api.multiblock.MultiblockLayout.Role.AIR)==1,"GT6 boiler layer roles including controller");
+        check(layout.cells().size()==36&&counts.get(gregtech.internal.multiblock.MultiblockLayout.Role.HEAT_INPUT)==9&&counts.get(gregtech.internal.multiblock.MultiblockLayout.Role.FLUID_INPUT)==9&&counts.get(gregtech.internal.multiblock.MultiblockLayout.Role.FLUID_OUTPUT)==17&&counts.get(gregtech.internal.multiblock.MultiblockLayout.Role.AIR)==1,"GT6 boiler layer roles including controller");
         var origin=new BlockPos(10,70,-50);
         for(var face:new Direction[]{Direction.NORTH,Direction.SOUTH,Direction.WEST,Direction.EAST}) {
-            var world=new java.util.HashMap<BlockPos,gregtech.api.multiblock.MultiblockLayout.Role>();
+            var world=new java.util.HashMap<BlockPos,gregtech.internal.multiblock.MultiblockLayout.Role>();
             for(var cell:layout.cells()) world.put(cell.at(origin,face),cell.role());
             check(layout.matches(origin,face,p->true,(p,r)->world.get(p)==r),"rotated valid boiler");
             for(var cell:layout.cells()) {

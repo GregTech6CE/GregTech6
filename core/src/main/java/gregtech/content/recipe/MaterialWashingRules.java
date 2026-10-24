@@ -1,7 +1,7 @@
 /* Gregorius Techneticies / GregTech-6 Team source rules, LGPL-3.0-or-later. */
 package gregtech.content.recipe;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.data.MaterialPrefix;
 import java.util.List;
 

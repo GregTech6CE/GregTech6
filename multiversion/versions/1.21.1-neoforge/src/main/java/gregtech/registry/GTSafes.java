@@ -15,7 +15,7 @@ public final class GTSafes {
         return java.util.List.copyOf(ALL);
     }
 
-    public static SafeBlock safe(gregtech.api.material.GTMaterial material, boolean keyLocked) {
+    public static SafeBlock safe(gregtech.internal.material.GTMaterial material, boolean keyLocked) {
         for (var b : ALL)
             if (b.get().material() == material && b.get().keyLocked() == keyLocked)
                 return b.get();

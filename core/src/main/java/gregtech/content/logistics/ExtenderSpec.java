@@ -19,7 +19,7 @@ public enum ExtenderSpec {
         return this == UNIVERSAL || this == UNIVERSAL_BRIDGE;
     }
 
-    public gregtech.api.material.GTMaterial material() {
+    public gregtech.internal.material.GTMaterial material() {
         return universal()
                 ? gregtech.content.material.Materials.StainlessSteel
                 : gregtech.content.material.Materials.Steel;

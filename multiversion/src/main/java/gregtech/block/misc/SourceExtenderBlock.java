@@ -1,6 +1,6 @@
 package gregtech.block.misc;
 
-import gregtech.api.tool.*;
+import gregtech.internal.tool.*;
 import gregtech.content.logistics.ExtenderSpec;
 import net.minecraft.core.*;
 import net.minecraft.world.*;

@@ -1,7 +1,7 @@
 package gregtech.registry;
 
-import gregtech.api.energy.WireSpec;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.energy.WireSpec;
+import gregtech.internal.material.GTMaterial;
 import gregtech.block.energy.ElectricWireBlock;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.SoundType;

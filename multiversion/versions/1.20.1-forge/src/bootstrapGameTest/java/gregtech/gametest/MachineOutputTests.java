@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
-import gregtech.api.fluid.FluidTankGT;
-import gregtech.api.recipe.MachineWorkOutputs;
+import gregtech.internal.fluid.FluidTankGT;
+import gregtech.internal.recipe.MachineWorkOutputs;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;

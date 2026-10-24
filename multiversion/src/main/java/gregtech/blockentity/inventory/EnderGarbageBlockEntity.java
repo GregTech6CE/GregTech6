@@ -37,7 +37,7 @@ import javax.annotation.Nullable;
  * contents (and any piped-in fluids) into the global {@link GarbageData}
  * garbage dump. A redstone signal pauses it.
  */
-public class EnderGarbageBlockEntity extends BlockEntity implements MenuProvider, gregtech.api.inventory.BlockContents {
+public class EnderGarbageBlockEntity extends BlockEntity implements MenuProvider, gregtech.internal.inventory.BlockContents {
 
     private final ItemStackHandler inventory = new ItemStackHandler(9) {
 
@@ -226,7 +226,7 @@ public class EnderGarbageBlockEntity extends BlockEntity implements MenuProvider
     @Override
     public void dropContents() {
         if (level == null || level.isClientSide) return;
-        gregtech.api.inventory.BlockContents.drop(this, inventory);
+        gregtech.internal.inventory.BlockContents.drop(this, inventory);
         setChanged();
     }
 }

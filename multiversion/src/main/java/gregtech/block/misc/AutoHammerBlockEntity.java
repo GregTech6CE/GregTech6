@@ -1,6 +1,6 @@
 package gregtech.block.misc;
 
-import gregtech.api.tool.PoweredToolTarget;
+import gregtech.internal.tool.PoweredToolTarget;
 import gregtech.data.GregTechTags;
 import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
@@ -40,7 +40,7 @@ public class AutoHammerBlockEntity extends AutoToolBlockEntity {
                 energy = gregtech.content.tool.AutomaticToolRules.hammerStored(energy, size, amount);
                 // Unlike generic overcharge(), GT6's automatic hammer calls explode() directly.
                 if (gregtech.content.tool.AutomaticToolRules.overvoltage(size, input()))
-                gregtech.api.energy.MachineOverload.explode(this,
+                gregtech.internal.energy.MachineOverload.explode(this,
                         gregtech.content.energy.OriginalRotaryConverter.overloadPower(size, energyType()));
             } else pullingBack = true;
             setChanged();

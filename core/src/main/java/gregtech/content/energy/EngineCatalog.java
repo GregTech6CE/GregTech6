@@ -2,13 +2,13 @@ package gregtech.content.energy;
 
 import gregtech.content.material.Materials;
 import gregtech.content.material.generated.WoodMaterials;
-import gregtech.api.machine.DieselEngineSpec;
-import gregtech.api.machine.ElectricEngineSpec;
-import gregtech.api.machine.FluxEngineSpec;
-import gregtech.api.machine.SteamEngineSpec;
-import gregtech.api.machine.StrongSteamEngineSpec;
-import gregtech.api.machine.RotationEngineSpec;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.machine.DieselEngineSpec;
+import gregtech.internal.machine.ElectricEngineSpec;
+import gregtech.internal.machine.FluxEngineSpec;
+import gregtech.internal.machine.SteamEngineSpec;
+import gregtech.internal.machine.StrongSteamEngineSpec;
+import gregtech.internal.machine.RotationEngineSpec;
+import gregtech.internal.material.GTMaterial;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -142,7 +142,7 @@ public final class EngineCatalog {
 
     // ── Registration ───────────────────────────────────────────────────────
 
-    public record Entry(gregtech.api.machine.EngineType type,Object spec) {}
+    public record Entry(gregtech.internal.machine.EngineType type,Object spec) {}
     public static java.util.List<Entry> all() {
         java.util.List<Entry> out=new java.util.ArrayList<>();
         registerElectricEngines(out);
@@ -163,7 +163,7 @@ public final class EngineCatalog {
                     id, mat, ELECTRIC_TIER_NUM[i],
                     ELECTRIC_INPUTS[i], ELECTRIC_OUTPUTS[i],
                     HARDNESS[i], BLAST_RESISTANCE[i]);
-            out.add(new Entry(gregtech.api.machine.EngineType.ELECTRIC,spec));
+            out.add(new Entry(gregtech.internal.machine.EngineType.ELECTRIC,spec));
         }
     }
 
@@ -176,7 +176,7 @@ public final class EngineCatalog {
                     id, mat, FLUX_TIER_NUM[i],
                     FLUX_INPUTS[i], FLUX_OUTPUTS[i],
                     HARDNESS[i], BLAST_RESISTANCE[i]);
-            out.add(new Entry(gregtech.api.machine.EngineType.FLUX,spec));
+            out.add(new Entry(gregtech.internal.machine.EngineType.FLUX,spec));
         }
     }
 
@@ -189,7 +189,7 @@ public final class EngineCatalog {
                     id, mat, STEAM_EFFICIENCIES[i],
                     (int)(STEAM_OUTPUTS[i]*200), STEAM_OUTPUTS[i]/2,
                     STEAM_HARDNESS[i], STEAM_BLAST_RESISTANCE[i]);
-            out.add(new Entry(gregtech.api.machine.EngineType.STEAM,spec));
+            out.add(new Entry(gregtech.internal.machine.EngineType.STEAM,spec));
         }
     }
 
@@ -202,7 +202,7 @@ public final class EngineCatalog {
                     id, mat, STEAM_EFFICIENCIES[i],
                     (int)(STRONG_STEAM_OUTPUTS[i]*200), STRONG_STEAM_OUTPUTS[i]/2,
                     STEAM_HARDNESS[i], STEAM_BLAST_RESISTANCE[i]);
-            out.add(new Entry(gregtech.api.machine.EngineType.STEAM,spec));
+            out.add(new Entry(gregtech.internal.machine.EngineType.STEAM,spec));
         }
     }
 
@@ -213,7 +213,7 @@ public final class EngineCatalog {
                     id, tier.material(), tier.voltageTier(),
                     tier.input(), tier.input() / 2,
                     6.0F, 6.0F);
-            out.add(new Entry(gregtech.api.machine.EngineType.ROTATION,spec));
+            out.add(new Entry(gregtech.internal.machine.EngineType.ROTATION,spec));
         }
     }
 
@@ -226,7 +226,7 @@ public final class EngineCatalog {
                     id, mat, DIESEL_TIERS[i],
                     DIESEL_OUTPUTS[i], DIESEL_OUTPUTS[i],
                     6.0F, 6.0F);
-            out.add(new Entry(gregtech.api.machine.EngineType.DIESEL,spec));
+            out.add(new Entry(gregtech.internal.machine.EngineType.DIESEL,spec));
         }
     }
 }

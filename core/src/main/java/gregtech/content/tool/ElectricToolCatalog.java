@@ -1,5 +1,6 @@
 package gregtech.content.tool;
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import java.util.List;
 /** GT6 Loader_Tools:356-376 and inherited electric ToolStats, shared by both loaders. */
 public final class ElectricToolCatalog {

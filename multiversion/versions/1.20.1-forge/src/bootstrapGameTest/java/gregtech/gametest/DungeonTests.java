@@ -2,8 +2,8 @@ package gregtech.gametest;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.prefix.BlockMaterialPrefix;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.prefix.BlockMaterialPrefix;
 import gregtech.block.MaterialBlock;
 import gregtech.block.stone.StoneType;
 import gregtech.block.stone.StoneVariant;
@@ -507,11 +507,11 @@ public final class DungeonTests {
                 "the workshop's material anvil has its block entity");
         ItemStack initialHammer = ((gregtech.blockentity.tool.MaterialAnvilBlockEntity) anvilEntity)
                 .workpiece(0);
-        helper.assertTrue(gregtech.api.tool.GTToolHelper.matchesTool(initialHammer,
-                        gregtech.api.tool.GTToolType.HARD_HAMMER)
-                        && gregtech.api.tool.GTToolHelper.getHead(initialHammer)
+        helper.assertTrue(gregtech.internal.tool.GTToolHelper.matchesTool(initialHammer,
+                        gregtech.internal.tool.GTToolType.HARD_HAMMER)
+                        && gregtech.internal.tool.GTToolHelper.getHead(initialHammer)
                                 == GT6Materials.Compounds.VanadiumSteel
-                        && gregtech.api.tool.GTToolHelper.getHandle(initialHammer)
+                        && gregtech.internal.tool.GTToolHelper.getHandle(initialHammer)
                                 == GT6Materials.Woods.Spruce,
                 "GT6's workshop anvil carries its Vanadium Steel / Spruce hammer");
         // GT6's vanilla anvil of :138 stays vanilla.
@@ -645,10 +645,10 @@ public final class DungeonTests {
                         == gregtech.data.BlockHarvestPolicy.Tool.CROWBAR,
                 "GT6 crate harvest tool is the crowbar");
         ItemStack crowbar = gregtech.item.GTToolItem.create(
-                gregtech.api.tool.GTToolType.CROWBAR,
+                gregtech.internal.tool.GTToolType.CROWBAR,
                 gregtech.content.material.Materials.Steel,
-                gregtech.api.material.GTMaterialRegistry.get("Wood"));
-        helper.assertTrue(gregtech.api.tool.GTToolHelper.isSpecialHarvestTool(
+                gregtech.internal.material.GTMaterialRegistry.get("Wood"));
+        helper.assertTrue(gregtech.internal.tool.GTToolHelper.isSpecialHarvestTool(
                         crowbar, crate.get().defaultBlockState()), "crowbar harvests the crate");
         helper.succeed();
     }
@@ -684,7 +684,7 @@ public final class DungeonTests {
         helper.assertTrue(pile.count() == (choosePlate ? plateCount : ingotCount),
                 "the selected candidate keeps its own stack size");
         helper.assertTrue(gregtech.blockentity.misc.PileBlockEntity.materialOf(pile.stored())
-                        == gregtech.api.material.GTMaterialRegistry.get(
+                        == gregtech.internal.material.GTMaterialRegistry.get(
                         materials[choosePlate ? plateMaterial : ingotMaterial]),
                 "the selected candidate keeps its own material");
         helper.succeed();

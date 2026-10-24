@@ -1096,7 +1096,7 @@ These classes live in the SDK because GregTech's own machine code uses them. The
 
 ### SDK packages
 
-The SDK is `gregtech.api.*` from `core/src/api/java` plus `gregtech.api.addon.platform.*` from `multiversion/src/api/java`. GregTech's own implementation also uses `gregtech.api.*` under `core/src/main` and `multiversion/src/main`, with no path overlap. A package name alone does not tell you whether a type is in the SDK; read the SDK jar or its Javadoc. `AddonPlatform` holds loader-neutral entries. A method whose signature names a loader fluid type is in `AddonLoader`.
+The SDK is `gregtech.api.*` from `core/src/api/java` plus `gregtech.api.addon.platform.*` from `multiversion/src/api/java`. GregTech's implementation is under `gregtech.internal.*`; concrete game content is outside the API. Four deprecated contributor/layout types remain in the main jar's `gregtech.api.addon` as explicit legacy exceptions, excluded from the SDK. Read the SDK jar or its Javadoc for the supported surface. `AddonPlatform` holds loader-neutral entries. A method whose signature names a loader fluid type is in `AddonLoader`.
 
 API version 0 includes crucible compositions, smelting targets and alloy rows, behavior-machine crucible callbacks, a read-only crucible view for bound parts, remote energy emission from a behavior machine to a saved coordinate, and still reads an old numeric material id as a built-in material, writing the name the next time that block or item is saved. It does **not** promise solid fuel, energy conversion, moving the built-in engines onto this template, arbitrary GUI widgets beyond a full `Screen` hosted over the menu, wireless compute parts, crucible blocks, writing a crucible's temperature or contents, melting an arbitrary non-GregTech item, datapack crucible rows, datapack-created recipe maps without a contributor, datapack reloads of the material table, one binary for both loaders, or a complete old GregAPI replacement. Only the documented entries are the compatibility surface. Use [the voltage guide](VOLTAGE_TIERS.md) rather than GT5/GTCE tier labels.
 
@@ -1144,9 +1144,13 @@ Legacy entries are marked deprecated from the CE baseline `0.0`. Numeric materia
 | gregtech.api.addon.AddonMachineDefinition | 0.0 | RecipeMachine | 0.10 |
 | gregtech.api.addon.AddonMachineLayout | 0.0 | StructureLayout | 0.10 |
 | gregtech.api.addon.MaterialDeclaration#builder | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
-| gregtech.api.addon.AddonMaterials#ADDON_ID_MIN | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
-| gregtech.api.addon.AddonMaterials#ADDON_ID_MAX | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
+| gregtech.internal.addon.AddonMaterials#ADDON_ID_MIN | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
+| gregtech.internal.addon.AddonMaterials#ADDON_ID_MAX | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
 
 ## License
 
 The SDK/project code license is LGPL-3.0-or-later. Preserve applicable source/asset notices; consult `LICENSE`, `COPYING` and `NOTICE` for the actual declarations.
+
+## test branch package migration
+
+The test branch changes the Java root from `com.gregtech.gregtech` to `gregtech` and moves implementation types to `gregtech.internal`. This breaks binary references: rebuild addons after updating imports and `META-INF/services` filenames and providers. Game resource IDs remain `gt6ce:`. Existing deprecation deadlines are unchanged. SDK bootstrap services are not addon extension points. See [package boundaries](integration/JAVA_PACKAGE_BOUNDARIES.md) and [per-type implementation moves](integration/PACKAGE_BOUNDARY_TYPES.tsv). This experimental branch does not establish old-addon binary compatibility.

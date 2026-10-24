@@ -2,7 +2,7 @@
  * Original Loader_MultiTileEntities 10001..10005, 11001..11005, 10161..10165, 11161..11165. */
 package gregtech.content.energy;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.content.material.Materials;
 import gregtech.content.transport.TransportCraftingCatalog.Input;
 import gregtech.content.transport.TransportCraftingCatalog.Row;

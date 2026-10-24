@@ -60,10 +60,10 @@ public final class SourceFilterTests {
         filter.setTemplate(0,new ItemStack(Items.APPLE));filter.toggleMode();
         var saved=filter.saveWithoutMetadata();filter.clearFilter();h.assertTrue(!filter.blacklist()&&filter.templates().isEmpty(),"clear resets mode and ghosts");filter.load(saved);
         h.assertTrue(filter.blacklist()&&!filter.permitsItem(new ItemStack(Items.APPLE)),"saved templates and mode reload");
-        var state=h.getLevel().getBlockState(abs);var monkey=gregtech.item.GTToolItem.create(gregtech.api.tool.GTToolType.MONKEY_WRENCH,gregtech.content.material.Materials.Steel,gregtech.api.material.GTMaterialRegistry.get("Wood"));
+        var state=h.getLevel().getBlockState(abs);var monkey=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.MONKEY_WRENCH,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
         var player=h.makeMockPlayer();player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,monkey);
         var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(abs).add(0,0,.5),Direction.SOUTH,abs,false);
-        gregtech.api.tool.ToolInteractions.use(state,h.getLevel(),abs,player,net.minecraft.world.InteractionHand.MAIN_HAND,hit);
+        gregtech.internal.tool.ToolInteractions.use(state,h.getLevel(),abs,player,net.minecraft.world.InteractionHand.MAIN_HAND,hit);
         h.assertTrue(h.getLevel().getBlockState(abs).getValue(FilterBlock.SECONDARY_SET),"choosing unchanged secondary direction explicitly migrates old auto-facing state");
         var drops=net.minecraft.world.level.block.Block.getDrops(h.getLevel().getBlockState(abs),h.getLevel(),abs,filter);
         h.assertTrue(drops.size()==1&&drops.get(0).getTag().getCompound("BlockEntityTag").getBoolean("gt.blacklist"),"breaking retains filter configuration, no ghost cargo drops");h.succeed();
@@ -71,7 +71,7 @@ public final class SourceFilterTests {
     @GameTest(template="test_empty") public static void filterManufacturingRoutesLoad(GameTestHelper h){
         for(String name:new String[]{"blank_cover","item_filter","fluid_filter","filter_items","filter_fluids","filter_items_fluids","filter_oredict","filter_items_reset","filter_fluids_reset","filter_items_fluids_reset","filter_oredict_reset"})
             h.assertTrue(h.getLevel().getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","logistics/"+name)).isPresent(),"filter manufacturing/reset recipe loaded: "+name);
-        var casing=GTBlocks.getStack(gregtech.api.prefix.BlockMaterialPrefix.casingMachine,gregtech.content.material.Materials.SteelGalvanized);
+        var casing=GTBlocks.getStack(gregtech.internal.prefix.BlockMaterialPrefix.casingMachine,gregtech.content.material.Materials.SteelGalvanized);
         h.assertTrue(gregtech.data.MachineRecipeMaps.Welder.mRecipeList.stream().anyMatch(r->r.mOutputs.length>0&&r.mOutputs[0].is(casing.getItem())),"galvanized casing upstream is craftable");h.succeed();
     }
 }

@@ -1,7 +1,8 @@
 package gregtech.gametest;
 
-import gregtech.api.machine.crucible.*;
+import gregtech.internal.machine.crucible.*;
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.blockentity.machine.*;
 import gregtech.content.multiblock.SharedLargeCrucibleStructure;
 import net.minecraft.core.BlockPos;

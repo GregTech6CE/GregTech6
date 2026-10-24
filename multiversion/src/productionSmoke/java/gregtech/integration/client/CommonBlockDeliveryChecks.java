@@ -187,7 +187,7 @@ final class CommonBlockDeliveryChecks {
             require(countKey(lines,"gt.lang.use.untape")== (mode==8?1:0)
                     && countKey(lines,"gt.lang.use.tape")== (mode==8?0:1)
                     && countKey(lines,"gt.lang.use.soft.hammer.to.reset")== (mode==8?0:1),"actual tape state controls");
-            require(read(packed).equals(data) && !gregtech.api.material.ItemMaterialRegistry.canRecover(packed),"hover preserves stored items and recovery rejects them");
+            require(read(packed).equals(data) && !gregtech.internal.material.ItemMaterialRegistry.canRecover(packed),"hover preserves stored items and recovery rejects them");
         }
         var safe=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gt6ce:safe")));
         for (boolean explicit : new boolean[]{false,true}) {

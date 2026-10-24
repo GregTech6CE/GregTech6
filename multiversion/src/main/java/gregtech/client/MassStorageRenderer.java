@@ -33,9 +33,9 @@ public final class MassStorageRenderer<T extends MassStorageBlockEntity> impleme
         ps.pushPose();
         ps.translate(0.5 + facing.getStepX() * 0.502, 0.5 + facing.getStepY() * 0.502,
                 0.5 + facing.getStepZ() * 0.502);
-        ps.mulPose(gregtech.api.block.DisplayFaceOrientation.rotation(facing));
+        ps.mulPose(gregtech.internal.block.DisplayFaceOrientation.rotation(facing));
         ps.pushPose();
-        ps.translate(0, .5 - gregtech.api.inventory.MassStorageFace.ICON_Y / 16, .005);
+        ps.translate(0, .5 - gregtech.internal.inventory.MassStorageFace.ICON_Y / 16, .005);
         ps.scale(0.45f, 0.45f, 0.02f);
         if (!shown.isEmpty()) Minecraft.getInstance().getItemRenderer().renderStatic(shown, ItemDisplayContext.GUI,
                 light, packedOverlay, ps, buffer, be.getLevel(), 0);
@@ -44,8 +44,8 @@ public final class MassStorageRenderer<T extends MassStorageBlockEntity> impleme
         int numeralColor = be instanceof gregtech.blockentity.inventory.LogisticsMassStorageBlockEntity
                 ? 0x00FFFF : 0xFFFFFF;
         var digits = state.getBlock() instanceof gregtech.block.inventory.ItemBarrelBlock
-                ? gregtech.api.sensor.SixCellDisplay.barrel(be.stored(), be.baseCapacity())
-                : gregtech.api.sensor.SixCellDisplay.storage(be.stored(), be.baseCapacity(), numeralColor);
+                ? gregtech.internal.sensor.SixCellDisplay.barrel(be.stored(), be.baseCapacity())
+                : gregtech.internal.sensor.SixCellDisplay.storage(be.stored(), be.baseCapacity(), numeralColor);
         SixCellDisplayRenderer.draw(digits, ps, buffer, light);
         ps.popPose();
     }

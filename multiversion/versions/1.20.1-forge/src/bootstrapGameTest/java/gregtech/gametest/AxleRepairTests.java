@@ -71,9 +71,9 @@ public final class AxleRepairTests {
             var stack=ingredient.getItems()[0].copy();
             if(stack.getItem() instanceof gregtech.item.GTToolItem)
                 stack=gregtech.item.GTToolItem.create(
-                        gregtech.api.tool.GTToolHelper.getType(stack),
-                        gregtech.api.material.GTMaterialRegistry.get("Steel"),
-                        gregtech.api.material.GTMaterialRegistry.get("Wood"));
+                        gregtech.internal.tool.GTToolHelper.getType(stack),
+                        gregtech.internal.material.GTMaterialRegistry.get("Steel"),
+                        gregtech.internal.material.GTMaterialRegistry.get("Wood"));
             grid.setItem(x+y*3,stack);
         }
         var creosote=gregtech.registry.GTFluids.still("Oil_Creosote").get();

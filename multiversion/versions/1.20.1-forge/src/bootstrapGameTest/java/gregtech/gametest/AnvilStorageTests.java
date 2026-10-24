@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
 import gregtech.registry.*;
-import gregtech.api.tool.*;
+import gregtech.internal.tool.*;
 import gregtech.blockentity.tool.MaterialAnvilBlockEntity;
 import gregtech.data.MachineRecipeMaps;
 import net.minecraft.core.*;
@@ -25,7 +25,7 @@ public final class AnvilStorageTests {
         h.assertTrue(io.insertItem(0,stack,false).isEmpty()&&anvil.workpiece(0).getCount()==2,"automation inserts recipe inputs");
         var exposed=io.getStackInSlot(0);exposed.setCount(0);
         h.assertTrue(anvil.workpiece(0).getCount()==2&&io.extractItem(0,64,false).isEmpty(),"no external mutation or extraction");
-        var hammer=GTToolHelper.write(GTToolItems.empty(GTToolType.HARD_HAMMER),gregtech.api.material.GTMaterialRegistry.get("Steel"),gregtech.api.material.GTMaterialRegistry.get("Wood"));
+        var hammer=GTToolHelper.write(GTToolItems.empty(GTToolType.HARD_HAMMER),gregtech.internal.material.GTMaterialRegistry.get("Steel"),gregtech.internal.material.GTMaterialRegistry.get("Wood"));
         hammer.setDamageValue(hammer.getMaxDamage());
         var data=anvil.saveWithoutMetadata();data.put("gt.work0",hammer.save(new net.minecraft.nbt.CompoundTag()));anvil.load(data);
         h.assertTrue(io.insertItem(1,stack,false).getCount()==2,"stored hammer blocks both automated work slots");
@@ -72,8 +72,8 @@ public final class AnvilStorageTests {
         h.assertTrue(anvil.workpiece(0).getCount()==2 && anvil.workpiece(1).getCount()==2,"two occupied slots are not redistributed");
         var cleared = anvil.saveWithoutMetadata(); cleared.remove("gt.work0"); cleared.remove("gt.work1"); anvil.load(cleared);
         var hammer = GTToolHelper.write(GTToolItems.empty(GTToolType.HARD_HAMMER),
-                gregtech.api.material.GTMaterialRegistry.get("Steel"),
-                gregtech.api.material.GTMaterialRegistry.get("Wood"));
+                gregtech.internal.material.GTMaterialRegistry.get("Steel"),
+                gregtech.internal.material.GTMaterialRegistry.get("Wood"));
         player.getInventory().clearContent(); player.setItemInHand(InteractionHand.MAIN_HAND,hammer.copy());
         anvil.interact(player,InteractionHand.MAIN_HAND,top);
         h.assertTrue(GTToolHelper.matchesTool(anvil.workpiece(0),GTToolType.HARD_HAMMER),"empty anvil stores hammer");

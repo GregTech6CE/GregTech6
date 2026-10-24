@@ -1,12 +1,12 @@
 package gregtech.gametest;
 
-import gregtech.api.machine.crucible.MoldShapes;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.machine.crucible.MoldShapes;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.MaterialProperty;
-import gregtech.api.material.StoredMaterial;
-import gregtech.api.recipe.RecipeInputs;
+import gregtech.internal.material.MaterialProperty;
+import gregtech.internal.material.StoredMaterial;
+import gregtech.internal.recipe.RecipeInputs;
 import gregtech.data.MachineRecipeMaps;
 //? if >=1.21.1 {
 /**///?} else {
@@ -107,7 +107,7 @@ public final class MaterialIdentitySaveTests {
     @GameTest(template = "test_empty", timeoutTicks = 400)
     public static void meltAddonIngotAndPourIt(GameTestHelper helper) {
         var alloy = GTMaterialRegistry.get("SampleAlloy");
-        helper.assertTrue(alloy.isValid() && gregtech.api.addon.AddonMaterials.owns(alloy),
+        helper.assertTrue(alloy.isValid() && gregtech.internal.addon.AddonMaterials.owns(alloy),
                 "SampleAlloy is an addon material");
         var ingot = GTItems.getStack(MaterialPrefix.ingot, alloy, 1);
         helper.assertTrue(!ingot.isEmpty(), "the addon metal has an ingot");
@@ -267,7 +267,7 @@ public final class MaterialIdentitySaveTests {
         var problems = new ArrayList<String>();
         for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
             GTMaterial canonical = material.resolve();
-            if (gregtech.api.addon.AddonMaterials.owns(canonical)) {
+            if (gregtech.internal.addon.AddonMaterials.owns(canonical)) {
                 if (GTMaterialRegistry.isPeriodicTableElement(canonical) || GTMaterialRegistry.isVanillaMatter(canonical))
                     problems.add(canonical.getName() + " addon material was stamped");
                 continue;

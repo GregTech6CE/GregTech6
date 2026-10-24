@@ -2,7 +2,7 @@
  * Adapted from original specialized controllers and MultiTileEntityBasicMachine.addToolTips. */
 package gregtech.client;
 
-import gregtech.api.machine.BasicMachineSpec;
+import gregtech.internal.machine.BasicMachineSpec;
 import gregtech.content.multiblock.OriginalControllerTooltipData;
 import gregtech.content.multiblock.OriginalControllerTooltipData.Family;
 import net.minecraft.ChatFormatting;

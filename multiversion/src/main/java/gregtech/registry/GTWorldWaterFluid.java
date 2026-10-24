@@ -1,6 +1,6 @@
 package gregtech.registry;
 
-import gregtech.api.fluid.VanillaWaterlogging;
+import gregtech.internal.fluid.VanillaWaterlogging;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;

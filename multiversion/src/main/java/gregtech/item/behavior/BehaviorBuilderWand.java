@@ -47,12 +47,12 @@ public final class BehaviorBuilderWand {
         }
         BlockState clicked = level.getBlockState(pos);
 //? if >=1.21.1 {
-        /*if (clicked.isAir() || !gregtech.api.tool.GTToolHelper.isUsable(wand)) return ManualToolBehaviorAccess.Outcome.refused(wand);
+        /*if (clicked.isAir() || !gregtech.internal.tool.GTToolHelper.isUsable(wand)) return ManualToolBehaviorAccess.Outcome.refused(wand);
 *///?} else {
-        if (clicked.isAir() || !gregtech.api.tool.GTToolHelper.isUsable(wand)) return ItemBehaviors.Outcome.refused(wand);
+        if (clicked.isAir() || !gregtech.internal.tool.GTToolHelper.isUsable(wand)) return ItemBehaviors.Outcome.refused(wand);
 //?}
 
-        int reach = Math.max(0, gregtech.api.tool.GTToolHelper.getHead(wand).getToolQuality() + 1);
+        int reach = Math.max(0, gregtech.internal.tool.GTToolHelper.getHead(wand).getToolQuality() + 1);
         boolean placedAny = false;
         placementLoop:
         for (int dx = step(side, Direction.Axis.X, -reach); dx <= step(side, Direction.Axis.X, reach); dx++) {
@@ -71,7 +71,7 @@ public final class BehaviorBuilderWand {
                     if (!ItemBehaviors.mayEdit(level, player, target.relative(side))) continue;
 //?}
 
-                    if (!gregtech.api.tool.GTToolHelper.isUsable(wand)) break placementLoop;
+                    if (!gregtech.internal.tool.GTToolHelper.isUsable(wand)) break placementLoop;
                     int sourceSlot = findSourceBlock(player, clicked);
                     if (sourceSlot < 0) break;   // GT6 runs out of matching blocks and stops the plane
                     if (!place(level, player, target, side, sourceSlot, wand, hitX, hitY, hitZ)) continue;
@@ -80,7 +80,7 @@ public final class BehaviorBuilderWand {
 *///?} else {
                     if (!ItemBehaviors.creative(player)) {
 //?}
-                        gregtech.api.tool.GTToolHelper.damageForUse(wand, 1, player,
+                        gregtech.internal.tool.GTToolHelper.damageForUse(wand, 1, player,
                                 player.getOffhandItem() == wand ? net.minecraft.world.entity.EquipmentSlot.OFFHAND
                                         : net.minecraft.world.entity.EquipmentSlot.MAINHAND);
                     }

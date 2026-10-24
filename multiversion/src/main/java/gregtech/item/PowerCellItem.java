@@ -2,7 +2,7 @@
  * Adapted from TileEntityBase09PowerCell and TileEntityBase08Battery. */
 package gregtech.item;
 
-import gregtech.api.energy.item.IItemEnergy;
+import gregtech.internal.energy.item.IItemEnergy;
 import gregtech.block.energy.PowerCellBlock;
 import gregtech.content.energy.PowerCellSpec;
 import gregtech.content.energy.ItemBatteryRules;

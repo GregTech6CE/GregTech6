@@ -1,6 +1,6 @@
 package gregtech.block.energy;
 
-import gregtech.api.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolHelper;
 import gregtech.content.nuclear.ReactorPorts;
 
 import gregtech.blockentity.energy.ReactorCoreBlockEntity;
@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /** GT6 single-rod reactor core with shared rod/container interaction. */
-public class ReactorCoreBlock extends Block implements EntityBlock, gregtech.api.tool.ToolInteractionTarget {
+public class ReactorCoreBlock extends Block implements EntityBlock, gregtech.internal.tool.ToolInteractionTarget {
 //? if >=1.21.1 {
     /*@Override public com.mojang.serialization.MapCodec<? extends Block> codec(){return com.mojang.serialization.MapCodec.unit(this);}
 *///?} else {
@@ -84,7 +84,7 @@ public class ReactorCoreBlock extends Block implements EntityBlock, gregtech.api
             net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,
             net.minecraft.world.level.block.state.BlockState next, boolean moving) {
         if (!state.is(next.getBlock()) && !level.isClientSide
-                && level.getBlockEntity(pos) instanceof gregtech.api.inventory.BlockContents contents) {
+                && level.getBlockEntity(pos) instanceof gregtech.internal.inventory.BlockContents contents) {
             contents.dropContents();
             level.updateNeighbourForOutputSignal(pos, this);
         }
@@ -102,7 +102,7 @@ public class ReactorCoreBlock extends Block implements EntityBlock, gregtech.api
         ReactorPorts.saveItemState(stack, state);
         return java.util.List.of(stack);
     }
-    @Override public gregtech.api.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+    @Override public gregtech.internal.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return ReactorPorts.tool(tool);
     }
 //? if >=1.21.1 {

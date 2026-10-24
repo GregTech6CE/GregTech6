@@ -1,7 +1,7 @@
 package gregtech.data;
 
 import gregtech.block.MaterialBlockLike;
-import gregtech.api.machine.GTMachineBlock;
+import gregtech.internal.machine.GTMachineBlock;
 import net.minecraft.world.level.block.*;
 
 /** GT6 Loader_MultiTileEntities material groups, adapted to Forge harvest tags.
@@ -41,7 +41,7 @@ public final class BlockHarvestPolicy {
    return Tool.PICKAXE;
   }
 //? if >=1.21.1 {
-  /*if(block instanceof gregtech.api.energy.WireMaterialLike || block instanceof gregtech.block.energy.SignalWireBlock) return Tool.CUTTER;
+  /*if(block instanceof gregtech.internal.energy.WireMaterialLike || block instanceof gregtech.block.energy.SignalWireBlock) return Tool.CUTTER;
   var id=net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(block);
 *///?} else {
   if(block instanceof gregtech.block.energy.ElectricWireBlock || block instanceof gregtech.block.energy.SignalWireBlock) return Tool.CUTTER;

@@ -5,9 +5,9 @@ package gregtech.client;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.material.MaterialTextureSet;
-import gregtech.api.prefix.BlockMaterialPrefix;
-import gregtech.api.prefix.BlockPrefixRegistry;
+import gregtech.internal.material.MaterialTextureSet;
+import gregtech.internal.prefix.BlockMaterialPrefix;
+import gregtech.internal.prefix.BlockPrefixRegistry;
 import gregtech.block.MaterialBlockLike;
 import gregtech.registry.GTBlocks;
 import com.mojang.logging.LogUtils;
@@ -32,7 +32,7 @@ import org.slf4j.Logger;
 import java.util.Map;
 
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+/*@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 *///?} else {
 @Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 //?}

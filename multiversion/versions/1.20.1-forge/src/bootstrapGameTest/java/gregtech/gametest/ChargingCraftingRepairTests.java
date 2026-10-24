@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.api.energy.item.IItemEnergy;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.energy.item.IItemEnergy;
+import gregtech.internal.tool.GTToolType;
 import gregtech.block.misc.*;
 import gregtech.block.energy.ElectricWireBlock;
 import gregtech.blockentity.energy.ElectricWireBlockEntity;
@@ -27,7 +27,7 @@ public final class ChargingCraftingRepairTests {
     private static ChargingCraftingTableBlockEntity place(GameTestHelper h,BlockPos pos){h.setBlock(pos,GTMiscBlocks.CHARGING_CRAFTING_TABLE.get());return (ChargingCraftingTableBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(pos));}
     private static void batteries(ChargingCraftingTableBlockEntity table){for(int i=16;i<=20;i++)table.items().setStackInSlot(i,new ItemStack(gregtech.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,1)));}
     private static long charge(ItemStack stack){return stack.getItem() instanceof IItemEnergy energy?energy.getEnergyStored(stack,GregTechTags.Energy.EU):0;}
-    private static ItemStack tool(GTToolType type){return gregtech.item.GTToolItem.create(type,Materials.Steel,gregtech.api.material.GTMaterialRegistry.get("Wood"));}
+    private static ItemStack tool(GTToolType type){return gregtech.item.GTToolItem.create(type,Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));}
     private static ElectricWireBlock cable(){return GTWires.allCables().stream().map(net.minecraftforge.registries.RegistryObject::get).filter(b->b.spec().material()==Materials.Copper&&b.spec().size()==12).findFirst().orElseThrow();}
     private static ElectricWireBlockEntity wire(GameTestHelper h,BlockPos pos,Direction... faces){var block=cable();var state=block.defaultBlockState();for(var face:faces)state=state.setValue(ElectricWireBlock.propFor(face),true);h.setBlock(pos,state);return (ElectricWireBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(pos));}
     @GameTest(template="test_empty")

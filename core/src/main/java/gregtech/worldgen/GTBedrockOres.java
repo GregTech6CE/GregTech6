@@ -1,7 +1,7 @@
 package gregtech.worldgen;
 
 import gregtech.content.material.Materials;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 
 import java.util.List;
 

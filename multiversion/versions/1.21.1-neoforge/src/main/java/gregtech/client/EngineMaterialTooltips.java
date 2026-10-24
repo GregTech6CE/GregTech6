@@ -1,5 +1,6 @@
 package gregtech.client;
-import gregtech.api.material.*;import net.minecraft.ChatFormatting;import net.minecraft.network.chat.Component;
+import gregtech.api.material.*;
+import gregtech.internal.material.*;import net.minecraft.ChatFormatting;import net.minecraft.network.chat.Component;
 /** Original contained-material presentation for engine items. */
 final class EngineMaterialTooltips {private EngineMaterialTooltips(){}
     public static Component containedMaterialLine(GTMaterial mat, long amount) {
@@ -33,7 +34,7 @@ final class EngineMaterialTooltips {private EngineMaterialTooltips(){}
     }
 
     public static double weightKg(GTMaterial material, long amount, double densityGPerCm3) {
-        return gregtech.api.material.MaterialMass.kilograms(densityGPerCm3, amount);
+        return gregtech.internal.material.MaterialMass.kilograms(densityGPerCm3, amount);
     }
 
     public static String displayUnits(long amount) {

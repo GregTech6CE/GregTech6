@@ -5,8 +5,8 @@ import gregtech.api.addon.RecipeOutputChances;
 import gregtech.api.addon.platform.AddonFluids;
 import gregtech.api.addon.platform.AddonLoader;
 import gregtech.api.addon.platform.AddonRecipes;
-import gregtech.api.recipe.Recipe;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.data.RegisteredFluids;
 import gregtech.registry.GTFluids;
 import net.minecraft.world.item.ItemStack;
@@ -56,19 +56,19 @@ public final class AddonLoaderServices {
         }
 
         @Override public boolean gas(net.minecraft.world.level.material.Fluid fluid) {
-            return fluid != null && gregtech.api.fluid.FluidHazards.isGas(fluid);
+            return fluid != null && gregtech.internal.fluid.FluidHazards.isGas(fluid);
         }
 
         @Override public boolean acid(net.minecraft.world.level.material.Fluid fluid) {
-            return fluid != null && gregtech.api.fluid.FluidHazards.isAcid(fluid);
+            return fluid != null && gregtech.internal.fluid.FluidHazards.isAcid(fluid);
         }
 
         @Override public boolean plasma(net.minecraft.world.level.material.Fluid fluid) {
-            return fluid != null && gregtech.api.fluid.FluidHazards.isPlasma(fluid);
+            return fluid != null && gregtech.internal.fluid.FluidHazards.isPlasma(fluid);
         }
 
         @Override public boolean magic(net.minecraft.world.level.material.Fluid fluid) {
-            return fluid != null && gregtech.api.fluid.FluidHazards.isMagic(fluid);
+            return fluid != null && gregtech.internal.fluid.FluidHazards.isMagic(fluid);
         }
     }
 
@@ -96,13 +96,13 @@ public final class AddonLoaderServices {
         @Override public String name() { return map.mNameInternal; }
 
         @Override public AddonRecipes.Line add(AddonRecipes.Line line) {
-            gregtech.api.addon.ExclusiveOutputMaps.requireRow(map, line.itemOutputs());
+            gregtech.internal.addon.ExclusiveOutputMaps.requireRow(map, line.itemOutputs());
             Recipe recipe = map.addRecipe(recipe(line));
             return recipe == null ? null : line(recipe);
         }
 
         @Override public AddonRecipes.Line addDisplay(AddonRecipes.Line line) {
-            gregtech.api.addon.ExclusiveOutputMaps.requireRow(map, line.itemOutputs());
+            gregtech.internal.addon.ExclusiveOutputMaps.requireRow(map, line.itemOutputs());
             Recipe recipe = map.addFakeRecipe(false, recipe(line));
             return recipe == null ? null : line(recipe);
         }

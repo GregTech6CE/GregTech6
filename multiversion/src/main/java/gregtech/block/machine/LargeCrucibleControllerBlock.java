@@ -107,7 +107,7 @@ public class LargeCrucibleControllerBlock extends HorizontalDirectionalBlock imp
 //? if >=1.21.1 {
                 /*&& level.getBlockEntity(pos) instanceof LargeCrucibleControllerBlockEntity contents) {
 *///?} else {
-                && level.getBlockEntity(pos) instanceof gregtech.api.inventory.BlockContents contents) {
+                && level.getBlockEntity(pos) instanceof gregtech.internal.inventory.BlockContents contents) {
 //?}
             contents.dropContents();
             level.updateNeighbourForOutputSignal(pos, this);

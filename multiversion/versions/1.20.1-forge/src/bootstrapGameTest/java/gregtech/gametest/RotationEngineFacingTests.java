@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.api.machine.MachineRegistry;
-import gregtech.api.machine.RotationEngineSpec;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.machine.MachineRegistry;
+import gregtech.internal.machine.RotationEngineSpec;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.tool.GTToolType;
 import gregtech.block.machine.EngineBlock;
 import gregtech.blockentity.GTEnergyBlockEntity;
 import gregtech.blockentity.machine.KineticRotationEngineBlockEntity;

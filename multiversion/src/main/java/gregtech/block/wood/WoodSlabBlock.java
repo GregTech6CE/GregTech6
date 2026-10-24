@@ -9,7 +9,7 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import java.util.List;
 
 /** A GT6 wood slab: two half slabs merged into a double slab return two items when mined. */
-public final class WoodSlabBlock extends SlabBlock implements gregtech.api.block.FaceGridSlab {
+public final class WoodSlabBlock extends SlabBlock implements gregtech.internal.block.FaceGridSlab {
 //? if >=1.21.1 {
     /*@Override public com.mojang.serialization.MapCodec<WoodSlabBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
 *///?} else {

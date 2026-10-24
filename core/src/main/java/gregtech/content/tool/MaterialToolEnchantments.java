@@ -1,7 +1,7 @@
 package gregtech.content.tool;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.tool.ToolDefinition;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.tool.ToolDefinition;
 import gregtech.content.book.GTMaterialEnchants;
 import gregtech.content.recipe.generated.GTEnchantmentTable;
 import java.util.LinkedHashMap;

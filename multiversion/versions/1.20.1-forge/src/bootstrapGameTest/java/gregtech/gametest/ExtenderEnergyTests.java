@@ -1,7 +1,9 @@
 package gregtech.gametest;
 
 import gregtech.api.energy.*;
+import gregtech.internal.energy.*;
 import gregtech.api.machine.*;
+import gregtech.internal.machine.*;
 import gregtech.block.misc.*;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.logistics.ExtenderSpec;

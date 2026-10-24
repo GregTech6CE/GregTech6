@@ -1,9 +1,9 @@
 package gregtech.compat;
 
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.prefix.PrefixRegistry;
-import gregtech.api.recipe.Recipe;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.prefix.PrefixRegistry;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.content.compat.CompatSpecs;
 import gregtech.content.recipe.DyeProcessingRecipes;
 import gregtech.data.MachineRecipeMaps;

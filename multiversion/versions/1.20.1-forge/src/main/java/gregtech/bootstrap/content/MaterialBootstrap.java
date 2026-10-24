@@ -1,8 +1,8 @@
 package gregtech.bootstrap.content;
 
-import gregtech.api.addon.AddonMaterials;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialRoleFlags;
+import gregtech.internal.addon.AddonMaterials;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialRoleFlags;
 import gregtech.bootstrap.InitializationStep;
 
 public record MaterialBootstrap() implements InitializationStep {

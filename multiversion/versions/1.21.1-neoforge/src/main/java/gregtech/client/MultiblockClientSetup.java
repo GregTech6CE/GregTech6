@@ -7,7 +7,7 @@ import net.neoforged.neoforge.client.event.*;
 import gregtech.registry.*;
 
 /** NeoForge renderer registration and material tints for multiblocks and crucibles. */
-@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class MultiblockClientSetup {
 
     private MultiblockClientSetup() {

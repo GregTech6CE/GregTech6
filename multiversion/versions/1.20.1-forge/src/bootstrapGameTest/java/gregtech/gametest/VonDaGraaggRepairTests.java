@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.multiblock.MultiblockLayout;
+import gregtech.internal.multiblock.MultiblockLayout;
 import gregtech.blockentity.machine.VonDaGraaggControllerBlockEntity;
 import gregtech.content.multiblock.LargeMachineParts;
 import gregtech.content.multiblock.ControllerStructureLayouts;

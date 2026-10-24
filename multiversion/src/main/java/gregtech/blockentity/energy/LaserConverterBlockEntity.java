@@ -4,7 +4,7 @@ import gregtech.blockentity.GTEnergyBlockEntity;
 import gregtech.block.energy.LaserConverterBlock;
 import gregtech.content.energy.LaserSpec;
 import gregtech.content.energy.LaserWorkRules;
-import gregtech.api.energy.EnergyTransfer;
+import gregtech.internal.energy.EnergyTransfer;
 import gregtech.data.GregTechTags;
 import gregtech.registry.GTBlockEntities;
 import net.minecraft.core.*;
@@ -26,7 +26,7 @@ public final class LaserConverterBlockEntity extends GTEnergyBlockEntity impleme
     private long energy;
     private boolean stopped;
     private boolean emitted;
-    private final gregtech.api.machine.MachineControl control=gregtech.api.machine.MachineControls.switchable(this,
+    private final gregtech.api.machine.MachineControl control=gregtech.internal.machine.MachineControls.switchable(this,
             ()->!this.stopped,value->{this.stopped=!value;setChanged();},()->getBlockState().getValue(LaserConverterBlock.ACTIVE),()->emitted);
     @Override public gregtech.api.machine.MachineControl machineControl(Direction side){return control;}
 //? if >=1.21.1 {

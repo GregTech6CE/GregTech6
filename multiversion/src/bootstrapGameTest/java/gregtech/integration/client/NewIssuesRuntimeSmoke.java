@@ -44,7 +44,7 @@ final class NewIssuesRuntimeSmoke {
         var actor=net.minecraftforge.common.util.FakePlayerFactory.get(level,new com.mojang.authlib.GameProfile(UUID.fromString("3c4f7d46-1316-4c7e-a240-d0c32aab4158"),"IssuesCheckpoint"));
 //?}
         actor.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);actor.moveTo(224.5,235,227.5);actor.getInventory().clearContent();
-        var rock=gregtech.registry.GTItems.getStack(gregtech.data.MaterialPrefix.rockGt,gregtech.api.material.GTMaterialRegistry.get("GraniteBlack"),3);
+        var rock=gregtech.registry.GTItems.getStack(gregtech.data.MaterialPrefix.rockGt,gregtech.internal.material.GTMaterialRegistry.get("GraniteBlack"),3);
         int placed=0;
         for(var collected:List.of(rock,new ItemStack(Items.RAW_COPPER,3))){
             require(!collected.isEmpty(),"missing rock fixture");level.setBlock(pos,Blocks.AIR.defaultBlockState(),3);level.setBlock(pos.below(),Blocks.STONE.defaultBlockState(),3);
@@ -114,16 +114,16 @@ final class NewIssuesRuntimeSmoke {
         require(chest.componentItems(Direction.EAST).getStackInSlot(0).getCount()==17&&ComponentCoverRuntime.slot(chest.getCover(Direction.EAST))==-4,"chest update packet erases contents");
         receipt.addProperty("conveyorArmNativeChecks",8);
         var coverFace=new BlockHitResult(Vec3.atCenterOf(pos),Direction.EAST,pos,false);
-        actor.setItemInHand(InteractionHand.MAIN_HAND,gregtech.item.GTToolItem.create(gregtech.api.tool.GTToolType.SCREWDRIVER,gregtech.content.material.Materials.Steel,gregtech.api.material.GTMaterialRegistry.get("Spruce")));
+        actor.setItemInHand(InteractionHand.MAIN_HAND,gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.SCREWDRIVER,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Spruce")));
         actor.setShiftKeyDown(false);require(ComponentCoverInteraction.use(chest,actor,InteractionHand.MAIN_HAND,coverFace).consumesAction(),"arm screw action");
         require(ComponentCoverRuntime.slot(chest.getCover(Direction.EAST))==-3,"arm screw increment");
         actor.setShiftKeyDown(true);ComponentCoverInteraction.use(chest,actor,InteractionHand.MAIN_HAND,coverFace);
         require(ComponentCoverRuntime.slot(chest.getCover(Direction.EAST))==-4,"arm sneak decrement");actor.setShiftKeyDown(false);
-        actor.setItemInHand(InteractionHand.MAIN_HAND,gregtech.item.GTToolItem.create(gregtech.api.tool.GTToolType.MONKEY_WRENCH,gregtech.content.material.Materials.Steel,gregtech.api.material.GTMaterialRegistry.get("Spruce")));
+        actor.setItemInHand(InteractionHand.MAIN_HAND,gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.MONKEY_WRENCH,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Spruce")));
         ComponentCoverInteraction.use(chest,actor,InteractionHand.MAIN_HAND,coverFace);require(ComponentCoverRuntime.visual(chest.getCover(Direction.EAST))==0,"arm monkey direction");
-        actor.setItemInHand(InteractionHand.MAIN_HAND,gregtech.item.GTToolItem.create(gregtech.api.tool.GTToolType.WRENCH,gregtech.content.material.Materials.Steel,gregtech.api.material.GTMaterialRegistry.get("Spruce")));
+        actor.setItemInHand(InteractionHand.MAIN_HAND,gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.WRENCH,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Spruce")));
         var facing=chest.getBlockState();require(ComponentCoverInteraction.use(chest,actor,InteractionHand.MAIN_HAND,coverFace).consumesAction()&&chest.getBlockState().equals(facing),"cover wrench rotates host");
-        actor.setItemInHand(InteractionHand.MAIN_HAND,gregtech.item.GTToolItem.create(gregtech.api.tool.GTToolType.CROWBAR,gregtech.content.material.Materials.Steel,gregtech.api.material.GTMaterialRegistry.get("Spruce")));
+        actor.setItemInHand(InteractionHand.MAIN_HAND,gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.CROWBAR,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Spruce")));
         ComponentCoverInteraction.use(chest,actor,InteractionHand.MAIN_HAND,coverFace);require(chest.getCover(Direction.EAST).isEmpty(),"crowbar cannot remove component");
         receipt.addProperty("componentToolInteractions",5);
 
@@ -268,7 +268,7 @@ final class NewIssuesRuntimeSmoke {
         int stones=0,tabs=0,forms=0;
         for(var nativeItem:BuiltInRegistries.ITEM){
             String key=null;
-            if(nativeItem instanceof gregtech.api.material.MaterialFormItem form)
+            if(nativeItem instanceof gregtech.internal.material.MaterialFormItem form)
                 key="oredict."+form.getPrefix().getName()+form.getMaterial().getName();
             else if(nativeItem instanceof BlockItem blockItem && blockItem.getBlock() instanceof gregtech.block.MaterialBlockLike form)
                 key="oredict."+form.prefix().getName()+form.material().getName();

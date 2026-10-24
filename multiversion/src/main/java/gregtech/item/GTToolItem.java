@@ -1,5 +1,5 @@
 package gregtech.item;
-import gregtech.api.material.MaterialPresentation;
+import gregtech.internal.material.MaterialPresentation;
 
 
 //? if >=1.21.1 {
@@ -9,9 +9,9 @@ import com.google.common.collect.Multimap;
 import gregtech.GregTech;
 //?}
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 import gregtech.client.GTToolTooltips;
 
 //? if >=1.21.1 {
@@ -82,7 +82,7 @@ public class GTToolItem extends Item {
     @Override
     public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
         // Original Behavior_Tool takes priority over the ordinary builder plane copy.
-        var multiblock = gregtech.api.multiblock.MultiblockTools.use(context);
+        var multiblock = gregtech.internal.multiblock.MultiblockTools.use(context);
         if (multiblock.consumesAction()) return multiblock;
         // §108: GT6's TOOL_plunger and TOOL_igniter clicks are onItemUseFirst behaviours as well, so
         // they run before Block#use (Behavior_Plunger_Fluid:49-62, Behavior_FlintAndTinder:45-61).
@@ -167,7 +167,7 @@ public class GTToolItem extends Item {
         BlockState state = context.getLevel().getBlockState(context.getClickedPos());
 //? if >=1.21.1 {
 /*
-        if (state.getBlock() instanceof gregtech.api.tool.ScrewdriverUseTarget) {
+        if (state.getBlock() instanceof gregtech.internal.tool.ScrewdriverUseTarget) {
 
 *///?} else {
         if (state.getBlock() instanceof HopperBlock || state.getBlock() instanceof QueueHopperBlock
@@ -180,7 +180,7 @@ public class GTToolItem extends Item {
                     context.getClickedPos(), context.isInside());
 
 //? if >=1.21.1 {
-/*            return ((gregtech.api.tool.ScrewdriverUseTarget)state.getBlock()).useScrewdriver(state,context.getLevel(),context.getClickedPos(),player,hand,hit);
+/*            return ((gregtech.internal.tool.ScrewdriverUseTarget)state.getBlock()).useScrewdriver(state,context.getLevel(),context.getClickedPos(),player,hand,hit);
 *///?} else {
             return state.use(context.getLevel(), player, hand, hit);
 //?}
@@ -207,9 +207,9 @@ public class GTToolItem extends Item {
     public void inventoryTick(ItemStack stack, Level level, net.minecraft.world.entity.Entity entity, int slot, boolean selected) {
 
 //? if >=1.21.1 {
-/*        if (!level.isClientSide) gregtech.api.tool.GTToolEnchantments.apply(stack, level.registryAccess());
+/*        if (!level.isClientSide) gregtech.internal.tool.GTToolEnchantments.apply(stack, level.registryAccess());
 *///?} else {
-        if (!level.isClientSide) gregtech.api.tool.GTToolEnchantments.apply(stack);
+        if (!level.isClientSide) gregtech.internal.tool.GTToolEnchantments.apply(stack);
 //?}
 
         super.inventoryTick(stack, level, entity, slot, selected);

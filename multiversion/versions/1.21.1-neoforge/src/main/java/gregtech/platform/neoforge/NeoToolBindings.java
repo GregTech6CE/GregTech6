@@ -1,7 +1,7 @@
 package gregtech.platform.neoforge;
 
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -64,6 +64,6 @@ public final class NeoToolBindings {
     }
 
     public static int craftDamage(ItemStack stack) {
-        return gregtech.api.tool.ToolCraftingRules.damage(craftKind(stack));
+        return gregtech.internal.tool.ToolCraftingRules.damage(craftKind(stack));
     }
 }

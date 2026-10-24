@@ -104,9 +104,9 @@ public final class CoverRemovalUpdateTests {
         }
     }
     private static ItemStack crowbar() {
-        return gregtech.item.GTToolItem.create(gregtech.api.tool.GTToolType.CROWBAR,
+        return gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.CROWBAR,
                 gregtech.content.material.Materials.Steel,
-                gregtech.api.material.GTMaterialRegistry.get("Wood"));
+                gregtech.internal.material.GTMaterialRegistry.get("Wood"));
     }
     private static int drops(Fixture f,net.minecraft.world.item.Item item) {
         return f.h.getLevel().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,

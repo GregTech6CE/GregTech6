@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
 import gregtech.api.machine.MachineControl;
-import gregtech.api.machine.MachineRegistry;
+import gregtech.internal.machine.MachineRegistry;
 import gregtech.block.misc.*;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.logistics.ExtenderSpec;
@@ -57,9 +57,9 @@ public final class UniversalExtenderTests {
     @GameTest(template="test_blueprint_empty") public static void stopSaveResumePendingOutput(GameTestHelper h){
         var block=MachineRegistry.basicMachines().stream().map(e->e.get()).filter(b->b.basicSpec().recipeMap().mOutputItemsCount>0).findFirst().orElseThrow();
         h.setBlock(CENTER,block);var machine=(BasicMachineBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(CENTER));
-        var recipe=new gregtech.api.recipe.Recipe(null,new ItemStack[]{new ItemStack(Items.DIAMOND,4)},null,null,null,null,16,16,0);
+        var recipe=new gregtech.internal.recipe.Recipe(null,new ItemStack[]{new ItemStack(Items.DIAMOND,4)},null,null,null,null,16,16,0);
         var data=machine.saveWithoutMetadata();data.putLong("gt.progress",16);data.putLong("gt.max_progress",16);
-        data.put("gt.pending_outputs",gregtech.api.recipe.MachineWorkOutputs.roll(recipe,1,bound->0).save());machine.load(data);
+        data.put("gt.pending_outputs",gregtech.internal.recipe.MachineWorkOutputs.roll(recipe,1,bound->0).save());machine.load(data);
         var relay=relay(h,CENTER.south(),ExtenderSpec.UNIVERSAL,Direction.NORTH,Direction.DOWN);
         var control=relay.machineControl(null);
         h.assertTrue(control.progress()==16&&control.progressMax()==16,"progress reaches relay unrounded");

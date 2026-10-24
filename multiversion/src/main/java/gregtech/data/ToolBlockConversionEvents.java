@@ -1,9 +1,9 @@
 package gregtech.data;
 
-import gregtech.api.recipe.Recipe;
-import gregtech.api.recipe.RecipeMap;
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.recipe.RecipeMap;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -36,9 +36,9 @@ import java.util.List;
  * </p>
  */
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID)
+/*@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID)
 *///?} else {
-@Mod.EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID)
+@Mod.EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID)
 //?}
 public final class ToolBlockConversionEvents {
     /** GT6 {@code getToolDamagePerBlockBreak} per tool. */

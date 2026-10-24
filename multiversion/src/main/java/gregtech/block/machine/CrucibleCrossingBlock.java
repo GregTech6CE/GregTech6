@@ -1,10 +1,10 @@
 package gregtech.block.machine;
 
-import gregtech.api.GTWaterloggable;
-import gregtech.api.machine.CrucibleSpec;
-import gregtech.api.machine.GTMachineBlock;
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.GTWaterloggable;
+import gregtech.internal.machine.CrucibleSpec;
+import gregtech.internal.machine.GTMachineBlock;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 import gregtech.blockentity.machine.CrucibleCrossingBlockEntity;
 import gregtech.registry.GTBlockEntities;
 import net.minecraft.core.BlockPos;

@@ -1,10 +1,10 @@
 package gregtech.integration.client;
 
 import com.google.gson.JsonObject;
-import gregtech.api.machine.OriginalSmelteryDefinitions;
-import gregtech.api.machine.crucible.CrucibleItemInput;
-import gregtech.api.machine.crucible.MoldShapes;
-import gregtech.api.material.ItemMaterialRegistry;
+import gregtech.internal.machine.OriginalSmelteryDefinitions;
+import gregtech.internal.machine.crucible.CrucibleItemInput;
+import gregtech.internal.machine.crucible.MoldShapes;
+import gregtech.internal.material.ItemMaterialRegistry;
 import gregtech.block.machine.MoldItemData;
 import gregtech.block.machine.SmeltingCrucibleBlock;
 import gregtech.client.CommonBlockTooltips;
@@ -120,7 +120,7 @@ final class SmelteryDeliveryChecks {
                     && c.getString().endsWith(" "+variant.crucible().smeltingThermalMassKg()+" kg")),"source large100U thermal hull "+id);
             try {
                 var method=entity.getClass().getDeclaredMethod("hazardProfile");method.setAccessible(true);
-                require(method.invoke(entity).equals(gregtech.api.machine.crucible.CrucibleHazards.LARGE),"native5-radius damage4 profile "+id);
+                require(method.invoke(entity).equals(gregtech.internal.machine.crucible.CrucibleHazards.LARGE),"native5-radius damage4 profile "+id);
             } catch(ReflectiveOperationException error) {throw new IllegalStateException("large native parameter "+id,error);}
             if(variant.originalId()>0) {
                 var data=ItemMaterialRegistry.get(stack).orElseThrow();

@@ -5,8 +5,8 @@ package gregtech.client;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.material.MaterialTextureSet;
-import gregtech.api.prefix.BlockMaterialPrefix;
+import gregtech.internal.material.MaterialTextureSet;
+import gregtech.internal.prefix.BlockMaterialPrefix;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;

@@ -1,5 +1,5 @@
 package gregtech.registry;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.block.machine.*;
 import gregtech.content.multiblock.*;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -57,21 +57,21 @@ public final class GTMultiblocks {
         IMPLOSION_COMPRESSOR_MAIN = controller("implosion_compressor_main", () -> new ImplosionCompressorControllerBlock(properties(12.5f)));
         FUSION_REACTOR_MAIN = controller("fusion_reactor_main", () -> new FusionReactorControllerBlock(properties(12.5f)));
         var original = OriginalMultiblockMachineParameters.distillationTower();
-        var spec = new gregtech.api.machine.BasicMachineSpec(original.id(), original.material(),
+        var spec = new gregtech.internal.machine.BasicMachineSpec(original.id(), original.material(),
                 original.machineName(), original.energyType(), original.tier(), original.energyIn(), original.energyOut(),
-                original.hardness(), original.blastResistance(), gregtech.api.energy.FaceConfig.from(original.faceConfig()),
+                original.hardness(), original.blastResistance(), gregtech.internal.energy.FaceConfig.from(original.faceConfig()),
                 original.constructionMaterials(), gregtech.data.MachineRecipeMaps.DistillationTower,
                 original.parallelLimit(), original.energyInMin(), original.energyInMax());
         DISTILLATION_TOWER_MAIN = RegisteredBlock.wrap(spec.id(),
-                gregtech.api.machine.MachineRegistry.registerBasicMachine(spec, props -> new MultiblockControllerBlock(spec, props)));
+                gregtech.internal.machine.MachineRegistry.registerBasicMachine(spec, props -> new MultiblockControllerBlock(spec, props)));
         //?}
         registerAddonParts();
     }
     /** Queues addon casings after the built-in parts. A call before addon machines install does nothing. */
     public static void registerAddonParts() {
-        if (addonQueued || !gregtech.api.addon.AddonMachines.installed()) return;
+        if (addonQueued || !gregtech.internal.addon.AddonMachines.installed()) return;
         addonQueued = true;
-        for (var part : gregtech.api.addon.AddonMachines.structureParts()) {
+        for (var part : gregtech.internal.addon.AddonMachines.structureParts()) {
             var declaration = part.declaration();
             float hardness = declaration.hardness();
             boolean energyPart = declaration.energy() != null || declaration.energyInput() != null;

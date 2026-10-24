@@ -1,7 +1,7 @@
 package gregtech.content.recipe;
 
 import gregtech.GregTech;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolType;
 import gregtech.recipe.GTFlintAndTinderRecipe;
 import gregtech.recipe.GTToolAssemblyRecipe;
 import gregtech.recipe.GTToolCraftingRecipe;

@@ -38,7 +38,7 @@ import net.minecraftforge.fml.common.Mod;
  * unified vanilla ingots; their {@code Item} classes cannot implement a GT-specific {@code useOn}.
  */
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID)
+/*@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID)
 *///?} else {
 @Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 //?}

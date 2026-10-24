@@ -3,13 +3,14 @@ package gregtech.content.recipe;
 /*import gregtech.block.wood.WoodSpecies;
 import gregtech.registry.*;
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 *///?} else {
 
 import gregtech.GregTech;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 //?}
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolType;
 //? if >=1.21.1 {
 //?} else {
 import gregtech.block.wood.WoodSpecies;

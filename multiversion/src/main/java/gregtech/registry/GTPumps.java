@@ -1,8 +1,8 @@
 package gregtech.registry;
 
 import gregtech.content.material.Materials;
-import gregtech.api.machine.PumpSpec;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.machine.PumpSpec;
+import gregtech.internal.material.GTMaterial;
 import gregtech.block.energy.PumpBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;

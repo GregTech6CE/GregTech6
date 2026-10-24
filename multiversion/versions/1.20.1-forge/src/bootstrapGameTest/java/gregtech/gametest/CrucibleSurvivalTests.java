@@ -1,7 +1,8 @@
 package gregtech.gametest;
-import gregtech.api.machine.crucible.CrucibleContentsNbt;
-import gregtech.api.machine.crucible.*;
+import gregtech.internal.machine.crucible.CrucibleContentsNbt;
+import gregtech.internal.machine.crucible.*;
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.data.generated.GT6Materials.*;
 import gregtech.registry.GTMachines;
 import gregtech.blockentity.machine.SmeltingCrucibleBlockEntity;
@@ -51,7 +52,7 @@ public final class CrucibleSurvivalTests {
      if(ingredient.getItems().length==0)continue;
      var stack=ingredient.getItems()[0].copy();
      if(stack.getItem() instanceof gregtech.item.GTToolItem)stack=gregtech.item.GTToolItem.create(
-       gregtech.api.tool.GTToolHelper.getType(stack),gregtech.content.material.Materials.Steel,GTMaterialRegistry.get("Wood"));
+       gregtech.internal.tool.GTToolHelper.getType(stack),gregtech.content.material.Materials.Steel,GTMaterialRegistry.get("Wood"));
      grid.setItem(x+y*3,stack);
     }
     h.assertTrue(shaped.matches(grid,h.getLevel()),"Manufacturing pattern executable: "+id);

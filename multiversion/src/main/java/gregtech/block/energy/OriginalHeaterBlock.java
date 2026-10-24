@@ -2,7 +2,7 @@
  * Adapted from MultiTileEntityHeaterElectric/Flux collision and contact damage. */
 package gregtech.block.energy;
 
-import gregtech.api.energy.EnergyNodeSpec;
+import gregtech.internal.energy.EnergyNodeSpec;
 import gregtech.content.energy.OriginalThermalConverter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;

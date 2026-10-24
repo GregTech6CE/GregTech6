@@ -1,10 +1,10 @@
 package gregtech.block.machine;
 
 import gregtech.blockentity.machine.LogisticsCoreControllerBlockEntity;
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.ToolInteractionSpec;
-import gregtech.api.tool.ToolInteractionTarget;
-import gregtech.api.tool.ToolInteractions;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.ToolInteractionSpec;
+import gregtech.internal.tool.ToolInteractionTarget;
+import gregtech.internal.tool.ToolInteractions;
 import gregtech.registry.GTBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -89,7 +89,7 @@ public final class LogisticsCoreControllerBlock extends DirectionalBlock impleme
     @Override
     public void toolStateChanged(Level level, BlockPos pos, BlockState state) {
         if (level.getBlockEntity(pos) instanceof LogisticsCoreControllerBlockEntity core)
-            gregtech.api.multiblock.tracking.StructureTracking.invalidate(core);
+            gregtech.internal.multiblock.tracking.StructureTracking.invalidate(core);
     }
 
     @Override

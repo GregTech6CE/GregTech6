@@ -3,7 +3,7 @@
  * TileEntityBase11Bidirectional and MultiTileEntitySolarPanelElectric. */
 package gregtech.content.energy;
 
-import gregtech.api.energy.EnergyNodeSpec;
+import gregtech.internal.energy.EnergyNodeSpec;
 
 /** Original rated statistics and tooltip choices, without native item/storage/rendering types. */
 public final class OriginalEnergyDeviceTooltipData {

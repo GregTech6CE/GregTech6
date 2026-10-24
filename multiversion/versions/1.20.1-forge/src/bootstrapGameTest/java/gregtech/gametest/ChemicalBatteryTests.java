@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.api.tool.*;
+import gregtech.internal.tool.*;
 import gregtech.block.energy.ChemicalBatteryBlock;
 import gregtech.blockentity.energy.ChemicalBatteryBlockEntity;
 import gregtech.content.energy.ChemicalBatterySpec;
@@ -87,7 +87,7 @@ public final class ChemicalBatteryTests {
         var saved=new ChemicalBatteryBlockEntity(pos,be.getBlockState());saved.load(be.saveWithoutMetadata());
         var client=new ChemicalBatteryBlockEntity(pos,be.getBlockState());client.load(be.getUpdateTag());
         h.assertTrue(saved.stored()==123456&&client.stored()==123456&&be.getUpdatePacket()!=null,"disk and client synchronization");
-        h.assertTrue(!((Object)be instanceof gregtech.api.energy.IEnergyBlock),"placed battery is passive, no fictional energy net output");
+        h.assertTrue(!((Object)be instanceof gregtech.internal.energy.IEnergyBlock),"placed battery is passive, no fictional energy net output");
         h.getLevel().destroyBlock(pos,true);
         var drops=h.getLevel().getEntitiesOfClass(ItemEntity.class,new AABB(pos).inflate(1));
         h.assertTrue(drops.stream().anyMatch(e->e.getItem().is(item)&&item.stored(e.getItem())==123456),"real loot drop retains charge");

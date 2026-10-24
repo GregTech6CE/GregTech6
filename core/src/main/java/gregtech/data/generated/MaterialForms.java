@@ -1,6 +1,6 @@
 package gregtech.data.generated;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -2308,7 +2308,7 @@ public final class MaterialForms {
      */
     public static boolean has(GTMaterial material, String flag) {
         if (material != null && "ORES".equals(flag)
-                && gregtech.api.addon.AddonMaterials.hasOreForm(material)) return true;
+                && gregtech.internal.addon.AddonMaterials.hasOreForm(material)) return true;
         return of(material).contains(flag);
     }
 

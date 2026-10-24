@@ -1,7 +1,7 @@
 package gregtech.block;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.prefix.BlockMaterialPrefix;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.prefix.BlockMaterialPrefix;
 
 public interface MaterialBlockLike {
     BlockMaterialPrefix prefix();

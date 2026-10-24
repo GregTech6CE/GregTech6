@@ -1,19 +1,19 @@
 package gregtech.block.energy;
 
 //? if >=1.21.1 {
-/*import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.ToolInteractions;
-import gregtech.api.tool.ToolInteractionSpec;
-import gregtech.api.tool.ToolInteractionTarget;
+/*import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.ToolInteractions;
+import gregtech.internal.tool.ToolInteractionSpec;
+import gregtech.internal.tool.ToolInteractionTarget;
 *///?} else {
 //?}
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.NeoToolBindings;
 *///?} else {
-import gregtech.api.tool.*;
+import gregtech.internal.tool.*;
 //?}
 
 import gregtech.blockentity.energy.SignalWireBlockEntity;
@@ -41,7 +41,7 @@ import java.util.List;
 /** Six independent ports; the common cutter spec also drives the client face overlay. */
 //? if >=1.21.1 {
 /*public final class SignalWireBlock extends Block implements EntityBlock, ToolInteractionTarget,
-        gregtech.api.tool.ScrewdriverUseTarget {
+        gregtech.internal.tool.ScrewdriverUseTarget {
 *///?} else {
 public final class SignalWireBlock extends Block implements EntityBlock, ToolInteractionTarget {
 //?}

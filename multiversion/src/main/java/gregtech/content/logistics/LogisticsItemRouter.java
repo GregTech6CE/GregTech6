@@ -1,6 +1,6 @@
 package gregtech.content.logistics;
 
-import gregtech.api.inventory.MassStorageMaterialForms;
+import gregtech.internal.inventory.MassStorageMaterialForms;
 import gregtech.blockentity.inventory.MassStorageBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

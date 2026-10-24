@@ -3,8 +3,8 @@
  * Heater/Cooler Electric/Flux classes, TileEntityBase11Twotypes and LH. */
 package gregtech.content.energy;
 
-import gregtech.api.energy.EnergyNodeSpec;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.energy.EnergyNodeSpec;
+import gregtech.internal.material.GTMaterial;
 import gregtech.content.material.Materials;
 import gregtech.data.GregTechTags;
 import java.util.*;

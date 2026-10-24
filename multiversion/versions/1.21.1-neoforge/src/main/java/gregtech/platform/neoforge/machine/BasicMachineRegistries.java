@@ -1,9 +1,10 @@
 package gregtech.platform.neoforge.machine;
-import gregtech.api.machine.BasicMachineSpec;
+import gregtech.internal.machine.BasicMachineSpec;
 import gregtech.block.machine.BasicMachineBlock;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.machine.BasicMachineDefinitions;
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.*;
 import net.minecraft.world.inventory.MenuType;
@@ -41,7 +42,7 @@ public final class BasicMachineRegistries {
    var blockReg=blocks.computeIfAbsent(namespace,ns->{var created=DeferredRegister.create(Registries.BLOCK,ns);created.register(bus);return created;});
    var itemReg=items.computeIfAbsent(namespace,ns->{var created=DeferredRegister.create(Registries.ITEM,ns);created.register(bus);return created;});
    var entityReg=entities.computeIfAbsent(namespace,ns->{var created=DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE,ns);created.register(bus);return created;});
-   var block=blockReg.register(spec.id(),()->spec.controllerKind()==gregtech.api.machine.MachineControllerKind.DISTILLATION?new gregtech.block.machine.MultiblockControllerBlock(spec,BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(spec.hardness(),spec.blastResistance()).requiresCorrectToolForDrops()):new BasicMachineBlock(spec,BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(spec.hardness(),spec.blastResistance()).requiresCorrectToolForDrops()));
+   var block=blockReg.register(spec.id(),()->spec.controllerKind()==gregtech.internal.machine.MachineControllerKind.DISTILLATION?new gregtech.block.machine.MultiblockControllerBlock(spec,BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(spec.hardness(),spec.blastResistance()).requiresCorrectToolForDrops()):new BasicMachineBlock(spec,BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(spec.hardness(),spec.blastResistance()).requiresCorrectToolForDrops()));
    MACHINES.add(block);
    itemReg.register(spec.id(),()->new BasicMachineItem(block.get(),new Item.Properties().stacksTo(16)));
    var type=entityReg.register("be_"+spec.id(),()->{

@@ -1,7 +1,7 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.energy.EnergyTransfer;
-import gregtech.api.energy.FaceConfig;
+import gregtech.internal.energy.EnergyTransfer;
+import gregtech.internal.energy.FaceConfig;
 import gregtech.blockentity.GTEnergyBlockEntity;
 import gregtech.data.GregTechTags;
 import net.minecraft.core.BlockPos;
@@ -212,7 +212,7 @@ public abstract class EngineBaseBlockEntity extends GTEnergyBlockEntity {
             if (kuEnergy >= capacity) break;
 
             var be = level.getBlockEntity(worldPosition.relative(dir));
-            if (!(be instanceof gregtech.api.energy.IEnergyBlock source)) continue;
+            if (!(be instanceof gregtech.internal.energy.IEnergyBlock source)) continue;
             Direction srcSide = dir.getOpposite();
             if (!source.isEnergyEmittingTo(inputEnergyType(), srcSide, false)) continue;
 
@@ -261,13 +261,13 @@ public abstract class EngineBaseBlockEntity extends GTEnergyBlockEntity {
 
     /** Inverse of the same shared capability-side mapping, including vertical engines. */
     protected Direction relativeToAbsolute(int relDir) {
-        return Direction.from3DDataValue(gregtech.api.energy.EngineFaceRotation.toWorld(
+        return Direction.from3DDataValue(gregtech.internal.energy.EngineFaceRotation.toWorld(
                 facing().get3DDataValue(), relDir));
     }
 
     /** Retains the existing entry-face convention on both platforms. */
     static int rotateAbsoluteToRelative(Direction facing, Direction side) {
-        return gregtech.api.energy.EngineFaceRotation.toRelative(
+        return gregtech.internal.energy.EngineFaceRotation.toRelative(
                 facing.get3DDataValue(), side.get3DDataValue());
     }
 }

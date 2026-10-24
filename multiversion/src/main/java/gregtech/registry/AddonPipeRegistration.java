@@ -1,8 +1,8 @@
 package gregtech.registry;
 
-import gregtech.api.machine.ItemPipeSpec;
-import gregtech.api.machine.PipeSpec;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.machine.ItemPipeSpec;
+import gregtech.internal.machine.PipeSpec;
+import gregtech.internal.material.GTMaterial;
 import gregtech.block.machine.FluidPipeBlock;
 import gregtech.block.machine.ItemPipeBlock;
 import net.minecraft.world.item.Item;
@@ -106,15 +106,15 @@ public final class AddonPipeRegistration {
         var material = spec.material();
         return new gregtech.block.machine.GTMachineBlockItem(block,
                 new Item.Properties().stacksTo(fluidStack(spec.size())),
-                new gregtech.api.machine.MachineSpec(spec.id(), material.getLocalName(), material.getColor(),
-                        0, 0, gregtech.api.machine.MachineTextures.BURNING_SOLID, 4.0F, 3.0F));
+                new gregtech.internal.machine.MachineSpec(spec.id(), material.getLocalName(), material.getColor(),
+                        0, 0, gregtech.internal.machine.MachineTextures.BURNING_SOLID, 4.0F, 3.0F));
     }
     private static Item itemItem(ItemPipeBlock block, ItemPipeSpec spec) {
         var material = spec.material();
         return new gregtech.block.machine.GTMachineBlockItem(block,
                 new Item.Properties().stacksTo(GTItemPipes.stackSize(spec.size())),
-                new gregtech.api.machine.MachineSpec(spec.id(), material.getLocalName(), material.getColor(),
-                        0, 0, gregtech.api.machine.MachineTextures.BURNING_SOLID, 1.5F, spec.blastResistance()));
+                new gregtech.internal.machine.MachineSpec(spec.id(), material.getLocalName(), material.getColor(),
+                        0, 0, gregtech.internal.machine.MachineTextures.BURNING_SOLID, 1.5F, spec.blastResistance()));
     }
 //?}
 

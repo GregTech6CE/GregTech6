@@ -73,14 +73,14 @@ public class DustFunnelBlock extends Block implements EntityBlock {
         if (!(level.getBlockEntity(pos) instanceof DustFunnelBlockEntity funnel)) return InteractionResult.PASS;
         ItemStack held = player.getItemInHand(hand);
         if (!level.isClientSide) {
-            if (gregtech.api.tool.GTToolHelper.isMonkeyWrench(held)) {
+            if (gregtech.internal.tool.GTToolHelper.isMonkeyWrench(held)) {
                 funnel.cycleMode(player.isShiftKeyDown());
                 player.displayClientMessage(funnel.modeIcon().getHoverName(), true);
-                gregtech.api.tool.GTToolHelper.damageForUse(held, 1, player);
-            } else if (gregtech.api.tool.GTToolHelper.matchesTool(held, gregtech.api.tool.GTToolType.PINCERS)) {
+                gregtech.internal.tool.GTToolHelper.damageForUse(held, 1, player);
+            } else if (gregtech.internal.tool.GTToolHelper.matchesTool(held, gregtech.internal.tool.GTToolType.PINCERS)) {
                 ItemStack out = funnel.retrieveFraction();
                 if (!out.isEmpty() && !player.addItem(out)) player.drop(out, false);
-                gregtech.api.tool.GTToolHelper.damageForToolClickReturn(held, 10, player);
+                gregtech.internal.tool.GTToolHelper.damageForToolClickReturn(held, 10, player);
             } else if (player.isShiftKeyDown() && held.isEmpty()) {
                 ItemStack out = funnel.retrieve();
                 if (!out.isEmpty() && !player.addItem(out)) player.drop(out, false);

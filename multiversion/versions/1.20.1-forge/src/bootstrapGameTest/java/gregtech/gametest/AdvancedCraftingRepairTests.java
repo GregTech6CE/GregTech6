@@ -4,7 +4,7 @@ import gregtech.GregTech;
 import gregtech.block.misc.*;
 import gregtech.client.gui.AdvancedCraftingMenu;
 import gregtech.content.material.Materials;
-import gregtech.api.tool.*;
+import gregtech.internal.tool.*;
 import gregtech.data.MaterialPrefix;
 import gregtech.item.GTToolItem;
 import gregtech.registry.*;
@@ -29,7 +29,7 @@ import java.util.*;
 @PrefixGameTestTemplate(false)
 public final class AdvancedCraftingRepairTests {
     private static AdvancedCraftingTableBlockEntity place(GameTestHelper h){h.setBlock(new BlockPos(1,1,1),GTMiscBlocks.ADVANCED_CRAFTING_TABLE.get());return (AdvancedCraftingTableBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(new BlockPos(1,1,1)));}
-    private static ItemStack tool(GTToolType type){return GTToolItem.create(type,Materials.Steel,gregtech.api.material.GTMaterialRegistry.get("Wood"));}
+    private static ItemStack tool(GTToolType type){return GTToolItem.create(type,Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));}
     private static void probe(GameTestHelper h,boolean toolRecipe,ItemStack[] inputs,Runnable action){
         var manager=h.getLevel().getRecipeManager();var old=new ArrayList<Recipe<?>>(manager.getRecipes());var all=new ArrayList<Recipe<?>>(old);
         var ingredients=NonNullList.<Ingredient>create();for(var input:inputs)ingredients.add(Ingredient.of(input));

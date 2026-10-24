@@ -1,6 +1,6 @@
 /* Original GT6 Loader_MultiTileEntities and MultiItemRandomTools; LGPL-3.0-or-later. */
 package gregtech.data;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import java.util.List;
 import java.util.Map;
 /** Source crafting rows omitted by the earlier recipe import. */
@@ -217,16 +217,16 @@ public final class OriginalSurvivalRecipes {
         new Row("ender_garbage_bin", 1, ImportedMaterialData.Steel, "OOO|OXO|PPP", Map.of('O', "mat:plate@Obsidian", 'P', "tag:gt6ce:technology/any_iron_plate", 'X', "mat:gem@EnderEye")),
         new Row("advanced_button", 1, ImportedMaterialData.TinAlloy, "dPT|WLW|TSw", Map.of('L', "mat:wireFine@Lumium", 'P', "mat:plateTiny", 'S', "mat:springSmall", 'T', "mat:screw", 'W', "mat:wireFine@RedAlloy", 'd', "item:gt6ce:tool_screwdriver", 'w', "item:gt6ce:tool_wrench")),
         new Row("coin_mold", 1, ImportedMaterialData.Steel, "yhf|PPP|III", Map.of('I', "mat:ingot@Iron", 'P', "tag:gt6ce:technology/any_iron_double_plate", 'f', "item:gt6ce:tool_file", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-        new Row("iron_key", 3, gregtech.api.material.GTMaterialRegistry.get("Iron"), "fPx", Map.of('f', "item:gt6ce:tool_file", 'P', "mat:plate", 'x', "item:gt6ce:tool_wire_cutter")),
-        new Row("gold_key", 3, gregtech.api.material.GTMaterialRegistry.get("Gold"), "fPx", Map.of('f', "item:gt6ce:tool_file", 'P', "mat:plate", 'x', "item:gt6ce:tool_wire_cutter")),
-        new Row("copper_key", 3, gregtech.api.material.GTMaterialRegistry.get("Copper"), "fPx", Map.of('f', "item:gt6ce:tool_file", 'P', "mat:plate", 'x', "item:gt6ce:tool_wire_cutter")),
-        new Row("tin_key", 3, gregtech.api.material.GTMaterialRegistry.get("Tin"), "fPx", Map.of('f', "item:gt6ce:tool_file", 'P', "mat:plate", 'x', "item:gt6ce:tool_wire_cutter")),
-        new Row("bronze_key", 3, gregtech.api.material.GTMaterialRegistry.get("Bronze"), "fPx", Map.of('f', "item:gt6ce:tool_file", 'P', "mat:plate", 'x', "item:gt6ce:tool_wire_cutter")),
-        new Row("brass_key", 3, gregtech.api.material.GTMaterialRegistry.get("Brass"), "fPx", Map.of('f', "item:gt6ce:tool_file", 'P', "mat:plate", 'x', "item:gt6ce:tool_wire_cutter")),
-        new Row("silver_key", 3, gregtech.api.material.GTMaterialRegistry.get("Silver"), "fPx", Map.of('f', "item:gt6ce:tool_file", 'P', "mat:plate", 'x', "item:gt6ce:tool_wire_cutter")),
-        new Row("platinum_key", 3, gregtech.api.material.GTMaterialRegistry.get("Platinum"), "fPx", Map.of('f', "item:gt6ce:tool_file", 'P', "mat:plate", 'x', "item:gt6ce:tool_wire_cutter")),
-        new Row("lead_key", 3, gregtech.api.material.GTMaterialRegistry.get("Lead"), "fPx", Map.of('f', "item:gt6ce:tool_file", 'P', "mat:plate", 'x', "item:gt6ce:tool_wire_cutter")),
-        new Row("plastic_key", 3, gregtech.api.material.GTMaterialRegistry.get("Plastic"), "fPx", Map.of('f', "item:gt6ce:tool_file", 'P', "mat:plate", 'x', "item:gt6ce:tool_wire_cutter")),
+        new Row("iron_key", 3, gregtech.internal.material.GTMaterialRegistry.get("Iron"), "fPx", Map.of('f', "item:gt6ce:tool_file", 'P', "mat:plate", 'x', "item:gt6ce:tool_wire_cutter")),
+        new Row("gold_key", 3, gregtech.internal.material.GTMaterialRegistry.get("Gold"), "fPx", Map.of('f', "item:gt6ce:tool_file", 'P', "mat:plate", 'x', "item:gt6ce:tool_wire_cutter")),
+        new Row("copper_key", 3, gregtech.internal.material.GTMaterialRegistry.get("Copper"), "fPx", Map.of('f', "item:gt6ce:tool_file", 'P', "mat:plate", 'x', "item:gt6ce:tool_wire_cutter")),
+        new Row("tin_key", 3, gregtech.internal.material.GTMaterialRegistry.get("Tin"), "fPx", Map.of('f', "item:gt6ce:tool_file", 'P', "mat:plate", 'x', "item:gt6ce:tool_wire_cutter")),
+        new Row("bronze_key", 3, gregtech.internal.material.GTMaterialRegistry.get("Bronze"), "fPx", Map.of('f', "item:gt6ce:tool_file", 'P', "mat:plate", 'x', "item:gt6ce:tool_wire_cutter")),
+        new Row("brass_key", 3, gregtech.internal.material.GTMaterialRegistry.get("Brass"), "fPx", Map.of('f', "item:gt6ce:tool_file", 'P', "mat:plate", 'x', "item:gt6ce:tool_wire_cutter")),
+        new Row("silver_key", 3, gregtech.internal.material.GTMaterialRegistry.get("Silver"), "fPx", Map.of('f', "item:gt6ce:tool_file", 'P', "mat:plate", 'x', "item:gt6ce:tool_wire_cutter")),
+        new Row("platinum_key", 3, gregtech.internal.material.GTMaterialRegistry.get("Platinum"), "fPx", Map.of('f', "item:gt6ce:tool_file", 'P', "mat:plate", 'x', "item:gt6ce:tool_wire_cutter")),
+        new Row("lead_key", 3, gregtech.internal.material.GTMaterialRegistry.get("Lead"), "fPx", Map.of('f', "item:gt6ce:tool_file", 'P', "mat:plate", 'x', "item:gt6ce:tool_wire_cutter")),
+        new Row("plastic_key", 3, gregtech.internal.material.GTMaterialRegistry.get("Plastic"), "fPx", Map.of('f', "item:gt6ce:tool_file", 'P', "mat:plate", 'x', "item:gt6ce:tool_wire_cutter")),
         new Row("press_bullet_casing_shape_small", 1, gregtech.content.material.Materials.Steel, "TPT|dyh|SPS", Map.of('T', "mat:screw", 'P', "mat:plateDouble", 'S', "mat:stick", 'd', "item:gt6ce:tool_screwdriver", 'y', "item:gt6ce:tool_chisel", 'h', "item:gt6ce:tool_hammer")),
         new Row("press_bullet_casing_shape_medium", 1, gregtech.content.material.Materials.Steel, "TPT|dyh|SPS", Map.of('T', "mat:screw", 'P', "mat:plateTriple", 'S', "mat:stick", 'd', "item:gt6ce:tool_screwdriver", 'y', "item:gt6ce:tool_chisel", 'h', "item:gt6ce:tool_hammer")),
         new Row("press_bullet_casing_shape_large", 1, gregtech.content.material.Materials.Steel, "TPT|dyh|SPS", Map.of('T', "mat:screw", 'P', "mat:plateQuadruple", 'S', "mat:stick", 'd', "item:gt6ce:tool_screwdriver", 'y', "item:gt6ce:tool_chisel", 'h', "item:gt6ce:tool_hammer"))

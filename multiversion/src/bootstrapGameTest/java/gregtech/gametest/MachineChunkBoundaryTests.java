@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.energy.FaceConfig;
+import gregtech.internal.energy.FaceConfig;
 import gregtech.block.machine.BasicMachineBlock;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.blockentity.machine.LargeRecipeMachineBlockEntity;

@@ -1,7 +1,7 @@
 package gregtech.blockentity.tool;
 
 import gregtech.data.MaterialPrefix;
-import gregtech.api.material.MaterialEquivalence;
+import gregtech.internal.material.MaterialEquivalence;
 import gregtech.registry.GTBlockEntities;
 import gregtech.registry.GTItems;
 import net.minecraft.core.BlockPos;
@@ -86,7 +86,7 @@ public final class CoinMoldBlockEntity extends BlockEntity {
         return current;
     }
 
-    @Nullable public gregtech.api.material.GTMaterial displayedMaterial() {
+    @Nullable public gregtech.internal.material.GTMaterial displayedMaterial() {
         var form = MaterialEquivalence.form(inventory.getStackInSlot(0));
         return form == null ? null : form.material();
     }

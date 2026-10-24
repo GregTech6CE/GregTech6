@@ -77,7 +77,7 @@ public final class MaterialProcessingTargets {
             String[] parts = row.split("\\|", -1);
             String owner = gregtech.content.recipe.generated.GTMaterialFields.materialOf(parts[0]);
             if (owner == null) continue;   // a GT6 material the port does not register
-            BY_MATERIAL.put(gregtech.api.material.GTMaterial.sanitize(owner)
+            BY_MATERIAL.put(gregtech.internal.material.GTMaterial.sanitize(owner)
                     + "|" + parts[1], new String[]{parts[2], parts[3]});
         }
     }
@@ -87,7 +87,7 @@ public final class MaterialProcessingTargets {
      * target field meaning the material itself, or null when GT6 only has the default there.
      */
     public static String[] of(String materialName, String kind) {
-        return BY_MATERIAL.get(gregtech.api.material.GTMaterial.sanitize(materialName)
+        return BY_MATERIAL.get(gregtech.internal.material.GTMaterial.sanitize(materialName)
                 + "|" + kind);
     }
 

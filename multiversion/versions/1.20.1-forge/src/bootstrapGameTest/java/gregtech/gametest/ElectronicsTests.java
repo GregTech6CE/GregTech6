@@ -1,6 +1,7 @@
 package gregtech.gametest;
 
 import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.content.recipe.ElectronicsRecipes;
 import gregtech.registry.*;
 import gregtech.data.*;
@@ -31,9 +32,9 @@ public final class ElectronicsTests {
                 h.assertTrue(ingredient.getItems().length>0,"resolved ingredient: "+recipe.getId());
                 var stack=ingredient.getItems()[0].copy();
                 if(stack.getItem() instanceof gregtech.item.GTToolItem) {
-                    var type=gregtech.api.tool.GTToolHelper.getType(stack);
+                    var type=gregtech.internal.tool.GTToolHelper.getType(stack);
                     stack=gregtech.item.GTToolItem.create(type,gregtech.content.material.Materials.Steel,
-                            gregtech.api.material.GTMaterialRegistry.get("Wood"));
+                            gregtech.internal.material.GTMaterialRegistry.get("Wood"));
                 }
                 grid.setItem(slot,stack);
             }
@@ -42,7 +43,7 @@ public final class ElectronicsTests {
             var remainders=recipe.getRemainingItems(grid);
             for(int slot=0;slot<9;slot++) if(grid.getItem(slot).getItem() instanceof gregtech.item.GTToolItem) {
                 var tool=grid.getItem(slot);
-                h.assertTrue(remainders.get(slot).getDamageValue()==gregtech.api.tool.GTToolHelper.getType(tool).damagePerCraft(),"each tool receives its own wear");
+                h.assertTrue(remainders.get(slot).getDamageValue()==gregtech.internal.tool.GTToolHelper.getType(tool).damagePerCraft(),"each tool receives its own wear");
                 h.assertTrue(tool.getDamageValue()==0,"craft preview does not damage input");
                 tool.setDamageValue(tool.getMaxDamage());
                 h.assertTrue(!recipe.matches(grid,h.getLevel()),"broken tool rejected");

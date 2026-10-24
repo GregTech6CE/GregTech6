@@ -23,7 +23,7 @@ import net.minecraftforge.server.ServerLifecycleHooks;
 
 /** Applies the machine-recipe overlay after tags bind on the logical server. */
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID)
+/*@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID)
 *///?} else {
 @Mod.EventBusSubscriber(modid = GregTech.MODID)
 //?}
@@ -32,7 +32,7 @@ public final class MachineRecipeLifecycle {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void tags(TagsUpdatedEvent event) {
-        for (var map : gregtech.api.recipe.RecipeMap.RECIPE_MAP_LIST) map.invalidateLookup();
+        for (var map : gregtech.internal.recipe.RecipeMap.RECIPE_MAP_LIST) map.invalidateLookup();
         if (!event.shouldUpdateStaticData()) return;
         MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
         if (server == null) return;

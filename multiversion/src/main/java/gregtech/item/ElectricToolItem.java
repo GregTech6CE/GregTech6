@@ -1,7 +1,7 @@
 package gregtech.item;
-import gregtech.api.material.MaterialPresentation;
+import gregtech.internal.material.MaterialPresentation;
 
-import gregtech.api.energy.item.IItemEnergy;
+import gregtech.internal.energy.item.IItemEnergy;
 import gregtech.data.GregTechTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -14,7 +14,7 @@ import gregtech.content.tool.ElectricToolWear;
 /** GT6 electric tool base — stores EU and consumes power on use. */
 
 //? if >=1.21.1 {
-/*public class ElectricToolItem extends TieredItem implements IItemEnergy, gregtech.api.tool.PoweredToolItem {
+/*public class ElectricToolItem extends TieredItem implements IItemEnergy, gregtech.internal.tool.PoweredToolItem {
 *///?} else {
 public class ElectricToolItem extends TieredItem implements IItemEnergy {
 //?}
@@ -71,14 +71,14 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
 
     /** Only the two currently implemented machine-click tool identities. Drill is not a pickaxe. */
     @javax.annotation.Nullable
-    public gregtech.api.tool.GTToolType interactionType(ItemStack stack) {
+    public gregtech.internal.tool.GTToolType interactionType(ItemStack stack) {
         return switch (toolName) {
-            case "Wrench" -> monkeyWrenchMode(stack) ? gregtech.api.tool.GTToolType.MONKEY_WRENCH
-                    : gregtech.api.tool.GTToolType.WRENCH;
-            case "Drill" -> gregtech.api.tool.GTToolType.HAND_DRILL;
-            case "Chainsaw","BuzzSaw" -> gregtech.api.tool.GTToolType.SAW;
-            case "Trimmer" -> gregtech.api.tool.GTToolType.BRANCH_CUTTER;
-            case "Screwdriver" -> gregtech.api.tool.GTToolType.SCREWDRIVER;
+            case "Wrench" -> monkeyWrenchMode(stack) ? gregtech.internal.tool.GTToolType.MONKEY_WRENCH
+                    : gregtech.internal.tool.GTToolType.WRENCH;
+            case "Drill" -> gregtech.internal.tool.GTToolType.HAND_DRILL;
+            case "Chainsaw","BuzzSaw" -> gregtech.internal.tool.GTToolType.SAW;
+            case "Trimmer" -> gregtech.internal.tool.GTToolType.BRANCH_CUTTER;
+            case "Screwdriver" -> gregtech.internal.tool.GTToolType.SCREWDRIVER;
             default -> null;
         };
     }
@@ -113,7 +113,7 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
             var pos = context.getClickedPos();
             var state = level.getBlockState(pos);
 //? if >=1.21.1 {
-/*            if (state.getBlock() instanceof gregtech.api.tool.ScrewdriverUseTarget target) {
+/*            if (state.getBlock() instanceof gregtech.internal.tool.ScrewdriverUseTarget target) {
 *///?} else {
             if (state.getBlock() instanceof gregtech.block.energy.SignalWireBlock) {
 //?}
@@ -234,16 +234,16 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
         super.inventoryTick(stack, level, entity, slot, selected);
 
 //? if >=1.21.1 {
-/*        if(!level.isClientSide) gregtech.api.tool.GTToolEnchantments.apply(stack,level.registryAccess());
+/*        if(!level.isClientSide) gregtech.internal.tool.GTToolEnchantments.apply(stack,level.registryAccess());
 *///?} else {
-        if(!level.isClientSide) gregtech.api.tool.GTToolEnchantments.apply(stack);
+        if(!level.isClientSide) gregtech.internal.tool.GTToolEnchantments.apply(stack);
 //?}
 
         if (!level.isClientSide && entity instanceof net.minecraft.world.entity.LivingEntity user) finishBrokenTool(stack, user);
     }
 
     /** GT6 Loader_Tools constructs an uncharged tool, with capacity inherited from its battery. */
-    public ItemStack assembled(gregtech.api.material.GTMaterial material, long batteryCapacity) {
+    public ItemStack assembled(gregtech.internal.material.GTMaterial material, long batteryCapacity) {
         if (!gregtech.content.tool.ElectricToolAssembly.validMaterial(material) || batteryCapacity<=0)
             throw new IllegalArgumentException("Invalid electric tool material/capacity");
 
@@ -252,24 +252,24 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
         gregtech.platform.neoforge.StackCustomData.update(result,tag->{var stats=new CompoundTag();stats.putString("head",material.getName());stats.putString("handle",definition().handleMaterial());tag.put("GT.ToolStats",stats);tag.putLong("gt.capacity",batteryCapacity);});
         result.remove(net.minecraft.core.component.DataComponents.MAX_DAMAGE);result.remove(net.minecraft.core.component.DataComponents.DAMAGE);
 *///?} else {
-        var result=gregtech.api.tool.GTToolHelper.write(new ItemStack(this),material,
-                gregtech.api.material.GTMaterialRegistry.get(definition().handleMaterial()));
+        var result=gregtech.internal.tool.GTToolHelper.write(new ItemStack(this),material,
+                gregtech.internal.material.GTMaterialRegistry.get(definition().handleMaterial()));
         result.getOrCreateTag().putLong("gt.capacity",batteryCapacity);
 //?}
 
         return result;
     }
 
-    public gregtech.api.material.GTMaterial headMaterial(ItemStack stack) {
-        var head=gregtech.api.tool.GTToolHelper.getHead(stack);
+    public gregtech.internal.material.GTMaterial headMaterial(ItemStack stack) {
+        var head=gregtech.internal.tool.GTToolHelper.getHead(stack);
         return head!=null && head.isValid() ? head : gregtech.content.material.Materials.Steel;
     }
 
     public int tint(ItemStack stack,int layer) {
         if(layer==1) return headMaterial(stack).getColor();
         if(layer==0) {
-            var handle=gregtech.api.tool.GTToolHelper.getHandle(stack);
-            return handle!=null && handle.isValid()?handle.getColor():gregtech.api.material.GTMaterialRegistry.get(definition().handleMaterial()).getColor();
+            var handle=gregtech.internal.tool.GTToolHelper.getHandle(stack);
+            return handle!=null && handle.isValid()?handle.getColor():gregtech.internal.material.GTMaterialRegistry.get(definition().handleMaterial()).getColor();
         }
         return 0xFFFFFF;
     }

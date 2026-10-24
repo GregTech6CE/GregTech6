@@ -1,7 +1,8 @@
 package gregtech.gametest;
 
 import gregtech.api.material.*;
-import gregtech.api.recipe.RecipeInputs;
+import gregtech.internal.material.*;
+import gregtech.internal.recipe.RecipeInputs;
 import gregtech.block.energy.*;
 import gregtech.blockentity.energy.EnergyNodeBlockEntity;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
@@ -126,7 +127,7 @@ public final class SteamTurbineSourceTests {
             h.assertTrue(available.values().stream().allMatch(v -> v>=0 && v<GTValues.U/72),"turbine recovery conserves each registered material");
             checkCrucible(h,result);
             var unsafe = result.copy(); stored(unsafe);
-            h.assertTrue(RecipeInputs.consume(recovery,List.of(unsafe),List.of(),1) == null && gregtech.api.machine.crucible.CrucibleItemInput.parse(unsafe).isEmpty(),"stored turbine machine survives recycling guard");
+            h.assertTrue(RecipeInputs.consume(recovery,List.of(unsafe),List.of(),1) == null && gregtech.internal.machine.crucible.CrucibleItemInput.parse(unsafe).isEmpty(),"stored turbine machine survives recycling guard");
             count++;
         }
         h.assertTrue(count == 15,"all original turbine crafting registrations"); h.succeed();

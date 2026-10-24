@@ -1,7 +1,7 @@
 package gregtech.data;
 
 import com.google.gson.Gson;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.AbstractPackResources;
@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Set;
 
 /** Original portable crafting dictionary patterns over shared catalogs; native data-pack reload and codecs. */
-@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public final class BumbleCraftingRecipePack extends AbstractPackResources {
     private static final Gson GSON=new Gson();
 

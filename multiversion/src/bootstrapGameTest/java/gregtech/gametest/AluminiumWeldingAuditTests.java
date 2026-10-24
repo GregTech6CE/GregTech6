@@ -1,9 +1,9 @@
 // CORRECTED 17:31 UTC: original Al IS FURNACE from metal factory933<=1200. Old384 oracle RETRACTED.
 // TESTS-ONLY baseline: uses only existing production APIs; no positive-overlay helper dependency.
 package gregtech.gametest;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.prefix.BlockMaterialPrefix;
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.prefix.BlockMaterialPrefix;
+import gregtech.internal.recipe.Recipe;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.data.MaterialPrefix;
 import gregtech.registry.*;
@@ -65,7 +65,7 @@ public final class AluminiumWeldingAuditTests {
   var al=GTMaterialRegistry.get("Aluminium");
   var r=MachineRecipeMaps.Welder.findRecipe(List.of(GTItems.getStack(MaterialPrefix.ingot,al,2),new ItemStack(GTTechnological.selectorTag(2))),List.of(),false,9,1,h.getLevel(),null,ItemStack.EMPTY);
   h.assertTrue(r!=null,"Registered Al double ingot exists");
-  var display=gregtech.api.recipe.RecipePowerStats.of(r,MachineRecipeMaps.Welder.mPower);
+  var display=gregtech.internal.recipe.RecipePowerStats.of(r,MachineRecipeMaps.Welder.mPower);
   h.assertTrue(display.time()==32 && display.timeUnit().equals("ticks"),"EMI base duration is ticks, not seconds");
   var t1=gregtech.api.recipe.MachineWorkCost.calculate(r.mEUt,r.mDuration,1,false,10000,16,64,false);
   var t2=gregtech.api.recipe.MachineWorkCost.calculate(r.mEUt,r.mDuration,1,false,10000,64,256,false);
@@ -99,7 +99,7 @@ public final class AluminiumWeldingAuditTests {
    "cell_wax_refractory","cell_wax_magic","cell_wax_amnesic","cell_wax_soulful",
    "cell_plastic","cell_tin","cell_tin_alloy","cell_aluminium");
   var seen=new java.util.HashSet<String>();int specs=0,checked=0;
-  for(var spec:gregtech.api.fluid.PortableFluidContainerSpec.values()) {
+  for(var spec:gregtech.internal.fluid.PortableFluidContainerSpec.values()) {
    if(!spec.shapeId().equals("cell"))continue;
    if(!expected.contains(spec.id()))continue;
    seen.add(spec.id());
@@ -118,7 +118,7 @@ public final class AluminiumWeldingAuditTests {
      h.assertTrue(recipe.mEUt==16 && recipe.mDuration==(tiny?8:64),"Original simple capsule work");
      h.assertTrue(recipe.mOutputs.length==1 && recipe.mOutputs[0].getCount()==(tiny?1:9)
       && net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(recipe.mOutputs[0].getItem()).equals(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","fluid_"+spec.id())),"Registered native capsule output identity");
-     var after=gregtech.api.recipe.RecipeInputs.consume(recipe,inputs,List.of(),1);
+     var after=gregtech.internal.recipe.RecipeInputs.consume(recipe,inputs,List.of(),1);
      h.assertTrue(after!=null && after.items().get(0).isEmpty() && after.items().get(1).is(mold.getItem())
       && after.items().get(1).getCount()==1,"Capsule consumes only material, retains mold");
      checked++;
@@ -135,11 +135,11 @@ public final class AluminiumWeldingAuditTests {
   h.assertTrue(recipe!=null,"Actual winning recipe exists: "+inputs);
   h.assertTrue(recipe.mEUt==16 && recipe.mDuration==ticks,"Winning cost expected16/"+ticks+", got"+recipe.mEUt+"/"+recipe.mDuration);
   h.assertTrue(recipe.mOutputs.length==1 && recipe.mOutputs[0].is(output.getItem()) && recipe.mOutputs[0].getCount()==output.getCount(),"Winning output unchanged");
-  var after=gregtech.api.recipe.RecipeInputs.consume(recipe,inputs,List.of(),1);
+  var after=gregtech.internal.recipe.RecipeInputs.consume(recipe,inputs,List.of(),1);
   h.assertTrue(after!=null,"Actual recipe consumption plan exists");
   for(int slot=0;slot<inputs.size();slot++) {
    var before=inputs.get(slot);var remaining=after.items().get(slot);
-   boolean retained=before.getItem() instanceof gregtech.api.recipe.RecipeCatalystLike catalyst && catalyst.isCatalyst();
+   boolean retained=before.getItem() instanceof gregtech.internal.recipe.RecipeCatalystLike catalyst && catalyst.isCatalyst();
    h.assertTrue(retained ? remaining.is(before.getItem()) && remaining.getCount()==before.getCount() : remaining.isEmpty(),
     "Original selector retained/material consumed at slot"+slot);
   }

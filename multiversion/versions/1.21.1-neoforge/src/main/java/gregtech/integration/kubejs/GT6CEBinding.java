@@ -1,9 +1,9 @@
 package gregtech.integration.kubejs;
 
 import com.google.gson.JsonParser;
-import gregtech.api.kubejs.StructureLayoutDocuments;
-import gregtech.api.recipe.data.MachineRecipeFields;
-import gregtech.api.recipe.data.MachineRecipeScript;
+import gregtech.internal.kubejs.StructureLayoutDocuments;
+import gregtech.internal.recipe.data.MachineRecipeFields;
+import gregtech.internal.recipe.data.MachineRecipeScript;
 import dev.latvian.mods.kubejs.generator.KubeDataGenerator;
 import dev.latvian.mods.kubejs.recipe.RecipesKubeEvent;
 import dev.latvian.mods.kubejs.script.SourceLine;

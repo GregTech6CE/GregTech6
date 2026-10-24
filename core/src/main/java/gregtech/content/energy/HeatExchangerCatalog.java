@@ -2,7 +2,7 @@
  * Loader_MultiTileEntities 9103–9159 and MultiTileEntityGeneratorHotFluid. */
 package gregtech.content.energy;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.data.ImportedMaterialData;
 import gregtech.content.multiblock.HeatExchangerRules;
 import java.util.List;
@@ -15,13 +15,13 @@ public final class HeatExchangerCatalog {
         public HeatExchangerRules.Settings settings() {
             return new HeatExchangerRules.Settings(rate, efficiency, "gt.recipe.fuels.hot", gregtech.data.GregTechTags.Energy.HU.getId());
         }
-        public gregtech.api.material.ItemComposition composition() {
+        public gregtech.internal.material.ItemComposition composition() {
             long unit = gregtech.api.material.GTValues.U;
-            return new gregtech.api.material.ItemComposition(null, List.of(
-                    gregtech.api.material.MaterialComponent.of(material, (dense() ? 26 : 8) * unit),
-                    gregtech.api.material.MaterialComponent.of(ImportedMaterialData.Pb, (dense() ? 16 : 4) * unit),
-                    gregtech.api.material.MaterialComponent.of(ImportedMaterialData.Cu, (dense() ? 12 : 2) * unit),
-                    gregtech.api.material.MaterialComponent.of(material == ImportedMaterialData.Invar ? ImportedMaterialData.Cu : ImportedMaterialData.AnnealedCopper, (dense() ? 9 : 2) * unit)),
+            return new gregtech.internal.material.ItemComposition(null, List.of(
+                    gregtech.internal.material.MaterialComponent.of(material, (dense() ? 26 : 8) * unit),
+                    gregtech.internal.material.MaterialComponent.of(ImportedMaterialData.Pb, (dense() ? 16 : 4) * unit),
+                    gregtech.internal.material.MaterialComponent.of(ImportedMaterialData.Cu, (dense() ? 12 : 2) * unit),
+                    gregtech.internal.material.MaterialComponent.of(material == ImportedMaterialData.Invar ? ImportedMaterialData.Cu : ImportedMaterialData.AnnealedCopper, (dense() ? 9 : 2) * unit)),
                     "GT6 Loader_MultiTileEntities " + sourceId + " CR.REV", true);
         }
     }

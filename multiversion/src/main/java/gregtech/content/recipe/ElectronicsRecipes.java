@@ -1,7 +1,8 @@
 package gregtech.content.recipe;
 
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.data.*;
 import gregtech.registry.*;
 import net.minecraft.world.item.ItemStack;
@@ -117,8 +118,8 @@ public final class ElectronicsRecipes {
      * directly and adds the group's re-registrations on top.
      */
     private static void crystal(String circuit, String[] names,
-                                gregtech.api.material.GTMaterial group) {
-        java.util.Set<gregtech.api.material.GTMaterial> gems = new java.util.LinkedHashSet<>();
+                                gregtech.internal.material.GTMaterial group) {
+        java.util.Set<gregtech.internal.material.GTMaterial> gems = new java.util.LinkedHashSet<>();
         for (String name : names) {
             var material = GTMaterialRegistry.get(name);
             if (material != null && material.isValid()) gems.add(material.resolve());

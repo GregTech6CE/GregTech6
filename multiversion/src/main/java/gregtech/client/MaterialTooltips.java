@@ -1,5 +1,5 @@
 package gregtech.client;
-import gregtech.api.material.MaterialPresentation;
+import gregtech.internal.material.MaterialPresentation;
 
 
 
@@ -8,15 +8,15 @@ import gregtech.api.material.MaterialPresentation;
 import gregtech.GregTech;
 //?}
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.ItemMaterialRegistry;
-import gregtech.api.material.MaterialChemistry;
-import gregtech.api.machine.FurnaceFuelValue;
-import gregtech.api.material.MaterialProperty;
-import gregtech.api.mod.ModData;
-import gregtech.api.prefix.BlockMaterialPrefix;
+import gregtech.internal.material.ItemMaterialRegistry;
+import gregtech.internal.material.MaterialChemistry;
+import gregtech.internal.machine.FurnaceFuelValue;
+import gregtech.internal.material.MaterialProperty;
+import gregtech.internal.mod.ModData;
+import gregtech.internal.prefix.BlockMaterialPrefix;
 import gregtech.data.MaterialPrefix;
 import gregtech.block.BlockMaterialWeights;
 import gregtech.block.stone.StoneMaterialWeights;
@@ -123,8 +123,8 @@ public final class MaterialTooltips {
         }
 
         if(flag.isAdvanced() && prefix!=null) {
-            var form = new gregtech.api.material.MaterialEquivalence.Form(prefix,mat);
-            String tag = gregtech.api.material.MaterialEquivalence.tagPath(form);
+            var form = new gregtech.internal.material.MaterialEquivalence.Form(prefix,mat);
+            String tag = gregtech.internal.material.MaterialEquivalence.tagPath(form);
             if(tag!=null) tooltip.add(Component.translatable("tooltip.gt6ce.material_tag","forge:"+tag).withStyle(ChatFormatting.DARK_GRAY));
             GTMaterial target = prefix==MaterialPrefix.oreRaw ? mat.getTargetCrushingMaterial() : mat.getTargetPulverMaterial();
             if(target.resolve()!=mat) tooltip.add(Component.translatable(prefix==MaterialPrefix.oreRaw ? "tooltip.gt6ce.crushing_result" : "tooltip.gt6ce.pulver_result",MaterialPresentation.name(target)).withStyle(ChatFormatting.GRAY));
@@ -184,7 +184,7 @@ public final class MaterialTooltips {
                     .withStyle(ChatFormatting.BLUE));
             return;
         }
-        var owners = gregtech.api.addon.AddonMaterials.owners(mat);
+        var owners = gregtech.internal.addon.AddonMaterials.owners(mat);
         if (owners.size() > 1) {
 //? if >=1.21.1 {
 /*            tooltip.add(Component.translatable("tooltip.gt6ce.material_from_addons", String.join(", ", owners))
@@ -195,7 +195,7 @@ public final class MaterialTooltips {
 //?}
             return;
         }
-        String sourceKey = gregtech.api.material.GTMaterialRegistry.isCoreMaterial(mat)
+        String sourceKey = gregtech.internal.material.GTMaterialRegistry.isCoreMaterial(mat)
 //? if >=1.21.1 {
 /*// Version-specific branch.
                 ? "tooltip." + "gt6ce" + ".material_from_mod"
@@ -213,9 +213,9 @@ public final class MaterialTooltips {
         return GTMaterialRegistry.isPeriodicTableElement(mat);
     }
 
-    public static void appendForeign(ItemStack stack, gregtech.api.material.ItemComposition data,
+    public static void appendForeign(ItemStack stack, gregtech.internal.material.ItemComposition data,
                                      List<Component> tooltip, TooltipFlag flag) {
-        var form = gregtech.api.material.MaterialEquivalence.form(stack);
+        var form = gregtech.internal.material.MaterialEquivalence.form(stack);
         if(form!=null) {
             append(stack,form.material(),form.prefix(),tooltip,flag);
             return;
@@ -303,7 +303,7 @@ public final class MaterialTooltips {
     }
 
     public static double weightKg(GTMaterial material, long amount, double densityGPerCm3) {
-        return gregtech.api.material.MaterialMass.kilograms(densityGPerCm3, amount);
+        return gregtech.internal.material.MaterialMass.kilograms(densityGPerCm3, amount);
     }
 
     public static String displayUnits(long amount) {

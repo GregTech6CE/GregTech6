@@ -1,8 +1,9 @@
 package gregtech.blockentity.tool;
 
-import gregtech.api.fluid.FluidTankGT;
-import gregtech.api.inventory.BlockContents;
+import gregtech.internal.fluid.FluidTankGT;
+import gregtech.internal.inventory.BlockContents;
 import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.block.tool.ProcessingToolBlock;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.registry.GTBlockEntities;
@@ -117,7 +118,7 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
         || fluid == net.minecraft.world.level.material.Fluids.FLOWING_WATER
         || entry != null && entry.hasFlag(gregtech.data.RegisteredFluids.FluidFlags.SIMPLE);
         return gregtech.content.tool.OpenVesselRules.accepts(wooden, bowl, temperature, limit, density, simple,
-                gregtech.api.fluid.FluidHazards.isGas(fluid), gregtech.api.fluid.FluidHazards.isAcid(fluid),
+                gregtech.internal.fluid.FluidHazards.isGas(fluid), gregtech.internal.fluid.FluidHazards.isAcid(fluid),
                 entry != null && entry.hasFlag(gregtech.data.RegisteredFluids.FluidFlags.MAGIC));
     }
 
@@ -246,9 +247,9 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
             if (side == Direction.UP) processMixer(player, held);
             return;
         }
-        if (gregtech.api.tool.GTToolHelper.matchesTool(held, gregtech.api.tool.GTToolType.PLUNGER)) {
+        if (gregtech.internal.tool.GTToolHelper.matchesTool(held, gregtech.internal.tool.GTToolType.PLUNGER)) {
             for (var tank : allTanks()) if (!tank.drain(1000, IFluidHandler.FluidAction.EXECUTE).isEmpty()) {
-                gregtech.api.tool.GTToolHelper.damageForUse(held, 1, player);
+                gregtech.internal.tool.GTToolHelper.damageForUse(held, 1, player);
                 return;
             }
         }

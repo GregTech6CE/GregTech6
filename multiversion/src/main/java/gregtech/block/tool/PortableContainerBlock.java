@@ -1,6 +1,6 @@
 package gregtech.block.tool;
 
-import gregtech.api.fluid.PortableFluidContainerSpec;
+import gregtech.internal.fluid.PortableFluidContainerSpec;
 import gregtech.blockentity.tool.PortableContainerBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.*;

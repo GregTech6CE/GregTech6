@@ -3,7 +3,9 @@ package gregtech.content.recipe;
 import gregtech.content.recipe.PolymerFormingRecipeRows.Form;
 
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.data.*;
 import gregtech.registry.*;
 import net.minecraft.world.item.ItemStack;

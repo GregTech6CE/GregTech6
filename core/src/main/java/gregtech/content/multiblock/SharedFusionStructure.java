@@ -1,6 +1,6 @@
 package gregtech.content.multiblock;
 
-import gregtech.api.multiblock.StructureGrid.Role;
+import gregtech.internal.multiblock.StructureGrid.Role;
 import java.util.List;
 
 /** Generated from GT6 MultiTileEntityFusionReactor by tools/import_fusion_structure.py.

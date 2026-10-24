@@ -1,6 +1,6 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.multiblock.MultiblockLayout.Role;
+import gregtech.internal.multiblock.MultiblockLayout.Role;
 
 //? if >=1.21.1 {
 //?} else {
@@ -17,7 +17,7 @@ public class DistillationTowerControllerBlockEntity extends LargeRecipeMachineBl
     public DistillationTowerControllerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
-    @Override public void setSpec(gregtech.api.machine.BasicMachineSpec spec) {
+    @Override public void setSpec(gregtech.internal.machine.BasicMachineSpec spec) {
         super.setSpec(spec);
         for(var tank:getTanksOutput())tank.setCapacity(Long.MAX_VALUE);
     }

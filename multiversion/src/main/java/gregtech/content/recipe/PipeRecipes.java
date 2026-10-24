@@ -5,13 +5,13 @@ package gregtech.content.recipe;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.machine.ItemPipeSpec;
-import gregtech.api.machine.PipeSpec;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.machine.ItemPipeSpec;
+import gregtech.internal.machine.PipeSpec;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.MaterialProperty;
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.material.MaterialProperty;
+import gregtech.internal.recipe.Recipe;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.data.MaterialPrefix;
 import gregtech.data.generated.MaterialWorkability;

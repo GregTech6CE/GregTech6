@@ -2,9 +2,9 @@
  * MultiTileEntityTank.addToolTips and its structure/facing superclass chain. */
 package gregtech.client;
 
-import gregtech.api.fluid.FluidTankGT;
-import gregtech.api.fluid.FluidHazards;
-import gregtech.api.fluid.MultiblockTankData;
+import gregtech.internal.fluid.FluidTankGT;
+import gregtech.internal.fluid.FluidHazards;
+import gregtech.internal.fluid.MultiblockTankData;
 import gregtech.content.multiblock.OriginalTankTooltipData;
 import gregtech.content.multiblock.TankValveSpec;
 import net.minecraft.ChatFormatting;

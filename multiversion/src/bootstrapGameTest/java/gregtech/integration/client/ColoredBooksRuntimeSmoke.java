@@ -56,7 +56,7 @@ final class ColoredBooksRuntimeSmoke {
         require(!written.isEmpty(),"Missing steam manual");
         for(var variant:ColoredBookRules.VARIANTS){
             var stack=GTColoredBooks.stack(variant.originalId());require(stack.getItem() instanceof ColoredBookItem,"Missing cover "+variant.path());
-            var book=(ColoredBookItem)stack.getItem();var composition=gregtech.api.material.ItemMaterialRegistry.get(stack).orElseThrow();
+            var book=(ColoredBookItem)stack.getItem();var composition=gregtech.internal.material.ItemMaterialRegistry.get(stack).orElseThrow();
 //? if >=1.21.1 {
 //?} else {
             player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,stack.copy());

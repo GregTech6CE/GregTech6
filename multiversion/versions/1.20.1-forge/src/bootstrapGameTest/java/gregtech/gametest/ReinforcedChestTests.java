@@ -6,7 +6,7 @@ import gregtech.registry.GTBlockEntities;
 import gregtech.registry.GTLootChests;
 import gregtech.block.inventory.MetalChestBlock;
 import gregtech.blockentity.inventory.MetalChestBlockEntity;
-import gregtech.api.material.MaterialProperty;
+import gregtech.internal.material.MaterialProperty;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -59,9 +59,9 @@ public final class ReinforcedChestTests {
                 var input = stacks[0].copy();
                 if (input.getItem() instanceof gregtech.item.GTToolItem) {
                     input = gregtech.item.GTToolItem.create(
-                            gregtech.api.tool.GTToolHelper.getType(input),
+                            gregtech.internal.tool.GTToolHelper.getType(input),
                             gregtech.content.material.Materials.Steel,
-                            gregtech.api.material.GTMaterialRegistry.get("Wood"));
+                            gregtech.internal.material.GTMaterialRegistry.get("Wood"));
                 }
                 grid.setItem(i, input);
             }

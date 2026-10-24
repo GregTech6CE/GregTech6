@@ -1,10 +1,10 @@
 package gregtech.content.book;
 
-import gregtech.api.machine.crucible.CrucibleReactions;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialMass;
-import gregtech.api.material.MaterialProperty;
+import gregtech.internal.machine.crucible.CrucibleReactions;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialMass;
+import gregtech.internal.material.MaterialProperty;
 
 import java.util.ArrayList;
 import java.util.Collections;

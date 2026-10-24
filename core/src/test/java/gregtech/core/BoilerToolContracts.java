@@ -1,6 +1,6 @@
 package gregtech.core;
 
-import gregtech.api.multiblock.StructureGrid;
+import gregtech.internal.multiblock.StructureGrid;
 import gregtech.content.multiblock.OriginalLargeBoilerParameters;
 import java.util.HashMap;
 

@@ -1,6 +1,7 @@
 package gregtech.content.recipe;
 
 import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.data.*;
 import gregtech.data.MachineRecipeMaps;

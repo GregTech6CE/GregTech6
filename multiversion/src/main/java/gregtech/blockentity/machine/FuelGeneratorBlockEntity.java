@@ -2,16 +2,16 @@ package gregtech.blockentity.machine;
 
 import gregtech.api.addon.FuelGenerator;
 import gregtech.api.addon.FuelOutput;
-import gregtech.api.energy.EnergyBlockViews;
-import gregtech.api.energy.EnergyTransfer;
-import gregtech.api.energy.IEnergyBlock;
+import gregtech.internal.energy.EnergyBlockViews;
+import gregtech.internal.energy.EnergyTransfer;
+import gregtech.internal.energy.IEnergyBlock;
 //? if >=1.21.1 {
-/*import gregtech.api.fluid.NativeMachineTankData;
+/*import gregtech.internal.fluid.NativeMachineTankData;
 *///?} else {
 //?}
-import gregtech.api.recipe.FluidFuelBatch;
-import gregtech.api.recipe.Recipe;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.recipe.FluidFuelBatch;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.block.machine.FuelGeneratorBlock;
 import gregtech.data.GregTechTags;
 import net.minecraft.core.BlockPos;
@@ -60,7 +60,7 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
 /**///?} else {
     @Nullable private LazyOptional<IFluidHandler> fluids;
 //?}
-    private final gregtech.api.machine.MachineControl control = gregtech.api.machine.MachineControls.switchable(this,
+    private final gregtech.api.machine.MachineControl control = gregtech.internal.machine.MachineControls.switchable(this,
             () -> !stopped, value -> { stopped = !value; setChanged(); }, () -> stored > 0, () -> emitted);
 
     public FuelGeneratorBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -121,7 +121,7 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
             if (budget <= 0) return;
             BlockPos neighbor = worldPosition.relative(side);
             if (!level.hasChunkAt(neighbor)) continue;
-            if (!(level.getBlockEntity(neighbor) instanceof gregtech.api.fluid.CompressedGasReceiver receiver))
+            if (!(level.getBlockEntity(neighbor) instanceof gregtech.internal.fluid.CompressedGasReceiver receiver))
                 continue;
             Direction face = side.getOpposite();
             FluidStack preview = receiver.extractCompressedGas(face, budget, false);

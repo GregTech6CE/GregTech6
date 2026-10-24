@@ -1,6 +1,6 @@
 package gregtech.block.tool;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.blockentity.tool.MaterialAnvilBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.*;

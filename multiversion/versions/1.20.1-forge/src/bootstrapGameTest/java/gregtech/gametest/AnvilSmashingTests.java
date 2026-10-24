@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.blockentity.tool.MaterialAnvilBlockEntity;
 import gregtech.data.MaterialPrefix;
 import gregtech.registry.GTToolBlocks;
@@ -81,16 +81,16 @@ public final class AnvilSmashingTests {
         if (anvil.workpiece(0).isEmpty() && anvil.workpiece(1).isEmpty()) return ItemStack.EMPTY;
 
         // 2. hit it with the hammer
-        var hammer = GTToolItems.get(gregtech.api.tool.GTToolType.HARD_HAMMER);
+        var hammer = GTToolItems.get(gregtech.internal.tool.GTToolType.HARD_HAMMER);
         player.setItemInHand(InteractionHand.MAIN_HAND, hammer == null
                 ? ItemStack.EMPTY : gregtech.item.GTToolItem.create(
-                        gregtech.api.tool.GTToolType.HARD_HAMMER,
+                        gregtech.internal.tool.GTToolType.HARD_HAMMER,
                         gregtech.content.material.Materials.Steel,
-                        gregtech.api.material.GTMaterialRegistry.get("Wood")));
+                        gregtech.internal.material.GTMaterialRegistry.get("Wood")));
         anvil.interact(player, InteractionHand.MAIN_HAND, hit(absolute, Direction.UP, 0.25, 0.9, 0.25));
         return player.getInventory().items.stream()
-                .filter(stack -> !stack.isEmpty() && !gregtech.api.tool.GTToolHelper.matchesTool(
-                        stack, gregtech.api.tool.GTToolType.HARD_HAMMER))
+                .filter(stack -> !stack.isEmpty() && !gregtech.internal.tool.GTToolHelper.matchesTool(
+                        stack, gregtech.internal.tool.GTToolType.HARD_HAMMER))
                 .findFirst().orElse(ItemStack.EMPTY);
     }
 

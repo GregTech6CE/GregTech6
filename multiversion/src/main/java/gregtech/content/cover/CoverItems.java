@@ -69,7 +69,7 @@ public final class CoverItems {
         if (stack.getItem() instanceof gregtech.item.PanelItemView panel)
             return panel.panelSpec().asphalt() ? CoverUtilityBehaviors.ASPHALT_PANEL : "decorative_panel";
         if (stack.getItem() instanceof gregtech.item.CanvasItem) return "canvas_cover";
-        if(stack.getItem() instanceof gregtech.api.material.MaterialFormItem material&&!MaterialCoverRules.textures(material.getPrefix().getName()).isEmpty())return "material_plate_cover";
+        if(stack.getItem() instanceof gregtech.internal.material.MaterialFormItem material&&!MaterialCoverRules.textures(material.getPrefix().getName()).isEmpty())return "material_plate_cover";
         if (key.getNamespace().equals("minecraft")) {
             // GT_API:799-802 - the vanilla redstone torch (either state) and repeater are covers
             return switch (id) {

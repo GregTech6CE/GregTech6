@@ -1,7 +1,7 @@
 /* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later. */
 package gregtech.content.multiblock;
 
-import gregtech.api.multiblock.StructureGrid;
+import gregtech.internal.multiblock.StructureGrid;
 import java.util.ArrayList;
 import java.util.List;
 

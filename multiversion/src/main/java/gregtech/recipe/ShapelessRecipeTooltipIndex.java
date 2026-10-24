@@ -1,9 +1,9 @@
 package gregtech.recipe;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.data.MaterialPrefix;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.item.MaterialItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -95,7 +95,7 @@ public final class ShapelessRecipeTooltipIndex {
 *///?} else {
             ItemStack result = shapeless.getResultItem(null);
 //?}
-            var outputItem=gregtech.api.material.MaterialEquivalence.form(result);
+            var outputItem=gregtech.internal.material.MaterialEquivalence.form(result);
             if (result.isEmpty() || outputItem==null) {
                 continue;
             }
@@ -109,7 +109,7 @@ public final class ShapelessRecipeTooltipIndex {
                     }
                 }
             }
-            var inputItem=inputs.size()==1?gregtech.api.material.MaterialEquivalence.form(inputs.get(0)):null;
+            var inputItem=inputs.size()==1?gregtech.internal.material.MaterialEquivalence.form(inputs.get(0)):null;
             if (inputItem==null) {
                 continue;
             }

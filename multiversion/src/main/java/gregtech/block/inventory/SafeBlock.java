@@ -1,6 +1,6 @@
 package gregtech.block.inventory;
 
-import gregtech.api.GTWaterloggable;
+import gregtech.internal.GTWaterloggable;
 import gregtech.blockentity.inventory.SafeBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -31,29 +31,29 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /** GT6 15-slot mechanical or key-controlled safe, with front-only GUI access. */
-public class SafeBlock extends DirectionalBlock implements EntityBlock, SimpleWaterloggedBlock, gregtech.api.tool.ToolInteractionTarget {
+public class SafeBlock extends DirectionalBlock implements EntityBlock, SimpleWaterloggedBlock, gregtech.internal.tool.ToolInteractionTarget {
 //? if >=1.21.1 {
     /*@Override protected com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec() { return com.mojang.serialization.MapCodec.unit(this); }
 *///?} else {
 //?}
     public static final net.minecraft.world.level.block.state.properties.BooleanProperty OPEN = net.minecraft.world.level.block.state.properties.BooleanProperty.create("open");
     private final boolean keyLocked;
-    private final gregtech.api.material.GTMaterial material;
+    private final gregtech.internal.material.GTMaterial material;
 
     public SafeBlock(Properties properties) {
         this(gregtech.content.material.Materials.Steel, false, properties);
     }
-    public SafeBlock(gregtech.api.material.GTMaterial material, boolean keyLocked, Properties properties) {
+    public SafeBlock(gregtech.internal.material.GTMaterial material, boolean keyLocked, Properties properties) {
         super(properties);
         this.material = material;
         this.keyLocked = keyLocked;
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH).setValue(GTWaterloggable.WATERLOGGED, false).setValue(OPEN, false));
     }
     public boolean keyLocked() { return keyLocked; }
-    public gregtech.api.material.GTMaterial material() { return material; }
-    @Override public gregtech.api.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
-        return gregtech.api.tool.GTToolHelper.isMachineWrench(tool)
-                ? gregtech.api.tool.ToolInteractionSpec.facing(FACING, gregtech.block.machine.MachineRotationType.ALL) : null;
+    public gregtech.internal.material.GTMaterial material() { return material; }
+    @Override public gregtech.internal.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+        return gregtech.internal.tool.GTToolHelper.isMachineWrench(tool)
+                ? gregtech.internal.tool.ToolInteractionSpec.facing(FACING, gregtech.block.machine.MachineRotationType.ALL) : null;
     }
     @Override public boolean canUseTool(Level level, BlockPos pos, Player player, ItemStack tool) {
         return level.getBlockEntity(pos) instanceof SafeBlockEntity safe && safe.canOpen(player);
@@ -113,7 +113,7 @@ public class SafeBlock extends DirectionalBlock implements EntityBlock, SimpleWa
         // (insert+extract in one click, double withdrawals, armor swap-backs)
         if (hand == net.minecraft.world.InteractionHand.OFF_HAND) return InteractionResult.PASS;
         if (!(level.getBlockEntity(pos) instanceof SafeBlockEntity safe)) return InteractionResult.PASS;
-        if (gregtech.api.tool.ToolInteractions.use(state, level, pos, player, hand, hit)) return InteractionResult.sidedSuccess(level.isClientSide);
+        if (gregtech.internal.tool.ToolInteractions.use(state, level, pos, player, hand, hit)) return InteractionResult.sidedSuccess(level.isClientSide);
         if (player.getItemInHand(hand).getItem() instanceof gregtech.item.GTDungeonKeyItem && keyLocked) {
             if (!level.isClientSide) safe.useKey(player.getItemInHand(hand));
             return InteractionResult.sidedSuccess(level.isClientSide);

@@ -1,5 +1,6 @@
 package gregtech.content.book;
-import gregtech.api.material.*;import java.util.*;
+import gregtech.api.material.*;
+import gregtech.internal.material.*;import java.util.*;
 /** Original material dictionary prose and processing/alloy/enchantment pages shared by both versions. */
 public final class GTMaterialDictionaryPages {private GTMaterialDictionaryPages(){}private static final int MAX_PAGE_LENGTH=256;
     /** The pages of one material's dictionary, in GT6's order: identity, composition, alloys, rest. */

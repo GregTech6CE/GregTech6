@@ -76,7 +76,7 @@ final class CannedFoodFeedbackChecks {
   var cat=new net.minecraft.world.entity.animal.Cat(net.minecraft.world.entity.EntityType.CAT,level);cat.setTame(true);;var fish=item("tiny_food_can_fish",2);actor.setItemInHand(InteractionHand.MAIN_HAND,fish);require(feed(actor,cat)&&cat.isInLove()&&fish.getCount()==1,"cat breeding");
   var craft=server.getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","food/empty_food_can")).orElseThrow();var recipe=(CraftingRecipe)craft;var inputs=new ArrayList<ItemStack>();
 //?}
-  for(var ingredient:recipe.getIngredients()){var choices=ingredient.getItems();require(choices.length>0,"unresolved empty-can ingredient");var input=choices[0].copy();if(input.getItem() instanceof gregtech.item.GTToolItem)gregtech.api.tool.GTToolHelper.write(input,gregtech.api.material.GTMaterialRegistry.get("Steel"),gregtech.api.material.GTMaterialRegistry.get("Spruce"));inputs.add(input);}
+  for(var ingredient:recipe.getIngredients()){var choices=ingredient.getItems();require(choices.length>0,"unresolved empty-can ingredient");var input=choices[0].copy();if(input.getItem() instanceof gregtech.item.GTToolItem)gregtech.internal.tool.GTToolHelper.write(input,gregtech.internal.material.GTMaterialRegistry.get("Steel"),gregtech.internal.material.GTMaterialRegistry.get("Spruce"));inputs.add(input);}
 //? if >=1.21.1 {
   /*var grid=CraftingInput.of(2,2,inputs);
 *///?} else {

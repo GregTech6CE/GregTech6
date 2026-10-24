@@ -37,13 +37,13 @@ public final class ScaffoldBlock extends ShapedToolBlock {
     private static final VoxelShape EAST_FRAME = Shapes.or(POSTS, Block.box(14, 0, 0, 16, 16, 16)).optimize();
     private static final VoxelShape WEST_FRAME = Shapes.or(POSTS, Block.box(0, 0, 0, 2, 16, 16)).optimize();
 
-    private final gregtech.api.material.GTMaterial material;
+    private final gregtech.internal.material.GTMaterial material;
 
     public ScaffoldBlock(Properties properties) {
         this(gregtech.content.material.Materials.Steel, properties);
     }
 
-    public ScaffoldBlock(gregtech.api.material.GTMaterial material, Properties properties) {
+    public ScaffoldBlock(gregtech.internal.material.GTMaterial material, Properties properties) {
         // Design 1 collision depends on the walking entity (sneaking/height), so Forge must not
         // cache the no-entity shape during BlockState baking and reuse it for every player.
         super("scaffold", properties.dynamicShape());
@@ -51,7 +51,7 @@ public final class ScaffoldBlock extends ShapedToolBlock {
         registerDefaultState(defaultBlockState().setValue(DESIGN, 1));
     }
 
-    public gregtech.api.material.GTMaterial material() {
+    public gregtech.internal.material.GTMaterial material() {
         return material;
     }
 

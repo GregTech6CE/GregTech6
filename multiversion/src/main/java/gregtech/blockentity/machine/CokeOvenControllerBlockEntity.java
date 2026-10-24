@@ -50,7 +50,7 @@ public class CokeOvenControllerBlockEntity extends LargeRecipeMachineBlockEntity
         super(gregtech.registry.GTBlockEntities.COKE_OVEN.get(),pos,state);
         setSpec(gregtech.block.machine.CokeOvenControllerBlock.makeSpec());
     }
-    @Override public void setSpec(gregtech.api.machine.BasicMachineSpec spec) {
+    @Override public void setSpec(gregtech.internal.machine.BasicMachineSpec spec) {
         super.setSpec(spec);getTanksOutput()[0].setCapacity(Long.MAX_VALUE);
     }
     @Override protected java.util.List<LargeMachineLayouts.Cell> structureCells() {return LargeMachineLayouts.fromShared(OriginalCokeOvenRules.cells());}

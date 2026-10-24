@@ -4,8 +4,8 @@ package gregtech.registry;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.material.GTMaterial;
-import gregtech.api.prefix.BlockMaterialPrefix;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.prefix.BlockMaterialPrefix;
 import gregtech.block.stone.GTStoneBlock;
 import gregtech.block.stone.GTStoneSlabBlock;
 import gregtech.block.stone.GTStoneSlabBlockItem;

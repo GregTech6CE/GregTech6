@@ -19,7 +19,7 @@
 
 package gregtech.content.plant;
 
-import gregtech.api.material.MaterialItemDefinitions;
+import gregtech.internal.material.MaterialItemDefinitions;
 import gregtech.data.MaterialPrefix;
 import java.util.List;
 

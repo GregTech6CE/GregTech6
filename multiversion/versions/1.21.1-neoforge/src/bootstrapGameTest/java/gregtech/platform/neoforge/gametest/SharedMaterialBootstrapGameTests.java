@@ -1,11 +1,11 @@
 package gregtech.platform.neoforge.gametest;
 
-import gregtech.api.machine.crucible.CrucibleMaterialStack;
-import gregtech.api.machine.crucible.CrucibleReactions;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialProperty;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.machine.crucible.CrucibleMaterialStack;
+import gregtech.internal.machine.crucible.CrucibleReactions;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialProperty;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.block.stone.StoneType;
 import gregtech.content.material.Materials;
 import gregtech.data.GregTechConstants;

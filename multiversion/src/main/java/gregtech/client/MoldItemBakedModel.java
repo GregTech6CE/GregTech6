@@ -1,7 +1,7 @@
 package gregtech.client;
 
 import gregtech.block.machine.MoldItemData;
-import gregtech.api.machine.crucible.MoldShapes;
+import gregtech.internal.machine.crucible.MoldShapes;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;

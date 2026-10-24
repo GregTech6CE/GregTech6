@@ -1,7 +1,8 @@
 package gregtech.content.recipe;
 
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.data.MaterialPrefix;
 import gregtech.registry.*;
 import net.minecraft.resources.ResourceLocation;

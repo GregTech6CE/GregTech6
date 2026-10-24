@@ -1,6 +1,6 @@
 package gregtech.block.misc;
 
-import gregtech.api.tool.PoweredToolTarget;
+import gregtech.internal.tool.PoweredToolTarget;
 import gregtech.data.GregTechTags;
 import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
@@ -18,7 +18,7 @@ public class AutoIgniterBlockEntity extends AutoToolBlockEntity {
         if (!isEnergyAcceptingFrom(type,side,false) || size<=0 || amount<=0) return 0;
         if (execute) {
             if (gregtech.content.tool.AutomaticToolRules.overvoltage(size,input())) {
-                gregtech.api.energy.MachineOverload.apply(this,size,energyType());
+                gregtech.internal.energy.MachineOverload.apply(this,size,energyType());
                 return 1;
             }
             if(cooldown==0 && energy<input()*10) energy+=size;

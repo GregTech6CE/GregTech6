@@ -1,9 +1,9 @@
 package gregtech.block.machine;
 
-import gregtech.api.addon.AddonMachines;
+import gregtech.internal.addon.AddonMachines;
 import gregtech.api.addon.FuelGenerator;
-import gregtech.api.machine.MachineSpec;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.machine.MachineSpec;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.blockentity.machine.FuelGeneratorBlockEntity;
 import gregtech.blockentity.machine.FuelTurbineBlockEntity;
 import net.minecraft.core.BlockPos;

@@ -3,10 +3,11 @@ package gregtech.data;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;
 import gregtech.api.machine.*;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.MaterialEquivalence;
-import gregtech.api.prefix.BlockMaterialPrefix;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.machine.*;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.MaterialEquivalence;
+import gregtech.internal.prefix.BlockMaterialPrefix;
+import gregtech.internal.tool.GTToolType;
 import gregtech.content.material.Materials;
 
 import gregtech.registry.*;
@@ -63,7 +64,7 @@ public final class OriginalHandCraftingRows {
                     : powerCellForm(MaterialPrefix.plate, spec.material());
             Ingredient bands = spec.band().equals("MagicIron")
                     ? Ingredient.of(java.util.stream.Stream.of("Manasteel", "Thaumium", "DarkThaumium", "SpectreIron", "FierySteel", "MeteoflameSteel")
-                            .map(name -> GTItems.getStack(MaterialPrefix.stickLong, gregtech.api.material.GTMaterialRegistry.get(name)))
+                            .map(name -> GTItems.getStack(MaterialPrefix.stickLong, gregtech.internal.material.GTMaterialRegistry.get(name)))
                             .filter(stack -> !stack.isEmpty()))
                     : powerCellForm(MaterialPrefix.stickLong, spec.band());
             int added = register(recipes, "storage/" + spec.id(), new String[]{"rCs", "PSP", "PSP"},
@@ -88,7 +89,7 @@ public final class OriginalHandCraftingRows {
                         'F', Ingredient.of(tech("compact_force_field_emitter_iv")),
                         'G', powerCellForm(MaterialPrefix.foil, "Graphene")),
                 new ItemStack(BuiltInRegistries.ITEM.get(id("aneutronic_fusion_power_cell_empty"))));
-        var palladium = gregtech.api.material.GTMaterialRegistry.get("Palladium");
+        var palladium = gregtech.internal.material.GTMaterialRegistry.get("Palladium");
         added += register(recipes, "energy/magic_field_absorber", new String[]{"GOG", "LBL", "CMC"},
                 Map.of('M', Ingredient.of(GTBlocks.getStack(BlockMaterialPrefix.casingMachine, palladium)),
                         'C', Ingredient.of(tech("circuit_magic")),
@@ -100,7 +101,7 @@ public final class OriginalHandCraftingRows {
     }
 
     private static Ingredient powerCellForm(MaterialPrefix prefix, String material) {
-        var stack = GTItems.getStack(prefix, gregtech.api.material.GTMaterialRegistry.get(material));
+        var stack = GTItems.getStack(prefix, gregtech.internal.material.GTMaterialRegistry.get(material));
         if (stack.isEmpty()) throw new IllegalStateException("Missing energy-device form: " + prefix.getName() + "/" + material);
         return gregtech.recipe.CraftingMaterialForms.ingredient(stack);
     }
@@ -108,9 +109,9 @@ public final class OriginalHandCraftingRows {
     /** GT6 Loader_Recipes_Handlers:418-419: an ingot or billet and a file produce one rod. */
     private static void rods(Map<ResourceLocation, byte[]> recipes) {
         var coated = Set.of("WoodTreated", "WoodPolished", "GildedIron", "SteelGalvanized", "NetherizedDiamond");
-        for (GTMaterial material : gregtech.api.material.GTMaterialRegistry.allMaterials()) {
+        for (GTMaterial material : gregtech.internal.material.GTMaterialRegistry.allMaterials()) {
             if (!material.isValid() || material.resolve() != material
-                    || material.has(gregtech.api.material.MaterialProperty.ANTIMATTER)
+                    || material.has(gregtech.internal.material.MaterialProperty.ANTIMATTER)
                     || coated.contains(material.getName().replace(" ", ""))) continue;
             ItemStack output = GTItems.getStack(MaterialPrefix.stick, material, 1);
             if (output.isEmpty()) continue;
@@ -130,7 +131,7 @@ public final class OriginalHandCraftingRows {
             Item item = BuiltInRegistries.ITEM.get(id(gregtech.content.tool.WoodenBucketCatalog.itemId(
                     band, gregtech.content.tool.WoodenBucketCatalog.empty())));
             ItemStack plate = GTItems.getStack(MaterialPrefix.plate,
-                    gregtech.api.material.GTMaterialRegistry.get(band.material()), 1);
+                    gregtech.internal.material.GTMaterialRegistry.get(band.material()), 1);
             if (item == Items.AIR || plate.isEmpty()) continue;
             register(recipes, "wooden_bucket/" + band.id(), new String[]{"WPW", " Wh"},
                     Map.of('W', Ingredient.of(ItemTags.PLANKS),
@@ -585,7 +586,7 @@ public final class OriginalHandCraftingRows {
     }
 
     private static ItemStack materialItem(MaterialPrefix prefix, String material) {
-        var resolved = gregtech.api.material.GTMaterialRegistry.get(material);
+        var resolved = gregtech.internal.material.GTMaterialRegistry.get(material);
         return resolved == null ? ItemStack.EMPTY : GTItems.getStack(prefix, resolved, 1);
     }
 
@@ -594,9 +595,9 @@ public final class OriginalHandCraftingRows {
         int added = 0;
         // Loader_MultiTileEntities:2003-2004, source craftable miniature relays.
         ItemStack obsidianRod = GTItems.getStack(MaterialPrefix.stickLong,
-                gregtech.api.material.GTMaterialRegistry.get("Obsidian"),1);
+                gregtech.internal.material.GTMaterialRegistry.get("Obsidian"),1);
         ItemStack endstoneRod = GTItems.getStack(MaterialPrefix.stickLong,
-                gregtech.api.material.GTMaterialRegistry.get("Endstone"),1);
+                gregtech.internal.material.GTMaterialRegistry.get("Endstone"),1);
         added += register(recipes,"portals/mini_nether",new String[]{"SSS","SsS","SSS"},
                 Map.of('S',Ingredient.of(obsidianRod),'s',Ingredient.of(tool(GTToolType.SAW))),
                 new ItemStack(GTDungeonBlocks.PORTAL_NETHER.get()));
@@ -606,7 +607,7 @@ public final class OriginalHandCraftingRows {
 
         // GT6 Loader_MultiTileEntities:184, treated-plank bottle crate 8762.
         var woodBolts=GTItems.creativeEntries(MaterialPrefix.bolt).stream()
-                .filter(entry->entry.material().has(gregtech.api.material.MaterialProperty.WOOD))
+                .filter(entry->entry.material().has(gregtech.internal.material.MaterialProperty.WOOD))
                 .map(entry->new ItemStack(entry.item().get())).toArray(ItemStack[]::new);
         added += register(recipes,"storage/bottle_crate",new String[]{"sfr","PGP","BPB"},
                 Map.of('s',Ingredient.of(tool(GTToolType.SAW)), 'f',Ingredient.of(tool(GTToolType.FILE)),
@@ -770,8 +771,8 @@ public final class OriginalHandCraftingRows {
             boolean wood = spec.material() == gregtech.content.material.generated.WoodMaterials.WoodTreated;
             boolean creosote = wood && spec.size() == 4;
             var keys = new java.util.LinkedHashMap<String, Object>();
-            keys.put("f", itemIngredient(new net.minecraft.world.item.ItemStack(gregtech.registry.GTToolItems.get(gregtech.api.tool.GTToolType.FILE))));
-            var hammer = wood ? gregtech.api.tool.GTToolType.SOFT_HAMMER : gregtech.api.tool.GTToolType.HARD_HAMMER;
+            keys.put("f", itemIngredient(new net.minecraft.world.item.ItemStack(gregtech.registry.GTToolItems.get(gregtech.internal.tool.GTToolType.FILE))));
+            var hammer = wood ? gregtech.internal.tool.GTToolType.SOFT_HAMMER : gregtech.internal.tool.GTToolType.HARD_HAMMER;
             keys.put(wood ? "r" : "h", itemIngredient(new net.minecraft.world.item.ItemStack(gregtech.registry.GTToolItems.get(hammer))));
             String[] pattern;
             if (creosote) {
@@ -790,7 +791,7 @@ public final class OriginalHandCraftingRows {
                 Object piece = itemIngredient(stack);
                 if (form == MaterialPrefix.stick || form == MaterialPrefix.stickLong) {
                     var tag = (form == MaterialPrefix.stick ? "rods/" : "long_rods/")
-                            + gregtech.api.material.MaterialEquivalence.materialName(spec.material());
+                            + gregtech.internal.material.MaterialEquivalence.materialName(spec.material());
                     piece = List.of(piece, Map.of("tag", "forge:" + tag), Map.of("tag", "c:" + tag));
                 }
                 keys.put("S", piece);

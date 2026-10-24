@@ -1,6 +1,6 @@
 package gregtech.content.recipe;
 
-import gregtech.api.mod.SetupOnce;
+import gregtech.internal.mod.SetupOnce;
 import gregtech.bootstrap.InitializationStep;
 import gregtech.content.nuclear.ReactorRodRecipes;
 import gregtech.content.tool.AnvilRecipeDefinitions;

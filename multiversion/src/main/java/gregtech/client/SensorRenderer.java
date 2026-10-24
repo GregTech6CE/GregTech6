@@ -26,7 +26,7 @@ public final class SensorRenderer implements BlockEntityRenderer<SensorBlockEnti
         ps.pushPose();
         ps.translate(0.5 + facing.getStepX() * -0.373, 0.5 + facing.getStepY() * -0.373,
                 0.5 + facing.getStepZ() * -0.373);
-        ps.mulPose(gregtech.api.block.DisplayFaceOrientation.rotation(facing));
+        ps.mulPose(gregtech.internal.block.DisplayFaceOrientation.rotation(facing));
 
         SixCellDisplayRenderer.draw(be.displayCells(), ps, buffer, light);
         ps.popPose();

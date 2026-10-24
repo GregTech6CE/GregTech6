@@ -1,6 +1,7 @@
 package gregtech.gametest;
 import gregtech.api.material.*;
-import gregtech.api.recipe.AutocraftableCraftingRecipe;
+import gregtech.internal.material.*;
+import gregtech.internal.recipe.AutocraftableCraftingRecipe;
 import gregtech.data.MaterialPrefix;
 import gregtech.registry.GTItems;
 import gregtech.recipe.ToolShapelessRecipe;

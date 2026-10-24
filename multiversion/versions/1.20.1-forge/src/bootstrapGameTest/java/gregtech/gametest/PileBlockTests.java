@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.block.misc.CoinPileBlock;
 import gregtech.block.misc.PileBlock;
 import gregtech.blockentity.misc.CoinPileBlockEntity;

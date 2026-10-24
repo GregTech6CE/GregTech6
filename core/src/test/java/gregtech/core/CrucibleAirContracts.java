@@ -1,7 +1,8 @@
 package gregtech.core;
 
-import gregtech.api.machine.crucible.*;
+import gregtech.internal.machine.crucible.*;
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.data.GregTechTags;
 import java.util.*;
 
@@ -12,7 +13,7 @@ public class CrucibleAirContracts {
         if (!value) throw new AssertionError(label);
     }
     public static void main(String[] args) {
-        gregtech.api.mod.ModData.bindPresence(id -> false);
+        gregtech.internal.mod.ModData.bindPresence(id -> false);
         GTMaterialRegistry.init();
         long u = GTValues.U;
         check(CrucibleEnergyRules.airAmount(1000,1,16*u)==u,"1000KU pushes 1U air");

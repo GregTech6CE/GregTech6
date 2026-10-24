@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.api.material.MaterialTextureSet;
+import gregtech.internal.material.MaterialTextureSet;
 import net.minecraft.resources.ResourceLocation;
 
 /** GT6 mold hull model (hollow shell). Delegates geometry to {@link SmelteryModelHelper}. */

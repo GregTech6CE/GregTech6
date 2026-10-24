@@ -32,9 +32,9 @@ import java.util.Set;
 
 /** Required vanilla overrides, loaded through the native data-pack reload path. */
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+/*@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 *///?} else {
-@Mod.EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 //?}
 public final class VanillaCraftingRecipePack extends AbstractPackResources {
     private Map<ResourceLocation,byte[]> resources;
@@ -103,10 +103,10 @@ public final class VanillaCraftingRecipePack extends AbstractPackResources {
         if(spec.startsWith("item:")) return Map.of("item",spec.substring(5));
         // GT6 uses OD.craftingFirestarter, including the two early wooden fire starters.
         if(spec.equals("firestarter")) return Map.of("tag","gt6ce:crafting_firestarters");
-        if(spec.startsWith("tool:")) return Map.of("item","gt6ce:tool_"+gregtech.api.tool.GTToolType.valueOf(spec.substring(5).toUpperCase(java.util.Locale.ROOT)).id());
+        if(spec.startsWith("tool:")) return Map.of("item","gt6ce:tool_"+gregtech.internal.tool.GTToolType.valueOf(spec.substring(5).toUpperCase(java.util.Locale.ROOT)).id());
         String[] parts=spec.split(":",3);
-        var stack=gregtech.registry.GTItems.getStack(gregtech.api.prefix.PrefixRegistry.byName(parts[1]),
-                gregtech.api.material.GTMaterialRegistry.get(parts[2]),1);
+        var stack=gregtech.registry.GTItems.getStack(gregtech.internal.prefix.PrefixRegistry.byName(parts[1]),
+                gregtech.internal.material.GTMaterialRegistry.get(parts[2]),1);
         if(stack.isEmpty()) throw new IllegalStateException("Unbound original vanilla ingredient "+spec);
         return Map.of("item",net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
     }

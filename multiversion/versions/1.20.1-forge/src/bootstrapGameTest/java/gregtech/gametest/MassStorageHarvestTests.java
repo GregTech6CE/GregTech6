@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
-import gregtech.api.inventory.MassStorageMaterialForms;
+import gregtech.internal.inventory.MassStorageMaterialForms;
 import gregtech.api.material.GTValues;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolType;
 import gregtech.blockentity.inventory.MassStorageBlockEntity;
 import gregtech.item.behavior.BehaviorDuctTape;
 import gregtech.item.behavior.ItemBehaviors;

@@ -1,11 +1,11 @@
 package gregtech.block.inventory;
 
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.ToolInteractions;
-import gregtech.api.tool.ToolInteractionSpec;
-import gregtech.api.tool.ToolInteractionTarget;
-import gregtech.api.GTWaterloggable;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.ToolInteractions;
+import gregtech.internal.tool.ToolInteractionSpec;
+import gregtech.internal.tool.ToolInteractionTarget;
+import gregtech.internal.GTWaterloggable;
+import gregtech.internal.material.GTMaterial;
 import gregtech.blockentity.inventory.MetalChestBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -99,7 +99,7 @@ public class MetalChestBlock extends HorizontalDirectionalBlock
     @Override
     public int getFlammability(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
         return shell == Shell.REINFORCED_WOOD
-                && !material.has(gregtech.api.material.MaterialProperty.UNBURNABLE) ? 100 : 0;
+                && !material.has(gregtech.internal.material.MaterialProperty.UNBURNABLE) ? 100 : 0;
     }
 
     @Override

@@ -1,8 +1,8 @@
 package gregtech.content.recipe;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.data.MaterialGroups;
 import gregtech.data.MaterialPrefix;
 import gregtech.data.generated.GT6Materials;

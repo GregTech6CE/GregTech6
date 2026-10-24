@@ -1080,7 +1080,7 @@ public final class MySourceBlockEntity extends BlockEntity implements GtSignalSo
 
 ### SDK 包
 
-SDK 是 `core/src/api/java` 下的 `gregtech.api.*`，加上 `multiversion/src/api/java` 下的 `gregtech.api.addon.platform.*`。GT 自己的实现也在 `core/src/main` 和 `multiversion/src/main` 下使用 `gregtech.api.*`，两边的相对路径没有交集。只看包名分不出一个类型是否在 SDK 里，要读 SDK jar 或它生成的 Javadoc。`AddonPlatform` 放与加载器无关的入口；签名里出现加载器流体类型的方法在 `AddonLoader`。
+SDK 是 `core/src/api/java` 下的 `gregtech.api.*`，加上 `multiversion/src/api/java` 下的 `gregtech.api.addon.platform.*`。GT 的实现位于 `gregtech.internal.*`，具体游戏内容位于 API 之外。四个已弃用的 contributor/layout 类型作为明确的旧入口例外，仍留在主模组的 `gregtech.api.addon`，不进入 SDK；支持范围以 SDK jar 和生成的 Javadoc 为准。`AddonPlatform` 放与加载器无关的入口；签名里出现加载器流体类型的方法在 `AddonLoader`。
 
 `onRecipesReady` 仍不是数据包重载事件。API 版本 0 包含坩埚成分、熔炼目标、合金反应、行为机器坩埚回调、绑定零件的只读坩埚视图，以及行为机器往记下的坐标远程送能，仍会把旧的材料数字 id 读成内置材料，并在这个方块或物品下次保存时写成名字。这一版不承诺固体燃料、能量转换、把内置引擎改到这套模板上、套在菜单之上的 `Screen` 之外的任意 GUI 控件、无线计算零件、坩埚方块、写入坩埚温度或内容物、任意非 GT 物品的熔化登记、坩埚数据包、不经入口就用数据包新建配方表、材料表的数据包重载、一份二进制同时跑两个加载器，或完整旧 GregAPI 替代。1.0 之前仅文档列出的入口作为兼容面。电压等级以[原GT6电压说明](VOLTAGE_TIERS.md)为准。
 
@@ -1128,9 +1128,13 @@ API **0** 是 GT6CE 的开发基线，包含下表全部能力。下列 1–7 �
 | gregtech.api.addon.AddonMachineDefinition | 0.0 | RecipeMachine | 0.10 |
 | gregtech.api.addon.AddonMachineLayout | 0.0 | StructureLayout | 0.10 |
 | gregtech.api.addon.MaterialDeclaration#builder | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
-| gregtech.api.addon.AddonMaterials#ADDON_ID_MIN | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
-| gregtech.api.addon.AddonMaterials#ADDON_ID_MAX | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
+| gregtech.internal.addon.AddonMaterials#ADDON_ID_MIN | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
+| gregtech.internal.addon.AddonMaterials#ADDON_ID_MAX | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
 
 ## 许可
 
 SDK与项目代码采用LGPL-3.0-or-later；原作者、第三方代码和资产各自声明继续保留，见根LICENSE、COPYING、NOTICE。
+
+## test 分支包名迁移
+
+本实验分支将 Java 根包由 `com.gregtech.gregtech` 改为 `gregtech`，内部实现迁往 `gregtech.internal`。这会破坏旧二进制引用：附属需要更新 import、`META-INF/services` 文件名及提供者类名，并重新编译。游戏资源 ID 仍为 `gt6ce:`，已有弃用期限不变。SDK 中的启动服务仍不是附属扩展点。详见[包边界](integration/JAVA_PACKAGE_BOUNDARIES.md)和[逐类迁移清单](integration/PACKAGE_BOUNDARY_TYPES.tsv)。不能据此宣称旧附属 JAR 免修改兼容。

@@ -79,8 +79,8 @@ final class CatalogFeedbackSmoke {
         }
         require(!server.getRecipeManager().byKey(id("fusion/fusion_reactor_main")).isPresent(),"duplicate fusion crafting still loaded");
         var bath=gregtech.data.MachineRecipeMaps.Bath;
-        require(gregtech.api.recipe.MachineGuiCoordinates.item(true,0,bath.mInputItemsCount,bath.mInputFluidCount).y()==16,"Bath input does not align with texture");
-        require(gregtech.api.recipe.MachineGuiCoordinates.item(false,0,bath.mOutputItemsCount,bath.mOutputFluidCount).y()==16,"Bath output does not align with texture");
+        require(gregtech.internal.recipe.MachineGuiCoordinates.item(true,0,bath.mInputItemsCount,bath.mInputFluidCount).y()==16,"Bath input does not align with texture");
+        require(gregtech.internal.recipe.MachineGuiCoordinates.item(false,0,bath.mOutputItemsCount,bath.mOutputFluidCount).y()==16,"Bath output does not align with texture");
         require(server.getRecipeManager().byKey(id("technology/plastic_lighter_empty")).isPresent(),"missing original plastic lighter recipe");
         var omitted = new com.google.gson.JsonArray();
         gregtech.content.recipe.UtilityProcessingRecipes.UNAVAILABLE_OPTIONAL_FORMS.forEach(omitted::add);
@@ -92,7 +92,7 @@ final class CatalogFeedbackSmoke {
         require(server.getRecipeManager().byKey(id("bales/bale_grass_pack")).isPresent(), "missing grass bale recipe");
         for (var wood : gregtech.content.plant.WoodSlabCatalog.WOODS) {
             var slab = BuiltInRegistries.BLOCK.get(id("slab_" + wood));
-            require(slab instanceof gregtech.api.block.FaceGridSlab, "no nine-grid wood slab " + wood);
+            require(slab instanceof gregtech.internal.block.FaceGridSlab, "no nine-grid wood slab " + wood);
             require(server.getRecipeManager().byKey(id("catalog_repairs/slab_" + wood)).isPresent(), "missing wood slab recipe " + wood);
         }
         for(var part:gregtech.content.multiblock.SharedLargeMachineParts.DEFINITIONS){
@@ -116,10 +116,10 @@ final class CatalogFeedbackSmoke {
     private static void checkNamespaceIdentity(JsonObject receipt) {
         String namespace = "gt6ce";
         String expectedName = "GregTech 6 Community Edition";
-        require(namespace.equals(gregtech.api.mod.GregTechIdentity.MOD_ID)
-                && namespace.equals(gregtech.api.mod.GregTechIdentity.REGISTRY_NAMESPACE),
+        require(namespace.equals(gregtech.internal.mod.GregTechIdentity.MOD_ID)
+                && namespace.equals(gregtech.internal.mod.GregTechIdentity.REGISTRY_NAMESPACE),
                 "loader and content namespace differ");
-        require(expectedName.equals(gregtech.api.mod.GregTechIdentity.MOD_NAME),
+        require(expectedName.equals(gregtech.internal.mod.GregTechIdentity.MOD_NAME),
                 "shared mod display name differs");
         var keyId = id("copper_key");
         var blockId = id("clay_brown");
@@ -144,7 +144,7 @@ final class CatalogFeedbackSmoke {
         require(expectedName.equals(loadedName), "loader reports another mod display name: " + loadedName);
         var owner = gregtech.data.ModReferences.GT;
         require(namespace.equals(owner.id) && expectedName.equals(owner.name) && owner.isLoaded()
-                && gregtech.api.mod.ModData.MODS.get(namespace) == owner,
+                && gregtech.internal.mod.ModData.MODS.get(namespace) == owner,
                 "material ownership metadata does not resolve to GT6CE");
         require("gregtech".equals(gregtech.data.ModReferences.GT5U.id)
                 && "gregtech".equals(gregtech.data.ModReferences.GT6U.id),
@@ -185,9 +185,9 @@ final class CatalogFeedbackSmoke {
         }
         for (var item : BuiltInRegistries.ITEM) {
             var path=BuiltInRegistries.ITEM.getKey(item).getPath();
-            if(item instanceof net.minecraft.world.item.BlockItem bi && bi.getBlock() instanceof gregtech.api.energy.WireMaterialLike wire) {
+            if(item instanceof net.minecraft.world.item.BlockItem bi && bi.getBlock() instanceof gregtech.internal.energy.WireMaterialLike wire) {
                 String form=(wire.spec().insulated()?"cable_gt":"wire_gt")+String.format(java.util.Locale.ROOT,"%02d",wire.spec().size());
-                var tag=net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM,id(form+"/"+gregtech.api.material.MaterialEquivalence.materialName(wire.spec().material())));
+                var tag=net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM,id(form+"/"+gregtech.internal.material.MaterialEquivalence.materialName(wire.spec().material())));
                 require(new net.minecraft.world.item.ItemStack(item).is(tag),"missing wire tag "+tag.location());
             }
             if (path.startsWith("axle_") || path.startsWith("log_") || path.startsWith("planks_")) {

@@ -1,12 +1,12 @@
 /* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later. Source boiler tool and structure rules. */
 package gregtech.blockentity.machine;
 
-import gregtech.api.fluid.FluidTankGT;
-import gregtech.api.multiblock.MultiblockLayout;
-import gregtech.api.multiblock.MultiblockPortOwner;
-import gregtech.api.multiblock.PartBindings;
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.fluid.FluidTankGT;
+import gregtech.internal.multiblock.MultiblockLayout;
+import gregtech.internal.multiblock.MultiblockPortOwner;
+import gregtech.internal.multiblock.PartBindings;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 import gregtech.block.machine.OriginalLargeBoilerControllerBlock;
 import gregtech.blockentity.GTEnergyBlockEntity;
 import gregtech.content.multiblock.OriginalLargeBoilerSpecs;
@@ -50,8 +50,8 @@ import java.util.List;
  * Their wall material and rated output are fixed by the placed controller item.
  */
 public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBlockEntity
-        implements MultiblockPortOwner, gregtech.api.multiblock.MultiblockToolTarget, gregtech.api.sensor.CompressionSensorSource,
-        gregtech.api.machine.HeatHandler, gregtech.api.multiblock.tracking.TrackedMultiblock {
+        implements MultiblockPortOwner, gregtech.internal.multiblock.MultiblockToolTarget, gregtech.api.sensor.CompressionSensorSource,
+        gregtech.api.machine.HeatHandler, gregtech.internal.multiblock.tracking.TrackedMultiblock {
     private static final int WATER_CAPACITY = gregtech.content.multiblock.OriginalLargeBoilerParameters.WATER_CAPACITY;
     private static final int HU_PER_WATER = gregtech.content.multiblock.OriginalLargeBoilerParameters.HU_PER_WATER;
     private static final int STEAM_PER_WATER = gregtech.content.multiblock.OriginalLargeBoilerParameters.STEAM_PER_WATER;
@@ -129,11 +129,11 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
     private Direction front() { return getBlockState().getValue(HorizontalDirectionalBlock.FACING); }
     private BlockPos bodyCentre() { return worldPosition.relative(front().getOpposite()); }
 
-    @Override public gregtech.api.multiblock.tracking.StructureDefinition structureDefinition() {
-        return gregtech.api.multiblock.tracking.CustomStructures.boiler(this);
+    @Override public gregtech.internal.multiblock.tracking.StructureDefinition structureDefinition() {
+        return gregtech.internal.multiblock.tracking.CustomStructures.boiler(this);
     }
     @Override public boolean isStructureOk() {
-        return gregtech.api.multiblock.tracking.StructureTracking.query(this);
+        return gregtech.internal.multiblock.tracking.StructureTracking.query(this);
     }
     /** Source claims each correct cell even when the shell has missing or obstructed cells. */
     @Override public boolean scanStructure() {
@@ -149,11 +149,11 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
             var position=centre.offset(cell.x(),cell.y(),cell.z());
             if(!level.hasChunkAt(position)){complete=false;continue;}
             if(position.equals(worldPosition))continue;
-            if(cell.role()==gregtech.api.multiblock.StructureGrid.Role.AIR) {
+            if(cell.role()==gregtech.internal.multiblock.StructureGrid.Role.AIR) {
                 if(!level.getBlockState(position).isAir())complete=false;
                 continue;
             }
-            var required=cell.role()==gregtech.api.multiblock.StructureGrid.Role.HEAT_INPUT
+            var required=cell.role()==gregtech.internal.multiblock.StructureGrid.Role.HEAT_INPUT
                     ?GTMultiblocks.HEAT_TRANSMITTER.get():variant.wall();
             if(!(level.getBlockState(position).getBlock() == required)
                     ||!(level.getBlockEntity(position) instanceof MultiblockPortBlockEntity port)||!port.canBind(worldPosition)) {
@@ -161,10 +161,10 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
             }
             parts.put(position,MultiblockLayout.Role.valueOf(cell.role().name()));
         }
-        var claimed = gregtech.api.multiblock.tracking.StructureClaims.update(this, complete, bindings, parts, 0,
+        var claimed = gregtech.internal.multiblock.tracking.StructureClaims.update(this, complete, bindings, parts, 0,
                 position->level.getBlockEntity(position) instanceof MultiblockPortBlockEntity port&&port.canBind(worldPosition),
                 (position,role)->((MultiblockPortBlockEntity)level.getBlockEntity(position)).bind(worldPosition,role),this::release);
-        boolean formed=complete&&claimed!=gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
+        boolean formed=complete&&claimed!=gregtech.internal.multiblock.tracking.StructureClaims.Result.FAILED;
         if(structureOkay!=formed){structureOkay=formed;syncToClient();}
         return formed;
     }
@@ -179,27 +179,27 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
             var centre=bodyCentre();
             for(var cell:gregtech.content.multiblock.OriginalLargeBoilerParameters.CHECK_ORDER) {
                 var position=centre.offset(cell.x(),cell.y(),cell.z());
-                if(position.equals(worldPosition)||cell.role()==gregtech.api.multiblock.StructureGrid.Role.AIR)continue;
-                var block=cell.role()==gregtech.api.multiblock.StructureGrid.Role.HEAT_INPUT
+                if(position.equals(worldPosition)||cell.role()==gregtech.internal.multiblock.StructureGrid.Role.AIR)continue;
+                var block=cell.role()==gregtech.internal.multiblock.StructureGrid.Role.HEAT_INPUT
                         ?GTMultiblocks.HEAT_TRANSMITTER.get():variant.wall();
-                gregtech.api.multiblock.MultiblockTools.build(context,position,block);
+                gregtech.internal.multiblock.MultiblockTools.build(context,position,block);
             }
-            gregtech.api.multiblock.tracking.StructureTracking.invalidate(this);
-            return gregtech.api.multiblock.MultiblockToolRules.BUILDER_COST;
+            gregtech.internal.multiblock.tracking.StructureTracking.invalidate(this);
+            return gregtech.internal.multiblock.MultiblockToolRules.BUILDER_COST;
         }
         if(GTToolHelper.matchesTool(context.getItemInHand(),GTToolType.MAGNIFYING_GLASS)) {
             messages.addAll(magnifyingGlassMessages());
-            return gregtech.api.multiblock.MultiblockToolRules.MAGNIFIER_COST;
+            return gregtech.internal.multiblock.MultiblockToolRules.MAGNIFIER_COST;
         }
         return 0;
     }
     public List<Component> magnifyingGlassMessages() {
         boolean previous=structureOkay,formed=isStructureOk();
         if(!previous||!formed)return List.of(Component.literal(
-                gregtech.api.multiblock.MultiblockToolRules.structureMessage(previous,formed)));
+                gregtech.internal.multiblock.MultiblockToolRules.structureMessage(previous,formed)));
         // This source override replaces the generic "formed already" line with boiler details.
         return List.of(Component.literal(gregtech.content.multiblock.OriginalLargeBoilerParameters.calcificationMessage(efficiency)),
-                gregtech.api.multiblock.MultiblockTools.tankContent(water,"WARNING: NO WATER!!!"));
+                gregtech.internal.multiblock.MultiblockTools.tankContent(water,"WARNING: NO WATER!!!"));
     }
 
     private void release(BlockPos position) {
@@ -209,15 +209,15 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
     }
     @Override public void onLoad() {
         super.onLoad();
-        if (level != null && !level.isClientSide) gregtech.api.multiblock.tracking.StructureTracking.attach(this);
+        if (level != null && !level.isClientSide) gregtech.internal.multiblock.tracking.StructureTracking.attach(this);
     }
     @Override public void onChunkUnloaded() {
-        gregtech.api.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
+        gregtech.internal.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
         super.onChunkUnloaded();
     }
     @Override public void setRemoved() {
-        if (!gregtech.api.multiblock.tracking.StructureTracking.unloading(this)) bindings.clear(this::release);
-        gregtech.api.multiblock.tracking.StructureTracking.onRemoved(this);
+        if (!gregtech.internal.multiblock.tracking.StructureTracking.unloading(this)) bindings.clear(this::release);
+        gregtech.internal.multiblock.tracking.StructureTracking.onRemoved(this);
         super.setRemoved();
     }
     private boolean shellLoaded() {
@@ -352,7 +352,7 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
         ItemStack held = player.getItemInHand(hand);
         if(GTToolHelper.matchesTool(held,GTToolType.MAGNIFYING_GLASS)||GTToolHelper.matchesTool(held,GTToolType.BUILDER_WAND)) {
             if(level.isClientSide)return InteractionResult.SUCCESS;
-            return gregtech.api.multiblock.MultiblockTools.use(new net.minecraft.world.item.context.UseOnContext(player,hand,
+            return gregtech.internal.multiblock.MultiblockTools.use(new net.minecraft.world.item.context.UseOnContext(player,hand,
                     new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(worldPosition),front(),worldPosition,false)));
         }
         if (GTToolHelper.matchesTool(held, GTToolType.PLUNGER)) {

@@ -1,7 +1,7 @@
 package gregtech.block.machine;
 
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 import gregtech.blockentity.machine.FunctionalPartRuntime;
 import gregtech.client.gui.PartMenu;
 import net.minecraft.core.BlockPos;

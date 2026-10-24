@@ -1,8 +1,8 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.inventory.BlockContents;
-import gregtech.api.machine.ITileEntityAdjacentInventoryUpdatable;
-import gregtech.api.machine.ItemPipeSpec;
+import gregtech.internal.inventory.BlockContents;
+import gregtech.internal.machine.ITileEntityAdjacentInventoryUpdatable;
+import gregtech.internal.machine.ItemPipeSpec;
 import gregtech.block.machine.ItemPipeBlock;
 import gregtech.content.cover.CoverItems;
 import gregtech.content.cover.CoverUtilityBehaviors;
@@ -1338,8 +1338,8 @@ public class ItemPipeBlockEntity extends BlockEntity
         float[] halves = new float[6];
         for (net.minecraft.core.Direction d : net.minecraft.core.Direction.values()) {
             halves[d.ordinal()] = level == null
-                    ? (float) gregtech.api.machine.PipeGeometry.NONE
-                    : (float) gregtech.api.machine.PipeGeometry.pipeHalfOf(
+                    ? (float) gregtech.internal.machine.PipeGeometry.NONE
+                    : (float) gregtech.internal.machine.PipeGeometry.pipeHalfOf(
                             level.getBlockState(worldPosition.relative(d)));
         }
 //? if >=1.21.1 {
@@ -1347,7 +1347,7 @@ public class ItemPipeBlockEntity extends BlockEntity
 *///?} else {
         return net.minecraftforge.client.model.data.ModelData.builder()
 //?}
-                .with(gregtech.api.machine.PipeModelData.NEIGHBOR_HALVES, halves)
+                .with(gregtech.internal.machine.PipeModelData.NEIGHBOR_HALVES, halves)
                 .build();
     }
 
@@ -1356,7 +1356,7 @@ public class ItemPipeBlockEntity extends BlockEntity
         super.onLoad();
         if (level != null && level.isClientSide) {
             requestModelDataUpdate();
-            gregtech.api.machine.PipeModelData.refreshCrossChunkNeighbors(level, worldPosition);
+            gregtech.internal.machine.PipeModelData.refreshCrossChunkNeighbors(level, worldPosition);
         }
     }
 

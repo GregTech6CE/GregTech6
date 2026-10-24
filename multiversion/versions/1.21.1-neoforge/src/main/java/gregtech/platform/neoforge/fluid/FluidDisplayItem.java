@@ -1,6 +1,7 @@
 package gregtech.platform.neoforge.fluid;
 
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.data.RegisteredFluids;
 import gregtech.registry.GTFluidType;
 import net.minecraft.network.chat.Component;
@@ -25,7 +26,7 @@ public final class FluidDisplayItem extends Item {
     @Override
     public net.minecraft.world.InteractionResult onItemUseFirst(ItemStack stack,
             net.minecraft.world.item.context.UseOnContext context) {
-        return gregtech.api.fluid.FluidDisplayInteraction.useFirst(stack, context);
+        return gregtech.internal.fluid.FluidDisplayInteraction.useFirst(stack, context);
     }
 
     public RegisteredFluids.FluidEntry fluidEntry() {
@@ -34,8 +35,8 @@ public final class FluidDisplayItem extends Item {
 
     @Override
     public Component getName(ItemStack stack) {
-        if (gregtech.api.fluid.FluidDisplayBinding.hasPayload(stack)) {
-            var fluid = gregtech.api.fluid.FluidDisplayBinding.resolveCurrent(stack);
+        if (gregtech.internal.fluid.FluidDisplayBinding.hasPayload(stack)) {
+            var fluid = gregtech.internal.fluid.FluidDisplayBinding.resolveCurrent(stack);
             if (!fluid.isEmpty()) {
                 // entryForFluid, not FluidStack#getDisplayName: the three world waters report vanilla
                 // water's FluidType (see GTWorldWaterFluid), so their type description is "Water" and
@@ -77,16 +78,16 @@ public final class FluidDisplayItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        var actual = gregtech.api.fluid.FluidDisplayBinding.resolve(context.registries(), stack);
-        long amount = gregtech.api.fluid.FluidDisplayBinding.hasPayload(stack) ? actual.getAmount() : 0;
+        var actual = gregtech.internal.fluid.FluidDisplayBinding.resolve(context.registries(), stack);
+        long amount = gregtech.internal.fluid.FluidDisplayBinding.hasPayload(stack) ? actual.getAmount() : 0;
         tooltip.addAll(GTFluidType.describeTooltip(actual, amount, flag.isAdvanced()));
     }
 
     @Override
     public boolean isFoil(ItemStack stack) {
         var entry = fluidEntry;
-        if (gregtech.api.fluid.FluidDisplayBinding.hasPayload(stack)) {
-            var actual = gregtech.api.fluid.FluidDisplayBinding.resolveCurrent(stack);
+        if (gregtech.internal.fluid.FluidDisplayBinding.hasPayload(stack)) {
+            var actual = gregtech.internal.fluid.FluidDisplayBinding.resolveCurrent(stack);
             entry = actual.isEmpty() ? null : gregtech.registry.GTFluids.entryForFluid(actual.getFluid());
             if (entry == null) return false;
         }
@@ -119,12 +120,12 @@ public final class FluidDisplayItem extends Item {
         }
 
         private Fluid resolveFluid() {
-            var fluid = gregtech.api.fluid.FluidDisplayBinding.resolveCurrent(container);
+            var fluid = gregtech.internal.fluid.FluidDisplayBinding.resolveCurrent(container);
             return fluid.isEmpty() ? null : fluid.getFluid();
         }
 
         private FluidStack contents(int amount) {
-            var fluid = gregtech.api.fluid.FluidDisplayBinding.resolveCurrent(container);
+            var fluid = gregtech.internal.fluid.FluidDisplayBinding.resolveCurrent(container);
             if (!fluid.isEmpty()) fluid.setAmount(amount);
             return fluid;
         }
@@ -169,7 +170,7 @@ public final class FluidDisplayItem extends Item {
             Fluid resolvedFluid = resolveFluid();
             if (resolvedFluid == null
                     || !FluidStack.isSameFluidSameComponents(
-                            gregtech.api.fluid.FluidDisplayBinding.resolveCurrent(container), resource))
+                            gregtech.internal.fluid.FluidDisplayBinding.resolveCurrent(container), resource))
                 return FluidStack.EMPTY;
             return drain(resource.getAmount(), action);
         }

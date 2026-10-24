@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.api.machine.crucible.CrucibleItemInput;
-import gregtech.api.sensor.SensorMeasurements;
+import gregtech.internal.machine.crucible.CrucibleItemInput;
+import gregtech.internal.sensor.SensorMeasurements;
 import gregtech.blockentity.sensor.SensorBlockEntity;
 import gregtech.data.MachineRecipeIngredients;
 import gregtech.data.SensorRecipePack;
@@ -345,7 +345,7 @@ public final class SensorMatrixTests {
      */
     @GameTest(template = "test_empty", timeoutTicks = 200)
     public static void everySensorHasItsOriginalGt6Recipe(GameTestHelper helper) {
-        var steel = gregtech.api.material.GTMaterialRegistry.get("StainlessSteel");
+        var steel = gregtech.internal.material.GTMaterialRegistry.get("StainlessSteel");
         List<String> broken = new ArrayList<>();
         int resolved = 0;
         int unusedKeys = 0;

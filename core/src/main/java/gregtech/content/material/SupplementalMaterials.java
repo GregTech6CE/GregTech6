@@ -1,6 +1,7 @@
 package gregtech.content.material;
 
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.content.material.generated.CompoundMaterials;
 import gregtech.content.material.generated.OreMaterials;
 

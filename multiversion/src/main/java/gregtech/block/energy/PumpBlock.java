@@ -1,6 +1,6 @@
 package gregtech.block.energy;
 
-import gregtech.api.machine.PumpSpec;
+import gregtech.internal.machine.PumpSpec;
 import gregtech.blockentity.energy.PumpBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

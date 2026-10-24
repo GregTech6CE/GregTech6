@@ -24,8 +24,8 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.*;
 
-public class LongDistEndpointBlock extends DirectionalBlock implements EntityBlock, gregtech.api.tool.ToolInteractionTarget,
-        gregtech.api.machine.GTMachineBlock {
+public class LongDistEndpointBlock extends DirectionalBlock implements EntityBlock, gregtech.internal.tool.ToolInteractionTarget,
+        gregtech.internal.machine.GTMachineBlock {
     private final boolean fluid;
 
     public boolean isFluid() {
@@ -38,8 +38,8 @@ public class LongDistEndpointBlock extends DirectionalBlock implements EntityBlo
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.UP));
     }
 
-    public gregtech.api.material.GTMaterial material() {
-        return gregtech.api.material.GTMaterialRegistry.get((fluid ? "Tungsten" : "Platinum"));
+    public gregtech.internal.material.GTMaterial material() {
+        return gregtech.internal.material.GTMaterialRegistry.get((fluid ? "Tungsten" : "Platinum"));
     }
 
     @Override
@@ -53,9 +53,9 @@ public class LongDistEndpointBlock extends DirectionalBlock implements EntityBlo
     }
 
     @Override
-    public gregtech.api.tool.ToolInteractionSpec toolInteraction(BlockState state, net.minecraft.world.item.ItemStack tool) {
-        return gregtech.api.tool.GTToolHelper.matchesTool(tool, gregtech.api.tool.GTToolType.WRENCH)
-                ? gregtech.api.tool.ToolInteractionSpec.facing(FACING, gregtech.block.machine.MachineRotationType.ALL) : null;
+    public gregtech.internal.tool.ToolInteractionSpec toolInteraction(BlockState state, net.minecraft.world.item.ItemStack tool) {
+        return gregtech.internal.tool.GTToolHelper.matchesTool(tool, gregtech.internal.tool.GTToolType.WRENCH)
+                ? gregtech.internal.tool.ToolInteractionSpec.facing(FACING, gregtech.block.machine.MachineRotationType.ALL) : null;
     }
 
     @Override
@@ -69,9 +69,9 @@ public class LongDistEndpointBlock extends DirectionalBlock implements EntityBlo
             net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
         var tool = player.getItemInHand(hand);
         if (!player.mayBuild() || !level.mayInteract(player, pos)) return net.minecraft.world.InteractionResult.PASS;
-        if (gregtech.api.tool.GTToolHelper.isSoftHammer(tool) || gregtech.api.tool.GTToolHelper.isMagnifyingGlass(tool)) {
+        if (gregtech.internal.tool.GTToolHelper.isSoftHammer(tool) || gregtech.internal.tool.GTToolHelper.isMagnifyingGlass(tool)) {
             if (!level.isClientSide) {
-                boolean reset = gregtech.api.tool.GTToolHelper.isSoftHammer(tool);
+                boolean reset = gregtech.internal.tool.GTToolHelper.isSoftHammer(tool);
                 if (level.getBlockEntity(pos) instanceof LongDistEndpointBlockEntity endpoint) {
                     if (reset) endpoint.rescan();
                     else endpoint.describe(player);
@@ -80,17 +80,17 @@ public class LongDistEndpointBlock extends DirectionalBlock implements EntityBlo
                     if (reset) endpoint.rescan();
                     else endpoint.describe(player);
                 }
-                gregtech.api.tool.GTToolHelper.damageForToolClickReturn(tool, reset ? 10000 : 1, player);
+                gregtech.internal.tool.GTToolHelper.damageForToolClickReturn(tool, reset ? 10000 : 1, player);
             }
             return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
         }
         var spec = toolInteraction(state, tool);
-        boolean same = spec != null && state.getValue(FACING) == gregtech.api.tool.ToolInteractions.selectedFace(hit);
-        boolean allowed = spec != null && gregtech.api.tool.ToolInteractions.canApply(spec, state, level, pos, player, tool,
-                gregtech.api.tool.ToolInteractions.selectedFace(hit));
-        if (gregtech.api.tool.ToolInteractions.use(state, level, pos, player, hand, hit)) {
+        boolean same = spec != null && state.getValue(FACING) == gregtech.internal.tool.ToolInteractions.selectedFace(hit);
+        boolean allowed = spec != null && gregtech.internal.tool.ToolInteractions.canApply(spec, state, level, pos, player, tool,
+                gregtech.internal.tool.ToolInteractions.selectedFace(hit));
+        if (gregtech.internal.tool.ToolInteractions.use(state, level, pos, player, hand, hit)) {
             if (allowed && !level.isClientSide && !(tool.getItem() instanceof gregtech.item.ElectricToolItem))
-                gregtech.api.tool.GTToolHelper.damageForToolClickReturn(tool, same ? 10000 : 9900, player);
+                gregtech.internal.tool.GTToolHelper.damageForToolClickReturn(tool, same ? 10000 : 9900, player);
             return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
         }
         return net.minecraft.world.InteractionResult.PASS;

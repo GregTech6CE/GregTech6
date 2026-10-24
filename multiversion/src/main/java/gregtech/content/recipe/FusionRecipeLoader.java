@@ -2,8 +2,8 @@ package gregtech.content.recipe;
 
 import gregtech.content.recipe.generated.GeneratedRecipeResolver;
 
-import gregtech.api.recipe.Recipe;
-import gregtech.api.material.MaterialStackItemHelper;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.material.MaterialStackItemHelper;
 import gregtech.data.*;
 import gregtech.registry.GTTechnological;
 import gregtech.bootstrap.InitializationStep;

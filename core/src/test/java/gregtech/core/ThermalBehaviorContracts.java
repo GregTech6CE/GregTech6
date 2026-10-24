@@ -1,8 +1,8 @@
 package gregtech.core;
 
-import gregtech.api.machine.crucible.ThermalState;
-import gregtech.api.machine.crucible.ThermalStep;
-import gregtech.api.machine.crucible.ThermalStep.EnergyKind;
+import gregtech.internal.machine.crucible.ThermalState;
+import gregtech.internal.machine.crucible.ThermalStep;
+import gregtech.internal.machine.crucible.ThermalStep.EnergyKind;
 
 /** Fixed upstream/brokestar fixtures and the seven thermal/two mixing comparison groups. */
 public final class ThermalBehaviorContracts {

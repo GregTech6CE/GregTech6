@@ -1,7 +1,7 @@
 package gregtech.block.stone;
 
 import gregtech.content.material.Materials;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 
 /** GT6 rock types — used by {@code Loader_Blocks} for stone block registration. */
 public enum StoneType {

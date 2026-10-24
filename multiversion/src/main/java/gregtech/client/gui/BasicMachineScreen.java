@@ -6,7 +6,7 @@ package gregtech.client.gui;
 import gregtech.GregTech;
 //?}
 
-import gregtech.api.fluid.FluidSlotAmountOverlay;
+import gregtech.internal.fluid.FluidSlotAmountOverlay;
 import gregtech.data.RegisteredFluids;
 import gregtech.registry.GTFluidType;
 import gregtech.registry.GTFluids;
@@ -56,7 +56,7 @@ public class BasicMachineScreen extends AbstractContainerScreen<BasicMachineCont
     }
 
     private static ResourceLocation resolveTexture(BasicMachineContainerMenu menu) {
-        return gregtech.api.recipe.MachineGuiLayout.texture(menu.recipeMap());
+        return gregtech.internal.recipe.MachineGuiLayout.texture(menu.recipeMap());
     }
 
     @Override

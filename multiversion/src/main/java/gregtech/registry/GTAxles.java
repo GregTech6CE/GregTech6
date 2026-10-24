@@ -2,8 +2,8 @@ package gregtech.registry;
 
 import gregtech.content.material.Materials;
 import gregtech.content.material.generated.WoodMaterials;
-import gregtech.api.energy.AxleSpec;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.energy.AxleSpec;
+import gregtech.internal.material.GTMaterial;
 import gregtech.block.energy.AxleBlock;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.SoundType;

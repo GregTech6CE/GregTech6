@@ -1,7 +1,7 @@
 package gregtech.content.multiblock;
 
 import gregtech.api.addon.LayoutRepeat;
-import gregtech.api.multiblock.MultiblockLayout.Role;
+import gregtech.internal.multiblock.MultiblockLayout.Role;
 import gregtech.registry.GTMultiblocks;
 import net.minecraft.core.*;
 import net.minecraft.world.level.block.Block;

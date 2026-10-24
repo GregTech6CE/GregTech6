@@ -1,7 +1,9 @@
 package gregtech.gametest;
 
 import gregtech.api.machine.*;
+import gregtech.internal.machine.*;
 import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.block.misc.*;
 import gregtech.blockentity.machine.*;
 import gregtech.content.cover.*;
@@ -33,7 +35,7 @@ public final class PanelCoverTests {
         var be=(BasicMachineBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(POS));
         var recipes=new RecipeMap(null,"panel_"+Long.toUnsignedString(be.getBlockPos().asLong()),"Panel test","panel",1,1,1,1,1,0,1,false,false,false,false);
         recipes.addRecipe(new Recipe(new ItemStack[]{new ItemStack(Items.APPLE)},new ItemStack[]{new ItemStack(Items.DIAMOND)},null,null,null,null,100,32,0));
-        be.setSpec(BasicMachineSpec.builder("panel_test",block.basicSpec().material()).machineType("test").energy(GregTechTags.Energy.EU,32).recipes(recipes).faces(gregtech.api.energy.FaceConfig.ALL_SIDES).build());return be;
+        be.setSpec(BasicMachineSpec.builder("panel_test",block.basicSpec().material()).machineType("test").energy(GregTechTags.Energy.EU,32).recipes(recipes).faces(gregtech.internal.energy.FaceConfig.ALL_SIDES).build());return be;
     }
     @GameTest(template="test_blueprint_empty") public static void manualSelectorAllFacesUsesRealEngineModes(GameTestHelper h){
         var relay=modeRelay(h);
@@ -158,7 +160,7 @@ public final class PanelCoverTests {
                 var item=ingredient.getItems()[0].copy();
                 if(item.getItem() instanceof gregtech.item.GTToolItem){
                     var key=net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(item.getItem()).getPath();
-                    item=gregtech.item.GTToolItem.create(key.contains("screwdriver")?gregtech.api.tool.GTToolType.SCREWDRIVER:gregtech.api.tool.GTToolType.WRENCH,gregtech.content.material.Materials.Steel,gregtech.api.material.GTMaterialRegistry.get("Wood"));
+                    item=gregtech.item.GTToolItem.create(key.contains("screwdriver")?gregtech.internal.tool.GTToolType.SCREWDRIVER:gregtech.internal.tool.GTToolType.WRENCH,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
                 }
                 grid.setItem(x+y*3,item);
             }
@@ -180,7 +182,7 @@ public final class PanelCoverTests {
             h.assertTrue(relay.machineControl(side).mode()==((before+1)&15),"rendered plus location operates actual block face "+side);relay.removeCover(side);
         }
         relay.attachCover(Direction.NORTH,stack(PanelCover.BUTTONS));
-        var chisel=gregtech.item.GTToolItem.create(gregtech.api.tool.GTToolType.CHISEL,gregtech.content.material.Materials.Steel,gregtech.api.material.GTMaterialRegistry.get("Wood"));
+        var chisel=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.CHISEL,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
         player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,chisel);
         var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(relay.getBlockPos()),Direction.NORTH,relay.getBlockPos(),false);
         block.use(relay.getBlockState(),h.getLevel(),relay.getBlockPos(),player,net.minecraft.world.InteractionHand.MAIN_HAND,hit);

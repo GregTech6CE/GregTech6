@@ -1,7 +1,8 @@
 package gregtech.bootstrap.registration;
 //? if >=1.21.1 {
-/*import gregtech.api.material.*;import gregtech.api.prefix.*;import gregtech.data.MaterialPrefix;import gregtech.registry.*;import net.minecraft.world.item.*;import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;import net.neoforged.bus.api.SubscribeEvent;import net.neoforged.fml.common.EventBusSubscriber;
-@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD)
+/*import gregtech.api.material.*;
+import gregtech.internal.material.*;import gregtech.internal.prefix.*;import gregtech.data.MaterialPrefix;import gregtech.registry.*;import net.minecraft.world.item.*;import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;import net.neoforged.bus.api.SubscribeEvent;import net.neoforged.fml.common.EventBusSubscriber;
+@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD)
 public final class CreativeTabBootstrap {private CreativeTabBootstrap(){}
 public static void register(net.neoforged.bus.api.IEventBus bus){GTCreativeTabIcons.register();GTCreativeTabIcons.ICONS.register(bus);GTCreativeTabs.registerTabs();GTCreativeTabs.TABS.register(bus);}
 @SubscribeEvent public static void populateTabs(BuildCreativeModeTabContentsEvent event){if(!event.getTabKey().location().getNamespace().equals("gt6ce"))return;
@@ -13,23 +14,23 @@ public static void register(net.neoforged.bus.api.IEventBus bus){GTCreativeTabIc
         for (var binding : GTItems.creativeEntries(prefix)) {
             GTMaterial material=binding.material();
             if (material.has(MaterialProperty.HIDDEN) || material.resolve()!=material
-                    || (!prefix.isValidFor(material) && !gregtech.api.addon.AddonMaterials.explicitPlateOrFoil(prefix, material))) continue;
+                    || (!prefix.isValidFor(material) && !gregtech.internal.addon.AddonMaterials.explicitPlateOrFoil(prefix, material))) continue;
             if(binding.item().isBound()) event.accept(new ItemStack(binding.item().get(),1));
 *///?} else {
 
 import gregtech.content.material.Materials;
 import gregtech.GregTech;
-import gregtech.api.machine.MachineRegistry;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialProperty;
-import gregtech.api.prefix.BlockMaterialPrefix;
-import gregtech.api.prefix.BlockPrefixRegistry;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.machine.MachineRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialProperty;
+import gregtech.internal.prefix.BlockMaterialPrefix;
+import gregtech.internal.prefix.BlockPrefixRegistry;
+import gregtech.internal.tool.GTToolType;
 import gregtech.block.stone.GTStoneBlock;
 import gregtech.block.stone.GTStoneSlabBlock;
 import gregtech.data.MaterialPrefix;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.data.generated.GT6Materials;
 import gregtech.item.GTToolItem;
 import gregtech.bootstrap.InitializationStep;
@@ -276,7 +277,7 @@ public class CreativeTabBootstrap implements InitializationStep {
             for (var entry : gregtech.registry.GTSensors.all()) {
                 if (entry.isPresent()) event.accept(new net.minecraft.world.item.ItemStack(entry.get()));
             }
-            for (var entry : gregtech.api.sensor.AddonSensors.blocks()) {
+            for (var entry : gregtech.internal.sensor.AddonSensors.blocks()) {
                 event.accept(new net.minecraft.world.item.ItemStack(entry.get()));
             }
         }
@@ -510,7 +511,7 @@ public class CreativeTabBootstrap implements InitializationStep {
         for (var binding : GTItems.creativeEntries(prefix)) {
             GTMaterial material=binding.material();
             if (material.has(MaterialProperty.HIDDEN) || material.resolve()!=material
-                    || (!prefix.isValidFor(material) && !gregtech.api.addon.AddonMaterials.explicitPlateOrFoil(prefix, material))) continue;
+                    || (!prefix.isValidFor(material) && !gregtech.internal.addon.AddonMaterials.explicitPlateOrFoil(prefix, material))) continue;
             if(binding.item().isPresent()) event.accept(new ItemStack(binding.item().get(),1));
         }
     }

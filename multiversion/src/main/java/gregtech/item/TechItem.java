@@ -3,7 +3,7 @@ package gregtech.item;
 import net.minecraft.world.item.Item;
 
 /** Pure technological item — carries a display name, no functionality. */
-public class TechItem extends Item implements gregtech.api.recipe.RecipeCatalystLike {
+public class TechItem extends Item implements gregtech.internal.recipe.RecipeCatalystLike {
     private final String englishName;
     private final boolean catalyst;
 

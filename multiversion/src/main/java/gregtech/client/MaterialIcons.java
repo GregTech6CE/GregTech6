@@ -4,9 +4,9 @@ package gregtech.client;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.MaterialIconDefinitions;
-import gregtech.api.material.MaterialTextureSet;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.MaterialIconDefinitions;
+import gregtech.internal.material.MaterialTextureSet;
 import gregtech.data.MaterialPrefix;
 //? if >=1.21.1 {
 /*import net.minecraft.client.resources.model.ModelResourceLocation;

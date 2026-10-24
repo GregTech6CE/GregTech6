@@ -1,7 +1,7 @@
 package gregtech.platform.neoforge.fluid;
 
-import gregtech.api.fluid.FluidRenderLayers;
-import gregtech.api.fluid.GTWaterParity;
+import gregtech.internal.fluid.FluidRenderLayers;
+import gregtech.internal.fluid.GTWaterParity;
 import gregtech.content.fluid.FluidDefinitions;
 import gregtech.data.RegisteredFluids;
 import gregtech.registry.GTFluids;

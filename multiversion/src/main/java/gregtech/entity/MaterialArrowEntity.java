@@ -1,6 +1,6 @@
 package gregtech.entity;
 
-import gregtech.api.material.MaterialFormItem;
+import gregtech.internal.material.MaterialFormItem;
 import gregtech.content.recipe.MaterialArrowRules;
 import gregtech.registry.GTProjectiles;
 import net.minecraft.nbt.CompoundTag;

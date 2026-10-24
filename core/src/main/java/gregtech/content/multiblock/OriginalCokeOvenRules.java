@@ -19,7 +19,7 @@
 
 package gregtech.content.multiblock;
 
-import gregtech.api.multiblock.StructureGrid;
+import gregtech.internal.multiblock.StructureGrid;
 import java.util.ArrayList;
 import java.util.List;
 

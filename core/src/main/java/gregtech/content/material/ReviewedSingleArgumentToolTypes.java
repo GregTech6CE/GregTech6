@@ -1,7 +1,7 @@
 package gregtech.content.material;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.addon.AddonMaterials;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.addon.AddonMaterials;
 /** Bounded source qual(long) cohort. Quality does not create tool types.
  * Outside this reviewed cohort keep legacy item eligibility, including AncientDebris.
  * This is not a complete tool-prefix parity profile. Explicit TOOL_HEAD remains a separate arm.

@@ -1,7 +1,7 @@
 /* Original GT6 MultiItemRandomTools and Loader_MultiTileEntities; LGPL-3.0-or-later. */
 package gregtech.data;
 
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.registry.GTStorageMetals;
 import java.util.*;
 

@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
-import gregtech.api.tool.GTToolEnchantments;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolEnchantments;
+import gregtech.internal.tool.GTToolType;
 import gregtech.content.material.Materials;
 import gregtech.content.material.generated.WoodMaterials;
 import gregtech.item.GTToolItem;

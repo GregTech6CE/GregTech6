@@ -4,7 +4,7 @@ import gregtech.block.machine.EngineBlock;
 import gregtech.block.machine.FluidPipeBlock;
 import gregtech.blockentity.machine.KineticDieselEngineBlockEntity;
 import gregtech.blockentity.machine.FluidPipeBlockEntity;
-import gregtech.api.machine.EngineType;
+import gregtech.internal.machine.EngineType;
 import gregtech.data.FuelRecipeMaps;
 import gregtech.registry.GTFluids;
 import gregtech.content.cover.PanelCoverHost;
@@ -220,9 +220,9 @@ public final class FuelEngineIntakeTests {
 
     private static ItemStack waterCarrier(GameTestHelper h) {
 //? if >=1.21.1 {
-        /*return gregtech.api.fluid.FluidDisplayBinding.display(h.getLevel().registryAccess(),new FluidStack(net.minecraft.world.level.material.Fluids.WATER,1000));
+        /*return gregtech.internal.fluid.FluidDisplayBinding.display(h.getLevel().registryAccess(),new FluidStack(net.minecraft.world.level.material.Fluids.WATER,1000));
 *///?} else {
-        return gregtech.api.fluid.FluidDisplayBinding.display(new FluidStack(net.minecraft.world.level.material.Fluids.WATER,1000));
+        return gregtech.internal.fluid.FluidDisplayBinding.display(new FluidStack(net.minecraft.world.level.material.Fluids.WATER,1000));
 //?}
     }
 

@@ -1,6 +1,6 @@
 package gregtech.gametest;
-import gregtech.api.material.MaterialFormItem;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.material.MaterialFormItem;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.block.machine.BasicMachineBlock;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.data.MachineRecipeMaps;

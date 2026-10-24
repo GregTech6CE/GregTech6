@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.content.material.Materials;
 import gregtech.content.material.generated.WoodMaterials;
 import gregtech.data.MaterialPrefix;

@@ -2,7 +2,7 @@
  * Adapted from manual station and MultiTileEntityBoilerTank.addToolTips. */
 package gregtech.client;
 
-import gregtech.api.machine.BoilerSpec;
+import gregtech.internal.machine.BoilerSpec;
 import gregtech.content.machine.OriginalFunctionalTooltipData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

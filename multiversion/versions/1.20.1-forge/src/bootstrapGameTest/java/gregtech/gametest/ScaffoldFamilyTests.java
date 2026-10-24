@@ -39,8 +39,8 @@ public final class ScaffoldFamilyTests {
                 grid.setItem(i, options[0].copy());
             }
             grid.setItem(4, gregtech.item.GTToolItem.create(
-                    gregtech.api.tool.GTToolType.SCREWDRIVER, Materials.Steel,
-                    gregtech.api.material.GTMaterialRegistry.get("Wood")));
+                    gregtech.internal.tool.GTToolType.SCREWDRIVER, Materials.Steel,
+                    gregtech.internal.material.GTMaterialRegistry.get("Wood")));
             h.assertTrue(recipe.matches(grid, h.getLevel()), "recipe matches actual materials: " + id);
             h.assertTrue(recipe.assemble(grid,h.getLevel().registryAccess()).is(block.asItem()), "correct output: " + id);
             h.assertTrue(!recipe.getRemainingItems(grid).get(4).isEmpty(), "screwdriver survives: " + id);

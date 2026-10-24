@@ -1,8 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.api.energy.FaceConfig;
+import gregtech.internal.energy.FaceConfig;
 import gregtech.api.machine.*;
-import gregtech.api.tool.*;
+import gregtech.internal.machine.*;
+import gregtech.internal.tool.*;
 import gregtech.blockentity.machine.*;
 import gregtech.content.multiblock.*;
 import gregtech.data.GregTechTags;
@@ -165,7 +166,7 @@ public final class AxialGeneratorTests {
         };
         var inventory=new net.minecraft.world.inventory.TransientCraftingContainer(menu,3,3);
         for(int slot=0;slot<9;slot++) {var ingredient=recipe.getIngredients().get(slot);if(!ingredient.isEmpty())inventory.setItem(slot,ingredient.getItems()[0].copy());}
-        var wrench=gregtech.item.GTToolItem.create(GTToolType.WRENCH,gregtech.content.material.Materials.Steel,gregtech.api.material.GTMaterialRegistry.get("Wood"));
+        var wrench=gregtech.item.GTToolItem.create(GTToolType.WRENCH,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
         inventory.setItem(1,wrench);h.assertTrue(recipe.matches(inventory,h.getLevel()),"usable wrench matches original pattern");
         var remaining=recipe.getRemainingItems(inventory);h.assertTrue(remaining.get(1).getDamageValue()==800&&wrench.getDamageValue()==0,"wrench returned with original 800 wear, input untouched");
         wrench.setDamageValue(wrench.getMaxDamage());h.assertTrue(!recipe.matches(inventory,h.getLevel()),"broken wrench cannot craft");

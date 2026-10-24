@@ -1,8 +1,8 @@
 package gregtech.content.multiblock;
 
-import gregtech.api.addon.AddonMachines;
+import gregtech.internal.addon.AddonMachines;
 import gregtech.api.addon.CellMatch;
-import gregtech.api.kubejs.StructureLayoutDocuments;
+import gregtech.internal.kubejs.StructureLayoutDocuments;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;

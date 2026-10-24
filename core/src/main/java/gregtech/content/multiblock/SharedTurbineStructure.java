@@ -1,6 +1,6 @@
 package gregtech.content.multiblock;
 
-import gregtech.api.multiblock.StructureGrid;
+import gregtech.internal.multiblock.StructureGrid;
 import java.util.ArrayList;
 
 /** GT6 MultiTileEntityLargeTurbine: front-centered, solid 3x3x4 housing. */

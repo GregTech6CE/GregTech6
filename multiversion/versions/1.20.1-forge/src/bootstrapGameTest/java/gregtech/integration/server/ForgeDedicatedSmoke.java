@@ -36,7 +36,7 @@ import net.minecraftforge.fml.common.Mod;
 import org.slf4j.Logger;
 
 /** Opt-in ordinary dedicated-server world restart smoke, excluded from the mod jar. */
-@Mod.EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, value = Dist.DEDICATED_SERVER,
+@Mod.EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, value = Dist.DEDICATED_SERVER,
         bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class ForgeDedicatedSmoke {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -236,7 +236,7 @@ public final class ForgeDedicatedSmoke {
             if(!menu.getSlot(0).getItem().isEmpty())throw new IllegalStateException("Assembly must reject third occupied slot");
             menu.getSlot(5).set(ItemStack.EMPTY);menu.clicked(0,0,net.minecraft.world.inventory.ClickType.PICKUP,actor);
             var pick=menu.getCarried().copy();
-            if(!gregtech.api.tool.GTToolHelper.isUsable(pick)||gregtech.api.tool.GTToolHelper.getType(pick)!=gregtech.api.tool.GTToolType.PICKAXE||gregtech.api.tool.GTToolHelper.getHead(pick)!=gregtech.content.material.Materials.Bronze||gregtech.api.tool.GTToolHelper.getHandle(pick)!=gregtech.content.material.generated.WoodMaterials.Wood||pick.getDamageValue()!=0||pick.getCount()!=1)throw new IllegalStateException("Actual shared bronze head/wood assembly failed");
+            if(!gregtech.internal.tool.GTToolHelper.isUsable(pick)||gregtech.internal.tool.GTToolHelper.getType(pick)!=gregtech.internal.tool.GTToolType.PICKAXE||gregtech.internal.tool.GTToolHelper.getHead(pick)!=gregtech.content.material.Materials.Bronze||gregtech.internal.tool.GTToolHelper.getHandle(pick)!=gregtech.content.material.generated.WoodMaterials.Wood||pick.getDamageValue()!=0||pick.getCount()!=1)throw new IllegalStateException("Actual shared bronze head/wood assembly failed");
             if(!menu.getSlot(1).getItem().isEmpty()||!menu.getSlot(9).getItem().is(Items.STICK)||menu.getSlot(9).getItem().getCount()!=2)throw new IllegalStateException("Actual result slot did not consume exactly one head/handle");
             var chest=(ChestBlockEntity)level.getBlockEntity(specimenPos);chest.setItem(2,pick);chest.setItem(3,menu.getSlot(9).getItem().copy());chest.setChanged();
             menu.setCarried(ItemStack.EMPTY);menu.getSlot(9).set(ItemStack.EMPTY);actor.containerMenu=actor.inventoryMenu;
@@ -445,8 +445,8 @@ public final class ForgeDedicatedSmoke {
             throw new IllegalStateException("Vertical engine back-face steam inlet failed");
         // Covers/exhaust depend on both directions using the same six-way mapping.
         for (int facing = 0; facing < 6; facing++) for (int side = 0; side < 6; side++) {
-            int relative = gregtech.api.energy.EngineFaceRotation.toRelative(facing, side);
-            if (gregtech.api.energy.EngineFaceRotation.toWorld(facing, relative) != side)
+            int relative = gregtech.internal.energy.EngineFaceRotation.toRelative(facing, side);
+            if (gregtech.internal.energy.EngineFaceRotation.toWorld(facing, relative) != side)
                 throw new IllegalStateException("Engine face round trip failed");
         }
     }
@@ -555,17 +555,17 @@ public final class ForgeDedicatedSmoke {
             @Override public boolean stillValid(net.minecraft.world.entity.player.Player player){return true;}
         };
         for(var entry:gregtech.content.energy.EngineCatalog.all()) {
-            boolean strong=entry.spec() instanceof gregtech.api.machine.StrongSteamEngineSpec;
-            String id;gregtech.api.material.GTMaterial material;
-            if(strong){var spec=(gregtech.api.machine.StrongSteamEngineSpec)entry.spec();id=spec.id();material=spec.material();}
-            else if(entry.spec() instanceof gregtech.api.machine.SteamEngineSpec spec){id=spec.id();material=spec.material();}
+            boolean strong=entry.spec() instanceof gregtech.internal.machine.StrongSteamEngineSpec;
+            String id;gregtech.internal.material.GTMaterial material;
+            if(strong){var spec=(gregtech.internal.machine.StrongSteamEngineSpec)entry.spec();id=spec.id();material=spec.material();}
+            else if(entry.spec() instanceof gregtech.internal.machine.SteamEngineSpec spec){id=spec.id();material=spec.material();}
             else continue;
             var plate=steamForm(strong?gregtech.data.MaterialPrefix.plateDense:gregtech.data.MaterialPrefix.plateDouble,material);
             var rod=steamForm(gregtech.data.MaterialPrefix.stick,material);
             var spring=steamForm(strong?gregtech.data.MaterialPrefix.spring:gregtech.data.MaterialPrefix.springSmall,material);
-            var hammer=gregtech.item.GTToolItem.create(gregtech.api.tool.GTToolType.HARD_HAMMER,
+            var hammer=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.HARD_HAMMER,
                     gregtech.content.material.Materials.Bronze,gregtech.content.material.generated.WoodMaterials.Wood);
-            var wrench=gregtech.item.GTToolItem.create(gregtech.api.tool.GTToolType.WRENCH,
+            var wrench=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.WRENCH,
                     gregtech.content.material.Materials.Bronze,gregtech.content.material.generated.WoodMaterials.Wood);
             var input=new net.minecraft.world.inventory.TransientCraftingContainer(menu,3,3);
             var stacks=java.util.List.of(plate.copy(),hammer,plate.copy(),rod.copy(),spring,rod.copy(),plate.copy(),wrench,plate.copy());
@@ -615,13 +615,13 @@ public final class ForgeDedicatedSmoke {
         if(fluid==null || !fluid.isPresent() || handler.fill(new net.minecraftforge.fluids.FluidStack(fluid.get(),1000),net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE)!=1000)throw new IllegalStateException("Missing finite lubricant vessel");
         cell=handler.getContainer();int checked=0;
         for(var entry:gregtech.content.energy.EngineCatalog.all()) {
-            if(!(entry.spec() instanceof gregtech.api.machine.DieselEngineSpec spec))continue;
+            if(!(entry.spec() instanceof gregtech.internal.machine.DieselEngineSpec spec))continue;
             var material=spec.material();String id=spec.id();
             var plate=steamForm(gregtech.data.MaterialPrefix.plateCurved,material);
             var rod=steamForm(gregtech.data.MaterialPrefix.stick,material);
             var gear=steamForm(gregtech.data.MaterialPrefix.gearGt,material);
             var small=steamForm(gregtech.data.MaterialPrefix.gearGtSmall,material);
-            var casing=gregtech.registry.GTBlocks.getStack(gregtech.api.prefix.BlockMaterialPrefix.casingMachineDouble,material);
+            var casing=gregtech.registry.GTBlocks.getStack(gregtech.internal.prefix.BlockMaterialPrefix.casingMachineDouble,material);
             if(casing.isEmpty())throw new IllegalStateException("Missing diesel double casing "+id);
             var actual=level.getRecipeManager().byKey(new net.minecraft.resources.ResourceLocation("gt6ce","engines/"+id)).orElseThrow();
             if(!(actual instanceof net.minecraft.world.item.crafting.CraftingRecipe craft))throw new IllegalStateException("Wrong diesel crafting type");
@@ -659,7 +659,7 @@ public final class ForgeDedicatedSmoke {
         try {serializer.toNetwork(buffer,recipe);var decoded=(net.minecraft.world.item.crafting.CraftingRecipe)serializer.fromNetwork(recipe.getId(),buffer);if(buffer.readableBytes()!=0)throw new IllegalStateException("Diesel recipe packet trailing bytes");return decoded;}finally{buffer.release();}
     }
 
-    private static ItemStack steamForm(gregtech.data.MaterialPrefix prefix,gregtech.api.material.GTMaterial material) {
+    private static ItemStack steamForm(gregtech.data.MaterialPrefix prefix,gregtech.internal.material.GTMaterial material) {
         var stack=gregtech.registry.GTItems.getStack(prefix,material,1);
         if(stack.isEmpty())throw new IllegalStateException("Missing exact steam form "+prefix+" / "+material);
         return stack;

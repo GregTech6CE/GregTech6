@@ -59,7 +59,7 @@ public class HopperContainerMenu extends AbstractContainerMenu {
     }
 
     private int addHopperSlots() {
-        var layout = gregtech.api.inventory.InventorySlotLayout.layout(slotCount);
+        var layout = gregtech.internal.inventory.InventorySlotLayout.layout(slotCount);
         int index = 0;
         for (var position : layout.positions())
             addSlot(createInventorySlot(inventory, index++, position.x(), position.y()));

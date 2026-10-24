@@ -1,8 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.api.machine.MachineRegistry;
+import gregtech.internal.machine.MachineRegistry;
 import gregtech.api.material.*;
-import gregtech.api.multiblock.MultiblockLayout.Role;
+import gregtech.internal.material.*;
+import gregtech.internal.multiblock.MultiblockLayout.Role;
 import gregtech.block.machine.BasicMachineBlock;
 import gregtech.blockentity.machine.*;
 import gregtech.content.multiblock.*;
@@ -73,9 +74,9 @@ public final class MatterFabricatorRegressionTests {
         var block=variants.stream().filter(b->b.basicSpec().tier()==1).findFirst().orElseThrow();
         var pos=new BlockPos(1,1,1);h.setBlock(pos,block);
         var machine=(CompactMatterFabricatorBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(pos));
-        var map=new gregtech.api.recipe.RecipeMap(null,"matter_efficiency_test","Test","test",1,1,1,0,0,0,1,false,false,false,false);
-        map.addRecipe(new gregtech.api.recipe.Recipe(new ItemStack[]{new ItemStack(net.minecraft.world.item.Items.APPLE)},new ItemStack[]{new ItemStack(net.minecraft.world.item.Items.DIAMOND)},null,null,null,null,32,1,0));
-        machine.setSpec(gregtech.api.machine.BasicMachineSpec.builder("matter_efficiency_test",block.basicSpec().material()).machineType("massfab").energy(GregTechTags.Energy.QU,32).tier(1).recipes(map).build());
+        var map=new gregtech.internal.recipe.RecipeMap(null,"matter_efficiency_test","Test","test",1,1,1,0,0,0,1,false,false,false,false);
+        map.addRecipe(new gregtech.internal.recipe.Recipe(new ItemStack[]{new ItemStack(net.minecraft.world.item.Items.APPLE)},new ItemStack[]{new ItemStack(net.minecraft.world.item.Items.DIAMOND)},null,null,null,null,32,1,0));
+        machine.setSpec(gregtech.internal.machine.BasicMachineSpec.builder("matter_efficiency_test",block.basicSpec().material()).machineType("massfab").energy(GregTechTags.Energy.QU,32).tier(1).recipes(map).build());
         machine.inventory().setStackInSlot(0,new ItemStack(net.minecraft.world.item.Items.APPLE));
         machine.doEnergyInjection(GregTechTags.Energy.QU,null,32,1,true);
         BasicMachineBlockEntity.serverTick(h.getLevel(),machine.getBlockPos(),machine.getBlockState(),machine);

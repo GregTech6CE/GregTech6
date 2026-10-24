@@ -18,9 +18,9 @@ final class DecorativePanelDeliveryChecks {
   require(gregtech.content.recipe.MaterialRecoveryRules.shredderWork(foam)==2L*Math.max(1,foam.getToolQuality()+1),"source BRITTLE foam recovery work");
   for(var spec:PanelCatalog.ALL){var stack=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gt6ce:"+spec.id())));
    require(stack.getItem() instanceof PanelItemView&&stack.getMaxStackSize()==16,"source stack identity "+spec.id());
-   var data=gregtech.api.material.ItemMaterialRegistry.get(stack).orElseThrow();
+   var data=gregtech.internal.material.ItemMaterialRegistry.get(stack).orElseThrow();
    require(data.components().size()==2&&data.amount()==gregtech.api.material.GTValues.U/6,"per-panel original construction/plank amount "+spec.id());
-   require(data.components().stream().anyMatch(c->c.material()==gregtech.api.material.GTMaterialRegistry.get("Iron")&&c.amount()==gregtech.api.material.GTValues.U/9),"original ANY.Iron screw amount "+spec.id());
+   require(data.components().stream().anyMatch(c->c.material()==gregtech.internal.material.GTMaterialRegistry.get("Iron")&&c.amount()==gregtech.api.material.GTValues.U/9),"original ANY.Iron screw amount "+spec.id());
 //? if >=1.21.1 {
    /*require(stack.getTooltipLines(net.minecraft.world.item.Item.TooltipContext.EMPTY,null,net.minecraft.world.item.TooltipFlag.ADVANCED).stream().anyMatch(t->t.getString().contains("0.111")),"material amount reaches native advanced tooltip "+spec.id());
 *///?} else {
@@ -52,7 +52,7 @@ final class DecorativePanelDeliveryChecks {
   }
   int transport=0,preferred=0;
   for(var item:gregtech.content.recipe.TransportMaterialRegistration.recoveryItems()) {
-   var stack=new ItemStack(item);var data=gregtech.api.material.ItemMaterialRegistry.get(stack).orElseThrow();
+   var stack=new ItemStack(item);var data=gregtech.internal.material.ItemMaterialRegistry.get(stack).orElseThrow();
    require(data.amount()>0&&data.recoverable(),"installed transport composition "+stack);
    if(data.prefix()!=null){var target=gregtech.registry.GTItems.getStack(data.prefix(),data.material(),2);require(target.is(item)&&target.getCount()==2,"installed native transport form target "+stack);preferred++;}
    require(gregtech.content.recipe.VanillaRecoveryRecipes.recipes().stream().anyMatch(r->r.mInputs[0].is(item)),"installed transport shredder entry "+stack);
@@ -61,7 +61,7 @@ final class DecorativePanelDeliveryChecks {
   long unit=gregtech.api.material.GTValues.U;long[] weights={unit/2,unit,unit*3,unit*6,unit*12,unit*12,unit*9};
   for(var spec:gregtech.content.transport.fluid.FluidTransportDefinitions.pipes()) {
    var stack=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gt6ce:"+spec.id())));
-   require(gregtech.api.material.ItemMaterialRegistry.get(stack).orElseThrow().amount()==weights[spec.size().ordinal()],"original installed pipe prefix weight "+spec.id());
+   require(gregtech.internal.material.ItemMaterialRegistry.get(stack).orElseThrow().amount()==weights[spec.size().ordinal()],"original installed pipe prefix weight "+spec.id());
   }
   for(var row:gregtech.content.transport.TransportCraftingCatalog.rows())require(gregtech.content.recipe.TransportCraftingInputs.json(row).isPresent(),"installed source crafting inputs "+row.path());
   var dataCounts=gregtech.content.recipe.GTMaterialDataRecipes.coverage();
@@ -71,14 +71,14 @@ final class DecorativePanelDeliveryChecks {
   require(preferred==406,"all original native pipe targets");
   int usbFileTypes=0;
   var steelFile=gregtech.content.recipe.GTMaterialDataRecipes.usbData(gregtech.content.recipe.GTMaterialDataRecipes.withMaterialData(
-          new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gt6ce:usb3_stick"))),gregtech.api.material.GTMaterialRegistry.get("Steel")));
+          new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gt6ce:usb3_stick"))),gregtech.internal.material.GTMaterialRegistry.get("Steel")));
   var ironFile=gregtech.content.recipe.GTMaterialDataRecipes.usbData(gregtech.content.recipe.GTMaterialDataRecipes.withMaterialData(
-          new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gt6ce:usb3_stick"))),gregtech.api.material.GTMaterialRegistry.get("Iron")));
-  for(var item:gregtech.api.recipe.UsbRecipeDisplayBinding.sticks()) {
+          new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gt6ce:usb3_stick"))),gregtech.internal.material.GTMaterialRegistry.get("Iron")));
+  for(var item:gregtech.internal.recipe.UsbRecipeDisplayBinding.sticks()) {
    var steel=new ItemStack(item);var iron=new ItemStack(item);var blank=new ItemStack(item);
    require(gregtech.content.data.UsbDataMedia.writeStick(steel,1,steelFile)&&gregtech.content.data.UsbDataMedia.writeStick(iron,1,ironFile),"installed legal USB file writer");
-   var fileId=gregtech.api.recipe.UsbRecipeDisplayBinding.subtype(steel);
-   require(!fileId.isEmpty()&&!fileId.equals(gregtech.api.recipe.UsbRecipeDisplayBinding.subtype(iron))&&gregtech.api.recipe.UsbRecipeDisplayBinding.subtype(blank).isEmpty(),"installed material file identity");usbFileTypes++;
+   var fileId=gregtech.internal.recipe.UsbRecipeDisplayBinding.subtype(steel);
+   require(!fileId.isEmpty()&&!fileId.equals(gregtech.internal.recipe.UsbRecipeDisplayBinding.subtype(iron))&&gregtech.internal.recipe.UsbRecipeDisplayBinding.subtype(blank).isEmpty(),"installed material file identity");usbFileTypes++;
   }
   require(usbFileTypes==4,"installed four USB file display types");
   var dataViews=new JsonObject();dataViews.addProperty("scans",dataCounts[0]);dataViews.addProperty("prints",dataCounts[1]);dataViews.addProperty("replications",dataCounts[2]);
@@ -88,7 +88,7 @@ final class DecorativePanelDeliveryChecks {
    for(char symbol:new char[]{'P','S'}) {
     var input=row.key().get(symbol);require(input.material().getId()<0,"original ANY.Steel/W tank input");
     var ingredient=gregtech.content.recipe.TransportCraftingInputs.resolve(input);
-    var prefix=gregtech.api.prefix.PrefixRegistry.byName(input.name());
+    var prefix=gregtech.internal.prefix.PrefixRegistry.byName(input.name());
     for(var member:input.material().getReRegistrations()) {
      var sample=gregtech.registry.GTItems.getStack(prefix,member);
      if(sample.isEmpty())continue;

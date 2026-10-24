@@ -1,7 +1,7 @@
 package gregtech.content.food;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.data.FluidCatalog;
 import gregtech.data.ImportedMaterialData;
 

@@ -1,6 +1,6 @@
 package gregtech.content.data;
 
-import gregtech.api.data.UsbDataPort;
+import gregtech.internal.data.UsbDataPort;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;

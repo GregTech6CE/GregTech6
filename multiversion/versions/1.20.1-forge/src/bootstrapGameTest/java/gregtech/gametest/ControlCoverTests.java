@@ -1,7 +1,9 @@
 package gregtech.gametest;
 
 import gregtech.api.machine.*;
+import gregtech.internal.machine.*;
 import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.cover.MachineCoverSpec;
 import gregtech.data.GregTechTags;
@@ -20,7 +22,7 @@ public final class ControlCoverTests {
         var m=(BasicMachineBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(POS));
         var map=new RecipeMap(null,"control_cover_test_"+Long.toUnsignedString(m.getBlockPos().asLong()),"Test","test",1,1,1,0,0,0,1,false,false,false,false);
         map.addRecipe(new Recipe(new ItemStack[]{new ItemStack(Items.APPLE)},new ItemStack[]{new ItemStack(Items.DIAMOND)},null,null,null,null,4,32,0));
-        m.setSpec(BasicMachineSpec.builder("control_cover_test",block.basicSpec().material()).machineType("test").energy(GregTechTags.Energy.EU,32).recipes(map).faces(gregtech.api.energy.FaceConfig.ALL_SIDES).build());return m;
+        m.setSpec(BasicMachineSpec.builder("control_cover_test",block.basicSpec().material()).machineType("test").energy(GregTechTags.Energy.EU,32).recipes(map).faces(gregtech.internal.energy.FaceConfig.ALL_SIDES).build());return m;
     }
     private static void tick(BasicMachineBlockEntity m){m.doEnergyInjection(GregTechTags.Energy.EU,null,32,1,true);BasicMachineBlockEntity.serverTick(m.getLevel(),m.getBlockPos(),m.getBlockState(),m);}
     private static void attach(BasicMachineBlockEntity m,Direction side,MachineCoverSpec spec){m.attachCover(side,new ItemStack(GTTechnological.get(spec.id)));}
@@ -96,7 +98,7 @@ public final class ControlCoverTests {
             for(int y=0;y<recipe.getHeight();y++)for(int x=0;x<recipe.getWidth();x++){
                 var ingredient=recipe.getIngredients().get(x+y*recipe.getWidth());if(ingredient.isEmpty())continue;
                 var item=ingredient.getItems()[0].copy();
-                if(item.getItem() instanceof gregtech.item.GTToolItem)item=gregtech.item.GTToolItem.create(gregtech.api.tool.GTToolType.SCREWDRIVER,gregtech.content.material.Materials.Steel,gregtech.api.material.GTMaterialRegistry.get("Wood"));
+                if(item.getItem() instanceof gregtech.item.GTToolItem)item=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.SCREWDRIVER,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
                 grid.setItem(x+y*3,item);
             }
             h.assertTrue(recipe.matches(grid,h.getLevel())&&recipe.assemble(grid,h.getLevel().registryAccess()).is(GTTechnological.get(spec.id)),"source pattern crafts implemented cover: "+spec.id);

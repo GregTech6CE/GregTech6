@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.multiblock.MultiblockLayout.Role;
+import gregtech.internal.multiblock.MultiblockLayout.Role;
 import gregtech.block.machine.BehaviorMachineBlock;
 import gregtech.blockentity.machine.BehaviorMachineBlockEntity;
 import gregtech.blockentity.machine.MultiblockPortBlockEntity;

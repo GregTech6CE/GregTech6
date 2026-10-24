@@ -33,7 +33,7 @@ public final class GTMenuTypes {
  public static final net.neoforged.neoforge.registries.DeferredHolder<net.minecraft.world.inventory.MenuType<?>,net.minecraft.world.inventory.MenuType<gregtech.client.gui.DataSwitchMenu>> USB_SWITCH=MENU_TYPES.register("usb_switch",()->net.neoforged.neoforge.common.extensions.IMenuTypeExtension.create((id,inventory,buffer)->new gregtech.client.gui.DataSwitchMenu(id,inventory,gregtech.block.inventory.UsbSwitchBlock.Kind.USB)));
  public static final net.neoforged.neoforge.registries.DeferredHolder<net.minecraft.world.inventory.MenuType<?>,net.minecraft.world.inventory.MenuType<gregtech.client.gui.DataSwitchMenu>> HDD_SWITCH=MENU_TYPES.register("hdd_switch",()->net.neoforged.neoforge.common.extensions.IMenuTypeExtension.create((id,inventory,buffer)->new gregtech.client.gui.DataSwitchMenu(id,inventory,gregtech.block.inventory.UsbSwitchBlock.Kind.HDD)));
  public static final net.neoforged.neoforge.registries.DeferredHolder<net.minecraft.world.inventory.MenuType<?>,net.minecraft.world.inventory.MenuType<gregtech.client.gui.FilterMenu>> FILTER=MENU_TYPES.register("filter",()->net.neoforged.neoforge.common.extensions.IMenuTypeExtension.create((id,inventory,buffer)->new gregtech.client.gui.FilterMenu(id,inventory,buffer.readBoolean())));
- private static final int[] HOPPER_SIZES=gregtech.api.inventory.InventorySlotLayout.supportedSizes();
+ private static final int[] HOPPER_SIZES=gregtech.internal.inventory.InventorySlotLayout.supportedSizes();
  private static final java.util.Map<Integer,net.neoforged.neoforge.registries.DeferredHolder<net.minecraft.world.inventory.MenuType<?>,net.minecraft.world.inventory.MenuType<gregtech.client.gui.HopperContainerMenu>>> BY_SIZE=new java.util.HashMap<>();
  static{for(int n:HOPPER_SIZES)BY_SIZE.put(n,MENU_TYPES.register("hopper_"+n,()->net.neoforged.neoforge.common.extensions.IMenuTypeExtension.create((id,inventory,buffer)->new gregtech.client.gui.HopperContainerMenu(id,inventory,n))));}
  public static net.minecraft.world.inventory.MenuType<gregtech.client.gui.HopperContainerMenu> forSlotCount(int n){var exact=BY_SIZE.get(n);if(exact!=null)return exact.get();for(int size:HOPPER_SIZES)if(size>=n)return BY_SIZE.get(size).get();return BY_SIZE.get(36).get();}
@@ -46,7 +46,7 @@ public final class GTMenuTypes {
             DeferredRegister.create(ForgeRegistries.MENU_TYPES, GregTech.NAMESPACE);
 
     // All distinct hopper slot counts used by GT6 materials
-    private static final int[] HOPPER_SIZES = gregtech.api.inventory.InventorySlotLayout.supportedSizes();
+    private static final int[] HOPPER_SIZES = gregtech.internal.inventory.InventorySlotLayout.supportedSizes();
     private static final Map<Integer, RegistryObject<MenuType<HopperContainerMenu>>> BY_SIZE = new HashMap<>();
 
     static {

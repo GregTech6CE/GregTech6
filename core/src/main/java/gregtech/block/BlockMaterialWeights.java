@@ -1,10 +1,10 @@
 package gregtech.block;
 
 import gregtech.content.material.Materials;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.MaterialChemistry;
-import gregtech.api.prefix.BlockMaterialPrefix;
+import gregtech.internal.material.MaterialChemistry;
+import gregtech.internal.prefix.BlockMaterialPrefix;
 import gregtech.data.generated.GT6Materials;
 
 import java.util.ArrayList;

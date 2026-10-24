@@ -1,6 +1,6 @@
 package gregtech.content.hazard;
 
-import gregtech.api.fluid.FluidHazards;
+import gregtech.internal.fluid.FluidHazards;
 import gregtech.damage.GTHazmat;
 import gregtech.data.RegisteredFluids;
 import gregtech.util.GTEntityHelper;

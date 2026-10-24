@@ -1,6 +1,6 @@
 package gregtech.core;
 
-import gregtech.api.energy.PacketEnergyBuffer;
+import gregtech.internal.energy.PacketEnergyBuffer;
 import java.math.BigInteger;
 
 /** Finite packet accounting, including requests whose unchecked product wraps. */

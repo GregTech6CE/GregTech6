@@ -1,7 +1,7 @@
 package gregtech.bootstrap.content;
 
 import gregtech.GregTech;
-import gregtech.api.fluid.FluidRenderLayers;
+import gregtech.internal.fluid.FluidRenderLayers;
 import gregtech.block.GTWorldFluidBlock;
 import gregtech.data.RegisteredFluids;
 import gregtech.item.FluidItem;
@@ -89,7 +89,7 @@ public record FluidBootstrap(IEventBus bus) implements InitializationStep {
 
             // GT6's sea/river/swamp water copy minecraft:water completely, so they get vanilla
             // water's block properties, explosion resistance and WaterFluid flow behaviour.
-            boolean worldWater = gregtech.api.fluid.GTWaterParity.isWorldWater(path);
+            boolean worldWater = gregtech.internal.fluid.GTWaterParity.isWorldWater(path);
 
             // World block for the spring fluids (created first: the fluid references it).
             final AtomicReference<RegistryObject<Fluid>> stillRef = new AtomicReference<>();

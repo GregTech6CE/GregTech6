@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
-import gregtech.api.recipe.RecipeMap;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.recipe.RecipeMap;
+import gregtech.internal.tool.GTToolType;
 import gregtech.block.machine.BehaviorMachineBlock;
 import gregtech.blockentity.machine.BehaviorMachineBlockEntity;
 import gregtech.content.material.Materials;

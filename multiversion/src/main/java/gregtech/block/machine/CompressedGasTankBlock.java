@@ -1,6 +1,6 @@
 package gregtech.block.machine;
 
-import gregtech.api.addon.AddonMachines;
+import gregtech.internal.addon.AddonMachines;
 import gregtech.api.addon.CompressedGasTankDeclaration;
 import gregtech.blockentity.machine.CompressedGasTankBlockEntity;
 import net.minecraft.core.BlockPos;

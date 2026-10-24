@@ -83,7 +83,7 @@ public final class ComponentCoverStorage {
             return;
         }
         for (var side : Direction.values())
-            gregtech.api.inventory.BlockContents.drop(host.coverOwner(), remove(side));
+            gregtech.internal.inventory.BlockContents.drop(host.coverOwner(), remove(side));
     }
 //? if >=1.21.1 {
     /*public void save(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {

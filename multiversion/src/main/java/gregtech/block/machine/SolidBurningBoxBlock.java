@@ -1,6 +1,6 @@
 package gregtech.block.machine;
 
-import gregtech.api.machine.MachineSpec;
+import gregtech.internal.machine.MachineSpec;
 import gregtech.blockentity.machine.SolidBurningBoxBlockEntity;
 import gregtech.registry.GTBlockEntities;
 import gregtech.util.GTEntityHelper;

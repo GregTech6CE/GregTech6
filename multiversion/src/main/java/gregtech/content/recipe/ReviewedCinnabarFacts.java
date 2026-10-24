@@ -1,7 +1,8 @@
 package gregtech.content.recipe;
 import gregtech.api.material.*;
-import gregtech.api.addon.AddonMaterials;
-import gregtech.api.prefix.BlockMaterialPrefix;
+import gregtech.internal.material.*;
+import gregtech.internal.addon.AddonMaterials;
+import gregtech.internal.prefix.BlockMaterialPrefix;
 import gregtech.data.MaterialPrefix;
 import gregtech.registry.GTItems;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -29,10 +30,10 @@ public final class ReviewedCinnabarFacts implements SourceOreFollowonRows.Facts 
   // This bounded adapter is not an external unifier. Defer instead of manufacturing builtin replacements.
   Set<String> names=Set.of("Cinnabar","Redstone","Sulfur","Glowstone","Selenium","SluiceSand");
   if(AddonMaterials.acceptedForms().stream().anyMatch(f->names.contains(f.materialName())))return true;
-  for(var item:gregtech.api.material.ItemMaterialRegistry.entries().keySet()) {
+  for(var item:gregtech.internal.material.ItemMaterialRegistry.entries().keySet()) {
    String ns=BuiltInRegistries.ITEM.getKey(item).getNamespace();
    if(ns.equals("gt6ce")||ns.equals("minecraft"))continue; // source baseline native/vanilla forms
-   var form=gregtech.api.material.MaterialEquivalence.form(new ItemStack(item));
+   var form=gregtech.internal.material.MaterialEquivalence.form(new ItemStack(item));
    if(form!=null&&names.contains(form.material().getName()))return true;
   }
   return false;

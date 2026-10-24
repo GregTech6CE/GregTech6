@@ -71,7 +71,7 @@ public final class NetherScatterTests {
         expected.put("Basalt", "Basalt");
         expected.put("Blackstone", "Blackstone");
         for (String material : expected.keySet()) {
-            if (gregtech.api.material.GTMaterialRegistry.get(material) == null) {
+            if (gregtech.internal.material.GTMaterialRegistry.get(material) == null) {
                 problems.add("missing GT6 material " + material);
             }
         }

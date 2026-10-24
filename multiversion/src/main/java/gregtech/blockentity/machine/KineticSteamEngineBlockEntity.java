@@ -1,9 +1,9 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.energy.EnergyTransfer;
-import gregtech.api.energy.FaceConfig;
-import gregtech.api.fluid.FluidTankGT;
-import gregtech.api.machine.SteamEngineData;
+import gregtech.internal.energy.EnergyTransfer;
+import gregtech.internal.energy.FaceConfig;
+import gregtech.internal.fluid.FluidTankGT;
+import gregtech.internal.machine.SteamEngineData;
 
 import gregtech.data.GregTechTags;
 import net.minecraft.core.BlockPos;
@@ -43,7 +43,7 @@ public class KineticSteamEngineBlockEntity extends EngineBaseBlockEntity impleme
     boolean enabled = true;
     boolean shutdown;
     private boolean emitted,working;
-    private final gregtech.api.machine.MachineControl control=gregtech.api.machine.MachineControls.switchable(this,
+    private final gregtech.api.machine.MachineControl control=gregtech.internal.machine.MachineControls.switchable(this,
             this::isEnabled,value->{this.enabled=value;setChanged();},()->working,()->emitted);
     @Override public gregtech.api.machine.MachineControl machineControl(Direction side){return control;}
     private int engineState, piston;
@@ -162,7 +162,7 @@ public class KineticSteamEngineBlockEntity extends EngineBaseBlockEntity impleme
     /*public IFluidHandler fluidHandler(@Nullable Direction side){
         FaceConfig fc=resolvedFaceConfig();
         if(steamTank!=null&&(side==null||FaceConfig.has(fc.fluidInputs(),relativeDir(side))))return steamInput();
-        if(distilledWaterTank!=null&&(side==null||FaceConfig.has(fc.fluidOutputs(),relativeDir(side))))return new gregtech.api.fluid.FluidPort(distilledWaterTank,false,true);
+        if(distilledWaterTank!=null&&(side==null||FaceConfig.has(fc.fluidOutputs(),relativeDir(side))))return new gregtech.internal.fluid.FluidPort(distilledWaterTank,false,true);
         return null;
 *///?} else {
     @Override
@@ -177,7 +177,7 @@ public class KineticSteamEngineBlockEntity extends EngineBaseBlockEntity impleme
             }
             if (distilledWaterTank != null && (side == null || FaceConfig.has(fc.fluidOutputs(), relativeDir(side)))) {
                 if (fluidOutCap == null || !fluidOutCap.isPresent()) {
-                    fluidOutCap = LazyOptional.of(() -> new gregtech.api.fluid.FluidPort(distilledWaterTank,false,true));
+                    fluidOutCap = LazyOptional.of(() -> new gregtech.internal.fluid.FluidPort(distilledWaterTank,false,true));
                 }
                 return fluidOutCap.cast();
             }

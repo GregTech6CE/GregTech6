@@ -1,7 +1,8 @@
 package gregtech.gametest;
 import gregtech.api.material.*;
-import gregtech.api.recipe.Recipe;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.material.*;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.data.*;
 import gregtech.registry.GTItems;
 import net.minecraft.gametest.framework.*;

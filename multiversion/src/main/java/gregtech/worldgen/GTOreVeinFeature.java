@@ -1,6 +1,6 @@
 package gregtech.worldgen;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.worldgen.GTOreVeins.OreVein;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
@@ -156,7 +156,7 @@ public class GTOreVeinFeature extends Feature<NoneFeatureConfiguration> {
             || random.nextInt(Math.max(1, Math.max(Math.abs(cX - tX), Math.abs(eX - tX)) / density)) == 0;
     }
 
-    private static boolean setOre(WorldGenLevel level, BlockPos pos, gregtech.api.material.GTMaterial material) {
+    private static boolean setOre(WorldGenLevel level, BlockPos pos, gregtech.internal.material.GTMaterial material) {
         if (level.isOutsideBuildHeight(pos.getY())) return false;
         return GTOreBlockResolver.placeOre(level, pos, material, false);
     }

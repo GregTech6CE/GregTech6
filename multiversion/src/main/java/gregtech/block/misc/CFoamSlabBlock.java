@@ -16,7 +16,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 /** GT6 BlockMetaType six directional half blocks, used by street edges and bridge parapets. */
-public class CFoamSlabBlock extends ColoredConstructionBlock implements gregtech.api.block.FaceGridSlab {
+public class CFoamSlabBlock extends ColoredConstructionBlock implements gregtech.internal.block.FaceGridSlab {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
     private static final VoxelShape[] SHAPES = {
         Block.box(0,0,0,16,8,16), Block.box(0,8,0,16,16,16),

@@ -2,8 +2,8 @@
  * Adapted from Loader_MultiTileEntities, source IDs 32733/32752/32753/32754. */
 package gregtech.content.transport.fluid;
 
-import gregtech.api.machine.TankSpec;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.machine.TankSpec;
+import gregtech.internal.material.GTMaterial;
 import gregtech.data.generated.GT6Materials;
 import java.util.List;
 import java.util.Optional;

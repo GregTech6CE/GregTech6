@@ -1,8 +1,8 @@
 package gregtech.worldgen;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialStackItemHelper;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialStackItemHelper;
 import gregtech.block.RockBlock;
 import gregtech.blockentity.RockBlockEntity;
 import gregtech.data.MaterialPrefix;

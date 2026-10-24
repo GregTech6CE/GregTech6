@@ -1,5 +1,5 @@
 package gregtech.gametest;
-import gregtech.api.fluid.*;
+import gregtech.internal.fluid.*;
 import gregtech.block.tool.*;
 import gregtech.registry.*;
 import net.minecraft.core.BlockPos;

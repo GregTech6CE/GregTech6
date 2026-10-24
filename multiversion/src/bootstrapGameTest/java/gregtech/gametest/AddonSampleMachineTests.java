@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
-import gregtech.api.multiblock.MultiblockLayout.Role;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.multiblock.MultiblockLayout.Role;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.block.machine.BasicMachineBlock;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.blockentity.machine.LargeRecipeMachineBlockEntity;

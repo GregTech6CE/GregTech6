@@ -1,8 +1,8 @@
 package gregtech.block.tool;
 
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
-import gregtech.api.tool.ToolInteractionSpec;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
+import gregtech.internal.tool.ToolInteractionSpec;
 import gregtech.blockentity.tool.CoinMoldBlockEntity;
 import gregtech.registry.GTBlockEntities;
 import net.minecraft.core.BlockPos;

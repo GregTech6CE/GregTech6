@@ -1,7 +1,7 @@
 package gregtech.data;
 
 import com.google.gson.Gson;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.block.machine.BasicMachineBlock;
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.machine.BasicMachineRegistries;
@@ -49,9 +49,9 @@ import java.util.Set;
  * </p>
  */
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+/*@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 *///?} else {
-@Mod.EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 //?}
 public final class BasicMachineRecipePack extends AbstractPackResources {
     /** Machines whose crafting recipe comes from the multiblock table instead. */

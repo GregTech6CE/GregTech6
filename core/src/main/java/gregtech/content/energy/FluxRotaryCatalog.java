@@ -2,8 +2,9 @@
  * Loader_MultiTileEntities 11021–11025, 11111–11115. */
 package gregtech.content.energy;
 
-import gregtech.api.energy.EnergyNodeSpec;
+import gregtech.internal.energy.EnergyNodeSpec;
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.content.material.Materials;
 import gregtech.data.GregTechTags;
 import java.util.*;

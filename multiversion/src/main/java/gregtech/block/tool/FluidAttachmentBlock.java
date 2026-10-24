@@ -1,6 +1,7 @@
 package gregtech.block.tool;
 import gregtech.content.tool.FluidAttachmentSpec;
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.registry.GTFluids;
 import net.minecraft.core.*;
 import net.minecraft.world.*;
@@ -19,7 +20,7 @@ import net.minecraftforge.fluids.*;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 //?}
 /** Material-defined attachment; explicit source tool access precedes ordinary fluid capabilities. */
-public class FluidAttachmentBlock extends net.minecraft.world.level.block.Block implements gregtech.api.tool.ToolInteractionTarget {
+public class FluidAttachmentBlock extends net.minecraft.world.level.block.Block implements gregtech.internal.tool.ToolInteractionTarget {
 //? if >=1.21.1 {
     /*@Override
     public com.mojang.serialization.MapCodec<FluidAttachmentBlock> codec() {
@@ -76,8 +77,8 @@ public class FluidAttachmentBlock extends net.minecraft.world.level.block.Block 
     }
 
     @Override
-    public gregtech.api.tool.ToolInteractionSpec toolInteraction(BlockState state, net.minecraft.world.item.ItemStack tool) {
-        return gregtech.api.tool.GTToolHelper.isMachineWrench(tool) ? gregtech.api.tool.ToolInteractionSpec.facing(FACING,
+    public gregtech.internal.tool.ToolInteractionSpec toolInteraction(BlockState state, net.minecraft.world.item.ItemStack tool) {
+        return gregtech.internal.tool.GTToolHelper.isMachineWrench(tool) ? gregtech.internal.tool.ToolInteractionSpec.facing(FACING,
                 spec.shape().equals("fluid_funnel") ? gregtech.block.machine.MachineRotationType.ALL
                         : gregtech.block.machine.MachineRotationType.HORIZONTAL) : null;
     }
@@ -116,7 +117,7 @@ public class FluidAttachmentBlock extends net.minecraft.world.level.block.Block 
         if (!level.hasChunkAt(targetPos)) return null;
         var target = level.getBlockEntity(targetPos);
         if (target == null || target.isRemoved()) return null;
-        if (target instanceof gregtech.api.fluid.FluidToolTarget tools)
+        if (target instanceof gregtech.internal.fluid.FluidToolTarget tools)
             return tools.fluidToolHandler(side, spec.fillsTarget());
 //? if >=1.21.1 {
         /*return level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK, targetPos, side);
@@ -173,7 +174,7 @@ public class FluidAttachmentBlock extends net.minecraft.world.level.block.Block 
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 //?}
         if (hand != InteractionHand.MAIN_HAND) return InteractionResult.PASS;
-        if (gregtech.api.tool.ToolInteractions.use(state, level, pos, player, hand,
+        if (gregtech.internal.tool.ToolInteractions.use(state, level, pos, player, hand,
                 hit)) return InteractionResult.sidedSuccess(level.isClientSide);
         var facing = state.getValue(FACING);
         var targetPos = pos.relative(facing);
@@ -256,8 +257,8 @@ public class FluidAttachmentBlock extends net.minecraft.world.level.block.Block 
         // entryForFluid, not the FluidType key: GT6's three world waters report vanilla water's
         // FluidType (see GTWorldWaterFluid), so the type key would resolve them to minecraft:water.
         var entry = GTFluids.entryForFluid(fluid.getFluid());
-        if (!water && entry != null && gregtech.api.fluid.FluidTexturePolicy.kind(
-                entry) == gregtech.api.fluid.FluidTexturePolicy.Kind.MOLTEN) limit = 144;
+        if (!water && entry != null && gregtech.internal.fluid.FluidTexturePolicy.kind(
+                entry) == gregtech.internal.fluid.FluidTexturePolicy.Kind.MOLTEN) limit = 144;
         return !FluidUtil.tryFluidTransfer(sink, source, limit, true).isEmpty();
     }
 }

@@ -1,8 +1,10 @@
 package gregtech.gametest;
 import gregtech.api.machine.*;
+import gregtech.internal.machine.*;
 import gregtech.api.material.*;
-import gregtech.api.recipe.RecipeInputs;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.material.*;
+import gregtech.internal.recipe.RecipeInputs;
+import gregtech.internal.tool.GTToolType;
 import gregtech.content.recipe.*;
 import gregtech.content.transport.*;
 import gregtech.content.transport.fluid.*;
@@ -24,7 +26,7 @@ import java.util.*;
 public final class TransportMaterialPortTests {
  static ItemStack item(String id){var s=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse(id)));if(s.isEmpty())throw new IllegalStateException("Missing transport item "+id);return s;}
  static Map<GTMaterial,Long> units(ItemComposition data){var result=new HashMap<GTMaterial,Long>();for(var c:data.components())result.merge(c.material(),c.amount(),Math::addExact);return result;}
- static void checkCrucible(GameTestHelper h,ItemStack s){var data=ItemMaterialRegistry.get(s).orElseThrow();var payload=gregtech.api.machine.crucible.CrucibleItemInput.parse(s);h.assertTrue(payload.size()==data.components().size(),"native crucible receives every component "+s);for(var c:data.components())h.assertTrue(payload.stream().anyMatch(p->p.material==c.material()&&p.amount==c.amount()),"exact crucible input "+s);}
+ static void checkCrucible(GameTestHelper h,ItemStack s){var data=ItemMaterialRegistry.get(s).orElseThrow();var payload=gregtech.internal.machine.crucible.CrucibleItemInput.parse(s);h.assertTrue(payload.size()==data.components().size(),"native crucible receives every component "+s);for(var c:data.components())h.assertTrue(payload.stream().anyMatch(p->p.material==c.material()&&p.amount==c.amount()),"exact crucible input "+s);}
 //? if >=1.21.1 {
  /*static void stored(ItemStack s){s.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(new net.minecraft.nbt.CompoundTag()));}
  static CraftingInput grid(List<ItemStack> stacks){return CraftingInput.of(3,3,stacks);}
@@ -43,7 +45,7 @@ public final class TransportMaterialPortTests {
   for(var spec:FluidTransportDefinitions.pipes()){var s=item("gt6ce:"+spec.id());var data=ItemMaterialRegistry.get(s).orElseThrow();h.assertTrue(data.components().size()==1&&data.material()==spec.material().resolve()&&data.amount()==weights[spec.size().ordinal()],"original OP fluid pipe weight "+spec.id());h.assertTrue(MaterialEquivalence.form(s)!=null,"native pipe prefix association "+spec.id());checkCrucible(h,s);}
   for(var mat:ItemPipeCatalog.ITEM_PIPE_MATS)for(var size:ItemPipeSpec.ItemPipeSize.values()){var s=item("gt6ce:item_pipe_"+size.name().toLowerCase(Locale.ROOT)+"_"+mat.idSuffix());var data=ItemMaterialRegistry.get(s).orElseThrow();h.assertTrue(data.components().size()==1&&data.amount()==u*(size.ordinal()%3==0?3:size.ordinal()%3==1?6:12),"source restrictive association overrides REV rings "+s);checkCrucible(h,s);}
   for(var spec:FluidTransportDefinitions.tanks()){var s=item("gt6ce:"+spec.id());var data=ItemMaterialRegistry.get(s).orElseThrow();if(spec.type()==TankSpec.TankType.METAL_DRUM)h.assertTrue(data.components().size()==1&&data.amount()==u*6,"four curved plates plus two long rods "+spec.id());else if(spec.type()==TankSpec.TankType.PLASTIC_CANISTER)h.assertTrue(data.amount()==u*3,"original explicit PlasticCan 3U");else h.assertTrue(units(data).equals(Map.of(spec.material().resolve(),u*4,ReversibleCraftingData.perItem(List.of(MaterialComponent.of(TransportMaterialRules.barrelRod(spec),u*2)),1,"fixture").material(),u*2)),"wood barrel plus ANY.Iron/MagicIron output rods "+spec.id());checkCrucible(h,s);}
-  h.assertTrue(!gregtech.api.material.MaterialItemDefinitions.candidatePrefixes().contains(MaterialPrefix.pipeMedium),"pipe metadata creates no ghost standalone item forms");h.succeed();
+  h.assertTrue(!gregtech.internal.material.MaterialItemDefinitions.candidatePrefixes().contains(MaterialPrefix.pipeMedium),"pipe metadata creates no ghost standalone item forms");h.succeed();
  }
  @GameTest(template="test_empty",timeoutTicks=140)
  public static void nativeTransportCraftingUsesSourceCountsToolsAndPayloadGuards(GameTestHelper h){
@@ -56,6 +58,6 @@ public final class TransportMaterialPortTests {
  }
  @GameTest(template="test_empty",timeoutTicks=100)
  public static void nativeTransportRecoveryConservesMaterialsAndRejectsStoredContents(GameTestHelper h){
-  for(var item:TransportMaterialRegistration.recoveryItems()){var s=new ItemStack(item);var recipe=VanillaRecoveryRecipes.recipes().stream().filter(x->x.mInputs[0].is(item)).findFirst().orElseThrow(()->new IllegalStateException("Missing native recovery "+s));h.assertTrue(RecipeInputs.consume(recipe,List.of(s),List.of(),1)!=null,"actual native recovery consumes one "+s);var available=new HashMap<GTMaterial,Long>();for(var c:ItemMaterialRegistry.get(s).orElseThrow().components())available.merge(c.material().getTargetPulverMaterial().resolve(),MaterialRecoveryRules.pulverizedAmount(c.material(),c.amount()),Math::addExact);for(var out:recipe.mOutputs){var form=MaterialEquivalence.form(out);h.assertTrue(form!=null,"actual dust identity "+out);long remainder=available.getOrDefault(form.material(),0L)-form.prefix().getMaterialWeight()*out.getCount();h.assertTrue(remainder>=0&&remainder<GTValues.U/72,"no extra or representably lost material "+s);available.put(form.material(),remainder);}var unsafe=s.copy();stored(unsafe);h.assertTrue(!ItemMaterialRegistry.canRecover(unsafe)&&RecipeInputs.consume(recipe,List.of(unsafe),List.of(),1)==null&&gregtech.api.machine.crucible.CrucibleItemInput.parse(unsafe).isEmpty(),"stored tank/pipe inventory survives recycling guard");}h.succeed();
+  for(var item:TransportMaterialRegistration.recoveryItems()){var s=new ItemStack(item);var recipe=VanillaRecoveryRecipes.recipes().stream().filter(x->x.mInputs[0].is(item)).findFirst().orElseThrow(()->new IllegalStateException("Missing native recovery "+s));h.assertTrue(RecipeInputs.consume(recipe,List.of(s),List.of(),1)!=null,"actual native recovery consumes one "+s);var available=new HashMap<GTMaterial,Long>();for(var c:ItemMaterialRegistry.get(s).orElseThrow().components())available.merge(c.material().getTargetPulverMaterial().resolve(),MaterialRecoveryRules.pulverizedAmount(c.material(),c.amount()),Math::addExact);for(var out:recipe.mOutputs){var form=MaterialEquivalence.form(out);h.assertTrue(form!=null,"actual dust identity "+out);long remainder=available.getOrDefault(form.material(),0L)-form.prefix().getMaterialWeight()*out.getCount();h.assertTrue(remainder>=0&&remainder<GTValues.U/72,"no extra or representably lost material "+s);available.put(form.material(),remainder);}var unsafe=s.copy();stored(unsafe);h.assertTrue(!ItemMaterialRegistry.canRecover(unsafe)&&RecipeInputs.consume(recipe,List.of(unsafe),List.of(),1)==null&&gregtech.internal.machine.crucible.CrucibleItemInput.parse(unsafe).isEmpty(),"stored tank/pipe inventory survives recycling guard");}h.succeed();
  }
 }

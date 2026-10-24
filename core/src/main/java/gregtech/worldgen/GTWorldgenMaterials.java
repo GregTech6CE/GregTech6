@@ -1,7 +1,7 @@
 package gregtech.worldgen;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.MaterialProperty;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.MaterialProperty;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -46,12 +46,12 @@ public final class GTWorldgenMaterials {
         }
         for (GTStoneLayersGen.LayerDef layer : GTStoneLayersGen.LAYERS) {
             for (GTStoneLayersGen.OreDef ore : layer.ores()) {
-                materials.add(gregtech.api.material.GTMaterialRegistry.get(ore.material()));
+                materials.add(gregtech.internal.material.GTMaterialRegistry.get(ore.material()));
             }
         }
         for (GTStoneLayersGen.ContactDef contact : GTStoneLayersGen.CONTACTS) {
             for (GTStoneLayersGen.OreDef ore : contact.ores()) {
-                materials.add(gregtech.api.material.GTMaterialRegistry.get(ore.material()));
+                materials.add(gregtech.internal.material.GTMaterialRegistry.get(ore.material()));
             }
         }
 

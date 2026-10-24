@@ -2,8 +2,9 @@
  * MultiTileEntityMagicFieldAbsorber, adapted to the shared modern energy boundary. */
 package gregtech.blockentity.energy;
 
-import gregtech.api.energy.EnergyTransfer;
+import gregtech.internal.energy.EnergyTransfer;
 import gregtech.api.machine.*;
+import gregtech.internal.machine.*;
 import gregtech.block.energy.MagicFieldAbsorberBlock;
 import gregtech.blockentity.GTEnergyBlockEntity;
 import gregtech.content.energy.MagicFieldAbsorberRules;

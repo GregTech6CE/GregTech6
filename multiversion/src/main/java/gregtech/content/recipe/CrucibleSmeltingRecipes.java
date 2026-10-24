@@ -1,9 +1,9 @@
 package gregtech.content.recipe;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.MaterialProperty;
+import gregtech.internal.material.MaterialProperty;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.data.MaterialPrefix;
 import gregtech.registry.GTItems;
@@ -80,7 +80,7 @@ public final class CrucibleSmeltingRecipes {
                 ItemStack input = GTItems.getStack(prefix, material, 1);
                 if (input.isEmpty()) continue;
                 // Raw ore must first use the actual crushing payload, not its 2U shell weight.
-                var preview = gregtech.api.machine.crucible.CrucibleInputRules.smeltingPreview(material, prefix);
+                var preview = gregtech.internal.machine.crucible.CrucibleInputRules.smeltingPreview(material, prefix);
                 if (preview == null) continue;
                 ItemStack output = OM.ingotOrDust(preview.material(), preview.amount());
                 if (output.isEmpty()) {

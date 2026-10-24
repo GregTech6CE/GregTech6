@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.api.mod.GregTechIdentity;
+import gregtech.internal.mod.GregTechIdentity;
 import gregtech.registry.GTManualStations;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;

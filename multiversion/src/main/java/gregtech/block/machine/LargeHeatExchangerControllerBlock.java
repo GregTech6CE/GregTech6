@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 
 import javax.annotation.Nullable;
 
-public class LargeHeatExchangerControllerBlock extends DirectionalBlock implements EntityBlock, gregtech.api.tool.ToolInteractionTarget {
+public class LargeHeatExchangerControllerBlock extends DirectionalBlock implements EntityBlock, gregtech.internal.tool.ToolInteractionTarget {
 
     public LargeHeatExchangerControllerBlock(Properties properties) {
         super(properties);
@@ -58,9 +58,9 @@ public class LargeHeatExchangerControllerBlock extends DirectionalBlock implemen
     }
 
     @Override
-    public gregtech.api.tool.ToolInteractionSpec toolInteraction(BlockState state, net.minecraft.world.item.ItemStack tool) {
-        return gregtech.api.tool.GTToolHelper.isMachineWrench(tool)
-                ? gregtech.api.tool.ToolInteractionSpec.facing(FACING, MachineRotationType.BOTTOM) : null;
+    public gregtech.internal.tool.ToolInteractionSpec toolInteraction(BlockState state, net.minecraft.world.item.ItemStack tool) {
+        return gregtech.internal.tool.GTToolHelper.isMachineWrench(tool)
+                ? gregtech.internal.tool.ToolInteractionSpec.facing(FACING, MachineRotationType.BOTTOM) : null;
     }
 
     @Override
@@ -96,7 +96,7 @@ public class LargeHeatExchangerControllerBlock extends DirectionalBlock implemen
     public net.minecraft.world.InteractionResult use(BlockState state, Level level, BlockPos pos, net.minecraft.world.entity.player.Player player,
             net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
 //?}
-        if (gregtech.api.tool.ToolInteractions.use(state, level, pos, player, hand, hit))
+        if (gregtech.internal.tool.ToolInteractions.use(state, level, pos, player, hand, hit))
         return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
         if (level.getBlockEntity(pos) instanceof LargeHeatExchangerControllerBlockEntity machine) {
             if (level.isClientSide) return net.minecraft.world.InteractionResult.SUCCESS;

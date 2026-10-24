@@ -39,7 +39,7 @@ final class MultiblockPartDeliveryChecks {
             require(lines.stream().filter(c -> CommonBlockTooltips.containsKey(List.of(c),"gt.lang.flammable")).count() == (source.flammability() > 0 ? 1 : 0), "Wood wall has one original flammability row " + id);
             require(BlockHarvestPolicy.source(block).orElseThrow().sourceId() == source.originalId(), "Exact source harvest identity " + id);
             var expected = gregtech.content.machine.MachineConstructionMaterials.block(source.path()).orElseThrow();
-            var actual = gregtech.api.material.ItemMaterialRegistry.get(stack).orElseThrow();
+            var actual = gregtech.internal.material.ItemMaterialRegistry.get(stack).orElseThrow();
             require(actual.components().equals(expected.components()), "Actual known material quantities " + id);
             require(!CommonBlockTooltips.containsKey(lines,"tooltip.gt6ce.contained_materials")
 //? if >=1.21.1 {

@@ -1,7 +1,8 @@
 package gregtech.blockentity.tool;
 
 import gregtech.api.recipe.*;
-import gregtech.api.tool.*;
+import gregtech.internal.recipe.*;
+import gregtech.internal.tool.*;
 import gregtech.block.tool.MaterialAnvilBlock;
 import gregtech.data.MachineRecipeMaps;
 import net.minecraft.core.*;
@@ -14,7 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
 /** Two workpieces and persisted GT6 durability units. Failed recipes never consume either. */
-public final class MaterialAnvilBlockEntity extends BlockEntity implements gregtech.api.inventory.BlockContents, PoweredToolTarget {
+public final class MaterialAnvilBlockEntity extends BlockEntity implements gregtech.internal.inventory.BlockContents, PoweredToolTarget {
     private final ItemStack[] work = {ItemStack.EMPTY, ItemStack.EMPTY};
     private long durability;
 //? if >=1.21.1 {
@@ -193,7 +194,7 @@ public final class MaterialAnvilBlockEntity extends BlockEntity implements gregt
     private ItemStack[] consume(Recipe recipe) {
         return gregtech.content.tool.AnvilWorkInputs.consume(work,recipe.mInputs);
     }
-    private void give(Player player, ItemStack item) { if(player==null) gregtech.api.inventory.BlockContents.drop(this,item); else if (!item.isEmpty() && !player.addItem(item)) player.drop(item, false); }
+    private void give(Player player, ItemStack item) { if(player==null) gregtech.internal.inventory.BlockContents.drop(this,item); else if (!item.isEmpty() && !player.addItem(item)) player.drop(item, false); }
 //? if >=1.21.1 {
     /*@Override protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
         super.saveAdditional(tag,lookup); tag.putLong("gt.durability", durability);
@@ -221,7 +222,7 @@ public final class MaterialAnvilBlockEntity extends BlockEntity implements gregt
     @Override public void dropContents() {
         if (level == null || level.isClientSide) return;
         for (int i = 0; i < work.length; i++) {
-            gregtech.api.inventory.BlockContents.drop(this, work[i]);
+            gregtech.internal.inventory.BlockContents.drop(this, work[i]);
             work[i] = ItemStack.EMPTY;
         }
         setChanged();

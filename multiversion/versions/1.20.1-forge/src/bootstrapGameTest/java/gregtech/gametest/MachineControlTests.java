@@ -1,7 +1,8 @@
 package gregtech.gametest;
 
 import gregtech.api.machine.*;
-import gregtech.api.tool.*;
+import gregtech.internal.machine.*;
+import gregtech.internal.tool.*;
 import gregtech.block.misc.*;
 import gregtech.blockentity.energy.*;
 import gregtech.blockentity.machine.*;
@@ -76,7 +77,7 @@ public final class MachineControlTests {
     @GameTest(template="test_blueprint_empty") public static void playerToolsOperateControlsAndUnsupportedTargetsDoNotWear(GameTestHelper h){
         var relay=relay(h,CENTER);h.setBlock(CENTER.east(),MachineRegistry.electricEngines().get(0).get());
         var player=h.makeMockPlayer();var material=gregtech.content.material.Materials.Steel;
-        var wood=gregtech.api.material.GTMaterialRegistry.get("Wood");
+        var wood=gregtech.internal.material.GTMaterialRegistry.get("Wood");
         var screwdriver=gregtech.item.GTToolItem.create(GTToolType.SCREWDRIVER,material,wood);
         var hammer=gregtech.item.GTToolItem.create(GTToolType.SOFT_HAMMER,material,wood);
         var hit=new BlockHitResult(Vec3.atCenterOf(relay.getBlockPos()),Direction.WEST,relay.getBlockPos(),false);var block=(SourceExtenderBlock)relay.getBlockState().getBlock();

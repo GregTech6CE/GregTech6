@@ -1,15 +1,15 @@
 package gregtech.registry;
 //? if >=1.21.1 {
-/*import gregtech.api.machine.ItemPipeSpec;
-import gregtech.api.material.GTMaterial;
+/*import gregtech.internal.machine.ItemPipeSpec;
+import gregtech.internal.material.GTMaterial;
 import gregtech.block.machine.ItemPipeBlock;
 import net.minecraft.world.item.*;
 import net.neoforged.neoforge.registries.*;
 import net.neoforged.bus.api.IEventBus;
 *///?} else {
 
-import gregtech.api.machine.ItemPipeSpec;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.machine.ItemPipeSpec;
+import gregtech.internal.material.GTMaterial;
 import gregtech.block.machine.ItemPipeBlock;
 import gregtech.block.machine.GTMachineBlockItem;
 import net.minecraft.world.item.Item;
@@ -80,9 +80,9 @@ public final class GTItemPipes {
         GTBlocks.BLOCK_ITEMS.register(id,
                 () -> new GTMachineBlockItem(block.get(),
                         new Item.Properties().stacksTo(stackSize(size)),
-                        new gregtech.api.machine.MachineSpec(
+                        new gregtech.internal.machine.MachineSpec(
                                 id, material.getLocalName(), material.getColor(), 0, 0,
-                                gregtech.api.machine.MachineTextures.BURNING_SOLID,
+                                gregtech.internal.machine.MachineTextures.BURNING_SOLID,
                                 1.5F, spec.blastResistance())));
         return block;
     }

@@ -1,6 +1,6 @@
 package gregtech.api.addon;
 
-import gregtech.api.recipe.RecipeMapSpec;
+import gregtech.internal.recipe.RecipeMapSpec;
 
 import java.util.List;
 

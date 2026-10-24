@@ -6,8 +6,8 @@ import gregtech.platform.neoforge.StackCustomData;
 import net.minecraft.core.HolderLookup;
 
 *///?} else {
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 //?}
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

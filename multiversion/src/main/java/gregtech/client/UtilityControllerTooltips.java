@@ -12,7 +12,7 @@ public final class UtilityControllerTooltips {
     private UtilityControllerTooltips() {}
     public static void heat(List<Component> lines) { heat(gregtech.content.multiblock.HeatExchangerRules.DEFAULTS,lines); }
     public static void heat(net.minecraft.world.item.ItemStack stack,List<Component> lines) {
-        heat(gregtech.api.fluid.HeatExchangerData.settings(stack),lines);
+        heat(gregtech.internal.fluid.HeatExchangerData.settings(stack),lines);
     }
     private static void heat(gregtech.content.multiblock.HeatExchangerRules.Settings settings,List<Component> lines) {
         if(CommonBlockTooltips.containsKey(lines,"gt.lang.structure"))return;

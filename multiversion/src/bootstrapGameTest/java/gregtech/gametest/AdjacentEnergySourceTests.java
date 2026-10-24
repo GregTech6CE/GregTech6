@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.energy.EnergyNodeSpec;
+import gregtech.internal.energy.EnergyNodeSpec;
 import gregtech.block.energy.EnergyNodeBlock;
 import gregtech.block.machine.BasicMachineBlock;
 import gregtech.blockentity.energy.EnergyNodeBlockEntity;

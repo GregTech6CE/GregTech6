@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.recipe.Recipe;
 import gregtech.content.book.GTBooks;
 import gregtech.content.recipe.GTMainRecipes;
 import gregtech.data.MachineRecipeMaps;

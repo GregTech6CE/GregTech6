@@ -2,7 +2,7 @@ package gregtech.integration.client;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
-import gregtech.api.fluid.FluidDisplayBinding;
+import gregtech.internal.fluid.FluidDisplayBinding;
 import gregtech.content.bumble.GTBumbleSpecies;
 import gregtech.registry.GTFluids;
 import gregtech.registry.GTFluidItems;
@@ -164,11 +164,11 @@ final class LanguageDeliveryChecks {
             var shape=item("extruder_shape_tinypipe");
             require(tooltip(shape).stream().anyMatch(c -> c.getString().equals(original("gt.multiitem.technological.10009.tooltip"))),
                     "Newly imported original shape description reaches native tooltip");
-            var toolSamples=List.of(gregtech.api.tool.GTToolType.SWORD,
-                    gregtech.api.tool.GTToolType.GEM_PICK,
-                    gregtech.api.tool.GTToolType.POCKET_MULTITOOL);
+            var toolSamples=List.of(gregtech.internal.tool.GTToolType.SWORD,
+                    gregtech.internal.tool.GTToolType.GEM_PICK,
+                    gregtech.internal.tool.GTToolType.POCKET_MULTITOOL);
             for(var type:toolSamples) {
-                var stack=gregtech.api.tool.GTToolHelper.displayTool(type);
+                var stack=gregtech.internal.tool.GTToolHelper.displayTool(type);
                 require(stack.getHoverName().getString().contains(original("gt.metatool.01."+type.gt6Id())),
                         "Assembled tool keeps localized original kind "+type);
                 require(!stack.getHoverName().getString().contains("%s"),"No unexpanded assembled tool format");
@@ -360,11 +360,11 @@ final class LanguageDeliveryChecks {
         for(var registered:BuiltInRegistries.ITEM)if(registered instanceof BlockItem item
                 && item.getBlock() instanceof gregtech.block.machine.EngineBlock engine) {
             var material=switch(engine.engineType()) {
-                case ELECTRIC -> engine.engineSpec(gregtech.api.machine.ElectricEngineSpec.class).material();
-                case FLUX -> engine.engineSpec(gregtech.api.machine.FluxEngineSpec.class).material();
-                case STEAM -> engine.engineSpec(gregtech.api.machine.SteamEngineData.class).material();
-                case ROTATION -> engine.engineSpec(gregtech.api.machine.RotationEngineSpec.class).material();
-                case DIESEL -> engine.engineSpec(gregtech.api.machine.DieselEngineSpec.class).material();
+                case ELECTRIC -> engine.engineSpec(gregtech.internal.machine.ElectricEngineSpec.class).material();
+                case FLUX -> engine.engineSpec(gregtech.internal.machine.FluxEngineSpec.class).material();
+                case STEAM -> engine.engineSpec(gregtech.internal.machine.SteamEngineData.class).material();
+                case ROTATION -> engine.engineSpec(gregtech.internal.machine.RotationEngineSpec.class).material();
+                case DIESEL -> engine.engineSpec(gregtech.internal.machine.DieselEngineSpec.class).material();
             };
             var lines=tooltip(new ItemStack(registered)).stream().skip(1).toList();
             String key=material.getTranslationKey();
@@ -372,13 +372,13 @@ final class LanguageDeliveryChecks {
             var materialLines=lines.stream().filter(c->c.getContents() instanceof TranslatableContents tr
                     &&tr.getKey().equals(key)).toList();
             require(materialLines.size()==1&&materialLines.get(0).getString().equals(
-                    gregtech.api.material.MaterialPresentation.name(material).getString()),
+                    gregtech.internal.material.MaterialPresentation.name(material).getString()),
                     "Engine uses its localized material exactly once "+BuiltInRegistries.ITEM.getKey(registered));
-            if(engine.engineType()!=gregtech.api.machine.EngineType.DIESEL) {
+            if(engine.engineType()!=gregtech.internal.machine.EngineType.DIESEL) {
                 require(lines.stream().anyMatch(c->has(c,"gt.lang.efficiency")),"Engine source efficiency label");
                 require(lines.stream().anyMatch(c->has(c,"gt.lang.energy.capacity")),"Engine source capacity label");
             }
-            if(engine.engineType()==gregtech.api.machine.EngineType.STEAM) {
+            if(engine.engineType()==gregtech.internal.machine.EngineType.STEAM) {
                 require(lines.stream().anyMatch(c->has(c,"fluid_type.gt6ce.steam")),"Steam input uses localized fluid name");
                 require(lines.stream().filter(c->has(c,"gt.lang.energy.input")||has(c,"gt.lang.energy.capacity"))
                         .noneMatch(c->c.getString().contains(" Steam"))
@@ -494,13 +494,13 @@ final class LanguageDeliveryChecks {
     }
     private static int verifyToolHints(boolean chinese) {
         int count=0;
-        for(var definition:gregtech.api.tool.ToolDefinition.values()) {
+        for(var definition:gregtech.internal.tool.ToolDefinition.values()) {
             if(definition.tooltipKey()==null)continue;
-            var type=gregtech.api.tool.GTToolType.valueOf(definition.name());
-            var stack=gregtech.api.tool.GTToolHelper.displayTool(type);
+            var type=gregtech.internal.tool.GTToolType.valueOf(definition.name());
+            var stack=gregtech.internal.tool.GTToolHelper.displayTool(type);
             String key="tooltip.gt6ce.tool_hint."+definition.tooltipKey();
             String expected=original(key);
-            String source=definition==gregtech.api.tool.ToolDefinition.BUILDER_WAND
+            String source=definition==gregtech.internal.tool.ToolDefinition.BUILDER_WAND
                     ? "gt.lang.use.builder.wand.to.ease.building" : "gt.metatool.01."+definition.gt6Id()+".tooltip";
             if(chinese)require(expected.equals(original(source)),"Original tool description or behavior instruction "+type);
             var rows=tooltip(stack).stream().filter(c -> has(c,key)).toList();
@@ -591,7 +591,7 @@ final class LanguageDeliveryChecks {
         for(var registered:BuiltInRegistries.ITEM)if(registered instanceof gregtech.item.CoinItem coin) {
             var stack=new ItemStack(registered);
             require(stack.getHoverName().getString().equals(expected),"Original coin name "+BuiltInRegistries.ITEM.getKey(registered));
-            String material=gregtech.api.material.MaterialPresentation.name(coin.getMaterial()).getString();
+            String material=gregtech.internal.material.MaterialPresentation.name(coin.getMaterial()).getString();
             require(tooltip(stack).stream().filter(c -> c.getString().equals(material)).count()==1,"Coin material shown exactly once");
             count++;
         }
@@ -631,11 +631,11 @@ final class LanguageDeliveryChecks {
 
     private static String materialSourceKey(ItemStack stack) {
         if(stack.getItem() instanceof gregtech.item.CoinItem)return "gt.multitileentity.32700";
-        if(stack.getItem() instanceof gregtech.api.material.MaterialFormItem form)
-            return gregtech.api.prefix.PrefixRegistry.sourceTranslationKey(form.getPrefix().getName(),form.getMaterial().getName());
+        if(stack.getItem() instanceof gregtech.internal.material.MaterialFormItem form)
+            return gregtech.internal.prefix.PrefixRegistry.sourceTranslationKey(form.getPrefix().getName(),form.getMaterial().getName());
         if(stack.getItem() instanceof BlockItem blockItem
                 && blockItem.getBlock() instanceof gregtech.block.MaterialBlockLike form)
-            return gregtech.api.prefix.PrefixRegistry.sourceTranslationKey(form.prefix().getName(),form.material().getName());
+            return gregtech.internal.prefix.PrefixRegistry.sourceTranslationKey(form.prefix().getName(),form.material().getName());
         return null;
     }
     private static JsonObject recordNameInventory(Minecraft client, Map<String,String> englishNames) {

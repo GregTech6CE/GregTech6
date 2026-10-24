@@ -1,6 +1,6 @@
 package gregtech.content.tool;
 
-import gregtech.api.tool.ToolDefinition;
+import gregtech.internal.tool.ToolDefinition;
 import gregtech.data.MaterialPrefix;
 
 import java.util.ArrayList;

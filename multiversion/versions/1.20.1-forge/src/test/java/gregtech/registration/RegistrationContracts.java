@@ -1,10 +1,11 @@
 package gregtech.registration;
 
 import gregtech.api.material.*;
-import gregtech.api.machine.BasicMachineSpec;
-import gregtech.api.energy.EnergyNodeSpec;
-import gregtech.api.fluid.FluidDefinition;
-import gregtech.api.mod.ModData;
+import gregtech.internal.material.*;
+import gregtech.internal.machine.BasicMachineSpec;
+import gregtech.internal.energy.EnergyNodeSpec;
+import gregtech.internal.fluid.FluidDefinition;
+import gregtech.internal.mod.ModData;
 import gregtech.content.material.Materials;
 import gregtech.content.machine.BasicMachineDefinitions;
 import gregtech.content.energy.EnergyNodeDefinitions;

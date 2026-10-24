@@ -1,18 +1,18 @@
 package gregtech.block.stone;
 //? if >=1.21.1 {
 //?} else {
-import gregtech.api.material.MaterialPresentation;
+import gregtech.internal.material.MaterialPresentation;
 //?}
 
 //? if >=1.21.1 {
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 //? if >=1.21.1 {
 //?} else {
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 //?}
 import gregtech.registry.GTBlocks;
 import net.minecraft.core.BlockPos;

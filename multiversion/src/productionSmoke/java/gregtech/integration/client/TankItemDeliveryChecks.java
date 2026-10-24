@@ -3,7 +3,7 @@ package gregtech.integration.client;
 import com.google.gson.JsonObject;
 import gregtech.block.machine.TankBlock;
 import gregtech.blockentity.machine.TankBlockEntity;
-import gregtech.api.material.ItemMaterialRegistry;
+import gregtech.internal.material.ItemMaterialRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -133,7 +133,7 @@ final class TankItemDeliveryChecks {
         out.addProperty("scope", "installed item methods and tooltip event at title screen; no recovery gameplay claim");
         return out;
     }
-    private static void verifyComposition(ItemStack stack, gregtech.api.material.ItemComposition expected) {
+    private static void verifyComposition(ItemStack stack, gregtech.internal.material.ItemComposition expected) {
         var id = BuiltInRegistries.ITEM.getKey(stack.getItem());
         var actual = ItemMaterialRegistry.get(stack).orElseThrow(() -> new IllegalStateException("installed source material data " + id));
         require(actual.components().equals(expected.components()), "installed exact source components " + id);
@@ -142,7 +142,7 @@ final class TankItemDeliveryChecks {
         require(lines.stream().filter(header::equals).count() == 1, "installed single material header " + id);
         for (var part : expected.components()) {
             String prefix = gregtech.client.MaterialTooltips.displayUnits(part.amount()) + " "
-                    + gregtech.api.material.MaterialPresentation.name(part.material()).getString();
+                    + gregtech.internal.material.MaterialPresentation.name(part.material()).getString();
             if (lines.stream().filter(line -> line.startsWith(prefix + " (")).count() != 1) {
                 quantityMismatches++;
                 System.err.println("SOURCE_QUANTITY_TOOLTIP_MISMATCH " + id + " expected " + prefix + "; actual " + lines);
@@ -202,7 +202,7 @@ final class TankItemDeliveryChecks {
             require(lines.contains(tr("gt.lang.use.magnifyingglass.to.detail")) == source.magnifier(), "installed source magnifier presence " + id);
             if (source.preparationKey() != null) require(lines.contains(tr(source.preparationKey())), "installed original preparation " + id);
             var block = ((net.minecraft.world.item.BlockItem) item.getItem()).getBlock();
-            String blast = tr("gt.lang.blastresistance") + gregtech.api.block.OriginalBlockTooltipRules.blastNumber(block.getExplosionResistance());
+            String blast = tr("gt.lang.blastresistance") + gregtech.internal.block.OriginalBlockTooltipRules.blastNumber(block.getExplosionResistance());
             require(lines.stream().anyMatch(s -> s.startsWith(blast)), "installed manual blast resistance " + id);
             require(lines.stream().noneMatch(s -> s.contains("tooltip.gt6ce.manual.")), "installed no unresolved old manual key " + id);
         }
@@ -262,7 +262,7 @@ final class TankItemDeliveryChecks {
                 for (String key : java.util.List.of("gt.tooltip.energybattery.1", "gt.tooltip.energybattery.2", "gt.tooltip.energybattery.3"))
                     require(lines.stream().filter(tr(key)::equals).count() == 1, "installed battery selector mode hint " + spec.id());
                 batteries++;
-            } else if (spec.kind() == gregtech.api.energy.EnergyNodeSpec.Kind.SOLAR) solar++;
+            } else if (spec.kind() == gregtech.internal.energy.EnergyNodeSpec.Kind.SOLAR) solar++;
             else {
                 require(lines.contains(tr("gt.lang.efficiency") + ": 100.00%"), "installed original transformer efficiency " + spec.id());
                 require(lines.stream().filter(tr("gt.lang.use.monkey.wrench.to.toggle.direction")::equals).count() == 1, "installed original Monkey Wrench hint " + spec.id());
@@ -304,7 +304,7 @@ final class TankItemDeliveryChecks {
                 && tile.getEnergySizeOutputMax(spec.outType(), null) == source.output().maximum(), "installed native original output range " + spec.id());
     }
 
-    private static void verifySourceEnergyLines(gregtech.api.energy.EnergyNodeSpec spec,
+    private static void verifySourceEnergyLines(gregtech.internal.energy.EnergyNodeSpec spec,
                                                 gregtech.content.energy.OriginalEnergyDeviceTooltipData.Profile source,
                                                 java.util.List<String> lines) {
         if (source.input() != null) {

@@ -2,13 +2,13 @@
  * Adapted from MultiTileEntityMotorElectric/Flux.onWalkOver2 and TileEntityBase11Motor. */
 package gregtech.block.energy;
 
-import gregtech.api.energy.EnergyNodeSpec;
+import gregtech.internal.energy.EnergyNodeSpec;
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.NeoToolBindings;
 *///?} else {
-import gregtech.api.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolHelper;
 //?}
-import gregtech.api.tool.ToolInteractionSpec;
+import gregtech.internal.tool.ToolInteractionSpec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;

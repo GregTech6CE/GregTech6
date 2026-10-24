@@ -150,8 +150,8 @@ public final class HeatSignedExtractionTests {
             matrix(h, boiler);
             operation(h, boiler, true, 10, 10);
             var requiredWall = OriginalLargeBoilerSpecs.LAYOUT.cells().stream()
-                    .filter(cell -> cell.role() != gregtech.api.multiblock.MultiblockLayout.Role.AIR
-                            && cell.role() != gregtech.api.multiblock.MultiblockLayout.Role.HEAT_INPUT
+                    .filter(cell -> cell.role() != gregtech.internal.multiblock.MultiblockLayout.Role.AIR
+                            && cell.role() != gregtech.internal.multiblock.MultiblockLayout.Role.HEAT_INPUT
                             && !cell.at(pos, Direction.NORTH).equals(pos))
                     .findFirst().orElseThrow().at(pos, Direction.NORTH);
             fixture.set(requiredWall, Blocks.AIR.defaultBlockState());

@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.api.sensor.SixCellDisplay;
+import gregtech.internal.sensor.SixCellDisplay;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.texture.OverlayTexture;

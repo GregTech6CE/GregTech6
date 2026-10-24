@@ -1,8 +1,8 @@
 package gregtech.item;
 
-import gregtech.api.fluid.PortableFluidContainerSpec;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialProperty;
+import gregtech.internal.fluid.PortableFluidContainerSpec;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialProperty;
 import gregtech.data.RegisteredFluids;
 import gregtech.registry.GTFluids;
 import net.minecraft.nbt.CompoundTag;
@@ -28,7 +28,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /** Finite, persistent fluid storage. Both machine interaction and automation use the same handler. */
-public final class PortableFluidContainerItem extends BlockItem implements gregtech.api.inventory.ContainerShapeLike {
+public final class PortableFluidContainerItem extends BlockItem implements gregtech.internal.inventory.ContainerShapeLike {
     private final PortableFluidContainerSpec spec;
 
     public PortableFluidContainerItem(net.minecraft.world.level.block.Block block, PortableFluidContainerSpec spec, Properties properties) {

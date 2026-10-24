@@ -1,11 +1,11 @@
 package gregtech.content.recipe;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.MaterialProperty;
-import gregtech.api.material.MaterialStackItemHelper;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.material.MaterialProperty;
+import gregtech.internal.material.MaterialStackItemHelper;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.data.MaterialPrefix;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.bootstrap.InitializationStep;
@@ -199,9 +199,9 @@ public class PartRecipeLoader implements InitializationStep {
 
     /** One GT6 extruder output: mold name (shape item suffix) plus the port form it produces. */
     private record ExtruderOutput(String mold, MaterialPrefix prefix,
-                                 gregtech.api.prefix.BlockMaterialPrefix blockPrefix) {
+                                 gregtech.internal.prefix.BlockMaterialPrefix blockPrefix) {
         static ExtruderOutput of(String mold, MaterialPrefix prefix) { return new ExtruderOutput(mold, prefix, null); }
-        static ExtruderOutput block(String mold, gregtech.api.prefix.BlockMaterialPrefix prefix) {
+        static ExtruderOutput block(String mold, gregtech.internal.prefix.BlockMaterialPrefix prefix) {
             return new ExtruderOutput(mold, null, prefix);
         }
         long weight() { return prefix != null ? prefix.getMaterialWeight() : blockPrefix.getMaterialWeight(); }
@@ -233,7 +233,7 @@ public class PartRecipeLoader implements InitializationStep {
             ExtruderOutput.of("filehead", MaterialPrefix.toolHeadFile),
             ExtruderOutput.of("hammerhead", MaterialPrefix.toolHeadHammer),
             // GT6 Loader_Recipes_Handlers:769 — a block of cast metal (9U) needs nine ingots.
-            ExtruderOutput.block("block", gregtech.api.prefix.BlockMaterialPrefix.blockSolid));
+            ExtruderOutput.block("block", gregtech.internal.prefix.BlockMaterialPrefix.blockSolid));
 
     /** GT6 outputs whose port form does not exist yet (recorded instead of guessed). */
     public static final List<String> EXTRUDER_SKIPPED = List.of(
@@ -340,12 +340,12 @@ public class PartRecipeLoader implements InitializationStep {
     // ── helpers ──────────────────────────────────────────────────────────────
 
     /** Registers {@code inCount × in → outCount × out} when both stacks resolve. */
-    private void roll(gregtech.api.recipe.RecipeMap map, GTMaterial m,
+    private void roll(gregtech.internal.recipe.RecipeMap map, GTMaterial m,
                       MaterialPrefix in, int inCount, MaterialPrefix out, int outCount, long duration) {
         roll(map, m, in, inCount, out, outCount, duration, EU);
     }
 
-    private void roll(gregtech.api.recipe.RecipeMap map, GTMaterial m,
+    private void roll(gregtech.internal.recipe.RecipeMap map, GTMaterial m,
                       MaterialPrefix in, int inCount, MaterialPrefix out, int outCount, long duration, long eut) {
         ItemStack input = mat(in, m, inCount);
         if (input.isEmpty()) return;

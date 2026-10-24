@@ -4,7 +4,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.*;
-@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD,value=Dist.CLIENT)
+@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD,value=Dist.CLIENT)
 public final class NuclearClientSetup{
  @SubscribeEvent public static void renderers(EntityRenderersEvent.RegisterRenderers event){event.registerBlockEntityRenderer(GTBlockEntities.REACTOR_CORE.get(),ReactorRodRenderer::new);event.registerBlockEntityRenderer(GTBlockEntities.REACTOR_CORE_2X2.get(),ReactorRodRenderer::new);}
  @SubscribeEvent public static void items(RegisterColorHandlersEvent.Item event){

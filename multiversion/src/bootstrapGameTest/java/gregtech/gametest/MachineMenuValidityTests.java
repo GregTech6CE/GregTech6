@@ -49,7 +49,7 @@ public final class MachineMenuValidityTests {
 //? if >=1.21.1 {
 /*        var blocks = gregtech.content.transport.HopperRegistries.hoppers();
 *///?} else {
-        var blocks = gregtech.api.machine.MachineRegistry.hoppers();
+        var blocks = gregtech.internal.machine.MachineRegistry.hoppers();
 //?}
         h.assertTrue(!blocks.isEmpty(), "registered hopper fixture exists");
         verify(h, blocks.get(0).get());
@@ -61,7 +61,7 @@ public final class MachineMenuValidityTests {
 //? if >=1.21.1 {
 /*        var blocks = gregtech.content.transport.HopperRegistries.queues();
 *///?} else {
-        var blocks = gregtech.api.machine.MachineRegistry.queueHoppers();
+        var blocks = gregtech.internal.machine.MachineRegistry.queueHoppers();
 //?}
         h.assertTrue(!blocks.isEmpty(), "registered queue hopper fixture exists");
         verify(h, blocks.get(0).get());

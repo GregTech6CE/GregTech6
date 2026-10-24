@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Set;
 
 /** Original wood dictionary patterns over shared catalogs; native data-pack reload and codecs. */
-@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public final class TrackCraftingRecipePack extends AbstractPackResources {
     private static final Gson GSON=new Gson();
 
@@ -67,7 +67,7 @@ public final class TrackCraftingRecipePack extends AbstractPackResources {
     }
     private static net.minecraft.world.item.ItemStack resolve(String value){
         if(value.startsWith("item:"))return new net.minecraft.world.item.ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse(value.substring(5))));
-        int colon=value.indexOf(':');var material=gregtech.api.material.GTMaterialRegistry.get(value.substring(colon+1));
+        int colon=value.indexOf(':');var material=gregtech.internal.material.GTMaterialRegistry.get(value.substring(colon+1));
         if(material==null||!material.isValid())return net.minecraft.world.item.ItemStack.EMPTY;
         return gregtech.registry.GTItems.getStack(value.startsWith("rail:")?MaterialPrefix.railGt:MaterialPrefix.stick,material.resolve(),1);
     }

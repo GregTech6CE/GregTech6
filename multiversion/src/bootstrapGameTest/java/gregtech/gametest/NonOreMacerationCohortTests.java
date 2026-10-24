@@ -1,7 +1,9 @@
 package gregtech.gametest;
 import gregtech.api.material.*;
-import gregtech.api.addon.AddonMaterials;
+import gregtech.internal.material.*;
+import gregtech.internal.addon.AddonMaterials;
 import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.data.*;
 import gregtech.recipe.CraftingMaterialForms;
 import gregtech.recipe.MachineRecipeOverlay;
@@ -169,7 +171,7 @@ public final class NonOreMacerationCohortTests {
             }
         }
         for(String name:RELEVANT){
-            var prefix=gregtech.api.prefix.PrefixRegistry.byName(name);if(prefix==null)continue;
+            var prefix=gregtech.internal.prefix.PrefixRegistry.byName(name);if(prefix==null)continue;
             var canonical=stack(prefix,m);if(canonical.isEmpty())continue;
             var data=ItemMaterialRegistry.explicit(canonical.getItem()).orElse(null);
             if(data!=null&&(data.prefix()!=prefix||!data.recoverable()||data.components().size()!=1

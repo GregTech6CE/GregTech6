@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
 import gregtech.api.addon.platform.AddonRecipes;
-import gregtech.api.recipe.Recipe;
-import gregtech.api.recipe.RecipeInputs;
-import gregtech.api.recipe.RecipeMap;
-import gregtech.api.recipe.data.MachineRecipeDocuments;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.recipe.RecipeInputs;
+import gregtech.internal.recipe.RecipeMap;
+import gregtech.internal.recipe.data.MachineRecipeDocuments;
 import gregtech.recipe.MachineDatapackRecipe;
 import gregtech.recipe.MachineRecipeOverlay;
 import java.util.ArrayList;
@@ -152,7 +152,7 @@ public final class FluidPresenceRecipeTests {
                     "similar custom names are not blanket rejected");
             var fuel = new Recipe(new ItemStack[0], new ItemStack[0], null, null,
                     new FluidStack[]{water(1)}, new FluidStack[0], 20, -1, 0).withPresenceFluidInputs(0);
-            var batch = gregtech.api.recipe.FluidFuelBatch.plan(fuel, water(1),
+            var batch = gregtech.internal.recipe.FluidFuelBatch.plan(fuel, water(1),
                     List.of(), new int[0], 20, 10000);
             h.assertTrue(batch != null && batch.input().getAmount() == 1 && batch.energy() == 20,
                     "standard fuel batch preserves presence and still credits recipe energy");
@@ -201,24 +201,24 @@ public final class FluidPresenceRecipeTests {
             var data = new net.minecraft.nbt.CompoundTag();
             data.putString("gt.fuelmap", map.mNameInternal);
             data.putLong("gt.output", 10);
-            var settings = gregtech.api.fluid.HeatExchangerData.settings(data);
+            var settings = gregtech.internal.fluid.HeatExchangerData.settings(data);
             h.assertTrue(settings.fuelMap().equals(map.mNameInternal), "native saved gt.fuelmap resolves custom map");
             var presence = new Recipe(new ItemStack[0], new ItemStack[0], null, null,
                     new FluidStack[]{water(1)}, new FluidStack[]{new FluidStack(Fluids.LAVA, 10)}, 20, -1, 0)
                     .withPresenceFluidInputs(0);
             map.add(presence);
-            var hot = new gregtech.api.fluid.FluidTankGT(1000);
-            var cold = new gregtech.api.fluid.FluidTankGT(1000);
+            var hot = new gregtech.internal.fluid.FluidTankGT(1000);
+            var cold = new gregtech.internal.fluid.FluidTankGT(1000);
             hot.setFluid(water(100));
             for (Recipe cached : new Recipe[]{null, presence}) {
-                var result = gregtech.api.fluid.HotFluidFuelCycle.charge(settings, hot, cold, 0, 0, cached);
+                var result = gregtech.internal.fluid.HotFluidFuelCycle.charge(settings, hot, cold, 0, 0, cached);
                 h.assertTrue(!result.active() && result.heat() == 0 && hot.getAmount() == 100 && cold.isEmpty(),
                         "unsupported presence neither drains/purges nor credits energy, cached or new");
             }
             var ordinary = new Recipe(new ItemStack[0], new ItemStack[0], null, null,
                     new FluidStack[]{water(100)}, new FluidStack[]{new FluidStack(Fluids.LAVA, 10)}, 20, -1, 0);
             map.add(ordinary);
-            var result = gregtech.api.fluid.HotFluidFuelCycle.charge(settings, hot, cold, 0, 0, presence);
+            var result = gregtech.internal.fluid.HotFluidFuelCycle.charge(settings, hot, cold, 0, 0, presence);
             h.assertTrue(result.active() && result.recipe() == ordinary && result.heat() == 20
                     && hot.isEmpty() && cold.getAmount() == 10, "presence cache does not shadow ordinary converter row");
         } finally { remove(map); }

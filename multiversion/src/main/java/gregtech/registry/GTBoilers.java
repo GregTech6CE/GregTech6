@@ -1,8 +1,8 @@
 package gregtech.registry;
 
 import gregtech.content.material.Materials;
-import gregtech.api.machine.BoilerSpec;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.machine.BoilerSpec;
+import gregtech.internal.material.GTMaterial;
 import gregtech.block.machine.BoilerTankBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;

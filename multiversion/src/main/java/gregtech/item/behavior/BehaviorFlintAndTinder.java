@@ -1,7 +1,7 @@
 package gregtech.item.behavior;
 
-import gregtech.api.material.MaterialProperty;
-import gregtech.api.tool.GTToolHelper;
+import gregtech.internal.material.MaterialProperty;
+import gregtech.internal.tool.GTToolHelper;
 //? if >=1.21.1 {
 /*import gregtech.item.behavior.ManualToolBehaviorAccess.Outcome;
 *///?} else {

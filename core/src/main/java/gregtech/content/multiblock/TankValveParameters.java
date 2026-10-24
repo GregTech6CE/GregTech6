@@ -1,6 +1,6 @@
 package gregtech.content.multiblock;
 
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterialRegistry;
 
 import java.util.LinkedHashMap;
 import java.util.List;

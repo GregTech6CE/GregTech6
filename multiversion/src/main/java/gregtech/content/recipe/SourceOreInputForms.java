@@ -1,8 +1,8 @@
 package gregtech.content.recipe;
-import gregtech.api.addon.AddonMaterials;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialFormItem;
+import gregtech.internal.addon.AddonMaterials;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialFormItem;
 import gregtech.data.MaterialPrefix;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
@@ -37,10 +37,10 @@ public final class SourceOreInputForms {
   if(AddonMaterials.acceptedForms().stream().anyMatch(f->f.materialName().equals(name)&&f.prefixName().equals(prefix.getName())))return canonical;
   if(!canonical.isEmpty()&&!BuiltInRegistries.ITEM.getKey(canonical.getItem()).getNamespace().equals("gt6ce"))return canonical;
   ItemStack external=ItemStack.EMPTY;
-  for(var item:gregtech.api.material.ItemMaterialRegistry.entries().keySet()){
+  for(var item:gregtech.internal.material.ItemMaterialRegistry.entries().keySet()){
    if(BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("gt6ce"))continue;
    ItemStack stack=new ItemStack(item,count);
-   var form=gregtech.api.material.MaterialEquivalence.form(stack);
+   var form=gregtech.internal.material.MaterialEquivalence.form(stack);
    if(form==null||form.prefix()!=prefix||form.material()!=material)continue;
    // Ambiguous externally owned targets are UNKNOWN; do not replace their existing selection.
    if(!external.isEmpty()&&external.getItem()!=item)return canonical;

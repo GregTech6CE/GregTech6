@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolType;
 import gregtech.block.LootCrateBlock;
 import gregtech.registry.GTDecorBlocks;
 import gregtech.registry.GTToolItems;

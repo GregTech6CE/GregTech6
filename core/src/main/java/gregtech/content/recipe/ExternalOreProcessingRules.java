@@ -1,9 +1,9 @@
 /* Gregorius Techneticies / GregTech-6 Team source data, LGPL-3.0-or-later. */
 package gregtech.content.recipe;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.MaterialProperty;
+import gregtech.internal.material.MaterialProperty;
 import gregtech.data.MaterialPrefix;
 import gregtech.data.generated.MaterialWorkability;
 import java.util.List;

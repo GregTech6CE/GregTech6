@@ -1,7 +1,7 @@
 package gregtech.registry;
 
 import gregtech.block.*;
-import gregtech.api.material.ItemMaterialRegistry;
+import gregtech.internal.material.ItemMaterialRegistry;
 import gregtech.data.MaterialPrefix;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;

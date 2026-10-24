@@ -1,6 +1,6 @@
 package gregtech.emi;
 
-import gregtech.api.material.MaterialDisplayBinding;
+import gregtech.internal.material.MaterialDisplayBinding;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import net.minecraft.world.item.Item;
@@ -12,7 +12,7 @@ import java.util.Map;
 /** One cache per EMI reload; mutable amounts/chances are copied, alias lists are shared. */
 final class MachineEmiIngredients {
     private final Map<Item, EmiIngredient> plain = new IdentityHashMap<>();
-    EmiIngredient ingredient(gregtech.api.recipe.Recipe recipe, int index) {
+    EmiIngredient ingredient(gregtech.internal.recipe.Recipe recipe, int index) {
         var choices = recipe.viewerInputAlternatives(index);
         if (choices.isEmpty()) return ingredient(recipe.mInputs[index]);
         return new MachineEmiIngredient(choices.stream().map(stack -> EmiStack.of(stack.copyWithCount(1))).toList(), recipe.mInputs[index].getCount());

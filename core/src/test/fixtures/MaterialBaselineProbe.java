@@ -1,5 +1,6 @@
 import gregtech.api.material.*;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.material.*;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.core.MaterialCatalogSnapshot;
 import java.util.Locale;
 
@@ -7,7 +8,7 @@ public class MaterialBaselineProbe {
     public static void main(String[] args) throws Exception {
         Locale.setDefault(Locale.ROOT);
         try {
-            gregtech.api.mod.ModData.class.getMethod("bindPresence", java.util.function.Predicate.class)
+            gregtech.internal.mod.ModData.class.getMethod("bindPresence", java.util.function.Predicate.class)
                     .invoke(null, (java.util.function.Predicate<String>) id -> id.equals("minecraft") || id.equals("gt6ce"));
         } catch (NoSuchMethodException originalPlatformBinding) {}
         PrefixRegistry.ensurePrefixesLoaded();
@@ -21,7 +22,7 @@ public class MaterialBaselineProbe {
         GTMaterialRegistry.postInit();
         System.out.println("post_init_sha256=" + MaterialCatalogSnapshot.sha256());
         System.out.println("positive_ids=" + GTMaterialRegistry.allMaterials().stream().filter(m -> m.getId() > 0).count());
-        System.out.println("explicit_reactions=" + gregtech.api.machine.crucible.CrucibleReactions.recipes().size());
-        System.out.println("all_reactions=" + gregtech.api.machine.crucible.CrucibleReactions.allRecipes().size());
+        System.out.println("explicit_reactions=" + gregtech.internal.machine.crucible.CrucibleReactions.recipes().size());
+        System.out.println("all_reactions=" + gregtech.internal.machine.crucible.CrucibleReactions.allRecipes().size());
     }
 }

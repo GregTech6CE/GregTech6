@@ -1,7 +1,9 @@
 package gregtech.content.recipe;
 
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.block.stone.*;
 import gregtech.data.*;
 import gregtech.registry.GTItems;
@@ -37,9 +39,9 @@ public final class StoneAndToolSurvivalRecipes {
                 var recipe=new Recipe(new ItemStack[]{rock,ItemStack.EMPTY},new ItemStack[]{dust},null,null,null,null,16,16,0);
                 if(MachineRecipeMaps.Anvil.addRecipe(recipe)!=null)ADDED.add(recipe);
             }
-            for(var prefix:gregtech.api.prefix.PrefixRegistry.all()) {
+            for(var prefix:gregtech.internal.prefix.PrefixRegistry.all()) {
                 if(!prefix.getName().startsWith("toolHeadRaw"))continue;
-                var target=gregtech.api.prefix.PrefixRegistry.all().stream().filter(p -> p.getName().equals(prefix.getName().replace("toolHeadRaw","toolHead"))).findFirst().orElse(null);
+                var target=gregtech.internal.prefix.PrefixRegistry.all().stream().filter(p -> p.getName().equals(prefix.getName().replace("toolHeadRaw","toolHead"))).findFirst().orElse(null);
                 if(target!=null)add(MachineRecipeMaps.Sharpening,GTItems.getStack(prefix,material),GTItems.getStack(target,material),16);
             }
         }

@@ -5,7 +5,7 @@ package gregtech.jei;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.worldgen.GTOreVeins;
 import gregtech.worldgen.GTStoneLayersGen;
 import gregtech.worldgen.GTWorldgenScale;

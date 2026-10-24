@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
-import gregtech.api.energy.FaceConfig;
-import gregtech.api.machine.BasicMachineSpec;
+import gregtech.internal.energy.FaceConfig;
+import gregtech.internal.machine.BasicMachineSpec;
 import gregtech.block.machine.BasicMachineBlock;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.data.GregTechTags;

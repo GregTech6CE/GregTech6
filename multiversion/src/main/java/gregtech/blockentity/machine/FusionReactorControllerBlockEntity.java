@@ -1,12 +1,13 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.energy.EnergyTransfer;
-import gregtech.api.multiblock.*;
-import gregtech.api.multiblock.tracking.CustomStructures;
-import gregtech.api.multiblock.tracking.StructureClaims;
-import gregtech.api.multiblock.tracking.StructureDefinition;
-import gregtech.api.multiblock.tracking.StructureTracking;
+import gregtech.internal.energy.EnergyTransfer;
+import gregtech.internal.multiblock.*;
+import gregtech.internal.multiblock.tracking.CustomStructures;
+import gregtech.internal.multiblock.tracking.StructureClaims;
+import gregtech.internal.multiblock.tracking.StructureDefinition;
+import gregtech.internal.multiblock.tracking.StructureTracking;
 import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.block.machine.*;
 import gregtech.content.multiblock.*;
 import gregtech.data.GregTechTags;

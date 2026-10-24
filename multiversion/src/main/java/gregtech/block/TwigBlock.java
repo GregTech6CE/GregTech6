@@ -52,10 +52,10 @@ public class TwigBlock extends Block {
         String name = gregtech.worldgen.SurfaceTwigRules.material(
                 level.dimension().location().toString(), biome, level.random::nextInt);
         if (name == null) return new ItemStack(Items.STICK, count);
-        var material = gregtech.api.material.GTMaterialRegistry.get(name);
+        var material = gregtech.internal.material.GTMaterialRegistry.get(name);
         // Old source WOODS field spelling vs canonical species name in the port.
         if (!material.isValid() && name.startsWith("Wood"))
-            material = gregtech.api.material.GTMaterialRegistry.get(name.substring(4));
+            material = gregtech.internal.material.GTMaterialRegistry.get(name.substring(4));
         if (!material.isValid()) throw new IllegalStateException("Missing source twig material " + name);
         var result = gregtech.registry.GTItems.getStack(
                 gregtech.data.MaterialPrefix.stick, material, count);

@@ -2,7 +2,7 @@ package gregtech.platform.neoforge.logistics;
 
 import gregtech.block.inventory.MassStorageBlock;
 import gregtech.blockentity.inventory.MassStorageBlockEntity;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.blockentity.inventory.LogisticsMassStorageBlockEntity;
 import gregtech.registry.GTStorageMetals;
 import net.minecraft.core.registries.BuiltInRegistries;

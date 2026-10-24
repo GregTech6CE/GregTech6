@@ -5,10 +5,10 @@ package gregtech.registry;
 //? if >=1.21.1 {
 //?} else {
 import gregtech.GregTech;
-import gregtech.api.machine.MachineRegistry;
+import gregtech.internal.machine.MachineRegistry;
 //?}
-import gregtech.api.prefix.BlockMaterialPrefix;
-import gregtech.api.prefix.BlockPrefixRegistry;
+import gregtech.internal.prefix.BlockMaterialPrefix;
+import gregtech.internal.prefix.BlockPrefixRegistry;
 
 
 
@@ -21,7 +21,7 @@ import gregtech.block.energy.ElectricWireBlock;
 import gregtech.data.RegisteredFluids;
 //?}
 import gregtech.data.MaterialPrefix;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.prefix.PrefixRegistry;
 
 //? if >=1.21.1 {
 //?} else {

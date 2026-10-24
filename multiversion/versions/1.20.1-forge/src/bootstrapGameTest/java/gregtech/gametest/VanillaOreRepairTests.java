@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
-import gregtech.api.machine.crucible.CrucibleItemInput;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.machine.crucible.CrucibleItemInput;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.ItemMaterialRegistry;
-import gregtech.api.material.MaterialEquivalence;
+import gregtech.internal.material.ItemMaterialRegistry;
+import gregtech.internal.material.MaterialEquivalence;
 import gregtech.block.VanillaOreBlock;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.data.MaterialPrefix;

@@ -1,8 +1,8 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.inventory.BlockContents;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.multiblock.*;
+import gregtech.internal.inventory.BlockContents;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.multiblock.*;
 import gregtech.block.OreBlock;
 import gregtech.block.OreHostStone;
 import gregtech.block.machine.OriginalBedrockDrillControllerBlock;
@@ -34,7 +34,7 @@ import java.util.*;
 
 /** Current bedrock drilling cycle: 32768 RU and 100 mB lubricant per produced item. */
 public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity implements MultiblockPortOwner, BlockContents,
-        gregtech.api.multiblock.tracking.TrackedMultiblock {
+        gregtech.internal.multiblock.tracking.TrackedMultiblock {
     public static final long ENERGY_CAPACITY = gregtech.content.multiblock.AdvancedControllerRules.DRILL_CAPACITY,
             WORK_ENERGY = gregtech.content.multiblock.AdvancedControllerRules.DRILL_WORK;
     private long energy;
@@ -61,7 +61,7 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
             setChanged();
         }
     };
-    private final IFluidHandler lubricantInput = new gregtech.api.fluid.FluidPort(lubricant, true, false);
+    private final IFluidHandler lubricantInput = new gregtech.internal.fluid.FluidPort(lubricant, true, false);
 //? if >=1.21.1 {
 //?} else {
     private LazyOptional<IItemHandler> items = LazyOptional.of(() -> output);
@@ -75,11 +75,11 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
         return MultiblockLayout.Role.valueOf(gregtech.content.multiblock.AdvancedControllerRules.drillRole(x, y, z).name());
     }
 
-    @Override public gregtech.api.multiblock.tracking.StructureDefinition structureDefinition() {
-        return gregtech.api.multiblock.tracking.CustomStructures.drill(this);
+    @Override public gregtech.internal.multiblock.tracking.StructureDefinition structureDefinition() {
+        return gregtech.internal.multiblock.tracking.CustomStructures.drill(this);
     }
     @Override public boolean isStructureOk() {
-        return gregtech.api.multiblock.tracking.StructureTracking.query(this);
+        return gregtech.internal.multiblock.tracking.StructureTracking.query(this);
     }
     @Override
     public boolean scanStructure() {
@@ -92,7 +92,7 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
                 var depositPos = worldPosition.offset(x, -5, z);
                 if (!level.hasChunkAt(depositPos)) {
                     bindings.clear(this::release);
-                    gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
+                    gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
                     return false;
                 }
                 // §103.B: bedrock deposits are ore blocks whose host rock (block state) is bedrock.
@@ -102,7 +102,7 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
                     if (!ore.prefix().getName().equals("oreSmall")) deposit.add(ore.material());
                 } else if (!floorState.is(Blocks.BEDROCK)) {
                     bindings.clear(this::release);
-                    gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
+                    gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
                     return false;
                 }
                 for (int y = -4; y <= 0; y++) {
@@ -114,16 +114,16 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
                     if (!(level.getBlockState(partPos).getBlock() == expectedBlock)
                             || !(level.getBlockEntity(partPos) instanceof MultiblockPortBlockEntity)) {
                         bindings.clear(this::release);
-                        gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
+                        gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
                         return false;
                     }
                     candidateParts.put(partPos, role(x, y, z));
                 }
             }
-        return gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, candidateParts, 0,
+        return gregtech.internal.multiblock.tracking.StructureClaims.update(this, true, bindings, candidateParts, 0,
                 partPosition -> ((MultiblockPortBlockEntity) level.getBlockEntity(partPosition)).canBind(worldPosition),
                 (partPosition, partRole) -> ((MultiblockPortBlockEntity) level.getBlockEntity(partPosition)).bind(worldPosition, partRole),
-                this::release) != gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
+                this::release) != gregtech.internal.multiblock.tracking.StructureClaims.Result.FAILED;
     }
 
     private void release(BlockPos pos) {
@@ -187,7 +187,7 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
             return brokenOre.isEmpty() ? GTItems.getStack(MaterialPrefix.oreRaw, deposit.get(selector)) : brokenOre;
         }
         if (level.random.nextInt(1000) == 0) {
-            var dust = GTItems.getStack(MaterialPrefix.dust, gregtech.api.material.GTMaterialRegistry.get("Bedrock"));
+            var dust = GTItems.getStack(MaterialPrefix.dust, gregtech.internal.material.GTMaterialRegistry.get("Bedrock"));
             if (!dust.isEmpty()) return dust;
         }
         if (level.dimension() == Level.NETHER) return new ItemStack(Blocks.NETHERRACK);
@@ -229,16 +229,16 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
 //?}
     @Override public void onLoad() {
         super.onLoad();
-        if (level != null && !level.isClientSide) gregtech.api.multiblock.tracking.StructureTracking.attach(this);
+        if (level != null && !level.isClientSide) gregtech.internal.multiblock.tracking.StructureTracking.attach(this);
     }
     @Override public void onChunkUnloaded() {
-        gregtech.api.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
+        gregtech.internal.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
         super.onChunkUnloaded();
     }
     @Override
     public void setRemoved() {
-        if (!gregtech.api.multiblock.tracking.StructureTracking.unloading(this)) bindings.clear(this::release);
-        gregtech.api.multiblock.tracking.StructureTracking.onRemoved(this);
+        if (!gregtech.internal.multiblock.tracking.StructureTracking.unloading(this)) bindings.clear(this::release);
+        gregtech.internal.multiblock.tracking.StructureTracking.onRemoved(this);
         super.setRemoved();
     }
 
@@ -335,7 +335,7 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
         size = Math.abs(size);
         if (size < 1024) return 0;
         var plan = gregtech.content.energy.DirectMachinePowerRules.inject(energy, ENERGY_CAPACITY, 4096, size, amount, execute);
-        if (plan.explode()) gregtech.api.energy.MachineOverload.explode(this, 6);
+        if (plan.explode()) gregtech.internal.energy.MachineOverload.explode(this, 6);
         else if (execute && plan.accepted() > 0) {
             energy = plan.energy();
             setChanged();
@@ -368,7 +368,7 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
         energy = Math.max(0, tag.getLong("gt.drill_energy"));
         stoneType = Math.floorMod(tag.getInt("gt.stone_type"), StoneType.values().length + 2);
         output.deserializeNBT(lookup, tag.getCompound("gt.output"));
-        gregtech.api.fluid.NativeMachineTankData.restore(lubricant, tag.getCompound("gt.lubricant"), lookup);
+        gregtech.internal.fluid.NativeMachineTankData.restore(lubricant, tag.getCompound("gt.lubricant"), lookup);
     }
 
     public void restorePersistentState(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {

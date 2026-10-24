@@ -1,5 +1,5 @@
 package gregtech.content.transport;
-import gregtech.api.machine.HopperSpec;import gregtech.block.machine.*;import gregtech.registry.GTBlockEntities;
+import gregtech.internal.machine.HopperSpec;import gregtech.block.machine.*;import gregtech.registry.GTBlockEntities;
 import net.minecraft.world.level.block.Block;import net.minecraft.world.level.block.state.BlockBehaviour;import net.minecraft.world.level.material.MapColor;import net.minecraft.world.item.Item;import net.neoforged.neoforge.registries.*;import net.neoforged.bus.api.IEventBus;
 public final class HopperRegistries {
  private HopperRegistries(){}

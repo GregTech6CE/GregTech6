@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
-import gregtech.api.machine.FurnaceFuelValue;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.prefix.BlockMaterialPrefix;
+import gregtech.internal.machine.FurnaceFuelValue;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.prefix.BlockMaterialPrefix;
 import gregtech.blockentity.machine.HeatExchangerBlockEntity;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.blockentity.energy.EnergyNodeBlockEntity;

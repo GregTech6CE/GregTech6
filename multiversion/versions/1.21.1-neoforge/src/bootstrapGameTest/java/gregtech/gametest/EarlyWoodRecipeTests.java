@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.ItemMaterialRegistry;
-import gregtech.api.recipe.RecipeMap;
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.material.ItemMaterialRegistry;
+import gregtech.internal.recipe.RecipeMap;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 import gregtech.content.material.Materials;
 import gregtech.content.material.generated.WoodMaterials;
 import gregtech.data.MachineRecipeMaps;

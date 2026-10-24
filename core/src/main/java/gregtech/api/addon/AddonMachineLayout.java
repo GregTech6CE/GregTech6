@@ -1,6 +1,6 @@
 package gregtech.api.addon;
 
-import gregtech.api.multiblock.StructureGrid;
+import gregtech.internal.multiblock.StructureGrid;
 
 import java.util.List;
 import java.util.Objects;

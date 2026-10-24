@@ -1,8 +1,8 @@
 package gregtech.blockentity.energy;
 
-import gregtech.api.energy.EnergyTransfer;
-import gregtech.api.energy.GearboxSpec;
-import gregtech.api.energy.IEnergyBlock;
+import gregtech.internal.energy.EnergyTransfer;
+import gregtech.internal.energy.GearboxSpec;
+import gregtech.internal.energy.IEnergyBlock;
 import gregtech.block.energy.GearboxBlock;
 import gregtech.data.GregTechTags;
 import gregtech.data.MaterialPrefix;

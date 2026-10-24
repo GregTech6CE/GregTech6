@@ -18,7 +18,7 @@ public final class RockItemPlacement {
 
     public static InteractionResult place(UseOnContext use) {
         var stack = use.getItemInHand();
-        var form = gregtech.api.material.MaterialEquivalence.form(stack);
+        var form = gregtech.internal.material.MaterialEquivalence.form(stack);
         if (use.getPlayer() == null || !use.getPlayer().isShiftKeyDown() || form == null
                 || form.prefix() != MaterialPrefix.rockGt && form.prefix() != MaterialPrefix.oreRaw)
             return InteractionResult.PASS;

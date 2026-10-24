@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.content.recipe.FurnaceSmeltingRecipes;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.data.MaterialPrefix;
@@ -49,8 +49,8 @@ public final class FurnaceSmeltingTests {
         GTMaterial smelting = material.getTargetSmeltingMaterial();
         if (smelting == null || !smelting.isValid()) smelting = material;
         long smeltingAmount = Math.max(0, material.getTargetSmeltingAmount());
-        return gregtech.api.machine.crucible.CrucibleMath.units(
-                gregtech.api.machine.crucible.CrucibleMath.units(
+        return gregtech.internal.machine.crucible.CrucibleMath.units(
+                gregtech.internal.machine.crucible.CrucibleMath.units(
                         smeltingAmount, GTValues.U, GTValues.U, false),
                 GTValues.U, prefix.getMaterialWeight(), false);
     }

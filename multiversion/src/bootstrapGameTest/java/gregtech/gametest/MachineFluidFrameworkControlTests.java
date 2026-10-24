@@ -2,7 +2,7 @@ package gregtech.gametest;
 
 import gregtech.block.machine.BasicMachineBlock;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
-import gregtech.api.fluid.FluidDisplayBinding;
+import gregtech.internal.fluid.FluidDisplayBinding;
 import gregtech.registry.GTFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

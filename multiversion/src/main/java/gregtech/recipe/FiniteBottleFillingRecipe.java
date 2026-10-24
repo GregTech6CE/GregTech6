@@ -135,7 +135,7 @@ public final class FiniteBottleFillingRecipe implements CraftingRecipe {
         public boolean test(ItemStack input) {
             if (input == null || input.isEmpty()
                     || input.getItem() instanceof gregtech.platform.neoforge.fluid.FluidDisplayItem
-                    || gregtech.api.fluid.FluidDisplayBinding.hasPayload(input)) return false;
+                    || gregtech.internal.fluid.FluidDisplayBinding.hasPayload(input)) return false;
             if (allowLubricantBottle && input.getItem() instanceof gregtech.item.BottleItem bottle)
                 return accepts(bottle.fluid());
             var one = input.copyWithCount(1);
@@ -183,7 +183,7 @@ public final class FiniteBottleFillingRecipe implements CraftingRecipe {
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import gregtech.GregTech;
-import gregtech.api.fluid.FluidDisplayBinding;
+import gregtech.internal.fluid.FluidDisplayBinding;
 import gregtech.content.food.GTDrinks;
 import gregtech.item.FluidItem;
 import gregtech.registry.GTFluids;

@@ -1,7 +1,9 @@
 package gregtech.core;
 
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.api.sensor.*;
+import gregtech.internal.sensor.*;
 import gregtech.content.machine.MachineConstructionMaterials;
 import gregtech.data.SourceBlockProperties;
 import gregtech.data.generated.GTSensorRecipesGen;

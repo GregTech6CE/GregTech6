@@ -14,7 +14,7 @@ public final class MiscBlockAppearance {
                 case 2048 -> "Chromium"; case 8192 -> "Titanium"; case 32768 -> "Iridium";
                 case 131072 -> "Osmium"; default -> "Trinitanium";
             };
-            return gregtech.api.material.GTMaterialRegistry.get(material).getColor();
+            return gregtech.internal.material.GTMaterialRegistry.get(material).getColor();
         }
         var key=ForgeRegistries.BLOCKS.getKey(block);
         if(key==null) return 0xFFFFFF;

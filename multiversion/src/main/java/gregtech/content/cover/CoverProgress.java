@@ -13,7 +13,7 @@ public final class CoverProgress {
     public static MachineControl control(PanelCoverHost host, Direction side) {
         var items = host.componentItems(side);
         var fluids = host.componentFluids(side);
-        var energy = host.coverOwner() instanceof gregtech.api.energy.IEnergyBlock block ? block : null;
+        var energy = host.coverOwner() instanceof gregtech.internal.energy.IEnergyBlock block ? block : null;
         var types = energy == null ? java.util.List.<gregtech.data.GregTechTags.Tag>of()
                 : energy.getEnergyCapacitorTypes(side);
         if (items == null && fluids == null && types.isEmpty()) return null;

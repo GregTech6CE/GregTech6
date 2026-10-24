@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
-import gregtech.api.fluid.PortableFluidContainerSpec;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.prefix.BlockMaterialPrefix;
+import gregtech.internal.fluid.PortableFluidContainerSpec;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.prefix.BlockMaterialPrefix;
 import gregtech.blockentity.tool.PortableContainerBlockEntity;
 import gregtech.data.*;
 import gregtech.registry.*;
@@ -68,9 +68,9 @@ public final class CapsuleCasingTests {
         int count=0;
         for(var recipe:MachineRecipeMaps.Shredder.mRecipeList)if(recipe.mInputs.length==1&&recipe.mInputs[0].getItem() instanceof gregtech.item.PortableFluidContainerItem vessel&&vessel.spec().shapeId().equals("cell")){
             var input=recipe.mInputs[0].copy();
-            h.assertTrue(gregtech.api.recipe.RecipeInputs.consume(recipe,java.util.List.of(input),java.util.List.of(),1)!=null,"empty capsule recyclable");
+            h.assertTrue(gregtech.internal.recipe.RecipeInputs.consume(recipe,java.util.List.of(input),java.util.List.of(),1)!=null,"empty capsule recyclable");
             input.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElseThrow(IllegalStateException::new).fill(new FluidStack(net.minecraft.world.level.material.Fluids.WATER,1),FluidAction.EXECUTE);
-            h.assertTrue(gregtech.api.recipe.RecipeInputs.consume(recipe,java.util.List.of(input),java.util.List.of(),1)==null,"even one L prevents recycling and fluid destruction");
+            h.assertTrue(gregtech.internal.recipe.RecipeInputs.consume(recipe,java.util.List.of(input),java.util.List.of(),1)==null,"even one L prevents recycling and fluid destruction");
             h.assertTrue(gregtech.item.MaterialItem.isMaterialItem(recipe.mOutputs[0],MaterialPrefix.dustTiny,vessel.spec().material())&&recipe.mOutputs[0].getCount()==1,"one ninth U recovered without duplication");count++;
         }
         h.assertTrue(count==40,"all forty capsules have empty-shell recycling");h.succeed();
@@ -114,7 +114,7 @@ public final class CapsuleCasingTests {
         var recipe=(gregtech.recipe.ToolShapedRecipe)h.getLevel().getRecipeManager().byKey(id).orElseThrow();
         for(int i=0;i<9;i++){
             var stack=recipe.getIngredients().get(i).getItems()[0].copy();
-            if(stack.getItem() instanceof gregtech.item.GTToolItem)stack=gregtech.item.GTToolItem.create(gregtech.api.tool.GTToolHelper.getType(stack),GTMaterialRegistry.get("Steel"),GTMaterialRegistry.get("Wood"));
+            if(stack.getItem() instanceof gregtech.item.GTToolItem)stack=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolHelper.getType(stack),GTMaterialRegistry.get("Steel"),GTMaterialRegistry.get("Wood"));
             grid.setItem(i,stack);
         }
         h.assertTrue(recipe.matches(grid,h.getLevel()),"empty aluminium capsule crafts empty Geiger counter");

@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.tool.*;
+import gregtech.internal.tool.*;
 import gregtech.content.material.Materials;
 import gregtech.item.GTToolItem;
 import gregtech.registry.GTElectricItems;

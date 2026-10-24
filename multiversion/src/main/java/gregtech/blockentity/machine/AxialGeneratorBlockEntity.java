@@ -1,8 +1,8 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.energy.EnergyBlockViews;
-import gregtech.api.energy.IEnergyBlock;
-import gregtech.api.multiblock.*;
+import gregtech.internal.energy.EnergyBlockViews;
+import gregtech.internal.energy.IEnergyBlock;
+import gregtech.internal.multiblock.*;
 import gregtech.blockentity.GTEnergyBlockEntity;
 import gregtech.content.multiblock.AxialGeneratorDefinitions;
 import gregtech.content.multiblock.AxialStructureTransform;
@@ -21,13 +21,13 @@ import java.util.*;
 
 /** Shared solid 3x3x4 assembly and rear shaft output. Storage belongs only to the controller. */
 public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity implements MultiblockPortOwner,
-        gregtech.api.machine.MachineControl.Provider, gregtech.api.multiblock.tracking.TrackedMultiblock {
+        gregtech.api.machine.MachineControl.Provider, gregtech.internal.multiblock.tracking.TrackedMultiblock {
     protected long energy;
     protected boolean stopped, overloaded;
     private boolean converting, emitted;
     private boolean rotorFormed, rotorActive;
     private final gregtech.api.machine.MachineControl control =
-            gregtech.api.machine.MachineControls.switchable(this,
+            gregtech.internal.machine.MachineControls.switchable(this,
                     () -> !this.stopped,
                     value -> {
                         this.stopped = !value || this.overloaded;
@@ -110,11 +110,11 @@ public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity impl
 
     public java.util.Set<BlockPos> trackedCells() { return grade().cells().keySet(); }
 
-    @Override public gregtech.api.multiblock.tracking.StructureDefinition structureDefinition() {
-        return gregtech.api.multiblock.tracking.CustomStructures.axial(this);
+    @Override public gregtech.internal.multiblock.tracking.StructureDefinition structureDefinition() {
+        return gregtech.internal.multiblock.tracking.CustomStructures.axial(this);
     }
     @Override public boolean isStructureOk() {
-        return gregtech.api.multiblock.tracking.StructureTracking.query(this);
+        return gregtech.internal.multiblock.tracking.StructureTracking.query(this);
     }
     @Override
     public boolean scanStructure() {
@@ -125,15 +125,15 @@ public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity impl
             if (!level.hasChunkAt(pos) || !grade().accepts(cell,
                     level.getBlockState(pos).getBlock()) || !(level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity)) {
                 bindings.clear(this::release);
-                gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
+                gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
                 return false;
             }
             parts.put(pos, role(cell, front(), grade().steam()));
         }
-        return gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, parts, 0,
+        return gregtech.internal.multiblock.tracking.StructureClaims.update(this, true, bindings, parts, 0,
                 p -> ((MultiblockPortBlockEntity) level.getBlockEntity(p)).canBind(worldPosition),
                 (p, r) -> ((MultiblockPortBlockEntity) level.getBlockEntity(p)).bind(worldPosition, r), this::release)
-                != gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
+                != gregtech.internal.multiblock.tracking.StructureClaims.Result.FAILED;
     }
 
     private void release(BlockPos pos) {
@@ -143,16 +143,16 @@ public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity impl
 
     @Override public void onLoad() {
         super.onLoad();
-        if (level != null && !level.isClientSide) gregtech.api.multiblock.tracking.StructureTracking.attach(this);
+        if (level != null && !level.isClientSide) gregtech.internal.multiblock.tracking.StructureTracking.attach(this);
     }
     @Override public void onChunkUnloaded() {
-        gregtech.api.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
+        gregtech.internal.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
         super.onChunkUnloaded();
     }
     @Override
     public void setRemoved() {
-        if (!gregtech.api.multiblock.tracking.StructureTracking.unloading(this)) bindings.clear(this::release);
-        gregtech.api.multiblock.tracking.StructureTracking.onRemoved(this);
+        if (!gregtech.internal.multiblock.tracking.StructureTracking.unloading(this)) bindings.clear(this::release);
+        gregtech.internal.multiblock.tracking.StructureTracking.onRemoved(this);
         super.setRemoved();
     }
 

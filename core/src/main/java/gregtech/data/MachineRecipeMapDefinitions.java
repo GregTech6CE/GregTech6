@@ -1,5 +1,5 @@
 package gregtech.data;
-import gregtech.api.recipe.RecipeMapSpec;
+import gregtech.internal.recipe.RecipeMapSpec;
 /** Complete original machine recipe-map catalogue; actual rows live at platform boundaries. */
 public final class MachineRecipeMapDefinitions {
     private static final String GUI="textures/gui/machines/";

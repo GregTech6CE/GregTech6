@@ -65,8 +65,8 @@ public final class GTIconSetBlocks {
             RegistryObject<Block> block = GTBlocks.BLOCKS.register(blockId, () -> createBlock(iconName));
             if (iconName.equals("logistics_wire")) LOGISTICS_WIRE = block;
             var sandSpec = gregtech.block.BlackSandBlock.spec(iconName);
-            if (sandSpec != null) GTBlocks.bind(gregtech.api.prefix.BlockMaterialPrefix.blockDust,
-                    gregtech.api.material.GTMaterialRegistry.get(sandSpec.material()), block);
+            if (sandSpec != null) GTBlocks.bind(gregtech.internal.prefix.BlockMaterialPrefix.blockDust,
+                    gregtech.internal.material.GTMaterialRegistry.get(sandSpec.material()), block);
             RegistryObject<Item> item = GTBlocks.BLOCK_ITEMS.register(blockId,
                     () -> gregtech.content.logistics.LongDistanceCatalog.find(blockId)!=null
                             ? new gregtech.item.LongDistanceBlockItem(block.get(),new Item.Properties().stacksTo(gregtech.content.logistics.LongDistanceCatalog.get(blockId).stackLimit()),gregtech.content.logistics.LongDistanceCatalog.get(blockId))

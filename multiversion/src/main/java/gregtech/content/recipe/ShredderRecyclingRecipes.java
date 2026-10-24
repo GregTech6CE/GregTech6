@@ -5,12 +5,12 @@ package gregtech.content.recipe;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.MaterialProperty;
-import gregtech.api.prefix.PrefixRegistry;
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.material.MaterialProperty;
+import gregtech.internal.prefix.PrefixRegistry;
+import gregtech.internal.recipe.Recipe;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.data.MaterialPrefix;
 import gregtech.data.generated.MaterialWorkability;

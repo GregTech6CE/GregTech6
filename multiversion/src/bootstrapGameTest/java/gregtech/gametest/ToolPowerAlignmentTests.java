@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.tool.*;
+import gregtech.internal.tool.*;
 import gregtech.content.material.Materials;
 import gregtech.data.*;
 import gregtech.item.GTToolItem;
@@ -28,7 +28,7 @@ import java.util.*;
 
 @GameTestHolder("gregtech_alignment") @PrefixGameTestTemplate(false)
 public final class ToolPowerAlignmentTests {
-    private static ItemStack form(MaterialPrefix prefix, gregtech.api.material.GTMaterial material) {
+    private static ItemStack form(MaterialPrefix prefix, gregtech.internal.material.GTMaterial material) {
         var stack=GTItems.getStack(prefix,material,1);
         if(stack.isEmpty())throw new IllegalStateException("Missing fixture form "+prefix+"/"+material);
         return stack;

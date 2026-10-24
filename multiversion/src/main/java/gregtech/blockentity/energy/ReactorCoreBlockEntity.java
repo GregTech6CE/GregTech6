@@ -1,7 +1,7 @@
 package gregtech.blockentity.energy;
 
-import gregtech.api.fluid.FluidTankGT;
-import gregtech.api.inventory.BlockContents;
+import gregtech.internal.fluid.FluidTankGT;
+import gregtech.internal.inventory.BlockContents;
 import gregtech.content.nuclear.*;
 import net.minecraft.core.*;
 import net.minecraft.nbt.*;
@@ -49,7 +49,7 @@ public class ReactorCoreBlockEntity extends BlockEntity implements BlockContents
     private LazyOptional<net.minecraftforge.items.IItemHandler> itemCap;
 //?}
     private int disabledSlots;
-    private final gregtech.api.machine.MachineControl control = gregtech.api.machine.MachineControls.switchable(this,
+    private final gregtech.api.machine.MachineControl control = gregtech.internal.machine.MachineControls.switchable(this,
             () -> !this.stopped, value -> setStopped(!value), () -> this.lastHeat > 0, () -> this.lastHeat > 0,
             this::disabledSlots, this::setDisabledSlots);
 

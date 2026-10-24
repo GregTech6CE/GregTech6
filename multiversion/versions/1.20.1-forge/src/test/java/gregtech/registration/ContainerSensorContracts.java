@@ -1,8 +1,8 @@
 package gregtech.registration;
 
-import gregtech.api.fluid.PortableFluidContainerSpec;
-import gregtech.api.sensor.SensorMeasurements;
-import gregtech.api.material.MaterialMass;
+import gregtech.internal.fluid.PortableFluidContainerSpec;
+import gregtech.internal.sensor.SensorMeasurements;
+import gregtech.internal.material.MaterialMass;
 import gregtech.api.material.GTValues;
 
 public final class ContainerSensorContracts {

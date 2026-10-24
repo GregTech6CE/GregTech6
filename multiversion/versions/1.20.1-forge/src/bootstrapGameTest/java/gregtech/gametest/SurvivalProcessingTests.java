@@ -1,6 +1,7 @@
 package gregtech.gametest;
 
 import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.content.recipe.*;
 import gregtech.data.*;
 import gregtech.registry.GTTechnological;
@@ -85,10 +86,10 @@ public final class SurvivalProcessingTests {
         h.assertTrue(magma.mInputs[0].is(Items.BLAZE_POWDER), "Vanilla blaze powder enters slime chain");
         var gold = row(SurvivalUtilityRecipes.INSTANCE, "mix/glistering_melon");
         h.assertTrue(gold.mInputs[1].is(Items.GOLD_NUGGET), "Vanilla nuggets accepted");
-        var sugar = gregtech.api.material.GTMaterialRegistry.get("Sugar");
+        var sugar = gregtech.internal.material.GTMaterialRegistry.get("Sugar");
         h.assertTrue(!gregtech.registry.GTItems.getStack(MaterialPrefix.gemChipped, sugar).isEmpty(), "Forced sugar crystal form restored");
         h.assertTrue(gregtech.registry.GTItems.getStack(MaterialPrefix.gem, sugar).isEmpty(), "Sugar does not gain unrelated gem forms");
-        var wood = gregtech.api.material.GTMaterialRegistry.get("Wood");
+        var wood = gregtech.internal.material.GTMaterialRegistry.get("Wood");
         for (var prefix : List.of(MaterialPrefix.dust, MaterialPrefix.dustSmall, MaterialPrefix.dustTiny))
             h.assertTrue(!gregtech.registry.GTItems.getStack(prefix, wood).isEmpty(), "Original G_WOOD dust forms registered");
         h.succeed();

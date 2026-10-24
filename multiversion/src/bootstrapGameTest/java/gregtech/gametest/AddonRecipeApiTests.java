@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
 import gregtech.api.addon.platform.AddonRecipes;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.recipe.RecipeMap;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.ItemStack;

@@ -1,9 +1,9 @@
 package gregtech.data;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialProperty;
-import gregtech.api.material.MaterialTextureSet;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialProperty;
+import gregtech.internal.material.MaterialTextureSet;
 import gregtech.data.generated.GT6Materials;
 
 /**
@@ -15,7 +15,7 @@ import gregtech.data.generated.GT6Materials;
  * Special rows ({@code Ma}, {@code elec}/{@code cent}/{@code clay} factories) live here.
  */
 @Deprecated
-public final class ImportedMaterialData extends gregtech.api.material.MaterialFactories {
+public final class ImportedMaterialData extends gregtech.internal.material.MaterialFactories {
     private ImportedMaterialData() {}
 
     // --- GT6-style factories (used by generated GT6Materials) ---
@@ -59,14 +59,14 @@ public final class ImportedMaterialData extends gregtech.api.material.MaterialFa
 
     // --- special / sentinel materials ---
 
-    public static final GTMaterial NULL  = gregtech.api.material.MaterialSentinels.Invalid;
-    public static final GTMaterial Empty = gregtech.api.material.MaterialSentinels.Empty;
+    public static final GTMaterial NULL  = gregtech.internal.material.MaterialSentinels.Invalid;
+    public static final GTMaterial Empty = gregtech.internal.material.MaterialSentinels.Empty;
 
     /**
      * Magic pseudo-element ({@code Ma}). Used in Ender Pearl ({@code BeK₄N₅Ma₆}) and other magical chemistry.
      */
     public static final GTMaterial
-            Ma = gregtech.api.material.MaterialDefinition.builder(4000, "Magic")
+            Ma = gregtech.internal.material.MaterialDefinition.builder(4000, "Magic")
                     .displayName("Ma").color(0xFF00FF)
                     .properties(MaterialProperty.ELEMENT, MaterialProperty.MAGICAL, MaterialProperty.HIDDEN)
                     .texture(MaterialTextureSet.SHINY).chemicalFormula("Ma")

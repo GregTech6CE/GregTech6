@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.prefix.BlockMaterialPrefix;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.prefix.BlockMaterialPrefix;
 import gregtech.block.OreBlock;
 import gregtech.block.OreHostStone;
 import gregtech.client.CommonBlockTooltips;
@@ -71,12 +71,12 @@ public final class OreHostHarvestTests {
                             "source Material.sand permits hand/wrong-category/below-tier drops: "+host+" small="+isSmall);
                 }
         var sand=state(h,true,false,OreHostStone.SAND);
-        var gtPick=gregtech.item.GTToolItem.create(gregtech.api.tool.GTToolType.PICKAXE,
+        var gtPick=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.PICKAXE,
                 GTMaterialRegistry.get("Steel").resolve(),GTMaterialRegistry.get("Wood").resolve());
-        h.assertTrue(!gtPick.isEmpty()&&gregtech.api.tool.GTToolHelper.isUsable(gtPick),"real assembled GT pick fixture");
+        h.assertTrue(!gtPick.isEmpty()&&gregtech.internal.tool.GTToolHelper.isUsable(gtPick),"real assembled GT pick fixture");
         player.setItemInHand(InteractionHand.MAIN_HAND,gtPick);
         h.assertTrue(correct(h,player,sand,pos),"source hand-harvestable host permits GT wrong-tool drops");
-        h.assertTrue(!gregtech.api.tool.GTToolHelper.canEffectiveHarvest(gtPick,sand),
+        h.assertTrue(!gregtech.internal.tool.GTToolHelper.canEffectiveHarvest(gtPick,sand),
                 "drop permission does not make wrong-category GT pick effective for sand mining speed");
 
         player.setItemInHand(InteractionHand.MAIN_HAND,ItemStack.EMPTY);

@@ -1,6 +1,7 @@
 package gregtech.gametest;
 
 import gregtech.api.addon.*;
+import gregtech.internal.addon.*;
 import gregtech.block.machine.BasicMachineBlock;
 import gregtech.blockentity.machine.LargeRecipeMachineBlockEntity;
 import gregtech.blockentity.machine.MultiblockPortBlockEntity;

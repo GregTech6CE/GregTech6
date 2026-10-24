@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
-import gregtech.api.addon.AddonMaterials;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.ItemMaterialRegistry;
-import gregtech.api.material.MaterialFormItem;
+import gregtech.internal.addon.AddonMaterials;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.ItemMaterialRegistry;
+import gregtech.internal.material.MaterialFormItem;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.data.MaterialPrefix;
 import net.minecraft.core.registries.BuiltInRegistries;

@@ -3,7 +3,7 @@ package gregtech.block.machine;
 
 import gregtech.blockentity.machine.HeatExchangerBlockEntity;
 import gregtech.content.energy.HeatExchangerCatalog;
-import gregtech.api.tool.*;
+import gregtech.internal.tool.*;
 import net.minecraft.core.*;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.Entity;

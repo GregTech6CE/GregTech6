@@ -1,5 +1,5 @@
 package gregtech.content.transport;
-import gregtech.api.machine.HopperSpec;
+import gregtech.internal.machine.HopperSpec;
 /** Complete original hopper/queuehopper material registry metadata, shared by both loaders. */
 public final class HopperCatalog {
  private HopperCatalog(){}

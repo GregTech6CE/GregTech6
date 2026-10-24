@@ -1,7 +1,10 @@
 package gregtech.gametest;
 import gregtech.api.machine.*;
+import gregtech.internal.machine.*;
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.content.recipe.*;
 import gregtech.content.transport.*;
 import gregtech.content.transport.fluid.FluidTransportDefinitions;

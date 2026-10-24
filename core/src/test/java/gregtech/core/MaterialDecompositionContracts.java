@@ -1,16 +1,16 @@
 package gregtech.core;
 
 import gregtech.api.addon.AddonMaterialContributor;
-import gregtech.api.addon.AddonMaterials;
+import gregtech.internal.addon.AddonMaterials;
 import gregtech.api.addon.MaterialComposition;
 import gregtech.api.addon.MaterialDeclaration;
 import gregtech.api.addon.MaterialFormRequest;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.MaterialProperty;
-import gregtech.api.mod.ModData;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.material.MaterialProperty;
+import gregtech.internal.mod.ModData;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.data.ModReferences;
 import gregtech.data.generated.MaterialDecompositionData;
 import java.net.URL;

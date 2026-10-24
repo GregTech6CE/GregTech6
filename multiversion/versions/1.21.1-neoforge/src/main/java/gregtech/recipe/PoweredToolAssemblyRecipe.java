@@ -1,5 +1,6 @@
 package gregtech.recipe;
 import gregtech.content.tool.ElectricToolAssembly;import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import com.mojang.serialization.*;import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;import net.minecraft.resources.ResourceLocation;import net.minecraft.world.item.*;import net.minecraft.world.item.crafting.*;import net.minecraft.network.RegistryFriendlyByteBuf;import net.minecraft.network.codec.*;
 /** Original concrete material/battery recipe, transmitted by stable identities and rebuilt with native components. */

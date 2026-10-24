@@ -101,7 +101,7 @@ public final class SharedLargeMachineParts {private SharedLargeMachineParts(){}
     public static int idForName(String name) {
         int builtin = builtinId(name);
         if (builtin >= 0) return builtin;
-        return gregtech.api.addon.AddonMachines.partId(name);
+        return gregtech.internal.addon.AddonMachines.partId(name);
     }
 
     /** Built-in part id, or -1. Does not look at addon parts. */

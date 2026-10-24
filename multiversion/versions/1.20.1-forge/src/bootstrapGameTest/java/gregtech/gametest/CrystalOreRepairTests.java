@@ -3,12 +3,12 @@ package gregtech.gametest;
 import gregtech.block.CrystalOreBlock;
 import gregtech.block.RockOreBlock;
 import gregtech.block.BlackSandBlock;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterial;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.ItemMaterialRegistry;
-import gregtech.api.material.MaterialEquivalence;
-import gregtech.api.machine.crucible.CrucibleItemInput;
+import gregtech.internal.material.ItemMaterialRegistry;
+import gregtech.internal.material.MaterialEquivalence;
+import gregtech.internal.machine.crucible.CrucibleItemInput;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.data.MaterialPrefix;
 import gregtech.data.MaterialPrefixes;
@@ -190,15 +190,15 @@ public final class CrystalOreRepairTests {
             h.assertTrue(sand.material() == GTMaterialRegistry.get(expected[i][1]),
                     id + " maps to GT6's mineral sand material");
             ItemStack sandItem = new ItemStack(sand);
-            var composition = gregtech.api.material.ItemMaterialRegistry.get(sandItem).orElseThrow();
+            var composition = gregtech.internal.material.ItemMaterialRegistry.get(sandItem).orElseThrow();
             h.assertTrue(composition.material() == sand.material()
                             && composition.amount() == gregtech.api.material.GTValues.U * 9,
                     id + " carries a nine-unit GT6 blockDust composition");
-            var crucible = gregtech.api.machine.crucible.CrucibleItemInput.parse(sandItem);
+            var crucible = gregtech.internal.machine.crucible.CrucibleItemInput.parse(sandItem);
             h.assertTrue(crucible.size() == 1 && crucible.get(0).material == sand.material()
                             && crucible.get(0).amount == gregtech.api.material.GTValues.U * 9,
                     id + " supplies its mineral sand to a crucible");
-            String materialTag = gregtech.api.material.MaterialEquivalence.materialName(sand.material());
+            String materialTag = gregtech.internal.material.MaterialEquivalence.materialName(sand.material());
             ResourceLocation formTag = ResourceLocation.fromNamespaceAndPath("gt6ce", "block_dust/" + materialTag);
             h.assertTrue(sandItem.is(ItemTags.create(formTag)) && state.is(BlockTags.create(formTag)),
                     id + " has matching GT6 blockDust item and block tags");

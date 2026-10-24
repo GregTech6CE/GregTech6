@@ -5,8 +5,8 @@ package gregtech.jei;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.tool.GTToolType;
 import gregtech.item.GTToolItem;
 import gregtech.recipe.ToolAssemblyCatalog;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;

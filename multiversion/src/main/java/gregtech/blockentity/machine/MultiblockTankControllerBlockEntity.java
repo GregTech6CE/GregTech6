@@ -1,7 +1,7 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.fluid.FluidTankGT;
-import gregtech.api.fluid.FluidHazards;
+import gregtech.internal.fluid.FluidTankGT;
+import gregtech.internal.fluid.FluidHazards;
 import gregtech.blockentity.GTEnergyBlockEntity;
 import gregtech.content.multiblock.LargeMachineParts;
 import gregtech.content.multiblock.TankValveSpec;
@@ -37,10 +37,10 @@ import java.util.List;
  * Shared 3x3x3 and 5x5x5 vessel state. The placed valve selects its specification;
  * valid shell parts delegate fluid I/O to this controller.
  */
-public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity implements gregtech.api.multiblock.MultiblockPortOwner,
-        gregtech.api.multiblock.tracking.TrackedMultiblock {
-    private final gregtech.api.multiblock.PartBindings<BlockPos,
-            gregtech.api.multiblock.MultiblockLayout.Role> bindings = new gregtech.api.multiblock.PartBindings<>();
+public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity implements gregtech.internal.multiblock.MultiblockPortOwner,
+        gregtech.internal.multiblock.tracking.TrackedMultiblock {
+    private final gregtech.internal.multiblock.PartBindings<BlockPos,
+            gregtech.internal.multiblock.MultiblockLayout.Role> bindings = new gregtech.internal.multiblock.PartBindings<>();
 
     int size = 3;
     // Selected from the placed valve block during construction.
@@ -63,7 +63,7 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
         if (size != 3 && size != 5) throw new IllegalArgumentException("Tank size: " + size);
         if (valveSpec != null && valveSpec.size() != size) throw new IllegalArgumentException("Tank valve size: " + size);
         this.size = size;
-        gregtech.api.fluid.MultiblockTankData.setCapacity(tank,
+        gregtech.internal.fluid.MultiblockTankData.setCapacity(tank,
                 valveSpec == null ? (size == 5 ? 1_024_000 : 320_000) : valveSpec.capacity());
         if (valveSpec != null) tank.setGasProof(valveSpec.gasProof()).setAcidProof(valveSpec.acidProof())
                 .setPlasmaProof(valveSpec.plasmaProof()).setMagicProof(valveSpec.magicProof())
@@ -89,51 +89,51 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
 
     @Override public void onLoad() {
         super.onLoad();
-        if (level != null && !level.isClientSide) gregtech.api.multiblock.tracking.StructureTracking.attach(this);
+        if (level != null && !level.isClientSide) gregtech.internal.multiblock.tracking.StructureTracking.attach(this);
     }
     @Override public void onChunkUnloaded() {
-        gregtech.api.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
+        gregtech.internal.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
         super.onChunkUnloaded();
     }
     @Override
     public void setRemoved() {
-        if (!gregtech.api.multiblock.tracking.StructureTracking.unloading(this)) bindings.clear(this::release);
-        gregtech.api.multiblock.tracking.StructureTracking.onRemoved(this);
+        if (!gregtech.internal.multiblock.tracking.StructureTracking.unloading(this)) bindings.clear(this::release);
+        gregtech.internal.multiblock.tracking.StructureTracking.onRemoved(this);
         super.setRemoved();
     }
 
     public int trackedSize() { return size; }
-    @Override public gregtech.api.multiblock.tracking.StructureDefinition structureDefinition() {
-        return gregtech.api.multiblock.tracking.CustomStructures.tank(this);
+    @Override public gregtech.internal.multiblock.tracking.StructureDefinition structureDefinition() {
+        return gregtech.internal.multiblock.tracking.CustomStructures.tank(this);
     }
     @Override public boolean isStructureOk() {
-        return gregtech.api.multiblock.tracking.StructureTracking.query(this);
+        return gregtech.internal.multiblock.tracking.StructureTracking.query(this);
     }
     public boolean scanStructure() {
         if (level == null || isRemoved()) return false;
         var wall = valveSpec == null ? (size == 5 ? GTMultiblocks.TANK_WALL_DENSE.get() : GTMultiblocks.TANK_WALL.get())
                 : LargeMachineParts.block(valveSpec.wallId());
-        var candidates = new java.util.LinkedHashMap<BlockPos, gregtech.api.multiblock.MultiblockLayout.Role>();
-        boolean valid = gregtech.api.multiblock.HollowTankStructure.validate(worldPosition, facing(), size,
+        var candidates = new java.util.LinkedHashMap<BlockPos, gregtech.internal.multiblock.MultiblockLayout.Role>();
+        boolean valid = gregtech.internal.multiblock.HollowTankStructure.validate(worldPosition, facing(), size,
                 level::hasChunkAt, pos -> {
                     if (!(level.getBlockState(pos).getBlock() == wall)) return false;
-                    candidates.put(pos, gregtech.api.multiblock.MultiblockLayout.Role.FLUID_IO);
+                    candidates.put(pos, gregtech.internal.multiblock.MultiblockLayout.Role.FLUID_IO);
                     return true;
                 }, pos -> level.getBlockState(pos).isAir());
         if (!valid) {
-            gregtech.api.multiblock.tracking.StructureClaims.runQuiet(() -> bindings.clear(this::release));
-            gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
+            gregtech.internal.multiblock.tracking.StructureClaims.runQuiet(() -> bindings.clear(this::release));
+            gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
             return false;
         }
-        return gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, candidates, 0,
+        return gregtech.internal.multiblock.tracking.StructureClaims.update(this, true, bindings, candidates, 0,
                 pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port && port.canBind(worldPosition),
                 (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role), this::release)
-                != gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
+                != gregtech.internal.multiblock.tracking.StructureClaims.Result.FAILED;
     }
 
     @Override
-    public IFluidHandler portFluids(gregtech.api.multiblock.MultiblockLayout.Role role) {
-        return role == gregtech.api.multiblock.MultiblockLayout.Role.FLUID_IO ? tankHandler : null;
+    public IFluidHandler portFluids(gregtech.internal.multiblock.MultiblockLayout.Role role) {
+        return role == gregtech.internal.multiblock.MultiblockLayout.Role.FLUID_IO ? tankHandler : null;
     }
 
     // ── Tick ─────────────────────────────────────────────────────────────────
@@ -418,9 +418,9 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
         setSize(size);
         // The placed valve owns size/capacity/proof flags; contents keep their source long amount.
 //? if >=1.21.1 {
-        /*gregtech.api.fluid.MultiblockTankData.readContents(tank, tag, tank.baseCapacity(), lookup);
+        /*gregtech.internal.fluid.MultiblockTankData.readContents(tank, tag, tank.baseCapacity(), lookup);
 *///?} else {
-        gregtech.api.fluid.MultiblockTankData.readContents(tank, tag, tank.baseCapacity());
+        gregtech.internal.fluid.MultiblockTankData.readContents(tank, tag, tank.baseCapacity());
 //?}
         tank.setOnChanged(this::setChanged);
     }

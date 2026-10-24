@@ -2,7 +2,7 @@ package gregtech.gametest;
 import gregtech.content.transport.PanelCatalog;
 import gregtech.content.cover.*;
 import gregtech.item.*;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolType;
 import gregtech.recipe.ToolShapedRecipe;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -23,7 +23,7 @@ import java.util.*;
 @GameTestHolder("gregtech_decorative_panels") @PrefixGameTestTemplate(false)
 public final class DecorativePanelPortTests {
  private static ItemStack item(String id){var stack=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse(id)));if(stack.isEmpty())throw new IllegalStateException("Missing panel input "+id);return stack;}
- private static ItemStack tool(GTToolType kind){return GTToolItem.create(kind,gregtech.content.material.Materials.Steel,gregtech.api.material.GTMaterialRegistry.get("Wood"));}
+ private static ItemStack tool(GTToolType kind){return GTToolItem.create(kind,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));}
 //? if >=1.21.1 {
  /*private static CraftingInput grid(List<ItemStack> stacks){return CraftingInput.of(3,3,stacks);}
 *///?} else {

@@ -1,15 +1,15 @@
 package gregtech.gametest;
 
-import gregtech.api.addon.AddonMaterials;
-import gregtech.api.machine.CrucibleSpec;
+import gregtech.internal.addon.AddonMaterials;
+import gregtech.internal.machine.CrucibleSpec;
 import gregtech.api.machine.HeatHandler;
-import gregtech.api.machine.crucible.CrucibleInputRules;
-import gregtech.api.machine.crucible.CrucibleMaterialStack;
-import gregtech.api.machine.crucible.ThermalStep;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.machine.crucible.CrucibleInputRules;
+import gregtech.internal.machine.crucible.CrucibleMaterialStack;
+import gregtech.internal.machine.crucible.ThermalStep;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.MaterialProperty;
+import gregtech.internal.material.MaterialProperty;
 import gregtech.data.MaterialPrefix;
 import gregtech.registry.GTItems;
 import java.util.HashSet;

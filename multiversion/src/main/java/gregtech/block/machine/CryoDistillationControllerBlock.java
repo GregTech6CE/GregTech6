@@ -2,7 +2,7 @@
  * Original 17111 CU controller, using the native basic-machine tools, menu and recipe engine. */
 package gregtech.block.machine;
 
-import gregtech.api.machine.BasicMachineSpec;
+import gregtech.internal.machine.BasicMachineSpec;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -20,7 +20,7 @@ public class CryoDistillationControllerBlock extends BasicMachineBlock {
     public static BasicMachineSpec makeSpec() {
         var p=gregtech.content.multiblock.OriginalMultiblockMachineParameters.cryoDistillationTower();
         return new BasicMachineSpec(p.id(),p.material(),p.machineName(),p.energyType(),p.tier(),p.energyIn(),p.energyOut(),
-                p.hardness(),p.blastResistance(),gregtech.api.energy.FaceConfig.from(p.faceConfig()),p.constructionMaterials(),
+                p.hardness(),p.blastResistance(),gregtech.internal.energy.FaceConfig.from(p.faceConfig()),p.constructionMaterials(),
                 gregtech.data.MachineRecipeMaps.CryoDistillationTower,p.parallelLimit(),p.energyInMin(),p.energyInMax());
     }
     @Override public BasicMachineBlockEntity createBlockEntity(BlockEntityType<?> type,BlockPos pos,BlockState state) {

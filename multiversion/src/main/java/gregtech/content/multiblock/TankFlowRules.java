@@ -9,6 +9,6 @@ public final class TankFlowRules {
     }
 
     public static boolean canAutoOutput(Direction face, boolean gas, int density) {
-        return gregtech.api.multiblock.StructureGrid.canAutoOutput(face.getStepY(), gas, density);
+        return gregtech.internal.multiblock.StructureGrid.canAutoOutput(face.getStepY(), gas, density);
     }
 }

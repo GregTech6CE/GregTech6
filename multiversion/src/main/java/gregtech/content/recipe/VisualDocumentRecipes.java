@@ -1,6 +1,6 @@
 /* GregTech-6 Team (2024) visual book/map recipes, LGPL-3.0-or-later. */
 package gregtech.content.recipe;
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.recipe.Recipe;
 import gregtech.content.data.*;
 import gregtech.registry.GTFluids;
 import net.minecraft.nbt.CompoundTag;

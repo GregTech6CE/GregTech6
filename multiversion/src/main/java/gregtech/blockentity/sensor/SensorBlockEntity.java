@@ -2,7 +2,7 @@ package gregtech.blockentity.sensor;
 
 import gregtech.api.addon.platform.AddonSensor;
 import gregtech.api.addon.platform.SensorContext;
-import gregtech.api.energy.IEnergyBlock;
+import gregtech.internal.energy.IEnergyBlock;
 import gregtech.data.GregTechTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -53,11 +53,11 @@ public class SensorBlockEntity extends BlockEntity {
     private Direction configuredInput;
     public Direction inputSide() {
         var front = getBlockState().getValue(DirectionalBlock.FACING);
-        return configuredInput != null && gregtech.api.sensor.SensorPanelRules.validInputSide(front.ordinal(), configuredInput.ordinal())
+        return configuredInput != null && gregtech.internal.sensor.SensorPanelRules.validInputSide(front.ordinal(), configuredInput.ordinal())
                 ? configuredInput : front.getOpposite();
     }
     public boolean setInputSide(Direction side) {
-        if (!gregtech.api.sensor.SensorPanelRules.validInputSide(
+        if (!gregtech.internal.sensor.SensorPanelRules.validInputSide(
                 getBlockState().getValue(DirectionalBlock.FACING).ordinal(), side.ordinal())) return false;
         configuredInput = side;
         syncInputSide();
@@ -81,7 +81,7 @@ public class SensorBlockEntity extends BlockEntity {
     private long measuredValue;
     private long measuredMaximum;
     private boolean hasMeasurement;
-    private gregtech.api.sensor.SensorControl.Mode mode = gregtech.api.sensor.SensorControl.Mode.DISPLAY;
+    private gregtech.internal.sensor.SensorControl.Mode mode = gregtech.internal.sensor.SensorControl.Mode.DISPLAY;
     private int threshold;
     private boolean hexadecimal;
 
@@ -105,14 +105,14 @@ public class SensorBlockEntity extends BlockEntity {
      * test can drive it without a clock.
      */
     public static long tpsFromElapsed(long elapsedMillis, int tickRate) {
-        return gregtech.api.sensor.SensorPanelRules.tpsFromElapsed(elapsedMillis,tickRate);
+        return gregtech.internal.sensor.SensorPanelRules.tpsFromElapsed(elapsedMillis,tickRate);
     }
 
-    private final gregtech.api.sensor.SensorAverage average = new gregtech.api.sensor.SensorAverage();
-    public gregtech.api.sensor.SixCellDisplay.Glyph[] displayCells() {
-        String unit = addon != null ? addon.unit() : gregtech.api.sensor.SensorPanelRules.unit(kind.name());
-        int color = addon != null ? addon.color() : gregtech.api.sensor.SensorPanelRules.color(kind.name());
-        return gregtech.api.sensor.SixCellDisplay.sensor(value,mode,hexadecimal,unit,color);
+    private final gregtech.internal.sensor.SensorAverage average = new gregtech.internal.sensor.SensorAverage();
+    public gregtech.internal.sensor.SixCellDisplay.Glyph[] displayCells() {
+        String unit = addon != null ? addon.unit() : gregtech.internal.sensor.SensorPanelRules.unit(kind.name());
+        int color = addon != null ? addon.color() : gregtech.internal.sensor.SensorPanelRules.color(kind.name());
+        return gregtech.internal.sensor.SixCellDisplay.sensor(value,mode,hexadecimal,unit,color);
     }
     public String displayText() {
         String number = hexadecimal ? Long.toHexString(value).toUpperCase(java.util.Locale.ROOT) : Long.toString(value);
@@ -123,22 +123,22 @@ public class SensorBlockEntity extends BlockEntity {
         };
     }
     public boolean control(double x, double y, boolean screwdriver, boolean reset) {
-        if (reset) { mode = gregtech.api.sensor.SensorControl.Mode.DISPLAY; threshold = 0; hexadecimal = false; average.resize(1); }
+        if (reset) { mode = gregtech.internal.sensor.SensorControl.Mode.DISPLAY; threshold = 0; hexadecimal = false; average.resize(1); }
         else if (screwdriver) {
             if (x >= 2 && x <= 14 && y >= 2 && y <= 4) hexadecimal = !hexadecimal;
             else {
-                int change = gregtech.api.sensor.SensorControl.thresholdChange(x,y,hexadecimal);
+                int change = gregtech.internal.sensor.SensorControl.thresholdChange(x,y,hexadecimal);
                 if (change != 0) average.resize(average.size()+change);
-                else mode = gregtech.api.sensor.SensorControl.Mode.values()[(mode.ordinal()+1)%8];
+                else mode = gregtech.internal.sensor.SensorControl.Mode.values()[(mode.ordinal()+1)%8];
             }
         } else {
-            if (!gregtech.api.sensor.SensorControl.hasThreshold(mode)) return false;
-            int change = gregtech.api.sensor.SensorControl.thresholdChange(x,y,hexadecimal);
+            if (!gregtech.internal.sensor.SensorControl.hasThreshold(mode)) return false;
+            int change = gregtech.internal.sensor.SensorControl.thresholdChange(x,y,hexadecimal);
             if (change == 0) return false;
             threshold = Math.max(0, Math.min(hexadecimal ? 65535 : 9999, threshold + change));
         }
         if (hasMeasurement) {
-            var reading = gregtech.api.sensor.SensorControl.evaluate(
+            var reading = gregtech.internal.sensor.SensorControl.evaluate(
                     mode, measuredValue, measuredMaximum, threshold);
             value = reading.displayed();
             signal = reading.signal();
@@ -240,7 +240,7 @@ public class SensorBlockEntity extends BlockEntity {
                 case ENERGY -> {
                     if (target instanceof gregtech.blockentity.energy.ElectricWireBlockEntity wire) {
                         newValue = wire.lastWattage();
-                        maximum = gregtech.api.sensor.SensorPanelRules.transferMaximum(wire.voltage(), wire.amperage());
+                        maximum = gregtech.internal.sensor.SensorPanelRules.transferMaximum(wire.voltage(), wire.amperage());
                     }
                 }
                 case PROGRESS -> {
@@ -277,13 +277,13 @@ public class SensorBlockEntity extends BlockEntity {
                 case TACHOMETER -> {
                     if (target instanceof gregtech.blockentity.energy.AxleBlockEntity axle) {
                         newValue = axle.transferredLast();
-                        maximum = gregtech.api.sensor.SensorPanelRules.transferMaximum(axle.maxSpeed(), axle.maxPower());
+                        maximum = gregtech.internal.sensor.SensorPanelRules.transferMaximum(axle.maxSpeed(), axle.maxPower());
                     }
                     else if (target instanceof gregtech.blockentity.energy.GearboxBlockEntity gearbox
                             && target.getBlockState().getBlock() instanceof gregtech.block.energy.GearboxBlock block) {
                         newValue = gearbox.transferredLast();
                         // GT6's custom-gearbox meter used rated speed * 16 instead.
-                        maximum = gregtech.api.sensor.SensorPanelRules.transferMaximum(
+                        maximum = gregtech.internal.sensor.SensorPanelRules.transferMaximum(
                                 block.spec().maxSpeed(), block.spec().maxPower());
                     }
                 }
@@ -301,21 +301,21 @@ public class SensorBlockEntity extends BlockEntity {
                         double kilograms = 0;
                         for (int i = 0; i < items.getSlots(); i++) {
                             var stack = items.getStackInSlot(i);
-                            for (var material : gregtech.api.machine.crucible.CrucibleItemInput.parse(stack))
+                            for (var material : gregtech.internal.machine.crucible.CrucibleItemInput.parse(stack))
                                 kilograms += material.weightKg() * stack.getCount();
                         }
                         // The four GT6 weight-o-meters are the same measurement with a different
                         // scale (SensorMeasurements): gramm / kilogramme / tons / kilotons.
                         newValue = switch (be.kind) {
                             case WEIGHTOMETRIC_LIGHT ->
-                                    gregtech.api.sensor.SensorMeasurements.grams(kilograms);
+                                    gregtech.internal.sensor.SensorMeasurements.grams(kilograms);
                             case WEIGHTOMETRIC_MEDIUM ->
-                                    gregtech.api.sensor.SensorMeasurements.kilograms(kilograms);
+                                    gregtech.internal.sensor.SensorMeasurements.kilograms(kilograms);
                             case WEIGHTOMETRIC_SUPER_HEAVY ->
-                                    gregtech.api.sensor.SensorMeasurements.kilotonnes(kilograms);
-                            default -> gregtech.api.sensor.SensorMeasurements.tonnes(kilograms);
+                                    gregtech.internal.sensor.SensorMeasurements.kilotonnes(kilograms);
+                            default -> gregtech.internal.sensor.SensorMeasurements.tonnes(kilograms);
                         };
-                        maximum = gregtech.api.sensor.SensorMeasurements.MAX_COUNT;
+                        maximum = gregtech.internal.sensor.SensorMeasurements.MAX_COUNT;
                     }
                 }
                 case TPS -> {
@@ -335,13 +335,13 @@ public class SensorBlockEntity extends BlockEntity {
                             capacity += fluids.getTankCapacity(i);
                         }
                         newValue = switch (be.kind) {
-                            case BUCKETOMETER -> gregtech.api.sensor.SensorMeasurements.cubicMetres(amount);
-                            case KILOBUCKETOMETER -> gregtech.api.sensor.SensorMeasurements.cubicDecametres(amount);
+                            case BUCKETOMETER -> gregtech.internal.sensor.SensorMeasurements.cubicMetres(amount);
+                            case KILOBUCKETOMETER -> gregtech.internal.sensor.SensorMeasurements.cubicDecametres(amount);
                             default -> amount;
                         };
                         maximum = switch (be.kind) {
-                            case BUCKETOMETER -> gregtech.api.sensor.SensorMeasurements.cubicMetres(capacity);
-                            case KILOBUCKETOMETER -> gregtech.api.sensor.SensorMeasurements.cubicDecametres(capacity);
+                            case BUCKETOMETER -> gregtech.internal.sensor.SensorMeasurements.cubicMetres(capacity);
+                            case KILOBUCKETOMETER -> gregtech.internal.sensor.SensorMeasurements.cubicDecametres(capacity);
                             default -> capacity;
                         };
                     }
@@ -350,11 +350,11 @@ public class SensorBlockEntity extends BlockEntity {
                     if (target instanceof gregtech.api.sensor.CompressionSensorSource compressed) {
                         long amount = compressed.gibblValue(facing.ordinal()), capacity = compressed.gibblMaximum(facing.ordinal());
                         newValue = be.kind == Kind.GIBBLOMETER
-                                ? gregtech.api.sensor.SensorMeasurements.gibbl(amount)
-                                : gregtech.api.sensor.SensorMeasurements.kiloGibbl(amount);
+                                ? gregtech.internal.sensor.SensorMeasurements.gibbl(amount)
+                                : gregtech.internal.sensor.SensorMeasurements.kiloGibbl(amount);
                         maximum = be.kind == Kind.GIBBLOMETER
-                                ? gregtech.api.sensor.SensorMeasurements.gibbl(capacity)
-                                : gregtech.api.sensor.SensorMeasurements.kiloGibbl(capacity);
+                                ? gregtech.internal.sensor.SensorMeasurements.gibbl(capacity)
+                                : gregtech.internal.sensor.SensorMeasurements.kiloGibbl(capacity);
                     }
                 }
                 case STACKOMETER -> {
@@ -408,7 +408,7 @@ public class SensorBlockEntity extends BlockEntity {
                         newValue = level.getServer().getPlayerCount(); maximum = level.getServer().getMaxPlayers();
                     }
                 }
-                case CHRONOMETER -> { newValue = gregtech.api.sensor.SensorMeasurements.timeOfDayMinutes(level.getDayTime()); maximum = 1440; }
+                case CHRONOMETER -> { newValue = gregtech.internal.sensor.SensorMeasurements.timeOfDayMinutes(level.getDayTime()); maximum = 1440; }
                 default -> {}
             }
         }
@@ -419,7 +419,7 @@ public class SensorBlockEntity extends BlockEntity {
         be.measuredMaximum = maximum;
         be.hasMeasurement = true;
         be.setChanged();
-        var reading = gregtech.api.sensor.SensorControl.evaluate(be.mode, newValue, maximum, be.threshold);
+        var reading = gregtech.internal.sensor.SensorControl.evaluate(be.mode, newValue, maximum, be.threshold);
         newValue = reading.displayed();
         int newSignal = reading.signal();
         if (newValue != be.value || newSignal != be.signal) {
@@ -465,11 +465,11 @@ public class SensorBlockEntity extends BlockEntity {
         super.load(tag);
 //?}
         int input = tag.contains("gt.sensor_input") ? tag.getByte("gt.sensor_input") : -1;
-        configuredInput = gregtech.api.sensor.SensorPanelRules.validInputSide(
+        configuredInput = gregtech.internal.sensor.SensorPanelRules.validInputSide(
                 getBlockState().getValue(DirectionalBlock.FACING).ordinal(), input) ? Direction.values()[input] : null;
         value = tag.getLong("gt.value");
         signal = Math.max(0, Math.min(15, tag.getInt("gt.signal")));
-        mode = gregtech.api.sensor.SensorControl.Mode.values()[Math.max(0,Math.min(7,tag.getInt("gt.control_mode")))];
+        mode = gregtech.internal.sensor.SensorControl.Mode.values()[Math.max(0,Math.min(7,tag.getInt("gt.control_mode")))];
         threshold = Math.max(0,Math.min(65535,tag.getInt("gt.threshold")));
         hexadecimal = tag.getBoolean("gt.hex");
         hasMeasurement = tag.contains("gt.measured_value");

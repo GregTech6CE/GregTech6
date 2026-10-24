@@ -3,6 +3,7 @@
 package gregtech.content.machine;
 
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.content.transport.HopperCatalog;
 import gregtech.data.generated.GT6Materials;
 import java.util.*;

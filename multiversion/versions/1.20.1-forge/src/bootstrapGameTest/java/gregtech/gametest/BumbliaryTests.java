@@ -118,8 +118,8 @@ public final class BumbliaryTests {
             @Override public boolean stillValid(Player player) { return true; }
         },3,3);
         for(int slot=0;slot<9;slot++) crafting.setItem(slot,ingredients.get(slot).getItems()[0].copy());
-        var screwdriver = gregtech.item.GTToolItem.create(gregtech.api.tool.GTToolType.SCREWDRIVER,
-                gregtech.content.material.Materials.Steel, gregtech.api.material.GTMaterialRegistry.get("Wood"));
+        var screwdriver = gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.SCREWDRIVER,
+                gregtech.content.material.Materials.Steel, gregtech.internal.material.GTMaterialRegistry.get("Wood"));
         crafting.setItem(7,screwdriver);
         var shaped = (gregtech.recipe.ToolShapedRecipe)recipe;
         helper.assertTrue(shaped.matches(crafting,helper.getLevel()), "real survival ingredients match original grid");

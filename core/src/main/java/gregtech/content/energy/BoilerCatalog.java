@@ -1,8 +1,8 @@
 package gregtech.content.energy;
 
 import gregtech.content.material.Materials;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.machine.BoilerSpec;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.machine.BoilerSpec;
 
 /** Single-block boiler ratings from GT6 Loader_MultiTileEntities, IDs 1200–1212 and 1250–1262. */
 public final class BoilerCatalog {

@@ -1,12 +1,12 @@
 package gregtech.block.machine;
 
-import gregtech.api.addon.AddonMachines;
+import gregtech.internal.addon.AddonMachines;
 import gregtech.api.addon.BehaviorMachine;
 import gregtech.api.addon.platform.AddonTool;
 import gregtech.api.addon.platform.AddonTools;
-import gregtech.api.machine.MachineSpec;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.tool.GTToolHelper;
+import gregtech.internal.machine.MachineSpec;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.tool.GTToolHelper;
 import gregtech.blockentity.machine.BehaviorMachineBlockEntity;
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.NeoToolBindings;

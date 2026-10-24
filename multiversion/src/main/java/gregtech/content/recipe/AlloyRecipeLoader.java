@@ -1,8 +1,8 @@
 package gregtech.content.recipe;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.data.RegisteredFluids;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.bootstrap.InitializationStep;
@@ -112,7 +112,7 @@ public class AlloyRecipeLoader implements InitializationStep {
      */
     private void crucibleAlloyingDisplay() {
         int shown = 0;
-        for (var reaction : gregtech.api.machine.crucible.CrucibleReactions.allRecipes()) {
+        for (var reaction : gregtech.internal.machine.crucible.CrucibleReactions.allRecipes()) {
             List<net.minecraft.world.item.ItemStack> inputs = new ArrayList<>();
             boolean complete = reaction.yield() > 0 && reaction.yield() <= 64;
             for (var part : reaction.parts()) {

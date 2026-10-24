@@ -37,7 +37,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import org.slf4j.Logger;
 
 /** Opt-in ordinary dedicated-server world restart smoke, excluded from the mod jar. */
-@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, value = Dist.DEDICATED_SERVER,
+@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, value = Dist.DEDICATED_SERVER,
         bus = EventBusSubscriber.Bus.GAME)
 public final class NeoForgeDedicatedSmoke {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -257,7 +257,7 @@ public final class NeoForgeDedicatedSmoke {
             if(!menu.getSlot(0).getItem().isEmpty())throw new IllegalStateException("Assembly must reject third occupied slot");
             menu.getSlot(5).set(ItemStack.EMPTY);menu.clicked(0,0,net.minecraft.world.inventory.ClickType.PICKUP,actor);
             var pick=menu.getCarried().copy();
-            if(!gregtech.api.tool.GTToolHelper.isUsable(pick)||gregtech.api.tool.GTToolHelper.getType(pick)!=gregtech.api.tool.GTToolType.PICKAXE||gregtech.api.tool.GTToolHelper.getHead(pick)!=gregtech.content.material.Materials.Bronze||gregtech.api.tool.GTToolHelper.getHandle(pick)!=gregtech.content.material.generated.WoodMaterials.Wood||pick.getDamageValue()!=0||pick.getCount()!=1)throw new IllegalStateException("Actual shared bronze head/wood assembly failed");
+            if(!gregtech.internal.tool.GTToolHelper.isUsable(pick)||gregtech.internal.tool.GTToolHelper.getType(pick)!=gregtech.internal.tool.GTToolType.PICKAXE||gregtech.internal.tool.GTToolHelper.getHead(pick)!=gregtech.content.material.Materials.Bronze||gregtech.internal.tool.GTToolHelper.getHandle(pick)!=gregtech.content.material.generated.WoodMaterials.Wood||pick.getDamageValue()!=0||pick.getCount()!=1)throw new IllegalStateException("Actual shared bronze head/wood assembly failed");
             if(!menu.getSlot(1).getItem().isEmpty()||!menu.getSlot(9).getItem().is(Items.STICK)||menu.getSlot(9).getItem().getCount()!=2)throw new IllegalStateException("Actual result slot did not consume exactly one head/handle");
             var chest=(ChestBlockEntity)level.getBlockEntity(specimenPos);chest.setItem(2,pick);chest.setItem(3,menu.getSlot(9).getItem().copy());chest.setChanged();
             menu.setCarried(ItemStack.EMPTY);menu.getSlot(9).set(ItemStack.EMPTY);actor.containerMenu=actor.inventoryMenu;
@@ -314,13 +314,13 @@ public final class NeoForgeDedicatedSmoke {
         menu.getSlot(5).set(takeEarly(actor,Items.STICK,1));
         menu.clicked(0,0,net.minecraft.world.inventory.ClickType.PICKUP,actor);
         var pick=menu.getCarried().copy();
-        if(!gregtech.api.tool.GTToolHelper.isUsable(pick)||gregtech.api.tool.GTToolHelper.getType(pick)!=gregtech.api.tool.GTToolType.PICKAXE||gregtech.api.tool.GTToolHelper.getHead(pick)!=gregtech.content.material.Materials.Flint||gregtech.api.tool.GTToolHelper.getHandle(pick)!=gregtech.content.material.generated.WoodMaterials.Wood)throw new IllegalStateException("Actual early crafting result slot did not produce Flint/Wood pick "+pick);
+        if(!gregtech.internal.tool.GTToolHelper.isUsable(pick)||gregtech.internal.tool.GTToolHelper.getType(pick)!=gregtech.internal.tool.GTToolType.PICKAXE||gregtech.internal.tool.GTToolHelper.getHead(pick)!=gregtech.content.material.Materials.Flint||gregtech.internal.tool.GTToolHelper.getHandle(pick)!=gregtech.content.material.generated.WoodMaterials.Wood)throw new IllegalStateException("Actual early crafting result slot did not produce Flint/Wood pick "+pick);
         for(int slot=1;slot<=9;slot++)if(!menu.getSlot(slot).getItem().isEmpty())throw new IllegalStateException("Actual result-slot click did not consume early grid");
         menu.setCarried(ItemStack.EMPTY);actor.containerMenu=actor.inventoryMenu;
         actor.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,pick);int before=pick.getDamageValue();
         for(int i=0;i<4;i++) {
             var material=i==3?gregtech.content.material.Materials.Tin:gregtech.content.material.Materials.Copper;
-            var pos=base.east(5+i);var ore=gregtech.registry.GTBlocks.getObject(gregtech.api.prefix.BlockMaterialPrefix.ore,material);
+            var pos=base.east(5+i);var ore=gregtech.registry.GTBlocks.getObject(gregtech.internal.prefix.BlockMaterialPrefix.ore,material);
             if(ore==null)throw new IllegalStateException("Missing registered early ore "+material);
             level.setBlockAndUpdate(pos,ore.get().defaultBlockState());actor.setPos(pos.getX()+0.5,pos.getY(),pos.getZ()+1.5);
             if(!pick.isCorrectToolForDrops(level.getBlockState(pos))||!actor.gameMode.destroyBlock(pos)||!level.getBlockState(pos).isAir())throw new IllegalStateException("Crafted flint pick cannot harvest actual ore "+material);
@@ -332,7 +332,7 @@ public final class NeoForgeDedicatedSmoke {
             }
             if(found!=1)throw new IllegalStateException("Wrong real harvest drop "+material+" / "+found);
         }
-        pick=actor.getMainHandItem();if(!gregtech.api.tool.GTToolHelper.isUsable(pick)||pick.getDamageValue()<=before)throw new IllegalStateException("Harvested early pick lost usability or mining wear");
+        pick=actor.getMainHandItem();if(!gregtech.internal.tool.GTToolHelper.isUsable(pick)||pick.getDamageValue()<=before)throw new IllegalStateException("Harvested early pick lost usability or mining wear");
         var chest=(ChestBlockEntity)level.getBlockEntity(specimenPos);chest.setItem(2,pick.copy());
         chest.setItem(3,takeEarly(actor,gregtech.registry.GTItems.getStack(gregtech.data.MaterialPrefix.oreRaw,gregtech.content.material.Materials.Copper).getItem(),3));
         chest.setItem(4,takeEarly(actor,gregtech.registry.GTItems.getStack(gregtech.data.MaterialPrefix.oreRaw,gregtech.content.material.Materials.Tin).getItem(),1));chest.setChanged();
@@ -544,8 +544,8 @@ public final class NeoForgeDedicatedSmoke {
             throw new IllegalStateException("Vertical engine back-face steam inlet failed");
         // Covers/exhaust depend on both directions using the same six-way mapping.
         for (int facing = 0; facing < 6; facing++) for (int side = 0; side < 6; side++) {
-            int relative = gregtech.api.energy.EngineFaceRotation.toRelative(facing, side);
-            if (gregtech.api.energy.EngineFaceRotation.toWorld(facing, relative) != side)
+            int relative = gregtech.internal.energy.EngineFaceRotation.toRelative(facing, side);
+            if (gregtech.internal.energy.EngineFaceRotation.toWorld(facing, relative) != side)
                 throw new IllegalStateException("Engine face round trip failed");
         }
     }

@@ -2,6 +2,7 @@
 package gregtech.content.recipe;
 
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.data.MaterialPrefix;
 import gregtech.data.generated.MaterialWorkability;
 import java.math.BigInteger;

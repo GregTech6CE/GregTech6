@@ -4,6 +4,7 @@
 package gregtech.content.machine;
 
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.data.ImportedMaterialData;
 import java.util.*;
 

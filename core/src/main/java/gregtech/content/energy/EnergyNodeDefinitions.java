@@ -1,7 +1,7 @@
 package gregtech.content.energy;
-import gregtech.api.energy.EnergyNodeSpec;
-import gregtech.api.energy.EnergyNodeSpec.Kind;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.energy.EnergyNodeSpec;
+import gregtech.internal.energy.EnergyNodeSpec.Kind;
+import gregtech.internal.material.GTMaterial;
 import gregtech.data.GregTechTags;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +86,6 @@ public final class EnergyNodeDefinitions {
         result.addAll(CrystalChargerDefinitions.specifications());
 
         result.addAll(OriginalThermalConverter.specifications());
-        return gregtech.api.definition.DefinitionCatalog.validated(result, EnergyNodeSpec::id);
+        return gregtech.internal.definition.DefinitionCatalog.validated(result, EnergyNodeSpec::id);
     }
 }

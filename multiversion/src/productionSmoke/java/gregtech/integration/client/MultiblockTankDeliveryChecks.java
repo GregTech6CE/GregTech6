@@ -1,8 +1,8 @@
 package gregtech.integration.client;
 
 import com.google.gson.JsonObject;
-import gregtech.api.fluid.*;
-import gregtech.api.material.ItemMaterialRegistry;
+import gregtech.internal.fluid.*;
+import gregtech.internal.material.ItemMaterialRegistry;
 import gregtech.block.machine.TankControllerBlock;
 import gregtech.blockentity.machine.MultiblockTankControllerBlockEntity;
 import gregtech.client.CommonBlockTooltips;

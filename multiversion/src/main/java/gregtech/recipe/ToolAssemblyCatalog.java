@@ -1,9 +1,9 @@
 package gregtech.recipe;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 import gregtech.data.MaterialPrefix;
 import gregtech.item.GTToolItem;
 import gregtech.item.MaterialItem;
@@ -245,7 +245,7 @@ public final class ToolAssemblyCatalog {
                 if (!material.isValid()) continue;
                 if (gate.onlyMaterial() != null && !gate.onlyMaterial().equals(material.getName())) continue;
                 if (gate.onlyStone()
-                        && !material.has(gregtech.api.material.MaterialProperty.STONE)) continue;
+                        && !material.has(gregtech.internal.material.MaterialProperty.STONE)) continue;
                 ItemStack stack = GTItems.getStack(prefix, material, 1);
                 if (!stack.isEmpty()) out.add(stack);
             }

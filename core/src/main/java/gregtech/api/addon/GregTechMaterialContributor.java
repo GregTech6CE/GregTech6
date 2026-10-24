@@ -1,6 +1,6 @@
 package gregtech.api.addon;
 
-import gregtech.api.material.MaterialDefinition;
+import gregtech.internal.material.MaterialDefinition;
 
 import java.util.List;
 

@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialEquivalence;
-import gregtech.api.prefix.BlockMaterialPrefix;
-import gregtech.api.recipe.Recipe;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialEquivalence;
+import gregtech.internal.prefix.BlockMaterialPrefix;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.content.recipe.AnvilShreddingRecipes;
 import gregtech.content.recipe.AutoclaveRecipes;
 import gregtech.content.recipe.CrusherFamilyRecipes;
@@ -62,7 +62,7 @@ public final class RecipeFamilyCoverageTests {
             if (!material.isValid() || !filter.test(material)) continue;
             boolean all = true;
             for (String name : prefixNames) {
-                MaterialPrefix prefix = gregtech.api.prefix.PrefixRegistry.byName(name);
+                MaterialPrefix prefix = gregtech.internal.prefix.PrefixRegistry.byName(name);
                 if (prefix == null || GTItems.getStack(prefix, material, 1).isEmpty()) { all = false; break; }
             }
             if (all) return material;
@@ -76,8 +76,8 @@ public final class RecipeFamilyCoverageTests {
 
     /** GT6 welder rows: SMITHABLE and not FLAMMABLE (Loader_Recipes_Handlers:320-332). */
     private static boolean welderEligible(GTMaterial material) {
-        return material.has(gregtech.api.material.MaterialProperty.SMITHABLE)
-                && !material.has(gregtech.api.material.MaterialProperty.FLAMMABLE);
+        return material.has(gregtech.internal.material.MaterialProperty.SMITHABLE)
+                && !material.has(gregtech.internal.material.MaterialProperty.FLAMMABLE);
     }
 
     @GameTest(template = "test_empty", timeoutTicks = 400)
@@ -92,9 +92,9 @@ public final class RecipeFamilyCoverageTests {
         GTMaterial head = firstMaterialWith("toolHeadRawPickaxe", "toolHeadPickaxe");
         if (head != null) {
             helper.assertTrue(route(MachineRecipeMaps.Sharpening,
-                    GTItems.getStack(gregtech.api.prefix.PrefixRegistry.byName("toolHeadRawPickaxe"),
+                    GTItems.getStack(gregtech.internal.prefix.PrefixRegistry.byName("toolHeadRawPickaxe"),
                             head, 1), null,
-                    GTItems.getStack(gregtech.api.prefix.PrefixRegistry.byName("toolHeadPickaxe"),
+                    GTItems.getStack(gregtech.internal.prefix.PrefixRegistry.byName("toolHeadPickaxe"),
                             head, 1)) != null,
                     "a raw pickaxe head sharpens into a finished one: " + head.getName());
         }
@@ -119,7 +119,7 @@ public final class RecipeFamilyCoverageTests {
         // Casings come from the welder for every smithable, non-flammable material (GT6 :349-358).
         int casingMaterials = 0;
         for (GTMaterial m : GTMaterialRegistry.allMaterials()) {
-            if (!m.isValid() || !m.has(gregtech.api.material.MaterialProperty.SMITHABLE)) continue;
+            if (!m.isValid() || !m.has(gregtech.internal.material.MaterialProperty.SMITHABLE)) continue;
             ItemStack casing = GTBlocks.getStack(BlockMaterialPrefix.casingMachine, m);
             if (casing.isEmpty()) continue;
             if (route(MachineRecipeMaps.Welder, GTItems.getStack(MaterialPrefix.plate, m, 6),
@@ -228,7 +228,7 @@ public final class RecipeFamilyCoverageTests {
         GTMaterial bouleMaterial = firstMaterialWith("bouleGt", "gem");
         if (bouleMaterial != null) {
             helper.assertTrue(route(MachineRecipeMaps.Crusher,
-                    GTItems.getStack(gregtech.api.prefix.PrefixRegistry.byName("bouleGt"),
+                    GTItems.getStack(gregtech.internal.prefix.PrefixRegistry.byName("bouleGt"),
                             bouleMaterial, 1), null,
                     GTItems.getStack(MaterialPrefix.gem, bouleMaterial, 4)) != null,
                     "a boule crushes into four gems: " + bouleMaterial.getName());

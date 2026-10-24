@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity;
 *///?} else {

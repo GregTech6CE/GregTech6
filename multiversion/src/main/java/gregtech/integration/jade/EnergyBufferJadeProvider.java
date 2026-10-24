@@ -1,6 +1,6 @@
 package gregtech.integration.jade;
 
-import gregtech.api.energy.IEnergyBlock;
+import gregtech.internal.energy.IEnergyBlock;
 import gregtech.data.GregTechTags;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

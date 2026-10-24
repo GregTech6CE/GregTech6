@@ -1,10 +1,10 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.energy.EnergyTransfer;
-import gregtech.api.machine.FurnaceFuelHelper;
-import gregtech.api.machine.MachineSpec;
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.energy.EnergyTransfer;
+import gregtech.internal.machine.FurnaceFuelHelper;
+import gregtech.internal.machine.MachineSpec;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 import gregtech.block.machine.GTFacingMachineBlock;
 import gregtech.block.machine.SolidBurningBoxBlock;
 import gregtech.util.GTEntityHelper;
@@ -40,9 +40,9 @@ import java.util.Collection;
  * Emits HU from the top face; fuel and ashes use front-face click inventory (no GUI).
  */
 //? if >=1.21.1 {
-/*public class SolidBurningBoxBlockEntity extends GTFacingMachineBlockEntity implements gregtech.item.behavior.ManualToolBehaviorAccess.Ignitable,gregtech.api.tool.PoweredToolTarget {
+/*public class SolidBurningBoxBlockEntity extends GTFacingMachineBlockEntity implements gregtech.item.behavior.ManualToolBehaviorAccess.Ignitable,gregtech.internal.tool.PoweredToolTarget {
 *///?} else {
-public class SolidBurningBoxBlockEntity extends GTFacingMachineBlockEntity implements gregtech.api.tool.PoweredToolTarget {
+public class SolidBurningBoxBlockEntity extends GTFacingMachineBlockEntity implements gregtech.internal.tool.PoweredToolTarget {
 //?}
     public static final int SLOT_LIMIT = 64;
     private static final int FUEL_SLOT = 0;
@@ -57,7 +57,7 @@ public class SolidBurningBoxBlockEntity extends GTFacingMachineBlockEntity imple
         @Override public ItemStack getStackInSlot(int slot) { return inventory.getStackInSlot(slot); }
         @Override public int getSlotLimit(int slot) { return inventory.getSlotLimit(slot); }
         @Override public boolean isItemValid(int slot, ItemStack stack) {
-            return slot == FUEL_SLOT && gregtech.api.machine.FurnaceFuelValue.getBurnValue(stack) > 0;
+            return slot == FUEL_SLOT && gregtech.internal.machine.FurnaceFuelValue.getBurnValue(stack) > 0;
         }
         @Override public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
             return isItemValid(slot, stack) ? inventory.insertItem(slot, stack, simulate) : stack;

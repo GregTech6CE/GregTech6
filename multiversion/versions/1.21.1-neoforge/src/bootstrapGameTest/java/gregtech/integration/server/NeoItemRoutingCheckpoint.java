@@ -25,7 +25,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 /** One grouped weighted-routing/conservation checkpoint. No production-jar test registration. */
-@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID,value=Dist.DEDICATED_SERVER)
+@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID,value=Dist.DEDICATED_SERVER)
 public final class NeoItemRoutingCheckpoint {
     private static final BlockPos ORIGIN=new BlockPos(128,100,128);
     private static final BlockPos FULL=new BlockPos(160,100,128);

@@ -13,9 +13,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 /** Original MultiItem behavior runs before vanilla handles owner right-click as sitting. */
 //? if >=1.21.1 {
-/*@net.neoforged.fml.common.EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID)
+/*@net.neoforged.fml.common.EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID)
 *///?} else {
-@net.minecraftforge.fml.common.Mod.EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID)
+@net.minecraftforge.fml.common.Mod.EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID)
 //?}
 public final class CannedFoodInteractionEvents {
     private CannedFoodInteractionEvents() {}

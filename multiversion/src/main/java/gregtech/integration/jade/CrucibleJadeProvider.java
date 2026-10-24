@@ -6,7 +6,7 @@ import gregtech.block.machine.SmeltingCrucibleBlock;
 *///?} else {
 import gregtech.blockentity.machine.SmeltingCrucibleBlockEntity;
 //?}
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -106,9 +106,9 @@ public enum CrucibleJadeProvider implements IBlockComponentProvider, IServerData
         }
         for (var entry : data.getList(NBT_CONTENT, net.minecraft.nbt.Tag.TAG_COMPOUND)) {
             var row = (CompoundTag) entry;
-            var material = gregtech.api.material.GTMaterialRegistry.get(row.getString("material"));
+            var material = gregtech.internal.material.GTMaterialRegistry.get(row.getString("material"));
             var line = Component.literal(gregtech.client.MaterialTooltips.displayUnits(row.getLong("amount")) + " ")
-                    .append(gregtech.api.material.MaterialPresentation.name(material))
+                    .append(gregtech.internal.material.MaterialPresentation.name(material))
                     .append(" (").append(Component.translatable("jade.gt6ce.crucible.state."
                             + (row.getBoolean("molten") ? "molten" : "solid"))).append(")");
             tooltip.add(Component.translatable("jade.gt6ce.crucible.content", line));

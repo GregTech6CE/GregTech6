@@ -1,6 +1,6 @@
 package gregtech.block.energy;
 
-import gregtech.api.energy.EnergyNodeSpec;
+import gregtech.internal.energy.EnergyNodeSpec;
 import gregtech.blockentity.energy.EnergyNodeBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;

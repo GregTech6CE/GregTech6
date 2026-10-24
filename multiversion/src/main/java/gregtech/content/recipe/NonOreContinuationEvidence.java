@@ -1,7 +1,8 @@
 package gregtech.content.recipe;
 
-import gregtech.api.addon.AddonMaterials;
+import gregtech.internal.addon.AddonMaterials;
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.data.MaterialPrefix;
 import gregtech.recipe.CraftingMaterialForms;
 import gregtech.registry.GTItems;
@@ -29,7 +30,7 @@ public final class NonOreContinuationEvidence {
             if(!triggers.contains(entry.getKey().prefix()))continue;
             GTMaterial material=GTMaterialRegistry.get(entry.getKey().material()).resolve();
             if(!candidates.contains(material))continue;
-            MaterialPrefix prefix=gregtech.api.prefix.PrefixRegistry.byName(entry.getKey().prefix());
+            MaterialPrefix prefix=gregtech.internal.prefix.PrefixRegistry.byName(entry.getKey().prefix());
             for(Item item:entry.getValue())if(!canonicalSelf(item,prefix,material))defer.add(material);
         }
         return new Snapshot(defer);
@@ -47,7 +48,7 @@ public final class NonOreContinuationEvidence {
                     &&triggers.contains(f.prefixName())))defer.add(material);
         }
         for(var material:candidates)for(String name:PROTECTED) {
-            MaterialPrefix prefix=gregtech.api.prefix.PrefixRegistry.byName(name);
+            MaterialPrefix prefix=gregtech.internal.prefix.PrefixRegistry.byName(name);
             var stack=GTItems.getStack(prefix,material,1);if(stack.isEmpty())continue;
             if(!canonicalSelf(stack.getItem(),prefix,material)){defer.add(material);continue;}
             var data=ItemMaterialRegistry.explicit(stack.getItem()).orElse(null);

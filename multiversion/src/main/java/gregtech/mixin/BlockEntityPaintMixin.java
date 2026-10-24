@@ -1,6 +1,6 @@
 package gregtech.mixin;
 
-import gregtech.api.tool.Paintable;
+import gregtech.internal.tool.Paintable;
 import gregtech.content.tool.PaintState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

@@ -1,8 +1,8 @@
 package gregtech.data.generated;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialProperty;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialProperty;
 import gregtech.data.MaterialPrefix;
 import java.util.Set;
 
@@ -56,7 +56,7 @@ public final class MaterialDataFacts {
         }
     }
     public static boolean scannable(MaterialPrefix prefix) {
-        return prefix != null && SCANNABLE.contains(gregtech.api.prefix.PrefixRegistry.sourceName(prefix.getName()));
+        return prefix != null && SCANNABLE.contains(gregtech.internal.prefix.PrefixRegistry.sourceName(prefix.getName()));
     }
     public static MaterialPrefix priority(GTMaterial material) {
         return switch (material.getId()) {

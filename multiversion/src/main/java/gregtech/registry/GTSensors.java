@@ -47,5 +47,5 @@ public final class GTSensors {
         GTBlocks.BLOCK_ITEMS.register(id, () -> new BlockItem(block.get(), new Item.Properties()));
     }
 
-    public static void registerAll(){for(var entry:gregtech.api.sensor.SensorCatalog.ALL)add(entry.id(),SensorBlockEntity.Kind.valueOf(entry.kind()));}
+    public static void registerAll(){for(var entry:gregtech.internal.sensor.SensorCatalog.ALL)add(entry.id(),SensorBlockEntity.Kind.valueOf(entry.kind()));}
 }

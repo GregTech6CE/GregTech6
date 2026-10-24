@@ -114,7 +114,7 @@ public final class ResinConservationTests {
             var id=net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(item);
             if(id==null || !id.getNamespace().equals("gt6ce") || !id.getPath().startsWith("fluid_")) continue;
             var stack=new ItemStack(item); if(stack.getMaxStackSize()<3) continue;
-            if(gregtech.api.fluid.HandContainerTransfer.prepare(stack,fluid,true)!=null) return stack;
+            if(gregtech.internal.fluid.HandContainerTransfer.prepare(stack,fluid,true)!=null) return stack;
         }
         return ItemStack.EMPTY;
     }

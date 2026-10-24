@@ -1,7 +1,7 @@
 package gregtech.block.machine;
 
-import gregtech.api.machine.BurningBoxFuelType;
-import gregtech.api.machine.MachineSpec;
+import gregtech.internal.machine.BurningBoxFuelType;
+import gregtech.internal.machine.MachineSpec;
 import gregtech.blockentity.machine.BurningBoxBlockEntity;
 import gregtech.registry.GTBlockEntities;
 import gregtech.util.GTEntityHelper;

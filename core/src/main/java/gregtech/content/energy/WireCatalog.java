@@ -1,8 +1,8 @@
 package gregtech.content.energy;
 
 import gregtech.content.material.Materials;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.energy.WireSpec;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.energy.WireSpec;
 import java.util.List;
 import java.util.ArrayList;
 

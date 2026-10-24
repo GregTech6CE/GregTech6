@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.api.fluid.GTWaterParity;
+import gregtech.internal.fluid.GTWaterParity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.core.BlockPos;

@@ -1,7 +1,7 @@
 package gregtech.integration.gameplay;
 
 import gregtech.api.material.GTValues;
-import gregtech.api.machine.crucible.CrucibleMaterialStack;
+import gregtech.internal.machine.crucible.CrucibleMaterialStack;
 import gregtech.blockentity.machine.SmeltingCrucibleBlockEntity;
 import gregtech.content.material.Materials;
 import gregtech.data.GregTechTags;

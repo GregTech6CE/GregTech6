@@ -2,10 +2,10 @@ package gregtech.internal.addon;
 
 import gregtech.api.addon.AddonRuntime;
 import gregtech.api.addon.GregTechMaterials;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialSentinels;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialSentinels;
+import gregtech.internal.prefix.PrefixRegistry;
 
 import java.util.ArrayList;
 import java.util.List;

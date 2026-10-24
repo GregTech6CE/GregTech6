@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.content.material.generated.OreMaterials;
 import gregtech.worldgen.GTColtanFeature;
 import gregtech.worldgen.GTFeatures;

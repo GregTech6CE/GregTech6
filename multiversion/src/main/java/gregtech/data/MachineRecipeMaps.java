@@ -1,16 +1,16 @@
 package gregtech.data;
 
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.recipe.RecipeMap;
 //? if >=1.21.1 {
 //?} else {
 import gregtech.GregTech;
-import gregtech.api.material.MaterialProperty;
+import gregtech.internal.material.MaterialProperty;
 //?}
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluids;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
-import gregtech.api.material.MaterialProperty;
+import gregtech.internal.material.MaterialProperty;
 /^* Same shared original maps with Neo ItemStack/FluidStack rows. ^/
 public final class MachineRecipeMaps {
     private MachineRecipeMaps() {}
@@ -99,8 +99,8 @@ public final class MachineRecipeMaps {
     public static final RecipeMap AnvilBendBig=fromDefinition(MachineRecipeMapDefinitions.AnvilBendBig);
     public static final RecipeMap BumbleQueens=fromDefinition(MachineRecipeMapDefinitions.BumbleQueens);
     public static final RecipeMap Trees=fromDefinition(MachineRecipeMapDefinitions.Trees);
-    private static gregtech.api.recipe.RecipeMap fromDefinition(gregtech.api.recipe.RecipeMapSpec spec) {
-        var map=new gregtech.api.recipe.RecipeMap(null,spec.mNameInternal,spec.mNameLocal,spec.mGUIPath,
+    private static gregtech.internal.recipe.RecipeMap fromDefinition(gregtech.internal.recipe.RecipeMapSpec spec) {
+        var map=new gregtech.internal.recipe.RecipeMap(null,spec.mNameInternal,spec.mNameLocal,spec.mGUIPath,
                 spec.mInputItemsCount,spec.mOutputItemsCount,spec.mMinimalInputItems,
                 spec.mInputFluidCount,spec.mOutputFluidCount,spec.mMinimalInputFluids,spec.mMinimalInputs,
                 spec.mNeedsOutputs,spec.mCombinePower,spec.mUseBucketSizeIn,spec.mUseBucketSizeOut);
@@ -510,8 +510,8 @@ public class MachineRecipeMaps {
      */
     public static ItemStack neverFurnaceOutput(ItemStack aOutput) {
         if (invalid(aOutput)) return aOutput;
-        if (!(aOutput.getItem() instanceof gregtech.api.material.MaterialFormItem materialItem)) return aOutput;
-        gregtech.api.material.GTMaterial material = materialItem.getMaterial().resolve();
+        if (!(aOutput.getItem() instanceof gregtech.internal.material.MaterialFormItem materialItem)) return aOutput;
+        gregtech.internal.material.GTMaterial material = materialItem.getMaterial().resolve();
         if (material == null || !material.isValid() || !material.has(MaterialProperty.NEVER_FURNACE)) {
             return aOutput;
         }
@@ -525,7 +525,7 @@ public class MachineRecipeMaps {
     /** Whether the stack's material may not be produced by furnace smelting (GT6 NEVER_FURNACE). */
     public static boolean isNeverFurnace(ItemStack aStack) {
         return aStack != null && !aStack.isEmpty()
-                && aStack.getItem() instanceof gregtech.api.material.MaterialFormItem materialItem
+                && aStack.getItem() instanceof gregtech.internal.material.MaterialFormItem materialItem
                 && materialItem.getMaterial().resolve() != null
                 && materialItem.getMaterial().resolve().has(MaterialProperty.NEVER_FURNACE);
     }
@@ -587,7 +587,7 @@ public class MachineRecipeMaps {
         boolean registered = false;
         for (var variant : gregtech.content.recipe.SawingCoolants.variants(aIsFoodItem)) {
             var coolant = gregtech.content.recipe.DyeProcessingRecipes.fluid(variant.field(), Math.toIntExact(amount * variant.multiplier()));
-            var recipe = new gregtech.api.recipe.Recipe(new ItemStack[]{aInput}, aOutputs,
+            var recipe = new gregtech.internal.recipe.Recipe(new ItemStack[]{aInput}, aOutputs,
                     null, null, new FluidStack[]{coolant}, null, aDuration * variant.multiplier(), aEUt, 0).withEmptyContainerInputs();
             registered |= Cutter.addRecipe(recipe) != null;
         }
@@ -603,8 +603,8 @@ public class MachineRecipeMaps {
     }
 //? if >=1.21.1 {
 //?} else {
-    private static gregtech.api.recipe.RecipeMap fromDefinition(gregtech.api.recipe.RecipeMapSpec spec) {
-        var map=new gregtech.api.recipe.RecipeMap(null,spec.mNameInternal,spec.mNameLocal,spec.mGUIPath,
+    private static gregtech.internal.recipe.RecipeMap fromDefinition(gregtech.internal.recipe.RecipeMapSpec spec) {
+        var map=new gregtech.internal.recipe.RecipeMap(null,spec.mNameInternal,spec.mNameLocal,spec.mGUIPath,
                 spec.mInputItemsCount,spec.mOutputItemsCount,spec.mMinimalInputItems,
                 spec.mInputFluidCount,spec.mOutputFluidCount,spec.mMinimalInputFluids,spec.mMinimalInputs,
                 spec.mNeedsOutputs,spec.mCombinePower,spec.mUseBucketSizeIn,spec.mUseBucketSizeOut);

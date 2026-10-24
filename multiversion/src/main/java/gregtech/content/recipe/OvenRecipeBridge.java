@@ -46,8 +46,8 @@ import java.util.List;
  */
 public final class OvenRecipeBridge {
     private OvenRecipeBridge() {}
-    private static final java.util.Set<gregtech.api.recipe.Recipe> MIRRORED = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>());
-    private static final java.util.Set<gregtech.api.recipe.Recipe> DISPLACED = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>());
+    private static final java.util.Set<gregtech.internal.recipe.Recipe> MIRRORED = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>());
+    private static final java.util.Set<gregtech.internal.recipe.Recipe> DISPLACED = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>());
 
     /** Undo only this loader's previous mirror, preserving independently registered machine recipes. */
     public static void clearMirrors() {
@@ -67,7 +67,7 @@ public final class OvenRecipeBridge {
 
     public static void apply(RecipeManager manager, net.minecraft.core.RegistryAccess access) {
         clearMirrors();
-        var originalRows=java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<gregtech.api.recipe.Recipe,Boolean>());
+        var originalRows=java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<gregtech.internal.recipe.Recipe,Boolean>());
         originalRows.addAll(MachineRecipeMaps.Furnace.mRecipeList);
 
 //? if >=1.21.1 {
@@ -182,13 +182,13 @@ public final class OvenRecipeBridge {
         int added = 0;
         var ordered=new ArrayList<>(MachineRecipeMaps.Furnace.mRecipeList);
 //? if >=1.21.1 {
-        /*ordered.sort(java.util.Comparator.comparing((gregtech.api.recipe.Recipe row)->sortKey(firstStack(row.mInputs), access))
+        /*ordered.sort(java.util.Comparator.comparing((gregtech.internal.recipe.Recipe row)->sortKey(firstStack(row.mInputs), access))
                 .thenComparing(row->sortKey(firstStack(row.mOutputs), access)));
 *///?} else {
-        ordered.sort(java.util.Comparator.comparing((gregtech.api.recipe.Recipe row)->firstStack(row.mInputs).save(new net.minecraft.nbt.CompoundTag()).toString())
+        ordered.sort(java.util.Comparator.comparing((gregtech.internal.recipe.Recipe row)->firstStack(row.mInputs).save(new net.minecraft.nbt.CompoundTag()).toString())
                 .thenComparing(row->firstStack(row.mOutputs).save(new net.minecraft.nbt.CompoundTag()).toString()));
 //?}
-        for (gregtech.api.recipe.Recipe gt : ordered) {
+        for (gregtech.internal.recipe.Recipe gt : ordered) {
             if (!gt.mEnabled || gt.mHidden) continue;
             ItemStack input = firstStack(gt.mInputs);
             ItemStack output = firstStack(gt.mOutputs);

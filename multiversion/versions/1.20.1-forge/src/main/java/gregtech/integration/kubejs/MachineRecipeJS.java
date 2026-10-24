@@ -2,7 +2,7 @@ package gregtech.integration.kubejs;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import gregtech.api.recipe.data.MachineRecipeScript;
+import gregtech.internal.recipe.data.MachineRecipeScript;
 import dev.latvian.mods.kubejs.fluid.FluidStackJS;
 import dev.latvian.mods.kubejs.fluid.InputFluid;
 import dev.latvian.mods.kubejs.fluid.OutputFluid;

@@ -1,16 +1,16 @@
 package gregtech.block;
 //? if >=1.21.1 {
 //?} else {
-import gregtech.api.material.MaterialPresentation;
+import gregtech.internal.material.MaterialPresentation;
 //?}
 
 //? if >=1.21.1 {
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.prefix.BlockMaterialPrefix;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.prefix.BlockMaterialPrefix;
 //? if >=1.21.1 {
 //?} else {
 import gregtech.blockentity.OreBlockEntity;

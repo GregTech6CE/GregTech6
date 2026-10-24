@@ -4,7 +4,7 @@ package gregtech.registry;
 
 import gregtech.GregTech;
 //?}
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolType;
 import gregtech.item.GTToolItem;
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.smeltery.SmelteryToolItem;

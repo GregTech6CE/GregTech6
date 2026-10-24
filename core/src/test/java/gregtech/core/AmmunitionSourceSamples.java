@@ -1,6 +1,7 @@
 package gregtech.core;
 
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.content.material.Materials;
 import gregtech.content.recipe.MaterialArrowRules;
 import gregtech.content.recipe.PressAmmunitionRecipeRows;

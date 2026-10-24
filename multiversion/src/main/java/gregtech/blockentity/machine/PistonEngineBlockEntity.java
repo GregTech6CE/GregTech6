@@ -1,8 +1,8 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.energy.EnergyTransfer;
-import gregtech.api.energy.FaceConfig;
-import gregtech.api.machine.PistonEngineState;
+import gregtech.internal.energy.EnergyTransfer;
+import gregtech.internal.energy.FaceConfig;
+import gregtech.internal.machine.PistonEngineState;
 import gregtech.block.machine.EngineBlock;
 import gregtech.data.GregTechTags;
 import net.minecraft.core.BlockPos;
@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public abstract class PistonEngineBlockEntity extends EngineBaseBlockEntity implements gregtech.api.machine.MachineControl.Provider {
     protected final PistonEngineState pistonState = new PistonEngineState();
     private boolean emitted;
-    private final gregtech.api.machine.MachineControl control=gregtech.api.machine.MachineControls.switchable(this,
+    private final gregtech.api.machine.MachineControl control=gregtech.internal.machine.MachineControls.switchable(this,
             ()->!pistonState.stopped(),value->{pistonState.setStopped(!value);syncToClient();},()->pistonState.active(),()->emitted,
             ()->pistonState.controlMode(),value->{pistonState.setControlMode(value);syncToClient();});
     @Override public gregtech.api.machine.MachineControl machineControl(Direction side){return control;}
@@ -43,7 +43,7 @@ public abstract class PistonEngineBlockEntity extends EngineBaseBlockEntity impl
     @Override public long doInject(GregTechTags.Tag type, Direction side, long size, long amount, boolean execute) {
         if (!isEnergyAcceptingFrom(type, side, false) || size == 0 || size == Long.MIN_VALUE || amount <= 0) return 0;
         if (Math.abs(size) > inputRate() * 2) {
-            if (execute) gregtech.api.energy.MachineOverload.apply(this, Math.abs(size), type);
+            if (execute) gregtech.internal.energy.MachineOverload.apply(this, Math.abs(size), type);
             return amount;
         }
         long accepted = pistonState.accept(size, amount, inputRate() * 2, execute);

@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.api.fluid.GTWaterParity;
+import gregtech.internal.fluid.GTWaterParity;
 import gregtech.registry.GTFluids;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -13,7 +13,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 
-@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, bus=EventBusSubscriber.Bus.MOD, value=Dist.CLIENT)
+@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, bus=EventBusSubscriber.Bus.MOD, value=Dist.CLIENT)
 public final class FluidClientSetup {
     private FluidClientSetup() {}
     @SubscribeEvent public static void extensions(RegisterClientExtensionsEvent event) {

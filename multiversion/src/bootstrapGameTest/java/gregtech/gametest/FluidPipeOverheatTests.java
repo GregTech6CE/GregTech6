@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.fluid.PipeIgnition;
+import gregtech.internal.fluid.PipeIgnition;
 import gregtech.block.machine.FluidPipeBlock;
 import gregtech.blockentity.machine.FluidPipeBlockEntity;
 import gregtech.registry.GTFluids;

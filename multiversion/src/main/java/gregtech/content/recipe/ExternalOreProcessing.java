@@ -1,8 +1,9 @@
 package gregtech.content.recipe;
 
 import gregtech.api.material.*;
-import gregtech.api.recipe.Recipe;
-import gregtech.api.recipe.RecipeMap;
+import gregtech.internal.material.*;
+import gregtech.internal.recipe.Recipe;
+import gregtech.internal.recipe.RecipeMap;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.data.MaterialPrefix;
 import gregtech.recipe.CraftingMaterialForms;
@@ -139,7 +140,7 @@ public final class ExternalOreProcessing {
         for (var prefix : ExternalOreProcessingRules.CRUCIBLE_FORMS) for (var entry : forms.entrySet()) {
             if (!entry.getKey().prefix().equals(prefix.getName())) continue;
             var material = GTMaterialRegistry.get(entry.getKey().material()).resolve();
-            var preview = gregtech.api.machine.crucible.CrucibleInputRules.smeltingPreview(material, prefix);
+            var preview = gregtech.internal.machine.crucible.CrucibleInputRules.smeltingPreview(material, prefix);
             if (preview == null) continue;
             var output = gregtech.util.OM.ingotOrDust(preview.material(), preview.amount());
             if (output.isEmpty()) continue;
@@ -174,7 +175,7 @@ public final class ExternalOreProcessing {
             for (var form : forms) if (allowed.contains(form.prefix())) { common = true; break; }
             if (!common) continue;
             if (forms.size() != 1) { ambiguous++; continue; }
-            var prefix = gregtech.api.prefix.PrefixRegistry.byName(forms.get(0).prefix());
+            var prefix = gregtech.internal.prefix.PrefixRegistry.byName(forms.get(0).prefix());
             var material = GTMaterialRegistry.get(forms.get(0).material()).resolve();
             if (prefix == null || !allowed.contains(prefix.getName()) || !material.isValid() || !prefix.isValidFor(material)) continue;
             materialData.put(item, new ItemComposition(prefix,

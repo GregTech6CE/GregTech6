@@ -13,7 +13,7 @@ public final class AnvilWorkInputs {
             if(needed==null||needed.isEmpty()) {if(--empty<0) return null;continue;}
             int remaining=needed.getCount();
             for(var available:result) {
-                if(!gregtech.api.recipe.RecipeInputs.matches(needed,available)) continue;
+                if(!gregtech.internal.recipe.RecipeInputs.matches(needed,available)) continue;
                 int take=Math.min(remaining,available.getCount());available.shrink(take);remaining-=take;
                 if(remaining==0) break;
             }

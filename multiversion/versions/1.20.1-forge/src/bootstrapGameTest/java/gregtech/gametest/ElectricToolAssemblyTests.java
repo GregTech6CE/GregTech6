@@ -1,7 +1,8 @@
 package gregtech.gametest;
 
 import gregtech.api.material.*;
-import gregtech.api.tool.*;
+import gregtech.internal.material.*;
+import gregtech.internal.tool.*;
 import gregtech.content.material.Materials;
 import gregtech.content.tool.ElectricToolAssembly;
 import gregtech.data.*;

@@ -1,6 +1,6 @@
 package gregtech.block.machine;
 
-import gregtech.api.machine.BasicMachineSpec;
+import gregtech.internal.machine.BasicMachineSpec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -19,7 +19,7 @@ public class CokeOvenControllerBlock extends BasicMachineBlock {
     public static BasicMachineSpec makeSpec() {
         var p=gregtech.content.multiblock.OriginalMultiblockMachineParameters.cokeOven();
         return new BasicMachineSpec(p.id(),p.material(),p.machineName(),p.energyType(),p.tier(),p.energyIn(),p.energyOut(),
-                p.hardness(),p.blastResistance(),gregtech.api.energy.FaceConfig.from(p.faceConfig()),p.constructionMaterials(),
+                p.hardness(),p.blastResistance(),gregtech.internal.energy.FaceConfig.from(p.faceConfig()),p.constructionMaterials(),
                 gregtech.data.MachineRecipeMaps.CokeOven,p.parallelLimit(),p.energyInMin(),p.energyInMax());
     }
     @Override public gregtech.blockentity.machine.BasicMachineBlockEntity createBlockEntity(BlockEntityType<?> type,BlockPos pos,BlockState state) {

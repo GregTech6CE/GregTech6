@@ -150,7 +150,7 @@ public final class BarsRepairTests {
             BarsBlock block = blocks[index];
             h.assertTrue(block.harvestLevel() == qualities[index]
                             && BlockHarvestPolicy.level(block) == qualities[index]
-                            && gregtech.api.tool.GTToolHelper.requiredHarvestLevel(
+                            && gregtech.internal.tool.GTToolHelper.requiredHarvestLevel(
                                     block.defaultBlockState()) == qualities[index],
                     block.materialName() + " bars require the GT6 material tool quality");
         }

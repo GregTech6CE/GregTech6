@@ -1,7 +1,7 @@
 package gregtech.registration;
 
-import gregtech.api.tool.ToolInteractionSpec;
-import gregtech.api.tool.ToolInteractions;
+import gregtech.internal.tool.ToolInteractionSpec;
+import gregtech.internal.tool.ToolInteractions;
 import gregtech.block.machine.MachineRotationType;
 import gregtech.util.GTPlacementCode;
 import net.minecraft.core.BlockPos;
@@ -18,10 +18,10 @@ public final class ToolInteractionContracts {
             check(GTPlacementCode.getSideWrenching(face, .5F, .5F, .5F) == face, "center " + face);
             check(GTPlacementCode.getSideWrenching(face, .1F, .1F, .1F) == face.getOpposite(), "corner " + face);
         }
-        check(gregtech.api.energy.EnergyPackets.magnitude(-16, true) == 16, "reverse RU packet");
-        check(gregtech.api.energy.EnergyPackets.magnitude(-16, false) == 0, "unsigned energy");
-        check(gregtech.api.energy.EnergyPackets.magnitude(Long.MIN_VALUE, true) == 0, "magnitude overflow");
-        check(gregtech.api.energy.EnergyPackets.fitting(Long.MAX_VALUE, 50, 16) == 3, "packet multiplication overflow");
+        check(gregtech.internal.energy.EnergyPackets.magnitude(-16, true) == 16, "reverse RU packet");
+        check(gregtech.internal.energy.EnergyPackets.magnitude(-16, false) == 0, "unsigned energy");
+        check(gregtech.internal.energy.EnergyPackets.magnitude(Long.MIN_VALUE, true) == 0, "magnitude overflow");
+        check(gregtech.internal.energy.EnergyPackets.fitting(Long.MAX_VALUE, 50, 16) == 3, "packet multiplication overflow");
         int[] positions = {0, -100, 100, -29999990, 29999990};
         for (int coordinate : positions) {
             BlockPos pos = new BlockPos(coordinate, 80, coordinate);

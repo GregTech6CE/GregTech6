@@ -1,8 +1,8 @@
 package gregtech.content.material;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.MaterialDefinition;
-import gregtech.api.material.MaterialProperty;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.MaterialDefinition;
+import gregtech.internal.material.MaterialProperty;
 
 /** GT6 MT.java particle row, IDs 1..5. Hidden identities, without generated item forms. */
 public final class ParticleMaterials {

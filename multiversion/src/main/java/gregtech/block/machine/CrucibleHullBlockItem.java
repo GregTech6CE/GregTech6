@@ -1,6 +1,6 @@
 package gregtech.block.machine;
 
-import gregtech.api.machine.CrucibleSpec;
+import gregtech.internal.machine.CrucibleSpec;
 import gregtech.client.SmelteryCompanionTooltips;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;

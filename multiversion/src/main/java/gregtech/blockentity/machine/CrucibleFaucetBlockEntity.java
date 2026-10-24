@@ -1,10 +1,10 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.machine.CrucibleSpec;
-import gregtech.api.machine.ITileEntityCrucible;
-import gregtech.api.machine.ITileEntityMold;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.machine.CrucibleSpec;
+import gregtech.internal.machine.ITileEntityCrucible;
+import gregtech.internal.machine.ITileEntityMold;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.block.machine.CrucibleFaucetBlock;
 import gregtech.data.GregTechConstants;
 import gregtech.data.GregTechTags;
@@ -152,7 +152,7 @@ public class CrucibleFaucetBlockEntity extends BlockEntity implements ITileEntit
         if (side != facing.ordinal()) return 0;
         if (material == null) return 0;
         // GT6: acid melts reject non-acid-proof faucets
-        if (!spec().acidProof() && material.has(gregtech.api.material.MaterialProperty.ACID)) return 0;
+        if (!spec().acidProof() && material.has(gregtech.internal.material.MaterialProperty.ACID)) return 0;
         if (temperature > getMoldMaxTemperature()) {
             meltdown();
             return 0;

@@ -6,7 +6,7 @@ import gregtech.platform.neoforge.NeoToolBindings;
 *///?} else {
 
 import com.google.gson.JsonObject;
-import gregtech.api.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolHelper;
 import gregtech.item.GTToolItem;
 //?}
 import net.minecraft.core.*;
@@ -23,7 +23,7 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 //? if >=1.21.1 {
 /*/^* Original mirror policy and GT tool wear, using native shaped recipe/component codecs. ^/
-public class ToolShapedRecipe implements CraftingRecipe, gregtech.api.recipe.AutocraftableCraftingRecipe {
+public class ToolShapedRecipe implements CraftingRecipe, gregtech.internal.recipe.AutocraftableCraftingRecipe {
     private final boolean autocraftable;
     private final String constructionColor;
 
@@ -86,7 +86,7 @@ public class ToolShapedRecipe implements CraftingRecipe, gregtech.api.recipe.Aut
 *///?} else {
 
 /** Normal shaped crafting, with usable GT tools returned with the specified GT6 durability cost. */
-public class ToolShapedRecipe extends ShapedRecipe implements gregtech.api.recipe.AutocraftableCraftingRecipe {
+public class ToolShapedRecipe extends ShapedRecipe implements gregtech.internal.recipe.AutocraftableCraftingRecipe {
     private final boolean autocraftable;
     private final String constructionColor;
 
@@ -178,13 +178,13 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.api.recip
     protected boolean toolsUsable(CraftingInput input) {
         for (int i = 0; i < input.size(); i++) {
             var stack = input.getItem(i);
-            if (requireEmptyFluidContainers && gregtech.api.material.ItemMaterialRegistry.hasStoredContents(stack)) return false;
+            if (requireEmptyFluidContainers && gregtech.internal.material.ItemMaterialRegistry.hasStoredContents(stack)) return false;
             if (requireEmptyFluidContainers && net.neoforged.neoforge.fluids.FluidUtil.getFluidContained(stack).filter(
                     fluid -> !fluid.isEmpty()).isPresent()) return false;
             if ((stack.getItem() instanceof gregtech.item.GTToolItem
                     || stack.getItem() instanceof gregtech.item.ElectricToolItem)
-                    && !gregtech.api.tool.GTToolHelper.matchesTool(stack,
-                    gregtech.api.tool.GTToolHelper.getType(stack))) return false;
+                    && !gregtech.internal.tool.GTToolHelper.matchesTool(stack,
+                    gregtech.internal.tool.GTToolHelper.getType(stack))) return false;
         }
         return true;
     }
@@ -332,7 +332,7 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.api.recip
     protected boolean toolsUsable(CraftingContainer inventory) {
         for (int slot = 0; slot < inventory.getContainerSize(); slot++) {
             var stack = inventory.getItem(slot);
-            if (requireEmptyFluidContainers && gregtech.api.material.ItemMaterialRegistry.hasStoredContents(stack)) return false;
+            if (requireEmptyFluidContainers && gregtech.internal.material.ItemMaterialRegistry.hasStoredContents(stack)) return false;
             if (requireEmptyFluidContainers && net.minecraftforge.fluids.FluidUtil.getFluidContained(stack).filter(
                     f -> !f.isEmpty()).isPresent()) return false;
             if ((stack.getItem() instanceof GTToolItem || stack.getItem() instanceof gregtech.item.ElectricToolItem)

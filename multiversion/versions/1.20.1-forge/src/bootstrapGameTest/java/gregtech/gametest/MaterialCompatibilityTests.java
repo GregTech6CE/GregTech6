@@ -1,7 +1,9 @@
 package gregtech.gametest;
-import gregtech.api.material.MaterialPresentation;
+import gregtech.internal.material.MaterialPresentation;
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.data.*;
 import gregtech.registry.GTItems;
 import net.minecraft.gametest.framework.*;
@@ -72,7 +74,7 @@ public final class MaterialCompatibilityTests {
     }
     @GameTest(template="test_empty") public static void smallOreMiningDropsProductsRatherThanItself(GameTestHelper h) {
         var material=GTMaterialRegistry.get("Diamond");
-        var prefix=gregtech.api.prefix.BlockMaterialPrefix.oreSmall;
+        var prefix=gregtech.internal.prefix.BlockMaterialPrefix.oreSmall;
         var block=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce",prefix.getBlockId(material)));
         var position=h.absolutePos(new net.minecraft.core.BlockPos(1,1,1));
         h.getLevel().setBlockAndUpdate(position,block.defaultBlockState());
@@ -106,7 +108,7 @@ public final class MaterialCompatibilityTests {
             public ItemStack quickMoveStack(net.minecraft.world.entity.player.Player p,int i){return ItemStack.EMPTY;}
         };
         var grid=new net.minecraft.world.inventory.TransientCraftingContainer(menu,3,3);
-        var type=gregtech.api.tool.GTToolType.PICKAXE;
+        var type=gregtech.internal.tool.GTToolType.PICKAXE;
         grid.setItem(0,GTItems.getStack(type.headPrefix(),GTMaterialRegistry.get("Iron")));
         grid.setItem(1,new ItemStack(Items.STICK));
         var recipe=new gregtech.recipe.GTToolAssemblyRecipe(ResourceLocation.parse("gt6ce:test_vanilla_handle"),type);
@@ -124,17 +126,17 @@ public final class MaterialCompatibilityTests {
         var steel=GTMaterialRegistry.get("Steel");
         // The one-piece tools keep GT6's shaped row (Loader_Tools:305-320): 3 plates around a hammer.
         grid.setItem(0,GTItems.getStack(MaterialPrefix.plate,steel));
-        grid.setItem(1,gregtech.api.tool.GTToolHelper.displayTool(
-                gregtech.api.tool.GTToolType.HARD_HAMMER));
+        grid.setItem(1,gregtech.internal.tool.GTToolHelper.displayTool(
+                gregtech.internal.tool.GTToolType.HARD_HAMMER));
         grid.setItem(2,GTItems.getStack(MaterialPrefix.plate,steel));
         grid.setItem(4,GTItems.getStack(MaterialPrefix.plate,steel));
         grid.setItem(7,GTItems.getStack(MaterialPrefix.plate,steel));
-        var type=gregtech.api.tool.GTToolType.WRENCH;
+        var type=gregtech.internal.tool.GTToolType.WRENCH;
         var recipe=new gregtech.recipe.GTToolCraftingRecipe(
                 ResourceLocation.parse("gt6ce:test_direct_wrench"),type,0);
         h.assertTrue(recipe.matches(grid,h.getLevel()),"Three same-material plates and a hammer craft a wrench");
         var output=recipe.assemble(grid,h.getLevel().registryAccess());
-        h.assertTrue(!output.isEmpty()&&gregtech.api.tool.GTToolHelper.getHead(output)==steel,
+        h.assertTrue(!output.isEmpty()&&gregtech.internal.tool.GTToolHelper.getHead(output)==steel,
                 "Direct tool keeps its input material stats");
         grid.setItem(7,GTItems.getStack(MaterialPrefix.plate,GTMaterialRegistry.get("Bronze")));
         h.assertTrue(!recipe.matches(grid,h.getLevel()),"Direct tool components cannot mix materials");

@@ -1,10 +1,10 @@
 package gregtech.compat;
 
-import gregtech.api.inventory.MassStorageMaterialForms;
-import gregtech.api.machine.crucible.CrucibleItemInput;
+import gregtech.internal.inventory.MassStorageMaterialForms;
+import gregtech.internal.machine.crucible.CrucibleItemInput;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.ItemMaterialRegistry;
-import gregtech.api.material.MaterialEquivalence;
+import gregtech.internal.material.ItemMaterialRegistry;
+import gregtech.internal.material.MaterialEquivalence;
 import gregtech.content.material.Materials;
 import gregtech.content.recipe.ExternalOreProcessing;
 import gregtech.data.MaterialPrefix;
@@ -92,7 +92,7 @@ public final class TaggedMaterialDataGameTests {
     }
 
     private static void assertForm(GameTestHelper helper, ItemStack stack, MaterialPrefix prefix,
-                                   gregtech.api.material.GTMaterial material, long amount, String label) {
+                                   gregtech.internal.material.GTMaterial material, long amount, String label) {
         var data = ItemMaterialRegistry.base(stack.getItem()).orElse(null);
         helper.assertTrue(data != null
                         && data.prefix() == prefix

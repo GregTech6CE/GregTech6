@@ -1,9 +1,9 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.fluid.FluidTankGT;
-import gregtech.api.machine.BoilerSpec;
-import gregtech.api.tool.GTToolHelper;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.fluid.FluidTankGT;
+import gregtech.internal.machine.BoilerSpec;
+import gregtech.internal.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolType;
 import gregtech.block.machine.BoilerTankBlock;
 import gregtech.blockentity.GTEnergyBlockEntity;
 import gregtech.data.GregTechTags;
@@ -48,11 +48,11 @@ import java.util.Random;
 public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements gregtech.api.sensor.CompressionSensorSource, gregtech.api.machine.HeatHandler {
 
 //? if >=1.21.1 {
-    /*private final gregtech.api.machine.AdjacentCapabilityCache<IFluidHandler> steamOutput =
-            new gregtech.api.machine.AdjacentCapabilityCache<>(this, net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK);
+    /*private final gregtech.internal.machine.AdjacentCapabilityCache<IFluidHandler> steamOutput =
+            new gregtech.internal.machine.AdjacentCapabilityCache<>(this, net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK);
 *///?} else {
-    private final gregtech.api.machine.AdjacentCapabilityCache<IFluidHandler> steamOutput =
-            new gregtech.api.machine.AdjacentCapabilityCache<>(this, ForgeCapabilities.FLUID_HANDLER);
+    private final gregtech.internal.machine.AdjacentCapabilityCache<IFluidHandler> steamOutput =
+            new gregtech.internal.machine.AdjacentCapabilityCache<>(this, ForgeCapabilities.FLUID_HANDLER);
 //?}
 
     private BoilerSpec spec;
@@ -292,7 +292,7 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements gregte
 
         ItemStack held = player.getItemInHand(hand);
 
-        if (gregtech.api.tool.ToolInteractions.use(state,level,worldPosition,player,hand,hit))
+        if (gregtech.internal.tool.ToolInteractions.use(state,level,worldPosition,player,hand,hit))
             return InteractionResult.CONSUME;
 
         // Source BoilerTank:165-178: a clean tank is inert; scale removal returns its actual amount.
@@ -454,13 +454,13 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements gregte
     }
 
 //? if >=1.21.1 {
-    /*public IFluidHandler fluidHandler(@Nullable Direction side){return side==Direction.UP?new gregtech.api.fluid.FluidPort(fluids,false,false):fluids;}
+    /*public IFluidHandler fluidHandler(@Nullable Direction side){return side==Direction.UP?new gregtech.internal.fluid.FluidPort(fluids,false,false):fluids;}
 *///?} else {
     @Override
     public <T> @org.jetbrains.annotations.NotNull LazyOptional<T> getCapability(
             @org.jetbrains.annotations.NotNull Capability<T> cap, @Nullable Direction side) {
         if (cap == ForgeCapabilities.FLUID_HANDLER && side==Direction.UP) {
-            if(topFluidCap==null)topFluidCap=LazyOptional.of(()->new gregtech.api.fluid.FluidPort(fluids,false,false));
+            if(topFluidCap==null)topFluidCap=LazyOptional.of(()->new gregtech.internal.fluid.FluidPort(fluids,false,false));
             return topFluidCap.cast();
         }
         if (cap == ForgeCapabilities.FLUID_HANDLER) {

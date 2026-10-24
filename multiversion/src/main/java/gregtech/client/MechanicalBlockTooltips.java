@@ -2,8 +2,8 @@
  * Adapted from MultiTileEntityAxle/GearBox.addToolTips and connector base. */
 package gregtech.client;
 
-import gregtech.api.energy.AxleSpec;
-import gregtech.api.energy.GearboxSpec;
+import gregtech.internal.energy.AxleSpec;
+import gregtech.internal.energy.GearboxSpec;
 import gregtech.content.energy.GearboxRotationRules;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

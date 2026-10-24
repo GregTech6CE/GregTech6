@@ -1,6 +1,6 @@
 package gregtech.registry;
 
-import gregtech.api.machine.MachineRegistry;
+import gregtech.internal.machine.MachineRegistry;
 import gregtech.block.machine.BasicMachineBlock;
 import gregtech.content.machine.BasicMachineDefinitions;
 import net.minecraftforge.eventbus.api.IEventBus;

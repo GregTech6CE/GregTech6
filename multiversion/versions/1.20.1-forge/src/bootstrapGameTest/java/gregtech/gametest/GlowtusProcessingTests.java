@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
 import gregtech.api.material.GTValues;
-import gregtech.api.material.ItemMaterialRegistry;
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.material.ItemMaterialRegistry;
+import gregtech.internal.recipe.Recipe;
 import gregtech.content.material.Materials;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.data.MaterialPrefix;
@@ -22,7 +22,7 @@ import java.util.List;
 @GameTestHolder("gregtech_repair")
 @PrefixGameTestTemplate(false)
 public final class GlowtusProcessingTests {
-    private static Recipe find(gregtech.api.recipe.RecipeMap map,
+    private static Recipe find(gregtech.internal.recipe.RecipeMap map,
                                ItemStack item, FluidStack fluid) {
         return map.findRecipe(List.of(item), fluid == null ? List.of() : List.of(fluid),
                 false, 1, map.mOutputItemsCount);

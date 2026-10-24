@@ -3,7 +3,7 @@
  * and the battery box / solar / bidirectional converter tooltip chains. */
 package gregtech.client;
 
-import gregtech.api.energy.EnergyNodeSpec;
+import gregtech.internal.energy.EnergyNodeSpec;
 import gregtech.content.energy.OriginalEnergyDeviceTooltipData;
 import gregtech.content.machine.OriginalFunctionalTooltipData;
 import gregtech.data.GregTechTags;

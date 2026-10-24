@@ -4,7 +4,7 @@ package gregtech.worldgen;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.block.OreBlock;
 import gregtech.block.OreHostStone;
 import gregtech.block.stone.GTStoneBlock;

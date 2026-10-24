@@ -1,7 +1,7 @@
 package gregtech.core;
 
 import gregtech.api.addon.AddonMachine;
-import gregtech.api.addon.AddonMachines;
+import gregtech.internal.addon.AddonMachines;
 import gregtech.api.addon.CellMatch;
 import gregtech.api.addon.EnergyInput;
 import gregtech.api.addon.EnergyOutput;
@@ -12,10 +12,10 @@ import gregtech.api.addon.RecipeMachine;
 import gregtech.api.addon.RecipeTable;
 import gregtech.api.addon.StructureLayout;
 import gregtech.api.addon.StructureRole;
-import gregtech.api.kubejs.KubeJsMachineDeclarations;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.mod.ModData;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.kubejs.KubeJsMachineDeclarations;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.mod.ModData;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.content.multiblock.SharedLargeMachineLayouts;
 import gregtech.data.MaterialGroups;
 import gregtech.data.ModReferences;

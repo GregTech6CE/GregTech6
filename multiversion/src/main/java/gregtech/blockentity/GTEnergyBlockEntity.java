@@ -1,7 +1,7 @@
 package gregtech.blockentity;
 
-import gregtech.api.energy.EnergyBlockDefaults;
-import gregtech.api.energy.IEnergyBlock;
+import gregtech.internal.energy.EnergyBlockDefaults;
+import gregtech.internal.energy.IEnergyBlock;
 import gregtech.data.GregTechTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -111,7 +111,7 @@ public abstract class GTEnergyBlockEntity extends BlockEntity implements IEnergy
 
     protected void syncToClient() {
         if (level == null || level.isClientSide || !(level instanceof ServerLevel serverLevel)) return;
-        gregtech.api.multiblock.tracking.StructureScanProbe.pause();
+        gregtech.internal.multiblock.tracking.StructureScanProbe.pause();
         try {
             setChanged();
             BlockState state = getBlockState();
@@ -127,7 +127,7 @@ public abstract class GTEnergyBlockEntity extends BlockEntity implements IEnergy
                 }
             }
         } finally {
-            gregtech.api.multiblock.tracking.StructureScanProbe.resume();
+            gregtech.internal.multiblock.tracking.StructureScanProbe.resume();
         }
     }
 
@@ -141,7 +141,7 @@ public abstract class GTEnergyBlockEntity extends BlockEntity implements IEnergy
         CompoundTag tag = super.getUpdateTag();
         saveAdditional(tag);
 //?}
-        gregtech.api.multiblock.tracking.ClientFormedSync.write(this, tag);
+        gregtech.internal.multiblock.tracking.ClientFormedSync.write(this, tag);
         return tag;
     }
 
@@ -174,6 +174,6 @@ public abstract class GTEnergyBlockEntity extends BlockEntity implements IEnergy
         super.handleUpdateTag(tag);
         load(tag);
 //?}
-        gregtech.api.multiblock.tracking.ClientFormedSync.read(this, tag);
+        gregtech.internal.multiblock.tracking.ClientFormedSync.read(this, tag);
     }
 }

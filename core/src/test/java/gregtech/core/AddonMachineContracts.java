@@ -21,26 +21,26 @@ import gregtech.api.addon.RecipeTable;
 import gregtech.api.addon.StructureLayout;
 import gregtech.api.addon.StructureRole;
 import gregtech.api.addon.BehaviorRangeRules;
-import gregtech.api.addon.ExclusiveOutputRules;
+import gregtech.internal.addon.ExclusiveOutputRules;
 import gregtech.api.addon.RecipeOutputChances;
-import gregtech.api.energy.MachineFaceMasks;
+import gregtech.internal.energy.MachineFaceMasks;
 import gregtech.api.addon.AddonMachineLayout;
-import gregtech.api.addon.AddonMachines;
-import gregtech.api.addon.BehaviorMachineFactories;
+import gregtech.internal.addon.AddonMachines;
+import gregtech.internal.addon.BehaviorMachineFactories;
 import gregtech.api.addon.LayoutPart;
-import gregtech.api.addon.LayoutPartFactories;
+import gregtech.internal.addon.LayoutPartFactories;
 import gregtech.api.addon.PartSlots;
 import gregtech.api.addon.IoTarget;
 import gregtech.api.addon.MachineFace;
 import gregtech.api.addon.GregTechMachineContributor;
 import gregtech.api.machine.BasicMachineEnergy;
-import gregtech.api.machine.BasicMachineParameters;
-import gregtech.api.machine.MachineControllerKind;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.mod.ModData;
-import gregtech.api.multiblock.StructureGrid;
-import gregtech.api.prefix.PrefixRegistry;
-import gregtech.api.recipe.RecipeMapSpec;
+import gregtech.internal.machine.BasicMachineParameters;
+import gregtech.internal.machine.MachineControllerKind;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.mod.ModData;
+import gregtech.internal.multiblock.StructureGrid;
+import gregtech.internal.prefix.PrefixRegistry;
+import gregtech.internal.recipe.RecipeMapSpec;
 import gregtech.content.multiblock.LargeMachineProcessingRules;
 import gregtech.content.multiblock.SharedLargeMachineLayouts;
 import gregtech.content.multiblock.SharedLargeMachineParts;
@@ -1187,7 +1187,7 @@ public final class AddonMachineContracts {
         @Override public String addonId() { return "aa_sample"; }
         @Override public List<AddonMachineDefinition> machines() {
             new BasicMachineParameters("bad_press", GTMaterialRegistry.get("Steel"), "badpress", "ZZ",
-                    1, 32, 0, 5, 5, gregtech.api.energy.MachineFaceMasks.ALL_SIDES,
+                    1, 32, 0, 5, 5, gregtech.internal.energy.MachineFaceMasks.ALL_SIDES,
                     List.of(), 1, 16, 64);
             return List.of();
         }

@@ -84,7 +84,7 @@ public final class BlueprintRegressionTests {
         helper.setBlock(pos,GTMultiblocks.IMPLOSION_COMPRESSOR_MAIN.get());
         helper.setBlock(pos.below(),Blocks.STONE);
         var layout=gregtech.blockentity.machine.ImplosionCompressorControllerBlockEntity.LAYOUT;
-        for(var cell:layout.cells()) helper.setBlock(cell.at(pos,Direction.NORTH),cell.role()==gregtech.api.multiblock.MultiblockLayout.Role.AIR?Blocks.AIR:GTMultiblocks.IMPLOSION_COMPRESSOR_WALL.get());
+        for(var cell:layout.cells()) helper.setBlock(cell.at(pos,Direction.NORTH),cell.role()==gregtech.internal.multiblock.MultiblockLayout.Role.AIR?Blocks.AIR:GTMultiblocks.IMPLOSION_COMPRESSOR_WALL.get());
         var machine=(gregtech.blockentity.machine.ImplosionCompressorControllerBlockEntity)helper.getLevel().getBlockEntity(absolute);
         helper.assertTrue(StructureTestSupport.ok(machine),"original hollow implosion structure forms");
         var partPos=pos.east();var part=helper.getLevel().getBlockEntity(helper.absolutePos(partPos));
@@ -133,7 +133,7 @@ public final class BlueprintRegressionTests {
         var filter=(FilterBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos));
         var water=new net.minecraftforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.WATER,1000);
         water.getOrCreateTag().putBoolean("special_water",true);
-        filter.setTemplate(0,gregtech.api.fluid.FluidDisplayBinding.display(water));
+        filter.setTemplate(0,gregtech.internal.fluid.FluidDisplayBinding.display(water));
         helper.assertTrue(filter.permitsFluid(water),"display fluid template resolves exact fluid identity");
         helper.assertTrue(filter.permitsFluid(new net.minecraftforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.WATER,1000)),"GT6 fluid filter matches fluid identity regardless of NBT");
         filter.toggleMode();helper.assertTrue(!filter.permitsFluid(water),"fluid blacklist reverses the same predicate");helper.succeed();
@@ -176,7 +176,7 @@ public final class BlueprintRegressionTests {
     public static void largeMachineLayoutsRequireTheirOriginalParts(GameTestHelper helper) {
         for(var front:java.util.List.of(Direction.NORTH,Direction.EAST,Direction.SOUTH,Direction.WEST))
         for(String name:gregtech.content.multiblock.LargeMachineLayouts.machines()) {
-            var block=gregtech.api.machine.MachineRegistry.basicMachines().stream().map(entry->entry.get()).filter(b->b.basicSpec().machineName().equals(name)).findFirst().orElseThrow();
+            var block=gregtech.internal.machine.MachineRegistry.basicMachines().stream().map(entry->entry.get()).filter(b->b.basicSpec().machineName().equals(name)).findFirst().orElseThrow();
             var pos=new BlockPos(6,2,6);
             helper.setBlock(pos,block.defaultBlockState().setValue(HorizontalDirectionalBlock.FACING,front));
             var machine=(gregtech.blockentity.machine.LargeRecipeMachineBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos));
@@ -184,7 +184,7 @@ public final class BlueprintRegressionTests {
             var layout=gregtech.content.multiblock.LargeMachineLayouts.cells(name);
             for(var cell:layout) helper.setBlock(cell.at(pos,front),cell.block());
             helper.assertTrue(StructureTestSupport.ok(machine),name+" accepts its complete original part arrangement");
-            var first=layout.stream().filter(cell->cell.role()!=gregtech.api.multiblock.MultiblockLayout.Role.AIR).findFirst().orElseThrow();
+            var first=layout.stream().filter(cell->cell.role()!=gregtech.internal.multiblock.MultiblockLayout.Role.AIR).findFirst().orElseThrow();
             helper.setBlock(first.at(pos,front),Blocks.AIR);
             helper.assertTrue(!StructureTestSupport.ok(machine),name+" immediately rejects missing parts");
             helper.setBlock(pos,Blocks.AIR);
@@ -220,13 +220,13 @@ public final class BlueprintRegressionTests {
     }
     @GameTest(template="test_blueprint_empty")
     public static void largeCrusherUsesOriginalEfficiencyAndRetainsInterruptedWork(GameTestHelper helper) {
-        var block=gregtech.api.machine.MachineRegistry.basicMachines().stream().map(entry->entry.get()).filter(b->b.basicSpec().machineName().equals("largecrusher")).findFirst().orElseThrow();
+        var block=gregtech.internal.machine.MachineRegistry.basicMachines().stream().map(entry->entry.get()).filter(b->b.basicSpec().machineName().equals("largecrusher")).findFirst().orElseThrow();
         var pos=new BlockPos(2,2,1);helper.setBlock(pos,block);helper.setBlock(pos.below(),Blocks.STONE);
         for(var cell:gregtech.content.multiblock.LargeMachineLayouts.cells("largecrusher"))helper.setBlock(cell.at(pos,Direction.NORTH),cell.block());
         var machine=(gregtech.blockentity.machine.LargeRecipeMachineBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos));
-        var recipes=new gregtech.api.recipe.RecipeMap(null,"blueprint_crusher_test","Test","test",1,1,1,0,0,0,1,false,false,false,false);
-        recipes.addRecipe(new gregtech.api.recipe.Recipe(new ItemStack[]{new ItemStack(Items.APPLE)},new ItemStack[]{new ItemStack(Items.DIAMOND)},null,null,null,null,192,32,0));
-        machine.setSpec(gregtech.api.machine.BasicMachineSpec.builder("blueprint_crusher_test",block.basicSpec().material()).machineType("largecrusher").energy(GregTechTags.Energy.RU,512).recipes(recipes).faces(block.basicSpec().faceConfig()).build());
+        var recipes=new gregtech.internal.recipe.RecipeMap(null,"blueprint_crusher_test","Test","test",1,1,1,0,0,0,1,false,false,false,false);
+        recipes.addRecipe(new gregtech.internal.recipe.Recipe(new ItemStack[]{new ItemStack(Items.APPLE)},new ItemStack[]{new ItemStack(Items.DIAMOND)},null,null,null,null,192,32,0));
+        machine.setSpec(gregtech.internal.machine.BasicMachineSpec.builder("blueprint_crusher_test",block.basicSpec().material()).machineType("largecrusher").energy(GregTechTags.Energy.RU,512).recipes(recipes).faces(block.basicSpec().faceConfig()).build());
         machine.inventory().setStackInSlot(0,new ItemStack(Items.APPLE));
         for(int i=0;i<12;i++) {machine.doEnergyInjection(GregTechTags.Energy.RU,null,512,1,true);gregtech.blockentity.machine.BasicMachineBlockEntity.serverTick(helper.getLevel(),helper.absolutePos(pos),machine.getBlockState(),machine);}
         helper.assertTrue(machine.getProgressPercent()==50,"6144 GU recipe costs 12288 RU at original 50 percent efficiency");
@@ -240,13 +240,13 @@ public final class BlueprintRegressionTests {
     public static void fluidFuelBatchChecksExhaustAndNbtBeforeConsuming(GameTestHelper helper) {
         var fuel=new net.minecraftforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.WATER,100);
         var exhaust=new net.minecraftforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.LAVA,50);
-        var recipe=new gregtech.api.recipe.Recipe(null,null,null,null,new net.minecraftforge.fluids.FluidStack[]{fuel},new net.minecraftforge.fluids.FluidStack[]{exhaust},1,-10,0);
+        var recipe=new gregtech.internal.recipe.Recipe(null,null,null,null,new net.minecraftforge.fluids.FluidStack[]{fuel},new net.minecraftforge.fluids.FluidStack[]{exhaust},1,-10,0);
         var input=fuel.copy();input.setAmount(1000);
-        var plan=gregtech.api.recipe.FluidFuelBatch.plan(recipe,input,net.minecraftforge.fluids.FluidStack.EMPTY,100,100,10000);
+        var plan=gregtech.internal.recipe.FluidFuelBatch.plan(recipe,input,net.minecraftforge.fluids.FluidStack.EMPTY,100,100,10000);
         helper.assertTrue(plan!=null&&plan.charges()==2&&plan.energy()==20&&plan.input().getAmount()==800&&plan.output().getAmount()==100&&input.getAmount()==1000,"batch limited by exhaust space; planning never mutates input");
-        helper.assertTrue(gregtech.api.recipe.FluidFuelBatch.plan(recipe,input,plan.output(),100,100,10000)==null,"full exhaust prevents fuel consumption");
+        helper.assertTrue(gregtech.internal.recipe.FluidFuelBatch.plan(recipe,input,plan.output(),100,100,10000)==null,"full exhaust prevents fuel consumption");
         var tagged=exhaust.copy();tagged.getOrCreateTag().putBoolean("different",true);
-        helper.assertTrue(gregtech.api.recipe.FluidFuelBatch.plan(recipe,input,tagged,1000,100,10000)==null,"different exhaust NBT cannot be merged");
+        helper.assertTrue(gregtech.internal.recipe.FluidFuelBatch.plan(recipe,input,tagged,1000,100,10000)==null,"different exhaust NBT cannot be merged");
         helper.succeed();
     }
     @GameTest(template="test_blueprint_empty")
@@ -286,14 +286,14 @@ public final class BlueprintRegressionTests {
 
     @GameTest(template="test_blueprint_empty")
     public static void ordinaryTimeMachineRunsWithoutExternalPower(GameTestHelper helper) {
-        var block=gregtech.api.machine.MachineRegistry.basicMachines().stream().map(entry->entry.get()).filter(b->b.basicSpec().machineName().equals("autoclave")).findFirst().orElseThrow();
+        var block=gregtech.internal.machine.MachineRegistry.basicMachines().stream().map(entry->entry.get()).filter(b->b.basicSpec().machineName().equals("autoclave")).findFirst().orElseThrow();
         helper.assertTrue(block.basicSpec().energyIn()==1&&block.basicSpec().energyInMin()==1&&block.basicSpec().energyInMax()==16,"TU registration uses original time energy limits");
         var pos=new BlockPos(2,2,2);helper.setBlock(pos,block);
         for(var side:Direction.values())helper.setBlock(pos.relative(side),Blocks.STONE);
         var machine=(gregtech.blockentity.machine.BasicMachineBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos));
-        var recipes=new gregtech.api.recipe.RecipeMap(null,"blueprint_time_test","Test","test",1,1,1,0,0,0,1,false,false,false,false);
-        recipes.addRecipe(new gregtech.api.recipe.Recipe(new ItemStack[]{new ItemStack(Items.APPLE)},new ItemStack[]{new ItemStack(Items.DIAMOND)},null,null,null,null,4,0,0));
-        machine.setSpec(gregtech.api.machine.BasicMachineSpec.builder("blueprint_time_test",block.basicSpec().material()).machineType("autoclave").energy(GregTechTags.Energy.TU,1).recipes(recipes).faces(block.basicSpec().faceConfig()).build());
+        var recipes=new gregtech.internal.recipe.RecipeMap(null,"blueprint_time_test","Test","test",1,1,1,0,0,0,1,false,false,false,false);
+        recipes.addRecipe(new gregtech.internal.recipe.Recipe(new ItemStack[]{new ItemStack(Items.APPLE)},new ItemStack[]{new ItemStack(Items.DIAMOND)},null,null,null,null,4,0,0));
+        machine.setSpec(gregtech.internal.machine.BasicMachineSpec.builder("blueprint_time_test",block.basicSpec().material()).machineType("autoclave").energy(GregTechTags.Energy.TU,1).recipes(recipes).faces(block.basicSpec().faceConfig()).build());
         machine.inventory().setStackInSlot(0,new ItemStack(Items.APPLE));
         for(int tick=0;tick<4;tick++)gregtech.blockentity.machine.BasicMachineBlockEntity.serverTick(helper.getLevel(),helper.absolutePos(pos),machine.getBlockState(),machine);
         helper.assertTrue(machine.inventory().getStackInSlot(1).is(Items.DIAMOND),"time-only recipe completes without an energy cable");helper.succeed();
@@ -314,9 +314,9 @@ public final class BlueprintRegressionTests {
         for(int n=0;n<recipe.mFluidOutputs.length;n++)helper.assertTrue(machine.getFluidInTank(n+1).getAmount()==count*recipe.mFluidOutputs[n].getAmount(),"each exhaust is conserved");
         machine.load(machine.saveWithoutMetadata());int remaining=machine.getFluidInTank(0).getAmount();machine.tick();
         helper.assertTrue(machine.getFluidInTank(0).getAmount()==remaining,"no receiver means buffered output blocks further fuel consumption");
-        var block=gregtech.api.machine.MachineRegistry.basicMachines().iterator().next().get();var target=pos.south(4);helper.setBlock(target,block);
+        var block=gregtech.internal.machine.MachineRegistry.basicMachines().iterator().next().get();var target=pos.south(4);helper.setBlock(target,block);
         var receiver=(gregtech.blockentity.machine.BasicMachineBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(target));
-        receiver.setSpec(gregtech.api.machine.BasicMachineSpec.builder("turbine_test_receiver",block.basicSpec().material()).machineType("test").energy(GregTechTags.Energy.RU,8192).recipes(block.basicSpec().recipeMap()).faces(gregtech.api.energy.FaceConfig.ALL_SIDES).build());
+        receiver.setSpec(gregtech.internal.machine.BasicMachineSpec.builder("turbine_test_receiver",block.basicSpec().material()).machineType("test").energy(GregTechTags.Energy.RU,8192).recipes(block.basicSpec().recipeMap()).faces(gregtech.internal.energy.FaceConfig.ALL_SIDES).build());
         machine.toggleStopped();machine.tick();helper.assertTrue(receiver.getEnergyTick()==8192&&machine.getEnergyStored(GregTechTags.Energy.RU,null)==0,"stored rotation exits rear structural face");
         helper.setBlock(pos.south(),Blocks.AIR);helper.assertTrue(!StructureTestSupport.ok(machine),"turbine center is solid, not hollow");helper.succeed();
     }
@@ -324,11 +324,11 @@ public final class BlueprintRegressionTests {
     public static void multipleExhaustFuelPlanIsAtomic(GameTestHelper helper){
         var water=new net.minecraftforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.WATER,10);
         var lava=new net.minecraftforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.LAVA,20);
-        var recipe=new gregtech.api.recipe.Recipe(null,null,null,null,new net.minecraftforge.fluids.FluidStack[]{water},new net.minecraftforge.fluids.FluidStack[]{water,lava},1,-100,0);
+        var recipe=new gregtech.internal.recipe.Recipe(null,null,null,null,new net.minecraftforge.fluids.FluidStack[]{water},new net.minecraftforge.fluids.FluidStack[]{water,lava},1,-100,0);
         var input=water.copy();input.setAmount(100);
-        var plan=gregtech.api.recipe.FluidFuelBatch.plan(recipe,input,java.util.List.of(net.minecraftforge.fluids.FluidStack.EMPTY,lava),new int[]{100,20},1000,10000);
+        var plan=gregtech.internal.recipe.FluidFuelBatch.plan(recipe,input,java.util.List.of(net.minecraftforge.fluids.FluidStack.EMPTY,lava),new int[]{100,20},1000,10000);
         helper.assertTrue(plan==null&&input.getAmount()==100,"second exhaust full rejects entire fuel transaction");
-        plan=gregtech.api.recipe.FluidFuelBatch.plan(recipe,input,java.util.List.of(net.minecraftforge.fluids.FluidStack.EMPTY,net.minecraftforge.fluids.FluidStack.EMPTY),new int[]{100,40},1000,10000);
+        plan=gregtech.internal.recipe.FluidFuelBatch.plan(recipe,input,java.util.List.of(net.minecraftforge.fluids.FluidStack.EMPTY,net.minecraftforge.fluids.FluidStack.EMPTY),new int[]{100,40},1000,10000);
         helper.assertTrue(plan!=null&&plan.charges()==2&&plan.outputs().get(0).getAmount()==20&&plan.outputs().get(1).getAmount()==40&&plan.input().getAmount()==80,"least available exhaust capacity bounds every output and input");helper.succeed();
     }
 }

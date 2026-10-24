@@ -2,7 +2,7 @@ package gregtech.registry;
 //? if >=1.21.1 {
 /*import gregtech.block.tool.DynamiteBlock;
 import gregtech.content.material.Materials;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -63,7 +63,7 @@ public final class GTToolBlocks {
     }
 
     public static void register(IEventBus bus) {
-        for (var spec : gregtech.api.fluid.PortableFluidContainerSpec.values()) {
+        for (var spec : gregtech.internal.fluid.PortableFluidContainerSpec.values()) {
             var block = BLOCKS.register("fluid_" + spec.id(), () -> new gregtech.block.tool.PortableContainerBlock(spec,
                     BlockBehaviour.Properties.of().strength(1f).noOcclusion()));
             PORTABLE.add(block);
@@ -114,7 +114,7 @@ public final class GTToolBlocks {
 
     public static final List<RegistryObject<gregtech.block.tool.ScaffoldBlock>> SCAFFOLDS = new ArrayList<>();
 
-    public static gregtech.block.tool.ScaffoldBlock scaffold(gregtech.api.material.GTMaterial material) {
+    public static gregtech.block.tool.ScaffoldBlock scaffold(gregtech.internal.material.GTMaterial material) {
         for (var entry : SCAFFOLDS) if (entry.get().material() == material) return entry.get();
         throw new IllegalArgumentException("No scaffold for " + material.getName());
     }
@@ -140,7 +140,7 @@ public final class GTToolBlocks {
 
     /** One of GT6's six ropes: same model, tinted by the rope's material (GT6 does the same). */
     private static RegistryObject<gregtech.block.tool.RopeBlock> rope(
-            String id, gregtech.api.material.GTMaterial material) {
+            String id, gregtech.internal.material.GTMaterial material) {
         RegistryObject<gregtech.block.tool.RopeBlock> block =
                 GTBlocks.BLOCKS.register(id, () -> new gregtech.block.tool.RopeBlock(
                         BlockBehaviour.Properties.of().mapColor(MapColor.WOOL)
@@ -151,12 +151,12 @@ public final class GTToolBlocks {
     }
 
     private static RegistryObject<gregtech.block.tool.RopeBlock> rope(gregtech.content.tool.UtilityToolRules.Rope spec) {
-        return rope(spec.id(), gregtech.api.material.GTMaterialRegistry.get(spec.material()));
+        return rope(spec.id(), gregtech.internal.material.GTMaterialRegistry.get(spec.material()));
     }
 
     /** One of GT6's three explosives: same model, tinted, with the original's blast quality. */
     private static RegistryObject<gregtech.block.tool.DynamiteBlock> dynamite(
-            String id, float resistance, int fortune, gregtech.api.material.GTMaterial material) {
+            String id, float resistance, int fortune, gregtech.internal.material.GTMaterial material) {
         RegistryObject<gregtech.block.tool.DynamiteBlock> block =
                 GTBlocks.BLOCKS.register(id, () -> new gregtech.block.tool.DynamiteBlock(
                         BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED)
@@ -305,7 +305,7 @@ public final class GTToolBlocks {
             // Original taps, funnels and gas nozzles: 64
         }
         // Preserve existing IDs while replacing placeholder items with finite fluid handlers.
-        for (var spec : gregtech.api.fluid.PortableFluidContainerSpec.values()) {
+        for (var spec : gregtech.internal.fluid.PortableFluidContainerSpec.values()) {
             var block = GTBlocks.BLOCKS.register("fluid_" + spec.id(), () -> new gregtech.block.tool.PortableContainerBlock(spec,
                     BlockBehaviour.Properties.of().strength(1.0f).noOcclusion()));
             PORTABLE.add(block);
@@ -321,7 +321,7 @@ public final class GTToolBlocks {
 
     public static void anvil(String id, String material, long durability) {
         var block = GTBlocks.BLOCKS.register(id, () -> new gregtech.block.tool.MaterialAnvilBlock(
-                () -> gregtech.api.material.GTMaterialRegistry.get(material), durability,
+                () -> gregtech.internal.material.GTMaterialRegistry.get(material), durability,
                 BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(10f, 1200f).requiresCorrectToolForDrops().sound(SoundType.ANVIL)));
         ANVILS.add(block);
         ALL_SIMPLE.add((RegistryObject) block);

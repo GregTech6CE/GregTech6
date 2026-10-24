@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.fluid.*;
+import gregtech.internal.fluid.*;
 import gregtech.data.RegisteredFluids;
 import gregtech.content.material.Materials;
 import net.minecraft.gametest.framework.*;

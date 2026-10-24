@@ -19,7 +19,7 @@ public final class NuclearReactorTests {
     }
     @GameTest(template="test_empty") public static void nuclearCatalogAndCoolants(GameTestHelper h){
         h.assertTrue(ReactorRodCatalog.ALL.size()==46,"46 original rod registrations");
-        for(var d:ReactorRodCatalog.ALL){h.assertTrue(!GTFuelRods.stack(d.originalId()).isEmpty(),"registered rod "+d.id());h.assertTrue(gregtech.api.material.GTMaterialRegistry.get(d.material()).isValid(),"rod material "+d.material());if(d.product()>0)h.assertTrue(ReactorRodCatalog.byOriginal(d.product())!=null,"rod product exists");}
+        for(var d:ReactorRodCatalog.ALL){h.assertTrue(!GTFuelRods.stack(d.originalId()).isEmpty(),"registered rod "+d.id());h.assertTrue(gregtech.internal.material.GTMaterialRegistry.get(d.material()).isValid(),"rod material "+d.material());if(d.product()>0)h.assertTrue(ReactorRodCatalog.byOriginal(d.product())!=null,"rod product exists");}
         for(var c:ReactorCoolants.values())h.assertTrue(c.inputFluid()!=null&&c.outputFluid()!=null,"coolant phases exist: "+c.name()+" "+c.input+" -> "+c.output);
         h.assertTrue(ReactorRodRecipes.count()>=40,"canning and recovery routes loaded");h.succeed();
     }

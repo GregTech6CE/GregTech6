@@ -5,7 +5,7 @@ package gregtech.content.recipe;
 *///?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolType;
 import gregtech.block.stone.StoneType;
 import gregtech.block.stone.StoneVariant;
 import gregtech.content.material.Materials;

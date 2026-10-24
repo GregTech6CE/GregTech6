@@ -1,5 +1,5 @@
 package gregtech.integration.server;
-import gregtech.api.tool.*;
+import gregtech.internal.tool.*;
 import gregtech.content.material.Materials;
 import gregtech.content.tool.*;
 import gregtech.data.GregTechTags;
@@ -9,7 +9,7 @@ import gregtech.platform.neoforge.StackCustomData;
 import gregtech.registry.*;
 import net.minecraft.core.*;import net.minecraft.nbt.CompoundTag;import net.minecraft.world.item.*;import net.minecraft.world.item.crafting.*;import net.minecraft.network.RegistryFriendlyByteBuf;import net.minecraft.resources.ResourceLocation;import net.neoforged.fml.common.EventBusSubscriber;import net.neoforged.bus.api.SubscribeEvent;import net.neoforged.api.distmarker.Dist;import net.neoforged.neoforge.event.server.ServerStartedEvent;
 /** Opt-in grouped actual recipe/packet/component/fuse checkpoint; excluded from production jars. */
-@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID,value=Dist.DEDICATED_SERVER)
+@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID,value=Dist.DEDICATED_SERVER)
 public final class NeoPoweredToolCheckpoint {
  private NeoPoweredToolCheckpoint(){}
  private static void require(boolean ok,String message){if(!ok)throw new IllegalStateException("Powered tool checkpoint: "+message);}
@@ -21,7 +21,7 @@ public final class NeoPoweredToolCheckpoint {
   var parts=new java.util.ArrayList<ItemStack>();for(var ingredient:recipe.getIngredients()){require(ingredient.getItems().length>0,"resolved assembly ingredient");parts.add(ingredient.getItems()[0].copy());}
   var input=CraftingInput.of(3,3,parts);require(recipe.matches(input,level),"original powered wrench shape");
   var stack=recipe.assemble(input,level.registryAccess());require(stack.getItem()==GTElectricItems.ELECTRIC_WRENCH.get()&&GTToolHelper.getHead(stack)==Materials.Bronze,"actual powered wrench output");
-  var tool=(ElectricToolItem)stack.getItem();var eu=GregTechTags.Energy.EU;long capacity=((gregtech.api.energy.item.IItemEnergy)gregtech.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,1)).getEnergyCapacity(new ItemStack(gregtech.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,1)),eu);
+  var tool=(ElectricToolItem)stack.getItem();var eu=GregTechTags.Energy.EU;long capacity=((gregtech.internal.energy.item.IItemEnergy)gregtech.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,1)).getEnergyCapacity(new ItemStack(gregtech.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,1)),eu);
   require(tool.getEnergyCapacity(stack,eu)==capacity&&tool.getEnergyStored(stack,eu)==0&&!stack.isDamageableItem(),"inherited battery capacity, uncharged, material wear separate");
   require(tool.doEnergyInjection(eu,stack,32,4,level,BlockPos.ZERO,false)==4&&tool.getEnergyStored(stack,eu)==0,"charge simulation leaves components unchanged");
   require(tool.doEnergyInjection(eu,stack,32,4,level,BlockPos.ZERO,true)==4&&tool.getEnergyStored(stack,eu)==128,"actual packet charge");

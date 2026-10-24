@@ -1,10 +1,10 @@
 package gregtech.blockentity.energy;
 
-import gregtech.api.energy.EnergyNet;
-import gregtech.api.energy.EnergyTransfer;
-import gregtech.api.energy.IEnergyBlock;
-import gregtech.api.energy.IEnergyConductor;
-import gregtech.api.energy.WireSpec;
+import gregtech.internal.energy.EnergyNet;
+import gregtech.internal.energy.EnergyTransfer;
+import gregtech.internal.energy.IEnergyBlock;
+import gregtech.internal.energy.IEnergyConductor;
+import gregtech.internal.energy.WireSpec;
 import gregtech.block.energy.ElectricWireBlock;
 import gregtech.data.GregTechConstants;
 import gregtech.data.GregTechTags;
@@ -59,7 +59,7 @@ public class ElectricWireBlockEntity extends BlockEntity implements IEnergyCondu
         super.onLoad();
         if (level != null && level.isClientSide) {
             requestModelDataUpdate();
-            gregtech.api.machine.PipeModelData.refreshCrossChunkNeighbors(level, worldPosition);
+            gregtech.internal.machine.PipeModelData.refreshCrossChunkNeighbors(level, worldPosition);
         }
         if (!initialized && level != null && !level.isClientSide) {
             initialized = true;
@@ -129,7 +129,7 @@ public class ElectricWireBlockEntity extends BlockEntity implements IEnergyCondu
                             neighborState.setValue(ElectricWireBlock.propFor(clickedFace), true));
                 }
             } else if (be != null) {
-                var endpoint = gregtech.api.energy.EnergyBlockViews.view(be);
+                var endpoint = gregtech.internal.energy.EnergyBlockViews.view(be);
                 if (endpoint != null && (endpoint.isEnergyAcceptingFrom(GregTechTags.Energy.EU, clickedFace, true)
                         || endpoint.isEnergyEmittingTo(GregTechTags.Energy.EU, clickedFace, true))) {
                     BlockState state = getBlockState();
@@ -332,8 +332,8 @@ public class ElectricWireBlockEntity extends BlockEntity implements IEnergyCondu
         float[] halves = new float[6];
         for (net.minecraft.core.Direction d : net.minecraft.core.Direction.values()) {
             halves[d.ordinal()] = level == null
-                    ? (float) gregtech.api.machine.PipeGeometry.NONE
-                    : (float) gregtech.api.machine.PipeGeometry.wireHalfOf(
+                    ? (float) gregtech.internal.machine.PipeGeometry.NONE
+                    : (float) gregtech.internal.machine.PipeGeometry.wireHalfOf(
                             level.getBlockState(worldPosition.relative(d)));
         }
 //? if >=1.21.1 {
@@ -341,7 +341,7 @@ public class ElectricWireBlockEntity extends BlockEntity implements IEnergyCondu
 *///?} else {
         return net.minecraftforge.client.model.data.ModelData.builder()
 //?}
-                .with(gregtech.api.machine.PipeModelData.NEIGHBOR_HALVES, halves)
+                .with(gregtech.internal.machine.PipeModelData.NEIGHBOR_HALVES, halves)
                 .build();
     }
 

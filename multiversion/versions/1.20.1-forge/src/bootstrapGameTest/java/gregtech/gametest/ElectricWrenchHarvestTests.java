@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.api.machine.MachineRegistry;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.machine.MachineRegistry;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.material.Materials;
 import gregtech.content.tool.*;
@@ -31,7 +31,7 @@ public final class ElectricWrenchHarvestTests {
         player.setGameMode(GameType.SURVIVAL);player.setOnGround(true);
         var tool=GTElectricItems.ELECTRIC_WRENCH.get();var stack=tool.assembled(Materials.Titanium,100000);
         stack.getOrCreateTag().putLong("gt.charge",10000);player.setItemInHand(InteractionHand.MAIN_HAND,stack);
-        h.assertTrue(!stack.isDamageableItem()&&gregtech.api.tool.GTToolHelper.canCollectMachineDrop(stack,state),
+        h.assertTrue(!stack.isDamageableItem()&&gregtech.internal.tool.GTToolHelper.canCollectMachineDrop(stack,state),
                 "custom material wear must not become a zero-durability vanilla tool that blocks collection");
         h.assertTrue(state.canHarvestBlock(h.getLevel(),pos,player),"actual survival player can harvest with charged electric wrench");
         float hardness=state.getDestroySpeed(h.getLevel(),pos),speed=2*Materials.Titanium.getToolSpeed();
@@ -48,7 +48,7 @@ public final class ElectricWrenchHarvestTests {
     @GameTest(template="test_empty")
     public static void materialQualityOverridesFixedIronTierAndEmptyToolsCannotHarvest(GameTestHelper h) {
         var material=GTMaterialRegistry.allMaterials().stream().filter(ElectricToolAssembly::validMaterial)
-                .max(java.util.Comparator.comparingInt(gregtech.api.material.GTMaterial::getToolQuality)).orElseThrow();
+                .max(java.util.Comparator.comparingInt(gregtech.internal.material.GTMaterial::getToolQuality)).orElseThrow();
         var block=ForgeRegistries.BLOCKS.getValues().stream().filter(b->BlockHarvestPolicy.level(b)>3
                 &&BlockHarvestPolicy.level(b)<=material.getToolQuality()&&ElectricWrenchHarvest.target(b.defaultBlockState())).findFirst().orElseThrow();
         var player=h.makeMockSurvivalPlayer();var pos=h.absolutePos(new BlockPos(1,1,1));

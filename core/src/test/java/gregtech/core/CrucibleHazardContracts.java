@@ -1,7 +1,7 @@
 package gregtech.core;
 
-import gregtech.api.machine.crucible.*;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.machine.crucible.*;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
 import gregtech.content.multiblock.OriginalLargeCrucibleParameters;
 import java.util.ArrayList;

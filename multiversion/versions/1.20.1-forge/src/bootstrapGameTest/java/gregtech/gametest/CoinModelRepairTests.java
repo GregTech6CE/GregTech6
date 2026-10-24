@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
 import com.google.gson.JsonObject;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialTextureSet;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialTextureSet;
 import gregtech.block.misc.CoinPileBlock;
 import gregtech.blockentity.misc.CoinPileBlockEntity;
 import gregtech.blockentity.tool.CoinMoldBlockEntity;

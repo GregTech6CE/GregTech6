@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.fluid.FluidTankGT;
+import gregtech.internal.fluid.FluidTankGT;
 import gregtech.blockentity.energy.ReactorCoreBlockEntity;
 import gregtech.blockentity.machine.TankBlockEntity;
 import gregtech.content.nuclear.ReactorCoolants;

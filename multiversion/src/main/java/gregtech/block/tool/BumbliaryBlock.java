@@ -1,6 +1,6 @@
 package gregtech.block.tool;
 
-import gregtech.api.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolHelper;
 import gregtech.blockentity.tool.BumbliaryBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -110,7 +110,7 @@ public class BumbliaryBlock extends ShapedToolBlock implements EntityBlock {
         if (hit.getDirection() == Direction.UP
                 && level.getBlockEntity(pos) instanceof BumbliaryBlockEntity machine) {
             ItemStack held = player.getItemInHand(hand);
-            boolean scoop = GTToolHelper.matchesTool(held, gregtech.api.tool.GTToolType.SCOOP);
+            boolean scoop = GTToolHelper.matchesTool(held, gregtech.internal.tool.GTToolType.SCOOP);
             if (player.isCreative() || scoop || held.isEmpty() || !GTToolHelper.isTool(held)) {
                 if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
                     // GT6 :289-290: disturbance delays breeding and the queen defends the nest.

@@ -1,11 +1,11 @@
 package gregtech.bootstrap.content;
 
 import gregtech.content.material.Materials;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialProperty;
-import gregtech.api.prefix.BlockMaterialPrefix;
-import gregtech.api.prefix.BlockPrefixRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialProperty;
+import gregtech.internal.prefix.BlockMaterialPrefix;
+import gregtech.internal.prefix.BlockPrefixRegistry;
 import gregtech.block.MaterialBlock;
 import gregtech.block.OreBlock;
 import gregtech.block.stone.GTStoneBlock;
@@ -74,7 +74,7 @@ public record BlockBootstrap() implements InitializationStep {
         Set<String> seenIds = new HashSet<>();
         int count = 0;
 
-        for (var definition : gregtech.api.material.MaterialBlockDefinitions.all()) {
+        for (var definition : gregtech.internal.material.MaterialBlockDefinitions.all()) {
             GTMaterial material = definition.material();
             BlockMaterialPrefix prefix = definition.prefix();
             String blockId = definition.blockId();

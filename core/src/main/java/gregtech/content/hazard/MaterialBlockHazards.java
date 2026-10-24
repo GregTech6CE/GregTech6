@@ -1,10 +1,10 @@
 /* Gregorius Techneticies / GregTech-6 Team source rules, LGPL-3.0-or-later. */
 package gregtech.content.hazard;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.MaterialProperty;
-import gregtech.api.prefix.BlockMaterialPrefix;
+import gregtech.internal.material.MaterialProperty;
+import gregtech.internal.prefix.BlockMaterialPrefix;
 
 /** PrefixBlock:393-405,538-541: strength follows contents, not the mining charge's fixed cube. */
 public final class MaterialBlockHazards {

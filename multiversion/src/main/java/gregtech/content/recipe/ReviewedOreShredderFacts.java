@@ -1,7 +1,8 @@
 package gregtech.content.recipe;
 
-import gregtech.api.addon.AddonMaterials;
+import gregtech.internal.addon.AddonMaterials;
 import gregtech.api.material.*;
+import gregtech.internal.material.*;
 import gregtech.data.MaterialPrefix;
 import gregtech.registry.GTItems;
 import java.util.List;

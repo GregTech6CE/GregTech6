@@ -1,6 +1,6 @@
 package gregtech.core;
 
-import gregtech.api.mod.SetupOnce;
+import gregtech.internal.mod.SetupOnce;
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;

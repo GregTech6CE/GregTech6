@@ -45,7 +45,7 @@ import gregtech.registry.GTFluids;
  *       them through {@link GTDungeonData#crate} with GT6's own material tables
  *       ({@link GTDungeonData#CRATE_DUSTS}, {@code CRATE_WOODS}, {@code CRATE_GEMS}, {@code CRATE_METALS},
  *       {@link GTDungeonData#CRATE_ORES}) - GT6's block draw and material draw happen in that order, see
- *       {@link GTDungeonData#crate(int, int, int, GTDungeonData.CrateForm[], gregtech.api.material.GTMaterial[])}.
+ *       {@link GTDungeonData#crate(int, int, int, GTDungeonData.CrateForm[], gregtech.internal.material.GTMaterial[])}.
      *       The size rolls ({@code next1in2}/{@code next1in3}/{@code next1in4} inside GT6's
      *       {@code set} calls) choose the corresponding block.</li>
  *   <li><b>Raw ore blocks.</b> GT6's ore quadrant tops its crate stacks with raw ore blocks
@@ -324,7 +324,7 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
     }
 
     /** The port material names of a GT6 material list, for the helpers that take strings. */
-    private static String[] materialNames(gregtech.api.material.GTMaterial[] materials) {
+    private static String[] materialNames(gregtech.internal.material.GTMaterial[] materials) {
         String[] names = new String[materials.length];
         for (int i = 0; i < materials.length; i++) names[i] = materials[i].getName();
         return names;

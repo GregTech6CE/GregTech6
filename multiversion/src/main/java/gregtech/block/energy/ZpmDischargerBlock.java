@@ -1,7 +1,7 @@
 package gregtech.block.energy;
 import gregtech.block.misc.AutoToolBlock;
 import gregtech.blockentity.energy.ZpmDischargerBlockEntity;
-import gregtech.api.tool.ToolInteractions;
+import gregtech.internal.tool.ToolInteractions;
 import gregtech.content.energy.ZpmEnergy;
 import net.minecraft.core.*;
 import net.minecraft.world.*;

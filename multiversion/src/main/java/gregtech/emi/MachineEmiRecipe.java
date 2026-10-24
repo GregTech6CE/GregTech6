@@ -1,6 +1,7 @@
 package gregtech.emi;
 
 import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiIngredient;
@@ -44,7 +45,7 @@ public final class MachineEmiRecipe implements EmiRecipe {
             if (fluid == null || fluid.isEmpty()) continue;
             var choices = new ArrayList<EmiStack>();
             choices.add(fluid(fluid));
-            for (var container : gregtech.api.fluid.FluidContainerDisplayBinding.containers(fluid)) choices.add(EmiStack.of(container));
+            for (var container : gregtech.internal.fluid.FluidContainerDisplayBinding.containers(fluid)) choices.add(EmiStack.of(container));
             ((recipe.isCatalystFluidInput(i) || recipe.isPresenceFluidInput(i)) ? catalysts : inputs).add(EmiIngredient.of(choices));
         }
         for (var special : RecipeSpecialItems.display(recipe.mSpecialItems)) catalysts.add(EmiStack.of(special));
@@ -77,9 +78,9 @@ public final class MachineEmiRecipe implements EmiRecipe {
         var client = net.minecraft.client.Minecraft.getInstance();
         if (client.level == null) return nativeStack;
 //? if >=1.21.1 {
-        /*var display = gregtech.api.fluid.FluidDisplayBinding.display(client.level.registryAccess(), stack);
+        /*var display = gregtech.internal.fluid.FluidDisplayBinding.display(client.level.registryAccess(), stack);
 *///?} else {
-        var display = gregtech.api.fluid.FluidDisplayBinding.display(stack);
+        var display = gregtech.internal.fluid.FluidDisplayBinding.display(stack);
 //?}
         return display.isEmpty() ? nativeStack : new FluidDisplayEmiStack(nativeStack, EmiStack.of(display));
     }
@@ -145,7 +146,7 @@ public final class MachineEmiRecipe implements EmiRecipe {
             if (input && recipe.isCatalystInput(i)) slot.catalyst(true).appendTooltip(Component.translatable("gt6ce.jei.catalyst"));
             if (!input) {
                 slot.recipeContext(this);
-                if (gregtech.api.addon.ExclusiveOutputMaps.enabled(map))
+                if (gregtech.internal.addon.ExclusiveOutputMaps.enabled(map))
                     slot.appendTooltip(Component.translatable("gt6ce.jei.chance", chance / 100.0));
             }
         }

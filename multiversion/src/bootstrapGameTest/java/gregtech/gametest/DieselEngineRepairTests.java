@@ -44,7 +44,7 @@ public final class DieselEngineRepairTests {
             for (Direction side : Direction.values()) {
                 helper.assertTrue(engine.isEnergyEmittingTo(GregTechTags.Energy.RU, side, false) == (side == front), "Fixed RU front " + front + "/" + side);
             }
-            engine.setFaceConfig(gregtech.api.energy.FaceConfig.builder().energyOut(gregtech.api.energy.FaceConfig.BACK).build());
+            engine.setFaceConfig(gregtech.internal.energy.FaceConfig.builder().energyOut(gregtech.internal.energy.FaceConfig.BACK).build());
             helper.assertTrue(engine.isEnergyEmittingTo(GregTechTags.Energy.RU, front, false), "Old saved masks cannot redirect RU");
             engine.fuelTank().fill(new FluidStack(GTFluids.still("Diesel").get(), 1), IFluidHandler.FluidAction.EXECUTE);
             tick(helper, engine);

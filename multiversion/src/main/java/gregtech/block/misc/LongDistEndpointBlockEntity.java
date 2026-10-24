@@ -22,7 +22,7 @@ import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
-import gregtech.api.energy.IEnergyBlock;
+import gregtech.internal.energy.IEnergyBlock;
 import gregtech.data.GregTechTags;
 import java.util.*;
 /** Resolves a cached remote item/fluid endpoint; the base class forwards its sided capabilities. */
@@ -43,7 +43,7 @@ public class LongDistEndpointBlockEntity extends gregtech.blockentity.Capability
     private boolean stopped;
     private long observedVersion = Long.MIN_VALUE;
     private final gregtech.content.logistics.LongDistanceLink<BlockPos, LongDistEndpointBlockEntity> link;
-    private final gregtech.api.machine.MachineControl control = gregtech.api.machine.MachineControls.switchable(this,
+    private final gregtech.api.machine.MachineControl control = gregtech.internal.machine.MachineControls.switchable(this,
             () -> !stopped, value -> setStopped(!value), () -> false, () -> false);
 
     @Override

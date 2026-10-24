@@ -5,12 +5,12 @@ package gregtech.content.recipe;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.machine.crucible.CrucibleMath;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.machine.crucible.CrucibleMath;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.MaterialProperty;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.material.MaterialProperty;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.data.MachineRecipeMaps;
 import gregtech.data.MaterialGroups;
 import gregtech.data.MaterialPrefix;

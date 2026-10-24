@@ -1,14 +1,14 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.fluid.FluidPipeChannels;
-import gregtech.api.fluid.FluidPipeSafety;
-import gregtech.api.fluid.PipeIgnition;
+import gregtech.internal.fluid.FluidPipeChannels;
+import gregtech.internal.fluid.FluidPipeSafety;
+import gregtech.internal.fluid.PipeIgnition;
 import gregtech.registry.GTFluids;
 
-import gregtech.api.fluid.FluidHazards;
-import gregtech.api.fluid.FluidTankGT;
-import gregtech.api.inventory.BlockContents;
-import gregtech.api.machine.PipeSpec;
+import gregtech.internal.fluid.FluidHazards;
+import gregtech.internal.fluid.FluidTankGT;
+import gregtech.internal.inventory.BlockContents;
+import gregtech.internal.machine.PipeSpec;
 import gregtech.block.machine.FluidPipeBlock;
 import gregtech.content.cover.CoverAttachmentBehaviors;
 import gregtech.content.cover.CoverItems;
@@ -1250,8 +1250,8 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         float[] halves = new float[6];
         for (net.minecraft.core.Direction d : net.minecraft.core.Direction.values()) {
             halves[d.ordinal()] = level == null
-                    ? (float) gregtech.api.machine.PipeGeometry.NONE
-                    : (float) gregtech.api.machine.PipeGeometry.fluidNeighborHalf(
+                    ? (float) gregtech.internal.machine.PipeGeometry.NONE
+                    : (float) gregtech.internal.machine.PipeGeometry.fluidNeighborHalf(
                             level.getBlockState(worldPosition.relative(d)), d);
         }
 //? if >=1.21.1 {
@@ -1259,7 +1259,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
 *///?} else {
         return net.minecraftforge.client.model.data.ModelData.builder()
 //?}
-                .with(gregtech.api.machine.PipeModelData.NEIGHBOR_HALVES, halves)
+                .with(gregtech.internal.machine.PipeModelData.NEIGHBOR_HALVES, halves)
                 .build();
     }
 
@@ -1268,7 +1268,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         super.onLoad();
         if (level != null && level.isClientSide) {
             requestModelDataUpdate();
-            gregtech.api.machine.PipeModelData.refreshCrossChunkNeighbors(level, worldPosition);
+            gregtech.internal.machine.PipeModelData.refreshCrossChunkNeighbors(level, worldPosition);
         }
     }
 

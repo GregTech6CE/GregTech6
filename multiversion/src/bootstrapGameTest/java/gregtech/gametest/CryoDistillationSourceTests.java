@@ -3,7 +3,7 @@ package gregtech.gametest;
 import gregtech.block.machine.CryoDistillationControllerBlock;
 import gregtech.blockentity.machine.*;
 import gregtech.content.multiblock.*;
-import gregtech.api.fluid.FluidTankGT;
+import gregtech.internal.fluid.FluidTankGT;
 import gregtech.data.GregTechTags;
 import gregtech.registry.GTFluids;
 import net.minecraft.core.*;

@@ -1,7 +1,7 @@
 package gregtech.data.generated;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.MaterialProperty;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.MaterialProperty;
 
 import java.util.Set;
 
@@ -135,7 +135,7 @@ public final class MaterialWorkability {
     private static boolean positive(GTMaterial material, Set<String> keys) {
         if (material == null) return false;
         material = material.resolve();
-        if (gregtech.api.addon.AddonMaterials.owns(material)) return false;
+        if (gregtech.internal.addon.AddonMaterials.owns(material)) return false;
         return keys.contains(material.getId() + ":" + normalize(material.getName()));
     }
 

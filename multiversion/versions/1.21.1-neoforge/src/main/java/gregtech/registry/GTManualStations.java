@@ -59,7 +59,7 @@ public final class GTManualStations {
         for (var v : gregtech.content.tool.UtilityToolRules.ROPES) {
             var b = GTBlocks.BLOCKS.register(v.id(), () -> new RopeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOL).strength(.5f,
                     .5f).sound(SoundType.WOOL).noOcclusion().noCollission(),
-                    gregtech.api.material.GTMaterialRegistry.get(v.material()).getColor()));
+                    gregtech.internal.material.GTMaterialRegistry.get(v.material()).getColor()));
             ROPES.add(b);
             item(v.id(), b, 64);
         }
@@ -103,7 +103,7 @@ public final class GTManualStations {
 
         for (var v : gregtech.content.tool.AnvilVariantCatalog.ALL) {
             var b = GTBlocks.BLOCKS.register(v.id(),
-                    () -> new MaterialAnvilBlock(() -> gregtech.api.material.GTMaterialRegistry.get(v.material()), v.durability(),
+                    () -> new MaterialAnvilBlock(() -> gregtech.internal.material.GTMaterialRegistry.get(v.material()), v.durability(),
                     BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(10f,
                     1200f).requiresCorrectToolForDrops().sound(SoundType.ANVIL)));
             ANVILS.add(b);

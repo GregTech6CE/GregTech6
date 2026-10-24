@@ -5,18 +5,18 @@ package gregtech.event;
 /*import net.neoforged.neoforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID)
+@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID)
 *///?} else {
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-@Mod.EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID)
+@Mod.EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID)
 //?}
 public final class OriginalItemFuelEvents {
     private OriginalItemFuelEvents() {}
     @SubscribeEvent
     public static void fuel(FurnaceFuelBurnTimeEvent event) {
-        Integer time = gregtech.api.machine.FurnaceFuelValue.originalBurnTime(event.getItemStack());
+        Integer time = gregtech.internal.machine.FurnaceFuelValue.originalBurnTime(event.getItemStack());
         if (time != null) event.setBurnTime(Math.max(time, event.getBurnTime()));
     }
 }

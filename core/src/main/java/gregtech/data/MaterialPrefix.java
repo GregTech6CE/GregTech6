@@ -1,10 +1,10 @@
 package gregtech.data;
 
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.material.GTMaterial;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.MaterialProperty;
-import gregtech.api.mod.GregTechIdentity;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.material.MaterialProperty;
+import gregtech.internal.mod.GregTechIdentity;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.data.generated.MaterialForms;
 import gregtech.content.material.generated.WoodMaterials;
 

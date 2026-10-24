@@ -6,7 +6,8 @@ package gregtech.jei;
 import gregtech.GregTech;
 //?}
 import gregtech.api.recipe.*;
-import gregtech.api.fluid.FluidDisplayBinding;
+import gregtech.internal.recipe.*;
+import gregtech.internal.fluid.FluidDisplayBinding;
 //? if >=1.21.1 {
 /*import mezz.jei.api.neoforge.NeoForgeTypes;
 *///?} else {
@@ -71,10 +72,10 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
             if(choices.isEmpty())itemSlot.addItemStack(items[i]);else itemSlot.addItemStacks(choices);
             var materialAliases=gregtech.content.recipe.CrucibleDisplayItems.isCrucible(map)
                     ? gregtech.content.recipe.CrucibleDisplayItems.aliases(items[i])
-                    : gregtech.api.material.MaterialDisplayBinding.alternatives(items[i]);
+                    : gregtech.internal.material.MaterialDisplayBinding.alternatives(items[i]);
             if(!materialAliases.isEmpty())builder.addInvisibleIngredients(role).addItemStacks(materialAliases);
             int chance=recipe.getOutputChance(i);
-            boolean showChance=!input&&(chance<10000||gregtech.api.addon.ExclusiveOutputMaps.enabled(map));
+            boolean showChance=!input&&(chance<10000||gregtech.internal.addon.ExclusiveOutputMaps.enabled(map));
             if(showChance) itemSlot.addTooltipCallback((view,tooltip)->tooltip.add(
                     Component.translatable("gt6ce.jei.chance",chance/100.0).withStyle(net.minecraft.ChatFormatting.YELLOW)));
         }
@@ -93,7 +94,7 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
 //?}
             var fluidSlot=builder.addSlot(fluidRole,point.x(),point.y()).setSlotName(fluidRole.name()+"_fluid_"+i);
             if (input) {
-                var containers = gregtech.api.fluid.FluidContainerDisplayBinding.containers(shown);
+                var containers = gregtech.internal.fluid.FluidContainerDisplayBinding.containers(shown);
                 if (!containers.isEmpty()) builder.addInvisibleIngredients(fluidRole).addItemStacks(containers);
             }
             if(!display.isEmpty()) fluidSlot.addItemStack(display).addTooltipCallback((view,tooltip)->

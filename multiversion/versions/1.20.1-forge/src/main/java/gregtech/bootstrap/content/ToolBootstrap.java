@@ -1,7 +1,7 @@
 package gregtech.bootstrap.content;
 
 import gregtech.GregTech;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.tool.GTToolType;
 import gregtech.bootstrap.InitializationStep;
 import gregtech.recipe.GTToolAssemblyRecipe;
 import gregtech.recipe.GTToolPatternRecipe;

@@ -29,13 +29,13 @@ public final class TowerAndPreviewRegressionTests {
         h.assertTrue(base.doEnergyInjection(GregTechTags.Energy.HU,Direction.DOWN,32,1,true)==0,"cached port immediately rejects energy after a structure break");
         h.setBlock(origin.offset(1,1,1),GTMultiblocks.DISTILLATION_TOWER_PART.get());
         h.assertTrue(StructureTestSupport.ok(tower) && base.doEnergyInjection(GregTechTags.Energy.HU,Direction.DOWN,32,1,true)==1,"repaired tower rebinds");
-        var recipes=new gregtech.api.recipe.RecipeMap(null,"tower_heat_test","Test","test",1,1,1,0,0,0,1,false,false,false,false);
-        recipes.addRecipe(new gregtech.api.recipe.Recipe(
+        var recipes=new gregtech.internal.recipe.RecipeMap(null,"tower_heat_test","Test","test",1,1,1,0,0,0,1,false,false,false,false);
+        recipes.addRecipe(new gregtech.internal.recipe.Recipe(
             new net.minecraft.world.item.ItemStack[]{new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.APPLE)},
             new net.minecraft.world.item.ItemStack[]{new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIAMOND)},null,null,null,null,4,32,0));
-        tower.setSpec(gregtech.api.machine.BasicMachineSpec.builder("tower_heat_test",tower.spec().material())
+        tower.setSpec(gregtech.internal.machine.BasicMachineSpec.builder("tower_heat_test",tower.spec().material())
             .machineType("distillationtower").energy(GregTechTags.Energy.HU,512).recipes(recipes)
-            .faces(gregtech.api.energy.FaceConfig.ALL_SIDES).build());
+            .faces(gregtech.internal.energy.FaceConfig.ALL_SIDES).build());
         tower.inventory().setStackInSlot(0,new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.APPLE));
         for(int i=0;i<6;i++){
             base.doEnergyInjection(GregTechTags.Energy.HU,Direction.DOWN,32,1,true);

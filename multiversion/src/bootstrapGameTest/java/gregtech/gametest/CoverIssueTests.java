@@ -1,7 +1,8 @@
 package gregtech.gametest;
 
 import gregtech.api.machine.*;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.machine.*;
+import gregtech.internal.tool.GTToolType;
 import gregtech.block.energy.*;
 import gregtech.block.machine.*;
 import gregtech.blockentity.energy.SignalWireBlockEntity;
@@ -72,7 +73,7 @@ public final class CoverIssueTests {
     private static ItemStack cover(String id) { return new ItemStack(GTTechnological.get(id)); }
     private static ItemStack tool(GTToolType kind) {
         return GTToolItem.create(kind,gregtech.content.material.Materials.Steel,
-                gregtech.api.material.GTMaterialRegistry.get("Wood"));
+                gregtech.internal.material.GTMaterialRegistry.get("Wood"));
     }
     private static net.minecraft.server.level.ServerPlayer player(GameTestHelper h,BlockPos pos) {
 //? if >=1.21.1 {
@@ -176,8 +177,8 @@ public final class CoverIssueTests {
         h.assertTrue(logistics.logisticsCovers().attach(Direction.EAST,cover(LogisticsCoverType.CPU_LOGIC.id())),"display attaches");
 //? if >=1.21.1 {
         /*var adjacent=owner.getBlockPos().east();place(h,adjacent,BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","logistics_wire")));
-        h.getLevel().setBlockAndUpdate(adjacent,h.getLevel().getBlockState(adjacent).setValue(gregtech.api.transport.PipeConnections.propFor(Direction.WEST),true));
-        h.assertTrue(!owner.getBlockState().getValue(gregtech.api.transport.PipeConnections.propFor(Direction.EAST)),"neighbor placement cannot open covered face");
+        h.getLevel().setBlockAndUpdate(adjacent,h.getLevel().getBlockState(adjacent).setValue(gregtech.internal.transport.PipeConnections.propFor(Direction.WEST),true));
+        h.assertTrue(!owner.getBlockState().getValue(gregtech.internal.transport.PipeConnections.propFor(Direction.EAST)),"neighbor placement cannot open covered face");
 *///?} else {
         var adjacent=owner.getBlockPos().east();place(h,adjacent,GTIconSetBlocks.LOGISTICS_WIRE.get());
         h.getLevel().setBlockAndUpdate(adjacent,h.getLevel().getBlockState(adjacent).setValue(ElectricWireBlock.WEST,true));
@@ -186,7 +187,7 @@ public final class CoverIssueTests {
         var player=player(h,owner.getBlockPos());player.setItemInHand(InteractionHand.MAIN_HAND,tool(GTToolType.WIRE_CUTTER));
         h.assertTrue(LogisticsCoverInteraction.use(logistics,h.getLevel(),player,InteractionHand.MAIN_HAND,Direction.EAST).consumesAction()
 //? if >=1.21.1 {
-                /*&&!owner.getBlockState().getValue(gregtech.api.transport.PipeConnections.propFor(Direction.EAST)),"held cutter is consumed by covered face");h.succeed();
+                /*&&!owner.getBlockState().getValue(gregtech.internal.transport.PipeConnections.propFor(Direction.EAST)),"held cutter is consumed by covered face");h.succeed();
 *///?} else {
                 &&!owner.getBlockState().getValue(ElectricWireBlock.EAST),"held cutter is consumed by covered face");h.succeed();
 //?}

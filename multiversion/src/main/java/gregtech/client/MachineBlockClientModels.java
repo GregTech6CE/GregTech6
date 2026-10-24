@@ -13,7 +13,7 @@ import gregtech.GregTech;
 //?}
 
 
-import gregtech.api.machine.BasicMachineSpec;
+import gregtech.internal.machine.BasicMachineSpec;
 
 
 
@@ -21,12 +21,12 @@ import gregtech.api.machine.BasicMachineSpec;
 //? if >=1.21.1 {
 /**///?} else {
 
-import gregtech.api.machine.MachineRegistry;
+import gregtech.internal.machine.MachineRegistry;
 //?}
 
 
 
-import gregtech.api.machine.BurningBoxFuelType;
+import gregtech.internal.machine.BurningBoxFuelType;
 
 import gregtech.block.machine.BasicMachineBlock;
 
@@ -93,7 +93,7 @@ import java.util.Map;
 
 
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+/*@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 *///?} else {
 @Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 //?}

@@ -1,18 +1,18 @@
 package gregtech.block.energy;
 
 //? if >=1.21.1 {
-/*import gregtech.api.tool.GTToolHelper;
+/*import gregtech.internal.tool.GTToolHelper;
 *///?} else {
 //?}
-import gregtech.api.tool.ToolInteractions;
-import gregtech.api.tool.ToolInteractionSpec;
-import gregtech.api.tool.ToolInteractionTarget;
-import gregtech.api.GTWaterloggable;
-import gregtech.api.energy.AxleSpec;
+import gregtech.internal.tool.ToolInteractions;
+import gregtech.internal.tool.ToolInteractionSpec;
+import gregtech.internal.tool.ToolInteractionTarget;
+import gregtech.internal.GTWaterloggable;
+import gregtech.internal.energy.AxleSpec;
 
 //? if >=1.21.1 {
 //?} else {
-import gregtech.api.tool.GTToolHelper;
+import gregtech.internal.tool.GTToolHelper;
 //?}
 import gregtech.blockentity.energy.AxleBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -47,7 +47,7 @@ import java.util.Map;
 
 /** GT6 rotational axle block — RU conductor with pipe-style 6-way connections. */
 //? if >=1.21.1 {
-/*public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, gregtech.api.machine.PipeGeometry.AxleConnectorGeometry, ToolInteractionTarget {
+/*public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, gregtech.internal.machine.PipeGeometry.AxleConnectorGeometry, ToolInteractionTarget {
 *///?} else {
 public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget {
 //?}
@@ -166,10 +166,10 @@ public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBl
         VoxelShape shape = Shapes.box(min, min, min, max, max, max);
         for (Direction dir : Direction.values()) {
             if (!state.getValue(propFor(dir))) continue;
-            double n = gregtech.api.machine.PipeGeometry.axleHalfOf(
+            double n = gregtech.internal.machine.PipeGeometry.axleHalfOf(
                     level.getBlockState(pos.relative(dir)));
-            double[] box = gregtech.api.machine.PipeGeometry.armBox(dir, half, n);
-            if (box != null) shape = Shapes.or(shape, gregtech.api.machine.PipeGeometry.boxShape(box));
+            double[] box = gregtech.internal.machine.PipeGeometry.armBox(dir, half, n);
+            if (box != null) shape = Shapes.or(shape, gregtech.internal.machine.PipeGeometry.boxShape(box));
         }
         return shape;
     }

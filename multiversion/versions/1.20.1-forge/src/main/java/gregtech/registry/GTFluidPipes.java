@@ -1,7 +1,7 @@
 package gregtech.registry;
 
-import gregtech.api.machine.PipeSpec;
-import gregtech.api.material.GTMaterial;
+import gregtech.internal.machine.PipeSpec;
+import gregtech.internal.material.GTMaterial;
 import gregtech.block.machine.FluidPipeBlock;
 import gregtech.block.machine.GTMachineBlockItem;
 import net.minecraft.world.item.Item;
@@ -36,9 +36,9 @@ public final class GTFluidPipes {
         GTBlocks.BLOCK_ITEMS.register(id,
                 () -> new GTMachineBlockItem(block.get(),
                         new Item.Properties().stacksTo(stackSize(size)),
-                        new gregtech.api.machine.MachineSpec(
+                        new gregtech.internal.machine.MachineSpec(
                         id, material.getLocalName(), material.getColor(), 0, 0,
-                        gregtech.api.machine.MachineTextures.BURNING_SOLID, 4.0F, 3.0F)));
+                        gregtech.internal.machine.MachineTextures.BURNING_SOLID, 4.0F, 3.0F)));
         return block;
     }
 

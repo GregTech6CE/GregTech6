@@ -4,7 +4,7 @@
  */
 package gregtech.item;
 
-import gregtech.api.energy.item.IItemEnergy;
+import gregtech.internal.energy.item.IItemEnergy;
 import gregtech.content.tool.ScannerEnergyRules;
 import gregtech.data.GregTechTags;
 import gregtech.item.behavior.BehaviorScanner;

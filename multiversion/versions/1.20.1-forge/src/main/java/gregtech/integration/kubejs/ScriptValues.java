@@ -1,10 +1,10 @@
 package gregtech.integration.kubejs;
 
-import gregtech.api.kubejs.StructureLayoutDocuments;
-import gregtech.api.recipe.data.FluidComponent;
-import gregtech.api.recipe.data.ItemComponent;
-import gregtech.api.recipe.data.ItemResult;
-import gregtech.api.recipe.data.MachineRecipeScript;
+import gregtech.internal.kubejs.StructureLayoutDocuments;
+import gregtech.internal.recipe.data.FluidComponent;
+import gregtech.internal.recipe.data.ItemComponent;
+import gregtech.internal.recipe.data.ItemResult;
+import gregtech.internal.recipe.data.MachineRecipeScript;
 import dev.latvian.mods.rhino.Wrapper;
 
 import java.util.ArrayList;

@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.api.GTWaterloggable;
-import gregtech.api.fluid.FluidRenderLayers;
-import gregtech.api.fluid.FluidVisualPolicy;
-import gregtech.api.fluid.GTWaterParity;
+import gregtech.internal.GTWaterloggable;
+import gregtech.internal.fluid.FluidRenderLayers;
+import gregtech.internal.fluid.FluidVisualPolicy;
+import gregtech.internal.fluid.GTWaterParity;
 import gregtech.block.stone.StoneType;
 import gregtech.block.stone.StoneVariant;
 import gregtech.data.RegisteredFluids;

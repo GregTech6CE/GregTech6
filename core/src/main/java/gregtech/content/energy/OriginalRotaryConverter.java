@@ -3,7 +3,7 @@
  * TileEntityBase11Motor/Bipolar, TE_Behavior_Energy_Stats/Converter/Active_Trinary. */
 package gregtech.content.energy;
 
-import gregtech.api.energy.EnergyNodeSpec;
+import gregtech.internal.energy.EnergyNodeSpec;
 import gregtech.data.GregTechTags;
 import java.math.BigInteger;
 import java.util.function.LongBinaryOperator;

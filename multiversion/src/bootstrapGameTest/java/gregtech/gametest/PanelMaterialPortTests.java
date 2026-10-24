@@ -1,6 +1,7 @@
 package gregtech.gametest;
 import gregtech.api.material.*;
-import gregtech.api.recipe.RecipeInputs;
+import gregtech.internal.material.*;
+import gregtech.internal.recipe.RecipeInputs;
 import gregtech.content.recipe.*;
 import gregtech.content.transport.*;
 import gregtech.data.*;
@@ -31,7 +32,7 @@ public final class PanelMaterialPortTests {
    expected.merge(GTMaterialRegistry.get("Iron"),GTValues.U/9,Math::addExact);
    h.assertTrue(units(data).equals(expected),"CR.REV source material split "+spec.id()+" "+data);
    h.assertTrue(data.components().size()==2&&data.amount()==GTValues.U/6,"largest source component stays primary "+spec.id());
-   var payload=gregtech.api.machine.crucible.CrucibleItemInput.parse(stack);
+   var payload=gregtech.internal.machine.crucible.CrucibleItemInput.parse(stack);
    h.assertTrue(payload.size()==2,"both panel components enter crucible "+spec.id());
    for(var c:data.components())h.assertTrue(payload.stream().anyMatch(p->p.material==c.material()&&p.amount==c.amount()),"crucible uses precise per-item material");
    PanelMaterialRegistration.register();h.assertTrue(ItemMaterialRegistry.get(stack).orElseThrow()==data,"original addItemData preserves existing binding");
@@ -54,7 +55,7 @@ public final class PanelMaterialPortTests {
 *///?} else {
    var unsafe=stack.copy();unsafe.getOrCreateTag().put("BlockEntityTag",new net.minecraft.nbt.CompoundTag());
 //?}
-   h.assertTrue(!ItemMaterialRegistry.canRecover(unsafe)&&RecipeInputs.consume(recipe,List.of(unsafe),List.of(),1)==null&&gregtech.api.machine.crucible.CrucibleItemInput.parse(unsafe).isEmpty(),"stored inventory cannot be destroyed by recovery");
+   h.assertTrue(!ItemMaterialRegistry.canRecover(unsafe)&&RecipeInputs.consume(recipe,List.of(unsafe),List.of(),1)==null&&gregtech.internal.machine.crucible.CrucibleItemInput.parse(unsafe).isEmpty(),"stored inventory cannot be destroyed by recovery");
   }h.succeed();
  }
 }

@@ -1,11 +1,11 @@
 package gregtech.blockentity.machine;
 
-import gregtech.api.energy.EnergyBlockViews;
-import gregtech.api.energy.EnergyTransfer;
-import gregtech.api.energy.FaceConfig;
-import gregtech.api.energy.IEnergyBlock;
-import gregtech.api.machine.PistonEngineState;
-import gregtech.api.machine.RotationEngineSpec;
+import gregtech.internal.energy.EnergyBlockViews;
+import gregtech.internal.energy.EnergyTransfer;
+import gregtech.internal.energy.FaceConfig;
+import gregtech.internal.energy.IEnergyBlock;
+import gregtech.internal.machine.PistonEngineState;
+import gregtech.internal.machine.RotationEngineSpec;
 import gregtech.block.machine.EngineBlock;
 import gregtech.data.GregTechTags;
 import net.minecraft.core.BlockPos;
@@ -114,7 +114,7 @@ public class KineticRotationEngineBlockEntity extends EngineBaseBlockEntity {
                     overvoltagePrevention++;
                     ruBuffer = 0;
                 } else {
-                    gregtech.api.energy.MachineOverload.apply(this, magnitude, type);
+                    gregtech.internal.energy.MachineOverload.apply(this, magnitude, type);
                 }
             }
             return amount;

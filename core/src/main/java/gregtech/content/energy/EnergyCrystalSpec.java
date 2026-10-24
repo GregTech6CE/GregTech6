@@ -2,8 +2,8 @@
  * Loader_MultiTileEntities 14500..14515 and MultiTileEntityBatteryLU8..8192. */
 package gregtech.content.energy;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.data.GregTechTags;
 import gregtech.data.MaterialPrefix;
 import java.util.List;

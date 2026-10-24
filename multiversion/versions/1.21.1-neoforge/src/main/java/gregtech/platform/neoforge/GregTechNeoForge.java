@@ -1,14 +1,14 @@
 package gregtech.platform.neoforge;
 
 import gregtech.api.recipe.MachineWorkCost;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialRoleFlags;
-import gregtech.api.material.ItemMaterialRegistry;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.material.MaterialRoleFlags;
+import gregtech.internal.material.ItemMaterialRegistry;
 import gregtech.content.material.VanillaCompositionLoader;
 import gregtech.content.material.VanillaUnificationLoader;
 import gregtech.platform.neoforge.smeltery.SmelteryRegistries;
-import gregtech.api.mod.ModData;
-import gregtech.api.prefix.PrefixRegistry;
+import gregtech.internal.mod.ModData;
+import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.data.MaterialGroups;
 import gregtech.data.ModReferences;
 import gregtech.registry.GTItems;
@@ -22,10 +22,10 @@ import org.slf4j.Logger;
 /** NeoForge lifecycle adapter. Gameplay registrations are added by subsystem ports. */
 @Mod(GregTechNeoForge.MOD_ID)
 public final class GregTechNeoForge {
-    public static final String MOD_ID = gregtech.api.mod.GregTechIdentity.MOD_ID;
-    public static final String NAMESPACE = gregtech.api.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+    public static final String MOD_ID = gregtech.internal.mod.GregTechIdentity.MOD_ID;
+    public static final String NAMESPACE = gregtech.internal.mod.GregTechIdentity.REGISTRY_NAMESPACE;
     private static final Logger LOGGER = LogUtils.getLogger();
-    private static final gregtech.api.mod.SetupOnce SHARED_SETUP = new gregtech.api.mod.SetupOnce();
+    private static final gregtech.internal.mod.SetupOnce SHARED_SETUP = new gregtech.internal.mod.SetupOnce();
 
     public GregTechNeoForge(IEventBus modEventBus, net.neoforged.fml.ModContainer modContainer) {
         gregtech.internal.addon.AddonCoreServices.bind();
@@ -42,7 +42,7 @@ public final class GregTechNeoForge {
         PrefixRegistry.ensurePrefixesLoaded();
         ModReferences.UNKNOWN.getClass();
         MaterialGroups.Glowstone.getClass();
-        gregtech.api.addon.AddonMaterials.collectContributors();
+        gregtech.internal.addon.AddonMaterials.collectContributors();
         GTMaterialRegistry.init();
         MaterialRoleFlags.apply();
         gregtech.platform.neoforge.fluid.FluidRegistries.register(modEventBus);
@@ -128,7 +128,7 @@ public final class GregTechNeoForge {
         gregtech.registry.GTProjectiles.registerDispensers();
         for (var holder : GTItems.allEntries()) {
             var item = holder.get();
-            var form = (gregtech.api.material.MaterialFormItem) item;
+            var form = (gregtech.internal.material.MaterialFormItem) item;
             ItemMaterialRegistry.register(item, form.getPrefix(), form.getMaterial());
         }
         gregtech.registry.GTDungeonBlocks.registerPotPlants();
@@ -157,7 +157,7 @@ public final class GregTechNeoForge {
         gregtech.content.recipe.MachineRecipeBootstrap.load();
         gregtech.api.addon.GregTechAddons.dispatchRecipesReady(
                 new gregtech.api.addon.GregTechAddon.Context("neoforge", "1.21.1"));
-        gregtech.api.addon.ExclusiveOutputMaps.audit();
+        gregtech.internal.addon.ExclusiveOutputMaps.audit();
         gregtech.content.multiblock.PlainStructureBlocks.resolve();
         LOGGER.info("GT addon API {} ready: {}", gregtech.api.addon.GregTechAddons.API_VERSION,
                 gregtech.api.addon.GregTechAddons.registeredIds());
@@ -175,7 +175,7 @@ public final class GregTechNeoForge {
     private static void registerBlockCompositions() {
         for (var holder : gregtech.registry.GTBlocks.allEntries()) {
             var block = holder.get();
-            java.util.List<gregtech.api.material.MaterialChemistry.WeightedMaterial> weights;
+            java.util.List<gregtech.internal.material.MaterialChemistry.WeightedMaterial> weights;
             if (block instanceof gregtech.block.MaterialBlockLike b)
                 weights = gregtech.block.BlockMaterialWeights.contained(b.material(), b.prefix());
             else if (block instanceof gregtech.block.stone.GTStoneBlock b)
@@ -184,9 +184,9 @@ public final class GregTechNeoForge {
                 weights = gregtech.block.stone.StoneMaterialWeights.contained(b.stoneMaterial(), b.variant(), true);
             else continue;
             var components = weights.stream().filter(w -> w.material().isValid() && w.amount() > 0)
-                    .map(w -> gregtech.api.material.MaterialComponent.of(w.material(), w.amount())).toList();
+                    .map(w -> gregtech.internal.material.MaterialComponent.of(w.material(), w.amount())).toList();
             if (!components.isEmpty()) ItemMaterialRegistry.register(block.asItem(),
-                    new gregtech.api.material.ItemComposition(null, components, "GT6 block composition", true));
+                    new gregtech.internal.material.ItemComposition(null, components, "GT6 block composition", true));
         }
     }
 }

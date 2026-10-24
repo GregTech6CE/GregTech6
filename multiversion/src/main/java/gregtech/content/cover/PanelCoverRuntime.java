@@ -1,6 +1,6 @@
 package gregtech.content.cover;
 
-import gregtech.api.energy.IEnergyBlock;
+import gregtech.internal.energy.IEnergyBlock;
 import gregtech.api.machine.MachineControl;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;

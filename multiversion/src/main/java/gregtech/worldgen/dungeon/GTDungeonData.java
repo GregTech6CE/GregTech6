@@ -4,9 +4,9 @@ package gregtech.worldgen.dungeon;
 /*import gregtech.registry.*;
 *///?} else {
 //?}
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.prefix.BlockMaterialPrefix;
+import gregtech.internal.material.GTMaterial;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.prefix.BlockMaterialPrefix;
 import gregtech.content.plant.BedrockFlowers;
 import gregtech.block.misc.CoinPileBlock;
 import gregtech.block.misc.ColoredGlassBlock;

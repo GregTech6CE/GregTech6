@@ -17,9 +17,9 @@ import net.minecraftforge.fml.common.Mod;
 
 /** GT6 EntityFoodTracker radiation branch: persistent 7-bit dose, no natural decay. */
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID)
+/*@EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID)
 *///?} else {
-@Mod.EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID)
+@Mod.EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID)
 //?}
 public final class PlayerRadiation {
     private static final String KEY = "gt6ce.radiation";

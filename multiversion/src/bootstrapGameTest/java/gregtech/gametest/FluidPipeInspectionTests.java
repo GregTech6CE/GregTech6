@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
-import gregtech.api.material.GTMaterialRegistry;
-import gregtech.api.tool.GTToolType;
+import gregtech.internal.material.GTMaterialRegistry;
+import gregtech.internal.tool.GTToolType;
 import gregtech.block.machine.FluidPipeBlock;
 import gregtech.blockentity.machine.FluidPipeBlockEntity;
 import gregtech.item.GTToolItem;

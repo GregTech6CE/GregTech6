@@ -1,6 +1,6 @@
 package gregtech.content.energy;
 
-import gregtech.api.energy.item.IItemEnergy;
+import gregtech.internal.energy.item.IItemEnergy;
 import gregtech.data.GregTechTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

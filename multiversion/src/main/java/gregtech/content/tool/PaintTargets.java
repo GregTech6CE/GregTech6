@@ -1,6 +1,6 @@
 package gregtech.content.tool;
 
-import gregtech.api.tool.Paintable;
+import gregtech.internal.tool.Paintable;
 import gregtech.block.misc.FixedConstructionColor;
 import gregtech.registry.GTConstructionVariants;
 import net.minecraft.core.BlockPos;

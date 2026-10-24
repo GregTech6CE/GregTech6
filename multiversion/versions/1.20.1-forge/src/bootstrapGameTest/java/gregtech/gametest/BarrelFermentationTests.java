@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.api.recipe.Recipe;
+import gregtech.internal.recipe.Recipe;
 import gregtech.blockentity.machine.TankBlockEntity;
 import gregtech.content.recipe.FermenterFoodRecipes;
 import gregtech.data.MachineRecipeMaps;
