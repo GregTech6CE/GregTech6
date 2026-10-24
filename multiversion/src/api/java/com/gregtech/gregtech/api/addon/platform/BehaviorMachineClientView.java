@@ -1,6 +1,6 @@
-package com.gregtech.gregtech.api.addon.platform;
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
 
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
+package com.gregtech.gregtech.api.addon.platform;
 
 /**
  * Behavior machine state GregTech has synced to the client. A renderer reads this.

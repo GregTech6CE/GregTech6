@@ -1,8 +1,9 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
-
 /**
+ * Internal: not part of the addon contract; may change without notice.
  * Cheap overclocking for one machine. An addon basic machine always uses its declaration.
  * Any machine whose declaration was set uses that boolean. Everyone else keeps {@code legacy}.
  */

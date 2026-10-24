@@ -1,9 +1,9 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 import java.util.List;
 import java.util.Objects;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * One addon recipe machine. Defaults: basic kind, parallel 1,
@@ -89,6 +89,12 @@ public final class RecipeMachine implements AddonMachine {
                 && recipeMap.equals(that.recipeMap) && structureKeys.equals(that.structureKeys);
     }
 
+    @Override public String toString() {
+        return "RecipeMachine[casing=" + casing + ", energy=" + energy + ", auxiliary=" + auxiliary
+                + ", startupEnergy=" + startupEnergy + ", recipeMap=" + recipeMap + ", parallel=" + parallel
+                + ", efficiency=" + efficiency + ", largeRecipe=" + largeRecipe + "]";
+    }
+
     @Override public int hashCode() {
         return Objects.hash(casing, energy, auxiliary, startupEnergy, io, largeRecipe, recipeMap, parallel,
                 efficiency, constantEnergy, cheapOverclocking, cheapOverclockingSpecified, minimumLightAbove,
@@ -106,7 +112,7 @@ public final class RecipeMachine implements AddonMachine {
         private boolean largeRecipe;
         private String recipeMap;
         private int parallel = 1;
-        private int efficiency = 10_000;
+        private int efficiency = AddonLimits.DEFAULT_EFFICIENCY;
         private boolean constantEnergy = true;
         private boolean cheapOverclocking;
         private boolean cheapOverclockingSpecified;
@@ -186,7 +192,7 @@ public final class RecipeMachine implements AddonMachine {
                 if (!auxiliary.anyPacket() && !auxiliary.rangeSpecified())
                     throw new IllegalArgumentException("Recipe machine '" + id
                             + "' auxiliary energy needs a packet range or anyPacket");
-                if (auxiliary.perTick() < 1 || auxiliary.perTick() > 1_000_000_000_000L)
+                if (auxiliary.perTick() < 1 || auxiliary.perTick() > AddonLimits.MAX_PER_TICK)
                     throw new IllegalArgumentException("Invalid auxiliary energy per tick for " + id);
                 if (!auxiliary.capacitySpecified() || auxiliary.capacity() < 1)
                     throw new IllegalArgumentException("Recipe machine '" + id
@@ -212,7 +218,7 @@ public final class RecipeMachine implements AddonMachine {
                 throw new IllegalArgumentException("Invalid recipe map name: " + recipeMap);
             if (parallel < 1)
                 throw new IllegalArgumentException("Invalid parallel for " + id + ": " + parallel);
-            if (efficiency < 1 || efficiency > 100_000)
+            if (efficiency < 1 || efficiency > AddonLimits.MAX_EFFICIENCY)
                 throw new IllegalArgumentException("Invalid efficiency for " + id + ": " + efficiency);
             if (minimumLightAbove < 0 || minimumLightAbove > 15)
                 throw new IllegalArgumentException("Invalid light requirement for " + id + ": " + minimumLightAbove);

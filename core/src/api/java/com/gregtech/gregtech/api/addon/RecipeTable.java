@@ -1,8 +1,8 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 import java.util.Objects;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * A machine recipe table or a fuel table. The fields match. The two factories do not share
@@ -74,6 +74,12 @@ public final class RecipeTable {
                 && name.equals(that.name) && title.equals(that.title) && gui.equals(that.gui);
     }
 
+    @Override public String toString() {
+        return "RecipeTable[name=" + name + ", fuel=" + fuel + ", items=" + inputItems + "/" + outputItems
+                + ", minimalInputItems=" + minimalInputItems + ", fluids=" + inputFluids + "/" + outputFluids
+                + ", minimalInputFluids=" + minimalInputFluids + "]";
+    }
+
     @Override public int hashCode() {
         return Objects.hash(fuel, name, title, gui, inputItems, outputItems, minimalInputItems,
                 inputFluids, outputFluids, minimalInputFluids, minimalInputs,
@@ -128,6 +134,10 @@ public final class RecipeTable {
             if (inputItems < 0 || outputItems < 0 || minimalInputItems < 0
                     || inputFluids < 0 || outputFluids < 0 || minimalInputFluids < 0 || minimalInputs < 0)
                 throw new IllegalArgumentException("Negative slot count on " + name);
+            if (minimalInputItems > inputItems)
+                throw new IllegalArgumentException("Minimal item inputs exceed the input slots on " + name);
+            if (minimalInputFluids > inputFluids)
+                throw new IllegalArgumentException("Minimal fluid inputs exceed the input tanks on " + name);
             return new RecipeTable(fuel, name, title, gui, inputItems, outputItems, minimalInputItems,
                     inputFluids, outputFluids, minimalInputFluids, minimalInputs,
                     needsOutputs, combinePower, bucketIn, bucketOut);

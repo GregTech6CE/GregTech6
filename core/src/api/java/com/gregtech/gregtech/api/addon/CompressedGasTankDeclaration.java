@@ -1,7 +1,8 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 /**
- * SPDX-License-Identifier: LGPL-3.0-or-later.
  * One compressed gas drum. Capacity is the stored millibuckets, not a multiplier.
  * The drum is always gas proof. Acid, plasma and magic are the pressure rating.
  * The temperature ceiling is the material melting point, resolved when machines install.
@@ -14,7 +15,7 @@ public record CompressedGasTankDeclaration(
         boolean plasmaProof,
         boolean magicProof
 ) {
-    public static final int MAX_CAPACITY = 1_024_000_000;
+    public static final int MAX_CAPACITY = AddonLimits.live(AddonLimits.MAX_CAPACITY);
 
     public CompressedGasTankDeclaration {
         if (!AddonNames.matches(AddonNames.LOWER_PATH, id))

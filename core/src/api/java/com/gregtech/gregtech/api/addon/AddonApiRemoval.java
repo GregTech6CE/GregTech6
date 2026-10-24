@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 import java.lang.annotation.ElementType;
@@ -6,7 +8,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * SPDX-License-Identifier: LGPL-3.0-or-later.
  * Planned deletion of an addon API entry that is also
  * {@link Deprecated}{@code (since = "0.N", forRemoval = true)}.
  * {@code removeAt} is the earliest {@code 0.MINOR} that may delete it,

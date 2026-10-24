@@ -1,6 +1,6 @@
-package com.gregtech.gregtech.api.addon;
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
 
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
+package com.gregtech.gregtech.api.addon;
 
 /** What a multiblock cell does. The names match GregTech's structure grid. */
 public enum StructureRole {

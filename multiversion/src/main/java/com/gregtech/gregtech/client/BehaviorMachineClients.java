@@ -70,7 +70,7 @@ public final class BehaviorMachineClients {
         if (!collected) collect();
         BehaviorMachineClient client = CLIENTS.get(addonId + "\0" + machineType);
         if (client == null) return null;
-        return client.screen(menu, inventory, title);
+        return client.screen(machineType, menu, inventory, title);
     }
 
     @Nullable

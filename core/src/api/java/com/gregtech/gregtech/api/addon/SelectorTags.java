@@ -1,11 +1,11 @@
-package com.gregtech.gregtech.api.addon;
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
 
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
+package com.gregtech.gregtech.api.addon;
 
 /** Programmed circuit numbers. 0 through 24 are {@code integrated_circuit_0} through {@code integrated_circuit_24}. */
 public final class SelectorTags {
-    public static final int MIN = 0;
-    public static final int MAX = 24;
+    public static final int MIN = AddonLimits.live(0);
+    public static final int MAX = AddonLimits.live(24);
 
     private SelectorTags() {}
 

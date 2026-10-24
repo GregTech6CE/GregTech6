@@ -1,6 +1,6 @@
-package com.gregtech.gregtech.api.signal;
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
 
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
+package com.gregtech.gregtech.api.signal;
 
 /**
  * A block entity that accepts signal-wire power and is not itself a source.

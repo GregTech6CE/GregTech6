@@ -1,6 +1,8 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
-/** SPDX-License-Identifier: LGPL-3.0-or-later. Shared checks for ore-vein and small-ore declarations. */
+/** Shared checks for ore-vein and small-ore declarations. */
 final class WorldgenNames {
     private WorldgenNames() {}
 

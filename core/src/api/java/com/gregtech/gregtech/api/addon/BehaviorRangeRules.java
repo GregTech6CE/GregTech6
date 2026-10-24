@@ -1,6 +1,11 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
-/** SPDX-License-Identifier: LGPL-3.0-or-later. Range and per-tick budget for behavior-machine world actions. */
+/**
+ * Internal: not part of the addon contract; may change without notice.
+ * Range and per-tick budget for behavior-machine world actions.
+ */
 public final class BehaviorRangeRules {
     /** Largest {@code maxRange} a declaration may name. kTFRU's widest miner is 32. */
     public static final int LIMIT = 32;

@@ -1,6 +1,11 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
-/** SPDX-License-Identifier: LGPL-3.0-or-later. Addon callback failures keep {@link Error} unwrapped. */
+/**
+ * Internal: not part of the addon contract; may change without notice.
+ * Addon callback failures keep {@link Error} unwrapped.
+ */
 public final class AddonFailures {
     private AddonFailures() {}
 
