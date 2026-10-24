@@ -115,7 +115,7 @@ public class Footprint {
             int sizeY = maxY - minY + 1;
             int sizeZ = maxZ - minZ + 1;
             long volume = (long) sizeX * sizeY * sizeZ;
-            int[] dense = volume > 0 && volume <= 1_000_000L ? new int[(int) volume] : new int[0];
+            int[] dense = volume > 0 && volume <= 8L * cells.size() ? new int[(int) volume] : new int[0];
             Map<Long, Integer> overflow = dense.length == 0 ? new HashMap<>() : null;
             for (int index = 0; index < cells.size(); index++) {
                 BlockPos cell = cells.get(index);

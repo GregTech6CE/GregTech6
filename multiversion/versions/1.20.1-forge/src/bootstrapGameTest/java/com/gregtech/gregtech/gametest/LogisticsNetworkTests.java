@@ -33,6 +33,7 @@ public final class LogisticsNetworkTests {
             helper.getLevel().setBlock(cell.at(core.getBlockPos(), Direction.NORTH),
                     LargeMachineParts.block(LogisticsCoreStructure.WALL).defaultBlockState(), 3);
         }
+        helper.assertTrue(StructureTestSupport.ok(core), "the minimal core reforms after replacing processors");
         helper.assertTrue(core.processorCounts().equals(new LogisticsCoreStructure.Counts(1, 1, 1, 1)),
                 "one Versatile processor and 26 cheap walls form a minimal core");
         return core;
@@ -67,6 +68,7 @@ public final class LogisticsNetworkTests {
                         helper.getLevel().getBlockEntity(cpu)).canLogistics(Direction.NORTH),
                 "GT6 seeds interior parts in the initial cube but closed processor faces do not relay");
         helper.getLevel().setBlock(cpu, LargeMachineParts.block(LogisticsCoreStructure.CONTROL).defaultBlockState(), 3);
+        helper.assertTrue(StructureTestSupport.ok(core), "Quadcore control keeps the core formed");
         helper.assertTrue(core.processorCounts().control() == 5 && core.scanNetwork().contains(second),
                 "Quadcore control adds four metres of cubic network range");
         helper.getLevel().setBlock(first, helper.getLevel().getBlockState(first)
