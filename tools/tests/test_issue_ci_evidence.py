@@ -10,7 +10,7 @@ import unittest
 import xml.etree.ElementTree as ET
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'integration'))
-from check_issue_gametest_report import check, EXPECTED, LEGACY_CASE_NAMESPACES, API_CONTRACT_CASES, ENERGY_STORAGE_CASE_NAMESPACES, COVER_REMOVAL_CASE_NAMESPACES, ORE_SOURCE_CASES, ORE_FOLLOWON_CASE_NAMESPACES, MATERIAL_PHASE_CASE_NAMESPACES, expected_namespace
+from check_issue_gametest_report import check, EXPECTED, LEGACY_CASE_NAMESPACES, API_CONTRACT_CASES, ENERGY_STORAGE_CASE_NAMESPACES, COVER_REMOVAL_CASE_NAMESPACES, ORE_SOURCE_CASES, ORE_FOLLOWON_CASE_NAMESPACES, MATERIAL_PHASE_CASE_NAMESPACES, POSITIVE_ORE_CENTRIFUGE_CASE_NAMESPACES, expected_namespace
 import verify_artifacts
 from verify_artifacts import required_forge_mixin_mappings
 
@@ -27,6 +27,16 @@ MATERIAL_PHASE_CASES = (
      'gregtech_issue_audit:test_empty'),
     ('smeltingtargetremovaltests.removedsmeltingtargetretainsconsumeddustacrosshotphase',
      'gregtech_issue_audit:crucible_removal_empty'),
+)
+
+
+POSITIVE_ORE_CENTRIFUGE_CASES = (
+    'positiveorecentrifugetests.copperpurifiedwholehasthreesourcebyproducts',
+    'positiveorecentrifugetests.copperpurifiedtinykeepssourcegradeandwork',
+    'positiveorecentrifugetests.galenapurifiedwholehasthreesourcebyproducts',
+    'positiveorecentrifugetests.galenapurifiedtinykeepssourcegradeandwork',
+    'positiveorecentrifugetests.netherquartzpurifiedwholeusesqualitythreework',
+    'positiveorecentrifugetests.netherquartzpurifiedtinykeepssourcegradeandwork',
 )
 
 
@@ -324,6 +334,38 @@ class IssueEvidenceTests(unittest.TestCase):
                         case.set('classname', 'wrong.' + identity.split('.', 1)[0])
                     else:
                         ET.SubElement(case, outcome, message='material phase contract did not pass')
+                    with self.subTest(platform=platform, identity=identity, outcome=outcome), \
+                            self.assertRaises(ValueError):
+                        self.verify(root, platform)
+
+    def test_positive_ore_centrifuge_exact_cases_and_outcomes_on_both_loaders(self):
+        self.assertEqual(set(POSITIVE_ORE_CENTRIFUGE_CASES), set(POSITIVE_ORE_CENTRIFUGE_CASE_NAMESPACES))
+        self.assertEqual(len(POSITIVE_ORE_CENTRIFUGE_CASES), 6)
+        for platform in ('forge', 'neoforge'):
+            self.verify(self.report(platform), platform)
+            for identity in POSITIVE_ORE_CENTRIFUGE_CASES:
+                self.assertIn(identity, EXPECTED[platform])
+                self.assertEqual(expected_namespace(identity), 'gregtech_ore_source_audit:test_empty')
+                for outcome in ('missing', 'failure', 'error', 'skipped', 'wrong_namespace',
+                                'qualified_wrong_namespace', 'class_suffix_wrong_namespace', 'wrong_method'):
+                    root = self.report(platform)
+                    suite = root.find('testsuite')
+                    case = next(c for c in suite
+                                if c.get('name') == identity.split('.', 1)[1]
+                                and c.get('classname') == expected_namespace(identity))
+                    if outcome == 'missing':
+                        suite.remove(case)
+                    elif outcome == 'wrong_namespace':
+                        case.set('classname', 'gregtech_issue_audit:test_empty')
+                    elif outcome == 'qualified_wrong_namespace':
+                        case.set('name', identity)
+                        case.set('classname', 'gregtech_issue_audit:test_empty')
+                    elif outcome == 'class_suffix_wrong_namespace':
+                        case.set('classname', 'wrong.' + identity.split('.', 1)[0])
+                    elif outcome == 'wrong_method':
+                        case.set('name', 'unrelatedpositiveoretest')
+                    else:
+                        ET.SubElement(case, outcome, message='positive ore centrifuge contract did not pass')
                     with self.subTest(platform=platform, identity=identity, outcome=outcome), \
                             self.assertRaises(ValueError):
                         self.verify(root, platform)
