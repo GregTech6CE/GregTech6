@@ -121,9 +121,9 @@ public final class BumbleBeeScanningTests {
         helper.assertTrue("Wild Bumblebee Drone (Scanned)"
                         .equals(english.get("item.gt6ce.wild_bumblebee_scanned_drone").getAsString()),
                 "the scanned drone is GT6's \"<name> Drone (Scanned)\"");
-        helper.assertTrue("Wild Bumblebee (Dead, Scanned)"
+        helper.assertTrue("Wild Bumblebee (Dead & Scanned)"
                         .equals(english.get("item.gt6ce.wild_bumblebee_scanned_dead").getAsString()),
-                "the scanned dead bee keeps one pair of parentheses");
+                "the scanned dead bee keeps the original GT6 ampersand form");
         helper.succeed();
     }
 
