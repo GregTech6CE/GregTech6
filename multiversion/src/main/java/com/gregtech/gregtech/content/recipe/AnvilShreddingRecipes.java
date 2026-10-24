@@ -93,7 +93,10 @@ public final class AnvilShreddingRecipes {
                 : GTItems.getStack(row.byproduct(), target, row.byproductCount());
         if (input.isEmpty() || output.isEmpty()) return;
         if (row.byproduct() != null && byproduct.isEmpty()) return;
-        long units = Math.max(row.input().getMaterialWeight(),
+        // OP.setOreStats stores oreRaw mAmount=-1 and mWeight=2U. Handler costs use mAmount,
+        // hence this row is governed by its15U/8 outputs (30*(quality+1)), not ore weight2U.
+        long inputUnits = row.input() == MaterialPrefix.oreRaw ? -1 : row.input().getMaterialWeight();
+        long units = Math.max(inputUnits,
                 row.output().getMaterialWeight() * row.outCount()
                         + (row.byproduct() == null ? 0 : row.byproduct().getMaterialWeight() * row.byproductCount()));
         // GT6 Row 16 EU/t with multiplier 16 on the shredding handler.

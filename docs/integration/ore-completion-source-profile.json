@@ -1,0 +1,170 @@
+{
+  "scope": "Finite slurry recycling, Anvil rock/raw work and TiFe fractional Smelter; not all-material parity",
+  "sources": [
+    {
+      "snapshot": "gregtech6-original",
+      "path": "src/main/java/gregtech/loaders/c/Loader_Recipes_Ores.java",
+      "sha256": "b94dc194c7557f341ebacd895cc18c2fada8c5e4cd33b45784c971f921db4aa3"
+    },
+    {
+      "snapshot": "gregtech6-original",
+      "path": "src/main/java/gregtech/loaders/c/Loader_Recipes_Handlers.java",
+      "sha256": "b6e4973cd8fe16038868f6fafd28528234b8299c6da8f448aad18414055c382b"
+    },
+    {
+      "snapshot": "gregtech6-original",
+      "path": "src/main/java/gregtech/loaders/b/Loader_OreProcessing.java",
+      "sha256": "bade43317484adffdca7b6bbaf3dc910da424d8ad3bcbe89235979044546c2c3"
+    },
+    {
+      "snapshot": "gregtech6-original",
+      "path": "src/main/java/gregapi/recipes/handlers/RecipeMapHandlerPrefix.java",
+      "sha256": "de005fa316ae3d9ebddf69456c47a4e1e0ec38b9983d9fa9d1809e2bd9e58156"
+    },
+    {
+      "snapshot": "gregtech6-original",
+      "path": "src/main/java/gregapi/recipes/handlers/RecipeMapHandlerPrefixShredding.java",
+      "sha256": "7258570a18592af7d8c6f8f3aced44464c57683497ac8eb4a6ff1badbbd902e6"
+    },
+    {
+      "snapshot": "gregtech6-original",
+      "path": "src/main/java/gregapi/oredict/OreDictPrefix.java",
+      "sha256": "89c94fd1149297496e2904a7897b3ab33c02991009b232df0d70febabb8888f5"
+    },
+    {
+      "snapshot": "gregtech6-original",
+      "path": "src/main/java/gregapi/data/MT.java",
+      "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2"
+    },
+    {
+      "snapshot": "gregtech6-original",
+      "path": "src/main/java/gregapi/data/CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+    },
+    {
+      "snapshot": "gregtech6-original",
+      "path": "src/main/java/gregapi/data/FL.java",
+      "sha256": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3"
+    },
+    {
+      "snapshot": "gregtech6-w",
+      "path": "src/main/java/gregtech/loaders/c/Loader_Recipes_Ores.java",
+      "sha256": "78d0542179b63bd6206377da7e23a2e70543f8b8086afebb1e182e7ff3461423"
+    },
+    {
+      "snapshot": "gregtech6-w",
+      "path": "src/main/java/gregtech/loaders/c/Loader_Recipes_Handlers.java",
+      "sha256": "229315ca6658fa0251e6aeeedce576347fe95da257ff905633b942b420a85a63"
+    },
+    {
+      "snapshot": "gregtech6-w",
+      "path": "src/main/java/gregtech/loaders/b/Loader_OreProcessing.java",
+      "sha256": "d90b07abed4361a74080c4e46703e4cb269dcabd36a1370a7a95600642e8ac72"
+    },
+    {
+      "snapshot": "gregtech6-w",
+      "path": "src/main/java/gregapi/recipes/handlers/RecipeMapHandlerPrefix.java",
+      "sha256": "4c479371ac33534468fd083ab257ac60634271f71cccf851039e5df2357bd26e"
+    },
+    {
+      "snapshot": "gregtech6-w",
+      "path": "src/main/java/gregapi/recipes/handlers/RecipeMapHandlerPrefixShredding.java",
+      "sha256": "eab673ed21bb8794e1c0bb149b7c388042fd3385db745467962ceece0d25f116"
+    },
+    {
+      "snapshot": "gregtech6-w",
+      "path": "src/main/java/gregapi/oredict/OreDictPrefix.java",
+      "sha256": "31d1eba6d8895b5360a48150f013d60021249bb17fdf1f67c4e2b3724bc4d238"
+    },
+    {
+      "snapshot": "gregtech6-w",
+      "path": "src/main/java/gregapi/data/MT.java",
+      "sha256": "9530c229de3483ab7be300c49ce1e08e44bcabfe9bdebd7844becefbd4782728"
+    },
+    {
+      "snapshot": "gregtech6-w",
+      "path": "src/main/java/gregapi/data/CS.java",
+      "sha256": "cc8051f7ab2c17e28a6c5d690267a39ebb5ce35cc112ceeb5e055d4e7be9fda7"
+    },
+    {
+      "snapshot": "gregtech6-w",
+      "path": "src/main/java/gregapi/data/FL.java",
+      "sha256": "98f3266c57fd267fdac6a4a5d54ff0fc241cbe31e028871d067b11caa8ab274a"
+    }
+  ],
+  "units": {
+    "U": 648648000,
+    "U9": 72072000
+  },
+  "slurry": {
+    "source_lines": {
+      "original": "Loader_Recipes_Ores45-49",
+      "w": "Loader_Recipes_Ores49-53"
+    },
+    "waters": [
+      "Water",
+      "MnWtr",
+      "DistW",
+      "SpDew"
+    ],
+    "mixer": {
+      "whole": {
+        "item": "dust SluiceSand1",
+        "water_mb": 900,
+        "slurry_mb": 900,
+        "ticks": 16,
+        "eut": 16
+      },
+      "tiny": {
+        "item": "OM.dust(SluiceSand,U9)",
+        "water_mb": 100,
+        "slurry_mb": 100,
+        "ticks": 16,
+        "eut": 16
+      }
+    },
+    "drying": {
+      "slurry_mb": 100,
+      "distilled_water_mb": 50,
+      "output": "OM.dust(SluiceSand,U9)",
+      "ticks": 100,
+      "eut": 16
+    },
+    "token_contract": "Additive omdu exact material units delegates to existing OM fallback. Legacy omd thousandths and w vanilla water semantics unchanged."
+  },
+  "anvil": {
+    "source_lines": {
+      "original": "Handlers157,166; Prefix costs226; OreDictPrefix174-180",
+      "w": "Handlers162,171; Prefix costs248; OreDictPrefix188-194"
+    },
+    "rock": "targetPulver dustSmall9,36*(quality+1) ticks,16GU",
+    "raw": "crushed1+crushedTiny6,30*(quality+1) ticks,16GU; MORTAR+selfcrush",
+    "empty_slot": "Actual AnvilWorkInputs.consume must accept empty and reject occupied second slot; generic map lookup alone is not this gameplay contract."
+  },
+  "fractional_thermal": {
+    "materials": [
+      {
+        "id": 220,
+        "name": "Titanium",
+        "small_mb": 36,
+        "small_ticks": 129,
+        "tiny_mb": 16,
+        "tiny_ticks": 57
+      },
+      {
+        "id": 260,
+        "name": "Iron",
+        "small_mb": 36,
+        "small_ticks": 207,
+        "tiny_mb": 16,
+        "tiny_ticks": 92
+      }
+    ],
+    "source_lines": {
+      "original": "Loader_OreProcessing240-291",
+      "w": "Loader_OreProcessing244-296"
+    },
+    "melter": "No generic row: reviewed source targets lack FURNACE/Calcite exception",
+    "scope": "Unchanged canonical builtin inputs, per-form semantic composition and exact generated molten identity; independent rows never removed."
+  }
+}

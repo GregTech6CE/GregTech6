@@ -5,16 +5,17 @@ from pathlib import Path
 INPUT_PROFILES=(('cohort','gregtech_nonore_cohort_audit',3),('restoring','gregtech_nonore_tag_audit',1),('stop','gregtech_nonore_stop_audit',1))
 SIFTING_PROFILES=(('sifting','gregtech_nonore_sifting_audit',5),('ice','gregtech_nonore_ice_sifting_audit',1),('ice_winner','gregtech_nonore_ice_winner_audit',1),('startup_grade','gregtech_nonore_ice_startup_grade_audit',1))
 BATCH_PROFILES=(('batch','gregtech_ore_alignment_batch',11),('raw_restoring','gregtech_nonore_raw_lifecycle_audit',1),('raw_winner','gregtech_nonore_raw_winner_audit',1))
-PROFILES=INPUT_PROFILES+SIFTING_PROFILES+BATCH_PROFILES
+COMPLETION_PROFILES=(('completion','gregtech_ore_completion_batch',6),)
+PROFILES=INPUT_PROFILES+SIFTING_PROFILES+BATCH_PROFILES+COMPLETION_PROFILES
 PROFILE_CONFIG={
  'cohort':('gt6-nonore-cohort-',None), 'restoring':('gt6-nonore-tag-','TAG'),
  'stop':('gt6-nonore-stop-','STOP'), 'sifting':('gt6-nonore-sifting-',None),
  'ice':('gt6-nonore-ice-','ICE'), 'ice_winner':('gt6-nonore-ice-winner-','ICE_WINNER'),
  'startup_grade':('gt6-nonore-ice-startup-grade-','ICE_STARTUP_GRADE'),
  'batch':('gt6-ore-alignment-',None),'raw_restoring':('gt6-nonore-raw-lifecycle-','RAW'),
- 'raw_winner':('gt6-nonore-raw-winner-','RAW_WINNER')}
+ 'raw_winner':('gt6-nonore-raw-winner-','RAW_WINNER'),'completion':('gt6-ore-completion-',None)}
 def profiles(group):
- return {'all':PROFILES,'inputs':INPUT_PROFILES,'sifting':SIFTING_PROFILES,'batch':BATCH_PROFILES}[group]
+ return {'all':PROFILES,'inputs':INPUT_PROFILES,'sifting':SIFTING_PROFILES,'batch':BATCH_PROFILES,'completion':COMPLETION_PROFILES}[group]
 def profile_environment(name,run,nonce,inherited):
  env=dict(inherited)
  # Isolated profiles must not inherit a previous profile's directory/nonce.
@@ -28,7 +29,7 @@ def profile_environment(name,run,nonce,inherited):
 def checker_arguments(root,name,xml,log,exitf,run,nonce):
  args=[sys.executable,str(root/'tools/integration'/('check_nonore_'+name+'.py')),
        '--xml',str(xml),'--exit-file',str(exitf),'--log',str(log)]
- if name in ('cohort','sifting','batch'):args+=['--phase','fixed']
+ if name in ('cohort','sifting','batch','completion'):args+=['--phase','fixed']
  else:args+=['--run-directory',str(run)]
  if name in ('stop','ice','ice_winner','startup_grade','raw_restoring','raw_winner'):args+=['--nonce',nonce]
  return args
@@ -63,7 +64,7 @@ def stop_group(proc):
  proc.wait(timeout=30)
 def main():
  for sig in (signal.SIGTERM,signal.SIGINT):signal.signal(sig,interrupted)
- p=argparse.ArgumentParser();p.add_argument('--loader',choices=('forge','neoforge'),required=True);p.add_argument('--profile-group',choices=('all','inputs','sifting','batch'),default='all');p.add_argument('--gradle-executable',type=Path);p.add_argument('--gradle-wrapper-mode',action='store_true');a=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('--loader',choices=('forge','neoforge'),required=True);p.add_argument('--profile-group',choices=('all','inputs','sifting','batch','completion'),default='all');p.add_argument('--gradle-executable',type=Path);p.add_argument('--gradle-wrapper-mode',action='store_true');a=p.parse_args()
  root=Path(__file__).resolve().parents[2]
  executable=executable_path(root,a.gradle_executable)
  if a.gradle_wrapper_mode and a.gradle_executable is None:raise ValueError('wrapper mode requires explicit executable')

@@ -1,7 +1,7 @@
 import os,unittest,subprocess,sys,signal,tempfile
 from pathlib import Path
 from unittest.mock import patch
-from tools.integration.run_nonore_profiles import PROFILES,INPUT_PROFILES,SIFTING_PROFILES,BATCH_PROFILES,PROFILE_CONFIG,profiles,profile_environment,checker_arguments,command,stop_group,interrupted,executable_path
+from tools.integration.run_nonore_profiles import PROFILES,INPUT_PROFILES,SIFTING_PROFILES,BATCH_PROFILES,COMPLETION_PROFILES,PROFILE_CONFIG,profiles,profile_environment,checker_arguments,command,stop_group,interrupted,executable_path
 class NonOreCIContract(unittest.TestCase):
  def test_exact_profile_partition_and_commands(self):
   self.assertEqual(INPUT_PROFILES,(('cohort','gregtech_nonore_cohort_audit',3),('restoring','gregtech_nonore_tag_audit',1),('stop','gregtech_nonore_stop_audit',1)))
@@ -50,8 +50,8 @@ class NonOreCIContract(unittest.TestCase):
 
  def test_exact_sifting_partition_and_no_environment_leakage(self):
   self.assertEqual(SIFTING_PROFILES,(('sifting','gregtech_nonore_sifting_audit',5),('ice','gregtech_nonore_ice_sifting_audit',1),('ice_winner','gregtech_nonore_ice_winner_audit',1),('startup_grade','gregtech_nonore_ice_startup_grade_audit',1)))
-  self.assertEqual(PROFILES,INPUT_PROFILES+SIFTING_PROFILES+BATCH_PROFILES)
-  self.assertEqual(sum(p[2] for p in PROFILES),26)
+  self.assertEqual(PROFILES,INPUT_PROFILES+SIFTING_PROFILES+BATCH_PROFILES+COMPLETION_PROFILES)
+  self.assertEqual(sum(p[2] for p in PROFILES),32)
   self.assertEqual(profiles('inputs'),INPUT_PROFILES);self.assertEqual(profiles('sifting'),SIFTING_PROFILES)
   self.assertEqual(profiles('all'),PROFILES)
   with self.assertRaises(KeyError):profiles('unknown')
@@ -65,15 +65,15 @@ class NonOreCIContract(unittest.TestCase):
    self.assertEqual({k:v for k,v in env.items() if k.startswith('GT6_NONORE_')},expected)
    args=checker_arguments(Path('/repo'),name,Path('/x'),Path('/l'),Path('/e'),Path('/fresh'),'a'*32)
    self.assertIn('/repo/tools/integration/check_nonore_'+name+'.py',args)
-   self.assertEqual('--phase' in args,name in ('cohort','sifting','batch'))
+   self.assertEqual('--phase' in args,name in ('cohort','sifting','batch','completion'))
    self.assertEqual('--nonce' in args,name in ('stop','ice','ice_winner','startup_grade','raw_restoring','raw_winner'))
-   self.assertEqual('--run-directory' in args,name not in ('cohort','sifting','batch'))
+   self.assertEqual('--run-directory' in args,name not in ('cohort','sifting','batch','completion'))
  def test_ci_group_time_budgets_and_unique_artifacts(self):
   root=Path(__file__).resolve().parents[2];s=(root/'.github/workflows/nonore-regressions.yml').read_text()
   self.assertIn('timeout-minutes: ${{ matrix.timeout }}',s)
   import re
-  jobs=re.findall(r'- loader: (forge|neoforge)\s+group: (inputs|sifting|batch)\s+timeout: (\d+)',s)
-  self.assertEqual(jobs,[('forge','inputs','90'),('neoforge','inputs','90'),('forge','sifting','120'),('neoforge','sifting','120'),('forge','batch','90'),('neoforge','batch','90')])
+  jobs=re.findall(r'- loader: (forge|neoforge)\s+group: (inputs|sifting|batch|completion)\s+timeout: (\d+)',s)
+  self.assertEqual(jobs,[('forge','inputs','90'),('neoforge','inputs','90'),('forge','sifting','120'),('neoforge','sifting','120'),('forge','batch','90'),('neoforge','batch','90'),('forge','completion','45'),('neoforge','completion','45')])
   self.assertEqual(s.count('group: inputs'),2);self.assertEqual(s.count('group: sifting'),2)
   self.assertEqual(s.count('timeout: 90'),4);self.assertEqual(s.count('timeout: 120'),2)
   self.assertIn('--profile-group ${{ matrix.group }}',s)
@@ -99,7 +99,7 @@ class NonOreCIContract(unittest.TestCase):
   import json
   self.assertEqual(BATCH_PROFILES,(('batch','gregtech_ore_alignment_batch',11),('raw_restoring','gregtech_nonore_raw_lifecycle_audit',1),('raw_winner','gregtech_nonore_raw_winner_audit',1)))
   self.assertEqual(profiles('batch'),BATCH_PROFILES)
-  self.assertEqual(len(PROFILES),10);self.assertEqual(len({p[0] for p in PROFILES}),10);self.assertEqual(len({p[1] for p in PROFILES}),10)
+  self.assertEqual(len(PROFILES),11);self.assertEqual(len({p[0] for p in PROFILES}),11);self.assertEqual(len({p[1] for p in PROFILES}),11)
   self.assertEqual(sum(p[2] for p in INPUT_PROFILES+SIFTING_PROFILES),13);self.assertEqual(sum(p[2] for p in BATCH_PROFILES),13)
   root=Path(__file__).resolve().parents[2]
   d=json.loads((root/'docs/integration/ore-magnetic-positive-source-profile.json').read_text())
@@ -110,3 +110,15 @@ class NonOreCIContract(unittest.TestCase):
   workflow=(root/'.github/workflows/nonore-regressions.yml').read_text()
   self.assertEqual(workflow.count('group: batch'),2)
   for module in ['test_nonore_batch_checker','test_nonore_raw_restoring_checker','test_nonore_raw_winner_checker']:self.assertIn('tools.tests.'+module,workflow)
+
+ def test_exact_completion_membership_and_existing_groups_unchanged(self):
+  self.assertEqual(COMPLETION_PROFILES,(("completion","gregtech_ore_completion_batch",6),))
+  self.assertEqual(profiles('completion'),COMPLETION_PROFILES)
+  self.assertEqual(PROFILES[:-1],INPUT_PROFILES+SIFTING_PROFILES+BATCH_PROFILES)
+  args=checker_arguments(Path('/repo'),'completion',Path('/x'),Path('/l'),Path('/e'),Path('/fresh'),'a'*32)
+  self.assertIn('/repo/tools/integration/check_nonore_completion.py',args)
+  self.assertEqual(args[-2:],['--phase','fixed']);self.assertNotIn('--nonce',args);self.assertNotIn('--run-directory',args)
+  self.assertEqual(PROFILE_CONFIG['completion'],('gt6-ore-completion-',None))
+  root=Path(__file__).resolve().parents[2];workflow=(root/'.github/workflows/nonore-regressions.yml').read_text()
+  self.assertEqual(workflow.count('group: completion'),2);self.assertEqual(workflow.count('timeout: 45'),2)
+  for module in ['test_nonore_completion_checker','test_slurry_recycling_migration']:self.assertIn('tools.tests.'+module,workflow)

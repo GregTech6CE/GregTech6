@@ -13,6 +13,7 @@ Sets: chem (default), other, potions, food, extruder.
 
 Spec grammar:
   items:  omd:<Mat>:<mU>     OM.dust(material, mU/1000 * U)
+          omdu:<Mat>:<source-U-long>  exact original-unit dust amount (bounded migrated rows)
           i:<prefix>:<Mat>:<count>
           tag:<N>            selector tag (catalyst)
   fluids: m:<Mat>:<amount>   legacy producer-dependent material-fluid amount
@@ -795,9 +796,14 @@ final class {CLASS_NAME} {{
         from integration.migrate_alumina_fluid_units import migrate_chemistry
         content = migrate_chemistry(content, _NativePath(SRC),
                                     _NativePath(GT6) / "gregapi/data/CS.java")
+    if SET == "ores":
+        from integration.migrate_slurry_recycling import migrate_ores
+        content = migrate_ores(content, _NativePath(SRC),
+                               _NativePath(GT6) / "gregapi/data/CS.java",
+                               _NativePath(GT6) / "gregapi/data/FL.java")
     with open(OUT, "w", encoding="utf-8") as f:
         f.write(content)
-    print(f"[{SET}] translated {parsed_calls} / {total} RM calls -> {len(ok)} recipes "
+    print(f"[{SET}] translated {parsed_calls} / {total} RM calls -> {len(ok) + (6 if SET == 'ores' else 0)} recipes "
           f"({os.path.basename(OUT)})")
 
 

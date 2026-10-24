@@ -63,6 +63,17 @@ public final class ReviewedCinnabarThermalRecipes {
   // Independent paired original literals: floor(weight*(melting-293)/1600), density4.54/7.874.
   long ticks=material.getId()==220?519:830;
   MachineRecipeMaps.Smelter.addRecipe1(true,16,ticks,input,(FluidStack)null,fluid,new ItemStack[0]);
+  // Finite extension of this reviewed Ti/Fe single-material source branch, not generic recycling.
+  // Missing forms stay missing; explicit changed compositions defer independently, never deleted.
+  for(var prefix:new MaterialPrefix[]{MaterialPrefix.dustSmall,MaterialPrefix.dustTiny}){
+   var fraction=GTItems.getStack(prefix,material,1);
+   long amount=prefix==MaterialPrefix.dustSmall?U/4:U/9;
+   if(fraction.isEmpty()||!unchangedInput(fraction,prefix,material,amount))continue;
+   boolean tiny=prefix==MaterialPrefix.dustTiny;
+   long fractionTicks=material.getId()==220?(tiny?57:129):(tiny?92:207);
+   var fractionFluid=fluid.copy();fractionFluid.setAmount(tiny?16:36);
+   MachineRecipeMaps.Smelter.addRecipe1(true,16,fractionTicks,fraction,(FluidStack)null,fractionFluid,new ItemStack[0]);
+  }
   return true;
  }
  private static boolean unchangedInput(ItemStack stack,MaterialPrefix prefix,GTMaterial material,long amount){
