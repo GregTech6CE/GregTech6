@@ -1,6 +1,6 @@
-package com.gregtech.gregtech.api.addon;
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
 
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
+package com.gregtech.gregtech.api.addon;
 
 /**
  * Exact accounting for one packet-shaped energy request. The sign of {@code packetSize}

@@ -1,15 +1,18 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 import java.util.List;
 import java.util.Objects;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * Item and fluid faces for a recipe machine. Leaving {@link RecipeMachine.Builder#io(MachineIo)}
  * unset keeps six-side item and fluid access and no automatic face. Once this object is set,
  * a channel that was not named is an empty face list, not the six-side default.
  * Energy faces are not here; they stay on {@link EnergyInput}.
+ * An automatic face is independent of the matching face list: the machine pushes on the automatic
+ * face, while the list only limits what pipes may take or insert. An automatic face does not have
+ * to appear in that list.
  */
 public final class MachineIo {
     private final List<MachineFace> itemInputs;
@@ -45,10 +48,10 @@ public final class MachineIo {
         this.fluidInputSource = fluidInputSource;
     }
 
-    public List<MachineFace> itemInputs() { return List.copyOf(itemInputs); }
-    public List<MachineFace> itemOutputs() { return List.copyOf(itemOutputs); }
-    public List<MachineFace> fluidInputs() { return List.copyOf(fluidInputs); }
-    public List<MachineFace> fluidOutputs() { return List.copyOf(fluidOutputs); }
+    public List<MachineFace> itemInputs() { return itemInputs; }
+    public List<MachineFace> itemOutputs() { return itemOutputs; }
+    public List<MachineFace> fluidInputs() { return fluidInputs; }
+    public List<MachineFace> fluidOutputs() { return fluidOutputs; }
     public MachineFace itemAutoInput() { return itemAutoInput; }
     public MachineFace itemAutoOutput() { return itemAutoOutput; }
     public MachineFace fluidAutoInput() { return fluidAutoInput; }
@@ -76,6 +79,12 @@ public final class MachineIo {
                 && Objects.equals(fluidInputSource, that.fluidInputSource);
     }
 
+    @Override public String toString() {
+        return "MachineIo[itemIn=" + itemInputs + ", itemOut=" + itemOutputs + ", fluidIn=" + fluidInputs
+                + ", fluidOut=" + fluidOutputs + ", itemAutoIn=" + itemAutoInput + ", itemAutoOut=" + itemAutoOutput
+                + ", fluidAutoIn=" + fluidAutoInput + ", fluidAutoOut=" + fluidAutoOutput + "]";
+    }
+
     @Override public int hashCode() {
         return Objects.hash(itemInputs, itemOutputs, fluidInputs, fluidOutputs,
                 itemAutoInput, itemAutoOutput, fluidAutoInput, fluidAutoOutput,
@@ -100,10 +109,10 @@ public final class MachineIo {
 
         private Builder() {}
 
-        public Builder itemInputs(MachineFace... faces) { itemInputs = faces == null ? List.of() : List.of(faces); return this; }
-        public Builder itemOutputs(MachineFace... faces) { itemOutputs = faces == null ? List.of() : List.of(faces); return this; }
-        public Builder fluidInputs(MachineFace... faces) { fluidInputs = faces == null ? List.of() : List.of(faces); return this; }
-        public Builder fluidOutputs(MachineFace... faces) { fluidOutputs = faces == null ? List.of() : List.of(faces); return this; }
+        public Builder itemInputs(MachineFace... faces) { itemInputs = MachineFace.listed(faces); return this; }
+        public Builder itemOutputs(MachineFace... faces) { itemOutputs = MachineFace.listed(faces); return this; }
+        public Builder fluidInputs(MachineFace... faces) { fluidInputs = MachineFace.listed(faces); return this; }
+        public Builder fluidOutputs(MachineFace... faces) { fluidOutputs = MachineFace.listed(faces); return this; }
         public Builder itemAutoInput(MachineFace face) { itemAutoInput = requireFace(face); return this; }
         public Builder itemAutoOutput(MachineFace face) { itemAutoOutput = requireFace(face); return this; }
         public Builder fluidAutoInput(MachineFace face) { fluidAutoInput = requireFace(face); return this; }

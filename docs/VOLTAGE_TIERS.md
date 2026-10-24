@@ -24,6 +24,6 @@ index   name    maximum EU packet size (V)
 15      XV      8589934592
 ```
 
-`tierMax` returns the first tier ceiling containing the absolute packet size; `tierMin` uses the original lower-tier boundary lookup. EU uses packet size × packet count, rather than a voltage-free total stored energy number. Forge Energy conversion remains a separate adapter; one API constant does not prove all high-tier machines/wires/bridges have been exercised. The final two corrections can affect any addon/layout that assumed the former sentinels; no universal saved-world migration is claimed.
+`tierMax` returns the first tier ceiling containing the absolute packet size; above the table it returns `VOLTAGES.length` (16), as original GT6 does, so it is not always a valid index. `tierMin` uses the original lower-tier boundary lookup and stays within 0..15. `Long.MIN_VALUE` keeps GT6's signed-magnitude result, tier 0. EU uses packet size × packet count, rather than a voltage-free total stored energy number. Forge Energy conversion remains a separate adapter; one API constant does not prove all high-tier machines/wires/bridges have been exercised. The final two corrections can affect any addon/layout that assumed the former sentinels; no universal saved-world migration is claimed.
 
 原始依据：本地只读原GT6 `src/main/java/gregapi/data/CS.java:146–157`。来源SHA和本批检查见 `core/provenance/addon-voltage-20261002.json`、`docs/integration/verification/addon-voltage-20261002.md`。

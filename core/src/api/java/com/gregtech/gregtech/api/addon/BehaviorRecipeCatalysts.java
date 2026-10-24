@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 import java.util.ArrayList;
@@ -7,9 +9,8 @@ import java.util.Objects;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
-
 /**
+ * Internal: not part of the addon contract; may change without notice.
  * Display-only catalyst rows for a behavior machine.
  * An empty name list does not change the index JEI and EMI already built.
  */

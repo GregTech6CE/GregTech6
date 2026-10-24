@@ -1,8 +1,13 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.recipe;
 
 import java.math.BigInteger;
 
-/** SPDX-License-Identifier: LGPL-3.0-or-later. Recipe work costs and bounded progress arithmetic; machine adapters own job transitions. */
+/**
+ * Internal: not part of the addon contract; may change without notice.
+ * Recipe work costs and bounded progress arithmetic; machine adapters own job transitions.
+ */
 public final class MachineWorkCost {
     public record Cost(long minimumPower, long totalWork) {}
 

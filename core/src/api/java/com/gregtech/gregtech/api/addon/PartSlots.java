@@ -1,9 +1,9 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 import java.util.List;
 import java.util.Objects;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * Item slots on one structure part. Faces are relative to the part's horizontal facing.
@@ -45,6 +45,11 @@ public final class PartSlots {
         if (!(other instanceof PartSlots that)) return false;
         return count == that.count && stackLimit == that.stackLimit && drops == that.drops
                 && insertFaces.equals(that.insertFaces) && extractFaces.equals(that.extractFaces);
+    }
+
+    @Override public String toString() {
+        return "PartSlots[count=" + count + ", stackLimit=" + stackLimit + ", insertFaces=" + insertFaces
+                + ", extractFaces=" + extractFaces + ", drops=" + drops + "]";
     }
 
     @Override public int hashCode() {

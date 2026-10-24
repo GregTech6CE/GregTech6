@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon.platform;
 
 //? if >=1.21.1 {
@@ -7,8 +9,6 @@ import net.minecraftforge.fluids.FluidStack;
 //?}
 import com.gregtech.gregtech.api.addon.InstalledService;
 import net.minecraft.world.level.material.Fluid;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /** Loader entry for types whose signatures differ between Forge and NeoForge. GregTech installs it once. */
 public final class AddonLoader {
@@ -27,7 +27,10 @@ public final class AddonLoader {
 
     /** GT implementation contract; addon consumers use {@link AddonFluids} and {@link AddonRecipes}. */
     public interface Services {
-        /** Null when {@code name} is not a registered GregTech fluid field. */
+        /**
+         * {@link FluidStack#EMPTY} for an unknown field, a null argument, or a non-positive amount.
+         * Never null.
+         */
         FluidStack fluid(String name, AddonFluids.Kind kind, int millibuckets);
 
         /** Null when no machine recipe map uses {@code name}. */

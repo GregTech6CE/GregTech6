@@ -1,6 +1,6 @@
-package com.gregtech.gregtech.api.addon;
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
 
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
+package com.gregtech.gregtech.api.addon;
 
 /**
  * Prefix names GregTech already generates, such as {@code dust}, {@code dustTiny}, {@code ingot} and {@code plantGtBerry},

@@ -1,5 +1,17 @@
 # 实现选择记录
 
+## 2026-10-24 / 附属声明类型的一致性与关系校验（卡 50）
+
+共享上限收进包内 `AddonLimits`：能量 1e12、容量 1,024,000,000 mB、效率上限 100,000、默认 10,000（万分之一）。正则统一为 `AddonNames` 的预编译模式（纹理、段路径、资源路径、命名空间、前缀名），类内专用模式改为私有 `Pattern`；`LayoutRepeat.absoluteUp` 改用 `Math.addExact` / `Math.multiplyExact`。null 约定按位置划分：record canonical 构造器 NPE，builder/工厂/`build()` IAE，varargs 里的 null 元素走 `MachineFace.distinct` 的 Missing 消息。
+
+能量声明的面顺序不参与相等性，`faces()` 保留写入顺序；`capacity(0)` 在建完后等同未写。机器与零件的旧 `item` / `setItem` 语义各自保留，文档列出差异。`Line` 的 duration、presence 数量、null 输出，`CrucibleContent` 的负数，以及 `StackComposition.of` 的无效组分都保留改写，只补 Javadoc。
+
+注册期新增拒绝：`RecipeTable` 的最少输入不得超过输入格数；`MachineTuning` 三者同时给出时能量必须落在区间内（合并后的行也经同一 canonical 构造器检查，`MachineTuningRules` 不再重复查一次）；`MaterialDeclaration` 的矿副产不得重复（自引用允许）；`MaterialComposition` / `CrucibleReactionDeclaration` 的组分不得重复；`MaterialFormRequest` 的两个名字按材料名和前缀名规则校验。`MaterialDeclaration` 熔点高于沸点只告警；`MachineIo` 的自动面不要求出现在对应面列表（机器主动推送与管道被动存取独立）；前缀的 `materials` 与 `excludedMaterials` 重叠时排除优先。见[契约核对](ADDON_API_CONTRACT_AUDIT_20261024.md)。
+
+## 2026-10-24 / 附属 API 契约修复（卡 49）
+
+`AddonRecipes.Line` 的 `equals` / `hashCode` 从对象身份改为按值：物品栈比较物品、数量和原生数据，流体栈比较流体、数量和原生数据。1.20.1 Forge 的 `FluidStack.equals` 只比流体和 NBT（忽略数量），1.21.1 NeoForge 不覆写 `equals`（对象身份），所以两侧都显式比较，空栈哈希固定为 0。`MachineFace.hashSet` 改成与 `sameSet` 一致的集合语义，重复面只计一次；`sameSet` 的长度检查和 `faces()` 的写入顺序不变。`GregTechAddons.dispatchRecipesReady` 捕获 `Throwable`，除 `Error` 外的失败（含 sneaky throw 的受检异常）都包成 `IllegalStateException` 并记为 `FAILED`，不再停在 `DISPATCHING`。`GTVoltageTiers.tierMax` 保持原版 GT6 的超表返回值 16 和 `Long.MIN_VALUE` 落 0，只补文档，不改成夹取值；触电伤害仍按 16 档。`BehaviorMachineClient.screen` 新增带 `machineType` 的 default 方法，旧签名保留为 default 并弃用。`MaterialDeclaration.builder(int, String)` 不再把忽略的编号存进 record，canonical 构造器传入非 0 id 时仍告警。见[契约核对](ADDON_API_CONTRACT_AUDIT_20261024.md)。
+
 2026-10-24 / 不为物品桶、水晶充能器另建库存和能量系统：桶向现有 MassStorage 注入具体容量；电池盒的原生边界从固定 EU 改读设备能量类型，core 缓冲规则继续共用。水晶用 PortableBatterySpec 复用现有被动电池，且将既有 Energium 六级宝石变为 MaterialFormItem + IItemEnergy，维持配方目标身份，避免重复物品注册。原化学电池列表仍仅包含 EU 电池，防止水晶误入电动工具配方。见[接口与验证](CRYSTAL_BARREL_COMPLETION.md)。
 
 ## 2026-10-24 / 优化机器公共路径并保留逐 tick 行为

@@ -1,11 +1,11 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon.platform;
 
 import com.gregtech.gregtech.api.addon.EnergyTransfer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import java.util.Objects;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * Energy operations for a behavior machine, with explicit packet and unit accounting.

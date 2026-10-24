@@ -1,8 +1,8 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon.platform;
 
 import net.minecraft.core.Direction;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /** GregTech's packet gate for an {@link EnergyBlock}. Cables call the block; the block calls this for the default rule. */
 public final class AddonEnergy {

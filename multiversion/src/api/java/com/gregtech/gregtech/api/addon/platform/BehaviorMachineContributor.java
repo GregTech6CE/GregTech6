@@ -1,8 +1,8 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon.platform;
 
 import java.util.Set;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * Creates the behavior for one addon. List this class in

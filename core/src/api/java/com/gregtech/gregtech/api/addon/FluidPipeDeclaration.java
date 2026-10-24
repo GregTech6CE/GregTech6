@@ -1,7 +1,8 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 /**
- * SPDX-License-Identifier: LGPL-3.0-or-later.
  * One addon fluid-pipe material. GregTech expands it into the seven built-in sizes,
  * from tiny through nonuple. {@code maxTemperature} of {@code 0} uses the material
  * melting point times 1.25, the same rule as a built-in row that leaves the limit unset.

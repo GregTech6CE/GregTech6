@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon.platform;
 
 import net.minecraft.core.Direction;
@@ -6,7 +8,6 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * SPDX-License-Identifier: LGPL-3.0-or-later.
  * Energy block an addon implements. {@code energy} is the short name, such as {@code EU}.
  * A null side means every side. Packet model: {@code size} times {@code amount}.
  */

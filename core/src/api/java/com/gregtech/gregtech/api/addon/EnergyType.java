@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 import java.util.HashMap;
@@ -7,7 +9,6 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
- * SPDX-License-Identifier: LGPL-3.0-or-later.
  * Short energy names such as {@code EU}. Builders canonicalize known names, so {@code "eu"} becomes
  * {@code "EU"} and {@code "ku"} matches {@link #signedDirection(String)}.
  */

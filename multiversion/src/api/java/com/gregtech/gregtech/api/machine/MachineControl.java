@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.machine;
 
 import net.minecraft.core.Direction;
@@ -6,7 +8,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import javax.annotation.Nullable;
 
 /**
- * SPDX-License-Identifier: LGPL-3.0-or-later.
  * Optional machine controls. Relays resolve the target on every operation, never cache a machine.
  * This boundary currently exposes running/active state but has no explicit work-possible
  * or just-completed state; callers must not infer full original detector support from it.

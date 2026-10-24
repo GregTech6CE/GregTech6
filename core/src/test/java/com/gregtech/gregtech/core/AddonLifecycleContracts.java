@@ -14,6 +14,7 @@ public final class AddonLifecycleContracts {
         switch (args[0]) {
             case "runtime" -> runtime();
             case "fatal" -> fatal();
+            case "checked" -> checked();
             default -> throw new IllegalArgumentException("Unknown scenario: " + args[0]);
         }
         System.out.println(args[0] + " passed " + assertions);
@@ -49,6 +50,30 @@ public final class AddonLifecycleContracts {
             check(failure == boom, "the same Error is rethrown");
             check(GregTechAddons.phase() == GregTechAddons.Phase.FAILED, "FAILED after an Error");
         }
+    }
+
+    private static void checked() {
+        java.io.IOException boom = new java.io.IOException("checked-like");
+        GregTechAddons.register(addon("zz_checked", () -> sneakyThrow(boom)));
+        var context = new GregTechAddon.Context("forge", "1.20.1");
+        try {
+            GregTechAddons.dispatchRecipesReady(context);
+            check(false, "checked failure must stop dispatch");
+        } catch (IllegalStateException wrapped) {
+            check(wrapped.getMessage() != null && wrapped.getMessage().contains("zz_checked"),
+                    "wrapped message names the addon");
+            check(wrapped.getCause() == boom, "checked failure stays as the cause");
+            check(GregTechAddons.phase() == GregTechAddons.Phase.FAILED, "FAILED after a checked failure");
+        }
+    }
+
+    private static void sneakyThrow(Throwable failure) {
+        AddonLifecycleContracts.<RuntimeException>sneakyThrow0(failure);
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <T extends Throwable> void sneakyThrow0(Throwable failure) throws T {
+        throw (T) failure;
     }
 
     private static GregTechAddon addon(String id, Runnable body) {

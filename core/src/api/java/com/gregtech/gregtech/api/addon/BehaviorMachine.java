@@ -1,11 +1,12 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
+import java.util.regex.Pattern;
 
 /**
  * One addon behavior machine. GregTech builds the block, inventory, tanks, menu and screen.
@@ -19,29 +20,32 @@ import java.util.Objects;
 public final class BehaviorMachine implements AddonMachine {
     /** Every relative face. An unset {@code io} uses this mask. */
     private static final int EVERY_FACE = (1 << 6) - 1;
-    public static final int SLOT = 18;
-    public static final int TANK_WIDTH = 18;
-    public static final int TANK_HEIGHT = 54;
-    public static final int ENERGY_WIDTH = 10;
-    public static final int ENERGY_HEIGHT = 54;
-    public static final int PROGRESS_WIDTH = 24;
-    public static final int PROGRESS_HEIGHT = 17;
+    private static final Pattern BLOCK_ENTITY_PATH = Pattern.compile("[a-z0-9_./-]{1,64}");
+    private static final Pattern STATE_KEY = Pattern.compile("[a-z0-9_.]{1,64}");
+    private static final Pattern TRANSLATION_KEY = Pattern.compile("[a-z0-9_.]+");
+    public static final int SLOT = AddonLimits.live(18);
+    public static final int TANK_WIDTH = AddonLimits.live(18);
+    public static final int TANK_HEIGHT = AddonLimits.live(54);
+    public static final int ENERGY_WIDTH = AddonLimits.live(10);
+    public static final int ENERGY_HEIGHT = AddonLimits.live(54);
+    public static final int PROGRESS_WIDTH = AddonLimits.live(24);
+    public static final int PROGRESS_HEIGHT = AddonLimits.live(17);
     /** Player inventory starts this far above the bottom of the gui height. */
-    public static final int PLAYER_INVENTORY_GAP = 82;
-    public static final int UV_SLOT_U = 176;
-    public static final int UV_SLOT_V = 0;
-    public static final int UV_ENERGY_U = 194;
-    public static final int UV_ENERGY_V = 0;
-    public static final int UV_ENERGY_FULL_U = 204;
-    public static final int UV_TANK_U = 214;
-    public static final int UV_TANK_V = 0;
-    public static final int UV_TANK_MARKS_U = 232;
-    public static final int UV_ARROW_U = 176;
-    public static final int UV_ARROW_V = 54;
-    public static final int UV_ARROW_FULL_V = 71;
-    public static final int UV_TOGGLE_OFF_U = 176;
-    public static final int UV_TOGGLE_ON_U = 194;
-    public static final int UV_TOGGLE_V = 88;
+    public static final int PLAYER_INVENTORY_GAP = AddonLimits.live(82);
+    public static final int UV_SLOT_U = AddonLimits.live(176);
+    public static final int UV_SLOT_V = AddonLimits.live(0);
+    public static final int UV_ENERGY_U = AddonLimits.live(194);
+    public static final int UV_ENERGY_V = AddonLimits.live(0);
+    public static final int UV_ENERGY_FULL_U = AddonLimits.live(204);
+    public static final int UV_TANK_U = AddonLimits.live(214);
+    public static final int UV_TANK_V = AddonLimits.live(0);
+    public static final int UV_TANK_MARKS_U = AddonLimits.live(232);
+    public static final int UV_ARROW_U = AddonLimits.live(176);
+    public static final int UV_ARROW_V = AddonLimits.live(54);
+    public static final int UV_ARROW_FULL_V = AddonLimits.live(71);
+    public static final int UV_TOGGLE_OFF_U = AddonLimits.live(176);
+    public static final int UV_TOGGLE_ON_U = AddonLimits.live(194);
+    public static final int UV_TOGGLE_V = AddonLimits.live(88);
 
     private final MachineCasing casing;
     private final EnergyInput energy;
@@ -132,26 +136,13 @@ public final class BehaviorMachine implements AddonMachine {
 
     public int playerInventoryY() { return guiHeight - PLAYER_INVENTORY_GAP; }
 
-    public int energyMask() {
-        if (energy == null) return 0;
-        int mask = 0;
-        for (MachineFace face : energy.faces()) mask |= face.bit();
-        return mask;
-    }
+    public int energyMask() { return energy == null ? 0 : MachineFace.mask(energy.faces()); }
 
-    public int auxiliaryMask() {
-        int mask = 0;
-        if (auxiliary != null) for (MachineFace face : auxiliary.faces()) mask |= face.bit();
-        return mask;
-    }
+    public int auxiliaryMask() { return auxiliary == null ? 0 : MachineFace.mask(auxiliary.faces()); }
 
     public boolean emitsEnergy() { return output != null; }
 
-    public int energyOutMask() {
-        int mask = 0;
-        if (output != null) for (MachineFace face : output.faces()) mask |= face.bit();
-        return mask;
-    }
+    public int energyOutMask() { return output == null ? 0 : MachineFace.mask(output.faces()); }
 
     /** Item-insert faces. An unset {@code io} is every face. A named {@code io} leaves an unnamed channel closed. */
     public int itemInputMask() { return faceMask(io == null ? null : io.itemInputs()); }
@@ -163,10 +154,7 @@ public final class BehaviorMachine implements AddonMachine {
     public int fluidOutputMask() { return faceMask(io == null ? null : io.fluidOutputs()); }
 
     private static int faceMask(List<MachineFace> faces) {
-        if (faces == null) return EVERY_FACE;
-        int mask = 0;
-        for (MachineFace face : faces) mask |= face.bit();
-        return mask;
+        return faces == null ? EVERY_FACE : MachineFace.mask(faces);
     }
 
     public int initialToggles() {
@@ -194,6 +182,12 @@ public final class BehaviorMachine implements AddonMachine {
                 && progress.equals(that.progress) && recipeMaps.equals(that.recipeMaps)
                 && Objects.equals(io, that.io) && gasValve == that.gasValve
                 && signalOutput == that.signalOutput && clientState.equals(that.clientState);
+    }
+
+    @Override public String toString() {
+        return "BehaviorMachine[casing=" + casing + ", energy=" + energy + ", auxiliary=" + auxiliary
+                + ", output=" + output + ", gui=" + gui + ", maxRange=" + maxRange
+                + ", recipeMaps=" + recipeMaps + "]";
     }
 
     @Override public int hashCode() {
@@ -305,11 +299,12 @@ public final class BehaviorMachine implements AddonMachine {
             var storedEnergy = energy == null ? null : mainInput(id, energy);
             var storedAuxiliary = auxiliaryInput(id, auxiliary, storedEnergy);
             var blockEntity = blockEntityId == null ? "" : blockEntityId;
-            if (!blockEntity.isEmpty() && !blockEntity.matches("[a-z0-9_./-]{1,64}"))
+            if (!blockEntity.isEmpty() && !AddonNames.matches(BLOCK_ENTITY_PATH, blockEntity))
                 throw new IllegalArgumentException("Invalid block entity id for " + id + ": " + blockEntity);
             if (guiWidth < 176 || guiWidth > 256 || guiHeight < 166 || guiHeight > 512)
-                throw new IllegalArgumentException("Invalid gui size for " + id);
-            if (gui == null || !gui.matches("[a-z0-9_.-]+:[a-z0-9_./-]+\\.png"))
+                throw new IllegalArgumentException("Invalid gui size for " + id + ": "
+                        + guiWidth + "x" + guiHeight);
+            if (!AddonNames.matches(AddonNames.TEXTURE, gui))
                 throw new IllegalArgumentException("Invalid gui texture for " + id + ": " + gui);
             Objects.requireNonNull(progress, "progress");
             if (maxRange < 0 || maxRange > BehaviorRangeRules.LIMIT)
@@ -324,12 +319,19 @@ public final class BehaviorMachine implements AddonMachine {
                     throw new IllegalArgumentException("Behavior machine '" + id + "' repeats recipe map '" + name + "'");
                 mapNames.add(name);
             }
-            if (items.size() > 54 || fluids.size() > 8 || toggles.size() > 16)
-                throw new IllegalArgumentException("Behavior machine '" + id + "' has too many slots");
+            if (items.size() > 54)
+                throw new IllegalArgumentException("Behavior machine '" + id + "' has " + items.size()
+                        + " item slots; at most 54");
+            if (fluids.size() > 8)
+                throw new IllegalArgumentException("Behavior machine '" + id + "' has " + fluids.size()
+                        + " fluid slots; at most 8");
+            if (toggles.size() > 16)
+                throw new IllegalArgumentException("Behavior machine '" + id + "' has " + toggles.size()
+                        + " toggles; at most 16");
             var seenClientKeys = new HashSet<String>();
             var clientKeys = new ArrayList<String>();
             for (String key : clientState) {
-                if (key == null || !key.matches("[a-z0-9_.]{1,64}"))
+                if (!AddonNames.matches(STATE_KEY, key))
                     throw new IllegalArgumentException("Invalid client state key for " + id + ": " + key);
                 if (!seenClientKeys.add(key))
                     throw new IllegalArgumentException("Behavior machine '" + id + "' repeats client state '" + key + "'");
@@ -338,11 +340,11 @@ public final class BehaviorMachine implements AddonMachine {
             if (clientKeys.size() > 32)
                 throw new IllegalArgumentException("Behavior machine '" + id + "' has more than 32 client state keys");
             for (FluidSlot fluid : fluids) {
-                if (fluid.capacity() < 1 || fluid.capacity() > 1_024_000_000)
+                if (fluid.capacity() < 1 || fluid.capacity() > AddonLimits.MAX_CAPACITY)
                     throw new IllegalArgumentException("Invalid tank capacity for " + id);
             }
             for (Toggle toggle : toggles) {
-                if (toggle.translationKey() == null || !toggle.translationKey().matches("[a-z0-9_.]+"))
+                if (!AddonNames.matches(TRANSLATION_KEY, toggle.translationKey()))
                     throw new IllegalArgumentException("Invalid toggle key for " + id + ": " + toggle.translationKey());
             }
             var widgets = new ArrayList<Widget>();
@@ -386,7 +388,7 @@ public final class BehaviorMachine implements AddonMachine {
     }
 
     private static EnergyInput mainInput(String id, EnergyInput energy) {
-        if (energy.perTick() < 1 || energy.perTick() > 1_000_000_000_000L)
+        if (energy.perTick() < 1 || energy.perTick() > AddonLimits.MAX_PER_TICK)
             throw new IllegalArgumentException("Invalid energy per tick for " + id + ": " + energy.perTick());
         if (energy.anyPacket()) {
             if (!energy.capacitySpecified() || energy.capacity() < 1)
@@ -409,7 +411,7 @@ public final class BehaviorMachine implements AddonMachine {
         if (!auxiliary.anyPacket() && !auxiliary.rangeSpecified())
             throw new IllegalArgumentException("Behavior machine '" + id
                     + "' auxiliary energy needs a packet range or anyPacket");
-        if (auxiliary.perTick() < 1 || auxiliary.perTick() > 1_000_000_000_000L)
+        if (auxiliary.perTick() < 1 || auxiliary.perTick() > AddonLimits.MAX_PER_TICK)
             throw new IllegalArgumentException("Invalid auxiliary energy per tick for " + id + ": " + auxiliary.perTick());
         if (!auxiliary.capacitySpecified() || auxiliary.capacity() < 1)
             throw new IllegalArgumentException("Behavior machine '" + id + "' auxiliary energy capacity must be positive");

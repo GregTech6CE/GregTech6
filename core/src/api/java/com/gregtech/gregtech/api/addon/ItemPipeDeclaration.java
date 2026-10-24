@@ -1,7 +1,8 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 /**
- * SPDX-License-Identifier: LGPL-3.0-or-later.
  * One addon item-pipe material. GregTech expands it into the six built-in sizes,
  * including the three restrictive sizes. {@code stepSize} is the medium-pipe routing
  * cost; larger sizes divide it the same way a built-in row does, so it must be at least 4.

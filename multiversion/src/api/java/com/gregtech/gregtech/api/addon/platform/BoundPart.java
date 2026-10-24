@@ -1,11 +1,11 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon.platform;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nullable;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * One addon part bound by a formed behavior machine. An energy part and a functional part

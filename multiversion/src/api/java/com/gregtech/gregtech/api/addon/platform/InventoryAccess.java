@@ -1,9 +1,10 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon.platform;
 
 import net.minecraft.world.item.ItemStack;
 
 /**
- * SPDX-License-Identifier: LGPL-3.0-or-later.
  * Inventory owned by a machine or a structure part, used during its server callback.
  * Reads are detached snapshots; writes copy their arguments and notify the host.
  * This is internal processing access, not a sided automation capability: it bypasses
