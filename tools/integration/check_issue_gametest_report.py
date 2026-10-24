@@ -12,6 +12,16 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'namedfluidtemperaturetests.coolant_ic2_hotkeepsauthoredtemperature',
+    'namedfluidtemperaturetests.glasskeepsauthoredtemperature',
+    'namedfluidtemperaturetests.matterchargedkeepsauthoredtemperature',
+    'namedfluidtemperaturetests.matterneutralkeepsauthoredtemperature',
+    'namedfluidtemperaturetests.oil_fryingkeepsauthoredtemperature',
+    'namedfluidtemperaturetests.phaseandauthoredmoltencontrolsstayunchanged',
+    'namedfluidtemperaturetests.thorium_saltkeepsauthoredtemperature',
+    'namedfluidtemperaturetests.uuamplifierkeepsauthoredtemperature',
+    'namedfluidtemperaturetests.uumkeepsauthoredtemperature',
+
     'stonelayerslabaudittests.structurecobbleslabsfollowonlytheirlocallayer',
     'waterbodybiomeboundarytests.swampoverridesgtwateronlyinsideitsowncolumns',
     'oreoverlaylifecyclecontrols.warmedsifterandstartupaddonrowssurviverepeatedoverlay',
@@ -398,7 +408,7 @@ def check(path, platform='forge'):
         classname = case.get('classname', '').lower()
         for identity in expected:
             test_class, method = identity.split('.', 1)
-            if identity.startswith(('oreoverlaylifecyclecontrols.', 'waterbodybiomeboundarytests.', 'stonelayerslabaudittests.')) or identity.startswith('energyneighborloadednesstests.') or identity.startswith('spikeharveststatetests.') or identity.startswith('spikefallinglifecycletests.') or identity in ORE_SOURCE_CASES or identity in ORE_FOLLOWON_CASE_NAMESPACES or identity == 'barracksdooralignmenttests.generateddoorsjoinslabwallsandsurviveupdates':
+            if identity.startswith(('namedfluidtemperaturetests.', 'oreoverlaylifecyclecontrols.', 'waterbodybiomeboundarytests.', 'stonelayerslabaudittests.')) or identity.startswith('energyneighborloadednesstests.') or identity.startswith('spikeharveststatetests.') or identity.startswith('spikefallinglifecycletests.') or identity in ORE_SOURCE_CASES or identity in ORE_FOLLOWON_CASE_NAMESPACES or identity == 'barracksdooralignmenttests.generateddoorsjoinslabwallsandsurviveupdates':
                 if name == method and classname == expected_namespace(identity):
                     found.add(identity)
                 continue
