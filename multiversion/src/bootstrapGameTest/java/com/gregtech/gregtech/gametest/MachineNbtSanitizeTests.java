@@ -100,8 +100,7 @@ public final class MachineNbtSanitizeTests {
                     "saved progress is clamped to the recomputed job size");
         } finally {
             h.getLevel().setBlock(pos, Blocks.AIR.defaultBlockState(), net.minecraft.world.level.block.Block.UPDATE_ALL);
-            RecipeMap.RECIPE_MAPS.remove(map.mNameInternal, map);
-            RecipeMap.RECIPE_MAP_LIST.remove(map);
+            RecipeMap.unregister(map);
         }
         h.succeed();
     }

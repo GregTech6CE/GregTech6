@@ -13,7 +13,7 @@ public final class BehaviorRangeRules {
 
     /** A range of 0 means the world actions are closed. */
     public static void requireUsable(int declared) {
-        if (declared < 1) throw new IllegalStateException("range is 0");
+        if (declared < 1) throw new IllegalStateException("range is 0 (declared " + declared + ")");
     }
 
     /**
@@ -23,16 +23,18 @@ public final class BehaviorRangeRules {
     public static void requireInside(int declared, int dx, int dy, int dz) {
         requireUsable(declared);
         if (dx == 0 && dy == 0 && dz == 0)
-            throw new IllegalArgumentException("machine block");
+            throw new IllegalArgumentException("machine block at offset " + dx + "," + dy + "," + dz
+                    + " (declared range " + declared + ")");
         if (!inside(declared, dx, dy, dz))
-            throw new IllegalArgumentException("outside range");
+            throw new IllegalArgumentException("outside range " + declared + " at offset "
+                    + dx + "," + dy + "," + dz);
     }
 
     /** {@code radius} is the cube half-extent and may not exceed the declaration. */
     public static void requireRadius(int declared, int radius) {
         requireUsable(declared);
         if (radius < 0 || radius > declared)
-            throw new IllegalArgumentException("outside range");
+            throw new IllegalArgumentException("outside range " + declared + " with radius " + radius);
     }
 
     public static boolean inside(int declared, int dx, int dy, int dz) {

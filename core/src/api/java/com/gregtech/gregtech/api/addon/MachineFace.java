@@ -3,6 +3,7 @@ package com.gregtech.gregtech.api.addon;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 
 /** SPDX-License-Identifier: LGPL-3.0-or-later */
 
@@ -42,5 +43,26 @@ public enum MachineFace {
             }
         }
         return List.copyOf(copy);
+    }
+
+    /** Null entries stay; this does not reject repeats. {@link #distinct} does. */
+    public static List<MachineFace> listed(MachineFace... faces) {
+        var list = new ArrayList<MachineFace>();
+        if (faces != null) for (MachineFace face : faces) list.add(face);
+        return list;
+    }
+
+    /** Same faces, ignoring order. */
+    public static boolean sameSet(List<MachineFace> left, List<MachineFace> right) {
+        if (left == right) return true;
+        if (left == null || right == null || left.size() != right.size()) return false;
+        return new HashSet<>(left).equals(new HashSet<>(right));
+    }
+
+    /** Order-independent hash for {@link #sameSet}. */
+    public static int hashSet(List<MachineFace> faces) {
+        int hash = 0;
+        if (faces != null) for (MachineFace face : faces) hash += Objects.hashCode(face);
+        return hash;
     }
 }

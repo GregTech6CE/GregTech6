@@ -112,7 +112,7 @@ public final class LayoutRepeat {
         }
 
         public LayoutRepeat build() {
-            if (key == null || !key.matches("[a-z][a-z0-9_]{0,63}"))
+            if (!AddonNames.matches(AddonNames.LOWER_PATH, key))
                 throw new IllegalArgumentException("Structure repeat key is invalid: " + key);
             if (min < 1)
                 throw new IllegalArgumentException("Structure repeat '" + key + "' needs min >= 1");

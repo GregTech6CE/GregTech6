@@ -106,12 +106,14 @@ public final class EnergyInput {
                 && rangeMin == that.rangeMin && rangeMax == that.rangeMax
                 && facesSpecified == that.facesSpecified && capacitySpecified == that.capacitySpecified
                 && capacity == that.capacity && anyPacket == that.anyPacket && overload == that.overload
-                && dynamic == that.dynamic && type.equals(that.type) && faces.equals(that.faces);
+                && dynamic == that.dynamic && EnergyType.same(type, that.type)
+                && MachineFace.sameSet(faces, that.faces);
     }
 
     @Override public int hashCode() {
-        return Objects.hash(type, perTick, rangeSpecified, rangeMin, rangeMax,
-                facesSpecified, faces, capacitySpecified, capacity, anyPacket, overload, dynamic);
+        return Objects.hash(type == null ? null : type.toLowerCase(java.util.Locale.ROOT), perTick,
+                rangeSpecified, rangeMin, rangeMax, facesSpecified, MachineFace.hashSet(faces),
+                capacitySpecified, capacity, anyPacket, overload, dynamic);
     }
 
     public static Builder builder(String type, long perTick) { return new Builder(type, perTick); }
@@ -170,11 +172,12 @@ public final class EnergyInput {
 
         /**
          * Lock the energy type from the first accepted packet. Only a behavior machine's main input
-         * may use this; {@link #type()} becomes {@code *}.
+         * may use this; {@link #type()} becomes {@link EnergyType#ANY}. The constructor type is
+         * replaced; {@code EnergyInput.builder("EU", 32).anyType()} is the usual form.
          */
         public Builder anyType() {
             dynamic = true;
-            type = "*";
+            type = EnergyType.ANY;
             return this;
         }
 
@@ -189,15 +192,14 @@ public final class EnergyInput {
         }
 
         public EnergyInput build() {
-            if (type == null || type.isBlank())
-                throw new IllegalArgumentException("Missing energy type");
+            String resolved = dynamic ? EnergyType.ANY : EnergyType.require(type);
             if (rangeSpecified && (rangeMin < 1 || rangeMax < rangeMin))
                 throw new IllegalArgumentException("Invalid energy range: " + rangeMin + ".." + rangeMax);
             if (anyPacket && rangeSpecified)
                 throw new IllegalArgumentException("Energy input cannot both limit packets and accept any packet");
             if (capacitySpecified && capacity < 0)
                 throw new IllegalArgumentException("Negative energy capacity");
-            return new EnergyInput(type, perTick, rangeSpecified, rangeMin, rangeMax, facesSpecified,
+            return new EnergyInput(resolved, perTick, rangeSpecified, rangeMin, rangeMax, facesSpecified,
                     MachineFace.distinct(faces, "energy face"), capacitySpecified, capacity, anyPacket, overload, dynamic);
         }
     }

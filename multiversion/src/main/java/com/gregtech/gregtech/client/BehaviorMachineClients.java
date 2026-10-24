@@ -32,16 +32,18 @@ public final class BehaviorMachineClients {
             try {
                 id = client.addonId();
             } catch (RuntimeException | Error failure) {
-                throw new IllegalStateException("Behavior machine client failed: " + client.getClass().getName(), failure);
+                throw com.gregtech.gregtech.api.addon.AddonFailures.of(
+                        "Behavior machine client failed: " + client.getClass().getName(), failure);
             }
-            if (id == null || id.isBlank())
+            if (!com.gregtech.gregtech.api.addon.AddonNames.isAddonId(id))
                 throw new IllegalStateException("Behavior machine client has no addon id: "
                         + client.getClass().getName());
             Set<String> types;
             try {
                 types = client.machineTypes();
             } catch (RuntimeException | Error failure) {
-                throw new IllegalStateException("Addon '" + id + "' behavior machine client failed", failure);
+                throw com.gregtech.gregtech.api.addon.AddonFailures.of(
+                        "Addon '" + id + "' behavior machine client failed", failure);
             }
             if (types == null) continue;
             for (String type : types) {

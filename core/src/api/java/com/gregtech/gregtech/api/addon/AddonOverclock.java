@@ -9,6 +9,10 @@ package com.gregtech.gregtech.api.addon;
 public final class AddonOverclock {
     private AddonOverclock() {}
 
+    /**
+     * {@code addonBasic} is an addon basic machine. {@code declared} means the declaration set the
+     * flag; {@code declaredValue} is that flag. Everyone else keeps {@code legacy}.
+     */
     public static boolean enabled(boolean addonBasic, boolean declared, boolean declaredValue, boolean legacy) {
         if (addonBasic || declared) return declaredValue;
         return legacy;

@@ -337,6 +337,11 @@ public final class AddonMaterialContracts {
                 () -> PrefixDeclaration.block("sampleCasing", "", " Sample Casing", 8, "slab",
                         "block/sample_casing", "storage_blocks/sample_casing", List.of("SoftRubber")),
                 "block shape must be cube");
+        var withShape = PrefixDeclaration.block("sampleCasing", "", " Sample Casing", 8 * GTValues.U, "cube",
+                "block/sample_casing", "storage_blocks/sample_casing", List.of("SoftRubber"));
+        var withoutShape = PrefixDeclaration.block("sampleCasing", "", " Sample Casing", 8 * GTValues.U,
+                "block/sample_casing", "storage_blocks/sample_casing", List.of("SoftRubber"));
+        check(withShape.equals(withoutShape), "the block prefix overload without shape is cube");
         AddonMaterials.submitDeclared("aa_block", List.of(MaterialDeclaration.builder("SoftRubber")
                         .displayName("Soft Rubber").color(0xE8E8E8).dust().polymer().build()),
                 List.of(new MaterialFormRequest("SoftRubber", "plate")),

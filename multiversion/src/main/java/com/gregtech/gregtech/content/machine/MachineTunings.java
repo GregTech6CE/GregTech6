@@ -33,14 +33,15 @@ public final class MachineTunings {
             try {
                 addon = contributor.addonId();
             } catch (RuntimeException | Error failure) {
-                throw new IllegalStateException("Machine tuning contributor failed: "
+                throw com.gregtech.gregtech.api.addon.AddonFailures.of("Machine tuning contributor failed: "
                         + contributor.getClass().getName(), failure);
             }
             List<MachineTuning> tunings;
             try {
                 tunings = contributor.tunings();
             } catch (RuntimeException | Error failure) {
-                throw new IllegalStateException("Addon '" + addon + "' machine tunings failed", failure);
+                throw com.gregtech.gregtech.api.addon.AddonFailures.of(
+                        "Addon '" + addon + "' machine tunings failed", failure);
             }
             if (tunings == null) continue;
             for (MachineTuning tuning : tunings) declared.add(new MachineTuningRules.Declared(addon, tuning));

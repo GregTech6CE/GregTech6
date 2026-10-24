@@ -62,9 +62,6 @@ public final class FuelGenerator implements AddonMachine {
     public static final class Builder {
         private final MachineCasing casing;
         private FuelOutput output;
-        private EnergyInput energy;
-        private EnergyOutput energyOutput;
-        private MachineIo io;
         private String fuelMap;
         private int efficiency = 10_000;
         private int tankCapacity = 4_000;
@@ -74,9 +71,18 @@ public final class FuelGenerator implements AddonMachine {
         private Builder(MachineCasing casing) { this.casing = casing; }
 
         public Builder output(FuelOutput value) { output = value; return this; }
-        public Builder energy(EnergyInput value) { energy = value; return this; }
-        public Builder energyOutput(EnergyOutput value) { energyOutput = value; return this; }
-        public Builder io(MachineIo value) { io = value; return this; }
+        public Builder energy(EnergyInput value) {
+            if (value != null) throw new IllegalArgumentException("Fuel generators cannot declare energy input");
+            return this;
+        }
+        public Builder energyOutput(EnergyOutput value) {
+            if (value != null) throw new IllegalArgumentException("Fuel generators cannot declare energy output");
+            return this;
+        }
+        public Builder io(MachineIo value) {
+            if (value != null) throw new IllegalArgumentException("Fuel generators cannot declare item and fluid faces");
+            return this;
+        }
         public Builder fuelMap(String value) { fuelMap = value; return this; }
         public Builder efficiency(int value) { efficiency = value; return this; }
         public Builder tank(int millibuckets) { tankCapacity = millibuckets; return this; }
@@ -89,23 +95,17 @@ public final class FuelGenerator implements AddonMachine {
             if (casing == null) throw new IllegalArgumentException("Missing casing");
             if (casing.tierSpecified())
                 throw new IllegalArgumentException("Fuel generators cannot declare a tier");
-            if (energy != null)
-                throw new IllegalArgumentException("Fuel generators cannot declare energy input");
-            if (energyOutput != null)
-                throw new IllegalArgumentException("Fuel generators cannot declare energy output");
-            if (io != null)
-                throw new IllegalArgumentException("Fuel generators cannot declare item and fluid faces");
             String id = casing.id();
             String machineType = casing.machineType() == null ? id : casing.machineType();
-            if (!machineType.matches("[a-z0-9_]+"))
+            if (!AddonNames.matches(AddonNames.MACHINE_TYPE, machineType))
                 throw new IllegalArgumentException("Invalid machine type for " + id + ": " + machineType);
-            if (fuelMap == null || !fuelMap.matches("[a-z0-9_.]+"))
+            if (!AddonNames.matches(AddonNames.RECIPE_MAP, fuelMap))
                 throw new IllegalArgumentException("Invalid fuel map name: " + fuelMap);
             if (output == null) throw new IllegalArgumentException("Missing fuel output for " + id);
             if (efficiency < 1 || efficiency > 100_000)
                 throw new IllegalArgumentException("Fuel efficiency out of range for " + id);
             if (tankCapacity < 1 || tankCapacity > MAX_TANK)
-                throw new IllegalArgumentException("Invalid machine parameters for " + id);
+                throw new IllegalArgumentException("Invalid tank capacity for " + id + ": " + tankCapacity);
             if (amperes < 1 || amperes > MAX_AMPERES)
                 throw new IllegalArgumentException("Fuel amperes out of range for " + id + ": " + amperes);
             return new FuelGenerator(casing.resolve(machineType, false, 0), output, fuelMap, efficiency,

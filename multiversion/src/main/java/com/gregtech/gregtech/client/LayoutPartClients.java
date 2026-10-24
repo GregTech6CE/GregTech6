@@ -26,15 +26,17 @@ public final class LayoutPartClients {
             try {
                 id = client.addonId();
             } catch (RuntimeException | Error failure) {
-                throw new IllegalStateException("Part client failed: " + client.getClass().getName(), failure);
+                throw com.gregtech.gregtech.api.addon.AddonFailures.of(
+                        "Part client failed: " + client.getClass().getName(), failure);
             }
-            if (id == null || id.isBlank())
+            if (!com.gregtech.gregtech.api.addon.AddonNames.isAddonId(id))
                 throw new IllegalStateException("Part client has no addon id: " + client.getClass().getName());
             Set<String> names;
             try {
                 names = client.partNames();
             } catch (RuntimeException | Error failure) {
-                throw new IllegalStateException("Addon '" + id + "' part client failed", failure);
+                throw com.gregtech.gregtech.api.addon.AddonFailures.of(
+                        "Addon '" + id + "' part client failed", failure);
             }
             if (names == null) continue;
             for (String name : names) {

@@ -723,7 +723,7 @@ public final class AddonMachineContracts {
                 .fuelMap("aa.fuel.gas").output(out).efficiency(100_001).build(), "efficiency");
         expectThrows(IllegalArgumentException.class, () -> FuelOutput.builder("RU", 0).front().build(), "per tick");
         expectThrows(IllegalArgumentException.class, () -> FuelGenerator.builder(casing)
-                .fuelMap("aa.fuel.gas").output(out).tank(0).build(), "parameters");
+                .fuelMap("aa.fuel.gas").output(out).tank(0).build(), "tank capacity");
         expectThrows(IllegalArgumentException.class, () -> FuelOutput.builder("RU", 16).behind(0).build(), "distance");
         expectThrows(IllegalArgumentException.class, () -> FuelOutput.builder("RU", 16).behind(9).build(), "distance");
         check(engine("aa.fuel.gas").amperes() == 1, "fuel amperes default to one");
