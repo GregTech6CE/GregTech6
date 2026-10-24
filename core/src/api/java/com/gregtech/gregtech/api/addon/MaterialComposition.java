@@ -10,7 +10,8 @@ import java.util.Objects;
 
 /**
  * Composition of one addon material, named at link time.
- * {@code amount} on each part is a positive multiple of {@link GTValues#U}.
+ * {@code amount} on each part is GregTech units, the same unit as {@link PrefixDeclaration#amount()}:
+ * a positive multiple of {@link GTValues#U}, so one ingot is {@code GTValues.U} and 3U is {@code 3 * GTValues.U}.
  * {@code divider} is stored as the composition divider. When {@code crucible} is true,
  * GregTech also adds one crucible reaction whose ratios are {@code amount / U} and whose yield is {@code divider}.
  * Composition and crucible participation alone do not permit automatic machine decomposition;
@@ -30,14 +31,15 @@ public record MaterialComposition(String material, long divider, List<Part> part
         parts = List.copyOf(copied);
     }
 
-    /** One component. {@code amount} is a positive multiple of {@link GTValues#U}. */
+    /** One component. {@code amount} is GregTech units, a positive multiple of {@link GTValues#U}. */
     public record Part(String material, long amount) {
         public Part {
             Objects.requireNonNull(material, "material");
             if (!AddonNames.matches(AddonNames.MATERIAL, material))
                 throw new IllegalArgumentException("Use a material name: " + material);
             if (amount <= 0 || amount % GTValues.U != 0)
-                throw new IllegalArgumentException("Composition amount must be a positive multiple of U: " + material);
+                throw new IllegalArgumentException(
+                        "Composition amount must be a positive multiple of U (one ingot is GTValues.U): " + material);
         }
     }
 }

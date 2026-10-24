@@ -7,6 +7,7 @@ import com.gregtech.gregtech.content.recipe.OvenRecipeBridge;
 import com.gregtech.gregtech.registry.GTWires;
 import com.gregtech.gregtech.world.GarbageData;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.ItemStack;
@@ -26,8 +27,9 @@ import java.util.List;
  *
  * <ul>
  *   <li>{@link #removedWireBlockEntityReleasesItsPosition()},
- *       {@link #wireGraphDoesNotGrowAcrossUnloadCycles()} and
- *       {@link #removedWireReleasesTheNeighbourEntryThatPointedAtIt()} measure {@link EnergyNet}: the
+ *       {@link #wireGraphDoesNotGrowAcrossUnloadCycles()},
+ *       {@link #removedWireReleasesTheNeighbourEntryThatPointedAtIt()} and
+ *       {@link #closedConnectionDropsTheReverseEdge()} measure {@link EnergyNet}: the
  *       per-dimension adjacency map is registered into on placement and used to be released only from
  *       {@code Block#onRemove}, so a chunk unload - which calls {@code onChunkUnloaded} and
  *       {@code setRemoved} ({@code LevelChunk#clearAllBlockEntities:574-577}) - left one entry per wire
@@ -155,6 +157,50 @@ public final class MemoryGrowthTests {
         h.assertTrue(!EnergyNet.tracks(level, a), "the released wire's own position must be dropped");
         h.assertTrue(!EnergyNet.tracks(level, b), "the neighbour whose only edge pointed at the released"
                 + " wire must be dropped with it, not left pointing at nothing");
+        h.succeed();
+    }
+
+    /**
+     * Closing a connection removes both directions. Clearing only the toggled wire's own edges used to
+     * leave the neighbour pointing back, and a later removal could not see that edge to drop it.
+     */
+    @GameTest(template = "test_blueprint_empty")
+    public static void closedConnectionDropsTheReverseEdge(GameTestHelper h) {
+        var level = h.getLevel();
+        var a = h.absolutePos(new BlockPos(8, 4, 8));
+        var b = a.east();
+        placeWire(h, a);
+        placeWire(h, b);
+        var aConnected = wire().defaultBlockState()
+                .setValue(ElectricWireBlock.CONNECTIONS[Direction.EAST.get3DDataValue()], true);
+        var bConnected = wire().defaultBlockState()
+                .setValue(ElectricWireBlock.CONNECTIONS[Direction.WEST.get3DDataValue()], true);
+        level.setBlockAndUpdate(a, aConnected);
+        level.setBlockAndUpdate(b, bConnected);
+        EnergyNet.onPlace(level, a);
+        EnergyNet.onPlace(level, b);
+        EnergyNet.onConnectionChange(level, a, aConnected, ElectricWireBlock.CONNECTIONS);
+        EnergyNet.onConnectionChange(level, b, bConnected, ElectricWireBlock.CONNECTIONS);
+        h.assertTrue(EnergyNet.getConnectedWires(level, a).contains(b)
+                        && EnergyNet.getConnectedWires(level, b).contains(a),
+                "the two wires see each other while the facing connections are open");
+
+        var closed = wire().defaultBlockState();
+        for (var property : ElectricWireBlock.CONNECTIONS) closed = closed.setValue(property, false);
+        level.setBlockAndUpdate(a, closed);
+        EnergyNet.onConnectionChange(level, a, closed, ElectricWireBlock.CONNECTIONS);
+
+        h.assertTrue(!EnergyNet.getConnectedWires(level, a).contains(b),
+                "closing A's connection must remove A→B");
+        h.assertTrue(!EnergyNet.getConnectedWires(level, b).contains(a),
+                "closing A's connection must remove the reverse edge B→A");
+        h.assertTrue(EnergyNet.tracks(level, a), "A is still placed, so its own entry stays");
+        h.assertTrue(!EnergyNet.tracks(level, b),
+                "B's only edge pointed at A, so closing that connection drops B instead of leaving it pointing at A");
+
+        ((ElectricWireBlockEntity) level.getBlockEntity(a)).setRemoved();
+        h.assertTrue(!EnergyNet.tracks(level, a) && !EnergyNet.tracks(level, b),
+                "removing A after the connection was closed must not leave either position tracked");
         h.succeed();
     }
 

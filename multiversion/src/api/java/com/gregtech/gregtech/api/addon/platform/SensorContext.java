@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
 
 /**
  * One sensor sample. {@code pos} is the sensor block, {@code target} the block in front of it,
- * and {@code side} the face of the target the sensor reads ({@code Direction.ordinal()}).
+ * and {@code side} the world face of the target the sensor reads.
  * The target is null when the block in front is missing or has no block entity.
  */
 public record SensorContext(Level level, BlockPos pos, @Nullable BlockEntity target, Direction side) {}

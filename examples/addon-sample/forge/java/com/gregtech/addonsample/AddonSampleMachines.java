@@ -364,7 +364,7 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
         @Override public boolean canFill(MachineBehaviorContext context, int tank, FluidStack stack) { return false; }
         @Override public void tick(MachineBehaviorContext context) {}
 
-        @Override public long gtSignal(MachineBehaviorContext context, int side) {
+        @Override public long gtSignal(MachineBehaviorContext context, Direction side) {
             return context.state().getBoolean("armed") ? 15L * GtSignalCarrier.UNIT : 0;
         }
 

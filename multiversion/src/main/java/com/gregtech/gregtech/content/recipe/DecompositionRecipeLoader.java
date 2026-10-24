@@ -1,28 +1,27 @@
 package com.gregtech.gregtech.content.recipe;
 
+import com.gregtech.gregtech.api.machine.crucible.CrucibleMath;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.gregtech.gregtech.api.material.MaterialComponent;
 import com.gregtech.gregtech.api.material.MaterialProperty;
 import com.gregtech.gregtech.api.material.MaterialStackItemHelper;
+import com.gregtech.gregtech.api.prefix.BlockMaterialPrefix;
 import com.gregtech.gregtech.api.recipe.Recipe;
 import com.gregtech.gregtech.api.recipe.RecipeMap;
-import com.gregtech.gregtech.data.RegisteredFluids;
-import com.gregtech.gregtech.data.MaterialPrefix;
-import com.gregtech.gregtech.data.MachineRecipeMaps;
 import com.gregtech.gregtech.bootstrap.InitializationStep;
-import com.gregtech.gregtech.registry.GTFluids;
+import com.gregtech.gregtech.content.recipe.generated.GeneratedRecipeResolver;
+import com.gregtech.gregtech.data.MachineRecipeMaps;
+import com.gregtech.gregtech.data.MaterialPrefix;
+import com.gregtech.gregtech.registry.GTBlocks;
 import com.gregtech.gregtech.registry.GTTechnological;
 import com.gregtech.gregtech.util.OM;
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.material.Fluid;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.registries.DeferredHolder;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.RegistryObject;
 //?}
 import org.slf4j.Logger;
 
@@ -32,19 +31,24 @@ import java.util.List;
 import static com.gregtech.gregtech.api.material.GTValues.U;
 
 /**
- * Current decomposition registration from the shared material composition catalog.
+ * GT6 {@code Loader_Recipes_Decomp}: generic decomposition of a material into its components.
  *
- * <p>Admission requires the original DECOMPOSABLE flag plus an explicit CENTRIFUGE and/or
- * ELECTROLYSER permission. Composition alone never grants a machine route. This implementation
- * still requires a dust input; Electrolyzer rows also require retained selector zero. Named fluid outputs require GAS/LIQUID flags and a bound registered holder;
- * otherwise it requests dust. An unresolved component skips the entire submission. These rules,
- * work parameters and submission counts are audited separately against GT6's
- * {@code Loader_Recipes_Decomp}; they do not yet encode all of its phase/work contracts.</p>
+ * <p>Admission requires the original {@link MaterialProperty#DECOMPOSABLE} flag plus an explicit
+ * {@link MaterialProperty#CENTRIFUGE} and/or {@link MaterialProperty#ELECTROLYSER} permission;
+ * composition shape never grants a machine route. Components at or below ambient temperature are
+ * emitted through their registered fluid, everything else through the component's pulverization
+ * target. A resolvable fluid form suppresses the dust/block-dust entries for that map, and
+ * electrolyzer rows retain the original selector-zero gate.</p>
  */
 public class DecompositionRecipeLoader implements InitializationStep {
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    private int added, skipped;
+    /** GT6 {@code CS.DEF_ENV_TEMP} = C + 20. */
+    private static final long ENV_TEMP = 293;
+
+    private int added;
+    private int skipped;
+    private int recipes;
 
     @Override
     public void run() {
@@ -59,85 +63,117 @@ public class DecompositionRecipeLoader implements InitializationStep {
             if (divider <= 0 || divider > 64) continue;
             if (material.has(MaterialProperty.ANTIMATTER)) continue;
 
-            ItemStack input = MaterialStackItemHelper.mat(MaterialPrefix.dust, material, (int) divider);
-            if (input.isEmpty()) continue;
-
+            long totalAmount = 0;
             List<ItemStack> dustOutputs = new ArrayList<>();
             List<FluidStack> fluidOutputs = new ArrayList<>();
-            long totalAmount = 0;
-            boolean complete = true;
-
             for (MaterialComponent component : material.getCompositionComponents()) {
-                GTMaterial part = component.material().resolve();
-                if (!part.isValid()) {
-                    complete = false;
-                    break;
-                }
                 totalAmount += component.amount();
-
-                FluidStack fluid = namedFluid(part, component.amount());
-                if (fluid != null) {
-                    fluidOutputs.add(fluid);
-                    continue;
+                GTMaterial part = component.material().resolve();
+                if (!part.isValid()) continue;
+                if (part.getMeltingPoint() <= ENV_TEMP) {
+                    FluidStack fluid = fluidOf(part, component.amount());
+                    if (fluid != null) {
+                        fluidOutputs.add(fluid);
+                        continue;
+                    }
                 }
-                ItemStack dust = OM.dust(part, component.amount());
-                if (!dust.isEmpty()) {
-                    dustOutputs.add(dust);
-                    continue;
-                }
-                complete = false;
-                break;
+                GTMaterial pulver = part.getTargetPulverMaterial();
+                long pulverAmount = pulver.getTargetPulverAmount();
+                if (pulverAmount <= 0) continue;
+                ItemStack dust = OM.dust(pulver, CrucibleMath.units(component.amount(), U, pulverAmount, false));
+                if (!dust.isEmpty()) dustOutputs.add(dust);
             }
-
-            if (!complete || (dustOutputs.isEmpty() && fluidOutputs.isEmpty())) {
+            if (dustOutputs.isEmpty() && fluidOutputs.isEmpty()) {
                 skipped++;
                 continue;
             }
 
-            long duration = Math.max(16, totalAmount * 14 / U);
-            if (centrifuge) add(MachineRecipeMaps.Centrifuge, 16, duration, input, dustOutputs, fluidOutputs);
-            if (electrolyzer) add(MachineRecipeMaps.Electrolyzer, 64, duration, input, dustOutputs, fluidOutputs);
+            long eut = Math.max(16L, CrucibleMath.units(totalAmount, U, 14, false));
+            long duration = Math.max(1L, CrucibleMath.units(totalAmount, U, 292, true));
+            boolean any = false;
+            if (centrifuge) any |= addMap(MachineRecipeMaps.Centrifuge, material, divider, eut, duration, dustOutputs, fluidOutputs);
+            if (electrolyzer) any |= addMap(MachineRecipeMaps.Electrolyzer, material, divider, eut, duration, dustOutputs, fluidOutputs);
+            if (any) added++; else {
+                skipped++;
+                LOGGER.info("[gregtech] Decomposition candidate {} ({}) has no resolvable input",
+                        material.getName(), divider);
+            }
         }
-        LOGGER.info("[gregtech] Decomposition recipes: {} added, {} skipped (incomplete outputs)", added, skipped);
+        LOGGER.info("[gregtech] Decomposition recipes: {} materials, {} recipes, {} skipped", added, recipes, skipped);
     }
 
-    private void add(RecipeMap map, long eut, long duration, ItemStack input,
-                     List<ItemStack> dustOutputs, List<FluidStack> fluidOutputs) {
-        boolean electrolyzer = map == MachineRecipeMaps.Electrolyzer;
-        var selector = electrolyzer ? GTTechnological.selectorTag(0) : null;
-        if (electrolyzer && selector == null) {
-            skipped++;
-            return;
+    private boolean addMap(RecipeMap map, GTMaterial material, long divider, long eut, long duration,
+                           List<ItemStack> dustOutputs, List<FluidStack> fluidOutputs) {
+        boolean addedAny = false;
+        boolean fluidInputAdded = false;
+        if (map.mInputFluidCount > 0) {
+            FluidStack input = fluidOf(material, divider * U);
+            if (input != null) {
+                fluidInputAdded = true;
+                addedAny |= add(map, null, input, dustOutputs, fluidOutputs, eut, duration);
+            }
         }
-        // Preserve the existing normalization before adding the presence-only selector. A native
-        // count-one catalyst passed into make() would otherwise prevent common-factor reduction.
-        Recipe recipe = RecipeMap.make(true, new ItemStack[]{input}, dustOutputs.toArray(RecipeMap.ZL_IS),
-                null, RecipeMap.ZL_LONG, RecipeMap.ZL_FS, fluidOutputs.toArray(RecipeMap.ZL_FS), duration, eut, 0);
-        if (recipe != null && electrolyzer) {
-            // Original Loader_Recipes_Decomp supplies ST.tag(0) for every Electrolyzer row.
-            // Keep the actual native selector visible, while retaining it during consumption.
-            recipe = new Recipe(new ItemStack[]{new ItemStack(selector), recipe.mInputs[0]}, recipe.mOutputs,
-                    recipe.mSpecialItems, recipe.mChances, recipe.mFluidInputs, recipe.mFluidOutputs,
-                    recipe.mDuration, recipe.mEUt, recipe.mSpecialValue).withCatalystInputs(0);
+
+        // GT6 suppresses the solid fallback once a fluid form was accepted; Glowstone keeps both.
+        if ((!fluidInputAdded || hasGlowstoneReRegistration(material)) && map.mInputItemsCount > 0) {
+            ItemStack dust = MaterialStackItemHelper.mat(MaterialPrefix.dust, material, (int) divider);
+            if (!dust.isEmpty()) addedAny |= add(map, dust, null, dustOutputs, fluidOutputs, eut, duration);
+            if (divider % 9 == 0) {
+                ItemStack block = GTBlocks.getStack(BlockMaterialPrefix.blockDust, material);
+                if (!block.isEmpty()) {
+                    block.setCount((int) (divider / 9));
+                    addedAny |= add(map, block, null, dustOutputs, fluidOutputs, eut, duration);
+                }
+            }
         }
-        map.addRecipe(recipe);
-        added++;
+        return addedAny;
     }
 
-    /** Named FL fluid for gas/liquid components (1 U = 1000 mB), or null. */
-    private static FluidStack namedFluid(GTMaterial material, long amountU) {
-        if (!material.has(MaterialProperty.GAS) && !material.has(MaterialProperty.LIQUID)) return null;
-        String key = material.getName();
-        if (RegisteredFluids.get(key) == null) return null;
-//? if >=1.21.1 {
-        /*DeferredHolder<Fluid, ? extends Fluid> fluid = GTFluids.still(key);
-        if (fluid == null || !fluid.isBound()) return null;
-*///?} else {
-        RegistryObject<Fluid> fluid = GTFluids.still(key);
-        if (fluid == null || !fluid.isPresent()) return null;
-//?}
-        long mb = amountU * 1000 / U;
-        if (mb <= 0) return null;
-        return new FluidStack(fluid.get(), (int) Math.min(Integer.MAX_VALUE, mb));
+    private boolean add(RecipeMap map, ItemStack itemInput, FluidStack fluidInput,
+                        List<ItemStack> dustOutputs, List<FluidStack> fluidOutputs, long eut, long duration) {
+        ItemStack[] items = itemInput == null ? RecipeMap.ZL_IS : new ItemStack[]{itemInput};
+        FluidStack[] fluids = fluidInput == null ? RecipeMap.ZL_FS : new FluidStack[]{fluidInput};
+        Recipe recipe = RecipeMap.make(true, items, dustOutputs.toArray(RecipeMap.ZL_IS),
+                null, RecipeMap.ZL_LONG, fluids, fluidOutputs.toArray(RecipeMap.ZL_FS), duration, eut, 0);
+        if (recipe == null) return false;
+
+        if (map == MachineRecipeMaps.Electrolyzer) {
+            var selector = GTTechnological.selectorTag(0);
+            if (selector == null) return false;
+            // Apply the presence-only selector after make() so common-factor reduction keeps working.
+            ItemStack[] gated = new ItemStack[recipe.mInputs.length + 1];
+            gated[0] = new ItemStack(selector);
+            System.arraycopy(recipe.mInputs, 0, gated, 1, recipe.mInputs.length);
+            recipe = new Recipe(gated, recipe.mOutputs, recipe.mSpecialItems, recipe.mChances,
+                    recipe.mFluidInputs, recipe.mFluidOutputs, recipe.mDuration, recipe.mEUt,
+                    recipe.mSpecialValue).withCatalystInputs(0);
+        }
+
+        if (map.addRecipe(recipe) == null) return false;
+        recipes++;
+        return true;
+    }
+
+    /**
+     * Component phase contract: GT6 asks the material for its fluid form at ambient temperature.
+     * This resolves the port's registered gas, liquid, named, and molten forms with the original
+     * 1000 mB/U and 144 mB/U scales, including vanilla water.
+     */
+    private static FluidStack fluidOf(GTMaterial material, long amountU) {
+        long mb = amountU * 1000L / U;
+        if (mb <= 0 || mb > Integer.MAX_VALUE) return null;
+        // Prefer the material's dedicated registered fluid so a gas-family alias such as Saltwater
+        // does not resolve to GenGas while the actual binding is the dedicated liquid.
+        FluidStack dedicated = GeneratedRecipeResolver.namedFluid(material.getName(), (int) mb);
+        if (dedicated != null && !dedicated.isEmpty()) return dedicated;
+        FluidStack stack = GeneratedRecipeResolver.materialFluid(material.getName(), (int) mb);
+        return stack == null || stack.isEmpty() ? null : stack;
+    }
+
+    private static boolean hasGlowstoneReRegistration(GTMaterial material) {
+        for (GTMaterial reRegistration : material.getReRegistrations()) {
+            if ("Glowstone".equals(reRegistration.getName())) return true;
+        }
+        return false;
     }
 }

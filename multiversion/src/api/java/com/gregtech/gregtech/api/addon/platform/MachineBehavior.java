@@ -2,6 +2,7 @@ package com.gregtech.gregtech.api.addon.platform;
 
 import com.gregtech.gregtech.api.addon.CrucibleMold;
 import com.gregtech.gregtech.api.addon.MachineFace;
+import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -87,22 +88,22 @@ public interface MachineBehavior {
      * <p>The supplied target is an SDK-safe view of the real mold. The behavior owns
      * its material inventory and must call {@link CrucibleMold#fillMold} for each
      * material it wants to offer, reducing its own content by the amount returned.
-     * {@code crucibleSide} is the side of this machine and {@code moldSide} is the
-     * receiving side of the mold.</p>
+     * {@code crucibleSide} is the world face of this machine and {@code moldSide} is the
+     * world face of the mold that receives the pour.</p>
      *
      * @return true when material was transferred
      */
     default boolean fillMoldAtSide(MachineBehaviorContext context, CrucibleMold mold,
-                                   int crucibleSide, int moldSide) { return false; }
+                                   Direction crucibleSide, Direction moldSide) { return false; }
 
     /**
      * GT signal this machine emits toward {@code side}, in
      * {@link com.gregtech.gregtech.api.signal.GtSignalCarrier#UNIT} units. The signal wire clamps
-     * the result to {@code [0, 15 * UNIT]}. {@code side} uses {@code Direction.ordinal()}: the
-     * direction from the wire toward this block. The default emits nothing, and a machine only
+     * the result to {@code [0, 15 * UNIT]}. {@code side} is the direction from the wire toward
+     * this block. The default emits nothing, and a machine only
      * becomes a signal source when its declaration sets {@code signalOutput(true)}.
      */
-    default long gtSignal(MachineBehaviorContext context, int side) { return 0; }
+    default long gtSignal(MachineBehaviorContext context, Direction side) { return 0; }
 
     /** A player flipped this switch. The new value is already stored. */
     default void onToggle(MachineBehaviorContext context, int toggle) {}

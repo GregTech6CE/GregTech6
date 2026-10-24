@@ -334,7 +334,7 @@ public final class AddonMaterialContracts {
     private static void blockPrefix() throws Exception {
         prepare();
         expectThrows(IllegalArgumentException.class,
-                () -> PrefixDeclaration.block("sampleCasing", "", " Sample Casing", 8, "slab",
+                () -> PrefixDeclaration.block("sampleCasing", "", " Sample Casing", 8 * GTValues.U, "slab",
                         "block/sample_casing", "storage_blocks/sample_casing", List.of("SoftRubber")),
                 "block shape must be cube");
         var withShape = PrefixDeclaration.block("sampleCasing", "", " Sample Casing", 8 * GTValues.U, "cube",
@@ -345,7 +345,7 @@ public final class AddonMaterialContracts {
         AddonMaterials.submitDeclared("aa_block", List.of(MaterialDeclaration.builder("SoftRubber")
                         .displayName("Soft Rubber").color(0xE8E8E8).dust().polymer().build()),
                 List.of(new MaterialFormRequest("SoftRubber", "plate")),
-                List.of(PrefixDeclaration.block("sampleCasing", "", " Sample Casing", 8, "cube",
+                List.of(PrefixDeclaration.block("sampleCasing", "", " Sample Casing", 8 * GTValues.U, "cube",
                         "block/sample_casing", "storage_blocks/sample_casing", List.of("SoftRubber"))));
         GTMaterialRegistry.init();
         BlockMaterialPrefix prefix = BlockPrefixRegistry.byName("sampleCasing");
@@ -383,7 +383,7 @@ public final class AddonMaterialContracts {
         AddonMaterials.submitDeclared("aa_block", List.of(MaterialDeclaration.builder("SoftRubber")
                         .displayName("Soft Rubber").color(0xE8E8E8).dust().build()),
                 List.of(new MaterialFormRequest("SoftRubber", "sampleCasing")),
-                List.of(PrefixDeclaration.block("sampleCasing", "", " Sample Casing", 8, "cube",
+                List.of(PrefixDeclaration.block("sampleCasing", "", " Sample Casing", 8 * GTValues.U, "cube",
                         "block/sample_casing", "storage_blocks/sample_casing", List.of("SoftRubber"))));
         expectThrows("block prefix", "sampleCasing", "SoftRubber");
     }
@@ -609,13 +609,16 @@ public final class AddonMaterialContracts {
 
     private static void prefix() throws Exception {
         expectThrows(IllegalArgumentException.class,
-                () -> new PrefixDeclaration("wide", "", " Wide", 1, "item/wide", List.of(), Set.of(PrefixCondition.NOT_WOOD)),
+                () -> new PrefixDeclaration("counted", "", " Counted", 8, "item/counted", List.of("Iron"), Set.of()),
+                "multiple of U");
+        expectThrows(IllegalArgumentException.class,
+                () -> new PrefixDeclaration("wide", "", " Wide", GTValues.U, "item/wide", List.of(), Set.of(PrefixCondition.NOT_WOOD)),
                 "needs materials");
         prepare();
         AddonMaterials.submit("aa_prefix",
                 List.of(MaterialDefinition.builder(1, "PrefixDust").dust().build()),
                 List.of(), null, List.of(), List.of(), List.of(), List.of(),
-                List.of(new PrefixDeclaration("sampleBlank", "", " Sample Blank", 8, "item/sample_blank",
+                List.of(new PrefixDeclaration("sampleBlank", "", " Sample Blank", 8 * GTValues.U, "item/sample_blank",
                         List.of("Iron", "PrefixDust"), Set.of())));
         GTMaterialRegistry.init();
         MaterialPrefix prefix = PrefixRegistry.byName("sampleBlank");
@@ -644,21 +647,21 @@ public final class AddonMaterialContracts {
     private static void prefixName() {
         prepare();
         AddonMaterials.submit("aa_hit", List.of(), List.of(), null, List.of(), List.of(), List.of(), List.of(),
-                List.of(new PrefixDeclaration("ingot", "Ingot ", "", 1, "item/hit", List.of("Iron"), Set.of())));
+                List.of(new PrefixDeclaration("ingot", "Ingot ", "", GTValues.U, "item/hit", List.of("Iron"), Set.of())));
         expectThrows("already exists", "ingot");
     }
 
     private static void prefixCase() {
         prepare();
         AddonMaterials.submit("aa_case", List.of(), List.of(), null, List.of(), List.of(), List.of(), List.of(),
-                List.of(new PrefixDeclaration("iNgot", "Ingot ", "", 1, "item/case", List.of("Iron"), Set.of())));
+                List.of(new PrefixDeclaration("iNgot", "Ingot ", "", GTValues.U, "item/case", List.of("Iron"), Set.of())));
         expectThrows("already exists", "iNgot", "ingot");
     }
 
     private static void prefixMissing() {
         prepare();
         AddonMaterials.submit("aa_miss", List.of(), List.of(), null, List.of(), List.of(), List.of(), List.of(),
-                List.of(new PrefixDeclaration("missingBlank", "", " Blank", 1, "item/missing",
+                List.of(new PrefixDeclaration("missingBlank", "", " Blank", GTValues.U, "item/missing",
                         List.of("NotAMaterial"), Set.of())));
         expectThrows("unknown material", "NotAMaterial");
     }
@@ -666,11 +669,11 @@ public final class AddonMaterialContracts {
     private static void prefixExclude() throws Exception {
         prepare();
         AddonMaterials.submit("aa_exclude", List.of(), List.of(), null, List.of(), List.of(), List.of(), List.of(),
-                List.of(new PrefixDeclaration("metalBit", "", " Metal Bit", 1, "item/metal_bit",
+                List.of(new PrefixDeclaration("metalBit", "", " Metal Bit", GTValues.U, "item/metal_bit",
                                 List.of(), Set.of(PrefixCondition.METAL), List.of("Iron", "Gold")),
-                        new PrefixDeclaration("alloyBit", "", " Alloy Bit", 1, "item/alloy_bit",
+                        new PrefixDeclaration("alloyBit", "", " Alloy Bit", GTValues.U, "item/alloy_bit",
                                 List.of(), Set.of(PrefixCondition.ALLOY)),
-                        new PrefixDeclaration("moltenBit", "", " Molten Bit", 1, "item/molten_bit",
+                        new PrefixDeclaration("moltenBit", "", " Molten Bit", GTValues.U, "item/molten_bit",
                                 List.of(), Set.of(PrefixCondition.MOLTEN))));
         GTMaterialRegistry.init();
         MaterialPrefix metal = PrefixRegistry.byName("metalBit");
@@ -691,7 +694,7 @@ public final class AddonMaterialContracts {
     private static void prefixCondition() throws Exception {
         prepare();
         AddonMaterials.submit("aa_cond", List.of(), List.of(), null, List.of(), List.of(), List.of(), List.of(),
-                List.of(new PrefixDeclaration("toolBit", "", " Tool Bit", 2, "item/tool_bit", List.of(),
+                List.of(new PrefixDeclaration("toolBit", "", " Tool Bit", 2 * GTValues.U, "item/tool_bit", List.of(),
                         Set.of(PrefixCondition.HAS_TOOL_STATS, PrefixCondition.SMITHABLE, PrefixCondition.NOT_WOOD))));
         GTMaterialRegistry.init();
         MaterialPrefix prefix = PrefixRegistry.byName("toolBit");

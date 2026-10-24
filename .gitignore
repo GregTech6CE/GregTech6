@@ -11,6 +11,7 @@ __pycache__/
 /work/
 # Local card plans; durable decisions and evidence still go to docs/integration.
 /docs/card-plans/
+/docs/supersymmetry-*.md
 **/build/
 **/.gradle/
 **/run/

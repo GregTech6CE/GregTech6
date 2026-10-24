@@ -17,9 +17,10 @@ public final class LayoutPartClients {
 
     private LayoutPartClients() {}
 
+    /** Published only after every client is accepted, so a failure can be collected again. */
     public static synchronized void collect() {
         if (collected) return;
-        collected = true;
+        var renderers = new LinkedHashMap<String, BlockEntityRenderer<BlockEntity>>();
         ClassLoader loader = LayoutPartClient.class.getClassLoader();
         for (LayoutPartClient client : ServiceLoader.load(LayoutPartClient.class, loader)) {
             String id;
@@ -41,10 +42,12 @@ public final class LayoutPartClients {
             if (names == null) continue;
             for (String name : names) {
                 BlockEntityRenderer<BlockEntity> renderer = client.renderer(name);
-                if (renderer != null && RENDERERS.putIfAbsent(id + "\0" + name, renderer) != null)
+                if (renderer != null && renderers.putIfAbsent(id + "\0" + name, renderer) != null)
                     throw new IllegalStateException("Addon '" + id + "' part '" + name + "' registered two renderers");
             }
         }
+        RENDERERS.putAll(renderers);
+        collected = true;
     }
 
     public static BlockEntityRenderer<BlockEntity> renderer(PartClientView view) {
