@@ -338,6 +338,8 @@ public class OreProcessingRecipeLoader implements InitializationStep {
             // crushedPurifiedTiny → dustTiny
             pulverizeOne(MaterialPrefix.crushedPurifiedTiny, material, 1, MaterialPrefix.dustTiny, U9);
             if (ReviewedCinnabarFacts.supports(material)) SourceOreFollowonRows.shredder(material,ReviewedCinnabarFacts.INSTANCE);
+            else if (ReviewedOreShredderFacts.supports(material))
+                SourceOreFollowonRows.shredder(material, ReviewedOreShredderFacts.INSTANCE);
         }
     }
 
@@ -352,7 +354,8 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         if (input.isEmpty()) return;
         ItemStack output = stackFor(outputPref, material, outAmount);
         if (output.isEmpty()) return;
-        if (ReviewedCinnabarFacts.supports(material)) {
+        if (ReviewedCinnabarFacts.supports(material) || ReviewedOreShredderFacts.supports(material)) {
+            // Preserve the legacy Crusher row; only the reviewed Shredder producer is retired.
             MachineRecipeMaps.Crusher.addRecipe1(true,16,64,new long[]{10000,1000,1000},input,output,ItemStack.EMPTY,ItemStack.EMPTY);
         } else MachineRecipeMaps.pulverizing(input, output);
     }
@@ -371,7 +374,8 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         if (output.isEmpty()) return;
         ItemStack multiOut = amount(outCount, output);
         MachineRecipeMaps.Crusher .addRecipe1(true, EU_TIER, 32, input, multiOut);
-        if (!ReviewedCinnabarFacts.supports(material)) MachineRecipeMaps.Shredder.addRecipe1(true, EU_TIER, 32, input, multiOut);
+        if (!ReviewedCinnabarFacts.supports(material) && !ReviewedOreShredderFacts.supports(material))
+            MachineRecipeMaps.Shredder.addRecipe1(true, EU_TIER, 32, input, multiOut);
     }
 
     // ========================================================================
