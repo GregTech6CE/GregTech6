@@ -8,6 +8,11 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 
 /** Same-tick structure assertions scan once, then read the tracker. A scan already on the stack stays closed. */
 public final class StructureTestSupport {
+    static {
+        // Test builds compare every incremental verdict with the phase-1 full scan.
+        StructureTracking.consistencyCheck(true);
+    }
+
     private StructureTestSupport() {}
 
     public static boolean ok(BlockEntity entity) {
