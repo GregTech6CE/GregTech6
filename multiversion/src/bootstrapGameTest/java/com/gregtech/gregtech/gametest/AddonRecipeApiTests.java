@@ -8,7 +8,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluids;
 //? if >=1.21.1 {
-/*import net.neoforged.neoforge.fluids.FluidStack;
+/*import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
+import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 *///?} else {
@@ -132,6 +134,68 @@ public final class AddonRecipeApiTests {
             rejected = true;
         }
         helper.assertTrue(rejected, "builder preserves constructor validation of conflicting fluid roles");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty")
+    public static void recipeRowsCompareByValue(GameTestHelper helper) {
+        var first = AddonRecipes.Line.builder()
+                .itemInputs(new ItemStack(Items.STICK, 4)).itemOutputs(new ItemStack(Items.PAPER, 2))
+                .fluidInputs(new FluidStack(Fluids.WATER, 250)).fluidOutputs(new FluidStack(Fluids.LAVA, 50))
+                .duration(20).euPerTick(8).special(300).build();
+        var same = AddonRecipes.Line.builder()
+                .itemInputs(new ItemStack(Items.STICK, 4)).itemOutputs(new ItemStack(Items.PAPER, 2))
+                .fluidInputs(new FluidStack(Fluids.WATER, 250)).fluidOutputs(new FluidStack(Fluids.LAVA, 50))
+                .duration(20).euPerTick(8).special(300).build();
+        helper.assertTrue(first.equals(same) && first.hashCode() == same.hashCode(),
+                "separately built rows with the same content are equal");
+
+        var fewerItems = AddonRecipes.Line.builder()
+                .itemInputs(new ItemStack(Items.STICK, 3)).itemOutputs(new ItemStack(Items.PAPER, 2))
+                .fluidInputs(new FluidStack(Fluids.WATER, 250)).fluidOutputs(new FluidStack(Fluids.LAVA, 50))
+                .duration(20).euPerTick(8).special(300).build();
+        helper.assertTrue(!first.equals(fewerItems), "item count takes part in row equality");
+
+        var lessWater = AddonRecipes.Line.builder()
+                .itemInputs(new ItemStack(Items.STICK, 4)).itemOutputs(new ItemStack(Items.PAPER, 2))
+                .fluidInputs(new FluidStack(Fluids.WATER, 249)).fluidOutputs(new FluidStack(Fluids.LAVA, 50))
+                .duration(20).euPerTick(8).special(300).build();
+        helper.assertTrue(!first.equals(lessWater), "fluid amount takes part in row equality");
+
+//? if >=1.21.1 {
+        /*var tagged = new ItemStack(Items.PAPER, 2);
+        tagged.set(DataComponents.CUSTOM_NAME, Component.literal("tagged"));
+        var taggedCopy = new ItemStack(Items.PAPER, 2);
+        taggedCopy.set(DataComponents.CUSTOM_NAME, Component.literal("tagged"));
+*///?} else {
+        var tagged = new ItemStack(Items.PAPER, 2);
+        tagged.getOrCreateTag().putString("tag", "value");
+        var taggedCopy = new ItemStack(Items.PAPER, 2);
+        taggedCopy.getOrCreateTag().putString("tag", "value");
+//?}
+        var taggedRow = AddonRecipes.Line.builder().itemOutputs(tagged).build();
+        var taggedCopyRow = AddonRecipes.Line.builder().itemOutputs(taggedCopy).build();
+        helper.assertTrue(taggedRow.equals(taggedCopyRow) && taggedRow.hashCode() == taggedCopyRow.hashCode(),
+                "item data takes part by value");
+        helper.assertTrue(!first.equals(AddonRecipes.Line.builder()
+                        .itemInputs(new ItemStack(Items.STICK, 4)).itemOutputs(tagged)
+                        .fluidInputs(new FluidStack(Fluids.WATER, 250)).fluidOutputs(new FluidStack(Fluids.LAVA, 50))
+                        .duration(20).euPerTick(8).special(300).build()),
+                "different item data alone is not equal when counts and other fields match");
+
+        var storedA = AddonRecipes.Line.read(new ItemStack[]{ItemStack.EMPTY}, null, null, null, 1, 0, 0, null, null);
+        var storedB = AddonRecipes.Line.read(new ItemStack[]{ItemStack.EMPTY}, null, null, null, 1, 0, 0, null, null);
+        helper.assertTrue(storedA.equals(storedB) && storedA.hashCode() == storedB.hashCode(),
+                "stored empty slots compare equal");
+
+        var presenceA = new AddonRecipes.Line(new ItemStack[0], new ItemStack[0],
+                new FluidStack[]{new FluidStack(Fluids.WATER, 100)}, new FluidStack[0],
+                1, 0, 0, null, null, null, new int[]{0});
+        var presenceB = new AddonRecipes.Line(new ItemStack[0], new ItemStack[0],
+                new FluidStack[]{new FluidStack(Fluids.WATER, 300)}, new FluidStack[0],
+                1, 0, 0, null, null, null, new int[]{0});
+        helper.assertTrue(presenceA.equals(presenceB) && presenceA.hashCode() == presenceB.hashCode(),
+                "presence fluids normalize their amount before comparison");
         helper.succeed();
     }
 

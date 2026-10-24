@@ -1,6 +1,6 @@
-package com.gregtech.gregtech.api.addon;
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
 
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
+package com.gregtech.gregtech.api.addon;
 
 /**
  * One override for a built-in machine variant, keyed by {@code machineName + tier}.
@@ -15,7 +15,7 @@ public record MachineTuning(
         Integer processingEfficiency,
         Boolean constantEnergy, Boolean cheapOverclocking) {
     public MachineTuning {
-        if (machineName == null || !machineName.matches("[a-z0-9_]+"))
+        if (!AddonNames.matches(AddonNames.MACHINE_TYPE, machineName))
             throw new IllegalArgumentException("Invalid tuned machine name: " + machineName);
         if (tier < 1)
             throw new IllegalArgumentException("Invalid tuned tier for " + machineName + ": " + tier);
@@ -32,7 +32,12 @@ public record MachineTuning(
             throw new IllegalArgumentException("Invalid tuned maximum energy for " + machineName + "/T" + tier);
         if (energyInMin != null && energyInMax != null && energyInMax < energyInMin)
             throw new IllegalArgumentException("Invalid tuned energy range for " + machineName + "/T" + tier);
-        if (processingEfficiency != null && (processingEfficiency < 1 || processingEfficiency > 100_000))
+        if (energyIn != null && energyInMin != null && energyInMax != null
+                && (energyIn < energyInMin || energyIn > energyInMax))
+            throw new IllegalArgumentException("Tuned energy sits outside its range for "
+                    + machineName + "/T" + tier + ": " + energyIn);
+        if (processingEfficiency != null
+                && (processingEfficiency < 1 || processingEfficiency > AddonLimits.MAX_EFFICIENCY))
             throw new IllegalArgumentException("Invalid tuned efficiency for " + machineName + "/T" + tier);
     }
 }

@@ -125,7 +125,7 @@ public final class AddonMaterials {
         for (AddonMaterialContributor contributor : ServiceLoader.load(AddonMaterialContributor.class, loader)) {
             try {
                 List<MaterialDeclaration> declarations = contributor.materials();
-                warnIgnoredDeclarationIds(contributor.addonId(), declarations);
+                warnDeclarationIssues(contributor.addonId(), declarations);
                 enqueue(contributor.addonId(), definitions(declarations), contributor.forms(), contributor::link,
                         contributor.compositions(), contributor.smeltingTargets(),
                         contributor.smeltingTargetRemovals(),
@@ -139,11 +139,15 @@ public final class AddonMaterials {
         }
     }
 
-    private static void warnIgnoredDeclarationIds(String addonId, List<MaterialDeclaration> declarations) {
+    private static void warnDeclarationIssues(String addonId, List<MaterialDeclaration> declarations) {
         for (MaterialDeclaration declaration : declarations) {
-            if (declaration.id() == 0) continue;
-            GTMaterialRegistry.warn("Addon '" + addonId + "' material '" + declaration.name()
-                    + "' declared numeric id " + declaration.id() + "; the id is ignored");
+            if (declaration.id() != 0)
+                GTMaterialRegistry.warn("Addon '" + addonId + "' material '" + declaration.name()
+                        + "' declared numeric id " + declaration.id() + "; the id is ignored");
+            if (declaration.meltingPoint() > declaration.boilingPoint())
+                GTMaterialRegistry.warn("Addon '" + addonId + "' material '" + declaration.name()
+                        + "' melts above its boiling point (" + declaration.meltingPoint()
+                        + " > " + declaration.boilingPoint() + ")");
         }
     }
 
@@ -187,7 +191,7 @@ public final class AddonMaterials {
     public static synchronized void submitDeclared(String addonId, List<MaterialDeclaration> materials,
                                                    List<MaterialFormRequest> forms, List<PrefixDeclaration> prefixes) {
         List<MaterialDeclaration> copied = List.copyOf(Objects.requireNonNull(materials, "materials"));
-        warnIgnoredDeclarationIds(addonId, copied);
+        warnDeclarationIssues(addonId, copied);
         enqueue(addonId, definitions(copied), forms, () -> {}, List.of(), List.of(), List.of(), List.of(), List.of(),
                 List.copyOf(Objects.requireNonNull(prefixes, "prefixes")),
                 oreDeclarations(copied), List.of(), List.of(), formTags(copied));
@@ -220,7 +224,7 @@ public final class AddonMaterials {
     public static synchronized void submitWorldgen(String addonId, List<MaterialDeclaration> materials,
                                                    List<OreVeinDeclaration> veins, List<SmallOreDeclaration> smallOres) {
         List<MaterialDeclaration> copied = List.copyOf(Objects.requireNonNull(materials, "materials"));
-        warnIgnoredDeclarationIds(addonId, copied);
+        warnDeclarationIssues(addonId, copied);
         enqueue(addonId, definitions(copied), List.of(), () -> {}, List.of(), List.of(), List.of(), List.of(), List.of(),
                 List.of(), oreDeclarations(copied), veins, smallOres, formTags(copied));
     }

@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon.platform;
 
 import net.minecraft.core.BlockPos;
@@ -6,8 +8,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 import javax.annotation.Nullable;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * One sensor sample. {@code pos} is the sensor block, {@code target} the block in front of it,

@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon.platform;
 
 //? if >=1.21.1 {
@@ -6,8 +8,6 @@ package com.gregtech.gregtech.api.addon.platform;
 import net.minecraftforge.fluids.FluidStack;
 //?}
 import net.minecraft.world.level.material.Fluid;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * GregTech fluids. {@code name} is the fluid field, such as {@code DistW}, not a material name.

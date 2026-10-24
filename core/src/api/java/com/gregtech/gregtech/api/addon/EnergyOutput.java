@@ -1,9 +1,10 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * Energy leaving a behavior machine, or an energy structure part.
@@ -61,8 +62,13 @@ public final class EnergyOutput {
                 && EnergyType.same(type, that.type) && MachineFace.sameSet(faces, that.faces);
     }
 
+    @Override public String toString() {
+        return "EnergyOutput[type=" + type + ", faces=" + faces + ", minSize=" + minSize + ", maxSize=" + maxSize
+                + ", maxAmount=" + maxAmount + ", allowNegative=" + allowNegative + ", remote=" + remote + "]";
+    }
+
     @Override public int hashCode() {
-        return Objects.hash(type == null ? null : type.toLowerCase(java.util.Locale.ROOT),
+        return Objects.hash(type == null ? null : type.toLowerCase(Locale.ROOT),
                 MachineFace.hashSet(faces), minSize, maxSize, maxAmount, allowNegative, remote);
     }
 
@@ -94,7 +100,7 @@ public final class EnergyOutput {
 
         public Builder faces(MachineFace... faces) {
             facesSpecified = true;
-            this.faces = faces == null ? List.of() : List.of(faces);
+            this.faces = MachineFace.listed(faces);
             return this;
         }
 

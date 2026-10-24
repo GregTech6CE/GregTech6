@@ -1,9 +1,10 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /** Pure data for one addon material. GregTech turns it into a generated {@code gt6ce:} material at startup. */
 public record MaterialDeclaration(
@@ -40,9 +41,12 @@ public record MaterialDeclaration(
         oreByproducts = oreByproducts == null ? List.of() : List.copyOf(oreByproducts);
         if (!ores && !oreByproducts.isEmpty())
             throw new IllegalArgumentException("Ore byproducts require ores: " + name);
+        var seenByproducts = new HashSet<String>();
         for (String byproduct : oreByproducts) {
             if (!AddonNames.matches(AddonNames.MATERIAL, byproduct))
                 throw new IllegalArgumentException("Use a material name for an ore byproduct of " + name);
+            if (!seenByproducts.add(byproduct))
+                throw new IllegalArgumentException("Repeats an ore byproduct '" + byproduct + "' for " + name);
         }
     }
 
@@ -65,7 +69,7 @@ public record MaterialDeclaration(
     @AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.MaterialDeclaration#builder", removeAt = "0.9")
     public static Builder builder(int id, String name) {
         if (id <= 0 || id >= 10_000) throw new IllegalArgumentException("Material ID must be 1..9999: " + id);
-        return new Builder(id, name);
+        return new Builder(0, name);
     }
 
     public static final class Builder {

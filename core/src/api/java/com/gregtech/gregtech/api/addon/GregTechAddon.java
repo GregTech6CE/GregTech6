@@ -1,6 +1,8 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
+/** One addon, identified by the loader mod id it registers from its mod constructor. */
 public interface GregTechAddon {
     /** The addon's own loader mod ID. Register during the addon's mod constructor. */
     String id();

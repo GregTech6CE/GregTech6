@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon.platform;
 
 import net.minecraft.network.chat.Component;
@@ -11,8 +13,6 @@ import net.minecraftforge.fluids.FluidStack;
 //?}
 
 import java.util.List;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * What one placed functional part does. GregTech creates a new instance for every block entity.
