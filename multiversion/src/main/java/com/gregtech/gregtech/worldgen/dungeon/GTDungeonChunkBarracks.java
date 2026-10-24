@@ -37,7 +37,7 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
  * <p>Port differences:</p>
  * <ul>
  *   <li>The 1.7.10 block metadata of the doors, buttons, pressure plates and beds becomes a 1.20.1 block
- *       state: GT6's door meta 1 (the Z=5 wall) faces north and meta 3 (the Z=10 wall) faces south, the
+ *       state: GT6's door meta 1 (the Z=5 wall) faces south and meta 3 (the Z=10 wall) faces north, the
  *       upper block's low bit (8/9) picks the hinge so the two doors of a wall mirror each other, GT6's
  *       button meta 3/4 (the wall at Z-1 / Z+1) becomes a wall button facing south / north, and GT6's bed
  *       bit 8 and bits 0..1 select the head and the direction the head points.</li>
@@ -120,15 +120,16 @@ public class GTDungeonChunkBarracks extends GTDungeonChunkRoomEmpty {
         }
 
         // GT6 :68-75 - the four iron doors of the inner room. The 1.7.10 metadata becomes a 1.20.1 door
-        // state; the hinge comes from the upper block's low bit, so each wall's pair mirrors itself.
-        data.set(3, 1, 5, door(Direction.NORTH, DoorHingeSide.LEFT, DoubleBlockHalf.LOWER));
-        data.set(3, 2, 5, door(Direction.NORTH, DoorHingeSide.LEFT, DoubleBlockHalf.UPPER));
-        data.set(12, 1, 5, door(Direction.NORTH, DoorHingeSide.RIGHT, DoubleBlockHalf.LOWER));
-        data.set(12, 2, 5, door(Direction.NORTH, DoorHingeSide.RIGHT, DoubleBlockHalf.UPPER));
-        data.set(3, 1, 10, door(Direction.SOUTH, DoorHingeSide.RIGHT, DoubleBlockHalf.LOWER));
-        data.set(3, 2, 10, door(Direction.SOUTH, DoorHingeSide.RIGHT, DoubleBlockHalf.UPPER));
-        data.set(12, 1, 10, door(Direction.SOUTH, DoorHingeSide.LEFT, DoubleBlockHalf.LOWER));
-        data.set(12, 2, 10, door(Direction.SOUTH, DoorHingeSide.LEFT, DoubleBlockHalf.UPPER));
+        // state: closed SOUTH lies at local z=0..3/16, NORTH at z=13/16..1,
+        // matching the adjacent NORTH/SOUTH half-slab walls. The upper metadata bit keeps the hinge.
+        data.set(3, 1, 5, door(Direction.SOUTH, DoorHingeSide.LEFT, DoubleBlockHalf.LOWER));
+        data.set(3, 2, 5, door(Direction.SOUTH, DoorHingeSide.LEFT, DoubleBlockHalf.UPPER));
+        data.set(12, 1, 5, door(Direction.SOUTH, DoorHingeSide.RIGHT, DoubleBlockHalf.LOWER));
+        data.set(12, 2, 5, door(Direction.SOUTH, DoorHingeSide.RIGHT, DoubleBlockHalf.UPPER));
+        data.set(3, 1, 10, door(Direction.NORTH, DoorHingeSide.RIGHT, DoubleBlockHalf.LOWER));
+        data.set(3, 2, 10, door(Direction.NORTH, DoorHingeSide.RIGHT, DoubleBlockHalf.UPPER));
+        data.set(12, 1, 10, door(Direction.NORTH, DoorHingeSide.LEFT, DoubleBlockHalf.LOWER));
+        data.set(12, 2, 10, door(Direction.NORTH, DoorHingeSide.LEFT, DoubleBlockHalf.UPPER));
         // GT6 :76-79 - the stone buttons beside the doors: meta 3 is the wall at Z-1, meta 4 the wall at Z+1.
         data.set(4, 2, 6, button(Direction.SOUTH));
         data.set(11, 2, 6, button(Direction.SOUTH));

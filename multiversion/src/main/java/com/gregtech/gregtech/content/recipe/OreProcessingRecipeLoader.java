@@ -676,6 +676,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
             GTMaterial material = mat.resolve();
             if (!material.isValid()) continue;
             if (material.has(MaterialProperty.ANTIMATTER)) continue;
+            if (ReviewedCinnabarThermalRecipes.emitIfSupported(material)) continue;
 
             GTMaterial smeltTarget = material.getTargetSmeltingMaterial();
             long smeltAmount = material.getTargetSmeltingAmount();

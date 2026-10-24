@@ -313,3 +313,42 @@ def addonApiVersionContracts = tasks.register('addonApiVersionContracts', JavaEx
     }
 }
 tasks.named('check').configure { dependsOn addonApiVersionContracts }
+
+
+def fluidSlotAmountOverlayChecks = tasks.register('fluidSlotAmountOverlayChecks', JavaExec) {
+    description = 'Checks original fluid-slot bucket labels and item-count alignment without Minecraft.'
+    group = 'verification'
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'com.gregtech.gregtech.core.FluidSlotAmountOverlayChecks'
+    javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
+    def marker = layout.buildDirectory.file('reports/contracts/fluidSlotAmountOverlayChecks.passed')
+    outputs.file(marker)
+    doFirst { marker.get().asFile.delete() }
+    doLast {
+        marker.get().asFile.parentFile.mkdirs()
+        marker.get().asFile.setText("FluidSlotAmountOverlayChecks: passed\n", 'UTF-8')
+    }
+}
+tasks.named('check').configure { dependsOn fluidSlotAmountOverlayChecks }
+
+// Each profile starts with untouched public registries; no reflection resets or state hacks.
+['positive', 'same-field', 'alias-field'].each { scenario ->
+    def contract = tasks.register("oreThermalSourceContracts_${scenario.replace('-', '_')}", JavaExec) {
+        description = "Checks thermal source units and generated-fluid provenance (${scenario}) in a fresh JVM."
+        group = 'verification'
+        dependsOn tasks.named('testClasses')
+        classpath = sourceSets.test.runtimeClasspath
+        mainClass = 'com.gregtech.gregtech.core.OreThermalSourceContracts'
+        args scenario
+        javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
+        def marker = layout.buildDirectory.file("reports/contracts/oreThermalSourceContracts_${scenario}.passed")
+        outputs.file(marker)
+        doFirst { marker.get().asFile.delete() }
+        doLast {
+            marker.get().asFile.parentFile.mkdirs()
+            marker.get().asFile.setText("OreThermalSourceContracts ${scenario}: passed\n", 'UTF-8')
+        }
+    }
+    tasks.named('check').configure { dependsOn contract }
+}
