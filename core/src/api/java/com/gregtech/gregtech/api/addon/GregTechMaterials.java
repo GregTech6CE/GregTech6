@@ -8,6 +8,7 @@ import java.util.List;
 public final class GregTechMaterials {
     private GregTechMaterials() {}
 
+    /** The named material, or {@link #invalid()} when the name is unknown. Never null. */
     public static Material find(String name) { return AddonRuntime.services().materials().find(name); }
 
     public static Material find(int id) { return AddonRuntime.services().materials().find(id); }

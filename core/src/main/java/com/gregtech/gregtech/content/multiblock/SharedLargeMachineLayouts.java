@@ -1,4 +1,5 @@
 package com.gregtech.gregtech.content.multiblock;
+import com.gregtech.gregtech.api.addon.LayoutRepeat;
 import com.gregtech.gregtech.api.multiblock.StructureGrid.Role;import java.util.*;
 /** Original GT6 large-machine coordinates and material-part IDs; no Minecraft registry. */
 public final class SharedLargeMachineLayouts {private SharedLargeMachineLayouts(){}
@@ -21,7 +22,7 @@ public final class SharedLargeMachineLayouts {private SharedLargeMachineLayouts(
             if(key==null||!key.matches("[a-z][a-z0-9_]{0,63}")) throw new IllegalArgumentException("Invalid repeat key: "+key);
             if(min<1) throw new IllegalArgumentException("Repeat '"+key+"' needs min >= 1");
             if(max!=-1&&max<min) throw new IllegalArgumentException("Repeat '"+key+"' needs max >= min or -1");
-            if(max>1024) throw new IllegalArgumentException("Repeat '"+key+"' max is too large: "+max);
+            if(max>LayoutRepeat.MAX_COPIES) throw new IllegalArgumentException("Repeat '"+key+"' max is too large: "+max);
             if(step!=1&&step!=-1) throw new IllegalArgumentException("Repeat '"+key+"' step must be 1 or -1");
             if(cells==null||cells.isEmpty()) throw new IllegalArgumentException("Repeat '"+key+"' is empty");
             cells=List.copyOf(cells);

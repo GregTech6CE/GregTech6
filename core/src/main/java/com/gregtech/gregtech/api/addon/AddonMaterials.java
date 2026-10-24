@@ -83,6 +83,7 @@ public final class AddonMaterials {
                               List<MaterialFormRequest> forms, Runnable link,
                               List<MaterialComposition> compositions,
                               List<SmeltingTargetDeclaration> smeltingTargets,
+                              List<SmeltingTargetRemoval> smeltingTargetRemovals,
                               List<CrucibleReactionDeclaration> crucibleReactions,
                               List<CrucibleReactionRemoval> crucibleRemovals,
                               List<PrefixDeclaration> prefixes,
@@ -127,6 +128,7 @@ public final class AddonMaterials {
                 warnIgnoredDeclarationIds(contributor.addonId(), declarations);
                 enqueue(contributor.addonId(), definitions(declarations), contributor.forms(), contributor::link,
                         contributor.compositions(), contributor.smeltingTargets(),
+                        contributor.smeltingTargetRemovals(),
                         contributor.crucibleReactions(), contributor.crucibleRemovals(), contributor.prefixes(),
                         oreDeclarations(declarations), contributor.oreVeins(), contributor.smallOres(),
                         formTags(declarations));
@@ -186,7 +188,7 @@ public final class AddonMaterials {
                                                    List<MaterialFormRequest> forms, List<PrefixDeclaration> prefixes) {
         List<MaterialDeclaration> copied = List.copyOf(Objects.requireNonNull(materials, "materials"));
         warnIgnoredDeclarationIds(addonId, copied);
-        enqueue(addonId, definitions(copied), forms, () -> {}, List.of(), List.of(), List.of(), List.of(),
+        enqueue(addonId, definitions(copied), forms, () -> {}, List.of(), List.of(), List.of(), List.of(), List.of(),
                 List.copyOf(Objects.requireNonNull(prefixes, "prefixes")),
                 oreDeclarations(copied), List.of(), List.of(), formTags(copied));
     }
@@ -220,7 +222,7 @@ public final class AddonMaterials {
         List<MaterialDeclaration> copied = List.copyOf(Objects.requireNonNull(materials, "materials"));
         warnIgnoredDeclarationIds(addonId, copied);
         enqueue(addonId, definitions(copied), List.of(), () -> {}, List.of(), List.of(), List.of(), List.of(), List.of(),
-                oreDeclarations(copied), veins, smallOres, formTags(copied));
+                List.of(), oreDeclarations(copied), veins, smallOres, formTags(copied));
     }
 
     private static synchronized void submit(String addonId, List<MaterialDefinition> materials,
@@ -238,14 +240,15 @@ public final class AddonMaterials {
             GTMaterialRegistry.warn("Addon '" + addonId + "' material '" + definition.name()
                     + "' declared numeric id " + definition.id() + "; the id is ignored");
         }
-        enqueue(addonId, copied, forms, link, compositions, smeltingTargets, crucibleReactions, crucibleRemovals,
-                prefixes, ores, veins, smallOres, List.of());
+        enqueue(addonId, copied, forms, link, compositions, smeltingTargets, List.of(), crucibleReactions,
+                crucibleRemovals, prefixes, ores, veins, smallOres, List.of());
     }
 
     private static synchronized void enqueue(String addonId, List<MaterialDefinition> materials,
                                              List<MaterialFormRequest> forms, Runnable link,
                                              List<MaterialComposition> compositions,
                                              List<SmeltingTargetDeclaration> smeltingTargets,
+                                             List<SmeltingTargetRemoval> smeltingTargetRemovals,
                                              List<CrucibleReactionDeclaration> crucibleReactions,
                                              List<CrucibleReactionRemoval> crucibleRemovals,
                                              List<PrefixDeclaration> prefixes,
@@ -264,6 +267,7 @@ public final class AddonMaterials {
         QUEUE.put(addonId, new Submission(addonId, copiedMaterials, copiedForms, link == null ? () -> {} : link,
                 List.copyOf(Objects.requireNonNull(compositions, "compositions")),
                 List.copyOf(Objects.requireNonNull(smeltingTargets, "smeltingTargets")),
+                List.copyOf(Objects.requireNonNull(smeltingTargetRemovals, "smeltingTargetRemovals")),
                 List.copyOf(Objects.requireNonNull(crucibleReactions, "crucibleReactions")),
                 List.copyOf(Objects.requireNonNull(crucibleRemovals, "crucibleRemovals")),
                 List.copyOf(Objects.requireNonNull(prefixes, "prefixes")),
@@ -499,13 +503,7 @@ public final class AddonMaterials {
             throw new IllegalStateException("Addon '" + addonId + "' prefix '" + declaration.name()
                     + "' already exists as a block prefix");
         Set<GTMaterial> selected = selectPrefixMaterials(addonId, declaration);
-        long weight;
-        try {
-            weight = Math.multiplyExact(declaration.unitAmount(), GTValues.U);
-        } catch (ArithmeticException overflow) {
-            throw new IllegalStateException("Addon '" + addonId + "' prefix '" + declaration.name()
-                    + "' unit amount overflows", overflow);
-        }
+        long weight = declaration.amount();
         String label = (declaration.displayPrefix() + declaration.displaySuffix()).trim();
         MaterialPrefix.defineAddon(declaration.name(), label, declaration.displayPrefix(), declaration.displaySuffix(),
                 weight, addonId, declaration.texture(), material -> selected.contains(material.resolve()));
@@ -517,13 +515,7 @@ public final class AddonMaterials {
             throw new IllegalStateException("Addon '" + addonId + "' block prefix '" + declaration.name()
                     + "' already exists");
         Set<GTMaterial> selected = selectPrefixMaterials(addonId, declaration);
-        long weight;
-        try {
-            weight = Math.multiplyExact(declaration.unitAmount(), GTValues.U);
-        } catch (ArithmeticException overflow) {
-            throw new IllegalStateException("Addon '" + addonId + "' prefix '" + declaration.name()
-                    + "' unit amount overflows", overflow);
-        }
+        long weight = declaration.amount();
         String label = (declaration.displayPrefix() + declaration.displaySuffix()).trim();
         com.gregtech.gregtech.api.prefix.BlockMaterialPrefix.defineAddon(declaration.name(), label,
                 declaration.displayPrefix(), declaration.displaySuffix(), weight, addonId, declaration.texture(),
@@ -626,6 +618,7 @@ public final class AddonMaterials {
         var explicit = new ArrayList<CrucibleReactions.AddonRow>();
         var derived = new ArrayList<CrucibleReactions.AddonRow>();
         var removals = new ArrayList<CrucibleReactions.AddonRemoval>();
+        var smeltingRemovals = new ArrayList<GTMaterial>();
         var derivedMaterials = new IdentityHashMap<GTMaterial, Boolean>();
         var crucibleFlags = new IdentityHashMap<GTMaterial, Boolean>();
         for (Submission submission : snapshot()) {
@@ -641,6 +634,9 @@ public final class AddonMaterials {
                         new CrucibleReactions.Reaction(material, composition.divider(), List.copyOf(parts))));
             }
             for (SmeltingTargetDeclaration target : submission.smeltingTargets) applySmelting(submission.addonId, target);
+            for (SmeltingTargetRemoval removal : submission.smeltingTargetRemovals) {
+                smeltingRemovals.add(material(submission.addonId, removal.material(), "smelting target removal"));
+            }
             for (CrucibleReactionDeclaration reaction : submission.crucibleReactions) {
                 explicit.add(new CrucibleReactions.AddonRow(submission.addonId,
                         resolveReaction(submission.addonId, reaction)));
@@ -649,6 +645,7 @@ public final class AddonMaterials {
                 removals.add(resolveRemoval(submission.addonId, removal));
             }
         }
+        for (GTMaterial material : smeltingRemovals) material.clearSmeltingTarget();
         CrucibleReactions.seal(explicit, derived, removals);
     }
 

@@ -190,8 +190,8 @@ public final class MaterialDecompositionPolicyTests {
 
     @GameTest(template = "test_empty", timeoutTicks = 100)
     public static void decompositionMapsFollowExplicitMaterialProcessing(GameTestHelper h) {
-        // Explicit elec factories remain valid. Do not use CobaltHexahydrate: its known
-        // vanilla-water output resolver gap is not part of this policy-only repair.
+        // Explicit elec factories remain valid. Cobalt hexahydrate's water output is covered by
+        // decompositionUsesFluidInputsAmbientPhasesAndOriginalWork below.
         ItemStack selector = selectorZero(h);
         Recipe silverIodide = lookup(h, MachineRecipeMaps.Electrolyzer, List.of(dust(h, "AgI", 64), selector), List.of());
         Recipe vanadiumOxide = lookup(h, MachineRecipeMaps.Electrolyzer, List.of(dust(h, "V2O5", 64), selector), List.of());
@@ -200,14 +200,20 @@ public final class MaterialDecompositionPolicyTests {
 
         var bronze = dust(h, "Bronze", 64);
         var lazurite = dust(h, "Lazurite", 64);
-        Recipe bronzeCentrifuge = lookup(h, MachineRecipeMaps.Centrifuge, List.of(bronze), List.of());
+        // GT6 feeds Bronze as 576 mB molten metal (divider 4U, 144 mB/U) and suppresses the dust row.
+        FluidStack bronzeFluid = com.gregtech.gregtech.content.recipe.generated.GeneratedRecipeResolver
+                .materialFluid("Bronze", 4000);
+        h.assertTrue(bronzeFluid != null && bronzeFluid.getAmount() == 576, "Bronze molten input exists");
+        Recipe bronzeCentrifuge = lookup(h, MachineRecipeMaps.Centrifuge, List.of(), List.of(bronzeFluid));
+        Recipe bronzeDustCentrifuge = lookup(h, MachineRecipeMaps.Centrifuge, List.of(bronze), List.of());
         Recipe bronzeElectrolyzer = lookup(h, MachineRecipeMaps.Electrolyzer, List.of(bronze, selector), List.of());
         Recipe bronzeBareElectrolyzer = lookup(h, MachineRecipeMaps.Electrolyzer, List.of(bronze), List.of());
         Recipe lazuriteElectrolyzer = lookup(h, MachineRecipeMaps.Electrolyzer, List.of(lazurite, selector), List.of());
         Recipe lazuriteBareElectrolyzer = lookup(h, MachineRecipeMaps.Electrolyzer, List.of(lazurite), List.of());
         Recipe lazuriteCentrifuge = lookup(h, MachineRecipeMaps.Centrifuge, List.of(lazurite), List.of());
         boolean bronzeCorrect = expectedOutput(h, bronzeCentrifuge, "Copper")
-                && expectedOutput(h, bronzeCentrifuge, "Tin") && bronzeElectrolyzer == null && bronzeBareElectrolyzer == null;
+                && expectedOutput(h, bronzeCentrifuge, "Tin") && bronzeDustCentrifuge == null
+                && bronzeElectrolyzer == null && bronzeBareElectrolyzer == null;
         boolean lazuriteCorrect = expectedOutput(h, lazuriteElectrolyzer, "Alumina")
                 && expectedOutput(h, lazuriteElectrolyzer, "SiliconDioxide") && lazuriteCentrifuge == null
                 && lazuriteBareElectrolyzer == null;
@@ -236,6 +242,73 @@ public final class MaterialDecompositionPolicyTests {
         specializedAlumina(h);
         h.succeed();
     }
+    private static boolean hasFluidOutput(Recipe recipe, String nameSuffix, int amount) {
+        return recipe != null && Arrays.stream(recipe.mFluidOutputs).anyMatch(
+                f -> !f.isEmpty() && fluidName(f).endsWith(nameSuffix) && f.getAmount() == amount);
+    }
+
+    private static Recipe recipeWithFluid(RecipeMap map, String fluidSuffix, int amount) {
+        return map.mRecipeList.stream()
+                .filter(r -> r.mEnabled && !r.mFakeRecipe)
+                .filter(r -> Arrays.stream(r.mFluidInputs).anyMatch(
+                        f -> !f.isEmpty() && fluidName(f).contains(fluidSuffix) && f.getAmount() == amount))
+                .findFirst().orElse(null);
+    }
+
+    private static String saltwaterDiagnostic() {
+        return MachineRecipeMaps.Electrolyzer.mRecipeList.stream()
+                .filter(r -> r.mEnabled && !r.mFakeRecipe)
+                .filter(r -> Arrays.stream(r.mFluidInputs).anyMatch(
+                        f -> !f.isEmpty() && fluidName(f).contains("saltwater")))
+                .map(MaterialDecompositionPolicyTests::nativeRecipe).toList().toString();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 100)
+    public static void decompositionUsesFluidInputsAmbientPhasesAndOriginalWork(GameTestHelper h) {
+        ItemStack selector = selectorZero(h);
+
+        // Liquid input: Saltwater divider 4 -> 4000 mB in, ambient water 3000 mB and salt dust out.
+        FluidStack saltwater = com.gregtech.gregtech.content.recipe.generated.GeneratedRecipeResolver
+                .materialFluid("Saltwater", 4000);
+        h.assertTrue(saltwater != null && saltwater.getAmount() == 4000, "Saltwater liquid input exists");
+        // The map stores recipes in a HashSet, so lookup order is not registration order; locate
+        // the generic 4000 mB row directly instead of relying on which saltwater row wins.
+        Recipe saltwaterRecipe = recipeWithFluid(MachineRecipeMaps.Electrolyzer, "saltwater", 4000);
+        h.assertTrue(saltwaterRecipe != null && saltwaterRecipe.mEUt == 56 && saltwaterRecipe.mDuration == 1168,
+                "Saltwater fluid electrolysis keeps original work: supplied=" + nativeFluids(new FluidStack[]{saltwater})
+                        + "; selected=" + nativeRecipe(saltwaterRecipe) + "; rows=" + saltwaterDiagnostic());
+        h.assertTrue(hasFluidOutput(saltwaterRecipe, "water", 3000) && expectedOutput(h, saltwaterRecipe, "Salt"),
+                "Saltwater outputs ambient water fluid and salt dust: " + nativeRecipe(saltwaterRecipe));
+
+        // Gas input: Nitrogen Monoxide divider 2 -> 2000 mB in, both components are ambient gases.
+        FluidStack nitrogenMonoxide = com.gregtech.gregtech.content.recipe.generated.GeneratedRecipeResolver
+                .materialFluid("NitrogenMonoxide", 2000);
+        h.assertTrue(nitrogenMonoxide != null && nitrogenMonoxide.getAmount() == 2000,
+                "Nitrogen Monoxide gas input exists");
+        Recipe noRecipe = lookup(h, MachineRecipeMaps.Electrolyzer, List.of(selector), List.of(nitrogenMonoxide));
+        h.assertTrue(noRecipe != null && noRecipe.mFluidInputs.length == 1 && noRecipe.mFluidInputs[0].getAmount() == 80
+                        && hasFluidOutput(noRecipe, "nitrogen", 40) && hasFluidOutput(noRecipe, "oxygen", 40),
+                "NO gas electrolysis is normalized and emits ambient gases: " + nativeRecipe(noRecipe));
+
+        // Vanilla water output: Cobalt hexahydrate divider 7 -> cobalt dust and 6000 mB water.
+        ItemStack cobaltHydrate = dust(h, "CobaltHexahydrate", 7);
+        Recipe cobaltRecipe = lookup(h, MachineRecipeMaps.Centrifuge, List.of(cobaltHydrate), List.of());
+        h.assertTrue(cobaltRecipe != null && expectedOutput(h, cobaltRecipe, "Cobalt")
+                        && hasFluidOutput(cobaltRecipe, "water", 6000),
+                "vanilla water is a resolved ambient output: " + nativeRecipe(cobaltRecipe));
+
+        // Work parameters: original EU = max(16, total*14/U), duration = ceil(total*292/U).
+        FluidStack bronzeFluid = com.gregtech.gregtech.content.recipe.generated.GeneratedRecipeResolver
+                .materialFluid("Bronze", 4000);
+        Recipe bronze = lookup(h, MachineRecipeMaps.Centrifuge, List.of(), List.of(bronzeFluid));
+        h.assertTrue(bronze != null && bronze.mEUt == 56 && bronze.mDuration == 1168,
+                "Bronze keeps original EU and duration: " + nativeRecipe(bronze));
+        Recipe lazurite = lookup(h, MachineRecipeMaps.Electrolyzer, List.of(dust(h, "Lazurite", 64), selector), List.of());
+        h.assertTrue(lazurite != null && lazurite.mEUt == 392 && lazurite.mDuration == 4088,
+                "Lazurite keeps original EU and normalized duration: " + nativeRecipe(lazurite));
+        h.succeed();
+    }
+
     @GameTest(template = "test_empty", timeoutTicks = 100)
     public static void genericElectrolysisRequiresAndRetainsSelectorZero(GameTestHelper h) {
         ItemStack coal = dust(h, "Coal", 1);

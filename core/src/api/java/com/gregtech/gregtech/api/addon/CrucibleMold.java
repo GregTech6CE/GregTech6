@@ -17,7 +17,10 @@ public interface CrucibleMold {
      * @param material    GregTech material to pour; an invalid material is rejected
      * @param amount      available material amount in GT units
      * @param temperature temperature of the material in Kelvin
-     * @param side        side of the mold receiving the pour
+     * @param side        {@code Direction.ordinal()} of the mold face receiving the pour.
+     *                    This core type cannot name {@code Direction}.
+     *                    {@code MachineBehavior.fillMoldAtSide} receives a {@code Direction};
+     *                    pass {@code side.ordinal()} here
      * @return amount actually consumed
      */
     long fillMold(GregTechMaterials.Material material, long amount, long temperature, int side);

@@ -61,6 +61,7 @@ public final class RecipeKeptInputs {
     /**
      * Amount left in one tank after the demand is met. {@code -1} when the tank is short.
      * A kept fluid is put back, so the stored amount is unchanged.
+     * {@code -1} means the tank cannot cover the demand. It is not a missing lookup.
      */
     public static int settle(boolean kept, int declared, int parallel, int stored) {
         long demand = fluidDemand(kept, declared, parallel);
