@@ -136,7 +136,7 @@ API 版本 **0** 对应模组版本 **0.0.0**；当前 API 0 是开发中接口�
 - **Gregorius Techneticies 与 GregTech 6 团队**：原版 GregTech 6。
 - **saltnya**：gregtech6reborn 与初始内容基准。
 - **brokestar233**：gregtech6-main 及相关移植工作。
-- **Lorbineitte Masson**：cruciblecraft 及相关移植工作。
+- **lombinaxmasson**：cruciblecraft 及相关移植工作。
 - 保留的来源声明中记载的原贡献者、翻译者、美术作者及第三方作者。
 
 详细来源与可获得的历史记录见 [SOURCES.md](docs/integration/SOURCES.md) 和 `core/provenance/`。
