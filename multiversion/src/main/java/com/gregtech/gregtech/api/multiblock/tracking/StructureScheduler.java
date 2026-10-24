@@ -1,0 +1,162 @@
+package com.gregtech.gregtech.api.multiblock.tracking;
+
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
+
+//? if >=1.21.1 {
+/*import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.level.ChunkEvent;
+import net.neoforged.neoforge.event.tick.LevelTickEvent;
+*///?} else {
+import com.gregtech.gregtech.GregTech;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.level.ChunkEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+//?}
+
+import java.util.ArrayList;
+import java.util.List;
+
+/** End-of-tick structure scans. Formed controllers that just changed are not subject to the cell budget. */
+//? if >=1.21.1 {
+/*@EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID)
+*///?} else {
+@Mod.EventBusSubscriber(modid = GregTech.MODID)
+//?}
+public final class StructureScheduler {
+    public static final int CELLS_PER_TICK = 20_000;
+    private static final int SAFETY_PERIOD = 600;
+    private static int testBudget = -1;
+
+    private StructureScheduler() {}
+
+    public static void flush(Level level) {
+        boolean auditing = StructureScanProbe.auditing();
+        StructureScanProbe.audit(true);
+        try {
+            end(level);
+        } finally {
+            StructureScanProbe.audit(auditing);
+        }
+    }
+
+    /** One budget slice, without turning footprint audit on. */
+    public static void tick(Level level) {
+        end(level);
+    }
+
+    public static void runSafetyNow(Level level) {
+        if (!(level instanceof ServerLevel)) return;
+        for (StructureTracker tracker : StructureWatchIndex.all(level)) {
+            if (tracker.unloading() || tracker.entity().isRemoved()) continue;
+            tracker.enqueue(false, true);
+            StructureWatchIndex.enqueue(tracker);
+        }
+        end(level);
+    }
+
+    /** {@code cells < 0} restores {@link #CELLS_PER_TICK}. */
+    public static void setCellBudgetForTests(int cells) {
+        testBudget = cells;
+    }
+
+    public static void enqueueAll() {
+        StructureWatchIndex.enqueueAll();
+    }
+
+    public static void chunkLoadedForTests(ServerLevel level, ChunkPos pos) {
+        StructureWatchIndex.chunkLoaded(level, pos);
+    }
+
+    public static void chunkUnloadedForTests(ServerLevel level, ChunkPos pos) {
+        StructureWatchIndex.chunkUnloaded(level, pos);
+    }
+
+    public static boolean pendingForTests(Level level, long chunk) {
+        return StructureWatchIndex.pending(level, chunk);
+    }
+
+    public static void deferChunkForTests(Level level, long chunk) {
+        if (level instanceof ServerLevel server) StructureWatchIndex.defer(server, chunk);
+    }
+
+    //? if >=1.21.1 {
+    /*@SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void end(LevelTickEvent.Post event) {
+        end(event.getLevel());
+    }
+    @SubscribeEvent
+    public static void load(ChunkEvent.Load event) {
+        if (event.getLevel() instanceof ServerLevel level) StructureWatchIndex.chunkLoaded(level, event.getChunk().getPos());
+    }
+    @SubscribeEvent
+    public static void unloadChunk(ChunkEvent.Unload event) {
+        if (event.getLevel() instanceof ServerLevel level) StructureWatchIndex.chunkUnloaded(level, event.getChunk().getPos());
+    }
+    @SubscribeEvent
+    public static void unloadLevel(net.neoforged.neoforge.event.level.LevelEvent.Unload event) {
+        if (event.getLevel() instanceof Level level) StructureWatchIndex.unloadWorld(level);
+    }
+    *///?} else {
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void end(TickEvent.LevelTickEvent event) {
+        if (event.phase != TickEvent.Phase.END) return;
+        end(event.level);
+    }
+
+    @SubscribeEvent
+    public static void load(ChunkEvent.Load event) {
+        if (event.getLevel() instanceof ServerLevel level) StructureWatchIndex.chunkLoaded(level, event.getChunk().getPos());
+    }
+
+    @SubscribeEvent
+    public static void unloadChunk(ChunkEvent.Unload event) {
+        if (event.getLevel() instanceof ServerLevel level) StructureWatchIndex.chunkUnloaded(level, event.getChunk().getPos());
+    }
+
+    @SubscribeEvent
+    public static void unloadLevel(net.minecraftforge.event.level.LevelEvent.Unload event) {
+        if (event.getLevel() instanceof Level level) StructureWatchIndex.unloadWorld(level);
+    }
+    //?}
+
+    private static void end(Level level) {
+        if (!(level instanceof ServerLevel server) || level.isClientSide) return;
+        StructureWatchIndex.promotePending(server);
+        enqueueSafety(server, level.getGameTime());
+        List<StructureTracker> batch = StructureWatchIndex.drainDirty(server);
+        if (batch.isEmpty()) return;
+        List<StructureTracker> expedited = new ArrayList<>();
+        List<StructureTracker> normal = new ArrayList<>();
+        for (StructureTracker tracker : batch) {
+            if (tracker.expedite()) expedited.add(tracker);
+            else normal.add(tracker);
+        }
+        for (StructureTracker tracker : expedited) StructureTracking.evaluate(tracker);
+        int budget = testBudget >= 0 ? testBudget : CELLS_PER_TICK;
+        for (StructureTracker tracker : normal) {
+            int cost = tracker.cellCount();
+            if (cost > budget) {
+                StructureWatchIndex.requeue(tracker);
+                continue;
+            }
+            budget -= cost;
+            StructureTracking.evaluate(tracker);
+        }
+    }
+
+    private static void enqueueSafety(ServerLevel level, long gameTime) {
+        for (StructureTracker tracker : StructureWatchIndex.all(level)) {
+            if (tracker.unloading() || tracker.dirty() || tracker.entity().isRemoved()) continue;
+            int phase = Math.floorMod(Long.hashCode(tracker.pos().asLong()), SAFETY_PERIOD);
+            if (Math.floorMod(gameTime, SAFETY_PERIOD) != phase) continue;
+            tracker.enqueue(false, true);
+            StructureWatchIndex.enqueue(tracker);
+        }
+    }
+}

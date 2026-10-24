@@ -86,7 +86,7 @@ public final class BlueprintRegressionTests {
         var layout=com.gregtech.gregtech.blockentity.machine.ImplosionCompressorControllerBlockEntity.LAYOUT;
         for(var cell:layout.cells()) helper.setBlock(cell.at(pos,Direction.NORTH),cell.role()==com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role.AIR?Blocks.AIR:GTMultiblocks.IMPLOSION_COMPRESSOR_WALL.get());
         var machine=(com.gregtech.gregtech.blockentity.machine.ImplosionCompressorControllerBlockEntity)helper.getLevel().getBlockEntity(absolute);
-        helper.assertTrue(machine.isStructureOk(),"original hollow implosion structure forms");
+        helper.assertTrue(StructureTestSupport.ok(machine),"original hollow implosion structure forms");
         var partPos=pos.east();var part=helper.getLevel().getBlockEntity(helper.absolutePos(partPos));
         var items=part.getCapability(ForgeCapabilities.ITEM_HANDLER,Direction.NORTH).orElseThrow(IllegalStateException::new);
         var recipe=com.gregtech.gregtech.data.MachineRecipeMaps.ImplosionCompressor.mRecipeList.iterator().next();
@@ -95,7 +95,7 @@ public final class BlueprintRegressionTests {
         helper.assertTrue(machine.getProgressPercent()==50,"time-powered recipe advances without EU");
         machine.load(machine.saveWithoutMetadata());
         helper.setBlock(partPos,Blocks.AIR);
-        helper.assertTrue(!machine.isStructureOk() && items.getSlots()==0,"breaking a wall disables its previously obtained port");
+        helper.assertTrue(!StructureTestSupport.ok(machine) && items.getSlots()==0,"breaking a wall disables its previously obtained port");
         for(int tick=0;tick<20;tick++) com.gregtech.gregtech.blockentity.machine.ImplosionCompressorControllerBlockEntity.serverTick(helper.getLevel(),absolute,machine.getBlockState(),machine);
         helper.assertTrue(machine.getProgressPercent()==50,"broken structure pauses saved work");
         helper.setBlock(partPos,GTMultiblocks.IMPLOSION_COMPRESSOR_WALL.get());
@@ -103,7 +103,7 @@ public final class BlueprintRegressionTests {
         helper.assertTrue(ItemStack.isSameItemSameTags(machine.inventory().getStackInSlot(machine.inputSlots()),recipe.mOutputs[0]),"repairing structure completes original gem recipe");
         helper.assertTrue(machine.inventory().getStackInSlot(2).getCount()==1,"selector circuit survives processing");
         helper.setBlock(pos.above().south(),Blocks.STONE);
-        helper.assertTrue(!machine.isStructureOk(),"center cell must remain air");helper.succeed();
+        helper.assertTrue(!StructureTestSupport.ok(machine),"center cell must remain air");helper.succeed();
     }
 
     @GameTest(template="test_blueprint_empty")
@@ -159,7 +159,7 @@ public final class BlueprintRegressionTests {
         }
         var rod=(com.gregtech.gregtech.blockentity.machine.LightningRodControllerBlockEntity)helper.getLevel().getBlockEntity(absolute);
         helper.assertTrue(rod!=null,"the lightning rod controller exists at "+absolute);
-        helper.assertTrue(rod.isStructureOk()&&rod.captureStrike(),"original alternating layers and unobstructed high rod capture a strike");
+        helper.assertTrue(StructureTestSupport.ok(rod)&&rod.captureStrike(),"original alternating layers and unobstructed high rod capture a strike");
         long capacity=rod.getEnergyCapacity(GregTechTags.Energy.EU,null);
         helper.assertTrue(capacity==589824000L && rod.getEnergyStored(GregTechTags.Energy.EU,null)==capacity,"strike stores original EU capacity");
         helper.assertTrue(rod.doEnergyExtraction(GregTechTags.Energy.EU,Direction.NORTH,32768,1,true)==0,"energy exits only at the bottom");
@@ -167,7 +167,7 @@ public final class BlueprintRegressionTests {
         rod.doEnergyExtraction(GregTechTags.Energy.EU,Direction.DOWN,32768,2,true);rod.load(rod.saveWithoutMetadata());
         helper.assertTrue(rod.getEnergyStored(GregTechTags.Energy.EU,null)==capacity-65536,"charge and extraction survive save/load");
         helper.setBlock(pos.offset(1,1,0),Blocks.AIR);
-        helper.assertTrue(!rod.isStructureOk() && rod.getEnergyOffered(GregTechTags.Energy.EU,Direction.DOWN,32768)==0,"broken coil layer cannot emit energy");
+        helper.assertTrue(!StructureTestSupport.ok(rod) && rod.getEnergyOffered(GregTechTags.Energy.EU,Direction.DOWN,32768)==0,"broken coil layer cannot emit energy");
         for(int y=0;y<=5;y++) for(int x=-1;x<=1;x++) for(int z=-1;z<=1;z++) helper.setBlock(pos.offset(x,y,z),Blocks.AIR);
         helper.succeed();
     }
@@ -180,13 +180,13 @@ public final class BlueprintRegressionTests {
             var pos=new BlockPos(6,2,6);
             helper.setBlock(pos,block.defaultBlockState().setValue(HorizontalDirectionalBlock.FACING,front));
             var machine=(com.gregtech.gregtech.blockentity.machine.LargeRecipeMachineBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos));
-            helper.assertTrue(!machine.isStructureOk(),name+" cannot operate as a single block");
+            helper.assertTrue(!StructureTestSupport.ok(machine),name+" cannot operate as a single block");
             var layout=com.gregtech.gregtech.content.multiblock.LargeMachineLayouts.cells(name);
             for(var cell:layout) helper.setBlock(cell.at(pos,front),cell.block());
-            helper.assertTrue(machine.isStructureOk(),name+" accepts its complete original part arrangement");
+            helper.assertTrue(StructureTestSupport.ok(machine),name+" accepts its complete original part arrangement");
             var first=layout.stream().filter(cell->cell.role()!=com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role.AIR).findFirst().orElseThrow();
             helper.setBlock(first.at(pos,front),Blocks.AIR);
-            helper.assertTrue(!machine.isStructureOk(),name+" immediately rejects missing parts");
+            helper.assertTrue(!StructureTestSupport.ok(machine),name+" immediately rejects missing parts");
             helper.setBlock(pos,Blocks.AIR);
             for(var cell:layout) helper.setBlock(cell.at(pos,front),Blocks.AIR);
         }
@@ -201,7 +201,7 @@ public final class BlueprintRegressionTests {
             helper.setBlock(pos.offset(x,y,z),y==-5?Blocks.BEDROCK:y==-4?GTMultiblocks.DENSE_TITANIUM_WALL.get():com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(18026));
         }
         var machine=(com.gregtech.gregtech.blockentity.machine.BedrockDrillControllerBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos));
-        helper.assertTrue(machine.isStructureOk(),"drill heads and four dense titanium layers form above bedrock");
+        helper.assertTrue(StructureTestSupport.ok(machine),"drill heads and four dense titanium layers form above bedrock");
         var input=(com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos.offset(1,-1,0)));
         var fluids=machine.getCapability(ForgeCapabilities.FLUID_HANDLER,null).orElseThrow(IllegalStateException::new);
         helper.assertTrue(fluids.fill(new net.minecraftforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.WATER,1000),net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE)==0,"water is not lubricant");
@@ -215,7 +215,7 @@ public final class BlueprintRegressionTests {
         input.doEnergyInjection(GregTechTags.Energy.RU,Direction.EAST,2048,16,true);machine.tick();
         helper.assertTrue(fluids.getFluidInTank(0).getAmount()==100&&machine.getEnergyStored(GregTechTags.Energy.RU,null)==32768,"occupied output consumes no more resources");
         helper.setBlock(pos.offset(1,-5,0),Blocks.STONE);inventory.extractItem(0,1,false);machine.tick();
-        helper.assertTrue(!machine.isStructureOk()&&inventory.getStackInSlot(0).isEmpty(),"missing bedrock stops mining without destroying the deposit");
+        helper.assertTrue(!StructureTestSupport.ok(machine)&&inventory.getStackInSlot(0).isEmpty(),"missing bedrock stops mining without destroying the deposit");
         helper.succeed();
     }
     @GameTest(template="test_blueprint_empty")
@@ -257,7 +257,7 @@ public final class BlueprintRegressionTests {
             helper.setBlock(pos.offset(x,y,z),y==0||x==0&&z==0?com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(18024):GTMultiblocks.HEAT_TRANSMITTER.get());
         }
         var machine=(com.gregtech.gregtech.blockentity.machine.LargeHeatExchangerControllerBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos));
-        helper.assertTrue(machine.isStructureOk(),"two-layer dense tungsten / heat-transmitter structure forms");
+        helper.assertTrue(StructureTestSupport.ok(machine),"two-layer dense tungsten / heat-transmitter structure forms");
         var recipe=com.gregtech.gregtech.data.FuelRecipeMaps.Hot.mRecipeList.stream().filter(r->r.mFluidInputs.length==1&&r.mFluidOutputs.length==1&&r.mEUt<0).findFirst().orElseThrow();
         var fuel=recipe.mFluidInputs[0].copy();fuel.setAmount(Math.min(163840,recipe.mFluidInputs[0].getAmount()*1000));
         machine.fill(fuel,net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);
@@ -269,7 +269,7 @@ public final class BlueprintRegressionTests {
         var full=recipe.mFluidOutputs[0].copy();full.setAmount(327680);data.put("gt.cold",full.writeToNBT(new net.minecraft.nbt.CompoundTag()));machine.load(data);
         int before=machine.getFluidInTank(0).getAmount();machine.tick();
         helper.assertTrue(machine.getFluidInTank(0).getAmount()==before&&machine.getEnergyStored(GregTechTags.Energy.HU,null)==0,"exhaust threshold stops fuel consumption");
-        helper.setBlock(pos.offset(1,1,0),Blocks.AIR);helper.assertTrue(!machine.isStructureOk(),"missing heat transmitter invalidates structure");helper.succeed();
+        helper.setBlock(pos.offset(1,1,0),Blocks.AIR);helper.assertTrue(!StructureTestSupport.ok(machine),"missing heat transmitter invalidates structure");helper.succeed();
     }
 
     @GameTest(template="test_blueprint_empty")
@@ -304,9 +304,9 @@ public final class BlueprintRegressionTests {
         var pos=new BlockPos(3,3,1);helper.setBlock(pos,GTMultiblocks.findPart(17231).get());
         for(int b=0;b<4;b++)for(int y=-1;y<=1;y++)for(int x=-1;x<=1;x++)if(b!=0||y!=0||x!=0)helper.setBlock(pos.offset(x,y,b),GTMultiblocks.TANK_WALL_DENSE.get());
         var machine=(com.gregtech.gregtech.blockentity.machine.LargeGasTurbineControllerBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos));
-        helper.assertTrue(machine.isStructureOk(),"35 solid walls form the original turbine volume");
+        helper.assertTrue(StructureTestSupport.ok(machine),"35 solid walls form the original turbine volume");
         helper.setBlock(pos.east(),GTMultiblocks.TANK_WALL_DENSE.get());
-        helper.assertTrue(machine.isStructureOk(),"weldable dense stainless wall shares the original structural identity");
+        helper.assertTrue(StructureTestSupport.ok(machine),"weldable dense stainless wall shares the original structural identity");
         var recipe=com.gregtech.gregtech.data.FuelRecipeMaps.Gas.mRecipeList.stream().filter(r->r.mFluidInputs.length==1&&r.mFluidOutputs.length>0&&r.mEUt<0&&r.mFluidInputs[0].getFluid()==GTFluids.still("Methane").get()).findFirst().orElseThrow();
         var fuel=recipe.mFluidInputs[0].copy();fuel.setAmount(49152);machine.fill(fuel,net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);machine.tick();
         int count=(49152-machine.getFluidInTank(0).getAmount())/recipe.mFluidInputs[0].getAmount();
@@ -318,7 +318,7 @@ public final class BlueprintRegressionTests {
         var receiver=(com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(target));
         receiver.setSpec(com.gregtech.gregtech.api.machine.BasicMachineSpec.builder("turbine_test_receiver",block.basicSpec().material()).machineType("test").energy(GregTechTags.Energy.RU,8192).recipes(block.basicSpec().recipeMap()).faces(com.gregtech.gregtech.api.energy.FaceConfig.ALL_SIDES).build());
         machine.toggleStopped();machine.tick();helper.assertTrue(receiver.getEnergyTick()==8192&&machine.getEnergyStored(GregTechTags.Energy.RU,null)==0,"stored rotation exits rear structural face");
-        helper.setBlock(pos.south(),Blocks.AIR);helper.assertTrue(!machine.isStructureOk(),"turbine center is solid, not hollow");helper.succeed();
+        helper.setBlock(pos.south(),Blocks.AIR);helper.assertTrue(!StructureTestSupport.ok(machine),"turbine center is solid, not hollow");helper.succeed();
     }
     @GameTest(template="test_blueprint_empty")
     public static void multipleExhaustFuelPlanIsAtomic(GameTestHelper helper){

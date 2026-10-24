@@ -155,7 +155,7 @@ public final class AddonSampleMachineTests {
         var cells = LargeMachineLayouts.cells("largesamplepress");
         helper.assertTrue(cells != null && cells.size() == 17, "sample layout has 17 casing cells");
         for (var cell : cells) helper.getLevel().setBlockAndUpdate(cell.at(pos, front), cell.block().defaultBlockState());
-        helper.assertTrue(machine.isStructureOk(), "large sample press formed");
+        helper.assertTrue(StructureTestSupport.ok(machine), "large sample press formed");
         var items = machine.portItems(Role.ITEM_FLUID_IO);
         helper.assertTrue(items.insertItem(0, new ItemStack(Items.IRON_BLOCK), false).isEmpty(), "item port accepted the block");
         helper.assertTrue(machine.injectPortEnergy(Role.ENERGY_INPUT, GregTechTags.Energy.EU, 512, 1024, true) > 0,

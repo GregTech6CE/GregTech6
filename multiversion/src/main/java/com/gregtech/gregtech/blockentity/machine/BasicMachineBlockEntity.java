@@ -1762,7 +1762,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 *///?} else {
         saveCovers(tag);
 //?}
-
+        com.gregtech.gregtech.api.multiblock.tracking.ClientFormedSync.write(this, tag);
         return tag;
     }
 
@@ -1775,7 +1775,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     public void handleUpdateTag(CompoundTag tag) {
         loadCovers(tag);
 //?}
-
+        com.gregtech.gregtech.api.multiblock.tracking.ClientFormedSync.read(this, tag);
     }
 
     @Override

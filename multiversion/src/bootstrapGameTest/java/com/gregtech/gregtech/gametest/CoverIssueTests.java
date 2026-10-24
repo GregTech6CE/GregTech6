@@ -120,7 +120,7 @@ public final class CoverIssueTests {
             int id=switch(cell.kind()){case CPU->LogisticsCoreStructure.VERSATILE;case VENT->LogisticsCoreStructure.VENT;case WALL->LogisticsCoreStructure.WALL;};
             place(h,cell.at(core.getBlockPos(),front),LargeMachineParts.block(id));
         }
-        h.assertTrue(core.isStructureOk()&&core.processorCounts().fixedEnergyPerTick()==128,"27 CPUs form with 128 EU/t standby");
+        h.assertTrue(StructureTestSupport.ok(core)&&core.processorCounts().fixedEnergyPerTick()==128,"27 CPUs form with 128 EU/t standby");
         for(var side:Direction.values())h.assertTrue(core.isEnergyAcceptingFrom(GregTechTags.Energy.EU,side,false)
                 &&core.getEnergySizeInputMin(GregTechTags.Energy.EU,side)==256
                 &&core.getEnergySizeInputMax(GregTechTags.Energy.EU,side)==1024,"controller input on "+side);

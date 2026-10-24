@@ -2,6 +2,7 @@ package com.gregtech.gregtech.integration.client;
 
 import com.google.gson.JsonObject;
 import com.gregtech.gregtech.blockentity.machine.*;
+import com.gregtech.gregtech.gametest.StructureTestSupport;
 import com.gregtech.gregtech.content.multiblock.*;
 import com.gregtech.gregtech.item.behavior.BehaviorFlintAndTinder;
 import com.gregtech.gregtech.registry.*;
@@ -68,7 +69,7 @@ final class CokeOvenRuntimeSmoke {
             for(int x=-3;x<=3;x++)for(int y=-3;y<=3;y++)for(int z=-3;z<=3;z++)level.setBlock(pos.offset(x,y,z),Blocks.AIR.defaultBlockState(),3);
             level.setBlock(pos,GTMultiblocks.COKE_OVEN_MAIN.get().defaultBlockState().setValue(HorizontalDirectionalBlock.FACING,fronts[i]),3);
             for(var cell:LargeMachineLayouts.fromShared(OriginalCokeOvenRules.cells()))level.setBlock(cell.at(pos,fronts[i]),cell.block().defaultBlockState(),3);
-            require(oven(level,i).isStructureOk(),"Exact source structure failed facing "+fronts[i]);
+            require(StructureTestSupport.ok(oven(level,i)),"Exact source structure failed facing "+fronts[i]);
         }
         var spec=oven(level,0).spec();
         require(spec.energyTag()==GregTechTags.Energy.TU&&spec.parallelLimit()==16&&spec.energyInMin()==1&&spec.energyInMax()==16,"Original TU parameters missing");
@@ -79,7 +80,7 @@ final class CokeOvenRuntimeSmoke {
         require(input.extractItem(0,1,false).isEmpty(),"Fire brick extracts recipe inputs");
         for(int i=1;i<4;i++)oven(level,i).inventory().setStackInSlot(0,new ItemStack(i==3?Items.COAL:Items.OAK_LOG));
         level.setBlock(positions[1].relative(fronts[1].getOpposite()),Blocks.STONE.defaultBlockState(),3);
-        require(!oven(level,1).isStructureOk(),"Filled centre accepted");
+        require(!StructureTestSupport.ok(oven(level,1)),"Filled centre accepted");
         require(items(level,positions[1].relative(fronts[1].getClockWise()),Direction.UP).getSlots()==0,"Broken oven keeps ports");
         oven(level,2).getTanksOutput()[0].setFluid(new FluidStack(net.minecraft.world.level.material.Fluids.WATER,1000));
         for(int i=1;i<4;i++)ignite(level,player,i);
@@ -103,7 +104,7 @@ final class CokeOvenRuntimeSmoke {
         }
         if(phase==3&&elapsed>=120&&oven(level,0).inventory().getStackInSlot(0).getCount()!=1)throw new IllegalStateException(diagnostic(level,0));
         if(phase==3&&elapsed>=200) {
-            require(oven(level,1).isStructureOk()&&oven(level,1).inventory().getStackInSlot(0).getCount()==1,"Expired ignition starts repaired oven");
+            require(StructureTestSupport.ok(oven(level,1))&&oven(level,1).inventory().getStackInSlot(0).getCount()==1,"Expired ignition starts repaired oven");
             require(oven(level,2).inventory().getStackInSlot(0).getCount()==1,"Expired ignition starts unblocked oven");
             require(oven(level,0).inventory().getStackInSlot(0).getCount()==1,"16 parallel input limit differs: "+diagnostic(level,0));
             ignite(level,player,1);ignite(level,player,2);phase=4;
@@ -126,9 +127,9 @@ final class CokeOvenRuntimeSmoke {
         try {var method=BasicMachineBlockEntity.class.getDeclaredMethod("computeParallel",com.gregtech.gregtech.api.recipe.Recipe.class);method.setAccessible(true);parallel=(int)method.invoke(machine,recipe);}
         catch(Exception e){throw new IllegalStateException(e);}
 //? if >=1.21.1 {
-        /*return "parallel="+parallel+", ignition="+machine.saveWithoutMetadata(level.registryAccess()).getInt("gt.coke_ignition")+", running="+machine.isRunning()+", cost="+(recipe==null?null:com.gregtech.gregtech.api.recipe.MachineWorkCost.calculate(recipe.mEUt,recipe.mDuration,parallel,false,10000,1,16,false,true))+", input="+machine.inventory().getStackInSlot(0)+", progress="+machine.machineControl(null).progress()+"/"+machine.machineControl(null).progressMax()+", structure="+machine.isStructureOk()+", energy="+machine.getEnergyTick()+", recipe="+(recipe==null?"null":"power="+recipe.mEUt+", ticks="+recipe.mDuration+", outputs="+java.util.Arrays.toString(recipe.mOutputs)+", fluids="+java.util.Arrays.toString(recipe.mFluidOutputs));
+        /*return "parallel="+parallel+", ignition="+machine.saveWithoutMetadata(level.registryAccess()).getInt("gt.coke_ignition")+", running="+machine.isRunning()+", cost="+(recipe==null?null:com.gregtech.gregtech.api.recipe.MachineWorkCost.calculate(recipe.mEUt,recipe.mDuration,parallel,false,10000,1,16,false,true))+", input="+machine.inventory().getStackInSlot(0)+", progress="+machine.machineControl(null).progress()+"/"+machine.machineControl(null).progressMax()+", structure="+StructureTestSupport.ok(machine)+", energy="+machine.getEnergyTick()+", recipe="+(recipe==null?"null":"power="+recipe.mEUt+", ticks="+recipe.mDuration+", outputs="+java.util.Arrays.toString(recipe.mOutputs)+", fluids="+java.util.Arrays.toString(recipe.mFluidOutputs));
 *///?} else {
-        return "parallel="+parallel+", ignition="+machine.saveWithoutMetadata().getInt("gt.coke_ignition")+", running="+machine.isRunning()+", cost="+(recipe==null?null:com.gregtech.gregtech.api.recipe.MachineWorkCost.calculate(recipe.mEUt,recipe.mDuration,parallel,false,10000,1,16,false,true))+", input="+machine.inventory().getStackInSlot(0)+", progress="+machine.machineControl(null).progress()+"/"+machine.machineControl(null).progressMax()+", structure="+machine.isStructureOk()+", energy="+machine.getEnergyTick()+", recipe="+(recipe==null?"null":"power="+recipe.mEUt+", ticks="+recipe.mDuration+", outputs="+java.util.Arrays.toString(recipe.mOutputs)+", fluids="+java.util.Arrays.toString(recipe.mFluidOutputs));
+        return "parallel="+parallel+", ignition="+machine.saveWithoutMetadata().getInt("gt.coke_ignition")+", running="+machine.isRunning()+", cost="+(recipe==null?null:com.gregtech.gregtech.api.recipe.MachineWorkCost.calculate(recipe.mEUt,recipe.mDuration,parallel,false,10000,1,16,false,true))+", input="+machine.inventory().getStackInSlot(0)+", progress="+machine.machineControl(null).progress()+"/"+machine.machineControl(null).progressMax()+", structure="+StructureTestSupport.ok(machine)+", energy="+machine.getEnergyTick()+", recipe="+(recipe==null?"null":"power="+recipe.mEUt+", ticks="+recipe.mDuration+", outputs="+java.util.Arrays.toString(recipe.mOutputs)+", fluids="+java.util.Arrays.toString(recipe.mFluidOutputs));
 //?}
     }
     private static void ignite(net.minecraft.server.level.ServerLevel level,net.minecraft.server.level.ServerPlayer player,int i) {

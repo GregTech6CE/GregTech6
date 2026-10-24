@@ -105,7 +105,7 @@ import java.util.UUID;
 public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlock, MenuProvider,
         com.gregtech.gregtech.api.fluid.CompressedGasReceiver, ITileEntityCrucible,
         com.gregtech.gregtech.api.multiblock.MultiblockPortOwner, com.gregtech.gregtech.api.signal.GtSignalSource,
-        BehaviorMachineClientView {
+        BehaviorMachineClientView, com.gregtech.gregtech.api.multiblock.tracking.TrackedMultiblock {
     private final BehaviorMachine declaration;
     private final AddonMachines.AcceptedBehavior accepted;
     private final MachineBehavior behavior;
@@ -328,14 +328,18 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         }
     }
 
-    public boolean structureFormed() { return formed; }
+    public boolean structureFormed() {
+        if (com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode.legacy()) return formed;
+        return isStructureOk();
+    }
 
     private void tickServer(Level level, BlockPos pos) {
         breaksLeft = BehaviorRangeRules.BREAKS_PER_TICK;
         itemsLeft = BehaviorRangeRules.ITEMS_PER_TICK;
         pollEnergy(level, pos);
         pollAuxiliary(level, pos);
-        refreshStructure();
+        if (com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode.legacy()) refreshStructure();
+        else formed = isStructureOk();
         powered = stored > 0;
         working = false;
         behavior.tick(context);
@@ -991,7 +995,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
 //?}
 
     @Override public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return clientKeys.isEmpty() ? null : ClientboundBlockEntityDataPacket.create(this);
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     private CompoundTag writeClientState(CompoundTag tag) {
@@ -1013,6 +1017,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         tag.put("l", longs);
         tag.put("b", bools);
         tag.put("s", strings);
+        com.gregtech.gregtech.api.multiblock.tracking.ClientFormedSync.write(this, tag);
         return tag;
     }
 
@@ -1025,6 +1030,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         for (String key : bools.getAllKeys()) if (clientKeys.contains(key)) state.bools.put(key, bools.getBoolean(key));
         CompoundTag strings = tag.getCompound("s");
         for (String key : strings.getAllKeys()) if (clientKeys.contains(key)) state.strings.put(key, strings.getString(key));
+        com.gregtech.gregtech.api.multiblock.tracking.ClientFormedSync.read(this, tag);
     }
 
     private boolean breakOne(BlockPos target) {
@@ -1292,39 +1298,55 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         return PartFaces.relative(facing, side) == valve;
     }
 
-    private void refreshStructure() {
-        if (checkingStructure) return;
+    public LargeMachineLayouts.Layout trackedLayout() {
+        return LargeMachineLayouts.layout(declaration.casing().machineType());
+    }
+
+    public boolean acceptsTrackedPart(LargeMachineLayouts.Cell cell, net.minecraft.world.level.block.Block expected,
+                                      net.minecraft.world.level.block.Block actual) {
+        return expected == actual;
+    }
+
+    @Override public com.gregtech.gregtech.api.multiblock.tracking.StructureDefinition structureDefinition() {
+        return com.gregtech.gregtech.api.multiblock.tracking.LayoutStructures.behavior(this);
+    }
+
+    @Override public boolean isStructureOk() {
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.query(this);
+    }
+
+    @Override public boolean scanStructure() {
+        if (checkingStructure) return false;
         checkingStructure = true;
-        formed = false; // Reentrant port requests must never observe the previous successful check.
         try {
             if (level == null || isRemoved()) {
                 structureBindings.clear(this::releaseStructure);
-                energyParts = List.of();
-                boundParts = List.of();
-                repeatCounts = Map.of();
-                return;
+                clearStructureCaches();
+                return false;
             }
-            refreshStructureNow();
+            var layout = trackedLayout();
+            if (layout == null) return true;
+            boolean formedNow = claimStructure(layout);
+            if (!formedNow) clearStructureCaches();
+            return formedNow;
         } finally {
             checkingStructure = false;
         }
     }
 
-    private void refreshStructureNow() {
-        var layout = LargeMachineLayouts.layout(declaration.casing().machineType());
-        if (layout == null) {
-            formed = true;
-            energyParts = List.of();
-            boundParts = List.of();
-            repeatCounts = Map.of();
-            return;
-        }
-        formed = claimStructure(layout);
-        if (!formed) {
-            energyParts = List.of();
-            boundParts = List.of();
-            repeatCounts = Map.of();
-        }
+    @Override public void structureFormedChanged(boolean now) {
+        formed = now;
+        if (!now) clearStructureCaches();
+    }
+
+    private void clearStructureCaches() {
+        energyParts = List.of();
+        boundParts = List.of();
+        repeatCounts = Map.of();
+    }
+
+    private void refreshStructure() {
+        formed = scanStructure();
     }
 
     private boolean claimStructure(LargeMachineLayouts.Layout layout) {
@@ -1341,6 +1363,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             var matched = matchingCell(cell, cellPos);
             if (matched == null) {
                 structureBindings.clear(this::releaseStructure);
+                com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
                 return false;
             }
             matchedCells.add(matched);
@@ -1359,6 +1382,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             });
             if (placed == null) {
                 structureBindings.clear(this::releaseStructure);
+                com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
                 return false;
             }
             counts.put(repeat.key(), placed.size() / repeat.cells().size());
@@ -1369,13 +1393,16 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
                     parts.put(cell.pos(), matched.role());
             }
         }
-        boolean claimed = structureBindings.update(parts,
+        var claimed = com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, structureBindings, parts,
+                behaviorDesignHash(matchedCells, repeatPlaced),
                 pos -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).canBind(worldPosition),
                 (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
                 this::releaseStructure);
-        if (!claimed) return false;
-        com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front, matchedCells);
-        com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, repeatPlaced);
+        if (claimed == com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED) return false;
+        if (claimed == com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.APPLIED) {
+            com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front, matchedCells);
+            com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, repeatPlaced);
+        }
         var found = new ArrayList<EnergyPart>();
         var bound = new ArrayList<BoundPart>();
         for (BlockPos cellPos : parts.keySet()) {
@@ -1393,7 +1420,15 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         return true;
     }
 
+    private static int behaviorDesignHash(List<LargeMachineLayouts.Cell> cells, List<LargeMachineLayouts.Placed> placed) {
+        int hash = 1;
+        for (var cell : cells) hash = 31 * hash + cell.design();
+        for (var cell : placed) hash = 31 * hash + cell.cell().design();
+        return hash;
+    }
+
     private LargeMachineLayouts.Cell matchingCell(LargeMachineLayouts.Cell cell, BlockPos cellPos) {
+        com.gregtech.gregtech.api.multiblock.tracking.StructureScanProbe.matcher();
         if (!level.hasChunkAt(cellPos)) return null;
         if (cell.role() == MultiblockLayout.Role.AIR) return level.isEmptyBlock(cellPos) ? cell : null;
         if (matchesChoice(cell.part(), cell.plain(), cellPos)) return cell;
@@ -1416,8 +1451,21 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             part.release(worldPosition);
     }
 
+    @Override public void onLoad() {
+        super.onLoad();
+        if (level != null && !level.isClientSide)
+            com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.attach(this);
+    }
+
+    @Override public void onChunkUnloaded() {
+        com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
+        super.onChunkUnloaded();
+    }
+
     @Override public void setRemoved() {
-        structureBindings.clear(this::releaseStructure);
+        if (!com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.unloading(this))
+            structureBindings.clear(this::releaseStructure);
+        com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.onRemoved(this);
         energyParts = List.of();
         boundParts = List.of();
         repeatCounts = Map.of();
@@ -1718,12 +1766,6 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     }
 
     // ── Structure ports ──────────────────────────────────────────────────
-
-    @Override public boolean isStructureOk() {
-        if (checkingStructure) return false;
-        refreshStructure();
-        return formed;
-    }
 
     private static boolean itemInput(MultiblockLayout.Role role) {
         return role == MultiblockLayout.Role.ITEM_IO || role == MultiblockLayout.Role.ITEM_FLUID_IO

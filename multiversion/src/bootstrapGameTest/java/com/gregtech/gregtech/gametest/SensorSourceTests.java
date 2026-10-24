@@ -37,7 +37,7 @@ public final class SensorSourceTests {
             player.getInventory().clearContent();player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,wand);
             player.getInventory().setItem(35,new ItemStack(com.gregtech.gregtech.registry.GTMultiblocks.HEAT_TRANSMITTER.get(),9));
             player.getInventory().setItem(34,new ItemStack(variant.wall(),25));
-            h.assertTrue(useHeatTool(player,pos).consumesAction()&&!boiler.isStructureOk(),"Controller-local build is handled but cannot reach the full shell "+variant.path()+front);
+            h.assertTrue(useHeatTool(player,pos).consumesAction()&&!StructureTestSupport.ok(boiler),"Controller-local build is handled but cannot reach the full shell "+variant.path()+front);
             h.assertTrue(player.getInventory().getItem(35).getCount()==3&&player.getInventory().getItem(34).getCount()==15,
                     "First click consumes exactly six heat transmitters and ten walls in every facing");
             var part=(com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity)world.getBlockEntity(centre);
@@ -46,7 +46,7 @@ public final class SensorSourceTests {
             useHeatTool(player,centre);
             useHeatTool(player,centre.east().above());
             useHeatTool(player,centre.above(2));
-            h.assertTrue(boiler.isStructureOk()&&wand.getDamageValue()==4,"Four local clicks complete the source structure at one wear each");
+            h.assertTrue(StructureTestSupport.ok(boiler)&&wand.getDamageValue()==4,"Four local clicks complete the source structure at one wear each");
             h.assertTrue(world.getBlockState(pos).is(block)&&world.getBlockState(centre.above()).isAir()
                     &&player.getInventory().getItem(35).isEmpty()&&player.getInventory().getItem(34).isEmpty(),
                     "Builder preserves controller and hollow centre; total consumption is nine transmitters and twenty-five walls");
@@ -71,7 +71,7 @@ public final class SensorSourceTests {
             player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,glass);
             h.assertTrue(useHeatTool(player,centre).consumesAction()&&glass.getDamageValue()==1,"Magnifier on a wall reaches boiler with one wear");
             world.setBlockAndUpdate(centre.above(),Blocks.STONE.defaultBlockState());
-            h.assertTrue(!boiler.isStructureOk()&&part.isBoundTo(pos),"Blocked hollow prevents formation without dropping valid bindings");
+            h.assertTrue(!StructureTestSupport.ok(boiler)&&part.isBoundTo(pos),"Blocked hollow prevents formation without dropping valid bindings");
             h.assertTrue(boiler.magnifyingGlassMessages().get(0).getString().equals("Structure did not form!"),"Broken boiler does not report normal formed diagnostics");
             world.removeBlock(pos,false);
             for(var cell:com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerParameters.CHECK_ORDER)
@@ -105,7 +105,7 @@ public final class SensorSourceTests {
         player.getInventory().setItem(35,new ItemStack(wall,9));
         player.getInventory().setItem(34,new ItemStack(transmitter,8));
         h.assertTrue(useHeatTool(player,pos).consumesAction(),"Builder is handled before ordinary plane copying");
-        h.assertTrue(machine.isStructureOk()&&wand.getDamageValue()==1,"One source tool click builds all seventeen cells with one wear");
+        h.assertTrue(StructureTestSupport.ok(machine)&&wand.getDamageValue()==1,"One source tool click builds all seventeen cells with one wear");
         h.assertTrue(player.getInventory().getItem(35).isEmpty()&&player.getInventory().getItem(34).isEmpty(),"Exactly nine walls and eight transmitters consumed");
         var messages=machine.magnifyingGlassMessages();
         h.assertTrue(messages.size()==3&&messages.get(0).getString().equals("Structure is formed already!")
@@ -115,7 +115,7 @@ public final class SensorSourceTests {
         player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,wand);
         var near=pos.offset(-1,0,-1);var far=pos.offset(1,0,1);var clicked=pos.north();
         world.setBlockAndUpdate(near,Blocks.AIR.defaultBlockState());world.setBlockAndUpdate(far,Blocks.AIR.defaultBlockState());
-        h.assertTrue(!machine.isStructureOk(),"Broken shell is incomplete");
+        h.assertTrue(!StructureTestSupport.ok(machine),"Broken shell is incomplete");
         var part=(com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity)world.getBlockEntity(clicked);
         h.assertTrue(part.isBoundTo(pos)&&part.fluidToolHandler(Direction.NORTH,false).getTanks()==0,
                 "Valid part retains tool ownership while incomplete shell cannot transport fluids");
@@ -123,9 +123,9 @@ public final class SensorSourceTests {
         useHeatTool(player,clicked);
         h.assertTrue(world.getBlockState(near).is(wall)&&world.getBlockState(far).isAir()&&player.getInventory().getItem(35).getCount()==1,
                 "Part click only repairs the nearby hole and leaves the opposite edge two blocks away untouched");
-        h.assertTrue(wand.getDamageValue()==2&&!machine.isStructureOk(),"Partial repair charges once and remains incomplete");
+        h.assertTrue(wand.getDamageValue()==2&&!StructureTestSupport.ok(machine),"Partial repair charges once and remains incomplete");
         useHeatTool(player,pos);
-        h.assertTrue(machine.isStructureOk()&&wand.getDamageValue()==3&&player.getInventory().getItem(35).isEmpty(),"Controller click completes remaining repair");
+        h.assertTrue(StructureTestSupport.ok(machine)&&wand.getDamageValue()==3&&player.getInventory().getItem(35).isEmpty(),"Controller click completes remaining repair");
         // With scarce material, source call order and reverse inventory order are observable.
         world.setBlockAndUpdate(pos.offset(-1,0,-1),Blocks.AIR.defaultBlockState());
         world.setBlockAndUpdate(pos.offset(0,0,-1),Blocks.AIR.defaultBlockState());
@@ -139,13 +139,13 @@ public final class SensorSourceTests {
         h.assertTrue(player.getInventory().getItem(35).isEmpty()&&player.getInventory().getItem(9).getCount()==2,"Higher inventory slot is consumed first");
         world.setBlockAndUpdate(pos.offset(1,0,-1),Blocks.OAK_LEAVES.defaultBlockState());
         useHeatTool(player,pos);
-        h.assertTrue(machine.isStructureOk()&&player.getInventory().getItem(9).getCount()==1,"Source easy replacement places into leaves at exact cell");
+        h.assertTrue(StructureTestSupport.ok(machine)&&player.getInventory().getItem(9).getCount()==1,"Source easy replacement places into leaves at exact cell");
         // Creative builds without inventory and without wear; adventure cannot edit the shell.
         player.getInventory().setItem(9,ItemStack.EMPTY);
         world.setBlockAndUpdate(near,Blocks.AIR.defaultBlockState());
         player.gameMode.changeGameModeForPlayer(net.minecraft.world.level.GameType.CREATIVE);
         int wear=wand.getDamageValue();useHeatTool(player,pos);
-        h.assertTrue(machine.isStructureOk()&&wand.getDamageValue()==wear,"Creative placement needs no source items and does not wear wand");
+        h.assertTrue(StructureTestSupport.ok(machine)&&wand.getDamageValue()==wear,"Creative placement needs no source items and does not wear wand");
         world.setBlockAndUpdate(near,Blocks.AIR.defaultBlockState());
         player.gameMode.changeGameModeForPlayer(net.minecraft.world.level.GameType.ADVENTURE);
         player.getInventory().setItem(35,new ItemStack(wall));useHeatTool(player,pos);
@@ -228,7 +228,7 @@ public final class SensorSourceTests {
         h.assertTrue(wrench.getDamageValue()==200&&world.getBlockState(pos).getValue(facing)==Direction.DOWN,"Changed and unchanged valid facing clicks cost the same source wear");
         for(var cell:com.gregtech.gregtech.content.multiblock.SharedHeatExchangerStructure.CELLS)
             world.setBlockAndUpdate(pos.offset(cell.right(),cell.up(),cell.back()),com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(cell.part()).defaultBlockState());
-        h.assertTrue(machine.isStructureOk(),"Source shell forms for attachment forwarding");
+        h.assertTrue(StructureTestSupport.ok(machine),"Source shell forms for attachment forwarding");
 //? if >=1.21.1 {
         /*var lava=new net.neoforged.neoforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.LAVA,5000);
         var water=new net.neoforged.neoforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.WATER,250);
@@ -347,7 +347,7 @@ public final class SensorSourceTests {
         var machine=(com.gregtech.gregtech.blockentity.machine.LargeHeatExchangerControllerBlockEntity)world.getBlockEntity(pos);
         for(var cell:com.gregtech.gregtech.content.multiblock.SharedHeatExchangerStructure.CELLS)
             world.setBlockAndUpdate(pos.offset(cell.right(),cell.up(),cell.back()),com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(cell.part()).defaultBlockState());
-        h.assertTrue(machine.isStructureOk(),"Original two-layer shell binds native parts");
+        h.assertTrue(StructureTestSupport.ok(machine),"Original two-layer shell binds native parts");
         var recipe=com.gregtech.gregtech.data.FuelRecipeMaps.Hot.mRecipeList.stream().filter(x->x.mFluidInputs.length==1&&x.mFluidInputs[0].getFluid()==net.minecraft.world.level.material.Fluids.LAVA).findFirst().orElseThrow();
         h.assertTrue(recipe.mEUt==-16&&recipe.mDuration==5,"Original vanilla lava yields80 heat per litre");
         var fuel=recipe.mFluidInputs[0].copy();fuel.setAmount(Math.min(163840,recipe.mFluidInputs[0].getAmount()*1000));
@@ -401,7 +401,7 @@ public final class SensorSourceTests {
                 "Source energy type, top emission and equal min/recommended/max");
         world.setBlockAndUpdate(pos.above().east(),Blocks.AIR.defaultBlockState());
         machine.tick();
-        h.assertTrue(!machine.isStructureOk()&&machine.getEnergyStored(com.gregtech.gregtech.data.GregTechTags.Energy.EU,null)==7_500_000_000L,
+        h.assertTrue(!StructureTestSupport.ok(machine)&&machine.getEnergyStored(com.gregtech.gregtech.data.GregTechTags.Energy.EU,null)==7_500_000_000L,
                 "Original buffered energy dissipates through all eight outlets even with broken shell /no receivers");
         var legacy=new net.minecraft.nbt.CompoundTag();legacy.putLong("gt.hu",12345L);
 //? if >=1.21.1 {
@@ -555,7 +555,7 @@ public final class SensorSourceTests {
         var tank = new net.minecraft.nbt.CompoundTag(); seeded.writeToNBT(tank);
         var saved = boiler.saveWithoutMetadata(); saved.put("gt.steam",tank); boiler.load(saved);
 //?}
-        h.assertTrue(boiler.isStructureOk(),"Real boiler binds its complete shell");
+        h.assertTrue(StructureTestSupport.ok(boiler),"Real boiler binds its complete shell");
         var heatPos = origin.east().below().south();
         var heat = (com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity) h.getLevel().getBlockEntity(heatPos);
         h.assertTrue(heat.sensorTarget() == boiler,"Source sensor unwraps an energy-only port to controller");
@@ -576,12 +576,12 @@ public final class SensorSourceTests {
         }
         var meter = (SensorBlockEntity)h.getLevel().getBlockEntity(meterPos);
         var broken = origin.west(); h.getLevel().setBlockAndUpdate(broken,Blocks.AIR.defaultBlockState());
-        h.assertTrue(!boiler.isStructureOk() && heat.sensorTarget() == boiler,"Source retains controller measurement through an intact part of an incomplete shell");
+        h.assertTrue(!StructureTestSupport.ok(boiler) && heat.sensorTarget() == boiler,"Source retains controller measurement through an intact part of an incomplete shell");
         h.assertTrue(heat.fluidToolHandler(Direction.EAST,false).getTanks()==0,"Retained sensor/tool binding does not permit fluid transfer through a broken shell");
         SensorBlockEntity.measure(h.getLevel(),meterPos,meter.getBlockState(),meter);
         h.assertTrue(meter.value() == 1_234_567,"Original SensorTE reads cached controller independently of shell formation");
         h.getLevel().setBlockAndUpdate(broken,boiler.variant().wall().defaultBlockState());
-        h.assertTrue(boiler.isStructureOk(),"Repaired shell rebinds");
+        h.assertTrue(StructureTestSupport.ok(boiler),"Repaired shell rebinds");
         SensorBlockEntity.measure(h.getLevel(),meterPos,meter.getBlockState(),meter);
         h.assertTrue(meter.value() == 1_234_567,"Reformed shell restores real measurement");
         h.getLevel().setBlockAndUpdate(origin,Blocks.AIR.defaultBlockState());

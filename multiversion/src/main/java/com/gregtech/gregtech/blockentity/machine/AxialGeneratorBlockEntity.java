@@ -21,7 +21,7 @@ import java.util.*;
 
 /** Shared solid 3x3x4 assembly and rear shaft output. Storage belongs only to the controller. */
 public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity implements MultiblockPortOwner,
-        com.gregtech.gregtech.api.machine.MachineControl.Provider {
+        com.gregtech.gregtech.api.machine.MachineControl.Provider, com.gregtech.gregtech.api.multiblock.tracking.TrackedMultiblock {
     protected long energy;
     protected boolean stopped, overloaded;
     private boolean converting, emitted;
@@ -108,8 +108,16 @@ public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity impl
         return AxialStructureTransform.role(front, cell.getX(), cell.getY(), cell.getZ(), steam);
     }
 
+    public java.util.Set<BlockPos> trackedCells() { return grade().cells().keySet(); }
+
+    @Override public com.gregtech.gregtech.api.multiblock.tracking.StructureDefinition structureDefinition() {
+        return com.gregtech.gregtech.api.multiblock.tracking.CustomStructures.axial(this);
+    }
+    @Override public boolean isStructureOk() {
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.query(this);
+    }
     @Override
-    public boolean isStructureOk() {
+    public boolean scanStructure() {
         if (level == null || isRemoved()) return false;
         var parts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
         for (var cell : grade().cells().keySet()) {
@@ -117,12 +125,15 @@ public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity impl
             if (!level.hasChunkAt(pos) || !grade().accepts(cell,
                     level.getBlockState(pos).getBlock()) || !(level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity)) {
                 bindings.clear(this::release);
+                com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
                 return false;
             }
             parts.put(pos, role(cell, front(), grade().steam()));
         }
-        return bindings.update(parts, p -> ((MultiblockPortBlockEntity) level.getBlockEntity(p)).canBind(worldPosition),
-                (p, r) -> ((MultiblockPortBlockEntity) level.getBlockEntity(p)).bind(worldPosition, r), this::release);
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, parts, 0,
+                p -> ((MultiblockPortBlockEntity) level.getBlockEntity(p)).canBind(worldPosition),
+                (p, r) -> ((MultiblockPortBlockEntity) level.getBlockEntity(p)).bind(worldPosition, r), this::release)
+                != com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
     }
 
     private void release(BlockPos pos) {
@@ -130,9 +141,18 @@ public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity impl
                 && level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part) part.release(worldPosition);
     }
 
+    @Override public void onLoad() {
+        super.onLoad();
+        if (level != null && !level.isClientSide) com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.attach(this);
+    }
+    @Override public void onChunkUnloaded() {
+        com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
+        super.onChunkUnloaded();
+    }
     @Override
     public void setRemoved() {
-        bindings.clear(this::release);
+        if (!com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.unloading(this)) bindings.clear(this::release);
+        com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.onRemoved(this);
         super.setRemoved();
     }
 

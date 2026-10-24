@@ -51,7 +51,7 @@ public final class AdjacentEnergySourceTests {
         for(boolean cold:new boolean[]{false,true})for(var front:List.of(Direction.NORTH,Direction.EAST,Direction.SOUTH,Direction.WEST)) {
             var machine=tower(h,pos,cold,front);
             for(var cell:cells)h.getLevel().setBlock(cell.at(pos,front),cell.block().defaultBlockState(),3);
-            h.assertTrue(machine.isStructureOk(),"source tower formed for "+cold+"/"+front);
+            h.assertTrue(StructureTestSupport.ok(machine),"source tower formed for "+cold+"/"+front);
             var sources=new ArrayList<EnergyNodeBlockEntity>();
             for(var cell:OriginalAdjacentEnergyRules.TOWER_SOURCES)sources.add(source(h,sourcePosition(pos,front,cell),cold,Direction.UP));
             tick(h,machine);machine.machineControl(null).setEnabled(false);
