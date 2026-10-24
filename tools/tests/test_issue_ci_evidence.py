@@ -239,24 +239,26 @@ class IssueEvidenceTests(unittest.TestCase):
         repo = Path(__file__).resolve().parents[2]
         self.assertIn('gt6ce_machine_performance,gregtech_ore_source_audit',
                       (repo / '.github/workflows/issue-regressions.yml').read_text())
+        # Several audit classes intentionally share this template namespace.
+        # Select each required identity, never the first namespace match from a set.
         for platform in EXPECTED:
-            for result in ('wrong_namespace', 'qualified_method_wrong_namespace', 'class_suffix_wrong_namespace', 'failure', 'error', 'skipped'):
-                root = self.report(platform)
-                case = next(c for c in root.iter('testcase')
-                            if c.get('classname') == 'gregtech_ore_source_audit:test_empty')
-                if result == 'wrong_namespace':
-                    case.set('classname', 'gregtech_issue_audit:test_empty')
-                elif result == 'qualified_method_wrong_namespace':
-                    identity = next(i for i in ORE_SOURCE_CASES if i.split('.', 1)[1] == case.get('name'))
-                    case.set('name', identity)
-                    case.set('classname', 'gregtech_issue_audit:test_empty')
-                elif result == 'class_suffix_wrong_namespace':
-                    identity = next(i for i in ORE_SOURCE_CASES if i.split('.', 1)[1] == case.get('name'))
-                    case.set('classname', 'wrong.' + identity.split('.', 1)[0])
-                else:
-                    ET.SubElement(case, result, message='ore source contract did not pass')
-                with self.subTest(platform=platform, result=result), self.assertRaises(ValueError):
-                    self.verify(root, platform)
+            for identity in sorted(ORE_SOURCE_CASES):
+                for result in ('wrong_namespace', 'qualified_method_wrong_namespace', 'class_suffix_wrong_namespace', 'failure', 'error', 'skipped'):
+                    root = self.report(platform)
+                    case = next(c for c in root.iter('testcase')
+                                if c.get('name') == identity.split('.', 1)[1]
+                                and c.get('classname') == expected_namespace(identity))
+                    if result == 'wrong_namespace':
+                        case.set('classname', 'gregtech_issue_audit:test_empty')
+                    elif result == 'qualified_method_wrong_namespace':
+                        case.set('name', identity)
+                        case.set('classname', 'gregtech_issue_audit:test_empty')
+                    elif result == 'class_suffix_wrong_namespace':
+                        case.set('classname', 'wrong.' + identity.split('.', 1)[0])
+                    else:
+                        ET.SubElement(case, result, message='ore source contract did not pass')
+                    with self.subTest(platform=platform, identity=identity, result=result), self.assertRaises(ValueError):
+                        self.verify(root, platform)
 
     def test_thermal_and_rawcraft_followon_exact_cases_and_namespaces(self):
         self.assertEqual(len(ORE_FOLLOWON_CASE_NAMESPACES), 10)
