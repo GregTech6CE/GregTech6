@@ -51,7 +51,11 @@ public interface MachineBehaviorContext {
 
     FluidStack fluid(int tank);
 
+    /** Capacity of tank {@code tank} in millibuckets. Prefer {@link #tankCapacity(int)} at call sites. */
     int capacity(int tank);
+
+    /** Same as {@link #capacity(int)}. */
+    default int tankCapacity(int tank) { return capacity(tank); }
 
     /**
      * Stores {@code stack} in the tank when the tank is empty or already holds that fluid.
@@ -68,6 +72,7 @@ public interface MachineBehaviorContext {
     /**
      * Energy stored in the main input, in the machine's energy unit.
      * A machine that declares no main input returns 0. {@link #generate} and {@link #emit} still move energy.
+     * The auxiliary buffer is {@link #energy(String)} / {@link #auxiliaryEnergy(String)}.
      */
     long energy();
 
@@ -93,6 +98,7 @@ public interface MachineBehaviorContext {
      * Spends {@code abs(size)} energy units for each packet a neighbor accepts.
      * Returns the number of accepted packets, not remaining packets or energy units.
      * A request above the declared maximum throws. Prefer {@link #energyAccess()} for a typed result.
+     * A named bound part is {@link #emit(String, long, long)} / {@link #emitToPart(String, long, long)}.
      */
     long emit(long size, long amount);
 
@@ -128,6 +134,9 @@ public interface MachineBehaviorContext {
      * A request the part's output declaration rejects throws.
      */
     long emit(String part, long size, long amount);
+
+    /** Same as {@link #emit(String, long, long)}. */
+    default long emitToPart(String part, long size, long amount) { return emit(part, size, amount); }
 
     boolean toggle(int index);
 
@@ -172,8 +181,12 @@ public interface MachineBehaviorContext {
     /**
      * Auxiliary buffer for {@code type}, in that energy's unit.
      * This is not {@link #energy()}. An unknown type, or a machine with no auxiliary input, is 0.
+     * Prefer {@link #auxiliaryEnergy(String)} at call sites.
      */
     long energy(String type);
+
+    /** Same as {@link #energy(String)}. */
+    default long auxiliaryEnergy(String type) { return energy(type); }
 
     /**
      * Removes {@code amount} from the auxiliary buffer of {@code type}.

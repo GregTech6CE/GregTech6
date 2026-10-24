@@ -25,9 +25,9 @@ public final class BehaviorMachineHosts {
             try {
                 id = contributor.addonId();
             } catch (RuntimeException | Error failure) {
-                throw new IllegalStateException("Behavior machine contributor failed: " + contributor.getClass().getName(), failure);
+                throw AddonFailures.of("Behavior machine contributor failed: " + contributor.getClass().getName(), failure);
             }
-            if (id == null || id.isBlank())
+            if (!AddonNames.isAddonId(id))
                 throw new IllegalStateException("Behavior machine contributor has no addon id: " + contributor.getClass().getName());
             if (CONTRIBUTORS.putIfAbsent(id, contributor) != null)
                 throw new IllegalStateException("Addon '" + id + "' registered two behavior factories");
@@ -35,7 +35,7 @@ public final class BehaviorMachineHosts {
             try {
                 machines = contributor.machineTypes();
             } catch (RuntimeException | Error failure) {
-                throw new IllegalStateException("Addon '" + id + "' behavior factory failed", failure);
+                throw AddonFailures.of("Addon '" + id + "' behavior factory failed", failure);
             }
             types.put(id, machines == null ? Set.of() : Set.copyOf(machines));
         }
@@ -46,7 +46,12 @@ public final class BehaviorMachineHosts {
         BehaviorMachineContributor contributor = CONTRIBUTORS.get(addonId);
         if (contributor == null)
             throw new IllegalStateException("Addon '" + addonId + "' machine '" + machineType + "' has no behavior factory");
-        MachineBehavior behavior = contributor.create(machineType);
+        MachineBehavior behavior;
+        try {
+            behavior = contributor.create(machineType);
+        } catch (RuntimeException | Error failure) {
+            throw AddonFailures.of("Addon '" + addonId + "' machine '" + machineType + "' behavior factory failed", failure);
+        }
         if (behavior == null)
             throw new IllegalStateException("Addon '" + addonId + "' machine '" + machineType + "' has no behavior factory");
         return behavior;

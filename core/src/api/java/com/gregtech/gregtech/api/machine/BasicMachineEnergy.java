@@ -1,6 +1,6 @@
 package com.gregtech.gregtech.api.machine;
 
-/** Shared bounded per-tick machine energy math; platform adapters retain saved state and sides. */
+/** SPDX-License-Identifier: LGPL-3.0-or-later. Shared bounded per-tick machine energy math; platform adapters retain saved state and sides. */
 public final class BasicMachineEnergy {
     private BasicMachineEnergy() {}
 

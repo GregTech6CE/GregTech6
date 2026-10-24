@@ -8,7 +8,7 @@ package com.gregtech.gregtech.api.addon;
  */
 public record ItemPipeDeclaration(String idSuffix, String material, long stepSize, int invSize) {
     public ItemPipeDeclaration {
-        if (idSuffix == null || !idSuffix.matches("[a-z][a-z0-9_]{0,63}"))
+        if (!AddonNames.matches(AddonNames.LOWER_PATH, idSuffix))
             throw new IllegalArgumentException("Item pipe id must be a lower-case suffix: " + idSuffix);
         if (material == null || material.isBlank())
             throw new IllegalArgumentException("Item pipe '" + idSuffix + "' needs a material");

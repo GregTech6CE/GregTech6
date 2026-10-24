@@ -1,6 +1,7 @@
 package com.gregtech.gregtech.api.addon.platform;
 
 import com.gregtech.gregtech.api.addon.GregTechMaterials;
+import com.gregtech.gregtech.api.addon.InstalledService;
 
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -14,20 +15,18 @@ import net.minecraft.world.item.ItemStack;
  * Fluid stacks and recipe rows that name a loader fluid type live on {@code AddonLoader} instead.
  */
 public final class AddonPlatform {
-    private static Services services;
+    private static final InstalledService<Services> INSTALLED = new InstalledService<>();
 
     private AddonPlatform() {}
 
     /** GT bootstrap only. Addons must not install or replace the host implementation. */
-    public static synchronized void bind(Services implementation) {
-        if (implementation == null) throw new IllegalArgumentException("addon platform services");
-        if (services != null) throw new IllegalStateException("GregTech addon platform API is already installed");
-        services = implementation;
+    public static void bind(Services implementation) {
+        INSTALLED.bind(implementation, "addon platform services",
+                "GregTech addon platform API is already installed");
     }
 
-    public static synchronized Services services() {
-        if (services == null) throw new IllegalStateException("GregTech addon platform API is not installed");
-        return services;
+    public static Services services() {
+        return INSTALLED.get("GregTech addon platform API is not installed");
     }
 
     /** GT implementation contract; addon consumers use the items, tools and energy facades. */

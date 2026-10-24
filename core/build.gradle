@@ -314,7 +314,6 @@ def addonApiVersionContracts = tasks.register('addonApiVersionContracts', JavaEx
 }
 tasks.named('check').configure { dependsOn addonApiVersionContracts }
 
-
 def fluidSlotAmountOverlayChecks = tasks.register('fluidSlotAmountOverlayChecks', JavaExec) {
     description = 'Checks original fluid-slot bucket labels and item-count alignment without Minecraft.'
     group = 'verification'
@@ -348,6 +347,26 @@ tasks.named('check').configure { dependsOn fluidSlotAmountOverlayChecks }
         doLast {
             marker.get().asFile.parentFile.mkdirs()
             marker.get().asFile.setText("OreThermalSourceContracts ${scenario}: passed\n", 'UTF-8')
+        }
+    }
+    tasks.named('check').configure { dependsOn contract }
+}
+
+['runtime', 'fatal'].each { scenario ->
+    def contract = tasks.register("addonLifecycleContracts_${scenario}", JavaExec) {
+        description = "Runs addon lifecycle scenario ${scenario} in its own JVM."
+        group = 'verification'
+        dependsOn tasks.named('testClasses')
+        classpath = sourceSets.test.runtimeClasspath
+        mainClass = 'com.gregtech.gregtech.core.AddonLifecycleContracts'
+        args scenario
+        javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
+        def marker = layout.buildDirectory.file("reports/contracts/addonLifecycleContracts_${scenario}.passed")
+        outputs.file(marker)
+        doFirst { marker.get().asFile.delete() }
+        doLast {
+            marker.get().asFile.parentFile.mkdirs()
+            marker.get().asFile.setText("addonLifecycleContracts ${scenario}: passed\n", 'UTF-8')
         }
     }
     tasks.named('check').configure { dependsOn contract }

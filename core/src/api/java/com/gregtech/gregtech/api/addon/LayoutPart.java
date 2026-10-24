@@ -13,8 +13,7 @@ import java.util.Objects;
  */
 public final class LayoutPart {
     public static final int MAX_FIELDS = 16;
-    private static final java.util.regex.Pattern ENERGY_TYPE =
-            java.util.regex.Pattern.compile("[A-Za-z][A-Za-z0-9_]{0,15}");
+    private static final java.util.regex.Pattern ENERGY_TYPE = EnergyType.NAME;
     private static final java.util.regex.Pattern FIELD =
             java.util.regex.Pattern.compile("[a-z0-9_.]{1,64}");
 
@@ -210,7 +209,7 @@ public final class LayoutPart {
         }
 
         public LayoutPart build() {
-            if (name == null || !name.matches("[a-z][a-z0-9_]{0,63}"))
+            if (!AddonNames.matches(AddonNames.LOWER_PATH, name))
                 throw new IllegalArgumentException("Structure part name must be a lower-case registry path: " + name);
             if (material == null || material.isBlank())
                 throw new IllegalArgumentException("Structure part '" + name + "' needs a material");
@@ -249,7 +248,7 @@ public final class LayoutPart {
                 throw new IllegalArgumentException("Structure part '" + name
                         + "' cannot both accept external faces and emit");
             if (input.capacitySpecified() && input.capacity() < 0)
-                throw new IllegalArgumentException("Energy part capacity must be positive: " + input.capacity());
+                throw new IllegalArgumentException("Energy part capacity must not be negative: " + input.capacity());
         }
 
         private static void validateInput(String name, EnergyInput input, long conditionPerTick) {

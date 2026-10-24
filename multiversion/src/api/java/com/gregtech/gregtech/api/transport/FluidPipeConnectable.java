@@ -3,6 +3,7 @@ package com.gregtech.gregtech.api.transport;
 import net.minecraft.core.Direction;
 
 /**
+ * SPDX-License-Identifier: LGPL-3.0-or-later.
  * Opt-in: a fluid pipe connects to this block without a wrench, both when the pipe is placed
  * against it and when it changes next to an existing pipe.
  *

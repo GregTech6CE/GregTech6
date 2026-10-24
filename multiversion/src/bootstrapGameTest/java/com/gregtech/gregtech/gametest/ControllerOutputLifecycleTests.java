@@ -94,7 +94,7 @@ public final class ControllerOutputLifecycleTests {
                 h.getLevel().setBlock(e.getKey(),e.getValue().state(),Block.UPDATE_CLIENTS|Block.UPDATE_KNOWN_SHAPE);
                 var be=h.getLevel().getBlockEntity(e.getKey());if(be!=null&&e.getValue().data()!=null)load(h,be,e.getValue().data());
             }
-        }finally{if(map!=null){RecipeMap.RECIPE_MAPS.remove(map.mNameInternal,map);RecipeMap.RECIPE_MAP_LIST.remove(map);}}}
+        }finally{if(map!=null) RecipeMap.unregister(map);}}
     }
     private static void tower(GameTestHelper h,boolean cold){
         try(var f=new Fixture(h,cold?1:0)){

@@ -88,7 +88,7 @@ public class GregTech {
             // expected whenever an optimized table contains an input that cancels against its own output.
             var collapsed = com.gregtech.gregtech.api.recipe.RecipeMap.collapsedSamples();
             LOGGER.info("Recipe tables: {} rows dropped as collapsed by optimization, per map {}, e.g. {}",
-                    com.gregtech.gregtech.api.recipe.RecipeMap.COLLAPSED_RECIPES_DROPPED,
+                    com.gregtech.gregtech.api.recipe.RecipeMap.collapsedRecipesDropped(),
                     com.gregtech.gregtech.api.recipe.RecipeMap.collapsedByMap(),
                     collapsed.subList(0, Math.min(8, collapsed.size())));
 

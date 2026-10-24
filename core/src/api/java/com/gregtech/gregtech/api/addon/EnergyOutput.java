@@ -58,11 +58,12 @@ public final class EnergyOutput {
         if (!(other instanceof EnergyOutput that)) return false;
         return minSize == that.minSize && maxSize == that.maxSize && maxAmount == that.maxAmount
                 && allowNegative == that.allowNegative && remote == that.remote
-                && type.equals(that.type) && faces.equals(that.faces);
+                && EnergyType.same(type, that.type) && MachineFace.sameSet(faces, that.faces);
     }
 
     @Override public int hashCode() {
-        return Objects.hash(type, faces, minSize, maxSize, maxAmount, allowNegative, remote);
+        return Objects.hash(type == null ? null : type.toLowerCase(java.util.Locale.ROOT),
+                MachineFace.hashSet(faces), minSize, maxSize, maxAmount, allowNegative, remote);
     }
 
     public static Builder builder(String type, long maxSize, long maxAmount) {
@@ -108,22 +109,17 @@ public final class EnergyOutput {
         }
 
         public EnergyOutput build() {
-            if (type == null || type.isBlank())
-                throw new IllegalArgumentException("Missing energy output type");
+            String resolved = EnergyType.require(type, "Missing energy output type");
             if (maxSize < 1 || maxAmount < 1)
                 throw new IllegalArgumentException("Energy output maximum must be positive");
             if (minSize < 1 || minSize > maxSize)
                 throw new IllegalArgumentException("Energy output minimum must sit inside the maximum");
-            if (allowNegative && !signedDirection(type))
+            if (allowNegative && !EnergyType.signedDirection(resolved))
                 throw new IllegalArgumentException("Energy output type cannot be negative");
             var distinct = MachineFace.distinct(faces, "energy output face");
             if ((!facesSpecified || distinct.isEmpty()) && !remote)
                 throw new IllegalArgumentException("Energy output needs a face");
-            return new EnergyOutput(type, distinct, minSize, maxSize, maxAmount, allowNegative, remote);
-        }
-
-        private static boolean signedDirection(String type) {
-            return type.equalsIgnoreCase("KU") || type.equalsIgnoreCase("RU");
+            return new EnergyOutput(resolved, distinct, minSize, maxSize, maxAmount, allowNegative, remote);
         }
     }
 }
