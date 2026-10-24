@@ -19,6 +19,33 @@ import net.minecraftforge.fml.common.Mod;
 //?}
 public final class BlockHarvestEvents {
  @SubscribeEvent public static void harvest(PlayerEvent.HarvestCheck event) {
+  // A Spike family has two material tiers in native state; a single vanilla block tag cannot encode them.
+  if (event.getTargetBlock().getBlock() instanceof com.gregtech.gregtech.block.misc.SpikeBlock) {
+   var stack = event.getEntity().getMainHandItem();
+   Integer actual = null;
+   // Concrete GT definitions expose material quality; interface-only addons do not.
+   if (stack.getItem() instanceof com.gregtech.gregtech.item.ElectricToolItem electric) {
+    actual = electric.headMaterial(stack).getToolQuality() + electric.definition().quality();
+   } else if (GTToolHelper.isTool(stack)) {
+    actual = GTToolHelper.getHarvestLevel(stack);
+   } else if (stack.getItem() instanceof net.minecraft.world.item.TieredItem tool
+       && tool.getTier() instanceof net.minecraft.world.item.Tiers tier) {
+    actual = switch (tier) {
+     case WOOD, GOLD -> 0;
+     case STONE -> 1;
+     case IRON -> 2;
+     case DIAMOND -> 3;
+     case NETHERITE -> 4;
+    };
+   }
+   if (actual != null) {
+    event.setCanHarvest(stack.isCorrectToolForDrops(event.getTargetBlock())
+        && actual >= SpikeHarvestPolicy.level(event.getTargetBlock()));
+    return;
+   }
+   // Unknown tiers/boolean-only adapters retain the complete preexisting handler below.
+   // Their numeric source-quality parity is unknown, not a reason for a new denial.
+  }
   var original=BlockHarvestPolicy.source(event.getTargetBlock().getBlock());
   if(original.isPresent() && original.get().handHarvestable()){event.setCanHarvest(true);return;}
   var stack=event.getEntity().getMainHandItem();
