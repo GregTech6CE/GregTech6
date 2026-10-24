@@ -2,6 +2,10 @@ package com.gregtech.gregtech.blockentity.machine;
 
 import com.gregtech.gregtech.api.energy.EnergyTransfer;
 import com.gregtech.gregtech.api.multiblock.*;
+import com.gregtech.gregtech.api.multiblock.tracking.CustomStructures;
+import com.gregtech.gregtech.api.multiblock.tracking.StructureClaims;
+import com.gregtech.gregtech.api.multiblock.tracking.StructureDefinition;
+import com.gregtech.gregtech.api.multiblock.tracking.StructureTracking;
 import com.gregtech.gregtech.api.recipe.*;
 import com.gregtech.gregtech.block.machine.*;
 import com.gregtech.gregtech.content.multiblock.*;
@@ -31,7 +35,8 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
 //?}
         setSpec(((BasicMachineBlock)state.getBlock()).basicSpec());
     }
-    @Override public boolean isStructureOk() {
+    @Override public StructureDefinition structureDefinition() { return CustomStructures.fusion(this); }
+    @Override public boolean scanStructure() {
         if(level==null||isRemoved())return false;
         var front=getBlockState().getValue(BasicMachineBlock.FACING);
         var candidates=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
@@ -49,12 +54,17 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
             candidates.put(pos,cell.role());
         }
         if(processors[0]!=3||processors[1]!=12||processors[2]!=12)return broken();
-        return fusionBindings.update(candidates,p->((MultiblockPortBlockEntity)level.getBlockEntity(p)).canBind(worldPosition),
-                (p,r)->((MultiblockPortBlockEntity)level.getBlockEntity(p)).bind(worldPosition,r),this::releaseFusionPart);
+        return StructureClaims.update(this, true, fusionBindings, candidates, 0,
+                p->((MultiblockPortBlockEntity)level.getBlockEntity(p)).canBind(worldPosition),
+                (p,r)->((MultiblockPortBlockEntity)level.getBlockEntity(p)).bind(worldPosition,r),this::releaseFusionPart)
+                != StructureClaims.Result.FAILED;
     }
-    private boolean broken(){fusionBindings.clear(this::releaseFusionPart);return false;}
+    private boolean broken(){fusionBindings.clear(this::releaseFusionPart);StructureClaims.cleared(this);return false;}
     private void releaseFusionPart(BlockPos pos){if(level!=null&&level.hasChunkAt(pos)&&level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part)part.release(worldPosition);}
-    @Override public void setRemoved(){fusionBindings.clear(this::releaseFusionPart);super.setRemoved();}
+    @Override public void setRemoved(){
+        if (!StructureTracking.unloading(this)) fusionBindings.clear(this::releaseFusionPart);
+        super.setRemoved();
+    }
 
     public static void serverTick(Level level,BlockPos pos,BlockState state,FusionReactorControllerBlockEntity be){be.tickFusion();}
     private void tickFusion() {

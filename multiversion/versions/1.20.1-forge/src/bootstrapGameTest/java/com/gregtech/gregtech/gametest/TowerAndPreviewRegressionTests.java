@@ -18,7 +18,7 @@ public final class TowerAndPreviewRegressionTests {
         var layout=com.gregtech.gregtech.content.multiblock.ControllerStructureLayouts.cells(GTMultiblocks.DISTILLATION_TOWER_MAIN.get());
         layout.forEach((p,b)->h.setBlock(origin.offset(p),b));
         var tower=(DistillationTowerControllerBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(origin));
-        h.assertTrue(tower.isStructureOk(),"tower forms and binds ports");
+        h.assertTrue(StructureTestSupport.ok(tower),"tower forms and binds ports");
         var base=(MultiblockPortBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(origin.below()));
         h.assertTrue(base.doEnergyInjection(GregTechTags.Energy.HU,Direction.DOWN,32,1,false)==1 && tower.getEnergyTick()==0,"HU simulation reaches controller without mutation");
         h.assertTrue(base.doEnergyInjection(GregTechTags.Energy.HU,Direction.DOWN,32,1,true)==1 && tower.getEnergyTick()==32,"bottom transmitter actually feeds HU to controller");
@@ -28,7 +28,7 @@ public final class TowerAndPreviewRegressionTests {
         h.setBlock(origin.offset(1,1,1),Blocks.AIR);
         h.assertTrue(base.doEnergyInjection(GregTechTags.Energy.HU,Direction.DOWN,32,1,true)==0,"cached port immediately rejects energy after a structure break");
         h.setBlock(origin.offset(1,1,1),GTMultiblocks.DISTILLATION_TOWER_PART.get());
-        h.assertTrue(tower.isStructureOk() && base.doEnergyInjection(GregTechTags.Energy.HU,Direction.DOWN,32,1,true)==1,"repaired tower rebinds");
+        h.assertTrue(StructureTestSupport.ok(tower) && base.doEnergyInjection(GregTechTags.Energy.HU,Direction.DOWN,32,1,true)==1,"repaired tower rebinds");
         var recipes=new com.gregtech.gregtech.api.recipe.RecipeMap(null,"tower_heat_test","Test","test",1,1,1,0,0,0,1,false,false,false,false);
         recipes.addRecipe(new com.gregtech.gregtech.api.recipe.Recipe(
             new net.minecraft.world.item.ItemStack[]{new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.APPLE)},

@@ -91,7 +91,7 @@ public final class FusionCoverLifecycleTests {
             h.assertTrue(h.getLevel().getBlockEntity(pos) instanceof FusionReactorControllerBlockEntity,
                     "native registered controller creates dedicated fusion executor");
             r=(FusionReactorControllerBlockEntity)h.getLevel().getBlockEntity(pos);
-            h.assertTrue(r.isStructureOk(),"actual registered fusion ring forms");
+            h.assertTrue(StructureTestSupport.ok(r),"actual registered fusion ring forms");
             map.mRecipeList.add(new Recipe(new ItemStack[]{new ItemStack(Items.APPLE)},new ItemStack[]{new ItemStack(Items.DIAMOND)},
                     null,null,null,null,duration,-8192,32768));
             r.setSpec(BasicMachineSpec.builder("fusion_cover_fixture",r.spec().material()).machineType("fusionreactor")
@@ -118,6 +118,7 @@ public final class FusionCoverLifecycleTests {
             var tag=save(h,r); var spec=r.spec(); var state=r.getBlockState();
             set(pos,state); r=(FusionReactorControllerBlockEntity)h.getLevel().getBlockEntity(pos);
             r.setSpec(spec); load(h,r,tag);
+            StructureTestSupport.ok(r);
         }
         BasicMachineBlockEntity receiver() {
             var block=(BasicMachineBlock)BuiltInRegistries.BLOCK.stream()
@@ -234,7 +235,7 @@ public final class FusionCoverLifecycleTests {
             long before=save(h,f.r).getLong("gt.cover_ticks");tick(f.r);
             h.assertTrue(save(h,f.r).getLong("gt.cover_ticks")==before+1&&chest.isEmpty()
                     &&f.r.inventory().getStackInSlot(1).getCount()==1,"invalid structure advances coverclock without transferring stock");
-            f.set(wall,wallState);h.assertTrue(f.r.isStructureOk(),"real wall repair rebinds ports");
+            f.set(wall,wallState);h.assertTrue(StructureTestSupport.ok(f.r),"real wall repair rebinds ports");
             f.r.machineControl(null).setEnabled(false);tick(f.r);
             h.assertTrue(save(h,f.r).getLong("gt.cover_ticks")==before+2&&!f.r.machineControl(null).running()
                     &&f.r.inventory().getStackInSlot(1).isEmpty()&&chest.getItem(0).is(Items.DIAMOND)

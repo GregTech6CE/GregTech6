@@ -118,7 +118,7 @@ public final class GasTurbinePartialFuelTests {
                         entry.getValue().defaultBlockState());
             }
             dynamo = (LargeDynamoControllerBlockEntity) h.getLevel().getBlockEntity(receiverPos);
-            h.assertTrue(gas.isStructureOk() && dynamo.isStructureOk(), "registered gas turbine and actual adjacent native dynamo both form");
+            h.assertTrue(StructureTestSupport.ok(gas) && StructureTestSupport.ok(dynamo), "registered gas turbine and actual adjacent native dynamo both form");
             var shown = OriginalGeneratorTooltipData.find(gasGrade.id());
             h.assertTrue(gasGrade.input() == 6144 && gasGrade.output() == 4096
                             && shown.outputMinimum() == 2048 && shown.outputMaximum() == 8192 && shown.efficiency() == 6666,
@@ -193,7 +193,7 @@ public final class GasTurbinePartialFuelTests {
             load(h, replacement, data);
             h.getLevel().setBlockEntity(replacement);
             gas = (LargeGasTurbineControllerBlockEntity) replacement;
-            h.assertTrue(old.isRemoved() && gas != old && gas.isStructureOk(), "fresh native entity rebinds actual shell after removal");
+            h.assertTrue(old.isRemoved() && gas != old && StructureTestSupport.ok(gas), "fresh native entity rebinds actual shell after removal");
         }
 
         @Override public void close() {

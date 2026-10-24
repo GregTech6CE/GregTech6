@@ -36,7 +36,7 @@ import java.util.List;
 
 /** GT6 Logistics Core structure, EU input, network discovery and private 108-slot buffers. */
 public final class LogisticsCoreControllerBlockEntity extends GTEnergyBlockEntity
-implements MultiblockPortOwner, LogisticsCoverHost, BlockContents {
+implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, com.gregtech.gregtech.api.multiblock.tracking.TrackedMultiblock {
     public static final int BUFFER_SLOTS = LogisticsCoreStructure.MAX_STORAGE_CPU_COUNT;
     public static final int TANK_CAPACITY = 16_000;
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();
@@ -67,8 +67,20 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents {
         super(GTBlockEntities.LOGISTICS_CORE.get(), pos, state);
     }
 
+    @Override public com.gregtech.gregtech.api.multiblock.tracking.StructureDefinition structureDefinition() {
+        return com.gregtech.gregtech.api.multiblock.tracking.CustomStructures.logistics(this);
+    }
+    @Override public boolean isStructureOk() {
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.query(this);
+    }
+    @Override public void structureFormedChanged(boolean formed) {
+        if (!formed) {
+            processors = null;
+            network = LogisticsNetwork.Snapshot.empty();
+        }
+    }
     @Override
-    public boolean isStructureOk() {
+    public boolean scanStructure() {
         if (level == null || isRemoved()) return false;
         Direction front = getBlockState().getValue(LogisticsCoreControllerBlock.FACING);
         LogisticsCoreStructure.Counts found = LogisticsCoreStructure.counts(level, worldPosition, front);
@@ -84,17 +96,21 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents {
                 case CPU -> MultiblockLayout.Role.CASING;
             });
         }
-        if (!level.isClientSide && !bindings.update(candidates,
-                pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part
-                && part.canBind(worldPosition),
-                (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
-                this::releasePart)) return unbind();
+        if (!level.isClientSide) {
+            var claimed = com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, candidates, 0,
+                    pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part
+                    && part.canBind(worldPosition),
+                    (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
+                    this::releasePart);
+            if (claimed == com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED) return unbind();
+        }
         processors = found;
         return true;
     }
 
     private boolean unbind() {
-        bindings.clear(this::releasePart);
+        com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.runQuiet(() -> bindings.clear(this::releasePart));
+        com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
         processors = null;
         network = LogisticsNetwork.Snapshot.empty();
         return false;
@@ -107,14 +123,21 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents {
     }
 
     @Override
+    public void onLoad() {
+        super.onLoad();
+        if (level != null && !level.isClientSide) com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.attach(this);
+    }
+
+    @Override
     public void setRemoved() {
-        unbind();
+        if (!com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.unloading(this)) unbind();
+        com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.onRemoved(this);
         super.setRemoved();
     }
 
     @Override
     public void onChunkUnloaded() {
-        unbind();
+        com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
         super.onChunkUnloaded();
     }
 

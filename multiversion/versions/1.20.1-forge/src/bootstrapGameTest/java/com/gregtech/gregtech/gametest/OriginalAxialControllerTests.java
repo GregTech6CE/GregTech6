@@ -51,7 +51,7 @@ public final class OriginalAxialControllerTests {
                 grade.cells().forEach((cell, part) -> helper.setBlock(
                         origin.relative(front.getClockWise(), cell.getX()).above(cell.getY()).relative(front.getOpposite(), cell.getZ()), part));
                 var machine = (AxialGeneratorBlockEntity) helper.getLevel().getBlockEntity(helper.absolutePos(origin));
-                helper.assertTrue(machine != null && machine.grade() == grade && machine.isStructureOk(),
+                helper.assertTrue(machine != null && machine.grade() == grade && StructureTestSupport.ok(machine),
                         originalId + " forms with the original grade's walls and coils");
                 helper.assertTrue((steam ? GTBlockEntities.LARGE_TURBINE : GTBlockEntities.LARGE_DYNAMO).get()
                                 .isValid(machine.getBlockState()), originalId + " belongs to a ticking block entity type");
@@ -80,7 +80,7 @@ public final class OriginalAxialControllerTests {
             helper.setBlock(origin, block.defaultBlockState().setValue(DirectionalBlock.FACING, front));
             for (var cell : TurbineStructure.LAYOUT.cells()) helper.setBlock(cell.at(origin, front), grade.wall());
             var machine = (LargeGasTurbineControllerBlockEntity) helper.getLevel().getBlockEntity(helper.absolutePos(origin));
-            helper.assertTrue(machine != null && machine.isStructureOk() && machine.grade() == grade,
+            helper.assertTrue(machine != null && StructureTestSupport.ok(machine) && machine.grade() == grade,
                     originalId + " forms with the original material wall");
             helper.assertTrue(GTBlockEntities.LARGE_GAS_TURBINE.get().isValid(machine.getBlockState()),
                     originalId + " belongs to the ticking gas turbine block entity type");

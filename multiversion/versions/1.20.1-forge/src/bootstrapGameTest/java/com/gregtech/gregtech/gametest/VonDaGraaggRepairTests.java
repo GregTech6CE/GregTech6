@@ -57,7 +57,7 @@ public final class VonDaGraaggRepairTests {
         helper.assertTrue(world.getBlockEntity(center) instanceof VonDaGraaggControllerBlockEntity,
                 "GT6 17996 must create a working controller entity, not a passive port");
         var machine = (VonDaGraaggControllerBlockEntity) world.getBlockEntity(center);
-        helper.assertTrue(machine.isStructureOk(), "the 41-wall base, five-coil pole and steel crown must form");
+        helper.assertTrue(StructureTestSupport.ok(machine), "the 41-wall base, five-coil pole and steel crown must form");
         var preview = ControllerStructureLayouts.cells(LargeMachineParts.block(17996));
         helper.assertTrue(preview != null && preview.size() == 63
                         && preview.values().stream().filter(part -> part == LargeMachineParts.block(18028)).count() == 41
@@ -96,7 +96,7 @@ public final class VonDaGraaggRepairTests {
                 "GT6 mossy cobblestone variants also exempt mob spawns");
         world.setBlock(center.offset(2, 0, 0), Blocks.AIR.defaultBlockState(), 3);
         VonDaGraaggControllerBlockEntity.serverTick(world, center, world.getBlockState(center), machine);
-        helper.assertTrue(machine.currentRange() == 0 && !machine.isStructureOk(),
+        helper.assertTrue(machine.currentRange() == 0 && !StructureTestSupport.ok(machine),
                 "a missing galvanized wall disables the machine and its inhibition range");
         helper.succeed();
     }
@@ -107,7 +107,7 @@ public final class VonDaGraaggRepairTests {
         BlockPos center = helper.absolutePos(new BlockPos(7, 1, 7));
         placeStructure(helper, center);
         var machine = (VonDaGraaggControllerBlockEntity) world.getBlockEntity(center);
-        helper.assertTrue(machine.isStructureOk(), "the input wall is connected");
+        helper.assertTrue(StructureTestSupport.ok(machine), "the input wall is connected");
         helper.assertTrue(machine.injectPortEnergy(MultiblockLayout.Role.ENERGY_INPUT,
                         GregTechTags.Energy.ELECTRICITY, 2048, 4, true) == 4
                         && machine.storedEnergy() == 8192,

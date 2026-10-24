@@ -38,7 +38,7 @@ public final class LargeCrucibleControllerTests {
     @GameTest(template = "test_empty")
     public static void formedVesselHidesPartsAndSharesCrucibleJade(GameTestHelper helper) {
         var be = build(helper, LargeCrucibleSpecs.byOriginalId(17309));
-        helper.assertTrue(be.isStructureOk() && be.isFormedForRendering(), "empty vessel forms before any contents exist");
+        helper.assertTrue(StructureTestSupport.ok(be) && be.isFormedForRendering(), "empty vessel forms before any contents exist");
         helper.assertTrue(be.getBlockState().getRenderShape() == net.minecraft.world.level.block.RenderShape.INVISIBLE,
                 "formed main is replaced by the whole-vessel renderer");
         for (int y=0;y<3;y++) for (int x=-1;x<=1;x++) for (int z=-1;z<=1;z++) {
@@ -56,7 +56,7 @@ public final class LargeCrucibleControllerTests {
                 && data.getLong("gt_crucible_melt_limit") == be.getMeltDownLimitK()
                 && data.contains("gt_crucible_content"), "Jade on a wall receives its controller's actual crucible data");
         helper.setBlock(CENTER.offset(-1,2,0),Blocks.AIR);
-        helper.assertTrue(!be.isStructureOk() && !be.isFormedForRendering(), "breaking the structure disables its large hull");
+        helper.assertTrue(!StructureTestSupport.ok(be) && !be.isFormedForRendering(), "breaking the structure disables its large hull");
         helper.assertTrue(part.getBlockState().getRenderShape() == net.minecraft.world.level.block.RenderShape.MODEL,
                 "remaining walls return to their ordinary models");
         var after = new net.minecraft.nbt.CompoundTag();
@@ -85,7 +85,7 @@ public final class LargeCrucibleControllerTests {
     public static void openVesselRequiresCorrectWallAndRoutesBottomHeatTopItems(GameTestHelper helper) {
         var steel = LargeCrucibleSpecs.byOriginalId(17309);
         var be = build(helper, steel);
-        helper.assertTrue(be.isStructureOk(), "3x3x3 steel ring with open centre forms");
+        helper.assertTrue(StructureTestSupport.ok(be), "3x3x3 steel ring with open centre forms");
         var bottom = (MultiblockPortBlockEntity) helper.getBlockEntity(CENTER.offset(1, 0, 0));
         var middle = (MultiblockPortBlockEntity) helper.getBlockEntity(CENTER.offset(1, 1, 0));
         var upper = (MultiblockPortBlockEntity) helper.getBlockEntity(CENTER.offset(1, 2, 0));
@@ -102,17 +102,17 @@ public final class LargeCrucibleControllerTests {
         LargeCrucibleControllerBlockEntity.serverTick(helper.getLevel(), helper.absolutePos(CENTER), be.getBlockState(), be);
         helper.assertTrue(be.getTemperature() > before, "HU raises the crucible temperature");
         helper.setBlock(CENTER.above(), Blocks.STONE);
-        helper.assertTrue(!be.isStructureOk(), "the vessel must stay open above its controller");
+        helper.assertTrue(!StructureTestSupport.ok(be), "the vessel must stay open above its controller");
         helper.setBlock(CENTER.above(), Blocks.AIR);
         helper.setBlock(CENTER.offset(1, 2, 0), LargeCrucibleSpecs.byOriginalId(17307).wall());
-        helper.assertTrue(!be.isStructureOk(), "another material's wall cannot complete the structure");
+        helper.assertTrue(!StructureTestSupport.ok(be), "another material's wall cannot complete the structure");
         helper.succeed();
     }
 
     @GameTest(template = "test_empty")
     public static void materialCapacityAndTopFluidPortShareOneContentList(GameTestHelper helper) {
         var be = build(helper, LargeCrucibleSpecs.byOriginalId(17302));
-        helper.assertTrue(be.isStructureOk(), "stainless crucible forms with stainless wall");
+        helper.assertTrue(StructureTestSupport.ok(be), "stainless crucible forms with stainless wall");
         var tag = be.saveWithoutMetadata();
         tag.putLong("gt.temperature", Materials.Iron.getMeltingPoint() + 25L);
         be.load(tag);
@@ -141,7 +141,7 @@ public final class LargeCrucibleControllerTests {
     public static void incompleteWallCoolsWithoutProcessingOrSpendingHeat(GameTestHelper helper) {
         var variant = LargeCrucibleSpecs.byOriginalId(17309);
         var be = build(helper, variant);
-        helper.assertTrue(be.isStructureOk(), "steel crucible starts formed");
+        helper.assertTrue(StructureTestSupport.ok(be), "steel crucible starts formed");
         var bottom = (MultiblockPortBlockEntity) helper.getBlockEntity(CENTER.offset(1, 0, 0));
         helper.assertTrue(bottom.doInject(GregTechTags.Energy.HU, Direction.EAST, 2048, 5, true) == 5,
                 "formed bottom wall accepts buffered heat");
@@ -153,7 +153,7 @@ public final class LargeCrucibleControllerTests {
         be.load(saved);
         long heat = be.getEnergyBuffer();
         helper.setBlock(CENTER.offset(1, 2, 0), Blocks.AIR);
-        helper.assertTrue(!be.isStructureOk(), "missing upper wall invalidates the vessel");
+        helper.assertTrue(!StructureTestSupport.ok(be), "missing upper wall invalidates the vessel");
 
         helper.runAfterDelay(25, () -> {
             helper.assertTrue(be.getTemperature() < 600 && be.getTemperature() >= 596,

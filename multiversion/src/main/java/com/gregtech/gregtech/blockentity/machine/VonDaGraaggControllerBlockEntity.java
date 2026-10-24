@@ -28,7 +28,8 @@ import java.util.List;
 
 /** GT6 17996: 41 galvanized base walls, 5 copper coils and the dense-steel top. */
 public final class VonDaGraaggControllerBlockEntity extends GTEnergyBlockEntity implements MultiblockPortOwner,
-        com.gregtech.gregtech.api.sensor.ProgressSensorSource, com.gregtech.gregtech.api.sensor.CompressionSensorSource {
+        com.gregtech.gregtech.api.sensor.ProgressSensorSource, com.gregtech.gregtech.api.sensor.CompressionSensorSource,
+        com.gregtech.gregtech.api.multiblock.tracking.TrackedMultiblock {
     public static final long CAPACITY = VonDaGraaggRules.CAPACITY;
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();
     private long energy;
@@ -66,19 +67,25 @@ public final class VonDaGraaggControllerBlockEntity extends GTEnergyBlockEntity 
         return 1000L * progressMaximum(side);
     }
 
+    @Override public com.gregtech.gregtech.api.multiblock.tracking.StructureDefinition structureDefinition() {
+        return com.gregtech.gregtech.api.multiblock.tracking.CustomStructures.tower(this);
+    }
+    @Override public boolean isStructureOk() {
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.query(this);
+    }
     @Override
-    public boolean isStructureOk() {
+    public boolean scanStructure() {
         if (level == null || isRemoved() || worldPosition.getY() + 7 >= level.getMaxBuildHeight())
             return invalid();
         var candidateParts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
         for (var cell : VonDaGraaggRules.layout())
             if (!collectPart(candidateParts, cell.x(), cell.y(), cell.z(), cell.partId(),
                     cell.energyInput() ? MultiblockLayout.Role.ENERGY_INPUT : MultiblockLayout.Role.CASING)) return invalid();
-        return bindings.update(candidateParts,
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, candidateParts, 0,
                 pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port
                         && port.canBind(worldPosition),
                 (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
-                this::release);
+                this::release) != com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
     }
 
     private boolean collectPart(LinkedHashMap<BlockPos, MultiblockLayout.Role> candidateParts,
@@ -92,6 +99,7 @@ public final class VonDaGraaggControllerBlockEntity extends GTEnergyBlockEntity 
 
     private boolean invalid() {
         bindings.clear(this::release);
+        com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
         return false;
     }
 
@@ -115,9 +123,18 @@ public final class VonDaGraaggControllerBlockEntity extends GTEnergyBlockEntity 
         if (changed) machine.syncToClient();
     }
 
+    @Override public void onLoad() {
+        super.onLoad();
+        if (level != null && !level.isClientSide) com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.attach(this);
+    }
+    @Override public void onChunkUnloaded() {
+        com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
+        super.onChunkUnloaded();
+    }
     @Override
     public void setRemoved() {
-        bindings.clear(this::release);
+        if (!com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.unloading(this)) bindings.clear(this::release);
+        com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.onRemoved(this);
         if (level instanceof ServerLevel server) VonDaGraaggSpawnInhibitor.unregister(server, worldPosition);
         super.setRemoved();
     }

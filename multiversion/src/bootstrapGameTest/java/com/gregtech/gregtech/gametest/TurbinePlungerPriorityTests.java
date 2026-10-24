@@ -151,7 +151,7 @@ public final class TurbinePlungerPriorityTests {
                         cell.getValue().defaultBlockState());
             }
             turbine = (LargeTurbineControllerBlockEntity) h.getLevel().getBlockEntity(pos);
-            h.assertTrue(turbine.isStructureOk(), "actual registered turbine and 35 native casing blocks form");
+            h.assertTrue(StructureTestSupport.ok(turbine), "actual registered turbine and 35 native casing blocks form");
         }
 
         void makeCondensate() {
