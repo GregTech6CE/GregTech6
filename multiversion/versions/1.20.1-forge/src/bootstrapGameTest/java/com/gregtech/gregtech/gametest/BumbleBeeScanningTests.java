@@ -56,11 +56,7 @@ public final class BumbleBeeScanningTests {
     }
 
     private static JsonObject lang(String language) throws Exception {
-        String path = "assets/gt6ce/lang/" + language + ".json";
-        try (InputStream stream = BumbleBeeScanningTests.class.getClassLoader().getResourceAsStream(path)) {
-            if (stream == null) throw new IllegalStateException("missing resource " + path);
-            return GsonHelper.parse(new InputStreamReader(stream, StandardCharsets.UTF_8));
-        }
+        return GametestLang.load(language);
     }
 
     /** The scanned bee the recipe handed out, or an empty stack. */
