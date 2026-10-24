@@ -183,7 +183,7 @@ tasks.named('check').configure { dependsOn addonApiClosureCheck }
     tasks.named('check').configure { dependsOn contract }
 }
 
-['crucible', 'cruciblecore', 'crucibleunknown', 'crucibledup', 'cruciblesteal', 'crucibleearly', 'crucibleself', 'cruciblebad'].each { scenario ->
+['crucible', 'cruciblecore', 'crucibleunknown', 'crucibledup', 'cruciblesteal', 'crucibleearly', 'crucibleself', 'cruciblebad', 'smeltingremoval'].each { scenario ->
     def contract = tasks.register("crucibleAddonContracts_${scenario}", JavaExec) {
         description = "Runs crucible addon scenario ${scenario} in its own JVM."
         group = 'verification'

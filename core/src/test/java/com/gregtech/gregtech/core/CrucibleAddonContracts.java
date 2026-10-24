@@ -1,12 +1,18 @@
 package com.gregtech.gregtech.core;
 
 import com.gregtech.gregtech.api.addon.AddonMaterials;
+import com.gregtech.gregtech.api.addon.AddonMaterialContributor;
+import com.gregtech.gregtech.api.addon.MaterialDeclaration;
+import com.gregtech.gregtech.api.addon.MaterialFormRequest;
+import com.gregtech.gregtech.api.addon.SmeltingTargetRemoval;
 import com.gregtech.gregtech.api.addon.CrucibleContent;
 import com.gregtech.gregtech.api.addon.CrucibleReactionDeclaration;
 import com.gregtech.gregtech.api.addon.CrucibleReactionRemoval;
 import com.gregtech.gregtech.api.addon.MaterialComposition;
 import com.gregtech.gregtech.api.addon.SmeltingTargetDeclaration;
 import com.gregtech.gregtech.api.machine.crucible.CrucibleMaterialStack;
+import com.gregtech.gregtech.api.machine.crucible.CrucibleInputRules;
+import com.gregtech.gregtech.api.machine.crucible.CrucibleProcess;
 import com.gregtech.gregtech.api.machine.crucible.CrucibleReactions;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
@@ -16,7 +22,13 @@ import com.gregtech.gregtech.api.material.MaterialProperty;
 import com.gregtech.gregtech.api.mod.ModData;
 import com.gregtech.gregtech.api.prefix.PrefixRegistry;
 import com.gregtech.gregtech.data.ModReferences;
+import com.gregtech.gregtech.data.MaterialPrefix;
 
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -28,7 +40,7 @@ public final class CrucibleAddonContracts {
 
     private CrucibleAddonContracts() {}
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         if (args.length != 1) throw new IllegalArgumentException("Expected one scenario");
         Locale.setDefault(Locale.ROOT);
         switch (args[0]) {
@@ -40,6 +52,7 @@ public final class CrucibleAddonContracts {
             case "crucibleearly" -> early();
             case "crucibleself" -> selfInput();
             case "cruciblebad" -> badDeclaration();
+            case "smeltingremoval" -> smeltingRemoval();
             default -> throw new IllegalArgumentException("Unknown scenario: " + args[0]);
         }
         System.out.println(args[0] + " passed " + assertions);
@@ -191,6 +204,105 @@ public final class CrucibleAddonContracts {
                 "positive");
         expectThrows(IllegalArgumentException.class,
                 () -> new CrucibleReactionDeclaration("Bronze", 1, List.of()), "needs inputs");
+    }
+
+    /** Runs the supported public service path, rather than mutating a core material after freeze. */
+    private static void smeltingRemoval() throws Exception {
+        prepare();
+        Path root = Files.createTempDirectory("gt-smelting-removal");
+        Path service = root.resolve("META-INF/services/" + AddonMaterialContributor.class.getName());
+        Files.createDirectories(service.getParent());
+        Files.writeString(service, SmeltingRemovalContributor.class.getName() + "\n", StandardCharsets.UTF_8);
+        try (URLClassLoader loader = new URLClassLoader(new URL[]{root.toUri().toURL()},
+                CrucibleAddonContracts.class.getClassLoader())) {
+            AddonMaterials.collectContributors(loader);
+        } finally {
+            Files.deleteIfExists(service);
+            Files.deleteIfExists(service.getParent());
+            Files.deleteIfExists(service.getParent().getParent());
+            Files.deleteIfExists(root);
+        }
+        GTMaterialRegistry.init();
+        GTMaterial source = GTMaterialRegistry.get("RemovalAuditSource");
+        GTMaterial target = GTMaterialRegistry.get("RemovalAuditTarget");
+        GTMaterial positive = GTMaterialRegistry.get("RemovalAuditPositive");
+        GTMaterial unmapped = GTMaterialRegistry.get("RemovalAuditUnmapped");
+        for (GTMaterial material : List.of(source, target, positive, unmapped)) {
+            check(material.isValid() && "aa_smelting_removal_audit".equals(AddonMaterials.owner(material))
+                            && !GTMaterialRegistry.isCoreMaterial(material),
+                    "the service must register its own isolated material: " + material.getName());
+        }
+        check(source.getTargetSmeltingMaterial() == source && source.getTargetSmeltingAmount() == 0
+                        && !source.has(MaterialProperty.MELTING),
+                "the public removal must override the earlier declared smelting target");
+        check(CrucibleInputRules.smeltingPreview(source, MaterialPrefix.dust) == null,
+                "an explicitly removed target must not advertise a smelting recipe");
+        check(positive.getTargetSmeltingMaterial() == target && positive.getTargetSmeltingAmount() == GTValues.U2
+                        && positive.has(MaterialProperty.MELTING),
+                "the positive-control smelting declaration must still be active");
+        check(unmapped.getTargetSmeltingMaterial() == unmapped && unmapped.getTargetSmeltingAmount() == GTValues.U,
+                "an omitted declaration must retain the default identity mapping");
+
+        var crossing = new ArrayList<>(List.of(CrucibleInputRules.materialItem(source, MaterialPrefix.dust)));
+        checkRetained(crossing, source, GTValues.U, 399, 398, false, "below melting");
+        checkRetained(crossing, source, GTValues.U, 400, 399, false, "crossing melting");
+        checkRetained(crossing, source, GTValues.U, 500, 400, false, "remaining hot");
+        checkRetained(crossing, source, GTValues.U, 399, 500, false, "cooling below melting");
+        checkRetained(crossing, source, GTValues.U, 500, 399, false, "reheating");
+
+        // An already hot crucible must also retain newly admitted content, including fractional units.
+        long exactAmount = GTValues.U + 1;
+        var incoming = new ArrayList<>(List.of(CrucibleMaterialStack.of(source, exactAmount)));
+        checkRetained(incoming, source, exactAmount, 500, 500, true, "new hot content");
+        checkRetained(incoming, source, exactAmount, 500, 500, false, "stable hot content");
+
+        var ordinary = new ArrayList<>(List.of(CrucibleMaterialStack.of(positive, GTValues.U)));
+        CrucibleProcess.process(ordinary, 500, 399, true, false);
+        check(ordinary.size() == 1 && ordinary.get(0).material == target && ordinary.get(0).amount == GTValues.U2,
+                "a positive target must still convert at the declared fractional yield");
+        var defaultMapping = new ArrayList<>(List.of(CrucibleMaterialStack.of(unmapped, GTValues.U)));
+        checkRetained(defaultMapping, unmapped, GTValues.U, 500, 399, true, "omitted target");
+
+        // Removal disables conversion, not normal phase hazards.
+        var boiling = new ArrayList<>(List.of(CrucibleMaterialStack.of(source, exactAmount)));
+        var vapor = CrucibleProcess.process(boiling, 1200, 1199, false, false);
+        check(boiling.isEmpty() && vapor.fizzCount() == 1 && vapor.vapors().size() == 1
+                        && vapor.vapors().get(0).material() == source && vapor.vapors().get(0).amount() == exactAmount
+                        && !vapor.acidDestroyedHull() && vapor.explosiveAmount() == 0,
+                "normal boiling must still vaporize the retained material at its boiling point");
+        check(source.getTargetSmeltingAmount() == 0 && !source.has(MaterialProperty.MELTING)
+                        && CrucibleInputRules.smeltingPreview(source, MaterialPrefix.dust) == null,
+                "processing must not restore a removed target or its recipe/display flag");
+    }
+
+    private static void checkRetained(List<CrucibleMaterialStack> content, GTMaterial material, long expectedAmount,
+                                      long temperature, long previousTemperature, boolean newContent, String phase) {
+        var result = CrucibleProcess.process(content, temperature, previousTemperature, newContent, false);
+        check(content.size() == 1 && content.get(0).material == material && content.get(0).amount == expectedAmount,
+                "smelting target removal must retain material identity and amount: " + phase);
+        check(result.fizzCount() == 0 && result.vapors().isEmpty()
+                        && !result.acidDestroyedHull() && result.explosiveAmount() == 0,
+                "safe retained material must not produce hazards: " + phase);
+    }
+
+    public static final class SmeltingRemovalContributor implements AddonMaterialContributor {
+        @Override public String addonId() { return "aa_smelting_removal_audit"; }
+        @Override public List<MaterialDeclaration> materials() {
+            return List.of(removalMaterial("RemovalAuditSource"), removalMaterial("RemovalAuditTarget"),
+                    removalMaterial("RemovalAuditPositive"), removalMaterial("RemovalAuditUnmapped"));
+        }
+        @Override public List<MaterialFormRequest> forms() { return List.of(); }
+        @Override public List<SmeltingTargetDeclaration> smeltingTargets() {
+            return List.of(new SmeltingTargetDeclaration("RemovalAuditSource", "RemovalAuditTarget", GTValues.U),
+                    new SmeltingTargetDeclaration("RemovalAuditPositive", "RemovalAuditTarget", GTValues.U2));
+        }
+        @Override public List<SmeltingTargetRemoval> smeltingTargetRemovals() {
+            return List.of(new SmeltingTargetRemoval("RemovalAuditSource"));
+        }
+        private static MaterialDeclaration removalMaterial(String name) {
+            return MaterialDeclaration.builder(name).dust().meltingPointKelvin(400)
+                    .boilingPointKelvin(1200).density(3F).build();
+        }
     }
 
     private static Set<String> inputNames(CrucibleReactions.Reaction reaction) {

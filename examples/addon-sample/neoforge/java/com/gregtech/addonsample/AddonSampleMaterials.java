@@ -11,6 +11,7 @@ import com.gregtech.gregtech.api.addon.PrefixCondition;
 import com.gregtech.gregtech.api.addon.PrefixDeclaration;
 import com.gregtech.gregtech.api.addon.SmallOreDeclaration;
 import com.gregtech.gregtech.api.addon.SmeltingTargetDeclaration;
+import com.gregtech.gregtech.api.addon.SmeltingTargetRemoval;
 import com.gregtech.gregtech.api.material.GTValues;
 
 import java.util.ArrayList;
@@ -37,6 +38,11 @@ public final class AddonSampleMaterials implements AddonMaterialContributor {
         materials.add(MaterialDeclaration.builder("SampleCrucibleAlloy")
                 .displayName("Sample Crucible Alloy").color(0xC4A574).meltingPointKelvin(1400)
                 .boilingPointKelvin(2500).density(8F).metal().build());
+        // Isolated public removal fixture: no built-in smelting target is changed.
+        materials.add(MaterialDeclaration.builder("SampleRetainedMatter")
+                .meltingPointKelvin(400).boilingPointKelvin(1200).density(3F).dust().build());
+        materials.add(MaterialDeclaration.builder("SampleRemovalTarget")
+                .meltingPointKelvin(400).boilingPointKelvin(1200).density(3F).dust().build());
         int scale = Integer.getInteger("gregtech.materialScale", 0);
         for (int i = 0; i < scale; i++) {
             String name = String.format(i % 2 == 0 ? "ScaleDust%04d" : "ScaleMetal%04d", i / 2);
@@ -75,7 +81,12 @@ public final class AddonSampleMaterials implements AddonMaterialContributor {
     }
 
     @Override public List<SmeltingTargetDeclaration> smeltingTargets() {
-        return List.of(new SmeltingTargetDeclaration("SampleAlloy", "SampleAlloy", GTValues.U));
+        return List.of(new SmeltingTargetDeclaration("SampleAlloy", "SampleAlloy", GTValues.U),
+                new SmeltingTargetDeclaration("SampleRetainedMatter", "SampleRemovalTarget", GTValues.U));
+    }
+
+    @Override public List<SmeltingTargetRemoval> smeltingTargetRemovals() {
+        return List.of(new SmeltingTargetRemoval("SampleRetainedMatter"));
     }
 
     @Override public List<CrucibleReactionDeclaration> crucibleReactions() {
