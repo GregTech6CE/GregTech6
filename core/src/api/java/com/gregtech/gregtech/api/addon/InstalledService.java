@@ -2,7 +2,11 @@
 
 package com.gregtech.gregtech.api.addon;
 
-/** One-time bind, lock-free read. */
+/**
+ * Internal: not part of the addon contract; may change without notice.
+ * One-time bind, lock-free read. The first bind owns the implementation; a later bind fails.
+ * GregTech installs the platform services; addons must not call {@code bind}.
+ */
 public final class InstalledService<T> {
     private volatile T value;
 

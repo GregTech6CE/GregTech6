@@ -1,8 +1,11 @@
 package com.gregtech.gregtech.core;
 
+import com.gregtech.gregtech.api.addon.AddonNames;
 import com.gregtech.gregtech.api.addon.BehaviorEnergyRules;
 import com.gregtech.gregtech.api.addon.BehaviorMachine;
 import com.gregtech.gregtech.api.addon.CellMatch;
+import com.gregtech.gregtech.api.addon.CompressedGasTankDeclaration;
+import com.gregtech.gregtech.api.addon.CrucibleReactionDeclaration;
 import com.gregtech.gregtech.api.addon.EnergyInput;
 import com.gregtech.gregtech.api.addon.EnergyOutput;
 import com.gregtech.gregtech.api.addon.EnergyType;
@@ -16,6 +19,9 @@ import com.gregtech.gregtech.api.addon.MachineFace;
 import com.gregtech.gregtech.api.addon.MachineIo;
 import com.gregtech.gregtech.api.addon.MachineTuning;
 import com.gregtech.gregtech.api.addon.MachineTuningRules;
+import com.gregtech.gregtech.api.addon.MaterialComposition;
+import com.gregtech.gregtech.api.addon.MaterialDeclaration;
+import com.gregtech.gregtech.api.addon.MaterialFormRequest;
 import com.gregtech.gregtech.api.addon.PartEnergyRules;
 import com.gregtech.gregtech.api.addon.PartSlotRules;
 import com.gregtech.gregtech.api.addon.PartSlots;
@@ -28,11 +34,18 @@ import com.gregtech.gregtech.api.material.GTValues;
 import com.gregtech.gregtech.api.kubejs.StructureLayoutDocuments;
 import com.gregtech.gregtech.content.multiblock.PartDesigns;
 import com.gregtech.gregtech.api.addon.RecipeMachine;
+import com.gregtech.gregtech.api.addon.RecipeKeptInputs;
+import com.gregtech.gregtech.api.addon.RecipeOutputChances;
 import com.gregtech.gregtech.api.addon.RecipeTable;
+import com.gregtech.gregtech.api.addon.SelectorTags;
 import com.gregtech.gregtech.api.addon.StructureLayout;
 import com.gregtech.gregtech.api.addon.StructureRole;
 
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /** New declaration types. Nothing here is installed, so the old machine queue stays untouched. */
 public final class AddonDeclarationTypeContracts {
@@ -40,7 +53,7 @@ public final class AddonDeclarationTypeContracts {
 
     private AddonDeclarationTypeContracts() {}
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         if (args.length != 0) throw new IllegalArgumentException("This contract takes no scenario");
         rejectedComponents();
         energyRules();
@@ -52,6 +65,11 @@ public final class AddonDeclarationTypeContracts {
         functionalParts();
         partAdditions();
         machineTuning();
+        namePatterns();
+        relations();
+        debugText();
+        messages();
+        constantPool();
         System.out.println("passed " + assertions);
     }
 
@@ -152,6 +170,17 @@ public final class AddonDeclarationTypeContracts {
                 .faces(MachineFace.RIGHT, MachineFace.LEFT).build());
         check(stored.equals(flipped) && stored.hashCode() == flipped.hashCode(),
                 "energy faces compare without order");
+        check(stored.energy().faces().equals(List.of(MachineFace.LEFT, MachineFace.RIGHT))
+                        && flipped.energy().faces().equals(List.of(MachineFace.RIGHT, MachineFace.LEFT)),
+                "equal declarations keep their written face order");
+        check(MachineFace.sameSet(List.of(MachineFace.LEFT, MachineFace.LEFT, MachineFace.RIGHT),
+                        List.of(MachineFace.LEFT, MachineFace.RIGHT, MachineFace.RIGHT)),
+                "sameSet compares repeated faces as a set");
+        check(MachineFace.hashSet(List.of(MachineFace.LEFT, MachineFace.LEFT, MachineFace.RIGHT))
+                        == MachineFace.hashSet(List.of(MachineFace.LEFT, MachineFace.RIGHT, MachineFace.RIGHT)),
+                "hashSet counts a repeated face once");
+        check(!MachineFace.sameSet(List.of(MachineFace.LEFT, MachineFace.LEFT), List.of(MachineFace.LEFT)),
+                "sameSet still requires equal lengths");
         check(EnergyInput.builder("eu", 32).build().type().equals(EnergyType.EU)
                 && EnergyType.signedDirection("ku") && EnergyType.time("tu"),
                 "known energy names are canonical and case-insensitive");
@@ -725,6 +754,154 @@ public final class AddonDeclarationTypeContracts {
                 IllegalStateException.class, "exceeds");
         fails(() -> MachineTuningRules.checkEffectiveValues(key, Long.MAX_VALUE, 2),
                 IllegalStateException.class, "overflows");
+    }
+
+    private static void namePatterns() {
+        check(AddonNames.matches(AddonNames.TEXTURE, "gt6ce:block/sample_casing.png")
+                        && !AddonNames.matches(AddonNames.TEXTURE, "gt6ce:block/sample_casing.png.bak")
+                        && !AddonNames.matches(AddonNames.TEXTURE, "Block:x.png"),
+                "texture pattern keeps its original shape");
+        check(AddonNames.matches(AddonNames.SEGMENT_PATH, "block/sample_casing")
+                        && AddonNames.matches(AddonNames.SEGMENT_PATH, "block/sample.casing-2")
+                        && !AddonNames.matches(AddonNames.SEGMENT_PATH, "block//sample")
+                        && !AddonNames.matches(AddonNames.SEGMENT_PATH, "Block/sample"),
+                "segment path pattern keeps its original shape");
+        check(AddonNames.matches(AddonNames.RESOURCE_PATH, "block/sample_casing.png")
+                        && !AddonNames.matches(AddonNames.RESOURCE_PATH, "block/Sample"),
+                "resource path pattern keeps its original shape");
+        check(AddonNames.matches(AddonNames.RESOURCE_NAMESPACE, "gt6ce.custom")
+                        && !AddonNames.matches(AddonNames.RESOURCE_NAMESPACE, "gt6ce/path"),
+                "resource namespace pattern keeps its original shape");
+    }
+
+    private static void relations() {
+        fails(() -> RecipeTable.machine("press").title("Press").gui("gui")
+                .inputItems(2).minimalInputItems(3).build(), "Minimal item");
+        fails(() -> RecipeTable.machine("press").title("Press").gui("gui")
+                .inputFluids(1).minimalInputFluids(2).build(), "Minimal fluid");
+
+        fails(() -> new MachineTuning("crusher", 1, null, 8L, 16L, 64L, null, null, null),
+                "outside its range");
+        fails(() -> MachineTuningRules.merge(List.of(
+                        new MachineTuningRules.Declared("aa",
+                                new MachineTuning("crusher", 1, null, 8L, null, null, null, null, null)),
+                        new MachineTuningRules.Declared("bb",
+                                new MachineTuning("crusher", 1, null, null, 16L, 64L, null, null, null)))),
+                IllegalArgumentException.class, "outside its range");
+
+        fails(() -> MaterialDeclaration.builder("Probe").oreByproducts("Iron", "Iron").build(),
+                "Repeats an ore byproduct");
+        check(MaterialDeclaration.builder("Probe").oreByproducts("Probe").build()
+                        .oreByproducts().equals(List.of("Probe")),
+                "an ore byproduct may name the material itself");
+
+        fails(() -> new MaterialFormRequest("Iron!", "dust"), "material name");
+        fails(() -> new MaterialFormRequest("Iron", "Dust!"), "prefix name");
+        check(new MaterialFormRequest(" Iron ", " dust ").materialName().equals("Iron"),
+                "material form names are trimmed");
+
+        fails(() -> new MaterialComposition("Probe", 1, List.of(
+                new MaterialComposition.Part("Iron", GTValues.U),
+                new MaterialComposition.Part("Iron", GTValues.U)), false), "Repeats component");
+        fails(() -> new CrucibleReactionDeclaration("Probe", 1, List.of(
+                new CrucibleReactionDeclaration.Part("Iron", 1),
+                new CrucibleReactionDeclaration.Part("Iron", 2))), "Repeats input");
+
+        fails(() -> LayoutCell.at(1, 0, 0, CellMatch.air(), null), IllegalArgumentException.class,
+                "structure role");
+        fails(() -> MachineIo.builder().itemInputs(MachineFace.FRONT, null).build(), "Missing item input face");
+        fails(() -> EnergyInput.builder("EU", 32).faces(MachineFace.FRONT, null).build(), "Missing energy face");
+        var independent = MachineIo.builder().itemOutputs(MachineFace.TOP)
+                .itemAutoOutput(MachineFace.BOTTOM).build();
+        check(independent.itemAutoOutput() == MachineFace.BOTTOM
+                        && independent.itemOutputs().equals(List.of(MachineFace.TOP)),
+                "an automatic face is independent of the matching face list");
+    }
+
+    private static void debugText() {
+        check(RecipeTable.machine("press").title("Press").gui("gui").build()
+                        .toString().contains("RecipeTable[name=press"),
+                "a recipe table prints its name");
+        check(casing("press").toString().contains("MachineCasing[id=press"),
+                "a casing prints its id");
+        check(eu(32).toString().contains("EnergyInput[type=EU"),
+                "an energy input prints its type");
+    }
+
+    private static void messages() {
+        fails(() -> StructureLayout.builder("press")
+                .cell(1, 0, 0, CellMatch.air(), StructureRole.CASING)
+                .cell(1, 0, 0, CellMatch.air(), StructureRole.CASING)
+                .build(), "Duplicate structure cell at 1/0/0");
+        fails(() -> RecipeKeptInputs.normalize(new int[]{0}, 0), "empty range");
+        fails(() -> new PrefixDeclaration("lineBreak", "A\nB", "", GTValues.U, "item/line_break",
+                List.of("Iron"), Set.of(), List.of()), "one line");
+        fails(() -> new PrefixDeclaration("longText", "x".repeat(65), "", GTValues.U, "item/long_text",
+                List.of("Iron"), Set.of(), List.of()), "64 characters");
+    }
+
+    private static void constantPool() throws IOException {
+        check(constantValueFields(RecipeOutputChances.class, Set.of("CERTAIN")).contains("CERTAIN"),
+                "the bytecode check recognizes a compile-time constant");
+        noConstantValue(FuelGenerator.class, "MAX_BEHIND", "MAX_AMPERES", "MAX_TANK");
+        noConstantValue(PartTanks.class, "MAX_CAPACITY");
+        noConstantValue(CompressedGasTankDeclaration.class, "MAX_CAPACITY");
+        noConstantValue(SelectorTags.class, "MIN", "MAX");
+        noConstantValue(BehaviorMachine.class,
+                "SLOT", "TANK_WIDTH", "TANK_HEIGHT", "ENERGY_WIDTH", "ENERGY_HEIGHT",
+                "PROGRESS_WIDTH", "PROGRESS_HEIGHT", "PLAYER_INVENTORY_GAP",
+                "UV_SLOT_U", "UV_SLOT_V", "UV_ENERGY_U", "UV_ENERGY_V", "UV_ENERGY_FULL_U",
+                "UV_TANK_U", "UV_TANK_V", "UV_TANK_MARKS_U", "UV_ARROW_U", "UV_ARROW_V",
+                "UV_ARROW_FULL_V", "UV_TOGGLE_OFF_U", "UV_TOGGLE_ON_U", "UV_TOGGLE_V");
+    }
+
+    private static void noConstantValue(Class<?> type, String... fields) throws IOException {
+        Set<String> inlined = constantValueFields(type, Set.of(fields));
+        for (String field : fields)
+            check(!inlined.contains(field), field + " must not be inlined as a compile-time constant");
+    }
+
+    private static Set<String> constantValueFields(Class<?> type, Set<String> wanted) throws IOException {
+        var result = new HashSet<String>();
+        try (var in = type.getResourceAsStream(type.getSimpleName() + ".class")) {
+            if (in == null) throw new IOException("Missing class file for " + type.getName());
+            var data = new DataInputStream(in);
+            data.readInt();
+            data.readUnsignedShort();
+            data.readUnsignedShort();
+            int poolSize = data.readUnsignedShort();
+            String[] utf8 = new String[poolSize];
+            for (int i = 1; i < poolSize; i++) {
+                int tag = data.readUnsignedByte();
+                switch (tag) {
+                    case 1 -> utf8[i] = data.readUTF();
+                    case 3, 4 -> data.skipBytes(4);
+                    case 5, 6 -> { data.skipBytes(8); i++; }
+                    case 7, 8, 16, 19, 20 -> data.skipBytes(2);
+                    case 9, 10, 11, 12, 17, 18 -> data.skipBytes(4);
+                    case 15 -> data.skipBytes(3);
+                    default -> throw new IOException("Unknown constant pool tag " + tag);
+                }
+            }
+            data.readUnsignedShort();
+            data.readUnsignedShort();
+            data.readUnsignedShort();
+            data.skipBytes(data.readUnsignedShort() * 2);
+            int fields = data.readUnsignedShort();
+            for (int f = 0; f < fields; f++) {
+                data.readUnsignedShort();
+                String name = utf8[data.readUnsignedShort()];
+                data.readUnsignedShort();
+                int attributes = data.readUnsignedShort();
+                for (int a = 0; a < attributes; a++) {
+                    String attribute = utf8[data.readUnsignedShort()];
+                    int length = data.readInt();
+                    if (wanted.contains(name) && "ConstantValue".equals(attribute)) result.add(name);
+                    data.skipBytes(length);
+                }
+            }
+        }
+        return result;
     }
 
     private static void check(boolean condition, String message) {

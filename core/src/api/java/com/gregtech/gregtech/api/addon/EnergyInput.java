@@ -3,12 +3,16 @@
 package com.gregtech.gregtech.api.addon;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
  * Energy coming into a recipe machine or a behavior machine.
  * Packet bounds, accepted range, faces and capacity are checked by the template, not here:
  * those rules are not the same for the two templates.
+ * Two declarations with the same faces in a different order are equal, while {@link #faces()}
+ * keeps the written order. A capacity of zero is the behavior-machine default and is
+ * indistinguishable from leaving it unset once the machine is built.
  */
 public final class EnergyInput {
     private final String type;
@@ -62,7 +66,10 @@ public final class EnergyInput {
      */
     public boolean facesSpecified() { return facesSpecified; }
 
-    /** An immutable copy. Empty when no faces were named and no template has filled the default. */
+    /**
+     * An immutable copy. Empty when no faces were named and no template has filled the default.
+     * Order is preserved as written and does not take part in equality.
+     */
     public List<MachineFace> faces() { return List.copyOf(faces); }
 
     /** True when {@link Builder#capacity(long)} was called, including a call with zero. */
@@ -110,8 +117,15 @@ public final class EnergyInput {
                 && MachineFace.sameSet(faces, that.faces);
     }
 
+    @Override public String toString() {
+        return "EnergyInput[type=" + type + ", perTick=" + perTick
+                + ", range=" + (rangeSpecified ? rangeMin + ".." + rangeMax : "unset")
+                + ", faces=" + faces + ", capacity=" + (capacitySpecified ? capacity : "unset")
+                + ", anyPacket=" + anyPacket + ", overload=" + overload + ", dynamic=" + dynamic + "]";
+    }
+
     @Override public int hashCode() {
-        return Objects.hash(type == null ? null : type.toLowerCase(java.util.Locale.ROOT), perTick,
+        return Objects.hash(type == null ? null : type.toLowerCase(Locale.ROOT), perTick,
                 rangeSpecified, rangeMin, rangeMax, facesSpecified, MachineFace.hashSet(faces),
                 capacitySpecified, capacity, anyPacket, overload, dynamic);
     }
@@ -147,17 +161,20 @@ public final class EnergyInput {
 
         public Builder faces(MachineFace... faces) {
             facesSpecified = true;
-            this.faces = faces == null ? List.of() : List.of(faces);
+            this.faces = MachineFace.listed(faces);
             return this;
         }
 
         public Builder faces(List<MachineFace> faces) {
             facesSpecified = true;
-            this.faces = faces == null ? List.of() : List.copyOf(faces);
+            this.faces = faces == null ? List.of() : MachineFace.listed(faces.toArray(new MachineFace[0]));
             return this;
         }
 
-        /** Zero is a real value for a behavior machine. A recipe machine rejects any call. */
+        /**
+         * Zero is a real value for a behavior machine, and a built machine treats it as the unset
+         * default. A recipe machine rejects any call.
+         */
         public Builder capacity(long value) {
             capacitySpecified = true;
             capacity = value;

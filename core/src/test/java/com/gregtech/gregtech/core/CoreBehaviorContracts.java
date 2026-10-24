@@ -789,6 +789,9 @@ public final class CoreBehaviorContracts {
         equal(8589934592L, com.gregtech.gregtech.data.GregTechConstants.V[15], "legacy voltage table has no Long.MAX_VALUE sentinel");
         check(java.util.Arrays.equals(GTVoltageTiers.NAMES,com.gregtech.gregtech.data.GregTechConstants.VN), "one canonical voltage name table");
         equal(1, GTVoltageTiers.tierMax(-32), "signed voltage magnitude");
+        equal(16, GTVoltageTiers.tierMax(8589934593L), "above the table keeps GT6's table-length result");
+        equal(0, GTVoltageTiers.tierMax(Long.MIN_VALUE), "Long.MIN_VALUE keeps GT6's signed-magnitude tier zero");
+        equal(15, GTVoltageTiers.tierMin(8589934593L), "tierMin above the table is the last tier");
     }
 
     private static void machineEnergyGoldens() {

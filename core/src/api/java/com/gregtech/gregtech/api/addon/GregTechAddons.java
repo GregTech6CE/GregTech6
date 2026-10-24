@@ -3,10 +3,15 @@
 package com.gregtech.gregtech.api.addon;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
 
-/** Shared, deterministic addon lifecycle for both loaders. */
+/**
+ * Shared, deterministic addon lifecycle for both loaders. Registration closes when
+ * {@link #dispatchRecipesReady} starts. The registry and phase have no reset entry, so a test
+ * that needs a fresh lifecycle runs in its own JVM.
+ */
 public final class GregTechAddons {
     /**
      * Minor of {@code mod_version} ({@code 0.MINOR.PATCH}), not an individual build identifier.
@@ -42,21 +47,22 @@ public final class GregTechAddons {
 
     /**
      * Platform bootstrap entry; addon authors register a provider rather than calling this method.
-     * A callback {@link RuntimeException} is wrapped as {@link IllegalStateException} and leaves
-     * {@link Phase#FAILED}. An {@link Error} is rethrown unchanged and also leaves {@code FAILED}.
-     * Addons that already ran are not rolled back.
+     * A callback failure other than an {@link Error} is wrapped as {@link IllegalStateException} and
+     * leaves {@link Phase#FAILED}; this includes a checked exception escaping through a sneaky throw.
+     * An {@link Error} is rethrown unchanged and also leaves {@code FAILED}. Addons that already ran
+     * are not rolled back.
      */
     public static void dispatchRecipesReady(GregTechAddon.Context context) {
         Objects.requireNonNull(context, "context");
-        List<java.util.Map.Entry<String, GregTechAddon>> providers;
+        List<Map.Entry<String, GregTechAddon>> providers;
         synchronized (GregTechAddons.class) {
             if (phase != Phase.COLLECTING) throw new IllegalStateException("GT addon recipe lifecycle dispatched twice");
             phase = Phase.DISPATCHING;
-            providers = ADDONS.entrySet().stream().map(entry -> java.util.Map.entry(entry.getKey(), entry.getValue())).toList();
+            providers = ADDONS.entrySet().stream().map(entry -> Map.entry(entry.getKey(), entry.getValue())).toList();
         }
         for (var entry : providers) {
             try { entry.getValue().onRecipesReady(context); }
-            catch (RuntimeException | Error failure) {
+            catch (Throwable failure) {
                 synchronized (GregTechAddons.class) { phase = Phase.FAILED; }
                 throw AddonFailures.of("GT addon recipes failed: " + entry.getKey(), failure);
             }

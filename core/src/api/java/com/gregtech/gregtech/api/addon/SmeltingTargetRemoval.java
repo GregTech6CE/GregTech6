@@ -12,7 +12,7 @@ import java.util.Objects;
 public record SmeltingTargetRemoval(String material) {
     public SmeltingTargetRemoval {
         Objects.requireNonNull(material, "material");
-        if (!material.matches("[A-Za-z][A-Za-z0-9_]*"))
+        if (!AddonNames.matches(AddonNames.MATERIAL, material))
             throw new IllegalArgumentException("Use a material name: " + material);
     }
 }

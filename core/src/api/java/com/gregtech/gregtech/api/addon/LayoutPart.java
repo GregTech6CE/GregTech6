@@ -2,7 +2,10 @@
 
 package com.gregtech.gregtech.api.addon;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 /**
  * One addon structure part. With no energy and no function it is a casing.
@@ -13,9 +16,8 @@ import java.util.Objects;
  */
 public final class LayoutPart {
     public static final int MAX_FIELDS = 16;
-    private static final java.util.regex.Pattern ENERGY_TYPE = EnergyType.NAME;
-    private static final java.util.regex.Pattern FIELD =
-            java.util.regex.Pattern.compile("[a-z0-9_.]{1,64}");
+    private static final Pattern ENERGY_TYPE = EnergyType.NAME;
+    private static final Pattern FIELD = Pattern.compile("[a-z0-9_.]{1,64}");
 
     private final String name;
     private final String material;
@@ -30,12 +32,12 @@ public final class LayoutPart {
     private final String gui;
     private final boolean ticks;
     private final boolean handlesUse;
-    private final java.util.List<String> fields;
+    private final List<String> fields;
 
     private LayoutPart(String name, String material, String texture, float hardness,
                        EnergyOutput energy, long energyCapacity, EnergyInput energyInput, long conditionPerTick,
                        PartSlots slots, PartTanks tanks, String gui, boolean ticks, boolean handlesUse,
-                       java.util.List<String> fields) {
+                       List<String> fields) {
         this.name = name;
         this.material = material;
         this.texture = texture;
@@ -87,7 +89,7 @@ public final class LayoutPart {
     public boolean handlesUse() { return handlesUse; }
 
     /** Named values GregTech stores for this part. Empty when the part has none. */
-    public java.util.List<String> fields() { return fields; }
+    public List<String> fields() { return fields; }
 
     /** Slots, tanks, a menu, a tick, a click handler, or a named field. A casing and an energy-only part are false. */
     public boolean functional() {
@@ -103,6 +105,13 @@ public final class LayoutPart {
                 && Objects.equals(energy, that.energy) && Objects.equals(energyInput, that.energyInput)
                 && Objects.equals(slots, that.slots) && Objects.equals(tanks, that.tanks)
                 && Objects.equals(gui, that.gui) && fields.equals(that.fields);
+    }
+
+    @Override public String toString() {
+        return "LayoutPart[name=" + name + ", material=" + material + ", texture=" + texture
+                + ", hardness=" + hardness + ", energy=" + energy + ", energyInput=" + energyInput
+                + ", energyCapacity=" + energyCapacity + ", conditionPerTick=" + conditionPerTick
+                + ", slots=" + slots + ", tanks=" + tanks + ", gui=" + gui + "]";
     }
 
     @Override public int hashCode() {
@@ -127,7 +136,7 @@ public final class LayoutPart {
         private String gui;
         private boolean ticks;
         private boolean handlesUse;
-        private final java.util.List<String> fields = new java.util.ArrayList<>();
+        private final List<String> fields = new ArrayList<>();
 
         private Builder(String name, String material) {
             this.name = name;
@@ -181,7 +190,7 @@ public final class LayoutPart {
          * {@code texture} is {@code namespace:path.png}. {@code onUse} returning true consumes the click first.
          */
         public Builder gui(String texture) {
-            if (texture == null || !texture.matches("[a-z0-9_.-]+:[a-z0-9_./-]+\\.png"))
+            if (!AddonNames.matches(AddonNames.TEXTURE, texture))
                 throw new IllegalArgumentException("Invalid part gui texture: " + texture);
             gui = texture;
             return this;
@@ -214,7 +223,7 @@ public final class LayoutPart {
             if (material == null || material.isBlank())
                 throw new IllegalArgumentException("Structure part '" + name + "' needs a material");
             var path = texture == null ? "" : texture;
-            if (!path.isEmpty() && !path.matches("[a-z0-9]+(?:[._-][a-z0-9]+)*(?:/[a-z0-9]+(?:[._-][a-z0-9]+)*)*"))
+            if (!path.isEmpty() && !AddonNames.matches(AddonNames.SEGMENT_PATH, path))
                 throw new IllegalArgumentException(
                         "Structure part '" + name + "' texture must be a path in the addon namespace: " + path);
             if (!hardnessSpecified || Float.isNaN(hardness) || hardness <= 0.0F)
@@ -237,7 +246,7 @@ public final class LayoutPart {
             }
             return new LayoutPart(name, material, path, hardness, energy, energy == null ? 0 : energyCapacity,
                     energyInput, energyInput == null ? 0 : conditionPerTick,
-                    slots, tanks, gui, ticks, handlesUse, java.util.List.copyOf(fields));
+                    slots, tanks, gui, ticks, handlesUse, List.copyOf(fields));
         }
 
         /** A two-way part's input is only the controller-to-part channel. */

@@ -6,12 +6,15 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 /**
  * A multiblock layout bound by name. The name equals the controller {@code machineType}.
  * Layouts are not inlined into a machine declaration.
  */
 public final class StructureLayout {
+    private static final Pattern LAYOUT_NAME = Pattern.compile("[a-z0-9_]+");
+
     private final String name;
     private final List<LayoutCell> cells;
     private final List<LayoutRepeat> repeats;
@@ -34,6 +37,11 @@ public final class StructureLayout {
         if (this == other) return true;
         if (!(other instanceof StructureLayout that)) return false;
         return name.equals(that.name) && cells.equals(that.cells) && repeats.equals(that.repeats);
+    }
+
+    @Override public String toString() {
+        return "StructureLayout[name=" + name + ", cells=" + cells.size()
+                + ", repeats=" + repeats.size() + "]";
     }
 
     @Override public int hashCode() { return Objects.hash(name, cells, repeats); }
@@ -69,14 +77,15 @@ public final class StructureLayout {
         }
 
         public StructureLayout build() {
-            if (name == null || !name.matches("[a-z0-9_]+"))
+            if (!AddonNames.matches(LAYOUT_NAME, name))
                 throw new IllegalArgumentException("Invalid layout name: " + name);
             if (cells.isEmpty() && repeats.isEmpty())
                 throw new IllegalArgumentException("Layout '" + name + "' is empty");
             var seen = new HashSet<Position>();
             for (LayoutCell cell : cells) {
                 if (!seen.add(new Position(cell.right(), cell.up(), cell.back())))
-                    throw new IllegalArgumentException("Duplicate structure cell");
+                    throw new IllegalArgumentException("Duplicate structure cell at "
+                            + cell.right() + "/" + cell.up() + "/" + cell.back());
             }
             var keys = new HashSet<String>();
             for (LayoutRepeat repeat : repeats) {

@@ -49,6 +49,7 @@ public final class MachineTuningRules {
             builder.put("cheapOverclocking", tuning.cheapOverclocking(), addon, key);
         }
         var merged = new LinkedHashMap<Key, Merged>();
+        // Builder.build() constructs a canonical MachineTuning, so a merged row is range-checked there.
         for (var entry : builders.entrySet()) merged.put(entry.getKey(), entry.getValue().build(entry.getKey()));
         return Collections.unmodifiableMap(merged);
     }

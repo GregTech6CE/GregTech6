@@ -51,6 +51,11 @@ public final class FuelOutput {
                 && behind == that.behind && type.equals(that.type);
     }
 
+    @Override public String toString() {
+        return "FuelOutput[type=" + type + ", perTick=" + perTick + ", placement="
+                + (front ? "FRONT" : back ? "BACK" : "BEHIND(" + behind + ")") + "]";
+    }
+
     @Override public int hashCode() {
         return Objects.hash(type, perTick, front, back, behind);
     }
@@ -77,7 +82,7 @@ public final class FuelOutput {
 
         public FuelOutput build() {
             String resolved = EnergyType.require(type, "Missing fuel output type");
-            if (perTick < 1 || perTick > 1_000_000_000_000L)
+            if (perTick < 1 || perTick > AddonLimits.MAX_PER_TICK)
                 throw new IllegalArgumentException("Fuel output per tick out of range: " + perTick);
             if (!front && !back) {
                 if (behind < 1 || behind > FuelGenerator.MAX_BEHIND)

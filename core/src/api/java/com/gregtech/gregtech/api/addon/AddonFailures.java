@@ -2,7 +2,10 @@
 
 package com.gregtech.gregtech.api.addon;
 
-/** Addon callback failures keep {@link Error} unwrapped. */
+/**
+ * Internal: not part of the addon contract; may change without notice.
+ * Addon callback failures keep {@link Error} unwrapped.
+ */
 public final class AddonFailures {
     private AddonFailures() {}
 

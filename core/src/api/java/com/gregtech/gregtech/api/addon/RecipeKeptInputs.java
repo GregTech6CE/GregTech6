@@ -3,6 +3,7 @@
 package com.gregtech.gregtech.api.addon;
 
 /**
+ * Internal: not part of the addon contract; may change without notice.
  * Input indexes a machine checks for and does not consume.
  * A count of 0, or 0 mB, is not a mark; the declared amount stays positive.
  */
@@ -29,12 +30,13 @@ public final class RecipeKeptInputs {
     private static int[] indexes(int[] kept, int count, String countLabel, String outside, String duplicate) {
         if (count < 0) throw new IllegalArgumentException("Invalid " + countLabel + ": " + count);
         if (kept == null || kept.length == 0) return new int[0];
-        boolean[] seen = count == 0 ? new boolean[0] : new boolean[count];
+        boolean[] seen = new boolean[count];
         int[] copy = new int[kept.length];
         for (int i = 0; i < kept.length; i++) {
             int index = kept[i];
             if (index < 0 || index >= count)
-                throw new IllegalArgumentException(outside + index + " is outside 0.." + (count - 1));
+                throw new IllegalArgumentException(outside + index + " is outside "
+                        + (count == 0 ? "an empty range" : "0.." + (count - 1)));
             if (seen[index]) throw new IllegalArgumentException(duplicate + index);
             seen[index] = true;
             copy[i] = index;

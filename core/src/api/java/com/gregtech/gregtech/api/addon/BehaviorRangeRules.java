@@ -2,7 +2,10 @@
 
 package com.gregtech.gregtech.api.addon;
 
-/** Range and per-tick budget for behavior-machine world actions. */
+/**
+ * Internal: not part of the addon contract; may change without notice.
+ * Range and per-tick budget for behavior-machine world actions.
+ */
 public final class BehaviorRangeRules {
     /** Largest {@code maxRange} a declaration may name. kTFRU's widest miner is 32. */
     public static final int LIMIT = 32;

@@ -352,7 +352,7 @@ tasks.named('check').configure { dependsOn fluidSlotAmountOverlayChecks }
     tasks.named('check').configure { dependsOn contract }
 }
 
-['runtime', 'fatal'].each { scenario ->
+['runtime', 'fatal', 'checked'].each { scenario ->
     def contract = tasks.register("addonLifecycleContracts_${scenario}", JavaExec) {
         description = "Runs addon lifecycle scenario ${scenario} in its own JVM."
         group = 'verification'

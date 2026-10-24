@@ -4,7 +4,10 @@ package com.gregtech.gregtech.api.recipe;
 
 import java.math.BigInteger;
 
-/** Recipe work costs and bounded progress arithmetic; machine adapters own job transitions. */
+/**
+ * Internal: not part of the addon contract; may change without notice.
+ * Recipe work costs and bounded progress arithmetic; machine adapters own job transitions.
+ */
 public final class MachineWorkCost {
     public record Cost(long minimumPower, long totalWork) {}
 
