@@ -3,6 +3,7 @@
 package com.gregtech.gregtech.api.addon;
 
 /**
+ * Internal: not part of the addon contract; may change without notice.
  * Cheap overclocking for one machine. An addon basic machine always uses its declaration.
  * Any machine whose declaration was set uses that boolean. Everyone else keeps {@code legacy}.
  */

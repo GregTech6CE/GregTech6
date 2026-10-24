@@ -2,6 +2,7 @@
 
 package com.gregtech.gregtech.api.addon;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /** Read-only material handles. The material table itself stays inside GregTech. */
@@ -91,10 +92,13 @@ public final class GregTechMaterials {
             units = units == null || units.isEmpty() ? List.of() : List.copyOf(units);
         }
 
-        /** A unit list with nothing positive is empty. A null prefix becomes an empty name. */
+        /**
+         * Null units, empty material names and non-positive amounts are dropped.
+         * A unit list with nothing left is empty. A null prefix becomes an empty name.
+         */
         public static StackComposition of(String prefix, List<Component> units) {
             if (units == null || units.isEmpty()) return EMPTY;
-            var copy = new java.util.ArrayList<Component>();
+            var copy = new ArrayList<Component>();
             for (Component unit : units) {
                 if (unit == null || unit.material() == null || unit.material().isEmpty() || unit.amount() <= 0) continue;
                 copy.add(new Component(unit.material(), unit.amount()));

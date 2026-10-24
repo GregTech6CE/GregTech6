@@ -44,6 +44,10 @@ public final class IoTarget {
         return right == that.right && up == that.up && back == that.back && receiver == that.receiver;
     }
 
+    @Override public String toString() {
+        return "IoTarget[at=" + right + "/" + up + "/" + back + ", receiver=" + receiver + "]";
+    }
+
     @Override public int hashCode() {
         return Objects.hash(right, up, back, receiver);
     }

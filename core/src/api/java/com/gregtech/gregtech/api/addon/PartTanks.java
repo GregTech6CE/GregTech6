@@ -12,7 +12,7 @@ import java.util.Objects;
  */
 public final class PartTanks {
     public static final int MAX_TANKS = 8;
-    public static final int MAX_CAPACITY = 1_024_000_000;
+    public static final int MAX_CAPACITY = AddonLimits.live(AddonLimits.MAX_CAPACITY);
 
     private final int count;
     private final int capacity;
@@ -39,6 +39,11 @@ public final class PartTanks {
         if (!(other instanceof PartTanks that)) return false;
         return count == that.count && capacity == that.capacity
                 && insertFaces.equals(that.insertFaces) && extractFaces.equals(that.extractFaces);
+    }
+
+    @Override public String toString() {
+        return "PartTanks[count=" + count + ", capacity=" + capacity
+                + ", insertFaces=" + insertFaces + ", extractFaces=" + extractFaces + "]";
     }
 
     @Override public int hashCode() {

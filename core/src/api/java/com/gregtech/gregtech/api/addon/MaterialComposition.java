@@ -5,6 +5,7 @@ package com.gregtech.gregtech.api.addon;
 import com.gregtech.gregtech.api.material.GTValues;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,7 +28,13 @@ public record MaterialComposition(String material, long divider, List<Part> part
         Objects.requireNonNull(parts, "parts");
         if (parts.isEmpty()) throw new IllegalArgumentException("Composition needs components: " + material);
         var copied = new ArrayList<Part>(parts.size());
-        for (Part part : parts) copied.add(Objects.requireNonNull(part, "part"));
+        var seen = new HashSet<String>();
+        for (Part part : parts) {
+            Part checked = Objects.requireNonNull(part, "part");
+            if (!seen.add(checked.material()))
+                throw new IllegalArgumentException("Repeats component '" + checked.material() + "' in " + material);
+            copied.add(checked);
+        }
         parts = List.copyOf(copied);
     }
 

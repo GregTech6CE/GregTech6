@@ -3,6 +3,7 @@
 package com.gregtech.gregtech.api.addon;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,7 +20,13 @@ public record CrucibleReactionDeclaration(String output, long yield, List<Part> 
         Objects.requireNonNull(parts, "parts");
         if (parts.isEmpty()) throw new IllegalArgumentException("Crucible reaction needs inputs: " + output);
         var copied = new ArrayList<Part>(parts.size());
-        for (Part part : parts) copied.add(Objects.requireNonNull(part, "part"));
+        var seen = new HashSet<String>();
+        for (Part part : parts) {
+            Part checked = Objects.requireNonNull(part, "part");
+            if (!seen.add(checked.material()))
+                throw new IllegalArgumentException("Repeats input '" + checked.material() + "' in " + output);
+            copied.add(checked);
+        }
         parts = List.copyOf(copied);
     }
 

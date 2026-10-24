@@ -47,6 +47,11 @@ public final class PartSlots {
                 && insertFaces.equals(that.insertFaces) && extractFaces.equals(that.extractFaces);
     }
 
+    @Override public String toString() {
+        return "PartSlots[count=" + count + ", stackLimit=" + stackLimit + ", insertFaces=" + insertFaces
+                + ", extractFaces=" + extractFaces + ", drops=" + drops + "]";
+    }
+
     @Override public int hashCode() {
         return Objects.hash(count, stackLimit, insertFaces, extractFaces, drops);
     }

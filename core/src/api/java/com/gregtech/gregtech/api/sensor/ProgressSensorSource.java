@@ -1,4 +1,5 @@
-/* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later.
+/* SPDX-License-Identifier: LGPL-3.0-or-later
+ * GregTech-6 Team / Gregorius Techneticies.
  * Domain boundary for original gregapi.tileentity.data.ITileEntityProgress. */
 package com.gregtech.gregtech.api.sensor;
 

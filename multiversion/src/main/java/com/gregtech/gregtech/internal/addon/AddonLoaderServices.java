@@ -87,6 +87,7 @@ public final class AddonLoaderServices {
         return new FluidStack(fluid.get(), millibuckets);
     }
 
+    /** Live view over the registry entry found by the call that created it; not cached. */
     private static final class MapView implements AddonRecipes.Map {
         private final RecipeMap map;
 

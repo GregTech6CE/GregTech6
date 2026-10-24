@@ -44,7 +44,7 @@ public final class LayoutCell {
 
     public static LayoutCell at(int right, int up, int back, CellMatch match, StructureRole role) {
         if (match == null) throw new IllegalArgumentException("Missing structure part");
-        Objects.requireNonNull(role, "role");
+        if (role == null) throw new IllegalArgumentException("Missing structure role");
         if (right == 0 && up == 0 && back == 0)
             throw new IllegalArgumentException("Structure cell cannot be the origin");
         return relative(right, up, back, match, role);
@@ -53,7 +53,7 @@ public final class LayoutCell {
     /** A cell whose coordinates are relative to a repeat anchor. The origin check runs on the absolute position. */
     public static LayoutCell relative(int right, int up, int back, CellMatch match, StructureRole role) {
         if (match == null) throw new IllegalArgumentException("Missing structure part");
-        Objects.requireNonNull(role, "role");
+        if (role == null) throw new IllegalArgumentException("Missing structure role");
         if (isPlainBlock(match) && role != StructureRole.CASING)
             throw new IllegalArgumentException("Plain block '" + match + "' requires the casing role");
         return new LayoutCell(right, up, back, match, role, -1);
@@ -74,6 +74,11 @@ public final class LayoutCell {
         if (!(other instanceof LayoutCell that)) return false;
         return right == that.right && up == that.up && back == that.back && design == that.design
                 && match.equals(that.match) && role == that.role;
+    }
+
+    @Override public String toString() {
+        return "LayoutCell[at=" + right + "/" + up + "/" + back + ", match=" + match
+                + ", role=" + role + ", design=" + design + "]";
     }
 
     @Override public int hashCode() {

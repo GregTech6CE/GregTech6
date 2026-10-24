@@ -5,7 +5,6 @@ package com.gregtech.gregtech.api.addon;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Machine-relative face. {@link #index()} and {@link #bit()} are the mask positions.
@@ -24,6 +23,13 @@ public enum MachineFace {
     public int index() { return index; }
 
     public int bit() { return 1 << index; }
+
+    /** Mask of {@code faces}; a null list is empty. */
+    public static int mask(List<MachineFace> faces) {
+        int mask = 0;
+        if (faces != null) for (MachineFace face : faces) mask |= face.bit();
+        return mask;
+    }
 
     /** All six faces, in {@link #index()} order. */
     public static List<MachineFace> all() { return ALL; }
@@ -59,10 +65,11 @@ public enum MachineFace {
         return new HashSet<>(left).equals(new HashSet<>(right));
     }
 
-    /** Order-independent hash for {@link #sameSet}. */
+    /**
+     * Order-independent hash for {@link #sameSet}. Repeated faces count once, matching the set
+     * comparison; length still takes part in {@code sameSet}.
+     */
     public static int hashSet(List<MachineFace> faces) {
-        int hash = 0;
-        if (faces != null) for (MachineFace face : faces) hash += Objects.hashCode(face);
-        return hash;
+        return faces == null ? 0 : new HashSet<>(faces).hashCode();
     }
 }

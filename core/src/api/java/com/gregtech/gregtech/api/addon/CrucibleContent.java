@@ -7,6 +7,7 @@ package com.gregtech.gregtech.api.addon;
  * The material is a name; resolve it with {@link GregTechMaterials#find(String)}.
  * {@code amount} is in GregTech units and {@code temperature} is in Kelvin.
  * Nothing is removed by reading this, and no block entity is kept.
+ * A negative amount or temperature is stored as zero.
  */
 public record CrucibleContent(String material, long amount, long temperature) {
     public static final CrucibleContent EMPTY = new CrucibleContent("", 0L, 0L);

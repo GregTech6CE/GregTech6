@@ -15,6 +15,7 @@ import com.gregtech.gregtech.api.addon.RecipeOutputChances;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /** Handles for machine recipe maps that already exist, including maps an addon declared. */
 public final class AddonRecipes {
@@ -294,10 +295,10 @@ public final class AddonRecipes {
         @Override public boolean equals(Object other) {
             if (this == other) return true;
             if (!(other instanceof Line line)) return false;
-            return Arrays.equals(itemInputs, line.itemInputs)
-                    && Arrays.equals(itemOutputs, line.itemOutputs)
-                    && Arrays.equals(fluidInputs, line.fluidInputs)
-                    && Arrays.equals(fluidOutputs, line.fluidOutputs)
+            return sameItems(itemInputs, line.itemInputs)
+                    && sameItems(itemOutputs, line.itemOutputs)
+                    && sameFluids(fluidInputs, line.fluidInputs)
+                    && sameFluids(fluidOutputs, line.fluidOutputs)
                     && duration == line.duration
                     && euPerTick == line.euPerTick
                     && special == line.special
@@ -308,10 +309,10 @@ public final class AddonRecipes {
         }
 
         @Override public int hashCode() {
-            int result = Arrays.hashCode(itemInputs);
-            result = 31 * result + Arrays.hashCode(itemOutputs);
-            result = 31 * result + Arrays.hashCode(fluidInputs);
-            result = 31 * result + Arrays.hashCode(fluidOutputs);
+            int result = hashItems(itemInputs);
+            result = 31 * result + hashItems(itemOutputs);
+            result = 31 * result + hashFluids(fluidInputs);
+            result = 31 * result + hashFluids(fluidOutputs);
             result = 31 * result + Long.hashCode(duration);
             result = 31 * result + Long.hashCode(euPerTick);
             result = 31 * result + Long.hashCode(special);
@@ -319,6 +320,62 @@ public final class AddonRecipes {
             result = 31 * result + Arrays.hashCode(keptInputs);
             result = 31 * result + Arrays.hashCode(keptFluidInputs);
             return 31 * result + Arrays.hashCode(presenceFluidInputs);
+        }
+
+        private static boolean sameItems(ItemStack[] left, ItemStack[] right) {
+            if (left.length != right.length) return false;
+            for (int i = 0; i < left.length; i++) {
+                if (!ItemStack.matches(left[i], right[i])) return false;
+            }
+            return true;
+        }
+
+        private static boolean sameFluids(FluidStack[] left, FluidStack[] right) {
+            if (left.length != right.length) return false;
+            for (int i = 0; i < left.length; i++) {
+//? if >=1.21.1 {
+                /*if (!FluidStack.matches(left[i], right[i])) return false;
+*///?} else {
+                if (!left[i].isFluidStackIdentical(right[i])) return false;
+//?}
+            }
+            return true;
+        }
+
+        private static int hashItems(ItemStack[] stacks) {
+            int hash = 1;
+            for (ItemStack stack : stacks) {
+                hash = 31 * hash + (stack == null || stack.isEmpty() ? 0 : itemHash(stack));
+            }
+            return hash;
+        }
+
+        private static int itemHash(ItemStack stack) {
+//? if >=1.21.1 {
+            /*int hash = ItemStack.hashItemAndComponents(stack);
+            return 31 * hash + stack.getCount();
+*///?} else {
+            return Objects.hash(stack.getItem(), stack.getCount(), stack.getTag());
+//?}
+        }
+
+        private static int hashFluids(FluidStack[] stacks) {
+            int hash = 1;
+            for (FluidStack stack : stacks) {
+                hash = 31 * hash + (stack == null || stack.isEmpty() ? 0 : fluidHash(stack));
+            }
+            return hash;
+        }
+
+        private static int fluidHash(FluidStack stack) {
+//? if >=1.21.1 {
+            /*int hash = FluidStack.hashFluidAndComponents(stack);
+            return 31 * hash + stack.getAmount();
+*///?} else {
+            int hash = 31 * stack.getFluid().hashCode()
+                    + (stack.getTag() == null ? 0 : stack.getTag().hashCode());
+            return 31 * hash + stack.getAmount();
+//?}
         }
 
         @Override public String toString() {
@@ -340,8 +397,11 @@ public final class AddonRecipes {
             ItemStack[] copy = new ItemStack[stacks.length];
             for (int i = 0; i < stacks.length; i++) {
                 ItemStack stack = stacks[i];
-                int count = stack == null || stack.isEmpty() ? 0 : stack.getCount();
-                RecipeKeptInputs.requirePositiveCount(count, i);
+                if (stack == null)
+                    throw new IllegalArgumentException("Item input " + i + " is null");
+                if (stack.isEmpty())
+                    throw new IllegalArgumentException("Item input " + i + " is empty");
+                RecipeKeptInputs.requirePositiveCount(stack.getCount(), i);
                 copy[i] = stack.copy();
             }
             return copy;

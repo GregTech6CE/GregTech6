@@ -27,7 +27,10 @@ public final class AddonLoader {
 
     /** GT implementation contract; addon consumers use {@link AddonFluids} and {@link AddonRecipes}. */
     public interface Services {
-        /** Null when {@code name} is not a registered GregTech fluid field. */
+        /**
+         * {@link FluidStack#EMPTY} for an unknown field, a null argument, or a non-positive amount.
+         * Never null.
+         */
         FluidStack fluid(String name, AddonFluids.Kind kind, int millibuckets);
 
         /** Null when no machine recipe map uses {@code name}. */

@@ -47,6 +47,11 @@ public final class MachineCasing {
                 && Objects.equals(machineType, that.machineType);
     }
 
+    @Override public String toString() {
+        return "MachineCasing[id=" + id + ", material=" + material + ", machineType=" + machineType
+                + ", tier=" + (tierSpecified ? tier : "unset") + "]";
+    }
+
     @Override public int hashCode() {
         return Objects.hash(id, material, machineType, tierSpecified, tier);
     }
@@ -70,11 +75,11 @@ public final class MachineCasing {
         public Builder tier(int value) { tierSpecified = true; tier = value; return this; }
 
         public MachineCasing build() {
-            if (id == null || !id.matches("[a-z0-9/._-]+"))
+            if (!AddonNames.matches(AddonNames.RESOURCE_PATH, id))
                 throw new IllegalArgumentException("Invalid machine ID: " + id);
             if (material == null || material.isBlank())
                 throw new IllegalArgumentException("Missing casing material for " + id);
-            if (machineType != null && !machineType.matches("[a-z0-9_]+"))
+            if (machineType != null && !AddonNames.matches(AddonNames.MACHINE_TYPE, machineType))
                 throw new IllegalArgumentException("Invalid machine type for " + id + ": " + machineType);
             return new MachineCasing(id, material, machineType, tierSpecified, tier);
         }

@@ -15,7 +15,7 @@ public record CompressedGasTankDeclaration(
         boolean plasmaProof,
         boolean magicProof
 ) {
-    public static final int MAX_CAPACITY = 1_024_000_000;
+    public static final int MAX_CAPACITY = AddonLimits.live(AddonLimits.MAX_CAPACITY);
 
     public CompressedGasTankDeclaration {
         if (!AddonNames.matches(AddonNames.LOWER_PATH, id))

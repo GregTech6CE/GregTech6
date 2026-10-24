@@ -10,11 +10,11 @@ import java.util.Objects;
  */
 public final class FuelGenerator implements AddonMachine {
     /** Furthest fixed output, matching the room past a gas turbine's rear wall. */
-    public static final int MAX_BEHIND = 8;
+    public static final int MAX_BEHIND = AddonLimits.live(8);
     /** Most packets one tick may push. The default is one. */
-    public static final int MAX_AMPERES = 64;
+    public static final int MAX_AMPERES = AddonLimits.live(64);
     /** Same tank bound as a behavior machine. */
-    public static final int MAX_TANK = 1_024_000_000;
+    public static final int MAX_TANK = AddonLimits.live(AddonLimits.MAX_CAPACITY);
 
     private final MachineCasing casing;
     private final FuelOutput output;
@@ -53,6 +53,12 @@ public final class FuelGenerator implements AddonMachine {
                 && casing.equals(that.casing) && output.equals(that.output) && fuelMap.equals(that.fuelMap);
     }
 
+    @Override public String toString() {
+        return "FuelGenerator[casing=" + casing + ", output=" + output + ", fuelMap=" + fuelMap
+                + ", efficiency=" + efficiency + ", tankCapacity=" + tankCapacity + ", multi=" + multi
+                + ", amperes=" + amperes + "]";
+    }
+
     @Override public int hashCode() {
         return Objects.hash(casing, output, fuelMap, efficiency, tankCapacity, multi, amperes);
     }
@@ -63,7 +69,7 @@ public final class FuelGenerator implements AddonMachine {
         private final MachineCasing casing;
         private FuelOutput output;
         private String fuelMap;
-        private int efficiency = 10_000;
+        private int efficiency = AddonLimits.DEFAULT_EFFICIENCY;
         private int tankCapacity = 4_000;
         private boolean multi;
         private int amperes = 1;
@@ -102,7 +108,7 @@ public final class FuelGenerator implements AddonMachine {
             if (!AddonNames.matches(AddonNames.RECIPE_MAP, fuelMap))
                 throw new IllegalArgumentException("Invalid fuel map name: " + fuelMap);
             if (output == null) throw new IllegalArgumentException("Missing fuel output for " + id);
-            if (efficiency < 1 || efficiency > 100_000)
+            if (efficiency < 1 || efficiency > AddonLimits.MAX_EFFICIENCY)
                 throw new IllegalArgumentException("Fuel efficiency out of range for " + id);
             if (tankCapacity < 1 || tankCapacity > MAX_TANK)
                 throw new IllegalArgumentException("Invalid tank capacity for " + id + ": " + tankCapacity);

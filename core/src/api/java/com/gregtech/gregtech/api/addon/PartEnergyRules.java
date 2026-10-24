@@ -5,6 +5,7 @@ package com.gregtech.gregtech.api.addon;
 import com.gregtech.gregtech.api.machine.BasicMachineEnergy;
 
 /**
+ * Internal: not part of the addon contract; may change without notice.
  * Packet admission and the per-tick condition drain for an energy part or an auxiliary buffer.
  * Overload effects stay with the block entity. This class only decides the numbers.
  */

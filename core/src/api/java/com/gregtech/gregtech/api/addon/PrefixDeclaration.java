@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * One addon item prefix. {@code amount} is GregTech units, the same unit as
@@ -26,6 +27,8 @@ public record PrefixDeclaration(
         boolean block,
         String oreDictionary
 ) {
+    private static final Pattern ORE_DICTIONARY = Pattern.compile("[a-z0-9_]+(?:/[a-z0-9_]+)*");
+
     /** Item prefix. A block prefix uses {@link #block}. */
     public PrefixDeclaration(String name, String displayPrefix, String displaySuffix, long amount,
                              String texture, List<String> materials, Set<PrefixCondition> conditions) {
@@ -58,7 +61,7 @@ public record PrefixDeclaration(
                                           String shape, String texture, String oreDictionary, List<String> materials) {
         if (!"cube".equals(shape))
             throw new IllegalArgumentException("Prefix '" + name + "' block shape must be cube");
-        if (oreDictionary == null || !oreDictionary.matches("[a-z0-9_]+(?:/[a-z0-9_]+)*"))
+        if (!AddonNames.matches(ORE_DICTIONARY, oreDictionary))
             throw new IllegalArgumentException(
                     "Prefix '" + name + "' ore dictionary name must be a tag path: " + oreDictionary);
         return new PrefixDeclaration(name, displayPrefix, displaySuffix, amount, texture, materials, Set.of(),
@@ -66,20 +69,21 @@ public record PrefixDeclaration(
     }
 
     public PrefixDeclaration {
-        if (name == null || !name.matches("[a-z][A-Za-z0-9]{0,63}"))
+        if (!AddonNames.matches(AddonNames.PREFIX_NAME, name))
             throw new IllegalArgumentException(
                     "Prefix name must start with a lower-case letter and use letters and digits: " + name);
         displayPrefix = displayPrefix == null ? "" : displayPrefix;
         displaySuffix = displaySuffix == null ? "" : displaySuffix;
         if (displayPrefix.isBlank() && displaySuffix.isBlank())
             throw new IllegalArgumentException("Prefix '" + name + "' needs a display prefix or a display suffix");
-        if (displayPrefix.length() > 64 || displaySuffix.length() > 64
-                || displayPrefix.indexOf('\n') >= 0 || displaySuffix.indexOf('\n') >= 0)
-            throw new IllegalArgumentException("Prefix '" + name + "' display text is too long");
+        if (displayPrefix.indexOf('\n') >= 0 || displaySuffix.indexOf('\n') >= 0)
+            throw new IllegalArgumentException("Prefix '" + name + "' display text must be one line");
+        if (displayPrefix.length() > 64 || displaySuffix.length() > 64)
+            throw new IllegalArgumentException("Prefix '" + name + "' display text is longer than 64 characters");
         if (amount <= 0 || amount % GTValues.U != 0)
             throw new IllegalArgumentException("Prefix '" + name
                     + "' amount must be a positive multiple of U (one ingot is GTValues.U; 8U is 8 * GTValues.U)");
-        if (texture == null || !texture.matches("[a-z0-9]+(?:[._-][a-z0-9]+)*(?:/[a-z0-9]+(?:[._-][a-z0-9]+)*)*"))
+        if (!AddonNames.matches(AddonNames.SEGMENT_PATH, texture))
             throw new IllegalArgumentException(
                     "Prefix '" + name + "' texture must be a path in the addon namespace: " + texture);
         if (materials == null) throw new IllegalArgumentException("Prefix '" + name + "' needs a material list");
@@ -112,9 +116,10 @@ public record PrefixDeclaration(
         for (PrefixCondition condition : conditions) if (condition.positive()) positive = true;
         if (materials.isEmpty() && !positive)
             throw new IllegalArgumentException(
-                    "Prefix '" + name + "' needs materials or a tool or smithable condition");
+                    "Prefix '" + name + "' needs materials, or a positive condition"
+                            + " (tool stats, smithable, metal, molten or alloy)");
         oreDictionary = oreDictionary == null ? "" : oreDictionary;
-        if (block && !oreDictionary.matches("[a-z0-9_]+(?:/[a-z0-9_]+)*"))
+        if (block && !AddonNames.matches(ORE_DICTIONARY, oreDictionary))
             throw new IllegalArgumentException(
                     "Prefix '" + name + "' ore dictionary name must be a tag path: " + oreDictionary);
         if (!block && !oreDictionary.isEmpty())

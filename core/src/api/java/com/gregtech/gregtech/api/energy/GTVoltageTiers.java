@@ -9,8 +9,8 @@ package com.gregtech.gregtech.api.energy;
  * {@code tierMax(voltage) * amperage * 4} (so an ULV wire carrying 8&nbsp;V deals nothing at all and a
  * 512&nbsp;V wire deals three times an LV one, per ampere).
  *
- * <p>The port's machine tiers use the same ladder ({@code BasicMachineOriginalParams} gives tier 5 the
- * 8192&nbsp;V machines), so the indices line up with GT6's {@code MT}/{@code RM} tier numbering.
+ * <p>The port's machine tiers use the same ladder (its tier 5 machines run at 8192&nbsp;V), so the
+ * indices line up with GT6's {@code MT}/{@code RM} tier numbering.
  */
 public final class GTVoltageTiers {
     private static final long[] VOLTAGE_TABLE = {
@@ -27,7 +27,12 @@ public final class GTVoltageTiers {
 
     private GTVoltageTiers() {}
 
-    /** GT6 {@code UT.Code.tier}/{@code tierMax}: the index of the tier {@code size} belongs to. */
+    /**
+     * GT6 {@code UT.Code.tier}/{@code tierMax}: the index of the tier {@code size} belongs to.
+     * A value above the table returns {@code VOLTAGES.length} (16), as GT6 does; that is not a valid
+     * index, so clamp it to {@code VOLTAGES.length - 1} before indexing. {@code Long.MIN_VALUE} keeps
+     * GT6's signed-magnitude behavior and returns tier 0.
+     */
     public static int tierMax(long size) {
         long value = Math.abs(size);
         for (int i = 0; i < VOLTAGE_TABLE.length; i++) {

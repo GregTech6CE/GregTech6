@@ -5,9 +5,12 @@ package com.gregtech.gregtech.api.addon.platform;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * Per-block-entity values GregTech writes to NBT. Keys match {@code [a-z0-9_.]+}.
- * A missing key reads as zero, false, an empty string or an empty item.
- * GregTech also drops stored items when the block is broken.
+ * Per-block-entity values GregTech writes to NBT. A machine accepts any key matching
+ * {@code [a-z0-9_.]{1,64}}; a functional part only accepts a key it declared with
+ * {@code LayoutPart.Builder#field}. Int, long, boolean and string values live in separate tables,
+ * so a key written with {@link #setInt} reads as zero through {@link #getLong}. Stored strings are
+ * non-null and at most 256 characters. A missing key reads as zero, false, an empty string or an
+ * empty item. GregTech also drops stored items when the block is broken.
  */
 public interface BehaviorState {
     int getInt(String key);

@@ -11,5 +11,9 @@ public record MaterialFormRequest(String materialName, String prefixName) {
         prefixName = Objects.requireNonNull(prefixName, "prefix name").trim();
         if (materialName.isEmpty() || prefixName.isEmpty())
             throw new IllegalArgumentException("A material form needs a material name and a prefix name");
+        if (!AddonNames.matches(AddonNames.MATERIAL, materialName))
+            throw new IllegalArgumentException("Use a material name: " + materialName);
+        if (!AddonNames.matches(AddonNames.PREFIX_NAME, prefixName))
+            throw new IllegalArgumentException("Invalid prefix name: " + prefixName);
     }
 }

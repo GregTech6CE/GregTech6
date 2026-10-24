@@ -2,7 +2,11 @@
 
 package com.gregtech.gregtech.api.addon;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * What a structure cell matches. GregTech parts, structure casings and addon parts share
@@ -52,21 +56,21 @@ public sealed interface CellMatch permits CellMatch.Part, CellMatch.Air, CellMat
 
     /** Any one of {@code members}. Nested groups and duplicates are rejected. */
     static CellMatch oneOf(CellMatch... members) {
-        return oneOf(members == null ? null : java.util.List.of(members));
+        return oneOf(members == null ? null : List.of(members));
     }
 
-    static CellMatch oneOf(java.util.List<CellMatch> members) {
+    static CellMatch oneOf(List<CellMatch> members) {
         if (members == null || members.size() < 2)
             throw new IllegalArgumentException("A structure cell needs at least two alternatives");
-        var copy = new java.util.ArrayList<CellMatch>();
-        var seen = new java.util.HashSet<CellMatch>();
+        var copy = new ArrayList<CellMatch>();
+        var seen = new HashSet<CellMatch>();
         for (CellMatch member : members) {
             if (member == null) throw new IllegalArgumentException("Missing structure alternative");
             if (member instanceof OneOf) throw new IllegalArgumentException("Nested structure alternatives");
             if (!seen.add(member)) throw new IllegalArgumentException("Duplicate structure alternative: " + member);
             copy.add(member);
         }
-        return new OneOf(java.util.List.copyOf(copy));
+        return new OneOf(List.copyOf(copy));
     }
 
     static CellMatch block(String id) {
@@ -86,8 +90,8 @@ public sealed interface CellMatch permits CellMatch.Part, CellMatch.Air, CellMat
         String part = tag ? "#" + id : id;
         int colon = id.indexOf(':');
         if (colon <= 0 || colon != id.lastIndexOf(':') || colon == id.length() - 1
-                || !id.substring(0, colon).matches("[a-z0-9_.-]+")
-                || !id.substring(colon + 1).matches("[a-z0-9/._-]+"))
+                || !AddonNames.matches(AddonNames.RESOURCE_NAMESPACE, id.substring(0, colon))
+                || !AddonNames.matches(AddonNames.RESOURCE_PATH, id.substring(colon + 1)))
             throw new IllegalArgumentException("Invalid block name: " + part);
     }
 
@@ -172,11 +176,11 @@ public sealed interface CellMatch permits CellMatch.Part, CellMatch.Air, CellMat
 
     /** Any one of a fixed set of matches. */
     final class OneOf implements CellMatch {
-        private final java.util.List<CellMatch> members;
+        private final List<CellMatch> members;
 
-        private OneOf(java.util.List<CellMatch> members) { this.members = members; }
+        private OneOf(List<CellMatch> members) { this.members = members; }
 
-        public java.util.List<CellMatch> members() { return members; }
+        public List<CellMatch> members() { return members; }
 
         @Override public boolean equals(Object other) {
             return other instanceof OneOf that && members.equals(that.members);
@@ -186,7 +190,7 @@ public sealed interface CellMatch permits CellMatch.Part, CellMatch.Air, CellMat
 
         @Override public String toString() {
             return members.stream().map(Object::toString)
-                    .collect(java.util.stream.Collectors.joining(",", "[", "]"));
+                    .collect(Collectors.joining(",", "[", "]"));
         }
     }
 

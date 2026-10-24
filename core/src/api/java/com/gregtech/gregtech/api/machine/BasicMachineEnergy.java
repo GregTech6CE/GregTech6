@@ -2,7 +2,10 @@
 
 package com.gregtech.gregtech.api.machine;
 
-/** Shared bounded per-tick machine energy math; platform adapters retain saved state and sides. */
+/**
+ * Internal: not part of the addon contract; may change without notice.
+ * Shared bounded per-tick machine energy math; platform adapters retain saved state and sides.
+ */
 public final class BasicMachineEnergy {
     private BasicMachineEnergy() {}
 
