@@ -53,7 +53,7 @@ public final class TankValveRepairTests {
     private static IFluidHandler wallPort(GameTestHelper helper, TankValveSpec spec) {
         var controller = (MultiblockTankControllerBlockEntity) helper.getLevel()
                 .getBlockEntity(helper.absolutePos(CONTROL));
-        helper.assertTrue(controller != null && controller.isStructureOk(),
+        helper.assertTrue(controller != null && StructureTestSupport.ok(controller),
                 "tank wall must be bound to its formed controller before querying a port");
         BlockPos side = CONTROL.south(spec.size() / 2).east(spec.size() / 2);
         var port = (MultiblockPortBlockEntity) helper.getLevel().getBlockEntity(helper.absolutePos(side));
@@ -78,9 +78,9 @@ public final class TankValveRepairTests {
             helper.assertTrue(tank.getType() == GTBlockEntities.MULTIBLOCK_TANK.get(), "valve has tank BE");
             helper.assertTrue(tank.valveSpec() == spec && tank.fluidHandler().getTankCapacity(0) == spec.capacity(),
                     "GT6 valve capacity is specific to ID " + spec.originalId());
-            helper.assertTrue(!tank.isStructureOk(), "unassembled valve cannot expose its tank");
+            helper.assertTrue(!StructureTestSupport.ok(tank), "unassembled valve cannot expose its tank");
             BlockPos center = buildShell(helper, spec);
-            helper.assertTrue(tank.isStructureOk(), "correct wall forms GT6 valve " + spec.originalId());
+            helper.assertTrue(StructureTestSupport.ok(tank), "correct wall forms GT6 valve " + spec.originalId());
             var port = (MultiblockPortBlockEntity) helper.getLevel().getBlockEntity(
                     helper.absolutePos(center.offset(spec.size() / 2, 0, 0)));
             IFluidHandler wallTank = port.getCapability(ForgeCapabilities.FLUID_HANDLER, Direction.EAST)
@@ -90,7 +90,7 @@ public final class TankValveRepairTests {
             helper.assertTrue(wallTank.fill(new FluidStack(Fluids.WATER, 1000), IFluidHandler.FluidAction.EXECUTE) == 1000,
                     "assembled wall accepts fluid " + spec.originalId());
             helper.setBlock(center.offset(spec.size() / 2, 0, 0), Blocks.IRON_BLOCK);
-            helper.assertTrue(!tank.isStructureOk() && wallTank.getTanks() == 0,
+            helper.assertTrue(!StructureTestSupport.ok(tank) && wallTank.getTanks() == 0,
                     "wrong wall invalidates the controller and old port capability " + spec.originalId());
         }
         helper.succeed();
@@ -101,14 +101,14 @@ public final class TankValveRepairTests {
         TankValveSpec wood = TankValveSpec.find(17001);
         var woodTank = place(helper, wood);
         buildShell(helper, wood);
-        helper.assertTrue(woodTank.isStructureOk(), "treated wood tank forms");
+        helper.assertTrue(StructureTestSupport.ok(woodTank), "treated wood tank forms");
         var helium = new FluidStack(GTFluids.still("Helium").get(), 1000);
         helper.assertTrue(woodTank.fluidHandler().fill(helium, IFluidHandler.FluidAction.EXECUTE) == 1000,
                 "GT6 lets gas enter an unproofed valve before its next hazard tick");
         MultiblockTankControllerBlockEntity.serverTick(helper.getLevel(), helper.absolutePos(CONTROL),
                 woodTank.getBlockState(), woodTank);
         helper.assertTrue(woodTank.fluidHandler().getFluidInTank(0).isEmpty()
-                        && woodTank.isStructureOk(),
+                        && StructureTestSupport.ok(woodTank),
                 "the gas vents on the next tick without destroying the wood tank");
         var water = new FluidStack(Fluids.WATER, 1000);
         helper.assertTrue(woodTank.fluidHandler().fill(water, IFluidHandler.FluidAction.EXECUTE) == 1000,
@@ -117,7 +117,7 @@ public final class TankValveRepairTests {
         TankValveSpec adamantium = TankValveSpec.find(17065);
         var metalTank = place(helper, adamantium);
         buildShell(helper, adamantium);
-        helper.assertTrue(metalTank.isStructureOk() && metalTank.fluidHandler().fill(helium,
+        helper.assertTrue(StructureTestSupport.ok(metalTank) && metalTank.fluidHandler().fill(helium,
                 IFluidHandler.FluidAction.EXECUTE) == 1000, "dense Adamantium accepts nonconducting gas");
         var state = metalTank.getBlockState();
         var drops = Block.getDrops(state, helper.getLevel(), helper.absolutePos(CONTROL), metalTank);
@@ -154,7 +154,7 @@ public final class TankValveRepairTests {
         TankValveSpec wood = TankValveSpec.find(17001);
         var valve = place(helper, wood);
         BlockPos centre = buildShell(helper, wood);
-        helper.assertTrue(valve.isStructureOk(), "wood tank forms");
+        helper.assertTrue(StructureTestSupport.ok(valve), "wood tank forms");
         helper.assertTrue(wallPort(helper, wood).fill(new FluidStack(Fluids.LAVA, 1_000),
                 IFluidHandler.FluidAction.EXECUTE) == 1_000,
                 "the wall really accepts lava before the next hazard tick");
@@ -192,7 +192,7 @@ public final class TankValveRepairTests {
                 "molten lithium enters the wood valve below its 500 K melting point");
         MultiblockTankControllerBlockEntity.serverTick(helper.getLevel(), helper.absolutePos(CONTROL),
                 valve.getBlockState(), valve);
-        helper.assertTrue(valve.isStructureOk() && valve.fluidHandler().getFluidInTank(0).isEmpty(),
+        helper.assertTrue(StructureTestSupport.ok(valve) && valve.fluidHandler().getFluidInTank(0).isEmpty(),
                 "wood valve vents a non-SIMPLE fluid without corroding or melting");
 
         TankValveSpec stainless = TankValveSpec.find(17002);
@@ -202,7 +202,7 @@ public final class TankValveRepairTests {
                 "acid enters the stainless valve");
         MultiblockTankControllerBlockEntity.serverTick(helper.getLevel(), helper.absolutePos(CONTROL),
                 valve.getBlockState(), valve);
-        helper.assertTrue(valve.isStructureOk() && valve.fluidHandler().getFluidInTank(0).getAmount() == 1_000,
+        helper.assertTrue(StructureTestSupport.ok(valve) && valve.fluidHandler().getFluidInTank(0).getAmount() == 1_000,
                 "an acid-proof material keeps its contents and shell");
         helper.succeed();
     }
@@ -214,7 +214,7 @@ public final class TankValveRepairTests {
         buildShell(helper, invar);
         BlockPos outside = CONTROL.south(2).east(3);
         helper.setBlock(outside, Blocks.DIAMOND_BLOCK);
-        helper.assertTrue(valve.isStructureOk(), "5x5x5 Invar tank forms with the outside marker present");
+        helper.assertTrue(StructureTestSupport.ok(valve), "5x5x5 Invar tank forms with the outside marker present");
         var pyrotheum = new FluidStack(GTFluids.still("Pyrotheum").get(), 1_000);
         helper.assertTrue(wallPort(helper, invar).fill(pyrotheum, IFluidHandler.FluidAction.EXECUTE) == 1_000,
                 "5x5x5 valve accepts fluid hotter than Invar until the hazard tick");

@@ -38,7 +38,7 @@ public final class LargeRecipeControllerSourceTests {
             var machine=(LargeRecipeMachineBlockEntity)h.getLevel().getBlockEntity(main);var name=machine.spec().machineName();
             var cells=LargeMachineLayouts.cells(name);
             for(var cell:cells)h.getLevel().setBlockAndUpdate(cell.at(main,front),cell.role()==Role.AIR?Blocks.AIR.defaultBlockState():cell.block().defaultBlockState());
-            h.assertTrue(machine.isStructureOk(),"original formed layout "+name+"/"+front);
+            h.assertTrue(StructureTestSupport.ok(machine),"original formed layout "+name+"/"+front);
             var energy=machine.spec().energyTag();
             for(var side:Direction.values())h.assertTrue(machine.isEnergyAcceptingFrom(energy,side,true),"original unrestricted main energy face "+name);
             for(var cell:cells)if(cell.role()!=Role.AIR) {
@@ -92,7 +92,7 @@ public final class LargeRecipeControllerSourceTests {
             var out=OriginalLargeRecipeMachineData.output(name,false);var targetPos=point(main,front,out.right(),out.up(),out.back());
             var drum=BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gt6ce:drum_stainless_steel"));
             h.getLevel().setBlockAndUpdate(targetPos,drum.defaultBlockState());
-            machine.machineControl(null).setEnabled(false);h.assertTrue(!machine.isStructureOk(),"fixture deliberately unformed "+name);
+            machine.machineControl(null).setEnabled(false);h.assertTrue(!StructureTestSupport.ok(machine),"fixture deliberately unformed "+name);
             tick(h,machine);
             h.assertTrue(((TankBlockEntity)h.getLevel().getBlockEntity(targetPos)).getFluidInTank(0).getAmount()==500&&machine.getTanksOutput()[0].isEmpty(),"actual saved fluid output before work despite stop/no energy/no structure "+name+"/"+front);
             h.getLevel().removeBlock(main,false);h.getLevel().removeBlock(targetPos,false);

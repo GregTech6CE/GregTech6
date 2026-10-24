@@ -92,7 +92,7 @@ public final class MachineExplosionReviewTests {
                     : cell.role() == com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role.HEAT_INPUT ? GTMultiblocks.HEAT_TRANSMITTER.get() : boiler.variant().wall();
             world.setBlockAndUpdate(at, b.defaultBlockState());
         }
-        h.assertTrue(boiler.isStructureOk(), "actual large boiler shell forms");
+        h.assertTrue(StructureTestSupport.ok(boiler), "actual large boiler shell forms");
         var saved = boiler.saveWithoutMetadata(world.registryAccess());
         var steam = new FluidTankGT(boiler.variant().steamCapacity());
         steam.setFluid(new FluidStack(GTFluids.still("Steam").get(), 1), boiler.variant().steamCapacity() * 4 / 30 + 1);
@@ -164,7 +164,7 @@ public final class MachineExplosionReviewTests {
                 world.setBlockAndUpdate(p.offset(x,y,z), LargeMachineParts.block(y==-4 ? 18103 : 18026).defaultBlockState());
         }
         var drill = (BedrockDrillControllerBlockEntity)world.getBlockEntity(p);
-        h.assertTrue(drill.isStructureOk(), "actual bedrock drill shell forms");
+        h.assertTrue(StructureTestSupport.ok(drill), "actual bedrock drill shell forms");
         try (var blasts = new Blasts()) {
             h.assertTrue(drill.doInject(GregTechTags.Energy.RU, null, 4096, 10, true) == 10
                     && drill.getEnergyStored(GregTechTags.Energy.RU,null) == 40960, "original last-batch buffer overshoot is retained");
@@ -184,7 +184,7 @@ public final class MachineExplosionReviewTests {
             for (var cell : LogisticsCoreStructure.cells())
                 world.setBlockAndUpdate(cell.at(corePos,Direction.NORTH), LogisticsCoreStructure.block(cell.kind()).defaultBlockState());
             var core = (LogisticsCoreControllerBlockEntity)world.getBlockEntity(corePos);
-            h.assertTrue(core.isStructureOk(), "actual logistics core with processors forms");
+            h.assertTrue(StructureTestSupport.ok(core), "actual logistics core with processors forms");
             core.doInject(GregTechTags.Energy.EU,null,1025,1,false);
             h.assertTrue(blasts.count == 1, "logistics overvoltage simulation is inert");
             core.doInject(GregTechTags.Energy.EU,null,1025,1,true);

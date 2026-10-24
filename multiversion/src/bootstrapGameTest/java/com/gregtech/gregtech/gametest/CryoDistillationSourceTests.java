@@ -54,7 +54,7 @@ public final class CryoDistillationSourceTests {
         var pos=origin(h);var entity=controller(h,pos);
         var cells=LargeMachineLayouts.fromShared(SharedDistillationTowerStructure.CELLS);
         for(var cell:cells)h.getLevel().setBlock(cell.at(pos,Direction.NORTH),cell.block().defaultBlockState(),3);
-        h.assertTrue(entity.isStructureOk() && ControllerStructureLayouts.cells(entity.getBlockState().getBlock()).size()==80,
+        h.assertTrue(StructureTestSupport.ok(entity) && ControllerStructureLayouts.cells(entity.getBlockState().getBlock()).size()==80,
                 "original full3x3x8 tower plus nine-transmitter base matches preview");
         h.assertTrue(entity.getEnergySizeInputMin(GregTechTags.Energy.CU,null)==1
                 && entity.getEnergySizeInputMax(GregTechTags.Energy.CU,null)==1024,"original cold range");
@@ -115,7 +115,7 @@ public final class CryoDistillationSourceTests {
                 && entity.getTanksOutput()[i].baseCapacity()==Long.MAX_VALUE,"legacy amount retained, source unlimited output restored");
         int[] heights={7,6,3};var receivers=new ArrayList<TankBlockEntity>();
         for(int height:heights)receivers.add(drum(h,pos.south(3).above(height)));
-        entity.machineControl(null).setEnabled(false);h.assertTrue(!entity.isStructureOk(),"fixture deliberately unformed");
+        entity.machineControl(null).setEnabled(false);h.assertTrue(!StructureTestSupport.ok(entity),"fixture deliberately unformed");
         tick(h,entity);
         for(int i=0;i<3;i++)h.assertTrue(receivers.get(i).getFluidInTank(0).getAmount()==amounts[i]
                 && entity.getTanksOutput()[i].isEmpty(),"source outputs saved fluids before work without power or formed structure");

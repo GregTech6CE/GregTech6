@@ -66,11 +66,11 @@ public final class MachineChunkBoundaryTests {
             var machine = (LargeRecipeMachineBlockEntity) place(h, "largecentrifuge", pos);
             var cells = LargeMachineLayouts.cells("largecentrifuge");
             for (var cell : cells) set(h.getLevel(), cell.at(pos, Direction.NORTH), cell.block().defaultBlockState());
-            h.assertTrue(machine.isStructureOk(), "registered large centrifuge forms entirely inside its own chunk");
+            h.assertTrue(StructureTestSupport.ok(machine), "registered large centrifuge forms entirely inside its own chunk");
             h.assertTrue(!h.getLevel().hasChunkAt(outside), "shell construction did not load exterior");
             BasicMachineBlockEntity.serverTick(h.getLevel(), pos, machine.getBlockState(), machine);
             h.assertTrue(!h.getLevel().hasChunkAt(outside), "real inherited machine tick must not load exterior for energy polling");
-            h.assertTrue(machine.isStructureOk(), "skipping exterior does not break loaded shell");
+            h.assertTrue(StructureTestSupport.ok(machine), "skipping exterior does not break loaded shell");
             set(h.getLevel(), pos, Blocks.AIR.defaultBlockState());
             for (var cell : cells) set(h.getLevel(), cell.at(pos, Direction.NORTH), Blocks.AIR.defaultBlockState());
         }

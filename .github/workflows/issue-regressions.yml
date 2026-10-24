@@ -62,7 +62,7 @@ jobs:
             -Dorg.gradle.java.installations.fromEnv=JAVA17_HOME,JAVA21_HOME \
             -Dorg.gradle.java.installations.auto-download=false \
             -PaddonSample=true \
-            -PgameTestNamespaces=gregtech_issue_audit,gregtech_cover_issues,gregtech_pipe_auto,gt6ce_api_contracts,gt6ce_crystal_barrel,gt6ce_diesel_repair,gt6ce_legacy_energy,gt6ce_machine_performance,gregtech_ore_source_audit,gregtech_ore_thermal_audit,gt6ce_barracks_door \
+            -PgameTestNamespaces=gregtech_issue_audit,gregtech_cover_issues,gregtech_pipe_auto,gt6ce_api_contracts,gt6ce_crystal_barrel,gt6ce_diesel_repair,gt6ce_legacy_energy,gt6ce_machine_performance,gregtech_ore_source_audit,gregtech_ore_thermal_audit,gt6ce_barracks_door,gt6ce_structure_tracking \
             -PgameTestHeap=3g \
             -PgameTestDirectory=build/issues-64-81-gametest \
             -PneoforgeGameTestDirectory=build/issues-64-81-gametest \

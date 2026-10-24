@@ -51,7 +51,7 @@ import java.util.List;
  */
 public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBlockEntity
         implements MultiblockPortOwner, com.gregtech.gregtech.api.multiblock.MultiblockToolTarget, com.gregtech.gregtech.api.sensor.CompressionSensorSource,
-        com.gregtech.gregtech.api.machine.HeatHandler {
+        com.gregtech.gregtech.api.machine.HeatHandler, com.gregtech.gregtech.api.multiblock.tracking.TrackedMultiblock {
     private static final int WATER_CAPACITY = com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerParameters.WATER_CAPACITY;
     private static final int HU_PER_WATER = com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerParameters.HU_PER_WATER;
     private static final int STEAM_PER_WATER = com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerParameters.STEAM_PER_WATER;
@@ -129,8 +129,14 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
     private Direction front() { return getBlockState().getValue(HorizontalDirectionalBlock.FACING); }
     private BlockPos bodyCentre() { return worldPosition.relative(front().getOpposite()); }
 
-    /** Source claims each correct cell even when the shell has missing or obstructed cells. */
+    @Override public com.gregtech.gregtech.api.multiblock.tracking.StructureDefinition structureDefinition() {
+        return com.gregtech.gregtech.api.multiblock.tracking.CustomStructures.boiler(this);
+    }
     @Override public boolean isStructureOk() {
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.query(this);
+    }
+    /** Source claims each correct cell even when the shell has missing or obstructed cells. */
+    @Override public boolean scanStructure() {
         if(level==null||isRemoved())return false;
         if(level.isClientSide)return structureOkay;
         // GT6 checkStructure2 retains its saved result until every shell chunk is available.
@@ -155,10 +161,10 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
             }
             parts.put(position,MultiblockLayout.Role.valueOf(cell.role().name()));
         }
-        boolean claimed=bindings.update(parts,
+        var claimed = com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, complete, bindings, parts, 0,
                 position->level.getBlockEntity(position) instanceof MultiblockPortBlockEntity port&&port.canBind(worldPosition),
                 (position,role)->((MultiblockPortBlockEntity)level.getBlockEntity(position)).bind(worldPosition,role),this::release);
-        boolean formed=complete&&claimed;
+        boolean formed=complete&&claimed!=com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
         if(structureOkay!=formed){structureOkay=formed;syncToClient();}
         return formed;
     }
@@ -178,7 +184,7 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
                         ?GTMultiblocks.HEAT_TRANSMITTER.get():variant.wall();
                 com.gregtech.gregtech.api.multiblock.MultiblockTools.build(context,position,block);
             }
-            isStructureOk();
+            com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.invalidate(this);
             return com.gregtech.gregtech.api.multiblock.MultiblockToolRules.BUILDER_COST;
         }
         if(GTToolHelper.matchesTool(context.getItemInHand(),GTToolType.MAGNIFYING_GLASS)) {
@@ -201,7 +207,19 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
                 && level.getBlockEntity(position) instanceof MultiblockPortBlockEntity port)
             port.release(worldPosition);
     }
-    @Override public void setRemoved() { bindings.clear(this::release); super.setRemoved(); }
+    @Override public void onLoad() {
+        super.onLoad();
+        if (level != null && !level.isClientSide) com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.attach(this);
+    }
+    @Override public void onChunkUnloaded() {
+        com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
+        super.onChunkUnloaded();
+    }
+    @Override public void setRemoved() {
+        if (!com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.unloading(this)) bindings.clear(this::release);
+        com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.onRemoved(this);
+        super.setRemoved();
+    }
     private boolean shellLoaded() {
         if (level == null) return false;
         for (var cell : OriginalLargeBoilerSpecs.LAYOUT.cells())

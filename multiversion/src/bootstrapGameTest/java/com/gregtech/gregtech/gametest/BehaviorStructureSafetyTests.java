@@ -98,7 +98,7 @@ public final class BehaviorStructureSafetyTests {
                     set(h,pos.east(),Blocks.AIR);
                     var casing = usePart ? part(h,pos.east()) : null;
                     if (!usePart) set(h,pos.east(),Blocks.STONE);
-                    h.assertTrue(machine.isStructureOk() && machine.isStructureOk(), "actual selected branch forms on repeated checks");
+                    h.assertTrue(StructureTestSupport.ok(machine) && StructureTestSupport.ok(machine), "actual selected branch forms on repeated checks");
                     h.assertTrue(input.isBoundTo(pos), "input role retained");
                     if (casing != null) h.assertTrue(casing.isBoundTo(pos) && casing.getEnergyTypes(null).isEmpty(),
                             "selected casing part binds without gaining energy permission");
@@ -119,14 +119,14 @@ public final class BehaviorStructureSafetyTests {
             var port = new MultiblockPortBlockEntity(originalPort.getBlockPos(), originalPort.getBlockState()) {
                 @Override public void bind(BlockPos owner, Role role) {
                     callbacks[0]++;
-                    h.assertTrue(!machine.isStructureOk(), "reentrant request during bind fails closed, never trusts stale formed");
+                    h.assertTrue(!StructureTestSupport.ok(machine), "reentrant request during bind fails closed, never trusts stale formed");
                     super.bind(owner,role);
                 }
             };
             h.getLevel().removeBlockEntity(port.getBlockPos());
             h.getLevel().setBlockEntity(port);
             set(h,pos.east(),Blocks.STONE);
-            h.assertTrue(machine.isStructureOk() && callbacks[0]>0, "fixture forms through actual guarded bind callback without controller tick");
+            h.assertTrue(StructureTestSupport.ok(machine) && callbacks[0]>0, "fixture forms through actual guarded bind callback without controller tick");
 //? if >=1.21.1 {
 /*            IItemHandler items = h.getLevel().getCapability(Capabilities.ItemHandler.BLOCK,port.getBlockPos(),Direction.DOWN);
             IFluidHandler fluids = h.getLevel().getCapability(Capabilities.FluidHandler.BLOCK,port.getBlockPos(),Direction.DOWN);
@@ -144,12 +144,12 @@ public final class BehaviorStructureSafetyTests {
             h.assertTrue(machine.inventory().getStackInSlot(0).getCount()==1
                     && machine.fluids().getFluidInTank(0).getAmount()==100, "rejected transfers preserve controller stock");
             set(h,pos.east(),Blocks.STONE);
-            h.assertTrue(machine.isStructureOk() && port.isBoundTo(pos), "restoration revalidates and rebinds");
+            h.assertTrue(StructureTestSupport.ok(machine) && port.isBoundTo(pos), "restoration revalidates and rebinds");
             h.assertTrue(items.insertItem(0,new ItemStack(Items.BONE_MEAL),false).isEmpty()
                     && fluids.fill(new FluidStack(Fluids.WATER,100),IFluidHandler.FluidAction.EXECUTE)==100,
                     "same retained relay resumes only after valid reformation");
             machine.setRemoved();
-            h.assertTrue(!machine.isStructureOk() && fluids.fill(new FluidStack(Fluids.WATER,1),IFluidHandler.FluidAction.EXECUTE)==0,
+            h.assertTrue(!StructureTestSupport.ok(machine) && fluids.fill(new FluidStack(Fluids.WATER,1),IFluidHandler.FluidAction.EXECUTE)==0,
                     "removed controller cannot validate or receive through retained port");
             set(h,pos,Blocks.AIR); set(h,pos.west(),Blocks.AIR); set(h,pos.east(),Blocks.AIR);
         });

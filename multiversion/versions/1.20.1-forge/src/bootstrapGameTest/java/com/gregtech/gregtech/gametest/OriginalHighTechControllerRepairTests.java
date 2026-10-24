@@ -42,7 +42,7 @@ public final class OriginalHighTechControllerRepairTests {
         }
         world.setBlock(center.above(5), LargeMachineParts.block(18104).defaultBlockState(), 3);
         var machine = (LightningRodControllerBlockEntity) world.getBlockEntity(center);
-        helper.assertTrue(machine != null && machine.isStructureOk(),
+        helper.assertTrue(machine != null && StructureTestSupport.ok(machine),
                 "five exact 3x3 layers and the original rod form GT6 17998");
         CompoundTag charge = new CompoundTag();
         charge.putLong("gt.energy", LightningRodControllerBlockEntity.PACKET * 3);
@@ -69,7 +69,7 @@ public final class OriginalHighTechControllerRepairTests {
                         == LightningRodControllerBlockEntity.PACKET * 2,
                 "placing the stored controller restores its charge");
         world.setBlock(center.offset(1, 1, 0), Blocks.AIR.defaultBlockState(), 3);
-        helper.assertTrue(!machine.isStructureOk(), "a missing original niobium-titanium coil breaks formation");
+        helper.assertTrue(!StructureTestSupport.ok(machine), "a missing original niobium-titanium coil breaks formation");
         helper.succeed();
     }
 
@@ -87,7 +87,7 @@ public final class OriginalHighTechControllerRepairTests {
             world.setBlock(center.offset(x, y, z), part.defaultBlockState(), 3);
         }
         var machine = (BedrockDrillControllerBlockEntity) world.getBlockEntity(center);
-        helper.assertTrue(machine != null && machine.isStructureOk(),
+        helper.assertTrue(machine != null && StructureTestSupport.ok(machine),
                 "GT6 18103 drill heads and four dense-titanium layers form above a bedrock floor");
         var wall = (MultiblockPortBlockEntity) world.getBlockEntity(center.offset(1, -1, 0));
         var tank = machine.getCapability(ForgeCapabilities.FLUID_HANDLER, null).orElseThrow(IllegalStateException::new);
@@ -109,7 +109,7 @@ public final class OriginalHighTechControllerRepairTests {
                         && !drops.get(0).getTagElement("BlockEntityTag").contains("gt.output"),
                 "the controller block drops with fluid state but without duplicating its separately dropped output");
         world.setBlock(center.offset(1, -4, 0), Blocks.AIR.defaultBlockState(), 3);
-        helper.assertTrue(!machine.isStructureOk(), "a missing original drill head disables mining");
+        helper.assertTrue(!StructureTestSupport.ok(machine), "a missing original drill head disables mining");
         helper.succeed();
     }
 }

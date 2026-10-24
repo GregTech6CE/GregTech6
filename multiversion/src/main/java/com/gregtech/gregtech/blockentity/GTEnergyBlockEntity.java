@@ -111,18 +111,23 @@ public abstract class GTEnergyBlockEntity extends BlockEntity implements IEnergy
 
     protected void syncToClient() {
         if (level == null || level.isClientSide || !(level instanceof ServerLevel serverLevel)) return;
-        setChanged();
-        BlockState state = getBlockState();
-        level.sendBlockUpdated(worldPosition, state, state, Block.UPDATE_CLIENTS);
-        ClientboundBlockEntityDataPacket packet = ClientboundBlockEntityDataPacket.create(this);
-        double x = worldPosition.getX() + 0.5;
-        double y = worldPosition.getY() + 0.5;
-        double z = worldPosition.getZ() + 0.5;
-        double distSq = 64.0 * 64.0;
-        for (ServerPlayer player : serverLevel.players()) {
-            if (player.distanceToSqr(x, y, z) <= distSq) {
-                player.connection.send(packet);
+        com.gregtech.gregtech.api.multiblock.tracking.StructureScanProbe.pause();
+        try {
+            setChanged();
+            BlockState state = getBlockState();
+            level.sendBlockUpdated(worldPosition, state, state, Block.UPDATE_CLIENTS);
+            ClientboundBlockEntityDataPacket packet = ClientboundBlockEntityDataPacket.create(this);
+            double x = worldPosition.getX() + 0.5;
+            double y = worldPosition.getY() + 0.5;
+            double z = worldPosition.getZ() + 0.5;
+            double distSq = 64.0 * 64.0;
+            for (ServerPlayer player : serverLevel.players()) {
+                if (player.distanceToSqr(x, y, z) <= distSq) {
+                    player.connection.send(packet);
+                }
             }
+        } finally {
+            com.gregtech.gregtech.api.multiblock.tracking.StructureScanProbe.resume();
         }
     }
 
@@ -136,6 +141,7 @@ public abstract class GTEnergyBlockEntity extends BlockEntity implements IEnergy
         CompoundTag tag = super.getUpdateTag();
         saveAdditional(tag);
 //?}
+        com.gregtech.gregtech.api.multiblock.tracking.ClientFormedSync.write(this, tag);
         return tag;
     }
 
@@ -168,5 +174,6 @@ public abstract class GTEnergyBlockEntity extends BlockEntity implements IEnergy
         super.handleUpdateTag(tag);
         load(tag);
 //?}
+        com.gregtech.gregtech.api.multiblock.tracking.ClientFormedSync.read(this, tag);
     }
 }

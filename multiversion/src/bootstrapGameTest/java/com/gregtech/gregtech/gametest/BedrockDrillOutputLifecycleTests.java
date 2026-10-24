@@ -125,7 +125,7 @@ public final class BedrockDrillOutputLifecycleTests {
             h.assertTrue(h.getLevel().getBlockEntity(pos) instanceof BedrockDrillControllerBlockEntity,
                     "actual registered drill creates its native controller");
             drill = (BedrockDrillControllerBlockEntity) h.getLevel().getBlockEntity(pos);
-            h.assertTrue(drill.isStructureOk(), "registered drill heads and titanium shell form over native bedrock");
+            h.assertTrue(StructureTestSupport.ok(drill), "registered drill heads and titanium shell form over native bedrock");
 //? if >=1.21.1 {
 /*            output = h.getLevel().getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK, pos, Direction.UP);
             fluids = h.getLevel().getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK, pos, Direction.UP);
@@ -198,7 +198,7 @@ public final class BedrockDrillOutputLifecycleTests {
             f.build(); var product = f.mine(); f.charge();
             var head = f.pos.offset(1, -4, 0);
             h.getLevel().setBlock(head, Blocks.AIR.defaultBlockState(), FLAGS);
-            h.assertTrue(!f.drill.isStructureOk(), "breaking an actual required drill head invalidates the shell");
+            h.assertTrue(!StructureTestSupport.ok(f.drill), "breaking an actual required drill head invalidates the shell");
             var chest = f.chest();
             tick(h, f.drill);
             onlyProduct(h, chest, product);
@@ -209,8 +209,9 @@ public final class BedrockDrillOutputLifecycleTests {
             f.resources(32768, 100);
             h.assertTrue(f.output.getStackInSlot(0).isEmpty(), "broken shell cannot spend the next fully funded cycle");
             h.getLevel().setBlock(head, LargeMachineParts.block(18103).defaultBlockState(), FLAGS);
+            com.gregtech.gregtech.api.multiblock.tracking.StructureScheduler.flush(h.getLevel());
             tick(h, f.drill);
-            h.assertTrue(f.drill.isStructureOk() && f.output.getStackInSlot(0).getCount() == 1,
+            h.assertTrue(StructureTestSupport.ok(f.drill) && f.output.getStackInSlot(0).getCount() == 1,
                     "repair reforms the real shell and resumes native mining");
             var second = f.output.getStackInSlot(0).copy();
             f.resources(0, 0);
@@ -234,7 +235,7 @@ public final class BedrockDrillOutputLifecycleTests {
             // This is an invalidated-callback test, not a simulated ChunkEvent.Unload claim.
             f.set(f.pos, oldState);
             var replacement = (BedrockDrillControllerBlockEntity) h.getLevel().getBlockEntity(f.pos);
-            h.assertTrue(old.isRemoved() && replacement != old && replacement.isStructureOk()
+            h.assertTrue(old.isRemoved() && replacement != old && StructureTestSupport.ok(replacement)
                             && pending.getStackInSlot(0).getCount() == 1,
                     "removed old identity retains its real pending product while replacement is installed");
             tick(h, old);

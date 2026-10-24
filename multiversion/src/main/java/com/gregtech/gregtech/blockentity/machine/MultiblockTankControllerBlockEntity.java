@@ -37,7 +37,8 @@ import java.util.List;
  * Shared 3x3x3 and 5x5x5 vessel state. The placed valve selects its specification;
  * valid shell parts delegate fluid I/O to this controller.
  */
-public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity implements com.gregtech.gregtech.api.multiblock.MultiblockPortOwner {
+public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity implements com.gregtech.gregtech.api.multiblock.MultiblockPortOwner,
+        com.gregtech.gregtech.api.multiblock.tracking.TrackedMultiblock {
     private final com.gregtech.gregtech.api.multiblock.PartBindings<BlockPos,
             com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role> bindings = new com.gregtech.gregtech.api.multiblock.PartBindings<>();
 
@@ -86,13 +87,29 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
             port.release(worldPosition);
     }
 
+    @Override public void onLoad() {
+        super.onLoad();
+        if (level != null && !level.isClientSide) com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.attach(this);
+    }
+    @Override public void onChunkUnloaded() {
+        com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
+        super.onChunkUnloaded();
+    }
     @Override
     public void setRemoved() {
-        bindings.clear(this::release);
+        if (!com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.unloading(this)) bindings.clear(this::release);
+        com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.onRemoved(this);
         super.setRemoved();
     }
 
-    public boolean isStructureOk() {
+    public int trackedSize() { return size; }
+    @Override public com.gregtech.gregtech.api.multiblock.tracking.StructureDefinition structureDefinition() {
+        return com.gregtech.gregtech.api.multiblock.tracking.CustomStructures.tank(this);
+    }
+    @Override public boolean isStructureOk() {
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.query(this);
+    }
+    public boolean scanStructure() {
         if (level == null || isRemoved()) return false;
         var wall = valveSpec == null ? (size == 5 ? GTMultiblocks.TANK_WALL_DENSE.get() : GTMultiblocks.TANK_WALL.get())
                 : LargeMachineParts.block(valveSpec.wallId());
@@ -104,12 +121,14 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
                     return true;
                 }, pos -> level.getBlockState(pos).isAir());
         if (!valid) {
-            bindings.clear(this::release);
+            com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.runQuiet(() -> bindings.clear(this::release));
+            com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
             return false;
         }
-        return bindings.update(candidates,
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, candidates, 0,
                 pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port && port.canBind(worldPosition),
-                (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role), this::release);
+                (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role), this::release)
+                != com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
     }
 
     @Override

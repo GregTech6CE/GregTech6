@@ -35,7 +35,7 @@ public final class LogisticsCoreTests {
             helper.getLevel().setBlock(cell.at(absolute, front), LargeMachineParts.block(id).defaultBlockState(), 3);
         }
         var core = (LogisticsCoreControllerBlockEntity) helper.getLevel().getBlockEntity(absolute);
-        helper.assertTrue(core.isStructureOk(), "original 5x5x5 Logistics Core forms facing " + front);
+        helper.assertTrue(StructureTestSupport.ok(core), "original 5x5x5 Logistics Core forms facing " + front);
         return core;
     }
 
@@ -72,7 +72,7 @@ public final class LogisticsCoreTests {
         helper.assertTrue(core.processorCounts().equals(new LogisticsCoreStructure.Counts(26, 26, 26, 26)),
                 "cheap interior wall contributes no processors");
         helper.getLevel().setBlock(cpu, Blocks.AIR.defaultBlockState(), 3);
-        helper.assertTrue(!core.isStructureOk(), "missing interior processor or wall breaks the structure");
+        helper.assertTrue(!StructureTestSupport.ok(core), "missing interior processor or wall breaks the structure");
         helper.succeed();
     }
 
@@ -98,10 +98,10 @@ public final class LogisticsCoreTests {
                         && core.storedEU() == 1024, "actual wall injection charges the controller");
         BlockPos broken = wall.getBlockPos();
         helper.getLevel().setBlock(broken, Blocks.AIR.defaultBlockState(), 3);
-        helper.assertTrue(!core.isStructureOk() && !wall.isEnergyAcceptingFrom(GregTechTags.Energy.EU, Direction.UP, false),
+        helper.assertTrue(!StructureTestSupport.ok(core) && !wall.isEnergyAcceptingFrom(GregTechTags.Energy.EU, Direction.UP, false),
                 "breaking one wall immediately unforms and releases its port");
         helper.getLevel().setBlock(broken, LargeMachineParts.block(LogisticsCoreStructure.WALL).defaultBlockState(), 3);
-        helper.assertTrue(core.isStructureOk(), "repairing the wall reforms the machine");
+        helper.assertTrue(StructureTestSupport.ok(core), "repairing the wall reforms the machine");
         helper.succeed();
     }
 

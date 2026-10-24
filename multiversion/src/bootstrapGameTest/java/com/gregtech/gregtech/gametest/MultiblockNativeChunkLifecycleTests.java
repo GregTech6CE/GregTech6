@@ -140,7 +140,7 @@ public final class MultiblockNativeChunkLifecycleTests {
                 level.setBlock(pos, cell.block().defaultBlockState(), FIXTURE_FLAGS);
             }
             h.assertTrue(actualChunks.equals(Set.of(controllerChunk, shellChunk)), "registered native layout spans exactly two chunks");
-            h.assertTrue(oldController.isStructureOk(), "registered centrifuge forms before unload");
+            h.assertTrue(StructureTestSupport.ok(oldController), "registered centrifuge forms before unload");
             oldLocalPort = (MultiblockPortBlockEntity) level.getBlockEntity(origin.south());
             oldRemotePort = (MultiblockPortBlockEntity) level.getBlockEntity(origin.east());
             h.assertTrue(oldLocalPort.isBoundTo(origin) && oldRemotePort.isBoundTo(origin), "both native ports initially bound");
@@ -171,7 +171,7 @@ public final class MultiblockNativeChunkLifecycleTests {
             assertSavedState(controller);
             var localPort = (MultiblockPortBlockEntity) level.getBlockEntity(origin.south());
             h.assertTrue(localPort != null && localPort != oldLocalPort, "native reload creates fresh local port");
-            h.assertTrue(!controller.isStructureOk(), "partial native reload safely refuses incomplete structure");
+            h.assertTrue(!StructureTestSupport.ok(controller), "partial native reload safely refuses incomplete structure");
             h.assertTrue(!localPort.isBoundTo(origin) && localPort.getEnergyTypes(Direction.DOWN).isEmpty(), "loaded port remains inactive without shell");
             h.assertTrue(!level.hasChunkAt(origin.east()), "validation and port query never force-load missing shell");
             phase = 3;
@@ -179,7 +179,7 @@ public final class MultiblockNativeChunkLifecycleTests {
             level.getChunk(shellChunk.x, shellChunk.z);
             var remotePort = (MultiblockPortBlockEntity) level.getBlockEntity(origin.east());
             h.assertTrue(remotePort != null && remotePort != oldRemotePort && !remotePort.isRemoved(), "shell reload creates fresh native port");
-            h.assertTrue(controller.isStructureOk(), "complete native reload reforms registered structure");
+            h.assertTrue(StructureTestSupport.ok(controller), "complete native reload reforms registered structure");
             h.assertTrue(localPort.isBoundTo(origin) && remotePort.isBoundTo(origin), "fresh ports rebind without manual reset");
             h.assertTrue(localPort.getEnergyTypes(Direction.DOWN).contains(controller.spec().energyTag()), "energy port permissions recover");
             assertSavedState(controller);

@@ -105,7 +105,7 @@ public final class ControllerOutputLifecycleTests {
             var machine=(DistillationTowerControllerBlockEntity)h.getLevel().getBlockEntity(f.pos);
             h.assertTrue(machine.attachCover(back,cover(CoverUtilityBehaviors.FILTER_ITEM)),"attach own BACK filter before enclosing shell");
             for(var cell:LargeMachineLayouts.fromShared(SharedDistillationTowerStructure.CELLS))f.set(cell.at(f.pos,front),cell.block().defaultBlockState());
-            h.assertTrue(machine.isStructureOk(),"real registered tower shell forms");
+            h.assertTrue(StructureTestSupport.ok(machine),"real registered tower shell forms");
             var target=f.pos.relative(back,3);f.set(target,Blocks.CHEST.defaultBlockState());
             var chest=(ChestBlockEntity)h.getLevel().getBlockEntity(target);int output=machine.inputSlots();
             machine.inventory().setStackInSlot(output,new ItemStack(Items.STICK,4)); // Explicit transfer-boundary output fixture.
@@ -155,7 +155,7 @@ public final class ControllerOutputLifecycleTests {
             var machine=(ImplosionCompressorControllerBlockEntity)h.getLevel().getBlockEntity(f.pos);
             var wall=block("implosion_compressor_wall");
             for(var cell:ImplosionCompressorControllerBlockEntity.LAYOUT.cells())if(cell.role()!=MultiblockLayout.Role.AIR)f.set(cell.at(f.pos,front),wall.defaultBlockState());
-            h.assertTrue(machine.isStructureOk(),"real implosion shell forms");
+            h.assertTrue(StructureTestSupport.ok(machine),"real implosion shell forms");
             f.map=new RecipeMap(null,"gt.recipe.test.implosion_lifecycle_"+java.util.UUID.randomUUID(),"Implosion lifecycle","test",1,1,1,0,0,0,1,false,false,false,false);
             f.map.mRecipeList.add(new Recipe(new ItemStack[]{new ItemStack(Items.APPLE)},new ItemStack[]{new ItemStack(Items.DIAMOND)},null,null,null,null,6,1,0));
             machine.setSpec(BasicMachineSpec.builder("implosion_lifecycle_fixture",machine.spec().material()).machineType("implosioncompressor")
@@ -172,7 +172,7 @@ public final class ControllerOutputLifecycleTests {
                     &&save(h,machine).getLong("gt.cover_ticks")==clock+3,"broken shell clears activity and detector while advancing lifecycle clock");
             h.assertTrue(machine.machineControl(null).progress()==progress&&machine.machineControl(null).progressMax()==maximum
                     &&machine.inventory().getStackInSlot(0).isEmpty()&&machine.inventory().getStackInSlot(1).isEmpty(),"invalid ticks retain reserved job without consuming or producing again");
-            f.set(missing,wall.defaultBlockState());h.assertTrue(machine.isStructureOk(),"real shell repair reforms");
+            f.set(missing,wall.defaultBlockState());h.assertTrue(StructureTestSupport.ok(machine),"real shell repair reforms");
             for(int i=0;i<10;i++)tick(h,machine);
             h.assertTrue(machine.inventory().getStackInSlot(1).is(Items.DIAMOND)&&machine.inventory().getStackInSlot(1).getCount()==1
                     &&machine.inventory().getStackInSlot(0).isEmpty(),"repair resumes retained job to exactly one product without replacement input");
