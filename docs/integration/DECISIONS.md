@@ -10,6 +10,10 @@
 
 保留旧上下文读取与能源接口，新增默认访问视图；新读法统一返回副本，写入统一经宿主通知，原生版本差异留在 Stonecutter 边界。能源结果区分包数与单位、宿主扣账与外部供能，并保留零件能接受不足一包的事实。配方数组不再泄露内部可变对象；旧构造器保留，新增 Builder。SDK 只取 API 源码集，阻断 core 实现与 MixinGradle 自动挂载，不以忽略重复文件掩盖源目录问题。版本保持 0，同版本开发 SDK 仍须配套运行时；见[统一化记录](ADDON_API_UNIFICATION.md)。
 
+## 2026-10-23 / 通用分解补齐原版输入、相态与工时合同
+
+准入继续使用 `MaterialProperty.DECOMPOSABLE` / `CENTRIFUGE` / `ELECTROLYSER` 和 `MaterialDecompositionData`，不引入第二套标签。`DecompositionRecipeLoader` 在此基础上恢复 `Loader_Recipes_Decomp` 的剩余合同：流体输入优先并抑制固体入口；固体入口包含粉尘和 `divider % 9 == 0` 的块粉；熔点不高于 293K 的组件走已注册流体（含 vanilla water 与 144 mB/U 熔融比例），其余走 `mTargetPulver`；EU/t 为 `max(16, total*14/U)`，时长为 `ceil(total*292/U)`；单组分解析失败时按原版丢弃。电解槽的 selector 0 门控和 `withCatalystInputs(0)` 保留。见[分解合同核查](MATERIAL_DECOMPOSITION_AUDIT.md) ALIGN-190–193 与[专题](MATERIAL_DECOMPOSITION_PHASE_AND_WORK_20261023.md)。
+
 ## 2026-10-23 / 附属材质形态与流体的注册命名空间
 
 附属材料的生成物品和流体改注册到 `AddonMaterials.owner` 的命名空间：多声明者取字母序最小的附属 id，`link()` 里新建的材料按 link 顺序追加。内置材料仍是 `gt6ce`；材质身份、tag、配方解析和翻译键不变。0.x 不提供旧 `gt6ce:` 物品 id 的存档重映射。流体显示物品随流体一起迁移，`FluidCatalog` 的全局路径查重保留；共享模型资源包按物品自身命名空间写 JSON，并把所有材质 owner 纳入 `getNamespaces`。
