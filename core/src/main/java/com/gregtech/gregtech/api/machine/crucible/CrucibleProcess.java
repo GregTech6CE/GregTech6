@@ -61,7 +61,8 @@ public final class CrucibleProcess {
                 content.clear();
                 return new PhaseResult(fizzCount + 1, vapors, true, 0);
             }
-            if (temperature >= material.getMeltingPoint()
+            // A removed target suppresses conversion, not the material itself or other phase effects.
+            if (material.getTargetSmeltingAmount() > 0 && temperature >= material.getMeltingPoint()
                     && (material.getTargetSmeltingMaterial().resolve() != material
                     || previousTemperature < material.getMeltingPoint() || newContent)) {
                 content.remove(i--);

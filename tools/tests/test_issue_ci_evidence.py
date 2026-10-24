@@ -10,7 +10,7 @@ import unittest
 import xml.etree.ElementTree as ET
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'integration'))
-from check_issue_gametest_report import check, EXPECTED, LEGACY_CASE_NAMESPACES, API_CONTRACT_CASES, ENERGY_STORAGE_CASE_NAMESPACES, COVER_REMOVAL_CASE_NAMESPACES, ORE_SOURCE_CASES, ORE_FOLLOWON_CASE_NAMESPACES, expected_namespace
+from check_issue_gametest_report import check, EXPECTED, LEGACY_CASE_NAMESPACES, API_CONTRACT_CASES, ENERGY_STORAGE_CASE_NAMESPACES, COVER_REMOVAL_CASE_NAMESPACES, ORE_SOURCE_CASES, ORE_FOLLOWON_CASE_NAMESPACES, MATERIAL_PHASE_CASE_NAMESPACES, expected_namespace
 import verify_artifacts
 from verify_artifacts import required_forge_mixin_mappings
 
@@ -19,6 +19,15 @@ LU_INTERACTION_CASES = {
     'crystalchargerinteractiontests.nativechargerinsertionkeepsenergyandinteractionguards',
     'crystalchargerinteractiontests.nativecrystalinsertionusesluandpreservescharge',
 }
+
+
+# Add later native material-contract regressions here only after their identity is confirmed.
+MATERIAL_PHASE_CASES = (
+    ('materialdecompositionpolicytests.decompositionusesfluidinputsambientphasesandoriginalwork',
+     'gregtech_issue_audit:test_empty'),
+    ('smeltingtargetremovaltests.removedsmeltingtargetretainsconsumeddustacrosshotphase',
+     'gregtech_issue_audit:crucible_removal_empty'),
+)
 
 
 class IssueEvidenceTests(unittest.TestCase):
@@ -286,6 +295,37 @@ class IssueEvidenceTests(unittest.TestCase):
                     else:
                         ET.SubElement(case, outcome, message='real source contract outcome')
                     with self.subTest(platform=platform, identity=identity, outcome=outcome), self.assertRaises(ValueError):
+                        self.verify(root, platform)
+
+    def test_material_phase_cases_require_exact_identity_and_pass_on_both_loaders(self):
+        for platform in ('forge', 'neoforge'):
+            self.verify(self.report(platform), platform)
+            for identity, namespace in MATERIAL_PHASE_CASES:
+                self.assertIn(identity, EXPECTED[platform])
+                self.assertEqual(MATERIAL_PHASE_CASE_NAMESPACES[identity], namespace)
+                self.assertEqual(expected_namespace(identity), namespace)
+                for outcome in ('missing', 'failure', 'error', 'skipped', 'wrong_namespace', 'wrong_method',
+                                'qualified_wrong_namespace', 'class_suffix_wrong_namespace'):
+                    root = self.report(platform)
+                    suite = root.find('testsuite')
+                    case = next(c for c in suite
+                                if c.get('name') == identity.split('.', 1)[1]
+                                and c.get('classname') == expected_namespace(identity))
+                    if outcome == 'missing':
+                        suite.remove(case)
+                    elif outcome == 'wrong_namespace':
+                        case.set('classname', 'gt6ce:test_empty')
+                    elif outcome == 'wrong_method':
+                        case.set('name', 'unrelatedmaterialphasetest')
+                    elif outcome == 'qualified_wrong_namespace':
+                        case.set('name', identity)
+                        case.set('classname', 'gt6ce:test_empty')
+                    elif outcome == 'class_suffix_wrong_namespace':
+                        case.set('classname', 'wrong.' + identity.split('.', 1)[0])
+                    else:
+                        ET.SubElement(case, outcome, message='material phase contract did not pass')
+                    with self.subTest(platform=platform, identity=identity, outcome=outcome), \
+                            self.assertRaises(ValueError):
                         self.verify(root, platform)
 
     def test_empty_report_rejected(self):

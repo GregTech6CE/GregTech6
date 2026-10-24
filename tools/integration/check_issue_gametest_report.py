@@ -353,7 +353,20 @@ ORE_SOURCE_CASES = {
 ORE_FOLLOWON_CASE_NAMESPACES = {'orethermalsourcetests.rawanddirtyformshavenogenericthermalrows': 'gregtech_ore_thermal_audit:test_empty', 'orethermalsourcetests.dustrecyclestotargetmercurynotmoltencinnabar': 'gregtech_ore_thermal_audit:test_empty', 'orethermalsourcetests.dustfractionspreservesourcefloorrounding': 'gregtech_ore_thermal_audit:test_empty', 'orethermalsourcetests.cleanandrefinedformsremainrecyclable': 'gregtech_ore_thermal_audit:test_empty', 'orethermalsourcetests.cleanandrefinedtinyformsusesourceunits': 'gregtech_ore_thermal_audit:test_empty', 'orethermalsourcetests.submillibucketdustdoesnotcreateafluidrow': 'gregtech_ore_thermal_audit:test_empty', 'orethermalsourcetests.blockdustpreservessourceweightandtruncatedwork': 'gregtech_ore_thermal_audit:test_empty', 'orerawcraftingsourcetests.cinnabarrawgemtwobytwopositions': 'gregtech_ore_source_audit:test_empty', 'orerawcraftingsourcetests.cinnabarrawgemthreebythreepositions': 'gregtech_ore_source_audit:test_empty', 'orerawcraftingsourcetests.cinnabarrawgemoccupiedcellsnotstackcount': 'gregtech_ore_source_audit:test_empty'}
 
 
+# New material phase contracts require the actual Mojang template namespace and bare method.
+# Extend this map only when a new native case identity has been confirmed.
+MATERIAL_PHASE_CASE_NAMESPACES = {
+    'materialdecompositionpolicytests.decompositionusesfluidinputsambientphasesandoriginalwork':
+        'gregtech_issue_audit:test_empty',
+    'smeltingtargetremovaltests.removedsmeltingtargetretainsconsumeddustacrosshotphase':
+        'gregtech_issue_audit:crucible_removal_empty',
+}
+FUNCTIONAL_CASES |= set(MATERIAL_PHASE_CASE_NAMESPACES)
+
+
 def expected_namespace(identity):
+    if identity in MATERIAL_PHASE_CASE_NAMESPACES:
+        return MATERIAL_PHASE_CASE_NAMESPACES[identity]
     if identity.startswith('oreoverlaylifecyclecontrols.'):
         return 'gregtech_ore_source_audit:test_empty'
     if identity.startswith('stonelayerslabaudittests.'):
@@ -408,6 +421,10 @@ def check(path, platform='forge'):
         classname = case.get('classname', '').lower()
         for identity in expected:
             test_class, method = identity.split('.', 1)
+            if identity in MATERIAL_PHASE_CASE_NAMESPACES:
+                if name == method and classname == MATERIAL_PHASE_CASE_NAMESPACES[identity]:
+                    found.add(identity)
+                continue
             if identity.startswith(('namedfluidtemperaturetests.', 'oreoverlaylifecyclecontrols.', 'waterbodybiomeboundarytests.', 'stonelayerslabaudittests.')) or identity.startswith('energyneighborloadednesstests.') or identity.startswith('spikeharveststatetests.') or identity.startswith('spikefallinglifecycletests.') or identity in ORE_SOURCE_CASES or identity in ORE_FOLLOWON_CASE_NAMESPACES or identity == 'barracksdooralignmenttests.generateddoorsjoinslabwallsandsurviveupdates':
                 if name == method and classname == expected_namespace(identity):
                     found.add(identity)
