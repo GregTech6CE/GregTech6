@@ -3,6 +3,8 @@ package com.gregtech.gregtech.gametest;
 import com.gregtech.gregtech.api.addon.platform.MachineBehaviorContext;
 import com.gregtech.gregtech.api.multiblock.MultiblockLayout;
 import com.gregtech.gregtech.api.multiblock.tracking.ClientFormedSync;
+import com.gregtech.gregtech.api.multiblock.tracking.Footprint;
+import com.gregtech.gregtech.api.multiblock.tracking.Projection;
 import com.gregtech.gregtech.api.multiblock.tracking.SectionWatchMask;
 import com.gregtech.gregtech.api.multiblock.tracking.StructureChunkWatch;
 import com.gregtech.gregtech.api.multiblock.tracking.StructureEpoch;
@@ -10,7 +12,9 @@ import com.gregtech.gregtech.api.multiblock.tracking.StructureScanProbe;
 import com.gregtech.gregtech.api.multiblock.tracking.StructureScheduler;
 import com.gregtech.gregtech.api.multiblock.tracking.StructureTracker;
 import com.gregtech.gregtech.api.multiblock.tracking.StructureTracking;
+import com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingEvents;
 import com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode;
+import com.gregtech.gregtech.api.multiblock.tracking.StructureWatchIndex;
 import com.gregtech.gregtech.api.multiblock.tracking.TrackedMultiblock;
 import com.gregtech.gregtech.block.machine.AddonEnergyPartBlock;
 import com.gregtech.gregtech.block.machine.AxialGeneratorBlock;
@@ -553,7 +557,7 @@ public final class StructureTrackingTests {
             StructureScanProbe.enable(true);
             StructureScanProbe.reset();
             StructureScheduler.chunkLoadedForTests(h.getLevel(), chunk);
-            h.assertTrue(tracker.dirty() && !tracker.safety(), "chunk load queues a normal scan, not a safety scan");
+            h.assertTrue(tracker.dirty(), "chunk load queues a normal scan");
             StructureScheduler.flush(h.getLevel());
             h.assertTrue(machine.isStructureOk() && StructureScanProbe.scans() >= 1, "the machine recovers on that tick");
         } finally {
@@ -692,7 +696,7 @@ public final class StructureTrackingTests {
             chunk.setUnsaved(false);
             StructureScanProbe.enable(true);
             StructureScanProbe.reset();
-            StructureTracking.evaluateForTests(machine, true);
+            StructureTracking.evaluateForTests(machine);
             h.assertTrue(machine.isStructureOk(), "the safety scan leaves a good structure formed");
             h.assertTrue(StructureScanProbe.binds() == 0 && StructureScanProbe.releases() == 0,
                     "the safety scan does not bind or release, binds=" + StructureScanProbe.binds()
@@ -704,6 +708,309 @@ public final class StructureTrackingTests {
             clear(h.getLevel(), cells);
         }
         h.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 400, batch = "st-fair")
+    public static void oversizedTrackerIsEvaluatedBeforeSmallOnes(GameTestHelper h) {
+        var layer = new LargeMachineLayouts.Cell(1, 0, 0, 18100, MultiblockLayout.Role.ITEM_FLUID_INPUT);
+        var repeat = new LargeMachineLayouts.Repeat("layers", 1, 5, 6, 1, 1, List.of(layer));
+        var big = new LargeMachineLayouts.Layout(List.of(), List.of(repeat));
+        withLayouts(Map.of("irrigator", big, "sampleminer", stoneLayout()), () -> {
+            var cells = new ArrayList<BlockPos>();
+            var smalls = new ArrayList<BehaviorMachineBlockEntity>();
+            StructureScheduler.setCellBudgetForTests(4);
+            try {
+                BlockPos origin = new BlockPos(24_100_000, 80, 24_100_000);
+                var machine = behavior(h.getLevel(), origin, "irrigator", cells);
+                for (int y = 1; y <= 5; y++) put(h.getLevel(), origin.east().above(y), part(18100), cells);
+                StructureTracking.attach(machine);
+                for (int i = 0; i < 20; i++) {
+                    BlockPos at = origin.offset(20 + (i % 5) * 3, 0, (i / 5) * 3);
+                    var small = behavior(h.getLevel(), at, "sampleminer", cells);
+                    put(h.getLevel(), at.east(), Blocks.STONE.defaultBlockState(), cells);
+                    StructureTracking.attach(small);
+                    smalls.add(small);
+                }
+                StructureScheduler.flush(h.getLevel());
+                h.assertTrue(machine.isStructureOk(),
+                        "the oversized head tracker is evaluated before the budget, cells="
+                                + StructureTracking.tracker(machine).cellCount());
+                h.assertTrue(formed(smalls) == 0, "smaller trackers behind it wait, formed=" + formed(smalls));
+                int ticks = 0;
+                while (formed(smalls) < smalls.size() && ticks < 20) {
+                    StructureScheduler.flush(h.getLevel());
+                    ticks++;
+                }
+                h.assertTrue(formed(smalls) == smalls.size() && ticks <= 12,
+                        "the smaller trackers still make progress, ticks=" + ticks + " formed=" + formed(smalls));
+                h.assertTrue(machine.isStructureOk(), "the oversized tracker stays formed");
+            } finally {
+                StructureScheduler.setCellBudgetForTests(-1);
+                clear(h.getLevel(), cells);
+            }
+        });
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 200, batch = "st-frontier")
+    public static void tightenedFootprintKeepsTheFrontierChunk(GameTestHelper h) {
+        var layer = new LargeMachineLayouts.Cell(1, 0, 0, 18100, MultiblockLayout.Role.ITEM_FLUID_INPUT);
+        var repeat = new LargeMachineLayouts.Repeat("layers", 1, 1, 4, 1, 1, List.of(layer));
+        var layout = new LargeMachineLayouts.Layout(List.of(), List.of(repeat));
+        withLayouts(Map.of("irrigator", layout), () -> {
+            var cells = new ArrayList<BlockPos>();
+            try {
+                int boundary = ((33_200_000 >> 4) + 1) << 4;
+                BlockPos at = new BlockPos(boundary - 1, 80, 33_200_000);
+                var machine = behavior(h.getLevel(), at, "irrigator", cells);
+                BlockPos low = at.east().above(1);
+                BlockPos middle = at.east().above(2);
+                BlockPos frontier = at.east().above(3);
+                put(h.getLevel(), low, part(18100), cells);
+                put(h.getLevel(), middle, part(18100), cells);
+                h.assertTrue(StructureTestSupport.ok(machine), "two repeat layers form across the chunk border");
+                ChunkPos frontierChunk = new ChunkPos(frontier);
+                StructureTracker tracker = StructureTracking.tracker(machine);
+                h.assertTrue(tracker != null && tracker.watch().indexOf(frontier) >= 0,
+                        "the unmatched next layer stays in the tightened footprint");
+                h.assertTrue(tracker.watch().indexOf(low) >= 0 && tracker.watch().indexOf(middle) >= 0,
+                        "the matched layers are watched");
+                StructureScheduler.chunkUnloadedForTests(h.getLevel(), frontierChunk);
+                h.assertTrue(!machine.isStructureOk(), "losing the frontier chunk suspends the machine");
+                StructureScheduler.chunkLoadedForTests(h.getLevel(), frontierChunk);
+                StructureScheduler.flush(h.getLevel());
+                h.assertTrue(machine.isStructureOk(), "the machine recovers on the load tick, before the safety net");
+            } finally {
+                clear(h.getLevel(), cells);
+            }
+        });
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 100, batch = "st-owner")
+    public static void trackingStateIsOwnedByTheServerWorld(GameTestHelper h) throws Exception {
+        for (var type : List.of(StructureWatchIndex.class, StructureTracker.class)) {
+            for (var field : type.getDeclaredFields()) {
+                h.assertTrue(!(java.lang.reflect.Modifier.isStatic(field.getModifiers())
+                                && Map.class.isAssignableFrom(field.getType())),
+                        type.getSimpleName() + "." + field.getName() + " is a static map");
+            }
+        }
+        StructureScanProbe.enable(true);
+        try {
+            var failure = new java.util.concurrent.atomic.AtomicReference<Throwable>();
+            var thread = new Thread(() -> {
+                try {
+                    StructureWatchIndex.defer(h.getLevel(), 0L);
+                } catch (Throwable thrown) {
+                    failure.set(thrown);
+                }
+            });
+            thread.start();
+            thread.join();
+            h.assertTrue(failure.get() instanceof IllegalStateException,
+                    "off-thread access throws: " + failure.get());
+        } finally {
+            StructureScanProbe.enable(false);
+        }
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 200, batch = "st-reloadsync")
+    public static void reloadInvalidatesTagAndOverlayMachinesSynchronously(GameTestHelper h) {
+        var tagged = new LargeMachineLayouts.Layout(List.of(
+                new LargeMachineLayouts.Cell(1, 0, 0, 0, MultiblockLayout.Role.CASING, "#minecraft:planks")), List.of());
+        withLayouts(Map.of("irrigator", tagged, "sampleminer", stoneLayout()), () -> {
+            var cells = new ArrayList<BlockPos>();
+            var implosionCells = new ArrayList<BlockPos>();
+            try {
+                BlockPos at = h.absolutePos(new BlockPos(3, 3, 3));
+                var tagMachine = behavior(h.getLevel(), at, "irrigator", cells);
+                put(h.getLevel(), at.east(), Blocks.OAK_PLANKS.defaultBlockState(), cells);
+                h.assertTrue(StructureTestSupport.ok(tagMachine), "the tag machine forms");
+                BlockPos plainAt = at.offset(8, 0, 0);
+                var plainMachine = behavior(h.getLevel(), plainAt, "sampleminer", cells);
+                put(h.getLevel(), plainAt.east(), Blocks.STONE.defaultBlockState(), cells);
+                h.assertTrue(StructureTestSupport.ok(plainMachine), "the plain machine forms");
+                var unaffected = (ImplosionCompressorControllerBlockEntity) implosion(h.getLevel(),
+                        new BlockPos(33_300_000, 80, 33_300_000), implosionCells);
+                h.assertTrue(StructureTestSupport.ok(unaffected), "the built-in machine forms");
+
+                StructureEpoch.bump(java.util.Set.of("sampleminer"));
+                h.assertTrue(!tagMachine.isStructureOk(), "tag cells drop formed in the same tick");
+                h.assertTrue(!plainMachine.isStructureOk(), "the overlay machine drops formed in the same tick");
+                h.assertTrue(unaffected.isStructureOk(), "an untouched built-in layout keeps its formed bit");
+                StructureScheduler.flush(h.getLevel());
+                h.assertTrue(tagMachine.isStructureOk(), "the tag verdict is unchanged after the rescan");
+                h.assertTrue(plainMachine.isStructureOk(), "the overlay machine forms again at tick end");
+            } finally {
+                clear(h.getLevel(), cells);
+                clear(h.getLevel(), implosionCells);
+            }
+        });
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 200, batch = "st-audit")
+    public static void projectionAuditAcceptsEquivalentChangesAndCatchesALie(GameTestHelper h) {
+        var crucibleCells = new ArrayList<BlockPos>();
+        StructureScanProbe.audit(true);
+        try {
+            BlockPos at = h.absolutePos(new BlockPos(8, 8, 8));
+            var crucible = preview(h.getLevel(), at, familyBlock("crucible"), crucibleCells);
+            h.assertTrue(StructureTestSupport.ok(crucible), "crucible forms");
+            BlockPos wall = crucibleCells.stream().filter(pos -> !pos.equals(at))
+                    .filter(pos -> h.getLevel().getBlockState(pos).hasProperty(MultiblockPortBlock.CRUCIBLE_FORMED))
+                    .findFirst().orElseThrow();
+            BlockState state = h.getLevel().getBlockState(wall);
+            h.getLevel().setBlock(wall, state.setValue(MultiblockPortBlock.CRUCIBLE_FORMED,
+                    !state.getValue(MultiblockPortBlock.CRUCIBLE_FORMED)), FLAGS);
+            h.assertTrue(StructureTracking.query((TrackedMultiblock) crucible),
+                    "a projected-equivalent change passes the audit");
+        } finally {
+            StructureScanProbe.audit(false);
+            clear(h.getLevel(), crucibleCells);
+        }
+        Footprint watch = new Footprint.Builder().addController(BlockPos.ZERO).build();
+        boolean caught = false;
+        try {
+            StructureTracking.auditProjection(watch, true, () -> false);
+        } catch (IllegalStateException expected) {
+            caught = true;
+        }
+        h.assertTrue(caught, "a BLOCK projection that hides a property change fails the audit");
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 100, batch = "st-probe")
+    public static void probeDoesNotLookUpThreadStateOutsideScans(GameTestHelper h) {
+        StructureScanProbe.enable(true);
+        try {
+            BlockPos pos = h.absolutePos(new BlockPos(2, 3, 2));
+            StructureScanProbe.reset();
+            h.getLevel().getBlockState(pos);
+            h.getLevel().getBlockEntity(pos);
+            h.assertTrue(StructureScanProbe.threadLookups() == 0,
+                    "no scan means no thread-local lookup, lookups=" + StructureScanProbe.threadLookups());
+            StructureScanProbe.open();
+            try {
+                StructureScanProbe.pause();
+                StructureScanProbe.pause();
+                StructureScanProbe.resume();
+                h.getLevel().getBlockState(pos);
+            } finally {
+                StructureScanProbe.close();
+            }
+            StructureScanProbe.open();
+            try {
+                h.getLevel().getBlockState(pos);
+            } finally {
+                StructureScanProbe.close();
+            }
+            h.assertTrue(StructureScanProbe.blockReads() == 1,
+                    "the next open/close cycle records reads again, reads=" + StructureScanProbe.blockReads());
+        } finally {
+            StructureScanProbe.enable(false);
+            StructureScanProbe.reset();
+        }
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 400, batch = "st-realunload")
+    public static void realShellChunkUnloadSuspendsAndReloads(GameTestHelper h) {
+        var far = new LargeMachineLayouts.Cell(256, 0, 0, 0, MultiblockLayout.Role.CASING, "minecraft:stone");
+        var layout = new LargeMachineLayouts.Layout(List.of(far), List.of());
+        var previous = layouts().put("irrigator", layout);
+        resolved().put("minecraft:stone", Blocks.STONE);
+        var cells = new ArrayList<BlockPos>();
+        BlockPos origin = new BlockPos(33_400_000, 80, 33_400_000);
+        ChunkPos controllerChunk = new ChunkPos(origin);
+        var machine = behavior(h.getLevel(), origin, "irrigator", cells);
+        BlockPos shellPos = origin.east(256);
+        ChunkPos shell = new ChunkPos(shellPos);
+        try {
+            put(h.getLevel(), shellPos, Blocks.STONE.defaultBlockState(), cells);
+            h.assertTrue(StructureTestSupport.ok(machine), "far-cell machine forms");
+            h.assertTrue(!controllerChunk.equals(shell), "the shell is in another chunk");
+            // setChunkForced uses ENTITY_TICKING (31) and keeps a two-chunk radius. A distance-0
+            // region ticket holds exactly the controller chunk, so the shell sixteen chunks away unloads.
+            h.getLevel().getChunkSource().addRegionTicket(net.minecraft.server.level.TicketType.PLAYER,
+                    controllerChunk, 0, controllerChunk);
+            StructureTrackingEvents.enable(true);
+            h.runAfterDelay(150, () -> {
+                try {
+                    h.assertTrue(h.getLevel().getChunkSource().getChunkNow(shell.x, shell.z) == null,
+                            "the shell chunk really unloaded");
+                    var log = StructureTrackingEvents.log();
+                    h.assertTrue(log.contains("ChunkEvent.Unload " + shell.toLong()),
+                            "the real unload event reached the index: " + log);
+                    h.assertTrue(!machine.isStructureOk(), "the machine suspends on the real unload");
+                    h.getLevel().getChunk(shell.x, shell.z);
+                    StructureScheduler.flush(h.getLevel());
+                    h.assertTrue(machine.isStructureOk(), "the machine forms again after the real reload");
+                } finally {
+                    StructureTrackingEvents.enable(false);
+                    clear(h.getLevel(), cells);
+                    h.getLevel().getChunkSource().removeRegionTicket(net.minecraft.server.level.TicketType.PLAYER,
+                            controllerChunk, 0, controllerChunk);
+                    restoreLayout("irrigator", previous);
+                }
+                h.succeed();
+            });
+        } catch (RuntimeException | Error failure) {
+            restoreLayout("irrigator", previous);
+            throw failure;
+        }
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 400, batch = "st-realctrl")
+    public static void realControllerChunkUnloadReattaches(GameTestHelper h) {
+        var far = new LargeMachineLayouts.Cell(64, 0, 0, 0, MultiblockLayout.Role.CASING, "minecraft:stone");
+        var layout = new LargeMachineLayouts.Layout(List.of(far), List.of());
+        var previous = layouts().put("irrigator", layout);
+        resolved().put("minecraft:stone", Blocks.STONE);
+        var cells = new ArrayList<BlockPos>();
+        BlockPos origin = new BlockPos(33_500_000, 80, 33_500_000);
+        ChunkPos controllerChunk = new ChunkPos(origin);
+        var machine = behavior(h.getLevel(), origin, "irrigator", cells);
+        BlockPos shellPos = origin.east(64);
+        ChunkPos shell = new ChunkPos(shellPos);
+        try {
+            put(h.getLevel(), shellPos, Blocks.STONE.defaultBlockState(), cells);
+            h.assertTrue(StructureTestSupport.ok(machine), "far-cell machine forms");
+            StructureTrackingEvents.enable(true);
+            h.runAfterDelay(150, () -> {
+                try {
+                    var log = StructureTrackingEvents.log();
+                    long hook = origin.asLong();
+                    int event = log.indexOf("ChunkEvent.Unload " + controllerChunk.toLong());
+                    int onUnload = log.indexOf("controller.onChunkUnloaded " + hook);
+                    int removed = log.indexOf("controller.setRemoved " + hook);
+                    h.assertTrue(event >= 0 && onUnload > event && removed > onUnload,
+                            "unload event, then onChunkUnloaded, then setRemoved: " + log);
+                    h.getLevel().getChunk(controllerChunk.x, controllerChunk.z);
+                    h.getLevel().getChunk(shell.x, shell.z);
+                    BlockEntity reloaded = h.getLevel().getBlockEntity(origin);
+                    h.assertTrue(reloaded instanceof TrackedMultiblock, "the controller block entity is back");
+                    h.assertTrue(StructureTestSupport.ok(reloaded), "the reloaded controller forms");
+                } finally {
+                    StructureTrackingEvents.enable(false);
+                    h.getLevel().getChunk(controllerChunk.x, controllerChunk.z);
+                    h.getLevel().getChunk(shell.x, shell.z);
+                    clear(h.getLevel(), cells);
+                    restoreLayout("irrigator", previous);
+                }
+                h.succeed();
+            });
+        } catch (RuntimeException | Error failure) {
+            restoreLayout("irrigator", previous);
+            throw failure;
+        }
+    }
+
+    private static void restoreLayout(String name, LargeMachineLayouts.Layout previous) {
+        if (previous == null) layouts().remove(name);
+        else layouts().put(name, previous);
     }
 
     private static void measure(GameTestHelper h, String family, BlockPos origin, Placer placer) {

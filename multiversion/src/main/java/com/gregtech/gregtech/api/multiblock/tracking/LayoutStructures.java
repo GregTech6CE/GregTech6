@@ -30,13 +30,23 @@ public final class LayoutStructures {
     }
 
     public static Footprint of(LargeMachineLayouts.Layout layout, BlockPos origin, Direction front, int layers, boolean frontier) {
+        if (layout == null) return new Footprint.Builder().addController(origin).build();
+        int[] all = new int[layout.repeats().size()];
+        java.util.Arrays.fill(all, layers);
+        return of(layout, origin, front, all, frontier);
+    }
+
+    /** Watches each repeat group up to its matched layer count, plus the next layer when {@code frontier}. */
+    public static Footprint of(LargeMachineLayouts.Layout layout, BlockPos origin, Direction front, int[] matched, boolean frontier) {
         Footprint.Builder builder = new Footprint.Builder().addController(origin);
         if (layout == null || front == null) return builder.build();
         for (LargeMachineLayouts.Cell cell : layout.cells()) {
             builder.add(cell.at(origin, front), projection(cell));
         }
-        int limit = frontier ? layers + 1 : layers;
-        for (LargeMachineLayouts.Repeat repeat : layout.repeats()) {
+        for (int group = 0; group < layout.repeats().size(); group++) {
+            LargeMachineLayouts.Repeat repeat = layout.repeats().get(group);
+            int found = matched != null && group < matched.length ? matched[group] : repeat.min();
+            int limit = frontier ? found + 1 : found;
             int cap = repeat.max() < 0 ? LargeMachineLayouts.MAX_REPEATS : repeat.max();
             int count = Math.max(0, Math.min(limit, cap));
             for (int copy = 0; copy < count; copy++) {
@@ -125,13 +135,40 @@ public final class LayoutStructures {
             return value != null && !value.repeats().isEmpty();
         }
 
+        @Override public boolean usesTags() {
+            LargeMachineLayouts.Layout value = layout.get();
+            if (value == null) return false;
+            if (tags(value.cells())) return true;
+            for (LargeMachineLayouts.Repeat repeat : value.repeats())
+                if (tags(repeat.cells())) return true;
+            return false;
+        }
+
+        @Override public String overlayMachine() {
+            if (machine instanceof com.gregtech.gregtech.blockentity.machine.LargeRecipeMachineBlockEntity recipe)
+                return recipe.spec() == null ? null : recipe.spec().machineName();
+            if (machine instanceof com.gregtech.gregtech.blockentity.machine.BehaviorMachineBlockEntity behavior)
+                return behavior.declaration().casing().machineType();
+            return null;
+        }
+
+        private static boolean tags(java.util.List<LargeMachineLayouts.Cell> cells) {
+            for (LargeMachineLayouts.Cell cell : cells) {
+                String plain = cell.plain();
+                if (plain == null) continue;
+                if (plain.startsWith("#")) return true;
+                if (plain.startsWith("anyfluid") && plain.indexOf('#') >= 0) return true;
+            }
+            return false;
+        }
+
         @Override public Footprint watchFootprint(TrackedMultiblock ignored) {
             LargeMachineLayouts.Layout value = layout.get();
             BlockEntity entity = machine.trackedEntity();
             if (value == null) return new Footprint.Builder().addController(entity.getBlockPos()).build();
-            int layers = 0;
-            for (LargeMachineLayouts.Repeat repeat : value.repeats()) layers = Math.max(layers, repeat.min());
-            return of(value, entity.getBlockPos(), facing(entity), layers, true);
+            StructureTracker tracker = StructureTracking.tracker(entity);
+            int[] matched = tracker == null ? null : tracker.matchedLayers();
+            return of(value, entity.getBlockPos(), facing(entity), matched, true);
         }
 
         @Override public Footprint declaredFootprint(TrackedMultiblock ignored) {

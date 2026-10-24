@@ -2109,3 +2109,53 @@ Sensors null-NBT源登记可合法携带REV，生成器只为这组解析，避�
 - 合并后的值重新走 `BasicMachineSpec` 规范构造器；额外限制 `parallelLimit <= 65536` 和 `energyIn × parallelLimit` 不溢出 long。调过 `cheapOverclocking` 会把它标成 declared，调过能量范围会把 `energyRangeDeclared` 置真。
 - 补丁只在内存中，每次启动重算，不写存档；移除附属后恢复内置值。启动日志逐字段打印 `[gt6ce] tuning: ...`，并写出 `config/gt6ce-tuning.txt`。v1 不提供数据包形式。
 - 验证：`AddonDeclarationTypeContracts` 增加 22 条断言（记录校验、合并、冲突、上限、溢出、报告顺序）；新增 `gregtech_tuning` 命名空间的 `MachineTuningTests`，Forge 与 NeoForge 各 1/1 required tests passed；`core:check`、两端 `compileJava`、`compileBootstrapGameTestJava`、`addonApiClosureCheck` 通过（core 111、两端 148 个 API 类）。未做客户端玩法、专服、存档重启验证。
+
+## 2026-10-24 / 结构跟踪阶段 1 收尾 批次 1：服务端索引的线程归属
+
+- `StructureWatchIndex.WorldData` 改挂在 `ServerLevel` 上：`ServerLevelStructureDataMixin` 注入 `gt$structureData` 字段，`StructureLevelData` 暴露读写；删除静态 `WeakHashMap<Level, WorldData>`。
+- 索引入口参数改为 `ServerLevel`；`StructureTracking` 的 `onChunkUnloaded`、`unloading`、`onRemoved`、`tracker` 先判 `isClientSide` 并返回。`enqueueAll` 遍历 `MinecraftServer.getAllLevels()`，`LevelEvent.Unload` 只处理 `ServerLevel`，卸载时清空队列/实体/覆盖集合再丢弃字段。
+- 测试构建里 `StructureScanProbe.enabled()` 为真时，`data(...)` 校验 `level.getServer().isSameThread()`，非服务端线程直接抛错。`trackingStateIsOwnedByTheServerWorld` 同时反射确认 `StructureWatchIndex` 和 `StructureTracker` 没有静态 `Map`。
+
+## 2026-10-24 / 结构跟踪阶段 1 收尾 批次 2：调度公平性
+
+- `dirty` 从 `LinkedHashSet` 改为 `ArrayDeque`，`StructureTracker` 增加在队标志；入队走队尾，`requeue` 把未处理的 tracker 按原顺序放回队首（先移除可能存在的旧条目，避免同 tick 事件重入造成重复）。
+- 每 tick 至少评估队首一个普通 tracker，不管成本；之后遇到第一个放不下的就停，剩余部分整体放回队首。加急通道仍然先于预算队列，且不计预算。
+- 原因：旧实现遇到超预算 tracker 就 `continue`，成本大于整份预算的 tracker 永远轮不到；`requeue` 加到队尾也让小 tracker 持续插队。场景 27 覆盖“超预算队首 + 20 个小 tracker”。
+
+## 2026-10-24 / 结构跟踪阶段 1 收尾 批次 3：足迹由扫描结果推导
+
+- 扫描体在返回前把各组匹配层数写给 tracker：`LargeRecipeMachineBlockEntity.scanStructure`、`BehaviorMachineBlockEntity.claimStructure` 用 `repeatCells(..., int[] matchedOut)` 记录完整副本数，`LightningRodControllerBlockEntity.scanStructure` 写 `rodLength`。`StructureTracking.noteMatchedLayers` 是唯一入口。
+- `LayoutStructures.of(layout, origin, front, int[] matched, boolean frontier)` 按组取层数；`LayoutDefinition.watchFootprint` 读 tracker 的 `matchedLayers`，没有扫描结果时回落到每组 `min`。避雷针的 `watchFootprint` 用 `rodLength + 1`（底座 + 已匹配段 + 下一段）。朝向变化时 `noteFacing()` 清空匹配层数，避免用旧朝向的层数收紧。
+- `StructureScanProbe.tighten` 删除。`LAST`/`LAST_CHUNKS`/`LAST_CALLERS` 只留给 `assertInside` 的测试审计，正式路径不再用读取记录决定足迹；这也修掉了 `hasChunkAt == false` 的失败格不进足迹、所在区块之后加载时找不到 tracker 的问题（场景 28 断言下一层仍在 watch 里）。
+
+## 2026-10-24 / 结构跟踪阶段 1 收尾 批次 4：探针热路径与异常安全
+
+- `pause`、`resume`、`note*`、`noteChunkQuery`、`matcher` 第一行判 `activeScans == 0` 后直接返回；没有扫描时不再做 `ThreadLocal.get()`。`threadLookups()` 是测试计数器，场景覆盖“无扫描时 0 次”。
+- `pause()` 返回进入前的暂停深度，`resume(int depth)` 恢复到该深度；`LevelStructureProbeMixin` 用 `pushPause()`/`popPause()` 的线程内配对栈，嵌套调用正常，外层返回时会清掉更深层未配对的暂停。
+- 无参 `resume()` 保留给扫描体里已经成对使用的 `StructureClaims`、`GTEnergyBlockEntity`、大型坩埚。
+
+## 2026-10-24 / 结构跟踪阶段 1 收尾 批次 5：卸载事件顺序与客户端同步
+
+- `StructureWatchIndex.chunkUnloaded` 在 `formed` 下降时补 `ClientFormedSync.send`；控制器自身区块卸载的 `StructureTracking.onChunkUnloaded` 不发包（实体和客户端区块同时在卸载）。其余下降路径（`invalidate`、`evaluate` 的区块未加载分支）本来就有同步。
+- 真实卸载的 gametest 先用 `setChunkForced` 保控制器区块，结果外壳所在区块 `getChunkNow` 已为 null 但没有 `ChunkEvent.Unload`：`setChunkForced` 的票据是 `ENTITY_TICKING`（31 级），会把邻近区块压在非加载的持有状态。改用 `TicketType.PLAYER`、距离 0 的 region 票据只保控制器区块，外壳仍要放到 16 个区块外才会真正释放；`getChunkNow == null` 不等于 holder 已释放。
+- Forge 1.20.1 和 NeoForge 1.21.1 实测顺序一致：无票据的控制器区块卸载时 `ChunkEvent.Unload` 先到，随后 `onChunkUnloaded`，再 `setRemoved`（`realControllerChunkUnloadReattaches` 两端通过）。`realShellChunkUnloadSuspendsAndReloads` 在控制器区块被票据保住的条件下确认外壳卸载会同步掉成型、重载后恢复。两端结构跟踪命名空间各 26/26。
+- 证据见 [structure-tracking-p1-closeout-20261024.json](verification/structure-tracking-p1-closeout-20261024.json)。
+
+## 2026-10-24 / 结构跟踪阶段 1 收尾 批次 6：`/reload` 与合同 3
+
+- `StructureDefinition` 新增 `usesTags()` 和 `overlayMachine()`；`LayoutDefinition` 扫固定格和重复组里的 `#tag` / `anyfluid#tag`，并报告大型配方机或行为机的 machine 名。`StructureLayoutOverlayRuntime.lastAffected()` 返回最近一次 install 覆盖的机器（旧 overlay ∪ 新接受）。
+- `StructureEpoch.bump(Set<String> affected)` 递增 epoch 后同步失效两类 tracker：布局含 tag 格的，以及本次 overlay 涉及的机器。失效走 `invalidate()`（formed 置 false、入队、发客户端同步）；其余只标 epoch 落后并排队，formed 不变，按预算重扫。
+- `StructureLayoutLifecycle.tags` 和 `started` 都传 `lastAffected()`。场景 30 覆盖“tag 机器和 overlay 机器同步掉成型、未动的内置布局机器不掉”。
+
+## 2026-10-24 / 结构跟踪阶段 1 收尾 批次 7：投影审计
+
+- `StructureWatchIndex.onChanged` 在 `auditing()` 为真且不在扫描中时，对“投影判定等价”的格子立即跑一次整段扫描，结果与缓存的 `formed` 不一致就抛 `IllegalStateException`。审计入口 `StructureTracking.auditProjection(watch, cached, fullScan)`，正式构建不跑。
+- 正例用坩埚的 `CRUCIBLE_FORMED` 属性翻转；负例直接构造一个 `Projection.BLOCK` 的 watch 和返回 false 的“扫描”，证明审计抓得到说谎的投影。
+
+## 2026-10-24 / 结构跟踪阶段 1 收尾 批次 8：顺手修
+
+- 安全网分桶：`WorldData.safety` 按 600 相位存 tracker，`StructureTracker` 创建时按位置哈希入桶；每 tick 只遍历当前相位的桶。`safetyVisitedForTests()` 记录本 tick 访问数。
+- `Footprint` 稠密索引阈值从“包围盒体积 ≤ 1_000_000”改为“体积 ≤ 8 × 格子数”，否则走已有的哈希路径；两个相距很远的格子不再分配最大 4 MB 的数组。
+- 删除 `StructureTracking.evaluate` 里的 `else if (safety && wasFormed != formed)`：读代码确认 `markFormed`/`markBroken` 的返回值已经覆盖边沿，这一支只在扫描中途被 `invalidate` 时重复通知。`StructureTracker.safety`、`enqueue` 的第二个参数和 `evaluateForTests(entity, safety)` 一并删除。
+- `onChanged` 里的 `List.copyOf` 保留：`structureFormedChanged(false)` 可能经 `setBlock` 重入 `onChanged`，`clearWatch` 会改列表，确认不了就按卡的要求保留。
+- `BehaviorMachineBlockEntity.getUpdatePacket` 未改：`create(this)` 只在 `sendBlockUpdated` 后取载荷，成型的边沿同步已经由 `ClientFormedSync.send` 控制；gametest 里量不出多发数量，按卡不做。

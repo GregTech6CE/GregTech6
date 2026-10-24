@@ -58,25 +58,29 @@ public class LightningRodControllerBlockEntity extends GTEnergyBlockEntity imple
     @Override
     public boolean scanStructure() {
         rodLength = 0;
-        if (level == null || isRemoved()) return false;
-        boolean originalId = getBlockState().getBlock() instanceof OriginalLightningRodControllerBlock;
-        for (int y = 0; y < 5; y++)
-            for (int x = -1; x <= 1; x++)
-                for (int z = -1; z <= 1; z++) {
-                    var partPos = worldPosition.offset(x, y, z);
-                    if (partPos.equals(worldPosition)) continue;
-                    var requiredBlock = originalId
-                            ? LargeMachineParts.block(y % 2 == 0 ? 18004 : 18041)
-                            : y % 2 == 0 ? GTMultiblocks.TUNGSTEN_WALL.get()
-                            : GTMultiblocks.LARGE_NIOBIUM_TITANIUM_COIL.get();
-                    if (!level.hasChunkAt(partPos)
-                            || !(level.getBlockState(partPos).getBlock() == requiredBlock)) return false;
-                }
-        var rodBlock = originalId ? LargeMachineParts.block(18104) : GTMultiblocks.LIGHTNING_ROD.get();
-        while (worldPosition.getY() + 5 + rodLength < level.getMaxBuildHeight()
-                && level.getBlockState(worldPosition.above(5 + rodLength)).is(rodBlock))
-            rodLength++;
-        return true;
+        try {
+            if (level == null || isRemoved()) return false;
+            boolean originalId = getBlockState().getBlock() instanceof OriginalLightningRodControllerBlock;
+            for (int y = 0; y < 5; y++)
+                for (int x = -1; x <= 1; x++)
+                    for (int z = -1; z <= 1; z++) {
+                        var partPos = worldPosition.offset(x, y, z);
+                        if (partPos.equals(worldPosition)) continue;
+                        var requiredBlock = originalId
+                                ? LargeMachineParts.block(y % 2 == 0 ? 18004 : 18041)
+                                : y % 2 == 0 ? GTMultiblocks.TUNGSTEN_WALL.get()
+                                : GTMultiblocks.LARGE_NIOBIUM_TITANIUM_COIL.get();
+                        if (!level.hasChunkAt(partPos)
+                                || !(level.getBlockState(partPos).getBlock() == requiredBlock)) return false;
+                    }
+            var rodBlock = originalId ? LargeMachineParts.block(18104) : GTMultiblocks.LIGHTNING_ROD.get();
+            while (worldPosition.getY() + 5 + rodLength < level.getMaxBuildHeight()
+                    && level.getBlockState(worldPosition.above(5 + rodLength)).is(rodBlock))
+                rodLength++;
+            return true;
+        } finally {
+            com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.noteMatchedLayers(this, new int[]{rodLength});
+        }
     }
 
     /** Called by the weather roll; also a deterministic seam for structure/energy regression tests. */
