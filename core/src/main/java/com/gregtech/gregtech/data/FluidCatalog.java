@@ -248,10 +248,10 @@ public class FluidCatalog {
 
     public static final FluidEntry
             Error = fluid("Error", "error").withFlags(FluidFlags.HIDDEN),
-            UUM = fluid("UUM", "ic2uumatter").withGlint(),
-            MatterNeutral = fluid("MatterNeutral", "neutralmatter").withGlint().withDensity(-5000).withLuminosity(15),
-            MatterCharged = fluid("MatterCharged", "chargedmatter").withGlint().withDensity(-5000).withLuminosity(15),
-            UUAmplifier = fluid("UUAmplifier", "uuamplifier"),
+            UUM = fluid("UUM", "ic2uumatter").withTemperature(100).withGlint(),
+            MatterNeutral = fluid("MatterNeutral", "neutralmatter").withTemperature(1).withGlint().withDensity(-5000).withLuminosity(15),
+            MatterCharged = fluid("MatterCharged", "chargedmatter").withTemperature(1).withGlint().withDensity(-5000).withLuminosity(15),
+            UUAmplifier = fluid("UUAmplifier", "uuamplifier").withTemperature(100),
             NitroFuel = fluid("NitroFuel", "nitrofuel"),
             XP = fluid("XP", "xpjuice").withGlint().withFlags(FluidFlags.MAGIC | FluidFlags.VOID_OVERFLOW),
             XP_Molten = fluid("XP_Molten", "xp").withGlint().withFlags(FluidFlags.MAGIC | FluidFlags.VOID_OVERFLOW),
@@ -621,7 +621,7 @@ public class FluidCatalog {
     // Oils
     // =======================================================================
 
-            Oil_Frying = fluid("Oil_Frying", "hotfryingoil").withFlags(FluidFlags.FOOD | FluidFlags.COOKING_OIL | FluidFlags.BATH),
+            Oil_Frying = fluid("Oil_Frying", "hotfryingoil").withTemperature(400).withFlags(FluidFlags.FOOD | FluidFlags.COOKING_OIL | FluidFlags.BATH),
             Oil_Seed = fluid("Oil_Seed", "seedoil").withFlags(FluidFlags.FOOD | FluidFlags.COOKING_OIL | FluidFlags.BATH),
             Oil_Plant = fluid("Oil_Plant", "plantoil").withFlags(FluidFlags.FOOD | FluidFlags.COOKING_OIL | FluidFlags.BATH),
             Oil_Sunflower = fluid("Oil_Sunflower", "sunfloweroil").withFlags(FluidFlags.FOOD | FluidFlags.COOKING_OIL | FluidFlags.BATH),
@@ -666,7 +666,7 @@ public class FluidCatalog {
             Lubricant = fluid("Lubricant", "lubricant").withFlags(FluidFlags.LUBRICANT),
             LubRoCant = fluid("LubRoCant", "rc lubricant").withFlags(FluidFlags.LUBRICANT),
             Coolant_IC2 = fluid("Coolant_IC2", "ic2coolant"),
-            Coolant_IC2_Hot = fluid("Coolant_IC2_Hot", "ic2hotcoolant").withFlags(FluidFlags.POWER_CONDUCTING),
+            Coolant_IC2_Hot = fluid("Coolant_IC2_Hot", "ic2hotcoolant").withTemperature(1200).withFlags(FluidFlags.POWER_CONDUCTING),
             Glue = fluid("Glue", "glue"),
             Latex = fluid("Latex", "latex").withTemperature(DEF_ENV_TEMP),
             Resin = fluid("Resin", "resin"),
@@ -678,7 +678,7 @@ public class FluidCatalog {
             Sewage = fluid("Sewage", "sewage"),
             Sludge = fluid("Sludge", "sludge"),
             Tar = fluid("Tar", "tar"),
-            Glass = fluid("Glass", "glass"),
+            Glass = fluid("Glass", "glass").withTemperature(1200),
             Sluice = fluid("Sluice", "sluicejuice"),
             Indigo = fluid("Indigo", "indigo"),
 
@@ -686,7 +686,7 @@ public class FluidCatalog {
     // Molten salts / reactor fluids
     // =======================================================================
 
-            Thorium_Salt = fluid("Thorium_Salt", "thoriumsalt"),
+            Thorium_Salt = fluid("Thorium_Salt", "thoriumsalt").withTemperature(600),
             Hot_Molten_Sodium = fluid("Hot_Molten_Sodium", "hotmoltensodium").withTemperature(1100).withFlags(FluidFlags.POWER_CONDUCTING),
             Hot_Molten_Tin = fluid("Hot_Molten_Tin", "hotmoltentin").withTemperature(2800).withFlags(FluidFlags.POWER_CONDUCTING),
             Hot_Heavy_Water = fluid("Hot_Heavy_Water", "hotheavywater").withTemperature(600).withFlags(FluidFlags.POWER_CONDUCTING),
