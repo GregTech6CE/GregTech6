@@ -403,13 +403,18 @@ public class RecipeMap {
     private record MakeResult(Recipe recipe, boolean collapsed) {}
 
     private Recipe addMade(MakeResult made) {
-        return addMade(made, true, false, false);
+        return addMade(made, true, false, false, mLogErrors);
     }
 
     /** Counts a dropped row on this map, then registers whatever {@code made} still holds. */
     private Recipe addMade(MakeResult made, boolean aCheckForCollisions, boolean aFakeRecipe, boolean aHidden) {
+        return addMade(made, aCheckForCollisions, aFakeRecipe, aHidden, mLogErrors);
+    }
+
+    private Recipe addMade(MakeResult made, boolean aCheckForCollisions, boolean aFakeRecipe, boolean aHidden,
+                           boolean aLogErrors) {
         if (made.collapsed()) COLLAPSED_BY_MAP.merge(mNameInternal, 1, Integer::sum);
-        return addRecipe(made.recipe(), aCheckForCollisions, aFakeRecipe, aHidden, mLogErrors);
+        return addRecipe(made.recipe(), aCheckForCollisions, aFakeRecipe, aHidden, aLogErrors);
     }
 
     /**
