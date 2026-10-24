@@ -66,9 +66,11 @@ public final class LogisticsCoreTests {
                 .filter(c -> c.kind() == LogisticsCoreStructure.Kind.CPU).findFirst().orElseThrow();
         BlockPos cpu = cpuCell.at(core.getBlockPos(), Direction.EAST);
         helper.getLevel().setBlock(cpu, LargeMachineParts.block(LogisticsCoreStructure.LOGIC).defaultBlockState(), 3);
+        helper.assertTrue(StructureTestSupport.ok(core), "Logic Quadcore keeps the core formed");
         helper.assertTrue(core.processorCounts().equals(new LogisticsCoreStructure.Counts(30, 26, 26, 26)),
                 "Logic Quadcore contributes four logic in place of one Versatile");
         helper.getLevel().setBlock(cpu, LargeMachineParts.block(LogisticsCoreStructure.WALL).defaultBlockState(), 3);
+        helper.assertTrue(StructureTestSupport.ok(core), "a cheap interior wall keeps the core formed");
         helper.assertTrue(core.processorCounts().equals(new LogisticsCoreStructure.Counts(26, 26, 26, 26)),
                 "cheap interior wall contributes no processors");
         helper.getLevel().setBlock(cpu, Blocks.AIR.defaultBlockState(), 3);

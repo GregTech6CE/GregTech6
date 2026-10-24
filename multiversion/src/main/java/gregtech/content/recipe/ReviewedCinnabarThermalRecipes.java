@@ -2,6 +2,8 @@ package gregtech.content.recipe;
 import gregtech.internal.addon.AddonMaterials;
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
+import gregtech.internal.material.*;
+import gregtech.internal.material.*;
 import gregtech.content.data.*;
 import gregtech.content.registry.GTItems;
 import net.minecraft.world.item.ItemStack;
@@ -11,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 //?}
 import static gregtech.api.material.GTValues.U;
-/** Ignored bounded source adapter: ordinary Cinnabar forms -> Mercury, NOT a universal recycling listener. */
+/** Bounded source thermal adapter: Cinnabar forms -> Mercury plus ordinary Ti/Fe dust; not a universal recycling listener. */
 public final class ReviewedCinnabarThermalRecipes {
  private ReviewedCinnabarThermalRecipes(){}
  private record Form(MaterialPrefix prefix,long amount){}
@@ -21,6 +23,7 @@ public final class ReviewedCinnabarThermalRecipes {
   new Form(MaterialPrefix.crushedPurified,10*(U/8)),new Form(MaterialPrefix.crushedPurifiedTiny,10*(U/72)),
   new Form(MaterialPrefix.crushedCentrifuged,11*(U/8)),new Form(MaterialPrefix.crushedCentrifugedTiny,11*(U/72))};
  public static boolean emitIfSupported(GTMaterial material){
+  if(emitWholeDustMetal(material))return true;
   if(!ReviewedCinnabarFacts.supports(material))return false;
   material=material.resolve();var target=material.getTargetSmeltingMaterial();
   if(target==null||!target.isValid())return false;target=target.resolve();
@@ -44,6 +47,37 @@ public final class ReviewedCinnabarThermalRecipes {
   inputs.add(new Input(block,9*U));
   for(var input:inputs)emit(input.stack,input.amount,target);
   return true; // Only replaces this producer's old dust row; no mapwide removals.
+ }
+ /** Source Ti/Fe targets lack FURNACE; preserve Smelter, do not invent a generic Melter row.
+  * Only this producer's old ordinary dust row is replaced. Independent/mapwide rows are untouched.
+  */
+ private static boolean emitWholeDustMetal(GTMaterial material){
+  if(material==null||!material.isValid())return false;
+  material=material.resolve();String field="GenMolten_"+material.getName();
+  if(!ReviewedOreGeneratedFluids.wholeDustMetal(material,RegisteredFluids.get(field)))return false;
+  var input=GTItems.getStack(MaterialPrefix.dust,material,1);
+  // Both native registrars install an explicit self/dust/U composition for every material item.
+  // Exact equivalent compositions are harmless; changed/mixed/unrecoverable bindings still defer.
+  if(input.isEmpty()||!unchangedInput(input,MaterialPrefix.dust,material,U))return false;
+  var fluid=gregtech.content.registry.GTFluids.stack(field,144);
+  String expected="gt6ce:molten_"+material.getName().toLowerCase(java.util.Locale.ROOT);
+  if(fluid==null||fluid.isEmpty()||fluid.getAmount()!=144
+    ||!net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(fluid.getFluid()).toString().equals(expected))return false;
+  // Independent paired original literals: floor(weight*(melting-293)/1600), density4.54/7.874.
+  long ticks=material.getId()==220?519:830;
+  MachineRecipeMaps.Smelter.addRecipe1(true,16,ticks,input,(FluidStack)null,fluid,new ItemStack[0]);
+  // Finite extension of this reviewed Ti/Fe single-material source branch, not generic recycling.
+  // Missing forms stay missing; explicit changed compositions defer independently, never deleted.
+  for(var prefix:new MaterialPrefix[]{MaterialPrefix.dustSmall,MaterialPrefix.dustTiny}){
+   var fraction=GTItems.getStack(prefix,material,1);
+   long amount=prefix==MaterialPrefix.dustSmall?U/4:U/9;
+   if(fraction.isEmpty()||!unchangedInput(fraction,prefix,material,amount))continue;
+   boolean tiny=prefix==MaterialPrefix.dustTiny;
+   long fractionTicks=material.getId()==220?(tiny?57:129):(tiny?92:207);
+   var fractionFluid=fluid.copy();fractionFluid.setAmount(tiny?16:36);
+   MachineRecipeMaps.Smelter.addRecipe1(true,16,fractionTicks,fraction,(FluidStack)null,fractionFluid,new ItemStack[0]);
+  }
+  return true;
  }
  private static boolean unchangedInput(ItemStack stack,MaterialPrefix prefix,GTMaterial material,long amount){
   if(stack.isEmpty())return true; // Missing forms were not registered by this producer either.

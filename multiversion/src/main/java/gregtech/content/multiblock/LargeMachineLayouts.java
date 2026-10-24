@@ -50,6 +50,12 @@ public final class LargeMachineLayouts {
      */
     public static List<Placed> repeatCells(net.minecraft.world.level.Level level,BlockPos origin,Direction front,
                                            Repeat repeat,java.util.function.BiPredicate<Cell,BlockPos> matches){
+        return repeatCells(level, origin, front, repeat, matches, null);
+    }
+    /** Same walk, with the number of complete copies written to {@code matchedOut[0]} even on failure. */
+    public static List<Placed> repeatCells(net.minecraft.world.level.Level level,BlockPos origin,Direction front,
+                                           Repeat repeat,java.util.function.BiPredicate<Cell,BlockPos> matches,
+                                           int[] matchedOut){
         int span=Math.max(1,level.getHeight());
         int limit=Math.min(span,repeat.max()<0?MAX_REPEATS:repeat.max());
         var out=new ArrayList<Placed>();
@@ -66,6 +72,7 @@ public final class LargeMachineLayouts {
             out.addAll(copyCells);
             matched++;
         }
+        if(matchedOut!=null)matchedOut[0]=matched;
         return matched<repeat.min()?null:List.copyOf(out);
     }
     public static List<Cell> fromShared(List<SharedLargeMachineLayouts.Cell> cells){return cells==null?null:cells.stream().map(cell->new Cell(cell.right(),cell.up(),cell.back(),cell.part(),Role.valueOf(cell.role().name()),cell.plain(),cell.design(),cell.alternatives())).toList();}

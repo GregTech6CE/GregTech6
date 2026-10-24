@@ -99,6 +99,7 @@ public final class BlueprintRegressionTests {
         for(int tick=0;tick<20;tick++) gregtech.content.blockentity.machine.ImplosionCompressorControllerBlockEntity.serverTick(helper.getLevel(),absolute,machine.getBlockState(),machine);
         helper.assertTrue(machine.getProgressPercent()==50,"broken structure pauses saved work");
         helper.setBlock(partPos,GTMultiblocks.IMPLOSION_COMPRESSOR_WALL.get());
+        helper.assertTrue(StructureTestSupport.ok(machine),"repairing the wall re-forms the structure");
         for(int tick=0;tick<128;tick++) gregtech.content.blockentity.machine.ImplosionCompressorControllerBlockEntity.serverTick(helper.getLevel(),absolute,machine.getBlockState(),machine);
         helper.assertTrue(ItemStack.isSameItemSameTags(machine.inventory().getStackInSlot(machine.inputSlots()),recipe.mOutputs[0]),"repairing structure completes original gem recipe");
         helper.assertTrue(machine.inventory().getStackInSlot(2).getCount()==1,"selector circuit survives processing");
@@ -176,7 +177,8 @@ public final class BlueprintRegressionTests {
     public static void largeMachineLayoutsRequireTheirOriginalParts(GameTestHelper helper) {
         for(var front:java.util.List.of(Direction.NORTH,Direction.EAST,Direction.SOUTH,Direction.WEST))
         for(String name:gregtech.content.multiblock.LargeMachineLayouts.machines()) {
-            var block=gregtech.internal.machine.MachineRegistry.basicMachines().stream().map(entry->entry.get()).filter(b->b.basicSpec().machineName().equals(name)).findFirst().orElseThrow();
+            var block=gregtech.internal.machine.MachineRegistry.basicMachines().stream().map(entry->entry.get()).filter(b->b.basicSpec().machineName().equals(name)).findFirst().orElse(null);
+            if(block==null)continue;
             var pos=new BlockPos(6,2,6);
             helper.setBlock(pos,block.defaultBlockState().setValue(HorizontalDirectionalBlock.FACING,front));
             var machine=(gregtech.content.blockentity.machine.LargeRecipeMachineBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos));

@@ -29,6 +29,7 @@
     "LevelChunkStructureWatchMixin",
     "LevelStructureProbeMixin",
     "ServerChunkCacheStructureProbeMixin",
+    "ServerLevelStructureDataMixin",
     "CoverDropMixin",
     "ExperienceOrbCountAccessor",
     "CoverWalkMixin",

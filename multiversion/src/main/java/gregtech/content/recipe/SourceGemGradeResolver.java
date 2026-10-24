@@ -8,8 +8,9 @@ import gregtech.content.registry.GTItems;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
 /** Recipe-local source availability. Never unregisters legacy items or changes their IDs.
- * Call after explicit external material-form registrations are available; reload rebuild must use
- * the same producer ownership boundary. Generic tags and chemical composition alone are not grades.
+ * The reviewed Sifting caller resolves outputs once while capturing startup definitions, after
+ * supported explicit form registrations are available. This does not rebind outputs from later
+ * crafting-grade tag aliases. Generic tags and chemical composition alone are not stored grades.
  */
 public final class SourceGemGradeResolver {
     private SourceGemGradeResolver() {}
@@ -39,7 +40,9 @@ public final class SourceGemGradeResolver {
             external=stack;
         }
         if(!external.isEmpty()) return external;
-        var decision=ReviewedOreSourceProfile.decision(material,ReviewedOreSourceProfile.Rule.GRADED_GEM);
+        var decision=ReviewedSiftingGemForms.decision(material,prefix);
+        if(decision==ReviewedOreSourceProfile.Decision.UNKNOWN)
+            decision=ReviewedOreSourceProfile.decision(material,ReviewedOreSourceProfile.Rule.GRADED_GEM);
         if(decision!=ReviewedOreSourceProfile.Decision.NO&&!canonical.isEmpty()) return canonical;
         return copyAmount(ordinaryGem,fallbackCount);
     }

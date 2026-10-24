@@ -126,6 +126,7 @@ public final class CoinAndPileAssetTests {
     private static Set<String> expectedCoins() {
         Set<String> ids = new TreeSet<>();
         for (GTMaterial material : GTMaterialRegistry.sortedMaterials()) {
+            if (gregtech.internal.addon.AddonMaterials.owner(material) != null) continue;
             if (material.has(MaterialProperty.HIDDEN)) continue;
             if (material.resolve() != material) continue;
             if (!MaterialPrefix.coin.isValidFor(material)) continue;
@@ -166,6 +167,7 @@ public final class CoinAndPileAssetTests {
         List<String> problems = new ArrayList<>();
         // Per material: its own coin item, of its own material, under the prefix's own item id.
         for (GTMaterial material : GTMaterialRegistry.sortedMaterials()) {
+            if (gregtech.internal.addon.AddonMaterials.owner(material) != null) continue;
             if (material.has(MaterialProperty.HIDDEN)) continue;
             if (material.resolve() != material) continue;
             if (!MaterialPrefix.coin.isValidFor(material)) continue;
@@ -444,7 +446,7 @@ public final class CoinAndPileAssetTests {
             }
             // The block/item name of the block, in both languages.
             for (String language : new String[]{"en_us", "zh_cn"}) {
-                if (!resourceJson("assets/gt6ce/lang/" + language + ".json").has("block.gt6ce." + block)) {
+                if (!GametestLang.load(language).has("block.gt6ce." + block)) {
                     problems.add(language + " has no name for block.gt6ce." + block);
                 }
             }
@@ -508,7 +510,7 @@ public final class CoinAndPileAssetTests {
         // icon item GTCreativeTabIcons registers per prefix, whose name the suite's translation guard
         // (MaterialCompatibilityTests.registeredNamesHaveTranslations) reads like any other item's.
         for (String language : new String[]{"en_us", "zh_cn"}) {
-            JsonObject lang = resourceJson("assets/gt6ce/lang/" + language + ".json");
+            JsonObject lang = GametestLang.load(language);
             for (String key : new String[]{"item.gt6ce.coin", "itemGroup.gt6ce.coin",
                     "item.gt6ce.tab_icon_coin"}) {
                 if (!lang.has(key)) problems.add(language + " has no " + key);

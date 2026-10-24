@@ -223,7 +223,7 @@ public final class CrankTests {
     @GameTest(template = "test_empty", timeoutTicks = 200)
     public static void crankTranslationKeysStayComplete(GameTestHelper helper) throws Exception {
         for (String language : new String[]{"en_us", "zh_cn"}) {
-            JsonObject lang = resourceJson("assets/gt6ce/lang/" + language + ".json");
+            JsonObject lang = GametestLang.load(language);
             for (String key : new String[]{"block.gt6ce.crank", "gt.tooltip.crank.1", "gt.tooltip.crank.2"}) {
                 helper.assertTrue(lang.has(key), language + " has no key " + key);
             }

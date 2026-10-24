@@ -2,6 +2,7 @@ package gregtech.internal.multiblock.tracking;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
@@ -9,7 +10,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
@@ -18,30 +21,42 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.WeakHashMap;
 
-/** Section and chunk indexes for one server world. */
+/** Section and chunk indexes for one server world. The data lives on the {@code ServerLevel}. */
 public final class StructureWatchIndex {
-    private static final Map<Level, WorldData> WORLDS = new WeakHashMap<>();
-
     private StructureWatchIndex() {}
 
-    static WorldData data(Level level) {
-        return WORLDS.computeIfAbsent(level, key -> new WorldData());
+    private static WorldData existing(ServerLevel level) {
+        return ((StructureLevelData) (Object) level).gt$structureData();
+    }
+
+    static WorldData data(ServerLevel level) {
+        if (level.isClientSide) {
+            throw new IllegalStateException("structure tracking data requested for a client level");
+        }
+        if (StructureScanProbe.enabled() && !level.getServer().isSameThread()) {
+            throw new IllegalStateException("structure tracking data touched off the server thread");
+        }
+        WorldData data = existing(level);
+        if (data == null) {
+            data = new WorldData();
+            ((StructureLevelData) (Object) level).gt$structureData(data);
+        }
+        return data;
     }
 
     public static void defer(ServerLevel level, long chunk) {
         data(level).pending.add(chunk);
     }
 
-    public static boolean pending(Level level, long chunk) {
-        WorldData data = WORLDS.get(level);
+    public static boolean pending(ServerLevel level, long chunk) {
+        WorldData data = existing(level);
         return data != null && data.pending.contains(chunk);
     }
 
     public static void onPortReleased(ServerLevel level, BlockPos pos, BlockPos owner) {
         if (level == null || pos == null) return;
-        WorldData data = WORLDS.get(level);
+        WorldData data = existing(level);
         if (data == null) return;
         List<StructureTracker> trackers = data.sections.get(sectionKey(pos));
         if (trackers == null) return;
@@ -50,17 +65,26 @@ public final class StructureWatchIndex {
             if (owner != null && owner.equals(tracker.pos())) continue;
             Footprint watch = tracker.watch();
             if (watch == null || watch.indexOf(pos) < 0) continue;
-            tracker.enqueue(false, false);
-            data.dirty.add(tracker);
+            tracker.enqueue(false);
+            addDirty(data, tracker);
         }
     }
 
-    static void unloadWorld(Level level) {
-        WORLDS.remove(level);
+    static void unloadWorld(ServerLevel level) {
+        WorldData data = existing(level);
+        if (data == null) return;
+        data.dirty.clear();
+        data.pending.clear();
+        data.entities.clear();
+        data.all.clear();
+        data.sections.clear();
+        data.chunks.clear();
+        data.safety.clear();
+        ((StructureLevelData) (Object) level).gt$structureData(null);
     }
 
     public static void onChanged(ServerLevel level, BlockPos pos, BlockState oldState, BlockState newState) {
-        WorldData data = WORLDS.get(level);
+        WorldData data = existing(level);
         if (data == null) return;
         long section = sectionKey(pos);
         List<StructureTracker> trackers = data.sections.get(section);
@@ -70,10 +94,14 @@ public final class StructureWatchIndex {
             if (watch == null) continue;
             int cell = watch.indexOf(pos);
             if (cell < 0) continue;
-            if (watch.projection(cell).equivalent(level, pos, oldState, newState)) continue;
+            if (watch.projection(cell).equivalent(level, pos, oldState, newState)) {
+                if (StructureScanProbe.auditing() && !StructureScanProbe.inScan())
+                    StructureTracking.auditEquivalent(tracker);
+                continue;
+            }
             if (pos.equals(tracker.pos())) tracker.noteFacing();
-            boolean fell = tracker.invalidate();
-            data.dirty.add(tracker);
+            boolean fell = tracker.invalidateCell(pos);
+            addDirty(data, tracker);
             if (fell) {
                 tracker.machine().structureFormedChanged(false);
                 ClientFormedSync.send(tracker.entity());
@@ -95,13 +123,14 @@ public final class StructureWatchIndex {
         if (trackers == null) return;
         for (StructureTracker tracker : List.copyOf(trackers)) {
             if (tracker.unloading() || tracker.entity().isRemoved()) continue;
-            tracker.enqueue(false, false);
-            data.dirty.add(tracker);
+            tracker.noteChunkReloaded(key);
+            tracker.enqueue(false);
+            addDirty(data, tracker);
         }
     }
 
     static void chunkUnloaded(ServerLevel level, ChunkPos pos) {
-        WorldData data = WORLDS.get(level);
+        WorldData data = existing(level);
         if (data == null) return;
         long key = pos.toLong();
         data.pending.remove(key);
@@ -110,13 +139,25 @@ public final class StructureWatchIndex {
         for (StructureTracker tracker : List.copyOf(trackers)) {
             if (tracker.unloading()) continue;
             boolean fell = tracker.suspend();
-            data.dirty.remove(tracker);
-            if (fell) tracker.machine().structureFormedChanged(false);
+            removeDirty(data, tracker);
+            if (fell) {
+                tracker.machine().structureFormedChanged(false);
+                // The unload event runs before this chunk is saved. sendBlockUpdated evaluates
+                // collision shapes, whose cover hooks look up the BE and can reload an absent
+                // controller before its saved data exists. Only notify a surviving live controller.
+                BlockPos controller = tracker.pos();
+                BlockEntity entity = tracker.entity();
+                if (ChunkPos.asLong(controller) != key && !entity.isRemoved() && level.hasChunkAt(controller)) {
+                    LevelChunk loaded = level.getChunkSource().getChunkNow(controller.getX() >> 4, controller.getZ() >> 4);
+                    if (loaded != null && loaded.getBlockEntities().get(controller) == entity)
+                        ClientFormedSync.send(entity);
+                }
+            }
         }
     }
 
     static void promotePending(ServerLevel level) {
-        WorldData data = WORLDS.get(level);
+        WorldData data = existing(level);
         if (data == null || data.pending.isEmpty()) return;
         Iterator<Long> pending = data.pending.iterator();
         while (pending.hasNext()) {
@@ -130,28 +171,30 @@ public final class StructureWatchIndex {
             if (trackers == null) continue;
             for (StructureTracker tracker : List.copyOf(trackers)) {
                 if (tracker.unloading() || tracker.entity().isRemoved()) continue;
-                tracker.enqueue(false, false);
-                data.dirty.add(tracker);
+                tracker.noteChunkReloaded(key);
+                tracker.enqueue(false);
+                addDirty(data, tracker);
             }
         }
     }
 
     static StructureTracker tracker(BlockEntity entity) {
         Level level = entity.getLevel();
-        if (level == null) return null;
-        WorldData data = WORLDS.get(level);
+        if (!(level instanceof ServerLevel server)) return null;
+        WorldData data = existing(server);
         return data == null ? null : data.entities.get(entity);
     }
 
     static StructureTracker attach(TrackedMultiblock machine) {
         BlockEntity entity = machine.trackedEntity();
-        Level level = entity.getLevel();
-        WorldData data = data(level);
+        if (!(entity.getLevel() instanceof ServerLevel server)) return null;
+        WorldData data = data(server);
         StructureTracker existing = data.entities.get(entity);
         if (existing != null) return existing;
         StructureTracker tracker = new StructureTracker(machine);
         data.entities.put(entity, tracker);
         data.all.add(tracker);
+        data.safety.computeIfAbsent(tracker.safetyBucket(), key -> new LinkedHashSet<>()).add(tracker);
         return tracker;
     }
 
@@ -165,8 +208,8 @@ public final class StructureWatchIndex {
         paint(level, footprint, true);
     }
 
-    static void clearWatch(Level level, StructureTracker tracker) {
-        WorldData data = WORLDS.get(level);
+    static void clearWatch(ServerLevel level, StructureTracker tracker) {
+        WorldData data = existing(level);
         Footprint footprint = tracker.watch();
         if (data == null || footprint == null || footprint.size() == 0 && footprint.sections().length == 0) {
             tracker.watch(Footprint.EMPTY);
@@ -174,60 +217,87 @@ public final class StructureWatchIndex {
         }
         for (long section : footprint.sections()) remove(data.sections, section, tracker);
         for (long chunk : footprint.chunks()) remove(data.chunks, chunk, tracker);
-        if (level instanceof ServerLevel server) paint(server, footprint, false);
+        paint(level, footprint, false);
         tracker.watch(Footprint.EMPTY);
     }
 
     static void remove(StructureTracker tracker) {
         BlockEntity entity = tracker.entity();
-        Level level = entity.getLevel();
-        if (level != null) clearWatch(level, tracker);
-        if (level == null) return;
-        WorldData data = WORLDS.get(level);
+        if (entity.getLevel() instanceof ServerLevel server) clearWatch(server, tracker);
+        if (!(entity.getLevel() instanceof ServerLevel server)) return;
+        WorldData data = existing(server);
         if (data == null) return;
         data.entities.remove(entity);
         data.all.remove(tracker);
-        data.dirty.remove(tracker);
+        removeDirty(data, tracker);
+        Set<StructureTracker> bucket = data.safety.get(tracker.safetyBucket());
+        if (bucket != null) {
+            bucket.remove(tracker);
+            if (bucket.isEmpty()) data.safety.remove(tracker.safetyBucket());
+        }
     }
 
     static void enqueue(StructureTracker tracker) {
-        Level level = tracker.entity().getLevel();
-        if (level == null) return;
-        data(level).dirty.add(tracker);
+        if (!(tracker.entity().getLevel() instanceof ServerLevel server)) return;
+        addDirty(data(server), tracker);
     }
 
-    static void enqueueAll() {
-        for (WorldData data : WORLDS.values()) {
+    static void enqueueAll(MinecraftServer server) {
+        for (ServerLevel level : server.getAllLevels()) {
+            WorldData data = existing(level);
+            if (data == null) continue;
             for (StructureTracker tracker : data.all) {
                 if (tracker.unloading() || tracker.entity().isRemoved()) continue;
-                tracker.enqueue(false, false);
-                data.dirty.add(tracker);
+                tracker.enqueue(false);
+                addDirty(data, tracker);
             }
         }
     }
 
-    static List<StructureTracker> drainDirty(Level level) {
-        WorldData data = WORLDS.get(level);
+    static List<StructureTracker> drainDirty(ServerLevel level) {
+        WorldData data = existing(level);
         if (data == null || data.dirty.isEmpty()) return List.of();
         List<StructureTracker> batch = new ArrayList<>(data.dirty);
         data.dirty.clear();
+        for (StructureTracker tracker : batch) tracker.queued(false);
         return batch;
     }
 
+    /** Returns an unprocessed tracker to the head, keeping its queue slot. */
     static void requeue(StructureTracker tracker) {
-        Level level = tracker.entity().getLevel();
-        if (level == null) return;
-        data(level).dirty.add(tracker);
+        if (!(tracker.entity().getLevel() instanceof ServerLevel server)) return;
+        WorldData data = data(server);
+        data.dirty.remove(tracker);
+        tracker.queued(true);
+        data.dirty.addFirst(tracker);
     }
 
-    static boolean hasDirty(Level level) {
-        WorldData data = WORLDS.get(level);
+    private static void addDirty(WorldData data, StructureTracker tracker) {
+        if (tracker.queued()) return;
+        tracker.queued(true);
+        data.dirty.addLast(tracker);
+    }
+
+    private static void removeDirty(WorldData data, StructureTracker tracker) {
+        if (!tracker.queued()) return;
+        tracker.queued(false);
+        data.dirty.remove(tracker);
+    }
+
+    static boolean hasDirty(ServerLevel level) {
+        WorldData data = existing(level);
         return data != null && !data.dirty.isEmpty();
     }
 
-    static Iterable<StructureTracker> all(Level level) {
-        WorldData data = WORLDS.get(level);
+    static Iterable<StructureTracker> all(ServerLevel level) {
+        WorldData data = existing(level);
         return data == null ? List.of() : data.all;
+    }
+
+    static Iterable<StructureTracker> safetyBucket(ServerLevel level, int bucket) {
+        WorldData data = existing(level);
+        if (data == null) return List.of();
+        return data.safety.getOrDefault(bucket, java.util.Set.of());
     }
 
     private static void paint(ServerLevel level, Footprint footprint, boolean ignored) {
@@ -278,12 +348,13 @@ public final class StructureWatchIndex {
                 SectionPos.blockToSectionCoord(pos.getY()), SectionPos.blockToSectionCoord(pos.getZ()));
     }
 
-    static final class WorldData {
+    public static final class WorldData {
         final Map<Long, List<StructureTracker>> sections = new HashMap<>();
         final Map<Long, List<StructureTracker>> chunks = new HashMap<>();
         final Map<BlockEntity, StructureTracker> entities = new IdentityHashMap<>();
         final Set<StructureTracker> all = new LinkedHashSet<>();
-        final Set<StructureTracker> dirty = new LinkedHashSet<>();
+        final Map<Integer, Set<StructureTracker>> safety = new HashMap<>();
+        final Deque<StructureTracker> dirty = new ArrayDeque<>();
         final Set<Long> pending = new HashSet<>();
     }
 }

@@ -41,7 +41,7 @@ public final class StructureLayoutLifecycle {
         var server = ServerLifecycleHooks.getCurrentServer();
         if (server == null) return;
         StructureLayoutOverlayRuntime.apply(server);
-        gregtech.internal.multiblock.tracking.StructureEpoch.bump();
+        gregtech.internal.multiblock.tracking.StructureEpoch.bump(StructureLayoutOverlayRuntime.lastAffected());
         PacketSyncStructureLayouts.send(server);
     }
 
@@ -49,7 +49,7 @@ public final class StructureLayoutLifecycle {
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void started(ServerStartedEvent event) {
         StructureLayoutOverlayRuntime.apply(event.getServer());
-        gregtech.internal.multiblock.tracking.StructureEpoch.bump();
+        gregtech.internal.multiblock.tracking.StructureEpoch.bump(StructureLayoutOverlayRuntime.lastAffected());
     }
 
     @SubscribeEvent

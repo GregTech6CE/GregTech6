@@ -107,48 +107,48 @@ public final class BumbleHiveTests {
     @GameTest(template = "test_empty", timeoutTicks = 200)
     public static void hiveIsRegistered(GameTestHelper helper) throws Exception {
         List<String> problems = new ArrayList<>();
-        Block hive = GTDecorBlocks.BUMBLE_HIVE.get();
-        if (!GTBlockEntities.BUMBLE_HIVE.get().isValid(hive.defaultBlockState())) {
-            problems.add("the hive block entity type must cover the hive");
-        }
-        if (hive.defaultBlockState().getValue(BumbleHiveBlock.COLOR) != DyeColor.LIGHT_GRAY) {
-            problems.add("GT6's default hive colour is light grey");
-        }
         if (GTFeatures.BUMBLE_HIVES == null || !GTFeatures.BUMBLE_HIVES.getId().getPath().equals("gt_bumble_hives")) {
             problems.add("the feature is registered as gt_bumble_hives");
         }
-        // GT6 tints one pair of icons at runtime; the port bakes all sixteen colours.
-        JsonObject variants = resourceJson("assets/gt6ce/blockstates/bumble_hive.json").getAsJsonObject("variants");
-        if (variants.size() != 16) problems.add("16 baked hive colours expected, got " + variants.size());
+        // The port flattens GT6's runtime tint into sixteen blocks, each with its own baked assets.
         for (DyeColor color : DyeColor.values()) {
             String name = color.getName();
-            JsonElement variant = variants.get("color=" + name);
-            if (variant == null) {
-                problems.add("no block state variant for " + name);
-                continue;
+            Block hive = gregtech.content.registry.GTBumbleBlocks.hive(color);
+            if (!GTBlockEntities.BUMBLE_HIVE.get().isValid(hive.defaultBlockState())) {
+                problems.add("the hive block entity type must cover bumble_hive_" + name);
             }
-            String model = variant.getAsJsonObject().get("model").getAsString();
-            String path = model.startsWith("gt6ce:") ? model.substring("gt6ce:".length()) : model;
-            // The model id's path already starts with "block/", e.g. gregtech:block/bumble_hive_white.
-            if (!resourceExists("assets/gt6ce/models/" + path + ".json")) {
-                problems.add("missing model " + model);
+            JsonObject variants = resourceJson("assets/gt6ce/blockstates/bumble_hive_" + name + ".json")
+                    .getAsJsonObject("variants");
+            if (variants.size() != 1) {
+                problems.add("bumble_hive_" + name + " must have one baked variant");
+            } else {
+                for (var variant : variants.entrySet()) {
+                    String model = variant.getValue().getAsJsonObject().get("model").getAsString();
+                    String path = model.startsWith("gt6ce:") ? model.substring("gt6ce:".length()) : model;
+                    if (!resourceExists("assets/gt6ce/models/" + path + ".json")) {
+                        problems.add("missing model " + model);
+                    }
+                }
+            }
+            if (!resourceExists("assets/gt6ce/models/item/bumble_hive_" + name + ".json")) {
+                problems.add("missing item model bumble_hive_" + name);
             }
             for (String face : new String[]{"bottom", "top", "side"}) {
                 if (!resourceExists("assets/gt6ce/textures/block/nature/bumblehive/" + name + "/" + face + ".png")) {
                     problems.add("missing texture " + name + "/" + face + ".png");
                 }
             }
+            for (String language : new String[]{"en_us", "zh_cn"}) {
+                if (!GametestLang.load(language).has("block.gt6ce.bumble_hive_" + name)) {
+                    problems.add(language + " has no name for block.gt6ce.bumble_hive_" + name);
+                }
+            }
         }
         for (String asset : new String[]{
-                "assets/gt6ce/models/item/bumble_hive.json",
                 // GT6's own tint sources, kept next to the baked colours.
                 "assets/gt6ce/textures/block/nature/bumblehive/colored/side.png",
                 "assets/gt6ce/textures/block/nature/bumblehive/overlay/side.png"}) {
             if (!resourceExists(asset)) problems.add("missing " + asset);
-        }
-        if (!resourceJson("assets/gt6ce/lang/en_us.json").has("block.gt6ce.bumble_hive")
-                || !resourceJson("assets/gt6ce/lang/zh_cn.json").has("block.gt6ce.bumble_hive")) {
-            problems.add("the hive needs its en_us and zh_cn name");
         }
         // Every colony species GT6's table can pick has to exist, with its comb and its four bee types.
         for (int speciesId : COLONY_SPECIES) {

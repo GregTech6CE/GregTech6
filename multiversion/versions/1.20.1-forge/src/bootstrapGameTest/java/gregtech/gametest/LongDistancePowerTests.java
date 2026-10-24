@@ -1,7 +1,6 @@
 package gregtech.gametest;
 
 import gregtech.content.block.misc.*;
-import gregtech.content.blockentity.GTEnergyBlockEntity;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.registry.*;
 import net.minecraft.core.*;
@@ -14,9 +13,10 @@ import net.minecraftforge.gametest.*;
 @PrefixGameTestTemplate(false)
 public final class LongDistancePowerTests {
     private static final BlockPos SOURCE=new BlockPos(2,2,2), RECEIVER=new BlockPos(5,2,2);
-    private static final class Sink extends GTEnergyBlockEntity {
+    private static final class Sink extends LongDistanceTransformerBlockEntity {
         long size, calls;
-        Sink(BlockPos pos,BlockState state){super(GTBlockEntities.LONG_DIST_TRANSFORMER.get(),pos,state);}
+        Sink(BlockPos pos,BlockState state){super(pos,state);}
+        @Override public void tickActivity() {}
         @Override public boolean isEnergyType(GregTechTags.Tag t,Direction s,boolean e){return t==GregTechTags.Energy.EU;}
         @Override public long doEnergyInjection(GregTechTags.Tag t,Direction side,long size,long amount,boolean execute){if(execute){this.size=size;calls++;}return Math.min(1,amount);}
         @Override public long getEnergyDemanded(GregTechTags.Tag t,Direction s,long size){return 1;}

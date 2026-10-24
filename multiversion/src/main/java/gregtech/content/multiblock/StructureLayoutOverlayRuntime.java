@@ -23,11 +23,15 @@ import java.util.TreeMap;
 public final class StructureLayoutOverlayRuntime {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static Map<String, String> documents = Map.of();
+    private static java.util.Set<String> lastAffected = java.util.Set.of();
     private static int logged;
 
     private StructureLayoutOverlayRuntime() {}
 
     public static Map<String, String> documents() { return documents; }
+
+    /** Machine names whose layout changed in the most recent install. */
+    public static java.util.Set<String> lastAffected() { return lastAffected; }
 
     /** Server datapack pass. Restores baselines, then applies the files that remain, in id order. */
     public static void apply(MinecraftServer server) {
@@ -82,6 +86,7 @@ public final class StructureLayoutOverlayRuntime {
         SharedLargeMachineLayouts.overlay(cells, repeats);
         documents = Map.copyOf(accepted);
         previous.addAll(accepted.keySet());
+        lastAffected = java.util.Set.copyOf(previous);
         LargeMachineLayouts.forget(previous);
     }
 

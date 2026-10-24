@@ -1,5 +1,9 @@
 package gregtech.internal.multiblock.tracking;
 
+import net.minecraft.core.Direction;
+
+import java.util.List;
+
 /** What a controller is made of. Phase 1 uses this for footprints and projections; the scan stays on the controller. */
 public sealed interface StructureDefinition permits StructureDefinition.Declarative, StructureDefinition.Custom {
     ClaimPolicy claimPolicy();
@@ -14,6 +18,16 @@ public sealed interface StructureDefinition permits StructureDefinition.Declarat
         return false;
     }
 
+    /** The layout contains tag cells, so a tag reload can change the verdict. */
+    default boolean usesTags() {
+        return false;
+    }
+
+    /** The addon layout name this definition reads, or null when it cannot be overridden. */
+    default String overlayMachine() {
+        return null;
+    }
+
     Footprint watchFootprint(TrackedMultiblock machine);
 
     Footprint declaredFootprint(TrackedMultiblock machine);
@@ -24,7 +38,20 @@ public sealed interface StructureDefinition permits StructureDefinition.Declarat
 
     enum ClaimPolicy { ATOMIC, PER_CELL }
 
-    non-sealed interface Declarative extends StructureDefinition {}
+    non-sealed interface Declarative extends StructureDefinition {
+        /** Compiled offsets and matchers for one facing. Rebuilt when the facing or the epoch changes. */
+        CompiledPattern compile(Direction front);
+
+        /** Extra constraints over matched cells, evaluated from cached choices. */
+        default List<Aggregate> aggregates() {
+            return List.of();
+        }
+
+        /** False keeps this definition on the full scan path while its family has not migrated yet. */
+        default boolean incremental() {
+            return true;
+        }
+    }
 
     non-sealed interface Custom extends StructureDefinition {}
 

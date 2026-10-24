@@ -2,6 +2,7 @@ package gregtech.content.recipe;
 
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
+import gregtech.internal.material.*;
 import gregtech.internal.recipe.*;
 import gregtech.internal.recipe.*;
 import gregtech.content.block.stone.*;
@@ -34,9 +35,11 @@ public final class StoneAndToolSurvivalRecipes {
         for(var material:GTMaterialRegistry.sortedMaterials()) {
             if(material.resolve()!=material||!material.isValid()||material.has(MaterialProperty.ANTIMATTER))continue;
             var rock=GTItems.getStack(MaterialPrefix.rockGt,material);
-            var dust=GTItems.getStack(MaterialPrefix.dustSmall,material,9);
+            // Original Handlers157 / W162: shredding targets pulver material, not input identity.
+            var dust=GTItems.getStack(MaterialPrefix.dustSmall,material.getTargetPulverMaterial().resolve(),9);
             if(!rock.isEmpty()&&!dust.isEmpty()) {
-                var recipe=new Recipe(new ItemStack[]{rock,ItemStack.EMPTY},new ItemStack[]{dust},null,null,null,null,16,16,0);
+                var recipe=new Recipe(new ItemStack[]{rock,ItemStack.EMPTY},new ItemStack[]{dust},null,null,null,null,
+                        Math.max(1,36L*(material.getToolQuality()+1L)),16,0);
                 if(MachineRecipeMaps.Anvil.addRecipe(recipe)!=null)ADDED.add(recipe);
             }
             for(var prefix:gregtech.internal.prefix.PrefixRegistry.all()) {

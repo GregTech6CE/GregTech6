@@ -221,7 +221,10 @@ public final class CustomStructures {
         @Override public boolean tightenWatch() { return true; }
 
         @Override public Footprint watchFootprint(TrackedMultiblock machine) {
-            return rod(entity, 1);
+            StructureTracker tracker = StructureTracking.tracker(entity);
+            int matched = tracker == null || tracker.matchedLayers() == null || tracker.matchedLayers().length == 0
+                    ? 0 : Math.max(0, tracker.matchedLayers()[0]);
+            return rod(entity, matched + 1);
         }
 
         @Override public Footprint declaredFootprint(TrackedMultiblock machine) {

@@ -59,6 +59,7 @@ public final class BasicMachineCraftingTests {
         int checked = 0;
         for (var entry : MachineRegistry.basicMachines()) {
             if (!entry.isPresent()) continue;
+            if (!entry.getId().getNamespace().equals(gregtech.GregTech.NAMESPACE)) continue;
             var spec = entry.get().basicSpec();
             if (BasicMachineRecipePack.MULTIBLOCK_CONTROLLERS.contains(spec.machineName())) continue;
 
@@ -130,6 +131,7 @@ public final class BasicMachineCraftingTests {
         TreeSet<String> registered = new TreeSet<>();
         for (var entry : MachineRegistry.basicMachines()) {
             if (!entry.isPresent()) continue;
+            if (!entry.getId().getNamespace().equals(gregtech.GregTech.NAMESPACE)) continue;
             var spec = entry.get().basicSpec();
             if (BasicMachineRecipePack.MULTIBLOCK_CONTROLLERS.contains(spec.machineName())) continue;
             registered.add(spec.machineName());

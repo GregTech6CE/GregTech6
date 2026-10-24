@@ -31,17 +31,10 @@ public final class OreSourcePolicy {
                 out.add(byproduct);
         return out;
     }
-    /** Bounded positive source flags missing from legacy imports; never infer negatives from absence.
-     * MT original OREMATS.Fe2O3(9104), Magnetite(9122) / paired w declarations: MAGNETIC_PASSIVE.
-     * Recipe-local overlay only: no global material flags, addon rows or identities changed.
-     */
+    /** Direct paired-source magnetic positives; omitted/addon identities retain legacy flags. */
     private static boolean magneticClass(GTMaterial material) {
         var m=material.resolve();
-        if(GTMaterialRegistry.isCoreMaterial(m)&&!gregtech.internal.addon.AddonMaterials.owns(m)) {
-            if((m.getId()==9104&&m.getName().equals("Hematite"))
-                    ||(m.getId()==9122&&m.getName().equals("Magnetite")))return true;
-        }
-        return m.has(MaterialProperty.MAGNETIC); // outside reviewed positives retains legacy
+        return ReviewedMagneticMaterials.sourcePositive(m)||m.has(MaterialProperty.MAGNETIC);
     }
 
 }

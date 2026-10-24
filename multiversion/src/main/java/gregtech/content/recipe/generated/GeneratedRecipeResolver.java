@@ -158,6 +158,25 @@ public final class GeneratedRecipeResolver {
         else skipped++;
     }
 
+    /** Additive exact original-U dust token. Legacy omd thousandths and item counts are unchanged.
+     * The existing OM selector retains fallback forms; malformed/negative/overflowing quantities
+     * are unsupported rather than rounded to one item. Source CS.U is 648648000.
+     */
+    private static ItemStack sourceDust(String[] parts) {
+        if (parts.length != 3 || parts[1].isEmpty() || !parts[2].matches("[1-9][0-9]*")) return null;
+        final long sourceAmount;
+        try { sourceAmount = Long.parseLong(parts[2]); }
+        catch (NumberFormatException invalidAmount) { return null; }
+        var ratio = java.math.BigInteger.valueOf(sourceAmount)
+                .multiply(java.math.BigInteger.valueOf(GTValues.U))
+                .divideAndRemainder(java.math.BigInteger.valueOf(648648000L));
+        // OM.dust can multiply a fractional amount by72. Keep its long arithmetic bounded.
+        if (ratio[1].signum() != 0 || ratio[0].signum() <= 0
+                || ratio[0].compareTo(java.math.BigInteger.valueOf(Long.MAX_VALUE / 72)) > 0) return null;
+        GTMaterial material = material(parts[1]);
+        return material == null ? null : OM.dust(material, ratio[0].longValueExact());
+    }
+
     /**
      * Resolve one transpiled item spec ({@code i:<prefix>:<material>:<count>},
      * {@code tech:<item>:<count>}, {@code v:<vanilla item>:<count>}, …) to a stack.
@@ -195,6 +214,7 @@ public final class GeneratedRecipeResolver {
     private static ItemStack resolveItem(String spec) {
         String[] parts = spec.split(":");
         switch (parts[0]) {
+            case "omdu" -> { return sourceDust(spec.split(":", -1)); }
             case "omd" -> {
                 GTMaterial material = material(parts[1]);
                 if (material == null) return null;

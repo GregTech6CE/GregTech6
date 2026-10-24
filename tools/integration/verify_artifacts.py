@@ -36,10 +36,12 @@ PLATFORMS = {
 # compiler-generated named-to-SRG mappings, including future mixins.
 # GasImmersionMixin injects only setFluidTypeHeight, which Forge adds to Entity;
 # it is not a Mojang-obfuscated method. Do not exempt Entity injections generally.
+# ServerLevelStructureDataMixin only adds a @Unique field and an interface, so the
+# annotation processor emits no member mappings for it.
 UNMAPPED_FORGE_API_MIXINS = frozenset({
     'WaterContainerMixin', 'ComponentCoverCapabilitiesMixin',
     'ReliableEmiNamespaceMixin', 'ReliableEmiGearboxIconMixin',
-    'GasImmersionMixin',
+    'GasImmersionMixin', 'ServerLevelStructureDataMixin',
 })
 
 

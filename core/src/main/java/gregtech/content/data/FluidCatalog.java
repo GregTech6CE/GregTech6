@@ -144,6 +144,8 @@ public class FluidCatalog {
     /** Exact entries actually created by the gas/liquid material factory, never external preemptions.
      * Registration-phase bookkeeping only; follows the catalog's existing single-threaded lifecycle. */
     private static final Map<String, FluidEntry> GENERATED_PHASE_DEFINITIONS = new LinkedHashMap<>();
+    /** Exact material-molten factory entries; external same-name/key definitions never gain ownership. */
+    private static final Map<String, FluidEntry> GENERATED_MOLTEN_DEFINITIONS = new LinkedHashMap<>();
     /** Registry name -> material name for fluids whose declaration carries no {@code materialKey}. */
     private static final Map<String, String> BOUND_MATERIALS = new LinkedHashMap<>();
     private static boolean definitionsClosed;
@@ -945,6 +947,12 @@ public class FluidCatalog {
         return get(field) == entry && REGISTRY.get(canonical) == entry && GENERATED_PHASE_DEFINITIONS.get(canonical) == entry;
     }
 
+    /** Exact material-molten factory provenance, not a name/texture or equal-record test. */
+    public static boolean isGeneratedMoltenDefinition(String field, FluidEntry entry) {
+        return field != null && entry != null && canonicalField(field).equals(field)
+                && get(field) == entry && GENERATED_MOLTEN_DEFINITIONS.get(field) == entry;
+    }
+
     public static Map<String, FluidEntry> all() {
         return Map.copyOf(REGISTRY);
     }
@@ -961,16 +969,19 @@ public class FluidCatalog {
                     && !material.has(MaterialProperty.ALLOY)) {
                 continue;
             }
+            String field = "GenMolten_" + material.getName();
             String registryName = "molten." + material.getName().toLowerCase(Locale.ROOT);
-            if (hasRegistryName(registryName)) {
+            // A public same-field declaration with a different path is still externally owned.
+            if (REGISTRY.containsKey(field) || hasRegistryName(registryName)) {
                 continue;
             }
             int tint = moltenTint(material);
             int temp = (int) material.getMeltingPoint();
             MOLTEN_FACTORY_FIELDS.add("GenMolten_" + material.getName());
-            register("GenMolten_" + material.getName(),
+            FluidEntry generated = register(field,
                     new FluidEntry(registryName, FluidTextureMode.GENERIC_MOLTEN,
                             material.getName(), tint, true, false, false, 0, 0, 0, temp, FluidFlags.LIQUID));
+            GENERATED_MOLTEN_DEFINITIONS.put(field, generated);
         }
     }
 
@@ -1045,6 +1056,7 @@ public class FluidCatalog {
             FluidEntry finalized = entry.withTemperature(temperature).withLuminosity(10);
             REGISTRY.put(field, finalized);
             if (GENERATED_PHASE_DEFINITIONS.get(field) == entry) GENERATED_PHASE_DEFINITIONS.put(field, finalized);
+            if (GENERATED_MOLTEN_DEFINITIONS.get(field) == entry) GENERATED_MOLTEN_DEFINITIONS.put(field, finalized);
         }
     }
 
@@ -1078,7 +1090,8 @@ public class FluidCatalog {
 
     private static boolean hasRegistryName(String registryName) {
         for (FluidEntry entry : REGISTRY.values()) {
-            if (entry.registryName().equals(registryName)) {
+            String wanted = sanitizePath(registryName), existing = sanitizePath(entry.registryName());
+            if (wanted.equals(existing) || wanted.equals(existing + "_flowing") || existing.equals(wanted + "_flowing")) {
                 return true;
             }
         }

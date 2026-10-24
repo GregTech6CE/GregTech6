@@ -24,12 +24,12 @@ public abstract class LevelStructureProbeMixin {
     private void gt$probeEntity(BlockPos pos, CallbackInfoReturnable<BlockEntity> cir) {
         StructureScanProbe.noteEntity(pos);
         // Loading a part can read its neighbours. Those reads are not structure cells.
-        StructureScanProbe.pause();
+        StructureScanProbe.pushPause();
     }
 
     @Inject(method = "getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;",
             at = @At("RETURN"))
     private void gt$probeEntityEnd(BlockPos pos, CallbackInfoReturnable<BlockEntity> cir) {
-        StructureScanProbe.resume();
+        StructureScanProbe.popPause();
     }
 }

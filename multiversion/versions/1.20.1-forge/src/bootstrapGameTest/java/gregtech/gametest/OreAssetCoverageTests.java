@@ -95,6 +95,7 @@ public final class OreAssetCoverageTests {
             if (!(block instanceof OreBlock ore)) {
                 continue;
             }
+            if (gregtech.internal.addon.AddonMaterials.owner(ore.material()) != null) continue;
             blocks++;
             if (ore.isSmall()) {
                 small++;

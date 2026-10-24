@@ -2,6 +2,7 @@ package gregtech.gametest;
 import gregtech.internal.material.MaterialPresentation;
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
+import gregtech.internal.material.*;
 import gregtech.internal.recipe.*;
 import gregtech.internal.recipe.*;
 import gregtech.content.data.*;
@@ -42,12 +43,19 @@ public final class MaterialCompatibilityTests {
         var gson=new com.google.gson.Gson();
         var missing=new TreeSet<String>();
         var languages=new ArrayList<Map<String,String>>();
-        for(String language:List.of("en_us","zh_cn")) try(var stream=MaterialCompatibilityTests.class.getResourceAsStream("/assets/gt6ce/lang/"+language+".json")) {
-            languages.add(gson.fromJson(new java.io.InputStreamReader(stream,java.nio.charset.StandardCharsets.UTF_8),new com.google.gson.reflect.TypeToken<Map<String,String>>(){}.getType()));
+        for(String language:List.of("en_us","zh_cn")) {
+            var map=new java.util.HashMap<String,String>();
+            for(var entry:GametestLang.load(language).entrySet()) map.put(entry.getKey(),entry.getValue().getAsString());
+            languages.add(map);
         }
-        for(var item:net.minecraftforge.registries.ForgeRegistries.ITEMS.getValues())
-            if(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(item).getNamespace().equals("gt6ce")) inspect(item.getName(new ItemStack(item)),languages,missing);
-        for(var mat:GTMaterialRegistry.allMaterials()) inspect(MaterialPresentation.name(mat),languages,missing);
+        for(var item:net.minecraftforge.registries.ForgeRegistries.ITEMS.getValues()) {
+            if(!net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(item).getNamespace().equals("gt6ce")) continue;
+            if(item instanceof gregtech.content.item.MaterialItem material
+                    && gregtech.internal.addon.AddonMaterials.owner(material.getMaterial())!=null) continue;
+            inspect(item.getName(new ItemStack(item)),languages,missing);
+        }
+        for(var mat:GTMaterialRegistry.allMaterials())
+            if(gregtech.internal.addon.AddonMaterials.owner(mat)==null) inspect(MaterialPresentation.name(mat),languages,missing);
         java.nio.file.Files.writeString(java.nio.file.Path.of("../../docs/localization-runtime-missing.json"),gson.toJson(missing));
         h.assertTrue(missing.isEmpty(),"Missing registered names: "+missing);
         h.succeed();

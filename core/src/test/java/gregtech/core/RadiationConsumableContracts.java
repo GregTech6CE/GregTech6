@@ -25,7 +25,7 @@ public final class RadiationConsumableContracts {
                 "two separate consumptions still apply twice");
 
         Path source = root.resolve("multiversion/src/main/java/gregtech");
-        String item = Files.readString(source.resolve("item/RadawayItem.java"));
+        String item = Files.readString(source.resolve("content/item/RadawayItem.java"));
         require(!item.contains("finishUsingItem("), "Radaway must not duplicate the finish-event dose");
         require(!item.contains("PlayerRadiation.change("), "no item-local dose mutation");
         require(item.contains(".alwaysEdible()") && item.contains(".alwaysEat()"), "usable while full on both loaders");
