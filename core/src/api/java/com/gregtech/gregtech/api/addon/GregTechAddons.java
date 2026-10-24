@@ -20,8 +20,7 @@ public final class GregTechAddons {
     /** Register from a mod constructor, before common setup; duplicate and late IDs fail explicitly. */
     public static synchronized void register(GregTechAddon addon) {
         Objects.requireNonNull(addon, "addon");
-        String id = Objects.requireNonNull(addon.id(), "addon ID");
-        if (!id.matches("[a-z][a-z0-9_]{1,63}")) throw new IllegalArgumentException("Invalid addon mod ID: " + id);
+        String id = AddonNames.requireAddonId(Objects.requireNonNull(addon.id(), "addon ID"));
         if (phase != Phase.COLLECTING) throw new IllegalStateException("GT addon registration closed: " + id);
         if (ADDONS.putIfAbsent(id, addon) != null) throw new IllegalStateException("Duplicate GT addon ID: " + id);
     }
@@ -30,7 +29,12 @@ public final class GregTechAddons {
     public static synchronized boolean recipesReady() { return phase == Phase.READY; }
     public static synchronized Phase phase() { return phase; }
 
-    /** Platform bootstrap entry; addon authors register a provider rather than calling this method. */
+    /**
+     * Platform bootstrap entry; addon authors register a provider rather than calling this method.
+     * A callback {@link RuntimeException} is wrapped as {@link IllegalStateException} and leaves
+     * {@link Phase#FAILED}. An {@link Error} is rethrown unchanged and also leaves {@code FAILED}.
+     * Addons that already ran are not rolled back.
+     */
     public static void dispatchRecipesReady(GregTechAddon.Context context) {
         Objects.requireNonNull(context, "context");
         List<java.util.Map.Entry<String, GregTechAddon>> providers;
@@ -43,7 +47,7 @@ public final class GregTechAddons {
             try { entry.getValue().onRecipesReady(context); }
             catch (RuntimeException | Error failure) {
                 synchronized (GregTechAddons.class) { phase = Phase.FAILED; }
-                throw new IllegalStateException("GT addon recipes failed: " + entry.getKey(), failure);
+                throw AddonFailures.of("GT addon recipes failed: " + entry.getKey(), failure);
             }
         }
         synchronized (GregTechAddons.class) { phase = Phase.READY; }

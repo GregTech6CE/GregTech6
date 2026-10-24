@@ -30,6 +30,9 @@ public sealed interface CellMatch permits CellMatch.Part, CellMatch.Air, CellMat
     static CellMatch part(String name) {
         if (name == null || name.isBlank()) throw new IllegalArgumentException("Missing structure part");
         if (name.equals("air")) return air();
+        if (name.equals("anyfluid")) return anyFluid();
+        if (name.equals("anyopaque")) return anyOpaque();
+        if (name.startsWith("anyfluid#")) return anyFluid(name.substring("anyfluid#".length()));
         return new Part(name);
     }
 

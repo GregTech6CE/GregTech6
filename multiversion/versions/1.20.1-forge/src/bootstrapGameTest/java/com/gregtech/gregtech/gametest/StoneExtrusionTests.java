@@ -194,12 +194,12 @@ public final class StoneExtrusionTests {
         ItemStack block = new ItemStack(granite);
         ItemStack shape = mold("extruder_shape_block");
         helper.assertTrue(!shape.isEmpty(), "the block mould exists");
-        int before = RecipeMap.COLLAPSED_RECIPES_DROPPED;
+        int before = RecipeMap.collapsedRecipesDropped();
         helper.assertTrue(RecipeMap.make(true, new ItemStack[]{block.copy(), shape.copy()}, new ItemStack[]{block.copy()},
                 null, null, null, null, 32, 16, 0) == null,
                 "a row whose only input cancels against its only output is dropped");
-        helper.assertTrue(RecipeMap.COLLAPSED_RECIPES_DROPPED == before + 1,
-                "the dropped row is counted, got " + (RecipeMap.COLLAPSED_RECIPES_DROPPED - before));
+        helper.assertTrue(RecipeMap.collapsedRecipesDropped() == before + 1,
+                "the dropped row is counted, got " + (RecipeMap.collapsedRecipesDropped() - before));
         // Control: the same row without optimization stays registered.
         helper.assertTrue(RecipeMap.make(false, new ItemStack[]{block.copy(), shape.copy()}, new ItemStack[]{block.copy()},
                 null, null, null, null, 32, 16, 0) != null,
@@ -227,7 +227,7 @@ public final class StoneExtrusionTests {
         json.put("registeredRowsAccountedFor", registered);
         json.put("formsThePortLacks", missingForms);
         json.put("extruderRecipes", MachineRecipeMaps.Extruder.mRecipeList.size());
-        json.put("collapsedRowsDropped", RecipeMap.COLLAPSED_RECIPES_DROPPED);
+        json.put("collapsedRowsDropped", RecipeMap.collapsedRecipesDropped());
         json.put("collapsedRowsByMap", RecipeMap.collapsedByMap());
         json.put("collapsedRowSamples", RecipeMap.collapsedSamples());
         try {

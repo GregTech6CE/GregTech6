@@ -46,9 +46,15 @@ public interface IEnergyBlock {
 
     long getEnergySizeOutputMax(GregTechTags.Tag energyType, @Nullable net.minecraft.core.Direction side);
 
-    /** Whether this side participates in energy connections (GT6 attachable surface). */
+    /**
+     * Whether this side participates in energy connections (GT6 attachable surface).
+     * The default matches {@link com.gregtech.gregtech.api.addon.platform.EnergyBlock}: every side,
+     * including a null (any-side) query. Addon blocks implement {@code EnergyBlock} with a
+     * {@code String} type; built-in blocks implement this interface with {@link GregTechTags.Tag}.
+     * The two cannot share one class: {@code getEnergyTypes} erases to the same method.
+     */
     default boolean hasEnergySurface(@Nullable net.minecraft.core.Direction side) {
-        return side == null || true;
+        return true;
     }
 
     default boolean isEnergyCapacitorType(GregTechTags.Tag energyType, @Nullable net.minecraft.core.Direction side) {

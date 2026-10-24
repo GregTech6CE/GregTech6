@@ -20,7 +20,7 @@ import java.util.Objects;
 public record MaterialComposition(String material, long divider, List<Part> parts, boolean crucible) {
     public MaterialComposition {
         Objects.requireNonNull(material, "material");
-        if (!material.matches("[A-Za-z][A-Za-z0-9_]*"))
+        if (!AddonNames.matches(AddonNames.MATERIAL, material))
             throw new IllegalArgumentException("Use a material name: " + material);
         if (divider <= 0) throw new IllegalArgumentException("Composition divider must be positive: " + material);
         Objects.requireNonNull(parts, "parts");
@@ -34,7 +34,7 @@ public record MaterialComposition(String material, long divider, List<Part> part
     public record Part(String material, long amount) {
         public Part {
             Objects.requireNonNull(material, "material");
-            if (!material.matches("[A-Za-z][A-Za-z0-9_]*"))
+            if (!AddonNames.matches(AddonNames.MATERIAL, material))
                 throw new IllegalArgumentException("Use a material name: " + material);
             if (amount <= 0 || amount % GTValues.U != 0)
                 throw new IllegalArgumentException("Composition amount must be a positive multiple of U: " + material);

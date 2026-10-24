@@ -42,6 +42,15 @@ public record PrefixDeclaration(
      * {@code forge:<oreDictionary>/<material>}.
      */
     public static PrefixDeclaration block(String name, String displayPrefix, String displaySuffix, long unitAmount,
+                                          String texture, String oreDictionary, List<String> materials) {
+        return block(name, displayPrefix, displaySuffix, unitAmount, "cube", texture, oreDictionary, materials);
+    }
+
+    /**
+     * Solid cube block prefix. {@code shape} must be {@code cube}; other shapes are rejected.
+     * Prefer {@link #block(String, String, String, long, String, String, List)}.
+     */
+    public static PrefixDeclaration block(String name, String displayPrefix, String displaySuffix, long unitAmount,
                                           String shape, String texture, String oreDictionary, List<String> materials) {
         if (!"cube".equals(shape))
             throw new IllegalArgumentException("Prefix '" + name + "' block shape must be cube");

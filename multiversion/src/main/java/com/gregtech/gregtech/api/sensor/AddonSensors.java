@@ -1,5 +1,7 @@
 package com.gregtech.gregtech.api.sensor;
 
+import com.gregtech.gregtech.api.addon.AddonFailures;
+import com.gregtech.gregtech.api.addon.AddonNames;
 import com.gregtech.gregtech.api.addon.platform.AddonSensor;
 import com.gregtech.gregtech.api.addon.platform.AddonSensorContributor;
 import net.minecraft.world.level.block.Block;
@@ -10,7 +12,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
-import java.util.Set;
 import java.util.function.Supplier;
 
 /** Sensor kinds declared by addons. Collected before block registration. */
@@ -34,17 +35,16 @@ public final class AddonSensors {
             try {
                 addon = contributor.addonId();
             } catch (RuntimeException | Error failure) {
-                throw new IllegalStateException("Sensor contributor failed: " + contributor.getClass().getName(),
-                        failure);
+                throw AddonFailures.of("Sensor contributor failed: " + contributor.getClass().getName(), failure);
             }
-            if (addon == null || !addon.matches("[a-z0-9_.-]+"))
+            if (!AddonNames.isAddonId(addon))
                 throw new IllegalStateException("Sensor contributor has no valid addon id: "
                         + contributor.getClass().getName());
             List<AddonSensor> kinds;
             try {
                 kinds = contributor.sensorKinds();
             } catch (RuntimeException | Error failure) {
-                throw new IllegalStateException("Addon '" + addon + "' sensor kinds failed", failure);
+                throw AddonFailures.of("Addon '" + addon + "' sensor kinds failed", failure);
             }
             if (kinds == null) continue;
             for (AddonSensor sensor : kinds) {

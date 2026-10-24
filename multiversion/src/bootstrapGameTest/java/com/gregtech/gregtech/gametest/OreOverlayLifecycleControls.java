@@ -106,7 +106,7 @@ public final class OreOverlayLifecycleControls {
             h.assertTrue(lookup(map,new ItemStack(Items.APPLE))==null,"excluded identity not resurrected by baseline");
             h.assertTrue(lookup(map,new ItemStack(Items.STICK))==independent
                     &&lookup(map,new ItemStack(Items.PAPER))==dynamic,"baseline leaves independent and provider intact");
-        } finally { RecipeMap.RECIPE_MAPS.remove(map.mNameInternal);RecipeMap.RECIPE_MAP_LIST.remove(map); }
+        } finally { RecipeMap.unregister(map); }
         h.succeed();
     }
     private static Recipe sampleStartup(GameTestHelper h,RecipeMap map) {

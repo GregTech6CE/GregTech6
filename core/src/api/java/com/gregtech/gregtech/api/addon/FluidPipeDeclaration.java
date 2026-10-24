@@ -10,7 +10,7 @@ public record FluidPipeDeclaration(String idSuffix, String material, long baseCa
                                    boolean gasProof, boolean acidProof, boolean plasmaProof,
                                    boolean magicProof, long maxTemperature, int flammability) {
     public FluidPipeDeclaration {
-        if (idSuffix == null || !idSuffix.matches("[a-z][a-z0-9_]{0,63}"))
+        if (!AddonNames.matches(AddonNames.LOWER_PATH, idSuffix))
             throw new IllegalArgumentException("Fluid pipe id must be a lower-case suffix: " + idSuffix);
         if (material == null || material.isBlank())
             throw new IllegalArgumentException("Fluid pipe '" + idSuffix + "' needs a material");
