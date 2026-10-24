@@ -27,10 +27,10 @@ public final class FermentationAccess {
     /** Call after the real platform recipe maps and selector items have initialized. */
     public static void bindOriginalRecipeMaps() {
         bind(fluid -> {
-            var selector = gregtech.registry.GTTechnological.selectorTag(0);
+            var selector = gregtech.content.registry.GTTechnological.selectorTag(0);
             if (selector == null) return null;
             var item = new net.minecraft.world.item.ItemStack(selector);
-            for (var recipe : gregtech.data.MachineRecipeMaps.Fermenter.mRecipeList) {
+            for (var recipe : gregtech.content.data.MachineRecipeMaps.Fermenter.mRecipeList) {
                 if (!recipe.mEnabled || recipe.mFakeRecipe) continue;
                 if (recipe.mInputs.length != 1
                         || !gregtech.internal.recipe.RecipeInputs.matches(recipe.mInputs[0], item)) continue;

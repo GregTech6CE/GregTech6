@@ -2,9 +2,9 @@ package gregtech.gametest;
 
 import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.data.MaterialPrefix;
-import gregtech.item.MaterialItem;
-import gregtech.registry.GTItems;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.item.MaterialItem;
+import gregtech.content.registry.GTItems;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;

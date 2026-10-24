@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.block.energy.EnergyNodeBlock;
-import gregtech.block.energy.RotaryConverterBlock;
-import gregtech.blockentity.energy.EnergyNodeBlockEntity;
-import gregtech.data.GregTechTags;
+import gregtech.content.block.energy.EnergyNodeBlock;
+import gregtech.content.block.energy.RotaryConverterBlock;
+import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
+import gregtech.content.data.GregTechTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;

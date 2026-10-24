@@ -693,7 +693,7 @@ public class RecipeMap {
         for (ItemStack in : aRecipe.mInputs) {
             if (empty(in)) continue;
             mRecipeItemMap.computeIfAbsent(in.getItem(), k -> new HashSet<>()).add(aRecipe);
-            for (var color : gregtech.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(in))
+            for (var color : gregtech.content.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(in))
                 mRecipeItemMap.computeIfAbsent(color.getItem(), k -> new HashSet<>()).add(aRecipe);
         }
         // Index by input fluids; a 0 mB catalyst still needs the fluid present.
@@ -758,7 +758,7 @@ public class RecipeMap {
             if (empty(in)) continue;
             var keys = new ArrayList<ItemStack>();
             keys.add(in);
-            keys.addAll(gregtech.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(in));
+            keys.addAll(gregtech.content.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(in));
             for (var key : keys) {
                 var pool = mRecipeItemMap.get(key.getItem());
                 if (pool == null) continue;

@@ -4,7 +4,7 @@
 package gregtech.content.energy;
 
 import gregtech.internal.energy.EnergyNodeSpec;
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 import java.math.BigInteger;
 import java.util.function.LongBinaryOperator;
 

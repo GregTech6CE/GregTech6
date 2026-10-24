@@ -3,7 +3,7 @@ package gregtech.platform.neoforge.smeltery;
 import gregtech.internal.machine.ManualToolRules;
 import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
@@ -14,7 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 
 /** First two real manual tool kinds; 1.21 stack components carry legacy GT.ToolStats. */
-public final class SmelteryToolItem extends gregtech.item.GTToolItem {
+public final class SmelteryToolItem extends gregtech.content.item.GTToolItem {
     public enum Kind { CHISEL, PINCERS }
     private final Kind kind;
     public SmelteryToolItem(Kind kind) { super(new Properties().stacksTo(1),gregtech.internal.tool.GTToolType.valueOf(kind.name())); this.kind = kind; }

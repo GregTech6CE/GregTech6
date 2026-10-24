@@ -7,8 +7,8 @@ import gregtech.api.addon.platform.AddonLoader;
 import gregtech.api.addon.platform.AddonRecipes;
 import gregtech.internal.recipe.Recipe;
 import gregtech.internal.recipe.RecipeMap;
-import gregtech.data.RegisteredFluids;
-import gregtech.registry.GTFluids;
+import gregtech.content.data.RegisteredFluids;
+import gregtech.content.registry.GTFluids;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.minecraft.world.level.material.Fluid;

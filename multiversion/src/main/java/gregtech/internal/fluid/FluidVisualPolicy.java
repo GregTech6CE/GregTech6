@@ -7,7 +7,7 @@ import gregtech.GregTech;
 //?}
 import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.data.RegisteredFluids;
+import gregtech.content.data.RegisteredFluids;
 import net.minecraft.resources.ResourceLocation;
 import java.util.function.Predicate;
 

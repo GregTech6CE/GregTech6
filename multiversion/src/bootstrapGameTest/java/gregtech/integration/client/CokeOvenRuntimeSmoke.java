@@ -1,12 +1,12 @@
 package gregtech.integration.client;
 
 import com.google.gson.JsonObject;
-import gregtech.blockentity.machine.*;
+import gregtech.content.blockentity.machine.*;
 import gregtech.gametest.StructureTestSupport;
 import gregtech.content.multiblock.*;
-import gregtech.item.behavior.BehaviorFlintAndTinder;
-import gregtech.registry.*;
-import gregtech.data.GregTechTags;
+import gregtech.content.item.behavior.BehaviorFlintAndTinder;
+import gregtech.content.registry.*;
+import gregtech.content.data.GregTechTags;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Screenshot;
 import net.minecraft.core.*;
@@ -84,12 +84,12 @@ final class CokeOvenRuntimeSmoke {
         require(items(level,positions[1].relative(fronts[1].getClockWise()),Direction.UP).getSlots()==0,"Broken oven keeps ports");
         oven(level,2).getTanksOutput()[0].setFluid(new FluidStack(net.minecraft.world.level.material.Fluids.WATER,1000));
         for(int i=1;i<4;i++)ignite(level,player,i);
-        var tankBlock=BuiltInRegistries.BLOCK.stream().filter(b->b instanceof gregtech.block.machine.TankBlock tank&&tank.spec().capacity()>=8000).findFirst().orElseThrow();
+        var tankBlock=BuiltInRegistries.BLOCK.stream().filter(b->b instanceof gregtech.content.block.machine.TankBlock tank&&tank.spec().capacity()>=8000).findFirst().orElseThrow();
         level.setBlock(positions[0].relative(fronts[0].getOpposite()).below(2),tankBlock.defaultBlockState(),3);
         legacy(level);
         ColoredBooksRuntimeSmoke.server(server,receipt);
         started=level.getGameTime();receipt.addProperty("cokeSourceStructureFacings",4);receipt.addProperty("cokeSourceFireBricks",25);
-        receipt.addProperty("cokeRecipeRows",gregtech.data.MachineRecipeMaps.CokeOven.mRecipeList.size());
+        receipt.addProperty("cokeRecipeRows",gregtech.content.data.MachineRecipeMaps.CokeOven.mRecipeList.size());
         phase=2;
     }
     private static boolean observe(net.minecraft.server.MinecraftServer server) {
@@ -112,7 +112,7 @@ final class CokeOvenRuntimeSmoke {
         }
         if(phase<4||elapsed<3810)return false;
         for(int i=0;i<3;i++)require(oven(level,i).inventory().getStackInSlot(1).is(Items.CHARCOAL)&&oven(level,i).inventory().getStackInSlot(1).getCount()==(i==0?16:1),"Source wood outputs differ "+i);
-        var coal=GTItems.getStack(gregtech.data.MaterialPrefix.gem,gregtech.content.material.Materials.CoalCoke,1);
+        var coal=GTItems.getStack(gregtech.content.data.MaterialPrefix.gem,gregtech.content.material.Materials.CoalCoke,1);
         require(oven(level,3).inventory().getStackInSlot(1).is(coal.getItem())&&oven(level,3).getTanksOutput()[0].getAmount()==500,"Coal source recipe not used");
         var floor=fluids(level,positions[0].relative(fronts[0].getOpposite()).below(2),Direction.UP);
         require(floor!=null&&floor.getFluidInTank(0).getAmount()==4000&&oven(level,0).getTanksOutput()[0].getAmount()==0,"Source floor output or conservation failed");
@@ -127,9 +127,9 @@ final class CokeOvenRuntimeSmoke {
         try {var method=BasicMachineBlockEntity.class.getDeclaredMethod("computeParallel",gregtech.internal.recipe.Recipe.class);method.setAccessible(true);parallel=(int)method.invoke(machine,recipe);}
         catch(Exception e){throw new IllegalStateException(e);}
 //? if >=1.21.1 {
-        /*return "parallel="+parallel+", ignition="+machine.saveWithoutMetadata(level.registryAccess()).getInt("gt.coke_ignition")+", running="+machine.isRunning()+", cost="+(recipe==null?null:gregtech.api.recipe.MachineWorkCost.calculate(recipe.mEUt,recipe.mDuration,parallel,false,10000,1,16,false,true))+", input="+machine.inventory().getStackInSlot(0)+", progress="+machine.machineControl(null).progress()+"/"+machine.machineControl(null).progressMax()+", structure="+StructureTestSupport.ok(machine)+", energy="+machine.getEnergyTick()+", recipe="+(recipe==null?"null":"power="+recipe.mEUt+", ticks="+recipe.mDuration+", outputs="+java.util.Arrays.toString(recipe.mOutputs)+", fluids="+java.util.Arrays.toString(recipe.mFluidOutputs));
+        /*return "parallel="+parallel+", ignition="+machine.saveWithoutMetadata(level.registryAccess()).getInt("gt.coke_ignition")+", running="+machine.isRunning()+", cost="+(recipe==null?null:gregtech.internal.recipe.MachineWorkCost.calculate(recipe.mEUt,recipe.mDuration,parallel,false,10000,1,16,false,true))+", input="+machine.inventory().getStackInSlot(0)+", progress="+machine.machineControl(null).progress()+"/"+machine.machineControl(null).progressMax()+", structure="+StructureTestSupport.ok(machine)+", energy="+machine.getEnergyTick()+", recipe="+(recipe==null?"null":"power="+recipe.mEUt+", ticks="+recipe.mDuration+", outputs="+java.util.Arrays.toString(recipe.mOutputs)+", fluids="+java.util.Arrays.toString(recipe.mFluidOutputs));
 *///?} else {
-        return "parallel="+parallel+", ignition="+machine.saveWithoutMetadata().getInt("gt.coke_ignition")+", running="+machine.isRunning()+", cost="+(recipe==null?null:gregtech.api.recipe.MachineWorkCost.calculate(recipe.mEUt,recipe.mDuration,parallel,false,10000,1,16,false,true))+", input="+machine.inventory().getStackInSlot(0)+", progress="+machine.machineControl(null).progress()+"/"+machine.machineControl(null).progressMax()+", structure="+StructureTestSupport.ok(machine)+", energy="+machine.getEnergyTick()+", recipe="+(recipe==null?"null":"power="+recipe.mEUt+", ticks="+recipe.mDuration+", outputs="+java.util.Arrays.toString(recipe.mOutputs)+", fluids="+java.util.Arrays.toString(recipe.mFluidOutputs));
+        return "parallel="+parallel+", ignition="+machine.saveWithoutMetadata().getInt("gt.coke_ignition")+", running="+machine.isRunning()+", cost="+(recipe==null?null:gregtech.internal.recipe.MachineWorkCost.calculate(recipe.mEUt,recipe.mDuration,parallel,false,10000,1,16,false,true))+", input="+machine.inventory().getStackInSlot(0)+", progress="+machine.machineControl(null).progress()+"/"+machine.machineControl(null).progressMax()+", structure="+StructureTestSupport.ok(machine)+", energy="+machine.getEnergyTick()+", recipe="+(recipe==null?"null":"power="+recipe.mEUt+", ticks="+recipe.mDuration+", outputs="+java.util.Arrays.toString(recipe.mOutputs)+", fluids="+java.util.Arrays.toString(recipe.mFluidOutputs));
 //?}
     }
     private static void ignite(net.minecraft.server.level.ServerLevel level,net.minecraft.server.level.ServerPlayer player,int i) {

@@ -43,7 +43,7 @@ public class Recipe {
         mInputs       = aInputs      != null ? aInputs      : new ItemStack[0];
         mOutputs      = aOutputs     != null ? aOutputs     : new ItemStack[0];
         for (int i = 0; i < mOutputs.length; i++) if (mOutputs[i] != null)
-            mOutputs[i] = gregtech.block.misc.LegacyConstructionBlockItem.canonical(mOutputs[i]);
+            mOutputs[i] = gregtech.content.block.misc.LegacyConstructionBlockItem.canonical(mOutputs[i]);
         mFluidInputs  = aFluidInputs != null ? aFluidInputs : new FluidStack[0];
         mFluidOutputs = aFluidOutputs!= null ? aFluidOutputs: new FluidStack[0];
         mChances      = aChances     != null ? aChances     : new long[mOutputs.length];
@@ -69,7 +69,7 @@ public class Recipe {
     }
     public java.util.List<ItemStack> viewerInputAlternatives(int index) {
         if (!viewerInputAlternatives.containsKey(index))
-            return gregtech.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(mInputs[index]);
+            return gregtech.content.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(mInputs[index]);
         return viewerInputAlternatives.getOrDefault(index, java.util.List.of()).stream().map(ItemStack::copy).toList();
     }
 

@@ -66,12 +66,12 @@ public final class CrucibleAutomationTests {
         place(h, gtPos, "smelting_crucible_steel");
         var gtAbove = gtPos.above();
         var gtState = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "hopper_steel"))
-                .defaultBlockState().setValue(gregtech.block.machine.HopperBlock.FACING, Direction.DOWN);
+                .defaultBlockState().setValue(gregtech.content.block.machine.HopperBlock.FACING, Direction.DOWN);
         h.getLevel().setBlock(gtAbove, gtState, 3);
-        var gt = (gregtech.blockentity.machine.HopperBlockEntity) h.getLevel().getBlockEntity(gtAbove);
+        var gt = (gregtech.content.blockentity.machine.HopperBlockEntity) h.getLevel().getBlockEntity(gtAbove);
         gt.setStackInSlot(0, new ItemStack(Items.IRON_INGOT, 8));
         for (int i = 0; i < 10; i++)
-            gregtech.blockentity.machine.HopperBlockEntity.serverTick(h.getLevel(), gtAbove, gtState, gt);
+            gregtech.content.blockentity.machine.HopperBlockEntity.serverTick(h.getLevel(), gtAbove, gtState, gt);
         h.assertTrue(handler(h, gtPos, Direction.UP).getStackInSlot(0).getCount() == 8 && gt.getStackInSlot(0).isEmpty(),
                 "GT hopper transfers its batch without loss or duplication");
         h.succeed();

@@ -2,8 +2,8 @@ package gregtech.gametest;
 
 import gregtech.content.material.Materials;
 import gregtech.content.tool.ElectricToolWear;
-import gregtech.data.*;
-import gregtech.registry.*;
+import gregtech.content.data.*;
+import gregtech.content.registry.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;

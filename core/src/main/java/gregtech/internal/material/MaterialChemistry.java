@@ -3,7 +3,7 @@ package gregtech.internal.material;
 import gregtech.api.material.GTValues;
 
 import gregtech.content.material.Materials;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 
 import java.util.ArrayList;
 import java.util.List;

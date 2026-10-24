@@ -1,12 +1,12 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.block.energy.ChemicalBatteryBlock;
-import gregtech.blockentity.energy.*;
+import gregtech.content.block.energy.ChemicalBatteryBlock;
+import gregtech.content.blockentity.energy.*;
 import gregtech.content.energy.ChemicalBatterySpec;
-import gregtech.data.GregTechTags;
-import gregtech.item.ChemicalBatteryItem;
-import gregtech.registry.*;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.item.ChemicalBatteryItem;
+import gregtech.content.registry.*;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.nbt.CompoundTag;

@@ -2,13 +2,13 @@ package gregtech.content.tool;
 
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
-import gregtech.api.recipe.*;
 import gregtech.internal.recipe.*;
-import gregtech.data.*;
-import gregtech.registry.GTItems;
+import gregtech.internal.recipe.*;
+import gregtech.content.data.*;
+import gregtech.content.registry.GTItems;
 import net.minecraft.world.item.ItemStack;
 import java.util.List;
-import static gregtech.data.MaterialPrefix.*;
+import static gregtech.content.data.MaterialPrefix.*;
 
 /** Original GT6 anvil handlers whose material conditions are already represented by this port. */
 public final class AnvilRecipeDefinitions {

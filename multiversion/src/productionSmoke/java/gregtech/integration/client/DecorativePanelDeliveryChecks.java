@@ -1,7 +1,7 @@
 package gregtech.integration.client;
 import com.google.gson.JsonObject;
 import gregtech.content.transport.PanelCatalog;
-import gregtech.item.PanelItemView;
+import gregtech.content.item.PanelItemView;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.Direction;
@@ -14,7 +14,7 @@ final class DecorativePanelDeliveryChecks {
  private static void require(boolean b,String why){if(!b)throw new IllegalStateException("Decorative panel delivery: "+why);}
  static JsonObject capture(Minecraft client,GuiGraphics g){
   int count=0,wood=0,colored=0;var page=gregtech.bootstrap.registration.OriginCreativeContents.contents("panels");
-  var foam=gregtech.data.generated.GT6Materials.Compounds.ConstructionFoam;
+  var foam=gregtech.content.data.generated.GT6Materials.Compounds.ConstructionFoam;
   require(gregtech.content.recipe.MaterialRecoveryRules.shredderWork(foam)==2L*Math.max(1,foam.getToolQuality()+1),"source BRITTLE foam recovery work");
   for(var spec:PanelCatalog.ALL){var stack=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gt6ce:"+spec.id())));
    require(stack.getItem() instanceof PanelItemView&&stack.getMaxStackSize()==16,"source stack identity "+spec.id());
@@ -54,7 +54,7 @@ final class DecorativePanelDeliveryChecks {
   for(var item:gregtech.content.recipe.TransportMaterialRegistration.recoveryItems()) {
    var stack=new ItemStack(item);var data=gregtech.internal.material.ItemMaterialRegistry.get(stack).orElseThrow();
    require(data.amount()>0&&data.recoverable(),"installed transport composition "+stack);
-   if(data.prefix()!=null){var target=gregtech.registry.GTItems.getStack(data.prefix(),data.material(),2);require(target.is(item)&&target.getCount()==2,"installed native transport form target "+stack);preferred++;}
+   if(data.prefix()!=null){var target=gregtech.content.registry.GTItems.getStack(data.prefix(),data.material(),2);require(target.is(item)&&target.getCount()==2,"installed native transport form target "+stack);preferred++;}
    require(gregtech.content.recipe.VanillaRecoveryRecipes.recipes().stream().anyMatch(r->r.mInputs[0].is(item)),"installed transport shredder entry "+stack);
    transport++;
   }
@@ -90,7 +90,7 @@ final class DecorativePanelDeliveryChecks {
     var ingredient=gregtech.content.recipe.TransportCraftingInputs.resolve(input);
     var prefix=gregtech.internal.prefix.PrefixRegistry.byName(input.name());
     for(var member:input.material().getReRegistrations()) {
-     var sample=gregtech.registry.GTItems.getStack(prefix,member);
+     var sample=gregtech.content.registry.GTItems.getStack(prefix,member);
      if(sample.isEmpty())continue;
      require(ingredient.test(sample),"every existing original barrel group member "+member);tankGroupVariants++;
     }

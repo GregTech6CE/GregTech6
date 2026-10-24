@@ -6,7 +6,7 @@ import gregtech.internal.multiblock.*;
 
 import gregtech.content.multiblock.BoilerStructure;
 
-import gregtech.registry.GTMultiblocks;
+import gregtech.content.registry.GTMultiblocks;
 
 import net.minecraft.core.*;
 
@@ -46,7 +46,7 @@ public static List<Info> recipes() {
 
         implosionCells.put(BlockPos.ZERO,MultiblockLayout.Role.ITEM_IO);
 
-        for(var cell:gregtech.blockentity.machine.ImplosionCompressorControllerBlockEntity.LAYOUT.cells()) implosionCells.put(cell.at(BlockPos.ZERO,Direction.NORTH),cell.role());
+        for(var cell:gregtech.content.blockentity.machine.ImplosionCompressorControllerBlockEntity.LAYOUT.cells()) implosionCells.put(cell.at(BlockPos.ZERO,Direction.NORTH),cell.role());
 
 
 
@@ -87,7 +87,7 @@ public static List<Info> recipes() {
 //? if >=1.21.1 {
 /*        for (var entry : gregtech.platform.neoforge.machine.FuelGeneratorRegistration.all()) {
 *///?} else {
-        for (var entry : gregtech.registry.FuelGeneratorRegistration.all()) {
+        for (var entry : gregtech.content.registry.FuelGeneratorRegistration.all()) {
 //?}
 
 //? if >=1.21.1 {
@@ -158,7 +158,7 @@ public static List<Info> recipes() {
 
         for(int y=-5;y<=0;y++)for(int x=-1;x<=1;x++)for(int z=-1;z<=1;z++)
 
-            drill.put(new BlockPos(x,y,z),y==-5?MultiblockLayout.Role.CASING:gregtech.blockentity.machine.BedrockDrillControllerBlockEntity.role(x,y,z));
+            drill.put(new BlockPos(x,y,z),y==-5?MultiblockLayout.Role.CASING:gregtech.content.blockentity.machine.BedrockDrillControllerBlockEntity.role(x,y,z));
 
         result.add(new Info(new ItemStack(GTMultiblocks.findPart(17999).get()),new ItemStack(gregtech.content.multiblock.LargeMachineParts.block(18026),35),new ItemStack(GTMultiblocks.DENSE_TITANIUM_WALL.get(),9),Map.copyOf(drill),false));
 
@@ -184,17 +184,17 @@ public static List<Info> recipes() {
 
                         ? MultiblockLayout.Role.AIR
 
-                        : entry.getKey() instanceof gregtech.block.machine.AxialGeneratorBlock axial
+                        : entry.getKey() instanceof gregtech.content.block.machine.AxialGeneratorBlock axial
 
-                        ? gregtech.blockentity.machine.AxialGeneratorBlockEntity.role(pos, axial.grade().steam())
+                        ? gregtech.content.blockentity.machine.AxialGeneratorBlockEntity.role(pos, axial.grade().steam())
 
-                        : entry.getKey() instanceof gregtech.block.machine.LargeCrucibleControllerBlock
+                        : entry.getKey() instanceof gregtech.content.block.machine.LargeCrucibleControllerBlock
 
                         ? pos.getY() == 0 ? MultiblockLayout.Role.ENERGY_INPUT
 
                         : pos.getY() == 1 ? MultiblockLayout.Role.CRUCIBLE : MultiblockLayout.Role.ITEM_FLUID_IO
 
-                        : entry.getKey() instanceof gregtech.block.machine.VonDaGraaggControllerBlock
+                        : entry.getKey() instanceof gregtech.content.block.machine.VonDaGraaggControllerBlock
 
                         && pos.getY() <= 1 ? MultiblockLayout.Role.ENERGY_INPUT
 
@@ -277,7 +277,7 @@ public static ItemStack expectedPart(Info info,BlockPos pos) {
 
         if(info.controller().is(GTMultiblocks.findPart(17998).get().asItem()))return new ItemStack(pos.getY()==5?GTMultiblocks.LIGHTNING_ROD.get():pos.getY()%2==0?GTMultiblocks.TUNGSTEN_WALL.get():GTMultiblocks.LARGE_NIOBIUM_TITANIUM_COIL.get());
 
-        if(info.controller().getItem() instanceof net.minecraft.world.item.BlockItem item && item.getBlock() instanceof gregtech.block.machine.FuelGeneratorBlock generator) {
+        if(info.controller().getItem() instanceof net.minecraft.world.item.BlockItem item && item.getBlock() instanceof gregtech.content.block.machine.FuelGeneratorBlock generator) {
 
             var cells=gregtech.content.multiblock.LargeMachineLayouts.cells(generator.declaration().casing().machineType());
 
@@ -286,7 +286,7 @@ public static ItemStack expectedPart(Info info,BlockPos pos) {
         }
 
 
-        if(info.controller().getItem() instanceof net.minecraft.world.item.BlockItem item && item.getBlock() instanceof gregtech.block.machine.BasicMachineBlock machine) {
+        if(info.controller().getItem() instanceof net.minecraft.world.item.BlockItem item && item.getBlock() instanceof gregtech.content.block.machine.BasicMachineBlock machine) {
 
             var cells=gregtech.content.multiblock.LargeMachineLayouts.cells(machine.basicSpec().machineName());
 

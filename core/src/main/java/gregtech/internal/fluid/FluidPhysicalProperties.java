@@ -1,9 +1,9 @@
 package gregtech.internal.fluid;
 
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.data.FluidCatalog;
-import gregtech.data.FluidCatalog.FluidEntry;
-import gregtech.data.FluidCatalog.FluidFlags;
+import gregtech.content.data.FluidCatalog;
+import gregtech.content.data.FluidCatalog.FluidEntry;
+import gregtech.content.data.FluidCatalog.FluidFlags;
 
 /** Original FL.create phase defaults and material-density conversion, shared by both loaders. */
 public final class FluidPhysicalProperties {

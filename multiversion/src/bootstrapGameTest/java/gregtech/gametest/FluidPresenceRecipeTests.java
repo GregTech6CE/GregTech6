@@ -5,8 +5,8 @@ import gregtech.internal.recipe.Recipe;
 import gregtech.internal.recipe.RecipeInputs;
 import gregtech.internal.recipe.RecipeMap;
 import gregtech.internal.recipe.data.MachineRecipeDocuments;
-import gregtech.recipe.MachineDatapackRecipe;
-import gregtech.recipe.MachineRecipeOverlay;
+import gregtech.content.recipe.MachineDatapackRecipe;
+import gregtech.content.recipe.MachineRecipeOverlay;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.gametest.framework.GameTest;
@@ -162,9 +162,9 @@ public final class FluidPresenceRecipeTests {
 
     @GameTest(template = "test_empty")
     public static void barrelSkipsPresenceWithoutDisablingOrdinaryFermenter(GameTestHelper h) {
-        var map = gregtech.data.MachineRecipeMaps.Fermenter;
+        var map = gregtech.content.data.MachineRecipeMaps.Fermenter;
         var original = new ArrayList<>(map.mRecipeList);
-        var selector = gregtech.registry.GTTechnological.selectorTag(0);
+        var selector = gregtech.content.registry.GTTechnological.selectorTag(0);
         h.assertTrue(selector != null, "registered fermentation selector");
         var presence = new Recipe(new ItemStack[]{new ItemStack(selector)}, new ItemStack[0], null, null,
                 new FluidStack[]{water(1)}, new FluidStack[]{new FluidStack(Fluids.LAVA, 10)}, 20, 16, 0)
@@ -176,10 +176,10 @@ public final class FluidPresenceRecipeTests {
             h.assertTrue(map.add(presence) == presence, "ordinary fermenter map accepts presence");
             h.assertTrue(map.findRecipe(List.of(new ItemStack(selector)), List.of(water(1)), false, 1, 1) == presence,
                     "ordinary fermenter matching still supports presence");
-            h.assertTrue(gregtech.blockentity.machine.TankBlockEntity.findFermentationRecipe(water(100)) == null,
+            h.assertTrue(gregtech.content.blockentity.machine.TankBlockEntity.findFermentationRecipe(water(100)) == null,
                     "barrel does not reinterpret identity representative as consumed quantity");
             map.add(ordinary);
-            var found = gregtech.blockentity.machine.TankBlockEntity.findFermentationRecipe(water(100));
+            var found = gregtech.content.blockentity.machine.TankBlockEntity.findFermentationRecipe(water(100));
 //? if >=1.21.1 {
             /*h.assertTrue(found != null && found.input().getAmount() == 100, "barrel still finds ordinary row");
 *///?} else {

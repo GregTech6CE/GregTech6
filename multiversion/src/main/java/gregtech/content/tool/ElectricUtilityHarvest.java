@@ -18,7 +18,7 @@
  */
 
 package gregtech.content.tool;
-import gregtech.item.ElectricToolItem;
+import gregtech.content.item.ElectricToolItem;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.*;
@@ -28,7 +28,7 @@ public final class ElectricUtilityHarvest {
  private ElectricUtilityHarvest(){}
  public static boolean target(ElectricToolItem tool,BlockState state){return switch(tool.toolName()){
   case "Mining Drill" -> state.is(BlockTags.MINEABLE_WITH_PICKAXE)||state.is(BlockTags.MINEABLE_WITH_SHOVEL)||state.getBlock() instanceof HalfTransparentBlock||state.getBlock() instanceof IceBlock||state.getBlock()==Blocks.PACKED_ICE||state.getBlock() instanceof FlowerPotBlock;
-  case "BuzzSaw" -> state.getBlock()==Blocks.IRON_BARS||state.getBlock() instanceof gregtech.block.misc.BarsBlock||net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(state.getBlock()).getNamespace().equals("carpentersblocks");
+  case "BuzzSaw" -> state.getBlock()==Blocks.IRON_BARS||state.getBlock() instanceof gregtech.content.block.misc.BarsBlock||net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(state.getBlock()).getNamespace().equals("carpentersblocks");
   case "Trimmer" -> state.is(BlockTags.LEAVES)||state.getBlock() instanceof VineBlock;
   default -> false;};}
  public static boolean canHarvest(ElectricToolItem tool,ItemStack stack,BlockState state){return tool.isPoweredUsable(stack)&&target(tool,state)&&tool.headMaterial(stack).getToolQuality()+tool.definition().quality()>=ElectricWrenchHarvest.requiredQuality(state);}

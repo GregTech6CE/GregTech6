@@ -2,7 +2,7 @@
  * MultiTileEntityMagicFieldAbsorber: trophy selection and alternating KU packets. */
 package gregtech.content.energy;
 
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 
 public final class MagicFieldAbsorberRules {
     private MagicFieldAbsorberRules() {}

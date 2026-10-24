@@ -1,8 +1,8 @@
 package gregtech.content.recipe;
 
 import gregtech.internal.material.GTMaterial;
-import gregtech.data.MaterialGroups;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialGroups;
+import gregtech.content.data.MaterialPrefix;
 import java.util.List;
 
 /** Exact ANY groups used by MultiItemRandomTools crafting rows. */

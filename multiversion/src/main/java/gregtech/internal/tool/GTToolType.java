@@ -1,6 +1,6 @@
 package gregtech.internal.tool;
 import gregtech.internal.material.GTMaterial;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;

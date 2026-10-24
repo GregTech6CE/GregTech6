@@ -1,5 +1,5 @@
 package gregtech.client;
-import gregtech.blockentity.machine.TankBlockEntity;
+import gregtech.content.blockentity.machine.TankBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;

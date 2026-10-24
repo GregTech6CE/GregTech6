@@ -3,9 +3,9 @@ package gregtech.platform.neoforge.fluid;
 import gregtech.internal.fluid.FluidRenderLayers;
 import gregtech.internal.fluid.GTWaterParity;
 import gregtech.content.fluid.FluidDefinitions;
-import gregtech.data.RegisteredFluids;
-import gregtech.registry.GTFluids;
-import gregtech.registry.GTWorldWaterFluid;
+import gregtech.content.data.RegisteredFluids;
+import gregtech.content.registry.GTFluids;
+import gregtech.content.registry.GTWorldWaterFluid;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -59,7 +59,7 @@ public final class FluidRegistries {
             var stillRef = new AtomicReference<DeferredHolder<Fluid, ? extends Fluid>>();
             var blockRef = new AtomicReference<DeferredHolder<Block, LiquidBlock>>();
             boolean water = GTWaterParity.isWorldWater(path);
-            if (FluidRenderLayers.worldFluidPaths().contains(path)) blockRef.set(BLOCKS.register(path, () -> new gregtech.block.GTWorldFluidBlock(
+            if (FluidRenderLayers.worldFluidPaths().contains(path)) blockRef.set(BLOCKS.register(path, () -> new gregtech.content.block.GTWorldFluidBlock(
                     (FlowingFluid) stillRef.get().get(), BlockBehaviour.Properties.of().mapColor(MapColor.WATER).replaceable().noCollission().strength(100).pushReaction(PushReaction.DESTROY).noLootTable().liquid().sound(SoundType.EMPTY))));
             var still = GTFluids.fluids(namespace).register(path, () -> water ? new GTWorldWaterFluid.Source(properties(field, type, blockRef, true)) : new BaseFlowingFluid.Source(properties(field, type, blockRef, false)));
             stillRef.set(still);

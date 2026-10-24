@@ -1,6 +1,6 @@
 package gregtech.internal.material;
 
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 import java.util.LinkedHashMap;
 import java.util.List;
 

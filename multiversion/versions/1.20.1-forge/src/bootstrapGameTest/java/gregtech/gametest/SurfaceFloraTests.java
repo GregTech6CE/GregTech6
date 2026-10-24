@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.registry.GTBlocks;
-import gregtech.worldgen.GTFeatures;
-import gregtech.worldgen.GTSurfaceFlora;
-import gregtech.worldgen.GTSurfaceFloraFeature;
+import gregtech.content.registry.GTBlocks;
+import gregtech.content.worldgen.GTFeatures;
+import gregtech.content.worldgen.GTSurfaceFlora;
+import gregtech.content.worldgen.GTSurfaceFloraFeature;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
@@ -68,7 +68,7 @@ public final class SurfaceFloraTests {
             }
         }
         helper.assertTrue(missing.isEmpty(), "GT6 fallen logs missing: " + missing);
-        helper.assertTrue(GTBlocks.TWIGS.get() instanceof gregtech.block.TwigBlock,
+        helper.assertTrue(GTBlocks.TWIGS.get() instanceof gregtech.content.block.TwigBlock,
                 "the ground twig block (GT6 WorldgenSticks) is registered");
         for (String colour : GTSurfaceFlora.GLOWTUS_COLOURS) {
             Block glowtus = GTSurfaceFlora.glowtus(colour);

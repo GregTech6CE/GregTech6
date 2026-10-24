@@ -168,14 +168,14 @@ public final class NeoForgeClientSmoke {
             int materials = 0;
             int fluids = 0;
             for (var item : net.minecraft.core.registries.BuiltInRegistries.ITEM) {
-                if (!(item instanceof gregtech.item.MaterialItem)
+                if (!(item instanceof gregtech.content.item.MaterialItem)
                         && !(item instanceof gregtech.platform.neoforge.fluid.FluidDisplayItem)) continue;
                 var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(item);
                 var model = manager.getModel(net.minecraft.client.resources.model.ModelResourceLocation.inventory(id));
                 if (model == null || model == missing) throw new IllegalStateException("Missing final inventory model: " + id);
-                if (item instanceof gregtech.item.MaterialItem) materials++; else fluids++;
+                if (item instanceof gregtech.content.item.MaterialItem) materials++; else fluids++;
             }
-            if (materials != gregtech.registry.GTItems.allEntries().size() || fluids == 0)
+            if (materials != gregtech.content.registry.GTItems.allEntries().size() || fluids == 0)
                 throw new IllegalStateException("Incomplete registry model check");
             gallery = new java.util.ArrayList<>();
             MaterialTooltipSmoke.check();
@@ -189,7 +189,7 @@ public final class NeoForgeClientSmoke {
             }
             var crusher = net.minecraft.core.registries.BuiltInRegistries.ITEM.stream()
                     .filter(item -> item instanceof net.minecraft.world.item.BlockItem blockItem
-                            && blockItem.getBlock() instanceof gregtech.block.machine.BasicMachineBlock machine
+                            && blockItem.getBlock() instanceof gregtech.content.block.machine.BasicMachineBlock machine
                             && machine.basicSpec().machineName().equals("crusher"))
                     .findFirst().orElseThrow(() -> new IllegalStateException("No registered crusher"));
             gallery.add(new net.minecraft.world.item.ItemStack(crusher));
@@ -356,10 +356,10 @@ public final class NeoForgeClientSmoke {
         return player;
     }
 
-    private static gregtech.blockentity.machine.BasicMachineBlockEntity machine(
+    private static gregtech.content.blockentity.machine.BasicMachineBlockEntity machine(
             net.minecraft.core.BlockPos pos) {
         if (worldServer.overworld().getBlockEntity(pos) instanceof
-                gregtech.blockentity.machine.BasicMachineBlockEntity machine) return machine;
+                gregtech.content.blockentity.machine.BasicMachineBlockEntity machine) return machine;
         throw new IllegalStateException("No actual saved machine at " + pos);
     }
 
@@ -367,8 +367,8 @@ public final class NeoForgeClientSmoke {
         var name = stack.get(net.minecraft.core.component.DataComponents.CUSTOM_NAME);
         if (stack.isEmpty() || stack.getCount() != 1 || name == null
                 || !name.getString().equals("client-gui-stock/" + WORLD_ID)
-                || !(stack.getItem() instanceof gregtech.item.MaterialItem material)
-                || material.getPrefix() != gregtech.data.MaterialPrefix.gemChipped
+                || !(stack.getItem() instanceof gregtech.content.item.MaterialItem material)
+                || material.getPrefix() != gregtech.content.data.MaterialPrefix.gemChipped
                 || material.getMaterial().resolve() != gregtech.content.material.Materials.Diamond.resolve())
             throw new IllegalStateException("Named chipped diamond stock did not survive actual menu/save path: " + stack
                     + ", name=" + (name == null ? "none" : name.getString()));
@@ -406,7 +406,7 @@ public final class NeoForgeClientSmoke {
             }
             player.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
             player.getInventory().clearContent();
-            var stock = gregtech.registry.GTItems.getStack(gregtech.data.MaterialPrefix.gemChipped,
+            var stock = gregtech.content.registry.GTItems.getStack(gregtech.content.data.MaterialPrefix.gemChipped,
                     gregtech.content.material.Materials.Diamond);
             stock.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME, Component.literal("client-gui-stock/" + WORLD_ID));
             player.getInventory().setItem(9, stock);

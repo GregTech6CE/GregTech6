@@ -2,8 +2,8 @@ package gregtech.content.food;
 
 import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.data.FluidCatalog;
-import gregtech.data.ImportedMaterialData;
+import gregtech.content.data.FluidCatalog;
+import gregtech.content.data.ImportedMaterialData;
 
 /** Resolve generated bottle expressions without confusing missing fluids with water. */
 public final class BottleFluidIdentity {

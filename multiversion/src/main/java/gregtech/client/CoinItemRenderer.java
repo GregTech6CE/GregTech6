@@ -1,7 +1,7 @@
 package gregtech.client;
 
 import gregtech.content.tool.CoinGeometry;
-import gregtech.item.CoinItem;
+import gregtech.content.item.CoinItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;

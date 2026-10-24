@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
 import gregtech.internal.fluid.*;
-import gregtech.data.RegisteredFluids;
+import gregtech.content.data.RegisteredFluids;
 import gregtech.content.material.Materials;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.resources.ResourceLocation;

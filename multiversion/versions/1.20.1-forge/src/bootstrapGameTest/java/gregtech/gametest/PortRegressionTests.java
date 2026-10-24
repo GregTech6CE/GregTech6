@@ -6,8 +6,8 @@ import gregtech.internal.material.*;
 import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.content.material.Materials;
 import gregtech.content.tool.AnvilWorkInputs;
-import gregtech.data.*;
-import gregtech.registry.*;
+import gregtech.content.data.*;
+import gregtech.content.registry.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.item.*;
 import net.minecraftforge.fluids.FluidStack;
@@ -229,7 +229,7 @@ public final class PortRegressionTests {
         var block = GTToolBlocks.ANVILS.get(0).get();
         helper.setBlock(pos, block.defaultBlockState());
         var absolute = helper.absolutePos(pos);
-        var anvil = (gregtech.blockentity.tool.MaterialAnvilBlockEntity) helper.getLevel().getBlockEntity(absolute);
+        var anvil = (gregtech.content.blockentity.tool.MaterialAnvilBlockEntity) helper.getLevel().getBlockEntity(absolute);
         var player = net.minecraftforge.common.util.FakePlayerFactory.getMinecraft(helper.getLevel());
         // Forge caches this fake player for the level. Other tests can leave it in creative mode,
         // which deliberately does not consume a stack on the anvil.
@@ -244,7 +244,7 @@ public final class PortRegressionTests {
             var hit = new net.minecraft.world.phys.BlockHitResult(new net.minecraft.world.phys.Vec3(absolute.getX()+.25,absolute.getY()+.8,absolute.getZ()+.5),net.minecraft.core.Direction.UP,absolute,false);
             anvil.interact(player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
             helper.assertTrue(anvil.workpiece(0).getCount()==3 && player.getMainHandItem().isEmpty(), "insert consumes held stack and updates workpiece");
-            var client = new gregtech.blockentity.tool.MaterialAnvilBlockEntity(absolute,block.defaultBlockState());
+            var client = new gregtech.content.blockentity.tool.MaterialAnvilBlockEntity(absolute,block.defaultBlockState());
             client.handleUpdateTag(anvil.getUpdateTag());
             helper.assertTrue(ItemStack.isSameItemSameTags(client.workpiece(0),anvil.workpiece(0)) && client.workpiece(0).getCount()==3, "initial chunk sync retains material, count and NBT");
             helper.assertTrue(anvil.getUpdatePacket().getTag().contains("gt.work0"), "live update packet includes workpieces");
@@ -274,7 +274,7 @@ public final class PortRegressionTests {
     public static void mortarVariantsAndRecipes(GameTestHelper helper) {
         int mortars=0;
         for (var entry:GTToolBlocks.manual()) {
-            if (entry.get().kind()!=gregtech.blockentity.tool.ManualToolBlockEntity.Kind.MORTAR) continue;
+            if (entry.get().kind()!=gregtech.content.blockentity.tool.ManualToolBlockEntity.Kind.MORTAR) continue;
             mortars++;
             helper.assertTrue(entry.get().tint(0)==Materials.Ceramic.getColor(), "ceramic bowl tint");
             var recipe=helper.getLevel().getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","tools/"+entry.getId().getPath())).orElseThrow();
@@ -291,7 +291,7 @@ public final class PortRegressionTests {
         var pos = new net.minecraft.core.BlockPos(1, 2, 1);
         helper.setBlock(pos, GTToolBlocks.ANVILS.get(0).get().defaultBlockState());
         var absolute = helper.absolutePos(pos);
-        var anvil = (gregtech.blockentity.tool.MaterialAnvilBlockEntity) helper.getLevel().getBlockEntity(absolute);
+        var anvil = (gregtech.content.blockentity.tool.MaterialAnvilBlockEntity) helper.getLevel().getBlockEntity(absolute);
         var player = net.minecraftforge.common.util.FakePlayerFactory.getMinecraft(helper.getLevel());
         player.getInventory().clearContent();
         player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new ItemStack(Items.BARRIER, 7));
@@ -304,8 +304,8 @@ public final class PortRegressionTests {
     @GameTest(template="test_blueprint_empty")
     public static void basicMachineRemovalDropsInventory(GameTestHelper helper) {
         var block = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValues().stream()
-                .filter(b -> b instanceof gregtech.block.machine.BasicMachineBlock)
-                .map(b -> (gregtech.block.machine.BasicMachineBlock)b).findFirst().orElseThrow();
+                .filter(b -> b instanceof gregtech.content.block.machine.BasicMachineBlock)
+                .map(b -> (gregtech.content.block.machine.BasicMachineBlock)b).findFirst().orElseThrow();
         var pos = new net.minecraft.core.BlockPos(1, 2, 1);
         // The GameTest world is reused between runs: drop this test's own leftovers first, or the
         // count below sees a previous run's stack (see LootCrateTests.placeCrate for the same fix).
@@ -314,7 +314,7 @@ public final class PortRegressionTests {
                 net.minecraft.world.entity.Entity::discard);
         helper.setBlock(pos, block.defaultBlockState());
         var absolute = helper.absolutePos(pos);
-        var machine = (gregtech.blockentity.machine.BasicMachineBlockEntity) helper.getLevel().getBlockEntity(absolute);
+        var machine = (gregtech.content.blockentity.machine.BasicMachineBlockEntity) helper.getLevel().getBlockEntity(absolute);
         var stack = new ItemStack(Items.DIAMOND, 17);
         stack.getOrCreateTag().putBoolean("drop_test", true);
         machine.inventory().setStackInSlot(0, stack);
@@ -344,14 +344,14 @@ public final class PortRegressionTests {
     public static void manualJuicerProcessingAndReload(GameTestHelper helper) {
         var block=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(net.minecraft.resources.ResourceLocation.parse("gt6ce:juicer"));
         var pos=new net.minecraft.core.BlockPos(1,2,1); helper.setBlock(pos,block);
-        var tool=(gregtech.blockentity.tool.ProcessingToolBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos));
+        var tool=(gregtech.content.blockentity.tool.ProcessingToolBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos));
         var player=helper.makeMockSurvivalPlayer();
         player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,new ItemStack(Items.APPLE,3));
         tool.interact(player,net.minecraft.world.InteractionHand.MAIN_HAND,net.minecraft.core.Direction.NORTH);
         helper.assertTrue(player.getMainHandItem().getCount()==2 && tool.displayFluid().getAmount()==75,
                 "actual hand pressing consumes one apple and produces 75 mB");
         var data=tool.saveWithoutMetadata();
-        var copy=new gregtech.blockentity.tool.ProcessingToolBlockEntity(helper.absolutePos(pos),block.defaultBlockState());copy.load(data);
+        var copy=new gregtech.content.blockentity.tool.ProcessingToolBlockEntity(helper.absolutePos(pos),block.defaultBlockState());copy.load(data);
         helper.assertTrue(copy.displayFluid().getAmount()==75,"juicer NBT preserves juice");
         helper.assertTrue(!tool.getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER).isPresent()
                 && !tool.process(null),"juicer cannot run as an automated inventory machine");
@@ -360,12 +360,12 @@ public final class PortRegressionTests {
 
     @GameTest(template="test_blueprint_empty")
     public static void steelSiftingTableAndManualVats(GameTestHelper helper) {
-        var sift=GTToolBlocks.manual().stream().map(e->e.get()).filter(b->b.kind()==gregtech.blockentity.tool.ManualToolBlockEntity.Kind.SIFTING).findFirst().orElseThrow();
+        var sift=GTToolBlocks.manual().stream().map(e->e.get()).filter(b->b.kind()==gregtech.content.blockentity.tool.ManualToolBlockEntity.Kind.SIFTING).findFirst().orElseThrow();
         helper.assertTrue(sift.tint(0)==Materials.Steel.getColor(),"sifting table has steel tint");
         for(String id:List.of("mixing_bowl","mixing_bowl_table","bathing_pot","bathing_pot_table",
                 "bathing_pot_wood","bathing_pot_table_wood","juicer")) {
             var block=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",id));
-            helper.assertTrue(gregtech.registry.GTBlockEntities.PROCESSING_TOOL.get().isValid(block.defaultBlockState()),"manual processing block entity attached: "+id);
+            helper.assertTrue(gregtech.content.registry.GTBlockEntities.PROCESSING_TOOL.get().isValid(block.defaultBlockState()),"manual processing block entity attached: "+id);
         }
         helper.succeed();
     }
@@ -383,10 +383,10 @@ public final class PortRegressionTests {
         for (String id : List.of("mixing_bowl_table", "bathing_pot_table", "bathing_pot_wood", "bathing_pot_table_wood")) {
             var block = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
                     net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", id));
-            helper.assertTrue(block instanceof gregtech.block.tool.ProcessingToolBlock,
+            helper.assertTrue(block instanceof gregtech.content.block.tool.ProcessingToolBlock,
                     "GT6 vessel has an active processing block: " + id);
             helper.setBlock(pos, block);
-            var tool = (gregtech.blockentity.tool.ProcessingToolBlockEntity)
+            var tool = (gregtech.content.blockentity.tool.ProcessingToolBlockEntity)
                     helper.getLevel().getBlockEntity(helper.absolutePos(pos));
             boolean wooden = id.endsWith("_wood");
             helper.assertTrue(tool != null && tool.recipes() == (id.startsWith("mixing_bowl")
@@ -405,7 +405,7 @@ public final class PortRegressionTests {
             helper.assertTrue(fluids.fill(new FluidStack(net.minecraft.world.level.material.Fluids.WATER, 5000),
                     net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE) == (wooden ? 4000 : 5000),
                     "open vessel fills to GT6 capacity: " + id);
-            var copy = new gregtech.blockentity.tool.ProcessingToolBlockEntity(helper.absolutePos(pos),
+            var copy = new gregtech.content.blockentity.tool.ProcessingToolBlockEntity(helper.absolutePos(pos),
                     block.defaultBlockState());
             copy.load(tool.saveWithoutMetadata());
             helper.assertTrue(copy.displayFluid().getAmount() == (wooden ? 4000 : 5000),
@@ -420,7 +420,7 @@ public final class PortRegressionTests {
         var bowl = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
                 net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "mixing_bowl_table"));
         helper.setBlock(pos, bowl);
-        var tool = (gregtech.blockentity.tool.ProcessingToolBlockEntity)
+        var tool = (gregtech.content.blockentity.tool.ProcessingToolBlockEntity)
                 helper.getLevel().getBlockEntity(helper.absolutePos(pos));
         var recipe = MachineRecipeMaps.Mixer.mRecipeList.stream()
                 .filter(r -> r.mEnabled && !r.mFakeRecipe && r.mEUt >= 0 && r.mEUt <= 32
@@ -435,9 +435,9 @@ public final class PortRegressionTests {
     }
     @GameTest(template="test_blueprint_empty")
     public static void drawerRemovalDropsAllCompartments(GameTestHelper helper) {
-        var block=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValues().stream().filter(b->b instanceof gregtech.block.inventory.DrawerQuadBlock).findFirst().orElseThrow();
+        var block=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValues().stream().filter(b->b instanceof gregtech.content.block.inventory.DrawerQuadBlock).findFirst().orElseThrow();
         var pos=new net.minecraft.core.BlockPos(1,2,1); helper.setBlock(pos,block); var absolute=helper.absolutePos(pos);
-        var drawer=(gregtech.blockentity.inventory.DrawerQuadBlockEntity)helper.getLevel().getBlockEntity(absolute);
+        var drawer=(gregtech.content.blockentity.inventory.DrawerQuadBlockEntity)helper.getLevel().getBlockEntity(absolute);
         var stack=new ItemStack(Items.EMERALD,64); stack.getOrCreateTag().putBoolean("drawer_drop_test",true);
         var area=new net.minecraft.world.phys.AABB(absolute).inflate(1);
         // Clear the volume before spilling: this structure position is shared by every test in the class
@@ -502,12 +502,12 @@ public final class PortRegressionTests {
     @GameTest(template="test_blueprint_empty")
     public static void machineDropCarriesPendingWorkWithoutInventoryDuplication(GameTestHelper helper) {
         var block=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValues().stream()
-                .filter(b->b instanceof gregtech.block.machine.BasicMachineBlock)
-                .map(b->(gregtech.block.machine.BasicMachineBlock)b)
+                .filter(b->b instanceof gregtech.content.block.machine.BasicMachineBlock)
+                .map(b->(gregtech.content.block.machine.BasicMachineBlock)b)
                 .filter(b->b.basicSpec().recipeMap().mOutputItemsCount>0 && b.basicSpec().recipeMap().mInputItemsCount>0).findFirst().orElseThrow();
         var pos=new net.minecraft.core.BlockPos(1,2,1); helper.setBlock(pos,block);
         var absolute=helper.absolutePos(pos);
-        var machine=(gregtech.blockentity.machine.BasicMachineBlockEntity)helper.getLevel().getBlockEntity(absolute);
+        var machine=(gregtech.content.blockentity.machine.BasicMachineBlockEntity)helper.getLevel().getBlockEntity(absolute);
         machine.inventory().setStackInSlot(0,new ItemStack(Items.APPLE,17));
         var recipe=new gregtech.internal.recipe.Recipe(new ItemStack[]{new ItemStack(Items.APPLE)},new ItemStack[]{new ItemStack(Items.DIAMOND,4)},null,null,null,null,16,16,0);
         recipe.mOutputs[0].getOrCreateTag().putBoolean("pending_work_test",true);
@@ -524,10 +524,10 @@ public final class PortRegressionTests {
         helper.setBlock(pos,net.minecraft.world.level.block.Blocks.AIR);
         var restoredPos=new net.minecraft.core.BlockPos(3,2,1); helper.setBlock(restoredPos,block);
         absolute=helper.absolutePos(restoredPos);
-        machine=(gregtech.blockentity.machine.BasicMachineBlockEntity)helper.getLevel().getBlockEntity(absolute);
+        machine=(gregtech.content.blockentity.machine.BasicMachineBlockEntity)helper.getLevel().getBlockEntity(absolute);
         machine.load(packed);
         helper.assertTrue(machine.inventory().getStackInSlot(0).isEmpty(),"restored block does not copy spilled inventory");
-        gregtech.blockentity.machine.BasicMachineBlockEntity.serverTick(helper.getLevel(),absolute,machine.getBlockState(),machine);
+        gregtech.content.blockentity.machine.BasicMachineBlockEntity.serverTick(helper.getLevel(),absolute,machine.getBlockState(),machine);
         int diamonds=0;
         for(int i=machine.inputSlots();i<machine.inventory().getSlots();i++) if(machine.inventory().getStackInSlot(i).is(Items.DIAMOND)) diamonds+=machine.inventory().getStackInSlot(i).getCount();
         diamonds+=helper.getLevel().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new net.minecraft.world.phys.AABB(absolute).inflate(2)).stream()

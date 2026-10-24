@@ -2,8 +2,8 @@ package gregtech.gametest;
 
 import gregtech.content.multiblock.LargeMachineParts;
 import gregtech.content.multiblock.TankValveSpec;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.data.MultiblockCraftingRecipes;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MultiblockCraftingRecipes;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;

@@ -1,7 +1,7 @@
 package gregtech.integration.jade;
 
 import gregtech.internal.energy.IEnergyBlock;
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -24,13 +24,13 @@ public enum EnergyBufferJadeProvider implements IBlockComponentProvider, IServer
 
     @Override
     public void appendServerData(CompoundTag tag, BlockAccessor accessor) {
-        if (accessor.getBlockEntity() instanceof gregtech.blockentity.energy.PowerCellBlockEntity cell) {
+        if (accessor.getBlockEntity() instanceof gregtech.content.blockentity.energy.PowerCellBlockEntity cell) {
             tag.putString(NBT_UNIT, "EU");
             tag.putLong(NBT_STORED, cell.stored());
             tag.putLong(NBT_CAPACITY, cell.spec().capacity());
             return;
         }
-        if(accessor.getBlockEntity() instanceof gregtech.blockentity.energy.ChemicalBatteryBlockEntity battery) {
+        if(accessor.getBlockEntity() instanceof gregtech.content.blockentity.energy.ChemicalBatteryBlockEntity battery) {
             tag.putString(NBT_UNIT,battery.spec().energyType().getShortName());tag.putLong(NBT_STORED,battery.stored());tag.putLong(NBT_CAPACITY,battery.spec().capacity());
             return;
         }

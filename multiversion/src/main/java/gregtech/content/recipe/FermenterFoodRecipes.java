@@ -1,9 +1,9 @@
 package gregtech.content.recipe;
 
 import gregtech.internal.recipe.RecipeMap;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.data.RegisteredFluids;
-import gregtech.registry.GTFluids;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.RegisteredFluids;
+import gregtech.content.registry.GTFluids;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
@@ -95,7 +95,7 @@ public final class FermenterFoodRecipes {
         // input, exactly like the transpiled chemical fermenter recipes. The port's RecipeMap
         // requires at least one input stack, and keeping the original marker is what the chemical
         // recipes already do, so both fermenter sources stay consistent.
-        Item item = gregtech.registry.GTTechnological.selectorTag(0);
+        Item item = gregtech.content.registry.GTTechnological.selectorTag(0);
         ItemStack[] inputs = item == null
                 ? RecipeMap.ZL_IS : new ItemStack[]{new ItemStack(item)};
         // addRecipeX returns null when the map rejects the recipe (validation or collision); only

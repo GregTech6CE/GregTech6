@@ -1,9 +1,9 @@
 package gregtech.gametest;
 import gregtech.content.food.BottleContents;
 import gregtech.content.food.GTDrinks;
-import gregtech.item.BottleItem;
-import gregtech.item.PortableFluidContainerItem;
-import gregtech.block.inventory.BottleCrateBlock;
+import gregtech.content.item.BottleItem;
+import gregtech.content.item.PortableFluidContainerItem;
+import gregtech.content.block.inventory.BottleCrateBlock;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

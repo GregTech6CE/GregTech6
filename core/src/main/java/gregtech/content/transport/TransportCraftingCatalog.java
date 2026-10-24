@@ -4,6 +4,7 @@ package gregtech.content.transport;
 
 import gregtech.api.machine.*;
 import gregtech.internal.machine.*;
+import gregtech.internal.machine.*;
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
 import gregtech.content.transport.fluid.FluidTransportDefinitions;
@@ -44,13 +45,13 @@ public final class TransportCraftingCatalog {
             if(size.restrictive()){
                 var base=switch(size){case RESTRICTIVE_MEDIUM->"medium";case RESTRICTIVE_LARGE->"large";default->"huge";};
                 var pattern=switch(size){case RESTRICTIVE_MEDIUM->List.of(" h ","RPR"," R ");case RESTRICTIVE_LARGE->List.of("hR ","RPR"," R ");default->List.of(" h ","RPR","RRR");};
-                rows.add(shaped("pipe/restrictive/"+id,pattern,Map.of('P',item(idOf("item_pipe_"+base+"_"+mat.idSuffix())),'R',form("ring",gregtech.data.MaterialGroups.Steel),'h',tool("hammer")),id,true));
+                rows.add(shaped("pipe/restrictive/"+id,pattern,Map.of('P',item(idOf("item_pipe_"+base+"_"+mat.idSuffix())),'R',form("ring",gregtech.content.data.MaterialGroups.Steel),'h',tool("hammer")),id,true));
             }else rows.add(plain("item/"+id,id,mat.material(),PipeSpec.PipeSize.valueOf(size.name())));
         }
         for(var spec:FluidTransportDefinitions.tanks()){
             var hull=spec.material();
-            if(hull==gregtech.data.generated.GT6Materials.Compounds.Steel)hull=gregtech.data.MaterialGroups.Steel;
-            if(hull==gregtech.data.generated.GT6Materials.Elements.W)hull=gregtech.data.MaterialGroups.W;
+            if(hull==gregtech.content.data.generated.GT6Materials.Compounds.Steel)hull=gregtech.content.data.MaterialGroups.Steel;
+            if(hull==gregtech.content.data.generated.GT6Materials.Elements.W)hull=gregtech.content.data.MaterialGroups.W;
             if(spec.type()==TankSpec.TankType.METAL_DRUM)
                 rows.add(shaped("tank/"+spec.id(),List.of(" h ","PSP","PSP"),Map.of('h',tool("hammer"),'P',form("plateCurved",hull),'S',form("stickLong",hull)),spec.id(),false));
             else if(spec.type()==TankSpec.TankType.WOOD_BARREL)

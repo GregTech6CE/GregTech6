@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
 import gregtech.api.machine.MachineControl;
-import gregtech.block.machine.BasicMachineBlock;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.block.machine.BasicMachineBlock;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.cover.MachineCoverSpec;
-import gregtech.registry.GTTechnological;
+import gregtech.content.registry.GTTechnological;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;

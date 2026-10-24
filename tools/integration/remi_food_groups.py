@@ -25,9 +25,9 @@ MEDICINES = {"medicine", "laxative", "empty_wax_pill", "radaway", "peppermint", 
 
 
 def catalog(java):
-    multi = (java / "registry/GTMultiItemsGen.java").read_text(encoding="utf-8")
+    multi = (java / "content/registry/GTMultiItemsGen.java").read_text(encoding="utf-8")
     rows = re.findall(r'"([a-z0-9_]+)", "[^"]*", "(food|bottles)", "[^"]*"', multi)
-    statistics = (java / "data/generated/GTFoodItemsGen.java").read_text(encoding="utf-8")
+    statistics = (java / "content/data/generated/GTFoodItemsGen.java").read_text(encoding="utf-8")
     stats = dict(re.findall(r'new FoodNutritionRows.Entry\("([^"]+)".*?, (true|false), \d+\)', statistics, re.S))
     assert len(stats) == sum(category == "food" for _, category in rows), "Review new food registrations/statistics"
     groups = collections.defaultdict(list)

@@ -63,7 +63,7 @@ def catalog(root):
             groups[stem].append(item)
             break
     # Use the actual native ore definitions, not display-name or broad ore substring guesses.
-    ores = (java / "block/SpecialOreDefinitions.java").read_text(encoding="utf-8")
+    ores = (java / "content/block/SpecialOreDefinitions.java").read_text(encoding="utf-8")
     groups["special_ores"] = ["block_" + icon for icon in re.findall(r'new VanillaSpec\("([^"]+)"', ores)]
     groups["rock_ores"] = ["block_" + icon for icon in re.findall(r'Map.entry\("([^"]+)", new RockSpec', ores)]
     groups["crystal_ores"] = sorted(set(re.findall(r'"(crystal_ore_[a-z_]+)"', ores)))
@@ -98,8 +98,8 @@ def catalog(root):
     groups["logistics_covers"] = re.findall(r'\("([^"]+)", Role\.', logistics)
     # Enumerate the same type x form product as both native Loader_Blocks.
     # Full blocks and slabs stay separate; rock identity never creates a group.
-    stones = (java / "block/stone/StoneType.java").read_text(encoding="utf-8")
-    variants = (java / "block/stone/StoneVariant.java").read_text(encoding="utf-8")
+    stones = (java / "content/block/stone/StoneType.java").read_text(encoding="utf-8")
+    variants = (java / "content/block/stone/StoneVariant.java").read_text(encoding="utf-8")
     rocks = re.findall(r'^    [A-Z_]+\("([^"]+)"', stones, re.M)
     forms = re.findall(r'^    [A-Z_]+\(\d+, "([^"]+)"', variants, re.M)
     assert len(rocks) == 27 and len(forms) == 16, "Review stone registration coverage"

@@ -3,8 +3,8 @@ package gregtech.internal.machine;
 import gregtech.internal.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.internal.material.MaterialProperty;
-import gregtech.data.MaterialPrefix;
-import gregtech.data.GregTechConstants;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.data.GregTechConstants;
 
 /** Material fuel values extracted from saltnya FurnaceFuelValue; item/tag fallback is platform code. */
 public final class MaterialFuelRules {
@@ -64,7 +64,7 @@ public final class MaterialFuelRules {
         if (prefix == gregtech.internal.prefix.BlockMaterialPrefix.ore
                 || prefix == gregtech.internal.prefix.BlockMaterialPrefix.oreSmall) return 0;
         long time = 0;
-        for (var part : gregtech.block.BlockMaterialWeights.contained(material, prefix))
+        for (var part : gregtech.content.block.BlockMaterialWeights.contained(material, prefix))
             time += scaleUnits(part.material().getFurnaceBurnTime(), GTValues.U, part.amount());
         if (prefix == gregtech.internal.prefix.BlockMaterialPrefix.blockRaw)
             time = material.resolve().getFurnaceBurnTime() * 10;

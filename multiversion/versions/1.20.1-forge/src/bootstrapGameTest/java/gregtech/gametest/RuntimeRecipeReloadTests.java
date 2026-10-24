@@ -2,10 +2,10 @@ package gregtech.gametest;
 
 import gregtech.GregTech;
 import gregtech.content.material.Materials;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.data.MaterialPrefix;
-import gregtech.recipe.RuntimeRecipeLifecycle;
-import gregtech.registry.GTItems;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.recipe.RuntimeRecipeLifecycle;
+import gregtech.content.registry.GTItems;
 import io.netty.buffer.Unpooled;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -99,7 +99,7 @@ public final class RuntimeRecipeReloadTests {
                     .append(recipe.getResultItem(access).save(new CompoundTag()));
             if(recipe instanceof ShapedRecipe shaped) value.append('|').append(shaped.getWidth()).append('x').append(shaped.getHeight());
             if(recipe instanceof AbstractCookingRecipe cooking) value.append('|').append(cooking.getCookingTime()).append('|').append(cooking.getExperience());
-            if(recipe instanceof gregtech.recipe.ToolShapedRecipe tools) value.append('|').append(tools.allowMirror());
+            if(recipe instanceof gregtech.content.recipe.ToolShapedRecipe tools) value.append('|').append(tools.allowMirror());
             for(var ingredient:recipe.getIngredients()) value.append('|').append(Arrays.stream(ingredient.getItems())
                     .map(s->s.save(new CompoundTag()).toString()).sorted().toList());
             if(result.put(recipe.getId().toString(),value.toString())!=null) throw new AssertionError("duplicate recipe id "+recipe.getId());

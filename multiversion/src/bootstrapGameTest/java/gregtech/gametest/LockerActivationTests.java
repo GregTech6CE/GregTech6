@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
-import gregtech.block.inventory.LockerBlock;
-import gregtech.blockentity.inventory.LockerBlockEntity;
+import gregtech.content.block.inventory.LockerBlock;
+import gregtech.content.blockentity.inventory.LockerBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

@@ -2,7 +2,7 @@ package gregtech.integration.client;
 
 import com.google.gson.JsonObject;
 import gregtech.internal.material.ItemMaterialRegistry;
-import gregtech.block.machine.BasicMachineBlock;
+import gregtech.content.block.machine.BasicMachineBlock;
 import gregtech.client.CommonBlockTooltips;
 import gregtech.content.multiblock.OriginalControllerTooltipData;
 import gregtech.content.multiblock.OriginalControllerTooltipData.Family;
@@ -58,12 +58,12 @@ final class ProcessControllerDeliveryChecks {
                         && count(normal,"gt.lang.use.soft.hammer.to.reset")==1,"source basic inheritance once "+id);
                 require(count(normal,"tooltip.gt6ce.machine.recipes")==0
                         && count(normal,"tooltip.gt6ce.machine.tool.screwdriver")==0,"old port generic rows not duplicated "+id);
-                var entity=(gregtech.blockentity.machine.BasicMachineBlockEntity)
+                var entity=(gregtech.content.blockentity.machine.BasicMachineBlockEntity)
                         machine.newBlockEntity(BlockPos.ZERO,block.defaultBlockState());
                 require(entity.getEnergySizeInputMin(spec.energyTag(),Direction.NORTH)==spec.energyInMin()
                         && entity.getEnergySizeInputMax(spec.energyTag(),Direction.NORTH)==spec.energyInMax(),"actual native source energy range "+id);
                 if(family==Family.CRYO_DISTILLATION_TOWER) {
-                    require(spec.energyTag()==gregtech.data.GregTechTags.Energy.CU
+                    require(spec.energyTag()==gregtech.content.data.GregTechTags.Energy.CU
                             && entity.getTanksInput().length==1 && entity.getTanksOutput().length==9,
                             "original cold recipe map has one fluid input and nine outputs "+id);
                     require(count(normal,"gt.td.short.energy.cryo")==1 && count(normal,"gt.td.short.energy.heat")==0,

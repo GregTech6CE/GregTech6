@@ -1,5 +1,5 @@
 package gregtech.platform.neoforge.machine;
-import gregtech.block.machine.BasicMachineBlock;
+import gregtech.content.block.machine.BasicMachineBlock;
 import net.minecraft.world.item.*;
 import net.minecraft.network.chat.Component;
 import java.util.List;

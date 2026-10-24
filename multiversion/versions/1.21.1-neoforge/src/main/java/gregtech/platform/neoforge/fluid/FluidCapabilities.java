@@ -16,20 +16,20 @@ public final class FluidCapabilities {
     @SubscribeEvent
     public static void register(RegisterCapabilitiesEvent event) {
         event.registerItem(Capabilities.FluidHandler.ITEM,
-                (stack, context) -> ((gregtech.item.WoodenBucketItem) stack.getItem()).handler(stack),
-                gregtech.registry.GTMultiItems.all().stream().map(holder -> holder.get())
-                        .filter(item -> item instanceof gregtech.item.WoodenBucketItem)
+                (stack, context) -> ((gregtech.content.item.WoodenBucketItem) stack.getItem()).handler(stack),
+                gregtech.content.registry.GTMultiItems.all().stream().map(holder -> holder.get())
+                        .filter(item -> item instanceof gregtech.content.item.WoodenBucketItem)
                         .toArray(net.minecraft.world.item.Item[]::new));
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,
-                gregtech.registry.GTBlockEntities.PORTABLE_CONTAINER.get(),
+                gregtech.content.registry.GTBlockEntities.PORTABLE_CONTAINER.get(),
                 (vessel, side) -> vessel.fluidHandler());
         event.registerItem(Capabilities.FluidHandler.ITEM,
                 (stack, context) -> ((FluidDisplayItem) stack.getItem()).handler(stack),
                 FluidRegistries.ITEMS.getEntries().stream().map(holder -> holder.get())
                         .toArray(net.minecraft.world.item.Item[]::new));
         event.registerItem(Capabilities.FluidHandler.ITEM,
-                (stack, context) -> ((gregtech.item.PortableFluidContainerItem) stack.getItem()).handler(stack),
-                gregtech.registry.GTToolBlocks.PORTABLE.stream().map(block -> block.get().asItem())
+                (stack, context) -> ((gregtech.content.item.PortableFluidContainerItem) stack.getItem()).handler(stack),
+                gregtech.content.registry.GTToolBlocks.PORTABLE.stream().map(block -> block.get().asItem())
                         .toArray(net.minecraft.world.item.Item[]::new));
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, SmelteryRegistries.SMELTING_CRUCIBLE.get(),
                 (crucible, side) -> side == Direction.DOWN ? null : crucible.moltenFluidHandler());

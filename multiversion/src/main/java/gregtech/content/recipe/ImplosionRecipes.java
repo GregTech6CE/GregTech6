@@ -3,8 +3,8 @@ package gregtech.content.recipe;
 import gregtech.content.recipe.ImplosionRecipeRows.Gem;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.recipe.Recipe;
-import gregtech.data.*;
-import gregtech.registry.*;
+import gregtech.content.data.*;
+import gregtech.content.registry.*;
 import net.minecraft.world.item.*;
 import java.util.List;
 /** GT6 Loader_Recipes_Other 708–758 and MT/ANY gem family declarations. */

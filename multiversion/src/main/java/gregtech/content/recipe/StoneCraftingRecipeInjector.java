@@ -1,19 +1,19 @@
 package gregtech.content.recipe;
 
 //? if >=1.21.1 {
-/*import gregtech.data.OriginalCraftingJson;
+/*import gregtech.content.data.OriginalCraftingJson;
 *///?} else {
 import gregtech.GregTech;
 //?}
 import gregtech.internal.tool.GTToolType;
-import gregtech.block.stone.StoneType;
-import gregtech.block.stone.StoneVariant;
+import gregtech.content.block.stone.StoneType;
+import gregtech.content.block.stone.StoneVariant;
 import gregtech.content.material.Materials;
-import gregtech.data.MaterialPrefix;
-import gregtech.recipe.ToolShapedRecipe;
-import gregtech.registry.GTBlocks;
-import gregtech.registry.GTItems;
-import gregtech.registry.GTToolItems;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.recipe.ToolShapedRecipe;
+import gregtech.content.registry.GTBlocks;
+import gregtech.content.registry.GTItems;
+import gregtech.content.registry.GTToolItems;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -93,7 +93,7 @@ public final class StoneCraftingRecipeInjector {
 
         /*com.mojang.logging.LogUtils.getLogger().info("Registered {} GT6 masonry crafting rows for {} rock types ({} skipped)",
 *///?} else {
-        if (added > 0) gregtech.recipe.RuntimeRecipeLifecycle.replaceGenerated(manager, recipes);
+        if (added > 0) gregtech.content.recipe.RuntimeRecipeLifecycle.replaceGenerated(manager, recipes);
         GregTech.LOGGER.info("Registered {} GT6 masonry crafting rows for {} rock types ({} skipped)",
 //?}
                 added, StoneType.values().length, SKIPPED.size());

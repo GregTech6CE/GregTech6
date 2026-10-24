@@ -8,8 +8,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 public final class MiscBlockAppearance {
     private MiscBlockAppearance() {}
     public static int tint(Block block) {
-        if (block instanceof gregtech.block.misc.SourceExtenderBlock extender) return extender.spec().material().getColor();
-        if(block instanceof gregtech.block.misc.LongDistanceTransformerBlock endpoint) {
+        if (block instanceof gregtech.content.block.misc.SourceExtenderBlock extender) return extender.spec().material().getColor();
+        if(block instanceof gregtech.content.block.misc.LongDistanceTransformerBlock endpoint) {
             String material=switch((int)endpoint.voltage()) {
                 case 2048 -> "Chromium"; case 8192 -> "Titanium"; case 32768 -> "Iridium";
                 case 131072 -> "Osmium"; default -> "Trinitanium";

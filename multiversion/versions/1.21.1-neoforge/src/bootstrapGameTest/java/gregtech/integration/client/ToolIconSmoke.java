@@ -2,7 +2,7 @@ package gregtech.integration.client;
 
 import gregtech.internal.tool.GTToolType;
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.item.GTToolItem;
+import gregtech.content.item.GTToolItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.RandomSource;

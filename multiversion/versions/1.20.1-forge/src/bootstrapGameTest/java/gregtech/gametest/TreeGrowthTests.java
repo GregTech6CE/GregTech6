@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
-import gregtech.block.wood.WoodSpecies;
-import gregtech.registry.GTWoods;
-import gregtech.worldgen.GTFeatures;
-import gregtech.worldgen.GTTreeGrower;
-import gregtech.worldgen.GTTreeShapes;
-import gregtech.worldgen.GTTreesFeature;
+import gregtech.content.block.wood.WoodSpecies;
+import gregtech.content.registry.GTWoods;
+import gregtech.content.worldgen.GTFeatures;
+import gregtech.content.worldgen.GTTreeGrower;
+import gregtech.content.worldgen.GTTreeShapes;
+import gregtech.content.worldgen.GTTreesFeature;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;

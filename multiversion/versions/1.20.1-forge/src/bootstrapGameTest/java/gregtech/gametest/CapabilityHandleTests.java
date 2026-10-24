@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
 import gregtech.internal.machine.MachineRegistry;
-import gregtech.block.machine.GTFacingMachineBlock;
+import gregtech.content.block.machine.GTFacingMachineBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -149,7 +149,7 @@ public final class CapabilityHandleTests {
 
     @GameTest(template = "test_empty", timeoutTicks = 300)
     public static void itemPipeCapabilitiesAreCached(GameTestHelper helper) {
-        var pipes = gregtech.registry.GTItemPipes.all();
+        var pipes = gregtech.content.registry.GTItemPipes.all();
         helper.assertTrue(!pipes.isEmpty(), "the port registers item pipes");
         if (!pipes.isEmpty()) {
             // Pipes are the machine every neighbor queries every tick, and they wrap their handler per side

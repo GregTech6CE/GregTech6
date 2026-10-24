@@ -4,7 +4,7 @@
 package gregtech.internal.machine;
 
 import gregtech.internal.material.GTMaterial;
-import gregtech.data.ImportedMaterialData;
+import gregtech.content.data.ImportedMaterialData;
 import java.util.*;
 
 /** Source hull statistics and construction amounts are separate: stone prefixes can have no positive REV data. */

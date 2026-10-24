@@ -1,8 +1,8 @@
 package gregtech.content.recipe;
 
-import gregtech.data.MachineRecipeMaps;
-import gregtech.item.BottleItem;
-import gregtech.data.generated.GTBottlesGen;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.item.BottleItem;
+import gregtech.content.data.generated.GTBottlesGen;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;

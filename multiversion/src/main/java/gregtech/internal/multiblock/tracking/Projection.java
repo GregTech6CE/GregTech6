@@ -1,7 +1,7 @@
 package gregtech.internal.multiblock.tracking;
 
 import gregtech.content.multiblock.PlainStructureBlocks;
-import gregtech.block.OreBlock;
+import gregtech.content.block.OreBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;

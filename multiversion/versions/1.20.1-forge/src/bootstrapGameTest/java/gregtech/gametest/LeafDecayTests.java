@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.block.wood.WoodLeavesBlock;
-import gregtech.block.wood.WoodSpecies;
-import gregtech.registry.GTWoods;
-import gregtech.worldgen.GTTreeShapes;
+import gregtech.content.block.wood.WoodLeavesBlock;
+import gregtech.content.block.wood.WoodSpecies;
+import gregtech.content.registry.GTWoods;
+import gregtech.content.worldgen.GTTreeShapes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;

@@ -1,8 +1,8 @@
 package gregtech.client;
 
-import gregtech.block.misc.SourceExtenderBlock;
+import gregtech.content.block.misc.SourceExtenderBlock;
 import gregtech.content.material.Materials;
-import gregtech.registry.GTRelaysFilters;
+import gregtech.content.registry.GTRelaysFilters;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;

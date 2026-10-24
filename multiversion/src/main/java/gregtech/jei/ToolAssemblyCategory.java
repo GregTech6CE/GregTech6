@@ -7,8 +7,8 @@ import gregtech.GregTech;
 //?}
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.tool.GTToolType;
-import gregtech.item.GTToolItem;
-import gregtech.recipe.ToolAssemblyCatalog;
+import gregtech.content.item.GTToolItem;
+import gregtech.content.recipe.ToolAssemblyCatalog;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
@@ -24,7 +24,7 @@ import net.minecraft.world.item.ItemStack;
 import java.util.List;
 
 /**
- * JEI view for the manual tool recipes ({@link gregtech.recipe.GTToolAssemblyRecipe}).
+ * JEI view for the manual tool recipes ({@link gregtech.content.recipe.GTToolAssemblyRecipe}).
  *
  * <p>Every GT6 tool is a data recipe without a fixed grid — the head decides the tool's material and
  * the handle only decides the durability — so the vanilla recipe viewer shows the 43

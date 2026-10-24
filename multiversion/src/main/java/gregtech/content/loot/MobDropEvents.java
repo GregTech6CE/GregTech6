@@ -23,7 +23,7 @@ package gregtech.content.loot;
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
 import gregtech.content.tool.OriginalToolMaterials;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -196,7 +196,7 @@ public final class MobDropEvents {
         if (form == null || !OriginalToolMaterials.inFamily(form.material(), "AnyIronOrSteel")) return ItemStack.EMPTY;
         var prefix = form.prefix();
         if (prefix != MaterialPrefix.plate && prefix != MaterialPrefix.ingot && prefix != MaterialPrefix.chunkGt && prefix != MaterialPrefix.nugget) return ItemStack.EMPTY;
-        return gregtech.registry.GTItems.getStack(prefix, GTMaterialRegistry.get("Lead"), 1);
+        return gregtech.content.registry.GTItems.getStack(prefix, GTMaterialRegistry.get("Lead"), 1);
     }
     private static String id(ItemStack stack) { return BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath(); }
     private static boolean tag(ItemStack stack, String tag) { return stack.is(ItemTags.create(ResourceLocation.parse(tag))); }

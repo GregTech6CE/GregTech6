@@ -2,9 +2,9 @@ package gregtech.compat;
 
 import gregtech.content.material.Materials;
 import gregtech.content.recipe.DyeProcessingRecipes;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.GTItems;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTItems;
 //? if >=1.21.1 {
 /*import java.util.ArrayList;
 import java.util.List;

@@ -3,7 +3,7 @@ package gregtech.gametest;
 import gregtech.internal.machine.crucible.*;
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
-import gregtech.blockentity.machine.*;
+import gregtech.content.blockentity.machine.*;
 import gregtech.content.multiblock.SharedLargeCrucibleStructure;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -38,7 +38,7 @@ public final class CrucibleHazardSourceTests {
     /*private static void temperature(GameTestHelper h,gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity entity,long t) {
         var tag=entity.saveWithoutMetadata(h.getLevel().registryAccess());
 *///?} else {
-    private static void temperature(GameTestHelper h,gregtech.blockentity.machine.SmeltingCrucibleBlockEntity entity,long t) {
+    private static void temperature(GameTestHelper h,gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity entity,long t) {
         var tag=entity.saveWithoutMetadata();
 //?}
         tag.putLong("gt.temperature",t);tag.putLong("gt.temperature.old",t);tag.putLong("gt.energy.buffer",0);tag.putInt("gt.cooldown",100);
@@ -51,7 +51,7 @@ public final class CrucibleHazardSourceTests {
 //? if >=1.21.1 {
     /*private static void tick(GameTestHelper h,gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity entity) {entity.serverTick();}
 *///?} else {
-    private static void tick(GameTestHelper h,gregtech.blockentity.machine.SmeltingCrucibleBlockEntity entity) {gregtech.blockentity.machine.SmeltingCrucibleBlockEntity.serverTick(h.getLevel(),entity.getBlockPos(),entity.getBlockState(),entity);}
+    private static void tick(GameTestHelper h,gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity entity) {gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity.serverTick(h.getLevel(),entity.getBlockPos(),entity.getBlockState(),entity);}
 //?}
     @GameTest(template="test_empty",timeoutTicks=80)
     public static void sourceGasBoundsDamageAndWdFireEligibility(GameTestHelper h) {
@@ -81,7 +81,7 @@ public final class CrucibleHazardSourceTests {
 //? if >=1.21.1 {
         /*var entity=(gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity)h.getLevel().getBlockEntity(pos);
 *///?} else {
-        var entity=(gregtech.blockentity.machine.SmeltingCrucibleBlockEntity)h.getLevel().getBlockEntity(pos);
+        var entity=(gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity)h.getLevel().getBlockEntity(pos);
 //?}
         h.assertTrue(entity.addMaterialStacks(List.of(CrucibleMaterialStack.of(GTMaterialRegistry.get("Water"),GTValues.U)),293),"native accepts water");
         temperature(h,entity,373);tick(h,entity);
@@ -95,7 +95,7 @@ public final class CrucibleHazardSourceTests {
     }
     @GameTest(template="test_empty",timeoutTicks=80)
     public static void formedLargeContactAndExactMeltdownBoundary(GameTestHelper h) {
-        var pos=arena(h,265);var block=(gregtech.block.machine.LargeCrucibleControllerBlock)block("large_steel_crucible");
+        var pos=arena(h,265);var block=(gregtech.content.block.machine.LargeCrucibleControllerBlock)block("large_steel_crucible");
         h.getLevel().setBlock(pos,block.defaultBlockState(),3);
         for(var cell:SharedLargeCrucibleStructure.CELLS) if(!cell.air())
             h.getLevel().setBlock(pos.offset(cell.x(),cell.y(),cell.z()),block.variant().wall().defaultBlockState(),3);

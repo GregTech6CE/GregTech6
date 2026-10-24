@@ -1,6 +1,6 @@
 package gregtech.integration.client;
 import com.google.gson.JsonObject;
-import gregtech.block.misc.*;
+import gregtech.content.block.misc.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Screenshot;
 import net.minecraft.core.*;

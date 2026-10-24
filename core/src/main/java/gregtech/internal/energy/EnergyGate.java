@@ -21,7 +21,7 @@ package gregtech.internal.energy;
 
 import java.util.function.LongSupplier;
 
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 
 /**
  * The pure part of the upstream TileEntityBase01Root energy gate (TileEntityBase01Root.java:716-717),

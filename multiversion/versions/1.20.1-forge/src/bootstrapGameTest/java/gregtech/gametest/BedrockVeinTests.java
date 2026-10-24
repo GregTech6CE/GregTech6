@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
 import gregtech.content.material.Materials;
-import gregtech.worldgen.GTBedrockOreFeature;
+import gregtech.content.worldgen.GTBedrockOreFeature;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -88,7 +88,7 @@ public final class BedrockVeinTests {
                 if (isOre(core)) {
                     coreOres++;
                     // §103.B: the bedrock background is the ore's `stone` block-state property now.
-                    helper.assertTrue(gregtech.block.OreBlock.isBedrockOre(core),
+                    helper.assertTrue(gregtech.content.block.OreBlock.isBedrockOre(core),
                             "the core ore keeps the bedrock background");
                     helper.assertTrue(level.getBlockEntity(pos) == null,
                             "§103.B: a bedrock ore has no block entity");

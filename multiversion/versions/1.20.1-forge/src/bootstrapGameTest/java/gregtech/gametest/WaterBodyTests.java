@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
-import gregtech.worldgen.GTFeatures;
-import gregtech.worldgen.GTWaterBodyFeature;
-import gregtech.worldgen.GTWorldgenBiomes;
+import gregtech.content.worldgen.GTFeatures;
+import gregtech.content.worldgen.GTWaterBodyFeature;
+import gregtech.content.worldgen.GTWorldgenBiomes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;

@@ -14,7 +14,7 @@ public final class CoverProgress {
         var items = host.componentItems(side);
         var fluids = host.componentFluids(side);
         var energy = host.coverOwner() instanceof gregtech.internal.energy.IEnergyBlock block ? block : null;
-        var types = energy == null ? java.util.List.<gregtech.data.GregTechTags.Tag>of()
+        var types = energy == null ? java.util.List.<gregtech.content.data.GregTechTags.Tag>of()
                 : energy.getEnergyCapacitorTypes(side);
         if (items == null && fluids == null && types.isEmpty()) return null;
         return new MachineControl() {

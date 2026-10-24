@@ -1,15 +1,15 @@
 package gregtech.gametest;
 
-import gregtech.block.energy.EnergyNodeBlock;
-import gregtech.blockentity.energy.ChemicalBatteryBlockEntity;
-import gregtech.blockentity.energy.EnergyNodeBlockEntity;
-import gregtech.blockentity.inventory.MassStorageBlockEntity;
+import gregtech.content.block.energy.EnergyNodeBlock;
+import gregtech.content.blockentity.energy.ChemicalBatteryBlockEntity;
+import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
+import gregtech.content.blockentity.inventory.MassStorageBlockEntity;
 import gregtech.content.energy.*;
-import gregtech.data.GregTechTags;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.item.EnergyCrystalItem;
-import gregtech.registry.GTItems;
-import gregtech.registry.GTItemBarrels;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.item.EnergyCrystalItem;
+import gregtech.content.registry.GTItems;
+import gregtech.content.registry.GTItemBarrels;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.*;

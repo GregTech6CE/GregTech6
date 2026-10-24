@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
 import gregtech.internal.tool.GTToolHelper;
-import gregtech.item.GTToolItem;
-import gregtech.item.TechItem;
-import gregtech.registry.GTTechnological;
+import gregtech.content.item.GTToolItem;
+import gregtech.content.item.TechItem;
+import gregtech.content.registry.GTTechnological;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -234,7 +234,7 @@ public final class HandCraftingTests {
         java.util.List<String> mirroring = new java.util.ArrayList<>();
         for (Recipe<?> recipe : h.getLevel().getRecipeManager().getRecipes()) {
             if (!recipe.getId().getNamespace().equals("gt6ce")) continue;
-            if (!(recipe instanceof gregtech.recipe.ToolShapedRecipe tool)) continue;
+            if (!(recipe instanceof gregtech.content.recipe.ToolShapedRecipe tool)) continue;
             // Rows injected at runtime (hand recipes, the GT6 masonry patterns) state their own flag in
             // code and are audited by their own tests; this rule is about the data-pack rows the
             // mirror-flag tool writes.
@@ -281,7 +281,7 @@ public final class HandCraftingTests {
         int asymmetric = 0;
         for (Recipe<?> recipe : h.getLevel().getRecipeManager().getRecipes()) {
             if (!recipe.getId().getNamespace().equals("gt6ce")) continue;
-            if (!(recipe instanceof gregtech.recipe.ToolShapedRecipe tool)) continue;
+            if (!(recipe instanceof gregtech.content.recipe.ToolShapedRecipe tool)) continue;
             int width = tool.getWidth();
             int height = tool.getHeight();
             StringBuilder shape = new StringBuilder();
@@ -392,7 +392,7 @@ public final class HandCraftingTests {
         BlockPos pos = new BlockPos(4, 3, 4);
         h.setBlock(pos, Blocks.AIR);
         h.setBlock(pos, block);
-        var machine = (gregtech.blockentity.machine.BasicMachineBlockEntity)
+        var machine = (gregtech.content.blockentity.machine.BasicMachineBlockEntity)
                 h.getLevel().getBlockEntity(h.absolutePos(pos));
         h.assertTrue(machine.attachCover(Direction.NORTH, pump), "machine face accepts a compact pump");
         h.assertTrue(gregtech.content.cover.CoverItems.behavior(machine.getCover(Direction.NORTH))
@@ -425,7 +425,7 @@ public final class HandCraftingTests {
             h.assertTrue(!empty.isEmpty(), "empty cell is registered: " + row[0]);
             int found = 0;
             for (gregtech.internal.recipe.Recipe recipe
-                    : gregtech.data.MachineRecipeMaps.Canner.mRecipeList) {
+                    : gregtech.content.data.MachineRecipeMaps.Canner.mRecipeList) {
                 if (recipe.mInputs.length == 0 || !recipe.mInputs[0].is(empty.getItem())) continue;
                 found++;
                 h.assertTrue(recipe.mOutputs.length == 1 && recipe.mOutputs[0].is(stack(row[1]).getItem()),

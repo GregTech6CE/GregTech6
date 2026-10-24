@@ -109,7 +109,7 @@ tasks.named('check').configure { dependsOn addonApiClosureCheck }
         mainClass = "gregtech.core.${entryPoint}"
         if (entryPoint == 'RadiationConsumableContracts') {
             args rootProject.projectDir.absolutePath
-            inputs.files(rootProject.file('multiversion/src/main/java/gregtech/item/RadawayItem.java'),
+            inputs.files(rootProject.file('multiversion/src/main/java/gregtech/content/item/RadawayItem.java'),
                     rootProject.file('multiversion/src/main/java/gregtech/content/food/FoodStatEvents.java'))
                     .withPropertyName('radiationConsumptionOwnership').withPathSensitivity(PathSensitivity.RELATIVE)
         }

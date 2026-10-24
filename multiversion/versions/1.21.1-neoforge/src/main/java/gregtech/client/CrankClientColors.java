@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.block.tool.CrankBlock;
+import gregtech.content.block.tool.CrankBlock;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;

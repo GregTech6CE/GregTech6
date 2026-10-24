@@ -121,7 +121,7 @@ public final class CoinGeometry {
         }
 
         public int pixelDepth(int x, int z) {
-            return gregtech.block.CoinPileRules.pixelDepth(rows, x, z);
+            return gregtech.content.block.CoinPileRules.pixelDepth(rows, x, z);
         }
 
         public synchronized List<AABB> pixelBoxes(int count) {
@@ -160,7 +160,7 @@ public final class CoinGeometry {
     }
 
     public static AABB cell(int face, int count) {
-        var bounds = gregtech.block.CoinPileRules.cell(face, count);
+        var bounds = gregtech.content.block.CoinPileRules.cell(face, count);
         return new AABB(bounds.x0(), bounds.y0(), bounds.z0(), bounds.x1(), bounds.y1(), bounds.z1());
     }
 

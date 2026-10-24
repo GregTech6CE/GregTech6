@@ -2,11 +2,11 @@ package gregtech.content.recipe;
 
 import gregtech.GregTech;
 import gregtech.internal.tool.GTToolType;
-import gregtech.recipe.GTFlintAndTinderRecipe;
-import gregtech.recipe.GTToolAssemblyRecipe;
-import gregtech.recipe.GTToolCraftingRecipe;
-import gregtech.recipe.GTToolHeadRecipe;
-import gregtech.recipe.GTToolRecipes;
+import gregtech.content.recipe.GTFlintAndTinderRecipe;
+import gregtech.content.recipe.GTToolAssemblyRecipe;
+import gregtech.content.recipe.GTToolCraftingRecipe;
+import gregtech.content.recipe.GTToolHeadRecipe;
+import gregtech.content.recipe.GTToolRecipes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -44,7 +44,7 @@ public final class ToolCraftingRecipeInjector {
         for (GTToolType type : GTToolType.values()) {
             List<GTToolRecipes.Pattern> patterns = GTToolRecipes.shaped(type);
             for (int i = 0; i < patterns.size(); i++) {
-                if (!gregtech.recipe.GTToolPatternRecipe.hasMaterials(type, patterns.get(i))) continue;
+                if (!gregtech.content.recipe.GTToolPatternRecipe.hasMaterials(type, patterns.get(i))) continue;
                 ResourceLocation id = id("tools/" + type.id() + (i == 0 ? "" : "_" + i));
                 recipes.add(type == GTToolType.FLINT_AND_TINDER
                         ? new GTFlintAndTinderRecipe(id)
@@ -62,7 +62,7 @@ public final class ToolCraftingRecipeInjector {
             if (patterns.isEmpty() && !assembly) withoutRecipe.add(type.id());
             List<GTToolRecipes.Pattern> headPatterns = GTToolRecipes.heads(type);
             for (int i = 0; i < headPatterns.size(); i++) {
-                if (!gregtech.recipe.GTToolPatternRecipe.hasMaterials(type, headPatterns.get(i))) continue;
+                if (!gregtech.content.recipe.GTToolPatternRecipe.hasMaterials(type, headPatterns.get(i))) continue;
                 ResourceLocation id = id("tool_heads/" + type.id() + (i == 0 ? "" : "_" + i));
                 recipes.add(new GTToolHeadRecipe(id, type, i));
                 REGISTERED.add(id.toString());
@@ -73,7 +73,7 @@ public final class ToolCraftingRecipeInjector {
         recipes.addAll(electric);
         electric.forEach(recipe->REGISTERED.add(recipe.getId().toString()));
         GregTech.LOGGER.info("Registered {} material-specific GT6 LV electric tool crafting rows",electric.size());
-        gregtech.recipe.RuntimeRecipeLifecycle.replaceGenerated(manager, recipes);
+        gregtech.content.recipe.RuntimeRecipeLifecycle.replaceGenerated(manager, recipes);
         GregTech.LOGGER.info("Registered GT6 tool crafting rows: {} shaped tools, {} head + handle"
                         + " assemblies, {} tool heads ({} tools without a manual recipe: {})",
                 shaped, assemblies, heads, withoutRecipe.size(), withoutRecipe);

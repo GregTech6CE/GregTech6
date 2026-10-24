@@ -18,7 +18,7 @@ import gregtech.api.addon.SmeltingTargetDeclaration;
 import gregtech.api.addon.SmeltingTargetRemoval;
 
 import gregtech.internal.machine.crucible.CrucibleReactions;
-import gregtech.data.generated.MaterialWorkability;
+import gregtech.content.data.generated.MaterialWorkability;
 import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
@@ -27,7 +27,7 @@ import gregtech.internal.material.MaterialDefinition;
 import gregtech.internal.material.MaterialProperty;
 import gregtech.internal.mod.ModData;
 import gregtech.internal.prefix.PrefixRegistry;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -83,7 +83,7 @@ public final class AddonMaterials {
      * {@code polymer()} allows {@code plate} and {@code foil}. {@code wires()} allows {@code wireFine}.
      * Core materials and every other prefix keep {@code MaterialPrefix.isValidFor}.
      */
-    public static boolean explicitPlateOrFoil(gregtech.data.MaterialPrefix prefix, GTMaterial material) {
+    public static boolean explicitPlateOrFoil(gregtech.content.data.MaterialPrefix prefix, GTMaterial material) {
         if (prefix == null || material == null || !material.isValid() || GTMaterialRegistry.isCoreMaterial(material.resolve()))
             return false;
         String name = prefix.getName();
@@ -439,12 +439,12 @@ public final class AddonMaterials {
 
     /** Veins resolve after linking, so a row can name a material created in {@code link()}. */
     public static void publishOreVeins() {
-        var queued = new ArrayList<gregtech.worldgen.AddonOreVeins.Submission>();
+        var queued = new ArrayList<gregtech.content.worldgen.AddonOreVeins.Submission>();
         for (Submission submission : snapshot()) {
-            queued.add(new gregtech.worldgen.AddonOreVeins.Submission(
+            queued.add(new gregtech.content.worldgen.AddonOreVeins.Submission(
                     submission.addonId, submission.veins, submission.smallOres));
         }
-        gregtech.worldgen.AddonOreVeins.publish(queued);
+        gregtech.content.worldgen.AddonOreVeins.publish(queued);
     }
 
     /** Byproduct names resolve after linking, so a list can name a material created in {@code link()}. */

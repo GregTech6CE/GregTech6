@@ -1,8 +1,8 @@
 package gregtech.client.gui;
 
-import gregtech.blockentity.tool.BumbliaryBlockEntity;
+import gregtech.content.blockentity.tool.BumbliaryBlockEntity;
 import gregtech.content.bumble.BumbleBeeType;
-import gregtech.registry.GTMenuTypes;
+import gregtech.content.registry.GTMenuTypes;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;

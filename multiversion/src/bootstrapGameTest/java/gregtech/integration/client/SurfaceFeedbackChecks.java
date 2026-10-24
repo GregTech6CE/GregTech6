@@ -1,10 +1,10 @@
 package gregtech.integration.client;
 import com.google.gson.*;
-import gregtech.block.plant.BushBlock;
-import gregtech.blockentity.*;
+import gregtech.content.block.plant.BushBlock;
+import gregtech.content.blockentity.*;
 import gregtech.content.plant.BerryBushCatalog;
-import gregtech.registry.*;
-import gregtech.worldgen.*;
+import gregtech.content.registry.*;
+import gregtech.content.worldgen.*;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -160,7 +160,7 @@ public final class SurfaceFeedbackChecks {
    require(fluidSprite,"spring inventory has wrong fluid sprite");require(!stack.getHoverName().getString().startsWith("block.gt6ce."),"untranslated spring variant");models++;
   }
   var pages=gregtech.bootstrap.registration.OriginCreativeContents.pages();require(pages.values().stream().flatMap(Collection::stream).filter(s->s.is(GTFluidSprings.FLUID_SPRING.get().asItem())).count()==0,"empty legacy spring in creative page");
-  require(pages.get("untyped").stream().filter(s->s.getItem() instanceof BlockItem b && b.getBlock() instanceof gregtech.block.FluidSpringBlock).count()==7,"typed creative spring count");
+  require(pages.get("untyped").stream().filter(s->s.getItem() instanceof BlockItem b && b.getBlock() instanceof gregtech.content.block.FluidSpringBlock).count()==7,"typed creative spring count");
   receipt.addProperty("flatSurfaceInventoryModelsChecked",models);receipt.add("flatBushInventoryColors",colors);
  }
  public static void render(net.minecraft.client.gui.GuiGraphics graphics,net.minecraft.client.Minecraft minecraft,JsonObject receipt){

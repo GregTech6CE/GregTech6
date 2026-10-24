@@ -20,7 +20,7 @@ public final class CoverPlacement {
         if (!placing && !removing) return false;
         return level.getBlockEntity(pos) instanceof PanelCoverHost host
                 // Loose piles consume plates as contents, never as machine covers.
-                && !(host.coverOwner() instanceof gregtech.blockentity.misc.PileBlockEntity)
+                && !(host.coverOwner() instanceof gregtech.content.blockentity.misc.PileBlockEntity)
                 && (ComponentCoverFallback.ownClass(host.coverOwner()) || ComponentCoverFallback.eligible(host.coverOwner()))
                 && (placing || host.hasAttachedCovers());
     }

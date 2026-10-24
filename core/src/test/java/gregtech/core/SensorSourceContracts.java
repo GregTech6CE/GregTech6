@@ -5,8 +5,8 @@ import gregtech.internal.material.*;
 import gregtech.api.sensor.*;
 import gregtech.internal.sensor.*;
 import gregtech.content.machine.MachineConstructionMaterials;
-import gregtech.data.SourceBlockProperties;
-import gregtech.data.generated.GTSensorRecipesGen;
+import gregtech.content.data.SourceBlockProperties;
+import gregtech.content.data.generated.GTSensorRecipesGen;
 import java.util.*;
 
 /** Current original 21 registrations and raw compressed-volume scaling, rather than fluid level. */

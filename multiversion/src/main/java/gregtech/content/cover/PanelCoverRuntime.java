@@ -49,14 +49,14 @@ public final class PanelCoverRuntime {
         var candidateControl=control(side);
         if(CoverItems.TAG_SELECTOR.equals(id))return candidateControl!=null&&candidateControl.supportsMode();
         // Original bare redstone wire inherits the insulated host class too; both accept these attachments.
-        if(CoverItems.REDSTONE_TORCH.equals(id)||CoverItems.REDSTONE_REPEATER.equals(id))return host.coverOwner() instanceof gregtech.blockentity.energy.SignalWireBlockEntity&&host.coverOwner().getBlockState().getBlock() instanceof gregtech.block.energy.SignalWireBlock;
+        if(CoverItems.REDSTONE_TORCH.equals(id)||CoverItems.REDSTONE_REPEATER.equals(id))return host.coverOwner() instanceof gregtech.content.blockentity.energy.SignalWireBlockEntity&&host.coverOwner().getBlockState().getBlock() instanceof gregtech.content.block.energy.SignalWireBlock;
         if(CoverAttachmentBehaviors.DRAIN.equals(id)||CoverAttachmentBehaviors.AIR_VENT.equals(id))return host.componentTicks()&&host.componentFluids(side)!=null&&host.componentFluids(side).getTanks()>0;
         if(CoverUtilityBehaviors.FILTER_ITEM.equals(id)){
             var owner=host.coverOwner();var level=owner.getLevel();
-            return host.componentItems(side)!=null&&!(owner instanceof gregtech.blockentity.machine.ItemPipeBlockEntity&&level!=null&&level.getBlockEntity(owner.getBlockPos().relative(side)) instanceof gregtech.blockentity.machine.ItemPipeBlockEntity);
+            return host.componentItems(side)!=null&&!(owner instanceof gregtech.content.blockentity.machine.ItemPipeBlockEntity&&level!=null&&level.getBlockEntity(owner.getBlockPos().relative(side)) instanceof gregtech.content.blockentity.machine.ItemPipeBlockEntity);
         }
         if(CoverUtilityBehaviors.FILTER_FLUID.equals(id))return host.componentFluids(side)!=null&&host.componentFluids(side).getTanks()>0;
-        if(CoverUtilityBehaviors.PRESSURE_VALVE.equals(id))return host.coverOwner() instanceof gregtech.blockentity.machine.FluidPipeBlockEntity;
+        if(CoverUtilityBehaviors.PRESSURE_VALVE.equals(id))return host.coverOwner() instanceof gregtech.content.blockentity.machine.FluidPipeBlockEntity;
         if(MachineCoverSpec.of(stack)!=null)return candidateControl!=null&&candidateControl.supportsSwitch();
         var panel=PanelCover.of(stack);if(panel==null)return CoverItems.isCover(stack);
         var c=control(side);
@@ -123,7 +123,7 @@ public final class PanelCoverRuntime {
     }
     /** Original CoverTextureSimple uses its wood/stone dig sound for both actions. */
     private void decorativeSound(ItemStack stack) {
-        if(server()&&stack.getItem() instanceof gregtech.item.PanelItemView panel) {
+        if(server()&&stack.getItem() instanceof gregtech.content.item.PanelItemView panel) {
             var owner=host.coverOwner();owner.getLevel().playSound(null,owner.getBlockPos(),
                 panel.panelSpec().kind().equals("wood")?net.minecraft.sounds.SoundEvents.WOOD_BREAK:net.minecraft.sounds.SoundEvents.STONE_BREAK,
                 net.minecraft.sounds.SoundSource.BLOCKS,1F,1F);
@@ -152,7 +152,7 @@ public final class PanelCoverRuntime {
                 c.setMode(CoverItems.selectorTag(stack));
             var spec = MachineCoverSpec.of(stack);
             if (spec != null && !spec.detector()
-                    && !(host instanceof gregtech.blockentity.machine.BasicMachineBlockEntity))
+                    && !(host instanceof gregtech.content.blockentity.machine.BasicMachineBlockEntity))
                 c.setEnabled(spec.allows(new MachineCoverSpec.State(host.coverPossible(side), c.running(), c.active(), false),
                         incoming(side), MachineCoverSpec.inverted(stack), host.coverOwner().getLevel().getGameTime()));
         }
@@ -222,7 +222,7 @@ public final class PanelCoverRuntime {
                 signal=c==null?0:spec.signal(new MachineCoverSpec.State(host.coverPossible(side),c.running(),c.active(),false),MachineCoverSpec.inverted(stack));
                 power=MachineCoverSpec.strong(stack);
             }
-            if(host.coverOwner() instanceof gregtech.blockentity.energy.SignalWireBlockEntity wire){
+            if(host.coverOwner() instanceof gregtech.content.blockentity.energy.SignalWireBlockEntity wire){
                 var id=CoverItems.behavior(stack);
                 if(CoverItems.REDSTONE_TORCH.equals(id))signal=wire.signal()>0?0:15;
                 else if(CoverItems.REDSTONE_REPEATER.equals(id))signal=wire.signal()>0?15:0;
@@ -240,9 +240,9 @@ public final class PanelCoverRuntime {
     }
     private void tickAttachments(long now){
         if(stopped||!host.componentTicks()
-                ||host.coverOwner() instanceof gregtech.blockentity.machine.BasicMachineBlockEntity
-                ||host.coverOwner() instanceof gregtech.blockentity.machine.FluidPipeBlockEntity
-                ||host.coverOwner() instanceof gregtech.blockentity.machine.ItemPipeBlockEntity)return;
+                ||host.coverOwner() instanceof gregtech.content.blockentity.machine.BasicMachineBlockEntity
+                ||host.coverOwner() instanceof gregtech.content.blockentity.machine.FluidPipeBlockEntity
+                ||host.coverOwner() instanceof gregtech.content.blockentity.machine.ItemPipeBlockEntity)return;
         for(var side:Direction.values()){
             var id=CoverItems.behavior(host.getCover(side));
             if(!CoverAttachmentBehaviors.DRAIN.equals(id)&&!CoverAttachmentBehaviors.AIR_VENT.equals(id))continue;

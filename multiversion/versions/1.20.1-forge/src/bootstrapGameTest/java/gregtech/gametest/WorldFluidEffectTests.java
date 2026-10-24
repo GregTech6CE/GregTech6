@@ -4,7 +4,7 @@ import gregtech.GregTech;
 import gregtech.content.hazard.BathingEffectEvents;
 import gregtech.content.hazard.BreathingGasEvents;
 import gregtech.content.hazard.WorldFluidEffects;
-import gregtech.damage.GTHazmat;
+import gregtech.content.damage.GTHazmat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

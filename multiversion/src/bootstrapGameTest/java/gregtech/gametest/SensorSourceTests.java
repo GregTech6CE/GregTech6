@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
 import gregtech.internal.sensor.SensorCatalog;
-import gregtech.block.sensor.SensorBlock;
-import gregtech.blockentity.sensor.SensorBlockEntity;
+import gregtech.content.block.sensor.SensorBlock;
+import gregtech.content.blockentity.sensor.SensorBlockEntity;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.*;
@@ -31,16 +31,16 @@ public final class SensorSourceTests {
             var block=BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.parse("gt6ce:"+variant.path()));
             var centre=pos.relative(front.getOpposite());
             world.setBlockAndUpdate(pos,block.defaultBlockState().setValue(net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING,front));
-            var boiler=(gregtech.blockentity.machine.OriginalLargeBoilerControllerBlockEntity)world.getBlockEntity(pos);
-            var wand=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.BUILDER_WAND,
+            var boiler=(gregtech.content.blockentity.machine.OriginalLargeBoilerControllerBlockEntity)world.getBlockEntity(pos);
+            var wand=gregtech.content.item.GTToolItem.create(gregtech.internal.tool.GTToolType.BUILDER_WAND,
                     gregtech.internal.material.GTMaterialRegistry.get("Heliodor"),gregtech.internal.material.GTMaterialRegistry.get("Wood"));
             player.getInventory().clearContent();player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,wand);
-            player.getInventory().setItem(35,new ItemStack(gregtech.registry.GTMultiblocks.HEAT_TRANSMITTER.get(),9));
+            player.getInventory().setItem(35,new ItemStack(gregtech.content.registry.GTMultiblocks.HEAT_TRANSMITTER.get(),9));
             player.getInventory().setItem(34,new ItemStack(variant.wall(),25));
             h.assertTrue(useHeatTool(player,pos).consumesAction()&&!StructureTestSupport.ok(boiler),"Controller-local build is handled but cannot reach the full shell "+variant.path()+front);
             h.assertTrue(player.getInventory().getItem(35).getCount()==3&&player.getInventory().getItem(34).getCount()==15,
                     "First click consumes exactly six heat transmitters and ten walls in every facing");
-            var part=(gregtech.blockentity.machine.MultiblockPortBlockEntity)world.getBlockEntity(centre);
+            var part=(gregtech.content.blockentity.machine.MultiblockPortBlockEntity)world.getBlockEntity(centre);
             h.assertTrue(part!=null&&part.isBoundTo(pos)&&part.fluidToolHandler(Direction.DOWN,false).getTanks()==0,
                     "Incomplete boiler keeps part tool access without opening storage");
             useHeatTool(player,centre);
@@ -66,7 +66,7 @@ public final class SensorSourceTests {
             h.assertTrue(messages.size()==2&&messages.get(0).getString().equals("Calcification: 1.24%")
                     &&messages.get(1).getString().startsWith("10_000 L of ")&&messages.get(1).getString().endsWith(" (Liquid)"),
                     "Source scale precision and actual water contents remain intact after state load");
-            var glass=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.MAGNIFYING_GLASS,
+            var glass=gregtech.content.item.GTToolItem.create(gregtech.internal.tool.GTToolType.MAGNIFYING_GLASS,
                     gregtech.internal.material.GTMaterialRegistry.get("Glass"),gregtech.internal.material.GTMaterialRegistry.get("Wood"));
             player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,glass);
             h.assertTrue(useHeatTool(player,centre).consumesAction()&&glass.getDamageValue()==1,"Magnifier on a wall reaches boiler with one wear");
@@ -85,7 +85,7 @@ public final class SensorSourceTests {
         var world=h.getLevel();var pos=h.absolutePos(new BlockPos(7,2,7));
         var block=BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.parse("gt6ce:heat_exchanger_main"));
         world.setBlockAndUpdate(pos,block.defaultBlockState());
-        var machine=(gregtech.blockentity.machine.LargeHeatExchangerControllerBlockEntity)world.getBlockEntity(pos);
+        var machine=(gregtech.content.blockentity.machine.LargeHeatExchangerControllerBlockEntity)world.getBlockEntity(pos);
 //? if >=1.21.1 {
         /*var player=net.neoforged.neoforge.common.util.FakePlayerFactory.get(world,new com.mojang.authlib.GameProfile(java.util.UUID.randomUUID(),"HeatBuilder"));
 *///?} else {
@@ -93,9 +93,9 @@ public final class SensorSourceTests {
 //?}
         player.gameMode.changeGameModeForPlayer(net.minecraft.world.level.GameType.SURVIVAL);
         player.setPos(net.minecraft.world.phys.Vec3.atCenterOf(pos.offset(-3,0,-3)));
-        var wand=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.BUILDER_WAND,
+        var wand=gregtech.content.item.GTToolItem.create(gregtech.internal.tool.GTToolType.BUILDER_WAND,
                 gregtech.internal.material.GTMaterialRegistry.get("Heliodor"),gregtech.internal.material.GTMaterialRegistry.get("Wood"));
-        var glass=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.MAGNIFYING_GLASS,
+        var glass=gregtech.content.item.GTToolItem.create(gregtech.internal.tool.GTToolType.MAGNIFYING_GLASS,
                 gregtech.internal.material.GTMaterialRegistry.get("Glass"),gregtech.internal.material.GTMaterialRegistry.get("Wood"));
         h.assertTrue(!wand.isEmpty()&&!glass.isEmpty(),"Real registered tools exist");
         player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,wand);
@@ -116,7 +116,7 @@ public final class SensorSourceTests {
         var near=pos.offset(-1,0,-1);var far=pos.offset(1,0,1);var clicked=pos.north();
         world.setBlockAndUpdate(near,Blocks.AIR.defaultBlockState());world.setBlockAndUpdate(far,Blocks.AIR.defaultBlockState());
         h.assertTrue(!StructureTestSupport.ok(machine),"Broken shell is incomplete");
-        var part=(gregtech.blockentity.machine.MultiblockPortBlockEntity)world.getBlockEntity(clicked);
+        var part=(gregtech.content.blockentity.machine.MultiblockPortBlockEntity)world.getBlockEntity(clicked);
         h.assertTrue(part.isBoundTo(pos)&&part.fluidToolHandler(Direction.NORTH,false).getTanks()==0,
                 "Valid part retains tool ownership while incomplete shell cannot transport fluids");
         player.getInventory().setItem(35,new ItemStack(wall,2));
@@ -178,7 +178,7 @@ public final class SensorSourceTests {
         var context=new net.minecraft.world.item.context.UseOnContext(player,net.minecraft.world.InteractionHand.MAIN_HAND,
                 new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(clicked),Direction.UP,clicked,false));
         h.assertTrue(part.useMultiblockTool(context,orphanMessages)==0&&orphanMessages.isEmpty(),"Old replaced part object never handles later clicks");
-        var orphan=(gregtech.blockentity.machine.MultiblockPortBlockEntity)world.getBlockEntity(clicked);
+        var orphan=(gregtech.content.blockentity.machine.MultiblockPortBlockEntity)world.getBlockEntity(clicked);
         h.assertTrue(orphan.useMultiblockTool(context,orphanMessages)==1&&orphanMessages.size()==1
                 &&orphanMessages.get(0).getString().equals("There is no Multiblock Controller for this Block."),"Orphan part reports original missing-controller diagnostic");
         h.succeed();
@@ -187,21 +187,21 @@ public final class SensorSourceTests {
         var context=new net.minecraft.world.item.context.UseOnContext(player,net.minecraft.world.InteractionHand.MAIN_HAND,
                 new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(pos),Direction.UP,pos,false));
         var stack=player.getMainHandItem();
-        return ((gregtech.item.GTToolItem)stack.getItem()).onItemUseFirst(stack,context);
+        return ((gregtech.content.item.GTToolItem)stack.getItem()).onItemUseFirst(stack,context);
     }
 
     @GameTest(template="test_empty",timeoutTicks=160)
     public static void heat_exchanger_tool_ports_and_fixed_front(GameTestHelper h) {
         var world=h.getLevel();var pos=h.absolutePos(new BlockPos(7,2,7));
-        var block=(gregtech.block.machine.LargeHeatExchangerControllerBlock)BuiltInRegistries.BLOCK.get(
+        var block=(gregtech.content.block.machine.LargeHeatExchangerControllerBlock)BuiltInRegistries.BLOCK.get(
                 net.minecraft.resources.ResourceLocation.parse("gt6ce:heat_exchanger_main"));
-        var facing=gregtech.block.machine.LargeHeatExchangerControllerBlock.FACING;
+        var facing=gregtech.content.block.machine.LargeHeatExchangerControllerBlock.FACING;
         h.assertTrue(block.defaultBlockState().getValue(facing)==Direction.DOWN,"Original default front is bottom");
         world.setBlockAndUpdate(pos,block.defaultBlockState().setValue(facing,Direction.WEST));
-        var machine=(gregtech.blockentity.machine.LargeHeatExchangerControllerBlockEntity)world.getBlockEntity(pos);
+        var machine=(gregtech.content.blockentity.machine.LargeHeatExchangerControllerBlockEntity)world.getBlockEntity(pos);
         machine.onLoad();
         h.assertTrue(world.getBlockState(pos).getValue(facing)==Direction.DOWN,"Old horizontal native state is normalized on load");
-        var wrench=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.WRENCH,
+        var wrench=gregtech.content.item.GTToolItem.create(gregtech.internal.tool.GTToolType.WRENCH,
                 gregtech.internal.material.GTMaterialRegistry.get("Steel"),gregtech.internal.material.GTMaterialRegistry.get("Wood"));
         for(var side:Direction.values()) {
             var spec=block.toolInteraction(block.defaultBlockState(),wrench);
@@ -236,7 +236,7 @@ public final class SensorSourceTests {
         var lava=new net.minecraftforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.LAVA,5000);
         var water=new net.minecraftforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.WATER,250);
 //?}
-        h.assertTrue(gregtech.data.FuelRecipeMaps.Hot.containsInput(lava),
+        h.assertTrue(gregtech.content.data.FuelRecipeMaps.Hot.containsInput(lava),
                 "Original FL.Lava hot recipe resolves to vanilla lava, which has no GT-specific still holder");
         var data=new net.minecraft.nbt.CompoundTag();
 //? if >=1.21.1 {
@@ -252,8 +252,8 @@ public final class SensorSourceTests {
         var simulate=net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.SIMULATE;
         var execute=net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE;
 //?}
-        var tap=(gregtech.block.tool.FluidAttachmentBlock)BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.parse("gt6ce:tap"));
-        var funnel=(gregtech.block.tool.FluidAttachmentBlock)BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.parse("gt6ce:fluid_funnel"));
+        var tap=(gregtech.content.block.tool.FluidAttachmentBlock)BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.parse("gt6ce:tap"));
+        var funnel=(gregtech.content.block.tool.FluidAttachmentBlock)BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.parse("gt6ce:fluid_funnel"));
         var tapped=tap.access(tap.attachedHandler(world,pos,Direction.NORTH));
         h.assertTrue(tapped.drain(lava,simulate).isEmpty(),"Typed drain must not skip the nonempty output to find matching input");
         h.assertTrue(tapped.drain(1000,simulate).getAmount()==250&&machine.tankAmount(1)==250,"Tap simulates only output without mutation");
@@ -276,7 +276,7 @@ public final class SensorSourceTests {
                     "Every formed part delegates the same recipe-gated input "+cell);
         }
         var transmitterPos=pos.above().east();
-        var part=(gregtech.blockentity.machine.MultiblockPortBlockEntity)world.getBlockEntity(transmitterPos);
+        var part=(gregtech.content.blockentity.machine.MultiblockPortBlockEntity)world.getBlockEntity(transmitterPos);
 //? if >=1.21.1 {
         /*h.assertTrue(world.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,transmitterPos,Direction.NORTH).getTanks()==0,
 *///?} else {
@@ -292,8 +292,8 @@ public final class SensorSourceTests {
     }
 
     private static void verifySourceHotFluids(GameTestHelper h) {
-        var map=gregtech.data.FuelRecipeMaps.Hot;
-        var fuel=gregtech.registry.GTFluids.stack("Blaze",1);
+        var map=gregtech.content.data.FuelRecipeMaps.Hot;
+        var fuel=gregtech.content.registry.GTFluids.stack("Blaze",1);
         var empty=gregtech.internal.recipe.RecipeMap.ZL_IS;
         var noFluids=gregtech.internal.recipe.RecipeMap.ZL_FS;
 //? if >=1.21.1 {
@@ -308,7 +308,7 @@ public final class SensorSourceTests {
         int checked=0;
         for(var row:gregtech.content.recipe.OriginalFuelRecipeRows.ROWS) {
             if(!row.kind().equals("hot"))continue;
-            var input=gregtech.registry.GTFluids.stack(row.input(),1);
+            var input=gregtech.content.registry.GTFluids.stack(row.input(),1);
             h.assertTrue(input!=null&&!input.isEmpty(),"Registered hot input "+row.input());
             var matches=map.mRecipeList.stream().filter(r->r.mFluidInputs.length==1&&r.mFluidInputs[0].getFluid()==input.getFluid()).toList();
             h.assertTrue(matches.size()==1,"Exactly one source recipe per distinct hot fluid "+row.input()+"; found "+matches.size());
@@ -316,7 +316,7 @@ public final class SensorSourceTests {
             h.assertTrue(recipe.mFluidInputs[0].getAmount()==1&&recipe.mEUt==-row.eut()&&recipe.mDuration==row.duration(),
                     "Original per-litre recipe energy "+row.input());
             if(row.output()!=null) {
-                var output=gregtech.registry.GTFluids.stack(row.output().equals("water")?"Water":row.output(),1);
+                var output=gregtech.content.registry.GTFluids.stack(row.output().equals("water")?"Water":row.output(),1);
                 h.assertTrue(output!=null&&!output.isEmpty()&&recipe.mFluidOutputs.length==1
                         &&recipe.mFluidOutputs[0].getFluid()==output.getFluid()&&recipe.mFluidOutputs[0].getAmount()==1,
                         "Original cooled output identity/amount "+row.input());
@@ -326,14 +326,14 @@ public final class SensorSourceTests {
         }
         h.assertTrue(checked==16,"All sixteen original hot-fluid rows resolved in the running game");
         for(String key:new String[]{"Lava_Pahoehoe","Lava_Volcanic","Lava_Pure"}) {
-            var fluid=gregtech.registry.GTFluids.stack(key,1).getFluid();
+            var fluid=gregtech.content.registry.GTFluids.stack(key,1).getFluid();
             h.assertTrue(fluid!=net.minecraft.world.level.material.Fluids.LAVA,
                     "Shared lava sprite must not alias registry identity "+key);
             h.assertTrue(gregtech.content.recipe.generated.GeneratedRecipeResolver.resolveFluidSpec("f:"+key+":1").getFluid()==fluid
-                    &&gregtech.content.food.GTDrinks.fluidOf(gregtech.data.RegisteredFluids.get(key))==fluid,
+                    &&gregtech.content.food.GTDrinks.fluidOf(gregtech.content.data.RegisteredFluids.get(key))==fluid,
                     "Chemical and container lookup preserve distinct fluid "+key);
         }
-        var cold=gregtech.registry.GTFluids.stack("Lava_Pahoehoe",1);
+        var cold=gregtech.content.registry.GTFluids.stack("Lava_Pahoehoe",1);
         h.assertTrue(BuiltInRegistries.FLUID.getKey(cold.getFluid()).toString().equals("gt6ce:ic2pahoehoelava")
                 &&cold.getFluid().getFluidType().getTemperature(cold)==1200,"Source cooled lava ID and temperature");
     }
@@ -344,11 +344,11 @@ public final class SensorSourceTests {
         var world=h.getLevel();var pos=h.absolutePos(new BlockPos(7,2,7));
         var block=BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.parse("gt6ce:heat_exchanger_main"));
         world.setBlockAndUpdate(pos,block.defaultBlockState());
-        var machine=(gregtech.blockentity.machine.LargeHeatExchangerControllerBlockEntity)world.getBlockEntity(pos);
+        var machine=(gregtech.content.blockentity.machine.LargeHeatExchangerControllerBlockEntity)world.getBlockEntity(pos);
         for(var cell:gregtech.content.multiblock.SharedHeatExchangerStructure.CELLS)
             world.setBlockAndUpdate(pos.offset(cell.right(),cell.up(),cell.back()),gregtech.content.multiblock.LargeMachineParts.block(cell.part()).defaultBlockState());
         h.assertTrue(StructureTestSupport.ok(machine),"Original two-layer shell binds native parts");
-        var recipe=gregtech.data.FuelRecipeMaps.Hot.mRecipeList.stream().filter(x->x.mFluidInputs.length==1&&x.mFluidInputs[0].getFluid()==net.minecraft.world.level.material.Fluids.LAVA).findFirst().orElseThrow();
+        var recipe=gregtech.content.data.FuelRecipeMaps.Hot.mRecipeList.stream().filter(x->x.mFluidInputs.length==1&&x.mFluidInputs[0].getFluid()==net.minecraft.world.level.material.Fluids.LAVA).findFirst().orElseThrow();
         h.assertTrue(recipe.mEUt==-16&&recipe.mDuration==5,"Original vanilla lava yields80 heat per litre");
         var fuel=recipe.mFluidInputs[0].copy();fuel.setAmount(Math.min(163840,recipe.mFluidInputs[0].getAmount()*1000));
 //? if >=1.21.1 {
@@ -358,12 +358,12 @@ public final class SensorSourceTests {
 //?}
         machine.tick();long used=accepted-machine.tankAmount(0),batches=used/recipe.mFluidInputs[0].getAmount();
         h.assertTrue(batches>0&&machine.tankAmount(1)==batches*recipe.mFluidOutputs[0].getAmount()
-                &&machine.getEnergyStored(gregtech.data.GregTechTags.Energy.HU,null)==batches*(-recipe.mEUt)*recipe.mDuration,
+                &&machine.getEnergyStored(gregtech.content.data.GregTechTags.Energy.HU,null)==batches*(-recipe.mEUt)*recipe.mDuration,
                 "Actual hot recipe consumes matching fuel and conserves cold output and heat");
 //? if >=1.21.1 {
-        /*h.assertTrue(machine.drain(1000,net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.SIMULATE).getFluid()==gregtech.registry.GTFluids.stack("Lava_Pahoehoe",1).getFluid(),
+        /*h.assertTrue(machine.drain(1000,net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.SIMULATE).getFluid()==gregtech.content.registry.GTFluids.stack("Lava_Pahoehoe",1).getFluid(),
 *///?} else {
-        h.assertTrue(machine.drain(1000,net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.SIMULATE).getFluid()==gregtech.registry.GTFluids.stack("Lava_Pahoehoe",1).getFluid(),
+        h.assertTrue(machine.drain(1000,net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.SIMULATE).getFluid()==gregtech.content.registry.GTFluids.stack("Lava_Pahoehoe",1).getFluid(),
 //?}
                 "Actual heat exchanger produces cooled lava rather than recycling vanilla lava");
 //? if >=1.21.1 {
@@ -394,14 +394,14 @@ public final class SensorSourceTests {
         h.assertTrue(machine.tankAmount(0)==0&&machine.tankCapacity(0)==5_000_000_000L,"Empty long envelope retains capacity without decoding an absent fluid");
 *///?} else {
 //?}
-        h.assertTrue(machine.isEnergyEmittingTo(gregtech.data.GregTechTags.Energy.EU,Direction.UP,false)
-                &&!machine.isEnergyEmittingTo(gregtech.data.GregTechTags.Energy.EU,Direction.DOWN,false)
-                &&machine.getEnergySizeOutputMin(gregtech.data.GregTechTags.Energy.EU,Direction.UP)==500000000L
-                &&machine.getEnergySizeOutputMax(gregtech.data.GregTechTags.Energy.EU,Direction.UP)==500000000L,
+        h.assertTrue(machine.isEnergyEmittingTo(gregtech.content.data.GregTechTags.Energy.EU,Direction.UP,false)
+                &&!machine.isEnergyEmittingTo(gregtech.content.data.GregTechTags.Energy.EU,Direction.DOWN,false)
+                &&machine.getEnergySizeOutputMin(gregtech.content.data.GregTechTags.Energy.EU,Direction.UP)==500000000L
+                &&machine.getEnergySizeOutputMax(gregtech.content.data.GregTechTags.Energy.EU,Direction.UP)==500000000L,
                 "Source energy type, top emission and equal min/recommended/max");
         world.setBlockAndUpdate(pos.above().east(),Blocks.AIR.defaultBlockState());
         machine.tick();
-        h.assertTrue(!StructureTestSupport.ok(machine)&&machine.getEnergyStored(gregtech.data.GregTechTags.Energy.EU,null)==7_500_000_000L,
+        h.assertTrue(!StructureTestSupport.ok(machine)&&machine.getEnergyStored(gregtech.content.data.GregTechTags.Energy.EU,null)==7_500_000_000L,
                 "Original buffered energy dissipates through all eight outlets even with broken shell /no receivers");
         var legacy=new net.minecraft.nbt.CompoundTag();legacy.putLong("gt.hu",12345L);
 //? if >=1.21.1 {
@@ -409,7 +409,7 @@ public final class SensorSourceTests {
 *///?} else {
         legacy.put("gt.cold",recipe.mFluidOutputs[0].writeToNBT(new net.minecraft.nbt.CompoundTag()));data=legacy;machine.load(data);
 //?}
-        h.assertTrue(machine.settings().rate()==16384&&machine.getEnergyStored(gregtech.data.GregTechTags.Energy.HU,null)==12345L
+        h.assertTrue(machine.settings().rate()==16384&&machine.getEnergyStored(gregtech.content.data.GregTechTags.Energy.HU,null)==12345L
                 &&machine.tankAmount(1)==recipe.mFluidOutputs[0].getAmount(),"Old native int tank and gt.hu remain readable");
         h.succeed();
     }
@@ -420,7 +420,7 @@ public final class SensorSourceTests {
         var targetPos=h.absolutePos(new BlockPos(5,1,5));
         var controller=BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.parse("gt6ce:von_da_graagg_generator"));
         world.setBlockAndUpdate(targetPos,controller.defaultBlockState());
-        var machine=(gregtech.blockentity.machine.VonDaGraaggControllerBlockEntity)world.getBlockEntity(targetPos);
+        var machine=(gregtech.content.blockentity.machine.VonDaGraaggControllerBlockEntity)world.getBlockEntity(targetPos);
 //? if >=1.21.1 {
         /*var saved=machine.saveWithoutMetadata(world.registryAccess());
         saved.putInt("gt.range",255); machine.loadWithComponents(saved,world.registryAccess());
@@ -483,10 +483,10 @@ public final class SensorSourceTests {
         h.assertTrue(sensor.inputSide() == Direction.SOUTH,"Old native save without new key defaults behind display");
 
         var boilerBlock = java.util.stream.StreamSupport.stream(BuiltInRegistries.BLOCK.spliterator(),false)
-                .filter(b -> b instanceof gregtech.block.machine.OriginalLargeBoilerControllerBlock boiler && boiler.variant().steamCapacity() > 1_234_567L)
+                .filter(b -> b instanceof gregtech.content.block.machine.OriginalLargeBoilerControllerBlock boiler && boiler.variant().steamCapacity() > 1_234_567L)
                 .findFirst().orElseThrow();
         var boilerPos = h.absolutePos(new BlockPos(1,1,4)); h.getLevel().setBlockAndUpdate(boilerPos,boilerBlock.defaultBlockState());
-        var boiler = (gregtech.blockentity.machine.OriginalLargeBoilerControllerBlockEntity)h.getLevel().getBlockEntity(boilerPos);
+        var boiler = (gregtech.content.blockentity.machine.OriginalLargeBoilerControllerBlockEntity)h.getLevel().getBlockEntity(boilerPos);
         var steam = BuiltInRegistries.FLUID.get(net.minecraft.resources.ResourceLocation.parse("gt6ce:steam"));
         var seeded = new gregtech.internal.fluid.FluidTankGT(boiler.variant().steamCapacity());
 //? if >=1.21.1 {
@@ -507,10 +507,10 @@ public final class SensorSourceTests {
             h.assertTrue(meter.value() == (path.equals("sensor_gibblometer")?1234:1),"Actual source pressure scale " + path);
         }
         var bathBlock = java.util.stream.StreamSupport.stream(BuiltInRegistries.BLOCK.spliterator(),false)
-                .filter(b -> b instanceof gregtech.block.machine.BasicMachineBlock basic
+                .filter(b -> b instanceof gregtech.content.block.machine.BasicMachineBlock basic
                         && basic.basicSpec().machineName().equals("bath") && basic.basicSpec().tier()==1).findFirst().orElseThrow();
         var bathPos = h.absolutePos(new BlockPos(1,1,7)); h.getLevel().setBlockAndUpdate(bathPos,bathBlock.defaultBlockState());
-        var bath = (gregtech.blockentity.machine.BasicMachineBlockEntity)h.getLevel().getBlockEntity(bathPos);
+        var bath = (gregtech.content.blockentity.machine.BasicMachineBlockEntity)h.getLevel().getBlockEntity(bathPos);
 //? if >=1.21.1 {
         /*bath.getTanksInput()[0].setFluid(new net.neoforged.neoforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.WATER,5000));
         bath.getTanksOutput()[0].setFluid(new net.neoforged.neoforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.WATER,7000));
@@ -525,23 +525,23 @@ public final class SensorSourceTests {
     @GameTest(template="test_empty",timeoutTicks=160)
     public static void original_parts_delegate_sensor_measurements(GameTestHelper h) {
         for (var source : gregtech.content.multiblock.OriginalMultiblockPartData.ALL) {
-            var block = (gregtech.block.machine.MultiblockPortBlock) BuiltInRegistries.BLOCK.get(
+            var block = (gregtech.content.block.machine.MultiblockPortBlock) BuiltInRegistries.BLOCK.get(
                     net.minecraft.resources.ResourceLocation.parse("gt6ce:" + source.path()));
-            var part = (gregtech.blockentity.machine.MultiblockPortBlockEntity) block.newBlockEntity(BlockPos.ZERO,block.defaultBlockState());
+            var part = (gregtech.content.blockentity.machine.MultiblockPortBlockEntity) block.newBlockEntity(BlockPos.ZERO,block.defaultBlockState());
             h.assertTrue(part.getType().isValid(block.defaultBlockState()) && part.sensorTarget() == part,
                     "All45 native factory bindings, unbound measures itself " + source.path());
         }
-        var block = (gregtech.block.machine.OriginalLargeBoilerControllerBlock) BuiltInRegistries.BLOCK.get(
+        var block = (gregtech.content.block.machine.OriginalLargeBoilerControllerBlock) BuiltInRegistries.BLOCK.get(
                 net.minecraft.resources.ResourceLocation.parse("gt6ce:stainless_steel_boiler_main_barometer"));
         var origin = h.absolutePos(new BlockPos(4,2,4));
         h.getLevel().setBlockAndUpdate(origin,block.defaultBlockState().setValue(net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING,Direction.NORTH));
-        var boiler = (gregtech.blockentity.machine.OriginalLargeBoilerControllerBlockEntity)h.getLevel().getBlockEntity(origin);
+        var boiler = (gregtech.content.blockentity.machine.OriginalLargeBoilerControllerBlockEntity)h.getLevel().getBlockEntity(origin);
         for (var cell : gregtech.content.multiblock.OriginalLargeBoilerSpecs.LAYOUT.cells()) {
             var position = cell.at(origin,Direction.NORTH);
             if (position.equals(origin)) continue;
             var required = cell.role() == gregtech.internal.multiblock.MultiblockLayout.Role.AIR ? Blocks.AIR
                     : cell.role() == gregtech.internal.multiblock.MultiblockLayout.Role.HEAT_INPUT
-                    ? gregtech.registry.GTMultiblocks.HEAT_TRANSMITTER.get() : boiler.variant().wall();
+                    ? gregtech.content.registry.GTMultiblocks.HEAT_TRANSMITTER.get() : boiler.variant().wall();
             h.getLevel().setBlockAndUpdate(position,required.defaultBlockState());
         }
         var steam = BuiltInRegistries.FLUID.get(net.minecraft.resources.ResourceLocation.parse("gt6ce:steam"));
@@ -557,7 +557,7 @@ public final class SensorSourceTests {
 //?}
         h.assertTrue(StructureTestSupport.ok(boiler),"Real boiler binds its complete shell");
         var heatPos = origin.east().below().south();
-        var heat = (gregtech.blockentity.machine.MultiblockPortBlockEntity) h.getLevel().getBlockEntity(heatPos);
+        var heat = (gregtech.content.blockentity.machine.MultiblockPortBlockEntity) h.getLevel().getBlockEntity(heatPos);
         h.assertTrue(heat.sensorTarget() == boiler,"Source sensor unwraps an energy-only port to controller");
 //? if >=1.21.1 {
         /*var fluids = h.getLevel().getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,heatPos,Direction.EAST);

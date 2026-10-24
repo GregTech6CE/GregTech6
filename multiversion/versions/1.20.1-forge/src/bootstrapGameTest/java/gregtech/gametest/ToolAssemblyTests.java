@@ -2,18 +2,18 @@ package gregtech.gametest;
 
 import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.block.stone.StoneType;
+import gregtech.content.block.stone.StoneType;
 import gregtech.internal.tool.GTToolHelper;
 import gregtech.internal.tool.GTToolType;
 import gregtech.content.material.Materials;
-import gregtech.data.MaterialPrefix;
-import gregtech.recipe.GTFlintAndTinderRecipe;
-import gregtech.recipe.GTToolAssemblyRecipe;
-import gregtech.recipe.GTToolCraftingRecipe;
-import gregtech.recipe.GTToolHeadRecipe;
-import gregtech.recipe.GTToolRecipes;
-import gregtech.recipe.ToolAssemblyCatalog;
-import gregtech.registry.GTItems;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.recipe.GTFlintAndTinderRecipe;
+import gregtech.content.recipe.GTToolAssemblyRecipe;
+import gregtech.content.recipe.GTToolCraftingRecipe;
+import gregtech.content.recipe.GTToolHeadRecipe;
+import gregtech.content.recipe.GTToolRecipes;
+import gregtech.content.recipe.ToolAssemblyCatalog;
+import gregtech.content.registry.GTItems;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
@@ -275,9 +275,9 @@ public final class ToolAssemblyTests {
                     rock, rock, rock, ItemStack.EMPTY, stick, ItemStack.EMPTY,
                     ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY});
             helper.assertTrue(!result.isEmpty(), "the stone pickaxe assembles");
-            helper.assertTrue(result.getItem() instanceof gregtech.item.GTToolItem,
+            helper.assertTrue(result.getItem() instanceof gregtech.content.item.GTToolItem,
                     "the result is a GT tool");
-            if (result.getItem() instanceof gregtech.item.GTToolItem) {
+            if (result.getItem() instanceof gregtech.content.item.GTToolItem) {
                 helper.assertTrue(GTToolHelper.getHead(result) == granite,
                         "the pickaxe is made of the rock that was used");
             }
@@ -333,8 +333,8 @@ public final class ToolAssemblyTests {
         return -1;
     }
 
-    private static gregtech.recipe.GTToolCraftingRecipe row(GameTestHelper helper, GTToolType type, int index) {
-        return new gregtech.recipe.GTToolCraftingRecipe(id("tools/" + type.id() + "_test"), type, index);
+    private static gregtech.content.recipe.GTToolCraftingRecipe row(GameTestHelper helper, GTToolType type, int index) {
+        return new gregtech.content.recipe.GTToolCraftingRecipe(id("tools/" + type.id() + "_test"), type, index);
     }
 
     /** The recipe of one GT6 row, or null when the grid does not match it. */

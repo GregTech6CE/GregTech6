@@ -1,7 +1,7 @@
 package gregtech.client.gui;
 
-import gregtech.block.misc.FilterBlockEntity;
-import gregtech.registry.GTMenuTypes;
+import gregtech.content.block.misc.FilterBlockEntity;
+import gregtech.content.registry.GTMenuTypes;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.*;
 import net.minecraft.world.inventory.*;

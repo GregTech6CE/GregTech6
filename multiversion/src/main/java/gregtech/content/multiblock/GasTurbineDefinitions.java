@@ -1,8 +1,8 @@
 package gregtech.content.multiblock;
 
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.block.machine.LargeGasTurbineControllerBlock;
-import gregtech.registry.*;
+import gregtech.content.block.machine.LargeGasTurbineControllerBlock;
+import gregtech.content.registry.*;
 import net.minecraft.world.level.block.Block;
 import java.util.*;
 

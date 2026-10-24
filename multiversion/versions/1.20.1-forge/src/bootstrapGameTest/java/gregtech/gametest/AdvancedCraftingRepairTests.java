@@ -1,16 +1,16 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.block.misc.*;
+import gregtech.content.block.misc.*;
 import gregtech.client.gui.AdvancedCraftingMenu;
 import gregtech.content.material.Materials;
 import gregtech.internal.tool.*;
-import gregtech.data.MaterialPrefix;
-import gregtech.item.GTToolItem;
-import gregtech.registry.*;
-import gregtech.worldgen.dungeon.*;
-import gregtech.worldgen.GTDungeonFeature;
-import gregtech.block.stone.StoneType;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.item.GTToolItem;
+import gregtech.content.registry.*;
+import gregtech.content.worldgen.dungeon.*;
+import gregtech.content.worldgen.GTDungeonFeature;
+import gregtech.content.block.stone.StoneType;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.nbt.CompoundTag;
@@ -34,7 +34,7 @@ public final class AdvancedCraftingRepairTests {
         var manager=h.getLevel().getRecipeManager();var old=new ArrayList<Recipe<?>>(manager.getRecipes());var all=new ArrayList<Recipe<?>>(old);
         var ingredients=NonNullList.<Ingredient>create();for(var input:inputs)ingredients.add(Ingredient.of(input));
         var recipe=new ShapedRecipe(GregTech.id("repair_crafting_probe"),"",CraftingBookCategory.MISC,inputs.length,1,ingredients,new ItemStack(Items.EMERALD));
-        all.add(toolRecipe?new gregtech.recipe.ToolShapedRecipe(recipe):recipe);manager.replaceRecipes(all);
+        all.add(toolRecipe?new gregtech.content.recipe.ToolShapedRecipe(recipe):recipe);manager.replaceRecipes(all);
         try{action.run();}finally{manager.replaceRecipes(old);}
     }
     @GameTest(template="test_empty")

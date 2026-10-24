@@ -93,6 +93,13 @@ def boundary_errors(path, source, *, core=False, parsed=None):
     code, literals = view.code, view.literals
     errors = []
     relative = '/' + path.as_posix()
+    declaration = re.search(r'\bpackage\s+([\w.]+)\s*;', code)
+    if declaration and '/java/' in relative:
+        expected = relative.split('/java/', 1)[1].rsplit('/', 1)[0].replace('/', '.')
+        if declaration[1] != expected:
+            errors.append('Java package differs from source directory: ' + str(path))
+        if re.match(r'gregtech\.(?:block|blockentity|item|data|registry|worldgen|world|entity|damage|recipe)(?:\.|$)', declaration[1]):
+            errors.append('Game content belongs under gregtech.content: ' + str(path))
     if '/src/api/java/' in relative and re.search(
             r'\bgregtech\s*\.\s*(?:internal|content|registry|block|blockentity|item|data|platform)\s*\.', code):
         errors.append('Public SDK must not depend on implementation or game content: ' + str(path))

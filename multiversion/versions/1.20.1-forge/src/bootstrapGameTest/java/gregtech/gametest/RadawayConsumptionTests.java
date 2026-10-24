@@ -3,7 +3,7 @@ package gregtech.gametest;
 import gregtech.content.food.GTFoodStats;
 import gregtech.content.food.PlayerFoodStats;
 import gregtech.content.nuclear.PlayerRadiation;
-import gregtech.item.RadawayItem;
+import gregtech.content.item.RadawayItem;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

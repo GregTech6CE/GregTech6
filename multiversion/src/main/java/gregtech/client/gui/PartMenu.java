@@ -1,8 +1,8 @@
 package gregtech.client.gui;
 
 import gregtech.api.addon.LayoutPart;
-import gregtech.blockentity.machine.FunctionalPartRuntime;
-import gregtech.registry.GTMenuTypes;
+import gregtech.content.blockentity.machine.FunctionalPartRuntime;
+import gregtech.content.registry.GTMenuTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;

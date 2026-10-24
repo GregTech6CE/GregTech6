@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
-import gregtech.worldgen.GTCellNoise;
-import gregtech.worldgen.GTStoneLayersGen;
+import gregtech.content.worldgen.GTCellNoise;
+import gregtech.content.worldgen.GTStoneLayersGen;
 
 /** Test-only logical sample; deliberately independent of GameTest's randomized native position. */
 final class StoneLayerSlabFixture {

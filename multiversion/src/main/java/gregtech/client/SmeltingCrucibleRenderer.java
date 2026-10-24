@@ -4,7 +4,7 @@ import gregtech.internal.material.GTMaterial;
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity;
 *///?} else {
-import gregtech.blockentity.machine.SmeltingCrucibleBlockEntity;
+import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
 //?}
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

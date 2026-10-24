@@ -26,7 +26,7 @@ public final class GTToolTooltips {
             return;
         }
         GTToolType type = GTToolHelper.getType(stack);
-        GTToolType statsType = stack.getItem() instanceof gregtech.item.PocketToolItem pocket ? pocket.toolType() : type;
+        GTToolType statsType = stack.getItem() instanceof gregtech.content.item.PocketToolItem pocket ? pocket.toolType() : type;
         GTMaterial head = GTToolHelper.getHead(stack);
         if (!head.isValid()) {
             return;

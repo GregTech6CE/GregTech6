@@ -1,7 +1,7 @@
 package gregtech.content.recipe;
 //? if >=1.21.1 {
-/*import gregtech.block.wood.WoodSpecies;
-import gregtech.registry.*;
+/*import gregtech.content.block.wood.WoodSpecies;
+import gregtech.content.registry.*;
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
 *///?} else {
@@ -13,16 +13,16 @@ import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.tool.GTToolType;
 //? if >=1.21.1 {
 //?} else {
-import gregtech.block.wood.WoodSpecies;
+import gregtech.content.block.wood.WoodSpecies;
 import gregtech.content.recipe.GTWoodRecipes;
 //?}
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 //? if >=1.21.1 {
 //?} else {
-import gregtech.recipe.ToolShapedRecipe;
-import gregtech.registry.GTItems;
-import gregtech.registry.GTToolItems;
-import gregtech.registry.GTWoods;
+import gregtech.content.recipe.ToolShapedRecipe;
+import gregtech.content.registry.GTItems;
+import gregtech.content.registry.GTToolItems;
+import gregtech.content.registry.GTWoods;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 //?}
@@ -125,7 +125,7 @@ public final class WoodCraftingRecipeInjector {
         for (String row : GTWoodRecipes.CRAFT_ROWS) added += row(recipes, row);
         for (String row : gregtech.content.recipe.NaturalWoodCraftingRows.ROWS) added += row(recipes, row);
         added += treatedWoodRows(recipes);
-        if (added > 0) gregtech.recipe.RuntimeRecipeLifecycle.replaceGenerated(manager, recipes);
+        if (added > 0) gregtech.content.recipe.RuntimeRecipeLifecycle.replaceGenerated(manager, recipes);
         GregTech.LOGGER.info("Registered {} GT6 wood dictionary crafting rows for {} species ({} skipped)",
                 added, speciesIds().size(), SKIPPED.size());
         for (String reason : SKIPPED) GregTech.LOGGER.debug("[gregtech] wood row skipped: {}", reason);

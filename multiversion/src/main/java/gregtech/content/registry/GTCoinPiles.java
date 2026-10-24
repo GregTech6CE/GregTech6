@@ -1,0 +1,22 @@
+package gregtech.content.registry;
+
+import gregtech.content.block.misc.CoinPileBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.MapColor;
+
+public final class GTCoinPiles {
+
+    private GTCoinPiles() {
+    }
+
+    public static RegisteredBlock<CoinPileBlock> COIN_PILE;
+
+    public static void initialize() {
+        COIN_PILE = RegisteredBlock.registerBlock("coin_pile",
+                () -> new CoinPileBlock(BlockBehaviour.Properties.of().mapColor(MapColor.GOLD).strength(3, 3).requiresCorrectToolForDrops().sound(SoundType.METAL).noOcclusion()));
+        GTBlocks.BLOCK_ITEMS.register("coin_pile", () -> new net.minecraft.world.item.BlockItem(COIN_PILE.get(),
+                new net.minecraft.world.item.Item.Properties()));
+    }
+}

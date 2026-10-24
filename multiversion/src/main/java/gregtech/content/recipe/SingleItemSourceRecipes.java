@@ -3,9 +3,9 @@ package gregtech.content.recipe;
 
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
-import gregtech.data.*;
-import gregtech.registry.GTFluids;
-import gregtech.registry.GTItems;
+import gregtech.content.data.*;
+import gregtech.content.registry.GTFluids;
+import gregtech.content.registry.GTItems;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.*;
 import java.util.*;

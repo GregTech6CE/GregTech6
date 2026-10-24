@@ -1,6 +1,6 @@
 package gregtech.content.storage;
 
-import gregtech.block.wood.WoodSpecies;
+import gregtech.content.block.wood.WoodSpecies;
 import java.util.ArrayList;
 import java.util.List;
 

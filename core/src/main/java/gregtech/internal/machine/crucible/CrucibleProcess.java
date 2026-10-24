@@ -4,7 +4,7 @@ import gregtech.internal.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.internal.material.MaterialProperty;
 import gregtech.content.material.Materials;
-import gregtech.data.GregTechConstants;
+import gregtech.content.data.GregTechConstants;
 
 import java.math.BigInteger;
 import java.util.ArrayList;

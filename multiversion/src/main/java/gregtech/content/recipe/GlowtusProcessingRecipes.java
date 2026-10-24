@@ -1,10 +1,10 @@
 package gregtech.content.recipe;
 
-import gregtech.data.MachineRecipeMaps;
-import gregtech.data.MaterialPrefix;
-import gregtech.data.RegisteredFluids;
-import gregtech.registry.GTFluids;
-import gregtech.worldgen.GTSurfaceFlora;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.data.RegisteredFluids;
+import gregtech.content.registry.GTFluids;
+import gregtech.content.worldgen.GTSurfaceFlora;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;

@@ -13,13 +13,13 @@ import gregtech.content.recipe.MachineCasingRecipes;
 import gregtech.content.recipe.SharpeningRecipes;
 import gregtech.content.recipe.ShredderRecyclingRecipes;
 import gregtech.content.recipe.WelderFamilyRecipes;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.data.MaterialPrefix;
-import gregtech.data.generated.MaterialWorkability;
-import gregtech.registry.GTBlocks;
-import gregtech.registry.GTItems;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.data.generated.MaterialWorkability;
+import gregtech.content.registry.GTBlocks;
+import gregtech.content.registry.GTItems;
 import net.minecraft.gametest.framework.GameTest;
-import gregtech.registry.GTTechnological;
+import gregtech.content.registry.GTTechnological;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.gametest.GameTestHolder;
@@ -144,7 +144,7 @@ public final class RecipeFamilyCoverageTests {
             return;
         }
         net.minecraftforge.fluids.FluidStack steam =
-                gregtech.registry.GTFluids.stack("Steam", 102400);
+                gregtech.content.registry.GTFluids.stack("Steam", 102400);
         helper.assertTrue(steam != null, "the port has a steam fluid for the autoclave");
         final GTMaterial crystallisable = material;
         Recipe recipe = MachineRecipeMaps.Autoclave.mRecipeList.stream()
@@ -189,7 +189,7 @@ public final class RecipeFamilyCoverageTests {
             if (!"plate".equals(entry.input())) continue;
             for (ItemStack in : entry.recipe().mInputs) {
                 if (in == null || in.isEmpty()) continue;
-                GTMaterial material = gregtech.item.MaterialItem.getMaterial(in);
+                GTMaterial material = gregtech.content.item.MaterialItem.getMaterial(in);
                 if (material != null) plateRows.putIfAbsent(material.getName(), entry.recipe());
             }
         }

@@ -5,7 +5,7 @@ package gregtech.content.machine;
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
 import gregtech.content.transport.HopperCatalog;
-import gregtech.data.generated.GT6Materials;
+import gregtech.content.data.generated.GT6Materials;
 import java.util.*;
 
 /** Source assembly data for stable block identities, independent of the native loader. */

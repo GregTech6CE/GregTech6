@@ -2,7 +2,7 @@ package gregtech.internal.multiblock.tracking;
 
 import gregtech.internal.multiblock.MultiblockLayout;
 import gregtech.internal.multiblock.PartBindings;
-import gregtech.blockentity.machine.MultiblockPortBlockEntity;
+import gregtech.content.blockentity.machine.MultiblockPortBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;

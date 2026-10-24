@@ -2,9 +2,9 @@ package gregtech.gametest;
 
 import gregtech.internal.energy.FaceConfig;
 import gregtech.internal.machine.BasicMachineSpec;
-import gregtech.block.machine.BasicMachineBlock;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
-import gregtech.data.GregTechTags;
+import gregtech.content.block.machine.BasicMachineBlock;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.data.GregTechTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;

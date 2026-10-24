@@ -1,12 +1,12 @@
 package gregtech.gametest;
 
-import gregtech.block.misc.ConcreteBlock;
-import gregtech.block.misc.ColoredGlassBlock;
-import gregtech.block.misc.FixedConstructionColor;
-import gregtech.block.stone.StoneType;
-import gregtech.registry.GTDecorBlocks;
-import gregtech.worldgen.GTDungeonFeature;
-import gregtech.worldgen.dungeon.GTDungeonData;
+import gregtech.content.block.misc.ConcreteBlock;
+import gregtech.content.block.misc.ColoredGlassBlock;
+import gregtech.content.block.misc.FixedConstructionColor;
+import gregtech.content.block.stone.StoneType;
+import gregtech.content.registry.GTDecorBlocks;
+import gregtech.content.worldgen.GTDungeonFeature;
+import gregtech.content.worldgen.dungeon.GTDungeonData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

@@ -5,7 +5,7 @@ import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.material.MaterialProperty;
 import gregtech.internal.material.MaterialTextureSet;
 import gregtech.internal.tool.ToolDefinition;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 import java.util.Map;
 import java.util.Set;
 

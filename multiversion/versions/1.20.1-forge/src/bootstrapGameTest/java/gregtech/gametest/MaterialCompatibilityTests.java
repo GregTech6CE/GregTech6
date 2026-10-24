@@ -2,10 +2,10 @@ package gregtech.gametest;
 import gregtech.internal.material.MaterialPresentation;
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
-import gregtech.api.recipe.*;
 import gregtech.internal.recipe.*;
-import gregtech.data.*;
-import gregtech.registry.GTItems;
+import gregtech.internal.recipe.*;
+import gregtech.content.data.*;
+import gregtech.content.registry.GTItems;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.item.*;
 import net.minecraft.tags.ItemTags;
@@ -34,7 +34,7 @@ public final class MaterialCompatibilityTests {
         h.assertTrue(iron.getTargetCrushingMaterial()!=iron.getTargetPulverMaterial(),"Independent GT6 targets");
         var recipe=MachineRecipeMaps.Shredder.findRecipe(List.of(new ItemStack(Items.CAULDRON)),List.of(),false,1,12);
         h.assertTrue(recipe!=null,"Cauldron recipe exists");
-        var output=(gregtech.item.MaterialItem)recipe.mOutputs[0].getItem();
+        var output=(gregtech.content.item.MaterialItem)recipe.mOutputs[0].getItem();
         h.assertTrue(output.getMaterial().resolve()==iron.resolve()&&recipe.mOutputs[0].getCount()==7,"Seven iron dust, not hematite");
         h.succeed();
     }
@@ -59,7 +59,7 @@ public final class MaterialCompatibilityTests {
         var hammer=MachineRecipeMaps.Hammer.findRecipe(List.of(raw),List.of(),false,1,1);
         h.assertTrue(crusher!=null&&hammer!=null&&crusher.mOutputs.length==2,"Crusher two outputs, hammer one");
         h.assertTrue(crusher.mOutputs[0].getCount()==hammer.mOutputs[0].getCount(),"Same base multiplier per output");
-        h.assertTrue(((gregtech.item.MaterialItem)crusher.mOutputs[0].getItem()).getMaterial().resolve()==iron.getTargetCrushingMaterial().resolve(),"Ore crushing uses ore target");
+        h.assertTrue(((gregtech.content.item.MaterialItem)crusher.mOutputs[0].getItem()).getMaterial().resolve()==iron.getTargetCrushingMaterial().resolve(),"Ore crushing uses ore target");
         h.assertTrue(MachineRecipeMaps.Sifting.findRecipe(List.of(raw),List.of(),false,1,6)==null,"Standard raw ore is not dust ore");
         var vanilla=MachineRecipeMaps.Crusher.findRecipe(List.of(new ItemStack(Items.IRON_ORE)),List.of(),false,1,12);
         h.assertTrue(vanilla!=null&&vanilla.mOutputs[0].getCount()==crusher.mOutputs[0].getCount(),"Vanilla iron ore uses same processing rules");
@@ -67,7 +67,7 @@ public final class MaterialCompatibilityTests {
         var shred=MachineRecipeMaps.Shredder.findRecipe(List.of(rock),List.of(),false,1,12);
         h.assertTrue(shred!=null,"Bearing rock recovery");
         long amount=0;
-        for(var out:shred.mOutputs) if(out.getItem() instanceof gregtech.item.MaterialItem m)amount+=m.getPrefix().getMaterialWeight()*out.getCount();
+        for(var out:shred.mOutputs) if(out.getItem() instanceof gregtech.content.item.MaterialItem m)amount+=m.getPrefix().getMaterialWeight()*out.getCount();
         h.assertTrue(amount<=MaterialPrefix.rockGt.getMaterialWeight(),"Rock cannot multiply into full ore outputs");
         h.assertTrue(MachineRecipeMaps.Anvil.containsInput(new ItemStack(Items.COPPER_INGOT)),"Vanilla copper passes anvil insertion filter");
         h.succeed();
@@ -86,8 +86,8 @@ public final class MaterialCompatibilityTests {
                 .withOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY,be);
         var drops=block.getDrops(block.defaultBlockState(),loot);
         h.assertTrue(!drops.isEmpty()&&drops.stream().noneMatch(stack->stack.is(block.asItem())),"Even silk touch uses GT6 weighted small-ore drops");
-        var a=gregtech.block.SmallOreDrops.drops(material,position,3,false,null);
-        var b=gregtech.block.SmallOreDrops.drops(material,position,3,false,null);
+        var a=gregtech.content.block.SmallOreDrops.drops(material,position,3,false,null);
+        var b=gregtech.content.block.SmallOreDrops.drops(material,position,3,false,null);
         h.assertTrue(a.size()==b.size(),"Location-seeded drops deterministic");
         for(int i=0;i<a.size();i++)h.assertTrue(ItemStack.matches(a.get(i),b.get(i)),"Stable drop pool");
         h.succeed();
@@ -111,7 +111,7 @@ public final class MaterialCompatibilityTests {
         var type=gregtech.internal.tool.GTToolType.PICKAXE;
         grid.setItem(0,GTItems.getStack(type.headPrefix(),GTMaterialRegistry.get("Iron")));
         grid.setItem(1,new ItemStack(Items.STICK));
-        var recipe=new gregtech.recipe.GTToolAssemblyRecipe(ResourceLocation.parse("gt6ce:test_vanilla_handle"),type);
+        var recipe=new gregtech.content.recipe.GTToolAssemblyRecipe(ResourceLocation.parse("gt6ce:test_vanilla_handle"),type);
         h.assertTrue(recipe.matches(grid,h.getLevel())&&!recipe.assemble(grid,h.getLevel().registryAccess()).isEmpty(),"Vanilla stick is a real GT wood handle");
         grid.setItem(1,new ItemStack(Items.IRON_INGOT));
         h.assertTrue(!recipe.matches(grid,h.getLevel()),"An ingot is not a rod");
@@ -132,7 +132,7 @@ public final class MaterialCompatibilityTests {
         grid.setItem(4,GTItems.getStack(MaterialPrefix.plate,steel));
         grid.setItem(7,GTItems.getStack(MaterialPrefix.plate,steel));
         var type=gregtech.internal.tool.GTToolType.WRENCH;
-        var recipe=new gregtech.recipe.GTToolCraftingRecipe(
+        var recipe=new gregtech.content.recipe.GTToolCraftingRecipe(
                 ResourceLocation.parse("gt6ce:test_direct_wrench"),type,0);
         h.assertTrue(recipe.matches(grid,h.getLevel()),"Three same-material plates and a hammer craft a wrench");
         var output=recipe.assemble(grid,h.getLevel().registryAccess());
@@ -148,15 +148,15 @@ public final class MaterialCompatibilityTests {
     }
     @GameTest(template="test_empty") public static void basicMachinesHaveSurvivalRecipes(GameTestHelper h) {
         int expected=0;
-        for(var entry:gregtech.registry.GTBasicMachines.all()) {
+        for(var entry:gregtech.content.registry.GTBasicMachines.all()) {
             var spec=entry.get().basicSpec();
-            if(gregtech.data.BasicMachineRecipePack.MULTIBLOCK_CONTROLLERS.contains(spec.machineName()))continue;
+            if(gregtech.content.data.BasicMachineRecipePack.MULTIBLOCK_CONTROLLERS.contains(spec.machineName()))continue;
             expected++;
             var id=ResourceLocation.fromNamespaceAndPath("gt6ce","machines/basic/"+spec.id());
             var recipe=h.getLevel().getRecipeManager().byKey(id).orElseThrow();
             // GT6 patterns contain empty cells on purpose (e.g. Rolling Mill "M "), so count
             // filled pattern cells and require exactly that many real ingredients.
-            var table=gregtech.data.BasicMachineCraftingRecipes.find(spec.machineName(),spec.tier());
+            var table=gregtech.content.data.BasicMachineCraftingRecipes.find(spec.machineName(),spec.tier());
             h.assertTrue(table!=null,"Original GT6 crafting pattern exists: "+id);
             int filled=0;
             for(var row:table.rows())for(int i=0;i<row.length();i++)if(row.charAt(i)!=' ')filled++;

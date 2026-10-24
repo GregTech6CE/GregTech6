@@ -1,15 +1,15 @@
 package gregtech.gametest;
 
-import gregtech.block.machine.LargeDynamoControllerBlock;
-import gregtech.block.machine.LargeGasTurbineControllerBlock;
-import gregtech.block.machine.LargeTurbineControllerBlock;
-import gregtech.blockentity.machine.AxialGeneratorBlockEntity;
-import gregtech.blockentity.machine.LargeGasTurbineControllerBlockEntity;
+import gregtech.content.block.machine.LargeDynamoControllerBlock;
+import gregtech.content.block.machine.LargeGasTurbineControllerBlock;
+import gregtech.content.block.machine.LargeTurbineControllerBlock;
+import gregtech.content.blockentity.machine.AxialGeneratorBlockEntity;
+import gregtech.content.blockentity.machine.LargeGasTurbineControllerBlockEntity;
 import gregtech.content.multiblock.AxialGeneratorDefinitions;
 import gregtech.content.multiblock.GasTurbineDefinitions;
 import gregtech.content.multiblock.LargeMachineParts;
 import gregtech.content.multiblock.TurbineStructure;
-import gregtech.registry.GTBlockEntities;
+import gregtech.content.registry.GTBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

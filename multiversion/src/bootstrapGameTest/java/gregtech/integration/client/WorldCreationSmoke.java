@@ -143,12 +143,12 @@ public final class WorldCreationSmoke {
                     int checked = 0;
                     for (var item : net.minecraft.core.registries.BuiltInRegistries.ITEM) {
                         var input = new ItemStack(item,2); if (input.isEmpty()) continue;
-                        var output = gregtech.recipe.CraftingMaterialForms.canonical(input);
+                        var output = gregtech.content.recipe.CraftingMaterialForms.canonical(input);
                         if (output.isEmpty() || output.getCount() != 2) throw new IllegalStateException("Canonical output lost count for " + item);
                         checked++;
                     }
                     var ordinary = new ItemStack(Items.BARRIER,3);
-                    if (gregtech.recipe.CraftingMaterialForms.canonical(ordinary) != ordinary)
+                    if (gregtech.content.recipe.CraftingMaterialForms.canonical(ordinary) != ordinary)
                         throw new IllegalStateException("Unknown form changed its native item");
                     var named = new ItemStack(Items.IRON_INGOT,3);
 //? if >=1.21.1 {
@@ -156,11 +156,11 @@ public final class WorldCreationSmoke {
 *///?} else {
                     named.setHoverName(Component.literal("keep me"));
 //?}
-                    if (gregtech.recipe.CraftingMaterialForms.canonical(named) != named)
+                    if (gregtech.content.recipe.CraftingMaterialForms.canonical(named) != named)
                         throw new IllegalStateException("Stack metadata was discarded");
-                    var iron = gregtech.registry.GTItems.getStack(gregtech.data.MaterialPrefix.ingot,
+                    var iron = gregtech.content.registry.GTItems.getStack(gregtech.content.data.MaterialPrefix.ingot,
                             gregtech.internal.material.GTMaterialRegistry.get("Iron"),3);
-                    var canonical = gregtech.recipe.CraftingMaterialForms.canonical(iron);
+                    var canonical = gregtech.content.recipe.CraftingMaterialForms.canonical(iron);
                     if (!canonical.is(Items.IRON_INGOT) || canonical.getCount() != 3)
                         throw new IllegalStateException("Known iron form no longer unifies");
                     int recipes = server.getRecipeManager().getRecipes().size();
@@ -292,7 +292,7 @@ public final class WorldCreationSmoke {
         for(var spec:gregtech.content.energy.ChemicalBatterySpec.all()) {
             var targetId=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",spec.id());
             var item=registry.get(targetId);
-            if(!(item instanceof gregtech.item.ChemicalBatteryItem battery)
+            if(!(item instanceof gregtech.content.item.ChemicalBatteryItem battery)
                     ||!registry.getKey(item).equals(targetId))
                 throw new IllegalStateException("Missing canonical chemical battery: "+targetId);
             if(battery.spec().capacity()<spec.capacity())throw new IllegalStateException("Incorrect canonical chemical battery capacity: "+targetId);
@@ -333,7 +333,7 @@ public final class WorldCreationSmoke {
             }
         }
         for(var spec:gregtech.content.energy.ChemicalBatterySpec.all()) {
-            var item=gregtech.registry.GTChemicalBatteries.item(spec.chemistry(),spec.tier());
+            var item=gregtech.content.registry.GTChemicalBatteries.item(spec.chemistry(),spec.tier());
             var tag=net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM,
                     net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","rechargeable_batteries/"+new String[]{"ulv","lv","mv","hv","ev"}[spec.tier()]));
             if(!new ItemStack(item).is(tag))throw new IllegalStateException("Source chemical battery missing from exact-tier group: "+spec.id());
@@ -348,8 +348,8 @@ public final class WorldCreationSmoke {
                 var recipe=holder;
 //?}
                 var output=recipe.getResultItem(server.registryAccess());
-                if(!(output.getItem() instanceof gregtech.item.ElectricToolItem electric)
-                        ||electric.getEnergyCapacity(output,gregtech.data.GregTechTags.Energy.EU)!=spec.capacity())
+                if(!(output.getItem() instanceof gregtech.content.item.ElectricToolItem electric)
+                        ||electric.getEnergyCapacity(output,gregtech.content.data.GregTechTags.Energy.EU)!=spec.capacity())
                     throw new IllegalStateException("Assembly lost source chemical capacity: "+id);
                 var obsolete=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","electric_tools/"+tool.id+"/steel");
                 if(server.getRecipeManager().byKey(obsolete).isPresent())throw new IllegalStateException("Placeholder assembly survived: "+obsolete);

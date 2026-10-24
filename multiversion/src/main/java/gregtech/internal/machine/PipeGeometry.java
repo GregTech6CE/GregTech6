@@ -3,13 +3,13 @@ package gregtech.internal.machine;
 
 //? if >=1.21.1 {
 //?} else {
-import gregtech.block.energy.ElectricWireBlock;
+import gregtech.content.block.energy.ElectricWireBlock;
 //?}
-import gregtech.block.machine.FluidPipeBlock;
+import gregtech.content.block.machine.FluidPipeBlock;
 
 //? if >=1.21.1 {
 //?} else {
-import gregtech.block.machine.ItemPipeBlock;
+import gregtech.content.block.machine.ItemPipeBlock;
 //?}
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
@@ -160,7 +160,7 @@ public final class PipeGeometry {
 
     /** Half-thickness of a wire-family neighbor. */
 //? if >=1.21.1 {
-    /*public static double wireHalfOf(BlockState state){if(state.getBlock() instanceof gregtech.block.energy.SignalWireBlock wire)return wire.halfThickness();return state.getBlock() instanceof gregtech.internal.energy.WireMaterialLike wire?wire.spec().halfThickness():NONE;}
+    /*public static double wireHalfOf(BlockState state){if(state.getBlock() instanceof gregtech.content.block.energy.SignalWireBlock wire)return wire.halfThickness();return state.getBlock() instanceof gregtech.internal.energy.WireMaterialLike wire?wire.spec().halfThickness():NONE;}
 *///?} else {
     public static double wireHalfOf(BlockState state) {
         if (state.getBlock() instanceof ElectricWireBlock wire) {
@@ -176,7 +176,7 @@ public final class PipeGeometry {
     public interface AxleConnectorGeometry { double axleHalfThickness(); }
 *///?} else {
     public static double axleHalfOf(BlockState state) {
-        if (state.getBlock() instanceof gregtech.block.energy.AxleBlock axle) {
+        if (state.getBlock() instanceof gregtech.content.block.energy.AxleBlock axle) {
             return axle.spec().halfThickness();
         }
         return NONE;

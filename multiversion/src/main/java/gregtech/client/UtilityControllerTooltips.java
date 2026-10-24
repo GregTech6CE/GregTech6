@@ -27,9 +27,9 @@ public final class UtilityControllerTooltips {
                 .append(heatUnit(settings))
                 .append(Component.literal("/t").withStyle(ChatFormatting.WHITE)));
         var emitted=settings.energyType();
-        if(emitted==gregtech.data.GregTechTags.Energy.KU)
+        if(emitted==gregtech.content.data.GregTechTags.Energy.KU)
             lines.add(Component.translatable("gt.lang.emits.redstoneflux.lossy").append(" 50%").withStyle(ChatFormatting.GOLD));
-        else if(emitted==gregtech.data.GregTechTags.Energy.RF||emitted==gregtech.data.GregTechTags.Energy.MJ)
+        else if(emitted==gregtech.content.data.GregTechTags.Energy.RF||emitted==gregtech.content.data.GregTechTags.Energy.MJ)
             lines.add(Component.translatable("gt.lang.emits.redstoneflux.lossless").withStyle(ChatFormatting.GOLD));
         lines.add(Component.translatable("gt.lang.nogui.funnel.tap.tank").withStyle(ChatFormatting.GOLD));
         parentTools(lines);

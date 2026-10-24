@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
 import gregtech.internal.fluid.FluidTankGT;
-import gregtech.blockentity.machine.OriginalLargeBoilerControllerBlockEntity;
+import gregtech.content.blockentity.machine.OriginalLargeBoilerControllerBlockEntity;
 import gregtech.content.multiblock.OriginalLargeBoilerSpecs;
-import gregtech.registry.GTFluids;
+import gregtech.content.registry.GTFluids;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.*;

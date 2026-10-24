@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
-import gregtech.worldgen.GTPitFeature;
-import gregtech.worldgen.GTWaterBodyFeature;
-import gregtech.worldgen.center.NativeOriginWorld;
+import gregtech.content.worldgen.GTPitFeature;
+import gregtech.content.worldgen.GTWaterBodyFeature;
+import gregtech.content.worldgen.center.NativeOriginWorld;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Proxy;
 import java.util.function.Predicate;

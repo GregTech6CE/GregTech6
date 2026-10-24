@@ -3,9 +3,9 @@ package gregtech.gametest;
 import gregtech.internal.fluid.PortableFluidContainerSpec;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.prefix.BlockMaterialPrefix;
-import gregtech.blockentity.tool.PortableContainerBlockEntity;
-import gregtech.data.*;
-import gregtech.registry.*;
+import gregtech.content.blockentity.tool.PortableContainerBlockEntity;
+import gregtech.content.data.*;
+import gregtech.content.registry.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.resources.ResourceLocation;
@@ -48,15 +48,15 @@ public final class CapsuleCasingTests {
     }
     @GameTest(template="test_empty") public static void capsuleExtrusionPreservesUnits(GameTestHelper h){
         int count=0;var materials=new java.util.HashSet<String>();
-        for(var recipe:MachineRecipeMaps.Extruder.mRecipeList)if(recipe.mOutputs.length==1&&recipe.mOutputs[0].getItem() instanceof gregtech.item.PortableFluidContainerItem vessel&&vessel.spec().shapeId().equals("cell")){
+        for(var recipe:MachineRecipeMaps.Extruder.mRecipeList)if(recipe.mOutputs.length==1&&recipe.mOutputs[0].getItem() instanceof gregtech.content.item.PortableFluidContainerItem vessel&&vessel.spec().shapeId().equals("cell")){
             boolean simple=gregtech.content.recipe.CapsuleCellRecipes.simpleExtrusion(vessel.spec());
             h.assertTrue(recipe.mEUt==(simple?16:96),"simple and hot extrusion have distinct energy requirements");
             if(simple)h.assertTrue(recipe.mDuration==(recipe.mOutputs[0].getCount()==1?8:64),"original simple extrusion duration");
             else h.assertTrue(!ForgeRegistries.ITEMS.getKey(recipe.mInputs[1].getItem()).getPath().startsWith("low_heat_"),"hot material cannot use low heat mold");
-            var prefix=gregtech.item.MaterialItem.getPrefix(recipe.mInputs[0]);
+            var prefix=gregtech.content.item.MaterialItem.getPrefix(recipe.mInputs[0]);
             h.assertTrue(prefix!=null&&prefix.getMaterialWeight()*9==gregtech.api.material.GTValues.U*recipe.mOutputs[0].getCount(),"extrusion conserves actual material units");
             materials.add(vessel.spec().id());
-            h.assertTrue(recipe.mInputs.length==2&&recipe.mInputs[1].getItem() instanceof gregtech.item.TechItem mold&&mold.isCatalyst(),"extruder mold is reusable");count++;
+            h.assertTrue(recipe.mInputs.length==2&&recipe.mInputs[1].getItem() instanceof gregtech.content.item.TechItem mold&&mold.isCatalyst(),"extruder mold is reusable");count++;
         }
         h.assertTrue(count>56&&materials.size()==40,"all forty source capsules now have manufacturing routes, got "+count+" / "+materials.size());h.succeed();
     }
@@ -66,12 +66,12 @@ public final class CapsuleCasingTests {
         h.assertTrue(gregtech.content.recipe.CapsuleCellRecipes.hotExtrusionTicks(tungsten,gregtech.api.material.GTValues.U)==expected,"source tungsten heat and mass work formula");
         h.assertTrue(PortableFluidContainerSpec.CELL_KREKNORITE.material()==GTMaterialRegistry.get("Trinium"),"legacy registry ID retains item identity but Ke resolves Trinium");
         int count=0;
-        for(var recipe:MachineRecipeMaps.Shredder.mRecipeList)if(recipe.mInputs.length==1&&recipe.mInputs[0].getItem() instanceof gregtech.item.PortableFluidContainerItem vessel&&vessel.spec().shapeId().equals("cell")){
+        for(var recipe:MachineRecipeMaps.Shredder.mRecipeList)if(recipe.mInputs.length==1&&recipe.mInputs[0].getItem() instanceof gregtech.content.item.PortableFluidContainerItem vessel&&vessel.spec().shapeId().equals("cell")){
             var input=recipe.mInputs[0].copy();
             h.assertTrue(gregtech.internal.recipe.RecipeInputs.consume(recipe,java.util.List.of(input),java.util.List.of(),1)!=null,"empty capsule recyclable");
             input.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElseThrow(IllegalStateException::new).fill(new FluidStack(net.minecraft.world.level.material.Fluids.WATER,1),FluidAction.EXECUTE);
             h.assertTrue(gregtech.internal.recipe.RecipeInputs.consume(recipe,java.util.List.of(input),java.util.List.of(),1)==null,"even one L prevents recycling and fluid destruction");
-            h.assertTrue(gregtech.item.MaterialItem.isMaterialItem(recipe.mOutputs[0],MaterialPrefix.dustTiny,vessel.spec().material())&&recipe.mOutputs[0].getCount()==1,"one ninth U recovered without duplication");count++;
+            h.assertTrue(gregtech.content.item.MaterialItem.isMaterialItem(recipe.mOutputs[0],MaterialPrefix.dustTiny,vessel.spec().material())&&recipe.mOutputs[0].getCount()==1,"one ninth U recovered without duplication");count++;
         }
         h.assertTrue(count==40,"all forty capsules have empty-shell recycling");h.succeed();
     }
@@ -97,7 +97,7 @@ public final class CapsuleCasingTests {
             h.assertTrue(routes.size()==2,"long and normal rod alternatives for lead casing grade "+grade);
             // GT6 Loader_Recipes_Handlers:349-358 keys the welding time on tEasyHeatable = Or(FURNACE):
             // the easy pass is 16 ticks per material unit, everything else pays 64 * units * (quality + 1).
-            long expected=gregtech.data.generated.MaterialWorkability.isFurnace(lead)
+            long expected=gregtech.content.data.generated.MaterialWorkability.isFurnace(lead)
                     ?16L*units[grade]:64L*units[grade]*(lead.getToolQuality()+1);
             for(var r:routes)h.assertTrue(r.mDuration==expected&&r.mEUt==16&&r.mInputs[0].getCount()==6,"source welding work and six plates");
             grade++;
@@ -111,17 +111,17 @@ public final class CapsuleCasingTests {
         var menu=new AbstractContainerMenu(null,0){public ItemStack quickMoveStack(net.minecraft.world.entity.player.Player p,int i){return ItemStack.EMPTY;}public boolean stillValid(net.minecraft.world.entity.player.Player p){return true;}};
         var grid=new TransientCraftingContainer(menu,3,3);
         var id=ResourceLocation.fromNamespaceAndPath("gt6ce","nuclear/geiger_counter_empty");
-        var recipe=(gregtech.recipe.ToolShapedRecipe)h.getLevel().getRecipeManager().byKey(id).orElseThrow();
+        var recipe=(gregtech.content.recipe.ToolShapedRecipe)h.getLevel().getRecipeManager().byKey(id).orElseThrow();
         for(int i=0;i<9;i++){
             var stack=recipe.getIngredients().get(i).getItems()[0].copy();
-            if(stack.getItem() instanceof gregtech.item.GTToolItem)stack=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolHelper.getType(stack),GTMaterialRegistry.get("Steel"),GTMaterialRegistry.get("Wood"));
+            if(stack.getItem() instanceof gregtech.content.item.GTToolItem)stack=gregtech.content.item.GTToolItem.create(gregtech.internal.tool.GTToolHelper.getType(stack),GTMaterialRegistry.get("Steel"),GTMaterialRegistry.get("Wood"));
             grid.setItem(i,stack);
         }
         h.assertTrue(recipe.matches(grid,h.getLevel()),"empty aluminium capsule crafts empty Geiger counter");
         var buffer=new net.minecraft.network.FriendlyByteBuf(io.netty.buffer.Unpooled.buffer());
         try{
-            gregtech.recipe.ToolShapedRecipe.SERIALIZER.toNetwork(buffer,recipe);
-            var copy=gregtech.recipe.ToolShapedRecipe.SERIALIZER.fromNetwork(id,buffer);
+            gregtech.content.recipe.ToolShapedRecipe.SERIALIZER.toNetwork(buffer,recipe);
+            var copy=gregtech.content.recipe.ToolShapedRecipe.SERIALIZER.fromNetwork(id,buffer);
             h.assertTrue(copy.matches(grid,h.getLevel())&&buffer.readableBytes()==0,"network codec preserves full recipe");
             grid.getItem(1).getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElseThrow(IllegalStateException::new).fill(new FluidStack(net.minecraft.world.level.material.Fluids.WATER,500),FluidAction.EXECUTE);
             h.assertTrue(!copy.matches(grid,h.getLevel())&&!recipe.matches(grid,h.getLevel()),"filled capsule rejected on both sides instead of losing fluid");

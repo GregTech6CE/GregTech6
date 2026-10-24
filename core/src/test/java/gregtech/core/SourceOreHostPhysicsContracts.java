@@ -1,7 +1,7 @@
 package gregtech.core;
 
-import gregtech.data.SourceOreHostPhysics;
-import gregtech.data.SourceOreHostPhysics.Mode;
+import gregtech.content.data.SourceOreHostPhysics;
+import gregtech.content.data.SourceOreHostPhysics.Mode;
 
 /** Literal expected results from the reviewed source tuple ledger; no native registry dependencies. */
 public final class SourceOreHostPhysicsContracts {

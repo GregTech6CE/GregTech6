@@ -4,20 +4,20 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import gregtech.internal.material.GTMaterial;
 import gregtech.internal.prefix.BlockMaterialPrefix;
-import gregtech.block.MaterialBlock;
-import gregtech.block.stone.StoneType;
-import gregtech.block.stone.StoneVariant;
-import gregtech.data.generated.GT6Materials;
-import gregtech.registry.GTBlocks;
-import gregtech.registry.GTDecorBlocks;
-import gregtech.worldgen.GTDungeonFeature;
-import gregtech.worldgen.GTFeatures;
-import gregtech.worldgen.dungeon.GTDungeonChunk;
-import gregtech.worldgen.dungeon.GTDungeonChunkCorridor;
-import gregtech.worldgen.dungeon.GTDungeonChunkRoomEmpty;
-import gregtech.worldgen.dungeon.GTDungeonChunkRoomStorage;
-import gregtech.worldgen.dungeon.GTDungeonData;
-import gregtech.worldgen.dungeon.GTDungeonLayout;
+import gregtech.content.block.MaterialBlock;
+import gregtech.content.block.stone.StoneType;
+import gregtech.content.block.stone.StoneVariant;
+import gregtech.content.data.generated.GT6Materials;
+import gregtech.content.registry.GTBlocks;
+import gregtech.content.registry.GTDecorBlocks;
+import gregtech.content.worldgen.GTDungeonFeature;
+import gregtech.content.worldgen.GTFeatures;
+import gregtech.content.worldgen.dungeon.GTDungeonChunk;
+import gregtech.content.worldgen.dungeon.GTDungeonChunkCorridor;
+import gregtech.content.worldgen.dungeon.GTDungeonChunkRoomEmpty;
+import gregtech.content.worldgen.dungeon.GTDungeonChunkRoomStorage;
+import gregtech.content.worldgen.dungeon.GTDungeonData;
+import gregtech.content.worldgen.dungeon.GTDungeonLayout;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
@@ -412,13 +412,13 @@ public final class DungeonTests {
                 new long[GTDungeonFeature.KEY_COUNT], new ItemStack[GTDungeonFeature.KEY_COUNT],
                 new boolean[GTDungeonFeature.KEY_COUNT], new HashSet<>(), new HashSet<>(),
                 RandomSource.create(4242L));
-        helper.assertTrue(new gregtech.worldgen.dungeon.GTDungeonChunkRoomWorkshop()
+        helper.assertTrue(new gregtech.content.worldgen.dungeon.GTDungeonChunkRoomWorkshop()
                 .generate(data), "the workshop accepts its cell");
 
         var workshopShelf = server.getBlockEntity(new BlockPos(x + 4, y + 3, z + 1));
-        helper.assertTrue(workshopShelf instanceof gregtech.blockentity.inventory.BookShelfBlockEntity,
+        helper.assertTrue(workshopShelf instanceof gregtech.content.blockentity.inventory.BookShelfBlockEntity,
                 "GT6 workshop's fixed manual shelf exists");
-        var shelfItems = ((gregtech.blockentity.inventory.BookShelfBlockEntity) workshopShelf)
+        var shelfItems = ((gregtech.content.blockentity.inventory.BookShelfBlockEntity) workshopShelf)
                 .inventory();
         String[] expectedManuals = {"Manual_Elements", "Manual_Alloys", "Manual_Smeltery",
                 "Manual_Random", "Manual_Extenders", "Manual_Steam", "Manual_Tools", "Manual_Printer"};
@@ -441,16 +441,16 @@ public final class DungeonTests {
 
         // GT6 ids 1102/1103/1104 burning boxes, 1020/1021/1022 crucibles, 1070/1071/1072 moulds: the
         // port's blocks are selected by the same roll, so the tier has to agree across all four.
-        int burningBoxTier = tier(burningBox, gregtech.registry.GTMachines.BURNING_BOX_SOLID_BRONZE,
-                gregtech.registry.GTMachines.BURNING_BOX_SOLID_INVAR,
-                gregtech.registry.GTMachines.BURNING_BOX_SOLID_STEEL);
-        int crucibleTier = tier(crucible, gregtech.registry.GTMachines.SMELTING_CRUCIBLE_BRONZE,
-                gregtech.registry.GTMachines.SMELTING_CRUCIBLE_INVAR,
-                gregtech.registry.GTMachines.SMELTING_CRUCIBLE_STEEL);
+        int burningBoxTier = tier(burningBox, gregtech.content.registry.GTMachines.BURNING_BOX_SOLID_BRONZE,
+                gregtech.content.registry.GTMachines.BURNING_BOX_SOLID_INVAR,
+                gregtech.content.registry.GTMachines.BURNING_BOX_SOLID_STEEL);
+        int crucibleTier = tier(crucible, gregtech.content.registry.GTMachines.SMELTING_CRUCIBLE_BRONZE,
+                gregtech.content.registry.GTMachines.SMELTING_CRUCIBLE_INVAR,
+                gregtech.content.registry.GTMachines.SMELTING_CRUCIBLE_STEEL);
         helper.assertTrue(burningBoxTier >= 0, "the burning box is the port's own block: " + burningBox);
         helper.assertTrue(crucibleTier == burningBoxTier,
                 "the crucible uses the burning box's tier (" + crucibleTier + " vs " + burningBoxTier + ")");
-        helper.assertTrue(crucible.getBlock() instanceof gregtech.block.machine.SmeltingCrucibleBlock,
+        helper.assertTrue(crucible.getBlock() instanceof gregtech.content.block.machine.SmeltingCrucibleBlock,
                 "the crucible is a smelting crucible");
         helper.assertTrue(burningBox.getValue(net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING)
                         == net.minecraft.core.Direction.WEST,
@@ -458,54 +458,54 @@ public final class DungeonTests {
 
         helper.assertTrue(moldWest.is(moldEast.getBlock()),
                 "both moulds are the same tier: " + moldWest + " / " + moldEast);
-        helper.assertTrue(moldWest.getBlock() instanceof gregtech.block.machine.MoldBlock,
+        helper.assertTrue(moldWest.getBlock() instanceof gregtech.content.block.machine.MoldBlock,
                 "the smeltery stack carries a mould: " + moldWest);
-        gregtech.block.machine.MoldBlock mold =
-                (gregtech.block.machine.MoldBlock) moldWest.getBlock();
+        gregtech.content.block.machine.MoldBlock mold =
+                (gregtech.content.block.machine.MoldBlock) moldWest.getBlock();
         helper.assertTrue(mold.spec().gt6MetaId() == 1070 + crucibleTier,
                 "the mould carries GT6's meta id of the rolled tier: " + mold.spec().gt6MetaId());
         for (int localZ : new int[]{2, 4}) {
             var moldEntity = server.getBlockEntity(new BlockPos(x + 14, y + 2, z + localZ));
-            helper.assertTrue(moldEntity instanceof gregtech.blockentity.machine.MoldBlockEntity
-                            && ((gregtech.blockentity.machine.MoldBlockEntity) moldEntity)
+            helper.assertTrue(moldEntity instanceof gregtech.content.blockentity.machine.MoldBlockEntity
+                            && ((gregtech.content.blockentity.machine.MoldBlockEntity) moldEntity)
                                     .getMoldShape() != 0,
                     "GT6's workshop mould starts with a castable cavity");
         }
-        helper.assertTrue(((gregtech.block.machine.SmeltingCrucibleBlock) crucible.getBlock())
+        helper.assertTrue(((gregtech.content.block.machine.SmeltingCrucibleBlock) crucible.getBlock())
                         .spec().gt6MetaId() == 1020 + crucibleTier,
                 "the crucible carries GT6's meta id of the rolled tier");
 
         // GT6's grindstone 32703 (facing SIDE_Z_POS) as the port's grindstone block.
         BlockState grindstone = server.getBlockState(new BlockPos(x + 12, y + 1, z + 1));
-        helper.assertTrue(grindstone.getBlock() instanceof gregtech.block.tool.ManualToolBlock tool
-                        && tool.kind() == gregtech.blockentity.tool.ManualToolBlockEntity.Kind.GRINDSTONE,
+        helper.assertTrue(grindstone.getBlock() instanceof gregtech.content.block.tool.ManualToolBlock tool
+                        && tool.kind() == gregtech.content.blockentity.tool.ManualToolBlockEntity.Kind.GRINDSTONE,
                 "the grindstone is the port's manual grindstone: " + grindstone);
-        helper.assertTrue(grindstone.getValue(gregtech.block.tool.ManualToolBlock.FACING)
+        helper.assertTrue(grindstone.getValue(gregtech.content.block.tool.ManualToolBlock.FACING)
                         == net.minecraft.core.Direction.SOUTH,
                 "GT6's grindstone faces SIDE_Z_POS (south)");
         var grinder = server.getBlockEntity(new BlockPos(x + 12, y + 1, z + 1));
-        helper.assertTrue(grinder instanceof gregtech.blockentity.tool.ManualToolBlockEntity
-                        && ((gregtech.blockentity.tool.ManualToolBlockEntity) grinder)
+        helper.assertTrue(grinder instanceof gregtech.content.blockentity.tool.ManualToolBlockEntity
+                        && ((gregtech.content.blockentity.tool.ManualToolBlockEntity) grinder)
                                 .stoneUses() >= 1
-                        && ((gregtech.blockentity.tool.ManualToolBlockEntity) grinder)
+                        && ((gregtech.content.blockentity.tool.ManualToolBlockEntity) grinder)
                                 .stoneUses() <= 4
-                        && grindstone.getValue(gregtech.block.tool.ManualToolBlock.STONE),
+                        && grindstone.getValue(gregtech.content.block.tool.ManualToolBlock.STONE),
                 "GT6's dungeon grindstone starts with 1..4 visible abrasive uses");
 
         // GT6's anvil multi-tile 32034+rnd(4): one of the port's four material anvils.
         BlockState anvil = server.getBlockState(new BlockPos(x + 11, y + 1, z + 4));
-        helper.assertTrue(anvil.getBlock() instanceof gregtech.block.tool.MaterialAnvilBlock,
+        helper.assertTrue(anvil.getBlock() instanceof gregtech.content.block.tool.MaterialAnvilBlock,
                 "the second anvil is a material anvil: " + anvil);
-        gregtech.block.tool.MaterialAnvilBlock materialAnvil =
-                (gregtech.block.tool.MaterialAnvilBlock) anvil.getBlock();
+        gregtech.content.block.tool.MaterialAnvilBlock materialAnvil =
+                (gregtech.content.block.tool.MaterialAnvilBlock) anvil.getBlock();
         String anvilMaterial = materialAnvil.material().getName();
         helper.assertTrue(java.util.Set.of("BlackSteel", "BlueSteel", "RedSteel", "VanadiumSteel")
                         .contains(anvilMaterial),
                 "GT6's anvil materials are 32034-32037: " + anvilMaterial);
         var anvilEntity = server.getBlockEntity(new BlockPos(x + 11, y + 1, z + 4));
-        helper.assertTrue(anvilEntity instanceof gregtech.blockentity.tool.MaterialAnvilBlockEntity,
+        helper.assertTrue(anvilEntity instanceof gregtech.content.blockentity.tool.MaterialAnvilBlockEntity,
                 "the workshop's material anvil has its block entity");
-        ItemStack initialHammer = ((gregtech.blockentity.tool.MaterialAnvilBlockEntity) anvilEntity)
+        ItemStack initialHammer = ((gregtech.content.blockentity.tool.MaterialAnvilBlockEntity) anvilEntity)
                 .workpiece(0);
         helper.assertTrue(gregtech.internal.tool.GTToolHelper.matchesTool(initialHammer,
                         gregtech.internal.tool.GTToolType.HARD_HAMMER)
@@ -524,23 +524,23 @@ public final class DungeonTests {
 
         // The drawer (4011) and the two mass storages (6011) are the port's own containers.
         BlockState drawer = server.getBlockState(new BlockPos(x + 1, y + 1, z + 3));
-        helper.assertTrue(drawer.getBlock() == gregtech.registry.GTStorage.DRAWER_QUAD.get(),
+        helper.assertTrue(drawer.getBlock() == gregtech.content.registry.GTStorage.DRAWER_QUAD.get(),
                 "the compartment drawer is the port's quad drawer: " + drawer);
-        helper.assertTrue(drawer.getValue(gregtech.block.inventory.DrawerQuadBlock.FACING)
+        helper.assertTrue(drawer.getValue(gregtech.content.block.inventory.DrawerQuadBlock.FACING)
                         == net.minecraft.core.Direction.EAST,
                 "GT6's drawer faces SIDE_X_POS (east)");
         for (int localY : new int[]{1, 2}) {
             BlockPos storagePos = new BlockPos(x + 4, y + localY, z + 1);
             BlockState storage = server.getBlockState(storagePos);
-            helper.assertTrue(storage.getBlock() == gregtech.registry.GTStorage.MASS_STORAGE.get(),
+            helper.assertTrue(storage.getBlock() == gregtech.content.registry.GTStorage.MASS_STORAGE.get(),
                     "GT6's mass storage is the port's own block: " + storage);
             helper.assertTrue(storage.getValue(net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING)
                             == net.minecraft.core.Direction.SOUTH,
                     "GT6's mass storage faces SIDE_Z_POS (south)");
             var bulk = server.getBlockEntity(storagePos);
-            helper.assertTrue(bulk instanceof gregtech.blockentity.inventory.MassStorageBlockEntity,
+            helper.assertTrue(bulk instanceof gregtech.content.blockentity.inventory.MassStorageBlockEntity,
                     "the rock supply has a bulk storage block entity");
-            var supplied = (gregtech.blockentity.inventory.MassStorageBlockEntity) bulk;
+            var supplied = (gregtech.content.blockentity.inventory.MassStorageBlockEntity) bulk;
             StoneType rock = localY == 1 ? rocks[0] : rocks[1];
             int minimum = localY == 1 ? 10_000 : 1_000;
             int maximum = localY == 1 ? 100_000 : 10_000;
@@ -636,15 +636,15 @@ public final class DungeonTests {
             long pieces = prefix.isPartialCrate() ? 16 : 64;
             helper.assertTrue(prefix.getMaterialWeight() == pieces * unit * (raw ? 2 : 1),
                     form + " must contain the GT6 ore or material unit amount");
-            helper.assertTrue(prefix.getRegistryName().equals(gregtech.data.MaterialPrefix.camelToSnake(prefix.getName())),
+            helper.assertTrue(prefix.getRegistryName().equals(gregtech.content.data.MaterialPrefix.camelToSnake(prefix.getName())),
                     form + " uses its own GT6 prefix id");
         }
         var crate = GTBlocks.getObject(BlockMaterialPrefix.crateGtIngot, GT6Materials.Elements.Cu);
         helper.assertTrue(crate != null && crate.isPresent(), "copper partial ingot crate is registered");
-        helper.assertTrue(gregtech.data.BlockHarvestPolicy.tool(crate.get())
-                        == gregtech.data.BlockHarvestPolicy.Tool.CROWBAR,
+        helper.assertTrue(gregtech.content.data.BlockHarvestPolicy.tool(crate.get())
+                        == gregtech.content.data.BlockHarvestPolicy.Tool.CROWBAR,
                 "GT6 crate harvest tool is the crowbar");
-        ItemStack crowbar = gregtech.item.GTToolItem.create(
+        ItemStack crowbar = gregtech.content.item.GTToolItem.create(
                 gregtech.internal.tool.GTToolType.CROWBAR,
                 gregtech.content.material.Materials.Steel,
                 gregtech.internal.material.GTMaterialRegistry.get("Wood"));
@@ -675,15 +675,15 @@ public final class DungeonTests {
         boolean choosePlate = probe.nextBoolean();
         helper.assertTrue(data.ingotsOrPlates(1, 1, 1, 0, materials), "the GT6 pile was placed");
         var entity = level.getBlockEntity(new BlockPos(minX + 1, y + 1, minZ + 1));
-        helper.assertTrue(entity instanceof gregtech.blockentity.misc.PileBlockEntity,
+        helper.assertTrue(entity instanceof gregtech.content.blockentity.misc.PileBlockEntity,
                 "the pile stores its drawn candidate");
-        var pile = (gregtech.blockentity.misc.PileBlockEntity) entity;
+        var pile = (gregtech.content.blockentity.misc.PileBlockEntity) entity;
         helper.assertTrue(pile.kind() == (choosePlate
                         ? GTDungeonData.PileKind.PLATE : GTDungeonData.PileKind.INGOT).blockKind(),
                 "kind is selected after both candidate draws");
         helper.assertTrue(pile.count() == (choosePlate ? plateCount : ingotCount),
                 "the selected candidate keeps its own stack size");
-        helper.assertTrue(gregtech.blockentity.misc.PileBlockEntity.materialOf(pile.stored())
+        helper.assertTrue(gregtech.content.blockentity.misc.PileBlockEntity.materialOf(pile.stored())
                         == gregtech.internal.material.GTMaterialRegistry.get(
                         materials[choosePlate ? plateMaterial : ingotMaterial]),
                 "the selected candidate keeps its own material");
@@ -799,7 +799,7 @@ public final class DungeonTests {
                             barrels++;
                             Integer index = family.get(name);
                             if (server.getBlockEntity(pos)
-                                    instanceof gregtech.blockentity.machine.TankBlockEntity tank) {
+                                    instanceof gregtech.content.blockentity.machine.TankBlockEntity tank) {
                                 net.minecraftforge.fluids.FluidStack fluid = tank.getFluidTank().getFluid();
                                 helper.assertTrue(fluid.getAmount() == capacity.get(index),
                                         name + " holds GT6's " + capacity.get(index) + " mB, got "
@@ -809,7 +809,7 @@ public final class DungeonTests {
                                 Set<net.minecraft.world.level.material.Fluid> allowed = new HashSet<>();
                                 for (String field : tables[index]) {
                                     net.minecraftforge.fluids.FluidStack stack =
-                                            gregtech.registry.GTFluids.stack(field, 1);
+                                            gregtech.content.registry.GTFluids.stack(field, 1);
                                     helper.assertFalse(stack.isEmpty(), "the port has the fluid " + field);
                                     allowed.add(stack.getFluid());
                                 }
@@ -897,7 +897,7 @@ public final class DungeonTests {
                     new boolean[GTDungeonFeature.KEY_COUNT], new HashSet<>(), new HashSet<>(),
                     RandomSource.create(seed));
             // The room refuses a cell whose centre has no bedrock under it (GT6 WorldgenOresBedrock:183-185).
-            if (!new gregtech.worldgen.dungeon.GTDungeonChunkRoomMiningBedrock().generate(data)) {
+            if (!new gregtech.content.worldgen.dungeon.GTDungeonChunkRoomMiningBedrock().generate(data)) {
                 continue;
             }
             rooms++;
@@ -963,7 +963,7 @@ public final class DungeonTests {
                     new long[GTDungeonFeature.KEY_COUNT], new ItemStack[GTDungeonFeature.KEY_COUNT],
                     new boolean[GTDungeonFeature.KEY_COUNT], new HashSet<>(), new HashSet<>(),
                     RandomSource.create(seed));
-            if (!new gregtech.worldgen.dungeon.GTDungeonChunkRoomMiningBedrock().generate(data)) {
+            if (!new gregtech.content.worldgen.dungeon.GTDungeonChunkRoomMiningBedrock().generate(data)) {
                 continue;
             }
             rooms++;
@@ -971,7 +971,7 @@ public final class DungeonTests {
             for (int[] corner : new int[][]{{6, 6}, {6, 9}, {9, 6}, {9, 9}}) {
                 BlockState state = server.getBlockState(
                         new BlockPos(minX + corner[0], chamberBottom, minZ + corner[1]));
-                helper.assertTrue(state.getBlock() instanceof gregtech.block.tool.DynamiteBlock,
+                helper.assertTrue(state.getBlock() instanceof gregtech.content.block.tool.DynamiteBlock,
                         "a chamber corner carries GT6's explosive, got " + state + " at "
                                 + corner[0] + "," + corner[1]);
                 helper.assertTrue(state.getValue(net.minecraft.world.level.block.DirectionalBlock.FACING)
@@ -982,7 +982,7 @@ public final class DungeonTests {
             // The lattice rim (:74-90) and the X crossing walkway (:100) are the port's scaffold.
             for (int[] site : new int[][]{{2, 4}, {13, 4}, {4, 2}, {4, 13}, {8, 8}}) {
                 BlockState state = server.getBlockState(new BlockPos(minX + site[0], y, minZ + site[1]));
-                if (state.getBlock() instanceof gregtech.block.tool.ShapedToolBlock scaffold
+                if (state.getBlock() instanceof gregtech.content.block.tool.ShapedToolBlock scaffold
                         && scaffold.toolId().equals("scaffold")) {
                     scaffolds++;
                 }
@@ -1024,7 +1024,7 @@ public final class DungeonTests {
                     new long[GTDungeonFeature.KEY_COUNT], new ItemStack[GTDungeonFeature.KEY_COUNT],
                     new boolean[GTDungeonFeature.KEY_COUNT], new HashSet<>(), new HashSet<>(),
                     RandomSource.create(seed));
-            if (!new gregtech.worldgen.dungeon.GTDungeonChunkRoomFarmCrop().generate(data)) {
+            if (!new gregtech.content.worldgen.dungeon.GTDungeonChunkRoomFarmCrop().generate(data)) {
                 continue;
             }
             rooms++;
@@ -1088,23 +1088,23 @@ public final class DungeonTests {
         WorldGenLevel level = server;
         StoneType[] rocks = {StoneType.LIMESTONE, StoneType.SLATE};
         BlockPos pos = helper.absolutePos(new BlockPos(1,1,1));
-        server.setBlock(pos, gregtech.registry.GTStorage.BOTTLE_CRATE.get().defaultBlockState()
+        server.setBlock(pos, gregtech.content.registry.GTStorage.BOTTLE_CRATE.get().defaultBlockState()
                 .setValue(net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING,
                         Direction.WEST), 3);
         helper.assertTrue(server.getBlockEntity(pos)
-                instanceof gregtech.blockentity.inventory.BottleCrateBlockEntity,
+                instanceof gregtech.content.blockentity.inventory.BottleCrateBlockEntity,
                 "the bottle crate carries its own block entity");
-        var crate = (gregtech.blockentity.inventory.BottleCrateBlockEntity)
+        var crate = (gregtech.content.blockentity.inventory.BottleCrateBlockEntity)
                 server.getBlockEntity(pos);
         ItemStack bottle = new ItemStack(net.minecraft.world.item.Items.GLASS_BOTTLE);
-        for (int i = 0; i < gregtech.blockentity.inventory.BottleCrateBlockEntity.SLOTS; i++) {
+        for (int i = 0; i < gregtech.content.blockentity.inventory.BottleCrateBlockEntity.SLOTS; i++) {
             helper.assertTrue(crate.insert(bottle.copy()).isEmpty(), "bottle " + i + " fits");
         }
         helper.assertFalse(crate.insert(bottle.copy()).isEmpty(),
                 "all nine crate slots are occupied");
         helper.assertFalse(crate.extractLast().isEmpty(), "the legacy extraction helper returns one bottle");
         helper.assertTrue(crate.contents().size()
-                        == gregtech.blockentity.inventory.BottleCrateBlockEntity.SLOTS - 1,
+                        == gregtech.content.blockentity.inventory.BottleCrateBlockEntity.SLOTS - 1,
                 "eight bottles are left, got " + crate.contents().size());
         server.destroyBlock(pos, true);
         helper.runAfterDelay(1, () -> {

@@ -2,11 +2,11 @@ package gregtech.gametest;
 
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.tool.GTToolType;
-import gregtech.block.wood.WoodSpecies;
+import gregtech.content.block.wood.WoodSpecies;
 import gregtech.content.material.Materials;
-import gregtech.item.GTToolItem;
-import gregtech.recipe.ToolShapedRecipe;
-import gregtech.registry.GTWoods;
+import gregtech.content.item.GTToolItem;
+import gregtech.content.recipe.ToolShapedRecipe;
+import gregtech.content.registry.GTWoods;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

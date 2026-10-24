@@ -145,7 +145,7 @@ public final class LootInjectionTests {
     @GameTest(template = "test_empty", timeoutTicks = 400)
     public static void lootChestsRollTheirTables(GameTestHelper h) {
         GTLootTables.load();
-        List<String> tables = gregtech.registry.GTLootChests.usableTables();
+        List<String> tables = gregtech.content.registry.GTLootChests.usableTables();
         h.assertTrue(tables.size() >= 15, "loot chest tables with rules: " + tables);
         h.assertTrue(tables.contains("gt.books") && tables.contains("gt.bottles")
                         && tables.contains("van.DUNGEON_CHEST"),
@@ -155,7 +155,7 @@ public final class LootInjectionTests {
         int index = 0;
         for (String table : tables) {
             String suffix = null;
-            for (var entry : gregtech.registry.GTLootChests.LOOT_CHESTS) {
+            for (var entry : gregtech.content.registry.GTLootChests.LOOT_CHESTS) {
                 if (entry.get().lootTable().equals(table)) suffix = entry.getId().getPath();
             }
             h.assertTrue(suffix != null, "a chest block carries the table " + table);
@@ -164,12 +164,12 @@ public final class LootInjectionTests {
             h.assertTrue(block != null, "registered loot chest block " + suffix);
             var pos = new net.minecraft.core.BlockPos(1 + (index % 4), 2, 1 + (index / 4));
             h.setBlock(pos, block.defaultBlockState()
-                    .setValue(gregtech.block.inventory.MetalChestBlock.FACING,
+                    .setValue(gregtech.content.block.inventory.MetalChestBlock.FACING,
                             net.minecraft.core.Direction.NORTH));
             var be = h.getBlockEntity(pos);
-            h.assertTrue(be instanceof gregtech.blockentity.inventory.MetalChestBlockEntity,
+            h.assertTrue(be instanceof gregtech.content.blockentity.inventory.MetalChestBlockEntity,
                     suffix + " has a chest block entity");
-            var chest = (gregtech.blockentity.inventory.MetalChestBlockEntity) be;
+            var chest = (gregtech.content.blockentity.inventory.MetalChestBlockEntity) be;
             // The block ticker may already have filled the chest (that is the point of the ticker), so
             // the assertion is on the outcome, not on who called it.
             int placed = chest.generateLootIfNeeded();
@@ -209,7 +209,7 @@ public final class LootInjectionTests {
                         + " (GT6 drops pages of 256 characters or more)");
             }
             ItemStack book = GTBooks.bookStack(name);
-            h.assertTrue(book.getItem() instanceof gregtech.item.ColoredBookItem && WrittenBookItem.makeSureTagIsValid(book.getTag()),
+            h.assertTrue(book.getItem() instanceof gregtech.content.item.ColoredBookItem && WrittenBookItem.makeSureTagIsValid(book.getTag()),
                     name + " opens as a valid Minecraft 1.20.1 written book");
         }
         h.assertTrue(GTBooks.pagesOf("Manual_Tools").size() == 43
@@ -257,7 +257,7 @@ public final class LootInjectionTests {
         for (int i = 0; i < 60; i++) {
             ItemStack stack = GTLootTables.roll("gt.books", random);
             h.assertTrue(!stack.isEmpty(), "gt.books roll returned a book");
-            h.assertTrue(stack.getItem() instanceof gregtech.item.ColoredBookItem, "gt.books roll uses its original book cover");
+            h.assertTrue(stack.getItem() instanceof gregtech.content.item.ColoredBookItem, "gt.books roll uses its original book cover");
             h.assertTrue(stack.getTag() != null && stack.getTag().contains("title"),
                     "the rolled book carries its title in NBT");
             h.assertTrue(!stack.getTag().getList("pages", 8).isEmpty(), "the rolled book carries pages");

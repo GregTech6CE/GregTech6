@@ -1,5 +1,5 @@
 package gregtech.client;
-import gregtech.block.energy.*;import gregtech.registry.*;
+import gregtech.content.block.energy.*;import gregtech.content.registry.*;
 @net.neoforged.fml.common.EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID,bus=net.neoforged.fml.common.EventBusSubscriber.Bus.MOD,value=net.neoforged.api.distmarker.Dist.CLIENT)
 public final class LaserClientSetup {private LaserClientSetup(){}
  @net.neoforged.bus.api.SubscribeEvent public static void blocks(net.neoforged.neoforge.client.event.RegisterColorHandlersEvent.Block event){for(var h:GTLasers.all())if(h.get() instanceof LaserConverterBlock laser)event.register((state,world,pos,index)->index==0?laser.spec().tint():0xFFFFFF,laser);event.register((state,world,pos,index)->state.getValue(ZpmModuleBlock.CHARGE)>0?0xFFDD00:0x806E00,GTZpmArtifacts.ZPM.get());for(var h:java.util.List.of(GTZpmArtifacts.BASIC,GTZpmArtifacts.ADVANCED,GTZpmArtifacts.ELITE))event.register((state,world,pos,index)->index==0?gregtech.internal.material.GTMaterialRegistry.get("Osmiridium").getColor():state.getValue(ZpmDischargerBlock.ACTIVE)?0xFFDD00:0x804000,h.get());}

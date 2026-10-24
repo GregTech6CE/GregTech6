@@ -1,5 +1,5 @@
 package gregtech.mixin;
-import gregtech.data.OreHostHarvest;
+import gregtech.content.data.OreHostHarvest;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;

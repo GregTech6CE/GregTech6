@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.block.tool.ScaffoldBlock;
-import gregtech.registry.GTToolBlocks;
-import gregtech.registry.GTStorageMetals;
+import gregtech.content.block.tool.ScaffoldBlock;
+import gregtech.content.registry.GTToolBlocks;
+import gregtech.content.registry.GTStorageMetals;
 import gregtech.content.material.Materials;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
@@ -38,7 +38,7 @@ public final class ScaffoldFamilyTests {
                 h.assertTrue(options.length > 0, "crafting material available: " + id + " slot " + i);
                 grid.setItem(i, options[0].copy());
             }
-            grid.setItem(4, gregtech.item.GTToolItem.create(
+            grid.setItem(4, gregtech.content.item.GTToolItem.create(
                     gregtech.internal.tool.GTToolType.SCREWDRIVER, Materials.Steel,
                     gregtech.internal.material.GTMaterialRegistry.get("Wood")));
             h.assertTrue(recipe.matches(grid, h.getLevel()), "recipe matches actual materials: " + id);

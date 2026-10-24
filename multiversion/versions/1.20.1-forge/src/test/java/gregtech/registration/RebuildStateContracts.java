@@ -13,7 +13,7 @@ public final class RebuildStateContracts {
     }
     private static void recipeLayout() {
         // Exercise real recipe-map dimensions against the shared GT6 container coordinates.
-        var ignored=gregtech.data.MachineRecipeMaps.Crusher;
+        var ignored=gregtech.content.data.MachineRecipeMaps.Crusher;
         for(var map:gregtech.internal.recipe.RecipeMap.RECIPE_MAP_LIST) {
             var points=new java.util.ArrayList<gregtech.internal.recipe.MachineGuiLayout.Point>();
             for(boolean input:new boolean[]{true,false}) {

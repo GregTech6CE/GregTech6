@@ -1,12 +1,12 @@
 package gregtech.gametest;
 
-import gregtech.block.machine.ItemPipeBlock;
-import gregtech.block.misc.SpikeBlock;
-import gregtech.block.stone.StoneType;
-import gregtech.blockentity.inventory.MassStorageBlockEntity;
-import gregtech.worldgen.GTDungeonFeature;
-import gregtech.worldgen.dungeon.GTDungeonChunkRoomFarmMobs;
-import gregtech.worldgen.dungeon.GTDungeonData;
+import gregtech.content.block.machine.ItemPipeBlock;
+import gregtech.content.block.misc.SpikeBlock;
+import gregtech.content.block.stone.StoneType;
+import gregtech.content.blockentity.inventory.MassStorageBlockEntity;
+import gregtech.content.worldgen.GTDungeonFeature;
+import gregtech.content.worldgen.dungeon.GTDungeonChunkRoomFarmMobs;
+import gregtech.content.worldgen.dungeon.GTDungeonData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

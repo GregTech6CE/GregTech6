@@ -7,30 +7,30 @@ import gregtech.api.material.GTValues;
 import gregtech.internal.material.MaterialProperty;
 import gregtech.internal.material.StoredMaterial;
 import gregtech.internal.recipe.RecipeInputs;
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.data.MachineRecipeMaps;
 //? if >=1.21.1 {
 /**///?} else {
 import gregtech.content.recipe.GTMaterialDataRecipes;
 //?}
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
-import gregtech.blockentity.machine.MoldBlockEntity;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.blockentity.machine.MoldBlockEntity;
 //? if >=1.21.1 {
 /*import gregtech.content.recipe.GTMaterialDataRecipes;
 *///?} else {
-import gregtech.blockentity.machine.SmeltingCrucibleBlockEntity;
+import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
 //?}
-import gregtech.registry.GTFluids;
+import gregtech.content.registry.GTFluids;
 //? if >=1.21.1 {
 /**///?} else {
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 //?}
-import gregtech.data.MaterialPrefix;
-import gregtech.item.MaterialItem;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.item.MaterialItem;
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity;
 *///?} else {
 //?}
-import gregtech.registry.GTItems;
+import gregtech.content.registry.GTItems;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.core.BlockPos;
@@ -327,7 +327,7 @@ public final class MaterialIdentitySaveTests {
 
     private static BasicMachineBlockEntity replicator(GameTestHelper helper, BlockPos pos) {
         var block = java.util.stream.StreamSupport.stream(BuiltInRegistries.BLOCK.spliterator(), false)
-                .filter(candidate -> candidate instanceof gregtech.block.machine.BasicMachineBlock machine
+                .filter(candidate -> candidate instanceof gregtech.content.block.machine.BasicMachineBlock machine
                         && machine.basicSpec().recipeMap() == MachineRecipeMaps.Replicator && machine.basicSpec().tier() == 1)
                 .findFirst().orElseThrow();
         helper.setBlock(pos, block.defaultBlockState());

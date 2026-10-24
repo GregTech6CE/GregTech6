@@ -1,9 +1,9 @@
 package gregtech.content.recipe;
 
 import gregtech.internal.recipe.RecipeMap;
-import gregtech.data.FuelRecipeMaps;
+import gregtech.content.data.FuelRecipeMaps;
 import gregtech.bootstrap.InitializationStep;
-import gregtech.registry.GTFluids;
+import gregtech.content.registry.GTFluids;
 import com.mojang.logging.LogUtils;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
@@ -45,7 +45,7 @@ public class FuelRecipeLoader implements InitializationStep {
         // Exact prepared catalog identity preserves dedicated and generated aliases without
         // mistaking a legacy registry name (ethanol/nitrofuel) for a Java field key.
         var seen=java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<net.minecraft.world.level.material.Fluid,Boolean>());
-        var entries=new java.util.TreeMap<>(gregtech.data.RegisteredFluids.all());
+        var entries=new java.util.TreeMap<>(gregtech.content.data.RegisteredFluids.all());
         for(var row:OriginalEngineFuelRows.ROWS) {
             boolean resolved=false;
             for(var entry:entries.entrySet()) {

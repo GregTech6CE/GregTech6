@@ -3,7 +3,7 @@ package gregtech.internal.material;
 import gregtech.internal.addon.AddonMaterials;
 import gregtech.internal.mod.GregTechIdentity;
 import gregtech.internal.prefix.PrefixRegistry;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;

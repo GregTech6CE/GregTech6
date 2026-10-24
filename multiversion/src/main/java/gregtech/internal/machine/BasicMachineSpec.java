@@ -10,9 +10,9 @@ import gregtech.content.energy.OriginalAdjacentEnergyRules;
 import gregtech.content.machine.OriginalBasicMachineRules;
 import gregtech.content.multiblock.LargeMachineProcessingRules;
 import gregtech.content.multiblock.OriginalLargeRecipeMachineData;
-import gregtech.data.BasicMachineOriginalParams;
-import gregtech.data.GregTechTags;
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.data.BasicMachineOriginalParams;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.data.MachineRecipeMaps;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;

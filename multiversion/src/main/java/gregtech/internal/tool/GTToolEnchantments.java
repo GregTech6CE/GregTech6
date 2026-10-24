@@ -75,7 +75,7 @@ public final class GTToolEnchantments {
 //?}
         var material=GTToolHelper.getHead(stack);
         java.util.Map<String,Integer> applicable;
-        if(stack.getItem() instanceof gregtech.item.ElectricToolItem electric) {
+        if(stack.getItem() instanceof gregtech.content.item.ElectricToolItem electric) {
             String original=electric.definition().original();
             var flags=gregtech.content.tool.OriginalToolFlags.of(original);
             applicable=MaterialToolEnchantments.of(flags.mining(),flags.weapon(),flags.ranged(),material);

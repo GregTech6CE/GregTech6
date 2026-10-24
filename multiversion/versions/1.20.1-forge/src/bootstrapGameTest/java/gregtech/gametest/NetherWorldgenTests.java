@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
 import gregtech.content.material.Materials;
-import gregtech.worldgen.GTBedrockOres;
-import gregtech.worldgen.GTBedrockOreDimensions;
-import gregtech.worldgen.GTNetherDepositFeature;
-import gregtech.worldgen.GTOreBlockResolver;
-import gregtech.worldgen.GTOreVeins;
+import gregtech.content.worldgen.GTBedrockOres;
+import gregtech.content.worldgen.GTBedrockOreDimensions;
+import gregtech.content.worldgen.GTNetherDepositFeature;
+import gregtech.content.worldgen.GTOreBlockResolver;
+import gregtech.content.worldgen.GTOreVeins;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

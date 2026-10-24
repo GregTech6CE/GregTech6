@@ -4,14 +4,14 @@ import gregtech.GregTech;
 import gregtech.internal.machine.ItemPipeSpec;
 import gregtech.internal.machine.PipeSpec;
 import gregtech.internal.energy.WireSpec;
-import gregtech.block.energy.AxleBlock;
-import gregtech.block.energy.ElectricWireBlock;
-import gregtech.block.machine.FluidPipeBlock;
-import gregtech.block.machine.ItemPipeBlock;
-import gregtech.registry.GTAxles;
-import gregtech.registry.GTFluidPipes;
-import gregtech.registry.GTItemPipes;
-import gregtech.registry.GTWires;
+import gregtech.content.block.energy.AxleBlock;
+import gregtech.content.block.energy.ElectricWireBlock;
+import gregtech.content.block.machine.FluidPipeBlock;
+import gregtech.content.block.machine.ItemPipeBlock;
+import gregtech.content.registry.GTAxles;
+import gregtech.content.registry.GTFluidPipes;
+import gregtech.content.registry.GTItemPipes;
+import gregtech.content.registry.GTWires;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.resources.model.BakedModel;
@@ -62,7 +62,7 @@ public final class PipeWireClientModels {
             replaced += replace(models, block,
                     new PipeWireBakedModel(half, side, 0, end, 0, 0, null));
         }
-        for (var block : gregtech.registry.AddonPipeRegistration.fluidBlocks()) {
+        for (var block : gregtech.content.registry.AddonPipeRegistration.fluidBlocks()) {
             PipeSpec spec = block.spec();
             String set = spec.material().getTextureSet().name().toLowerCase(Locale.ROOT);
             double half = Math.max(1.0, spec.diameter() * 8.0);
@@ -85,7 +85,7 @@ public final class PipeWireClientModels {
             replaced += replace(models, block,
                     new PipeWireBakedModel(half, side, 0, end, 0, 0, overlay));
         }
-        for (var block : gregtech.registry.AddonPipeRegistration.itemBlocks()) {
+        for (var block : gregtech.content.registry.AddonPipeRegistration.itemBlocks()) {
             ItemPipeSpec spec = block.spec();
             String set = spec.material().getTextureSet().name().toLowerCase(Locale.ROOT);
             double half = Math.max(1.0, spec.diameter() * 8.0);
@@ -110,7 +110,7 @@ public final class PipeWireClientModels {
             replaced += replace(models, block, model);
         }
 
-        for (var entry : gregtech.registry.GTSignalWires.all()) {
+        for (var entry : gregtech.content.registry.GTSignalWires.all()) {
             var block = entry.get();
             replaced += replace(models, block, block.insulated()
                     ? new PipeWireBakedModel(2, GregTech.id("block/iconsets/insulation_full"), 1, WIRE_TEX, 0, 1, null)

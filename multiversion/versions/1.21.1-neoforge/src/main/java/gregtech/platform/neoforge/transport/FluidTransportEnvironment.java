@@ -1,7 +1,7 @@
 package gregtech.platform.neoforge.transport;
 
-import gregtech.data.GregTechConstants;
-import gregtech.damage.GTDamageTypes;
+import gregtech.content.data.GregTechConstants;
+import gregtech.content.damage.GTDamageTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;

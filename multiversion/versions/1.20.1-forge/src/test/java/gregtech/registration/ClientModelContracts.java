@@ -96,9 +96,9 @@ public final class ClientModelContracts {
         if (!gregtech.internal.fluid.FluidTexturePolicy.select(preferred,
                 gregtech.internal.fluid.FluidTexturePolicy.Kind.PLASMA, available::contains).equals(plasma))
             throw new AssertionError("Plasma has its own fallback category");
-        if (gregtech.internal.fluid.FluidTexturePolicy.kind(new gregtech.data.RegisteredFluids.FluidEntry("molten.copper"))
+        if (gregtech.internal.fluid.FluidTexturePolicy.kind(new gregtech.content.data.RegisteredFluids.FluidEntry("molten.copper"))
                 != gregtech.internal.fluid.FluidTexturePolicy.Kind.MOLTEN
-                || gregtech.internal.fluid.FluidTexturePolicy.kind(new gregtech.data.RegisteredFluids.FluidEntry("oxygen").withGas())
+                || gregtech.internal.fluid.FluidTexturePolicy.kind(new gregtech.content.data.RegisteredFluids.FluidEntry("oxygen").withGas())
                 != gregtech.internal.fluid.FluidTexturePolicy.Kind.GAS)
             throw new AssertionError("Actual registry entries must classify by phase");
         if (!gregtech.internal.fluid.FluidTexturePolicy.select(preferred, false, false, available::contains).equals(fluid)

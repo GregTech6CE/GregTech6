@@ -9,7 +9,7 @@ import gregtech.internal.machine.crucible.CrucibleMath;
 import gregtech.internal.material.AtomicProperties;
 import gregtech.api.material.GTValues;
 import gregtech.internal.multiblock.PartBindings;
-import gregtech.api.recipe.MachineWorkCost;
+import gregtech.internal.recipe.MachineWorkCost;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -95,10 +95,10 @@ public final class CoreBehaviorContracts {
     private static void externalAdditionalGrindingSourceSamples() {
         // OP:143-144,149-151; Handler:84,86-87,89,120-124,132-136,161-165.
         var rows = gregtech.content.recipe.ExternalOreProcessingRules.GRINDING;
-        var forms = new gregtech.data.MaterialPrefix[]{
-                gregtech.data.MaterialPrefix.clump, gregtech.data.MaterialPrefix.reduced,
-                gregtech.data.MaterialPrefix.crystalline, gregtech.data.MaterialPrefix.cleanGravel,
-                gregtech.data.MaterialPrefix.cluster};
+        var forms = new gregtech.content.data.MaterialPrefix[]{
+                gregtech.content.data.MaterialPrefix.clump, gregtech.content.data.MaterialPrefix.reduced,
+                gregtech.content.data.MaterialPrefix.crystalline, gregtech.content.data.MaterialPrefix.cleanGravel,
+                gregtech.content.data.MaterialPrefix.cluster};
         long[] weights = {648_648_000L, 648_648_000L, 648_648_000L, 648_648_000L, 1_945_944_000L};
         long[] soft0 = {16, 16, 16, 16, 48}, hard0 = {256, 256, 256, 256, 768};
         long[] soft2 = {48, 48, 48, 48, 144}, hard2 = {768, 768, 768, 768, 2304};
@@ -121,9 +121,9 @@ public final class CoreBehaviorContracts {
             check(anvil.requiresEmptySlot() && !shredder.requiresEmptySlot(), "source additional Anvil empty workpiece " + i);
             check(!anvil.pulverizedRemains() && !shredder.pulverizedRemains(), "explicit source dust counts stay explicit " + i);
         }
-        var mortarForms = new gregtech.data.MaterialPrefix[]{
-                gregtech.data.MaterialPrefix.cleanGravel, gregtech.data.MaterialPrefix.crystalline,
-                gregtech.data.MaterialPrefix.reduced, gregtech.data.MaterialPrefix.clump};
+        var mortarForms = new gregtech.content.data.MaterialPrefix[]{
+                gregtech.content.data.MaterialPrefix.cleanGravel, gregtech.content.data.MaterialPrefix.crystalline,
+                gregtech.content.data.MaterialPrefix.reduced, gregtech.content.data.MaterialPrefix.clump};
         for (int i = 0; i < mortarForms.length; i++) {
             var row = rows.get(i + 16);
             check(row.map().equals("Mortar") && row.input() == mortarForms[i], "source Mortar input; no cluster Mortar route " + i);
@@ -198,25 +198,25 @@ public final class CoreBehaviorContracts {
             equal(hard2[i], row.duration(2, false), "source dirty dust hard quality and rounding " + i);
         }
         var furnace = gregtech.content.recipe.FurnaceSmeltingRules.EXTERNAL;
-        check(furnace.get(9).input() == gregtech.data.MaterialPrefix.dustPure && !furnace.get(9).experience(), "source pure dust smelting grants no XP");
-        check(furnace.get(10).input() == gregtech.data.MaterialPrefix.dustRefined && !furnace.get(10).experience(), "source refined dust smelting grants no XP");
-        check(furnace.get(11).input() == gregtech.data.MaterialPrefix.dustImpure && !furnace.get(11).experience(), "source foreign impure dust smelting grants no XP");
+        check(furnace.get(9).input() == gregtech.content.data.MaterialPrefix.dustPure && !furnace.get(9).experience(), "source pure dust smelting grants no XP");
+        check(furnace.get(10).input() == gregtech.content.data.MaterialPrefix.dustRefined && !furnace.get(10).experience(), "source refined dust smelting grants no XP");
+        check(furnace.get(11).input() == gregtech.content.data.MaterialPrefix.dustImpure && !furnace.get(11).experience(), "source foreign impure dust smelting grants no XP");
         equal(792_792_000L, furnace.get(9).amount(), "source pure dust furnace uses 11/9 U");
         equal(864_864_000L, furnace.get(10).amount(), "source refined dust furnace uses 12/9 U");
         equal(720_720_000L, furnace.get(11).amount(), "source impure dust furnace uses 10/9 U");
         var washing = gregtech.content.recipe.MaterialWashingRules.ROWS;
         equal(4, washing.size(), "four source cauldron listeners");
-        check(washing.get(0).input() == gregtech.data.MaterialPrefix.crushed
-                && washing.get(0).output() == gregtech.data.MaterialPrefix.crushedPurified
-                && washing.get(0).byproduct() == gregtech.data.MaterialPrefix.crushedPurifiedTiny,
+        check(washing.get(0).input() == gregtech.content.data.MaterialPrefix.crushed
+                && washing.get(0).output() == gregtech.content.data.MaterialPrefix.crushedPurified
+                && washing.get(0).byproduct() == gregtech.content.data.MaterialPrefix.crushedPurifiedTiny,
                 "source crushed washing output and optional tiny byproduct");
         check(!washing.get(0).givesByproduct(0) && washing.get(0).givesByproduct(1), "source crushed washing accepts one of two random outcomes");
         for (int i = 1; i < 4; i++) {
-            check(washing.get(i).input().getName().equals(names[i - 1]) && washing.get(i).output() == gregtech.data.MaterialPrefix.dust,
+            check(washing.get(i).input().getName().equals(names[i - 1]) && washing.get(i).output() == gregtech.content.data.MaterialPrefix.dust,
                     "source dust washing returns clean dust " + i);
             check(washing.get(i).byproduct() == null && !washing.get(i).givesByproduct(0), "source dust washing discards impurities " + i);
         }
-        check(gregtech.content.recipe.MaterialWashingRules.row(gregtech.data.MaterialPrefix.dust) == null,
+        check(gregtech.content.recipe.MaterialWashingRules.row(gregtech.content.data.MaterialPrefix.dust) == null,
                 "clean dust has no repeated washing listener");
         var step = gregtech.content.recipe.MaterialWashingRules.step(64, 3, true);
         equal(63, step.remainingCount(), "one washing tick consumes one item from a full stack");
@@ -266,18 +266,18 @@ public final class CoreBehaviorContracts {
         // OP:142,146-148; Handler:62,65-67. Independent source weights and getCosts goldens.
         var rows = gregtech.content.recipe.ExternalOreProcessingRules.ROUTES;
         equal(4, rows.size(), "four original optional ore-prefix routes");
-        equal(243_243_000L, gregtech.data.MaterialPrefix.rawOreChunk.getMaterialWeight(), "source raw chunks weigh 27/72 U");
-        equal(1_297_296_000L, gregtech.data.MaterialPrefix.chunk.getMaterialWeight(), "source external chunks weigh 2 U");
-        equal(1_297_296_000L, gregtech.data.MaterialPrefix.rubble.getMaterialWeight(), "source rubble weighs 2 U");
-        equal(1_945_944_000L, gregtech.data.MaterialPrefix.pebbles.getMaterialWeight(), "source pebbles weigh 3 U");
+        equal(243_243_000L, gregtech.content.data.MaterialPrefix.rawOreChunk.getMaterialWeight(), "source raw chunks weigh 27/72 U");
+        equal(1_297_296_000L, gregtech.content.data.MaterialPrefix.chunk.getMaterialWeight(), "source external chunks weigh 2 U");
+        equal(1_297_296_000L, gregtech.content.data.MaterialPrefix.rubble.getMaterialWeight(), "source rubble weighs 2 U");
+        equal(1_945_944_000L, gregtech.content.data.MaterialPrefix.pebbles.getMaterialWeight(), "source pebbles weigh 3 U");
         long[] baseTicks = {24, 256, 384, 1536};
         for (int i = 0; i < rows.size(); i++) {
             equal(baseTicks[i], rows.get(i).duration(0), "source larger input/output weight cost row " + i);
             equal(baseTicks[i] * 3, rows.get(i).duration(2), "source material quality scales cost row " + i);
         }
-        check(rows.get(0).output() == gregtech.data.MaterialPrefix.crushedTiny && rows.get(0).count() == 3,
+        check(rows.get(0).output() == gregtech.content.data.MaterialPrefix.crushedTiny && rows.get(0).count() == 3,
                 "raw chunks crush to exactly three tiny crushed ores");
-        check(rows.get(3).map().equals("Sifting") && rows.get(3).output() == gregtech.data.MaterialPrefix.dust && rows.get(3).count() == 3,
+        check(rows.get(3).map().equals("Sifting") && rows.get(3).output() == gregtech.content.data.MaterialPrefix.dust && rows.get(3).count() == 3,
                 "pebbles finish in the sifter with three dust, not the crusher");
         for (var row : rows) check(!gregtech.internal.material.MaterialItemDefinitions.candidatePrefixes().contains(row.input()),
                 "optional source prefix never creates a GT-owned item " + row.input().getName());
@@ -289,7 +289,7 @@ public final class CoreBehaviorContracts {
 
     private static void explosiveStorageSourceSamples() {
         // Original PrefixBlock :399 and :540, OP weights 9/16/64 units, MT :1309-1310 flags.
-        gregtech.data.MaterialPrefixes.bootstrap();
+        gregtech.content.data.MaterialPrefixes.bootstrap();
         var material = gregtech.content.material.generated.CompoundMaterials.Dynamite;
         check(material.has(gregtech.internal.material.MaterialProperty.EXPLOSIVE)
                 && material.has(gregtech.internal.material.MaterialProperty.FLAMMABLE), "source dynamite has both reaction flags");
@@ -496,9 +496,9 @@ public final class CoreBehaviorContracts {
         // even when every random ore roll is blank. Absolute tail heights adapt the y=0 source.
         var filled = new HashSet<String>();
         int[] floorWrites = {0}, highestTail = {Integer.MIN_VALUE};
-        boolean generated = gregtech.worldgen.MineralWorldgenRules.bedrockVein(
+        boolean generated = gregtech.content.worldgen.MineralWorldgenRules.bedrockVein(
                 0, 0, -64, 63, bound -> bound - 1,
-                new gregtech.worldgen.MineralWorldgenRules.VeinSink() {
+                new gregtech.content.worldgen.MineralWorldgenRules.VeinSink() {
                     public boolean isBedrockFloor(int x,int y,int z) { return x == 8 && y == -64 && z == 8; }
                     public void prepareStone(int x,int y,int z) { filled.add(x + "," + y + "," + z); }
                     public boolean bedrock(int x,int y,int z,boolean small) { floorWrites[0]++; return y == -64; }
@@ -785,9 +785,9 @@ public final class CoreBehaviorContracts {
         check("LV".equals(GTVoltageTiers.nameOf(32)), "LV label");
         check("PUV1".equals(GTVoltageTiers.nameOf(2097152)), "original post-ultimate label");
         check("XV".equals(GTVoltageTiers.nameOf(2147483648L)), "original maximum label");
-        equal(2147483648L, gregtech.data.GregTechConstants.V[14], "legacy voltage table uses original finite XV");
-        equal(8589934592L, gregtech.data.GregTechConstants.V[15], "legacy voltage table has no Long.MAX_VALUE sentinel");
-        check(java.util.Arrays.equals(GTVoltageTiers.NAMES,gregtech.data.GregTechConstants.VN), "one canonical voltage name table");
+        equal(2147483648L, gregtech.content.data.GregTechConstants.V[14], "legacy voltage table uses original finite XV");
+        equal(8589934592L, gregtech.content.data.GregTechConstants.V[15], "legacy voltage table has no Long.MAX_VALUE sentinel");
+        check(java.util.Arrays.equals(GTVoltageTiers.NAMES,gregtech.content.data.GregTechConstants.VN), "one canonical voltage name table");
         equal(1, GTVoltageTiers.tierMax(-32), "signed voltage magnitude");
         equal(16, GTVoltageTiers.tierMax(8589934593L), "above the table keeps GT6's table-length result");
         equal(0, GTVoltageTiers.tierMax(Long.MIN_VALUE), "Long.MIN_VALUE keeps GT6's signed-magnitude tier zero");
@@ -795,16 +795,16 @@ public final class CoreBehaviorContracts {
     }
 
     private static void machineEnergyGoldens() {
-        equal(2, gregtech.api.machine.BasicMachineEnergy.demanded(33, 64, 16), "GT6 whole-packet rounded demand");
-        equal(2, gregtech.api.machine.BasicMachineEnergy.accepted(33, 64, -16, 9), "signed packet admission");
-        equal(64, gregtech.api.machine.BasicMachineEnergy.add(33, 64, 16, 2), "inherited buffer clips last packet excess");
-        equal(49, gregtech.api.machine.BasicMachineEnergy.add(33, 64, 16, 1), "one admitted packet");
-        equal(0, gregtech.api.machine.BasicMachineEnergy.accepted(65, 64, 16, 9), "old over-capacity state never returns negative packets");
-        equal(0, gregtech.api.machine.BasicMachineEnergy.accepted(0, 64, Long.MIN_VALUE, 1), "unrepresentable signed magnitude rejected");
-        equal(0, gregtech.api.machine.BasicMachineEnergy.accepted(0, 64, 1, -1), "negative request rejected");
-        equal(Long.MAX_VALUE, gregtech.api.machine.BasicMachineEnergy.add(0, Long.MAX_VALUE, 2, Long.MAX_VALUE), "large packet train saturates without overflow");
-        equal(32, gregtech.api.machine.BasicMachineEnergy.drain(96,64), "per-tick rated drain keeps remaining input");
-        equal(0, gregtech.api.machine.BasicMachineEnergy.drain(16,64), "unused partial input discarded");
+        equal(2, gregtech.internal.machine.BasicMachineEnergy.demanded(33, 64, 16), "GT6 whole-packet rounded demand");
+        equal(2, gregtech.internal.machine.BasicMachineEnergy.accepted(33, 64, -16, 9), "signed packet admission");
+        equal(64, gregtech.internal.machine.BasicMachineEnergy.add(33, 64, 16, 2), "inherited buffer clips last packet excess");
+        equal(49, gregtech.internal.machine.BasicMachineEnergy.add(33, 64, 16, 1), "one admitted packet");
+        equal(0, gregtech.internal.machine.BasicMachineEnergy.accepted(65, 64, 16, 9), "old over-capacity state never returns negative packets");
+        equal(0, gregtech.internal.machine.BasicMachineEnergy.accepted(0, 64, Long.MIN_VALUE, 1), "unrepresentable signed magnitude rejected");
+        equal(0, gregtech.internal.machine.BasicMachineEnergy.accepted(0, 64, 1, -1), "negative request rejected");
+        equal(Long.MAX_VALUE, gregtech.internal.machine.BasicMachineEnergy.add(0, Long.MAX_VALUE, 2, Long.MAX_VALUE), "large packet train saturates without overflow");
+        equal(32, gregtech.internal.machine.BasicMachineEnergy.drain(96,64), "per-tick rated drain keeps remaining input");
+        equal(0, gregtech.internal.machine.BasicMachineEnergy.drain(16,64), "unused partial input discarded");
         equal(96, MachineWorkCost.advance(64,128,32), "ordinary recipe advances by supplied work");
         equal(128, MachineWorkCost.advance(120,128,32), "completed recipe stops at its cost");
         equal(Long.MAX_VALUE, MachineWorkCost.advance(Long.MAX_VALUE-4,Long.MAX_VALUE,32), "largest job can complete without wraparound");

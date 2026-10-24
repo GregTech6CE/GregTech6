@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
-import gregtech.registry.GTBlocks;
-import gregtech.worldgen.GTFeatures;
-import gregtech.worldgen.GTPitFeature;
-import gregtech.worldgen.GTPitShape;
-import gregtech.worldgen.GTSurfaceDepositFeature;
+import gregtech.content.registry.GTBlocks;
+import gregtech.content.worldgen.GTFeatures;
+import gregtech.content.worldgen.GTPitFeature;
+import gregtech.content.worldgen.GTPitShape;
+import gregtech.content.worldgen.GTSurfaceDepositFeature;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;
@@ -145,16 +145,16 @@ public final class PitTests {
     public static void twigsHaveASingleOwner(GameTestHelper helper) {
         String source = null;
         try (var stream = PitTests.class.getClassLoader()
-                .getResourceAsStream("gregtech/worldgen/GTSurfaceDepositFeature.class")) {
+                .getResourceAsStream("gregtech/content/worldgen/GTSurfaceDepositFeature.class")) {
             helper.assertTrue(stream != null, "the deposit feature class is on the classpath");
         } catch (java.io.IOException e) {
             helper.fail("cannot read the deposit feature class: " + e);
         }
         // The behaviour instead of the bytes: the flora feature owns GT6's WorldgenSticks numbers.
-        helper.assertTrue(gregtech.worldgen.GTSurfaceFlora.TWIG_AMOUNT == 2
-                        && gregtech.worldgen.GTSurfaceFlora.TWIG_PROBABILITY == 2,
+        helper.assertTrue(gregtech.content.worldgen.GTSurfaceFlora.TWIG_AMOUNT == 2
+                        && gregtech.content.worldgen.GTSurfaceFlora.TWIG_PROBABILITY == 2,
                 "WorldgenSticks is (2, 2) and lives in the flora feature");
-        helper.assertTrue(GTBlocks.TWIGS.get() instanceof gregtech.block.TwigBlock,
+        helper.assertTrue(GTBlocks.TWIGS.get() instanceof gregtech.content.block.TwigBlock,
                 "the twig block is still the GT6 WorldgenSticks block");
         helper.assertTrue(source == null, "no second twig owner");
         helper.succeed();

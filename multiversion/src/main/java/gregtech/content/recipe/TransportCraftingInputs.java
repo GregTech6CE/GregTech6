@@ -3,7 +3,7 @@ package gregtech.content.recipe;
 import com.google.gson.*;
 import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.content.transport.TransportCraftingCatalog;
-import gregtech.registry.GTItems;
+import gregtech.content.registry.GTItems;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
@@ -23,7 +23,7 @@ public final class TransportCraftingInputs {
             var prefix=input.name().equals("casingMachineDouble") ? gregtech.internal.prefix.BlockMaterialPrefix.casingMachineDouble : gregtech.internal.prefix.BlockMaterialPrefix.casingMachine;
             var material=input.material();
             var materials=material.getId()<0?material.getReRegistrations():Set.of(material);
-            var stacks=materials.stream().map(m -> gregtech.registry.GTBlocks.getStack(prefix,m)).filter(stack -> !stack.isEmpty()).toList();
+            var stacks=materials.stream().map(m -> gregtech.content.registry.GTBlocks.getStack(prefix,m)).filter(stack -> !stack.isEmpty()).toList();
             return stacks.isEmpty()?Ingredient.EMPTY:Ingredient.of(stacks.stream());
         }
         if(input.kind().equals("wire") || input.kind().equals("cable")) {
@@ -31,7 +31,7 @@ public final class TransportCraftingInputs {
             int size=Integer.parseInt(input.name());
             var material=input.material();
             var targets=material.getId()<0?material.getReRegistrations():Set.of(material);
-            var wires=gregtech.registry.GTWires.all().stream().map(v -> v.get()).filter(b -> b.spec().size()==size && b.spec().insulated()==insulated
+            var wires=gregtech.content.registry.GTWires.all().stream().map(v -> v.get()).filter(b -> b.spec().size()==size && b.spec().insulated()==insulated
                     && targets.contains(b.spec().material())).map(b -> new ItemStack(b)).toList();
             return wires.isEmpty()?Ingredient.EMPTY:Ingredient.of(wires.stream());
         }

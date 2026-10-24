@@ -1,6 +1,6 @@
 package gregtech.emi;
 
-import gregtech.recipe.ToolAssemblyCatalog;
+import gregtech.content.recipe.ToolAssemblyCatalog;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;

@@ -2,7 +2,7 @@
 package gregtech.client;
 
 import gregtech.content.cover.*;
-import gregtech.item.CanvasItem;
+import gregtech.content.item.CanvasItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;

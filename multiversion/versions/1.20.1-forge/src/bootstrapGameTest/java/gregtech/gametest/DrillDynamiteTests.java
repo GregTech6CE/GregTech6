@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
-import gregtech.block.tool.DynamiteBlock;
+import gregtech.content.block.tool.DynamiteBlock;
 import gregtech.content.tool.DynamiteSubstrates;
-import gregtech.item.behavior.BehaviorRemote;
-import gregtech.item.behavior.ItemBehaviors;
-import gregtech.registry.GTElectricItems;
-import gregtech.registry.GTToolBlocks;
+import gregtech.content.item.behavior.BehaviorRemote;
+import gregtech.content.item.behavior.ItemBehaviors;
+import gregtech.content.registry.GTElectricItems;
+import gregtech.content.registry.GTToolBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

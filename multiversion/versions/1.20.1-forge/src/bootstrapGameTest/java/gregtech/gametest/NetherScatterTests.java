@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
-import gregtech.block.RockBlock;
-import gregtech.blockentity.RockBlockEntity;
-import gregtech.registry.GTBlocks;
-import gregtech.worldgen.GTFeatures;
-import gregtech.worldgen.GTNetherScatterFeature;
+import gregtech.content.block.RockBlock;
+import gregtech.content.blockentity.RockBlockEntity;
+import gregtech.content.registry.GTBlocks;
+import gregtech.content.worldgen.GTFeatures;
+import gregtech.content.worldgen.GTNetherScatterFeature;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;

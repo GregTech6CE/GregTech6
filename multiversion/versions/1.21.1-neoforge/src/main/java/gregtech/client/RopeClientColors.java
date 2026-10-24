@@ -1,7 +1,7 @@
 package gregtech.client;
 
 import gregtech.internal.mod.GregTechIdentity;
-import gregtech.registry.GTManualStations;
+import gregtech.content.registry.GTManualStations;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;

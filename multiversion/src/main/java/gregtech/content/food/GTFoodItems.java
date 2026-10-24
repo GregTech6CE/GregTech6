@@ -1,6 +1,6 @@
 package gregtech.content.food;
 
-import gregtech.data.generated.GTFoodItemsGen;
+import gregtech.content.data.generated.GTFoodItemsGen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
@@ -217,7 +217,7 @@ public final class GTFoodItems {
             return;
         }
         // CannedFoodItem owns its complete FoodStat callback, including the container.
-        if (event.getItem().getItem() instanceof gregtech.item.CannedFoodItem) return;
+        if (event.getItem().getItem() instanceof gregtech.content.item.CannedFoodItem) return;
         Entry entry = entryFor(event.getItem().getItem());
         if (entry == null || entry.container().isEmpty() || entry.containerCount() <= 0) {
             return;

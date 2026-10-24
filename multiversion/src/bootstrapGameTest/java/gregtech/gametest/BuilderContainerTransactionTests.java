@@ -3,7 +3,7 @@ package gregtech.gametest;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.tool.GTToolHelper;
 import gregtech.internal.tool.GTToolType;
-import gregtech.registry.GTToolItems;
+import gregtech.content.registry.GTToolItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

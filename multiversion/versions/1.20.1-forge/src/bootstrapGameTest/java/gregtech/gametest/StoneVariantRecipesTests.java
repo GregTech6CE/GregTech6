@@ -5,17 +5,17 @@ import gregtech.internal.recipe.Recipe;
 import gregtech.internal.recipe.RecipeMap;
 import gregtech.internal.tool.GTToolHelper;
 import gregtech.internal.tool.GTToolType;
-import gregtech.block.stone.StoneType;
-import gregtech.block.stone.StoneVariant;
+import gregtech.content.block.stone.StoneType;
+import gregtech.content.block.stone.StoneVariant;
 import gregtech.content.material.Materials;
 import gregtech.content.recipe.StoneVariantRecipes;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.data.MaterialPrefix;
-import gregtech.item.GTToolItem;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.item.GTToolItem;
 import gregtech.content.recipe.StoneCraftingRecipeInjector;
-import gregtech.registry.GTBlocks;
-import gregtech.registry.GTItems;
-import gregtech.registry.GTToolItems;
+import gregtech.content.registry.GTBlocks;
+import gregtech.content.registry.GTItems;
+import gregtech.content.registry.GTToolItems;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
@@ -332,9 +332,9 @@ public final class StoneVariantRecipesTests {
     private static void assertMirror(GameTestHelper helper, String path, boolean expected) {
         var id = ResourceLocation.fromNamespaceAndPath("gt6ce", "stone/" + path);
         var recipe = helper.getLevel().getRecipeManager().byKey(id).orElse(null);
-        helper.assertTrue(recipe instanceof gregtech.recipe.ToolShapedRecipe,
+        helper.assertTrue(recipe instanceof gregtech.content.recipe.ToolShapedRecipe,
                 "masonry row " + id + " is a tool-shaped recipe");
-        boolean mirrors = ((gregtech.recipe.ToolShapedRecipe) recipe).allowMirror();
+        boolean mirrors = ((gregtech.content.recipe.ToolShapedRecipe) recipe).allowMirror();
         helper.assertTrue(mirrors == expected,
                 id + (expected ? " must mirror (CR.DEF_MIR)" : " must not mirror (CR.DEF)"));
     }

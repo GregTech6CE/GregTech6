@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.block.misc.*;
-import gregtech.blockentity.GTEnergyBlockEntity;
-import gregtech.data.GregTechTags;
-import gregtech.registry.*;
+import gregtech.content.block.misc.*;
+import gregtech.content.blockentity.GTEnergyBlockEntity;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.registry.*;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.level.block.*;

@@ -17,8 +17,8 @@ import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.mod.ModData;
 import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.content.multiblock.SharedLargeMachineLayouts;
-import gregtech.data.MaterialGroups;
-import gregtech.data.ModReferences;
+import gregtech.content.data.MaterialGroups;
+import gregtech.content.data.ModReferences;
 
 import java.util.List;
 import java.util.Locale;

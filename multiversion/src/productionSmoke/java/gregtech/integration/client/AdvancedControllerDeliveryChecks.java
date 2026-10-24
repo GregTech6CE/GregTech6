@@ -1,6 +1,6 @@
 package gregtech.integration.client;
 import com.google.gson.JsonObject;
-import gregtech.block.machine.BasicMachineBlock;
+import gregtech.content.block.machine.BasicMachineBlock;
 import gregtech.content.multiblock.OriginalAdvancedControllerData;
 import gregtech.client.CommonBlockTooltips;
 import net.minecraft.core.registries.BuiltInRegistries;

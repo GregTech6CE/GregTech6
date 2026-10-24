@@ -1,7 +1,7 @@
 package gregtech.emi;
 
 import gregtech.jei.WorldgenInfoData;
-import gregtech.worldgen.GTWorldgenScale;
+import gregtech.content.worldgen.GTWorldgenScale;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.*;
 import dev.emi.emi.api.stack.*;

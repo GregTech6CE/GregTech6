@@ -1,10 +1,10 @@
 package gregtech.client;
 
-import gregtech.data.RegisteredFluids;
+import gregtech.content.data.RegisteredFluids;
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.fluid.FluidDisplayItem;
 *///?} else {
-import gregtech.item.FluidItem;
+import gregtech.content.item.FluidItem;
 //?}
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlas;
@@ -78,7 +78,7 @@ public final class FluidItemOverrideList extends ItemOverrides {
         // (purple-black missing texture on every molten fluid item).
         String path = RegisteredFluids.sanitizePath(flEntry.registryName());
         ResourceLocation fluidId = ResourceLocation.fromNamespaceAndPath(
-                gregtech.registry.GTFluids.namespace(flEntry), path);
+                gregtech.content.registry.GTFluids.namespace(flEntry), path);
 //? if >=1.21.1 {
         /*Fluid fluid = BuiltInRegistries.FLUID.get(fluidId);
 *///?} else {

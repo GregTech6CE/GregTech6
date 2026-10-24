@@ -3,7 +3,7 @@ package gregtech.core;
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
 import gregtech.internal.prefix.PrefixRegistry;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.*;

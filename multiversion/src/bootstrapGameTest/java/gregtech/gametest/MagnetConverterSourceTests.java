@@ -3,14 +3,14 @@ package gregtech.gametest;
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
 import gregtech.internal.recipe.RecipeInputs;
-import gregtech.block.energy.*;
-import gregtech.blockentity.energy.EnergyNodeBlockEntity;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
-import gregtech.blockentity.machine.BoilerTankBlockEntity;
+import gregtech.content.block.energy.*;
+import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.blockentity.machine.BoilerTankBlockEntity;
 import gregtech.content.energy.OriginalMagnetCrafting;
 import gregtech.content.recipe.*;
-import gregtech.data.GregTechTags;
-import gregtech.item.GTToolItem;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.item.GTToolItem;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.*;
@@ -29,8 +29,8 @@ public final class MagnetConverterSourceTests {
     @GameTest(template="test_empty", timeoutTicks=100)
     public static void nativeBipolarMuReceiversStoppedResidualBufferAndLegacyControls(GameTestHelper h) {
         var polarizer = java.util.stream.StreamSupport.stream(BuiltInRegistries.BLOCK.spliterator(), false)
-                .filter(b -> b instanceof gregtech.block.machine.BasicMachineBlock)
-                .map(b -> (gregtech.block.machine.BasicMachineBlock)b)
+                .filter(b -> b instanceof gregtech.content.block.machine.BasicMachineBlock)
+                .map(b -> (gregtech.content.block.machine.BasicMachineBlock)b)
                 .filter(b -> b.basicSpec().machineName().equals("polarizer") && b.basicSpec().tier() == 1).findFirst().orElseThrow();
         int x = 3;
         for (String id : List.of("electromagnet_lv", "flux_magnet_lv")) {

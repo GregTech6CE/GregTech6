@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.block.tool.FluidAttachmentBlock;
+import gregtech.content.block.tool.FluidAttachmentBlock;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.item.*;
@@ -48,7 +48,7 @@ public final class FluidAttachmentInteractionTests {
         var tap=(FluidAttachmentBlock)block("tap");
         h.assertTrue(FluidAttachmentBlock.pourBelow(h.getLevel(),p,tap.access(source))&&source.getFluidAmount()==250,"one click transfers 250 L into porcelain cup");
         h.assertTrue(!FluidAttachmentBlock.pourBelow(h.getLevel(),p,tap.access(source))&&source.getFluidAmount()==250,"full cup consumes nothing");
-        var vessel=(gregtech.blockentity.tool.PortableContainerBlockEntity)h.getLevel().getBlockEntity(p.below());
+        var vessel=(gregtech.content.blockentity.tool.PortableContainerBlockEntity)h.getLevel().getBlockEntity(p.below());
         var contents=vessel.contents().getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.FLUID_HANDLER_ITEM).orElseThrow(IllegalStateException::new);
         h.assertTrue(contents.getFluidInTank(0).getAmount()==250,"picked-up vessel item contains same transferred fluid");h.succeed();
     }

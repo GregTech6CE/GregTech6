@@ -1,6 +1,6 @@
 package gregtech.content.tool;
 
-import gregtech.item.ElectricToolItem;
+import gregtech.content.item.ElectricToolItem;
 import net.minecraft.world.item.ItemStack;
 import java.util.function.IntUnaryOperator;
 

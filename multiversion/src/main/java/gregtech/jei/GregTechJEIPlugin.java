@@ -34,7 +34,7 @@ import java.util.Map;
 public final class GregTechJEIPlugin implements IModPlugin {
     @Override public void onRuntimeAvailable(mezz.jei.api.runtime.IJeiRuntime runtime) {
         var legacy = net.minecraft.core.registries.BuiltInRegistries.ITEM.stream()
-                .filter(item -> item instanceof gregtech.block.misc.LegacyConstructionBlockItem)
+                .filter(item -> item instanceof gregtech.content.block.misc.LegacyConstructionBlockItem)
                 .map(ItemStack::new).toList();
         runtime.getIngredientManager().removeIngredientsAtRuntime(mezz.jei.api.constants.VanillaTypes.ITEM_STACK, legacy);
     }
@@ -88,7 +88,7 @@ public final class GregTechJEIPlugin implements IModPlugin {
     @Override
     public void registerRecipeCatalysts(mezz.jei.api.registration.IRecipeCatalystRegistration registration) {
         for(var table:net.minecraft.core.registries.BuiltInRegistries.BLOCK)
-            if(table instanceof gregtech.block.misc.AdvancedCraftingTableBlock)
+            if(table instanceof gregtech.content.block.misc.AdvancedCraftingTableBlock)
                 registration.addRecipeCatalyst(new ItemStack(table),mezz.jei.api.constants.RecipeTypes.CRAFTING);
         for (var info : MultiblockInfoCategory.recipes())
             registration.addRecipeCatalyst(info.controller(), MultiblockInfoCategory.TYPE);
@@ -110,7 +110,7 @@ public final class GregTechJEIPlugin implements IModPlugin {
 /*        for(var entry:gregtech.platform.neoforge.fluid.FluidRegistries.allItems().toList()) if(entry.isBound())
             registration.registerSubtypeInterpreter(entry.get(),(stack,context) -> gregtech.internal.fluid.FluidDisplayBinding.subtype(net.minecraft.client.Minecraft.getInstance().level.registryAccess(),stack));
 *///?} else {
-        for(var entry:gregtech.registry.GTFluidItems.allEntries()) if(entry.isPresent())
+        for(var entry:gregtech.content.registry.GTFluidItems.allEntries()) if(entry.isPresent())
             registration.registerSubtypeInterpreter(entry.get(),(stack,context) -> gregtech.internal.fluid.FluidDisplayBinding.subtype(stack));
 //?}
 
@@ -154,7 +154,7 @@ public final class GregTechJEIPlugin implements IModPlugin {
         if (!net.minecraftforge.fml.ModList.get().isLoaded("emi"))
 //?}
 
-            registration.addRecipes(ToolAssemblyCategory.TYPE, gregtech.recipe.ToolAssemblyCatalog.build());
+            registration.addRecipes(ToolAssemblyCategory.TYPE, gregtech.content.recipe.ToolAssemblyCatalog.build());
         // EMI registers these same rows natively; keep JEI's bridge from duplicating them.
 
 //? if >=1.21.1 {

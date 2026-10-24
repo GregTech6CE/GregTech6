@@ -1,12 +1,12 @@
 package gregtech.gametest;
 
-import gregtech.block.energy.ElectricWireBlock;
-import gregtech.block.machine.LogisticsWireBlock;
-import gregtech.blockentity.machine.LogisticsWireBlockEntity;
+import gregtech.content.block.energy.ElectricWireBlock;
+import gregtech.content.block.machine.LogisticsWireBlock;
+import gregtech.content.blockentity.machine.LogisticsWireBlockEntity;
 import gregtech.content.logistics.LogisticsCoverType;
 import gregtech.content.logistics.LogisticsCpuDisplay;
-import gregtech.data.GregTechTags;
-import gregtech.registry.GTIconSetBlocks;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.registry.GTIconSetBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -70,7 +70,7 @@ public final class LogisticsCpuDisplayTests {
         var wallCell = gregtech.content.logistics.LogisticsCoreStructure.cells().stream()
                 .filter(cell -> cell.kind() == gregtech.content.logistics.LogisticsCoreStructure.Kind.WALL)
                 .findFirst().orElseThrow();
-        var port = (gregtech.blockentity.machine.MultiblockPortBlockEntity)
+        var port = (gregtech.content.blockentity.machine.MultiblockPortBlockEntity)
                 helper.getLevel().getBlockEntity(wallCell.at(core.getBlockPos(), Direction.NORTH));
         helper.assertTrue(port.doEnergyInjection(GregTechTags.Energy.EU, Direction.UP, 512, 2, true) == 2,
                 "galvanized wall powers CPU meter test");
@@ -99,7 +99,7 @@ public final class LogisticsCpuDisplayTests {
                         types[i] + " shows the previous pass and emits equal weak/direct power");
             }
             var saved = testedCore.saveWithoutMetadata();
-            var restored = new gregtech.blockentity.machine.LogisticsCoreControllerBlockEntity(
+            var restored = new gregtech.content.blockentity.machine.LogisticsCoreControllerBlockEntity(
                     testedCore.getBlockPos(), testedCore.getBlockState());
             restored.load(saved);
             helper.assertTrue(restored.logisticsCovers().displayVisual(Direction.UP) == 10

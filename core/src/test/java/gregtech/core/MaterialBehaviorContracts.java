@@ -7,10 +7,10 @@ import gregtech.internal.material.*;
 import gregtech.internal.mod.ModData;
 import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.content.material.Materials;
-import gregtech.data.GregTechConstants;
-import gregtech.data.MaterialPrefix;
-import gregtech.data.ModReferences;
-import gregtech.data.generated.GT6Materials;
+import gregtech.content.data.GregTechConstants;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.data.ModReferences;
+import gregtech.content.data.generated.GT6Materials;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.*;
@@ -79,15 +79,15 @@ public final class MaterialBehaviorContracts {
         // Same domain holder order as Loader_Data, excluding its game-only tables.
         PrefixRegistry.ensurePrefixesLoaded();
         ModReferences.UNKNOWN.getClass();
-        gregtech.data.MaterialGroups.Glowstone.getClass();
+        gregtech.content.data.MaterialGroups.Glowstone.getClass();
         GTMaterialRegistry.init();
         for(var type:gregtech.internal.tool.ToolDefinition.values())
             check(gregtech.content.tool.OriginalToolFlags.of(type.name())!=null,"Every native Nexus tool has its source classification: "+type);
         for(var tool:gregtech.content.tool.ElectricToolCatalog.ALL)
             check(gregtech.content.tool.OriginalToolFlags.of(tool.original())!=null,"Every powered Nexus tool has its source classification: "+tool.id());
         check(gregtech.content.tool.MaterialToolEnchantments.ammunition(GTMaterialRegistry.get("DarkMatter")).getOrDefault("looting",0)==6,"Source ammunition uses Ammo looting, twice its Weapons level");
-        check(gregtech.data.MaterialPrefix.stickLong.isValidFor(GTMaterialRegistry.get("Obsidian")), "source miniature Nether recipe has its Obsidian long rod form");
-        check(gregtech.data.MaterialPrefix.stickLong.isValidFor(GTMaterialRegistry.get("Endstone")), "source miniature End recipe has its Endstone long rod form");
+        check(gregtech.content.data.MaterialPrefix.stickLong.isValidFor(GTMaterialRegistry.get("Obsidian")), "source miniature Nether recipe has its Obsidian long rod form");
+        check(gregtech.content.data.MaterialPrefix.stickLong.isValidFor(GTMaterialRegistry.get("Endstone")), "source miniature End recipe has its Endstone long rod form");
 
         check(GTMaterialRegistry.registrationPhase() == GTMaterialRegistry.RegistrationPhase.READY,
                 "The complete directory must finish linking");
@@ -157,8 +157,8 @@ public final class MaterialBehaviorContracts {
     }
 
     private static void validateRecipeMapPresentation() throws Exception {
-        var maps=new ArrayList<>(gregtech.data.MachineRecipeMapDefinitions.all());
-        for(var field:gregtech.data.FuelRecipeMapDefinitions.class.getFields())
+        var maps=new ArrayList<>(gregtech.content.data.MachineRecipeMapDefinitions.all());
+        for(var field:gregtech.content.data.FuelRecipeMapDefinitions.class.getFields())
             if(field.getType()==gregtech.internal.recipe.RecipeMapSpec.class)maps.add((gregtech.internal.recipe.RecipeMapSpec)field.get(null));
         var expected=new HashMap<String,String[]>();
         try(var stream=MaterialBehaviorContracts.class.getResourceAsStream("/recipe-map-presentation-source.tsv");

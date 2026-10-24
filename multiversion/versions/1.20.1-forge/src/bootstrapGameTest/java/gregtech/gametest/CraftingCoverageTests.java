@@ -2,8 +2,8 @@ package gregtech.gametest;
 
 import gregtech.internal.recipe.Recipe;
 import gregtech.internal.recipe.RecipeMap;
-import gregtech.registry.GTTechnological;
-import gregtech.registry.GTToolItems;
+import gregtech.content.registry.GTTechnological;
+import gregtech.content.registry.GTToolItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

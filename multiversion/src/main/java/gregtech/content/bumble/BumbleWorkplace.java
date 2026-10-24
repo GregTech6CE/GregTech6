@@ -1,16 +1,16 @@
 package gregtech.content.bumble;
 
-import gregtech.block.IconSetPlantBlock;
+import gregtech.content.block.IconSetPlantBlock;
 
 //? if >=1.21.1 {
 //?} else {
-import gregtech.block.misc.DiggableBlock;
+import gregtech.content.block.misc.DiggableBlock;
 //?}
-import gregtech.block.plant.BedrockFlowerBlock;
-import gregtech.block.stone.GTStoneBlock;
-import gregtech.block.stone.StoneVariantFlags;
-import gregtech.block.wood.TreeHoleBlock;
-import gregtech.block.wood.WoodSpecies;
+import gregtech.content.block.plant.BedrockFlowerBlock;
+import gregtech.content.block.stone.GTStoneBlock;
+import gregtech.content.block.stone.StoneVariantFlags;
+import gregtech.content.block.wood.TreeHoleBlock;
+import gregtech.content.block.wood.WoodSpecies;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;

@@ -4,7 +4,7 @@ package gregtech.internal.energy;
 
 import gregtech.GregTechConfig;
 import gregtech.content.energy.OriginalRotaryConverter;
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;

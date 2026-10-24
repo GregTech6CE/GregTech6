@@ -3,11 +3,12 @@ package gregtech.gametest;
 import gregtech.internal.energy.FaceConfig;
 import gregtech.api.machine.*;
 import gregtech.internal.machine.*;
+import gregtech.internal.machine.*;
 import gregtech.internal.tool.*;
-import gregtech.blockentity.machine.*;
+import gregtech.content.blockentity.machine.*;
 import gregtech.content.multiblock.*;
-import gregtech.data.GregTechTags;
-import gregtech.registry.*;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.registry.*;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.nbt.CompoundTag;
@@ -148,7 +149,7 @@ public final class AxialGeneratorTests {
             var recipe=manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","axial/"+entry.getId().getPath()));
             h.assertTrue(recipe.isPresent(),"manufacturing recipe loads: "+entry.getId());
             var wall=AxialGeneratorDefinitions.grade(entry.get()).wall().asItem();
-            h.assertTrue(gregtech.data.MachineRecipeMaps.Welder.mRecipeList.stream().anyMatch(r->r.mOutputs.length==1&&r.mOutputs[0].is(wall)),"JEI's canonical wall has a welding route");
+            h.assertTrue(gregtech.content.data.MachineRecipeMaps.Welder.mRecipeList.stream().anyMatch(r->r.mOutputs.length==1&&r.mOutputs[0].is(wall)),"JEI's canonical wall has a welding route");
             h.assertTrue(recipe.get().getIngredients().stream().allMatch(ingredient->ingredient.isEmpty()||ingredient.getItems().length>0),"all ingredients resolve");
         }
         for(var entry:GasTurbineDefinitions.blocks())h.assertTrue(manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","axial/"+entry.getId().getPath())).isPresent(),"gas turbine upgrade route");
@@ -159,14 +160,14 @@ public final class AxialGeneratorTests {
             h.assertTrue(manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","axial/block_plate_"+material)).isPresent(),"rotor plate packing loads");
             h.assertTrue(manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","axial/unpack_"+material+"_plates")).isPresent(),"rotor plate unpacking loads");
         }
-        var recipe=(gregtech.recipe.ToolShapedRecipe)manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","axial/large_dynamo_main")).orElseThrow();
+        var recipe=(gregtech.content.recipe.ToolShapedRecipe)manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","axial/large_dynamo_main")).orElseThrow();
         var menu=new net.minecraft.world.inventory.AbstractContainerMenu(null,0) {
             @Override public ItemStack quickMoveStack(net.minecraft.world.entity.player.Player player,int slot){return ItemStack.EMPTY;}
             @Override public boolean stillValid(net.minecraft.world.entity.player.Player player){return true;}
         };
         var inventory=new net.minecraft.world.inventory.TransientCraftingContainer(menu,3,3);
         for(int slot=0;slot<9;slot++) {var ingredient=recipe.getIngredients().get(slot);if(!ingredient.isEmpty())inventory.setItem(slot,ingredient.getItems()[0].copy());}
-        var wrench=gregtech.item.GTToolItem.create(GTToolType.WRENCH,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
+        var wrench=gregtech.content.item.GTToolItem.create(GTToolType.WRENCH,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
         inventory.setItem(1,wrench);h.assertTrue(recipe.matches(inventory,h.getLevel()),"usable wrench matches original pattern");
         var remaining=recipe.getRemainingItems(inventory);h.assertTrue(remaining.get(1).getDamageValue()==800&&wrench.getDamageValue()==0,"wrench returned with original 800 wear, input untouched");
         wrench.setDamageValue(wrench.getMaxDamage());h.assertTrue(!recipe.matches(inventory,h.getLevel()),"broken wrench cannot craft");

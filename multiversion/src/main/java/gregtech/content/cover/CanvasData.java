@@ -18,7 +18,7 @@ public final class CanvasData {
     }
 
     public static boolean isCanvas(ItemStack stack) {
-        return stack.getItem() instanceof gregtech.item.CanvasItem;
+        return stack.getItem() instanceof gregtech.content.item.CanvasItem;
     }
 
     public static boolean hasImage(ItemStack stack) {
@@ -97,12 +97,12 @@ public final class CanvasData {
                 var property = state.getBlock().getStateDefinition().getProperty(key);
                 if (property != null) state = set(state, property, properties.getString(key));
             }
-            if (item.getBlock() instanceof gregtech.block.misc.ColoredConstructionBlock)
-            state = gregtech.block.misc.FixedConstructionColor.recolor(state,
-                    gregtech.block.misc.ColoredConstructionBlock.itemColor(stack));
-            if (item.getBlock() instanceof gregtech.block.misc.ColoredGlassBlock)
-            state = gregtech.block.misc.FixedConstructionColor.recolor(state,
-                    gregtech.block.misc.ColoredGlassBlock.itemColor(stack));
+            if (item.getBlock() instanceof gregtech.content.block.misc.ColoredConstructionBlock)
+            state = gregtech.content.block.misc.FixedConstructionColor.recolor(state,
+                    gregtech.content.block.misc.ColoredConstructionBlock.itemColor(stack));
+            if (item.getBlock() instanceof gregtech.content.block.misc.ColoredGlassBlock)
+            state = gregtech.content.block.misc.FixedConstructionColor.recolor(state,
+                    gregtech.content.block.misc.ColoredGlassBlock.itemColor(stack));
         }
         return state == null ? null : fromState(state);
     }

@@ -5,7 +5,7 @@ import gregtech.internal.material.ItemMaterialRegistry;
 import gregtech.client.CommonBlockTooltips;
 import gregtech.content.machine.MachineConstructionMaterials;
 import gregtech.content.multiblock.OriginalUtilityControllerData;
-import gregtech.data.BlockHarvestPolicy;
+import gregtech.content.data.BlockHarvestPolicy;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -104,11 +104,11 @@ final class UtilityControllerDeliveryChecks {
         return result;
     }
     private static void verifyHotFluidModels() {
-        var map=gregtech.data.FuelRecipeMaps.Hot;
+        var map=gregtech.content.data.FuelRecipeMaps.Hot;
         int checked=0;
         for(var row:gregtech.content.recipe.OriginalFuelRecipeRows.ROWS) {
             if(!row.kind().equals("hot"))continue;
-            var input=gregtech.registry.GTFluids.stack(row.input(),1);
+            var input=gregtech.content.registry.GTFluids.stack(row.input(),1);
             require(input!=null&&!input.isEmpty(),"Installed hot fluid "+row.input());
             var matches=map.mRecipeList.stream().filter(r->r.mFluidInputs.length==1&&r.mFluidInputs[0].getFluid()==input.getFluid()).toList();
             require(matches.size()==1&&matches.get(0).mEUt==-row.eut()&&matches.get(0).mDuration==row.duration(),
@@ -117,8 +117,8 @@ final class UtilityControllerDeliveryChecks {
         }
         require(checked==16,"All original hot recipe rows installed");
         for(String key:List.of("Lava_Pahoehoe","Lava_Volcanic","Lava_Pure")) {
-            var entry=gregtech.data.RegisteredFluids.get(key);
-            var fluid=gregtech.registry.GTFluids.stack(key,1);
+            var entry=gregtech.content.data.RegisteredFluids.get(key);
+            var fluid=gregtech.content.registry.GTFluids.stack(key,1);
             require(fluid!=null&&!fluid.isEmpty()&&fluid.getFluid()!=net.minecraft.world.level.material.Fluids.LAVA,
                     "Distinct installed lava identity "+key);
             var id=ResourceLocation.parse("gt6ce:fluid_item_"+entry.registryName());
@@ -131,7 +131,7 @@ final class UtilityControllerDeliveryChecks {
         }
     }
     private static void verifyHeatFaces(net.minecraft.world.level.block.Block block) {
-        var facing=gregtech.block.machine.LargeHeatExchangerControllerBlock.FACING;
+        var facing=gregtech.content.block.machine.LargeHeatExchangerControllerBlock.FACING;
         require(block.defaultBlockState().getValue(facing)==net.minecraft.core.Direction.DOWN,"Original heat front is fixed at bottom");
         for(var direction:net.minecraft.core.Direction.values()) {
             var state=block.defaultBlockState().setValue(facing,direction);

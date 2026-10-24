@@ -2,8 +2,8 @@ package gregtech.integration.client;
 
 import com.google.gson.*;
 import gregtech.content.cover.*;
-import gregtech.blockentity.machine.*;
-import gregtech.blockentity.inventory.MetalChestBlockEntity;
+import gregtech.content.blockentity.machine.*;
+import gregtech.content.blockentity.inventory.MetalChestBlockEntity;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -44,18 +44,18 @@ final class NewIssuesRuntimeSmoke {
         var actor=net.minecraftforge.common.util.FakePlayerFactory.get(level,new com.mojang.authlib.GameProfile(UUID.fromString("3c4f7d46-1316-4c7e-a240-d0c32aab4158"),"IssuesCheckpoint"));
 //?}
         actor.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);actor.moveTo(224.5,235,227.5);actor.getInventory().clearContent();
-        var rock=gregtech.registry.GTItems.getStack(gregtech.data.MaterialPrefix.rockGt,gregtech.internal.material.GTMaterialRegistry.get("GraniteBlack"),3);
+        var rock=gregtech.content.registry.GTItems.getStack(gregtech.content.data.MaterialPrefix.rockGt,gregtech.internal.material.GTMaterialRegistry.get("GraniteBlack"),3);
         int placed=0;
         for(var collected:List.of(rock,new ItemStack(Items.RAW_COPPER,3))){
             require(!collected.isEmpty(),"missing rock fixture");level.setBlock(pos,Blocks.AIR.defaultBlockState(),3);level.setBlock(pos.below(),Blocks.STONE.defaultBlockState(),3);
             actor.setShiftKeyDown(true);actor.setItemInHand(InteractionHand.MAIN_HAND,collected);
             var hit=new BlockHitResult(Vec3.atCenterOf(pos.below()),Direction.UP,pos.below(),false);
-            var result=gregtech.block.misc.PilePlacementHandler.tryPlace(level,actor,InteractionHand.MAIN_HAND,hit);
+            var result=gregtech.content.block.misc.PilePlacementHandler.tryPlace(level,actor,InteractionHand.MAIN_HAND,hit);
             require(result.consumesAction()&&collected.getCount()==2,"sneak rock placement/count "+collected);
             var drops=Block.getDrops(level.getBlockState(pos),level,pos,level.getBlockEntity(pos));
             require(drops.size()==1&&drops.get(0).is(collected.getItem())&&drops.get(0).getCount()==1,"rock placement rerolled contents/ore bonus");
             actor.setShiftKeyDown(false);
-            require(gregtech.block.misc.PilePlacementHandler.tryPlace(level,actor,InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.PASS,"non-sneak replacement");placed++;
+            require(gregtech.content.block.misc.PilePlacementHandler.tryPlace(level,actor,InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.PASS,"non-sneak replacement");placed++;
         }
         receipt.addProperty("collectedRockPlacements",placed);
         actor.setItemInHand(InteractionHand.MAIN_HAND,ItemStack.EMPTY);
@@ -88,7 +88,7 @@ final class NewIssuesRuntimeSmoke {
         ComponentCoverRuntime.tick(tank,Direction.EAST,45);require(tank.getFluidInTank(0).getAmount()==1000,"paused pump moved");
         tank.removeCover(Direction.DOWN);tank.panels().beforeTick();require(!tank.panels().stopped(),"controller removal remains paused");
         receipt.addProperty("pumpNativeChecks",9);
-        var chestBlock=BuiltInRegistries.BLOCK.stream().filter(b->b instanceof gregtech.block.inventory.MetalChestBlock).findFirst().orElseThrow();
+        var chestBlock=BuiltInRegistries.BLOCK.stream().filter(b->b instanceof gregtech.content.block.inventory.MetalChestBlock).findFirst().orElseThrow();
         place(level,pos,chestBlock);place(level,target,Blocks.CHEST);
         var chest=(MetalChestBlockEntity)level.getBlockEntity(pos);var own=chest.componentItems(Direction.EAST);var other=items(level,target,Direction.WEST);
         own.insertItem(0,new ItemStack(Items.DIAMOND,64),false);own.insertItem(1,new ItemStack(Items.EMERALD,32),false);
@@ -114,31 +114,31 @@ final class NewIssuesRuntimeSmoke {
         require(chest.componentItems(Direction.EAST).getStackInSlot(0).getCount()==17&&ComponentCoverRuntime.slot(chest.getCover(Direction.EAST))==-4,"chest update packet erases contents");
         receipt.addProperty("conveyorArmNativeChecks",8);
         var coverFace=new BlockHitResult(Vec3.atCenterOf(pos),Direction.EAST,pos,false);
-        actor.setItemInHand(InteractionHand.MAIN_HAND,gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.SCREWDRIVER,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Spruce")));
+        actor.setItemInHand(InteractionHand.MAIN_HAND,gregtech.content.item.GTToolItem.create(gregtech.internal.tool.GTToolType.SCREWDRIVER,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Spruce")));
         actor.setShiftKeyDown(false);require(ComponentCoverInteraction.use(chest,actor,InteractionHand.MAIN_HAND,coverFace).consumesAction(),"arm screw action");
         require(ComponentCoverRuntime.slot(chest.getCover(Direction.EAST))==-3,"arm screw increment");
         actor.setShiftKeyDown(true);ComponentCoverInteraction.use(chest,actor,InteractionHand.MAIN_HAND,coverFace);
         require(ComponentCoverRuntime.slot(chest.getCover(Direction.EAST))==-4,"arm sneak decrement");actor.setShiftKeyDown(false);
-        actor.setItemInHand(InteractionHand.MAIN_HAND,gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.MONKEY_WRENCH,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Spruce")));
+        actor.setItemInHand(InteractionHand.MAIN_HAND,gregtech.content.item.GTToolItem.create(gregtech.internal.tool.GTToolType.MONKEY_WRENCH,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Spruce")));
         ComponentCoverInteraction.use(chest,actor,InteractionHand.MAIN_HAND,coverFace);require(ComponentCoverRuntime.visual(chest.getCover(Direction.EAST))==0,"arm monkey direction");
-        actor.setItemInHand(InteractionHand.MAIN_HAND,gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.WRENCH,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Spruce")));
+        actor.setItemInHand(InteractionHand.MAIN_HAND,gregtech.content.item.GTToolItem.create(gregtech.internal.tool.GTToolType.WRENCH,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Spruce")));
         var facing=chest.getBlockState();require(ComponentCoverInteraction.use(chest,actor,InteractionHand.MAIN_HAND,coverFace).consumesAction()&&chest.getBlockState().equals(facing),"cover wrench rotates host");
-        actor.setItemInHand(InteractionHand.MAIN_HAND,gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.CROWBAR,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Spruce")));
+        actor.setItemInHand(InteractionHand.MAIN_HAND,gregtech.content.item.GTToolItem.create(gregtech.internal.tool.GTToolType.CROWBAR,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Spruce")));
         ComponentCoverInteraction.use(chest,actor,InteractionHand.MAIN_HAND,coverFace);require(chest.getCover(Direction.EAST).isEmpty(),"crowbar cannot remove component");
         receipt.addProperty("componentToolInteractions",5);
 
         int fluidPipes=0,itemPipes=0,machines=0,batteries=0;
         for(var b:BuiltInRegistries.BLOCK){
             if(!BuiltInRegistries.BLOCK.getKey(b).getNamespace().equals("gt6ce"))continue;
-            if(b instanceof gregtech.block.machine.FluidPipeBlock&&fluidPipes==0){
+            if(b instanceof gregtech.content.block.machine.FluidPipeBlock&&fluidPipes==0){
                 place(level,pos,b);var pipe=(FluidPipeBlockEntity)level.getBlockEntity(pos);
                 require(pipe.attachCover(Direction.EAST,pump),"fluid pipe pump attach");require(ComponentCoverRuntime.visual(pipe.getCover(Direction.EAST))==1,"pipe must force input");
                 require(!pipe.attachCover(Direction.WEST,item("compact_electric_conveyor_ulv")),"item cover on inventory-less pipe");fluidPipes++;
-            }else if(b instanceof gregtech.block.machine.ItemPipeBlock&&itemPipes==0){
+            }else if(b instanceof gregtech.content.block.machine.ItemPipeBlock&&itemPipes==0){
                 place(level,pos,b);var pipe=(ItemPipeBlockEntity)level.getBlockEntity(pos);
                 require(pipe.attachCover(Direction.EAST,item("compact_robot_arm_xv")),"item pipe robot attach");
                 require(ComponentCoverRuntime.visual(pipe.getCover(Direction.EAST))==1&&ComponentCoverRuntime.slot(pipe.getCover(Direction.EAST))==-1,"pipe arm source slot");itemPipes++;
-            }else if(b instanceof gregtech.block.machine.BasicMachineBlock&&machines==0){
+            }else if(b instanceof gregtech.content.block.machine.BasicMachineBlock&&machines==0){
                 place(level,pos,b);var machine=(BasicMachineBlockEntity)level.getBlockEntity(pos);
                 if(machine.componentItems(Direction.EAST).getSlots()>0){require(machine.attachCover(Direction.EAST,item("compact_electric_conveyor_xv")),"basic machine conveyor attach");machines++;}
             }
@@ -205,7 +205,7 @@ final class NewIssuesRuntimeSmoke {
         require(faces>=30,"missing generic native hosts");
         place(level,pos,Blocks.CHEST);var vanilla=(PanelCoverHost)level.getBlockEntity(pos);
         require(!vanilla.attachCover(Direction.EAST,item("compact_electric_conveyor_xv")),"vanilla chest accepted GT cover");
-        var hopperBlock=BuiltInRegistries.BLOCK.stream().filter(b->b.getClass()==gregtech.block.machine.HopperBlock.class).findFirst().orElseThrow();
+        var hopperBlock=BuiltInRegistries.BLOCK.stream().filter(b->b.getClass()==gregtech.content.block.machine.HopperBlock.class).findFirst().orElseThrow();
         place(level,pos,hopperBlock);place(level,pos.north(),Blocks.CHEST);
         var owner=level.getBlockEntity(pos);var host=(PanelCoverHost)owner;
         require(ComponentCoverFallback.uses(owner)&&ComponentCoverFallback.eligible(owner),"hopper fallback not selected");
@@ -270,13 +270,13 @@ final class NewIssuesRuntimeSmoke {
             String key=null;
             if(nativeItem instanceof gregtech.internal.material.MaterialFormItem form)
                 key="oredict."+form.getPrefix().getName()+form.getMaterial().getName();
-            else if(nativeItem instanceof BlockItem blockItem && blockItem.getBlock() instanceof gregtech.block.MaterialBlockLike form)
+            else if(nativeItem instanceof BlockItem blockItem && blockItem.getBlock() instanceof gregtech.content.block.MaterialBlockLike form)
                 key="oredict."+form.prefix().getName()+form.material().getName();
             if(key!=null&&entries.has(key)){
                 require(new ItemStack(nativeItem).getHoverName().getString().equals(language.getOrDefault(key)),"native material form ignores source name "+key);forms++;
             }
         }
-        for(var b:BuiltInRegistries.BLOCK)if(b instanceof gregtech.block.stone.GTStoneBlock||b instanceof gregtech.block.stone.GTStoneSlabBlock){
+        for(var b:BuiltInRegistries.BLOCK)if(b instanceof gregtech.content.block.stone.GTStoneBlock||b instanceof gregtech.content.block.stone.GTStoneSlabBlock){
             var key=b.getDescriptionId();require(entries.has(key),"missing typed stone name "+key);require(new ItemStack(b).getHoverName().getString().equals(entries.get(key).getAsString()),"stone item name still generic "+key);stones++;
         }
         for(var key:entries.keySet())if(key.startsWith("itemGroup.gt6ce.")){require(language.has(key),"missing native tab "+key);tabs++;}

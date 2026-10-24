@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
-import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.internal.recipe.*;
 import gregtech.internal.fluid.FluidTankGT;
 import gregtech.internal.machine.AdjacentCapabilityCache;
-import gregtech.blockentity.machine.*;
-import gregtech.registry.GTFluids;
+import gregtech.content.blockentity.machine.*;
+import gregtech.content.registry.GTFluids;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.*;
@@ -207,7 +207,7 @@ public final class MachinePerformanceTests {
         var map = map();
         try {
             var pos = new BlockPos(2, 2, 2);
-            var block = (gregtech.block.machine.BasicMachineBlock) block("sluice_bronze");
+            var block = (gregtech.content.block.machine.BasicMachineBlock) block("sluice_bronze");
             h.setBlock(pos, block);
             h.setBlock(pos.above(), Blocks.CHEST);
             h.setBlock(pos.below(), Blocks.CHEST);
@@ -215,7 +215,7 @@ public final class MachinePerformanceTests {
             var source = (net.minecraft.world.Container) h.getBlockEntity(pos.above());
             var target = (net.minecraft.world.Container) h.getBlockEntity(pos.below());
             machine.setSpec(gregtech.internal.machine.BasicMachineSpec.builder("performance_fixture", block.basicSpec().material())
-                    .machineType("sluice").energy(gregtech.data.GregTechTags.Energy.TU, 1).energyRange(1, 1)
+                    .machineType("sluice").energy(gregtech.content.data.GregTechTags.Energy.TU, 1).energyRange(1, 1)
                     .processingEfficiency(10000).parallel(1).recipes(map)
                     .faces(new gregtech.internal.energy.FaceConfig(63, 63, 63, 63, 0, 0, 1, 0, -1, -1)).build());
             map.add(new Recipe(new ItemStack[]{new ItemStack(Items.COBBLESTONE)}, new ItemStack[]{new ItemStack(Items.STICK, 4)},

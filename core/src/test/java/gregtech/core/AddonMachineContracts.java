@@ -1,10 +1,10 @@
 package gregtech.core;
 
 import gregtech.api.addon.AddonMachine;
-import gregtech.api.addon.BehaviorEnergyRules;
+import gregtech.internal.addon.BehaviorEnergyRules;
 import gregtech.api.addon.BehaviorMachine;
-import gregtech.api.addon.BehaviorRecipeCatalysts;
-import gregtech.api.addon.AddonOverclock;
+import gregtech.internal.addon.BehaviorRecipeCatalysts;
+import gregtech.internal.addon.AddonOverclock;
 import gregtech.api.addon.AddonMachineContributor;
 import gregtech.api.addon.AddonMachineDefinition;
 import gregtech.api.addon.CellMatch;
@@ -33,7 +33,7 @@ import gregtech.api.addon.PartSlots;
 import gregtech.api.addon.IoTarget;
 import gregtech.api.addon.MachineFace;
 import gregtech.api.addon.GregTechMachineContributor;
-import gregtech.api.machine.BasicMachineEnergy;
+import gregtech.internal.machine.BasicMachineEnergy;
 import gregtech.internal.machine.BasicMachineParameters;
 import gregtech.internal.machine.MachineControllerKind;
 import gregtech.internal.material.GTMaterialRegistry;
@@ -44,8 +44,8 @@ import gregtech.internal.recipe.RecipeMapSpec;
 import gregtech.content.multiblock.LargeMachineProcessingRules;
 import gregtech.content.multiblock.SharedLargeMachineLayouts;
 import gregtech.content.multiblock.SharedLargeMachineParts;
-import gregtech.data.GregTechTags;
-import gregtech.data.ModReferences;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.data.ModReferences;
 
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -1058,7 +1058,7 @@ public final class AddonMachineContracts {
         GTMaterialRegistry.setLogSink((warning, message) -> {});
         PrefixRegistry.ensurePrefixesLoaded();
         ModReferences.UNKNOWN.getClass();
-        gregtech.data.MaterialGroups.Glowstone.getClass();
+        gregtech.content.data.MaterialGroups.Glowstone.getClass();
     }
 
     private static void expectThrows(Class<? extends Throwable> expected, Runnable action, String... parts) {

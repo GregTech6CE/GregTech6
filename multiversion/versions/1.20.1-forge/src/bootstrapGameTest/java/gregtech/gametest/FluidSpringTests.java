@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
-import gregtech.blockentity.FluidSpringBlockEntity;
-import gregtech.registry.GTBlockEntities;
-import gregtech.registry.GTDecorBlocks;
-import gregtech.worldgen.GTFeatures;
-import gregtech.worldgen.GTFluidSpringsFeature;
+import gregtech.content.blockentity.FluidSpringBlockEntity;
+import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTDecorBlocks;
+import gregtech.content.worldgen.GTFeatures;
+import gregtech.content.worldgen.GTFluidSpringsFeature;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;
@@ -95,7 +95,7 @@ public final class FluidSpringTests {
                 problems.add(spring.name() + ": the spring was not placed");
                 continue;
             }
-            var springBlock = gregtech.registry.GTFluidSprings.byFluid(spring.fluidId());
+            var springBlock = gregtech.content.registry.GTFluidSprings.byFluid(spring.fluidId());
             if (!level.getBlockState(pos).is(springBlock)) {
                 problems.add(spring.name() + ": fluid_spring block missing");
                 continue;

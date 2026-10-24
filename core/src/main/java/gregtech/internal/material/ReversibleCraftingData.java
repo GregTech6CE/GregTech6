@@ -2,8 +2,8 @@
  * Adapted from CR.shaped, OreDictItemData and OreDictManager.setItemData_. */
 package gregtech.internal.material;
 
-import gregtech.data.MaterialGroups;
-import gregtech.data.generated.GT6Materials;
+import gregtech.content.data.MaterialGroups;
+import gregtech.content.data.generated.GT6Materials;
 import java.util.*;
 
 /** CR.REV: sum known consumed inputs, then divide each component by the output count. */

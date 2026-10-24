@@ -1,12 +1,12 @@
 package gregtech.content.recipe;
 
 import gregtech.internal.recipe.Recipe;
-import gregtech.block.stone.StoneType;
-import gregtech.block.stone.StoneVariant;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.GTBlocks;
-import gregtech.registry.GTItems;
+import gregtech.content.block.stone.StoneType;
+import gregtech.content.block.stone.StoneVariant;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTBlocks;
+import gregtech.content.registry.GTItems;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;

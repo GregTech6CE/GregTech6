@@ -1,6 +1,6 @@
 package gregtech.platform.neoforge.smeltery;
 
-import gregtech.data.GregTechConstants;
+import gregtech.content.data.GregTechConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;

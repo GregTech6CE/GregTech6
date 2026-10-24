@@ -7,20 +7,20 @@ import gregtech.internal.machine.MachineRegistry;
 //?}
 import gregtech.internal.recipe.Recipe;
 //? if >=1.21.1 {
-/*import gregtech.blockentity.machine.BasicMachineBlockEntity;
+/*import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 *///?} else {
 //?}
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 //? if >=1.21.1 {
 /**///?} else {
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 //?}
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.data.MachineRecipeMaps;
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.machine.BasicMachineRegistries;
 *///?} else {
 //?}
-import gregtech.recipe.MachineRecipeOverlay;
+import gregtech.content.recipe.MachineRecipeOverlay;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
@@ -131,11 +131,11 @@ public final class MachineRecipeOverlayTests {
                         net.minecraft.world.item.crafting.Ingredient.of(Items.JIGSAW), new ItemStack(Items.DIAMOND), 0, 200)));
         if (mode != 0) {
             rows.add(new net.minecraft.world.item.crafting.RecipeHolder<>(ids.withSuffix("_remove_a"),
-                    gregtech.recipe.MachineDatapackRecipe.removal(clear)));
+                    gregtech.content.recipe.MachineDatapackRecipe.removal(clear)));
             rows.add(new net.minecraft.world.item.crafting.RecipeHolder<>(ids.withSuffix("_remove_b"),
-                    gregtech.recipe.MachineDatapackRecipe.removal(removed)));
+                    gregtech.content.recipe.MachineDatapackRecipe.removal(removed)));
             rows.add(new net.minecraft.world.item.crafting.RecipeHolder<>(ids.withSuffix("_add"),
-                    gregtech.recipe.MachineDatapackRecipe.addition(added)));
+                    gregtech.content.recipe.MachineDatapackRecipe.addition(added)));
         }
 *///?} else {
         var rows = new ArrayList<net.minecraft.world.item.crafting.Recipe<?>>(server.getRecipeManager().getRecipes());
@@ -146,9 +146,9 @@ public final class MachineRecipeOverlayTests {
                 net.minecraft.world.item.crafting.CookingBookCategory.MISC,
                 net.minecraft.world.item.crafting.Ingredient.of(Items.JIGSAW), new ItemStack(Items.DIAMOND), 0, 200));
         if (mode != 0) {
-            rows.add(gregtech.recipe.MachineDatapackRecipe.removal(ids.withSuffix("_remove_a"), clear));
-            rows.add(gregtech.recipe.MachineDatapackRecipe.removal(ids.withSuffix("_remove_b"), removed));
-            rows.add(gregtech.recipe.MachineDatapackRecipe.addition(ids.withSuffix("_add"), added));
+            rows.add(gregtech.content.recipe.MachineDatapackRecipe.removal(ids.withSuffix("_remove_a"), clear));
+            rows.add(gregtech.content.recipe.MachineDatapackRecipe.removal(ids.withSuffix("_remove_b"), removed));
+            rows.add(gregtech.content.recipe.MachineDatapackRecipe.addition(ids.withSuffix("_add"), added));
         }
 //?}
         manager.replaceRecipes(rows);

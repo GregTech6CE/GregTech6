@@ -1,10 +1,10 @@
 package gregtech.content.recipe;
 
-import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.internal.recipe.*;
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.data.*;
-import gregtech.registry.*;
+import gregtech.content.data.*;
+import gregtech.content.registry.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.material.Fluids;
@@ -126,7 +126,7 @@ public final class DyeProcessingRecipes {
     }
     private static ItemStack colored(String id,net.minecraft.world.item.DyeColor color,int count){
         var block=((net.minecraft.world.item.BlockItem)item("gt6ce:"+id,1).getItem()).getBlock();
-        var stack=gregtech.block.misc.ConcreteBlock.coloredItem(block,color);stack.setCount(count);return stack;
+        var stack=gregtech.content.block.misc.ConcreteBlock.coloredItem(block,color);stack.setCount(count);return stack;
     }
     private static ItemStack item(String id,int count){
 //? if >=1.21.1 {

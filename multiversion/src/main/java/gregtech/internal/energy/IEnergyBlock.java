@@ -1,6 +1,6 @@
 package gregtech.internal.energy;
 
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 
 import javax.annotation.Nullable;
 import java.util.Collection;

@@ -1,6 +1,6 @@
 package gregtech.content.nuclear;
 import gregtech.internal.tool.*;
-import gregtech.blockentity.energy.ReactorCoreBlockEntity;
+import gregtech.content.blockentity.energy.ReactorCoreBlockEntity;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.chat.Component;

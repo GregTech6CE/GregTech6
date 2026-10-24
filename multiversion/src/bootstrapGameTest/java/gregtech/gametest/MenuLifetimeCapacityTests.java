@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.block.misc.AdvancedCraftingTableBlockEntity;
-import gregtech.blockentity.energy.EnergyNodeBlockEntity;
-import gregtech.blockentity.inventory.DrawerQuadBlockEntity;
-import gregtech.blockentity.machine.BehaviorMachineBlockEntity;
+import gregtech.content.block.misc.AdvancedCraftingTableBlockEntity;
+import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
+import gregtech.content.blockentity.inventory.DrawerQuadBlockEntity;
+import gregtech.content.blockentity.machine.BehaviorMachineBlockEntity;
 import gregtech.client.gui.AdvancedCraftingMenu;
 import gregtech.client.gui.BehaviorMachineMenu;
 import com.mojang.authlib.GameProfile;

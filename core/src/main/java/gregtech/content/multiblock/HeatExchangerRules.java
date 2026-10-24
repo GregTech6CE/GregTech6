@@ -3,7 +3,7 @@
 package gregtech.content.multiblock;
 
 import java.math.BigInteger;
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 
 public final class HeatExchangerRules {
 

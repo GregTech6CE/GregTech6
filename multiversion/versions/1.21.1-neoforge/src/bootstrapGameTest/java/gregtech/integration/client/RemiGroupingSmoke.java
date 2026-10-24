@@ -96,8 +96,8 @@ final class RemiGroupingSmoke {
             receipt.addProperty("gearboxInventoryTexturedFaces",gearboxes*6);
             receipt.addProperty("tappedLogsFolded",true);
             var springNames = new HashSet<String>();
-            for (var spring : gregtech.worldgen.FluidSpringRules.SPRINGS) {
-                var block = gregtech.registry.GTFluidSprings.byFluid(spring.fluidId());
+            for (var spring : gregtech.content.worldgen.FluidSpringRules.SPRINGS) {
+                var block = gregtech.content.registry.GTFluidSprings.byFluid(spring.fluidId());
                 String name = new net.minecraft.world.item.ItemStack(block).getHoverName().getString();
                 require(springNames.add(name) && name.contains(" ("), "ambiguous spring name " + name);
             }

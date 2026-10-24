@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
-import gregtech.block.energy.SignalWireBlock;
+import gregtech.content.block.energy.SignalWireBlock;
 import gregtech.content.cover.CoverWorldInteraction;
 import gregtech.content.cover.PanelCoverHost;
-import gregtech.registry.GTSignalWires;
-import gregtech.registry.GTTechnological;
+import gregtech.content.registry.GTSignalWires;
+import gregtech.content.registry.GTTechnological;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import net.minecraft.core.BlockPos;
@@ -104,7 +104,7 @@ public final class CoverRemovalUpdateTests {
         }
     }
     private static ItemStack crowbar() {
-        return gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.CROWBAR,
+        return gregtech.content.item.GTToolItem.create(gregtech.internal.tool.GTToolType.CROWBAR,
                 gregtech.content.material.Materials.Steel,
                 gregtech.internal.material.GTMaterialRegistry.get("Wood"));
     }
@@ -191,7 +191,7 @@ public final class CoverRemovalUpdateTests {
                 try(var f=new Fixture(h,20+side.ordinal()+(huge?6:0))) {
                     var pipe=net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(
                             net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",huge?"pipe_huge_steel":"pipe_medium_steel"));
-                    h.assertTrue(pipe instanceof gregtech.block.machine.FluidPipeBlock,"registered pipe fixture");
+                    h.assertTrue(pipe instanceof gregtech.content.block.machine.FluidPipeBlock,"registered pipe fixture");
                     f.set(f.pos,pipe.defaultBlockState());
                     exercise(h,f,side,huge,GTTechnological.get("blank_cover"));
                 }

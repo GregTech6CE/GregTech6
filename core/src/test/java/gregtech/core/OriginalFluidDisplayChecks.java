@@ -3,7 +3,7 @@ package gregtech.core;
 import gregtech.api.material.GTValues;
 import gregtech.content.fluid.OriginalFluidDisplayRules;
 import gregtech.content.fluid.OriginalFluidDisplayRules.*;
-import gregtech.data.FluidCatalog.FluidFlags;
+import gregtech.content.data.FluidCatalog.FluidFlags;
 import java.math.BigInteger;
 import java.util.List;
 

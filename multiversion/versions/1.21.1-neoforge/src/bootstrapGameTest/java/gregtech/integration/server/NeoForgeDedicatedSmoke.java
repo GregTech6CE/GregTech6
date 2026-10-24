@@ -224,9 +224,9 @@ public final class NeoForgeDedicatedSmoke {
                 level.setBlockAndUpdate(target.below(),Blocks.STONE.defaultBlockState());
             }
             var block=net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","grindstone_block"));
-            if(!(block instanceof gregtech.block.tool.ManualToolBlock))throw new IllegalStateException("Missing actual grindstone");
+            if(!(block instanceof gregtech.content.block.tool.ManualToolBlock))throw new IllegalStateException("Missing actual grindstone");
             level.setBlockAndUpdate(pos,block.defaultBlockState());level.setBlockAndUpdate(bench,Blocks.CRAFTING_TABLE.defaultBlockState());
-            var station=(gregtech.blockentity.tool.ManualToolBlockEntity)level.getBlockEntity(pos);
+            var station=(gregtech.content.blockentity.tool.ManualToolBlockEntity)level.getBlockEntity(pos);
             var actor=net.neoforged.neoforge.common.util.FakePlayerFactory.get(level,new com.mojang.authlib.GameProfile(UUID.fromString(specimenId),"[gt-assembly]"));
             actor.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);actor.getInventory().clearContent();actor.getInventory().selected=8;
             actor.setPos(pos.getX()+.5,pos.getY(),pos.getZ()+1.5);
@@ -234,12 +234,12 @@ public final class NeoForgeDedicatedSmoke {
             actor.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,new ItemStack(Items.SANDSTONE));
             actor.gameMode.useItemOn(actor,level,actor.getMainHandItem(),net.minecraft.world.InteractionHand.MAIN_HAND,hit);
             if(!actor.getMainHandItem().isEmpty()||station.stoneUses()!=8)throw new IllegalStateException("Actual sandstone install failed");
-            var raw=gregtech.registry.GTItems.getStack(gregtech.data.MaterialPrefix.toolHeadRawPickaxe,gregtech.content.material.Materials.Bronze);
+            var raw=gregtech.content.registry.GTItems.getStack(gregtech.content.data.MaterialPrefix.toolHeadRawPickaxe,gregtech.content.material.Materials.Bronze);
             if(raw.isEmpty())throw new IllegalStateException("Missing registered raw bronze pick head");
             actor.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,raw);
             for(int click=0;click<10;click++)actor.gameMode.useItemOn(actor,level,actor.getMainHandItem(),net.minecraft.world.InteractionHand.MAIN_HAND,hit);
             if(!actor.getMainHandItem().isEmpty()||station.stoneUses()!=7)throw new IllegalStateException("Actual ten grind clicks did not consume raw head/one abrasive use");
-            var expected=gregtech.registry.GTItems.getStack(gregtech.data.MaterialPrefix.toolHeadPickaxe,gregtech.content.material.Materials.Bronze);
+            var expected=gregtech.content.registry.GTItems.getStack(gregtech.content.data.MaterialPrefix.toolHeadPickaxe,gregtech.content.material.Materials.Bronze);
             ItemStack head=ItemStack.EMPTY;
             for(int slot=0;slot<actor.getInventory().getContainerSize();slot++) {
                 var held=actor.getInventory().getItem(slot);
@@ -300,8 +300,8 @@ public final class NeoForgeDedicatedSmoke {
             level.setBlockAndUpdate(pos.below(),Blocks.STONE.defaultBlockState());
         }
         for(int i=0;i<4;i++) {
-            var pos=base.east(i);level.setBlockAndUpdate(pos,i==3?gregtech.registry.GTBlocks.TWIGS.get().defaultBlockState():gregtech.registry.GTBlocks.ROCK.get().defaultBlockState());
-            if(i<3)((gregtech.blockentity.RockBlockEntity)level.getBlockEntity(pos)).setItemId("minecraft:flint");
+            var pos=base.east(i);level.setBlockAndUpdate(pos,i==3?gregtech.content.registry.GTBlocks.TWIGS.get().defaultBlockState():gregtech.content.registry.GTBlocks.ROCK.get().defaultBlockState());
+            if(i<3)((gregtech.content.blockentity.RockBlockEntity)level.getBlockEntity(pos)).setItemId("minecraft:flint");
             actor.setPos(pos.getX()+0.5,pos.getY(),pos.getZ()+1.5);actor.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ItemStack.EMPTY);
             var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(pos),net.minecraft.core.Direction.UP,pos,false);
             actor.gameMode.useItemOn(actor,level,ItemStack.EMPTY,net.minecraft.world.InteractionHand.MAIN_HAND,hit);
@@ -320,11 +320,11 @@ public final class NeoForgeDedicatedSmoke {
         actor.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,pick);int before=pick.getDamageValue();
         for(int i=0;i<4;i++) {
             var material=i==3?gregtech.content.material.Materials.Tin:gregtech.content.material.Materials.Copper;
-            var pos=base.east(5+i);var ore=gregtech.registry.GTBlocks.getObject(gregtech.internal.prefix.BlockMaterialPrefix.ore,material);
+            var pos=base.east(5+i);var ore=gregtech.content.registry.GTBlocks.getObject(gregtech.internal.prefix.BlockMaterialPrefix.ore,material);
             if(ore==null)throw new IllegalStateException("Missing registered early ore "+material);
             level.setBlockAndUpdate(pos,ore.get().defaultBlockState());actor.setPos(pos.getX()+0.5,pos.getY(),pos.getZ()+1.5);
             if(!pick.isCorrectToolForDrops(level.getBlockState(pos))||!actor.gameMode.destroyBlock(pos)||!level.getBlockState(pos).isAir())throw new IllegalStateException("Crafted flint pick cannot harvest actual ore "+material);
-            var raw=gregtech.registry.GTItems.getStack(gregtech.data.MaterialPrefix.oreRaw,material);
+            var raw=gregtech.content.registry.GTItems.getStack(gregtech.content.data.MaterialPrefix.oreRaw,material);
             int found=0;
             for(var drop:level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new net.minecraft.world.phys.AABB(pos).inflate(1))) {
                 if(!ItemStack.isSameItemSameComponents(drop.getItem(),raw))continue;
@@ -334,8 +334,8 @@ public final class NeoForgeDedicatedSmoke {
         }
         pick=actor.getMainHandItem();if(!gregtech.internal.tool.GTToolHelper.isUsable(pick)||pick.getDamageValue()<=before)throw new IllegalStateException("Harvested early pick lost usability or mining wear");
         var chest=(ChestBlockEntity)level.getBlockEntity(specimenPos);chest.setItem(2,pick.copy());
-        chest.setItem(3,takeEarly(actor,gregtech.registry.GTItems.getStack(gregtech.data.MaterialPrefix.oreRaw,gregtech.content.material.Materials.Copper).getItem(),3));
-        chest.setItem(4,takeEarly(actor,gregtech.registry.GTItems.getStack(gregtech.data.MaterialPrefix.oreRaw,gregtech.content.material.Materials.Tin).getItem(),1));chest.setChanged();
+        chest.setItem(3,takeEarly(actor,gregtech.content.registry.GTItems.getStack(gregtech.content.data.MaterialPrefix.oreRaw,gregtech.content.material.Materials.Copper).getItem(),3));
+        chest.setItem(4,takeEarly(actor,gregtech.content.registry.GTItems.getStack(gregtech.content.data.MaterialPrefix.oreRaw,gregtech.content.material.Materials.Tin).getItem(),1));chest.setChanged();
         var saved=new JsonObject();saved.addProperty("specimenId",specimenId);saved.addProperty("workbenchResultSlotClicked",true);saved.addProperty("actualOreHarvests",4);saved.addProperty("pickWear",pick.getDamageValue()-before);
         var items=new JsonObject();for(int slot=2;slot<=4;slot++)items.addProperty(Integer.toString(slot),chest.getItem(slot).saveOptional(level.registryAccess()).toString());saved.add("items",items);
         Files.writeString(worldRoot.getParent().resolve("early-tool-snapshot.json"),saved.toString());LOGGER.info("EARLY_TOOL_COLLECT_CRAFT_HARVEST_SUCCESS {}",saved);
@@ -354,8 +354,8 @@ public final class NeoForgeDedicatedSmoke {
 
     private static net.minecraft.core.BlockPos steamBase() { return specimenPos.south(12); }
 
-    private static gregtech.blockentity.machine.KineticDieselEngineBlockEntity diesel(ServerLevel level,int offset) {
-        return (gregtech.blockentity.machine.KineticDieselEngineBlockEntity)level.getBlockEntity(steamBase().east(offset));
+    private static gregtech.content.blockentity.machine.KineticDieselEngineBlockEntity diesel(ServerLevel level,int offset) {
+        return (gregtech.content.blockentity.machine.KineticDieselEngineBlockEntity)level.getBlockEntity(steamBase().east(offset));
     }
 
     private static void prepareDieselPower(ServerLevel level) {
@@ -375,7 +375,7 @@ public final class NeoForgeDedicatedSmoke {
         placements.put(base.east(8).south(),steamBlock("drum_bronze").defaultBlockState());
         placements.put(base.west(2),Blocks.STONE.defaultBlockState());
         for(var e:placements.entrySet()) {level.getChunk(e.getKey());if(!level.getBlockState(e.getKey()).isAir())throw new IllegalStateException("Diesel specimen refuses overwrite "+e.getKey());level.setBlockAndUpdate(e.getKey(),e.getValue());}
-        var machine=(gregtech.blockentity.machine.BasicMachineBlockEntity)level.getBlockEntity(base.north());
+        var machine=(gregtech.content.blockentity.machine.BasicMachineBlockEntity)level.getBlockEntity(base.north());
         machine.inventory().setStackInSlot(0,machineFeed());
         supplyDiesel(level,-1,100);supplyDiesel(level,4,1);
     }
@@ -383,7 +383,7 @@ public final class NeoForgeDedicatedSmoke {
     private static void supplyDiesel(ServerLevel level,int offset,int amount) {
         var pos=steamBase().east(offset);
         var inlet=level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,pos,net.minecraft.core.Direction.UP);
-        if(inlet==null||inlet.fill(new net.neoforged.neoforge.fluids.FluidStack(gregtech.registry.GTFluids.still("Diesel").get(),amount),net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE)!=amount)throw new IllegalStateException("Diesel actual fuel capability failed");
+        if(inlet==null||inlet.fill(new net.neoforged.neoforge.fluids.FluidStack(gregtech.content.registry.GTFluids.still("Diesel").get(),amount),net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE)!=amount)throw new IllegalStateException("Diesel actual fuel capability failed");
     }
 
     private static Path dieselSnapshotPath(){return worldRoot.getParent().resolve("diesel-power-snapshot.json");}
@@ -402,13 +402,13 @@ public final class NeoForgeDedicatedSmoke {
             level.getChunk(steamBase().east(offset));var actual=dieselSnapshot(level,"loaded").getAsJsonObject(Integer.toString(offset));
             if(!actual.equals(saved.getAsJsonObject(Integer.toString(offset))))throw new IllegalStateException("Diesel real disk stock/stopped mismatch "+offset+" "+actual);
             var be=diesel(level,offset);
-            var ru=gregtech.data.GregTechTags.Energy.RU;
-            var ku=gregtech.data.GregTechTags.Energy.KU;
+            var ru=gregtech.content.data.GregTechTags.Energy.RU;
+            var ku=gregtech.content.data.GregTechTags.Energy.KU;
             long rated=be.spec().outputRate();
             if(be.getEnergySizeOutputMin(ru,null)!=rated||be.getEnergySizeOutputRecommended(ru,null)!=rated||be.getEnergySizeOutputMax(ru,null)!=rated||be.getEnergySizeOutputMin(ku,null)!=0||be.getEnergySizeOutputMax(ku,null)!=0)throw new IllegalStateException("Diesel exact rated RU packet range mismatch");
             long stored=be.getKuEnergy();
-            if(be.doInject(gregtech.data.GregTechTags.Energy.KU,null,16,1,true)!=0 || be.doInject(gregtech.data.GregTechTags.Energy.RU,null,16,1,true)!=0 || be.getKuEnergy()!=stored)throw new IllegalStateException("Fuel motor accepted external energy");
-            if(!be.isEnergyType(gregtech.data.GregTechTags.Energy.RU,null,true)||be.isEnergyType(gregtech.data.GregTechTags.Energy.KU,null,true)||be.getEnergyStored(gregtech.data.GregTechTags.Energy.RU,null)!=be.getKuEnergy())throw new IllegalStateException("Diesel RU API not aligned");
+            if(be.doInject(gregtech.content.data.GregTechTags.Energy.KU,null,16,1,true)!=0 || be.doInject(gregtech.content.data.GregTechTags.Energy.RU,null,16,1,true)!=0 || be.getKuEnergy()!=stored)throw new IllegalStateException("Fuel motor accepted external energy");
+            if(!be.isEnergyType(gregtech.content.data.GregTechTags.Energy.RU,null,true)||be.isEnergyType(gregtech.content.data.GregTechTags.Energy.KU,null,true)||be.getEnergyStored(gregtech.content.data.GregTechTags.Energy.RU,null)!=be.getKuEnergy())throw new IllegalStateException("Diesel RU API not aligned");
         }
         for(var pos:java.util.List.of(steamBase(),steamBase().west(),steamBase().east(8)))level.setChunkForced(pos.getX()>>4,pos.getZ()>>4,true);
         LOGGER.info("DIESEL_POWER_DISK_READ {}",saved);
@@ -421,14 +421,14 @@ public final class NeoForgeDedicatedSmoke {
         if(DIESEL_READ_ONLY||dieselCycleObserved||be.fuelTank().getAmount()!=0||be.getKuEnergy()<=0)return;
         long expected=DIESEL_BASELINE?32:448;
         if(be.getKuEnergy()!=expected)throw new IllegalStateException("One real mB diesel cycle: "+be.getKuEnergy()+" expected "+expected);
-        if(!DIESEL_BASELINE && be.getEnergyCapacity(gregtech.data.GregTechTags.Energy.RU,null)<expected)throw new IllegalStateException("RU reservoir reports less than its full cycle");
+        if(!DIESEL_BASELINE && be.getEnergyCapacity(gregtech.content.data.GregTechTags.Energy.RU,null)<expected)throw new IllegalStateException("RU reservoir reports less than its full cycle");
         dieselCycleObserved=true;
         if(DIESEL_BASELINE)be.setStopped(true);
         LOGGER.info("DIESEL_CYCLE_OBSERVED baseline={} ordinaryTick={} oneFuelMilliBucket=true storedEnergy={} originalRecipeEnergy=448",DIESEL_BASELINE,observedTicks,be.getKuEnergy());
     }
 
     private static void verifyDieselOutput(ServerLevel level) {
-        var machine=(gregtech.blockentity.machine.BasicMachineBlockEntity)level.getBlockEntity(steamBase().north());
+        var machine=(gregtech.content.blockentity.machine.BasicMachineBlockEntity)level.getBlockEntity(steamBase().north());
         var chest=(ChestBlockEntity)level.getBlockEntity(steamBase().north().below());
         var recipe=machine.recipeMap().findRecipe(java.util.List.of(machineFeed()),java.util.List.of(),false,machine.inputSlots(),machine.outputSlots());
         if(recipe==null||!machine.inventory().getStackInSlot(0).isEmpty()||machine.machineControl(null).progressMax()!=0)throw new IllegalStateException("Diesel/RU/rotation/KU did not complete real crushing");
@@ -440,21 +440,21 @@ public final class NeoForgeDedicatedSmoke {
             int inChest=0;for(int slot=0;slot<chest.getContainerSize();slot++)if(ItemStack.isSameItemSameComponents(expected,chest.getItem(slot)))inChest+=chest.getItem(slot).getCount();
             if(inChest!=expected.getCount())throw new IllegalStateException("Diesel recipe did not deliver actual output to chest");
         }
-        var tank=(gregtech.blockentity.machine.TankBlockEntity)level.getBlockEntity(steamBase().east(8).south());
-        if(tank.getFluidInTank(0).getAmount()!=1||tank.getFluidInTank(0).getFluid()!=gregtech.registry.GTFluids.still("CarbonDioxide").get())throw new IllegalStateException("Diesel real rear exhaust delivery failed");
+        var tank=(gregtech.content.blockentity.machine.TankBlockEntity)level.getBlockEntity(steamBase().east(8).south());
+        if(tank.getFluidInTank(0).getAmount()!=1||tank.getFluidInTank(0).getFluid()!=gregtech.content.registry.GTFluids.still("CarbonDioxide").get())throw new IllegalStateException("Diesel real rear exhaust delivery failed");
     }
 
     private static void finishDieselPower(ServerLevel level) {
         var generator=diesel(level,-1);
         if(DIESEL_BASELINE) {
-            if(!dieselCycleObserved||generator.isEnergyType(gregtech.data.GregTechTags.Energy.RU,null,true)||!generator.isEnergyType(gregtech.data.GregTechTags.Energy.KU,null,true))throw new IllegalStateException("Original wrong-output baseline changed unexpectedly");
-            var machine=(gregtech.blockentity.machine.BasicMachineBlockEntity)level.getBlockEntity(steamBase().north());
+            if(!dieselCycleObserved||generator.isEnergyType(gregtech.content.data.GregTechTags.Energy.RU,null,true)||!generator.isEnergyType(gregtech.content.data.GregTechTags.Energy.KU,null,true))throw new IllegalStateException("Original wrong-output baseline changed unexpectedly");
+            var machine=(gregtech.content.blockentity.machine.BasicMachineBlockEntity)level.getBlockEntity(steamBase().north());
             if(machine.inventory().getStackInSlot(0).isEmpty()||machine.machineControl(null).progressMax()!=0)throw new IllegalStateException("Unexpected baseline powered recipe");
         } else {
             if(!DIESEL_READ_ONLY&&!dieselCycleObserved)throw new IllegalStateException("No real full diesel fuel-cycle observation");
             verifyDieselOutput(level);
             generator.setStopped(true);
-            ((gregtech.blockentity.machine.BasicMachineBlockEntity)level.getBlockEntity(steamBase().north())).machineControl(null).setEnabled(false);
+            ((gregtech.content.blockentity.machine.BasicMachineBlockEntity)level.getBlockEntity(steamBase().north())).machineControl(null).setEnabled(false);
         }
         var snapshot=dieselSnapshot(level,DIESEL_BASELINE?"baseline":"powered");
         try{Files.writeString(dieselSnapshotPath(),snapshot.toString());}catch(IOException e){throw new IllegalStateException(e);}
@@ -484,18 +484,18 @@ public final class NeoForgeDedicatedSmoke {
         level.setBlockAndUpdate(base, steamBlock("burning_box_solid_dense_bronze").defaultBlockState());
         level.setBlockAndUpdate(base.above(), steamBlock("strong_steam_boiler_bronze").defaultBlockState());
         var pipe = steamBlock("pipe_medium_steel").defaultBlockState()
-                .setValue(gregtech.block.machine.FluidPipeBlock.propFor(net.minecraft.core.Direction.DOWN), true)
-                .setValue(gregtech.block.machine.FluidPipeBlock.propFor(net.minecraft.core.Direction.NORTH), true);
+                .setValue(gregtech.content.block.machine.FluidPipeBlock.propFor(net.minecraft.core.Direction.DOWN), true)
+                .setValue(gregtech.content.block.machine.FluidPipeBlock.propFor(net.minecraft.core.Direction.NORTH), true);
         level.setBlockAndUpdate(pipePos, pipe);
         level.setBlockAndUpdate(enginePos, steamBlock("engine_steam_strong_bronze").defaultBlockState()
                 .setValue(net.minecraft.world.level.block.DirectionalBlock.FACING, net.minecraft.core.Direction.NORTH));
         level.setBlockAndUpdate(machinePos, steamBlock("crusher_bronze").defaultBlockState()
                 .setValue(net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING, net.minecraft.core.Direction.NORTH));
         level.setBlockAndUpdate(machinePos.below(), Blocks.CHEST.defaultBlockState());
-        var boiler = (gregtech.blockentity.machine.BoilerTankBlockEntity) level.getBlockEntity(base.above());
+        var boiler = (gregtech.content.blockentity.machine.BoilerTankBlockEntity) level.getBlockEntity(base.above());
         if (boiler.storedHeat() != 0 || !boiler.steamTank().isEmpty()) throw new IllegalStateException("Boiler must start cold");
         boiler.waterTank().fill(new net.neoforged.neoforge.fluids.FluidStack(
-                gregtech.registry.GTFluids.still("DistW").get(), 4000),
+                gregtech.content.registry.GTFluids.still("DistW").get(), 4000),
                 net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);
         var waterPipePos = base.east().above();
         var waterSourcePos = base.east(2).above(2);
@@ -503,24 +503,24 @@ public final class NeoForgeDedicatedSmoke {
             if (!level.getBlockState(pos).isAir()) throw new IllegalStateException("Water supply refuses overwrite");
         }
         var waterPipe = steamBlock("pipe_medium_steel").defaultBlockState()
-                .setValue(gregtech.block.machine.FluidPipeBlock.propFor(net.minecraft.core.Direction.EAST), true)
-                .setValue(gregtech.block.machine.FluidPipeBlock.propFor(net.minecraft.core.Direction.WEST), true);
+                .setValue(gregtech.content.block.machine.FluidPipeBlock.propFor(net.minecraft.core.Direction.EAST), true)
+                .setValue(gregtech.content.block.machine.FluidPipeBlock.propFor(net.minecraft.core.Direction.WEST), true);
         level.setBlockAndUpdate(waterPipePos, waterPipe);
         level.setBlockAndUpdate(waterPipePos.east(), waterPipe
-                .setValue(gregtech.block.machine.FluidPipeBlock.propFor(net.minecraft.core.Direction.EAST), false)
-                .setValue(gregtech.block.machine.FluidPipeBlock.propFor(net.minecraft.core.Direction.UP), true));
+                .setValue(gregtech.content.block.machine.FluidPipeBlock.propFor(net.minecraft.core.Direction.EAST), false)
+                .setValue(gregtech.content.block.machine.FluidPipeBlock.propFor(net.minecraft.core.Direction.UP), true));
         level.setBlockAndUpdate(waterSourcePos, steamBlock("drum_bronze").defaultBlockState());
-        var waterSource = (gregtech.blockentity.machine.TankBlockEntity) level.getBlockEntity(waterSourcePos);
+        var waterSource = (gregtech.content.blockentity.machine.TankBlockEntity) level.getBlockEntity(waterSourcePos);
         if (waterSource.fill(new net.neoforged.neoforge.fluids.FluidStack(
-                gregtech.registry.GTFluids.still("DistW").get(), 50000),
+                gregtech.content.registry.GTFluids.still("DistW").get(), 50000),
                 net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE) != 50000)
             throw new IllegalStateException("Could not supply distilled water reserve");
         waterSource.toggleAutoOutput();
-        var engine = (gregtech.blockentity.machine.KineticSteamEngineBlockEntity) level.getBlockEntity(enginePos);
+        var engine = (gregtech.content.blockentity.machine.KineticSteamEngineBlockEntity) level.getBlockEntity(enginePos);
         if (engine.getKuEnergy() != 0 || !engine.steamTank().isEmpty()) throw new IllegalStateException("Engine must start cold");
-        var machine = (gregtech.blockentity.machine.BasicMachineBlockEntity) level.getBlockEntity(machinePos);
+        var machine = (gregtech.content.blockentity.machine.BasicMachineBlockEntity) level.getBlockEntity(machinePos);
         machine.inventory().setStackInSlot(0, machineFeed());
-        var box = (gregtech.blockentity.machine.SolidBurningBoxBlockEntity) level.getBlockEntity(base);
+        var box = (gregtech.content.blockentity.machine.SolidBurningBoxBlockEntity) level.getBlockEntity(base);
         var player = net.neoforged.neoforge.common.util.FakePlayerFactory.getMinecraft(level);
         player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new ItemStack(Items.COAL, 64));
         var hit = new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(base),
@@ -539,7 +539,7 @@ public final class NeoForgeDedicatedSmoke {
         var verticalInlet = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,
                 verticalPos, net.minecraft.core.Direction.DOWN);
         if (verticalInlet == null || verticalInlet.fill(new net.neoforged.neoforge.fluids.FluidStack(
-                gregtech.registry.GTFluids.still("Steam").get(), 200),
+                gregtech.content.registry.GTFluids.still("Steam").get(), 200),
                 net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE) != 200)
             throw new IllegalStateException("Vertical engine back-face steam inlet failed");
         // Covers/exhaust depend on both directions using the same six-way mapping.
@@ -553,11 +553,11 @@ public final class NeoForgeDedicatedSmoke {
     private static void verifySteamChain(ServerLevel level) {
         var base = steamBase();
         level.getChunk(base); level.getChunk(base.north(2));
-        var boiler = (gregtech.blockentity.machine.BoilerTankBlockEntity) level.getBlockEntity(base.above());
-        var box = (gregtech.blockentity.machine.SolidBurningBoxBlockEntity) level.getBlockEntity(base);
-        var machine = (gregtech.blockentity.machine.BasicMachineBlockEntity) level.getBlockEntity(base.above(2).north(2));
+        var boiler = (gregtech.content.blockentity.machine.BoilerTankBlockEntity) level.getBlockEntity(base.above());
+        var box = (gregtech.content.blockentity.machine.SolidBurningBoxBlockEntity) level.getBlockEntity(base);
+        var machine = (gregtech.content.blockentity.machine.BasicMachineBlockEntity) level.getBlockEntity(base.above(2).north(2));
         var chest = (ChestBlockEntity) level.getBlockEntity(machine.getBlockPos().below());
-        var waterSource = (gregtech.blockentity.machine.TankBlockEntity) level.getBlockEntity(base.east(2).above(2));
+        var waterSource = (gregtech.content.blockentity.machine.TankBlockEntity) level.getBlockEntity(base.east(2).above(2));
         var recipe = machine.recipeMap().findRecipe(java.util.List.of(machineFeed()), java.util.List.of(),
                 false, machine.inputSlots(), machine.outputSlots());
         if (recipe == null || !machine.inventory().getStackInSlot(0).isEmpty()
@@ -580,7 +580,7 @@ public final class NeoForgeDedicatedSmoke {
         var exhaust = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,
                 base.east(4).above(2).north(), net.minecraft.core.Direction.SOUTH);
         var recovered = exhaust == null ? net.neoforged.neoforge.fluids.FluidStack.EMPTY : exhaust.getFluidInTank(0);
-        if (recovered.getAmount() != 1 || recovered.getFluid() != gregtech.registry.GTFluids.still("DistW").get())
+        if (recovered.getAmount() != 1 || recovered.getFluid() != gregtech.content.registry.GTFluids.still("DistW").get())
             throw new IllegalStateException("Vertical engine failed to recover one-L north-side condensate");
         LOGGER.info("STEAM_CHAIN_COMPLETE ordinaryTicks={} coldStart=true directEnergyInjection=false manualMachineTicks=false water={} coal={}",
                 observedTicks, boiler.waterTank().getAmount(), box.getFuelStack().getCount());
@@ -606,7 +606,7 @@ public final class NeoForgeDedicatedSmoke {
                 .filter(holder -> holder.get().spec().material().equals(ceramic)).findFirst().orElseThrow().get();
         level.setBlockAndUpdate(moldPos, gregtech.platform.neoforge.smeltery.SmelteryRegistries.CERAMIC_MOLD.get().defaultBlockState());
         level.setBlockAndUpdate(basinPos, basinBlock.defaultBlockState());
-        var mold = (gregtech.blockentity.machine.MoldBlockEntity) level.getBlockEntity(moldPos);
+        var mold = (gregtech.content.blockentity.machine.MoldBlockEntity) level.getBlockEntity(moldPos);
         // Initialize through the public carving/filling API; verify never seeds this state.
         for (int z = 0; z < 5; z++) for (int x = 0; x < 3; x++)
             mold.trySelectShape(null, net.minecraft.world.InteractionHand.MAIN_HAND,
@@ -615,7 +615,7 @@ public final class NeoForgeDedicatedSmoke {
         if (mold.fillMold(gregtech.content.material.Materials.Copper, unit, 300,
                 net.minecraft.core.Direction.UP.ordinal()) != unit)
             throw new IllegalStateException("Could not prepare filled one-U copper mold");
-        var basin = (gregtech.blockentity.machine.MoldBasinBlockEntity) level.getBlockEntity(basinPos);
+        var basin = (gregtech.content.blockentity.machine.MoldBasinBlockEntity) level.getBlockEntity(basinPos);
         if (basin.fillMold(gregtech.content.material.Materials.Bronze, 9L * unit, 300,
                 net.minecraft.core.Direction.UP.ordinal()) != 9L * unit || basin.consumeContent(unit) != unit)
             throw new IllegalStateException("Could not prepare partly drained eight-U bronze basin");
@@ -625,26 +625,26 @@ public final class NeoForgeDedicatedSmoke {
         level.getChunk(specimenPos.south(2));
         level.getChunk(specimenPos.south(4));
         long unit = gregtech.api.material.GTValues.U;
-        if (!(level.getBlockEntity(specimenPos.south(2)) instanceof gregtech.blockentity.machine.MoldBlockEntity mold)
+        if (!(level.getBlockEntity(specimenPos.south(2)) instanceof gregtech.content.blockentity.machine.MoldBlockEntity mold)
                 || mold.getMoldContentMaterial() != gregtech.content.material.Materials.Copper
                 || mold.getMoldContentAmount() != unit || mold.getMoldRequiredMaterialUnits() != unit)
             throw new IllegalStateException("Real-world copper mold shape/material/amount did not survive");
-        if (!(level.getBlockEntity(specimenPos.south(4)) instanceof gregtech.blockentity.machine.MoldBasinBlockEntity basin)
+        if (!(level.getBlockEntity(specimenPos.south(4)) instanceof gregtech.content.blockentity.machine.MoldBasinBlockEntity basin)
                 || basin.getMoldContentMaterial() != gregtech.content.material.Materials.Bronze
                 || basin.getMoldContentAmount() != 8L * unit || !basin.getSolidOutput().isEmpty())
             throw new IllegalStateException("Real-world eight-U bronze basin changed or created a full block");
     }
 
-    private static gregtech.blockentity.machine.BasicMachineBlockEntity machine(ServerLevel level, int offset) {
+    private static gregtech.content.blockentity.machine.BasicMachineBlockEntity machine(ServerLevel level, int offset) {
         BlockPos pos = specimenPos.south(offset);
         level.getChunk(pos);
-        if (level.getBlockEntity(pos) instanceof gregtech.blockentity.machine.BasicMachineBlockEntity machine)
+        if (level.getBlockEntity(pos) instanceof gregtech.content.blockentity.machine.BasicMachineBlockEntity machine)
             return machine;
         throw new IllegalStateException("Missing real basic machine at " + pos);
     }
 
     private static ItemStack machineFeed() {
-        return gregtech.registry.GTItems.getStack(gregtech.data.MaterialPrefix.gemChipped,
+        return gregtech.content.registry.GTItems.getStack(gregtech.content.data.MaterialPrefix.gemChipped,
                 gregtech.content.material.Materials.Diamond);
     }
 
@@ -662,7 +662,7 @@ public final class NeoForgeDedicatedSmoke {
             String id = offset == 6 ? "crusher_bronze" : "mixer_bronze";
             var block = net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(
                     net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", id));
-            if (!(block instanceof gregtech.block.machine.BasicMachineBlock))
+            if (!(block instanceof gregtech.content.block.machine.BasicMachineBlock))
                 throw new IllegalStateException("Missing registered machine " + id);
             level.setBlockAndUpdate(pos.below(), Blocks.STONE.defaultBlockState());
             level.setBlockAndUpdate(pos, block.defaultBlockState());
@@ -670,9 +670,9 @@ public final class NeoForgeDedicatedSmoke {
         var crusher = machine(level, 6);
         crusher.inventory().setStackInSlot(0, machineFeed());
         for (int tick = 0; tick < 2; tick++) {
-            if (crusher.doInject(gregtech.data.GregTechTags.Energy.KU, net.minecraft.core.Direction.SOUTH, 32, 1, true) != 1)
+            if (crusher.doInject(gregtech.content.data.GregTechTags.Energy.KU, net.minecraft.core.Direction.SOUTH, 32, 1, true) != 1)
                 throw new IllegalStateException("Actual crusher back face refused a valid KU packet");
-            gregtech.blockentity.machine.BasicMachineBlockEntity.serverTick(level,
+            gregtech.content.blockentity.machine.BasicMachineBlockEntity.serverTick(level,
                     crusher.getBlockPos(), crusher.getBlockState(), crusher);
         }
         crusher.machineControl(null).setEnabled(false);
@@ -737,15 +737,15 @@ public final class NeoForgeDedicatedSmoke {
         }
     }
 
-    private static void resumeMachineJob(ServerLevel level, gregtech.blockentity.machine.BasicMachineBlockEntity crusher) {
+    private static void resumeMachineJob(ServerLevel level, gregtech.content.blockentity.machine.BasicMachineBlockEntity crusher) {
         var recipe = crusher.recipeMap().findRecipe(java.util.List.of(machineFeed()), java.util.List.of(),
                 false, crusher.inputSlots(), crusher.outputSlots());
         if (recipe == null || recipe.mFluidInputs.length != 0 || recipe.mFluidOutputs.length != 0)
             throw new IllegalStateException("Missing actual registered diamond crushing recipe");
         crusher.machineControl(null).setEnabled(true);
         for (int tick = 0; tick < 5000 && crusher.machineControl(null).progressMax() > 0; tick++) {
-            crusher.doInject(gregtech.data.GregTechTags.Energy.KU, net.minecraft.core.Direction.SOUTH, 32, 1, true);
-            gregtech.blockentity.machine.BasicMachineBlockEntity.serverTick(level,
+            crusher.doInject(gregtech.content.data.GregTechTags.Energy.KU, net.minecraft.core.Direction.SOUTH, 32, 1, true);
+            gregtech.content.blockentity.machine.BasicMachineBlockEntity.serverTick(level,
                     crusher.getBlockPos(), crusher.getBlockState(), crusher);
         }
         if (crusher.machineControl(null).progressMax() != 0)

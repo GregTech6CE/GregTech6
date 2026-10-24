@@ -2,7 +2,7 @@ package gregtech.content.recipe;
 
 //? if >=1.21.1 {
 /*import java.util.Map;
-import gregtech.data.OriginalCraftingJson;
+import gregtech.content.data.OriginalCraftingJson;
 import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
 import gregtech.GregTech;
@@ -10,15 +10,15 @@ import gregtech.GregTech;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.tool.GTToolType;
 import gregtech.content.plant.BedrockFlowers;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 
 //? if >=1.21.1 {
 //?} else {
-import gregtech.recipe.RuntimeRecipeLifecycle;
+import gregtech.content.recipe.RuntimeRecipeLifecycle;
 //?}
-import gregtech.recipe.ToolShapedRecipe;
-import gregtech.registry.GTItems;
-import gregtech.registry.GTToolItems;
+import gregtech.content.recipe.ToolShapedRecipe;
+import gregtech.content.registry.GTItems;
+import gregtech.content.registry.GTToolItems;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;

@@ -1,6 +1,6 @@
 package gregtech.internal.energy.item;
 
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.core.BlockPos;

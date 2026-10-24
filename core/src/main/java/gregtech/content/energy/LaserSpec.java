@@ -1,6 +1,6 @@
 package gregtech.content.energy;
 
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 
 /** Loader_MultiTileEntities: 10101..105, 11101..105, 10121..125, 10151..155. */
 public record LaserSpec(Kind kind, int tier) {

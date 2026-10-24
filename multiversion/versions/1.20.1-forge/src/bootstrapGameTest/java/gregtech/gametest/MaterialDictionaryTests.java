@@ -118,7 +118,7 @@ public final class MaterialDictionaryTests {
      *
      * <p>GT6 keeps all eleven targets on {@code OreDictMaterial}; the port models four of them on
      * {@code GTMaterial} and the other seven in
-     * {@link gregtech.data.generated.MaterialProcessingTargets} (generated from
+     * {@link gregtech.content.data.generated.MaterialProcessingTargets} (generated from
      * {@code MT.java} by {@code tools/extract_gt6_processing_targets.py}), whose default is GT6's own
      * ({@code OreDictMaterial:287-294}: the material itself, one unit).</p>
      */
@@ -174,12 +174,12 @@ public final class MaterialDictionaryTests {
 
         // The table behind the seven extra targets: 38 explicit GT6 rows over 17 materials, and GT6's
         // own seven kind names.
-        helper.assertTrue(gregtech.data.generated.MaterialProcessingTargets.KINDS.length == 7,
+        helper.assertTrue(gregtech.content.data.generated.MaterialProcessingTargets.KINDS.length == 7,
                 "seven extra targets: " + java.util.Arrays.toString(
-                        gregtech.data.generated.MaterialProcessingTargets.KINDS));
-        helper.assertTrue(gregtech.data.generated.MaterialProcessingTargets.rowCount() == 38,
+                        gregtech.content.data.generated.MaterialProcessingTargets.KINDS));
+        helper.assertTrue(gregtech.content.data.generated.MaterialProcessingTargets.rowCount() == 38,
                 "explicit GT6 target rows: "
-                        + gregtech.data.generated.MaterialProcessingTargets.rowCount());
+                        + gregtech.content.data.generated.MaterialProcessingTargets.rowCount());
 
         // Iron's first page carries the header and GT6's wording for a self target.
         GTMaterial iron = GTMaterialRegistry.get("Iron");

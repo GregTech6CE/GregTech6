@@ -5,7 +5,7 @@ import gregtech.internal.material.*;
 import gregtech.content.machine.MachineConstructionMaterials;
 import gregtech.content.multiblock.OriginalGeneratorTooltipData;
 import gregtech.content.multiblock.OriginalGeneratorTooltipData.Kind;
-import gregtech.data.SourceBlockProperties;
+import gregtech.content.data.SourceBlockProperties;
 import java.util.*;
 
 /** Fixed original Loader rows / LH arithmetic, independent of the live rating table. */

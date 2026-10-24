@@ -1,12 +1,12 @@
 package gregtech.gametest;
 
-import gregtech.block.tool.SapBagBlock;
-import gregtech.block.wood.TreeHoleBlock;
-import gregtech.block.wood.WoodSpecies;
-import gregtech.blockentity.SapBagBlockEntity;
-import gregtech.registry.GTBlockEntities;
-import gregtech.registry.GTToolBlocks;
-import gregtech.registry.GTTreeHoles;
+import gregtech.content.block.tool.SapBagBlock;
+import gregtech.content.block.wood.TreeHoleBlock;
+import gregtech.content.block.wood.WoodSpecies;
+import gregtech.content.blockentity.SapBagBlockEntity;
+import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTToolBlocks;
+import gregtech.content.registry.GTTreeHoles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

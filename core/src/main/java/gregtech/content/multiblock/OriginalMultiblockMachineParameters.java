@@ -28,7 +28,7 @@ public final class OriginalMultiblockMachineParameters {
     public static BasicMachineParameters cokeOven() {
         return BasicMachineParameters.builder("coke_oven_main", Materials.Ceramic)
                 .machineType("cokeoven")
-                .energy(gregtech.data.GregTechTags.Energy.TU, 1)
+                .energy(gregtech.content.data.GregTechTags.Energy.TU, 1)
                 .energyRange(1, 16)
                 .parallel(16)
                 .strength(5, 5)

@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
-import gregtech.blockentity.tool.BumbliaryBlockEntity;
-import gregtech.blockentity.energy.ReactorCoreBlockEntity;
+import gregtech.content.blockentity.tool.BumbliaryBlockEntity;
+import gregtech.content.blockentity.energy.ReactorCoreBlockEntity;
 import gregtech.content.bumble.*;
 import gregtech.content.nuclear.ReactorCoolants;
-import gregtech.registry.GTBumbleBlocks;
-import gregtech.registry.GTEnergyNodes;
+import gregtech.content.registry.GTBumbleBlocks;
+import gregtech.content.registry.GTEnergyNodes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;

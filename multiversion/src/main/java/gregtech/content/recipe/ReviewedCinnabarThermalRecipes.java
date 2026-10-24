@@ -2,8 +2,8 @@ package gregtech.content.recipe;
 import gregtech.internal.addon.AddonMaterials;
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
-import gregtech.data.*;
-import gregtech.registry.GTItems;
+import gregtech.content.data.*;
+import gregtech.content.registry.GTItems;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
@@ -51,7 +51,7 @@ public final class ReviewedCinnabarThermalRecipes {
   if(prefix!=null){
    if(!(stack.getItem() instanceof MaterialFormItem form)||form.getPrefix()!=prefix
      ||form.getMaterial().resolve()!=material||prefix.getMaterialWeight()!=amount)return false;
-  }else if(!(stack.getItem() instanceof gregtech.block.MaterialBlockItem block)
+  }else if(!(stack.getItem() instanceof gregtech.content.block.MaterialBlockItem block)
      ||block.material()==null||block.material().resolve()!=material)return false;
   var composition=ItemMaterialRegistry.explicit(stack.getItem()).orElse(null);
   if(composition==null)return true; // Native material items normally carry their own immutable form, not registry data.

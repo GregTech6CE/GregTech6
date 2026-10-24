@@ -1,6 +1,6 @@
 package gregtech.content.food;
 
-import gregtech.damage.GTDamageTypes;
+import gregtech.content.damage.GTDamageTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;

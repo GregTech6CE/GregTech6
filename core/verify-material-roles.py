@@ -85,8 +85,8 @@ public final class CurrentMaterialRoleProbe {
   ModData.bindPresence(id -> id.equals("minecraft") || id.equals("gregtech"));
   GTMaterialRegistry.setLogSink((warning,message)->{});
   PrefixRegistry.ensurePrefixesLoaded();
-  gregtech.data.ModReferences.UNKNOWN.getClass();
-  gregtech.data.MaterialGroups.Glowstone.getClass();
+  gregtech.content.data.ModReferences.UNKNOWN.getClass();
+  gregtech.content.data.MaterialGroups.Glowstone.getClass();
   GTMaterialRegistry.init(); MaterialRoleFlags.apply(); GTMaterialRegistry.postInit();
   System.out.println("role_sha256="+SharedMaterialBootstrapGameTests.roleSnapshotSha256());
   var helper=new net.minecraft.gametest.framework.GameTestHelper();

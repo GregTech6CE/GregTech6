@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
-import gregtech.block.misc.*;
-import gregtech.registry.*;
+import gregtech.content.block.misc.*;
+import gregtech.content.registry.*;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.item.*;
@@ -40,11 +40,11 @@ public final class SourceFilterTests {
     @GameTest(template="test_blueprint_empty") public static void prefixSelectionAndFluidPassthrough(GameTestHelper h){
         h.setBlock(P,GTMiscBlocks.FILTER_OREDICT.get());var filter=(FilterBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(P));
         var steel=gregtech.content.material.Materials.Steel;var copper=gregtech.content.material.Materials.Copper;
-        var plate=GTItems.getStack(gregtech.data.MaterialPrefix.plate,steel,1);
+        var plate=GTItems.getStack(gregtech.content.data.MaterialPrefix.plate,steel,1);
         h.assertTrue(!filter.permitsItem(plate),"unconfigured source prefix blocks items");filter.toggleMode();
         h.assertTrue(!filter.permitsItem(plate),"unconfigured prefix still blocks items in blacklist mode");filter.clearFilter();filter.setTemplate(0,plate);
-        h.assertTrue(filter.permitsItem(GTItems.getStack(gregtech.data.MaterialPrefix.plate,copper,1)),"prefix accepts same form of another material");
-        h.assertTrue(!filter.permitsItem(GTItems.getStack(gregtech.data.MaterialPrefix.ingot,steel,1)),"shared material does not imply shared prefix");
+        h.assertTrue(filter.permitsItem(GTItems.getStack(gregtech.content.data.MaterialPrefix.plate,copper,1)),"prefix accepts same form of another material");
+        h.assertTrue(!filter.permitsItem(GTItems.getStack(gregtech.content.data.MaterialPrefix.ingot,steel,1)),"shared material does not imply shared prefix");
         var water=new net.minecraftforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.WATER,1000);
         h.assertTrue(filter.permitsFluid(water)&&filter.getCapability(ForgeCapabilities.FLUID_HANDLER,Direction.SOUTH).isPresent(),"source prefix filter permits fluid capability and all fluids");
         var player=h.makeMockPlayer();var menu=new gregtech.client.gui.FilterMenu(1,player.getInventory(),filter);
@@ -60,7 +60,7 @@ public final class SourceFilterTests {
         filter.setTemplate(0,new ItemStack(Items.APPLE));filter.toggleMode();
         var saved=filter.saveWithoutMetadata();filter.clearFilter();h.assertTrue(!filter.blacklist()&&filter.templates().isEmpty(),"clear resets mode and ghosts");filter.load(saved);
         h.assertTrue(filter.blacklist()&&!filter.permitsItem(new ItemStack(Items.APPLE)),"saved templates and mode reload");
-        var state=h.getLevel().getBlockState(abs);var monkey=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.MONKEY_WRENCH,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
+        var state=h.getLevel().getBlockState(abs);var monkey=gregtech.content.item.GTToolItem.create(gregtech.internal.tool.GTToolType.MONKEY_WRENCH,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
         var player=h.makeMockPlayer();player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,monkey);
         var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(abs).add(0,0,.5),Direction.SOUTH,abs,false);
         gregtech.internal.tool.ToolInteractions.use(state,h.getLevel(),abs,player,net.minecraft.world.InteractionHand.MAIN_HAND,hit);
@@ -72,6 +72,6 @@ public final class SourceFilterTests {
         for(String name:new String[]{"blank_cover","item_filter","fluid_filter","filter_items","filter_fluids","filter_items_fluids","filter_oredict","filter_items_reset","filter_fluids_reset","filter_items_fluids_reset","filter_oredict_reset"})
             h.assertTrue(h.getLevel().getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","logistics/"+name)).isPresent(),"filter manufacturing/reset recipe loaded: "+name);
         var casing=GTBlocks.getStack(gregtech.internal.prefix.BlockMaterialPrefix.casingMachine,gregtech.content.material.Materials.SteelGalvanized);
-        h.assertTrue(gregtech.data.MachineRecipeMaps.Welder.mRecipeList.stream().anyMatch(r->r.mOutputs.length>0&&r.mOutputs[0].is(casing.getItem())),"galvanized casing upstream is craftable");h.succeed();
+        h.assertTrue(gregtech.content.data.MachineRecipeMaps.Welder.mRecipeList.stream().anyMatch(r->r.mOutputs.length>0&&r.mOutputs[0].is(casing.getItem())),"galvanized casing upstream is craftable");h.succeed();
     }
 }

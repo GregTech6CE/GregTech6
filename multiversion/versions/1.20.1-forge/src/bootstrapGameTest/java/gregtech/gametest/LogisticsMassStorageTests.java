@@ -1,21 +1,21 @@
 package gregtech.gametest;
 
-import gregtech.block.energy.ElectricWireBlock;
-import gregtech.block.machine.LogisticsWireBlock;
-import gregtech.blockentity.inventory.LogisticsMassStorageBlockEntity;
-import gregtech.blockentity.machine.LogisticsWireBlockEntity;
+import gregtech.content.block.energy.ElectricWireBlock;
+import gregtech.content.block.machine.LogisticsWireBlock;
+import gregtech.content.blockentity.inventory.LogisticsMassStorageBlockEntity;
+import gregtech.content.blockentity.machine.LogisticsWireBlockEntity;
 import gregtech.content.logistics.LogisticsCoreStructure;
 import gregtech.content.logistics.LogisticsCoverType;
 import gregtech.content.material.Materials;
-import gregtech.data.BlockHarvestPolicy;
-import gregtech.data.GregTechTags;
+import gregtech.content.data.BlockHarvestPolicy;
+import gregtech.content.data.GregTechTags;
 import gregtech.internal.tool.GTToolHelper;
 import gregtech.internal.tool.GTToolType;
-import gregtech.item.GTToolItem;
-import gregtech.registry.GTBlockEntities;
-import gregtech.registry.GTIconSetBlocks;
-import gregtech.registry.GTStorage;
-import gregtech.registry.GTStorageMetals;
+import gregtech.content.item.GTToolItem;
+import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTIconSetBlocks;
+import gregtech.content.registry.GTStorage;
+import gregtech.content.registry.GTStorageMetals;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -124,7 +124,7 @@ public final class LogisticsMassStorageTests {
         source.setItem(0, new ItemStack(Items.DIAMOND, 5));
         var wallCell = LogisticsCoreStructure.cells().stream()
                 .filter(cell -> cell.kind() == LogisticsCoreStructure.Kind.WALL).findFirst().orElseThrow();
-        var wall = (gregtech.blockentity.machine.MultiblockPortBlockEntity)
+        var wall = (gregtech.content.blockentity.machine.MultiblockPortBlockEntity)
                 helper.getLevel().getBlockEntity(wallCell.at(core.getBlockPos(), Direction.NORTH));
         helper.assertTrue(wall.doEnergyInjection(GregTechTags.Energy.EU,
                 Direction.UP, 512, 1, true) == 1, "core accepts a 512 EU packet");

@@ -1,14 +1,14 @@
 package gregtech.gametest;
 
-import gregtech.block.machine.TankControllerBlock;
-import gregtech.blockentity.machine.MultiblockPortBlockEntity;
-import gregtech.blockentity.machine.MultiblockTankControllerBlockEntity;
+import gregtech.content.block.machine.TankControllerBlock;
+import gregtech.content.blockentity.machine.MultiblockPortBlockEntity;
+import gregtech.content.blockentity.machine.MultiblockTankControllerBlockEntity;
 import gregtech.content.multiblock.LargeMachineParts;
 import gregtech.content.multiblock.ControllerStructureLayouts;
 import gregtech.content.multiblock.TankValveSpec;
-import gregtech.registry.GTBlockEntities;
-import gregtech.registry.GTFluids;
-import gregtech.registry.GTTanks;
+import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTFluids;
+import gregtech.content.registry.GTTanks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

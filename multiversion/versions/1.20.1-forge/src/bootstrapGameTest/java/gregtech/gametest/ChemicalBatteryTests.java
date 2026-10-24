@@ -2,15 +2,15 @@ package gregtech.gametest;
 
 import gregtech.GregTech;
 import gregtech.internal.tool.*;
-import gregtech.block.energy.ChemicalBatteryBlock;
-import gregtech.blockentity.energy.ChemicalBatteryBlockEntity;
+import gregtech.content.block.energy.ChemicalBatteryBlock;
+import gregtech.content.blockentity.energy.ChemicalBatteryBlockEntity;
 import gregtech.content.energy.ChemicalBatterySpec;
 import gregtech.content.material.Materials;
 import gregtech.content.tool.ElectricToolAssembly;
-import gregtech.data.GregTechTags;
-import gregtech.item.*;
-import gregtech.recipe.ToolShapedRecipe;
-import gregtech.registry.*;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.item.*;
+import gregtech.content.recipe.ToolShapedRecipe;
+import gregtech.content.registry.*;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.nbt.CompoundTag;
@@ -121,7 +121,7 @@ public final class ChemicalBatteryTests {
     @GameTest(template="test_empty")
     public static void realChargerAndToolAssemblyUseChemicalCapacity(GameTestHelper h){
         var pos=new BlockPos(1,1,1);h.setBlock(pos,GTMiscBlocks.CHARGING_CRAFTING_TABLE.get());
-        var charger=(gregtech.block.misc.ChargingCraftingTableBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(pos));
+        var charger=(gregtech.content.block.misc.ChargingCraftingTableBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(pos));
         var item=item(ChemicalBatterySpec.Chemistry.LEAD_ACID,1);
         charger.items().setStackInSlot(16,new ItemStack(item));
         h.assertTrue(charger.doEnergyInjection(GregTechTags.Energy.EU,Direction.DOWN,32,1,true)==1&&item.stored(charger.items().getStackInSlot(16))==32,"existing charger accepts the real LV chemical battery");

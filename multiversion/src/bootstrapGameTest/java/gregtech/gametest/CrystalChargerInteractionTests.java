@@ -1,12 +1,12 @@
 package gregtech.gametest;
 
-import gregtech.block.energy.EnergyNodeBlock;
-import gregtech.blockentity.energy.EnergyNodeBlockEntity;
+import gregtech.content.block.energy.EnergyNodeBlock;
+import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.data.MaterialPrefix;
-import gregtech.data.GregTechTags;
-import gregtech.item.ChemicalBatteryItem;
-import gregtech.registry.GTItems;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.item.ChemicalBatteryItem;
+import gregtech.content.registry.GTItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;

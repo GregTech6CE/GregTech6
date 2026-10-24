@@ -35,8 +35,8 @@ public class GregTech {
         IEventBus modEventBus = context.getModEventBus();
 
         GTPackets.register();
-        gregtech.registry.GTProjectiles.register(modEventBus);
-        gregtech.worldgen.GTFeatures.register(modEventBus);
+        gregtech.content.registry.GTProjectiles.register(modEventBus);
+        gregtech.content.worldgen.GTFeatures.register(modEventBus);
 
         // Base data must precede material items and dependent blocks.
         initialize("content",
@@ -74,8 +74,8 @@ public class GregTech {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            gregtech.registry.GTProjectiles.registerDispensers();
-            gregtech.registry.GTDungeonBlocks.registerPotPlants();
+            gregtech.content.registry.GTProjectiles.registerDispensers();
+            gregtech.content.registry.GTDungeonBlocks.registerPotPlants();
             initialize("material linking", new MaterialLinkBootstrap(), new MaterialItemRegistration());
             gregtech.content.recipe.MachineRecipeBootstrap.load();
             gregtech.api.addon.GregTechAddons.dispatchRecipesReady(

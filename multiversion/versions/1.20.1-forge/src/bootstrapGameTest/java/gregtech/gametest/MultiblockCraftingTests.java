@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
-import gregtech.data.BasicMachineRecipePack;
-import gregtech.data.MachineRecipeIngredients;
-import gregtech.data.MultiblockCraftingRecipes;
-import gregtech.data.MultiblockRecipePack;
-import gregtech.registry.GTBasicMachines;
+import gregtech.content.data.BasicMachineRecipePack;
+import gregtech.content.data.MachineRecipeIngredients;
+import gregtech.content.data.MultiblockCraftingRecipes;
+import gregtech.content.data.MultiblockRecipePack;
+import gregtech.content.registry.GTBasicMachines;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;

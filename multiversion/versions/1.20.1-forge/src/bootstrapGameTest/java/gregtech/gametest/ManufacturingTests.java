@@ -1,13 +1,13 @@
 package gregtech.gametest;
 
-import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.internal.recipe.*;
 import gregtech.internal.tool.*;
 import gregtech.content.recipe.*;
-import gregtech.data.*;
-import gregtech.item.*;
-import gregtech.registry.*;
-import gregtech.block.energy.ElectricWireBlock;
+import gregtech.content.data.*;
+import gregtech.content.item.*;
+import gregtech.content.registry.*;
+import gregtech.content.block.energy.ElectricWireBlock;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.*;
@@ -55,7 +55,7 @@ public final class ManufacturingTests {
     @GameTest(template="test_blueprint_empty")
     public static void moldsHaveUniqueOrientationAndSurviveNetwork(GameTestHelper h) {
         var molds=h.getLevel().getRecipeManager().getRecipes().stream().filter(r->r.getId().getNamespace().equals("gt6ce")&&r.getId().getPath().startsWith("extruder_shapes/"))
-                .map(r->(gregtech.recipe.ToolShapedRecipe)r).toList();
+                .map(r->(gregtech.content.recipe.ToolShapedRecipe)r).toList();
         // 64 extruder shapes + the 14 shape items GT6 crafts the same way (food molds and slicer
         // blades, MultiItemTechnological:336-380), all registered as gregtech:tool_shaped recipes
         h.assertTrue(molds.size()==78,"78 molds loaded; got "+molds.size());
@@ -77,8 +77,8 @@ public final class ManufacturingTests {
             }
             var buffer=new FriendlyByteBuf(io.netty.buffer.Unpooled.buffer());
             try {
-                gregtech.recipe.ToolShapedRecipe.SERIALIZER.toNetwork(buffer,recipe);
-                var copy=gregtech.recipe.ToolShapedRecipe.SERIALIZER.fromNetwork(recipe.getId(),buffer);
+                gregtech.content.recipe.ToolShapedRecipe.SERIALIZER.toNetwork(buffer,recipe);
+                var copy=gregtech.content.recipe.ToolShapedRecipe.SERIALIZER.fromNetwork(recipe.getId(),buffer);
                 h.assertTrue(copy.matches(grid,h.getLevel())&&buffer.readableBytes()==0,"shape network codec includes mirror rule");
                 for(int y=0;y<3;y++){var a=grid.getItem(y*3);var b=grid.getItem(y*3+2);grid.setItem(y*3,b);grid.setItem(y*3+2,a);}
                 h.assertTrue(copy.matches(grid,h.getLevel())==recipe.matches(grid,h.getLevel()),"network keeps orientation behavior");
@@ -94,7 +94,7 @@ public final class ManufacturingTests {
             var remaining=RecipeInputs.consume(recipe,items,List.of(),1);h.assertTrue(remaining!=null,"wire machine recipe executes");
             long input=0;for(var stack:items) {
                 if(stack.getItem() instanceof BlockItem item&&item.getBlock() instanceof ElectricWireBlock wire)input+=wire.spec().materialAmount()*stack.getCount();
-                else if(stack.getItem() instanceof BlockItem item&&item.getBlock() instanceof gregtech.block.energy.SignalWireBlock)input+=gregtech.api.material.GTValues.U/2*stack.getCount();
+                else if(stack.getItem() instanceof BlockItem item&&item.getBlock() instanceof gregtech.content.block.energy.SignalWireBlock)input+=gregtech.api.material.GTValues.U/2*stack.getCount();
                 else if(entry.map()==MachineRecipeMaps.Wiremill&&stack.getItem() instanceof MaterialItem item)input+=item.getPrefix().getMaterialWeight()*stack.getCount();
             }
             var result=recipe.mOutputs[0];var block=((BlockItem)result.getItem()).getBlock();

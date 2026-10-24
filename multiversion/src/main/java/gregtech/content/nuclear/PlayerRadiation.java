@@ -50,7 +50,7 @@ public final class PlayerRadiation {
             // IC2, so the severe stage of its own dose tracker deals it - which is also what gives
             // GTDamageTypes.RADIATION ("was irradiated") its call site. One point per symptom tick
             // (every 50 ticks): requests 1 HP per 2.5 s; actual damage still follows the damage pipeline.
-            player.hurt(gregtech.damage.GTDamageTypes.radiation(player.level()), 1.0F);
+            player.hurt(gregtech.content.damage.GTDamageTypes.radiation(player.level()), 1.0F);
         }
         if (value < 50) return;
         int amplifier = value >= SEVERE_DOSE ? 2 : value >= 75 ? 1 : 0;

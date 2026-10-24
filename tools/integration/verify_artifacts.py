@@ -52,19 +52,19 @@ def required_forge_mixin_mappings(config):
 # Both production platforms must retain the restored gameplay implementations.
 # Shared-core agreement alone also accepts a material-only NeoForge skeleton.
 GAMEPLAY_CLASSES = (
-    'gregtech/registry/GTBlocks.class',
-    'gregtech/registry/GTBlockEntities.class',
-    'gregtech/worldgen/GTFeatures.class',
-    'gregtech/item/GunToolItem.class',
-    'gregtech/item/PocketToolItem.class',
-    'gregtech/item/ElectricToolItem.class',
+    'gregtech/content/registry/GTBlocks.class',
+    'gregtech/content/registry/GTBlockEntities.class',
+    'gregtech/content/worldgen/GTFeatures.class',
+    'gregtech/content/item/GunToolItem.class',
+    'gregtech/content/item/PocketToolItem.class',
+    'gregtech/content/item/ElectricToolItem.class',
     'gregtech/content/tool/ElectricUtilityHarvest.class',
-    'gregtech/item/behavior/BehaviorPlugLeak.class',
+    'gregtech/content/item/behavior/BehaviorPlugLeak.class',
 )
 PLATFORM_GAMEPLAY_CLASSES = {
     'forge': (
-        'gregtech/registry/GTMachines.class',
-        'gregtech/blockentity/machine/SmeltingCrucibleBlockEntity.class',
+        'gregtech/content/registry/GTMachines.class',
+        'gregtech/content/blockentity/machine/SmeltingCrucibleBlockEntity.class',
     ),
     'neoforge': (
         'gregtech/platform/neoforge/machine/BasicMachineRegistries.class',

@@ -3,7 +3,7 @@ package gregtech.integration.client;
 import com.google.gson.JsonObject;
 import gregtech.content.multiblock.OriginalMultiblockPartData;
 import gregtech.client.CommonBlockTooltips;
-import gregtech.data.BlockHarvestPolicy;
+import gregtech.content.data.BlockHarvestPolicy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -18,7 +18,7 @@ final class MultiblockPartDeliveryChecks {
             require(BuiltInRegistries.ITEM.containsKey(id), "Original part registered " + id);
             var stack = new ItemStack(BuiltInRegistries.ITEM.get(id));
             var block = ((BlockItem) stack.getItem()).getBlock();
-            require(block instanceof gregtech.block.machine.MultiblockPortBlock, "Native port including niobium titanium coil " + id);
+            require(block instanceof gregtech.content.block.machine.MultiblockPortBlock, "Native port including niobium titanium coil " + id);
 //? if >=1.21.1 {
             /*var lines = stack.getTooltipLines(Item.TooltipContext.EMPTY,null,TooltipFlag.NORMAL);
 *///?} else {

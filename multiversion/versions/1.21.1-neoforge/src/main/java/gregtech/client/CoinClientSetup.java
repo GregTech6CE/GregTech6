@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.registry.*;
+import gregtech.content.registry.*;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.api.distmarker.Dist;
@@ -16,7 +16,7 @@ public final class CoinClientSetup {
     public static void items(net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent event) {
         var coins = GTItems.allEntries().stream()
                 .map(item -> item.get())
-                .filter(item -> item instanceof gregtech.item.CoinItem)
+                .filter(item -> item instanceof gregtech.content.item.CoinItem)
                 .toArray(net.minecraft.world.item.Item[]::new);
         event.registerItem(new net.neoforged.neoforge.client.extensions.common.IClientItemExtensions() {
 

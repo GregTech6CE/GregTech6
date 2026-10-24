@@ -2,7 +2,7 @@ package gregtech.gametest;
 
 import gregtech.internal.fluid.PortableFluidContainerSpec;
 import gregtech.content.tool.PortableContainerLimits;
-import gregtech.blockentity.tool.PortableContainerBlockEntity;
+import gregtech.content.blockentity.tool.PortableContainerBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.item.*;
@@ -35,7 +35,7 @@ public final class PortableContainerLimitTests {
         for(var spec:PortableFluidContainerSpec.values())if(PortableContainerLimits.adjustable(spec)){
             var stack=vessel(spec);var handler=stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElseThrow(IllegalStateException::new);
             boolean gas=spec.shapeId().equals("barometer_gas_cylinder");
-            var fluid=gas?gregtech.registry.GTFluids.still("Helium").get():net.minecraft.world.level.material.Fluids.WATER;
+            var fluid=gas?gregtech.content.registry.GTFluids.still("Helium").get():net.minecraft.world.level.material.Fluids.WATER;
             stack.getOrCreateTag().putInt("gt.mode",600);
             h.assertTrue(handler.fill(new FluidStack(fluid,900),FluidAction.SIMULATE)==600&&handler.getFluidInTank(0).isEmpty(),"simulation obeys live limit without mutation");
             h.assertTrue(handler.fill(new FluidStack(fluid,900),FluidAction.EXECUTE)==600,"item fills only to chosen limit");

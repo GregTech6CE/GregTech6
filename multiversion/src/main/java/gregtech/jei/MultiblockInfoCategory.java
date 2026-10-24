@@ -2,7 +2,7 @@ package gregtech.jei;
 
 import gregtech.internal.multiblock.*;
 import gregtech.content.multiblock.BoilerStructure;
-import gregtech.registry.GTMultiblocks;
+import gregtech.content.registry.GTMultiblocks;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;

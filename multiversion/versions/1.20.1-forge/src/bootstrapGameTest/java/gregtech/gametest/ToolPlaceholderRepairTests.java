@@ -1,13 +1,13 @@
 package gregtech.gametest;
 
-import gregtech.block.tool.AdvancedButtonBlock;
-import gregtech.block.tool.CoinMoldBlock;
-import gregtech.block.tool.ScaffoldBlock;
-import gregtech.blockentity.tool.AdvancedButtonBlockEntity;
-import gregtech.blockentity.tool.CoinMoldBlockEntity;
+import gregtech.content.block.tool.AdvancedButtonBlock;
+import gregtech.content.block.tool.CoinMoldBlock;
+import gregtech.content.block.tool.ScaffoldBlock;
+import gregtech.content.blockentity.tool.AdvancedButtonBlockEntity;
+import gregtech.content.blockentity.tool.CoinMoldBlockEntity;
 import gregtech.content.material.Materials;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.GTItems;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

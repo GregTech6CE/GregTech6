@@ -3,12 +3,12 @@ package gregtech.gametest;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.tool.GTToolHelper;
 import gregtech.internal.tool.GTToolType;
-import gregtech.block.RockOreBlock;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.data.MaterialPrefix;
-import gregtech.data.ToolBlockConversionEvents;
-import gregtech.registry.GTItems;
-import gregtech.registry.GTToolItems;
+import gregtech.content.block.RockOreBlock;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.data.ToolBlockConversionEvents;
+import gregtech.content.registry.GTItems;
+import gregtech.content.registry.GTToolItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -103,8 +103,8 @@ public final class ToolBlockConversionTests {
     /** The conversion must stay reachable: the map has to be populated. */
     @GameTest(template = "test_empty")
     public static void hammerAndChiselMapsArePopulated(GameTestHelper helper) {
-        int hammer = gregtech.data.MachineRecipeMaps.Hammer.mRecipeList.size();
-        int chisel = gregtech.data.MachineRecipeMaps.Chisel.mRecipeList.size();
+        int hammer = gregtech.content.data.MachineRecipeMaps.Hammer.mRecipeList.size();
+        int chisel = gregtech.content.data.MachineRecipeMaps.Chisel.mRecipeList.size();
         helper.assertTrue(hammer > 500, "hammer recipes registered: " + hammer);
         helper.assertTrue(chisel > 0, "chisel recipes registered: " + chisel);
         helper.succeed();
@@ -113,7 +113,7 @@ public final class ToolBlockConversionTests {
     /** GT6 crowbar / universal spade unpack a block's drops through the Unboxinator map. */
     @GameTest(template = "test_empty")
     public static void crowbarUnpacksBoxedDrops(GameTestHelper helper) {
-        var recipe = gregtech.data.MachineRecipeMaps.Unboxinator.mRecipeList.stream()
+        var recipe = gregtech.content.data.MachineRecipeMaps.Unboxinator.mRecipeList.stream()
                 .filter(r -> !r.mFakeRecipe && r.mInputs.length > 0 && !r.mInputs[0].isEmpty())
                 .findFirst().orElse(null);
         helper.assertTrue(recipe != null, "unboxinator has a real recipe to convert");

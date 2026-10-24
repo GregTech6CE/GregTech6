@@ -3,7 +3,7 @@ package gregtech.content.tool;
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
 import gregtech.internal.tool.*;
-import gregtech.item.GTToolItem;
+import gregtech.content.item.GTToolItem;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;

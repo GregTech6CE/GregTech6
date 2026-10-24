@@ -1,5 +1,5 @@
 package gregtech.integration.jade;
-import gregtech.blockentity.energy.EnergyNodeBlockEntity;
+import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;

@@ -1,6 +1,6 @@
 package gregtech.content.fluid;
 import gregtech.content.transport.fluid.FluidTransportDefinitions;
-import gregtech.registry.GTTanks;
+import gregtech.content.registry.GTTanks;
 /** Platform registration over the shared original ordinary tank catalog. */
 public final class TankDefinitions {
     private TankDefinitions() {}

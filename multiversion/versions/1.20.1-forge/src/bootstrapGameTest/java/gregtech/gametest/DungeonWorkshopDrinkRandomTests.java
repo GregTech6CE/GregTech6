@@ -1,12 +1,12 @@
 package gregtech.gametest;
 
-import gregtech.block.stone.StoneType;
-import gregtech.blockentity.machine.TankBlockEntity;
-import gregtech.registry.GTFluids;
-import gregtech.worldgen.GTDungeonFeature;
-import gregtech.worldgen.dungeon.GTDungeonChunkRoomWorkshop;
-import gregtech.worldgen.dungeon.GTDungeonData;
-import gregtech.worldgen.dungeon.GTDungeonLayout;
+import gregtech.content.block.stone.StoneType;
+import gregtech.content.blockentity.machine.TankBlockEntity;
+import gregtech.content.registry.GTFluids;
+import gregtech.content.worldgen.GTDungeonFeature;
+import gregtech.content.worldgen.dungeon.GTDungeonChunkRoomWorkshop;
+import gregtech.content.worldgen.dungeon.GTDungeonData;
+import gregtech.content.worldgen.dungeon.GTDungeonLayout;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

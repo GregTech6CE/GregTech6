@@ -1,8 +1,8 @@
 package gregtech.content.food;
 
 import gregtech.content.nuclear.PlayerRadiation;
-import gregtech.data.RegisteredFluids;
-import gregtech.data.generated.GTDrinksGen;
+import gregtech.content.data.RegisteredFluids;
+import gregtech.content.data.generated.GTDrinksGen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -92,10 +92,10 @@ public final class GTDrinks {
 
     private static Fluid stillFluid(String field) {
 //? if >=1.21.1 {
-        /*var ro = gregtech.registry.GTFluids.still(field);
+        /*var ro = gregtech.content.registry.GTFluids.still(field);
         return ro != null && ro.isBound() ? ro.get() : null;
 *///?} else {
-        net.minecraftforge.registries.RegistryObject<Fluid> ro = gregtech.registry.GTFluids.still(field);
+        net.minecraftforge.registries.RegistryObject<Fluid> ro = gregtech.content.registry.GTFluids.still(field);
         return ro != null && ro.isPresent() ? ro.get() : null;
 //?}
     }
@@ -118,11 +118,11 @@ public final class GTDrinks {
 *///?} else {
         for (net.minecraftforge.registries.RegistryObject<Fluid> ro
 //?}
-                : gregtech.registry.GTFluids.FLUIDS.getEntries()) {
+                : gregtech.content.registry.GTFluids.FLUIDS.getEntries()) {
 //? if >=1.21.1 {
-            /*if (ro.isBound() && gregtech.registry.GTFluids.entryForFluid(ro.get()) == entry) {
+            /*if (ro.isBound() && gregtech.content.registry.GTFluids.entryForFluid(ro.get()) == entry) {
 *///?} else {
-            if (ro.isPresent() && gregtech.registry.GTFluids.entryForFluid(ro.get()) == entry) {
+            if (ro.isPresent() && gregtech.content.registry.GTFluids.entryForFluid(ro.get()) == entry) {
 //?}
                 return ro.get();
             }

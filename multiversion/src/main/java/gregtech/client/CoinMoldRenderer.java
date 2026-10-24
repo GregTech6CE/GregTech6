@@ -4,7 +4,7 @@ package gregtech.client;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.blockentity.tool.CoinMoldBlockEntity;
+import gregtech.content.blockentity.tool.CoinMoldBlockEntity;
 import gregtech.content.tool.CoinMoldGeometry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.*;

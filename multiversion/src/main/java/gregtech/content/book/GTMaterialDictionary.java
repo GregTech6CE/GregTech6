@@ -6,8 +6,8 @@ import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
 import gregtech.internal.material.MaterialProperty;
 import gregtech.internal.prefix.PrefixRegistry;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.GTItems;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -78,7 +78,7 @@ public final class GTMaterialDictionary {
         if (material == null || !material.isValid()) return ItemStack.EMPTY;
         List<String> pages = pages(material);
         if (pages.isEmpty()) return ItemStack.EMPTY;
-        ItemStack stack = gregtech.registry.GTColoredBooks.stack(pages.size()>50?32003:32002);
+        ItemStack stack = gregtech.content.registry.GTColoredBooks.stack(pages.size()>50?32003:32002);
 //? if >=1.21.1 {
 //?} else {
         CompoundTag tag = stack.getOrCreateTag();
@@ -141,7 +141,7 @@ public final class GTMaterialDictionary {
     }
     private static String ore(GTMaterial material) {
         // The port's ore blocks are blocks (BlockMaterialPrefix.ore), the raw ore is an item.
-        ItemStack ore = gregtech.registry.GTBlocks.getStack(
+        ItemStack ore = gregtech.content.registry.GTBlocks.getStack(
                 gregtech.internal.prefix.BlockMaterialPrefix.ore, material);
         ItemStack raw = GTItems.getStack(MaterialPrefix.oreRaw, material, 1);
         if (ore.isEmpty() && raw.isEmpty()) return null;

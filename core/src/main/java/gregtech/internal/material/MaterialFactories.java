@@ -2,7 +2,7 @@ package gregtech.internal.material;
 
 import gregtech.api.material.GTValues;
 
-import gregtech.data.GregTechConstants;
+import gregtech.content.data.GregTechConstants;
 
 import gregtech.content.material.Materials;
 

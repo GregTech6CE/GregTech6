@@ -1,6 +1,6 @@
 package gregtech.content.food;
 
-import gregtech.item.BottleItem;
+import gregtech.content.item.BottleItem;
 import gregtech.content.nuclear.PlayerRadiation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;

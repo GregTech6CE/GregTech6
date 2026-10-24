@@ -4,8 +4,8 @@ package gregtech.content.transport;
 
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
-import gregtech.data.MaterialGroups;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialGroups;
+import gregtech.content.data.MaterialPrefix;
 import java.util.*;
 
 public final class PanelMaterialRules {

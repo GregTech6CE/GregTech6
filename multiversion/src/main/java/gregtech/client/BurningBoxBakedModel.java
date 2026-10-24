@@ -5,7 +5,7 @@ package gregtech.client;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.block.machine.GTFacingMachineBlock;
+import gregtech.content.block.machine.GTFacingMachineBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;

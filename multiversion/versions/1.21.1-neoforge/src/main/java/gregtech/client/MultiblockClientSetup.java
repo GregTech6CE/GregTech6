@@ -4,7 +4,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.*;
-import gregtech.registry.*;
+import gregtech.content.registry.*;
 
 /** NeoForge renderer registration and material tints for multiblocks and crucibles. */
 @EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)

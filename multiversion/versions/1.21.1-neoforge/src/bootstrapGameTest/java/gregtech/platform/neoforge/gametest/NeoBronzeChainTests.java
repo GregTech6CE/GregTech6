@@ -4,9 +4,9 @@ import gregtech.internal.machine.crucible.CrucibleItemInput;
 import gregtech.internal.machine.crucible.CrucibleMaterialStack;
 import gregtech.api.material.GTValues;
 import gregtech.content.material.Materials;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 import gregtech.platform.neoforge.smeltery.*;
-import gregtech.registry.GTItems;
+import gregtech.content.registry.GTItems;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -130,7 +130,7 @@ public final class NeoBronzeChainTests {
         for (int i = 0; i < 4; i++) {
             var material = i == 3 ? Materials.Tin : Materials.Copper;
             BlockPos relative = new BlockPos(6 + i, 1, 3), absolute = helper.absolutePos(relative);
-            var block = gregtech.registry.GTBlocks.getObject(
+            var block = gregtech.content.registry.GTBlocks.getObject(
                     gregtech.internal.prefix.BlockMaterialPrefix.ore, material);
             helper.assertTrue(block != null, "Registered actual raw ore block exists");
             helper.setBlock(relative.below(), Blocks.STONE);
@@ -165,7 +165,7 @@ public final class NeoBronzeChainTests {
                 actor.getInventory().setItem(slot, ItemStack.EMPTY);
             }
             helper.assertTrue(gathered.getCount() == required, "Use harvested raw stock without replacement");
-            var display = gregtech.data.MachineRecipeMaps.CrucibleSmelting.mRecipeList.stream()
+            var display = gregtech.content.data.MachineRecipeMaps.CrucibleSmelting.mRecipeList.stream()
                     .filter(recipe -> recipe.mInputs.length==1 && ItemStack.isSameItemSameComponents(recipe.mInputs[0],expected))
                     .findFirst().orElseThrow();
             // Recipe registration intentionally unifies copper to vanilla's copper ingot.
@@ -190,7 +190,7 @@ public final class NeoBronzeChainTests {
                 .findFirst().orElseThrow().get();
         BlockPos basinPos = mold.getBlockPos().below();
         helper.getLevel().setBlockAndUpdate(basinPos, basinBlock.defaultBlockState());
-        var basin = (gregtech.blockentity.machine.MoldBasinBlockEntity)
+        var basin = (gregtech.content.blockentity.machine.MoldBasinBlockEntity)
                 helper.getLevel().getBlockEntity(basinPos);
         helper.assertTrue(basin.fillMold(Materials.Bronze, 9L * GTValues.U, 1400, Direction.UP.ordinal())
                 == 9L * GTValues.U, "Stacked basin accepts exactly nine U");
@@ -199,7 +199,7 @@ public final class NeoBronzeChainTests {
                 && basin.getMoldContentAmount() == 9L * GTValues.U,
                 "Ambient air must not make a hot basin immediately castable");
         for (int tick = 0; tick < 250; tick++)
-            gregtech.blockentity.machine.MoldBasinBlockEntity.serverTick(
+            gregtech.content.blockentity.machine.MoldBasinBlockEntity.serverTick(
                     helper.getLevel(), basinPos, basin.getBlockState(), basin);
         for (int cast = 1; cast <= 9; cast++) {
             click(helper, player, mold.getBlockPos(), Direction.UP, 0.5, 0.1875, 0.5);

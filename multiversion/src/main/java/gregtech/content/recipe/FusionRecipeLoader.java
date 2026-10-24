@@ -4,8 +4,8 @@ import gregtech.content.recipe.generated.GeneratedRecipeResolver;
 
 import gregtech.internal.recipe.Recipe;
 import gregtech.internal.material.MaterialStackItemHelper;
-import gregtech.data.*;
-import gregtech.registry.GTTechnological;
+import gregtech.content.data.*;
+import gregtech.content.registry.GTTechnological;
 import gregtech.bootstrap.InitializationStep;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {

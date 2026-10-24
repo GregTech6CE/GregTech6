@@ -3,8 +3,8 @@ package gregtech.internal.machine;
 import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.ItemMaterialRegistry;
 import gregtech.internal.material.MaterialStackItemHelper;
-import gregtech.data.MaterialPrefix;
-import gregtech.data.GregTechConstants;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.data.GregTechConstants;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 

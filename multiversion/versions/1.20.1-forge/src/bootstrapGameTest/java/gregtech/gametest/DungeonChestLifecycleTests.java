@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
-import gregtech.blockentity.inventory.MetalChestBlockEntity;
-import gregtech.block.stone.StoneType;
-import gregtech.registry.GTLootChests;
-import gregtech.worldgen.dungeon.GTDungeonData;
-import gregtech.worldgen.GTDungeonFeature;
+import gregtech.content.blockentity.inventory.MetalChestBlockEntity;
+import gregtech.content.block.stone.StoneType;
+import gregtech.content.registry.GTLootChests;
+import gregtech.content.worldgen.dungeon.GTDungeonData;
+import gregtech.content.worldgen.GTDungeonFeature;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -48,7 +48,7 @@ public final class DungeonChestLifecycleTests {
         h.assertTrue(chest.generateLootIfNeeded() == 0 && count(chest, Items.PAPER) == 0, "consumed loot stays consumed");
         h.assertTrue(data.chestContents(3, 1, 1, new ItemStack(Items.IRON_INGOT, 23)), "GT supply chest placed");
         var supplied = (MetalChestBlockEntity) level.getBlockEntity(origin.offset(3, 1, 1));
-        h.assertTrue(supplied.getBlockState().is(gregtech.registry.GTStorage.reinforcedChest(
+        h.assertTrue(supplied.getBlockState().is(gregtech.content.registry.GTStorage.reinforcedChest(
                 gregtech.content.material.Materials.Gold)), "portal supplies use GT6 gold-reinforced chest 502");
         supplied.load(supplied.saveWithoutMetadata());
         h.assertTrue(count(supplied, Items.IRON_INGOT) == 23, "fixed supplies survive reload");
@@ -56,7 +56,7 @@ public final class DungeonChestLifecycleTests {
         h.assertTrue(supplied.inventory().getSlots() == 54 && count(supplied, Items.IRON_INGOT) == 0,
                 "empty NBT clears contents without losing slots");
         h.assertTrue(data.safe(5, 1, 1, "gregtech_repair:shelf_paper", 445L, true), "dungeon places actual key safe");
-        var locked = (gregtech.blockentity.inventory.SafeBlockEntity) level.getBlockEntity(origin.offset(5, 1, 1));
+        var locked = (gregtech.content.blockentity.inventory.SafeBlockEntity) level.getBlockEntity(origin.offset(5, 1, 1));
         locked.load(locked.saveWithoutMetadata());
         h.assertTrue(locked.keyId() == 445L && !locked.opened() && locked.inventory().isEmpty(), "dungeon key and unopened loot survive reload");
         h.succeed();

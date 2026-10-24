@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
 import gregtech.content.energy.BatteryBoxEnergy;
-import gregtech.data.GregTechTags;
-import gregtech.item.ChemicalBatteryItem;
-import gregtech.registry.GTElectricItems;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.item.ChemicalBatteryItem;
+import gregtech.content.registry.GTElectricItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -17,8 +17,8 @@ import java.util.List;
 public final class LegacyBatteryVoltageTests {
     @GameTest(template = "test_empty")
     public static void migratedHandlesHonorChemicalPacketLimitsAndSimulation(GameTestHelper h) {
-        var batteries = List.of(gregtech.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,1), gregtech.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,2),
-                gregtech.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,3), gregtech.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,4), gregtech.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.LITHIUM_COBALT,4));
+        var batteries = List.of(gregtech.content.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,1), gregtech.content.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,2),
+                gregtech.content.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,3), gregtech.content.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,4), gregtech.content.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.LITHIUM_COBALT,4));
         var eu = GregTechTags.Energy.EU;
         for (ChemicalBatteryItem battery : batteries) {
             var stack = new ItemStack(battery);
@@ -56,8 +56,8 @@ public final class LegacyBatteryVoltageTests {
 
     @GameTest(template = "test_empty")
     public static void batteryBoxCountsOnlyCompatibleLegacyVoltage(GameTestHelper h) {
-        var lv = new ItemStack(gregtech.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,1));
-        var mv = new ItemStack(gregtech.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,2));
+        var lv = new ItemStack(gregtech.content.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,1));
+        var mv = new ItemStack(gregtech.content.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,2));
         var cells = List.of(lv, mv);
         h.assertTrue(new BatteryBoxEnergy(cells, 32).providers() == 1, "LV box counts only LV battery");
         h.assertTrue(new BatteryBoxEnergy(cells, 128).providers() == 1, "MV box counts only MV battery");

@@ -2,8 +2,8 @@ package gregtech.content.recipe;
 
 import gregtech.GregTech;
 import gregtech.content.food.GTDrinks;
-import gregtech.item.BottleItem;
-import gregtech.recipe.FiniteBottleFillingRecipe;
+import gregtech.content.item.BottleItem;
+import gregtech.content.recipe.FiniteBottleFillingRecipe;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -62,7 +62,7 @@ public final class BottleFillingRecipeInjector {
         int added = 0;
         for (gregtech.content.food.BottleFillingRows.Family family : FAMILIES) added += fill(recipes, family);
         added += fillLubricant(recipes);
-        if (added > 0) gregtech.recipe.RuntimeRecipeLifecycle.replaceGenerated(manager, recipes);
+        if (added > 0) gregtech.content.recipe.RuntimeRecipeLifecycle.replaceGenerated(manager, recipes);
         GregTech.LOGGER.info("Registered {} GT6 bottle filling rows for {} families ({} skipped)",
                 added, FAMILIES.size(), SKIPPED.size());
         for (String reason : SKIPPED) GregTech.LOGGER.debug("[gregtech] bottle filling row skipped: {}", reason);

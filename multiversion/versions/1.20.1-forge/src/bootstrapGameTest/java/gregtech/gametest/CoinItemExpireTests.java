@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.block.misc.CoinItemExpireHandler;
-import gregtech.blockentity.misc.CoinPileBlockEntity;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.GTDecorBlocks;
-import gregtech.registry.GTItems;
+import gregtech.content.block.misc.CoinItemExpireHandler;
+import gregtech.content.blockentity.misc.CoinPileBlockEntity;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTDecorBlocks;
+import gregtech.content.registry.GTItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

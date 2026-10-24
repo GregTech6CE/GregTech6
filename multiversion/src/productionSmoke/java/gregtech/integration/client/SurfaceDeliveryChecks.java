@@ -1,8 +1,8 @@
 package gregtech.integration.client;
 import com.google.gson.*;
 import gregtech.content.plant.BerryBushCatalog;
-import gregtech.registry.*;
-import gregtech.worldgen.FluidSpringRules;
+import gregtech.content.registry.*;
+import gregtech.content.worldgen.FluidSpringRules;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -24,7 +24,7 @@ final class SurfaceDeliveryChecks {
 *///?} else {
    require((color&0xffffff)==BerryBushCatalog.inventoryColour(berry),"berry tint "+berry.id());
 //?}
-   for(int stage=0;stage<4;stage++)require((minecraft.getBlockColors().getColor(block.defaultBlockState().setValue(gregtech.block.plant.BushBlock.STAGE,stage),null,null,1)&0xffffff)==BerryBushCatalog.stageColour(berry,stage),"berry stage "+berry.id());
+   for(int stage=0;stage<4;stage++)require((minecraft.getBlockColors().getColor(block.defaultBlockState().setValue(gregtech.content.block.plant.BushBlock.STAGE,stage),null,null,1)&0xffffff)==BerryBushCatalog.stageColour(berry,stage),"berry stage "+berry.id());
    checkMesh(minecraft,stack,null);
   }
   int materialBushes=0;
@@ -67,7 +67,7 @@ final class SurfaceDeliveryChecks {
   String[] machineNames={"lightning_galvanized_steel","lightning_aluminium","lightning_stainless_steel","lightning_chromium","lightning_titanium","melter_stainless_steel"};
   for(int i=0;i<machineNames.length;i++) {
    var stack=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",machineNames[i])));checkMesh(minecraft,stack,null);
-   var block=(gregtech.block.machine.BasicMachineBlock)((BlockItem)stack.getItem()).getBlock();require((minecraft.getItemColors().getColor(stack,0)&0xffffff)==(block.basicSpec().material().getColor()&0xffffff),"machine inventory tint");
+   var block=(gregtech.content.block.machine.BasicMachineBlock)((BlockItem)stack.getItem()).getBlock();require((minecraft.getItemColors().getColor(stack,0)&0xffffff)==(block.basicSpec().material().getColor()&0xffffff),"machine inventory tint");
    int x=8+i*65,y=110;graphics.fill(x,y,x+62,y+33,0xff30303d);graphics.renderItem(stack,x+22,y+2);graphics.drawString(minecraft.font,minecraft.font.plainSubstrByWidth(stack.getHoverName().getString(),60),x+1,y+21,0xffffff,false);machineIds.add(machineNames[i]);
   }
   graphics.pose().popPose();

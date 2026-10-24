@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
-import gregtech.block.inventory.UsbSwitchBlock;
-import gregtech.blockentity.inventory.UsbSwitchBlockEntity;
+import gregtech.content.block.inventory.UsbSwitchBlock;
+import gregtech.content.blockentity.inventory.UsbSwitchBlockEntity;
 import gregtech.client.gui.DataSwitchMenu;
 import gregtech.content.data.UsbDataMedia;
-import gregtech.registry.GTStorage;
-import gregtech.registry.GTTechnological;
+import gregtech.content.registry.GTStorage;
+import gregtech.content.registry.GTTechnological;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

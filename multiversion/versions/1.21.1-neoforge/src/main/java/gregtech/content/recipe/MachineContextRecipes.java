@@ -1,10 +1,10 @@
 package gregtech.content.recipe;
 
-import gregtech.api.recipe.*;
 import gregtech.internal.recipe.*;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.internal.recipe.*;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.data.*;
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.data.MachineRecipeMaps;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.fluids.FluidStack;
 

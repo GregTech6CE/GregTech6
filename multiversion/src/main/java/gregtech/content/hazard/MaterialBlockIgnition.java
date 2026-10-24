@@ -1,6 +1,6 @@
 package gregtech.content.hazard;
 
-import gregtech.block.MaterialBlockLike;
+import gregtech.content.block.MaterialBlockLike;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;

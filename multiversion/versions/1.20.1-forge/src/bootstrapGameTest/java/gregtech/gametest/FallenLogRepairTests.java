@@ -2,12 +2,12 @@ package gregtech.gametest;
 
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.tool.GTToolType;
-import gregtech.block.wood.FallenLogBlock;
+import gregtech.content.block.wood.FallenLogBlock;
 import gregtech.content.material.Materials;
 import gregtech.content.material.generated.WoodMaterials;
-import gregtech.data.MaterialPrefix;
-import gregtech.item.GTToolItem;
-import gregtech.registry.GTItems;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.item.GTToolItem;
+import gregtech.content.registry.GTItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

@@ -4,8 +4,8 @@ package gregtech.content.recipe;
 import gregtech.internal.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.internal.material.MaterialProperty;
-import gregtech.data.MaterialPrefix;
-import gregtech.data.generated.MaterialWorkability;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.data.generated.MaterialWorkability;
 import java.util.List;
 
 /** Loader_Recipes_Handlers external-prefix rows; RecipeMapHandlerPrefix:getCosts and Shredding targets. */

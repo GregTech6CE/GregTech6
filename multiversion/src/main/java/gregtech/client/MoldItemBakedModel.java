@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.block.machine.MoldItemData;
+import gregtech.content.block.machine.MoldItemData;
 import gregtech.internal.machine.crucible.MoldShapes;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.block.model.*;

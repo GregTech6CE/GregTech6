@@ -1,8 +1,8 @@
 package gregtech.integration.client;
 
 import com.google.gson.JsonObject;
-import gregtech.block.machine.TankBlock;
-import gregtech.blockentity.machine.TankBlockEntity;
+import gregtech.content.block.machine.TankBlock;
+import gregtech.content.blockentity.machine.TankBlockEntity;
 import gregtech.internal.material.ItemMaterialRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -117,7 +117,7 @@ final class TankItemDeliveryChecks {
             blocks++;
         }
         for (var block : BuiltInRegistries.BLOCK) {
-            if (!(block instanceof gregtech.block.machine.BasicMachineBlock machine)) continue;
+            if (!(block instanceof gregtech.content.block.machine.BasicMachineBlock machine)) continue;
             var spec = machine.basicSpec();
             var expected = gregtech.content.machine.OriginalMachineMaterialData.find(spec.machineName(), spec.tier());
             if (expected.isEmpty()) continue;
@@ -162,7 +162,7 @@ final class TankItemDeliveryChecks {
     private static int verifyFluidPipeTooltips() {
         int pipes = 0;
         for (var block : BuiltInRegistries.BLOCK) {
-            if (!(block instanceof gregtech.block.machine.FluidPipeBlock pipe)) continue;
+            if (!(block instanceof gregtech.content.block.machine.FluidPipeBlock pipe)) continue;
             var lines = tooltip(new ItemStack(block), net.minecraft.world.item.TooltipFlag.NORMAL);
             String bandwidth = net.minecraft.network.chat.Component.translatable("gt.lang.pipe.stats.bandwidth").getString()
                     + pipe.spec().bandwidthPerTank() + " L/t";
@@ -208,7 +208,7 @@ final class TankItemDeliveryChecks {
         }
         int boilers = 0;
         for (var block : BuiltInRegistries.BLOCK) {
-            if (!(block instanceof gregtech.block.machine.BoilerTankBlock boiler)) continue;
+            if (!(block instanceof gregtech.content.block.machine.BoilerTankBlock boiler)) continue;
             var item = new ItemStack(block);
             var lines = tooltip(item, net.minecraft.world.item.TooltipFlag.NORMAL);
             for (String key : java.util.List.of("gt.lang.requirement.water.pure", "gt.lang.nogui.funnel.tank",
@@ -241,7 +241,7 @@ final class TankItemDeliveryChecks {
     private static JsonObject verifyEnergyDeviceTooltips() {
         int batteries = 0, solar = 0, electric = 0, rotation = 0, reversed = 0;
         for (var block : BuiltInRegistries.BLOCK) {
-            if (!(block instanceof gregtech.block.energy.EnergyNodeBlock node)
+            if (!(block instanceof gregtech.content.block.energy.EnergyNodeBlock node)
                     || !gregtech.content.energy.OriginalEnergyDeviceTooltipData.handles(node.spec())
                     || gregtech.content.energy.OriginalRotaryConverter.handles(node.spec())
                     || gregtech.content.energy.OriginalThermalConverter.handles(node.spec())
@@ -255,8 +255,8 @@ final class TankItemDeliveryChecks {
             String wrench = tr("gt.lang.use.x.to.toggle.facing.pre") + tr("gt.lang.tool.name.wrench") + tr("gt.lang.use.x.to.toggle.facing.post");
             require(lines.stream().filter(wrench::equals).count() == 1, "installed one source energy-device facing hint " + spec.id());
             var raw = node.newBlockEntity(net.minecraft.core.BlockPos.ZERO, node.defaultBlockState());
-            require(raw instanceof gregtech.blockentity.energy.EnergyNodeBlockEntity, "installed actual node factory " + spec.id());
-            var tile = (gregtech.blockentity.energy.EnergyNodeBlockEntity) raw;
+            require(raw instanceof gregtech.content.blockentity.energy.EnergyNodeBlockEntity, "installed actual node factory " + spec.id());
+            var tile = (gregtech.content.blockentity.energy.EnergyNodeBlockEntity) raw;
             verifyNativeEnergyStats(tile, source);
             if (source.batteryModes()) {
                 for (String key : java.util.List.of("gt.tooltip.energybattery.1", "gt.tooltip.energybattery.2", "gt.tooltip.energybattery.3"))
@@ -292,7 +292,7 @@ final class TankItemDeliveryChecks {
         return out;
     }
 
-    private static void verifyNativeEnergyStats(gregtech.blockentity.energy.EnergyNodeBlockEntity tile,
+    private static void verifyNativeEnergyStats(gregtech.content.blockentity.energy.EnergyNodeBlockEntity tile,
                                                 gregtech.content.energy.OriginalEnergyDeviceTooltipData.Profile source) {
         var spec = tile.spec();
         if (source.input() != null)
@@ -328,12 +328,12 @@ final class TankItemDeliveryChecks {
     private static JsonObject verifyRotaryConverterDelivery() {
         int motors = 0, dynamos = 0, states = 0;
         for (var block : BuiltInRegistries.BLOCK) {
-            if (!(block instanceof gregtech.block.energy.EnergyNodeBlock node)
+            if (!(block instanceof gregtech.content.block.energy.EnergyNodeBlock node)
                     || !gregtech.content.energy.OriginalRotaryConverter.handles(node.spec())) continue;
             var spec = node.spec();
             boolean motor = gregtech.content.energy.OriginalRotaryConverter.motor(spec);
-            require(block instanceof gregtech.block.energy.RotaryConverterBlock, "installed converter visual state block " + spec.id());
-            require((block instanceof gregtech.block.energy.OriginalMotorBlock) == motor, "installed separate motor direction state " + spec.id());
+            require(block instanceof gregtech.content.block.energy.RotaryConverterBlock, "installed converter visual state block " + spec.id());
+            require((block instanceof gregtech.content.block.energy.OriginalMotorBlock) == motor, "installed separate motor direction state " + spec.id());
             var item = new ItemStack(block);
             var lines = tooltip(item, net.minecraft.world.item.TooltipFlag.NORMAL);
             var source = gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(spec, false);
@@ -341,14 +341,14 @@ final class TankItemDeliveryChecks {
             require(lines.contains(tr("gt.lang.efficiency") + (motor ? ": 50.00%" : ": 68.75%")), "installed original rotary efficiency " + spec.id());
             require(lines.stream().filter(tr("gt.lang.use.monkey.wrench.to.toggle.direction")::equals).count() == (motor ? 1 : 0),
                     "installed source motor-only reversal hint " + spec.id());
-            if (spec.inType() == gregtech.data.GregTechTags.Energy.RF)
+            if (spec.inType() == gregtech.content.data.GregTechTags.Energy.RF)
                 require(lines.contains(tr("gt.lang.accepts.redstoneflux.lossless")), "installed RF acceptance hint " + spec.id());
-            if (spec.outType() == gregtech.data.GregTechTags.Energy.RF)
+            if (spec.outType() == gregtech.content.data.GregTechTags.Energy.RF)
                 require(lines.contains(tr("gt.lang.emits.redstoneflux.lossless")), "installed RF emission hint " + spec.id());
             var material = gregtech.content.machine.MachineConstructionMaterials.blocks().get(spec.id());
             require(material != null, "installed source converter material registration " + spec.id());
             verifyComposition(item, material);
-            var tile = (gregtech.blockentity.energy.EnergyNodeBlockEntity) node.newBlockEntity(BlockPos.ZERO, block.defaultBlockState());
+            var tile = (gregtech.content.blockentity.energy.EnergyNodeBlockEntity) node.newBlockEntity(BlockPos.ZERO, block.defaultBlockState());
             require(tile.isOriginalRotaryConverter(), "installed native converter route " + spec.id());
             verifyNativeEnergyStats(tile, source);
             require(tile.getEnergyCapacity(spec.inType(), null) == spec.inputRate() * 2, "installed source two-input buffer " + spec.id());
@@ -359,7 +359,7 @@ final class TankItemDeliveryChecks {
             }
             require(tile.doEnergyInjection(spec.inType(), front.getOpposite(), spec.inputRate(), Long.MAX_VALUE, false) == 2 && tile.stored() == 0,
                     "installed source simulation is bounded and pure " + spec.id());
-            if (spec.inType() != gregtech.data.GregTechTags.Energy.RF) {
+            if (spec.inType() != gregtech.content.data.GregTechTags.Energy.RF) {
                 require(tile.doEnergyInjection(spec.inType(), front.getOpposite(), source.input().minimum() - 1, 3, true) == 3 && tile.stored() == 0,
                         "installed root consumes undersized packets without storage " + spec.id());
             }
@@ -380,10 +380,10 @@ final class TankItemDeliveryChecks {
                 for (var face : net.minecraft.core.Direction.values())
                     quads.addAll(model.getQuads(state, face, net.minecraft.util.RandomSource.create(0)));
                 quads.addAll(model.getQuads(state, null, net.minecraft.util.RandomSource.create(0)));
-                boolean active = state.getValue(gregtech.block.energy.RotaryConverterBlock.ACTIVITY) > 0;
+                boolean active = state.getValue(gregtech.content.block.energy.RotaryConverterBlock.ACTIVITY) > 0;
                 String folder = !active ? "/overlay/" : !motor ? "/overlay_active/"
-                        : "/overlay_active_" + (state.getValue(gregtech.block.energy.OriginalMotorBlock.COUNTER_CLOCKWISE) ? "l" : "r")
-                        + (state.getValue(gregtech.block.energy.OriginalMotorBlock.FAST) ? "f/" : "s/");
+                        : "/overlay_active_" + (state.getValue(gregtech.content.block.energy.OriginalMotorBlock.COUNTER_CLOCKWISE) ? "l" : "r")
+                        + (state.getValue(gregtech.content.block.energy.OriginalMotorBlock.FAST) ? "f/" : "s/");
                 require(quads.stream().anyMatch(q -> q.getSprite().contents().name().getPath().contains(folder)),
                         "installed actual active/inactive overlay baked " + spec.id() + state);
                 require(quads.stream().noneMatch(q -> q.getSprite().contents().name().getPath().equals("missingno")), "installed converter layer textures exist " + spec.id());
@@ -401,14 +401,14 @@ final class TankItemDeliveryChecks {
 
     private static JsonObject verifyThermalConverterDelivery() {
         int heaters = 0, coolers = 0, rf = 0, states = 0;
-        var heat = gregtech.data.GregTechTags.Energy.HU;
+        var heat = gregtech.content.data.GregTechTags.Energy.HU;
         for (var block : BuiltInRegistries.BLOCK) {
-            if (!(block instanceof gregtech.block.energy.EnergyNodeBlock node)
+            if (!(block instanceof gregtech.content.block.energy.EnergyNodeBlock node)
                     || !gregtech.content.energy.OriginalThermalConverter.handles(node.spec())) continue;
             var spec = node.spec();
             boolean cooler = gregtech.content.energy.OriginalThermalConverter.cooler(spec);
-            require(block instanceof gregtech.block.energy.RotaryConverterBlock, "installed thermal trinary states " + spec.id());
-            require((block instanceof gregtech.block.energy.OriginalHeaterBlock) != cooler, "installed heater contact block only " + spec.id());
+            require(block instanceof gregtech.content.block.energy.RotaryConverterBlock, "installed thermal trinary states " + spec.id());
+            require((block instanceof gregtech.content.block.energy.OriginalHeaterBlock) != cooler, "installed heater contact block only " + spec.id());
             var item = new ItemStack(block);
             var lines = tooltip(item, net.minecraft.world.item.TooltipFlag.NORMAL);
             var source = gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(spec, false);
@@ -420,14 +420,14 @@ final class TankItemDeliveryChecks {
                 require(lines.stream().filter(secondary::equals).count() == 1 && lines.contains(tr("gt.lang.reminder.extenders")), "installed secondary HU and source extender reminder " + spec.id());
             } else require(lines.contains(tr("gt.lang.hazard.contact") + " (" + tr("gt.lang.face.front") + ")"), "installed source heater contact hazard " + spec.id());
             require(lines.stream().noneMatch(tr("gt.lang.use.monkey.wrench.to.toggle.direction")::equals), "installed thermal has no motor reversal hint " + spec.id());
-            if (spec.inType() == gregtech.data.GregTechTags.Energy.RF) {
+            if (spec.inType() == gregtech.content.data.GregTechTags.Energy.RF) {
                 require(lines.contains(tr("gt.lang.accepts.redstoneflux.lossless")), "installed thermal RF hint " + spec.id()); rf++;
             }
             verifyComposition(item, gregtech.content.machine.MachineConstructionMaterials.block(spec.id()).orElseThrow());
             var sourceCreative = gregtech.content.creative.SourceCreativeCatalog.entry(spec.id());
             require(sourceCreative != null && sourceCreative.family().equals(cooler ? "coolers" : "heaters"), "installed original thermal creative binding " + spec.id());
             require(item.getHoverName().getString().equals(spec.displayEn()), "installed original English thermal name " + spec.id());
-            var tile = (gregtech.blockentity.energy.EnergyNodeBlockEntity) node.newBlockEntity(BlockPos.ZERO, block.defaultBlockState());
+            var tile = (gregtech.content.blockentity.energy.EnergyNodeBlockEntity) node.newBlockEntity(BlockPos.ZERO, block.defaultBlockState());
             require(tile.isOriginalThermalConverter() && !tile.isOriginalMotor() && !tile.isOriginalRotaryConverter(), "installed native common converter with separate thermal identity " + spec.id());
             verifyNativeEnergyStats(tile, source);
             require(tile.getEnergyCapacity(spec.inType(), null) == 2*spec.inputRate(), "installed thermal source storage " + spec.id());
@@ -455,7 +455,7 @@ final class TankItemDeliveryChecks {
                 var quads = new java.util.ArrayList<net.minecraft.client.renderer.block.model.BakedQuad>();
                 for (var face : net.minecraft.core.Direction.values()) quads.addAll(model.getQuads(state, face, net.minecraft.util.RandomSource.create(0)));
                 quads.addAll(model.getQuads(state, null, net.minecraft.util.RandomSource.create(0)));
-                String folder = state.getValue(gregtech.block.energy.RotaryConverterBlock.ACTIVITY) > 0 ? "/overlay_active/" : "/overlay/";
+                String folder = state.getValue(gregtech.content.block.energy.RotaryConverterBlock.ACTIVITY) > 0 ? "/overlay_active/" : "/overlay/";
                 require(quads.stream().anyMatch(q -> q.getSprite().contents().name().getPath().contains(folder))
                         && quads.stream().noneMatch(q -> q.getSprite().contents().name().getPath().equals("missingno")), "installed thermal colored/active layers exist " + spec.id());
                 if (!cooler) {
@@ -485,7 +485,7 @@ final class TankItemDeliveryChecks {
     private static JsonObject verifyMagnetConverterDelivery() {
         int count = 0, states = 0;
         for (var block : BuiltInRegistries.BLOCK) {
-            if (!(block instanceof gregtech.block.energy.MagnetMachineBlock node)) continue;
+            if (!(block instanceof gregtech.content.block.energy.MagnetMachineBlock node)) continue;
             var spec = node.spec();
             var item = new ItemStack(block);
             var lines = tooltip(item, net.minecraft.world.item.TooltipFlag.NORMAL);
@@ -499,7 +499,7 @@ final class TankItemDeliveryChecks {
             var entry = gregtech.content.creative.SourceCreativeCatalog.entry(spec.id());
             require(entry != null && entry.family().equals("magnets") && item.getHoverName().getString().equals(spec.displayEn()),
                     "installed original magnet names and creative family " + spec.id());
-            var tile = (gregtech.blockentity.energy.EnergyNodeBlockEntity) node.newBlockEntity(BlockPos.ZERO, block.defaultBlockState());
+            var tile = (gregtech.content.blockentity.energy.EnergyNodeBlockEntity) node.newBlockEntity(BlockPos.ZERO, block.defaultBlockState());
             require(tile.isMagnet() && tile.hasOriginalConverter() && !tile.isOriginalMotor() && !tile.isOriginalThermalConverter(),
                     "installed source bipolar common converter route " + spec.id());
             verifyNativeEnergyStats(tile, source);
@@ -523,7 +523,7 @@ final class TankItemDeliveryChecks {
                 var quads = new java.util.ArrayList<net.minecraft.client.renderer.block.model.BakedQuad>();
                 for (var face : net.minecraft.core.Direction.values()) quads.addAll(model.getQuads(state, face, net.minecraft.util.RandomSource.create(0)));
                 quads.addAll(model.getQuads(state, null, net.minecraft.util.RandomSource.create(0)));
-                String overlay = state.getValue(gregtech.block.energy.MagnetMachineBlock.ACTIVE) ? "/overlay_active/" : "/overlay/";
+                String overlay = state.getValue(gregtech.content.block.energy.MagnetMachineBlock.ACTIVE) ? "/overlay_active/" : "/overlay/";
                 require(quads.stream().anyMatch(q -> q.getTintIndex() == 0 && q.getSprite().contents().name().getPath().contains("/colored/"))
                         && quads.stream().anyMatch(q -> q.getSprite().contents().name().getPath().contains(overlay))
                         && quads.stream().noneMatch(q -> q.getSprite().contents().name().getPath().equals("missingno")), "installed magnet material tint and source overlay " + spec.id());
@@ -541,10 +541,10 @@ final class TankItemDeliveryChecks {
     private static JsonObject verifySteamTurbineDelivery() {
         int count = 0, states = 0;
         for (var block : BuiltInRegistries.BLOCK) {
-            if (!(block instanceof gregtech.block.energy.EnergyNodeBlock node)
+            if (!(block instanceof gregtech.content.block.energy.EnergyNodeBlock node)
                     || !gregtech.content.energy.OriginalSteamTurbines.handles(node.spec())) continue;
             var spec = node.spec(); var item = new ItemStack(block);
-            require(block instanceof gregtech.block.energy.OriginalMotorBlock && item.getMaxStackSize() == 16,
+            require(block instanceof gregtech.content.block.energy.OriginalMotorBlock && item.getMaxStackSize() == 16,
                     "installed source steam motor controls and sixteen-item stack " + spec.id());
             var lines = tooltip(item, net.minecraft.world.item.TooltipFlag.NORMAL);
             var source = gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(spec, false);
@@ -557,7 +557,7 @@ final class TankItemDeliveryChecks {
             var entry = gregtech.content.creative.SourceCreativeCatalog.entry(spec.id());
             require(entry != null && entry.family().equals("turbines") && item.getHoverName().getString().equals(spec.displayEn()),
                     "installed source turbine creative entry and name " + spec.id());
-            var tile = (gregtech.blockentity.energy.EnergyNodeBlockEntity) node.newBlockEntity(BlockPos.ZERO, block.defaultBlockState());
+            var tile = (gregtech.content.blockentity.energy.EnergyNodeBlockEntity) node.newBlockEntity(BlockPos.ZERO, block.defaultBlockState());
             require(tile.isTurbine() && tile.hasOriginalConverter() && tile.isOriginalMotor() && !tile.isOriginalRotaryConverter(),
                     "installed source turbine shares the motor converter without changing electric family identity " + spec.id());
             verifyNativeEnergyStats(tile, source);
@@ -586,10 +586,10 @@ final class TankItemDeliveryChecks {
                 var quads = new java.util.ArrayList<net.minecraft.client.renderer.block.model.BakedQuad>();
                 for (var face : net.minecraft.core.Direction.values()) quads.addAll(model.getQuads(state, face, net.minecraft.util.RandomSource.create(0)));
                 quads.addAll(model.getQuads(state, null, net.minecraft.util.RandomSource.create(0)));
-                boolean active = state.getValue(gregtech.block.energy.RotaryConverterBlock.ACTIVITY) > 0;
+                boolean active = state.getValue(gregtech.content.block.energy.RotaryConverterBlock.ACTIVITY) > 0;
                 String folder = active ? "/overlay_active_"
-                        + (state.getValue(gregtech.block.energy.OriginalMotorBlock.COUNTER_CLOCKWISE) ? "l" : "r")
-                        + (state.getValue(gregtech.block.energy.OriginalMotorBlock.FAST) ? "f/" : "s/") : "/overlay/";
+                        + (state.getValue(gregtech.content.block.energy.OriginalMotorBlock.COUNTER_CLOCKWISE) ? "l" : "r")
+                        + (state.getValue(gregtech.content.block.energy.OriginalMotorBlock.FAST) ? "f/" : "s/") : "/overlay/";
                 require(quads.stream().anyMatch(q -> q.getTintIndex() == 0 && q.getSprite().contents().name().getPath().contains("/colored/"))
                         && quads.stream().anyMatch(q -> q.getSprite().contents().name().getPath().contains(folder))
                         && quads.stream().noneMatch(q -> q.getSprite().contents().name().getPath().equals("missingno")),
@@ -605,27 +605,27 @@ final class TankItemDeliveryChecks {
         return result;
     }
 
-    private static String sourceEnergyUnit(gregtech.data.GregTechTags.Tag type) {
-        return tr(type == gregtech.data.GregTechTags.Energy.RU ? "gt.td.short.energy.kinetic_rotation"
-                : type == gregtech.data.GregTechTags.Energy.RF ? "gt.td.short.energy.redstone_flux"
-                : type == gregtech.data.GregTechTags.Energy.HU ? "gt.td.short.energy.heat"
-                : type == gregtech.data.GregTechTags.Energy.STEAM ? "gt.td.short.energy.steam"
-                : type == gregtech.data.GregTechTags.Energy.MU ? "gt.td.short.energy.magnetic"
-                : type == gregtech.data.GregTechTags.Energy.CU ? "gt.td.short.energy.cryo" : "gt.td.short.energy.electricity");
+    private static String sourceEnergyUnit(gregtech.content.data.GregTechTags.Tag type) {
+        return tr(type == gregtech.content.data.GregTechTags.Energy.RU ? "gt.td.short.energy.kinetic_rotation"
+                : type == gregtech.content.data.GregTechTags.Energy.RF ? "gt.td.short.energy.redstone_flux"
+                : type == gregtech.content.data.GregTechTags.Energy.HU ? "gt.td.short.energy.heat"
+                : type == gregtech.content.data.GregTechTags.Energy.STEAM ? "gt.td.short.energy.steam"
+                : type == gregtech.content.data.GregTechTags.Energy.MU ? "gt.td.short.energy.magnetic"
+                : type == gregtech.content.data.GregTechTags.Energy.CU ? "gt.td.short.energy.cryo" : "gt.td.short.energy.electricity");
     }
 
     private static JsonObject verifyMechanicalTooltips() {
         int axles = 0, gearboxes = 0, largeBoilers = 0;
         for (var block : BuiltInRegistries.BLOCK) {
             var item = new ItemStack(block);
-            if (block instanceof gregtech.block.energy.AxleBlock axle) {
+            if (block instanceof gregtech.content.block.energy.AxleBlock axle) {
                 var lines = tooltip(item, net.minecraft.world.item.TooltipFlag.NORMAL);
                 require(lines.contains(tr("gt.lang.axle.stats.speed") + axle.spec().maxSpeed() + " " + tr("gt.td.short.energy.kinetic_rotation")), "installed original axle speed");
                 require(lines.contains(tr("gt.lang.axle.stats.power") + axle.spec().maxPower()), "installed original axle power");
                 String wrench = tr("gt.lang.use.x.to.toggle.connection.pre") + tr("gt.lang.tool.name.wrench") + tr("gt.lang.use.x.to.toggle.connection.post");
                 require(lines.contains(wrench), "installed original axle connection hint");
                 axles++;
-            } else if (block instanceof gregtech.block.energy.GearboxBlock gearbox) {
+            } else if (block instanceof gregtech.content.block.energy.GearboxBlock gearbox) {
                 String warning = tr("gt.tooltip.gearbox.custom.1");
                 var lines = tooltip(item, net.minecraft.world.item.TooltipFlag.NORMAL);
                 require(!lines.contains(warning), "installed empty gearbox suppresses wrong interlock warning");
@@ -649,7 +649,7 @@ final class TankItemDeliveryChecks {
 //?}
                 require(!tooltip(item, net.minecraft.world.item.TooltipFlag.NORMAL).contains(warning), "installed saved matching axle clears warning");
                 gearboxes++;
-            } else if (block instanceof gregtech.block.machine.OriginalLargeBoilerControllerBlock boiler) {
+            } else if (block instanceof gregtech.content.block.machine.OriginalLargeBoilerControllerBlock boiler) {
                 var lines = tooltip(item, net.minecraft.world.item.TooltipFlag.NORMAL);
                 for (String key : java.util.List.of("gt.tooltip.multiblock.largeboiler.1", "gt.tooltip.multiblock.largeboiler.2", "gt.tooltip.multiblock.largeboiler.3", "gt.tooltip.multiblock.largeboiler.4", "gt.lang.requirement.water.pure", "gt.lang.hazard.explosion.steam", "gt.lang.hazard.meltdown", "gt.lang.use.chisel.to.decalcify", "gt.lang.use.builder.wand.to.ease.building", "gt.lang.use.magnifyingglass.to.detail"))
                     require(lines.stream().filter(tr(key)::equals).count() == 1, "installed complete original large boiler line " + key);

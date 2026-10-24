@@ -3,7 +3,7 @@ import gregtech.internal.addon.AddonMaterials;
 import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.material.MaterialFormItem;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
 /** Recipe-local guard for reviewed source NO; does not unregister legacy items or alter target links.
@@ -30,7 +30,7 @@ public final class SourceOreInputForms {
   * Applies only to generated recipe outputs; legitimate explicit external forms remain authoritative. */
  public static ItemStack reviewedOreOutput(MaterialPrefix prefix,GTMaterial material,int count){
   material=material.resolve();
-  ItemStack canonical=gregtech.registry.GTItems.getStack(prefix,material,count);
+  ItemStack canonical=gregtech.content.registry.GTItems.getStack(prefix,material,count);
   Evidence evidence=material.getId()==8500&&material.getName().equals("Stone")?Evidence.NO:Evidence.UNKNOWN;
   if(evidence!=Evidence.NO||AddonMaterials.owns(material)||!GTMaterialRegistry.isCoreMaterial(material))return canonical;
   String name=material.getName();

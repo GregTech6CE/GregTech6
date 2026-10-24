@@ -19,7 +19,7 @@
 
 package gregtech.content.tool;
 import gregtech.internal.material.GTMaterial;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 /** GregTech-6 Team's Behavior_Gun magazine and material ballistics (LGPL-3.0-or-later). */
 public final class GunRules {
  private GunRules(){}

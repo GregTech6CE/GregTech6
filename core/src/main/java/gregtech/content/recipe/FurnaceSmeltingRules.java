@@ -3,8 +3,8 @@ package gregtech.content.recipe;
 
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
-import gregtech.data.MaterialPrefix;
-import gregtech.data.generated.MaterialWorkability;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.data.generated.MaterialWorkability;
 import java.math.BigInteger;
 import java.util.List;
 

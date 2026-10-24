@@ -1,7 +1,7 @@
 package gregtech.internal.material;
 
-import gregtech.block.stone.StoneType;
-import gregtech.worldgen.GTWorldgenMaterials;
+import gregtech.content.block.stone.StoneType;
+import gregtech.content.worldgen.GTWorldgenMaterials;
 
 /** Original catalog roles, applied after linking and before platform item forms/post-init. */
 public final class MaterialRoleFlags {

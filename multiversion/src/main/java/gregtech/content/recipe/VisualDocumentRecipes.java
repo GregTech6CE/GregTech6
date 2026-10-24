@@ -2,7 +2,7 @@
 package gregtech.content.recipe;
 import gregtech.internal.recipe.Recipe;
 import gregtech.content.data.*;
-import gregtech.registry.GTFluids;
+import gregtech.content.registry.GTFluids;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;

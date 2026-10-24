@@ -12,10 +12,10 @@ import gregtech.internal.material.ItemMaterialRegistry;
 import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.internal.tool.GTToolHelper;
 import gregtech.internal.tool.GTToolType;
-import gregtech.data.GregTechTags;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.GTItems;
-import gregtech.registry.GTTechnological;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTItems;
+import gregtech.content.registry.GTTechnological;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -80,7 +80,7 @@ public final class AddonPlatformServices {
             if (data == null || data.components().isEmpty()) return GregTechMaterials.StackComposition.EMPTY;
             String prefix = data.prefix() == null ? "" : data.prefix().getName();
             if (prefix.isEmpty() && stack.getItem() instanceof net.minecraft.world.item.BlockItem blockItem
-                    && blockItem.getBlock() instanceof gregtech.block.MaterialBlockLike like
+                    && blockItem.getBlock() instanceof gregtech.content.block.MaterialBlockLike like
                     && like.prefix() != null)
                 prefix = like.prefix().compositionName();
             var units = new ArrayList<GregTechMaterials.Component>();

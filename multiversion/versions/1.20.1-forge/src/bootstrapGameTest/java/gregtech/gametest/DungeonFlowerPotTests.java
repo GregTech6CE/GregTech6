@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
 import gregtech.content.plant.BedrockFlowers;
-import gregtech.registry.GTDungeonBlocks;
-import gregtech.worldgen.GTDungeonFeature;
-import gregtech.worldgen.dungeon.GTDungeonChunkRoomLibraryNormal;
-import gregtech.worldgen.dungeon.GTDungeonData;
-import gregtech.block.stone.StoneType;
+import gregtech.content.registry.GTDungeonBlocks;
+import gregtech.content.worldgen.GTDungeonFeature;
+import gregtech.content.worldgen.dungeon.GTDungeonChunkRoomLibraryNormal;
+import gregtech.content.worldgen.dungeon.GTDungeonData;
+import gregtech.content.block.stone.StoneType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -119,7 +119,7 @@ public final class DungeonFlowerPotTests {
                 flowerCount++;
                 helper.assertTrue(pot.getContent() != Blocks.AIR, "library flower pot is not empty");
             } else {
-                helper.assertTrue(block == gregtech.registry.GTLasers.ZPM.get(),
+                helper.assertTrue(block == gregtech.content.registry.GTLasers.ZPM.get(),
                         "library pot position is a GT flower or its one permitted ZPM");
             }
         }

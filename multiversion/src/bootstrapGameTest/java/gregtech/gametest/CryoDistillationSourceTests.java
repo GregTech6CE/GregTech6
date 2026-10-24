@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
-import gregtech.block.machine.CryoDistillationControllerBlock;
-import gregtech.blockentity.machine.*;
+import gregtech.content.block.machine.CryoDistillationControllerBlock;
+import gregtech.content.blockentity.machine.*;
 import gregtech.content.multiblock.*;
 import gregtech.internal.fluid.FluidTankGT;
-import gregtech.data.GregTechTags;
-import gregtech.registry.GTFluids;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.registry.GTFluids;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.*;
@@ -76,7 +76,7 @@ public final class CryoDistillationSourceTests {
         h.getLevel().setBlockAndUpdate(pos.south(3),Blocks.CHEST.defaultBlockState());
         var air=GTFluids.stack("Air",200);
         h.assertTrue(!air.isEmpty() && entity.fill(air,IFluidHandler.FluidAction.EXECUTE)==200,"actual registered air input");
-        h.assertTrue(entity.recipeMap()==gregtech.data.MachineRecipeMaps.CryoDistillationTower,"original recipe map wired");
+        h.assertTrue(entity.recipeMap()==gregtech.content.data.MachineRecipeMaps.CryoDistillationTower,"original recipe map wired");
         for(int i=0;i<66;i++) {entity.doEnergyInjection(GregTechTags.Energy.CU,null,64,1,true);tick(h,entity);}
         var expected=Map.of(2,Map.entry("carbondioxide",10),3,Map.entry("argon",1),4,Map.entry("oxygen",50),
                 5,Map.entry("nitrogen",143),6,Map.entry("neon",1),7,Map.entry("helium",1));

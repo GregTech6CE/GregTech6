@@ -5,9 +5,9 @@ import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.material.MaterialProperty;
 import gregtech.internal.recipe.Recipe;
 import gregtech.content.material.Materials;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.GTItems;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTItems;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.ItemStack;
@@ -143,7 +143,7 @@ public final class CrucibleTemperatureTests {
         for (Recipe recipe : MachineRecipeMaps.Furnace.mRecipeList) {
             for (ItemStack output : recipe.mOutputs) {
                 if (MachineRecipeMaps.isNeverFurnace(output)) {
-                    if (output.getItem() instanceof gregtech.item.MaterialItem item
+                    if (output.getItem() instanceof gregtech.content.item.MaterialItem item
                             && item.getPrefix() == MaterialPrefix.scrapGt) {
                         scrapOutputs++;
                     } else {
@@ -223,7 +223,7 @@ public final class CrucibleTemperatureTests {
             if (recipe.mInputs.length == 0 || recipe.mOutputs.length == 0) continue;
             if (!ItemStack.isSameItemSameTags(recipe.mInputs[0], expectedInput)) continue;
             for (ItemStack out : recipe.mOutputs) {
-                if (!out.isEmpty() && out.getItem() instanceof gregtech.item.MaterialItem item
+                if (!out.isEmpty() && out.getItem() instanceof gregtech.content.item.MaterialItem item
                         && item.getMaterial().resolve() == output) {
                     return recipe;
                 }

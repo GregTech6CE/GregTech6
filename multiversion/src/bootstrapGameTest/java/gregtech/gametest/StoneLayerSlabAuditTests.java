@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
-import gregtech.block.stone.*;
-import gregtech.registry.GTBlocks;
-import gregtech.worldgen.*;
+import gregtech.content.block.stone.*;
+import gregtech.content.registry.GTBlocks;
+import gregtech.content.worldgen.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

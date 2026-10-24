@@ -2,8 +2,8 @@ package gregtech.gametest;
 
 import gregtech.internal.tool.*;
 import gregtech.content.material.Materials;
-import gregtech.item.GTToolItem;
-import gregtech.registry.GTElectricItems;
+import gregtech.content.item.GTToolItem;
+import gregtech.content.registry.GTElectricItems;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.InteractionHand;

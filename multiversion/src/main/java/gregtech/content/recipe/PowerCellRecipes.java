@@ -3,7 +3,7 @@
 package gregtech.content.recipe;
 
 import gregtech.content.energy.PowerCellSpec;
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.data.MachineRecipeMaps;
 
 public final class PowerCellRecipes extends OriginalRecipeBatch {
     public static int register() {

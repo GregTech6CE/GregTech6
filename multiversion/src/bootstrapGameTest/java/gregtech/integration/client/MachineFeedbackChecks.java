@@ -1,7 +1,7 @@
 package gregtech.integration.client;
 
 import com.google.gson.*;
-import gregtech.block.machine.BasicMachineBlock;
+import gregtech.content.block.machine.BasicMachineBlock;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -15,7 +15,7 @@ final class MachineFeedbackChecks {
     private static void require(boolean value, String message) { if(!value) throw new IllegalStateException(message); }
     private static ItemStack usable(ItemStack sample) {
         var stack=sample.copyWithCount(1);
-        if(stack.getItem() instanceof gregtech.item.GTToolItem tool && tool.toolType().requiresHeadAssembly())
+        if(stack.getItem() instanceof gregtech.content.item.GTToolItem tool && tool.toolType().requiresHeadAssembly())
             gregtech.internal.tool.GTToolHelper.write(stack,
                 gregtech.internal.material.GTMaterialRegistry.get("Steel"),
                 gregtech.internal.material.GTMaterialRegistry.get("Spruce"));
@@ -74,7 +74,7 @@ final class MachineFeedbackChecks {
             String name="lightning_"+suffix;
             craft(server,"machines/basic/"+name,name,rows);
             var block=(BasicMachineBlock)BuiltInRegistries.BLOCK.get(id(name));var spec=block.basicSpec();
-            require(spec.recipeMap()==gregtech.data.MachineRecipeMaps.Lightning && !spec.recipeMap().mRecipeList.isEmpty(), "No actual Lightning recipe map "+name);
+            require(spec.recipeMap()==gregtech.content.data.MachineRecipeMaps.Lightning && !spec.recipeMap().mRecipeList.isEmpty(), "No actual Lightning recipe map "+name);
             require(spec.energyIn()==(32L<<(2*(spec.tier()-1))) && spec.hardness()==4f, "Wrong original Lightning grade "+name);
             require(gregtech.bootstrap.registration.OriginCreativeContents.family(block.asItem()).equals("basic_machines"), "Missing Lightning creative entry "+name);
             machineRows.add(name);
@@ -89,7 +89,7 @@ final class MachineFeedbackChecks {
             var cheap=entity.getClass().getDeclaredMethod("cheapOverclocking");cheap.setAccessible(true);
             var duration=entity.getClass().getDeclaredMethod("parallelScalesDuration");duration.setAccessible(true);
             require((Boolean)cheap.invoke(entity) && (Boolean)duration.invoke(entity), "Melter still ignores original operating flags");
-            var cost=gregtech.api.recipe.MachineWorkCost.calculate(1,20,3,(Boolean)duration.invoke(entity),10000,spec.energyInMin(),spec.energyInMax(),(Boolean)cheap.invoke(entity));
+            var cost=gregtech.internal.recipe.MachineWorkCost.calculate(1,20,3,(Boolean)duration.invoke(entity),10000,spec.energyInMin(),spec.energyInMax(),(Boolean)cheap.invoke(entity));
             require(cost!=null && cost.minimumPower()==1 && cost.totalWork()==60,"Native Melter still applies expensive low-power overclocking");
         } catch(ReflectiveOperationException e) {throw new IllegalStateException(e);}
         int groups=0;

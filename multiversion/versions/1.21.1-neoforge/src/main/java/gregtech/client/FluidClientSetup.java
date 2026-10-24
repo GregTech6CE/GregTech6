@@ -1,7 +1,7 @@
 package gregtech.client;
 
 import gregtech.internal.fluid.GTWaterParity;
-import gregtech.registry.GTFluids;
+import gregtech.content.registry.GTFluids;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;

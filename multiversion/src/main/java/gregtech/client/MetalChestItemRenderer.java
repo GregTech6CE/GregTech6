@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.block.inventory.MetalChestBlock;
+import gregtech.content.block.inventory.MetalChestBlock;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;

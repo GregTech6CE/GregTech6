@@ -78,7 +78,7 @@ public abstract class AbstractMinecartSpeedCapMixin {
     @org.spongepowered.asm.mixin.injection.Redirect(method="moveAlongTrack",
             at=@At(value="INVOKE",target="Lnet/minecraft/world/level/block/PoweredRailBlock;isActivatorRail()Z",remap=false))
     private boolean gregtech$useTrackBoosterMotion(net.minecraft.world.level.block.PoweredRailBlock rail){
-        return rail instanceof gregtech.block.misc.TrackBlock.Booster || rail.isActivatorRail();
+        return rail instanceof gregtech.content.block.misc.TrackBlock.Booster || rail.isActivatorRail();
     }
 
 }

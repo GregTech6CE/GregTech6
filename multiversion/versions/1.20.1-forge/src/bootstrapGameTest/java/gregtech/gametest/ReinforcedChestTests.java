@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
-import gregtech.registry.GTStorage;
-import gregtech.registry.GTStorageMetals;
-import gregtech.registry.GTBlockEntities;
-import gregtech.registry.GTLootChests;
-import gregtech.block.inventory.MetalChestBlock;
-import gregtech.blockentity.inventory.MetalChestBlockEntity;
+import gregtech.content.registry.GTStorage;
+import gregtech.content.registry.GTStorageMetals;
+import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTLootChests;
+import gregtech.content.block.inventory.MetalChestBlock;
+import gregtech.content.blockentity.inventory.MetalChestBlockEntity;
 import gregtech.internal.material.MaterialProperty;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -57,8 +57,8 @@ public final class ReinforcedChestTests {
                 var stacks = shaped.getIngredients().get(i).getItems();
                 h.assertTrue(stacks.length > 0, "all chest ingredients resolve: " + spec.suffix());
                 var input = stacks[0].copy();
-                if (input.getItem() instanceof gregtech.item.GTToolItem) {
-                    input = gregtech.item.GTToolItem.create(
+                if (input.getItem() instanceof gregtech.content.item.GTToolItem) {
+                    input = gregtech.content.item.GTToolItem.create(
                             gregtech.internal.tool.GTToolHelper.getType(input),
                             gregtech.content.material.Materials.Steel,
                             gregtech.internal.material.GTMaterialRegistry.get("Wood"));

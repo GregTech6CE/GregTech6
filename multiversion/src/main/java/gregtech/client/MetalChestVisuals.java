@@ -14,11 +14,11 @@ import net.minecraft.resources.ResourceLocation;
 
 /** GT6 MultiTileEntityChest's legacy 64x64 layout, shared by the block and its inventory item. */
 final class MetalChestVisuals {
-    private static final java.util.Map<gregtech.block.inventory.MetalChestBlock.Shell,
+    private static final java.util.Map<gregtech.content.block.inventory.MetalChestBlock.Shell,
             ResourceLocation[]> TEXTURES =
-            new java.util.EnumMap<>(gregtech.block.inventory.MetalChestBlock.Shell.class);
+            new java.util.EnumMap<>(gregtech.content.block.inventory.MetalChestBlock.Shell.class);
     static {
-        for (var shell : gregtech.block.inventory.MetalChestBlock.Shell.values()) {
+        for (var shell : gregtech.content.block.inventory.MetalChestBlock.Shell.values()) {
             String path = "textures/block/machines/" + shell.texture() + "/";
             TEXTURES.put(shell, new ResourceLocation[]{
                     ResourceLocation.fromNamespaceAndPath("gt6ce", path + "colored.png"),
@@ -40,7 +40,7 @@ final class MetalChestVisuals {
         return LayerDefinition.create(mesh, 64, 64);
     }
 
-    void render(Direction facing, gregtech.block.inventory.MetalChestBlock block,
+    void render(Direction facing, gregtech.content.block.inventory.MetalChestBlock block,
                 float open, PoseStack pose, MultiBufferSource buffers, int light, int overlay) {
         int color = block.material().getColor();
         var textures = TEXTURES.get(block.shell());

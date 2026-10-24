@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.blockentity.machine.KineticSteamEngineBlockEntity;
+import gregtech.content.blockentity.machine.KineticSteamEngineBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;

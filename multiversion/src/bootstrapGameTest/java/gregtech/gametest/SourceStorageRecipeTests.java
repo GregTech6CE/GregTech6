@@ -4,7 +4,7 @@ import gregtech.api.material.*;
 import gregtech.internal.material.*;
 import gregtech.internal.recipe.RecipeInputs;
 import gregtech.content.recipe.*;
-import gregtech.item.GTToolItem;
+import gregtech.content.item.GTToolItem;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;

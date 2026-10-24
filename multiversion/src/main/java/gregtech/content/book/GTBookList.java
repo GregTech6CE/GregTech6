@@ -15,7 +15,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 /**
  * Native item-stack adapter for the shelf classifications currently adopted in {@link BookShelfRules}.
  * It supplies accepted display items, automated extraction exclusions and stored-item book points
- * to {@link gregtech.block.BookShelfBlock}.
+ * to {@link gregtech.content.block.BookShelfBlock}.
  *
  * <p>GT6 keeps three sets: the {@code BOOK_REGISTER} map (everything that can be <em>displayed</em>
  * on a shelf — books, paper, maps, frames, buttons, levers, torches and stone decoys),

@@ -1,12 +1,12 @@
 package gregtech.gametest;
 
-import gregtech.block.machine.EngineBlock;
-import gregtech.block.machine.FluidPipeBlock;
-import gregtech.blockentity.machine.KineticDieselEngineBlockEntity;
-import gregtech.blockentity.machine.FluidPipeBlockEntity;
+import gregtech.content.block.machine.EngineBlock;
+import gregtech.content.block.machine.FluidPipeBlock;
+import gregtech.content.blockentity.machine.KineticDieselEngineBlockEntity;
+import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
 import gregtech.internal.machine.EngineType;
-import gregtech.data.FuelRecipeMaps;
-import gregtech.registry.GTFluids;
+import gregtech.content.data.FuelRecipeMaps;
+import gregtech.content.registry.GTFluids;
 import gregtech.content.cover.PanelCoverHost;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -160,7 +160,7 @@ public final class FuelEngineIntakeTests {
             var saved=snapshot(h,be);be.setStopped(false);be.fuelTank().setEmpty();restore(h,be,saved);
             h.assertTrue(be.isStopped()&&be.fuelTank().getAmount()==7&&snapshot(h,be).equals(saved),"native NBT round trip retains fuel/stopped/config");
             var host=(PanelCoverHost)(Object)be;
-            var shutter=new ItemStack(gregtech.registry.GTTechnological.get(gregtech.content.cover.PanelCover.SHUTTER.id));
+            var shutter=new ItemStack(gregtech.content.registry.GTTechnological.get(gregtech.content.cover.PanelCover.SHUTTER.id));
             h.assertTrue(host.attachCover(Direction.EAST,shutter),"actual component cover attaches");
             host.panels().configure(Direction.EAST,false,false);
             h.assertTrue(host.panels().shuttered(Direction.EAST),"closed real shutter fixture");
@@ -177,7 +177,7 @@ public final class FuelEngineIntakeTests {
     public static void finitePortableContainerUsesItsNativeItemFirstTransfer(GameTestHelper h) {
         try(var f=new Fixture(h,64)) {
             var be=engine(f,engines().get(0),Direction.NORTH);
-            var container=BuiltInRegistries.ITEM.stream().filter(i->i instanceof gregtech.item.PortableFluidContainerItem)
+            var container=BuiltInRegistries.ITEM.stream().filter(i->i instanceof gregtech.content.item.PortableFluidContainerItem)
                 .map(ItemStack::new).filter(s->FluidUtil.getFluidHandler(s).map(c->c.fill(fuel(h,"Diesel",100),FluidAction.SIMULATE)==100).orElse(false)).findFirst().orElseThrow();
             var expectedEmptyItem=container.getItem();
             var itemCap=FluidUtil.getFluidHandler(container).orElseThrow(() -> new IllegalStateException("Missing finite container fluid capability"));
@@ -200,7 +200,7 @@ public final class FuelEngineIntakeTests {
     public static void creativeDisplayFuelCarrierFullDispatchCanRefuelEngine(GameTestHelper h) {
         try(var f=new Fixture(h,80)) {
             var be=engine(f,engines().get(0),Direction.NORTH);
-            var carrier=new ItemStack(gregtech.registry.GTFluidItems.get("Diesel"));
+            var carrier=new ItemStack(gregtech.content.registry.GTFluidItems.get("Diesel"));
             h.assertTrue(FluidUtil.getFluidHandler(carrier).map(c->!c.drain(1,FluidAction.SIMULATE).isEmpty()).orElse(false),"real carrier exposes diesel item capability");
             var player=actor(h,f.center);
             player.setItemInHand(InteractionHand.MAIN_HAND,carrier);var hit=new BlockHitResult(Vec3.atCenterOf(f.center),Direction.UP,f.center,false);
@@ -243,7 +243,7 @@ public final class FuelEngineIntakeTests {
         try(var f=new Fixture(h,96)) {
             var be=engine(f,engines().get(0),Direction.NORTH);var player=actor(h,f.center);
             var bucket=BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","wooden_bucket_copper_water"));
-            h.assertTrue(bucket instanceof gregtech.item.WoodenBucketItem,"registered wooden water bucket, not AIR");
+            h.assertTrue(bucket instanceof gregtech.content.item.WoodenBucketItem,"registered wooden water bucket, not AIR");
             var water=waterCarrier(h);
             h.assertTrue(!water.isEmpty(),"actual water display carrier registered");
             for(var mode:java.util.List.of(net.minecraft.world.level.GameType.SURVIVAL,net.minecraft.world.level.GameType.CREATIVE))

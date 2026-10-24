@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.block.GTGrassBlock;
+import gregtech.content.block.GTGrassBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

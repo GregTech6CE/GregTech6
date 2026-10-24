@@ -5,8 +5,8 @@ package gregtech.client;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.block.stone.GTStoneBlock;
-import gregtech.registry.GTBlocks;
+import gregtech.content.block.stone.GTStoneBlock;
+import gregtech.content.registry.GTBlocks;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;

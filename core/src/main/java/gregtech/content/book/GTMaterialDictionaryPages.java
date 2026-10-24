@@ -68,7 +68,7 @@ public final class GTMaterialDictionaryPages {private GTMaterialDictionaryPages(
     /**
      * One labelled line of a processing page. GT6 keeps eleven targets on the material
      * ({@code OreDictMaterial:284-295}); the port models four of them there and the other seven in
-     * {@link gregtech.data.generated.MaterialProcessingTargets}, whose rows are generated
+     * {@link gregtech.content.data.generated.MaterialProcessingTargets}, whose rows are generated
      * from {@code MT.java} and whose default is GT6's own ({@code OreDictMaterial:287-294}: the material
      * itself, one unit).
      */
@@ -89,12 +89,12 @@ public final class GTMaterialDictionaryPages {private GTMaterialDictionaryPages(
 
     /** The value line of one of the seven targets the port holds in {@link MaterialProcessingTargets}. */
     private static void processingTableValue(StringBuilder out, String label, GTMaterial material) {
-        String[] row = gregtech.data.generated.MaterialProcessingTargets.of(
+        String[] row = gregtech.content.data.generated.MaterialProcessingTargets.of(
                 material.getName(), label);
         if (row == null) {
             // GT6's default for those seven: the material itself, one unit.
             processingValue(out, material,
-                    gregtech.data.generated.MaterialProcessingTargets.DEFAULT_AMOUNT,
+                    gregtech.content.data.generated.MaterialProcessingTargets.DEFAULT_AMOUNT,
                     material);
             return;
         }

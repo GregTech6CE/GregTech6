@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.block.misc.LongDistEndpointBlock;
-import gregtech.block.misc.LongDistPipeBlock;
-import gregtech.registry.GTMiscBlocks;
-import gregtech.registry.GTTanks;
+import gregtech.content.block.misc.LongDistEndpointBlock;
+import gregtech.content.block.misc.LongDistPipeBlock;
+import gregtech.content.registry.GTMiscBlocks;
+import gregtech.content.registry.GTTanks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

@@ -8,12 +8,12 @@ import gregtech.internal.material.MaterialProperty;
 import gregtech.internal.prefix.BlockMaterialPrefix;
 import gregtech.internal.recipe.Recipe;
 import gregtech.internal.recipe.RecipeMap;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.data.MaterialPrefix;
-import gregtech.data.generated.MaterialWorkability;
-import gregtech.registry.GTBlocks;
-import gregtech.registry.GTItems;
-import gregtech.registry.GTTechnological;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.data.generated.MaterialWorkability;
+import gregtech.content.registry.GTBlocks;
+import gregtech.content.registry.GTItems;
+import gregtech.content.registry.GTTechnological;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;

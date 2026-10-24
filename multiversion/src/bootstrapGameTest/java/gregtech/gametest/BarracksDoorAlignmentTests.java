@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
-import gregtech.block.stone.GTStoneSlabBlock;
-import gregtech.block.stone.StoneType;
-import gregtech.worldgen.GTDungeonFeature;
-import gregtech.worldgen.dungeon.GTDungeonChunkBarracks;
-import gregtech.worldgen.dungeon.GTDungeonData;
+import gregtech.content.block.stone.GTStoneSlabBlock;
+import gregtech.content.block.stone.StoneType;
+import gregtech.content.worldgen.GTDungeonFeature;
+import gregtech.content.worldgen.dungeon.GTDungeonChunkBarracks;
+import gregtech.content.worldgen.dungeon.GTDungeonData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

@@ -1,10 +1,10 @@
 package gregtech.content.recipe;
 
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.api.recipe.*;
 import gregtech.internal.recipe.*;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.*;
+import gregtech.internal.recipe.*;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 //? if >=1.21.1 {

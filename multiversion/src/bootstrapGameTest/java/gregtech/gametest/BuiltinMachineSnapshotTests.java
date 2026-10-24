@@ -2,9 +2,9 @@ package gregtech.gametest;
 
 import gregtech.internal.multiblock.MultiblockLayout;
 import gregtech.internal.multiblock.MultiblockPortOwner;
-import gregtech.block.machine.BasicMachineBlock;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
-import gregtech.blockentity.machine.LargeRecipeMachineBlockEntity;
+import gregtech.content.block.machine.BasicMachineBlock;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.blockentity.machine.LargeRecipeMachineBlockEntity;
 import gregtech.client.MachineTooltips;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

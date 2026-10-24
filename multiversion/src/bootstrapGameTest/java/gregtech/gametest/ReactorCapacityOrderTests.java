@@ -1,13 +1,13 @@
 package gregtech.gametest;
 
 import gregtech.internal.fluid.FluidTankGT;
-import gregtech.blockentity.energy.ReactorCoreBlockEntity;
-import gregtech.blockentity.machine.TankBlockEntity;
+import gregtech.content.blockentity.energy.ReactorCoreBlockEntity;
+import gregtech.content.blockentity.machine.TankBlockEntity;
 import gregtech.content.nuclear.ReactorCoolants;
 import gregtech.content.nuclear.ReactorNetwork;
 import gregtech.content.nuclear.ReactorPorts;
-import gregtech.registry.GTEnergyNodes;
-import gregtech.registry.GTFuelRods;
+import gregtech.content.registry.GTEnergyNodes;
+import gregtech.content.registry.GTFuelRods;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;

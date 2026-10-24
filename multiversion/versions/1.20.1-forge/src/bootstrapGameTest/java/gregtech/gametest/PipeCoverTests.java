@@ -1,12 +1,12 @@
 package gregtech.gametest;
 
-import gregtech.blockentity.machine.FluidPipeBlockEntity;
-import gregtech.block.machine.FluidPipeBlock;
+import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
+import gregtech.content.block.machine.FluidPipeBlock;
 import gregtech.content.cover.CoverAttachmentBehaviors;
 import gregtech.content.cover.CoverItems;
 import gregtech.content.cover.CoverUtilityBehaviors;
-import gregtech.registry.GTFluids;
-import gregtech.registry.GTTechnological;
+import gregtech.content.registry.GTFluids;
+import gregtech.content.registry.GTTechnological;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

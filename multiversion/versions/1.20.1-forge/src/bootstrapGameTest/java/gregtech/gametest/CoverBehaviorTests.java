@@ -4,13 +4,13 @@ import gregtech.internal.energy.FaceConfig;
 import gregtech.internal.machine.BasicMachineSpec;
 import gregtech.internal.machine.MachineRegistry;
 import gregtech.internal.recipe.RecipeMap;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.cover.CoverItems;
 import gregtech.content.cover.CoverUtilityBehaviors;
 import gregtech.content.cover.CoverUtilityBehaviors.ValveAction;
-import gregtech.data.GregTechTags;
-import gregtech.registry.GTMiscBlocks;
-import gregtech.registry.GTTechnological;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.registry.GTMiscBlocks;
+import gregtech.content.registry.GTTechnological;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -475,7 +475,7 @@ public final class CoverBehaviorTests {
         ServerLevel level = helper.getLevel();
         BlockPos pos = site(32, 0);
         var machine = machine(level, pos);
-        var air = gregtech.registry.GTFluids.still("Air_Nether");
+        var air = gregtech.content.registry.GTFluids.still("Air_Nether");
         helper.assertTrue(air != null && air.isPresent(),
                 "gt6ce:netherair is registered, got " + air);
         var fluid = air.get();

@@ -5,20 +5,20 @@ import gregtech.internal.machine.MachineRegistry;
 import gregtech.internal.recipe.RecipeMap;
 import gregtech.internal.tool.GTToolHelper;
 import gregtech.internal.tool.GTToolType;
-import gregtech.blockentity.CFoamBlockEntity;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
-import gregtech.data.GregTechTags;
-import gregtech.item.behavior.BehaviorDuctTape;
-import gregtech.item.behavior.BehaviorFlintAndTinder;
-import gregtech.item.behavior.BehaviorLighter;
-import gregtech.item.behavior.BehaviorPlungerFluid;
-import gregtech.item.behavior.BehaviorScanner;
-import gregtech.item.behavior.BehaviorSprayColorRemover;
-import gregtech.item.behavior.BehaviorSprayExtinguisher;
-import gregtech.item.behavior.BehaviorSprayFoamHardener;
-import gregtech.item.behavior.BehaviorSprayFoamRemover;
-import gregtech.item.behavior.ItemBehaviors;
-import gregtech.registry.GTDecorBlocks;
+import gregtech.content.blockentity.CFoamBlockEntity;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.item.behavior.BehaviorDuctTape;
+import gregtech.content.item.behavior.BehaviorFlintAndTinder;
+import gregtech.content.item.behavior.BehaviorLighter;
+import gregtech.content.item.behavior.BehaviorPlungerFluid;
+import gregtech.content.item.behavior.BehaviorScanner;
+import gregtech.content.item.behavior.BehaviorSprayColorRemover;
+import gregtech.content.item.behavior.BehaviorSprayExtinguisher;
+import gregtech.content.item.behavior.BehaviorSprayFoamHardener;
+import gregtech.content.item.behavior.BehaviorSprayFoamRemover;
+import gregtech.content.item.behavior.ItemBehaviors;
+import gregtech.content.registry.GTDecorBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -45,7 +45,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The port's GT6 item-behaviour layer ({@code gregtech.item.behavior}) — one test per
+ * The port's GT6 item-behaviour layer ({@code gregtech.content.item.behavior}) — one test per
  * behaviour, each with a positive case and at least one case where the behaviour must do nothing.
  *
  * <p>GT6 sources: {@code gregtech/items/behaviors/Behavior_*.java} in the original tree; every

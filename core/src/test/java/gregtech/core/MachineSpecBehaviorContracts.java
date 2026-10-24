@@ -9,8 +9,8 @@ import gregtech.internal.mod.ModData;
 import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.content.material.Materials;
 import gregtech.content.material.generated.CompoundMaterials;
-import gregtech.data.MaterialGroups;
-import gregtech.data.ModReferences;
+import gregtech.content.data.MaterialGroups;
+import gregtech.content.data.ModReferences;
 
 /** Fixed original registry inputs; runs against both original Git blobs and relocated records. */
 public final class MachineSpecBehaviorContracts {
@@ -117,7 +117,7 @@ public final class MachineSpecBehaviorContracts {
         long u=GTValues.U;
         composition(gregtech.content.machine.MachineConstructionMaterials.block("logistics_core").orElseThrow(),
                 java.util.Map.of("SteelGalvanized",8*u,"Pt",2*u,"Emerald",2*u));
-        var harvest=gregtech.data.SourceBlockProperties.block("logistics_core").orElseThrow();
+        var harvest=gregtech.content.data.SourceBlockProperties.block("logistics_core").orElseThrow();
         check(harvest.sourceId()==17997 && harvest.tool().equals("wrench") && !harvest.handHarvestable()
                 && harvest.material().resolve()==GTMaterialRegistry.get("SteelGalvanized").resolve()
                 && harvest.explicitLevel()==-1,"17997 original aMachine tool/material-quality metadata");
@@ -146,8 +146,8 @@ public final class MachineSpecBehaviorContracts {
         var unsupported = gregtech.internal.energy.EnergyNodeSpec.builder("fixture_generic_hu_source",
                 gregtech.content.material.Materials.StainlessSteel)
                 .texture("fixture").names("Fixture", "Fixture").capacity(64)
-                .input(gregtech.data.GregTechTags.Energy.EU,32)
-                .output(gregtech.data.GregTechTags.Energy.HU,16).build();
+                .input(gregtech.content.data.GregTechTags.Energy.EU,32)
+                .output(gregtech.content.data.GregTechTags.Energy.HU,16).build();
         check(!gregtech.content.energy.OriginalAdjacentEnergyRules.respondsToAdjacent(unsupported),
                 "generic switchable energy nodes do not acquire an unregistered source WASTE contract");
     }
@@ -295,7 +295,7 @@ public final class MachineSpecBehaviorContracts {
     }
 
     private static void originalHarvestProperties() {
-        var properties = gregtech.data.SourceBlockProperties.blocks();
+        var properties = gregtech.content.data.SourceBlockProperties.blocks();
         check(properties.size() == 1603, "689 fixed identities, 120 hoppers, 780 storage, 8 heat exchangers and 6 upper flux devices");
         var restoredDevices = java.util.Map.ofEntries(
                 java.util.Map.entry("heat_exchanger_invar", 9103),
@@ -318,7 +318,7 @@ public final class MachineSpecBehaviorContracts {
                     "Restored original device has construction materials: " + entry.getKey());
         }
         check(properties.get("fire_bricks").sourceId() == 18000, "Original fire bricks harvest metadata uses the canonical identity");
-        check(gregtech.data.SourceBlockProperties.basics().size() == 265, "All265 adopted original machine metadata keys");
+        check(gregtech.content.data.SourceBlockProperties.basics().size() == 265, "All265 adopted original machine metadata keys");
         var wood = properties.get("gearbox_wood");
         check(wood.sourceId() == 24809 && wood.tool().equals("axe") && wood.handHarvestable(), "Wood gearbox original aWooden exemption");
         var metal = properties.get("gearbox_iridium");
@@ -330,9 +330,9 @@ public final class MachineSpecBehaviorContracts {
         var ironwood = properties.get("engine_steam_ironwood");
         check(ironwood.sourceId() == 1310 && ironwood.tool().equals("axe") && ironwood.handHarvestable(), "Ironwood source utility group exemption");
         check(properties.get("electric_motor_lv").material().resolve() == GTMaterialRegistry.get("SteelGalvanized"), "Motor harvest follows original casing, not magnet inside");
-        check(gregtech.data.SourceBlockProperties.basic("melter", 1).orElseThrow().material().resolve()
+        check(gregtech.content.data.SourceBlockProperties.basic("melter", 1).orElseThrow().material().resolve()
                 == GTMaterialRegistry.get("Iron"), "Source melter harvest follows registration metadata before ceramic lining override");
-        check(gregtech.data.SourceBlockProperties.basic("cokeoven", 1).orElseThrow().tool().equals("pickaxe"), "Coke oven source aStone, not heuristic controller wrench");
+        check(gregtech.content.data.SourceBlockProperties.basic("cokeoven", 1).orElseThrow().tool().equals("pickaxe"), "Coke oven source aStone, not heuristic controller wrench");
         for (String name : new String[]{"hopper_steel", "queue_hopper_steel"}) {
             var hopper = properties.get(name);
             check(hopper != null && !hopper.handHarvestable() && hopper.tool().equals("wrench")
@@ -361,7 +361,7 @@ public final class MachineSpecBehaviorContracts {
         check(gregtech.content.machine.MachineConstructionMaterials.blocks().size() == 1561,
                 "647 fixed, 120 hoppers, 780 storage, 8 heat exchangers and 6 upper flux devices");
         long u = GTValues.U;
-        for (var spec : gregtech.registry.GTStorageMetals.ALL) {
+        for (var spec : gregtech.content.registry.GTStorageMetals.ALL) {
             var metal = spec.material().resolve();
             String suffix = spec.suffix();
             for (var row : java.util.Map.of("chest_"+suffix,5*u,
@@ -378,7 +378,7 @@ public final class MachineSpecBehaviorContracts {
                 composition(record,expected);
                 var metadata = harvest.get(row.getKey());
                 check(metadata.material().resolve() == metal, "Native metalset suffix/source material identity "+row.getKey());
-                check(metadata.sourceId() >= 0 && gregtech.data.SourceBlockProperties.block(row.getKey()).orElseThrow().equals(metadata),
+                check(metadata.sourceId() >= 0 && gregtech.content.data.SourceBlockProperties.block(row.getKey()).orElseThrow().equals(metadata),
                         "Native storage has real original registration identity "+row.getKey());
             }
         }
@@ -415,7 +415,7 @@ public final class MachineSpecBehaviorContracts {
         var storage = gregtech.content.machine.OriginalStorageMaterialData.blocks();
         var harvest = gregtech.content.machine.OriginalStorageMaterialData.harvest();
         long u = GTValues.U;
-        for (var spec : gregtech.registry.GTStorageMetals.ALL) {
+        for (var spec : gregtech.content.registry.GTStorageMetals.ALL) {
             String suffix = spec.suffix(), tableSuffix = suffix.equals("steel") ? "" : "_"+suffix;
             var metal = spec.material().resolve();
             var amounts = java.util.Map.of("advanced_crafting_table"+tableSuffix,4*u+2*u/9,
@@ -455,7 +455,7 @@ public final class MachineSpecBehaviorContracts {
             shelves++;
         }
         check(shelves==60 && harvest.get("bookshelf_metal_stainless_steel").sourceId()==7111,"All original metal shelves including native split-word paths");
-        for (var spec : gregtech.registry.GTStorageMetals.ALL) {
+        for (var spec : gregtech.content.registry.GTStorageMetals.ALL) {
             String suffix = spec.suffix();
             var locker = harvest.get(suffix.equals("stainless_steel") ? "locker" : "locker_"+suffix);
             check(locker.sourceId() == harvest.get("chest_"+suffix).sourceId()+7300,
@@ -546,11 +546,11 @@ public final class MachineSpecBehaviorContracts {
                         "Original fixed battery output and source hint chain " + tier + "/" + size);
             }
         }
-        check(gregtech.internal.energy.EnergyGate.gateInjection(gregtech.data.GregTechTags.Energy.EU,
+        check(gregtech.internal.energy.EnergyGate.gateInjection(gregtech.content.data.GregTechTags.Energy.EU,
                         true, 3, gregtech.content.energy.OriginalEnergyDeviceTooltipData.batteryInputMinimum(8), 7,
                         () -> { throw new AssertionError("ULV packet below4 must never reach storage"); }) == 7,
                 "Original ULV under-voltage packet is consumed without storing");
-        check(gregtech.internal.energy.EnergyGate.gateInjection(gregtech.data.GregTechTags.Energy.EU,
+        check(gregtech.internal.energy.EnergyGate.gateInjection(gregtech.content.data.GregTechTags.Energy.EU,
                         true, 4, gregtech.content.energy.OriginalEnergyDeviceTooltipData.batteryInputMinimum(8), 7,
                         () -> 5) == 5, "Original ULV4 packet reaches storage callback");
         var nodes = gregtech.content.energy.EnergyNodeDefinitions.specifications();
@@ -671,10 +671,10 @@ public final class MachineSpecBehaviorContracts {
         var rfDynamo = nodes.stream().filter(s -> s.id().equals("flux_dynamo_lv")).findFirst().orElseThrow();
         step = new gregtech.content.energy.OriginalRotaryConverter.State(rfDynamo).tick(16, false, receiver);
         check(calls[0] == 1 && calls[1] == 44 && step.energy() == 0, "Original RF output is44 unit packets at half speed");
-        check(gregtech.content.energy.OriginalRotaryConverter.overloadPower(32, gregtech.data.GregTechTags.Energy.EU) == 1
-                        && gregtech.content.energy.OriginalRotaryConverter.overloadPower(33, gregtech.data.GregTechTags.Energy.EU) == 2
-                        && gregtech.content.energy.OriginalRotaryConverter.overloadPower(65, gregtech.data.GregTechTags.Energy.RU) == 2
-                        && gregtech.content.energy.OriginalRotaryConverter.overloadPower(1000, gregtech.data.GregTechTags.Energy.RF) == 0.1F,
+        check(gregtech.content.energy.OriginalRotaryConverter.overloadPower(32, gregtech.content.data.GregTechTags.Energy.EU) == 1
+                        && gregtech.content.energy.OriginalRotaryConverter.overloadPower(33, gregtech.content.data.GregTechTags.Energy.EU) == 2
+                        && gregtech.content.energy.OriginalRotaryConverter.overloadPower(65, gregtech.content.data.GregTechTags.Energy.RU) == 2
+                        && gregtech.content.energy.OriginalRotaryConverter.overloadPower(1000, gregtech.content.data.GregTechTags.Energy.RF) == 0.1F,
                 "Source tierMax overcharge power and non-exploding RF break strength");
     }
 
@@ -701,9 +701,9 @@ public final class MachineSpecBehaviorContracts {
             check(spec.inputRate() == input && spec.outputRate() == output && spec.capacity() == 2*input
                             && spec.material() == GTMaterialRegistry.get((rf ? fluxMaterials : electricMaterials)[i]),
                     "Original thermal source hull/rates/storage " + id);
-            check(spec.inType() == (rf ? gregtech.data.GregTechTags.Energy.RF : gregtech.data.GregTechTags.Energy.EU)
-                            && spec.outType() == (cooler ? gregtech.data.GregTechTags.Energy.CU : gregtech.data.GregTechTags.Energy.HU)
-                            && gregtech.data.GregTechTags.Energy.isSizeIrrelevant(spec.outType()),
+            check(spec.inType() == (rf ? gregtech.content.data.GregTechTags.Energy.RF : gregtech.content.data.GregTechTags.Energy.EU)
+                            && spec.outType() == (cooler ? gregtech.content.data.GregTechTags.Energy.CU : gregtech.content.data.GregTechTags.Energy.HU)
+                            && gregtech.content.data.GregTechTags.Energy.isSizeIrrelevant(spec.outType()),
                     "Original thermal types and unit packet emission " + id);
             check(profile.input().minimum() == input/2 && profile.input().maximum() == input*2
                             && profile.output().minimum() == output/2 && profile.output().maximum() == output*2
@@ -771,8 +771,8 @@ public final class MachineSpecBehaviorContracts {
             var profile = gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(spec, false);
             check(spec.inputRate() == input && spec.outputRate() == output && spec.capacity() == 2*input
                             && spec.material() == GTMaterialRegistry.get((rf ? fluxHulls : hulls)[tier]), "Source magnet ratings and identity " + id);
-            check(spec.outType() == gregtech.data.GregTechTags.Energy.MU
-                            && !gregtech.data.GregTechTags.Energy.isSizeIrrelevant(spec.outType()), "Source signed MU packets " + id);
+            check(spec.outType() == gregtech.content.data.GregTechTags.Energy.MU
+                            && !gregtech.content.data.GregTechTags.Energy.isSizeIrrelevant(spec.outType()), "Source signed MU packets " + id);
             check(profile.input().minimum() == input/2 && profile.input().maximum() == 2*input
                             && profile.output().minimum() == output/2 && profile.output().maximum() == 2*output
                             && profile.inputFaceKey().equals("gt.lang.face.any.but.front.back")
@@ -829,7 +829,7 @@ public final class MachineSpecBehaviorContracts {
                     && spec.outputRate()==output && spec.capacity()==2*input && spec.material().resolve()==hull.resolve(), "Source turbine IDs, hull and rates " + v.id());
             check(spec.material().getColor()==hull.getColor(), "Source Kinetic_T hull appearance " + v.id());
             var expected = new java.util.HashMap<String,Long>();
-            var rotor = v.rotor()==gregtech.data.MaterialGroups.Steel ? Materials.Steel : v.rotor();
+            var rotor = v.rotor()==gregtech.content.data.MaterialGroups.Steel ? Materials.Steel : v.rotor();
             expected.put(hull.resolve().getName(),23*u); expected.merge(rotor.resolve().getName(),17*u,Long::sum);
             composition(gregtech.content.machine.OriginalMachineMaterialData.block(v.id()).orElseThrow(),expected);
             var row = rows.get(i);
@@ -964,7 +964,7 @@ public final class MachineSpecBehaviorContracts {
         check(gregtech.internal.machine.OriginalSmelteryDefinitions.get(1041).meltingPointK()==1873,"HSLA canonical source melting point");
         int positive=0;
         for(var spec:definitions) {
-            var policy=gregtech.data.SourceBlockProperties.block(spec.id()).orElseThrow();
+            var policy=gregtech.content.data.SourceBlockProperties.block(spec.id()).orElseThrow();
             check(policy.sourceId()==spec.gt6MetaId() && policy.tool().equals("pickaxe"),"Smeltery source ID and tool identity "+spec.id());
             check(policy.handHarvestable()==(spec.id().startsWith("crucible_faucet_")
                     || spec.id().startsWith("mold_") && !spec.id().startsWith("mold_basin_")),
@@ -976,13 +976,13 @@ public final class MachineSpecBehaviorContracts {
         near(large.smeltingThermalMassKg(),9627.533611630674D,"Large vessel keeps100U heat capacity");
         var shapes=gregtech.internal.machine.crucible.MoldShapes.recipes();
         check(gregtech.internal.machine.crucible.MoldShapes.recipe(0)==null,"Unselected mold has no cast recipe");
-        check(gregtech.internal.machine.crucible.MoldShapes.recipe(1<<30).itemPrefix()==gregtech.data.MaterialPrefix.nugget
+        check(gregtech.internal.machine.crucible.MoldShapes.recipe(1<<30).itemPrefix()==gregtech.content.data.MaterialPrefix.nugget
                 && gregtech.internal.machine.crucible.MoldShapes.requiredMaterialUnits(1<<30)==0,"Legacy high bits retain source nugget fallback but never consume material");
         check(gregtech.internal.machine.crucible.MoldShapes.requiredMaterialUnits((1<<30)|1)==GTValues.U9,
                 "Unknown one-cell cavity consumes one nugget regardless of legacy high bits");
         check(gregtech.internal.machine.crucible.MoldShapes.requiredMaterialUnits(0x1ffffff)==u,"Full25-cell plate uses1U");
         int ingot=0b00000_11111_11111_11111_00000;
-        check(gregtech.internal.machine.crucible.MoldShapes.recipe(ingot).itemPrefix()==gregtech.data.MaterialPrefix.ingot,
+        check(gregtech.internal.machine.crucible.MoldShapes.recipe(ingot).itemPrefix()==gregtech.content.data.MaterialPrefix.ingot,
                 "Pinned original three-row ingot shape");
         check(gregtech.internal.machine.crucible.MoldShapes.requiredMaterialUnits(ingot|(1<<30))==u,"Known ingot shape ignores extra legacy bits");
     }
@@ -1022,11 +1022,11 @@ public final class MachineSpecBehaviorContracts {
         int rows=0;
         for(var name:java.util.List.of("implosioncompressor","fusionreactor","largemassfab"))rows+=gregtech.content.multiblock.OriginalAdvancedControllerData.structureKeys(name).size();
         check(rows==17,"Original three specialized structures2+7+8");
-        var original=gregtech.data.BasicMachineOriginalParams.find("largemassfab",1);
+        var original=gregtech.content.data.BasicMachineOriginalParams.find("largemassfab",1);
         check(original.originalName().equals("Large Matter Fabricator")&&original.parallelDuration(),"Original17199 omitted registration now present with parallel-duration flag");
         long u=gregtech.api.material.GTValues.U;
         composition(gregtech.content.machine.OriginalMachineMaterialData.find("largemassfab",1).orElseThrow(),java.util.Map.of("Osmium",128*u,"Titanium",32*u,"NetherStar",8*u,"Lead",36*u));
-        var harvest=gregtech.data.SourceBlockProperties.basics().get("largemassfab/1");
+        var harvest=gregtech.content.data.SourceBlockProperties.basics().get("largemassfab/1");
         check(harvest.sourceId()==17199&&harvest.tool().equals("wrench")&&!harvest.handHarvestable()&&harvest.material().resolve()==gregtech.internal.material.GTMaterialRegistry.get("Pb"),"Original17199 source harvest identity and lead hull");
     }
 }

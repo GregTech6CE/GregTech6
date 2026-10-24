@@ -2,8 +2,8 @@ package gregtech.integration.client;
 
 import com.google.gson.JsonObject;
 import gregtech.client.CommonBlockTooltips;
-import gregtech.data.BlockHarvestPolicy;
-import gregtech.data.SourceBlockProperties;
+import gregtech.content.data.BlockHarvestPolicy;
+import gregtech.content.data.SourceBlockProperties;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -35,7 +35,7 @@ final class CommonBlockDeliveryChecks {
             boolean fixed = SourceBlockProperties.block(path).isPresent();
             if (fixed) { sourceBlocks++; checkedSourcePaths.add(path); }
             // Some named source blocks are also BasicMachineBlock instances; these sets overlap.
-            if (block instanceof gregtech.block.machine.BasicMachineBlock machine
+            if (block instanceof gregtech.content.block.machine.BasicMachineBlock machine
                     && SourceBlockProperties.basic(machine.basicSpec().machineName(),machine.basicSpec().tier()).isPresent()) {
                 sourceMachines++;
                 if (fixed) overlappingMachines++;
@@ -109,18 +109,18 @@ final class CommonBlockDeliveryChecks {
             if (!(item instanceof BlockItem nativeItem)) continue;
             if (!BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("gt6ce")) continue;
             var type=nativeItem.getBlock();
-            if (!(type instanceof gregtech.block.inventory.SafeBlock
-                    || type instanceof gregtech.block.inventory.DrawerQuadBlock
-                    || type instanceof gregtech.block.misc.AdvancedCraftingTableBlock
-                    || type instanceof gregtech.block.inventory.BottleCrateBlock
-                    || type instanceof gregtech.block.inventory.MassStorageBlock
-                    || type instanceof gregtech.block.BookShelfBlock
-                    || type instanceof gregtech.block.tool.ScaffoldBlock
-                    || item instanceof gregtech.block.machine.HopperBlockItem
-                    || item instanceof gregtech.block.machine.QueueHopperBlockItem)) continue;
+            if (!(type instanceof gregtech.content.block.inventory.SafeBlock
+                    || type instanceof gregtech.content.block.inventory.DrawerQuadBlock
+                    || type instanceof gregtech.content.block.misc.AdvancedCraftingTableBlock
+                    || type instanceof gregtech.content.block.inventory.BottleCrateBlock
+                    || type instanceof gregtech.content.block.inventory.MassStorageBlock
+                    || type instanceof gregtech.content.block.BookShelfBlock
+                    || type instanceof gregtech.content.block.tool.ScaffoldBlock
+                    || item instanceof gregtech.content.block.machine.HopperBlockItem
+                    || item instanceof gregtech.content.block.machine.QueueHopperBlockItem)) continue;
             var block=nativeItem.getBlock(); var stack=new ItemStack(item); var lines=tooltip(stack);
             boolean facing=false;
-            if (block instanceof gregtech.block.BookShelfBlock shelf) {
+            if (block instanceof gregtech.content.block.BookShelfBlock shelf) {
                 require(countKey(lines,"gt.lang.nogui.rightclick.interact")==1
                         && countKey(lines,"gt.lang.use.pincers.to.take")==1
                         && countKey(lines,"gt.lang.use.magnifyingglass.to.detail")==1,"original shelf interaction rows");
@@ -131,37 +131,37 @@ final class CommonBlockDeliveryChecks {
                         && countKey(lines,"tooltip.gt6ce.machine.tool.magnifying_glass")==0,"obsolete guessed shelf rows absent");
                 if(shelf.variant().metal())require(BlockHarvestPolicy.source(block).orElseThrow().sourceId()==shelf.variant().originalId(),"actual metal shelf source ID");
                 shelves++;facing=true;
-            } else if (block instanceof gregtech.block.tool.ScaffoldBlock) {
+            } else if (block instanceof gregtech.content.block.tool.ScaffoldBlock) {
                 require(BlockHarvestPolicy.level(block)==0 && !BlockHarvestPolicy.handHarvestable(block),"actual scaffold explicit0 machine harvest rule");
                 scaffolds++;facing=true;
-            } else if (block instanceof gregtech.block.inventory.SafeBlock safe) {
+            } else if (block instanceof gregtech.content.block.inventory.SafeBlock safe) {
                 require(countKey(lines,safe.keyLocked()?"gt.lang.key.controlled":"gt.lang.owner.controlled")==1,"source lock rule once "+stack);
                 require(countKey(lines,"gt.tooltip.safe.1")==0 && countKey(lines,"gt.tooltip.safe.2")==0,"old guessed safe rows removed");
                 safes++;facing=true;
-            } else if (block instanceof gregtech.block.inventory.DrawerQuadBlock) {
+            } else if (block instanceof gregtech.content.block.inventory.DrawerQuadBlock) {
                 require(countKey(lines,"gt.lang.use.monkey.wrench.to.toggle.inputs")==1,"source drawer input access tool");
                 drawers++;facing=true;
-            } else if (block instanceof gregtech.block.misc.AdvancedCraftingTableBlock) {
+            } else if (block instanceof gregtech.content.block.misc.AdvancedCraftingTableBlock) {
                 require(countKey(lines,"gt.lang.use.monkey.wrench.to.toggle.inputs")==1
                         && countKey(lines,"gt.lang.use.screwdriver.to.toggle")==1,"both source crafting table controls including charging inheritance");
                 tables++;facing=true;
-            } else if (block instanceof gregtech.block.inventory.BottleCrateBlock) {
+            } else if (block instanceof gregtech.content.block.inventory.BottleCrateBlock) {
                 require(countKey(lines,"gt.lang.nogui.rightclick.interact")==1,"source bottlecrate direct interaction row");
                 crates++;facing=true;
-            } else if (block instanceof gregtech.block.inventory.MassStorageBlock) {
+            } else if (block instanceof gregtech.content.block.inventory.MassStorageBlock) {
                 require(countKey(lines,"gt.multitileentity.massstorage.tooltip.1")==1
                         && countKey(lines,"gt.multitileentity.massstorage.tooltip.2")==1,"source mass capacity/table rows");
                 require(countKey(lines,"gt.lang.use.tape")==1 && countKey(lines,"gt.lang.use.untape")==0,"default untaped storage tools");
                 mass++;facing=true;
             }
-            var hopper=item instanceof gregtech.block.machine.HopperBlockItem h?h.spec():
-                    item instanceof gregtech.block.machine.QueueHopperBlockItem q?q.spec():null;
+            var hopper=item instanceof gregtech.content.block.machine.HopperBlockItem h?h.spec():
+                    item instanceof gregtech.content.block.machine.QueueHopperBlockItem q?q.spec():null;
             if (hopper!=null) {
-                boolean queue=item instanceof gregtech.block.machine.QueueHopperBlockItem;
+                boolean queue=item instanceof gregtech.content.block.machine.QueueHopperBlockItem;
                 require(number(lines,"gt.multitileentity.hopper.tooltip.1",Math.max(queue?2:1,hopper.slotCount())),"actual source hopper inventory size "+stack);
                 require(countKey(lines,"gt.multitileentity.hopper.tooltip.2")== (queue?1:0),"default saved hopper stack limit visibility");
                 if(queue)require(number(lines,"gt.multitileentity.hopper.tooltip.2",64),"default queue source size64");
-                require(gregtech.data.BlockHarvestPolicy.level(nativeItem.getBlock())==0,"explicit0 native hopper metadata");
+                require(gregtech.content.data.BlockHarvestPolicy.level(nativeItem.getBlock())==0,"explicit0 native hopper metadata");
                 var data=new CompoundTag();data.putByte("gt.mode",(byte)16);data.putBoolean("gt.exact",true);write(stack,data);
                 var configured=tooltip(stack);
                 require(number(configured,"gt.multitileentity.hopper.tooltip.2",16)
@@ -234,7 +234,7 @@ final class CommonBlockDeliveryChecks {
                 && countKey(lines,"tooltip.gt6ce.machine.harvest.tool_label") == 0
                 && countKey(lines,"tooltip.gt6ce.crucible.harvest_pickaxe") == 0
                 && countKey(lines,"tooltip.gt6ce.wire.harvest_tool") == 0, "obsolete generic harvest instructions removed " + stack);
-        if (block instanceof gregtech.block.BookShelfBlock)
+        if (block instanceof gregtech.content.block.BookShelfBlock)
             require(countKey(lines,"gt.lang.enchantment.bonus") == 1,"original bookshelf interface hint");
         var second = new ArrayList<>(lines); CommonBlockTooltips.append(stack,second);
         require(second.stream().filter(line -> line.getString().equals(row)).count() == 1,"shared rows do not duplicate if reapplied");

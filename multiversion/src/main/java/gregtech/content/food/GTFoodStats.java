@@ -1,6 +1,6 @@
 package gregtech.content.food;
 
-import gregtech.data.generated.GTFoodStatsGen;
+import gregtech.content.data.generated.GTFoodStatsGen;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 

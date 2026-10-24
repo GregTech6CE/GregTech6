@@ -4,7 +4,7 @@ import gregtech.internal.machine.InitialSmelteryDefinitions;
 import gregtech.internal.machine.crucible.*;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
-import gregtech.data.GregTechConstants;
+import gregtech.content.data.GregTechConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -25,18 +25,18 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collection;
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 import gregtech.internal.machine.CrucibleSpec;
 import javax.annotation.Nullable;
 import gregtech.internal.tool.GTToolHelper;
-import gregtech.registry.GTItems;
+import gregtech.content.registry.GTItems;
 import gregtech.content.material.Materials;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 import gregtech.util.GTEntityHelper;
 import net.minecraft.world.InteractionResult;
 
 /** Neo world/cache/storage adapter for the shared real crucible engine. */
-public class SmeltingCrucibleEntity extends gregtech.blockentity.GTEnergyBlockEntity implements gregtech.internal.energy.HeatEnergyBlock, gregtech.internal.machine.ITileEntityCrucible, gregtech.internal.fluid.MoltenMaterialStorage,
+public class SmeltingCrucibleEntity extends gregtech.content.blockentity.GTEnergyBlockEntity implements gregtech.internal.energy.HeatEnergyBlock, gregtech.internal.machine.ITileEntityCrucible, gregtech.internal.fluid.MoltenMaterialStorage,
         gregtech.api.machine.HeatHandler {
     public static final long MAX_AMOUNT = 16L * GTValues.U;
     private final List<CrucibleMaterialStack> content = new ArrayList<>();
@@ -49,7 +49,7 @@ public class SmeltingCrucibleEntity extends gregtech.blockentity.GTEnergyBlockEn
     }
     private final gregtech.internal.machine.CrucibleSpec spec;
     private ThermalState thermal = new ThermalState(293, 293, 0, 100);
-    public SmeltingCrucibleEntity(BlockPos pos, BlockState state) { this(SmelteryRegistries.SMELTING_CRUCIBLE.get(),pos,state,state.getBlock() instanceof gregtech.block.machine.SmeltingCrucibleBlock block?block.spec():InitialSmelteryDefinitions.ceramicCrucible()); }
+    public SmeltingCrucibleEntity(BlockPos pos, BlockState state) { this(SmelteryRegistries.SMELTING_CRUCIBLE.get(),pos,state,state.getBlock() instanceof gregtech.content.block.machine.SmeltingCrucibleBlock block?block.spec():InitialSmelteryDefinitions.ceramicCrucible()); }
     public SmeltingCrucibleEntity(BlockPos pos,BlockState state,CrucibleSpec spec){this(SmelteryRegistries.SMELTING_CRUCIBLE.get(),pos,state,spec);}
     protected SmeltingCrucibleEntity(net.minecraft.world.level.block.entity.BlockEntityType<?> type,BlockPos pos,BlockState state,gregtech.internal.machine.CrucibleSpec spec){super(type,pos,state);this.spec=spec;}
     public gregtech.internal.machine.CrucibleSpec spec(){return spec;}
@@ -59,9 +59,9 @@ public class SmeltingCrucibleEntity extends gregtech.blockentity.GTEnergyBlockEn
     public long getMeltDownLimitK(){return spec.meltDownTemperatureK();}
     protected ItemStackHandler cacheHandler(){return cache;}
     protected AABB itemSuctionArea(){return new AABB(worldPosition.getX()+.125,worldPosition.getY()+.125,worldPosition.getZ()+.125,worldPosition.getX()+.875,worldPosition.getY()+1,worldPosition.getZ()+.875);}
-    protected long environmentTemperature(){return gregtech.blockentity.machine.SmelteryBlockEntityHelper.environmentTemperature(level,worldPosition);}
+    protected long environmentTemperature(){return gregtech.content.blockentity.machine.SmelteryBlockEntityHelper.environmentTemperature(level,worldPosition);}
     protected void sync(){setChanged();syncToClient();}
-    protected void meltdown(){level.playSound(null,worldPosition,SoundEvents.FIRE_EXTINGUISH,SoundSource.BLOCKS,0.5F,2.6F);gregtech.blockentity.machine.SmelteryFireHelper.crucibleMeltdown(level,worldPosition,hazardProfile(),getTemperature());}
+    protected void meltdown(){level.playSound(null,worldPosition,SoundEvents.FIRE_EXTINGUISH,SoundSource.BLOCKS,0.5F,2.6F);gregtech.content.blockentity.machine.SmelteryFireHelper.crucibleMeltdown(level,worldPosition,hazardProfile(),getTemperature());}
     protected void addHeatEnergy(long units){if(units>0){thermal=new ThermalState(getTemperature(),thermal.previousTemperatureK(),Math.min(Long.MAX_VALUE-units,getEnergyBuffer())+units,thermal.cooldownTicks());setChanged();}}
     protected void removeHeatEnergy(long units){if(units>0){thermal=new ThermalState(getTemperature(),thermal.previousTemperatureK(),Math.max(0,getEnergyBuffer()-units),thermal.cooldownTicks());setChanged();}}
     protected void coolWithoutStructure(){if(level==null||level.isClientSide)return;long environment=environmentTemperature(),before=getTemperature(),temp=before;if(level.getGameTime()%10==0){if(temp>environment)temp--;else if(temp<environment)temp++;}temp=Math.max(temp,Math.min(200,environment));if(temp!=before){thermal=new ThermalState(temp,thermal.previousTemperatureK(),getEnergyBuffer(),thermal.cooldownTicks());sync();}}
@@ -186,7 +186,7 @@ public class SmeltingCrucibleEntity extends gregtech.blockentity.GTEnergyBlockEn
                 before != content.hashCode(), spec.acidProof());
         for (int i = 0; i < phase.fizzCount(); i++)
             level.playSound(null, worldPosition, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F);
-        for (var vapor : phase.vapors()) gregtech.blockentity.machine.SmelteryFireHelper.vaporize(level, worldPosition, hazardProfile(), vapor);
+        for (var vapor : phase.vapors()) gregtech.content.blockentity.machine.SmelteryFireHelper.vaporize(level, worldPosition, hazardProfile(), vapor);
         if (phase.explosiveAmount() > 0) {
             int strength = CrucibleHazards.explosionPower(hazardProfile(), phase.explosiveAmount());
             level.removeBlock(worldPosition, false);

@@ -1,10 +1,10 @@
 package gregtech.gametest;
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
-import gregtech.api.recipe.*;
 import gregtech.internal.recipe.*;
-import gregtech.data.*;
-import gregtech.registry.GTItems;
+import gregtech.internal.recipe.*;
+import gregtech.content.data.*;
+import gregtech.content.registry.GTItems;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.item.*;
 import net.minecraftforge.gametest.*;
@@ -38,13 +38,13 @@ public final class SurvivalExtensionTests {
   h.succeed();
  }
  @GameTest(template="test_empty") public static void normalOreDropsRawAndSilkPreservesHost(GameTestHelper h) {
-  var ore=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValues().stream().filter(b->b instanceof gregtech.block.OreBlock o&&!o.isSmall()&&o.material()==GTMaterialRegistry.get("Iron")).map(b->(gregtech.block.OreBlock)b).findFirst().orElseThrow();
+  var ore=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValues().stream().filter(b->b instanceof gregtech.content.block.OreBlock o&&!o.isSmall()&&o.material()==GTMaterialRegistry.get("Iron")).map(b->(gregtech.content.block.OreBlock)b).findFirst().orElseThrow();
   var pos=h.absolutePos(new net.minecraft.core.BlockPos(1,1,1));
   // §103.B: the host rock is the ore's `stone` block-state property (it was the ore block entity).
-  var state=ore.stateFor(gregtech.block.OreHostStone.GRANITE_BLACK);
+  var state=ore.stateFor(gregtech.content.block.OreHostStone.GRANITE_BLACK);
   h.getLevel().setBlock(pos,state,3);
   h.assertTrue(h.getLevel().getBlockEntity(pos)==null,"§103.B: an ore block keeps no block entity");
-  h.assertTrue(gregtech.block.OreBlock.stoneOf(h.getLevel().getBlockState(pos))==gregtech.block.OreHostStone.GRANITE_BLACK,
+  h.assertTrue(gregtech.content.block.OreBlock.stoneOf(h.getLevel().getBlockState(pos))==gregtech.content.block.OreHostStone.GRANITE_BLACK,
           "the placed state keeps the host rock");
   var raw=GTItems.getStack(MaterialPrefix.oreRaw,GTMaterialRegistry.get("Iron"));
   h.assertTrue(!raw.isEmpty(),"Iron raw ore form must be registered");
@@ -57,9 +57,9 @@ public final class SurvivalExtensionTests {
   h.assertTrue(drops.get(0).getTagElement("BlockEntityTag")!=null,"Silk keeps host stone NBT");
   h.assertTrue("stone_granite_black".equals(drops.get(0).getTagElement("BlockStateTag").getString("stone")),
           "§103.B: silk also writes the vanilla BlockStateTag");
-  h.assertTrue(gregtech.block.OreBlock.stoneOfStack(drops.get(0))==gregtech.block.OreHostStone.GRANITE_BLACK,
+  h.assertTrue(gregtech.content.block.OreBlock.stoneOfStack(drops.get(0))==gregtech.content.block.OreHostStone.GRANITE_BLACK,
           "the dropped item reads back as its host rock");
-  for(var b:net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValues())if(b instanceof gregtech.block.OreBlock o&&!o.isSmall())
+  for(var b:net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValues())if(b instanceof gregtech.content.block.OreBlock o&&!o.isSmall())
    h.assertTrue(!GTItems.getStack(MaterialPrefix.oreRaw,o.material()).isEmpty(),"Every normal ore has a registered raw drop: "+o.material().getName());
   h.succeed();
  }

@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.block.misc.PileBlock;
-import gregtech.block.misc.PileItemExpireHandler;
-import gregtech.block.misc.PilePlacementHandler;
-import gregtech.blockentity.misc.PileBlockEntity;
-import gregtech.registry.GTItems;
+import gregtech.content.block.misc.PileBlock;
+import gregtech.content.block.misc.PileItemExpireHandler;
+import gregtech.content.block.misc.PilePlacementHandler;
+import gregtech.content.blockentity.misc.PileBlockEntity;
+import gregtech.content.registry.GTItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

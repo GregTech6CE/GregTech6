@@ -1,6 +1,6 @@
 package gregtech.content.multiblock;
 
-import gregtech.registry.GTMultiblocks;
+import gregtech.content.registry.GTMultiblocks;
 import net.minecraft.core.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -22,9 +22,9 @@ public final class ControllerStructureLayouts {
         for(var entry:cells.entrySet()){
             var local=entry.getKey();
             BlockPos pos;
-            if (state.getBlock() instanceof gregtech.block.machine.AxialGeneratorBlock)
+            if (state.getBlock() instanceof gregtech.content.block.machine.AxialGeneratorBlock)
                 pos=AxialStructureTransform.at(controller.getBlockPos(),front,local.getX(),local.getY(),local.getZ());
-            else if (state.getBlock() instanceof gregtech.block.machine.TankControllerBlock tank
+            else if (state.getBlock() instanceof gregtech.content.block.machine.TankControllerBlock tank
                     && tank.valveSpec()!=null) {
                 int radius=tank.size()/2;
                 pos=controller.getBlockPos().relative(front.getOpposite(),radius)

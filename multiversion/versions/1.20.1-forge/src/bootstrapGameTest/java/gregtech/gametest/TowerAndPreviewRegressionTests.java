@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
-import gregtech.registry.*;
-import gregtech.data.GregTechTags;
-import gregtech.blockentity.machine.*;
+import gregtech.content.registry.*;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.blockentity.machine.*;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.level.block.Blocks;
@@ -91,10 +91,10 @@ public final class TowerAndPreviewRegressionTests {
             // Heightmap + 4 is not sufficient after placing/removing the preceding test roof.
             sequence.thenWaitUntil(()->h.assertTrue(failed[0]||world.isRainingAt(pos.above()),"wait for exposed rainy fixture skylight"));
             sequence.thenExecute(()->checked.accept(()->{
-                var tool=(gregtech.blockentity.tool.ProcessingToolBlockEntity)world.getBlockEntity(pos);
+                var tool=(gregtech.content.blockentity.tool.ProcessingToolBlockEntity)world.getBlockEntity(pos);
                 h.assertTrue(tool!=null,"weather fixture remains at "+pos+", block="+world.getBlockState(pos));
                 var climate=world.getBiome(pos).value().getModifiedClimateSettings();
-                int expected=gregtech.blockentity.tool.ProcessingToolBlockEntity.rainfallAmount(climate.downfall(),climate.temperature(),false);
+                int expected=gregtech.content.blockentity.tool.ProcessingToolBlockEntity.rainfallAmount(climate.downfall(),climate.temperature(),false);
                 int before=tool.displayFluid().getAmount();h.assertTrue(expected>0,"plains fixture has rain");tool.collectRain();
                 h.assertTrue(tool.displayFluid().getAmount()==before+(id.equals("juicer")?0:expected),"only open bowl and bath collect rain");
                 world.setBlockAndUpdate(pos.above(),Blocks.STONE.defaultBlockState());before=tool.displayFluid().getAmount();tool.collectRain();
@@ -102,22 +102,22 @@ public final class TowerAndPreviewRegressionTests {
             }));
             sequence.thenWaitUntil(()->h.assertTrue(failed[0]||world.isRainingAt(pos.above()),"wait for removed roof skylight"));
             sequence.thenExecute(()->checked.accept(()->{
-                var tool=(gregtech.blockentity.tool.ProcessingToolBlockEntity)world.getBlockEntity(pos);
+                var tool=(gregtech.content.blockentity.tool.ProcessingToolBlockEntity)world.getBlockEntity(pos);
                 h.assertTrue(tool!=null,"weather fixture remains at "+pos+", block="+world.getBlockState(pos));
                 if(!id.equals("juicer")){
                     var climate=world.getBiome(pos).value().getModifiedClimateSettings();
-                    int expected=gregtech.blockentity.tool.ProcessingToolBlockEntity.rainfallAmount(climate.downfall(),climate.temperature(),false);
+                    int expected=gregtech.content.blockentity.tool.ProcessingToolBlockEntity.rainfallAmount(climate.downfall(),climate.temperature(),false);
                     int before=tool.displayFluid().getAmount();data.setThundering(true);world.setThunderLevel(1);tool.collectRain();
                     h.assertTrue(tool.displayFluid().getAmount()==before+expected*2,"thunder doubles rainfall");data.setThundering(false);world.setThunderLevel(0);
                     for(int i=0;i<100;i++)tool.collectRain();h.assertTrue(tool.displayFluid().getAmount()==8000,"rain never overflows or opens duplicate water tanks");
-                    var copy=new gregtech.blockentity.tool.ProcessingToolBlockEntity(pos,tool.getBlockState());copy.load(tool.saveWithoutMetadata());
+                    var copy=new gregtech.content.blockentity.tool.ProcessingToolBlockEntity(pos,tool.getBlockState());copy.load(tool.saveWithoutMetadata());
                     h.assertTrue(copy.displayFluid().getAmount()==8000,"collected water persists");
                 }
             }));
         }
         sequence.thenExecute(()->checked.accept(()->{
-            h.assertTrue(gregtech.blockentity.tool.ProcessingToolBlockEntity.rainfallAmount(0,1,false)==0
-                &&gregtech.blockentity.tool.ProcessingToolBlockEntity.rainfallAmount(1,0.1F,false)==0,"dry and cold biomes collect nothing");cleanup.run();
+            h.assertTrue(gregtech.content.blockentity.tool.ProcessingToolBlockEntity.rainfallAmount(0,1,false)==0
+                &&gregtech.content.blockentity.tool.ProcessingToolBlockEntity.rainfallAmount(1,0.1F,false)==0,"dry and cold biomes collect nothing");cleanup.run();
         })).thenSucceed();
     }
 }

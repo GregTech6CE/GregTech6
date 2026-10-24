@@ -2,12 +2,12 @@ package gregtech.gametest;
 
 import gregtech.GregTech;
 import gregtech.internal.energy.EnergyNodeSpec;
-import gregtech.block.energy.EnergyNodeBlock;
-import gregtech.block.energy.MagnetMachineBlock;
-import gregtech.blockentity.energy.EnergyNodeBlockEntity;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.block.energy.EnergyNodeBlock;
+import gregtech.content.block.energy.MagnetMachineBlock;
+import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.energy.MagnetMachineDefinitions;
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.blockentity.sensor.SensorBlockEntity;
+import gregtech.content.blockentity.sensor.SensorBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;

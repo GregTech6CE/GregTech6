@@ -2,14 +2,14 @@ package gregtech.gametest;
 
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
-import gregtech.api.recipe.*;
 import gregtech.internal.recipe.*;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.internal.recipe.*;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.data.*;
 import gregtech.content.recipe.GTMaterialDataRecipes;
-import gregtech.data.*;
-import gregtech.data.generated.MaterialDataFacts;
-import gregtech.registry.*;
+import gregtech.content.data.*;
+import gregtech.content.data.generated.MaterialDataFacts;
+import gregtech.content.registry.*;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -60,16 +60,16 @@ public final class MolecularDataPortTests {
         var shortMatter=new ArrayList<>(matter(260));shortMatter.get(0).setAmount(shortMatter.get(0).getAmount()-1);
         h.assertTrue(lookup(h,MachineRecipeMaps.Replicator,List.of(usb(260)),shortMatter)==null,"insufficient neutral matter rejected");
         var lines=new ArrayList<net.minecraft.network.chat.Component>();
-        gregtech.item.behavior.BehaviorDataStorage.dataTooltip(UsbDataMedia.readStick(usb(260),3),lines,true);
+        gregtech.content.item.behavior.BehaviorDataStorage.dataTooltip(UsbDataMedia.readStick(usb(260),3),lines,true);
         h.assertTrue(lines.size()==5&&lines.get(4).getString().contains(Long.toString((material(260).getProtons()+material(260).getNeutrons())*65536L))&&lines.get(4).getString().endsWith(" QU"),"original tooltip estimate and unit");
-        lines.clear();gregtech.item.behavior.BehaviorDataStorage.dataTooltip(UsbDataMedia.readStick(usb(8214),3),lines,false);
+        lines.clear();gregtech.content.item.behavior.BehaviorDataStorage.dataTooltip(UsbDataMedia.readStick(usb(8214),3),lines,false);
         h.assertTrue(lines.size()==1&&lines.get(0).getString().contains("Not Replicatable"),"non-UUM data keeps original refusal hint");h.succeed();
     }
     @GameTest(template="test_empty",timeoutTicks=60)
     public static void priorityPrefixesAndAmbientFluids(GameTestHelper h) {
         for(int id:new int[]{140,160,8341}) {
             var recipe=lookup(h,MachineRecipeMaps.Replicator,List.of(usb(id)),matter(id));var expected=MaterialDataFacts.priority(material(id));
-            h.assertTrue(recipe!=null&&recipe.mOutputs.length==1&&gregtech.item.MaterialItem.getPrefix(recipe.mOutputs[0])==expected&&recipe.mOutputs[0].getCount()==1,"source priority output for "+material(id).getName());
+            h.assertTrue(recipe!=null&&recipe.mOutputs.length==1&&gregtech.content.item.MaterialItem.getPrefix(recipe.mOutputs[0])==expected&&recipe.mOutputs[0].getCount()==1,"source priority output for "+material(id).getName());
         }
         for(int id:new int[]{10,800,9800}) {
             var recipe=lookup(h,MachineRecipeMaps.Replicator,List.of(usb(id)),matter(id));
@@ -81,7 +81,7 @@ public final class MolecularDataPortTests {
     }
     private static BasicMachineBlockEntity machine(GameTestHelper h,BlockPos pos) {
         var block=java.util.stream.StreamSupport.stream(BuiltInRegistries.BLOCK.spliterator(),false)
-            .filter(b->b instanceof gregtech.block.machine.BasicMachineBlock m&&m.basicSpec().recipeMap()==MachineRecipeMaps.Replicator&&m.basicSpec().tier()==1)
+            .filter(b->b instanceof gregtech.content.block.machine.BasicMachineBlock m&&m.basicSpec().recipeMap()==MachineRecipeMaps.Replicator&&m.basicSpec().tier()==1)
             .findFirst().orElseThrow();
         h.setBlock(pos,block);for(var side:Direction.values())h.setBlock(pos.relative(side),Blocks.STONE);
         return (BasicMachineBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(pos));
@@ -90,13 +90,13 @@ public final class MolecularDataPortTests {
     public static void lowTierQuantumMachineAndSelectedHddFile(GameTestHelper h) {
         var machine=machine(h,new BlockPos(8,2,3));var portPos=machine.getBlockPos().north();
         h.getLevel().setBlockAndUpdate(portPos,BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","hdd_switch")).defaultBlockState());
-        var port=(gregtech.blockentity.inventory.UsbSwitchBlockEntity)h.getLevel().getBlockEntity(portPos);
+        var port=(gregtech.content.blockentity.inventory.UsbSwitchBlockEntity)h.getLevel().getBlockEntity(portPos);
         var drive=item("usb3_hdd");UsbDataMedia.writeDrive(drive,9,3,UsbDataMedia.readStick(usb(260),3));port.items().setStackInSlot(0,drive);port.setMode(9);
         var cable=item("usb3_cable");var direction=gregtech.content.cover.CoverStackData.readOrEmpty(cable);direction.putByte(UsbDataCable.NBT_DIRECTION,(byte)Direction.NORTH.ordinal());gregtech.content.cover.CoverStackData.write(cable,direction);
         machine.inventory().setStackInSlot(0,cable.copy());var fluids=matter(260);for(int i=0;i<fluids.size();i++)machine.getTanksInput()[i].setFluid(fluids.get(i));
         for(int i=0;i<2000;i++) { machine.doEnergyInjection(machine.spec().energyTag(),null,machine.spec().energyInMax(),1,true);BasicMachineBlockEntity.serverTick(h.getLevel(),machine.getBlockPos(),machine.getBlockState(),machine); }
         var output=machine.inventory().getStackInSlot(MachineRecipeMaps.Replicator.mInputItemsCount);
-        h.assertTrue(!output.isEmpty()&&output.getCount()==1&&gregtech.item.MaterialItem.getMaterial(output).resolve()==material(260),"actual T1 16..64 QU input completes iron replication");
+        h.assertTrue(!output.isEmpty()&&output.getCount()==1&&gregtech.content.item.MaterialItem.getMaterial(output).resolve()==material(260),"actual T1 16..64 QU input completes iron replication");
         h.assertTrue(same(machine.inventory().getStackInSlot(0),cable)&&port.readUsbData(Direction.SOUTH,3)!=null&&Arrays.stream(machine.getTanksInput()).allMatch(t->t.getFluid().isEmpty()),"actual machine retains selected cable/HDD file and consumes exact matter");h.succeed();
     }
 //? if >=1.21.1 {

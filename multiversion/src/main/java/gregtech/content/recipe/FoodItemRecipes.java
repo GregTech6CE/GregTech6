@@ -9,9 +9,9 @@ import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.content.food.GTFoodItems;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.GTItems;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTItems;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -240,8 +240,8 @@ public final class FoodItemRecipes {
         // MultiItemFood.java:506 — the two egg halves mix back into a scrambled egg.
         mixerPair("egg_white", "egg_yolk", "scrambled_egg", 1, "MultiItemFood.java:506");
         // MultiItemFood.java:509-511 — egg yolk plus a cooking oil and a vinegar makes 250 mB mayonnaise.
-        for (String oil : fluidFields(gregtech.data.RegisteredFluids.FluidFlags.COOKING_OIL)) {
-            for (String vinegar : fluidFields(gregtech.data.RegisteredFluids.FluidFlags.VINEGAR)) {
+        for (String oil : fluidFields(gregtech.content.data.RegisteredFluids.FluidFlags.COOKING_OIL)) {
+            for (String vinegar : fluidFields(gregtech.content.data.RegisteredFluids.FluidFlags.VINEGAR)) {
                 mayonnaise(oil, vinegar, "MultiItemFood.java:509");
             }
         }
@@ -269,7 +269,7 @@ public final class FoodItemRecipes {
     private static void iceCream() {
         for (var water : SawingCoolants.variants(true)) for(int count:new int[]{1,4}) {
             ItemStack salt=GTItems.getStack(count==1?MaterialPrefix.dustSmall:MaterialPrefix.dust,
-                    gregtech.data.ImportedMaterialData.NaCl,1);
+                    gregtech.content.data.ImportedMaterialData.NaCl,1);
             FluidStack cream=fluid("Cream",250*count), liquid=fluid(water.field(),250*count);
             ItemStack output=food("ice_cream",count);
             if(!salt.isEmpty()&&!cream.isEmpty()&&!liquid.isEmpty()&&!output.isEmpty()
@@ -442,7 +442,7 @@ public final class FoodItemRecipes {
     }
 
     private static FluidStack fluid(String field, int amount) {
-        FluidStack stack = gregtech.registry.GTFluids.stack(field, amount);
+        FluidStack stack = gregtech.content.registry.GTFluids.stack(field, amount);
         return stack == null ? FluidStack.EMPTY : stack;
     }
 
@@ -453,7 +453,7 @@ public final class FoodItemRecipes {
      */
     private static List<String> fluidFields(long flag) {
         java.util.TreeSet<String> fields = new java.util.TreeSet<>();
-        for (var entry : gregtech.data.RegisteredFluids.all().entrySet()) {
+        for (var entry : gregtech.content.data.RegisteredFluids.all().entrySet()) {
             if (entry.getValue().hasFlag(flag)) {
                 fields.add(entry.getKey());
             }
@@ -463,7 +463,7 @@ public final class FoodItemRecipes {
 
     /** GT6 registers these fluid-only rows with {@code ST.tag(0)} as their item input. */
     private static ItemStack selector() {
-        Item tag = gregtech.registry.GTTechnological.selectorTag(0);
+        Item tag = gregtech.content.registry.GTTechnological.selectorTag(0);
         return tag == null ? ItemStack.EMPTY : new ItemStack(tag);
     }
 }

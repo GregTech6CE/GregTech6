@@ -8,8 +8,8 @@ import gregtech.content.recipe.BatteryCellRecipeRows.Fill;
 import gregtech.GregTech;
 //?}
 import gregtech.internal.recipe.Recipe;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.registry.GTTechnological;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.registry.GTTechnological;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -103,13 +103,13 @@ public final class BatteryCellRecipes {
                     .materialFluid(material.getName(), mb);
             if (stack != null) return stack;
         }
-        var still = gregtech.registry.GTFluids.still(materialName);
+        var still = gregtech.content.registry.GTFluids.still(materialName);
 //? if >=1.21.1 {
         /*if (still != null && still.isBound()) return new FluidStack(still.get(), mb);
 *///?} else {
         if (still != null && still.isPresent()) return new FluidStack(still.get(), mb);
 //?}
-        var generated = gregtech.registry.GTFluids.still("GenGas_" + materialName);
+        var generated = gregtech.content.registry.GTFluids.still("GenGas_" + materialName);
 //? if >=1.21.1 {
         /*return generated != null && generated.isBound() ? new FluidStack(generated.get(), mb) : null;
 *///?} else {

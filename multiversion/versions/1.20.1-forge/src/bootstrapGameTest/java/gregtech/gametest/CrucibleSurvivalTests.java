@@ -3,9 +3,9 @@ import gregtech.internal.machine.crucible.CrucibleContentsNbt;
 import gregtech.internal.machine.crucible.*;
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
-import gregtech.data.generated.GT6Materials.*;
-import gregtech.registry.GTMachines;
-import gregtech.blockentity.machine.SmeltingCrucibleBlockEntity;
+import gregtech.content.data.generated.GT6Materials.*;
+import gregtech.content.registry.GTMachines;
+import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.item.*;
 import net.minecraft.core.BlockPos;
@@ -51,14 +51,14 @@ public final class CrucibleSurvivalTests {
      var ingredient=shaped.getIngredients().get(x+y*shaped.getWidth());
      if(ingredient.getItems().length==0)continue;
      var stack=ingredient.getItems()[0].copy();
-     if(stack.getItem() instanceof gregtech.item.GTToolItem)stack=gregtech.item.GTToolItem.create(
+     if(stack.getItem() instanceof gregtech.content.item.GTToolItem)stack=gregtech.content.item.GTToolItem.create(
        gregtech.internal.tool.GTToolHelper.getType(stack),gregtech.content.material.Materials.Steel,GTMaterialRegistry.get("Wood"));
      grid.setItem(x+y*3,stack);
     }
     h.assertTrue(shaped.matches(grid,h.getLevel()),"Manufacturing pattern executable: "+id);
     h.assertTrue(!shaped.assemble(grid,h.getLevel().registryAccess()).isEmpty(),"Real manufacturing result");
     var remains=shaped.getRemainingItems(grid);
-    for(int slot=0;slot<9;slot++)if(grid.getItem(slot).getItem() instanceof gregtech.item.GTToolItem)
+    for(int slot=0;slot<9;slot++)if(grid.getItem(slot).getItem() instanceof gregtech.content.item.GTToolItem)
      h.assertTrue(!remains.get(slot).isEmpty()&&remains.get(slot).getDamageValue()>0,"Tools returned with wear: "+id);
    }
    h.assertTrue(!recipe.getResultItem(h.getLevel().registryAccess()).isEmpty(),"Registered crafting result "+id);

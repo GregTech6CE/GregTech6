@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
-import gregtech.block.energy.AxleBlock;
-import gregtech.block.misc.AdvancedCraftingTableBlockEntity;
-import gregtech.blockentity.energy.AxleBlockEntity;
-import gregtech.data.GregTechTags;
+import gregtech.content.block.energy.AxleBlock;
+import gregtech.content.block.misc.AdvancedCraftingTableBlockEntity;
+import gregtech.content.blockentity.energy.AxleBlockEntity;
+import gregtech.content.data.GregTechTags;
 import gregtech.GregTech;
-import gregtech.registry.*;
+import gregtech.content.registry.*;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -59,7 +59,7 @@ public final class AxleRepairTests {
     @GameTest(template="test_empty")
     public static void hugeWoodAxleConsumesFiniteCreosoteAndKeepsContainer(GameTestHelper h){
         var id=GregTech.id("hand/axle/axle_wood_4");
-        var recipe=(gregtech.recipe.CreosoteAxleRecipe)h.getLevel().getRecipeManager().byKey(id).orElseThrow();
+        var recipe=(gregtech.content.recipe.CreosoteAxleRecipe)h.getLevel().getRecipeManager().byKey(id).orElseThrow();
         var menu=new net.minecraft.world.inventory.AbstractContainerMenu(null,0){
             @Override public net.minecraft.world.item.ItemStack quickMoveStack(net.minecraft.world.entity.player.Player player,int slot){return net.minecraft.world.item.ItemStack.EMPTY;}
             @Override public boolean stillValid(net.minecraft.world.entity.player.Player player){return true;}
@@ -69,14 +69,14 @@ public final class AxleRepairTests {
             var ingredient=recipe.getIngredients().get(x+y*recipe.getWidth());
             if(ingredient.isEmpty())continue;
             var stack=ingredient.getItems()[0].copy();
-            if(stack.getItem() instanceof gregtech.item.GTToolItem)
-                stack=gregtech.item.GTToolItem.create(
+            if(stack.getItem() instanceof gregtech.content.item.GTToolItem)
+                stack=gregtech.content.item.GTToolItem.create(
                         gregtech.internal.tool.GTToolHelper.getType(stack),
                         gregtech.internal.material.GTMaterialRegistry.get("Steel"),
                         gregtech.internal.material.GTMaterialRegistry.get("Wood"));
             grid.setItem(x+y*3,stack);
         }
-        var creosote=gregtech.registry.GTFluids.still("Oil_Creosote").get();
+        var creosote=gregtech.content.registry.GTFluids.still("Oil_Creosote").get();
         var filled=net.minecraftforge.fluids.FluidUtil.getFluidContained(grid.getItem(3)).orElse(net.minecraftforge.fluids.FluidStack.EMPTY);
         h.assertTrue(filled.getFluid()==creosote&&filled.getAmount()>=1000,"JEI example is a real finite creosote container");
         h.assertTrue(recipe.matches(grid,h.getLevel()),"filled vessel, beam and two valid tools craft huge wood axle");
@@ -86,20 +86,20 @@ public final class AxleRepairTests {
                 "craft drains exactly 1000 mB and returns the same vessel");
         h.assertTrue(net.minecraftforge.fluids.FluidUtil.getFluidContained(grid.getItem(3)).orElse(net.minecraftforge.fluids.FluidStack.EMPTY).getAmount()==filled.getAmount(),
                 "recipe matching and remainder calculation leave input untouched");
-        var proxy=gregtech.registry.GTFluidItems.forFluid(creosote);
+        var proxy=gregtech.content.registry.GTFluidItems.forFluid(creosote);
         grid.setItem(3,new net.minecraft.world.item.ItemStack(proxy));
         h.assertTrue(!recipe.matches(grid,h.getLevel()),"infinite display fluid cannot pay for creosote");
         var buffer=new net.minecraft.network.FriendlyByteBuf(io.netty.buffer.Unpooled.buffer());
         try{
-            gregtech.recipe.CreosoteAxleRecipe.SERIALIZER.toNetwork(buffer,recipe);
-            var copy=gregtech.recipe.CreosoteAxleRecipe.SERIALIZER.fromNetwork(id,buffer);
+            gregtech.content.recipe.CreosoteAxleRecipe.SERIALIZER.toNetwork(buffer,recipe);
+            var copy=gregtech.content.recipe.CreosoteAxleRecipe.SERIALIZER.fromNetwork(id,buffer);
             grid.setItem(3,remains.get(3));
             h.assertTrue(!copy.matches(grid,h.getLevel())&&buffer.readableBytes()==0,"client recipe codec retains finite creosote requirement");
         }finally{buffer.release();}
         h.succeed();
     }
     /** Test receiver exposes exactly what traversed the real server block-entity network. */
-    private static final class Sink extends gregtech.blockentity.GTEnergyBlockEntity {
+    private static final class Sink extends gregtech.content.blockentity.GTEnergyBlockEntity {
         long packets,lastSpeed;
         Sink(BlockPos pos,BlockState state){super(GTBlockEntities.CHARGING_CRAFTING_TABLE.get(),pos,state);}
         @Override public boolean isEnergyType(GregTechTags.Tag energy,Direction side,boolean emitting){return !emitting&&energy==GregTechTags.Energy.RU;}

@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.block.inventory.MassStorageBlock;
+import gregtech.content.block.inventory.MassStorageBlock;
 import gregtech.platform.neoforge.logistics.StorageRegistries;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;

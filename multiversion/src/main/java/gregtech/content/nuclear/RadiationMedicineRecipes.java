@@ -2,11 +2,11 @@ package gregtech.content.nuclear;
 
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
-import gregtech.api.recipe.*;
 import gregtech.internal.recipe.*;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.*;
+import gregtech.internal.recipe.*;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 //? if >=1.21.1 {

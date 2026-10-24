@@ -24,10 +24,10 @@ public final class ReactorRadiation {
     public static boolean apply(LivingEntity entity, int level, int dose) {
 //? if >=1.21.1 {
         /*if (level <= 0 || dose <= 0 || !entity.isAlive() || entity.getType().is(net.minecraft.tags.EntityTypeTags.UNDEAD)
-                || entity.getType().is(net.minecraft.tags.EntityTypeTags.ARTHROPOD) || gregtech.damage.GTHazmat.isRadioProtected(entity)) return false;
+                || entity.getType().is(net.minecraft.tags.EntityTypeTags.ARTHROPOD) || gregtech.content.damage.GTHazmat.isRadioProtected(entity)) return false;
 *///?} else {
         if (level <= 0 || dose <= 0 || !entity.isAlive() || entity.getMobType() == MobType.UNDEAD || entity.getMobType() == MobType.ARTHROPOD
-                || gregtech.damage.GTHazmat.isRadioProtected(entity)) return false;
+                || gregtech.content.damage.GTHazmat.isRadioProtected(entity)) return false;
 //?}
         if (entity.level().isClientSide) return false;
         if (entity instanceof net.minecraft.world.entity.player.Player player) {

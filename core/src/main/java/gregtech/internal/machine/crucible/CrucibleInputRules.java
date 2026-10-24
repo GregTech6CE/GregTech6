@@ -2,7 +2,7 @@ package gregtech.internal.machine.crucible;
 
 import gregtech.internal.material.GTMaterial;
 import gregtech.api.material.GTValues;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 
 /** Original material item/raw ore payloads, after platform stack recovery checks. */
 public final class CrucibleInputRules {

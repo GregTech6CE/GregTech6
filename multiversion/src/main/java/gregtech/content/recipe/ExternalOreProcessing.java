@@ -4,9 +4,9 @@ import gregtech.api.material.*;
 import gregtech.internal.material.*;
 import gregtech.internal.recipe.Recipe;
 import gregtech.internal.recipe.RecipeMap;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.data.MaterialPrefix;
-import gregtech.recipe.CraftingMaterialForms;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.recipe.CraftingMaterialForms;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
@@ -132,7 +132,7 @@ public final class ExternalOreProcessing {
                 OWNED.computeIfAbsent(map, unused -> Collections.newSetFromMap(new IdentityHashMap<>())).add(recipe);
                 cookingData.put(item, new FurnaceSmeltingRecipes.CookingData(
                         row.experience() ? FurnaceSmeltingRules.experience(amount, material.getToolQuality()) : 0,
-                        gregtech.data.generated.MaterialWorkability.isFood(material)));
+                        gregtech.content.data.generated.MaterialWorkability.isFood(material)));
                 added++;
             }
         }
@@ -199,7 +199,7 @@ public final class ExternalOreProcessing {
     }
 
     private static ItemStack output(MaterialPrefix prefix, GTMaterial material, int count) {
-        var output = gregtech.registry.GTItems.getStack(prefix, material, count);
+        var output = gregtech.content.registry.GTItems.getStack(prefix, material, count);
         return output.isEmpty() ? CraftingMaterialForms.stack(prefix.getName(), material, count) : output;
     }
 }

@@ -4,7 +4,7 @@ import gregtech.api.material.GTValues;
 
 import gregtech.internal.addon.AddonMaterials;
 import gregtech.content.material.Materials;
-import gregtech.data.ImportedMaterialData;
+import gregtech.content.data.ImportedMaterialData;
 
 import java.util.ArrayList;
 import java.util.Collection;

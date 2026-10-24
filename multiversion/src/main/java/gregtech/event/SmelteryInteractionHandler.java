@@ -8,13 +8,13 @@ import gregtech.GregTech;
 import gregtech.internal.machine.GTMachineBlock;
 import gregtech.internal.tool.GTToolHelper;
 import gregtech.internal.tool.GTToolType;
-import gregtech.blockentity.machine.CrucibleFaucetBlockEntity;
-import gregtech.blockentity.machine.MoldBasinBlockEntity;
-import gregtech.blockentity.machine.MoldBlockEntity;
+import gregtech.content.blockentity.machine.CrucibleFaucetBlockEntity;
+import gregtech.content.blockentity.machine.MoldBasinBlockEntity;
+import gregtech.content.blockentity.machine.MoldBlockEntity;
 
 //? if >=1.21.1 {
 //?} else {
-import gregtech.registry.GTSounds;
+import gregtech.content.registry.GTSounds;
 //?}
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

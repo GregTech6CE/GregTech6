@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
 import gregtech.internal.energy.EnergyNet;
-import gregtech.block.energy.ElectricWireBlock;
-import gregtech.blockentity.energy.ElectricWireBlockEntity;
+import gregtech.content.block.energy.ElectricWireBlock;
+import gregtech.content.blockentity.energy.ElectricWireBlockEntity;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.*;

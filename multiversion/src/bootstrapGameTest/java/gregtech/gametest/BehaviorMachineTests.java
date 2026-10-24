@@ -2,11 +2,11 @@ package gregtech.gametest;
 
 import gregtech.internal.recipe.RecipeMap;
 import gregtech.internal.tool.GTToolType;
-import gregtech.block.machine.BehaviorMachineBlock;
-import gregtech.blockentity.machine.BehaviorMachineBlockEntity;
+import gregtech.content.block.machine.BehaviorMachineBlock;
+import gregtech.content.blockentity.machine.BehaviorMachineBlockEntity;
 import gregtech.content.material.Materials;
 import gregtech.content.material.generated.WoodMaterials;
-import gregtech.item.GTToolItem;
+import gregtech.content.item.GTToolItem;
 import gregtech.client.gui.BehaviorMachineMenu;
 import gregtech.jei.RecipeMachines;
 import net.minecraft.core.BlockPos;

@@ -1,12 +1,12 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.block.OreBlock;
-import gregtech.block.OreHostStone;
-import gregtech.block.stone.StoneType;
-import gregtech.blockentity.OreBlockEntity;
+import gregtech.content.block.OreBlock;
+import gregtech.content.block.OreHostStone;
+import gregtech.content.block.stone.StoneType;
+import gregtech.content.blockentity.OreBlockEntity;
 import gregtech.content.material.Materials;
-import gregtech.worldgen.GTOreBlockResolver;
+import gregtech.content.worldgen.GTOreBlockResolver;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

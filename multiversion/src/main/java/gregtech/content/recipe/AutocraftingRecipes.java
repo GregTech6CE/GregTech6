@@ -138,8 +138,8 @@ public final class AutocraftingRecipes {
         if (level == null || level.isClientSide || available.isEmpty()) return null;
         ItemStack[] pattern = blueprint(level, machine, program);
         var grouped = AutocraftingRules.inputs(Arrays.asList(pattern), ItemStack::isEmpty,
-                s -> s.getItem() instanceof gregtech.item.GTToolItem
-                || s.getItem() instanceof gregtech.item.ElectricToolItem,
+                s -> s.getItem() instanceof gregtech.content.item.GTToolItem
+                || s.getItem() instanceof gregtech.content.item.ElectricToolItem,
 //? if >=1.21.1 {
                 /*ItemStack::isSameItemSameComponents, AutocraftingRecipes::infinite);
 *///?} else {

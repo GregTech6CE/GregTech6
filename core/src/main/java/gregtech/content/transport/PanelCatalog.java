@@ -2,7 +2,7 @@
  * Original MultiTileEntityPanel / Loader_MultiTileEntities; provenance in panels-source-20261006.json. */
 package gregtech.content.transport;
 
-import gregtech.block.ConstructionRules;
+import gregtech.content.block.ConstructionRules;
 import gregtech.content.storage.BottleCrateVariants;
 import gregtech.content.tool.PaintingRules;
 import java.util.*;

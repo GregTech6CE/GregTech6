@@ -1,5 +1,5 @@
 package gregtech.content.recipe;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 import java.util.List;
 /** Original LaserEmitterRecipes parameters; native stack/registry construction stays in the platforms. */
 public final class LaserEmitterRecipeRows {

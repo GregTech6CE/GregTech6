@@ -1,7 +1,7 @@
 package gregtech.content.transport.fluid;
 
-import gregtech.block.machine.TankBlock;
-import gregtech.block.machine.FluidPipeBlock;
+import gregtech.content.block.machine.TankBlock;
+import gregtech.content.block.machine.FluidPipeBlock;
 import gregtech.client.TankTooltips;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;

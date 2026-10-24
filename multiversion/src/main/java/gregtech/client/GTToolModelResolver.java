@@ -2,7 +2,7 @@ package gregtech.client;
 
 import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.MaterialTextureSet;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 import gregtech.internal.prefix.PrefixRegistry;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.resources.model.BakedModel;

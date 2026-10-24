@@ -5,10 +5,10 @@ import gregtech.internal.machine.OriginalSmelteryDefinitions;
 import gregtech.internal.machine.crucible.CrucibleItemInput;
 import gregtech.internal.machine.crucible.MoldShapes;
 import gregtech.internal.material.ItemMaterialRegistry;
-import gregtech.block.machine.MoldItemData;
-import gregtech.block.machine.SmeltingCrucibleBlock;
+import gregtech.content.block.machine.MoldItemData;
+import gregtech.content.block.machine.SmeltingCrucibleBlock;
 import gregtech.client.CommonBlockTooltips;
-import gregtech.data.BlockHarvestPolicy;
+import gregtech.content.data.BlockHarvestPolicy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -99,8 +99,8 @@ final class SmelteryDeliveryChecks {
             var id=ResourceLocation.parse("gt6ce:"+variant.path());
             require(BuiltInRegistries.ITEM.containsKey(id),"large vessel item exists "+id);
             var stack=new ItemStack(BuiltInRegistries.ITEM.get(id));
-            var block=(gregtech.block.machine.LargeCrucibleControllerBlock)((BlockItem)stack.getItem()).getBlock();
-            var entity=(gregtech.blockentity.machine.LargeCrucibleControllerBlockEntity)
+            var block=(gregtech.content.block.machine.LargeCrucibleControllerBlock)((BlockItem)stack.getItem()).getBlock();
+            var entity=(gregtech.content.blockentity.machine.LargeCrucibleControllerBlockEntity)
                     block.newBlockEntity(BlockPos.ZERO,block.defaultBlockState());
             long limit=gregtech.content.multiblock.OriginalLargeCrucibleParameters.meltDownTemperatureK(variant.material().getMeltingPoint());
             require(entity.getMeltDownLimitK()==limit,"native large limit truncates1.10 "+id);

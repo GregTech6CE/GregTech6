@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
-import gregtech.block.misc.BarsBlock;
-import gregtech.data.BlockHarvestPolicy;
-import gregtech.registry.GTDecorBlocks;
+import gregtech.content.block.misc.BarsBlock;
+import gregtech.content.data.BlockHarvestPolicy;
+import gregtech.content.registry.GTDecorBlocks;
 import gregtech.GregTech;
-import gregtech.recipe.ToolShapedRecipe;
+import gregtech.content.recipe.ToolShapedRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

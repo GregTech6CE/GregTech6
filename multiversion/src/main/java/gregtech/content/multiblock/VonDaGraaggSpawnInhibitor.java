@@ -4,9 +4,9 @@ package gregtech.content.multiblock;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.blockentity.machine.VonDaGraaggControllerBlockEntity;
-import gregtech.block.stone.GTStoneBlock;
-import gregtech.block.stone.StoneVariant;
+import gregtech.content.blockentity.machine.VonDaGraaggControllerBlockEntity;
+import gregtech.content.block.stone.GTStoneBlock;
+import gregtech.content.block.stone.StoneVariant;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Blocks;

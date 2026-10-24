@@ -4,7 +4,7 @@ package gregtech.client.gui;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.block.inventory.UsbSwitchBlock;
+import gregtech.content.block.inventory.UsbSwitchBlock;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;

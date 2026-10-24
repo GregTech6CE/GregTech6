@@ -1,7 +1,7 @@
 package gregtech.client;
 
-import gregtech.block.tool.MaterialAnvilBlock;
-import gregtech.blockentity.tool.MaterialAnvilBlockEntity;
+import gregtech.content.block.tool.MaterialAnvilBlock;
+import gregtech.content.blockentity.tool.MaterialAnvilBlockEntity;
 import gregtech.content.tool.AnvilWorkpieceGeometry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;

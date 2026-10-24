@@ -2,7 +2,7 @@ package gregtech.content.recipe;
 import gregtech.internal.material.GTMaterial;
 import gregtech.internal.recipe.Recipe;
 import gregtech.internal.recipe.RecipeMap;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;

@@ -1,12 +1,12 @@
 package gregtech.gametest;
 
-import gregtech.block.machine.LogisticsCoreControllerBlock;
-import gregtech.blockentity.machine.LogisticsCoreControllerBlockEntity;
-import gregtech.blockentity.machine.MultiblockPortBlockEntity;
+import gregtech.content.block.machine.LogisticsCoreControllerBlock;
+import gregtech.content.blockentity.machine.LogisticsCoreControllerBlockEntity;
+import gregtech.content.blockentity.machine.MultiblockPortBlockEntity;
 import gregtech.content.logistics.LogisticsCoreStructure;
 import gregtech.content.multiblock.LargeMachineParts;
-import gregtech.data.GregTechTags;
-import gregtech.registry.GTLasers;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.registry.GTLasers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -138,7 +138,7 @@ public final class LogisticsCoreTests {
     @GameTest(template = "test_fusion_empty", timeoutTicks = 200)
     public static void ceilingFloorAndWrenchUseTheSixFaceStructure(GameTestHelper helper) {
         var block = (LogisticsCoreControllerBlock) GTLasers.LOGISTICS_CORE.get();
-        var wrench = gregtech.item.GTToolItem.create(
+        var wrench = gregtech.content.item.GTToolItem.create(
                 gregtech.internal.tool.GTToolType.WRENCH,
                 gregtech.content.material.Materials.Steel,
                 gregtech.internal.material.GTMaterialRegistry.get("Wood"));

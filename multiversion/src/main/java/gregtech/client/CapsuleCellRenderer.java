@@ -1,7 +1,7 @@
 package gregtech.client;
 
-import gregtech.blockentity.tool.PortableContainerBlockEntity;
-import gregtech.item.PortableFluidContainerItem;
+import gregtech.content.blockentity.tool.PortableContainerBlockEntity;
+import gregtech.content.item.PortableFluidContainerItem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.blockentity.*;

@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.block.machine.EngineBlock;
-import gregtech.blockentity.machine.KineticDieselEngineBlockEntity;
-import gregtech.data.GregTechTags;
-import gregtech.registry.GTFluids;
+import gregtech.content.block.machine.EngineBlock;
+import gregtech.content.blockentity.machine.KineticDieselEngineBlockEntity;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.registry.GTFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;

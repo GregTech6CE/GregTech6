@@ -1,7 +1,7 @@
 package gregtech.content.recipe;
 import gregtech.internal.addon.AddonMaterials;
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.data.FluidCatalog;
+import gregtech.content.data.FluidCatalog;
 /** Source-bound generated Mercury only. Never treats equal external definitions as factory-owned. */
 public final class ReviewedOreGeneratedFluids {
  private ReviewedOreGeneratedFluids(){}

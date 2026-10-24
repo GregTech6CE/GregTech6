@@ -2,11 +2,11 @@ package gregtech.internal.prefix;
 
 import gregtech.internal.material.GTMaterial;
 import gregtech.api.material.GTValues;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 
 import java.util.function.Predicate;
 
-/** Storage / casing / crate block prefix (GT6 {@code OP} block form). Instances are created from {@link gregtech.data.MaterialPrefixes}. */
+/** Storage / casing / crate block prefix (GT6 {@code OP} block form). Instances are created from {@link gregtech.content.data.MaterialPrefixes}. */
 public final class BlockMaterialPrefix {
     public enum MapColor { METAL, STONE, WOOD, SAND }
     public enum SoundType { METAL, STONE, WOOD, SAND, GRAVEL }
@@ -108,7 +108,7 @@ public final class BlockMaterialPrefix {
     }
 
     public static void bootstrap() {
-        gregtech.data.MaterialPrefixes.bootstrap();
+        gregtech.content.data.MaterialPrefixes.bootstrap();
         if (blockRaw == null || blockIngot == null || crateGtRaw == null) {
             throw new IllegalStateException("BlockMaterialPrefix constants failed to initialize");
         }

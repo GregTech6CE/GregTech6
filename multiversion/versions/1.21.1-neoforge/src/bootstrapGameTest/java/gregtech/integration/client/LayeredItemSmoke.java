@@ -1,9 +1,9 @@
 package gregtech.integration.client;
 
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.item.MaterialItem;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.GTElectricItems;
+import gregtech.content.item.MaterialItem;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTElectricItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.core.Direction;

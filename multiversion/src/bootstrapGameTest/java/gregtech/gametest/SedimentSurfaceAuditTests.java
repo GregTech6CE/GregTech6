@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
-import gregtech.worldgen.GTBlackSandFeature;
-import gregtech.worldgen.GTPitFeature;
+import gregtech.content.worldgen.GTBlackSandFeature;
+import gregtech.content.worldgen.GTPitFeature;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Proxy;
 import java.util.Optional;

@@ -1,12 +1,12 @@
 package gregtech.gametest;
 
-import gregtech.block.machine.ItemPipeBlock;
-import gregtech.block.stone.StoneType;
-import gregtech.worldgen.GTDungeonFeature;
-import gregtech.worldgen.dungeon.GTDungeonChunkRoomFarmMobs;
-import gregtech.worldgen.dungeon.GTDungeonData;
-import gregtech.worldgen.dungeon.GTDungeonLayout;
-import gregtech.worldgen.dungeon.GTDungeonSharedState;
+import gregtech.content.block.machine.ItemPipeBlock;
+import gregtech.content.block.stone.StoneType;
+import gregtech.content.worldgen.GTDungeonFeature;
+import gregtech.content.worldgen.dungeon.GTDungeonChunkRoomFarmMobs;
+import gregtech.content.worldgen.dungeon.GTDungeonData;
+import gregtech.content.worldgen.dungeon.GTDungeonLayout;
+import gregtech.content.worldgen.dungeon.GTDungeonSharedState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -57,8 +57,8 @@ public final class DungeonMobFarmOuterTests {
                 "real feature dispatch generates its empty border cell without indexing outside the layout");
         int y = GTDungeonLayout.y(helper.getLevel(), GTDungeonLayout.MIN_Y);
         helper.assertTrue(helper.getLevel().getBlockState(new BlockPos((anchor.x-2)*16+8,y+43,(anchor.z-2)*16+8))
-                        .is(gregtech.registry.GTBlocks.getStoneState(StoneType.LIMESTONE,
-                                gregtech.block.stone.StoneVariant.TILES).getBlock()),
+                        .is(gregtech.content.registry.GTBlocks.getStoneState(StoneType.LIMESTONE,
+                                gregtech.content.block.stone.StoneVariant.TILES).getBlock()),
                 "border platform has its roof, not a silently skipped cell");
         helper.succeed();
     }
@@ -169,8 +169,8 @@ public final class DungeonMobFarmOuterTests {
                         GTDungeonLayout.MIN_Y, 3, new StoneType[]{StoneType.LIMESTONE, StoneType.SLATE},
                         chosenSeed), "a planned empty cell builds its own NW outer platform");
         helper.assertTrue(helper.getLevel().getBlockState(new BlockPos(x + 8, y + 43, z + 8))
-                        .is(gregtech.registry.GTBlocks.getStoneState(
-                                StoneType.LIMESTONE, gregtech.block.stone.StoneVariant.TILES).getBlock()),
+                        .is(gregtech.content.registry.GTBlocks.getStoneState(
+                                StoneType.LIMESTONE, gregtech.content.block.stone.StoneVariant.TILES).getBlock()),
                 "outer platform owns GT6's upper roof");
         helper.assertTrue(helper.getLevel().getBlockState(new BlockPos(x + 9, y + 7, z + 8))
                         .getBlock() instanceof ItemPipeBlock,

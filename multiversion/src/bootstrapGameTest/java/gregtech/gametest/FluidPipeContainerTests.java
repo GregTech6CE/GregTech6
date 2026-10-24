@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
-import gregtech.block.machine.FluidPipeBlock;
-import gregtech.blockentity.machine.FluidPipeBlockEntity;
-import gregtech.blockentity.machine.TankBlockEntity;
+import gregtech.content.block.machine.FluidPipeBlock;
+import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
+import gregtech.content.blockentity.machine.TankBlockEntity;
 import gregtech.content.cover.CoverUtilityBehaviors;
-import gregtech.registry.GTTechnological;
+import gregtech.content.registry.GTTechnological;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;

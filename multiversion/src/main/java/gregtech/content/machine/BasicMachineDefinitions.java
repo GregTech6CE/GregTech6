@@ -6,7 +6,7 @@ import gregtech.internal.machine.BasicMachineSpec;
 
 import gregtech.internal.energy.FaceConfig;
 
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.data.MachineRecipeMaps;
 
 import java.util.List;
 

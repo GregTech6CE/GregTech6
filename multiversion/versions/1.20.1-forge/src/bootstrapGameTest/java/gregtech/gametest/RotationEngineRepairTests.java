@@ -1,12 +1,12 @@
 package gregtech.gametest;
 
 import gregtech.internal.machine.MachineRegistry;
-import gregtech.block.machine.EngineBlock;
-import gregtech.blockentity.GTEnergyBlockEntity;
-import gregtech.blockentity.machine.KineticRotationEngineBlockEntity;
-import gregtech.data.GregTechTags;
-import gregtech.registry.GTBlockEntities;
-import gregtech.registry.GTMiscBlocks;
+import gregtech.content.block.machine.EngineBlock;
+import gregtech.content.blockentity.GTEnergyBlockEntity;
+import gregtech.content.blockentity.machine.KineticRotationEngineBlockEntity;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTMiscBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

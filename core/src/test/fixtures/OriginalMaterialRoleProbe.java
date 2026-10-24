@@ -1,7 +1,7 @@
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.material.MaterialProperty;
 import gregtech.internal.prefix.PrefixRegistry;
-import gregtech.block.stone.StoneType;
+import gregtech.content.block.stone.StoneType;
 import gregtech.platform.neoforge.gametest.SharedMaterialBootstrapGameTests;
 import java.util.Locale;
 
@@ -11,11 +11,11 @@ public final class OriginalMaterialRoleProbe {
     public static void main(String[] args) throws Exception {
         Locale.setDefault(Locale.ROOT);
         PrefixRegistry.ensurePrefixesLoaded();
-        gregtech.data.ModReferences.UNKNOWN.getClass();
-        gregtech.data.MaterialGroups.Glowstone.getClass();
+        gregtech.content.data.ModReferences.UNKNOWN.getClass();
+        gregtech.content.data.MaterialGroups.Glowstone.getClass();
         GTMaterialRegistry.init();
         // Exactly the original Loader_Materials order, without calling the extracted helper.
-        gregtech.worldgen.GTWorldgenMaterials.flagOreMaterials();
+        gregtech.content.worldgen.GTWorldgenMaterials.flagOreMaterials();
         for (StoneType stone : StoneType.values()) stone.material().put(MaterialProperty.STONE);
         GTMaterialRegistry.postInit();
         System.out.println("role_sha256=" + SharedMaterialBootstrapGameTests.roleSnapshotSha256());

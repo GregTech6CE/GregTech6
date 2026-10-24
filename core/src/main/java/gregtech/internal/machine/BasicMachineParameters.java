@@ -5,7 +5,7 @@ import gregtech.internal.energy.MachineFaceMasks;
 import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.MaterialChemistry.WeightedMaterial;
 import gregtech.content.multiblock.LargeMachineProcessingRules;
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 
 
 import java.util.List;

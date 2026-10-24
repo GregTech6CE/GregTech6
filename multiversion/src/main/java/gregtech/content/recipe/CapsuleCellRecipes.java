@@ -2,8 +2,8 @@ package gregtech.content.recipe;
 
 import gregtech.internal.fluid.PortableFluidContainerSpec;
 import gregtech.internal.recipe.Recipe;
-import gregtech.data.*;
-import gregtech.registry.*;
+import gregtech.content.data.*;
+import gregtech.content.registry.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
@@ -42,7 +42,7 @@ public final class CapsuleCellRecipes {
     }
     public static boolean simpleExtrusion(PortableFluidContainerSpec spec) {
         // Keep legacy/extension choices; the imported source profile supplies positive evidence only.
-        return gregtech.data.generated.MaterialWorkability.hasProvenSimpleExtrusion(spec.material())
+        return gregtech.content.data.generated.MaterialWorkability.hasProvenSimpleExtrusion(spec.material())
                 || spec.id().startsWith("cell_wax")||switch(spec.id()) {
             case "cell_plastic","cell_tin","cell_tin_alloy","cell_aluminium"->true;default->false;
         };

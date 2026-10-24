@@ -1,9 +1,9 @@
 package gregtech.gametest;
-import gregtech.registry.*;
+import gregtech.content.registry.*;
 import gregtech.content.energy.ZpmEnergy;
-import gregtech.block.energy.ZpmDischargerBlock;
-import gregtech.blockentity.energy.*;
-import gregtech.data.GregTechTags;
+import gregtech.content.block.energy.ZpmDischargerBlock;
+import gregtech.content.blockentity.energy.*;
+import gregtech.content.data.GregTechTags;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.item.*;
@@ -25,7 +25,7 @@ public final class ZpmRegressionTests {
         h.assertTrue(z.doEnergyInjection(GregTechTags.Energy.QU,Direction.WEST,131072,1,true)==0,"cannot recharge artifact or converter");
         var receiverBlock=gregtech.internal.machine.MachineRegistry.basicMachines().get(0).get();
         h.setBlock(pos.east(),receiverBlock);
-        var receiver=(gregtech.blockentity.machine.BasicMachineBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(pos.east()));
+        var receiver=(gregtech.content.blockentity.machine.BasicMachineBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(pos.east()));
         receiver.setSpec(gregtech.internal.machine.BasicMachineSpec.builder("zpm_test",receiverBlock.basicSpec().material())
                 .machineType(receiverBlock.basicSpec().machineName()).energy(GregTechTags.Energy.EU,ZpmEnergy.PACKET)
                 .recipes(receiverBlock.basicSpec().recipeMap())

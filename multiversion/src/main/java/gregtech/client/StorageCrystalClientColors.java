@@ -1,8 +1,8 @@
 package gregtech.client;
 
-import gregtech.registry.GTItemBarrels;
-import gregtech.registry.GTChemicalBatteries;
-import gregtech.blockentity.energy.ChemicalBatteryBlockEntity;
+import gregtech.content.registry.GTItemBarrels;
+import gregtech.content.registry.GTChemicalBatteries;
+import gregtech.content.blockentity.energy.ChemicalBatteryBlockEntity;
 import gregtech.content.material.Materials;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;

@@ -4,7 +4,7 @@ package gregtech.client;
 /**///?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.recipe.MachineRecipeOverlay;
+import gregtech.content.recipe.MachineRecipeOverlay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.crafting.RecipeManager;
 //? if >=1.21.1 {

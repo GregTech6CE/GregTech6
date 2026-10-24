@@ -49,7 +49,7 @@ public final class PistonEngineContracts {
                         default -> throw new AssertionError("Unexpected call " + method.getName());
                     };
                 });
-        var eu = gregtech.data.GregTechTags.Energy.EU;
+        var eu = gregtech.content.data.GregTechTags.Energy.EU;
         check(gregtech.internal.energy.EnergyBlockDefaults.doEnergyInjection(
                 port, eu, net.minecraft.core.Direction.NORTH, 1, 1, true) == 0,
                 "wrong-side undervoltage must not consume a packet");

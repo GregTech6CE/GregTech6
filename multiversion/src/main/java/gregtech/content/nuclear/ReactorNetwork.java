@@ -4,7 +4,7 @@ package gregtech.content.nuclear;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.blockentity.energy.ReactorCoreBlockEntity;
+import gregtech.content.blockentity.energy.ReactorCoreBlockEntity;
 import net.minecraft.core.*;
 import net.minecraft.world.level.Level;
 //? if >=1.21.1 {

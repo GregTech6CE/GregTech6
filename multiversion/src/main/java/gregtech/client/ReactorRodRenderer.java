@@ -1,5 +1,5 @@
 package gregtech.client;
-import gregtech.blockentity.energy.ReactorCoreBlockEntity;
+import gregtech.content.blockentity.energy.ReactorCoreBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.blockentity.*;

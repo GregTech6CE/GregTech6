@@ -3,8 +3,8 @@ package gregtech.gametest;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.tool.GTToolHelper;
 import gregtech.internal.tool.GTToolType;
-import gregtech.registry.GTElectricItems;
-import gregtech.registry.GTToolItems;
+import gregtech.content.registry.GTElectricItems;
+import gregtech.content.registry.GTToolItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -391,8 +391,8 @@ public final class ToolPlacementTransactionTests {
             click(player, pos, Direction.UP, 1);
             h.assertTrue(listener.calls == 3 && player.getInventory().getItem(35).getCount() == 7, "creative placement keeps torch stock");
             h.assertTrue(torchCount(player) == 7, "creative placement leaves exactly seven torches across all slots");
-            long charge = ((gregtech.item.ElectricToolItem) drill.getItem()).getEnergyStored(drill,
-                    gregtech.data.GregTechTags.Energy.EU);
+            long charge = ((gregtech.content.item.ElectricToolItem) drill.getItem()).getEnergyStored(drill,
+                    gregtech.content.data.GregTechTags.Energy.EU);
             h.assertTrue(charge == 1000 && player.getMainHandItem() == drill, "held drill identity/charge unchanged");
         } finally {
             unregister(listener);

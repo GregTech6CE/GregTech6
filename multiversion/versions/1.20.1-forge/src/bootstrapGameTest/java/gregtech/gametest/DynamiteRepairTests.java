@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.block.tool.DynamiteBlock;
-import gregtech.blockentity.tool.DynamiteBlockEntity;
+import gregtech.content.block.tool.DynamiteBlock;
+import gregtech.content.blockentity.tool.DynamiteBlockEntity;
 import gregtech.content.tool.DynamiteExplosion;
-import gregtech.registry.GTToolBlocks;
+import gregtech.content.registry.GTToolBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -98,7 +98,7 @@ public final class DynamiteRepairTests {
     @GameTest(template="test_empty")
     public static void qualityIsAResistanceThresholdAndFortuneMatchesOriginal(GameTestHelper h) {
         var level=h.getLevel(); var center=h.absolutePos(new BlockPos(2,2,2));
-        var safe=gregtech.registry.GTStorage.safe(gregtech.content.material.Materials.Bronze,false);
+        var safe=gregtech.content.registry.GTStorage.safe(gregtech.content.material.Materials.Bronze,false);
         var pos=center.east(); level.setBlock(pos,safe.defaultBlockState(),3);
         h.assertTrue(safe.getExplosionResistance()>10 && safe.getExplosionResistance()<=40,"fixture separates qualities");
         DynamiteExplosion.detonate(level,center,10,3);

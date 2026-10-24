@@ -1,5 +1,5 @@
 package gregtech.platform.neoforge.transport;
-import gregtech.block.machine.FluidPipeBlock;
+import gregtech.content.block.machine.FluidPipeBlock;
 import gregtech.platform.neoforge.NeoToolBindings;
 import gregtech.content.transport.fluid.FluidTransportRegistries;
 import net.minecraft.core.BlockPos;

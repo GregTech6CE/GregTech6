@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.blockentity.machine.QueueHopperBlockEntity;
+import gregtech.content.blockentity.machine.QueueHopperBlockEntity;
 import gregtech.client.gui.HopperContainerMenu;
 import com.mojang.authlib.GameProfile;
 import java.util.ArrayList;

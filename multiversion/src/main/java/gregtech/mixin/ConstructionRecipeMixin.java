@@ -1,7 +1,7 @@
 package gregtech.mixin;
 
 import com.google.gson.JsonElement;
-import gregtech.recipe.ConstructionRecipeMigration;
+import gregtech.content.recipe.ConstructionRecipeMigration;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.profiling.ProfilerFiller;

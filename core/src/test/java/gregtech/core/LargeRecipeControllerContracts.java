@@ -4,7 +4,7 @@ import gregtech.api.material.*;
 import gregtech.internal.material.*;
 import gregtech.content.machine.*;
 import gregtech.content.multiblock.*;
-import gregtech.data.*;
+import gregtech.content.data.*;
 import java.util.*;
 
 /** Fixed original registrations, not a replay of the implementation's defaults. */

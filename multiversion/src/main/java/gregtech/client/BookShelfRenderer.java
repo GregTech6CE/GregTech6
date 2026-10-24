@@ -5,8 +5,8 @@ package gregtech.client;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.block.BookShelfBlock;
-import gregtech.blockentity.inventory.BookShelfBlockEntity;
+import gregtech.content.block.BookShelfBlock;
+import gregtech.content.blockentity.inventory.BookShelfBlockEntity;
 import gregtech.content.book.BookShelfGeometry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -24,7 +24,7 @@ public final class BookShelfRenderer implements BlockEntityRenderer<BookShelfBlo
     public BookShelfRenderer(BlockEntityRendererProvider.Context context) {}
 
     private static String texture(ItemStack stack) {
-        if(stack.getItem() instanceof gregtech.item.ColoredBookItem book)return book.variant().shelfTexture();
+        if(stack.getItem() instanceof gregtech.content.item.ColoredBookItem book)return book.variant().shelfTexture();
         if (stack.is(Items.ENCHANTED_BOOK)) return "book_enchanted";
         // GT6 LoaderBookList display IDs 2 and 255, respectively.
         if (stack.is(Items.STONE_BUTTON) || stack.is(Items.REDSTONE_TORCH)) return "book_enchanted";
@@ -63,7 +63,7 @@ public final class BookShelfRenderer implements BlockEntityRenderer<BookShelfBlo
             if (stack.isEmpty()) continue;
             var b = BookShelfGeometry.bookBounds(slot);
             String texture = texture(stack);
-            int tint=stack.getItem() instanceof gregtech.item.ColoredBookItem book && !book.variant().color().equals("brown")?book.variant().tint():0xFFFFFF;
+            int tint=stack.getItem() instanceof gregtech.content.item.ColoredBookItem book && !book.variant().color().equals("brown")?book.variant().tint():0xFFFFFF;
             var spine = buffers.getBuffer(RenderType.entityCutout(bookTexture(stack, texture, "back")));
             float x0=(float)b.minX, x1=(float)b.maxX, y0=(float)b.minY, y1=(float)b.maxY, z0=(float)b.minZ, z1=(float)b.maxZ;
             if (slot < 14) {

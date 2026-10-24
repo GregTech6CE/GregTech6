@@ -6,10 +6,10 @@ import gregtech.api.material.GTValues;
 import gregtech.internal.material.MaterialProperty;
 import gregtech.internal.material.MaterialStackItemHelper;
 import gregtech.internal.prefix.PrefixRegistry;
-import gregtech.data.MaterialPrefix;
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.data.MachineRecipeMaps;
 import gregtech.bootstrap.InitializationStep;
-import gregtech.registry.GTTechnological;
+import gregtech.content.registry.GTTechnological;
 import gregtech.util.OM;
 import net.minecraft.world.item.ItemStack;
 
@@ -207,7 +207,7 @@ public class PartRecipeLoader implements InitializationStep {
         long weight() { return prefix != null ? prefix.getMaterialWeight() : blockPrefix.getMaterialWeight(); }
         ItemStack stack(GTMaterial material) {
             return prefix != null ? mat(prefix, material, 1)
-                    : gregtech.registry.GTBlocks.getStack(blockPrefix, material);
+                    : gregtech.content.registry.GTBlocks.getStack(blockPrefix, material);
         }
     }
 

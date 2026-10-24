@@ -51,8 +51,8 @@ public final class ComponentCoverRuntime {
     }
 
     public static boolean pipe(PanelCoverHost host) {
-        return host.coverOwner() instanceof gregtech.blockentity.machine.FluidPipeBlockEntity
-                || host.coverOwner() instanceof gregtech.blockentity.machine.ItemPipeBlockEntity;
+        return host.coverOwner() instanceof gregtech.content.blockentity.machine.FluidPipeBlockEntity
+                || host.coverOwner() instanceof gregtech.content.blockentity.machine.ItemPipeBlockEntity;
     }
 
     public static boolean canAttach(PanelCoverHost host, Direction side, ItemStack stack) {
@@ -94,7 +94,7 @@ public final class ComponentCoverRuntime {
         var next = owner.getBlockPos().relative(side);
         if (level == null || level.isClientSide || owner.isRemoved() || !level.hasChunkAt(next)) return;
         var neighbor = level.getBlockEntity(next);
-        if (neighbor instanceof gregtech.blockentity.machine.MultiblockPortBlockEntity part
+        if (neighbor instanceof gregtech.content.blockentity.machine.MultiblockPortBlockEntity part
                 && part.isBoundTo(owner.getBlockPos())) return;
         boolean input = visual(stack) != 0;
         if (kind == ComponentCoverRules.Kind.PUMP) {

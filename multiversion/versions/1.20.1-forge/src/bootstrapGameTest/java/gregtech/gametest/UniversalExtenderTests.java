@@ -2,10 +2,10 @@ package gregtech.gametest;
 
 import gregtech.api.machine.MachineControl;
 import gregtech.internal.machine.MachineRegistry;
-import gregtech.block.misc.*;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.block.misc.*;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.logistics.ExtenderSpec;
-import gregtech.registry.*;
+import gregtech.content.registry.*;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.item.*;

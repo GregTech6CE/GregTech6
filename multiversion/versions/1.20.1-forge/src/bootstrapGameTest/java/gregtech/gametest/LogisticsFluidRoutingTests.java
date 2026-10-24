@@ -1,17 +1,17 @@
 package gregtech.gametest;
 
-import gregtech.block.energy.ElectricWireBlock;
-import gregtech.block.machine.LogisticsWireBlock;
-import gregtech.blockentity.machine.LogisticsCoreControllerBlockEntity;
-import gregtech.blockentity.machine.LogisticsWireBlockEntity;
-import gregtech.blockentity.machine.MultiblockPortBlockEntity;
-import gregtech.blockentity.machine.TankBlockEntity;
+import gregtech.content.block.energy.ElectricWireBlock;
+import gregtech.content.block.machine.LogisticsWireBlock;
+import gregtech.content.blockentity.machine.LogisticsCoreControllerBlockEntity;
+import gregtech.content.blockentity.machine.LogisticsWireBlockEntity;
+import gregtech.content.blockentity.machine.MultiblockPortBlockEntity;
+import gregtech.content.blockentity.machine.TankBlockEntity;
 import gregtech.content.logistics.LogisticsCoreStructure;
 import gregtech.content.logistics.LogisticsCoverInteraction;
 import gregtech.content.logistics.LogisticsCoverType;
-import gregtech.data.GregTechTags;
-import gregtech.registry.GTIconSetBlocks;
-import gregtech.registry.GTTanks;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.registry.GTIconSetBlocks;
+import gregtech.content.registry.GTTanks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

@@ -1,10 +1,10 @@
 package gregtech.content.transport.fluid;
 import gregtech.internal.machine.TankSpec;
 import gregtech.internal.machine.PipeSpec;
-import gregtech.block.machine.TankBlock;
-import gregtech.block.machine.FluidPipeBlock;
-import gregtech.blockentity.machine.TankBlockEntity;
-import gregtech.blockentity.machine.FluidPipeBlockEntity;
+import gregtech.content.block.machine.TankBlock;
+import gregtech.content.block.machine.FluidPipeBlock;
+import gregtech.content.blockentity.machine.TankBlockEntity;
+import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -42,7 +42,7 @@ public final class FluidTransportRegistries {
                     TANKS.stream().map(DeferredHolder::get).toArray(Block[]::new)).build(null));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FluidPipeBlockEntity>> FLUID_PIPE =
             ENTITIES.register("fluid_pipe", () -> BlockEntityType.Builder.of(FluidPipeBlockEntity::new,
-                    gregtech.registry.AddonPipeRegistration.fluidPipeBlocks(
+                    gregtech.content.registry.AddonPipeRegistration.fluidPipeBlocks(
                             PIPES.stream().map(DeferredHolder::get))).build(null));
 
     public static List<DeferredBlock<TankBlock>> tanks() { return List.copyOf(TANKS); }
@@ -61,7 +61,7 @@ public final class FluidTransportRegistries {
         for (PipeSpec spec : FluidTransportDefinitions.pipes()) {
             String owner = gregtech.internal.addon.AddonPipes.owner(spec.id());
             if (owner != null) {
-                gregtech.registry.AddonPipeRegistration.queueFluid(owner, spec);
+                gregtech.content.registry.AddonPipeRegistration.queueFluid(owner, spec);
                 continue;
             }
             var block = BLOCKS.register(spec.id(), () -> new FluidPipeBlock(spec, FluidPipeBlock.defaultProperties(spec)));

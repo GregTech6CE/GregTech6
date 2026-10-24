@@ -1,8 +1,8 @@
 package gregtech.platform.neoforge.machine;
 
 import gregtech.internal.addon.AddonMachines;
-import gregtech.block.machine.FuelGeneratorBlock;
-import gregtech.blockentity.machine.FuelGeneratorBlockEntity;
+import gregtech.content.block.machine.FuelGeneratorBlock;
+import gregtech.content.blockentity.machine.FuelGeneratorBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;

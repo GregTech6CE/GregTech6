@@ -1,6 +1,6 @@
 package gregtech.content.recipe;
 
-import gregtech.data.FluidCatalog.FluidFlags;
+import gregtech.content.data.FluidCatalog.FluidFlags;
 import java.util.List;
 
 /**

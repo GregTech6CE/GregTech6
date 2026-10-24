@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.registry.GTLegacyEnergyDevices;
+import gregtech.content.registry.GTLegacyEnergyDevices;
 //? if >=1.21.1 {
 /*import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;

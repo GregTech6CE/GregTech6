@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
-import gregtech.worldgen.GTBlackSandFeature;
-import gregtech.worldgen.GTCellNoise;
-import gregtech.worldgen.GTFeatures;
-import gregtech.worldgen.GTPitShape;
-import gregtech.worldgen.GTTurfFeature;
-import gregtech.worldgen.GTWorldgenBiomes;
+import gregtech.content.worldgen.GTBlackSandFeature;
+import gregtech.content.worldgen.GTCellNoise;
+import gregtech.content.worldgen.GTFeatures;
+import gregtech.content.worldgen.GTPitShape;
+import gregtech.content.worldgen.GTTurfFeature;
+import gregtech.content.worldgen.GTWorldgenBiomes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;

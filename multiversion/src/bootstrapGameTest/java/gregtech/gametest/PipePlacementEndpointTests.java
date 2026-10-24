@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.block.energy.ElectricWireBlock;
-import gregtech.block.machine.FluidPipeBlock;
-import gregtech.block.machine.ItemPipeBlock;
-import gregtech.block.machine.TankBlock;
+import gregtech.content.block.energy.ElectricWireBlock;
+import gregtech.content.block.machine.FluidPipeBlock;
+import gregtech.content.block.machine.ItemPipeBlock;
+import gregtech.content.block.machine.TankBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -105,10 +105,10 @@ public final class PipePlacementEndpointTests {
         try (var f = new Fixture(h, 48)) {
             var wire = registered(ElectricWireBlock.class);
             var laser = BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "co2_laser_lv"));
-            h.assertTrue(laser instanceof gregtech.block.energy.LaserConverterBlock, "registered EU laser endpoint");
-            f.set(f.center, laser.defaultBlockState().setValue(gregtech.block.energy.LaserConverterBlock.FACING, Direction.NORTH));
+            h.assertTrue(laser instanceof gregtech.content.block.energy.LaserConverterBlock, "registered EU laser endpoint");
+            f.set(f.center, laser.defaultBlockState().setValue(gregtech.content.block.energy.LaserConverterBlock.FACING, Direction.NORTH));
             var endpoint = gregtech.internal.energy.EnergyBlockViews.view(h.getLevel().getBlockEntity(f.center));
-            var eu = gregtech.data.GregTechTags.Energy.EU;
+            var eu = gregtech.content.data.GregTechTags.Energy.EU;
             h.assertTrue(endpoint != null && endpoint.isEnergyAcceptingFrom(eu, Direction.SOUTH, true)
                     && !endpoint.isEnergyAcceptingFrom(eu, Direction.NORTH, true)
                     && !endpoint.isEnergyEmittingTo(eu, Direction.NORTH, true), "real native EU back input / wrong front face");
@@ -134,8 +134,8 @@ public final class PipePlacementEndpointTests {
         try (var f = new Fixture(h, 64)) {
             var pipe = registered(FluidPipeBlock.class);
             f.set(f.center, pipe.defaultBlockState());
-            var support = (gregtech.blockentity.machine.FluidPipeBlockEntity) h.getLevel().getBlockEntity(f.center);
-            var shutter = new ItemStack(gregtech.registry.GTTechnological.get(gregtech.content.cover.PanelCover.SHUTTER.id));
+            var support = (gregtech.content.blockentity.machine.FluidPipeBlockEntity) h.getLevel().getBlockEntity(f.center);
+            var shutter = new ItemStack(gregtech.content.registry.GTTechnological.get(gregtech.content.cover.PanelCover.SHUTTER.id));
             h.assertTrue(support.attachCover(Direction.UP, shutter), "support accepts real shutter");
             support.panels().configure(Direction.UP, false, false);
             h.assertTrue(support.panels().shuttered(Direction.UP), "support shutter is actually closed");
@@ -144,12 +144,12 @@ public final class PipePlacementEndpointTests {
             f.set(f.center.above(), Blocks.AIR.defaultBlockState());
             f.set(f.center, Blocks.AIR.defaultBlockState());
             f.set(f.center, pipe.defaultBlockState());
-            support = (gregtech.blockentity.machine.FluidPipeBlockEntity) h.getLevel().getBlockEntity(f.center);
+            support = (gregtech.content.blockentity.machine.FluidPipeBlockEntity) h.getLevel().getBlockEntity(f.center);
             support.setFaceManuallyDisconnected(Direction.UP, true);
             place(h, pipe, f.center, Direction.UP);
             h.assertTrue(!h.getLevel().getBlockState(f.center.above()).getValue(FluidPipeBlock.propFor(Direction.DOWN))
                     && support.isFaceManuallyDisconnected(Direction.UP), "placement does not erase neighbor manual veto");
-            var placed = (gregtech.blockentity.machine.FluidPipeBlockEntity) h.getLevel().getBlockEntity(f.center.above());
+            var placed = (gregtech.content.blockentity.machine.FluidPipeBlockEntity) h.getLevel().getBlockEntity(f.center.above());
             placed.setFaceManuallyDisconnected(Direction.DOWN, true);
             support.setFaceManuallyDisconnected(Direction.UP, false);
             placed.autoConnectOnPlace(Direction.UP);
@@ -169,8 +169,8 @@ public final class PipePlacementEndpointTests {
         try (var f = new Fixture(h, 80)) {
             var pipe = registered(ItemPipeBlock.class);
             f.set(f.center, pipe.defaultBlockState());
-            var support = (gregtech.blockentity.machine.ItemPipeBlockEntity) h.getLevel().getBlockEntity(f.center);
-            var shutter = new ItemStack(gregtech.registry.GTTechnological.get(gregtech.content.cover.PanelCover.SHUTTER.id));
+            var support = (gregtech.content.blockentity.machine.ItemPipeBlockEntity) h.getLevel().getBlockEntity(f.center);
+            var shutter = new ItemStack(gregtech.content.registry.GTTechnological.get(gregtech.content.cover.PanelCover.SHUTTER.id));
             h.assertTrue(support.attachCover(Direction.UP, shutter), "support accepts real shutter");
             support.panels().configure(Direction.UP, false, false);
             h.assertTrue(support.panels().shuttered(Direction.UP), "support shutter is actually closed");
@@ -179,12 +179,12 @@ public final class PipePlacementEndpointTests {
             f.set(f.center.above(), Blocks.AIR.defaultBlockState());
             f.set(f.center, Blocks.AIR.defaultBlockState());
             f.set(f.center, pipe.defaultBlockState());
-            support = (gregtech.blockentity.machine.ItemPipeBlockEntity) h.getLevel().getBlockEntity(f.center);
+            support = (gregtech.content.blockentity.machine.ItemPipeBlockEntity) h.getLevel().getBlockEntity(f.center);
             support.setFaceManuallyDisconnected(Direction.UP, true);
             place(h, pipe, f.center, Direction.UP);
             h.assertTrue(!h.getLevel().getBlockState(f.center.above()).getValue(ItemPipeBlock.propFor(Direction.DOWN))
                     && support.isFaceManuallyDisconnected(Direction.UP), "item placement preserves neighbor manual veto");
-            var placed = (gregtech.blockentity.machine.ItemPipeBlockEntity) h.getLevel().getBlockEntity(f.center.above());
+            var placed = (gregtech.content.blockentity.machine.ItemPipeBlockEntity) h.getLevel().getBlockEntity(f.center.above());
             placed.setFaceManuallyDisconnected(Direction.DOWN, true);
             support.setFaceManuallyDisconnected(Direction.UP, false);
             placed.autoConnectOnPlace(Direction.UP);

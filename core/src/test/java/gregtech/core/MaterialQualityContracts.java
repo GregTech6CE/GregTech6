@@ -4,7 +4,7 @@ import gregtech.api.material.*;
 import gregtech.internal.material.*;
 import gregtech.internal.mod.ModData;
 import gregtech.internal.prefix.BlockMaterialPrefix;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 
 /** Pinned original MT numeric qual(long) rows; no broad quality inference or recipe rewrite. */
 public final class MaterialQualityContracts {

@@ -6,7 +6,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 *///?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.data.MachineRecipeMaps;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -51,7 +51,7 @@ public final class OvenRecipeBridge {
 
     /** Undo only this loader's previous mirror, preserving independently registered machine recipes. */
     public static void clearMirrors() {
-        gregtech.recipe.MachineRecipeOverlay.restoreFurnaceBeforeMirror();
+        gregtech.content.recipe.MachineRecipeOverlay.restoreFurnaceBeforeMirror();
         var map=MachineRecipeMaps.Furnace;
         map.mRecipeList.removeAll(MIRRORED);
         map.mRecipeItemMap.values().forEach(rows->rows.removeAll(MIRRORED));
@@ -139,12 +139,12 @@ public final class OvenRecipeBridge {
         com.mojang.logging.LogUtils.getLogger().info("Converted {} vanilla smelting recipes to GT6 oven recipes; {} un-smelted"
 *///?} else {
         int fuelled = mirrorIntoFurnace(rewritten);
-        gregtech.recipe.RuntimeRecipeLifecycle.replaceGenerated(manager, rewritten);
+        gregtech.content.recipe.RuntimeRecipeLifecycle.replaceGenerated(manager, rewritten);
         GregTech.LOGGER.info("Converted {} vanilla smelting recipes to GT6 oven recipes; {} un-smelted"
 //?}
                 + " (NEVER_FURNACE materials yield scrap instead); {} GT furnace rows added to the"
                 + " vanilla furnace.", mirrored, unsmelted, fuelled);
-        gregtech.recipe.MachineRecipeOverlay.reapplyFurnace(manager);
+        gregtech.content.recipe.MachineRecipeOverlay.reapplyFurnace(manager);
     }
 
     /**

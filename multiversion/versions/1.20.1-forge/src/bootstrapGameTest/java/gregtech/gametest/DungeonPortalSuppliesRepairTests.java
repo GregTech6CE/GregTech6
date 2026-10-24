@@ -1,15 +1,15 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.block.stone.StoneType;
-import gregtech.blockentity.inventory.MetalChestBlockEntity;
+import gregtech.content.block.stone.StoneType;
+import gregtech.content.blockentity.inventory.MetalChestBlockEntity;
 import gregtech.content.book.GTBooks;
 import gregtech.content.material.Materials;
-import gregtech.registry.GTStorage;
-import gregtech.worldgen.GTDungeonFeature;
-import gregtech.worldgen.dungeon.GTDungeonChunkRoomPortalNether;
-import gregtech.worldgen.dungeon.GTDungeonData;
-import gregtech.worldgen.dungeon.GTDungeonLayout;
+import gregtech.content.registry.GTStorage;
+import gregtech.content.worldgen.GTDungeonFeature;
+import gregtech.content.worldgen.dungeon.GTDungeonChunkRoomPortalNether;
+import gregtech.content.worldgen.dungeon.GTDungeonData;
+import gregtech.content.worldgen.dungeon.GTDungeonLayout;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

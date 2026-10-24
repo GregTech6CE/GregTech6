@@ -8,8 +8,8 @@ public final class MaterialCoverRules {
     /** Original stone plates copy untinted rock/vanilla textures rather than generic material icons. */
     public static List<String> stoneTextures(String prefix,String material) {
         if(!"plate".equals(prefix))return List.of();
-        for(var stone:gregtech.block.stone.StoneType.values())if(stone.material().getName().equals(material))
-            return java.util.Arrays.stream(gregtech.block.stone.StoneVariant.values())
+        for(var stone:gregtech.content.block.stone.StoneType.values())if(stone.material().getName().equals(material))
+            return java.util.Arrays.stream(gregtech.content.block.stone.StoneVariant.values())
                     .map(variant->"gt6ce:block/stones/"+stone.textureFolder()+"/"+variant.textureName()).toList();
         return switch(material){
             case "Stone" -> List.of("minecraft:block/stone","minecraft:block/cobblestone","minecraft:block/mossy_cobblestone",

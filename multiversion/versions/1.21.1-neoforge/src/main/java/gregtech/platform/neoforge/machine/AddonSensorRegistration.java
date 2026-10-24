@@ -2,7 +2,7 @@ package gregtech.platform.neoforge.machine;
 
 import gregtech.api.addon.platform.AddonSensor;
 import gregtech.internal.sensor.AddonSensors;
-import gregtech.block.sensor.SensorBlock;
+import gregtech.content.block.sensor.SensorBlock;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;

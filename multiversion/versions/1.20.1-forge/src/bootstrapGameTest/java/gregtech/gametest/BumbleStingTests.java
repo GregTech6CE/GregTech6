@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
-import gregtech.blockentity.tool.BumbliaryBlockEntity;
+import gregtech.content.blockentity.tool.BumbliaryBlockEntity;
 import gregtech.content.bumble.*;
-import gregtech.registry.GTToolBlocks;
+import gregtech.content.registry.GTToolBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

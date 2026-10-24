@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.blockentity.tool.BumbliaryBlockEntity;
-import gregtech.recipe.FiniteBottleFillingRecipe;
-import gregtech.recipe.ToolShapedRecipe;
-import gregtech.registry.GTFluidItems;
-import gregtech.registry.GTToolBlocks;
+import gregtech.content.blockentity.tool.BumbliaryBlockEntity;
+import gregtech.content.recipe.FiniteBottleFillingRecipe;
+import gregtech.content.recipe.ToolShapedRecipe;
+import gregtech.content.registry.GTFluidItems;
+import gregtech.content.registry.GTToolBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;

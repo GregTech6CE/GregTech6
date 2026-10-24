@@ -2,11 +2,11 @@ package gregtech.gametest;
 
 import gregtech.internal.multiblock.MultiblockLayout.Role;
 import gregtech.internal.recipe.RecipeMap;
-import gregtech.block.machine.BasicMachineBlock;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
-import gregtech.blockentity.machine.LargeRecipeMachineBlockEntity;
+import gregtech.content.block.machine.BasicMachineBlock;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.blockentity.machine.LargeRecipeMachineBlockEntity;
 import gregtech.content.multiblock.LargeMachineLayouts;
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 import gregtech.jei.MultiblockInfoData;
 import gregtech.jei.RecipeMachines;
 import java.nio.file.Files;

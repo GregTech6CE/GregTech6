@@ -1,6 +1,6 @@
 package gregtech.content.logistics;
 
-import gregtech.item.MaterialItem;
+import gregtech.content.item.MaterialItem;
 import net.minecraft.world.item.*;
 
 /**
@@ -36,18 +36,18 @@ public final class FilterRules {
                 && formItem.getBlock() instanceof gregtech.internal.inventory.PipeFormLike pipeForm)
             return pipePrefix(pipeForm.pipeSizeName());
 *///?} else {
-        if (candidateStack.getItem() instanceof gregtech.item.PortableFluidContainerItem formItem
+        if (candidateStack.getItem() instanceof gregtech.content.item.PortableFluidContainerItem formItem
                 && formItem.spec().shapeId().equals("cell"))
             return "capcellcon";
         if (candidateStack.getItem() instanceof BlockItem formItem
-                && formItem.getBlock() instanceof gregtech.block.machine.FluidPipeBlock pipeForm)
+                && formItem.getBlock() instanceof gregtech.content.block.machine.FluidPipeBlock pipeForm)
             return pipePrefix(pipeForm.spec().size().name());
         if (candidateStack.getItem() instanceof BlockItem formItem
-                && formItem.getBlock() instanceof gregtech.block.machine.ItemPipeBlock pipeForm)
+                && formItem.getBlock() instanceof gregtech.content.block.machine.ItemPipeBlock pipeForm)
             return pipePrefix(pipeForm.spec().size().name());
 //?}
         if (candidateStack.getItem() instanceof BlockItem formItem
-                && formItem.getBlock() instanceof gregtech.block.MaterialBlockLike materialBlock)
+                && formItem.getBlock() instanceof gregtech.content.block.MaterialBlockLike materialBlock)
             return materialBlock.prefix().getName();
         // Known standard material forms bridge Forge tag conventions to original prefixes.
         // Do not treat arbitrary forge tags (e.g. ores/metals) as interchangeable prefixes.

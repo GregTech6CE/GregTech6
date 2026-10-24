@@ -1,7 +1,7 @@
 package gregtech.client;
 
 import gregtech.content.tool.CoinGeometry;
-import gregtech.item.CoinItem;
+import gregtech.content.item.CoinItem;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;

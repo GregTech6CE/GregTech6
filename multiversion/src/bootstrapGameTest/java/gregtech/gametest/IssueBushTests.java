@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
-import gregtech.block.plant.BushBlock;
-import gregtech.blockentity.BushBlockEntity;
-import gregtech.registry.GTBushes;
+import gregtech.content.block.plant.BushBlock;
+import gregtech.content.blockentity.BushBlockEntity;
+import gregtech.content.registry.GTBushes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -130,7 +130,7 @@ public final class IssueBushTests {
         var pos = h.absolutePos(new BlockPos(2, 2, 2));
         var root = core(h, pos);
         for (var face : Direction.values()) if(face != Direction.DOWN) h.getLevel().setBlockAndUpdate(pos.relative(face), Blocks.AIR.defaultBlockState());
-        gregtech.worldgen.GTBushesFeature.placeBranches(h.getLevel(), pos, "blueberry");
+        gregtech.content.worldgen.GTBushesFeature.placeBranches(h.getLevel(), pos, "blueberry");
         for (var face : Direction.values()) {
             if(face == Direction.DOWN)continue;
             var state = h.getLevel().getBlockState(pos.relative(face));

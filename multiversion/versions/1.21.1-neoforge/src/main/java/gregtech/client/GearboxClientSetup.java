@@ -1,5 +1,5 @@
 package gregtech.client;
-import gregtech.registry.GTGearboxes;
+import gregtech.content.registry.GTGearboxes;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
@@ -12,7 +12,7 @@ import net.neoforged.neoforge.client.event.*;
 @EventBusSubscriber(modid = gregtech.internal.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD,value=Dist.CLIENT)
 public final class GearboxClientSetup {
  private GearboxClientSetup(){}
- private static int color(gregtech.block.energy.GearboxBlock block,int layer){return layer==0?block.spec().material().getColor():0xFFFFFF;}
+ private static int color(gregtech.content.block.energy.GearboxBlock block,int layer){return layer==0?block.spec().material().getColor():0xFFFFFF;}
  @SubscribeEvent public static void blocks(RegisterColorHandlersEvent.Block event){for(var entry:GTGearboxes.allGearboxes()){var block=entry.get();event.register((state,level,pos,layer)->color(block,layer),block);}}
  @SubscribeEvent public static void items(RegisterColorHandlersEvent.Item event){for(var entry:GTGearboxes.allGearboxes()){var block=entry.get();event.register(ItemColorARGB.opaque((stack,layer)->color(block,layer)),block.asItem());}}
  @SubscribeEvent public static void transformerBlocks(RegisterColorHandlersEvent.Block event){for(var entry:GTGearboxes.allTransformers()){var block=entry.get();event.register((state,level,pos,layer)->layer==0?block.spec().material().getColor():0xFFFFFF,block);}}

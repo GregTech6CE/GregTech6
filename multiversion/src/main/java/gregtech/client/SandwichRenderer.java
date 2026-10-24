@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.blockentity.misc.SandwichBlockEntity;
+import gregtech.content.blockentity.misc.SandwichBlockEntity;
 import gregtech.content.food.SandwichIngredients;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;

@@ -1,6 +1,6 @@
 package gregtech.content.recipe;
 
-import gregtech.data.*;
+import gregtech.content.data.*;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.material.Fluids;
 //? if >=1.21.1 {

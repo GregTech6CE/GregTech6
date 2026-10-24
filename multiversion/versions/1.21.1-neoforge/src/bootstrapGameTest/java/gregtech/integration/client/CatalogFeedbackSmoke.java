@@ -1,8 +1,8 @@
 package gregtech.integration.client;
 
 import com.google.gson.JsonObject;
-import gregtech.registry.*;
-import gregtech.block.plant.BaleBlock;
+import gregtech.content.registry.*;
+import gregtech.content.block.plant.BaleBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -26,13 +26,13 @@ final class CatalogFeedbackSmoke {
         }
         var level = server.overworld();
         int height = level.getSeaLevel() + 36;
-        var origin = new gregtech.worldgen.center.NativeOriginWorld(level, new ChunkPos(0, 0), height);
+        var origin = new gregtech.content.worldgen.center.NativeOriginWorld(level, new ChunkPos(0, 0), height);
         for (int meta = 0; meta < 3; meta++) {
             var pos = new BlockPos(3 + meta, height, 3);
             level.setBlock(pos.below(), Blocks.STONE.defaultBlockState(), 3);
             require(origin.setBlock(pos.getX(), pos.getY(), pos.getZ(),
-                    new gregtech.worldgen.center.OriginWorld.Block("source:sands"), meta, 3), "origin sand placement failed");
-            String expected = gregtech.block.BlackSandDefinitions.IDS.get(meta);
+                    new gregtech.content.worldgen.center.OriginWorld.Block("source:sands"), meta, 3), "origin sand placement failed");
+            String expected = gregtech.content.block.BlackSandDefinitions.IDS.get(meta);
             require(BuiltInRegistries.BLOCK.getKey(level.getBlockState(pos).getBlock()).equals(id(expected)), "origin still places dust " + meta);
         }
         var fresh = (BaleBlock) BuiltInRegistries.BLOCK.get(id("bale_grass"));
@@ -59,11 +59,11 @@ final class CatalogFeedbackSmoke {
         receipt.addProperty("originBlackSandVariants", 3);
         receipt.addProperty("baleDryWetRotAndScheduling", true);
         // Old ingredient IDs must resolve directly to the sole canonical item.
-        var ingredient = gregtech.data.MachineRecipeIngredients.resolve("item:gt6ce:tank_wall",
+        var ingredient = gregtech.content.data.MachineRecipeIngredients.resolve("item:gt6ce:tank_wall",
                 gregtech.content.material.Materials.StainlessSteel, 1);
         require(ingredient.equals(java.util.Map.of("item", "gt6ce:tank_wall")), "canonical wall recipe lost");
-        for (var row : java.util.stream.Stream.concat(gregtech.data.OriginalSurvivalRecipes.ROWS.stream(),
-                gregtech.data.UtilityCraftingRows.ROWS.stream()).toList()) {
+        for (var row : java.util.stream.Stream.concat(gregtech.content.data.OriginalSurvivalRecipes.ROWS.stream(),
+                gregtech.content.data.UtilityCraftingRows.ROWS.stream()).toList()) {
             var recipe=server.getRecipeManager().byKey(id("survival_repairs/" + row.id()));
             require(recipe.isPresent(), "missing source crafting recipe " + row.id());
             for (var input : recipe.orElseThrow().value().getIngredients())
@@ -71,21 +71,21 @@ final class CatalogFeedbackSmoke {
                         "empty crafting ingredient in " + row.id());
         }
         checkRecipeTags(server, receipt);
-        require(gregtech.registry.GTStorageContainers.LOCKERS.size()==60,"incomplete locker metalset");
-        for(var holder:gregtech.registry.GTStorageContainers.LOCKERS) {
+        require(gregtech.content.registry.GTStorageContainers.LOCKERS.size()==60,"incomplete locker metalset");
+        for(var holder:gregtech.content.registry.GTStorageContainers.LOCKERS) {
             var locker=holder.get();
             require(locker.material()!=null,"uncolored locker");
             require(locker.newBlockEntity(new BlockPos(0,height,0),locker.defaultBlockState()).getType().isValid(locker.defaultBlockState()),"locker entity rejects material variant");
         }
         require(!server.getRecipeManager().byKey(id("fusion/fusion_reactor_main")).isPresent(),"duplicate fusion crafting still loaded");
-        var bath=gregtech.data.MachineRecipeMaps.Bath;
+        var bath=gregtech.content.data.MachineRecipeMaps.Bath;
         require(gregtech.internal.recipe.MachineGuiCoordinates.item(true,0,bath.mInputItemsCount,bath.mInputFluidCount).y()==16,"Bath input does not align with texture");
         require(gregtech.internal.recipe.MachineGuiCoordinates.item(false,0,bath.mOutputItemsCount,bath.mOutputFluidCount).y()==16,"Bath output does not align with texture");
         require(server.getRecipeManager().byKey(id("technology/plastic_lighter_empty")).isPresent(),"missing original plastic lighter recipe");
         var omitted = new com.google.gson.JsonArray();
         gregtech.content.recipe.UtilityProcessingRecipes.UNAVAILABLE_OPTIONAL_FORMS.forEach(omitted::add);
         receipt.add("unavailableOptionalMaterialForms", omitted);
-        receipt.addProperty("utilityCraftingRows",gregtech.data.UtilityCraftingRows.ROWS.size());
+        receipt.addProperty("utilityCraftingRows",gregtech.content.data.UtilityCraftingRows.ROWS.size());
         receipt.addProperty("lockerMaterials",60);
         receipt.addProperty("bathSlotY",16);
         receipt.addProperty("utilityProcessingRows",gregtech.content.recipe.UtilityProcessingRecipes.INSTANCE.entries().size());
@@ -98,15 +98,15 @@ final class CatalogFeedbackSmoke {
         for(var part:gregtech.content.multiblock.SharedLargeMachineParts.DEFINITIONS){
             require(BuiltInRegistries.BLOCK.get(id(part.name()))==GTMultiblocks.findPart(part.originalId()).get(),"part identity mismatch "+part.name());
         }
-        receipt.addProperty("sourceRepairCraftingRows", gregtech.data.OriginalSurvivalRecipes.ROWS.size());
-        var cut = gregtech.data.MachineRecipeMaps.Cutter.mRecipeList.stream()
+        receipt.addProperty("sourceRepairCraftingRows", gregtech.content.data.OriginalSurvivalRecipes.ROWS.size());
+        var cut = gregtech.content.data.MachineRecipeMaps.Cutter.mRecipeList.stream()
                 .filter(r -> r.mOutputs.length > 0 && java.util.Set.of("glass_clear_slab","glass_glow_slab","cfoam_slab")
                         .contains(BuiltInRegistries.ITEM.getKey(r.mOutputs[0].getItem()).getPath())).toList();
         require(cut.size() == 16 * 3 * gregtech.content.recipe.SawingCoolants.variants(false).size(), "missing colored slab coolant recipes " + cut.size());
         for (var recipe : cut) {
             require(recipe.mExactItemInputs, "slab cutter ignores color");
-            require(gregtech.block.misc.ColoredConstructionBlock.itemColor(recipe.mInputs[0])
-                    == gregtech.block.misc.ColoredConstructionBlock.itemColor(recipe.mOutputs[0]), "slab cutter changes color");
+            require(gregtech.content.block.misc.ColoredConstructionBlock.itemColor(recipe.mInputs[0])
+                    == gregtech.content.block.misc.ColoredConstructionBlock.itemColor(recipe.mOutputs[0]), "slab cutter changes color");
         }
         receipt.addProperty("exactColoredSlabCuttingRecipes", cut.size());
         receipt.addProperty("woodSlabFamilies", gregtech.content.plant.WoodSlabCatalog.WOODS.size());
@@ -142,12 +142,12 @@ final class CatalogFeedbackSmoke {
                 .orElseThrow(() -> new IllegalStateException("missing gt6ce mod container"));
         String loadedName = container.getModInfo().getDisplayName();
         require(expectedName.equals(loadedName), "loader reports another mod display name: " + loadedName);
-        var owner = gregtech.data.ModReferences.GT;
+        var owner = gregtech.content.data.ModReferences.GT;
         require(namespace.equals(owner.id) && expectedName.equals(owner.name) && owner.isLoaded()
                 && gregtech.internal.mod.ModData.MODS.get(namespace) == owner,
                 "material ownership metadata does not resolve to GT6CE");
-        require("gregtech".equals(gregtech.data.ModReferences.GT5U.id)
-                && "gregtech".equals(gregtech.data.ModReferences.GT6U.id),
+        require("gregtech".equals(gregtech.content.data.ModReferences.GT5U.id)
+                && "gregtech".equals(gregtech.content.data.ModReferences.GT6U.id),
                 "external GregTech provenance IDs were replaced");
         String emiName;
         try {
@@ -210,7 +210,7 @@ final class CatalogFeedbackSmoke {
             var input=gregtech.content.recipe.ClayMoldRecipes.input(raw);
             for(var type:java.util.List.of(net.minecraft.world.item.crafting.RecipeType.SMELTING,net.minecraft.world.item.crafting.RecipeType.BLASTING))
                 if(server.getRecipeManager().getRecipes().stream().noneMatch(h->h.value().getType()==type && h.value().getIngredients().stream().anyMatch(i->i.test(input))
-                    && gregtech.block.machine.MoldItemData.shape(h.value().getResultItem(server.registryAccess()))==raw.shape()))failures.add(raw.id()+" missing shaped "+type);
+                    && gregtech.content.block.machine.MoldItemData.shape(h.value().getResultItem(server.registryAccess()))==raw.shape()))failures.add(raw.id()+" missing shaped "+type);
             if(server.getRecipeManager().byKey(id("clay_molds/reclaim_"+raw.id())).isEmpty())failures.add(raw.id()+" reclaim");
             if(server.getRecipeManager().getRecipes().stream().noneMatch(h->h.value().getType()==net.minecraft.world.item.crafting.RecipeType.CRAFTING
                     && h.value().getResultItem(server.registryAccess()).is(input.getItem())))failures.add(raw.id()+" forming");

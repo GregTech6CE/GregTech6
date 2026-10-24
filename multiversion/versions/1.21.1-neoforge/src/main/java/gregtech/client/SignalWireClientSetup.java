@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.registry.GTSignalWires;
+import gregtech.content.registry.GTSignalWires;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
@@ -17,7 +17,7 @@ public final class SignalWireClientSetup {
     private SignalWireClientSetup() {
     }
 
-    private static int color(gregtech.block.energy.SignalWireBlock block, int layer) {
+    private static int color(gregtech.content.block.energy.SignalWireBlock block, int layer) {
         return gregtech.content.energy.SignalWireColors.tint(block.material(), layer);
     }
 

@@ -7,9 +7,9 @@ public final class ZpmEnergy {
     public static final String KEY=ZpmWorkRules.KEY;
     private ZpmEnergy(){}
 //? if >=1.21.1 {
-    /*public static boolean isModule(ItemStack stack){return stack.is(gregtech.registry.GTZpmArtifacts.ZPM.get().asItem());}
+    /*public static boolean isModule(ItemStack stack){return stack.is(gregtech.content.registry.GTZpmArtifacts.ZPM.get().asItem());}
 *///?} else {
-    public static boolean isModule(ItemStack stack){return stack.is(gregtech.registry.GTLasers.ZPM.get().asItem());}
+    public static boolean isModule(ItemStack stack){return stack.is(gregtech.content.registry.GTLasers.ZPM.get().asItem());}
 //?}
     public static long stored(ItemStack stack){
 //? if >=1.21.1 {
@@ -29,8 +29,8 @@ public final class ZpmEnergy {
 //?}
     }
 //? if >=1.21.1 {
-    /*public static ItemStack charged(){var stack=new ItemStack(gregtech.registry.GTZpmArtifacts.ZPM.get());set(stack,CAPACITY);return stack;}
+    /*public static ItemStack charged(){var stack=new ItemStack(gregtech.content.registry.GTZpmArtifacts.ZPM.get());set(stack,CAPACITY);return stack;}
 *///?} else {
-    public static ItemStack charged(){var stack=new ItemStack(gregtech.registry.GTLasers.ZPM.get());set(stack,CAPACITY);return stack;}
+    public static ItemStack charged(){var stack=new ItemStack(gregtech.content.registry.GTLasers.ZPM.get());set(stack,CAPACITY);return stack;}
 //?}
 }

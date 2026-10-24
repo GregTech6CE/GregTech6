@@ -1,16 +1,16 @@
 package gregtech.gametest;
 
-import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.internal.recipe.*;
 import gregtech.internal.tool.*;
-import gregtech.block.machine.FluidPipeBlock;
-import gregtech.block.misc.*;
-import gregtech.blockentity.CFoamBlockEntity;
-import gregtech.blockentity.energy.EnergyNodeBlockEntity;
-import gregtech.blockentity.inventory.MassStorageBlockEntity;
-import gregtech.blockentity.machine.*;
-import gregtech.data.*;
-import gregtech.registry.*;
+import gregtech.content.block.machine.FluidPipeBlock;
+import gregtech.content.block.misc.*;
+import gregtech.content.blockentity.CFoamBlockEntity;
+import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
+import gregtech.content.blockentity.inventory.MassStorageBlockEntity;
+import gregtech.content.blockentity.machine.*;
+import gregtech.content.data.*;
+import gregtech.content.registry.*;
 import net.minecraft.core.*;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -34,12 +34,12 @@ public final class StorageAndDirectionFeedbackTests {
     @GameTest(template="test_empty", timeoutTicks=40)
     public static void monkeyWrenchSwitchesMassStorageAndActualBottomOutput(GameTestHelper h) {
         BlockPos pos = h.absolutePos(new BlockPos(3, 3, 3));
-        var storageBlock = BuiltInRegistries.BLOCK.stream().filter(block -> block instanceof gregtech.block.inventory.MassStorageBlock).findFirst().orElseThrow();
+        var storageBlock = BuiltInRegistries.BLOCK.stream().filter(block -> block instanceof gregtech.content.block.inventory.MassStorageBlock).findFirst().orElseThrow();
         h.getLevel().setBlockAndUpdate(pos, storageBlock.defaultBlockState());
         h.getLevel().setBlockAndUpdate(pos.below(), Blocks.CHEST.defaultBlockState());
         var storage = (MassStorageBlockEntity)h.getLevel().getBlockEntity(pos);
         var actor = net.neoforged.neoforge.common.util.FakePlayerFactory.getMinecraft(h.getLevel());
-        var toolItem = BuiltInRegistries.ITEM.stream().filter(item -> item instanceof gregtech.item.GTToolItem tool
+        var toolItem = BuiltInRegistries.ITEM.stream().filter(item -> item instanceof gregtech.content.item.GTToolItem tool
                 && tool.toolType() == GTToolType.MONKEY_WRENCH).findFirst().orElseThrow();
         var tool = GTToolHelper.write(new ItemStack(toolItem), gregtech.content.material.Materials.Steel,
                 gregtech.internal.material.GTMaterialRegistry.get("Wood"));

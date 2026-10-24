@@ -1,6 +1,6 @@
 package gregtech.content.energy;
 
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 
 /** Shared passive battery contract, used by chemical cells and GT6 energy crystals. */
 public interface PortableBatterySpec {

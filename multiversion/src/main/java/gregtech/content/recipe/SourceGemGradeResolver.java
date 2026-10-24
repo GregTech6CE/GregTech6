@@ -3,8 +3,8 @@ import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.ItemMaterialRegistry;
 import gregtech.internal.material.MaterialEquivalence;
 import gregtech.internal.addon.AddonMaterials;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.GTItems;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTItems;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
 /** Recipe-local source availability. Never unregisters legacy items or changes their IDs.

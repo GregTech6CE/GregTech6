@@ -1,8 +1,8 @@
 package gregtech.client;
 
-import gregtech.block.OreBlock;
-import gregtech.block.OreHostStone;
-import gregtech.block.stone.StoneType;
+import gregtech.content.block.OreBlock;
+import gregtech.content.block.OreHostStone;
+import gregtech.content.block.stone.StoneType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;

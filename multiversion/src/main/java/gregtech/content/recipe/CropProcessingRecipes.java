@@ -1,8 +1,8 @@
 package gregtech.content.recipe;
 
 import gregtech.internal.recipe.RecipeMap;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.registry.GTFluids;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.registry.GTFluids;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {

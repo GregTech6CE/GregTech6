@@ -1,6 +1,6 @@
 package gregtech.internal.fluid;
 
-import gregtech.item.WoodenBucketItem;
+import gregtech.content.item.WoodenBucketItem;
 import gregtech.content.tool.WoodenBucketCatalog;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;

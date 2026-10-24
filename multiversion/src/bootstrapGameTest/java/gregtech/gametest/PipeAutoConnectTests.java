@@ -1,13 +1,13 @@
 package gregtech.gametest;
 
-import gregtech.block.energy.ElectricWireBlock;
-import gregtech.block.energy.SignalWireBlock;
-import gregtech.block.machine.FluidPipeBlock;
-import gregtech.block.machine.ItemPipeBlock;
-import gregtech.blockentity.machine.FluidPipeBlockEntity;
-import gregtech.blockentity.machine.ItemPipeBlockEntity;
-import gregtech.registry.GTItemPipes;
-import gregtech.registry.GTSignalWires;
+import gregtech.content.block.energy.ElectricWireBlock;
+import gregtech.content.block.energy.SignalWireBlock;
+import gregtech.content.block.machine.FluidPipeBlock;
+import gregtech.content.block.machine.ItemPipeBlock;
+import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
+import gregtech.content.blockentity.machine.ItemPipeBlockEntity;
+import gregtech.content.registry.GTItemPipes;
+import gregtech.content.registry.GTSignalWires;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -171,8 +171,8 @@ public final class PipeAutoConnectTests {
         // world-state write also exercises the separate recursive-onPlace stale-BE defect.
         helper.getLevel().setBlockAndUpdate(pos,wireBlock().defaultBlockState().setValue(ElectricWireBlock.EAST,true));
         var source=(SignalProbes.SignalProbeSourceBlockEntity)helper.getLevel().getBlockEntity(pos.east());
-        source.emitted=5*gregtech.blockentity.energy.SignalWireBlockEntity.UNIT;
-        var wire=(gregtech.blockentity.energy.SignalWireBlockEntity)helper.getLevel().getBlockEntity(pos);
+        source.emitted=5*gregtech.content.blockentity.energy.SignalWireBlockEntity.UNIT;
+        var wire=(gregtech.content.blockentity.energy.SignalWireBlockEntity)helper.getLevel().getBlockEntity(pos);
         helper.assertTrue(wire.getBlockState().equals(helper.getLevel().getBlockState(pos))
                 && wire.connected(Direction.EAST),"initial explicit port agrees in the world and block entity");
         wire.setMode(0);wire.tickNetwork();

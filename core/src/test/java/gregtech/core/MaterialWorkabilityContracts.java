@@ -2,12 +2,13 @@ package gregtech.core;
 
 import gregtech.api.addon.*;
 import gregtech.internal.addon.*;
+import gregtech.internal.addon.*;
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
 import gregtech.internal.mod.ModData;
 import gregtech.internal.prefix.PrefixRegistry;
-import gregtech.data.ModReferences;
-import gregtech.data.generated.MaterialWorkability;
+import gregtech.content.data.ModReferences;
+import gregtech.content.data.generated.MaterialWorkability;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
@@ -24,7 +25,7 @@ public final class MaterialWorkabilityContracts {
         GTMaterialRegistry.setLogSink((warning, message) -> {});
         PrefixRegistry.ensurePrefixesLoaded();
         ModReferences.UNKNOWN.getClass();
-        gregtech.data.MaterialGroups.Glowstone.getClass();
+        gregtech.content.data.MaterialGroups.Glowstone.getClass();
         var root = Files.createTempDirectory("gt-workability-api");
         var service = root.resolve("META-INF/services/gregtech.api.addon.AddonMaterialContributor");
         Files.createDirectories(service.getParent());

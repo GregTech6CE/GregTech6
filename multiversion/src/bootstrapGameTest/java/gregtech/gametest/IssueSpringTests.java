@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.GameType;
 import gregtech.internal.tool.*;
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.item.GTToolItem;
+import gregtech.content.item.GTToolItem;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
@@ -26,13 +26,13 @@ public final class IssueSpringTests {
     public static void storedFluidIsInClientUpdateAndModelData(GameTestHelper h) {
         var pos=h.absolutePos(new BlockPos(2,2,2));var block=BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","fluid_spring"));
         h.getLevel().setBlockAndUpdate(pos,block.defaultBlockState());
-        var spring=(gregtech.blockentity.FluidSpringBlockEntity)h.getLevel().getBlockEntity(pos);
+        var spring=(gregtech.content.blockentity.FluidSpringBlockEntity)h.getLevel().getBlockEntity(pos);
 //? if >=1.21.1 {
-        /*spring.setSpring("gt6ce:liquid_light_oil",6000);spring=(gregtech.blockentity.FluidSpringBlockEntity)h.getLevel().getBlockEntity(pos);var tag=spring.getUpdateTag(h.getLevel().registryAccess());
+        /*spring.setSpring("gt6ce:liquid_light_oil",6000);spring=(gregtech.content.blockentity.FluidSpringBlockEntity)h.getLevel().getBlockEntity(pos);var tag=spring.getUpdateTag(h.getLevel().registryAccess());
 *///?} else {
-        spring.setSpring("gt6ce:liquid_light_oil",6000);spring=(gregtech.blockentity.FluidSpringBlockEntity)h.getLevel().getBlockEntity(pos);var tag=spring.getUpdateTag();
+        spring.setSpring("gt6ce:liquid_light_oil",6000);spring=(gregtech.content.blockentity.FluidSpringBlockEntity)h.getLevel().getBlockEntity(pos);var tag=spring.getUpdateTag();
 //?}
         h.assertTrue(!tag.contains("spring")&&!tag.contains("amount")&&spring.fluidId().equals("gt6ce:liquid_light_oil")&&spring.amount()==6000,"block identity defines the client fluid and rate");
-        h.assertTrue(spring.getUpdatePacket()!=null&&spring.getModelData().get(gregtech.blockentity.FluidSpringBlockEntity.MODEL_FLUID)==spring.fluid(),"actual model data uses stored fluid");h.succeed();
+        h.assertTrue(spring.getUpdatePacket()!=null&&spring.getModelData().get(gregtech.content.blockentity.FluidSpringBlockEntity.MODEL_FLUID)==spring.fluid(),"actual model data uses stored fluid");h.succeed();
     }
 }

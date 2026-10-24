@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
 import gregtech.bootstrap.registration.OriginCreativeContents;
-import gregtech.block.stone.StoneType;
-import gregtech.worldgen.GTDungeonFeature;
-import gregtech.worldgen.dungeon.GTDungeonData;
+import gregtech.content.block.stone.StoneType;
+import gregtech.content.worldgen.GTDungeonFeature;
+import gregtech.content.worldgen.dungeon.GTDungeonData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -17,14 +17,14 @@ import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import gregtech.block.tool.DynamiteBlock;
+import gregtech.content.block.tool.DynamiteBlock;
 import gregtech.content.tool.DynamiteSubstrates;
-import gregtech.registry.GTElectricItems;
-import gregtech.registry.GTToolBlocks;
+import gregtech.content.registry.GTElectricItems;
+import gregtech.content.registry.GTToolBlocks;
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.block.misc.PileBlock;
-import gregtech.blockentity.misc.PileBlockEntity;
-import gregtech.registry.GTItems;
+import gregtech.content.block.misc.PileBlock;
+import gregtech.content.blockentity.misc.PileBlockEntity;
+import gregtech.content.registry.GTItems;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -115,14 +115,14 @@ public final class OpenIssueRegressionTests {
         for (String prefix : java.util.List.of("ore_iron", "ore_small_iron")) {
             var id = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", prefix);
             var block = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(id);
-            h.assertTrue(block instanceof gregtech.block.OreBlock, "registered GT ore: " + id);
-            for (var host : java.util.List.of(gregtech.block.OreHostStone.STONE,
-                    gregtech.block.OreHostStone.DEEPSLATE,
-                    gregtech.block.OreHostStone.BEDROCK)) {
+            h.assertTrue(block instanceof gregtech.content.block.OreBlock, "registered GT ore: " + id);
+            for (var host : java.util.List.of(gregtech.content.block.OreHostStone.STONE,
+                    gregtech.content.block.OreHostStone.DEEPSLATE,
+                    gregtech.content.block.OreHostStone.BEDROCK)) {
                 h.setBlock(SUPPORT.above(), Blocks.AIR);
-                h.setBlock(SUPPORT, block.defaultBlockState().setValue(gregtech.block.OreBlock.STONE, host));
+                h.setBlock(SUPPORT, block.defaultBlockState().setValue(gregtech.content.block.OreBlock.STONE, host));
                 var player = player(h, false);
-                boolean allowed = host != gregtech.block.OreHostStone.BEDROCK;
+                boolean allowed = host != gregtech.content.block.OreHostStone.BEDROCK;
                 h.assertTrue(DynamiteSubstrates.canDrill(h.getLevel(), h.absolutePos(SUPPORT)) == allowed,
                         id + " admission for " + host);
                 h.assertTrue(place(h, player, Direction.UP) == allowed, id + " placement for " + host);

@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.internal.recipe.*;
 import gregtech.content.recipe.*;
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.data.MachineRecipeMaps;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.item.*;
 import net.minecraftforge.gametest.*;

@@ -3,7 +3,7 @@ package gregtech.integration.jade;
 import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.material.MaterialPresentation;
-import gregtech.blockentity.RockBlockEntity;
+import gregtech.content.blockentity.RockBlockEntity;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import snownee.jade.api.BlockAccessor;
@@ -24,7 +24,7 @@ public enum RockTwigJadeProvider implements IBlockComponentProvider {
             Component display = material != null && material.resolve().isValid()
                     ? MaterialPresentation.name(material.resolve()) : Component.literal(rock.getMaterial());
             tooltip.add(Component.translatable("gt6ce.jade.rock_content", display));
-        } else if (accessor.getBlock() instanceof gregtech.block.TwigBlock) {
+        } else if (accessor.getBlock() instanceof gregtech.content.block.TwigBlock) {
             tooltip.add(Component.translatable("gt6ce.jade.twig_content"));
         }
     }

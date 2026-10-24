@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.registry.*;
+import gregtech.content.registry.*;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.api.distmarker.Dist;

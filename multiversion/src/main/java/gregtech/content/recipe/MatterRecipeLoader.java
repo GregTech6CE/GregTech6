@@ -4,8 +4,8 @@ import gregtech.api.material.*;
 import gregtech.internal.material.*;
 import gregtech.internal.prefix.BlockMaterialPrefix;
 import gregtech.internal.recipe.Recipe;
-import gregtech.data.*;
-import gregtech.registry.*;
+import gregtech.content.data.*;
+import gregtech.content.registry.*;
 import gregtech.bootstrap.InitializationStep;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {

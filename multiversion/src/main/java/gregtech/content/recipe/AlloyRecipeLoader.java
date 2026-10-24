@@ -3,10 +3,10 @@ package gregtech.content.recipe;
 import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.recipe.RecipeMap;
-import gregtech.data.RegisteredFluids;
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.data.RegisteredFluids;
+import gregtech.content.data.MachineRecipeMaps;
 import gregtech.bootstrap.InitializationStep;
-import gregtech.registry.GTFluids;
+import gregtech.content.registry.GTFluids;
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.level.material.Fluid;
 //? if >=1.21.1 {

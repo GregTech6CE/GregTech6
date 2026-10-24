@@ -1,15 +1,15 @@
 package gregtech.gametest;
 
-import gregtech.block.stone.StoneType;
-import gregtech.blockentity.misc.CoinPileBlockEntity;
-import gregtech.worldgen.GTDungeonFeature;
-import gregtech.worldgen.dungeon.GTDungeonChunk;
-import gregtech.worldgen.dungeon.GTDungeonChunkRoomLibraryNormal;
-import gregtech.worldgen.dungeon.GTDungeonChunkRoomMiningBedrock;
-import gregtech.worldgen.dungeon.GTDungeonChunkRoomWorkshop;
-import gregtech.worldgen.dungeon.GTDungeonData;
-import gregtech.worldgen.dungeon.GTDungeonLayout;
-import gregtech.worldgen.dungeon.GTDungeonSharedState;
+import gregtech.content.block.stone.StoneType;
+import gregtech.content.blockentity.misc.CoinPileBlockEntity;
+import gregtech.content.worldgen.GTDungeonFeature;
+import gregtech.content.worldgen.dungeon.GTDungeonChunk;
+import gregtech.content.worldgen.dungeon.GTDungeonChunkRoomLibraryNormal;
+import gregtech.content.worldgen.dungeon.GTDungeonChunkRoomMiningBedrock;
+import gregtech.content.worldgen.dungeon.GTDungeonChunkRoomWorkshop;
+import gregtech.content.worldgen.dungeon.GTDungeonData;
+import gregtech.content.worldgen.dungeon.GTDungeonLayout;
+import gregtech.content.worldgen.dungeon.GTDungeonSharedState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;

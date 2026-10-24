@@ -12,12 +12,12 @@ public final class FluidTexturePolicy {
         public ResourceLocation standard() { return ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/" + texture); }
     }
     private FluidTexturePolicy() {}
-    public static Kind kind(gregtech.data.RegisteredFluids.FluidEntry entry) {
+    public static Kind kind(gregtech.content.data.RegisteredFluids.FluidEntry entry) {
         String name = entry.registryName();
-        if ((entry.flags() & gregtech.data.RegisteredFluids.FluidFlags.PLASMA) != 0 || name.startsWith("plasma.")) return Kind.PLASMA;
+        if ((entry.flags() & gregtech.content.data.RegisteredFluids.FluidFlags.PLASMA) != 0 || name.startsWith("plasma.")) return Kind.PLASMA;
         if (name.startsWith("gas.") || entry.gas()) return Kind.GAS;
         if (name.startsWith("liquid.")) return Kind.LIQUID;
-        if (entry.textureMode() == gregtech.data.RegisteredFluids.FluidTextureMode.GENERIC_MOLTEN || name.startsWith("molten.")) return Kind.MOLTEN;
+        if (entry.textureMode() == gregtech.content.data.RegisteredFluids.FluidTextureMode.GENERIC_MOLTEN || name.startsWith("molten.")) return Kind.MOLTEN;
         return entry.gas() ? Kind.GAS : Kind.LIQUID;
     }
     public static ResourceLocation select(ResourceLocation preferred, boolean molten, boolean gas,

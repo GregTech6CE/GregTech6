@@ -1,10 +1,10 @@
 package gregtech.content.recipe;
 
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.api.recipe.*;
 import gregtech.internal.recipe.*;
-import gregtech.data.*;
-import gregtech.registry.*;
+import gregtech.internal.recipe.*;
+import gregtech.content.data.*;
+import gregtech.content.registry.*;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
@@ -100,9 +100,9 @@ public final class ElectronicsRecipes {
         // a gem plate is engraved into a crystal circuit, the socket is crafted from a platinum circuit
         // plate, two ultimate circuits and two helium-neon laser emitters, and the Press turns
         // socket + circuit into a processor.
-        crystal("crystal_circuit_diamond", new String[]{"Diamond"}, gregtech.data.MaterialGroups.Diamond);
-        crystal("crystal_circuit_emerald", new String[]{"Emerald"}, gregtech.data.MaterialGroups.Emerald);
-        crystal("crystal_circuit_sapphire", new String[]{"Sapphire", "GreenSapphire"}, gregtech.data.MaterialGroups.Sapphire);
+        crystal("crystal_circuit_diamond", new String[]{"Diamond"}, gregtech.content.data.MaterialGroups.Diamond);
+        crystal("crystal_circuit_emerald", new String[]{"Emerald"}, gregtech.content.data.MaterialGroups.Emerald);
+        crystal("crystal_circuit_sapphire", new String[]{"Sapphire", "GreenSapphire"}, gregtech.content.data.MaterialGroups.Sapphire);
         crystal("crystal_circuit_ruby", new String[]{"Ruby"}, null);   // GT6: plateGem(MT.Ruby) only
         for (String gem : new String[]{"Diamond", "Ruby", "Emerald", "Sapphire"}) {
             press(16, tech("crystal_processor_" + gem.toLowerCase(Locale.ROOT), 1),

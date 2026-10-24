@@ -25,7 +25,7 @@ public final class MachineMenuValidityTests {
     @GameTest(template = "test_empty", timeoutTicks = 40)
     public static void basicMachineMenuRequiresLiveNearbyOwner(GameTestHelper h) {
         var block = java.util.stream.StreamSupport.stream(net.minecraft.core.registries.BuiltInRegistries.BLOCK.spliterator(), false)
-                .filter(candidate -> candidate instanceof gregtech.block.machine.BasicMachineBlock machine
+                .filter(candidate -> candidate instanceof gregtech.content.block.machine.BasicMachineBlock machine
                         && machine.basicSpec().machineName().equals("distillery"))
                 .findFirst().orElseThrow();
         verify(h, block);
@@ -34,13 +34,13 @@ public final class MachineMenuValidityTests {
 
     @GameTest(template = "test_empty", timeoutTicks = 40)
     public static void bumbliaryMenuRequiresLiveNearbyOwner(GameTestHelper h) {
-        verify(h, gregtech.registry.GTBumbleBlocks.BUMBLIARY.get());
+        verify(h, gregtech.content.registry.GTBumbleBlocks.BUMBLIARY.get());
         h.succeed();
     }
 
     @GameTest(template = "test_empty", timeoutTicks = 40)
     public static void advancedBumbliaryMenuRequiresLiveNearbyOwner(GameTestHelper h) {
-        verify(h, gregtech.registry.GTBumbleBlocks.ADVANCED_BUMBLIARY.get());
+        verify(h, gregtech.content.registry.GTBumbleBlocks.ADVANCED_BUMBLIARY.get());
         h.succeed();
     }
 

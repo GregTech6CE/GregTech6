@@ -3,8 +3,8 @@ package gregtech.gametest;
 import gregtech.content.food.GTDrinks;
 import gregtech.content.food.GTFoodStats;
 import gregtech.content.food.PlayerFoodStats;
-import gregtech.data.RegisteredFluids;
-import gregtech.registry.GTFluidItems;
+import gregtech.content.data.RegisteredFluids;
+import gregtech.content.registry.GTFluidItems;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.InteractionHand;
@@ -57,13 +57,13 @@ public final class DrinkTests {
                 "red wine is alcohol 30 + sugar 10, got " + wine);
 
         helper.assertTrue(GTDrinks.registered() + GTDrinks.unresolved().size()
-                        == gregtech.data.generated.GTDrinksGen.ROWS.size(),
+                        == gregtech.content.data.generated.GTDrinksGen.ROWS.size(),
                 "every generated drink row is either resolved to a port fluid or listed as unresolved: "
                         + GTDrinks.registered() + " + " + GTDrinks.unresolved().size() + " vs "
-                        + gregtech.data.generated.GTDrinksGen.ROWS.size());
+                        + gregtech.content.data.generated.GTDrinksGen.ROWS.size());
         gregtech.GregTech.LOGGER.info("[drinks] table: {} of {} GT6 rows resolve onto port fluids; "
                         + "unresolved: {}", GTDrinks.registered(),
-                gregtech.data.generated.GTDrinksGen.ROWS.size(), GTDrinks.unresolved().size());
+                gregtech.content.data.generated.GTDrinksGen.ROWS.size(), GTDrinks.unresolved().size());
         // Something that is not a drink at all.
         helper.assertTrue(GTDrinks.rowFor(fluid("Iron")) == null, "molten iron is not drinkable");
         helper.assertTrue(GTDrinks.rowFor((Fluid) null) == null, "and a null fluid has no row");
@@ -223,9 +223,9 @@ public final class DrinkTests {
     public static void gt6BottleItemsAreDrinkable(GameTestHelper helper) {
         var level = helper.getLevel();
         Item beer = net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(gregtech.GregTech.id("beer"));
-        helper.assertTrue(beer instanceof gregtech.item.BottleItem,
+        helper.assertTrue(beer instanceof gregtech.content.item.BottleItem,
                 "the port's beer bottle is a BottleItem, got " + beer);
-        if (!(beer instanceof gregtech.item.BottleItem bottle)) {
+        if (!(beer instanceof gregtech.content.item.BottleItem bottle)) {
             return;
         }
         helper.assertTrue("Beer".equals(bottle.fluidKey()),
@@ -246,7 +246,7 @@ public final class DrinkTests {
         helper.assertTrue(player.getInventory().countItem(beer) == 0,
                 "the bottle itself is consumed, still holding "
                         + player.getInventory().countItem(beer));
-        Item emptyBottle = gregtech.item.BottleItem.emptyBottle().getItem();
+        Item emptyBottle = gregtech.content.item.BottleItem.emptyBottle().getItem();
         helper.assertTrue(player.getInventory().countItem(emptyBottle) == 1,
                 "and GT6's empty bottle comes back (" + emptyBottle + "), count "
                         + player.getInventory().countItem(emptyBottle));
@@ -263,11 +263,11 @@ public final class DrinkTests {
         java.util.List<String> notBottles = new java.util.ArrayList<>();
         java.util.List<String> withoutFluid = new java.util.ArrayList<>();
         int covered = 0;
-        String[] entries = gregtech.data.generated.GTBottlesGen.ENTRIES;
+        String[] entries = gregtech.content.data.generated.GTBottlesGen.ENTRIES;
         for (int i = 0; i + 2 < entries.length; i += 3) {
             String id = entries[i];
             Item item = net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(gregtech.GregTech.id(id));
-            if (!(item instanceof gregtech.item.BottleItem bottle)) {
+            if (!(item instanceof gregtech.content.item.BottleItem bottle)) {
                 notBottles.add(id + " -> " + item);
                 continue;
             }

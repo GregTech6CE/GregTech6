@@ -2,7 +2,7 @@ package gregtech.gametest;
 
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.tool.GTToolType;
-import gregtech.item.GTToolItem;
+import gregtech.content.item.GTToolItem;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
@@ -81,7 +81,7 @@ public final class EarlyCeramicRecipeTests {
         for(var pair:fired) {
             var input=item(pair[0]);var output=item(pair[1]);
             h.assertTrue(fires(h,input,output),"actual vanilla firing "+pair[0]+" -> "+pair[1]);
-            var oven=gregtech.data.MachineRecipeMaps.Furnace.findRecipe(List.of(input),List.of(),true,1,1);
+            var oven=gregtech.content.data.MachineRecipeMaps.Furnace.findRecipe(List.of(input),List.of(),true,1,1);
             h.assertTrue(oven!=null && oven.mOutputs.length==1 && oven.mOutputs[0].is(output.getItem()),"actual GT oven firing "+pair[0]);
             String reclaim=pair[0].equals("clay_funnel")||pair[0].equals("clay_tap")
                     ?"fluid_tools/reclaim_"+pair[0]:"ceramic_utilities/reclaim_"+pair[0];

@@ -1,6 +1,6 @@
 package gregtech.gametest;
-import gregtech.block.machine.BasicMachineBlock;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.block.machine.BasicMachineBlock;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.machine.OriginalBasicMachineRules;
 import gregtech.internal.recipe.Recipe;
 import net.minecraft.core.*;

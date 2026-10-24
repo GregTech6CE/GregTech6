@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
-import gregtech.blockentity.tool.BumbliaryBlockEntity;
+import gregtech.content.blockentity.tool.BumbliaryBlockEntity;
 import gregtech.content.bumble.BumbleBeeGenes;
 import gregtech.content.bumble.BumbleBeeType;
 import gregtech.content.bumble.GTBumbleSpecies;
-import gregtech.registry.GTBumbleBlocks;
+import gregtech.content.registry.GTBumbleBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

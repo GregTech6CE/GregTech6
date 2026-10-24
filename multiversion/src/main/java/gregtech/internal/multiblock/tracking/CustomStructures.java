@@ -1,11 +1,11 @@
 package gregtech.internal.multiblock.tracking;
 
 import gregtech.internal.multiblock.MultiblockLayout;
-import gregtech.blockentity.machine.AxialGeneratorBlockEntity;
-import gregtech.blockentity.machine.FuelTurbineBlockEntity;
-import gregtech.blockentity.machine.LargeGasTurbineControllerBlockEntity;
-import gregtech.blockentity.machine.LightningRodControllerBlockEntity;
-import gregtech.blockentity.machine.MultiblockTankControllerBlockEntity;
+import gregtech.content.blockentity.machine.AxialGeneratorBlockEntity;
+import gregtech.content.blockentity.machine.FuelTurbineBlockEntity;
+import gregtech.content.blockentity.machine.LargeGasTurbineControllerBlockEntity;
+import gregtech.content.blockentity.machine.LightningRodControllerBlockEntity;
+import gregtech.content.blockentity.machine.MultiblockTankControllerBlockEntity;
 import gregtech.content.logistics.LogisticsCoreStructure;
 import gregtech.content.multiblock.AxialStructureTransform;
 import gregtech.content.multiblock.FusionStructure;
@@ -99,7 +99,7 @@ public final class CustomStructures {
         BlockEntity entity = machine.trackedEntity();
         Direction front = LayoutStructures.facing(entity);
         Footprint.Builder builder = new Footprint.Builder().addController(entity.getBlockPos());
-        for (var cell : gregtech.blockentity.machine.ImplosionCompressorControllerBlockEntity.LAYOUT.cells()) {
+        for (var cell : gregtech.content.blockentity.machine.ImplosionCompressorControllerBlockEntity.LAYOUT.cells()) {
             builder.add(cell.at(entity.getBlockPos(), front),
                     cell.role() == MultiblockLayout.Role.AIR ? Projection.AIR : Projection.BLOCK);
         }

@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
-import gregtech.block.machine.MultiblockControllerBlock;
-import gregtech.blockentity.machine.DistillationTowerControllerBlockEntity;
-import gregtech.blockentity.machine.MultiblockPortBlockEntity;
+import gregtech.content.block.machine.MultiblockControllerBlock;
+import gregtech.content.blockentity.machine.DistillationTowerControllerBlockEntity;
+import gregtech.content.blockentity.machine.MultiblockPortBlockEntity;
 import gregtech.content.multiblock.LargeMachineLayouts;
 import gregtech.content.multiblock.SharedDistillationTowerStructure;
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.*;

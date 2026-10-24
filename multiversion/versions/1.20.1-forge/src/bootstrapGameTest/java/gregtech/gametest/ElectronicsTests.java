@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
-import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.internal.recipe.*;
 import gregtech.content.recipe.ElectronicsRecipes;
-import gregtech.registry.*;
-import gregtech.data.*;
+import gregtech.content.registry.*;
+import gregtech.content.data.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
@@ -31,9 +31,9 @@ public final class ElectronicsTests {
                 if(ingredient.isEmpty())continue;
                 h.assertTrue(ingredient.getItems().length>0,"resolved ingredient: "+recipe.getId());
                 var stack=ingredient.getItems()[0].copy();
-                if(stack.getItem() instanceof gregtech.item.GTToolItem) {
+                if(stack.getItem() instanceof gregtech.content.item.GTToolItem) {
                     var type=gregtech.internal.tool.GTToolHelper.getType(stack);
-                    stack=gregtech.item.GTToolItem.create(type,gregtech.content.material.Materials.Steel,
+                    stack=gregtech.content.item.GTToolItem.create(type,gregtech.content.material.Materials.Steel,
                             gregtech.internal.material.GTMaterialRegistry.get("Wood"));
                 }
                 grid.setItem(slot,stack);
@@ -41,7 +41,7 @@ public final class ElectronicsTests {
             h.assertTrue(recipe.matches(grid,h.getLevel()),"original pattern crafts: "+recipe.getId());
             h.assertTrue(!recipe.assemble(grid,h.getLevel().registryAccess()).isEmpty(),"nonempty component result");
             var remainders=recipe.getRemainingItems(grid);
-            for(int slot=0;slot<9;slot++) if(grid.getItem(slot).getItem() instanceof gregtech.item.GTToolItem) {
+            for(int slot=0;slot<9;slot++) if(grid.getItem(slot).getItem() instanceof gregtech.content.item.GTToolItem) {
                 var tool=grid.getItem(slot);
                 h.assertTrue(remainders.get(slot).getDamageValue()==gregtech.internal.tool.GTToolHelper.getType(tool).damagePerCraft(),"each tool receives its own wear");
                 h.assertTrue(tool.getDamageValue()==0,"craft preview does not damage input");

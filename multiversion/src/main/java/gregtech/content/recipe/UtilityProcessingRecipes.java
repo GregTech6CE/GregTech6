@@ -1,12 +1,12 @@
 /* GregTech-6 Team: MultiItemRandomTools, Loader_Recipes_Other and Loader_Recipes_Handlers; LGPL-3.0-or-later. */
 package gregtech.content.recipe;
-import gregtech.api.recipe.*;
 import gregtech.internal.recipe.*;
-import gregtech.data.*;
-import gregtech.registry.*;
+import gregtech.internal.recipe.*;
+import gregtech.content.data.*;
+import gregtech.content.registry.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.*;
-import gregtech.block.misc.ConcreteBlock;
+import gregtech.content.block.misc.ConcreteBlock;
 /** Missing source survival manufacturing routes; common tables, native stack boundary. */
 public final class UtilityProcessingRecipes extends OriginalRecipeBatch {
     public static final UtilityProcessingRecipes INSTANCE=new UtilityProcessingRecipes();
@@ -37,7 +37,7 @@ public final class UtilityProcessingRecipes extends OriginalRecipeBatch {
                 fluids(gregtech.content.recipe.generated.GeneratedRecipeResolver.materialFluid(acid,16000)),null);
         add("foam_hardener",MachineRecipeMaps.Canner,256,16,items(item("minecraft:sand",7),item("gt6ce:empty_spray_can",1)),items(item("gt6ce:hardening_spray",1)),null,null);
         // Full material crates pack 64 pieces; partial crates are normally loot and unpack 16.
-        for(var block:BuiltInRegistries.BLOCK) if(block instanceof gregtech.block.MaterialBlockLike materialBlock && materialBlock.prefix().isCrate()) {
+        for(var block:BuiltInRegistries.BLOCK) if(block instanceof gregtech.content.block.MaterialBlockLike materialBlock && materialBlock.prefix().isCrate()) {
             String prefix=materialBlock.prefix().getName();
             boolean full=prefix.startsWith("crateGt64");
             String form=prefix.replace("crateGt64", "").replace("crateGt", "");

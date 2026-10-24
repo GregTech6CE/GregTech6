@@ -2,8 +2,8 @@ package gregtech.platform.neoforge.fluid;
 
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
-import gregtech.data.RegisteredFluids;
-import gregtech.registry.GTFluidType;
+import gregtech.content.data.RegisteredFluids;
+import gregtech.content.registry.GTFluidType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
@@ -42,9 +42,9 @@ public final class FluidDisplayItem extends Item {
                 // water's FluidType (see GTWorldWaterFluid), so their type description is "Water" and
                 // the GT6 name of the fluid the payload actually carries would be lost. Resolve the
                 // GT6 entry of that fluid instead, exactly what the type description used to give.
-                var entry = gregtech.registry.GTFluids.entryForFluid(fluid.getFluid());
+                var entry = gregtech.content.registry.GTFluids.entryForFluid(fluid.getFluid());
                 if (entry == null) return fluid.getDisplayName();
-                String path = gregtech.registry.GTFluids.sanitizePath(entry.registryName());
+                String path = gregtech.content.registry.GTFluids.sanitizePath(entry.registryName());
                 return GTFluidType.describe(entry, path);
             }
         }
@@ -88,7 +88,7 @@ public final class FluidDisplayItem extends Item {
         var entry = fluidEntry;
         if (gregtech.internal.fluid.FluidDisplayBinding.hasPayload(stack)) {
             var actual = gregtech.internal.fluid.FluidDisplayBinding.resolveCurrent(stack);
-            entry = actual.isEmpty() ? null : gregtech.registry.GTFluids.entryForFluid(actual.getFluid());
+            entry = actual.isEmpty() ? null : gregtech.content.registry.GTFluids.entryForFluid(actual.getFluid());
             if (entry == null) return false;
         }
         if (entry.glint()) return true;

@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
 import gregtech.internal.GTWaterloggable;
-import gregtech.block.machine.*;
-import gregtech.block.energy.*;
+import gregtech.content.block.machine.*;
+import gregtech.content.block.energy.*;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.level.BlockGetter;

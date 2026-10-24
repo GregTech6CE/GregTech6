@@ -7,10 +7,10 @@ import gregtech.internal.material.MaterialProperty;
 import gregtech.internal.recipe.Recipe;
 import gregtech.internal.recipe.RecipeMap;
 import gregtech.content.book.GTMaterialDictionary;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.GTFluids;
-import gregtech.registry.GTItems;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTFluids;
+import gregtech.content.registry.GTItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -97,7 +97,7 @@ public final class GTMaterialDataRecipes {
         MachineRecipeMaps.Replicator.dynamicRecipes(GTMaterialDataRecipes::replicator);
         BlueprintRecipes.register();
         CanvasRecipes.register();
-        gregtech.registry.GTColoredBooks.registerRecipes();
+        gregtech.content.registry.GTColoredBooks.registerRecipes();
         MaterialDataViewerRecipes.register();
         return 1;
     }
@@ -119,7 +119,7 @@ public final class GTMaterialDataRecipes {
             GTMaterial material = raw.resolve();
             if (!material.isValid() || material.getId() <= 0 || !seen.add(material)) continue;
             if (gregtech.internal.prefix.PrefixRegistry.all().stream().anyMatch(prefix ->
-                    gregtech.data.generated.MaterialDataFacts.scannable(prefix)
+                    gregtech.content.data.generated.MaterialDataFacts.scannable(prefix)
                             && !GTItems.getStack(prefix, material, 1).isEmpty())) scannable++;
             if (!GTMaterialDictionary.bookStack(material).isEmpty()) printable++;
             if (replicationRecipe(material) != null) replicable++;
@@ -415,15 +415,15 @@ public final class GTMaterialDataRecipes {
     /** The material a scanned item is made of, or null when it carries none. */
     @Nullable
     private static GTMaterial scannable(ItemStack stack) {
-        MaterialPrefix prefix = gregtech.item.MaterialItem.getPrefix(stack);
-        GTMaterial material = gregtech.item.MaterialItem.getMaterial(stack);
+        MaterialPrefix prefix = gregtech.content.item.MaterialItem.getPrefix(stack);
+        GTMaterial material = gregtech.content.item.MaterialItem.getMaterial(stack);
         if (material == null || !material.isValid() || prefix == null) {
             var data = ItemMaterialRegistry.get(stack);
             if (data.isEmpty()) return null;
             prefix = data.get().prefix();
             material = data.get().material();
         }
-        if (!gregtech.data.generated.MaterialDataFacts.scannable(prefix)) return null;
+        if (!gregtech.content.data.generated.MaterialDataFacts.scannable(prefix)) return null;
         material = material.resolve();
         return material.isValid() && material.getId() > 0 ? material : null;
     }
@@ -557,7 +557,7 @@ public final class GTMaterialDataRecipes {
         FluidStack fluid = nonempty(GTFluids.stack((gas ? "GenGas_" : "GenLiquid_") + material.getName(), 1000));
         if (!fluid.isEmpty()) return fluid;
         fluid = nonempty(GTFluids.stack(material.getName(), 1000));
-        if (!fluid.isEmpty() && gregtech.registry.GTFluids.isGas(fluid) == gas) return fluid;
+        if (!fluid.isEmpty() && gregtech.content.registry.GTFluids.isGas(fluid) == gas) return fluid;
         return gas ? FluidStack.EMPTY : nonempty(GTFluids.stack("GenMolten_" + material.getName(), 144));
     }
 
@@ -578,7 +578,7 @@ public final class GTMaterialDataRecipes {
      * stick (2).
      */
     private static ItemStack primaryForm(GTMaterial material) {
-        MaterialPrefix priority = gregtech.data.generated.MaterialDataFacts.priority(material);
+        MaterialPrefix priority = gregtech.content.data.generated.MaterialDataFacts.priority(material);
         if (priority != null) {
             ItemStack preferred = GTItems.getStack(priority, material, 1);
             if (!preferred.isEmpty()) return preferred;

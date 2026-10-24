@@ -1,7 +1,7 @@
 package gregtech.gametest;
-import gregtech.blockentity.machine.*;
-import gregtech.registry.*;
-import gregtech.data.GregTechTags;
+import gregtech.content.blockentity.machine.*;
+import gregtech.content.registry.*;
+import gregtech.content.data.GregTechTags;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.resources.ResourceLocation;

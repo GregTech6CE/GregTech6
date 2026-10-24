@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
-import gregtech.block.misc.SourceExtenderBlock;
+import gregtech.content.block.misc.SourceExtenderBlock;
 import gregtech.content.logistics.ExtenderSpec;
-import gregtech.registry.GTMiscBlocks;
+import gregtech.content.registry.GTMiscBlocks;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.item.*;
@@ -80,8 +80,8 @@ public final class SourceExtenderTests {
     }
     @GameTest(template="test_blueprint_empty") public static void sourceToolsAndCrafting(GameTestHelper h){
         var steel=gregtech.content.material.Materials.Steel;var wood=gregtech.internal.material.GTMaterialRegistry.get("Wood");
-        var wrench=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.WRENCH,steel,wood);
-        var monkey=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.MONKEY_WRENCH,steel,wood);
+        var wrench=gregtech.content.item.GTToolItem.create(gregtech.internal.tool.GTToolType.WRENCH,steel,wood);
+        var monkey=gregtech.content.item.GTToolItem.create(gregtech.internal.tool.GTToolType.MONKEY_WRENCH,steel,wood);
         for(var spec:ExtenderSpec.values()){
             var block=GTMiscBlocks.SOURCE_EXTENDERS.get(spec).get();var state=block.defaultBlockState();
             h.assertTrue(new ItemStack(block).getMaxStackSize()==16,"source stack size 16");
@@ -93,7 +93,7 @@ public final class SourceExtenderTests {
             var id=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","logistics/"+spec.id);
             var recipe=h.getLevel().getRecipeManager().byKey(id).orElseThrow();
             h.assertTrue(recipe.getResultItem(h.getLevel().registryAccess()).is(block.asItem()),"source survival recipe loaded: "+spec.id);
-            var shaped=(gregtech.recipe.ToolShapedRecipe)recipe;
+            var shaped=(gregtech.content.recipe.ToolShapedRecipe)recipe;
             var menu=new net.minecraft.world.inventory.AbstractContainerMenu(null,0){
                 public ItemStack quickMoveStack(net.minecraft.world.entity.player.Player player,int slot){return ItemStack.EMPTY;}
                 public boolean stillValid(net.minecraft.world.entity.player.Player player){return true;}
@@ -102,12 +102,12 @@ public final class SourceExtenderTests {
             for(int y=0;y<shaped.getHeight();y++)for(int x=0;x<shaped.getWidth();x++){
                 var ingredient=shaped.getIngredients().get(x+y*shaped.getWidth());if(ingredient.isEmpty())continue;
                 var input=ingredient.getItems()[0].copy();
-                if(input.getItem() instanceof gregtech.item.GTToolItem)input=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolHelper.getType(input),steel,wood);
+                if(input.getItem() instanceof gregtech.content.item.GTToolItem)input=gregtech.content.item.GTToolItem.create(gregtech.internal.tool.GTToolHelper.getType(input),steel,wood);
                 grid.setItem(x+y*3,input);
             }
             h.assertTrue(shaped.matches(grid,h.getLevel()),"source pattern can actually be crafted: "+spec.id);
             var remainder=shaped.getRemainingItems(grid);
-            for(int slot=0;slot<9;slot++)if(grid.getItem(slot).getItem() instanceof gregtech.item.GTToolItem)
+            for(int slot=0;slot<9;slot++)if(grid.getItem(slot).getItem() instanceof gregtech.content.item.GTToolItem)
                 h.assertTrue(!remainder.get(slot).isEmpty()&&remainder.get(slot).getDamageValue()>0,"hammer and wrench remain with wear");
         }
         h.succeed();
@@ -116,8 +116,8 @@ public final class SourceExtenderTests {
         var block=GTMiscBlocks.SOURCE_EXTENDERS.get(ExtenderSpec.COMBINED).get();h.setBlock(CENTER,block);
         var absolute=h.absolutePos(CENTER);var player=h.makeMockPlayer();
         var material=gregtech.content.material.Materials.Steel;var wood=gregtech.internal.material.GTMaterialRegistry.get("Wood");
-        var wrench=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.WRENCH,material,wood);
-        var monkey=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.MONKEY_WRENCH,material,wood);
+        var wrench=gregtech.content.item.GTToolItem.create(gregtech.internal.tool.GTToolType.WRENCH,material,wood);
+        var monkey=gregtech.content.item.GTToolItem.create(gregtech.internal.tool.GTToolType.MONKEY_WRENCH,material,wood);
         for(var side:Direction.values()){
             var state=h.getLevel().getBlockState(absolute);var before=state.getValue(SourceExtenderBlock.SECONDARY);
             player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,wrench);

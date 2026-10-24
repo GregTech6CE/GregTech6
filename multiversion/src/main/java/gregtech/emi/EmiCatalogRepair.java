@@ -14,7 +14,7 @@ final class EmiCatalogRepair {
         var field = Class.forName("dev.emi.emi.registry.EmiStackList").getField("stacks");
         var original = ((java.util.List<EmiStack>) field.get(null)).stream()
                 .filter(stack -> !(stack.getItemStack().getItem() instanceof
-                        gregtech.block.misc.LegacyConstructionBlockItem)).toList();
+                        gregtech.content.block.misc.LegacyConstructionBlockItem)).toList();
         var sorted = new ArrayList<EmiStack>();
         for (var stack : original) {
             if (!stack.getId().getNamespace().equals("gt6ce")) continue;
@@ -73,7 +73,7 @@ final class EmiCatalogRepair {
         String path = stack.getId().getPath();
         var item = stack.getItemStack();
         if (item.getItem() instanceof net.minecraft.world.item.BlockItem block
-                && block.getBlock() instanceof gregtech.block.machine.BasicMachineBlock machine) {
+                && block.getBlock() instanceof gregtech.content.block.machine.BasicMachineBlock machine) {
             var spec = machine.basicSpec();
             return gregtech.content.creative.EmiCatalogOrder.machineKey(path, spec.machineName(), spec.tier(),
                     gregtech.content.multiblock.LargeMachineLayouts.cells(spec.machineName()) != null);

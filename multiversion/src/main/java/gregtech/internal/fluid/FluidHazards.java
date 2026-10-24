@@ -2,8 +2,8 @@ package gregtech.internal.fluid;
 
 import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.MaterialProperty;
-import gregtech.data.RegisteredFluids;
-import gregtech.registry.GTFluids;
+import gregtech.content.data.RegisteredFluids;
+import gregtech.content.registry.GTFluids;
 import net.minecraft.world.level.material.Fluid;
 
 /**

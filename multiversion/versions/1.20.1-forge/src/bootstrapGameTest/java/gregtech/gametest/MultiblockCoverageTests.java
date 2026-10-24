@@ -3,8 +3,8 @@ package gregtech.gametest;
 import gregtech.GregTech;
 import gregtech.content.multiblock.LargeMachineLayouts;
 import gregtech.content.multiblock.LargeMachineParts;
-import gregtech.data.generated.GT6MultiblockIds;
-import gregtech.data.BlockHarvestPolicy;
+import gregtech.content.data.generated.GT6MultiblockIds;
+import gregtech.content.data.BlockHarvestPolicy;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -83,7 +83,7 @@ public final class MultiblockCoverageTests {
                     continue;
                 }
                 if (row.kind() == GT6MultiblockIds.Kind.PLACEHOLDER) {
-                    if (!(part.get() instanceof gregtech.block.machine.MultiblockPortBlock))
+                    if (!(part.get() instanceof gregtech.content.block.machine.MultiblockPortBlock))
                         broken.add(row.gt6Id() + " " + row.gt6Name()
                                 + ": labelled placeholder but no longer a passive port; update the audit");
                     placeholders++;
@@ -101,7 +101,7 @@ public final class MultiblockCoverageTests {
                 }
                 var numericHost = LargeMachineParts.find(row.gt6Id());
                 if (numericHost != null && numericHost.isPresent()
-                        && numericHost.get() instanceof gregtech.block.machine.MultiblockPortBlock) {
+                        && numericHost.get() instanceof gregtech.content.block.machine.MultiblockPortBlock) {
                     broken.add(row.gt6Id() + " " + row.gt6Name()
                             + ": labelled active controller but registered as a passive port");
                     continue;

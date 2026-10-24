@@ -2,7 +2,7 @@ package gregtech.internal.addon;
 
 import gregtech.internal.machine.BasicMachineSpec;
 import gregtech.internal.recipe.RecipeMap;
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.data.MachineRecipeMaps;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
-import gregtech.block.misc.BumbleHiveBlock;
-import gregtech.block.misc.FixedBumbleHiveBlock;
-import gregtech.blockentity.misc.BumbleHiveBlockEntity;
+import gregtech.content.block.misc.BumbleHiveBlock;
+import gregtech.content.block.misc.FixedBumbleHiveBlock;
+import gregtech.content.blockentity.misc.BumbleHiveBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -52,7 +52,7 @@ public final class IssueHiveTests {
             h.getLevel().setBlockAndUpdate(pos, legacy.defaultBlockState().setValue(BumbleHiveBlock.COLOR, color));
             var hive = (BumbleHiveBlockEntity)h.getLevel().getBlockEntity(pos);
             for (int i = 0; i < BumbleHiveBlockEntity.SLOTS; i++) hive.inventory().setStackInSlot(i, new ItemStack(Items.HONEYCOMB, i + 1));
-            var ticker = ((BumbleHiveBlock)legacy).getTicker(h.getLevel(), hive.getBlockState(), gregtech.registry.GTBlockEntities.BUMBLE_HIVE.get());
+            var ticker = ((BumbleHiveBlock)legacy).getTicker(h.getLevel(), hive.getBlockState(), gregtech.content.registry.GTBlockEntities.BUMBLE_HIVE.get());
             ticker.tick(h.getLevel(), pos, hive.getBlockState(), hive);
             var migrated = (BumbleHiveBlockEntity)h.getLevel().getBlockEntity(pos);
             h.assertTrue(migrated.getBlockState().getBlock() instanceof FixedBumbleHiveBlock fixed && fixed.color() == color, "server tick migrates old color " + color);

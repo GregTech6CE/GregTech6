@@ -4,7 +4,7 @@ import gregtech.content.material.Materials;
 
 import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.data.FluidCatalog;
+import gregtech.content.data.FluidCatalog;
 
 /** Static and material-derived fluid definitions, prepared before Forge registration. */
 public final class FluidDefinitions {

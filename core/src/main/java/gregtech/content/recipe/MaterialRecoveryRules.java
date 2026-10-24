@@ -2,7 +2,7 @@ package gregtech.content.recipe;
 
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 import java.math.BigInteger;
 
 /** Original VanillaRecoveryRecipes pulverizing arithmetic and dust pile selection. */
@@ -21,8 +21,8 @@ public final class MaterialRecoveryRules {
     public static long shredderWork(GTMaterial material) {
         return (material.getName().contains("Quartz") ? 64L
                 : material.hasAny(MaterialProperty.WOOD, MaterialProperty.STONE, MaterialProperty.GEM)
-                    || gregtech.data.generated.MaterialWorkability.isBrittle(material)
-                    || gregtech.data.generated.MaterialWorkability.isFood(material)
+                    || gregtech.content.data.generated.MaterialWorkability.isBrittle(material)
+                    || gregtech.content.data.generated.MaterialWorkability.isFood(material)
                 ? 2L : 256L) * Math.max(1, material.getToolQuality() + 1);
     }
 

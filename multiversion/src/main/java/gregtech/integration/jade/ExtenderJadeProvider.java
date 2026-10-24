@@ -1,6 +1,6 @@
 package gregtech.integration.jade;
 
-import gregtech.block.misc.*;
+import gregtech.content.block.misc.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;

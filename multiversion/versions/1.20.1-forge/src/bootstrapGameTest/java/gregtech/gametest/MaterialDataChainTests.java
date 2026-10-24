@@ -5,14 +5,14 @@ import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.recipe.Recipe;
 import gregtech.internal.recipe.RecipeInputs;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.book.GTMaterialDictionary;
 import gregtech.content.recipe.GTMaterialDataRecipes;
-import gregtech.data.GregTechTags;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.GTFluids;
-import gregtech.registry.GTItems;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTFluids;
+import gregtech.content.registry.GTItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -67,7 +67,7 @@ public final class MaterialDataChainTests {
     }
 
     private static ItemStack stick() {
-        var item = gregtech.registry.GTTechnological.get(GTMaterialDataRecipes.USB_STICK);
+        var item = gregtech.content.registry.GTTechnological.get(GTMaterialDataRecipes.USB_STICK);
         return item == null ? ItemStack.EMPTY : new ItemStack(item);
     }
 
@@ -99,7 +99,7 @@ public final class MaterialDataChainTests {
                 List.of(new ItemStack(Items.PAPER, 3), scanned), List.of(dye), false, 2, 1);
         h.assertTrue(printed != null, "a scanned stick plus three paper and dye prints something");
         ItemStack page = printed.getOutput(0);
-        h.assertTrue(page.getItem() instanceof gregtech.item.ColoredBookItem, "the printer prints a source dictionary cover: " + page);
+        h.assertTrue(page.getItem() instanceof gregtech.content.item.ColoredBookItem, "the printer prints a source dictionary cover: " + page);
         h.assertTrue(GTMaterialDictionary.materialOf(page) == material,
                 "the printed book is the scanned material's dictionary");
         h.assertTrue(page.getTag().getList("pages", 8).size() == GTMaterialDictionary.pages(material).size(),
@@ -304,7 +304,7 @@ public final class MaterialDataChainTests {
 
     /** One of GT6's drives: {@code usb1_hdd} … {@code usb4_hdd}. */
     private static ItemStack drive(int tier) {
-        var item = gregtech.registry.GTTechnological.get("usb" + tier + "_hdd");
+        var item = gregtech.content.registry.GTTechnological.get("usb" + tier + "_hdd");
         return item == null ? ItemStack.EMPTY : new ItemStack(item);
     }
 
@@ -430,8 +430,8 @@ public final class MaterialDataChainTests {
                         && GTMaterialDataRecipes.usbData(stickRecipe.mOutputs[0]) != null,
                 "the scanner writes the stick");
         ItemStack output = stickRecipe.mOutputs[0];
-        h.setBlock(new BlockPos(2, 1, 2), gregtech.registry.GTStorage.HDD_SWITCH.get());
-        var port = (gregtech.blockentity.inventory.UsbSwitchBlockEntity) h.getLevel().getBlockEntity(
+        h.setBlock(new BlockPos(2, 1, 2), gregtech.content.registry.GTStorage.HDD_SWITCH.get());
+        var port = (gregtech.content.blockentity.inventory.UsbSwitchBlockEntity) h.getLevel().getBlockEntity(
                 h.absolutePos(new BlockPos(2, 1, 2)));
         port.items().setStackInSlot(0, drive);
         port.setMode(0);
@@ -439,7 +439,7 @@ public final class MaterialDataChainTests {
                 "HDD switch receives the scanned stick file");
         h.assertTrue(GTMaterialDataRecipes.scannedMaterialIn(port.items().getStackInSlot(0), 0) == material,
                 "HDD slot zero now stores the scanned material");
-        ItemStack higherTier = new ItemStack(gregtech.registry.GTTechnological.get("usb4_stick"));
+        ItemStack higherTier = new ItemStack(gregtech.content.registry.GTTechnological.get("usb4_stick"));
         higherTier.getOrCreateTag().putString("test.marker", "preserve-me");
         Recipe higherTierRecipe = GTMaterialDataRecipes.scanner(
                 List.of(sample(material).copy(), higherTier), List.of());
@@ -458,14 +458,14 @@ public final class MaterialDataChainTests {
     public static void theDriveTooltipListsItsSixteenSlots(GameTestHelper h) {
         ItemStack fresh = drive(3);
         List<net.minecraft.network.chat.Component> lines = new java.util.ArrayList<>();
-        gregtech.item.behavior.ItemBehaviors.tooltip(fresh, lines);
+        gregtech.content.item.behavior.ItemBehaviors.tooltip(fresh, lines);
         h.assertTrue(lines.size() == 1 && text(lines.get(0)).contains("Perfectly Formatted"),
                 "an unwritten drive says it is perfectly formatted, got " + lines);
 
         ItemStack wiped = drive(3);
         wiped.getOrCreateTag().put(GTMaterialDataRecipes.NBT_USB_DRIVE, new net.minecraft.nbt.CompoundTag());
         lines.clear();
-        gregtech.item.behavior.ItemBehaviors.tooltip(wiped, lines);
+        gregtech.content.item.behavior.ItemBehaviors.tooltip(wiped, lines);
         h.assertTrue(lines.size() == 1 && text(lines.get(0)).contains("Uncleanly Formatted"),
                 "an emptied drive says it is uncleanly formatted, got " + lines);
 
@@ -473,7 +473,7 @@ public final class MaterialDataChainTests {
         ItemStack used = drive(3);
         GTMaterialDataRecipes.writeMaterialData(used, material);
         lines.clear();
-        gregtech.item.behavior.ItemBehaviors.tooltip(used, lines);
+        gregtech.content.item.behavior.ItemBehaviors.tooltip(used, lines);
         h.assertTrue(lines.size() == GTMaterialDataRecipes.DRIVE_SLOTS,
                 "a used drive lists all " + GTMaterialDataRecipes.DRIVE_SLOTS + " slots, got " + lines.size());
         long empty = lines.stream().filter(line -> text(line).contains("is Empty")).count();
@@ -485,7 +485,7 @@ public final class MaterialDataChainTests {
         // The stick's tooltip is the other one: the verbose form plus its tier line.
         ItemStack stick = GTMaterialDataRecipes.withMaterialData(stick(), material);
         lines.clear();
-        gregtech.item.behavior.ItemBehaviors.tooltip(stick, lines);
+        gregtech.content.item.behavior.ItemBehaviors.tooltip(stick, lines);
         h.assertTrue(lines.size() >= 2 && text(lines.get(lines.size() - 1)).contains("USB 3.0"),
                 "the stick prints its tier line last, got " + lines);
         h.succeed();

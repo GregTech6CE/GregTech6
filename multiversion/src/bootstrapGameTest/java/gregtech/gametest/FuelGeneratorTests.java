@@ -9,19 +9,19 @@ import gregtech.internal.machine.MachineRegistry;
 //?}
 import gregtech.internal.recipe.Recipe;
 import gregtech.internal.recipe.RecipeMap;
-import gregtech.block.machine.FuelGeneratorBlock;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
-import gregtech.blockentity.machine.FuelGeneratorBlockEntity;
-import gregtech.blockentity.machine.FuelTurbineBlockEntity;
+import gregtech.content.block.machine.FuelGeneratorBlock;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.blockentity.machine.FuelGeneratorBlockEntity;
+import gregtech.content.blockentity.machine.FuelTurbineBlockEntity;
 import gregtech.content.multiblock.LargeMachineLayouts;
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 import gregtech.jei.MultiblockInfoData;
 import gregtech.jei.RecipeMachines;
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.machine.BasicMachineRegistries;
 *///?} else {
 //?}
-import gregtech.registry.GTMultiblocks;
+import gregtech.content.registry.GTMultiblocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;

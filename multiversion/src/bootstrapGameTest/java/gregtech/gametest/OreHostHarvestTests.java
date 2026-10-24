@@ -2,10 +2,10 @@ package gregtech.gametest;
 
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.prefix.BlockMaterialPrefix;
-import gregtech.block.OreBlock;
-import gregtech.block.OreHostStone;
+import gregtech.content.block.OreBlock;
+import gregtech.content.block.OreHostStone;
 import gregtech.client.CommonBlockTooltips;
-import gregtech.registry.GTBlocks;
+import gregtech.content.registry.GTBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.network.chat.Component;
@@ -71,7 +71,7 @@ public final class OreHostHarvestTests {
                             "source Material.sand permits hand/wrong-category/below-tier drops: "+host+" small="+isSmall);
                 }
         var sand=state(h,true,false,OreHostStone.SAND);
-        var gtPick=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.PICKAXE,
+        var gtPick=gregtech.content.item.GTToolItem.create(gregtech.internal.tool.GTToolType.PICKAXE,
                 GTMaterialRegistry.get("Steel").resolve(),GTMaterialRegistry.get("Wood").resolve());
         h.assertTrue(!gtPick.isEmpty()&&gregtech.internal.tool.GTToolHelper.isUsable(gtPick),"real assembled GT pick fixture");
         player.setItemInHand(InteractionHand.MAIN_HAND,gtPick);
@@ -94,14 +94,14 @@ public final class OreHostHarvestTests {
         player.setItemInHand(InteractionHand.MAIN_HAND,custom);
         h.assertTrue(!correct(h,player,normal,pos),"custom TOOL with no correct-drop rules is not force-promoted by diamond identity");
 *///?}
-        var drillItem=gregtech.registry.GTElectricItems.get("electric_mining_drill");
+        var drillItem=gregtech.content.registry.GTElectricItems.get("electric_mining_drill");
         var steel=GTMaterialRegistry.get("Steel").resolve();
         h.assertTrue(steel.getToolQuality()==2&&drillItem.definition().quality()==0,"existing LV drill quality2 fixture");
         var drill=drillItem.assembled(steel,10000);
         h.assertTrue(!drill.isEmpty(),"actual public assembled drill");
         player.setItemInHand(InteractionHand.MAIN_HAND,drill);
         h.assertTrue(!correct(h,player,normal,pos),"uncharged drill cannot harvest");
-        h.assertTrue(drillItem.doEnergyInjection(gregtech.data.GregTechTags.Energy.EU,
+        h.assertTrue(drillItem.doEnergyInjection(gregtech.content.data.GregTechTags.Energy.EU,
                 drill,32,32,h.getLevel(),pos,true)==32,"actual public LV charging accepts32 packets");
         h.assertTrue(drillItem.isPoweredUsable(drill),"charged drill is usable");
         h.assertTrue(correct(h,player,normal,pos)&&correct(h,player,small,pos)&&correct(h,player,broken,pos),

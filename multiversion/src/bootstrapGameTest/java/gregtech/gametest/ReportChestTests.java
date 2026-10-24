@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.blockentity.inventory.MetalChestBlockEntity;
+import gregtech.content.blockentity.inventory.MetalChestBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;

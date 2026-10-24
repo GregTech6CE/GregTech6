@@ -1,7 +1,7 @@
 package gregtech.client;
 
-import gregtech.blockentity.tool.ProcessingToolBlockEntity;
-import gregtech.block.tool.ProcessingToolBlock;
+import gregtech.content.blockentity.tool.ProcessingToolBlockEntity;
+import gregtech.content.block.tool.ProcessingToolBlock;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.blockentity.*;

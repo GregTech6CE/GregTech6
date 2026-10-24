@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.block.inventory.BottleCrateBlock;
-import gregtech.blockentity.inventory.BottleCrateBlockEntity;
+import gregtech.content.block.inventory.BottleCrateBlock;
+import gregtech.content.blockentity.inventory.BottleCrateBlockEntity;
 import gregtech.content.tool.BottleCrateGeometry;
-import gregtech.registry.GTStorage;
+import gregtech.content.registry.GTStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -52,7 +52,7 @@ public final class BottleCrateRepairTests {
                 h.assertTrue(crate.items().getStackInSlot(slot).isEmpty(),"selected cell emptied");
             }
         }
-        for(var item:new net.minecraft.world.item.Item[]{Items.POTION,Items.SPLASH_POTION,Items.LINGERING_POTION,Items.EXPERIENCE_BOTTLE,gregtech.item.BottleItem.emptyBottle().getItem()})
+        for(var item:new net.minecraft.world.item.Item[]{Items.POTION,Items.SPLASH_POTION,Items.LINGERING_POTION,Items.EXPERIENCE_BOTTLE,gregtech.content.item.BottleItem.emptyBottle().getItem()})
             h.assertTrue(BottleCrateBlock.isBottle(new ItemStack(item)),"accept bottle family "+item);
         h.assertTrue(!BottleCrateBlock.isBottle(new ItemStack(Items.WATER_BUCKET)),"buckets are not bottles");
         h.succeed();
@@ -124,7 +124,7 @@ public final class BottleCrateRepairTests {
     public static void wrenchRotatesFrameWithoutMovingInventoryAndWoodBurns(GameTestHelper h) {
         var pos=h.absolutePos(new BlockPos(1,1,1)); var crate=place(h,pos); var player=h.makeMockSurvivalPlayer();
         crate.items().setStackInSlot(8,new ItemStack(Items.GLASS_BOTTLE,9));
-        var tool=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.WRENCH,
+        var tool=gregtech.content.item.GTToolItem.create(gregtech.internal.tool.GTToolType.WRENCH,
                 gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
         player.setItemInHand(InteractionHand.MAIN_HAND,tool);
         for(var face:Direction.Plane.HORIZONTAL) {

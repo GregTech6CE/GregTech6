@@ -1,16 +1,16 @@
 package gregtech.gametest;
 
-import gregtech.block.energy.ElectricWireBlock;
-import gregtech.block.machine.LogisticsTankBlock;
-import gregtech.block.machine.LogisticsWireBlock;
-import gregtech.blockentity.machine.LogisticsTankBlockEntity;
-import gregtech.blockentity.machine.LogisticsWireBlockEntity;
-import gregtech.blockentity.machine.TankBlockEntity;
+import gregtech.content.block.energy.ElectricWireBlock;
+import gregtech.content.block.machine.LogisticsTankBlock;
+import gregtech.content.block.machine.LogisticsWireBlock;
+import gregtech.content.blockentity.machine.LogisticsTankBlockEntity;
+import gregtech.content.blockentity.machine.LogisticsWireBlockEntity;
+import gregtech.content.blockentity.machine.TankBlockEntity;
 import gregtech.content.logistics.LogisticsCoverType;
-import gregtech.registry.GTBlockEntities;
-import gregtech.registry.GTFluids;
-import gregtech.registry.GTIconSetBlocks;
-import gregtech.registry.GTTanks;
+import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTFluids;
+import gregtech.content.registry.GTIconSetBlocks;
+import gregtech.content.registry.GTTanks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -131,9 +131,9 @@ public final class LogisticsTankTests {
         var wallCell = gregtech.content.logistics.LogisticsCoreStructure.cells().stream()
                 .filter(cell -> cell.kind() == gregtech.content.logistics.LogisticsCoreStructure.Kind.WALL)
                 .findFirst().orElseThrow();
-        var wall = (gregtech.blockentity.machine.MultiblockPortBlockEntity)
+        var wall = (gregtech.content.blockentity.machine.MultiblockPortBlockEntity)
                 helper.getLevel().getBlockEntity(wallCell.at(core.getBlockPos(), Direction.NORTH));
-        helper.assertTrue(wall.doEnergyInjection(gregtech.data.GregTechTags.Energy.EU,
+        helper.assertTrue(wall.doEnergyInjection(gregtech.content.data.GregTechTags.Energy.EU,
                 Direction.UP, 512, 1, true) == 1, "core is powered");
         var stored = core.routeNetworkOnce();
         helper.assertTrue(stored.fluidMoved() == 10_000 && storage.getFluidTank().getAmount() == 10_000

@@ -6,7 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.fluids.FluidStack;
 import gregtech.platform.neoforge.fluid.FluidDisplayItem;
-import gregtech.data.RegisteredFluids;
+import gregtech.content.data.RegisteredFluids;
 
 /^* Full source display payload, preserving external fluid identity and native components via provider serialization. ^/
 public final class FluidDisplayBinding {
@@ -73,9 +73,9 @@ public final class FluidDisplayBinding {
         return fluid.isEmpty() ? "empty" : BuiltInRegistries.FLUID.getKey(fluid.getFluid()) + "/" + fluid.getComponentsPatch();
     }
 *///?} else {
-import gregtech.item.FluidItem;
-import gregtech.registry.GTFluidItems;
-import gregtech.data.RegisteredFluids;
+import gregtech.content.item.FluidItem;
+import gregtech.content.registry.GTFluidItems;
+import gregtech.content.data.RegisteredFluids;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;

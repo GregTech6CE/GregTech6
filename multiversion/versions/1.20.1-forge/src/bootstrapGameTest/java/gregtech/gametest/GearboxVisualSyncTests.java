@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.block.energy.GearboxBlock;
-import gregtech.blockentity.energy.GearboxBlockEntity;
-import gregtech.data.GregTechTags;
+import gregtech.content.block.energy.GearboxBlock;
+import gregtech.content.blockentity.energy.GearboxBlockEntity;
+import gregtech.content.data.GregTechTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

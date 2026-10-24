@@ -1,12 +1,12 @@
 package gregtech.gametest;
 
 import gregtech.api.energy.GTVoltageTiers;
-import gregtech.block.energy.ElectricWireBlock;
-import gregtech.block.misc.ChargingCraftingTableBlockEntity;
-import gregtech.blockentity.energy.ElectricWireBlockEntity;
+import gregtech.content.block.energy.ElectricWireBlock;
+import gregtech.content.block.misc.ChargingCraftingTableBlockEntity;
+import gregtech.content.blockentity.energy.ElectricWireBlockEntity;
 import gregtech.content.material.Materials;
-import gregtech.data.GregTechTags;
-import gregtech.registry.*;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.registry.*;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.entity.EntityType;
@@ -29,7 +29,7 @@ public final class ElectricWireRepairTests {
     private static ChargingCraftingTableBlockEntity receiver(GameTestHelper h,BlockPos pos,int slots) {
         h.setBlock(pos,GTMiscBlocks.CHARGING_CRAFTING_TABLE.get());
         var table=(ChargingCraftingTableBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(pos));
-        for(int i=16;i<16+slots;i++)table.items().setStackInSlot(i,new ItemStack(gregtech.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,1)));
+        for(int i=16;i<16+slots;i++)table.items().setStackInSlot(i,new ItemStack(gregtech.content.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,1)));
         return table;
     }
     private static long send(ElectricWireBlockEntity wire,long volts,long packets) {
@@ -63,8 +63,8 @@ public final class ElectricWireRepairTests {
     public static void voltageBoundaryCooldownAndExtremeCountersMatchOriginal(GameTestHelper h) {
         var pos=new BlockPos(1,1,1);var wire=place(h,pos,true,12);
         var table=receiver(h,pos.east(),1);
-        table.items().setStackInSlot(16,new ItemStack(gregtech.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,2)));
-        table.items().setStackInSlot(17,new ItemStack(gregtech.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,3)));
+        table.items().setStackInSlot(16,new ItemStack(gregtech.content.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,2)));
+        table.items().setStackInSlot(17,new ItemStack(gregtech.content.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,3)));
         h.assertTrue(send(wire,wire.voltage()+wire.lossPerBlock(),1)==1&&wire.burnCounter()==0,"rating compares voltage after local loss");
         h.assertTrue(send(wire,wire.voltage()+wire.lossPerBlock()+1,7)==7&&wire.burnCounter()==1,"one volt over rating heats wire and consumes offer");
         wire.serverTick();h.assertTrue(wire.burnCounter()==1,"first tick does not cool");wire.serverTick();

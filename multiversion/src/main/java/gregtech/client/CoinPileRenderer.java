@@ -4,9 +4,9 @@ package gregtech.client;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.blockentity.misc.CoinPileBlockEntity;
+import gregtech.content.blockentity.misc.CoinPileBlockEntity;
 import gregtech.content.tool.CoinGeometry;
-import gregtech.item.MaterialItem;
+import gregtech.content.item.MaterialItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;

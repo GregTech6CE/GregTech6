@@ -1,18 +1,18 @@
 package gregtech.gametest;
 
-import gregtech.block.CrystalOreBlock;
-import gregtech.block.RockOreBlock;
-import gregtech.block.BlackSandBlock;
+import gregtech.content.block.CrystalOreBlock;
+import gregtech.content.block.RockOreBlock;
+import gregtech.content.block.BlackSandBlock;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.internal.material.ItemMaterialRegistry;
 import gregtech.internal.material.MaterialEquivalence;
 import gregtech.internal.machine.crucible.CrucibleItemInput;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.data.MaterialPrefix;
-import gregtech.data.MaterialPrefixes;
-import gregtech.registry.GTItems;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefixes;
+import gregtech.content.registry.GTItems;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;

@@ -1,6 +1,6 @@
 package gregtech.internal.tool;
 
-import gregtech.block.machine.MachineRotationType;
+import gregtech.content.block.machine.MachineRotationType;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -13,15 +13,15 @@ public record ToolInteractionSpec(DirectionProperty facing, MachineRotationType 
         FLUID, ITEM, ELECTRIC, AXLE, LASER, REDSTONE, LOGISTICS;
         public BooleanProperty property(Direction side) {
             return switch (this) {
-                case FLUID -> gregtech.block.machine.FluidPipeBlock.propFor(side);
-                case ITEM -> gregtech.block.machine.ItemPipeBlock.propFor(side);
+                case FLUID -> gregtech.content.block.machine.FluidPipeBlock.propFor(side);
+                case ITEM -> gregtech.content.block.machine.ItemPipeBlock.propFor(side);
 //? if >=1.21.1 {
-                /*case ELECTRIC, LASER, REDSTONE -> gregtech.block.energy.ElectricWireBlock.propFor(side);
+                /*case ELECTRIC, LASER, REDSTONE -> gregtech.content.block.energy.ElectricWireBlock.propFor(side);
                 case LOGISTICS -> gregtech.internal.transport.PipeConnections.propFor(side);
 *///?} else {
-                case ELECTRIC, LASER, REDSTONE, LOGISTICS -> gregtech.block.energy.ElectricWireBlock.propFor(side);
+                case ELECTRIC, LASER, REDSTONE, LOGISTICS -> gregtech.content.block.energy.ElectricWireBlock.propFor(side);
 //?}
-                case AXLE -> gregtech.block.energy.AxleBlock.propFor(side);
+                case AXLE -> gregtech.content.block.energy.AxleBlock.propFor(side);
             };
         }
     }
@@ -36,7 +36,7 @@ public record ToolInteractionSpec(DirectionProperty facing, MachineRotationType 
     }
     public boolean allows(BlockState state, Direction side) {
         return allows(side) && (connection != ConnectionKind.AXLE
-                || gregtech.block.energy.AxleBlock.isValidConnectionState(state.cycle(connection.property(side))));
+                || gregtech.content.block.energy.AxleBlock.isValidConnectionState(state.cycle(connection.property(side))));
     }
     public int activeFaces(BlockState state) {
         if (connection == null) return 1 << state.getValue(facing).ordinal();

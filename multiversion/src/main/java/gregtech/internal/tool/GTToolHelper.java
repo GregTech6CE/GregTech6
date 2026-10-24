@@ -4,15 +4,15 @@ import gregtech.content.material.Materials;
 
 //? if >=1.21.1 {
 /**///?} else {
-import gregtech.block.machine.SolidBurningBoxBlock;
+import gregtech.content.block.machine.SolidBurningBoxBlock;
 //?}
 
 import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.material.MaterialProperty;
-import gregtech.data.MaterialPrefix;
-import gregtech.data.generated.GT6Materials;
-import gregtech.item.GTToolItem;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.data.generated.GT6Materials;
+import gregtech.content.item.GTToolItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -70,7 +70,7 @@ public final class GTToolHelper {
 //? if >=1.21.1 {
 /*        return isTool(stack) || stack.getItem() instanceof gregtech.internal.tool.PoweredToolItem electric
 *///?} else {
-        return isTool(stack) || stack.getItem() instanceof gregtech.item.ElectricToolItem electric
+        return isTool(stack) || stack.getItem() instanceof gregtech.content.item.ElectricToolItem electric
 //?}
 
                 && electric.interactionType(stack) != null;
@@ -85,12 +85,12 @@ public final class GTToolHelper {
 //? if >=1.21.1 {
 /*        if (stack.getItem() instanceof gregtech.internal.tool.PoweredToolItem electric
 *///?} else {
-        if (stack.getItem() instanceof gregtech.item.ElectricToolItem electric
+        if (stack.getItem() instanceof gregtech.content.item.ElectricToolItem electric
 //?}
 
                 && electric.interactionType(stack) != null) return electric.interactionType(stack);
         if (stack.getItem() instanceof GTToolItem toolItem) {
-            return toolItem instanceof gregtech.item.PocketToolItem pocket?pocket.activeType():toolItem.toolType();
+            return toolItem instanceof gregtech.content.item.PocketToolItem pocket?pocket.activeType():toolItem.toolType();
         }
         return GTToolType.PICKAXE;
     }
@@ -104,7 +104,7 @@ public final class GTToolHelper {
 //? if >=1.21.1 {
 /*        if (stack.getItem() instanceof gregtech.internal.tool.PoweredToolItem electric) {
 *///?} else {
-        if (stack.getItem() instanceof gregtech.item.ElectricToolItem electric) {
+        if (stack.getItem() instanceof gregtech.content.item.ElectricToolItem electric) {
 //?}
 
             return electric.interactionType(stack) == type && electric.canInteract(stack);
@@ -185,7 +185,7 @@ public final class GTToolHelper {
 /*        if (stack.getItem() instanceof gregtech.internal.tool.PoweredToolItem electric) {
 *///?} else {
     public static void damageForUse(ItemStack stack, int amount, @Nullable LivingEntity user, EquipmentSlot slot) {
-        if (stack.getItem() instanceof gregtech.item.ElectricToolItem electric) {
+        if (stack.getItem() instanceof gregtech.content.item.ElectricToolItem electric) {
 //?}
 
             electric.consumeInteractionEnergy(stack, Math.max(0L, amount) * 100L, user);
@@ -265,7 +265,7 @@ public final class GTToolHelper {
     }
 
     public static float getCombatDamage(ItemStack stack) {
-        GTToolType type = stack.getItem() instanceof gregtech.item.PocketToolItem pocket?pocket.toolType():getType(stack);
+        GTToolType type = stack.getItem() instanceof gregtech.content.item.PocketToolItem pocket?pocket.toolType():getType(stack);
         GTMaterial stat = getStatMaterial(stack);
         return type.baseDamage() + stat.getToolQuality();
     }
@@ -280,7 +280,7 @@ public final class GTToolHelper {
     }
 
     public static boolean canEffectiveHarvest(ItemStack stack, BlockState state) {
-        var oreDecision=gregtech.data.OreHostHarvest.effectiveDecision(stack,state);
+        var oreDecision=gregtech.content.data.OreHostHarvest.effectiveDecision(stack,state);
         if(oreDecision.isPresent())return oreDecision.get();
         if (!isUsable(stack)) {
             return false;
@@ -297,7 +297,7 @@ public final class GTToolHelper {
     }
 
     public static boolean isCorrectToolForDrops(ItemStack stack, BlockState state) {
-        var oreDecision=gregtech.data.OreHostHarvest.decision(stack,state);
+        var oreDecision=gregtech.content.data.OreHostHarvest.decision(stack,state);
         if(oreDecision.isPresent())return oreDecision.get();
         if (isSpecialHarvestTool(stack, state)) return true;
         if (!isUsable(stack)) {
@@ -342,7 +342,7 @@ public final class GTToolHelper {
 //? if >=1.21.1 {
 /*        if (stack.getItem() instanceof gregtech.internal.tool.PoweredToolItem electric)
 *///?} else {
-        if (stack.getItem() instanceof gregtech.item.ElectricToolItem electric)
+        if (stack.getItem() instanceof gregtech.content.item.ElectricToolItem electric)
 //?}
 
             return state.getBlock() instanceof gregtech.internal.machine.GTMachineBlock
@@ -372,7 +372,7 @@ public final class GTToolHelper {
 /*        if (stack.getItem() instanceof gregtech.internal.tool.PoweredToolItem electric)
             return electric.harvestSpeed(stack);
 *///?} else {
-        if (stack.getItem() instanceof gregtech.item.ElectricToolItem electric)
+        if (stack.getItem() instanceof gregtech.content.item.ElectricToolItem electric)
             return gregtech.content.tool.ElectricWrenchHarvest.speed(electric,stack);
 //?}
 
@@ -392,7 +392,7 @@ public final class GTToolHelper {
 //? if >=1.21.1 {
 /*        if (stack.getItem() instanceof gregtech.internal.tool.PoweredToolItem electric) {
 *///?} else {
-        if (stack.getItem() instanceof gregtech.item.ElectricToolItem electric) {
+        if (stack.getItem() instanceof gregtech.content.item.ElectricToolItem electric) {
 //?}
 
             if (gt6Return > 0) electric.consumeInteractionEnergy(stack,
@@ -412,12 +412,12 @@ public final class GTToolHelper {
 /*        if (stack.getItem() instanceof gregtech.internal.tool.PoweredToolItem electric)
             return electric.canHarvest(stack,state);
 *///?} else {
-        if (stack.getItem() instanceof gregtech.item.ElectricToolItem electric)
+        if (stack.getItem() instanceof gregtech.content.item.ElectricToolItem electric)
             return gregtech.content.tool.ElectricWrenchHarvest.canHarvest(electric,stack,state);
 //?}
 
         if (!isUsable(stack)) return false;
-        var tool=gregtech.data.BlockHarvestPolicy.tool(state.getBlock());
+        var tool=gregtech.content.data.BlockHarvestPolicy.tool(state.getBlock());
 
 //? if >=1.21.1 {
 /*        var id=net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(state.getBlock());
@@ -438,11 +438,11 @@ public final class GTToolHelper {
     }
 
     public static int requiredHarvestLevel(BlockState state) {
-        var ore=gregtech.data.OreHostPhysics.params(state);
+        var ore=gregtech.content.data.OreHostPhysics.params(state);
         if(ore.isPresent())return ore.get().harvest();
-        if (state.getBlock() instanceof gregtech.block.misc.SpikeBlock)
-            return gregtech.data.SpikeHarvestPolicy.level(state);
-        int materialLevel=gregtech.data.BlockHarvestPolicy.level(state.getBlock());
+        if (state.getBlock() instanceof gregtech.content.block.misc.SpikeBlock)
+            return gregtech.content.data.SpikeHarvestPolicy.level(state);
+        int materialLevel=gregtech.content.data.BlockHarvestPolicy.level(state.getBlock());
         if(materialLevel>3) return materialLevel;
         if (state.is(BlockTags.NEEDS_DIAMOND_TOOL)) {
             return 3;
@@ -469,7 +469,7 @@ public final class GTToolHelper {
             return;
         }
         GTToolType type = getType(stack);
-        int perBreak = (stack.getItem() instanceof gregtech.item.PocketToolItem pocket?pocket.toolType():type).damagePerBlockBreak();
+        int perBreak = (stack.getItem() instanceof gregtech.content.item.PocketToolItem pocket?pocket.toolType():type).damagePerBlockBreak();
         if (state.getBlock() instanceof gregtech.internal.machine.GTMachineBlock && isMachineWrench(stack)) {
             perBreak = GTToolType.WRENCH.damagePerBlockBreak();
         }
@@ -481,7 +481,7 @@ public final class GTToolHelper {
         if (!isTool(stack) || user != null && isCreative(user)) {
             return;
         }
-        hurt(stack, (stack.getItem() instanceof gregtech.item.PocketToolItem pocket?pocket.toolType():getType(stack)).damagePerEntityAttack(), user);
+        hurt(stack, (stack.getItem() instanceof gregtech.content.item.PocketToolItem pocket?pocket.toolType():getType(stack)).damagePerEntityAttack(), user);
     }
 
     private static void hurt(ItemStack stack, int amount, @Nullable LivingEntity user) {
@@ -569,7 +569,7 @@ public final class GTToolHelper {
         if (prefix == null) return null;
         for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
             if (!material.isValid() || !type.canUseHead(material) || !prefix.isValidFor(material)) continue;
-            if (!gregtech.registry.GTItems.getStack(prefix, material, 1).isEmpty()) return material;
+            if (!gregtech.content.registry.GTItems.getStack(prefix, material, 1).isEmpty()) return material;
         }
         return null;
     }
@@ -592,7 +592,7 @@ public final class GTToolHelper {
                 ? firstToolMaterial(type.headPrefix(), type) : Materials.Steel;
         if (material == null) material = Materials.Steel;
         GTMaterial handle = isValidStick(material) ? material : firstHandleMaterial();
-        return gregtech.item.GTToolItem.create(type, material, handle == null ? material : handle);
+        return gregtech.content.item.GTToolItem.create(type, material, handle == null ? material : handle);
     }
 
     private static boolean hasStats(ItemStack stack) {

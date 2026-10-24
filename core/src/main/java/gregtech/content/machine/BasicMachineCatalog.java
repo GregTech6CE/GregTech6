@@ -5,7 +5,7 @@ import gregtech.internal.energy.MachineFaceMasks;
 import gregtech.internal.machine.BasicMachineParameters;
 import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.MaterialChemistry.WeightedMaterial;
-import gregtech.data.ImportedMaterialData;
+import gregtech.content.data.ImportedMaterialData;
 
 import static gregtech.internal.energy.MachineFaceMasks.*;
 
@@ -249,7 +249,7 @@ public final class BasicMachineCatalog {
                 // Original GT6 per-machine/per-tier registration values; the synthetic
                 // tables below remain only as the fallback for machines GT6 has no
                 // "Basic Machines" row for (the large* batch machines).
-                var original = gregtech.data.BasicMachineOriginalParams.find(def.name(), tierNumber);
+                var original = gregtech.content.data.BasicMachineOriginalParams.find(def.name(), tierNumber);
                 float[] stats = original != null
                         ? new float[]{original.hardness(), original.resistance()}
                         : STAT_OVERRIDES.getOrDefault(def.name(), TIER_STATS[Math.min(t, TIER_STATS.length - 1)]);
@@ -259,7 +259,7 @@ public final class BasicMachineCatalog {
                 int parallel = original != null ? original.parallel()
                         : BasicMachineParameters.legacyParallelLimit(def.name());
                 List<WeightedMaterial> materials = OriginalMachineMaterialData.weights(def.name(), tierNumber);
-                var energyType = gregtech.data.GregTechTags.Energy.ALL.stream()
+                var energyType = gregtech.content.data.GregTechTags.Energy.ALL.stream()
                         .filter(type -> type.getShortName().equals(energyName)).findFirst().orElseThrow();
                 BasicMachineParameters spec = BasicMachineParameters.builder(id, mat)
                         .machineType(def.name())
@@ -282,10 +282,10 @@ public final class BasicMachineCatalog {
         for (var extra : EXTRA_TIERS.entrySet()) {
             String name = extra.getKey();
             for (int tier : extra.getValue()) {
-                var original = gregtech.data.BasicMachineOriginalParams.find(name, tier);
+                var original = gregtech.content.data.BasicMachineOriginalParams.find(name, tier);
                 String energyName = original != null ? original.energyType() : "QU";
                 long energyIn = original != null ? original.energyInput() : 32L << (2 * (tier - 1));
-                var energyType = gregtech.data.GregTechTags.Energy.ALL.stream()
+                var energyType = gregtech.content.data.GregTechTags.Energy.ALL.stream()
                         .filter(type -> type.getShortName().equals(energyName)).findFirst().orElseThrow();
                 result.add(BasicMachineParameters.builder(name + "_osmiridium_t" + tier,
                         gregtech.internal.material.GTMaterialRegistry.get("Osmiridium"))

@@ -4,11 +4,11 @@ import gregtech.internal.recipe.Recipe;
 import gregtech.content.bumble.BumbleBeeType;
 import gregtech.content.bumble.GTBumbleSpecies;
 import gregtech.content.material.Materials;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.data.MaterialPrefix;
-import gregtech.data.RegisteredFluids;
-import gregtech.registry.GTFluids;
-import gregtech.registry.GTItems;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.data.RegisteredFluids;
+import gregtech.content.registry.GTFluids;
+import gregtech.content.registry.GTItems;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 

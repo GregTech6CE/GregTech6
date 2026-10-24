@@ -48,7 +48,7 @@ public final class MultiblockTools {
         if(tank.isEmpty())return Component.literal(emptyMessage);
         var fluid=tank.getFluidLong();
         return Component.literal(MultiblockToolRules.amount(tank.getAmount())+" L of ").append(fluid.getDisplayName())
-                .append(gregtech.registry.GTFluids.isGas(fluid)?" (Gaseous)":" (Liquid)");
+                .append(gregtech.content.registry.GTFluids.isGas(fluid)?" (Gaseous)":" (Liquid)");
     }
 
     /** Exact structure cell placement; never the ordinary wand's copy-on-top operation. */

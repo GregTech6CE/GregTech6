@@ -4,9 +4,9 @@ import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
 import gregtech.internal.material.MaterialProperty;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.GTItems;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTItems;
 import gregtech.util.OM;
 import net.minecraft.world.item.ItemStack;
 

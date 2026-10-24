@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.block.misc.SandwichBlock;
-import gregtech.blockentity.misc.SandwichBlockEntity;
+import gregtech.content.block.misc.SandwichBlock;
+import gregtech.content.blockentity.misc.SandwichBlockEntity;
 import gregtech.content.food.SandwichIngredients;
-import gregtech.registry.GTDecorBlocks;
+import gregtech.content.registry.GTDecorBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

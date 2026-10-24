@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.block.BookShelfBlock;
-import gregtech.blockentity.inventory.BookShelfBlockEntity;
+import gregtech.content.block.BookShelfBlock;
+import gregtech.content.blockentity.inventory.BookShelfBlockEntity;
 import gregtech.content.book.BookShelfGeometry;
-import gregtech.registry.GTDecorBlocks;
+import gregtech.content.registry.GTDecorBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

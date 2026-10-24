@@ -1,8 +1,8 @@
 package gregtech.platform.neoforge.machine;
 
 import gregtech.internal.addon.AddonMachines;
-import gregtech.block.machine.BehaviorMachineBlock;
-import gregtech.blockentity.machine.BehaviorMachineBlockEntity;
+import gregtech.content.block.machine.BehaviorMachineBlock;
+import gregtech.content.blockentity.machine.BehaviorMachineBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;

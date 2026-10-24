@@ -1,7 +1,7 @@
 package gregtech.internal.energy;
 
 import gregtech.internal.material.GTMaterial;
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 
 /**
  * One GT6 energy-net node device (motor, dynamo, transformer, steam turbine,

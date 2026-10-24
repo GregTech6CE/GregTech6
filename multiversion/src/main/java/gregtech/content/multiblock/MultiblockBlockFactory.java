@@ -1,6 +1,6 @@
 package gregtech.content.multiblock;
 
-import gregtech.block.machine.*;
+import gregtech.content.block.machine.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;

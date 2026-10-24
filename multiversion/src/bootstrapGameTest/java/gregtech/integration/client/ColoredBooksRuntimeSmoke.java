@@ -2,8 +2,8 @@ package gregtech.integration.client;
 
 import com.google.gson.JsonObject;
 import gregtech.content.book.*;
-import gregtech.registry.*;
-import gregtech.item.ColoredBookItem;
+import gregtech.content.registry.*;
+import gregtech.content.item.ColoredBookItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Screenshot;
 import net.minecraft.core.*;
@@ -67,7 +67,7 @@ final class ColoredBooksRuntimeSmoke {
             require(book.getBurnTime(stack,RecipeType.SMELTING)==(variant.large()||variant.emblem().equals("radiation")?400:200),"Source burn time "+variant.path());
             require(BookShelfRules.enchantPower("gt6ce:"+variant.path())==1,"Shelf rejects book "+variant.path());
             require(stack.is(net.minecraft.tags.ItemTags.LECTERN_BOOKS)&&stack.is(net.minecraft.tags.ItemTags.BOOKSHELF_BOOKS),"Native book tags missing "+variant.path());
-            var conversion=gregtech.data.MachineRecipeMaps.Generifier.findRecipe(List.of(stack),List.of(),false,1,9);
+            var conversion=gregtech.content.data.MachineRecipeMaps.Generifier.findRecipe(List.of(stack),List.of(),false,1,9);
             require(conversion!=null&&conversion.mOutputs[0].is(Items.WRITTEN_BOOK)&&conversion.mDuration==1&&conversion.mEUt==0,"Missing source generifier "+variant.path());
             if(!variant.hidden())for(String group:List.of("empty","recolor","printed")){
                 var recipe=recipe(server,group+"/"+variant.path());var stacks=new ArrayList<ItemStack>();

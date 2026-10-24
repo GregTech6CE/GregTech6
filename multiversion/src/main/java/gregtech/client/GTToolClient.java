@@ -6,8 +6,8 @@ import gregtech.GregTech;
 //?}
 import gregtech.internal.tool.GTToolHelper;
 import gregtech.internal.tool.GTToolType;
-import gregtech.item.GTToolItem;
-import gregtech.registry.GTToolItems;
+import gregtech.content.item.GTToolItem;
+import gregtech.content.registry.GTToolItems;
 //? if >=1.21.1 {
 /*import net.neoforged.api.distmarker.Dist;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;

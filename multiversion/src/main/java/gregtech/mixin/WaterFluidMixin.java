@@ -1,6 +1,6 @@
 package gregtech.mixin;
 
-import gregtech.registry.GTWorldWaterFluid;
+import gregtech.content.registry.GTWorldWaterFluid;
 import gregtech.internal.fluid.WaterMixinStatus;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.WaterFluid;

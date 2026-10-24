@@ -1,8 +1,8 @@
 package gregtech.client;
 
-import gregtech.block.MaterialBlockItem;
-import gregtech.block.MaterialBlockLike;
-import gregtech.registry.GTBlocks;
+import gregtech.content.block.MaterialBlockItem;
+import gregtech.content.block.MaterialBlockLike;
+import gregtech.content.registry.GTBlocks;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;

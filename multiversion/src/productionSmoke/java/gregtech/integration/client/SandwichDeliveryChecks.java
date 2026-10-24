@@ -1,6 +1,6 @@
 package gregtech.integration.client;
 import com.google.gson.*;
-import gregtech.blockentity.misc.SandwichBlockEntity;
+import gregtech.content.blockentity.misc.SandwichBlockEntity;
 import gregtech.content.food.*;
 import gregtech.client.SandwichItemRenderer;
 import net.minecraft.client.Minecraft;

@@ -4,7 +4,7 @@ import gregtech.internal.tool.GTToolEnchantments;
 import gregtech.internal.tool.GTToolType;
 import gregtech.content.material.Materials;
 import gregtech.content.material.generated.WoodMaterials;
-import gregtech.item.GTToolItem;
+import gregtech.content.item.GTToolItem;
 import com.mojang.serialization.Lifecycle;
 import io.netty.buffer.Unpooled;
 import net.minecraft.core.HolderLookup;

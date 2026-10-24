@@ -20,7 +20,7 @@
 package gregtech.content.plant;
 
 import gregtech.internal.material.MaterialItemDefinitions;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 import java.util.List;
 
 /** Original MultiTileEntityBush plantGtBerry branch, with independent modern block identities.

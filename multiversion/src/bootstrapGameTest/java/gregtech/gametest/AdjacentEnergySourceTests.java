@@ -1,14 +1,14 @@
 package gregtech.gametest;
 
 import gregtech.internal.energy.EnergyNodeSpec;
-import gregtech.block.energy.EnergyNodeBlock;
-import gregtech.block.machine.BasicMachineBlock;
-import gregtech.blockentity.energy.EnergyNodeBlockEntity;
-import gregtech.blockentity.machine.*;
+import gregtech.content.block.energy.EnergyNodeBlock;
+import gregtech.content.block.machine.BasicMachineBlock;
+import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
+import gregtech.content.blockentity.machine.*;
 import gregtech.content.energy.OriginalAdjacentEnergyRules;
 import gregtech.content.material.Materials;
 import gregtech.content.multiblock.*;
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.*;

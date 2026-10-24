@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.block.misc.TrackBlock;
+import gregtech.content.block.misc.TrackBlock;
 import gregtech.content.recipe.TrackRecipeInjector;
-import gregtech.registry.GTTrackBlocks;
-import gregtech.registry.GTIconSetBlocks;
+import gregtech.content.registry.GTTrackBlocks;
+import gregtech.content.registry.GTIconSetBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.gametest.framework.GameTest;
@@ -324,8 +324,8 @@ public final class TrackTests {
         h.assertTrue(rail.getResultItem(access).getCount() == 4,
                 "it yields four vanilla rails, got " + rail.getResultItem(access));
         h.assertTrue(rail.getIngredients().stream().anyMatch(ingredient -> ingredient.getItems().length > 0
-                        && ingredient.getItems()[0].is(gregtech.registry.GTItems
-                        .getStack(gregtech.data.MaterialPrefix.railGt,
+                        && ingredient.getItems()[0].is(gregtech.content.registry.GTItems
+                        .getStack(gregtech.content.data.MaterialPrefix.railGt,
                                 gregtech.internal.material.GTMaterialRegistry.get("Iron"), 1)
                         .getItem())),
                 "it is built from GT6's iron rail items, not vanilla iron ingots");

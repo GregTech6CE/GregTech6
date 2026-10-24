@@ -5,11 +5,11 @@ import gregtech.internal.machine.MachineRegistry;
 import gregtech.internal.machine.RotationEngineSpec;
 import gregtech.internal.prefix.BlockMaterialPrefix;
 import gregtech.content.material.Materials;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.GTAxles;
-import gregtech.registry.GTBlocks;
-import gregtech.registry.GTItems;
-import gregtech.registry.GTPumps;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTAxles;
+import gregtech.content.registry.GTBlocks;
+import gregtech.content.registry.GTItems;
+import gregtech.content.registry.GTPumps;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -76,15 +76,15 @@ public final class RotationEngineRegistrationTests {
             var ingredient = recipe.getIngredients().get(i);
             if (ingredient.isEmpty()) continue;
             var example = ingredient.getItems()[0].copy();
-            if (example.getItem() instanceof gregtech.item.GTToolItem)
-                example = gregtech.item.GTToolItem.create(
+            if (example.getItem() instanceof gregtech.content.item.GTToolItem)
+                example = gregtech.content.item.GTToolItem.create(
                         gregtech.internal.tool.GTToolHelper.getType(example),
                         gregtech.internal.material.GTMaterialRegistry.get("Steel"),
                         gregtech.internal.material.GTMaterialRegistry.get("Wood"));
             grid.setItem(i, example);
         }
         var bottle = ForgeRegistries.ITEMS.getValue(GregTech.id("lubricant_bottle"));
-        helper.assertTrue(bottle instanceof gregtech.item.BottleItem,
+        helper.assertTrue(bottle instanceof gregtech.content.item.BottleItem,
                 "engine lubricant is an actual consumable GT6 bottle");
         grid.setItem(5, new ItemStack(bottle));
         var smallGear = GTItems.getStack(MaterialPrefix.gearGtSmall, Materials.Bronze, 1);
@@ -100,14 +100,14 @@ public final class RotationEngineRegistrationTests {
                         && grid.getItem(6).is(gear.getItem()) && grid.getItem(8).is(gear.getItem()),
                 "bronze engine uses the original small-gear/axle/casing/large-gear layout");
         var wrench = grid.getItem(3);
-        helper.assertTrue(wrench.getItem() instanceof gregtech.item.GTToolItem,
+        helper.assertTrue(wrench.getItem() instanceof gregtech.content.item.GTToolItem,
                 "engine recipe requires the reusable GT wrench");
         helper.assertTrue(recipe instanceof net.minecraft.world.item.crafting.CraftingRecipe crafted
                         && crafted.matches(grid, helper.getLevel()),
                 "bronze engine assembles in a real 3x3 crafting grid");
         var crafted = (net.minecraft.world.item.crafting.CraftingRecipe) recipe;
         var remainders = crafted.getRemainingItems(grid);
-        helper.assertTrue(remainders.get(5).is(gregtech.item.BottleItem.emptyBottle().getItem())
+        helper.assertTrue(remainders.get(5).is(gregtech.content.item.BottleItem.emptyBottle().getItem())
                         && grid.getItem(5).is(bottle),
                 "craft consumes 250 mB lubricant and returns the empty bottle without mutating input");
         helper.assertTrue(!remainders.get(3).isEmpty()

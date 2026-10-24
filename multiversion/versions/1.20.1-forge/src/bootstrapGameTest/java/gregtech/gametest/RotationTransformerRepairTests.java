@@ -1,15 +1,15 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.block.energy.EnergyNodeBlock;
-import gregtech.blockentity.energy.EnergyNodeBlockEntity;
+import gregtech.content.block.energy.EnergyNodeBlock;
+import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.tool.GTToolType;
 import gregtech.content.material.Materials;
-import gregtech.data.GregTechTags;
-import gregtech.item.GTToolItem;
-import gregtech.registry.GTEnergyNodes;
-import gregtech.registry.GTGearboxes;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.item.GTToolItem;
+import gregtech.content.registry.GTEnergyNodes;
+import gregtech.content.registry.GTGearboxes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

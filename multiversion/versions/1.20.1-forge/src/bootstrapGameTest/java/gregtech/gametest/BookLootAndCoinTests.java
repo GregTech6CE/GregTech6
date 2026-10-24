@@ -1,12 +1,12 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.block.BookShelfBlock;
-import gregtech.block.misc.CoinPileBlock;
-import gregtech.blockentity.inventory.BookShelfBlockEntity;
-import gregtech.blockentity.misc.CoinPileBlockEntity;
+import gregtech.content.block.BookShelfBlock;
+import gregtech.content.block.misc.CoinPileBlock;
+import gregtech.content.blockentity.inventory.BookShelfBlockEntity;
+import gregtech.content.blockentity.misc.CoinPileBlockEntity;
 import gregtech.content.tool.CoinGeometry;
-import gregtech.registry.GTDecorBlocks;
+import gregtech.content.registry.GTDecorBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

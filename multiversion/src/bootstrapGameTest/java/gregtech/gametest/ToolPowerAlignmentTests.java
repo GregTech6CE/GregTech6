@@ -2,12 +2,12 @@ package gregtech.gametest;
 
 import gregtech.internal.tool.*;
 import gregtech.content.material.Materials;
-import gregtech.data.*;
-import gregtech.item.GTToolItem;
-import gregtech.recipe.*;
-import gregtech.registry.*;
-import gregtech.blockentity.energy.EnergyNodeBlockEntity;
-import gregtech.blockentity.machine.*;
+import gregtech.content.data.*;
+import gregtech.content.item.GTToolItem;
+import gregtech.content.recipe.*;
+import gregtech.content.registry.*;
+import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
+import gregtech.content.blockentity.machine.*;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -164,7 +164,7 @@ public final class ToolPowerAlignmentTests {
         var dynamo=(EnergyNodeBlockEntity)level.getBlockEntity(base.above(2));
         var machine=(BasicMachineBlockEntity)level.getBlockEntity(base.above(3));
         var fixture=machine.recipeMap().mRecipeList.stream().filter(r->r.mEnabled&&!r.mFakeRecipe&&r.mEUt>0&&r.mEUt<=22
-            &&gregtech.api.recipe.MachineWorkCost.calculate(r.mEUt,r.mDuration,1,false,10000,16,64,false).minimumPower()<=22
+            &&gregtech.internal.recipe.MachineWorkCost.calculate(r.mEUt,r.mDuration,1,false,10000,16,64,false).minimumPower()<=22
             &&r.mInputs.length<=machine.recipeMap().mInputItemsCount&&r.mFluidInputs.length<=machine.getTanksInput().length
             &&r.mOutputs.length<=machine.recipeMap().mOutputItemsCount&&r.mFluidOutputs.length<=machine.getTanksOutput().length
             &&r.mInputs.length>0&&r.mOutputs.length>0&&Arrays.stream(r.mInputs).allMatch(s->!s.isEmpty()&&s.getCount()<=64)

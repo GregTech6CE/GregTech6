@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.block.misc.DiggableBlock;
+import gregtech.content.block.misc.DiggableBlock;
 import gregtech.content.material.Materials;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.GTItems;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

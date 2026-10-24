@@ -2,7 +2,7 @@ package gregtech.integration.client;
 import com.google.gson.JsonObject;
 import gregtech.client.CanvasCoverRenderer;
 import gregtech.content.cover.*;
-import gregtech.registry.GTTechnological;
+import gregtech.content.registry.GTTechnological;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.Direction;
@@ -47,7 +47,7 @@ final class CanvasDeliveryChecks {
         int pageModels=0;
         for(String path:java.util.List.of("printed_pages","many_printed_pages")) {
             var pages=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",path)));
-            require(pages.getItem() instanceof gregtech.item.PrintedPagesItem,"native printed-page behavior "+path);
+            require(pages.getItem() instanceof gregtech.content.item.PrintedPagesItem,"native printed-page behavior "+path);
             var model=client.getItemRenderer().getModel(pages,null,null,0);
             int count=0;
 //? if >=1.21.1 {
@@ -63,25 +63,25 @@ final class CanvasDeliveryChecks {
         }
         int bookHints=0;
         for(var variant:gregtech.content.book.ColoredBookRules.VARIANTS) {
-            var book=gregtech.registry.GTColoredBooks.stack(variant.originalId());
-            require(gregtech.data.MachineRecipeMaps.ScannerVisuals.mRecipeList.stream().anyMatch(r->r.mFakeRecipe&&r.mDuration==512&&r.mEUt==16&&r.mInputs.length==2&&r.mInputs[0].is(book.getItem())),"source scanner viewer row "+variant.path());bookHints++;
+            var book=gregtech.content.registry.GTColoredBooks.stack(variant.originalId());
+            require(gregtech.content.data.MachineRecipeMaps.ScannerVisuals.mRecipeList.stream().anyMatch(r->r.mFakeRecipe&&r.mDuration==512&&r.mEUt==16&&r.mInputs.length==2&&r.mInputs[0].is(book.getItem())),"source scanner viewer row "+variant.path());bookHints++;
         }
         for(String path:java.util.List.of("printed_pages","many_printed_pages")) {
             var item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",path));
-            require(gregtech.data.MachineRecipeMaps.Printer.mRecipeList.stream().anyMatch(r->r.mFakeRecipe&&r.mOutputs.length==1&&r.mOutputs[0].is(item)&&r.mEUt==16&&r.mDuration==(path.equals("printed_pages")?512:1024)),"source printer viewer row "+path);
+            require(gregtech.content.data.MachineRecipeMaps.Printer.mRecipeList.stream().anyMatch(r->r.mFakeRecipe&&r.mOutputs.length==1&&r.mOutputs[0].is(item)&&r.mEUt==16&&r.mDuration==(path.equals("printed_pages")?512:1024)),"source printer viewer row "+path);
         }
         var iron=gregtech.internal.material.GTMaterialRegistry.get(260).resolve();
         var dataStick=gregtech.content.recipe.GTMaterialDataRecipes.withMaterialData(new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce","usb3_stick"))),iron);
-        var matter=java.util.List.of(gregtech.registry.GTFluids.stack("MatterNeutral",(int)iron.getNeutrons()),gregtech.registry.GTFluids.stack("MatterCharged",(int)iron.getProtons()));
-        var replication=gregtech.data.MachineRecipeMaps.Replicator.findRecipe(java.util.List.of(dataStick),matter,false,3,3);
+        var matter=java.util.List.of(gregtech.content.registry.GTFluids.stack("MatterNeutral",(int)iron.getNeutrons()),gregtech.content.registry.GTFluids.stack("MatterCharged",(int)iron.getProtons()));
+        var replication=gregtech.content.data.MachineRecipeMaps.Replicator.findRecipe(java.util.List.of(dataStick),matter,false,3,3);
         require(replication!=null&&replication.mEUt==1&&replication.mDuration==(iron.getProtons()+iron.getNeutrons())*256L&&!replication.mCanBeBuffered,"installed original molecular work fields");
         require(!gregtech.internal.material.GTMaterialRegistry.get(8214).has(gregtech.internal.material.MaterialProperty.UUM),"installed obsidian source gate");
-        var mercury=gregtech.registry.GTFluids.stack("GenLiquid_Mercury",1000);
+        var mercury=gregtech.content.registry.GTFluids.stack("GenLiquid_Mercury",1000);
         require(mercury!=null&&!mercury.isEmpty()&&BuiltInRegistries.FLUID.getKey(mercury.getFluid()).getPath().equals("mercury"),"installed ordinary mercury liquid");
         int electricalRows=0;
         for(int tier=0;tier<10;tier++) {
             var key="gt6ce:circuits_tier_"+tier+"_plus";
-            require(gregtech.data.MachineRecipeIngredients.resolve("circuit:"+tier,iron,1).equals(java.util.Map.of("tag",key)),"installed original circuit grade "+tier);
+            require(gregtech.content.data.MachineRecipeIngredients.resolve("circuit:"+tier,iron,1).equals(java.util.Map.of("tag",key)),"installed original circuit grade "+tier);
             String path="data/gt6ce/tags/items/circuits_tier_"+tier+"_plus.json";
             try(var stream=CanvasDeliveryChecks.class.getClassLoader().getResourceAsStream(path)) {
                 require(stream!=null,"shared installed circuit tag "+tier);
@@ -100,7 +100,7 @@ final class CanvasDeliveryChecks {
             String id=(large?"energy_storage_":"battery_box_")+suffix;
             require(gregtech.content.recipe.EquipmentCraftingCatalog.FILES.contains("energy_nodes/"+id+".json"),"native recipe pack includes high box "+id);
             var stack=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",id)));
-            require(stack.getItem() instanceof net.minecraft.world.item.BlockItem b&&b.getBlock() instanceof gregtech.block.energy.EnergyNodeBlock node&&node.spec().batterySlots()==(large?16:4),"installed high box original slots "+id);electricalRows++;
+            require(stack.getItem() instanceof net.minecraft.world.item.BlockItem b&&b.getBlock() instanceof gregtech.content.block.energy.EnergyNodeBlock node&&node.spec().batterySlots()==(large?16:4),"installed high box original slots "+id);electricalRows++;
         }
         graphics.pose().popPose();var result=new JsonObject();result.addProperty("originalCircuitTagGrades",10);result.addProperty("externalHighBatteryBoxRecipes",electricalRows);result.addProperty("originalMolecularDataFields",true);result.addProperty("mercuryAmbientUnitMb",1000);result.addProperty("originalCanvasItemModels",meshes);result.addProperty("printedPageModels",pageModels);result.addProperty("coloredBookScanHints",bookHints);result.addProperty("directionalAndFluidFaces",4);result.addProperty("brightImage",true);return result;
     }

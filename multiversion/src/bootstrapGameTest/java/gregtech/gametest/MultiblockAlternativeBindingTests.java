@@ -2,9 +2,10 @@ package gregtech.gametest;
 
 import gregtech.api.addon.*;
 import gregtech.internal.addon.*;
-import gregtech.block.machine.BasicMachineBlock;
-import gregtech.blockentity.machine.LargeRecipeMachineBlockEntity;
-import gregtech.blockentity.machine.MultiblockPortBlockEntity;
+import gregtech.internal.addon.*;
+import gregtech.content.block.machine.BasicMachineBlock;
+import gregtech.content.blockentity.machine.LargeRecipeMachineBlockEntity;
+import gregtech.content.blockentity.machine.MultiblockPortBlockEntity;
 import gregtech.content.multiblock.LargeMachineLayouts;
 import gregtech.content.multiblock.LargeMachineParts;
 import net.minecraft.core.BlockPos;

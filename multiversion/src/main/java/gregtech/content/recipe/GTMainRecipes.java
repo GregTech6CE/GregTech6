@@ -2,7 +2,7 @@ package gregtech.content.recipe;
 
 import gregtech.internal.recipe.Recipe;
 import gregtech.internal.recipe.RecipeMap;
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.recipe.generated.GeneratedRecipeResolver;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {

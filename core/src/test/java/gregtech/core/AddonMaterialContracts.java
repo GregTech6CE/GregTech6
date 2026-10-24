@@ -18,15 +18,15 @@ import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.material.MaterialBlockDefinitions;
 import gregtech.internal.prefix.BlockMaterialPrefix;
 import gregtech.internal.prefix.BlockPrefixRegistry;
-import gregtech.block.BlockMaterialWeights;
+import gregtech.content.block.BlockMaterialWeights;
 import gregtech.internal.material.MaterialDefinition;
 import gregtech.internal.material.MaterialItemDefinitions;
-import gregtech.data.generated.MaterialForms;
+import gregtech.content.data.generated.MaterialForms;
 import gregtech.internal.mod.ModData;
 import gregtech.internal.prefix.PrefixRegistry;
-import gregtech.data.MaterialPrefix;
-import gregtech.data.ModReferences;
-import gregtech.worldgen.GTOreVeins;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.data.ModReferences;
+import gregtech.content.worldgen.GTOreVeins;
 
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -793,7 +793,7 @@ public final class AddonMaterialContracts {
         GTMaterialRegistry.setLogSink((warning, message) -> {});
         PrefixRegistry.ensurePrefixesLoaded();
         ModReferences.UNKNOWN.getClass();
-        gregtech.data.MaterialGroups.Glowstone.getClass();
+        gregtech.content.data.MaterialGroups.Glowstone.getClass();
     }
 
     private static void expectThrows(String... parts) {

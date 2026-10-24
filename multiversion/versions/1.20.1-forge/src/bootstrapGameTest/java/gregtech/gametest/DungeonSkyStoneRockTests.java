@@ -1,15 +1,15 @@
 package gregtech.gametest;
 
-import gregtech.block.RockBlock;
-import gregtech.block.stone.StoneType;
-import gregtech.blockentity.RockBlockEntity;
-import gregtech.data.MaterialPrefix;
-import gregtech.data.generated.GT6Materials;
-import gregtech.registry.GTBlocks;
-import gregtech.registry.GTItems;
-import gregtech.worldgen.GTDungeonFeature;
-import gregtech.worldgen.dungeon.GTDungeonChunkBarracks;
-import gregtech.worldgen.dungeon.GTDungeonData;
+import gregtech.content.block.RockBlock;
+import gregtech.content.block.stone.StoneType;
+import gregtech.content.blockentity.RockBlockEntity;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.data.generated.GT6Materials;
+import gregtech.content.registry.GTBlocks;
+import gregtech.content.registry.GTItems;
+import gregtech.content.worldgen.GTDungeonFeature;
+import gregtech.content.worldgen.dungeon.GTDungeonChunkBarracks;
+import gregtech.content.worldgen.dungeon.GTDungeonData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

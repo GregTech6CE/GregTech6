@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
-import gregtech.block.energy.PumpBlock;
-import gregtech.blockentity.energy.PumpBlockEntity;
-import gregtech.blockentity.machine.TankBlockEntity;
-import gregtech.data.GregTechTags;
-import gregtech.registry.GTPumps;
-import gregtech.registry.GTTanks;
+import gregtech.content.block.energy.PumpBlock;
+import gregtech.content.blockentity.energy.PumpBlockEntity;
+import gregtech.content.blockentity.machine.TankBlockEntity;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.registry.GTPumps;
+import gregtech.content.registry.GTTanks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

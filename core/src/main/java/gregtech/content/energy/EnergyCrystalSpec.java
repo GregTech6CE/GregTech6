@@ -4,8 +4,8 @@ package gregtech.content.energy;
 
 import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.data.GregTechTags;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.data.MaterialPrefix;
 import java.util.List;
 import java.util.ArrayList;
 

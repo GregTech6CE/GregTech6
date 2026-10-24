@@ -3,8 +3,8 @@ package gregtech.content.recipe;
 import gregtech.internal.machine.PipeSpec;
 import gregtech.internal.material.GTMaterial;
 import gregtech.api.material.GTValues;
-import gregtech.data.MaterialPrefix;
-import gregtech.data.generated.MaterialWorkability;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.data.generated.MaterialWorkability;
 
 /** Original five GT6 curved-plate welding rows and exact work costs, shared by both loaders. */
 public final class PipeWeldingRules {

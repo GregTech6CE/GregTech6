@@ -1,10 +1,10 @@
 package gregtech.platform.neoforge.logistics;
 
-import gregtech.block.inventory.MassStorageBlock;
-import gregtech.blockentity.inventory.MassStorageBlockEntity;
+import gregtech.content.block.inventory.MassStorageBlock;
+import gregtech.content.blockentity.inventory.MassStorageBlockEntity;
 import gregtech.internal.material.GTMaterial;
-import gregtech.blockentity.inventory.LogisticsMassStorageBlockEntity;
-import gregtech.registry.GTStorageMetals;
+import gregtech.content.blockentity.inventory.LogisticsMassStorageBlockEntity;
+import gregtech.content.registry.GTStorageMetals;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -28,7 +28,7 @@ public final class StorageRegistries {
     public static final java.util.function.Supplier<BlockEntityType<MassStorageBlockEntity>> MASS_STORAGE =
             TYPES.register("mass_storage",
             () -> BlockEntityType.Builder.of(MassStorageBlockEntity::new,
-                    java.util.stream.Stream.concat(STORAGES.stream(), gregtech.registry.GTItemBarrels.ALL.stream()).map(java.util.function.Supplier::get).toArray(Block[]::new)).build(null));
+                    java.util.stream.Stream.concat(STORAGES.stream(), gregtech.content.registry.GTItemBarrels.ALL.stream()).map(java.util.function.Supplier::get).toArray(Block[]::new)).build(null));
     public static final java.util.function.Supplier<BlockEntityType<LogisticsMassStorageBlockEntity>> LOGISTICS_MASS_STORAGE =
             TYPES.register("logistics_mass_storage",
             () -> BlockEntityType.Builder.of(LogisticsMassStorageBlockEntity::new,
@@ -56,7 +56,7 @@ public final class StorageRegistries {
 
     private static void bindLogistics(String registryId, GTMaterial material, float hardness, float resistance) {
         var registeredBlock = BLOCKS.register(registryId, () ->
-                new gregtech.block.inventory.LogisticsMassStorageBlock(material,
+                new gregtech.content.block.inventory.LogisticsMassStorageBlock(material,
                         BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK)
                                 .strength(hardness, resistance).requiresCorrectToolForDrops()));
         LOGISTICS_STORAGES.add(registeredBlock);

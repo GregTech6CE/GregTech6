@@ -14,9 +14,9 @@ import gregtech.internal.machine.MachineRegistry;
 
 import gregtech.internal.recipe.RecipeMap;
 
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.data.MachineRecipeMaps;
 
-import gregtech.registry.GTToolBlocks;
+import gregtech.content.registry.GTToolBlocks;
 
 import net.minecraft.world.item.ItemStack;
 
@@ -64,7 +64,7 @@ public final class RecipeMachines {
 
 
 //? if >=1.21.1 {
-/*        for (var entry:gregtech.registry.GTManualStations.MANUAL) if(entry.isBound())
+/*        for (var entry:gregtech.content.registry.GTManualStations.MANUAL) if(entry.isBound())
 *///?} else {
         for (var entry:GTToolBlocks.manual()) if(entry.isPresent())
 //?}
@@ -76,9 +76,9 @@ public final class RecipeMachines {
 
 
 //? if >=1.21.1 {
-/*        for (var entry:gregtech.registry.GTManualStations.VESSELS) if(entry.isBound() && entry.get() instanceof gregtech.block.tool.ProcessingToolBlock tool) {
+/*        for (var entry:gregtech.content.registry.GTManualStations.VESSELS) if(entry.isBound() && entry.get() instanceof gregtech.content.block.tool.ProcessingToolBlock tool) {
 *///?} else {
-        for (var entry:GTToolBlocks.simpleBlocks()) if(entry.isPresent() && entry.get() instanceof gregtech.block.tool.ProcessingToolBlock tool) {
+        for (var entry:GTToolBlocks.simpleBlocks()) if(entry.isPresent() && entry.get() instanceof gregtech.content.block.tool.ProcessingToolBlock tool) {
 //?}
 
 
@@ -92,7 +92,7 @@ public final class RecipeMachines {
 
 
 //? if >=1.21.1 {
-/*        for (var entry:gregtech.registry.GTManualStations.ANVILS) if(entry.isBound()) {
+/*        for (var entry:gregtech.content.registry.GTManualStations.ANVILS) if(entry.isBound()) {
 *///?} else {
         for (var entry:GTToolBlocks.ANVILS) if(entry.isPresent()) {
 //?}
@@ -124,14 +124,14 @@ public final class RecipeMachines {
 //? if >=1.21.1 {
 /*        add(result,MachineRecipeMaps.ImplosionCompressor,new ItemStack(RecipeMachines.machine("implosion_compressor_main")));
 *///?} else {
-        add(result,MachineRecipeMaps.ImplosionCompressor,new ItemStack(gregtech.registry.GTMultiblocks.IMPLOSION_COMPRESSOR_MAIN.get()));
+        add(result,MachineRecipeMaps.ImplosionCompressor,new ItemStack(gregtech.content.registry.GTMultiblocks.IMPLOSION_COMPRESSOR_MAIN.get()));
 //?}
 
 
 //? if >=1.21.1 {
 /*        for (var entry : gregtech.platform.neoforge.machine.FuelGeneratorRegistration.all())
 *///?} else {
-        for (var entry : gregtech.registry.FuelGeneratorRegistration.all()) if (entry.isPresent())
+        for (var entry : gregtech.content.registry.FuelGeneratorRegistration.all()) if (entry.isPresent())
 //?}
 
             add(result, RecipeMap.RECIPE_MAPS.get(entry.get().declaration().fuelMap()), new ItemStack(entry.get()));
@@ -140,35 +140,35 @@ public final class RecipeMachines {
 //? if >=1.21.1 {
 /*        for (var entry : gregtech.platform.neoforge.machine.BehaviorMachineRegistration.all())
 *///?} else {
-        for (var entry : gregtech.registry.BehaviorMachineRegistration.all()) if (entry.isPresent())
+        for (var entry : gregtech.content.registry.BehaviorMachineRegistration.all()) if (entry.isPresent())
 //?}
 
-            gregtech.api.addon.BehaviorRecipeCatalysts.add(result,
+            gregtech.internal.addon.BehaviorRecipeCatalysts.add(result,
                     entry.get().declaration().recipeMaps(), new ItemStack(entry.get()),
                     RecipeMap.RECIPE_MAPS::get, RecipeMachines::sameStack);
 
 
         for(var entry:gregtech.content.multiblock.GasTurbineDefinitions.blocks())
 
-            add(result,gregtech.data.FuelRecipeMaps.Gas,new ItemStack(entry.get()));
+            add(result,gregtech.content.data.FuelRecipeMaps.Gas,new ItemStack(entry.get()));
 
         for (int originalId = 17231; originalId <= 17234; originalId++)
 
-            add(result,gregtech.data.FuelRecipeMaps.Gas,
+            add(result,gregtech.content.data.FuelRecipeMaps.Gas,
 
                     new ItemStack(gregtech.content.multiblock.LargeMachineParts.block(originalId)));
 
 
 
-        add(result,MachineRecipeMaps.CokeOven,new ItemStack(gregtech.registry.GTMultiblocks.COKE_OVEN_MAIN.get()));
-        add(result,gregtech.data.FuelRecipeMaps.Hot,new ItemStack(gregtech.registry.GTMultiblocks.HEAT_EXCHANGER_MAIN.get()));
-        for (var exchanger : gregtech.registry.GTHeatExchangers.all())
-            add(result,gregtech.data.FuelRecipeMaps.Hot,new ItemStack(exchanger.get()));
+        add(result,MachineRecipeMaps.CokeOven,new ItemStack(gregtech.content.registry.GTMultiblocks.COKE_OVEN_MAIN.get()));
+        add(result,gregtech.content.data.FuelRecipeMaps.Hot,new ItemStack(gregtech.content.registry.GTMultiblocks.HEAT_EXCHANGER_MAIN.get()));
+        for (var exchanger : gregtech.content.registry.GTHeatExchangers.all())
+            add(result,gregtech.content.data.FuelRecipeMaps.Hot,new ItemStack(exchanger.get()));
 
 //? if >=1.21.1 {
 /*        add(result,MachineRecipeMaps.Fusion,new ItemStack(RecipeMachines.machine("fusion_reactor_main")));
 *///?} else {
-        add(result,MachineRecipeMaps.Fusion,new ItemStack(gregtech.registry.GTMultiblocks.FUSION_REACTOR_MAIN.get()));
+        add(result,MachineRecipeMaps.Fusion,new ItemStack(gregtech.content.registry.GTMultiblocks.FUSION_REACTOR_MAIN.get()));
 //?}
 
 

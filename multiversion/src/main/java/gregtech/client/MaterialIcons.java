@@ -7,7 +7,7 @@ import gregtech.GregTech;
 import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.MaterialIconDefinitions;
 import gregtech.internal.material.MaterialTextureSet;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 //? if >=1.21.1 {
 /*import net.minecraft.client.resources.model.ModelResourceLocation;
 *///?} else {

@@ -15,7 +15,7 @@ final class LootFeedbackChecks {
     /** Recipe previews enumerate tool identities; a real player uses an assembled tool. */
     private static ItemStack usableIngredient(ItemStack sample) {
         var stack = sample.copyWithCount(1);
-        if (stack.getItem() instanceof gregtech.item.GTToolItem tool
+        if (stack.getItem() instanceof gregtech.content.item.GTToolItem tool
                 && tool.toolType().requiresHeadAssembly()) {
             gregtech.internal.tool.GTToolHelper.write(stack,
                 gregtech.internal.material.GTMaterialRegistry.get("Steel"),
@@ -88,9 +88,9 @@ final class LootFeedbackChecks {
 //?}
             var loaded = server.getRecipeManager().byKey(key).orElseThrow(() -> new IllegalStateException("Missing source crafting: " + key));
 //? if >=1.21.1 {
-            /*var recipe = (gregtech.recipe.ToolShapedRecipe)loaded.value();
+            /*var recipe = (gregtech.content.recipe.ToolShapedRecipe)loaded.value();
 *///?} else {
-            var recipe = (gregtech.recipe.ToolShapedRecipe)loaded;
+            var recipe = (gregtech.content.recipe.ToolShapedRecipe)loaded;
 //?}
             var ingredients = recipe.getIngredients();
             int side = name.equals("crate") ? 2 : 3;
@@ -112,8 +112,8 @@ final class LootFeedbackChecks {
             require(path(output).equals(name) && output.getCount() == 1, "Source crafting output differs: " + key);
             crafted++;
         }
-        require(!gregtech.block.LootCrateBlock.crateStack().isEmpty(), "Opening loot crates still loses the empty crate");
-        require(gregtech.block.LootCrateBlock.rollVanillaLoot(level, net.minecraft.core.BlockPos.ZERO, net.minecraft.util.RandomSource.create(1)).size() <= 1,
+        require(!gregtech.content.block.LootCrateBlock.crateStack().isEmpty(), "Opening loot crates still loses the empty crate");
+        require(gregtech.content.block.LootCrateBlock.rollVanillaLoot(level, net.minecraft.core.BlockPos.ZERO, net.minecraft.util.RandomSource.create(1)).size() <= 1,
             "Loot crate returns an entire chest rather than one stack");
         receipt.addProperty("newFeedbackCraftingRowsChecked", crafted);
         receipt.addProperty("lootCrateReturnAndStackLimitChecks", 2);

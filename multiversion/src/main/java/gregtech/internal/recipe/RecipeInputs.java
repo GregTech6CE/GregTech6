@@ -113,7 +113,7 @@ public final class RecipeInputs {
 
     public static boolean matches(ItemStack required, ItemStack available) {
         if(available.isEmpty())return false;
-        var colors = gregtech.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(required);
+        var colors = gregtech.content.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(required);
         if (!colors.isEmpty()) return colors.stream().anyMatch(color -> matches(color, available));
         if(!required.is(available.getItem())) return gregtech.internal.material.MaterialEquivalence.matches(required,available);
         // An unfilled vessel in a recipe denotes its empty shell. Never silently
@@ -124,7 +124,7 @@ public final class RecipeInputs {
                 &&net.neoforged.neoforge.fluids.FluidUtil.getFluidContained(available).isPresent())return false;
         return required.getComponentsPatch().isEmpty() || ItemStack.isSameItemSameComponents(required, available);
 *///?} else {
-        if(required.getItem() instanceof gregtech.item.PortableFluidContainerItem
+        if(required.getItem() instanceof gregtech.content.item.PortableFluidContainerItem
                 &&net.minecraftforge.fluids.FluidUtil.getFluidContained(required).isEmpty()
                 &&net.minecraftforge.fluids.FluidUtil.getFluidContained(available).isPresent())return false;
         return !required.hasTag() || ItemStack.isSameItemSameTags(required, available);

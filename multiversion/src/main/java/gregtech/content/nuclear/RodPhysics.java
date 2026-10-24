@@ -1,6 +1,6 @@
 package gregtech.content.nuclear;
-import gregtech.item.FuelRodItem;
-import gregtech.registry.GTFuelRods;
+import gregtech.content.item.FuelRodItem;
+import gregtech.content.registry.GTFuelRods;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.StackCustomData;

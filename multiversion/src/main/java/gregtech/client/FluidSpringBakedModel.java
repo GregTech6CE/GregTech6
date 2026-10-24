@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.blockentity.FluidSpringBlockEntity;
+import gregtech.content.blockentity.FluidSpringBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.texture.*;

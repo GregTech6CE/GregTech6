@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
-import gregtech.registry.*;
-import gregtech.block.inventory.SafeBlock;
-import gregtech.blockentity.inventory.SafeBlockEntity;
+import gregtech.content.registry.*;
+import gregtech.content.block.inventory.SafeBlock;
+import gregtech.content.blockentity.inventory.SafeBlockEntity;
 import gregtech.content.material.Materials;
-import gregtech.item.GTDungeonKeyItem;
+import gregtech.content.item.GTDungeonKeyItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

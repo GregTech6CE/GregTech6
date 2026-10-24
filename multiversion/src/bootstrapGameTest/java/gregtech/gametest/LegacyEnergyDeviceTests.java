@@ -1,14 +1,14 @@
 package gregtech.gametest;
 
-import gregtech.block.energy.MagicFieldAbsorberBlock;
-import gregtech.blockentity.GTEnergyBlockEntity;
-import gregtech.blockentity.energy.MagicFieldAbsorberBlockEntity;
+import gregtech.content.block.energy.MagicFieldAbsorberBlock;
+import gregtech.content.blockentity.GTEnergyBlockEntity;
+import gregtech.content.blockentity.energy.MagicFieldAbsorberBlockEntity;
 import gregtech.content.energy.BatteryBoxEnergy;
 import gregtech.content.energy.MagicFieldAbsorberRules;
 import gregtech.content.energy.PowerCellSpec;
-import gregtech.data.GregTechTags;
-import gregtech.item.PowerCellItem;
-import gregtech.registry.GTLegacyEnergyDevices;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.item.PowerCellItem;
+import gregtech.content.registry.GTLegacyEnergyDevices;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.*;
@@ -49,7 +49,7 @@ public final class LegacyEnergyDeviceTests {
             var pos = h.absolutePos(new BlockPos(2, 2, 2));
             var block = ((PowerCellItem) new ItemStack(BuiltInRegistries.ITEM.get(id(spec.id()))).getItem()).getBlock();
             h.getLevel().setBlockAndUpdate(pos, block.defaultBlockState());
-            var placed = (gregtech.blockentity.energy.PowerCellBlockEntity) h.getLevel().getBlockEntity(pos);
+            var placed = (gregtech.content.blockentity.energy.PowerCellBlockEntity) h.getLevel().getBlockEntity(pos);
             placed.setCharge(spec.voltage() * 7);
             h.assertTrue(item.stored(placed.asItem()) == spec.voltage() * 7, "Placed cell retains remaining energy on recovery");
         }
@@ -64,9 +64,9 @@ public final class LegacyEnergyDeviceTests {
             h.assertTrue(recipe.getIngredients().stream().allMatch(ingredient -> ingredient.getItems().length > 0), "All nine crafting inputs resolve: " + name);
         }
         var input = new ItemStack(BuiltInRegistries.ITEM.get(id("power_cell_empty")));
-        h.assertTrue(gregtech.data.MachineRecipeMaps.Canner.mRecipeList.stream()
+        h.assertTrue(gregtech.content.data.MachineRecipeMaps.Canner.mRecipeList.stream()
                 .anyMatch(r -> r.mInputs.length > 0 && r.mInputs[0].is(input.getItem()) && r.mFluidInputs.length == 1 && r.mFluidInputs[0].getAmount() == 200_000), "Canner fuel recipe is registered");
-        h.assertTrue(BuiltInRegistries.BLOCK.get(id("flower_vindicator_flower")) instanceof gregtech.block.plant.BedrockFlowerBlock,
+        h.assertTrue(BuiltInRegistries.BLOCK.get(id("flower_vindicator_flower")) instanceof gregtech.content.block.plant.BedrockFlowerBlock,
                 "Vindicator is a real indicator flower");
         var empty = new ItemStack(BuiltInRegistries.ITEM.get(id("power_cell_empty")));
         var clean = empty.copy(); ((PowerCellItem) empty.getItem()).setCharge(empty, 0);

@@ -3,9 +3,9 @@ package gregtech.content.recipe;
 import gregtech.GregTech;
 import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.GTItems;
-import gregtech.registry.GTTrackBlocks;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTItems;
+import gregtech.content.registry.GTTrackBlocks;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -71,7 +71,7 @@ public final class TrackRecipeInjector {
             };
         }
         added += vanilla(recipes, access);
-        if (added > 0) gregtech.recipe.RuntimeRecipeLifecycle.replaceGenerated(manager, recipes);
+        if (added > 0) gregtech.content.recipe.RuntimeRecipeLifecycle.replaceGenerated(manager, recipes);
         GregTech.LOGGER.info("Registered {} GT6 track crafting rows", added);
         return;
     }

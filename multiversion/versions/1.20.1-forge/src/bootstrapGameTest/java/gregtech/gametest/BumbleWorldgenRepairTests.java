@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
 import gregtech.content.bumble.BumbleBeeGenes;
-import gregtech.data.GregTechConstants;
-import gregtech.worldgen.GTBumbleHivesFeature;
+import gregtech.content.data.GregTechConstants;
+import gregtech.content.worldgen.GTBumbleHivesFeature;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.*;

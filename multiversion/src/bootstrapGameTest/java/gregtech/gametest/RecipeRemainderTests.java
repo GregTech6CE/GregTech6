@@ -2,13 +2,13 @@ package gregtech.gametest;
 
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
-import gregtech.api.recipe.*;
 import gregtech.internal.recipe.*;
-import gregtech.block.machine.BasicMachineBlock;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.internal.recipe.*;
+import gregtech.content.block.machine.BasicMachineBlock;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.recipe.PartRecipeLoader;
 import gregtech.content.recipe.PulverizationRules;
-import gregtech.data.*;
+import gregtech.content.data.*;
 import gregtech.util.OM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;

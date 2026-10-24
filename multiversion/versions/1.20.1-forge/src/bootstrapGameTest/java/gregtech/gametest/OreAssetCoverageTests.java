@@ -3,7 +3,7 @@ package gregtech.gametest;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import gregtech.GregTech;
-import gregtech.block.OreBlock;
+import gregtech.content.block.OreBlock;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;

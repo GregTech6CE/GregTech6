@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.registry.*;
+import gregtech.content.registry.*;
 import gregtech.internal.tool.*;
-import gregtech.blockentity.tool.MaterialAnvilBlockEntity;
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.blockentity.tool.MaterialAnvilBlockEntity;
+import gregtech.content.data.MachineRecipeMaps;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.InteractionHand;

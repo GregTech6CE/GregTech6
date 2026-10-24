@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
-import gregtech.block.misc.SpikeBlock;
-import gregtech.registry.GTDecorBlocks;
+import gregtech.content.block.misc.SpikeBlock;
+import gregtech.content.registry.GTDecorBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

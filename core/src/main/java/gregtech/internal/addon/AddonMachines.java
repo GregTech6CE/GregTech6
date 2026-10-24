@@ -34,9 +34,9 @@ import gregtech.internal.multiblock.StructureGrid;
 import gregtech.internal.recipe.RecipeMapSpec;
 import gregtech.content.multiblock.SharedLargeMachineLayouts;
 import gregtech.content.multiblock.SharedLargeMachineParts;
-import gregtech.data.FuelRecipeMapDefinitions;
-import gregtech.data.GregTechTags;
-import gregtech.data.MachineRecipeMapDefinitions;
+import gregtech.content.data.FuelRecipeMapDefinitions;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.data.MachineRecipeMapDefinitions;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

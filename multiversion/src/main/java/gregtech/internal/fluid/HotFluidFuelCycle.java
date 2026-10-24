@@ -1,7 +1,7 @@
 /* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later. */
 package gregtech.internal.fluid;
 
-import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.internal.recipe.*;
 import gregtech.content.multiblock.HeatExchangerRules;
 //? if >=1.21.1 {

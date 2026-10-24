@@ -1,12 +1,12 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.block.energy.*;
-import gregtech.blockentity.energy.EnergyNodeBlockEntity;
+import gregtech.content.block.energy.*;
+import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
 import gregtech.content.cover.*;
 import gregtech.content.energy.ElectricTransformerControl;
-import gregtech.data.GregTechTags;
-import gregtech.registry.GTTechnological;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.registry.GTTechnological;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.item.ItemStack;

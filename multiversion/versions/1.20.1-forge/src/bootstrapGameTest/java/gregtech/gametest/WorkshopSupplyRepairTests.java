@@ -1,13 +1,13 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.block.inventory.BottleCrateBlock;
-import gregtech.blockentity.inventory.BottleCrateBlockEntity;
-import gregtech.block.tool.FluidAttachmentBlock;
-import gregtech.item.BottleItem;
-import gregtech.worldgen.dungeon.*;
-import gregtech.worldgen.GTDungeonFeature;
-import gregtech.block.stone.StoneType;
+import gregtech.content.block.inventory.BottleCrateBlock;
+import gregtech.content.blockentity.inventory.BottleCrateBlockEntity;
+import gregtech.content.block.tool.FluidAttachmentBlock;
+import gregtech.content.item.BottleItem;
+import gregtech.content.worldgen.dungeon.*;
+import gregtech.content.worldgen.GTDungeonFeature;
+import gregtech.content.block.stone.StoneType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -80,7 +80,7 @@ public final class WorkshopSupplyRepairTests {
             var candidates=recipe.getIngredients().get(slot).getItems();
             h.assertTrue(candidates.length>0,"required original ingredient resolves in slot "+slot);
             var stack=candidates[0].copy();
-            if(stack.getItem() instanceof gregtech.item.GTToolItem) stack=gregtech.item.GTToolItem.create(
+            if(stack.getItem() instanceof gregtech.content.item.GTToolItem) stack=gregtech.content.item.GTToolItem.create(
                     gregtech.internal.tool.GTToolHelper.getType(stack),gregtech.content.material.Materials.Steel,
                     gregtech.internal.material.GTMaterialRegistry.get("Wood"));
             grid.setItem(slot,stack);
@@ -88,7 +88,7 @@ public final class WorkshopSupplyRepairTests {
         for(String glue:new String[]{"glue_bottle","tar_bottle","green_slime_bottle","pink_slime_bottle","blue_slime_bottle"}) {
             grid.setItem(4,new ItemStack(ForgeRegistries.ITEMS.getValue(GregTech.id(glue))));
             h.assertTrue(recipe.matches(grid,level),"original glue alternative crafts: "+glue);
-            h.assertTrue(recipe.assemble(grid,level.registryAccess()).is(gregtech.registry.GTStorage.BOTTLE_CRATE.get().asItem()),"one treated crate output");
+            h.assertTrue(recipe.assemble(grid,level.registryAccess()).is(gregtech.content.registry.GTStorage.BOTTLE_CRATE.get().asItem()),"one treated crate output");
             var remaining=recipe.getRemainingItems(grid);
             for(int slot=0;slot<3;slot++) h.assertTrue(!remaining.get(slot).isEmpty() && remaining.get(slot).getDamageValue()>grid.getItem(slot).getDamageValue(),"tool is returned with wear");
             h.assertTrue(remaining.get(4).is(BottleItem.emptyBottle().getItem()) && remaining.get(4).getCount()==1,"glue portion returns exactly one empty bottle");

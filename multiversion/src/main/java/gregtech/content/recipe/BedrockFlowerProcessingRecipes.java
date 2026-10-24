@@ -1,10 +1,10 @@
 package gregtech.content.recipe;
 
 import gregtech.content.plant.BedrockFlowers;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.data.MaterialPrefix;
-import gregtech.data.RegisteredFluids;
-import gregtech.registry.GTFluids;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.data.RegisteredFluids;
+import gregtech.content.registry.GTFluids;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 //? if >=1.21.1 {

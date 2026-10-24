@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.registry.*;
+import gregtech.content.registry.*;
 import gregtech.content.tool.AutomaticToolRules;
 import gregtech.content.material.Materials;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -29,7 +29,7 @@ public final class AutomaticToolClientColors {
         String id = BuiltInRegistries.BLOCK.getKey(block).getPath();
         if (id.equals("advanced_button")) return Materials.TinAlloy.getColor();
         if (id.equals("dust_funnel")) return Materials.Steel.getColor();
-        if (block instanceof gregtech.block.inventory.UsbSwitchBlock) return Materials.SteelGalvanized.getColor();
+        if (block instanceof gregtech.content.block.inventory.UsbSwitchBlock) return Materials.SteelGalvanized.getColor();
         return AutomaticToolRules.material(AutomaticToolRules.profile(BuiltInRegistries.BLOCK.getKey(block).getPath())).getColor();
     }
 

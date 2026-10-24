@@ -1,7 +1,7 @@
 package gregtech.platform.neoforge.energy;
 
-import gregtech.block.energy.ElectricWireBlock;
-import gregtech.blockentity.energy.ElectricWireBlockEntity;
+import gregtech.content.block.energy.ElectricWireBlock;
+import gregtech.content.blockentity.energy.ElectricWireBlockEntity;
 import gregtech.platform.neoforge.NeoToolBindings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -29,8 +29,8 @@ public final class WireToolInteractions {
         if (!level.setBlockAndUpdate(pos, state.setValue(ElectricWireBlock.propFor(connectionSide), connect))) return true;
         var neighborState = level.getBlockState(neighborPos);
         if (state.getBlock() instanceof ElectricWireBlock && neighborState.getBlock() instanceof ElectricWireBlock
-                || state.getBlock() instanceof gregtech.block.energy.SignalWireBlock
-                && neighborState.getBlock() instanceof gregtech.block.energy.SignalWireBlock) {
+                || state.getBlock() instanceof gregtech.content.block.energy.SignalWireBlock
+                && neighborState.getBlock() instanceof gregtech.content.block.energy.SignalWireBlock) {
             level.setBlockAndUpdate(neighborPos, neighborState.setValue(ElectricWireBlock.propFor(connectionSide.getOpposite()), connect));
             changed(level, neighborPos);
         }

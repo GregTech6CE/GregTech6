@@ -5,6 +5,6 @@ public final class SandwichClientSetup {
     @SubscribeEvent public static void extensions(net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent event) {
         event.registerItem(new net.neoforged.neoforge.client.extensions.common.IClientItemExtensions() {
             @Override public net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer getCustomRenderer() { return SandwichItemRenderer.instance(); }
-        },gregtech.registry.GTSandwich.SANDWICH_BLOCK.get().asItem());
+        },gregtech.content.registry.GTSandwich.SANDWICH_BLOCK.get().asItem());
     }
 }

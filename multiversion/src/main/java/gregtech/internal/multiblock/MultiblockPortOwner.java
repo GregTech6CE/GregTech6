@@ -1,6 +1,6 @@
 package gregtech.internal.multiblock;
 
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 *///?} else {

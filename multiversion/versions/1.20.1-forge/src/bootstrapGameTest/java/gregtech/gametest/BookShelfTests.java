@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.block.BookShelfBlock;
-import gregtech.blockentity.inventory.BookShelfBlockEntity;
+import gregtech.content.block.BookShelfBlock;
+import gregtech.content.blockentity.inventory.BookShelfBlockEntity;
 import gregtech.content.book.GTBookList;
-import gregtech.registry.GTBlockEntities;
-import gregtech.registry.GTDecorBlocks;
+import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTDecorBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

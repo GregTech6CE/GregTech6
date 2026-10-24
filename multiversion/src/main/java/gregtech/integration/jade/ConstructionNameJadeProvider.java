@@ -1,6 +1,6 @@
 package gregtech.integration.jade;
 
-import gregtech.block.misc.ConcreteBlock;
+import gregtech.content.block.misc.ConcreteBlock;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import snownee.jade.api.BlockAccessor;

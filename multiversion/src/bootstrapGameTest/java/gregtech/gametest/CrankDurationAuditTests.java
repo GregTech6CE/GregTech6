@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.block.tool.CrankBlock;
+import gregtech.content.block.tool.CrankBlock;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -99,7 +99,7 @@ public final class CrankDurationAuditTests {
         String diagnostic(ServerPlayer p) {
             Object tracked;
             try {
-                var field = Class.forName("gregtech.block.tool.CrankInteractionEvents")
+                var field = Class.forName("gregtech.content.block.tool.CrankInteractionEvents")
                         .getDeclaredField("LAST_TARGET");
                 field.setAccessible(true);
                 tracked = ((java.util.Map<?, ?>) field.get(null)).get(p);
@@ -222,17 +222,17 @@ public final class CrankDurationAuditTests {
         });
             });
     }
-    private static final class CountingReceiver extends gregtech.blockentity.machine.BasicMachineBlockEntity {
+    private static final class CountingReceiver extends gregtech.content.blockentity.machine.BasicMachineBlockEntity {
         long offers, accepted, lastTick = Long.MIN_VALUE;
         boolean packetValid = true, duplicateTick;
         CountingReceiver(net.minecraft.world.level.block.entity.BlockEntity original) {
             super(original.getType(), original.getBlockPos(), original.getBlockState());
         }
-        @Override public long doEnergyInjection(gregtech.data.GregTechTags.Tag type,
+        @Override public long doEnergyInjection(gregtech.content.data.GregTechTags.Tag type,
                 Direction side, long size, long amount, boolean inject) {
             if (inject) {
                 offers++;
-                packetValid &= type == gregtech.data.GregTechTags.Energy.RU
+                packetValid &= type == gregtech.content.data.GregTechTags.Energy.RU
                         && side == Direction.NORTH && size == -16 && amount == 1;
                 duplicateTick |= lastTick == getLevel().getGameTime();
                 lastTick = getLevel().getGameTime();
@@ -248,12 +248,12 @@ public final class CrankDurationAuditTests {
         whenReady(h, () -> {
         var f = new Fixture(h);
         var mount = f.crank.south();
-        var block = (gregtech.block.machine.BasicMachineBlock) BuiltInRegistries.BLOCK.stream()
-                .filter(b -> b instanceof gregtech.block.machine.BasicMachineBlock).findFirst().orElseThrow();
+        var block = (gregtech.content.block.machine.BasicMachineBlock) BuiltInRegistries.BLOCK.stream()
+                .filter(b -> b instanceof gregtech.content.block.machine.BasicMachineBlock).findFirst().orElseThrow();
         h.getLevel().setBlock(mount, block.defaultBlockState(), 3);
         var receiver = new CountingReceiver(h.getLevel().getBlockEntity(mount));
         receiver.setSpec(gregtech.internal.machine.BasicMachineSpec.builder("crank_duration_receiver", block.basicSpec().material())
-                .machineType("test").energy(gregtech.data.GregTechTags.Energy.RU, 16)
+                .machineType("test").energy(gregtech.content.data.GregTechTags.Energy.RU, 16)
                 .recipes(block.basicSpec().recipeMap()).faces(gregtech.internal.energy.FaceConfig.ALL_SIDES).build());
         h.getLevel().setBlockEntity(receiver);
         var p = f.player(false);

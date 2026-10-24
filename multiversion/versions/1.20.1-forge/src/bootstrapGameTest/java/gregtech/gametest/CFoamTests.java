@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.block.misc.CFoamBlock;
-import gregtech.blockentity.CFoamBlockEntity;
-import gregtech.registry.GTBlockEntities;
-import gregtech.registry.GTDecorBlocks;
+import gregtech.content.block.misc.CFoamBlock;
+import gregtech.content.blockentity.CFoamBlockEntity;
+import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTDecorBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

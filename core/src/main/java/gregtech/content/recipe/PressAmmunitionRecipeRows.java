@@ -1,6 +1,6 @@
 package gregtech.content.recipe;
 
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 import java.util.List;
 
 /** GT6 Loader_Recipes_Handlers:252-258,452-456. EMPTY forms are consumed shafts/charged casings. */

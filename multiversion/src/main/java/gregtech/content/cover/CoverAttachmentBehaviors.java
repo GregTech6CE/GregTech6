@@ -1,6 +1,6 @@
 package gregtech.content.cover;
 
-import gregtech.registry.GTFluids;
+import gregtech.content.registry.GTFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceKey;

@@ -12,8 +12,8 @@ public class MaterialBaselineProbe {
                     .invoke(null, (java.util.function.Predicate<String>) id -> id.equals("minecraft") || id.equals("gt6ce"));
         } catch (NoSuchMethodException originalPlatformBinding) {}
         PrefixRegistry.ensurePrefixesLoaded();
-        gregtech.data.ModReferences.UNKNOWN.getClass();
-        gregtech.data.MaterialGroups.Glowstone.getClass();
+        gregtech.content.data.ModReferences.UNKNOWN.getClass();
+        gregtech.content.data.MaterialGroups.Glowstone.getClass();
         GTMaterialRegistry.init();
         System.out.println("declared=" + GTMaterialRegistry.allMaterials().size());
         System.out.println("aliases=" + MaterialCatalogSnapshot.aliases().size());

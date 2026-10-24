@@ -3,14 +3,14 @@ package gregtech.gametest;
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
 import gregtech.internal.recipe.RecipeInputs;
-import gregtech.block.energy.*;
-import gregtech.blockentity.energy.EnergyNodeBlockEntity;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
-import gregtech.blockentity.machine.BoilerTankBlockEntity;
+import gregtech.content.block.energy.*;
+import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.blockentity.machine.BoilerTankBlockEntity;
 import gregtech.content.energy.OriginalThermalCrafting;
 import gregtech.content.recipe.*;
-import gregtech.data.GregTechTags;
-import gregtech.item.GTToolItem;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.item.GTToolItem;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.*;
@@ -37,15 +37,15 @@ public final class ThermalConverterSourceTests {
     @GameTest(template="test_empty", timeoutTicks=100)
     public static void thermalTwinOutputsNativeReceiversStoppedFeAndHeaterContact(GameTestHelper h) {
         var freezer = java.util.stream.StreamSupport.stream(BuiltInRegistries.BLOCK.spliterator(), false)
-                .filter(b -> b instanceof gregtech.block.machine.BasicMachineBlock)
-                .map(b -> (gregtech.block.machine.BasicMachineBlock) b)
+                .filter(b -> b instanceof gregtech.content.block.machine.BasicMachineBlock)
+                .map(b -> (gregtech.content.block.machine.BasicMachineBlock) b)
                 .filter(b -> b.basicSpec().machineName().equals("freezer") && b.basicSpec().tier() == 1).findFirst().orElseThrow();
-        var boiler = gregtech.registry.GTBoilers.all().get(0).get();
+        var boiler = gregtech.content.registry.GTBoilers.all().get(0).get();
         int z = 2;
         for (String id : List.of("electric_cooler_lv", "flux_cooler_lv")) {
             var pos = new BlockPos(4,4,z);
             var tile = place(h, pos, id, Direction.EAST);
-            h.setBlock(pos.east(), freezer.defaultBlockState().setValue(gregtech.block.machine.BasicMachineBlock.FACING, Direction.EAST));
+            h.setBlock(pos.east(), freezer.defaultBlockState().setValue(gregtech.content.block.machine.BasicMachineBlock.FACING, Direction.EAST));
             h.setBlock(pos.west(), boiler.defaultBlockState());
             var cold = (BasicMachineBlockEntity) h.getBlockEntity(pos.east());
             var heat = (BoilerTankBlockEntity) h.getBlockEntity(pos.west());
@@ -143,7 +143,7 @@ public final class ThermalConverterSourceTests {
             }
             h.assertTrue(recoveredMaterials.equals(available.keySet()),"thermal recovery includes every registered pulverizing target");
             if (description.output().equals("gt6ce:electric_heater_lv"))
-                h.assertTrue(Arrays.stream(recovery.mOutputs).anyMatch(out -> MaterialEquivalence.form(out).prefix() == gregtech.data.MaterialPrefix.dustSmall && out.getCount() == 57),
+                h.assertTrue(Arrays.stream(recovery.mOutputs).anyMatch(out -> MaterialEquivalence.form(out).prefix() == gregtech.content.data.MaterialPrefix.dustSmall && out.getCount() == 57),
                         "original heater14+1/3U hull yields57 quarter dust piles");
             checkCrucible(h,result);
             var unsafe = result.copy(); stored(unsafe);

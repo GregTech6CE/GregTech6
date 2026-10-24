@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
-import gregtech.block.inventory.DrawerQuadBlock;
-import gregtech.blockentity.inventory.DrawerQuadBlockEntity;
+import gregtech.content.block.inventory.DrawerQuadBlock;
+import gregtech.content.blockentity.inventory.DrawerQuadBlockEntity;
 import gregtech.content.cover.ForgeCoverCapabilityCache;
 import gregtech.content.cover.PanelCoverHost;
 import java.util.concurrent.atomic.AtomicInteger;

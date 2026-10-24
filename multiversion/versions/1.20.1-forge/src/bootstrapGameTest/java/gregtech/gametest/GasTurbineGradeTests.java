@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
 import gregtech.content.multiblock.*;
-import gregtech.blockentity.machine.*;
-import gregtech.registry.*;
-import gregtech.data.*;
+import gregtech.content.blockentity.machine.*;
+import gregtech.content.registry.*;
+import gregtech.content.data.*;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.level.block.Blocks;
@@ -17,7 +17,7 @@ public final class GasTurbineGradeTests {
     public static void structuralPartsDropThemselves(GameTestHelper h) {
         var pos=new BlockPos(2,2,2);
         for(var entry:GTMultiblocks.parts()) {
-            if(!(entry.get() instanceof gregtech.block.machine.MultiblockPortBlock))continue;
+            if(!(entry.get() instanceof gregtech.content.block.machine.MultiblockPortBlock))continue;
             h.setBlock(pos,entry.get());
             var absolute=h.absolutePos(pos);var state=h.getLevel().getBlockState(absolute);
             var drops=net.minecraft.world.level.block.Block.getDrops(state,h.getLevel(),absolute,h.getLevel().getBlockEntity(absolute));
@@ -63,7 +63,7 @@ public final class GasTurbineGradeTests {
     @GameTest(template="test_blueprint_empty")
     public static void newWallsHaveOriginalWeldingRecipes(GameTestHelper h) {
         var material=gregtech.internal.material.GTMaterialRegistry.get("Adamantium");
-        for(var prefix:new gregtech.data.MaterialPrefix[]{MaterialPrefix.ingot,MaterialPrefix.plate,MaterialPrefix.plateDense})
+        for(var prefix:new gregtech.content.data.MaterialPrefix[]{MaterialPrefix.ingot,MaterialPrefix.plate,MaterialPrefix.plateDense})
             h.assertTrue(!GTItems.getStack(prefix,material).isEmpty(),"original Adamantium form exists: "+prefix.getName());
         var adamantiumDust=GTItems.getStack(MaterialPrefix.dust,material);
         h.assertTrue(MachineRecipeMaps.Furnace.mRecipeList.stream().noneMatch(r->r.mInputs.length>0&&r.mInputs[0].is(adamantiumDust.getItem())),
@@ -75,7 +75,7 @@ public final class GasTurbineGradeTests {
         for(int id:new int[]{18023,18025}) {
             var wall=LargeMachineParts.block(id).asItem();
             h.assertTrue(MachineRecipeMaps.Welder.mRecipeList.stream().anyMatch(r->r.mOutputs.length==1&&r.mOutputs[0].is(wall)&&r.mInputs[0].getCount()==4&&r.mDuration==512&&r.mEUt==64),"four dense plates weld into wall "+id+"; existing recipes: "+MachineRecipeMaps.Welder.mRecipeList.stream()
-                    .filter(r->r.mOutputs.length>0&&(r.mOutputs[0].is(wall)||java.util.Arrays.stream(r.mInputs).anyMatch(i->i.getItem() instanceof gregtech.item.MaterialItem m && m.getMaterial().getName().equals(id==18023?"TungstenSteel":"Adamantium"))))
+                    .filter(r->r.mOutputs.length>0&&(r.mOutputs[0].is(wall)||java.util.Arrays.stream(r.mInputs).anyMatch(i->i.getItem() instanceof gregtech.content.item.MaterialItem m && m.getMaterial().getName().equals(id==18023?"TungstenSteel":"Adamantium"))))
                     .map(r->java.util.Arrays.toString(r.mInputs)+" -> "+java.util.Arrays.toString(r.mOutputs)+" / "+r.mDuration+" / "+r.mEUt).toList());
         }
         h.succeed();

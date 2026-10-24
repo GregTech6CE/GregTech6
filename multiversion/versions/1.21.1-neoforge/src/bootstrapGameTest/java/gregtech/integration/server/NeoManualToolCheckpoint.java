@@ -4,10 +4,10 @@ import gregtech.internal.tool.GTToolHelper;
 import gregtech.internal.tool.GTToolType;
 import gregtech.content.material.Materials;
 import gregtech.content.material.generated.WoodMaterials;
-import gregtech.data.MaterialPrefix;
-import gregtech.item.GTToolItem;
-import gregtech.registry.GTItems;
-import gregtech.recipe.GTToolRecipeSerializers;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.item.GTToolItem;
+import gregtech.content.registry.GTItems;
+import gregtech.content.recipe.GTToolRecipeSerializers;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -152,8 +152,8 @@ public final class NeoManualToolCheckpoint {
   com.mojang.logging.LogUtils.getLogger().info("ELECTRIC_FLUX_CRAFTING_CHECKPOINT_SUCCESS {}","{\"platform\":\"neoforge\",\"recipes\":10,\"electricRows\":5,\"fluxRows\":5,\"actualSerializerRoundTrips\":10,\"electricToFluxAllTiers\":true,\"wireWidthAndMaterialDistinction\":true,\"hammerWear\":400,\"wrenchWear\":800,\"playerCraftingClickVerified\":false}");
  }
  public static void dieselCrafting(ServerLevel level) {
-  var industrial=new gregtech.recipe.FiniteBottleFillingRecipe.ContainerIngredient("Lubricant",true);
-  var fillingOnly=new gregtech.recipe.FiniteBottleFillingRecipe.ContainerIngredient("Lubricant");
+  var industrial=new gregtech.content.recipe.FiniteBottleFillingRecipe.ContainerIngredient("Lubricant",true);
+  var fillingOnly=new gregtech.content.recipe.FiniteBottleFillingRecipe.ContainerIngredient("Lubricant");
   var bottle=equipmentItem("lubricant_bottle");var cell=industrial.example();
   require(industrial.test(bottle)&&industrial.test(cell)&&!fillingOnly.test(bottle),"industrial bottle alternative/default filling isolation");
   var emptyCell=cell.copy();var emptyHandler=net.neoforged.neoforge.fluids.FluidUtil.getFluidHandler(emptyCell).orElseThrow();
@@ -161,10 +161,10 @@ public final class NeoManualToolCheckpoint {
   var shortCell=cell.copy();var shortHandler=net.neoforged.neoforge.fluids.FluidUtil.getFluidHandler(shortCell).orElseThrow();
   shortHandler.drain(1,net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);shortCell=shortHandler.getContainer();
   require(!industrial.test(emptyCell)&&!industrial.test(shortCell)&&!industrial.test(equipmentItem("olive_oil")),"empty/999mB/early oil rejected");
-  var display=gregtech.registry.GTFluidItems.get("Lubricant");require(display!=null&&!industrial.test(new ItemStack(display)),"creative fluid display rejected");
+  var display=gregtech.content.registry.GTFluidItems.get("Lubricant");require(display!=null&&!industrial.test(new ItemStack(display)),"creative fluid display rejected");
   var rotary=cell.copy();var rotaryHandler=net.neoforged.neoforge.fluids.FluidUtil.getFluidHandler(rotary).orElseThrow();
   rotaryHandler.drain(1000,net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);
-  var rotaryFluid=gregtech.registry.GTFluids.still("LubRoCant");
+  var rotaryFluid=gregtech.content.registry.GTFluids.still("LubRoCant");
   require(rotaryFluid!=null&&rotaryFluid.isBound()&&rotaryHandler.fill(new net.neoforged.neoforge.fluids.FluidStack(rotaryFluid.get(),1000),net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE)==1000,"actual LubRoCant vessel");
   rotary=rotaryHandler.getContainer();require(industrial.test(rotary),"original LubRoCant alias accepted");
   int checked=0;
@@ -173,7 +173,7 @@ public final class NeoManualToolCheckpoint {
    String id=spec.id();var material=spec.material();
    var plate=equipmentForm(MaterialPrefix.plateCurved,material);var rod=equipmentForm(MaterialPrefix.stick,material);
    var gear=equipmentForm(MaterialPrefix.gearGt,material);var small=equipmentForm(MaterialPrefix.gearGtSmall,material);
-   var casing=gregtech.registry.GTBlocks.getStack(gregtech.internal.prefix.BlockMaterialPrefix.casingMachineDouble,material);require(!casing.isEmpty(),"diesel original double casing "+id);
+   var casing=gregtech.content.registry.GTBlocks.getStack(gregtech.internal.prefix.BlockMaterialPrefix.casingMachineDouble,material);require(!casing.isEmpty(),"diesel original double casing "+id);
    var actual=recipe(level,"engines/"+id);
    for(var ingredient:actual.getIngredients())if(ingredient!=Ingredient.EMPTY)require(ingredient.getItems().length>0,"diesel ingredient closure "+id);
    for(var lubricant:List.of(bottle,cell,rotary)) {
@@ -181,7 +181,7 @@ public final class NeoManualToolCheckpoint {
     craft(level,"engines/"+id,input,id);
     var decoded=network(actual,level);require(decoded.matches(input,level),"diesel actual container codec round trip "+id);
     var remains=decoded.getRemainingItems(input);
-    if(lubricant==bottle)require(ItemStack.isSameItemSameComponents(remains.get(1),gregtech.item.BottleItem.emptyBottle())&&remains.get(1).getCount()==1,"250mB bottle consumed/empty bottle returned "+id);
+    if(lubricant==bottle)require(ItemStack.isSameItemSameComponents(remains.get(1),gregtech.content.item.BottleItem.emptyBottle())&&remains.get(1).getCount()==1,"250mB bottle consumed/empty bottle returned "+id);
     else require(remains.get(1).getItem()==lubricant.getItem()&&remains.get(1).getCount()==1&&net.neoforged.neoforge.fluids.FluidUtil.getFluidContained(remains.get(1)).orElse(net.neoforged.neoforge.fluids.FluidStack.EMPTY).isEmpty()
         &&net.neoforged.neoforge.fluids.FluidUtil.getFluidContained(lubricant).orElseThrow().getAmount()==1000,"1000mB drained physical vessel/input preserved "+id);
     for(int slot:List.of(0,2,3,4,5,6,7,8))require(remains.get(slot).isEmpty(),"diesel material slot consumed "+id);
@@ -191,7 +191,7 @@ public final class NeoManualToolCheckpoint {
    }
    checked++;
   }
-  var emptyBottle=gregtech.item.BottleItem.emptyBottle();
+  var emptyBottle=gregtech.content.item.BottleItem.emptyBottle();
   var fillingInput=CraftingInput.of(3,2,List.of(cell.copy(),emptyBottle.copy(),emptyBottle.copy(),emptyBottle.copy(),emptyBottle.copy(),ItemStack.EMPTY));
   var filling=recipe(level,"bottles/lubricant_bottle_x4");require(filling.matches(fillingInput,level)&&filling.assemble(fillingInput,level.registryAccess()).getCount()==4&&network(filling,level).matches(fillingInput,level),"legacy 1000mB four-bottle filling still matches/network");
   var invalid=new ArrayList<>(fillingInput.items());invalid.set(0,bottle.copy());require(!filling.matches(CraftingInput.of(3,2,invalid),level),"legacy filling cannot turn one 250mB bottle into four");

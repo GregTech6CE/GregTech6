@@ -3,7 +3,7 @@ package gregtech.gametest;
 import gregtech.internal.recipe.Recipe;
 import gregtech.internal.recipe.RecipeMap;
 import gregtech.content.recipe.GTMainRecipes;
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.data.MachineRecipeMaps;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.ItemStack;

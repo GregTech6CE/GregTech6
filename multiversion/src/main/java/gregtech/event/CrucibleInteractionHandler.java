@@ -4,7 +4,7 @@ package gregtech.event;
 /*import gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity;
 *///?} else {
 import gregtech.GregTech;
-import gregtech.blockentity.machine.SmeltingCrucibleBlockEntity;
+import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
 //?}
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
@@ -50,14 +50,14 @@ public final class CrucibleInteractionHandler {
 *///?} else {
         SmeltingCrucibleBlockEntity crucible = blockEntity instanceof SmeltingCrucibleBlockEntity direct
 //?}
-                ? direct : blockEntity instanceof gregtech.blockentity.machine.MultiblockPortBlockEntity port
+                ? direct : blockEntity instanceof gregtech.content.blockentity.machine.MultiblockPortBlockEntity port
 //? if >=1.21.1 {
                         /*&& port.isCrucibleUpperPort() && port.crucibleController() instanceof SmeltingCrucibleEntity owner ? owner : null;
 *///?} else {
                         && port.isCrucibleUpperPort() ? port.crucibleController() : null;
 //?}
         if (crucible == null) return;
-        if (crucible instanceof gregtech.blockentity.machine.LargeCrucibleControllerBlockEntity large
+        if (crucible instanceof gregtech.content.blockentity.machine.LargeCrucibleControllerBlockEntity large
                 && !large.isStructureOk()) return;
         InteractionResult result = crucible.tryUse(event.getEntity(), event.getHand(), event.getHitVec());
         if (result != InteractionResult.PASS) {

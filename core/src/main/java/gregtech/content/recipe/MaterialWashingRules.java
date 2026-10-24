@@ -2,7 +2,7 @@
 package gregtech.content.recipe;
 
 import gregtech.internal.material.GTMaterial;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 import java.util.List;
 
 /** OP:570-573 / OreDictListenerItem_Washing: one item and one water level per server tick. */

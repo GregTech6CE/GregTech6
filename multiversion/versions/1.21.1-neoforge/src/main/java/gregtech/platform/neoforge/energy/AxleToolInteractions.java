@@ -1,6 +1,6 @@
 package gregtech.platform.neoforge.energy;
-import gregtech.block.energy.AxleBlock;
-import gregtech.blockentity.energy.AxleBlockEntity;
+import gregtech.content.block.energy.AxleBlock;
+import gregtech.content.blockentity.energy.AxleBlockEntity;
 import gregtech.platform.neoforge.NeoToolBindings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;

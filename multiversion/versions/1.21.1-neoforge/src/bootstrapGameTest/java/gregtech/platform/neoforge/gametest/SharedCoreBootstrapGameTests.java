@@ -3,7 +3,7 @@ package gregtech.platform.neoforge.gametest;
 import gregtech.internal.energy.EnergyPackets;
 import gregtech.internal.machine.crucible.CrucibleMath;
 import gregtech.api.material.GTValues;
-import gregtech.api.recipe.MachineWorkCost;
+import gregtech.internal.recipe.MachineWorkCost;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.neoforged.neoforge.gametest.GameTestHolder;

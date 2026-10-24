@@ -1,6 +1,6 @@
 package gregtech.content.recipe;
 
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.data.MachineRecipeMaps;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
@@ -31,7 +31,7 @@ public final class ClayMoldRecipes {
         var item=ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce","mold_ceramic"));
         if (item==null || item==Items.AIR) throw new IllegalStateException("Missing ceramic mold");
 //?}
-        return gregtech.block.machine.MoldItemData.withShape(new ItemStack(item),raw.shape());
+        return gregtech.content.block.machine.MoldItemData.withShape(new ItemStack(item),raw.shape());
     }
     public static int register() {
         int count=0;

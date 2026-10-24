@@ -6,8 +6,8 @@ package gregtech.client;
 import gregtech.GregTech;
 //?}
 import gregtech.internal.material.ItemMaterialRegistry;
-import gregtech.item.MaterialItem;
-import gregtech.block.MaterialBlockItem;
+import gregtech.content.item.MaterialItem;
+import gregtech.content.block.MaterialBlockItem;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.api.distmarker.Dist;

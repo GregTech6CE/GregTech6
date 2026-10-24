@@ -3,7 +3,7 @@
 package gregtech.content.energy;
 
 import gregtech.internal.material.GTMaterial;
-import gregtech.data.ImportedMaterialData;
+import gregtech.content.data.ImportedMaterialData;
 import gregtech.content.multiblock.HeatExchangerRules;
 import java.util.List;
 
@@ -13,7 +13,7 @@ public final class HeatExchangerCatalog {
     public record Spec(String id, int sourceId, GTMaterial material, int rate, int efficiency, float hardness) {
         public boolean dense() { return sourceId >= 9150; }
         public HeatExchangerRules.Settings settings() {
-            return new HeatExchangerRules.Settings(rate, efficiency, "gt.recipe.fuels.hot", gregtech.data.GregTechTags.Energy.HU.getId());
+            return new HeatExchangerRules.Settings(rate, efficiency, "gt.recipe.fuels.hot", gregtech.content.data.GregTechTags.Energy.HU.getId());
         }
         public gregtech.internal.material.ItemComposition composition() {
             long unit = gregtech.api.material.GTValues.U;

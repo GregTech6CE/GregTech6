@@ -270,7 +270,7 @@ public final class TankTooltips {
 
     // === Magnifying Glass Info (sent to player chat) ===
 
-    public static void sendTankInfo(gregtech.blockentity.machine.TankBlockEntity tank,
+    public static void sendTankInfo(gregtech.content.blockentity.machine.TankBlockEntity tank,
                                     net.minecraft.world.entity.player.Player player) {
         TankSpec spec = tank.spec();
         var fluid = tank.getFluidTank().getFluid();

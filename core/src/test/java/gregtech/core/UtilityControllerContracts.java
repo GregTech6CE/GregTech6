@@ -4,7 +4,7 @@ import gregtech.api.material.*;
 import gregtech.internal.material.*;
 import gregtech.content.machine.MachineConstructionMaterials;
 import gregtech.content.multiblock.OriginalUtilityControllerData;
-import gregtech.data.SourceBlockProperties;
+import gregtech.content.data.SourceBlockProperties;
 import java.util.*;
 
 /** Fixed Loader 17197/17998 inputs and specialized source tooltip arithmetic. */

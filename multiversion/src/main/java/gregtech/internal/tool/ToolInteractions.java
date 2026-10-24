@@ -1,7 +1,7 @@
 package gregtech.internal.tool;
 
 import gregtech.util.GTPlacementCode;
-import gregtech.blockentity.energy.ElectricWireBlockEntity;
+import gregtech.content.blockentity.energy.ElectricWireBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -31,7 +31,7 @@ public final class ToolInteractions {
     /** Read-only feasibility check used on both sides, including neighbor axle constraints. */
     public static boolean canApply(ToolInteractionSpec spec, BlockState state, Level level, BlockPos pos,
                                    Player player, ItemStack tool, Direction side) {
-        if (tool.getItem() instanceof gregtech.item.ElectricToolItem electric
+        if (tool.getItem() instanceof gregtech.content.item.ElectricToolItem electric
                 && !electric.canInteract(tool)) return false;
         if (!spec.allows(state, side) || !player.mayBuild() || !level.mayInteract(player, pos)) return false;
         if (state.getBlock() instanceof ToolInteractionTarget target && !target.canUseTool(level, pos, player, tool)) return false;
@@ -46,7 +46,7 @@ public final class ToolInteractions {
         var otherSpec = describe(other, tool);
         return otherSpec == null || otherSpec.connection() != spec.connection()
                 || spec.connection() != ToolInteractionSpec.ConnectionKind.AXLE
-                || gregtech.block.energy.AxleBlock.isValidConnectionState(other.setValue(
+                || gregtech.content.block.energy.AxleBlock.isValidConnectionState(other.setValue(
                     spec.connection().property(side.getOpposite()), !state.getValue(spec.connection().property(side))));
     }
 
@@ -95,7 +95,7 @@ public final class ToolInteractions {
 //? if >=1.21.1 {
         /*level.playSound(null, pos, gregtech.content.transport.fluid.FluidTransportRegistries.WRENCH.get(),
 *///?} else {
-        level.playSound(null, pos, gregtech.registry.GTSounds.WRENCH.get(),
+        level.playSound(null, pos, gregtech.content.registry.GTSounds.WRENCH.get(),
 //?}
                 net.minecraft.sounds.SoundSource.BLOCKS, 1.0F, 1.0F);
         if (spec.connection() == null) GTToolHelper.damageForToolClickReturn(player.getItemInHand(hand), 10000, player);
@@ -109,6 +109,6 @@ public final class ToolInteractions {
 *///?} else {
 //?}
         if (level.getBlockEntity(pos) instanceof ElectricWireBlockEntity wire) wire.onConnectionChanged();
-        if (level.getBlockEntity(pos) instanceof gregtech.blockentity.energy.AxleBlockEntity axle) axle.onConnectionChanged();
+        if (level.getBlockEntity(pos) instanceof gregtech.content.blockentity.energy.AxleBlockEntity axle) axle.onConnectionChanged();
     }
 }

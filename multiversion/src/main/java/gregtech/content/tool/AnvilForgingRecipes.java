@@ -3,11 +3,11 @@ package gregtech.content.tool;
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
 import gregtech.internal.recipe.Recipe;
-import gregtech.data.*;
-import gregtech.registry.GTItems;
+import gregtech.content.data.*;
+import gregtech.content.registry.GTItems;
 import net.minecraft.world.item.ItemStack;
 import java.util.List;
-import static gregtech.data.MaterialPrefix.*;
+import static gregtech.content.data.MaterialPrefix.*;
 
 /** Loader_Recipes_Handlers 175–199, restricted by the original self-forging material declarations. */
 public final class AnvilForgingRecipes {

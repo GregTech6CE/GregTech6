@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.registry.*;
-import gregtech.block.wood.*;
-import gregtech.block.tool.SapBagBlock;
-import gregtech.blockentity.SapBagBlockEntity;
+import gregtech.content.registry.*;
+import gregtech.content.block.wood.*;
+import gregtech.content.block.tool.SapBagBlock;
+import gregtech.content.blockentity.SapBagBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -104,7 +104,7 @@ public final class ResinConservationTests {
         var pos=new BlockPos(20000000,100,20000000);
         h.assertTrue(!h.getLevel().hasChunkAt(pos),"test starts in an unloaded region");
         for(var species:new WoodSpecies[]{WoodSpecies.RUBBER,WoodSpecies.MAPLE,WoodSpecies.RAINBOWOOD}) {
-            h.assertTrue(gregtech.blockentity.TreeHoleBlockEntity.countTreeLeaves(h.getLevel(),pos,species)==0,"unloaded tree cannot refill");
+            h.assertTrue(gregtech.content.blockentity.TreeHoleBlockEntity.countTreeLeaves(h.getLevel(),pos,species)==0,"unloaded tree cannot refill");
             for(int dx=-1;dx<=1;dx++) for(int dz=-1;dz<=1;dz++) h.assertTrue(!h.getLevel().hasChunkAt(pos.offset(dx*16,0,dz*16)),"scan does not load neighboring chunks");
         }
         h.succeed();

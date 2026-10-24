@@ -1,14 +1,14 @@
 package gregtech.gametest;
 
 import gregtech.internal.multiblock.MultiblockLayout;
-import gregtech.blockentity.machine.VonDaGraaggControllerBlockEntity;
+import gregtech.content.blockentity.machine.VonDaGraaggControllerBlockEntity;
 import gregtech.content.multiblock.LargeMachineParts;
 import gregtech.content.multiblock.ControllerStructureLayouts;
 import gregtech.content.multiblock.VonDaGraaggSpawnInhibitor;
-import gregtech.data.GregTechTags;
-import gregtech.block.stone.StoneType;
-import gregtech.block.stone.StoneVariant;
-import gregtech.registry.GTBlocks;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.block.stone.StoneType;
+import gregtech.content.block.stone.StoneVariant;
+import gregtech.content.registry.GTBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
 import gregtech.internal.recipe.Recipe;
-import gregtech.block.tool.DynamiteBlock;
-import gregtech.block.tool.RopeBlock;
+import gregtech.content.block.tool.DynamiteBlock;
+import gregtech.content.block.tool.RopeBlock;
 import gregtech.content.material.Materials;
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.data.MachineRecipeMaps;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
@@ -92,8 +92,8 @@ public final class ToolBlockTests {
         var manager = h.getLevel().getRecipeManager();
         var dustIds = new java.util.TreeSet<String>();
         var silica = gregtech.content.material.Materials.SiliconDioxide;
-        var stack = gregtech.registry.GTItems.getStack(
-                gregtech.data.MaterialPrefix.dust, silica, 1);
+        var stack = gregtech.content.registry.GTItems.getStack(
+                gregtech.content.data.MaterialPrefix.dust, silica, 1);
         if (!stack.isEmpty()) {
             dustIds.add(ForgeRegistries.ITEMS.getKey(stack.getItem()).toString());
         }
@@ -114,7 +114,7 @@ public final class ToolBlockTests {
                 h.assertTrue(ingredient.getItems().length > 0,
                         id + " ingredient resolves to an item");
             }
-            h.assertTrue(recipe.get() instanceof gregtech.recipe.ToolShapedRecipe tool
+            h.assertTrue(recipe.get() instanceof gregtech.content.recipe.ToolShapedRecipe tool
                             && !tool.allowMirror(),
                     id + " does not mirror (GT6 uses DEF_REV_NCC)");
         }

@@ -3,15 +3,15 @@ package gregtech.gametest;
 import gregtech.GregTech;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.tool.GTToolType;
-import gregtech.block.energy.EnergyNodeBlock;
-import gregtech.block.energy.GearboxBlock;
-import gregtech.blockentity.energy.EnergyNodeBlockEntity;
-import gregtech.blockentity.energy.GearboxBlockEntity;
+import gregtech.content.block.energy.EnergyNodeBlock;
+import gregtech.content.block.energy.GearboxBlock;
+import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
+import gregtech.content.blockentity.energy.GearboxBlockEntity;
 import gregtech.content.material.Materials;
-import gregtech.data.GregTechTags;
-import gregtech.data.MaterialPrefix;
-import gregtech.item.GTToolItem;
-import gregtech.registry.GTItems;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.item.GTToolItem;
+import gregtech.content.registry.GTItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -83,7 +83,7 @@ public final class GearboxMechanicsRepairTests {
         int count = 0;
         for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
             ItemStack stack = player.getInventory().getItem(i);
-            if (gregtech.item.MaterialItem.isMaterialItem(stack, MaterialPrefix.gearGt, Materials.Bronze)) {
+            if (gregtech.content.item.MaterialItem.isMaterialItem(stack, MaterialPrefix.gearGt, Materials.Bronze)) {
                 count += stack.getCount();
             }
         }

@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.GameType;
 import gregtech.internal.tool.*;
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.item.GTToolItem;
+import gregtech.content.item.GTToolItem;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
@@ -58,9 +58,9 @@ public final class IssueAxeTests {
     public static void tallerColumnSlowsMining(GameTestHelper h) {
         var pos=h.absolutePos(new BlockPos(2,2,2));var level=h.getLevel();var p=player(h,false);
         var state=Blocks.OAK_LOG.defaultBlockState();level.setBlockAndUpdate(pos.above(),Blocks.AIR.defaultBlockState());
-        float one=gregtech.item.behavior.AxeColumnHarvest.speed(p,p.getMainHandItem(),state,pos,10);
+        float one=gregtech.content.item.behavior.AxeColumnHarvest.speed(p,p.getMainHandItem(),state,pos,10);
         level.setBlockAndUpdate(pos.above(),state);level.setBlockAndUpdate(pos.above(2),state);
-        float tall=gregtech.item.behavior.AxeColumnHarvest.speed(p,p.getMainHandItem(),state,pos,10);
+        float tall=gregtech.content.item.behavior.AxeColumnHarvest.speed(p,p.getMainHandItem(),state,pos,10);
         h.assertTrue(one==20&&tall<10,"height reduces original doubled log speed");h.succeed();
     }
 }

@@ -2,7 +2,7 @@ package gregtech.core;
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
 import gregtech.content.recipe.ReviewedOreGeneratedFluids;
-import gregtech.data.FluidCatalog;
+import gregtech.content.data.FluidCatalog;
 public final class OreThermalSourceContracts {
  static void require(boolean condition,String evidence){if(!condition)throw new AssertionError(evidence);System.out.println(evidence);}
  static FluidCatalog.FluidEntry exact(){return new FluidCatalog.FluidEntry("mercury",FluidCatalog.FluidTextureMode.DEDICATED,"Mercury",0,true,false,false,0,0,0,300,FluidCatalog.FluidFlags.LIQUID);}

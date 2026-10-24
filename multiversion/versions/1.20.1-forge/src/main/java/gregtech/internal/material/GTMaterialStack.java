@@ -1,6 +1,6 @@
 package gregtech.internal.material;
 
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 import net.minecraft.world.item.ItemStack;
 
 /**

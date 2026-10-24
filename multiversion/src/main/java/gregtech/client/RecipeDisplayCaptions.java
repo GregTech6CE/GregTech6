@@ -18,14 +18,14 @@ public final class RecipeDisplayCaptions {
             if (visibility.usage())
                 caption(graphics, Component.translatable(stats.generating() ? "gt6ce.jei.output" : "gt6ce.jei.usage", stats.usage().toString(), ENERGY_UNIT), 98);
             if (visibility.tier()) caption(graphics, Component.translatable("gt6ce.jei.tier", stats.tier().toString(), ENERGY_UNIT), 110);
-            if(visibility.power() && map!=gregtech.data.MachineRecipeMaps.Fusion) caption(graphics, Component.translatable("gt6ce.jei.power", stats.power()), 122);
+            if(visibility.power() && map!=gregtech.content.data.MachineRecipeMaps.Fusion) caption(graphics, Component.translatable("gt6ce.jei.power", stats.power()), 122);
         } else if(visibility.tier()) {
             caption(graphics, Component.translatable("gt6ce.jei.tier_unspecified"), 110);
         }
         // Instant maps (the crucibles) convert on contact, so a duration line would be a lie.
         if (!map.mInstantRecipes)
             caption(graphics, Component.translatable("gt6ce.jei.time_" + stats.timeUnit(), stats.time()), 134);
-        if(map==gregtech.data.MachineRecipeMaps.Fusion)
+        if(map==gregtech.content.data.MachineRecipeMaps.Fusion)
             caption(graphics,Component.translatable("gt6ce.fusion.startup",recipe.mSpecialValue),122);
         else if(map.hasSpecialValueLabel() && recipe.mSpecialValue!=0)
             // GT6 NEI special value, e.g. the crucible's "Temperature: 1811 K".

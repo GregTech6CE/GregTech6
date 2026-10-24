@@ -1,13 +1,13 @@
 package gregtech.gametest;
 
-import gregtech.block.machine.OriginalBedrockDrillControllerBlock;
-import gregtech.block.machine.OriginalLightningRodControllerBlock;
-import gregtech.blockentity.machine.BedrockDrillControllerBlockEntity;
-import gregtech.blockentity.machine.LightningRodControllerBlockEntity;
-import gregtech.blockentity.machine.MultiblockPortBlockEntity;
+import gregtech.content.block.machine.OriginalBedrockDrillControllerBlock;
+import gregtech.content.block.machine.OriginalLightningRodControllerBlock;
+import gregtech.content.blockentity.machine.BedrockDrillControllerBlockEntity;
+import gregtech.content.blockentity.machine.LightningRodControllerBlockEntity;
+import gregtech.content.blockentity.machine.MultiblockPortBlockEntity;
 import gregtech.content.multiblock.LargeMachineParts;
-import gregtech.data.GregTechTags;
-import gregtech.registry.GTFluids;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.registry.GTFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

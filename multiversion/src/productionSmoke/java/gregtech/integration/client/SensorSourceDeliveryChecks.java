@@ -5,7 +5,7 @@ import gregtech.internal.material.ItemMaterialRegistry;
 import gregtech.internal.sensor.SensorCatalog;
 import gregtech.client.CommonBlockTooltips;
 import gregtech.content.machine.MachineConstructionMaterials;
-import gregtech.data.BlockHarvestPolicy;
+import gregtech.content.data.BlockHarvestPolicy;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -21,7 +21,7 @@ final class SensorSourceDeliveryChecks {
             require(BuiltInRegistries.ITEM.containsKey(id), "Source sensor item " + id);
             var stack = new ItemStack(BuiltInRegistries.ITEM.get(id));
             var block = ((BlockItem)stack.getItem()).getBlock();
-            require(block instanceof gregtech.block.sensor.SensorBlock sensor && sensor.kind().name().equals(entry.kind()), "Actual sensor source kind " + id);
+            require(block instanceof gregtech.content.block.sensor.SensorBlock sensor && sensor.kind().name().equals(entry.kind()), "Actual sensor source kind " + id);
 //? if >=1.21.1 {
             /*var lines = stack.getTooltipLines(Item.TooltipContext.EMPTY,null,TooltipFlag.NORMAL);
 *///?} else {

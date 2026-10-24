@@ -5,10 +5,10 @@ import gregtech.internal.material.*;
 import gregtech.internal.tool.*;
 import gregtech.content.material.Materials;
 import gregtech.content.tool.ElectricToolAssembly;
-import gregtech.data.*;
-import gregtech.item.*;
-import gregtech.recipe.ToolShapedRecipe;
-import gregtech.registry.*;
+import gregtech.content.data.*;
+import gregtech.content.item.*;
+import gregtech.content.recipe.ToolShapedRecipe;
+import gregtech.content.registry.*;
 import io.netty.buffer.Unpooled;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.network.FriendlyByteBuf;
@@ -45,7 +45,7 @@ public final class ElectricToolAssemblyTests {
                 grid.setItem(3,GTItems.getStack(MaterialPrefix.screw,Materials.Titanium));
                 h.assertTrue(!recipe.matches(grid,h.getLevel()),"cannot mix rod/head material with a different screw");
             } else {
-                grid.setItem(spec==ElectricToolAssembly.SCREWDRIVER?6:7,new ItemStack(gregtech.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,2)));
+                grid.setItem(spec==ElectricToolAssembly.SCREWDRIVER?6:7,new ItemStack(gregtech.content.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,2)));
                 h.assertTrue(!recipe.matches(grid,h.getLevel()),"MV battery is not an LV battery");
             }
             grid=grid(recipe);

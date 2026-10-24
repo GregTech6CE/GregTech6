@@ -1,6 +1,6 @@
 package gregtech.content.tool;
 
-import gregtech.item.ElectricToolItem;
+import gregtech.content.item.ElectricToolItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;

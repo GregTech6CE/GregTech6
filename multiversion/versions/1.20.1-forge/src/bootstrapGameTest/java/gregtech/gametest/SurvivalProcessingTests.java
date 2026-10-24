@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
-import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.internal.recipe.*;
 import gregtech.content.recipe.*;
-import gregtech.data.*;
-import gregtech.registry.GTTechnological;
+import gregtech.content.data.*;
+import gregtech.content.registry.GTTechnological;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.item.*;
 import net.minecraftforge.fluids.FluidStack;
@@ -87,11 +87,11 @@ public final class SurvivalProcessingTests {
         var gold = row(SurvivalUtilityRecipes.INSTANCE, "mix/glistering_melon");
         h.assertTrue(gold.mInputs[1].is(Items.GOLD_NUGGET), "Vanilla nuggets accepted");
         var sugar = gregtech.internal.material.GTMaterialRegistry.get("Sugar");
-        h.assertTrue(!gregtech.registry.GTItems.getStack(MaterialPrefix.gemChipped, sugar).isEmpty(), "Forced sugar crystal form restored");
-        h.assertTrue(gregtech.registry.GTItems.getStack(MaterialPrefix.gem, sugar).isEmpty(), "Sugar does not gain unrelated gem forms");
+        h.assertTrue(!gregtech.content.registry.GTItems.getStack(MaterialPrefix.gemChipped, sugar).isEmpty(), "Forced sugar crystal form restored");
+        h.assertTrue(gregtech.content.registry.GTItems.getStack(MaterialPrefix.gem, sugar).isEmpty(), "Sugar does not gain unrelated gem forms");
         var wood = gregtech.internal.material.GTMaterialRegistry.get("Wood");
         for (var prefix : List.of(MaterialPrefix.dust, MaterialPrefix.dustSmall, MaterialPrefix.dustTiny))
-            h.assertTrue(!gregtech.registry.GTItems.getStack(prefix, wood).isEmpty(), "Original G_WOOD dust forms registered");
+            h.assertTrue(!gregtech.content.registry.GTItems.getStack(prefix, wood).isEmpty(), "Original G_WOOD dust forms registered");
         h.succeed();
     }
     private static Recipe row(OriginalRecipeBatch batch, String id) {

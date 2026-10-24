@@ -1,19 +1,19 @@
 package gregtech.gametest;
 
-import gregtech.block.energy.SignalWireBlock;
+import gregtech.content.block.energy.SignalWireBlock;
 import gregtech.content.cover.CoverWorldInteraction;
 import gregtech.content.cover.PanelCoverHost;
-import gregtech.registry.GTSignalWires;
-import gregtech.registry.GTTechnological;
+import gregtech.content.registry.GTSignalWires;
+import gregtech.content.registry.GTTechnological;
 import gregtech.content.cover.CoverPlacement;
 import gregtech.content.cover.CoverItems;
-import gregtech.block.misc.PileBlock;
-import gregtech.blockentity.misc.PileBlockEntity;
+import gregtech.content.block.misc.PileBlock;
+import gregtech.content.blockentity.misc.PileBlockEntity;
 import gregtech.internal.tool.GTToolType;
-import gregtech.item.GTToolItem;
+import gregtech.content.item.GTToolItem;
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.registry.GTItems;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.registry.GTItems;
+import gregtech.content.data.MaterialPrefix;
 import java.util.LinkedHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

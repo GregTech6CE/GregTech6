@@ -28,13 +28,13 @@ import gregtech.internal.machine.MachineRegistry;
 
 import gregtech.internal.machine.BurningBoxFuelType;
 
-import gregtech.block.machine.BasicMachineBlock;
+import gregtech.content.block.machine.BasicMachineBlock;
 
-import gregtech.block.machine.BurningBoxBlock;
+import gregtech.content.block.machine.BurningBoxBlock;
 
-import gregtech.block.machine.EngineBlock;
+import gregtech.content.block.machine.EngineBlock;
 
-import gregtech.block.machine.SolidBurningBoxBlock;
+import gregtech.content.block.machine.SolidBurningBoxBlock;
 
 import com.mojang.logging.LogUtils;
 
@@ -640,7 +640,7 @@ public final class MachineBlockClientModels {
 
 
 //? if >=1.21.1 {
-/*        for (var entry : gregtech.registry.GTEngines.all()) {
+/*        for (var entry : gregtech.content.registry.GTEngines.all()) {
 *///?} else {
         for (var entry : MachineRegistry.allEngines()) {
 //?}

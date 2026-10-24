@@ -2,8 +2,8 @@ package gregtech.gametest;
 
 import gregtech.internal.machine.BoilerSpec;
 import gregtech.api.machine.HeatHandler;
-import gregtech.blockentity.machine.BoilerTankBlockEntity;
-import gregtech.registry.GTFluids;
+import gregtech.content.blockentity.machine.BoilerTankBlockEntity;
+import gregtech.content.registry.GTFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
@@ -29,7 +29,7 @@ public final class HeatHandlerTests {
 
     private static BoilerTankBlockEntity boiler(GameTestHelper helper, BlockPos pos) {
         var block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "steam_boiler_bronze"));
-        helper.assertTrue(block instanceof gregtech.block.machine.BoilerTankBlock, "bronze boiler block");
+        helper.assertTrue(block instanceof gregtech.content.block.machine.BoilerTankBlock, "bronze boiler block");
         helper.getLevel().setBlockAndUpdate(pos, block.defaultBlockState());
         var entity = helper.getLevel().getBlockEntity(pos);
         helper.assertTrue(entity instanceof BoilerTankBlockEntity, "boiler block entity");

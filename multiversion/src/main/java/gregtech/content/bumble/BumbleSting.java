@@ -1,7 +1,7 @@
 package gregtech.content.bumble;
 
-import gregtech.damage.GTDamageTypes;
-import gregtech.damage.GTHazmat;
+import gregtech.content.damage.GTDamageTypes;
+import gregtech.content.damage.GTHazmat;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;

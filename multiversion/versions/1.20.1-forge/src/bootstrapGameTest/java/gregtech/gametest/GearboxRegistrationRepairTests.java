@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
-import gregtech.registry.GTBlockEntities;
-import gregtech.registry.GTGearboxes;
+import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTGearboxes;
 import gregtech.GregTech;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

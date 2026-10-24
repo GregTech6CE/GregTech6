@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.recipe.FiniteBottleFillingRecipe;
-import gregtech.registry.GTFluidItems;
-import gregtech.registry.GTFluids;
+import gregtech.content.recipe.FiniteBottleFillingRecipe;
+import gregtech.content.registry.GTFluidItems;
+import gregtech.content.registry.GTFluids;
 import io.netty.buffer.Unpooled;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

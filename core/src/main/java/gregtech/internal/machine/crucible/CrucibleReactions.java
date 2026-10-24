@@ -2,7 +2,7 @@ package gregtech.internal.machine.crucible;
 
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
-import gregtech.data.generated.GT6Materials.*;
+import gregtech.content.data.generated.GT6Materials.*;
 import java.util.*;
 
 /** GT6 MT.addAlloyingRecipe ratios; output yield is independent of consumed flux. */

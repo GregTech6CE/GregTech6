@@ -1,12 +1,12 @@
 package gregtech.gametest;
 import gregtech.internal.multiblock.MultiblockLayout.Role;
-import gregtech.block.machine.BasicMachineBlock;
-import gregtech.block.energy.EnergyNodeBlock;
-import gregtech.blockentity.machine.*;
-import gregtech.blockentity.energy.EnergyNodeBlockEntity;
+import gregtech.content.block.machine.BasicMachineBlock;
+import gregtech.content.block.energy.EnergyNodeBlock;
+import gregtech.content.blockentity.machine.*;
+import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
 
 import gregtech.content.multiblock.*;
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;

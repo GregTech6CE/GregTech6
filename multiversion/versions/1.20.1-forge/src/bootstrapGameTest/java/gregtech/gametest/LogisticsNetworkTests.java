@@ -1,12 +1,12 @@
 package gregtech.gametest;
 
-import gregtech.block.energy.ElectricWireBlock;
-import gregtech.block.machine.LogisticsWireBlock;
-import gregtech.blockentity.machine.LogisticsCoreControllerBlockEntity;
-import gregtech.blockentity.machine.LogisticsWireBlockEntity;
+import gregtech.content.block.energy.ElectricWireBlock;
+import gregtech.content.block.machine.LogisticsWireBlock;
+import gregtech.content.blockentity.machine.LogisticsCoreControllerBlockEntity;
+import gregtech.content.blockentity.machine.LogisticsWireBlockEntity;
 import gregtech.content.logistics.LogisticsCoreStructure;
 import gregtech.content.multiblock.LargeMachineParts;
-import gregtech.registry.GTIconSetBlocks;
+import gregtech.content.registry.GTIconSetBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -63,7 +63,7 @@ public final class LogisticsNetworkTests {
         var cpu = LogisticsCoreStructure.cells().stream().filter(c -> c.kind() == LogisticsCoreStructure.Kind.CPU)
                 .skip(1).findFirst().orElseThrow().at(core.getBlockPos(), Direction.NORTH);
         helper.assertTrue(shortRange.contains(cpu)
-                        && !((gregtech.blockentity.machine.MultiblockPortBlockEntity)
+                        && !((gregtech.content.blockentity.machine.MultiblockPortBlockEntity)
                         helper.getLevel().getBlockEntity(cpu)).canLogistics(Direction.NORTH),
                 "GT6 seeds interior parts in the initial cube but closed processor faces do not relay");
         helper.getLevel().setBlock(cpu, LargeMachineParts.block(LogisticsCoreStructure.CONTROL).defaultBlockState(), 3);

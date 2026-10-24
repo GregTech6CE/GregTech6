@@ -1,6 +1,6 @@
 package gregtech.emi;
 
-import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.internal.recipe.*;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;

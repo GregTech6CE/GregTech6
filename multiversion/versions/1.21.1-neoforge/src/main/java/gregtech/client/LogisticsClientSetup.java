@@ -16,9 +16,9 @@ public final class LogisticsClientSetup {
 
     @SubscribeEvent
     public static void renderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(gregtech.registry.GTBlockEntities.LOGISTICS_CORE.get(),
+        event.registerBlockEntityRenderer(gregtech.content.registry.GTBlockEntities.LOGISTICS_CORE.get(),
                 LogisticsCoverRenderer::new);
-        event.registerBlockEntityRenderer(gregtech.registry.GTBlockEntities.MULTIBLOCK_PORT.get(),
+        event.registerBlockEntityRenderer(gregtech.content.registry.GTBlockEntities.MULTIBLOCK_PORT.get(),
                 LogisticsCoverRenderer::new);
         event.registerBlockEntityRenderer(LogisticsRegistries.LOGISTICS_WIRE.get(), LogisticsCoverRenderer::new);
     }

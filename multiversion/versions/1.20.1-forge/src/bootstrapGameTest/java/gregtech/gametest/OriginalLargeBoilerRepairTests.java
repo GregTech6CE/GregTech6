@@ -1,15 +1,15 @@
 package gregtech.gametest;
 
 import gregtech.internal.multiblock.MultiblockLayout;
-import gregtech.block.machine.OriginalLargeBoilerControllerBlock;
-import gregtech.blockentity.machine.MultiblockPortBlockEntity;
-import gregtech.blockentity.machine.OriginalLargeBoilerControllerBlockEntity;
+import gregtech.content.block.machine.OriginalLargeBoilerControllerBlock;
+import gregtech.content.blockentity.machine.MultiblockPortBlockEntity;
+import gregtech.content.blockentity.machine.OriginalLargeBoilerControllerBlockEntity;
 import gregtech.content.multiblock.LargeMachineParts;
 import gregtech.content.multiblock.OriginalLargeBoilerSpecs;
-import gregtech.data.GregTechTags;
-import gregtech.registry.GTBlockEntities;
-import gregtech.registry.GTFluids;
-import gregtech.registry.GTTanks;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTFluids;
+import gregtech.content.registry.GTTanks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -47,7 +47,7 @@ public final class OriginalLargeBoilerRepairTests {
             BlockPos pos = cell.at(CONTROL, Direction.NORTH);
             if (pos.equals(CONTROL)) continue;
             Block part = switch (cell.role()) {
-                case HEAT_INPUT -> gregtech.registry.GTMultiblocks.HEAT_TRANSMITTER.get();
+                case HEAT_INPUT -> gregtech.content.registry.GTMultiblocks.HEAT_TRANSMITTER.get();
                 case AIR -> Blocks.AIR;
                 default -> spec.wall();
             };

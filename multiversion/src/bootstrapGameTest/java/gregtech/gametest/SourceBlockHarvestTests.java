@@ -2,8 +2,8 @@ package gregtech.gametest;
 
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.tool.*;
-import gregtech.data.BlockHarvestPolicy;
-import gregtech.item.GTToolItem;
+import gregtech.content.data.BlockHarvestPolicy;
+import gregtech.content.item.GTToolItem;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.*;

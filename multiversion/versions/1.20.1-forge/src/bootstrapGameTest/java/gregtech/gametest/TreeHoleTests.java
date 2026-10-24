@@ -1,14 +1,14 @@
 package gregtech.gametest;
 
 import gregtech.internal.tool.GTToolType;
-import gregtech.block.wood.TreeHoleBlock;
-import gregtech.block.wood.WoodSpecies;
-import gregtech.blockentity.TreeHoleBlockEntity;
-import gregtech.registry.GTBlockEntities;
-import gregtech.registry.GTToolItems;
-import gregtech.registry.GTTreeHoles;
-import gregtech.registry.GTWoods;
-import gregtech.worldgen.GTTreeShapes;
+import gregtech.content.block.wood.TreeHoleBlock;
+import gregtech.content.block.wood.WoodSpecies;
+import gregtech.content.blockentity.TreeHoleBlockEntity;
+import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTToolItems;
+import gregtech.content.registry.GTTreeHoles;
+import gregtech.content.registry.GTWoods;
+import gregtech.content.worldgen.GTTreeShapes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

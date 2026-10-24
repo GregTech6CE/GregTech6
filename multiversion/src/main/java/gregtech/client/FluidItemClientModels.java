@@ -5,9 +5,9 @@ package gregtech.client;
 /*import gregtech.platform.neoforge.fluid.FluidDisplayItem;
 *///?} else {
 import gregtech.GregTech;
-import gregtech.item.FluidItem;
+import gregtech.content.item.FluidItem;
 //?}
-import gregtech.registry.GTFluidItems;
+import gregtech.content.registry.GTFluidItems;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.block.model.ItemTransforms;

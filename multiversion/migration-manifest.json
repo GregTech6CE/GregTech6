@@ -5455,7 +5455,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/BlackSandBlock.java",
+      "path": "gregtech/content/block/BlackSandBlock.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -5469,7 +5469,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/BlockPrefixPresentation.java",
+      "path": "gregtech/content/block/BlockPrefixPresentation.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -5483,7 +5483,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/BookShelfBlock.java",
+      "path": "gregtech/content/block/BookShelfBlock.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -5497,7 +5497,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/CrystalOreBlock.java",
+      "path": "gregtech/content/block/CrystalOreBlock.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -5511,7 +5511,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/FluidSpringBlock.java",
+      "path": "gregtech/content/block/FluidSpringBlock.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -5525,7 +5525,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/GTGrassBlock.java",
+      "path": "gregtech/content/block/GTGrassBlock.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -5539,7 +5539,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/GTWorldFluidBlock.java",
+      "path": "gregtech/content/block/GTWorldFluidBlock.java",
       "kind": "conditional",
       "conditional_regions": 12,
       "source_sha256": {
@@ -5553,7 +5553,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/IconSetBlock.java",
+      "path": "gregtech/content/block/IconSetBlock.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -5567,7 +5567,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/IconSetLilyBlock.java",
+      "path": "gregtech/content/block/IconSetLilyBlock.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -5581,7 +5581,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/IconSetPlantBlock.java",
+      "path": "gregtech/content/block/IconSetPlantBlock.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -5595,7 +5595,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/LootCrateBlock.java",
+      "path": "gregtech/content/block/LootCrateBlock.java",
       "kind": "conditional",
       "conditional_regions": 7,
       "source_sha256": {
@@ -5609,7 +5609,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/MaterialBlock.java",
+      "path": "gregtech/content/block/MaterialBlock.java",
       "kind": "conditional",
       "conditional_regions": 8,
       "source_sha256": {
@@ -5623,7 +5623,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/MaterialBlockItem.java",
+      "path": "gregtech/content/block/MaterialBlockItem.java",
       "kind": "conditional",
       "conditional_regions": 16,
       "source_sha256": {
@@ -5637,7 +5637,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/OreBlock.java",
+      "path": "gregtech/content/block/OreBlock.java",
       "kind": "conditional",
       "conditional_regions": 13,
       "source_sha256": {
@@ -5651,7 +5651,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/OreHostStone.java",
+      "path": "gregtech/content/block/OreHostStone.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -5665,7 +5665,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/RockBlock.java",
+      "path": "gregtech/content/block/RockBlock.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -5679,7 +5679,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/RockOreBlock.java",
+      "path": "gregtech/content/block/RockOreBlock.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -5693,7 +5693,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/SmallOreDrops.java",
+      "path": "gregtech/content/block/SmallOreDrops.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -5707,7 +5707,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/TwigBlock.java",
+      "path": "gregtech/content/block/TwigBlock.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -5721,7 +5721,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/VanillaOreBlock.java",
+      "path": "gregtech/content/block/VanillaOreBlock.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -5735,7 +5735,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/energy/AxleBlock.java",
+      "path": "gregtech/content/block/energy/AxleBlock.java",
       "kind": "conditional",
       "conditional_regions": 11,
       "source_sha256": {
@@ -5749,7 +5749,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/energy/BatteryBoxBlock.java",
+      "path": "gregtech/content/block/energy/BatteryBoxBlock.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -5763,7 +5763,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/energy/ChemicalBatteryBlock.java",
+      "path": "gregtech/content/block/energy/ChemicalBatteryBlock.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -5777,7 +5777,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/energy/ElectricTransformerBlock.java",
+      "path": "gregtech/content/block/energy/ElectricTransformerBlock.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -5791,7 +5791,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/energy/ElectricWireBlock.java",
+      "path": "gregtech/content/block/energy/ElectricWireBlock.java",
       "kind": "conditional",
       "conditional_regions": 11,
       "source_sha256": {
@@ -5805,7 +5805,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/energy/EnergyNodeBlock.java",
+      "path": "gregtech/content/block/energy/EnergyNodeBlock.java",
       "kind": "conditional",
       "conditional_regions": 16,
       "source_sha256": {
@@ -5819,7 +5819,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/energy/GearboxBlock.java",
+      "path": "gregtech/content/block/energy/GearboxBlock.java",
       "kind": "conditional",
       "conditional_regions": 12,
       "source_sha256": {
@@ -5833,7 +5833,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/energy/LaserConverterBlock.java",
+      "path": "gregtech/content/block/energy/LaserConverterBlock.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -5847,7 +5847,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/energy/LaserFiberBlock.java",
+      "path": "gregtech/content/block/energy/LaserFiberBlock.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -5861,7 +5861,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/energy/MagnetBlock.java",
+      "path": "gregtech/content/block/energy/MagnetBlock.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -5875,7 +5875,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/energy/MagnetMachineBlock.java",
+      "path": "gregtech/content/block/energy/MagnetMachineBlock.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -5889,7 +5889,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/energy/OriginalHeaterBlock.java",
+      "path": "gregtech/content/block/energy/OriginalHeaterBlock.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -5903,7 +5903,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/energy/OriginalMotorBlock.java",
+      "path": "gregtech/content/block/energy/OriginalMotorBlock.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -5917,7 +5917,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/energy/PumpBlock.java",
+      "path": "gregtech/content/block/energy/PumpBlock.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -5931,7 +5931,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/energy/ReactorCasingBlock.java",
+      "path": "gregtech/content/block/energy/ReactorCasingBlock.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -5945,7 +5945,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/energy/ReactorCore2x2Block.java",
+      "path": "gregtech/content/block/energy/ReactorCore2x2Block.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -5959,7 +5959,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/energy/ReactorCoreBlock.java",
+      "path": "gregtech/content/block/energy/ReactorCoreBlock.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -5973,7 +5973,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/energy/ReactorRodBlock.java",
+      "path": "gregtech/content/block/energy/ReactorRodBlock.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -5987,7 +5987,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/energy/RotaryConverterBlock.java",
+      "path": "gregtech/content/block/energy/RotaryConverterBlock.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -6001,7 +6001,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/energy/SignalWireBlock.java",
+      "path": "gregtech/content/block/energy/SignalWireBlock.java",
       "kind": "conditional",
       "conditional_regions": 10,
       "source_sha256": {
@@ -6015,7 +6015,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/energy/SolarPanelBlock.java",
+      "path": "gregtech/content/block/energy/SolarPanelBlock.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -6029,7 +6029,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/energy/ZpmDischargerBlock.java",
+      "path": "gregtech/content/block/energy/ZpmDischargerBlock.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -6043,7 +6043,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/energy/ZpmModuleBlock.java",
+      "path": "gregtech/content/block/energy/ZpmModuleBlock.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -6057,7 +6057,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/inventory/BottleCrateBlock.java",
+      "path": "gregtech/content/block/inventory/BottleCrateBlock.java",
       "kind": "conditional",
       "conditional_regions": 6,
       "source_sha256": {
@@ -6071,7 +6071,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/inventory/DrawerQuadBlock.java",
+      "path": "gregtech/content/block/inventory/DrawerQuadBlock.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -6085,7 +6085,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/inventory/EnderGarbageBlock.java",
+      "path": "gregtech/content/block/inventory/EnderGarbageBlock.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -6099,7 +6099,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/inventory/EnderGarbageDumpBlock.java",
+      "path": "gregtech/content/block/inventory/EnderGarbageDumpBlock.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -6113,7 +6113,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/inventory/LockerBlock.java",
+      "path": "gregtech/content/block/inventory/LockerBlock.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -6127,7 +6127,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/inventory/LogisticsMassStorageBlock.java",
+      "path": "gregtech/content/block/inventory/LogisticsMassStorageBlock.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -6141,7 +6141,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/inventory/LootChestBlock.java",
+      "path": "gregtech/content/block/inventory/LootChestBlock.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -6155,7 +6155,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/inventory/MassStorageBlock.java",
+      "path": "gregtech/content/block/inventory/MassStorageBlock.java",
       "kind": "conditional",
       "conditional_regions": 14,
       "source_sha256": {
@@ -6169,7 +6169,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/inventory/MetalChestBlock.java",
+      "path": "gregtech/content/block/inventory/MetalChestBlock.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -6183,7 +6183,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/inventory/MetalChestBlockItem.java",
+      "path": "gregtech/content/block/inventory/MetalChestBlockItem.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -6197,7 +6197,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/inventory/SafeBlock.java",
+      "path": "gregtech/content/block/inventory/SafeBlock.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -6211,7 +6211,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/inventory/UsbSwitchBlock.java",
+      "path": "gregtech/content/block/inventory/UsbSwitchBlock.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -6225,7 +6225,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/AxialGeneratorBlock.java",
+      "path": "gregtech/content/block/machine/AxialGeneratorBlock.java",
       "kind": "conditional",
       "conditional_regions": 6,
       "source_sha256": {
@@ -6239,7 +6239,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/BasicMachineBlock.java",
+      "path": "gregtech/content/block/machine/BasicMachineBlock.java",
       "kind": "conditional",
       "conditional_regions": 17,
       "source_sha256": {
@@ -6253,7 +6253,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/BedrockDrillControllerBlock.java",
+      "path": "gregtech/content/block/machine/BedrockDrillControllerBlock.java",
       "kind": "conditional",
       "conditional_regions": 6,
       "source_sha256": {
@@ -6267,7 +6267,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/BoilerTankBlock.java",
+      "path": "gregtech/content/block/machine/BoilerTankBlock.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -6281,7 +6281,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/BurningBoxBlock.java",
+      "path": "gregtech/content/block/machine/BurningBoxBlock.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -6295,7 +6295,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/BurningBoxBlockItem.java",
+      "path": "gregtech/content/block/machine/BurningBoxBlockItem.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -6307,7 +6307,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/CokeOvenControllerBlock.java",
+      "path": "gregtech/content/block/machine/CokeOvenControllerBlock.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -6321,7 +6321,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/CokeOvenWallBlock.java",
+      "path": "gregtech/content/block/machine/CokeOvenWallBlock.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -6333,7 +6333,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/CrucibleCrossingBlock.java",
+      "path": "gregtech/content/block/machine/CrucibleCrossingBlock.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -6347,7 +6347,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/CrucibleFaucetBlock.java",
+      "path": "gregtech/content/block/machine/CrucibleFaucetBlock.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -6361,7 +6361,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/CrucibleHullBlockItem.java",
+      "path": "gregtech/content/block/machine/CrucibleHullBlockItem.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -6375,7 +6375,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/CryoDistillationControllerBlock.java",
+      "path": "gregtech/content/block/machine/CryoDistillationControllerBlock.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -6389,7 +6389,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/EngineBlock.java",
+      "path": "gregtech/content/block/machine/EngineBlock.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -6403,7 +6403,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/FluidPipeBlock.java",
+      "path": "gregtech/content/block/machine/FluidPipeBlock.java",
       "kind": "conditional",
       "conditional_regions": 24,
       "source_sha256": {
@@ -6417,7 +6417,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/FusionReactorControllerBlock.java",
+      "path": "gregtech/content/block/machine/FusionReactorControllerBlock.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -6429,7 +6429,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/GTFacingMachineBlock.java",
+      "path": "gregtech/content/block/machine/GTFacingMachineBlock.java",
       "kind": "conditional",
       "conditional_regions": 6,
       "source_sha256": {
@@ -6443,7 +6443,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/GTMachineBlockItem.java",
+      "path": "gregtech/content/block/machine/GTMachineBlockItem.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -6455,7 +6455,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/HopperBlock.java",
+      "path": "gregtech/content/block/machine/HopperBlock.java",
       "kind": "conditional",
       "conditional_regions": 7,
       "source_sha256": {
@@ -6469,7 +6469,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/HopperBlockItem.java",
+      "path": "gregtech/content/block/machine/HopperBlockItem.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -6483,7 +6483,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/ImplosionCompressorControllerBlock.java",
+      "path": "gregtech/content/block/machine/ImplosionCompressorControllerBlock.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -6495,7 +6495,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/ItemPipeBlock.java",
+      "path": "gregtech/content/block/machine/ItemPipeBlock.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -6509,7 +6509,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/ItemPipeBlockItem.java",
+      "path": "gregtech/content/block/machine/ItemPipeBlockItem.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -6521,7 +6521,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/LargeBoilerControllerBlock.java",
+      "path": "gregtech/content/block/machine/LargeBoilerControllerBlock.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -6535,7 +6535,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/LargeCrucibleControllerBlock.java",
+      "path": "gregtech/content/block/machine/LargeCrucibleControllerBlock.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -6549,7 +6549,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/LargeCrucibleWallBlock.java",
+      "path": "gregtech/content/block/machine/LargeCrucibleWallBlock.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -6561,7 +6561,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/LargeDynamoControllerBlock.java",
+      "path": "gregtech/content/block/machine/LargeDynamoControllerBlock.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -6575,7 +6575,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/LargeGasTurbineControllerBlock.java",
+      "path": "gregtech/content/block/machine/LargeGasTurbineControllerBlock.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -6589,7 +6589,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/LargeHeatExchangerControllerBlock.java",
+      "path": "gregtech/content/block/machine/LargeHeatExchangerControllerBlock.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -6603,7 +6603,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/LargeTurbineControllerBlock.java",
+      "path": "gregtech/content/block/machine/LargeTurbineControllerBlock.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -6617,7 +6617,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/LightningRodControllerBlock.java",
+      "path": "gregtech/content/block/machine/LightningRodControllerBlock.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -6631,7 +6631,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/LogisticsCoreControllerBlock.java",
+      "path": "gregtech/content/block/machine/LogisticsCoreControllerBlock.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -6645,7 +6645,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/LogisticsTankBlock.java",
+      "path": "gregtech/content/block/machine/LogisticsTankBlock.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -6659,7 +6659,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/LogisticsWireBlock.java",
+      "path": "gregtech/content/block/machine/LogisticsWireBlock.java",
       "kind": "conditional",
       "conditional_regions": 14,
       "source_sha256": {
@@ -6673,7 +6673,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/MachineRotationType.java",
+      "path": "gregtech/content/block/machine/MachineRotationType.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -6687,7 +6687,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/MoldBasinBlock.java",
+      "path": "gregtech/content/block/machine/MoldBasinBlock.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -6701,7 +6701,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/MoldBlock.java",
+      "path": "gregtech/content/block/machine/MoldBlock.java",
       "kind": "conditional",
       "conditional_regions": 7,
       "source_sha256": {
@@ -6715,7 +6715,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/MoldItemData.java",
+      "path": "gregtech/content/block/machine/MoldItemData.java",
       "kind": "conditional",
       "conditional_regions": 6,
       "source_sha256": {
@@ -6729,7 +6729,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/MultiblockControllerBlock.java",
+      "path": "gregtech/content/block/machine/MultiblockControllerBlock.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -6743,7 +6743,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/MultiblockPortBlock.java",
+      "path": "gregtech/content/block/machine/MultiblockPortBlock.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -6757,7 +6757,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/OriginalBedrockDrillControllerBlock.java",
+      "path": "gregtech/content/block/machine/OriginalBedrockDrillControllerBlock.java",
       "kind": "conditional",
       "conditional_regions": 13,
       "source_sha256": {
@@ -6771,7 +6771,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/OriginalLargeBoilerControllerBlock.java",
+      "path": "gregtech/content/block/machine/OriginalLargeBoilerControllerBlock.java",
       "kind": "conditional",
       "conditional_regions": 12,
       "source_sha256": {
@@ -6785,7 +6785,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/OriginalLightningRodControllerBlock.java",
+      "path": "gregtech/content/block/machine/OriginalLightningRodControllerBlock.java",
       "kind": "conditional",
       "conditional_regions": 7,
       "source_sha256": {
@@ -6799,7 +6799,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/QueueHopperBlock.java",
+      "path": "gregtech/content/block/machine/QueueHopperBlock.java",
       "kind": "conditional",
       "conditional_regions": 7,
       "source_sha256": {
@@ -6813,7 +6813,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/QueueHopperBlockItem.java",
+      "path": "gregtech/content/block/machine/QueueHopperBlockItem.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -6827,7 +6827,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/SmeltingCrucibleBlock.java",
+      "path": "gregtech/content/block/machine/SmeltingCrucibleBlock.java",
       "kind": "conditional",
       "conditional_regions": 14,
       "source_sha256": {
@@ -6841,7 +6841,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/SmeltingCrucibleBlockItem.java",
+      "path": "gregtech/content/block/machine/SmeltingCrucibleBlockItem.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -6855,7 +6855,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/SolidBurningBoxBlock.java",
+      "path": "gregtech/content/block/machine/SolidBurningBoxBlock.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -6869,7 +6869,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/TankBlock.java",
+      "path": "gregtech/content/block/machine/TankBlock.java",
       "kind": "conditional",
       "conditional_regions": 11,
       "source_sha256": {
@@ -6883,7 +6883,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/TankControllerBlock.java",
+      "path": "gregtech/content/block/machine/TankControllerBlock.java",
       "kind": "conditional",
       "conditional_regions": 10,
       "source_sha256": {
@@ -6897,7 +6897,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/TankWallBlock.java",
+      "path": "gregtech/content/block/machine/TankWallBlock.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -6909,7 +6909,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/machine/VonDaGraaggControllerBlock.java",
+      "path": "gregtech/content/block/machine/VonDaGraaggControllerBlock.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -6923,7 +6923,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/AdvancedCraftingTableBlock.java",
+      "path": "gregtech/content/block/misc/AdvancedCraftingTableBlock.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -6937,7 +6937,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/AdvancedCraftingTableBlockEntity.java",
+      "path": "gregtech/content/block/misc/AdvancedCraftingTableBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 15,
       "source_sha256": {
@@ -6951,7 +6951,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/AsphaltBlock.java",
+      "path": "gregtech/content/block/misc/AsphaltBlock.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -6965,7 +6965,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/AutoHammerBlock.java",
+      "path": "gregtech/content/block/misc/AutoHammerBlock.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -6979,7 +6979,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/AutoHammerBlockEntity.java",
+      "path": "gregtech/content/block/misc/AutoHammerBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -6993,7 +6993,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/AutoIgniterBlock.java",
+      "path": "gregtech/content/block/misc/AutoIgniterBlock.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -7007,7 +7007,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/AutoIgniterBlockEntity.java",
+      "path": "gregtech/content/block/misc/AutoIgniterBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -7021,7 +7021,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/AutoToolBlock.java",
+      "path": "gregtech/content/block/misc/AutoToolBlock.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -7035,7 +7035,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/AutoToolBlockEntity.java",
+      "path": "gregtech/content/block/misc/AutoToolBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -7049,7 +7049,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/BarsBlock.java",
+      "path": "gregtech/content/block/misc/BarsBlock.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -7063,7 +7063,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/BarsBlockItem.java",
+      "path": "gregtech/content/block/misc/BarsBlockItem.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -7077,7 +7077,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/BumbleHiveBlock.java",
+      "path": "gregtech/content/block/misc/BumbleHiveBlock.java",
       "kind": "conditional",
       "conditional_regions": 7,
       "source_sha256": {
@@ -7091,7 +7091,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/CFoamBlock.java",
+      "path": "gregtech/content/block/misc/CFoamBlock.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -7105,7 +7105,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/CFoamSlabBlock.java",
+      "path": "gregtech/content/block/misc/CFoamSlabBlock.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -7119,7 +7119,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/ChargingCraftingTableBlock.java",
+      "path": "gregtech/content/block/misc/ChargingCraftingTableBlock.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -7133,7 +7133,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/ChargingCraftingTableBlockEntity.java",
+      "path": "gregtech/content/block/misc/ChargingCraftingTableBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -7147,7 +7147,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/CoinItemExpireHandler.java",
+      "path": "gregtech/content/block/misc/CoinItemExpireHandler.java",
       "kind": "conditional",
       "conditional_regions": 7,
       "source_sha256": {
@@ -7161,7 +7161,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/CoinPileBlock.java",
+      "path": "gregtech/content/block/misc/CoinPileBlock.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -7175,7 +7175,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/ColoredConstructionBlock.java",
+      "path": "gregtech/content/block/misc/ColoredConstructionBlock.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -7189,7 +7189,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/ColoredConstructionBlockItem.java",
+      "path": "gregtech/content/block/misc/ColoredConstructionBlockItem.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -7203,7 +7203,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/ColoredGlassBlock.java",
+      "path": "gregtech/content/block/misc/ColoredGlassBlock.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -7217,7 +7217,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/ColoredGlassBlockItem.java",
+      "path": "gregtech/content/block/misc/ColoredGlassBlockItem.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -7231,7 +7231,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/ColoredGlassSlabBlock.java",
+      "path": "gregtech/content/block/misc/ColoredGlassSlabBlock.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -7245,7 +7245,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/ConcreteBlock.java",
+      "path": "gregtech/content/block/misc/ConcreteBlock.java",
       "kind": "conditional",
       "conditional_regions": 8,
       "source_sha256": {
@@ -7259,7 +7259,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/ConcreteBlockItem.java",
+      "path": "gregtech/content/block/misc/ConcreteBlockItem.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -7273,7 +7273,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/DiggableBlock.java",
+      "path": "gregtech/content/block/misc/DiggableBlock.java",
       "kind": "conditional",
       "conditional_regions": 7,
       "source_sha256": {
@@ -7287,7 +7287,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/DungeonPortalBlock.java",
+      "path": "gregtech/content/block/misc/DungeonPortalBlock.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -7301,7 +7301,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/DungeonPortalBlockEntity.java",
+      "path": "gregtech/content/block/misc/DungeonPortalBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -7315,7 +7315,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/ExtenderBlock.java",
+      "path": "gregtech/content/block/misc/ExtenderBlock.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -7329,7 +7329,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/ExtenderBlockEntity.java",
+      "path": "gregtech/content/block/misc/ExtenderBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -7343,7 +7343,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/FilterBlock.java",
+      "path": "gregtech/content/block/misc/FilterBlock.java",
       "kind": "conditional",
       "conditional_regions": 6,
       "source_sha256": {
@@ -7357,7 +7357,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/FilterBlockEntity.java",
+      "path": "gregtech/content/block/misc/FilterBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -7371,7 +7371,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/FixedBumbleHiveBlock.java",
+      "path": "gregtech/content/block/misc/FixedBumbleHiveBlock.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -7385,7 +7385,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/FreshCFoamBlock.java",
+      "path": "gregtech/content/block/misc/FreshCFoamBlock.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -7399,7 +7399,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/GregLanternBlock.java",
+      "path": "gregtech/content/block/misc/GregLanternBlock.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -7413,7 +7413,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/LongDistEndpointBlock.java",
+      "path": "gregtech/content/block/misc/LongDistEndpointBlock.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -7427,7 +7427,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/LongDistEndpointBlockEntity.java",
+      "path": "gregtech/content/block/misc/LongDistEndpointBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -7441,7 +7441,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/LongDistPipeBlock.java",
+      "path": "gregtech/content/block/misc/LongDistPipeBlock.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -7455,7 +7455,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/LongDistanceTopology.java",
+      "path": "gregtech/content/block/misc/LongDistanceTopology.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -7469,7 +7469,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/LongDistanceTransformerBlock.java",
+      "path": "gregtech/content/block/misc/LongDistanceTransformerBlock.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -7483,7 +7483,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/LongDistanceTransformerBlockEntity.java",
+      "path": "gregtech/content/block/misc/LongDistanceTransformerBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -7497,7 +7497,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/PanelBlock.java",
+      "path": "gregtech/content/block/misc/PanelBlock.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -7511,7 +7511,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/PileBlock.java",
+      "path": "gregtech/content/block/misc/PileBlock.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -7525,7 +7525,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/PileItemExpireHandler.java",
+      "path": "gregtech/content/block/misc/PileItemExpireHandler.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -7539,7 +7539,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/PilePlacementHandler.java",
+      "path": "gregtech/content/block/misc/PilePlacementHandler.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -7553,7 +7553,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/RoadStripeRailBlock.java",
+      "path": "gregtech/content/block/misc/RoadStripeRailBlock.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -7567,7 +7567,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/SandwichBlock.java",
+      "path": "gregtech/content/block/misc/SandwichBlock.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -7581,7 +7581,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/SourceExtenderBlock.java",
+      "path": "gregtech/content/block/misc/SourceExtenderBlock.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -7595,7 +7595,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/SpikeBlock.java",
+      "path": "gregtech/content/block/misc/SpikeBlock.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -7609,7 +7609,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/misc/TrackBlock.java",
+      "path": "gregtech/content/block/misc/TrackBlock.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -7623,7 +7623,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/plant/BaleBlock.java",
+      "path": "gregtech/content/block/plant/BaleBlock.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -7637,7 +7637,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/plant/BedrockFlowerBlock.java",
+      "path": "gregtech/content/block/plant/BedrockFlowerBlock.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -7651,7 +7651,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/plant/BedrockHexalilyBlock.java",
+      "path": "gregtech/content/block/plant/BedrockHexalilyBlock.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -7665,7 +7665,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/plant/BushBlock.java",
+      "path": "gregtech/content/block/plant/BushBlock.java",
       "kind": "conditional",
       "conditional_regions": 7,
       "source_sha256": {
@@ -7679,7 +7679,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/sensor/SensorBlock.java",
+      "path": "gregtech/content/block/sensor/SensorBlock.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -7693,7 +7693,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/stone/GTStoneBlock.java",
+      "path": "gregtech/content/block/stone/GTStoneBlock.java",
       "kind": "conditional",
       "conditional_regions": 6,
       "source_sha256": {
@@ -7707,7 +7707,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/stone/GTStoneSlabBlock.java",
+      "path": "gregtech/content/block/stone/GTStoneSlabBlock.java",
       "kind": "conditional",
       "conditional_regions": 13,
       "source_sha256": {
@@ -7721,7 +7721,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/stone/GTStoneSlabBlockItem.java",
+      "path": "gregtech/content/block/stone/GTStoneSlabBlockItem.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -7735,7 +7735,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/stone/SlabPlacementHelper.java",
+      "path": "gregtech/content/block/stone/SlabPlacementHelper.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -7749,7 +7749,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/stone/StoneBlockProperties.java",
+      "path": "gregtech/content/block/stone/StoneBlockProperties.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -7763,7 +7763,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/tool/AdvancedButtonBlock.java",
+      "path": "gregtech/content/block/tool/AdvancedButtonBlock.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -7777,7 +7777,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/tool/BumbliaryBlock.java",
+      "path": "gregtech/content/block/tool/BumbliaryBlock.java",
       "kind": "conditional",
       "conditional_regions": 7,
       "source_sha256": {
@@ -7791,7 +7791,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/tool/CoinMoldBlock.java",
+      "path": "gregtech/content/block/tool/CoinMoldBlock.java",
       "kind": "conditional",
       "conditional_regions": 6,
       "source_sha256": {
@@ -7805,7 +7805,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/tool/CrankBlock.java",
+      "path": "gregtech/content/block/tool/CrankBlock.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -7819,7 +7819,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/tool/DustFunnelBlock.java",
+      "path": "gregtech/content/block/tool/DustFunnelBlock.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -7833,7 +7833,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/tool/DynamiteBlock.java",
+      "path": "gregtech/content/block/tool/DynamiteBlock.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -7847,7 +7847,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/tool/FluidAttachmentBlock.java",
+      "path": "gregtech/content/block/tool/FluidAttachmentBlock.java",
       "kind": "conditional",
       "conditional_regions": 7,
       "source_sha256": {
@@ -7861,7 +7861,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/tool/ManualToolBlock.java",
+      "path": "gregtech/content/block/tool/ManualToolBlock.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -7875,7 +7875,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/tool/MaterialAnvilBlock.java",
+      "path": "gregtech/content/block/tool/MaterialAnvilBlock.java",
       "kind": "conditional",
       "conditional_regions": 8,
       "source_sha256": {
@@ -7889,7 +7889,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/tool/PlantPotBlock.java",
+      "path": "gregtech/content/block/tool/PlantPotBlock.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -7903,7 +7903,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/tool/PortableContainerBlock.java",
+      "path": "gregtech/content/block/tool/PortableContainerBlock.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -7917,7 +7917,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/tool/ProcessingToolBlock.java",
+      "path": "gregtech/content/block/tool/ProcessingToolBlock.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -7931,7 +7931,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/tool/RopeBlock.java",
+      "path": "gregtech/content/block/tool/RopeBlock.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -7945,7 +7945,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/tool/SapBagBlock.java",
+      "path": "gregtech/content/block/tool/SapBagBlock.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -7959,7 +7959,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/tool/ScaffoldBlock.java",
+      "path": "gregtech/content/block/tool/ScaffoldBlock.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -7973,7 +7973,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/tool/ShapedToolBlock.java",
+      "path": "gregtech/content/block/tool/ShapedToolBlock.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -7987,7 +7987,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/tool/TapBlock.java",
+      "path": "gregtech/content/block/tool/TapBlock.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -8001,7 +8001,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/wood/FallenLogBlock.java",
+      "path": "gregtech/content/block/wood/FallenLogBlock.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -8015,7 +8015,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/wood/TreeHoleBlock.java",
+      "path": "gregtech/content/block/wood/TreeHoleBlock.java",
       "kind": "conditional",
       "conditional_regions": 6,
       "source_sha256": {
@@ -8029,7 +8029,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/wood/WoodBeamBlock.java",
+      "path": "gregtech/content/block/wood/WoodBeamBlock.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -8043,7 +8043,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/wood/WoodLeavesBlock.java",
+      "path": "gregtech/content/block/wood/WoodLeavesBlock.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -8057,7 +8057,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/wood/WoodLogBlock.java",
+      "path": "gregtech/content/block/wood/WoodLogBlock.java",
       "kind": "conditional",
       "conditional_regions": 7,
       "source_sha256": {
@@ -8071,7 +8071,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/wood/WoodPlanksBlock.java",
+      "path": "gregtech/content/block/wood/WoodPlanksBlock.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -8085,7 +8085,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/wood/WoodSaplingBlock.java",
+      "path": "gregtech/content/block/wood/WoodSaplingBlock.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -8099,7 +8099,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/block/wood/WoodSlabBlock.java",
+      "path": "gregtech/content/block/wood/WoodSlabBlock.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -8113,7 +8113,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/BushBlockEntity.java",
+      "path": "gregtech/content/blockentity/BushBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -8127,7 +8127,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/CFoamBlockEntity.java",
+      "path": "gregtech/content/blockentity/CFoamBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -8141,7 +8141,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/CapabilityRelayBlockEntity.java",
+      "path": "gregtech/content/blockentity/CapabilityRelayBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 7,
       "source_sha256": {
@@ -8155,7 +8155,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/EnergyRelayBlockEntity.java",
+      "path": "gregtech/content/blockentity/EnergyRelayBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -8169,7 +8169,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/FluidSpringBlockEntity.java",
+      "path": "gregtech/content/blockentity/FluidSpringBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 9,
       "source_sha256": {
@@ -8183,7 +8183,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/GTEnergyBlockEntity.java",
+      "path": "gregtech/content/blockentity/GTEnergyBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -8197,7 +8197,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/OreBlockEntity.java",
+      "path": "gregtech/content/blockentity/OreBlockEntity.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -8209,7 +8209,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/RockBlockEntity.java",
+      "path": "gregtech/content/blockentity/RockBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -8223,7 +8223,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/SapBagBlockEntity.java",
+      "path": "gregtech/content/blockentity/SapBagBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 8,
       "source_sha256": {
@@ -8237,7 +8237,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/TreeHoleBlockEntity.java",
+      "path": "gregtech/content/blockentity/TreeHoleBlockEntity.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -8251,7 +8251,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/behavior/EnergyCapacitorBehavior.java",
+      "path": "gregtech/content/blockentity/behavior/EnergyCapacitorBehavior.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -8263,7 +8263,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/behavior/EnergyConverterBehavior.java",
+      "path": "gregtech/content/blockentity/behavior/EnergyConverterBehavior.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -8275,7 +8275,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/behavior/EnergyStatsBehavior.java",
+      "path": "gregtech/content/blockentity/behavior/EnergyStatsBehavior.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -8287,7 +8287,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/energy/AxleBlockEntity.java",
+      "path": "gregtech/content/blockentity/energy/AxleBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 9,
       "source_sha256": {
@@ -8301,7 +8301,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/energy/ChemicalBatteryBlockEntity.java",
+      "path": "gregtech/content/blockentity/energy/ChemicalBatteryBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -8315,7 +8315,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/energy/ElectricWireBlockEntity.java",
+      "path": "gregtech/content/blockentity/energy/ElectricWireBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 6,
       "source_sha256": {
@@ -8329,7 +8329,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/energy/EnergyNodeBlockEntity.java",
+      "path": "gregtech/content/blockentity/energy/EnergyNodeBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 31,
       "source_sha256": {
@@ -8343,7 +8343,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/energy/GearboxBlockEntity.java",
+      "path": "gregtech/content/blockentity/energy/GearboxBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 8,
       "source_sha256": {
@@ -8357,7 +8357,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/energy/LaserConverterBlockEntity.java",
+      "path": "gregtech/content/blockentity/energy/LaserConverterBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -8371,7 +8371,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/energy/LaserFiberBlockEntity.java",
+      "path": "gregtech/content/blockentity/energy/LaserFiberBlockEntity.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -8385,7 +8385,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/energy/PlacedReactorRodBlockEntity.java",
+      "path": "gregtech/content/blockentity/energy/PlacedReactorRodBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -8399,7 +8399,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/energy/PumpBlockEntity.java",
+      "path": "gregtech/content/blockentity/energy/PumpBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 9,
       "source_sha256": {
@@ -8413,7 +8413,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/energy/ReactorCore2x2BlockEntity.java",
+      "path": "gregtech/content/blockentity/energy/ReactorCore2x2BlockEntity.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -8427,7 +8427,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/energy/ReactorCoreBlockEntity.java",
+      "path": "gregtech/content/blockentity/energy/ReactorCoreBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 10,
       "source_sha256": {
@@ -8441,7 +8441,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/energy/SignalWireBlockEntity.java",
+      "path": "gregtech/content/blockentity/energy/SignalWireBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -8455,7 +8455,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/energy/ZpmDischargerBlockEntity.java",
+      "path": "gregtech/content/blockentity/energy/ZpmDischargerBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -8469,7 +8469,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/energy/ZpmModuleBlockEntity.java",
+      "path": "gregtech/content/blockentity/energy/ZpmModuleBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -8483,7 +8483,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/inventory/BookShelfBlockEntity.java",
+      "path": "gregtech/content/blockentity/inventory/BookShelfBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 7,
       "source_sha256": {
@@ -8497,7 +8497,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/inventory/BottleCrateBlockEntity.java",
+      "path": "gregtech/content/blockentity/inventory/BottleCrateBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 10,
       "source_sha256": {
@@ -8511,7 +8511,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/inventory/DrawerQuadBlockEntity.java",
+      "path": "gregtech/content/blockentity/inventory/DrawerQuadBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 9,
       "source_sha256": {
@@ -8525,7 +8525,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/inventory/EnderGarbageBlockEntity.java",
+      "path": "gregtech/content/blockentity/inventory/EnderGarbageBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -8539,7 +8539,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/inventory/EnderGarbageDumpBlockEntity.java",
+      "path": "gregtech/content/blockentity/inventory/EnderGarbageDumpBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 6,
       "source_sha256": {
@@ -8553,7 +8553,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/inventory/LockerBlockEntity.java",
+      "path": "gregtech/content/blockentity/inventory/LockerBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -8567,7 +8567,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/inventory/LogisticsMassStorageBlockEntity.java",
+      "path": "gregtech/content/blockentity/inventory/LogisticsMassStorageBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -8581,7 +8581,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/inventory/MassStorageBlockEntity.java",
+      "path": "gregtech/content/blockentity/inventory/MassStorageBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 18,
       "source_sha256": {
@@ -8595,7 +8595,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/inventory/MetalChestBlockEntity.java",
+      "path": "gregtech/content/blockentity/inventory/MetalChestBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 12,
       "source_sha256": {
@@ -8609,7 +8609,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/inventory/SafeBlockEntity.java",
+      "path": "gregtech/content/blockentity/inventory/SafeBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 10,
       "source_sha256": {
@@ -8623,7 +8623,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/inventory/UsbSwitchBlockEntity.java",
+      "path": "gregtech/content/blockentity/inventory/UsbSwitchBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 12,
       "source_sha256": {
@@ -8637,7 +8637,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/AxialGeneratorBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/AxialGeneratorBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -8651,7 +8651,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/BasicMachineBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/BasicMachineBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 50,
       "source_sha256": {
@@ -8665,7 +8665,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/BedrockDrillControllerBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/BedrockDrillControllerBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -8679,7 +8679,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/BoilerTankBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/BoilerTankBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 12,
       "source_sha256": {
@@ -8693,7 +8693,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/BurningBoxBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/BurningBoxBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 19,
       "source_sha256": {
@@ -8707,7 +8707,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/CokeOvenControllerBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/CokeOvenControllerBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 6,
       "source_sha256": {
@@ -8721,7 +8721,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/CompactMatterFabricatorBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/CompactMatterFabricatorBlockEntity.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -8735,7 +8735,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/CrucibleCrossingBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/CrucibleCrossingBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -8749,7 +8749,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/CrucibleFaucetBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/CrucibleFaucetBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -8763,7 +8763,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/CryoDistillationControllerBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/CryoDistillationControllerBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -8777,7 +8777,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/DistillationTowerControllerBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/DistillationTowerControllerBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 6,
       "source_sha256": {
@@ -8791,7 +8791,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/EngineBaseBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/EngineBaseBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -8805,7 +8805,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/FluidPipeBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/FluidPipeBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 38,
       "source_sha256": {
@@ -8819,7 +8819,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/FusionReactorControllerBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/FusionReactorControllerBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -8833,7 +8833,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/GTFacingMachineBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/GTFacingMachineBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -8847,7 +8847,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/HopperBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/HopperBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 23,
       "source_sha256": {
@@ -8861,7 +8861,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/ImplosionCompressorControllerBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/ImplosionCompressorControllerBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -8875,7 +8875,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/ItemPipeBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/ItemPipeBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 36,
       "source_sha256": {
@@ -8889,7 +8889,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/KineticDieselEngineBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/KineticDieselEngineBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 9,
       "source_sha256": {
@@ -8903,7 +8903,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/KineticElectricEngineBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/KineticElectricEngineBlockEntity.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -8917,7 +8917,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/KineticFluxEngineBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/KineticFluxEngineBlockEntity.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -8931,7 +8931,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/KineticRotationEngineBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/KineticRotationEngineBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -8945,7 +8945,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/KineticSteamEngineBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/KineticSteamEngineBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 15,
       "source_sha256": {
@@ -8959,7 +8959,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/LargeBoilerControllerBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/LargeBoilerControllerBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 13,
       "source_sha256": {
@@ -8973,7 +8973,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/LargeCrucibleControllerBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/LargeCrucibleControllerBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 6,
       "source_sha256": {
@@ -8987,7 +8987,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/LargeDynamoControllerBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/LargeDynamoControllerBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -9001,7 +9001,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/LargeGasTurbineControllerBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/LargeGasTurbineControllerBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -9015,7 +9015,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/LargeHeatExchangerControllerBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/LargeHeatExchangerControllerBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 11,
       "source_sha256": {
@@ -9029,7 +9029,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/LargeRecipeMachineBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/LargeRecipeMachineBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -9043,7 +9043,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/LargeTurbineControllerBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/LargeTurbineControllerBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -9057,7 +9057,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/LightningRodControllerBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/LightningRodControllerBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -9071,7 +9071,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/LogisticsCoreControllerBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/LogisticsCoreControllerBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 8,
       "source_sha256": {
@@ -9085,7 +9085,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/LogisticsTankBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/LogisticsTankBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -9099,7 +9099,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/LogisticsWireBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/LogisticsWireBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 6,
       "source_sha256": {
@@ -9113,7 +9113,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/MatterFabricatorBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/MatterFabricatorBlockEntity.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -9127,7 +9127,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/MoldBasinBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/MoldBasinBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 10,
       "source_sha256": {
@@ -9141,7 +9141,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/MoldBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/MoldBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 11,
       "source_sha256": {
@@ -9155,7 +9155,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/MultiblockPortBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/MultiblockPortBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 10,
       "source_sha256": {
@@ -9169,7 +9169,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/MultiblockTankControllerBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/MultiblockTankControllerBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 9,
       "source_sha256": {
@@ -9183,7 +9183,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/OriginalLargeBoilerControllerBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/OriginalLargeBoilerControllerBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 12,
       "source_sha256": {
@@ -9197,7 +9197,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/PistonEngineBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/PistonEngineBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -9211,7 +9211,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/QueueHopperBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/QueueHopperBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 22,
       "source_sha256": {
@@ -9225,7 +9225,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/SmelteryBlockEntityHelper.java",
+      "path": "gregtech/content/blockentity/machine/SmelteryBlockEntityHelper.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -9239,7 +9239,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/SmelteryFireHelper.java",
+      "path": "gregtech/content/blockentity/machine/SmelteryFireHelper.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -9253,7 +9253,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/SmeltingCrucibleBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/SmeltingCrucibleBlockEntity.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -9265,7 +9265,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/SolidBurningBoxBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/SolidBurningBoxBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 14,
       "source_sha256": {
@@ -9279,7 +9279,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/TankBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/TankBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 33,
       "source_sha256": {
@@ -9293,7 +9293,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/machine/VonDaGraaggControllerBlockEntity.java",
+      "path": "gregtech/content/blockentity/machine/VonDaGraaggControllerBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -9307,7 +9307,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/misc/BumbleHiveBlockEntity.java",
+      "path": "gregtech/content/blockentity/misc/BumbleHiveBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -9321,7 +9321,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/misc/CoinPileBlockEntity.java",
+      "path": "gregtech/content/blockentity/misc/CoinPileBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 8,
       "source_sha256": {
@@ -9335,7 +9335,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/misc/PileBlockEntity.java",
+      "path": "gregtech/content/blockentity/misc/PileBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 8,
       "source_sha256": {
@@ -9349,7 +9349,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/misc/SandwichBlockEntity.java",
+      "path": "gregtech/content/blockentity/misc/SandwichBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 18,
       "source_sha256": {
@@ -9363,7 +9363,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/sensor/SensorBlockEntity.java",
+      "path": "gregtech/content/blockentity/sensor/SensorBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 12,
       "source_sha256": {
@@ -9377,7 +9377,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/tool/AdvancedButtonBlockEntity.java",
+      "path": "gregtech/content/blockentity/tool/AdvancedButtonBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -9391,7 +9391,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/tool/BumbliaryBlockEntity.java",
+      "path": "gregtech/content/blockentity/tool/BumbliaryBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 11,
       "source_sha256": {
@@ -9405,7 +9405,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/tool/CoinMoldBlockEntity.java",
+      "path": "gregtech/content/blockentity/tool/CoinMoldBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 12,
       "source_sha256": {
@@ -9419,7 +9419,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/tool/DustFunnelBlockEntity.java",
+      "path": "gregtech/content/blockentity/tool/DustFunnelBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 7,
       "source_sha256": {
@@ -9433,7 +9433,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/tool/DynamiteBlockEntity.java",
+      "path": "gregtech/content/blockentity/tool/DynamiteBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -9447,7 +9447,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/tool/ManualToolBlockEntity.java",
+      "path": "gregtech/content/blockentity/tool/ManualToolBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 13,
       "source_sha256": {
@@ -9461,7 +9461,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/tool/MaterialAnvilBlockEntity.java",
+      "path": "gregtech/content/blockentity/tool/MaterialAnvilBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 9,
       "source_sha256": {
@@ -9475,7 +9475,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/tool/PortableContainerBlockEntity.java",
+      "path": "gregtech/content/blockentity/tool/PortableContainerBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 7,
       "source_sha256": {
@@ -9489,7 +9489,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/blockentity/tool/ProcessingToolBlockEntity.java",
+      "path": "gregtech/content/blockentity/tool/ProcessingToolBlockEntity.java",
       "kind": "conditional",
       "conditional_regions": 9,
       "source_sha256": {
@@ -14935,7 +14935,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/damage/GTDamageTypes.java",
+      "path": "gregtech/content/damage/GTDamageTypes.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -14949,7 +14949,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/damage/GTHazmat.java",
+      "path": "gregtech/content/damage/GTHazmat.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -14963,7 +14963,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/data/AmmunitionCraftingRecipePack.java",
+      "path": "gregtech/content/data/AmmunitionCraftingRecipePack.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -14975,7 +14975,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/data/BasicMachineRecipePack.java",
+      "path": "gregtech/content/data/BasicMachineRecipePack.java",
       "kind": "conditional",
       "conditional_regions": 10,
       "source_sha256": {
@@ -14989,7 +14989,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/data/BlockHarvestEvents.java",
+      "path": "gregtech/content/data/BlockHarvestEvents.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -15003,7 +15003,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/data/BlockHarvestPolicy.java",
+      "path": "gregtech/content/data/BlockHarvestPolicy.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -15017,7 +15017,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/data/BlockIcons.java",
+      "path": "gregtech/content/data/BlockIcons.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -15029,7 +15029,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/data/BlockLootPack.java",
+      "path": "gregtech/content/data/BlockLootPack.java",
       "kind": "conditional",
       "conditional_regions": 10,
       "source_sha256": {
@@ -15043,7 +15043,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/data/BookCraftingRecipePack.java",
+      "path": "gregtech/content/data/BookCraftingRecipePack.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -15055,7 +15055,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/data/BottleFillingRecipePack.java",
+      "path": "gregtech/content/data/BottleFillingRecipePack.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -15067,7 +15067,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/data/BumbleCraftingRecipePack.java",
+      "path": "gregtech/content/data/BumbleCraftingRecipePack.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -15079,7 +15079,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/data/FuelRecipeMaps.java",
+      "path": "gregtech/content/data/FuelRecipeMaps.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -15093,7 +15093,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/data/GregTechData.java",
+      "path": "gregtech/content/data/GregTechData.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -15105,7 +15105,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/data/MachineRecipeIngredients.java",
+      "path": "gregtech/content/data/MachineRecipeIngredients.java",
       "kind": "conditional",
       "conditional_regions": 18,
       "source_sha256": {
@@ -15119,7 +15119,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/data/MachineRecipeMaps.java",
+      "path": "gregtech/content/data/MachineRecipeMaps.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -15133,7 +15133,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/data/ManualToolRecipePack.java",
+      "path": "gregtech/content/data/ManualToolRecipePack.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -15145,7 +15145,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/data/MaterialTagPack.java",
+      "path": "gregtech/content/data/MaterialTagPack.java",
       "kind": "conditional",
       "conditional_regions": 44,
       "source_sha256": {
@@ -15159,7 +15159,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/data/MultiblockRecipePack.java",
+      "path": "gregtech/content/data/MultiblockRecipePack.java",
       "kind": "conditional",
       "conditional_regions": 12,
       "source_sha256": {
@@ -15173,7 +15173,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/data/NuclearCraftingRecipePack.java",
+      "path": "gregtech/content/data/NuclearCraftingRecipePack.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -15185,7 +15185,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/data/OriginalCraftingJson.java",
+      "path": "gregtech/content/data/OriginalCraftingJson.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -15197,7 +15197,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/data/OriginalHandCraftingRows.java",
+      "path": "gregtech/content/data/OriginalHandCraftingRows.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -15209,7 +15209,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/data/PortableCraftingRecipePack.java",
+      "path": "gregtech/content/data/PortableCraftingRecipePack.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -15221,7 +15221,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/data/RegisteredFluids.java",
+      "path": "gregtech/content/data/RegisteredFluids.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -15235,7 +15235,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/data/SensorRecipePack.java",
+      "path": "gregtech/content/data/SensorRecipePack.java",
       "kind": "conditional",
       "conditional_regions": 10,
       "source_sha256": {
@@ -15249,7 +15249,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/data/ToolBlockConversionEvents.java",
+      "path": "gregtech/content/data/ToolBlockConversionEvents.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -15263,7 +15263,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/data/TrackCraftingRecipePack.java",
+      "path": "gregtech/content/data/TrackCraftingRecipePack.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -15275,7 +15275,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/data/VanillaCraftingRecipePack.java",
+      "path": "gregtech/content/data/VanillaCraftingRecipePack.java",
       "kind": "conditional",
       "conditional_regions": 6,
       "source_sha256": {
@@ -15289,7 +15289,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/data/WoodCraftingRecipePack.java",
+      "path": "gregtech/content/data/WoodCraftingRecipePack.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -15301,7 +15301,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/data/generated/GTFoodStatsGen.java",
+      "path": "gregtech/content/data/generated/GTFoodStatsGen.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -15315,7 +15315,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/entity/MaterialArrowEntity.java",
+      "path": "gregtech/content/entity/MaterialArrowEntity.java",
       "kind": "conditional",
       "conditional_regions": 8,
       "source_sha256": {
@@ -15553,7 +15553,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/BookShelfBlockItem.java",
+      "path": "gregtech/content/item/BookShelfBlockItem.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -15567,7 +15567,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/BottleItem.java",
+      "path": "gregtech/content/item/BottleItem.java",
       "kind": "conditional",
       "conditional_regions": 6,
       "source_sha256": {
@@ -15581,7 +15581,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/BushBlockItem.java",
+      "path": "gregtech/content/item/BushBlockItem.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -15595,7 +15595,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/CannedFoodItem.java",
+      "path": "gregtech/content/item/CannedFoodItem.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -15609,7 +15609,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/CanvasItem.java",
+      "path": "gregtech/content/item/CanvasItem.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -15623,7 +15623,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/ChemicalBatteryItem.java",
+      "path": "gregtech/content/item/ChemicalBatteryItem.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -15637,7 +15637,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/CoinItem.java",
+      "path": "gregtech/content/item/CoinItem.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -15651,7 +15651,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/ColoredBookItem.java",
+      "path": "gregtech/content/item/ColoredBookItem.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -15665,7 +15665,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/CreativeTabIconItem.java",
+      "path": "gregtech/content/item/CreativeTabIconItem.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -15679,7 +15679,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/ElectricToolItem.java",
+      "path": "gregtech/content/item/ElectricToolItem.java",
       "kind": "conditional",
       "conditional_regions": 18,
       "source_sha256": {
@@ -15693,7 +15693,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/FluidItem.java",
+      "path": "gregtech/content/item/FluidItem.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -15705,7 +15705,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/FuelRodItem.java",
+      "path": "gregtech/content/item/FuelRodItem.java",
       "kind": "conditional",
       "conditional_regions": 12,
       "source_sha256": {
@@ -15719,7 +15719,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/GTDungeonKeyItem.java",
+      "path": "gregtech/content/item/GTDungeonKeyItem.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -15733,7 +15733,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/GTToolItem.java",
+      "path": "gregtech/content/item/GTToolItem.java",
       "kind": "conditional",
       "conditional_regions": 13,
       "source_sha256": {
@@ -15747,7 +15747,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/GeigerCounterItem.java",
+      "path": "gregtech/content/item/GeigerCounterItem.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -15761,7 +15761,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/GunToolItem.java",
+      "path": "gregtech/content/item/GunToolItem.java",
       "kind": "conditional",
       "conditional_regions": 7,
       "source_sha256": {
@@ -15775,7 +15775,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/LongDistanceBlockItem.java",
+      "path": "gregtech/content/item/LongDistanceBlockItem.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -15789,7 +15789,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/MaterialArrowItem.java",
+      "path": "gregtech/content/item/MaterialArrowItem.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -15803,7 +15803,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/MaterialItem.java",
+      "path": "gregtech/content/item/MaterialItem.java",
       "kind": "conditional",
       "conditional_regions": 11,
       "source_sha256": {
@@ -15817,7 +15817,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/MultiBehaviorItem.java",
+      "path": "gregtech/content/item/MultiBehaviorItem.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -15829,7 +15829,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/PaintSprayItem.java",
+      "path": "gregtech/content/item/PaintSprayItem.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -15843,7 +15843,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/PanelBlockItem.java",
+      "path": "gregtech/content/item/PanelBlockItem.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -15857,7 +15857,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/PanelItem.java",
+      "path": "gregtech/content/item/PanelItem.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -15871,7 +15871,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/PanelItemView.java",
+      "path": "gregtech/content/item/PanelItemView.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -15885,7 +15885,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/PocketToolItem.java",
+      "path": "gregtech/content/item/PocketToolItem.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -15899,7 +15899,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/PortableFluidContainerItem.java",
+      "path": "gregtech/content/item/PortableFluidContainerItem.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -15913,7 +15913,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/PrintedPagesItem.java",
+      "path": "gregtech/content/item/PrintedPagesItem.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -15927,7 +15927,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/RadawayItem.java",
+      "path": "gregtech/content/item/RadawayItem.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -15941,7 +15941,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/RadiationSuitItem.java",
+      "path": "gregtech/content/item/RadiationSuitItem.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -15955,7 +15955,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/RemoteActivatorItem.java",
+      "path": "gregtech/content/item/RemoteActivatorItem.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -15967,7 +15967,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/RockItemPlacement.java",
+      "path": "gregtech/content/item/RockItemPlacement.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -15981,7 +15981,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/SandwichBlockItem.java",
+      "path": "gregtech/content/item/SandwichBlockItem.java",
       "kind": "conditional",
       "conditional_regions": 7,
       "source_sha256": {
@@ -15995,7 +15995,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/ScannerItem.java",
+      "path": "gregtech/content/item/ScannerItem.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -16009,7 +16009,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/SelectorTagItem.java",
+      "path": "gregtech/content/item/SelectorTagItem.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -16023,7 +16023,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/TechItem.java",
+      "path": "gregtech/content/item/TechItem.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -16037,7 +16037,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/WireBlockItem.java",
+      "path": "gregtech/content/item/WireBlockItem.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -16051,7 +16051,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/behavior/AxeColumnHarvest.java",
+      "path": "gregtech/content/item/behavior/AxeColumnHarvest.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -16065,7 +16065,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/behavior/BehaviorBuilderWand.java",
+      "path": "gregtech/content/item/behavior/BehaviorBuilderWand.java",
       "kind": "conditional",
       "conditional_regions": 7,
       "source_sha256": {
@@ -16079,7 +16079,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/behavior/BehaviorChunkEraser.java",
+      "path": "gregtech/content/item/behavior/BehaviorChunkEraser.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -16093,7 +16093,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/behavior/BehaviorCropnalyzer.java",
+      "path": "gregtech/content/item/behavior/BehaviorCropnalyzer.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -16107,7 +16107,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/behavior/BehaviorDataStorage.java",
+      "path": "gregtech/content/item/behavior/BehaviorDataStorage.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -16121,7 +16121,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/behavior/BehaviorDataStorage16.java",
+      "path": "gregtech/content/item/behavior/BehaviorDataStorage16.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -16135,7 +16135,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/behavior/BehaviorDuctTape.java",
+      "path": "gregtech/content/item/behavior/BehaviorDuctTape.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -16149,7 +16149,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/behavior/BehaviorFlintAndTinder.java",
+      "path": "gregtech/content/item/behavior/BehaviorFlintAndTinder.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -16163,7 +16163,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/behavior/BehaviorLighter.java",
+      "path": "gregtech/content/item/behavior/BehaviorLighter.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -16177,7 +16177,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/behavior/BehaviorPlaceDynamite.java",
+      "path": "gregtech/content/item/behavior/BehaviorPlaceDynamite.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -16191,7 +16191,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/behavior/BehaviorPlaceWoodworkingSupplies.java",
+      "path": "gregtech/content/item/behavior/BehaviorPlaceWoodworkingSupplies.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -16205,7 +16205,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/behavior/BehaviorPlugLeak.java",
+      "path": "gregtech/content/item/behavior/BehaviorPlugLeak.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -16219,7 +16219,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/behavior/BehaviorPlungerFluid.java",
+      "path": "gregtech/content/item/behavior/BehaviorPlungerFluid.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -16233,7 +16233,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/behavior/BehaviorRemote.java",
+      "path": "gregtech/content/item/behavior/BehaviorRemote.java",
       "kind": "conditional",
       "conditional_regions": 8,
       "source_sha256": {
@@ -16247,7 +16247,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/behavior/BehaviorScanner.java",
+      "path": "gregtech/content/item/behavior/BehaviorScanner.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -16261,7 +16261,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/behavior/BehaviorSprayColorRemover.java",
+      "path": "gregtech/content/item/behavior/BehaviorSprayColorRemover.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -16275,7 +16275,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/behavior/BehaviorSprayExtinguisher.java",
+      "path": "gregtech/content/item/behavior/BehaviorSprayExtinguisher.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -16289,7 +16289,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/behavior/BehaviorSprayFoamHardener.java",
+      "path": "gregtech/content/item/behavior/BehaviorSprayFoamHardener.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -16303,7 +16303,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/behavior/BehaviorSprayFoamRemover.java",
+      "path": "gregtech/content/item/behavior/BehaviorSprayFoamRemover.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -16317,7 +16317,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/behavior/BehaviorWorldgenDebugger.java",
+      "path": "gregtech/content/item/behavior/BehaviorWorldgenDebugger.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -16331,7 +16331,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/behavior/Extinguishable.java",
+      "path": "gregtech/content/item/behavior/Extinguishable.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -16343,7 +16343,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/behavior/ItemBehaviors.java",
+      "path": "gregtech/content/item/behavior/ItemBehaviors.java",
       "kind": "conditional",
       "conditional_regions": 18,
       "source_sha256": {
@@ -16357,7 +16357,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/behavior/ManualToolBehaviorAccess.java",
+      "path": "gregtech/content/item/behavior/ManualToolBehaviorAccess.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -16369,7 +16369,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/behavior/RemoteActivatable.java",
+      "path": "gregtech/content/item/behavior/RemoteActivatable.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -16383,7 +16383,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/item/behavior/ToolPlantHarvest.java",
+      "path": "gregtech/content/item/behavior/ToolPlantHarvest.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -17861,7 +17861,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/recipe/BookBindingRecipe.java",
+      "path": "gregtech/content/recipe/BookBindingRecipe.java",
       "kind": "conditional",
       "conditional_regions": 6,
       "source_sha256": {
@@ -17875,7 +17875,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/recipe/CraftingFormPosition.java",
+      "path": "gregtech/content/recipe/CraftingFormPosition.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -17887,7 +17887,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/recipe/CraftingMaterialForms.java",
+      "path": "gregtech/content/recipe/CraftingMaterialForms.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -17901,7 +17901,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/recipe/CraftingTools.java",
+      "path": "gregtech/content/recipe/CraftingTools.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -17915,7 +17915,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/recipe/CreosoteAxleRecipe.java",
+      "path": "gregtech/content/recipe/CreosoteAxleRecipe.java",
       "kind": "conditional",
       "conditional_regions": 21,
       "source_sha256": {
@@ -17929,7 +17929,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/recipe/ExternalOreRecipeLifecycle.java",
+      "path": "gregtech/content/recipe/ExternalOreRecipeLifecycle.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -17943,7 +17943,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/recipe/FiniteBottleFillingRecipe.java",
+      "path": "gregtech/content/recipe/FiniteBottleFillingRecipe.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -17957,7 +17957,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/recipe/GTFlintAndTinderRecipe.java",
+      "path": "gregtech/content/recipe/GTFlintAndTinderRecipe.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -17971,7 +17971,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/recipe/GTToolAssemblyRecipe.java",
+      "path": "gregtech/content/recipe/GTToolAssemblyRecipe.java",
       "kind": "conditional",
       "conditional_regions": 7,
       "source_sha256": {
@@ -17985,7 +17985,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/recipe/GTToolCraftingRecipe.java",
+      "path": "gregtech/content/recipe/GTToolCraftingRecipe.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -17999,7 +17999,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/recipe/GTToolHeadRecipe.java",
+      "path": "gregtech/content/recipe/GTToolHeadRecipe.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18013,7 +18013,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/recipe/GTToolPatternRecipe.java",
+      "path": "gregtech/content/recipe/GTToolPatternRecipe.java",
       "kind": "conditional",
       "conditional_regions": 9,
       "source_sha256": {
@@ -18027,7 +18027,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/recipe/GTToolRecipeSerializers.java",
+      "path": "gregtech/content/recipe/GTToolRecipeSerializers.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -18041,7 +18041,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/recipe/GTToolRecipes.java",
+      "path": "gregtech/content/recipe/GTToolRecipes.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -18055,7 +18055,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/recipe/NeoRecipeSerializers.java",
+      "path": "gregtech/content/recipe/NeoRecipeSerializers.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18067,7 +18067,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/recipe/OvenRecipeLifecycle.java",
+      "path": "gregtech/content/recipe/OvenRecipeLifecycle.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18079,7 +18079,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/recipe/PoweredToolAssemblyRecipe.java",
+      "path": "gregtech/content/recipe/PoweredToolAssemblyRecipe.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18091,7 +18091,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/recipe/RuntimeRecipeLifecycle.java",
+      "path": "gregtech/content/recipe/RuntimeRecipeLifecycle.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18103,7 +18103,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/recipe/ShapelessRecipeTooltipIndex.java",
+      "path": "gregtech/content/recipe/ShapelessRecipeTooltipIndex.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -18117,7 +18117,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/recipe/ShapelessRecipeTooltipIndexLoader.java",
+      "path": "gregtech/content/recipe/ShapelessRecipeTooltipIndexLoader.java",
       "kind": "conditional",
       "conditional_regions": 6,
       "source_sha256": {
@@ -18131,7 +18131,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/recipe/ToolAssemblyCatalog.java",
+      "path": "gregtech/content/recipe/ToolAssemblyCatalog.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -18145,7 +18145,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/recipe/ToolShapedRecipe.java",
+      "path": "gregtech/content/recipe/ToolShapedRecipe.java",
       "kind": "conditional",
       "conditional_regions": 6,
       "source_sha256": {
@@ -18159,7 +18159,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/recipe/ToolShapelessRecipe.java",
+      "path": "gregtech/content/recipe/ToolShapelessRecipe.java",
       "kind": "conditional",
       "conditional_regions": 12,
       "source_sha256": {
@@ -18173,7 +18173,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/BatteryItemAliases.java",
+      "path": "gregtech/content/registry/BatteryItemAliases.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18185,7 +18185,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTAxles.java",
+      "path": "gregtech/content/registry/GTAxles.java",
       "kind": "conditional",
       "conditional_regions": 7,
       "source_sha256": {
@@ -18199,7 +18199,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTBars.java",
+      "path": "gregtech/content/registry/GTBars.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18211,7 +18211,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTBasicMachines.java",
+      "path": "gregtech/content/registry/GTBasicMachines.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18223,7 +18223,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTBlackSands.java",
+      "path": "gregtech/content/registry/GTBlackSands.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18235,7 +18235,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTBlockEntities.java",
+      "path": "gregtech/content/registry/GTBlockEntities.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -18249,7 +18249,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTBlocks.java",
+      "path": "gregtech/content/registry/GTBlocks.java",
       "kind": "conditional",
       "conditional_regions": 17,
       "source_sha256": {
@@ -18263,7 +18263,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTBoilers.java",
+      "path": "gregtech/content/registry/GTBoilers.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -18277,7 +18277,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTBookShelves.java",
+      "path": "gregtech/content/registry/GTBookShelves.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18289,7 +18289,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTBumbleBlocks.java",
+      "path": "gregtech/content/registry/GTBumbleBlocks.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18301,7 +18301,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTBushes.java",
+      "path": "gregtech/content/registry/GTBushes.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -18315,7 +18315,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTChemicalBatteries.java",
+      "path": "gregtech/content/registry/GTChemicalBatteries.java",
       "kind": "conditional",
       "conditional_regions": 7,
       "source_sha256": {
@@ -18329,7 +18329,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTCoinPiles.java",
+      "path": "gregtech/content/registry/GTCoinPiles.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18341,7 +18341,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTColoredBooks.java",
+      "path": "gregtech/content/registry/GTColoredBooks.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -18355,7 +18355,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTConstructionBlocks.java",
+      "path": "gregtech/content/registry/GTConstructionBlocks.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18367,7 +18367,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTCraftingTables.java",
+      "path": "gregtech/content/registry/GTCraftingTables.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18379,7 +18379,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTCreativeTabIcons.java",
+      "path": "gregtech/content/registry/GTCreativeTabIcons.java",
       "kind": "conditional",
       "conditional_regions": 7,
       "source_sha256": {
@@ -18393,7 +18393,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTCreativeTabs.java",
+      "path": "gregtech/content/registry/GTCreativeTabs.java",
       "kind": "conditional",
       "conditional_regions": 30,
       "source_sha256": {
@@ -18407,7 +18407,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTDecorBlocks.java",
+      "path": "gregtech/content/registry/GTDecorBlocks.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18419,7 +18419,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTDungeonBlocks.java",
+      "path": "gregtech/content/registry/GTDungeonBlocks.java",
       "kind": "conditional",
       "conditional_regions": 13,
       "source_sha256": {
@@ -18433,7 +18433,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTDungeonKeys.java",
+      "path": "gregtech/content/registry/GTDungeonKeys.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -18447,7 +18447,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTElectricItems.java",
+      "path": "gregtech/content/registry/GTElectricItems.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -18461,7 +18461,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTEnchantments.java",
+      "path": "gregtech/content/registry/GTEnchantments.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18473,7 +18473,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTEnergyNodes.java",
+      "path": "gregtech/content/registry/GTEnergyNodes.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -18487,7 +18487,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTEngines.java",
+      "path": "gregtech/content/registry/GTEngines.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -18501,7 +18501,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTFluidComponents.java",
+      "path": "gregtech/content/registry/GTFluidComponents.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18513,7 +18513,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTFluidItems.java",
+      "path": "gregtech/content/registry/GTFluidItems.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -18527,7 +18527,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTFluidPipes.java",
+      "path": "gregtech/content/registry/GTFluidPipes.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18539,7 +18539,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTFluidSprings.java",
+      "path": "gregtech/content/registry/GTFluidSprings.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -18553,7 +18553,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTFluidType.java",
+      "path": "gregtech/content/registry/GTFluidType.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -18567,7 +18567,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTFluids.java",
+      "path": "gregtech/content/registry/GTFluids.java",
       "kind": "conditional",
       "conditional_regions": 10,
       "source_sha256": {
@@ -18581,7 +18581,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTFoodItems.java",
+      "path": "gregtech/content/registry/GTFoodItems.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18593,7 +18593,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTFuelRods.java",
+      "path": "gregtech/content/registry/GTFuelRods.java",
       "kind": "conditional",
       "conditional_regions": 6,
       "source_sha256": {
@@ -18607,7 +18607,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTGearboxes.java",
+      "path": "gregtech/content/registry/GTGearboxes.java",
       "kind": "conditional",
       "conditional_regions": 9,
       "source_sha256": {
@@ -18621,7 +18621,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTGrassSoils.java",
+      "path": "gregtech/content/registry/GTGrassSoils.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18633,7 +18633,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTIconSetBlocks.java",
+      "path": "gregtech/content/registry/GTIconSetBlocks.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18645,7 +18645,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTItemPipes.java",
+      "path": "gregtech/content/registry/GTItemPipes.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -18659,7 +18659,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTItems.java",
+      "path": "gregtech/content/registry/GTItems.java",
       "kind": "conditional",
       "conditional_regions": 13,
       "source_sha256": {
@@ -18673,7 +18673,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTLasers.java",
+      "path": "gregtech/content/registry/GTLasers.java",
       "kind": "conditional",
       "conditional_regions": 8,
       "source_sha256": {
@@ -18687,7 +18687,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTLogisticsTank.java",
+      "path": "gregtech/content/registry/GTLogisticsTank.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18699,7 +18699,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTLongDistance.java",
+      "path": "gregtech/content/registry/GTLongDistance.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18711,7 +18711,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTLootChests.java",
+      "path": "gregtech/content/registry/GTLootChests.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -18725,7 +18725,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTMachines.java",
+      "path": "gregtech/content/registry/GTMachines.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18737,7 +18737,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTMagnets.java",
+      "path": "gregtech/content/registry/GTMagnets.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -18751,7 +18751,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTManualStations.java",
+      "path": "gregtech/content/registry/GTManualStations.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18763,7 +18763,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTMaterialPiles.java",
+      "path": "gregtech/content/registry/GTMaterialPiles.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18775,7 +18775,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTMaterialRegistration.java",
+      "path": "gregtech/content/registry/GTMaterialRegistration.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18787,7 +18787,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTMenuTypes.java",
+      "path": "gregtech/content/registry/GTMenuTypes.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -18801,7 +18801,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTMetalChests.java",
+      "path": "gregtech/content/registry/GTMetalChests.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18813,7 +18813,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTMiscBlocks.java",
+      "path": "gregtech/content/registry/GTMiscBlocks.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18825,7 +18825,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTMultiItems.java",
+      "path": "gregtech/content/registry/GTMultiItems.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -18839,7 +18839,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTMultiblocks.java",
+      "path": "gregtech/content/registry/GTMultiblocks.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -18853,7 +18853,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTPlants.java",
+      "path": "gregtech/content/registry/GTPlants.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18865,7 +18865,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTProjectiles.java",
+      "path": "gregtech/content/registry/GTProjectiles.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -18879,7 +18879,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTPumps.java",
+      "path": "gregtech/content/registry/GTPumps.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -18893,7 +18893,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTRadiationProtection.java",
+      "path": "gregtech/content/registry/GTRadiationProtection.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -18907,7 +18907,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTRelaysFilters.java",
+      "path": "gregtech/content/registry/GTRelaysFilters.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18919,7 +18919,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTRemainingDecor.java",
+      "path": "gregtech/content/registry/GTRemainingDecor.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18931,7 +18931,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTRemainingIconBlocks.java",
+      "path": "gregtech/content/registry/GTRemainingIconBlocks.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18943,7 +18943,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTSafes.java",
+      "path": "gregtech/content/registry/GTSafes.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18955,7 +18955,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTSandwich.java",
+      "path": "gregtech/content/registry/GTSandwich.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -18967,7 +18967,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTSensors.java",
+      "path": "gregtech/content/registry/GTSensors.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -18981,7 +18981,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTSignalWires.java",
+      "path": "gregtech/content/registry/GTSignalWires.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -18995,7 +18995,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTSounds.java",
+      "path": "gregtech/content/registry/GTSounds.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -19009,7 +19009,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTSpecialOreBlocks.java",
+      "path": "gregtech/content/registry/GTSpecialOreBlocks.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19021,7 +19021,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTSpikes.java",
+      "path": "gregtech/content/registry/GTSpikes.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19033,7 +19033,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTStorage.java",
+      "path": "gregtech/content/registry/GTStorage.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19045,7 +19045,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTStorageContainers.java",
+      "path": "gregtech/content/registry/GTStorageContainers.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19057,7 +19057,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTSurfaceBlocks.java",
+      "path": "gregtech/content/registry/GTSurfaceBlocks.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19069,7 +19069,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTTanks.java",
+      "path": "gregtech/content/registry/GTTanks.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19081,7 +19081,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTTechnological.java",
+      "path": "gregtech/content/registry/GTTechnological.java",
       "kind": "conditional",
       "conditional_regions": 8,
       "source_sha256": {
@@ -19095,7 +19095,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTToolBlocks.java",
+      "path": "gregtech/content/registry/GTToolBlocks.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -19109,7 +19109,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTToolItems.java",
+      "path": "gregtech/content/registry/GTToolItems.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -19123,7 +19123,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTTrackBlocks.java",
+      "path": "gregtech/content/registry/GTTrackBlocks.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -19137,7 +19137,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTTreeHoles.java",
+      "path": "gregtech/content/registry/GTTreeHoles.java",
       "kind": "conditional",
       "conditional_regions": 6,
       "source_sha256": {
@@ -19151,7 +19151,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTWires.java",
+      "path": "gregtech/content/registry/GTWires.java",
       "kind": "conditional",
       "conditional_regions": 9,
       "source_sha256": {
@@ -19165,7 +19165,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTWoods.java",
+      "path": "gregtech/content/registry/GTWoods.java",
       "kind": "conditional",
       "conditional_regions": 8,
       "source_sha256": {
@@ -19179,7 +19179,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTWorldWaterFluid.java",
+      "path": "gregtech/content/registry/GTWorldWaterFluid.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -19193,7 +19193,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/GTZpmArtifacts.java",
+      "path": "gregtech/content/registry/GTZpmArtifacts.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19205,7 +19205,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/LegacyContentBinding.java",
+      "path": "gregtech/content/registry/LegacyContentBinding.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19219,7 +19219,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/LegacyContentRegistryAliases.java",
+      "path": "gregtech/content/registry/LegacyContentRegistryAliases.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19231,7 +19231,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/LegacyItemMappings.java",
+      "path": "gregtech/content/registry/LegacyItemMappings.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19243,7 +19243,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/registry/MachineBlockRegistration.java",
+      "path": "gregtech/content/registry/MachineBlockRegistration.java",
       "kind": "forge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19325,7 +19325,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/world/GarbageData.java",
+      "path": "gregtech/content/world/GarbageData.java",
       "kind": "conditional",
       "conditional_regions": 11,
       "source_sha256": {
@@ -19339,7 +19339,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTBedrockOreDimensions.java",
+      "path": "gregtech/content/worldgen/GTBedrockOreDimensions.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19353,7 +19353,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTBedrockOreFeature.java",
+      "path": "gregtech/content/worldgen/GTBedrockOreFeature.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -19367,7 +19367,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTBlackSandFeature.java",
+      "path": "gregtech/content/worldgen/GTBlackSandFeature.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -19381,7 +19381,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTBumbleHivesFeature.java",
+      "path": "gregtech/content/worldgen/GTBumbleHivesFeature.java",
       "kind": "conditional",
       "conditional_regions": 7,
       "source_sha256": {
@@ -19395,7 +19395,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTBushesFeature.java",
+      "path": "gregtech/content/worldgen/GTBushesFeature.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19409,7 +19409,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTColtanFeature.java",
+      "path": "gregtech/content/worldgen/GTColtanFeature.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19423,7 +19423,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTDeepOceanFeature.java",
+      "path": "gregtech/content/worldgen/GTDeepOceanFeature.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -19437,7 +19437,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTDungeonAnchorPiece.java",
+      "path": "gregtech/content/worldgen/GTDungeonAnchorPiece.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19451,7 +19451,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTDungeonFeature.java",
+      "path": "gregtech/content/worldgen/GTDungeonFeature.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -19465,7 +19465,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTDungeonPlacement.java",
+      "path": "gregtech/content/worldgen/GTDungeonPlacement.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -19479,7 +19479,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTDungeonStructure.java",
+      "path": "gregtech/content/worldgen/GTDungeonStructure.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -19493,7 +19493,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTFeatures.java",
+      "path": "gregtech/content/worldgen/GTFeatures.java",
       "kind": "conditional",
       "conditional_regions": 7,
       "source_sha256": {
@@ -19507,7 +19507,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTFluidSpringsFeature.java",
+      "path": "gregtech/content/worldgen/GTFluidSpringsFeature.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -19521,7 +19521,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTNetherDepositFeature.java",
+      "path": "gregtech/content/worldgen/GTNetherDepositFeature.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -19535,7 +19535,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTNetherScatterFeature.java",
+      "path": "gregtech/content/worldgen/GTNetherScatterFeature.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -19549,7 +19549,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTOreBlockResolver.java",
+      "path": "gregtech/content/worldgen/GTOreBlockResolver.java",
       "kind": "conditional",
       "conditional_regions": 9,
       "source_sha256": {
@@ -19563,7 +19563,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTOreVeinFeature.java",
+      "path": "gregtech/content/worldgen/GTOreVeinFeature.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19577,7 +19577,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTOriginFeature.java",
+      "path": "gregtech/content/worldgen/GTOriginFeature.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19591,7 +19591,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTPitFeature.java",
+      "path": "gregtech/content/worldgen/GTPitFeature.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -19605,7 +19605,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTRockPlacement.java",
+      "path": "gregtech/content/worldgen/GTRockPlacement.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19619,7 +19619,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTRocksFeature.java",
+      "path": "gregtech/content/worldgen/GTRocksFeature.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -19633,7 +19633,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTSmallOreFeature.java",
+      "path": "gregtech/content/worldgen/GTSmallOreFeature.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19647,7 +19647,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTStoneLayerFeature.java",
+      "path": "gregtech/content/worldgen/GTStoneLayerFeature.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -19661,7 +19661,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTStructures.java",
+      "path": "gregtech/content/worldgen/GTStructures.java",
       "kind": "conditional",
       "conditional_regions": 11,
       "source_sha256": {
@@ -19675,7 +19675,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTSurfaceDepositFeature.java",
+      "path": "gregtech/content/worldgen/GTSurfaceDepositFeature.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -19689,7 +19689,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTSurfaceFlora.java",
+      "path": "gregtech/content/worldgen/GTSurfaceFlora.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -19703,7 +19703,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTSurfaceFloraFeature.java",
+      "path": "gregtech/content/worldgen/GTSurfaceFloraFeature.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19717,7 +19717,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTTreeGrower.java",
+      "path": "gregtech/content/worldgen/GTTreeGrower.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -19731,7 +19731,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTTreeShapes.java",
+      "path": "gregtech/content/worldgen/GTTreeShapes.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19745,7 +19745,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTTreesFeature.java",
+      "path": "gregtech/content/worldgen/GTTreesFeature.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19759,7 +19759,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTTurfFeature.java",
+      "path": "gregtech/content/worldgen/GTTurfFeature.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -19773,7 +19773,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTWaterBodyFeature.java",
+      "path": "gregtech/content/worldgen/GTWaterBodyFeature.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -19787,7 +19787,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTWorldgenBiomes.java",
+      "path": "gregtech/content/worldgen/GTWorldgenBiomes.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19801,7 +19801,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/GTWorldgenScale.java",
+      "path": "gregtech/content/worldgen/GTWorldgenScale.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19815,7 +19815,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/OreHarvest.java",
+      "path": "gregtech/content/worldgen/OreHarvest.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19827,7 +19827,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/OreHostStateAdapter.java",
+      "path": "gregtech/content/worldgen/OreHostStateAdapter.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19839,7 +19839,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/center/NativeOriginFacilities.java",
+      "path": "gregtech/content/worldgen/center/NativeOriginFacilities.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19853,7 +19853,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/center/NativeOriginItems.java",
+      "path": "gregtech/content/worldgen/center/NativeOriginItems.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -19867,7 +19867,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/center/NativeOriginWorld.java",
+      "path": "gregtech/content/worldgen/center/NativeOriginWorld.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -19881,7 +19881,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/center/OriginSpawnEvents.java",
+      "path": "gregtech/content/worldgen/center/OriginSpawnEvents.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -19895,7 +19895,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/DungeonBindings.java",
+      "path": "gregtech/content/worldgen/dungeon/DungeonBindings.java",
       "kind": "neoforge_only",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19907,7 +19907,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/DungeonBottleSupplies.java",
+      "path": "gregtech/content/worldgen/dungeon/DungeonBottleSupplies.java",
       "kind": "conditional",
       "conditional_regions": 5,
       "source_sha256": {
@@ -19921,7 +19921,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/GTDungeonChunk.java",
+      "path": "gregtech/content/worldgen/dungeon/GTDungeonChunk.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19935,7 +19935,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/GTDungeonChunkBarracks.java",
+      "path": "gregtech/content/worldgen/dungeon/GTDungeonChunkBarracks.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -19949,7 +19949,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/GTDungeonChunkCorridor.java",
+      "path": "gregtech/content/worldgen/dungeon/GTDungeonChunkCorridor.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19963,7 +19963,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/GTDungeonChunkCorridor3.java",
+      "path": "gregtech/content/worldgen/dungeon/GTDungeonChunkCorridor3.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -19977,7 +19977,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/GTDungeonChunkCorridor4.java",
+      "path": "gregtech/content/worldgen/dungeon/GTDungeonChunkCorridor4.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -19991,7 +19991,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/GTDungeonChunkDoorPiston.java",
+      "path": "gregtech/content/worldgen/dungeon/GTDungeonChunkDoorPiston.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -20005,7 +20005,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/GTDungeonChunkEntrance.java",
+      "path": "gregtech/content/worldgen/dungeon/GTDungeonChunkEntrance.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -20019,7 +20019,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/GTDungeonChunkPillar.java",
+      "path": "gregtech/content/worldgen/dungeon/GTDungeonChunkPillar.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -20033,7 +20033,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/GTDungeonChunkRoomEmpty.java",
+      "path": "gregtech/content/worldgen/dungeon/GTDungeonChunkRoomEmpty.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -20047,7 +20047,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/GTDungeonChunkRoomFarmCrop.java",
+      "path": "gregtech/content/worldgen/dungeon/GTDungeonChunkRoomFarmCrop.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -20061,7 +20061,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/GTDungeonChunkRoomFarmFish.java",
+      "path": "gregtech/content/worldgen/dungeon/GTDungeonChunkRoomFarmFish.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -20075,7 +20075,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/GTDungeonChunkRoomFarmMobs.java",
+      "path": "gregtech/content/worldgen/dungeon/GTDungeonChunkRoomFarmMobs.java",
       "kind": "conditional",
       "conditional_regions": 9,
       "source_sha256": {
@@ -20089,7 +20089,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/GTDungeonChunkRoomLibrary.java",
+      "path": "gregtech/content/worldgen/dungeon/GTDungeonChunkRoomLibrary.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -20103,7 +20103,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/GTDungeonChunkRoomLibraryNormal.java",
+      "path": "gregtech/content/worldgen/dungeon/GTDungeonChunkRoomLibraryNormal.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -20117,7 +20117,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/GTDungeonChunkRoomMiningBedrock.java",
+      "path": "gregtech/content/worldgen/dungeon/GTDungeonChunkRoomMiningBedrock.java",
       "kind": "conditional",
       "conditional_regions": 6,
       "source_sha256": {
@@ -20131,7 +20131,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/GTDungeonChunkRoomPortal.java",
+      "path": "gregtech/content/worldgen/dungeon/GTDungeonChunkRoomPortal.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -20145,7 +20145,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/GTDungeonChunkRoomPortalEnd.java",
+      "path": "gregtech/content/worldgen/dungeon/GTDungeonChunkRoomPortalEnd.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -20159,7 +20159,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/GTDungeonChunkRoomPortalNether.java",
+      "path": "gregtech/content/worldgen/dungeon/GTDungeonChunkRoomPortalNether.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -20173,7 +20173,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/GTDungeonChunkRoomStorage.java",
+      "path": "gregtech/content/worldgen/dungeon/GTDungeonChunkRoomStorage.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -20187,7 +20187,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/GTDungeonChunkRoomWorkshop.java",
+      "path": "gregtech/content/worldgen/dungeon/GTDungeonChunkRoomWorkshop.java",
       "kind": "conditional",
       "conditional_regions": 18,
       "source_sha256": {
@@ -20201,7 +20201,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/GTDungeonCupDrinks.java",
+      "path": "gregtech/content/worldgen/dungeon/GTDungeonCupDrinks.java",
       "kind": "shared",
       "conditional_regions": 0,
       "source_sha256": {
@@ -20215,7 +20215,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/GTDungeonData.java",
+      "path": "gregtech/content/worldgen/dungeon/GTDungeonData.java",
       "kind": "conditional",
       "conditional_regions": 21,
       "source_sha256": {
@@ -20229,7 +20229,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/GTDungeonLayout.java",
+      "path": "gregtech/content/worldgen/dungeon/GTDungeonLayout.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -20243,7 +20243,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/GTDungeonSharedState.java",
+      "path": "gregtech/content/worldgen/dungeon/GTDungeonSharedState.java",
       "kind": "conditional",
       "conditional_regions": 1,
       "source_sha256": {
@@ -20257,7 +20257,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/WorkshopCraftingSupplies.java",
+      "path": "gregtech/content/worldgen/dungeon/WorkshopCraftingSupplies.java",
       "kind": "conditional",
       "conditional_regions": 3,
       "source_sha256": {
@@ -20271,7 +20271,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/WorkshopDrawerSupplies.java",
+      "path": "gregtech/content/worldgen/dungeon/WorkshopDrawerSupplies.java",
       "kind": "conditional",
       "conditional_regions": 2,
       "source_sha256": {
@@ -20285,7 +20285,7 @@
     },
     {
       "source_set": "main",
-      "path": "gregtech/worldgen/dungeon/WorkshopFluidStation.java",
+      "path": "gregtech/content/worldgen/dungeon/WorkshopFluidStation.java",
       "kind": "conditional",
       "conditional_regions": 4,
       "source_sha256": {
@@ -125657,7 +125657,7 @@
     },
     {
       "source_set": "main",
-      "path": "data/gregtech/recipe/pipes/pipe_huge_wood.json",
+      "path": "data/gregtech/content/recipe/pipes/pipe_huge_wood.json",
       "kind": "neoforge_only",
       "format": "json",
       "native_signature": {
@@ -125669,7 +125669,7 @@
     },
     {
       "source_set": "main",
-      "path": "data/gregtech/recipe/pipes/pipe_large_wood.json",
+      "path": "data/gregtech/content/recipe/pipes/pipe_large_wood.json",
       "kind": "neoforge_only",
       "format": "json",
       "native_signature": {
@@ -125681,7 +125681,7 @@
     },
     {
       "source_set": "main",
-      "path": "data/gregtech/recipe/pipes/pipe_medium_wood.json",
+      "path": "data/gregtech/content/recipe/pipes/pipe_medium_wood.json",
       "kind": "neoforge_only",
       "format": "json",
       "native_signature": {
@@ -125693,7 +125693,7 @@
     },
     {
       "source_set": "main",
-      "path": "data/gregtech/recipe/pipes/pipe_small_wood.json",
+      "path": "data/gregtech/content/recipe/pipes/pipe_small_wood.json",
       "kind": "neoforge_only",
       "format": "json",
       "native_signature": {
@@ -125705,7 +125705,7 @@
     },
     {
       "source_set": "main",
-      "path": "data/gregtech/recipe/pipes/pipe_tiny_wood.json",
+      "path": "data/gregtech/content/recipe/pipes/pipe_tiny_wood.json",
       "kind": "neoforge_only",
       "format": "json",
       "native_signature": {
@@ -125717,7 +125717,7 @@
     },
     {
       "source_set": "main",
-      "path": "data/gregtech/recipe/wood/slab_bluespruce.json",
+      "path": "data/gregtech/content/recipe/wood/slab_bluespruce.json",
       "kind": "neoforge_only",
       "format": "json",
       "native_signature": {

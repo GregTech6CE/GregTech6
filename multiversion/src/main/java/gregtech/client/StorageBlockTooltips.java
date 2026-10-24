@@ -30,7 +30,7 @@ public final class StorageBlockTooltips {
                 .append(Component.literal(Long.toString(Math.max(0, data == null ? 0 : data.getLong("gt.stored"))))
                         .withStyle(ChatFormatting.WHITE)));
         lines.add(Component.translatable(OriginalStorageTooltipData.MASS_SIZE).withStyle(ChatFormatting.AQUA)
-                .append(Long.toString(stack.getItem() instanceof net.minecraft.world.item.BlockItem item && item.getBlock() instanceof gregtech.block.inventory.MassStorageBlock block ? block.capacity() : OriginalStorageTooltipData.MASS_CAPACITY)));
+                .append(Long.toString(stack.getItem() instanceof net.minecraft.world.item.BlockItem item && item.getBlock() instanceof gregtech.content.block.inventory.MassStorageBlock block ? block.capacity() : OriginalStorageTooltipData.MASS_CAPACITY)));
         add(lines, OriginalStorageTooltipData.MASS_TABLE, ChatFormatting.AQUA);
         tools(lines, OriginalStorageTooltipData.massTools(data == null ? 0 : data.getInt("gt.mode")));
         facing(lines);

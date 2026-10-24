@@ -2,10 +2,10 @@ package gregtech.client;
 
 import gregtech.internal.material.MaterialIconDefinitions;
 import gregtech.internal.material.MaterialTextureSet;
-import gregtech.block.MaterialBlockLike;
-import gregtech.block.machine.BasicMachineBlock;
-import gregtech.item.CreativeTabIconItem;
-import gregtech.item.MaterialItem;
+import gregtech.content.block.MaterialBlockLike;
+import gregtech.content.block.machine.BasicMachineBlock;
+import gregtech.content.item.CreativeTabIconItem;
+import gregtech.content.item.MaterialItem;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -103,7 +103,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             }
             if (id.getNamespace().equals("gt6ce") && !id.getPath().equals("bottle_crate")
                     && item instanceof BlockItem crateItem
-                    && crateItem.getBlock() instanceof gregtech.block.inventory.BottleCrateBlock crate) {
+                    && crateItem.getBlock() instanceof gregtech.content.block.inventory.BottleCrateBlock crate) {
                 String model = "block/inventory/" + id.getPath();
                 String blockJson = "{\"parent\":\"gt6ce:block/inventory/bottle_crate_tinted\",\"textures\":{\"wood\":\"" + crate.frameTexture() + "\"}}";
                 result.put(location("models/" + model + ".json"), blockJson.getBytes(StandardCharsets.UTF_8));
@@ -118,7 +118,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
 //? if >=1.21.1 {
             /*boolean fluidDisplay = item instanceof gregtech.platform.neoforge.fluid.FluidDisplayItem;
 *///?} else {
-            boolean fluidDisplay = item instanceof gregtech.item.FluidItem;
+            boolean fluidDisplay = item instanceof gregtech.content.item.FluidItem;
 //?}
             if (!id.getNamespace().equals("gt6ce") && !materialForm && !fluidDisplay) continue;
             if (SharedInventoryModelPack.class.getResource("/assets/" + id.getNamespace()
@@ -129,7 +129,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
 //? if >=1.21.1 {
             /*} else if (item instanceof gregtech.platform.neoforge.fluid.FluidDisplayItem) {
 *///?} else {
-            } else if (item instanceof gregtech.item.FluidItem) {
+            } else if (item instanceof gregtech.content.item.FluidItem) {
 //?}
                 parent = location("item/fluid_item");
             } else if (item instanceof CreativeTabIconItem icon) {
@@ -156,8 +156,8 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         // Material bushes share the existing 28 geometries; resource packs can override each identity.
         byte[] bushStates=gregtech.content.plant.MaterialBerryBushCatalog.blockstateJson().getBytes(StandardCharsets.UTF_8);
         byte[] bushItem=MaterialIconDefinitions.sharedInventoryJson("gt6ce:block/plants/bush_stage3").getBytes(StandardCharsets.UTF_8);
-        for(var block:gregtech.registry.GTBushes.allBlocks()) {
-            var berryId=((gregtech.block.plant.BushBlock)block).berryId();
+        for(var block:gregtech.content.registry.GTBushes.allBlocks()) {
+            var berryId=((gregtech.content.block.plant.BushBlock)block).berryId();
             int berryColon=berryId.indexOf(':');
             if(!berryId.substring(berryColon+1).startsWith("plant_gt_berry_"))continue;
             var id=BuiltInRegistries.BLOCK.getKey(block);
@@ -187,11 +187,11 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
     }
 
     private static void emitStructureParts(Map<ResourceLocation, byte[]> result) {
-        for (var part : gregtech.registry.GTMultiblocks.addonParts()) {
+        for (var part : gregtech.content.registry.GTMultiblocks.addonParts()) {
             ResourceLocation id = part.block().getId();
             String texture = part.texture() == null ? "" : part.texture();
-            boolean energy = part.block().get() instanceof gregtech.block.machine.AddonEnergyPartBlock;
-            boolean functional = part.block().get() instanceof gregtech.block.machine.AddonFunctionalPartBlock;
+            boolean energy = part.block().get() instanceof gregtech.content.block.machine.AddonEnergyPartBlock;
+            boolean functional = part.block().get() instanceof gregtech.content.block.machine.AddonFunctionalPartBlock;
             String model = texture.isEmpty()
                     ? "gt6ce:block/machine/multiblock/steel_wall"
                     : id.getNamespace() + ":block/" + id.getPath();
@@ -239,7 +239,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         byte[] model = "{\"parent\":\"minecraft:block/cube_all\",\"textures\":{\"all\":\"minecraft:block/iron_block\"}}"
                 .getBytes(StandardCharsets.UTF_8);
         for (var block : BuiltInRegistries.BLOCK) {
-            if (!(block instanceof gregtech.block.machine.CompressedGasTankBlock)) continue;
+            if (!(block instanceof gregtech.content.block.machine.CompressedGasTankBlock)) continue;
             ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
             String path = id.getPath();
             result.put(named(id.getNamespace(), "models/block/" + path + ".json"), model);
@@ -255,8 +255,8 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
     private static void emitAddonPipes(Map<ResourceLocation, byte[]> result) {
         String blockstate = "{\"variants\":{\"\":{\"model\":\"gt6ce:block/machine/pipe_tiny_steel_core\"}}}";
         String item = "{\"parent\":\"gt6ce:block/machine/pipe_tiny_steel_core\"}";
-        for (var block : gregtech.registry.AddonPipeRegistration.fluidBlocks()) emitPipe(result, block, blockstate, item);
-        for (var block : gregtech.registry.AddonPipeRegistration.itemBlocks()) emitPipe(result, block, blockstate, item);
+        for (var block : gregtech.content.registry.AddonPipeRegistration.fluidBlocks()) emitPipe(result, block, blockstate, item);
+        for (var block : gregtech.content.registry.AddonPipeRegistration.itemBlocks()) emitPipe(result, block, blockstate, item);
     }
 
     private static void emitPipe(Map<ResourceLocation, byte[]> result, net.minecraft.world.level.block.Block block,
@@ -342,12 +342,12 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         names.add("gt6ce");
         for (var prefix : gregtech.internal.prefix.PrefixRegistry.addonPrefixes())
             names.add(prefix.itemNamespace());
-        for (var part : gregtech.registry.GTMultiblocks.addonParts())
+        for (var part : gregtech.content.registry.GTMultiblocks.addonParts())
             names.add(part.block().getId().getNamespace());
         for (var block : BuiltInRegistries.BLOCK)
-            if (block instanceof gregtech.block.machine.CompressedGasTankBlock)
+            if (block instanceof gregtech.content.block.machine.CompressedGasTankBlock)
                 names.add(BuiltInRegistries.BLOCK.getKey(block).getNamespace());
-        names.addAll(gregtech.registry.AddonPipeRegistration.namespaces());
+        names.addAll(gregtech.content.registry.AddonPipeRegistration.namespaces());
         for (var material : gregtech.internal.material.GTMaterialRegistry.allMaterials())
             names.addAll(gregtech.internal.addon.AddonMaterials.owners(material));
         return Set.copyOf(names);

@@ -1,6 +1,6 @@
 package gregtech.mixin;
 
-import gregtech.recipe.CraftingFormPosition;
+import gregtech.content.recipe.CraftingFormPosition;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
 import org.spongepowered.asm.mixin.Mixin;

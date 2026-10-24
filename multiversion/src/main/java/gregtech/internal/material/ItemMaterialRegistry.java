@@ -2,7 +2,7 @@ package gregtech.internal.material;
 
 import gregtech.api.material.GTValues;
 
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;

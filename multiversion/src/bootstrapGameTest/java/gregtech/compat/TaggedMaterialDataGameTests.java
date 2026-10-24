@@ -7,8 +7,8 @@ import gregtech.internal.material.ItemMaterialRegistry;
 import gregtech.internal.material.MaterialEquivalence;
 import gregtech.content.material.Materials;
 import gregtech.content.recipe.ExternalOreProcessing;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.GTItems;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTItems;
 //? if >=1.21.1 {
 /*import java.util.ArrayList;
 import net.minecraft.core.registries.BuiltInRegistries;

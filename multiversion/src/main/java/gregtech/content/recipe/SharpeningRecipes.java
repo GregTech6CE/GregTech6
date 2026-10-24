@@ -10,9 +10,9 @@ import gregtech.api.material.GTValues;
 import gregtech.internal.material.MaterialProperty;
 import gregtech.internal.recipe.Recipe;
 import gregtech.internal.recipe.RecipeMap;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.GTItems;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTItems;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;

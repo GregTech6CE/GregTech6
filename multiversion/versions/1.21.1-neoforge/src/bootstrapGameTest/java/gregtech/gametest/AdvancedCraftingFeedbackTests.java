@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.block.misc.AdvancedCraftingTableBlockEntity;
+import gregtech.content.block.misc.AdvancedCraftingTableBlockEntity;
 import gregtech.client.gui.AdvancedCraftingMenu;
-import gregtech.recipe.AdvancedCraftingRecipeReload;
-import gregtech.registry.GTCraftingTables;
+import gregtech.content.recipe.AdvancedCraftingRecipeReload;
+import gregtech.content.registry.GTCraftingTables;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -32,16 +32,16 @@ public final class AdvancedCraftingFeedbackTests {
 
     @GameTest(template="test_empty",timeoutTicks=100)
     public static void stoneLayerModeDisablesOnlyLegacyOverworldVeins(GameTestHelper helper){
-        var old=gregtech.worldgen.GTOreVeins.OVERWORLD_VEINS;
+        var old=gregtech.content.worldgen.GTOreVeins.OVERWORLD_VEINS;
         helper.assertTrue(old.size()==31&&old.stream().anyMatch(v->v.name().equals("lignite")),"retain the original alternate-mode catalog");
-        helper.assertTrue(gregtech.worldgen.GTWorldgenDefaults.STONE_LAYERS
-                &&gregtech.worldgen.GTOreVeins.activeOverworldVeins().isEmpty(),
+        helper.assertTrue(gregtech.content.worldgen.GTWorldgenDefaults.STONE_LAYERS
+                &&gregtech.content.worldgen.GTOreVeins.activeOverworldVeins().isEmpty(),
                 "GT6 default strata mode disables every legacy Overworld large vein");
         var shown=gregtech.jei.WorldgenInfoData.buildVeins();
         helper.assertTrue(shown.size()==5&&shown.stream().allMatch(v->v.dimension().equals("minecraft:the_end")),
                 "JEI and EMI show only active large veins and retain the End catalog");
-        helper.assertTrue(!gregtech.worldgen.GTOreVeins.OVERWORLD_SMALL_ORES.isEmpty()
-                &&!gregtech.worldgen.GTStoneLayersGen.LAYERS.isEmpty(),
+        helper.assertTrue(!gregtech.content.worldgen.GTOreVeins.OVERWORLD_SMALL_ORES.isEmpty()
+                &&!gregtech.content.worldgen.GTStoneLayersGen.LAYERS.isEmpty(),
                 "small-ore and stone-layer data remain independent");
         helper.succeed();
     }

@@ -1,10 +1,10 @@
 package gregtech.integration.client;
 
-import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.internal.recipe.*;
 import gregtech.internal.tool.GTToolType;
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.item.GTToolItem;
+import gregtech.content.item.GTToolItem;
 import gregtech.jei.RecipeMapCategory;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;

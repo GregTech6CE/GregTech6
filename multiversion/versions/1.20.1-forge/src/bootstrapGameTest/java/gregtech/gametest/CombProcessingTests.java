@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
 import gregtech.internal.recipe.Recipe;
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.data.MachineRecipeMaps;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
@@ -90,13 +90,13 @@ public final class CombProcessingTests {
         boolean honey = false;
         for (FluidStack fluid : recipe.mFluidOutputs) {
             if (fluid != null && fluid.getAmount() == 100
-                    && fluid.getFluid() == gregtech.registry.GTFluids.still("Honey").get()) {
+                    && fluid.getFluid() == gregtech.content.registry.GTFluids.still("Honey").get()) {
                 honey = true;
             }
         }
         h.assertTrue(honey, "it yields 100 mB of honey: " + java.util.Arrays.toString(recipe.mFluidOutputs));
-        ItemStack wax = gregtech.registry.GTItems.getStack(
-                gregtech.data.MaterialPrefix.dust,
+        ItemStack wax = gregtech.content.registry.GTItems.getStack(
+                gregtech.content.data.MaterialPrefix.dust,
                 gregtech.internal.material.GTMaterialRegistry.get("WaxBee"), 1);
         h.assertTrue(!wax.isEmpty(), "the port registers bee wax (" + wax + ")");
         boolean sawWax = false;
@@ -118,10 +118,10 @@ public final class CombProcessingTests {
         int honey = 0, jelly = 0;
         for (FluidStack fluid : recipe.mFluidOutputs) {
             if (fluid == null) continue;
-            if (fluid.getFluid() == gregtech.registry.GTFluids.still("Honey").get()) {
+            if (fluid.getFluid() == gregtech.content.registry.GTFluids.still("Honey").get()) {
                 honey = fluid.getAmount();
             }
-            if (fluid.getFluid() == gregtech.registry.GTFluids.still("RoyalJelly").get()) {
+            if (fluid.getFluid() == gregtech.content.registry.GTFluids.still("RoyalJelly").get()) {
                 jelly = fluid.getAmount();
             }
         }

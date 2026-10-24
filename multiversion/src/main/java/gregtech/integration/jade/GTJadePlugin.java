@@ -1,23 +1,23 @@
 package gregtech.integration.jade;
 
-import gregtech.block.machine.BasicMachineBlock;
-import gregtech.block.machine.BoilerTankBlock;
-import gregtech.block.machine.EngineBlock;
-import gregtech.block.machine.MoldBasinBlock;
-import gregtech.block.machine.MoldBlock;
-import gregtech.block.machine.SmeltingCrucibleBlock;
-import gregtech.block.machine.SolidBurningBoxBlock;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
-import gregtech.blockentity.machine.BoilerTankBlockEntity;
-import gregtech.blockentity.machine.EngineBaseBlockEntity;
-import gregtech.blockentity.machine.MoldBasinBlockEntity;
-import gregtech.blockentity.machine.MoldBlockEntity;
+import gregtech.content.block.machine.BasicMachineBlock;
+import gregtech.content.block.machine.BoilerTankBlock;
+import gregtech.content.block.machine.EngineBlock;
+import gregtech.content.block.machine.MoldBasinBlock;
+import gregtech.content.block.machine.MoldBlock;
+import gregtech.content.block.machine.SmeltingCrucibleBlock;
+import gregtech.content.block.machine.SolidBurningBoxBlock;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.blockentity.machine.BoilerTankBlockEntity;
+import gregtech.content.blockentity.machine.EngineBaseBlockEntity;
+import gregtech.content.blockentity.machine.MoldBasinBlockEntity;
+import gregtech.content.blockentity.machine.MoldBlockEntity;
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity;
 *///?} else {
-import gregtech.blockentity.machine.SmeltingCrucibleBlockEntity;
+import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
 //?}
-import gregtech.blockentity.machine.SolidBurningBoxBlockEntity;
+import gregtech.content.blockentity.machine.SolidBurningBoxBlockEntity;
 import snownee.jade.api.IWailaClientRegistration;
 import snownee.jade.api.IWailaCommonRegistration;
 import snownee.jade.api.IWailaPlugin;
@@ -29,14 +29,14 @@ public class GTJadePlugin implements IWailaPlugin {
 
     @Override
     public void register(IWailaCommonRegistration registration) {
-        registration.registerBlockDataProvider(MagicFieldAbsorberJadeProvider.INSTANCE, gregtech.blockentity.energy.MagicFieldAbsorberBlockEntity.class);
-        registration.registerBlockDataProvider(EnergyBufferJadeProvider.INSTANCE, gregtech.blockentity.energy.PowerCellBlockEntity.class);
+        registration.registerBlockDataProvider(MagicFieldAbsorberJadeProvider.INSTANCE, gregtech.content.blockentity.energy.MagicFieldAbsorberBlockEntity.class);
+        registration.registerBlockDataProvider(EnergyBufferJadeProvider.INSTANCE, gregtech.content.blockentity.energy.PowerCellBlockEntity.class);
         registration.registerBlockDataProvider(DustFunnelJadeProvider.INSTANCE,
-                gregtech.blockentity.tool.DustFunnelBlockEntity.class);
-        registration.registerBlockDataProvider(TurbineJadeProvider.INSTANCE, gregtech.blockentity.energy.EnergyNodeBlockEntity.class);
-        registration.registerBlockDataProvider(EnergyBufferJadeProvider.INSTANCE,gregtech.blockentity.energy.ChemicalBatteryBlockEntity.class);
-        registration.registerBlockDataProvider(ExtenderJadeProvider.INSTANCE,gregtech.block.misc.ExtenderBlockEntity.class);
-        registration.registerBlockDataProvider(ReactorJadeProvider.INSTANCE,gregtech.blockentity.energy.ReactorCoreBlockEntity.class);
+                gregtech.content.blockentity.tool.DustFunnelBlockEntity.class);
+        registration.registerBlockDataProvider(TurbineJadeProvider.INSTANCE, gregtech.content.blockentity.energy.EnergyNodeBlockEntity.class);
+        registration.registerBlockDataProvider(EnergyBufferJadeProvider.INSTANCE,gregtech.content.blockentity.energy.ChemicalBatteryBlockEntity.class);
+        registration.registerBlockDataProvider(ExtenderJadeProvider.INSTANCE,gregtech.content.block.misc.ExtenderBlockEntity.class);
+        registration.registerBlockDataProvider(ReactorJadeProvider.INSTANCE,gregtech.content.blockentity.energy.ReactorCoreBlockEntity.class);
         registration.registerBlockDataProvider(MultiblockJadeProvider.INSTANCE, net.minecraft.world.level.block.entity.BlockEntity.class);
         registration.registerBlockDataProvider(BurningBoxJadeProvider.INSTANCE, SolidBurningBoxBlockEntity.class);
 //? if >=1.21.1 {
@@ -44,7 +44,7 @@ public class GTJadePlugin implements IWailaPlugin {
 *///?} else {
         registration.registerBlockDataProvider(CrucibleJadeProvider.INSTANCE, SmeltingCrucibleBlockEntity.class);
 //?}
-        registration.registerBlockDataProvider(CrucibleJadeProvider.INSTANCE, gregtech.blockentity.machine.MultiblockPortBlockEntity.class);
+        registration.registerBlockDataProvider(CrucibleJadeProvider.INSTANCE, gregtech.content.blockentity.machine.MultiblockPortBlockEntity.class);
         registration.registerBlockDataProvider(MoldJadeProvider.INSTANCE, MoldBlockEntity.class);
         registration.registerBlockDataProvider(MoldJadeProvider.INSTANCE, MoldBasinBlockEntity.class);
         registration.registerBlockDataProvider(BasicMachineJadeProvider.INSTANCE, BasicMachineBlockEntity.class);
@@ -54,30 +54,30 @@ public class GTJadePlugin implements IWailaPlugin {
 
     @Override
     public void registerClient(IWailaClientRegistration registration) {
-        registration.registerBlockComponent(MagicFieldAbsorberJadeProvider.INSTANCE, gregtech.block.energy.MagicFieldAbsorberBlock.class);
-        registration.registerBlockComponent(EnergyBufferJadeProvider.INSTANCE, gregtech.block.energy.PowerCellBlock.class);
+        registration.registerBlockComponent(MagicFieldAbsorberJadeProvider.INSTANCE, gregtech.content.block.energy.MagicFieldAbsorberBlock.class);
+        registration.registerBlockComponent(EnergyBufferJadeProvider.INSTANCE, gregtech.content.block.energy.PowerCellBlock.class);
         registration.registerBlockComponent(DustFunnelJadeProvider.INSTANCE,
-                gregtech.block.tool.DustFunnelBlock.class);
-        registration.registerBlockComponent(TurbineJadeProvider.INSTANCE, gregtech.block.energy.EnergyNodeBlock.class);
+                gregtech.content.block.tool.DustFunnelBlock.class);
+        registration.registerBlockComponent(TurbineJadeProvider.INSTANCE, gregtech.content.block.energy.EnergyNodeBlock.class);
         registration.registerBlockComponent(ConstructionNameJadeProvider.INSTANCE,
-                gregtech.block.misc.ColoredConstructionBlock.class);
+                gregtech.content.block.misc.ColoredConstructionBlock.class);
         registration.registerBlockComponent(ConstructionNameJadeProvider.INSTANCE,
-                gregtech.block.misc.ConcreteBlock.class);
-        registration.registerBlockComponent(EnergyBufferJadeProvider.INSTANCE,gregtech.block.energy.ChemicalBatteryBlock.class);
-        registration.registerBlockComponent(ExtenderJadeProvider.INSTANCE,gregtech.block.misc.SourceExtenderBlock.class);
-        registration.registerBlockComponent(ReactorJadeProvider.INSTANCE,gregtech.block.energy.ReactorCoreBlock.class);
-        registration.registerBlockComponent(ReactorJadeProvider.INSTANCE,gregtech.block.energy.ReactorCore2x2Block.class);
+                gregtech.content.block.misc.ConcreteBlock.class);
+        registration.registerBlockComponent(EnergyBufferJadeProvider.INSTANCE,gregtech.content.block.energy.ChemicalBatteryBlock.class);
+        registration.registerBlockComponent(ExtenderJadeProvider.INSTANCE,gregtech.content.block.misc.SourceExtenderBlock.class);
+        registration.registerBlockComponent(ReactorJadeProvider.INSTANCE,gregtech.content.block.energy.ReactorCoreBlock.class);
+        registration.registerBlockComponent(ReactorJadeProvider.INSTANCE,gregtech.content.block.energy.ReactorCore2x2Block.class);
         registration.registerBlockComponent(MultiblockJadeProvider.INSTANCE, net.minecraft.world.level.block.Block.class);
         registration.registerBlockComponent(BurningBoxJadeProvider.INSTANCE, SolidBurningBoxBlock.class);
         registration.registerBlockComponent(CrucibleJadeProvider.INSTANCE, SmeltingCrucibleBlock.class);
-        registration.registerBlockComponent(CrucibleJadeProvider.INSTANCE, gregtech.block.machine.LargeCrucibleControllerBlock.class);
-        registration.registerBlockComponent(CrucibleJadeProvider.INSTANCE, gregtech.block.machine.MultiblockPortBlock.class);
+        registration.registerBlockComponent(CrucibleJadeProvider.INSTANCE, gregtech.content.block.machine.LargeCrucibleControllerBlock.class);
+        registration.registerBlockComponent(CrucibleJadeProvider.INSTANCE, gregtech.content.block.machine.MultiblockPortBlock.class);
         registration.registerBlockComponent(MoldJadeProvider.INSTANCE, MoldBlock.class);
         registration.registerBlockComponent(MoldJadeProvider.INSTANCE, MoldBasinBlock.class);
         registration.registerBlockComponent(BasicMachineJadeProvider.INSTANCE, BasicMachineBlock.class);
         registration.registerBlockComponent(EngineJadeProvider.INSTANCE, EngineBlock.class);
         registration.registerBlockComponent(BoilerJadeProvider.INSTANCE, BoilerTankBlock.class);
-        registration.registerBlockComponent(RockTwigJadeProvider.INSTANCE, gregtech.block.RockBlock.class);
-        registration.registerBlockComponent(RockTwigJadeProvider.INSTANCE, gregtech.block.TwigBlock.class);
+        registration.registerBlockComponent(RockTwigJadeProvider.INSTANCE, gregtech.content.block.RockBlock.class);
+        registration.registerBlockComponent(RockTwigJadeProvider.INSTANCE, gregtech.content.block.TwigBlock.class);
     }
 }

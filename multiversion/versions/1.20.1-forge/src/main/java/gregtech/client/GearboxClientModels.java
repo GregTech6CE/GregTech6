@@ -1,8 +1,8 @@
 package gregtech.client;
 
 import gregtech.GregTech;
-import gregtech.block.energy.GearboxBlock;
-import gregtech.registry.GTGearboxes;
+import gregtech.content.block.energy.GearboxBlock;
+import gregtech.content.registry.GTGearboxes;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.resources.model.BakedModel;

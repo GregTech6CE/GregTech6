@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.block.energy.ElectricWireBlock;
-import gregtech.block.misc.ChargingCraftingTableBlockEntity;
-import gregtech.blockentity.energy.ElectricWireBlockEntity;
-import gregtech.data.GregTechTags;
-import gregtech.registry.*;
+import gregtech.content.block.energy.ElectricWireBlock;
+import gregtech.content.block.misc.ChargingCraftingTableBlockEntity;
+import gregtech.content.blockentity.energy.ElectricWireBlockEntity;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.registry.*;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.entity.EntityType;
@@ -45,7 +45,7 @@ public final class WireDefinitionRepairTests {
             String name=i==0?"graphene":"superconductor";var b=wire(name,1,false);var pos=new BlockPos(1,1,1+i*2);
             h.setBlock(pos,b.defaultBlockState().setValue(ElectricWireBlock.WEST,true).setValue(ElectricWireBlock.EAST,true));
             h.setBlock(pos.east(),GTMiscBlocks.CHARGING_CRAFTING_TABLE.get());
-            var table=(ChargingCraftingTableBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(pos.east()));table.items().setStackInSlot(16,new ItemStack(gregtech.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,1)));
+            var table=(ChargingCraftingTableBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(pos.east()));table.items().setStackInSlot(16,new ItemStack(gregtech.content.registry.GTChemicalBatteries.item(gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,1)));
             var be=(ElectricWireBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(pos));
             h.assertTrue(be.doEnergyInjection(GregTechTags.Energy.EU,Direction.WEST,32,1,true)==1,"real current through "+name);be.serverTick();
             h.assertTrue(be.lastWattage()==32-b.spec().lossPerBlock(),"nonzero carried power");

@@ -1,5 +1,5 @@
 package gregtech.content.nuclear;
-import gregtech.registry.GTFluids;
+import gregtech.content.registry.GTFluids;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
 *///?} else {

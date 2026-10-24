@@ -2,8 +2,8 @@ package gregtech.gametest;
 
 import gregtech.internal.material.GTMaterial;
 import gregtech.content.material.generated.OreMaterials;
-import gregtech.worldgen.GTColtanFeature;
-import gregtech.worldgen.GTFeatures;
+import gregtech.content.worldgen.GTColtanFeature;
+import gregtech.content.worldgen.GTFeatures;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;
@@ -167,7 +167,7 @@ public final class ColtanTests {
 
         // The whole band stays inside GT6's y = 20..40 after the depth remap.
         List<String> outside = new ArrayList<>();
-        int bandTop = gregtech.worldgen.GTWorldgenScale.remapY(gen, GTColtanFeature.MAX_Y);
+        int bandTop = gregtech.content.worldgen.GTWorldgenScale.remapY(gen, GTColtanFeature.MAX_Y);
         for (int y = BAND_LOW; y <= BAND_HIGH; y++) {
             for (int i = 0; i < 16; i++) {
                 for (int j = 0; j < 16; j++) {

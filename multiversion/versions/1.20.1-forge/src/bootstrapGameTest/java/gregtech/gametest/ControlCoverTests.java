@@ -2,12 +2,13 @@ package gregtech.gametest;
 
 import gregtech.api.machine.*;
 import gregtech.internal.machine.*;
-import gregtech.api.recipe.*;
+import gregtech.internal.machine.*;
 import gregtech.internal.recipe.*;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.internal.recipe.*;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.cover.MachineCoverSpec;
-import gregtech.data.GregTechTags;
-import gregtech.registry.GTTechnological;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.registry.GTTechnological;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.item.*;
@@ -93,17 +94,17 @@ public final class ControlCoverTests {
             public boolean stillValid(net.minecraft.world.entity.player.Player player){return true;}
         };
         for(var spec:MachineCoverSpec.values()){
-            var recipe=(gregtech.recipe.ToolShapedRecipe)h.getLevel().getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","control_covers/"+spec.id)).orElseThrow();
+            var recipe=(gregtech.content.recipe.ToolShapedRecipe)h.getLevel().getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","control_covers/"+spec.id)).orElseThrow();
             var grid=new net.minecraft.world.inventory.TransientCraftingContainer(menu,3,3);
             for(int y=0;y<recipe.getHeight();y++)for(int x=0;x<recipe.getWidth();x++){
                 var ingredient=recipe.getIngredients().get(x+y*recipe.getWidth());if(ingredient.isEmpty())continue;
                 var item=ingredient.getItems()[0].copy();
-                if(item.getItem() instanceof gregtech.item.GTToolItem)item=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.SCREWDRIVER,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
+                if(item.getItem() instanceof gregtech.content.item.GTToolItem)item=gregtech.content.item.GTToolItem.create(gregtech.internal.tool.GTToolType.SCREWDRIVER,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
                 grid.setItem(x+y*3,item);
             }
             h.assertTrue(recipe.matches(grid,h.getLevel())&&recipe.assemble(grid,h.getLevel().registryAccess()).is(GTTechnological.get(spec.id)),"source pattern crafts implemented cover: "+spec.id);
             var remainder=recipe.getRemainingItems(grid);
-            for(int slot=0;slot<9;slot++)if(grid.getItem(slot).getItem() instanceof gregtech.item.GTToolItem)h.assertTrue(!remainder.get(slot).isEmpty()&&remainder.get(slot).getDamageValue()>0,"reboot-cover screwdriver remains with wear");
+            for(int slot=0;slot<9;slot++)if(grid.getItem(slot).getItem() instanceof gregtech.content.item.GTToolItem)h.assertTrue(!remainder.get(slot).isEmpty()&&remainder.get(slot).getDamageValue()>0,"reboot-cover screwdriver remains with wear");
         }
         h.succeed();
     }

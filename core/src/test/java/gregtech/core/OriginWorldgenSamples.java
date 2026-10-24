@@ -1,6 +1,6 @@
 package gregtech.core;
 
-import gregtech.worldgen.center.*;
+import gregtech.content.worldgen.center.*;
 import java.util.*;
 
 /** Small source-pinned placement samples; no Minecraft world, client or server launch. */

@@ -17,13 +17,13 @@ import gregtech.internal.machine.FurnaceFuelValue;
 import gregtech.internal.material.MaterialProperty;
 import gregtech.internal.mod.ModData;
 import gregtech.internal.prefix.BlockMaterialPrefix;
-import gregtech.data.MaterialPrefix;
-import gregtech.block.BlockMaterialWeights;
-import gregtech.block.stone.StoneMaterialWeights;
-import gregtech.block.stone.StoneVariant;
-import gregtech.data.GregTechConstants;
-import gregtech.data.ModReferences;
-import gregtech.recipe.ShapelessRecipeTooltipIndex;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.block.BlockMaterialWeights;
+import gregtech.content.block.stone.StoneMaterialWeights;
+import gregtech.content.block.stone.StoneVariant;
+import gregtech.content.data.GregTechConstants;
+import gregtech.content.data.ModReferences;
+import gregtech.content.recipe.ShapelessRecipeTooltipIndex;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -50,7 +50,7 @@ public final class MaterialTooltips {
         appendWithMaterials(stack, material, BlockMaterialWeights.contained(material, prefix), null, tooltip, flag);
     }
 
-    /** Decorative stone blocks ({@link gregtech.block.stone.GTStoneBlock}). */
+    /** Decorative stone blocks ({@link gregtech.content.block.stone.GTStoneBlock}). */
     public static void appendStoneBlock(ItemStack stack, GTMaterial material, StoneVariant variant, boolean slab,
                                         List<Component> tooltip, TooltipFlag flag) {
         appendWithMaterials(stack, material, StoneMaterialWeights.contained(material, variant, slab), null, tooltip, flag);

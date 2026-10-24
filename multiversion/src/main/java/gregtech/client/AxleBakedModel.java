@@ -5,8 +5,8 @@ package gregtech.client;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.block.energy.AxleBlock;
-import gregtech.blockentity.energy.AxleBlockEntity;
+import gregtech.content.block.energy.AxleBlock;
+import gregtech.content.blockentity.energy.AxleBlockEntity;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.core.Direction;

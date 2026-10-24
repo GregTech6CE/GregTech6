@@ -6,7 +6,7 @@ import gregtech.client.CommonBlockTooltips;
 import gregtech.content.machine.MachineConstructionMaterials;
 import gregtech.content.multiblock.OriginalGeneratorTooltipData;
 import gregtech.content.multiblock.OriginalGeneratorTooltipData.Kind;
-import gregtech.data.BlockHarvestPolicy;
+import gregtech.content.data.BlockHarvestPolicy;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;

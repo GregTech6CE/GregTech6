@@ -1,7 +1,7 @@
 /* Derived from GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later. */
 package gregtech.content.food;
 
-import gregtech.item.CannedFoodItem;
+import gregtech.content.item.CannedFoodItem;
 import net.minecraft.world.entity.LivingEntity;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;

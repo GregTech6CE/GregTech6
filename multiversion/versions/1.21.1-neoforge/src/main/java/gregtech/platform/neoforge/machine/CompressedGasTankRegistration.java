@@ -1,8 +1,8 @@
 package gregtech.platform.neoforge.machine;
 
 import gregtech.internal.addon.AddonMachines;
-import gregtech.block.machine.CompressedGasTankBlock;
-import gregtech.blockentity.machine.CompressedGasTankBlockEntity;
+import gregtech.content.block.machine.CompressedGasTankBlock;
+import gregtech.content.blockentity.machine.CompressedGasTankBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;

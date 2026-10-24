@@ -4,7 +4,7 @@ import gregtech.content.food.FoodStatEvents;
 import gregtech.content.food.GTFoodStats;
 import gregtech.content.food.PlayerFoodStats;
 import gregtech.content.nuclear.PlayerRadiation;
-import gregtech.damage.GTDamageTypes;
+import gregtech.content.damage.GTDamageTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -294,7 +294,7 @@ public final class FoodStatsTests {
         helper.assertTrue(PlayerFoodStats.OVERDOSE_DEATH, "DeathByOverdosingCertainFoods defaults to true");
         helper.assertTrue(PlayerFoodStats.NUTRITION_SYSTEM, "NutritionSystem defaults to true");
         // Every generated row really is a registered item with at least one non-zero statistic.
-        for (GTFoodStats.Row row : gregtech.data.generated.GTFoodStatsGen.ROWS) {
+        for (GTFoodStats.Row row : gregtech.content.data.generated.GTFoodStatsGen.ROWS) {
             helper.assertTrue(BuiltInRegistries.ITEM.getKey(row.item()) != null,
                     row.item() + " is registered");
             helper.assertTrue(row.alcohol() != 0 || row.caffeine() != 0 || row.dehydration() != 0

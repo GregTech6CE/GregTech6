@@ -1,10 +1,10 @@
 package gregtech.integration.client;
 
 import com.google.gson.*;
-import gregtech.blockentity.misc.SandwichBlockEntity;
+import gregtech.content.blockentity.misc.SandwichBlockEntity;
 import gregtech.content.food.*;
 import gregtech.content.nuclear.PlayerRadiation;
-import gregtech.item.SandwichBlockItem;
+import gregtech.content.item.SandwichBlockItem;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -48,7 +48,7 @@ public final class SandwichFeedbackChecks {
   use.accept(item("tofu_bar",16));require(be.contents().size()==2&&actor.getMainHandItem().getCount()==16,"duplicate top layer accepted");
   use.accept(item("tomato_ketchup",3));require(be.contents().size()==2&&actor.getMainHandItem().getCount()==3,"insufficient bottle accepted");
   use.accept(item("tomato_ketchup",4));require(be.ingredient(4).getCount()==4&&be.layerId(4)==1&&actor.getInventory().countItem(item("tomato_ketchup",1).getItem())==0,"four bottles per sixteen sandwiches");
-  require(actor.getInventory().countItem(gregtech.item.BottleItem.emptyBottle().getItem())==4,"empty bottles returned exactly once");
+  require(actor.getInventory().countItem(gregtech.content.item.BottleItem.emptyBottle().getItem())==4,"empty bottles returned exactly once");
   use.accept(new ItemStack(Items.REDSTONE,16));require(be.redstoneEnabled()&&be.redstoneSignal()==4&&be.comparatorSignal()==4&&be.sizePixels()==5,"redstone count/height");
   use.accept(item("toasted_toast",16));require(be.sizePixels()==7&&be.comparatorSignal()==6&&be.redstoneSignal()==6,"height signal update");
   var drop=be.dropItem();require(drop.is(item("sandwich_block",1).getItem())&&drop.getCount()==16,"preserved batch outer count");

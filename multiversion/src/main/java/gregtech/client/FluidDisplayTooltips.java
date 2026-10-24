@@ -29,7 +29,7 @@ public final class FluidDisplayTooltips {
 //? if >=1.21.1 {
                 /*&& event.getItemStack().getItem() instanceof gregtech.platform.neoforge.fluid.FluidDisplayItem) {
 *///?} else {
-                && event.getItemStack().getItem() instanceof gregtech.item.FluidItem) {
+                && event.getItemStack().getItem() instanceof gregtech.content.item.FluidItem) {
 //?}
             event.getToolTip().add(Component.translatable(OriginalFluidDisplayRules.PREFIX + "creative_fill")
                     .withStyle(ChatFormatting.AQUA));

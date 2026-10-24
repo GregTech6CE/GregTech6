@@ -1,14 +1,14 @@
 package gregtech.gametest;
 
-import gregtech.block.stone.StoneType;
-import gregtech.block.stone.StoneVariant;
-import gregtech.blockentity.tool.BumbliaryBlockEntity;
+import gregtech.content.block.stone.StoneType;
+import gregtech.content.block.stone.StoneVariant;
+import gregtech.content.blockentity.tool.BumbliaryBlockEntity;
 import gregtech.content.bumble.BumbleBeeGenes;
 import gregtech.content.bumble.BumbleBeeType;
 import gregtech.content.bumble.BumbleWorkplace;
 import gregtech.content.bumble.GTBumbleSpecies;
-import gregtech.registry.GTBlocks;
-import gregtech.registry.GTToolBlocks;
+import gregtech.content.registry.GTBlocks;
+import gregtech.content.registry.GTToolBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

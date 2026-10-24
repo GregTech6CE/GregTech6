@@ -2,7 +2,7 @@ package gregtech.core;
 
 import gregtech.content.fluid.FluidDefinitions;
 import gregtech.content.recipe.OriginalFuelRecipeRows;
-import gregtech.data.FluidCatalog;
+import gregtech.content.data.FluidCatalog;
 
 /** Pinned Loader_Fuels:191-213 and CS:216-234, including per-litre rather than per-bucket energy. */
 final class HotFluidSourceContracts {

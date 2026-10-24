@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
-import gregtech.block.machine.FluidPipeBlock;
-import gregtech.blockentity.machine.FluidPipeBlockEntity;
+import gregtech.content.block.machine.FluidPipeBlock;
+import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
@@ -167,13 +167,13 @@ public final class FluidPipeChannelTests {
 //?}
     }
 
-    private static gregtech.blockentity.machine.TankBlockEntity drum(GameTestHelper h, BlockPos pos) {
+    private static gregtech.content.blockentity.machine.TankBlockEntity drum(GameTestHelper h, BlockPos pos) {
         var block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "drum_stainless_steel"));
         h.getLevel().setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
         h.getLevel().setBlockAndUpdate(pos, block.defaultBlockState());
         var be = h.getLevel().getBlockEntity(pos);
-        h.assertTrue(be instanceof gregtech.blockentity.machine.TankBlockEntity, "registered drum");
-        return (gregtech.blockentity.machine.TankBlockEntity) be;
+        h.assertTrue(be instanceof gregtech.content.blockentity.machine.TankBlockEntity, "registered drum");
+        return (gregtech.content.blockentity.machine.TankBlockEntity) be;
     }
 
     @GameTest(template = "test_empty", timeoutTicks = 40)
@@ -205,7 +205,7 @@ public final class FluidPipeChannelTests {
         open(h, p, Direction.EAST, true);
         var pos = p.getBlockPos().east();
         h.getLevel().setBlockAndUpdate(pos, Blocks.CAULDRON.defaultBlockState());
-        var distilled = gregtech.registry.GTFluids.stack("DistW", 1000);
+        var distilled = gregtech.content.registry.GTFluids.stack("DistW", 1000);
         h.assertTrue(distilled != null, "distilled water registered");
         p.fill(distilled, FluidAction.EXECUTE);
         tick(h, p);
@@ -213,7 +213,7 @@ public final class FluidPipeChannelTests {
                 && p.getFluidInTank(0).isEmpty() && neighbor.getFluidInTank(0).isEmpty(), "cauldron priority includes distilled water");
         h.getLevel().setBlockAndUpdate(pos, Blocks.CAULDRON.defaultBlockState());
         open(h, p, Direction.WEST, false);
-        var seawater = gregtech.registry.GTFluids.stack("Ocean", 1000);
+        var seawater = gregtech.content.registry.GTFluids.stack("Ocean", 1000);
         h.assertTrue(seawater != null, "sea water registered");
         p.fill(seawater, FluidAction.EXECUTE);
         tick(h, p);
@@ -231,7 +231,7 @@ public final class FluidPipeChannelTests {
         tick(h, p);
         h.assertTrue(p.getFluidInTank(0).getAmount() == 1000, "closed outlet cannot fill cauldron");
         open(h, p, Direction.EAST, true);
-        var cover = new net.minecraft.world.item.ItemStack(gregtech.registry.GTTechnological.get(
+        var cover = new net.minecraft.world.item.ItemStack(gregtech.content.registry.GTTechnological.get(
                 gregtech.content.cover.CoverUtilityBehaviors.FILTER_FLUID));
         h.assertTrue(p.attachCover(Direction.EAST, cover), "attach empty whitelist filter");
         tick(h, p);

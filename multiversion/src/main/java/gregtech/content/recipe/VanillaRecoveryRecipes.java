@@ -4,10 +4,10 @@ package gregtech.content.recipe;
 
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
-import gregtech.api.recipe.*;
 import gregtech.internal.recipe.*;
-import gregtech.data.*;
-import gregtech.registry.GTItems;
+import gregtech.internal.recipe.*;
+import gregtech.content.data.*;
+import gregtech.content.registry.GTItems;
 import net.minecraft.world.item.*;
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
@@ -84,7 +84,7 @@ public final class VanillaRecoveryRecipes {
 //?}
         if (!id.getNamespace().equals("gt6ce")) return false;
         var expected = gregtech.content.machine.MachineConstructionMaterials.block(id.getPath());
-        if (expected.isEmpty() && block instanceof gregtech.block.machine.BasicMachineBlock machine)
+        if (expected.isEmpty() && block instanceof gregtech.content.block.machine.BasicMachineBlock machine)
             expected = gregtech.content.machine.OriginalMachineMaterialData.find(machine.basicSpec().machineName(), machine.basicSpec().tier());
         if (expected.isEmpty()) return false;
         var registered = ItemMaterialRegistry.base(item);

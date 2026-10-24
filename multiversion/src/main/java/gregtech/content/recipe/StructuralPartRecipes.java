@@ -3,8 +3,8 @@ package gregtech.content.recipe;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.recipe.Recipe;
 import gregtech.content.multiblock.LargeMachineParts;
-import gregtech.data.*;
-import gregtech.registry.*;
+import gregtech.content.data.*;
+import gregtech.content.registry.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 

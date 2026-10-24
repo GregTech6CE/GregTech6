@@ -1,5 +1,5 @@
 package gregtech.content.recipe;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 import gregtech.internal.prefix.BlockMaterialPrefix;
 import java.util.List;
 /** Original WelderFamilyRecipes parameters; native stack/registry construction stays in the platforms. */

@@ -1,9 +1,9 @@
 package gregtech.content.recipe;
 
-import gregtech.block.wood.WoodSpecies;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.GTWoods;
+import gregtech.content.block.wood.WoodSpecies;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTWoods;
 import net.minecraft.world.item.ItemStack;
 
 /**

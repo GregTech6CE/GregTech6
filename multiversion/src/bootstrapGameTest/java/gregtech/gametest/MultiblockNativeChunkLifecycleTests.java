@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
-import gregtech.block.machine.BasicMachineBlock;
-import gregtech.blockentity.machine.LargeRecipeMachineBlockEntity;
-import gregtech.blockentity.machine.MultiblockPortBlockEntity;
+import gregtech.content.block.machine.BasicMachineBlock;
+import gregtech.content.blockentity.machine.LargeRecipeMachineBlockEntity;
+import gregtech.content.blockentity.machine.MultiblockPortBlockEntity;
 import gregtech.content.multiblock.LargeMachineLayouts;
 import java.util.HashSet;
 import java.util.Set;

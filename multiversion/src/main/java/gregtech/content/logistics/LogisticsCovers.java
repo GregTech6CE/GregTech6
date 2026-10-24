@@ -5,9 +5,9 @@ import gregtech.internal.inventory.BlockContents;
 /*import gregtech.internal.transport.PipeConnections;
 import net.minecraft.core.HolderLookup;
 *///?} else {
-import gregtech.block.energy.ElectricWireBlock;
+import gregtech.content.block.energy.ElectricWireBlock;
 //?}
-import gregtech.block.machine.LogisticsWireBlock;
+import gregtech.content.block.machine.LogisticsWireBlock;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;

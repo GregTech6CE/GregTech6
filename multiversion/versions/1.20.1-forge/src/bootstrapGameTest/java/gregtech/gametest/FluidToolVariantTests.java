@@ -1,7 +1,7 @@
 package gregtech.gametest;
 import gregtech.internal.fluid.*;
-import gregtech.block.tool.*;
-import gregtech.registry.*;
+import gregtech.content.block.tool.*;
+import gregtech.content.registry.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.resources.ResourceLocation;
@@ -12,13 +12,13 @@ import net.minecraftforge.gametest.*;
 @GameTestHolder("gt6ce") @PrefixGameTestTemplate(false)
 public final class FluidToolVariantTests {
     @GameTest(template="test_empty") public static void finalizedFluidDeclarations(GameTestHelper h){
-        var declared=gregtech.data.RegisteredFluids.Steam;
-        h.assertTrue(gregtech.data.RegisteredFluids.get("Steam").equals(declared),"registry must retain chained immutable declaration properties");
+        var declared=gregtech.content.data.RegisteredFluids.Steam;
+        h.assertTrue(gregtech.content.data.RegisteredFluids.get("Steam").equals(declared),"registry must retain chained immutable declaration properties");
         var steam=GTFluids.still("Steam").get();
         h.assertTrue(GTFluids.isGas(new FluidStack(steam,1))&&steam.getFluidType().getTemperature()==373&&steam.getFluidType().getDensity()==-1000,"actual Forge steam retains gas phase, temperature and density");
-        for(var field:gregtech.data.RegisteredFluids.class.getFields()){
-            if(field.getType()!=gregtech.data.RegisteredFluids.FluidEntry.class)continue;
-            var registered=gregtech.data.RegisteredFluids.get(field.getName());
+        for(var field:gregtech.content.data.RegisteredFluids.class.getFields()){
+            if(field.getType()!=gregtech.content.data.RegisteredFluids.FluidEntry.class)continue;
+            var registered=gregtech.content.data.RegisteredFluids.get(field.getName());
             if(registered!=null)try{h.assertTrue(registered.equals(field.get(null)),"final declaration retained: "+field.getName());}catch(IllegalAccessException e){throw new IllegalStateException(e);}
         }
         h.succeed();
@@ -36,8 +36,8 @@ public final class FluidToolVariantTests {
         }
         h.assertTrue(pots==4&&cylinders==4,"four source variants for each family");
         var acid=new FluidStack(GTFluids.still("GenLiquid_SulfuricAcid").get(),100);
-        var ceramic=(gregtech.item.PortableFluidContainerItem)net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce","fluid_measuring_pot"));
-        var stainless=(gregtech.item.PortableFluidContainerItem)net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce","fluid_measuring_pot_stainless_steel"));
+        var ceramic=(gregtech.content.item.PortableFluidContainerItem)net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce","fluid_measuring_pot"));
+        var stainless=(gregtech.content.item.PortableFluidContainerItem)net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce","fluid_measuring_pot_stainless_steel"));
         h.assertTrue(!ceramic.accepts(acid)&&stainless.accepts(acid),"actual acid fluid obeys material resistance in item handler");
 
         h.assertTrue(!PortableFluidContainerSpec.BAROMETER_GAS_CYLINDER.accepts(300,false,false,false,false),"gas cylinder rejects liquids");

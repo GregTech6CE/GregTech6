@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.GameType;
 import gregtech.internal.tool.*;
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.item.GTToolItem;
+import gregtech.content.item.GTToolItem;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
@@ -26,7 +26,7 @@ public final class IssueOilTests {
     public static void oilsAndGasHaveOriginalFlammability(GameTestHelper h) {
         for(String id:List.of("liquid_extra_heavy_oil","liquid_heavy_oil","liquid_medium_oil","liquid_light_oil","gas_natural_gas")) {
             var block=BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce",id));
-            h.assertTrue(block instanceof gregtech.block.GTWorldFluidBlock,"registered combustible "+id);
+            h.assertTrue(block instanceof gregtech.content.block.GTWorldFluidBlock,"registered combustible "+id);
             h.assertTrue(block.getFlammability(block.defaultBlockState(),h.getLevel(),BlockPos.ZERO,Direction.UP)==1000,"source flammability "+id);
             var flow=BuiltInRegistries.FLUID.get(ResourceLocation.fromNamespaceAndPath("gt6ce",id+"_flowing"));
             h.assertTrue(block.getFlammability(flow.defaultFluidState().createLegacyBlock(),h.getLevel(),BlockPos.ZERO,Direction.UP)==1000,"flowing flammability "+id);
@@ -55,7 +55,7 @@ public final class IssueOilTests {
     public static void noncombustibleWaterSurvivesHeat(GameTestHelper h) {
         var pos=h.absolutePos(new BlockPos(2,2,2));var block=BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","swampwater"));
         h.getLevel().setBlockAndUpdate(pos,block.defaultBlockState());h.getLevel().setBlockAndUpdate(pos.below(),Blocks.LAVA.defaultBlockState());
-        ((gregtech.block.GTWorldFluidBlock)block).tick(block.defaultBlockState(),h.getLevel(),pos,net.minecraft.util.RandomSource.create(42));
+        ((gregtech.content.block.GTWorldFluidBlock)block).tick(block.defaultBlockState(),h.getLevel(),pos,net.minecraft.util.RandomSource.create(42));
         h.assertTrue(h.getLevel().getBlockState(pos).is(block),"water does not ignite");h.succeed();
     }
 }

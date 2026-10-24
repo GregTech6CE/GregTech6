@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
-import gregtech.block.machine.FluidPipeBlock;
-import gregtech.blockentity.machine.FluidPipeBlockEntity;
-import gregtech.blockentity.machine.TankBlockEntity;
+import gregtech.content.block.machine.FluidPipeBlock;
+import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
+import gregtech.content.blockentity.machine.TankBlockEntity;
 import gregtech.content.cover.CoverUtilityBehaviors;
-import gregtech.registry.GTTechnological;
+import gregtech.content.registry.GTTechnological;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -57,7 +57,7 @@ public final class FluidPipeRemovalTests {
     private static ItemStack cover(String id) { return new ItemStack(GTTechnological.get(id)); }
 
     private static int garbageAmount(GameTestHelper h, net.minecraft.world.level.material.Fluid fluid) {
-        var data = gregtech.world.GarbageData.get(h.getLevel());
+        var data = gregtech.content.world.GarbageData.get(h.getLevel());
 //? if >=1.21.1 {
         /*var tag = data.save(new net.minecraft.nbt.CompoundTag(), h.getLevel().registryAccess());
 *///?} else {

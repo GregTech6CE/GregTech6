@@ -1,6 +1,6 @@
 package gregtech.internal.energy;
 
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 import gregtech.util.GTEnergySides;
 import net.minecraft.core.Direction;
 

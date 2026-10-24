@@ -1,7 +1,7 @@
 package gregtech.core;
 import gregtech.content.machine.OriginalBasicMachineRules;
 import gregtech.internal.energy.MachineFaceMasks;
-import gregtech.api.recipe.MachineWorkCost;
+import gregtech.internal.recipe.MachineWorkCost;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 public final class BasicMachineSourceContracts {

@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
 import gregtech.internal.fluid.FluidTankGT;
-import gregtech.block.machine.TankControllerBlock;
-import gregtech.blockentity.machine.MultiblockTankControllerBlockEntity;
+import gregtech.content.block.machine.TankControllerBlock;
+import gregtech.content.blockentity.machine.MultiblockTankControllerBlockEntity;
 import gregtech.client.CommonBlockTooltips;
 import gregtech.content.multiblock.OriginalTankTooltipData;
 import net.minecraft.core.BlockPos;

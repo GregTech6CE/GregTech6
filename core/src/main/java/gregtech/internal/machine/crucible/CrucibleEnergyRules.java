@@ -2,7 +2,7 @@
 package gregtech.internal.machine.crucible;
 
 import gregtech.api.material.GTValues;
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 import java.math.BigInteger;
 import java.util.List;
 

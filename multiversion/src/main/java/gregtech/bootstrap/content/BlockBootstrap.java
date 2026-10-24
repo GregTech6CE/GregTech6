@@ -6,21 +6,21 @@ import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.material.MaterialProperty;
 import gregtech.internal.prefix.BlockMaterialPrefix;
 import gregtech.internal.prefix.BlockPrefixRegistry;
-import gregtech.block.MaterialBlock;
-import gregtech.block.OreBlock;
-import gregtech.block.stone.GTStoneBlock;
-import gregtech.block.stone.GTStoneSlabBlock;
-import gregtech.block.stone.StoneType;
-import gregtech.block.stone.StoneVariant;
+import gregtech.content.block.MaterialBlock;
+import gregtech.content.block.OreBlock;
+import gregtech.content.block.stone.GTStoneBlock;
+import gregtech.content.block.stone.GTStoneSlabBlock;
+import gregtech.content.block.stone.StoneType;
+import gregtech.content.block.stone.StoneVariant;
 //? if >=1.21.1 {
 //?} else {
 import gregtech.bootstrap.InitializationStep;
 //?}
-import gregtech.registry.GTBlocks;
+import gregtech.content.registry.GTBlocks;
 //? if >=1.21.1 {
-/*import gregtech.registry.GTSpecialOreBlocks;
+/*import gregtech.content.registry.GTSpecialOreBlocks;
 *///?} else {
-import gregtech.registry.GTIconSetBlocks;
+import gregtech.content.registry.GTIconSetBlocks;
 //?}
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.level.block.Block;
@@ -45,14 +45,14 @@ public record BlockBootstrap() implements InitializationStep {
 
     @Override
     public void run() {
-        gregtech.registry.GTLegacyEnergyDevices.registerAll();
-        gregtech.registry.GTItemBarrels.registerAll();
+        gregtech.content.registry.GTLegacyEnergyDevices.registerAll();
+        gregtech.content.registry.GTItemBarrels.registerAll();
         registerMaterialBlocks();
         registerStoneBlocks();
         registerStoneSlabs();
         registerIconSetBlocks();
 //? if >=1.21.1 {
-        /*gregtech.registry.GTMultiblocks.registerAll();
+        /*gregtech.content.registry.GTMultiblocks.registerAll();
 *///?} else {
 //?}
     }
@@ -60,7 +60,7 @@ public record BlockBootstrap() implements InitializationStep {
     private static void registerIconSetBlocks() {
 //? if >=1.21.1 {
         /*GTSpecialOreBlocks.registerAll();
-        gregtech.registry.GTPlants.registerAll();
+        gregtech.content.registry.GTPlants.registerAll();
         LOGGER.info("Queued {} icon set blocks for registration", GTSpecialOreBlocks.all().size());
 *///?} else {
         GTIconSetBlocks.registerAll();
@@ -97,9 +97,9 @@ public record BlockBootstrap() implements InitializationStep {
     private static Block createBlock(BlockMaterialPrefix prefix, GTMaterial material) {
         boolean isOre = "ore".equals(prefix.getName()) || "oreSmall".equals(prefix.getName());
         BlockBehaviour.Properties properties = BlockBehaviour.Properties.of()
-                .mapColor(gregtech.block.BlockPrefixPresentation.mapColor(prefix))
+                .mapColor(gregtech.content.block.BlockPrefixPresentation.mapColor(prefix))
                 .strength(prefix.computeHardness(material), prefix.computeResistance(material))
-                .sound(gregtech.block.BlockPrefixPresentation.soundType(prefix));
+                .sound(gregtech.content.block.BlockPrefixPresentation.soundType(prefix));
         if (!prefix.falling() && !prefix.isCrate()) {
             properties = properties.requiresCorrectToolForDrops();
         }

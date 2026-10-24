@@ -7,8 +7,8 @@ import gregtech.GregTech;
 //?}
 import gregtech.internal.machine.CrucibleSpec;
 import gregtech.internal.material.GTMaterial;
-import gregtech.blockentity.machine.MoldBasinBlockEntity;
-import gregtech.blockentity.machine.MoldBlockEntity;
+import gregtech.content.blockentity.machine.MoldBasinBlockEntity;
+import gregtech.content.blockentity.machine.MoldBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;

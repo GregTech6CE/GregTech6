@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
-import gregtech.block.stone.StoneType;
-import gregtech.worldgen.GTDeepOceanFeature;
-import gregtech.worldgen.GTFeatures;
-import gregtech.worldgen.GTRocksFeature;
-import gregtech.worldgen.GTWorldgenBiomes;
+import gregtech.content.block.stone.StoneType;
+import gregtech.content.worldgen.GTDeepOceanFeature;
+import gregtech.content.worldgen.GTFeatures;
+import gregtech.content.worldgen.GTRocksFeature;
+import gregtech.content.worldgen.GTWorldgenBiomes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;
@@ -200,8 +200,8 @@ public final class RockAndDeepOceanTests {
         // Build a pylon on a prepared water column and check the shape.
         ServerLevel level = helper.getLevel();
         WorldGenLevel gen = (WorldGenLevel) level;
-        Block dark = gregtech.registry.GTBlocks.getStone(
-                StoneType.PRISMARINE_DARK, gregtech.block.stone.StoneVariant.STONE);
+        Block dark = gregtech.content.registry.GTBlocks.getStone(
+                StoneType.PRISMARINE_DARK, gregtech.content.block.stone.StoneVariant.STONE);
         helper.assertTrue(dark != null && dark != Blocks.AIR, "the dark prismarine stone block exists");
         int x = BASE_X, z = BASE_Z + 20, y = 34;
         clearPylon(level, x, y, z);
@@ -236,12 +236,12 @@ public final class RockAndDeepOceanTests {
                 for (int dy = -10; dy <= 10; dy++) {
                     BlockPos pos = new BlockPos(x + dx, y + dy, z + dz);
                     BlockState pylon = level.getBlockState(pos);
-                    if (!(pylon.getBlock() instanceof gregtech.block.OreBlock)) {
+                    if (!(pylon.getBlock() instanceof gregtech.content.block.OreBlock)) {
                         continue;
                     }
-                    gregtech.block.OreHostStone host =
-                            gregtech.block.OreBlock.stoneOf(pylon);
-                    helper.assertTrue(host == gregtech.block.OreHostStone.STONE,
+                    gregtech.content.block.OreHostStone host =
+                            gregtech.content.block.OreBlock.stoneOf(pylon);
+                    helper.assertTrue(host == gregtech.content.block.OreHostStone.STONE,
                             "the pylon ore keeps GT6's normal-stone background, got " + host.id());
                     helper.assertTrue(level.getBlockEntity(pos) == null,
                             "§103.B: a pylon ore block has no block entity");

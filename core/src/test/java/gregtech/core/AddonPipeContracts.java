@@ -11,7 +11,7 @@ import gregtech.internal.mod.ModData;
 import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.content.transport.ItemPipeCatalog;
 import gregtech.content.transport.fluid.FluidTransportDefinitions;
-import gregtech.data.ModReferences;
+import gregtech.content.data.ModReferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -196,7 +196,7 @@ public final class AddonPipeContracts {
         GTMaterialRegistry.setLogSink((warning, message) -> {});
         PrefixRegistry.ensurePrefixesLoaded();
         ModReferences.UNKNOWN.getClass();
-        gregtech.data.MaterialGroups.Glowstone.getClass();
+        gregtech.content.data.MaterialGroups.Glowstone.getClass();
         GTMaterialRegistry.init();
     }
 

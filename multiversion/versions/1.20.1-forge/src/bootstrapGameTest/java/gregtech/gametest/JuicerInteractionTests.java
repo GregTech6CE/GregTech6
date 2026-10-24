@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
 import gregtech.internal.recipe.Recipe;
-import gregtech.blockentity.tool.ProcessingToolBlockEntity;
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.blockentity.tool.ProcessingToolBlockEntity;
+import gregtech.content.data.MachineRecipeMaps;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.resources.ResourceLocation;

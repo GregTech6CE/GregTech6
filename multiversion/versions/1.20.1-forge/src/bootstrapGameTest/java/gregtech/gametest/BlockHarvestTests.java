@@ -28,7 +28,7 @@ public final class BlockHarvestTests {
   for(var b:ForgeRegistries.BLOCKS.getValues()) {
    var id=ForgeRegistries.BLOCKS.getKey(b);
    if(!id.getNamespace().equals("gt6ce")||b instanceof LiquidBlock)continue;
-   var tag=net.minecraft.tags.BlockTags.create(net.minecraft.resources.ResourceLocation.parse(gregtech.data.BlockHarvestPolicy.tag(gregtech.data.BlockHarvestPolicy.tool(b))));
+   var tag=net.minecraft.tags.BlockTags.create(net.minecraft.resources.ResourceLocation.parse(gregtech.content.data.BlockHarvestPolicy.tag(gregtech.content.data.BlockHarvestPolicy.tool(b))));
    h.assertTrue(b.defaultBlockState().is(tag),"Missing harvest tag: "+id);count++;
   }
   h.assertTrue(count>2000,"Audit must cover actual registry");h.succeed();
@@ -38,7 +38,7 @@ public final class BlockHarvestTests {
   var pos=h.absolutePos(new BlockPos(1,2,1)); h.getLevel().setBlock(pos,block.defaultBlockState(),3);
   var player=net.minecraftforge.common.util.FakePlayerFactory.getMinecraft(h.getLevel());
   player.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
-  var wrench=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.WRENCH,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
+  var wrench=gregtech.content.item.GTToolItem.create(gregtech.internal.tool.GTToolType.WRENCH,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
   player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,wrench);
   h.assertTrue(block.defaultBlockState().canHarvestBlock(h.getLevel(),pos,player),"Wrench can harvest axle");
   h.assertTrue(player.gameMode.destroyBlock(pos),"Actual survival break succeeds");
@@ -47,21 +47,21 @@ public final class BlockHarvestTests {
  }
  @GameTest(template="test_empty") public static void materialTierAndWoodTools(GameTestHelper h) {
   var pos=h.absolutePos(new BlockPos(1,2,1));var player=net.minecraftforge.common.util.FakePlayerFactory.getMinecraft(h.getLevel());
-  var high=ForgeRegistries.BLOCKS.getValues().stream().filter(b->b instanceof gregtech.block.MaterialBlockLike && gregtech.data.BlockHarvestPolicy.level(b)>=3).findFirst().orElseThrow();
+  var high=ForgeRegistries.BLOCKS.getValues().stream().filter(b->b instanceof gregtech.content.block.MaterialBlockLike && gregtech.content.data.BlockHarvestPolicy.level(b)>=3).findFirst().orElseThrow();
   player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,new ItemStack(Items.WOODEN_PICKAXE));
   h.assertTrue(!high.defaultBlockState().canHarvestBlock(h.getLevel(),pos,player),"Wood pickaxe cannot bypass material tier");
   var wood=ForgeRegistries.BLOCKS.getValue(new net.minecraft.resources.ResourceLocation("gt6ce","wood_barrel"));
   h.assertTrue(wood.defaultBlockState().is(net.minecraft.tags.BlockTags.MINEABLE_WITH_AXE),"Wood barrel axe tag");
-  var wire=ForgeRegistries.BLOCKS.getValues().stream().filter(b->b instanceof gregtech.block.energy.ElectricWireBlock).findFirst().orElseThrow();
-  var cutter=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.WIRE_CUTTER,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
+  var wire=ForgeRegistries.BLOCKS.getValues().stream().filter(b->b instanceof gregtech.content.block.energy.ElectricWireBlock).findFirst().orElseThrow();
+  var cutter=gregtech.content.item.GTToolItem.create(gregtech.internal.tool.GTToolType.WIRE_CUTTER,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
   h.assertTrue(gregtech.internal.tool.GTToolHelper.isCorrectToolForDrops(cutter,wire.defaultBlockState()),"Wire cutter recognized");h.succeed();
  }
  @GameTest(template="test_empty") public static void barrelKeepsFluidWithoutSpillingToNeighbor(GameTestHelper h) {
-  var block=gregtech.registry.GTTanks.WOOD_BARREL.get();
+  var block=gregtech.content.registry.GTTanks.WOOD_BARREL.get();
   var pos=h.absolutePos(new BlockPos(1,2,1));var neighbor=pos.east();
   h.getLevel().setBlock(pos,block.defaultBlockState(),3);h.getLevel().setBlock(neighbor,block.defaultBlockState(),3);
-  var be=(gregtech.blockentity.machine.TankBlockEntity)h.getLevel().getBlockEntity(pos);
-  var other=(gregtech.blockentity.machine.TankBlockEntity)h.getLevel().getBlockEntity(neighbor);
+  var be=(gregtech.content.blockentity.machine.TankBlockEntity)h.getLevel().getBlockEntity(pos);
+  var other=(gregtech.content.blockentity.machine.TankBlockEntity)h.getLevel().getBlockEntity(neighbor);
   be.getFluidTank().fill(new net.minecraftforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.WATER,1000),net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);
   var drops=Block.getDrops(block.defaultBlockState(),h.getLevel(),pos,be);
   h.assertTrue(drops.size()==1&&drops.get(0).is(block.asItem()),"One barrel drop");
@@ -69,7 +69,7 @@ public final class BlockHarvestTests {
   h.assertTrue(other.getFluidTank().isEmpty(),"Breaking does not also export saved fluid");
   h.getLevel().setBlock(pos,block.defaultBlockState(),3);
   net.minecraft.world.item.BlockItem.updateCustomBlockEntityTag(h.getLevel(),null,pos,drops.get(0));
-  var restored=(gregtech.blockentity.machine.TankBlockEntity)h.getLevel().getBlockEntity(pos);
+  var restored=(gregtech.content.blockentity.machine.TankBlockEntity)h.getLevel().getBlockEntity(pos);
   h.assertTrue(restored.getFluidTank().getFluid().getAmount()==1000,"Replacement preserves all water");h.succeed();
  }
 }

@@ -2,13 +2,14 @@ package gregtech.gametest;
 
 import gregtech.api.machine.*;
 import gregtech.internal.machine.*;
+import gregtech.internal.machine.*;
 import gregtech.internal.tool.*;
-import gregtech.block.misc.*;
-import gregtech.blockentity.energy.*;
-import gregtech.blockentity.machine.*;
+import gregtech.content.block.misc.*;
+import gregtech.content.blockentity.energy.*;
+import gregtech.content.blockentity.machine.*;
 import gregtech.content.logistics.ExtenderSpec;
 import gregtech.content.multiblock.*;
-import gregtech.registry.*;
+import gregtech.content.registry.*;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.*;
@@ -28,7 +29,7 @@ public final class MachineControlTests {
         var blocks=new java.util.ArrayList<Block>();
         MachineRegistry.electricEngines().forEach(e->blocks.add(e.get()));MachineRegistry.fluxEngines().forEach(e->blocks.add(e.get()));
         MachineRegistry.steamEngines().forEach(e->blocks.add(e.get()));MachineRegistry.dieselEngines().forEach(e->blocks.add(e.get()));
-        GTLasers.all().forEach(e->{if(e.get() instanceof gregtech.block.energy.LaserConverterBlock||e.get() instanceof gregtech.block.energy.ZpmDischargerBlock)blocks.add(e.get());});
+        GTLasers.all().forEach(e->{if(e.get() instanceof gregtech.content.block.energy.LaserConverterBlock||e.get() instanceof gregtech.content.block.energy.ZpmDischargerBlock)blocks.add(e.get());});
         AxialGeneratorDefinitions.blocks(true).forEach(e->blocks.add(e.get()));AxialGeneratorDefinitions.blocks(false).forEach(e->blocks.add(e.get()));
         GasTurbineDefinitions.blocks().forEach(e->blocks.add(e.get()));blocks.add(GTEnergyNodes.REACTOR_CORE_BLOCK.get());blocks.add(GTEnergyNodes.REACTOR_CORE_2X2.get());
         var relay=relay(h,CENTER);var external=relay.machineControl(null);
@@ -56,7 +57,7 @@ public final class MachineControlTests {
                 engine.load(state);h.assertTrue(control.mode()==mode,"mode survives save/load");
             }
             h.assertTrue(control.setMode(999)==15&&control.setMode(-999)==0,"invalid external modes are bounded to four bits");
-            control.setEnabled(false);h.assertTrue(!engine.isEnergyAcceptingFrom(block==MachineRegistry.electricEngines().get(0).get()?gregtech.data.GregTechTags.Energy.EU:gregtech.data.GregTechTags.Energy.RF,engine.getBlockState().getValue(gregtech.block.machine.EngineBlock.FACING).getOpposite(),false),"stopped piston rejects new input");
+            control.setEnabled(false);h.assertTrue(!engine.isEnergyAcceptingFrom(block==MachineRegistry.electricEngines().get(0).get()?gregtech.content.data.GregTechTags.Energy.EU:gregtech.content.data.GregTechTags.Energy.RF,engine.getBlockState().getValue(gregtech.content.block.machine.EngineBlock.FACING).getOpposite(),false),"stopped piston rejects new input");
         }
         h.setBlock(CENTER.east(2),Blocks.AIR);
         h.getLevel().setBlock(second.getBlockPos(),second.getBlockState().setValue(SourceExtenderBlock.FACING,Direction.WEST).setValue(SourceExtenderBlock.SECONDARY,Direction.WEST),3);
@@ -78,8 +79,8 @@ public final class MachineControlTests {
         var relay=relay(h,CENTER);h.setBlock(CENTER.east(),MachineRegistry.electricEngines().get(0).get());
         var player=h.makeMockPlayer();var material=gregtech.content.material.Materials.Steel;
         var wood=gregtech.internal.material.GTMaterialRegistry.get("Wood");
-        var screwdriver=gregtech.item.GTToolItem.create(GTToolType.SCREWDRIVER,material,wood);
-        var hammer=gregtech.item.GTToolItem.create(GTToolType.SOFT_HAMMER,material,wood);
+        var screwdriver=gregtech.content.item.GTToolItem.create(GTToolType.SCREWDRIVER,material,wood);
+        var hammer=gregtech.content.item.GTToolItem.create(GTToolType.SOFT_HAMMER,material,wood);
         var hit=new BlockHitResult(Vec3.atCenterOf(relay.getBlockPos()),Direction.WEST,relay.getBlockPos(),false);var block=(SourceExtenderBlock)relay.getBlockState().getBlock();
         var control=relay.machineControl(null);int before=control.mode();player.setItemInHand(InteractionHand.MAIN_HAND,screwdriver);
         block.use(relay.getBlockState(),h.getLevel(),relay.getBlockPos(),player,InteractionHand.MAIN_HAND,hit);

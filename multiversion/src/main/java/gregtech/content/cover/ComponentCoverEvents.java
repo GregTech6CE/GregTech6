@@ -48,7 +48,7 @@ public final class ComponentCoverEvents {
         var hit = event.getHitVec();
         if (CoverItems.isCover(held) || crowbar)
             hit = hit.withDirection(gregtech.internal.tool.ToolInteractions.selectedFace(hit));
-        if (host.coverOwner() instanceof gregtech.blockentity.misc.PileBlockEntity pile
+        if (host.coverOwner() instanceof gregtech.content.blockentity.misc.PileBlockEntity pile
                 && pile.canAccept(held)) {
             // Allow the normal pile callback while sneaking, without bypassing protection events.
 //? if >=1.21.1 {
@@ -58,7 +58,7 @@ public final class ComponentCoverEvents {
 //?}
             return;
         }
-        boolean recoverPileCover = host.coverOwner() instanceof gregtech.blockentity.misc.PileBlockEntity
+        boolean recoverPileCover = host.coverOwner() instanceof gregtech.content.blockentity.misc.PileBlockEntity
                 && crowbar && !host.getCover(hit.getDirection()).isEmpty();
         if (ComponentCoverFallback.fallbackClass(host.coverOwner())
                 && !ComponentCoverFallback.eligible(host.coverOwner()) && !recoverPileCover) return;

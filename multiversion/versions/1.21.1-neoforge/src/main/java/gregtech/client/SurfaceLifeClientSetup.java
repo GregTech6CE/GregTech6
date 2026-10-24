@@ -1,6 +1,6 @@
 package gregtech.client;
-import gregtech.block.plant.BushBlock;
-import gregtech.registry.GTBushes;
+import gregtech.content.block.plant.BushBlock;
+import gregtech.content.registry.GTBushes;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 @net.neoforged.fml.common.EventBusSubscriber(modid=gregtech.internal.mod.GregTechIdentity.MOD_ID,bus=net.neoforged.fml.common.EventBusSubscriber.Bus.MOD,value=net.neoforged.api.distmarker.Dist.CLIENT)

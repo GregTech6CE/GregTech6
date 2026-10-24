@@ -1,14 +1,14 @@
 package gregtech.gametest;
 
-import gregtech.block.misc.ColoredGlassBlock;
-import gregtech.block.misc.ConcreteBlock;
-import gregtech.block.misc.FixedConstructionColor;
-import gregtech.block.misc.GregLanternBlock;
-import gregtech.block.misc.RoadStripeRailBlock;
-import gregtech.registry.GTDecorBlocks;
+import gregtech.content.block.misc.ColoredGlassBlock;
+import gregtech.content.block.misc.ConcreteBlock;
+import gregtech.content.block.misc.FixedConstructionColor;
+import gregtech.content.block.misc.GregLanternBlock;
+import gregtech.content.block.misc.RoadStripeRailBlock;
+import gregtech.content.registry.GTDecorBlocks;
 import gregtech.content.material.Materials;
-import gregtech.data.MaterialPrefix;
-import gregtech.item.MaterialItem;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.item.MaterialItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

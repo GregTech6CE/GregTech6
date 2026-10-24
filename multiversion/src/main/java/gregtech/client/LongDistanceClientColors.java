@@ -1,6 +1,6 @@
 package gregtech.client;
 import net.minecraft.world.level.block.Block;
-import gregtech.block.misc.*;
+import gregtech.content.block.misc.*;
 //? if >=1.21.1 {
 /*import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;

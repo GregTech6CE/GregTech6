@@ -7,9 +7,9 @@ import gregtech.GregTech;
 //?}
 
 import gregtech.internal.fluid.FluidSlotAmountOverlay;
-import gregtech.data.RegisteredFluids;
-import gregtech.registry.GTFluidType;
-import gregtech.registry.GTFluids;
+import gregtech.content.data.RegisteredFluids;
+import gregtech.content.registry.GTFluidType;
+import gregtech.content.registry.GTFluids;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;

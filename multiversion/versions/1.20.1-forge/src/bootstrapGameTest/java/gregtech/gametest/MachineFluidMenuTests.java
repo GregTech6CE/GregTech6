@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
 import gregtech.internal.machine.MachineRegistry;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.client.gui.*;
 import gregtech.network.PacketSyncFluids;
 import net.minecraft.core.BlockPos;

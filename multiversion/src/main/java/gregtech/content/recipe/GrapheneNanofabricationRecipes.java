@@ -3,10 +3,10 @@ package gregtech.content.recipe;
 import gregtech.content.recipe.GrapheneNanofabricationRecipeRows.Entry;
 
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.api.recipe.*;
 import gregtech.internal.recipe.*;
-import gregtech.data.*;
-import gregtech.registry.*;
+import gregtech.internal.recipe.*;
+import gregtech.content.data.*;
+import gregtech.content.registry.*;
 import net.minecraft.world.item.ItemStack;
 import java.util.*;
 

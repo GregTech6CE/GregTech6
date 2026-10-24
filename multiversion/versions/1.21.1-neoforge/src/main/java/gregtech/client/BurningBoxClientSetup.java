@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.block.machine.GTFacingMachineBlock;
+import gregtech.content.block.machine.GTFacingMachineBlock;
 import gregtech.platform.neoforge.smeltery.SmelteryRegistries;
 import net.minecraft.client.resources.model.*;
 import net.minecraft.core.Direction;

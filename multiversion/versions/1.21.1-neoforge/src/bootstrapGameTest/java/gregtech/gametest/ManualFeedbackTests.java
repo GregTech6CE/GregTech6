@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
-import gregtech.block.OreBlock;
-import gregtech.block.tool.CrankBlock;
-import gregtech.item.behavior.BehaviorChunkEraser;
-import gregtech.item.behavior.BehaviorWorldgenDebugger;
-import gregtech.registry.GTManualStations;
+import gregtech.content.block.OreBlock;
+import gregtech.content.block.tool.CrankBlock;
+import gregtech.content.item.behavior.BehaviorChunkEraser;
+import gregtech.content.item.behavior.BehaviorWorldgenDebugger;
+import gregtech.content.registry.GTManualStations;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;

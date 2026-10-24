@@ -1,6 +1,6 @@
 package gregtech.content.food;
 
-import gregtech.blockentity.misc.SandwichBlockEntity;
+import gregtech.content.blockentity.misc.SandwichBlockEntity;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -44,9 +44,9 @@ public final class SandwichPlacementHandler {
                 || !player.mayBuild() || !level.mayInteract(player, target)
                 || !player.mayUseItemAt(target, context.getClickedFace(), held)) return InteractionResult.PASS;
 //? if >=1.21.1 {
-        /*var state = gregtech.registry.GTSandwich.SANDWICH_BLOCK.get().defaultBlockState();
+        /*var state = gregtech.content.registry.GTSandwich.SANDWICH_BLOCK.get().defaultBlockState();
 *///?} else {
-        var state = gregtech.registry.GTDecorBlocks.SANDWICH_BLOCK.get().defaultBlockState();
+        var state = gregtech.content.registry.GTDecorBlocks.SANDWICH_BLOCK.get().defaultBlockState();
 //?}
         if (!state.canSurvive(level, target)) return InteractionResult.PASS;
         if (level.isClientSide) return InteractionResult.SUCCESS;

@@ -1,7 +1,7 @@
 package gregtech.integration.client;
 
-import gregtech.block.MaterialBlockItem;
-import gregtech.item.MaterialItem;
+import gregtech.content.block.MaterialBlockItem;
+import gregtech.content.item.MaterialItem;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.contents.TranslatableContents;

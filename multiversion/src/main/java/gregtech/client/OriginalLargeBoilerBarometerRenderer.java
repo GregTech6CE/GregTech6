@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.blockentity.machine.OriginalLargeBoilerControllerBlockEntity;
+import gregtech.content.blockentity.machine.OriginalLargeBoilerControllerBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;

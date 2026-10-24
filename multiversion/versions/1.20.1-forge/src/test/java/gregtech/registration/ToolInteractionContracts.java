@@ -2,7 +2,7 @@ package gregtech.registration;
 
 import gregtech.internal.tool.ToolInteractionSpec;
 import gregtech.internal.tool.ToolInteractions;
-import gregtech.block.machine.MachineRotationType;
+import gregtech.content.block.machine.MachineRotationType;
 import gregtech.util.GTPlacementCode;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -13,7 +13,7 @@ import net.minecraft.world.phys.Vec3;
 /** Face mapping at the world border, original GT6 corners, and legal rotation properties. */
 public final class ToolInteractionContracts {
     public static void main(String[] args) {
-        check(gregtech.data.MachineRecipeMaps.Mortar != gregtech.data.MachineRecipeMaps.Sharpening, "Mortar recipes must not enter Sharpening");
+        check(gregtech.content.data.MachineRecipeMaps.Mortar != gregtech.content.data.MachineRecipeMaps.Sharpening, "Mortar recipes must not enter Sharpening");
         for (Direction face : Direction.values()) {
             check(GTPlacementCode.getSideWrenching(face, .5F, .5F, .5F) == face, "center " + face);
             check(GTPlacementCode.getSideWrenching(face, .1F, .1F, .1F) == face.getOpposite(), "corner " + face);

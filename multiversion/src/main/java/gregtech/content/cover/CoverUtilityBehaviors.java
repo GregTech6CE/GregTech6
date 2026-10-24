@@ -3,7 +3,7 @@ package gregtech.content.cover;
 import gregtech.internal.fluid.FluidHazards;
 import gregtech.internal.fluid.FluidTankGT;
 import gregtech.content.logistics.FilterRules;
-import gregtech.registry.GTFluids;
+import gregtech.content.registry.GTFluids;
 import gregtech.util.GTEntityHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

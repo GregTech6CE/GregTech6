@@ -1,13 +1,13 @@
 package gregtech.gametest;
 
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
-import gregtech.blockentity.machine.BehaviorMachineBlockEntity;
-import gregtech.blockentity.tool.BumbliaryBlockEntity;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.blockentity.machine.BehaviorMachineBlockEntity;
+import gregtech.content.blockentity.tool.BumbliaryBlockEntity;
 import gregtech.client.gui.BasicMachineContainerMenu;
 import gregtech.content.bumble.BumbleBeeType;
 import gregtech.content.bumble.GTBumbleProducts;
 import gregtech.content.bumble.GTBumbleSpecies;
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.data.MachineRecipeMaps;
 import com.mojang.authlib.GameProfile;
 import java.util.ArrayList;
 import java.util.List;

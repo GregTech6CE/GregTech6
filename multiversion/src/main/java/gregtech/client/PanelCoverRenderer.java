@@ -57,10 +57,10 @@ public final class PanelCoverRenderer {
         var stack=host.getCover(side);if(!CoverItems.isCover(stack))return false;
         var behavior=CoverItems.behavior(stack);
         if((CoverItems.REDSTONE_TORCH.equals(behavior)||CoverItems.REDSTONE_REPEATER.equals(behavior))
-                &&host.coverOwner() instanceof gregtech.blockentity.energy.SignalWireBlockEntity wire) {
+                &&host.coverOwner() instanceof gregtech.content.blockentity.energy.SignalWireBlockEntity wire) {
             boolean torch=CoverItems.REDSTONE_TORCH.equals(behavior);
             // Network signal is server-only; POWER is the synchronized wire state.
-            boolean powered=wire.getBlockState().getValue(gregtech.block.energy.SignalWireBlock.POWER)>0;
+            boolean powered=wire.getBlockState().getValue(gregtech.content.block.energy.SignalWireBlock.POWER)>0;
             boolean lit=torch?!powered:powered;
             String path="block/machines/covers/"+(torch?"redstonetorch/":"redstonerepeater/")+(lit?"on/":"off/");
             CoverSurfaceRenderer.torch(pose,buffers.getBuffer(RenderType.cutout()),side,
@@ -71,12 +71,12 @@ public final class PanelCoverRenderer {
         if(CanvasData.isCanvas(stack)) {
             var owner=host.coverOwner();var level=owner.getLevel();
             int light=level==null?fallbackLight:LevelRenderer.getLightColor(level,owner.getBlockPos().relative(side));
-            var canvas=(gregtech.item.CanvasItem)stack.getItem();
+            var canvas=(gregtech.content.item.CanvasItem)stack.getItem();
             CoverSurfaceRenderer.attachment(owner,side,pose,buffers.getBuffer(RenderType.cutout()),
                     ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce","block/machines/covers/canvas")),light,canvas.variant().rgb());
             CanvasCoverRenderer.render(stack,side,pose,buffers,light,level,owner.getBlockPos());return true;
         }
-        if(stack.getItem() instanceof gregtech.item.PanelItemView panel) {
+        if(stack.getItem() instanceof gregtech.content.item.PanelItemView panel) {
             var spec=panel.panelSpec();var vertices=buffers.getBuffer(RenderType.cutout());
             CoverSurfaceRenderer.attachment(host.coverOwner(),side,pose,vertices,ArmRenderHelper.getSprite(ResourceLocation.parse(spec.texture())),fallbackLight,spec.tint());
             CoverSurfaceRenderer.draw(pose,vertices,side,ArmRenderHelper.getSprite(ResourceLocation.parse(spec.texture())),fallbackLight,0,spec.tint());return true;

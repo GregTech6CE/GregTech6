@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.registry.GTFluids;
+import gregtech.content.registry.GTFluids;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

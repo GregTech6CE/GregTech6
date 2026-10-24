@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.data.MultiblockCraftingRecipes;
+import gregtech.content.data.MultiblockCraftingRecipes;
 import gregtech.content.recipe.TrackRecipeInjector;
 import net.minecraft.core.NonNullList;
 import net.minecraft.gametest.framework.GameTest;

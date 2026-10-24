@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.recipe.generated.GeneratedRecipeResolver;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

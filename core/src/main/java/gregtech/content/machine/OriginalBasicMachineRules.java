@@ -3,7 +3,7 @@
 package gregtech.content.machine;
 
 import gregtech.internal.energy.MachineFaceMasks;
-import gregtech.data.BasicMachineOriginalParams;
+import gregtech.content.data.BasicMachineOriginalParams;
 import java.util.List;
 import java.util.Set;
 

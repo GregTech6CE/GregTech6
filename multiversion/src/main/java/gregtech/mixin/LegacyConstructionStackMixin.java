@@ -1,6 +1,6 @@
 package gregtech.mixin;
 
-import gregtech.block.misc.LegacyConstructionBlockItem;
+import gregtech.content.block.misc.LegacyConstructionBlockItem;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

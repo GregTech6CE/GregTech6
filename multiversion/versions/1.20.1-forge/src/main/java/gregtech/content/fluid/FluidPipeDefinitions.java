@@ -1,6 +1,6 @@
 package gregtech.content.fluid;
 import gregtech.content.transport.fluid.FluidTransportDefinitions;
-import gregtech.registry.GTFluidPipes;
+import gregtech.content.registry.GTFluidPipes;
 /** Platform registration over the shared original pipe catalog. */
 public final class FluidPipeDefinitions {
     private FluidPipeDefinitions() {}
@@ -12,7 +12,7 @@ public final class FluidPipeDefinitions {
                 var block = GTFluidPipes.register(spec);
                 if (spec.id().equals("pipe_medium_steel")) GTFluidPipes.PIPE_MEDIUM_STEEL = block;
             } else {
-                gregtech.registry.AddonPipeRegistration.queueFluid(owner, spec);
+                gregtech.content.registry.AddonPipeRegistration.queueFluid(owner, spec);
             }
         }
     }

@@ -4,7 +4,7 @@ package gregtech.client;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.registry.GTToolItems;
+import gregtech.content.registry.GTToolItems;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
@@ -82,10 +82,10 @@ public final class GTToolModel {
             }
         }
 //? if >=1.21.1 {
-        /*for(var holder:gregtech.registry.GTElectricItems.tools()) {
+        /*for(var holder:gregtech.content.registry.GTElectricItems.tools()) {
             var id=BuiltInRegistries.ITEM.getKey(holder.get());var inventory=ModelResourceLocation.inventory(id);
 *///?} else {
-        for(var holder:gregtech.registry.GTElectricItems.all()) {
+        for(var holder:gregtech.content.registry.GTElectricItems.all()) {
             var id=net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(holder.get());var inventory=new ModelResourceLocation(id,"inventory");
 //?}
             var base=models.get(inventory);if(base!=null)models.put(inventory,new GTToolBakedModel(base));

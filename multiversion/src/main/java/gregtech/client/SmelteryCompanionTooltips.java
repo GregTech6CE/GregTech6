@@ -4,7 +4,7 @@ package gregtech.client;
 
 import gregtech.internal.machine.CrucibleSpec;
 import gregtech.internal.machine.crucible.MoldShapes;
-import gregtech.block.machine.MoldItemData;
+import gregtech.content.block.machine.MoldItemData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;

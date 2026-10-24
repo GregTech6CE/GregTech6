@@ -1,6 +1,6 @@
 package gregtech.event;
 
-import gregtech.item.behavior.AxeColumnHarvest;
+import gregtech.content.item.behavior.AxeColumnHarvest;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.bus.api.SubscribeEvent;

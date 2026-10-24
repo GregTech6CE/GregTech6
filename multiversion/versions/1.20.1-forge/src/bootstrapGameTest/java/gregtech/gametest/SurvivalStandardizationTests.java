@@ -1,11 +1,11 @@
 package gregtech.gametest;
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
-import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.internal.recipe.*;
 import gregtech.content.recipe.*;
-import gregtech.registry.*;
-import gregtech.data.*;
+import gregtech.content.registry.*;
+import gregtech.content.data.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.item.*;
 import net.minecraftforge.gametest.*;

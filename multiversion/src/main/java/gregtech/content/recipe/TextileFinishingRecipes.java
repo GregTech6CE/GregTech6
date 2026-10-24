@@ -1,6 +1,6 @@
 package gregtech.content.recipe;
 
-import gregtech.data.*;
+import gregtech.content.data.*;
 import net.minecraft.world.item.*;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;

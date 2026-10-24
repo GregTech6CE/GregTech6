@@ -2,11 +2,11 @@ package gregtech.gametest;
 
 import gregtech.api.signal.GtSignalCarrier;
 import gregtech.api.signal.GtSignalReceiver;
-import gregtech.block.energy.ElectricWireBlock;
-import gregtech.block.energy.SignalWireBlock;
-import gregtech.blockentity.energy.SignalWireBlockEntity;
+import gregtech.content.block.energy.ElectricWireBlock;
+import gregtech.content.block.energy.SignalWireBlock;
+import gregtech.content.blockentity.energy.SignalWireBlockEntity;
 import gregtech.gametest.SignalProbes.SignalProbeSourceBlockEntity;
-import gregtech.registry.GTSignalWires;
+import gregtech.content.registry.GTSignalWires;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

@@ -3,11 +3,11 @@ package gregtech.gametest;
 import gregtech.GregTech;
 import gregtech.internal.machine.crucible.CrucibleItemInput;
 import gregtech.internal.sensor.SensorMeasurements;
-import gregtech.blockentity.sensor.SensorBlockEntity;
-import gregtech.data.MachineRecipeIngredients;
-import gregtech.data.SensorRecipePack;
-import gregtech.data.generated.GTSensorRecipesGen;
-import gregtech.registry.GTSensors;
+import gregtech.content.blockentity.sensor.SensorBlockEntity;
+import gregtech.content.data.MachineRecipeIngredients;
+import gregtech.content.data.SensorRecipePack;
+import gregtech.content.data.generated.GTSensorRecipesGen;
+import gregtech.content.registry.GTSensors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
@@ -121,7 +121,7 @@ public final class SensorMatrixTests {
             registered.append(row[2]).append(' ');
         }
         int count = 0;
-        for (RegistryObject<gregtech.block.sensor.SensorBlock> entry : GTSensors.all()) {
+        for (RegistryObject<gregtech.content.block.sensor.SensorBlock> entry : GTSensors.all()) {
             if (entry.isPresent()) count++;
         }
         helper.assertTrue(count == GT6_SENSORS.length,

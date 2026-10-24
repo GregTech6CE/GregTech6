@@ -1,6 +1,6 @@
 package gregtech.content.recipe;
 import com.google.gson.JsonParser;
-import gregtech.data.OriginalHandCraftingRows;
+import gregtech.content.data.OriginalHandCraftingRows;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.*;
@@ -26,7 +26,7 @@ public final class HandToolCraftingRecipeInjector {
             if(serializer==null)throw new IllegalStateException("Unknown hand recipe serializer "+type);
             recipes.add(serializer.fromJson(id,json));REGISTERED.add(id.toString());
         }
-        if(!REGISTERED.isEmpty())gregtech.recipe.RuntimeRecipeLifecycle.replaceGenerated(manager,recipes);
+        if(!REGISTERED.isEmpty())gregtech.content.recipe.RuntimeRecipeLifecycle.replaceGenerated(manager,recipes);
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] Shared original hand recipes: {}",REGISTERED.size());
     }
 }

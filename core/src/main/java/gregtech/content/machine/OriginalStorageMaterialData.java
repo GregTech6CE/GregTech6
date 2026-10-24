@@ -6,8 +6,8 @@ package gregtech.content.machine;
 
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
-import gregtech.data.ImportedMaterialData;
-import gregtech.data.SourceBlockProperties;
+import gregtech.content.data.ImportedMaterialData;
+import gregtech.content.data.SourceBlockProperties;
 import java.util.*;
 
 /** Original storage recipes, source IDs and explicit block-group/metadata choices. */
@@ -86,15 +86,15 @@ public final class OriginalStorageMaterialData {
     }
     private static void metalset(String suffix,int id,GTMaterial metal,String bookshelfPath) {
         add("chest_"+suffix,                                                      id+0,    metal, "pickaxe", 0,  false, MaterialComponent.of(metal,3243240000L));
-        add("reinforced_wood_chest_"+suffix,                                                    id+500,  metal, "axe",    0,  true,  MaterialComponent.of(metal,1621620000L), MaterialComponent.of(gregtech.data.generated.GT6Materials.Woods.Wood,2594592000L));
+        add("reinforced_wood_chest_"+suffix,                                                    id+500,  metal, "axe",    0,  true,  MaterialComponent.of(metal,1621620000L), MaterialComponent.of(gregtech.content.data.generated.GT6Materials.Woods.Wood,2594592000L));
         add(suffix.equals("steel")?"safe":"safe_"+suffix,                         id+2000, metal, "wrench",  -1, false, MaterialComponent.of(metal,17837820000L));
         add("key_safe_"+suffix,                                                   id+3000, metal, "wrench",  -1, false, MaterialComponent.of(metal,17837820000L));
         add(suffix.equals("stainless_steel")?"drawer_quad":"drawer_quad_"+suffix, id+4000, metal, "wrench",  -1, false, MaterialComponent.of(metal,13261248000L));
         add(suffix.equals("stainless_steel")?"locker":"locker_"+suffix,           id+7300, metal, "wrench",  -1, false, MaterialComponent.of(metal,9225216000L));
         add("mass_storage_"+suffix,                                               id+6000, metal, "wrench",  -1, false, MaterialComponent.of(metal,11963952000L));
         add("bottle_crate_"+suffix,                                               id+8600, metal, "pickaxe", 0,  true,  MaterialComponent.of(metal,1117116000L));
-        add(suffix.equals("steel")?"advanced_crafting_table":"advanced_crafting_table_"+suffix, id+5000, metal, "wrench", -1, false, MaterialComponent.of(metal,2738736000L), MaterialComponent.of(gregtech.data.generated.GT6Materials.Woods.Wood,2594592000L));
-        add(suffix.equals("steel")?"charging_crafting_table":"charging_crafting_table_"+suffix,id+5500,metal,"wrench",-1,false,MaterialComponent.of(ImportedMaterialData.Au,5189184000L),MaterialComponent.of(ImportedMaterialData.Rubber,5189184000L),MaterialComponent.of(metal,2882880000L),MaterialComponent.of(gregtech.data.generated.GT6Materials.Woods.Wood,2594592000L));
+        add(suffix.equals("steel")?"advanced_crafting_table":"advanced_crafting_table_"+suffix, id+5000, metal, "wrench", -1, false, MaterialComponent.of(metal,2738736000L), MaterialComponent.of(gregtech.content.data.generated.GT6Materials.Woods.Wood,2594592000L));
+        add(suffix.equals("steel")?"charging_crafting_table":"charging_crafting_table_"+suffix,id+5500,metal,"wrench",-1,false,MaterialComponent.of(ImportedMaterialData.Au,5189184000L),MaterialComponent.of(ImportedMaterialData.Rubber,5189184000L),MaterialComponent.of(metal,2882880000L),MaterialComponent.of(gregtech.content.data.generated.GT6Materials.Woods.Wood,2594592000L));
         add("logistics_mass_storage_"+suffix,id+6200,metal,"wrench",-1,false,MaterialComponent.of(metal,12252240000L),MaterialComponent.of(ImportedMaterialData.Os,162162000L),MaterialComponent.of(ImportedMaterialData.Al,720720000L),MaterialComponent.of(ImportedMaterialData.Pt,648648000L),MaterialComponent.of(ImportedMaterialData.Emerald,648648000L));
         add(bookshelfPath,                                                        id+7100, metal, "wrench",  -1, false, MaterialComponent.of(metal,2738736000L));
         add(suffix.equals("steel")?"scaffold":"scaffold_"+suffix,                 id+8400, metal, "wrench",  0,  false, MaterialComponent.of(metal,1441440000L));

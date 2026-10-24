@@ -11,11 +11,11 @@ import java.util.Map;
 public final class FluidAppearance {
     private record Key(ResourceLocation preferred, FluidTexturePolicy.Kind kind) {}
     private static final Map<Key, ResourceLocation> CACHE = new ConcurrentHashMap<>();
-    private static final Map<gregtech.data.RegisteredFluids.FluidEntry, gregtech.internal.fluid.FluidVisualPolicy.Visual> VISUALS = new ConcurrentHashMap<>();
+    private static final Map<gregtech.content.data.RegisteredFluids.FluidEntry, gregtech.internal.fluid.FluidVisualPolicy.Visual> VISUALS = new ConcurrentHashMap<>();
     private static ResourceManager resources;
     private FluidAppearance() {}
     public static synchronized void clearCache() { CACHE.clear(); VISUALS.clear(); resources = null; }
-    public static synchronized gregtech.internal.fluid.FluidVisualPolicy.Visual appearance(gregtech.data.RegisteredFluids.FluidEntry entry) {
+    public static synchronized gregtech.internal.fluid.FluidVisualPolicy.Visual appearance(gregtech.content.data.RegisteredFluids.FluidEntry entry) {
         ResourceManager current = Minecraft.getInstance().getResourceManager();
         if(current != resources){CACHE.clear();VISUALS.clear();resources=current;}
         return VISUALS.computeIfAbsent(entry, value -> gregtech.internal.fluid.FluidVisualPolicy.select(value,

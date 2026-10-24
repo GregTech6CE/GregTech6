@@ -5,9 +5,9 @@ package gregtech.client;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.blockentity.inventory.BottleCrateBlockEntity;
+import gregtech.content.blockentity.inventory.BottleCrateBlockEntity;
 import gregtech.content.tool.BottleCrateGeometry;
-import gregtech.item.BottleItem;
+import gregtech.content.item.BottleItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;

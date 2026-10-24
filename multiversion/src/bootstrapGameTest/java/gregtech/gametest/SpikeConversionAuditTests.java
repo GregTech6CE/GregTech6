@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
-import gregtech.block.misc.SpikeBlock;
+import gregtech.content.block.misc.SpikeBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import gregtech.registry.GTSpikes;
+import gregtech.content.registry.GTSpikes;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;

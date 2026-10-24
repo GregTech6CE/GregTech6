@@ -2,8 +2,8 @@ package gregtech.content.recipe;
 
 import gregtech.internal.material.GTMaterial;
 import gregtech.api.material.GTValues;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.GTItems;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTItems;
 import gregtech.util.OM;
 import net.minecraft.world.item.ItemStack;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public final class CrucibleDisplayItems {
     }
 
     public static boolean isCrucible(gregtech.internal.recipe.RecipeMap map) {
-        return map == gregtech.data.MachineRecipeMaps.CrucibleAlloying
-                || map == gregtech.data.MachineRecipeMaps.CrucibleSmelting;
+        return map == gregtech.content.data.MachineRecipeMaps.CrucibleAlloying
+                || map == gregtech.content.data.MachineRecipeMaps.CrucibleSmelting;
     }
 }

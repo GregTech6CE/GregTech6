@@ -3,11 +3,11 @@ package gregtech.bootstrap.content;
 import gregtech.GregTech;
 import gregtech.internal.tool.GTToolType;
 import gregtech.bootstrap.InitializationStep;
-import gregtech.recipe.GTToolAssemblyRecipe;
-import gregtech.recipe.GTToolPatternRecipe;
-import gregtech.recipe.GTToolHeadRecipe;
-import gregtech.recipe.GTToolRecipeSerializers;
-import gregtech.registry.GTToolItems;
+import gregtech.content.recipe.GTToolAssemblyRecipe;
+import gregtech.content.recipe.GTToolPatternRecipe;
+import gregtech.content.recipe.GTToolHeadRecipe;
+import gregtech.content.recipe.GTToolRecipeSerializers;
+import gregtech.content.registry.GTToolItems;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -33,31 +33,31 @@ public record ToolBootstrap(IEventBus bus) implements InitializationStep {
     public static final RegistryObject<RecipeSerializer<GTToolHeadRecipe>> TOOL_HEAD =
             RECIPE_SERIALIZERS.register("tool_head", () -> GTToolRecipeSerializers.HEAD);
 
-    public static final RegistryObject<RecipeSerializer<gregtech.recipe.SpikeConversionRecipe>> SPIKE_CONVERSION =
-            RECIPE_SERIALIZERS.register("spike_conversion", () -> gregtech.recipe.SpikeConversionRecipe.SERIALIZER);
+    public static final RegistryObject<RecipeSerializer<gregtech.content.recipe.SpikeConversionRecipe>> SPIKE_CONVERSION =
+            RECIPE_SERIALIZERS.register("spike_conversion", () -> gregtech.content.recipe.SpikeConversionRecipe.SERIALIZER);
 
-    public static final RegistryObject<RecipeSerializer<gregtech.recipe.ToolShapelessRecipe>> TOOL_SHAPELESS =
-            RECIPE_SERIALIZERS.register("tool_shapeless", () -> gregtech.recipe.ToolShapelessRecipe.SERIALIZER);
-    public static final RegistryObject<RecipeSerializer<gregtech.recipe.ToolShapedRecipe>> TOOL_SHAPED =
-            RECIPE_SERIALIZERS.register("tool_shaped", () -> gregtech.recipe.ToolShapedRecipe.SERIALIZER);
+    public static final RegistryObject<RecipeSerializer<gregtech.content.recipe.ToolShapelessRecipe>> TOOL_SHAPELESS =
+            RECIPE_SERIALIZERS.register("tool_shapeless", () -> gregtech.content.recipe.ToolShapelessRecipe.SERIALIZER);
+    public static final RegistryObject<RecipeSerializer<gregtech.content.recipe.ToolShapedRecipe>> TOOL_SHAPED =
+            RECIPE_SERIALIZERS.register("tool_shaped", () -> gregtech.content.recipe.ToolShapedRecipe.SERIALIZER);
 
     /** GT6's huge wooden axle consumes a finite 1000 mB creosote container. */
-    public static final RegistryObject<RecipeSerializer<gregtech.recipe.CreosoteAxleRecipe>> CREOSOTE_AXLE =
-            RECIPE_SERIALIZERS.register("creosote_axle", () -> gregtech.recipe.CreosoteAxleRecipe.SERIALIZER);
+    public static final RegistryObject<RecipeSerializer<gregtech.content.recipe.CreosoteAxleRecipe>> CREOSOTE_AXLE =
+            RECIPE_SERIALIZERS.register("creosote_axle", () -> gregtech.content.recipe.CreosoteAxleRecipe.SERIALIZER);
 
     /** GT6 bottle rows consume a real 1000 mB container and return the empty vessel. */
-    public static final RegistryObject<RecipeSerializer<gregtech.recipe.FiniteBottleFillingRecipe>> FINITE_BOTTLE_FILLING =
-            RECIPE_SERIALIZERS.register("finite_bottle_filling", () -> gregtech.recipe.FiniteBottleFillingRecipe.SERIALIZER);
+    public static final RegistryObject<RecipeSerializer<gregtech.content.recipe.FiniteBottleFillingRecipe>> FINITE_BOTTLE_FILLING =
+            RECIPE_SERIALIZERS.register("finite_bottle_filling", () -> gregtech.content.recipe.FiniteBottleFillingRecipe.SERIALIZER);
 
     @Override
     public void run() {
-        gregtech.recipe.CreosoteAxleRecipe.registerIngredient();
-        gregtech.recipe.FiniteBottleFillingRecipe.registerIngredient();
+        gregtech.content.recipe.CreosoteAxleRecipe.registerIngredient();
+        gregtech.content.recipe.FiniteBottleFillingRecipe.registerIngredient();
         GTToolItems.ITEMS.register(bus);
-        RECIPE_SERIALIZERS.register("book_binding",()->gregtech.recipe.BookBindingRecipe.SERIALIZER);
-        RECIPE_SERIALIZERS.register("machine", () -> gregtech.recipe.MachineDatapackRecipe.ADDITION);
-        RECIPE_SERIALIZERS.register("machine_removal", () -> gregtech.recipe.MachineDatapackRecipe.REMOVAL);
-        gregtech.recipe.MachineDatapackRecipe.TYPES.register(bus);
+        RECIPE_SERIALIZERS.register("book_binding",()->gregtech.content.recipe.BookBindingRecipe.SERIALIZER);
+        RECIPE_SERIALIZERS.register("machine", () -> gregtech.content.recipe.MachineDatapackRecipe.ADDITION);
+        RECIPE_SERIALIZERS.register("machine_removal", () -> gregtech.content.recipe.MachineDatapackRecipe.REMOVAL);
+        gregtech.content.recipe.MachineDatapackRecipe.TYPES.register(bus);
         RECIPE_SERIALIZERS.register(bus);
     }
 

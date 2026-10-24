@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
-import gregtech.block.tool.*;
-import gregtech.blockentity.tool.*;
+import gregtech.content.block.tool.*;
+import gregtech.content.blockentity.tool.*;
 import gregtech.content.material.Materials;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.GTItems;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTItems;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.item.*;

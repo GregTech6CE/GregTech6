@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
 import gregtech.internal.material.GTMaterial;
-import gregtech.worldgen.GTOreBlockResolver;
-import gregtech.worldgen.GTOreVeins;
-import gregtech.worldgen.GTStoneLayersGen;
+import gregtech.content.worldgen.GTOreBlockResolver;
+import gregtech.content.worldgen.GTOreVeins;
+import gregtech.content.worldgen.GTStoneLayersGen;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.level.block.Blocks;

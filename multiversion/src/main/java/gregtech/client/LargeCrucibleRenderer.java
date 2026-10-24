@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.blockentity.machine.LargeCrucibleControllerBlockEntity;
+import gregtech.content.blockentity.machine.LargeCrucibleControllerBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -61,7 +61,7 @@ public final class LargeCrucibleRenderer implements BlockEntityRenderer<LargeCru
 *///?} else {
         if (be.isMeltDownWarning()) tint = CrucibleBlockBakedModel.meltdownRgb(tint);
 //?}
-        var facing = be.getBlockState().getValue(gregtech.block.machine.LargeCrucibleControllerBlock.FACING);
+        var facing = be.getBlockState().getValue(gregtech.content.block.machine.LargeCrucibleControllerBlock.FACING);
         for (var face : faces) {
             String part = face == net.minecraft.core.Direction.UP ? "top"
                     : face == net.minecraft.core.Direction.DOWN ? "bottom" : "side";

@@ -4,7 +4,7 @@ import gregtech.content.food.GTFoodStats;
 import gregtech.content.food.PlayerFoodStats;
 import gregtech.content.nuclear.PlayerRadiation;
 import gregtech.content.nuclear.ReactorRadiation;
-import gregtech.damage.GTHazmat;
+import gregtech.content.damage.GTHazmat;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

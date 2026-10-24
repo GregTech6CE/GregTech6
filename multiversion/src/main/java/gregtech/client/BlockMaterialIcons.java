@@ -7,7 +7,7 @@ import gregtech.GregTech;
 //?}
 import gregtech.internal.material.MaterialTextureSet;
 import gregtech.internal.prefix.BlockMaterialPrefix;
-import gregtech.block.stone.GTStoneBlock;
+import gregtech.content.block.stone.GTStoneBlock;
 import net.minecraft.resources.ResourceLocation;
 
 /** Block material icon paths under {@code textures/block/material_icons/{set}/{prefix}.png}. */

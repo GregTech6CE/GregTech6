@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.worldgen.GTWaterBodyFeature;
+import gregtech.content.worldgen.GTWaterBodyFeature;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;

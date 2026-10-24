@@ -4,7 +4,7 @@ package gregtech.content.transport.fluid;
 
 import gregtech.internal.machine.TankSpec;
 import gregtech.internal.material.GTMaterial;
-import gregtech.data.generated.GT6Materials;
+import gregtech.content.data.generated.GT6Materials;
 import java.util.List;
 import java.util.Optional;
 

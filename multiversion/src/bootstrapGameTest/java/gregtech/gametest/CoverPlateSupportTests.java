@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
-import gregtech.block.energy.SignalWireBlock;
+import gregtech.content.block.energy.SignalWireBlock;
 import gregtech.content.cover.CoverWorldInteraction;
 import gregtech.content.cover.PanelCoverHost;
-import gregtech.registry.GTSignalWires;
-import gregtech.registry.GTTechnological;
+import gregtech.content.registry.GTSignalWires;
+import gregtech.content.registry.GTTechnological;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import net.minecraft.core.BlockPos;
@@ -154,7 +154,7 @@ public final class CoverPlateSupportTests {
             for(var face:Direction.values())for(var type:net.minecraft.world.level.block.SupportType.values())
                 h.assertTrue(h.getLevel().getBlockState(f.pos.west()).isFaceSturdy(h.getLevel(),f.pos.west(),face,type),"ordinary full-block support unchanged");
             var pipe=net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","pipe_medium_steel"));
-            h.assertTrue(pipe instanceof gregtech.block.machine.FluidPipeBlock,"real pressure-valve host");
+            h.assertTrue(pipe instanceof gregtech.content.block.machine.FluidPipeBlock,"real pressure-valve host");
             f.set(f.pos,pipe.defaultBlockState());
             h.assertTrue(!h.getLevel().getBlockState(f.pos).isFaceSturdy(h.getLevel(),f.pos,Direction.NORTH),"uncovered medium pipe has no full north support");
             var valve=GTTechnological.get(gregtech.content.cover.CoverUtilityBehaviors.PRESSURE_VALVE);
@@ -166,7 +166,7 @@ public final class CoverPlateSupportTests {
             f.click(Direction.NORTH,new ItemStack(Items.LEVER,2));
             h.assertTrue(h.getLevel().getBlockState(f.pos.north()).isAir()&&f.player.getMainHandItem().getCount()==2,"native lever rejects pressure-valve face");
             var huge=net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","pipe_huge_steel"));
-            h.assertTrue(huge instanceof gregtech.block.machine.FluidPipeBlock,"real full-diameter valve host");
+            h.assertTrue(huge instanceof gregtech.content.block.machine.FluidPipeBlock,"real full-diameter valve host");
             f.set(f.pos,huge.defaultBlockState());
             h.assertTrue(h.getLevel().getBlockState(f.pos).isFaceSturdy(h.getLevel(),f.pos,Direction.NORTH),"uncovered huge pipe supplies native full support");
             f.click(Direction.NORTH,new ItemStack(valve,2));

@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.blockentity.machine.QueueHopperBlockEntity;
+import gregtech.content.blockentity.machine.QueueHopperBlockEntity;
 import gregtech.internal.machine.MachineRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

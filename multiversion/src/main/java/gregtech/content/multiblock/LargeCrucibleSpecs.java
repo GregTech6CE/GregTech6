@@ -4,7 +4,7 @@ import gregtech.internal.machine.CrucibleSpec;
 import gregtech.internal.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.content.material.Materials;
-import gregtech.registry.GTMultiblocks;
+import gregtech.content.registry.GTMultiblocks;
 import net.minecraft.world.level.block.Block;
 
 import java.util.List;

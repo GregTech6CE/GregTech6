@@ -2,7 +2,7 @@ package gregtech.integration.jade;
 
 import gregtech.internal.fluid.FluidTankGT;
 import gregtech.internal.machine.BasicMachineSpec;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;

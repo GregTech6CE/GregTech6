@@ -4,9 +4,9 @@ package gregtech.gametest;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.prefix.BlockMaterialPrefix;
 import gregtech.internal.recipe.Recipe;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.*;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.*;
 import java.util.List;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -25,7 +25,7 @@ public final class AluminiumWeldingAuditTests {
  public static void aluminium_original_easy_welding_registered_costs(GameTestHelper h) {
   var al=GTMaterialRegistry.get("Aluminium");
   h.assertTrue(al.getToolQuality()==2,"Al quality 2");
-  h.assertTrue(gregtech.data.generated.MaterialWorkability.isFurnace(al),"Al inherits FURNACE via metal factory at933K");
+  h.assertTrue(gregtech.content.data.generated.MaterialWorkability.isFurnace(al),"Al inherits FURNACE via metal factory at933K");
   check(h,List.of(GTItems.getStack(MaterialPrefix.ingot,al,2),new ItemStack(GTTechnological.selectorTag(2))),
     GTItems.getStack(MaterialPrefix.ingotDouble,al,1),32);
   var ingotOutputs=new MaterialPrefix[]{MaterialPrefix.ingotTriple,MaterialPrefix.ingotQuadruple,MaterialPrefix.ingotQuintuple};
@@ -56,7 +56,7 @@ public final class AluminiumWeldingAuditTests {
  @GameTest(template="test_empty",timeoutTicks=20)
  public static void furnace_rotor_original_fixed_duration(GameTestHelper h) {
   var copper=GTMaterialRegistry.get("Copper");
-  h.assertTrue(gregtech.data.generated.MaterialWorkability.isFurnace(copper),"Copper is FURNACE");
+  h.assertTrue(gregtech.content.data.generated.MaterialWorkability.isFurnace(copper),"Copper is FURNACE");
   check(h,List.of(GTItems.getStack(MaterialPrefix.plateCurved,copper,4),GTItems.getStack(MaterialPrefix.ring,copper,1)),GTItems.getStack(MaterialPrefix.rotor,copper,1),64);
   h.succeed();
  }
@@ -67,12 +67,12 @@ public final class AluminiumWeldingAuditTests {
   h.assertTrue(r!=null,"Registered Al double ingot exists");
   var display=gregtech.internal.recipe.RecipePowerStats.of(r,MachineRecipeMaps.Welder.mPower);
   h.assertTrue(display.time()==32 && display.timeUnit().equals("ticks"),"EMI base duration is ticks, not seconds");
-  var t1=gregtech.api.recipe.MachineWorkCost.calculate(r.mEUt,r.mDuration,1,false,10000,16,64,false);
-  var t2=gregtech.api.recipe.MachineWorkCost.calculate(r.mEUt,r.mDuration,1,false,10000,64,256,false);
+  var t1=gregtech.internal.recipe.MachineWorkCost.calculate(r.mEUt,r.mDuration,1,false,10000,16,64,false);
+  var t2=gregtech.internal.recipe.MachineWorkCost.calculate(r.mEUt,r.mDuration,1,false,10000,64,256,false);
   h.assertTrue(t1!=null && t1.minimumPower()==16 && t1.totalWork()==512,"T1 original work");
   h.assertTrue(t2!=null && t2.minimumPower()==64 && t2.totalWork()==1024,"T2 original overclock work");
   // This is core arithmetic, not a claim to exercise native energy delivery or wall-clock scheduling.
-  long progress=0;for(int i=0;i<16;i++)progress=gregtech.api.recipe.MachineWorkCost.advance(progress,t1.totalWork(),32);
+  long progress=0;for(int i=0;i<16;i++)progress=gregtech.internal.recipe.MachineWorkCost.advance(progress,t1.totalWork(),32);
   h.assertTrue(progress==t1.totalWork(),"Nominal T1 energy takes16 active ticks, distinct from32 base ticks");
   h.succeed();
  }
@@ -80,15 +80,15 @@ public final class AluminiumWeldingAuditTests {
  public static void inherited_flags_aliases_and_hard_control(GameTestHelper h) {
   var al=GTMaterialRegistry.get("Aluminium");
   h.assertTrue(GTMaterialRegistry.get("Al").resolve()==al.resolve(),"Al alias resolves to canonical Aluminium");
-  h.assertTrue(gregtech.data.generated.MaterialWorkability.isFurnace(al),"Al933K inherits FURNACE");
-  h.assertTrue(gregtech.data.generated.MaterialWorkability.isMortarGrindable(al),"Al inherits MORTAR");
+  h.assertTrue(gregtech.content.data.generated.MaterialWorkability.isFurnace(al),"Al933K inherits FURNACE");
+  h.assertTrue(gregtech.content.data.generated.MaterialWorkability.isMortarGrindable(al),"Al inherits MORTAR");
   for(String name:new String[]{"Tin","Zinc","Lead","SiliconDioxide","HardPlastic","WhiteEndSand","BlackEndSand","WaxRefractory"})
-   h.assertTrue(gregtech.data.generated.MaterialWorkability.isFurnace(GTMaterialRegistry.get(name)),"Canonical source FURNACE: "+name);
-  h.assertTrue(gregtech.data.generated.MaterialWorkability.isSoft(GTMaterialRegistry.get("GoldInductive")),"InductiveAlloy source field maps to GoldInductive id8604");
+   h.assertTrue(gregtech.content.data.generated.MaterialWorkability.isFurnace(GTMaterialRegistry.get(name)),"Canonical source FURNACE: "+name);
+  h.assertTrue(gregtech.content.data.generated.MaterialWorkability.isSoft(GTMaterialRegistry.get("GoldInductive")),"InductiveAlloy source field maps to GoldInductive id8604");
   var wax=GTMaterialRegistry.get("WaxRefractory");
-  h.assertTrue(wax.getMeltingPoint()>1200 && gregtech.data.generated.MaterialWorkability.isFurnace(wax),"Postfactory heat does not erase wax FURNACE");
+  h.assertTrue(wax.getMeltingPoint()>1200 && gregtech.content.data.generated.MaterialWorkability.isFurnace(wax),"Postfactory heat does not erase wax FURNACE");
   var ti=GTMaterialRegistry.get("Titanium");
-  h.assertTrue(!gregtech.data.generated.MaterialWorkability.isFurnace(ti),"Source-proven high-temperature Ti hard control; not a generic unknown-negative assertion");
+  h.assertTrue(!gregtech.content.data.generated.MaterialWorkability.isFurnace(ti),"Source-proven high-temperature Ti hard control; not a generic unknown-negative assertion");
   check(h,List.of(GTItems.getStack(MaterialPrefix.ingot,ti,2),new ItemStack(GTTechnological.selectorTag(2))),GTItems.getStack(MaterialPrefix.ingotDouble,ti,1),512);
   h.succeed();
  }

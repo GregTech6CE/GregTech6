@@ -5,7 +5,7 @@ package gregtech.client;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.blockentity.energy.GearboxBlockEntity;
+import gregtech.content.blockentity.energy.GearboxBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;

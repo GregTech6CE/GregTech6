@@ -1,12 +1,12 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.block.stone.StoneType;
-import gregtech.blockentity.tool.PortableContainerBlockEntity;
-import gregtech.registry.GTFluids;
-import gregtech.worldgen.GTDungeonFeature;
-import gregtech.worldgen.GTSurfaceFlora;
-import gregtech.worldgen.dungeon.GTDungeonData;
+import gregtech.content.block.stone.StoneType;
+import gregtech.content.blockentity.tool.PortableContainerBlockEntity;
+import gregtech.content.registry.GTFluids;
+import gregtech.content.worldgen.GTDungeonFeature;
+import gregtech.content.worldgen.GTSurfaceFlora;
+import gregtech.content.worldgen.dungeon.GTDungeonData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

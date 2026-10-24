@@ -1,7 +1,7 @@
 package gregtech.content.tool;
 
-import gregtech.data.BlockHarvestPolicy;
-import gregtech.item.ElectricToolItem;
+import gregtech.content.data.BlockHarvestPolicy;
+import gregtech.content.item.ElectricToolItem;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.*;
@@ -14,12 +14,12 @@ public final class ElectricWrenchHarvest {
     private ElectricWrenchHarvest() {}
     public static boolean target(BlockState state) {
         Block block=state.getBlock();
-        if (block instanceof gregtech.block.machine.FluidPipeBlock pipe) {
+        if (block instanceof gregtech.content.block.machine.FluidPipeBlock pipe) {
             var texture=pipe.spec().material().getTextureSet();
             if (texture==gregtech.internal.material.MaterialTextureSet.WOOD
                     || texture==gregtech.internal.material.MaterialTextureSet.RUBBER) return false;
         }
-        if (block instanceof gregtech.block.machine.ItemPipeBlock pipe) {
+        if (block instanceof gregtech.content.block.machine.ItemPipeBlock pipe) {
             var texture=pipe.spec().material().getTextureSet();
             if (texture==gregtech.internal.material.MaterialTextureSet.WOOD
                     || texture==gregtech.internal.material.MaterialTextureSet.RUBBER) return false;
@@ -27,17 +27,17 @@ public final class ElectricWrenchHarvest {
         return state.is(WRENCH) || state.is(MONKEY_WRENCH)
 //? if >=1.21.1 {
 //?} else {
-                || block instanceof gregtech.block.misc.BarsBlock
+                || block instanceof gregtech.content.block.misc.BarsBlock
 //?}
                 || block instanceof net.minecraft.world.level.block.piston.PistonBaseBlock
                 || block instanceof net.minecraft.world.level.block.piston.PistonHeadBlock
                 || block instanceof RedstoneLampBlock || block instanceof HopperBlock || block instanceof DispenserBlock;
     }
     public static int requiredQuality(BlockState state) {
-        var ore=gregtech.data.OreHostPhysics.params(state);
+        var ore=gregtech.content.data.OreHostPhysics.params(state);
         if(ore.isPresent())return ore.get().harvest();
-        if (state.getBlock() instanceof gregtech.block.misc.SpikeBlock)
-            return gregtech.data.SpikeHarvestPolicy.level(state);
+        if (state.getBlock() instanceof gregtech.content.block.misc.SpikeBlock)
+            return gregtech.content.data.SpikeHarvestPolicy.level(state);
         int vanilla=state.is(BlockTags.NEEDS_DIAMOND_TOOL)?3:state.is(BlockTags.NEEDS_IRON_TOOL)?2:state.is(BlockTags.NEEDS_STONE_TOOL)?1:0;
         return Math.max(vanilla,BlockHarvestPolicy.level(state.getBlock()));
     }

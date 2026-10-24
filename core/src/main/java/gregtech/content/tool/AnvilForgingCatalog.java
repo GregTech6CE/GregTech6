@@ -1,5 +1,5 @@
 package gregtech.content.tool;
-import gregtech.data.MaterialPrefix;import static gregtech.data.MaterialPrefix.*;import java.util.List;
+import gregtech.content.data.MaterialPrefix;import static gregtech.content.data.MaterialPrefix.*;import java.util.List;
 public final class AnvilForgingCatalog {private AnvilForgingCatalog(){}
     public record Rule(MaterialPrefix first,MaterialPrefix second,MaterialPrefix output,int outputCount,MaterialPrefix scrap,int scrapCount) {}
     private static Rule join(MaterialPrefix first,MaterialPrefix second,MaterialPrefix output) { return new Rule(first,second,output,1,null,0); }

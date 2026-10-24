@@ -1,6 +1,6 @@
 package gregtech.gametest;
 
-import gregtech.block.tool.PlantPotBlock;
+import gregtech.content.block.tool.PlantPotBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

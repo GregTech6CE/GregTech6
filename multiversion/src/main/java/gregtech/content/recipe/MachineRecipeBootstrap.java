@@ -5,7 +5,7 @@ import gregtech.bootstrap.InitializationStep;
 import gregtech.content.nuclear.ReactorRodRecipes;
 import gregtech.content.tool.AnvilRecipeDefinitions;
 import gregtech.content.recipe.generated.GeneratedRecipeResolver;
-import gregtech.data.FuelRecipeMaps;
+import gregtech.content.data.FuelRecipeMaps;
 import com.mojang.logging.LogUtils;
 import org.slf4j.Logger;
 

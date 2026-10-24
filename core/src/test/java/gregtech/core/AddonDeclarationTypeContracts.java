@@ -1,7 +1,7 @@
 package gregtech.core;
 
 import gregtech.api.addon.AddonNames;
-import gregtech.api.addon.BehaviorEnergyRules;
+import gregtech.internal.addon.BehaviorEnergyRules;
 import gregtech.api.addon.BehaviorMachine;
 import gregtech.api.addon.CellMatch;
 import gregtech.api.addon.CompressedGasTankDeclaration;
@@ -22,7 +22,7 @@ import gregtech.internal.addon.MachineTuningRules;
 import gregtech.api.addon.MaterialComposition;
 import gregtech.api.addon.MaterialDeclaration;
 import gregtech.api.addon.MaterialFormRequest;
-import gregtech.api.addon.PartEnergyRules;
+import gregtech.internal.addon.PartEnergyRules;
 import gregtech.api.addon.PartSlotRules;
 import gregtech.api.addon.PartSlots;
 import gregtech.api.addon.PartTankRules;
@@ -451,7 +451,7 @@ public final class AddonDeclarationTypeContracts {
         check(!capped.overload() && capped.packets() == 1, "the buffer caps how many packets fit");
         var any = PartEnergyRules.admit(0, 1_000, 10_000, 1, 0, 0, true);
         check(!any.overload() && any.packets() == 1, "anyPacket does not overload");
-        check(gregtech.api.machine.BasicMachineEnergy.add(0, 1_000, 10_000, any.packets()) == 1_000,
+        check(gregtech.internal.machine.BasicMachineEnergy.add(0, 1_000, 10_000, any.packets()) == 1_000,
                 "anyPacket fills up to capacity");
         var dry = PartEnergyRules.drain(100, 192);
         check(!dry.satisfied() && dry.stored() == 100, "a short condition buffer is not drained");

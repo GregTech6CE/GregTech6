@@ -5,7 +5,7 @@ package gregtech.jei;
 //?} else {
 import gregtech.GregTech;
 //?}
-import gregtech.api.recipe.*;
+import gregtech.internal.recipe.*;
 import gregtech.internal.recipe.*;
 import gregtech.internal.fluid.FluidDisplayBinding;
 //? if >=1.21.1 {
@@ -131,7 +131,7 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
         gregtech.client.RecipeDisplayCaptions.draw(graphics, map, recipe);
     }
     @Override public java.util.List<Component> getTooltipStrings(Recipe recipe,IRecipeSlotsView slots,double mouseX,double mouseY) {
-        if(map==gregtech.data.MachineRecipeMaps.Anvil || map==gregtech.data.MachineRecipeMaps.AnvilBendBig || map==gregtech.data.MachineRecipeMaps.AnvilBendSmall) {
+        if(map==gregtech.content.data.MachineRecipeMaps.Anvil || map==gregtech.content.data.MachineRecipeMaps.AnvilBendBig || map==gregtech.content.data.MachineRecipeMaps.AnvilBendSmall) {
             for(int i=0;i<recipe.mInputs.length;i++) if(recipe.mInputs[i]==null || recipe.mInputs[i].isEmpty()) {
                 var point=MachineGuiLayout.item(true,i,map.mInputItemsCount,0);
                 if(mouseX>=point.x()&&mouseX<point.x()+16&&mouseY>=point.y()&&mouseY<point.y()+16)

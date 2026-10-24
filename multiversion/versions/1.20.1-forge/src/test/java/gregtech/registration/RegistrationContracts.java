@@ -9,7 +9,7 @@ import gregtech.internal.mod.ModData;
 import gregtech.content.material.Materials;
 import gregtech.content.machine.BasicMachineDefinitions;
 import gregtech.content.energy.EnergyNodeDefinitions;
-import gregtech.data.*;
+import gregtech.content.data.*;
 import java.util.*;
 
 /** Headless definition contracts. The runner supplies a test-only ModList fixture. */

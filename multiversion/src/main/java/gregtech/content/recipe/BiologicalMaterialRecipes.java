@@ -1,6 +1,6 @@
 package gregtech.content.recipe;
 
-import gregtech.data.*;
+import gregtech.content.data.*;
 import net.minecraft.world.item.*;
 
 /** GT6 OreDict slimeball, Other itemResin, and Vanilla slime centrifuging/magma cream. */

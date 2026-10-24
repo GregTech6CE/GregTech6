@@ -1,8 +1,8 @@
 package gregtech.content.recipe.generated;
 
 import gregtech.content.tool.CraftingToolDefinitions;
-import gregtech.data.MaterialGroups;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialGroups;
+import gregtech.content.data.MaterialPrefix;
 
 /** Original embedded RM rows in MultiItemRandomTools:345-361,369,378,389,503-512. */
 final class GTTechnologyRecipes {
@@ -23,7 +23,7 @@ final class GTTechnologyRecipes {
         for (var wood : MaterialGroups.Wood.getReRegistrations()) {
             if (!MaterialPrefix.bolt.isValidFor(wood.resolve())) continue;
             var phosphorus = new java.util.LinkedHashSet<>(MaterialGroups.Phosphorus.getReRegistrations());
-            phosphorus.add(gregtech.data.generated.GT6Materials.Elements.P);
+            phosphorus.add(gregtech.content.data.generated.GT6Materials.Elements.P);
             for (var material : phosphorus) {
                 if (material == null || !MaterialPrefix.dust.isValidFor(material.resolve())) continue;
                 String name = material.resolve().getName(), stick = wood.resolve().getName();

@@ -20,7 +20,7 @@
 package gregtech.content.fluid;
 
 import gregtech.api.material.GTValues;
-import gregtech.data.FluidCatalog.FluidFlags;
+import gregtech.content.data.FluidCatalog.FluidFlags;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;

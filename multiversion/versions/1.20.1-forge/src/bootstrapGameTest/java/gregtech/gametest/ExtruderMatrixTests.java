@@ -4,11 +4,11 @@ import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.material.MaterialEquivalence;
 import gregtech.internal.recipe.Recipe;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
 import gregtech.content.recipe.PartRecipeLoader;
-import gregtech.registry.GTItems;
-import gregtech.registry.GTTechnological;
+import gregtech.content.registry.GTItems;
+import gregtech.content.registry.GTTechnological;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.ItemStack;
@@ -99,7 +99,7 @@ public final class ExtruderMatrixTests {
         }
 
         // blockSolid is 9U, so GT6 scales the input to nine ingots (Loader_Recipes_Handlers:812).
-        ItemStack block = gregtech.registry.GTBlocks.getStack(
+        ItemStack block = gregtech.content.registry.GTBlocks.getStack(
                 gregtech.internal.prefix.BlockMaterialPrefix.blockSolid, steel);
         helper.assertTrue(!block.isEmpty(), "steel has a solid block form");
         Recipe blockRoute = route(index, ingot, "extruder_shape_block", block);

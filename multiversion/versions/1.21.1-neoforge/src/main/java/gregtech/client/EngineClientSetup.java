@@ -1,8 +1,8 @@
 package gregtech.client;
 
-import gregtech.registry.*;
+import gregtech.content.registry.*;
 import gregtech.internal.machine.EngineType;
-import gregtech.blockentity.machine.*;
+import gregtech.content.blockentity.machine.*;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;

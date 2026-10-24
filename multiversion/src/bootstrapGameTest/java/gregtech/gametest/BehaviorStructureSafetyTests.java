@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
 import gregtech.internal.multiblock.MultiblockLayout.Role;
-import gregtech.block.machine.BehaviorMachineBlock;
-import gregtech.blockentity.machine.BehaviorMachineBlockEntity;
-import gregtech.blockentity.machine.MultiblockPortBlockEntity;
+import gregtech.content.block.machine.BehaviorMachineBlock;
+import gregtech.content.blockentity.machine.BehaviorMachineBlockEntity;
+import gregtech.content.blockentity.machine.MultiblockPortBlockEntity;
 import gregtech.content.multiblock.LargeMachineLayouts;
 import gregtech.content.multiblock.LargeMachineParts;
 import gregtech.content.multiblock.PlainStructureBlocks;

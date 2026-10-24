@@ -1,10 +1,10 @@
 package gregtech.client;
 
 import gregtech.internal.material.GTMaterial;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 import gregtech.internal.tool.GTToolHelper;
 import gregtech.internal.tool.GTToolType;
-import gregtech.item.GTToolItem;
+import gregtech.content.item.GTToolItem;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
@@ -59,7 +59,7 @@ public final class GTToolBakedModel implements BakedModel {
     private List<BakedQuad> quadsForStack(ItemStack effective, @Nullable BlockState state, @Nullable Direction direction,
                                           RandomSource random, @Nullable net.minecraft.client.renderer.RenderType renderType,
                                           ModelData data) {
-        if (effective.isEmpty() || !(effective.getItem() instanceof GTToolItem)&&!(effective.getItem() instanceof gregtech.item.ElectricToolItem)) {
+        if (effective.isEmpty() || !(effective.getItem() instanceof GTToolItem)&&!(effective.getItem() instanceof gregtech.content.item.ElectricToolItem)) {
             return base.getQuads(state, direction, random, data, renderType);
         }
         List<BakedQuad> quads = buildQuads(effective, direction, random, renderType);
@@ -68,7 +68,7 @@ public final class GTToolBakedModel implements BakedModel {
 
     private List<BakedQuad> buildQuads(ItemStack stack, @Nullable Direction direction, RandomSource random,
                                        @Nullable net.minecraft.client.renderer.RenderType renderType) {
-        if(stack.getItem() instanceof gregtech.item.ElectricToolItem electric){
+        if(stack.getItem() instanceof gregtech.content.item.ElectricToolItem electric){
             var spec=electric.definition();String body=switch(spec.name()){case "Drill"->"handle_electric_drill";case "Mixer"->"handle_electric_mixer";case "Trimmer"->"handle_electric_trimmer";case "BuzzSaw"->"handle_buzzsaw";default->"power_unit_"+spec.tierName();};
             var out=new ArrayList<BakedQuad>();appendIconsetQuads(out,ToolIconSets.icon(body),0,direction,random,renderType);
             if(java.util.Set.of("Drill","Mixer","Trimmer").contains(spec.name()))appendIconsetQuads(out,ToolIconSets.icon("tip_electric_"+spec.name().toLowerCase(java.util.Locale.ROOT)),1,direction,random,renderType);
@@ -189,7 +189,7 @@ public final class GTToolBakedModel implements BakedModel {
         @Override
         public BakedModel resolve(BakedModel model, ItemStack stack, @Nullable ClientLevel level,
                                   @Nullable LivingEntity entity, int seed) {
-            if (!(stack.getItem() instanceof gregtech.item.ElectricToolItem) && (!(stack.getItem() instanceof GTToolItem) || !GTToolHelper.isTool(stack))) {
+            if (!(stack.getItem() instanceof gregtech.content.item.ElectricToolItem) && (!(stack.getItem() instanceof GTToolItem) || !GTToolHelper.isTool(stack))) {
                 return base;
             }
             return new GTToolBakedModel(base, stack);

@@ -1,8 +1,8 @@
 package gregtech.gametest;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.prefix.BlockMaterialPrefix;
-import gregtech.block.*;
-import gregtech.registry.GTBlocks;
+import gregtech.content.block.*;
+import gregtech.content.registry.GTBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.*;

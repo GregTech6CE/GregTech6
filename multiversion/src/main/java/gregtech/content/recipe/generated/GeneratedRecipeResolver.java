@@ -5,11 +5,11 @@ import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.material.MaterialStackItemHelper;
 import gregtech.api.material.GTValues;
 import gregtech.internal.recipe.RecipeMap;
-import gregtech.data.RegisteredFluids;
-import gregtech.data.MaterialPrefix;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.registry.GTFluids;
-import gregtech.registry.GTTechnological;
+import gregtech.content.data.RegisteredFluids;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.registry.GTFluids;
+import gregtech.content.registry.GTTechnological;
 import gregtech.util.OM;
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.item.Item;
@@ -222,7 +222,7 @@ public final class GeneratedRecipeResolver {
                     gregtech.internal.prefix.BlockMaterialPrefix block =
                             gregtech.internal.prefix.BlockPrefixRegistry.byName(parts[1]);
                     if (block == null) return null;
-                    ItemStack stack = gregtech.registry.GTBlocks.getStack(block, material);
+                    ItemStack stack = gregtech.content.registry.GTBlocks.getStack(block, material);
                     if (stack.isEmpty()) return null;
                     ItemStack out = stack.copy();
                     out.setCount(Math.min(count, out.getMaxStackSize()));
@@ -252,7 +252,7 @@ public final class GeneratedRecipeResolver {
             // GT6 fluid cells: represented by the registered FluidItems
             // (1000 mB unit), e.g. "cell:Water:2"
             case "cell" -> {
-                var fluidItem = gregtech.registry.GTFluidItems.get(parts[1]);
+                var fluidItem = gregtech.content.registry.GTFluidItems.get(parts[1]);
                 return fluidItem == null ? null : new ItemStack(fluidItem, Integer.parseInt(parts[2]));
             }
             // GT6 technological items (IL.<Name>), e.g. "tech:extruder_shape_plate:1".
@@ -261,9 +261,9 @@ public final class GeneratedRecipeResolver {
             // vanilla items, so the alias table is consulted and then the item registry (which also
             // accepts the "minecraft:" namespace).
             case "tech" -> {
-                String id = gregtech.registry.GTTechnological.ALIASES
+                String id = gregtech.content.registry.GTTechnological.ALIASES
                         .getOrDefault(parts[1], parts[1]);
-                var techItem = gregtech.registry.GTTechnological.get(parts[1]);
+                var techItem = gregtech.content.registry.GTTechnological.get(parts[1]);
                 if (techItem == null) {
 //? if >=1.21.1 {
                     /*var key = id.indexOf(':') >= 0
@@ -435,7 +435,7 @@ public final class GeneratedRecipeResolver {
         // GT6 field names (TiCl4, HNO3, ...) often differ from the registry
         // display names ("Titanium Tetrachloride") — fall back to the MT field
         try {
-            Object value = gregtech.data.ImportedMaterialData.class.getField(name).get(null);
+            Object value = gregtech.content.data.ImportedMaterialData.class.getField(name).get(null);
             if (value instanceof GTMaterial mt && mt.resolve().isValid()) return mt.resolve();
         } catch (ReflectiveOperationException ignored) {
             // no such field — genuinely unknown material

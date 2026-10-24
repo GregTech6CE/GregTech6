@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
 import gregtech.internal.tool.GTToolType;
-import gregtech.block.LootCrateBlock;
-import gregtech.registry.GTDecorBlocks;
-import gregtech.registry.GTToolItems;
+import gregtech.content.block.LootCrateBlock;
+import gregtech.content.registry.GTDecorBlocks;
+import gregtech.content.registry.GTToolItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

@@ -1,7 +1,7 @@
 package gregtech.gametest;
 import gregtech.content.nuclear.*;
-import gregtech.registry.*;
-import gregtech.blockentity.energy.*;
+import gregtech.content.registry.*;
+import gregtech.content.blockentity.energy.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.nbt.*;

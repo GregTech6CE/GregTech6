@@ -1,8 +1,8 @@
 /* Derived from GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later. */
 package gregtech.content.recipe;
 
-import gregtech.data.*;
-import gregtech.registry.*;
+import gregtech.content.data.*;
+import gregtech.content.registry.*;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.prefix.PrefixRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;

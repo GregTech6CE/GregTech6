@@ -4,8 +4,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
 import gregtech.internal.fluid.FluidDisplayBinding;
 import gregtech.content.bumble.GTBumbleSpecies;
-import gregtech.registry.GTFluids;
-import gregtech.registry.GTFluidItems;
+import gregtech.content.registry.GTFluids;
+import gregtech.content.registry.GTFluidItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -279,7 +279,7 @@ final class LanguageDeliveryChecks {
         var panels=gregtech.content.transport.PanelCatalog.ALL;
         for(var spec:panels)requireInstalledName(item(spec.id()));
         int bottles=0;
-        for(var registered:BuiltInRegistries.ITEM)if(registered instanceof gregtech.item.BottleItem) {
+        for(var registered:BuiltInRegistries.ITEM)if(registered instanceof gregtech.content.item.BottleItem) {
             var stack=new ItemStack(registered);requireInstalledName(stack);
             String key=stack.getDescriptionId()+".tooltip";
             require(Language.getInstance().has(key),"Original bottle description key "+key);
@@ -358,7 +358,7 @@ final class LanguageDeliveryChecks {
     private static int verifyEngineDescriptions() {
         int count=0;
         for(var registered:BuiltInRegistries.ITEM)if(registered instanceof BlockItem item
-                && item.getBlock() instanceof gregtech.block.machine.EngineBlock engine) {
+                && item.getBlock() instanceof gregtech.content.block.machine.EngineBlock engine) {
             var material=switch(engine.engineType()) {
                 case ELECTRIC -> engine.engineSpec(gregtech.internal.machine.ElectricEngineSpec.class).material();
                 case FLUX -> engine.engineSpec(gregtech.internal.machine.FluxEngineSpec.class).material();
@@ -423,7 +423,7 @@ final class LanguageDeliveryChecks {
             var block=((BlockItem)item(entry.getKey()).getItem()).getBlock();
             require(block.defaultBlockState().getProperties().stream().anyMatch(p -> p.getName().equals("color")),
                     "Colored fixture must have a real color state: "+entry.getKey());
-            var stack=gregtech.block.misc.ConcreteBlock.coloredItem(block,color);
+            var stack=gregtech.content.block.misc.ConcreteBlock.coloredItem(block,color);
             String key="block.gt6ce."+entry.getKey()+"."+color.getName();
             String actual=stack.getHoverName().getString();
             String expected=original(key);
@@ -449,7 +449,7 @@ final class LanguageDeliveryChecks {
 //? if >=1.21.1 {
             /*data.putString("id","gt6ce:metal_chest");stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(data));
 *///?} else {
-            net.minecraft.world.item.BlockItem.setBlockEntityData(stack,gregtech.registry.GTBlockEntities.METAL_CHEST.get(),data);
+            net.minecraft.world.item.BlockItem.setBlockEntityData(stack,gregtech.content.registry.GTBlockEntities.METAL_CHEST.get(),data);
 //?}
             require(tooltip(stack).stream().noneMatch(c -> c.getString().startsWith("Contains Loot of ")),"Consumed chest does not advertise unrolled loot "+entry);
             checked++;
@@ -461,9 +461,9 @@ final class LanguageDeliveryChecks {
 //? if >=1.21.1 {
         /*for(var registered:BuiltInRegistries.ITEM)if(registered instanceof gregtech.platform.neoforge.fluid.FluidDisplayItem fluidItem) {
 *///?} else {
-        for(var registered:BuiltInRegistries.ITEM)if(registered instanceof gregtech.item.FluidItem fluidItem) {
+        for(var registered:BuiltInRegistries.ITEM)if(registered instanceof gregtech.content.item.FluidItem fluidItem) {
 //?}
-            String key="fluid_type.gt6ce."+gregtech.data.FluidCatalog.sanitizePath(fluidItem.fluidEntry().registryName());
+            String key="fluid_type.gt6ce."+gregtech.content.data.FluidCatalog.sanitizePath(fluidItem.fluidEntry().registryName());
             if(!Language.getInstance().has(key))continue;
             var stack=new ItemStack(registered);
             require(stack.getHoverName().getString().equals(original(key)),"Installed declared fluid name "+key);
@@ -517,7 +517,7 @@ final class LanguageDeliveryChecks {
         for(var family:gregtech.content.energy.SignalWireCatalog.families()) {
             ids.add("wire_01_"+family.name());ids.add("cable_01_"+family.name());
         }
-        for(var icon:gregtech.block.SpecialOreDefinitions.ORDERED_ICONS)
+        for(var icon:gregtech.content.block.SpecialOreDefinitions.ORDERED_ICONS)
             ids.add(icon.startsWith("ore_")?"block_"+icon:icon);
         for(String tier:new String[]{"lv","mv","hv","ev","iv"})
             for(String family:new String[]{"co2_laser","flux_laser","laser_absorber"})ids.add(family+"_"+tier);
@@ -580,7 +580,7 @@ final class LanguageDeliveryChecks {
             String id="integrated_circuit_"+configuration;verifySourceTechnology(id,"gt.integrated_circuit",chinese);
             var stack=item(id);String expected=original("gt.integrated_circuit.configuration")+"== "+configuration;
             require(tooltip(stack).stream().filter(c -> c.getString().equals(expected)).count()==1,"Selector configuration appears once "+id);
-            require(stack.getItem() instanceof gregtech.item.SelectorTagItem tag && tag.isCatalyst(),"Selector keeps recipe catalyst identity");
+            require(stack.getItem() instanceof gregtech.content.item.SelectorTagItem tag && tag.isCatalyst(),"Selector keeps recipe catalyst identity");
             count++;
         }
         require(count==86,"Complete source-bound technology and dye bottle catalog");return count;
@@ -588,7 +588,7 @@ final class LanguageDeliveryChecks {
     private static int verifyCoins(boolean chinese) {
         String expected=original("item.gt6ce.coin");int count=0;
         if(chinese)require(expected.equals(original("gt.multitileentity.32700")),"Original coin family name");
-        for(var registered:BuiltInRegistries.ITEM)if(registered instanceof gregtech.item.CoinItem coin) {
+        for(var registered:BuiltInRegistries.ITEM)if(registered instanceof gregtech.content.item.CoinItem coin) {
             var stack=new ItemStack(registered);
             require(stack.getHoverName().getString().equals(expected),"Original coin name "+BuiltInRegistries.ITEM.getKey(registered));
             String material=gregtech.internal.material.MaterialPresentation.name(coin.getMaterial()).getString();
@@ -630,11 +630,11 @@ final class LanguageDeliveryChecks {
     }
 
     private static String materialSourceKey(ItemStack stack) {
-        if(stack.getItem() instanceof gregtech.item.CoinItem)return "gt.multitileentity.32700";
+        if(stack.getItem() instanceof gregtech.content.item.CoinItem)return "gt.multitileentity.32700";
         if(stack.getItem() instanceof gregtech.internal.material.MaterialFormItem form)
             return gregtech.internal.prefix.PrefixRegistry.sourceTranslationKey(form.getPrefix().getName(),form.getMaterial().getName());
         if(stack.getItem() instanceof BlockItem blockItem
-                && blockItem.getBlock() instanceof gregtech.block.MaterialBlockLike form)
+                && blockItem.getBlock() instanceof gregtech.content.block.MaterialBlockLike form)
             return gregtech.internal.prefix.PrefixRegistry.sourceTranslationKey(form.prefix().getName(),form.material().getName());
         return null;
     }
@@ -685,9 +685,9 @@ final class LanguageDeliveryChecks {
                 "granite","diorite","andesite","komatiite","greenschist","blueschist",
                 "kimberlite","quartzite","prismarine.light","prismarine.dark","slate","shale");
         int count=0;
-        for(var stone:gregtech.block.stone.StoneType.values()) {
+        for(var stone:gregtech.content.block.stone.StoneType.values()) {
             if(!sources.contains(stone.textureFolder().substring("gt.stone.".length())))continue;
-            for(var variant:gregtech.block.stone.StoneVariant.values())for(boolean slab:new boolean[]{false,true}) {
+            for(var variant:gregtech.content.block.stone.StoneVariant.values())for(boolean slab:new boolean[]{false,true}) {
                 String id=stone.registryId()+"_"+variant.registrySuffix()+(slab?"_slab":"");
                 var stack=item(id);
                 String expected=original("block.gt6ce."+id);
@@ -704,11 +704,11 @@ final class LanguageDeliveryChecks {
     private static int verifyBushes(boolean chinese) {
         String expected=original("block.gt6ce.bush");
         if(chinese)require(expected.equals(original("gt.multitileentity.32759")),"Original bush family name");
-        var blocks=gregtech.registry.GTBushes.allBlocks();
+        var blocks=gregtech.content.registry.GTBushes.allBlocks();
         require(blocks.length==10+gregtech.content.plant.MaterialBerryBushCatalog.variants().size(),
                 "Complete unplanted/food/cotton/material bush catalog");
         for(var block:blocks) {
-            var bush=(gregtech.block.plant.BushBlock)block;
+            var bush=(gregtech.content.block.plant.BushBlock)block;
             var stack=new ItemStack(block);
             require(stack.getHoverName().getString().equals(expected)&&block.getName().getString().equals(expected),
                     "Bush keeps original family name "+bush.berryId());
@@ -730,12 +730,12 @@ final class LanguageDeliveryChecks {
         var mismatches=new ArrayList<String>();
         for(var registered:BuiltInRegistries.ITEM) {
 //? if >=1.21.1 {
-            /*if(!(registered instanceof gregtech.block.machine.ItemPipeBlockItem)
+            /*if(!(registered instanceof gregtech.content.block.machine.ItemPipeBlockItem)
                     && !(registered instanceof gregtech.content.transport.fluid.FluidTransportBlockItem)
 *///?} else {
-            if(!(registered instanceof gregtech.block.machine.GTMachineBlockItem)
+            if(!(registered instanceof gregtech.content.block.machine.GTMachineBlockItem)
 //?}
-                    && !(registered instanceof gregtech.item.BookShelfBlockItem))continue;
+                    && !(registered instanceof gregtech.content.item.BookShelfBlockItem))continue;
             var stack=new ItemStack(registered);
             String key=stack.getDescriptionId(),actual=stack.getHoverName().getString();
             if(!Language.getInstance().has(key)||!actual.equals(Component.translatable(key).getString()))

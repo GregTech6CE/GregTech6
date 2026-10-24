@@ -3,8 +3,8 @@ package gregtech.integration.client;
 import com.google.gson.JsonObject;
 import gregtech.internal.fluid.*;
 import gregtech.internal.material.ItemMaterialRegistry;
-import gregtech.block.machine.TankControllerBlock;
-import gregtech.blockentity.machine.MultiblockTankControllerBlockEntity;
+import gregtech.content.block.machine.TankControllerBlock;
+import gregtech.content.blockentity.machine.MultiblockTankControllerBlockEntity;
 import gregtech.client.CommonBlockTooltips;
 import gregtech.content.multiblock.OriginalTankTooltipData;
 import net.minecraft.core.BlockPos;
@@ -55,7 +55,7 @@ final class MultiblockTankDeliveryChecks {
                 boolean gas=sample==2, hasFluid=sample!=5;
                 long amount=switch(sample) {case 0->2500;case 1->0;case 2->5000;case 3->capacity+12345;case 4->3500000000L;default->0;};
                 var savedTank=new FluidTankGT(999999999L);
-                var fluid=gas?gregtech.registry.GTFluids.stack("Steam",1).getFluid():Fluids.WATER;
+                var fluid=gas?gregtech.content.registry.GTFluids.stack("Steam",1).getFluid():Fluids.WATER;
 //? if >=1.21.1 {
                 /*if(hasFluid) savedTank.setFluid(new net.neoforged.neoforge.fluids.FluidStack(fluid,1),amount);
                 var data=new CompoundTag();var nested=new CompoundTag();savedTank.writeToNBT(nested,net.minecraft.core.RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY));

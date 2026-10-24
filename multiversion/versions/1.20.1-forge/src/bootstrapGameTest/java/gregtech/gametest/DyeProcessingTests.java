@@ -2,7 +2,7 @@ package gregtech.gametest;
 
 import gregtech.internal.recipe.RecipeInputs;
 import gregtech.content.recipe.DyeProcessingRecipes;
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.data.MachineRecipeMaps;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.item.*;
 import net.minecraftforge.gametest.*;

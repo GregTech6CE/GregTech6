@@ -2,12 +2,13 @@ package gregtech.gametest;
 
 import gregtech.api.machine.*;
 import gregtech.internal.machine.*;
+import gregtech.internal.machine.*;
 import gregtech.internal.tool.*;
-import gregtech.block.machine.*;
-import gregtech.blockentity.machine.*;
+import gregtech.content.block.machine.*;
+import gregtech.content.blockentity.machine.*;
 import gregtech.content.material.Materials;
-import gregtech.data.*;
-import gregtech.registry.*;
+import gregtech.content.data.*;
+import gregtech.content.registry.*;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.*;

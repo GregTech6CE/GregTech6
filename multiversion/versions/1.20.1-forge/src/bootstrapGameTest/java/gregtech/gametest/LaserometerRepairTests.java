@@ -1,13 +1,13 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.block.energy.LaserConverterBlock;
-import gregtech.block.energy.LaserFiberBlock;
-import gregtech.blockentity.energy.LaserFiberBlockEntity;
-import gregtech.blockentity.sensor.SensorBlockEntity;
-import gregtech.data.GregTechTags;
-import gregtech.registry.GTBlockEntities;
-import gregtech.registry.GTLasers;
+import gregtech.content.block.energy.LaserConverterBlock;
+import gregtech.content.block.energy.LaserFiberBlock;
+import gregtech.content.blockentity.energy.LaserFiberBlockEntity;
+import gregtech.content.blockentity.sensor.SensorBlockEntity;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTLasers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

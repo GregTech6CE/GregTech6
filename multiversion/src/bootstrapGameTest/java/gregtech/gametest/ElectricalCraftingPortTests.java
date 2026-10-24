@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.block.energy.EnergyNodeBlock;
-import gregtech.blockentity.energy.EnergyNodeBlockEntity;
+import gregtech.content.block.energy.EnergyNodeBlock;
+import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
 import gregtech.content.recipe.ElectricalCraftingRules;
-import gregtech.data.MachineRecipeIngredients;
-import gregtech.data.GregTechTags;
+import gregtech.content.data.MachineRecipeIngredients;
+import gregtech.content.data.GregTechTags;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.*;
 import net.minecraft.resources.ResourceLocation;

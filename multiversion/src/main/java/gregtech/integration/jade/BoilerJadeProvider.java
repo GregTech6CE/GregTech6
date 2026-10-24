@@ -1,8 +1,8 @@
 package gregtech.integration.jade;
 
 import gregtech.internal.machine.BoilerSpec;
-import gregtech.block.machine.BoilerTankBlock;
-import gregtech.blockentity.machine.BoilerTankBlockEntity;
+import gregtech.content.block.machine.BoilerTankBlock;
+import gregtech.content.blockentity.machine.BoilerTankBlockEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;

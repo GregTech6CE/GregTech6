@@ -3,7 +3,7 @@ package gregtech.content.material.generated;
 import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.MaterialProperty;
 import gregtech.internal.material.MaterialTextureSet;
-import gregtech.data.GregTechConstants;
+import gregtech.content.data.GregTechConstants;
 import static gregtech.internal.material.MaterialFactories.*;
 
 /** Generated from GT6 material definitions. Regenerate with tools/transpile_gt6_materials.py. */

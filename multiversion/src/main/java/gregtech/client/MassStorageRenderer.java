@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.blockentity.inventory.MassStorageBlockEntity;
+import gregtech.content.blockentity.inventory.MassStorageBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
@@ -41,9 +41,9 @@ public final class MassStorageRenderer<T extends MassStorageBlockEntity> impleme
                 light, packedOverlay, ps, buffer, be.getLevel(), 0);
         ps.popPose();
 
-        int numeralColor = be instanceof gregtech.blockentity.inventory.LogisticsMassStorageBlockEntity
+        int numeralColor = be instanceof gregtech.content.blockentity.inventory.LogisticsMassStorageBlockEntity
                 ? 0x00FFFF : 0xFFFFFF;
-        var digits = state.getBlock() instanceof gregtech.block.inventory.ItemBarrelBlock
+        var digits = state.getBlock() instanceof gregtech.content.block.inventory.ItemBarrelBlock
                 ? gregtech.internal.sensor.SixCellDisplay.barrel(be.stored(), be.baseCapacity())
                 : gregtech.internal.sensor.SixCellDisplay.storage(be.stored(), be.baseCapacity(), numeralColor);
         SixCellDisplayRenderer.draw(digits, ps, buffer, light);

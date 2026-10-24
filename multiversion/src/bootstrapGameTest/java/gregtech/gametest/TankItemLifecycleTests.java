@@ -3,9 +3,9 @@ package gregtech.gametest;
 import gregtech.internal.material.ItemMaterialRegistry;
 import gregtech.internal.machine.crucible.CrucibleItemInput;
 import gregtech.internal.recipe.RecipeInputs;
-import gregtech.block.machine.TankBlock;
-import gregtech.blockentity.machine.TankBlockEntity;
-import gregtech.blockentity.machine.LogisticsTankBlockEntity;
+import gregtech.content.block.machine.TankBlock;
+import gregtech.content.blockentity.machine.TankBlockEntity;
+import gregtech.content.blockentity.machine.LogisticsTankBlockEntity;
 import gregtech.content.cover.MachineCoverSpec;
 import gregtech.content.cover.PanelCover;
 import gregtech.content.recipe.VanillaRecoveryRecipes;
@@ -203,7 +203,7 @@ public final class TankItemLifecycleTests {
         h.assertTrue(ItemMaterialRegistry.hasStoredContents(drop), "empty but configured tank stays data-bearing");
         checkRecovery(h, drop, false);
 
-        var logisticsBlock = BuiltInRegistries.BLOCK.stream().filter(b -> b instanceof gregtech.block.machine.LogisticsTankBlock).findFirst().orElseThrow();
+        var logisticsBlock = BuiltInRegistries.BLOCK.stream().filter(b -> b instanceof gregtech.content.block.machine.LogisticsTankBlock).findFirst().orElseThrow();
         var logistics = (LogisticsTankBlockEntity) place(h, p, pos, new ItemStack(logisticsBlock));
         logistics.getFluidTank().fill(new FluidStack(Fluids.WATER, 1000), FluidAction.EXECUTE);
         h.assertTrue(logistics.getFluidTank().drain(1000, FluidAction.EXECUTE).getAmount() == 1000, "logistics barrel drains all contents");

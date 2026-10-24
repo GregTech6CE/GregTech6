@@ -12,17 +12,17 @@ import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
 import gregtech.internal.material.MaterialProperty;
 import gregtech.internal.recipe.Recipe;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.data.MaterialPrefix;
-import gregtech.data.generated.MaterialWorkability;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.data.generated.MaterialWorkability;
 //? if >=1.21.1 {
 /*import gregtech.content.transport.fluid.FluidTransportRegistries;
 *///?} else {
-import gregtech.registry.GTFluidPipes;
+import gregtech.content.registry.GTFluidPipes;
 //?}
-import gregtech.registry.GTItemPipes;
-import gregtech.registry.GTItems;
-import gregtech.registry.GTTechnological;
+import gregtech.content.registry.GTItemPipes;
+import gregtech.content.registry.GTItems;
+import gregtech.content.registry.GTTechnological;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
@@ -94,7 +94,7 @@ public final class PipeRecipes {
             fluid.computeIfAbsent(spec.material().getName(), k -> new HashMap<>())
                     .put(spec.size(), new ItemStack(holder.get().asItem()));
         }
-        for (var block : gregtech.registry.AddonPipeRegistration.fluidBlocks()) {
+        for (var block : gregtech.content.registry.AddonPipeRegistration.fluidBlocks()) {
             PipeSpec spec = block.spec();
             fluid.computeIfAbsent(spec.material().getName(), k -> new HashMap<>())
                     .putIfAbsent(spec.size(), new ItemStack(block.asItem()));
@@ -110,7 +110,7 @@ public final class PipeRecipes {
             item.computeIfAbsent(spec.material().getName(), k -> new HashMap<>())
                     .put(spec.size(), new ItemStack(holder.get().asItem()));
         }
-        for (var block : gregtech.registry.AddonPipeRegistration.itemBlocks()) {
+        for (var block : gregtech.content.registry.AddonPipeRegistration.itemBlocks()) {
             ItemPipeSpec spec = block.spec();
             item.computeIfAbsent(spec.material().getName(), k -> new HashMap<>())
                     .putIfAbsent(spec.size(), new ItemStack(block.asItem()));

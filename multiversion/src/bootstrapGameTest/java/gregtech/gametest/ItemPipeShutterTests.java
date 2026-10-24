@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
-import gregtech.block.machine.HopperBlock;
-import gregtech.block.machine.ItemPipeBlock;
-import gregtech.blockentity.machine.HopperBlockEntity;
-import gregtech.blockentity.machine.ItemPipeBlockEntity;
+import gregtech.content.block.machine.HopperBlock;
+import gregtech.content.block.machine.ItemPipeBlock;
+import gregtech.content.blockentity.machine.HopperBlockEntity;
+import gregtech.content.blockentity.machine.ItemPipeBlockEntity;
 import gregtech.content.cover.PanelCover;
-import gregtech.registry.GTTechnological;
+import gregtech.content.registry.GTTechnological;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;

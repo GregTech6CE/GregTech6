@@ -1,8 +1,8 @@
 package gregtech.gametest;
-import gregtech.block.energy.*;
-import gregtech.blockentity.energy.EnergyNodeBlockEntity;
+import gregtech.content.block.energy.*;
+import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
 import gregtech.content.cover.*;
-import gregtech.registry.*;
+import gregtech.content.registry.*;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.item.ItemStack;
@@ -57,7 +57,7 @@ public final class BatteryBoxPanelTests {
         be.panels().afterTick();h.assertTrue(be.panels().signal(Direction.NORTH)==0,"empty emits zero");
         var battery=GTChemicalBatteries.all().stream().map(net.minecraftforge.registries.RegistryObject::get)
                 .filter(b->b.spec().id().equals("battery_lead_acid_lv")).findFirst().orElseThrow();
-        var stack=new ItemStack(battery);((gregtech.item.ChemicalBatteryItem)stack.getItem()).setCharge(stack,64000);
+        var stack=new ItemStack(battery);((gregtech.content.item.ChemicalBatteryItem)stack.getItem()).setCharge(stack,64000);
         be.installBattery(stack);be.panels().afterTick();
         var state=be.getBlockState();var pos=be.getBlockPos();
         h.assertTrue(state.getSignal(h.getLevel(),pos,Direction.SOUTH)==15,"full battery signal reaches block redstone query on physical north face");

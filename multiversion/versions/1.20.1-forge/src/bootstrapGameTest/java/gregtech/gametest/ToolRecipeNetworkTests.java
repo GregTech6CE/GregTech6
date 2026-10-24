@@ -2,7 +2,7 @@ package gregtech.gametest;
 
 import gregtech.GregTech;
 import gregtech.internal.tool.GTToolType;
-import gregtech.recipe.*;
+import gregtech.content.recipe.*;
 import com.google.gson.JsonObject;
 import io.netty.buffer.Unpooled;
 import net.minecraft.gametest.framework.GameTest;

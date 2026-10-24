@@ -2,8 +2,8 @@ package gregtech.bootstrap.registration;
 
 import gregtech.content.creative.*;
 import gregtech.internal.material.MaterialFormItem;
-import gregtech.block.MaterialBlockLike;
-import gregtech.item.*;
+import gregtech.content.block.MaterialBlockLike;
+import gregtech.content.item.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.*;
 import java.util.*;
@@ -22,7 +22,7 @@ public final class OriginCreativeContents {
         if(item instanceof ColoredBookItem || id.equals("dusty_guide_book") || id.equals("dusty_material_dictionary"))return "books";
         if(item instanceof GTToolItem) return "tools";
         if(item instanceof ElectricToolItem) return "tools";
-        if(item instanceof gregtech.item.PanelItemView) return "panels";
+        if(item instanceof gregtech.content.item.PanelItemView) return "panels";
         if(item instanceof ChemicalBatteryItem) return "batteries";
         // Shapes are accessories, even when their translated name matches "Extruder".
         if(id.startsWith("extruder_shape_") || id.startsWith("low_heat_extruder_shape_")) return "molds";
@@ -30,7 +30,7 @@ public final class OriginCreativeContents {
 //? if >=1.21.1 {
 /*        if(item instanceof gregtech.platform.neoforge.fluid.FluidDisplayItem) return "fluids";
 *///?} else {
-        if(item instanceof gregtech.item.FluidItem) return "fluids";
+        if(item instanceof gregtech.content.item.FluidItem) return "fluids";
 //?}
 
         if(item instanceof BlockItem b) {
@@ -101,39 +101,39 @@ public final class OriginCreativeContents {
 //? if >=1.21.1 {
 /*            var itemId = BuiltInRegistries.ITEM.getKey(item);
             boolean addonMachine = item instanceof BlockItem blockItem
-                    && (blockItem.getBlock() instanceof gregtech.block.machine.BasicMachineBlock machine
+                    && (blockItem.getBlock() instanceof gregtech.content.block.machine.BasicMachineBlock machine
                     && !"gt6ce".equals(machine.basicSpec().namespace())
-                    || blockItem.getBlock() instanceof gregtech.block.machine.BehaviorMachineBlock behavior
+                    || blockItem.getBlock() instanceof gregtech.content.block.machine.BehaviorMachineBlock behavior
                     && !"gt6ce".equals(behavior.accepted().addonId()));
             boolean addonPipe = item instanceof BlockItem pipeItem
-                    && (pipeItem.getBlock() instanceof gregtech.block.machine.FluidPipeBlock
-                    || pipeItem.getBlock() instanceof gregtech.block.machine.ItemPipeBlock);
+                    && (pipeItem.getBlock() instanceof gregtech.content.block.machine.FluidPipeBlock
+                    || pipeItem.getBlock() instanceof gregtech.content.block.machine.ItemPipeBlock);
             boolean addonPart = item instanceof BlockItem partItem
-                    && (partItem.getBlock() instanceof gregtech.block.machine.MultiblockPortBlock
-                    || partItem.getBlock() instanceof gregtech.block.machine.AddonEnergyPartBlock
-                    || partItem.getBlock() instanceof gregtech.block.machine.AddonFunctionalPartBlock);
+                    && (partItem.getBlock() instanceof gregtech.content.block.machine.MultiblockPortBlock
+                    || partItem.getBlock() instanceof gregtech.content.block.machine.AddonEnergyPartBlock
+                    || partItem.getBlock() instanceof gregtech.content.block.machine.AddonFunctionalPartBlock);
             boolean addonDrum = item instanceof BlockItem drumItem
-                    && drumItem.getBlock() instanceof gregtech.block.machine.CompressedGasTankBlock;
+                    && drumItem.getBlock() instanceof gregtech.content.block.machine.CompressedGasTankBlock;
             boolean addonFluid = item instanceof gregtech.platform.neoforge.fluid.FluidDisplayItem;
             if ((!itemId.getNamespace().equals("gt6ce") && !addonMachine && !addonPipe && !addonPart && !addonDrum && !addonFluid)
                     || item instanceof MaterialFormItem && !(item instanceof EnergyCrystalItem) || item instanceof CreativeTabIconItem) continue;
 *///?} else {
             var itemId = BuiltInRegistries.ITEM.getKey(item);
             boolean addonMachine = item instanceof BlockItem blockItem
-                    && (blockItem.getBlock() instanceof gregtech.block.machine.BasicMachineBlock machine
+                    && (blockItem.getBlock() instanceof gregtech.content.block.machine.BasicMachineBlock machine
                     && !"gt6ce".equals(machine.basicSpec().namespace())
-                    || blockItem.getBlock() instanceof gregtech.block.machine.BehaviorMachineBlock behavior
+                    || blockItem.getBlock() instanceof gregtech.content.block.machine.BehaviorMachineBlock behavior
                     && !"gt6ce".equals(behavior.accepted().addonId()));
             boolean addonPipe = item instanceof BlockItem pipeItem
-                    && (pipeItem.getBlock() instanceof gregtech.block.machine.FluidPipeBlock
-                    || pipeItem.getBlock() instanceof gregtech.block.machine.ItemPipeBlock);
+                    && (pipeItem.getBlock() instanceof gregtech.content.block.machine.FluidPipeBlock
+                    || pipeItem.getBlock() instanceof gregtech.content.block.machine.ItemPipeBlock);
             boolean addonPart = item instanceof BlockItem partItem
-                    && (partItem.getBlock() instanceof gregtech.block.machine.MultiblockPortBlock
-                    || partItem.getBlock() instanceof gregtech.block.machine.AddonEnergyPartBlock
-                    || partItem.getBlock() instanceof gregtech.block.machine.AddonFunctionalPartBlock);
+                    && (partItem.getBlock() instanceof gregtech.content.block.machine.MultiblockPortBlock
+                    || partItem.getBlock() instanceof gregtech.content.block.machine.AddonEnergyPartBlock
+                    || partItem.getBlock() instanceof gregtech.content.block.machine.AddonFunctionalPartBlock);
             boolean addonDrum = item instanceof BlockItem drumItem
-                    && drumItem.getBlock() instanceof gregtech.block.machine.CompressedGasTankBlock;
-            boolean addonFluid = item instanceof gregtech.item.FluidItem;
+                    && drumItem.getBlock() instanceof gregtech.content.block.machine.CompressedGasTankBlock;
+            boolean addonFluid = item instanceof gregtech.content.item.FluidItem;
             if((!itemId.getNamespace().equals("gt6ce") && !addonMachine && !addonPipe && !addonPart && !addonDrum && !addonFluid)||item instanceof MaterialFormItem && !(item instanceof EnergyCrystalItem)||item instanceof CreativeTabIconItem)continue;
 //?}
             if(item instanceof BlockItem b && b.getBlock() instanceof MaterialBlockLike)continue;
@@ -142,7 +142,7 @@ public final class OriginCreativeContents {
 //? if >=1.21.1 {
 /*            if(item instanceof gregtech.platform.neoforge.fluid.FluidDisplayItem fluid && fluid.fluidEntry().isHidden())continue;
 *///?} else {
-            if(item instanceof gregtech.item.FluidItem fluid && fluid.fluidEntry().isHidden())continue;
+            if(item instanceof gregtech.content.item.FluidItem fluid && fluid.fluidEntry().isHidden())continue;
 //?}
 
             if (item instanceof CannedFoodItem can && can.spec().hidden()) continue;
@@ -154,33 +154,33 @@ public final class OriginCreativeContents {
             // Original canvas loop immediately precedes Magic Research Paper (MultiItemRandomTools:443-452).
             if(item instanceof CanvasItem)return SourceCreativeCatalog.entry("magic_research_paper_introduction").order();
             if(item instanceof ColoredBookItem book)return book.variant().originalId();
-            if(item instanceof gregtech.item.PanelItemView panel)return panel.panelSpec().order();
+            if(item instanceof gregtech.content.item.PanelItemView panel)return panel.panelSpec().order();
             if(item instanceof GTToolItem tool)return tool.toolType().gt6Id();
             var source=SourceCreativeCatalog.entry(BuiltInRegistries.ITEM.getKey(item).getPath());
             return source==null?Integer.MAX_VALUE:source.order();
         }).thenComparingInt(item->item instanceof CanvasItem canvas?canvas.variant().originalId():Integer.MAX_VALUE).thenComparing(item->BuiltInRegistries.ITEM.getKey(item).getPath()));
         for(var item:items) {
-            if (item instanceof BlockItem construction && gregtech.registry.GTConstructionVariants.legacy(construction.getBlock())) continue;
-            if(item instanceof gregtech.item.PanelItemView panel&&!panel.panelSpec().canonical())continue;
+            if (item instanceof BlockItem construction && gregtech.content.registry.GTConstructionVariants.legacy(construction.getBlock())) continue;
+            if(item instanceof gregtech.content.item.PanelItemView panel&&!panel.panelSpec().canonical())continue;
             var page=result.get(family(item));
             if(item instanceof GTToolItem tool) {
                 var type=tool.toolType(); var head=type==gregtech.internal.tool.GTToolType.GEM_PICK?gregtech.content.material.Materials.Diamond:gregtech.content.material.Materials.Steel;
                 page.add(GTToolItem.create(type,head,type.requiresHeadAssembly()?gregtech.content.material.generated.WoodMaterials.Wood:head));
             } else if(item instanceof ElectricToolItem electric) {
-                page.add(electric.assembled(gregtech.content.material.Materials.Steel,electric.getEnergyCapacity(new ItemStack(item),gregtech.data.GregTechTags.Energy.EU)));
+                page.add(electric.assembled(gregtech.content.material.Materials.Steel,electric.getEnergyCapacity(new ItemStack(item),gregtech.content.data.GregTechTags.Energy.EU)));
             } else if(item instanceof ChemicalBatteryItem battery) {
                 page.add(new ItemStack(item));var charged=new ItemStack(item);battery.setCharge(charged,battery.spec().capacity());page.add(charged);
-            } else if (item instanceof gregtech.item.SpikeBlockItem spikeItem) {
-                var block = (gregtech.block.misc.SpikeBlock) spikeItem.getBlock();
+            } else if (item instanceof gregtech.content.item.SpikeBlockItem spikeItem) {
+                var block = (gregtech.content.block.misc.SpikeBlock) spikeItem.getBlock();
                 for (boolean secondary : new boolean[]{false, true})
-                    for (var mode : gregtech.block.misc.SpikeBlock.Mode.values())
-                        page.add(gregtech.item.SpikeBlockItem.variant(block, mode, secondary));
-            } else if(item instanceof BlockItem b && b.getBlock() instanceof gregtech.block.misc.FixedConstructionColor) {
+                    for (var mode : gregtech.content.block.misc.SpikeBlock.Mode.values())
+                        page.add(gregtech.content.item.SpikeBlockItem.variant(block, mode, secondary));
+            } else if(item instanceof BlockItem b && b.getBlock() instanceof gregtech.content.block.misc.FixedConstructionColor) {
                 page.add(new ItemStack(item));
-            } else if(item instanceof BlockItem b && (b.getBlock() instanceof gregtech.block.misc.ConcreteBlock||b.getBlock() instanceof gregtech.block.misc.ColoredConstructionBlock)) {
-                for(int meta=0;meta<16;meta++)page.add(gregtech.block.misc.ConcreteBlock.coloredItem(b.getBlock(),DyeColor.byId(15-meta)));
-            } else if(item instanceof BlockItem b && b.getBlock() instanceof gregtech.block.misc.ColoredGlassBlock) {
-                for(int meta=0;meta<16;meta++)page.add(gregtech.block.misc.ColoredGlassBlock.coloredItem(b.getBlock(),DyeColor.byId(15-meta)));
+            } else if(item instanceof BlockItem b && (b.getBlock() instanceof gregtech.content.block.misc.ConcreteBlock||b.getBlock() instanceof gregtech.content.block.misc.ColoredConstructionBlock)) {
+                for(int meta=0;meta<16;meta++)page.add(gregtech.content.block.misc.ConcreteBlock.coloredItem(b.getBlock(),DyeColor.byId(15-meta)));
+            } else if(item instanceof BlockItem b && b.getBlock() instanceof gregtech.content.block.misc.ColoredGlassBlock) {
+                for(int meta=0;meta<16;meta++)page.add(gregtech.content.block.misc.ColoredGlassBlock.coloredItem(b.getBlock(),DyeColor.byId(15-meta)));
             } else if(BuiltInRegistries.ITEM.getKey(item).getPath().equals("zpm_module"))page.add(gregtech.content.energy.ZpmEnergy.charged());
             else page.add(new ItemStack(item));
         }

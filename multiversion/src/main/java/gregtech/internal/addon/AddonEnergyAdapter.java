@@ -2,7 +2,7 @@ package gregtech.internal.addon;
 
 import gregtech.api.addon.platform.EnergyBlock;
 import gregtech.internal.energy.IEnergyBlock;
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 import net.minecraft.core.Direction;
 
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
 package gregtech.internal.multiblock.tracking;
 
-import gregtech.blockentity.machine.BehaviorMachineBlockEntity;
-import gregtech.blockentity.machine.LargeRecipeMachineBlockEntity;
+import gregtech.content.blockentity.machine.BehaviorMachineBlockEntity;
+import gregtech.content.blockentity.machine.LargeRecipeMachineBlockEntity;
 import gregtech.content.multiblock.LargeMachineLayouts;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

@@ -21,7 +21,7 @@ import gregtech.internal.material.GTMaterial;
 //?}
 
 import gregtech.internal.material.MaterialChemistry.WeightedMaterial;
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.data.MachineRecipeMaps;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 

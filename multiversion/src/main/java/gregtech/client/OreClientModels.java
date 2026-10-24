@@ -6,8 +6,8 @@ package gregtech.client;
 import gregtech.GregTech;
 //?}
 import gregtech.internal.material.MaterialTextureSet;
-import gregtech.block.OreBlock;
-import gregtech.registry.GTBlocks;
+import gregtech.content.block.OreBlock;
+import gregtech.content.registry.GTBlocks;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.BlockModelShaper;

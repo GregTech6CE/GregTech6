@@ -1,6 +1,6 @@
 package gregtech.content.food;
 
-import gregtech.data.generated.GTBottlesGen;
+import gregtech.content.data.generated.GTBottlesGen;
 
 import java.util.LinkedHashMap;
 import java.util.List;

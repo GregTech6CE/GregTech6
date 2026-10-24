@@ -8,10 +8,10 @@ import gregtech.api.material.*;
 import gregtech.internal.material.*;
 import gregtech.internal.tool.*;
 import gregtech.content.material.Materials;
-import gregtech.data.MaterialPrefix;
-import gregtech.item.ElectricToolItem;
-import gregtech.recipe.ToolShapedRecipe;
-import gregtech.registry.*;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.item.ElectricToolItem;
+import gregtech.content.recipe.ToolShapedRecipe;
+import gregtech.content.registry.*;
 import net.minecraft.core.NonNullList;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.resources.ResourceLocation;
@@ -55,8 +55,8 @@ public enum ElectricToolAssembly {
         return recipe(material,new ItemStack(battery),"/"+battery.spec().id());
     }
     public ToolShapedRecipe recipe(GTMaterial material,ItemStack battery,String suffix) {
-        if(!(battery.getItem() instanceof gregtech.item.ChemicalBatteryItem energy)
-                ||energy.spec().energyType()!=gregtech.data.GregTechTags.Energy.EU||energy.spec().tier()!=definition().tier())return null;
+        if(!(battery.getItem() instanceof gregtech.content.item.ChemicalBatteryItem energy)
+                ||energy.spec().energyType()!=gregtech.content.data.GregTechTags.Energy.EU||energy.spec().tier()!=definition().tier())return null;
         if (!validMaterial(material) || GTItems.getStack(head,material,1).isEmpty()) return null;
         var ingredients=NonNullList.withSize(9,Ingredient.EMPTY);
         for(int i=0;i<9;i++) {
@@ -66,11 +66,11 @@ public enum ElectricToolAssembly {
             ingredients.set(i,ingredient);
         }
         long capacity=energy.getEnergyCapacity(battery,
-                gregtech.data.GregTechTags.Energy.EU);
+                gregtech.content.data.GregTechTags.Energy.EU);
         var result=item().assembled(material,capacity);
 //? if >=1.21.1 {
         /*var key=ResourceLocation.fromNamespaceAndPath("gt6ce","electric_tools/"+id+"/"+material.getName().toLowerCase(Locale.ROOT)+suffix);
-        return new gregtech.recipe.PoweredToolAssemblyRecipe(new ShapedRecipe("gt6ce.electric_tools",
+        return new gregtech.content.recipe.PoweredToolAssemblyRecipe(new ShapedRecipe("gt6ce.electric_tools",
                 CraftingBookCategory.EQUIPMENT,new ShapedRecipePattern(3,3,ingredients,Optional.empty()),result),this,material,battery);
 *///?} else {
         var key=GregTech.id("electric_tools/"+id+"/"+material.getName().toLowerCase(Locale.ROOT)+suffix);

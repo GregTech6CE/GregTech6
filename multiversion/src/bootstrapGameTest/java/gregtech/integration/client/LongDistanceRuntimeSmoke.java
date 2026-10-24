@@ -1,7 +1,7 @@
 package gregtech.integration.client;
 
 import com.google.gson.*;
-import gregtech.block.misc.*;
+import gregtech.content.block.misc.*;
 import gregtech.content.logistics.LongDistanceCatalog;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -52,7 +52,7 @@ final class LongDistanceRuntimeSmoke {
             require(line.maximumTemperature()==spec.maximumTemperature()&&line.maximumVoltage()==spec.voltage(),"wrong native limits "+spec.id());
             if(spec.kind().equals("FLUID_PIPE"))require(gregtech.internal.material.GTMaterialRegistry.get(spec.material()).getMeltingPoint()==spec.maximumTemperature(),"source material melting value differs "+spec.id());
             require(gregtech.bootstrap.registration.OriginCreativeContents.family(b.asItem()).equals("long_distance_transport"),"wrong creative family "+spec.id());
-            require(gregtech.data.BlockHarvestPolicy.level(b)==3&&gregtech.data.BlockHarvestPolicy.tool(b)==(line.isWire()?gregtech.data.BlockHarvestPolicy.Tool.CUTTER:gregtech.data.BlockHarvestPolicy.Tool.WRENCH),"wrong source harvest "+spec.id());
+            require(gregtech.content.data.BlockHarvestPolicy.level(b)==3&&gregtech.content.data.BlockHarvestPolicy.tool(b)==(line.isWire()?gregtech.content.data.BlockHarvestPolicy.Tool.CUTTER:gregtech.content.data.BlockHarvestPolicy.Tool.WRENCH),"wrong source harvest "+spec.id());
             level.setBlock(start,b.defaultBlockState(),3);
             var loot=Block.getDrops(b.defaultBlockState(),level,start,null);
             require(loot.size()==1&&loot.get(0).is(b.asItem())&&loot.get(0).getCount()==1,"wrong typed block drop "+spec.id());drops++;typed++;
@@ -82,7 +82,7 @@ final class LongDistanceRuntimeSmoke {
                 var fluidRelay=fluids(level,start,facing);require(fluidRelay!=null&&fluidRelay.getTanks()>0,"fluid route absent "+spec.id());
                 FluidStack below=FluidStack.EMPTY,at=FluidStack.EMPTY,above=FluidStack.EMPTY;
                 for(var fluid:BuiltInRegistries.FLUID){
-                    var entry=gregtech.registry.GTFluids.entryForFluid(fluid);
+                    var entry=gregtech.content.registry.GTFluids.entryForFluid(fluid);
                     if(entry==null||!entry.registryName().toLowerCase(java.util.Locale.ROOT).contains("molten"))continue;
                     if(entry.temperature()<spec.maximumTemperature()&&below.isEmpty())below=new FluidStack(fluid,250);
                     if(entry.temperature()==spec.maximumTemperature())at=new FluidStack(fluid,250);
@@ -107,25 +107,25 @@ final class LongDistanceRuntimeSmoke {
             level.setBlock(start.relative(facing.getOpposite(),4),sender.defaultBlockState().setValue(LongDistanceTransformerBlock.FACING,facing),3);
             for(int i=1;i<=3;i++)level.setBlock(start.relative(facing.getOpposite(),i),block("long_dist_wire_ev").defaultBlockState(),3);
             var transformer=(LongDistanceTransformerBlockEntity)level.getBlockEntity(start);
-            require(transformer.doEnergyInjection(gregtech.data.GregTechTags.Energy.EU,facing,2048,3,false)==3,"homogeneous wire simulation blocked");
+            require(transformer.doEnergyInjection(gregtech.content.data.GregTechTags.Energy.EU,facing,2048,3,false)==3,"homogeneous wire simulation blocked");
             level.setBlock(middle,block("long_dist_wire_lead").defaultBlockState(),3);
-            require(transformer.doEnergyInjection(gregtech.data.GregTechTags.Energy.EU,facing,2048,3,false)==0,"tin and lead connected despite distinct source metadata");
+            require(transformer.doEnergyInjection(gregtech.content.data.GregTechTags.Energy.EU,facing,2048,3,false)==0,"tin and lead connected despite distinct source metadata");
             level.setBlock(middle,block("long_dist_wire_ev").defaultBlockState(),3);
-            require(transformer.doEnergyInjection(gregtech.data.GregTechTags.Energy.EU,facing,2048,3,false)==3,"wire route did not recover");
+            require(transformer.doEnergyInjection(gregtech.content.data.GregTechTags.Energy.EU,facing,2048,3,false)==3,"wire route did not recover");
             level.setBlock(middle.relative(facing.getAxis()==Direction.Axis.Y?Direction.EAST:Direction.UP),block("long_dist_wire_lead").defaultBlockState(),3);
-            require(transformer.doEnergyInjection(gregtech.data.GregTechTags.Energy.EU,facing,2048,3,false)==3,"unconnected material branch incorrectly breaks line");
+            require(transformer.doEnergyInjection(gregtech.content.data.GregTechTags.Energy.EU,facing,2048,3,false)==3,"unconnected material branch incorrectly breaks line");
             level.setBlock(middle.relative(facing.getAxis()==Direction.Axis.Y?Direction.EAST:Direction.UP),Blocks.AIR.defaultBlockState(),3);powerChecks+=4;
 
             var storage=start.relative(facing.getOpposite(),5);level.setBlock(storage,Blocks.AIR.defaultBlockState(),3);
-            level.setBlock(storage,block("battery_box_ev").defaultBlockState().setValue(gregtech.block.energy.EnergyNodeBlock.FACING,facing.getOpposite()),3);
-            var batteryBox=(gregtech.blockentity.energy.EnergyNodeBlockEntity)level.getBlockEntity(storage);
+            level.setBlock(storage,block("battery_box_ev").defaultBlockState().setValue(gregtech.content.block.energy.EnergyNodeBlock.FACING,facing.getOpposite()),3);
+            var batteryBox=(gregtech.content.blockentity.energy.EnergyNodeBlockEntity)level.getBlockEntity(storage);
             require(batteryBox.installBattery(new ItemStack(BuiltInRegistries.ITEM.get(id("battery_lithium_cobalt_ev")))),"actual EV battery installation");
             batteryBox.batteryEnergy().tick(level.getGameTime(),null,null);
-            require(transformer.doEnergyInjection(gregtech.data.GregTechTags.Energy.EU,facing,2048,2,false)==2&&batteryBox.stored()==0,"power simulation mutated real battery box");
-            require(transformer.doEnergyInjection(gregtech.data.GregTechTags.Energy.EU,facing,2048,2,true)==2&&batteryBox.stored()==3968,"actual positive packets or 64 EU loss differs");
-            require(transformer.doEnergyInjection(gregtech.data.GregTechTags.Energy.EU,facing,-2048,1,true)==1&&batteryBox.stored()==5952,"actual signed packet delivery differs");
+            require(transformer.doEnergyInjection(gregtech.content.data.GregTechTags.Energy.EU,facing,2048,2,false)==2&&batteryBox.stored()==0,"power simulation mutated real battery box");
+            require(transformer.doEnergyInjection(gregtech.content.data.GregTechTags.Energy.EU,facing,2048,2,true)==2&&batteryBox.stored()==3968,"actual positive packets or 64 EU loss differs");
+            require(transformer.doEnergyInjection(gregtech.content.data.GregTechTags.Energy.EU,facing,-2048,1,true)==1&&batteryBox.stored()==5952,"actual signed packet delivery differs");
             var control=gregtech.api.machine.MachineControl.find(transformer,null);require(control!=null,"source on/off interface missing");control.setEnabled(false);
-            require(transformer.doEnergyInjection(gregtech.data.GregTechTags.Energy.EU,facing,2048,1,true)==0&&batteryBox.stored()==5952,"disabled source transmits");
+            require(transformer.doEnergyInjection(gregtech.content.data.GregTechTags.Energy.EU,facing,2048,1,true)==0&&batteryBox.stored()==5952,"disabled source transmits");
             transformer.rescan();require(transformer.isStopped(),"soft reset toggles stopped state");control.setEnabled(true);
             transformer.tickActivity();require(level.getBlockState(start).getValue(LongDistanceTransformerBlock.ACTIVITY)==2,"real activity does not display blinking state");
             for(int tick=0;tick<64;tick++)transformer.tickActivity();require(level.getBlockState(start).getValue(LongDistanceTransformerBlock.ACTIVITY)==0,"64 inactive ticks do not clear display");
@@ -153,7 +153,7 @@ final class LongDistanceRuntimeSmoke {
         for(var name:ENDPOINTS){
             var b=block(name);var stack=new ItemStack(b);require(stack.getMaxStackSize()==16,"source endpoint stack limit "+name);
             var state=b.defaultBlockState();level.setBlock(pos,state,3);
-            var wrench=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.WRENCH,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Spruce"));
+            var wrench=gregtech.content.item.GTToolItem.create(gregtech.internal.tool.GTToolType.WRENCH,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Spruce"));
             actor.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,wrench);
             for(var direction:Direction.values()){
                 var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(pos),direction,pos,false);
@@ -171,7 +171,7 @@ final class LongDistanceRuntimeSmoke {
             }
             actor.setXRot(0);
             for(var type:java.util.List.of(gregtech.internal.tool.GTToolType.SOFT_HAMMER,gregtech.internal.tool.GTToolType.MAGNIFYING_GLASS)){
-                var tool=gregtech.item.GTToolItem.create(type,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Spruce"));actor.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,tool);
+                var tool=gregtech.content.item.GTToolItem.create(type,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Spruce"));actor.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,tool);
                 if(b instanceof LongDistEndpointBlock endpoint)endpoint.interact(state,level,pos,actor,net.minecraft.world.InteractionHand.MAIN_HAND,hit);else ((LongDistanceTransformerBlock)b).interact(state,level,pos,actor,net.minecraft.world.InteractionHand.MAIN_HAND,hit);
                 require(tool.getDamageValue()==(type==gregtech.internal.tool.GTToolType.SOFT_HAMMER?100:1),"wrong source tool-click cost "+name+" "+type);
                 var control=gregtech.api.machine.MachineControl.find(level.getBlockEntity(pos),null);require(control!=null&&control.enabled(),"soft reset toggles endpoint off "+name);
@@ -179,7 +179,7 @@ final class LongDistanceRuntimeSmoke {
             }
             var original=level.getBlockEntity(pos);gregtech.api.machine.MachineControl.find(original,null).setEnabled(false);
             if(original instanceof LongDistanceTransformerBlockEntity transformer){
-                transformer.setStopped(false);require(transformer.doEnergyInjection(gregtech.data.GregTechTags.Energy.EU,state.getValue(LongDistanceTransformerBlock.FACING),transformer.voltage()*3,1,true)==0&&level.getBlockState(pos).is(b),"unconnected source incorrectly overcharges "+name);transformer.setStopped(true);unconnected++;
+                transformer.setStopped(false);require(transformer.doEnergyInjection(gregtech.content.data.GregTechTags.Energy.EU,state.getValue(LongDistanceTransformerBlock.FACING),transformer.voltage()*3,1,true)==0&&level.getBlockState(pos).is(b),"unconnected source incorrectly overcharges "+name);transformer.setStopped(true);unconnected++;
             }
 //? if >=1.21.1 {
             /*var saved=original.saveWithFullMetadata(level.registryAccess());

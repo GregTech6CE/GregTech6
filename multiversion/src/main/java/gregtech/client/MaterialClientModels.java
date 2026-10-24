@@ -9,17 +9,17 @@ import gregtech.internal.material.MaterialTextureSet;
 /*import gregtech.internal.prefix.PrefixRegistry;
 *///?} else {
 //?}
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 //? if >=1.21.1 {
 //?} else {
 import gregtech.internal.prefix.PrefixRegistry;
 //?}
-import gregtech.item.MaterialItem;
+import gregtech.content.item.MaterialItem;
 //? if >=1.21.1 {
 //?} else {
-import gregtech.item.CoinItem;
+import gregtech.content.item.CoinItem;
 //?}
-import gregtech.registry.GTItems;
+import gregtech.content.registry.GTItems;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.resources.model.BakedModel;
 //? if >=1.21.1 {
@@ -98,7 +98,7 @@ public final class MaterialClientModels {
 
 //?}
         for (var entry : GTItems.allEntries()) {
-            if (entry.get() instanceof gregtech.item.EnergyCrystalItem) continue;
+            if (entry.get() instanceof gregtech.content.item.EnergyCrystalItem) continue;
 //? if >=1.21.1 {
             /*gregtech.internal.material.MaterialFormItem item = (gregtech.internal.material.MaterialFormItem) entry.get();
             if (item.getPrefix().isAddon()) continue;
@@ -106,7 +106,7 @@ public final class MaterialClientModels {
             if (model == null) {
                 missing++;
             } else {
-                models.put(ModelResourceLocation.inventory(entry.getId()),item instanceof gregtech.item.CoinItem?new CoinItemBakedModel(model):model);
+                models.put(ModelResourceLocation.inventory(entry.getId()),item instanceof gregtech.content.item.CoinItem?new CoinItemBakedModel(model):model);
 *///?} else {
             if (!(entry.get() instanceof gregtech.internal.material.MaterialFormItem materialItem)
                     || materialItem.getPrefix().isAddon()) {
@@ -142,7 +142,7 @@ public final class MaterialClientModels {
     /*@SubscribeEvent
     public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
         for (var entry : GTItems.allEntries()) {
-            if (entry.get() instanceof gregtech.item.EnergyCrystalItem) continue;
+            if (entry.get() instanceof gregtech.content.item.EnergyCrystalItem) continue;
             gregtech.internal.material.MaterialFormItem item = (gregtech.internal.material.MaterialFormItem) entry.get();
             event.register(ItemColorARGB.opaque((stack, layer) -> layer == 0 ? item.getTintColor() : 0xFFFFFF), entry.get());
 *///?} else {

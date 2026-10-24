@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
-import gregtech.item.behavior.BehaviorBuilderWand;
-import gregtech.item.behavior.BehaviorChunkEraser;
-import gregtech.item.behavior.BehaviorRemote;
-import gregtech.item.behavior.BehaviorWorldgenDebugger;
-import gregtech.item.behavior.ItemBehaviors;
+import gregtech.content.item.behavior.BehaviorBuilderWand;
+import gregtech.content.item.behavior.BehaviorChunkEraser;
+import gregtech.content.item.behavior.BehaviorRemote;
+import gregtech.content.item.behavior.BehaviorWorldgenDebugger;
+import gregtech.content.item.behavior.ItemBehaviors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -290,7 +290,7 @@ public final class DebugToolBehaviorTests {
         clearSite(level, centre, 2);
 
         Block ore = ForgeRegistries.BLOCKS.getValues().stream()
-                .filter(b -> b instanceof gregtech.block.OreBlock)
+                .filter(b -> b instanceof gregtech.content.block.OreBlock)
                 .findFirst().orElseThrow();
         int chunkX = centre.getX() >> 4;
         int chunkZ = centre.getZ() >> 4;
@@ -380,11 +380,11 @@ public final class DebugToolBehaviorTests {
         player.moveTo(charge.getX() + 8.5D, charge.getY(), charge.getZ() + 0.5D, 0.0F, 0.0F);
         helper.assertTrue(BehaviorRemote.useInAir(level, player, remote).acted(),
                 "a right-click in the air runs the activation (:76-90)");
-        helper.assertTrue(level.getBlockEntity(charge) instanceof gregtech.blockentity.tool.DynamiteBlockEntity chargeEntity
+        helper.assertTrue(level.getBlockEntity(charge) instanceof gregtech.content.blockentity.tool.DynamiteBlockEntity chargeEntity
                         && chargeEntity.remainingTicks() == 20,
                 "remote activation arms a 20-tick fuse instead of immediately detonating");
         // This isolated fixture is outside active chunks; drive its real server ticker explicitly.
-        var chargeEntity = (gregtech.blockentity.tool.DynamiteBlockEntity) level.getBlockEntity(charge);
+        var chargeEntity = (gregtech.content.blockentity.tool.DynamiteBlockEntity) level.getBlockEntity(charge);
         for (int tick=0; tick<20; tick++) chargeEntity.serverTick();
         helper.assertTrue(level.getBlockState(charge).isAir(), "charge detonates after its fuse");
         helper.assertTrue(BehaviorRemote.getCoords(remote.getTag(), level).isEmpty(),

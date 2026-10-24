@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.prefix.PrefixRegistry;
 import gregtech.content.compat.CompatSpecs;
-import gregtech.registry.GTItems;
+import gregtech.content.registry.GTItems;
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {

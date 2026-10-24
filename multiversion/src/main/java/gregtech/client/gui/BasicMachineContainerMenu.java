@@ -1,8 +1,8 @@
 package gregtech.client.gui;
 
 import gregtech.internal.recipe.RecipeMap;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.data.MachineRecipeMaps;
 
 //? if >=1.21.1 {
 /**///?} else {
@@ -10,7 +10,7 @@ import gregtech.network.GTPackets;
 //?}
 
 import gregtech.network.PacketSyncFluids;
-import gregtech.registry.GTMenuTypes;
+import gregtech.content.registry.GTMenuTypes;
 
 //? if >=1.21.1 {
 /*import net.minecraft.network.RegistryFriendlyByteBuf;

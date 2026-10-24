@@ -2,8 +2,8 @@ package gregtech.integration.jade;
 
 import gregtech.internal.energy.IEnergyBlock;
 import gregtech.internal.multiblock.StructureController;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
-import gregtech.data.GregTechTags;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.data.GregTechTags;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
@@ -25,11 +25,11 @@ public enum MultiblockJadeProvider implements IBlockComponentProvider, IServerDa
         var data = new CompoundTag();
         if (!(entity instanceof StructureController controller)) return data;
         data.putBoolean("formed", controller.isStructureOk());
-        if (entity instanceof gregtech.blockentity.machine.FusionReactorControllerBlockEntity fusion) {
+        if (entity instanceof gregtech.content.blockentity.machine.FusionReactorControllerBlockEntity fusion) {
             data.putLong("fusionCharge", fusion.chargeRemaining());
             data.putLong("fusionOutput", fusion.isRunning() ? fusion.outputEU() : 0);
         }
-        if (entity instanceof gregtech.blockentity.machine.AxialGeneratorBlockEntity axial) {
+        if (entity instanceof gregtech.content.blockentity.machine.AxialGeneratorBlockEntity axial) {
             data.putString("axialState", axial.isOverloaded() ? "overloaded" : axial.isStopped() ? "stopped" : "enabled");
             data.putBoolean("axialSteam", axial.grade().steam());
             data.putInt("axialInput", axial.grade().input());

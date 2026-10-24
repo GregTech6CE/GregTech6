@@ -12,7 +12,7 @@ import gregtech.internal.machine.CrucibleSpec;
 import gregtech.internal.machine.MachineRegistry;
 //?}
 import gregtech.internal.material.MaterialTextureSet;
-import gregtech.block.machine.SmeltingCrucibleBlock;
+import gregtech.content.block.machine.SmeltingCrucibleBlock;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;

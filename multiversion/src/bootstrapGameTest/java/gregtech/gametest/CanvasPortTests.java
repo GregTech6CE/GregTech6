@@ -1,13 +1,13 @@
 package gregtech.gametest;
 
-import gregtech.api.recipe.*;
 import gregtech.internal.recipe.*;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.internal.recipe.*;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.cover.*;
 import gregtech.content.data.*;
 import gregtech.content.recipe.CanvasRecipes;
-import gregtech.data.*;
-import gregtech.registry.*;
+import gregtech.content.data.*;
+import gregtech.content.registry.*;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.*;
@@ -78,7 +78,7 @@ public final class CanvasPortTests {
         h.assertTrue(lookup(MachineRecipeMaps.ScannerVisuals,h,List.of(new ItemStack(Items.DIAMOND),usb),List.of())==null,"unmapped non-block items cannot invent images");h.succeed();
     }
     private static BasicMachineBlockEntity machine(GameTestHelper h,BlockPos pos,RecipeMap map){
-        var block=java.util.stream.StreamSupport.stream(BuiltInRegistries.BLOCK.spliterator(),false).filter(b->b instanceof gregtech.block.machine.BasicMachineBlock machine&&machine.basicSpec().recipeMap()==map).map(b->(gregtech.block.machine.BasicMachineBlock)b).findFirst().orElseThrow();
+        var block=java.util.stream.StreamSupport.stream(BuiltInRegistries.BLOCK.spliterator(),false).filter(b->b instanceof gregtech.content.block.machine.BasicMachineBlock machine&&machine.basicSpec().recipeMap()==map).map(b->(gregtech.content.block.machine.BasicMachineBlock)b).findFirst().orElseThrow();
         h.setBlock(pos,Blocks.AIR);h.setBlock(pos,block);for(var side:Direction.values())h.setBlock(pos.relative(side),Blocks.STONE);return (BasicMachineBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(pos));
     }
     private static void runPowered(GameTestHelper h,BasicMachineBlockEntity machine,int ticks){
@@ -93,7 +93,7 @@ public final class CanvasPortTests {
         h.assertTrue(CanvasData.read(UsbDataMedia.readStick(written,1)).block().equals("minecraft:crafting_table"),"actual machine output is the scanned block");
         var printer=machine(h,new BlockPos(10,2,3),MachineRecipeMaps.Printer);
         var portPos=printer.getBlockPos().north();h.getLevel().setBlockAndUpdate(portPos,BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","hdd_switch")).defaultBlockState());
-        var port=(gregtech.blockentity.inventory.UsbSwitchBlockEntity)h.getLevel().getBlockEntity(portPos);
+        var port=(gregtech.content.blockentity.inventory.UsbSwitchBlockEntity)h.getLevel().getBlockEntity(portPos);
         var drive=item("usb3_hdd");UsbDataMedia.writeDrive(drive,7,1,UsbDataMedia.readStick(written,1));port.items().setStackInSlot(0,drive);port.setMode(7);
         var cable=item("usb3_cable");var cableData=CoverStackData.readOrEmpty(cable);cableData.putByte(UsbDataCable.NBT_DIRECTION,(byte)Direction.NORTH.ordinal());CoverStackData.write(cable,cableData);
         printer.inventory().setStackInSlot(0,item("canvas_cyan"));printer.inventory().setStackInSlot(1,cable.copy());

@@ -1,12 +1,12 @@
 package gregtech.gametest;
 
-import gregtech.block.plant.BushBlock;
-import gregtech.blockentity.BushBlockEntity;
+import gregtech.content.block.plant.BushBlock;
+import gregtech.content.blockentity.BushBlockEntity;
 import gregtech.content.plant.GTBerryBushes;
-import gregtech.registry.GTBlockEntities;
-import gregtech.registry.GTBushes;
-import gregtech.worldgen.GTBushesFeature;
-import gregtech.worldgen.GTFeatures;
+import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTBushes;
+import gregtech.content.worldgen.GTBushesFeature;
+import gregtech.content.worldgen.GTFeatures;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;

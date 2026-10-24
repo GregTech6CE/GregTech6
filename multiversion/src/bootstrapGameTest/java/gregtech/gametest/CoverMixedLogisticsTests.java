@@ -2,7 +2,7 @@ package gregtech.gametest;
 
 import gregtech.content.cover.*;
 import gregtech.content.logistics.*;
-import gregtech.registry.GTTechnological;
+import gregtech.content.registry.GTTechnological;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.*;

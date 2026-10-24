@@ -8,9 +8,10 @@ import gregtech.GregTech;
 import gregtech.internal.energy.FaceConfig;
 import gregtech.api.machine.*;
 import gregtech.internal.machine.*;
+import gregtech.internal.machine.*;
 import gregtech.internal.material.GTMaterial;
 import gregtech.api.material.GTValues;
-import gregtech.block.machine.EngineBlock;
+import gregtech.content.block.machine.EngineBlock;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 
@@ -44,7 +45,7 @@ public final class EngineTooltips {
             case ROTATION -> appendRotation(block, ms, tooltip);
             case DIESEL -> {
                 tooltip.add(Component.translatable("gt.lang.recipes").append(": ")
-                        .append(Component.translatable(gregtech.data.FuelRecipeMaps.Engine.mNameInternal)));
+                        .append(Component.translatable(gregtech.content.data.FuelRecipeMaps.Engine.mNameInternal)));
                 appendEfficiencyLine(10000, tooltip);
                 tooltip.add(Component.translatable("gt.lang.energy.output").append(": ")
                         .append(TooltipHelper.formatLong(block.engineSpec(DieselEngineSpec.class).outputRate()) + " RU/t ("

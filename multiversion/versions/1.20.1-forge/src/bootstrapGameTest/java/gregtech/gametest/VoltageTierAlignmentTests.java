@@ -5,9 +5,9 @@ import gregtech.internal.machine.BasicMachineSpec;
 import gregtech.internal.machine.MachineRegistry;
 import gregtech.internal.material.GTMaterial;
 import gregtech.content.material.Materials;
-import gregtech.data.GregTechConstants;
-import gregtech.data.MachineRecipeIngredients;
-import gregtech.registry.GTEnergyNodes;
+import gregtech.content.data.GregTechConstants;
+import gregtech.content.data.MachineRecipeIngredients;
+import gregtech.content.registry.GTEnergyNodes;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -245,7 +245,7 @@ public final class VoltageTierAlignmentTests {
         int checked = 0;
         for (var family : families.entrySet()) {
             if (family.getValue().size() < 2) continue; // single-tier machine: own casing material
-            if (gregtech.data.BasicMachineRecipePack.MULTIBLOCK_CONTROLLERS
+            if (gregtech.content.data.BasicMachineRecipePack.MULTIBLOCK_CONTROLLERS
                     .contains(family.getKey())) continue;
             for (BasicMachineSpec spec : family.getValue()) {
                 int tier = spec.tier();
@@ -347,7 +347,7 @@ public final class VoltageTierAlignmentTests {
                 problems.add(spec.id() + ": nominal " + spec.energyIn() + " " + spec.energyType()
                         + "/t outside the accepted " + spec.energyInMin() + ".." + spec.energyInMax());
             }
-            var original = gregtech.data.BasicMachineOriginalParams
+            var original = gregtech.content.data.BasicMachineOriginalParams
                     .find(spec.machineName(), spec.tier());
             if (original == null || portOwnedRange.contains(spec.id())) continue;
             if (spec.energyIn() != original.energyInput()) {

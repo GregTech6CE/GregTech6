@@ -12,10 +12,10 @@ import gregtech.internal.machine.CrucibleSpec;
 import gregtech.internal.machine.MachineRegistry;
 //?}
 import gregtech.internal.material.MaterialTextureSet;
-import gregtech.block.machine.CrucibleCrossingBlock;
-import gregtech.block.machine.CrucibleFaucetBlock;
-import gregtech.block.machine.MoldBasinBlock;
-import gregtech.block.machine.MoldBlock;
+import gregtech.content.block.machine.CrucibleCrossingBlock;
+import gregtech.content.block.machine.CrucibleFaucetBlock;
+import gregtech.content.block.machine.MoldBasinBlock;
+import gregtech.content.block.machine.MoldBlock;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;

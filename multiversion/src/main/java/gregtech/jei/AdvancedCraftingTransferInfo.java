@@ -1,7 +1,7 @@
 package gregtech.jei;
 
 import gregtech.client.gui.AdvancedCraftingMenu;
-import gregtech.registry.GTMenuTypes;
+import gregtech.content.registry.GTMenuTypes;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.transfer.IRecipeTransferInfo;

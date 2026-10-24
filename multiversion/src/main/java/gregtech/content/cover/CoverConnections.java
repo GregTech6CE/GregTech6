@@ -18,9 +18,9 @@ public final class CoverConnections {
         var owner = host.coverOwner();
         var level = owner.getLevel();
         return CoverUtilityBehaviors.FILTER_ITEM.equals(id)
-                && owner instanceof gregtech.blockentity.machine.ItemPipeBlockEntity
+                && owner instanceof gregtech.content.blockentity.machine.ItemPipeBlockEntity
                 && level != null
-                && level.getBlockEntity(owner.getBlockPos().relative(side)) instanceof gregtech.blockentity.machine.ItemPipeBlockEntity;
+                && level.getBlockEntity(owner.getBlockPos().relative(side)) instanceof gregtech.content.blockentity.machine.ItemPipeBlockEntity;
     }
 
     public static boolean canConnect(Level level, BlockPos pos, Direction side) {

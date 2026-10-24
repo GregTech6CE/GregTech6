@@ -2,10 +2,10 @@ package gregtech.gametest;
 
 import gregtech.content.food.GTDrinks;
 
-import gregtech.data.RegisteredFluids;
-import gregtech.data.generated.GTBottlesGen;
-import gregtech.item.BottleItem;
-import gregtech.registry.GTFluids;
+import gregtech.content.data.RegisteredFluids;
+import gregtech.content.data.generated.GTBottlesGen;
+import gregtech.content.item.BottleItem;
+import gregtech.content.registry.GTFluids;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.gametest.framework.GameTest;

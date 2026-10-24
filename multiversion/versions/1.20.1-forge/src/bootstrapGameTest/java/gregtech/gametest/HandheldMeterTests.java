@@ -1,17 +1,17 @@
 package gregtech.gametest;
 
-import gregtech.block.energy.AxleBlock;
-import gregtech.block.energy.ElectricWireBlock;
-import gregtech.block.misc.ChargingCraftingTableBlockEntity;
-import gregtech.blockentity.energy.AxleBlockEntity;
-import gregtech.blockentity.energy.ElectricWireBlockEntity;
-import gregtech.blockentity.energy.EnergyNodeBlockEntity;
-import gregtech.blockentity.energy.GearboxBlockEntity;
+import gregtech.content.block.energy.AxleBlock;
+import gregtech.content.block.energy.ElectricWireBlock;
+import gregtech.content.block.misc.ChargingCraftingTableBlockEntity;
+import gregtech.content.blockentity.energy.AxleBlockEntity;
+import gregtech.content.blockentity.energy.ElectricWireBlockEntity;
+import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
+import gregtech.content.blockentity.energy.GearboxBlockEntity;
 import gregtech.content.energy.ChemicalBatterySpec;
 import gregtech.content.material.Materials;
-import gregtech.data.GregTechTags;
-import gregtech.registry.GTChemicalBatteries;
-import gregtech.registry.GTWires;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.registry.GTChemicalBatteries;
+import gregtech.content.registry.GTWires;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;

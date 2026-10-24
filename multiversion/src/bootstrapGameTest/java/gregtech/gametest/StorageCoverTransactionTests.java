@@ -1,10 +1,10 @@
 package gregtech.gametest;
 
-import gregtech.blockentity.inventory.EnderGarbageDumpBlockEntity;
-import gregtech.blockentity.inventory.UsbSwitchBlockEntity;
+import gregtech.content.blockentity.inventory.EnderGarbageDumpBlockEntity;
+import gregtech.content.blockentity.inventory.UsbSwitchBlockEntity;
 import gregtech.client.gui.GarbageDumpContainerMenu;
 import gregtech.content.data.UsbDataMedia;
-import gregtech.world.GarbageData;
+import gregtech.content.world.GarbageData;
 import com.mojang.authlib.GameProfile;
 import java.util.UUID;
 import net.minecraft.core.BlockPos;

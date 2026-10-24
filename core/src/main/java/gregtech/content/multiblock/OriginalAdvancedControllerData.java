@@ -6,7 +6,7 @@ import gregtech.internal.energy.MachineFaceMasks;
 import gregtech.internal.machine.BasicMachineParameters;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.content.machine.OriginalMachineMaterialData;
-import gregtech.data.BasicMachineOriginalParams;
+import gregtech.content.data.BasicMachineOriginalParams;
 import java.util.List;
 
 public final class OriginalAdvancedControllerData {

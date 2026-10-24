@@ -1,5 +1,5 @@
 package gregtech.jei;
-import gregtech.recipe.ToolShapedRecipe;
+import gregtech.content.recipe.ToolShapedRecipe;
 import gregtech.internal.fluid.FluidContainerDisplayBinding;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.ICraftingGridHelper;

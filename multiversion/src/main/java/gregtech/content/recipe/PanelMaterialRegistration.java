@@ -5,7 +5,7 @@ package gregtech.content.recipe;
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
 import gregtech.content.transport.*;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
@@ -29,9 +29,9 @@ public final class PanelMaterialRegistration {
     public static void register() {
         for (String kind : List.of("concrete", "asphalt", "cfoam", "cfoam_fresh", "cfoam_slab")) {
             var material = switch (kind) {
-                case "concrete" -> gregtech.data.generated.GT6Materials.Stones.Concrete;
-                case "asphalt" -> gregtech.data.generated.GT6Materials.Compounds.Asphalt;
-                default -> gregtech.data.generated.GT6Materials.Compounds.ConstructionFoam;
+                case "concrete" -> gregtech.content.data.generated.GT6Materials.Stones.Concrete;
+                case "asphalt" -> gregtech.content.data.generated.GT6Materials.Compounds.Asphalt;
+                default -> gregtech.content.data.generated.GT6Materials.Compounds.ConstructionFoam;
             };
             long amount = kind.endsWith("_slab") ? GTValues.U / 2 : GTValues.U;
             known(item("gt6ce:" + kind), new ItemComposition(null, material, amount));
@@ -40,8 +40,8 @@ public final class PanelMaterialRegistration {
                 MaterialComponent.of(GTMaterialRegistry.get("Concrete"), GTValues.U),
                 MaterialComponent.of(GTMaterialRegistry.get("Iron"), MaterialPrefix.stick.getMaterialWeight())),
                 "GT6 BlockConcreteReinforced", true));
-        for (var variant : gregtech.registry.GTConstructionVariants.all()) {
-            var block = (gregtech.block.misc.FixedConstructionColor) variant.get();
+        for (var variant : gregtech.content.registry.GTConstructionVariants.all()) {
+            var block = (gregtech.content.block.misc.FixedConstructionColor) variant.get();
             var composition = ItemMaterialRegistry.base(item("gt6ce:" + block.family())).orElse(null);
             if (composition != null) known(variant.get().asItem(), composition);
         }

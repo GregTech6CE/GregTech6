@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
 import gregtech.internal.tool.*;
-import gregtech.block.inventory.SafeBlock;
-import gregtech.blockentity.inventory.SafeBlockEntity;
+import gregtech.content.block.inventory.SafeBlock;
+import gregtech.content.blockentity.inventory.SafeBlockEntity;
 import gregtech.content.material.Materials;
-import gregtech.item.GTToolItem;
-import gregtech.registry.*;
+import gregtech.content.item.GTToolItem;
+import gregtech.content.registry.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -47,7 +47,7 @@ public final class SafeRotationTests {
         // Existing unrestricted targets keep their previous behavior with the default permission hooks.
         var chest=GTStorage.chest(Materials.Steel); level.setBlock(pos,chest.defaultBlockState(),3);
         ToolInteractions.use(level.getBlockState(pos),level,pos,player,InteractionHand.MAIN_HAND,new BlockHitResult(Vec3.atCenterOf(pos).add(.5,0,0),Direction.EAST,pos,false));
-        h.assertTrue(level.getBlockState(pos).getValue(gregtech.block.inventory.MetalChestBlock.FACING)==Direction.EAST,"ordinary chest still rotates through shared tool path");
+        h.assertTrue(level.getBlockState(pos).getValue(gregtech.content.block.inventory.MetalChestBlock.FACING)==Direction.EAST,"ordinary chest still rotates through shared tool path");
         h.succeed();
     }
 

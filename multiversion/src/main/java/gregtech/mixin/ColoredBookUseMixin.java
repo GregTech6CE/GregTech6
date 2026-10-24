@@ -8,5 +8,5 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(ServerPlayer.class)
 public abstract class ColoredBookUseMixin {
     @Redirect(method="openItemGui",at=@At(value="INVOKE",target="Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z"),require=1)
-    private boolean gregtech$writtenCover(ItemStack stack,Item item){return stack.is(item)||(item==Items.WRITTEN_BOOK&&stack.getItem() instanceof gregtech.item.ColoredBookItem);}
+    private boolean gregtech$writtenCover(ItemStack stack,Item item){return stack.is(item)||(item==Items.WRITTEN_BOOK&&stack.getItem() instanceof gregtech.content.item.ColoredBookItem);}
 }

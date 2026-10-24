@@ -31,8 +31,8 @@ public final class MultiblockPreviewPanel {
     private List<String> repeatNotes() {
         if(!(info.controller().getItem() instanceof net.minecraft.world.item.BlockItem item))return List.of();
         String machine=null;
-        if(item.getBlock() instanceof gregtech.block.machine.BasicMachineBlock basic)machine=basic.basicSpec().machineName();
-        else if(item.getBlock() instanceof gregtech.block.machine.BehaviorMachineBlock behavior)machine=behavior.accepted().declaration().casing().machineType();
+        if(item.getBlock() instanceof gregtech.content.block.machine.BasicMachineBlock basic)machine=basic.basicSpec().machineName();
+        else if(item.getBlock() instanceof gregtech.content.block.machine.BehaviorMachineBlock behavior)machine=behavior.accepted().declaration().casing().machineType();
         if(machine==null)return List.of();
         var layout=gregtech.content.multiblock.LargeMachineLayouts.layout(machine);
         if(layout==null||layout.repeats().isEmpty())return List.of();
@@ -58,35 +58,35 @@ public final class MultiblockPreviewPanel {
     public boolean drag(int button,double dx,double dy) { if(button==0)camera.rotate(dx*.7,dy*.7);else if(button==1)camera.pan(dx,dy);else return false;return true; }
     public void scroll(double delta) {camera.zoom(delta);}
     public List<Component> tooltip(double mouseY) {
-        if(mouseY>=height-24 && info.controller().getItem() instanceof net.minecraft.world.item.BlockItem axialItem && axialItem.getBlock() instanceof gregtech.block.machine.AxialGeneratorBlock axial)
+        if(mouseY>=height-24 && info.controller().getItem() instanceof net.minecraft.world.item.BlockItem axialItem && axialItem.getBlock() instanceof gregtech.content.block.machine.AxialGeneratorBlock axial)
             return List.of(Component.translatable(axial.grade().steam()?"gt6ce.jei.assembly_steam_turbine":"gt6ce.jei.assembly_dynamo"));
-        if(mouseY>=height-24 && info.controller().getItem() instanceof net.minecraft.world.item.BlockItem item && item.getBlock() instanceof gregtech.block.machine.BasicMachineBlock machine && machine.basicSpec().machineName().equals("largemassfab"))
+        if(mouseY>=height-24 && info.controller().getItem() instanceof net.minecraft.world.item.BlockItem item && item.getBlock() instanceof gregtech.content.block.machine.BasicMachineBlock machine && machine.basicSpec().machineName().equals("largemassfab"))
             return List.of(Component.translatable("gt6ce.jei.assembly_matter"));
 //? if >=1.21.1 {
         /*if(mouseY>=height-24 && info.controller().is(RecipeMachines.machine("fusion_reactor_main").asItem()))
 *///?} else {
-        if(mouseY>=height-24 && info.controller().is(gregtech.registry.GTMultiblocks.FUSION_REACTOR_MAIN.get().asItem()))
+        if(mouseY>=height-24 && info.controller().is(gregtech.content.registry.GTMultiblocks.FUSION_REACTOR_MAIN.get().asItem()))
 //?}
             return List.of(Component.translatable("gt6ce.jei.assembly_fusion"));
-        if(mouseY>=height-24 && info.controller().getItem() instanceof net.minecraft.world.item.BlockItem axialItem && axialItem.getBlock() instanceof gregtech.block.machine.AxialGeneratorBlock axial)
+        if(mouseY>=height-24 && info.controller().getItem() instanceof net.minecraft.world.item.BlockItem axialItem && axialItem.getBlock() instanceof gregtech.content.block.machine.AxialGeneratorBlock axial)
             return List.of(Component.translatable(axial.grade().steam()?"gt6ce.jei.assembly_steam_turbine":"gt6ce.jei.assembly_dynamo"));
         if(mouseY>=height-24 && info.controller().is(gregtech.content.multiblock.LargeMachineParts.block(17998).asItem()))
             return List.of(Component.translatable("gt6ce.jei.assembly_lightning"));
         if(mouseY>=height-24 && info.controller().is(gregtech.content.multiblock.LargeMachineParts.block(17999).asItem()))
             return List.of(Component.translatable("gt6ce.jei.assembly_drill"));
         if(mouseY>=height-24 && info.controller().getItem() instanceof net.minecraft.world.item.BlockItem boilerItem
-                && boilerItem.getBlock() instanceof gregtech.block.machine.OriginalLargeBoilerControllerBlock)
+                && boilerItem.getBlock() instanceof gregtech.content.block.machine.OriginalLargeBoilerControllerBlock)
             return List.of(Component.translatable("gt6ce.jei.assembly_boiler"));
         if(mouseY>=height-24 && info.controller().getItem() instanceof net.minecraft.world.item.BlockItem tankItem
-                && tankItem.getBlock() instanceof gregtech.block.machine.TankControllerBlock tank
+                && tankItem.getBlock() instanceof gregtech.content.block.machine.TankControllerBlock tank
                 && tank.valveSpec() != null)
             return List.of(Component.translatable("gt6ce.jei.assembly_tank"));
         if(mouseY>=height-24 && info.controller().getItem() instanceof net.minecraft.world.item.BlockItem block && gregtech.content.multiblock.ControllerStructureLayouts.cells(block.getBlock())!=null)
             return List.of(Component.translatable("gt6ce.jei.assembly_legacy"));
 //? if >=1.21.1 {
-        /*if(mouseY>=height-24)return List.of(Component.translatable(gregtech.content.multiblock.GasTurbineDefinitions.isController(info.controller())?"gt6ce.jei.assembly_gas_turbine":info.controller().is(gregtech.registry.GTMultiblocks.HEAT_EXCHANGER_MAIN.get().asItem())?"gt6ce.jei.assembly_exchanger":info.controller().is(gregtech.registry.GTMultiblocks.findPart(17999).get().asItem())||info.controller().is(gregtech.content.multiblock.LargeMachineParts.block(17999).asItem())?"gt6ce.jei.assembly_drill":info.controller().is(gregtech.registry.GTMultiblocks.findPart(17998).get().asItem())||info.controller().is(gregtech.content.multiblock.LargeMachineParts.block(17998).asItem())?"gt6ce.jei.assembly_lightning":info.controller().getItem() instanceof net.minecraft.world.item.BlockItem item && item.getBlock() instanceof gregtech.block.machine.BasicMachineBlock machine && gregtech.content.multiblock.LargeMachineLayouts.cells(machine.basicSpec().machineName())!=null?"gt6ce.jei.assembly_large_machine":info.controller().is(RecipeMachines.machine("implosion_compressor_main").asItem())?"gt6ce.jei.assembly_implosion":info.boiler()?"gt6ce.jei.assembly_boiler":"gt6ce.jei.assembly_tank"));
+        /*if(mouseY>=height-24)return List.of(Component.translatable(gregtech.content.multiblock.GasTurbineDefinitions.isController(info.controller())?"gt6ce.jei.assembly_gas_turbine":info.controller().is(gregtech.content.registry.GTMultiblocks.HEAT_EXCHANGER_MAIN.get().asItem())?"gt6ce.jei.assembly_exchanger":info.controller().is(gregtech.content.registry.GTMultiblocks.findPart(17999).get().asItem())||info.controller().is(gregtech.content.multiblock.LargeMachineParts.block(17999).asItem())?"gt6ce.jei.assembly_drill":info.controller().is(gregtech.content.registry.GTMultiblocks.findPart(17998).get().asItem())||info.controller().is(gregtech.content.multiblock.LargeMachineParts.block(17998).asItem())?"gt6ce.jei.assembly_lightning":info.controller().getItem() instanceof net.minecraft.world.item.BlockItem item && item.getBlock() instanceof gregtech.content.block.machine.BasicMachineBlock machine && gregtech.content.multiblock.LargeMachineLayouts.cells(machine.basicSpec().machineName())!=null?"gt6ce.jei.assembly_large_machine":info.controller().is(RecipeMachines.machine("implosion_compressor_main").asItem())?"gt6ce.jei.assembly_implosion":info.boiler()?"gt6ce.jei.assembly_boiler":"gt6ce.jei.assembly_tank"));
 *///?} else {
-        if(mouseY>=height-24)return List.of(Component.translatable(gregtech.content.multiblock.GasTurbineDefinitions.isController(info.controller())?"gt6ce.jei.assembly_gas_turbine":info.controller().is(gregtech.registry.GTMultiblocks.HEAT_EXCHANGER_MAIN.get().asItem())?"gt6ce.jei.assembly_exchanger":info.controller().is(gregtech.registry.GTMultiblocks.findPart(17999).get().asItem())||info.controller().is(gregtech.content.multiblock.LargeMachineParts.block(17999).asItem())?"gt6ce.jei.assembly_drill":info.controller().is(gregtech.registry.GTMultiblocks.findPart(17998).get().asItem())||info.controller().is(gregtech.content.multiblock.LargeMachineParts.block(17998).asItem())?"gt6ce.jei.assembly_lightning":info.controller().getItem() instanceof net.minecraft.world.item.BlockItem item && item.getBlock() instanceof gregtech.block.machine.BasicMachineBlock machine && gregtech.content.multiblock.LargeMachineLayouts.cells(machine.basicSpec().machineName())!=null?"gt6ce.jei.assembly_large_machine":info.controller().is(gregtech.registry.GTMultiblocks.IMPLOSION_COMPRESSOR_MAIN.get().asItem())?"gt6ce.jei.assembly_implosion":info.boiler()?"gt6ce.jei.assembly_boiler":"gt6ce.jei.assembly_tank"));
+        if(mouseY>=height-24)return List.of(Component.translatable(gregtech.content.multiblock.GasTurbineDefinitions.isController(info.controller())?"gt6ce.jei.assembly_gas_turbine":info.controller().is(gregtech.content.registry.GTMultiblocks.HEAT_EXCHANGER_MAIN.get().asItem())?"gt6ce.jei.assembly_exchanger":info.controller().is(gregtech.content.registry.GTMultiblocks.findPart(17999).get().asItem())||info.controller().is(gregtech.content.multiblock.LargeMachineParts.block(17999).asItem())?"gt6ce.jei.assembly_drill":info.controller().is(gregtech.content.registry.GTMultiblocks.findPart(17998).get().asItem())||info.controller().is(gregtech.content.multiblock.LargeMachineParts.block(17998).asItem())?"gt6ce.jei.assembly_lightning":info.controller().getItem() instanceof net.minecraft.world.item.BlockItem item && item.getBlock() instanceof gregtech.content.block.machine.BasicMachineBlock machine && gregtech.content.multiblock.LargeMachineLayouts.cells(machine.basicSpec().machineName())!=null?"gt6ce.jei.assembly_large_machine":info.controller().is(gregtech.content.registry.GTMultiblocks.IMPLOSION_COMPRESSOR_MAIN.get().asItem())?"gt6ce.jei.assembly_implosion":info.boiler()?"gt6ce.jei.assembly_boiler":"gt6ce.jei.assembly_tank"));
 //?}
         return List.of();
     }

@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
 import gregtech.internal.energy.FaceConfig;
-import gregtech.block.machine.BasicMachineBlock;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
-import gregtech.blockentity.machine.LargeRecipeMachineBlockEntity;
+import gregtech.content.block.machine.BasicMachineBlock;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.blockentity.machine.LargeRecipeMachineBlockEntity;
 import gregtech.content.multiblock.LargeMachineLayouts;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

@@ -1,9 +1,9 @@
 package gregtech.gametest;
 import gregtech.content.transport.PanelCatalog;
 import gregtech.content.cover.*;
-import gregtech.item.*;
+import gregtech.content.item.*;
 import gregtech.internal.tool.GTToolType;
-import gregtech.recipe.ToolShapedRecipe;
+import gregtech.content.recipe.ToolShapedRecipe;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.*;
@@ -34,7 +34,7 @@ public final class DecorativePanelPortTests {
 //?}
  private static List<ItemStack> inputs(PanelCatalog.Spec spec,String color){
   var screw=item("gt6ce:screw_iron");var plank=item(spec.input());
-  if(!color.isEmpty())plank=gregtech.block.misc.ConcreteBlock.coloredItem(((BlockItem)plank.getItem()).getBlock(),DyeColor.byName(color,null));
+  if(!color.isEmpty())plank=gregtech.content.block.misc.ConcreteBlock.coloredItem(((BlockItem)plank.getItem()).getBlock(),DyeColor.byName(color,null));
   return new ArrayList<>(List.of(screw.copy(),tool(GTToolType.SAW),screw.copy(),screw.copy(),plank,screw.copy(),screw.copy(),tool(GTToolType.SCREWDRIVER),screw.copy()));
  }
 //? if >=1.21.1 {
@@ -56,7 +56,7 @@ public final class DecorativePanelPortTests {
 //?} else {
    if(!row.matches(grid,h.getLevel())) {
     var flags=new ArrayList<String>();for(int i=0;i<9;i++)flags.add(i+":"+row.getIngredients().get(i).test(stacks.get(i))+":"+stacks.get(i));
-    throw new IllegalStateException("Panel recipe diagnostic "+spec.id()+" required="+row.constructionColor()+" actual="+gregtech.block.misc.ColoredConstructionBlock.itemColor(stacks.get(4))+" flags="+flags);
+    throw new IllegalStateException("Panel recipe diagnostic "+spec.id()+" required="+row.constructionColor()+" actual="+gregtech.content.block.misc.ColoredConstructionBlock.itemColor(stacks.get(4))+" flags="+flags);
    }
 //?}
    h.assertTrue(row.matches(grid,h.getLevel()),"registered exact recipe "+spec.id());var result=row.assemble(grid,h.getLevel().registryAccess());
@@ -68,7 +68,7 @@ public final class DecorativePanelPortTests {
    if(!spec.color().isEmpty()){
     String other=spec.color().equals("red")?"blue":"red";
     h.assertTrue(!row.matches(grid(inputs(spec,other)),h.getLevel())&&!decoded.matches(grid(inputs(spec,other)),h.getLevel()),"another color cannot craft this panel "+spec.id());
-    h.assertTrue(gregtech.block.misc.ColoredConstructionBlock.itemColor(decoded.getIngredients().get(4).getItems()[0]).getName().equals(spec.color()),"recipe viewer ingredient restores source color");
+    h.assertTrue(gregtech.content.block.misc.ColoredConstructionBlock.itemColor(decoded.getIngredients().get(4).getItems()[0]).getName().equals(spec.color()),"recipe viewer ingredient restores source color");
    }
    stacks.set(1,ItemStack.EMPTY);h.assertTrue(!row.matches(grid(stacks),h.getLevel()),"missing saw refused");
    stacks=inputs(spec,spec.color());stacks.set(0,item("minecraft:iron_ingot"));h.assertTrue(!row.matches(grid(stacks),h.getLevel()),"ingot cannot substitute screw");

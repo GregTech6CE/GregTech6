@@ -1,6 +1,6 @@
 package gregtech.emi;
 import gregtech.internal.fluid.FluidContainerDisplayBinding;
-import gregtech.item.WoodenBucketItem;
+import gregtech.content.item.WoodenBucketItem;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.*;
 import dev.emi.emi.api.stack.*;

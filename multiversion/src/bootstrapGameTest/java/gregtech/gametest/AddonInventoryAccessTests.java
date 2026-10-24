@@ -2,7 +2,7 @@ package gregtech.gametest;
 
 import gregtech.api.addon.platform.MachineBehaviorContext;
 import gregtech.api.addon.platform.PartContext;
-import gregtech.blockentity.machine.BehaviorMachineBlockEntity;
+import gregtech.content.blockentity.machine.BehaviorMachineBlockEntity;
 import java.lang.reflect.Proxy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;

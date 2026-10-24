@@ -1,7 +1,7 @@
 package gregtech.integration.server;
 
-import gregtech.block.machine.ItemPipeBlock;
-import gregtech.blockentity.machine.ItemPipeBlockEntity;
+import gregtech.content.block.machine.ItemPipeBlock;
+import gregtech.content.blockentity.machine.ItemPipeBlockEntity;
 import gregtech.content.transport.ItemPipeTransferAdapter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

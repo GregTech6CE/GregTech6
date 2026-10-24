@@ -3,7 +3,7 @@ package gregtech.integration.jade;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
 import gregtech.internal.material.MaterialPresentation;
-import gregtech.blockentity.tool.DustFunnelBlockEntity;
+import gregtech.content.blockentity.tool.DustFunnelBlockEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;

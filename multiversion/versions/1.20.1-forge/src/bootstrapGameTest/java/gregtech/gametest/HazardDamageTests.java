@@ -4,20 +4,20 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import gregtech.api.energy.GTVoltageTiers;
 import gregtech.internal.energy.WireSpec;
-import gregtech.block.energy.ElectricWireBlock;
-import gregtech.block.machine.FluidPipeBlock;
-import gregtech.blockentity.energy.ElectricWireBlockEntity;
-import gregtech.blockentity.energy.ReactorCoreBlockEntity;
-import gregtech.blockentity.machine.FluidPipeBlockEntity;
+import gregtech.content.block.energy.ElectricWireBlock;
+import gregtech.content.block.machine.FluidPipeBlock;
+import gregtech.content.blockentity.energy.ElectricWireBlockEntity;
+import gregtech.content.blockentity.energy.ReactorCoreBlockEntity;
+import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
 import gregtech.content.nuclear.PlayerRadiation;
-import gregtech.damage.GTDamageTypes;
-import gregtech.damage.GTHazmat;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.GTEnergyNodes;
-import gregtech.registry.GTFluidPipes;
-import gregtech.registry.GTFuelRods;
-import gregtech.registry.GTRadiationProtection;
-import gregtech.registry.GTWires;
+import gregtech.content.damage.GTDamageTypes;
+import gregtech.content.damage.GTHazmat;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTEnergyNodes;
+import gregtech.content.registry.GTFluidPipes;
+import gregtech.content.registry.GTFuelRods;
+import gregtech.content.registry.GTRadiationProtection;
+import gregtech.content.registry.GTWires;
 import gregtech.util.GTEntityHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -346,7 +346,7 @@ public final class HazardDamageTests {
         helper.assertTrue(MaterialPrefix.ingot.heatDamage() == 0.0F,
                 "an ordinary ingot does not burn its holder");
 
-        ItemStack hot = gregtech.registry.GTItems.getStack(MaterialPrefix.ingotHot,
+        ItemStack hot = gregtech.content.registry.GTItems.getStack(MaterialPrefix.ingotHot,
                 gregtech.internal.material.GTMaterialRegistry.get("Iron"));
         helper.assertTrue(!hot.isEmpty(), "an iron hot ingot item exists");
         helper.assertTrue(GTEntityHelper.heatDamageFromItem(hot) == 3.0F,
@@ -400,7 +400,7 @@ public final class HazardDamageTests {
     }
 
     private static ItemStack suit(ArmorItem.Type type) {
-        RegistryObject<gregtech.item.RadiationSuitItem> piece = GTRadiationProtection.SUIT.get(type);
+        RegistryObject<gregtech.content.item.RadiationSuitItem> piece = GTRadiationProtection.SUIT.get(type);
         return piece == null ? ItemStack.EMPTY : new ItemStack(piece.get());
     }
 

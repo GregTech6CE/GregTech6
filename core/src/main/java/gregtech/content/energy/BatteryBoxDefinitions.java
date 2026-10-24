@@ -3,7 +3,7 @@ package gregtech.content.energy;
 import gregtech.internal.energy.EnergyNodeSpec;
 import gregtech.internal.material.GTMaterial;
 import gregtech.content.material.Materials;
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 import java.util.*;
 
 /** Original 10080-10099 family. Existing energy_storage IDs become the large boxes they depict. */

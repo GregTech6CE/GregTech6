@@ -25,7 +25,7 @@ public final class UtilityCoverInteraction {
             var fluid = container.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);
             if (!fluid.isEmpty()) return fluid;
         }
-        if (held.getItem() instanceof gregtech.item.BottleItem bottle && bottle.fluid() != null)
+        if (held.getItem() instanceof gregtech.content.item.BottleItem bottle && bottle.fluid() != null)
             return new FluidStack(bottle.fluid(), 250);
 //? if >=1.21.1 {
         /*if (held.getItem() instanceof net.minecraft.world.item.BucketItem bucket)

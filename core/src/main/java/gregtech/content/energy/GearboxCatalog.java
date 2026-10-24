@@ -5,7 +5,7 @@ import gregtech.internal.energy.*;
 import gregtech.internal.material.GTMaterial;
 import gregtech.content.material.Materials;
 import gregtech.content.material.generated.WoodMaterials;
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 /** Original custom gearbox and rotational transformer ratings; runtime behavior is audited separately. */
 public final class GearboxCatalog {
     private GearboxCatalog() {}

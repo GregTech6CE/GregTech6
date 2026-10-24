@@ -2,17 +2,18 @@ package gregtech.gametest;
 
 import gregtech.api.machine.*;
 import gregtech.internal.machine.*;
+import gregtech.internal.machine.*;
 import gregtech.internal.tool.GTToolType;
-import gregtech.block.energy.*;
-import gregtech.block.machine.*;
-import gregtech.blockentity.energy.SignalWireBlockEntity;
-import gregtech.blockentity.machine.*;
+import gregtech.content.block.energy.*;
+import gregtech.content.block.machine.*;
+import gregtech.content.blockentity.energy.SignalWireBlockEntity;
+import gregtech.content.blockentity.machine.*;
 import gregtech.content.cover.*;
 import gregtech.content.logistics.*;
 import gregtech.content.multiblock.LargeMachineParts;
-import gregtech.data.GregTechTags;
-import gregtech.item.GTToolItem;
-import gregtech.registry.*;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.item.GTToolItem;
+import gregtech.content.registry.*;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.*;
@@ -132,9 +133,9 @@ public final class CoverIssueTests {
         var wallCell=LogisticsCoreStructure.cells().stream().filter(c->c.kind()==LogisticsCoreStructure.Kind.WALL).findFirst().orElseThrow();
         var wall=(MultiblockPortBlockEntity)h.getLevel().getBlockEntity(wallCell.at(core.getBlockPos(),front));
 //? if >=1.21.1 {
-        /*var wire=(gregtech.blockentity.machine.LogisticsWireBlockEntity)place(h,site(10),BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","logistics_wire")));
+        /*var wire=(gregtech.content.blockentity.machine.LogisticsWireBlockEntity)place(h,site(10),BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","logistics_wire")));
 *///?} else {
-        var wire=(gregtech.blockentity.machine.LogisticsWireBlockEntity)place(h,site(10),GTIconSetBlocks.LOGISTICS_WIRE.get());
+        var wire=(gregtech.content.blockentity.machine.LogisticsWireBlockEntity)place(h,site(10),GTIconSetBlocks.LOGISTICS_WIRE.get());
 //?}
         for(var target:new LogisticsCoverHost[]{core,wall,wire}) {
             h.assertTrue(target.logisticsCovers().attach(Direction.UP,cover(LogisticsCoverType.CPU_LOGIC.id())),"CPU display attaches");
@@ -153,7 +154,7 @@ public final class CoverIssueTests {
     public static void logisticsStorageAndCoveredWireStayDisconnected(GameTestHelper h) {
 //? if >=1.21.1 {
         /*var tank=place(h,site(30),BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","logistics_tank")));
-        var mass=place(h,site(34),BuiltInRegistries.BLOCK.stream().filter(b->b instanceof gregtech.block.inventory.LogisticsMassStorageBlock).findFirst().orElseThrow());
+        var mass=place(h,site(34),BuiltInRegistries.BLOCK.stream().filter(b->b instanceof gregtech.content.block.inventory.LogisticsMassStorageBlock).findFirst().orElseThrow());
 *///?} else {
         var tank=place(h,site(30),GTTanks.LOGISTICS_TANK.get());
         var mass=place(h,site(34),GTStorage.LOGISTICS_MASS_STORAGES.get(0).get());

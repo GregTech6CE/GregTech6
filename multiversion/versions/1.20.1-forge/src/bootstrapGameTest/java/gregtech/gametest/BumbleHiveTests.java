@@ -3,15 +3,15 @@ package gregtech.gametest;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import gregtech.block.misc.BumbleHiveBlock;
-import gregtech.blockentity.misc.BumbleHiveBlockEntity;
+import gregtech.content.block.misc.BumbleHiveBlock;
+import gregtech.content.blockentity.misc.BumbleHiveBlockEntity;
 import gregtech.content.bumble.BumbleBeeGenes;
 import gregtech.content.bumble.BumbleBeeType;
 import gregtech.content.bumble.GTBumbleSpecies;
-import gregtech.registry.GTBlockEntities;
-import gregtech.registry.GTDecorBlocks;
-import gregtech.worldgen.GTBumbleHivesFeature;
-import gregtech.worldgen.GTFeatures;
+import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTDecorBlocks;
+import gregtech.content.worldgen.GTBumbleHivesFeature;
+import gregtech.content.worldgen.GTFeatures;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -400,11 +400,11 @@ public final class BumbleHiveTests {
         int x = BASE_X + 200;
         int z = BASE_Z + 200;
         // The band is remapped into 1.18's deeper overworld, exactly like the ore tables.
-        int lowY = gregtech.worldgen.GTWorldgenScale.remapY(
+        int lowY = gregtech.content.worldgen.GTWorldgenScale.remapY(
                 (WorldGenLevel) server, GTBumbleHivesFeature.UNDERGROUND_MIN_Y);
-        int highY = gregtech.worldgen.GTWorldgenScale.remapY(
+        int highY = gregtech.content.worldgen.GTWorldgenScale.remapY(
                 (WorldGenLevel) server, GTBumbleHivesFeature.UNDERGROUND_MAX_Y);
-        int pocketY = gregtech.worldgen.GTWorldgenScale.remapY((WorldGenLevel) server, 20);
+        int pocketY = gregtech.content.worldgen.GTWorldgenScale.remapY((WorldGenLevel) server, 20);
         for (int y = lowY; y < highY; y++) {
             server.setBlock(new BlockPos(x, y, z), Blocks.AIR.defaultBlockState(), 3);
         }

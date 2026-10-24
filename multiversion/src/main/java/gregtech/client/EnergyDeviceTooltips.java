@@ -6,7 +6,7 @@ package gregtech.client;
 import gregtech.internal.energy.EnergyNodeSpec;
 import gregtech.content.energy.OriginalEnergyDeviceTooltipData;
 import gregtech.content.machine.OriginalFunctionalTooltipData;
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import java.util.List;

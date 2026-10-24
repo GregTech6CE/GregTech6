@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
-import gregtech.worldgen.GTCellNoise;
-import gregtech.worldgen.GTNetherDepositFeature;
+import gregtech.content.worldgen.GTCellNoise;
+import gregtech.content.worldgen.GTNetherDepositFeature;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

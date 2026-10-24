@@ -1,7 +1,7 @@
 package gregtech.internal.tool;
 
 import gregtech.internal.material.GTMaterial;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 
 import java.util.Locale;
 

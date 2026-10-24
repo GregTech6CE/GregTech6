@@ -14,8 +14,8 @@ public abstract class CoverSignalMixin {
     private static PanelCoverHost emittingHost(BlockGetter level, BlockPos pos, Direction query) {
         var owner = level.getBlockEntity(pos);
         if (owner == null || !ComponentCoverFallback.ownClass(owner)
-                || owner instanceof gregtech.blockentity.machine.BasicMachineBlockEntity
-                || owner instanceof gregtech.blockentity.energy.SignalWireBlockEntity
+                || owner instanceof gregtech.content.blockentity.machine.BasicMachineBlockEntity
+                || owner instanceof gregtech.content.blockentity.energy.SignalWireBlockEntity
                 || !(owner instanceof PanelCoverHost host)) return null;
         var cover = host.getCover(query.getOpposite());
         var panel = PanelCover.of(cover);

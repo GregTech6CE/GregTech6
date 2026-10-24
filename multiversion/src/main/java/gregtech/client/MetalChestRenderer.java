@@ -1,7 +1,7 @@
 package gregtech.client;
 
-import gregtech.block.inventory.MetalChestBlock;
-import gregtech.blockentity.inventory.MetalChestBlockEntity;
+import gregtech.content.block.inventory.MetalChestBlock;
+import gregtech.content.blockentity.inventory.MetalChestBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;

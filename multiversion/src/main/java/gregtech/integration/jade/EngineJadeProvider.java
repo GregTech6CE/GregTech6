@@ -2,9 +2,10 @@ package gregtech.integration.jade;
 
 import gregtech.api.machine.*;
 import gregtech.internal.machine.*;
-import gregtech.block.machine.EngineBlock;
-import gregtech.blockentity.machine.*;
-import gregtech.data.GregTechTags;
+import gregtech.internal.machine.*;
+import gregtech.content.block.machine.EngineBlock;
+import gregtech.content.blockentity.machine.*;
+import gregtech.content.data.GregTechTags;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;

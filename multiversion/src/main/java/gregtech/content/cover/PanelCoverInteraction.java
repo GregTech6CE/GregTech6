@@ -66,7 +66,7 @@ public final class PanelCoverInteraction {
         boolean cutter=GTToolHelper.isWireCutter(held),screw=GTToolHelper.isScrewdriver(held),chisel=GTToolHelper.matchesTool(held,GTToolType.CHISEL);
 //?}
         if((cutter||screw||chisel)&&(host.panels().configure(side,cutter,chisel)
-                ||!chisel&&host instanceof gregtech.blockentity.machine.BasicMachineBlockEntity machine&&machine.configureControlCover(side,cutter))){
+                ||!chisel&&host instanceof gregtech.content.blockentity.machine.BasicMachineBlockEntity machine&&machine.configureControlCover(side,cutter))){
             // Fixed one-point charge; original cover tool-return costs differ by action.
             if(!level.isClientSide){
 //? if >=1.21.1 {

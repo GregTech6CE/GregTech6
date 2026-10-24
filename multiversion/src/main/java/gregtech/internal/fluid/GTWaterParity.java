@@ -1,6 +1,6 @@
 package gregtech.internal.fluid;
 
-import gregtech.data.RegisteredFluids;
+import gregtech.content.data.RegisteredFluids;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;

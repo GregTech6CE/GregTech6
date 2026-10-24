@@ -1,7 +1,7 @@
 package gregtech.client;
 
-import gregtech.block.tool.FluidAttachmentBlock;
-import gregtech.block.tool.PortableContainerBlock;
+import gregtech.content.block.tool.FluidAttachmentBlock;
+import gregtech.content.block.tool.PortableContainerBlock;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -24,7 +24,7 @@ public final class MaterialShellColors {
     @SubscribeEvent
     public static void items(RegisterColorHandlersEvent.Item event) {
         for (var item : BuiltInRegistries.ITEM) {
-            if (item instanceof gregtech.item.PortableFluidContainerItem container)
+            if (item instanceof gregtech.content.item.PortableFluidContainerItem container)
                 event.register(ItemColorARGB.opaque((stack, tint) -> tint == 0 ? container.spec().material().getColor() : 0xFFFFFF), item);
             else if (item instanceof net.minecraft.world.item.BlockItem blockItem
                     && blockItem.getBlock() instanceof FluidAttachmentBlock attachment)

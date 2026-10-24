@@ -1,7 +1,7 @@
 package gregtech.jei;
 
 import gregtech.internal.machine.MachineRegistry;
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.data.MachineRecipeMaps;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraftforge.gametest.GameTestHolder;

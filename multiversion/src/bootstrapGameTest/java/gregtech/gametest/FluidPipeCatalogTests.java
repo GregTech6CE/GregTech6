@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
-import gregtech.block.machine.FluidPipeBlock;
-import gregtech.blockentity.machine.FluidPipeBlockEntity;
+import gregtech.content.block.machine.FluidPipeBlock;
+import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
 import gregtech.content.transport.fluid.FluidTransportDefinitions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;

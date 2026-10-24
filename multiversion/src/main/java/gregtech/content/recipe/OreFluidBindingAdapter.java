@@ -1,7 +1,7 @@
 package gregtech.content.recipe;
 import gregtech.internal.material.GTMaterial;
 import gregtech.internal.addon.AddonMaterials;
-import gregtech.registry.GTFluids;
+import gregtech.content.registry.GTFluids;
 import net.minecraft.core.registries.BuiltInRegistries;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
@@ -40,8 +40,8 @@ public final class OreFluidBindingAdapter {
    case "Petrotheum" -> "petrotheum";
    default -> throw new IllegalStateException("No reviewed native identity: "+b.field());
   };
-  var entry=gregtech.data.RegisteredFluids.get(b.field());
-  if(entry==null||!(gregtech.data.RegisteredFluids.isBuiltInDefinition(entry)
+  var entry=gregtech.content.data.RegisteredFluids.get(b.field());
+  if(entry==null||!(gregtech.content.data.RegisteredFluids.isBuiltInDefinition(entry)
        || (b.field().equals("GenLiquid_Mercury") && ReviewedOreGeneratedFluids.mercury(entry)))||!entry.registryName().equals(b.registryPath()))
    throw new IllegalStateException("Reviewed source catalog identity mismatch: "+b);
   if(!key.getNamespace().equals("gt6ce")||!key.getPath().equals(nativePath))

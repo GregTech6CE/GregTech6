@@ -7,8 +7,8 @@ import gregtech.internal.material.GTMaterial;
 import gregtech.content.material.Materials;
 import gregtech.content.transport.TransportCraftingCatalog.Input;
 import gregtech.content.transport.TransportCraftingCatalog.Row;
-import gregtech.data.GregTechTags;
-import gregtech.data.MaterialGroups;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.data.MaterialGroups;
 import java.util.*;
 
 /** Source name identifies the four crafted rotors; hull identity comes from Kinetic_T. */

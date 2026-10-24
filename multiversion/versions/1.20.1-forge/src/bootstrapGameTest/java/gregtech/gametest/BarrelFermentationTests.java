@@ -1,12 +1,12 @@
 package gregtech.gametest;
 
 import gregtech.internal.recipe.Recipe;
-import gregtech.blockentity.machine.TankBlockEntity;
+import gregtech.content.blockentity.machine.TankBlockEntity;
 import gregtech.content.recipe.FermenterFoodRecipes;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.registry.GTFluids;
-import gregtech.registry.GTTanks;
-import gregtech.registry.GTTechnological;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.registry.GTFluids;
+import gregtech.content.registry.GTTanks;
+import gregtech.content.registry.GTTechnological;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

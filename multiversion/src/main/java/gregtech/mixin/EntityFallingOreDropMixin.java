@@ -1,8 +1,8 @@
 package gregtech.mixin;
 
-import gregtech.block.OreBlock;
-import gregtech.block.misc.SpikeBlock;
-import gregtech.item.SpikeBlockItem;
+import gregtech.content.block.OreBlock;
+import gregtech.content.block.misc.SpikeBlock;
+import gregtech.content.item.SpikeBlockItem;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.item.ItemEntity;

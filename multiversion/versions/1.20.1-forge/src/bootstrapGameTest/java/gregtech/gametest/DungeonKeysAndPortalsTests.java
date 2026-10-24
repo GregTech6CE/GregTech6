@@ -1,21 +1,21 @@
 package gregtech.gametest;
 
 import com.google.gson.JsonObject;
-import gregtech.block.misc.DungeonPortalBlock;
-import gregtech.block.misc.DungeonPortalBlockEntity;
-import gregtech.block.stone.GTStoneSlabBlock;
-import gregtech.block.stone.StoneType;
-import gregtech.block.stone.StoneVariant;
-import gregtech.item.GTDungeonKeyItem;
-import gregtech.registry.GTBlocks;
-import gregtech.registry.GTDungeonBlocks;
-import gregtech.registry.GTDungeonKeys;
-import gregtech.worldgen.GTDungeonFeature;
-import gregtech.worldgen.dungeon.GTDungeonChunkRoomPortalEnd;
-import gregtech.worldgen.dungeon.GTDungeonChunkRoomPortalNether;
-import gregtech.worldgen.dungeon.GTDungeonChunkRoomStorage;
-import gregtech.worldgen.dungeon.GTDungeonData;
-import gregtech.worldgen.dungeon.GTDungeonLayout;
+import gregtech.content.block.misc.DungeonPortalBlock;
+import gregtech.content.block.misc.DungeonPortalBlockEntity;
+import gregtech.content.block.stone.GTStoneSlabBlock;
+import gregtech.content.block.stone.StoneType;
+import gregtech.content.block.stone.StoneVariant;
+import gregtech.content.item.GTDungeonKeyItem;
+import gregtech.content.registry.GTBlocks;
+import gregtech.content.registry.GTDungeonBlocks;
+import gregtech.content.registry.GTDungeonKeys;
+import gregtech.content.worldgen.GTDungeonFeature;
+import gregtech.content.worldgen.dungeon.GTDungeonChunkRoomPortalEnd;
+import gregtech.content.worldgen.dungeon.GTDungeonChunkRoomPortalNether;
+import gregtech.content.worldgen.dungeon.GTDungeonChunkRoomStorage;
+import gregtech.content.worldgen.dungeon.GTDungeonData;
+import gregtech.content.worldgen.dungeon.GTDungeonLayout;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -235,7 +235,7 @@ public final class DungeonKeysAndPortalsTests {
             }
             check(problems, block instanceof DungeonPortalBlock, id + " is not a dungeon portal");
             check(problems, block.asItem() != Items.AIR, "the block " + id + " has no item");
-            check(problems, gregtech.registry.GTBlockEntities.DUNGEON_PORTAL.get()
+            check(problems, gregtech.content.registry.GTBlockEntities.DUNGEON_PORTAL.get()
                             .isValid(block.defaultBlockState()),
                     "the dungeon portal block entity type covers " + id);
             check(problems, english.has("block.gt6ce." + id), "en_us has no name for " + id);
@@ -395,9 +395,9 @@ public final class DungeonKeysAndPortalsTests {
             }
         }
         // GT6 :41-48: the supply chest uses seven sparse slots, not slots 0..6.
-        check(problems, at(helper, origin, 1, 2, 5).getBlock() instanceof gregtech.block.inventory.MetalChestBlock,
+        check(problems, at(helper, origin, 1, 2, 5).getBlock() instanceof gregtech.content.block.inventory.MetalChestBlock,
                 "the GT supply chest stands at (1,2,5)");
-        if (helper.getLevel().getBlockEntity(origin.offset(1, 2, 5)) instanceof gregtech.blockentity.inventory.MetalChestBlockEntity chest) {
+        if (helper.getLevel().getBlockEntity(origin.offset(1, 2, 5)) instanceof gregtech.content.blockentity.inventory.MetalChestBlockEntity chest) {
             var inventory = chest.inventory();
             check(problems, inventory.getStackInSlot(0).isEmpty() && inventory.getStackInSlot(3).isEmpty(),
                     "the original supply slots before slot 4 remain empty");

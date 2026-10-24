@@ -2,7 +2,7 @@
  * MultiTileEntityPipeFluid.onTick2/onServerTickPre and WD.even. */
 package gregtech.content.transport.fluid;
 
-import gregtech.blockentity.machine.FluidPipeBlockEntity;
+import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import java.util.*;

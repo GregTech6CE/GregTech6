@@ -1,7 +1,7 @@
 package gregtech.platform.neoforge.machine;
 import gregtech.internal.machine.BasicMachineSpec;
-import gregtech.block.machine.BasicMachineBlock;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.block.machine.BasicMachineBlock;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.machine.BasicMachineDefinitions;
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
@@ -42,7 +42,7 @@ public final class BasicMachineRegistries {
    var blockReg=blocks.computeIfAbsent(namespace,ns->{var created=DeferredRegister.create(Registries.BLOCK,ns);created.register(bus);return created;});
    var itemReg=items.computeIfAbsent(namespace,ns->{var created=DeferredRegister.create(Registries.ITEM,ns);created.register(bus);return created;});
    var entityReg=entities.computeIfAbsent(namespace,ns->{var created=DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE,ns);created.register(bus);return created;});
-   var block=blockReg.register(spec.id(),()->spec.controllerKind()==gregtech.internal.machine.MachineControllerKind.DISTILLATION?new gregtech.block.machine.MultiblockControllerBlock(spec,BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(spec.hardness(),spec.blastResistance()).requiresCorrectToolForDrops()):new BasicMachineBlock(spec,BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(spec.hardness(),spec.blastResistance()).requiresCorrectToolForDrops()));
+   var block=blockReg.register(spec.id(),()->spec.controllerKind()==gregtech.internal.machine.MachineControllerKind.DISTILLATION?new gregtech.content.block.machine.MultiblockControllerBlock(spec,BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(spec.hardness(),spec.blastResistance()).requiresCorrectToolForDrops()):new BasicMachineBlock(spec,BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(spec.hardness(),spec.blastResistance()).requiresCorrectToolForDrops()));
    MACHINES.add(block);
    itemReg.register(spec.id(),()->new BasicMachineItem(block.get(),new Item.Properties().stacksTo(16)));
    var type=entityReg.register("be_"+spec.id(),()->{
@@ -59,31 +59,31 @@ public final class BasicMachineRegistries {
   bus.addListener(gregtech.network.MachinePayloads::register);
  }
  private static void capabilities(RegisterCapabilitiesEvent event){
-  event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,gregtech.registry.GTBlockEntities.BUMBLIARY.get(),gregtech.blockentity.tool.BumbliaryBlockEntity::itemCapability);
-  event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,gregtech.registry.GTBlockEntities.BEDROCK_DRILL.get(),gregtech.blockentity.machine.BedrockDrillControllerBlockEntity::itemCapability);
-  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,gregtech.registry.GTBlockEntities.REACTOR_CORE.get(),gregtech.blockentity.energy.ReactorCoreBlockEntity::fluidCapability);
-  event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,gregtech.registry.GTBlockEntities.REACTOR_CORE.get(),gregtech.blockentity.energy.ReactorCoreBlockEntity::itemCapability);
-  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,gregtech.registry.GTBlockEntities.REACTOR_CORE_2X2.get(),gregtech.blockentity.energy.ReactorCoreBlockEntity::fluidCapability);
-  event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,gregtech.registry.GTBlockEntities.REACTOR_CORE_2X2.get(),gregtech.blockentity.energy.ReactorCoreBlockEntity::itemCapability);
-  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,gregtech.registry.GTBlockEntities.BEDROCK_DRILL.get(),gregtech.blockentity.machine.BedrockDrillControllerBlockEntity::fluidCapability);
-  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,gregtech.registry.GTBlockEntities.LARGE_CRUCIBLE.get(),gregtech.blockentity.machine.LargeCrucibleControllerBlockEntity::fluidCapability);
-  event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,gregtech.registry.GTBlockEntities.LARGE_CRUCIBLE.get(),gregtech.blockentity.machine.LargeCrucibleControllerBlockEntity::itemCapability);
-  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,gregtech.registry.GTBlockEntities.LARGE_TURBINE.get(),gregtech.blockentity.machine.LargeTurbineControllerBlockEntity::fluidCapability);
-  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,gregtech.registry.GTBlockEntities.LARGE_GAS_TURBINE.get(),gregtech.blockentity.machine.LargeGasTurbineControllerBlockEntity::fluidCapability);
-  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,gregtech.registry.GTBlockEntities.LARGE_HEAT_EXCHANGER.get(),gregtech.blockentity.machine.LargeHeatExchangerControllerBlockEntity::fluidCapability);
+  event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,gregtech.content.registry.GTBlockEntities.BUMBLIARY.get(),gregtech.content.blockentity.tool.BumbliaryBlockEntity::itemCapability);
+  event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,gregtech.content.registry.GTBlockEntities.BEDROCK_DRILL.get(),gregtech.content.blockentity.machine.BedrockDrillControllerBlockEntity::itemCapability);
+  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,gregtech.content.registry.GTBlockEntities.REACTOR_CORE.get(),gregtech.content.blockentity.energy.ReactorCoreBlockEntity::fluidCapability);
+  event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,gregtech.content.registry.GTBlockEntities.REACTOR_CORE.get(),gregtech.content.blockentity.energy.ReactorCoreBlockEntity::itemCapability);
+  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,gregtech.content.registry.GTBlockEntities.REACTOR_CORE_2X2.get(),gregtech.content.blockentity.energy.ReactorCoreBlockEntity::fluidCapability);
+  event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,gregtech.content.registry.GTBlockEntities.REACTOR_CORE_2X2.get(),gregtech.content.blockentity.energy.ReactorCoreBlockEntity::itemCapability);
+  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,gregtech.content.registry.GTBlockEntities.BEDROCK_DRILL.get(),gregtech.content.blockentity.machine.BedrockDrillControllerBlockEntity::fluidCapability);
+  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,gregtech.content.registry.GTBlockEntities.LARGE_CRUCIBLE.get(),gregtech.content.blockentity.machine.LargeCrucibleControllerBlockEntity::fluidCapability);
+  event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,gregtech.content.registry.GTBlockEntities.LARGE_CRUCIBLE.get(),gregtech.content.blockentity.machine.LargeCrucibleControllerBlockEntity::itemCapability);
+  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,gregtech.content.registry.GTBlockEntities.LARGE_TURBINE.get(),gregtech.content.blockentity.machine.LargeTurbineControllerBlockEntity::fluidCapability);
+  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,gregtech.content.registry.GTBlockEntities.LARGE_GAS_TURBINE.get(),gregtech.content.blockentity.machine.LargeGasTurbineControllerBlockEntity::fluidCapability);
+  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,gregtech.content.registry.GTBlockEntities.LARGE_HEAT_EXCHANGER.get(),gregtech.content.blockentity.machine.LargeHeatExchangerControllerBlockEntity::fluidCapability);
 
-  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,gregtech.registry.GTBlockEntities.ORIGINAL_LARGE_BOILER.get(),gregtech.blockentity.machine.OriginalLargeBoilerControllerBlockEntity::fluidCapability);
-  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,gregtech.registry.GTBlockEntities.MULTIBLOCK_TANK.get(),gregtech.blockentity.machine.MultiblockTankControllerBlockEntity::fluidCapability);
-  event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,gregtech.registry.GTBlockEntities.COKE_OVEN.get(),gregtech.blockentity.machine.CokeOvenControllerBlockEntity::itemCapability);
-  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,gregtech.registry.GTBlockEntities.COKE_OVEN.get(),gregtech.blockentity.machine.CokeOvenControllerBlockEntity::fluidCapability);
-  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,gregtech.registry.GTBlockEntities.CRYO_DISTILLATION.get(),gregtech.blockentity.machine.CryoDistillationControllerBlockEntity::fluidCapability);
-  event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,gregtech.registry.GTBlockEntities.CRYO_DISTILLATION.get(),gregtech.blockentity.machine.CryoDistillationControllerBlockEntity::itemCapability);
-  event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,gregtech.registry.GTBlockEntities.MULTIBLOCK_PORT.get(),gregtech.blockentity.machine.MultiblockPortBlockEntity::itemCapability);
-  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,gregtech.registry.GTBlockEntities.MULTIBLOCK_PORT.get(),gregtech.blockentity.machine.MultiblockPortBlockEntity::fluidCapability);
-  event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,gregtech.registry.GTBlockEntities.ADDON_ENERGY_PART.get(),gregtech.blockentity.machine.AddonEnergyPartBlockEntity::itemCapability);
-  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,gregtech.registry.GTBlockEntities.ADDON_ENERGY_PART.get(),gregtech.blockentity.machine.AddonEnergyPartBlockEntity::fluidCapability);
-  event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,gregtech.registry.GTBlockEntities.ADDON_FUNCTIONAL_PART.get(),gregtech.blockentity.machine.AddonFunctionalPartBlockEntity::itemCapability);
-  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,gregtech.registry.GTBlockEntities.ADDON_FUNCTIONAL_PART.get(),gregtech.blockentity.machine.AddonFunctionalPartBlockEntity::fluidCapability);
+  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,gregtech.content.registry.GTBlockEntities.ORIGINAL_LARGE_BOILER.get(),gregtech.content.blockentity.machine.OriginalLargeBoilerControllerBlockEntity::fluidCapability);
+  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,gregtech.content.registry.GTBlockEntities.MULTIBLOCK_TANK.get(),gregtech.content.blockentity.machine.MultiblockTankControllerBlockEntity::fluidCapability);
+  event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,gregtech.content.registry.GTBlockEntities.COKE_OVEN.get(),gregtech.content.blockentity.machine.CokeOvenControllerBlockEntity::itemCapability);
+  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,gregtech.content.registry.GTBlockEntities.COKE_OVEN.get(),gregtech.content.blockentity.machine.CokeOvenControllerBlockEntity::fluidCapability);
+  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,gregtech.content.registry.GTBlockEntities.CRYO_DISTILLATION.get(),gregtech.content.blockentity.machine.CryoDistillationControllerBlockEntity::fluidCapability);
+  event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,gregtech.content.registry.GTBlockEntities.CRYO_DISTILLATION.get(),gregtech.content.blockentity.machine.CryoDistillationControllerBlockEntity::itemCapability);
+  event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,gregtech.content.registry.GTBlockEntities.MULTIBLOCK_PORT.get(),gregtech.content.blockentity.machine.MultiblockPortBlockEntity::itemCapability);
+  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,gregtech.content.registry.GTBlockEntities.MULTIBLOCK_PORT.get(),gregtech.content.blockentity.machine.MultiblockPortBlockEntity::fluidCapability);
+  event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,gregtech.content.registry.GTBlockEntities.ADDON_ENERGY_PART.get(),gregtech.content.blockentity.machine.AddonEnergyPartBlockEntity::itemCapability);
+  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,gregtech.content.registry.GTBlockEntities.ADDON_ENERGY_PART.get(),gregtech.content.blockentity.machine.AddonEnergyPartBlockEntity::fluidCapability);
+  event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,gregtech.content.registry.GTBlockEntities.ADDON_FUNCTIONAL_PART.get(),gregtech.content.blockentity.machine.AddonFunctionalPartBlockEntity::itemCapability);
+  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,gregtech.content.registry.GTBlockEntities.ADDON_FUNCTIONAL_PART.get(),gregtech.content.blockentity.machine.AddonFunctionalPartBlockEntity::fluidCapability);
   for(var type:TYPES){event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,type.get(),BasicMachineBlockEntity::itemCapability);event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,type.get(),BasicMachineBlockEntity::fluidCapability);}
  }
  public static void registerCompositions(){

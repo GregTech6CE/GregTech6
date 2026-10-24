@@ -3,7 +3,7 @@
 package gregtech.internal.machine;
 
 import gregtech.internal.energy.IEnergyBlock;
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 

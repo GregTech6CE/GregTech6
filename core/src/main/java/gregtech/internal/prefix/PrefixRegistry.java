@@ -1,6 +1,6 @@
 package gregtech.internal.prefix;
 
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 
 import java.util.ArrayList;
 import java.util.Collections;

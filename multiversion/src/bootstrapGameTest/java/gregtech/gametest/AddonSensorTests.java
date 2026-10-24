@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
-import gregtech.block.sensor.SensorBlock;
-import gregtech.blockentity.machine.BehaviorMachineBlockEntity;
-import gregtech.blockentity.sensor.SensorBlockEntity;
+import gregtech.content.block.sensor.SensorBlock;
+import gregtech.content.blockentity.machine.BehaviorMachineBlockEntity;
+import gregtech.content.blockentity.sensor.SensorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;

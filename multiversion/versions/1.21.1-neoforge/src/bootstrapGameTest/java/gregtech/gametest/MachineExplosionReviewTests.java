@@ -3,15 +3,15 @@ package gregtech.gametest;
 import gregtech.GregTechConfig;
 import gregtech.internal.energy.MachineOverload;
 import gregtech.internal.fluid.FluidTankGT;
-import gregtech.block.energy.*;
-import gregtech.block.misc.*;
-import gregtech.blockentity.energy.EnergyNodeBlockEntity;
-import gregtech.blockentity.machine.*;
+import gregtech.content.block.energy.*;
+import gregtech.content.block.misc.*;
+import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
+import gregtech.content.blockentity.machine.*;
 import gregtech.content.energy.BoilerHazards;
 import gregtech.content.logistics.LogisticsCoreStructure;
 import gregtech.content.multiblock.*;
-import gregtech.data.GregTechTags;
-import gregtech.registry.*;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.registry.*;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.*;
@@ -156,7 +156,7 @@ public final class MachineExplosionReviewTests {
     public static void directControllersKeepBufferGuardAndExplodeOnlyOnce(GameTestHelper h) {
         var world = h.getLevel();
         var p = h.absolutePos(new BlockPos(3, 6, 3));
-        var drillBlock = BuiltInRegistries.BLOCK.stream().filter(b -> b instanceof gregtech.block.machine.OriginalBedrockDrillControllerBlock).findFirst().orElseThrow();
+        var drillBlock = BuiltInRegistries.BLOCK.stream().filter(b -> b instanceof gregtech.content.block.machine.OriginalBedrockDrillControllerBlock).findFirst().orElseThrow();
         world.setBlockAndUpdate(p, drillBlock.defaultBlockState());
         for (int x=-1;x<=1;x++) for (int z=-1;z<=1;z++) {
             world.setBlockAndUpdate(p.offset(x,-5,z), Blocks.BEDROCK.defaultBlockState());
@@ -180,7 +180,7 @@ public final class MachineExplosionReviewTests {
             h.assertTrue(blasts.count == 1, "stale drill callbacks cannot repeat the explosion");
 
             var corePos = h.absolutePos(new BlockPos(10,3,8));
-            world.setBlockAndUpdate(corePos, block("logistics_core").defaultBlockState().setValue(gregtech.block.machine.LogisticsCoreControllerBlock.FACING, Direction.NORTH));
+            world.setBlockAndUpdate(corePos, block("logistics_core").defaultBlockState().setValue(gregtech.content.block.machine.LogisticsCoreControllerBlock.FACING, Direction.NORTH));
             for (var cell : LogisticsCoreStructure.cells())
                 world.setBlockAndUpdate(cell.at(corePos,Direction.NORTH), LogisticsCoreStructure.block(cell.kind()).defaultBlockState());
             var core = (LogisticsCoreControllerBlockEntity)world.getBlockEntity(corePos);

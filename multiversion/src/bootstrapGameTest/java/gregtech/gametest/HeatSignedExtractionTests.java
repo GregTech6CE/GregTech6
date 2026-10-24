@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
 import gregtech.api.machine.HeatHandler;
-import gregtech.blockentity.machine.OriginalLargeBoilerControllerBlockEntity;
+import gregtech.content.blockentity.machine.OriginalLargeBoilerControllerBlockEntity;
 import gregtech.content.multiblock.LargeMachineParts;
 import gregtech.content.multiblock.OriginalLargeBoilerSpecs;
-import gregtech.registry.GTHeatExchangers;
-import gregtech.registry.GTMultiblocks;
+import gregtech.content.registry.GTHeatExchangers;
+import gregtech.content.registry.GTMultiblocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;

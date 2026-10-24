@@ -2,12 +2,12 @@ package gregtech.bootstrap.content;
 
 import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.MaterialItemDefinitions;
-import gregtech.data.MaterialPrefix;
-import gregtech.item.CoinItem;
-import gregtech.item.MaterialItem;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.item.CoinItem;
+import gregtech.content.item.MaterialItem;
 import gregtech.bootstrap.InitializationStep;
-import gregtech.registry.GTItems;
-import gregtech.registry.GTTechnological;
+import gregtech.content.registry.GTItems;
+import gregtech.content.registry.GTTechnological;
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.RegistryObject;
@@ -35,31 +35,31 @@ public record ItemBootstrap() implements InitializationStep {
                     prefix == MaterialPrefix.coin
                             ? new CoinItem(new Item.Properties().stacksTo(64), material)
                             : gregtech.content.recipe.MaterialArrowRules.isArrow(prefix, material)
-                            ? new gregtech.item.MaterialArrowItem(new Item.Properties().stacksTo(64), prefix, material)
-                            : gregtech.item.EnergyCrystalItem.createOrMaterial(prefix, material));
+                            ? new gregtech.content.item.MaterialArrowItem(new Item.Properties().stacksTo(64), prefix, material)
+                            : gregtech.content.item.EnergyCrystalItem.createOrMaterial(prefix, material));
             GTItems.bind(prefix, material, registered);
             total++;
         }
 
         LOGGER.info("Queued {} material items for registration", total);
 
-        gregtech.registry.GTColoredBooks.registerAll();
+        gregtech.content.registry.GTColoredBooks.registerAll();
         GTTechnological.registerAll();
         LOGGER.info("Queued {} technological items for registration", GTTechnological.all().size());
 
-        gregtech.registry.GTMultiItems.registerAll();
+        gregtech.content.registry.GTMultiItems.registerAll();
         LOGGER.info("Queued {} multi-items (tools/bottles/food/bumblebees) for registration",
-                gregtech.registry.GTMultiItems.all().size());
+                gregtech.content.registry.GTMultiItems.all().size());
 
         // §108: GT6's food items are all inside the multi-item table above; this registry only holds
         // the handful that were genuinely missing (today none - see GTFoodItemsGen.GAP).
-        gregtech.registry.GTFoodItems.registerAll();
+        gregtech.content.registry.GTFoodItems.registerAll();
         LOGGER.info("Queued {} GT6 food items the multi-item table was missing",
-                gregtech.registry.GTFoodItems.registered());
+                gregtech.content.registry.GTFoodItems.registered());
 
-        gregtech.registry.GTFuelRods.registerAll();
+        gregtech.content.registry.GTFuelRods.registerAll();
         LOGGER.info("Queued {} fuel rod items for registration",
-                gregtech.registry.GTFuelRods.ALL.size());
+                gregtech.content.registry.GTFuelRods.ALL.size());
     }
 
 }

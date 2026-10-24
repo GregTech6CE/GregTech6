@@ -1,7 +1,7 @@
 package gregtech.content.recipe;
 
-import gregtech.data.MachineRecipeMaps;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 

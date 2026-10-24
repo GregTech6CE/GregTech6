@@ -6,9 +6,9 @@ package gregtech.jei;
 import gregtech.GregTech;
 //?}
 import gregtech.internal.material.GTMaterial;
-import gregtech.worldgen.GTOreVeins;
-import gregtech.worldgen.GTStoneLayersGen;
-import gregtech.worldgen.GTWorldgenScale;
+import gregtech.content.worldgen.GTOreVeins;
+import gregtech.content.worldgen.GTStoneLayersGen;
+import gregtech.content.worldgen.GTWorldgenScale;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -132,8 +132,8 @@ public class WorldgenInfoData {
 public record BedrockInfo(String name, GTMaterial material, int chance, ItemStack flower) {}
 public static List<BedrockInfo> buildBedrockOres() {
         List<BedrockInfo> out = new ArrayList<>();
-        for (gregtech.worldgen.GTBedrockOres.BedrockOre ore
-                : gregtech.worldgen.GTBedrockOres.OVERWORLD) {
+        for (gregtech.content.worldgen.GTBedrockOres.BedrockOre ore
+                : gregtech.content.worldgen.GTBedrockOres.OVERWORLD) {
 //? if >=1.21.1 {
             /*Item flower = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", ore.flowerId()));
 *///?} else {

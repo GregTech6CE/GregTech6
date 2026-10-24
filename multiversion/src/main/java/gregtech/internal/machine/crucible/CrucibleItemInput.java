@@ -12,18 +12,18 @@ import gregtech.internal.material.ItemMaterialRegistry;
 *///?} else {
 import gregtech.internal.material.MaterialChemistry;
 //?}
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 //? if >=1.21.1 {
 //?} else {
-import gregtech.block.BlockMaterialWeights;
-import gregtech.block.MaterialBlockLike;
-import gregtech.block.machine.SmeltingCrucibleBlock;
-import gregtech.block.stone.GTStoneBlock;
-import gregtech.block.stone.GTStoneSlabBlock;
-import gregtech.block.stone.StoneMaterialWeights;
-import gregtech.block.stone.StoneVariant;
+import gregtech.content.block.BlockMaterialWeights;
+import gregtech.content.block.MaterialBlockLike;
+import gregtech.content.block.machine.SmeltingCrucibleBlock;
+import gregtech.content.block.stone.GTStoneBlock;
+import gregtech.content.block.stone.GTStoneSlabBlock;
+import gregtech.content.block.stone.StoneMaterialWeights;
+import gregtech.content.block.stone.StoneVariant;
 //?}
-import gregtech.item.MaterialItem;
+import gregtech.content.item.MaterialItem;
 //? if >=1.21.1 {
 //?} else {
 import net.minecraft.world.item.BlockItem;
@@ -62,7 +62,7 @@ public final class CrucibleItemInput {
 //? if >=1.21.1 {
         /*if (stack.getItem() instanceof net.minecraft.world.item.BlockItem item) {
             var block = item.getBlock();
-            if (block instanceof gregtech.block.MaterialBlockLike materialBlock) {
+            if (block instanceof gregtech.content.block.MaterialBlockLike materialBlock) {
                 long oreCount = switch (materialBlock.prefix().getName()) {
 *///?} else {
 
@@ -87,7 +87,7 @@ public final class CrucibleItemInput {
                 };
 //? if >=1.21.1 {
                 /*if (oreCount > 0) result.add(CrucibleInputRules.ore(materialBlock.material().resolve(), oreCount));
-                else for (var weighted : gregtech.block.BlockMaterialWeights.contained(
+                else for (var weighted : gregtech.content.block.BlockMaterialWeights.contained(
                         materialBlock.material(), materialBlock.prefix()))
                     if (weighted.material().isValid()) CrucibleMaterialStack.of(weighted.material(), weighted.amount()).addToList(result);
 *///?} else {
@@ -107,10 +107,10 @@ public final class CrucibleItemInput {
 
 //? if >=1.21.1 {
             /*java.util.List<gregtech.internal.material.MaterialChemistry.WeightedMaterial> weights =
-                    block instanceof gregtech.block.stone.GTStoneBlock stone
-                            ? gregtech.block.stone.StoneMaterialWeights.contained(stone.stoneMaterial(), stone.variant(), false)
-                    : block instanceof gregtech.block.stone.GTStoneSlabBlock slab
-                            ? gregtech.block.stone.StoneMaterialWeights.contained(slab.stoneMaterial(), slab.variant(), true)
+                    block instanceof gregtech.content.block.stone.GTStoneBlock stone
+                            ? gregtech.content.block.stone.StoneMaterialWeights.contained(stone.stoneMaterial(), stone.variant(), false)
+                    : block instanceof gregtech.content.block.stone.GTStoneSlabBlock slab
+                            ? gregtech.content.block.stone.StoneMaterialWeights.contained(slab.stoneMaterial(), slab.variant(), true)
                     : java.util.List.of();
             if (!weights.isEmpty()) {
                 for (var weighted : weights)

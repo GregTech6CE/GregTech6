@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
 import gregtech.internal.machine.MachineRegistry;
-import gregtech.data.BasicMachineCraftingRecipes;
-import gregtech.data.BasicMachineRecipePack;
-import gregtech.data.MachineRecipeIngredients;
+import gregtech.content.data.BasicMachineCraftingRecipes;
+import gregtech.content.data.BasicMachineRecipePack;
+import gregtech.content.data.MachineRecipeIngredients;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.ItemStack;

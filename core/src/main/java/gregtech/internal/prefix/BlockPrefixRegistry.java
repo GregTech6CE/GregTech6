@@ -14,7 +14,7 @@ public final class BlockPrefixRegistry {
     }
 
     public static void ensurePrefixesLoaded() {
-        gregtech.data.MaterialPrefixes.bootstrap();
+        gregtech.content.data.MaterialPrefixes.bootstrap();
     }
 
     public static List<BlockMaterialPrefix> all() {

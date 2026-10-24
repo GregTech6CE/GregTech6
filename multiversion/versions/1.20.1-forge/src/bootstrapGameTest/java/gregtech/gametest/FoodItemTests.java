@@ -6,9 +6,9 @@ import gregtech.content.food.GTFoodItems;
 import gregtech.content.food.GTFoodStats;
 import gregtech.content.food.PlayerFoodStats;
 import gregtech.content.recipe.FoodItemRecipes;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.data.generated.GTFoodItemsGen;
-import gregtech.data.generated.GTFoodStatsGen;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.generated.GTFoodItemsGen;
+import gregtech.content.data.generated.GTFoodStatsGen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
@@ -52,7 +52,7 @@ public final class FoodItemTests {
 
     /** The gap registry lives in {@code registry}, the content table in {@code content.food}. */
     private static int itemGap() {
-        return gregtech.registry.GTFoodItems.gap().size();
+        return gregtech.content.registry.GTFoodItems.gap().size();
     }
 
     private static void eat(Player player, ItemStack stack) {
@@ -307,7 +307,7 @@ public final class FoodItemTests {
         // (MultiItemFood.java:715), which the generated table records under SKIPPED, so the lookup uses
         // the vanilla item rather than a GT food id.
         ItemStack splitBlade = new ItemStack(
-                gregtech.registry.GTTechnological.get("slicer_shape_split"));
+                gregtech.content.registry.GTTechnological.get("slicer_shape_split"));
         ItemStack slicedBread = food("sliced_bread");
         helper.assertTrue(!splitBlade.isEmpty() && !slicedBread.isEmpty(),
                 "gt6ce:slicer_shape_split and gt6ce:sliced_bread are registered");

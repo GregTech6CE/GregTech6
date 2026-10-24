@@ -2,15 +2,15 @@ package gregtech.content.tool;
 
 //? if >=1.21.1 {
 //?} else {
-import gregtech.block.GTGrassBlock;
+import gregtech.content.block.GTGrassBlock;
 //?}
-import gregtech.block.RockOreBlock;
-import gregtech.block.OreBlock;
+import gregtech.content.block.RockOreBlock;
+import gregtech.content.block.OreBlock;
 //? if >=1.21.1 {
 //?} else {
-import gregtech.block.misc.DiggableBlock;
+import gregtech.content.block.misc.DiggableBlock;
 //?}
-import gregtech.block.stone.GTStoneBlock;
+import gregtech.content.block.stone.GTStoneBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;

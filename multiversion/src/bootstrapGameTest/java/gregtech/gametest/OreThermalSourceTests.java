@@ -1,10 +1,10 @@
 package gregtech.gametest;
 import gregtech.internal.material.MaterialFormItem;
 import gregtech.internal.recipe.RecipeMap;
-import gregtech.block.machine.BasicMachineBlock;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.recipe.MachineRecipeOverlay;
+import gregtech.content.block.machine.BasicMachineBlock;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.recipe.MachineRecipeOverlay;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
@@ -27,10 +27,10 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 public final class OreThermalSourceTests {
  private static final FluidStack[] NONE=new FluidStack[0];
  private static FluidStack mercury(int amount){
-  var stack=gregtech.registry.GTFluids.stack("GenLiquid_Mercury",amount);
+  var stack=gregtech.content.registry.GTFluids.stack("GenLiquid_Mercury",amount);
   if(stack==null||stack.isEmpty()||!BuiltInRegistries.FLUID.getKey(stack.getFluid()).toString().equals("gt6ce:mercury"))
    throw new AssertionError("Required reviewed native Mercury fluid identity");
-  var catalog=gregtech.data.RegisteredFluids.get("GenLiquid_Mercury");
+  var catalog=gregtech.content.data.RegisteredFluids.get("GenLiquid_Mercury");
   if(catalog==null||!catalog.registryName().equals("mercury"))throw new AssertionError("Required source mercury registry binding");
   return stack;
  }

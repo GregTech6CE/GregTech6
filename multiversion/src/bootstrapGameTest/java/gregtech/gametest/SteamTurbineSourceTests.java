@@ -3,14 +3,14 @@ package gregtech.gametest;
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
 import gregtech.internal.recipe.RecipeInputs;
-import gregtech.block.energy.*;
-import gregtech.blockentity.energy.EnergyNodeBlockEntity;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
-import gregtech.blockentity.machine.BoilerTankBlockEntity;
+import gregtech.content.block.energy.*;
+import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.blockentity.machine.BoilerTankBlockEntity;
 import gregtech.content.energy.OriginalSteamTurbines;
 import gregtech.content.recipe.*;
-import gregtech.data.GregTechTags;
-import gregtech.item.GTToolItem;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.item.GTToolItem;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.*;
@@ -48,8 +48,8 @@ public final class SteamTurbineSourceTests {
         h.assertTrue(battery.installBattery(item("gt6ce:battery_lead_acid_lv")),"actual complete battery installed");
         battery.batteryEnergy().tick(2,null,null);
         h.setBlock(pos.south(),BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gt6ce:drum_stainless_steel")).defaultBlockState());
-        var drum = (gregtech.blockentity.machine.TankBlockEntity) h.getBlockEntity(pos.south());
-        var steam = gregtech.registry.GTFluids.stack("Steam",384);
+        var drum = (gregtech.content.blockentity.machine.TankBlockEntity) h.getBlockEntity(pos.south());
+        var steam = gregtech.content.registry.GTFluids.stack("Steam",384);
 //? if >=1.21.1 {
         /*var inlet = java.util.Objects.requireNonNull(h.getLevel().getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,turbine.getBlockPos(),Direction.WEST));
         var side = java.util.Objects.requireNonNull(h.getLevel().getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,turbine.getBlockPos(),Direction.UP));
@@ -60,7 +60,7 @@ public final class SteamTurbineSourceTests {
         h.assertTrue(inlet.getTankCapacity(0) == 1536 && inlet.fill(steam,FluidAction.SIMULATE) == 384
                 && inlet.getFluidInTank(0).isEmpty(),"source1536L steam tank and pure insertion simulation");
         h.assertTrue(side.getTanks() == 1 && side.fill(steam,FluidAction.EXECUTE) == 0
-                && inlet.fill(gregtech.registry.GTFluids.stack("DistW",384),FluidAction.EXECUTE) == 0,"only steam at current back can fill visible tank");
+                && inlet.fill(gregtech.content.registry.GTFluids.stack("DistW",384),FluidAction.EXECUTE) == 0,"only steam at current back can fill visible tank");
         h.setBlock(pos,turbine.getBlockState().setValue(EnergyNodeBlock.FACING,Direction.SOUTH));
         h.assertTrue(inlet.fill(steam,FluidAction.EXECUTE) == 0,"cached former back capability cannot bypass rotation");
         h.setBlock(pos,turbine.getBlockState().setValue(EnergyNodeBlock.FACING,Direction.EAST));
@@ -88,7 +88,7 @@ public final class SteamTurbineSourceTests {
         h.assertTrue(battery.batteryEnergy().buffer() == 88 && drum.getFluidInTank(0).getAmount() == 1,
                 "reverse preserves pending steam half and signed RU/EU; no second condensation");
         turbine.machineControl(null).setEnabled(true);
-        h.assertTrue(inlet.fill(gregtech.registry.GTFluids.stack("Steam",192),FluidAction.EXECUTE) == 192 && turbine.purgeTurbineSteam() == 192
+        h.assertTrue(inlet.fill(gregtech.content.registry.GTFluids.stack("Steam",192),FluidAction.EXECUTE) == 192 && turbine.purgeTurbineSteam() == 192
                 && inlet.getFluidInTank(0).isEmpty(),"source plunger trashes whole steam tank");
 //? if >=1.21.1 {
         /*var afterPurge = turbine.saveWithoutMetadata(h.getLevel().registryAccess());
@@ -100,7 +100,7 @@ public final class SteamTurbineSourceTests {
         h.succeed();
     }
     private static net.minecraft.world.level.material.Fluid steamWater() {
-        return gregtech.registry.GTFluids.still("DistW").get();
+        return gregtech.content.registry.GTFluids.still("DistW").get();
     }
     @GameTest(template="test_empty", timeoutTicks=100)
     public static void fifteenTurbineCraftingRowsToolsSynchronizationMaterialRecoveryAndStoredProtection(GameTestHelper h) {

@@ -1,7 +1,7 @@
 package gregtech.internal.energy;
 
 import gregtech.internal.material.GTMaterial;
-import gregtech.data.GregTechConstants;
+import gregtech.content.data.GregTechConstants;
 
 /** Defines one electric wire type (GT6 {@code MultiTileEntityWireElectric}). */
 public record WireSpec(String id, GTMaterial material, int size, long voltage, long amperage, long lossPerBlock,

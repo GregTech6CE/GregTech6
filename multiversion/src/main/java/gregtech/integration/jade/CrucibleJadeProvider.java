@@ -1,10 +1,10 @@
 package gregtech.integration.jade;
 
-import gregtech.block.machine.SmeltingCrucibleBlock;
+import gregtech.content.block.machine.SmeltingCrucibleBlock;
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity;
 *///?} else {
-import gregtech.blockentity.machine.SmeltingCrucibleBlockEntity;
+import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
 //?}
 import gregtech.internal.material.GTMaterial;
 import net.minecraft.nbt.CompoundTag;
@@ -40,7 +40,7 @@ public enum CrucibleJadeProvider implements IBlockComponentProvider, IServerData
 *///?} else {
         SmeltingCrucibleBlockEntity crucible = entity instanceof SmeltingCrucibleBlockEntity direct ? direct
 //?}
-                : entity instanceof gregtech.blockentity.machine.MultiblockPortBlockEntity port
+                : entity instanceof gregtech.content.blockentity.machine.MultiblockPortBlockEntity port
 //? if >=1.21.1 {
 /*// Version-specific branch.
                     ? (port.crucibleController() instanceof SmeltingCrucibleEntity owner ? owner : null) : null;

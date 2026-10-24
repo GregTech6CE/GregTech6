@@ -1,7 +1,7 @@
 package gregtech.client;
 
-import gregtech.registry.GTFluidSprings;
-import gregtech.blockentity.FluidSpringBlockEntity;
+import gregtech.content.registry.GTFluidSprings;
+import gregtech.content.blockentity.FluidSpringBlockEntity;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -33,7 +33,7 @@ public final class FluidSpringClient {
 
     public static Fluid fluid(ItemStack stack) {
         if (stack.getItem() instanceof net.minecraft.world.item.BlockItem item
-                && item.getBlock() instanceof gregtech.block.FluidSpringBlock block && block.spring() != null)
+                && item.getBlock() instanceof gregtech.content.block.FluidSpringBlock block && block.spring() != null)
         return BuiltInRegistries.FLUID.get(ResourceLocation.parse(block.spring().fluidId()));
 //? if >=1.21.1 {
         /*var packed = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
@@ -46,7 +46,7 @@ public final class FluidSpringClient {
     }
     @SubscribeEvent public static void models(ModelEvent.ModifyBakingResult event) {
         for (var block : GTFluidSprings.allBlocks()) {
-            var fluid = ((gregtech.block.FluidSpringBlock) block).spring();
+            var fluid = ((gregtech.content.block.FluidSpringBlock) block).spring();
             var output = fluid == null ? Fluids.WATER : BuiltInRegistries.FLUID.get(ResourceLocation.parse(fluid.fluidId()));
             var id = BlockModelShaper.stateToModelLocation(block.defaultBlockState());
             event.getModels().computeIfPresent(id, (key, model) -> new FluidSpringBakedModel(model, output));
@@ -60,7 +60,7 @@ public final class FluidSpringClient {
     }
     @SubscribeEvent public static void blocks(RegisterColorHandlersEvent.Block event) {
         event.register((state, level, pos, layer) -> {
-            var definition = ((gregtech.block.FluidSpringBlock) state.getBlock()).spring();
+            var definition = ((gregtech.content.block.FluidSpringBlock) state.getBlock()).spring();
             Fluid output = definition == null ? Fluids.WATER : BuiltInRegistries.FLUID.get(ResourceLocation.parse(definition.fluidId()));
             if (definition == null && level != null && pos != null && level.getBlockEntity(pos) instanceof FluidSpringBlockEntity be
                     && be.fluid() != null) output = be.fluid();

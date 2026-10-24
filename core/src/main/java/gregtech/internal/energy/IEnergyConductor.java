@@ -1,6 +1,6 @@
 package gregtech.internal.energy;
 
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 
 /** Metadata for energy conductors (GT6 {@code ITileEntityEnergyDataConductor}). */
 public interface IEnergyConductor {

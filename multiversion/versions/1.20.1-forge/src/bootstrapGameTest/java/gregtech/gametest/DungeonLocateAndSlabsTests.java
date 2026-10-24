@@ -3,21 +3,21 @@ package gregtech.gametest;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.MapCodec;
-import gregtech.block.stone.GTStoneSlabBlock;
-import gregtech.block.stone.StoneType;
-import gregtech.block.stone.StoneVariant;
-import gregtech.registry.GTBlocks;
-import gregtech.worldgen.GTDungeonAnchorPiece;
-import gregtech.worldgen.GTDungeonFeature;
-import gregtech.worldgen.GTDungeonPlacement;
-import gregtech.worldgen.GTDungeonStructure;
-import gregtech.worldgen.GTStructures;
-import gregtech.worldgen.dungeon.GTDungeonChunkBarracks;
-import gregtech.worldgen.dungeon.GTDungeonChunkEntrance;
-import gregtech.worldgen.dungeon.GTDungeonChunkRoomFarmCrop;
-import gregtech.worldgen.dungeon.GTDungeonChunkRoomPortalNether;
-import gregtech.worldgen.dungeon.GTDungeonData;
-import gregtech.worldgen.dungeon.GTDungeonLayout;
+import gregtech.content.block.stone.GTStoneSlabBlock;
+import gregtech.content.block.stone.StoneType;
+import gregtech.content.block.stone.StoneVariant;
+import gregtech.content.registry.GTBlocks;
+import gregtech.content.worldgen.GTDungeonAnchorPiece;
+import gregtech.content.worldgen.GTDungeonFeature;
+import gregtech.content.worldgen.GTDungeonPlacement;
+import gregtech.content.worldgen.GTDungeonStructure;
+import gregtech.content.worldgen.GTStructures;
+import gregtech.content.worldgen.dungeon.GTDungeonChunkBarracks;
+import gregtech.content.worldgen.dungeon.GTDungeonChunkEntrance;
+import gregtech.content.worldgen.dungeon.GTDungeonChunkRoomFarmCrop;
+import gregtech.content.worldgen.dungeon.GTDungeonChunkRoomPortalNether;
+import gregtech.content.worldgen.dungeon.GTDungeonData;
+import gregtech.content.worldgen.dungeon.GTDungeonLayout;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -254,7 +254,7 @@ public final class DungeonLocateAndSlabsTests {
         ServerLevel level = helper.getLevel();
         List<String> problems = new ArrayList<>();
 
-        // The structure itself, with the type that names its codec (data/gregtech/worldgen/structure/...).
+        // The structure itself, with the type that names its codec (data/gregtech/content/worldgen/structure/...).
         var structures = level.registryAccess().registryOrThrow(Registries.STRUCTURE);
         check(problems, structures.containsKey(GTStructures.DUNGEON), "gt6ce:gt_dungeon is not registered");
         Structure dungeon = structures.get(GTStructures.DUNGEON);

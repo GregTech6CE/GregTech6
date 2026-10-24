@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
 import gregtech.internal.fluid.PipeIgnition;
-import gregtech.block.machine.FluidPipeBlock;
-import gregtech.blockentity.machine.FluidPipeBlockEntity;
-import gregtech.registry.GTFluids;
+import gregtech.content.block.machine.FluidPipeBlock;
+import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
+import gregtech.content.registry.GTFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;

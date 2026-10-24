@@ -7,8 +7,8 @@ import gregtech.internal.tool.GTToolType;
 import gregtech.content.material.Materials;
 import gregtech.content.material.generated.WoodMaterials;
 import gregtech.content.recipe.HandToolCraftingRecipeInjector;
-import gregtech.item.GTToolItem;
-import gregtech.registry.GTGearboxes;
+import gregtech.content.item.GTToolItem;
+import gregtech.content.registry.GTGearboxes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -91,13 +91,13 @@ public final class GearboxRegistrationTests {
         for (var entry : GTGearboxes.allGearboxes()) {
             helper.setBlock(place, entry.get());
             helper.assertTrue(helper.getLevel().getBlockEntity(helper.absolutePos(place))
-                            instanceof gregtech.blockentity.energy.GearboxBlockEntity,
+                            instanceof gregtech.content.blockentity.energy.GearboxBlockEntity,
                     "real gearbox block entity: " + entry.getId());
         }
         for (var entry : GTGearboxes.allTransformers()) {
             helper.setBlock(place, entry.get());
             helper.assertTrue(helper.getLevel().getBlockEntity(helper.absolutePos(place))
-                            instanceof gregtech.blockentity.energy.EnergyNodeBlockEntity,
+                            instanceof gregtech.content.blockentity.energy.EnergyNodeBlockEntity,
                     "real transformer block entity: " + entry.getId());
         }
         helper.succeed();

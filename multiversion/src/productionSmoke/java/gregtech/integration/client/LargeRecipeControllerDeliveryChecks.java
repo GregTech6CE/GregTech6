@@ -1,8 +1,8 @@
 package gregtech.integration.client;
 import com.google.gson.JsonObject;
 import gregtech.internal.material.ItemMaterialRegistry;
-import gregtech.block.machine.BasicMachineBlock;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.block.machine.BasicMachineBlock;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.client.CommonBlockTooltips;
 import gregtech.content.machine.OriginalMachineMaterialData;
 import gregtech.content.multiblock.*;
@@ -39,11 +39,11 @@ final class LargeRecipeControllerDeliveryChecks {
             count++;
         }
 //? if >=1.21.1 {
-        /*var pack=new gregtech.data.MultiblockRecipePack(new net.minecraft.server.packs.PackLocationInfo("gt6ce:delivery",Component.literal("Delivery"),net.minecraft.server.packs.repository.PackSource.BUILT_IN,Optional.empty()));
+        /*var pack=new gregtech.content.data.MultiblockRecipePack(new net.minecraft.server.packs.PackLocationInfo("gt6ce:delivery",Component.literal("Delivery"),net.minecraft.server.packs.repository.PackSource.BUILT_IN,Optional.empty()));
 *///?} else {
-        var pack=new gregtech.data.MultiblockRecipePack("gt6ce:delivery");
+        var pack=new gregtech.content.data.MultiblockRecipePack("gt6ce:delivery");
 //?}
-        for(var entry:gregtech.data.MultiblockCraftingRecipes.ENTRIES)if(entry.blockId().startsWith("large")&&OriginalLargeRecipeMachineData.handles(entry.blockId().substring(0,entry.blockId().indexOf('_')))) {
+        for(var entry:gregtech.content.data.MultiblockCraftingRecipes.ENTRIES)if(entry.blockId().startsWith("large")&&OriginalLargeRecipeMachineData.handles(entry.blockId().substring(0,entry.blockId().indexOf('_')))) {
 //? if >=1.21.1 {
             /*var resource=pack.getResource(net.minecraft.server.packs.PackType.SERVER_DATA,net.minecraft.resources.ResourceLocation.parse("gt6ce:recipe/machines/multiblock/"+entry.blockId()+".json"));
 *///?} else {

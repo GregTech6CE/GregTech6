@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
 import gregtech.internal.energy.EnergyNet;
-import gregtech.block.energy.ElectricWireBlock;
-import gregtech.blockentity.energy.ElectricWireBlockEntity;
+import gregtech.content.block.energy.ElectricWireBlock;
+import gregtech.content.blockentity.energy.ElectricWireBlockEntity;
 import gregtech.content.recipe.OvenRecipeBridge;
-import gregtech.registry.GTWires;
-import gregtech.world.GarbageData;
+import gregtech.content.registry.GTWires;
+import gregtech.content.world.GarbageData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

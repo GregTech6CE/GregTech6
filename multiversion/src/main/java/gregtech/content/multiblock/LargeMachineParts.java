@@ -1,7 +1,7 @@
 package gregtech.content.multiblock;
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.registry.GTMultiblocks;
-import gregtech.registry.RegisteredBlock;
+import gregtech.content.registry.GTMultiblocks;
+import gregtech.content.registry.RegisteredBlock;
 import net.minecraft.world.level.block.Block;
 import java.util.List;
 import java.util.Objects;

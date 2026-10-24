@@ -4,13 +4,13 @@ import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.tool.GTToolHelper;
 import gregtech.internal.tool.GTToolType;
-import gregtech.block.wood.WoodSpecies;
+import gregtech.content.block.wood.WoodSpecies;
 import gregtech.content.recipe.GTWoodRecipes;
-import gregtech.data.MaterialPrefix;
-import gregtech.item.GTToolItem;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.item.GTToolItem;
 import gregtech.content.recipe.WoodCraftingRecipeInjector;
-import gregtech.registry.GTItems;
-import gregtech.registry.GTWoods;
+import gregtech.content.registry.GTItems;
+import gregtech.content.registry.GTWoods;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
@@ -123,7 +123,7 @@ public final class WoodRecipeTests {
     private static final Set<String> FILE_ROWS = Set.of("log_to_sticks", "beam_to_sticks");
 
     private static ItemStack tool(GTToolType type) {
-        var item = gregtech.registry.GTToolItems.get(type);
+        var item = gregtech.content.registry.GTToolItems.get(type);
         return item == null ? ItemStack.EMPTY : new ItemStack(item);
     }
 
@@ -474,7 +474,7 @@ public final class WoodRecipeTests {
             if (!batch.contains(recipe.getId().toString())) continue;
             TransientCraftingContainer grid = grid();
             if (recipe instanceof ShapedRecipe shapedRecipe) {
-                if (recipe instanceof gregtech.recipe.ToolShapedRecipe tool) {
+                if (recipe instanceof gregtech.content.recipe.ToolShapedRecipe tool) {
                     if (tool.allowMirror()) mirroring.add(recipe.getId().toString());
                 }
                 for (int y = 0; y < shapedRecipe.getHeight(); y++) {

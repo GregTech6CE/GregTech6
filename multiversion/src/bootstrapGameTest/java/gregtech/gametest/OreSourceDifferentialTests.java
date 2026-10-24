@@ -3,10 +3,10 @@ package gregtech.gametest;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.recipe.Recipe;
 import gregtech.internal.recipe.RecipeMap;
-import gregtech.data.MaterialPrefix;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.registry.GTItems;
-import gregtech.registry.GTFluids;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.registry.GTItems;
+import gregtech.content.registry.GTFluids;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.ItemStack;
@@ -70,7 +70,7 @@ public final class OreSourceDifferentialTests {
             case "GenMolten_WaxSoulful" -> new String[]{"molten.waxsoulful","gt6ce:molten_waxsoulful"};
             default -> throw new AssertionError("Unreviewed fluid alias " + field);
         };
-        var entry=gregtech.data.RegisteredFluids.get(field);
+        var entry=gregtech.content.data.RegisteredFluids.get(field);
         if(entry==null||!entry.registryName().equals(binding[0]))
             throw new AssertionError("Source fluid catalog binding mismatch "+field+" expected "+binding[0]);
         var id=net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(fluid.getFluid());

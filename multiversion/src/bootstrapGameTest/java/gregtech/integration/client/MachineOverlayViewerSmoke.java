@@ -2,9 +2,9 @@ package gregtech.integration.client;
 
 import com.google.gson.JsonObject;
 import gregtech.internal.recipe.Recipe;
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.data.MachineRecipeMaps;
 import gregtech.jei.RecipeMapCategory;
-import gregtech.recipe.MachineRecipeOverlay;
+import gregtech.content.recipe.MachineRecipeOverlay;
 import com.mojang.logging.LogUtils;
 import dev.emi.emi.api.EmiApi;
 import dev.emi.emi.api.stack.EmiIngredient;

@@ -8,8 +8,8 @@ import gregtech.GregTech;
 import gregtech.internal.material.MaterialTextureSet;
 import gregtech.internal.prefix.BlockMaterialPrefix;
 import gregtech.internal.prefix.BlockPrefixRegistry;
-import gregtech.block.MaterialBlockLike;
-import gregtech.registry.GTBlocks;
+import gregtech.content.block.MaterialBlockLike;
+import gregtech.content.registry.GTBlocks;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -96,7 +96,7 @@ public final class MaterialBlockClientModels {
                 continue;
             }
             // Ore blocks render via OreBakedModel (NBT-driven stone background), see OreClientModels.
-            if (entry.get() instanceof gregtech.block.OreBlock) {
+            if (entry.get() instanceof gregtech.content.block.OreBlock) {
                 continue;
             }
 //? if >=1.21.1 {

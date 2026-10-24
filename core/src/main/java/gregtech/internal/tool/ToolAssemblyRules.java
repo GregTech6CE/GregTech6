@@ -1,7 +1,7 @@
 package gregtech.internal.tool;
 
 import gregtech.internal.material.GTMaterial;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 import java.util.List;
 
 /** Shared head/handle admission from saltnya's GTToolAssemblyRecipe; stacks stay on the platform. */

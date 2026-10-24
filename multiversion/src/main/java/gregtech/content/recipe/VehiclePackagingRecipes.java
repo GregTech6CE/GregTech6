@@ -1,6 +1,6 @@
 package gregtech.content.recipe;
 import gregtech.internal.recipe.Recipe;
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.data.MachineRecipeMaps;
 import net.minecraft.world.item.ItemStack;
 import java.util.*;
 /** GT6 RM.boxunbox minecarts; modern chest boats use the same empty-shell contract. */

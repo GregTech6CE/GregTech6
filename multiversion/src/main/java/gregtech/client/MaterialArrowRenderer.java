@@ -1,7 +1,7 @@
 package gregtech.client;
 
-import gregtech.entity.MaterialArrowEntity;
-import gregtech.registry.GTProjectiles;
+import gregtech.content.entity.MaterialArrowEntity;
+import gregtech.content.registry.GTProjectiles;
 import net.minecraft.client.renderer.entity.ArrowRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;

@@ -2,12 +2,12 @@ package gregtech.gametest;
 
 import gregtech.api.machine.MachineControl;
 import gregtech.internal.tool.*;
-import gregtech.block.energy.*;
-import gregtech.blockentity.energy.SignalWireBlockEntity;
+import gregtech.content.block.energy.*;
+import gregtech.content.blockentity.energy.SignalWireBlockEntity;
 import gregtech.content.material.Materials;
 import gregtech.content.recipe.WireProcessingRecipes;
-import gregtech.item.GTToolItem;
-import gregtech.registry.*;
+import gregtech.content.item.GTToolItem;
+import gregtech.content.registry.*;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.*;

@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 import gregtech.internal.material.ItemMaterialRegistry;
 import gregtech.internal.recipe.Recipe;
 import gregtech.internal.recipe.RecipeMap;
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.data.MachineRecipeMaps;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.item.ItemStack;

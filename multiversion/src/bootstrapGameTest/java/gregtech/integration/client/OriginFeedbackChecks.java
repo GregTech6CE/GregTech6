@@ -1,6 +1,6 @@
 package gregtech.integration.client;
 import com.google.gson.*;
-import gregtech.worldgen.center.*;
+import gregtech.content.worldgen.center.*;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -32,21 +32,21 @@ public final class OriginFeedbackChecks {
         receipt.addProperty("originCenterBiomesChecked",biomes.length);
         var asphalt=BuiltInRegistries.BLOCK.get(id("asphalt"));
         var road=level.getBlockState(new BlockPos(-4,height,64));
-        require(road.is(gregtech.registry.GTConstructionVariants.coloredBlock(asphalt,DyeColor.GRAY)),"Road is not source gray asphalt");
+        require(road.is(gregtech.content.registry.GTConstructionVariants.coloredBlock(asphalt,DyeColor.GRAY)),"Road is not source gray asphalt");
         require(level.getBlockState(new BlockPos(72,height-10,-72)).is(Blocks.TERRACOTTA),"Original uncolored mesa terracotta was dyed");
         int[] facilities={7133,4033,6033,5033,8033,14999,26304,32048,32057,32062,32702,32703,32705,32707,32709,32711,32719,32722,32727,32732,32735,32737,32739,32744,32750};
         for(int legacy:facilities)require(BuiltInRegistries.BLOCK.containsKey(id(NativeOriginFacilities.block(legacy))),"Missing source facility "+legacy);
         require(level.getBlockState(new BlockPos(17,height+1,-46)).is(Blocks.END_PORTAL_FRAME),"Original Nexus portal frame was not generated");
-        require("glass_glow_slab".equals(gregtech.registry.GTConstructionVariants.family(level.getBlockState(new BlockPos(34,height+15,-30)).getBlock())),"Source test roof glow-glass slab missing");
+        require("glass_glow_slab".equals(gregtech.content.registry.GTConstructionVariants.family(level.getBlockState(new BlockPos(34,height+15,-30)).getBlock())),"Source test roof glow-glass slab missing");
         var grind=level.getBlockEntity(new BlockPos(42,height+2,-18));
-        require(grind instanceof gregtech.blockentity.tool.ManualToolBlockEntity station&&station.stoneUses()==4,"Source grindstone not preloaded");
+        require(grind instanceof gregtech.content.blockentity.tool.ManualToolBlockEntity station&&station.stoneUses()==4,"Source grindstone not preloaded");
         var button=level.getBlockEntity(new BlockPos(44,height+2,-20));
-        require(button instanceof gregtech.blockentity.tool.AdvancedButtonBlockEntity b&&b.isInverted()&&!b.isLampMode(),"Source inverted test button config lost");
+        require(button instanceof gregtech.content.blockentity.tool.AdvancedButtonBlockEntity b&&b.isInverted()&&!b.isLampMode(),"Source inverted test button config lost");
         require(level.getBlockState(new BlockPos(41,height+4,-18)).isAir(),"Removed certificate still generated");
         var drawer=level.getBlockEntity(new BlockPos(39,height+2,-18));
-        require(drawer instanceof gregtech.blockentity.inventory.DrawerQuadBlockEntity,"Source test drawer was not generated");
-        if(!(drawer instanceof gregtech.blockentity.inventory.DrawerQuadBlockEntity))throw new IllegalStateException("Missing actual test drawer");
-        var inventory=((gregtech.blockentity.inventory.DrawerQuadBlockEntity)drawer).items();
+        require(drawer instanceof gregtech.content.blockentity.inventory.DrawerQuadBlockEntity,"Source test drawer was not generated");
+        if(!(drawer instanceof gregtech.content.blockentity.inventory.DrawerQuadBlockEntity))throw new IllegalStateException("Missing actual test drawer");
+        var inventory=((gregtech.content.blockentity.inventory.DrawerQuadBlockEntity)drawer).items();
         JsonArray missing=new JsonArray();int present=0,optional=0;
         for(int slot=0;slot<OriginTestInventory.ROWS.size();slot++) {
             String row=OriginTestInventory.ROWS.get(slot);var expected=NativeOriginItems.stack(row);
@@ -70,9 +70,9 @@ public final class OriginFeedbackChecks {
             try {
                 level.setBlock(mount,Blocks.REDSTONE_LAMP.defaultBlockState(),3);
                 level.setBlock(front,Blocks.REDSTONE_LAMP.defaultBlockState(),3);
-                var off=crank.defaultBlockState().setValue(gregtech.block.tool.CrankBlock.FACING,handle);
+                var off=crank.defaultBlockState().setValue(gregtech.content.block.tool.CrankBlock.FACING,handle);
                 level.setBlock(pos,off,3);require(!level.hasNeighborSignal(mount),"Idle crank emits redstone");
-                var on=off.setValue(gregtech.block.tool.CrankBlock.ACTIVE,true);
+                var on=off.setValue(gregtech.content.block.tool.CrankBlock.ACTIVE,true);
                 level.setBlock(pos,on,3);
                 require(level.hasNeighborSignal(mount),"Active crank does not power mounting block: "+handle);
                 require(!level.hasNeighborSignal(front),"Active crank powers handle neighbor: "+handle);
@@ -82,7 +82,7 @@ public final class OriginFeedbackChecks {
         }
         receipt.addProperty("crankNativeSignalChecks",checks);
         // Actual native tool stack enchantment, not a tooltip/table-only assertion.
-        var knife=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.KNIFE,
+        var knife=gregtech.content.item.GTToolItem.create(gregtech.internal.tool.GTToolType.KNIFE,
                 gregtech.content.material.Materials.Flint,gregtech.content.material.generated.WoodMaterials.Wood);
 //? if >=1.21.1 {
         /*gregtech.internal.tool.GTToolEnchantments.apply(knife,server.registryAccess());
@@ -120,8 +120,8 @@ public final class OriginFeedbackChecks {
         actor.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);actor.moveTo(4.5,140,4.5,0,0);actor.getInventory().clearContent();int gunChecks=0;
         var material=gregtech.content.material.Materials.Steel;
         for(var type:java.util.List.of(gregtech.internal.tool.GTToolType.PISTOL,gregtech.internal.tool.GTToolType.CARBINE,gregtech.internal.tool.GTToolType.RIFLE)){
-            var stack=gregtech.item.GTToolItem.create(type,material,gregtech.internal.material.GTMaterialRegistry.get("Spruce"));var gun=(gregtech.item.GunToolItem)stack.getItem();
-            actor.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,stack);actor.getInventory().setItem(9,gregtech.registry.GTItems.getStack(gun.definition().ammunition(),gregtech.content.material.Materials.Lead,32));
+            var stack=gregtech.content.item.GTToolItem.create(type,material,gregtech.internal.material.GTMaterialRegistry.get("Spruce"));var gun=(gregtech.content.item.GunToolItem)stack.getItem();
+            actor.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,stack);actor.getInventory().setItem(9,gregtech.content.registry.GTItems.getStack(gun.definition().ammunition(),gregtech.content.material.Materials.Lead,32));
             require(gun.reload(stack,actor),"Gun cannot reload: "+type);var loaded=gun.ammunition(stack,level);require(loaded.getCount()==gun.definition().magazine()&&actor.getInventory().getItem(9).getCount()==32-loaded.getCount(),"Gun ammo not conserved: "+type);gunChecks+=2;
             var target=net.minecraft.world.entity.EntityType.ZOMBIE.create(level);target.moveTo(4.5,140,9.5);target.setNoAi(true);level.addFreshEntity(target);float health=target.getHealth();
             try{actor.setShiftKeyDown(false);gun.activate(level,actor,net.minecraft.world.InteractionHand.MAIN_HAND);require(target.getHealth()<health,"Gun shot does not hurt target: "+type);require(gun.ammunition(stack,level).getCount()==gun.definition().magazine()-1&&stack.getDamageValue()==100,"Gun shot did not consume ammo and wear: "+type);gunChecks+=2;
@@ -132,9 +132,9 @@ public final class OriginFeedbackChecks {
         int[] expectedSlots={7,8,9,9};int craftingRows=0;
         for(String kind:java.util.List.of("pistol","carbine","rifle","pocket_multitool")){
 //? if >=1.21.1 {
-            /*var holder=server.getRecipeManager().byKey(id("tools/"+kind)).orElseThrow(()->new IllegalStateException("Missing source tool crafting: "+kind));var recipe=(gregtech.recipe.GTToolCraftingRecipe)holder.value();
+            /*var holder=server.getRecipeManager().byKey(id("tools/"+kind)).orElseThrow(()->new IllegalStateException("Missing source tool crafting: "+kind));var recipe=(gregtech.content.recipe.GTToolCraftingRecipe)holder.value();
 *///?} else {
-            var holder=server.getRecipeManager().byKey(id("tools/"+kind)).orElseThrow(()->new IllegalStateException("Missing source tool crafting: "+kind));var recipe=(gregtech.recipe.GTToolCraftingRecipe)holder;
+            var holder=server.getRecipeManager().byKey(id("tools/"+kind)).orElseThrow(()->new IllegalStateException("Missing source tool crafting: "+kind));var recipe=(gregtech.content.recipe.GTToolCraftingRecipe)holder;
 //?}
             require(recipe.getIngredients().stream().filter(i->i!=net.minecraft.world.item.crafting.Ingredient.EMPTY).count()==expectedSlots[craftingRows],"Source tool crafting has empty ingredient: "+kind);
 //? if >=1.21.1 {
@@ -146,32 +146,32 @@ public final class OriginFeedbackChecks {
 //?}
             require(recipe.matches(grid,level),"Source tool representative inputs do not match: "+kind);
             var assembled=recipe.assemble(grid,level.registryAccess());
-            require(!assembled.isEmpty()&&assembled.getItem()==gregtech.registry.GTToolItems.get(gregtech.internal.tool.GTToolType.valueOf(kind.toUpperCase(java.util.Locale.ROOT))),"Source tool assembly returns the wrong item: "+kind);
+            require(!assembled.isEmpty()&&assembled.getItem()==gregtech.content.registry.GTToolItems.get(gregtech.internal.tool.GTToolType.valueOf(kind.toUpperCase(java.util.Locale.ROOT))),"Source tool assembly returns the wrong item: "+kind);
             craftingRows++;
         }
         receipt.addProperty("nexusGunAndPocketCraftingRows",craftingRows);
-        var pocket=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.POCKET_MULTITOOL,material,material);pocket.setDamageValue(123);
+        var pocket=gregtech.content.item.GTToolItem.create(gregtech.internal.tool.GTToolType.POCKET_MULTITOOL,material,material);pocket.setDamageValue(123);
         actor.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,pocket);actor.setShiftKeyDown(true);int modes=0;var pos=new BlockPos(4,139,4);var prior=level.getBlockState(pos);level.setBlock(pos,Blocks.STONE.defaultBlockState(),3);
-        try{for(int i=0;i<8;i++){var before=actor.getMainHandItem();var item=(gregtech.item.PocketToolItem)before.getItem();
+        try{for(int i=0;i<8;i++){var before=actor.getMainHandItem();var item=(gregtech.content.item.PocketToolItem)before.getItem();
             var context=new net.minecraft.world.item.context.UseOnContext(actor,net.minecraft.world.InteractionHand.MAIN_HAND,new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(pos),Direction.UP,pos,false));
-            item.onItemUseFirst(before,context);var after=actor.getMainHandItem();require(after.getItem()==gregtech.registry.GTToolItems.get(gregtech.item.PocketToolItem.MODES[(i+1)%8])&&after.getDamageValue()==123&&after.getMaxDamage()==pocket.getMaxDamage(),"Pocket mode loses identity or wear: "+i);modes++;
+            item.onItemUseFirst(before,context);var after=actor.getMainHandItem();require(after.getItem()==gregtech.content.registry.GTToolItems.get(gregtech.content.item.PocketToolItem.MODES[(i+1)%8])&&after.getDamageValue()==123&&after.getMaxDamage()==pocket.getMaxDamage(),"Pocket mode loses identity or wear: "+i);modes++;
         }}finally{level.setBlock(pos,prior,3);actor.setShiftKeyDown(false);actor.getInventory().clearContent();}
         receipt.addProperty("nexusPocketModesChecked",modes);
 //? if >=1.21.1 {
-        /*int powered=0;for(var definition:gregtech.content.tool.ElectricToolCatalog.ALL){var tool=gregtech.registry.GTElectricItems.get(definition.id());var stack=tool.assembled(material,definition.capacity());gregtech.platform.neoforge.StackCustomData.update(stack,t->t.putLong("gt.charge",definition.capacity()));
+        /*int powered=0;for(var definition:gregtech.content.tool.ElectricToolCatalog.ALL){var tool=gregtech.content.registry.GTElectricItems.get(definition.id());var stack=tool.assembled(material,definition.capacity());gregtech.platform.neoforge.StackCustomData.update(stack,t->t.putLong("gt.charge",definition.capacity()));
 *///?} else {
-        int powered=0;for(var definition:gregtech.content.tool.ElectricToolCatalog.ALL){var tool=gregtech.registry.GTElectricItems.get(definition.id());var stack=tool.assembled(material,definition.capacity());stack.getOrCreateTag().putLong("gt.charge",definition.capacity());
+        int powered=0;for(var definition:gregtech.content.tool.ElectricToolCatalog.ALL){var tool=gregtech.content.registry.GTElectricItems.get(definition.id());var stack=tool.assembled(material,definition.capacity());stack.getOrCreateTag().putLong("gt.charge",definition.capacity());
 //?}
             if(definition.name().equals("Mining Drill"))require(tool.isCorrectToolForDrops(stack,Blocks.STONE.defaultBlockState())&&tool.isCorrectToolForDrops(stack,Blocks.DIRT.defaultBlockState()),"Mining drill cannot mine and shovel: "+definition.id());
             if(definition.name().equals("Trimmer"))require(tool.isCorrectToolForDrops(stack,Blocks.OAK_LEAVES.defaultBlockState()),"Trimmer cannot harvest leaves");
             if(definition.name().equals("BuzzSaw"))require(tool.isCorrectToolForDrops(stack,Blocks.IRON_BARS.defaultBlockState())&&!tool.isCorrectToolForDrops(stack,Blocks.OAK_LOG.defaultBlockState()),"Buzzsaw has wrong target policy");
-            long before=tool.getEnergyStored(stack,gregtech.data.GregTechTags.Energy.EU);tool.consumeInteractionEnergy(stack,100,actor);require(tool.getEnergyStored(stack,gregtech.data.GregTechTags.Energy.EU)==before-100,"Powered tool does not consume EU: "+definition.id());powered++;
+            long before=tool.getEnergyStored(stack,gregtech.content.data.GregTechTags.Energy.EU);tool.consumeInteractionEnergy(stack,100,actor);require(tool.getEnergyStored(stack,gregtech.content.data.GregTechTags.Energy.EU)==before-100,"Powered tool does not consume EU: "+definition.id());powered++;
         }
         receipt.addProperty("nexusPoweredToolsChecked",powered);
     }
     public static void client(net.minecraft.client.Minecraft minecraft,JsonObject receipt) {
         var asphalt=BuiltInRegistries.BLOCK.get(id("asphalt"));
-        var gray=gregtech.block.misc.ConcreteBlock.coloredItem(asphalt,DyeColor.GRAY);
+        var gray=gregtech.content.block.misc.ConcreteBlock.coloredItem(asphalt,DyeColor.GRAY);
         int rgb=minecraft.getItemColors().getColor(gray,0)&0xffffff;
         require(rgb==0x808080,"Source gray asphalt item tint mismatch: "+Integer.toHexString(rgb));
         var crank=new ItemStack(BuiltInRegistries.ITEM.get(id("crank")));
@@ -179,7 +179,7 @@ public final class OriginFeedbackChecks {
         require(crankRgb==gregtech.content.material.Materials.Iron.getColor(),"Crank source iron tint mismatch");
         checkModel(minecraft,gray,true);checkModel(minecraft,crank,true);
         int gearboxes=0;
-        for(var entry:gregtech.registry.GTGearboxes.allGearboxes()){checkModel(minecraft,new ItemStack(entry.get()),true);gearboxes++;}
+        for(var entry:gregtech.content.registry.GTGearboxes.allGearboxes()){checkModel(minecraft,new ItemStack(entry.get()),true);gearboxes++;}
         require(gearboxes==13,"Native original gearbox count mismatch");
         receipt.addProperty("gearboxInventoryModelsChecked",gearboxes);
         checkModel(minecraft,new ItemStack(BuiltInRegistries.ITEM.get(id("loot_crate"))),false);
@@ -253,7 +253,7 @@ public final class OriginFeedbackChecks {
     /** Draw the affected items through the real GUI item renderer before the existing screenshot. */
     public static void renderInventory(net.minecraft.client.gui.GuiGraphics graphics,net.minecraft.client.Minecraft minecraft,JsonObject receipt) {
         var stacks=new java.util.ArrayList<ItemStack>();
-        for(var entry:gregtech.registry.GTGearboxes.allGearboxes())stacks.add(new ItemStack(entry.get()));
+        for(var entry:gregtech.content.registry.GTGearboxes.allGearboxes())stacks.add(new ItemStack(entry.get()));
         for(var spec:gregtech.content.tool.UtilityToolRules.ROPES)stacks.add(new ItemStack(BuiltInRegistries.ITEM.get(id(spec.id()))));
         for(String name:java.util.List.of("filter_items","filter_fluids","filter_items_fluids","filter_oredict","crank","asphalt"))
             stacks.add(new ItemStack(BuiltInRegistries.ITEM.get(id(name))));

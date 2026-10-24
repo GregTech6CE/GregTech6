@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
 import gregtech.content.cover.CoverAttachmentBehaviors;
-import gregtech.registry.GTFluids;
+import gregtech.content.registry.GTFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

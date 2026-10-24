@@ -46,7 +46,7 @@ public final class ComponentCoverFallback {
     public static boolean ownClass(BlockEntity owner) {
         if (owner == null) return false;
         for (Class<?> type = owner.getClass(); type != BlockEntity.class && type != null; type = type.getSuperclass())
-            if (type.getName().startsWith("gregtech.blockentity.")) return true;
+            if (type.getName().startsWith("gregtech.content.blockentity.")) return true;
         return false;
     }
 
@@ -61,7 +61,7 @@ public final class ComponentCoverFallback {
     public static boolean eligible(BlockEntity owner){
         if(!ownClass(owner)||owner.getLevel()==null||owner.isRemoved())return false;
         // Loose material piles use plates as contents, not as machine covers.
-        if(owner instanceof gregtech.blockentity.misc.PileBlockEntity)return false;
+        if(owner instanceof gregtech.content.blockentity.misc.PileBlockEntity)return false;
         // The active fallback service provides cover ticks even for otherwise passive GT storage.
         return owner.getBlockState().getBlock() instanceof net.minecraft.world.level.block.EntityBlock;
     }

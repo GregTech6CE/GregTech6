@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.registry.GTHeatExchangers;
+import gregtech.content.registry.GTHeatExchangers;
 //? if >=1.21.1 {
 /*import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;

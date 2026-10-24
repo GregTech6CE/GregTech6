@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
-import gregtech.block.plant.BaleBlock;
-import gregtech.data.BlockHarvestPolicy;
+import gregtech.content.block.plant.BaleBlock;
+import gregtech.content.data.BlockHarvestPolicy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

@@ -1,7 +1,7 @@
 package gregtech.integration.client;
 
-import gregtech.block.plant.BushBlock;
-import gregtech.registry.GTBushes;
+import gregtech.content.block.plant.BushBlock;
+import gregtech.content.registry.GTBushes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;

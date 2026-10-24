@@ -1,7 +1,7 @@
 package gregtech.content.recipe;
-import gregtech.data.*;
-import gregtech.registry.GTWoods;
-import gregtech.block.wood.WoodSpecies;
+import gregtech.content.data.*;
+import gregtech.content.registry.GTWoods;
+import gregtech.content.block.wood.WoodSpecies;
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
 import gregtech.content.plant.WoodSlabCatalog;

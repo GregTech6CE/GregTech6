@@ -2,7 +2,7 @@ package gregtech.internal.material;
 
 import gregtech.api.material.GTValues;
 
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 import java.util.List;
 
 /** Complete original VanillaUnificationLoader identity/weight table without Minecraft types. */

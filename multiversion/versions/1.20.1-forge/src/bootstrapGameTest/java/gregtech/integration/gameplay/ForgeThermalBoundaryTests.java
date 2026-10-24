@@ -2,10 +2,10 @@ package gregtech.integration.gameplay;
 
 import gregtech.api.material.GTValues;
 import gregtech.internal.machine.crucible.CrucibleMaterialStack;
-import gregtech.blockentity.machine.SmeltingCrucibleBlockEntity;
+import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
 import gregtech.content.material.Materials;
-import gregtech.data.GregTechTags;
-import gregtech.registry.GTMachines;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.registry.GTMachines;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;

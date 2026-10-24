@@ -1,6 +1,6 @@
 package gregtech.gametest;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.registry.GTFluids;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.registry.GTFluids;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.gametest.framework.GameTest;

@@ -1,7 +1,7 @@
 package gregtech.platform.neoforge.logistics;
 
-import gregtech.block.machine.LogisticsWireBlock;
-import gregtech.blockentity.machine.LogisticsWireBlockEntity;
+import gregtech.content.block.machine.LogisticsWireBlock;
+import gregtech.content.blockentity.machine.LogisticsWireBlockEntity;
 import gregtech.content.logistics.LogisticsCoverDefinition;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.BlockItem;

@@ -1,7 +1,7 @@
 package gregtech.integration.jade;
 
-import gregtech.block.machine.SolidBurningBoxBlock;
-import gregtech.blockentity.machine.SolidBurningBoxBlockEntity;
+import gregtech.content.block.machine.SolidBurningBoxBlock;
+import gregtech.content.blockentity.machine.SolidBurningBoxBlockEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;

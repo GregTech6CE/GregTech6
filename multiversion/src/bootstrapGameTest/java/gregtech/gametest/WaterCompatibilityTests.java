@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
 import gregtech.internal.fluid.GTWaterParity;
-import gregtech.registry.GTWorldWaterFluid;
+import gregtech.content.registry.GTWorldWaterFluid;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;

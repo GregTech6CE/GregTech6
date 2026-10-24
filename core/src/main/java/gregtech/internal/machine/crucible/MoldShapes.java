@@ -1,7 +1,7 @@
 package gregtech.internal.machine.crucible;
 
 import gregtech.api.material.GTValues;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;

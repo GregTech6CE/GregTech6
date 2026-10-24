@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
 import gregtech.GregTech;
-import gregtech.blockentity.tool.CoinMoldBlockEntity;
+import gregtech.content.blockentity.tool.CoinMoldBlockEntity;
 import gregtech.content.material.Materials;
 import gregtech.content.tool.CoinMoldGeometry;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.GTItems;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTItems;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.InteractionHand;

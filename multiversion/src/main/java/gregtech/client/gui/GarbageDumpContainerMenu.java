@@ -1,7 +1,7 @@
 package gregtech.client.gui;
 
-import gregtech.blockentity.inventory.EnderGarbageDumpBlockEntity;
-import gregtech.registry.GTMenuTypes;
+import gregtech.content.blockentity.inventory.EnderGarbageDumpBlockEntity;
+import gregtech.content.registry.GTMenuTypes;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
@@ -68,7 +68,7 @@ public class GarbageDumpContainerMenu extends HopperContainerMenu {
         moveItemStackTo(taken, slotCount(), slots.size(), true);
         if (!taken.isEmpty() && !player.level().isClientSide) {
             // Full or partially full inventory: restore every unplaced item.
-            gregtech.world.GarbageData.get(player.level()).trash(taken);
+            gregtech.content.world.GarbageData.get(player.level()).trash(taken);
         }
         broadcastChanges();
         return ItemStack.EMPTY;

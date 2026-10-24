@@ -2,9 +2,9 @@ package gregtech.gametest;
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
 import gregtech.internal.recipe.AutocraftableCraftingRecipe;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.GTItems;
-import gregtech.recipe.ToolShapelessRecipe;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTItems;
+import gregtech.content.recipe.ToolShapelessRecipe;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -54,7 +54,7 @@ public final class OreRawCraftingSourceTests {
   h.assertTrue(recipe instanceof AutocraftableCraftingRecipe a&&!a.isAutocraftableByGT(),"manual conversion is not GT autocraftable");
   var grid=CraftingInput.ofPositioned(side,side,cells).input();
   if(!grid.isEmpty()){
-   var position=(gregtech.recipe.CraftingFormPosition)grid;
+   var position=(gregtech.content.recipe.CraftingFormPosition)grid;
    int first=0;while(cells.get(first).isEmpty())first++;
    h.assertTrue(position.gregtech$formGridSize()==side*side&&position.gregtech$formFirstSlot()==first,
        "Neo native position capture must preserve full grid before cropping");

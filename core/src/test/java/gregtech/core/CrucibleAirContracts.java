@@ -3,7 +3,7 @@ package gregtech.core;
 import gregtech.internal.machine.crucible.*;
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 import java.util.*;
 
 public class CrucibleAirContracts {

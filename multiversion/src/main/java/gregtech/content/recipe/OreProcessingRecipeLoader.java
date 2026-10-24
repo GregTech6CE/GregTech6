@@ -3,9 +3,9 @@ package gregtech.content.recipe;
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
 import gregtech.internal.recipe.RecipeMap;
-import gregtech.data.*;
+import gregtech.content.data.*;
 import gregtech.bootstrap.InitializationStep;
-import gregtech.registry.GTFluids;
+import gregtech.content.registry.GTFluids;
 import gregtech.util.OM;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
@@ -206,12 +206,12 @@ public class OreProcessingRecipeLoader implements InitializationStep {
     private void processDenseIconOres() {
 //? if >=1.21.1 {
         /*for (var entry
-                : gregtech.registry.GTSpecialOreBlocks.all()) {
-            if (!entry.isBound() || !(entry.get() instanceof gregtech.block.DenseOreBlock denseOre))
+                : gregtech.content.registry.GTSpecialOreBlocks.all()) {
+            if (!entry.isBound() || !(entry.get() instanceof gregtech.content.block.DenseOreBlock denseOre))
 *///?} else {
         for (RegistryObject<net.minecraft.world.level.block.Block> entry
-                : gregtech.registry.GTIconSetBlocks.all()) {
-            if (!entry.isPresent() || !(entry.get() instanceof gregtech.block.DenseOreBlock denseOre))
+                : gregtech.content.registry.GTIconSetBlocks.all()) {
+            if (!entry.isPresent() || !(entry.get() instanceof gregtech.content.block.DenseOreBlock denseOre))
 //?}
                 continue;
             net.minecraft.world.level.block.Block block = entry.get();
@@ -227,12 +227,12 @@ public class OreProcessingRecipeLoader implements InitializationStep {
     private void processVanillaIconOres() {
 //? if >=1.21.1 {
         /*for (var entry
-                : gregtech.registry.GTSpecialOreBlocks.all()) {
-            if (!entry.isBound() || !(entry.get() instanceof gregtech.block.VanillaOreBlock ore))
+                : gregtech.content.registry.GTSpecialOreBlocks.all()) {
+            if (!entry.isBound() || !(entry.get() instanceof gregtech.content.block.VanillaOreBlock ore))
 *///?} else {
         for (RegistryObject<net.minecraft.world.level.block.Block> entry
-                : gregtech.registry.GTIconSetBlocks.all()) {
-            if (!entry.isPresent() || !(entry.get() instanceof gregtech.block.VanillaOreBlock ore))
+                : gregtech.content.registry.GTIconSetBlocks.all()) {
+            if (!entry.isPresent() || !(entry.get() instanceof gregtech.content.block.VanillaOreBlock ore))
 //?}
                 continue;
             GTMaterial material = ore.material().resolve();

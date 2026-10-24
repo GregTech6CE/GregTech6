@@ -2,9 +2,9 @@ package gregtech.core;
 
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
-import gregtech.data.MaterialGroups;
-import gregtech.data.GregTechConstants;
-import gregtech.data.generated.GT6Materials;
+import gregtech.content.data.MaterialGroups;
+import gregtech.content.data.GregTechConstants;
+import gregtech.content.data.generated.GT6Materials;
 
 /** Literal MT.java woodnormal rows; independent of the port's generated holder and factories. */
 public final class SourceWoodFixtures {

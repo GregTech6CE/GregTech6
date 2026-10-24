@@ -1,5 +1,5 @@
 package gregtech.client;
-import gregtech.item.PanelItemView;
+import gregtech.content.item.PanelItemView;
 import net.minecraft.core.registries.BuiltInRegistries;
 //? if >=1.21.1 {
 /*import net.neoforged.api.distmarker.Dist;

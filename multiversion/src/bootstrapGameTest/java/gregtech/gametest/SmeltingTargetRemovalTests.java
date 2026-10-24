@@ -10,8 +10,8 @@ import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
 import gregtech.internal.material.MaterialProperty;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.GTItems;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTItems;
 import java.util.HashSet;
 import java.util.List;
 import java.util.function.Supplier;
@@ -77,15 +77,15 @@ public final class SmeltingTargetRemovalTests {
     private static Vessel vessel(GameTestHelper h, BlockPos local) {
         var pos = h.absolutePos(local);
         var block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "smelting_crucible_steel"));
-        h.assertTrue(block instanceof gregtech.block.machine.SmeltingCrucibleBlock,
+        h.assertTrue(block instanceof gregtech.content.block.machine.SmeltingCrucibleBlock,
                 "actual registered steel crucible block exists");
         h.getLevel().setBlock(pos, block.defaultBlockState(), 3);
 //? if >=1.21.1 {
         /*var entity = (gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity) h.getLevel().getBlockEntity(pos);
         Runnable tick = entity::serverTick;
 *///?} else {
-        var entity = (gregtech.blockentity.machine.SmeltingCrucibleBlockEntity) h.getLevel().getBlockEntity(pos);
-        Runnable tick = () -> gregtech.blockentity.machine.SmeltingCrucibleBlockEntity.serverTick(
+        var entity = (gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity) h.getLevel().getBlockEntity(pos);
+        Runnable tick = () -> gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity.serverTick(
                 h.getLevel(), pos, entity.getBlockState(), entity);
 //?}
         h.assertTrue(entity != null && entity.getContentView().isEmpty() && entity.getCacheStack().isEmpty(),
@@ -120,7 +120,7 @@ public final class SmeltingTargetRemovalTests {
         h.assertTrue(contents.size() == 1 && contents.get(0).material == source && contents.get(0).amount == GTValues.U,
                 "removed target retains the consumed native dust identity and exact U: " + boundary);
         h.assertTrue(h.getLevel().getBlockState(vessel.pos()).getBlock()
-                        instanceof gregtech.block.machine.SmeltingCrucibleBlock,
+                        instanceof gregtech.content.block.machine.SmeltingCrucibleBlock,
                 "safe retained matter leaves the crucible intact: " + boundary);
     }
 

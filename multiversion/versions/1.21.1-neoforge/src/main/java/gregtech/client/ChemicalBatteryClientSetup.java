@@ -1,6 +1,6 @@
 package gregtech.client;
-import gregtech.registry.GTChemicalBatteries;
-import gregtech.item.ChemicalBatteryItem;
+import gregtech.content.registry.GTChemicalBatteries;
+import gregtech.content.item.ChemicalBatteryItem;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;

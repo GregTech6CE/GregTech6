@@ -1,7 +1,7 @@
 package gregtech.internal.energy;
 
-import gregtech.data.GregTechTags;
-import gregtech.data.GregTechConstants;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.data.GregTechConstants;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 //? if >=1.21.1 {

@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.registry.*;
+import gregtech.content.registry.*;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.api.distmarker.Dist;
@@ -23,8 +23,8 @@ public final class StorageContainerClientSetup {
         e.registerBlockEntityRenderer(GTBlockEntities.MATERIAL_ANVIL.get(), MaterialAnvilRenderer::new);
         e.registerBlockEntityRenderer(GTBlockEntities.EXTENDER.get(), ExtenderCoverRenderer::new);
         e.registerBlockEntityRenderer(GTBlockEntities.USB_SWITCH.get(), (context) ->
-                new net.minecraft.client.renderer.blockentity.BlockEntityRenderer<gregtech.blockentity.inventory.UsbSwitchBlockEntity>() {
-                    public void render(gregtech.blockentity.inventory.UsbSwitchBlockEntity be,
+                new net.minecraft.client.renderer.blockentity.BlockEntityRenderer<gregtech.content.blockentity.inventory.UsbSwitchBlockEntity>() {
+                    public void render(gregtech.content.blockentity.inventory.UsbSwitchBlockEntity be,
                                        float partial, com.mojang.blaze3d.vertex.PoseStack pose,
                                        net.minecraft.client.renderer.MultiBufferSource buffers,
                                        int light, int overlay) {

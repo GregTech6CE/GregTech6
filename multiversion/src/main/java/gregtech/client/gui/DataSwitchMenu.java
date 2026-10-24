@@ -1,9 +1,9 @@
 package gregtech.client.gui;
 
-import gregtech.block.inventory.UsbSwitchBlock;
-import gregtech.blockentity.inventory.UsbSwitchBlockEntity;
+import gregtech.content.block.inventory.UsbSwitchBlock;
+import gregtech.content.blockentity.inventory.UsbSwitchBlockEntity;
 import gregtech.content.data.UsbDataMedia;
-import gregtech.registry.GTMenuTypes;
+import gregtech.content.registry.GTMenuTypes;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;

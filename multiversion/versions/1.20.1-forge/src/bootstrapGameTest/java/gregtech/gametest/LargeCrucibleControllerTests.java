@@ -2,13 +2,13 @@ package gregtech.gametest;
 
 import gregtech.internal.machine.crucible.CrucibleMaterialStack;
 import gregtech.api.material.GTValues;
-import gregtech.blockentity.machine.LargeCrucibleControllerBlockEntity;
-import gregtech.blockentity.machine.MultiblockPortBlockEntity;
+import gregtech.content.blockentity.machine.LargeCrucibleControllerBlockEntity;
+import gregtech.content.blockentity.machine.MultiblockPortBlockEntity;
 import gregtech.content.material.Materials;
 import gregtech.content.multiblock.LargeCrucibleSpecs;
 import gregtech.content.multiblock.LargeMachineParts;
-import gregtech.data.GregTechTags;
-import gregtech.registry.GTFluids;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.registry.GTFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -71,7 +71,7 @@ public final class LargeCrucibleControllerTests {
         for (var variant : LargeCrucibleSpecs.all()) {
             helper.assertTrue(variant.wall() != Blocks.AIR, variant.path() + " wall is registered");
             helper.assertTrue(LargeMachineParts.block(variant.originalId()) instanceof
-                    gregtech.block.machine.LargeCrucibleControllerBlock,
+                    gregtech.content.block.machine.LargeCrucibleControllerBlock,
                     variant.path() + " is a controller, not an inert port");
             helper.assertTrue(helper.getLevel().getRecipeManager().byKey(
                     ResourceLocation.fromNamespaceAndPath("gt6ce", "machines/multiblock/" + variant.path())).isPresent(),

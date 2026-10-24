@@ -1,6 +1,6 @@
 package gregtech.content.multiblock;
 
-import gregtech.blockentity.machine.MultiblockPortBlockEntity;
+import gregtech.content.blockentity.machine.MultiblockPortBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;

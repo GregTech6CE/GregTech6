@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.blockentity.energy.EnergyNodeBlockEntity;
+import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;

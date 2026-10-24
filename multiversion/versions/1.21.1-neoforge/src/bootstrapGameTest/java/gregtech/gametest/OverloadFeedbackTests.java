@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
 import gregtech.GregTechConfig;
-import gregtech.blockentity.energy.EnergyNodeBlockEntity;
-import gregtech.blockentity.machine.BasicMachineBlockEntity;
-import gregtech.blockentity.machine.BoilerTankBlockEntity;
-import gregtech.data.GregTechTags;
-import gregtech.registry.GTFluids;
+import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.blockentity.machine.BoilerTankBlockEntity;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.registry.GTFluids;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.*;
@@ -73,9 +73,9 @@ public final class OverloadFeedbackTests {
             h.assertTrue(count.get() == 0, "disabled overload policy never creates an area explosion");
 
             var hammerPos = h.absolutePos(new BlockPos(8, 2, 8));
-            var hammerBlock = gregtech.registry.GTRelaysFilters.HAMMERS.get(0).get();
+            var hammerBlock = gregtech.content.registry.GTRelaysFilters.HAMMERS.get(0).get();
             h.getLevel().setBlockAndUpdate(hammerPos, hammerBlock.defaultBlockState());
-            var hammer = (gregtech.block.misc.AutoHammerBlockEntity)h.getLevel().getBlockEntity(hammerPos);
+            var hammer = (gregtech.content.block.misc.AutoHammerBlockEntity)h.getLevel().getBlockEntity(hammerPos);
             hammer.doInject(GregTechTags.Energy.KU, null, hammer.input() * 2 + 1, 1, true);
             h.assertTrue(count.get() == 1 && h.getLevel().getBlockEntity(hammerPos) == null,
                     "automatic hammer retains the original direct-explosion exception with overload config disabled");

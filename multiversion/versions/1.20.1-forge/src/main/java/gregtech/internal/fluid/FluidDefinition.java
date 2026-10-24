@@ -1,10 +1,10 @@
 package gregtech.internal.fluid;
 
 import gregtech.internal.material.GTMaterial;
-import gregtech.data.RegisteredFluids;
-import gregtech.data.FluidCatalog.FluidEntry;
-import gregtech.data.FluidCatalog.FluidFlags;
-import gregtech.data.FluidCatalog.FluidTextureMode;
+import gregtech.content.data.RegisteredFluids;
+import gregtech.content.data.FluidCatalog.FluidEntry;
+import gregtech.content.data.FluidCatalog.FluidFlags;
+import gregtech.content.data.FluidCatalog.FluidTextureMode;
 
 import java.util.Objects;
 

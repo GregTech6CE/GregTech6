@@ -1,6 +1,6 @@
 package gregtech.mixin;
 
-import gregtech.registry.GTFluids;
+import gregtech.content.registry.GTFluids;
 import net.minecraft.world.entity.Entity;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidType;

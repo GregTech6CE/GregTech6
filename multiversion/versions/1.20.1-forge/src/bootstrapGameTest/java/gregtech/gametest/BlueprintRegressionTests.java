@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
-import gregtech.block.misc.*;
-import gregtech.registry.*;
-import gregtech.data.GregTechTags;
+import gregtech.content.block.misc.*;
+import gregtech.content.registry.*;
+import gregtech.content.data.GregTechTags;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.item.*;
@@ -83,23 +83,23 @@ public final class BlueprintRegressionTests {
         var pos=new BlockPos(2,2,1);var absolute=helper.absolutePos(pos);
         helper.setBlock(pos,GTMultiblocks.IMPLOSION_COMPRESSOR_MAIN.get());
         helper.setBlock(pos.below(),Blocks.STONE);
-        var layout=gregtech.blockentity.machine.ImplosionCompressorControllerBlockEntity.LAYOUT;
+        var layout=gregtech.content.blockentity.machine.ImplosionCompressorControllerBlockEntity.LAYOUT;
         for(var cell:layout.cells()) helper.setBlock(cell.at(pos,Direction.NORTH),cell.role()==gregtech.internal.multiblock.MultiblockLayout.Role.AIR?Blocks.AIR:GTMultiblocks.IMPLOSION_COMPRESSOR_WALL.get());
-        var machine=(gregtech.blockentity.machine.ImplosionCompressorControllerBlockEntity)helper.getLevel().getBlockEntity(absolute);
+        var machine=(gregtech.content.blockentity.machine.ImplosionCompressorControllerBlockEntity)helper.getLevel().getBlockEntity(absolute);
         helper.assertTrue(StructureTestSupport.ok(machine),"original hollow implosion structure forms");
         var partPos=pos.east();var part=helper.getLevel().getBlockEntity(helper.absolutePos(partPos));
         var items=part.getCapability(ForgeCapabilities.ITEM_HANDLER,Direction.NORTH).orElseThrow(IllegalStateException::new);
-        var recipe=gregtech.data.MachineRecipeMaps.ImplosionCompressor.mRecipeList.iterator().next();
+        var recipe=gregtech.content.data.MachineRecipeMaps.ImplosionCompressor.mRecipeList.iterator().next();
         for(int slot=0;slot<recipe.mInputs.length;slot++) helper.assertTrue(items.insertItem(slot,recipe.mInputs[slot].copy(),false).isEmpty(),"wall accepts real recipe input");
-        for(int tick=0;tick<128;tick++) gregtech.blockentity.machine.ImplosionCompressorControllerBlockEntity.serverTick(helper.getLevel(),absolute,machine.getBlockState(),machine);
+        for(int tick=0;tick<128;tick++) gregtech.content.blockentity.machine.ImplosionCompressorControllerBlockEntity.serverTick(helper.getLevel(),absolute,machine.getBlockState(),machine);
         helper.assertTrue(machine.getProgressPercent()==50,"time-powered recipe advances without EU");
         machine.load(machine.saveWithoutMetadata());
         helper.setBlock(partPos,Blocks.AIR);
         helper.assertTrue(!StructureTestSupport.ok(machine) && items.getSlots()==0,"breaking a wall disables its previously obtained port");
-        for(int tick=0;tick<20;tick++) gregtech.blockentity.machine.ImplosionCompressorControllerBlockEntity.serverTick(helper.getLevel(),absolute,machine.getBlockState(),machine);
+        for(int tick=0;tick<20;tick++) gregtech.content.blockentity.machine.ImplosionCompressorControllerBlockEntity.serverTick(helper.getLevel(),absolute,machine.getBlockState(),machine);
         helper.assertTrue(machine.getProgressPercent()==50,"broken structure pauses saved work");
         helper.setBlock(partPos,GTMultiblocks.IMPLOSION_COMPRESSOR_WALL.get());
-        for(int tick=0;tick<128;tick++) gregtech.blockentity.machine.ImplosionCompressorControllerBlockEntity.serverTick(helper.getLevel(),absolute,machine.getBlockState(),machine);
+        for(int tick=0;tick<128;tick++) gregtech.content.blockentity.machine.ImplosionCompressorControllerBlockEntity.serverTick(helper.getLevel(),absolute,machine.getBlockState(),machine);
         helper.assertTrue(ItemStack.isSameItemSameTags(machine.inventory().getStackInSlot(machine.inputSlots()),recipe.mOutputs[0]),"repairing structure completes original gem recipe");
         helper.assertTrue(machine.inventory().getStackInSlot(2).getCount()==1,"selector circuit survives processing");
         helper.setBlock(pos.above().south(),Blocks.STONE);
@@ -157,7 +157,7 @@ public final class BlueprintRegressionTests {
             var above=pos.above(y);
             if(!helper.getLevel().getBlockState(helper.absolutePos(above)).isAir()) helper.setBlock(above,Blocks.AIR);
         }
-        var rod=(gregtech.blockentity.machine.LightningRodControllerBlockEntity)helper.getLevel().getBlockEntity(absolute);
+        var rod=(gregtech.content.blockentity.machine.LightningRodControllerBlockEntity)helper.getLevel().getBlockEntity(absolute);
         helper.assertTrue(rod!=null,"the lightning rod controller exists at "+absolute);
         helper.assertTrue(StructureTestSupport.ok(rod)&&rod.captureStrike(),"original alternating layers and unobstructed high rod capture a strike");
         long capacity=rod.getEnergyCapacity(GregTechTags.Energy.EU,null);
@@ -179,7 +179,7 @@ public final class BlueprintRegressionTests {
             var block=gregtech.internal.machine.MachineRegistry.basicMachines().stream().map(entry->entry.get()).filter(b->b.basicSpec().machineName().equals(name)).findFirst().orElseThrow();
             var pos=new BlockPos(6,2,6);
             helper.setBlock(pos,block.defaultBlockState().setValue(HorizontalDirectionalBlock.FACING,front));
-            var machine=(gregtech.blockentity.machine.LargeRecipeMachineBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos));
+            var machine=(gregtech.content.blockentity.machine.LargeRecipeMachineBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos));
             helper.assertTrue(!StructureTestSupport.ok(machine),name+" cannot operate as a single block");
             var layout=gregtech.content.multiblock.LargeMachineLayouts.cells(name);
             for(var cell:layout) helper.setBlock(cell.at(pos,front),cell.block());
@@ -200,9 +200,9 @@ public final class BlueprintRegressionTests {
             if(x==0&&y==0&&z==0)continue;
             helper.setBlock(pos.offset(x,y,z),y==-5?Blocks.BEDROCK:y==-4?GTMultiblocks.DENSE_TITANIUM_WALL.get():gregtech.content.multiblock.LargeMachineParts.block(18026));
         }
-        var machine=(gregtech.blockentity.machine.BedrockDrillControllerBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos));
+        var machine=(gregtech.content.blockentity.machine.BedrockDrillControllerBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos));
         helper.assertTrue(StructureTestSupport.ok(machine),"drill heads and four dense titanium layers form above bedrock");
-        var input=(gregtech.blockentity.machine.MultiblockPortBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos.offset(1,-1,0)));
+        var input=(gregtech.content.blockentity.machine.MultiblockPortBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos.offset(1,-1,0)));
         var fluids=machine.getCapability(ForgeCapabilities.FLUID_HANDLER,null).orElseThrow(IllegalStateException::new);
         helper.assertTrue(fluids.fill(new net.minecraftforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.WATER,1000),net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE)==0,"water is not lubricant");
         fluids.fill(new net.minecraftforge.fluids.FluidStack(GTFluids.still("Lubricant").get(),200),net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);
@@ -223,16 +223,16 @@ public final class BlueprintRegressionTests {
         var block=gregtech.internal.machine.MachineRegistry.basicMachines().stream().map(entry->entry.get()).filter(b->b.basicSpec().machineName().equals("largecrusher")).findFirst().orElseThrow();
         var pos=new BlockPos(2,2,1);helper.setBlock(pos,block);helper.setBlock(pos.below(),Blocks.STONE);
         for(var cell:gregtech.content.multiblock.LargeMachineLayouts.cells("largecrusher"))helper.setBlock(cell.at(pos,Direction.NORTH),cell.block());
-        var machine=(gregtech.blockentity.machine.LargeRecipeMachineBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos));
+        var machine=(gregtech.content.blockentity.machine.LargeRecipeMachineBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos));
         var recipes=new gregtech.internal.recipe.RecipeMap(null,"blueprint_crusher_test","Test","test",1,1,1,0,0,0,1,false,false,false,false);
         recipes.addRecipe(new gregtech.internal.recipe.Recipe(new ItemStack[]{new ItemStack(Items.APPLE)},new ItemStack[]{new ItemStack(Items.DIAMOND)},null,null,null,null,192,32,0));
         machine.setSpec(gregtech.internal.machine.BasicMachineSpec.builder("blueprint_crusher_test",block.basicSpec().material()).machineType("largecrusher").energy(GregTechTags.Energy.RU,512).recipes(recipes).faces(block.basicSpec().faceConfig()).build());
         machine.inventory().setStackInSlot(0,new ItemStack(Items.APPLE));
-        for(int i=0;i<12;i++) {machine.doEnergyInjection(GregTechTags.Energy.RU,null,512,1,true);gregtech.blockentity.machine.BasicMachineBlockEntity.serverTick(helper.getLevel(),helper.absolutePos(pos),machine.getBlockState(),machine);}
+        for(int i=0;i<12;i++) {machine.doEnergyInjection(GregTechTags.Energy.RU,null,512,1,true);gregtech.content.blockentity.machine.BasicMachineBlockEntity.serverTick(helper.getLevel(),helper.absolutePos(pos),machine.getBlockState(),machine);}
         helper.assertTrue(machine.getProgressPercent()==50,"6144 GU recipe costs 12288 RU at original 50 percent efficiency");
-        gregtech.blockentity.machine.BasicMachineBlockEntity.serverTick(helper.getLevel(),helper.absolutePos(pos),machine.getBlockState(),machine);
+        gregtech.content.blockentity.machine.BasicMachineBlockEntity.serverTick(helper.getLevel(),helper.absolutePos(pos),machine.getBlockState(),machine);
         helper.assertTrue(machine.getProgressPercent()==50,"crusher retains work on a missing power tick");
-        for(int i=0;i<12;i++) {machine.doEnergyInjection(GregTechTags.Energy.RU,null,512,1,true);gregtech.blockentity.machine.BasicMachineBlockEntity.serverTick(helper.getLevel(),helper.absolutePos(pos),machine.getBlockState(),machine);}
+        for(int i=0;i<12;i++) {machine.doEnergyInjection(GregTechTags.Energy.RU,null,512,1,true);gregtech.content.blockentity.machine.BasicMachineBlockEntity.serverTick(helper.getLevel(),helper.absolutePos(pos),machine.getBlockState(),machine);}
         helper.assertTrue(machine.inventory().getStackInSlot(1).is(Items.DIAMOND),"24 powered ticks complete exactly one cheap-overclocked job");helper.succeed();
     }
 
@@ -256,9 +256,9 @@ public final class BlueprintRegressionTests {
             if(x==0&&y==0&&z==0)continue;
             helper.setBlock(pos.offset(x,y,z),y==0||x==0&&z==0?gregtech.content.multiblock.LargeMachineParts.block(18024):GTMultiblocks.HEAT_TRANSMITTER.get());
         }
-        var machine=(gregtech.blockentity.machine.LargeHeatExchangerControllerBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos));
+        var machine=(gregtech.content.blockentity.machine.LargeHeatExchangerControllerBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos));
         helper.assertTrue(StructureTestSupport.ok(machine),"two-layer dense tungsten / heat-transmitter structure forms");
-        var recipe=gregtech.data.FuelRecipeMaps.Hot.mRecipeList.stream().filter(r->r.mFluidInputs.length==1&&r.mFluidOutputs.length==1&&r.mEUt<0).findFirst().orElseThrow();
+        var recipe=gregtech.content.data.FuelRecipeMaps.Hot.mRecipeList.stream().filter(r->r.mFluidInputs.length==1&&r.mFluidOutputs.length==1&&r.mEUt<0).findFirst().orElseThrow();
         var fuel=recipe.mFluidInputs[0].copy();fuel.setAmount(Math.min(163840,recipe.mFluidInputs[0].getAmount()*1000));
         machine.fill(fuel,net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);
         machine.tick();
@@ -274,13 +274,13 @@ public final class BlueprintRegressionTests {
 
     @GameTest(template="test_blueprint_empty")
     public static void workCostMatchesOriginalOverclockingAndRejectsOverflow(GameTestHelper helper) {
-        var normal=gregtech.api.recipe.MachineWorkCost.calculate(32,192,1,true,10000,128,512,false);
+        var normal=gregtech.internal.recipe.MachineWorkCost.calculate(32,192,1,true,10000,128,512,false);
         helper.assertTrue(normal.minimumPower()==128&&normal.totalWork()==12288,"4x power gives 2x speed and doubles total energy");
-        var cheap=gregtech.api.recipe.MachineWorkCost.calculate(32,192,4,true,5000,512,4096,true);
+        var cheap=gregtech.internal.recipe.MachineWorkCost.calculate(32,192,4,true,5000,512,4096,true);
         helper.assertTrue(cheap.minimumPower()==32&&cheap.totalWork()==49152,"cheap overclock retains work, batch and efficiency scale it");
-        var timed=gregtech.api.recipe.MachineWorkCost.calculate(0,256,64,false,10000,1,16,false);
+        var timed=gregtech.internal.recipe.MachineWorkCost.calculate(0,256,64,false,10000,1,16,false);
         helper.assertTrue(timed.totalWork()==256&&timed.minimumPower()==1,"TU parallel recipes retain their original duration");
-        helper.assertTrue(gregtech.api.recipe.MachineWorkCost.calculate(4096,Long.MAX_VALUE,64,true,2500,512,4096,true)==null,"overflowing recipe is rejected before ingredients can be consumed");
+        helper.assertTrue(gregtech.internal.recipe.MachineWorkCost.calculate(4096,Long.MAX_VALUE,64,true,2500,512,4096,true)==null,"overflowing recipe is rejected before ingredients can be consumed");
         helper.succeed();
     }
 
@@ -290,12 +290,12 @@ public final class BlueprintRegressionTests {
         helper.assertTrue(block.basicSpec().energyIn()==1&&block.basicSpec().energyInMin()==1&&block.basicSpec().energyInMax()==16,"TU registration uses original time energy limits");
         var pos=new BlockPos(2,2,2);helper.setBlock(pos,block);
         for(var side:Direction.values())helper.setBlock(pos.relative(side),Blocks.STONE);
-        var machine=(gregtech.blockentity.machine.BasicMachineBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos));
+        var machine=(gregtech.content.blockentity.machine.BasicMachineBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos));
         var recipes=new gregtech.internal.recipe.RecipeMap(null,"blueprint_time_test","Test","test",1,1,1,0,0,0,1,false,false,false,false);
         recipes.addRecipe(new gregtech.internal.recipe.Recipe(new ItemStack[]{new ItemStack(Items.APPLE)},new ItemStack[]{new ItemStack(Items.DIAMOND)},null,null,null,null,4,0,0));
         machine.setSpec(gregtech.internal.machine.BasicMachineSpec.builder("blueprint_time_test",block.basicSpec().material()).machineType("autoclave").energy(GregTechTags.Energy.TU,1).recipes(recipes).faces(block.basicSpec().faceConfig()).build());
         machine.inventory().setStackInSlot(0,new ItemStack(Items.APPLE));
-        for(int tick=0;tick<4;tick++)gregtech.blockentity.machine.BasicMachineBlockEntity.serverTick(helper.getLevel(),helper.absolutePos(pos),machine.getBlockState(),machine);
+        for(int tick=0;tick<4;tick++)gregtech.content.blockentity.machine.BasicMachineBlockEntity.serverTick(helper.getLevel(),helper.absolutePos(pos),machine.getBlockState(),machine);
         helper.assertTrue(machine.inventory().getStackInSlot(1).is(Items.DIAMOND),"time-only recipe completes without an energy cable");helper.succeed();
     }
 
@@ -303,11 +303,11 @@ public final class BlueprintRegressionTests {
     public static void gasTurbineConsumesFuelAndEmitsAtRear(GameTestHelper helper){
         var pos=new BlockPos(3,3,1);helper.setBlock(pos,GTMultiblocks.findPart(17231).get());
         for(int b=0;b<4;b++)for(int y=-1;y<=1;y++)for(int x=-1;x<=1;x++)if(b!=0||y!=0||x!=0)helper.setBlock(pos.offset(x,y,b),GTMultiblocks.TANK_WALL_DENSE.get());
-        var machine=(gregtech.blockentity.machine.LargeGasTurbineControllerBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos));
+        var machine=(gregtech.content.blockentity.machine.LargeGasTurbineControllerBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos));
         helper.assertTrue(StructureTestSupport.ok(machine),"35 solid walls form the original turbine volume");
         helper.setBlock(pos.east(),GTMultiblocks.TANK_WALL_DENSE.get());
         helper.assertTrue(StructureTestSupport.ok(machine),"weldable dense stainless wall shares the original structural identity");
-        var recipe=gregtech.data.FuelRecipeMaps.Gas.mRecipeList.stream().filter(r->r.mFluidInputs.length==1&&r.mFluidOutputs.length>0&&r.mEUt<0&&r.mFluidInputs[0].getFluid()==GTFluids.still("Methane").get()).findFirst().orElseThrow();
+        var recipe=gregtech.content.data.FuelRecipeMaps.Gas.mRecipeList.stream().filter(r->r.mFluidInputs.length==1&&r.mFluidOutputs.length>0&&r.mEUt<0&&r.mFluidInputs[0].getFluid()==GTFluids.still("Methane").get()).findFirst().orElseThrow();
         var fuel=recipe.mFluidInputs[0].copy();fuel.setAmount(49152);machine.fill(fuel,net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);machine.tick();
         int count=(49152-machine.getFluidInTank(0).getAmount())/recipe.mFluidInputs[0].getAmount();
         helper.assertTrue(machine.getEnergyStored(GregTechTags.Energy.RU,null)==8192&&count>0,"fuel generates the maximum packet at original 2/3 conversion");
@@ -315,7 +315,7 @@ public final class BlueprintRegressionTests {
         machine.load(machine.saveWithoutMetadata());int remaining=machine.getFluidInTank(0).getAmount();machine.tick();
         helper.assertTrue(machine.getFluidInTank(0).getAmount()==remaining,"no receiver means buffered output blocks further fuel consumption");
         var block=gregtech.internal.machine.MachineRegistry.basicMachines().iterator().next().get();var target=pos.south(4);helper.setBlock(target,block);
-        var receiver=(gregtech.blockentity.machine.BasicMachineBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(target));
+        var receiver=(gregtech.content.blockentity.machine.BasicMachineBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(target));
         receiver.setSpec(gregtech.internal.machine.BasicMachineSpec.builder("turbine_test_receiver",block.basicSpec().material()).machineType("test").energy(GregTechTags.Energy.RU,8192).recipes(block.basicSpec().recipeMap()).faces(gregtech.internal.energy.FaceConfig.ALL_SIDES).build());
         machine.toggleStopped();machine.tick();helper.assertTrue(receiver.getEnergyTick()==8192&&machine.getEnergyStored(GregTechTags.Energy.RU,null)==0,"stored rotation exits rear structural face");
         helper.setBlock(pos.south(),Blocks.AIR);helper.assertTrue(!StructureTestSupport.ok(machine),"turbine center is solid, not hollow");helper.succeed();

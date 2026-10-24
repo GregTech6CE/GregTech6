@@ -43,12 +43,12 @@ public final class CoverDrops {
     }
     public static List<ItemStack> capture(BlockState state,ServerLevel level,BlockEntity owner,List<ItemStack> drops){
         if(owner==null||!ComponentCoverFallback.ownClass(owner))return drops;
-        boolean machine = owner instanceof gregtech.blockentity.machine.HopperBlockEntity
-                || owner instanceof gregtech.blockentity.tool.ProcessingToolBlockEntity
-                || owner instanceof gregtech.blockentity.GTEnergyBlockEntity
-                    && !(owner instanceof gregtech.blockentity.machine.TankBlockEntity)
-                    && !(owner instanceof gregtech.blockentity.machine.LogisticsTankBlockEntity)
-                    && !(owner instanceof gregtech.blockentity.machine.MultiblockTankControllerBlockEntity);
+        boolean machine = owner instanceof gregtech.content.blockentity.machine.HopperBlockEntity
+                || owner instanceof gregtech.content.blockentity.tool.ProcessingToolBlockEntity
+                || owner instanceof gregtech.content.blockentity.GTEnergyBlockEntity
+                    && !(owner instanceof gregtech.content.blockentity.machine.TankBlockEntity)
+                    && !(owner instanceof gregtech.content.blockentity.machine.LogisticsTankBlockEntity)
+                    && !(owner instanceof gregtech.content.blockentity.machine.MultiblockTankControllerBlockEntity);
         if (machine) for (var stack : drops) if (stack.is(state.getBlock().asItem())) {
 //? if >=1.21.1 {
             /*stack.remove(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);

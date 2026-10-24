@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.block.machine.HopperBlock;
-import gregtech.block.machine.QueueHopperBlock;
-import gregtech.blockentity.machine.HopperBlockEntity;
-import gregtech.blockentity.machine.QueueHopperBlockEntity;
+import gregtech.content.block.machine.HopperBlock;
+import gregtech.content.block.machine.QueueHopperBlock;
+import gregtech.content.blockentity.machine.HopperBlockEntity;
+import gregtech.content.blockentity.machine.QueueHopperBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;

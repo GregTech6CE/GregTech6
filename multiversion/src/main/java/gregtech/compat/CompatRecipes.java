@@ -6,8 +6,8 @@ import gregtech.internal.recipe.Recipe;
 import gregtech.internal.recipe.RecipeMap;
 import gregtech.content.compat.CompatSpecs;
 import gregtech.content.recipe.DyeProcessingRecipes;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.registry.GTItems;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.registry.GTItems;
 import com.mojang.logging.LogUtils;
 
 //? if >=1.21.1 {

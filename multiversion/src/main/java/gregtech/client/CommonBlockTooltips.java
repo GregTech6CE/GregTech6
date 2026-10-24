@@ -3,9 +3,9 @@
 package gregtech.client;
 
 import gregtech.internal.block.OriginalBlockTooltipRules;
-import gregtech.block.BookShelfBlock;
+import gregtech.content.block.BookShelfBlock;
 import gregtech.content.cover.CoverItems;
-import gregtech.data.BlockHarvestPolicy;
+import gregtech.content.data.BlockHarvestPolicy;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -46,7 +46,7 @@ public final class CommonBlockTooltips {
         if (!BuiltInRegistries.BLOCK.getKey(block).getNamespace().equals("gt6ce")) return;
         boolean flammable = lines.stream().anyMatch(line -> containsAnyKey(line, FLAME_KEYS));
         var state = block.defaultBlockState();
-        var ore = gregtech.data.OreHostPhysics.itemParams(stack);
+        var ore = gregtech.content.data.OreHostPhysics.itemParams(stack);
         for (var side : Direction.values())
             flammable |= state.getFlammability(EmptyBlockGetter.INSTANCE, BlockPos.ZERO, side) > 0;
         // Native tooltip events include the item name at index0. Keep player names/lore intact.

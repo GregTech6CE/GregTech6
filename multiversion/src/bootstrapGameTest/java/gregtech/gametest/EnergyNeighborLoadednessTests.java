@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
-import gregtech.block.energy.LaserConverterBlock;
-import gregtech.block.machine.EngineBlock;
-import gregtech.blockentity.energy.GearboxBlockEntity;
-import gregtech.blockentity.energy.LaserConverterBlockEntity;
-import gregtech.blockentity.machine.KineticRotationEngineBlockEntity;
-import gregtech.data.GregTechTags;
+import gregtech.content.block.energy.LaserConverterBlock;
+import gregtech.content.block.machine.EngineBlock;
+import gregtech.content.blockentity.energy.GearboxBlockEntity;
+import gregtech.content.blockentity.energy.LaserConverterBlockEntity;
+import gregtech.content.blockentity.machine.KineticRotationEngineBlockEntity;
+import gregtech.content.data.GregTechTags;
 import gregtech.util.GTEnergySides;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -120,7 +120,7 @@ public final class EnergyNeighborLoadednessTests {
         f.set(pos,block("engine_rotation_bronze").defaultBlockState().setValue(EngineBlock.FACING,Direction.EAST).setValue(EngineBlock.LIT,false));
         var engine=(KineticRotationEngineBlockEntity)h.getLevel().getBlockEntity(pos);var target=pos.north();
         var gearboxBlock=block("gearbox_bronze");
-        h.assertTrue(gearboxBlock instanceof gregtech.block.energy.GearboxBlock,"registered bronze gearbox exists");
+        h.assertTrue(gearboxBlock instanceof gregtech.content.block.energy.GearboxBlock,"registered bronze gearbox exists");
         f.set(target,gearboxBlock.defaultBlockState());var gearbox=(GearboxBlockEntity)h.getLevel().getBlockEntity(target);
         gearbox.mountGear(Direction.EAST);gearbox.mountGear(Direction.SOUTH);
         h.assertTrue(gearbox.gearsWork(),"real two-gear corner configuration works");

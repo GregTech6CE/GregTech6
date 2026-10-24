@@ -1,6 +1,6 @@
 package gregtech.platform.neoforge.logistics;
 
-import gregtech.registry.GTBlockEntities;
+import gregtech.content.registry.GTBlockEntities;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.bus.api.SubscribeEvent;
 

@@ -1,8 +1,8 @@
 package gregtech.content.hazard;
 
 import gregtech.internal.fluid.FluidHazards;
-import gregtech.damage.GTHazmat;
-import gregtech.data.RegisteredFluids;
+import gregtech.content.damage.GTHazmat;
+import gregtech.content.data.RegisteredFluids;
 import gregtech.util.GTEntityHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;

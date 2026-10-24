@@ -60,7 +60,7 @@ public final class NeoToolBindings {
     }
 
     public static String craftKind(ItemStack stack) {
-        return GTToolHelper.isTool(stack) ? ((gregtech.item.GTToolItem) stack.getItem()).toolType().id() : "";
+        return GTToolHelper.isTool(stack) ? ((gregtech.content.item.GTToolItem) stack.getItem()).toolType().id() : "";
     }
 
     public static int craftDamage(ItemStack stack) {

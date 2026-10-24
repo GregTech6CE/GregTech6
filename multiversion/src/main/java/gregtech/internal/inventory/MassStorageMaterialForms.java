@@ -4,19 +4,19 @@ import gregtech.internal.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.internal.material.ItemMaterialRegistry;
 import gregtech.internal.material.MaterialEquivalence;
-import gregtech.block.MaterialBlockLike;
+import gregtech.content.block.MaterialBlockLike;
 //? if >=1.21.1 {
 /*import gregtech.internal.energy.WireMaterialLike;
 *///?} else {
-import gregtech.block.energy.ElectricWireBlock;
+import gregtech.content.block.energy.ElectricWireBlock;
 //?}
-import gregtech.data.MaterialPrefix;
-import gregtech.item.MaterialItem;
-import gregtech.registry.GTItems;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.item.MaterialItem;
+import gregtech.content.registry.GTItems;
 
 //? if >=1.21.1 {
 //?} else {
-import gregtech.registry.GTWires;
+import gregtech.content.registry.GTWires;
 //?}
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;

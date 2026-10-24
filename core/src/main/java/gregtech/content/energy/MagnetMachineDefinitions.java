@@ -5,7 +5,7 @@ package gregtech.content.energy;
 import gregtech.internal.energy.EnergyNodeSpec;
 import gregtech.internal.material.GTMaterial;
 import gregtech.content.material.Materials;
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 
 import java.util.ArrayList;
 import java.util.List;

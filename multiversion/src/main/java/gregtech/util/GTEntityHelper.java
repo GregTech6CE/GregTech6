@@ -2,8 +2,8 @@ package gregtech.util;
 
 import gregtech.api.energy.GTVoltageTiers;
 import gregtech.internal.material.ItemMaterialRegistry;
-import gregtech.damage.GTDamageTypes;
-import gregtech.damage.GTHazmat;
+import gregtech.content.damage.GTDamageTypes;
+import gregtech.content.damage.GTHazmat;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -71,7 +71,7 @@ public final class GTEntityHelper {
         // GT6 reads OM.anydata(stack).mPrefix, which covers both GT material items and unified vanilla
         // ones; the port keeps material items off ItemMaterialRegistry (their prefix lives on the
         // MaterialItem instance), so both paths are needed here.
-        gregtech.data.MaterialPrefix prefix =
+        gregtech.content.data.MaterialPrefix prefix =
                 stack.getItem() instanceof gregtech.internal.material.MaterialFormItem materialItem
                         ? materialItem.getPrefix()
                         : ItemMaterialRegistry.get(stack)

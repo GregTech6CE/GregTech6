@@ -6,8 +6,8 @@ import gregtech.internal.recipe.RecipeMap;
 import gregtech.internal.recipe.RecipeMapSpec;
 import gregtech.content.machine.BasicMachineCatalog;
 import gregtech.content.multiblock.SharedLargeMachineLayouts;
-import gregtech.data.FuelRecipeMaps;
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.data.FuelRecipeMaps;
+import gregtech.content.data.MachineRecipeMaps;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -93,7 +93,7 @@ public final class AddonMachineRuntime {
                 || parameters.cheapOverclockingSpecified())
             spec.cheapOverclocking(parameters.cheapOverclocking());
         if (definition.auxiliaryEnergyType() != null) {
-            var tag = gregtech.data.GregTechTags.Energy.ALL.stream()
+            var tag = gregtech.content.data.GregTechTags.Energy.ALL.stream()
                     .filter(candidate -> candidate.getShortName().equalsIgnoreCase(definition.auxiliaryEnergyType()))
                     .findFirst()
                     .orElseThrow(() -> new IllegalStateException("Addon '" + accepted.addonId()

@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
 import gregtech.content.nuclear.*;
-import gregtech.registry.*;
+import gregtech.content.registry.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.item.*;
@@ -21,7 +21,7 @@ public final class NuclearSurvivalTests {
             stack.getOrCreateTag().putBoolean("gt.test.marker",true);
             var block=((BlockItem)stack.getItem()).getBlock();h.setBlock(p,block);
             var absolute=h.absolutePos(p);block.setPlacedBy(h.getLevel(),absolute,block.defaultBlockState(),player,stack);
-            var be=(gregtech.blockentity.energy.PlacedReactorRodBlockEntity)h.getLevel().getBlockEntity(absolute);
+            var be=(gregtech.content.blockentity.energy.PlacedReactorRodBlockEntity)h.getLevel().getBlockEntity(absolute);
             be.load(be.saveWithoutMetadata());
             var drops=Block.getDrops(be.getBlockState(),h.getLevel(),absolute,be);
             h.assertTrue(drops.size()==1&&ItemStack.matches(stack,drops.get(0)),"placing/saving/breaking preserves exact rod: "+definition.id());
@@ -78,21 +78,21 @@ public final class NuclearSurvivalTests {
         var pill=items.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","empty_wax_pill"));
         var medicine=items.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","radaway"));
         var counter=items.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","geiger_counter"));
-        var routes=gregtech.data.MachineRecipeMaps.Extruder.mRecipeList.stream()
+        var routes=gregtech.content.data.MachineRecipeMaps.Extruder.mRecipeList.stream()
                 .filter(r->java.util.Arrays.stream(r.mOutputs).anyMatch(s->s.is(pill))).toList();
         h.assertTrue(routes.size()==18,"three food-grade waxes, three dust sizes, two bottle molds");
         for(var recipe:routes){
-            h.assertTrue(recipe.mInputs[1].getItem() instanceof gregtech.item.TechItem mold&&mold.isCatalyst(),"pill mold is not consumed");
+            h.assertTrue(recipe.mInputs[1].getItem() instanceof gregtech.content.item.TechItem mold&&mold.isCatalyst(),"pill mold is not consumed");
             h.assertTrue(recipe.mDuration==64&&recipe.mEUt==16,"original wax extrusion work");
         }
-        h.assertTrue(gregtech.data.MachineRecipeMaps.Boxinator.mRecipeList.stream().anyMatch(r->java.util.Arrays.stream(r.mOutputs).anyMatch(s->s.is(medicine))),"iodine packaging route exists");
-        long filled=gregtech.data.MachineRecipeMaps.Canner.mRecipeList.stream().filter(r->java.util.Arrays.stream(r.mOutputs).anyMatch(s->s.is(counter))).count();
+        h.assertTrue(gregtech.content.data.MachineRecipeMaps.Boxinator.mRecipeList.stream().anyMatch(r->java.util.Arrays.stream(r.mOutputs).anyMatch(s->s.is(medicine))),"iodine packaging route exists");
+        long filled=gregtech.content.data.MachineRecipeMaps.Canner.mRecipeList.stream().filter(r->java.util.Arrays.stream(r.mOutputs).anyMatch(s->s.is(counter))).count();
         h.assertTrue(filled==3,"helium/neon/argon filling routes");
         var pos=new BlockPos(1,2,1);h.setBlock(pos,GTEnergyNodes.REACTOR_CORE_2X2.get());
-        var core=(gregtech.blockentity.energy.ReactorCoreBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(pos));
+        var core=(gregtech.content.blockentity.energy.ReactorCoreBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(pos));
         core.neutrons[0]=11;core.neutrons[1]=22;core.neutrons[2]=33;core.neutrons[3]=44;
-        var reading=gregtech.item.GeigerCounterItem.reading(core).getString();
+        var reading=gregtech.content.item.GeigerCounterItem.reading(core).getString();
         h.assertTrue(reading.contains("11 n; 22 n; 33 n; 44 n"),"counter reports individual rod levels");
-        h.assertTrue(counter instanceof gregtech.item.GeigerCounterItem,"counter has actual interaction behavior");h.succeed();
+        h.assertTrue(counter instanceof gregtech.content.item.GeigerCounterItem,"counter has actual interaction behavior");h.succeed();
     }
 }

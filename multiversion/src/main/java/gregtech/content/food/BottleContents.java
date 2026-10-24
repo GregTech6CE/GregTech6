@@ -1,6 +1,6 @@
 package gregtech.content.food;
 
-import gregtech.item.BottleItem;
+import gregtech.content.item.BottleItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PotionItem;

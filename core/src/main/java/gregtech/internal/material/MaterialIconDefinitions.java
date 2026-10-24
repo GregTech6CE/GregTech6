@@ -1,6 +1,6 @@
 package gregtech.internal.material;
 
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 
 /** Shared original material icon selection and resource paths, without client classes. */
 public final class MaterialIconDefinitions {

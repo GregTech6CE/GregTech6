@@ -1,7 +1,7 @@
 package gregtech.compat;
 
 import gregtech.content.recipe.DyeProcessingRecipes;
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.data.MachineRecipeMaps;
 //? if >=1.21.1 {
 /*import java.util.ArrayList;
 import java.util.List;
@@ -66,9 +66,9 @@ public final class ProjectRedCompatGameTests {
         helper.assertTrue(manager.byKey(added).isPresent(), "GT red iron recipe is present");
         helper.assertTrue(manager.byKey(silicon).isPresent(), "GT silicon wafer recipe is present");
 //? if >=1.21.1 {
-        /*helper.assertTrue(manager.byKey(silicon).orElseThrow().value() instanceof gregtech.recipe.ToolShapedRecipe,
+        /*helper.assertTrue(manager.byKey(silicon).orElseThrow().value() instanceof gregtech.content.recipe.ToolShapedRecipe,
 *///?} else {
-        helper.assertTrue(manager.byKey(silicon).orElseThrow() instanceof gregtech.recipe.ToolShapedRecipe,
+        helper.assertTrue(manager.byKey(silicon).orElseThrow() instanceof gregtech.content.recipe.ToolShapedRecipe,
 //?}
                 "hand sawing uses the recipe that returns and wears tools");
         var server = helper.getLevel().getServer();

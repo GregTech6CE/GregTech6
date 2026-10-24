@@ -1,11 +1,11 @@
 package gregtech.gametest;
 
-import gregtech.blockentity.inventory.DrawerQuadBlockEntity;
-import gregtech.blockentity.inventory.EnderGarbageBlockEntity;
-import gregtech.blockentity.inventory.MetalChestBlockEntity;
-import gregtech.blockentity.inventory.SafeBlockEntity;
-import gregtech.blockentity.machine.HopperBlockEntity;
-import gregtech.blockentity.machine.QueueHopperBlockEntity;
+import gregtech.content.blockentity.inventory.DrawerQuadBlockEntity;
+import gregtech.content.blockentity.inventory.EnderGarbageBlockEntity;
+import gregtech.content.blockentity.inventory.MetalChestBlockEntity;
+import gregtech.content.blockentity.inventory.SafeBlockEntity;
+import gregtech.content.blockentity.machine.HopperBlockEntity;
+import gregtech.content.blockentity.machine.QueueHopperBlockEntity;
 import gregtech.client.gui.HopperContainerMenu;
 import com.mojang.authlib.GameProfile;
 import java.util.ArrayList;

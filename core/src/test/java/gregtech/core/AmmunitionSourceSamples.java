@@ -5,7 +5,7 @@ import gregtech.internal.material.*;
 import gregtech.content.material.Materials;
 import gregtech.content.recipe.MaterialArrowRules;
 import gregtech.content.recipe.PressAmmunitionRecipeRows;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MaterialPrefix;
 import java.util.Set;
 import java.util.stream.Collectors;
 

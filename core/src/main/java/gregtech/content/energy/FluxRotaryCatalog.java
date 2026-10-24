@@ -6,7 +6,7 @@ import gregtech.internal.energy.EnergyNodeSpec;
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
 import gregtech.content.material.Materials;
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 import java.util.*;
 
 public final class FluxRotaryCatalog {

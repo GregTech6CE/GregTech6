@@ -1,7 +1,7 @@
 package gregtech.content.multiblock;
 
-import gregtech.block.machine.*;
-import gregtech.registry.*;
+import gregtech.content.block.machine.*;
+import gregtech.content.registry.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
 import java.util.*;

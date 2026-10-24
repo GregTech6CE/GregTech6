@@ -1,15 +1,15 @@
 package gregtech.gametest;
 
-import gregtech.block.tool.BumbliaryBlock;
-import gregtech.blockentity.tool.BumbliaryBlockEntity;
+import gregtech.content.block.tool.BumbliaryBlock;
+import gregtech.content.blockentity.tool.BumbliaryBlockEntity;
 import gregtech.client.gui.BumbliaryContainerMenu;
 import gregtech.content.bumble.BumbleBeeGenes;
 import gregtech.content.bumble.BumbleBeeType;
 import gregtech.content.bumble.GTBumbleProducts;
 import gregtech.content.bumble.GTBumbleSpecies;
-import gregtech.registry.GTBlockEntities;
-import gregtech.registry.GTMenuTypes;
-import gregtech.registry.GTToolBlocks;
+import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTMenuTypes;
+import gregtech.content.registry.GTToolBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -104,13 +104,13 @@ public final class BumbliaryTests {
     @GameTest(template = "test_empty", timeoutTicks = 200)
     public static void ordinaryBumbliaryHasOriginalSurvivalRecipe(GameTestHelper helper) {
         var recipe = helper.getLevel().getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath("gt6ce", "tool_blocks/bumbliary")).orElseThrow();
-        helper.assertTrue(recipe instanceof gregtech.recipe.ToolShapedRecipe, "bumbliary uses tool-aware crafting");
+        helper.assertTrue(recipe instanceof gregtech.content.recipe.ToolShapedRecipe, "bumbliary uses tool-aware crafting");
         var ingredients = recipe.getIngredients();
         helper.assertTrue(ingredients.size() == 9, "original 3x3 grid");
         for (int i=0;i<9;i++) helper.assertTrue(ingredients.get(i).getItems().length > 0, "resolved survival ingredient " + i);
-        var iron = gregtech.registry.GTItems.getStack(gregtech.data.MaterialPrefix.screw,
+        var iron = gregtech.content.registry.GTItems.getStack(gregtech.content.data.MaterialPrefix.screw,
                 gregtech.content.material.Materials.Iron);
-        var steel = gregtech.registry.GTItems.getStack(gregtech.data.MaterialPrefix.screw,
+        var steel = gregtech.content.registry.GTItems.getStack(gregtech.content.data.MaterialPrefix.screw,
                 gregtech.content.material.Materials.Steel);
         helper.assertTrue(ingredients.get(6).test(iron) && ingredients.get(6).test(steel), "ANY.Iron accepts iron and steel screws");
         var crafting = new net.minecraft.world.inventory.TransientCraftingContainer(new net.minecraft.world.inventory.AbstractContainerMenu(null,0) {
@@ -118,10 +118,10 @@ public final class BumbliaryTests {
             @Override public boolean stillValid(Player player) { return true; }
         },3,3);
         for(int slot=0;slot<9;slot++) crafting.setItem(slot,ingredients.get(slot).getItems()[0].copy());
-        var screwdriver = gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.SCREWDRIVER,
+        var screwdriver = gregtech.content.item.GTToolItem.create(gregtech.internal.tool.GTToolType.SCREWDRIVER,
                 gregtech.content.material.Materials.Steel, gregtech.internal.material.GTMaterialRegistry.get("Wood"));
         crafting.setItem(7,screwdriver);
-        var shaped = (gregtech.recipe.ToolShapedRecipe)recipe;
+        var shaped = (gregtech.content.recipe.ToolShapedRecipe)recipe;
         helper.assertTrue(shaped.matches(crafting,helper.getLevel()), "real survival ingredients match original grid");
         helper.assertTrue(!shaped.getRemainingItems(crafting).get(7).isEmpty()
                 && shaped.getRemainingItems(crafting).get(7).getDamageValue() > screwdriver.getDamageValue(), "craft returns the worn screwdriver");

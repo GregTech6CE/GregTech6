@@ -19,7 +19,7 @@
 
 package gregtech.internal.energy;
 
-import gregtech.data.GregTechConstants;
+import gregtech.content.data.GregTechConstants;
 
 /**
  * Static seam for the MC-free FE packet math between GT emitters/consumers and foreign

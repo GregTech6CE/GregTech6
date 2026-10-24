@@ -2,14 +2,15 @@ package gregtech.gametest;
 
 import gregtech.api.machine.*;
 import gregtech.internal.machine.*;
-import gregtech.api.recipe.*;
+import gregtech.internal.machine.*;
 import gregtech.internal.recipe.*;
-import gregtech.block.misc.*;
-import gregtech.blockentity.machine.*;
+import gregtech.internal.recipe.*;
+import gregtech.content.block.misc.*;
+import gregtech.content.blockentity.machine.*;
 import gregtech.content.cover.*;
 import gregtech.content.logistics.ExtenderSpec;
-import gregtech.data.GregTechTags;
-import gregtech.registry.*;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.registry.*;
 import net.minecraft.core.*;
 import net.minecraft.gametest.framework.*;
 import net.minecraft.world.item.*;
@@ -90,14 +91,14 @@ public final class PanelCoverTests {
     @GameTest(template="test_blueprint_empty") public static void energyScaleUsesQuantumStorageWithoutConversion(GameTestHelper h){
         var relay=energyRelay(h);h.assertTrue(relay.getEnergyCapacitorTypes(Direction.NORTH).contains(GregTechTags.Energy.QU),"QU storage is discoverable despite EU emission");
         h.assertTrue(relay.attachCover(Direction.NORTH,stack(PanelCover.ENERGY)),"real capacitor accepts energy scale");relay.tickSignals();h.assertTrue(relay.panels().signal(Direction.NORTH)==0,"empty module is zero");
-        var zpm=(gregtech.blockentity.energy.ZpmDischargerBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(POS.east()));
+        var zpm=(gregtech.content.blockentity.energy.ZpmDischargerBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(POS.east()));
         zpm.inventory().insertItem(0,gregtech.content.energy.ZpmEnergy.charged(),false);long before=zpm.totalEnergy();relay.tickSignals();
         h.assertTrue(relay.panels().signal(Direction.NORTH)==14&&zpm.totalEnergy()==before,"nearly-full QU is fourteen without extracting energy");
         relay.panels().configure(Direction.NORTH,false,false);relay.panels().configure(Direction.NORTH,true,false);h.assertTrue(relay.coverStrongSignal(Direction.SOUTH)==1,"reverse and strong configuration");h.succeed();
     }
     @GameTest(template="test_blueprint_empty") public static void energyDisplayTracksChargeAndClientSnapshot(GameTestHelper h){
         var relay=energyRelay(h);relay.attachCover(Direction.NORTH,stack(PanelCover.ENERGY_DISPLAY));relay.tickSignals();h.assertTrue(PanelCoverRuntime.value(relay.getCover(Direction.NORTH))==0,"empty display");
-        var zpm=(gregtech.blockentity.energy.ZpmDischargerBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(POS.east()));zpm.inventory().insertItem(0,gregtech.content.energy.ZpmEnergy.charged(),false);relay.tickSignals();
+        var zpm=(gregtech.content.blockentity.energy.ZpmDischargerBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(POS.east()));zpm.inventory().insertItem(0,gregtech.content.energy.ZpmEnergy.charged(),false);relay.tickSignals();
         var client=new ExtenderBlockEntity(relay.getBlockPos(),relay.getBlockState());client.handleUpdateTag(relay.getUpdateTag());h.assertTrue(PanelCoverRuntime.value(client.getCover(Direction.NORTH))==9,"client receives current energy display stage");
         zpm.inventory().extractItem(0,1,false);relay.tickSignals();h.assertTrue(PanelCoverRuntime.value(relay.getCover(Direction.NORTH))==0,"removed module clears display");
         for(int n=0;n<=10;n++)h.assertTrue(PanelCoverRuntime.scale(n,10,10)==n,"eleven source display stages");h.succeed();
@@ -153,19 +154,19 @@ public final class PanelCoverTests {
         var m=machine(h);h.assertTrue(!m.attachCover(Direction.NORTH,stack(PanelCover.MANUAL))&&!m.attachCover(Direction.NORTH,stack(PanelCover.ENERGY)),"no fake modes or capacitor on processing machines");
         var menu=new net.minecraft.world.inventory.AbstractContainerMenu(null,0){public ItemStack quickMoveStack(net.minecraft.world.entity.player.Player p,int s){return ItemStack.EMPTY;}public boolean stillValid(net.minecraft.world.entity.player.Player p){return true;}};
         for(var panel:PanelCover.values()){
-            var recipe=(gregtech.recipe.ToolShapedRecipe)h.getLevel().getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","panel_covers/"+panel.id)).orElseThrow();
+            var recipe=(gregtech.content.recipe.ToolShapedRecipe)h.getLevel().getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","panel_covers/"+panel.id)).orElseThrow();
             var grid=new net.minecraft.world.inventory.TransientCraftingContainer(menu,3,3);
             for(int y=0;y<recipe.getHeight();y++)for(int x=0;x<recipe.getWidth();x++){
                 var ingredient=recipe.getIngredients().get(x+y*recipe.getWidth());if(ingredient.isEmpty())continue;
                 var item=ingredient.getItems()[0].copy();
-                if(item.getItem() instanceof gregtech.item.GTToolItem){
+                if(item.getItem() instanceof gregtech.content.item.GTToolItem){
                     var key=net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(item.getItem()).getPath();
-                    item=gregtech.item.GTToolItem.create(key.contains("screwdriver")?gregtech.internal.tool.GTToolType.SCREWDRIVER:gregtech.internal.tool.GTToolType.WRENCH,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
+                    item=gregtech.content.item.GTToolItem.create(key.contains("screwdriver")?gregtech.internal.tool.GTToolType.SCREWDRIVER:gregtech.internal.tool.GTToolType.WRENCH,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
                 }
                 grid.setItem(x+y*3,item);
             }
             h.assertTrue(recipe.matches(grid,h.getLevel())&&recipe.assemble(grid,h.getLevel().registryAccess()).is(GTTechnological.get(panel.id)),"real crafting resolves every ingredient: "+panel.id);
-            var remaining=recipe.getRemainingItems(grid);for(int i=0;i<9;i++)if(grid.getItem(i).getItem() instanceof gregtech.item.GTToolItem)h.assertTrue(!remaining.get(i).isEmpty()&&remaining.get(i).getDamageValue()>0,"shutter tools retained with wear");
+            var remaining=recipe.getRemainingItems(grid);for(int i=0;i<9;i++)if(grid.getItem(i).getItem() instanceof gregtech.content.item.GTToolItem)h.assertTrue(!remaining.get(i).isEmpty()&&remaining.get(i).getDamageValue()>0,"shutter tools retained with wear");
         }h.succeed();
     }
     @GameTest(template="test_blueprint_empty") public static void playerClicksMatchFaceTexturesAndUseOneCover(GameTestHelper h){
@@ -182,7 +183,7 @@ public final class PanelCoverTests {
             h.assertTrue(relay.machineControl(side).mode()==((before+1)&15),"rendered plus location operates actual block face "+side);relay.removeCover(side);
         }
         relay.attachCover(Direction.NORTH,stack(PanelCover.BUTTONS));
-        var chisel=gregtech.item.GTToolItem.create(gregtech.internal.tool.GTToolType.CHISEL,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
+        var chisel=gregtech.content.item.GTToolItem.create(gregtech.internal.tool.GTToolType.CHISEL,gregtech.content.material.Materials.Steel,gregtech.internal.material.GTMaterialRegistry.get("Wood"));
         player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,chisel);
         var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(relay.getBlockPos()),Direction.NORTH,relay.getBlockPos(),false);
         block.use(relay.getBlockState(),h.getLevel(),relay.getBlockPos(),player,net.minecraft.world.InteractionHand.MAIN_HAND,hit);

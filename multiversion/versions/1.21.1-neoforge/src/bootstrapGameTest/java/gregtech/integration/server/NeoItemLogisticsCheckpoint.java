@@ -1,9 +1,9 @@
 package gregtech.integration.server;
-import gregtech.registry.*;
+import gregtech.content.registry.*;
 import gregtech.content.transport.*;
 import gregtech.content.recipe.PipeRecipes;
-import gregtech.block.machine.ItemPipeBlock;
-import gregtech.blockentity.machine.*;
+import gregtech.content.block.machine.ItemPipeBlock;
+import gregtech.content.blockentity.machine.*;
 import gregtech.internal.tool.ScrewdriverUseTarget;
 import gregtech.content.cover.CoverUtilityBehaviors;
 import net.minecraft.core.*;import net.minecraft.core.component.DataComponents;

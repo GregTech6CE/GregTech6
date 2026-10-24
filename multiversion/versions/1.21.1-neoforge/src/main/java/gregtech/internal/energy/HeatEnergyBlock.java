@@ -1,6 +1,6 @@
 package gregtech.internal.energy;
 
-import gregtech.data.GregTechTags;
+import gregtech.content.data.GregTechTags;
 import net.minecraft.core.Direction;
 import java.util.Collection;
 import java.util.List;

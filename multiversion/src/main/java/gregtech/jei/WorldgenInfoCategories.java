@@ -6,9 +6,9 @@ package gregtech.jei;
 import gregtech.GregTech;
 //?}
 import gregtech.internal.material.GTMaterial;
-import gregtech.worldgen.GTOreVeins;
-import gregtech.worldgen.GTStoneLayersGen;
-import gregtech.worldgen.GTWorldgenScale;
+import gregtech.content.worldgen.GTOreVeins;
+import gregtech.content.worldgen.GTStoneLayersGen;
+import gregtech.content.worldgen.GTWorldgenScale;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;

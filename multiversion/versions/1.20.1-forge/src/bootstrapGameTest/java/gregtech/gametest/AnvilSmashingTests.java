@@ -3,11 +3,11 @@ package gregtech.gametest;
 import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.prefix.PrefixRegistry;
-import gregtech.blockentity.tool.MaterialAnvilBlockEntity;
-import gregtech.data.MaterialPrefix;
-import gregtech.registry.GTToolBlocks;
-import gregtech.registry.GTToolItems;
-import gregtech.registry.GTItems;
+import gregtech.content.blockentity.tool.MaterialAnvilBlockEntity;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTToolBlocks;
+import gregtech.content.registry.GTToolItems;
+import gregtech.content.registry.GTItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -83,7 +83,7 @@ public final class AnvilSmashingTests {
         // 2. hit it with the hammer
         var hammer = GTToolItems.get(gregtech.internal.tool.GTToolType.HARD_HAMMER);
         player.setItemInHand(InteractionHand.MAIN_HAND, hammer == null
-                ? ItemStack.EMPTY : gregtech.item.GTToolItem.create(
+                ? ItemStack.EMPTY : gregtech.content.item.GTToolItem.create(
                         gregtech.internal.tool.GTToolType.HARD_HAMMER,
                         gregtech.content.material.Materials.Steel,
                         gregtech.internal.material.GTMaterialRegistry.get("Wood")));
@@ -102,14 +102,14 @@ public final class AnvilSmashingTests {
     private static GTMaterial firstOreMaterial() {
         for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
             if (!material.isValid()) continue;
-            if (!gregtech.data.generated.MaterialWorkability.isMortarGrindable(material)) continue;
+            if (!gregtech.content.data.generated.MaterialWorkability.isMortarGrindable(material)) continue;
             if (material.getTargetCrushingMaterial() != material) continue;
             if (GTItems.getStack(MaterialPrefix.crushed, material, 1).isEmpty()) continue;
             if (GTItems.getStack(MaterialPrefix.dust, material, 1).isEmpty()) continue;
             boolean supported = true;
             for (var prefix : new MaterialPrefix[]{MaterialPrefix.crushed, MaterialPrefix.oreRaw, MaterialPrefix.rockGt}) {
                 var stack = GTItems.getStack(prefix, material, 1);
-                if (stack.isEmpty() || !gregtech.data.MachineRecipeMaps.Anvil.containsInput(stack)) supported = false;
+                if (stack.isEmpty() || !gregtech.content.data.MachineRecipeMaps.Anvil.containsInput(stack)) supported = false;
             }
             if (!supported) continue;
             return material;

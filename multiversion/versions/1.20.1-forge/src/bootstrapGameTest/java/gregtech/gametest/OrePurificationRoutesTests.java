@@ -4,8 +4,8 @@ import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.material.MaterialEquivalence;
 import gregtech.internal.recipe.Recipe;
-import gregtech.data.MachineRecipeMaps;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.ItemStack;
@@ -37,7 +37,7 @@ public final class OrePurificationRoutesTests {
     }
 
     private static boolean inputIs(Recipe recipe, MaterialPrefix prefix, GTMaterial material) {
-        ItemStack expected = gregtech.registry.GTItems.getStack(prefix, material, 1);
+        ItemStack expected = gregtech.content.registry.GTItems.getStack(prefix, material, 1);
         if (expected.isEmpty()) return false;
         for (ItemStack input : recipe.mInputs) {
             if (!input.isEmpty() && MaterialEquivalence.matches(expected, input)) return true;
@@ -46,7 +46,7 @@ public final class OrePurificationRoutesTests {
     }
 
     private static boolean outputIs(Recipe recipe, MaterialPrefix prefix, GTMaterial material) {
-        ItemStack expected = gregtech.registry.GTItems.getStack(prefix, material, 1);
+        ItemStack expected = gregtech.content.registry.GTItems.getStack(prefix, material, 1);
         if (expected.isEmpty()) return false;
         for (ItemStack output : recipe.mOutputs) {
             if (!output.isEmpty() && MaterialEquivalence.matches(expected, output)) return true;
@@ -154,7 +154,7 @@ public final class OrePurificationRoutesTests {
         helper.assertTrue(recipe.mFluidInputs.length == 1 && recipe.mFluidInputs[0].getAmount() == 900,
                 "900 mB of water per recipe");
         helper.assertTrue(recipe.mFluidOutputs.length == 1
-                        && recipe.mFluidOutputs[0].getFluid() == gregtech.registry.GTFluids
+                        && recipe.mFluidOutputs[0].getFluid() == gregtech.content.registry.GTFluids
                                 .still("Sluice").get(),
                 "the machine leaves GT6's sluice fluid: " + java.util.Arrays.toString(recipe.mFluidOutputs));
 

@@ -1,5 +1,5 @@
 package gregtech.client;
-import gregtech.registry.*;
+import gregtech.content.registry.*;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -8,11 +8,11 @@ import net.neoforged.neoforge.client.event.*;
 public final class NuclearClientSetup{
  @SubscribeEvent public static void renderers(EntityRenderersEvent.RegisterRenderers event){event.registerBlockEntityRenderer(GTBlockEntities.REACTOR_CORE.get(),ReactorRodRenderer::new);event.registerBlockEntityRenderer(GTBlockEntities.REACTOR_CORE_2X2.get(),ReactorRodRenderer::new);}
  @SubscribeEvent public static void items(RegisterColorHandlersEvent.Item event){
-  for(var holder:GTFuelRods.ALL)event.register(ItemColorARGB.opaque((stack,index)->index==0?((gregtech.item.FuelRodItem)stack.getItem()).tintRgb():0xFFFFFF),holder.get());
+  for(var holder:GTFuelRods.ALL)event.register(ItemColorARGB.opaque((stack,index)->index==0?((gregtech.content.item.FuelRodItem)stack.getItem()).tintRgb():0xFFFFFF),holder.get());
   for(var block:reactorBlocks())event.register(ItemColorARGB.opaque((stack,index)->reactorColor(index)),block.asItem());
  }
  @SubscribeEvent public static void blocks(RegisterColorHandlersEvent.Block event){
-  for(var holder:GTFuelRods.BLOCKS.values())event.register((state,level,pos,index)->index==0?((gregtech.item.FuelRodItem)state.getBlock().asItem()).tintRgb():0xFFFFFF,holder.get());
+  for(var holder:GTFuelRods.BLOCKS.values())event.register((state,level,pos,index)->index==0?((gregtech.content.item.FuelRodItem)state.getBlock().asItem()).tintRgb():0xFFFFFF,holder.get());
   for(var block:reactorBlocks())event.register((state,level,pos,index)->reactorColor(index),block);
  }
  private static int reactorColor(int index){return index==0?gregtech.content.material.Materials.Lead.getColor():0xFFFFFF;}

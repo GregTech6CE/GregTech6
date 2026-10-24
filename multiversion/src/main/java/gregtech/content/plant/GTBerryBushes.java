@@ -31,7 +31,7 @@ public final class GTBerryBushes extends BerryBushCatalog {
         var known = id.getNamespace().equals("gt6ce") ? BerryBushCatalog.byId(id.getPath()) : null;
         if (known != null) return known;
         var form = gregtech.internal.material.MaterialEquivalence.form(stack);
-        if (form == null || form.prefix() != gregtech.data.MaterialPrefix.plantGtBerry) return null;
+        if (form == null || form.prefix() != gregtech.content.data.MaterialPrefix.plantGtBerry) return null;
         return MaterialBerryBushCatalog.colours(id.toString(), form.material().getColor());
     }
 

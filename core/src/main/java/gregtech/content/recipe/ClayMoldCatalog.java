@@ -3,9 +3,9 @@ package gregtech.content.recipe;
 import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.prefix.PrefixRegistry;
-import gregtech.data.MaterialGroups;
-import gregtech.data.MaterialPrefix;
-import gregtech.data.generated.GT6Materials;
+import gregtech.content.data.MaterialGroups;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.data.generated.GT6Materials;
 import java.util.List;
 
 /** Generated from original GT6 MultiItemRandomTools and MTE firing rows; LGPL, original authors retained. */

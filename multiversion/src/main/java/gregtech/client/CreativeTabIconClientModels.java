@@ -7,9 +7,9 @@ import gregtech.GregTech;
 //?}
 import gregtech.internal.material.MaterialTextureSet;
 import gregtech.internal.prefix.BlockMaterialPrefix;
-import gregtech.data.MaterialPrefix;
-import gregtech.item.CreativeTabIconItem;
-import gregtech.registry.GTCreativeTabIcons;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.item.CreativeTabIconItem;
+import gregtech.content.registry.GTCreativeTabIcons;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;

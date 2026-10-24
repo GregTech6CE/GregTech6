@@ -2,11 +2,11 @@ package gregtech.content.recipe;
 
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
-import gregtech.api.recipe.*;
 import gregtech.internal.recipe.*;
-import gregtech.block.stone.*;
-import gregtech.data.*;
-import gregtech.registry.GTItems;
+import gregtech.internal.recipe.*;
+import gregtech.content.block.stone.*;
+import gregtech.content.data.*;
+import gregtech.content.registry.GTItems;
 import net.minecraft.world.item.*;
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
@@ -132,7 +132,7 @@ public final class StoneAndToolSurvivalRecipes {
     }
 
     private static ItemStack mold(String id) {
-        var item = gregtech.registry.GTTechnological.get(id);
+        var item = gregtech.content.registry.GTTechnological.get(id);
         return item == null ? ItemStack.EMPTY : new ItemStack(item);
     }
 

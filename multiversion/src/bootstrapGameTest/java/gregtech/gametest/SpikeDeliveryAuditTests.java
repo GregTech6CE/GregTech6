@@ -1,9 +1,9 @@
 package gregtech.gametest;
 
-import gregtech.block.misc.SpikeBlock;
+import gregtech.content.block.misc.SpikeBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import gregtech.registry.GTSpikes;
+import gregtech.content.registry.GTSpikes;
 import gregtech.bootstrap.registration.OriginCreativeContents;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

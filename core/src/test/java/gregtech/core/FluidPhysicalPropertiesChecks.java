@@ -2,7 +2,7 @@ package gregtech.core;
 
 import gregtech.internal.fluid.FluidPhysicalProperties;
 import gregtech.content.fluid.FluidDefinitions;
-import gregtech.data.FluidCatalog;
+import gregtech.content.data.FluidCatalog;
 
 /** Executable source contracts; not a replacement for native entity GameTests. */
 public final class FluidPhysicalPropertiesChecks {

@@ -2,14 +2,14 @@ package gregtech.gametest;
 
 import gregtech.internal.recipe.Recipe;
 import gregtech.internal.recipe.RecipeMap;
-import gregtech.block.stone.GTStoneBlock;
-import gregtech.block.stone.StoneType;
-import gregtech.block.stone.StoneVariant;
+import gregtech.content.block.stone.GTStoneBlock;
+import gregtech.content.block.stone.StoneType;
+import gregtech.content.block.stone.StoneVariant;
 import gregtech.content.recipe.StoneAndToolSurvivalRecipes;
-import gregtech.data.MachineRecipeMaps;
+import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.recipe.generated.GeneratedRecipeResolver;
-import gregtech.registry.GTBlocks;
-import gregtech.registry.GTTechnological;
+import gregtech.content.registry.GTBlocks;
+import gregtech.content.registry.GTTechnological;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.ItemStack;
@@ -205,11 +205,11 @@ public final class StoneExtrusionTests {
                 null, null, null, null, 32, 16, 0) != null,
                 "without optimization the self-loop row is a literal GT6 recipe");
         // Control: an ordinary row survives optimization.
-        ItemStack dust = gregtech.registry.GTItems.getStack(
-                gregtech.data.MaterialPrefix.dust,
+        ItemStack dust = gregtech.content.registry.GTItems.getStack(
+                gregtech.content.data.MaterialPrefix.dust,
                 gregtech.internal.material.GTMaterialRegistry.get("Rubber"), 1);
-        ItemStack ingot = gregtech.registry.GTItems.getStack(
-                gregtech.data.MaterialPrefix.ingot,
+        ItemStack ingot = gregtech.content.registry.GTItems.getStack(
+                gregtech.content.data.MaterialPrefix.ingot,
                 gregtech.internal.material.GTMaterialRegistry.get("Rubber"), 1);
         helper.assertTrue(!dust.isEmpty() && !ingot.isEmpty(), "rubber dust and ingot exist");
         helper.assertTrue(RecipeMap.make(true, new ItemStack[]{dust.copy(), mold("extruder_shape_ingot")},

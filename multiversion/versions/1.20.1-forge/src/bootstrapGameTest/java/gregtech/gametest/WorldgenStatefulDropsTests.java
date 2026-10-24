@@ -1,12 +1,12 @@
 package gregtech.gametest;
 
-import gregtech.block.plant.BushBlock;
-import gregtech.blockentity.BushBlockEntity;
-import gregtech.blockentity.FluidSpringBlockEntity;
+import gregtech.content.block.plant.BushBlock;
+import gregtech.content.blockentity.BushBlockEntity;
+import gregtech.content.blockentity.FluidSpringBlockEntity;
 import gregtech.content.plant.GTBerryBushes;
-import gregtech.registry.GTBushes;
-import gregtech.registry.GTDecorBlocks;
-import gregtech.worldgen.GTFluidSpringsFeature;
+import gregtech.content.registry.GTBushes;
+import gregtech.content.registry.GTDecorBlocks;
+import gregtech.content.worldgen.GTFluidSpringsFeature;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -32,7 +32,7 @@ public final class WorldgenStatefulDropsTests {
         ServerLevel level = helper.getLevel();
         var legacy = GTDecorBlocks.FLUID_SPRING.get();
         for (var spring : GTFluidSpringsFeature.SPRINGS) {
-            var block=gregtech.registry.GTFluidSprings.byFluid(spring.fluidId());
+            var block=gregtech.content.registry.GTFluidSprings.byFluid(spring.fluidId());
             level.getBlockState(SPRING_FROM); // load the remote test chunk
             level.removeBlock(SPRING_FROM, false);
             level.removeBlock(SPRING_TO, false);

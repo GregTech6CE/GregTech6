@@ -1,10 +1,10 @@
 package gregtech.integration.client;
 
 import com.google.gson.JsonObject;
-import gregtech.block.plant.BushBlock;
-import gregtech.blockentity.BushBlockEntity;
+import gregtech.content.block.plant.BushBlock;
+import gregtech.content.blockentity.BushBlockEntity;
 import gregtech.content.plant.MaterialBerryBushCatalog;
-import gregtech.registry.*;
+import gregtech.content.registry.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;

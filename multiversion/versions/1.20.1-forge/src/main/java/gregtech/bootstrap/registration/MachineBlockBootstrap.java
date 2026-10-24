@@ -2,7 +2,7 @@ package gregtech.bootstrap.registration;
 
 import gregtech.internal.machine.MachineRegistry;
 import gregtech.bootstrap.InitializationStep;
-import gregtech.registry.*;
+import gregtech.content.registry.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 /** Registers all GT6 machine blocks, wires, pipes, and tanks — following the original GT6 {@code Loader_MultiTileEntities} pattern. */
@@ -11,7 +11,7 @@ public record MachineBlockBootstrap(IEventBus bus) implements InitializationStep
     @Override
     public void run() {
         gregtech.content.energy.WireDefinitions.register();
-        gregtech.registry.GTSignalWires.register();
+        gregtech.content.registry.GTSignalWires.register();
         gregtech.content.fluid.FluidPipeDefinitions.register();
         gregtech.content.transport.ItemPipeDefinitions.register();
         gregtech.content.fluid.TankDefinitions.register();
@@ -31,7 +31,7 @@ public record MachineBlockBootstrap(IEventBus bus) implements InitializationStep
         GTStorage.registerAll();
         GTLootChests.registerAll();
         GTSensors.registerAll();
-        gregtech.registry.AddonSensorRegistration.register(bus);
+        gregtech.content.registry.AddonSensorRegistration.register(bus);
         GTToolBlocks.registerAll();
         GTMiscBlocks.registerAll();
         GTWoods.registerAll();

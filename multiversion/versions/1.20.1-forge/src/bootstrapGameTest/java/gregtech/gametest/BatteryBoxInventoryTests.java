@@ -1,7 +1,7 @@
 package gregtech.gametest;
 
-import gregtech.blockentity.energy.EnergyNodeBlockEntity;
-import gregtech.registry.GTEnergyNodes;
+import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
+import gregtech.content.registry.GTEnergyNodes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.*;
@@ -83,7 +83,7 @@ public final class BatteryBoxInventoryTests {
     public static void machineCircuitRequirementsOnlyAcceptSameOrHigherTier(GameTestHelper h) {
         String[] names = {"basic", "good", "advanced", "elite", "master", "ultimate"};
         for (int required = 1; required <= names.length; required++) {
-            Object resolved = gregtech.data.MachineRecipeIngredients.resolve(
+            Object resolved = gregtech.content.data.MachineRecipeIngredients.resolve(
                     "circuit:" + required, gregtech.content.material.Materials.Steel, 1);
             var ingredient = net.minecraft.world.item.crafting.Ingredient.fromJson(new com.google.gson.Gson().toJsonTree(resolved));
             for (int actual = 1; actual <= names.length; actual++) {

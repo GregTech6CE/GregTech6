@@ -1,10 +1,10 @@
 package gregtech.client;
 //? if >=1.21.1 {
-/*import gregtech.registry.GTConstructionBlocks;
+/*import gregtech.content.registry.GTConstructionBlocks;
 *///?} else {
-import gregtech.registry.GTDecorBlocks;
+import gregtech.content.registry.GTDecorBlocks;
 //?}
-import gregtech.block.misc.*;
+import gregtech.content.block.misc.*;
 //? if >=1.21.1 {
 /*import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -20,8 +20,8 @@ import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 //?}
 public final class OriginConstructionClient {
     private static net.minecraft.world.level.block.Block[] blocks() {
-        return gregtech.registry.GTConstructionBlocks.all().stream()
-                .map(gregtech.registry.RegisteredBlock::get)
+        return gregtech.content.registry.GTConstructionBlocks.all().stream()
+                .map(gregtech.content.registry.RegisteredBlock::get)
                 .toArray(net.minecraft.world.level.block.Block[]::new);
     }
 //? if >=1.21.1 {

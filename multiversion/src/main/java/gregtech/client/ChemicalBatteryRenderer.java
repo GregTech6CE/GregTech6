@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.blockentity.energy.ChemicalBatteryBlockEntity;
+import gregtech.content.blockentity.energy.ChemicalBatteryBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.blockentity.*;

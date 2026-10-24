@@ -21,8 +21,8 @@ import gregtech.internal.material.MaterialDefinition;
 import gregtech.internal.material.MaterialProperty;
 import gregtech.internal.mod.ModData;
 import gregtech.internal.prefix.PrefixRegistry;
-import gregtech.data.ModReferences;
-import gregtech.data.MaterialPrefix;
+import gregtech.content.data.ModReferences;
+import gregtech.content.data.MaterialPrefix;
 
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -326,7 +326,7 @@ public final class CrucibleAddonContracts {
         GTMaterialRegistry.setLogSink((warning, message) -> {});
         PrefixRegistry.ensurePrefixesLoaded();
         ModReferences.UNKNOWN.getClass();
-        gregtech.data.MaterialGroups.Glowstone.getClass();
+        gregtech.content.data.MaterialGroups.Glowstone.getClass();
     }
 
     private static void expectThrows(String... parts) {
