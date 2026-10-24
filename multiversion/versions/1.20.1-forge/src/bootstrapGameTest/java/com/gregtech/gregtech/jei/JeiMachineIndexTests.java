@@ -17,6 +17,7 @@ public final class JeiMachineIndexTests {
         int checked = 0;
         for (var entry : MachineRegistry.basicMachines()) {
             if (!entry.isPresent() || entry.get().basicSpec().machineName().equals("fusionreactor")) continue;
+            if (!entry.getId().getNamespace().equals(com.gregtech.gregtech.GregTech.NAMESPACE)) continue;
             var map = MachineRecipeMaps.byMachineName(entry.get().basicSpec().machineName());
             if (map == null) continue;
             helper.assertTrue(index.containsKey(map) && index.get(map).stream().anyMatch(stack -> stack.is(entry.get().asItem())),

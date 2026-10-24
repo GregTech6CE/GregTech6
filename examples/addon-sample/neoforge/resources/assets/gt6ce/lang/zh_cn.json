@@ -1,0 +1,11 @@
+{
+  "material.gt6ce.ammoniumnitrate": "硝酸铵",
+  "material.gt6ce.beer": "啤酒",
+  "material.gt6ce.samplealloy": "样品合金",
+  "material.gt6ce.samplecruciblealloy": "样品坩埚合金",
+  "material.gt6ce.sampleremovaltarget": "样品移除目标",
+  "material.gt6ce.sampleretainedmatter": "样品保留物质",
+  "material.gt6ce.samplerubber": "样品橡胶",
+  "block.gt6ce.sample_casing": "样品橡胶外壳",
+  "item.gt6ce.tab_icon_block_sample_casing": "样品橡胶外壳"
+}

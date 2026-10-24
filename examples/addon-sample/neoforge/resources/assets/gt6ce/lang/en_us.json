@@ -1,3 +1,11 @@
 {
-  "material.gt6ce.ammoniumnitrate": "Ammonium Nitrate"
+  "material.gt6ce.ammoniumnitrate": "Ammonium Nitrate",
+  "material.gt6ce.beer": "Beer",
+  "material.gt6ce.samplealloy": "Sample Alloy",
+  "material.gt6ce.samplecruciblealloy": "Sample Crucible Alloy",
+  "material.gt6ce.sampleremovaltarget": "Sample Removal Target",
+  "material.gt6ce.sampleretainedmatter": "Sample Retained Matter",
+  "material.gt6ce.samplerubber": "Sample Rubber",
+  "block.gt6ce.sample_casing": "Sample Rubber Casing",
+  "item.gt6ce.tab_icon_block_sample_casing": "Sample Rubber Casing"
 }

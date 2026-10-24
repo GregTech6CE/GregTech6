@@ -14,6 +14,16 @@ public sealed interface StructureDefinition permits StructureDefinition.Declarat
         return false;
     }
 
+    /** The layout contains tag cells, so a tag reload can change the verdict. */
+    default boolean usesTags() {
+        return false;
+    }
+
+    /** The addon layout name this definition reads, or null when it cannot be overridden. */
+    default String overlayMachine() {
+        return null;
+    }
+
     Footprint watchFootprint(TrackedMultiblock machine);
 
     Footprint declaredFootprint(TrackedMultiblock machine);

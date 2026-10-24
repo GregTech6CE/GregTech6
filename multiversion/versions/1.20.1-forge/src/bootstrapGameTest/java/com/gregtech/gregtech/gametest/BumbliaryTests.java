@@ -352,10 +352,8 @@ public final class BumbliaryTests {
     }
 
     private static String lang(String language) {
-        try (java.io.InputStream stream = BumbliaryTests.class.getClassLoader()
-                .getResourceAsStream("assets/gt6ce/lang/" + language + ".json")) {
-            if (stream == null) return "";
-            return new String(stream.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        try {
+            return GametestLang.load(language).toString();
         } catch (java.io.IOException exception) {
             return "";
         }

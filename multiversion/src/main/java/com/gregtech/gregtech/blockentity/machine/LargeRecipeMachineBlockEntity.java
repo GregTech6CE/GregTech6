@@ -275,45 +275,53 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
     @Override public boolean scanStructure() {
         if(level==null||spec()==null||isRemoved()) return false;
         var layout=structureLayout();if(layout==null)return false;
-        if(!validStructureParts()){bindings.clear(this::release);StructureClaims.cleared(this);return false;}
-        var front=getBlockState().getValue(HorizontalDirectionalBlock.FACING);
-        var parts=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
-        var ovenCoil=new net.minecraft.world.level.block.Block[1];
-        var matchedCells=new java.util.ArrayList<LargeMachineLayouts.Cell>();
-        for(var cell:layout.cells()) {
-            var pos=cell.at(worldPosition,front);
-            var matched=matchingCell(cell,pos,ovenCoil);
-            if(matched==null) {bindings.clear(this::release);StructureClaims.cleared(this);return false;}
-            matchedCells.add(matched);
-            if(matched.role()!=MultiblockLayout.Role.AIR&&!matched.plainBlock())parts.put(pos,matched.role());
-        }
-        var repeatPlaced=new java.util.ArrayList<LargeMachineLayouts.Placed>();
-        for(var repeat:layout.repeats()) {
-            var matches=new java.util.HashMap<BlockPos,LargeMachineLayouts.Cell>();
-            var placed=LargeMachineLayouts.repeatCells(level,worldPosition,front,repeat,(cell,pos)->{
+        int[] matchedLayers=new int[layout.repeats().size()];
+        try {
+            if(!validStructureParts()){bindings.clear(this::release);StructureClaims.cleared(this);return false;}
+            var front=getBlockState().getValue(HorizontalDirectionalBlock.FACING);
+            var parts=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
+            var ovenCoil=new net.minecraft.world.level.block.Block[1];
+            var matchedCells=new java.util.ArrayList<LargeMachineLayouts.Cell>();
+            for(var cell:layout.cells()) {
+                var pos=cell.at(worldPosition,front);
                 var matched=matchingCell(cell,pos,ovenCoil);
-                if(matched==null)return false;
-                matches.put(pos,matched);
-                return true;
-            });
-            if(placed==null){bindings.clear(this::release);StructureClaims.cleared(this);return false;}
-            // Only complete repeat copies are committed, not the matched prefix of a failed copy.
-            for(var cell:placed) {
-                var matched=matches.get(cell.pos());
-                repeatPlaced.add(new LargeMachineLayouts.Placed(matched,cell.pos()));
-                if(matched.role()!=MultiblockLayout.Role.AIR&&!matched.plainBlock())parts.put(cell.pos(),matched.role());
+                if(matched==null) {bindings.clear(this::release);StructureClaims.cleared(this);return false;}
+                matchedCells.add(matched);
+                if(matched.role()!=MultiblockLayout.Role.AIR&&!matched.plainBlock())parts.put(pos,matched.role());
             }
+            var repeatPlaced=new java.util.ArrayList<LargeMachineLayouts.Placed>();
+            for(int group=0;group<layout.repeats().size();group++) {
+                var repeat=layout.repeats().get(group);
+                var matches=new java.util.HashMap<BlockPos,LargeMachineLayouts.Cell>();
+                int[] found=new int[1];
+                var placed=LargeMachineLayouts.repeatCells(level,worldPosition,front,repeat,(cell,pos)->{
+                    var matched=matchingCell(cell,pos,ovenCoil);
+                    if(matched==null)return false;
+                    matches.put(pos,matched);
+                    return true;
+                },found);
+                matchedLayers[group]=found[0];
+                if(placed==null){bindings.clear(this::release);StructureClaims.cleared(this);return false;}
+                // Only complete repeat copies are committed, not the matched prefix of a failed copy.
+                for(var cell:placed) {
+                    var matched=matches.get(cell.pos());
+                    repeatPlaced.add(new LargeMachineLayouts.Placed(matched,cell.pos()));
+                    if(matched.role()!=MultiblockLayout.Role.AIR&&!matched.plainBlock())parts.put(cell.pos(),matched.role());
+                }
+            }
+            var claimed = StructureClaims.update(this, true, bindings, parts,
+                    designHash(matchedCells, repeatPlaced),
+                    pos->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).canBind(worldPosition),
+                    (pos,role)->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).bind(worldPosition,role),this::release);
+            if (claimed == StructureClaims.Result.FAILED) return false;
+            if (claimed == StructureClaims.Result.APPLIED) {
+                com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front, matchedCells);
+                com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, repeatPlaced);
+            }
+            return true;
+        } finally {
+            StructureTracking.noteMatchedLayers(this, matchedLayers);
         }
-        var claimed = StructureClaims.update(this, true, bindings, parts,
-                designHash(matchedCells, repeatPlaced),
-                pos->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).canBind(worldPosition),
-                (pos,role)->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).bind(worldPosition,role),this::release);
-        if (claimed == StructureClaims.Result.FAILED) return false;
-        if (claimed == StructureClaims.Result.APPLIED) {
-            com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front, matchedCells);
-            com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, repeatPlaced);
-        }
-        return true;
     }
     private static int designHash(List<LargeMachineLayouts.Cell> cells, List<LargeMachineLayouts.Placed> placed) {
         int hash = 1;
