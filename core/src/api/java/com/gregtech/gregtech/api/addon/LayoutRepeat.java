@@ -12,9 +12,12 @@ import java.util.Objects;
  * {@code MachineBehaviorContext.structureRepeats(key)}. {@code up} is the anchor layer;
  * a cell's {@code up} is its distance from the anchor along {@code step}. {@code step} is
  * {@code 1} upward or {@code -1} downward. {@code max} {@code -1} repeats until a layer
- * fails to match, bounded by the structure-check cap.
+ * fails to match, bounded by {@link #MAX_COPIES}.
  */
 public final class LayoutRepeat {
+    /** Largest finite {@code max}. An unbounded group is overlap-checked for this many copies. */
+    public static final int MAX_COPIES = 1024;
+
     private final String key;
     private final int up;
     private final int min;
@@ -118,7 +121,7 @@ public final class LayoutRepeat {
                 throw new IllegalArgumentException("Structure repeat '" + key + "' needs min >= 1");
             if (max != -1 && max < min)
                 throw new IllegalArgumentException("Structure repeat '" + key + "' needs max >= min or -1");
-            if (max > 1024)
+            if (max > MAX_COPIES)
                 throw new IllegalArgumentException("Structure repeat '" + key + "' max is too large: " + max);
             if (cells.isEmpty())
                 throw new IllegalArgumentException("Structure repeat '" + key + "' is empty");

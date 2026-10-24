@@ -386,6 +386,14 @@ public final class GTMaterial {
         return this;
     }
 
+    /** Drops the smelting target and its {@link MaterialProperty#MELTING} flag. */
+    public GTMaterial clearSmeltingTarget() {
+        this.targetSmeltingMaterial = this;
+        this.targetSmeltingAmount = 0;
+        this.properties.remove(MaterialProperty.MELTING);
+        return this;
+    }
+
     /** GT6 {@code setOreMultiplier}; crushed-ore output multiplier, clamped to at least 1. */
     public GTMaterial setOreMultiplier(int multiplier) {
         this.oreMultiplier = (byte) Math.max(1, multiplier);

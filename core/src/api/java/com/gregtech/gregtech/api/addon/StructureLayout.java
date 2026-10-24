@@ -82,17 +82,34 @@ public final class StructureLayout {
             for (LayoutRepeat repeat : repeats) {
                 if (!keys.add(repeat.key()))
                     throw new IllegalArgumentException("Duplicate structure repeat key: " + repeat.key());
-                for (LayoutCell cell : repeat.cells()) {
-                    int absoluteUp = repeat.absoluteUp(cell, 0);
-                    if (cell.right() == 0 && absoluteUp == 0 && cell.back() == 0)
-                        throw new IllegalArgumentException("Structure repeat '" + repeat.key()
-                                + "' cell cannot be the origin");
-                    if (!seen.add(new Position(cell.right(), absoluteUp, cell.back())))
-                        throw new IllegalArgumentException("Structure repeat '" + repeat.key()
-                                + "' overlaps another cell");
+                // Every copy a formed structure can contain. Checking the first copy alone misses a
+                // later required layer, and misses two groups whose first copies do not touch.
+                int copies = repeat.unbounded() ? LayoutRepeat.MAX_COPIES : repeat.max();
+                List<LayoutCell> group = repeat.cells();
+                for (int copy = 0; copy < copies; copy++) {
+                    for (LayoutCell cell : group) {
+                        int absoluteUp = absoluteLayer(repeat, cell, copy);
+                        if (cell.right() == 0 && absoluteUp == 0 && cell.back() == 0)
+                            throw new IllegalArgumentException("Structure repeat '" + repeat.key()
+                                    + "' copy " + copy + " cell cannot be the origin");
+                        if (!seen.add(new Position(cell.right(), absoluteUp, cell.back())))
+                            throw new IllegalArgumentException("Structure repeat '" + repeat.key()
+                                    + "' copy " + copy + " overlaps another cell");
+                    }
                 }
             }
             return new StructureLayout(name, List.copyOf(cells), List.copyOf(repeats));
+        }
+    }
+
+    /** Absolute layer of {@code cell} in {@code copy}, rejecting a coordinate that does not fit in an int. */
+    private static int absoluteLayer(LayoutRepeat repeat, LayoutCell cell, int copy) {
+        try {
+            int along = Math.addExact(cell.up(), Math.multiplyExact(copy, repeat.height()));
+            return Math.addExact(repeat.up(), Math.multiplyExact(repeat.step(), along));
+        } catch (ArithmeticException overflow) {
+            throw new IllegalArgumentException("Structure repeat '" + repeat.key()
+                    + "' copy " + copy + " is outside the coordinate range", overflow);
         }
     }
 

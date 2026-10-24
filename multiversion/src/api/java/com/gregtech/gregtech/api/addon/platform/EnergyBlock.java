@@ -46,8 +46,7 @@ public interface EnergyBlock {
     }
 
     default long getEnergySizeInputMax(String energy, Direction side) {
-        long recommended = getEnergySizeInputRecommended(energy, side);
-        return recommended <= 0 ? 0 : recommended * 2;
+        return doubled(getEnergySizeInputRecommended(energy, side));
     }
 
     default long getEnergySizeOutputMin(String energy, Direction side) {
@@ -56,8 +55,13 @@ public interface EnergyBlock {
     }
 
     default long getEnergySizeOutputMax(String energy, Direction side) {
-        long recommended = getEnergySizeOutputRecommended(energy, side);
-        return recommended <= 0 ? 0 : recommended * 2;
+        return doubled(getEnergySizeOutputRecommended(energy, side));
+    }
+
+    /** Twice {@code recommended}, or {@link Long#MAX_VALUE} when that product does not fit in a long. */
+    private static long doubled(long recommended) {
+        if (recommended <= 0) return 0;
+        return recommended > Long.MAX_VALUE / 2 ? Long.MAX_VALUE : recommended * 2;
     }
 
     default boolean hasEnergySurface(Direction side) { return true; }

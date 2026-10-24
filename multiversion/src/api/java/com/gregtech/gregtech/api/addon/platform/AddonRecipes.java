@@ -20,7 +20,7 @@ import java.util.List;
 public final class AddonRecipes {
     private AddonRecipes() {}
 
-    /** The named map, or an exception when GregTech has no such map. */
+    /** The named map. An unknown name throws {@link IllegalArgumentException}. */
     public static Map map(String name) {
         Map map = AddonLoader.services().map(name);
         if (map == null) throw new IllegalArgumentException("Unknown recipe map: " + name);
@@ -70,21 +70,23 @@ public final class AddonRecipes {
      * {@code presenceFluidInputs} checks only that the original tanks contain that fluid, without reserving any amount.
      * Use positive native representatives for presence gates; native zero-sized stacks lose their fluid identity.
      * Null marks nothing. Kept and presence indexes must not overlap.
+     * <p>
+     * Every constructor checks that each input amount is positive. {@link #read} is the only path that keeps an
+     * empty slot from a row already stored. Array accessors return copies; changing a returned array or stack
+     * does not change this row.
      */
-    public record Line(
-            ItemStack[] itemInputs,
-            ItemStack[] itemOutputs,
-            FluidStack[] fluidInputs,
-            FluidStack[] fluidOutputs,
-            long duration,
-            long euPerTick,
-            long special,
-            int[] outputChances,
-            int[] keptInputs,
-            int[] keptFluidInputs,
-            int[] presenceFluidInputs
-    ) {
-        private static final ThreadLocal<Boolean> READING = ThreadLocal.withInitial(() -> Boolean.FALSE);
+    public static final class Line {
+        private final ItemStack[] itemInputs;
+        private final ItemStack[] itemOutputs;
+        private final FluidStack[] fluidInputs;
+        private final FluidStack[] fluidOutputs;
+        private final long duration;
+        private final long euPerTick;
+        private final long special;
+        private final int[] outputChances;
+        private final int[] keptInputs;
+        private final int[] keptFluidInputs;
+        private final int[] presenceFluidInputs;
 
         /** Named construction with the same validation and defaults as the public constructors. */
         public static Builder builder() {
@@ -92,21 +94,25 @@ public final class AddonRecipes {
         }
 
         /** Detached copies, including each stack's native item data. */
-        @Override public ItemStack[] itemInputs() { return copyItems(itemInputs); }
+        public ItemStack[] itemInputs() { return copyItems(itemInputs); }
 
         /** Detached copies, including each stack's native item data. */
-        @Override public ItemStack[] itemOutputs() { return copyItems(itemOutputs); }
+        public ItemStack[] itemOutputs() { return copyItems(itemOutputs); }
 
         /** Detached copies, including each stack's native fluid data. */
-        @Override public FluidStack[] fluidInputs() { return copyFluids(fluidInputs); }
+        public FluidStack[] fluidInputs() { return copyFluids(fluidInputs); }
 
         /** Detached copies, including each stack's native fluid data. */
-        @Override public FluidStack[] fluidOutputs() { return copyFluids(fluidOutputs); }
+        public FluidStack[] fluidOutputs() { return copyFluids(fluidOutputs); }
 
-        @Override public int[] outputChances() { return outputChances.clone(); }
-        @Override public int[] keptInputs() { return keptInputs.clone(); }
-        @Override public int[] keptFluidInputs() { return keptFluidInputs.clone(); }
-        @Override public int[] presenceFluidInputs() { return presenceFluidInputs.clone(); }
+        public long duration() { return duration; }
+        public long euPerTick() { return euPerTick; }
+        public long special() { return special; }
+
+        public int[] outputChances() { return outputChances.clone(); }
+        public int[] keptInputs() { return keptInputs.clone(); }
+        public int[] keptFluidInputs() { return keptFluidInputs.clone(); }
+        public int[] presenceFluidInputs() { return presenceFluidInputs.clone(); }
 
         /**
          * A stored row, including an empty slot a built-in recipe already kept.
@@ -129,56 +135,63 @@ public final class AddonRecipes {
         public static Line read(ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs,
                                 FluidStack[] fluidOutputs, long duration, long euPerTick, long special,
                                 int[] outputChances, int[] keptInputs, int[] keptFluidInputs, int[] presenceFluidInputs) {
-            READING.set(Boolean.TRUE);
-            try {
-                return new Line(itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, euPerTick, special,
-                        outputChances, keptInputs, keptFluidInputs, presenceFluidInputs);
-            } finally {
-                READING.remove();
-            }
+            return new Line(true, itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, euPerTick, special,
+                    outputChances, keptInputs, keptFluidInputs, presenceFluidInputs);
         }
 
         /** Every item output is certain. No input is marked kept. */
         public Line(ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs, FluidStack[] fluidOutputs,
                     long duration, long euPerTick, long special) {
-            this(itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, euPerTick, special, null, null);
+            this(false, itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, euPerTick, special, null, null, null, null);
         }
 
         /** No input is marked kept. */
         public Line(ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs, FluidStack[] fluidOutputs,
                     long duration, long euPerTick, long special, int[] outputChances) {
-            this(itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, euPerTick, special, outputChances, null);
+            this(false, itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, euPerTick, special, outputChances, null, null, null);
         }
 
         /** No fluid input is marked kept. */
         public Line(ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs, FluidStack[] fluidOutputs,
                     long duration, long euPerTick, long special, int[] outputChances, int[] keptInputs) {
-            this(itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, euPerTick, special,
-                    outputChances, keptInputs, null);
+            this(false, itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, euPerTick, special,
+                    outputChances, keptInputs, null, null);
         }
 
         /** Compatibility overload: positive kept amounts, no presence-only gates. */
         public Line(ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs, FluidStack[] fluidOutputs,
                     long duration, long euPerTick, long special, int[] outputChances, int[] keptInputs, int[] keptFluidInputs) {
-            this(itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, euPerTick, special,
+            this(false, itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, euPerTick, special,
                     outputChances, keptInputs, keptFluidInputs, null);
         }
 
-        public Line {
-            itemInputs = copyItemInputs(itemInputs);
-            itemOutputs = copyItems(itemOutputs);
-            fluidInputs = copyFluidInputs(fluidInputs);
-            fluidOutputs = copyFluids(fluidOutputs);
-            duration = Math.max(1, duration);
-            outputChances = RecipeOutputChances.normalize(outputChances, itemOutputs.length);
-            keptInputs = RecipeKeptInputs.normalize(keptInputs, itemInputs.length);
-            keptFluidInputs = RecipeKeptInputs.normalizeFluids(keptFluidInputs, fluidInputs.length);
-            presenceFluidInputs = RecipeKeptInputs.normalizeFluids(presenceFluidInputs, fluidInputs.length);
-            for (int index : presenceFluidInputs) {
-                if (fluidInputs[index].isEmpty()) throw new IllegalArgumentException("Presence fluid input " + index + " is empty");
-                for (int kept : keptFluidInputs) if (kept == index)
+        /** Positive input amounts, including presence-only gates. */
+        public Line(ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs, FluidStack[] fluidOutputs,
+                    long duration, long euPerTick, long special, int[] outputChances, int[] keptInputs,
+                    int[] keptFluidInputs, int[] presenceFluidInputs) {
+            this(false, itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, euPerTick, special,
+                    outputChances, keptInputs, keptFluidInputs, presenceFluidInputs);
+        }
+
+        private Line(boolean reading, ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs,
+                     FluidStack[] fluidOutputs, long duration, long euPerTick, long special, int[] outputChances,
+                     int[] keptInputs, int[] keptFluidInputs, int[] presenceFluidInputs) {
+            this.itemInputs = reading ? copyItems(itemInputs) : copyItemInputs(itemInputs);
+            this.itemOutputs = copyItems(itemOutputs);
+            this.fluidInputs = reading ? copyFluids(fluidInputs) : copyFluidInputs(fluidInputs);
+            this.fluidOutputs = copyFluids(fluidOutputs);
+            this.duration = Math.max(1, duration);
+            this.euPerTick = euPerTick;
+            this.special = special;
+            this.outputChances = RecipeOutputChances.normalize(outputChances, this.itemOutputs.length);
+            this.keptInputs = RecipeKeptInputs.normalize(keptInputs, this.itemInputs.length);
+            this.keptFluidInputs = RecipeKeptInputs.normalizeFluids(keptFluidInputs, this.fluidInputs.length);
+            this.presenceFluidInputs = RecipeKeptInputs.normalizeFluids(presenceFluidInputs, this.fluidInputs.length);
+            for (int index : this.presenceFluidInputs) {
+                if (this.fluidInputs[index].isEmpty()) throw new IllegalArgumentException("Presence fluid input " + index + " is empty");
+                for (int kept : this.keptFluidInputs) if (kept == index)
                     throw new IllegalArgumentException("Fluid input " + index + " cannot be both kept and presence-only");
-                fluidInputs[index].setAmount(1);
+                this.fluidInputs[index].setAmount(1);
             }
         }
 
@@ -278,9 +291,52 @@ public final class AddonRecipes {
             }
         }
 
+        @Override public boolean equals(Object other) {
+            if (this == other) return true;
+            if (!(other instanceof Line line)) return false;
+            return Arrays.equals(itemInputs, line.itemInputs)
+                    && Arrays.equals(itemOutputs, line.itemOutputs)
+                    && Arrays.equals(fluidInputs, line.fluidInputs)
+                    && Arrays.equals(fluidOutputs, line.fluidOutputs)
+                    && duration == line.duration
+                    && euPerTick == line.euPerTick
+                    && special == line.special
+                    && Arrays.equals(outputChances, line.outputChances)
+                    && Arrays.equals(keptInputs, line.keptInputs)
+                    && Arrays.equals(keptFluidInputs, line.keptFluidInputs)
+                    && Arrays.equals(presenceFluidInputs, line.presenceFluidInputs);
+        }
+
+        @Override public int hashCode() {
+            int result = Arrays.hashCode(itemInputs);
+            result = 31 * result + Arrays.hashCode(itemOutputs);
+            result = 31 * result + Arrays.hashCode(fluidInputs);
+            result = 31 * result + Arrays.hashCode(fluidOutputs);
+            result = 31 * result + Long.hashCode(duration);
+            result = 31 * result + Long.hashCode(euPerTick);
+            result = 31 * result + Long.hashCode(special);
+            result = 31 * result + Arrays.hashCode(outputChances);
+            result = 31 * result + Arrays.hashCode(keptInputs);
+            result = 31 * result + Arrays.hashCode(keptFluidInputs);
+            return 31 * result + Arrays.hashCode(presenceFluidInputs);
+        }
+
+        @Override public String toString() {
+            return "Line[itemInputs=" + Arrays.toString(itemInputs)
+                    + ", itemOutputs=" + Arrays.toString(itemOutputs)
+                    + ", fluidInputs=" + Arrays.toString(fluidInputs)
+                    + ", fluidOutputs=" + Arrays.toString(fluidOutputs)
+                    + ", duration=" + duration
+                    + ", euPerTick=" + euPerTick
+                    + ", special=" + special
+                    + ", outputChances=" + Arrays.toString(outputChances)
+                    + ", keptInputs=" + Arrays.toString(keptInputs)
+                    + ", keptFluidInputs=" + Arrays.toString(keptFluidInputs)
+                    + ", presenceFluidInputs=" + Arrays.toString(presenceFluidInputs) + "]";
+        }
+
         private static ItemStack[] copyItemInputs(ItemStack[] stacks) {
             if (stacks == null) return new ItemStack[0];
-            if (READING.get()) return copyItems(stacks);
             ItemStack[] copy = new ItemStack[stacks.length];
             for (int i = 0; i < stacks.length; i++) {
                 ItemStack stack = stacks[i];
@@ -293,7 +349,6 @@ public final class AddonRecipes {
 
         private static FluidStack[] copyFluidInputs(FluidStack[] stacks) {
             if (stacks == null) return new FluidStack[0];
-            if (READING.get()) return copyFluids(stacks);
             FluidStack[] copy = new FluidStack[stacks.length];
             for (int i = 0; i < stacks.length; i++) {
                 FluidStack stack = stacks[i];

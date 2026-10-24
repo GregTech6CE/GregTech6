@@ -11,7 +11,8 @@ import net.minecraft.world.level.material.Fluid;
 
 /**
  * GregTech fluids. {@code name} is the fluid field, such as {@code DistW}, not a material name.
- * The result is null when that fluid is not registered.
+ * An unknown field, a null argument, or a non-positive amount is {@link FluidStack#EMPTY}, never null.
+ * That is the same absence as {@link AddonItems#stack(String, String)} returning {@link net.minecraft.world.item.ItemStack#EMPTY}.
  */
 public final class AddonFluids {
     private AddonFluids() {}

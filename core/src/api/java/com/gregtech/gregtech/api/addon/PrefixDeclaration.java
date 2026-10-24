@@ -1,5 +1,7 @@
 package com.gregtech.gregtech.api.addon;
 
+import com.gregtech.gregtech.api.material.GTValues;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -7,14 +9,15 @@ import java.util.Set;
 
 /**
  * SPDX-License-Identifier: LGPL-3.0-or-later.
- * One addon item prefix. {@code unitAmount} counts {@code U}, so {@code 8} is 8U.
+ * One addon item prefix. {@code amount} is GregTech units, the same unit as
+ * {@link MaterialComposition.Part#amount()}: one ingot is {@link GTValues#U}, so 8U is {@code 8 * GTValues.U}.
  * {@code texture} is a path in the addon's own namespace, with no namespace written in the string.
  */
 public record PrefixDeclaration(
         String name,
         String displayPrefix,
         String displaySuffix,
-        long unitAmount,
+        long amount,
         String texture,
         List<String> materials,
         Set<PrefixCondition> conditions,
@@ -23,41 +26,41 @@ public record PrefixDeclaration(
         String oreDictionary
 ) {
     /** Item prefix. A block prefix uses {@link #block}. */
-    public PrefixDeclaration(String name, String displayPrefix, String displaySuffix, long unitAmount,
+    public PrefixDeclaration(String name, String displayPrefix, String displaySuffix, long amount,
                              String texture, List<String> materials, Set<PrefixCondition> conditions) {
-        this(name, displayPrefix, displaySuffix, unitAmount, texture, materials, conditions, List.of(), false, "");
+        this(name, displayPrefix, displaySuffix, amount, texture, materials, conditions, List.of(), false, "");
     }
 
     /** Item prefix with material names removed after the conditions select. */
-    public PrefixDeclaration(String name, String displayPrefix, String displaySuffix, long unitAmount,
+    public PrefixDeclaration(String name, String displayPrefix, String displaySuffix, long amount,
                              String texture, List<String> materials, Set<PrefixCondition> conditions,
                              List<String> excludedMaterials) {
-        this(name, displayPrefix, displaySuffix, unitAmount, texture, materials, conditions, excludedMaterials,
+        this(name, displayPrefix, displaySuffix, amount, texture, materials, conditions, excludedMaterials,
                 false, "");
     }
 
     /**
      * Solid cube block prefix. {@code shape} is {@code cube}. {@code texture} is a path in the addon namespace.
      * {@code oreDictionary} is a tag path, such as {@code storage_blocks/sample_casing}. Each material is tagged
-     * {@code forge:<oreDictionary>/<material>}.
+     * {@code forge:<oreDictionary>/<material>}. {@code amount} is GregTech units, the same unit as an item prefix.
      */
-    public static PrefixDeclaration block(String name, String displayPrefix, String displaySuffix, long unitAmount,
+    public static PrefixDeclaration block(String name, String displayPrefix, String displaySuffix, long amount,
                                           String texture, String oreDictionary, List<String> materials) {
-        return block(name, displayPrefix, displaySuffix, unitAmount, "cube", texture, oreDictionary, materials);
+        return block(name, displayPrefix, displaySuffix, amount, "cube", texture, oreDictionary, materials);
     }
 
     /**
      * Solid cube block prefix. {@code shape} must be {@code cube}; other shapes are rejected.
      * Prefer {@link #block(String, String, String, long, String, String, List)}.
      */
-    public static PrefixDeclaration block(String name, String displayPrefix, String displaySuffix, long unitAmount,
+    public static PrefixDeclaration block(String name, String displayPrefix, String displaySuffix, long amount,
                                           String shape, String texture, String oreDictionary, List<String> materials) {
         if (!"cube".equals(shape))
             throw new IllegalArgumentException("Prefix '" + name + "' block shape must be cube");
         if (oreDictionary == null || !oreDictionary.matches("[a-z0-9_]+(?:/[a-z0-9_]+)*"))
             throw new IllegalArgumentException(
                     "Prefix '" + name + "' ore dictionary name must be a tag path: " + oreDictionary);
-        return new PrefixDeclaration(name, displayPrefix, displaySuffix, unitAmount, texture, materials, Set.of(),
+        return new PrefixDeclaration(name, displayPrefix, displaySuffix, amount, texture, materials, Set.of(),
                 List.of(), true, oreDictionary);
     }
 
@@ -72,8 +75,9 @@ public record PrefixDeclaration(
         if (displayPrefix.length() > 64 || displaySuffix.length() > 64
                 || displayPrefix.indexOf('\n') >= 0 || displaySuffix.indexOf('\n') >= 0)
             throw new IllegalArgumentException("Prefix '" + name + "' display text is too long");
-        if (unitAmount <= 0)
-            throw new IllegalArgumentException("Prefix '" + name + "' unit amount must be a positive number of U");
+        if (amount <= 0 || amount % GTValues.U != 0)
+            throw new IllegalArgumentException("Prefix '" + name
+                    + "' amount must be a positive multiple of U (one ingot is GTValues.U; 8U is 8 * GTValues.U)");
         if (texture == null || !texture.matches("[a-z0-9]+(?:[._-][a-z0-9]+)*(?:/[a-z0-9]+(?:[._-][a-z0-9]+)*)*"))
             throw new IllegalArgumentException(
                     "Prefix '" + name + "' texture must be a path in the addon namespace: " + texture);

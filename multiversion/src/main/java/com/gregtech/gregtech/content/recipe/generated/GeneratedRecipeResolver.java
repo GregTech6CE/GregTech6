@@ -401,6 +401,11 @@ public final class GeneratedRecipeResolver {
         return new FluidStack(fluid.get(), mb);
     }
 
+    /** Named registered fluid by field key, including the vanilla water/lava reuse. */
+    public static FluidStack namedFluid(String key, int mb) {
+        return named(key, mb);
+    }
+
     /** Material fluid: generated gas/liquid (1U=1000mB) or molten (1U=144mB) or named. */
     public static FluidStack materialFluid(String materialName, int mb) {
         GTMaterial material = material(materialName);
