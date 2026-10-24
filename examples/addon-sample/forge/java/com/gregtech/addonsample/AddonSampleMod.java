@@ -14,11 +14,31 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod("addon_sample")
 public final class AddonSampleMod {
+    private static final net.minecraftforge.registries.DeferredRegister<net.minecraft.world.item.Item> TAG_PROBE_ITEMS =
+            net.minecraftforge.registries.DeferredRegister.create(net.minecraftforge.registries.ForgeRegistries.ITEMS, "addon_sample");
+    static {
+        // Plain addon-owned items: no GT material binding until the isolated probe's datapack tags load.
+        TAG_PROBE_ITEMS.register("nonore_raw_probe", () -> new net.minecraft.world.item.Item(new net.minecraft.world.item.Item.Properties()));
+        TAG_PROBE_ITEMS.register("nonore_crushed_probe", () -> new net.minecraft.world.item.Item(new net.minecraft.world.item.Item.Properties()));
+        TAG_PROBE_ITEMS.register("nonore_collision_probe", () -> new net.minecraft.world.item.Item(new net.minecraft.world.item.Item.Properties()));
+    }
     public AddonSampleMod() {
+        TAG_PROBE_ITEMS.register(net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext.get().getModEventBus());
         GregTechAddons.register(new GregTechAddon() {
             @Override public String id() { return "addon_sample"; }
 
             @Override public void onRecipesReady(Context context) {
+                // Isolated source-input policy fixture only; ordinary sample/full-suite behavior stays unchanged.
+                String namespaces=System.getProperty("neoforge.enabledGameTestNamespaces",System.getProperty("forge.enabledGameTestNamespaces",""));
+                if (namespaces.equals("gregtech_nonore_tag_audit") || namespaces.equals("gregtech_nonore_stop_audit")) {
+                    ItemStack input=AddonItems.stack("crushedTiny","Rubber");
+                    if(input.isEmpty())throw new IllegalStateException("nonore startup fixture missing retained Rubber form");
+                    var accepted=AddonRecipes.map("gt.recipe.crusher").add(new AddonRecipes.Line(
+                            new ItemStack[]{input},new ItemStack[]{new ItemStack(Items.EMERALD)},null,null,37,16,0));
+                    // Baseline collision is expected RED, not a startup crash; native test checks real acceptance.
+                    System.out.println("[nonore-startup-winner] Rubber accepted="+(accepted!=null));
+                }
+
                 if (AddonItems.stack("ingot", "Iron", 1).isEmpty())
                     throw new IllegalStateException("sample iron ingot missing");
                 if (!GregTechMaterials.find("Steel").valid())

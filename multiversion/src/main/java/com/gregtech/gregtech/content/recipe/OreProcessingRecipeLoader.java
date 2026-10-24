@@ -72,6 +72,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         processDenseIconOres();
         processVanillaIconOres();
         processVanillaOres();
+        NonOreMacerationRows.begin();
         processMaceration();
         processWashing();
         processPurifiedRoutes();
@@ -79,6 +80,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         processReviewedFollowonRoutes();
         processByproductList();
         processRecycling();
+        NonOreMacerationRows.seal();
     }
 
     // ========================================================================
@@ -321,8 +323,10 @@ public class OreProcessingRecipeLoader implements InitializationStep {
      * Crushed → dust chain using Crusher + Shredder ({@link RM#pulverizing}).
      */
     private void processMaceration() {
+        var reviewedSeen = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<GTMaterial, Boolean>());
         for (GTMaterial mat : GTMaterialRegistry.allMaterials()) {
             GTMaterial material = mat.resolve();
+            if (NonOreMacerationRows.reviewed(material) && !reviewedSeen.add(material)) continue;
             if (!material.isValid()) continue;
 
             // crushed → dust
@@ -357,6 +361,10 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         if (ReviewedCinnabarFacts.supports(material) || ReviewedOreShredderFacts.supports(material)) {
             // Preserve the legacy Crusher row; only the reviewed Shredder producer is retired.
             MachineRecipeMaps.Crusher.addRecipe1(true,16,64,new long[]{10000,1000,1000},input,output,ItemStack.EMPTY,ItemStack.EMPTY);
+        } else if (NonOreMacerationRows.reviewed(material)) {
+            for (var map : new com.gregtech.gregtech.api.recipe.RecipeMap[]{MachineRecipeMaps.Crusher,MachineRecipeMaps.Shredder})
+                NonOreMacerationRows.register(material,inputPref,"maceration/"+inputPref.getName(),map,true,input,
+                        new ItemStack[]{output,ItemStack.EMPTY,ItemStack.EMPTY},new long[]{10000,1000,1000},null,64,16);
         } else MachineRecipeMaps.pulverizing(input, output);
     }
 
@@ -373,6 +381,12 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         ItemStack output = stackFor(outputPref, material, perUnitAmount);
         if (output.isEmpty()) return;
         ItemStack multiOut = amount(outCount, output);
+        if (NonOreMacerationRows.reviewed(material)) {
+            for (var map : new com.gregtech.gregtech.api.recipe.RecipeMap[]{MachineRecipeMaps.Crusher,MachineRecipeMaps.Shredder})
+                NonOreMacerationRows.register(material,inputPref,"maceration/"+inputPref.getName(),map,true,input,
+                        new ItemStack[]{multiOut},null,null,32,EU_TIER);
+            return;
+        }
         MachineRecipeMaps.Crusher .addRecipe1(true, EU_TIER, 32, input, multiOut);
         if (!ReviewedCinnabarFacts.supports(material) && !ReviewedOreShredderFacts.supports(material))
             MachineRecipeMaps.Shredder.addRecipe1(true, EU_TIER, 32, input, multiOut);
@@ -390,8 +404,10 @@ public class OreProcessingRecipeLoader implements InitializationStep {
      * </ul>
      */
     private void processWashing() {
+        var reviewedSeen = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<GTMaterial, Boolean>());
         for (GTMaterial mat : GTMaterialRegistry.allMaterials()) {
             GTMaterial material = mat.resolve();
+            if (NonOreMacerationRows.reviewed(material) && !reviewedSeen.add(material)) continue;
             if (!material.isValid() || !MaterialPrefix.crushed.isValidFor(material)) continue;
 
             List<GTMaterial> byProds = material.getByProducts();
@@ -402,7 +418,11 @@ public class OreProcessingRecipeLoader implements InitializationStep {
                 ItemStack crushedPurified = mat(MaterialPrefix.crushedPurified, material, 1);
                 if (!crushed.isEmpty() && !crushedPurified.isEmpty()) {
                     ItemStack bypTiny = byProductTiny(byProds, 0, material);
-                    MachineRecipeMaps.Bath.addRecipe1(true, EU_TIER, 120,
+                    if (NonOreMacerationRows.reviewed(material))
+                        NonOreMacerationRows.register(material,MaterialPrefix.crushed,"washing/crushed",MachineRecipeMaps.Bath,
+                                true,crushed,new ItemStack[]{crushedPurified,bypTiny},new long[]{CHANCE_100,CHANCE_50},
+                                new FluidStack[]{WATER_MB},120,EU_TIER);
+                    else MachineRecipeMaps.Bath.addRecipe1(true, EU_TIER, 120,
                             new long[]{CHANCE_100, CHANCE_50},
                             crushed, WATER_MB, (FluidStack) null,
                             crushedPurified, bypTiny);
@@ -424,7 +444,10 @@ public class OreProcessingRecipeLoader implements InitializationStep {
                 ItemStack crushedCentrifuged = mat(MaterialPrefix.crushedCentrifuged, material, 1);
                 if (!crushedPurified.isEmpty() && !crushedCentrifuged.isEmpty()) {
                     ItemStack bypTiny = byProductTiny(byProds, 1, byProductTiny(byProds, 0, material));
-                    MachineRecipeMaps.Centrifuge.addRecipe1(true, EU_TIER, 120,
+                    if (NonOreMacerationRows.reviewed(material))
+                        NonOreMacerationRows.register(material,MaterialPrefix.crushedPurified,"washing/purified",MachineRecipeMaps.Centrifuge,
+                                true,crushedPurified,new ItemStack[]{crushedCentrifuged,bypTiny},new long[]{CHANCE_100,CHANCE_50},null,120,EU_TIER);
+                    else MachineRecipeMaps.Centrifuge.addRecipe1(true, EU_TIER, 120,
                             new long[]{CHANCE_100, CHANCE_50},
                             crushedPurified, crushedCentrifuged, bypTiny);
                 }

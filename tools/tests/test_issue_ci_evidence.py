@@ -318,6 +318,45 @@ class IssueEvidenceTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'did not execute'):
             self.verify(self.report('forge', namespace='gregtech_issue_audit:test_empty'), 'forge')
 
+    def test_recipe_value_case_requires_exact_native_identity_on_both_loaders(self):
+        identity = 'addonrecipeapitests.reciperowscomparebyvalue'
+        namespace = 'gt6ce_api_contracts:test_empty'
+        method = identity.split('.', 1)[1]
+        self.assertIn(identity, API_CONTRACT_CASES)
+        self.assertEqual(namespace, expected_namespace(identity))
+        for platform in EXPECTED:
+            self.assertIn(identity, EXPECTED[platform])
+            self.verify(self.report(platform), platform)
+            for outcome in ('missing', 'failure', 'error', 'skipped', 'wrong_namespace',
+                            'wrong_template', 'qualified_wrong_namespace',
+                            'qualified_correct_namespace', 'class_suffix',
+                            'wrong_method', 'duplicate_other_case'):
+                root = self.report(platform)
+                suite = root.find('testsuite')
+                case = next(c for c in suite if c.get('name') == method
+                            and c.get('classname') == namespace)
+                if outcome == 'missing':
+                    suite.remove(case)
+                elif outcome in ('failure', 'error', 'skipped'):
+                    ET.SubElement(case, outcome, message='recipe value contract did not pass')
+                elif outcome == 'wrong_namespace':
+                    case.set('classname', 'gregtech_issue_audit:test_empty')
+                elif outcome == 'wrong_template':
+                    case.set('classname', 'gt6ce_api_contracts:other_empty')
+                elif outcome == 'qualified_wrong_namespace':
+                    case.set('name', 'foreign.' + identity)
+                    case.set('classname', 'foreign:test_empty')
+                elif outcome == 'qualified_correct_namespace':
+                    case.set('name', identity)
+                elif outcome == 'class_suffix':
+                    case.set('classname', 'foreign.addonrecipeapitests')
+                elif outcome == 'wrong_method':
+                    case.set('name', method + '_other')
+                elif outcome == 'duplicate_other_case':
+                    case.set('name', 'reciperowsowntheirarraysandstacks')
+                with self.subTest(platform=platform, outcome=outcome), self.assertRaises(ValueError):
+                    self.verify(root, platform)
+
     def test_each_addon_api_case_must_execute_on_both_loaders(self):
         for platform in EXPECTED:
             for identity in API_CONTRACT_CASES:

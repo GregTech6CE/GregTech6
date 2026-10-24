@@ -53,7 +53,8 @@ public final class AddonSampleMaterials implements AddonMaterialContributor {
     }
 
     @Override public List<MaterialFormRequest> forms() {
-        return List.of(new MaterialFormRequest("SampleRubber", "plate"), new MaterialFormRequest("SampleRubber", "foil"));
+        return List.of(new MaterialFormRequest("SampleRubber", "plate"), new MaterialFormRequest("SampleRubber", "foil"),
+                new MaterialFormRequest("Bakelite", "crushed"));
     }
 
     @Override public List<OreVeinDeclaration> oreVeins() {

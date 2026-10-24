@@ -163,14 +163,14 @@ public final class AddonRecipeApiTests {
         helper.assertTrue(!first.equals(lessWater), "fluid amount takes part in row equality");
 
 //? if >=1.21.1 {
-        /*var tagged = new ItemStack(Items.PAPER);
+        /*var tagged = new ItemStack(Items.PAPER, 2);
         tagged.set(DataComponents.CUSTOM_NAME, Component.literal("tagged"));
-        var taggedCopy = new ItemStack(Items.PAPER);
+        var taggedCopy = new ItemStack(Items.PAPER, 2);
         taggedCopy.set(DataComponents.CUSTOM_NAME, Component.literal("tagged"));
 *///?} else {
-        var tagged = new ItemStack(Items.PAPER);
+        var tagged = new ItemStack(Items.PAPER, 2);
         tagged.getOrCreateTag().putString("tag", "value");
-        var taggedCopy = new ItemStack(Items.PAPER);
+        var taggedCopy = new ItemStack(Items.PAPER, 2);
         taggedCopy.getOrCreateTag().putString("tag", "value");
 //?}
         var taggedRow = AddonRecipes.Line.builder().itemOutputs(tagged).build();
@@ -181,7 +181,7 @@ public final class AddonRecipeApiTests {
                         .itemInputs(new ItemStack(Items.STICK, 4)).itemOutputs(tagged)
                         .fluidInputs(new FluidStack(Fluids.WATER, 250)).fluidOutputs(new FluidStack(Fluids.LAVA, 50))
                         .duration(20).euPerTick(8).special(300).build()),
-                "different item data is not equal");
+                "different item data alone is not equal when counts and other fields match");
 
         var storedA = AddonRecipes.Line.read(new ItemStack[]{ItemStack.EMPTY}, null, null, null, 1, 0, 0, null, null);
         var storedB = AddonRecipes.Line.read(new ItemStack[]{ItemStack.EMPTY}, null, null, null, 1, 0, 0, null, null);
