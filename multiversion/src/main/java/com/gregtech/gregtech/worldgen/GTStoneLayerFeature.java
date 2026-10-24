@@ -160,6 +160,14 @@ public class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration> {
                         }
                     }
 
+                    // Existing vanilla structure half-blocks follow the same local host material.
+                    // Do not recolor existing GT slabs or other decorative slab families.
+                    if (hostBlock == Blocks.COBBLESTONE_SLAB || hostBlock == Blocks.MOSSY_COBBLESTONE_SLAB) {
+                        BlockState full = hostBlock == Blocks.COBBLESTONE_SLAB ? layer.cobble() : layer.mossy();
+                        BlockState replacement = structureSlabState(host, full);
+                        if (replacement != null) placedAny |= level.setBlock(cursor, replacement, 2);
+                    }
+
                     // Slide the window up by one block.
                     System.arraycopy(scan, 1, scan, 0, 6);
                     scan[6] = layers[noise.get(x, y + 4, z, listSize)];
@@ -175,6 +183,24 @@ public class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration> {
             }
         }
         return placedAny;
+    }
+
+    /** Only called for the two vanilla cobble slab hosts, during stone-layer generation. */
+    private static BlockState structureSlabState(BlockState host, @Nullable BlockState full) {
+        if (full == null || !(full.getBlock() instanceof com.gregtech.gregtech.block.stone.GTStoneBlock stone)) return null;
+        var half = host.getValue(net.minecraft.world.level.block.SlabBlock.TYPE);
+        boolean wet = host.getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED);
+        if (half == net.minecraft.world.level.block.state.properties.SlabType.DOUBLE) {
+            // A noncanonical externally-created wet double cannot be represented by a full GT block.
+            return wet ? null : full;
+        }
+        Block slab = GTBlocks.getStoneSlab(stone.stoneType(), stone.variant());
+        if (!(slab instanceof com.gregtech.gregtech.block.stone.GTStoneSlabBlock)) return null;
+        return slab.defaultBlockState()
+                .setValue(com.gregtech.gregtech.block.stone.GTStoneSlabBlock.FACING,
+                        half == net.minecraft.world.level.block.state.properties.SlabType.TOP
+                                ? net.minecraft.core.Direction.UP : net.minecraft.core.Direction.DOWN)
+                .setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED, wet);
     }
 
     // ── data resolution (lazy, after registries are loaded) ─────────────────
