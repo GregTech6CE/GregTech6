@@ -3,6 +3,7 @@ package com.gregtech.gregtech.api.crop;
 import java.util.List;
 
 /**
+ * SPDX-License-Identifier: LGPL-3.0-or-later.
  * Optional crop-analysis boundary for addons on both loaders. A crop block entity can
  * implement this interface without importing Minecraft, either loader, or IC2.
  * Return {@code null} when the holder has no crop. Names may be translation keys or

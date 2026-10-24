@@ -17,7 +17,7 @@ public record CompressedGasTankDeclaration(
     public static final int MAX_CAPACITY = 1_024_000_000;
 
     public CompressedGasTankDeclaration {
-        if (id == null || !id.matches("[a-z][a-z0-9_]{0,63}"))
+        if (!AddonNames.matches(AddonNames.LOWER_PATH, id))
             throw new IllegalArgumentException(
                     "Compressed gas tank name must be a lower-case registry path: " + id);
         if (material == null || material.isBlank())

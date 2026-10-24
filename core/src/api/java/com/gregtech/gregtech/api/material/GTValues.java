@@ -1,6 +1,11 @@
 package com.gregtech.gregtech.api.material;
 
-/** GregTech material-unit constants ({@code CS.U} in GT6). */
+/**
+ * SPDX-License-Identifier: LGPL-3.0-or-later.
+ * GregTech material units ({@code CS.U} in GT6).
+ * Prefix amounts, composition parts, smelting targets and {@code GregTechMaterials.Component}
+ * all use this unit. One ingot is {@link #U}.
+ */
 public final class GTValues {
     public static final long U = 648_648_000L;
     public static final long U2 = U / 2;

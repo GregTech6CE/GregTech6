@@ -177,8 +177,7 @@ public final class AddonRecipeApiTests {
             helper.assertTrue(item.getCount() == 8 && fluid.getAmount() == 250,
                     "public query inputs remain untouched");
         } finally {
-            RecipeMap.RECIPE_MAPS.remove(nativeMap.mNameInternal);
-            RecipeMap.RECIPE_MAP_LIST.remove(nativeMap);
+            RecipeMap.unregister(nativeMap);
         }
         helper.succeed();
     }

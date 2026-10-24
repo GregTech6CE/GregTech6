@@ -145,8 +145,7 @@ public final class MachinePendingStateTests {
                     && restored.getProgressPercent() == 0
                     && save(h, restored).getLong("gt.max_progress") == 0, "exact residual flush, no reroll or duplicate input consumption");
         } finally {
-            RecipeMap.RECIPE_MAPS.remove(map.mNameInternal, map);
-            RecipeMap.RECIPE_MAP_LIST.remove(map);
+            RecipeMap.unregister(map);
         }
         h.succeed();
     }
