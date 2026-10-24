@@ -409,6 +409,11 @@ public class OreProcessingRecipeLoader implements InitializationStep {
                 SourceOreFollowonRows.centrifuge(material,ReviewedCinnabarFacts.INSTANCE);
                 continue; // original Bath branch above remains unchanged; replace only owned generic centrifuge
             }
+            if (ReviewedOreCentrifugeFacts.supports(material)) {
+                SourceOreFollowonRows.centrifuge(material, ReviewedOreCentrifugeFacts.INSTANCE);
+                // Retire only this producer's old row; a collision must not re-add the legacy recipe.
+                continue;
+            }
             // ── Centrifuge: crushedPurified → crushedCentrifuged + second byproduct ──
             if (MaterialPrefix.crushedCentrifuged.isValidFor(material)) {
                 ItemStack crushedPurified = mat(MaterialPrefix.crushedPurified, material, 1);
