@@ -46,8 +46,7 @@ public final class EnergyBlockDefaults {
     }
 
     public static long getEnergySizeOutputMax(IEnergyBlock self, GregTechTags.Tag energyType, @Nullable Direction side) {
-        long rec = self.getEnergySizeOutputRecommended(energyType, side);
-        return rec <= 0 ? 0 : rec * 2;
+        return doubled(self.getEnergySizeOutputRecommended(energyType, side));
     }
 
     public static long getEnergySizeInputMin(IEnergyBlock self, GregTechTags.Tag energyType, @Nullable Direction side) {
@@ -56,8 +55,13 @@ public final class EnergyBlockDefaults {
     }
 
     public static long getEnergySizeInputMax(IEnergyBlock self, GregTechTags.Tag energyType, @Nullable Direction side) {
-        long rec = self.getEnergySizeInputRecommended(energyType, side);
-        return rec <= 0 ? 0 : rec * 2;
+        return doubled(self.getEnergySizeInputRecommended(energyType, side));
+    }
+
+    /** Twice {@code recommended}, or {@link Long#MAX_VALUE} when that product does not fit in a long. */
+    private static long doubled(long recommended) {
+        if (recommended <= 0) return 0;
+        return recommended > Long.MAX_VALUE / 2 ? Long.MAX_VALUE : recommended * 2;
     }
 
     public static Collection<GregTechTags.Tag> emptyTypes() {

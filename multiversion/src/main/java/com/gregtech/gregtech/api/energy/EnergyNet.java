@@ -30,8 +30,9 @@ public final class EnergyNet {
 
     public static void onPlace(Level level, BlockPos pos) {
         if (level.isClientSide) return;
+        // The key outlives the call. A mutable position would move inside the map if the caller reused it.
         GRAPHS.computeIfAbsent(level, k -> new HashMap<>())
-                .putIfAbsent(pos, new HashSet<>());
+                .putIfAbsent(pos.immutable(), new HashSet<>());
     }
 
     /**
@@ -49,16 +50,22 @@ public final class EnergyNet {
         if (level.isClientSide) return;
         Map<BlockPos, Set<BlockPos>> graph = GRAPHS.get(level);
         if (graph == null) return;
-        Set<BlockPos> neighbors = graph.remove(pos);
-        if (neighbors != null) {
-            for (BlockPos nb : neighbors) {
-                Set<BlockPos> nbSet = graph.get(nb);
-                if (nbSet != null) {
-                    nbSet.remove(pos);
-                    if (nbSet.isEmpty()) graph.remove(nb);
-                }
-            }
-        }
+        BlockPos key = pos.immutable();
+        Set<BlockPos> neighbors = graph.remove(key);
+        if (neighbors == null) return;
+        for (BlockPos neighbor : neighbors) detach(graph, neighbor, key);
+    }
+
+    /**
+     * Drops {@code self} from {@code neighbor}. An entry with no edges left is dropped with it: it carries no
+     * connectivity, and {@link #getConnectedWires} still reports a start position that has no map entry.
+     */
+    private static void detach(Map<BlockPos, Set<BlockPos>> graph, BlockPos neighbor, BlockPos self) {
+        if (neighbor.equals(self)) return;
+        Set<BlockPos> neighborEdges = graph.get(neighbor);
+        if (neighborEdges == null) return;
+        neighborEdges.remove(self);
+        if (neighborEdges.isEmpty()) graph.remove(neighbor);
     }
 
     /**
@@ -86,26 +93,36 @@ public final class EnergyNet {
         return graph != null && graph.containsKey(pos);
     }
 
-    /** Rebuild adjacency from block state after a connection toggle. */
+    /**
+     * Rebuilds adjacency from the block state after a connection toggle.
+     *
+     * <p>The previous neighbours lose their edge back to this position before the new ones are recorded.
+     * Clearing only this position's set used to leave the old neighbour pointing here. {@link #onRemove}
+     * walks the edges this position still has, so a connection closed first and a block removed second
+     * never saw that stale reverse edge and could not drop it.</p>
+     */
     public static void onConnectionChange(Level level, BlockPos pos, BlockState state,
                                           BooleanProperty[] connectionProps) {
         if (level.isClientSide) return;
         Map<BlockPos, Set<BlockPos>> graph = GRAPHS.get(level);
         if (graph == null) return;
-        Set<BlockPos> edges = graph.computeIfAbsent(pos, k -> new HashSet<>());
-        edges.clear();
+        BlockPos key = pos.immutable();
+        Set<BlockPos> edges = graph.computeIfAbsent(key, k -> new HashSet<>());
+        if (!edges.isEmpty()) {
+            BlockPos[] previous = edges.toArray(BlockPos[]::new);
+            edges.clear();
+            for (BlockPos neighbor : previous) detach(graph, neighbor, key);
+        }
 
         for (int i = 0; i < connectionProps.length; i++) {
             if (!state.getValue(connectionProps[i])) continue;
             Direction dir = Direction.from3DDataValue(i);
-            BlockPos nbPos = pos.relative(dir);
-            if (!level.hasChunkAt(nbPos)) continue;
-            BlockEntity nbBe = level.getBlockEntity(nbPos);
-            if (nbBe instanceof IEnergyConductor) {
-                edges.add(nbPos.immutable());
-                // make symmetric
-                Set<BlockPos> nbEdges = graph.computeIfAbsent(nbPos.immutable(), k -> new HashSet<>());
-                nbEdges.add(pos.immutable());
+            BlockPos neighbor = pos.relative(dir).immutable();
+            if (!level.hasChunkAt(neighbor)) continue;
+            BlockEntity neighborEntity = level.getBlockEntity(neighbor);
+            if (neighborEntity instanceof IEnergyConductor) {
+                edges.add(neighbor);
+                graph.computeIfAbsent(neighbor, k -> new HashSet<>()).add(key);
             }
         }
     }

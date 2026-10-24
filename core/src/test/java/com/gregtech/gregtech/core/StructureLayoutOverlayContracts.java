@@ -112,6 +112,32 @@ public final class StructureLayoutOverlayContracts {
         var longRepeat = LayoutRepeat.builder("drill", 1, 1, 384)
                 .cell(1, 0, 0, CellMatch.anyOpaque(), StructureRole.CASING).build();
         check(longRepeat.max() == 384, "a repeat may exceed the old 64-copy cap");
+        var stacked = StructureLayout.builder("stacked")
+                .cell(1, 0, 0, CellMatch.air(), StructureRole.AIR)
+                .repeat(LayoutRepeat.builder("shell", 1, 2, 3)
+                        .cell(1, 0, 0, CellMatch.air(), StructureRole.AIR).build())
+                .build();
+        check(stacked.repeats().get(0).min() == 2, "required copies may stack above a fixed cell");
+        expectThrows(IllegalArgumentException.class, () -> StructureLayout.builder("stacked")
+                .cell(1, 2, 0, CellMatch.air(), StructureRole.AIR)
+                .repeat(LayoutRepeat.builder("shell", 1, 2, 3)
+                        .cell(1, 0, 0, CellMatch.air(), StructureRole.AIR).build())
+                .build(), "overlaps");
+        expectThrows(IllegalArgumentException.class, () -> StructureLayout.builder("crossed")
+                .repeat(LayoutRepeat.builder("lower", 1, 1, 3)
+                        .cell(1, 0, 0, CellMatch.air(), StructureRole.AIR).build())
+                .repeat(LayoutRepeat.builder("upper", 2, 1, 2)
+                        .cell(1, 0, 0, CellMatch.air(), StructureRole.AIR).build())
+                .build(), "overlaps");
+        expectThrows(IllegalArgumentException.class, () -> StructureLayout.builder("originlater")
+                .repeat(LayoutRepeat.builder("down", 1, 2, 2).step(-1)
+                        .cell(0, 0, 0, CellMatch.air(), StructureRole.AIR).build())
+                .build(), "origin");
+        expectThrows(IllegalArgumentException.class, () -> StructureLayout.builder("drillhit")
+                .cell(1, 5, 0, CellMatch.air(), StructureRole.AIR)
+                .repeat(LayoutRepeat.builder("drill", 1, 1, -1)
+                        .cell(1, 0, 0, CellMatch.air(), StructureRole.AIR).build())
+                .build(), "overlaps");
         check(sharedRepeat.repeats().size() == 1 && sharedRepeat.cells().size() == 1, "shared repeat");
         check(SharedLargeMachineLayouts.cells("repeatpress").size() == 2, "repeat min expansion");
         System.out.println("structure layout overlay passed " + assertions);

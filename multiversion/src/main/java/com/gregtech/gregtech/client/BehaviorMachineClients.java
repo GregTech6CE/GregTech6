@@ -23,9 +23,11 @@ public final class BehaviorMachineClients {
 
     private BehaviorMachineClients() {}
 
+    /** Published only after every client is accepted, so a failure can be collected again. */
     public static synchronized void collect() {
         if (collected) return;
-        collected = true;
+        var found = new LinkedHashMap<String, BehaviorMachineClient>();
+        var renderers = new LinkedHashMap<String, BlockEntityRenderer<BlockEntity>>();
         ClassLoader loader = BehaviorMachineClient.class.getClassLoader();
         for (BehaviorMachineClient client : ServiceLoader.load(BehaviorMachineClient.class, loader)) {
             String id;
@@ -49,13 +51,16 @@ public final class BehaviorMachineClients {
             for (String type : types) {
                 if (type == null || type.isBlank())
                     throw new IllegalStateException("Addon '" + id + "' behavior machine client has an empty type");
-                if (CLIENTS.putIfAbsent(id + "\0" + type, client) != null)
+                if (found.putIfAbsent(id + "\0" + type, client) != null)
                     throw new IllegalStateException("Addon '" + id + "' machine '" + type
                             + "' registered two client hooks");
                 BlockEntityRenderer<BlockEntity> renderer = client.renderer(type);
-                if (renderer != null) RENDERERS.put(id + "\0" + type, renderer);
+                if (renderer != null) renderers.put(id + "\0" + type, renderer);
             }
         }
+        CLIENTS.putAll(found);
+        RENDERERS.putAll(renderers);
+        collected = true;
     }
 
     /** Null keeps the default screen. */
