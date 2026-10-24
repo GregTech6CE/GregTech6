@@ -15,7 +15,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Proxy;
 import java.util.Optional;
 //? if >=1.21.1 {
@@ -26,15 +25,17 @@ import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 //?}
 
-/** INACTIVE proposal: expected to fail the conversion assertion on current main. */
+/** Full-feature slab conversion at a pinned logical sample, backed by one owned native cell.
+ * This is not a natural-terrain test at the randomly placed GameTest world coordinates. */
 @GameTestHolder("gregtech_issue_audit")
 @PrefixGameTestTemplate(false)
 public final class StoneLayerSlabAuditTests {
     @GameTest(template = "stone_layer_slab_empty", timeoutTicks = 200)
     public static void structureCobbleSlabsFollowOnlyTheirLocalLayer(GameTestHelper h) {
         var level = h.getLevel();
-        // A single owned native cell, within the feature's generation range. Proxy masks all
-        // other reads with air and rejects all other writes; full feature cannot touch neighbors.
+        // A single owned native cell. The feature sees a fixed logical noise coordinate;
+        // the proxy maps only that coordinate to this cell, masks other reads with air,
+        // and rejects every other write/unsupported callback without touching neighbors.
         // The anchor may contain the GameTest structure control block entity.
         // Center (1,1,1) is strictly inside our dedicated 3x3x3 empty fixture.
         BlockPos p = h.absolutePos(new BlockPos(1, 1, 1));
@@ -43,8 +44,15 @@ public final class StoneLayerSlabAuditTests {
         h.assertTrue(level.hasChunkAt(p), "owned template cell already loaded");
         h.assertTrue(level.getBlockEntity(p) == null, "fixture has no block entity to preserve");
         BlockState pristine = level.getBlockState(p);
-        long seed = seedFor(p, true);
-        var def = definition(p, seed);
+        BlockPos sample = new BlockPos(StoneLayerSlabFixture.X, StoneLayerSlabFixture.Y, StoneLayerSlabFixture.Z);
+        h.assertTrue(sample.getY() > -63 && sample.getY() < 112, "logical sample is in layer generation range");
+        long seed = StoneLayerSlabFixture.TARGET_SEED;
+        var def = StoneLayerSlabFixture.definition(seed);
+        h.assertTrue(!def.noDeep() && def.stoneType() != null, "pinned positive sample has a deep cobble target");
+        long noTarget = StoneLayerSlabFixture.NO_TARGET_SEED;
+        var negative = StoneLayerSlabFixture.definition(noTarget);
+        h.assertTrue(!negative.noDeep() && negative.stoneType() == null,
+                "pinned negative sample reaches no-target handling, not the noDeep early return");
         StoneType type = StoneType.valueOf(def.stoneType());
         try {
             for (boolean mossy : new boolean[]{false, true}) {
@@ -53,15 +61,15 @@ public final class StoneLayerSlabAuditTests {
                 Block full = GTBlocks.getStone(type, variant);
                 Block slab = GTBlocks.getStoneSlab(type, variant);
                 h.assertTrue(full != null && slab instanceof GTStoneSlabBlock, "real registered target pair");
-                // Calibrate actual full-block behavior at precisely the SAME position and seed.
+                // Calibrate the real feature at precisely the SAME logical/native positions and seed.
                 BlockState control = (mossy ? Blocks.MOSSY_COBBLESTONE : Blocks.COBBLESTONE).defaultBlockState();
-                h.assertTrue(generate(h, p, seed, control).is(full), "native full-block control chooses expected local material");
+                h.assertTrue(generate(h, p, sample, seed, control).is(full), "native full-block control chooses expected local material");
                 for (SlabType half : SlabType.values()) for (boolean wet : new boolean[]{false, true}) {
                     // Vanilla double slabs cannot contain water through legitimate placement.
 
                     BlockState input = vanilla.defaultBlockState().setValue(SlabBlock.TYPE, half)
                             .setValue(BlockStateProperties.WATERLOGGED, wet);
-                    BlockState actual = generate(h, p, seed, input);
+                    BlockState actual = generate(h, p, sample, seed, input);
                     if (half == SlabType.DOUBLE && wet) {
                         h.assertTrue(actual.equals(input), "noncanonical waterlogged double stays intact instead of losing water");
                     } else if (half == SlabType.DOUBLE) {
@@ -80,35 +88,32 @@ public final class StoneLayerSlabAuditTests {
                 for (Direction facing : Direction.values()) for (boolean wet : new boolean[]{false, true}) {
                     BlockState input = existing.defaultBlockState().setValue(GTStoneSlabBlock.FACING, facing)
                             .setValue(BlockStateProperties.WATERLOGGED, wet);
-                    h.assertTrue(generate(h, p, seed, input).equals(input), "existing GT slab orientation/material survives");
+                    h.assertTrue(generate(h, p, sample, seed, input).equals(input), "existing GT slab orientation/material survives");
                 }
             }
             for (Block block : new Block[]{Blocks.STONE_SLAB, Blocks.STONE_BRICK_SLAB,
                     Blocks.OAK_SLAB, Blocks.COBBLESTONE_STAIRS, Blocks.MOSSY_COBBLESTONE_STAIRS}) {
                 BlockState input = block.defaultBlockState();
-                h.assertTrue(generate(h, p, seed, input).equals(input), "unrelated structures/stairs excluded: " + block);
+                h.assertTrue(generate(h, p, sample, seed, input).equals(input), "unrelated structures/stairs excluded: " + block);
             }
-            long noTarget = seedFor(p, false);
+            for (Block block : new Block[]{Blocks.COBBLESTONE, Blocks.MOSSY_COBBLESTONE}) {
+                BlockState input = block.defaultBlockState();
+                h.assertTrue(generate(h, p, sample, noTarget, input).equals(input),
+                        "native full-block control has no cobble target at the same logical/native positions");
+            }
             for (Block block : new Block[]{Blocks.COBBLESTONE_SLAB, Blocks.MOSSY_COBBLESTONE_SLAB}) {
-                BlockState input = block.defaultBlockState().setValue(SlabBlock.TYPE, SlabType.TOP)
-                        .setValue(BlockStateProperties.WATERLOGGED, true);
-                h.assertTrue(generate(h, p, noTarget, input).equals(input), "layer without cobble target preserves host");
+                for (SlabType half : SlabType.values()) for (boolean wet : new boolean[]{false, true}) {
+                    BlockState input = block.defaultBlockState().setValue(SlabBlock.TYPE, half)
+                            .setValue(BlockStateProperties.WATERLOGGED, wet);
+                    h.assertTrue(generate(h, p, sample, noTarget, input).equals(input),
+                            "layer without cobble target preserves every half/water state");
+                }
             }
         } finally { level.setBlock(p, pristine, 18); }
         h.succeed();
     }
 
-    private static GTStoneLayersGen.LayerDef definition(BlockPos p, long seed) {
-        return GTStoneLayersGen.LAYERS.get(new GTCellNoise(seed).get(p.getX(), p.getY(), p.getZ(), GTStoneLayersGen.LAYERS.size()));
-    }
-    private static long seedFor(BlockPos p, boolean target) {
-        for (long seed = 0; seed < 100000; seed++) {
-            var def = definition(p, seed);
-            if (!def.noDeep() && (def.stoneType() != null) == target) return seed;
-        }
-        throw new AssertionError("cannot find bounded deterministic fixture seed");
-    }
-    private static BlockState generate(GameTestHelper h, BlockPos p, long seed, BlockState input) {
+    private static BlockState generate(GameTestHelper h, BlockPos p, BlockPos sample, long seed, BlockState input) {
         var level = h.getLevel();
         level.setBlock(p, input, 18);
         WorldGenLevel fixture = (WorldGenLevel) Proxy.newProxyInstance(WorldGenLevel.class.getClassLoader(),
@@ -117,17 +122,22 @@ public final class StoneLayerSlabAuditTests {
                     // Surface-rock decoration is outside this subterranean one-cell fixture.
                     if (method.getName().equals("getHeight") && args != null && args.length == 3)
                         return level.getMinBuildHeight();
+                    if (method.getName().equals("getMinBuildHeight")) return level.getMinBuildHeight();
+                    if (method.getName().equals("isOutsideBuildHeight") && args != null
+                            && args.length == 1 && args[0] instanceof Integer y)
+                        return level.isOutsideBuildHeight(y);
                     if (method.getName().equals("getBlockState") && args[0] instanceof BlockPos read)
-                        return read.equals(p) ? level.getBlockState(p) : Blocks.AIR.defaultBlockState();
+                        return read.equals(sample) ? level.getBlockState(p) : Blocks.AIR.defaultBlockState();
                     if (method.getName().equals("setBlock") && args[0] instanceof BlockPos write) {
-                        h.assertTrue(write.equals(p), "full layer feature must stay within owned cell");
+                        h.assertTrue(write.equals(sample), "full layer feature must stay within the mapped logical cell");
                         return level.setBlock(p, (BlockState) args[1], ((Integer) args[2]) | 16);
                     }
-                    try { return method.invoke(level, args); }
-                    catch (InvocationTargetException e) { throw e.getCause(); }
+                    // Fail closed: a future feature callback must never access logical coordinates
+                    // in the native world or load/mutate any unowned chunk through delegation.
+                    throw new AssertionError("unsupported one-cell fixture callback: " + method);
                 });
         new GTStoneLayerFeature().place(new FeaturePlaceContext<>(Optional.empty(), fixture,
-                level.getChunkSource().getGenerator(), RandomSource.create(42), p, NoneFeatureConfiguration.INSTANCE));
+                level.getChunkSource().getGenerator(), RandomSource.create(42), sample, NoneFeatureConfiguration.INSTANCE));
         return level.getBlockState(p);
     }
 }

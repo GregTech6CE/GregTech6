@@ -86,7 +86,7 @@ The diagnostic selected only seven existing `gregtech_ore_thermal_audit` control
 
 ## Bounded correction and verification boundary
 
-[ReviewedOreCentrifugeFacts](../../multiversion/src/main/java/com/gregtech/gregtech/content/recipe/ReviewedOreCentrifugeFacts.java) admits only these three builtin profiles. It requires exact core ID/name, no addon ownership, original quality, first-three byproduct identities/order/thermal values and native registered forms with exact material/prefix identity. The corrected ownership guard is **material-and-prefix-role specific**:
+[ReviewedOreCentrifugeFacts](../../multiversion/src/main/java/com/gregtech/gregtech/content/recipe/ReviewedOreCentrifugeFacts.java) admitted only these three builtin profiles in the verified617 snapshot. The current branch adds a separately audited [eight-profile data-only expansion](SOLID_ORE_CENTRIFUGE_EXPANSION_AUDIT.md), whose full649 verification remains pending. It requires exact core ID/name, no addon ownership, original quality, first-three byproduct identities/order/thermal values and native registered forms with exact material/prefix identity. The corrected ownership guard is **material-and-prefix-role specific**:
 
 - Source material: external `crushedPurified`, `crushedPurifiedTiny` or `crushedCentrifugedTiny` forms cause UNKNOWN.
 - Each of the first three byproducts: external `crushedCentrifugedTiny` forms cause UNKNOWN.
@@ -104,8 +104,15 @@ The public evidence checker adds a separate strict six-ID group, preserving the 
 
 Role-specific correction against the clean first-patch base: SHA256 `4a5b4235de1dd05c0c2edc72e0d9d7037c0934fb99be09f59505b0f34ba5e621`; strengthened native tests: `8c02c1bc04a2258b5d058e3ea403828966a0d01479594c92818477e6fec3e1e3`. Both loader cached compilations passed. **Final role-corrected dual-loader verification passed**, independently of the earlier diagnostic and cached compilation evidence; see the terminal result below. The separate next quality/importer proposal remains outside this report and must not be mixed into the 617 snapshot.
 
-## Final verification
+## Final local617 verification
 
 Actual full gate: Forge 313/313 in 7m53s and NeoForge 304/304 in 4m32s, native command and strict checker exit 0 on both. All previous 605 cases remain passing. All six new source rows pass with actual unrelated sampleBlank coexistence assertions; none of the expected output/chance/work assertions was relaxed. Dual-platform builds/core, 157 Python guards, 491 REMI groups and package checks passed (1039 shared classes per loader, SDK 118 core + 46 native).
 
 Evidence: `work/validation/positive-ore-centrifuge-fixed-retry/local-validation-receipt.md`. Forge XML SHA256 `eae55fb57f8fb14dcf6ab0675e00ea3b44cb3cf829ab29e370beb18fd274e112`; NeoForge `62c21e64c374425193852d782edef69d68778c02ce476458e477eb83740736d6`. Runtime/test/resource hashes and tracked code diff remained unchanged throughout the gate. Only this audit history document was updated during/after verification. This is registered-recipe/native lookup verification, not a full survival progression or client-rendering test. No material-quality/host-physics changes or new eight-material roster are included in this batch.
+
+
+## Subsequent remote CI and current branch
+
+The pushed617 commit `9ce86aa7edcdedb7e95ea5802f2f7f1a54cb2f62` failed remote CI in two existing fixtures: Forge313 had only `drillTorchCancellationAndCreativePreserveInventory` fail its combined event-count/air-restoration assertion; NeoForge304 had only `structurecobbleslabsfollowonlytheirlocallayer` fail to find its bounded deterministic fixture seed. **All six ore cases passed on both remote loaders.** Actual downloaded XML/log evidence is under `work/validation/ore-centrifuge-remote-ci/artifacts/`. The local617 pass above remains valid, but is not a remote-CI pass.
+
+The current unmerged branch supersedes that snapshot with the separately documented eight-profile expansion and two test-only fixture corrections. The [torch fixture audit](TORCH_PLACEMENT_FIXTURE_AUDIT.md) distinguishes the proven unsafe fixture assumption from the unknown actual remote failure branch. The full local649 retry passed both loaders; remote recovery and merge are still subject to the new pushed commit’s CI. Quality/importer and host-physics work remain separate.

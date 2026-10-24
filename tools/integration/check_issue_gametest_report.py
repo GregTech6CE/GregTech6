@@ -363,6 +363,27 @@ MATERIAL_PHASE_CASE_NAMESPACES = {
 }
 FUNCTIONAL_CASES |= set(MATERIAL_PHASE_CASE_NAMESPACES)
 
+# Separate bounded eight-owner centrifuge slice; do not expand the historical 27-case source group.
+NEXT_ORE_CENTRIFUGE_CASE_NAMESPACES = {
+    'solidorecentrifugetests.chalcopyritepurifiedwhole': 'gregtech_ore_source_audit:test_empty',
+    'solidorecentrifugetests.chalcopyritepurifiedtiny': 'gregtech_ore_source_audit:test_empty',
+    'solidorecentrifugetests.pentlanditepurifiedwhole': 'gregtech_ore_source_audit:test_empty',
+    'solidorecentrifugetests.pentlanditepurifiedtiny': 'gregtech_ore_source_audit:test_empty',
+    'solidorecentrifugetests.sphaleritepurifiedwhole': 'gregtech_ore_source_audit:test_empty',
+    'solidorecentrifugetests.sphaleritepurifiedtiny': 'gregtech_ore_source_audit:test_empty',
+    'solidorecentrifugetests.tetrahedritepurifiedwhole': 'gregtech_ore_source_audit:test_empty',
+    'solidorecentrifugetests.tetrahedritepurifiedtiny': 'gregtech_ore_source_audit:test_empty',
+    'solidorecentrifugetests.pyritepurifiedwhole': 'gregtech_ore_source_audit:test_empty',
+    'solidorecentrifugetests.pyritepurifiedtiny': 'gregtech_ore_source_audit:test_empty',
+    'solidorecentrifugetests.nickelpurifiedwhole': 'gregtech_ore_source_audit:test_empty',
+    'solidorecentrifugetests.nickelpurifiedtiny': 'gregtech_ore_source_audit:test_empty',
+    'solidorecentrifugetests.cooperitepurifiedwhole': 'gregtech_ore_source_audit:test_empty',
+    'solidorecentrifugetests.cooperitepurifiedtiny': 'gregtech_ore_source_audit:test_empty',
+    'solidorecentrifugetests.yellowlimonitepurifiedwhole': 'gregtech_ore_source_audit:test_empty',
+    'solidorecentrifugetests.yellowlimonitepurifiedtiny': 'gregtech_ore_source_audit:test_empty',
+}
+FUNCTIONAL_CASES |= set(NEXT_ORE_CENTRIFUGE_CASE_NAMESPACES)
+
 # Separate bounded positive-ore slice; do not expand the historical 27-case source group.
 POSITIVE_ORE_CENTRIFUGE_CASE_NAMESPACES = {
     'positiveorecentrifugetests.copperpurifiedwholehasthreesourcebyproducts': 'gregtech_ore_source_audit:test_empty',
@@ -376,6 +397,10 @@ FUNCTIONAL_CASES |= set(POSITIVE_ORE_CENTRIFUGE_CASE_NAMESPACES)
 
 
 def expected_namespace(identity):
+    if identity == "toolplacementtransactiontests.drilltorchcancellationandcreativepreserveinventory":
+        return "gregtech_issue_audit:torch_placement_empty"
+    if identity in NEXT_ORE_CENTRIFUGE_CASE_NAMESPACES:
+        return NEXT_ORE_CENTRIFUGE_CASE_NAMESPACES[identity]
     if identity in POSITIVE_ORE_CENTRIFUGE_CASE_NAMESPACES:
         return POSITIVE_ORE_CENTRIFUGE_CASE_NAMESPACES[identity]
     if identity in MATERIAL_PHASE_CASE_NAMESPACES:
@@ -434,6 +459,10 @@ def check(path, platform='forge'):
         classname = case.get('classname', '').lower()
         for identity in expected:
             test_class, method = identity.split('.', 1)
+            if identity in NEXT_ORE_CENTRIFUGE_CASE_NAMESPACES:
+                if name == method and classname == NEXT_ORE_CENTRIFUGE_CASE_NAMESPACES[identity]:
+                    found.add(identity)
+                continue
             if identity in POSITIVE_ORE_CENTRIFUGE_CASE_NAMESPACES:
                 if name == method and classname == POSITIVE_ORE_CENTRIFUGE_CASE_NAMESPACES[identity]:
                     found.add(identity)

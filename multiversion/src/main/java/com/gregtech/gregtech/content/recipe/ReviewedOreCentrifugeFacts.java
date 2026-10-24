@@ -14,9 +14,10 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
 import static com.gregtech.gregtech.content.recipe.SourceOreFollowonRows.Evidence.*;
 
-/** Bounded original ORES/quality/solid-phase facts for purified Copper, Galena and Nether Quartz.
+/** Bounded original ORES/quality/solid-phase facts for reviewed purified ores.
  * Only the Centrifuge consumer uses this adapter; no global material flags or unrelated routes change.
- * Source MT418/586/3040,3717/3034,179/1554/3205; Ores464-470; OP135-140.
+ * Source Ores464-470; OP135-140; literal MT profiles with independently reviewed first-three byproducts.
+ * The roster is data-only: unknown identities, changed facts and relevant external forms still defer.
  */
 public final class ReviewedOreCentrifugeFacts implements SourceOreFollowonRows.Facts {
     public static final ReviewedOreCentrifugeFacts INSTANCE = new ReviewedOreCentrifugeFacts();
@@ -29,7 +30,23 @@ public final class ReviewedOreCentrifugeFacts implements SourceOreFollowonRows.F
             new Profile(new Identity(9117, "Galena", 784), 0, List.of(
                     new Identity(9130, "Sphalerite", 540), new Identity(470, "Silver", 1234), new Identity(820, "Lead", 600))),
             new Profile(new Identity(8346, "NetherQuartz", 1986), 3, List.of(
-                    new Identity(9160, "Barite", 1853), new Identity(8747, "Efrine", 2246), new Identity(8457, "VoidQuartz", 1986))));
+                    new Identity(9160, "Barite", 1853), new Identity(8747, "Efrine", 2246), new Identity(8457, "VoidQuartz", 1986))),
+            new Profile(new Identity(9111, "Chalcopyrite", 986), 0, List.of(
+                    new Identity(9125, "Pyrite", 862), new Identity(9115, "Cobaltite", 1014), new Identity(480, "Cadmium", 594))),
+            new Profile(new Identity(9145, "Pentlandite", 1097), 0, List.of(
+                    new Identity(9104, "Hematite", 1207), new Identity(160, "Sulfur", 388), new Identity(9115, "Cobaltite", 1014))),
+            new Profile(new Identity(9130, "Sphalerite", 540), 0, List.of(
+                    new Identity(480, "Cadmium", 594), new Identity(310, "Gallium", 302), new Identity(300, "Zinc", 692))),
+            new Profile(new Identity(9132, "Tetrahedrite", 993), 0, List.of(
+                    new Identity(290, "Copper", 1357), new Identity(510, "Antimony", 903), new Identity(300, "Zinc", 692))),
+            new Profile(new Identity(9125, "Pyrite", 862), 0, List.of(
+                    new Identity(160, "Sulfur", 388), new Identity(8208, "Phosphorus", 829), new Identity(9104, "Hematite", 1207))),
+            new Profile(new Identity(280, "Nickel", 1728), 2, List.of(
+                    new Identity(9115, "Cobaltite", 1014), new Identity(9116, "Cooperite", 1677), new Identity(9104, "Hematite", 1207))),
+            new Profile(new Identity(9116, "Cooperite", 1677), 0, List.of(
+                    new Identity(460, "Palladium", 1828), new Identity(280, "Nickel", 1728), new Identity(770, "Iridium", 2719))),
+            new Profile(new Identity(9137, "YellowLimonite", 1523), 0, List.of(
+                    new Identity(280, "Nickel", 1728), new Identity(9106, "BrownLimonite", 1523), new Identity(9115, "Cobaltite", 1014))));
 
     private static boolean identity(GTMaterial material, Identity expected) {
         if (material == null || !material.isValid()) return false;
