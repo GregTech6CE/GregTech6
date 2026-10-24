@@ -126,6 +126,26 @@ public final class LayoutStructures {
 
         @Override public StructureDefinition.ClaimPolicy claimPolicy() { return StructureDefinition.ClaimPolicy.ATOMIC; }
 
+        /**
+         * Card 53 migrates the four Layout families that have no per-scan matching state of their own.
+         * Large oven coil sameness and the remaining large-recipe families stay on the full scan until
+         * cards 54 and 55.
+         */
+        @Override public boolean incremental() {
+            if (machine instanceof BehaviorMachineBlockEntity) return true;
+            if (!(machine instanceof LargeRecipeMachineBlockEntity recipe)) return false;
+            var spec = recipe.spec();
+            if (spec == null) return false;
+            return switch (spec.machineName()) {
+                case "distillationtower", "cryodistillationtower", "cokeoven", "largemassfab" -> true;
+                default -> false;
+            };
+        }
+
+        @Override public CompiledPattern compile(net.minecraft.core.Direction front) {
+            return CompiledPattern.compile(machine, layout.get(), front, aggregates());
+        }
+
         @Override public boolean formsImmediately() {
             return formWithoutLayout && layout.get() == null;
         }

@@ -72,3 +72,44 @@ Forge通用BehaviorPlungerFluid首先要求BE自身instanceof IFluidHandler；�
 五份完整有序执行词法及字面量位置保持：BE Forge2771／Neo2702，Block1000／1322；[Neo罐恢复辅助](../../multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/api/fluid/NativeMachineTankData.java)3→16行、174项保持。BE一条注释改为当前周期，去掉“必须有矿”的过强暗示；其余注释、许可证和Stonecutter指令保留。原BedrockDrill头为GregTech-6 Team2025、Gregorius Techneticies、LGPL-3.0-or-later，其余来源独立留头／摘要；没有复制外部原生方法进生产。
 
 CompoundMaterials／WoodMaterials摘要保持，未Java编译／目标初始化、Gradle、测试、游戏、pack生成、供能／排液／爆炸、磁盘重启、构建或推送。正式251条包括已修复／部分修复、扩展合同和保留政策，不能当作251个未修故障；全面核查继续。
+
+## 2026-10-24 补充：结构检查与矿物候选对照（结构跟踪卡 56）
+
+结构跟踪改造要定基岩钻机的矿物候选留在结构匹配里，还是移到运行逻辑。这一节只对照成型条件，不改代码。原只读根`D:/Projects/java/gt6_source_code/gregtech6/src/main/java`，当前基线`main@4dc02e6ca`。没有新增ALIGN编号：成型条件没有发现新的差异，只补充036和232的源码依据。
+
+### 原版怎么成型
+
+原`MultiTileEntityBedrockDrill.checkStructure2`（82–120行）：
+
+- `yCoord < 5`直接不成型；先清空矿物列表`mList`。
+- 主控下5格的3×3地面逐格看方块。大基岩矿把材料加进`mList`两次，小基岩矿一次。HBM的Coltan、Oil两种基岩矿加各自的材料并置`tOverride`。其余方块若`WD.bedrock`不为真（原版基岩或Betweenlands基岩，`WD.java:672`），置`tBedrock`为假。
+- 每个(i, j)再检查y=-4到0五个零件位，用`checkAndSetTargetOffset`认领。某格失败只把`tSuccess`置假，循环不中断。
+- 返回`tSuccess && (tBedrock || tOverride)`。
+
+`checkAndSetTarget`（`ITileEntityMultiBlockController.java:47-77`）对匹配的零件直接`setTarget`；只有零件当前的目标是别的控制器、且那个控制器的`isInsideStructure`覆盖它时才拒绝。钻机的`isInsideStructure`是x±1、y-5到y、z±1（`MultiTileEntityBedrockDrill.java:144-146`），含地面层。
+
+`checkStructure2`只在`mStructureChanged`或强制检查时运行（`TileEntityBase10MultiBlockBase.java:177-185`）。强制检查来自首个tick、坐标变化、建造棒和放大镜，以及未成型时每600tick一次（同文件105–170行）；成型后没有周期性重检。`onTick2`的生产条件调的是`checkStructure(F)`（`MultiTileEntityBedrockDrill.java:155`），所以`mList`是上一次结构检查留下的缓存。
+
+### 当前怎么成型
+
+`BedrockDrillControllerBlockEntity.scanStructure()`（85–127行）：
+
+- 地面格：区块没加载就不成型并清认领；宿主岩为基岩的`OreBlock`把材料放进`deposit`（`oreSmall`一次，其余两次）；否则不是原版基岩就不成型并清认领。
+- 5层零件：方块和方块实体类型都对才进候选；第一处不对就清认领并返回。
+- 最后`StructureClaims.update`→`PartBindings.update`：先验证全部候选都能认领，任何一个不行就清掉所有并失败（`core/.../PartBindings.java:11`）。
+- 追踪足迹（`CustomStructures.drillFootprint`，139–152行）：9个地面格用`Projection.bedrockFloor()`，比较矿的材料、前缀、宿主岩，或原版基岩，或其他方块；44个支撑用`Projection.BLOCK`。
+
+### 五个问题
+
+1. **原版地面格的接受集合。** 大基岩矿、小基岩矿、HBM的两种基岩矿，以及`WD.bedrock`为真的方块（原版基岩、Betweenlands基岩）。集合之外的方块使`tBedrock`为假，成型失败；例外只有HBM基岩矿出现时的`tOverride`，那时非基岩格也被容忍（`MultiTileEntityBedrockDrill.java:89-108、119`）。
+2. **矿物列表的位置。** 在`checkStructure2`里顺手收集，但不是成型条件：9格都是普通基岩也成型，只是`tSelector < mList.size()`不成立，不进矿物分支（160–161行）。成型状态不随列表变化。
+3. **当前实现和原版的差异。** 地面格和矿物候选都在`scanStructure()`里（90–107行）；接受集合是宿主岩为基岩的矿块和原版基岩，成型同样不看有没有矿。差异只有三处：没有HBM覆盖和Betweenlands基岩两个第三方分支（现代端口没有这两个模组，见上文待另核）；第一处不匹配就清掉全部认领，原版继续认领其余零件（036）；地面区块没加载时直接不成型，原版没有对应的显式检查。
+4. **移到运行逻辑的可见差异。** 前提：地面格在结构里只要求“基岩类方块”，矿物列表在每个钻井周期开始时读这9格。
+   - 成型判定不变，矿物分支概率不变（仍由选择值是否小于列表长度决定），绑定不变（地面格不是零件）。
+   - 列表新鲜度：原版是上次结构检查的缓存，当前是每次扫描重建，移后总是当前状态。唯一能看出差别的改动是“地面格换成另一种基岩矿”：原版不会因此重检，当前因为`bedrockFloor()`比较矿的材料而让机器停到当tick末，移后当前也不停。生存里基本碰不到：基岩矿挖不动、炸不掉（`OreBlock.java:317、335`）。
+   - 成本：现在一次完整检查读44支撑加9地面并重建列表和认领（232）；移后结构评估不碰矿物，每个周期读9格。原版提示输入最多32768RU/t（`MultiTileEntityBedrockDrill.java:139`），一个周期耗32768RU，最坏每tick一个周期、9次`getBlockState`，仍少于一次完整检查，需要时可按地面格变化缓存。
+5. **逐格认领和`PER_CELL`。** 原版逐格认领，当前原子认领。可见差异集中在没建完或有争用的塔：原版未建完时已有的零件先被这台钻机认领，当前整塔都不认领。这台钻机的能量入口在当前要求已成型（`injectPortEnergy`和`doInject`先问`isStructureOk()`，248），所以未建完时已认领的零件不会因此多出可用的能量入口；流体端口的门控没有逐条核对。结论：列入`PER_CELL`对比，但不建议为它开启，默认保持原子认领。
+
+### 结论
+
+对照结果支持把矿物候选移出结构匹配，见DECISIONS 2026-10-24。HBM覆盖和Betweenlands基岩不在这个结论里。只读对照，没有改代码，没有跑Gradle，没有进游戏。
