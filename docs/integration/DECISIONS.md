@@ -2171,3 +2171,13 @@ Sensors null-NBT源登记可合法携带REV，生成器只为这组解析，避�
 - 删除 `StructureTracking.evaluate` 里的 `else if (safety && wasFormed != formed)`：读代码确认 `markFormed`/`markBroken` 的返回值已经覆盖边沿，这一支只在扫描中途被 `invalidate` 时重复通知。`StructureTracker.safety`、`enqueue` 的第二个参数和 `evaluateForTests(entity, safety)` 一并删除。
 - `onChanged` 里的 `List.copyOf` 保留：`structureFormedChanged(false)` 可能经 `setBlock` 重入 `onChanged`，`clearWatch` 会改列表，确认不了就按卡的要求保留。
 - `BehaviorMachineBlockEntity.getUpdatePacket` 未改：`create(this)` 只在 `sendBlockUpdated` 后取载荷，成型的边沿同步已经由 `ClientFormedSync.send` 控制；gametest 里量不出多发数量，按卡不做。
+
+## 2026-10-24 / 结构跟踪卡 56：基岩钻机的矿物候选移到运行逻辑（选 A）
+
+- 结论：选 A。基岩钻机地面 9 格在结构定义里只要求基岩类方块（宿主岩为基岩的矿块，任意材料和大小，或原版基岩）；矿物列表不属于结构匹配，改在每个钻井周期开始时读这 9 格。现在的代码不动，迁移随结构跟踪阶段 2 的特殊家族一批做（卡 55 批次 5）。
+- 依据：对照原版 `checkStructure2`（`MultiTileEntityBedrockDrill.java:82-120`），矿物列表是顺手收集的缓存，不是成型条件：9 格全是普通基岩也成型，只是不进矿物分支。当前 `scanStructure()` 的成型条件与此一致，所以移出后成型判定、矿物分支概率、绑定语义都不变。详见 `BEDROCK_DRILL_AUDIT.md` 末节。
+- 唯一的可见差别：地面格换成另一种基岩矿时，现在的 `Projection.bedrockFloor()` 把矿的材料和大小放进投影，机器会停到当 tick 末；移出后投影只比“是不是基岩类”，不再停机。原版也不会因此重新检查。基岩矿挖不动、炸不掉，生存里基本碰不到。
+- 不在这个决定里：原版的两个第三方分支（HBM 基岩矿的 `tOverride`、Betweenlands 基岩）。现代端口没有这两个模组，仍按审计另核。
+- 迁移要求：地面格用一个“基岩类”匹配器，投影只比“是不是基岩类”；`nextProduct()` 在周期开始时读 9 格，带 `hasChunkAt` 保护，大矿放材料两次、小矿一次，与现在一致；44 个支撑是固定格；认领策略声明 `ATOMIC`。
+- 逐格认领：原版是逐格认领（ALIGN-036），列入 `PER_CELL` 的对比（卡 58 批次 3），建议保持 `ATOMIC`：这台钻机的能量入口要求已成型，未建完时的认领差异几乎没有出口。
+- 验证：只读对照，没有改代码，没有跑 Gradle，没有进游戏。
