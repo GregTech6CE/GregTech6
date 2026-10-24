@@ -43,3 +43,7 @@
 ## CI 校验自身的确定性修正
 
 首个远程 NeoForge 作业在原生测试之前停于 Python 证据测试：多个用例组共用 ore-source 模板，而测试从无序集合中选第一个命名空间匹配项，又错误假设它属于最初27个用例。`PYTHONHASHSEED=1` 在本地稳定复现 StopIteration。修正后逐一按27个精确身份检查每种拒绝场景，不删除或放宽证据规则。8个不同哈希种子及原 CI 命令通过，全部142项Python检查、源码检查和491组REMI复验通过。没有修改运行时Java或原生测试内容；此前601项原生结果保持适用，远程CI在新提交上重新执行。失败日志和修正回执保留于 `work/validation/named-fluid-remote-ci/`、`work/validation/named-fluid-ci-hotfix/receipt.md`。
+
+## 与后续附属 API 提交集成
+
+合并上游 PR #99（b3a4d3dec /8735b8f1f）后重新完成完整本地601门禁：Forge305、NeoForge296均通过；新增 addonLifecycleContracts_runtime/fatal 核心任务实际执行，142项Python检查、491组REMI、每端1038共享打包类和SDK117核心/46原生类检查通过。运行时输入/终态快照一致，回执 `work/validation/named-fluid-upstream-integrated/local-validation-receipt.md`。该合并没有删减既有原生用例；未选择的旧NBT/挤压测试仍仅编译，不计入本门禁的执行声明。重启证明草稿不包含在此次集成树或结果中。
