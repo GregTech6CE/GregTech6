@@ -168,6 +168,19 @@ non-sealed interface Custom extends StructureDefinition {
 
 阶段 1 完成后：静置时的扫描次数为 0；端口查询不再触发扫描；每次真实变化在当 tick 末触发一次现有的完整扫描。
 
+### 阶段 1 进度（2026-10-24 收尾，卡 52）
+
+| 项 | 状态 | 落地 |
+|---|---|---|
+| 1 服务端索引的线程归属 | 完成 | 数据挂在 `ServerLevel` 的 mixin 字段上，删除静态 `WeakHashMap<Level, ...>`；客户端入口提前返回；测试构建校验服务端线程 |
+| 2 调度公平性 | 完成 | `dirty` 改 `ArrayDeque` + 在队标志；每 tick 至少评估队首一个；放不下时按原顺序放回队首；加急通道不变 |
+| 3 足迹收紧由扫描结果推导 | 完成 | 扫描体回传各组匹配层数；`LayoutStructures.of(..., int[], true)`；避雷针用 `rodLength + 1`；读取记录只留给审计 |
+| 4 探针热路径与异常安全 | 完成 | `activeScans == 0` 提前返回；`pause` 返回深度、`resume(depth)` 恢复，嵌套用配对栈 |
+| 5 卸载事件顺序与客户端同步 | 完成 | 外壳区块卸载时补 `ClientFormedSync.send`；新增真实卸载/重载场景与事件顺序记录器 |
+| 6 `/reload` 与合同 3 | 完成 | tag 格和本次 overlay 涉及的机器同步 `invalidate()`，其余只标 epoch 落后 |
+| 7 投影审计 | 完成 | `auditing()` 下对"等价"判定跑整段扫描；负例覆盖 BLOCK 投影说谎 |
+| 顺手修 | 完成/跳过 | 安全网分桶、`Footprint` 密度阈值、删除重复的安全网边沿分支；`onChanged` 的 `List.copyOf` 保留；`getUpdatePacket` 未改 |
+
 ## 阶段 2：声明式定义与增量评估
 
 把各家族从 `Custom` 迁移成 `Declarative`，并在 `Declarative` 上做增量评估（阶段 1 已接入的 `Layout` 家族直接开始增量评估）。逐个家族迁移，每迁一个跑一次一致性检查和模糊测试。
@@ -297,6 +310,44 @@ non-sealed interface Custom extends StructureDefinition {
 23. `SATISFIED` 每 tick 翻转，持续 100 tick，机器不停机，扫描计数为 0。
 24. 控制器区块和部件区块同时加载、控制器的 `onLoad` 尚未执行时，它的认领不被孤儿清理释放。
 25. 成型结构静置时，再次扫描（例如安全网触发）不对部件执行 bind 和设计号写入，部件区块不被标记为需要保存。
+26. 真实区块卸载和加载：事件顺序符合「区块加载状态」一节；卸载期间机器停机，重载后恢复；存档里的控制器状态与卸载前一致；客户端在外壳区块卸载后收到 `formed = false`。
+27. 一个足迹超过预算的 tracker，在队列里有很多小 tracker 时，也能在有限个 tick 内评估完；中等 tracker 不被小 tracker 持续插队。
+28. 可重复层结构收紧足迹后，生长前沿所在的区块仍在覆盖集合里；该区块卸载再加载时，机器在安全网之前恢复评估。
+29. `tracking/` 包里没有以 `Level` 为键的静态 `Map`；索引入口在非服务端线程上调用直接抛错。
+30. `/reload` 改 overlay 布局或 tag 后，受影响机器在 `epoch` 递增的同一 tick 内 `isStructureOk()` 为 false；不受影响的内置布局机器不停机。
+31. 审计模式下跑结构测试零违例；故意构造的 BLOCK 投影负例上审计必须失败。
+
+### 场景覆盖（2026-10-24）
+
+| 场景 | 测试 | 备注 |
+|---|---|---|
+| 1、2 | `idleAndPortQueriesScanOnlyInLegacy` | 逐家族计 idle 和端口查询 |
+| 3 | `brokenShellUnformsAtEndOfTickAndRepairs` | |
+| 4 | `fiftyCellEditsEvaluateEachMachineOnce` | |
+| 5 | `repeatLayerAddsAndDropsTheMiddle` | |
+| 6 | `removingOneControllerLetsTheOtherForm` | |
+| 7 | `shellUnloadStopsAndReloadKeepsContents` | 卸载钩子；库存/能量保持 |
+| 8 | `epochReloadFollowsTheNewLayoutAndTag` | |
+| 9 | `wrenchAndFacingRecheckTankBoilerAndLogistics` | |
+| 10 | `pistonPushesAPlainCasingOutOfTheLayout` | |
+| 11 | `noLayoutFormsOnTheFirstQueryAndALayoutChecksCells` | |
+| 12 | `twoHundredMachinesShareTheCellBudget` | |
+| 13 | `bucketClickFollowsTheSyncedFormedBit` | |
+| 14 | `controllerUnloadDoesNotChangeLoadedParts` | 卸载钩子 |
+| 15、16、21、24 | — | 阶段 3 的认领表场景，本阶段测不了 |
+| 17 | `pendingChunkBecomesAvailableWithoutTheSafetyNet` | |
+| 18 | `sectionMaskWatchesIndexesPast31` | |
+| 19 | `satisfiedCrucibleFormAndFluidLevelDoNotDirty` | Layout 与 Custom 各一 |
+| 20 | `exhaustedBudgetStillRepairsAFormedMachineThisTick` | |
+| 22 | `exhaustedBudgetStillRepairsAFormedMachineThisTick` | 只覆盖成型位，未覆盖"恢复运行" |
+| 23 | `satisfiedCrucibleFormAndFluidLevelDoNotDirty` | SATISFIED 翻转 100 次 |
+| 25 | `safetyRescanDoesNotBindOrMarkChunks` | |
+| 26 | `realShellChunkUnloadSuspendsAndReloads`、`realControllerChunkUnloadReattaches` | 真实卸载；事件顺序见 [DECISIONS](DECISIONS.md) |
+| 27 | `oversizedTrackerIsEvaluatedBeforeSmallOnes` | |
+| 28 | `tightenedFootprintKeepsTheFrontierChunk` | |
+| 29 | `trackingStateIsOwnedByTheServerWorld` | 源码/线程守卫 |
+| 30 | `reloadInvalidatesTagAndOverlayMachinesSynchronously` | |
+| 31 | `projectionAuditAcceptsEquivalentChangesAndCatchesALie` | 正例 + 负例 |
 
 ## 待定决策
 
@@ -307,6 +358,8 @@ non-sealed interface Custom extends StructureDefinition {
 已定：区块卸载期间 `formed` 为 false、停机、保留认领；认领表条目寿命跟随部件区块，控制器卸载期间不可抢占，主人已加载时用预留表保住认领；相关变化同步失效（合同 3 的严格语义），接受"合法替换也停机到 tick 末"的代价；安全网 600 tick、按位置错开相位、两种状态都兜。
 
 待核对：1.21.1 NeoForge 里方块实体 `onLoad` 与 `ChunkEvent.Load` 的先后顺序。
+
+2026-10-24 部分结论（卡 52 批次 5）：Forge 1.20.1 的 `ChunkEvent.Unload` 只在区块 holder 真正释放时发出。被 `setChunkForced`（`ENTITY_TICKING`，31 级票据）压住的邻近区块可以 `getChunkNow == null`、`hasChunkAt == false`，但不发 `ChunkEvent.Unload`；距离 0 的 `PLAYER` region 票据同样有传播，外壳要放到 16 个区块外才会真正释放。控制器区块无票据卸载时的顺序在 Forge 和 NeoForge 上一致：`ChunkEvent.Unload → onChunkUnloaded → setRemoved`，两条真实卸载测试两个平台都通过。方块实体 `onLoad` 与 `ChunkEvent.Load` 的先后、以及区块保存与这两者的相对顺序仍未单独测量。
 
 ## 参考
 

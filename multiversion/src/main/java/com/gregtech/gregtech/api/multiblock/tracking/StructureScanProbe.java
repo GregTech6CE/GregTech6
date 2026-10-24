@@ -8,12 +8,13 @@ import java.util.Arrays;
 
 /**
  * Counts structure reads while a scan is on the stack. The counters stay at zero unless a test enables them.
- * Block reads are recorded for every scan so a dynamic footprint can shrink to the cells the scan actually touched.
+ * Read coordinates are kept for the test-build footprint audit only; the watch footprint comes from scan results.
  */
 public final class StructureScanProbe {
     private static boolean enabled;
     private static boolean audit;
     private static int activeScans;
+    private static int threadLookups;
     private static int scans;
     private static int blockReads;
     private static int entityReads;
@@ -22,6 +23,8 @@ public final class StructureScanProbe {
     private static int binds;
     private static int releases;
     private static final ThreadLocal<Frame> CURRENT = new ThreadLocal<>();
+    private static final ThreadLocal<java.util.ArrayDeque<Integer>> PAUSES =
+            ThreadLocal.withInitial(java.util.ArrayDeque::new);
     private static final ThreadLocal<long[]> LAST = new ThreadLocal<>();
     private static final ThreadLocal<long[]> LAST_CHUNKS = new ThreadLocal<>();
     private static final ThreadLocal<String[]> LAST_CALLERS = new ThreadLocal<>();
@@ -46,6 +49,7 @@ public final class StructureScanProbe {
 
     public static void reset() {
         scans = 0;
+        threadLookups = 0;
         blockReads = 0;
         entityReads = 0;
         chunkChecks = 0;
@@ -55,6 +59,7 @@ public final class StructureScanProbe {
     }
 
     public static int scans() { return scans; }
+    public static int threadLookups() { return threadLookups; }
     public static int blockReads() { return blockReads; }
     public static int entityReads() { return entityReads; }
     public static int chunkChecks() { return chunkChecks; }
@@ -91,17 +96,44 @@ public final class StructureScanProbe {
         activeScans = Math.max(0, activeScans - 1);
     }
 
-    public static void pause() {
+    /** Pauses read recording and returns the depth to restore. No thread lookup when no scan is active. */
+    public static int pause() {
+        if (activeScans == 0) return -1;
         Frame frame = CURRENT.get();
-        if (frame != null) frame.pause++;
+        threadLookups++;
+        return frame == null ? -1 : frame.pause++;
     }
 
     public static void resume() {
+        if (activeScans == 0) return;
         Frame frame = CURRENT.get();
+        threadLookups++;
         if (frame != null && frame.pause > 0) frame.pause--;
     }
 
+    /** Restores the pause depth captured by {@link #pause()}, dropping deeper unpaired pauses. */
+    public static void resume(int depth) {
+        if (activeScans == 0) return;
+        Frame frame = CURRENT.get();
+        threadLookups++;
+        if (frame == null) return;
+        frame.pause = Math.max(0, depth);
+    }
+
+    /** Head of a probe call that must restore its own depth on the matching return. */
+    public static void pushPause() {
+        if (activeScans == 0) return;
+        PAUSES.get().push(pause());
+    }
+
+    public static void popPause() {
+        if (activeScans == 0) return;
+        java.util.ArrayDeque<Integer> stack = PAUSES.get();
+        if (!stack.isEmpty()) resume(stack.pop());
+    }
+
     public static void matcher() {
+        if (activeScans == 0) return;
         if (enabled && inScan()) matchers++;
     }
 
@@ -124,6 +156,7 @@ public final class StructureScanProbe {
     public static void noteChunkQuery(int chunkX, int chunkZ) {
         if (activeScans == 0) return;
         Frame frame = CURRENT.get();
+        threadLookups++;
         if (frame == null || frame.depth <= 0 || frame.pause > 0) return;
         if (enabled) chunkChecks++;
         frame.addChunk(ChunkPos.asLong(chunkX, chunkZ));
@@ -132,6 +165,7 @@ public final class StructureScanProbe {
     private static void note(BlockPos pos, Kind kind) {
         if (activeScans == 0) return;
         Frame frame = CURRENT.get();
+        threadLookups++;
         if (frame == null || frame.depth <= 0 || frame.pause > 0) return;
         if (enabled) {
             switch (kind) {
@@ -194,22 +228,6 @@ public final class StructureScanProbe {
             if (++shown == 6) break;
         }
         return text.toString();
-    }
-
-    /** Cells actually read, plus the controller so a wrench still invalidates after the watch shrinks. */
-    public static Footprint tighten(BlockPos controller, Footprint declared) {
-        long[] reads = LAST.get();
-        Footprint.Builder builder = new Footprint.Builder().addController(controller);
-        if (reads != null && declared != null) {
-            for (long packed : reads) {
-                BlockPos pos = BlockPos.of(packed);
-                if (pos.equals(controller)) continue;
-                int index = declared.indexOf(pos);
-                if (index < 0) continue;
-                builder.add(pos, declared.projection(index));
-            }
-        }
-        return builder.build();
     }
 
     private enum Kind { BLOCK, ENTITY, CHUNK }

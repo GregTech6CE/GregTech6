@@ -42,27 +42,43 @@ public final class StructureTracking {
 
     public static void onChunkUnloaded(TrackedMultiblock machine) {
         if (StructureTrackingMode.legacy()) return;
-        StructureTracker tracker = StructureWatchIndex.tracker(machine.trackedEntity());
+        BlockEntity entity = machine.trackedEntity();
+        Level level = entity.getLevel();
+        if (!(level instanceof ServerLevel server) || entity.isRemoved()) return;
+        StructureTracker tracker = StructureWatchIndex.tracker(entity);
         if (tracker == null) return;
+        StructureTrackingEvents.record("controller.onChunkUnloaded " + entity.getBlockPos().asLong());
         tracker.markUnloading();
         boolean fell = tracker.suspend();
-        Level level = machine.trackedEntity().getLevel();
-        if (level != null) StructureWatchIndex.clearWatch(level, tracker);
+        StructureWatchIndex.clearWatch(server, tracker);
         if (fell) machine.structureFormedChanged(false);
     }
 
     public static boolean unloading(TrackedMultiblock machine) {
-        StructureTracker tracker = StructureWatchIndex.tracker(machine.trackedEntity());
+        BlockEntity entity = machine.trackedEntity();
+        if (entity.getLevel() == null || entity.getLevel().isClientSide) return false;
+        StructureTracker tracker = StructureWatchIndex.tracker(entity);
         return tracker != null && tracker.unloading();
     }
 
     public static void onRemoved(TrackedMultiblock machine) {
-        StructureTracker tracker = StructureWatchIndex.tracker(machine.trackedEntity());
-        if (tracker != null) StructureWatchIndex.remove(tracker);
+        BlockEntity entity = machine.trackedEntity();
+        if (entity.getLevel() == null || entity.getLevel().isClientSide) return;
+        StructureTracker tracker = StructureWatchIndex.tracker(entity);
+        if (tracker != null) {
+            StructureTrackingEvents.record("controller.setRemoved " + entity.getBlockPos().asLong());
+            StructureWatchIndex.remove(tracker);
+        }
     }
 
     public static StructureTracker tracker(BlockEntity entity) {
         return entity == null ? null : StructureWatchIndex.tracker(entity);
+    }
+
+    /** Called by a scan body with the layer counts it matched, in layout repeat order. */
+    public static void noteMatchedLayers(BlockEntity entity, int[] layers) {
+        StructureTracker tracker = tracker(entity);
+        if (tracker != null) tracker.matchedLayers(layers);
     }
 
     public static StructureTracker attach(TrackedMultiblock machine) {
@@ -73,13 +89,14 @@ public final class StructureTracking {
         StructureTracker existing = StructureWatchIndex.tracker(entity);
         if (existing != null) return existing;
         StructureTracker tracker = StructureWatchIndex.attach(machine);
+        StructureTrackingEvents.record("tracker.attach " + entity.getBlockPos().asLong());
         StructureDefinition definition = machine.structureDefinition();
         if (definition.formsImmediately()) {
             if (tracker.markFormed(StructureEpoch.get())) machine.structureFormedChanged(true);
             return tracker;
         }
         install(server, tracker, definition.watchFootprint(machine));
-        tracker.enqueue(false, false);
+        tracker.enqueue(false);
         StructureWatchIndex.enqueue(tracker);
         return tracker;
     }
@@ -113,15 +130,12 @@ public final class StructureTracking {
             }
             return;
         }
-        boolean wasFormed = tracker.formed();
-        boolean safety = tracker.safety();
         boolean formed = scan(machine);
         if (StructureScanProbe.auditing()) {
             StructureScanProbe.assertInside(entity, definition.declaredFootprint(machine));
         }
         if (definition.tightenWatch()) {
-            Footprint declared = definition.declaredFootprint(machine);
-            install(server, tracker, StructureScanProbe.tighten(entity.getBlockPos(), declared));
+            install(server, tracker, definition.watchFootprint(machine));
         }
         boolean edge;
         if (formed) edge = tracker.markFormed(StructureEpoch.get());
@@ -129,9 +143,21 @@ public final class StructureTracking {
         if (edge) {
             machine.structureFormedChanged(formed);
             ClientFormedSync.send(entity);
-        } else if (safety && wasFormed != formed) {
-            machine.structureFormedChanged(formed);
-            ClientFormedSync.send(entity);
+        }
+    }
+
+    /** Test-only: when a projection calls a change equivalent, a full scan must agree with the cached bit. */
+    static void auditEquivalent(StructureTracker tracker) {
+        if (tracker.unloading() || tracker.entity().isRemoved()) return;
+        if (!(tracker.entity().getLevel() instanceof ServerLevel)) return;
+        auditProjection(tracker.watch(), tracker.formed(), () -> scan(tracker.machine()));
+    }
+
+    public static void auditProjection(Footprint watch, boolean cachedFormed, java.util.function.BooleanSupplier fullScan) {
+        boolean scanned = fullScan.getAsBoolean();
+        if (scanned != cachedFormed) {
+            throw new IllegalStateException("structure projection audit: cached formed=" + cachedFormed
+                    + " but a full scan returned " + scanned + " for a watch of " + watch.size() + " cells");
         }
     }
 
@@ -158,11 +184,11 @@ public final class StructureTracking {
         return true;
     }
 
-    /** One safety scan of this controller. The world queue is left alone. */
-    public static void evaluateForTests(BlockEntity entity, boolean safety) {
+    /** One direct evaluation of this controller. The world queue is left alone. */
+    public static void evaluateForTests(BlockEntity entity) {
         StructureTracker tracker = tracker(entity);
         if (tracker == null || entity.isRemoved()) return;
-        tracker.enqueue(false, safety);
+        tracker.enqueue(false);
         evaluate(tracker);
     }
 

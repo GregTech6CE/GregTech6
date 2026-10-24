@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "scope": "structure tracking phase 1 closeout (card 52): batches 1-8",
+  "branch": "feat/structure-tracking-phase-1-closeout",
+  "base_head": "327089700",
+  "card": "docs/card-plans/active/52-structure-tracking-phase1-closeout.md",
+  "mod_version": "0.0.0",
+  "api_version": 0,
+  "jdk_toolchains": {
+    "forge": 17,
+    "neoforge": 21
+  },
+  "platform_compile": {
+    "command": "./gradlew :multiversion:1.20.1-forge:compileJava :multiversion:1.21.1-neoforge:compileJava :multiversion:1.20.1-forge:addonApiClosureCheck :multiversion:1.21.1-neoforge:addonApiClosureCheck --console=plain",
+    "result": "BUILD SUCCESSFUL",
+    "api_closure": {
+      "forge": "passed",
+      "neoforge": "passed"
+    },
+    "gametest_compile": {
+      "command": "./gradlew :multiversion:1.20.1-forge:compileBootstrapGameTestJava :multiversion:1.21.1-neoforge:compileBootstrapGameTestJava --console=plain",
+      "result": "BUILD SUCCESSFUL",
+      "note": "the final real-unload test rewrite was type-checked with javac against the Forge run classpath; the Forge runGameTestServer then compiled and ran it"
+    }
+  },
+  "gametests": {
+    "namespace": "gt6ce_structure_tracking",
+    "addon_sample_required": true,
+    "addon_sample_note": "the namespace uses addon_sample:irrigator and addon_sample:sample_miner; without -PaddonSample=true, 14 required tests fail with 'Missing block addon_sample:irrigator'",
+    "forge": {
+      "attempts": [
+        {
+          "run": 1,
+          "command": "./gradlew :multiversion:1.20.1-forge:runGameTestServer -PgameTestNamespaces=gt6ce_structure_tracking -PgameTestHeap=3g \"-PgameTestJvmArgs=-XX:+UseSerialGC\" -PgameTestDirectory=build/gametest-st-p1c-all --console=plain",
+          "result": "14 required tests failed, 11 passed",
+          "cause": "-PaddonSample=true missing",
+          "log": "work/structure-tracking-p1c-forge-run1-20261024.log",
+          "sha256": "60e19dd7827927145659564fbaa772e8fb6d9357546c9d05eef0577a92dbfbb5"
+        },
+        {
+          "run": 2,
+          "command": "./gradlew :multiversion:1.20.1-forge:runGameTestServer -PaddonSample=true -PgameTestNamespaces=gt6ce_structure_tracking -PgameTestHeap=3g \"-PgameTestJvmArgs=-XX:+UseSerialGC\" -PgameTestDirectory=build/gametest-st-p1c-all2 --console=plain",
+          "result": "24/25 required tests passed",
+          "failure": "realchunkunloadsuspendsandreloads: the machine suspends on the real unload",
+          "cause": "the shell chunk was adjacent to the controller chunk held by setChunkForced; no ChunkEvent.Unload reached the index",
+          "log": "work/structure-tracking-p1c-forge-run2-20261024.log",
+          "sha256": "a15c38e46f08b843a8188d1a91d73d58cffd372539920722ceedd3fd83947461"
+        },
+        {
+          "run": 3,
+          "command": "same as run 2 with -PgameTestDirectory=build/gametest-st-p1c-all3",
+          "result": "24/25 required tests passed",
+          "failure": "same test; the event log listed 8 ChunkEvent.Unload entries but not the shell chunk",
+          "log": "work/structure-tracking-p1c-forge-run3-20261024.log",
+          "sha256": "7a24c02fad9963fcf008b74577c05d28a9c6d2b6045baec17c49495763fb1ba7"
+        },
+        {
+          "run": 4,
+          "command": "same as run 2 with -PgameTestDirectory=build/gametest-st-p1c-all4",
+          "result": "24/25 required tests passed",
+          "failure": "same test; diagnostics expected=8965744232487500 shellLoadable=false controllerNow=true",
+          "cause": "a chunk adjacent to a held chunk stays in a non-loading holder state; ChunkEvent.Unload is not posted",
+          "log": "work/structure-tracking-p1c-forge-run4-20261024.log",
+          "sha256": "d56b3baf16ca642157db37483a096cbe295b4932cbe14ffd75ba897f18e81113"
+        },
+        {
+          "run": 5,
+          "command": "./gradlew :multiversion:1.20.1-forge:runGameTestServer -PaddonSample=true -PgameTestNamespaces=gt6ce_structure_tracking -PgameTestHeap=3g \"-PgameTestJvmArgs=-XX:+UseSerialGC\" -PgameTestDirectory=build/gametest-st-p1c-all5 --console=plain",
+          "result": "25/26 required tests passed",
+          "failure": "realshellchunkunloadsuspendsandreloads: the shell 4 chunks away still produced no ChunkEvent.Unload while the controller chunk was held by a distance-0 PLAYER ticket",
+          "cause": "ticket propagation from the held chunk reaches farther than the first neighbour; the shell was moved to 16 chunks",
+          "log": "work/structure-tracking-p1c-forge-run5-20261024.log",
+          "sha256": "834716e49edcdc779047ad9943bc1949c5e40ea570d84b16c3174b0b1b44bf50"
+        },
+        {
+          "run": 6,
+          "command": "same as run 5 with -PgameTestDirectory=build/gametest-st-p1c-all6 and the shell 256 blocks (16 chunks) away",
+          "result": "All 26 required tests passed",
+          "covers": [
+            "realShellChunkUnloadSuspendsAndReloads",
+            "realControllerChunkUnloadReattaches"
+          ],
+          "log": "work/structure-tracking-p1c-forge-run6-20261024.log",
+          "sha256": "fc6450a9f30dbd83459fe62e30b20dfd33f8f568d2994f1af14c8401e444bdac"
+        }
+      ]
+    },
+    "neoforge": {
+      "command": "./gradlew :multiversion:1.21.1-neoforge:runGameTestServer -PaddonSample=true -PgameTestNamespaces=gt6ce_structure_tracking -PgameTestHeap=3g -PneoforgeGameTestDirectory=build/bootstrap-gametest-st-p1c-all1 --console=plain",
+      "result": "All 26 required tests passed",
+      "covers": [
+        "realShellChunkUnloadSuspendsAndReloads",
+        "realControllerChunkUnloadReattaches"
+      ],
+      "log": "work/structure-tracking-p1c-neoforge-run1-20261024.log",
+      "sha256": "aa9edd9dd77e851e95d2d8f8177b1d875c0a8d6f062c23423ad493024ddc88fc"
+    }
+  },
+  "full_suite": {
+    "forge_6g": {
+      "command": "./gradlew :multiversion:1.20.1-forge:runGameTestServer -PaddonSample=true -PgameTestHeap=6g \"-PgameTestJvmArgs=-XX:+UseSerialGC\" -PgameTestDirectory=build/gametest-full6g-st-p1c --console=plain",
+      "result": "failed: 101 test failures across 8 batches (about 800 tests), then the server crashed before printing the summary",
+      "crash": "ClassCastException: LongDistancePowerTests$Sink cannot be cast to LongDistanceTransformerBlockEntity at LongDistanceTransformerBlock.java:62",
+      "failure_groups": {
+        "document_path": 15,
+        "logistics_processor_counts_null": 11,
+        "other_content_and_repair": 75
+      },
+      "assessment": "not treated as a card-52 regression: the document-path failures come from the gametest working-directory depth, the logistics failures are the phase-1 tick-end scan semantics (processorCounts() is null until the scheduled scan), the rest are content/translation/recipe/model tests in gregtech_repair, and the crash is a test-only fake block entity in LongDistancePowerTests. A baseline run on origin/main was not done.",
+      "log": "work/structure-tracking-p1c-forge-full6g-20261024.log",
+      "sha256": "42c0bfa03105f85a318776fd8e0a40ce2d0d7997f27df707a8efd0ddb058fe0d",
+      "failure_list": "work/structure-tracking-p1c-forge-full-failures-20261024.txt"
+    },
+    "forge_6g_after_test_fixes": {
+      "command": "./gradlew :multiversion:1.20.1-forge:runGameTestServer -PaddonSample=true -PgameTestHeap=6g \"-PgameTestJvmArgs=-XX:+UseSerialGC\" -PgameTestDirectory=D:/Baobao/projects/dev/java/GregTech6CommunityEdition/GregTech6/run/gametest-full-st-p1c-2 --console=plain",
+      "result": "1045 tests complete, 104 required tests failed",
+      "cleared": [
+        "15 logistics and structure tests that assumed an immediate rescan or a registered basic-machine block"
+      ],
+      "new_failures": [
+        "crushedorekeepsitsextrafraction"
+      ],
+      "remaining_structural": [
+        "previouspassdrivesallfourmetersandemitsredstone: not patched; CPU display timing, no tracking relation"
+      ],
+      "assessment": "the crash and the 15 document-path failures are gone; the remaining failures are content, translation, recipe, model and repair-suite behaviour tests, not structure-tracking regressions",
+      "log": "work/structure-tracking-p1c-forge-full6g-20261024-run3.log",
+      "sha256": "dda228891d00ab3697d3b84aa838594a381066f85c1927941ef0a338ed58c31c",
+      "failure_list": "work/structure-tracking-p1c-forge-full-failures-20261024-run3.txt"
+    },
+    "forge_6g_mechanical_batch": {
+      "command": "./gradlew :multiversion:1.20.1-forge:runGameTestServer -PaddonSample=true -PgameTestHeap=6g \"-PgameTestJvmArgs=-XX:+UseSerialGC\" -PgameTestDirectory=D:/Baobao/projects/dev/java/GregTech6CommunityEdition/GregTech6/run/gametest-full-st-p1c-3 --console=plain",
+      "result": "1045 tests complete, 93 required tests failed",
+      "cleared": [
+        "allenergyvariantssharerecipemap",
+        "bumbliaryisregistered",
+        "coinitemsexistfortheirmaterials",
+        "cranktranslationkeysstaycomplete",
+        "crushedorekeepsitsextrafraction",
+        "everymachineusesitsoriginalpattern",
+        "everyoreblockshipsitsassets",
+        "mutualwireconnectionsandcontrolradius",
+        "pileassetsresolve",
+        "registerednameshavetranslations",
+        "tablecoverseverysingleblockmachine"
+      ],
+      "new_failures": [],
+      "changes": [
+        "tests merge every gt6ce language resource instead of reading the first one",
+        "the addon sample provides en_us/zh_cn names for its gt6ce materials and casing",
+        "core names for four potion fluids",
+        "base machine/asset/coin audits skip addon-owned content"
+      ],
+      "after_this_run": [
+        "scanned dead bee name changed to 'Wild Bumblebee (Dead, Scanned)'",
+        "hive test rewritten for the sixteen flattened bumble_hive_<color> blocks; not rerun"
+      ],
+      "log": "work/structure-tracking-p1c-forge-full6g-20261024-run4.log",
+      "sha256": "c715f789f762381795e6dc2b554e912ee757f4e2eda00c96c6ace8fbc9f987dc",
+      "failure_list": "work/structure-tracking-p1c-forge-full-failures-20261024-run4.txt"
+    },
+    "neoforge": "not run"
+  },
+  "not_verified": [
+    "full runGameTestServer suite on either platform (Forge: 93/1045 failed, mostly pre-existing content tests)",
+    "the bee-name and flattened-hive test fixes after the 93-run",
+    "manual single-player / dedicated-server checks",
+    "gameplay",
+    "saved-world restart"
+  ]
+}
