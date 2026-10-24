@@ -39,7 +39,10 @@ public final class AddonApiVersionContracts {
         var properties = Path.of(args[0]);
         var english = Path.of(args[args.length - 2]);
         var chinese = Path.of(args[args.length - 1]);
-        int minor = requireApiMinor(Files.readString(properties), GregTechAddons.API_VERSION);
+        check(GregTechAddons.API_VERSION == GregTechAddons.apiVersion(), "API_VERSION reads apiVersion()");
+        check(!classFileContains(GregTechAddons.class, "ConstantValue"),
+                "API_VERSION must be read at runtime, not inlined as a compile-time constant");
+        int minor = requireApiMinor(Files.readString(properties), GregTechAddons.apiVersion());
         var entries = new ArrayList<Entry>();
         for (int i = 1; i < args.length - 2; i++) entries.addAll(scanTree(Path.of(args[i])));
         var en = parseTable(english.toString(), Files.readString(english), EN_HEADING, EN_HEADER);
@@ -47,6 +50,26 @@ public final class AddonApiVersionContracts {
         audit(minor, entries, en, zh);
         System.out.println("addon API version contracts passed: " + assertions
                 + " assertions, " + entries.size() + " scheduled removals (Java 17; no game dependencies)");
+    }
+
+    /** True when the class file contains {@code ascii}. A compile-time constant field adds {@code ConstantValue}. */
+    private static boolean classFileContains(Class<?> type, String ascii) throws IOException {
+        try (var in = type.getResourceAsStream(type.getSimpleName() + ".class")) {
+            if (in == null) throw new IOException("Missing class file for " + type.getName());
+            byte[] bytes = in.readAllBytes();
+            byte[] needle = ascii.getBytes(java.nio.charset.StandardCharsets.US_ASCII);
+            for (int offset = 0; offset <= bytes.length - needle.length; offset++) {
+                boolean match = true;
+                for (int i = 0; i < needle.length; i++) {
+                    if (bytes[offset + i] != needle[i]) {
+                        match = false;
+                        break;
+                    }
+                }
+                if (match) return true;
+            }
+            return false;
+        }
     }
 
     private static void selfCheck() {

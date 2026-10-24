@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.content.multiblock;
 
+import com.gregtech.gregtech.api.addon.LayoutRepeat;
 import com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role;
 import com.gregtech.gregtech.registry.GTMultiblocks;
 import net.minecraft.core.*;
@@ -41,8 +42,8 @@ public final class LargeMachineLayouts {
     public record Layout(List<Cell> cells,List<Repeat> repeats){}
     /** One cell resolved to a world position. */
     public record Placed(Cell cell,BlockPos pos){}
-    /** Upper bound for an unbounded repeat; the world height still caps the walk. */
-    public static final int MAX_REPEATS=1024;
+    /** Upper bound for an unbounded repeat; the world height still caps the walk. Same cap as {@link LayoutRepeat#MAX_COPIES}. */
+    public static final int MAX_REPEATS=LayoutRepeat.MAX_COPIES;
     /**
      * Resolves every fully matching copy of {@code repeat}. Returns null when fewer than
      * {@code min} copies match. The first copy with a failing cell ends the walk.
