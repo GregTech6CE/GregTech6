@@ -2,6 +2,7 @@ package com.gregtech.gregtech.blockentity.machine;
 
 import com.gregtech.gregtech.api.multiblock.*;
 import com.gregtech.gregtech.api.multiblock.tracking.LayoutStructures;
+import com.gregtech.gregtech.api.multiblock.tracking.PatternMatch;
 import com.gregtech.gregtech.api.multiblock.tracking.StructureClaims;
 import com.gregtech.gregtech.api.multiblock.tracking.StructureDefinition;
 import com.gregtech.gregtech.api.multiblock.tracking.StructureTracking;
@@ -267,9 +268,10 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
     protected boolean validStructureParts() {return true;}
     protected boolean matchesPart(LargeMachineLayouts.Cell cell,net.minecraft.world.level.block.Block expected,net.minecraft.world.level.block.Block actual) {return (actual == expected);}
     public LargeMachineLayouts.Layout trackedLayout() { return structureLayout(); }
-    public boolean acceptsTrackedPart(LargeMachineLayouts.Cell cell, net.minecraft.world.level.block.Block expected, net.minecraft.world.level.block.Block actual) {
+    @Override public boolean acceptsTrackedPart(LargeMachineLayouts.Cell cell, net.minecraft.world.level.block.Block expected, net.minecraft.world.level.block.Block actual) {
         return matchesPart(cell, expected, actual);
     }
+    @Override public boolean structurePartsValid() { return validStructureParts(); }
     @Override public StructureDefinition structureDefinition() { return LayoutStructures.recipe(this); }
     @Override public boolean isStructureOk() { return StructureTracking.query(this); }
     @Override public boolean scanStructure() {
@@ -323,6 +325,41 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
             StructureTracking.noteMatchedLayers(this, matchedLayers);
         }
     }
+    /** Claims a match the incremental evaluator already built, without reading the layout again. */
+    @Override public boolean applyStructure(PatternMatch match) {
+        if (level == null || spec() == null || isRemoved()) return false;
+        var front = getBlockState().getValue(HorizontalDirectionalBlock.FACING);
+        var parts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
+        var matchedCells = new java.util.ArrayList<LargeMachineLayouts.Cell>(match.fixedCells().size());
+        for (var fixed : match.fixedCells()) {
+            matchedCells.add(fixed.cell());
+            if (fixed.cell().role() != MultiblockLayout.Role.AIR && !fixed.cell().plainBlock())
+                parts.put(fixed.pos(), fixed.cell().role());
+        }
+        var repeatPlaced = match.repeatPlaced();
+        for (var placed : repeatPlaced) {
+            var cell = placed.cell();
+            if (cell.role() != MultiblockLayout.Role.AIR && !cell.plainBlock())
+                parts.put(placed.pos(), cell.role());
+        }
+        var claimed = StructureClaims.update(this, true, bindings, parts,
+                designHash(matchedCells, repeatPlaced),
+                pos -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).canBind(worldPosition),
+                (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
+                this::release);
+        if (claimed == StructureClaims.Result.FAILED) return false;
+        if (claimed == StructureClaims.Result.APPLIED) {
+            com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front, matchedCells);
+            com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, repeatPlaced);
+        }
+        return true;
+    }
+
+    @Override public void releaseStructureClaims() {
+        bindings.clear(this::release);
+        StructureClaims.cleared(this);
+    }
+
     private static int designHash(List<LargeMachineLayouts.Cell> cells, List<LargeMachineLayouts.Placed> placed) {
         int hash = 1;
         for (var cell : cells) hash = 31 * hash + cell.design();

@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "scope": "structure tracking phase 2 card 53: declarative core and Layout-family incremental evaluation",
+  "branch": "feat/structure-tracking-declarative-core",
+  "base_head": "8834835a7",
+  "card": "docs/card-plans/active/53-structure-tracking-declarative-core.md",
+  "mod_version": "0.0.0",
+  "api_version": 0,
+  "jdk_toolchains": {
+    "forge": 17,
+    "neoforge": 21
+  },
+  "platform_compile": {
+    "command": "./gradlew :multiversion:1.20.1-forge:compileJava :multiversion:1.21.1-neoforge:compileJava :multiversion:1.20.1-forge:addonApiClosureCheck :multiversion:1.21.1-neoforge:addonApiClosureCheck :multiversion:1.20.1-forge:compileBootstrapGameTestJava :multiversion:1.21.1-neoforge:compileBootstrapGameTestJava --console=plain",
+    "result": "BUILD SUCCESSFUL",
+    "api_closure": {
+      "forge": "passed",
+      "neoforge": "passed"
+    },
+    "gametest_compile": "passed"
+  },
+  "gametests": {
+    "addon_sample_required": true,
+    "heap_note": "the card command says 3g; namespace runs used 6g because the 8000-step fuzz plus consistency scans made the 3g/SerialGC run unreliable. The first 6g attempt crashed for an unrelated reason: the new namespace had no test_empty structure resource.",
+    "structure_resource_note": "added data/gt6ce_structure_incremental/structures/test_empty.nbt (Forge) and .../structure/test_empty.nbt (NeoForge), copied from the gt6ce_structure_tracking namespace",
+    "world_border_note": "initial fuzz origins at 31M-35M triggered a vanilla Aquifer ArrayIndexOutOfBoundsException during chunk generation because they are outside the 1.20.1 world border (+-29,999,984). All origins moved to 27.0M-28.2M.",
+    "forge": {
+      "incremental": {
+        "command": "./gradlew :multiversion:1.20.1-forge:runGameTestServer -PaddonSample=true -PgameTestNamespaces=gt6ce_structure_incremental -PgameTestHeap=6g \"-PgameTestJvmArgs=-XX:+UseSerialGC\" -PgameTestDirectory=build/gametest-st-decl-b1 --console=plain",
+        "result": "All 4 required tests passed",
+        "log": "work/gametest-st-decl-b1.log",
+        "sha256": "71875b7e1ba7179589af7f180342214e482e064a1ea91c36dfdff622c45fa013"
+      },
+      "structure_tracking": {
+        "command": "./gradlew :multiversion:1.20.1-forge:runGameTestServer -PaddonSample=true -PgameTestNamespaces=gt6ce_structure_tracking -PgameTestHeap=6g \"-PgameTestJvmArgs=-XX:+UseSerialGC\" -PgameTestDirectory=build/gametest-st-decl-track --console=plain",
+        "result": "All 26 required tests passed",
+        "log": "work/gametest-st-decl-track-forge.log",
+        "sha256": "9b39eaa8b62ef7edb918d5f81b44fe3437756f29e0c98081fe56b6c0250c7963"
+      }
+    },
+    "neoforge": {
+      "incremental": {
+        "command": "./gradlew :multiversion:1.21.1-neoforge:runGameTestServer -PaddonSample=true -PgameTestNamespaces=gt6ce_structure_incremental -PgameTestHeap=6g -PneoforgeGameTestDirectory=build/bootstrap-gametest-st-decl-inc --console=plain",
+        "result": "All 4 required tests passed",
+        "log": "work/gametest-st-decl-b1-neoforge.log",
+        "sha256": "082c186ce9fefea08ab214a6b613e11b564cc40e4ce5998c642a17214f18b28a"
+      },
+      "structure_tracking": {
+        "command": "./gradlew :multiversion:1.21.1-neoforge:runGameTestServer -PaddonSample=true -PgameTestNamespaces=gt6ce_structure_tracking -PgameTestHeap=6g -PneoforgeGameTestDirectory=build/bootstrap-gametest-st-decl-track --console=plain",
+        "result": "All 26 required tests passed",
+        "log": "work/gametest-st-decl-track-neoforge.log",
+        "sha256": "1ae86d89381031ad4364a7fe1e0d59312cc589661a07fd9c53b371a84c2a3b7f"
+      }
+    }
+  },
+  "incremental_cost": {
+    "scenario": "behavior machine, one repeat group of twelve layers, one cell per layer; break layer 6 (copy 5)",
+    "forge_and_neoforge_identical": true,
+    "before_break": { "state": "FORMED", "matched_layers": [12] },
+    "after_break": { "state": "FORMED", "matched_layers": [5], "matchers": 1, "block_reads": 1 },
+    "repair": { "matchers": 7, "note": "copy 5 is re-read plus copies 6..11, which were outside the watch after the truncation" }
+  },
+  "fuzz": {
+    "namespace": "gt6ce_structure_incremental",
+    "consistency_check": "StructureTestSupport enables StructureTracking.consistencyCheck(true); every incremental verdict is compared with the phase-1 full scan",
+    "steps_per_family": 2000,
+    "families": ["behavior (addon_sample:irrigator, synthetic repeat layout)", "distillationtower", "cokeoven", "largemassfab"],
+    "seeds": [53000001, 53000002, 53000003, 53000004],
+    "mismatches": 0,
+    "platforms": ["forge 1.20.1", "neoforge 1.21.1"]
+  },
+  "not_run": [
+    "full runGameTestServer without -PgameTestNamespaces on either platform; the phase-1 branch still carries the pre-existing full-suite failures recorded in structure-tracking-p1-closeout-20261024.json",
+    "dev client and dedicated server manual checks",
+    "gameplay tests",
+    "save restart and old-save backup tests"
+  ],
+  "branch_note": "another process committed 823d02c84 on feat/structure-tracking-phase-1-closeout and left HEAD there while this card's work was uncommitted in the shared checkout; the feat/structure-tracking-declarative-core branch still points at 8834835a7"
+}

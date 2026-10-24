@@ -1,7 +1,11 @@
 package com.gregtech.gregtech.api.multiblock.tracking;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /** One server controller. The formed bit is what queries read. */
 public final class StructureTracker {
@@ -20,6 +24,13 @@ public final class StructureTracker {
     private int[] matchedLayers;
     private Footprint watch = Footprint.EMPTY;
     private final ClaimMemory claims = new ClaimMemory();
+    private CompiledPattern pattern;
+    private PatternState patternState;
+    private Direction patternFront;
+    private int patternEpoch = -1;
+    private boolean fullEval;
+    private final Set<Long> changedCells = new HashSet<>();
+    private final Set<Long> reloadedChunks = new HashSet<>();
 
     StructureTracker(TrackedMultiblock machine) {
         this.machine = machine;
@@ -81,6 +92,17 @@ public final class StructureTracker {
 
     /** A relevant change. Formed controllers are rescanned before the budget queue. Returns true when the formed bit fell. */
     boolean invalidate() {
+        fullEval = true;
+        return invalidateFormed();
+    }
+
+    /** A relevant change at one cell: only that cell (and any repeat layer above it) is re-evaluated. */
+    boolean invalidateCell(BlockPos pos) {
+        if (pos != null) changedCells.add(pos.asLong());
+        return invalidateFormed();
+    }
+
+    private boolean invalidateFormed() {
         boolean was = formed;
         formed = false;
         if (state == State.FORMED || was) state = State.UNKNOWN;
@@ -88,6 +110,53 @@ public final class StructureTracker {
         if (was) expedite = true;
         return was;
     }
+
+    void noteChunkReloaded(long chunk) {
+        reloadedChunks.add(chunk);
+    }
+
+    boolean takeFullEval() {
+        boolean value = fullEval;
+        fullEval = false;
+        return value;
+    }
+
+    void requestFullEval() {
+        fullEval = true;
+    }
+
+    Set<Long> takeChangedCells() {
+        if (changedCells.isEmpty()) return Set.of();
+        Set<Long> copy = Set.copyOf(changedCells);
+        changedCells.clear();
+        return copy;
+    }
+
+    Set<Long> takeReloadedChunks() {
+        if (reloadedChunks.isEmpty()) return Set.of();
+        Set<Long> copy = Set.copyOf(reloadedChunks);
+        reloadedChunks.clear();
+        return copy;
+    }
+
+    void clearChanges() {
+        changedCells.clear();
+        reloadedChunks.clear();
+        fullEval = false;
+    }
+
+    CompiledPattern pattern() { return pattern; }
+    PatternState patternState() { return patternState; }
+    Direction patternFront() { return patternFront; }
+    int patternEpoch() { return patternEpoch; }
+
+    void pattern(CompiledPattern value, Direction front, int epoch) {
+        pattern = value;
+        patternFront = front;
+        patternEpoch = epoch;
+    }
+
+    void patternState(PatternState value) { patternState = value; }
 
     /** Chunk of a watched cell unloaded. Claims stay. Returns true when the formed bit fell. */
     boolean suspend() {
@@ -122,6 +191,7 @@ public final class StructureTracker {
     private void finish() {
         dirty = false;
         expedite = false;
+        clearChanges();
     }
 
     void discard() {

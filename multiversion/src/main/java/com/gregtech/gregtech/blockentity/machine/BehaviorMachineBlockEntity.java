@@ -24,6 +24,7 @@ import com.gregtech.gregtech.api.addon.platform.MachineBehavior;
 import com.gregtech.gregtech.api.addon.platform.MachineBehaviorContext;
 import com.gregtech.gregtech.api.multiblock.MultiblockLayout;
 import com.gregtech.gregtech.api.multiblock.PartBindings;
+import com.gregtech.gregtech.api.multiblock.tracking.PatternMatch;
 import com.gregtech.gregtech.content.multiblock.LargeMachineLayouts;
 import com.gregtech.gregtech.api.energy.EnergyBlockViews;
 import com.gregtech.gregtech.api.energy.FaceConfig;
@@ -1358,8 +1359,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
                 ? getBlockState().getValue(HorizontalDirectionalBlock.FACING) : Direction.NORTH;
         int[] matchedLayers = new int[layout.repeats().size()];
         try {
-            var parts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
-            var matchedCells = new ArrayList<LargeMachineLayouts.Cell>();
+            var matchedCells = new ArrayList<PatternMatch.FixedCell>();
             for (var cell : layout.cells()) {
                 BlockPos cellPos = cell.at(worldPosition, front);
                 var matched = matchingCell(cell, cellPos);
@@ -1368,9 +1368,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
                     com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
                     return false;
                 }
-                matchedCells.add(matched);
-                if (matched.role() != MultiblockLayout.Role.AIR && !matched.plainBlock())
-                    parts.put(cellPos, matched.role());
+                matchedCells.add(new PatternMatch.FixedCell(matched, cellPos));
             }
             var repeatPlaced = new ArrayList<LargeMachineLayouts.Placed>();
             var counts = new LinkedHashMap<String, Integer>();
@@ -1394,38 +1392,73 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
                 for (var cell : placed) {
                     var matched = matches.get(cell.pos());
                     repeatPlaced.add(new LargeMachineLayouts.Placed(matched, cell.pos()));
-                    if (matched.role() != MultiblockLayout.Role.AIR && !matched.plainBlock())
-                        parts.put(cell.pos(), matched.role());
                 }
             }
-            var claimed = com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, structureBindings, parts,
-                    behaviorDesignHash(matchedCells, repeatPlaced),
-                    pos -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).canBind(worldPosition),
-                    (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
-                    this::releaseStructure);
-            if (claimed == com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED) return false;
-            if (claimed == com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.APPLIED) {
-                com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front, matchedCells);
-                com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, repeatPlaced);
-            }
-            var found = new ArrayList<EnergyPart>();
-            var bound = new ArrayList<BoundPart>();
-            for (BlockPos cellPos : parts.keySet()) {
-                var occupant = level.getBlockEntity(cellPos);
-                if (occupant instanceof AddonEnergyPartBlockEntity energy) {
-                    found.add(new EnergyPartView(energy));
-                    bound.add(new BoundView(energy));
-                } else if (occupant instanceof AddonFunctionalPartBlockEntity functional) {
-                    bound.add(new BoundView(functional));
-                }
-            }
-            energyParts = List.copyOf(found);
-            boundParts = List.copyOf(bound);
-            repeatCounts = Map.copyOf(counts);
-            return true;
+            return applyPrepared(front, matchedCells, repeatPlaced, counts);
         } finally {
             com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.noteMatchedLayers(this, matchedLayers);
         }
+    }
+
+    /** Claims a match the incremental evaluator already built, without reading the layout again. */
+    @Override public boolean applyStructure(com.gregtech.gregtech.api.multiblock.tracking.PatternMatch match) {
+        Direction front = getBlockState().hasProperty(HorizontalDirectionalBlock.FACING)
+                ? getBlockState().getValue(HorizontalDirectionalBlock.FACING) : Direction.NORTH;
+        var counts = new LinkedHashMap<String, Integer>(match.counts());
+        return applyPrepared(front, match.fixedCells(), match.repeatPlaced(), counts);
+    }
+
+    private boolean applyPrepared(Direction front, List<PatternMatch.FixedCell> matchedCells,
+                                  List<LargeMachineLayouts.Placed> repeatPlaced,
+                                  Map<String, Integer> counts) {
+        if (level == null || isRemoved()) {
+            structureBindings.clear(this::releaseStructure);
+            return false;
+        }
+        var parts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
+        var cells = new ArrayList<LargeMachineLayouts.Cell>(matchedCells.size());
+        for (var fixed : matchedCells) {
+            var matched = fixed.cell();
+            cells.add(matched);
+            if (matched.role() != MultiblockLayout.Role.AIR && !matched.plainBlock())
+                parts.put(fixed.pos(), matched.role());
+        }
+        for (var placed : repeatPlaced) {
+            var matched = placed.cell();
+            if (matched.role() != MultiblockLayout.Role.AIR && !matched.plainBlock())
+                parts.put(placed.pos(), matched.role());
+        }
+        var claimed = com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, structureBindings, parts,
+                behaviorDesignHash(cells, repeatPlaced),
+                pos -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).canBind(worldPosition),
+                (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
+                this::releaseStructure);
+        if (claimed == com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED) return false;
+        if (claimed == com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.APPLIED) {
+            com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front, cells);
+            com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, repeatPlaced);
+        }
+        var found = new ArrayList<EnergyPart>();
+        var bound = new ArrayList<BoundPart>();
+        for (BlockPos cellPos : parts.keySet()) {
+            var occupant = level.getBlockEntity(cellPos);
+            if (occupant instanceof AddonEnergyPartBlockEntity energy) {
+                found.add(new EnergyPartView(energy));
+                bound.add(new BoundView(energy));
+            } else if (occupant instanceof AddonFunctionalPartBlockEntity functional) {
+                bound.add(new BoundView(functional));
+            }
+        }
+        energyParts = List.copyOf(found);
+        boundParts = List.copyOf(bound);
+        repeatCounts = Map.copyOf(counts);
+        return true;
+    }
+
+    @Override public void releaseStructureClaims() {
+        structureBindings.clear(this::releaseStructure);
+        com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
+        clearStructureCaches();
     }
 
     private static int behaviorDesignHash(List<LargeMachineLayouts.Cell> cells, List<LargeMachineLayouts.Placed> placed) {
