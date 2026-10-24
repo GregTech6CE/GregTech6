@@ -57,6 +57,7 @@ public final class StructureScheduler {
         if (!(level instanceof ServerLevel server)) return;
         for (StructureTracker tracker : StructureWatchIndex.all(server)) {
             if (tracker.unloading() || tracker.entity().isRemoved()) continue;
+            tracker.requestFullEval();
             tracker.enqueue(false);
             StructureWatchIndex.enqueue(tracker);
         }
@@ -212,6 +213,7 @@ public final class StructureScheduler {
         for (StructureTracker tracker : StructureWatchIndex.safetyBucket(level, phase)) {
             safetyVisited++;
             if (tracker.unloading() || tracker.dirty() || tracker.entity().isRemoved()) continue;
+            tracker.requestFullEval();
             tracker.enqueue(false);
             StructureWatchIndex.enqueue(tracker);
         }

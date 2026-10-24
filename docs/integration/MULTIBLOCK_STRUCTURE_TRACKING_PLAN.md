@@ -225,6 +225,15 @@ non-sealed interface Custom extends StructureDefinition {
 - **一致性检查**：测试构建里每次增量评估之后，额外跑一次阶段 1 的整段扫描，两者结果不一致就让测试失败。正式构建不跑。
 - **随机模糊测试**：对每个家族，在足迹内随机改格子（放置、破坏、换候选、换方向），每一步比较增量结果和全量结果。重点覆盖可重复层前缀、生长前沿和聚合约束的边界。
 
+### 阶段 2 进度（2026-10-24，卡 53）
+
+| 项 | 状态 | 落地 |
+|---|---|---|
+| `Layout` 家族的编译图样与增量评估 | 完成 | 新增 `CompiledPattern`、`PatternState`、`PatternMatch`；蒸馏塔（含低温）、物质制造机、焦炉和附属行为机走增量路径，其余大型配方家族和大型烤炉在 54、55 |
+| 聚合约束与同类约束 | 通用实现完成 | `Aggregate.Count`（精确/至少/至多）与 `Aggregate.SameBlock`，用合成图样覆盖；聚变、物流核心、大型烤炉的接线在 54、55 |
+| 一致性检查 | 完成 | 测试构建由 `StructureTestSupport` 打开，每次增量评估后跑原样的 `scanStructure()` 对照 |
+| 随机模糊测试 | 完成（Forge） | 新命名空间 `gt6ce_structure_incremental`，四个家族各 2000 步；NeoForge 结果见 VERIFICATION |
+
 ## 阶段 3：认领表与边沿副作用
 
 ### 认领表

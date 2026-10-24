@@ -72,6 +72,20 @@ public final class StructureScanProbe {
         return frame != null && frame.depth > 0;
     }
 
+    /**
+     * Opens a frame for incremental evaluation: reads and matchers are counted, but the frame is not
+     * a scan. Nested frames share the outer one, and {@link #close()} restores it as usual.
+     */
+    public static void openIncremental() {
+        Frame frame = CURRENT.get();
+        if (frame == null) {
+            frame = new Frame();
+            CURRENT.set(frame);
+            activeScans++;
+        }
+        frame.depth++;
+    }
+
     /** Opens a scan frame. Nested calls share the outer frame so a scan counts once. */
     public static void open() {
         Frame frame = CURRENT.get();
