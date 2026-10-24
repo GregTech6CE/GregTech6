@@ -51,7 +51,17 @@ Completed local checks: dual-loader build/core checks (including up-to-date task
 
 The separate seven-profile Sifting/raw-input runner also passed **26/26 (13 per loader)** in fresh isolated JVMs/worlds: cohort3, restoring1, actual-stop1, Sifting5, literal Ice1, tiny startup winner1 and startup grade1 per loader. Native and strict receipt checks passed; these cases are **not** counted in849. Input/final source snapshots are identical. The terminal local receipt SHA256 is `03f1b7d30d4fe52a6ef58d52b29e42c50d556b993434048fbbd18ad16f06a7eb`; its artifact manifest records XML/snapshot/JAR hashes. The stop profile retains its private pack only in the dead disposable world and does not claim live restoration or a same-JVM second world.
 
-These receipts validate the pinned PR103/Sifting source above, **not** subsequently fetched PR105 (`9f4f066bb`); its new incremental runtime and namespace require a separate merged-source gate.
+These receipts validate the pinned PR103/Sifting source above, not PR105; the separate merged-source result follows below.
+
+## PR105 merged-source validation
+
+Upstream PR105 (`9f4f066bb`) was merged at `0e6e54a3255da0d6eff918f6c73f0f5aacfb809c`, preserving the reviewed own-unload guard and native fixtures. The focused workflow now includes `gt6ce_structure_incremental`; four exact shared identities/template bindings were added without dropping any of the prior849. The three-path admission patch is SHA256 `3ebfefd2ce54cf95bc886a9b8510f20e79fe98a95a8a9a4fe8e4a1b5a375c587`; the tested source diff is `e9a5746ad9d3cad66518330f61742140440c4263de136b87bb239535d3a42084`.
+
+The merged source passed **857/857 selected native cases (Forge433 + Neo424)** at the existing **3g** test heap, with native/strict exits0 and no failures, errors or skips. All four new incremental cases ran, including unchanged2000-step fuzz for each of four families and incremental/full-scan consistency checks. Existing native unload/persistence controls also passed; no tests or assertions were weakened to fit the heap. Upstream's focused6g receipt was not treated as proof that6g was required here.
+
+Dual-loader build/core checks (including up-to-date tasks), **233 Python guards** and **491 REMI groups** passed. Both packages (1,048 shared classes), SDKs (119 core +46 native API classes), mappings/refmaps and physics-JAR checks also passed. Input/final source snapshots are identical; the terminal receipt SHA256 is `d19ce1b016587d21f76b927b267dfc779023459c610f31333f9baf987bd664f9`. Evidence is under `work/validation/sifting-pr105-integrated/`; this documentation-only amendment does not represent another native execution.
+
+To avoid redundant repeated gates in this batch, the seven-profile isolated runner was **not rerun after PR105**. Its26-case result above remains pinned only to the earlier PR103/Sifting source; it is neither added to857 nor represented as a merged-source pass. The restart, old-save, external-addon and whole-chain limits below remain unchanged.
 
 ## Limits
 

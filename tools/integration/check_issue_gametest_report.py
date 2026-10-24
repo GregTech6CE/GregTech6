@@ -471,6 +471,14 @@ ORE_SHREDDER_CASE_NAMESPACES = {
 }
 FUNCTIONAL_CASES |= set(ORE_SHREDDER_CASE_NAMESPACES)
 
+STRUCTURE_INCREMENTAL_CASE_NAMESPACES = {
+    'structureincrementaltests.syntheticaggregatesrotationandchunkreload': 'gt6ce_structure_incremental:test_empty',
+    'structureincrementaltests.matchercandidatesmatchthescanorder': 'gt6ce_structure_incremental:test_empty',
+    'structureincrementaltests.onecelleditreadsonlyitslayerandthefrontier': 'gt6ce_structure_incremental:test_empty',
+    'structureincrementaltests.fuzzmigratedfamilies': 'gt6ce_structure_incremental:test_empty',
+}
+FUNCTIONAL_CASES |= set(STRUCTURE_INCREMENTAL_CASE_NAMESPACES)
+
 STRUCTURE_TRACKING_CASE_NAMESPACES = {
     'structuretrackingtests.idleandportqueriesscanonlyinlegacy': 'gt6ce_structure_tracking:test_empty',
     'structuretrackingtests.brokenshellunformsatendoftickandrepairs': 'gt6ce_structure_tracking:test_empty',
@@ -502,6 +510,8 @@ STRUCTURE_TRACKING_CASE_NAMESPACES = {
 FUNCTIONAL_CASES |= set(STRUCTURE_TRACKING_CASE_NAMESPACES)
 
 def expected_namespace(identity):
+    if identity in STRUCTURE_INCREMENTAL_CASE_NAMESPACES:
+        return STRUCTURE_INCREMENTAL_CASE_NAMESPACES[identity]
     if identity in STRUCTURE_TRACKING_CASE_NAMESPACES:
         return STRUCTURE_TRACKING_CASE_NAMESPACES[identity]
     if identity in ORE_SHREDDER_CASE_NAMESPACES:
@@ -582,6 +592,10 @@ def check(path, platform='forge'):
             test_class, method = identity.split('.', 1)
             if identity == 'addonrecipeapitests.reciperowscomparebyvalue':
                 if name == method and classname == 'gt6ce_api_contracts:test_empty':
+                    found.add(identity)
+                continue
+            if identity in STRUCTURE_INCREMENTAL_CASE_NAMESPACES:
+                if name == method and classname == STRUCTURE_INCREMENTAL_CASE_NAMESPACES[identity]:
                     found.add(identity)
                 continue
             if identity in STRUCTURE_TRACKING_CASE_NAMESPACES:

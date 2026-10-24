@@ -10,7 +10,7 @@ import unittest
 import xml.etree.ElementTree as ET
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'integration'))
-from check_issue_gametest_report import check, EXPECTED, LEGACY_CASE_NAMESPACES, API_CONTRACT_CASES, ENERGY_STORAGE_CASE_NAMESPACES, COVER_REMOVAL_CASE_NAMESPACES, ORE_SOURCE_CASES, ORE_FOLLOWON_CASE_NAMESPACES, MATERIAL_PHASE_CASE_NAMESPACES, POSITIVE_ORE_CENTRIFUGE_CASE_NAMESPACES, NEXT_ORE_CENTRIFUGE_CASE_NAMESPACES, QUALITY_PHYSICS_CASE_NAMESPACES, ORE_SHREDDER_CASE_NAMESPACES, STRUCTURE_TRACKING_CASE_NAMESPACES, expected_namespace
+from check_issue_gametest_report import check, EXPECTED, LEGACY_CASE_NAMESPACES, API_CONTRACT_CASES, ENERGY_STORAGE_CASE_NAMESPACES, COVER_REMOVAL_CASE_NAMESPACES, ORE_SOURCE_CASES, ORE_FOLLOWON_CASE_NAMESPACES, MATERIAL_PHASE_CASE_NAMESPACES, POSITIVE_ORE_CENTRIFUGE_CASE_NAMESPACES, NEXT_ORE_CENTRIFUGE_CASE_NAMESPACES, QUALITY_PHYSICS_CASE_NAMESPACES, ORE_SHREDDER_CASE_NAMESPACES, STRUCTURE_TRACKING_CASE_NAMESPACES, STRUCTURE_INCREMENTAL_CASE_NAMESPACES, expected_namespace
 import verify_artifacts
 from verify_artifacts import required_forge_mixin_mappings
 
@@ -161,6 +161,54 @@ STRUCTURE_TRACKING_CASES = (
 
 
 class IssueEvidenceTests(unittest.TestCase):
+    def test_structure_incremental_exact_cases_and_outcomes_on_both_loaders(self):
+        identities = (
+            'structureincrementaltests.syntheticaggregatesrotationandchunkreload',
+            'structureincrementaltests.matchercandidatesmatchthescanorder',
+            'structureincrementaltests.onecelleditreadsonlyitslayerandthefrontier',
+            'structureincrementaltests.fuzzmigratedfamilies',
+        )
+        self.assertEqual(set(identities), set(STRUCTURE_INCREMENTAL_CASE_NAMESPACES))
+        self.assertEqual(len(identities), 4)
+        workflow = (Path(__file__).resolve().parents[2] / '.github/workflows/issue-regressions.yml').read_text()
+        self.assertIn('gt6ce_structure_incremental', workflow.split('-PgameTestNamespaces=', 1)[1].split()[0].split(','))
+        for platform in ('forge', 'neoforge'):
+            self.verify(self.report(platform), platform)
+            for identity in identities:
+                self.assertIn(identity, EXPECTED[platform])
+                self.assertEqual(expected_namespace(identity), 'gt6ce_structure_incremental:test_empty')
+                for outcome in ('missing', 'failure', 'error', 'skipped', 'wrong_namespace',
+                                'wrong_template', 'wrong_method', 'class_suffix', 'qualified_correct_namespace',
+                                'qualified_wrong_namespace', 'no_dot_prefix', 'duplicate_other_case'):
+                    root = self.report(platform)
+                    suite = root.find('testsuite')
+                    case = next(c for c in suite if c.get('name') == identity.split('.', 1)[1]
+                                and c.get('classname') == expected_namespace(identity))
+                    if outcome == 'missing':
+                        suite.remove(case)
+                    elif outcome == 'wrong_namespace':
+                        case.set('classname', 'gt6ce_structure_tracking:test_empty')
+                    elif outcome == 'wrong_template':
+                        case.set('classname', 'gt6ce_structure_incremental:wrong_template')
+                    elif outcome == 'wrong_method':
+                        case.set('name', 'unrelatedincrementalcase')
+                    elif outcome == 'class_suffix':
+                        case.set('classname', 'wrong.' + identity.split('.', 1)[0])
+                    elif outcome == 'qualified_correct_namespace':
+                        case.set('name', identity)
+                    elif outcome == 'qualified_wrong_namespace':
+                        case.set('name', 'forged.' + identity)
+                        case.set('classname', 'wrong:template')
+                    elif outcome == 'no_dot_prefix':
+                        case.set('name', 'evil' + identity)
+                    elif outcome == 'duplicate_other_case':
+                        other = next(c for c in suite if c.get('name') != case.get('name'))
+                        case.attrib.update(other.attrib)
+                    else:
+                        ET.SubElement(case, outcome, message='incremental structure contract did not pass')
+                    with self.subTest(platform=platform, identity=identity, outcome=outcome), self.assertRaises(ValueError):
+                        self.verify(root, platform)
+
     def test_structure_data_mixin_exemption_is_exact_and_package_scoped(self):
         package = 'com/gregtech/gregtech/mixin/'
         config = {'package': 'com.gregtech.gregtech.mixin',
