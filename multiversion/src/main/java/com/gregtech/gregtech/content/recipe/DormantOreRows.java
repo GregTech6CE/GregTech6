@@ -14,7 +14,7 @@ import java.util.function.Predicate;
 
 /** caller-owned immutable definitions, never discovered from live recipe signatures.
  * Instances are lifecycle-confined. No constructor/definition admission, no global map sweep.
- * Only explicitly captured ordinary one-input OPL maceration/washing/Sifting rows enter this ledger.
+ * Only explicitly captured ordinary one-input OPL builtin raw, maceration/washing/Sifting/Sluice rows enter this ledger.
  */
 public final class DormantOreRows {
     private record Key(GTMaterial material, String producer, RecipeMap map) {}
@@ -24,18 +24,18 @@ public final class DormantOreRows {
         final ItemStack input;
         final ItemStack[] outputs;
         final long[] chances;
-        final FluidStack[] fluids;
+        final FluidStack[] fluids, fluidOutputs;
         final long duration, eu;
         Definition(Key key, boolean optimize, ItemStack input, ItemStack[] outputs,
-                   long[] chances, FluidStack[] fluids, long duration, long eu) {
+                   long[] chances, FluidStack[] fluids, FluidStack[] fluidOutputs, long duration, long eu) {
             this.key=key; this.optimize=optimize; this.input=input.copy();
             this.outputs=copy(outputs);this.chances=chances==null?null:chances.clone();
-            this.fluids=copy(fluids);this.duration=duration;this.eu=eu;
+            this.fluids=copy(fluids);this.fluidOutputs=copy(fluidOutputs);this.duration=duration;this.eu=eu;
         }
         Recipe admit() {
             // Same public admission path as addRecipe1: optimize, validate, collision-check.
             return key.map.addRecipe(optimize,new ItemStack[]{input.copy()},copy(outputs),null,
-                    chances==null?null:chances.clone(),copy(fluids),null,duration,eu,0);
+                    chances==null?null:chances.clone(),copy(fluids),copy(fluidOutputs),duration,eu,0);
         }
     }
     private final LinkedHashMap<Key,Definition> definitions=new LinkedHashMap<>();
@@ -43,12 +43,18 @@ public final class DormantOreRows {
     private boolean sealed;
     public void define(GTMaterial material,String producer,RecipeMap map,boolean optimize,
                        ItemStack input,ItemStack[] outputs,long[] chances,FluidStack[] fluids,long duration,long eu) {
+        define(material,producer,map,optimize,input,outputs,chances,fluids,null,duration,eu);
+    }
+    /** Fluid outputs are immutable definition data too, copied again on every admission. */
+    public void define(GTMaterial material,String producer,RecipeMap map,boolean optimize,
+                       ItemStack input,ItemStack[] outputs,long[] chances,FluidStack[] fluids,
+                       FluidStack[] fluidOutputs,long duration,long eu) {
         if(sealed)throw new IllegalStateException("Definition phase already sealed");
         Objects.requireNonNull(material);Objects.requireNonNull(producer);Objects.requireNonNull(map);
         if(material.resolve()!=material||input==null||input.isEmpty())throw new IllegalArgumentException("Canonical material/input required");
         Key key=new Key(material,producer,map);
         if(definitions.containsKey(key))throw new IllegalStateException("Duplicate producer definition: "+producer);
-        definitions.put(key,new Definition(key,optimize,input,outputs,chances,fluids,duration,eu));
+        definitions.put(key,new Definition(key,optimize,input,outputs,chances,fluids,fluidOutputs,duration,eu));
     }
     public void seal(){sealed=true;}
     public int definitionCount(){return definitions.size();}

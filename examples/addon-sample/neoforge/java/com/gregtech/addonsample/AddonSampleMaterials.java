@@ -61,6 +61,7 @@ public final class AddonSampleMaterials implements AddonMaterialContributor {
             requests.add(new MaterialFormRequest("Ice","gemExquisite"));
             requests.add(new MaterialFormRequest("Ice","gemFlawless"));
         }
+        if(namespaces.equals("gregtech_ore_alignment_batch")) requests.add(new MaterialFormRequest("Bakelite","oreRaw"));
         return List.copyOf(requests);
     }
 

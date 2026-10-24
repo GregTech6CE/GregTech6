@@ -48,6 +48,24 @@ public final class AddonSampleMod {
                     System.out.println("[nonore-ice-startup-winner] accepted="+(accepted!=null));
                 }
 
+                // Separate raw-map winner profile, not the literal raw-pair oracle.
+                if (namespaces.equals("gregtech_nonore_raw_winner_audit")) {
+                    ItemStack input=AddonItems.stack("oreRaw","PVC");
+                    if(input.isEmpty())throw new IllegalStateException("PVC raw startup input missing");
+                    var accepted=AddonRecipes.map("gt.recipe.crusher").add(new AddonRecipes.Line(
+                            new ItemStack[]{input},new ItemStack[]{new ItemStack(Items.EMERALD)},null,null,37,16,0));
+                    System.out.println("[nonore-raw-winner-startup] accepted="+(accepted!=null));
+                    ItemStack sluiceInput=AddonItems.stack("crushed","PVC");
+                    var sluiceWater=AddonFluids.still("Water",900);
+                    var slurry=AddonFluids.still("Sluice",37);
+                    if(sluiceInput.isEmpty()||sluiceWater.isEmpty()||slurry.isEmpty())
+                        throw new IllegalStateException("PVC Sluice startup fixture missing");
+                    var sluiceAccepted=AddonRecipes.map("gt.recipe.sluice").add(new AddonRecipes.Line(
+                            new ItemStack[]{sluiceInput},new ItemStack[]{new ItemStack(Items.DIAMOND)},
+                            new FluidStack[]{sluiceWater},new FluidStack[]{slurry},53,16,0));
+                    System.out.println("[nonore-sluice-winner-startup] accepted="+(sluiceAccepted!=null));
+                }
+
                 if (AddonItems.stack("ingot", "Iron", 1).isEmpty())
                     throw new IllegalStateException("sample iron ingot missing");
                 if (!GregTechMaterials.find("Steel").valid())

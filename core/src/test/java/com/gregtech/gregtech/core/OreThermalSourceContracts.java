@@ -8,7 +8,40 @@ public final class OreThermalSourceContracts {
  public static void main(String[] args){String mode=args[0];if(!java.util.Set.of("positive","same-field","alias-field").contains(mode))throw new IllegalArgumentException(mode);com.gregtech.gregtech.api.mod.ModData.bindPresence(id->id.equals("minecraft")||id.equals("gt6ce"));GTMaterialRegistry.init();
   FluidCatalog.FluidEntry external=null;
   if(!mode.equals("positive"))external=FluidCatalog.registerDefinition(mode.equals("same-field")?"GenLiquid_Mercury":"ExternalMercury",exact());
+  FluidCatalog.FluidEntry externalTi=null,externalFe=null;
+  if(!mode.equals("positive")){
+   externalTi=FluidCatalog.registerDefinition(mode.equals("same-field")?"GenMolten_Titanium":"ExternalTitanium",
+    new FluidCatalog.FluidEntry("molten.titanium",FluidCatalog.FluidTextureMode.GENERIC_MOLTEN,"Titanium",0,true,false,false,0,0,10,1941,FluidCatalog.FluidFlags.LIQUID));
+   externalFe=FluidCatalog.registerDefinition(mode.equals("same-field")?"GenMolten_Iron":"ExternalIron",
+    new FluidCatalog.FluidEntry(mode.equals("same-field")?"external.iron":"molten_iron",FluidCatalog.FluidTextureMode.GENERIC_MOLTEN,"Iron",0,true,false,false,0,0,10,1811,FluidCatalog.FluidFlags.LIQUID));
+  }
   com.gregtech.gregtech.content.fluid.FluidDefinitions.prepare();
+  for(String name:new String[]{"Titanium","Iron"}){
+   String field="GenMolten_"+name;var material=GTMaterialRegistry.get(name).resolve();var molten=FluidCatalog.get(field);
+   if(mode.equals("positive")){
+    require(ReviewedOreGeneratedFluids.wholeDustMetal(material,molten),"reviewed generated molten "+name);
+    require(!FluidCatalog.isGeneratedMoltenDefinition(field,molten.withTemperature(molten.temperature())),"equal molten record not factory identity "+name);
+    require(!ReviewedOreGeneratedFluids.wholeDustMetal(null,molten)&&!ReviewedOreGeneratedFluids.wholeDustMetal(GTMaterialRegistry.get("Aluminium"),molten),"null/foreign material cannot acquire molten permission "+name);
+    var oldTarget=material.getTargetSmeltingMaterial();long oldAmount=material.getTargetSmeltingAmount();
+    try{material.setSmelting(GTMaterialRegistry.get("Aluminium"),oldAmount);require(!ReviewedOreGeneratedFluids.wholeDustMetal(material,molten),"explicit target override defers "+name);}
+    finally{material.setSmelting(oldTarget,oldAmount);}
+    try{material.setSmelting(oldTarget,oldAmount/2);require(!ReviewedOreGeneratedFluids.wholeDustMetal(material,molten),"explicit target ratio override defers "+name);}
+    finally{material.setSmelting(oldTarget,oldAmount);}
+    var before=molten;FluidCatalog.finalizeMaterialFluidProperties();molten=FluidCatalog.get(field);
+    require(molten!=before&&ReviewedOreGeneratedFluids.wholeDustMetal(material,molten),"owned molten immutable finalization transfers identity "+name);
+    FluidCatalog.registerGeneratedMoltenFluids(GTMaterialRegistry.allMaterials());
+    require(FluidCatalog.get(field)==molten&&ReviewedOreGeneratedFluids.wholeDustMetal(material,molten),"repeated molten generation preserves exact identity "+name);
+    var math=com.gregtech.gregtech.content.recipe.SourceRecyclingMath.singleLiquid(648648000L,648648000L,648648000L,144,name.equals("Titanium")?4.54:7.874,name.equals("Titanium")?1941:1811,name.equals("Titanium")?1941:1811,293);
+    require(math.millibuckets()==144&&math.ticks()==(name.equals("Titanium")?519:830),"source whole dust work "+name);
+   }else{
+    if(mode.equals("same-field"))require(molten==(name.equals("Titanium")?externalTi:externalFe),"same-key molten preemption retains exact public object "+name);
+    else require(molten==null,"alternate-key same-path molten preemption creates no factory alias "+name);
+    require(!ReviewedOreGeneratedFluids.wholeDustMetal(material,molten),"external molten definition stays UNKNOWN "+name);
+    FluidCatalog.registerGeneratedMoltenFluids(GTMaterialRegistry.allMaterials());
+    require(FluidCatalog.get(field)==molten&&!ReviewedOreGeneratedFluids.wholeDustMetal(material,molten),"repeated molten factory cannot claim external preemption "+name);
+   }
+  }
+
   var entry=FluidCatalog.get("GenLiquid_Mercury");
   require(entry!=null&&entry.temperature()==300,"actual native Mercury300");
   if(mode.equals("positive")){
