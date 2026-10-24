@@ -41,7 +41,8 @@ public final class OreFluidBindingAdapter {
    default -> throw new IllegalStateException("No reviewed native identity: "+b.field());
   };
   var entry=com.gregtech.gregtech.data.RegisteredFluids.get(b.field());
-  if(entry==null||!com.gregtech.gregtech.data.RegisteredFluids.isBuiltInDefinition(entry)||!entry.registryName().equals(b.registryPath()))
+  if(entry==null||!(com.gregtech.gregtech.data.RegisteredFluids.isBuiltInDefinition(entry)
+       || (b.field().equals("GenLiquid_Mercury") && ReviewedOreGeneratedFluids.mercury(entry)))||!entry.registryName().equals(b.registryPath()))
    throw new IllegalStateException("Reviewed source catalog identity mismatch: "+b);
   if(!key.getNamespace().equals("gt6ce")||!key.getPath().equals(nativePath))
    throw new IllegalStateException("Reviewed source fluid binding identity mismatch: "+b+" -> "+key);

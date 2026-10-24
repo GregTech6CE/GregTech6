@@ -10,7 +10,7 @@ import unittest
 import xml.etree.ElementTree as ET
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'integration'))
-from check_issue_gametest_report import check, EXPECTED, LEGACY_CASE_NAMESPACES, API_CONTRACT_CASES, ENERGY_STORAGE_CASE_NAMESPACES, COVER_REMOVAL_CASE_NAMESPACES, ORE_SOURCE_CASES, expected_namespace
+from check_issue_gametest_report import check, EXPECTED, LEGACY_CASE_NAMESPACES, API_CONTRACT_CASES, ENERGY_STORAGE_CASE_NAMESPACES, COVER_REMOVAL_CASE_NAMESPACES, ORE_SOURCE_CASES, ORE_FOLLOWON_CASE_NAMESPACES, expected_namespace
 import verify_artifacts
 from verify_artifacts import required_forge_mixin_mappings
 
@@ -257,6 +257,34 @@ class IssueEvidenceTests(unittest.TestCase):
                     ET.SubElement(case, result, message='ore source contract did not pass')
                 with self.subTest(platform=platform, result=result), self.assertRaises(ValueError):
                     self.verify(root, platform)
+
+    def test_thermal_and_rawcraft_followon_exact_cases_and_namespaces(self):
+        self.assertEqual(len(ORE_FOLLOWON_CASE_NAMESPACES), 10)
+        self.assertEqual(sum(v == 'gregtech_ore_thermal_audit:test_empty' for v in ORE_FOLLOWON_CASE_NAMESPACES.values()), 7)
+        repo = Path(__file__).resolve().parents[2]
+        self.assertIn('gregtech_ore_source_audit,gregtech_ore_thermal_audit',
+                      (repo / '.github/workflows/issue-regressions.yml').read_text())
+        for platform in EXPECTED:
+            for identity in ORE_FOLLOWON_CASE_NAMESPACES:
+                self.assertIn(identity, EXPECTED[platform])
+                for outcome in ('missing', 'namespace', 'qualified_wrong_namespace', 'class_suffix_wrong_namespace', 'failure', 'error', 'skipped'):
+                    root = self.report(platform)
+                    suite = root.find('testsuite')
+                    case = next(c for c in suite if c.get('name') == identity.split('.', 1)[1]
+                                and c.get('classname') == expected_namespace(identity))
+                    if outcome == 'missing':
+                        suite.remove(case)
+                    elif outcome == 'namespace':
+                        case.set('classname', 'gregtech_issue_audit:test_empty')
+                    elif outcome == 'qualified_wrong_namespace':
+                        case.set('name', identity)
+                        case.set('classname', 'gregtech_issue_audit:test_empty')
+                    elif outcome == 'class_suffix_wrong_namespace':
+                        case.set('classname', 'wrong.' + identity.split('.', 1)[0])
+                    else:
+                        ET.SubElement(case, outcome, message='real source contract outcome')
+                    with self.subTest(platform=platform, identity=identity, outcome=outcome), self.assertRaises(ValueError):
+                        self.verify(root, platform)
 
     def test_empty_report_rejected(self):
         with self.assertRaisesRegex(ValueError, 'did not execute'):

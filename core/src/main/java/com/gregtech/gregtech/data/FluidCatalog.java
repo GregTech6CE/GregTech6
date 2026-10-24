@@ -141,6 +141,9 @@ public class FluidCatalog {
      * only one canonical field owns the fluid.
      */
     private static final Map<String, String> GENERATED_ALIASES = new LinkedHashMap<>();
+    /** Exact entries actually created by the gas/liquid material factory, never external preemptions.
+     * Registration-phase bookkeeping only; follows the catalog's existing single-threaded lifecycle. */
+    private static final Map<String, FluidEntry> GENERATED_PHASE_DEFINITIONS = new LinkedHashMap<>();
     /** Registry name -> material name for fluids whose declaration carries no {@code materialKey}. */
     private static final Map<String, String> BOUND_MATERIALS = new LinkedHashMap<>();
     private static boolean definitionsClosed;
@@ -935,6 +938,13 @@ public class FluidCatalog {
         return entry != null && BUILT_IN_PATHS.contains(sanitizePath(entry.registryName()));
     }
 
+    /** Factory provenance, distinct from static-directory ownership. Equal copied records are not proof. */
+    public static boolean isGeneratedGasLiquidDefinition(String field, FluidEntry entry) {
+        if (field == null || entry == null) return false;
+        String canonical = canonicalField(field);
+        return get(field) == entry && REGISTRY.get(canonical) == entry && GENERATED_PHASE_DEFINITIONS.get(canonical) == entry;
+    }
+
     public static Map<String, FluidEntry> all() {
         return Map.copyOf(REGISTRY);
     }
@@ -1004,9 +1014,10 @@ public class FluidCatalog {
                 case "Cryolite", "AluminiumFluoride", "LithiumChloride", "LithiumChlorate" -> true;
                 default -> false;
             }) MOLTEN_FACTORY_FIELDS.add(field);
-            register(field, new FluidEntry(lower, FluidTextureMode.DEDICATED, material.getName(), 0, true, false,
+            FluidEntry generated = register(field, new FluidEntry(lower, FluidTextureMode.DEDICATED, material.getName(), 0, true, false,
                     gas, 0, 0, 0, DEF_ENV_TEMP,
                     gas ? FluidFlags.GAS_FLAG : FluidFlags.LIQUID));
+            GENERATED_PHASE_DEFINITIONS.put(field, generated);
             // GT6 keeps one fluid object for both states, so the other generated key aliases it.
             GENERATED_ALIASES.put((gas ? "GenLiquid_" : "GenGas_") + material.getName(), field);
         }
@@ -1031,7 +1042,9 @@ public class FluidCatalog {
             // Original FL.createMolten: literal 300 K floor, bounded below the boiling point.
             int temperature = melting <= 0 ? 1000
                     : melting < 300 ? Math.min(300, material.getBoilingPoint() - 1) : melting;
-            REGISTRY.put(field, entry.withTemperature(temperature).withLuminosity(10));
+            FluidEntry finalized = entry.withTemperature(temperature).withLuminosity(10);
+            REGISTRY.put(field, finalized);
+            if (GENERATED_PHASE_DEFINITIONS.get(field) == entry) GENERATED_PHASE_DEFINITIONS.put(field, finalized);
         }
     }
 

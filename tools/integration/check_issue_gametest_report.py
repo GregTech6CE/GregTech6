@@ -12,6 +12,9 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'fluidslotamountoverlaytests.inputslotbucketoverlaykeepsexactliters',
+    'fluidslotamountoverlaytests.outputslotbucketoverlaykeepsexactliters',
+    'barracksdooralignmenttests.generateddoorsjoinslabwallsandsurviveupdates',
     'bottlecontentsnativetests.vanillabottlesandnativecapabilitypayloadskeeptheiridentity',
     'bottlefluidresolutiontests.allgeneratedbottlesresolvetheiractualregisteredfluid',
     'bottlefluidresolutiontests.sixpreviouslywaterbottlesusesourcenamedspriteandwhitetint',
@@ -323,7 +326,14 @@ ORE_SOURCE_CASES = {
 }
 
 
+ORE_FOLLOWON_CASE_NAMESPACES = {'orethermalsourcetests.rawanddirtyformshavenogenericthermalrows': 'gregtech_ore_thermal_audit:test_empty', 'orethermalsourcetests.dustrecyclestotargetmercurynotmoltencinnabar': 'gregtech_ore_thermal_audit:test_empty', 'orethermalsourcetests.dustfractionspreservesourcefloorrounding': 'gregtech_ore_thermal_audit:test_empty', 'orethermalsourcetests.cleanandrefinedformsremainrecyclable': 'gregtech_ore_thermal_audit:test_empty', 'orethermalsourcetests.cleanandrefinedtinyformsusesourceunits': 'gregtech_ore_thermal_audit:test_empty', 'orethermalsourcetests.submillibucketdustdoesnotcreateafluidrow': 'gregtech_ore_thermal_audit:test_empty', 'orethermalsourcetests.blockdustpreservessourceweightandtruncatedwork': 'gregtech_ore_thermal_audit:test_empty', 'orerawcraftingsourcetests.cinnabarrawgemtwobytwopositions': 'gregtech_ore_source_audit:test_empty', 'orerawcraftingsourcetests.cinnabarrawgemthreebythreepositions': 'gregtech_ore_source_audit:test_empty', 'orerawcraftingsourcetests.cinnabarrawgemoccupiedcellsnotstackcount': 'gregtech_ore_source_audit:test_empty'}
+
+
 def expected_namespace(identity):
+    if identity == 'barracksdooralignmenttests.generateddoorsjoinslabwallsandsurviveupdates':
+        return 'gt6ce_barracks_door:barracks'
+    if identity in ORE_FOLLOWON_CASE_NAMESPACES:
+        return ORE_FOLLOWON_CASE_NAMESPACES[identity]
     if identity.startswith('crankdurationaudittests.'):
         return 'gregtech_issue_audit:crank_duration_empty'
     if identity in ORE_SOURCE_CASES:
@@ -338,8 +348,8 @@ def expected_namespace(identity):
 
 
 EXPECTED = {
-    'forge': {'openissueregressiontests.' + method for method in FORGE_METHODS} | {GAS_CASE} | FUNCTIONAL_CASES | FORGE_ONLY_CASES | set(LEGACY_CASE_NAMESPACES) | API_CONTRACT_CASES | set(ENERGY_STORAGE_CASE_NAMESPACES) | ORE_SOURCE_CASES,
-    'neoforge': {GAS_CASE} | FUNCTIONAL_CASES | set(LEGACY_CASE_NAMESPACES) | API_CONTRACT_CASES | set(ENERGY_STORAGE_CASE_NAMESPACES) | ORE_SOURCE_CASES,
+    'forge': {'openissueregressiontests.' + method for method in FORGE_METHODS} | {GAS_CASE} | FUNCTIONAL_CASES | FORGE_ONLY_CASES | set(LEGACY_CASE_NAMESPACES) | API_CONTRACT_CASES | set(ENERGY_STORAGE_CASE_NAMESPACES) | ORE_SOURCE_CASES | set(ORE_FOLLOWON_CASE_NAMESPACES),
+    'neoforge': {GAS_CASE} | FUNCTIONAL_CASES | set(LEGACY_CASE_NAMESPACES) | API_CONTRACT_CASES | set(ENERGY_STORAGE_CASE_NAMESPACES) | ORE_SOURCE_CASES | set(ORE_FOLLOWON_CASE_NAMESPACES),
 }
 
 
@@ -361,7 +371,7 @@ def check(path, platform='forge'):
         classname = case.get('classname', '').lower()
         for identity in expected:
             test_class, method = identity.split('.', 1)
-            if identity in ORE_SOURCE_CASES:
+            if identity in ORE_SOURCE_CASES or identity in ORE_FOLLOWON_CASE_NAMESPACES or identity == 'barracksdooralignmenttests.generateddoorsjoinslabwallsandsurviveupdates':
                 if name == method and classname == expected_namespace(identity):
                     found.add(identity)
                 continue

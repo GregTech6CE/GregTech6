@@ -6,6 +6,7 @@ package com.gregtech.gregtech.client.gui;
 import com.gregtech.gregtech.GregTech;
 //?}
 
+import com.gregtech.gregtech.api.fluid.FluidSlotAmountOverlay;
 import com.gregtech.gregtech.data.RegisteredFluids;
 import com.gregtech.gregtech.registry.GTFluidType;
 import com.gregtech.gregtech.registry.GTFluids;
@@ -128,20 +129,16 @@ public class BasicMachineScreen extends AbstractContainerScreen<BasicMachineCont
 
             graphics.blit(x, y, 0, 16, 16, sprite, r, g, b, 1.0F);
 
-            // Amount overlay
-            String amt = formatFluidAmount(fluid.getAmount());
-            graphics.pose().pushPose();
-            graphics.pose().translate(0, 0, 200);
-            graphics.drawString(font, amt, x + 1, y + 8, 0xFFFFFF, true);
-            graphics.pose().popPose();
+            // Original FL.display(tank, true, true): capped bucket count, vanilla item overlay.
+            String amount = FluidSlotAmountOverlay.text(fluid.getAmount());
+            if (!amount.isEmpty()) {
+                graphics.pose().pushPose();
+                graphics.pose().translate(0, 0, 200);
+                graphics.drawString(font, amount, FluidSlotAmountOverlay.x(x, font.width(amount)),
+                        FluidSlotAmountOverlay.y(y), 0xFFFFFF, true);
+                graphics.pose().popPose();
+            }
         }
-    }
-
-    private static String formatFluidAmount(int mb) {
-        if (mb >= 1_000_000_000) return (mb / 1_000_000_000) + "B";
-        if (mb >= 1_000_000) return (mb / 1_000_000) + "M";
-        if (mb >= 1_000) return (mb / 1_000) + "k";
-        return String.valueOf(mb);
     }
 
     @Override
