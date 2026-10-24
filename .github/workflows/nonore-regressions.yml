@@ -18,17 +18,25 @@ concurrency:
 
 jobs:
   nonore-isolated:
-    name: ${{ matrix.loader }} isolated nonore regressions
+    name: ${{ matrix.loader }} ${{ matrix.group }} isolated nonore regressions
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: ${{ matrix.timeout }}
     strategy:
       fail-fast: false
       matrix:
         include:
           - loader: forge
-            node: 1.20.1-forge
+            group: inputs
+            timeout: 90
           - loader: neoforge
-            node: 1.21.1-neoforge
+            group: inputs
+            timeout: 90
+          - loader: forge
+            group: sifting
+            timeout: 120
+          - loader: neoforge
+            group: sifting
+            timeout: 120
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -48,17 +56,17 @@ jobs:
       - run: echo "JAVA17_HOME=$JAVA_HOME" >> "$GITHUB_ENV"
       - uses: gradle/actions/setup-gradle@v4
       - name: Check isolated evidence gates
-        run: python -X utf8 -m unittest tools.tests.test_nonore_cohort_checker tools.tests.test_nonore_stop_checker tools.tests.test_nonore_dust_comparator tools.tests.test_nonore_restoring_checker tools.tests.test_nonore_ci_contract
+        run: python -X utf8 -m unittest tools.tests.test_nonore_cohort_checker tools.tests.test_nonore_stop_checker tools.tests.test_nonore_dust_comparator tools.tests.test_nonore_restoring_checker tools.tests.test_nonore_ci_contract tools.tests.test_nonore_sifting_checker tools.tests.test_nonore_ice_checker tools.tests.test_nonore_ice_winner_checker tools.tests.test_nonore_startup_grade_checker
       - name: Run fixed isolated profiles sequentially
         # Development GameTestServer only. No dedicated-server EULA acceptance.
         run: |
           chmod +x gradlew
-          python -u -X utf8 tools/integration/run_nonore_profiles.py --loader ${{ matrix.loader }}
+          python -u -X utf8 tools/integration/run_nonore_profiles.py --loader ${{ matrix.loader }} --profile-group ${{ matrix.group }}
       - name: Preserve all isolated evidence, including failure receipts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.loader }}-nonore-regressions-${{ github.sha }}
+          name: ${{ matrix.loader }}-${{ matrix.group }}-nonore-regressions-${{ github.sha }}
           include-hidden-files: true
           if-no-files-found: error
           path: |

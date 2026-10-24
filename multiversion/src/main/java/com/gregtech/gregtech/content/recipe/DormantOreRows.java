@@ -14,7 +14,7 @@ import java.util.function.Predicate;
 
 /** caller-owned immutable definitions, never discovered from live recipe signatures.
  * Instances are lifecycle-confined. No constructor/definition admission, no global map sweep.
- * Only real, ordinary one-input OPL maceration/washing rows are in this proposed slice.
+ * Only explicitly captured ordinary one-input OPL maceration/washing/Sifting rows enter this ledger.
  */
 public final class DormantOreRows {
     private record Key(GTMaterial material, String producer, RecipeMap map) {}

@@ -1,10 +1,10 @@
 import os,unittest,subprocess,sys,signal,tempfile
 from pathlib import Path
 from unittest.mock import patch
-from tools.integration.run_nonore_profiles import PROFILES,command,stop_group,interrupted,executable_path
+from tools.integration.run_nonore_profiles import PROFILES,INPUT_PROFILES,SIFTING_PROFILES,PROFILE_CONFIG,profiles,profile_environment,checker_arguments,command,stop_group,interrupted,executable_path
 class NonOreCIContract(unittest.TestCase):
  def test_exact_profile_partition_and_commands(self):
-  self.assertEqual(PROFILES,(('cohort','gregtech_nonore_cohort_audit',3),('restoring','gregtech_nonore_tag_audit',1),('stop','gregtech_nonore_stop_audit',1)))
+  self.assertEqual(INPUT_PROFILES,(('cohort','gregtech_nonore_cohort_audit',3),('restoring','gregtech_nonore_tag_audit',1),('stop','gregtech_nonore_stop_audit',1)))
   with patch.dict(os.environ,{'JAVA17_HOME':'/jdk17'}):
    for loader,node in [('forge','1.20.1-forge'),('neoforge','1.21.1-neoforge')]:
     for _,ns,_ in PROFILES:
@@ -47,3 +47,50 @@ class NonOreCIContract(unittest.TestCase):
   for prefix in ('--no-daemon','--max-workers','-Dorg.gradle.java.home','-Dorg.gradle.java.installations'):
    self.assertFalse(any(a.startswith(prefix) for a in c))
   self.assertIn('-Dorg.gradle.jvmargs=-Xmx1536m',c);self.assertIn('-PgameTestHeap=3g',c)
+
+ def test_exact_sifting_partition_and_no_environment_leakage(self):
+  self.assertEqual(SIFTING_PROFILES,(('sifting','gregtech_nonore_sifting_audit',5),('ice','gregtech_nonore_ice_sifting_audit',1),('ice_winner','gregtech_nonore_ice_winner_audit',1),('startup_grade','gregtech_nonore_ice_startup_grade_audit',1)))
+  self.assertEqual(PROFILES,INPUT_PROFILES+SIFTING_PROFILES)
+  self.assertEqual(sum(p[2] for p in PROFILES),13)
+  self.assertEqual(profiles('inputs'),INPUT_PROFILES);self.assertEqual(profiles('sifting'),SIFTING_PROFILES)
+  self.assertEqual(profiles('all'),PROFILES)
+  with self.assertRaises(KeyError):profiles('unknown')
+  inherited={'GT6_NONORE_TAG_DIRECTORY':'old','GT6_NONORE_STOP_NONCE':'old','GT6_NONORE_ICE_DIRECTORY':'old','GT6_NONORE_ICE_STARTUP_GRADE_NONCE':'old','KEEP':'yes'}
+  for name,_,_ in PROFILES:
+   env=profile_environment(name,Path('/fresh'),'a'*32,inherited)
+   self.assertEqual(env['KEEP'],'yes');self.assertNotIn('old',env.values());self.assertEqual(inherited['GT6_NONORE_TAG_DIRECTORY'],'old')
+   stem=PROFILE_CONFIG[name][1]
+   expected={} if stem is None else {'GT6_NONORE_'+stem+'_DIRECTORY':'/fresh'}
+   if stem and name!='restoring':expected['GT6_NONORE_'+stem+'_NONCE']='a'*32
+   self.assertEqual({k:v for k,v in env.items() if k.startswith('GT6_NONORE_')},expected)
+   args=checker_arguments(Path('/repo'),name,Path('/x'),Path('/l'),Path('/e'),Path('/fresh'),'a'*32)
+   self.assertIn('/repo/tools/integration/check_nonore_'+name+'.py',args)
+   self.assertEqual('--phase' in args,name in ('cohort','sifting'))
+   self.assertEqual('--nonce' in args,name in ('stop','ice','ice_winner','startup_grade'))
+   self.assertEqual('--run-directory' in args,name not in ('cohort','sifting'))
+ def test_ci_group_time_budgets_and_unique_artifacts(self):
+  root=Path(__file__).resolve().parents[2];s=(root/'.github/workflows/nonore-regressions.yml').read_text()
+  self.assertIn('timeout-minutes: ${{ matrix.timeout }}',s)
+  import re
+  jobs=re.findall(r'- loader: (forge|neoforge)\s+group: (inputs|sifting)\s+timeout: (\d+)',s)
+  self.assertEqual(jobs,[('forge','inputs','90'),('neoforge','inputs','90'),('forge','sifting','120'),('neoforge','sifting','120')])
+  self.assertEqual(s.count('group: inputs'),2);self.assertEqual(s.count('group: sifting'),2)
+  self.assertEqual(s.count('timeout: 90'),2);self.assertEqual(s.count('timeout: 120'),2)
+  self.assertIn('--profile-group ${{ matrix.group }}',s)
+  self.assertIn('${{ matrix.loader }}-${{ matrix.group }}-nonore-regressions-',s)
+  runner=(root/'tools/integration/run_nonore_profiles.py').read_text()
+  self.assertIn('proc.wait(timeout=25*60)',runner)
+
+ def test_shipped_source_provenance_is_bounded_and_available(self):
+  import json,re
+  root=Path(__file__).resolve().parents[2]
+  d=json.loads((root/'docs/integration/nonore-sifting-source-profile.json').read_text())
+  self.assertEqual({n:g['id'] for n,g in d['generation'].items()},{'Flint':8002,'Ice':9802,'Obsidian':8214})
+  self.assertTrue(all(g['ORES'] is False for g in d['generation'].values()))
+  self.assertEqual(d['generation']['Ice']['forced'],['gemChipped','gemFlawed','gem'])
+  self.assertFalse(d['generation']['Ice']['upper_graded_generation'])
+  self.assertIn('UNKNOWN',d['generation']['Flint']['actual_common_gem'])
+  self.assertEqual({v['source'] for v in d['evidence']},{'gregtech6-original','gregtech6-w'})
+  for v in d['evidence']:
+   self.assertRegex(v['sha256'],r'^[0-9a-f]{64}$');self.assertTrue(v['lines'])
+  self.assertIn('No late grade-tag binding feature',d['runtime_scope'])

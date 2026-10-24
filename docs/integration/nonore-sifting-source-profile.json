@@ -1,0 +1,1513 @@
+{
+  "scope": "Paired original source only. All three builtin ORES_NO; recipe-presence depends on actual registrations, not generation eligibility alone. No native execution.",
+  "source_profile_sha256": "6c4bd00e92467b80cda2c521d9da678b19d8b59f32c3278552879512dcdc7ec0",
+  "generation": {
+    "Flint": {
+      "id": 8002,
+      "factory": "cent -> dcmp -> create + G_GEM/STONE",
+      "ORES": false,
+      "GEMS": true,
+      "TRANSPARENT": false,
+      "CRYSTAL": false,
+      "own_gem_generation": "disabled explicitly",
+      "own_graded_generation": false,
+      "actual_common_gem": "Controlled paired GT plus standard Forge baseline has no gemFlint registration; independent external registrations UNKNOWN."
+    },
+    "Ice": {
+      "id": 9802,
+      "factory": "create + G_GEM_TRANSPARENT",
+      "ORES": false,
+      "GEMS": true,
+      "TRANSPARENT": true,
+      "CRYSTAL": false,
+      "forced": [
+        "gemChipped",
+        "gemFlawed",
+        "gem"
+      ],
+      "upper_graded_generation": false
+    },
+    "Obsidian": {
+      "id": 8214,
+      "factory": "elec -> dcmp -> create + G_STONE",
+      "ORES": false,
+      "GEMS": false,
+      "TRANSPARENT": false,
+      "CRYSTAL": false,
+      "own_gem_generation": false,
+      "own_graded_generation": false,
+      "actual_common_gem": "none established in reviewed builtin sources; external may supply"
+    }
+  },
+  "registration_predicate": [
+    "material nonnull, not ANTIMATTER, not Bedrock",
+    "dust.mat(material,1) valid",
+    "BOTH crushedPurified.mat(material,1) and crushedPurifiedTiny.mat(material,1) valid",
+    "gem.mat(material,1) != null",
+    "ordinary map admission/collision/config still applies"
+  ],
+  "runtime_grade_rule": [
+    {
+      "slot": 0,
+      "requested_prefix": "gemLegendary",
+      "registered_count": 1,
+      "fallback_prefix": "gem",
+      "fallback_count": 8
+    },
+    {
+      "slot": 1,
+      "requested_prefix": "gemExquisite",
+      "registered_count": 1,
+      "fallback_prefix": "gem",
+      "fallback_count": 4
+    },
+    {
+      "slot": 2,
+      "requested_prefix": "gemFlawless",
+      "registered_count": 1,
+      "fallback_prefix": "gem",
+      "fallback_count": 2
+    },
+    {
+      "slot": 3,
+      "requested_prefix": "gem",
+      "registered_count": 1,
+      "fallback_prefix": "gem",
+      "fallback_count": 1
+    },
+    {
+      "slot": 4,
+      "requested_prefix": "gemFlawed",
+      "registered_count": 2,
+      "fallback_prefix": "gem",
+      "fallback_count": 1
+    },
+    {
+      "slot": 5,
+      "requested_prefix": "gemChipped",
+      "registered_count": 4,
+      "fallback_prefix": "gem",
+      "fallback_count": 1
+    },
+    {
+      "slot": 6,
+      "requested_prefix": "dust",
+      "registered_count": 1,
+      "fallback": null
+    }
+  ],
+  "conditional_rows": [
+    {
+      "material": "Flint",
+      "id": 8002,
+      "input": {
+        "prefix": "crushedPurified",
+        "count": 1
+      },
+      "requires": "both purified forms valid; dust1 actual; common gem1 actual; upper/other grades absent except forced Ice flawed/chipped",
+      "outputs": [
+        {
+          "prefix": "gem",
+          "material": "Flint",
+          "count": 8,
+          "chance_per_10000": 9
+        },
+        {
+          "prefix": "gem",
+          "material": "Flint",
+          "count": 4,
+          "chance_per_10000": 90
+        },
+        {
+          "prefix": "gem",
+          "material": "Flint",
+          "count": 2,
+          "chance_per_10000": 360
+        },
+        {
+          "prefix": "gem",
+          "material": "Flint",
+          "count": 1,
+          "chance_per_10000": 1350
+        },
+        {
+          "prefix": "gem",
+          "material": "Flint",
+          "count": 1,
+          "chance_per_10000": 1800
+        },
+        {
+          "prefix": "gem",
+          "material": "Flint",
+          "count": 1,
+          "chance_per_10000": 3600
+        },
+        {
+          "prefix": "dust",
+          "material": "Flint",
+          "count": 1,
+          "chance_per_10000": 4500
+        }
+      ],
+      "duration": 144,
+      "eu_per_tick": 16,
+      "optimize": true,
+      "fluid_inputs": [],
+      "fluid_outputs": [],
+      "status": "conditional source definition, not observed registration or runtime"
+    },
+    {
+      "material": "Flint",
+      "id": 8002,
+      "input": {
+        "prefix": "crushedPurifiedTiny",
+        "count": 1
+      },
+      "requires": "both purified forms valid; dust1 actual; common gem1 actual; upper/other grades absent except forced Ice flawed/chipped",
+      "outputs": [
+        {
+          "prefix": "gem",
+          "material": "Flint",
+          "count": 8,
+          "chance_per_10000": 1
+        },
+        {
+          "prefix": "gem",
+          "material": "Flint",
+          "count": 4,
+          "chance_per_10000": 10
+        },
+        {
+          "prefix": "gem",
+          "material": "Flint",
+          "count": 2,
+          "chance_per_10000": 40
+        },
+        {
+          "prefix": "gem",
+          "material": "Flint",
+          "count": 1,
+          "chance_per_10000": 150
+        },
+        {
+          "prefix": "gem",
+          "material": "Flint",
+          "count": 1,
+          "chance_per_10000": 200
+        },
+        {
+          "prefix": "gem",
+          "material": "Flint",
+          "count": 1,
+          "chance_per_10000": 400
+        },
+        {
+          "prefix": "dust",
+          "material": "Flint",
+          "count": 1,
+          "chance_per_10000": 500
+        }
+      ],
+      "duration": 16,
+      "eu_per_tick": 16,
+      "optimize": true,
+      "fluid_inputs": [],
+      "fluid_outputs": [],
+      "status": "conditional source definition, not observed registration or runtime"
+    },
+    {
+      "material": "Ice",
+      "id": 9802,
+      "input": {
+        "prefix": "crushedPurified",
+        "count": 1
+      },
+      "requires": "both purified forms valid; dust1 actual; common gem1 actual; upper/other grades absent except forced Ice flawed/chipped",
+      "outputs": [
+        {
+          "prefix": "gem",
+          "material": "Ice",
+          "count": 8,
+          "chance_per_10000": 9
+        },
+        {
+          "prefix": "gem",
+          "material": "Ice",
+          "count": 4,
+          "chance_per_10000": 90
+        },
+        {
+          "prefix": "gem",
+          "material": "Ice",
+          "count": 2,
+          "chance_per_10000": 360
+        },
+        {
+          "prefix": "gem",
+          "material": "Ice",
+          "count": 1,
+          "chance_per_10000": 1350
+        },
+        {
+          "prefix": "gemFlawed",
+          "material": "Ice",
+          "count": 2,
+          "chance_per_10000": 1800
+        },
+        {
+          "prefix": "gemChipped",
+          "material": "Ice",
+          "count": 4,
+          "chance_per_10000": 3600
+        },
+        {
+          "prefix": "dust",
+          "material": "Ice",
+          "count": 1,
+          "chance_per_10000": 4500
+        }
+      ],
+      "duration": 144,
+      "eu_per_tick": 16,
+      "optimize": true,
+      "fluid_inputs": [],
+      "fluid_outputs": [],
+      "status": "conditional source definition, not observed registration or runtime"
+    },
+    {
+      "material": "Ice",
+      "id": 9802,
+      "input": {
+        "prefix": "crushedPurifiedTiny",
+        "count": 1
+      },
+      "requires": "both purified forms valid; dust1 actual; common gem1 actual; upper/other grades absent except forced Ice flawed/chipped",
+      "outputs": [
+        {
+          "prefix": "gem",
+          "material": "Ice",
+          "count": 8,
+          "chance_per_10000": 1
+        },
+        {
+          "prefix": "gem",
+          "material": "Ice",
+          "count": 4,
+          "chance_per_10000": 10
+        },
+        {
+          "prefix": "gem",
+          "material": "Ice",
+          "count": 2,
+          "chance_per_10000": 40
+        },
+        {
+          "prefix": "gem",
+          "material": "Ice",
+          "count": 1,
+          "chance_per_10000": 150
+        },
+        {
+          "prefix": "gemFlawed",
+          "material": "Ice",
+          "count": 2,
+          "chance_per_10000": 200
+        },
+        {
+          "prefix": "gemChipped",
+          "material": "Ice",
+          "count": 4,
+          "chance_per_10000": 400
+        },
+        {
+          "prefix": "dust",
+          "material": "Ice",
+          "count": 1,
+          "chance_per_10000": 500
+        }
+      ],
+      "duration": 16,
+      "eu_per_tick": 16,
+      "optimize": true,
+      "fluid_inputs": [],
+      "fluid_outputs": [],
+      "status": "conditional source definition, not observed registration or runtime"
+    },
+    {
+      "material": "Obsidian",
+      "id": 8214,
+      "input": {
+        "prefix": "crushedPurified",
+        "count": 1
+      },
+      "requires": "both purified forms valid; dust1 actual; common gem1 actual; upper/other grades absent except forced Ice flawed/chipped",
+      "outputs": [
+        {
+          "prefix": "gem",
+          "material": "Obsidian",
+          "count": 8,
+          "chance_per_10000": 9
+        },
+        {
+          "prefix": "gem",
+          "material": "Obsidian",
+          "count": 4,
+          "chance_per_10000": 90
+        },
+        {
+          "prefix": "gem",
+          "material": "Obsidian",
+          "count": 2,
+          "chance_per_10000": 360
+        },
+        {
+          "prefix": "gem",
+          "material": "Obsidian",
+          "count": 1,
+          "chance_per_10000": 1350
+        },
+        {
+          "prefix": "gem",
+          "material": "Obsidian",
+          "count": 1,
+          "chance_per_10000": 1800
+        },
+        {
+          "prefix": "gem",
+          "material": "Obsidian",
+          "count": 1,
+          "chance_per_10000": 3600
+        },
+        {
+          "prefix": "dust",
+          "material": "Obsidian",
+          "count": 1,
+          "chance_per_10000": 4500
+        }
+      ],
+      "duration": 144,
+      "eu_per_tick": 16,
+      "optimize": true,
+      "fluid_inputs": [],
+      "fluid_outputs": [],
+      "status": "conditional source definition, not observed registration or runtime"
+    },
+    {
+      "material": "Obsidian",
+      "id": 8214,
+      "input": {
+        "prefix": "crushedPurifiedTiny",
+        "count": 1
+      },
+      "requires": "both purified forms valid; dust1 actual; common gem1 actual; upper/other grades absent except forced Ice flawed/chipped",
+      "outputs": [
+        {
+          "prefix": "gem",
+          "material": "Obsidian",
+          "count": 8,
+          "chance_per_10000": 1
+        },
+        {
+          "prefix": "gem",
+          "material": "Obsidian",
+          "count": 4,
+          "chance_per_10000": 10
+        },
+        {
+          "prefix": "gem",
+          "material": "Obsidian",
+          "count": 2,
+          "chance_per_10000": 40
+        },
+        {
+          "prefix": "gem",
+          "material": "Obsidian",
+          "count": 1,
+          "chance_per_10000": 150
+        },
+        {
+          "prefix": "gem",
+          "material": "Obsidian",
+          "count": 1,
+          "chance_per_10000": 200
+        },
+        {
+          "prefix": "gem",
+          "material": "Obsidian",
+          "count": 1,
+          "chance_per_10000": 400
+        },
+        {
+          "prefix": "dust",
+          "material": "Obsidian",
+          "count": 1,
+          "chance_per_10000": 500
+        }
+      ],
+      "duration": 16,
+      "eu_per_tick": 16,
+      "optimize": true,
+      "fluid_inputs": [],
+      "fluid_outputs": [],
+      "status": "conditional source definition, not observed registration or runtime"
+    }
+  ],
+  "evidence": [
+    {
+      "source": "gregtech6-original",
+      "path": "src/main/java/gregtech/loaders/c/Loader_Recipes_Ores.java",
+      "sha256": "b94dc194c7557f341ebacd895cc18c2fada8c5e4cd33b45784c971f921db4aa3",
+      "lines": [
+        {
+          "line": 385,
+          "text": "for (OreDictMaterial aMat : OreDictMaterial.MATERIAL_ARRAY) if (aMat != null && !aMat.contains(ANTIMATTER) && aMat != MT.Bedrock) {"
+        },
+        {
+          "line": 386,
+          "text": "ItemStack tDust = dust.mat(aMat, 1);"
+        },
+        {
+          "line": 387,
+          "text": "if (ST.invalid(tDust)) continue;"
+        },
+        {
+          "line": 448,
+          "text": "ItemStack tPurified = crushedPurified.mat(aMat, 1), tPurifiedTiny = crushedPurifiedTiny.mat(aMat, 1);"
+        },
+        {
+          "line": 449,
+          "text": "if (ST.valid(tPurified) && ST.valid(tPurifiedTiny)) {"
+        },
+        {
+          "line": 458,
+          "text": "ItemStack tGem = gem.mat(aMat, 1);"
+        },
+        {
+          "line": 459,
+          "text": "if (tGem != null) {"
+        },
+        {
+          "line": 460,
+          "text": "RM.Sifting.addRecipe1(T, 16, 144, new long[] {9, 90, 360, 1350, 1800, 3600, 4500}, tPurified    , gemLegendary.mat(aMat, ST.amount(8, tGem), 1), gemExquisite.mat(aMat, ST.amount(4, tGem), 1), gemFlawless.mat(aMat, ST.amount(2, tGem), 1), tGem, gemFlawed.mat(aMat, tGem, 2), gemChipped.mat(aMat, tGem, 4), tDust);"
+        },
+        {
+          "line": 461,
+          "text": "RM.Sifting.addRecipe1(T, 16,  16, new long[] {1, 10,  40,  150,  200,  400,  500}, tPurifiedTiny, gemLegendary.mat(aMat, ST.amount(8, tGem), 1), gemExquisite.mat(aMat, ST.amount(4, tGem), 1), gemFlawless.mat(aMat, ST.amount(2, tGem), 1), tGem, gemFlawed.mat(aMat, tGem, 2), gemChipped.mat(aMat, tGem, 4), tDust);"
+        }
+      ]
+    },
+    {
+      "source": "gregtech6-original",
+      "path": "src/main/java/gregapi/data/MT.java",
+      "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2",
+      "lines": [
+        {
+          "line": 56,
+          "text": "static OreDictMaterial create       (int aID, String aNameOreDict) {if (aID >= 10000) return null; OreDictMaterial rMaterial = OreDictMaterial.createMaterial(aID, aNameOreDict, aNameOreDict); ALL_MATERIALS_REGISTERED_HERE.add(rMaterial); if (aID > 0) rMaterial.setOriginalMod(MD.GAPI); return rMaterial.handle(ANY.WoodPlastic);}"
+        },
+        {
+          "line": 57,
+          "text": "static OreDictMaterial create       (int aID, String aNameOreDict, TextureSet[] aSets) {return create(aID, aNameOreDict).setTextures(aSets);}"
+        },
+        {
+          "line": 58,
+          "text": "static OreDictMaterial create       (int aID, String aNameOreDict, TextureSet[] aSets, long aR, long aG, long aB, long aA, Object... aRandomData) {return create(aID, aNameOreDict, aSets).setRGBa(aR, aG, aB, aA).put(aRandomData, aR==256?UNUSED_MATERIAL:null).hide(aR==256);}"
+        },
+        {
+          "line": 94,
+          "text": "static OreDictMaterial dcmp         (int aID, String aNameOreDict, TextureSet[] aSets, long aR, long aG, long aB, long aA    , Object... aRandomData)  {return create          (aID, aNameOreDict, aSets           , aR, aG, aB, aA, aRandomData).put(DECOMPOSABLE);}"
+        },
+        {
+          "line": 95,
+          "text": "static OreDictMaterial cent         (int aID, String aNameOreDict, TextureSet[] aSets, long aR, long aG, long aB, long aA    , Object... aRandomData)  {return dcmp            (aID, aNameOreDict, aSets           , aR, aG, aB, aA, aRandomData).put(CENTRIFUGE);}"
+        },
+        {
+          "line": 96,
+          "text": "static OreDictMaterial elec         (int aID, String aNameOreDict, TextureSet[] aSets, long aR, long aG, long aB, long aA    , Object... aRandomData)  {return dcmp            (aID, aNameOreDict, aSets           , aR, aG, aB, aA, aRandomData).put(ELECTROLYSER);}"
+        },
+        {
+          "line": 1013,
+          "text": "Ice                     = create        ( 9802, \"Ice\"                   , SET_CUBE_SHINY        , 200, 200, 255, 255, G_GEM_TRANSPARENT, CONTAINERS, UNRECYCLABLE, FOOD, BRITTLE, MORTAR, COOL2CRYSTAL)                                                         .uumMcfg( 0, H              , 2*U, O                , 1*U)                                                                                                  .aspects(TC.GELUM, 2).setSmelting(H2O, U).heat(CS.C, CS.C+100).setDensity(1.0).qual(1, 2.0, 4, 0),"
+        },
+        {
+          "line": 1058,
+          "text": "Flint                   = cent          ( 8002, \"Flint\"                 , SET_FLINT             ,   0,  32,  64, 255, UNRECYCLABLE, BRITTLE, MORTAR, G_GEM, STONE)                                                                                              .uumMcfg( 0, SiO2           , 1*U)                                                                                                                          .aspects(TC.TERRA, 1, TC.INSTRUMENTUM, 1).qual(1, 2.5, 48,  1).setSmelting(SiO2, U),"
+        },
+        {
+          "line": 1636,
+          "text": "Obsidian                = elec          ( 8214, \"Obsidian\"              , SET_STONE             ,  80,  50, 100, 255, G_STONE, STONE, BRITTLE, MORTAR, UNBURNABLE)                                                                                              .setMcfg(64, Mg             , 1*U, Fe               , 1*U, SiO2             , 6*U, O                , 4*U)                                                  .aspects(TC.TENEBRAE    , 1, TC.IGNIS, 2, TC.TERRA, 2).setSmelting(Lava, U).heat(1300, 4000).qual(1, 3.0, 32, 3),"
+        },
+        {
+          "line": 2051,
+          "text": "Ice                     .put(MD.MC);"
+        },
+        {
+          "line": 2054,
+          "text": "Flint                   .put(MD.MC);"
+        },
+        {
+          "line": 2055,
+          "text": "Obsidian                .put(MD.MC);"
+        },
+        {
+          "line": 2796,
+          "text": "Flint                   .addEnchantmentForDamage(Enchantment.fireAspect, 1).addEnchantmentForRanged(Enchantment.flame, 1);"
+        },
+        {
+          "line": 2798,
+          "text": "Obsidian                .addEnchantmentForDamage(Enchantment.fireAspect, 1).addEnchantmentForRanged(Enchantment.flame, 1);"
+        },
+        {
+          "line": 2874,
+          "text": "Ice                     .addEnchantmentForDamage(Enchantment.sharpness, 1).addEnchantmentForRanged(Enchantment.power, 1);"
+        },
+        {
+          "line": 2979,
+          "text": "Obsidian                .addEnchantmentForArmors(Enchantment.blastProtection, 3);"
+        },
+        {
+          "line": 3255,
+          "text": "Flint                           .ores(Obsidian                  );"
+        },
+        {
+          "line": 3261,
+          "text": "Obsidian                        .ores(Peridot                   , MgCO3                     );"
+        }
+      ]
+    },
+    {
+      "source": "gregtech6-original",
+      "path": "src/main/java/gregapi/data/TD.java",
+      "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea",
+      "lines": [
+        {
+          "line": 600,
+          "text": "G_GEM                       = new TagData[] {PROJECTILES, DUSTS, PLANTS, PLATES, STICKS, GEMS, ARMORS},"
+        },
+        {
+          "line": 602,
+          "text": "G_GEM_TRANSPARENT           = new TagData[] {PROJECTILES, DUSTS, PLANTS, PLATES, STICKS, GEMS, ARMORS, LENSES, TD.Properties.TRANSPARENT},"
+        },
+        {
+          "line": 605,
+          "text": "G_STONE                     = new TagData[] {PROJECTILES, DUSTS, PLANTS, PLATES, STICKS},"
+        }
+      ]
+    },
+    {
+      "source": "gregtech6-original",
+      "path": "src/main/java/gregapi/data/OP.java",
+      "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e",
+      "lines": [
+        {
+          "line": 135,
+          "text": "crushed                     = create(\"crushed\"                      , \"Crushed Ores\"                    , \"Crushed \"                        , \" Ore\"                            ).setMaterialStats( 9*U8)     .setCondition(ORES)                                                                                         .add(UNIFICATABLE, BURNABLE, TOOLTIP_ENCHANTS, RECYCLABLE, ORE_PROCESSING_BASED, ORE_PROCESSING_DIRTY  ).aspects(TC.PERFODIO, 1),"
+        },
+        {
+          "line": 136,
+          "text": "crushedTiny                 = create(\"crushedTiny\"                  , \"Tiny Crushed Ores\"               , \"Tiny Crushed \"                   , \" Ore\"                            ).setMaterialStats( 9*U72)    .setCondition(crushed)                                                                                      .add(UNIFICATABLE, BURNABLE, TOOLTIP_ENCHANTS, RECYCLABLE, ORE_PROCESSING_BASED, ORE_PROCESSING_DIRTY  ).aspects(TC.PERFODIO, 1),"
+        },
+        {
+          "line": 137,
+          "text": "crushedPurified             = create(\"crushedPurified\"              , \"Purified Ores\"                   , \"Purified \"                       , \" Ore\"                            ).setMaterialStats(10*U8)     .setCondition(crushed)                                                                                      .add(UNIFICATABLE, BURNABLE, TOOLTIP_ENCHANTS, RECYCLABLE, ORE_PROCESSING_BASED, ORE_PROCESSING_CLEAN  ).aspects(TC.PERFODIO, 1),"
+        },
+        {
+          "line": 138,
+          "text": "crushedPurifiedTiny         = create(\"crushedPurifiedTiny\"          , \"Tiny Purified Ores\"              , \"Tiny Purified \"                  , \" Ore\"                            ).setMaterialStats(10*U72)    .setCondition(crushedPurified)                                                                              .add(UNIFICATABLE, BURNABLE, TOOLTIP_ENCHANTS, RECYCLABLE, ORE_PROCESSING_BASED, ORE_PROCESSING_CLEAN  ).aspects(TC.PERFODIO, 1),"
+        },
+        {
+          "line": 173,
+          "text": "gem                         = create(\"gem\"                          , \"Gemstones\"                       , \"\"                                , \"\"                                ).setMaterialStats(U    )     .setCondition(GEMS)                                                                                         .add(UNIFICATABLE, BURNABLE, TOOLTIP_ENCHANTS, SELF_REFERENCING, RECYCLABLE, SIMPLIFIABLE, GEM_BASED, SCANNABLE, EXTRUDER_FODDER, TOOLTIP_MATERIAL).setMinStacksize(64).aspects(TC.VITREUS, 1), // A regular Gem worth one Dust. Introduced by Eloraam"
+        },
+        {
+          "line": 174,
+          "text": "gemChipped                  = create(\"gemChipped\"                   , \"Chipped Gemstones\"               , \"Chipped \"                        , \"\"                                ).setMaterialStats(U4   )     .setCondition(new And(gem, TRANSPARENT, CRYSTAL, PEARL.NOT))                                                .add(UNIFICATABLE, BURNABLE, TOOLTIP_ENCHANTS, SELF_REFERENCING, RECYCLABLE, SIMPLIFIABLE, GEM_BASED           , EXTRUDER_FODDER, TOOLTIP_MATERIAL).aspects(TC.VITREUS, 1), // A regular Gem worth one small Dust. Introduced by TerraFirmaCraft"
+        },
+        {
+          "line": 175,
+          "text": "gemFlawed                   = create(\"gemFlawed\"                    , \"Flawed Gemstones\"                , \"Flawed \"                         , \"\"                                ).setMaterialStats(U2   )     .setCondition(new And(gem, TRANSPARENT, CRYSTAL, PEARL.NOT))                                                .add(UNIFICATABLE, BURNABLE, TOOLTIP_ENCHANTS, SELF_REFERENCING, RECYCLABLE, SIMPLIFIABLE, GEM_BASED           , EXTRUDER_FODDER, TOOLTIP_MATERIAL).aspects(TC.VITREUS, 1), // A regular Gem worth two small Dusts. Introduced by TerraFirmaCraft"
+        },
+        {
+          "line": 176,
+          "text": "gemFlawless                 = create(\"gemFlawless\"                  , \"Flawless Gemstones\"              , \"Flawless \"                       , \"\"                                ).setMaterialStats(U * 2)     .setCondition(new And(gem, TRANSPARENT, CRYSTAL, PEARL.NOT))                                                .add(UNIFICATABLE, BURNABLE, TOOLTIP_ENCHANTS, SELF_REFERENCING, RECYCLABLE, SIMPLIFIABLE, GEM_BASED, SCANNABLE, EXTRUDER_FODDER, TOOLTIP_MATERIAL).aspects(TC.VITREUS, 2), // A regular Gem worth two Dusts. Introduced by TerraFirmaCraft"
+        },
+        {
+          "line": 177,
+          "text": "gemExquisite                = create(\"gemExquisite\"                 , \"Exquisite Gemstones\"             , \"Exquisite \"                      , \"\"                                ).setMaterialStats(U * 4)     .setCondition(new And(gem, TRANSPARENT, CRYSTAL, PEARL.NOT))                                                .add(UNIFICATABLE, BURNABLE, TOOLTIP_ENCHANTS, SELF_REFERENCING, RECYCLABLE, SIMPLIFIABLE, GEM_BASED, SCANNABLE, EXTRUDER_FODDER, TOOLTIP_MATERIAL).aspects(TC.VITREUS, 3), // A regular Gem worth four Dusts. Introduced by TerraFirmaCraft"
+        },
+        {
+          "line": 178,
+          "text": "gemLegendary                = create(\"gemLegendary\"                 , \"Legendary Gemstones\"             , \"Legendary \"                      , \"\"                                ).setMaterialStats(U * 8)     .setCondition(new And(gem, TRANSPARENT, CRYSTAL, PEARL.NOT))                                                .add(UNIFICATABLE, BURNABLE, TOOLTIP_ENCHANTS, SELF_REFERENCING, RECYCLABLE, SIMPLIFIABLE, GEM_BASED, SCANNABLE, EXTRUDER_FODDER, TOOLTIP_MATERIAL).aspects(TC.VITREUS, 4), // A regular Gem worth nine Dusts. Introduced by GregTech"
+        },
+        {
+          "line": 600,
+          "text": "gem               .disableItemGeneration(MT.Coal, MT.Charcoal, MT.NetherStar, MT.Diamond, MT.Emerald, MT.NetherQuartz, MT.EnderPearl, MT.EnderEye, MT.Flint, MT.Lapis);"
+        },
+        {
+          "line": 613,
+          "text": "gemChipped        .forceItemGeneration(MT.Ice, MT.NaCl, MT.KCl, MT.KIO3, MT.Firestone, MT.Sugar);"
+        },
+        {
+          "line": 614,
+          "text": "gemFlawed         .forceItemGeneration(MT.Ice, MT.NaCl, MT.KCl, MT.KIO3, MT.Firestone);"
+        },
+        {
+          "line": 615,
+          "text": "gem               .forceItemGeneration(MT.Ice, MT.NaCl, MT.KCl, MT.KIO3, MT.Firestone, MT.Ta);"
+        }
+      ]
+    },
+    {
+      "source": "gregtech6-original",
+      "path": "src/main/java/gregapi/oredict/OreDictPrefix.java",
+      "sha256": "89c94fd1149297496e2904a7897b3ab33c02991009b232df0d70febabb8888f5",
+      "lines": [
+        {
+          "line": 359,
+          "text": "if (aMaterials != null) for (OreDictMaterial aMaterial : aMaterials) if (aMaterial != null && !mItemGeneratorForced.contains(aMaterial)) mItemGeneratorForced.add(aMaterial);"
+        },
+        {
+          "line": 364,
+          "text": "public boolean isGeneratingItem(OreDictMaterial aMaterial) {"
+        },
+        {
+          "line": 365,
+          "text": "return aMaterial != null && (mItemGeneratorForced.contains(aMaterial) || (!mItemGeneratorBlackList.contains(aMaterial) && mCondition.isTrue(aMaterial)));"
+        },
+        {
+          "line": 369,
+          "text": "public boolean canGenerateItem(OreDictMaterial aMaterial) {"
+        },
+        {
+          "line": 370,
+          "text": "return aMaterial != null && (mItemGeneratorForced.contains(aMaterial) || mCondition.isTrue(aMaterial));"
+        },
+        {
+          "line": 454,
+          "text": "public ItemStack mat(OreDictMaterial aMaterial, long aStackSize) {"
+        },
+        {
+          "line": 457,
+          "text": "public ItemStack mat(OreDictMaterial aMaterial, long aStackSize, ItemStack aReplacement) {"
+        },
+        {
+          "line": 458,
+          "text": "return OreDictManager.INSTANCE.getStack(this, aMaterial, aReplacement, aStackSize);"
+        },
+        {
+          "line": 460,
+          "text": "public ItemStack mat(OreDictMaterial aMaterial, ItemStack aReplacement, long aStackSize) {"
+        },
+        {
+          "line": 461,
+          "text": "return OreDictManager.INSTANCE.getStack(this, aMaterial, aReplacement, aStackSize);"
+        },
+        {
+          "line": 571,
+          "text": "public boolean isTrue(ITagDataContainer<?> aMaterial) {"
+        }
+      ]
+    },
+    {
+      "source": "gregtech6-original",
+      "path": "src/main/java/gregapi/oredict/OreDictManager.java",
+      "sha256": "41376372c077030142a6e95385a74f9dde79c3b15d9a4de95cff99f371b44801",
+      "lines": [
+        {
+          "line": 549,
+          "text": "public ItemStack getStack(OreDictPrefix aPrefix, OreDictMaterial aMaterial, long aAmount) {"
+        },
+        {
+          "line": 553,
+          "text": "public ItemStack getStack(OreDictPrefix aPrefix, OreDictMaterial aMaterial, ItemStack aReplacement, long aAmount) {"
+        },
+        {
+          "line": 554,
+          "text": "if (GAPI.mStartedInit) return getStack(aPrefix.mNameInternal + aMaterial.mNameInternal, aReplacement, aAmount, F, F);"
+        },
+        {
+          "line": 569,
+          "text": "if (rStack == null) rStack = getFirstOre(aName, aAmount);"
+        },
+        {
+          "line": 570,
+          "text": "return rStack == null ? aReplacement : ST.amount(aAmount, rStack);"
+        }
+      ]
+    },
+    {
+      "source": "gregtech6-original",
+      "path": "src/main/java/gregapi/load/LoaderItemData.java",
+      "sha256": "0dc916611c9a743f477e473b75b3fa3462a47d22dd75ef086c33ea18aaa9f968",
+      "lines": [
+        {
+          "line": 533,
+          "text": "OM.reg(OD.itemFlint                         , ST.make(Items.flint, 1, W));"
+        },
+        {
+          "line": 2464,
+          "text": "OM.data(ST.make(Items.flint                          , 1, W), MT.Flint              ,  U * 1);"
+        }
+      ]
+    },
+    {
+      "source": "gregtech6-original",
+      "path": "src/main/java/gregapi/load/LoaderOreDictReRegistrations.java",
+      "sha256": "d34719309a5ddf5bd7fc01c0462b57af52b4cf980a69fae4d4042c2ab78b07ef",
+      "lines": [
+        {
+          "line": 1417,
+          "text": "OreDictManager.INSTANCE.setAutomaticItemData(OD.itemFlint, new OreDictItemData(MT.Flint, U));"
+        },
+        {
+          "line": 1418,
+          "text": "OreDictManager.INSTANCE.setAutomaticItemData(\"flint\", new OreDictItemData(MT.Flint, U));"
+        }
+      ]
+    },
+    {
+      "source": "gregtech6-w",
+      "path": "src/main/java/gregtech/loaders/c/Loader_Recipes_Ores.java",
+      "sha256": "78d0542179b63bd6206377da7e23a2e70543f8b8086afebb1e182e7ff3461423",
+      "lines": [
+        {
+          "line": 389,
+          "text": "for (OreDictMaterial aMat : OreDictMaterial.MATERIAL_ARRAY) if (aMat != null && !aMat.contains(ANTIMATTER) && aMat != MT.Bedrock) {"
+        },
+        {
+          "line": 390,
+          "text": "ItemStack tDust = dust.mat(aMat, 1);"
+        },
+        {
+          "line": 391,
+          "text": "if (ST.invalid(tDust)) continue;"
+        },
+        {
+          "line": 452,
+          "text": "ItemStack tPurified = crushedPurified.mat(aMat, 1), tPurifiedTiny = crushedPurifiedTiny.mat(aMat, 1);"
+        },
+        {
+          "line": 453,
+          "text": "if (ST.valid(tPurified) && ST.valid(tPurifiedTiny)) {"
+        },
+        {
+          "line": 462,
+          "text": "ItemStack tGem = gem.mat(aMat, 1);"
+        },
+        {
+          "line": 463,
+          "text": "if (tGem != null) {"
+        },
+        {
+          "line": 464,
+          "text": "RM.Sifting.addRecipe1(T, 16, 144, new long[] {9, 90, 360, 1350, 1800, 3600, 4500}, tPurified    , gemLegendary.mat(aMat, ST.amount(8, tGem), 1), gemExquisite.mat(aMat, ST.amount(4, tGem), 1), gemFlawless.mat(aMat, ST.amount(2, tGem), 1), tGem, gemFlawed.mat(aMat, tGem, 2), gemChipped.mat(aMat, tGem, 4), tDust);"
+        },
+        {
+          "line": 465,
+          "text": "RM.Sifting.addRecipe1(T, 16,  16, new long[] {1, 10,  40,  150,  200,  400,  500}, tPurifiedTiny, gemLegendary.mat(aMat, ST.amount(8, tGem), 1), gemExquisite.mat(aMat, ST.amount(4, tGem), 1), gemFlawless.mat(aMat, ST.amount(2, tGem), 1), tGem, gemFlawed.mat(aMat, tGem, 2), gemChipped.mat(aMat, tGem, 4), tDust);"
+        }
+      ]
+    },
+    {
+      "source": "gregtech6-w",
+      "path": "src/main/java/gregapi/data/MT.java",
+      "sha256": "9530c229de3483ab7be300c49ce1e08e44bcabfe9bdebd7844becefbd4782728",
+      "lines": [
+        {
+          "line": 1020,
+          "text": "Ice                     = create        ( 9802, \"Ice\"                   , SET_CUBE_SHINY        , 200, 200, 255, 255, G_GEM_TRANSPARENT, CONTAINERS, UNRECYCLABLE, FOOD, BRITTLE, MORTAR, COOL2CRYSTAL)                                                         .uumMcfg( 0, H              , 2*U, O                , 1*U)                                                                                                  .aspects(TC.GELUM, 2).setSmelting(H2O, U).heat(CS.C, CS.C+100).setDensity(1.0).qual(1, 2.0, 4, 0),"
+        },
+        {
+          "line": 1065,
+          "text": "Flint                   = cent          ( 8002, \"Flint\"                 , SET_FLINT             ,   0,  32,  64, 255, UNRECYCLABLE, BRITTLE, MORTAR, G_GEM, STONE)                                                                                              .uumMcfg( 0, SiO2           , 1*U)                                                                                                                          .aspects(TC.TERRA, 1, TC.INSTRUMENTUM, 1).qual(1, 2.5, 48,  1).setSmelting(SiO2, U),"
+        },
+        {
+          "line": 1643,
+          "text": "Obsidian                = elec          ( 8214, \"Obsidian\"              , SET_STONE             ,  80,  50, 100, 255, G_STONE, STONE, BRITTLE, MORTAR, UNBURNABLE)                                                                                              .setMcfg(64, Mg             , 1*U, Fe               , 1*U, SiO2             , 6*U, O                , 4*U)                                                  .aspects(TC.TENEBRAE    , 1, TC.IGNIS, 2, TC.TERRA, 2).setSmelting(Lava, U).heat(1300, 4000).qual(1, 3.0, 32, 3),"
+        },
+        {
+          "line": 2058,
+          "text": "Ice                     .put(MD.MC);"
+        },
+        {
+          "line": 2061,
+          "text": "Flint                   .put(MD.MC);"
+        },
+        {
+          "line": 2062,
+          "text": "Obsidian                .put(MD.MC);"
+        },
+        {
+          "line": 2803,
+          "text": "Flint                   .addEnchantmentForDamage(Enchantments.FIRE_ASPECT, 1).addEnchantmentForRanged(Enchantments.FLAME, 1);"
+        },
+        {
+          "line": 2805,
+          "text": "Obsidian                .addEnchantmentForDamage(Enchantments.FIRE_ASPECT, 1).addEnchantmentForRanged(Enchantments.FLAME, 1);"
+        },
+        {
+          "line": 2881,
+          "text": "Ice                     .addEnchantmentForDamage(Enchantments.SHARPNESS, 1).addEnchantmentForRanged(Enchantments.POWER, 1);"
+        },
+        {
+          "line": 2986,
+          "text": "Obsidian                .addEnchantmentForArmors(Enchantments.BLAST_PROTECTION, 3);"
+        },
+        {
+          "line": 3349,
+          "text": "Flint                           .ores(Obsidian                  );"
+        },
+        {
+          "line": 3355,
+          "text": "Obsidian                        .ores(Peridot                   , MgCO3                     );"
+        }
+      ]
+    },
+    {
+      "source": "gregtech6-w",
+      "path": "src/main/java/gregapi/data/TD.java",
+      "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea",
+      "lines": [
+        {
+          "line": 600,
+          "text": "G_GEM                       = new TagData[] {PROJECTILES, DUSTS, PLANTS, PLATES, STICKS, GEMS, ARMORS},"
+        },
+        {
+          "line": 602,
+          "text": "G_GEM_TRANSPARENT           = new TagData[] {PROJECTILES, DUSTS, PLANTS, PLATES, STICKS, GEMS, ARMORS, LENSES, TD.Properties.TRANSPARENT},"
+        },
+        {
+          "line": 605,
+          "text": "G_STONE                     = new TagData[] {PROJECTILES, DUSTS, PLANTS, PLATES, STICKS},"
+        }
+      ]
+    },
+    {
+      "source": "gregtech6-w",
+      "path": "src/main/java/gregapi/data/OP.java",
+      "sha256": "ba9c0d28d1d24992107592f0eb4c02f6f77e0d0dbeaaee1f34fd0f853e77d42e",
+      "lines": [
+        {
+          "line": 139,
+          "text": "crushed                     = create(\"crushed\"                      , \"Crushed Ores\"                    , \"Crushed \"                        , \" Ore\"                            ).setMaterialStats( 9*U8)     .setCondition(ORES)                                                                                         .add(UNIFICATABLE, BURNABLE, TOOLTIP_ENCHANTS, RECYCLABLE, ORE_PROCESSING_BASED, ORE_PROCESSING_DIRTY  ).aspects(TC.PERFODIO, 1),"
+        },
+        {
+          "line": 140,
+          "text": "crushedTiny                 = create(\"crushedTiny\"                  , \"Tiny Crushed Ores\"               , \"Tiny Crushed \"                   , \" Ore\"                            ).setMaterialStats( 9*U72)    .setCondition(crushed)                                                                                      .add(UNIFICATABLE, BURNABLE, TOOLTIP_ENCHANTS, RECYCLABLE, ORE_PROCESSING_BASED, ORE_PROCESSING_DIRTY  ).aspects(TC.PERFODIO, 1),"
+        },
+        {
+          "line": 141,
+          "text": "crushedPurified             = create(\"crushedPurified\"              , \"Purified Ores\"                   , \"Purified \"                       , \" Ore\"                            ).setMaterialStats(10*U8)     .setCondition(crushed)                                                                                      .add(UNIFICATABLE, BURNABLE, TOOLTIP_ENCHANTS, RECYCLABLE, ORE_PROCESSING_BASED, ORE_PROCESSING_CLEAN  ).aspects(TC.PERFODIO, 1),"
+        },
+        {
+          "line": 142,
+          "text": "crushedPurifiedTiny         = create(\"crushedPurifiedTiny\"          , \"Tiny Purified Ores\"              , \"Tiny Purified \"                  , \" Ore\"                            ).setMaterialStats(10*U72)    .setCondition(crushedPurified)                                                                              .add(UNIFICATABLE, BURNABLE, TOOLTIP_ENCHANTS, RECYCLABLE, ORE_PROCESSING_BASED, ORE_PROCESSING_CLEAN  ).aspects(TC.PERFODIO, 1),"
+        },
+        {
+          "line": 177,
+          "text": "gem                         = create(\"gem\"                          , \"Gemstones\"                       , \"\"                                , \"\"                                ).setMaterialStats(U    )     .setCondition(GEMS)                                                                                         .add(UNIFICATABLE, BURNABLE, TOOLTIP_ENCHANTS, SELF_REFERENCING, RECYCLABLE, SIMPLIFIABLE, GEM_BASED, SCANNABLE, EXTRUDER_FODDER, TOOLTIP_MATERIAL).setMinStacksize(64).aspects(TC.VITREUS, 1), // A regular Gem worth one Dust. Introduced by Eloraam"
+        },
+        {
+          "line": 178,
+          "text": "gemChipped                  = create(\"gemChipped\"                   , \"Chipped Gemstones\"               , \"Chipped \"                        , \"\"                                ).setMaterialStats(U4   )     .setCondition(new And(gem, TRANSPARENT, CRYSTAL, PEARL.NOT))                                                .add(UNIFICATABLE, BURNABLE, TOOLTIP_ENCHANTS, SELF_REFERENCING, RECYCLABLE, SIMPLIFIABLE, GEM_BASED           , EXTRUDER_FODDER, TOOLTIP_MATERIAL).aspects(TC.VITREUS, 1), // A regular Gem worth one small Dust. Introduced by TerraFirmaCraft"
+        },
+        {
+          "line": 179,
+          "text": "gemFlawed                   = create(\"gemFlawed\"                    , \"Flawed Gemstones\"                , \"Flawed \"                         , \"\"                                ).setMaterialStats(U2   )     .setCondition(new And(gem, TRANSPARENT, CRYSTAL, PEARL.NOT))                                                .add(UNIFICATABLE, BURNABLE, TOOLTIP_ENCHANTS, SELF_REFERENCING, RECYCLABLE, SIMPLIFIABLE, GEM_BASED           , EXTRUDER_FODDER, TOOLTIP_MATERIAL).aspects(TC.VITREUS, 1), // A regular Gem worth two small Dusts. Introduced by TerraFirmaCraft"
+        },
+        {
+          "line": 180,
+          "text": "gemFlawless                 = create(\"gemFlawless\"                  , \"Flawless Gemstones\"              , \"Flawless \"                       , \"\"                                ).setMaterialStats(U * 2)     .setCondition(new And(gem, TRANSPARENT, CRYSTAL, PEARL.NOT))                                                .add(UNIFICATABLE, BURNABLE, TOOLTIP_ENCHANTS, SELF_REFERENCING, RECYCLABLE, SIMPLIFIABLE, GEM_BASED, SCANNABLE, EXTRUDER_FODDER, TOOLTIP_MATERIAL).aspects(TC.VITREUS, 2), // A regular Gem worth two Dusts. Introduced by TerraFirmaCraft"
+        },
+        {
+          "line": 181,
+          "text": "gemExquisite                = create(\"gemExquisite\"                 , \"Exquisite Gemstones\"             , \"Exquisite \"                      , \"\"                                ).setMaterialStats(U * 4)     .setCondition(new And(gem, TRANSPARENT, CRYSTAL, PEARL.NOT))                                                .add(UNIFICATABLE, BURNABLE, TOOLTIP_ENCHANTS, SELF_REFERENCING, RECYCLABLE, SIMPLIFIABLE, GEM_BASED, SCANNABLE, EXTRUDER_FODDER, TOOLTIP_MATERIAL).aspects(TC.VITREUS, 3), // A regular Gem worth four Dusts. Introduced by TerraFirmaCraft"
+        },
+        {
+          "line": 182,
+          "text": "gemLegendary                = create(\"gemLegendary\"                 , \"Legendary Gemstones\"             , \"Legendary \"                      , \"\"                                ).setMaterialStats(U * 8)     .setCondition(new And(gem, TRANSPARENT, CRYSTAL, PEARL.NOT))                                                .add(UNIFICATABLE, BURNABLE, TOOLTIP_ENCHANTS, SELF_REFERENCING, RECYCLABLE, SIMPLIFIABLE, GEM_BASED, SCANNABLE, EXTRUDER_FODDER, TOOLTIP_MATERIAL).aspects(TC.VITREUS, 4), // A regular Gem worth nine Dusts. Introduced by GregTech"
+        },
+        {
+          "line": 604,
+          "text": "gem               .disableItemGeneration(MT.Coal, MT.Charcoal, MT.NetherStar, MT.Diamond, MT.Emerald, MT.NetherQuartz, MT.EnderPearl, MT.EnderEye, MT.Flint, MT.Lapis);"
+        },
+        {
+          "line": 617,
+          "text": "gemChipped        .forceItemGeneration(MT.Ice, MT.NaCl, MT.KCl, MT.KIO3, MT.Firestone, MT.Sugar);"
+        },
+        {
+          "line": 618,
+          "text": "gemFlawed         .forceItemGeneration(MT.Ice, MT.NaCl, MT.KCl, MT.KIO3, MT.Firestone);"
+        },
+        {
+          "line": 619,
+          "text": "gem               .forceItemGeneration(MT.Ice, MT.NaCl, MT.KCl, MT.KIO3, MT.Firestone, MT.Ta);"
+        }
+      ]
+    },
+    {
+      "source": "gregtech6-w",
+      "path": "src/main/java/gregapi/oredict/OreDictPrefix.java",
+      "sha256": "31d1eba6d8895b5360a48150f013d60021249bb17fdf1f67c4e2b3724bc4d238",
+      "lines": [
+        {
+          "line": 376,
+          "text": "if (aMaterials != null) for (OreDictMaterial aMaterial : aMaterials) if (aMaterial != null && !mItemGeneratorForced.contains(aMaterial)) mItemGeneratorForced.add(aMaterial);"
+        },
+        {
+          "line": 381,
+          "text": "public boolean isGeneratingItem(OreDictMaterial aMaterial) {"
+        },
+        {
+          "line": 382,
+          "text": "return aMaterial != null && (mItemGeneratorForced.contains(aMaterial) || (!mItemGeneratorBlackList.contains(aMaterial) && mCondition.isTrue(aMaterial)));"
+        },
+        {
+          "line": 386,
+          "text": "public boolean canGenerateItem(OreDictMaterial aMaterial) {"
+        },
+        {
+          "line": 387,
+          "text": "return aMaterial != null && (mItemGeneratorForced.contains(aMaterial) || mCondition.isTrue(aMaterial));"
+        },
+        {
+          "line": 471,
+          "text": "public ItemStack mat(OreDictMaterial aMaterial, long aStackSize) {"
+        },
+        {
+          "line": 474,
+          "text": "public ItemStack mat(OreDictMaterial aMaterial, long aStackSize, ItemStack aReplacement) {"
+        },
+        {
+          "line": 475,
+          "text": "return OreDictManager.INSTANCE.getStack(this, aMaterial, aReplacement, aStackSize);"
+        },
+        {
+          "line": 477,
+          "text": "public ItemStack mat(OreDictMaterial aMaterial, ItemStack aReplacement, long aStackSize) {"
+        },
+        {
+          "line": 478,
+          "text": "return OreDictManager.INSTANCE.getStack(this, aMaterial, aReplacement, aStackSize);"
+        },
+        {
+          "line": 588,
+          "text": "public boolean isTrue(ITagDataContainer<?> aMaterial) {"
+        }
+      ]
+    },
+    {
+      "source": "gregtech6-w",
+      "path": "src/main/java/gregapi/oredict/OreDictManager.java",
+      "sha256": "7ede04180e6c8f761f33fc355422d5f7e7e1f1b05074f5e6bbf9233fdd3cc9b3",
+      "lines": [
+        {
+          "line": 585,
+          "text": "public ItemStack getStack(OreDictPrefix aPrefix, OreDictMaterial aMaterial, long aAmount) {"
+        },
+        {
+          "line": 589,
+          "text": "public ItemStack getStack(OreDictPrefix aPrefix, OreDictMaterial aMaterial, ItemStack aReplacement, long aAmount) {"
+        },
+        {
+          "line": 590,
+          "text": "if (GAPI.mStartedInit) return getStack(aPrefix.mNameInternal + aMaterial.mNameInternal, aReplacement, aAmount, F, F);"
+        },
+        {
+          "line": 605,
+          "text": "if (rStack == null) rStack = getFirstOre(aName, aAmount);"
+        },
+        {
+          "line": 606,
+          "text": "return rStack == null ? aReplacement : ST.amount(aAmount, rStack);"
+        }
+      ]
+    },
+    {
+      "source": "gregtech6-w",
+      "path": "src/main/java/gregapi/load/LoaderItemData.java",
+      "sha256": "7c5680391a3554eeb1c2501aa30caf264eaeb008a60c506161db9f8a1b8169f8",
+      "lines": [
+        {
+          "line": 548,
+          "text": "OM.reg(OD.itemFlint                         , ST.make(Items.FLINT, 1, W));"
+        },
+        {
+          "line": 2482,
+          "text": "OM.data(ST.make(Items.FLINT                          , 1, W), MT.Flint              ,  U * 1);"
+        }
+      ]
+    },
+    {
+      "source": "gregtech6-w",
+      "path": "src/main/java/gregapi/load/LoaderOreDictReRegistrations.java",
+      "sha256": "5b5dfafaa60449081d7c128ec0711091d6b2c412e2657647d0a312fa34258034",
+      "lines": [
+        {
+          "line": 1418,
+          "text": "OreDictManager.INSTANCE.setAutomaticItemData(OD.itemFlint, new OreDictItemData(MT.Flint, U));"
+        },
+        {
+          "line": 1419,
+          "text": "OreDictManager.INSTANCE.setAutomaticItemData(\"flint\", new OreDictItemData(MT.Flint, U));"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "External valid input singular is insufficient: both whole/tiny required by shared enclosing condition.",
+    "An external common gem can enable rows even when GEMS false; an external grade replaces fallback even when cannot generate.",
+    "External graded gem alone does not replace required common gem gate.",
+    "No independent builtin gemFlint binding proved; previous conversational vanilla-flint assumption retracted.",
+    "Source force/disable controls are generation intent, not permission to erase addon items or recipes.",
+    "Generic loop captures current registered forms during load; arbitrary later mod mutation/lifecycle is outside this source oracle."
+  ],
+  "historical_oracle_sha256": "eca8b8c44624c9672d910ab290ec187da9eac4f5ac6641703797b4f2ac038696",
+  "source_decision_addendum": {
+    "scope": "source-only combined decision index; original reviewed artifacts retained unchanged",
+    "reviewed_artifacts": {
+      "oracle-independent.json": "eca8b8c44624c9672d910ab290ec187da9eac4f5ac6641703797b4f2ac038696",
+      "flint-binding-trace.json": "fc3fa714a6a37a728891d257e6694d5a98708958c5da524523caa3d6faed74f9"
+    },
+    "Flint_common_gem_resolution": "GT itemFlint/data path does not establish gemFlint; own generation disabled; no paired GT alias/direct registration or standard Forge vanilla registration supplies it. Controlled source baseline common gem absent; independent external registrations UNKNOWN. This addendum resolves earlier oracle UNRESOLVED wording for this bounded baseline only.",
+    "Ice": "forced ordinary/flawed/chipped; no generated upper3 grades; with actual both purified inputs/common gem and no external uppergrades:8/4/2/1/2/4/dust1",
+    "Obsidian": "source G_STONE has no builtin common gem; actual external common gem required for positive source recipe",
+    "native_claim": false
+  },
+  "flint_binding_trace": {
+    "scope": "GT-owned paired static source registration trace only; no legacy Forge/mod runtime execution. The known itemFlint path cannot establish gemFlint. Actual external gem registration remains UNKNOWN.",
+    "evidence": [
+      {
+        "source": "gregtech6-original",
+        "path": "gregapi/load/LoaderItemData.java",
+        "sha256": "0dc916611c9a743f477e473b75b3fa3462a47d22dd75ef086c33ea18aaa9f968",
+        "lines": [
+          {
+            "line": 533,
+            "text": "OM.reg(OD.itemFlint                         , ST.make(Items.flint, 1, W));"
+          },
+          {
+            "line": 2464,
+            "text": "OM.data(ST.make(Items.flint                          , 1, W), MT.Flint              ,  U * 1);"
+          }
+        ]
+      },
+      {
+        "source": "gregtech6-original",
+        "path": "gregapi/load/LoaderOreDictReRegistrations.java",
+        "sha256": "d34719309a5ddf5bd7fc01c0462b57af52b4cf980a69fae4d4042c2ab78b07ef",
+        "lines": [
+          {
+            "line": 108,
+            "text": "OreDictManager.INSTANCE.addReRegistrationWithReversal(\"itemAnthracite\"             , \"gemAnthracite\");"
+          },
+          {
+            "line": 1417,
+            "text": "OreDictManager.INSTANCE.setAutomaticItemData(OD.itemFlint, new OreDictItemData(MT.Flint, U));"
+          }
+        ]
+      },
+      {
+        "source": "gregtech6-original",
+        "path": "gregapi/data/OP.java",
+        "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e",
+        "lines": [
+          {
+            "line": 375,
+            "text": "item                        = create(\"item\"                         , \"Items\"                           , \"\"                                , \"\"                                )                             .add(NO_PREFIX_FILTERING), // Random Item. Introduced by Alblaka"
+          },
+          {
+            "line": 600,
+            "text": "gem               .disableItemGeneration(MT.Coal, MT.Charcoal, MT.NetherStar, MT.Diamond, MT.Emerald, MT.NetherQuartz, MT.EnderPearl, MT.EnderEye, MT.Flint, MT.Lapis);"
+          }
+        ]
+      },
+      {
+        "source": "gregtech6-original",
+        "path": "gregapi/oredict/OreDictPrefix.java",
+        "sha256": "89c94fd1149297496e2904a7897b3ab33c02991009b232df0d70febabb8888f5",
+        "lines": [
+          {
+            "line": 71,
+            "text": "public OreDictPrefix mTargetRegistration = this;"
+          },
+          {
+            "line": 359,
+            "text": "if (aMaterials != null) for (OreDictMaterial aMaterial : aMaterials) if (aMaterial != null && !mItemGeneratorForced.contains(aMaterial)) mItemGeneratorForced.add(aMaterial);"
+          },
+          {
+            "line": 364,
+            "text": "public boolean isGeneratingItem(OreDictMaterial aMaterial) {"
+          },
+          {
+            "line": 365,
+            "text": "return aMaterial != null && (mItemGeneratorForced.contains(aMaterial) || (!mItemGeneratorBlackList.contains(aMaterial) && mCondition.isTrue(aMaterial)));"
+          },
+          {
+            "line": 370,
+            "text": "return aMaterial != null && (mItemGeneratorForced.contains(aMaterial) || mCondition.isTrue(aMaterial));"
+          }
+        ]
+      },
+      {
+        "source": "gregtech6-original",
+        "path": "gregapi/item/prefixitem/PrefixItem.java",
+        "sha256": "28b7ce821756919a3140e6e4e61bd03e8b716a13e3f29cb0367bae9bef9cd843",
+        "lines": [
+          {
+            "line": 104,
+            "text": "for (short i = 0; i < mMaterialList.length; i++) if (mPrefix.isGeneratingItem(mMaterialList[i])) {"
+          },
+          {
+            "line": 107,
+            "text": "if (tUnificationAllowed) OreDictManager.INSTANCE.addTarget_(mPrefix, mMaterialList[i], tStack); else OreDictManager.INSTANCE.registerOre_(mPrefix, mMaterialList[i], tStack);"
+          },
+          {
+            "line": 114,
+            "text": "if ((SHOW_HIDDEN_PREFIXES || !mPrefix.contains(TD.Creative.HIDDEN))) for (int i = 0; i < mMaterialList.length; i++) if (mPrefix.isGeneratingItem(mMaterialList[i])) if (SHOW_HIDDEN_MATERIALS || !mMaterialList[i].mHidden) {"
+          }
+        ]
+      },
+      {
+        "source": "gregtech6-original",
+        "path": "gregapi/oredict/OreDictManager.java",
+        "sha256": "41376372c077030142a6e95385a74f9dde79c3b15d9a4de95cff99f371b44801",
+        "lines": [
+          {
+            "line": 238,
+            "text": "public boolean setAutomaticItemData(Object aOreDictName, OreDictItemData aData) {"
+          },
+          {
+            "line": 240,
+            "text": "mStringToItemDataMappings.put(aOreDictName.toString(), aData);"
+          },
+          {
+            "line": 242,
+            "text": "addItemData_(tStack, OreDictItemData.copy(aData));"
+          },
+          {
+            "line": 384,
+            "text": "Collection<String> tReRegistrations = mReRegistrationMappings.get(aEvent.Name);"
+          },
+          {
+            "line": 385,
+            "text": "if (tReRegistrations != null) for (String tName : tReRegistrations) registerOreSafe(tName, aEvent.Ore);"
+          },
+          {
+            "line": 407,
+            "text": "if (aPrefix == null) aPrefix = OreDictPrefix.get(aEvent.Name);"
+          },
+          {
+            "line": 412,
+            "text": "if (aPrefix != aPrefix.mTargetRegistration) {"
+          },
+          {
+            "line": 429,
+            "text": "if (aPrefix == OP.ore || aPrefix.contains(TD.Prefix.MATERIAL_BASED)) {"
+          },
+          {
+            "line": 554,
+            "text": "if (GAPI.mStartedInit) return getStack(aPrefix.mNameInternal + aMaterial.mNameInternal, aReplacement, aAmount, F, F);"
+          },
+          {
+            "line": 569,
+            "text": "if (rStack == null) rStack = getFirstOre(aName, aAmount);"
+          },
+          {
+            "line": 570,
+            "text": "return rStack == null ? aReplacement : ST.amount(aAmount, rStack);"
+          },
+          {
+            "line": 660,
+            "text": "sItemStack2DataMap.put(new ItemStackContainer(aStack), aData);"
+          }
+        ]
+      },
+      {
+        "source": "gregtech6-original",
+        "path": "gregapi/oredict/OreDictItemData.java",
+        "sha256": "d44471d8e7d2d732891e79a0f234045a693290e29f3d463dbc79633283d8517f",
+        "lines": [
+          {
+            "line": 58,
+            "text": "mPrefix = null;"
+          },
+          {
+            "line": 60,
+            "text": "mOreDictName = \"\";"
+          },
+          {
+            "line": 74,
+            "text": "this(OM.stack(aMaterial, aAmount), aByProducts);"
+          },
+          {
+            "line": 76,
+            "text": "public OreDictItemData(OreDictMaterial aMaterial, long aAmount, OreDictMaterialStack... aByProducts) {"
+          },
+          {
+            "line": 77,
+            "text": "this(OM.stack(aMaterial, aAmount), aByProducts);"
+          },
+          {
+            "line": 81,
+            "text": "this(OM.stack(aMaterial, aAmount), OM.stack(aByProduct, aByProductAmount));"
+          },
+          {
+            "line": 84,
+            "text": "this(OM.stack(aMaterial, aAmount), OM.stack(aByProduct, aByProductAmount));"
+          },
+          {
+            "line": 86,
+            "text": "public OreDictItemData(OreDictMaterial aMaterial, long aAmount, OreDictMaterial aByProduct, OreDictPrefix aByProductAmount) {"
+          },
+          {
+            "line": 87,
+            "text": "this(OM.stack(aMaterial, aAmount), OM.stack(aByProduct, aByProductAmount));"
+          },
+          {
+            "line": 89,
+            "text": "public OreDictItemData(OreDictMaterial aMaterial, long aAmount, OreDictMaterial aByProduct, long aByProductAmount) {"
+          },
+          {
+            "line": 90,
+            "text": "this(OM.stack(aMaterial, aAmount), OM.stack(aByProduct, aByProductAmount));"
+          },
+          {
+            "line": 93,
+            "text": "public OreDictItemData(OreDictMaterial aMaterial, long aAmount, OreDictMaterial aByProduct, long aByProductAmount, OreDictMaterial aByProduct2, long aByProductAmount2) {"
+          },
+          {
+            "line": 94,
+            "text": "this(OM.stack(aMaterial, aAmount), OM.stack(aByProduct, aByProductAmount), OM.stack(aByProduct2, aByProductAmount2));"
+          },
+          {
+            "line": 102,
+            "text": "mPrefix = null;"
+          },
+          {
+            "line": 103,
+            "text": "mOreDictName = \"\";"
+          }
+        ]
+      },
+      {
+        "source": "gregtech6-w",
+        "path": "gregapi/load/LoaderItemData.java",
+        "sha256": "7c5680391a3554eeb1c2501aa30caf264eaeb008a60c506161db9f8a1b8169f8",
+        "lines": [
+          {
+            "line": 548,
+            "text": "OM.reg(OD.itemFlint                         , ST.make(Items.FLINT, 1, W));"
+          },
+          {
+            "line": 2482,
+            "text": "OM.data(ST.make(Items.FLINT                          , 1, W), MT.Flint              ,  U * 1);"
+          }
+        ]
+      },
+      {
+        "source": "gregtech6-w",
+        "path": "gregapi/load/LoaderOreDictReRegistrations.java",
+        "sha256": "5b5dfafaa60449081d7c128ec0711091d6b2c412e2657647d0a312fa34258034",
+        "lines": [
+          {
+            "line": 109,
+            "text": "OreDictManager.INSTANCE.addReRegistrationWithReversal(\"itemAnthracite\"             , \"gemAnthracite\");"
+          },
+          {
+            "line": 1418,
+            "text": "OreDictManager.INSTANCE.setAutomaticItemData(OD.itemFlint, new OreDictItemData(MT.Flint, U));"
+          }
+        ]
+      },
+      {
+        "source": "gregtech6-w",
+        "path": "gregapi/data/OP.java",
+        "sha256": "ba9c0d28d1d24992107592f0eb4c02f6f77e0d0dbeaaee1f34fd0f853e77d42e",
+        "lines": [
+          {
+            "line": 379,
+            "text": "item                        = create(\"item\"                         , \"Items\"                           , \"\"                                , \"\"                                )                             .add(NO_PREFIX_FILTERING), // Random Item. Introduced by Alblaka"
+          },
+          {
+            "line": 604,
+            "text": "gem               .disableItemGeneration(MT.Coal, MT.Charcoal, MT.NetherStar, MT.Diamond, MT.Emerald, MT.NetherQuartz, MT.EnderPearl, MT.EnderEye, MT.Flint, MT.Lapis);"
+          }
+        ]
+      },
+      {
+        "source": "gregtech6-w",
+        "path": "gregapi/oredict/OreDictPrefix.java",
+        "sha256": "31d1eba6d8895b5360a48150f013d60021249bb17fdf1f67c4e2b3724bc4d238",
+        "lines": [
+          {
+            "line": 75,
+            "text": "public OreDictPrefix mTargetRegistration = this;"
+          },
+          {
+            "line": 376,
+            "text": "if (aMaterials != null) for (OreDictMaterial aMaterial : aMaterials) if (aMaterial != null && !mItemGeneratorForced.contains(aMaterial)) mItemGeneratorForced.add(aMaterial);"
+          },
+          {
+            "line": 381,
+            "text": "public boolean isGeneratingItem(OreDictMaterial aMaterial) {"
+          },
+          {
+            "line": 382,
+            "text": "return aMaterial != null && (mItemGeneratorForced.contains(aMaterial) || (!mItemGeneratorBlackList.contains(aMaterial) && mCondition.isTrue(aMaterial)));"
+          },
+          {
+            "line": 387,
+            "text": "return aMaterial != null && (mItemGeneratorForced.contains(aMaterial) || mCondition.isTrue(aMaterial));"
+          }
+        ]
+      },
+      {
+        "source": "gregtech6-w",
+        "path": "gregapi/item/prefixitem/PrefixItem.java",
+        "sha256": "11176efa4c99a403ae2b45d95f2470ad605eaafc366b962974ef342b772edc8e",
+        "lines": [
+          {
+            "line": 115,
+            "text": "for (short i = 0; i < mMaterialList.length; i++) if (mPrefix.isGeneratingItem(mMaterialList[i])) {"
+          },
+          {
+            "line": 118,
+            "text": "if (tUnificationAllowed) OreDictManager.INSTANCE.addTarget_(mPrefix, mMaterialList[i], tStack); else OreDictManager.INSTANCE.registerOre_(mPrefix, mMaterialList[i], tStack);"
+          },
+          {
+            "line": 125,
+            "text": "if ((SHOW_HIDDEN_PREFIXES || !mPrefix.contains(TD.Creative.HIDDEN))) for (int i = 0; i < mMaterialList.length; i++) if (mPrefix.isGeneratingItem(mMaterialList[i])) if (SHOW_HIDDEN_MATERIALS || !mMaterialList[i].mHidden) {"
+          }
+        ]
+      },
+      {
+        "source": "gregtech6-w",
+        "path": "gregapi/oredict/OreDictManager.java",
+        "sha256": "7ede04180e6c8f761f33fc355422d5f7e7e1f1b05074f5e6bbf9233fdd3cc9b3",
+        "lines": [
+          {
+            "line": 269,
+            "text": "public boolean setAutomaticItemData(Object aOreDictName, OreDictItemData aData) {"
+          },
+          {
+            "line": 272,
+            "text": "mStringToItemDataMappings.put(aOreDictName.toString(), aData);"
+          },
+          {
+            "line": 274,
+            "text": "addItemData_(tStack, OreDictItemData.copy(aData));"
+          },
+          {
+            "line": 419,
+            "text": "Collection<String> tReRegistrations = mReRegistrationMappings.get(aEvent.Name);"
+          },
+          {
+            "line": 420,
+            "text": "if (tReRegistrations != null) for (String tName : tReRegistrations) registerOreSafe(tName, aEvent.Ore);"
+          },
+          {
+            "line": 443,
+            "text": "if (aPrefix == null) aPrefix = OreDictPrefix.get(aEvent.Name);"
+          },
+          {
+            "line": 448,
+            "text": "if (aPrefix != aPrefix.mTargetRegistration) {"
+          },
+          {
+            "line": 465,
+            "text": "if (aPrefix == OP.ore || aPrefix.contains(TD.Prefix.MATERIAL_BASED)) {"
+          },
+          {
+            "line": 590,
+            "text": "if (GAPI.mStartedInit) return getStack(aPrefix.mNameInternal + aMaterial.mNameInternal, aReplacement, aAmount, F, F);"
+          },
+          {
+            "line": 605,
+            "text": "if (rStack == null) rStack = getFirstOre(aName, aAmount);"
+          },
+          {
+            "line": 606,
+            "text": "return rStack == null ? aReplacement : ST.amount(aAmount, rStack);"
+          },
+          {
+            "line": 702,
+            "text": "sItemStack2DataMap.put(new ItemStackContainer(aStack), aData);"
+          }
+        ]
+      },
+      {
+        "source": "gregtech6-w",
+        "path": "gregapi/oredict/OreDictItemData.java",
+        "sha256": "575e2a7a711f8e2b11636faa75f7a88f71a29dd1c35453557b27039d87942a8d",
+        "lines": [
+          {
+            "line": 63,
+            "text": "mPrefix = null;"
+          },
+          {
+            "line": 65,
+            "text": "mOreDictName = \"\";"
+          },
+          {
+            "line": 79,
+            "text": "this(OM.stack(aMaterial, aAmount), aByProducts);"
+          },
+          {
+            "line": 81,
+            "text": "public OreDictItemData(OreDictMaterial aMaterial, long aAmount, OreDictMaterialStack... aByProducts) {"
+          },
+          {
+            "line": 82,
+            "text": "this(OM.stack(aMaterial, aAmount), aByProducts);"
+          },
+          {
+            "line": 86,
+            "text": "this(OM.stack(aMaterial, aAmount), OM.stack(aByProduct, aByProductAmount));"
+          },
+          {
+            "line": 89,
+            "text": "this(OM.stack(aMaterial, aAmount), OM.stack(aByProduct, aByProductAmount));"
+          },
+          {
+            "line": 91,
+            "text": "public OreDictItemData(OreDictMaterial aMaterial, long aAmount, OreDictMaterial aByProduct, OreDictPrefix aByProductAmount) {"
+          },
+          {
+            "line": 92,
+            "text": "this(OM.stack(aMaterial, aAmount), OM.stack(aByProduct, aByProductAmount));"
+          },
+          {
+            "line": 94,
+            "text": "public OreDictItemData(OreDictMaterial aMaterial, long aAmount, OreDictMaterial aByProduct, long aByProductAmount) {"
+          },
+          {
+            "line": 95,
+            "text": "this(OM.stack(aMaterial, aAmount), OM.stack(aByProduct, aByProductAmount));"
+          },
+          {
+            "line": 98,
+            "text": "public OreDictItemData(OreDictMaterial aMaterial, long aAmount, OreDictMaterial aByProduct, long aByProductAmount, OreDictMaterial aByProduct2, long aByProductAmount2) {"
+          },
+          {
+            "line": 99,
+            "text": "this(OM.stack(aMaterial, aAmount), OM.stack(aByProduct, aByProductAmount), OM.stack(aByProduct2, aByProductAmount2));"
+          },
+          {
+            "line": 107,
+            "text": "mPrefix = null;"
+          },
+          {
+            "line": 108,
+            "text": "mOreDictName = \"\";"
+          }
+        ]
+      }
+    ],
+    "exact_literal_gemFlint_java_hits": {
+      "gregtech6-original": [],
+      "gregtech6-w": []
+    }
+  },
+  "runtime_scope": "Only owned Sifting input emissions and startup Ice upper-grade selection; external/startup Flint/Obsidian conservatively defer. No late grade-tag binding feature."
+}

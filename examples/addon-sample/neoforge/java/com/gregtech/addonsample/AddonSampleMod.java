@@ -39,6 +39,15 @@ public final class AddonSampleMod {
                     System.out.println("[nonore-startup-winner] Rubber accepted="+(accepted!=null));
                 }
 
+                // Separate tiny-winner profile: never masks the literal Ice whole/tiny oracle case.
+                if (namespaces.equals("gregtech_nonore_ice_winner_audit")) {
+                    ItemStack input=AddonItems.stack("crushedPurifiedTiny","Ice");
+                    if(input.isEmpty())throw new IllegalStateException("Ice tiny startup input missing");
+                    var accepted=AddonRecipes.map("gt.recipe.sifter").add(new AddonRecipes.Line(
+                            new ItemStack[]{input},new ItemStack[]{new ItemStack(Items.EMERALD)},null,null,37,16,0));
+                    System.out.println("[nonore-ice-startup-winner] accepted="+(accepted!=null));
+                }
+
                 if (AddonItems.stack("ingot", "Iron", 1).isEmpty())
                     throw new IllegalStateException("sample iron ingot missing");
                 if (!GregTechMaterials.find("Steel").valid())
