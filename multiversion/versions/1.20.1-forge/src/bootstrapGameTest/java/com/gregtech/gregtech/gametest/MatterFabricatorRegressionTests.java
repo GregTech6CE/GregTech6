@@ -24,7 +24,7 @@ public final class MatterFabricatorRegressionTests {
         var pos=new BlockPos(5,2,5);h.setBlock(pos,block.defaultBlockState().setValue(BasicMachineBlock.FACING,front));
         for(var cell:MatterFabricatorStructure.CELLS)h.setBlock(cell.at(pos,front),cell.block());
         var machine=(MatterFabricatorBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(pos));
-        h.assertTrue(machine.isStructureOk(),"original matter structure forms");return machine;
+        h.assertTrue(StructureTestSupport.ok(machine),"original matter structure forms");return machine;
     }
     private static void tick(MatterFabricatorBlockEntity m){BasicMachineBlockEntity.serverTick(m.getLevel(),m.getBlockPos(),m.getBlockState(),m);}
     @GameTest(template="test_blueprint_empty")
@@ -54,14 +54,14 @@ public final class MatterFabricatorRegressionTests {
         var a=candidates.get(0).at(machine.getBlockPos(),front);var b=candidates.get(4).at(machine.getBlockPos(),front);
         var first=h.getLevel().getBlockState(a);var second=h.getLevel().getBlockState(b);
         h.getLevel().setBlock(a,second,3);h.getLevel().setBlock(b,first,3);
-        h.assertTrue(machine.isStructureOk(),"top processors can swap positions while preserving 4+4 counts");
+        h.assertTrue(StructureTestSupport.ok(machine),"top processors can swap positions while preserving 4+4 counts");
         var cell=MatterFabricatorStructure.CELLS.stream().filter(c->c.part()==18031).findFirst().orElseThrow();
         var port=(MultiblockPortBlockEntity)h.getLevel().getBlockEntity(cell.at(machine.getBlockPos(),front));
         var center=MatterFabricatorStructure.CELLS.stream().filter(c->c.role()==Role.AIR).findFirst().orElseThrow().at(machine.getBlockPos(),front);
         h.getLevel().setBlock(center,Blocks.STONE.defaultBlockState(),3);
-        h.assertTrue(!machine.isStructureOk()&&port.doEnergyInjection(GregTechTags.Energy.QU,Direction.UP,32,1,true)==0,"center obstruction invalidates cached ports immediately");
-        h.getLevel().setBlock(center,Blocks.AIR.defaultBlockState(),3);h.assertTrue(machine.isStructureOk(),"clearing center rebinds");
-        h.getLevel().setBlock(a,first,3);h.assertTrue(!machine.isStructureOk(),"incorrect processor ratio is rejected");h.succeed();
+        h.assertTrue(!StructureTestSupport.ok(machine)&&port.doEnergyInjection(GregTechTags.Energy.QU,Direction.UP,32,1,true)==0,"center obstruction invalidates cached ports immediately");
+        h.getLevel().setBlock(center,Blocks.AIR.defaultBlockState(),3);h.assertTrue(StructureTestSupport.ok(machine),"clearing center rebinds");
+        h.getLevel().setBlock(a,first,3);h.assertTrue(!StructureTestSupport.ok(machine),"incorrect processor ratio is rejected");h.succeed();
     }
     @GameTest(template="test_empty")
     public static void compactGradesAndOriginalEfficiency(GameTestHelper h) {

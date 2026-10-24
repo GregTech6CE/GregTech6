@@ -65,7 +65,7 @@ public final class OriginalLargeBoilerControllerBlock extends HorizontalDirectio
     }
     @Override public void toolStateChanged(Level level, BlockPos pos, BlockState state) {
         if (level.getBlockEntity(pos) instanceof OriginalLargeBoilerControllerBlockEntity boiler)
-            boiler.isStructureOk();
+            com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.invalidate(boiler);
     }
 //? if >=1.21.1 {
     /*private InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,

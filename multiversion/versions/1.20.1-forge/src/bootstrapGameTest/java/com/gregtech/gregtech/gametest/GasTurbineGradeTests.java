@@ -34,7 +34,7 @@ public final class GasTurbineGradeTests {
             var grade=GasTurbineDefinitions.grade(entry.get());h.setBlock(pos,Blocks.AIR);h.setBlock(pos,entry.get().defaultBlockState().setValue(net.minecraft.world.level.block.DirectionalBlock.FACING,front));
             for(var cell:TurbineStructure.LAYOUT.cells())h.setBlock(cell.at(pos,front),grade.wall());
             var machine=(LargeGasTurbineControllerBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(pos));
-            h.assertTrue(machine.isStructureOk(),"grade forms from its own 35 walls: "+grade.id());
+            h.assertTrue(StructureTestSupport.ok(machine),"grade forms from its own 35 walls: "+grade.id());
             h.assertTrue(machine.getTankCapacity(0)==grade.inputMaximum()*4,"grade-specific fuel capacity");
             var fuel=recipe.mFluidInputs[0].copy();fuel.setAmount(machine.getTankCapacity(0));
             int filled=machine.fill(fuel,FluidAction.EXECUTE);machine.tick();
@@ -52,10 +52,10 @@ public final class GasTurbineGradeTests {
             machine.toggleStopped();machine.tick();
             h.assertTrue(receiver.getEnergyTick()==grade.outputMaximum()&&machine.getEnergyStored(GregTechTags.Energy.RU,null)==0,"grade output reaches rear receiver in each facing");
             h.setBlock(target,Blocks.AIR);
-            h.setBlock(pos.relative(front.getClockWise()),Blocks.AIR);h.assertTrue(!machine.isStructureOk(),"broken structure invalidates immediately");
-            h.setBlock(pos.relative(front.getClockWise()),grade.wall());h.assertTrue(machine.isStructureOk(),"repair rebinds structure");
+            h.setBlock(pos.relative(front.getClockWise()),Blocks.AIR);h.assertTrue(!StructureTestSupport.ok(machine),"broken structure invalidates immediately");
+            h.setBlock(pos.relative(front.getClockWise()),grade.wall());h.assertTrue(StructureTestSupport.ok(machine),"repair rebinds structure");
             if(grade.wallId()!=18022) {
-                h.setBlock(pos.relative(front.getClockWise()),GTMultiblocks.TANK_WALL_DENSE.get());h.assertTrue(!machine.isStructureOk(),"lower-grade casing is rejected");
+                h.setBlock(pos.relative(front.getClockWise()),GTMultiblocks.TANK_WALL_DENSE.get());h.assertTrue(!StructureTestSupport.ok(machine),"lower-grade casing is rejected");
             }
         }
         h.succeed();

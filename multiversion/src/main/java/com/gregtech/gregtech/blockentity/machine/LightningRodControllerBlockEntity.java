@@ -14,7 +14,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.*;
 
 /** Original five solid layers plus rod pillar; a strike stores 18000 packets of 32768 EU. */
-public class LightningRodControllerBlockEntity extends GTEnergyBlockEntity implements com.gregtech.gregtech.api.multiblock.StructureController {
+public class LightningRodControllerBlockEntity extends GTEnergyBlockEntity implements com.gregtech.gregtech.api.multiblock.StructureController,
+        com.gregtech.gregtech.api.multiblock.tracking.TrackedMultiblock {
     public static final long PACKET = com.gregtech.gregtech.content.multiblock.AdvancedControllerRules.LIGHTNING_PACKET,
             ENERGY_CAPACITY = com.gregtech.gregtech.content.multiblock.AdvancedControllerRules.LIGHTNING_CAPACITY;
     private static final Set<LightningRodControllerBlockEntity> LOADED = Collections.newSetFromMap(new WeakHashMap<>());
@@ -28,22 +29,34 @@ public class LightningRodControllerBlockEntity extends GTEnergyBlockEntity imple
     @Override
     public void onLoad() {
         super.onLoad();
-        if (level != null && !level.isClientSide) LOADED.add(this);
+        if (level != null && !level.isClientSide) {
+            LOADED.add(this);
+            com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.attach(this);
+        }
     }
 
     @Override
     public void setRemoved() {
         LOADED.remove(this);
+        com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.onRemoved(this);
         super.setRemoved();
     }
 
     @Override
     public void onChunkUnloaded() {
         LOADED.remove(this);
+        com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
         super.onChunkUnloaded();
     }
 
-    public boolean isStructureOk() {
+    @Override public com.gregtech.gregtech.api.multiblock.tracking.StructureDefinition structureDefinition() {
+        return com.gregtech.gregtech.api.multiblock.tracking.CustomStructures.lightning(this);
+    }
+    @Override public boolean isStructureOk() {
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.query(this);
+    }
+    @Override
+    public boolean scanStructure() {
         rodLength = 0;
         if (level == null || isRemoved()) return false;
         boolean originalId = getBlockState().getBlock() instanceof OriginalLightningRodControllerBlock;

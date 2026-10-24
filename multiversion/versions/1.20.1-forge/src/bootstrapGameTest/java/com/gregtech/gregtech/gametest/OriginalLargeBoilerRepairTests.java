@@ -66,16 +66,16 @@ public final class OriginalLargeBoilerRepairTests {
             var boiler = place(helper, spec);
             helper.assertTrue(boiler.getType() == GTBlockEntities.ORIGINAL_LARGE_BOILER.get(),
                     "each original ID creates its own boiler block entity");
-            helper.assertTrue(!boiler.isStructureOk(), "unassembled boiler is inert");
+            helper.assertTrue(!StructureTestSupport.ok(boiler), "unassembled boiler is inert");
             build(helper, spec);
-            helper.assertTrue(boiler.isStructureOk(), "correct dense wall forms tier " + spec.originalId());
+            helper.assertTrue(StructureTestSupport.ok(boiler), "correct dense wall forms tier " + spec.originalId());
             helper.assertTrue(spec.previewCells().size() == 35
                             && spec.previewCells().values().stream()
                                     .filter(b -> b == spec.wall()).count() == 25,
                     "JEI preview includes all 25 matching dense walls, nine heat transmitters and air");
             helper.setBlock(CONTROL.south(), spec.denseWallId() == 18022
                     ? LargeMachineParts.block(18026) : LargeMachineParts.block(18022));
-            helper.assertTrue(!boiler.isStructureOk(), "other material wall invalidates tier " + spec.originalId());
+            helper.assertTrue(!StructureTestSupport.ok(boiler), "other material wall invalidates tier " + spec.originalId());
         }
         helper.succeed();
     }
@@ -85,7 +85,7 @@ public final class OriginalLargeBoilerRepairTests {
         var spec = OriginalLargeBoilerSpecs.byOriginalId(17201);
         var boiler = place(helper, spec);
         build(helper, spec);
-        helper.assertTrue(boiler.isStructureOk(), "stainless boiler forms");
+        helper.assertTrue(StructureTestSupport.ok(boiler), "stainless boiler forms");
         BlockPos waterPos = helper.absolutePos(CONTROL.south());
         BlockPos steamPos = helper.absolutePos(CONTROL.south().above(2));
         BlockPos heatPos = helper.absolutePos(CONTROL.below());
@@ -169,7 +169,7 @@ public final class OriginalLargeBoilerRepairTests {
         var spec = OriginalLargeBoilerSpecs.byOriginalId(17201);
         var boiler = place(helper, spec);
         build(helper, spec);
-        helper.assertTrue(boiler.isStructureOk(), "boiler forms before testing pressure-dependent output");
+        helper.assertTrue(StructureTestSupport.ok(boiler), "boiler forms before testing pressure-dependent output");
         BlockPos receiver = CONTROL.south().above(3);
         long capacity = spec.steamCapacity();
         long[] stored = {capacity * 3 / 4, capacity * 3 / 4 + 1};
@@ -200,7 +200,7 @@ public final class OriginalLargeBoilerRepairTests {
         var spec = OriginalLargeBoilerSpecs.byOriginalId(17201);
         var boiler = place(helper, spec);
         build(helper, spec);
-        helper.assertTrue(boiler.isStructureOk(), "boiler forms before its wall is damaged");
+        helper.assertTrue(StructureTestSupport.ok(boiler), "boiler forms before its wall is damaged");
         CompoundTag saved = boiler.saveWithoutMetadata();
         saved.putLong("gt.heat", spec.steamOutput() * 32 + 1);
         saved.putInt("gt.cooldown", 0);
@@ -211,7 +211,7 @@ public final class OriginalLargeBoilerRepairTests {
         saved.put("gt.steam", steamTag);
         boiler.load(saved);
         helper.setBlock(CONTROL.south(), Blocks.AIR);
-        helper.assertTrue(!boiler.isStructureOk() && boiler.barometerValue() <= 4,
+        helper.assertTrue(!StructureTestSupport.ok(boiler) && boiler.barometerValue() <= 4,
                 "damaged boiler is invalid but below explosive pressure");
         OriginalLargeBoilerControllerBlockEntity.serverTick(helper.getLevel(),
                 helper.absolutePos(CONTROL), boiler.getBlockState(), boiler);

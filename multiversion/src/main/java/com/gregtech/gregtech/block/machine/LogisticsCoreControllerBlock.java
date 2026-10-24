@@ -88,7 +88,8 @@ public final class LogisticsCoreControllerBlock extends DirectionalBlock impleme
 
     @Override
     public void toolStateChanged(Level level, BlockPos pos, BlockState state) {
-        if (level.getBlockEntity(pos) instanceof LogisticsCoreControllerBlockEntity core) core.isStructureOk();
+        if (level.getBlockEntity(pos) instanceof LogisticsCoreControllerBlockEntity core)
+            com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.invalidate(core);
     }
 
     @Override

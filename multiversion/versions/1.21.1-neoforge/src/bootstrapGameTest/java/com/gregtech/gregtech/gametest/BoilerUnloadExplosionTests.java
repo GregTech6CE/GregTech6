@@ -37,11 +37,11 @@ public final class BoilerUnloadExplosionTests {
             steam.setFluid(new FluidStack(GTFluids.still("Steam").get(),1),boiler.variant().steamCapacity()/4);
             var tank=new net.minecraft.nbt.CompoundTag();steam.writeToNBT(tank,world.registryAccess());saved.put("gt.steam",tank);
             boiler.loadWithComponents(saved,world.registryAccess());
-            h.assertTrue(boiler.isStructureOk(),"source retains saved formed state while shell chunks are unavailable");
+            h.assertFalse(StructureTestSupport.ok(boiler),"tracked query is unformed while a shell chunk is unavailable");
             OriginalLargeBoilerControllerBlockEntity.serverTick(world,p,boiler.getBlockState(),boiler);
             h.assertTrue(world.getBlockEntity(p)==boiler&&blasts.get()==0,"partial loading alone never counts as pressure-vessel damage");
             for(var cell:OriginalLargeBoilerSpecs.LAYOUT.cells())world.getChunkAt(cell.at(p,Direction.NORTH));
-            h.assertTrue(!boiler.isStructureOk(),"after real chunks load, a genuinely missing shell invalidates the cached state");
+            h.assertTrue(!StructureTestSupport.ok(boiler),"after real chunks load, a genuinely missing shell invalidates the cached state");
             OriginalLargeBoilerControllerBlockEntity.serverTick(world,p,boiler.getBlockState(),boiler);
             h.assertTrue(blasts.get()==1&&world.getBlockEntity(p)==null,"confirmed missing pressurised shell still retains original explosion");
         } finally {
