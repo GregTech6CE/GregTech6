@@ -6,6 +6,7 @@ import com.gregtech.gregtech.api.machine.CrucibleSpec;
 import com.gregtech.gregtech.api.machine.ITileEntityCrucible;
 import com.gregtech.gregtech.api.machine.ITileEntityMold;
 import com.gregtech.gregtech.api.machine.crucible.CrucibleItemInput;
+import com.gregtech.gregtech.api.machine.crucible.CrucibleAutomationInput;
 import com.gregtech.gregtech.api.machine.crucible.CrucibleMaterialStack;
 import com.gregtech.gregtech.api.machine.crucible.CrucibleMath;
 import com.gregtech.gregtech.api.machine.crucible.CrucibleProcess;
@@ -152,12 +153,15 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
         return amount;
     }
     private net.minecraftforge.common.util.LazyOptional<net.minecraftforge.fluids.capability.IFluidHandler> moltenFluidCapability = net.minecraftforge.common.util.LazyOptional.of(() -> new com.gregtech.gregtech.api.fluid.MoltenFluidHandler(this));
+    private net.minecraftforge.common.util.LazyOptional<net.minecraftforge.items.IItemHandler> itemInputCapability =
+            net.minecraftforge.common.util.LazyOptional.of(() -> new CrucibleAutomationInput(cache));
     @Override public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, Direction side) {
+        if (capability == net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER && side == Direction.UP) return itemInputCapability.cast();
         if (capability == net.minecraftforge.common.capabilities.ForgeCapabilities.FLUID_HANDLER && side != Direction.DOWN) return moltenFluidCapability.cast();
         return super.getCapability(capability, side);
     }
-    @Override public void invalidateCaps() { super.invalidateCaps(); moltenFluidCapability.invalidate(); }
-    @Override public void reviveCaps() { super.reviveCaps(); moltenFluidCapability = net.minecraftforge.common.util.LazyOptional.of(() -> new com.gregtech.gregtech.api.fluid.MoltenFluidHandler(this)); }
+    @Override public void invalidateCaps() { super.invalidateCaps(); moltenFluidCapability.invalidate(); itemInputCapability.invalidate(); }
+    @Override public void reviveCaps() { super.reviveCaps(); itemInputCapability = net.minecraftforge.common.util.LazyOptional.of(() -> new CrucibleAutomationInput(cache)); moltenFluidCapability = net.minecraftforge.common.util.LazyOptional.of(() -> new com.gregtech.gregtech.api.fluid.MoltenFluidHandler(this)); }
 
     public long getEnergyBuffer() {
         return energyBuffer;

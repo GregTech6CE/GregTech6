@@ -43,6 +43,10 @@ public class SmeltingCrucibleEntity extends com.gregtech.gregtech.blockentity.GT
     private final ItemStackHandler cache = new ItemStackHandler(1) {
         @Override protected void onContentsChanged(int slot) { setChanged(); }
     };
+    private final net.neoforged.neoforge.items.IItemHandler itemInput = new CrucibleAutomationInput(cache);
+    public net.neoforged.neoforge.items.IItemHandler itemInputHandler(@Nullable Direction side) {
+        return side == Direction.UP && !isRemoved() ? itemInput : null;
+    }
     private final com.gregtech.gregtech.api.machine.CrucibleSpec spec;
     private ThermalState thermal = new ThermalState(293, 293, 0, 100);
     public SmeltingCrucibleEntity(BlockPos pos, BlockState state) { this(SmelteryRegistries.SMELTING_CRUCIBLE.get(),pos,state,state.getBlock() instanceof com.gregtech.gregtech.block.machine.SmeltingCrucibleBlock block?block.spec():InitialSmelteryDefinitions.ceramicCrucible()); }
