@@ -12,6 +12,14 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'energyneighborloadednesstests.laserneighborlookupskipsabsentborderswithoutretainingwaste',
+    'energyneighborloadednesstests.rotationradialpollingskipsabsentbordersandkeepsnativepushinput',
+    'spikeharveststatetests.sourcematerialqualityandnativevanillatoolsfollowsecondarystate',
+    'spikeharveststatetests.actualsurvivalbreakrejectslowtierandkeepssecondarydrop',
+
+    'spikefallinglifecycletests.itemplacementschedulesfallingandemitsoriginalsound',
+    'spikefallinglifecycletests.realfallingitemlandsordropswithoutlosingvariant',
+
     'fluidslotamountoverlaytests.inputslotbucketoverlaykeepsexactliters',
     'fluidslotamountoverlaytests.outputslotbucketoverlaykeepsexactliters',
     'barracksdooralignmenttests.generateddoorsjoinslabwallsandsurviveupdates',
@@ -330,6 +338,13 @@ ORE_FOLLOWON_CASE_NAMESPACES = {'orethermalsourcetests.rawanddirtyformshavenogen
 
 
 def expected_namespace(identity):
+    if identity in {'sedimentsurfaceaudittests.pitkeepsgrassandgeneratesbelowit',
+                    'sedimentsurfaceaudittests.blacksandkeepsgrassandgeneratesbelowit'}:
+        return 'gregtech_issue_audit:sediment_columns_empty'
+    if identity.startswith("spikeharveststatetests."):
+        return "gregtech_issue_audit:spike_harvest_empty"
+    if identity.startswith("spikefallinglifecycletests."):
+        return "gregtech_issue_audit:spike_falling_empty"
     if identity == 'barracksdooralignmenttests.generateddoorsjoinslabwallsandsurviveupdates':
         return 'gt6ce_barracks_door:barracks'
     if identity in ORE_FOLLOWON_CASE_NAMESPACES:
@@ -371,7 +386,7 @@ def check(path, platform='forge'):
         classname = case.get('classname', '').lower()
         for identity in expected:
             test_class, method = identity.split('.', 1)
-            if identity in ORE_SOURCE_CASES or identity in ORE_FOLLOWON_CASE_NAMESPACES or identity == 'barracksdooralignmenttests.generateddoorsjoinslabwallsandsurviveupdates':
+            if identity.startswith('energyneighborloadednesstests.') or identity.startswith('spikeharveststatetests.') or identity.startswith('spikefallinglifecycletests.') or identity in ORE_SOURCE_CASES or identity in ORE_FOLLOWON_CASE_NAMESPACES or identity == 'barracksdooralignmenttests.generateddoorsjoinslabwallsandsurviveupdates':
                 if name == method and classname == expected_namespace(identity):
                     found.add(identity)
                 continue

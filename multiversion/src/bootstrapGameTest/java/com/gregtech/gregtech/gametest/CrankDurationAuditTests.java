@@ -35,7 +35,7 @@ public final class CrankDurationAuditTests {
     private static void whenReady(GameTestHelper h, Runnable start) {
         h.startSequence().thenWaitUntil(() -> {
             var center = h.absolutePos(new BlockPos(4, 4, 4));
-            for (var at : BlockPos.betweenClosed(center.offset(-2, -2, -2), center.offset(2, 2, 2))) {
+            for (var at : BlockPos.betweenClosed(center.offset(-3, -3, -3), center.offset(3, 3, 3))) {
                 h.assertTrue(h.getLevel().areEntitiesLoaded(net.minecraft.world.level.ChunkPos.asLong(at))
                         && h.getLevel().isPositionEntityTicking(at), "waiting for loaded/ticking fixture chunk");
             }
@@ -58,6 +58,26 @@ public final class CrankDurationAuditTests {
                 h.assertTrue(h.getLevel().areEntitiesLoaded(net.minecraft.world.level.ChunkPos.asLong(at))
                         && h.getLevel().isPositionEntityTicking(at), "fixture chunk is loaded and ticking");
             }
+            // GameTestServer can use noise terrain: clearing a 9-cube does not remove aquifers
+            // above it. Seal a wholly template-owned chamber before clearing its interior;
+            // otherwise natural falling water can wash the crank away during the 500 ticks.
+            var low = h.absolutePos(new BlockPos(1, 1, 1));
+            var high = h.absolutePos(new BlockPos(7, 7, 7));
+            for (var at : BlockPos.betweenClosed(low, high)) {
+                h.assertTrue(owned.contains(at), "sealed chamber must remain inside owned template");
+            }
+            int quiet = net.minecraft.world.level.block.Block.UPDATE_CLIENTS
+                    | net.minecraft.world.level.block.Block.UPDATE_KNOWN_SHAPE;
+            for (var at : BlockPos.betweenClosed(low, high)) {
+                if (at.getX() == low.getX() || at.getX() == high.getX()
+                        || at.getY() == low.getY() || at.getY() == high.getY()
+                        || at.getZ() == low.getZ() || at.getZ() == high.getZ()) {
+                    h.getLevel().setBlock(at, Blocks.STONE.defaultBlockState(), quiet);
+                }
+            }
+            for (var at : BlockPos.betweenClosed(low.offset(1, 1, 1), high.offset(-1, -1, -1))) {
+                h.getLevel().setBlock(at, Blocks.AIR.defaultBlockState(), quiet);
+            }
             h.getLevel().setBlock(crank.south(), Blocks.STONE.defaultBlockState(), 3);
             h.getLevel().setBlock(other, Blocks.STONE.defaultBlockState(), 3);
             h.getLevel().setBlock(crank, crankBlock().defaultBlockState()
@@ -72,10 +92,32 @@ public final class CrankDurationAuditTests {
             p.setPos(crank.getX() + .5, crank.getY(), crank.getZ() - 1);
             return p;
         }
-        void click(ServerPlayer p, BlockPos pos) {
-            p.gameMode.useItemOn(p, h.getLevel(), p.getMainHandItem(), InteractionHand.MAIN_HAND,
+        net.minecraft.world.InteractionResult click(ServerPlayer p, BlockPos pos) {
+            return p.gameMode.useItemOn(p, h.getLevel(), p.getMainHandItem(), InteractionHand.MAIN_HAND,
                     new BlockHitResult(Vec3.atCenterOf(pos), Direction.NORTH, pos, false));
         }
+        String diagnostic(ServerPlayer p) {
+            Object tracked;
+            try {
+                var field = Class.forName("com.gregtech.gregtech.block.tool.CrankInteractionEvents")
+                        .getDeclaredField("LAST_TARGET");
+                field.setAccessible(true);
+                tracked = ((java.util.Map<?, ?>) field.get(null)).get(p);
+            } catch (ReflectiveOperationException exception) { tracked = exception.toString(); }
+            return "gameTick=" + h.getLevel().getGameTime() + ", crank=" + crank
+                    + ", state=" + h.getLevel().getBlockState(crank)
+                    + ", mount=" + h.getLevel().getBlockState(crank.south())
+                    + ", lastTarget=" + tracked + ", player=" + p.getUUID() + ", alive=" + p.isAlive()
+                    + ", removed=" + p.isRemoved() + ", health=" + p.getHealth() + ", position=" + p.position()
+                    + ", distanceSquared=" + p.distanceToSqr(Vec3.atCenterOf(crank))
+                    + ", creative=" + p.isCreative() + ", spectator=" + p.isSpectator()
+                    + ", mayBuild=" + p.mayBuild() + ", sameLevel=" + (p.level() == h.getLevel())
+                    + ", loaded=" + h.getLevel().hasChunkAt(crank)
+                    + ", entitiesLoaded=" + h.getLevel().areEntitiesLoaded(net.minecraft.world.level.ChunkPos.asLong(crank))
+                    + ", entityTicking=" + h.getLevel().isPositionEntityTicking(crank)
+                    + ", scheduled=" + h.getLevel().getBlockTicks().hasScheduledTick(crank, crankBlock());
+        }
+
         void active(boolean expected, String why) {
             var state = h.getLevel().getBlockState(crank);
             h.assertTrue(state.is(crankBlock()) && state.getValue(CrankBlock.ACTIVE) == expected, why);
@@ -94,12 +136,20 @@ public final class CrankDurationAuditTests {
         whenReady(h, () -> {
         var f = new Fixture(h);
         var p = f.player(false);
-        f.click(p, f.crank);
+        var result = f.click(p, f.crank);
+        var observations = new java.util.ArrayList<String>();
+        observations.add("activationResult=" + result + "; " + f.diagnostic(p));
+        h.assertTrue(result.consumesAction(), "initial native crank interaction must be accepted: " + observations);
+        f.active(true, "initial native crank activation must be active: " + observations);
+        for (int checkpoint : new int[]{1, 10, 100, 250, 499}) {
+            h.runAfterDelay(checkpoint, () -> observations.add(f.diagnostic(p)));
+        }
         // Turning the head is not a new interaction and must not release the crank.
         p.setYRot(180);
         p.setXRot(-70);
         h.runAfterDelay(500, () -> {
-            f.active(true, "one click still turns after 25 seconds, no machine required");
+            f.active(true, "one click still turns after 25 seconds, no machine required; observations=" + observations
+                    + "; final=" + f.diagnostic(p));
             f.click(p, f.other);
         });
         h.runAfterDelay(503, () -> {

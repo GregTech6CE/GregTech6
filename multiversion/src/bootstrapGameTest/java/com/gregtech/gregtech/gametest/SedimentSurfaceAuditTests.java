@@ -29,22 +29,35 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 @GameTestHolder("gregtech_issue_audit")
 @PrefixGameTestTemplate(false)
 public final class SedimentSurfaceAuditTests {
-    @GameTest(template = "test_empty", timeoutTicks = 40)
+    @GameTest(template = "sediment_columns_empty", timeoutTicks = 40)
     public static void pitKeepsGrassAndGeneratesBelowIt(GameTestHelper h) { verify(h, false); }
-    @GameTest(template = "test_empty", timeoutTicks = 40)
+    @GameTest(template = "sediment_columns_empty", timeoutTicks = 40)
     public static void blackSandKeepsGrassAndGeneratesBelowIt(GameTestHelper h) { verify(h, true); }
 
     private static void verify(GameTestHelper h, boolean black) {
         var top = h.absolutePos(new BlockPos(2, 12, 2));
         var level = h.getLevel();
+        // The dedicated 6x16x6 air template owns every position we touch (x2..5/y4..13/z2).
+        // Check ALL cells before mutating any: no force-loading, no erasing unexpected block entities.
+        var pristine = new java.util.LinkedHashMap<BlockPos, BlockState>();
+        for (int x = 0; x < 4; x++) for (int dy = -8; dy <= 1; dy++) {
+            var p = top.offset(x, dy, 0);
+            h.assertTrue(level.getChunkSource().getChunkNow(p.getX() >> 4, p.getZ() >> 4) != null,
+                    "dedicated sediment fixture chunk must already be loaded");
+            var old = level.getBlockState(p);
+            h.assertTrue(old.isAir() && level.getBlockEntity(p) == null,
+                    "dedicated air columns must be pristine before any fixture mutation");
+            pristine.put(p.immutable(), old);
+        }
+        try {
         // Four native columns: intact grass, exposed sand, coarse dirt, podzol (old dirt meta 2).
         var caps = new net.minecraft.world.level.block.Block[]{Blocks.GRASS_BLOCK, Blocks.SAND,
                 Blocks.COARSE_DIRT, Blocks.PODZOL};
         for (int x = 0; x < caps.length; x++) {
             var p = top.offset(x, 0, 0);
-            level.setBlock(p.above(), Blocks.AIR.defaultBlockState(), 2);
-            level.setBlock(p, caps[x].defaultBlockState(), 2);
-            for (int y = 1; y <= 8; y++) level.setBlock(p.below(y), Blocks.DIRT.defaultBlockState(), 2);
+            level.setBlock(p.above(), Blocks.AIR.defaultBlockState(), 18);
+            level.setBlock(p, caps[x].defaultBlockState(), 18);
+            for (int y = 1; y <= 8; y++) level.setBlock(p.below(y), Blocks.DIRT.defaultBlockState(), 18);
         }
         var biome = level.registryAccess().registryOrThrow(Registries.BIOME)
                 .getHolderOrThrow(black ? Biomes.RIVER : Biomes.PLAINS);
@@ -60,9 +73,10 @@ public final class SedimentSurfaceAuditTests {
                     }
                     if (method.getReturnType() == boolean.class && args != null && args.length >= 3
                             && args[0] instanceof BlockPos p && args[1] instanceof BlockState state) {
-                        h.assertTrue(inside(p, top), "full feature cannot write outside bounded native fixture");
+                        h.assertTrue(inside(p, top) && pristine.containsKey(p), "full feature cannot write outside owned native fixture");
                         written.add(p.immutable());
-                        return level.setBlock(p, state, (Integer) args[2]);
+                        // Prevent shape updates from escaping fixture ownership; native block storage remains real.
+                        return level.setBlock(p, state, (Integer) args[2] | 16);
                     }
                     try { return method.invoke(level, args); }
                     catch (InvocationTargetException e) { throw e.getCause(); }
@@ -81,6 +95,14 @@ public final class SedimentSurfaceAuditTests {
         h.assertTrue(written.contains(top.offset(2, 0, 0)), "coarse dirt is source dirt meta 1");
         h.assertTrue(written.contains(top.offset(3, 0, 0)) != black,
                 "podzol is source dirt meta 2: clay permits it, black sand excludes it");
+        } finally {
+            // All saved cells were proven air/no-BE before mutation. Restore exact saved states
+            // even if a feature assertion fails, before reporting success or returning control.
+            for (var saved : pristine.entrySet()) {
+                level.removeBlockEntity(saved.getKey());
+                level.setBlock(saved.getKey(), saved.getValue(), 18);
+            }
+        }
         h.succeed();
     }
     private static boolean inside(BlockPos p, BlockPos top) {

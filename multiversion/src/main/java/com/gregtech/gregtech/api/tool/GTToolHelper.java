@@ -434,6 +434,8 @@ public final class GTToolHelper {
     }
 
     public static int requiredHarvestLevel(BlockState state) {
+        if (state.getBlock() instanceof com.gregtech.gregtech.block.misc.SpikeBlock)
+            return com.gregtech.gregtech.data.SpikeHarvestPolicy.level(state);
         int materialLevel=com.gregtech.gregtech.data.BlockHarvestPolicy.level(state.getBlock());
         if(materialLevel>3) return materialLevel;
         if (state.is(BlockTags.NEEDS_DIAMOND_TOOL)) {

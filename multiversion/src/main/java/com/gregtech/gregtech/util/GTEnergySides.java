@@ -35,7 +35,8 @@ public final class GTEnergySides {
 
     @Nullable
     public static BlockEntity getNeighbor(Level level, BlockPos pos, Direction from) {
-        return level.getBlockEntity(offset(pos, from));
+        BlockPos target = offset(pos, from);
+        return level.hasChunkAt(target) ? level.getBlockEntity(target) : null;
     }
 
     /** Side of the receiver block that faces the emitter. */

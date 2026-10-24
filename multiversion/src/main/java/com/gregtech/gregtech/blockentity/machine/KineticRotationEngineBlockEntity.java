@@ -185,7 +185,9 @@ public class KineticRotationEngineBlockEntity extends EngineBaseBlockEntity {
             if (!isEnergyAcceptingFrom(GregTechTags.Energy.RU, side, false)) continue;
             long demand = getEnergyDemanded(GregTechTags.Energy.RU, side, inputRate());
             if (demand <= 0) break;
-            IEnergyBlock source = EnergyBlockViews.view(level.getBlockEntity(worldPosition.relative(side)));
+            BlockPos target = worldPosition.relative(side);
+            if (!level.hasChunkAt(target)) continue;
+            IEnergyBlock source = EnergyBlockViews.view(level.getBlockEntity(target));
             if (source == null) continue;
             Direction sourceSide = side.getOpposite();
             if (!source.isEnergyEmittingTo(GregTechTags.Energy.RU, sourceSide, false)) continue;

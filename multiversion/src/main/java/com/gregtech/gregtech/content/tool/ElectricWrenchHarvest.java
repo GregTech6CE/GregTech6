@@ -34,6 +34,8 @@ public final class ElectricWrenchHarvest {
                 || block instanceof RedstoneLampBlock || block instanceof HopperBlock || block instanceof DispenserBlock;
     }
     public static int requiredQuality(BlockState state) {
+        if (state.getBlock() instanceof com.gregtech.gregtech.block.misc.SpikeBlock)
+            return com.gregtech.gregtech.data.SpikeHarvestPolicy.level(state);
         int vanilla=state.is(BlockTags.NEEDS_DIAMOND_TOOL)?3:state.is(BlockTags.NEEDS_IRON_TOOL)?2:state.is(BlockTags.NEEDS_STONE_TOOL)?1:0;
         return Math.max(vanilla,BlockHarvestPolicy.level(state.getBlock()));
     }
