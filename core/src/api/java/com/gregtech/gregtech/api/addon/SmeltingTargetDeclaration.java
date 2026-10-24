@@ -8,7 +8,8 @@ import java.util.Objects;
 
 /**
  * What an addon material becomes once a crucible reaches its melting point.
- * {@code amount} is the output for each {@link GTValues#U} of input. {@code U} is one to one.
+ * {@code amount} is GregTech units produced for each {@link GTValues#U} of input, the same unit as a
+ * composition part. Pass {@link GTValues#U} for one to one. A fraction such as {@link GTValues#U4} is allowed.
  * Declaring a target also marks the material as melting, so the crucible smelting page lists it.
  */
 public record SmeltingTargetDeclaration(String material, String target, long amount) {

@@ -4,7 +4,9 @@ package com.gregtech.gregtech.api.sensor;
 
 /**
  * Absolute temperature a block entity reports to a thermometer sensor.
- * Side uses the native six-direction ordinal, the same as {@link ProgressSensorSource}.
+ * {@code side} is {@code Direction.ordinal()}, the same as {@link ProgressSensorSource}.
+ * This core type cannot name {@code Direction}. {@code SensorContext.side} is the {@code Direction}
+ * an addon sensor receives.
  */
 public interface TemperatureSource {
     long temperatureK(int side);
