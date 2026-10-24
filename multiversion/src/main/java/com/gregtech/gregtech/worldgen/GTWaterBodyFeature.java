@@ -36,9 +36,9 @@ import java.util.Set;
  * <p>GT6 registers the three in a fixed order — ocean, then river, then swamp — and says so in the
  * source ("IT IS IMPORTANT THAT OCEAN COMES BEFORE RIVER AND SWAMP"). The port keeps that by
  * running all three passes from one feature, in the same order, so a chunk that touches both a
- * river and a swamp ends up with swamp water, exactly like GT6. The swamp pass also converts GT6's
- * own waterlike blocks ({@code tBlock instanceof BlockWaterlike}), i.e. water an earlier pass
- * already turned into sea or river water.
+ * river and a swamp converts vanilla water in both, but only overwrites GT water in swamp
+ * columns. GT6 gates its {@code BlockWaterlike} branch on {@code aBiomes[tX][tZ]}; this
+ * preserves sea/river water outside the swamp without changing fluid movement.
  */
 public class GTWaterBodyFeature extends Feature<NoneFeatureConfiguration> {
     /** GT6's {@code mHeight = WD.waterLevel()} — the default overworld water level. */
@@ -105,7 +105,7 @@ public class GTWaterBodyFeature extends Feature<NoneFeatureConfiguration> {
         };
     }
 
-    /** The kind a chunk ends up with after running every pass in order (swamp wins, as in GT6). */
+    /** Last admitted chunk pass; individual columns can retain earlier GT water outside swamps. */
     public static Kind resolve(Set<ResourceLocation> biomes) {
         Kind result = null;
         for (Kind kind : PASSES) {
@@ -119,7 +119,11 @@ public class GTWaterBodyFeature extends Feature<NoneFeatureConfiguration> {
         boolean placed = false;
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 16; j++) {
-                placed |= convertColumn(level, minX + i, minZ + j, top, fill, waterlike);
+                // Source WorldgenSwamp: vanilla water is chunk-wide, but existing GT water
+                // is eligible only when this column belongs to a swamp biome.
+                ResourceLocation columnBiome = waterlike ? GTWorldgenBiomes.biomeId(level, minX + i, minZ + j) : null;
+                boolean columnWaterlike = columnBiome != null && GTWorldgenBiomes.SWAMP.contains(columnBiome);
+                placed |= convertColumn(level, minX + i, minZ + j, top, fill, columnWaterlike);
             }
         }
         return placed;

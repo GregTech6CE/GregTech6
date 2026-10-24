@@ -12,6 +12,12 @@ FORGE_METHODS = {
 
 
 FUNCTIONAL_CASES = {
+    'stonelayerslabaudittests.structurecobbleslabsfollowonlytheirlocallayer',
+    'waterbodybiomeboundarytests.swampoverridesgtwateronlyinsideitsowncolumns',
+    'oreoverlaylifecyclecontrols.warmedsifterandstartupaddonrowssurviverepeatedoverlay',
+    'oreoverlaylifecyclecontrols.sifterdatapackreplacementwinswarmlookupandremovalrestoressource',
+    'oreoverlaylifecyclecontrols.exactunlinkinvalidateswarmlookupwithoutremovingindependentordynamicrows',
+
     'energyneighborloadednesstests.laserneighborlookupskipsabsentborderswithoutretainingwaste',
     'energyneighborloadednesstests.rotationradialpollingskipsabsentbordersandkeepsnativepushinput',
     'spikeharveststatetests.sourcematerialqualityandnativevanillatoolsfollowsecondarystate',
@@ -338,6 +344,12 @@ ORE_FOLLOWON_CASE_NAMESPACES = {'orethermalsourcetests.rawanddirtyformshavenogen
 
 
 def expected_namespace(identity):
+    if identity.startswith('oreoverlaylifecyclecontrols.'):
+        return 'gregtech_ore_source_audit:test_empty'
+    if identity.startswith('stonelayerslabaudittests.'):
+        return 'gregtech_issue_audit:stone_layer_slab_empty'
+    if identity.startswith('waterbodybiomeboundarytests.'):
+        return 'gregtech_issue_audit:water_biome_boundary_empty'
     if identity in {'sedimentsurfaceaudittests.pitkeepsgrassandgeneratesbelowit',
                     'sedimentsurfaceaudittests.blacksandkeepsgrassandgeneratesbelowit'}:
         return 'gregtech_issue_audit:sediment_columns_empty'
@@ -386,7 +398,7 @@ def check(path, platform='forge'):
         classname = case.get('classname', '').lower()
         for identity in expected:
             test_class, method = identity.split('.', 1)
-            if identity.startswith('energyneighborloadednesstests.') or identity.startswith('spikeharveststatetests.') or identity.startswith('spikefallinglifecycletests.') or identity in ORE_SOURCE_CASES or identity in ORE_FOLLOWON_CASE_NAMESPACES or identity == 'barracksdooralignmenttests.generateddoorsjoinslabwallsandsurviveupdates':
+            if identity.startswith(('oreoverlaylifecyclecontrols.', 'waterbodybiomeboundarytests.', 'stonelayerslabaudittests.')) or identity.startswith('energyneighborloadednesstests.') or identity.startswith('spikeharveststatetests.') or identity.startswith('spikefallinglifecycletests.') or identity in ORE_SOURCE_CASES or identity in ORE_FOLLOWON_CASE_NAMESPACES or identity == 'barracksdooralignmenttests.generateddoorsjoinslabwallsandsurviveupdates':
                 if name == method and classname == expected_namespace(identity):
                     found.add(identity)
                 continue

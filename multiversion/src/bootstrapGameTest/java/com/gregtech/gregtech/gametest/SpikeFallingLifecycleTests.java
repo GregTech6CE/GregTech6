@@ -48,7 +48,7 @@ public final class SpikeFallingLifecycleTests {
         var template = new HashSet<BlockPos>();
         h.forEveryBlockInStructure(at -> template.add(h.absolutePos(at)));
         h.startSequence().thenWaitUntil(() -> {
-            for (var local : BlockPos.betweenClosed(new BlockPos(0,12,0),new BlockPos(11,22,7))) {
+            for (var local : BlockPos.betweenClosed(new BlockPos(0,12,0),new BlockPos(11,23,7))) {
                 var at = h.absolutePos(local);
                 h.assertTrue(template.contains(at), "Spike fixture must fit dedicated template: " + at);
                 h.assertTrue(h.getLevel().areEntitiesLoaded(net.minecraft.world.level.ChunkPos.asLong(at))
@@ -88,7 +88,7 @@ public final class SpikeFallingLifecycleTests {
                 h.getLevel().getEntitiesOfClass(ItemEntity.class,new AABB(p).inflate(.5),e->e.getItem().getItem() instanceof net.minecraft.world.item.BlockItem bi&&bi.getBlock() instanceof SpikeBlock).forEach(ItemEntity::discard);
             }
             h.getLevel().getEntitiesOfClass(ItemEntity.class,
-                    new AABB(h.absolutePos(BlockPos.ZERO)).expandTowards(11,23,7),
+                    new AABB(h.absolutePos(new BlockPos(0,12,0))).expandTowards(11,11,7),
                     e->e.getItem().getItem() instanceof net.minecraft.world.item.BlockItem bi && bi.getBlock() instanceof SpikeBlock)
                     .forEach(ItemEntity::discard);
             before.forEach((p,state)->{
@@ -153,17 +153,33 @@ public final class SpikeFallingLifecycleTests {
     private static void run_realFallingItemLandsOrDropsWithoutLosingVariant(GameTestHelper h) {
         var b=GTSpikes.get(SpikeBlock.Family.STEEL);var landing=h.absolutePos(new BlockPos(2,20,2));var failure=landing.offset(4,0,0);
         var before=new LinkedHashMap<BlockPos,net.minecraft.world.level.block.state.BlockState>();
-        for(var top:List.of(landing,failure)) {
-            before.put(top.east(),h.getLevel().getBlockState(top.east()));
-            for(int dy=-6;dy<=0;dy++)before.put(top.offset(0,dy,0),h.getLevel().getBlockState(top.offset(0,dy,0)));
-        }
-        // Own the catch platform: an ItemEntity can move horizontally after leaving the slab.
-        for(var local:BlockPos.betweenClosed(new BlockPos(0,13,0),new BlockPos(11,13,7))) {
-            var at=h.absolutePos(local);before.put(at,h.getLevel().getBlockState(at));
+        for(var local:BlockPos.betweenClosed(new BlockPos(0,12,0),new BlockPos(11,23,7))) {
+            var at=h.absolutePos(local);
+            h.assertTrue(h.getLevel().getBlockEntity(at)==null,"sealed upper fixture must not overwrite any block entity or controller: "+at);
+            before.put(at,h.getLevel().getBlockState(at));
         }
         cleanupOnCompletion(h,before);
-        var ownedArea=new AABB(h.absolutePos(BlockPos.ZERO)).expandTowards(11,23,7);
-        h.assertTrue(h.getLevel().getEntitiesOfClass(ItemEntity.class,ownedArea).isEmpty(),"dedicated falling fixture starts without items");
+        int quiet=net.minecraft.world.level.block.Block.UPDATE_CLIENTS
+                |net.minecraft.world.level.block.Block.UPDATE_KNOWN_SHAPE;
+        // Seal only the owned upper chamber, never the template control block at local zero.
+        // The old floor-only fixture admitted falling gravel from well above the template.
+        for(var local:BlockPos.betweenClosed(new BlockPos(0,12,0),new BlockPos(11,23,7))) {
+            if(local.getX()==0||local.getX()==11||local.getY()==12||local.getY()==23
+                    ||local.getZ()==0||local.getZ()==7)
+                h.getLevel().setBlock(h.absolutePos(local),Blocks.STONE.defaultBlockState(),quiet);
+        }
+        for(var local:BlockPos.betweenClosed(new BlockPos(1,14,1),new BlockPos(10,22,6)))
+            h.getLevel().setBlock(h.absolutePos(local),Blocks.AIR.defaultBlockState(),quiet);
+        var ownedArea=new AABB(h.absolutePos(new BlockPos(0,12,0))).expandTowards(11,11,7);
+        // Setup-only removal of ambient natural falling blocks/items, never test Spike entities.
+        // No entity is filtered/removed between real placement and the final exact-one assertion.
+        h.getLevel().getEntitiesOfClass(FallingBlockEntity.class,ownedArea,
+                e->!(e.getBlockState().getBlock() instanceof SpikeBlock)).forEach(FallingBlockEntity::discard);
+        h.getLevel().getEntitiesOfClass(ItemEntity.class,ownedArea,
+                e->e.getItem().getItem() instanceof net.minecraft.world.item.BlockItem bi
+                        &&!(bi.getBlock() instanceof SpikeBlock)).forEach(ItemEntity::discard);
+        h.assertTrue(h.getLevel().getEntitiesOfClass(ItemEntity.class,ownedArea).isEmpty(),"sealed falling fixture starts with exactly zero items");
+        h.assertTrue(h.getLevel().getEntitiesOfClass(FallingBlockEntity.class,ownedArea).isEmpty(),"sealed falling fixture starts with exactly zero falling entities");
         for(var local:BlockPos.betweenClosed(new BlockPos(0,13,0),new BlockPos(11,13,7)))
             h.getLevel().setBlock(h.absolutePos(local),Blocks.STONE.defaultBlockState(),3);
         for(var top:List.of(landing,failure))for(int dy=-6;dy<=0;dy++)h.getLevel().setBlock(top.offset(0,dy,0),Blocks.AIR.defaultBlockState(),3);
@@ -180,7 +196,7 @@ public final class SpikeFallingLifecycleTests {
         h.runAfterDelay(70,()->{
             var landed=h.getLevel().getBlockState(landing.below(4));
             h.assertTrue(landed.is(b)&&landed.getValue(SpikeBlock.MODE)==SpikeBlock.Mode.FALLING&&landed.getValue(SpikeBlock.SECONDARY),"normal landing preserves red steel falling state");
-            var area=new AABB(h.absolutePos(BlockPos.ZERO)).expandTowards(11,23,7);
+            var area=new AABB(h.absolutePos(new BlockPos(0,12,0))).expandTowards(11,11,7);
             var items=h.getLevel().getEntitiesOfClass(ItemEntity.class,area);
             var allItems=h.getLevel().getEntitiesOfClass(ItemEntity.class,area);
             var falling=h.getLevel().getEntitiesOfClass(FallingBlockEntity.class,area);
