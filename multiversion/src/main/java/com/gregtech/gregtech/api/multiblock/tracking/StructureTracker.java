@@ -11,16 +11,20 @@ public final class StructureTracker {
     private State state = State.UNKNOWN;
     private boolean formed;
     private boolean dirty;
+    private boolean queued;
     private boolean expedite;
     private boolean unloading;
     private boolean facingDirty;
-    private boolean safety;
+    private final int safetyBucket;
     private int epoch = -1;
+    private int[] matchedLayers;
     private Footprint watch = Footprint.EMPTY;
     private final ClaimMemory claims = new ClaimMemory();
 
     StructureTracker(TrackedMultiblock machine) {
         this.machine = machine;
+        this.safetyBucket = Math.floorMod(Long.hashCode(machine.trackedEntity().getBlockPos().asLong()),
+                StructureScheduler.SAFETY_PERIOD);
     }
 
     public TrackedMultiblock machine() { return machine; }
@@ -29,20 +33,23 @@ public final class StructureTracker {
     public boolean formed() { return formed; }
     public State state() { return state; }
     public boolean dirty() { return dirty; }
+    public boolean queued() { return queued; }
     public boolean expedite() { return expedite; }
     public boolean unloading() { return unloading; }
-    public boolean safety() { return safety; }
+    public int safetyBucket() { return safetyBucket; }
     public int epoch() { return epoch; }
+    public int[] matchedLayers() { return matchedLayers; }
     public Footprint watch() { return watch; }
     public int cellCount() { return Math.max(1, watch.size()); }
 
     void watch(Footprint footprint) { this.watch = footprint == null ? Footprint.EMPTY : footprint; }
 
-    void enqueue(boolean expediteScan, boolean safetyScan) {
+    void enqueue(boolean expediteScan) {
         dirty = true;
         if (expediteScan) expedite = true;
-        if (safetyScan) safety = true;
     }
+
+    void queued(boolean value) { queued = value; }
 
     boolean consumeFacing() {
         boolean value = facingDirty;
@@ -50,7 +57,15 @@ public final class StructureTracker {
         return value;
     }
 
-    void noteFacing() { facingDirty = true; }
+    void noteFacing() {
+        facingDirty = true;
+        matchedLayers = null;
+    }
+
+    /** Layer counts reported by the scan body for each repeat group, in layout order. */
+    void matchedLayers(int[] layers) {
+        matchedLayers = layers == null ? null : layers.clone();
+    }
 
     void markUnloading() { unloading = true; }
 
@@ -81,7 +96,6 @@ public final class StructureTracker {
         state = State.SUSPENDED;
         dirty = false;
         expedite = false;
-        safety = false;
         return was;
     }
 
@@ -108,7 +122,6 @@ public final class StructureTracker {
     private void finish() {
         dirty = false;
         expedite = false;
-        safety = false;
     }
 
     void discard() {
