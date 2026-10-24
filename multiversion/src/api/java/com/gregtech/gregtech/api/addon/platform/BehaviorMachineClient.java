@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon.platform;
 
 import net.minecraft.client.gui.screens.Screen;
@@ -8,8 +10,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 
 import javax.annotation.Nullable;
 import java.util.Set;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * Client screens and renderers for one addon's behavior machines. List this class in

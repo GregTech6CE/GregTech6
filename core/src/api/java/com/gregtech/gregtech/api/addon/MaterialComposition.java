@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 import com.gregtech.gregtech.api.material.GTValues;
@@ -5,8 +7,6 @@ import com.gregtech.gregtech.api.material.GTValues;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * Composition of one addon material, named at link time.

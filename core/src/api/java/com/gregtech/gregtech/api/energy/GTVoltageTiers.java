@@ -1,7 +1,8 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.energy;
 
 /**
- * SPDX-License-Identifier: LGPL-3.0-or-later.
  * GT6's voltage tier table ({@code CS.V}) and tier lookups ({@code UT.Code.tier}/{@code tierMax}/
  * {@code tierMin}), ported because several GT6 mechanics are expressed in <em>tier indices</em>
  * rather than volts - most visibly {@code UT.Entities.applyElectricityDamage}, whose damage is

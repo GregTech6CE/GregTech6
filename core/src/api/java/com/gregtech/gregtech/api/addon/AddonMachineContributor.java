@@ -1,9 +1,10 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 import java.util.List;
 
 /**
- * SPDX-License-Identifier: LGPL-3.0-or-later.
  * Machine entry discovered with {@link java.util.ServiceLoader}.
  * List this class in {@code META-INF/services/com.gregtech.gregtech.api.addon.AddonMachineContributor}.
  * GregTech loads it after materials are initialized and before pipes or machine blocks are registered.

@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon.platform;
 
 import net.minecraft.world.item.ItemStack;
@@ -13,8 +15,6 @@ import com.gregtech.gregtech.api.addon.RecipeOutputChances;
 
 import java.util.Arrays;
 import java.util.List;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /** Handles for machine recipe maps that already exist, including maps an addon declared. */
 public final class AddonRecipes {

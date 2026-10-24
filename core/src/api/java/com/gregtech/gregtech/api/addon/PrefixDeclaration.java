@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 import com.gregtech.gregtech.api.material.GTValues;
@@ -8,7 +10,6 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * SPDX-License-Identifier: LGPL-3.0-or-later.
  * One addon item prefix. {@code amount} is GregTech units, the same unit as
  * {@link MaterialComposition.Part#amount()}: one ingot is {@link GTValues#U}, so 8U is {@code 8 * GTValues.U}.
  * {@code texture} is a path in the addon's own namespace, with no namespace written in the string.

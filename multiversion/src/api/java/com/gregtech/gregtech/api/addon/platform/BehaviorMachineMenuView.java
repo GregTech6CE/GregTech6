@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon.platform;
 
 //? if >=1.21.1 {
@@ -5,8 +7,6 @@ package com.gregtech.gregtech.api.addon.platform;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
 //?}
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * The values a behavior machine menu has already synced to the client.

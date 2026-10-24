@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon.platform;
 
 import com.gregtech.gregtech.api.addon.CrucibleContent;
@@ -12,8 +14,6 @@ import net.minecraftforge.fluids.FluidStack;
 //?}
 
 import javax.annotation.Nullable;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * The placed part a {@link PartBehavior} reads and writes. Valid during that behavior's callbacks,

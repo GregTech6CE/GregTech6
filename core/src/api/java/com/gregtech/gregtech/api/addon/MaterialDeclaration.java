@@ -1,9 +1,9 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 import java.util.List;
 import java.util.Objects;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /** Pure data for one addon material. GregTech turns it into a generated {@code gt6ce:} material at startup. */
 public record MaterialDeclaration(

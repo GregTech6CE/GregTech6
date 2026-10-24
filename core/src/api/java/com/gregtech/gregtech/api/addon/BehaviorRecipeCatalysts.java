@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 import java.util.ArrayList;
@@ -6,8 +8,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * Display-only catalyst rows for a behavior machine.

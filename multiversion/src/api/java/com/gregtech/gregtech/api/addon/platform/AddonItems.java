@@ -1,11 +1,11 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon.platform;
 
 import com.gregtech.gregtech.api.addon.GregTechMaterials;
 import com.gregtech.gregtech.api.addon.SelectorTags;
 
 import net.minecraft.world.item.ItemStack;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * GregTech material forms and programmed circuits as item stacks.

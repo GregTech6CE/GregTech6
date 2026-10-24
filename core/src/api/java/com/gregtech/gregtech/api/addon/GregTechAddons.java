@@ -1,10 +1,12 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.TreeMap;
 
-/** SPDX-License-Identifier: LGPL-3.0-or-later. Shared, deterministic addon lifecycle for both loaders. */
+/** Shared, deterministic addon lifecycle for both loaders. */
 public final class GregTechAddons {
     /**
      * Minor of {@code mod_version} ({@code 0.MINOR.PATCH}), not an individual build identifier.

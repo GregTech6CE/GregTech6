@@ -1,8 +1,8 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 import java.util.List;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /** Read-only material handles. The material table itself stays inside GregTech. */
 public final class GregTechMaterials {
