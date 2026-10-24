@@ -166,7 +166,7 @@ public final class MachinePendingStateTests {
             for (var cell : TurbineStructure.LAYOUT.cells())
                 h.getLevel().setBlockAndUpdate(cell.at(pos, front), grade.wall().defaultBlockState());
             var machine = (LargeGasTurbineControllerBlockEntity) h.getLevel().getBlockEntity(pos);
-            h.assertTrue(machine.isStructureOk(), "registered gas turbine forms with native walls");
+            h.assertTrue(StructureTestSupport.ok(machine), "registered gas turbine forms with native walls");
             var recipe = FuelRecipeMaps.Gas.mRecipeList.stream().filter(r -> r.mFluidInputs.length == 1
                     && r.mFluidOutputs.length > 0 && r.mEUt < 0
                     && r.mFluidInputs[0].getFluid() == GTFluids.still("Methane").get()).findFirst().orElseThrow();
@@ -189,6 +189,7 @@ public final class MachinePendingStateTests {
             var restored = new LargeGasTurbineControllerBlockEntity(pos, machine.getBlockState());
             load(h, restored, snapshot);
             h.getLevel().setBlockEntity(restored);
+            StructureTestSupport.ok(restored);
             restored.tick();
             h.assertTrue(restored.getFluidInTank(0).getAmount() == remaining
                     && restored.getEnergyStored(GregTechTags.Energy.RU, null) == grade.outputMaximum()

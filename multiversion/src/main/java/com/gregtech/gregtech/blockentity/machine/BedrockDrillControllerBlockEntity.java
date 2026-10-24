@@ -33,7 +33,8 @@ import net.minecraftforge.items.*;
 import java.util.*;
 
 /** Current bedrock drilling cycle: 32768 RU and 100 mB lubricant per produced item. */
-public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity implements MultiblockPortOwner, BlockContents {
+public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity implements MultiblockPortOwner, BlockContents,
+        com.gregtech.gregtech.api.multiblock.tracking.TrackedMultiblock {
     public static final long ENERGY_CAPACITY = com.gregtech.gregtech.content.multiblock.AdvancedControllerRules.DRILL_CAPACITY,
             WORK_ENERGY = com.gregtech.gregtech.content.multiblock.AdvancedControllerRules.DRILL_WORK;
     private long energy;
@@ -74,8 +75,14 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
         return MultiblockLayout.Role.valueOf(com.gregtech.gregtech.content.multiblock.AdvancedControllerRules.drillRole(x, y, z).name());
     }
 
+    @Override public com.gregtech.gregtech.api.multiblock.tracking.StructureDefinition structureDefinition() {
+        return com.gregtech.gregtech.api.multiblock.tracking.CustomStructures.drill(this);
+    }
+    @Override public boolean isStructureOk() {
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.query(this);
+    }
     @Override
-    public boolean isStructureOk() {
+    public boolean scanStructure() {
         if (level == null || isRemoved() || worldPosition.getY() - 5 < level.getMinBuildHeight()) return false;
         boolean usesOriginalController = getBlockState().getBlock() instanceof OriginalBedrockDrillControllerBlock;
         var candidateParts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
@@ -85,6 +92,7 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
                 var depositPos = worldPosition.offset(x, -5, z);
                 if (!level.hasChunkAt(depositPos)) {
                     bindings.clear(this::release);
+                    com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
                     return false;
                 }
                 // §103.B: bedrock deposits are ore blocks whose host rock (block state) is bedrock.
@@ -94,6 +102,7 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
                     if (!ore.prefix().getName().equals("oreSmall")) deposit.add(ore.material());
                 } else if (!floorState.is(Blocks.BEDROCK)) {
                     bindings.clear(this::release);
+                    com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
                     return false;
                 }
                 for (int y = -4; y <= 0; y++) {
@@ -105,15 +114,16 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
                     if (!(level.getBlockState(partPos).getBlock() == expectedBlock)
                             || !(level.getBlockEntity(partPos) instanceof MultiblockPortBlockEntity)) {
                         bindings.clear(this::release);
+                        com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
                         return false;
                     }
                     candidateParts.put(partPos, role(x, y, z));
                 }
             }
-        return bindings.update(candidateParts,
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, candidateParts, 0,
                 partPosition -> ((MultiblockPortBlockEntity) level.getBlockEntity(partPosition)).canBind(worldPosition),
                 (partPosition, partRole) -> ((MultiblockPortBlockEntity) level.getBlockEntity(partPosition)).bind(worldPosition, partRole),
-                this::release);
+                this::release) != com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
     }
 
     private void release(BlockPos pos) {
@@ -217,9 +227,18 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
         fluids = LazyOptional.of(() -> lubricant);
     }
 //?}
+    @Override public void onLoad() {
+        super.onLoad();
+        if (level != null && !level.isClientSide) com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.attach(this);
+    }
+    @Override public void onChunkUnloaded() {
+        com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
+        super.onChunkUnloaded();
+    }
     @Override
     public void setRemoved() {
-        bindings.clear(this::release);
+        if (!com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.unloading(this)) bindings.clear(this::release);
+        com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.onRemoved(this);
         super.setRemoved();
     }
 

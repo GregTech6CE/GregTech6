@@ -51,7 +51,7 @@ public final class PortRegressionTests {
             var entity = helper.getLevel().getBlockEntity(helper.absolutePos(origin));
             helper.assertTrue(entity instanceof com.gregtech.gregtech.api.multiblock.StructureController, "controller exposes common status");
             helper.assertTrue(com.gregtech.gregtech.content.multiblock.ControllerStructureLayouts.matches(entity), "every preview part matches validation");
-            helper.assertTrue(((com.gregtech.gregtech.api.multiblock.StructureController)entity).isStructureOk(), "controller uses shared geometry");
+            helper.assertTrue(StructureTestSupport.ok((net.minecraft.world.level.block.entity.BlockEntity)entity), "controller uses shared geometry");
             var broken = entry.getValue().entrySet().stream()
                     .filter(cell -> cell.getValue() != net.minecraft.world.level.block.Blocks.AIR)
                     .findFirst().orElseThrow().getKey();

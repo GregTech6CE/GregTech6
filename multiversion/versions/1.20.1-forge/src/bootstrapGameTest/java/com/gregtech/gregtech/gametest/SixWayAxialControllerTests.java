@@ -62,7 +62,7 @@ public final class SixWayAxialControllerTests {
             grade.cells().forEach((cell, part) -> helper.setBlock(
                     AxialStructureTransform.at(origin, front, cell.getX(), cell.getY(), cell.getZ()), part));
             var machine = (LargeTurbineControllerBlockEntity) helper.getLevel().getBlockEntity(helper.absolutePos(origin));
-            helper.assertTrue(machine != null && machine.isStructureOk(), "steam turbine forms facing " + front);
+            helper.assertTrue(machine != null && StructureTestSupport.ok(machine), "steam turbine forms facing " + front);
             BlockPos rear = AxialStructureTransform.at(origin, front, 0, 0, 3);
             helper.assertTrue(port(helper, rear).isEnergyEmittingTo(GregTechTags.Energy.RU, front, false),
                     "rear-centre is the RU port facing " + front);
@@ -102,7 +102,7 @@ public final class SixWayAxialControllerTests {
             grade.cells().forEach((cell, part) -> helper.setBlock(
                     AxialStructureTransform.at(origin, front, cell.getX(), cell.getY(), cell.getZ()), part));
             var machine = (LargeDynamoControllerBlockEntity) helper.getLevel().getBlockEntity(helper.absolutePos(origin));
-            helper.assertTrue(machine != null && machine.isStructureOk(), "dynamo forms facing " + front);
+            helper.assertTrue(machine != null && StructureTestSupport.ok(machine), "dynamo forms facing " + front);
             BlockPos rear = AxialStructureTransform.at(origin, front, 0, 0, 3);
             helper.assertTrue(port(helper, rear).isEnergyEmittingTo(GregTechTags.Energy.EU, front, false),
                     "rear-centre is the EU port facing " + front);
@@ -129,7 +129,7 @@ public final class SixWayAxialControllerTests {
             for (var cell : TurbineStructure.LAYOUT.cells()) helper.setBlock(
                     AxialStructureTransform.at(origin, front, cell.right(), cell.up(), cell.back()), grade.wall());
             var machine = (LargeGasTurbineControllerBlockEntity) helper.getLevel().getBlockEntity(helper.absolutePos(origin));
-            helper.assertTrue(machine != null && machine.isStructureOk(), "gas turbine forms facing " + front);
+            helper.assertTrue(machine != null && StructureTestSupport.ok(machine), "gas turbine forms facing " + front);
             BlockPos rear = AxialStructureTransform.at(origin, front, 0, 0, 3);
             helper.assertTrue(port(helper, rear).isEnergyEmittingTo(GregTechTags.Energy.RU, front, false),
                     "rear-centre is the RU port facing " + front);

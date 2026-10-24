@@ -133,12 +133,18 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
     }
 
     public void bind(BlockPos owner,MultiblockLayout.Role role) {
-        this.controller=owner.immutable(); this.role=role;
+        com.gregtech.gregtech.api.multiblock.tracking.StructureScanProbe.onBind();
+        com.gregtech.gregtech.api.multiblock.tracking.StructureScanProbe.pause();
+        try {
+            this.controller=owner.immutable(); this.role=role;
 //? if >=1.21.1 {
-        /*updateCrucibleVisual(owner() instanceof com.gregtech.gregtech.api.multiblock.CrucibleStructureOwner);
+            /*updateCrucibleVisual(owner() instanceof com.gregtech.gregtech.api.multiblock.CrucibleStructureOwner);
 *///?} else {
-        updateCrucibleVisual(owner() instanceof LargeCrucibleControllerBlockEntity);
+            updateCrucibleVisual(owner() instanceof LargeCrucibleControllerBlockEntity);
 //?}
+        } finally {
+            com.gregtech.gregtech.api.multiblock.tracking.StructureScanProbe.resume();
+        }
     }
     @Override public void onLoad() {
         super.onLoad();
@@ -154,10 +160,18 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
     }
     public void release(BlockPos owner) {
         if (owner.equals(controller)) {
-            controller = null;
-            role = null;
-            updateCrucibleVisual(false);
-            restoreStructureDesign();
+            com.gregtech.gregtech.api.multiblock.tracking.StructureScanProbe.onRelease();
+            com.gregtech.gregtech.api.multiblock.tracking.StructureScanProbe.pause();
+            try {
+                controller = null;
+                role = null;
+                updateCrucibleVisual(false);
+                restoreStructureDesign();
+            } finally {
+                com.gregtech.gregtech.api.multiblock.tracking.StructureScanProbe.resume();
+            }
+            if (level instanceof net.minecraft.server.level.ServerLevel server)
+                com.gregtech.gregtech.api.multiblock.tracking.StructureWatchIndex.onPortReleased(server, worldPosition, owner);
         }
     }
     @Override public boolean canLogistics(Direction side) {

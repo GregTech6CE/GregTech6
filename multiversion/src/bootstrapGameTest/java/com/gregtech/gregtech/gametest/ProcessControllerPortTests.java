@@ -38,7 +38,7 @@ public final class ProcessControllerPortTests {
         h.getLevel().setBlockAndUpdate(pos,block.defaultBlockState());
         for(var cell:cells) h.getLevel().setBlock(cell.at(pos,Direction.NORTH),cell.block().defaultBlockState(),3);
         var entity=(DistillationTowerControllerBlockEntity)h.getLevel().getBlockEntity(pos);
-        h.assertTrue(entity.isStructureOk(),"actual source tower forms from 80 original structural parts");
+        h.assertTrue(StructureTestSupport.ok(entity),"actual source tower forms from 80 original structural parts");
         for(var side:Direction.values()) {
 //? if >=1.21.1 {
             /*var cap=entity.fluidCapability(side);

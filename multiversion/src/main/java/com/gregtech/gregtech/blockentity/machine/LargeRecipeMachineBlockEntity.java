@@ -1,6 +1,12 @@
 package com.gregtech.gregtech.blockentity.machine;
 
 import com.gregtech.gregtech.api.multiblock.*;
+import com.gregtech.gregtech.api.multiblock.tracking.LayoutStructures;
+import com.gregtech.gregtech.api.multiblock.tracking.StructureClaims;
+import com.gregtech.gregtech.api.multiblock.tracking.StructureDefinition;
+import com.gregtech.gregtech.api.multiblock.tracking.StructureTracking;
+import com.gregtech.gregtech.api.multiblock.tracking.StructureScanProbe;
+import com.gregtech.gregtech.api.multiblock.tracking.TrackedMultiblock;
 import com.gregtech.gregtech.content.multiblock.LargeMachineLayouts;
 import com.gregtech.gregtech.data.GregTechTags;
 import net.minecraft.core.*;
@@ -22,7 +28,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import java.util.*;
 
 /** Shared execution and atomic part ownership for original large recipe-machine layouts. */
-public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity implements MultiblockPortOwner {
+public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity implements MultiblockPortOwner, TrackedMultiblock {
     private final PartBindings<BlockPos,MultiblockLayout.Role> bindings=new PartBindings<>();
     public LargeRecipeMachineBlockEntity(BlockEntityType<?> type,BlockPos pos,BlockState state) { super(type,pos,state); }
     private boolean originalProcessingController() {return spec()!=null && spec().suppressSideAutoInput();}
@@ -260,10 +266,16 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
     protected java.util.List<LargeMachineLayouts.Cell> structureCells() { return null; }
     protected boolean validStructureParts() {return true;}
     protected boolean matchesPart(LargeMachineLayouts.Cell cell,net.minecraft.world.level.block.Block expected,net.minecraft.world.level.block.Block actual) {return (actual == expected);}
-    @Override public boolean isStructureOk() {
+    public LargeMachineLayouts.Layout trackedLayout() { return structureLayout(); }
+    public boolean acceptsTrackedPart(LargeMachineLayouts.Cell cell, net.minecraft.world.level.block.Block expected, net.minecraft.world.level.block.Block actual) {
+        return matchesPart(cell, expected, actual);
+    }
+    @Override public StructureDefinition structureDefinition() { return LayoutStructures.recipe(this); }
+    @Override public boolean isStructureOk() { return StructureTracking.query(this); }
+    @Override public boolean scanStructure() {
         if(level==null||spec()==null||isRemoved()) return false;
         var layout=structureLayout();if(layout==null)return false;
-        if(!validStructureParts()){bindings.clear(this::release);return false;}
+        if(!validStructureParts()){bindings.clear(this::release);StructureClaims.cleared(this);return false;}
         var front=getBlockState().getValue(HorizontalDirectionalBlock.FACING);
         var parts=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
         var ovenCoil=new net.minecraft.world.level.block.Block[1];
@@ -271,7 +283,7 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         for(var cell:layout.cells()) {
             var pos=cell.at(worldPosition,front);
             var matched=matchingCell(cell,pos,ovenCoil);
-            if(matched==null) {bindings.clear(this::release);return false;}
+            if(matched==null) {bindings.clear(this::release);StructureClaims.cleared(this);return false;}
             matchedCells.add(matched);
             if(matched.role()!=MultiblockLayout.Role.AIR&&!matched.plainBlock())parts.put(pos,matched.role());
         }
@@ -284,7 +296,7 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
                 matches.put(pos,matched);
                 return true;
             });
-            if(placed==null){bindings.clear(this::release);return false;}
+            if(placed==null){bindings.clear(this::release);StructureClaims.cleared(this);return false;}
             // Only complete repeat copies are committed, not the matched prefix of a failed copy.
             for(var cell:placed) {
                 var matched=matches.get(cell.pos());
@@ -292,15 +304,25 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
                 if(matched.role()!=MultiblockLayout.Role.AIR&&!matched.plainBlock())parts.put(cell.pos(),matched.role());
             }
         }
-        boolean formed = bindings.update(parts,pos->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).canBind(worldPosition),
+        var claimed = StructureClaims.update(this, true, bindings, parts,
+                designHash(matchedCells, repeatPlaced),
+                pos->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).canBind(worldPosition),
                 (pos,role)->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).bind(worldPosition,role),this::release);
-        if (formed) {
+        if (claimed == StructureClaims.Result.FAILED) return false;
+        if (claimed == StructureClaims.Result.APPLIED) {
             com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front, matchedCells);
             com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, repeatPlaced);
         }
-        return formed;
+        return true;
+    }
+    private static int designHash(List<LargeMachineLayouts.Cell> cells, List<LargeMachineLayouts.Placed> placed) {
+        int hash = 1;
+        for (var cell : cells) hash = 31 * hash + cell.design();
+        for (var cell : placed) hash = 31 * hash + cell.cell().design();
+        return hash;
     }
     private LargeMachineLayouts.Cell matchingCell(LargeMachineLayouts.Cell cell,BlockPos pos,net.minecraft.world.level.block.Block[] ovenCoil) {
+        StructureScanProbe.matcher();
         if(!level.hasChunkAt(pos))return null;
         if(cell.role()==MultiblockLayout.Role.AIR)return level.isEmptyBlock(pos)?cell:null;
         if(matchesChoice(cell,cell.part(),cell.plain(),pos,ovenCoil))return cell;
@@ -334,7 +356,19 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         return true;
     }
     private void release(BlockPos pos) { if(level!=null&&level.hasChunkAt(pos)&&level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part) part.release(worldPosition); }
-    @Override public void setRemoved() {bindings.clear(this::release);super.setRemoved();}
+    @Override public void onLoad() {
+        super.onLoad();
+        if (level != null && !level.isClientSide) StructureTracking.attach(this);
+    }
+    @Override public void onChunkUnloaded() {
+        StructureTracking.onChunkUnloaded(this);
+        super.onChunkUnloaded();
+    }
+    @Override public void setRemoved() {
+        if (!StructureTracking.unloading(this)) bindings.clear(this::release);
+        StructureTracking.onRemoved(this);
+        super.setRemoved();
+    }
     private static boolean input(MultiblockLayout.Role role) { return role==MultiblockLayout.Role.ITEM_FLUID_IO||role==MultiblockLayout.Role.ITEM_FLUID_INPUT||role==MultiblockLayout.Role.ITEM_FLUID_ENERGY_INPUT||role==MultiblockLayout.Role.ITEM_FLUID_ENERGY; }
     private static boolean output(MultiblockLayout.Role role) { return role==MultiblockLayout.Role.FLUID_OUTPUT||role==MultiblockLayout.Role.ITEM_FLUID_IO||role==MultiblockLayout.Role.ITEM_FLUID_OUTPUT||role==MultiblockLayout.Role.ITEM_FLUID_ENERGY; }
     private static boolean energy(MultiblockLayout.Role role) {return role==MultiblockLayout.Role.ENERGY_INPUT||role==MultiblockLayout.Role.ITEM_FLUID_ENERGY_INPUT||role==MultiblockLayout.Role.ITEM_FLUID_ENERGY;}

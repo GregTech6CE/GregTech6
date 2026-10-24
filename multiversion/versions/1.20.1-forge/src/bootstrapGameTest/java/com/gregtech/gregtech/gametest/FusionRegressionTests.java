@@ -23,7 +23,7 @@ public final class FusionRegressionTests {
         var absolute=h.absolutePos(ORIGIN);
         for(var cell:FusionStructure.CELLS)h.getLevel().setBlock(cell.at(absolute,front),cell.block().defaultBlockState(),3);
         var reactor=(FusionReactorControllerBlockEntity)h.getLevel().getBlockEntity(absolute);
-        h.assertTrue(reactor.isStructureOk(),"original fusion ring forms facing "+front);
+        h.assertTrue(StructureTestSupport.ok(reactor),"original fusion ring forms facing "+front);
         return reactor;
     }
     private static void tick(FusionReactorControllerBlockEntity r) {FusionReactorControllerBlockEntity.serverTick(r.getLevel(),r.getBlockPos(),r.getBlockState(),r);}
@@ -65,11 +65,11 @@ public final class FusionRegressionTests {
         var a=cpus.get(0).at(r.getBlockPos(),Direction.EAST);var b=cpus.get(3).at(r.getBlockPos(),Direction.EAST);
         var first=h.getLevel().getBlockState(a);var second=h.getLevel().getBlockState(b);
         h.getLevel().setBlock(a,second,3);h.getLevel().setBlock(b,first,3);
-        h.assertTrue(r.isStructureOk(),"processor counts matter, not prescribed positions");
+        h.assertTrue(StructureTestSupport.ok(r),"processor counts matter, not prescribed positions");
         fixture(r,"fusion_break_test");r.inventory().setStackInSlot(0,new ItemStack(Items.APPLE));tick(r);
         h.getLevel().setBlock(a,Blocks.AIR.defaultBlockState(),3);
-        h.assertTrue(lu.doEnergyInjection(GregTechTags.Energy.LU,Direction.UP,8192,1,true)==0&&!r.isStructureOk(),"cached ports close immediately on broken structure");
-        h.getLevel().setBlock(a,second,3);h.assertTrue(r.isStructureOk(),"repair rebinds ring");
+        h.assertTrue(lu.doEnergyInjection(GregTechTags.Energy.LU,Direction.UP,8192,1,true)==0&&!StructureTestSupport.ok(r),"cached ports close immediately on broken structure");
+        h.getLevel().setBlock(a,second,3);h.assertTrue(StructureTestSupport.ok(r),"repair rebinds ring");
         var eu=port(r,Role.ENERGY_OUTPUT);h.assertTrue(eu.isEnergyEmittingTo(GregTechTags.Energy.EU,Direction.EAST,false)&&!eu.isEnergyAcceptingFrom(GregTechTags.Energy.LU,Direction.EAST,false),"EU outlets cannot accept startup energy");
         h.succeed();
     }

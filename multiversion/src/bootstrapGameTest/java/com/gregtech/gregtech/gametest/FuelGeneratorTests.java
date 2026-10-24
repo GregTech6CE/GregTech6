@@ -1,6 +1,7 @@
 package com.gregtech.gregtech.gametest;
 
 import com.gregtech.gregtech.api.energy.FaceConfig;
+import com.gregtech.gregtech.api.multiblock.tracking.StructureScheduler;
 import com.gregtech.gregtech.api.machine.BasicMachineSpec;
 //? if >=1.21.1 {
 /**///?} else {
@@ -142,6 +143,7 @@ public final class FuelGeneratorTests {
             wall = cell.at(origin, Direction.NORTH);
             helper.getLevel().setBlockAndUpdate(wall, cell.block().defaultBlockState());
         }
+        StructureScheduler.flush(helper.getLevel());
         turbine.tick();
         helper.assertTrue(turbine.isFormed(), "the tank wall forms the turbine");
         helper.assertTrue(turbine.storedEnergy() == 160, "half efficiency stores 160");
@@ -166,6 +168,7 @@ public final class FuelGeneratorTests {
         var layout = LargeMachineLayouts.cells("sample_turbine");
         BlockPos wall = layout.get(0).at(origin, Direction.NORTH);
         helper.getLevel().setBlockAndUpdate(wall, layout.get(0).block().defaultBlockState());
+        StructureScheduler.flush(helper.getLevel());
         turbine.fill(new FluidStack(Fluids.LAVA, 100), IFluidHandler.FluidAction.EXECUTE);
         turbine.tick();
         turbine.machineControl(null).setEnabled(false);

@@ -133,7 +133,7 @@ public final class HeatSignedExtractionTests {
             fixture.set(pos, LargeMachineParts.block(variant.originalId()).defaultBlockState()
                     .setValue(HorizontalDirectionalBlock.FACING, Direction.NORTH));
             var boiler = (OriginalLargeBoilerControllerBlockEntity) h.getLevel().getBlockEntity(pos);
-            h.assertTrue(!boiler.isStructureOk(), "unassembled registered boiler is unformed");
+            h.assertTrue(!StructureTestSupport.ok(boiler), "unassembled registered boiler is unformed");
             operation(h, boiler, false, -10, 0);
             operation(h, boiler, true, 10, 0);
             for (var cell : OriginalLargeBoilerSpecs.LAYOUT.cells()) {
@@ -146,7 +146,7 @@ public final class HeatSignedExtractionTests {
                 };
                 fixture.set(cellPos, part.defaultBlockState());
             }
-            h.assertTrue(boiler.isStructureOk(), "native transmitter and wall shell forms without overriding validation");
+            h.assertTrue(StructureTestSupport.ok(boiler), "native transmitter and wall shell forms without overriding validation");
             matrix(h, boiler);
             operation(h, boiler, true, 10, 10);
             var requiredWall = OriginalLargeBoilerSpecs.LAYOUT.cells().stream()
@@ -155,7 +155,7 @@ public final class HeatSignedExtractionTests {
                             && !cell.at(pos, Direction.NORTH).equals(pos))
                     .findFirst().orElseThrow().at(pos, Direction.NORTH);
             fixture.set(requiredWall, Blocks.AIR.defaultBlockState());
-            h.assertTrue(!boiler.isStructureOk(), "removing a required loaded wall invalidates the shell");
+            h.assertTrue(!StructureTestSupport.ok(boiler), "removing a required loaded wall invalidates the shell");
             operation(h, boiler, false, -10, 0);
             operation(h, boiler, true, 10, 0);
             operation(h, boiler, false, 10, 10); // Existing extraction remains a plain drain when broken.

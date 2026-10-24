@@ -99,7 +99,7 @@ public final class CrucibleHazardSourceTests {
         for(var cell:SharedLargeCrucibleStructure.CELLS) if(!cell.air())
             h.getLevel().setBlock(pos.offset(cell.x(),cell.y(),cell.z()),block.variant().wall().defaultBlockState(),3);
         var entity=(LargeCrucibleControllerBlockEntity)h.getLevel().getBlockEntity(pos);
-        h.assertTrue(entity.isStructureOk() && entity.getMeltDownLimitK()==2250,"actual formed original Steel limit2250K");
+        h.assertTrue(StructureTestSupport.ok(entity) && entity.getMeltDownLimitK()==2250,"actual formed original Steel limit2250K");
         temperature(h,entity,1000);var victim=cow(h,pos,.5);
         block.stepOn(h.getLevel(),pos,h.getLevel().getBlockState(pos),victim);
         h.assertTrue(Math.abs(victim.getHealth()-6F)<0.0001F,"large main contact uses original uncapped damage14");victim.discard();
