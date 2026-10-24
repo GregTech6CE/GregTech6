@@ -20,7 +20,8 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import java.util.*;
 
 /** GT6 implosion: 25 dense tungstensteel walls, one air cell, timed explosive recipes. */
-public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockEntity implements MultiblockPortOwner {
+public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockEntity implements MultiblockPortOwner,
+        com.gregtech.gregtech.api.multiblock.tracking.TrackedMultiblock {
     private final PartBindings<BlockPos,MultiblockLayout.Role> bindings=new PartBindings<>();
     public static final MultiblockLayout LAYOUT=MultiblockLayout.fromShared(com.gregtech.gregtech.content.multiblock.SharedImplosionStructure.LAYOUT);
 //? if >=1.21.1 {
@@ -36,7 +37,13 @@ public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockE
         BasicMachineBlockEntity.serverTick(level,pos,state,machine);
     }
     @Override protected boolean structureComplete() { return isStructureOk(); }
+    @Override public com.gregtech.gregtech.api.multiblock.tracking.StructureDefinition structureDefinition() {
+        return com.gregtech.gregtech.api.multiblock.tracking.CustomStructures.implosion(this);
+    }
     @Override public boolean isStructureOk() {
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.query(this);
+    }
+    @Override public boolean scanStructure() {
         if(level==null || isRemoved()) return false;
         var facing=getBlockState().getValue(HorizontalDirectionalBlock.FACING);
         var candidates=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
@@ -45,12 +52,26 @@ public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockE
             if(!level.getBlockState(pos).is(GTMultiblocks.IMPLOSION_COMPRESSOR_WALL.get()) || !(level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity)) return false;
             candidates.put(pos,role);return true;
         });
-        if(!valid) { bindings.clear(this::release);return false; }
-        return bindings.update(candidates,pos->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).canBind(worldPosition),
-                (pos,role)->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).bind(worldPosition,role),this::release);
+        if(!valid) { bindings.clear(this::release); com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this); return false; }
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, candidates, 0,
+                pos->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).canBind(worldPosition),
+                (pos,role)->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).bind(worldPosition,role),this::release)
+                != com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
     }
     private void release(BlockPos pos) { if(level!=null&&level.hasChunkAt(pos)&&level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part) part.release(worldPosition); }
-    @Override public void setRemoved() { bindings.clear(this::release);super.setRemoved(); }
+    @Override public void onLoad() {
+        super.onLoad();
+        if (level != null && !level.isClientSide) com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.attach(this);
+    }
+    @Override public void onChunkUnloaded() {
+        com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.onChunkUnloaded(this);
+        super.onChunkUnloaded();
+    }
+    @Override public void setRemoved() {
+        if (!com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.unloading(this)) bindings.clear(this::release);
+        com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.onRemoved(this);
+        super.setRemoved();
+    }
     @Override public IFluidHandler portFluids(MultiblockLayout.Role role) { return null; }
     @Override public IItemHandler portItems(MultiblockLayout.Role role) {
 //? if >=1.21.1 {

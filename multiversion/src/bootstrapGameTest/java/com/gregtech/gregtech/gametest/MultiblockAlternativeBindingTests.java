@@ -104,7 +104,7 @@ public final class MultiblockAlternativeBindingTests {
                 var casing = usePart ? part(h, mixedPos) : null;
                 if (!usePart) h.getLevel().setBlock(mixedPos, Blocks.STONE.defaultBlockState(), 2);
                 for (int check = 0; check < 2; check++) {
-                    h.assertTrue(machine.isStructureOk(), "valid mixed alternative forms on every check, order=" + plainFirst);
+                    h.assertTrue(StructureTestSupport.ok(machine), "valid mixed alternative forms on every check, order=" + plainFirst);
                     h.assertTrue(energy.isBoundTo(origin) && energy.getEnergyTypes(Direction.DOWN).contains(machine.spec().energyTag()),
                             "independent energy role stays bound with its original permissions");
                     if (casing != null) h.assertTrue(casing.isBoundTo(origin) && casing.getEnergyTypes(Direction.DOWN).isEmpty(),
@@ -113,9 +113,9 @@ public final class MultiblockAlternativeBindingTests {
                 }
             }
             h.getLevel().setBlock(mixedPos, Blocks.DIRT.defaultBlockState(), 2);
-            h.assertTrue(!machine.isStructureOk() && !energy.isBoundTo(origin), "destroyed required cell invalidates and releases loaded ports");
+            h.assertTrue(!StructureTestSupport.ok(machine) && !energy.isBoundTo(origin), "destroyed required cell invalidates and releases loaded ports");
             h.getLevel().setBlock(mixedPos, Blocks.STONE.defaultBlockState(), 2);
-            h.assertTrue(machine.isStructureOk() && energy.isBoundTo(origin), "restoring valid choice reforms without manual reset");
+            h.assertTrue(StructureTestSupport.ok(machine) && energy.isBoundTo(origin), "restoring valid choice reforms without manual reset");
             h.getLevel().setBlock(origin, Blocks.AIR.defaultBlockState(), 2);
             for (var pos : new BlockPos[]{origin.west(), mixedPos, mixedPos.above(), origin.east(2), origin.east(2).above()})
                 h.getLevel().setBlock(pos, Blocks.AIR.defaultBlockState(), 2);

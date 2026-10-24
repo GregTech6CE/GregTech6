@@ -56,7 +56,8 @@ public class TankControllerBlock extends DirectionalBlock implements EntityBlock
 
     @Override
     public void toolStateChanged(Level level, BlockPos pos, BlockState state) {
-        if (level.getBlockEntity(pos) instanceof MultiblockTankControllerBlockEntity tank) tank.isStructureOk();
+        if (level.getBlockEntity(pos) instanceof MultiblockTankControllerBlockEntity tank)
+            com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.invalidate(tank);
     }
 //? if >=1.21.1 {
     /*private net.minecraft.world.InteractionResult interact(BlockState state, Level level, BlockPos pos,

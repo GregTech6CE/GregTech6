@@ -25,7 +25,7 @@ public final class AxialGeneratorTests {
         var grade=AxialGeneratorDefinitions.grade(block);
         grade.cells().forEach((cell,part)->h.setBlock(pos.relative(front.getClockWise(),cell.getX()).above(cell.getY()).relative(front.getOpposite(),cell.getZ()),part));
         var machine=(AxialGeneratorBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(pos));
-        h.assertTrue(machine.isStructureOk(),"solid structure forms: "+grade.id()+" / "+front);
+        h.assertTrue(StructureTestSupport.ok(machine),"solid structure forms: "+grade.id()+" / "+front);
         return machine;
     }
     private static BasicMachineBlockEntity sink(GameTestHelper h,BlockPos pos,GregTechTags.Tag energy,long size) {
@@ -57,9 +57,9 @@ public final class AxialGeneratorTests {
             h.assertTrue(machine.fill(steam,FluidAction.EXECUTE)==0,"stop blocks new steam");
             h.assertTrue(machine.getEnergyOffered(GregTechTags.Energy.RU,null,1)==0,"main cannot duplicate rear shaft output");
             var part=pos.relative(front.getClockWise());h.setBlock(part,Blocks.AIR);
-            h.assertTrue(!machine.isStructureOk(),"broken wall invalidates immediately");
-            h.setBlock(part,grade.wall());h.assertTrue(machine.isStructureOk(),"wall repair rebinds");
-            if(grade.materials().wallId()!=18022) {h.setBlock(part,GTMultiblocks.TANK_WALL_DENSE.get());h.assertTrue(!machine.isStructureOk(),"wrong-grade wall rejected");}
+            h.assertTrue(!StructureTestSupport.ok(machine),"broken wall invalidates immediately");
+            h.setBlock(part,grade.wall());h.assertTrue(StructureTestSupport.ok(machine),"wall repair rebinds");
+            if(grade.materials().wallId()!=18022) {h.setBlock(part,GTMultiblocks.TANK_WALL_DENSE.get());h.assertTrue(!StructureTestSupport.ok(machine),"wrong-grade wall rejected");}
         }
         h.succeed();
     }
@@ -89,9 +89,9 @@ public final class AxialGeneratorTests {
             machine.toggleStopped();h.assertTrue(!machine.isOverloaded()&&machine.isStopped(),"reset does not immediately restart");
             machine.toggleStopped();h.assertTrue(!machine.isStopped(),"explicit restart");
             var middle=pos.relative(front.getOpposite());h.setBlock(middle,grade.wall());
-            h.assertTrue(!machine.isStructureOk(),"solid metal cannot replace a copper coil");
+            h.assertTrue(!StructureTestSupport.ok(machine),"solid metal cannot replace a copper coil");
             h.setBlock(middle,GTMultiblocks.LARGE_COPPER_COIL.get());
-            h.assertTrue(!machine.isStructureOk(),"legacy generic dynamo wall cannot replace GT6 18040 copper coil");
+            h.assertTrue(!StructureTestSupport.ok(machine),"legacy generic dynamo wall cannot replace GT6 18040 copper coil");
         }
         h.succeed();
     }
@@ -134,7 +134,7 @@ public final class AxialGeneratorTests {
         h.assertTrue(machine.purgeFluid()==amount/170-10&&machine.getFluidInTank(1).isEmpty(),"second plunge drains output");
         h.setBlock(pos.west(),Blocks.AIR);
         h.assertTrue(front.fill(steam,FluidAction.EXECUTE)==0,"retained capability cannot fill through a broken structure");
-        h.setBlock(pos.west(),machine.grade().wall());h.assertTrue(machine.isStructureOk(),"repair forms");
+        h.setBlock(pos.west(),machine.grade().wall());h.assertTrue(StructureTestSupport.ok(machine),"repair forms");
         steam.setAmount(machine.getTankCapacity(0));machine.fill(steam,FluidAction.EXECUTE);machine.tick();
         h.assertTrue(machine.isOverloaded()&&machine.saveWithoutMetadata().getLong("gt.pending")==0,"excessive steam clears queued output and latches overload");
         machine.load(machine.saveWithoutMetadata());h.assertTrue(machine.isOverloaded(),"steam fault survives reload");

@@ -40,6 +40,15 @@ public final class GregTechConfig {
             .define("machines.break_by_overload", false);
 
 //? if >=1.21.1 {
+    /*private static final ModConfigSpec.ConfigValue<String> STRUCTURE_TRACKING = BUILDER
+*///?} else {
+    private static final ForgeConfigSpec.ConfigValue<String> STRUCTURE_TRACKING = BUILDER
+//?}
+            .comment("Multiblock structure checks. tracked reads a cache and scans at the end of the tick.",
+                    "legacy scans on every query, including the previous unloaded-boiler cache.")
+            .define("multiblock.structureTracking", "tracked");
+
+//? if >=1.21.1 {
     /*public static final ModConfigSpec SPEC = BUILDER.build();
 *///?} else {
     static final ForgeConfigSpec SPEC = BUILDER.build();
@@ -50,6 +59,15 @@ public final class GregTechConfig {
     public static boolean explodeByOverload() {
         try {
             return OVERLOAD_EXPLOSIONS.get();
+        } catch (IllegalStateException e) {
+            return false;
+        }
+    }
+
+    public static boolean structureTrackingLegacy() {
+        try {
+            String mode = STRUCTURE_TRACKING.get();
+            return mode != null && mode.equalsIgnoreCase("legacy");
         } catch (IllegalStateException e) {
             return false;
         }
