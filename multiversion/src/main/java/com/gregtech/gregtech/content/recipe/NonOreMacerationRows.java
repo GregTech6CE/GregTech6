@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 //?}
 import java.util.*;
-/** Exact OPL maceration/washing and purified Sifting producers only; no other map rows are inferred. */
+/** Exact OPL builtin raw Crusher/Hammer, maceration/washing and purified Sifting and water Sluice producers only; no other map rows are inferred. */
 public final class NonOreMacerationRows {
  private NonOreMacerationRows(){}
  private static final DormantOreRows ROWS=new DormantOreRows();
@@ -26,10 +26,15 @@ public final class NonOreMacerationRows {
  }
  public static void register(GTMaterial material,MaterialPrefix prefix,String producer,RecipeMap map,
        boolean optimize,ItemStack input,ItemStack[] outputs,long[] chances,FluidStack[] fluids,long duration,long eu){
+  register(material,prefix,producer,map,optimize,input,outputs,chances,fluids,null,duration,eu);
+ }
+ public static void register(GTMaterial material,MaterialPrefix prefix,String producer,RecipeMap map,
+       boolean optimize,ItemStack input,ItemStack[] outputs,long[] chances,FluidStack[] fluids,
+       FluidStack[] fluidOutputs,long duration,long eu){
   if(input==null||input.isEmpty())return; // same missing-form skip as original callsite
   if(reviewed(material)&&!SourceOreInputForms.allowGeneratedInput(material,prefix,input,SourceOreInputForms.Evidence.NO)){
-   MATERIALS.add(material);ROWS.define(material,producer,map,optimize,input,outputs,chances,fluids,duration,eu);
-  }else map.addRecipe(optimize,new ItemStack[]{input},outputs,null,chances,fluids,null,duration,eu,0);
+   MATERIALS.add(material);ROWS.define(material,producer,map,optimize,input,outputs,chances,fluids,fluidOutputs,duration,eu);
+  }else map.addRecipe(optimize,new ItemStack[]{input},outputs,null,chances,fluids,fluidOutputs,duration,eu,0);
  }
  public static void seal(){ROWS.seal();}
  public static Set<Recipe> owned(){return ROWS.owned();}

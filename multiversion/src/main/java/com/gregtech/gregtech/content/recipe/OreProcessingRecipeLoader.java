@@ -64,15 +64,19 @@ public class OreProcessingRecipeLoader implements InitializationStep {
 
     /** Tracks materials already added to the ByProductList (avoids duplicates). */
     private final List<GTMaterial> mByProductListed = new ArrayList<>();
+    /** Deduplicate only immutable builtin raw descriptors, never independent recipe rows. */
+    private final java.util.Set<GTMaterial> mRawDefinitions = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>());
 
     @Override
     public void run() {
+        // Snapshot form provenance before any owned raw descriptors. The following entry loops
+        // only add recipe rows; they do not publish material forms or dispatch addon callbacks.
+        NonOreMacerationRows.begin();
         processOreToCrushed();
         processOreBlocks();
         processDenseIconOres();
         processVanillaIconOres();
         processVanillaOres();
-        NonOreMacerationRows.begin();
         processMaceration();
         processWashing();
         processPurifiedRoutes();
@@ -124,7 +128,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
             ItemStack oreInput = mat(MaterialPrefix.oreRaw, material, 1);
             if (oreInput.isEmpty()) continue;
 
-            registerOreEntryRecipes(material, oreInput, baseMultiplier);
+            registerOreEntryRecipes(material, oreInput, baseMultiplier, true);
 
 
         }
@@ -281,6 +285,11 @@ public class OreProcessingRecipeLoader implements InitializationStep {
 
     /** Standard Crusher / Hammer / smelting for one ore-shaped input stack. */
     private void registerOreEntryRecipes(GTMaterial material, ItemStack oreInput, int multiplier) {
+        registerOreEntryRecipes(material, oreInput, multiplier, false);
+    }
+
+    /** Only processOreToCrushed supplies builtinRaw; shared block/vanilla callers remain unchanged. */
+    private void registerOreEntryRecipes(GTMaterial material, ItemStack oreInput, int multiplier, boolean builtinRaw) {
         if (isOilsands(material)) { registerOilsandsInput(oreInput); return; }
 
         GTMaterial target = material.getTargetCrushingMaterial().resolve();
@@ -290,12 +299,26 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         if (out.isEmpty()) out = mat(MaterialPrefix.dust, target, count);
         if (out.isEmpty()) return;
         long quality = Math.max(1, material.getToolQuality() + 1);
-        // GT6 crusher has two guaranteed primary outputs; hammer has one.
-        if (ReviewedCinnabarFacts.supports(material)
-                && oreInput.getItem()==mat(MaterialPrefix.oreRaw,material,1).getItem()) {
-            SourceOreFollowonRows.rawCrusher(material,ReviewedCinnabarFacts.INSTANCE);
-        } else MachineRecipeMaps.Crusher.addRecipe1(true, EU_TIER, 128L * count * quality, oreInput, out, out.copy());
-        MachineRecipeMaps.Hammer.addRecipe1(true, EU_TIER, 32L * count * quality, oreInput, out.copy());
+        boolean dormantRaw = builtinRaw && NonOreMacerationRows.reviewed(material)
+                && !SourceOreInputForms.allowGeneratedInput(material, MaterialPrefix.oreRaw, oreInput,
+                        SourceOreInputForms.Evidence.NO);
+        if (dormantRaw) {
+            if (mRawDefinitions.add(material)) {
+                NonOreMacerationRows.register(material, MaterialPrefix.oreRaw, "raw/crusher", MachineRecipeMaps.Crusher,
+                        true, oreInput, new ItemStack[]{out, out.copy()}, null, new FluidStack[0], 128L * count * quality, EU_TIER);
+                NonOreMacerationRows.register(material, MaterialPrefix.oreRaw, "raw/hammer", MachineRecipeMaps.Hammer,
+                        true, oreInput, new ItemStack[]{out.copy()}, null, new FluidStack[0], 32L * count * quality, EU_TIER);
+            }
+        } else {
+            // Unreviewed/external/startup overrides retain original direct admission and ordering.
+            // GT6 crusher has two guaranteed primary outputs; hammer has one.
+            if (ReviewedCinnabarFacts.supports(material)
+                    && oreInput.getItem()==mat(MaterialPrefix.oreRaw,material,1).getItem()) {
+                SourceOreFollowonRows.rawCrusher(material,ReviewedCinnabarFacts.INSTANCE);
+            } else MachineRecipeMaps.Crusher.addRecipe1(true, EU_TIER, 128L * count * quality, oreInput, out, out.copy());
+            MachineRecipeMaps.Hammer.addRecipe1(true, EU_TIER, 32L * count * quality, oreInput, out.copy());
+        }
+        // Furnace ownership/eligibility is separate, even when the two machine rows are dormant.
         // Sifting is for DUST_ORE prefixes, not ordinary raw/stone ores.
         registerSmelting(material, oreInput);
     }
@@ -564,14 +587,14 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         FluidStack sluice100 = fluidStack("Sluice", 100);
         if (water900.length == 0 || sluice900 == null || sluice100 == null) return;
 
+        // Deduplicate captured definitions only; UNKNOWN and externally owned direct admissions
+        // retain their existing order and collision behavior, including repeated aliases.
+        var defined = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<GTMaterial, Boolean>());
         for (GTMaterial mat : GTMaterialRegistry.allMaterials()) {
             GTMaterial material = mat.resolve();
             if (!material.isValid() || !MaterialPrefix.crushed.isValidFor(material)) continue;
 
             ItemStack crushed = mat(MaterialPrefix.crushed, material, 1);
-            if (!SourceOreInputForms.allowGeneratedInput(material,MaterialPrefix.crushed,crushed,
-                    material.getId()==8221&&material.getName().equals("Wood")
-                    ?SourceOreInputForms.Evidence.NO:SourceOreInputForms.Evidence.UNKNOWN))continue;
             ItemStack crushedTiny = mat(MaterialPrefix.crushedTiny, material, 1);
             ItemStack purified = mat(MaterialPrefix.crushedPurified, material, 1);
             ItemStack purifiedTiny = mat(MaterialPrefix.crushedPurifiedTiny, material, 1);
@@ -594,17 +617,27 @@ public class OreProcessingRecipeLoader implements InitializationStep {
             }
             if (!complete) continue;
 
+            boolean captured = NonOreMacerationRows.reviewed(material)
+                    && (!SourceOreInputForms.allowGeneratedInput(material, MaterialPrefix.crushed, crushed,
+                            SourceOreInputForms.Evidence.NO)
+                    || !SourceOreInputForms.allowGeneratedInput(material, MaterialPrefix.crushedTiny, crushedTiny,
+                            SourceOreInputForms.Evidence.NO));
+            if (captured && !defined.add(material)) continue;
             for (FluidStack water : water900) {
-                MachineRecipeMaps.Sluice.addRecipe1(true, EU_TIER, 144, SLUICE_CHANCES,
-                        crushed, water, sluice900.copy(), purified,
-                        fines9[0].copy(), fines9[1].copy(), fines9[2].copy(), fines9[3].copy(),
-                        fines9[4].copy(), fines9[5].copy(), fines9[6].copy(), fines9[7].copy());
+                NonOreMacerationRows.register(material, MaterialPrefix.crushed,
+                        "sluice/whole/" + net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(water.getFluid()),
+                        MachineRecipeMaps.Sluice, true, crushed,
+                        new ItemStack[]{purified, fines9[0].copy(), fines9[1].copy(), fines9[2].copy(), fines9[3].copy(),
+                                fines9[4].copy(), fines9[5].copy(), fines9[6].copy(), fines9[7].copy()},
+                        SLUICE_CHANCES, new FluidStack[]{water}, new FluidStack[]{sluice900.copy()}, 144, EU_TIER);
             }
             for (FluidStack water : water100) {
-                MachineRecipeMaps.Sluice.addRecipe1(true, EU_TIER, 16, SLUICE_CHANCES,
-                        crushedTiny, water, sluice100.copy(), purifiedTiny,
-                        fines1[0].copy(), fines1[1].copy(), fines1[2].copy(), fines1[3].copy(),
-                        fines1[4].copy(), fines1[5].copy(), fines1[6].copy(), fines1[7].copy());
+                NonOreMacerationRows.register(material, MaterialPrefix.crushedTiny,
+                        "sluice/tiny/" + net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(water.getFluid()),
+                        MachineRecipeMaps.Sluice, true, crushedTiny,
+                        new ItemStack[]{purifiedTiny, fines1[0].copy(), fines1[1].copy(), fines1[2].copy(), fines1[3].copy(),
+                                fines1[4].copy(), fines1[5].copy(), fines1[6].copy(), fines1[7].copy()},
+                        SLUICE_CHANCES, new FluidStack[]{water}, new FluidStack[]{sluice100.copy()}, 16, EU_TIER);
             }
         }
     }
