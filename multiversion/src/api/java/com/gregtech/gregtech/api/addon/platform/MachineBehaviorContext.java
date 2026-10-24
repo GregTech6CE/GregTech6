@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon.platform;
 
 import net.minecraft.core.BlockPos;
@@ -10,8 +12,6 @@ import java.util.List;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
 //?}
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /** The placed machine a behavior reads and writes. Valid during the callbacks on {@link MachineBehavior}. */
 public interface MachineBehaviorContext {

@@ -1,8 +1,8 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 import java.util.Objects;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /** One structure cell. The origin is rejected. Coordinates are not limited to ±16. */
 public final class LayoutCell {

@@ -1,9 +1,9 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 import java.util.List;
 import java.util.Objects;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * Item and fluid faces for a recipe machine. Leaving {@link RecipeMachine.Builder#io(MachineIo)}

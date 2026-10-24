@@ -1,8 +1,8 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 import com.gregtech.gregtech.api.machine.BasicMachineEnergy;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * Packet admission and the per-tick condition drain for an energy part or an auxiliary buffer.

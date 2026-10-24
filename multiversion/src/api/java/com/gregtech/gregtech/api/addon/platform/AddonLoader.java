@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon.platform;
 
 //? if >=1.21.1 {
@@ -7,8 +9,6 @@ import net.minecraftforge.fluids.FluidStack;
 //?}
 import com.gregtech.gregtech.api.addon.InstalledService;
 import net.minecraft.world.level.material.Fluid;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /** Loader entry for types whose signatures differ between Forge and NeoForge. GregTech installs it once. */
 public final class AddonLoader {

@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon.platform;
 
 import com.gregtech.gregtech.api.addon.GregTechMaterials;
@@ -7,8 +9,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * Platform entry installed by GregTech before material initialization.

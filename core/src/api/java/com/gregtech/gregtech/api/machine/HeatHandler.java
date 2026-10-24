@@ -1,7 +1,8 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.machine;
 
 /**
- * SPDX-License-Identifier: LGPL-3.0-or-later.
  * Signed heat facade over a machine's own HU buffer.
  *
  * <p>Amounts are signed heat units: a positive value heats, a negative value cools. Each

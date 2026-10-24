@@ -1,8 +1,8 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 import java.util.Objects;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * Removes the crucible smelting target of a material, including a built-in one.

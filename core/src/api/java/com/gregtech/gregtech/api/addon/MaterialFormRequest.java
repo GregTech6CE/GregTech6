@@ -1,8 +1,10 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 import java.util.Objects;
 
-/** SPDX-License-Identifier: LGPL-3.0-or-later. One extra material form of a prefix GregTech already generates. A new prefix is a {@link PrefixDeclaration}. */
+/** One extra material form of a prefix GregTech already generates. A new prefix is a {@link PrefixDeclaration}. */
 public record MaterialFormRequest(String materialName, String prefixName) {
     public MaterialFormRequest {
         materialName = Objects.requireNonNull(materialName, "material name").trim();

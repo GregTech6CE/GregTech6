@@ -1,7 +1,8 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 /**
- * SPDX-License-Identifier: LGPL-3.0-or-later.
  * One compressed gas drum. Capacity is the stored millibuckets, not a multiplier.
  * The drum is always gas proof. Acid, plasma and magic are the pressure rating.
  * The temperature ceiling is the material melting point, resolved when machines install.

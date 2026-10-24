@@ -1,6 +1,6 @@
-package com.gregtech.gregtech.api.addon;
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
 
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
+package com.gregtech.gregtech.api.addon;
 
 /** Programmed circuit numbers. 0 through 24 are {@code integrated_circuit_0} through {@code integrated_circuit_24}. */
 public final class SelectorTags {

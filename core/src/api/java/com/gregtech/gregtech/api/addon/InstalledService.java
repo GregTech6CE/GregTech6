@@ -1,6 +1,8 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
-/** SPDX-License-Identifier: LGPL-3.0-or-later. One-time bind, lock-free read. */
+/** One-time bind, lock-free read. */
 public final class InstalledService<T> {
     private volatile T value;
 

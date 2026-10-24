@@ -1,8 +1,8 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 import java.util.Objects;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * A machine recipe table or a fuel table. The fields match. The two factories do not share

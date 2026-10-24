@@ -1,8 +1,10 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 import java.util.regex.Pattern;
 
-/** SPDX-License-Identifier: LGPL-3.0-or-later. Shared name patterns so each check does not recompile a regex. */
+/** Shared name patterns so each check does not recompile a regex. */
 public final class AddonNames {
     /** Loader mod id used as {@code addonId()}. Two to 64 characters. */
     public static final Pattern ADDON_ID = Pattern.compile("[a-z][a-z0-9_]{1,63}");

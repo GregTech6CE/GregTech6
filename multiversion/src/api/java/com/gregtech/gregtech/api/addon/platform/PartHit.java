@@ -1,8 +1,8 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon.platform;
 
 import net.minecraft.core.Direction;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * Where a player clicked a part. {@code x}, {@code y} and {@code z} are fractions of the block,

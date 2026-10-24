@@ -1,8 +1,10 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 import com.gregtech.gregtech.api.machine.BasicMachineEnergy;
 
-/** SPDX-License-Identifier: LGPL-3.0-or-later. Tick-end storage and declared output limits for a behavior machine. */
+/** Tick-end storage and declared output limits for a behavior machine. */
 public final class BehaviorEnergyRules {
     private BehaviorEnergyRules() {}
 

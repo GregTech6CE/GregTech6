@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon.platform;
 
 import com.gregtech.gregtech.api.addon.CrucibleMold;
@@ -11,8 +13,6 @@ import net.minecraft.world.item.ItemStack;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
 //?}
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * What one placed behavior machine does. GregTech creates a new instance for every block entity.

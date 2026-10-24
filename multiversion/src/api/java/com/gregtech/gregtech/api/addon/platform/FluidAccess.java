@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon.platform;
 
 //? if >=1.21.1 {
@@ -7,7 +9,6 @@ import net.minecraftforge.fluids.FluidStack;
 //?}
 
 /**
- * SPDX-License-Identifier: LGPL-3.0-or-later.
  * Tanks owned by a machine or structure part. All amounts and capacities are mB.
  * Reads and returned fluids are detached snapshots; fill arguments remain caller-owned.
  * Use during server callbacks only and do not retain the view. Like the legacy context

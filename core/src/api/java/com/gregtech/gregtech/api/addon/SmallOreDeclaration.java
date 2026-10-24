@@ -1,7 +1,8 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon;
 
 /**
- * SPDX-License-Identifier: LGPL-3.0-or-later.
  * One small ore, with the same fields as a built-in {@code SmallOre}.
  * Heights are the pre-remap values used by the built-in tables. The overworld generator stretches them.
  */

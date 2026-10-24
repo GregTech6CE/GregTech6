@@ -1,8 +1,8 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package com.gregtech.gregtech.api.addon.platform;
 
 import net.minecraft.world.item.ItemStack;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
  * Per-block-entity values GregTech writes to NBT. Keys match {@code [a-z0-9_.]+}.
