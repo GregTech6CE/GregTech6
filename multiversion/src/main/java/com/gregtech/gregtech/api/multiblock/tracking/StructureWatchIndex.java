@@ -100,7 +100,7 @@ public final class StructureWatchIndex {
                 continue;
             }
             if (pos.equals(tracker.pos())) tracker.noteFacing();
-            boolean fell = tracker.invalidate();
+            boolean fell = tracker.invalidateCell(pos);
             addDirty(data, tracker);
             if (fell) {
                 tracker.machine().structureFormedChanged(false);
@@ -123,6 +123,7 @@ public final class StructureWatchIndex {
         if (trackers == null) return;
         for (StructureTracker tracker : List.copyOf(trackers)) {
             if (tracker.unloading() || tracker.entity().isRemoved()) continue;
+            tracker.noteChunkReloaded(key);
             tracker.enqueue(false);
             addDirty(data, tracker);
         }
@@ -170,6 +171,7 @@ public final class StructureWatchIndex {
             if (trackers == null) continue;
             for (StructureTracker tracker : List.copyOf(trackers)) {
                 if (tracker.unloading() || tracker.entity().isRemoved()) continue;
+                tracker.noteChunkReloaded(key);
                 tracker.enqueue(false);
                 addDirty(data, tracker);
             }
