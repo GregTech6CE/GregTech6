@@ -149,14 +149,32 @@ STRUCTURE_TRACKING_CASES = (
     'structuretrackingtests.satisfiedcrucibleformandfluidleveldonotdirty',
     'structuretrackingtests.exhaustedbudgetstillrepairsaformedmachinethistick',
     'structuretrackingtests.safetyrescandoesnotbindormarkchunks',
+    'structuretrackingtests.oversizedtrackerisevaluatedbeforesmallones',
+    'structuretrackingtests.tightenedfootprintkeepsthefrontierchunk',
+    'structuretrackingtests.trackingstateisownedbytheserverworld',
+    'structuretrackingtests.reloadinvalidatestagandoverlaymachinessynchronously',
+    'structuretrackingtests.projectionauditacceptsequivalentchangesandcatchesalie',
+    'structuretrackingtests.probedoesnotlookupthreadstateoutsidescans',
+    'structuretrackingtests.realshellchunkunloadsuspendsandreloads',
+    'structuretrackingtests.realcontrollerchunkunloadreattaches',
 )
 
 
 class IssueEvidenceTests(unittest.TestCase):
+    def test_structure_data_mixin_exemption_is_exact_and_package_scoped(self):
+        package = 'com/gregtech/gregtech/mixin/'
+        config = {'package': 'com.gregtech.gregtech.mixin',
+                  'mixins': ['ServerLevelStructureDataMixin', 'LevelChunkStructureWatchMixin',
+                             'ServerLevelFutureMixin'], 'client': []}
+        self.assertEqual({package + 'LevelChunkStructureWatchMixin', package + 'ServerLevelFutureMixin'},
+                         required_forge_mixin_mappings(config))
+        config['package'] = 'other.mixin'
+        self.assertIn('other/mixin/ServerLevelStructureDataMixin', required_forge_mixin_mappings(config))
+
     def test_structure_tracking_exact_identities_and_native_template(self):
         expected = STRUCTURE_TRACKING_CASES
         self.assertEqual(set(expected), set(STRUCTURE_TRACKING_CASE_NAMESPACES))
-        self.assertEqual(len(expected), 18)
+        self.assertEqual(len(expected), 26)
         for platform in EXPECTED:
             self.assertTrue(set(expected) <= EXPECTED[platform])
             self.verify(self.report(platform), platform)

@@ -141,7 +141,16 @@ public final class StructureWatchIndex {
             removeDirty(data, tracker);
             if (fell) {
                 tracker.machine().structureFormedChanged(false);
-                ClientFormedSync.send(tracker.entity());
+                // The unload event runs before this chunk is saved. sendBlockUpdated evaluates
+                // collision shapes, whose cover hooks look up the BE and can reload an absent
+                // controller before its saved data exists. Only notify a surviving live controller.
+                BlockPos controller = tracker.pos();
+                BlockEntity entity = tracker.entity();
+                if (ChunkPos.asLong(controller) != key && !entity.isRemoved() && level.hasChunkAt(controller)) {
+                    LevelChunk loaded = level.getChunkSource().getChunkNow(controller.getX() >> 4, controller.getZ() >> 4);
+                    if (loaded != null && loaded.getBlockEntities().get(controller) == entity)
+                        ClientFormedSync.send(entity);
+                }
             }
         }
     }

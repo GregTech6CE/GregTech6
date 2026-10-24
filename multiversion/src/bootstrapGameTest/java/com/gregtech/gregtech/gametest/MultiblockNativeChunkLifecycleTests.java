@@ -23,12 +23,14 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.level.ChunkEvent;
+import net.neoforged.neoforge.event.level.ChunkDataEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 *///?} else {
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.level.ChunkEvent;
+import net.minecraftforge.event.level.ChunkDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
@@ -99,9 +101,13 @@ public final class MultiblockNativeChunkLifecycleTests {
         private MultiblockPortBlockEntity oldLocalPort;
         private MultiblockPortBlockEntity oldRemotePort;
         private long seededEnergy;
+        private long unloadedTick = -1;
+        private net.minecraft.world.level.chunk.LevelChunk oldControllerChunk;
+        private net.minecraft.world.level.chunk.LevelChunk oldShellChunk;
         private boolean registered;
-        private boolean closed;
-        private int phase;
+        private volatile boolean closed;
+        private volatile int phase;
+        private final java.util.List<String> dataEvents = new java.util.concurrent.CopyOnWriteArrayList<>();
 
         private NativeChunkLifecycleFixture(GameTestHelper h) { this.h = h; level = h.getLevel(); }
 
@@ -114,6 +120,44 @@ public final class MultiblockNativeChunkLifecycleTests {
             }
         }
 
+        @SubscribeEvent
+        public void nativeMultiblockChunkDataSaved(ChunkDataEvent.Save event) {
+            captureNativeMultiblockChunkData(event);
+        }
+
+        @SubscribeEvent
+        public void nativeMultiblockChunkDataLoaded(ChunkDataEvent.Load event) {
+            captureNativeMultiblockChunkData(event);
+        }
+
+        // NeoForge rejects abstract event subscribers; both loaders expose concrete Save/Load events.
+        private void captureNativeMultiblockChunkData(ChunkDataEvent event) {
+            if (closed || phase < 1 || event.getLevel() != level
+                    || (!event.getChunk().getPos().equals(controllerChunk)
+                    && !event.getChunk().getPos().equals(shellChunk))) return;
+            // Observe the loader's real serialized Save/Load payload, never reconstruct or reinject it.
+            // Load can run asynchronously: copy only event-owned data and append to a thread-safe log.
+            var data = event.getData();
+            var proof = new net.minecraft.nbt.CompoundTag();
+            proof.putInt("xPos", data.getInt("xPos"));
+            proof.putInt("zPos", data.getInt("zPos"));
+            proof.putString("Status", data.getString("Status"));
+            proof.putLong("LastUpdate", data.getLong("LastUpdate"));
+            proof.put("block_entities", data.getList("block_entities", 10).copy());
+            var sections = new net.minecraft.nbt.ListTag();
+            for (var entry : data.getList("sections", 10)) {
+                var section = (net.minecraft.nbt.CompoundTag) entry;
+                if (section.getByte("Y") == origin.getY() >> 4) sections.add(section.copy());
+            }
+            proof.put("fixture_sections", sections);
+            BlockPos sample = event.getChunk().getPos().equals(controllerChunk) ? origin : origin.east();
+            String entry = event.getClass().getSimpleName() + " chunk=" + event.getChunk().getPos()
+                    + " sample=" + sample + " state=" + event.getChunk().getBlockState(sample)
+                    + " payload=" + proof;
+            dataEvents.add(entry);
+            System.out.println("[multiblock-native-data] " + entry);
+        }
+
         private void start() {
             h.assertTrue(!level.hasChunkAt(origin) && !level.hasChunkAt(origin.east()), "remote fixture chunks initially unavailable");
             // FULL/UNKNOWN33, never FORCED31: forced controller tickets retain adjacent
@@ -124,8 +168,8 @@ public final class MultiblockNativeChunkLifecycleTests {
             MinecraftForge.EVENT_BUS.register(this);
             //?}
             registered = true;
-            level.getChunk(controllerChunk.x, controllerChunk.z);
-            level.getChunk(shellChunk.x, shellChunk.z);
+            oldControllerChunk = level.getChunk(controllerChunk.x, controllerChunk.z);
+            oldShellChunk = level.getChunk(shellChunk.x, shellChunk.z);
             var block = (BasicMachineBlock) BuiltInRegistries.BLOCK.stream()
                     .filter(b -> b instanceof BasicMachineBlock m && m.basicSpec().machineName().equals("largecentrifuge"))
                     .findFirst().orElseThrow();
@@ -152,7 +196,10 @@ public final class MultiblockNativeChunkLifecycleTests {
             h.assertTrue(seededEnergy > 0, "energy seed is nonzero");
             oldController.setChanged();
             phase = 1;
-            System.out.println("[multiblock-native-lifecycle] phase=1 formed chunks=2 inventory=7 energy=" + seededEnergy);
+            System.out.println("[multiblock-native-lifecycle] phase=1 formed chunks=2 inventory=7 energy=" + seededEnergy
+                    + " state=" + oldController.getBlockState()
+                    + " type=" + BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(oldController.getType())
+                    + " valid=" + oldController.getType().isValid(oldController.getBlockState()));
             // No read of either remote chunk while waiting: UNKNOWN tickets expire naturally.
         }
 
@@ -161,24 +208,51 @@ public final class MultiblockNativeChunkLifecycleTests {
                     + " removed=" + oldController.isRemoved() + " full=" + level.hasChunkAt(origin) + "/" + level.hasChunkAt(origin.east()));
             if (unloaded.size() != 2 || !oldController.isRemoved() || !oldLocalPort.isRemoved()
                     || !oldRemotePort.isRemoved() || level.hasChunkAt(origin) || level.hasChunkAt(origin.east())) return;
-            phase = 2;
-            System.out.println("[multiblock-native-lifecycle] phase=2 actual-unloads=2 old-removed=3 full=0 tick=" + h.getTick());
+            if (unloadedTick < 0) {
+                phase = 2;
+                unloadedTick = h.getTick();
+                System.out.println("[multiblock-native-lifecycle] phase=2 actual-unloads=2 old-removed=3 full=0 tick=" + unloadedTick);
+                return;
+            }
+            // hasChunk checks holders, while getChunk can still return a just-unloaded cached chunk.
+            // Cross one actual server tick so ServerChunkCache clears that cache naturally; never
+            // clear engine state reflectively, retry hydration, or replace it with a captured tag.
+            if (h.getTick() <= unloadedTick) return;
             // All reload assertions run in one callback, before UNKNOWN can expire.
-            level.getChunk(controllerChunk.x, controllerChunk.z);
+            var reloadedControllerChunk = level.getChunk(controllerChunk.x, controllerChunk.z);
             h.assertTrue(!level.hasChunkAt(origin.east()), "controller-only FULL load leaves neighboring shell unavailable");
             var controller = (LargeRecipeMachineBlockEntity) level.getBlockEntity(origin);
-            h.assertTrue(controller != null && controller != oldController && !controller.isRemoved(), "native reload creates fresh controller identity");
+            String reloadState = "tick=" + h.getTick() + " unloadTick=" + unloadedTick + " events=" + unloaded
+                    + " controllerChunk=" + controllerChunk + " oldChunk=" + System.identityHashCode(oldControllerChunk)
+                    + " newChunk=" + System.identityHashCode(reloadedControllerChunk)
+                    + " controllerFull=" + level.hasChunkAt(origin) + " shellFull=" + level.hasChunkAt(origin.east())
+                    + " controllerHolder=" + level.getChunkSource().getChunkDebugData(controllerChunk)
+                    + " shellHolder=" + level.getChunkSource().getChunkDebugData(shellChunk)
+                    + " blockState=" + reloadedControllerChunk.getBlockState(origin)
+                    + " liveEntityPresent=" + reloadedControllerChunk.getBlockEntities().containsKey(origin)
+                    + " serializedEntityPositions=" + reloadedControllerChunk.getBlockEntitiesPos()
+                    + " expectedType=" + BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(oldController.getType())
+                    + " typeValid=" + oldController.getType().isValid(reloadedControllerChunk.getBlockState(origin))
+                    + " oldController=" + describe(oldController) + " controller=" + describe(controller)
+                    + " dataEvents=" + dataEvents;
+            h.assertTrue(reloadedControllerChunk != oldControllerChunk, "native reload creates a fresh controller chunk: " + reloadState);
+            h.assertTrue(controller != null && controller != oldController && !controller.isRemoved(),
+                    "native reload creates fresh controller identity: " + reloadState);
             assertSavedState(controller);
             var localPort = (MultiblockPortBlockEntity) level.getBlockEntity(origin.south());
-            h.assertTrue(localPort != null && localPort != oldLocalPort, "native reload creates fresh local port");
+            h.assertTrue(localPort != null && localPort != oldLocalPort,
+                    "native reload creates fresh local port: old=" + describe(oldLocalPort) + " new=" + describe(localPort) + " " + reloadState);
             h.assertTrue(!StructureTestSupport.ok(controller), "partial native reload safely refuses incomplete structure");
             h.assertTrue(!localPort.isBoundTo(origin) && localPort.getEnergyTypes(Direction.DOWN).isEmpty(), "loaded port remains inactive without shell");
             h.assertTrue(!level.hasChunkAt(origin.east()), "validation and port query never force-load missing shell");
             phase = 3;
             System.out.println("[multiblock-native-lifecycle] phase=3 controller-reloaded shell-full=false saved-state=true");
-            level.getChunk(shellChunk.x, shellChunk.z);
+            var reloadedShellChunk = level.getChunk(shellChunk.x, shellChunk.z);
+            h.assertTrue(reloadedShellChunk != oldShellChunk, "native reload creates a fresh shell chunk: old="
+                    + System.identityHashCode(oldShellChunk) + " new=" + System.identityHashCode(reloadedShellChunk) + " " + reloadState);
             var remotePort = (MultiblockPortBlockEntity) level.getBlockEntity(origin.east());
-            h.assertTrue(remotePort != null && remotePort != oldRemotePort && !remotePort.isRemoved(), "shell reload creates fresh native port");
+            h.assertTrue(remotePort != null && remotePort != oldRemotePort && !remotePort.isRemoved(),
+                    "shell reload creates fresh native port: old=" + describe(oldRemotePort) + " new=" + describe(remotePort) + " " + reloadState);
             h.assertTrue(StructureTestSupport.ok(controller), "complete native reload reforms registered structure");
             h.assertTrue(localPort.isBoundTo(origin) && remotePort.isBoundTo(origin), "fresh ports rebind without manual reset");
             h.assertTrue(localPort.getEnergyTypes(Direction.DOWN).contains(controller.spec().energyTag()), "energy port permissions recover");
@@ -187,6 +261,11 @@ public final class MultiblockNativeChunkLifecycleTests {
             System.out.println("[multiblock-native-lifecycle] phase=4 reformed ports-rebound=2 inventory=7 energy=" + seededEnergy);
             close();
             h.succeed();
+        }
+
+        private static String describe(net.minecraft.world.level.block.entity.BlockEntity entity) {
+            return entity == null ? "null" : entity.getClass().getSimpleName() + "@" + System.identityHashCode(entity)
+                    + "[removed=" + entity.isRemoved() + ",pos=" + entity.getBlockPos() + "]";
         }
 
         private void assertSavedState(LargeRecipeMachineBlockEntity controller) {

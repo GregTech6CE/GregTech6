@@ -925,41 +925,103 @@ public final class StructureTrackingTests {
         var cells = new ArrayList<BlockPos>();
         BlockPos origin = new BlockPos(33_400_000, 80, 33_400_000);
         ChunkPos controllerChunk = new ChunkPos(origin);
-        var machine = behavior(h.getLevel(), origin, "irrigator", cells);
         BlockPos shellPos = origin.east(256);
         ChunkPos shell = new ChunkPos(shellPos);
+        boolean[] closed = {false};
+        Runnable cleanup = () -> {
+            if (closed[0]) return;
+            closed[0] = true;
+            StructureTrackingEvents.enable(false);
+            clear(h.getLevel(), cells);
+            h.getLevel().getChunkSource().removeRegionTicket(net.minecraft.server.level.TicketType.PLAYER,
+                    controllerChunk, 0, controllerChunk);
+            restoreLayout("irrigator", previous);
+        };
         try {
+            cleanupOnCompletion(h, cleanup);
+            var machine = behavior(h.getLevel(), origin, "irrigator", cells);
             put(h.getLevel(), shellPos, Blocks.STONE.defaultBlockState(), cells);
             h.assertTrue(StructureTestSupport.ok(machine), "far-cell machine forms");
             h.assertTrue(!controllerChunk.equals(shell), "the shell is in another chunk");
-            // setChunkForced uses ENTITY_TICKING (31) and keeps a two-chunk radius. A distance-0
-            // region ticket holds exactly the controller chunk, so the shell sixteen chunks away unloads.
+            var oldShellChunk = h.getLevel().getChunkSource().getChunkNow(shell.x, shell.z);
+            h.assertTrue(oldShellChunk != null, "the exact shell chunk starts FULL: " + shell);
+            // A distance-0 region ticket holds the controller; the shell sixteen chunks away unloads.
             h.getLevel().getChunkSource().addRegionTicket(net.minecraft.server.level.TicketType.PLAYER,
                     controllerChunk, 0, controllerChunk);
             StructureTrackingEvents.enable(true);
-            h.runAfterDelay(150, () -> {
+            long[] unloadedTick = {-1};
+            h.onEachTick(() -> {
+                if (closed[0]) return;
                 try {
-                    h.assertTrue(h.getLevel().getChunkSource().getChunkNow(shell.x, shell.z) == null,
-                            "the shell chunk really unloaded");
                     var log = StructureTrackingEvents.log();
+                    var shellNow = h.getLevel().getChunkSource().getChunkNow(shell.x, shell.z);
+                    String state = "tick=" + h.getTick() + " shell=" + shell + "/" + shell.toLong()
+                            + " shellFull=" + h.getLevel().hasChunkAt(shellPos)
+                            + " shellHolder=" + h.getLevel().getChunkSource().getChunkDebugData(shell)
+                            + " shellNow=" + System.identityHashCode(shellNow)
+                            + " oldShell=" + System.identityHashCode(oldShellChunk)
+                            + " controllerFull=" + h.getLevel().hasChunkAt(origin)
+                            + " controllerHolder=" + h.getLevel().getChunkSource().getChunkDebugData(controllerChunk)
+                            + " controllerRemoved=" + machine.isRemoved() + " events=" + log;
+                    h.assertTrue(h.getTick() < 350, "native shell unload deadline: " + state);
+                    // Losing FULL availability precedes the asynchronous native unload/save callback.
+                    // Wait for this exact event, not a fixed delay or unrelated fixtures' events.
+                    if (shellNow != null || !log.contains("ChunkEvent.Unload " + shell.toLong())) return;
+                    if (unloadedTick[0] < 0) {
+                        unloadedTick[0] = h.getTick();
+                        return;
+                    }
+                    // Let the next real server tick clear its native recent-chunk cache.
+                    if (h.getTick() <= unloadedTick[0]) return;
+                    h.assertTrue(shellNow == null, "the shell chunk really unloaded: " + state);
                     h.assertTrue(log.contains("ChunkEvent.Unload " + shell.toLong()),
-                            "the real unload event reached the index: " + log);
-                    h.assertTrue(!machine.isStructureOk(), "the machine suspends on the real unload");
-                    h.getLevel().getChunk(shell.x, shell.z);
+                            "the real unload event reached the index: " + state);
+                    h.assertTrue(h.getLevel().hasChunkAt(origin) && !machine.isRemoved(),
+                            "the original controller survives the shell-only unload: " + state);
+                    h.assertTrue(!machine.isStructureOk(), "the machine suspends on the real unload: " + state);
+                    var reloadedShell = h.getLevel().getChunk(shell.x, shell.z);
+                    h.assertTrue(reloadedShell != oldShellChunk,
+                            "native shell reload creates a fresh chunk: new=" + System.identityHashCode(reloadedShell) + " " + state);
                     StructureScheduler.flush(h.getLevel());
-                    h.assertTrue(machine.isStructureOk(), "the machine forms again after the real reload");
-                } finally {
-                    StructureTrackingEvents.enable(false);
-                    clear(h.getLevel(), cells);
-                    h.getLevel().getChunkSource().removeRegionTicket(net.minecraft.server.level.TicketType.PLAYER,
-                            controllerChunk, 0, controllerChunk);
-                    restoreLayout("irrigator", previous);
+                    h.assertTrue(machine.isStructureOk(), "the machine forms again after the real reload: " + state);
+                    System.out.println("[structure-tracking-native-shell] " + state + " reloaded="
+                            + System.identityHashCode(reloadedShell) + " formed=true");
+                    cleanup.run();
+                    h.succeed();
+                } catch (RuntimeException | Error failure) {
+                    cleanup.run();
+                    throw failure;
                 }
-                h.succeed();
             });
         } catch (RuntimeException | Error failure) {
-            restoreLayout("irrigator", previous);
+            cleanup.run();
             throw failure;
+        }
+    }
+
+    private static void cleanupOnCompletion(GameTestHelper h, Runnable cleanup) {
+        try {
+            net.minecraft.gametest.framework.GameTestInfo info = null;
+            for (var field : GameTestHelper.class.getDeclaredFields()) {
+                if (field.getType() != net.minecraft.gametest.framework.GameTestInfo.class) continue;
+                field.setAccessible(true);
+                info = (net.minecraft.gametest.framework.GameTestInfo) field.get(h);
+                break;
+            }
+            if (info == null) throw new IllegalStateException("GameTestInfo cleanup hook unavailable");
+            info.addListener(new net.minecraft.gametest.framework.GameTestListener() {
+                @Override public void testStructureLoaded(net.minecraft.gametest.framework.GameTestInfo test) {}
+                //? if >=1.21.1 {
+                /*@Override public void testPassed(net.minecraft.gametest.framework.GameTestInfo test, net.minecraft.gametest.framework.GameTestRunner runner) { cleanup.run(); }
+                @Override public void testFailed(net.minecraft.gametest.framework.GameTestInfo test, net.minecraft.gametest.framework.GameTestRunner runner) { cleanup.run(); }
+                @Override public void testAddedForRerun(net.minecraft.gametest.framework.GameTestInfo oldTest, net.minecraft.gametest.framework.GameTestInfo newTest, net.minecraft.gametest.framework.GameTestRunner runner) { cleanup.run(); }
+                *///?} else {
+                @Override public void testPassed(net.minecraft.gametest.framework.GameTestInfo test) { cleanup.run(); }
+                @Override public void testFailed(net.minecraft.gametest.framework.GameTestInfo test) { cleanup.run(); }
+                //?}
+            });
+        } catch (ReflectiveOperationException failure) {
+            throw new AssertionError("Cannot install native GameTest completion cleanup", failure);
         }
     }
 
@@ -972,38 +1034,68 @@ public final class StructureTrackingTests {
         var cells = new ArrayList<BlockPos>();
         BlockPos origin = new BlockPos(33_500_000, 80, 33_500_000);
         ChunkPos controllerChunk = new ChunkPos(origin);
-        var machine = behavior(h.getLevel(), origin, "irrigator", cells);
         BlockPos shellPos = origin.east(64);
         ChunkPos shell = new ChunkPos(shellPos);
+        boolean[] closed = {false};
+        Runnable cleanup = () -> {
+            if (closed[0]) return;
+            closed[0] = true;
+            StructureTrackingEvents.enable(false);
+            clear(h.getLevel(), cells);
+            restoreLayout("irrigator", previous);
+        };
         try {
+            cleanupOnCompletion(h, cleanup);
+            var machine = behavior(h.getLevel(), origin, "irrigator", cells);
             put(h.getLevel(), shellPos, Blocks.STONE.defaultBlockState(), cells);
             h.assertTrue(StructureTestSupport.ok(machine), "far-cell machine forms");
+            var oldControllerChunk = h.getLevel().getChunkSource().getChunkNow(controllerChunk.x, controllerChunk.z);
+            h.assertTrue(oldControllerChunk != null, "the exact controller chunk starts FULL: " + controllerChunk);
             StructureTrackingEvents.enable(true);
-            h.runAfterDelay(150, () -> {
+            long[] unloadedTick = {-1};
+            h.onEachTick(() -> {
+                if (closed[0]) return;
                 try {
                     var log = StructureTrackingEvents.log();
                     long hook = origin.asLong();
                     int event = log.indexOf("ChunkEvent.Unload " + controllerChunk.toLong());
                     int onUnload = log.indexOf("controller.onChunkUnloaded " + hook);
                     int removed = log.indexOf("controller.setRemoved " + hook);
+                    String state = "tick=" + h.getTick() + " controller=" + controllerChunk + "/" + controllerChunk.toLong()
+                            + " shell=" + shell + "/" + shell.toLong() + " oldRemoved=" + machine.isRemoved()
+                            + " controllerFull=" + h.getLevel().hasChunkAt(origin)
+                            + " shellFull=" + h.getLevel().hasChunkAt(shellPos)
+                            + " controllerHolder=" + h.getLevel().getChunkSource().getChunkDebugData(controllerChunk)
+                            + " shellHolder=" + h.getLevel().getChunkSource().getChunkDebugData(shell) + " events=" + log;
+                    h.assertTrue(h.getTick() < 350, "native controller unload deadline: " + state);
+                    // Exact native event, both controller callbacks, removal and FULL absence are the
+                    // lifecycle boundary; unrelated coordinates or a fixed delay cannot establish it.
+                    if (event < 0 || onUnload < 0 || removed < 0 || !machine.isRemoved()
+                            || h.getLevel().hasChunkAt(origin) || h.getLevel().hasChunkAt(shellPos)) return;
                     h.assertTrue(event >= 0 && onUnload > event && removed > onUnload,
-                            "unload event, then onChunkUnloaded, then setRemoved: " + log);
-                    h.getLevel().getChunk(controllerChunk.x, controllerChunk.z);
+                            "unload event, then onChunkUnloaded, then setRemoved: " + state);
+                    if (unloadedTick[0] < 0) {
+                        unloadedTick[0] = h.getTick();
+                        return;
+                    }
+                    if (h.getTick() <= unloadedTick[0]) return;
+                    var reloadedChunk = h.getLevel().getChunk(controllerChunk.x, controllerChunk.z);
                     h.getLevel().getChunk(shell.x, shell.z);
                     BlockEntity reloaded = h.getLevel().getBlockEntity(origin);
-                    h.assertTrue(reloaded instanceof TrackedMultiblock, "the controller block entity is back");
-                    h.assertTrue(StructureTestSupport.ok(reloaded), "the reloaded controller forms");
-                } finally {
-                    StructureTrackingEvents.enable(false);
-                    h.getLevel().getChunk(controllerChunk.x, controllerChunk.z);
-                    h.getLevel().getChunk(shell.x, shell.z);
-                    clear(h.getLevel(), cells);
-                    restoreLayout("irrigator", previous);
+                    h.assertTrue(reloadedChunk != oldControllerChunk && reloaded != machine,
+                            "native controller reload has fresh chunk and entity identities: " + state);
+                    h.assertTrue(reloaded instanceof TrackedMultiblock, "the controller block entity is back: " + state);
+                    h.assertTrue(StructureTestSupport.ok(reloaded), "the reloaded controller forms: " + state);
+                    System.out.println("[structure-tracking-native-controller] " + state + " reattached=true");
+                    cleanup.run();
+                    h.succeed();
+                } catch (RuntimeException | Error failure) {
+                    cleanup.run();
+                    throw failure;
                 }
-                h.succeed();
             });
         } catch (RuntimeException | Error failure) {
-            restoreLayout("irrigator", previous);
+            cleanup.run();
             throw failure;
         }
     }

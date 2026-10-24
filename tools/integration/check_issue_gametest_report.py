@@ -490,6 +490,14 @@ STRUCTURE_TRACKING_CASE_NAMESPACES = {
     'structuretrackingtests.satisfiedcrucibleformandfluidleveldonotdirty': 'gt6ce_structure_tracking:test_empty',
     'structuretrackingtests.exhaustedbudgetstillrepairsaformedmachinethistick': 'gt6ce_structure_tracking:test_empty',
     'structuretrackingtests.safetyrescandoesnotbindormarkchunks': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.oversizedtrackerisevaluatedbeforesmallones': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.tightenedfootprintkeepsthefrontierchunk': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.trackingstateisownedbytheserverworld': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.reloadinvalidatestagandoverlaymachinessynchronously': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.projectionauditacceptsequivalentchangesandcatchesalie': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.probedoesnotlookupthreadstateoutsidescans': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.realshellchunkunloadsuspendsandreloads': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.realcontrollerchunkunloadreattaches': 'gt6ce_structure_tracking:test_empty',
 }
 FUNCTIONAL_CASES |= set(STRUCTURE_TRACKING_CASE_NAMESPACES)
 
