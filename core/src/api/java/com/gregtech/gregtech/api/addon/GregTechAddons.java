@@ -9,8 +9,17 @@ public final class GregTechAddons {
     /**
      * Minor of {@code mod_version} ({@code 0.MINOR.PATCH}), not an individual build identifier.
      * Development builds sharing a version still need a matching SDK and runtime.
+     * The loader version range rejects an old jar.
+     *
+     * <p>Not a compile-time constant. A {@code static final} primitive set to a literal is copied into
+     * addon bytecode, so that addon would keep the minor it was compiled against. This field is
+     * initialized from {@link #apiVersion()} and is read at runtime.</p>
      */
-    public static final int API_VERSION = 0;
+    public static final int API_VERSION = apiVersion();
+
+    /** Current {@link #API_VERSION}. */
+    public static int apiVersion() { return 0; }
+
     private static final TreeMap<String, GregTechAddon> ADDONS = new TreeMap<>();
     public enum Phase { COLLECTING, DISPATCHING, READY, FAILED }
     private static Phase phase = Phase.COLLECTING;

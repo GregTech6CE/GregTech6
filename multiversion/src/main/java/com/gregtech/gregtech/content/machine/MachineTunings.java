@@ -23,9 +23,9 @@ public final class MachineTunings {
 
     private MachineTunings() {}
 
+    /** Published only after every tuning is merged, so a failure can be collected again. */
     public static synchronized void collect() {
         if (collected) return;
-        collected = true;
         var declared = new ArrayList<MachineTuningRules.Declared>();
         ClassLoader loader = MachineTuningContributor.class.getClassLoader();
         for (MachineTuningContributor contributor : ServiceLoader.load(MachineTuningContributor.class, loader)) {
@@ -47,6 +47,7 @@ public final class MachineTunings {
             for (MachineTuning tuning : tunings) declared.add(new MachineTuningRules.Declared(addon, tuning));
         }
         applied = MachineTuningRules.merge(declared);
+        collected = true;
         for (String line : MachineTuningRules.describe(applied)) LOGGER.info("[gt6ce] tuning: {}", line);
         if (!applied.isEmpty()) writeReport();
     }

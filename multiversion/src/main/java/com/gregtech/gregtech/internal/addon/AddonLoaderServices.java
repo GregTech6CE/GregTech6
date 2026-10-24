@@ -41,10 +41,10 @@ public final class AddonLoaderServices {
 
     private static final class Services implements AddonLoader.Services {
         @Override public FluidStack fluid(String name, AddonFluids.Kind kind, int millibuckets) {
-            if (name == null || kind == null || millibuckets <= 0) return null;
+            if (name == null || kind == null || millibuckets <= 0) return FluidStack.EMPTY;
             if (kind == AddonFluids.Kind.STILL) {
                 FluidStack stack = GTFluids.stack(name, millibuckets);
-                return stack == null || stack.isEmpty() ? null : stack;
+                return stack == null || stack.isEmpty() ? FluidStack.EMPTY : stack;
             }
             return flowing(name, millibuckets);
         }
@@ -74,15 +74,15 @@ public final class AddonLoaderServices {
 
     private static FluidStack flowing(String name, int millibuckets) {
         RegisteredFluids.FluidEntry entry = RegisteredFluids.get(name);
-        if (entry == null) return null;
+        if (entry == null) return FluidStack.EMPTY;
         if (entry.isVanillaWater()) return new FluidStack(Fluids.FLOWING_WATER, millibuckets);
         if (entry.isVanillaLava()) return new FluidStack(Fluids.FLOWING_LAVA, millibuckets);
 //? if >=1.21.1 {
 /*        DeferredHolder<Fluid, ? extends Fluid> fluid = GTFluids.flowing(name);
-        if (fluid == null || !fluid.isBound()) return null;
+        if (fluid == null || !fluid.isBound()) return FluidStack.EMPTY;
 *///?} else {
         RegistryObject<net.minecraft.world.level.material.Fluid> fluid = GTFluids.flowing(name);
-        if (fluid == null || !fluid.isPresent()) return null;
+        if (fluid == null || !fluid.isPresent()) return FluidStack.EMPTY;
 //?}
         return new FluidStack(fluid.get(), millibuckets);
     }

@@ -60,11 +60,11 @@ public final class AddonSampleMaterials implements AddonMaterialContributor {
     }
 
     @Override public List<PrefixDeclaration> prefixes() {
-        return List.of(new PrefixDeclaration("sampleBlank", "", " Sample Blank", 8, "item/sample_blank",
+        return List.of(new PrefixDeclaration("sampleBlank", "", " Sample Blank", 8 * GTValues.U, "item/sample_blank",
                         List.of("Iron", "SampleAlloy"),
                         Set.of(PrefixCondition.METAL, PrefixCondition.MOLTEN),
                         List.of("AnnealedCopper")),
-                PrefixDeclaration.block("sampleCasing", "", " Sample Casing", 8, "cube", "block/sample_casing",
+                PrefixDeclaration.block("sampleCasing", "", " Sample Casing", 8 * GTValues.U, "cube", "block/sample_casing",
                         "storage_blocks/sample_casing", List.of("SampleRubber")));
     }
 
