@@ -113,6 +113,16 @@ API 版本 0 对应模组版本 0.0.0。当前 API 0 是开发中接口，保留
 
 上述两个命令分别运行对应客户端，按需选一个。专用服务器对应 `:runServer` 和 `:multiversion:1.21.1-neoforge:runServer`，首次需按 Minecraft 的要求处理服务器 EULA；开发启动不会自动证明成品 JAR、玩法或世界重载通过。
 
+结构跟踪等 gametest 用 `runGameTestServer`。按命名空间过滤时 3 GB 堆够用；**不带 `-PgameTestNamespaces` 的全量运行要至少 6 GB 堆**（8 GB 更稳），否则会在约 18 分钟后 `OutOfMemoryError`。全量或带附属样例的测试加 `-PaddonSample=true`。中断过的运行可能留下 `BootstrapLauncher` 进程，重跑前先结束它：
+
+```powershell
+.\gradlew.bat :multiversion:1.20.1-forge:runGameTestServer -PaddonSample=true -PgameTestHeap=6g "-PgameTestJvmArgs=-XX:+UseSerialGC"
+.\gradlew.bat :multiversion:1.21.1-neoforge:runGameTestServer -PaddonSample=true -PgameTestHeap=6g
+```
+
+日常改动不需要每次跑全量：两平台编译加受影响的命名空间即可。全量只在改构建/核心逻辑或准备合并时跑，并把失败清单存档作为基线；之后比较新增失败，而不是要求它一次全绿。
+
+
 Linux/macOS 先设置 `JAVA17_HOME`、`JAVA21_HOME` 和 `JAVA_HOME="$JAVA17_HOME"`，再执行：
 
 ```sh
