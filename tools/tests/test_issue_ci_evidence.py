@@ -10,7 +10,7 @@ import unittest
 import xml.etree.ElementTree as ET
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'integration'))
-from check_issue_gametest_report import check, EXPECTED, LEGACY_CASE_NAMESPACES, API_CONTRACT_CASES, ENERGY_STORAGE_CASE_NAMESPACES, COVER_REMOVAL_CASE_NAMESPACES, ORE_SOURCE_CASES, ORE_FOLLOWON_CASE_NAMESPACES, MATERIAL_PHASE_CASE_NAMESPACES, POSITIVE_ORE_CENTRIFUGE_CASE_NAMESPACES, NEXT_ORE_CENTRIFUGE_CASE_NAMESPACES, QUALITY_PHYSICS_CASE_NAMESPACES, expected_namespace
+from check_issue_gametest_report import check, EXPECTED, LEGACY_CASE_NAMESPACES, API_CONTRACT_CASES, ENERGY_STORAGE_CASE_NAMESPACES, COVER_REMOVAL_CASE_NAMESPACES, ORE_SOURCE_CASES, ORE_FOLLOWON_CASE_NAMESPACES, MATERIAL_PHASE_CASE_NAMESPACES, POSITIVE_ORE_CENTRIFUGE_CASE_NAMESPACES, NEXT_ORE_CENTRIFUGE_CASE_NAMESPACES, QUALITY_PHYSICS_CASE_NAMESPACES, ORE_SHREDDER_CASE_NAMESPACES, expected_namespace
 import verify_artifacts
 from verify_artifacts import required_forge_mixin_mappings
 
@@ -57,6 +57,76 @@ NEXT_ORE_CENTRIFUGE_CASES = (
     'solidorecentrifugetests.cooperitepurifiedtiny',
     'solidorecentrifugetests.yellowlimonitepurifiedwhole',
     'solidorecentrifugetests.yellowlimonitepurifiedtiny',
+)
+
+
+ORE_SHREDDER_CASES = (
+    'oreshreddersourcetests.coppercrushed',
+    'oreshreddersourcetests.coppercrushedpurified',
+    'oreshreddersourcetests.coppercrushedcentrifuged',
+    'oreshreddersourcetests.coppercrushedtiny',
+    'oreshreddersourcetests.coppercrushedpurifiedtiny',
+    'oreshreddersourcetests.coppercrushedcentrifugedtiny',
+    'oreshreddersourcetests.galenacrushed',
+    'oreshreddersourcetests.galenacrushedpurified',
+    'oreshreddersourcetests.galenacrushedcentrifuged',
+    'oreshreddersourcetests.galenacrushedtiny',
+    'oreshreddersourcetests.galenacrushedpurifiedtiny',
+    'oreshreddersourcetests.galenacrushedcentrifugedtiny',
+    'oreshreddersourcetests.netherquartzcrushed',
+    'oreshreddersourcetests.netherquartzcrushedpurified',
+    'oreshreddersourcetests.netherquartzcrushedcentrifuged',
+    'oreshreddersourcetests.netherquartzcrushedtiny',
+    'oreshreddersourcetests.netherquartzcrushedpurifiedtiny',
+    'oreshreddersourcetests.netherquartzcrushedcentrifugedtiny',
+    'oreshreddersourcetests.chalcopyritecrushed',
+    'oreshreddersourcetests.chalcopyritecrushedpurified',
+    'oreshreddersourcetests.chalcopyritecrushedcentrifuged',
+    'oreshreddersourcetests.chalcopyritecrushedtiny',
+    'oreshreddersourcetests.chalcopyritecrushedpurifiedtiny',
+    'oreshreddersourcetests.chalcopyritecrushedcentrifugedtiny',
+    'oreshreddersourcetests.pentlanditecrushed',
+    'oreshreddersourcetests.pentlanditecrushedpurified',
+    'oreshreddersourcetests.pentlanditecrushedcentrifuged',
+    'oreshreddersourcetests.pentlanditecrushedtiny',
+    'oreshreddersourcetests.pentlanditecrushedpurifiedtiny',
+    'oreshreddersourcetests.pentlanditecrushedcentrifugedtiny',
+    'oreshreddersourcetests.sphaleritecrushed',
+    'oreshreddersourcetests.sphaleritecrushedpurified',
+    'oreshreddersourcetests.sphaleritecrushedcentrifuged',
+    'oreshreddersourcetests.sphaleritecrushedtiny',
+    'oreshreddersourcetests.sphaleritecrushedpurifiedtiny',
+    'oreshreddersourcetests.sphaleritecrushedcentrifugedtiny',
+    'oreshreddersourcetests.tetrahedritecrushed',
+    'oreshreddersourcetests.tetrahedritecrushedpurified',
+    'oreshreddersourcetests.tetrahedritecrushedcentrifuged',
+    'oreshreddersourcetests.tetrahedritecrushedtiny',
+    'oreshreddersourcetests.tetrahedritecrushedpurifiedtiny',
+    'oreshreddersourcetests.tetrahedritecrushedcentrifugedtiny',
+    'oreshreddersourcetests.pyritecrushed',
+    'oreshreddersourcetests.pyritecrushedpurified',
+    'oreshreddersourcetests.pyritecrushedcentrifuged',
+    'oreshreddersourcetests.pyritecrushedtiny',
+    'oreshreddersourcetests.pyritecrushedpurifiedtiny',
+    'oreshreddersourcetests.pyritecrushedcentrifugedtiny',
+    'oreshreddersourcetests.nickelcrushed',
+    'oreshreddersourcetests.nickelcrushedpurified',
+    'oreshreddersourcetests.nickelcrushedcentrifuged',
+    'oreshreddersourcetests.nickelcrushedtiny',
+    'oreshreddersourcetests.nickelcrushedpurifiedtiny',
+    'oreshreddersourcetests.nickelcrushedcentrifugedtiny',
+    'oreshreddersourcetests.cooperitecrushed',
+    'oreshreddersourcetests.cooperitecrushedpurified',
+    'oreshreddersourcetests.cooperitecrushedcentrifuged',
+    'oreshreddersourcetests.cooperitecrushedtiny',
+    'oreshreddersourcetests.cooperitecrushedpurifiedtiny',
+    'oreshreddersourcetests.cooperitecrushedcentrifugedtiny',
+    'oreshreddersourcetests.yellowlimonitecrushed',
+    'oreshreddersourcetests.yellowlimonitecrushedpurified',
+    'oreshreddersourcetests.yellowlimonitecrushedcentrifuged',
+    'oreshreddersourcetests.yellowlimonitecrushedtiny',
+    'oreshreddersourcetests.yellowlimonitecrushedpurifiedtiny',
+    'oreshreddersourcetests.yellowlimonitecrushedcentrifugedtiny',
 )
 
 
@@ -464,6 +534,66 @@ class IssueEvidenceTests(unittest.TestCase):
                     with self.subTest(platform=platform, identity=identity, outcome=outcome), \
                             self.assertRaises(ValueError):
                         self.verify(root, platform)
+
+    def test_all_shredder_cases_require_exact_identity_template_and_success(self):
+        self.assertEqual(set(ORE_SHREDDER_CASES), set(ORE_SHREDDER_CASE_NAMESPACES))
+        self.assertEqual(len(ORE_SHREDDER_CASES), 66)
+        for platform in ('forge', 'neoforge'):
+            self.verify(self.report(platform), platform)
+            for identity in ORE_SHREDDER_CASES:
+                self.assertIn(identity, EXPECTED[platform])
+                self.assertEqual(expected_namespace(identity), 'gregtech_ore_source_audit:test_empty')
+                for outcome in ('missing', 'failure', 'error', 'skipped', 'wrong_namespace',
+                                'qualified_wrong_namespace', 'class_suffix_wrong_namespace', 'wrong_method',
+                                'wrong_template', 'qualified_correct_namespace', 'duplicate_other_case'):
+                    root = self.report(platform)
+                    suite = root.find('testsuite')
+                    case = next(c for c in suite
+                                if c.get('name') == identity.split('.', 1)[1]
+                                and c.get('classname') == expected_namespace(identity))
+                    if outcome == 'missing':
+                        suite.remove(case)
+                    elif outcome == 'wrong_namespace':
+                        case.set('classname', 'gregtech_issue_audit:test_empty')
+                    elif outcome == 'qualified_wrong_namespace':
+                        case.set('name', identity)
+                        case.set('classname', 'gregtech_issue_audit:test_empty')
+                    elif outcome == 'class_suffix_wrong_namespace':
+                        case.set('classname', 'wrong.' + identity.split('.', 1)[0])
+                    elif outcome == 'wrong_method':
+                        case.set('name', 'unrelatedshreddertest')
+                    elif outcome == 'wrong_template':
+                        case.set('classname', 'gregtech_ore_source_audit:wrong_template')
+                    elif outcome == 'qualified_correct_namespace':
+                        case.set('name', identity)
+                    elif outcome == 'duplicate_other_case':
+                        other = next(c for c in suite if c.get('name') != case.get('name'))
+                        case.attrib.update(other.attrib)
+                    else:
+                        ET.SubElement(case, outcome, message='Shredder source contract did not pass')
+                    with self.subTest(platform=platform, identity=identity, outcome=outcome), \
+                            self.assertRaises(ValueError):
+                        self.verify(root, platform)
+
+    def test_legacy_matching_keeps_suffixes_and_all_colliding_method_candidates(self):
+        # Preselection is not a legacy matcher hardening: preserve its historical
+        # qualified/no-dot-prefix and classname-suffix behavior, including collisions.
+        identities = {'legacyfirst.sharedmethod', 'legacysecond.sharedmethod'}
+        for platform in ('forge', 'neoforge'):
+            with patch.dict(EXPECTED, {platform: identities}):
+                for mode in ('class_suffix', 'qualified', 'no_dot_prefix'):
+                    root = ET.Element('testsuite')
+                    for identity in sorted(identities):
+                        test_class, method = identity.split('.', 1)
+                        name = method if mode == 'class_suffix' else ('prefix.' if mode == 'qualified' else 'evil') + identity
+                        classname = 'wrong.' + test_class if mode == 'class_suffix' else 'unrelated:template'
+                        ET.SubElement(root, 'testcase', name=name, classname=classname)
+                    with self.subTest(platform=platform, mode=mode):
+                        self.verify(root, platform)
+                        # One matching bucket member must not satisfy the other identity.
+                        root.remove(list(root)[0])
+                        with self.assertRaisesRegex(ValueError, 'did not execute'):
+                            self.verify(root, platform)
 
     def test_empty_report_rejected(self):
         with self.assertRaisesRegex(ValueError, 'did not execute'):

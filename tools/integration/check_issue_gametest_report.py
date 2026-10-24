@@ -399,7 +399,80 @@ FUNCTIONAL_CASES |= set(POSITIVE_ORE_CENTRIFUGE_CASE_NAMESPACES)
 QUALITY_PHYSICS_CASE_NAMESPACES = {'orehostphysicstests.actualstatehardnessandcontextualblastfollowliteralsourcehosts': 'gregtech_ore_source_audit:ore_host_physics_owned', 'orehostphysicstests.unreviewedhostsandnonoredenseclasseskeepexistingphysics': 'gregtech_ore_source_audit:ore_host_physics_owned', 'orehostharvesttests.nativeplayerharvesthonorssmallbrokenoffsetsandhostminimum': 'gregtech_ore_source_audit:ore_host_physics_owned', 'orehostharvesttests.nativedestroyprogressuseshardnessoncewithoutlegacybrokenmultiplier': 'gregtech_ore_source_audit:ore_host_physics_owned', 'orehostharvesttests.commonitemtooltipreadshostbrokenstateandhideslowtier': 'gregtech_ore_source_audit:ore_host_physics_owned', 'orequalitymetadatatests.reviewedharvestqualitypreservesnativeorelevelsandlegacyforms': 'gregtech_ore_source_audit:test_empty', 'orequalitymetadatatests.bauxiteandscheelitequalityscaleacceptedcrusherhammerwork': 'gregtech_ore_source_audit:test_empty'}
 FUNCTIONAL_CASES |= set(QUALITY_PHYSICS_CASE_NAMESPACES)
 
+# Separate six-form Shredder slice; retain all existing source and quality/physics groups.
+ORE_SHREDDER_CASE_NAMESPACES = {
+    'oreshreddersourcetests.coppercrushed': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.coppercrushedpurified': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.coppercrushedcentrifuged': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.coppercrushedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.coppercrushedpurifiedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.coppercrushedcentrifugedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.galenacrushed': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.galenacrushedpurified': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.galenacrushedcentrifuged': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.galenacrushedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.galenacrushedpurifiedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.galenacrushedcentrifugedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.netherquartzcrushed': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.netherquartzcrushedpurified': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.netherquartzcrushedcentrifuged': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.netherquartzcrushedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.netherquartzcrushedpurifiedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.netherquartzcrushedcentrifugedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.chalcopyritecrushed': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.chalcopyritecrushedpurified': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.chalcopyritecrushedcentrifuged': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.chalcopyritecrushedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.chalcopyritecrushedpurifiedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.chalcopyritecrushedcentrifugedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.pentlanditecrushed': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.pentlanditecrushedpurified': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.pentlanditecrushedcentrifuged': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.pentlanditecrushedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.pentlanditecrushedpurifiedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.pentlanditecrushedcentrifugedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.sphaleritecrushed': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.sphaleritecrushedpurified': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.sphaleritecrushedcentrifuged': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.sphaleritecrushedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.sphaleritecrushedpurifiedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.sphaleritecrushedcentrifugedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.tetrahedritecrushed': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.tetrahedritecrushedpurified': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.tetrahedritecrushedcentrifuged': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.tetrahedritecrushedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.tetrahedritecrushedpurifiedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.tetrahedritecrushedcentrifugedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.pyritecrushed': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.pyritecrushedpurified': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.pyritecrushedcentrifuged': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.pyritecrushedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.pyritecrushedpurifiedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.pyritecrushedcentrifugedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.nickelcrushed': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.nickelcrushedpurified': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.nickelcrushedcentrifuged': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.nickelcrushedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.nickelcrushedpurifiedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.nickelcrushedcentrifugedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.cooperitecrushed': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.cooperitecrushedpurified': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.cooperitecrushedcentrifuged': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.cooperitecrushedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.cooperitecrushedpurifiedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.cooperitecrushedcentrifugedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.yellowlimonitecrushed': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.yellowlimonitecrushedpurified': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.yellowlimonitecrushedcentrifuged': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.yellowlimonitecrushedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.yellowlimonitecrushedpurifiedtiny': 'gregtech_ore_source_audit:test_empty',
+    'oreshreddersourcetests.yellowlimonitecrushedcentrifugedtiny': 'gregtech_ore_source_audit:test_empty',
+}
+FUNCTIONAL_CASES |= set(ORE_SHREDDER_CASE_NAMESPACES)
+
 def expected_namespace(identity):
+    if identity in ORE_SHREDDER_CASE_NAMESPACES:
+        return ORE_SHREDDER_CASE_NAMESPACES[identity]
     if identity in {
         "toolplacementtransactiontests.builderusesheadqualityandhitcoordinates",
         "toolplacementtransactiontests.buildercancellationrollsbackworldstockandwear",
@@ -463,12 +536,21 @@ def check(path, platform='forge'):
             for field in ('failures', 'errors', 'skipped'):
                 if float(suite.get(field, '0')) != 0:
                     raise ValueError(f'Report {field} count is nonzero')
+    # Every accepted predicate requires name == method or name.endswith(identity).
+    # Either implies equal final dot-separated segments; retain the predicates below.
+    candidates_by_tail = {}
+    for identity in expected:
+        candidates_by_tail.setdefault(identity.rsplit('.', 1)[-1], []).append(identity)
     found = set()
     for case in cases:
         name = case.get('name', '').lower()
         classname = case.get('classname', '').lower()
-        for identity in expected:
+        for identity in candidates_by_tail.get(name.rsplit('.', 1)[-1], ()):
             test_class, method = identity.split('.', 1)
+            if identity in ORE_SHREDDER_CASE_NAMESPACES:
+                if name == method and classname == ORE_SHREDDER_CASE_NAMESPACES[identity]:
+                    found.add(identity)
+                continue
             if identity in QUALITY_PHYSICS_CASE_NAMESPACES:
                 if name == method and classname == QUALITY_PHYSICS_CASE_NAMESPACES[identity]:
                     found.add(identity)
