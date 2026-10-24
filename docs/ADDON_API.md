@@ -78,7 +78,7 @@ dependencies {
 }
 ```
 
-Declare a required loader dependency on **`gt6ce`** with `versionRange="[0.0.0,0.1.0)"`, `ordering="NONE"` and `side="BOTH"`. Java packages use `com.gregtech.gregtech.*`, the loader mod id and content/save namespace are **`gt6ce`**, and `gregtech6` is reserved only so an addon does not claim it as `addonId()`. Any addon that registers materials, prefixes, machines, layout parts, pipes or tanks adds registry entries and must be installed on both client and server (`side="BOTH"`); datapack-only recipe changes (`gt6ce:machine` and `gt6ce:machine_removal`) live on the server and sync to clients through vanilla recipe sync. Build your addon separately for each loader, using that loader's supported Java/Minecraft toolchain. One SDK jar does not make a Forge addon binary load on NeoForge.
+Declare a required loader dependency on **`gt6ce`** with `versionRange="[0.0.0,0.1.0)"`, `ordering="NONE"` and `side="BOTH"`. Java packages use `gregtech.*`, the loader mod id and content/save namespace are **`gt6ce`**, and `gregtech6` is reserved only so an addon does not claim it as `addonId()`. Any addon that registers materials, prefixes, machines, layout parts, pipes or tanks adds registry entries and must be installed on both client and server (`side="BOTH"`); datapack-only recipe changes (`gt6ce:machine` and `gt6ce:machine_removal`) live on the server and sync to clients through vanilla recipe sync. Build your addon separately for each loader, using that loader's supported Java/Minecraft toolchain. One SDK jar does not make a Forge addon binary load on NeoForge.
 
 ```toml
 # Forge: META-INF/mods.toml
@@ -101,8 +101,8 @@ side="BOTH"
 ### Registering an addon
 
 ```java
-import com.gregtech.gregtech.api.addon.GregTechAddon;
-import com.gregtech.gregtech.api.addon.GregTechAddons;
+import gregtech.api.addon.GregTechAddon;
+import gregtech.api.addon.GregTechAddons;
 
 // Call this from the constructor of your Forge or NeoForge @Mod class.
 GregTechAddons.register(new GregTechAddon() {
@@ -134,8 +134,8 @@ Every contributor class listed in `META-INF/services/...` must be `public` with 
 An example recipe callback, where `MyItems.MY_ORE` is registered by your addon:
 
 ```java
-import com.gregtech.gregtech.api.addon.platform.AddonItems;
-import com.gregtech.gregtech.api.addon.platform.AddonRecipes;
+import gregtech.api.addon.platform.AddonItems;
+import gregtech.api.addon.platform.AddonRecipes;
 import net.minecraft.world.item.ItemStack;
 
 var map = AddonRecipes.map("gt.recipe.mortar");
@@ -283,7 +283,7 @@ Declare materials, forms, prefixes, ore generation and crucible behavior through
 
 ### Materials and forms
 
-List an `AddonMaterialContributor` in `META-INF/services/com.gregtech.gregtech.api.addon.AddonMaterialContributor`. GregTech loads that file with its own class loader at the start of material initialization, before the built-in directory is declared. Return pure data. GregTech calls every list method once, right there: `materials()`, `forms()`, `prefixes()`, `compositions()`, `smeltingTargets()`, `crucibleReactions()`, `crucibleRemovals()`, `oreVeins()` and `smallOres()`. None of them, and not the service constructor, may touch GregTech material tables. `compositions()`, `smeltingTargets()`, `crucibleReactions()` and `crucibleRemovals()` are applied after the built-in directory has linked. `link()` runs at the same point for anything those lists do not cover.
+List an `AddonMaterialContributor` in `META-INF/services/gregtech.api.addon.AddonMaterialContributor`. GregTech loads that file with its own class loader at the start of material initialization, before the built-in directory is declared. Return pure data. GregTech calls every list method once, right there: `materials()`, `forms()`, `prefixes()`, `compositions()`, `smeltingTargets()`, `crucibleReactions()`, `crucibleRemovals()`, `oreVeins()` and `smallOres()`. None of them, and not the service constructor, may touch GregTech material tables. `compositions()`, `smeltingTargets()`, `crucibleReactions()` and `crucibleRemovals()` are applied after the built-in directory has linked. `link()` runs at the same point for anything those lists do not cover.
 
 ```java
 public final class MyMaterials implements AddonMaterialContributor {
@@ -455,7 +455,7 @@ Builder conventions differ as well:
 
 ### Registering machines
 
-List an `AddonMachineContributor` in `META-INF/services/com.gregtech.gregtech.api.addon.AddonMachineContributor`. GregTech loads that file with its own class loader after materials are initialized and before it registers machine blocks. Return pure data from `addonMachines()`, `structureLayouts()`, `layoutParts()` and `recipeTables()`. Do not register blocks yourself. `fluidPipes()`, `itemPipes()` and `compressedGasTanks()` stay on this contributor. Pipes and compressed drums are in the sections of those names.
+List an `AddonMachineContributor` in `META-INF/services/gregtech.api.addon.AddonMachineContributor`. GregTech loads that file with its own class loader after materials are initialized and before it registers machine blocks. Return pure data from `addonMachines()`, `structureLayouts()`, `layoutParts()` and `recipeTables()`. Do not register blocks yourself. `fluidPipes()`, `itemPipes()` and `compressedGasTanks()` stay on this contributor. Pipes and compressed drums are in the sections of those names.
 
 `addonId()` is the loader mod id. It matches `[a-z][a-z0-9_]{1,63}` (two to 64 characters). `gt6ce`, `gregtech6` and `minecraft` are reserved. The registry path may repeat across namespaces. `machineType` is global: it must not be a built-in catalog or layout name. Two blocks of the same addon may share a machine type when they agree on the signature for that template. A second addon cannot reuse the name.
 
@@ -467,11 +467,11 @@ Block models resolve to `<namespace>:block/machine/basic/<machineType>` plus `_r
 
 Files an addon jar provides for its declarations:
 
-- `META-INF/services/com.gregtech.gregtech.api.addon.AddonMaterialContributor` (materials, prefixes, worldgen and crucible rules)
-- `META-INF/services/com.gregtech.gregtech.api.addon.AddonMachineContributor` (machines, recipe tables, layouts, layout parts, pipes and compressed gas tanks)
-- `META-INF/services/com.gregtech.gregtech.api.addon.platform.BehaviorMachineContributor` (when declaring any `BehaviorMachine`)
-- `META-INF/services/com.gregtech.gregtech.api.addon.platform.LayoutPartContributor` (when declaring any functional `LayoutPart`)
-- `META-INF/services/com.gregtech.gregtech.api.addon.platform.LayoutPartClient` (client side, when a functional part supplies a block-entity renderer)
+- `META-INF/services/gregtech.api.addon.AddonMaterialContributor` (materials, prefixes, worldgen and crucible rules)
+- `META-INF/services/gregtech.api.addon.AddonMachineContributor` (machines, recipe tables, layouts, layout parts, pipes and compressed gas tanks)
+- `META-INF/services/gregtech.api.addon.platform.BehaviorMachineContributor` (when declaring any `BehaviorMachine`)
+- `META-INF/services/gregtech.api.addon.platform.LayoutPartContributor` (when declaring any functional `LayoutPart`)
+- `META-INF/services/gregtech.api.addon.platform.LayoutPartClient` (client side, when a functional part supplies a block-entity renderer)
 - Machine blockstates at `assets/<addonId>/blockstates/<id>.json`, block models at `assets/<addonId>/models/block/machine/basic/<machineType>.json` (plus `<machineType>_running.json` and `<machineType>_active.json`), and item models at `assets/<addonId>/models/item/<id>.json` (GregTech generates blockstates and models for layout parts, pipes and compressed gas tanks unless the addon overrides them)
 - Recipe-table GUI textures at `assets/<addonId>/textures/gui/recipes/<file>.png` (for `.gui("<addonId>:textures/gui/machines/<file>")`) and behavior-machine GUI sheets at `assets/<addonId>/textures/gui/<sheet>.png`
 - Prefix textures at `assets/<addonId>/textures/<texture>.png` and optional custom layout-part textures at `assets/<addonId>/textures/<texture>.png`
@@ -665,13 +665,13 @@ A condition part binds to a behavior machine or to a large recipe controller. Bu
 
 A field key matches `[a-z0-9_.]{1,64}`. There are at most 16 keys. A bad key, a repeated key, or a 17th key fails at `build()`. GregTech does not invent a meaning for the key. `PartContext.state()` reads and writes the declared keys. An undeclared key throws. A missing named value is 0, false, an empty string or an empty item. A string is at most 256 characters.
 
-The behavior is a `LayoutPartContributor`, listed in `META-INF/services/com.gregtech.gregtech.api.addon.platform.LayoutPartContributor`. `partNames()` names every functional part. A casing or an energy-only part is not listed. `create` runs once for each placed block entity. A functional part with no factory fails startup and names the addon and the part. The addon does not subclass the block entity.
+The behavior is a `LayoutPartContributor`, listed in `META-INF/services/gregtech.api.addon.platform.LayoutPartContributor`. `partNames()` names every functional part. A casing or an energy-only part is not listed. `create` runs once for each placed block entity. A functional part with no factory fails startup and names the addon and the part. The addon does not subclass the block entity.
 
 `PartBehavior` receives `tick`, `onUse`, `canInsert`, `canExtract`, `canFill`, `canDrain`, `onSlotsChanged`, `describe` and `onWrench`. `PartContext.setItem` replaces a slot without asking `canInsert` or the face list, and a count above the slot limit is cut to that limit. Pipes use the face list and then `canInsert` or `canExtract`. A player click is `onUse`, with a `PartHit` for the clicked face and the position as fractions from the low corner of the block. A wrench calls `onWrench` first. True consumes the click. False lets GregTech rotate the horizontal facing. A magnifying glass shows `describe()`. An empty list leaves that click unhandled.
 
 Slots save as `gt.part_slots`, one compound per slot, in order. An empty slot is an empty compound. Tanks save as `gt.part_tanks`. Fields save as `gt.part_fields`, with the same `i`, `l`, `b`, `s` and `t` compounds as a behavior machine's state. Load skips a key that is no longer declared. A casing or an energy-only part does not write these keys. The energy keys stay `gt.part_energy`, `gt.part_output`, `gt.part_amount`, `gt.part_stopped`, `gt.part_input` and `gt.part_satisfied`.
 
-A functional part with no energy role uses the block entity `gt6ce:addon_functional_part`. Its block state is the horizontal facing. A part that also emits or accepts energy stays on `gt6ce:addon_energy_part`, and that block entity stores the slots and fields beside the energy keys. An energy-only part does not send a block-entity update packet. A functional part does. The client reads a `PartClientView`. A `LayoutPartClient` may return a block-entity renderer for that part name. List it in `META-INF/services/com.gregtech.gregtech.api.addon.platform.LayoutPartClient`. GregTech reads that file during client setup, calls it, and does not ask the addon to register the renderer. A part with no renderer still receives the view.
+A functional part with no energy role uses the block entity `gt6ce:addon_functional_part`. Its block state is the horizontal facing. A part that also emits or accepts energy stays on `gt6ce:addon_energy_part`, and that block entity stores the slots and fields beside the energy keys. An energy-only part does not send a block-entity update packet. A functional part does. The client reads a `PartClientView`. A `LayoutPartClient` may return a block-entity renderer for that part name. List it in `META-INF/services/gregtech.api.addon.platform.LayoutPartClient`. GregTech reads that file during client setup, calls it, and does not ask the addon to register the renderer. A part with no renderer still receives the view.
 
 `MachineBehaviorContext.parts()` lists every addon part bound by the formed layout. A casing is not included. The list is empty when the machine is unformed. Do not keep a `BoundPart`, its `behavior()` or its `context()` after the callback. A cell that is both an energy part and a functional part appears once, with both `energy()` and `behavior()` set, and that cell is also in `energyParts()`. `energyParts()` remains that energy view. An energy-only part has a null `behavior()`. A functional part with no energy role has a null `energy()`. Cast `behavior()` to the addon's own type and pass `context()` into those methods.
 
@@ -744,7 +744,7 @@ if (control != null && control.available()) {
 
 ### Heat
 
-`HeatHandler` is in the SDK at `com.gregtech.gregtech.api.machine`. A block entity that implements it exposes a signed HU buffer directly. `TemperatureSource` (under Sensor sources) stays the read-only temperature interface; use `HeatHandler` when the addon also writes heat.
+`HeatHandler` is in the SDK at `gregtech.api.machine`. A block entity that implements it exposes a signed HU buffer directly. `TemperatureSource` (under Sensor sources) stays the read-only temperature interface; use `HeatHandler` when the addon also writes heat.
 
 ```java
 if (level.getBlockEntity(pos) instanceof HeatHandler heat) {
@@ -761,13 +761,13 @@ The adapters are the single-block and original large boilers, the single-block a
 
 ### Machine tuning
 
-`MachineTuningContributor` in `META-INF/services/com.gregtech.gregtech.api.addon.MachineTuningContributor` overrides built-in machine variants. GregTech loads it before the built-in catalog is converted into specs. `MachineTuning` is keyed by `machineName` and `tier`; only non-null fields change: `parallelLimit`, `energyIn`, `energyInMin`, `energyInMax`, `processingEfficiency` (parts per 10000), `constantEnergy` and `cheapOverclocking`. `id`, material, energy type, recipe map, faces, structure and auxiliary energy stay fixed.
+`MachineTuningContributor` in `META-INF/services/gregtech.api.addon.MachineTuningContributor` overrides built-in machine variants. GregTech loads it before the built-in catalog is converted into specs. `MachineTuning` is keyed by `machineName` and `tier`; only non-null fields change: `parallelLimit`, `energyIn`, `energyInMin`, `energyInMax`, `processingEfficiency` (parts per 10000), `constantEnergy` and `cheapOverclocking`. `id`, material, energy type, recipe map, faces, structure and auxiliary energy stay fixed.
 
 The merged fields go through the canonical `BasicMachineSpec` constructor. A second addon may repeat the same value; a different value for the same `(machineName, tier, field)` fails startup and names both addons, the field and both values. A key that matches no built-in row also fails startup. A tuned `parallelLimit` is capped at 65536 and `energyIn × parallelLimit` must fit in a long. The patch exists only at runtime: it is recomputed on every startup, is never written into a save, and removing the addon restores the built-in values. Startup logs one `[gt6ce] tuning: ...` line per field and writes `config/gt6ce-tuning.txt`. Version 0 has no datapack form.
 
 ### Behavior machines
 
-Return each `BehaviorMachine` from `addonMachines()`. Also list a `BehaviorMachineContributor` in `META-INF/services/com.gregtech.gregtech.api.addon.platform.BehaviorMachineContributor`. That interface lives in the loader API because `FluidStack` differs between Forge and NeoForge. `machineTypes()` must include every behavior machine type this addon declares. GregTech calls `create` once for each placed block entity. A missing factory fails startup and names the addon and the machine type.
+Return each `BehaviorMachine` from `addonMachines()`. Also list a `BehaviorMachineContributor` in `META-INF/services/gregtech.api.addon.platform.BehaviorMachineContributor`. That interface lives in the loader API because `FluidStack` differs between Forge and NeoForge. `machineTypes()` must include every behavior machine type this addon declares. GregTech calls `create` once for each placed block entity. A missing factory fails startup and names the addon and the machine type.
 
 #### Unified storage access
 
@@ -921,7 +921,7 @@ A behavior machine is not a recipe machine. GregTech does not look up a row, spe
 
 `signalOutput(true)` lets the machine act as a GT signal source. The behavior implements `gtSignal(context, side)` and returns a strength in `GtSignalCarrier.UNIT` units; `side` is a `Direction`, the direction from the wire toward this block. The default returns 0. A machine without `signalOutput` keeps the block's `isSignalSource` false and does not change any existing signal network. The wire still clamps the result to `[0, 15 * UNIT]`.
 
-`clientState(keys...)` lists behavior state keys GregTech syncs to the client. Only the declared keys are sent, a missing key reads as zero, false or an empty string, and a key that was not declared throws. At most 32 keys. A client-only `BehaviorMachineClient`, listed in `META-INF/services/com.gregtech.gregtech.api.addon.platform.BehaviorMachineClient`, supplies a screen and a block entity renderer per machine type. Override `screen(machineType, menu, inventory, title)`; the older `screen(menu, inventory, title)` is deprecated and kept for existing clients. `screen` returns null to keep the default GUI; a returned `Screen` is hosted over the menu, so item slots and the player inventory stay usable, and it reads `energy`, `progress`, `isOn`, `tankAmount`, `tankFluid` and `containerId` through `BehaviorMachineMenuView`. `renderer` returns null when the machine has no extra drawing; it reads the synced state through `BehaviorMachineClientView`. Both run on the client only, so a server without the addon's client half still starts.
+`clientState(keys...)` lists behavior state keys GregTech syncs to the client. Only the declared keys are sent, a missing key reads as zero, false or an empty string, and a key that was not declared throws. At most 32 keys. A client-only `BehaviorMachineClient`, listed in `META-INF/services/gregtech.api.addon.platform.BehaviorMachineClient`, supplies a screen and a block entity renderer per machine type. Override `screen(machineType, menu, inventory, title)`; the older `screen(menu, inventory, title)` is deprecated and kept for existing clients. `screen` returns null to keep the default GUI; a returned `Screen` is hosted over the menu, so item slots and the player inventory stay usable, and it reads `energy`, `progress`, `isOn`, `tankAmount`, `tankFluid` and `containerId` through `BehaviorMachineMenuView`. `renderer` returns null when the machine has no extra drawing; it reads the synced state through `BehaviorMachineClientView`. Both run on the client only, so a server without the addon's client half still starts.
 
 ```java
 @Override public long gtSignal(MachineBehaviorContext context, int side) {
@@ -1033,14 +1033,14 @@ The block id is `<addon>:<id>`. Hardness is 1, blast resistance is 6, and the it
 
 `ProgressSensorSource`, `CompressionSensorSource` and `TemperatureSource` are in the core SDK, which cannot name `Direction`. A block entity that implements them is read by GregTech's progress, compressed-gas and thermometer sensor panels. Every `side` is `Direction.ordinal()`. `MachineFace` stays the machine-relative face and is not used here. `TemperatureSource` supplies both `temperatureK(side)` and `maximumK(side)`; the maximum drives percentage and scale modes.
 
-`AddonSensorContributor`, listed in `META-INF/services/com.gregtech.gregtech.api.addon.platform.AddonSensorContributor`, declares sensor kinds. GregTech loads it before block registration and registers `<addon>:sensor_<id>` as a block and block item in the addon's namespace. `AddonSensor` supplies `id`, `titleKey`, `unit`, `color`, `maximum`, `read(SensorContext)` and an optional `maximum(SensorContext)`. The sensor measures every ten game ticks; the context carries the sensor position, the target block entity (which may be null) and the target face as a `Direction` (`SensorContext.side`, not an ordinal). `unit` must be one of the existing GregTech glyph names (`liter`, `eu`, `scale`, `kelvin`, `ru`, `ton`, `gramm`, `kilogramm`, `kiloton`, `clock`, `cubicmeter`, `cubicdecameter`, `gibbl`, `lumin`, `greg`, `neutron`, `lu`), so no new texture is needed. The addon supplies the blockstate, model and `block.<addon>.sensor_<id>` name; GregTech supplies the tooltip hints, comparator output, display modes and save fields. Sensor ids are unique across addons, and a duplicate fails startup. The generated `gt6ce:sensor_recipes` pack does not add recipes for addon sensors.
+`AddonSensorContributor`, listed in `META-INF/services/gregtech.api.addon.platform.AddonSensorContributor`, declares sensor kinds. GregTech loads it before block registration and registers `<addon>:sensor_<id>` as a block and block item in the addon's namespace. `AddonSensor` supplies `id`, `titleKey`, `unit`, `color`, `maximum`, `read(SensorContext)` and an optional `maximum(SensorContext)`. The sensor measures every ten game ticks; the context carries the sensor position, the target block entity (which may be null) and the target face as a `Direction` (`SensorContext.side`, not an ordinal). `unit` must be one of the existing GregTech glyph names (`liter`, `eu`, `scale`, `kelvin`, `ru`, `ton`, `gramm`, `kilogramm`, `kiloton`, `clock`, `cubicmeter`, `cubicdecameter`, `gibbl`, `lumin`, `greg`, `neutron`, `lu`), so no new texture is needed. The addon supplies the blockstate, model and `block.<addon>.sensor_<id>` name; GregTech supplies the tooltip hints, comparator output, display modes and save fields. Sensor ids are unique across addons, and a duplicate fails startup. The generated `gt6ce:sensor_recipes` pack does not add recipes for addon sensors.
 
 ## Signal wires
 
 Signal wire block entities implement `GtSignalCarrier`. `GtSignalCarrier.UNIT` is one vanilla redstone level (`Integer.MAX_VALUE`). `signal()` is the fractional strength on that wire. Attenuation, the saved `mode`, and the 0–15 block-state level are unchanged. The wire still rebuilds its network from sources every server tick.
 
 ```java
-if (level.getBlockEntity(pos) instanceof com.gregtech.gregtech.api.signal.GtSignalCarrier wire) {
+if (level.getBlockEntity(pos) instanceof gregtech.api.signal.GtSignalCarrier wire) {
     long fractional = wire.signal();
     // ...
 }
@@ -1096,7 +1096,7 @@ These classes live in the SDK because GregTech's own machine code uses them. The
 
 ### SDK packages
 
-The SDK is `com.gregtech.gregtech.api.*` from `core/src/api/java` plus `com.gregtech.gregtech.api.addon.platform.*` from `multiversion/src/api/java`. GregTech's own implementation also uses `com.gregtech.gregtech.api.*` under `core/src/main` and `multiversion/src/main`, with no path overlap. A package name alone does not tell you whether a type is in the SDK; read the SDK jar or its Javadoc. `AddonPlatform` holds loader-neutral entries. A method whose signature names a loader fluid type is in `AddonLoader`.
+The SDK is `gregtech.api.*` from `core/src/api/java` plus `gregtech.api.addon.platform.*` from `multiversion/src/api/java`. GregTech's own implementation also uses `gregtech.api.*` under `core/src/main` and `multiversion/src/main`, with no path overlap. A package name alone does not tell you whether a type is in the SDK; read the SDK jar or its Javadoc. `AddonPlatform` holds loader-neutral entries. A method whose signature names a loader fluid type is in `AddonLoader`.
 
 API version 0 includes crucible compositions, smelting targets and alloy rows, behavior-machine crucible callbacks, a read-only crucible view for bound parts, remote energy emission from a behavior machine to a saved coordinate, and still reads an old numeric material id as a built-in material, writing the name the next time that block or item is saved. It does **not** promise solid fuel, energy conversion, moving the built-in engines onto this template, arbitrary GUI widgets beyond a full `Screen` hosted over the menu, wireless compute parts, crucible blocks, writing a crucible's temperature or contents, melting an arbitrary non-GregTech item, datapack crucible rows, datapack-created recipe maps without a contributor, datapack reloads of the material table, one binary for both loaders, or a complete old GregAPI replacement. Only the documented entries are the compatibility surface. Use [the voltage guide](VOLTAGE_TIERS.md) rather than GT5/GTCE tier labels.
 
@@ -1139,13 +1139,13 @@ Legacy entries are marked deprecated from the CE baseline `0.0`. Numeric materia
 
 | Entry | Deprecated | Replacement | Remove at |
 | --- | --- | --- | --- |
-| com.gregtech.gregtech.api.addon.GregTechMachineContributor | 0.0 | AddonMachineContributor | 0.10 |
-| com.gregtech.gregtech.api.addon.GregTechMaterialContributor | 0.0 | AddonMaterialContributor | 0.10 |
-| com.gregtech.gregtech.api.addon.AddonMachineDefinition | 0.0 | RecipeMachine | 0.10 |
-| com.gregtech.gregtech.api.addon.AddonMachineLayout | 0.0 | StructureLayout | 0.10 |
-| com.gregtech.gregtech.api.addon.MaterialDeclaration#builder | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
-| com.gregtech.gregtech.api.addon.AddonMaterials#ADDON_ID_MIN | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
-| com.gregtech.gregtech.api.addon.AddonMaterials#ADDON_ID_MAX | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
+| gregtech.api.addon.GregTechMachineContributor | 0.0 | AddonMachineContributor | 0.10 |
+| gregtech.api.addon.GregTechMaterialContributor | 0.0 | AddonMaterialContributor | 0.10 |
+| gregtech.api.addon.AddonMachineDefinition | 0.0 | RecipeMachine | 0.10 |
+| gregtech.api.addon.AddonMachineLayout | 0.0 | StructureLayout | 0.10 |
+| gregtech.api.addon.MaterialDeclaration#builder | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
+| gregtech.api.addon.AddonMaterials#ADDON_ID_MIN | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
+| gregtech.api.addon.AddonMaterials#ADDON_ID_MAX | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
 
 ## License
 

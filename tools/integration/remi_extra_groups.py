@@ -7,7 +7,7 @@ from remi_food_groups import UNFIRED_CLAY, resources as food_resources
 
 
 def resources(root):
-    java = root / "core/src/main/java/com/gregtech/gregtech"
+    java = root / "core/src/main/java/gregtech"
     tiers = ("ulv", "lv", "mv", "hv", "ev", "iv", "luv", "zpm", "uv", "xv")
     for stem, label in (("crystal_charger", "itemGroup.gt6ce.crystal_chargers"),
                         ("large_crystal_charger", "emi.group.gt6ce.large_crystal_chargers")):

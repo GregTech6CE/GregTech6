@@ -1,0 +1,35 @@
+package gregtech.content.transport;
+
+import gregtech.content.material.Materials;
+import gregtech.api.machine.ItemPipeSpec;
+import gregtech.api.material.GTMaterial;
+import gregtech.data.generated.GT6Materials;
+import gregtech.registry.*;
+
+/** Built-in GT6 definitions; registration IDs and ordering are preserved. */
+public final class ItemPipeDefinitions {
+    private ItemPipeDefinitions() {}
+
+    // ==================== Item Pipes ====================
+
+    public static void register() {
+        gregtech.api.addon.AddonMachines.collectContributors();
+        for (ItemPipeCatalog.ItemPipeMat mat : ItemPipeCatalog.mats()) {
+            for (ItemPipeSpec.ItemPipeSize size : ItemPipeSpec.ItemPipeSize.values()) {
+                String sizeKey = size.name().toLowerCase();
+                String id = "item_pipe_" + sizeKey + "_" + mat.idSuffix();
+                String owner = gregtech.api.addon.AddonPipes.owner(id);
+                if (owner != null) {
+                    gregtech.registry.AddonPipeRegistration.queueItem(
+                            owner, id, mat.material(), size, mat.stepSize(), mat.invSize(), true);
+                    continue;
+                }
+                var block = GTItemPipes.register(id, mat.material(), size, mat.stepSize(), mat.invSize(), true);
+                if (mat.idSuffix().equals("brass") && size == ItemPipeSpec.ItemPipeSize.MEDIUM) {
+                    GTItemPipes.PIPE_MEDIUM_BRASS = block;
+                }
+            }
+        }
+    }
+
+}

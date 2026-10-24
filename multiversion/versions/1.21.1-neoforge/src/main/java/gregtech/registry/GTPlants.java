@@ -1,0 +1,7 @@
+package gregtech.registry;
+import net.minecraft.world.level.block.*;import net.minecraft.world.level.block.state.BlockBehaviour;import net.neoforged.neoforge.registries.*;import java.util.*;import gregtech.content.plant.*;
+/** Actual baseline bush/desert flower/lily factories, over shared source identities. */
+public final class GTPlants {private GTPlants(){}private static final List<DeferredHolder<Block,Block>> ALL=new ArrayList<>();public static List<DeferredHolder<Block,Block>> all(){return List.copyOf(ALL);}
+ public static void registerAll(){for(String id:IconPlantCatalog.IDS){var block=GTBlocks.BLOCKS.register(id,()->create(id));GTBlocks.registerBlockItem(id,block);ALL.add(block);}com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native original icon plants: {}",ALL.size());}
+ private static Block create(String id){var p=BlockBehaviour.Properties.of().instabreak().sound(IconPlantCatalog.lily(id)?SoundType.LILY_PAD:SoundType.GRASS).lightLevel(state->IconPlantCatalog.light(id));if(id.equals("flower_hexalily"))return new gregtech.block.plant.BedrockHexalilyBlock(p,id);if(IconPlantCatalog.lily(id))return new gregtech.block.IconSetLilyBlock(p,id);p.noCollission();var flower=BedrockFlowers.byId(id);return flower==null?new gregtech.block.IconSetPlantBlock(p,id):new gregtech.block.plant.BedrockFlowerBlock(p,id,flower.desert());}
+}

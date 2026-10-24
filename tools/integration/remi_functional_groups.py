@@ -38,7 +38,7 @@ circuit_board circuit_part circuit_plate circuit_wire circuit_wiring crystal_cir
 magic_research_paper""".split()
 
 def catalog(root):
-    java = root / "core/src/main/java/com/gregtech/gregtech"
+    java = root / "core/src/main/java/gregtech"
     en = json.loads((root / "core/src/main/resources/assets/gt6ce/lang/en_us.json").read_text(encoding="utf-8"))
     # Only actual name keys, never .tooltip entries or %s material templates.
     ids = {k.split('.')[2]: k for k, v in en.items()

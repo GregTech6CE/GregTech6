@@ -1,0 +1,4 @@
+package gregtech.client;
+import gregtech.registry.GTRemainingDecor;import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;import net.neoforged.bus.api.SubscribeEvent;import net.neoforged.fml.common.EventBusSubscriber;import net.neoforged.api.distmarker.Dist;
+@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD,value=Dist.CLIENT)
+public final class PanelClientSetup {private PanelClientSetup(){}@SubscribeEvent public static void blocks(RegisterColorHandlersEvent.Block e){for(var b:GTRemainingDecor.PANELS)e.register((s,l,p,t)->t==0?b.get().tintRgb():0xFFFFFF,b.get());}@SubscribeEvent public static void items(RegisterColorHandlersEvent.Item e){for(var b:GTRemainingDecor.PANELS)e.register(ItemColorARGB.opaque((s,t)->t==0?b.get().tintRgb():0xFFFFFF),b.get().asItem());}}

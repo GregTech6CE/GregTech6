@@ -64,7 +64,7 @@ modules = run([jdk / 'bin/jdeps.exe', '--multi-release', '17', '--print-module-d
 if modules != 'java.base':
     raise RuntimeError('Unexpected production core module dependencies: ' + modules)
 for name in ('MachineSpec', 'CrucibleSpec'):
-    class_name = 'com.gregtech.gregtech.api.machine.' + name
+    class_name = 'gregtech.api.machine.' + name
     signatures = []
     for compiled in (original_classes, main_classes):
         result = subprocess.check_output([str(jdk / 'bin/javap.exe'), '-public', '-s',
@@ -74,7 +74,7 @@ for name in ('MachineSpec', 'CrucibleSpec'):
         raise RuntimeError('Original/current public API descriptors differ: ' + name)
 print('Original/current public record API descriptors match')
 
-probe = 'com.gregtech.gregtech.core.MachineSpecBehaviorContracts'
+probe = 'gregtech.core.MachineSpecBehaviorContracts'
 outputs = []
 for mode, roots in [('original', [original_classes, main_classes, test_classes]),
                     ('current', [main_classes, test_classes])]:
@@ -85,6 +85,6 @@ if outputs[0] != outputs[1]:
     raise RuntimeError('Original/current fixture receipts differ')
 for contract in ('CoreBehaviorContracts', 'MaterialBehaviorContracts', 'ThermalBehaviorContracts'):
     run([jdk / 'bin/java.exe', '--limit-modules', 'java.base', '-cp',
-         os.pathsep.join(map(str, [main_classes, test_classes])), 'com.gregtech.gregtech.core.' + contract])
+         os.pathsep.join(map(str, [main_classes, test_classes])), 'gregtech.core.' + contract])
 print('PASS original/current exact records and public API; java.base production closure; existing core/material/thermal contracts')
 print('Fresh isolated output: ' + str(scratch))

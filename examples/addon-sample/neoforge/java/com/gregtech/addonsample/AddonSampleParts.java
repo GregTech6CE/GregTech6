@@ -1,11 +1,11 @@
 package com.gregtech.addonsample;
 
-import com.gregtech.gregtech.api.addon.LayoutPart;
-import com.gregtech.gregtech.api.addon.PartSlots;
-import com.gregtech.gregtech.api.addon.platform.LayoutPartContributor;
-import com.gregtech.gregtech.api.addon.platform.PartBehavior;
-import com.gregtech.gregtech.api.addon.platform.PartContext;
-import com.gregtech.gregtech.api.addon.platform.PartHit;
+import gregtech.api.addon.LayoutPart;
+import gregtech.api.addon.PartSlots;
+import gregtech.api.addon.platform.LayoutPartContributor;
+import gregtech.api.addon.platform.PartBehavior;
+import gregtech.api.addon.platform.PartContext;
+import gregtech.api.addon.platform.PartHit;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;

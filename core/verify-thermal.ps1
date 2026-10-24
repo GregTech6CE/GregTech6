@@ -11,11 +11,11 @@ if ($JdkHome) {
     $thermalJava = (Get-Command java -ErrorAction Stop).Source
 }
 $thermalSources = @('CrucibleMath.java', 'ThermalState.java', 'ThermalStep.java') | ForEach-Object {
-    Join-Path $thermalCore "src/main/java/com/gregtech/gregtech/api/machine/crucible/$_"
+    Join-Path $thermalCore "src/main/java/gregtech/api/machine/crucible/$_"
 }
-$thermalSources += Join-Path $thermalCore 'src/test/java/com/gregtech/gregtech/core/ThermalBehaviorContracts.java'
+$thermalSources += Join-Path $thermalCore 'src/test/java/gregtech/core/ThermalBehaviorContracts.java'
 & $thermalJavac --release 17 -encoding UTF-8 -d $thermalOutput $thermalSources
 if ($LASTEXITCODE -ne 0) { throw 'Pure thermal Java17 compilation failed' }
-& $thermalJava -cp $thermalOutput com.gregtech.gregtech.core.ThermalBehaviorContracts
+& $thermalJava -cp $thermalOutput gregtech.core.ThermalBehaviorContracts
 if ($LASTEXITCODE -ne 0) { throw 'Thermal contracts failed' }
 Write-Output "Fresh thermal classes: $thermalOutput"

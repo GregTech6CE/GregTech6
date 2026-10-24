@@ -1,1 +1,1 @@
-com.gregtech.gregtech.integration.kubejs.GTKubeJSPlugin kubejs
+gregtech.integration.kubejs.GTKubeJSPlugin kubejs

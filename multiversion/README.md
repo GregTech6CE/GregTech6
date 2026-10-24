@@ -2,11 +2,11 @@
 
 分支：`experiment/stonecutter-emi`。已同步 main 的服装分类和普通变速箱修复，原始原生代码基线为 `1e3a60d0a`。
 
-此前只有生成空目录的脚手架。本轮接入 12 对实际 EMI 类：8 对相同，4 对涉及 NBT／DataComponentPatch、FluidStack 和注册表访问差异，使用 `//? if >=1.21.1` 条件维护。只保留 `src/main/java/com/gregtech/gregtech/emi` 在本目录下的一份实现；原两个平台目录不再保留第二份。
+此前只有生成空目录的脚手架。本轮接入 12 对实际 EMI 类：8 对相同，4 对涉及 NBT／DataComponentPatch、FluidStack 和注册表访问差异，使用 `//? if >=1.21.1` 条件维护。只保留 `src/main/java/gregtech/emi` 在本目录下的一份实现；原两个平台目录不再保留第二份。
 
 ## 修改位置和构建方式
 
-- 日常改动：`multiversion/src/main/java/com/gregtech/gregtech/emi/`。活动源码为 Forge 1.20.1；NeoForge 差异保存在条件注释中。
+- 日常改动：`multiversion/src/main/java/gregtech/emi/`。活动源码为 Forge 1.20.1；NeoForge 差异保存在条件注释中。
 - 生成位置：`multiversion/versions/<节点>/build/generated/stonecutter/main/java/`。此目录忽略提交，不手改。
 - Forge 和 NeoForge 的既有 `compileJava` 通过 Gradle 目录 artifact 自动依赖对应 `stonecutterGenerate`，普通 `:assemble` / `:neoforge:assemble` 也会生成需要的代码。
 - 双版编译：`gradlew :compileBothPlatforms`。

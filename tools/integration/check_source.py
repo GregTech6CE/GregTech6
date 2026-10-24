@@ -164,7 +164,7 @@ def check(repo):
                 path = resources / f'assets/gt6ce/lang/{locale}.json'
                 if path.exists():
                     errors.append('Platform language shadows shared core: ' + str(path.relative_to(repo)))
-    tag_catalog = repo / 'core/src/main/java/com/gregtech/gregtech/content/recipe/EquipmentCraftingCatalog.java'
+    tag_catalog = repo / 'core/src/main/java/gregtech/content/recipe/EquipmentCraftingCatalog.java'
     if tag_catalog.exists():
         listed = set(re.findall(r'"([^"\n]+)"', tag_catalog.read_text(encoding='utf-8').split(' TAGS = ',1)[1]))
         data = repo / 'core/src/main/resources/data'

@@ -1,0 +1,154 @@
+package gregtech.gametest;
+
+import gregtech.block.machine.LogisticsCoreControllerBlock;
+import gregtech.blockentity.machine.LogisticsCoreControllerBlockEntity;
+import gregtech.blockentity.machine.MultiblockPortBlockEntity;
+import gregtech.content.logistics.LogisticsCoreStructure;
+import gregtech.content.multiblock.LargeMachineParts;
+import gregtech.data.GregTechTags;
+import gregtech.registry.GTLasers;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.gametest.framework.GameTest;
+import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.gametest.GameTestHolder;
+import net.minecraftforge.gametest.PrefixGameTestTemplate;
+
+/** Focused GT6 17997 geometry, wall energy, accounting and manufacturing regression coverage. */
+@GameTestHolder("gregtech_repair")
+@PrefixGameTestTemplate(false)
+public final class LogisticsCoreTests {
+    private static final BlockPos ORIGIN = new BlockPos(12, 4, 10);
+
+    static LogisticsCoreControllerBlockEntity build(GameTestHelper helper, Direction front) {
+        helper.setBlock(ORIGIN, GTLasers.LOGISTICS_CORE.get().defaultBlockState()
+                .setValue(LogisticsCoreControllerBlock.FACING, front));
+        BlockPos absolute = helper.absolutePos(ORIGIN);
+        for (var cell : LogisticsCoreStructure.cells()) {
+            int id = switch (cell.kind()) {
+                case CPU -> LogisticsCoreStructure.VERSATILE;
+                case VENT -> LogisticsCoreStructure.VENT;
+                case WALL -> LogisticsCoreStructure.WALL;
+            };
+            helper.getLevel().setBlock(cell.at(absolute, front), LargeMachineParts.block(id).defaultBlockState(), 3);
+        }
+        var core = (LogisticsCoreControllerBlockEntity) helper.getLevel().getBlockEntity(absolute);
+        helper.assertTrue(StructureTestSupport.ok(core), "original 5x5x5 Logistics Core forms facing " + front);
+        return core;
+    }
+
+    private static MultiblockPortBlockEntity part(LogisticsCoreControllerBlockEntity core,
+            Direction front, LogisticsCoreStructure.Kind kind) {
+        var cell = LogisticsCoreStructure.cells().stream().filter(c -> c.kind() == kind).findFirst().orElseThrow();
+        return (MultiblockPortBlockEntity) core.getLevel().getBlockEntity(cell.at(core.getBlockPos(), front));
+    }
+
+    @GameTest(template = "test_fusion_empty", timeoutTicks = 200)
+    public static void gt6CubeAndProcessorEconomics(GameTestHelper helper) {
+        helper.assertTrue(LogisticsCoreStructure.cells().size() == 124, "controller replaces one of 125 cells");
+        for (var kind : LogisticsCoreStructure.Kind.values()) {
+            long expected = switch (kind) { case CPU -> 27; case VENT -> 53; case WALL -> 44; };
+            helper.assertTrue(LogisticsCoreStructure.cells().stream().filter(c -> c.kind() == kind).count()
+                    == expected, kind + " count must match GT6");
+        }
+        var core = build(helper, Direction.EAST);
+        var allVersatile = core.processorCounts();
+        helper.assertTrue(allVersatile.equals(new LogisticsCoreStructure.Counts(27, 27, 27, 27)),
+                "each Versatile processor contributes one to all four counters");
+        helper.assertTrue(allVersatile.routingThreshold() == 46784
+                        && allVersatile.energyCapacity() == 186752
+                        && allVersatile.fixedEnergyPerTick() == 128
+                        && LogisticsCoreStructure.range(allVersatile) == 29,
+                "threshold, buffer, standby cost per tick and network radius are distinct GT6 values");
+        var cpuCell = LogisticsCoreStructure.cells().stream()
+                .filter(c -> c.kind() == LogisticsCoreStructure.Kind.CPU).findFirst().orElseThrow();
+        BlockPos cpu = cpuCell.at(core.getBlockPos(), Direction.EAST);
+        helper.getLevel().setBlock(cpu, LargeMachineParts.block(LogisticsCoreStructure.LOGIC).defaultBlockState(), 3);
+        helper.assertTrue(core.processorCounts().equals(new LogisticsCoreStructure.Counts(30, 26, 26, 26)),
+                "Logic Quadcore contributes four logic in place of one Versatile");
+        helper.getLevel().setBlock(cpu, LargeMachineParts.block(LogisticsCoreStructure.WALL).defaultBlockState(), 3);
+        helper.assertTrue(core.processorCounts().equals(new LogisticsCoreStructure.Counts(26, 26, 26, 26)),
+                "cheap interior wall contributes no processors");
+        helper.getLevel().setBlock(cpu, Blocks.AIR.defaultBlockState(), 3);
+        helper.assertTrue(!StructureTestSupport.ok(core), "missing interior processor or wall breaks the structure");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_fusion_empty", timeoutTicks = 200)
+    public static void controllerAndGalvanizedWallsAcceptEu(GameTestHelper helper) {
+        var core = build(helper, Direction.NORTH);
+        var wall = part(core, Direction.NORTH, LogisticsCoreStructure.Kind.WALL);
+        var vent = part(core, Direction.NORTH, LogisticsCoreStructure.Kind.VENT);
+        helper.assertTrue(wall.isEnergyAcceptingFrom(GregTechTags.Energy.EU, Direction.UP, false)
+                        && !vent.isEnergyAcceptingFrom(GregTechTags.Energy.EU, Direction.UP, false)
+                        && core.isEnergyAcceptingFrom(GregTechTags.Energy.EU, Direction.NORTH, false),
+                "controller and 44 galvanized wall parts admit EU");
+        helper.assertTrue(wall.getEnergySizeInputMin(GregTechTags.Energy.EU, Direction.UP) == 256
+                        && wall.getEnergySizeInputRecommended(GregTechTags.Energy.EU, Direction.UP) == 512
+                        && wall.getEnergySizeInputMax(GregTechTags.Energy.EU, Direction.UP) == 1024
+                        && wall.getEnergyDemanded(GregTechTags.Energy.EU, Direction.UP, 512) == 1024,
+                "GT6 EU packet range and fixed demanded-packet count");
+        helper.assertTrue(wall.doEnergyInjection(GregTechTags.Energy.LU, Direction.UP, 512, 1, true) == 0,
+                "wall does not accept laser energy");
+        helper.assertTrue(wall.doEnergyInjection(GregTechTags.Energy.EU, Direction.UP, 512, 2, false) == 2
+                        && core.storedEU() == 0, "simulation is inert");
+        helper.assertTrue(wall.doEnergyInjection(GregTechTags.Energy.EU, Direction.UP, 512, 2, true) == 2
+                        && core.storedEU() == 1024, "actual wall injection charges the controller");
+        BlockPos broken = wall.getBlockPos();
+        helper.getLevel().setBlock(broken, Blocks.AIR.defaultBlockState(), 3);
+        helper.assertTrue(!StructureTestSupport.ok(core) && !wall.isEnergyAcceptingFrom(GregTechTags.Energy.EU, Direction.UP, false),
+                "breaking one wall immediately unforms and releases its port");
+        helper.getLevel().setBlock(broken, LargeMachineParts.block(LogisticsCoreStructure.WALL).defaultBlockState(), 3);
+        helper.assertTrue(StructureTestSupport.ok(core), "repairing the wall reforms the machine");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_fusion_empty", timeoutTicks = 200)
+    public static void fixedEuChargeFollowsOriginalEveryTick(GameTestHelper helper) {
+        var core=build(helper,Direction.NORTH);
+        core.doEnergyInjection(GregTechTags.Energy.EU,Direction.NORTH,512,20,true);
+        long before=core.storedEU();
+        for(int i=0;i<20;i++)LogisticsCoreControllerBlockEntity.serverTick(helper.getLevel(),core.getBlockPos(),core.getBlockState(),core);
+        helper.assertTrue(core.storedEU()==before-20*128,"27 versatile CPUs charge 128 EU every tick");
+        var wall=part(core,Direction.NORTH,LogisticsCoreStructure.Kind.WALL);
+        helper.getLevel().setBlockAndUpdate(wall.getBlockPos(),Blocks.AIR.defaultBlockState());
+        before=core.storedEU();
+        LogisticsCoreControllerBlockEntity.serverTick(helper.getLevel(),core.getBlockPos(),core.getBlockState(),core);
+        helper.assertTrue(core.storedEU()==before-20,"unformed controller still charges 20 EU per tick");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_fusion_empty", timeoutTicks = 200)
+    public static void chargePersistsAndOriginalRecipeLoads(GameTestHelper helper) {
+        var core = build(helper, Direction.SOUTH);
+        var wall = part(core, Direction.SOUTH, LogisticsCoreStructure.Kind.WALL);
+        wall.doEnergyInjection(GregTechTags.Energy.EU, Direction.UP, 512, 3, true);
+        var saved = core.saveWithoutMetadata();
+        var restored = new LogisticsCoreControllerBlockEntity(core.getBlockPos(), core.getBlockState());
+        restored.load(saved);
+        helper.assertTrue(restored.storedEU() == 1536, "stored EU survives an NBT round trip");
+        helper.assertTrue(helper.getLevel().getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath(
+                "gt6ce", "machines/multiblock/logistics_core")).isPresent(),
+                "GT6 CCC/PMP/CCC Logistics Core recipe resolves in the generated pack");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_fusion_empty", timeoutTicks = 200)
+    public static void ceilingFloorAndWrenchUseTheSixFaceStructure(GameTestHelper helper) {
+        var block = (LogisticsCoreControllerBlock) GTLasers.LOGISTICS_CORE.get();
+        var wrench = gregtech.item.GTToolItem.create(
+                gregtech.api.tool.GTToolType.WRENCH,
+                gregtech.content.material.Materials.Steel,
+                gregtech.api.material.GTMaterialRegistry.get("Wood"));
+        for (Direction side : Direction.values())
+            helper.assertTrue(block.toolInteraction(block.defaultBlockState(), wrench)
+                    .allows(block.defaultBlockState(), side), "wrench selects " + side + " on original six-faced core");
+        var floor = build(helper, Direction.DOWN);
+        helper.assertTrue(floor.processorCounts().valid(), "controller forms on the bottom face");
+        var ceiling = build(helper, Direction.UP);
+        helper.assertTrue(ceiling.processorCounts().valid(), "controller forms on the top face");
+        helper.succeed();
+    }
+}

@@ -139,7 +139,7 @@ def main():
             originals.extend(paths[relative] for paths in files.values() if relative in paths)
     old = json.loads((ROOT / 'multiversion/emi-migration.json').read_text())
     for row in old['classes']:
-        records.append({'source_set': 'main', 'path': 'com/gregtech/gregtech/emi/' + row['class'] + '.java',
+        records.append({'source_set': 'main', 'path': 'gregtech/emi/' + row['class'] + '.java',
                         'kind': 'conditional' if row['conditional_regions'] else 'shared',
                         'conditional_regions': row['conditional_regions'], 'source_sha256': row['baseline'],
                         'native_signature': row['native_signature'], 'prior_baseline': old['baseline_commit']})

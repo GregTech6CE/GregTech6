@@ -1,18 +1,18 @@
 package com.gregtech.addonsample;
 
-import com.gregtech.gregtech.api.addon.AddonMaterialContributor;
-import com.gregtech.gregtech.api.addon.CrucibleReactionDeclaration;
-import com.gregtech.gregtech.api.addon.CrucibleReactionRemoval;
-import com.gregtech.gregtech.api.addon.MaterialComposition;
-import com.gregtech.gregtech.api.addon.MaterialDeclaration;
-import com.gregtech.gregtech.api.addon.MaterialFormRequest;
-import com.gregtech.gregtech.api.addon.OreVeinDeclaration;
-import com.gregtech.gregtech.api.addon.PrefixCondition;
-import com.gregtech.gregtech.api.addon.PrefixDeclaration;
-import com.gregtech.gregtech.api.addon.SmallOreDeclaration;
-import com.gregtech.gregtech.api.addon.SmeltingTargetDeclaration;
-import com.gregtech.gregtech.api.addon.SmeltingTargetRemoval;
-import com.gregtech.gregtech.api.material.GTValues;
+import gregtech.api.addon.AddonMaterialContributor;
+import gregtech.api.addon.CrucibleReactionDeclaration;
+import gregtech.api.addon.CrucibleReactionRemoval;
+import gregtech.api.addon.MaterialComposition;
+import gregtech.api.addon.MaterialDeclaration;
+import gregtech.api.addon.MaterialFormRequest;
+import gregtech.api.addon.OreVeinDeclaration;
+import gregtech.api.addon.PrefixCondition;
+import gregtech.api.addon.PrefixDeclaration;
+import gregtech.api.addon.SmallOreDeclaration;
+import gregtech.api.addon.SmeltingTargetDeclaration;
+import gregtech.api.addon.SmeltingTargetRemoval;
+import gregtech.api.material.GTValues;
 
 import java.util.ArrayList;
 import java.util.List;

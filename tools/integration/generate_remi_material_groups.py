@@ -14,7 +14,7 @@ plateGem plateTiny plate plateDouble plateTriple plateQuadruple plateQuintuple p
 plateCurved foil scrapGt oreRaw stick stickLong bolt screw gearGt gearGtSmall ring chain
 spring springSmall rotor lens round itemCasing wireFine""".split()
 
-JAVA = ROOT / "core/src/main/java/com/gregtech/gregtech"
+JAVA = ROOT / "core/src/main/java/gregtech"
 ASSETS = ROOT / "core/src/main/resources/assets/gt6ce"
 
 def additional_prefixes():

@@ -47,29 +47,29 @@ def required_forge_mixin_mappings(config):
     package = config['package'].replace('.', '/')
     return {package + '/' + name
             for name in config['mixins'] + config.get('client', [])
-            if package != 'com/gregtech/gregtech/mixin' or name not in UNMAPPED_FORGE_API_MIXINS}
+            if package != 'gregtech/mixin' or name not in UNMAPPED_FORGE_API_MIXINS}
 
 # Both production platforms must retain the restored gameplay implementations.
 # Shared-core agreement alone also accepts a material-only NeoForge skeleton.
 GAMEPLAY_CLASSES = (
-    'com/gregtech/gregtech/registry/GTBlocks.class',
-    'com/gregtech/gregtech/registry/GTBlockEntities.class',
-    'com/gregtech/gregtech/worldgen/GTFeatures.class',
-    'com/gregtech/gregtech/item/GunToolItem.class',
-    'com/gregtech/gregtech/item/PocketToolItem.class',
-    'com/gregtech/gregtech/item/ElectricToolItem.class',
-    'com/gregtech/gregtech/content/tool/ElectricUtilityHarvest.class',
-    'com/gregtech/gregtech/item/behavior/BehaviorPlugLeak.class',
+    'gregtech/registry/GTBlocks.class',
+    'gregtech/registry/GTBlockEntities.class',
+    'gregtech/worldgen/GTFeatures.class',
+    'gregtech/item/GunToolItem.class',
+    'gregtech/item/PocketToolItem.class',
+    'gregtech/item/ElectricToolItem.class',
+    'gregtech/content/tool/ElectricUtilityHarvest.class',
+    'gregtech/item/behavior/BehaviorPlugLeak.class',
 )
 PLATFORM_GAMEPLAY_CLASSES = {
     'forge': (
-        'com/gregtech/gregtech/registry/GTMachines.class',
-        'com/gregtech/gregtech/blockentity/machine/SmeltingCrucibleBlockEntity.class',
+        'gregtech/registry/GTMachines.class',
+        'gregtech/blockentity/machine/SmeltingCrucibleBlockEntity.class',
     ),
     'neoforge': (
-        'com/gregtech/gregtech/platform/neoforge/machine/BasicMachineRegistries.class',
-        'com/gregtech/gregtech/platform/neoforge/smeltery/SmeltingCrucibleEntity.class',
-        'com/gregtech/gregtech/client/RopeClientColors.class',
+        'gregtech/platform/neoforge/machine/BasicMachineRegistries.class',
+        'gregtech/platform/neoforge/smeltery/SmeltingCrucibleEntity.class',
+        'gregtech/client/RopeClientColors.class',
     ),
 }
 
@@ -145,10 +145,10 @@ def test_only_entries(repo):
                          for path in resource_root.rglob('*') if path.is_file())
     # Retain known exclusions even if test sources are accidentally removed.
     class_stems.update({
-        'com/gregtech/gregtech/core/CoreBehaviorContracts',
-        'com/gregtech/gregtech/gametest/IntegrationBootstrapTests',
-        'com/gregtech/gregtech/platform/neoforge/gametest/SharedCoreBootstrapGameTests',
-        'com/gregtech/gregtech/jei/JeiMachineIndexTests',
+        'gregtech/core/CoreBehaviorContracts',
+        'gregtech/gametest/IntegrationBootstrapTests',
+        'gregtech/platform/neoforge/gametest/SharedCoreBootstrapGameTests',
+        'gregtech/jei/JeiMachineIndexTests',
     })
     return class_stems, resources
 
@@ -158,9 +158,9 @@ def is_test_entry(name, stems, resources):
     # fixture. Keep namespace exclusions even if a test is moved/deleted later.
     return (name in resources or name.startswith((
         'data/gregtech_bootstrap/', 'data/gregtech_repair/', 'data/gregtech_sensor_source/',
-        'com/gregtech/gregtech/core/',
-        'com/gregtech/gregtech/gametest/',
-        'com/gregtech/gregtech/platform/neoforge/gametest/'))
+        'gregtech/core/',
+        'gregtech/gametest/',
+        'gregtech/platform/neoforge/gametest/'))
         or (name.endswith('.class') and name[:-6].split('$', 1)[0] in stems))
 
 
@@ -314,7 +314,7 @@ def inspect(path, platform, required_core, properties, forbidden_tests):
                 raise ValueError(f'{path}: missing complete Mixin mappings: {sorted(required_mappings - mappings.keys())}')
             target = 'spawnAtLocation(Lnet/minecraft/world/level/ItemLike;)Lnet/minecraft/world/entity/item/ItemEntity;'
             expected = 'Lnet/minecraft/world/entity/Entity;m_19998_(Lnet/minecraft/world/level/ItemLike;)Lnet/minecraft/world/entity/item/ItemEntity;'
-            if mappings.get('com/gregtech/gregtech/mixin/EntityFallingOreDropMixin', {}).get(target) != expected:
+            if mappings.get('gregtech/mixin/EntityFallingOreDropMixin', {}).get(target) != expected:
                 raise ValueError(f'{path}: missing falling-ore production mapping')
             manifest = archive.read('META-INF/MANIFEST.MF').decode('utf-8').replace('\r\n ', '')
             if 'MixinConfigs: gregtech.mixins.json' not in manifest:

@@ -78,7 +78,7 @@ dependencies {
 }
 ```
 
-附属须声明必需依赖模组 **`gt6ce`**，写 `versionRange="[0.0.0,0.1.0)"`、`ordering="NONE"`、`side="BOTH"`。Java 包名沿用 `com.gregtech.gregtech.*`，加载器模组 id 以及内容和存档命名空间是 **`gt6ce`**，`gregtech6` 只是保留名（防止被附属用作 `addonId()`）。只要附属注册了材料、前缀、机器、结构零件、管子或储罐，就会新增注册项，客户端和服务端都必须安装（`side="BOTH"`）；纯数据包配方改动（`gt6ce:machine` 与 `gt6ce:machine_removal`）放在服务端数据包里，由原版配方同步发给客户端。Forge 和 NeoForge 各编一份。一个 SDK 不会让 Forge 二进制在 NeoForge 上运行。
+附属须声明必需依赖模组 **`gt6ce`**，写 `versionRange="[0.0.0,0.1.0)"`、`ordering="NONE"`、`side="BOTH"`。Java 包名沿用 `gregtech.*`，加载器模组 id 以及内容和存档命名空间是 **`gt6ce`**，`gregtech6` 只是保留名（防止被附属用作 `addonId()`）。只要附属注册了材料、前缀、机器、结构零件、管子或储罐，就会新增注册项，客户端和服务端都必须安装（`side="BOTH"`）；纯数据包配方改动（`gt6ce:machine` 与 `gt6ce:machine_removal`）放在服务端数据包里，由原版配方同步发给客户端。Forge 和 NeoForge 各编一份。一个 SDK 不会让 Forge 二进制在 NeoForge 上运行。
 
 ```toml
 # Forge: META-INF/mods.toml
@@ -101,8 +101,8 @@ side="BOTH"
 ### 注册附属
 
 ```java
-import com.gregtech.gregtech.api.addon.GregTechAddon;
-import com.gregtech.gregtech.api.addon.GregTechAddons;
+import gregtech.api.addon.GregTechAddon;
+import gregtech.api.addon.GregTechAddons;
 
 // 在 Forge 或 NeoForge 的 @Mod 构造方法里调用。
 GregTechAddons.register(new GregTechAddon() {
@@ -133,8 +133,8 @@ GregTechAddons.register(new GregTechAddon() {
 下面是一个完整的配方回调示例（其中 `MyItems.MY_ORE` 由你的附属自己注册）：
 
 ```java
-import com.gregtech.gregtech.api.addon.platform.AddonItems;
-import com.gregtech.gregtech.api.addon.platform.AddonRecipes;
+import gregtech.api.addon.platform.AddonItems;
+import gregtech.api.addon.platform.AddonRecipes;
 import net.minecraft.world.item.ItemStack;
 
 var map = AddonRecipes.map("gt.recipe.mortar");
@@ -282,7 +282,7 @@ ServerEvents.recipes(event => {
 
 ### 材料与形态
 
-在 `META-INF/services/com.gregtech.gregtech.api.addon.AddonMaterialContributor` 里列出 `AddonMaterialContributor`。GT 在材料初始化开始时用自己的类加载器读这个文件，早于内置目录的 `declare()`。返回纯数据。GT 会在这时一次性调用所有列表方法：`materials()`、`forms()`、`prefixes()`、`compositions()`、`smeltingTargets()`、`crucibleReactions()`、`crucibleRemovals()`、`oreVeins()` 和 `smallOres()`。这些方法和服务构造方法里都不要碰 GT 的材料表。`compositions()`、`smeltingTargets()`、`crucibleReactions()` 和 `crucibleRemovals()` 在内置目录 `link()` 之后才应用。`link()` 也在这时调用，用来放这四张表没有覆盖的跨材料链接。
+在 `META-INF/services/gregtech.api.addon.AddonMaterialContributor` 里列出 `AddonMaterialContributor`。GT 在材料初始化开始时用自己的类加载器读这个文件，早于内置目录的 `declare()`。返回纯数据。GT 会在这时一次性调用所有列表方法：`materials()`、`forms()`、`prefixes()`、`compositions()`、`smeltingTargets()`、`crucibleReactions()`、`crucibleRemovals()`、`oreVeins()` 和 `smallOres()`。这些方法和服务构造方法里都不要碰 GT 的材料表。`compositions()`、`smeltingTargets()`、`crucibleReactions()` 和 `crucibleRemovals()` 在内置目录 `link()` 之后才应用。`link()` 也在这时调用，用来放这四张表没有覆盖的跨材料链接。
 
 ```java
 public final class MyMaterials implements AddonMaterialContributor {
@@ -454,7 +454,7 @@ Builder 约定也不同：
 
 ### 注册机器
 
-在 `META-INF/services/com.gregtech.gregtech.api.addon.AddonMachineContributor` 里列出 `AddonMachineContributor`。GT 在材料初始化之后、注册机器方块之前，用自己的类加载器读这个文件。`addonMachines()`、`structureLayouts()`、`layoutParts()` 和 `recipeTables()` 返回纯数据。不要自己注册方块。`fluidPipes()`、`itemPipes()` 和 `compressedGasTanks()` 仍在这个贡献者上。管子和压缩气罐写在同名的那两节。
+在 `META-INF/services/gregtech.api.addon.AddonMachineContributor` 里列出 `AddonMachineContributor`。GT 在材料初始化之后、注册机器方块之前，用自己的类加载器读这个文件。`addonMachines()`、`structureLayouts()`、`layoutParts()` 和 `recipeTables()` 返回纯数据。不要自己注册方块。`fluidPipes()`、`itemPipes()` 和 `compressedGasTanks()` 仍在这个贡献者上。管子和压缩气罐写在同名的那两节。
 
 `addonId()` 是加载器模组 id。写法是 `[a-z][a-z0-9_]{1,63}`，2 到 64 个字符。`gt6ce`、`gregtech6` 和 `minecraft` 保留。注册路径可以在不同命名空间里重复。`machineType` 是全局的：不能占用内置目录或布局名。同一个附属的两台方块，签名对得上时可以共用机器类型。另一个附属不能再用这个名字。
 
@@ -466,11 +466,11 @@ GT 在自己的模组总线上，把方块、物品和方块实体类型注册�
 
 附属 jar 按所用功能需要准备的资源与服务文件清单：
 
-- `META-INF/services/com.gregtech.gregtech.api.addon.AddonMaterialContributor`（声明材料、前缀、世界生成和坩埚规则时）
-- `META-INF/services/com.gregtech.gregtech.api.addon.AddonMachineContributor`（声明机器、配方表、结构布局、结构零件、管子和压缩气罐时）
-- `META-INF/services/com.gregtech.gregtech.api.addon.platform.BehaviorMachineContributor`（声明 `BehaviorMachine` 时）
-- `META-INF/services/com.gregtech.gregtech.api.addon.platform.LayoutPartContributor`（声明带功能的 `LayoutPart` 时）
-- `META-INF/services/com.gregtech.gregtech.api.addon.platform.LayoutPartClient`（仅客户端，功能零件需要方块实体渲染器时）
+- `META-INF/services/gregtech.api.addon.AddonMaterialContributor`（声明材料、前缀、世界生成和坩埚规则时）
+- `META-INF/services/gregtech.api.addon.AddonMachineContributor`（声明机器、配方表、结构布局、结构零件、管子和压缩气罐时）
+- `META-INF/services/gregtech.api.addon.platform.BehaviorMachineContributor`（声明 `BehaviorMachine` 时）
+- `META-INF/services/gregtech.api.addon.platform.LayoutPartContributor`（声明带功能的 `LayoutPart` 时）
+- `META-INF/services/gregtech.api.addon.platform.LayoutPartClient`（仅客户端，功能零件需要方块实体渲染器时）
 - 机器方块状态 `assets/<附属 id>/blockstates/<id>.json`、方块模型 `assets/<附属 id>/models/block/machine/basic/<机器类型>.json`（以及 `<机器类型>_running.json` 和 `<机器类型>_active.json`）、物品模型 `assets/<附属 id>/models/item/<id>.json`（结构零件、管子和压缩气罐由 GT 生成默认方块状态与模型，附属可按需覆盖）
 - 配方表 GUI 贴图 `assets/<附属 id>/textures/gui/recipes/<文件名>.png`（对应 `.gui("<附属 id>:textures/gui/machines/<文件名>")`）与行为机器 GUI 贴图 `assets/<附属 id>/textures/gui/<贴图>.png`
 - 前缀物品贴图 `assets/<附属 id>/textures/<texture>.png` 以及自定义结构零件贴图 `assets/<附属 id>/textures/<texture>.png`
@@ -664,13 +664,13 @@ public List<LayoutPart> layoutParts() {
 
 字段键匹配 `[a-z0-9_.]{1,64}`。最多 16 个。非法的键、重复的键、第 17 个键都在 `build()` 失败。GT 不给键规定含义。`PartContext.state()` 读写这些已声明的键。没声明的键会抛出。已声明但还没写入的值是 0、false、空字符串或空物品。字符串最长 256。
 
-行为是 `LayoutPartContributor`，列在 `META-INF/services/com.gregtech.gregtech.api.addon.platform.LayoutPartContributor`。`partNames()` 要写出每一个功能零件。外壳和只含能量的零件不列。每放下一个方块实体，`create` 调用一次。功能零件没有工厂时启动失败，并写出附属和零件。附属不继承方块实体。
+行为是 `LayoutPartContributor`，列在 `META-INF/services/gregtech.api.addon.platform.LayoutPartContributor`。`partNames()` 要写出每一个功能零件。外壳和只含能量的零件不列。每放下一个方块实体，`create` 调用一次。功能零件没有工厂时启动失败，并写出附属和零件。附属不继承方块实体。
 
 `PartBehavior` 收到 `tick`、`onUse`、`canInsert`、`canExtract`、`canFill`、`canDrain`、`onSlotsChanged`、`describe` 和 `onWrench`。`PartContext.setItem` 直接换掉一格，不问 `canInsert`，也不看面列表。数量超过该格上限时被截到上限。管子先看面列表，再问 `canInsert` 或 `canExtract`。玩家右键走 `onUse`，`PartHit` 给出点击的面，以及从方块低角量起的比例位置。扳手先调 `onWrench`。返回 true 就吃掉这次点击。返回 false 时 GT 旋转水平朝向。放大镜显示 `describe()`。空列表则这次点击不处理。
 
 槽存成 `gt.part_slots`，按槽序每个一个 compound。空槽是空 compound。罐子存成 `gt.part_tanks`。字段存成 `gt.part_fields`，里面的 `i`、`l`、`b`、`s`、`t` 和行为机器的状态相同。读取时跳过已经不再声明的键。外壳和只含能量的零件不写这些键。能量键仍是 `gt.part_energy`、`gt.part_output`、`gt.part_amount`、`gt.part_stopped`、`gt.part_input` 和 `gt.part_satisfied`。
 
-没有能量角色的功能零件用方块实体 `gt6ce:addon_functional_part`。方块状态只有水平朝向。同时出能或收能的零件仍用 `gt6ce:addon_energy_part`，槽和字段写在能量键旁边。只含能量的零件不发方块实体更新包。功能零件会发。客户端读 `PartClientView`。`LayoutPartClient` 可以按零件名返回方块实体渲染器。把它列在 `META-INF/services/com.gregtech.gregtech.api.addon.platform.LayoutPartClient` 里。GT 在客户端初始化时读取这个文件并负责调用，附属不用自己注册渲染器。没有渲染器的零件仍会同步这份视图。
+没有能量角色的功能零件用方块实体 `gt6ce:addon_functional_part`。方块状态只有水平朝向。同时出能或收能的零件仍用 `gt6ce:addon_energy_part`，槽和字段写在能量键旁边。只含能量的零件不发方块实体更新包。功能零件会发。客户端读 `PartClientView`。`LayoutPartClient` 可以按零件名返回方块实体渲染器。把它列在 `META-INF/services/gregtech.api.addon.platform.LayoutPartClient` 里。GT 在客户端初始化时读取这个文件并负责调用，附属不用自己注册渲染器。没有渲染器的零件仍会同步这份视图。
 
 `MachineBehaviorContext.parts()` 列出这张已成形布局绑定的每一个附属零件。外壳不在里面。机器还没成形时列表是空的。不要把 `BoundPart`、它的 `behavior()` 或 `context()` 留到回调外面。既是能量零件又是功能零件的格子只出现一次，`energy()` 和 `behavior()` 都有，并且这一格也在 `energyParts()` 里。`energyParts()` 仍是这份绑定的能量视图。只含能量的零件，`behavior()` 是 null。没有能量角色的功能零件，`energy()` 是 null。把 `behavior()` 转成附属自己的类型，并把 `context()` 传进那些方法。
 
@@ -743,7 +743,7 @@ if (control != null && control.available()) {
 
 ### 热量
 
-`HeatHandler` 在 SDK 的 `com.gregtech.gregtech.api.machine` 里。方块实体实现它，就直接暴露一个有符号 HU 缓冲。`TemperatureSource`（见「传感器源」）仍是只读温度接口；需要写热量时用 `HeatHandler`。
+`HeatHandler` 在 SDK 的 `gregtech.api.machine` 里。方块实体实现它，就直接暴露一个有符号 HU 缓冲。`TemperatureSource`（见「传感器源」）仍是只读温度接口；需要写热量时用 `HeatHandler`。
 
 ```java
 if (level.getBlockEntity(pos) instanceof HeatHandler heat) {
@@ -760,13 +760,13 @@ if (level.getBlockEntity(pos) instanceof HeatHandler heat) {
 
 ### 内置机器调参
 
-`MachineTuningContributor` 写在 `META-INF/services/com.gregtech.gregtech.api.addon.MachineTuningContributor`，用来覆盖内置机器变体。GT 在内置目录转成 spec 之前加载它。`MachineTuning` 以 `machineName` 和 `tier` 为键，只改非空字段：`parallelLimit`、`energyIn`、`energyInMin`、`energyInMax`、`processingEfficiency`（万分比）、`constantEnergy` 和 `cheapOverclocking`；`id`、材料、能量类型、配方表、面、结构和附加能量保持不变。
+`MachineTuningContributor` 写在 `META-INF/services/gregtech.api.addon.MachineTuningContributor`，用来覆盖内置机器变体。GT 在内置目录转成 spec 之前加载它。`MachineTuning` 以 `machineName` 和 `tier` 为键，只改非空字段：`parallelLimit`、`energyIn`、`energyInMin`、`energyInMax`、`processingEfficiency`（万分比）、`constantEnergy` 和 `cheapOverclocking`；`id`、材料、能量类型、配方表、面、结构和附加能量保持不变。
 
 合并后的字段重新走 `BasicMachineSpec` 规范构造器。另一个附属可以重复同一个值；同一个 `(machineName, tier, field)` 出现不同值时启动失败，并写出双方附属、字段和两个值。键没有命中任何内置行也会启动失败。调过的 `parallelLimit` 上限是 65536，`energyIn × parallelLimit` 必须能放进 long。补丁只存在于运行时：每次启动重算，不写进存档，移除附属后恢复内置值。启动日志每个字段打印一行 `[gt6ce] tuning: ...`，并写出 `config/gt6ce-tuning.txt`。版本 0 不提供数据包形式。
 
 ### 行为机器
 
-每个 `BehaviorMachine` 从 `addonMachines()` 返回。另外在 `META-INF/services/com.gregtech.gregtech.api.addon.platform.BehaviorMachineContributor` 里列出 `BehaviorMachineContributor`。这个接口在加载器 API 里，因为 Forge 和 NeoForge 的 `FluidStack` 不同。`machineTypes()` 必须盖住这个附属声明的每一种行为机器类型。每放下一台方块实体，GT 调用一次 `create`。缺少工厂时启动失败，并写出附属和机器类型。
+每个 `BehaviorMachine` 从 `addonMachines()` 返回。另外在 `META-INF/services/gregtech.api.addon.platform.BehaviorMachineContributor` 里列出 `BehaviorMachineContributor`。这个接口在加载器 API 里，因为 Forge 和 NeoForge 的 `FluidStack` 不同。`machineTypes()` 必须盖住这个附属声明的每一种行为机器类型。每放下一台方块实体，GT 调用一次 `create`。缺少工厂时启动失败，并写出附属和机器类型。
 
 #### 统一的存储访问
 
@@ -918,7 +918,7 @@ private static boolean adjacentWater(MachineBehaviorContext context) {
 
 `signalOutput(true)` 让这台机器可以作为 GT 信号源。行为实现 `gtSignal(context, side)`，返回以 `GtSignalCarrier.UNIT` 为单位的强度；`side` 是 `Direction`，方向从信号线指向本方块。缺省返回 0。未声明 `signalOutput` 的机器，方块的 `isSignalSource` 仍为假，不会改变现有信号网络。信号线仍会把结果夹到 `[0, 15 * UNIT]`。
 
-`clientState(keys...)` 列出要同步到客户端的行为状态键。只发送声明过的键；缺键读到 0、false 或空字符串；读未声明的键会抛出。最多 32 个键。客户端专用的 `BehaviorMachineClient` 写在 `META-INF/services/com.gregtech.gregtech.api.addon.platform.BehaviorMachineClient`，按机器类型提供屏幕和方块实体渲染器。覆写 `screen(machineType, menu, inventory, title)`；旧的 `screen(menu, inventory, title)` 已弃用，只为已有客户端保留。`screen` 返回 null 表示保留默认界面；返回的 `Screen` 会套在菜单之上，物品槽和玩家物品栏仍可用，并通过 `BehaviorMachineMenuView` 读 `energy`、`progress`、`isOn`、`tankAmount`、`tankFluid` 和 `containerId`。`renderer` 返回 null 表示这台机器没有额外绘制；它通过 `BehaviorMachineClientView` 读同步状态。两者都只在客户端加载，缺少客户端部分的专服仍能启动。
+`clientState(keys...)` 列出要同步到客户端的行为状态键。只发送声明过的键；缺键读到 0、false 或空字符串；读未声明的键会抛出。最多 32 个键。客户端专用的 `BehaviorMachineClient` 写在 `META-INF/services/gregtech.api.addon.platform.BehaviorMachineClient`，按机器类型提供屏幕和方块实体渲染器。覆写 `screen(machineType, menu, inventory, title)`；旧的 `screen(menu, inventory, title)` 已弃用，只为已有客户端保留。`screen` 返回 null 表示保留默认界面；返回的 `Screen` 会套在菜单之上，物品槽和玩家物品栏仍可用，并通过 `BehaviorMachineMenuView` 读 `energy`、`progress`、`isOn`、`tankAmount`、`tankFluid` 和 `containerId`。`renderer` 返回 null 表示这台机器没有额外绘制；它通过 `BehaviorMachineClientView` 读同步状态。两者都只在客户端加载，缺少客户端部分的专服仍能启动。
 
 ```java
 @Override public long gtSignal(MachineBehaviorContext context, int side) {
@@ -1030,14 +1030,14 @@ public List<ItemPipeDeclaration> itemPipes() {
 
 `ProgressSensorSource`、`CompressionSensorSource` 和 `TemperatureSource` 在核心 SDK 里，那里不能写 `Direction`。方块实体实现它们，GT 的进度、压缩气体和温度传感器面板就会读这个方块。三个接口的 `side` 都是 `Direction.ordinal()`。`MachineFace` 仍是相对机器朝向的面，这里不用。`TemperatureSource` 同时给出 `temperatureK(side)` 和 `maximumK(side)`，后者用于百分比和刻度模式。
 
-`AddonSensorContributor` 写在 `META-INF/services/com.gregtech.gregtech.api.addon.platform.AddonSensorContributor`，用来声明 sensor kind。GT 在方块注册之前加载它，并在附属命名空间注册 `<附属>:sensor_<id>` 方块和方块物品。`AddonSensor` 提供 `id`、`titleKey`、`unit`、`color`、`maximum`、`read(SensorContext)`，以及可选的 `maximum(SensorContext)`。传感器每 10 游戏 tick 采样一次；上下文带传感器坐标、目标方块实体（可能为 null）和目标面（`SensorContext.side`，类型是 `Direction`，不是序号）。`unit` 必须是已有的 GT 字模名（`liter`、`eu`、`scale`、`kelvin`、`ru`、`ton`、`gramm`、`kilogramm`、`kiloton`、`clock`、`cubicmeter`、`cubicdecameter`、`gibbl`、`lumin`、`greg`、`neutron`、`lu`），因此不需要新贴图。方块状态、模型和 `block.<附属>.sensor_<id>` 显示名由附属提供；提示、比较器输出、显示模式和存档字段由 GT 提供。sensor id 在所有附属之间唯一，重复会在启动时失败。生成的 `gt6ce:sensor_recipes` 不会给附属传感器加配方。
+`AddonSensorContributor` 写在 `META-INF/services/gregtech.api.addon.platform.AddonSensorContributor`，用来声明 sensor kind。GT 在方块注册之前加载它，并在附属命名空间注册 `<附属>:sensor_<id>` 方块和方块物品。`AddonSensor` 提供 `id`、`titleKey`、`unit`、`color`、`maximum`、`read(SensorContext)`，以及可选的 `maximum(SensorContext)`。传感器每 10 游戏 tick 采样一次；上下文带传感器坐标、目标方块实体（可能为 null）和目标面（`SensorContext.side`，类型是 `Direction`，不是序号）。`unit` 必须是已有的 GT 字模名（`liter`、`eu`、`scale`、`kelvin`、`ru`、`ton`、`gramm`、`kilogramm`、`kiloton`、`clock`、`cubicmeter`、`cubicdecameter`、`gibbl`、`lumin`、`greg`、`neutron`、`lu`），因此不需要新贴图。方块状态、模型和 `block.<附属>.sensor_<id>` 显示名由附属提供；提示、比较器输出、显示模式和存档字段由 GT 提供。sensor id 在所有附属之间唯一，重复会在启动时失败。生成的 `gt6ce:sensor_recipes` 不会给附属传感器加配方。
 
 ## 信号线
 
 信号线方块实体实现 `GtSignalCarrier`。`GtSignalCarrier.UNIT` 是一级原版红石，数值为 `Integer.MAX_VALUE`。`signal()` 是这根线上当前的精细强度。衰减、存档里的 `mode`，以及方块状态上的 0–15 级都不变。线仍然每个服务端 tick 从信号源重算网络。
 
 ```java
-if (level.getBlockEntity(pos) instanceof com.gregtech.gregtech.api.signal.GtSignalCarrier wire) {
+if (level.getBlockEntity(pos) instanceof gregtech.api.signal.GtSignalCarrier wire) {
     long fractional = wire.signal();
     // ...
 }
@@ -1080,7 +1080,7 @@ public final class MySourceBlockEntity extends BlockEntity implements GtSignalSo
 
 ### SDK 包
 
-SDK 是 `core/src/api/java` 下的 `com.gregtech.gregtech.api.*`，加上 `multiversion/src/api/java` 下的 `com.gregtech.gregtech.api.addon.platform.*`。GT 自己的实现也在 `core/src/main` 和 `multiversion/src/main` 下使用 `com.gregtech.gregtech.api.*`，两边的相对路径没有交集。只看包名分不出一个类型是否在 SDK 里，要读 SDK jar 或它生成的 Javadoc。`AddonPlatform` 放与加载器无关的入口；签名里出现加载器流体类型的方法在 `AddonLoader`。
+SDK 是 `core/src/api/java` 下的 `gregtech.api.*`，加上 `multiversion/src/api/java` 下的 `gregtech.api.addon.platform.*`。GT 自己的实现也在 `core/src/main` 和 `multiversion/src/main` 下使用 `gregtech.api.*`，两边的相对路径没有交集。只看包名分不出一个类型是否在 SDK 里，要读 SDK jar 或它生成的 Javadoc。`AddonPlatform` 放与加载器无关的入口；签名里出现加载器流体类型的方法在 `AddonLoader`。
 
 `onRecipesReady` 仍不是数据包重载事件。API 版本 0 包含坩埚成分、熔炼目标、合金反应、行为机器坩埚回调、绑定零件的只读坩埚视图，以及行为机器往记下的坐标远程送能，仍会把旧的材料数字 id 读成内置材料，并在这个方块或物品下次保存时写成名字。这一版不承诺固体燃料、能量转换、把内置引擎改到这套模板上、套在菜单之上的 `Screen` 之外的任意 GUI 控件、无线计算零件、坩埚方块、写入坩埚温度或内容物、任意非 GT 物品的熔化登记、坩埚数据包、不经入口就用数据包新建配方表、材料表的数据包重载、一份二进制同时跑两个加载器，或完整旧 GregAPI 替代。1.0 之前仅文档列出的入口作为兼容面。电压等级以[原GT6电压说明](VOLTAGE_TIERS.md)为准。
 
@@ -1123,13 +1123,13 @@ API **0** 是 GT6CE 的开发基线，包含下表全部能力。下列 1–7 �
 
 | 入口 | 弃用版本 | 替代 | 计划移除 |
 | --- | --- | --- | --- |
-| com.gregtech.gregtech.api.addon.GregTechMachineContributor | 0.0 | AddonMachineContributor | 0.10 |
-| com.gregtech.gregtech.api.addon.GregTechMaterialContributor | 0.0 | AddonMaterialContributor | 0.10 |
-| com.gregtech.gregtech.api.addon.AddonMachineDefinition | 0.0 | RecipeMachine | 0.10 |
-| com.gregtech.gregtech.api.addon.AddonMachineLayout | 0.0 | StructureLayout | 0.10 |
-| com.gregtech.gregtech.api.addon.MaterialDeclaration#builder | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
-| com.gregtech.gregtech.api.addon.AddonMaterials#ADDON_ID_MIN | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
-| com.gregtech.gregtech.api.addon.AddonMaterials#ADDON_ID_MAX | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
+| gregtech.api.addon.GregTechMachineContributor | 0.0 | AddonMachineContributor | 0.10 |
+| gregtech.api.addon.GregTechMaterialContributor | 0.0 | AddonMaterialContributor | 0.10 |
+| gregtech.api.addon.AddonMachineDefinition | 0.0 | RecipeMachine | 0.10 |
+| gregtech.api.addon.AddonMachineLayout | 0.0 | StructureLayout | 0.10 |
+| gregtech.api.addon.MaterialDeclaration#builder | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
+| gregtech.api.addon.AddonMaterials#ADDON_ID_MIN | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
+| gregtech.api.addon.AddonMaterials#ADDON_ID_MAX | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
 
 ## 许可
 

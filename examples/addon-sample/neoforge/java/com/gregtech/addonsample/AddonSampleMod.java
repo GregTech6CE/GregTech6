@@ -1,11 +1,11 @@
 package com.gregtech.addonsample;
 
-import com.gregtech.gregtech.api.addon.GregTechAddon;
-import com.gregtech.gregtech.api.addon.GregTechAddons;
-import com.gregtech.gregtech.api.addon.GregTechMaterials;
-import com.gregtech.gregtech.api.addon.platform.AddonFluids;
-import com.gregtech.gregtech.api.addon.platform.AddonItems;
-import com.gregtech.gregtech.api.addon.platform.AddonRecipes;
+import gregtech.api.addon.GregTechAddon;
+import gregtech.api.addon.GregTechAddons;
+import gregtech.api.addon.GregTechMaterials;
+import gregtech.api.addon.platform.AddonFluids;
+import gregtech.api.addon.platform.AddonItems;
+import gregtech.api.addon.platform.AddonRecipes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluids;

@@ -1,0 +1,52 @@
+package gregtech.client;
+
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.*;
+import gregtech.registry.*;
+
+/** NeoForge renderer registration and material tints for multiblocks and crucibles. */
+@EventBusSubscriber(modid = gregtech.api.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+public final class MultiblockClientSetup {
+
+    private MultiblockClientSetup() {
+    }
+    @SubscribeEvent
+    public static void renderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerBlockEntityRenderer(GTBlockEntities.ORIGINAL_LARGE_BOILER.get(), OriginalLargeBoilerBarometerRenderer::new);
+        event.registerBlockEntityRenderer(GTBlockEntities.LARGE_CRUCIBLE.get(), LargeCrucibleRenderer::new);
+        event.registerBlockEntityRenderer(gregtech.platform.neoforge.smeltery.SmelteryRegistries.SMELTING_CRUCIBLE.get(),
+                SmeltingCrucibleRenderer::new);
+        event.registerBlockEntityRenderer(GTBlockEntities.LARGE_TURBINE.get(), LargeTurbineRotorRenderer::new);
+        event.registerBlockEntityRenderer(GTBlockEntities.LARGE_GAS_TURBINE.get(), LargeTurbineRotorRenderer::new);
+    }
+
+    @SubscribeEvent
+    public static void blocks(RegisterColorHandlersEvent.Block event) {
+        for (var holder : gregtech.platform.neoforge.smeltery.SmelteryRegistries.crucibles())
+            event.register((state, level, pos, index) -> {
+                if (index != 0) return 0xFFFFFF;
+                int tint = holder.get().spec().tintRgb();
+                if (level != null && pos != null
+                        && level.getBlockEntity(pos) instanceof gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity crucible
+                        && crucible.isMeltDownWarning())
+                    return CrucibleBlockBakedModel.meltdownRgb(tint);
+                return tint;
+            }, holder.get());
+        for (var holder : GTMultiblocks.texturedBlocks())
+            event.register((state, level, pos, index) -> index == 0 ? GTMultiblocks.tintOf(state.getBlock()) : 0xFFFFFF,
+                    holder.get());
+    }
+
+    @SubscribeEvent
+    public static void items(RegisterColorHandlersEvent.Item event) {
+        for (var holder : gregtech.platform.neoforge.smeltery.SmelteryRegistries.crucibles())
+            event.register(ItemColorARGB.opaque((stack, index) -> index == 0 ? holder.get().spec().tintRgb() : 0xFFFFFF),
+                    holder.get().asItem());
+        for (var holder : GTMultiblocks.texturedBlocks()) {
+            var block = holder.get();
+            event.register(ItemColorARGB.opaque((stack, index) -> index == 0 ? GTMultiblocks.tintOf(block) : 0xFFFFFF), block.asItem());
+        }
+    }
+}

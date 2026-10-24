@@ -15,15 +15,15 @@ $coreSources = @(Get-ChildItem -LiteralPath (Join-Path $coreModule 'src/main/jav
     ForEach-Object { $_.FullName })
 $coreSources += @(Get-ChildItem -LiteralPath (Join-Path $coreModule 'src/test/java') -Recurse -Filter '*.java' -File |
     ForEach-Object { $_.FullName })
-if (-not $coreSources.Count -or -not (Test-Path -LiteralPath (Join-Path $coreModule 'src/test/java/com/gregtech/gregtech/core/CoreBehaviorContracts.java'))) {
+if (-not $coreSources.Count -or -not (Test-Path -LiteralPath (Join-Path $coreModule 'src/test/java/gregtech/core/CoreBehaviorContracts.java'))) {
     throw 'Core sources or required behavior contract source missing.'
 }
 Write-Output "Fresh standalone class output: $coreOutput"
 & $coreJavac --release 17 -encoding UTF-8 -d $coreOutput $coreSources
 if ($LASTEXITCODE -ne 0) { throw "Core javac failed with exit code $LASTEXITCODE" }
-& $coreJava -cp $coreOutput com.gregtech.gregtech.core.CoreBehaviorContracts
+& $coreJava -cp $coreOutput gregtech.core.CoreBehaviorContracts
 if ($LASTEXITCODE -ne 0) { throw "Core contracts failed with exit code $LASTEXITCODE" }
-& $coreJava -cp $coreOutput com.gregtech.gregtech.core.MaterialBehaviorContracts
+& $coreJava -cp $coreOutput gregtech.core.MaterialBehaviorContracts
 if ($LASTEXITCODE -ne 0) { throw "Material contracts failed with exit code $LASTEXITCODE" }
 $coreManifest = Get-Content -LiteralPath (Join-Path $coreModule 'provenance/saltnya-extractions.json') -Raw | ConvertFrom-Json
 foreach ($coreEntry in $coreManifest.files) {

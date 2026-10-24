@@ -1,7 +1,7 @@
 package com.gregtech.addonsample;
 
-import com.gregtech.gregtech.api.addon.platform.AddonFluids;
-import com.gregtech.gregtech.api.addon.platform.AddonItems;
+import gregtech.api.addon.platform.AddonFluids;
+import gregtech.api.addon.platform.AddonItems;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.event.server.ServerStartedEvent;

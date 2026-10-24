@@ -4,7 +4,7 @@
   "updates": [
     {
       "source_set": "productionSmoke",
-      "path": "com/gregtech/gregtech/integration/client/CommonBlockDeliveryChecks.java",
+      "path": "gregtech/integration/client/CommonBlockDeliveryChecks.java",
       "reason": "Align installed-JAR test coverage with canonical IDs after the previously completed duplicate-registration removal; include restored lockers. No production-mod code/resource changes.",
       "old_signature": {
         "forge": "5063d3ee8eb523b13e4454f9ed8329a74ededa74300b0e38dfc63b2b78e5503b",
@@ -17,7 +17,7 @@
     },
     {
       "source_set": "productionSmoke",
-      "path": "com/gregtech/gregtech/integration/client/GeneratorTooltipDeliveryChecks.java",
+      "path": "gregtech/integration/client/GeneratorTooltipDeliveryChecks.java",
       "reason": "Align installed-JAR test coverage with canonical IDs after the previously completed duplicate-registration removal; include restored lockers. No production-mod code/resource changes.",
       "old_signature": {
         "forge": "49f572f7e3d5df4fb80039945962ba56925ee1b3fbeb80d742adce9007155dfa",
@@ -30,7 +30,7 @@
     },
     {
       "source_set": "productionSmoke",
-      "path": "com/gregtech/gregtech/integration/client/LanguageDeliveryChecks.java",
+      "path": "gregtech/integration/client/LanguageDeliveryChecks.java",
       "reason": "Align installed-JAR test coverage with canonical IDs after the previously completed duplicate-registration removal; include restored lockers. No production-mod code/resource changes.",
       "old_signature": {
         "forge": "76fc8a04a88fddd3a32d646fc5dace5bd05a538cd1ec676881839886aa29551f",
@@ -43,7 +43,7 @@
     },
     {
       "source_set": "productionSmoke",
-      "path": "com/gregtech/gregtech/integration/client/MultiblockTankDeliveryChecks.java",
+      "path": "gregtech/integration/client/MultiblockTankDeliveryChecks.java",
       "reason": "Align installed-JAR test coverage with canonical IDs after the previously completed duplicate-registration removal; include restored lockers. No production-mod code/resource changes.",
       "old_signature": {
         "forge": "481e8676cf291b4b0bb271c5b953e24c606a766ac7b61435f93d9f676fbf42a0",
@@ -56,7 +56,7 @@
     },
     {
       "source_set": "productionSmoke",
-      "path": "com/gregtech/gregtech/integration/client/ProcessControllerDeliveryChecks.java",
+      "path": "gregtech/integration/client/ProcessControllerDeliveryChecks.java",
       "reason": "Align installed-JAR test coverage with canonical IDs after the previously completed duplicate-registration removal; include restored lockers. No production-mod code/resource changes.",
       "old_signature": {
         "forge": "1b6dcf7be1dda0a73aaf08c82984ac2ff803c9738ab4859a8d01df057a137ea0",
@@ -69,7 +69,7 @@
     },
     {
       "source_set": "productionSmoke",
-      "path": "com/gregtech/gregtech/integration/client/UtilityControllerDeliveryChecks.java",
+      "path": "gregtech/integration/client/UtilityControllerDeliveryChecks.java",
       "reason": "Align installed-JAR test coverage with canonical IDs after the previously completed duplicate-registration removal; include restored lockers. No production-mod code/resource changes.",
       "old_signature": {
         "forge": "c1ced354c064e8e5d6f2a02cd00d6557d3d0c60c26a3e69a7f14cde779b2064f",
@@ -82,7 +82,7 @@
     },
     {
       "source_set": "productionSmoke",
-      "path": "com/gregtech/gregtech/integration/client/TankItemDeliveryChecks.java",
+      "path": "gregtech/integration/client/TankItemDeliveryChecks.java",
       "reason": "Verify each canonical material-bearing block once after legacy generator/controller IDs were merged; independent test mod only.",
       "old_signature": {
         "forge": "1d7a344b2909b6e5be9c4e1f9524c8500c9430cf076dc8e26a97ea46a648daed",

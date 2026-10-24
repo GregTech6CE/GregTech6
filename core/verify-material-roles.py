@@ -74,18 +74,18 @@ elif mode == 'current':
     for path, content in stubs.items():
         if '/gametest/' in path:
             write(path, content.encode('utf-8'))
-    write('CurrentMaterialRoleProbe.java', b'''import com.gregtech.gregtech.api.material.*;
-import com.gregtech.gregtech.api.mod.ModData;
-import com.gregtech.gregtech.api.prefix.PrefixRegistry;
-import com.gregtech.gregtech.platform.neoforge.gametest.SharedMaterialBootstrapGameTests;
+    write('CurrentMaterialRoleProbe.java', b'''import gregtech.api.material.*;
+import gregtech.api.mod.ModData;
+import gregtech.api.prefix.PrefixRegistry;
+import gregtech.platform.neoforge.gametest.SharedMaterialBootstrapGameTests;
 public final class CurrentMaterialRoleProbe {
  public static void main(String[] args) throws Exception {
   java.util.Locale.setDefault(java.util.Locale.ROOT);
   ModData.bindPresence(id -> id.equals("minecraft") || id.equals("gregtech"));
   GTMaterialRegistry.setLogSink((warning,message)->{});
   PrefixRegistry.ensurePrefixesLoaded();
-  com.gregtech.gregtech.data.ModReferences.UNKNOWN.getClass();
-  com.gregtech.gregtech.data.MaterialGroups.Glowstone.getClass();
+  gregtech.data.ModReferences.UNKNOWN.getClass();
+  gregtech.data.MaterialGroups.Glowstone.getClass();
   GTMaterialRegistry.init(); MaterialRoleFlags.apply(); GTMaterialRegistry.postInit();
   System.out.println("role_sha256="+SharedMaterialBootstrapGameTests.roleSnapshotSha256());
   var helper=new net.minecraft.gametest.framework.GameTestHelper();
@@ -100,8 +100,8 @@ public final class CurrentMaterialRoleProbe {
 else:
     raise ValueError(mode)
 
-write('com/gregtech/gregtech/platform/neoforge/gametest/SharedMaterialBootstrapGameTests.java',
-      (root / 'neoforge/src/bootstrapGameTest/java/com/gregtech/gregtech/platform/neoforge/gametest/SharedMaterialBootstrapGameTests.java').read_bytes())
+write('gregtech/platform/neoforge/gametest/SharedMaterialBootstrapGameTests.java',
+      (root / 'neoforge/src/bootstrapGameTest/java/gregtech/platform/neoforge/gametest/SharedMaterialBootstrapGameTests.java').read_bytes())
 inputs = sorted(sources.rglob('*.java'))
 subprocess.run([str(jdk / 'bin/javac.exe'), '--release', '17', '-encoding', 'UTF-8', '-d', str(classes)] + [str(p) for p in inputs], check=True)
 subprocess.run([str(jdk / 'bin/java.exe'), '-cp', str(classes), main_class] + (['check'] if check else []), check=True)

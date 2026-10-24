@@ -7,7 +7,7 @@ import re
 
 
 def wooden_bucket_variants(root):
-    source = (root / "core/src/main/java/com/gregtech/gregtech/content/tool/WoodenBucketCatalog.java").read_text(encoding="utf-8")
+    source = (root / "core/src/main/java/gregtech/content/tool/WoodenBucketCatalog.java").read_text(encoding="utf-8")
     bands = re.findall(r'new Band\("([^"]+)",\s*"[^"]+",\s*\d+\)', source)
     contents = re.findall(r'new Content\("([^"]+)",\s*"[^"]+",\s*(\d+),', source)
     assert len(bands) == 9 and len(contents) == 19, "Review original wooden bucket variants"
@@ -16,7 +16,7 @@ def wooden_bucket_variants(root):
 
 
 def extend(root, groups, ids):
-    java = root / "core/src/main/java/com/gregtech/gregtech"
+    java = root / "core/src/main/java/gregtech"
     # A translated sprite name is not a registered gearbox. Match the same 13 tiers
     # used by both native registries; never include the obsolete bare "gearbox" ID.
     gearboxes = (java / "content/energy/GearboxCatalog.java").read_text(encoding="utf-8")

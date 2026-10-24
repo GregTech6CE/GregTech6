@@ -18,7 +18,7 @@ def signature(source):
 def main():
     manifest = json.loads((ROOT / "multiversion/emi-migration.json").read_text())
     records = {}
-    package = "com/gregtech/gregtech/emi"
+    package = "gregtech/emi"
     for platform, node, prefix in (("forge", "1.20.1-forge", "src"),
                                     ("neoforge", "1.21.1-neoforge", "neoforge/src")):
         output = ROOT / f"multiversion/versions/{node}/build/generated/stonecutter/main/java/{package}"

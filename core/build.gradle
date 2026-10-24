@@ -106,11 +106,11 @@ tasks.named('check').configure { dependsOn addonApiClosureCheck }
         group = 'verification'
         dependsOn tasks.named('testClasses')
         classpath = sourceSets.test.runtimeClasspath
-        mainClass = "com.gregtech.gregtech.core.${entryPoint}"
+        mainClass = "gregtech.core.${entryPoint}"
         if (entryPoint == 'RadiationConsumableContracts') {
             args rootProject.projectDir.absolutePath
-            inputs.files(rootProject.file('multiversion/src/main/java/com/gregtech/gregtech/item/RadawayItem.java'),
-                    rootProject.file('multiversion/src/main/java/com/gregtech/gregtech/content/food/FoodStatEvents.java'))
+            inputs.files(rootProject.file('multiversion/src/main/java/gregtech/item/RadawayItem.java'),
+                    rootProject.file('multiversion/src/main/java/gregtech/content/food/FoodStatEvents.java'))
                     .withPropertyName('radiationConsumptionOwnership').withPathSensitivity(PathSensitivity.RELATIVE)
         }
         javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
@@ -131,7 +131,7 @@ tasks.named('check').configure { dependsOn addonApiClosureCheck }
         group = 'verification'
         dependsOn tasks.named('testClasses')
         classpath = sourceSets.test.runtimeClasspath
-        mainClass = 'com.gregtech.gregtech.core.AddonPipeContracts'
+        mainClass = 'gregtech.core.AddonPipeContracts'
         args scenario
         javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
         def marker = layout.buildDirectory.file("reports/contracts/addonPipeContracts_${scenario}.passed")
@@ -151,7 +151,7 @@ tasks.named('check').configure { dependsOn addonApiClosureCheck }
         group = 'verification'
         dependsOn tasks.named('testClasses')
         classpath = sourceSets.test.runtimeClasspath
-        mainClass = 'com.gregtech.gregtech.core.AddonMachineContracts'
+        mainClass = 'gregtech.core.AddonMachineContracts'
         args scenario
         javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
         def marker = layout.buildDirectory.file("reports/contracts/addonMachineContracts_${scenario}.passed")
@@ -171,7 +171,7 @@ tasks.named('check').configure { dependsOn addonApiClosureCheck }
         group = 'verification'
         dependsOn tasks.named('testClasses')
         classpath = sourceSets.test.runtimeClasspath
-        mainClass = 'com.gregtech.gregtech.core.AddonMaterialContracts'
+        mainClass = 'gregtech.core.AddonMaterialContracts'
         args scenario
         javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
         def marker = layout.buildDirectory.file("reports/contracts/addonMaterialContracts_${scenario}.passed")
@@ -191,7 +191,7 @@ tasks.named('check').configure { dependsOn addonApiClosureCheck }
         group = 'verification'
         dependsOn tasks.named('testClasses')
         classpath = sourceSets.test.runtimeClasspath
-        mainClass = 'com.gregtech.gregtech.core.CrucibleAddonContracts'
+        mainClass = 'gregtech.core.CrucibleAddonContracts'
         args scenario
         javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
         def marker = layout.buildDirectory.file("reports/contracts/crucibleAddonContracts_${scenario}.passed")
@@ -210,7 +210,7 @@ tasks.register('addonMaterialScale', JavaExec) {
     group = 'verification'
     dependsOn tasks.named('testClasses')
     classpath = sourceSets.test.runtimeClasspath
-    mainClass = 'com.gregtech.gregtech.core.AddonMaterialContracts'
+    mainClass = 'gregtech.core.AddonMaterialContracts'
     args 'scale'
     jvmArgs '-Xmx2g'
     javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
@@ -221,7 +221,7 @@ def machineRecipeOverlayContracts = tasks.register('machineRecipeOverlayContract
     group = 'verification'
     dependsOn tasks.named('testClasses')
     classpath = sourceSets.test.runtimeClasspath
-    mainClass = 'com.gregtech.gregtech.core.MachineRecipeOverlayContracts'
+    mainClass = 'gregtech.core.MachineRecipeOverlayContracts'
     javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
     def marker = layout.buildDirectory.file('reports/contracts/machineRecipeOverlayContracts.passed')
     outputs.file(marker)
@@ -239,7 +239,7 @@ tasks.named('check').configure { dependsOn machineRecipeOverlayContracts }
         group = 'verification'
         dependsOn tasks.named('testClasses')
         classpath = sourceSets.test.runtimeClasspath
-        mainClass = 'com.gregtech.gregtech.core.KubeJsMachineContracts'
+        mainClass = 'gregtech.core.KubeJsMachineContracts'
         args scenario
         javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
         def marker = layout.buildDirectory.file("reports/contracts/kubeJsMachineContracts_${scenario}.passed")
@@ -258,7 +258,7 @@ def structureLayoutOverlayContracts = tasks.register('structureLayoutOverlayCont
     group = 'verification'
     dependsOn tasks.named('testClasses')
     classpath = sourceSets.test.runtimeClasspath
-    mainClass = 'com.gregtech.gregtech.core.StructureLayoutOverlayContracts'
+    mainClass = 'gregtech.core.StructureLayoutOverlayContracts'
     javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
     def marker = layout.buildDirectory.file('reports/contracts/structureLayoutOverlayContracts.passed')
     outputs.file(marker)
@@ -275,7 +275,7 @@ def addonRecipeLineContracts = tasks.register('addonRecipeLineContracts', JavaEx
     group = 'verification'
     dependsOn tasks.named('testClasses')
     classpath = sourceSets.test.runtimeClasspath
-    mainClass = 'com.gregtech.gregtech.core.AddonRecipeLineContracts'
+    mainClass = 'gregtech.core.AddonRecipeLineContracts'
     javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
     def marker = layout.buildDirectory.file('reports/contracts/addonRecipeLineContracts.passed')
     outputs.file(marker)
@@ -292,7 +292,7 @@ def addonApiVersionContracts = tasks.register('addonApiVersionContracts', JavaEx
     group = 'verification'
     dependsOn tasks.named('testClasses')
     classpath = sourceSets.test.runtimeClasspath
-    mainClass = 'com.gregtech.gregtech.core.AddonApiVersionContracts'
+    mainClass = 'gregtech.core.AddonApiVersionContracts'
     workingDir = rootProject.projectDir
     args 'gradle.properties', 'core/src/main/java', 'core/src/api/java', 'docs/ADDON_API.md', 'docs/ADDON_API.zh-CN.md'
     inputs.file(rootProject.file('gradle.properties')).withPropertyName('modVersionProperties')
@@ -321,7 +321,7 @@ def fluidSlotAmountOverlayChecks = tasks.register('fluidSlotAmountOverlayChecks'
     group = 'verification'
     dependsOn tasks.named('testClasses')
     classpath = sourceSets.test.runtimeClasspath
-    mainClass = 'com.gregtech.gregtech.core.FluidSlotAmountOverlayChecks'
+    mainClass = 'gregtech.core.FluidSlotAmountOverlayChecks'
     javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
     def marker = layout.buildDirectory.file('reports/contracts/fluidSlotAmountOverlayChecks.passed')
     outputs.file(marker)
@@ -340,7 +340,7 @@ tasks.named('check').configure { dependsOn fluidSlotAmountOverlayChecks }
         group = 'verification'
         dependsOn tasks.named('testClasses')
         classpath = sourceSets.test.runtimeClasspath
-        mainClass = 'com.gregtech.gregtech.core.OreThermalSourceContracts'
+        mainClass = 'gregtech.core.OreThermalSourceContracts'
         args scenario
         javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
         def marker = layout.buildDirectory.file("reports/contracts/oreThermalSourceContracts_${scenario}.passed")
@@ -360,7 +360,7 @@ tasks.named('check').configure { dependsOn fluidSlotAmountOverlayChecks }
         group = 'verification'
         dependsOn tasks.named('testClasses')
         classpath = sourceSets.test.runtimeClasspath
-        mainClass = 'com.gregtech.gregtech.core.AddonLifecycleContracts'
+        mainClass = 'gregtech.core.AddonLifecycleContracts'
         args scenario
         javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
         def marker = layout.buildDirectory.file("reports/contracts/addonLifecycleContracts_${scenario}.passed")

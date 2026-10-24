@@ -46,7 +46,7 @@ foreach ($baselineStub in $baselineStubs.PSObject.Properties) {
     [System.IO.File]::WriteAllText($baselineTarget, $baselineStub.Value, $baselineUtf8)
 }
 $baselineInputs = @(Get-ChildItem -LiteralPath $baselineSources -Recurse -File -Filter '*.java' | ForEach-Object { $_.FullName })
-$baselineInputs += @((Join-Path $baselineCore 'src/test/java/com/gregtech/gregtech/core/MaterialCatalogSnapshot.java'),
+$baselineInputs += @((Join-Path $baselineCore 'src/test/java/gregtech/core/MaterialCatalogSnapshot.java'),
     (Join-Path $baselineCore 'src/test/fixtures/MaterialBaselineProbe.java'))
 if ($JdkHome) {
     $baselineJavac = Join-Path $JdkHome 'bin/javac.exe'

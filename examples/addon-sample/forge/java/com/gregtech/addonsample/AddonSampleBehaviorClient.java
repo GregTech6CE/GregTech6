@@ -1,8 +1,8 @@
 package com.gregtech.addonsample;
 
-import com.gregtech.gregtech.api.addon.platform.BehaviorMachineClient;
-import com.gregtech.gregtech.api.addon.platform.BehaviorMachineClientView;
-import com.gregtech.gregtech.api.addon.platform.BehaviorMachineMenuView;
+import gregtech.api.addon.platform.BehaviorMachineClient;
+import gregtech.api.addon.platform.BehaviorMachineClientView;
+import gregtech.api.addon.platform.BehaviorMachineMenuView;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.LevelRenderer;

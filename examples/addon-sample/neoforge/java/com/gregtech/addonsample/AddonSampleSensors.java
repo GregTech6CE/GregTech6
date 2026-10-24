@@ -1,10 +1,10 @@
 package com.gregtech.addonsample;
 
-import com.gregtech.gregtech.api.addon.platform.AddonSensor;
-import com.gregtech.gregtech.api.addon.platform.AddonSensorContributor;
-import com.gregtech.gregtech.api.addon.platform.SensorContext;
-import com.gregtech.gregtech.api.signal.GtSignalCarrier;
-import com.gregtech.gregtech.api.signal.GtSignalSource;
+import gregtech.api.addon.platform.AddonSensor;
+import gregtech.api.addon.platform.AddonSensorContributor;
+import gregtech.api.addon.platform.SensorContext;
+import gregtech.api.signal.GtSignalCarrier;
+import gregtech.api.signal.GtSignalSource;
 
 import java.util.List;
 
