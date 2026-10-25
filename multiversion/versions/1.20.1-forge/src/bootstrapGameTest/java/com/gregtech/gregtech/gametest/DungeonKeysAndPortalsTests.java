@@ -516,7 +516,7 @@ public final class DungeonKeysAndPortalsTests {
         ServerLevel level = helper.getLevel();
         Block block = GTDungeonBlocks.PORTAL_NETHER.get();
         DungeonPortalBlockEntity portal = placePortal(level, pos, block, TEST_KEY);
-        Player player = helper.makeMockPlayer();
+        Player player = ToolInteractionActors.survival(helper,pos);
         player.getAbilities().instabuild = false;
         List<String> problems = new ArrayList<>();
         player.setItemInHand(InteractionHand.MAIN_HAND, GTDungeonKeyItem.key(GTDungeonKeys.byIndex(1), TEST_KEY, 0));

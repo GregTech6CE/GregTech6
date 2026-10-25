@@ -91,7 +91,8 @@ public final class AxialGeneratorTests {
             var middle=pos.relative(front.getOpposite());h.setBlock(middle,grade.wall());
             h.assertTrue(!StructureTestSupport.ok(machine),"solid metal cannot replace a copper coil");
             h.setBlock(middle,GTMultiblocks.LARGE_COPPER_COIL.get());
-            h.assertTrue(!StructureTestSupport.ok(machine),"legacy generic dynamo wall cannot replace GT6 18040 copper coil");
+            h.assertTrue(GTMultiblocks.LARGE_COPPER_COIL.get()==LargeMachineParts.block(18040),"named copper coil is the original 18040 identity");
+            h.assertTrue(StructureTestSupport.ok(machine),"restoring the original coil reforms the complete structure");
         }
         h.succeed();
     }

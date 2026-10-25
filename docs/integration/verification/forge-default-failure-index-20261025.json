@@ -95,7 +95,7 @@
       "name": "dynamofourgradesandelectricalboundaries",
       "original_failure": "legacy generic dynamo wall cannot replace GT6 18040 copper coil",
       "family": "machine_lifecycle_structure_and_drops",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "dynamofourgradesandelectricalboundaries",
       "sources": [
         {
@@ -104,13 +104,14 @@
           "method_at_baseline": "dynamoFourGradesAndElectricalBoundaries",
           "method_snapshot_sha256": "ee71ae81f7000a17b9b22dce160da28c59a2c19bb1d8c5038322aca2ffb051c3"
         }
-      ]
+      ],
+      "verification": "forge-tool-boundaries-20261025.json"
     },
     {
       "name": "builderwandisfreeincreative",
       "original_failure": "a creative player still builds",
       "family": "tools_and_player_interaction",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "builderwandisfreeincreative",
       "sources": [
         {
@@ -119,7 +120,8 @@
           "method_at_baseline": "builderWandIsFreeInCreative",
           "method_snapshot_sha256": "c6e79d9fb50c97a2538912752dc78bcf54815b4f4f654a52bb43ddc507537c53"
         }
-      ]
+      ],
+      "verification": "forge-tool-boundaries-20261025.json"
     },
     {
       "name": "rejectedpacketsneverenergizewireandacceptedpoweraccumulates",
@@ -269,7 +271,7 @@
       "name": "everytoolhasgt6srecipefamily",
       "original_failure": "every port tool has a GT6 manual recipe family, missing: [pocket_knife, pocket_saw, pocket_file, pocket_screwdriver, pocket_wire_cutter, pocket_scissors, pocket_chisel]",
       "family": "tools_and_player_interaction",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "everytoolhasgt6srecipefamily",
       "sources": [
         {
@@ -278,7 +280,8 @@
           "method_at_baseline": "everyToolHasGt6sRecipeFamily",
           "method_snapshot_sha256": "da11f4d79d5a9018544ccb34d1d9892e6b8bc1635ebce859e2e1220a8ed9e361"
         }
-      ]
+      ],
+      "verification": "forge-tool-boundaries-20261025.json"
     },
     {
       "name": "reddyechainkeepsoriginalamountsandresiduechance",
@@ -396,7 +399,7 @@
       "name": "earlytoolscomefromrocksandflint",
       "original_failure": "three rocks and a stick craft a stone pickaxe",
       "family": "tools_and_player_interaction",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "earlytoolscomefromrocksandflint",
       "sources": [
         {
@@ -405,13 +408,14 @@
           "method_at_baseline": "earlyToolsComeFromRocksAndFlint",
           "method_snapshot_sha256": "425a40c13b61b24579f364b307e66b2c725e0f9efbd3c9cdfab6b14cefd3eaa8"
         }
-      ]
+      ],
+      "verification": "forge-tool-boundaries-20261025.json"
     },
     {
       "name": "dispatcherrouteseachfamily",
       "original_failure": "the dispatcher reaches the portable scanner (Behavior_Scanner:54)",
       "family": "tools_and_player_interaction",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "dispatcherrouteseachfamily",
       "sources": [
         {
@@ -420,13 +424,14 @@
           "method_at_baseline": "dispatcherRoutesEachFamily",
           "method_snapshot_sha256": "94bb218b01e3c19892c14e09324cf310614f9d7d56f77f55b4b5a4999b75ec56"
         }
-      ]
+      ],
+      "verification": "forge-tool-boundaries-20261025.json"
     },
     {
       "name": "survivaldrilluseslastchargeandbindsfirstavailablehotbarremote",
       "original_failure": "drilling consumes 100 EU",
       "family": "tools_and_player_interaction",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "survivaldrilluseslastchargeandbindsfirstavailablehotbarremote",
       "sources": [
         {
@@ -435,7 +440,8 @@
           "method_at_baseline": "survivalDrillUsesLastChargeAndBindsFirstAvailableHotbarRemote",
           "method_snapshot_sha256": "280be187450176bc4bb0594ef5854127c601a40109466c75dab8d74adc84c509"
         }
-      ]
+      ],
+      "verification": "forge-tool-boundaries-20261025.json"
     },
     {
       "name": "originalgasturbinehousingsformanduseoriginalsteamhousing",
@@ -473,7 +479,7 @@
       "name": "largecrusherusesoriginalefficiencyandretainsinterruptedwork",
       "original_failure": "6144 GU recipe costs 12288 RU at original 50 percent efficiency",
       "family": "machine_lifecycle_structure_and_drops",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "largecrusherusesoriginalefficiencyandretainsinterruptedwork",
       "sources": [
         {
@@ -482,7 +488,8 @@
           "method_at_baseline": "largeCrusherUsesOriginalEfficiencyAndRetainsInterruptedWork",
           "method_snapshot_sha256": "898dcfedfc3f4ae1995abb3b0b8e326baf1cf0ff09ee1d5e66f7cba9972e477f"
         }
-      ]
+      ],
+      "verification": "forge-tool-boundaries-20261025.json"
     },
     {
       "name": "rebootwindowsandmachinetimerpersist",
@@ -520,7 +527,7 @@
       "name": "builderwandcopiesthesurfaceonelayerup",
       "original_failure": "the wand reports the click as handled (Behavior_Builderwand:130)",
       "family": "tools_and_player_interaction",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "builderwandcopiesthesurfaceonelayerup",
       "sources": [
         {
@@ -529,7 +536,8 @@
           "method_at_baseline": "builderWandCopiesTheSurfaceOneLayerUp",
           "method_snapshot_sha256": "2eef92913893a15d9491ec617b1b9abc0b80da5c864ecc4fb30497ae94df0b8d"
         }
-      ]
+      ],
+      "verification": "forge-tool-boundaries-20261025.json"
     },
     {
       "name": "originallvpatternsmaterialsandtoolremainders",
@@ -567,7 +575,7 @@
       "name": "miniportalsourceactivation",
       "original_failure": "Ender Eye activates and consumes one eye",
       "family": "world_generation_radiation_and_bees",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "miniportalsourceactivation",
       "sources": [
         {
@@ -576,7 +584,8 @@
           "method_at_baseline": "miniPortalSourceActivation",
           "method_snapshot_sha256": "aaad1c1d5a4e260a4f461d6ce331c993e5ced34e2ec296c6a27db094a2a84afc"
         }
-      ]
+      ],
+      "verification": "forge-tool-boundaries-20261025.json"
     },
     {
       "name": "thefilteronthesendingfacegatesoutgoingitems",
@@ -645,7 +654,7 @@
       "name": "bronzepumpcanaccumulateoriginalbufferwithoutsimulationmutation",
       "original_failure": "a whole RU packet cannot overflow the 8192-RU buffer",
       "family": "covers_controls_and_energy_boundaries",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "bronzepumpcanaccumulateoriginalbufferwithoutsimulationmutation",
       "sources": [
         {
@@ -654,7 +663,8 @@
           "method_at_baseline": "bronzePumpCanAccumulateOriginalBufferWithoutSimulationMutation",
           "method_snapshot_sha256": "8b4e827953a7bef8355ae5f8d51e526e1e96cbf913189334629e0c0eeeac43b5"
         }
-      ]
+      ],
+      "verification": "forge-tool-boundaries-20261025.json"
     },
     {
       "name": "allmanufacturingingredientsareregistered",
@@ -723,7 +733,7 @@
       "name": "headandhandlerowsstayshapeless",
       "original_failure": "head then handle matches",
       "family": "tools_and_player_interaction",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "headandhandlerowsstayshapeless",
       "sources": [
         {
@@ -732,13 +742,14 @@
           "method_at_baseline": "headAndHandleRowsStayShapeless",
           "method_snapshot_sha256": "cf03e2e463670ac151903d39a4a559bb2e7420dc2e067445938b0275b9a8f993"
         }
-      ]
+      ],
+      "verification": "forge-tool-boundaries-20261025.json"
     },
     {
       "name": "attachmentphaseandflowrules",
       "original_failure": "gas drain rule cap_nozzle_steel",
       "family": "tools_and_player_interaction",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "attachmentphaseandflowrules",
       "sources": [
         {
@@ -747,7 +758,8 @@
           "method_at_baseline": "attachmentPhaseAndFlowRules",
           "method_snapshot_sha256": "ab6e692336436d94fc7874ca87cd4b748fe354cc3ca4d5c9d4ca5eb2ab952217"
         }
-      ]
+      ],
+      "verification": "forge-tool-boundaries-20261025.json"
     },
     {
       "name": "dungeonkeysareregisteredinbothlanguages",
@@ -960,7 +972,7 @@
       "name": "tierbuffersautooutputandcooldropnbt",
       "original_failure": "formed controller receives water",
       "family": "machine_lifecycle_structure_and_drops",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "tierbuffersautooutputandcooldropnbt",
       "sources": [
         {
@@ -969,7 +981,8 @@
           "method_at_baseline": "tierBuffersAutoOutputAndCoolDropNbt",
           "method_snapshot_sha256": "ee5f47b50e157e66d1935753b79fe7f50b9e5be4ec9800e1856033cbd0b8db6a"
         }
-      ]
+      ],
+      "verification": "forge-tool-boundaries-20261025.json"
     },
     {
       "name": "fluxlasercapabilityandstoppersist",
@@ -1100,7 +1113,7 @@
       "name": "builderwandskipsblockedpositions",
       "original_failure": "the other eight placements still happen",
       "family": "tools_and_player_interaction",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "builderwandskipsblockedpositions",
       "sources": [
         {
@@ -1109,7 +1122,8 @@
           "method_at_baseline": "builderWandSkipsBlockedPositions",
           "method_snapshot_sha256": "cc0c3617e0ecbec46bd11b8c0af575ac4fe24a8ed2525f9ad8b794b245acfb61"
         }
-      ]
+      ],
+      "verification": "forge-tool-boundaries-20261025.json"
     },
     {
       "name": "fluidburningboxcapabilitiesarecached",
@@ -1209,10 +1223,11 @@
   "ledger": {
     "indexed_before_batch": 76,
     "verified_this_batch": 21,
-    "pending_original_candidates": 23,
+    "pending_original_candidates": 9,
     "not_a_new_full_suite_measurement": true,
     "subsequent_cover_boundary_verified": 3,
     "subsequent_harvest_verified": 13,
-    "subsequent_processing_verified": 16
+    "subsequent_processing_verified": 16,
+    "subsequent_tool_boundary_verified": 14
   }
 }

@@ -231,9 +231,10 @@ public final class BlueprintRegressionTests {
         var recipes=new com.gregtech.gregtech.api.recipe.RecipeMap(null,"blueprint_crusher_test","Test","test",1,1,1,0,0,0,1,false,false,false,false);
         recipes.addRecipe(new com.gregtech.gregtech.api.recipe.Recipe(new ItemStack[]{new ItemStack(Items.APPLE)},new ItemStack[]{new ItemStack(Items.DIAMOND)},null,null,null,null,192,32,0));
         machine.setSpec(com.gregtech.gregtech.api.machine.BasicMachineSpec.builder("blueprint_crusher_test",block.basicSpec().material()).machineType("largecrusher").energy(GregTechTags.Energy.RU,512).recipes(recipes).faces(block.basicSpec().faceConfig()).build());
+        helper.assertTrue(StructureTestSupport.ok(machine),"crusher structure settled before work");
         machine.inventory().setStackInSlot(0,new ItemStack(Items.APPLE));
         for(int i=0;i<12;i++) {machine.doEnergyInjection(GregTechTags.Energy.RU,null,512,1,true);com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity.serverTick(helper.getLevel(),helper.absolutePos(pos),machine.getBlockState(),machine);}
-        helper.assertTrue(machine.getProgressPercent()==50,"6144 GU recipe costs 12288 RU at original 50 percent efficiency");
+        helper.assertTrue(machine.getProgressPercent()==50,"6144 GU recipe costs 12288 RU at original 50 percent efficiency: "+machine.getProgressPercent()+" / "+machine.saveWithoutMetadata());
         com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity.serverTick(helper.getLevel(),helper.absolutePos(pos),machine.getBlockState(),machine);
         helper.assertTrue(machine.getProgressPercent()==50,"crusher retains work on a missing power tick");
         for(int i=0;i<12;i++) {machine.doEnergyInjection(GregTechTags.Energy.RU,null,512,1,true);com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity.serverTick(helper.getLevel(),helper.absolutePos(pos),machine.getBlockState(),machine);}

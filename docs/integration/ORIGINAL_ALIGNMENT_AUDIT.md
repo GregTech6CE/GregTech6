@@ -304,7 +304,7 @@
 | ALIGN-221 | 确认玩家排液先被通用1000L行为接管，绕过设备专用整罐／顺序。 | 原工具先Behavior_Tool专用、成功即停，才到通用排液fallback。 | 当前GTToolItem先通用，cold2000时排1000并请求100耐久，原清2000／请求20；两端原生非PASS截断Block使用已追。hot-only专用成本另扩126，不代表所有工具入口，见[热交换器](HEAT_EXCHANGER_AUDIT.md)。大型蒸汽涡轮输入2000／水1000时也先排水，绕过输入优先专用清空，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。 |
 | ALIGN-222 | 确认旋转泵相连液体搜索被独立区域逐列扫描替代。 | 从正面同族液体连通扩散，按轻重切层，有3000／20刻重查。 | 当前先扫入口(-64,-64)列、高度-64起，入口空气也可抽孤立远源；固定向下／source扫描不等价，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
 | ALIGN-223 | 确认旋转泵RU输入范围和异常包处理不同。 | 四档有效存能R/2–2R；低速包消耗但不存，超限进保护计数。 | 当前固定8–R，青铜48被拒、8被存；无原过载反馈，不据此恢复爆炸，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
-| ALIGN-224 | 确认旋转泵整包下舍入可能令合法恒定输入达不到启动门槛。 | 8192需求按包向上取整，青铜17包可达8194。 | 当前最多481包到8177，余15拒17包且<8192不抽，条件持续则停；额定32正常，既有8191测试不是原版舍入证明，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
+| ALIGN-224 | 确认旋转泵整包下舍入可能令合法恒定输入达不到启动门槛。 | 8192需求按包向上取整，青铜17包可达8194。 | 历史下舍入故障在当前PumpWorkRules已改为向上取整。2026-10-25校正旧断言后，Forge青铜实测17RU接482包到8194、8191+32到8223并拒绝继续注入，模拟只读；其他输入范围/搜索差异保留，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)与[回执](verification/forge-tool-boundaries-20261025.json)。 |
 | ALIGN-225 | 确认旋转泵世界排液对象和回调准入不同。 | 同族流动块也以最低16RU清除，IFluidBlock查询实际排液结果。 | 当前仅source并造1000L，随后整个BlockState换空气；两版含水半砖返回source，可被整体移除。未游戏复现，保留整桶／移除成功保护，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
 | ALIGN-226 | 确认旋转泵只读出液罐变为允许外部填充的双向能力。 | 无盖泵fillable=null，Root.fill返回0；抽取任意面、主动推四侧。 | 两端直接返回tank，空罐fill1000可成功，四侧未排空时暂停抽新源；容量差异仅在特定量条件适用，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
 | ALIGN-227 | 确认旋转泵缺少原开关与运行状态接口。 | 原SwitchableOnOff／RunningActively由控制／检测盖消费，停机拒供能及新源抽取、仍推旧液。 | 当前无stopped／历史／MachineControl.Provider；Mixin后备覆盖板宿主已有，撤回全安装失败说法。fallback只有计量、supportsSwitch=false，原控制／运行检测未接通，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
