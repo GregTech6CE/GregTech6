@@ -471,6 +471,12 @@ ORE_SHREDDER_CASE_NAMESPACES = {
 }
 FUNCTIONAL_CASES |= set(ORE_SHREDDER_CASE_NAMESPACES)
 
+BUILDER_CASE_NAMESPACES = {
+    'sensorsourcetests.boiler_builder_without_reference_scans': 'gregtech_sensor_source:test_empty',
+    'sensorsourcetests.heat_exchanger_builder_without_reference_scans': 'gregtech_sensor_source:test_empty',
+}
+FUNCTIONAL_CASES |= set(BUILDER_CASE_NAMESPACES)
+
 STRUCTURE_INCREMENTAL_CASE_NAMESPACES = {
     'structureincrementaltests.syntheticaggregatesrotationandchunkreload': 'gt6ce_structure_incremental:test_empty',
     'structureincrementaltests.matchercandidatesmatchthescanorder': 'gt6ce_structure_incremental:test_empty',
@@ -510,6 +516,8 @@ STRUCTURE_TRACKING_CASE_NAMESPACES = {
 FUNCTIONAL_CASES |= set(STRUCTURE_TRACKING_CASE_NAMESPACES)
 
 def expected_namespace(identity):
+    if identity in BUILDER_CASE_NAMESPACES:
+        return BUILDER_CASE_NAMESPACES[identity]
     if identity in STRUCTURE_INCREMENTAL_CASE_NAMESPACES:
         return STRUCTURE_INCREMENTAL_CASE_NAMESPACES[identity]
     if identity in STRUCTURE_TRACKING_CASE_NAMESPACES:
@@ -592,6 +600,10 @@ def check(path, platform='forge'):
             test_class, method = identity.split('.', 1)
             if identity == 'addonrecipeapitests.reciperowscomparebyvalue':
                 if name == method and classname == 'gt6ce_api_contracts:test_empty':
+                    found.add(identity)
+                continue
+            if identity in BUILDER_CASE_NAMESPACES:
+                if name == method and classname == BUILDER_CASE_NAMESPACES[identity]:
                     found.add(identity)
                 continue
             if identity in STRUCTURE_INCREMENTAL_CASE_NAMESPACES:
