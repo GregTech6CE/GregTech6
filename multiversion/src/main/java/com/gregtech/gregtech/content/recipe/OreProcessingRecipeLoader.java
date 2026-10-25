@@ -435,8 +435,11 @@ public class OreProcessingRecipeLoader implements InitializationStep {
 
             List<GTMaterial> byProds = material.getByProducts();
 
-            // ── Bath: crushed + water → crushedPurified + first byproduct ──
-            if (MaterialPrefix.crushedPurified.isValidFor(material)) {
+            // The reviewed Cinnabar source has reagent-specific Bath routes, not this legacy
+            // water-only shortcut. Skip only this producer; external forms/profiles still defer
+            // and independent startup/datapack recipes are never searched for or removed.
+            if (!ReviewedCinnabarFacts.supports(material)
+                    && MaterialPrefix.crushedPurified.isValidFor(material)) {
                 ItemStack crushed = mat(MaterialPrefix.crushed, material, 1);
                 ItemStack crushedPurified = mat(MaterialPrefix.crushedPurified, material, 1);
                 if (!crushed.isEmpty() && !crushedPurified.isEmpty()) {
@@ -454,7 +457,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
 
             if (ReviewedCinnabarFacts.supports(material)) {
                 SourceOreFollowonRows.centrifuge(material,ReviewedCinnabarFacts.INSTANCE);
-                continue; // original Bath branch above remains unchanged; replace only owned generic centrifuge
+                continue; // source Cinnabar washing is handled by explicit reagent routes; replace owned centrifuge
             }
             if (ReviewedOreCentrifugeFacts.supports(material)) {
                 SourceOreFollowonRows.centrifuge(material, ReviewedOreCentrifugeFacts.INSTANCE);
