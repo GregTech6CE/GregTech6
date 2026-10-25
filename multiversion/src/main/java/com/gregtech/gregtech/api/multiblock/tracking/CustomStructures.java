@@ -1,18 +1,7 @@
 package com.gregtech.gregtech.api.multiblock.tracking;
 
-import com.gregtech.gregtech.api.multiblock.MultiblockLayout;
-import com.gregtech.gregtech.blockentity.machine.AxialGeneratorBlockEntity;
-import com.gregtech.gregtech.blockentity.machine.FuelTurbineBlockEntity;
-import com.gregtech.gregtech.blockentity.machine.LargeGasTurbineControllerBlockEntity;
-import com.gregtech.gregtech.blockentity.machine.LightningRodControllerBlockEntity;
-import com.gregtech.gregtech.blockentity.machine.MultiblockTankControllerBlockEntity;
-import com.gregtech.gregtech.content.logistics.LogisticsCoreStructure;
-import com.gregtech.gregtech.content.multiblock.AxialStructureTransform;
 import com.gregtech.gregtech.content.multiblock.FusionStructure;
 import com.gregtech.gregtech.content.multiblock.LargeMachineLayouts;
-import com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerSpecs;
-import com.gregtech.gregtech.content.multiblock.TurbineStructure;
-import com.gregtech.gregtech.content.multiblock.VonDaGraaggRules;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -26,24 +15,6 @@ public final class CustomStructures {
     public static StructureDefinition fusion(BlockEntity entity) {
         return fixed(entity, CustomStructures::fusionFootprint);
     }
-
-    public static StructureDefinition tank(MultiblockTankControllerBlockEntity entity) {
-        return fixed(entity, machine -> tankFootprint(entity));
-    }
-
-    public static StructureDefinition logistics(BlockEntity entity) {
-        return fixed(entity, CustomStructures::logisticsFootprint);
-    }
-
-    public static StructureDefinition drill(BlockEntity entity) {
-        return fixed(entity, CustomStructures::drillFootprint);
-    }
-
-
-    public static StructureDefinition lightning(LightningRodControllerBlockEntity entity) {
-        return new Lightning(entity);
-    }
-
     public static StructureDefinition unformed(BlockEntity entity) {
         return fixed(entity, machine -> new Footprint.Builder().addController(machine.trackedEntity().getBlockPos()).build());
     }
@@ -64,78 +35,4 @@ public final class CustomStructures {
         return builder.build();
     }
 
-    private static Footprint logisticsFootprint(TrackedMultiblock machine) {
-        BlockEntity entity = machine.trackedEntity();
-        Direction front = LayoutStructures.facing(entity);
-        Footprint.Builder builder = new Footprint.Builder().addController(entity.getBlockPos());
-        for (var cell : LogisticsCoreStructure.cells()) builder.add(cell.at(entity.getBlockPos(), front), Projection.BLOCK);
-        return builder.build();
-    }
-
-    private static Footprint drillFootprint(TrackedMultiblock machine) {
-        BlockEntity entity = machine.trackedEntity();
-        BlockPos origin = entity.getBlockPos();
-        Footprint.Builder builder = new Footprint.Builder().addController(origin);
-        for (int x = -1; x <= 1; x++)
-            for (int z = -1; z <= 1; z++) {
-                builder.add(origin.offset(x, -5, z), Projection.bedrockFloor());
-                for (int y = -4; y <= 0; y++) {
-                    if (x == 0 && y == 0 && z == 0) continue;
-                    builder.add(origin.offset(x, y, z), Projection.BLOCK);
-                }
-            }
-        return builder.build();
-    }
-
-    private static Footprint tankFootprint(MultiblockTankControllerBlockEntity entity) {
-        int size = entity.trackedSize();
-        Direction front = LayoutStructures.facing(entity);
-        BlockPos origin = entity.getBlockPos();
-        int radius = size / 2;
-        BlockPos centre = origin.relative(front.getOpposite(), radius);
-        Footprint.Builder builder = new Footprint.Builder().addController(origin);
-        for (int x = -radius; x <= radius; x++)
-            for (int y = -radius; y <= radius; y++)
-                for (int z = -radius; z <= radius; z++) {
-                    BlockPos pos = centre.offset(x, y, z);
-                    if (pos.equals(origin)) continue;
-                    boolean shell = Math.abs(x) == radius || Math.abs(y) == radius || Math.abs(z) == radius;
-                    builder.add(pos, shell ? Projection.BLOCK : Projection.AIR);
-                }
-        return builder.build();
-    }
-
-    private static final class Lightning implements StructureDefinition.Custom {
-        private final LightningRodControllerBlockEntity entity;
-
-        private Lightning(LightningRodControllerBlockEntity entity) { this.entity = entity; }
-
-        @Override public StructureDefinition.ClaimPolicy claimPolicy() { return StructureDefinition.ClaimPolicy.ATOMIC; }
-        @Override public boolean tightenWatch() { return true; }
-
-        @Override public Footprint watchFootprint(TrackedMultiblock machine) {
-            StructureTracker tracker = StructureTracking.tracker(entity);
-            int matched = tracker == null || tracker.matchedLayers() == null || tracker.matchedLayers().length == 0
-                    ? 0 : Math.max(0, tracker.matchedLayers()[0]);
-            return rod(entity, matched + 1);
-        }
-
-        @Override public Footprint declaredFootprint(TrackedMultiblock machine) {
-            int span = entity.getLevel() == null ? 384 : entity.getLevel().getMaxBuildHeight() - entity.getBlockPos().getY();
-            return rod(entity, Math.max(1, span));
-        }
-
-        private static Footprint rod(LightningRodControllerBlockEntity entity, int segments) {
-            BlockPos origin = entity.getBlockPos();
-            Footprint.Builder builder = new Footprint.Builder().addController(origin);
-            for (int y = 0; y < 5; y++)
-                for (int x = -1; x <= 1; x++)
-                    for (int z = -1; z <= 1; z++)
-                        builder.add(origin.offset(x, y, z), Projection.BLOCK);
-            int limit = entity.getLevel() == null ? segments : Math.min(segments,
-                    Math.max(0, entity.getLevel().getMaxBuildHeight() - origin.getY() - 5));
-            for (int i = 0; i < limit; i++) builder.add(origin.above(5 + i), Projection.BLOCK);
-            return builder.build();
-        }
-    }
 }

@@ -1,6 +1,5 @@
 package com.gregtech.gregtech.gametest;
 
-import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.GTValues;
 import com.gregtech.gregtech.api.material.ItemMaterialRegistry;
 import com.gregtech.gregtech.api.machine.crucible.CrucibleItemInput;
@@ -31,7 +30,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
 
@@ -87,18 +85,21 @@ public final class BedrockBrokenOreRepairTests {
 
     @GameTest(template = "coin_pile_space")
     public static void bedrockDrillSelectsAPlaceableBrokenOre(GameTestHelper helper) throws Exception {
-        BlockPos pos = helper.absolutePos(new BlockPos(1, 1, 1));
+        BlockPos pos = helper.absolutePos(new BlockPos(1, 8, 1));
         helper.getLevel().setBlock(pos, GTMultiblocks.findPart(17999).get().defaultBlockState(), 3);
         var drill = (BedrockDrillControllerBlockEntity) helper.getLevel().getBlockEntity(pos);
         helper.assertTrue(drill != null, "bedrock drill controller creates its block entity");
 
-        // Seed the 18-entry deposit list that checkStructure collects from nine full bedrock ores.
+        // Each production cycle reads the real floor, rather than retaining a scan-populated cache.
+        var product = OreBlock.brokenStack(Materials.Iron, OreHostStone.STONE);
+        helper.assertTrue(product.getItem() instanceof BlockItem, "registered iron ore block exists");
+        var ore = (OreBlock) ((BlockItem) product.getItem()).getBlock();
+        for (int x = -1; x <= 1; x++) for (int z = -1; z <= 1; z++)
+            helper.getLevel().setBlock(pos.offset(x, -5, z), ore.stateFor(OreHostStone.BEDROCK), 3);
+        helper.assertTrue(drill.drillingCandidates().size() == 18
+                        && drill.drillingCandidates().stream().allMatch(material -> material.resolve() == Materials.Iron.resolve()),
+                "nine actual full bedrock ores supply eighteen weighted iron candidates");
         // Invoke the production selector directly so this test checks its item before a 32768 RU cycle.
-        Field depositField = BedrockDrillControllerBlockEntity.class.getDeclaredField("deposit");
-        depositField.setAccessible(true);
-        @SuppressWarnings("unchecked")
-        List<GTMaterial> deposit = (List<GTMaterial>) depositField.get(drill);
-        for (int i = 0; i < 18; i++) deposit.add(Materials.Iron);
         Method nextProduct = BedrockDrillControllerBlockEntity.class.getDeclaredMethod("nextProduct");
         nextProduct.setAccessible(true);
         ItemStack mined = ItemStack.EMPTY;

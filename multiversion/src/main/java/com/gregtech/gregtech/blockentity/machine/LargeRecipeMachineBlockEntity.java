@@ -269,10 +269,16 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
     protected boolean matchesPart(LargeMachineLayouts.Cell cell,net.minecraft.world.level.block.Block expected,net.minecraft.world.level.block.Block actual) {return (actual == expected);}
     public LargeMachineLayouts.Layout trackedLayout() { return structureLayout(); }
     @Override public boolean acceptsTrackedPart(LargeMachineLayouts.Cell cell, net.minecraft.world.level.block.Block expected, net.minecraft.world.level.block.Block actual) {
+        if (cell.part() == 18042 && spec() != null && "largeoven".equals(spec().machineName()))
+            return (actual == expected || actual == com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(18043))
+                    && matchesPart(cell, actual, actual);
         return matchesPart(cell, expected, actual);
     }
     @Override public boolean structurePartsValid() { return validStructureParts(); }
-    @Override public StructureDefinition structureDefinition() { return LayoutStructures.recipe(this); }
+    @Override public StructureDefinition structureDefinition() {
+        return spec() != null && "largeoven".equals(spec().machineName())
+                ? com.gregtech.gregtech.content.multiblock.SpecialStructures.oven(this) : LayoutStructures.recipe(this);
+    }
     @Override public boolean isStructureOk() { return StructureTracking.query(this); }
     @Override public boolean scanStructure() {
         if(level==null||spec()==null||isRemoved()) return false;
@@ -282,11 +288,10 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
             if(!validStructureParts()){bindings.clear(this::release);StructureClaims.cleared(this);return false;}
             var front=getBlockState().getValue(HorizontalDirectionalBlock.FACING);
             var parts=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
-            var ovenCoil=new net.minecraft.world.level.block.Block[1];
             var matchedCells=new java.util.ArrayList<LargeMachineLayouts.Cell>();
             for(var cell:layout.cells()) {
                 var pos=cell.at(worldPosition,front);
-                var matched=matchingCell(cell,pos,ovenCoil);
+                var matched=matchingCell(cell,pos);
                 if(matched==null) {bindings.clear(this::release);StructureClaims.cleared(this);return false;}
                 matchedCells.add(matched);
                 if(matched.role()!=MultiblockLayout.Role.AIR&&!matched.plainBlock())parts.put(pos,matched.role());
@@ -297,7 +302,7 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
                 var matches=new java.util.HashMap<BlockPos,LargeMachineLayouts.Cell>();
                 int[] found=new int[1];
                 var placed=LargeMachineLayouts.repeatCells(level,worldPosition,front,repeat,(cell,pos)->{
-                    var matched=matchingCell(cell,pos,ovenCoil);
+                    var matched=matchingCell(cell,pos);
                     if(matched==null)return false;
                     matches.put(pos,matched);
                     return true;
@@ -310,6 +315,10 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
                     repeatPlaced.add(new LargeMachineLayouts.Placed(matched,cell.pos()));
                     if(matched.role()!=MultiblockLayout.Role.AIR&&!matched.plainBlock())parts.put(cell.pos(),matched.role());
                 }
+            }
+            // The retained full scan checks the whole coil group explicitly; matchers have no scan-local state.
+            if ("largeoven".equals(spec().machineName()) && !ovenCoilsAgree(front, matchedCells, repeatPlaced)) {
+                bindings.clear(this::release); StructureClaims.cleared(this); return false;
             }
             var claimed = StructureClaims.update(this, true, bindings, parts,
                     designHash(matchedCells, repeatPlaced),
@@ -366,27 +375,32 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         for (var cell : placed) hash = 31 * hash + cell.cell().design();
         return hash;
     }
-    private LargeMachineLayouts.Cell matchingCell(LargeMachineLayouts.Cell cell,BlockPos pos,net.minecraft.world.level.block.Block[] ovenCoil) {
+    private boolean ovenCoilsAgree(Direction front, List<LargeMachineLayouts.Cell> fixed, List<LargeMachineLayouts.Placed> repeated) {
+        return java.util.stream.Stream.concat(
+                fixed.stream().filter(cell -> cell.part() == 18042).map(cell -> cell.at(worldPosition, front)),
+                repeated.stream().filter(placed -> placed.cell().part() == 18042).map(LargeMachineLayouts.Placed::pos))
+                .map(pos -> level.getBlockState(pos).getBlock()).distinct().limit(2).count() <= 1;
+    }
+    private LargeMachineLayouts.Cell matchingCell(LargeMachineLayouts.Cell cell,BlockPos pos) {
         StructureScanProbe.matcher();
         if(!level.hasChunkAt(pos))return null;
         if(cell.role()==MultiblockLayout.Role.AIR)return level.isEmptyBlock(pos)?cell:null;
-        if(matchesChoice(cell,cell.part(),cell.plain(),pos,ovenCoil))return cell;
+        if(matchesChoice(cell,cell.part(),cell.plain(),pos))return cell;
         for(var alternative:cell.alternatives()) {
             var choice = new LargeMachineLayouts.Cell(cell.right(),cell.up(),cell.back(),alternative.part(),
                     cell.role(),alternative.plain(),cell.design(),java.util.List.of());
-            if(matchesChoice(choice,alternative.part(),alternative.plain(),pos,ovenCoil))return choice;
+            if(matchesChoice(choice,alternative.part(),alternative.plain(),pos))return choice;
         }
         return null;
     }
-    private boolean matchesChoice(LargeMachineLayouts.Cell cell,int part,String plain,BlockPos pos,net.minecraft.world.level.block.Block[] ovenCoil) {
+    private boolean matchesChoice(LargeMachineLayouts.Cell cell,int part,String plain,BlockPos pos) {
         if(plain!=null)return LargeMachineLayouts.matchesPlain(level,pos,plain);
         var expected=com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(part);
         if(part==18042 && "largeoven".equals(spec().machineName())) {
-            if(ovenCoil[0]==null) {
-                ovenCoil[0]=level.getBlockState(pos).getBlock();
-                if(ovenCoil[0]!=expected&&ovenCoil[0]!=com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(18043))return false;
-            }
-            expected=ovenCoil[0];
+            var actual = level.getBlockState(pos).getBlock();
+            return (actual == expected || actual == com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(18043))
+                    && matchesPart(cell, actual, actual)
+                    && level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity;
         }
         return matchesPart(cell,expected,level.getBlockState(pos).getBlock())
                 && level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity;
