@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-25",
+  "working_base": "85052aa6e710a9d83fbe570cf3d02a2ad89bfebe",
+  "scope": "Validate effective nominal energy after merging addon tuning fields with built-in defaults in BasicMachineDefinitions.from",
+  "pre_change_catalog_audit": {
+    "rows": 260,
+    "TU_rows": 7,
+    "out_of_range": 0,
+    "performed_before_adding_guard": true,
+    "source": "core/src/main/java/com/gregtech/gregtech/content/machine/BasicMachineCatalog.java",
+    "TU_window": [
+      1,
+      16
+    ]
+  },
+  "regressions": [
+    "energy-only override above inherited maximum or below inherited minimum",
+    "minimum-only, maximum-only and two-bound overrides excluding inherited nominal",
+    "two addons supplying partial fields while maximum is inherited",
+    "inclusive min/max boundaries and a valid singleton range",
+    "parallel-only override preserves energy fields",
+    "all built-in specs remain valid; every TU row rejects nominal 17 and accepts boundary 16"
+  ],
+  "core": {
+    "machineSpecBehaviorContracts_assertions": 10494,
+    "addonDeclarationTypeContracts_assertions": 291,
+    "documentation_checker": "passed",
+    "documentation_regression_tests": 19
+  },
+  "native": {
+    "1.20.1-forge": {
+      "passed": 4,
+      "failed": 0,
+      "report": "multiversion/versions/1.20.1-forge/build/reports/gametest/tuning-effective-range.xml",
+      "sha256": "f91200066f7224792545ccd735a5dd874343a627c7ba23c988ae350bd140ccb3",
+      "methods": [
+        "allbuiltinsandtutuningsusevalideffectiveranges",
+        "partialtuningchecksinheritedenergyrange",
+        "tuningchangesonlydeclaredfields",
+        "tuningenergyboundariesanduntouchedvaluesremainvalid"
+      ]
+    },
+    "1.21.1-neoforge": {
+      "passed": 4,
+      "failed": 0,
+      "report": "multiversion/versions/1.21.1-neoforge/build/reports/gametest/tuning-effective-range.xml",
+      "sha256": "e0de1d2d3dd3a3eabf43207c85d8b3526e45fe1b722fd1c5564f612920f73c1c",
+      "methods": [
+        "allbuiltinsandtutuningsusevalideffectiveranges",
+        "partialtuningchecksinheritedenergyrange",
+        "tuningchangesonlydeclaredfields",
+        "tuningenergyboundariesanduntouchedvaluesremainvalid"
+      ]
+    }
+  },
+  "environment": {
+    "launcher_java": 21,
+    "forge_java": 17,
+    "neoforge_java": 21,
+    "gameTestHeap": "3g",
+    "namespace": "gregtech_tuning"
+  },
+  "ci": "issue-regressions enables gregtech_tuning and requires all four exact method/template identities",
+  "initial_attempt": "Default 1536m Forge heap exhausted during startup; no regression result claimed for that attempt. Retried both platforms with the CI 3g heap.",
+  "limits": "Focused tuning tests and catalog audit; not a full issue-regression, client gameplay or save/restart validation run."
+}

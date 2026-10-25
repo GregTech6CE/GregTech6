@@ -788,7 +788,9 @@ if (level.getBlockEntity(pos) instanceof HeatHandler heat) {
 
 `MachineTuningContributor` 写在 `META-INF/services/com.gregtech.gregtech.api.addon.MachineTuningContributor`，用来覆盖内置机器变体。GT 在内置目录转成 spec 之前加载它。`MachineTuning` 以 `machineName` 和 `tier` 为键，只改非空字段：`parallelLimit`、`energyIn`、`energyInMin`、`energyInMax`、`processingEfficiency`（万分比）、`constantEnergy` 和 `cheapOverclocking`；`id`、材料、能量类型、配方表、面、结构和附加能量保持不变。
 
-合并后的字段重新走 `BasicMachineSpec` 规范构造器。另一个附属可以重复同一个值；同一个 `(machineName, tier, field)` 出现不同值时启动失败，并写出双方附属、字段和两个值。键没有命中任何内置行也会启动失败。调过的 `parallelLimit` 上限是 65536，`energyIn × parallelLimit` 必须能放进 long。补丁只存在于运行时：每次启动重算，不写进存档，移除附属后恢复内置值。启动日志每个字段打印一行 `[gt6ce] tuning: ...`，并写出 `config/gt6ce-tuning.txt`。版本 0 不提供数据包形式。
+未覆盖的字段取内置默认值后，最终标称输入必须落在最终输入范围内；只覆盖一个字段也会检查，越界时启动失败。随后最终字段重新走 `BasicMachineSpec` 规范构造器。
+
+另一个附属可以重复同一个值；同一个 `(machineName, tier, field)` 出现不同值时启动失败，并写出双方附属、字段和两个值。键没有命中任何内置行也会启动失败。调过的 `parallelLimit` 上限是 65536，`energyIn × parallelLimit` 必须能放进 long。补丁只存在于运行时：每次启动重算，不写进存档，移除附属后恢复内置值。启动日志每个字段打印一行 `[gt6ce] tuning: ...`，并写出 `config/gt6ce-tuning.txt`。版本 0 不提供数据包形式。
 
 ### 燃料机
 

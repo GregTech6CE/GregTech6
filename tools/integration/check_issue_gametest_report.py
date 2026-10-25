@@ -477,6 +477,14 @@ BUILDER_CASE_NAMESPACES = {
 }
 FUNCTIONAL_CASES |= set(BUILDER_CASE_NAMESPACES)
 
+TUNING_CASE_NAMESPACES = {
+    'machinetuningtests.tuningchangesonlydeclaredfields': 'gregtech_tuning:test_empty',
+    'machinetuningtests.partialtuningchecksinheritedenergyrange': 'gregtech_tuning:test_empty',
+    'machinetuningtests.tuningenergyboundariesanduntouchedvaluesremainvalid': 'gregtech_tuning:test_empty',
+    'machinetuningtests.allbuiltinsandtutuningsusevalideffectiveranges': 'gregtech_tuning:test_empty',
+}
+FUNCTIONAL_CASES |= set(TUNING_CASE_NAMESPACES)
+
 STRUCTURE_INCREMENTAL_CASE_NAMESPACES = {
     'structureincrementaltests.syntheticaggregatesrotationandchunkreload': 'gt6ce_structure_incremental:test_empty',
     'structureincrementaltests.matchercandidatesmatchthescanorder': 'gt6ce_structure_incremental:test_empty',
@@ -516,6 +524,8 @@ STRUCTURE_TRACKING_CASE_NAMESPACES = {
 FUNCTIONAL_CASES |= set(STRUCTURE_TRACKING_CASE_NAMESPACES)
 
 def expected_namespace(identity):
+    if identity in TUNING_CASE_NAMESPACES:
+        return TUNING_CASE_NAMESPACES[identity]
     if identity in BUILDER_CASE_NAMESPACES:
         return BUILDER_CASE_NAMESPACES[identity]
     if identity in STRUCTURE_INCREMENTAL_CASE_NAMESPACES:
@@ -598,6 +608,10 @@ def check(path, platform='forge'):
         classname = case.get('classname', '').lower()
         for identity in candidates_by_tail.get(name.rsplit('.', 1)[-1], ()):
             test_class, method = identity.split('.', 1)
+            if identity in TUNING_CASE_NAMESPACES:
+                if name == method and classname == TUNING_CASE_NAMESPACES[identity]:
+                    found.add(identity)
+                continue
             if identity == 'addonrecipeapitests.reciperowscomparebyvalue':
                 if name == method and classname == 'gt6ce_api_contracts:test_empty':
                     found.add(identity)

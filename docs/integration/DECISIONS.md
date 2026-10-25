@@ -1,5 +1,13 @@
 # 实现选择记录
 
+## 2026-10-25 / 内置机器调参的有效能量范围补查
+
+- `MachineTuning` canonical 构造器只验证声明中同时存在的 `energyIn`、`energyInMin`、`energyInMax`；`MachineTuningRules.merge` 只合并附属声明，不会填内置值。原先把这一步等同最终合并检查的理由不成立，卡 50 及调参 API 的记录已更正。
+- 在补检查前扫描内置目录 260 行，其中 TU 7 行：标称能量越界为 0，TU 窗口为 1..16。无需内置兼容豁免。
+- `BasicMachineDefinitions.from` 先用内置值填齐 tuning 的空字段，再检查最终 `energyIn ∈ [energyInMin, energyInMax]`，失败抛 `IllegalStateException` 并带机器名、tier、标称输入和有效范围。合法的上下边界保留；不自动扩大未声明的窗口。`BasicMachineSpec` 的一般构造契约不扩大，本次检查仅作用于内置调参应用路径。
+- 新增部分覆盖、两个附属分别覆盖、合法边界、非能量字段覆盖及所有 TU 行的原生回归；全部内置行的范围审计也接入核心契约。问题回归 CI 显式启用 `gregtech_tuning`，报告门禁要求四个测试身份都实际执行。
+- 验证：核心机器契约 10494 条断言、声明类型契约 291 条断言、文档校验及其 19 项回归通过；Forge 1.20.1 / NeoForge 1.21.1 的 `gregtech_tuning` 均 4/4。原生测试使用 3g 堆，默认 1536m 的首次 Forge 启动耗尽内存，没有当作测试结果。证据见 [machine-tuning-effective-range-20261025.json](verification/machine-tuning-effective-range-20261025.json)。本轮没有跑完整问题回归、客户端玩法或存档重启。
+
 ## 2026-10-25 / 附属 API 文档参考与校验（卡 61）
 
 - 跨类型约定与声明上限以 `ADDON_API.md` / `ADDON_API.zh-CN.md` 的顶层约定、上限章节为准；方法细节以 SDK Javadoc 为准。主题正文引用参考表，历史上游 minor 1–8 放入附录，不能当作 CE API 0 的功能门槛。
@@ -13,7 +21,7 @@
 
 能量声明的面顺序不参与相等性，`faces()` 保留写入顺序；`capacity(0)` 在建完后等同未写。机器与零件的旧 `item` / `setItem` 语义各自保留，文档列出差异。`Line` 的 duration、presence 数量、null 输出，`CrucibleContent` 的负数，以及 `StackComposition.of` 的无效组分都保留改写，只补 Javadoc。
 
-注册期新增拒绝：`RecipeTable` 的最少输入不得超过输入格数；`MachineTuning` 三者同时给出时能量必须落在区间内（合并后的行也经同一 canonical 构造器检查，`MachineTuningRules` 不再重复查一次）；`MaterialDeclaration` 的矿副产不得重复（自引用允许）；`MaterialComposition` / `CrucibleReactionDeclaration` 的组分不得重复；`MaterialFormRequest` 的两个名字按材料名和前缀名规则校验。`MaterialDeclaration` 熔点高于沸点只告警；`MachineIo` 的自动面不要求出现在对应面列表（机器主动推送与管道被动存取独立）；前缀的 `materials` 与 `excludedMaterials` 重叠时排除优先。见[契约核对](ADDON_API_CONTRACT_AUDIT_20261024.md)。
+注册期新增拒绝：`RecipeTable` 的最少输入不得超过输入格数；`MachineTuning` 三者同时给出时能量必须落在区间内；canonical 构造器只覆盖附属间合并得到的完整三元组。和内置默认值合并发生在 `BasicMachineDefinitions.from`，该处须另外检查最终 `energyIn ∈ [energyInMin, energyInMax]`（见 2026-10-25 的补查记录）；`MaterialDeclaration` 的矿副产不得重复（自引用允许）；`MaterialComposition` / `CrucibleReactionDeclaration` 的组分不得重复；`MaterialFormRequest` 的两个名字按材料名和前缀名规则校验。`MaterialDeclaration` 熔点高于沸点只告警；`MachineIo` 的自动面不要求出现在对应面列表（机器主动推送与管道被动存取独立）；前缀的 `materials` 与 `excludedMaterials` 重叠时排除优先。见[契约核对](ADDON_API_CONTRACT_AUDIT_20261024.md)。
 
 ## 2026-10-24 / 附属 API 契约修复（卡 49）
 
@@ -2125,7 +2133,7 @@ Sensors null-NBT源登记可合法携带REV，生成器只为这组解析，避�
 - 新增 `MachineTuning` 和 `MachineTuningContributor`（`core/src/api`，ServiceLoader，服务文件 `META-INF/services/com.gregtech.gregtech.api.addon.MachineTuningContributor`）。`MachineTunings.collect()` 在 `BasicMachineDefinitions.specifications()` 中、`AddonMachineRuntime.install()` 之后、内置目录转成 spec 之前运行。
 - 键是 `machineName + tier`，与 `BasicMachineOriginalParams.find` 同键；只覆盖 `parallelLimit`、`energyIn`、`energyInMin`、`energyInMax`、`processingEfficiency`、`constantEnergy`、`cheapOverclocking`，其余字段保持内置值。
 - 冲突按字段判：同一 `(machineName, tier, field)` 被两个附属写成不同值时启动失败，并列出双方 addonId、字段和两个值；值相同则合并；同一附属重复声明同一字段失败。没有命中任何内置行的键也启动失败。
-- 合并后的值重新走 `BasicMachineSpec` 规范构造器；额外限制 `parallelLimit <= 65536` 和 `energyIn × parallelLimit` 不溢出 long。调过 `cheapOverclocking` 会把它标成 declared，调过能量范围会把 `energyRangeDeclared` 置真。
+- 附属覆盖值和内置默认值在 `BasicMachineDefinitions.from` 中合并，先检查最终 `energyIn ∈ [energyInMin, energyInMax]`，再重建 `BasicMachineSpec`（其规范构造器只检查范围本身，不保证标称能量在其中）；另限制 `parallelLimit <= 65536` 和 `energyIn × parallelLimit` 不溢出 long。调过 `cheapOverclocking` 会把它标成 declared，调过能量范围会把 `energyRangeDeclared` 置真。
 - 补丁只在内存中，每次启动重算，不写存档；移除附属后恢复内置值。启动日志逐字段打印 `[gt6ce] tuning: ...`，并写出 `config/gt6ce-tuning.txt`。v1 不提供数据包形式。
 - 验证：`AddonDeclarationTypeContracts` 增加 22 条断言（记录校验、合并、冲突、上限、溢出、报告顺序）；新增 `gregtech_tuning` 命名空间的 `MachineTuningTests`，Forge 与 NeoForge 各 1/1 required tests passed；`core:check`、两端 `compileJava`、`compileBootstrapGameTestJava`、`addonApiClosureCheck` 通过（core 111、两端 148 个 API 类）。未做客户端玩法、专服、存档重启验证。
 
