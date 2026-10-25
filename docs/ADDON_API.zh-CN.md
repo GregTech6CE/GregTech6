@@ -1342,7 +1342,7 @@ public final class MySourceBlockEntity extends BlockEntity implements GtSignalSo
 
 SDK 是 `core/src/api/java` 下的 `gregtech.api.*`，加上 `multiversion/src/api/java` 下的 `gregtech.api.*`（平台门面、机器控制和管道连接契约）。GT 的实现位于 `gregtech.internal.*`，具体游戏内容位于 API 之外。四个已弃用的 contributor/layout 类型作为明确的旧入口例外，仍留在主模组的 `gregtech.api.addon`，不进入 SDK；支持范围以 SDK jar 和生成的 Javadoc 为准。`AddonPlatform` 放与加载器无关的入口；签名里出现加载器流体类型的方法在 `AddonLoader`。
 
-`onRecipesReady` 仍不是数据包重载事件。API 版本 0 包含坩埚成分、熔炼目标、合金反应、行为机器坩埚回调、绑定零件的只读坩埚视图，以及行为机器往记下的坐标远程送能，仍会把旧的材料数字 id 读成内置材料，并在这个方块或物品下次保存时写成名字。这一版不承诺固体燃料、能量转换、把内置引擎改到这套模板上、套在菜单之上的 `Screen` 之外的任意 GUI 控件、无线计算零件、坩埚方块、写入坩埚温度或内容物、任意非 GT 物品的熔化登记、坩埚数据包、不经入口就用数据包新建配方表、材料表的数据包重载、一份二进制同时跑两个加载器，或完整旧 GregAPI 替代。1.0 之前仅文档列出的入口作为兼容面。电压等级以[原GT6电压说明](VOLTAGE_TIERS.md)为准。
+`onRecipesReady` 仍不是数据包重载事件。API 版本 0 包含坩埚成分、熔炼目标、合金反应、行为机器坩埚回调、绑定零件的只读坩埚视图，以及行为机器往记下的坐标远程送能，仍会把旧的材料数字 id 读成内置材料，并在这个方块或物品下次保存时写成名字。这一版不承诺固体燃料、能量转换、把内置引擎改到这套模板上、套在菜单之上的 `Screen` 之外的任意 GUI 控件、无线计算零件、坩埚方块、写入坩埚温度或内容物、任意非 GT 物品的熔化登记、坩埚数据包、不经入口就用数据包新建配方表、材料表的数据包重载、一份二进制同时跑两个加载器，或完整旧 GregAPI 替代。1.0 之前仅文档列出的入口作为兼容面。电压等级以[原 GT6 电压定义](../core/src/api/java/gregtech/api/energy/GTVoltageTiers.java)为准。
 
 本次统一补上明确的访问／对象归属契约、不可变配方快照和具名构造，并未增加通用事务式配方执行器、任意数量的能源通道或带版本号的行为状态迁移。既有配方机器模板和主／附加能源缓冲保持原有范围。
 
@@ -1441,8 +1441,8 @@ SDK与项目代码采用LGPL-3.0-or-later；原作者、第三方代码和资产
 
 ## test 分支包名迁移
 
-本实验分支将 Java 根包由 `com.gregtech.gregtech` 改为 `gregtech`，内部实现迁往 `gregtech.internal`。这会破坏旧二进制引用：附属需要更新 import、`META-INF/services` 文件名及提供者类名，并重新编译。游戏资源 ID 仍为 `gt6ce:`，已有弃用期限不变。SDK 中的启动服务仍不是附属扩展点。详见[包边界](integration/JAVA_PACKAGE_BOUNDARIES.md)和[逐类迁移清单](integration/PACKAGE_BOUNDARY_TYPES.tsv)。不能据此宣称旧附属 JAR 免修改兼容。
+本实验分支将 Java 根包由 `com.gregtech.gregtech` 改为 `gregtech`，内部实现迁往 `gregtech.internal`。这会破坏旧二进制引用：附属需要更新 import、`META-INF/services` 文件名及提供者类名，并重新编译。游戏资源 ID 仍为 `gt6ce:`，已有弃用期限不变。SDK 中的启动服务仍不是附属扩展点。不能据此宣称旧附属 JAR 免修改兼容。
 
-内容目录整理将根包下的 block、blockentity、item、data、registry、recipe、worldgen、world、entity、damage 收拢到 `gregtech.content`，详见[内容源码迁移表](integration/CONTENT_PACKAGE_MOVES.tsv)。这些实现不进入 SDK。
+内容目录整理将根包下的 block、blockentity、item、data、registry、recipe、worldgen、world、entity、damage 收拢到 `gregtech.content`。这些实现不进入 SDK。
 
 旧 SDK 中已标明 internal 的六个辅助类现在只随主模组提供：`MachineWorkCost`、`BasicMachineEnergy`、`AddonOverclock`、`BehaviorEnergyRules`、`BehaviorRecipeCatalysts`、`PartEnergyRules`，分别位于 `gregtech.internal.recipe`、`gregtech.internal.machine` 或 `gregtech.internal.addon`。附属应使用文档中的公开 API，不依赖这些实现。`AddonFailures`、`InstalledService`、`BehaviorRangeRules`、`RecipeKeptInputs` 仍被 SDK 自身的门面或声明校验使用，因此随 SDK 保留；这不使它们成为受支持的扩展点。

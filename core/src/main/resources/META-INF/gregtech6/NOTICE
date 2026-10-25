@@ -3,34 +3,12 @@ Code: SPDX-License-Identifier: LGPL-3.0-or-later
 
 This project's code is distributed under the GNU Lesser General Public License,
 version 3 or (at your option) any later version. See LICENSE and docs/licenses/GPL-3.0.txt.
-In distributed JARs, the GPL text is META-INF/gregtech6/GPL-3.0.txt.
-On 2026-10-02 the project owner identified themselves as saltnya in the development
-conversation and instructed adoption of the other two ports' code license.
+In distributed JARs, both license texts are included under META-INF/gregtech6/.
 
 Original GregTech 6: Gregorius Techneticies and its contributors.
-gregtech6reborn: saltnya.
-gregtech6-main: brokestar233 and its contributors.
-cruciblecraft: Copyright (C) 2026 Lorbineitte Masson and its contributors.
-Original copyright headers and the source/history records are retained.
 
-Additional behavior reference: wolfram0108 / gregtech6_w (LGPL-3.0-or-later),
-compared with original GT6 for fluid pipe channel selection. Its engine adaptation
-and assets were not imported for that fluid-pipe change. See docs/integration/SOURCES.md.
-The material arrow texture is now retained from its GregTech asset catalog
-(src/main/resources/assets/gregtech/textures/entity/arrow.png), under its upstream
-CC0-1.0 default asset license. See docs/integration/verification/ammunition-source-20261004.json.
-The 171 original wooden bucket sprites (randomtools 2000..2818) are also retained
-from that catalog under CC0-1.0, credited to Gregorius Techneticies / GregTech-6 Team.
-See docs/integration/verification/wooden-buckets-source-20261019.json for byte hashes.
-
-Assets and other third-party components retain their own licenses, not this blanket
-code declaration. Upstream GT6 default assets: CC0-1.0 unless otherwise stated.
-GregTech logos and derivatives: CC-BY-NC-4.0. Other author/component-specific notices
-remain applicable; see the preserved LICENSE.assets, LICENSE.logos and source notices.
-
-The previous root LICENSE.txt was a Forge/FML MDK LGPL-2.1 template, not a license
-grant for the port. Its exact original is retained in
-docs/integration/audits/notices/saltnya/LICENSE.txt.
-
-License choice does not establish feature completion, runtime validation or universal
-old-save compatibility. See docs/integration/LICENSE_REVIEW.md and STATUS.md.
+Upstream GT6 default assets are CC0-1.0 unless otherwise stated.
+GregTech logos and derivatives are licensed under CC-BY-NC-4.0.
+Assets and third-party components retain their respective licenses and notices;
+the project's code license does not replace them.
+Bundled third-party license texts and notices are included under META-INF/licenses/.
