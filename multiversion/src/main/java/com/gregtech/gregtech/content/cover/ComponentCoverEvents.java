@@ -43,11 +43,19 @@ public final class ComponentCoverEvents {
     public static void use(PlayerInteractEvent.RightClickBlock event) {
         if (!(event.getLevel().getBlockEntity(event.getPos()) instanceof PanelCoverHost host)) return;
         var held = event.getEntity().getItemInHand(event.getHand());
-        if (event.getHand() == net.minecraft.world.InteractionHand.MAIN_HAND && CoverItems.isCover(held)
+        boolean crowbar = com.gregtech.gregtech.api.tool.GTToolHelper.matchesTool(held,
+                com.gregtech.gregtech.api.tool.GTToolType.CROWBAR);
+        var hit = event.getHitVec();
+        if (CoverItems.isCover(held) || crowbar)
+            hit = hit.withDirection(com.gregtech.gregtech.api.tool.ToolInteractions.selectedFace(hit));
+        boolean recoverStoredCover = (host.coverOwner() instanceof com.gregtech.gregtech.blockentity.misc.PileBlockEntity
+                || host.coverOwner() instanceof com.gregtech.gregtech.blockentity.tool.ProcessingToolBlockEntity)
+                && crowbar && !host.getCover(hit.getDirection()).isEmpty();
+        if (event.getHand() == net.minecraft.world.InteractionHand.MAIN_HAND
                 && host.coverOwner() instanceof com.gregtech.gregtech.blockentity.tool.ProcessingToolBlockEntity tool
-                && tool.isRecipeInput(held)) {
-            // A plate can be both an ingredient and a cover. Preserve native insertion,
-            // including while sneaking; other protection handlers can still cancel the event.
+                && tool.handlesHandInput(held) && !recoverStoredCover) {
+            // Manual storage accepts items without recipes too. In particular, sneaking
+            // with a BlockItem must use the vessel instead of placing an adjacent block.
 //? if >=1.21.1 {
             /*if (event.getUseBlock() == net.neoforged.neoforge.common.util.TriState.FALSE) return;
             event.setUseBlock(net.neoforged.neoforge.common.util.TriState.TRUE);
@@ -57,11 +65,6 @@ public final class ComponentCoverEvents {
 //?}
             return;
         }
-        boolean crowbar = com.gregtech.gregtech.api.tool.GTToolHelper.matchesTool(held,
-                com.gregtech.gregtech.api.tool.GTToolType.CROWBAR);
-        var hit = event.getHitVec();
-        if (CoverItems.isCover(held) || crowbar)
-            hit = hit.withDirection(com.gregtech.gregtech.api.tool.ToolInteractions.selectedFace(hit));
         if (host.coverOwner() instanceof com.gregtech.gregtech.blockentity.misc.PileBlockEntity pile
                 && pile.canAccept(held)) {
             // Allow the normal pile callback while sneaking, without bypassing protection events.
@@ -72,9 +75,6 @@ public final class ComponentCoverEvents {
 //?}
             return;
         }
-        boolean recoverStoredCover = (host.coverOwner() instanceof com.gregtech.gregtech.blockentity.misc.PileBlockEntity
-                || host.coverOwner() instanceof com.gregtech.gregtech.blockentity.tool.ProcessingToolBlockEntity)
-                && crowbar && !host.getCover(hit.getDirection()).isEmpty();
         if (ComponentCoverFallback.fallbackClass(host.coverOwner())
                 && !ComponentCoverFallback.eligible(host.coverOwner()) && !recoverStoredCover) return;
         var result = host instanceof com.gregtech.gregtech.content.logistics.LogisticsCoverHost logistics

@@ -258,7 +258,12 @@ public final class ProcessingToolInputPriorityTests {
         for (String path : TOOLS) try (var f = new Fixture(h, path)) {
             h.assertTrue(!f.tool().recipes().containsInput(new ItemStack(blank)), "blank cover is not a fabricated vessel ingredient");
             f.click(new ItemStack(blank, 2), false);
-            h.assertTrue(f.player.getMainHandItem().getCount() == 2, "forbidden new cover does not consume held items: " + path);
+            if (path.equals("juicer")) {
+                h.assertTrue(f.player.getMainHandItem().getCount() == 2, "juicer has no manual item storage");
+            } else {
+                h.assertTrue(f.player.getMainHandItem().isEmpty() && f.inputCount(new ItemStack(blank)) == 2,
+                        "a cover item may be stored as an ordinary manual input without a recipe: " + path);
+            }
             f.assertNoCovers("original hand-processing host forbids new attachments");
 
             var legacy = save(h, f.tool());
