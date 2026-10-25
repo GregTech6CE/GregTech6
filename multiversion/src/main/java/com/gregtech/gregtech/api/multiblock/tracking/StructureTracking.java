@@ -57,6 +57,7 @@ public final class StructureTracking {
         BlockEntity entity = machine.trackedEntity();
         Level level = entity.getLevel();
         if (!(level instanceof ServerLevel server) || entity.isRemoved()) return;
+        WorldStructureClaims.controllerUnloaded(server, entity.getBlockPos());
         StructureTracker tracker = StructureWatchIndex.tracker(entity);
         if (tracker == null) return;
         StructureTrackingEvents.record("controller.onChunkUnloaded " + entity.getBlockPos().asLong());
@@ -77,6 +78,9 @@ public final class StructureTracking {
         BlockEntity entity = machine.trackedEntity();
         if (entity.getLevel() == null || entity.getLevel().isClientSide) return;
         StructureTracker tracker = StructureWatchIndex.tracker(entity);
+        if (!StructureTrackingMode.legacy() && entity.getLevel() instanceof ServerLevel server
+                && (tracker == null || !tracker.unloading()))
+            WorldStructureClaims.releaseController(server, entity.getBlockPos());
         if (tracker != null) {
             StructureTrackingEvents.record("controller.setRemoved " + entity.getBlockPos().asLong());
             StructureWatchIndex.remove(tracker);
@@ -94,10 +98,12 @@ public final class StructureTracking {
     }
 
     public static StructureTracker attach(TrackedMultiblock machine) {
+        if (StructureTrackingMode.legacy()) return null;
         BlockEntity entity = machine.trackedEntity();
         Level level = entity.getLevel();
         if (level == null || level.isClientSide || entity.isRemoved()) return null;
         if (!(level instanceof ServerLevel server)) return null;
+        if (!isCurrentEntity(server, entity)) return null;
         StructureTracker existing = StructureWatchIndex.tracker(entity);
         if (existing != null) return existing;
         StructureTracker tracker = StructureWatchIndex.attach(machine);
@@ -121,6 +127,22 @@ public final class StructureTracking {
             tracker.discard();
             return;
         }
+        BlockPos controllerPos = entity.getBlockPos();
+        LevelChunk controllerChunk = server.getChunkSource().getChunkNow(controllerPos.getX() >> 4, controllerPos.getZ() >> 4);
+        if (controllerChunk == null) {
+            // Losing FULL availability precedes native onChunkUnloaded/setRemoved. Keep the
+            // tracker until those callbacks so they can still distinguish unload from removal.
+            if (tracker.suspend()) machine.structureFormedChanged(false);
+            return;
+        }
+        if (controllerChunk.getBlockEntities().get(controllerPos) != entity) {
+            // External chunk editors can remove a BE without calling setRemoved. Its stale
+            // tracker must never claim parts again while the deferred orphan check is pending.
+            tracker.discard();
+            StructureWatchIndex.remove(tracker);
+            return;
+        }
+        WorldStructureClaims.beginEvaluation(tracker);
         StructureDefinition definition = machine.structureDefinition();
         if (definition.formsImmediately()) {
             StructureWatchIndex.clearWatch(server, tracker);
@@ -250,7 +272,7 @@ public final class StructureTracking {
     /** Test-only: when a projection calls a change equivalent, a full scan must agree with the cached bit. */
     static void auditEquivalent(StructureTracker tracker) {
         if (tracker.unloading() || tracker.entity().isRemoved()) return;
-        if (!(tracker.entity().getLevel() instanceof ServerLevel)) return;
+        if (!(tracker.entity().getLevel() instanceof ServerLevel server) || !isCurrentEntity(server, tracker.entity())) return;
         auditProjection(tracker.watch(), tracker.formed(), () -> scan(tracker.machine()));
     }
 
@@ -283,6 +305,12 @@ public final class StructureTracking {
             if (!level.hasChunkAt(probe)) return false;
         }
         return true;
+    }
+
+    private static boolean isCurrentEntity(ServerLevel level, BlockEntity entity) {
+        BlockPos pos = entity.getBlockPos();
+        LevelChunk chunk = level.getChunkSource().getChunkNow(pos.getX() >> 4, pos.getZ() >> 4);
+        return chunk != null && chunk.getBlockEntities().get(pos) == entity;
     }
 
     /** One direct evaluation of this controller. The world queue is left alone. */
