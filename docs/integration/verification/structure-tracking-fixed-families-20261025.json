@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "scope": "structure tracking phase 2 card 54: migrate the fixed-cell families to declarative incremental evaluation",
+  "branch": "feat/structure-tracking-fixed-families",
+  "base_head": "4b3db53b7",
+  "card": "docs/card-plans/active/54-structure-tracking-fixed-families.md",
+  "mod_version": "0.0.0",
+  "api_version": 0,
+  "jdk_toolchains": {
+    "forge": 17,
+    "neoforge": 21
+  },
+  "merge_note": "The branch started at 9f4f066bb (PR105). origin/main advanced to 4b3db53b7 during the card; the branch fast-forwarded to it before the final runs. d894b5899 in that range fixes the pre-save controller reload that made registeredMultiblockSurvivesRealUnloadAndStagedReload fail on the old base.",
+  "platform_compile": {
+    "command": "./gradlew :multiversion:1.20.1-forge:compileJava :multiversion:1.21.1-neoforge:compileJava :multiversion:1.20.1-forge:addonApiClosureCheck :multiversion:1.21.1-neoforge:addonApiClosureCheck :multiversion:1.20.1-forge:compileBootstrapGameTestJava :multiversion:1.21.1-neoforge:compileBootstrapGameTestJava --console=plain",
+    "result": "BUILD SUCCESSFUL",
+    "api_closure": {
+      "forge": "passed",
+      "neoforge": "passed"
+    },
+    "gametest_compile": "passed"
+  },
+  "fixed_families": [
+    {"family": "fusion", "controller": "FusionReactorControllerBlockEntity", "cells": 886, "projection": ["BLOCK"], "aggregates": ["Count 18200 == 3", "Count 18201 == 12", "Count 18202 == 12"], "designs": "none"},
+    {"family": "implosion", "controller": "ImplosionCompressorControllerBlockEntity", "cells": 25, "projection": ["BLOCK", "AIR"], "designs": "none"},
+    {"family": "boiler", "controller": "OriginalLargeBoilerControllerBlockEntity", "cells": 35, "projection": ["BLOCK", "AIR"], "designs": "none", "formed_sync": "structureOkay + syncToClient"},
+    {"family": "gas turbine", "controller": "LargeGasTurbineControllerBlockEntity", "cells": 35, "projection": ["BLOCK"], "designs": "none", "geometry": "six-axis"},
+    {"family": "axial turbine/dynamo", "controller": "AxialGeneratorBlockEntity", "cells": 35, "projection": ["BLOCK"], "designs": "none", "geometry": "six-axis"},
+    {"family": "fuel turbine", "controller": "FuelTurbineBlockEntity", "cells": "layout-defined", "projection": ["BLOCK"], "designs": "fuelDesignHash + StructureDesigns.apply", "formed_sync": "formed"},
+    {"family": "heat exchanger", "controller": "LargeHeatExchangerControllerBlockEntity", "cells": 17, "projection": ["BLOCK"], "designs": "none", "formed_sync": "structureOkay + syncToClient", "geometry": "world-axis, facing fixed to DOWN"},
+    {"family": "Von Da Graagg tower", "controller": "VonDaGraaggControllerBlockEntity", "cells": "layout-defined", "projection": ["BLOCK"], "designs": "none", "geometry": "world-axis"},
+    {"family": "large crucible", "controller": "LargeCrucibleControllerBlockEntity", "cells": 26, "projection": ["BLOCK", "AIR"], "designs": "none", "formed_sync": "CRUCIBLE_FORMED edge write", "geometry": "world-axis"}
+  ],
+  "gametests": {
+    "addon_sample_required": true,
+    "heap": "6g",
+    "forge": {
+      "issue_audit": {
+        "command": "./gradlew :multiversion:1.20.1-forge:runGameTestServer -PaddonSample=true -PgameTestNamespaces=gregtech_issue_audit -PgameTestHeap=6g \"-PgameTestJvmArgs=-XX:+UseSerialGC\" -PgameTestDirectory=build/gametest-issue-audit-54c --console=plain",
+        "result": "All 226 required tests passed",
+        "log": "multiversion/versions/1.20.1-forge/build/gametest-issue-audit-54c/logs/latest.log",
+        "sha256": "056e2bee19c8b47dfab1fbe5964f564a5dd383eee21c08cfc8627f91ee2307ee"
+      },
+      "structure_tracking": {
+        "command": "./gradlew :multiversion:1.20.1-forge:runGameTestServer -PaddonSample=true -PgameTestNamespaces=gt6ce_structure_tracking -PgameTestHeap=6g \"-PgameTestJvmArgs=-XX:+UseSerialGC\" -PgameTestDirectory=build/gametest-st-tracking-merged --console=plain",
+        "result": "All 26 required tests passed",
+        "log": "multiversion/versions/1.20.1-forge/build/gametest-st-tracking-merged/logs/latest.log",
+        "sha256": "1a049da0a3d8eb7d26dbec65ec489d2e75f1a335f543d4f67e22212b129da8a6"
+      },
+      "incremental": {
+        "command": "./gradlew :multiversion:1.20.1-forge:runGameTestServer -PaddonSample=true -PgameTestNamespaces=gt6ce_structure_incremental -PgameTestHeap=6g \"-PgameTestJvmArgs=-XX:+UseSerialGC\" -PgameTestDirectory=build/gametest-st-fixed-merged3 --console=plain",
+        "result": "All 13 required tests passed",
+        "log": "multiversion/versions/1.20.1-forge/build/gametest-st-fixed-merged3/logs/latest.log",
+        "sha256": "5567f7e725d9bd6bcc004fd1e4d40edcf84dcbef5b94f213a42f1ad01419dc86"
+      }
+    },
+    "neoforge": {
+      "issue_audit": {
+        "command": "./gradlew :multiversion:1.21.1-neoforge:runGameTestServer -PaddonSample=true -PgameTestNamespaces=gregtech_issue_audit -PgameTestHeap=6g -PneoforgeGameTestDirectory=build/bootstrap-gametest-issue-audit-54 --console=plain",
+        "result": "All 217 required tests passed",
+        "log": "multiversion/versions/1.21.1-neoforge/build/bootstrap-gametest-issue-audit-54/logs/latest.log",
+        "sha256": "740d97ae7c0f40d55ab43968e079dc5bdc715334ad4bc55f6b7e924a71c1839a"
+      },
+      "structure_tracking": {
+        "command": "./gradlew :multiversion:1.21.1-neoforge:runGameTestServer -PaddonSample=true -PgameTestNamespaces=gt6ce_structure_tracking -PgameTestHeap=6g -PneoforgeGameTestDirectory=build/bootstrap-gametest-st-tracking-merged --console=plain",
+        "result": "All 26 required tests passed",
+        "log": "multiversion/versions/1.21.1-neoforge/build/bootstrap-gametest-st-tracking-merged/logs/latest.log",
+        "sha256": "9baf30546c512cd3d7078f54781bbf9b4d6a43f575f355e8724e7fedb0335808"
+      },
+      "incremental": {
+        "command": "./gradlew :multiversion:1.21.1-neoforge:runGameTestServer -PaddonSample=true -PgameTestNamespaces=gt6ce_structure_incremental -PgameTestHeap=6g -PneoforgeGameTestDirectory=build/bootstrap-gametest-st-fixed-merged3 --console=plain",
+        "result": "All 13 required tests passed",
+        "log": "multiversion/versions/1.21.1-neoforge/build/bootstrap-gametest-st-fixed-merged3/logs/latest.log",
+        "sha256": "cc5dcd65ea0f45374836a93da05c60e1dc974d8102ad3d3a976c4f3b129cf7b2"
+      }
+    }
+  },
+  "fuzz": {
+    "namespace": "gt6ce_structure_incremental",
+    "consistency_check": "StructureTestSupport enables StructureTracking.consistencyCheck(true); every incremental verdict is compared with the phase-1 full scan",
+    "families": [
+      {"family": "fusion", "steps": 300, "seed": 54000001},
+      {"family": "implosion", "steps": 200, "seed": 54000002},
+      {"family": "boiler", "steps": 200, "seed": 54000003},
+      {"family": "gas_turbine", "steps": 200, "seed": 54000004, "extra": "vertical facing"},
+      {"family": "axial", "steps": 200, "seed": 54000005, "extra": "vertical facing"},
+      {"family": "exchanger", "steps": 200, "seed": 54000006},
+      {"family": "tower", "steps": 200, "seed": 54000007},
+      {"family": "crucible", "steps": 200, "seed": 54000008},
+      {"family": "fuel_turbine", "steps": 100, "seed": 54000009}
+    ],
+    "mismatches": 0,
+    "platforms": ["forge 1.20.1", "neoforge 1.21.1"]
+  },
+  "query_cost": {
+    "source": "gt6ce_structure_tracking idleAndPortQueriesScanOnlyInLegacy, 140 queries per family",
+    "forge_and_neoforge_identical": true,
+    "axial": {"legacy_scans": 140, "legacy_block_reads": 4900, "tracked_scans": 0, "tracked_block_reads": 0},
+    "fusion": {"legacy_scans": 140, "legacy_block_reads": 124040, "tracked_scans": 0, "tracked_block_reads": 0},
+    "boiler": {"legacy_scans": 140, "legacy_block_reads": 4900, "tracked_scans": 0, "tracked_block_reads": 0},
+    "gas_turbine": {"legacy_scans": 140, "legacy_block_reads": 4900, "tracked_scans": 0, "tracked_block_reads": 0},
+    "implosion": {"legacy_scans": 140, "legacy_block_reads": 3640, "tracked_scans": 0, "tracked_block_reads": 0},
+    "heat_exchanger": {"legacy_scans": 140, "legacy_block_reads": 2380, "tracked_scans": 0, "tracked_block_reads": 0},
+    "fuel_turbine": {"legacy_scans": 140, "legacy_block_reads": 140, "tracked_scans": 0, "tracked_block_reads": 0},
+    "note": "The LARGE_TURBINE_AUDIT case (35-cell turbine, 20 fluid queries = 700 checks + 700 binds) no longer scans at all in tracked mode; the totals above cover 140 queries."
+  },
+  "scenario_19": {
+    "test": "crucibleFixedPatternTracksShellAirAndVisual",
+    "assertion": "flipping a part's CRUCIBLE_FORMED property leaves the tracker not dirty and formed",
+    "platforms": ["forge 1.20.1", "neoforge 1.21.1"]
+  },
+  "fixes_found_by_consistency": [
+    "The crucible source flags its two air cells with air=true but keeps role CASING; the compiled pattern must declare them as AIR instead of copying the role.",
+    "Claiming the crucible writes CRUCIBLE_FORMED on its parts through bind; that self-caused write ran outside the incremental probe frame and the projection audit treated it as an external change. applyStructure/releaseStructureClaims now run inside openIncremental."
+  ],
+  "not_run": [
+    "full runGameTestServer without -PgameTestNamespaces on either platform; the project CI selection is the namespace list in .github/workflows/issue-regressions.yml, and the bare default only selects a few gt6ce tests",
+    "dev client and dedicated server manual checks",
+    "gameplay tests",
+    "save restart and old-save backup tests"
+  ],
+  "local_only": true
+}

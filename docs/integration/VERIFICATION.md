@@ -1823,3 +1823,11 @@ Forge开发47.4.20/Java17.0.10，Neo开发21.1.243/Java21.0.7，各3GiB/directCo
 新增 `gt6ce_structure_incremental` 命名空间（4 项）：合成图样的精确计数、同类方块、旋转和区块重载；单格破坏与修复的读取计数；四个家族各 2000 步模糊测试（固定种子 53000001–53000004）。Forge 1.20.1 与 NeoForge 1.21.1 均 **4/4 required tests passed**；既有 `gt6ce_structure_tracking` 在一致性检查打开后均 **26/26 required tests passed**。计数实测两端一致：断开第 6 层（共 12 层）时 `matchers=1`、`blockReads=1`，重复组截到 5 层且结构仍成型；修复时重读断点及以上共 7 格。双平台 `compileJava`、`addonApiClosureCheck`、`compileBootstrapGameTestJava` 通过。
 
 过程中修正：新命名空间缺少 `test_empty.nbt`（已补 Forge `structures/` 与 NeoForge `structure/` 两份）；模糊测试初始坐标在 31M–35M，超出 1.20.1 世界边界，触发原版 Aquifer 越界崩溃，已移到 27.0M–28.2M；命名空间测试堆从卡上的 3g 提到 6g。未跑两个平台的全量 `runGameTestServer`（阶段 1 分支上仍有既有的全量失败清单），客户端/专服、玩法实测、存档重启未做。证据与日志哈希见 [structure-tracking-declarative-core-20261024.json](verification/structure-tracking-declarative-core-20261024.json)。仅本地，未提交、未推送。
+
+## 2026-10-25 / 结构跟踪阶段 2 卡 54：固定格家族迁移
+
+新增 `CompiledPattern.FixedCell`、`compileFixed(...)` 和 `FixedStructures`。九个固定格家族改走 `Declarative`：聚变、内爆压缩机、大型锅炉、大型燃气涡轮、大型涡轮/大型发电机、FuelTurbine、大型换热器、禁刷怪塔、大型坩埚。聚变的处理器格用候选 18200/18201/18202 加计数聚合 3/12/12；FuelTurbine 保留设计号写入；锅炉、换热器和坩埚各自接管成型位的边沿同步。九个家族的 `CustomStructures` 手写足迹登记已删除，旧 `scanStructure()` 保留作一致性对照。
+
+分支基于 PR105（`9f4f066bb`）；`origin/main` 期间前进到 `4b3db53b7`，分支快进到该提交后重跑。上游 `d894b5899` 修复了控制器自身区块保存前的重载问题，旧基线上 `registeredMultiblockSurvivesRealUnloadAndStagedReload` 因此失败；快进后该用例通过。重编译后双平台结果：Forge `gregtech_issue_audit` **226/226**、`gt6ce_structure_tracking` **26/26**、`gt6ce_structure_incremental` **13/13**；NeoForge **217/217**、**26/26**、**13/13**；`addonApiClosureCheck` 两端通过。九个家族的新场景各含拆补，模糊测试 100–300 步；一致性检查与投影审计全程打开，零不一致。
+
+`gt6ce_structure_tracking` 的 140 次查询计数：轴向主控 legacy 140 次扫描 / 4900 次方块读取、聚变 124040 次，迁移后 tracked 均为 **0 / 0**。坩埚部件 `CRUCIBLE_FORMED` 翻转不标脏的场景 19 断言已补。过程中一致性检查抓到两处：坩埚空气格必须按 `air` 标志声明 `AIR`；认领时写部件 `CRUCIBLE_FORMED` 需放在增量探针帧内，否则投影审计把它当成外部变化。未跑 CI 的完整命名空间选择（`issue-regressions.yml` 里那串）、客户端/专服、玩法实测、存档重启。证据与日志哈希见 [structure-tracking-fixed-families-20261025.json](verification/structure-tracking-fixed-families-20261025.json)。仅本地，未提交、未推送。
