@@ -10,9 +10,24 @@ import com.gregtech.gregtech.api.multiblock.tracking.StructureScheduler;
 import com.gregtech.gregtech.api.multiblock.tracking.StructureTracking;
 import com.gregtech.gregtech.api.multiblock.tracking.TrackedMultiblock;
 import com.gregtech.gregtech.block.machine.BasicMachineBlock;
+import com.gregtech.gregtech.blockentity.machine.FuelTurbineBlockEntity;
+import com.gregtech.gregtech.blockentity.machine.FusionReactorControllerBlockEntity;
+import com.gregtech.gregtech.blockentity.machine.ImplosionCompressorControllerBlockEntity;
+import com.gregtech.gregtech.blockentity.machine.LargeCrucibleControllerBlockEntity;
+import com.gregtech.gregtech.blockentity.machine.LargeGasTurbineControllerBlockEntity;
+import com.gregtech.gregtech.blockentity.machine.LargeHeatExchangerControllerBlockEntity;
+import com.gregtech.gregtech.blockentity.machine.LargeTurbineControllerBlockEntity;
+import com.gregtech.gregtech.blockentity.machine.OriginalLargeBoilerControllerBlockEntity;
+import com.gregtech.gregtech.blockentity.machine.VonDaGraaggControllerBlockEntity;
+import com.gregtech.gregtech.content.multiblock.FusionStructure;
 import com.gregtech.gregtech.content.multiblock.LargeMachineLayouts;
+import com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerSpecs;
 import com.gregtech.gregtech.content.multiblock.PlainStructureBlocks;
+import com.gregtech.gregtech.content.multiblock.SharedHeatExchangerStructure;
+import com.gregtech.gregtech.content.multiblock.SharedLargeCrucibleStructure;
 import com.gregtech.gregtech.content.multiblock.SharedLargeMachineLayouts;
+import com.gregtech.gregtech.content.multiblock.TurbineStructure;
+import com.gregtech.gregtech.content.multiblock.VonDaGraaggRules;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -23,6 +38,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -223,6 +239,539 @@ public final class StructureIncrementalTests {
                     StructureScanProbe.reset();
                 }
             });
+        } finally {
+            clear(level, placed);
+        }
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 600, batch = "st-fixed-fusion")
+    public static void fusionFixedPatternTracksProcessorCountsAndShellEdits(GameTestHelper h) {
+        ServerLevel level = h.getLevel();
+        BlockPos origin = new BlockPos(28_600_000, 80, 28_600_000);
+        List<BlockPos> placed = new ArrayList<>();
+        Map<BlockPos, BlockState> shell = new LinkedHashMap<>();
+        try {
+            for (var cell : FusionStructure.CELLS)
+                shell.putIfAbsent(cell.at(origin, Direction.NORTH), cell.block().defaultBlockState());
+            int minX = shell.keySet().stream().mapToInt(BlockPos::getX).min().orElseThrow() - 1;
+            int maxX = shell.keySet().stream().mapToInt(BlockPos::getX).max().orElseThrow() + 1;
+            int minY = shell.keySet().stream().mapToInt(BlockPos::getY).min().orElseThrow() - 1;
+            int maxY = shell.keySet().stream().mapToInt(BlockPos::getY).max().orElseThrow() + 1;
+            int minZ = shell.keySet().stream().mapToInt(BlockPos::getZ).min().orElseThrow() - 1;
+            int maxZ = shell.keySet().stream().mapToInt(BlockPos::getZ).max().orElseThrow() + 1;
+            for (BlockPos pos : BlockPos.betweenClosed(new BlockPos(minX, minY, minZ), new BlockPos(maxX, maxY, maxZ)))
+                level.setBlock(pos, Blocks.AIR.defaultBlockState(), FLAGS);
+
+            Block controller = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "fusion_reactor_main"));
+            h.assertTrue(controller instanceof BasicMachineBlock basic && "fusionreactor".equals(basic.basicSpec().machineName()),
+                    "registered fusion controller exists on this loader");
+            put(level, origin, controller.defaultBlockState().setValue(BasicMachineBlock.FACING, Direction.NORTH), placed);
+            for (var entry : shell.entrySet()) put(level, entry.getKey(), entry.getValue(), placed);
+            BlockEntity entity = level.getBlockEntity(origin);
+            h.assertTrue(entity instanceof FusionReactorControllerBlockEntity, "dedicated fusion executor");
+            h.assertTrue(StructureTestSupport.ok(entity), "fusion ring starts formed");
+
+            BlockPos firstProcessor = null, secondType = null;
+            for (var cell : FusionStructure.CELLS) {
+                if (cell.part() == 18200 && firstProcessor == null) firstProcessor = cell.at(origin, Direction.NORTH);
+                if (cell.part() == 18201 && secondType == null) secondType = cell.at(origin, Direction.NORTH);
+            }
+            place(level, firstProcessor, part(18201), placed);
+            place(level, secondType, part(18200), placed);
+            h.assertTrue(StructureTestSupport.ok(entity), "processors may swap positions while the 3/12/12 counts hold");
+            place(level, firstProcessor, part(18202), placed);
+            h.assertTrue(!StructureTestSupport.ok(entity), "changing one processor type fails the 3/12/12 count");
+            place(level, firstProcessor, part(18201), placed);
+            h.assertTrue(StructureTestSupport.ok(entity), "restoring the processor type forms again");
+            place(level, firstProcessor, part(18200), placed);
+            place(level, secondType, part(18201), placed);
+            h.assertTrue(StructureTestSupport.ok(entity), "the original processor assignment forms again");
+
+            BlockPos shellCell = shell.keySet().iterator().next();
+            place(level, shellCell, Blocks.AIR.defaultBlockState(), placed);
+            h.assertTrue(!StructureTestSupport.ok(entity), "a missing shell cell breaks the ring");
+            place(level, shellCell, shell.get(shellCell), placed);
+            h.assertTrue(StructureTestSupport.ok(entity), "replacing the shell cell forms again");
+
+            List<BlockPos> cells = new ArrayList<>(shell.keySet());
+            Random random = new Random(54_000_001L);
+            System.out.println("[structure-incremental] fuzz family=fusion seed=54000001 steps=300 cells=" + cells.size());
+            for (int step = 0; step < 300; step++) {
+                BlockPos pos = cells.get(random.nextInt(cells.size()));
+                int roll = random.nextInt(10);
+                if (roll < 5) place(level, pos, shell.get(pos), placed);
+                else if (roll < 8) place(level, pos, Blocks.AIR.defaultBlockState(), placed);
+                else place(level, pos, Blocks.COBBLESTONE.defaultBlockState(), placed);
+                StructureScheduler.flush(level);
+            }
+            for (var entry : shell.entrySet()) place(level, entry.getKey(), entry.getValue(), placed);
+            StructureScheduler.flush(level);
+            h.assertTrue(StructureTestSupport.ok(entity), "fusion recovers after the fuzz");
+        } finally {
+            clear(level, placed);
+        }
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 400, batch = "st-fixed-implosion")
+    public static void implosionFixedPatternTracksAirAndShellEdits(GameTestHelper h) {
+        ServerLevel level = h.getLevel();
+        BlockPos origin = new BlockPos(28_800_000, 80, 28_800_000);
+        List<BlockPos> placed = new ArrayList<>();
+        List<BlockPos> walls = new ArrayList<>();
+        BlockPos airCell = null;
+        try {
+            Block controller = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "implosion_compressor_main"));
+            h.assertTrue(controller != Blocks.AIR, "registered implosion controller exists on this loader");
+            List<BlockPos> cells = new ArrayList<>();
+            for (var cell : ImplosionCompressorControllerBlockEntity.LAYOUT.cells())
+                cells.add(cell.at(origin, Direction.NORTH));
+            for (BlockPos pos : cells) level.setBlock(pos, Blocks.AIR.defaultBlockState(), FLAGS);
+            put(level, origin, controller.defaultBlockState().setValue(HorizontalDirectionalBlock.FACING, Direction.NORTH), placed);
+            for (var cell : ImplosionCompressorControllerBlockEntity.LAYOUT.cells()) {
+                BlockPos pos = cell.at(origin, Direction.NORTH);
+                if (cell.role() == MultiblockLayout.Role.AIR) {
+                    airCell = pos;
+                    place(level, pos, Blocks.AIR.defaultBlockState(), placed);
+                } else {
+                    place(level, pos, part(18023), placed);
+                    walls.add(pos);
+                }
+            }
+            BlockEntity entity = level.getBlockEntity(origin);
+            h.assertTrue(entity instanceof ImplosionCompressorControllerBlockEntity, "dedicated implosion executor");
+            h.assertTrue(StructureTestSupport.ok(entity), "implosion shell starts formed");
+
+            BlockPos wall = walls.get(0);
+            place(level, wall, Blocks.AIR.defaultBlockState(), placed);
+            h.assertTrue(!StructureTestSupport.ok(entity), "a missing wall breaks the shell");
+            place(level, wall, part(18023), placed);
+            h.assertTrue(StructureTestSupport.ok(entity), "replacing the wall forms again");
+            place(level, airCell, part(18023), placed);
+            h.assertTrue(!StructureTestSupport.ok(entity), "a filled air cell breaks the shell");
+            place(level, airCell, Blocks.AIR.defaultBlockState(), placed);
+            h.assertTrue(StructureTestSupport.ok(entity), "clearing the air cell forms again");
+
+            Random random = new Random(54_000_002L);
+            System.out.println("[structure-incremental] fuzz family=implosion seed=54000002 steps=200 cells=" + walls.size());
+            for (int step = 0; step < 200; step++) {
+                BlockPos pos = walls.get(random.nextInt(walls.size()));
+                int roll = random.nextInt(10);
+                if (roll < 5) place(level, pos, part(18023), placed);
+                else if (roll < 8) place(level, pos, Blocks.AIR.defaultBlockState(), placed);
+                else place(level, pos, Blocks.COBBLESTONE.defaultBlockState(), placed);
+                StructureScheduler.flush(level);
+            }
+            for (BlockPos pos : walls) place(level, pos, part(18023), placed);
+            StructureScheduler.flush(level);
+            h.assertTrue(StructureTestSupport.ok(entity), "implosion recovers after the fuzz");
+        } finally {
+            clear(level, placed);
+        }
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 400, batch = "st-fixed-boiler")
+    public static void boilerFixedPatternTracksWallsAndAir(GameTestHelper h) {
+        ServerLevel level = h.getLevel();
+        BlockPos origin = new BlockPos(29_000_000, 80, 29_000_000);
+        List<BlockPos> placed = new ArrayList<>();
+        Map<BlockPos, BlockState> shell = new LinkedHashMap<>();
+        BlockPos airCell = null;
+        try {
+            Block controller = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "stainless_steel_boiler_main_barometer"));
+            h.assertTrue(controller != Blocks.AIR, "registered boiler controller exists on this loader");
+            List<BlockPos> cells = new ArrayList<>();
+            for (var cell : OriginalLargeBoilerSpecs.LAYOUT.cells())
+                if (!(cell.right() == 0 && cell.up() == 0 && cell.back() == 0))
+                    cells.add(cell.at(origin, Direction.NORTH));
+            for (BlockPos pos : cells) level.setBlock(pos, Blocks.AIR.defaultBlockState(), FLAGS);
+            put(level, origin, controller.defaultBlockState().setValue(HorizontalDirectionalBlock.FACING, Direction.NORTH), placed);
+            BlockEntity entity = level.getBlockEntity(origin);
+            h.assertTrue(entity instanceof OriginalLargeBoilerControllerBlockEntity, "dedicated boiler executor");
+            int wall = ((OriginalLargeBoilerControllerBlockEntity) entity).variant().denseWallId();
+            for (var cell : OriginalLargeBoilerSpecs.LAYOUT.cells()) {
+                if (cell.right() == 0 && cell.up() == 0 && cell.back() == 0) continue;
+                BlockPos pos = cell.at(origin, Direction.NORTH);
+                if (cell.role() == MultiblockLayout.Role.AIR) {
+                    airCell = pos;
+                    place(level, pos, Blocks.AIR.defaultBlockState(), placed);
+                } else {
+                    BlockState state = (cell.role() == MultiblockLayout.Role.HEAT_INPUT ? part(18101) : part(wall));
+                    place(level, pos, state, placed);
+                    shell.put(pos.immutable(), state);
+                }
+            }
+            h.assertTrue(StructureTestSupport.ok(entity), "boiler shell starts formed");
+
+            BlockPos wallCell = shell.keySet().iterator().next();
+            place(level, wallCell, Blocks.AIR.defaultBlockState(), placed);
+            h.assertTrue(!StructureTestSupport.ok(entity), "a missing wall breaks the boiler");
+            place(level, wallCell, shell.get(wallCell), placed);
+            h.assertTrue(StructureTestSupport.ok(entity), "replacing the wall forms again");
+            place(level, airCell, part(wall), placed);
+            h.assertTrue(!StructureTestSupport.ok(entity), "a filled air cell breaks the boiler");
+            place(level, airCell, Blocks.AIR.defaultBlockState(), placed);
+            h.assertTrue(StructureTestSupport.ok(entity), "clearing the air cell forms again");
+
+            List<BlockPos> cellsList = new ArrayList<>(shell.keySet());
+            Random random = new Random(54_000_003L);
+            System.out.println("[structure-incremental] fuzz family=boiler seed=54000003 steps=200 cells=" + cellsList.size());
+            for (int step = 0; step < 200; step++) {
+                BlockPos pos = cellsList.get(random.nextInt(cellsList.size()));
+                int roll = random.nextInt(10);
+                if (roll < 5) place(level, pos, shell.get(pos), placed);
+                else if (roll < 8) place(level, pos, Blocks.AIR.defaultBlockState(), placed);
+                else place(level, pos, Blocks.COBBLESTONE.defaultBlockState(), placed);
+                StructureScheduler.flush(level);
+            }
+            for (var entry : shell.entrySet()) place(level, entry.getKey(), entry.getValue(), placed);
+            StructureScheduler.flush(level);
+            h.assertTrue(StructureTestSupport.ok(entity), "boiler recovers after the fuzz");
+        } finally {
+            clear(level, placed);
+        }
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 400, batch = "st-fixed-gas-turbine")
+    public static void gasTurbineFixedPatternTracksShellEdits(GameTestHelper h) {
+        ServerLevel level = h.getLevel();
+        BlockPos origin = new BlockPos(29_200_000, 80, 29_200_000);
+        List<BlockPos> placed = new ArrayList<>();
+        Map<BlockPos, BlockState> shell = new LinkedHashMap<>();
+        try {
+            Block controller = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "magnalium_gas_turbine_main_housing"));
+            h.assertTrue(controller != Blocks.AIR, "registered gas turbine controller exists on this loader");
+            List<BlockPos> cells = new ArrayList<>();
+            for (var cell : TurbineStructure.LAYOUT.cells()) cells.add(cell.at(origin, Direction.NORTH));
+            for (BlockPos pos : cells) level.setBlock(pos, Blocks.AIR.defaultBlockState(), FLAGS);
+            put(level, origin, controller.defaultBlockState().setValue(DirectionalBlock.FACING, Direction.NORTH), placed);
+            BlockEntity entity = level.getBlockEntity(origin);
+            h.assertTrue(entity instanceof LargeGasTurbineControllerBlockEntity, "gas turbine executor");
+            BlockState wall = part(((LargeGasTurbineControllerBlockEntity) entity).grade().wallId());
+            for (var cell : TurbineStructure.LAYOUT.cells()) {
+                BlockPos pos = cell.at(origin, Direction.NORTH);
+                place(level, pos, wall, placed);
+                shell.put(pos.immutable(), wall);
+            }
+            h.assertTrue(StructureTestSupport.ok(entity), "gas turbine shell starts formed");
+
+            BlockPos wallCell = shell.keySet().iterator().next();
+            place(level, wallCell, Blocks.AIR.defaultBlockState(), placed);
+            h.assertTrue(!StructureTestSupport.ok(entity), "a missing wall breaks the gas turbine");
+            place(level, wallCell, shell.get(wallCell), placed);
+            h.assertTrue(StructureTestSupport.ok(entity), "replacing the wall forms again");
+
+            List<BlockPos> cellsList = new ArrayList<>(shell.keySet());
+            Random random = new Random(54_000_004L);
+            System.out.println("[structure-incremental] fuzz family=gas_turbine seed=54000004 steps=200 cells=" + cellsList.size());
+            for (int step = 0; step < 200; step++) {
+                BlockPos pos = cellsList.get(random.nextInt(cellsList.size()));
+                int roll = random.nextInt(10);
+                if (roll < 5) place(level, pos, shell.get(pos), placed);
+                else if (roll < 8) place(level, pos, Blocks.AIR.defaultBlockState(), placed);
+                else place(level, pos, Blocks.COBBLESTONE.defaultBlockState(), placed);
+                StructureScheduler.flush(level);
+            }
+            for (var entry : shell.entrySet()) place(level, entry.getKey(), entry.getValue(), placed);
+            StructureScheduler.flush(level);
+            h.assertTrue(StructureTestSupport.ok(entity), "gas turbine recovers after the fuzz");
+
+            // Six-axis facing: rebuild the same layout against the vertical front.
+            for (BlockPos pos : shell.keySet()) level.setBlock(pos, Blocks.AIR.defaultBlockState(), FLAGS);
+            shell.clear();
+            Direction up = Direction.UP;
+            level.setBlock(origin, level.getBlockState(origin).setValue(DirectionalBlock.FACING, up), FLAGS);
+            for (var cell : TurbineStructure.LAYOUT.cells()) {
+                BlockPos pos = com.gregtech.gregtech.content.multiblock.AxialStructureTransform.at(
+                        origin, up, cell.right(), cell.up(), cell.back());
+                place(level, pos, wall, placed);
+                shell.put(pos.immutable(), wall);
+            }
+            StructureScheduler.flush(level);
+            h.assertTrue(StructureTestSupport.ok(entity), "gas turbine forms against a vertical front");
+        } finally {
+            clear(level, placed);
+        }
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 400, batch = "st-fixed-axial")
+    public static void axialGeneratorFixedPatternTracksShellAndVerticalFacing(GameTestHelper h) {
+        ServerLevel level = h.getLevel();
+        BlockPos origin = new BlockPos(29_400_000, 80, 29_400_000);
+        List<BlockPos> placed = new ArrayList<>();
+        Map<BlockPos, BlockState> shell = new LinkedHashMap<>();
+        try {
+            Block controller = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "magnalium_steam_turbine_main_housing"));
+            h.assertTrue(controller != Blocks.AIR, "registered axial generator exists on this loader");
+            put(level, origin, controller.defaultBlockState().setValue(DirectionalBlock.FACING, Direction.NORTH), placed);
+            BlockEntity entity = level.getBlockEntity(origin);
+            h.assertTrue(entity instanceof LargeTurbineControllerBlockEntity, "axial generator executor");
+            var grade = ((LargeTurbineControllerBlockEntity) entity).grade();
+            shell.clear();
+            for (var cell : grade.cells().keySet()) {
+                BlockPos pos = com.gregtech.gregtech.content.multiblock.AxialStructureTransform.at(
+                        origin, Direction.NORTH, cell.getX(), cell.getY(), cell.getZ());
+                BlockState state = axialCell(grade, cell);
+                place(level, pos, state, placed);
+                shell.put(pos.immutable(), state);
+            }
+            h.assertTrue(StructureTestSupport.ok(entity), "axial generator shell starts formed");
+
+            BlockPos wallCell = shell.keySet().iterator().next();
+            place(level, wallCell, Blocks.AIR.defaultBlockState(), placed);
+            h.assertTrue(!StructureTestSupport.ok(entity), "a missing wall breaks the axial generator");
+            place(level, wallCell, shell.get(wallCell), placed);
+            h.assertTrue(StructureTestSupport.ok(entity), "replacing the wall forms again");
+
+            List<BlockPos> cellsList = new ArrayList<>(shell.keySet());
+            Random random = new Random(54_000_005L);
+            System.out.println("[structure-incremental] fuzz family=axial seed=54000005 steps=200 cells=" + cellsList.size());
+            for (int step = 0; step < 200; step++) {
+                BlockPos pos = cellsList.get(random.nextInt(cellsList.size()));
+                int roll = random.nextInt(10);
+                if (roll < 5) place(level, pos, shell.get(pos), placed);
+                else if (roll < 8) place(level, pos, Blocks.AIR.defaultBlockState(), placed);
+                else place(level, pos, Blocks.COBBLESTONE.defaultBlockState(), placed);
+                StructureScheduler.flush(level);
+            }
+            for (var entry : shell.entrySet()) place(level, entry.getKey(), entry.getValue(), placed);
+            StructureScheduler.flush(level);
+            h.assertTrue(StructureTestSupport.ok(entity), "axial generator recovers after the fuzz");
+
+            for (BlockPos pos : shell.keySet()) level.setBlock(pos, Blocks.AIR.defaultBlockState(), FLAGS);
+            shell.clear();
+            level.setBlock(origin, level.getBlockState(origin).setValue(DirectionalBlock.FACING, Direction.UP), FLAGS);
+            for (var cell : grade.cells().keySet()) {
+                BlockPos pos = com.gregtech.gregtech.content.multiblock.AxialStructureTransform.at(
+                        origin, Direction.UP, cell.getX(), cell.getY(), cell.getZ());
+                BlockState state = axialCell(grade, cell);
+                place(level, pos, state, placed);
+                shell.put(pos.immutable(), state);
+            }
+            StructureScheduler.flush(level);
+            h.assertTrue(StructureTestSupport.ok(entity), "axial generator forms against a vertical front");
+        } finally {
+            clear(level, placed);
+        }
+        h.succeed();
+    }
+
+    private static BlockState axialCell(com.gregtech.gregtech.content.multiblock.AxialGeneratorDefinitions.Grade grade,
+                                        BlockPos cell) {
+        boolean coil = com.gregtech.gregtech.content.multiblock.OriginalGeneratorParameters.usesCopperCoil(
+                grade.steam(), cell.getZ());
+        return part(coil ? 18040 : grade.materials().wallId());
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 200, batch = "st-fixed-fuel-turbine")
+    public static void fuelTurbineFixedPatternFollowsItsLayout(GameTestHelper h) {
+        ServerLevel level = h.getLevel();
+        BlockPos origin = new BlockPos(29_600_000, 80, 29_600_000);
+        List<BlockPos> placed = new ArrayList<>();
+        Map<BlockPos, BlockState> shell = new LinkedHashMap<>();
+        try {
+            Block controller = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("addon_sample", "sample_turbine"));
+            h.assertTrue(controller != Blocks.AIR, "sample turbine exists with the addon sample");
+            put(level, origin, controller.defaultBlockState(), placed);
+            BlockEntity entity = level.getBlockEntity(origin);
+            h.assertTrue(entity instanceof FuelTurbineBlockEntity, "fuel turbine executor");
+            var layout = LargeMachineLayouts.cells("sample_turbine");
+            h.assertTrue(layout != null && !layout.isEmpty(), "sample turbine layout");
+            for (var cell : layout) {
+                BlockPos pos = cell.at(origin, Direction.NORTH);
+                BlockState state = cell.block().defaultBlockState();
+                place(level, pos, state, placed);
+                shell.put(pos.immutable(), state);
+            }
+            h.assertTrue(StructureTestSupport.ok(entity), "fuel turbine starts formed");
+            h.assertTrue(((FuelTurbineBlockEntity) entity).isFormed(), "formed bit mirrors the tracker");
+
+            BlockPos wall = shell.keySet().iterator().next();
+            place(level, wall, Blocks.AIR.defaultBlockState(), placed);
+            h.assertTrue(!StructureTestSupport.ok(entity), "a missing wall breaks the fuel turbine");
+            h.assertTrue(!((FuelTurbineBlockEntity) entity).isFormed(), "formed bit falls with the tracker");
+            place(level, wall, shell.get(wall), placed);
+            h.assertTrue(StructureTestSupport.ok(entity), "replacing the wall forms again");
+            h.assertTrue(((FuelTurbineBlockEntity) entity).isFormed(), "formed bit rises with the tracker");
+
+            Random random = new Random(54_000_009L);
+            System.out.println("[structure-incremental] fuzz family=fuel_turbine seed=54000009 steps=100 cells=" + shell.size());
+            for (int step = 0; step < 100; step++) {
+                BlockPos pos = wall;
+                int roll = random.nextInt(10);
+                if (roll < 5) place(level, pos, shell.get(pos), placed);
+                else if (roll < 8) place(level, pos, Blocks.AIR.defaultBlockState(), placed);
+                else place(level, pos, Blocks.COBBLESTONE.defaultBlockState(), placed);
+                StructureScheduler.flush(level);
+            }
+            for (var entry : shell.entrySet()) place(level, entry.getKey(), entry.getValue(), placed);
+            StructureScheduler.flush(level);
+            h.assertTrue(StructureTestSupport.ok(entity), "fuel turbine recovers after the fuzz");
+        } finally {
+            clear(level, placed);
+        }
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 400, batch = "st-fixed-exchanger")
+    public static void heatExchangerFixedPatternTracksItsShell(GameTestHelper h) {
+        ServerLevel level = h.getLevel();
+        BlockPos origin = new BlockPos(29_700_000, 80, 29_700_000);
+        List<BlockPos> placed = new ArrayList<>();
+        Map<BlockPos, BlockState> shell = new LinkedHashMap<>();
+        try {
+            Block controller = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "heat_exchanger_main"));
+            h.assertTrue(controller != Blocks.AIR, "registered heat exchanger exists on this loader");
+            put(level, origin, controller.defaultBlockState(), placed);
+            BlockEntity entity = level.getBlockEntity(origin);
+            h.assertTrue(entity instanceof LargeHeatExchangerControllerBlockEntity, "heat exchanger executor");
+            for (var cell : SharedHeatExchangerStructure.CELLS) {
+                BlockPos pos = origin.offset(cell.right(), cell.up(), cell.back());
+                BlockState state = part(cell.part());
+                place(level, pos, state, placed);
+                shell.put(pos.immutable(), state);
+            }
+            h.assertTrue(StructureTestSupport.ok(entity), "heat exchanger shell starts formed");
+
+            BlockPos wall = shell.keySet().iterator().next();
+            place(level, wall, Blocks.AIR.defaultBlockState(), placed);
+            h.assertTrue(!StructureTestSupport.ok(entity), "a missing cell breaks the heat exchanger");
+            place(level, wall, shell.get(wall), placed);
+            h.assertTrue(StructureTestSupport.ok(entity), "replacing the cell forms again");
+
+            List<BlockPos> cellsList = new ArrayList<>(shell.keySet());
+            Random random = new Random(54_000_006L);
+            System.out.println("[structure-incremental] fuzz family=exchanger seed=54000006 steps=200 cells=" + cellsList.size());
+            for (int step = 0; step < 200; step++) {
+                BlockPos pos = cellsList.get(random.nextInt(cellsList.size()));
+                int roll = random.nextInt(10);
+                if (roll < 5) place(level, pos, shell.get(pos), placed);
+                else if (roll < 8) place(level, pos, Blocks.AIR.defaultBlockState(), placed);
+                else place(level, pos, Blocks.COBBLESTONE.defaultBlockState(), placed);
+                StructureScheduler.flush(level);
+            }
+            for (var entry : shell.entrySet()) place(level, entry.getKey(), entry.getValue(), placed);
+            StructureScheduler.flush(level);
+            h.assertTrue(StructureTestSupport.ok(entity), "heat exchanger recovers after the fuzz");
+        } finally {
+            clear(level, placed);
+        }
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 400, batch = "st-fixed-tower")
+    public static void vonDaGraaggFixedPatternTracksItsShell(GameTestHelper h) {
+        ServerLevel level = h.getLevel();
+        BlockPos origin = new BlockPos(29_800_000, 80, 29_800_000);
+        List<BlockPos> placed = new ArrayList<>();
+        Map<BlockPos, BlockState> shell = new LinkedHashMap<>();
+        try {
+            Block controller = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "von_da_graagg_generator"));
+            h.assertTrue(controller != Blocks.AIR, "registered Von Da Graagg tower exists on this loader");
+            put(level, origin, controller.defaultBlockState(), placed);
+            BlockEntity entity = level.getBlockEntity(origin);
+            h.assertTrue(entity instanceof VonDaGraaggControllerBlockEntity, "Von Da Graagg executor");
+            for (var cell : VonDaGraaggRules.layout()) {
+                BlockPos pos = origin.offset(cell.x(), cell.y(), cell.z());
+                BlockState state = part(cell.partId());
+                place(level, pos, state, placed);
+                shell.put(pos.immutable(), state);
+            }
+            h.assertTrue(StructureTestSupport.ok(entity), "Von Da Graagg shell starts formed");
+
+            BlockPos wall = shell.keySet().iterator().next();
+            place(level, wall, Blocks.AIR.defaultBlockState(), placed);
+            h.assertTrue(!StructureTestSupport.ok(entity), "a missing cell breaks the tower");
+            place(level, wall, shell.get(wall), placed);
+            h.assertTrue(StructureTestSupport.ok(entity), "replacing the cell forms again");
+
+            List<BlockPos> cellsList = new ArrayList<>(shell.keySet());
+            Random random = new Random(54_000_007L);
+            System.out.println("[structure-incremental] fuzz family=tower seed=54000007 steps=200 cells=" + cellsList.size());
+            for (int step = 0; step < 200; step++) {
+                BlockPos pos = cellsList.get(random.nextInt(cellsList.size()));
+                int roll = random.nextInt(10);
+                if (roll < 5) place(level, pos, shell.get(pos), placed);
+                else if (roll < 8) place(level, pos, Blocks.AIR.defaultBlockState(), placed);
+                else place(level, pos, Blocks.COBBLESTONE.defaultBlockState(), placed);
+                StructureScheduler.flush(level);
+            }
+            for (var entry : shell.entrySet()) place(level, entry.getKey(), entry.getValue(), placed);
+            StructureScheduler.flush(level);
+            h.assertTrue(StructureTestSupport.ok(entity), "Von Da Graagg recovers after the fuzz");
+        } finally {
+            clear(level, placed);
+        }
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 400, batch = "st-fixed-crucible")
+    public static void crucibleFixedPatternTracksShellAirAndVisual(GameTestHelper h) {
+        ServerLevel level = h.getLevel();
+        BlockPos origin = new BlockPos(29_900_000, 80, 29_900_000);
+        List<BlockPos> placed = new ArrayList<>();
+        Map<BlockPos, BlockState> shell = new LinkedHashMap<>();
+        BlockPos airCell = null;
+        try {
+            Block controller = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "large_stainless_steel_crucible"));
+            h.assertTrue(controller != Blocks.AIR, "registered large crucible exists on this loader");
+            put(level, origin, controller.defaultBlockState(), placed);
+            BlockEntity entity = level.getBlockEntity(origin);
+            h.assertTrue(entity instanceof LargeCrucibleControllerBlockEntity, "large crucible executor");
+            int wall = ((LargeCrucibleControllerBlockEntity) entity).variant().wallId();
+            for (var cell : SharedLargeCrucibleStructure.CELLS) {
+                BlockPos pos = origin.offset(cell.x(), cell.y(), cell.z());
+                if (cell.air()) {
+                    airCell = pos;
+                    place(level, pos, Blocks.AIR.defaultBlockState(), placed);
+                } else {
+                    BlockState state = part(wall);
+                    place(level, pos, state, placed);
+                    shell.put(pos.immutable(), state);
+                }
+            }
+            h.assertTrue(StructureTestSupport.ok(entity), "large crucible starts formed");
+            h.assertTrue(((LargeCrucibleControllerBlockEntity) entity).isFormedForRendering(), "controller visual follows the formed bit");
+
+            // Scenario 19: a part-only visual property must not invalidate the structure.
+            BlockPos visualPart = shell.keySet().iterator().next();
+            BlockState visualState = level.getBlockState(visualPart);
+            var visualProperty = com.gregtech.gregtech.block.machine.MultiblockPortBlock.CRUCIBLE_FORMED;
+            h.assertTrue(visualState.hasProperty(visualProperty), "crucible part exposes its visual property");
+            level.setBlock(visualPart, visualState.setValue(visualProperty, !visualState.getValue(visualProperty)), FLAGS);
+            h.assertTrue(!StructureTracking.tracker(entity).dirty(), "a part visual change alone does not dirty the tracker");
+            h.assertTrue(StructureTestSupport.ok(entity), "the crucible stays formed after a part visual change");
+            level.setBlock(visualPart, visualState, FLAGS);
+
+            BlockPos wallCell = shell.keySet().iterator().next();
+            place(level, wallCell, Blocks.AIR.defaultBlockState(), placed);
+            h.assertTrue(!StructureTestSupport.ok(entity), "a missing wall breaks the crucible");
+            h.assertTrue(!((LargeCrucibleControllerBlockEntity) entity).isFormedForRendering(), "controller visual falls with the formed bit");
+            place(level, wallCell, shell.get(wallCell), placed);
+            h.assertTrue(StructureTestSupport.ok(entity), "replacing the wall forms again");
+            place(level, airCell, part(wall), placed);
+            h.assertTrue(!StructureTestSupport.ok(entity), "a filled air cell breaks the crucible");
+            place(level, airCell, Blocks.AIR.defaultBlockState(), placed);
+            h.assertTrue(StructureTestSupport.ok(entity), "clearing the air cell forms again");
+
+            List<BlockPos> cellsList = new ArrayList<>(shell.keySet());
+            Random random = new Random(54_000_008L);
+            System.out.println("[structure-incremental] fuzz family=crucible seed=54000008 steps=200 cells=" + cellsList.size());
+            for (int step = 0; step < 200; step++) {
+                BlockPos pos = cellsList.get(random.nextInt(cellsList.size()));
+                int roll = random.nextInt(10);
+                if (roll < 5) place(level, pos, shell.get(pos), placed);
+                else if (roll < 8) place(level, pos, Blocks.AIR.defaultBlockState(), placed);
+                else place(level, pos, Blocks.COBBLESTONE.defaultBlockState(), placed);
+                StructureScheduler.flush(level);
+            }
+            for (var entry : shell.entrySet()) place(level, entry.getKey(), entry.getValue(), placed);
+            StructureScheduler.flush(level);
+            h.assertTrue(StructureTestSupport.ok(entity), "large crucible recovers after the fuzz");
         } finally {
             clear(level, placed);
         }

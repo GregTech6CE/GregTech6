@@ -219,15 +219,17 @@ public final class StructureTracking {
         } else {
             state.applyChanges(entity.getBlockPos(), tracker.takeChangedCells(), tracker.takeReloadedChunks());
         }
+        boolean matched;
         StructureScanProbe.openIncremental();
         try {
             state.evaluate(level, entity.getBlockPos());
+            matched = state.complete() && machine.structurePartsValid();
+            // Claims can write part visuals (the crucible does); those are not external changes.
+            if (matched) matched = machine.applyStructure(state.match(entity.getBlockPos()));
+            else machine.releaseStructureClaims();
         } finally {
             StructureScanProbe.close();
         }
-        boolean matched = state.complete() && machine.structurePartsValid();
-        if (matched) matched = machine.applyStructure(state.match(entity.getBlockPos()));
-        else machine.releaseStructureClaims();
         tracker.matchedLayers(state.matchedLayers());
         install(server, tracker, definition.watchFootprint(machine));
         boolean edge = matched ? tracker.markFormed(epoch) : tracker.markBroken(epoch);

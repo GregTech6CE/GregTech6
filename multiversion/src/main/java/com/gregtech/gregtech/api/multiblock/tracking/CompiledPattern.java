@@ -36,6 +36,9 @@ public final class CompiledPattern {
     private final List<Aggregate> aggregates;
     private final int maxCopies;
 
+    /** One fixed cell with world offsets relative to the controller, for structures no layout describes. */
+    public record FixedCell(int dx, int dy, int dz, LargeMachineLayouts.Cell cell) {}
+
     private CompiledPattern(Direction front, List<Fixed> fixed, List<Group> groups,
                             List<RepairCell> repeatCells, List<Aggregate> aggregates) {
         this.front = front;
@@ -96,6 +99,22 @@ public final class CompiledPattern {
             }
         }
         return new CompiledPattern(front, fixed, groups, repeat, aggregates);
+    }
+
+    /**
+     * Compiles explicit fixed cells. Families whose geometry is not a {@link LargeMachineLayouts.Layout},
+     * or whose offsets do not rotate with the facing, build the offsets themselves.
+     */
+    public static CompiledPattern compileFixed(TrackedMultiblock machine, Direction front,
+                                               List<FixedCell> cells, List<Aggregate> aggregates) {
+        if (cells == null || front == null) return null;
+        List<Fixed> fixed = new ArrayList<>(cells.size());
+        for (FixedCell cell : cells) {
+            LargeMachineLayouts.Cell spec = cell.cell();
+            fixed.add(new Fixed(cell.dx(), cell.dy(), cell.dz(), spec.role(),
+                    spec.role() == Role.AIR ? null : matcher(machine, spec), spec));
+        }
+        return new CompiledPattern(front, fixed, List.of(), List.of(), aggregates);
     }
 
     private static Matcher matcher(TrackedMultiblock machine, LargeMachineLayouts.Cell cell) {

@@ -2,7 +2,10 @@ package com.gregtech.gregtech.blockentity.machine;
 
 import com.gregtech.gregtech.api.energy.EnergyTransfer;
 import com.gregtech.gregtech.api.multiblock.*;
-import com.gregtech.gregtech.api.multiblock.tracking.CustomStructures;
+import com.gregtech.gregtech.api.multiblock.tracking.Aggregate;
+import com.gregtech.gregtech.api.multiblock.tracking.CompiledPattern;
+import com.gregtech.gregtech.api.multiblock.tracking.FixedStructures;
+import com.gregtech.gregtech.api.multiblock.tracking.PatternMatch;
 import com.gregtech.gregtech.api.multiblock.tracking.StructureClaims;
 import com.gregtech.gregtech.api.multiblock.tracking.StructureDefinition;
 import com.gregtech.gregtech.api.multiblock.tracking.StructureTracking;
@@ -20,7 +23,12 @@ import java.util.*;
 
 /** Dedicated GT6 fusion executor: input reservation, LU startup, timed EU output and retained products. */
 public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockEntity {
+    private static final List<Aggregate> AGGREGATES=List.of(
+            Aggregate.Count.exactly(Aggregate.part(18200),3),
+            Aggregate.Count.exactly(Aggregate.part(18201),12),
+            Aggregate.Count.exactly(Aggregate.part(18202),12));
     private final PartBindings<BlockPos,MultiblockLayout.Role> fusionBindings=new PartBindings<>();
+    private final StructureDefinition definition=FixedStructures.declarative(this,this::structureCells,AGGREGATES);
     private long chargeRemaining,chargeTotal,progress,duration,outputEU;
     private MachineWorkOutputs products;
     private Recipe continuousRecipe;
@@ -35,7 +43,39 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
 //?}
         setSpec(((BasicMachineBlock)state.getBlock()).basicSpec());
     }
-    @Override public StructureDefinition structureDefinition() { return CustomStructures.fusion(this); }
+    @Override public StructureDefinition structureDefinition() { return definition; }
+    /** CPU positions accept any processor type; the aggregates enforce the 3/12/12 split. */
+    private java.util.List<CompiledPattern.FixedCell> structureCells(Direction front) {
+        var cells=new java.util.ArrayList<CompiledPattern.FixedCell>(FusionStructure.CELLS.size());
+        for(var cell:FusionStructure.CELLS) {
+            var spec=cell.part()>=18200&&cell.part()<=18202?processorCell(cell):cell;
+            var offset=cell.at(BlockPos.ZERO,front);
+            cells.add(new CompiledPattern.FixedCell(offset.getX(),offset.getY(),offset.getZ(),spec));
+        }
+        return cells;
+    }
+    private static LargeMachineLayouts.Cell processorCell(LargeMachineLayouts.Cell cell) {
+        var alternatives=List.of(new SharedLargeMachineLayouts.Choice(18201,null),
+                new SharedLargeMachineLayouts.Choice(18202,null));
+        return new LargeMachineLayouts.Cell(cell.right(),cell.up(),cell.back(),18200,cell.role(),cell.plain(),
+                cell.design(),alternatives);
+    }
+    @Override public boolean applyStructure(PatternMatch match) {
+        if(level==null||isRemoved())return false;
+        var candidates=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
+        for(var fixed:match.fixedCells()) {
+            var cell=fixed.cell();
+            if(cell.role()!=MultiblockLayout.Role.AIR)candidates.put(fixed.pos(),cell.role());
+        }
+        return StructureClaims.update(this,true,fusionBindings,candidates,0,
+                p->((MultiblockPortBlockEntity)level.getBlockEntity(p)).canBind(worldPosition),
+                (p,r)->((MultiblockPortBlockEntity)level.getBlockEntity(p)).bind(worldPosition,r),
+                this::releaseFusionPart)!=StructureClaims.Result.FAILED;
+    }
+    @Override public void releaseStructureClaims() {
+        fusionBindings.clear(this::releaseFusionPart);
+        StructureClaims.cleared(this);
+    }
     @Override public boolean scanStructure() {
         if(level==null||isRemoved())return false;
         var front=getBlockState().getValue(BasicMachineBlock.FACING);

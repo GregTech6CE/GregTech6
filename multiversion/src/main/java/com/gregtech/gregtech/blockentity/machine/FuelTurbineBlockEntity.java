@@ -16,12 +16,16 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 //?}
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 /** Multiblock fuel generator. The structure is an existing large-machine layout of GregTech parts. */
 public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements MultiblockPortOwner,
         com.gregtech.gregtech.api.multiblock.tracking.TrackedMultiblock {
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();
+    private final com.gregtech.gregtech.api.multiblock.tracking.StructureDefinition definition =
+            com.gregtech.gregtech.api.multiblock.tracking.FixedStructures.declarative(this, this::structureCells, List.of());
 
     public FuelTurbineBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -39,7 +43,43 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
     }
 
     @Override public com.gregtech.gregtech.api.multiblock.tracking.StructureDefinition structureDefinition() {
-        return com.gregtech.gregtech.api.multiblock.tracking.CustomStructures.fuel(this);
+        return definition;
+    }
+    private List<com.gregtech.gregtech.api.multiblock.tracking.CompiledPattern.FixedCell> structureCells(Direction front) {
+        var layout = trackedCells();
+        if (layout == null) return List.of();
+        var cells = new ArrayList<com.gregtech.gregtech.api.multiblock.tracking.CompiledPattern.FixedCell>(layout.size());
+        for (var cell : layout) {
+            var offset = cell.at(BlockPos.ZERO, front);
+            cells.add(new com.gregtech.gregtech.api.multiblock.tracking.CompiledPattern.FixedCell(
+                    offset.getX(), offset.getY(), offset.getZ(), cell));
+        }
+        return cells;
+    }
+    @Override public boolean applyStructure(com.gregtech.gregtech.api.multiblock.tracking.PatternMatch match) {
+        var layout = trackedCells();
+        if (level == null || isRemoved() || layout == null) {
+            releaseStructureClaims();
+            return false;
+        }
+        var parts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
+        for (var fixed : match.fixedCells()) {
+            var cell = fixed.cell();
+            if (cell.role() != MultiblockLayout.Role.AIR && !cell.plainBlock())
+                parts.put(fixed.pos(), cell.role());
+        }
+        var claimed = com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, parts,
+                fuelDesignHash(layout),
+                pos -> ((com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity) level.getBlockEntity(pos)).canBind(worldPosition),
+                (pos, role) -> ((com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
+                this::release);
+        if (claimed == com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.APPLIED)
+            com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front(), layout);
+        return claimed != com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
+    }
+    @Override public void releaseStructureClaims() {
+        bindings.clear(this::release);
+        com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
     }
     @Override public boolean isStructureOk() {
         return com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.query(this);
