@@ -587,7 +587,21 @@ FUNCTIONAL_CASES |= set(SENSOR_PROGRESS_CASE_NAMESPACES)
 CINNABAR_BARREL_CASE_NAMESPACES = {'cinnabarbathparitytests.cinnabarwatershortcutabsentwhilesourcebathandsluiceremain': 'gregtech_ore_source_audit:test_empty', 'cinnabarbathparitytests.explicitcinnabarwateroverridewinsandremovalrestoresabsence': 'gregtech_ore_source_audit:test_empty', 'barrelresumeregressiontests.serializedsealedbarrelresumesthroughcompletion': 'gregtech_barrel_resume:test_empty', 'barrelresumeregressiontests.savedworkwithoutcachedmaximumresumes': 'gregtech_barrel_resume:test_empty', 'barrelresumeregressiontests.invalidemptyandgasoutputdonotresumesavedwork': 'gregtech_barrel_resume:test_empty', 'barrelresumeregressiontests.changedfluidandexplicitresealstillresetwork': 'gregtech_barrel_resume:test_empty'}
 FUNCTIONAL_CASES |= set(CINNABAR_BARREL_CASE_NAMESPACES)
 
+ORE_FORM_OUTPUT_CASE_NAMESPACES = {
+    'oreformoutputregressiontests.literaldolamidesourcefinesallwaterandsizevariants': 'gregtech_ore_form_outputs:test_empty',
+    'oreformoutputregressiontests.sourceoutputdynamicnativecohorthasexactsourceslots': 'gregtech_ore_form_outputs:test_empty',
+    'oreformoutputregressiontests.sourceoutputconservativeprovenancekeepspublicforms': 'gregtech_ore_form_outputs:test_empty',
+    'oreformoutputregressiontests.unsupportedlatenativeformtagdeferstousablecanonical': 'gregtech_ore_form_outputs:test_empty',
+    'oreformoutputregressiontests.compatibleexplicitfineandambiguityuseactualmachinecontract': 'gregtech_ore_form_outputs:test_empty',
+    'oreformoutputregressiontests.compatiblefinerepeatedoverlayandnativetagremovalpreservewarmrows': 'gregtech_ore_form_outputs:test_empty',
+    'oreformoutputregressiontests.sourceoutputpubliccollisionwinnersurvivesexactcleanup': 'gregtech_ore_form_outputs:test_empty',
+    'oreformoutputregressiontests.sourceoutputbaselineandsamejvmstophandlerdonotresurrectownedrows': 'gregtech_ore_form_outputs:test_empty',
+}
+FUNCTIONAL_CASES |= set(ORE_FORM_OUTPUT_CASE_NAMESPACES)
+
 def expected_namespace(identity):
+    if identity in ORE_FORM_OUTPUT_CASE_NAMESPACES:
+        return ORE_FORM_OUTPUT_CASE_NAMESPACES[identity]
     if identity in CINNABAR_BARREL_CASE_NAMESPACES:
         return CINNABAR_BARREL_CASE_NAMESPACES[identity]
     if identity in SENSOR_PROGRESS_CASE_NAMESPACES:
@@ -696,6 +710,10 @@ def check(path, platform='forge'):
                 continue
             if identity in CINNABAR_BARREL_CASE_NAMESPACES:
                 if name == method and classname == CINNABAR_BARREL_CASE_NAMESPACES[identity]:
+                    found.add(identity)
+                continue
+            if identity in ORE_FORM_OUTPUT_CASE_NAMESPACES:
+                if name == method and classname == ORE_FORM_OUTPUT_CASE_NAMESPACES[identity]:
                     found.add(identity)
                 continue
             if identity in SENSOR_PROGRESS_CASE_NAMESPACES:
