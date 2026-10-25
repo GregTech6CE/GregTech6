@@ -276,8 +276,6 @@ public final class MaterialTooltips {
         if (!mat.isValid()) {
             return Component.empty();
         }
-        if (GTMaterialRegistry.isVanillaMatter(mat)) return Component.literal(displayUnits(amount) + " ")
-                .append(MaterialPresentation.name(mat)).append(Component.translatable("tooltip.gt6ce.composition_category"));
         double weightKg = weightKg(mat, amount);
         long frac = ((long) (weightKg * 1000)) % 1000;
 

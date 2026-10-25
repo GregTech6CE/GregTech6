@@ -20,7 +20,6 @@ public final class MaterialDefinitions {
         AntimatterMaterials.register();
         GT6Materials.touchAll();
         SupplementalMaterials.declare();
-        VanillaMatterMaterials.declare();
     }
 
     public static void link() {

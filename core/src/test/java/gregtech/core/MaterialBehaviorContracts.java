@@ -59,10 +59,12 @@ public final class MaterialBehaviorContracts {
     // Complete 155935-row snapshots at both stages normalize exactly to the previous fingerprints;
     // every form/alias/prefix and all 56085 core material item IDs remain unchanged.
     // Evidence: docs/integration/verification/material-quality-differential-20261024.json.
-    private static final String DEFINITIONS_SHA256 = "9dd543e019f6352f64023be930ba999d763beeaec1ef2e1b7cb70bfd9eb6d20e";
-    /** MaterialItemDefinitions.all() before addon materials existed, 56085 rows, zero suffixes. */
-    private static final String ITEM_ID_SHA256 = "c3360a6cdc2ac4aa396b7a9bb778f11663171afb4e949709c65f3903f25a5fef";
-    private static final String POST_INIT_SHA256 = "bb41a81162be04fc7e7a64f3f7be0dc224551ea8ebfb71c80fffad3e39fbbfac";
+    // 2026-10-26: remove only the ten placeholder identities and their form/alias rows.
+    // docs/integration/verification/placeholder-matter-removal-20261026.json proves all retained rows identical.
+    private static final String DEFINITIONS_SHA256 = "a38c8a9dfe6895a7e9319d1afcc2da55bc2416da2f976557df1b90d9c89c7de6";
+    /** Supported built-in item IDs after removing ten placeholder Unit entries; 56075 rows. */
+    private static final String ITEM_ID_SHA256 = "a3bdd7e67e2b168f3982d2f2494216fec92a8b0596b07244402edbe586e8aa73";
+    private static final String POST_INIT_SHA256 = "40d359a7cc337ddc08f9a5dbe23be18a838dcba33bbb4458f5965e388333a636";
     private static int assertions;
     private MaterialBehaviorContracts() {}
 
@@ -81,6 +83,8 @@ public final class MaterialBehaviorContracts {
         ModReferences.UNKNOWN.getClass();
         gregtech.content.data.MaterialGroups.Glowstone.getClass();
         GTMaterialRegistry.init();
+        for (String removed : "Wool PlantMatter Soil Feather AnimalShell Sculk DyeMatter MagicMatter Dripstone Tuff".split(" "))
+            check(!GTMaterialRegistry.get(removed).isValid(), "Invented vanilla matter must stay unregistered: " + removed);
         for(var type:gregtech.internal.tool.ToolDefinition.values())
             check(gregtech.content.tool.OriginalToolFlags.of(type.name())!=null,"Every native Nexus tool has its source classification: "+type);
         for(var tool:gregtech.content.tool.ElectricToolCatalog.ALL)
@@ -91,8 +95,8 @@ public final class MaterialBehaviorContracts {
 
         check(GTMaterialRegistry.registrationPhase() == GTMaterialRegistry.RegistrationPhase.READY,
                 "The complete directory must finish linking");
-        check(GTMaterialRegistry.allMaterials().size() == 1160, "All 1160 original material objects must remain");
-        check(MaterialCatalogSnapshot.aliases().size() == 1523, "All 1523 original name entries must remain");
+        check(GTMaterialRegistry.allMaterials().size() == 1150, "1150 materials remain after removing ten invented placeholders");
+        check(MaterialCatalogSnapshot.aliases().size() == 1513, "1513 names remain after removing ten placeholder names");
         check(PrefixRegistry.all().size() == 132, "122 prior prefixes plus ten source native pipe associations must remain");
         check(DEFINITIONS_SHA256.equals(MaterialCatalogSnapshot.sha256()), "Full definitions/aliases/forms must match the Community Edition snapshot");
         GTMaterialRegistry.init();
@@ -152,7 +156,7 @@ public final class MaterialBehaviorContracts {
         validateAmountsAndReactions();
         validateMaterialItemIds();
         System.out.println("Material behavior contracts passed: " + assertions
-                + " assertions; 1160 materials, 1105 positive IDs, 1523 name entries, " + PrefixRegistry.all().size() + " prefixes, "
+                + " assertions; 1150 materials, 1095 positive IDs, 1513 name entries, " + PrefixRegistry.all().size() + " prefixes, "
                 + CrucibleReactions.allRecipes().size() + " reactions");
     }
 
@@ -208,7 +212,7 @@ public final class MaterialBehaviorContracts {
                 check(component.material().isValid() && component.amount() > 0, "Composition must retain valid positive inputs: " + material);
             }
         }
-        check(ids.size() == 1105, "All 1105 positive IDs must remain unique");
+        check(ids.size() == 1095, "1095 supported positive IDs remain unique");
         for (var alias : MaterialCatalogSnapshot.aliases().entrySet())
             check(GTMaterialRegistry.get(alias.getKey()) == alias.getValue().resolve(), "Alias must retain identity: " + alias.getKey());
         check(GTMaterialRegistry.get(-1) == Materials.Invalid && GTMaterialRegistry.get(0) == Materials.Invalid
@@ -277,7 +281,7 @@ public final class MaterialBehaviorContracts {
     }
 
     private static void validateMaterialItemIds() throws Exception {
-        check(ITEM_ID_SHA256.equals(itemIdFingerprint(true)), "built-in material item ids match the golden sample taken before the two-pass change");
+        check(ITEM_ID_SHA256.equals(itemIdFingerprint(true)), "built-in material item ids match the reviewed sample after removing placeholder Unit entries");
         int free = freeMaterialId(1);
         var added = GTMaterialRegistry.createMaterial(free, "Aaaaddon", "Aaaaddon", 0xFFFFFF).put(MaterialProperty.DUST);
         check(!GTMaterialRegistry.isCoreMaterial(added), "a material registered after init is not part of the core directory");

@@ -1,0 +1,35 @@
+{
+  "init": {
+    "removed_rows": 1340,
+    "expected_sha256": "a38c8a9dfe6895a7e9319d1afcc2da55bc2416da2f976557df1b90d9c89c7de6"
+  },
+  "post": {
+    "removed_rows": 1340,
+    "expected_sha256": "40d359a7cc337ddc08f9a5dbe23be18a838dcba33bbb4458f5965e388333a636"
+  },
+  "removed_materials": [
+    "Wool",
+    "PlantMatter",
+    "Soil",
+    "Feather",
+    "AnimalShell",
+    "Sculk",
+    "DyeMatter",
+    "MagicMatter",
+    "Dripstone",
+    "Tuff"
+  ],
+  "removed_composition_rows": 299,
+  "derived_known_compositions": [
+    "mangrove_roots",
+    "blue_dye",
+    "white_dye",
+    "light_blue_dye",
+    "brown_dye"
+  ],
+  "retained_graph_exact_match": true,
+  "removed_item_forms": 10,
+  "retained_item_forms": 56075,
+  "retained_item_ids_exact_match": true,
+  "item_sha256": "a3bdd7e67e2b168f3982d2f2494216fec92a8b0596b07244402edbe586e8aa73"
+}

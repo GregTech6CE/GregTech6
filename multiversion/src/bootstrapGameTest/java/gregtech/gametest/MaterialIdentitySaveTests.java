@@ -268,7 +268,7 @@ public final class MaterialIdentitySaveTests {
         for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
             GTMaterial canonical = material.resolve();
             if (gregtech.internal.addon.AddonMaterials.owns(canonical)) {
-                if (GTMaterialRegistry.isPeriodicTableElement(canonical) || GTMaterialRegistry.isVanillaMatter(canonical))
+                if (GTMaterialRegistry.isPeriodicTableElement(canonical))
                     problems.add(canonical.getName() + " addon material was stamped");
                 continue;
             }
@@ -276,9 +276,6 @@ public final class MaterialIdentitySaveTests {
                     && !canonical.has(MaterialProperty.ANTIMATTER);
             if (GTMaterialRegistry.isPeriodicTableElement(canonical) != oldElement)
                 problems.add(canonical.getName() + " periodic table");
-            boolean oldVanilla = canonical.getId() >= 7900 && canonical.getId() <= 7912;
-            if (GTMaterialRegistry.isVanillaMatter(canonical) != oldVanilla)
-                problems.add(canonical.getName() + " vanilla matter");
         }
         helper.assertTrue(problems.isEmpty(), "tooltip flags drifted: " + problems);
         helper.succeed();

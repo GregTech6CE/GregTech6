@@ -49,13 +49,6 @@
     "recoverable": false,
     "source": "Minecraft hanging sign recipe, generic Wood"
   },
-  "acacia_leaves": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "acacia_log": {
     "components": {
       "Bark": 648648000,
@@ -77,13 +70,6 @@
     },
     "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
-  },
-  "acacia_sapling": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "acacia_sign": {
     "components": {
@@ -139,13 +125,6 @@
     "components": {},
     "recoverable": false,
     "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "allium": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "amethyst_block": {
     "components": {
@@ -224,13 +203,6 @@
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2513"
   },
-  "apple": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "archer_pottery_sherd": {
     "components": {
       "Ceramic": 648648000
@@ -253,15 +225,6 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "arrow": {
-    "components": {
-      "Feather": 162162000,
-      "Flint": 162162000,
-      "Wood": 81081000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/arrow.json"
-  },
   "axolotl_bucket": {
     "components": {
       "Iron": 1945944000
@@ -274,37 +237,9 @@
     "recoverable": false,
     "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
-  "azalea": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "azalea_leaves": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "azure_bluet": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "baked_potato": {
     "components": {
       "Potato": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "bamboo": {
-    "components": {
-      "PlantMatter": 648648000
     },
     "recoverable": false,
     "source": "1.20.1 material family"
@@ -495,38 +430,9 @@
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/beehive.json"
   },
-  "beetroot": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "beetroot_seeds": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "beetroot_soup": {
-    "components": {
-      "PlantMatter": 3891888000,
-      "Wood": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/beetroot_soup.json"
-  },
   "bell": {
     "components": {
       "Gold": 2594592000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "big_dripleaf": {
-    "components": {
-      "PlantMatter": 648648000
     },
     "recoverable": false,
     "source": "1.20.1 material family"
@@ -581,13 +487,6 @@
     "recoverable": false,
     "source": "Minecraft hanging sign recipe, generic Wood"
   },
-  "birch_leaves": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "birch_log": {
     "components": {
       "Bark": 648648000,
@@ -609,13 +508,6 @@
     },
     "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
-  },
-  "birch_sapling": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "birch_sign": {
     "components": {
@@ -653,37 +545,6 @@
     "recoverable": true,
     "source": "GT6 WoodEntry: six sawn planks plus two wood units and one bark"
   },
-  "black_banner": {
-    "components": {
-      "Wood": 324324000,
-      "Wool": 15567552000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/black_banner.json"
-  },
-  "black_bed": {
-    "components": {
-      "Wood": 1945944000,
-      "Wool": 7783776000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/black_bed.json"
-  },
-  "black_candle": {
-    "components": {
-      "WaxBee": 648648000,
-      "Wool": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft honeycomb and string convention"
-  },
-  "black_carpet": {
-    "components": {
-      "Wool": 1729728000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "black_concrete": {
     "components": {
       "Concrete": 5837832000
@@ -698,27 +559,12 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "black_dye": {
-    "components": {
-      "DyeMatter": 72072000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "black_glazed_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
     "recoverable": true,
     "source": "1.20.1 material family"
-  },
-  "black_shulker_box": {
-    "components": {
-      "AnimalShell": 1297296000,
-      "Wood": 5189184000
-    },
-    "recoverable": false,
-    "source": "Minecraft shulker shell and chest"
   },
   "black_stained_glass": {
     "components": {
@@ -740,13 +586,6 @@
     },
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
-  },
-  "black_wool": {
-    "components": {
-      "Wool": 2594592000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "blackstone": {
     "components": {
@@ -810,37 +649,6 @@
     "recoverable": false,
     "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
-  "blue_banner": {
-    "components": {
-      "Wood": 324324000,
-      "Wool": 15567552000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/blue_banner.json"
-  },
-  "blue_bed": {
-    "components": {
-      "Wood": 1945944000,
-      "Wool": 7783776000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/blue_bed.json"
-  },
-  "blue_candle": {
-    "components": {
-      "WaxBee": 648648000,
-      "Wool": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft honeycomb and string convention"
-  },
-  "blue_carpet": {
-    "components": {
-      "Wool": 1729728000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "blue_concrete": {
     "components": {
       "Concrete": 5837832000
@@ -857,10 +665,10 @@
   },
   "blue_dye": {
     "components": {
-      "DyeMatter": 72072000
+      "Lapis": 648648000
     },
     "recoverable": false,
-    "source": "1.20.1 material family"
+    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/blue_dye.json"
   },
   "blue_glazed_terracotta": {
     "components": {
@@ -875,21 +683,6 @@
     },
     "recoverable": true,
     "source": "1.20.1 material family"
-  },
-  "blue_orchid": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "blue_shulker_box": {
-    "components": {
-      "AnimalShell": 1297296000,
-      "Wood": 5189184000
-    },
-    "recoverable": false,
-    "source": "Minecraft shulker shell and chest"
   },
   "blue_stained_glass": {
     "components": {
@@ -911,13 +704,6 @@
     },
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
-  },
-  "blue_wool": {
-    "components": {
-      "Wool": 2594592000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "bone": {
     "components": {
@@ -954,14 +740,6 @@
     },
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2528"
-  },
-  "bow": {
-    "components": {
-      "Wood": 972972000,
-      "Wool": 1945944000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/bow.json"
   },
   "bowl": {
     "components": {
@@ -1048,37 +826,6 @@
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2481"
   },
-  "brown_banner": {
-    "components": {
-      "Wood": 324324000,
-      "Wool": 15567552000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/brown_banner.json"
-  },
-  "brown_bed": {
-    "components": {
-      "Wood": 1945944000,
-      "Wool": 7783776000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/brown_bed.json"
-  },
-  "brown_candle": {
-    "components": {
-      "WaxBee": 648648000,
-      "Wool": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft honeycomb and string convention"
-  },
-  "brown_carpet": {
-    "components": {
-      "Wool": 1729728000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "brown_concrete": {
     "components": {
       "Concrete": 5837832000
@@ -1095,10 +842,10 @@
   },
   "brown_dye": {
     "components": {
-      "DyeMatter": 72072000
+      "Cocoa": 648648000
     },
     "recoverable": false,
-    "source": "1.20.1 material family"
+    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/brown_dye.json"
   },
   "brown_glazed_terracotta": {
     "components": {
@@ -1106,28 +853,6 @@
     },
     "recoverable": true,
     "source": "1.20.1 material family"
-  },
-  "brown_mushroom": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "brown_mushroom_block": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "brown_shulker_box": {
-    "components": {
-      "AnimalShell": 1297296000,
-      "Wood": 5189184000
-    },
-    "recoverable": false,
-    "source": "Minecraft shulker shell and chest"
   },
   "brown_stained_glass": {
     "components": {
@@ -1149,22 +874,6 @@
     },
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
-  },
-  "brown_wool": {
-    "components": {
-      "Wool": 2594592000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "brush": {
-    "components": {
-      "Copper": 648648000,
-      "Feather": 648648000,
-      "Wood": 324324000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/brush.json"
   },
   "bubble_coral": {
     "components": {
@@ -1201,14 +910,6 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "bundle": {
-    "components": {
-      "Leather": 3891888000,
-      "Wool": 1297296000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 explicit composition convention"
-  },
   "burn_pottery_sherd": {
     "components": {
       "Ceramic": 648648000
@@ -1216,37 +917,12 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "cactus": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "cake": {
-    "components": {
-      "AnimalShell": 648648000,
-      "Milk": 1945944000,
-      "Sugar": 1297296000,
-      "Wheat": 1945944000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 explicit composition convention"
-  },
   "calcite": {
     "components": {
       "Calcite": 5837832000
     },
     "recoverable": true,
     "source": "1.20.1 material family"
-  },
-  "calibrated_sculk_sensor": {
-    "components": {
-      "Amethyst": 1945944000,
-      "Sculk": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/calibrated_sculk_sensor.json"
   },
   "camel_spawn_egg": {
     "components": {},
@@ -1261,30 +937,6 @@
     "recoverable": false,
     "source": "Minecraft 1.20.1 explicit composition convention"
   },
-  "candle": {
-    "components": {
-      "WaxBee": 648648000,
-      "Wool": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft honeycomb and string convention"
-  },
-  "carrot": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "carrot_on_a_stick": {
-    "components": {
-      "PlantMatter": 648648000,
-      "Wood": 972972000,
-      "Wool": 1297296000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/carrot_on_a_stick.json"
-  },
   "cartography_table": {
     "components": {
       "Paper": 1297296000,
@@ -1292,13 +944,6 @@
     },
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/cartography_table.json"
-  },
-  "carved_pumpkin": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "cat_spawn_egg": {
     "components": {},
@@ -1442,13 +1087,6 @@
     "recoverable": false,
     "source": "Minecraft hanging sign recipe, generic Wood"
   },
-  "cherry_leaves": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "cherry_log": {
     "components": {
       "Bark": 648648000,
@@ -1470,13 +1108,6 @@
     },
     "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
-  },
-  "cherry_sapling": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "cherry_sign": {
     "components": {
@@ -1605,27 +1236,6 @@
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/chiseled_stone_bricks.json"
   },
-  "chorus_flower": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "chorus_fruit": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "chorus_plant": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "clay": {
     "components": {
       "Clay": 2594592000
@@ -1667,13 +1277,6 @@
       "Coal": 1297296000
     },
     "recoverable": true,
-    "source": "1.20.1 material family"
-  },
-  "coarse_dirt": {
-    "components": {
-      "Soil": 648648000
-    },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "coast_armor_trim_smithing_template": {
@@ -1739,13 +1342,6 @@
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2535"
   },
-  "cobweb": {
-    "components": {
-      "Wool": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "cocoa_beans": {
     "components": {
       "Cocoa": 648648000
@@ -1808,14 +1404,6 @@
     },
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/composter.json"
-  },
-  "conduit": {
-    "components": {
-      "AnimalShell": 5189184000,
-      "Prismarine": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/conduit.json"
   },
   "cooked_beef": {
     "components": {
@@ -1905,13 +1493,6 @@
       "Copper": 1297296000
     },
     "recoverable": true,
-    "source": "1.20.1 material family"
-  },
-  "cornflower": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "cow_spawn_egg": {
@@ -2008,13 +1589,6 @@
     "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
-  "crimson_fungus": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "crimson_hanging_sign": {
     "components": {
       "Iron": 432432000,
@@ -2030,13 +1604,6 @@
     "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
-  "crimson_nylium": {
-    "components": {
-      "Soil": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "crimson_planks": {
     "components": {
       "Wood": 648648000
@@ -2050,13 +1617,6 @@
     },
     "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
-  },
-  "crimson_roots": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "crimson_sign": {
     "components": {
@@ -2092,15 +1652,6 @@
     },
     "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
-  },
-  "crossbow": {
-    "components": {
-      "Iron": 972972000,
-      "Wood": 1621620000,
-      "Wool": 1297296000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/crossbow.json"
   },
   "crying_obsidian": {
     "components": {
@@ -2158,37 +1709,6 @@
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/cut_sandstone_slab_from_sandstone_stonecutting.json"
   },
-  "cyan_banner": {
-    "components": {
-      "Wood": 324324000,
-      "Wool": 15567552000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/cyan_banner.json"
-  },
-  "cyan_bed": {
-    "components": {
-      "Wood": 1945944000,
-      "Wool": 7783776000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/cyan_bed.json"
-  },
-  "cyan_candle": {
-    "components": {
-      "WaxBee": 648648000,
-      "Wool": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft honeycomb and string convention"
-  },
-  "cyan_carpet": {
-    "components": {
-      "Wool": 1729728000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "cyan_concrete": {
     "components": {
       "Concrete": 5837832000
@@ -2203,27 +1723,12 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "cyan_dye": {
-    "components": {
-      "DyeMatter": 72072000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "cyan_glazed_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
     "recoverable": true,
     "source": "1.20.1 material family"
-  },
-  "cyan_shulker_box": {
-    "components": {
-      "AnimalShell": 1297296000,
-      "Wood": 5189184000
-    },
-    "recoverable": false,
-    "source": "Minecraft shulker shell and chest"
   },
   "cyan_stained_glass": {
     "components": {
@@ -2246,26 +1751,12 @@
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
   },
-  "cyan_wool": {
-    "components": {
-      "Wool": 2594592000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "damaged_anvil": {
     "components": {
       "Iron": 12972960000
     },
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2515"
-  },
-  "dandelion": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "danger_pottery_sherd": {
     "components": {
@@ -2324,13 +1815,6 @@
     "recoverable": false,
     "source": "Minecraft hanging sign recipe, generic Wood"
   },
-  "dark_oak_leaves": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "dark_oak_log": {
     "components": {
       "Bark": 648648000,
@@ -2352,13 +1836,6 @@
     },
     "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
-  },
-  "dark_oak_sapling": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "dark_oak_sign": {
     "components": {
@@ -2395,30 +1872,6 @@
     },
     "recoverable": true,
     "source": "GT6 WoodEntry: six sawn planks plus two wood units and one bark"
-  },
-  "dark_prismarine": {
-    "components": {
-      "DyeMatter": 72072000,
-      "Prismarine": 5189184000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/dark_prismarine.json"
-  },
-  "dark_prismarine_slab": {
-    "components": {
-      "DyeMatter": 36036000,
-      "Prismarine": 2594592000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/dark_prismarine_slab.json"
-  },
-  "dark_prismarine_stairs": {
-    "components": {
-      "DyeMatter": 72072000,
-      "Prismarine": 5189184000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/dark_prismarine_stairs_from_dark_prismarine_stonecutting.json"
   },
   "daylight_detector": {
     "components": {
@@ -2834,20 +2287,6 @@
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/diorite_wall.json"
   },
-  "dirt": {
-    "components": {
-      "Soil": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "dirt_path": {
-    "components": {
-      "Soil": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "disc_fragment_5": {
     "components": {
       "Plastic": 648648000
@@ -2880,39 +2319,11 @@
     "recoverable": false,
     "source": "Minecraft bottle shell; contents are stack-dependent and not recycled"
   },
-  "dragon_egg": {
-    "components": {
-      "MagicMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "dragon_head": {
     "components": {
       "Bone": 648648000
     },
     "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "dried_kelp": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "dried_kelp_block": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "dripstone_block": {
-    "components": {
-      "Dripstone": 5837832000
-    },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "dropper": {
@@ -2931,20 +2342,6 @@
   "dune_armor_trim_smithing_template": {
     "components": {
       "Paper": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "echo_shard": {
-    "components": {
-      "Sculk": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "egg": {
-    "components": {
-      "AnimalShell": 648648000
     },
     "recoverable": false,
     "source": "1.20.1 material family"
@@ -3005,27 +2402,10 @@
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2526"
   },
-  "end_crystal": {
-    "components": {
-      "EnderEye": 648648000,
-      "Glass": 40864824000,
-      "MagicMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/end_crystal.json"
-  },
   "end_portal_frame": {
     "components": {},
     "recoverable": false,
     "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "end_rod": {
-    "components": {
-      "Blaze": 81081000,
-      "PlantMatter": 162162000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/end_rod.json"
   },
   "end_stone": {
     "components": {
@@ -3153,36 +2533,6 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "farmland": {
-    "components": {
-      "Soil": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "feather": {
-    "components": {
-      "Feather": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "fermented_spider_eye": {
-    "components": {
-      "MeatRaw": 648648000,
-      "PlantMatter": 648648000,
-      "Sugar": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/fermented_spider_eye.json"
-  },
-  "fern": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "filled_map": {
     "components": {
       "Paper": 5189184000
@@ -3234,14 +2584,6 @@
     "recoverable": false,
     "source": "GT6 LoaderItemData.java:2494"
   },
-  "fishing_rod": {
-    "components": {
-      "Wood": 972972000,
-      "Wool": 1297296000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/fishing_rod.json"
-  },
   "fletching_table": {
     "components": {
       "Flint": 1297296000,
@@ -3279,20 +2621,6 @@
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2480"
   },
-  "flowering_azalea": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "flowering_azalea_leaves": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "fox_spawn_egg": {
     "components": {},
     "recoverable": false,
@@ -3309,13 +2637,6 @@
     "components": {},
     "recoverable": false,
     "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "frogspawn": {
-    "components": {
-      "AnimalShell": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "furnace": {
     "components": {
@@ -3336,13 +2657,6 @@
     "components": {},
     "recoverable": false,
     "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "ghast_tear": {
-    "components": {
-      "MagicMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "gilded_blackstone": {
     "components": {
@@ -3382,35 +2696,6 @@
   "globe_banner_pattern": {
     "components": {
       "Paper": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "glow_berries": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "glow_ink_sac": {
-    "components": {
-      "DyeMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "glow_item_frame": {
-    "components": {
-      "DyeMatter": 648648000,
-      "Wood": 2594592000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/glow_item_frame.json"
-  },
-  "glow_lichen": {
-    "components": {
-      "PlantMatter": 648648000
     },
     "recoverable": false,
     "source": "1.20.1 material family"
@@ -3620,54 +2905,9 @@
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/granite_wall.json"
   },
-  "grass": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "grass_block": {
-    "components": {
-      "Soil": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "gravel": {
     "components": {
       "Stone": 5837832000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "gray_banner": {
-    "components": {
-      "Wood": 324324000,
-      "Wool": 15567552000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/gray_banner.json"
-  },
-  "gray_bed": {
-    "components": {
-      "Wood": 1945944000,
-      "Wool": 7783776000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/gray_bed.json"
-  },
-  "gray_candle": {
-    "components": {
-      "WaxBee": 648648000,
-      "Wool": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft honeycomb and string convention"
-  },
-  "gray_carpet": {
-    "components": {
-      "Wool": 1729728000
     },
     "recoverable": false,
     "source": "1.20.1 material family"
@@ -3686,27 +2926,12 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "gray_dye": {
-    "components": {
-      "DyeMatter": 72072000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "gray_glazed_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
     "recoverable": true,
     "source": "1.20.1 material family"
-  },
-  "gray_shulker_box": {
-    "components": {
-      "AnimalShell": 1297296000,
-      "Wood": 5189184000
-    },
-    "recoverable": false,
-    "source": "Minecraft shulker shell and chest"
   },
   "gray_stained_glass": {
     "components": {
@@ -3729,44 +2954,6 @@
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
   },
-  "gray_wool": {
-    "components": {
-      "Wool": 2594592000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "green_banner": {
-    "components": {
-      "Wood": 324324000,
-      "Wool": 15567552000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/green_banner.json"
-  },
-  "green_bed": {
-    "components": {
-      "Wood": 1945944000,
-      "Wool": 7783776000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/green_bed.json"
-  },
-  "green_candle": {
-    "components": {
-      "WaxBee": 648648000,
-      "Wool": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft honeycomb and string convention"
-  },
-  "green_carpet": {
-    "components": {
-      "Wool": 1729728000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "green_concrete": {
     "components": {
       "Concrete": 5837832000
@@ -3781,27 +2968,12 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "green_dye": {
-    "components": {
-      "DyeMatter": 72072000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "green_glazed_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
     "recoverable": true,
     "source": "1.20.1 material family"
-  },
-  "green_shulker_box": {
-    "components": {
-      "AnimalShell": 1297296000,
-      "Wood": 5189184000
-    },
-    "recoverable": false,
-    "source": "Minecraft shulker shell and chest"
   },
   "green_stained_glass": {
     "components": {
@@ -3824,13 +2996,6 @@
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
   },
-  "green_wool": {
-    "components": {
-      "Wool": 2594592000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "grindstone": {
     "components": {
       "Stone": 2918916000,
@@ -3849,13 +3014,6 @@
       "Gunpowder": 648648000
     },
     "recoverable": true,
-    "source": "1.20.1 material family"
-  },
-  "hanging_roots": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "hay_block": {
@@ -4043,13 +3201,6 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "ink_sac": {
-    "components": {
-      "DyeMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "iron_axe": {
     "components": {
       "Iron": 1873872000,
@@ -4215,15 +3366,6 @@
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2575"
   },
-  "jack_o_lantern": {
-    "components": {
-      "Coal": 162162000,
-      "PlantMatter": 5837832000,
-      "Wood": 81081000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 explicit composition convention"
-  },
   "jigsaw": {
     "components": {},
     "recoverable": false,
@@ -4287,13 +3429,6 @@
     "recoverable": false,
     "source": "Minecraft hanging sign recipe, generic Wood"
   },
-  "jungle_leaves": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "jungle_log": {
     "components": {
       "Bark": 648648000,
@@ -4315,13 +3450,6 @@
     },
     "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
-  },
-  "jungle_sapling": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "jungle_sign": {
     "components": {
@@ -4358,13 +3486,6 @@
     },
     "recoverable": true,
     "source": "GT6 WoodEntry: six sawn planks plus two wood units and one bark"
-  },
-  "kelp": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "knowledge_book": {
     "components": {},
@@ -4415,27 +3536,12 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "large_fern": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "lava_bucket": {
     "components": {
       "Iron": 1945944000
     },
     "recoverable": false,
     "source": "Minecraft filled bucket shell; contents excluded from bulk recovery"
-  },
-  "lead": {
-    "components": {
-      "Rubber": 324324000,
-      "Wool": 1297296000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/lead.json"
   },
   "leather": {
     "components": {
@@ -4528,37 +3634,6 @@
     "recoverable": false,
     "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
-  "light_blue_banner": {
-    "components": {
-      "Wood": 324324000,
-      "Wool": 15567552000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/light_blue_banner.json"
-  },
-  "light_blue_bed": {
-    "components": {
-      "Wood": 1945944000,
-      "Wool": 7783776000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/light_blue_bed.json"
-  },
-  "light_blue_candle": {
-    "components": {
-      "WaxBee": 648648000,
-      "Wool": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft honeycomb and string convention"
-  },
-  "light_blue_carpet": {
-    "components": {
-      "Wool": 1729728000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "light_blue_concrete": {
     "components": {
       "Concrete": 5837832000
@@ -4575,10 +3650,11 @@
   },
   "light_blue_dye": {
     "components": {
-      "DyeMatter": 72072000
+      "Bone": 324324000,
+      "Lapis": 324324000
     },
     "recoverable": false,
-    "source": "1.20.1 material family"
+    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/light_blue_dye_from_blue_white_dye.json"
   },
   "light_blue_glazed_terracotta": {
     "components": {
@@ -4586,14 +3662,6 @@
     },
     "recoverable": true,
     "source": "1.20.1 material family"
-  },
-  "light_blue_shulker_box": {
-    "components": {
-      "AnimalShell": 1297296000,
-      "Wood": 5189184000
-    },
-    "recoverable": false,
-    "source": "Minecraft shulker shell and chest"
   },
   "light_blue_stained_glass": {
     "components": {
@@ -4616,44 +3684,6 @@
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
   },
-  "light_blue_wool": {
-    "components": {
-      "Wool": 2594592000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "light_gray_banner": {
-    "components": {
-      "Wood": 324324000,
-      "Wool": 15567552000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/light_gray_banner.json"
-  },
-  "light_gray_bed": {
-    "components": {
-      "Wood": 1945944000,
-      "Wool": 7783776000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/light_gray_bed.json"
-  },
-  "light_gray_candle": {
-    "components": {
-      "WaxBee": 648648000,
-      "Wool": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft honeycomb and string convention"
-  },
-  "light_gray_carpet": {
-    "components": {
-      "Wool": 1729728000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "light_gray_concrete": {
     "components": {
       "Concrete": 5837832000
@@ -4668,27 +3698,12 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "light_gray_dye": {
-    "components": {
-      "DyeMatter": 72072000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "light_gray_glazed_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
     "recoverable": true,
     "source": "1.20.1 material family"
-  },
-  "light_gray_shulker_box": {
-    "components": {
-      "AnimalShell": 1297296000,
-      "Wood": 5189184000
-    },
-    "recoverable": false,
-    "source": "Minecraft shulker shell and chest"
   },
   "light_gray_stained_glass": {
     "components": {
@@ -4711,13 +3726,6 @@
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
   },
-  "light_gray_wool": {
-    "components": {
-      "Wool": 2594592000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "light_weighted_pressure_plate": {
     "components": {
       "Gold": 1297296000
@@ -4731,58 +3739,6 @@
     },
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/lightning_rod.json"
-  },
-  "lilac": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "lily_of_the_valley": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "lily_pad": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "lime_banner": {
-    "components": {
-      "Wood": 324324000,
-      "Wool": 15567552000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/lime_banner.json"
-  },
-  "lime_bed": {
-    "components": {
-      "Wood": 1945944000,
-      "Wool": 7783776000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/lime_bed.json"
-  },
-  "lime_candle": {
-    "components": {
-      "WaxBee": 648648000,
-      "Wool": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft honeycomb and string convention"
-  },
-  "lime_carpet": {
-    "components": {
-      "Wool": 1729728000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "lime_concrete": {
     "components": {
@@ -4798,27 +3754,12 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "lime_dye": {
-    "components": {
-      "DyeMatter": 72072000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "lime_glazed_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
     "recoverable": true,
     "source": "1.20.1 material family"
-  },
-  "lime_shulker_box": {
-    "components": {
-      "AnimalShell": 1297296000,
-      "Wood": 5189184000
-    },
-    "recoverable": false,
-    "source": "Minecraft shulker shell and chest"
   },
   "lime_stained_glass": {
     "components": {
@@ -4841,13 +3782,6 @@
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
   },
-  "lime_wool": {
-    "components": {
-      "Wool": 2594592000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "lingering_potion": {
     "components": {
       "Glass": 648648000
@@ -4868,45 +3802,6 @@
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/lodestone.json"
   },
-  "loom": {
-    "components": {
-      "Wood": 1297296000,
-      "Wool": 1297296000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/loom.json"
-  },
-  "magenta_banner": {
-    "components": {
-      "Wood": 324324000,
-      "Wool": 15567552000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/magenta_banner.json"
-  },
-  "magenta_bed": {
-    "components": {
-      "Wood": 1945944000,
-      "Wool": 7783776000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/magenta_bed.json"
-  },
-  "magenta_candle": {
-    "components": {
-      "WaxBee": 648648000,
-      "Wool": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft honeycomb and string convention"
-  },
-  "magenta_carpet": {
-    "components": {
-      "Wool": 1729728000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "magenta_concrete": {
     "components": {
       "Concrete": 5837832000
@@ -4921,27 +3816,12 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "magenta_dye": {
-    "components": {
-      "DyeMatter": 72072000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "magenta_glazed_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
     "recoverable": true,
     "source": "1.20.1 material family"
-  },
-  "magenta_shulker_box": {
-    "components": {
-      "AnimalShell": 1297296000,
-      "Wood": 5189184000
-    },
-    "recoverable": false,
-    "source": "Minecraft shulker shell and chest"
   },
   "magenta_stained_glass": {
     "components": {
@@ -4963,13 +3843,6 @@
     },
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
-  },
-  "magenta_wool": {
-    "components": {
-      "Wool": 2594592000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "magma_block": {
     "components": {
@@ -5042,13 +3915,6 @@
     "recoverable": false,
     "source": "Minecraft hanging sign recipe, generic Wood"
   },
-  "mangrove_leaves": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "mangrove_log": {
     "components": {
       "Bark": 648648000,
@@ -5071,16 +3937,9 @@
     "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
-  "mangrove_propagule": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "mangrove_roots": {
     "components": {
-      "PlantMatter": 648648000
+      "Wood": 648648000
     },
     "recoverable": false,
     "source": "1.20.1 material family"
@@ -5135,27 +3994,6 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "melon": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "melon_seeds": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "melon_slice": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "milk_bucket": {
     "components": {
       "Iron": 1945944000
@@ -5188,20 +4026,6 @@
     "components": {},
     "recoverable": false,
     "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "moss_block": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "moss_carpet": {
-    "components": {
-      "Wool": 1729728000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "mossy_cobblestone": {
     "components": {
@@ -5266,48 +4090,6 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "mud": {
-    "components": {
-      "Soil": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "mud_brick_slab": {
-    "components": {
-      "Soil": 324324000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/mud_brick_slab.json"
-  },
-  "mud_brick_stairs": {
-    "components": {
-      "Soil": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/mud_brick_stairs_from_mud_bricks_stonecutting.json"
-  },
-  "mud_brick_wall": {
-    "components": {
-      "Soil": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/mud_brick_wall.json"
-  },
-  "mud_bricks": {
-    "components": {
-      "Soil": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/mud_bricks.json"
-  },
-  "muddy_mangrove_roots": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "mule_spawn_egg": {
     "components": {},
     "recoverable": false,
@@ -5319,14 +4101,6 @@
     },
     "recoverable": false,
     "source": "1.20.1 material family"
-  },
-  "mushroom_stew": {
-    "components": {
-      "PlantMatter": 1297296000,
-      "Wood": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/mushroom_stew.json"
   },
   "music_disc_11": {
     "components": {
@@ -5447,23 +4221,9 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "mycelium": {
-    "components": {
-      "Soil": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "name_tag": {
     "components": {
       "Paper": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "nautilus_shell": {
-    "components": {
-      "AnimalShell": 648648000
     },
     "recoverable": false,
     "source": "1.20.1 material family"
@@ -5524,32 +4284,11 @@
     "recoverable": true,
     "source": "1.20.1 material family"
   },
-  "nether_sprouts": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "nether_star": {
     "components": {
       "NetherStar": 648648000
     },
     "recoverable": true,
-    "source": "1.20.1 material family"
-  },
-  "nether_wart": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "nether_wart_block": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "netherite_axe": {
@@ -5750,13 +4489,6 @@
     "recoverable": false,
     "source": "Minecraft hanging sign recipe, generic Wood"
   },
-  "oak_leaves": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "oak_log": {
     "components": {
       "Bark": 648648000,
@@ -5778,13 +4510,6 @@
     },
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2568"
-  },
-  "oak_sapling": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "oak_sign": {
     "components": {
@@ -5843,44 +4568,6 @@
     "recoverable": false,
     "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
-  "ochre_froglight": {
-    "components": {
-      "MagicMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "orange_banner": {
-    "components": {
-      "Wood": 324324000,
-      "Wool": 15567552000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/orange_banner.json"
-  },
-  "orange_bed": {
-    "components": {
-      "Wood": 1945944000,
-      "Wool": 7783776000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/orange_bed.json"
-  },
-  "orange_candle": {
-    "components": {
-      "WaxBee": 648648000,
-      "Wool": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft honeycomb and string convention"
-  },
-  "orange_carpet": {
-    "components": {
-      "Wool": 1729728000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "orange_concrete": {
     "components": {
       "Concrete": 5837832000
@@ -5895,27 +4582,12 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "orange_dye": {
-    "components": {
-      "DyeMatter": 72072000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "orange_glazed_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
     "recoverable": true,
     "source": "1.20.1 material family"
-  },
-  "orange_shulker_box": {
-    "components": {
-      "AnimalShell": 1297296000,
-      "Wood": 5189184000
-    },
-    "recoverable": false,
-    "source": "Minecraft shulker shell and chest"
   },
   "orange_stained_glass": {
     "components": {
@@ -5937,27 +4609,6 @@
     },
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
-  },
-  "orange_tulip": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "orange_wool": {
-    "components": {
-      "Wool": 2594592000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "oxeye_daisy": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "oxidized_copper": {
     "components": {
@@ -5994,13 +4645,6 @@
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2466"
   },
-  "packed_mud": {
-    "components": {
-      "Soil": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "painting": {
     "components": {
       "Wood": 2594592000
@@ -6024,20 +4668,6 @@
     "components": {},
     "recoverable": false,
     "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "pearlescent_froglight": {
-    "components": {
-      "MagicMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "peony": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "petrified_oak_slab": {
     "components": {
@@ -6092,37 +4722,6 @@
     "recoverable": false,
     "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
-  "pink_banner": {
-    "components": {
-      "Wood": 324324000,
-      "Wool": 15567552000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/pink_banner.json"
-  },
-  "pink_bed": {
-    "components": {
-      "Wood": 1945944000,
-      "Wool": 7783776000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/pink_bed.json"
-  },
-  "pink_candle": {
-    "components": {
-      "WaxBee": 648648000,
-      "Wool": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft honeycomb and string convention"
-  },
-  "pink_carpet": {
-    "components": {
-      "Wool": 1729728000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "pink_concrete": {
     "components": {
       "Concrete": 5837832000
@@ -6137,34 +4736,12 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "pink_dye": {
-    "components": {
-      "DyeMatter": 72072000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "pink_glazed_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
     "recoverable": true,
     "source": "1.20.1 material family"
-  },
-  "pink_petals": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "pink_shulker_box": {
-    "components": {
-      "AnimalShell": 1297296000,
-      "Wood": 5189184000
-    },
-    "recoverable": false,
-    "source": "Minecraft shulker shell and chest"
   },
   "pink_stained_glass": {
     "components": {
@@ -6187,20 +4764,6 @@
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
   },
-  "pink_tulip": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "pink_wool": {
-    "components": {
-      "Wool": 2594592000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "piston": {
     "components": {
       "Stone": 2594592000,
@@ -6208,20 +4771,6 @@
     },
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2585"
-  },
-  "pitcher_plant": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "pitcher_pod": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "player_head": {
     "components": {
@@ -6233,20 +4782,6 @@
   "plenty_pottery_sherd": {
     "components": {
       "Ceramic": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "podzol": {
-    "components": {
-      "Soil": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "pointed_dripstone": {
-    "components": {
-      "Dripstone": 1459458000
     },
     "recoverable": false,
     "source": "1.20.1 material family"
@@ -6431,20 +4966,6 @@
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/polished_granite_stairs_from_granite_stonecutting.json"
   },
-  "popped_chorus_fruit": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "poppy": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "porkchop": {
     "components": {
       "Bone": 72072000,
@@ -6574,60 +5095,6 @@
     "recoverable": false,
     "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
-  "pumpkin": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "pumpkin_pie": {
-    "components": {
-      "AnimalShell": 648648000,
-      "PlantMatter": 648648000,
-      "Sugar": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/pumpkin_pie.json"
-  },
-  "pumpkin_seeds": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "purple_banner": {
-    "components": {
-      "Wood": 324324000,
-      "Wool": 15567552000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/purple_banner.json"
-  },
-  "purple_bed": {
-    "components": {
-      "Wood": 1945944000,
-      "Wool": 7783776000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/purple_bed.json"
-  },
-  "purple_candle": {
-    "components": {
-      "WaxBee": 648648000,
-      "Wool": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft honeycomb and string convention"
-  },
-  "purple_carpet": {
-    "components": {
-      "Wool": 1729728000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "purple_concrete": {
     "components": {
       "Concrete": 5837832000
@@ -6642,27 +5109,12 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "purple_dye": {
-    "components": {
-      "DyeMatter": 72072000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "purple_glazed_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
     "recoverable": true,
     "source": "1.20.1 material family"
-  },
-  "purple_shulker_box": {
-    "components": {
-      "AnimalShell": 1297296000,
-      "Wood": 5189184000
-    },
-    "recoverable": false,
-    "source": "Minecraft shulker shell and chest"
   },
   "purple_stained_glass": {
     "components": {
@@ -6684,41 +5136,6 @@
     },
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
-  },
-  "purple_wool": {
-    "components": {
-      "Wool": 2594592000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "purpur_block": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/purpur_block.json"
-  },
-  "purpur_pillar": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/purpur_pillar_from_purpur_block_stonecutting.json"
-  },
-  "purpur_slab": {
-    "components": {
-      "PlantMatter": 324324000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/purpur_slab_from_purpur_block_stonecutting.json"
-  },
-  "purpur_stairs": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/purpur_stairs_from_purpur_block_stonecutting.json"
   },
   "quartz": {
     "components": {
@@ -6788,16 +5205,6 @@
     "recoverable": false,
     "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
-  "rabbit_stew": {
-    "components": {
-      "MeatCooked": 648648000,
-      "PlantMatter": 1297296000,
-      "Potato": 648648000,
-      "Wood": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/rabbit_stew_from_brown_mushroom.json"
-  },
   "rail": {
     "components": {
       "Iron": 243243000,
@@ -6860,46 +5267,6 @@
     "recoverable": true,
     "source": "1.20.1 material family"
   },
-  "recovery_compass": {
-    "components": {
-      "Iron": 2594592000,
-      "Redstone": 648648000,
-      "Sculk": 5189184000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/recovery_compass.json"
-  },
-  "red_banner": {
-    "components": {
-      "Wood": 324324000,
-      "Wool": 15567552000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/red_banner.json"
-  },
-  "red_bed": {
-    "components": {
-      "Wood": 1945944000,
-      "Wool": 7783776000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/red_bed.json"
-  },
-  "red_candle": {
-    "components": {
-      "WaxBee": 648648000,
-      "Wool": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft honeycomb and string convention"
-  },
-  "red_carpet": {
-    "components": {
-      "Wool": 1729728000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "red_concrete": {
     "components": {
       "Concrete": 5837832000
@@ -6914,65 +5281,12 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "red_dye": {
-    "components": {
-      "DyeMatter": 72072000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "red_glazed_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
     "recoverable": true,
     "source": "1.20.1 material family"
-  },
-  "red_mushroom": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "red_mushroom_block": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "red_nether_brick_slab": {
-    "components": {
-      "NetherBrick": 648648000,
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/red_nether_brick_slab.json"
-  },
-  "red_nether_brick_stairs": {
-    "components": {
-      "NetherBrick": 1297296000,
-      "PlantMatter": 1297296000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/red_nether_brick_stairs_from_red_nether_bricks_stonecutting.json"
-  },
-  "red_nether_brick_wall": {
-    "components": {
-      "NetherBrick": 1297296000,
-      "PlantMatter": 1297296000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/red_nether_brick_wall.json"
-  },
-  "red_nether_bricks": {
-    "components": {
-      "NetherBrick": 1297296000,
-      "PlantMatter": 1297296000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/red_nether_bricks.json"
   },
   "red_sand": {
     "components": {
@@ -7009,14 +5323,6 @@
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/red_sandstone_wall.json"
   },
-  "red_shulker_box": {
-    "components": {
-      "AnimalShell": 1297296000,
-      "Wood": 5189184000
-    },
-    "recoverable": false,
-    "source": "Minecraft shulker shell and chest"
-  },
   "red_stained_glass": {
     "components": {
       "Glass": 5837832000
@@ -7037,20 +5343,6 @@
     },
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
-  },
-  "red_tulip": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "red_wool": {
-    "components": {
-      "Wool": 2594592000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "redstone": {
     "components": {
@@ -7121,20 +5413,6 @@
   "rib_armor_trim_smithing_template": {
     "components": {
       "Paper": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "rooted_dirt": {
-    "components": {
-      "Soil": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "rose_bush": {
-    "components": {
-      "PlantMatter": 648648000
     },
     "recoverable": false,
     "source": "1.20.1 material family"
@@ -7211,76 +5489,12 @@
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/sandstone_wall.json"
   },
-  "scaffolding": {
-    "components": {
-      "PlantMatter": 648648000,
-      "Wool": 108108000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/scaffolding.json"
-  },
-  "sculk": {
-    "components": {
-      "Sculk": 5837832000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "sculk_catalyst": {
-    "components": {
-      "Sculk": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "sculk_sensor": {
-    "components": {
-      "Sculk": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "sculk_shrieker": {
-    "components": {
-      "Sculk": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "sculk_vein": {
-    "components": {
-      "Sculk": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "scute": {
-    "components": {
-      "AnimalShell": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "sea_lantern": {
     "components": {
       "Prismarine": 5837832000
     },
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/sea_lantern.json"
-  },
-  "sea_pickle": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "seagrass": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "sentry_armor_trim_smithing_template": {
     "components": {
@@ -7329,28 +5543,6 @@
     },
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/shield.json"
-  },
-  "shroomlight": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "shulker_box": {
-    "components": {
-      "AnimalShell": 1297296000,
-      "Wood": 5189184000
-    },
-    "recoverable": false,
-    "source": "Minecraft shulker shell and chest"
-  },
-  "shulker_shell": {
-    "components": {
-      "AnimalShell": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "shulker_spawn_egg": {
     "components": {},
@@ -7422,13 +5614,6 @@
   "small_amethyst_bud": {
     "components": {
       "Amethyst": 324324000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "small_dripleaf": {
-    "components": {
-      "PlantMatter": 648648000
     },
     "recoverable": false,
     "source": "1.20.1 material family"
@@ -7533,13 +5718,6 @@
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2537"
   },
-  "sniffer_egg": {
-    "components": {
-      "AnimalShell": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "sniffer_spawn_egg": {
     "components": {},
     "recoverable": false,
@@ -7610,13 +5788,6 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "soul_soil": {
-    "components": {
-      "Soil": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "soul_torch": {
     "components": {
       "Coal": 162162000,
@@ -7625,23 +5796,6 @@
     },
     "recoverable": false,
     "source": "Minecraft 1.20.1 explicit composition convention"
-  },
-  "spawner": {
-    "components": {
-      "MagicMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "spectral_arrow": {
-    "components": {
-      "Feather": 81081000,
-      "Flint": 81081000,
-      "Glowstone": 1297296000,
-      "Wood": 40540500
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/spectral_arrow.json"
   },
   "spider_eye": {
     "components": {
@@ -7668,20 +5822,6 @@
     },
     "recoverable": false,
     "source": "Minecraft bottle shell; contents are stack-dependent and not recycled"
-  },
-  "sponge": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "spore_blossom": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "spruce_boat": {
     "components": {
@@ -7733,13 +5873,6 @@
     "recoverable": false,
     "source": "Minecraft hanging sign recipe, generic Wood"
   },
-  "spruce_leaves": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "spruce_log": {
     "components": {
       "Bark": 648648000,
@@ -7761,13 +5894,6 @@
     },
     "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
-  },
-  "spruce_sapling": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "spruce_sign": {
     "components": {
@@ -7954,13 +6080,6 @@
     "recoverable": false,
     "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
-  "string": {
-    "components": {
-      "Wool": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "stripped_acacia_log": {
     "components": {
       "Wood": 5189184000
@@ -8125,20 +6244,6 @@
     "recoverable": true,
     "source": "1.20.1 material family"
   },
-  "sugar_cane": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "sunflower": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "suspicious_gravel": {
     "components": {
       "Stone": 5837832000
@@ -8149,21 +6254,6 @@
   "suspicious_sand": {
     "components": {
       "Sand": 5837832000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "suspicious_stew": {
-    "components": {
-      "PlantMatter": 1945944000,
-      "Wood": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 explicit composition convention"
-  },
-  "sweet_berries": {
-    "components": {
-      "PlantMatter": 648648000
     },
     "recoverable": false,
     "source": "1.20.1 material family"
@@ -8180,13 +6270,6 @@
     "recoverable": false,
     "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
-  "tall_grass": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "target": {
     "components": {
       "Redstone": 2594592000,
@@ -8194,14 +6277,6 @@
     },
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/target.json"
-  },
-  "template_shulker_box": {
-    "components": {
-      "AnimalShell": 1297296000,
-      "Wood": 5189184000
-    },
-    "recoverable": false,
-    "source": "Minecraft shulker shell and chest"
   },
   "template_spawn_egg": {
     "components": {},
@@ -8230,15 +6305,6 @@
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/tinted_glass.json"
   },
-  "tipped_arrow": {
-    "components": {
-      "Feather": 162162000,
-      "Flint": 162162000,
-      "Wood": 81081000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 explicit composition convention"
-  },
   "tnt": {
     "components": {
       "Gunpowder": 2594592000,
@@ -8263,27 +6329,6 @@
     },
     "recoverable": false,
     "source": "Minecraft 1.20.1 explicit composition convention"
-  },
-  "torchflower": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "torchflower_seeds": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "totem_of_undying": {
-    "components": {
-      "MagicMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "trader_llama_spawn_egg": {
     "components": {},
@@ -8356,37 +6401,9 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "tuff": {
-    "components": {
-      "Tuff": 5837832000
-    },
-    "recoverable": true,
-    "source": "1.20.1 material family"
-  },
-  "turtle_egg": {
-    "components": {
-      "AnimalShell": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "turtle_helmet": {
-    "components": {
-      "AnimalShell": 3243240000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/turtle_helmet.json"
-  },
   "turtle_helmet_amethyst_trim": {
     "components": {
       "Amethyst": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "turtle_scute": {
-    "components": {
-      "AnimalShell": 648648000
     },
     "recoverable": false,
     "source": "1.20.1 material family"
@@ -8395,20 +6412,6 @@
     "components": {},
     "recoverable": false,
     "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "twisting_vines": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "verdant_froglight": {
-    "components": {
-      "MagicMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "vex_armor_trim_smithing_template": {
     "components": {
@@ -8431,13 +6434,6 @@
     "components": {},
     "recoverable": false,
     "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "vine": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "wandering_trader_spawn_egg": {
     "components": {},
@@ -8484,22 +6480,6 @@
     "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
-  "warped_fungus": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "warped_fungus_on_a_stick": {
-    "components": {
-      "PlantMatter": 648648000,
-      "Wood": 972972000,
-      "Wool": 1297296000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/warped_fungus_on_a_stick.json"
-  },
   "warped_hanging_sign": {
     "components": {
       "Iron": 432432000,
@@ -8515,13 +6495,6 @@
     "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
-  "warped_nylium": {
-    "components": {
-      "Soil": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "warped_planks": {
     "components": {
       "Wood": 648648000
@@ -8535,13 +6508,6 @@
     },
     "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
-  },
-  "warped_roots": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "warped_sign": {
     "components": {
@@ -8577,13 +6543,6 @@
     },
     "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
-  },
-  "warped_wart_block": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "water_bucket": {
     "components": {
@@ -8739,61 +6698,9 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "weeping_vines": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "wet_sponge": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "wheat": {
     "components": {
       "Wheat": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "wheat_seeds": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "white_banner": {
-    "components": {
-      "Wood": 324324000,
-      "Wool": 15567552000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/white_banner.json"
-  },
-  "white_bed": {
-    "components": {
-      "Wood": 1945944000,
-      "Wool": 7783776000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/white_bed.json"
-  },
-  "white_candle": {
-    "components": {
-      "WaxBee": 648648000,
-      "Wool": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft honeycomb and string convention"
-  },
-  "white_carpet": {
-    "components": {
-      "Wool": 1729728000
     },
     "recoverable": false,
     "source": "1.20.1 material family"
@@ -8814,10 +6721,10 @@
   },
   "white_dye": {
     "components": {
-      "DyeMatter": 72072000
+      "Bone": 648648000
     },
     "recoverable": false,
-    "source": "1.20.1 material family"
+    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/white_dye.json"
   },
   "white_glazed_terracotta": {
     "components": {
@@ -8825,14 +6732,6 @@
     },
     "recoverable": true,
     "source": "1.20.1 material family"
-  },
-  "white_shulker_box": {
-    "components": {
-      "AnimalShell": 1297296000,
-      "Wood": 5189184000
-    },
-    "recoverable": false,
-    "source": "Minecraft shulker shell and chest"
   },
   "white_stained_glass": {
     "components": {
@@ -8855,20 +6754,6 @@
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
   },
-  "white_tulip": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "white_wool": {
-    "components": {
-      "Wool": 2594592000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "wild_armor_trim_smithing_template": {
     "components": {
       "Paper": 648648000
@@ -8880,13 +6765,6 @@
     "components": {},
     "recoverable": false,
     "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "wither_rose": {
-    "components": {
-      "PlantMatter": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "wither_skeleton_skull": {
     "components": {
@@ -8959,37 +6837,6 @@
     "recoverable": false,
     "source": "GT6 LoaderItemData.java:2497"
   },
-  "yellow_banner": {
-    "components": {
-      "Wood": 324324000,
-      "Wool": 15567552000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/yellow_banner.json"
-  },
-  "yellow_bed": {
-    "components": {
-      "Wood": 1945944000,
-      "Wool": 7783776000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/yellow_bed.json"
-  },
-  "yellow_candle": {
-    "components": {
-      "WaxBee": 648648000,
-      "Wool": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft honeycomb and string convention"
-  },
-  "yellow_carpet": {
-    "components": {
-      "Wool": 1729728000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "yellow_concrete": {
     "components": {
       "Concrete": 5837832000
@@ -9004,27 +6851,12 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "yellow_dye": {
-    "components": {
-      "DyeMatter": 72072000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "yellow_glazed_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
     "recoverable": true,
     "source": "1.20.1 material family"
-  },
-  "yellow_shulker_box": {
-    "components": {
-      "AnimalShell": 1297296000,
-      "Wood": 5189184000
-    },
-    "recoverable": false,
-    "source": "Minecraft shulker shell and chest"
   },
   "yellow_stained_glass": {
     "components": {
@@ -9046,13 +6878,6 @@
     },
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
-  },
-  "yellow_wool": {
-    "components": {
-      "Wool": 2594592000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "zoglin_spawn_egg": {
     "components": {},

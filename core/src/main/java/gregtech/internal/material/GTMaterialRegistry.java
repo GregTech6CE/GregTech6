@@ -34,7 +34,6 @@ public final class GTMaterialRegistry {
     private static final Map<String, GTMaterial> BY_NAME = new HashMap<>();
     private static final Map<Integer, GTMaterial> BY_ID = new HashMap<>();
     private static final Set<GTMaterial> PERIODIC_TABLE = new HashSet<>();
-    private static final Set<GTMaterial> VANILLA_MATTER = new HashSet<>();
     private static int nextAddonId = ADDON_ID_START;
     private static final Set<GTMaterial> ALL_MATERIALS = new HashSet<>();
 
@@ -159,11 +158,6 @@ public final class GTMaterialRegistry {
         return material != null && PERIODIC_TABLE.contains(material.resolve());
     }
 
-    /** Built-in vanilla-matter material, stamped from the old {@code 7900..7912} rule. */
-    public static boolean isVanillaMatter(GTMaterial material) {
-        return material != null && VANILLA_MATTER.contains(material.resolve());
-    }
-
     private static void stampBuiltinIdentity() {
         for (GTMaterial material : ALL_MATERIALS) {
             GTMaterial canonical = material.resolve();
@@ -171,9 +165,6 @@ public final class GTMaterialRegistry {
             if (canonical.has(MaterialProperty.ELEMENT) && canonical.getId() > 0 && canonical.getId() < 8000
                     && !canonical.has(MaterialProperty.ANTIMATTER)) {
                 PERIODIC_TABLE.add(canonical);
-            }
-            if (canonical.getId() >= 7900 && canonical.getId() <= 7912) {
-                VANILLA_MATTER.add(canonical);
             }
         }
     }
