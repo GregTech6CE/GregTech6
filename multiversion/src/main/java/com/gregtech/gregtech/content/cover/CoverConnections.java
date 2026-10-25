@@ -4,8 +4,7 @@ import net.minecraft.core.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-/** Cover placement and tools share the native connector connection bits.
- * Pressure-valve interception is not yet included in these gates. */
+/** Cover placement and tools share the native connector connection bits. */
 public final class CoverConnections {
     private CoverConnections() {}
 
@@ -17,6 +16,10 @@ public final class CoverConnections {
         if (CoverItems.REDSTONE_TORCH.equals(id) || CoverItems.REDSTONE_REPEATER.equals(id)) return true;
         var owner = host.coverOwner();
         var level = owner.getLevel();
+        if (CoverUtilityBehaviors.PRESSURE_VALVE.equals(id)
+                && owner instanceof com.gregtech.gregtech.blockentity.machine.FluidPipeBlockEntity
+                && level != null
+                && level.getBlockEntity(owner.getBlockPos().relative(side)) instanceof com.gregtech.gregtech.blockentity.machine.FluidPipeBlockEntity) return true;
         return CoverUtilityBehaviors.FILTER_ITEM.equals(id)
                 && owner instanceof com.gregtech.gregtech.blockentity.machine.ItemPipeBlockEntity
                 && level != null

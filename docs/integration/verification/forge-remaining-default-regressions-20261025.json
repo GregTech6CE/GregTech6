@@ -1,0 +1,520 @@
+{
+  "date": "2026-10-25",
+  "base_commit": "5b1ae2a20",
+  "scope": "Nine pending original Forge default-suite records, followed by a fresh complete default-suite run.",
+  "production_change": "MultiblockRecipePack rejects unavailable concrete original ingredients before generic fallback; only four known external stones may omit their 16 unavailable utility rows.",
+  "source_author": "GregTech-6 Team / Gregorius Techneticies",
+  "source_license": "LGPL-3.0-or-later; retained original notices",
+  "sources": [
+    {
+      "path": "../gt6_source_code/gregtech6/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "sha256": "93414ed9510ff0465b062efbfe7775d256100425379a24d3857c437cef7ddc27",
+      "lf_sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393"
+    },
+    {
+      "path": "../gt6_source_code/gregtech6/src/main/java/gregtech/items/MultiItemRandomTools.java",
+      "sha256": "38571694f3284d20a1dc8567f8191d43099b8a242c83c5e2758241b2e9b71e11",
+      "lf_sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d"
+    },
+    {
+      "path": "../gt6_source_code/gregtech6/src/main/java/gregapi/util/CR.java",
+      "sha256": "427090d85d740dab815a5b825c3e06688a40e82b82d18b30920fc1798cd9a4fa",
+      "lf_sha256": "952f94e0dfff66d27d2ac2b97ed47b6aa0c8250aa19babd5cc528c89616c0760"
+    },
+    {
+      "path": "../gt6_source_code/gregtech6/src/main/java/gregapi/block/multitileentity/MultiTileEntityRegistry.java",
+      "sha256": "d7bfa1aa447b6dd7a97bf58b19c7aec85cd5b77b56de2ce1b9444b8e99caf4f9",
+      "lf_sha256": "70fb3ce00e7036e343e253e0f9fd8401b05c3f4f4e16b88f1b3fb94c3b111e83"
+    },
+    {
+      "path": "../gt6_source_code/gregtech6/src/main/java/gregtech/loaders/c/Loader_Recipes_Woods.java",
+      "sha256": "dfeac755d0f9dee083529a994d51fbf4d292e8d505f8285ea39cf01154fc5a18",
+      "lf_sha256": "c91d081abaad62fdda8774873473516d269c7b6da9e8c0cb0fdb1270bd51aa68"
+    },
+    {
+      "path": "../gt6_source_code/gregtech6/src/main/java/gregapi/util/UT.java",
+      "sha256": "3896db5619d5761f69128eac3bdfb1ccfa175018100f2ab9145feb9005340040",
+      "lf_sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709"
+    },
+    {
+      "path": "../gt6_source_code/gregtech6/src/main/java/gregapi/player/EntityFoodTracker.java",
+      "sha256": "d4bc7e63baf3fe9b937eb94390af5c0667204e4b10900ea05239cb06133036fb",
+      "lf_sha256": "550e9511a8753ae4514463e942b84eb0a7f51ec6c5cfbc607ce11f04036dcdad"
+    },
+    {
+      "path": "../gt6_source_code/gregtech6/src/main/java/gregtech/items/MultiItemFood.java",
+      "sha256": "48a73cb10cd1cabbbe1196358b703095ce7fddcd7e643d60137d04f6e3255a22",
+      "lf_sha256": "bc66d27a6428a3d62e3000b6bae4c8b0f1a775dad00d139bff507b201acd6598"
+    },
+    {
+      "path": "../gt6_source_code/gregtech6/src/main/java/gregapi/item/multiitem/food/FoodStat.java",
+      "sha256": "0e98fdeba0fe96f04fe77b8afc3703103573693c58dd88b267ec2d1fcc4cc55a",
+      "lf_sha256": "13bf9e026acb33571344f0a17eb849b8acda18eec0ac75e65bc71383d268f8ad"
+    },
+    {
+      "path": "../gt6_source_code/gregtech6/src/main/java/gregtech/worldgen/tree/WorldgenLogFrozen.java",
+      "sha256": "38413ffc4890b1cb7442165bc9f2a53ee914b73accc132a1c576c341f238325a",
+      "lf_sha256": "1897bc77b1bc98558de7d435fd28f455d6ae32b72a72793c4bc040dd878e804e"
+    },
+    {
+      "path": "../gt6_source_code/gregtech6/src/main/java/gregapi/worldgen/dungeon/DungeonChunkRoomFarmMobs.java",
+      "sha256": "282d205293a4439d8b0babf0e5295e175fb083daeba9329f15f9b181c6daec88",
+      "lf_sha256": "f05d19b8a1a5c01f5a4a5a3aa43d20cce76fe9c9702ea9766bda1d7c85641cff"
+    },
+    {
+      "path": "../gt6_source_code/gregtech6/src/main/java/gregapi/worldgen/dungeon/DungeonChunkCorridor.java",
+      "sha256": "5efb0f282a64ae0fd4a18ed4a01c4058dd162cffae5c570fd1e13d1006788557",
+      "lf_sha256": "f8b8a542c57f0b1400017b48dc72a88af81fec981a8db0ba13c4fdb0d263f415"
+    },
+    {
+      "path": "../gt6_source_code/gregtech6/src/main/java/gregapi/worldgen/dungeon/DungeonData.java",
+      "sha256": "3af0103b8b562304262d05a210702c4e9c0687b0cba376fe417ac68228859398",
+      "lf_sha256": "c4e55b5bb9a4c2e7461fd48972098e7d12ad06f6edeb544470ddffb40bc65946"
+    },
+    {
+      "path": "../gt6_source_code/gregtech6/src/main/java/gregapi/worldgen/dungeon/DungeonChunkRoomPortalNether.java",
+      "sha256": "4c40545f962d817e755f6abfd2490e48b43db7c358b35bf1db03471637faeb04",
+      "lf_sha256": "aae845b6a0de9e6e96312d57328553016a08105eae24f3f11e3a7d410068ee94"
+    },
+    {
+      "path": "../gt6_source_code/gregtech6/src/main/java/gregtech/loaders/b/Loader_Books.java",
+      "sha256": "0df26142d54090dc7c3bb7e93323b32d6043acf06d360b8de96d7a69decdddf6",
+      "lf_sha256": "a4a79476ee1a757d478ad2ed100c862e8501b056dc87fae4b75413a7df622d79"
+    },
+    {
+      "path": "../gt6_source_code/gregtech6/src/main/java/gregtech/tileentity/tools/MultiTileEntityBumbliary.java",
+      "sha256": "48a7526663bec7943aa7b62e40305ad044298dd19516c9ab97daa99ac1f88202",
+      "lf_sha256": "72bd7595c28b4859d82e6196e0e355655fac40de671171d8f71c6c009d452840"
+    }
+  ],
+  "findings": [
+    "MachineRecipeIngredients substitutions are global across packs. They were caused by missing concrete external stone inputs of OriginalSurvivalRecipes, not a basic-machine recipe gap.",
+    "Loader_MultiTileEntities:306-309,353-356,400-403,447-450 uses OP.stone.dat(aMat) and hides those items when corresponding external mods are absent. Original CR.shaped:371-405 preserves an unavailable ore-dictionary ingredient instead of substituting iron; the recipe cannot match. Modern adaptation omits the 16 unavailable rows. This is not a claim that the original CR directly skips missing ore entries.",
+    "MultiblockRecipePack now validates all concrete original survival/utility inputs before generic ingredient resolution. Only four explicit unavailable external-stone IDs can omit a row; any other absent concrete input throws. No new stone identities/material fallback are invented.",
+    "BasicMachineCraftingTests retains strict empty substitutions and checks all 16 conditional row-presence mappings plus real minecraft:stone in the four native utility recipes.",
+    "Original Loader_MultiTileEntities:2046-2078 explicitly uses DEF_REV_NCC_MIR for colored and wood decorative panels. MultiItemRandomTools:395/398 explicitly uses DEF_NCC_MIR for both early fire starters. Loader_Recipes_Woods:270 explicitly uses DEF_NCC_MIR for Blue Spruce slab.",
+    "HandCraftingTests now pins the complete source opt-in set: 78 canonical panel recipes plus fire_starter, fire_starter_2 and slab_bluespruce. Runtime VanillaCraftingRecipePack contributes 11 gt6ce-namespace wood saw rows, each required to have width 1, so reflecting them does not change the pattern. No unexpected mirror flag is allowed; missing opt-ins fail too.",
+    "Creative mocks are correctly radiation-immune. Exposure tests use real survival mocks; all 24/25/50/75/100+ symptoms, overflow, NBT and clone checks remain. Radaway uses native item use/player ticks and Forge Finish dispatch; doses 100->50->0 and counts 2->1->empty are checked at full hunger.",
+    "SurfaceFlora uses string biome keys. Dungeon wet ceilings use fixed brown glow-glass identity for source theme 3. Portal slot22 is the green-cover hunting manual, checked for count, identity and complete contents.",
+    "The mob-platform proxy permits only writes and WATER/5-tick scheduling, verifies local chunk ownership, existing water sources and exactly16 unique schedules; complete maps and scheduling sets must match in forward and reverse chunk order.",
+    "Queen-death tests follow original :137: an empty main drone slot is skipped; an incompatible item remains; compatible parked drones merge only exact matching children. Three natural breeding cycles check every offspring identity/genome/count exactly once, first highest-aggression princess promotion, pending brood clearing, and old corpse clearing with exact queen-corpse NBT. Parents have different lifespan/aggression genomes to distinguish the corpses."
+  ],
+  "optional_rows": [
+    {
+      "recipe": "gt6ce:survival_repairs/crucible_faucet_umber",
+      "input": "gt6ce:stone_umber_stone"
+    },
+    {
+      "recipe": "gt6ce:survival_repairs/crucible_faucet_livingrock",
+      "input": "gt6ce:stone_livingrock_stone"
+    },
+    {
+      "recipe": "gt6ce:survival_repairs/crucible_faucet_holystone",
+      "input": "gt6ce:stone_holystone_stone"
+    },
+    {
+      "recipe": "gt6ce:survival_repairs/crucible_faucet_betweenstone",
+      "input": "gt6ce:stone_betweenstone_stone"
+    },
+    {
+      "recipe": "gt6ce:survival_repairs/mold_umber",
+      "input": "gt6ce:stone_umber_stone"
+    },
+    {
+      "recipe": "gt6ce:survival_repairs/mold_livingrock",
+      "input": "gt6ce:stone_livingrock_stone"
+    },
+    {
+      "recipe": "gt6ce:survival_repairs/mold_holystone",
+      "input": "gt6ce:stone_holystone_stone"
+    },
+    {
+      "recipe": "gt6ce:survival_repairs/mold_betweenstone",
+      "input": "gt6ce:stone_betweenstone_stone"
+    },
+    {
+      "recipe": "gt6ce:survival_repairs/mold_basin_umber",
+      "input": "gt6ce:stone_umber_stone"
+    },
+    {
+      "recipe": "gt6ce:survival_repairs/mold_basin_livingrock",
+      "input": "gt6ce:stone_livingrock_stone"
+    },
+    {
+      "recipe": "gt6ce:survival_repairs/mold_basin_holystone",
+      "input": "gt6ce:stone_holystone_stone"
+    },
+    {
+      "recipe": "gt6ce:survival_repairs/mold_basin_betweenstone",
+      "input": "gt6ce:stone_betweenstone_stone"
+    },
+    {
+      "recipe": "gt6ce:survival_repairs/crucible_crossing_umber",
+      "input": "gt6ce:stone_umber_stone"
+    },
+    {
+      "recipe": "gt6ce:survival_repairs/crucible_crossing_livingrock",
+      "input": "gt6ce:stone_livingrock_stone"
+    },
+    {
+      "recipe": "gt6ce:survival_repairs/crucible_crossing_holystone",
+      "input": "gt6ce:stone_holystone_stone"
+    },
+    {
+      "recipe": "gt6ce:survival_repairs/crucible_crossing_betweenstone",
+      "input": "gt6ce:stone_betweenstone_stone"
+    }
+  ],
+  "attempts": [
+    {
+      "xml": "work/forge-remaining-baseline.xml",
+      "xml_sha256": "b1ed16993b7661159bf59e656dc554d0a4731ad8371bc733508e13b6c2e37932",
+      "log": "work/forge-remaining-baseline.log",
+      "log_sha256": "c69fe346f60b7ee88ea355e45e858dd83e99bf787fbe5b0752b0c80bdbb601e8",
+      "total": 9,
+      "passed": 0,
+      "gradle_summary": [
+        "BUILD FAILED in 5m 59s"
+      ],
+      "cases": [
+        {
+          "classname": "gt6ce_forge_remaining:test_blueprint_large",
+          "name": "tablesmatchgt6",
+          "time": "0.89",
+          "passed": false,
+          "failure": {
+            "message": "the frozen log is GT6's BIOMES_FROZEN entry"
+          },
+          "error": null
+        },
+        {
+          "classname": "gt6ce_forge_remaining:test_blueprint_large",
+          "name": "queendeathhandsoutthebroodandpromotesaprincess",
+          "time": "0.91",
+          "passed": false,
+          "failure": {
+            "message": "the main drone slot is filled first (:137)"
+          },
+          "error": null
+        },
+        {
+          "classname": "gt6ce_forge_remaining:test_blueprint_large",
+          "name": "playerradiationaccumulatesandpersists",
+          "time": "0.907",
+          "passed": false,
+          "failure": {
+            "message": "below 25 has no radiation symptom"
+          },
+          "error": null
+        },
+        {
+          "classname": "gt6ce_forge_remaining:test_blueprint_large",
+          "name": "radiationsuitandmedicine",
+          "time": "0.892",
+          "passed": false,
+          "failure": {
+            "message": "missing one piece removes protection"
+          },
+          "error": null
+        },
+        {
+          "classname": "gt6ce_forge_remaining:test_blueprint_large",
+          "name": "dungeoncelldispatchmatchesgt6",
+          "time": "2.33",
+          "passed": false,
+          "failure": {
+            "message": "liquid above an ordinary ceiling column selects glowing glass"
+          },
+          "error": null
+        },
+        {
+          "classname": "gt6ce_forge_remaining:test_blueprint_large",
+          "name": "toolshapedrecipesdonotmirrorunlesstheoriginaldid",
+          "time": "4.717",
+          "passed": false,
+          "failure": {
+            "message": "only the GT6 CR.DEF_NCC_MIR Blue Spruce slab row mirrors: [gt6ce:decorative_panels/panel_wood_warped, gt6ce:decorative_panels/panel_wood, gt6ce:decorative_panels/panel_concrete_orange, gt6ce:decorative_panels/panel_cfoam_magenta, gt6ce:decorative_panels/panel_concrete_green, gt6ce:decorative_panels/panel_cfoam_blue, gt6ce:decorative_panels/panel_concrete_white, gt6ce:decorative_panels/panel_asphalt_white, gt6ce:decorative_panels/panel_asphalt_brown, gt6ce:decorative_panels/panel_wood_birch, gt6ce:decorative_panels/panel_wood_pine, gt6ce:decorative_panels/panel_concrete_magenta, gt6ce:vanilla/stick_saw, gt6ce:decorative_panels/panel_cfoam_yellow, gt6ce:decorative_panels/panel_wood_spruce, gt6ce:decorative_panels/panel_concrete_brown, gt6ce:decorative_panels/panel_asphalt_red, gt6ce:decorative_panels/panel_concrete_light_gray, gt6ce:decorative_panels/panel_asphalt_yellow, gt6ce:decorative_panels/panel_asphalt_lime, gt6ce:decorative_panels/panel_concrete_lime, gt6ce:decorative_panels/panel_asphalt_cyan, gt6ce:vanilla/warped_planks_saw, gt6ce:decorative_panels/panel_cfoam_red, gt6ce:decorative_panels/panel_cfoam_light_gray, gt6ce:decorative_panels/panel_cfoam_black, gt6ce:vanilla/acacia_planks_saw, gt6ce:decorative_panels/panel_cfoam_brown, gt6ce:technology/fire_starter_2, gt6ce:decorative_panels/panel_cfoam_cyan, gt6ce:decorative_panels/panel_wood_dark_oak, gt6ce:vanilla/dark_oak_planks_saw, gt6ce:decorative_panels/panel_wood_jungle, gt6ce:decorative_panels/panel_wood_hazel, gt6ce:decorative_panels/panel_asphalt_magenta, gt6ce:decorative_panels/panel_wood_ebony, gt6ce:decorative_panels/panel_concrete_yellow, gt6ce:decorative_panels/panel_wood_bluespruce, gt6ce:decorative_panels/panel_concrete_purple, gt6ce:vanilla/jungle_planks_saw, gt6ce:vanilla/cherry_planks_saw, gt6ce:decorative_panels/panel_cfoam_lime, gt6ce:decorative_panels/panel_cfoam_orange, gt6ce:decorative_panels/panel_wood_frozen, gt6ce:decorative_panels/panel_wood_bamboo, gt6ce:decorative_panels/panel_wood_willow, gt6ce:technology/fire_starter, gt6ce:vanilla/mangrove_planks_saw, gt6ce:decorative_panels/panel_wood_maple, gt6ce:decorative_panels/panel_cfoam_pink, gt6ce:decorative_panels/panel_cfoam_green, gt6ce:decorative_panels/panel_cfoam_gray, gt6ce:decorative_panels/panel_wood_dry, gt6ce:decorative_panels/panel_cfoam_purple, gt6ce:decorative_panels/panel_wood_crimson, gt6ce:decorative_panels/panel_wood_rotten, gt6ce:decorative_panels/panel_asphalt_black, gt6ce:decorative_panels/panel_wood_acacia, gt6ce:decorative_panels/panel_asphalt_light_gray, gt6ce:vanilla/spruce_planks_saw, gt6ce:decorative_panels/panel_wood_cherry, gt6ce:decorative_panels/panel_wood_rainbowood, gt6ce:wood/slab_bluespruce, gt6ce:decorative_panels/panel_asphalt_purple, gt6ce:decorative_panels/panel_wood_cinnamon, gt6ce:decorative_panels/panel_asphalt_pink, gt6ce:vanilla/oak_planks_saw, gt6ce:decorative_panels/panel_concrete_light_blue, gt6ce:decorative_panels/panel_wood_treated, gt6ce:vanilla/crimson_planks_saw, gt6ce:decorative_panels/panel_wood_mossy, gt6ce:decorative_panels/panel_asphalt_orange, gt6ce:decorative_panels/panel_concrete_red, gt6ce:decorative_panels/panel_wood_white_mahoe, gt6ce:decorative_panels/panel_asphalt_gray, gt6ce:decorative_panels/panel_wood_coconut, gt6ce:decorative_panels/panel_asphalt_green, gt6ce:decorative_panels/panel_asphalt_light_blue, gt6ce:decorative_panels/panel_concrete_pink, gt6ce:decorative_panels/panel_concrete_black, gt6ce:decorative_panels/panel_wood_rubber, gt6ce:decorative_panels/panel_wood_compressed, gt6ce:decorative_panels/panel_concrete_gray, gt6ce:decorative_panels/panel_cfoam_light_blue, gt6ce:decorative_panels/panel_concrete_cyan, gt6ce:vanilla/birch_planks_saw, gt6ce:decorative_panels/panel_concrete_blue, gt6ce:decorative_panels/panel_wood_mangrove, gt6ce:decorative_panels/panel_asphalt_blue, gt6ce:decorative_panels/panel_wood_blue_mahoe, gt6ce:decorative_panels/panel_wood_wood, gt6ce:decorative_panels/panel_cfoam_white]"
+          },
+          "error": null
+        },
+        {
+          "classname": "gt6ce_forge_remaining:test_blueprint_large",
+          "name": "substitutionsarereported",
+          "time": "4.708",
+          "passed": false,
+          "failure": {
+            "message": "machine crafting ingredient substitutions changed (see docs/machine-crafting-substitutions.json): {item gt6ce:stone_holystone_stone=machine casing block, block casingMachine of Holystone=machine casing block, block casingMachine of Livingrock=machine casing block, block casingMachine of Betweenstone=machine casing block, item gt6ce:stone_livingrock_stone=machine casing block, item gt6ce:stone_betweenstone_stone=machine casing block, item gt6ce:stone_umber_stone=machine casing block, block casingMachine of Umber=machine casing block}"
+          },
+          "error": null
+        },
+        {
+          "classname": "gt6ce_forge_remaining:test_blueprint_large",
+          "name": "targetchunkownseveryplatformandpipewriteineitherorder",
+          "time": "4.717",
+          "passed": false,
+          "failure": {
+            "message": "java.lang.AssertionError: mob-farm platform unexpectedly read scheduleTick"
+          },
+          "error": null
+        },
+        {
+          "classname": "gt6ce_forge_remaining:test_blueprint_large",
+          "name": "netherportalroombuildsgt6frame",
+          "time": "12.975",
+          "passed": false,
+          "failure": {
+            "message": "slot 22 holds GT6's hunting guide"
+          },
+          "error": null
+        }
+      ]
+    },
+    {
+      "xml": "work/forge-remaining-focused.xml",
+      "xml_sha256": "882796f856689d253ff689d9ad1075768d7308f1a5967516be858d9b86073138",
+      "log": "work/forge-remaining-focused.log",
+      "log_sha256": "fb96048d27e04ceede85c07f2087a1b03a6e4e0ea910d25567738c30cd260234",
+      "total": 9,
+      "passed": 9,
+      "gradle_summary": [
+        "BUILD SUCCESSFUL in 11m 2s"
+      ],
+      "cases": [
+        {
+          "classname": "gt6ce_forge_remaining:test_blueprint_large",
+          "name": "tablesmatchgt6",
+          "time": "0.411",
+          "passed": true,
+          "failure": null,
+          "error": null
+        },
+        {
+          "classname": "gt6ce_forge_remaining:test_blueprint_large",
+          "name": "queendeathhandsoutthebroodandpromotesaprincess",
+          "time": "0.431",
+          "passed": true,
+          "failure": null,
+          "error": null
+        },
+        {
+          "classname": "gt6ce_forge_remaining:test_blueprint_large",
+          "name": "playerradiationaccumulatesandpersists",
+          "time": "0.443",
+          "passed": true,
+          "failure": null,
+          "error": null
+        },
+        {
+          "classname": "gt6ce_forge_remaining:test_blueprint_large",
+          "name": "radiationsuitandmedicine",
+          "time": "0.468",
+          "passed": true,
+          "failure": null,
+          "error": null
+        },
+        {
+          "classname": "gt6ce_forge_remaining:test_blueprint_large",
+          "name": "dungeoncelldispatchmatchesgt6",
+          "time": "2.32",
+          "passed": true,
+          "failure": null,
+          "error": null
+        },
+        {
+          "classname": "gt6ce_forge_remaining:test_blueprint_large",
+          "name": "toolshapedrecipesdonotmirrorunlesstheoriginaldid",
+          "time": "4.087",
+          "passed": true,
+          "failure": null,
+          "error": null
+        },
+        {
+          "classname": "gt6ce_forge_remaining:test_blueprint_large",
+          "name": "substitutionsarereported",
+          "time": "4.067",
+          "passed": true,
+          "failure": null,
+          "error": null
+        },
+        {
+          "classname": "gt6ce_forge_remaining:test_blueprint_large",
+          "name": "targetchunkownseveryplatformandpipewriteineitherorder",
+          "time": "4.111",
+          "passed": true,
+          "failure": null,
+          "error": null
+        },
+        {
+          "classname": "gt6ce_forge_remaining:test_blueprint_large",
+          "name": "netherportalroombuildsgt6frame",
+          "time": "13.586",
+          "passed": true,
+          "failure": null,
+          "error": null
+        }
+      ]
+    }
+  ],
+  "default_suite": {
+    "xml": "work/forge-remaining-default.xml",
+    "xml_sha256": "7d8f1f0a7b44e35cb5e390851a8cc2250e110e91c30ce961643e2ac5024c849e",
+    "log": "work/forge-remaining-default.log",
+    "log_sha256": "5cf9e48133b79ec622cdf8099677c149f264b06532ce2a82b529116ac65644dc",
+    "total": 1045,
+    "passed": 1045,
+    "gradle_summary": [
+      "BUILD SUCCESSFUL in 19m 39s"
+    ],
+    "cases": [
+      {
+        "classname": "gt6ce:test_empty",
+        "name": "substitutionsarereported",
+        "time": "120.842",
+        "passed": true,
+        "failure": null,
+        "error": null
+      },
+      {
+        "classname": "gt6ce:test_blueprint_empty",
+        "name": "toolshapedrecipesdonotmirrorunlesstheoriginaldid",
+        "time": "30.222",
+        "passed": true,
+        "failure": null,
+        "error": null
+      },
+      {
+        "classname": "gt6ce:test_empty",
+        "name": "playerradiationaccumulatesandpersists",
+        "time": "12.018",
+        "passed": true,
+        "failure": null,
+        "error": null
+      },
+      {
+        "classname": "gregtech_repair:test_empty",
+        "name": "targetchunkownseveryplatformandpipewriteineitherorder",
+        "time": "17.031",
+        "passed": true,
+        "failure": null,
+        "error": null
+      },
+      {
+        "classname": "gt6ce:test_empty",
+        "name": "tablesmatchgt6",
+        "time": "25.174",
+        "passed": true,
+        "failure": null,
+        "error": null
+      },
+      {
+        "classname": "gt6ce:test_empty",
+        "name": "dungeoncelldispatchmatchesgt6",
+        "time": "26.008",
+        "passed": true,
+        "failure": null,
+        "error": null
+      },
+      {
+        "classname": "gt6ce:test_empty",
+        "name": "radiationsuitandmedicine",
+        "time": "1.931",
+        "passed": true,
+        "failure": null,
+        "error": null
+      },
+      {
+        "classname": "gt6ce:test_empty",
+        "name": "netherportalroombuildsgt6frame",
+        "time": "43.306",
+        "passed": true,
+        "failure": null,
+        "error": null
+      },
+      {
+        "classname": "gt6ce:test_empty",
+        "name": "queendeathhandsoutthebroodandpromotesaprincess",
+        "time": "43.517",
+        "passed": true,
+        "failure": null,
+        "error": null
+      }
+    ],
+    "case_listing": "Only the nine selected cases and any failures are embedded; XML hash covers all cases.",
+    "namespaces": [
+      "gt6ce",
+      "gregtech_repair"
+    ],
+    "explicit_namespace_override": false
+  },
+  "compile_validation": "Forge main and bootstrapGameTest compilation plus NeoForge main compilation in the focused invocation; final Gradle success is required.",
+  "files": [
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/data/MultiblockRecipePack.java",
+      "sha256": "cfbbe783ba530f1431e9c162e9f65810c545ef8c8b98dd1ec74bb4772c078bce"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BasicMachineCraftingTests.java",
+      "sha256": "835881fd08b2f411c5dbaf0722a678f6cb7ebd51af384b48614cc462296d3768"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BumbliaryTests.java",
+      "sha256": "45a3c8b7be4e585a061ac22dba69c3afaddeb77e1e9e7bf3ddcdd23b48fbf4a5"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DungeonKeysAndPortalsTests.java",
+      "sha256": "04d9594205c76603648385f081cf2fc5d50dac97f573aebcbf3f080bf9cc1809"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DungeonMobFarmOuterTests.java",
+      "sha256": "4195a35fd500a875c8808a13cace271eee3e1e030f52f3985571913de4455e10"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DungeonTests.java",
+      "sha256": "fe814be10df46ed1351027e5b79f9075af274b134236ab2acb23c5046c8bdb46"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/HandCraftingTests.java",
+      "sha256": "d78ae9b7c66049bf6a949bc16382c956eef1ead2cd736f0c3c18dd0d2202cfac"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/NuclearSurvivalTests.java",
+      "sha256": "54e6c63822051d20de9dc8bede27aa3a64f178612e1325f51c53c2f29930a863"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/SurfaceFloraTests.java",
+      "sha256": "368730603506866a72a3f6244a51e44411fbb0fa7cc9a74f0afba27f22b132f0"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ForgeRemainingRegressionTests.java",
+      "sha256": "fd0a460446ac888b9e424e8f74a4ee05e55c77a0c4efc56caa5f390477aeb08a"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/resources/data/gt6ce_forge_remaining/structures/test_blueprint_large.nbt",
+      "sha256": "c8fffeda1e10a4dc652fff0d398bcf67bf7eaf92ec2fc25ae868ea934c86be0d"
+    }
+  ],
+  "runners": [
+    {
+      "path": "work/run-forge-remaining-baseline.ps1",
+      "sha256": "3952396d414155b0d5ac7ae44aff12d02135800e182504d0db3a4acbb88bca95",
+      "command": "$ErrorActionPreference = 'Stop'\n$env:JAVA_HOME = 'C:/Users/T14/.gradle/jdks/eclipse_adoptium-17-amd64-windows/jdk-17.0.20.1+1'\n$env:JAVA17_HOME = $env:JAVA_HOME\n$env:JAVA21_HOME = 'C:/Program Files/Eclipse Adoptium/jdk-21.0.12.8-hotspot'\n$env:GRADLE_USER_HOME = 'C:/Users/T14/.gradle'\nSet-Location (Split-Path -Parent $PSScriptRoot)\n$ErrorActionPreference = 'Continue'\n& ./gradlew.bat --console=plain '-PaddonSample=true' '-PgameTestNamespaces=gt6ce_forge_remaining' '-PgameTestHeap=6g' '-PgameTestJvmArgs=-XX:+UseSerialGC' '-PgameTestDirectory=../../../work/forge-remaining-baseline' '-PgameTestReport=../../../work/forge-remaining-baseline.xml' :multiversion:1.20.1-forge:runGameTestServer *> work/forge-remaining-baseline.log\n$result = $LASTEXITCODE\nGet-Content work/forge-remaining-baseline.log -Tail 35\nexit $result\n\n\n\n"
+    },
+    {
+      "path": "work/run-forge-remaining-fixed.ps1",
+      "sha256": "9831672036c0371fe2ac0a0e7fcda7c6ea97aff436b780dd1ad6fbcf7cf3948f",
+      "command": "param([ValidateSet('focused','default')][string]$Mode = 'focused')\n$ErrorActionPreference = 'Stop'\n$env:JAVA_HOME = 'C:/Users/T14/.gradle/jdks/eclipse_adoptium-17-amd64-windows/jdk-17.0.20.1+1'\n$env:JAVA17_HOME = $env:JAVA_HOME\n$env:JAVA21_HOME = 'C:/Program Files/Eclipse Adoptium/jdk-21.0.12.8-hotspot'\n$env:GRADLE_USER_HOME = 'C:/Users/T14/.gradle'\nSet-Location (Split-Path -Parent $PSScriptRoot)\n$arguments = @('--console=plain', '-PaddonSample=true', '-PgameTestHeap=6g', '-PgameTestJvmArgs=-XX:+UseSerialGC',\n    \"-PgameTestDirectory=../../../work/forge-remaining-$Mode\", \"-PgameTestReport=../../../work/forge-remaining-$Mode.xml\")\nif ($Mode -eq 'focused') { $arguments += '-PgameTestNamespaces=gt6ce_forge_remaining' }\n$arguments += ':multiversion:1.20.1-forge:runGameTestServer'\nif ($Mode -eq 'focused') { $arguments += ':multiversion:1.21.1-neoforge:compileJava' }\n$ErrorActionPreference = 'Continue'\n& ./gradlew.bat @arguments *> \"work/forge-remaining-$Mode.log\"\n$result = $LASTEXITCODE\nGet-Content \"work/forge-remaining-$Mode.log\" -Tail 35\nexit $result\n"
+    }
+  ],
+  "generated_reports": {
+    "backup": "work/remaining-report-backup",
+    "baseline_manifest": "work/remaining-generated/baseline-manifest.json",
+    "final_manifest": "work/remaining-generated/final-manifest.json",
+    "restored": true
+  },
+  "limits": [
+    "NeoForge game suite not rerun in this batch; shared main code compiled only.",
+    "Default Forge suite covers the configured two namespaces, not all opt-in regression namespaces.",
+    "Native server tests do not establish client play, complete survival chains, historical-save compatibility or independent JVM saved-world restart.",
+    "Overall integration remains incomplete."
+  ]
+}

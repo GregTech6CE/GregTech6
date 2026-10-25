@@ -89,11 +89,20 @@ public final class DungeonKeysAndPortalsTests {
             "Iron Key", "Lead Key", "Plastic Key", "Platinum Key", "Silver Key", "Tin Key"};
 
     private static JsonObject lang(String language) throws Exception {
-        try (InputStream stream = DungeonKeysAndPortalsTests.class.getClassLoader()
-                .getResourceAsStream("assets/gt6ce/lang/" + language + ".json")) {
-            if (stream == null) throw new IllegalStateException("missing " + language + " language file");
-            return GsonHelper.parse(new InputStreamReader(stream, StandardCharsets.UTF_8));
+        // An addon may contribute another fragment at the same language path.
+        var resources = DungeonKeysAndPortalsTests.class.getClassLoader()
+                .getResources("assets/gt6ce/lang/" + language + ".json");
+        JsonObject merged = new JsonObject();
+        boolean found = false;
+        while (resources.hasMoreElements()) {
+            found = true;
+            try (InputStream stream = resources.nextElement().openStream()) {
+                GsonHelper.parse(new InputStreamReader(stream, StandardCharsets.UTF_8))
+                        .entrySet().forEach(entry -> merged.add(entry.getKey(), entry.getValue()));
+            }
         }
+        if (!found) throw new IllegalStateException("missing " + language + " language resources");
+        return merged;
     }
 
     /** One of the suite's own sites, 32 blocks apart inside the reserved area (class javadoc). */
@@ -205,7 +214,7 @@ public final class DungeonKeysAndPortalsTests {
         JsonObject english = lang("en_us");
         JsonObject chinese = lang("zh_cn");
         for (int index = 0; index < KEY_MATERIALS.length; index++) {
-            String id = "key_" + KEY_MATERIALS[index];
+            String id = KEY_MATERIALS[index] + "_key";
             String name = KEY_NAMES[index];
             var item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
             if (item == null || item == Items.AIR) {
@@ -215,7 +224,7 @@ public final class DungeonKeysAndPortalsTests {
             check(problems, item instanceof GTDungeonKeyItem, id + " is not a dungeon key item");
             check(problems, english.has("item.gt6ce." + id), "en_us has no name for " + id);
             check(problems, chinese.has("item.gt6ce." + id), "zh_cn has no name for " + id);
-            check(problems, name.equals(english.get("item.gt6ce." + id).getAsString()),
+            if (english.has("item.gt6ce." + id)) check(problems, name.equals(english.get("item.gt6ce." + id).getAsString()),
                     id + " is not GT6's " + name);
             check(problems, new ItemStack(item).getHoverName().getString().equals(name),
                     id + " does not name itself " + name);
@@ -251,8 +260,8 @@ public final class DungeonKeysAndPortalsTests {
         List<String> problems = new ArrayList<>();
         ClassLoader loader = DungeonKeysAndPortalsTests.class.getClassLoader();
         for (String material : KEY_MATERIALS) {
-            for (String asset : new String[]{"models/item/key_" + material + ".json",
-                    "textures/item/key_" + material + ".png"}) {
+            for (String asset : new String[]{"models/item/" + material + "_key.json",
+                    "textures/item/randomtools/" + material + "_key.png"}) {
                 if (loader.getResource("assets/gt6ce/" + asset) == null) problems.add("missing " + asset);
             }
         }
@@ -410,8 +419,13 @@ public final class DungeonKeysAndPortalsTests {
             check(problems, inventory.getStackInSlot(15).is(Blocks.GLOWSTONE.asItem())
                             && inventory.getStackInSlot(15).getCount() == 16,
                     "slot 15 holds GT6's 16 glowstone");
-            check(problems, inventory.getStackInSlot(22).is(Items.WRITTEN_BOOK),
-                    "slot 22 holds GT6's hunting guide");
+            ItemStack guide = inventory.getStackInSlot(22);
+            ItemStack expectedGuide = com.gregtech.gregtech.content.book.GTBooks.bookStack("Manual_Hunting_Blaze");
+            // Loader_Books creates this manual on ItemsGT.BOOKS meta 3, the small green cover.
+            check(problems, guide.is(ForgeRegistries.ITEMS.getValue(
+                            ResourceLocation.fromNamespaceAndPath("gt6ce", "book_green")))
+                            && guide.getCount() == 1 && ItemStack.isSameItemSameTags(guide, expectedGuide),
+                    "slot 22 holds one GT6 Blaze/Ghast hunting guide with its source cover and full written content");
             check(problems, inventory.getStackInSlot(29).is(Items.GHAST_TEAR)
                             && inventory.getStackInSlot(29).getCount() == 4,
                     "slot 29 holds GT6's four ghast tears");
@@ -507,7 +521,7 @@ public final class DungeonKeysAndPortalsTests {
         ServerLevel level = helper.getLevel();
         Block block = GTDungeonBlocks.PORTAL_NETHER.get();
         DungeonPortalBlockEntity portal = placePortal(level, pos, block, TEST_KEY);
-        Player player = helper.makeMockPlayer();
+        Player player = ToolInteractionActors.survival(helper,pos);
         player.getAbilities().instabuild = false;
         List<String> problems = new ArrayList<>();
         player.setItemInHand(InteractionHand.MAIN_HAND, GTDungeonKeyItem.key(GTDungeonKeys.byIndex(1), TEST_KEY, 0));
@@ -562,6 +576,7 @@ public final class DungeonKeysAndPortalsTests {
         helper.assertTrue(handler.insertItem(0, diamond, true).isEmpty() && handler.getStackInSlot(0).isEmpty(), "simulation does not mutate remote inventory");
         helper.assertTrue(handler.insertItem(0, diamond, false).isEmpty() && handler.getStackInSlot(0).getCount() == 3, "real insertion reaches the remote inventory");
         helper.assertTrue(handler.extractItem(0, 2, false).getCount() == 2 && handler.getStackInSlot(0).getCount() == 1, "remote extraction preserves counts");
+        helper.assertTrue(diamond.getCount() == 3, "remote storage owns its copy: later extraction cannot mutate the caller's offered stack");
         BlockPos localChest = origin.east();
         world.getChunkAt(localChest);
         world.setBlock(localChest, Blocks.CHEST.defaultBlockState(), 3);

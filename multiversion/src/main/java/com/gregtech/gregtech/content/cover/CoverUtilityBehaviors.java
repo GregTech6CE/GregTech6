@@ -2,7 +2,6 @@ package com.gregtech.gregtech.content.cover;
 
 import com.gregtech.gregtech.api.fluid.FluidHazards;
 import com.gregtech.gregtech.api.fluid.FluidTankGT;
-import com.gregtech.gregtech.content.logistics.FilterRules;
 import com.gregtech.gregtech.registry.GTFluids;
 import com.gregtech.gregtech.util.GTEntityHelper;
 import net.minecraft.core.BlockPos;
@@ -164,10 +163,10 @@ public final class CoverUtilityBehaviors {
     /**
      * Current adjacent-inventory pull into the supplied host handler. GT6 instead searched
      * the pipe network and delivered to the inventory facing the cover. The direction,
-     * empty-filter semantics, repeated-stack selection and pipe accounting still differ.
+     * repeated-stack selection and pipe accounting still differ.
      *
      * @param target the port's receiving handler (the host's own slots)
-     * @param filter the stored item template; current matching uses logistics FilterRules
+     * @param filter source ItemStackSet semantics: item/metadata (including wildcard), ignoring extra NBT
      * @param blacklist inverted-filter mode
      * @param tickCounter host-local cover clock
      * @param pending requests an attempt outside the periodic phase; callers clear it on success
@@ -196,7 +195,12 @@ public final class CoverUtilityBehaviors {
         for (int slot = 0; slot < source.getSlots() && budget > 0; slot++) {
             ItemStack stack = source.getStackInSlot(slot);
             if (stack.isEmpty()) continue;
-            if (!filterPermits(present, blacklist, false, FilterRules.itemMatches(filter, stack))) continue;
+            // CoverRetrieverItem passes a null filter set when no template is installed.
+            // ST.move/ItemStackSet match item and metadata, never the logistics NBT policy.
+            if (present && !filterPermits(true, blacklist, false,
+                    filter.getItem() == stack.getItem()
+                            && (filter.getDamageValue() == Short.MAX_VALUE
+                            || filter.getDamageValue() == stack.getDamageValue()))) continue;
             ItemStack simulated = source.extractItem(slot, Math.min(budget, stack.getCount()), true);
             if (simulated.isEmpty()) continue;
             int accepted = simulated.getCount() - insert(target, simulated.copy(), true).getCount();
@@ -527,8 +531,8 @@ public final class CoverUtilityBehaviors {
      * the host's cover counter, not its full entity lifetime.</p>
      *
      * <p>GT6 disconnects the covered side on each eligible tick, even before testing
-     * fullness. Neither this helper nor its current caller performs that disconnect.
-     * Keep this connection-state difference separate from the release decision.</p>
+     * fullness. The fluid-pipe caller performs that disconnect before invoking this
+     * release decision, including when its tank is empty.</p>
      *
      * @param tank        the tank that is released when full
      * @param tickCounter the owner's cover tick counter, standing in for GT6's {@code aTimer}

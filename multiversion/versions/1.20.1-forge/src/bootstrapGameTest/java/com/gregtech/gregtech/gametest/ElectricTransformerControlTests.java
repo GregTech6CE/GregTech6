@@ -59,7 +59,7 @@ public final class ElectricTransformerControlTests {
         var copy=new EnergyNodeBlockEntity(a.getBlockPos(),a.getBlockState());copy.load(a.saveWithoutMetadata());
         h.assertTrue(!copy.machineControl(Direction.NORTH).enabled()&&copy.machineControl(Direction.NORTH).mode()==12,"mode and stop persist");h.succeed();
     }
-    @GameTest(template="test_empty")
+    @GameTest(template="harvest_empty")
     public static void directSelectorAndStatusPanelsPersistAndDrop(GameTestHelper h){
         var b=place(h,new BlockPos(2,2,2),Direction.NORTH);
         h.assertTrue(b.attachCover(Direction.NORTH,panel(PanelCover.BUTTONS))&&b.attachCover(Direction.SOUTH,panel(PanelCover.STATUS)),"original control panels attach to transformer");
@@ -68,8 +68,6 @@ public final class ElectricTransformerControlTests {
         var copy=new EnergyNodeBlockEntity(b.getBlockPos(),b.getBlockState());copy.load(b.getUpdateTag());
         h.assertTrue(PanelCover.of(copy.getCover(Direction.NORTH))==PanelCover.BUTTONS&&copy.machineControl(Direction.NORTH).mode()==5,"update NBT contains panel and mode");
         b.removeCover(Direction.NORTH);h.assertTrue(b.machineControl(Direction.NORTH).mode()==0,"removing selector resets mode");
-        var pos=b.getBlockPos();h.getLevel().destroyBlock(pos,true);
-        var drops=h.getLevel().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new AABB(pos).inflate(.8));
-        h.assertTrue(drops.stream().filter(e->PanelCover.of(e.getItem())==PanelCover.STATUS).count()==1,"remaining transformer panel drops once");h.succeed();
+        HarvestFixtureAssertions.destroyWithCover(h,b,Direction.SOUTH,PanelCoverRuntime.value(b.getCover(Direction.SOUTH)));
     }
 }

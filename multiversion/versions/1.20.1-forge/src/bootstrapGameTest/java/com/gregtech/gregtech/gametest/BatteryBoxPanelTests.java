@@ -31,7 +31,7 @@ public final class BatteryBoxPanelTests {
             h.assertTrue(be.getBlockState().getValue(prop)==2,"intermediate buffer uses blinking overlay");buffer(be,31);
         }).thenExecuteAfter(21,()->h.assertTrue(be.getBlockState().getValue(prop)==0,"less than one output packet uses idle overlay")).thenSucceed();
     }
-    @GameTest(template="test_empty")
+    @GameTest(template="harvest_empty")
     public static void blockClicksControlModesAndStatusAndPersistPanels(GameTestHelper h){
         var be=box(h);var player=h.makeMockPlayer();var pos=be.getBlockPos();
         player.setItemInHand(InteractionHand.MAIN_HAND,panel(PanelCover.BUTTONS));
@@ -46,9 +46,7 @@ public final class BatteryBoxPanelTests {
         h.assertTrue(PanelCover.of(copy.getCover(Direction.NORTH))==PanelCover.BUTTONS&&PanelCoverRuntime.value(copy.getCover(Direction.NORTH))==5,"client/update NBT retains cover value");
         h.assertTrue(!copy.batteryEnergy().enabled()&&copy.batteryEnergy().mode()==5,"control state saved with covers");
         be.removeCover(Direction.NORTH);h.assertTrue(be.batteryEnergy().mode()==0,"removing selector resets mode");
-        h.getLevel().destroyBlock(pos,true);
-        var drops=h.getLevel().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new AABB(pos).inflate(.8));
-        h.assertTrue(drops.stream().filter(e->PanelCover.of(e.getItem())==PanelCover.STATUS).count()==1,"remaining cover drops exactly once");h.succeed();
+        HarvestFixtureAssertions.destroyWithCover(h,be,Direction.SOUTH,PanelCoverRuntime.value(be.getCover(Direction.SOUTH)));
     }
     @GameTest(template="test_empty")
     public static void emptyCapacitorAndEnergyPanelsExposePhysicalRedstone(GameTestHelper h){

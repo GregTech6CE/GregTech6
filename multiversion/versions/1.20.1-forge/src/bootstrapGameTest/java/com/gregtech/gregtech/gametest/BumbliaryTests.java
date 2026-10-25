@@ -418,88 +418,74 @@ public final class BumbliaryTests {
     /** GT6's queen death ({@code :121-163}): the brood is handed out and a princess is promoted. */
     @GameTest(template = "test_empty", timeoutTicks = 400)
     public static void queenDeathHandsOutTheBroodAndPromotesAPrincess(GameTestHelper helper) {
-        // ── the main drone slot is free, so GT6's brood starts there (:137-138) ──────────────────
-        BumbliaryBlockEntity machine = machine(helper, 0, false);
-        machine.inventory().setStackInSlot(BumbliaryBlockEntity.SLOT_ROYAL,
-                bee(helper, SPECIES, BumbleBeeType.PRINCESS, genes(1200, 10000, 100, 3)));
-        machine.inventory().setStackInSlot(BumbliaryBlockEntity.SLOT_DRONE,
-                bee(helper, SPECIES, BumbleBeeType.DRONE, genes(1200, 10000, 100, 3)));
-        int bred = 0;
-        while (machine.life() == 0 && bred < 3000) {
-            machine.tickLogic();
-            bred++;
-        }
-        helper.assertTrue(machine.life() > 0, "the pair breeds");
-        ItemStack[] brood = machine.brood();
-        helper.assertTrue(brood.length >= 4, "the brood has children, got " + brood.length);
+        // GT6 :137 deliberately skips an empty main slot. An occupied compatible stack can
+        // merge offspring; an incompatible item stays untouched and sends them to spare slots.
+        for (int scenario = 0; scenario < 3; scenario++) {
+            BumbliaryBlockEntity machine = machine(helper, scenario, false);
+            machine.inventory().setStackInSlot(BumbliaryBlockEntity.SLOT_ROYAL,
+                    bee(helper, SPECIES, BumbleBeeType.PRINCESS, genes(1200, 10000, 100, 3)));
+            machine.inventory().setStackInSlot(BumbliaryBlockEntity.SLOT_DRONE,
+                    bee(helper, SPECIES, BumbleBeeType.DRONE, genes(2400, 10000, 500, 3)));
+            int bred = 0;
+            while (machine.life() == 0 && bred++ < 3000) machine.tickLogic();
+            helper.assertTrue(machine.life() > 0, "the pair breeds in scenario " + scenario);
+            CompoundTag queenTag = machine.inventory().getStackInSlot(BumbliaryBlockEntity.SLOT_ROYAL).getTag().copy();
+            ItemStack[] brood = machine.brood();
+            helper.assertTrue(brood.length >= 4, "the brood has children");
+            List<ItemStack> expected = new ArrayList<>();
+            ItemStack bestPrincess = ItemStack.EMPTY;
+            for (ItemStack child : brood) {
+                expected.add(child.copy());
+                if (BumbleBeeType.of(child) == BumbleBeeType.PRINCESS
+                        && (bestPrincess.isEmpty() || BumbleBeeGenes.aggressiveness(BumbleBeeGenes.peek(child))
+                        > BumbleBeeGenes.aggressiveness(BumbleBeeGenes.peek(bestPrincess)))) bestPrincess = child.copy();
+            }
+            helper.assertTrue(!bestPrincess.isEmpty(), "breeding always includes a princess");
+            ItemStack parked = scenario == 0 ? ItemStack.EMPTY : scenario == 1 ? new ItemStack(Items.DIRT)
+                    : java.util.Arrays.stream(brood).filter(child -> BumbleBeeType.of(child) == BumbleBeeType.DRONE)
+                            .findFirst().orElseThrow().copy();
+            machine.inventory().setStackInSlot(BumbliaryBlockEntity.SLOT_DRONE, parked.copy());
+            if (scenario == 2) expected.add(parked.copy());
 
-        ticksUntilQueenDeath(machine);
-        helper.assertTrue(machine.life() == 0, "the queen dies when its life runs out (:121)");
-        helper.assertTrue(machine.endedQueen(), "GT6 flags the death for the one tick it happens on (:122)");
-        helper.assertTrue(machine.brood().length == 0, "the brood is handed out and cleared (:145)");
-        // The whole brood is handed out: the children go to the drone group (:135-138) and GT6 then
-        // moves the most aggressive spare princess into the royal slot (:160-163), so that one leaves
-        // the group again. Both cases are counted, whether a promotion happened or not.
-        ItemStack royal = machine.inventory().getStackInSlot(BumbliaryBlockEntity.SLOT_ROYAL);
-        helper.assertTrue(beesInDroneSlots(machine) + beeCount(royal) == brood.length,
-                "every child that fits the place is handed out (:135-138, :160-163), got "
-                        + beesInDroneSlots(machine) + " in the drone group plus " + beeCount(royal)
-                        + " in the royal slot of " + brood.length);
-        helper.assertTrue(!machine.inventory().getStackInSlot(BumbliaryBlockEntity.SLOT_DRONE).isEmpty(),
-                "the main drone slot is filled first (:137)");
-        List<ItemStack> dead = contents(machine, BumbliaryBlockEntity.SLOTS_DEAD);
-        helper.assertTrue(dead.stream().anyMatch(stack -> BumbleBeeType.of(stack) == BumbleBeeType.DEAD),
-                "the dead queen lies in a dead slot (:126-128)");
-
-        // GT6 only promotes a princess out of the spare drone slots (:147-163); whether one of the
-        // children that went there is a princess depends on GT6's princess count, so the check follows
-        // the original: whenever the spare slots hold a princess, the royal slot has one.
-        List<Integer> sparePrincesses = new ArrayList<>();
-        for (int slot : BumbliaryBlockEntity.SLOTS_DRONE) {
-            ItemStack stack = machine.inventory().getStackInSlot(slot);
-            if (BumbleBeeType.of(stack) == BumbleBeeType.PRINCESS) sparePrincesses.add(speciesId(stack));
+            ticksUntilQueenDeath(machine);
+            helper.assertTrue(machine.life() == 0 && machine.endedQueen(),
+                    "queen death is flagged on its final life tick (:121-122)");
+            helper.assertTrue(machine.brood().length == 0, "handed-out brood is cleared (:145)");
+            ItemStack royal = machine.inventory().getStackInSlot(BumbliaryBlockEntity.SLOT_ROYAL);
+            helper.assertTrue(ItemStack.matches(royal, bestPrincess),
+                    "the first most-aggressive spare princess is promoted, preserving her genome (:147-163)");
+            ItemStack main = machine.inventory().getStackInSlot(BumbliaryBlockEntity.SLOT_DRONE);
+            if (scenario < 2) {
+                helper.assertTrue(ItemStack.matches(main, parked),
+                        "empty or incompatible main slot remains unchanged (:137)");
+            } else {
+                long matchingChildren = java.util.Arrays.stream(brood)
+                        .filter(child -> ItemStack.isSameItemSameTags(child, parked)).count();
+                helper.assertTrue(ItemStack.isSameItemSameTags(main, parked)
+                                && main.getCount() == parked.getCount() + matchingChildren,
+                        "compatible occupied main slot merges exactly its matching offspring (:137)");
+            }
+            List<ItemStack> actual = new ArrayList<>(contents(machine, BumbliaryBlockEntity.SLOTS_DRONE));
+            actual.add(royal);
+            if (scenario == 2) actual.add(main);
+            for (ItemStack stack : actual) {
+                int remaining = stack.getCount();
+                for (ItemStack child : expected) {
+                    if (!ItemStack.isSameItemSameTags(stack, child)) continue;
+                    int moved = Math.min(remaining, child.getCount());
+                    child.shrink(moved);
+                    remaining -= moved;
+                }
+                helper.assertTrue(remaining == 0, "every distributed bee has its original identity and genome");
+            }
+            helper.assertTrue(expected.stream().allMatch(ItemStack::isEmpty),
+                    "every child is accounted for exactly once, including the promoted princess");
+            List<ItemStack> dead = contents(machine, BumbliaryBlockEntity.SLOTS_DEAD);
+            helper.assertTrue(dead.size() == 1 && BumbleBeeType.of(dead.get(0)) == BumbleBeeType.DEAD
+                            && speciesId(dead.get(0)) == SPECIES && dead.get(0).getCount() == 1
+                            && queenTag.equals(dead.get(0).getTag()),
+                    "the prior dead drone is cleared and the dead queen is stored (:124-128)");
         }
-        if (sparePrincesses.isEmpty()) {
-            helper.assertTrue(royal.isEmpty(), "without a princess in the spare slots nothing is promoted");
-        } else {
-            helper.assertTrue(BumbleBeeType.of(royal) == BumbleBeeType.PRINCESS,
-                    "the most aggressive princess of the spare slots becomes the queen (:160-163)");
-            helper.assertTrue(sparePrincesses.contains(speciesId(royal)),
-                    "the promoted princess comes from the brood");
-        }
-
-        // ── a blocked main drone slot forces the whole brood into the spare slots ────────────────
-        BumbliaryBlockEntity second = machine(helper, 1, false);
-        second.inventory().setStackInSlot(BumbliaryBlockEntity.SLOT_ROYAL,
-                bee(helper, SPECIES, BumbleBeeType.PRINCESS, genes(1200, 10000, 100, 3)));
-        second.inventory().setStackInSlot(BumbliaryBlockEntity.SLOT_DRONE,
-                bee(helper, SPECIES, BumbleBeeType.DRONE, genes(1200, 10000, 100, 3)));
-        int secondBred = 0;
-        while (second.life() == 0 && secondBred < 3000) {
-            second.tickLogic();
-            secondBred++;
-        }
-        helper.assertTrue(second.life() > 0, "the second pair breeds too");
-        int secondBrood = second.brood().length;
-        // GT6 leaves the main drone slot to the bees it holds; an item the brood cannot merge with
-        // sends every child into the spare slots (:137-138).
-        second.inventory().setStackInSlot(BumbliaryBlockEntity.SLOT_DRONE, new ItemStack(Items.DIRT));
-        ticksUntilQueenDeath(second);
-        // Every child went into a spare slot, so at least one spare princess exists and GT6 promotes
-        // it into the royal slot (:147-163) - that child therefore leaves the drone group again.
-        ItemStack promoted = second.inventory().getStackInSlot(BumbliaryBlockEntity.SLOT_ROYAL);
-        helper.assertTrue(BumbleBeeType.of(promoted) == BumbleBeeType.PRINCESS,
-                "one of the brood's princesses is promoted, got " + BumbleBeeType.of(promoted));
-        helper.assertTrue(speciesId(promoted) == SPECIES || speciesId(promoted) == SPECIES - 10,
-                "the promoted princess is one of the brood's, got " + speciesId(promoted));
-        helper.assertTrue(beesInSpareSlots(second) == secondBrood - 1,
-                "the whole brood minus the promoted princess sits in the spare slots (:138), got "
-                        + beesInSpareSlots(second) + " of " + (secondBrood - 1));
-        helper.assertTrue(beesInDroneSlots(second) + beeCount(promoted) == secondBrood,
-                "the brood is accounted for by the drone group plus the promoted princess (:160-163), got "
-                        + beesInDroneSlots(second) + " plus " + beeCount(promoted) + " of " + secondBrood);
-        helper.assertTrue(beesInDroneSlots(second) == secondBrood - 1,
-                "exactly the promoted child left the drone group, got " + beesInDroneSlots(second));
         helper.succeed();
     }
 

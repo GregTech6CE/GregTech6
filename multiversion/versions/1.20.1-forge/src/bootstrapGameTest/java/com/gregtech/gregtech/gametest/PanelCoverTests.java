@@ -186,11 +186,8 @@ public final class PanelCoverTests {
         block.use(relay.getBlockState(),h.getLevel(),relay.getBlockPos(),player,net.minecraft.world.InteractionHand.MAIN_HAND,hit);
         h.assertTrue(PanelCoverRuntime.style(relay.getCover(Direction.NORTH))==1&&chisel.getDamageValue()==1,"chisel changes style and wears exactly once");h.succeed();
     }
-    @GameTest(template="test_blueprint_empty") public static void brokenExtenderDropsConfiguredPanelOnce(GameTestHelper h){
+    @GameTest(template="harvest_empty") public static void brokenExtenderDropsConfiguredPanelOnce(GameTestHelper h){
         var relay=relay(h,ExtenderSpec.INVENTORY);relay.attachCover(Direction.NORTH,stack(PanelCover.EMITTER));relay.panels().click(Direction.NORTH,.125,.125);
-        h.getLevel().destroyBlock(relay.getBlockPos(),true);
-        var entities=h.getLevel().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new net.minecraft.world.phys.AABB(relay.getBlockPos()).inflate(1));
-        int count=0;for(var entity:entities)if(entity.getItem().is(GTTechnological.get(PanelCover.EMITTER.id))){count+=entity.getItem().getCount();h.assertTrue(PanelCoverRuntime.value(entity.getItem())==15,"broken host preserves panel setting");}
-        h.assertTrue(count==1,"breaking extender drops exactly one attached panel");h.succeed();
+        HarvestFixtureAssertions.destroyWithCover(h,relay,Direction.NORTH,15);
     }
 }

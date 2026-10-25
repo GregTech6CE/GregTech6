@@ -1,0 +1,211 @@
+{
+  "date": "2026-10-25",
+  "branch": "codex/targeted-default-regressions",
+  "base_commit": "216cb6f9c",
+  "card55": {
+    "status": "closed by user direction; remaining default failures tracked separately",
+    "pr": "https://github.com/GregTech6CE/GregTech6/pull/125"
+  },
+  "scope": "Three Neo bootstrap fixture failures; no production material/reaction implementation changes; no Forge default-suite rerun.",
+  "adopted_core": {
+    "materials": 1160,
+    "positive_ids": 1105,
+    "name_entries": 1523,
+    "prefixes": 132,
+    "ore_roles": 210,
+    "ore_processing_roles": 415,
+    "stone_roles": 82,
+    "explicit_reactions": 46,
+    "total_reactions_without_addons": 137
+  },
+  "source_role_proof": {
+    "original_sha256": "734a7fee39e9326dbfae519c34f3b9a0cb510d7d7a5535858cd04ab0aea99ccb",
+    "normalization": [
+      "Exclude addon-owned objects from the core fingerprint",
+      "Exclude only 9317:Cinnamonwood, 9354:Limewood, 9374:Magicwood, 9376:Ashwood",
+      "Normalize only material 8277:PetrifiedWood STONE to false; assert actual STONE+WOOD before normalization"
+    ],
+    "restorations_asserted_separately": true,
+    "stone_descriptors_unchanged": 27,
+    "original_source_mode_rerun": false,
+    "limitation": "Preserved import/saltnya-snapshot ref is absent locally. Original fixture is frozen from base commit; no new original-source execution claimed."
+  },
+  "sample_profile": {
+    "core_reactions": 136,
+    "total_reactions": 138,
+    "delta": "Remove precisely StainlessSteel from WroughtIron/Nichrome/Chromium/Manganese; add explicit and composition SampleCrucibleAlloy rows.",
+    "id_boundary": "All positive IDs unique; built-ins below ADDON_ID_START=10000; addon objects owned and allocated at/above boundary."
+  },
+  "checks": [
+    {
+      "name": "core:materialBehaviorContracts",
+      "result": "passed",
+      "assertions": 7959,
+      "source_wood_rows": 110,
+      "source_wood_assertions": 1212
+    },
+    {
+      "name": "Fresh current-mode source compilation and inert fixtures",
+      "result": "4/4 passed; jdeps only java.base",
+      "note": "Completed before final addon-ID-boundary correction; final fixture preflight separately checked both profiles."
+    },
+    {
+      "name": "Final fixture preflight without game runtime",
+      "profiles": [
+        "bare core on JDK17",
+        "actual Neo addon-sample contributor on JDK21"
+      ],
+      "result": "4/4 each"
+    },
+    {
+      "name": "NeoForge 1.21.1 gregtech_bootstrap with addonSample=true",
+      "result": "7/7 passed",
+      "cases": [
+        {
+          "name": "originalalternatereactions",
+          "template": "gregtech_bootstrap:test_empty",
+          "failures": []
+        },
+        {
+          "name": "originalrolesunitsandcomposition",
+          "template": "gregtech_bootstrap:test_empty",
+          "failures": []
+        },
+        {
+          "name": "sharedmachineworkcost",
+          "template": "gregtech_bootstrap:test_empty",
+          "failures": []
+        },
+        {
+          "name": "completematerialdirectory",
+          "template": "gregtech_bootstrap:test_empty",
+          "failures": []
+        },
+        {
+          "name": "sharedsignedenergypackets",
+          "template": "gregtech_bootstrap:test_empty",
+          "failures": []
+        },
+        {
+          "name": "originalcoppertinreaction",
+          "template": "gregtech_bootstrap:test_empty",
+          "failures": []
+        },
+        {
+          "name": "sharedmaterialunits",
+          "template": "gregtech_bootstrap:test_empty",
+          "failures": []
+        }
+      ]
+    }
+  ],
+  "commands": {
+    "game": "$ErrorActionPreference = 'Stop'\n$env:JAVA_HOME = 'C:/Users/T14/.gradle/jdks/eclipse_adoptium-17-amd64-windows/jdk-17.0.20.1+1'\n$env:JAVA17_HOME = $env:JAVA_HOME\n$env:JAVA21_HOME = 'C:/Program Files/Eclipse Adoptium/jdk-21.0.12.8-hotspot'\n$env:GRADLE_USER_HOME = 'C:/Users/T14/.gradle'\nSet-Location (Split-Path -Parent $PSScriptRoot)\n& ./gradlew.bat --console=plain :core:materialBehaviorContracts '-PaddonSample=true' '-PgameTestNamespaces=gregtech_bootstrap' '-PgameTestHeap=6g' '-PgameTestJvmArgs=-XX:+UseSerialGC' '-PgameTestDirectory=../../../work/material-bootstrap-neoforge' '-PneoforgeGameTestDirectory=../../../work/material-bootstrap-neoforge' '-PgameTestReport=../../../work/material-bootstrap-neoforge.xml' :multiversion:1.21.1-neoforge:runGameTestServer *> work/material-bootstrap-neoforge.log\n$result = $LASTEXITCODE\nGet-Content work/material-bootstrap-neoforge.log -Tail 55\nexit $result\n",
+    "fresh_current_verifier": "python core/verify-material-roles.py current --jdk-home <installed JDK17>"
+  },
+  "runtime_attempts": [
+    {
+      "attempt": 1,
+      "result": "6/7 passed; completeMaterialDirectory still rejected addon id 10000 via obsolete global ceiling",
+      "cases": [
+        {
+          "name": "originalalternatereactions",
+          "template": "gregtech_bootstrap:test_empty",
+          "failures": []
+        },
+        {
+          "name": "originalrolesunitsandcomposition",
+          "template": "gregtech_bootstrap:test_empty",
+          "failures": []
+        },
+        {
+          "name": "sharedmachineworkcost",
+          "template": "gregtech_bootstrap:test_empty",
+          "failures": []
+        },
+        {
+          "name": "completematerialdirectory",
+          "template": "gregtech_bootstrap:test_empty",
+          "failures": [
+            "(-13943222, -60, 13880499) Positive material IDs must be unique and in the registry range: GTMaterial{AmmoniumNitrate, id=10000}"
+          ]
+        },
+        {
+          "name": "sharedsignedenergypackets",
+          "template": "gregtech_bootstrap:test_empty",
+          "failures": []
+        },
+        {
+          "name": "originalcoppertinreaction",
+          "template": "gregtech_bootstrap:test_empty",
+          "failures": []
+        },
+        {
+          "name": "sharedmaterialunits",
+          "template": "gregtech_bootstrap:test_empty",
+          "failures": []
+        }
+      ]
+    },
+    {
+      "attempt": 2,
+      "result": "7/7 passed; same seven-test namespace after final boundary correction"
+    }
+  ],
+  "tool_attempts": [
+    "First fresh verifier hit Windows command-line length; fixed javac argument-file handling.",
+    "Sandboxed javac then failed closing compiler resources; the same fresh verifier completed outside sandbox.",
+    "Initial sample preflight used JDK17 against Neo JDK21 classes; reran with installed JDK21 and passed."
+  ],
+  "evidence": [
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/bootstrapGameTest/java/com/gregtech/gregtech/platform/neoforge/gametest/SharedMaterialBootstrapGameTests.java",
+      "sha256": "42306748c8f3034b667a117b46c53c047923004a3910a2dd8118d129bbe06f1e"
+    },
+    {
+      "path": "core/verify-material-roles.py",
+      "sha256": "5ae39de6835f8c670a2b14671ce0ca66901b488e9e59b21ad51f0b3360c98e68"
+    },
+    {
+      "path": "core/src/test/fixtures/original-material-roles/SharedMaterialBootstrapGameTests.java",
+      "sha256": "d3e9af03875cc28e798bdd1166bdbad5b809efb7fb9031493e61f210782bfc7e"
+    },
+    {
+      "path": "core/provenance/material-role-extractions.json",
+      "sha256": "a3bf116ecf9d5f6357da8301b3be87cf8fb64ad0ea26081e75c907410c898f38"
+    },
+    {
+      "path": "docs/integration/verification/normal-wood-differential-20261003.json",
+      "sha256": "048443deb8f8fbce28495de8ffaf07666f6ef1f474e758065a404725f8314f88"
+    },
+    {
+      "path": "work/material-bootstrap-neoforge.log",
+      "sha256": "3c61c08a6078a5b2b5fb4f06d5197c1267c70f32fec837a3a9d2133d9f1d160b"
+    },
+    {
+      "path": "work/material-bootstrap-neoforge.xml",
+      "sha256": "4ab2a1f89f5c109cd96482fc33272e1759f367185d12f45321ec905c3748d57b"
+    },
+    {
+      "path": "work/material-bootstrap-neoforge-attempt1.log",
+      "sha256": "b1197429b530b17ad4527ac864c8b3fd4d77460fb2b17dd18d6cdfec7c8e615d"
+    },
+    {
+      "path": "work/material-bootstrap-neoforge-attempt1.xml",
+      "sha256": "271dbe4d6451d30bee85fb2a9a8b00b906359d387019e7d3448ac31477f10cd7"
+    },
+    {
+      "path": "work/material-bootstrap-fix/current-role-verifier.log",
+      "sha256": "fed2f41efe07f85099c2cd3317121ffb467c46d23729072acaa2d7d269f25e4d"
+    },
+    {
+      "path": "work/material-bootstrap-fix/bare-preflight.log",
+      "sha256": "1fce23db1d40b2f06e77a09c5cfadd8d09fad0208f3caedfc457923c8515bdfb"
+    },
+    {
+      "path": "work/material-bootstrap-fix/sample-preflight.log",
+      "sha256": "1fce23db1d40b2f06e77a09c5cfadd8d09fad0208f3caedfc457923c8515bdfb"
+    }
+  ],
+  "remaining": "Forge original 93/1045 failure receipt retained; its three card55 fixture corrections passed separately. No new full Forge run and no assertion that the remaining Forge failures are repaired. Client gameplay, save restart and historical saves unverified; overall port unfinished."
+}

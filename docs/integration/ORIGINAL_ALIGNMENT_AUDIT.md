@@ -186,7 +186,7 @@
 | ALIGN-103 | 确认检索器恢复后失败持续逐 tick 重试。 | 原版通过容量等门控后，在尝试前清除 pending。 | 当前两类宿主仅成功搬运后清除，恢复失败保留；停止门控仍在，重载未验，见 [报告](FILTER_RETRIEVER_COVER_AUDIT.md)。 |
 | ALIGN-104 | 确认检索器空模板与数据匹配合同不同。 | 原版无模板两模式均不筛选，有模板按物品／元数据集合匹配。 | 当前空白名单阻断，带数据模板用完整 NBT／components 比较；重复点击设置的通配字段又未读取。普通过滤器不可据此全局改规则，见 [报告](FILTER_RETRIEVER_COVER_AUDIT.md)。 |
 | ALIGN-105 | 确认电池盒侧面物品能力未应用过滤器。 | 原版 final canInsertItem／canExtractItem 先问覆盖板，再问电池准入。 | 当前仅挡板和组件方向，后备 Mixin 排除原生 getCover 重写；两版 provider 均进入此路径。电池种类限制仍在，见 [报告](COVER_CAPABILITY_AUDIT.md)。 |
-| ALIGN-106 | 确认压力阀未断开阀面，也未接入管道连接拦截。 | 原版每次合格 tick 先 disconnect，再看满罐；前方管道 interceptConnect=true。 | 当前 helper／宿主均不改连接，CoverConnections 无阀门分支；原错误命名谓词仅被测试调用，安装检查则已有实现。见 [报告](PRESSURE_VALVE_AUDIT.md)。 |
+| ALIGN-106 | 确认压力阀未断开阀面，也未接入管道连接拦截。 | 原版每次合格 tick 先 disconnect，再看满罐；前方管道 interceptConnect=true。 | 历史核查确认缺失；2026-10-25后续修复宿主合格调度的断连及共用门控拦截，Forge空罐/暂停/后放相邻管/双向门控/双方连接位与真实排液通过。ALIGN-100时钟差异仍在，Neo仅编译。见 [报告](PRESSURE_VALVE_AUDIT.md)与[回执](verification/forge-cover-boundaries-20261025.json)。 |
 | ALIGN-107 | 确认固定编号选择标签错误受停止门控，安装也未立即设模式。 | 原版 placed／loaded／tickPre 强制指定模式，不检查 stopped。 | 当前 beforeTick 要求 !stopped，attached 不处理固定标签；不能据此删除其他选择器的正确暂停门控，见 [报告](SELECTOR_PANEL_AUDIT.md)。 |
 | ALIGN-108 | 确认手动／按钮选择器停止加载时丢失面板恢复机会。 | 原版 onCoverLoaded 无条件用保存值恢复模式。 | 当前 stopped 跳过循环但仍清 restore，恢复后读宿主模式覆盖面板；宿主独立保存可能掩盖，未实测重启，见 [报告](SELECTOR_PANEL_AUDIT.md)。 |
 | ALIGN-109 | 确认按钮复位比原版提前一个机器工作阶段。 | 原版 post-work tick 将倒计时 2 变 1 并清零模式。 | 当前 beforeTick 清零，电动机随后执行转换器；末轮机器采用模式不同，不是 10→1 数量规则错误，见 [报告](SELECTOR_PANEL_AUDIT.md)。 |
@@ -304,7 +304,7 @@
 | ALIGN-221 | 确认玩家排液先被通用1000L行为接管，绕过设备专用整罐／顺序。 | 原工具先Behavior_Tool专用、成功即停，才到通用排液fallback。 | 当前GTToolItem先通用，cold2000时排1000并请求100耐久，原清2000／请求20；两端原生非PASS截断Block使用已追。hot-only专用成本另扩126，不代表所有工具入口，见[热交换器](HEAT_EXCHANGER_AUDIT.md)。大型蒸汽涡轮输入2000／水1000时也先排水，绕过输入优先专用清空，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。 |
 | ALIGN-222 | 确认旋转泵相连液体搜索被独立区域逐列扫描替代。 | 从正面同族液体连通扩散，按轻重切层，有3000／20刻重查。 | 当前先扫入口(-64,-64)列、高度-64起，入口空气也可抽孤立远源；固定向下／source扫描不等价，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
 | ALIGN-223 | 确认旋转泵RU输入范围和异常包处理不同。 | 四档有效存能R/2–2R；低速包消耗但不存，超限进保护计数。 | 当前固定8–R，青铜48被拒、8被存；无原过载反馈，不据此恢复爆炸，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
-| ALIGN-224 | 确认旋转泵整包下舍入可能令合法恒定输入达不到启动门槛。 | 8192需求按包向上取整，青铜17包可达8194。 | 当前最多481包到8177，余15拒17包且<8192不抽，条件持续则停；额定32正常，既有8191测试不是原版舍入证明，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
+| ALIGN-224 | 确认旋转泵整包下舍入可能令合法恒定输入达不到启动门槛。 | 8192需求按包向上取整，青铜17包可达8194。 | 历史下舍入故障在当前PumpWorkRules已改为向上取整。2026-10-25校正旧断言后，Forge青铜实测17RU接482包到8194、8191+32到8223并拒绝继续注入，模拟只读；其他输入范围/搜索差异保留，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)与[回执](verification/forge-tool-boundaries-20261025.json)。 |
 | ALIGN-225 | 确认旋转泵世界排液对象和回调准入不同。 | 同族流动块也以最低16RU清除，IFluidBlock查询实际排液结果。 | 当前仅source并造1000L，随后整个BlockState换空气；两版含水半砖返回source，可被整体移除。未游戏复现，保留整桶／移除成功保护，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
 | ALIGN-226 | 确认旋转泵只读出液罐变为允许外部填充的双向能力。 | 无盖泵fillable=null，Root.fill返回0；抽取任意面、主动推四侧。 | 两端直接返回tank，空罐fill1000可成功，四侧未排空时暂停抽新源；容量差异仅在特定量条件适用，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
 | ALIGN-227 | 确认旋转泵缺少原开关与运行状态接口。 | 原SwitchableOnOff／RunningActively由控制／检测盖消费，停机拒供能及新源抽取、仍推旧液。 | 当前无stopped／历史／MachineControl.Provider；Mixin后备覆盖板宿主已有，撤回全安装失败说法。fallback只有计量、supportsSwitch=false，原控制／运行检测未接通，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |

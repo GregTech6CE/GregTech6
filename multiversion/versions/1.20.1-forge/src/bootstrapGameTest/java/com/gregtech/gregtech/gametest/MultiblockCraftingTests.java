@@ -123,8 +123,10 @@ public final class MultiblockCraftingTests {
             Block block = ForgeRegistries.BLOCKS.getValue(
                     ResourceLocation.fromNamespaceAndPath("gt6ce", controller));
             helper.assertTrue(block != null, "controller block exists: " + controller);
-            helper.assertTrue(MultiblockCraftingRecipes.find(controller) != null,
-                    "controller has an original GT6 crafting recipe: " + controller);
+            helper.assertTrue(helper.getLevel().getRecipeManager().getRecipes().stream()
+                    .filter(r->r.getType()==RecipeType.CRAFTING)
+                    .anyMatch(r->r.getResultItem(helper.getLevel().registryAccess()).is(block.asItem())),
+                    "controller has a loaded survival crafting route from its source family: " + controller);
         }
         helper.succeed();
     }

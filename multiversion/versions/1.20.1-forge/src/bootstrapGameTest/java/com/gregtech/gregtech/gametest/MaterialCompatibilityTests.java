@@ -155,10 +155,11 @@ public final class MaterialCompatibilityTests {
         int expected=0;
         for(var entry:com.gregtech.gregtech.registry.GTBasicMachines.all()) {
             var spec=entry.get().basicSpec();
+            if(!spec.namespace().equals("gt6ce"))continue; // Addons own their manufacturing recipes.
             if(com.gregtech.gregtech.data.BasicMachineRecipePack.MULTIBLOCK_CONTROLLERS.contains(spec.machineName()))continue;
             expected++;
             var id=ResourceLocation.fromNamespaceAndPath("gt6ce","machines/basic/"+spec.id());
-            var recipe=h.getLevel().getRecipeManager().byKey(id).orElseThrow();
+            var recipe=h.getLevel().getRecipeManager().byKey(id).orElseThrow(()->new AssertionError("Missing built-in manufacturing recipe "+id+" for "+spec.machineName()+" tier "+spec.tier()));
             // GT6 patterns contain empty cells on purpose (e.g. Rolling Mill "M "), so count
             // filled pattern cells and require exactly that many real ingredients.
             var table=com.gregtech.gregtech.data.BasicMachineCraftingRecipes.find(spec.machineName(),spec.tier());

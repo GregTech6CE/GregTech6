@@ -26,7 +26,7 @@ public final class CoverDrops {
 *///?} else {
         var saved=owner.saveWithoutMetadata();var result=new CompoundTag();
 //?}
-        for(String key:saved.getAllKeys())if(key.startsWith("gt_cover_")||key.startsWith("gt.logistics.cover.")||key.equals("gt.component_covers")||key.equals("gt.cover.stopped"))result.put(key,saved.get(key).copy());
+        for(String key:saved.getAllKeys())if(key.startsWith("gt_cover_")||key.startsWith("gt.battery_cover_")||key.startsWith("gt.logistics.cover.")||key.equals("gt.component_covers")||key.equals("gt.cover.stopped"))result.put(key,saved.get(key).copy());
         return result;
     }
     /** Player destruction removes the block before calculating its loot: snapshot attachments first. */

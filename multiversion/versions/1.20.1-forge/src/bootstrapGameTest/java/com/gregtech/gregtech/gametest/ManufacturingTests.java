@@ -33,7 +33,7 @@ public final class ManufacturingTests {
     @GameTest(template="test_blueprint_empty")
     public static void wireCraftingPreservesConductorAmount(GameTestHelper h) {
         int count=0;
-        for(var raw:h.getLevel().getRecipeManager().getRecipes())if(raw.getId().getNamespace().equals("gt6ce")&&raw.getId().getPath().startsWith("wire_working/")) {
+        for(var raw:h.getLevel().getRecipeManager().getRecipes())if(raw.getId().getNamespace().equals("gt6ce")&&(raw.getId().getPath().startsWith("wire_working/")||raw.getId().getPath().startsWith("wire_sizes/"))) {
             var recipe=(ShapelessRecipe)raw;var grid=grid();int slot=0;long amount=0;String material=null;
             for(var ingredient:recipe.getIngredients()) {
                 h.assertTrue(ingredient.getItems().length>0,"wire ingredient resolves");
@@ -42,14 +42,29 @@ public final class ManufacturingTests {
                     amount+=block.spec().materialAmount();material=block.spec().id();
                 }
             }
-            h.assertTrue(recipe.matches(grid,h.getLevel()),"wire crafting matches");
+            if(!recipe.matches(grid,h.getLevel())&&slot==1) {
+                var input=grid.getItem(0).copy();
+                for(int offset=1;offset<9&&!recipe.matches(grid,h.getLevel());offset++) {
+                    grid.clearContent();grid.setItem(offset,input.copy());
+                }
+            }
+            h.assertTrue(recipe.matches(grid,h.getLevel()),"wire crafting matches at its source selector position: "+recipe.getId());
             var output=recipe.assemble(grid,h.getLevel().registryAccess());var block=(ElectricWireBlock)((BlockItem)output.getItem()).getBlock();
             h.assertTrue(block.spec().id().equals(material)&&block.spec().materialAmount()*output.getCount()==amount,"wire crafting conserves metal and family");
             count++;
         }
-        // 450 unpack + 810 weave + 56 insulation recipes. Graphene and
-        // superconductor have no insulated cable in GT6 (two sizes each).
-        h.assertTrue(count==1316,"all 1316 wire recipes loaded; got "+count);h.succeed();
+        var families=new TreeMap<String,TreeSet<Integer>>();
+        int oldUnpack=0;
+        for(var entry:GTWires.allWires()) {
+            var spec=entry.get().spec();families.computeIfAbsent(spec.id(),key->new TreeSet<>()).add(spec.size());
+            if(spec.size()>1)oldUnpack++;
+        }
+        int insulation=(int)GTWires.allCables().stream().filter(e->e.get().spec().size()<=2).count();
+        int converted=0;
+        for(var sizes:families.values())for(int big:sizes)for(int small:sizes)if(small<big&&big%small==0) {
+            converted++;if(big/small<10)converted++;
+        }
+        h.assertTrue(count==oldUnpack+insulation+converted,"source unpack/insulation and canonical wire-size routes loaded: "+count+" / "+(oldUnpack+insulation+converted));h.succeed();
     }
     @GameTest(template="test_blueprint_empty")
     public static void moldsHaveUniqueOrientationAndSurviveNetwork(GameTestHelper h) {

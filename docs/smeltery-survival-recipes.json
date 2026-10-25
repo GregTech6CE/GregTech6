@@ -1,552 +1,552 @@
 {
   "recipes": {
-    "gregtech:smeltery_survival/smelting_crucible_stone": {
+    "gt6ce:smeltery_survival/smelting_crucible_stone": {
       "source_line": 251,
-      "output": "gregtech:smelting_crucible_stone"
+      "output": "gt6ce:smelting_crucible_stone"
     },
-    "gregtech:smeltery_survival/smelting_crucible_basalt": {
+    "gt6ce:smeltery_survival/smelting_crucible_basalt": {
       "source_line": 252,
-      "output": "gregtech:smelting_crucible_basalt"
+      "output": "gt6ce:smelting_crucible_basalt"
     },
-    "gregtech:smeltery_survival/smelting_crucible_granite_black": {
+    "gt6ce:smeltery_survival/smelting_crucible_granite_black": {
       "source_line": 253,
-      "output": "gregtech:smelting_crucible_granite_black"
+      "output": "gt6ce:smelting_crucible_granite_black"
     },
-    "gregtech:smeltery_survival/smelting_crucible_granite_red": {
+    "gt6ce:smeltery_survival/smelting_crucible_granite_red": {
       "source_line": 254,
-      "output": "gregtech:smelting_crucible_granite_red"
+      "output": "gt6ce:smelting_crucible_granite_red"
     },
-    "gregtech:smeltery_survival/smelting_crucible_nether_brick": {
+    "gt6ce:smeltery_survival/smelting_crucible_nether_brick": {
       "source_line": 255,
-      "output": "gregtech:smelting_crucible_nether_brick"
+      "output": "gt6ce:smelting_crucible_nether_brick"
     },
-    "gregtech:smeltery_survival/smelting_crucible_quartz": {
+    "gt6ce:smeltery_survival/smelting_crucible_quartz": {
       "source_line": 262,
-      "output": "gregtech:smelting_crucible_quartz"
+      "output": "gt6ce:smelting_crucible_quartz"
     },
-    "gregtech:smeltery_survival/smelting_crucible_carbon": {
+    "gt6ce:smeltery_survival/smelting_crucible_carbon": {
       "source_line": 263,
-      "output": "gregtech:smelting_crucible_carbon"
+      "output": "gt6ce:smelting_crucible_carbon"
     },
-    "gregtech:smeltery_survival/smelting_crucible_bronze": {
+    "gt6ce:smeltery_survival/smelting_crucible_bronze": {
       "source_line": 265,
-      "output": "gregtech:smelting_crucible_bronze"
+      "output": "gt6ce:smelting_crucible_bronze"
     },
-    "gregtech:smeltery_survival/smelting_crucible_invar": {
+    "gt6ce:smeltery_survival/smelting_crucible_invar": {
       "source_line": 266,
-      "output": "gregtech:smelting_crucible_invar"
+      "output": "gt6ce:smelting_crucible_invar"
     },
-    "gregtech:smeltery_survival/smelting_crucible_steel": {
+    "gt6ce:smeltery_survival/smelting_crucible_steel": {
       "source_line": 267,
-      "output": "gregtech:smelting_crucible_steel"
+      "output": "gt6ce:smelting_crucible_steel"
     },
-    "gregtech:smeltery_survival/smelting_crucible_hsla": {
+    "gt6ce:smeltery_survival/smelting_crucible_hsla": {
       "source_line": 268,
-      "output": "gregtech:smelting_crucible_hsla"
+      "output": "gt6ce:smelting_crucible_hsla"
     },
-    "gregtech:smeltery_survival/smelting_crucible_stainless_steel": {
+    "gt6ce:smeltery_survival/smelting_crucible_stainless_steel": {
       "source_line": 269,
-      "output": "gregtech:smelting_crucible_stainless_steel"
+      "output": "gt6ce:smelting_crucible_stainless_steel"
     },
-    "gregtech:smeltery_survival/smelting_crucible_dark_iron": {
+    "gt6ce:smeltery_survival/smelting_crucible_dark_iron": {
       "source_line": 270,
-      "output": "gregtech:smelting_crucible_dark_iron"
+      "output": "gt6ce:smelting_crucible_dark_iron"
     },
-    "gregtech:smeltery_survival/smelting_crucible_meteoric_iron": {
+    "gt6ce:smeltery_survival/smelting_crucible_meteoric_iron": {
       "source_line": 271,
-      "output": "gregtech:smelting_crucible_meteoric_iron"
+      "output": "gt6ce:smelting_crucible_meteoric_iron"
     },
-    "gregtech:smeltery_survival/smelting_crucible_meteoric_steel": {
+    "gt6ce:smeltery_survival/smelting_crucible_meteoric_steel": {
       "source_line": 272,
-      "output": "gregtech:smelting_crucible_meteoric_steel"
+      "output": "gt6ce:smelting_crucible_meteoric_steel"
     },
-    "gregtech:smeltery_survival/smelting_crucible_netherite": {
+    "gt6ce:smeltery_survival/smelting_crucible_netherite": {
       "source_line": 273,
-      "output": "gregtech:smelting_crucible_netherite"
+      "output": "gt6ce:smelting_crucible_netherite"
     },
-    "gregtech:smeltery_survival/smelting_crucible_knightmetal": {
+    "gt6ce:smeltery_survival/smelting_crucible_knightmetal": {
       "source_line": 274,
-      "output": "gregtech:smelting_crucible_knightmetal"
+      "output": "gt6ce:smelting_crucible_knightmetal"
     },
-    "gregtech:smeltery_survival/smelting_crucible_fiery_steel": {
+    "gt6ce:smeltery_survival/smelting_crucible_fiery_steel": {
       "source_line": 275,
-      "output": "gregtech:smelting_crucible_fiery_steel"
+      "output": "gt6ce:smelting_crucible_fiery_steel"
     },
-    "gregtech:smeltery_survival/smelting_crucible_octine": {
+    "gt6ce:smeltery_survival/smelting_crucible_octine": {
       "source_line": 276,
-      "output": "gregtech:smelting_crucible_octine"
+      "output": "gt6ce:smelting_crucible_octine"
     },
-    "gregtech:smeltery_survival/smelting_crucible_thaumium": {
+    "gt6ce:smeltery_survival/smelting_crucible_thaumium": {
       "source_line": 277,
-      "output": "gregtech:smelting_crucible_thaumium"
+      "output": "gt6ce:smelting_crucible_thaumium"
     },
-    "gregtech:smeltery_survival/smelting_crucible_titanium": {
+    "gt6ce:smeltery_survival/smelting_crucible_titanium": {
       "source_line": 278,
-      "output": "gregtech:smelting_crucible_titanium"
+      "output": "gt6ce:smelting_crucible_titanium"
     },
-    "gregtech:smeltery_survival/smelting_crucible_chromium": {
+    "gt6ce:smeltery_survival/smelting_crucible_chromium": {
       "source_line": 279,
-      "output": "gregtech:smelting_crucible_chromium"
+      "output": "gt6ce:smelting_crucible_chromium"
     },
-    "gregtech:smeltery_survival/smelting_crucible_molybdenum": {
+    "gt6ce:smeltery_survival/smelting_crucible_molybdenum": {
       "source_line": 280,
-      "output": "gregtech:smelting_crucible_molybdenum"
+      "output": "gt6ce:smelting_crucible_molybdenum"
     },
-    "gregtech:smeltery_survival/smelting_crucible_niobium": {
+    "gt6ce:smeltery_survival/smelting_crucible_niobium": {
       "source_line": 281,
-      "output": "gregtech:smelting_crucible_niobium"
+      "output": "gt6ce:smelting_crucible_niobium"
     },
-    "gregtech:smeltery_survival/smelting_crucible_tantalum": {
+    "gt6ce:smeltery_survival/smelting_crucible_tantalum": {
       "source_line": 282,
-      "output": "gregtech:smelting_crucible_tantalum"
+      "output": "gt6ce:smelting_crucible_tantalum"
     },
-    "gregtech:smeltery_survival/smelting_crucible_osmium": {
+    "gt6ce:smeltery_survival/smelting_crucible_osmium": {
       "source_line": 283,
-      "output": "gregtech:smelting_crucible_osmium"
+      "output": "gt6ce:smelting_crucible_osmium"
     },
-    "gregtech:smeltery_survival/smelting_crucible_iridium": {
+    "gt6ce:smeltery_survival/smelting_crucible_iridium": {
       "source_line": 284,
-      "output": "gregtech:smelting_crucible_iridium"
+      "output": "gt6ce:smelting_crucible_iridium"
     },
-    "gregtech:smeltery_survival/smelting_crucible_niobium_titanium": {
+    "gt6ce:smeltery_survival/smelting_crucible_niobium_titanium": {
       "source_line": 285,
-      "output": "gregtech:smelting_crucible_niobium_titanium"
+      "output": "gt6ce:smelting_crucible_niobium_titanium"
     },
-    "gregtech:smeltery_survival/smelting_crucible_vanadium": {
+    "gt6ce:smeltery_survival/smelting_crucible_vanadium": {
       "source_line": 286,
-      "output": "gregtech:smelting_crucible_vanadium"
+      "output": "gt6ce:smelting_crucible_vanadium"
     },
-    "gregtech:smeltery_survival/smelting_crucible_tungsten": {
+    "gt6ce:smeltery_survival/smelting_crucible_tungsten": {
       "source_line": 287,
-      "output": "gregtech:smelting_crucible_tungsten"
+      "output": "gt6ce:smelting_crucible_tungsten"
     },
-    "gregtech:smeltery_survival/smelting_crucible_ta4hfc5": {
+    "gt6ce:smeltery_survival/smelting_crucible_ta4hfc5": {
       "source_line": 288,
-      "output": "gregtech:smelting_crucible_ta4hfc5"
+      "output": "gt6ce:smelting_crucible_ta4hfc5"
     },
-    "gregtech:smeltery_survival/smelting_crucible_void_metal": {
+    "gt6ce:smeltery_survival/smelting_crucible_void_metal": {
       "source_line": 289,
-      "output": "gregtech:smelting_crucible_void_metal"
+      "output": "gt6ce:smelting_crucible_void_metal"
     },
-    "gregtech:smeltery_survival/smelting_crucible_bedrock_hsla_alloy": {
+    "gt6ce:smeltery_survival/smelting_crucible_bedrock_hsla_alloy": {
       "source_line": 291,
-      "output": "gregtech:smelting_crucible_bedrock_hsla_alloy"
+      "output": "gt6ce:smelting_crucible_bedrock_hsla_alloy"
     },
-    "gregtech:smeltery_survival/smelting_crucible_ad": {
+    "gt6ce:smeltery_survival/smelting_crucible_ad": {
       "source_line": 292,
-      "output": "gregtech:smelting_crucible_ad"
+      "output": "gt6ce:smelting_crucible_ad"
     },
-    "gregtech:smeltery_survival/burning_box_solid_brick": {
+    "gt6ce:smeltery_survival/burning_box_solid_brick": {
       "source_line": 519,
-      "output": "gregtech:burning_box_solid_brick"
+      "output": "gt6ce:burning_box_solid_brick"
     },
-    "gregtech:smeltery_survival/burning_box_solid_lead": {
+    "gt6ce:smeltery_survival/burning_box_solid_lead": {
       "source_line": 522,
-      "output": "gregtech:burning_box_solid_lead"
+      "output": "gt6ce:burning_box_solid_lead"
     },
-    "gregtech:smeltery_survival/burning_box_solid_bismuth": {
+    "gt6ce:smeltery_survival/burning_box_solid_bismuth": {
       "source_line": 523,
-      "output": "gregtech:burning_box_solid_bismuth"
+      "output": "gt6ce:burning_box_solid_bismuth"
     },
-    "gregtech:smeltery_survival/burning_box_solid_bronze": {
+    "gt6ce:smeltery_survival/burning_box_solid_bronze": {
       "source_line": 524,
-      "output": "gregtech:burning_box_solid_bronze"
+      "output": "gt6ce:burning_box_solid_bronze"
     },
-    "gregtech:smeltery_survival/burning_box_solid_arsenic_copper": {
+    "gt6ce:smeltery_survival/burning_box_solid_arsenic_copper": {
       "source_line": 525,
-      "output": "gregtech:burning_box_solid_arsenic_copper"
+      "output": "gt6ce:burning_box_solid_arsenic_copper"
     },
-    "gregtech:smeltery_survival/burning_box_solid_arsenic_bronze": {
+    "gt6ce:smeltery_survival/burning_box_solid_arsenic_bronze": {
       "source_line": 526,
-      "output": "gregtech:burning_box_solid_arsenic_bronze"
+      "output": "gt6ce:burning_box_solid_arsenic_bronze"
     },
-    "gregtech:smeltery_survival/burning_box_solid_invar": {
+    "gt6ce:smeltery_survival/burning_box_solid_invar": {
       "source_line": 527,
-      "output": "gregtech:burning_box_solid_invar"
+      "output": "gt6ce:burning_box_solid_invar"
     },
-    "gregtech:smeltery_survival/burning_box_solid_steel": {
+    "gt6ce:smeltery_survival/burning_box_solid_steel": {
       "source_line": 528,
-      "output": "gregtech:burning_box_solid_steel"
+      "output": "gt6ce:burning_box_solid_steel"
     },
-    "gregtech:smeltery_survival/burning_box_solid_chromium": {
+    "gt6ce:smeltery_survival/burning_box_solid_chromium": {
       "source_line": 529,
-      "output": "gregtech:burning_box_solid_chromium"
+      "output": "gt6ce:burning_box_solid_chromium"
     },
-    "gregtech:smeltery_survival/burning_box_solid_titanium": {
+    "gt6ce:smeltery_survival/burning_box_solid_titanium": {
       "source_line": 530,
-      "output": "gregtech:burning_box_solid_titanium"
+      "output": "gt6ce:burning_box_solid_titanium"
     },
-    "gregtech:smeltery_survival/burning_box_solid_netherite": {
+    "gt6ce:smeltery_survival/burning_box_solid_netherite": {
       "source_line": 531,
-      "output": "gregtech:burning_box_solid_netherite"
+      "output": "gt6ce:burning_box_solid_netherite"
     },
-    "gregtech:smeltery_survival/burning_box_solid_tungsten": {
+    "gt6ce:smeltery_survival/burning_box_solid_tungsten": {
       "source_line": 532,
-      "output": "gregtech:burning_box_solid_tungsten"
+      "output": "gt6ce:burning_box_solid_tungsten"
     },
-    "gregtech:smeltery_survival/burning_box_solid_tungsten_steel": {
+    "gt6ce:smeltery_survival/burning_box_solid_tungsten_steel": {
       "source_line": 533,
-      "output": "gregtech:burning_box_solid_tungsten_steel"
+      "output": "gt6ce:burning_box_solid_tungsten_steel"
     },
-    "gregtech:smeltery_survival/burning_box_solid_ta4hfc5": {
+    "gt6ce:smeltery_survival/burning_box_solid_ta4hfc5": {
       "source_line": 534,
-      "output": "gregtech:burning_box_solid_ta4hfc5"
+      "output": "gt6ce:burning_box_solid_ta4hfc5"
     },
-    "gregtech:smeltery_survival/burning_box_solid_dense_lead": {
+    "gt6ce:smeltery_survival/burning_box_solid_dense_lead": {
       "source_line": 536,
-      "output": "gregtech:burning_box_solid_dense_lead"
+      "output": "gt6ce:burning_box_solid_dense_lead"
     },
-    "gregtech:smeltery_survival/burning_box_solid_dense_bismuth": {
+    "gt6ce:smeltery_survival/burning_box_solid_dense_bismuth": {
       "source_line": 537,
-      "output": "gregtech:burning_box_solid_dense_bismuth"
+      "output": "gt6ce:burning_box_solid_dense_bismuth"
     },
-    "gregtech:smeltery_survival/burning_box_solid_dense_bronze": {
+    "gt6ce:smeltery_survival/burning_box_solid_dense_bronze": {
       "source_line": 538,
-      "output": "gregtech:burning_box_solid_dense_bronze"
+      "output": "gt6ce:burning_box_solid_dense_bronze"
     },
-    "gregtech:smeltery_survival/burning_box_solid_dense_arsenic_copper": {
+    "gt6ce:smeltery_survival/burning_box_solid_dense_arsenic_copper": {
       "source_line": 539,
-      "output": "gregtech:burning_box_solid_dense_arsenic_copper"
+      "output": "gt6ce:burning_box_solid_dense_arsenic_copper"
     },
-    "gregtech:smeltery_survival/burning_box_solid_dense_arsenic_bronze": {
+    "gt6ce:smeltery_survival/burning_box_solid_dense_arsenic_bronze": {
       "source_line": 540,
-      "output": "gregtech:burning_box_solid_dense_arsenic_bronze"
+      "output": "gt6ce:burning_box_solid_dense_arsenic_bronze"
     },
-    "gregtech:smeltery_survival/burning_box_solid_dense_invar": {
+    "gt6ce:smeltery_survival/burning_box_solid_dense_invar": {
       "source_line": 541,
-      "output": "gregtech:burning_box_solid_dense_invar"
+      "output": "gt6ce:burning_box_solid_dense_invar"
     },
-    "gregtech:smeltery_survival/burning_box_solid_dense_steel": {
+    "gt6ce:smeltery_survival/burning_box_solid_dense_steel": {
       "source_line": 542,
-      "output": "gregtech:burning_box_solid_dense_steel"
+      "output": "gt6ce:burning_box_solid_dense_steel"
     },
-    "gregtech:smeltery_survival/burning_box_solid_dense_chromium": {
+    "gt6ce:smeltery_survival/burning_box_solid_dense_chromium": {
       "source_line": 543,
-      "output": "gregtech:burning_box_solid_dense_chromium"
+      "output": "gt6ce:burning_box_solid_dense_chromium"
     },
-    "gregtech:smeltery_survival/burning_box_solid_dense_titanium": {
+    "gt6ce:smeltery_survival/burning_box_solid_dense_titanium": {
       "source_line": 544,
-      "output": "gregtech:burning_box_solid_dense_titanium"
+      "output": "gt6ce:burning_box_solid_dense_titanium"
     },
-    "gregtech:smeltery_survival/burning_box_solid_dense_netherite": {
+    "gt6ce:smeltery_survival/burning_box_solid_dense_netherite": {
       "source_line": 545,
-      "output": "gregtech:burning_box_solid_dense_netherite"
+      "output": "gt6ce:burning_box_solid_dense_netherite"
     },
-    "gregtech:smeltery_survival/burning_box_solid_dense_tungsten": {
+    "gt6ce:smeltery_survival/burning_box_solid_dense_tungsten": {
       "source_line": 546,
-      "output": "gregtech:burning_box_solid_dense_tungsten"
+      "output": "gt6ce:burning_box_solid_dense_tungsten"
     },
-    "gregtech:smeltery_survival/burning_box_solid_dense_tungsten_steel": {
+    "gt6ce:smeltery_survival/burning_box_solid_dense_tungsten_steel": {
       "source_line": 547,
-      "output": "gregtech:burning_box_solid_dense_tungsten_steel"
+      "output": "gt6ce:burning_box_solid_dense_tungsten_steel"
     },
-    "gregtech:smeltery_survival/burning_box_solid_dense_ta4hfc5": {
+    "gt6ce:smeltery_survival/burning_box_solid_dense_ta4hfc5": {
       "source_line": 548,
-      "output": "gregtech:burning_box_solid_dense_ta4hfc5"
+      "output": "gt6ce:burning_box_solid_dense_ta4hfc5"
     },
-    "gregtech:smeltery_survival/steam_boiler_lead": {
+    "gt6ce:smeltery_survival/steam_boiler_lead": {
       "source_line": 553,
-      "output": "gregtech:steam_boiler_lead"
+      "output": "gt6ce:steam_boiler_lead"
     },
-    "gregtech:smeltery_survival/steam_boiler_bismuth": {
+    "gt6ce:smeltery_survival/steam_boiler_bismuth": {
       "source_line": 554,
-      "output": "gregtech:steam_boiler_bismuth"
+      "output": "gt6ce:steam_boiler_bismuth"
     },
-    "gregtech:smeltery_survival/steam_boiler_bronze": {
+    "gt6ce:smeltery_survival/steam_boiler_bronze": {
       "source_line": 555,
-      "output": "gregtech:steam_boiler_bronze"
+      "output": "gt6ce:steam_boiler_bronze"
     },
-    "gregtech:smeltery_survival/steam_boiler_arsenic_copper": {
+    "gt6ce:smeltery_survival/steam_boiler_arsenic_copper": {
       "source_line": 556,
-      "output": "gregtech:steam_boiler_arsenic_copper"
+      "output": "gt6ce:steam_boiler_arsenic_copper"
     },
-    "gregtech:smeltery_survival/steam_boiler_arsenic_bronze": {
+    "gt6ce:smeltery_survival/steam_boiler_arsenic_bronze": {
       "source_line": 557,
-      "output": "gregtech:steam_boiler_arsenic_bronze"
+      "output": "gt6ce:steam_boiler_arsenic_bronze"
     },
-    "gregtech:smeltery_survival/steam_boiler_invar": {
+    "gt6ce:smeltery_survival/steam_boiler_invar": {
       "source_line": 558,
-      "output": "gregtech:steam_boiler_invar"
+      "output": "gt6ce:steam_boiler_invar"
     },
-    "gregtech:smeltery_survival/steam_boiler_steel": {
+    "gt6ce:smeltery_survival/steam_boiler_steel": {
       "source_line": 559,
-      "output": "gregtech:steam_boiler_steel"
+      "output": "gt6ce:steam_boiler_steel"
     },
-    "gregtech:smeltery_survival/steam_boiler_chromium": {
+    "gt6ce:smeltery_survival/steam_boiler_chromium": {
       "source_line": 560,
-      "output": "gregtech:steam_boiler_chromium"
+      "output": "gt6ce:steam_boiler_chromium"
     },
-    "gregtech:smeltery_survival/steam_boiler_titanium": {
+    "gt6ce:smeltery_survival/steam_boiler_titanium": {
       "source_line": 561,
-      "output": "gregtech:steam_boiler_titanium"
+      "output": "gt6ce:steam_boiler_titanium"
     },
-    "gregtech:smeltery_survival/steam_boiler_netherite": {
+    "gt6ce:smeltery_survival/steam_boiler_netherite": {
       "source_line": 562,
-      "output": "gregtech:steam_boiler_netherite"
+      "output": "gt6ce:steam_boiler_netherite"
     },
-    "gregtech:smeltery_survival/steam_boiler_tungsten": {
+    "gt6ce:smeltery_survival/steam_boiler_tungsten": {
       "source_line": 563,
-      "output": "gregtech:steam_boiler_tungsten"
+      "output": "gt6ce:steam_boiler_tungsten"
     },
-    "gregtech:smeltery_survival/steam_boiler_tungsten_steel": {
+    "gt6ce:smeltery_survival/steam_boiler_tungsten_steel": {
       "source_line": 564,
-      "output": "gregtech:steam_boiler_tungsten_steel"
+      "output": "gt6ce:steam_boiler_tungsten_steel"
     },
-    "gregtech:smeltery_survival/steam_boiler_ultimet": {
+    "gt6ce:smeltery_survival/steam_boiler_ultimet": {
       "source_line": 565,
-      "output": "gregtech:steam_boiler_ultimet"
+      "output": "gt6ce:steam_boiler_ultimet"
     },
-    "gregtech:smeltery_survival/strong_steam_boiler_lead": {
+    "gt6ce:smeltery_survival/strong_steam_boiler_lead": {
       "source_line": 567,
-      "output": "gregtech:strong_steam_boiler_lead"
+      "output": "gt6ce:strong_steam_boiler_lead"
     },
-    "gregtech:smeltery_survival/strong_steam_boiler_bismuth": {
+    "gt6ce:smeltery_survival/strong_steam_boiler_bismuth": {
       "source_line": 568,
-      "output": "gregtech:strong_steam_boiler_bismuth"
+      "output": "gt6ce:strong_steam_boiler_bismuth"
     },
-    "gregtech:smeltery_survival/strong_steam_boiler_bronze": {
+    "gt6ce:smeltery_survival/strong_steam_boiler_bronze": {
       "source_line": 569,
-      "output": "gregtech:strong_steam_boiler_bronze"
+      "output": "gt6ce:strong_steam_boiler_bronze"
     },
-    "gregtech:smeltery_survival/strong_steam_boiler_arsenic_copper": {
+    "gt6ce:smeltery_survival/strong_steam_boiler_arsenic_copper": {
       "source_line": 570,
-      "output": "gregtech:strong_steam_boiler_arsenic_copper"
+      "output": "gt6ce:strong_steam_boiler_arsenic_copper"
     },
-    "gregtech:smeltery_survival/strong_steam_boiler_arsenic_bronze": {
+    "gt6ce:smeltery_survival/strong_steam_boiler_arsenic_bronze": {
       "source_line": 571,
-      "output": "gregtech:strong_steam_boiler_arsenic_bronze"
+      "output": "gt6ce:strong_steam_boiler_arsenic_bronze"
     },
-    "gregtech:smeltery_survival/strong_steam_boiler_invar": {
+    "gt6ce:smeltery_survival/strong_steam_boiler_invar": {
       "source_line": 572,
-      "output": "gregtech:strong_steam_boiler_invar"
+      "output": "gt6ce:strong_steam_boiler_invar"
     },
-    "gregtech:smeltery_survival/strong_steam_boiler_steel": {
+    "gt6ce:smeltery_survival/strong_steam_boiler_steel": {
       "source_line": 573,
-      "output": "gregtech:strong_steam_boiler_steel"
+      "output": "gt6ce:strong_steam_boiler_steel"
     },
-    "gregtech:smeltery_survival/strong_steam_boiler_chromium": {
+    "gt6ce:smeltery_survival/strong_steam_boiler_chromium": {
       "source_line": 574,
-      "output": "gregtech:strong_steam_boiler_chromium"
+      "output": "gt6ce:strong_steam_boiler_chromium"
     },
-    "gregtech:smeltery_survival/strong_steam_boiler_titanium": {
+    "gt6ce:smeltery_survival/strong_steam_boiler_titanium": {
       "source_line": 575,
-      "output": "gregtech:strong_steam_boiler_titanium"
+      "output": "gt6ce:strong_steam_boiler_titanium"
     },
-    "gregtech:smeltery_survival/strong_steam_boiler_netherite": {
+    "gt6ce:smeltery_survival/strong_steam_boiler_netherite": {
       "source_line": 576,
-      "output": "gregtech:strong_steam_boiler_netherite"
+      "output": "gt6ce:strong_steam_boiler_netherite"
     },
-    "gregtech:smeltery_survival/strong_steam_boiler_tungsten": {
+    "gt6ce:smeltery_survival/strong_steam_boiler_tungsten": {
       "source_line": 577,
-      "output": "gregtech:strong_steam_boiler_tungsten"
+      "output": "gt6ce:strong_steam_boiler_tungsten"
     },
-    "gregtech:smeltery_survival/strong_steam_boiler_tungsten_steel": {
+    "gt6ce:smeltery_survival/strong_steam_boiler_tungsten_steel": {
       "source_line": 578,
-      "output": "gregtech:strong_steam_boiler_tungsten_steel"
+      "output": "gt6ce:strong_steam_boiler_tungsten_steel"
     },
-    "gregtech:smeltery_survival/strong_steam_boiler_ultimet": {
+    "gt6ce:smeltery_survival/strong_steam_boiler_ultimet": {
       "source_line": 579,
-      "output": "gregtech:strong_steam_boiler_ultimet"
+      "output": "gt6ce:strong_steam_boiler_ultimet"
     },
-    "gregtech:smeltery_survival/burning_box_liquid_bronze": {
+    "gt6ce:smeltery_survival/burning_box_liquid_bronze": {
       "source_line": 619,
-      "output": "gregtech:burning_box_liquid_bronze"
+      "output": "gt6ce:burning_box_liquid_bronze"
     },
-    "gregtech:smeltery_survival/burning_box_liquid_arsenic_copper": {
+    "gt6ce:smeltery_survival/burning_box_liquid_arsenic_copper": {
       "source_line": 620,
-      "output": "gregtech:burning_box_liquid_arsenic_copper"
+      "output": "gt6ce:burning_box_liquid_arsenic_copper"
     },
-    "gregtech:smeltery_survival/burning_box_liquid_arsenic_bronze": {
+    "gt6ce:smeltery_survival/burning_box_liquid_arsenic_bronze": {
       "source_line": 621,
-      "output": "gregtech:burning_box_liquid_arsenic_bronze"
+      "output": "gt6ce:burning_box_liquid_arsenic_bronze"
     },
-    "gregtech:smeltery_survival/burning_box_liquid_invar": {
+    "gt6ce:smeltery_survival/burning_box_liquid_invar": {
       "source_line": 622,
-      "output": "gregtech:burning_box_liquid_invar"
+      "output": "gt6ce:burning_box_liquid_invar"
     },
-    "gregtech:smeltery_survival/burning_box_liquid_steel": {
+    "gt6ce:smeltery_survival/burning_box_liquid_steel": {
       "source_line": 623,
-      "output": "gregtech:burning_box_liquid_steel"
+      "output": "gt6ce:burning_box_liquid_steel"
     },
-    "gregtech:smeltery_survival/burning_box_liquid_chromium": {
+    "gt6ce:smeltery_survival/burning_box_liquid_chromium": {
       "source_line": 624,
-      "output": "gregtech:burning_box_liquid_chromium"
+      "output": "gt6ce:burning_box_liquid_chromium"
     },
-    "gregtech:smeltery_survival/burning_box_liquid_titanium": {
+    "gt6ce:smeltery_survival/burning_box_liquid_titanium": {
       "source_line": 625,
-      "output": "gregtech:burning_box_liquid_titanium"
+      "output": "gt6ce:burning_box_liquid_titanium"
     },
-    "gregtech:smeltery_survival/burning_box_liquid_netherite": {
+    "gt6ce:smeltery_survival/burning_box_liquid_netherite": {
       "source_line": 626,
-      "output": "gregtech:burning_box_liquid_netherite"
+      "output": "gt6ce:burning_box_liquid_netherite"
     },
-    "gregtech:smeltery_survival/burning_box_liquid_tungsten": {
+    "gt6ce:smeltery_survival/burning_box_liquid_tungsten": {
       "source_line": 627,
-      "output": "gregtech:burning_box_liquid_tungsten"
+      "output": "gt6ce:burning_box_liquid_tungsten"
     },
-    "gregtech:smeltery_survival/burning_box_liquid_tungsten_steel": {
+    "gt6ce:smeltery_survival/burning_box_liquid_tungsten_steel": {
       "source_line": 628,
-      "output": "gregtech:burning_box_liquid_tungsten_steel"
+      "output": "gt6ce:burning_box_liquid_tungsten_steel"
     },
-    "gregtech:smeltery_survival/burning_box_liquid_ta4hfc5": {
+    "gt6ce:smeltery_survival/burning_box_liquid_ta4hfc5": {
       "source_line": 629,
-      "output": "gregtech:burning_box_liquid_ta4hfc5"
+      "output": "gt6ce:burning_box_liquid_ta4hfc5"
     },
-    "gregtech:smeltery_survival/burning_box_liquid_dense_bronze": {
+    "gt6ce:smeltery_survival/burning_box_liquid_dense_bronze": {
       "source_line": 633,
-      "output": "gregtech:burning_box_liquid_dense_bronze"
+      "output": "gt6ce:burning_box_liquid_dense_bronze"
     },
-    "gregtech:smeltery_survival/burning_box_liquid_dense_arsenic_copper": {
+    "gt6ce:smeltery_survival/burning_box_liquid_dense_arsenic_copper": {
       "source_line": 634,
-      "output": "gregtech:burning_box_liquid_dense_arsenic_copper"
+      "output": "gt6ce:burning_box_liquid_dense_arsenic_copper"
     },
-    "gregtech:smeltery_survival/burning_box_liquid_dense_arsenic_bronze": {
+    "gt6ce:smeltery_survival/burning_box_liquid_dense_arsenic_bronze": {
       "source_line": 635,
-      "output": "gregtech:burning_box_liquid_dense_arsenic_bronze"
+      "output": "gt6ce:burning_box_liquid_dense_arsenic_bronze"
     },
-    "gregtech:smeltery_survival/burning_box_liquid_dense_invar": {
+    "gt6ce:smeltery_survival/burning_box_liquid_dense_invar": {
       "source_line": 636,
-      "output": "gregtech:burning_box_liquid_dense_invar"
+      "output": "gt6ce:burning_box_liquid_dense_invar"
     },
-    "gregtech:smeltery_survival/burning_box_liquid_dense_steel": {
+    "gt6ce:smeltery_survival/burning_box_liquid_dense_steel": {
       "source_line": 637,
-      "output": "gregtech:burning_box_liquid_dense_steel"
+      "output": "gt6ce:burning_box_liquid_dense_steel"
     },
-    "gregtech:smeltery_survival/burning_box_liquid_dense_chromium": {
+    "gt6ce:smeltery_survival/burning_box_liquid_dense_chromium": {
       "source_line": 638,
-      "output": "gregtech:burning_box_liquid_dense_chromium"
+      "output": "gt6ce:burning_box_liquid_dense_chromium"
     },
-    "gregtech:smeltery_survival/burning_box_liquid_dense_titanium": {
+    "gt6ce:smeltery_survival/burning_box_liquid_dense_titanium": {
       "source_line": 639,
-      "output": "gregtech:burning_box_liquid_dense_titanium"
+      "output": "gt6ce:burning_box_liquid_dense_titanium"
     },
-    "gregtech:smeltery_survival/burning_box_liquid_dense_netherite": {
+    "gt6ce:smeltery_survival/burning_box_liquid_dense_netherite": {
       "source_line": 640,
-      "output": "gregtech:burning_box_liquid_dense_netherite"
+      "output": "gt6ce:burning_box_liquid_dense_netherite"
     },
-    "gregtech:smeltery_survival/burning_box_liquid_dense_tungsten": {
+    "gt6ce:smeltery_survival/burning_box_liquid_dense_tungsten": {
       "source_line": 641,
-      "output": "gregtech:burning_box_liquid_dense_tungsten"
+      "output": "gt6ce:burning_box_liquid_dense_tungsten"
     },
-    "gregtech:smeltery_survival/burning_box_liquid_dense_tungsten_steel": {
+    "gt6ce:smeltery_survival/burning_box_liquid_dense_tungsten_steel": {
       "source_line": 642,
-      "output": "gregtech:burning_box_liquid_dense_tungsten_steel"
+      "output": "gt6ce:burning_box_liquid_dense_tungsten_steel"
     },
-    "gregtech:smeltery_survival/burning_box_liquid_dense_ta4hfc5": {
+    "gt6ce:smeltery_survival/burning_box_liquid_dense_ta4hfc5": {
       "source_line": 643,
-      "output": "gregtech:burning_box_liquid_dense_ta4hfc5"
+      "output": "gt6ce:burning_box_liquid_dense_ta4hfc5"
     },
-    "gregtech:smeltery_survival/burning_box_fluidbed_lead": {
+    "gt6ce:smeltery_survival/burning_box_fluidbed_lead": {
       "source_line": 678,
-      "output": "gregtech:burning_box_fluidbed_lead"
+      "output": "gt6ce:burning_box_fluidbed_lead"
     },
-    "gregtech:smeltery_survival/burning_box_fluidbed_bismuth": {
+    "gt6ce:smeltery_survival/burning_box_fluidbed_bismuth": {
       "source_line": 679,
-      "output": "gregtech:burning_box_fluidbed_bismuth"
+      "output": "gt6ce:burning_box_fluidbed_bismuth"
     },
-    "gregtech:smeltery_survival/burning_box_fluidbed_bronze": {
+    "gt6ce:smeltery_survival/burning_box_fluidbed_bronze": {
       "source_line": 680,
-      "output": "gregtech:burning_box_fluidbed_bronze"
+      "output": "gt6ce:burning_box_fluidbed_bronze"
     },
-    "gregtech:smeltery_survival/burning_box_fluidbed_arsenic_copper": {
+    "gt6ce:smeltery_survival/burning_box_fluidbed_arsenic_copper": {
       "source_line": 681,
-      "output": "gregtech:burning_box_fluidbed_arsenic_copper"
+      "output": "gt6ce:burning_box_fluidbed_arsenic_copper"
     },
-    "gregtech:smeltery_survival/burning_box_fluidbed_arsenic_bronze": {
+    "gt6ce:smeltery_survival/burning_box_fluidbed_arsenic_bronze": {
       "source_line": 682,
-      "output": "gregtech:burning_box_fluidbed_arsenic_bronze"
+      "output": "gt6ce:burning_box_fluidbed_arsenic_bronze"
     },
-    "gregtech:smeltery_survival/burning_box_fluidbed_invar": {
+    "gt6ce:smeltery_survival/burning_box_fluidbed_invar": {
       "source_line": 683,
-      "output": "gregtech:burning_box_fluidbed_invar"
+      "output": "gt6ce:burning_box_fluidbed_invar"
     },
-    "gregtech:smeltery_survival/burning_box_fluidbed_steel": {
+    "gt6ce:smeltery_survival/burning_box_fluidbed_steel": {
       "source_line": 684,
-      "output": "gregtech:burning_box_fluidbed_steel"
+      "output": "gt6ce:burning_box_fluidbed_steel"
     },
-    "gregtech:smeltery_survival/burning_box_fluidbed_chromium": {
+    "gt6ce:smeltery_survival/burning_box_fluidbed_chromium": {
       "source_line": 685,
-      "output": "gregtech:burning_box_fluidbed_chromium"
+      "output": "gt6ce:burning_box_fluidbed_chromium"
     },
-    "gregtech:smeltery_survival/burning_box_fluidbed_titanium": {
+    "gt6ce:smeltery_survival/burning_box_fluidbed_titanium": {
       "source_line": 686,
-      "output": "gregtech:burning_box_fluidbed_titanium"
+      "output": "gt6ce:burning_box_fluidbed_titanium"
     },
-    "gregtech:smeltery_survival/burning_box_fluidbed_netherite": {
+    "gt6ce:smeltery_survival/burning_box_fluidbed_netherite": {
       "source_line": 687,
-      "output": "gregtech:burning_box_fluidbed_netherite"
+      "output": "gt6ce:burning_box_fluidbed_netherite"
     },
-    "gregtech:smeltery_survival/burning_box_fluidbed_tungsten": {
+    "gt6ce:smeltery_survival/burning_box_fluidbed_tungsten": {
       "source_line": 688,
-      "output": "gregtech:burning_box_fluidbed_tungsten"
+      "output": "gt6ce:burning_box_fluidbed_tungsten"
     },
-    "gregtech:smeltery_survival/burning_box_fluidbed_tungsten_steel": {
+    "gt6ce:smeltery_survival/burning_box_fluidbed_tungsten_steel": {
       "source_line": 689,
-      "output": "gregtech:burning_box_fluidbed_tungsten_steel"
+      "output": "gt6ce:burning_box_fluidbed_tungsten_steel"
     },
-    "gregtech:smeltery_survival/burning_box_fluidbed_ta4hfc5": {
+    "gt6ce:smeltery_survival/burning_box_fluidbed_ta4hfc5": {
       "source_line": 690,
-      "output": "gregtech:burning_box_fluidbed_ta4hfc5"
+      "output": "gt6ce:burning_box_fluidbed_ta4hfc5"
     },
-    "gregtech:smeltery_survival/burning_box_fluidbed_dense_lead": {
+    "gt6ce:smeltery_survival/burning_box_fluidbed_dense_lead": {
       "source_line": 692,
-      "output": "gregtech:burning_box_fluidbed_dense_lead"
+      "output": "gt6ce:burning_box_fluidbed_dense_lead"
     },
-    "gregtech:smeltery_survival/burning_box_fluidbed_dense_bismuth": {
+    "gt6ce:smeltery_survival/burning_box_fluidbed_dense_bismuth": {
       "source_line": 693,
-      "output": "gregtech:burning_box_fluidbed_dense_bismuth"
+      "output": "gt6ce:burning_box_fluidbed_dense_bismuth"
     },
-    "gregtech:smeltery_survival/burning_box_fluidbed_dense_bronze": {
+    "gt6ce:smeltery_survival/burning_box_fluidbed_dense_bronze": {
       "source_line": 694,
-      "output": "gregtech:burning_box_fluidbed_dense_bronze"
+      "output": "gt6ce:burning_box_fluidbed_dense_bronze"
     },
-    "gregtech:smeltery_survival/burning_box_fluidbed_dense_arsenic_copper": {
+    "gt6ce:smeltery_survival/burning_box_fluidbed_dense_arsenic_copper": {
       "source_line": 695,
-      "output": "gregtech:burning_box_fluidbed_dense_arsenic_copper"
+      "output": "gt6ce:burning_box_fluidbed_dense_arsenic_copper"
     },
-    "gregtech:smeltery_survival/burning_box_fluidbed_dense_arsenic_bronze": {
+    "gt6ce:smeltery_survival/burning_box_fluidbed_dense_arsenic_bronze": {
       "source_line": 696,
-      "output": "gregtech:burning_box_fluidbed_dense_arsenic_bronze"
+      "output": "gt6ce:burning_box_fluidbed_dense_arsenic_bronze"
     },
-    "gregtech:smeltery_survival/burning_box_fluidbed_dense_invar": {
+    "gt6ce:smeltery_survival/burning_box_fluidbed_dense_invar": {
       "source_line": 697,
-      "output": "gregtech:burning_box_fluidbed_dense_invar"
+      "output": "gt6ce:burning_box_fluidbed_dense_invar"
     },
-    "gregtech:smeltery_survival/burning_box_fluidbed_dense_steel": {
+    "gt6ce:smeltery_survival/burning_box_fluidbed_dense_steel": {
       "source_line": 698,
-      "output": "gregtech:burning_box_fluidbed_dense_steel"
+      "output": "gt6ce:burning_box_fluidbed_dense_steel"
     },
-    "gregtech:smeltery_survival/burning_box_fluidbed_dense_chromium": {
+    "gt6ce:smeltery_survival/burning_box_fluidbed_dense_chromium": {
       "source_line": 699,
-      "output": "gregtech:burning_box_fluidbed_dense_chromium"
+      "output": "gt6ce:burning_box_fluidbed_dense_chromium"
     },
-    "gregtech:smeltery_survival/burning_box_fluidbed_dense_titanium": {
+    "gt6ce:smeltery_survival/burning_box_fluidbed_dense_titanium": {
       "source_line": 700,
-      "output": "gregtech:burning_box_fluidbed_dense_titanium"
+      "output": "gt6ce:burning_box_fluidbed_dense_titanium"
     },
-    "gregtech:smeltery_survival/burning_box_fluidbed_dense_netherite": {
+    "gt6ce:smeltery_survival/burning_box_fluidbed_dense_netherite": {
       "source_line": 701,
-      "output": "gregtech:burning_box_fluidbed_dense_netherite"
+      "output": "gt6ce:burning_box_fluidbed_dense_netherite"
     },
-    "gregtech:smeltery_survival/burning_box_fluidbed_dense_tungsten": {
+    "gt6ce:smeltery_survival/burning_box_fluidbed_dense_tungsten": {
       "source_line": 702,
-      "output": "gregtech:burning_box_fluidbed_dense_tungsten"
+      "output": "gt6ce:burning_box_fluidbed_dense_tungsten"
     },
-    "gregtech:smeltery_survival/burning_box_fluidbed_dense_tungsten_steel": {
+    "gt6ce:smeltery_survival/burning_box_fluidbed_dense_tungsten_steel": {
       "source_line": 703,
-      "output": "gregtech:burning_box_fluidbed_dense_tungsten_steel"
+      "output": "gt6ce:burning_box_fluidbed_dense_tungsten_steel"
     },
-    "gregtech:smeltery_survival/burning_box_fluidbed_dense_ta4hfc5": {
+    "gt6ce:smeltery_survival/burning_box_fluidbed_dense_ta4hfc5": {
       "source_line": 704,
-      "output": "gregtech:burning_box_fluidbed_dense_ta4hfc5"
+      "output": "gt6ce:burning_box_fluidbed_dense_ta4hfc5"
     },
-    "gregtech:smeltery_survival/clay_crucible": {
+    "gt6ce:smeltery_survival/clay_crucible": {
       "source": "MultiItemRandomTools.java:113,125; Loader_MultiTileEntities.java:256"
     },
-    "gregtech:smeltery_survival/ceramic_crucible_firing": {
+    "gt6ce:smeltery_survival/ceramic_crucible_firing": {
       "source": "MultiItemRandomTools.java:113,125; Loader_MultiTileEntities.java:256"
     },
-    "gregtech:smeltery_survival/clay_crucible_reclaim": {
+    "gt6ce:smeltery_survival/clay_crucible_reclaim": {
       "source": "MultiItemRandomTools.java:113,125; Loader_MultiTileEntities.java:256"
     }
   },

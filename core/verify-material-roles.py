@@ -37,6 +37,13 @@ def write(path, data):
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_bytes(data)
 
+def compile_java(output, inputs):
+    # The split API + implementation tree exceeds Windows' command-line length.
+    argument_file = scratch / (output.name + '-sources.args')
+    argument_file.write_text('\n'.join('"' + path.as_posix() + '"' for path in inputs), encoding='utf-8')
+    subprocess.run([str(jdk / 'bin/javac.exe'), '--release', '17', '-encoding', 'UTF-8',
+                    '-d', str(output), '@' + str(argument_file)], check=True)
+
 if mode == 'original':
     files = {entry['original_path']: entry for entry in material['files'] + base['files']}
     for path, entry in files.items():
@@ -59,14 +66,15 @@ if mode == 'original':
     write('OriginalMaterialRoleProbe.java', (root / 'core/src/test/fixtures/OriginalMaterialRoleProbe.java').read_bytes())
     main_class = 'OriginalMaterialRoleProbe'
 elif mode == 'current':
-    for path in (root / 'core/src/main/java').rglob('*.java'):
-        write(path.relative_to(root / 'core/src/main/java'), path.read_bytes())
+    for source_root in [root / 'core/src/api/java', root / 'core/src/main/java']:
+        for path in source_root.rglob('*.java'):
+            write(path.relative_to(source_root), path.read_bytes())
     stubs = json.loads((root / 'core/src/test/fixtures/material-role-boundary-stubs.json').read_text(encoding='utf-8'))
     # Current core compiles with NO game stubs/classpath; test annotations/helper are compile-only below.
     main_sources = sorted(sources.rglob('*.java'))
     main_classes = scratch / 'main-classes'
     main_classes.mkdir()
-    subprocess.run([str(jdk / 'bin/javac.exe'), '--release', '17', '-encoding', 'UTF-8', '-d', str(main_classes)] + [str(p) for p in main_sources], check=True)
+    compile_java(main_classes, main_sources)
     dependencies = subprocess.check_output([str(jdk / 'bin/jdeps.exe'), '--multi-release', '17', '--recursive', '-s', str(main_classes)], text=True)
     print(dependencies, end='')
     if not dependencies.strip() or any(not line.endswith(' -> java.base') for line in dependencies.splitlines()):
@@ -81,7 +89,7 @@ import com.gregtech.gregtech.platform.neoforge.gametest.SharedMaterialBootstrapG
 public final class CurrentMaterialRoleProbe {
  public static void main(String[] args) throws Exception {
   java.util.Locale.setDefault(java.util.Locale.ROOT);
-  ModData.bindPresence(id -> id.equals("minecraft") || id.equals("gregtech"));
+  ModData.bindPresence(id -> id.equals("minecraft") || id.equals("gt6ce"));
   GTMaterialRegistry.setLogSink((warning,message)->{});
   PrefixRegistry.ensurePrefixesLoaded();
   com.gregtech.gregtech.data.ModReferences.UNKNOWN.getClass();
@@ -100,9 +108,12 @@ public final class CurrentMaterialRoleProbe {
 else:
     raise ValueError(mode)
 
-write('com/gregtech/gregtech/platform/neoforge/gametest/SharedMaterialBootstrapGameTests.java',
-      (root / 'neoforge/src/bootstrapGameTest/java/com/gregtech/gregtech/platform/neoforge/gametest/SharedMaterialBootstrapGameTests.java').read_bytes())
+# The source-snapshot probe must keep the original 1156/109 fixtures and APIs.
+# Current game fixtures also cover later accepted CE restorations and addon profiles.
+fixture = (root / 'core/src/test/fixtures/original-material-roles/SharedMaterialBootstrapGameTests.java'
+           if mode == 'original' else root / 'multiversion/versions/1.21.1-neoforge/src/bootstrapGameTest/java/com/gregtech/gregtech/platform/neoforge/gametest/SharedMaterialBootstrapGameTests.java')
+write('com/gregtech/gregtech/platform/neoforge/gametest/SharedMaterialBootstrapGameTests.java', fixture.read_bytes())
 inputs = sorted(sources.rglob('*.java'))
-subprocess.run([str(jdk / 'bin/javac.exe'), '--release', '17', '-encoding', 'UTF-8', '-d', str(classes)] + [str(p) for p in inputs], check=True)
+compile_java(classes, inputs)
 subprocess.run([str(jdk / 'bin/java.exe'), '-cp', str(classes), main_class] + (['check'] if check else []), check=True)
 print('fresh_scratch=' + str(scratch), flush=True)

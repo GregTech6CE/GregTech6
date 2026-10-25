@@ -1845,3 +1845,97 @@ Forge开发47.4.20/Java17.0.10，Neo开发21.1.243/Java21.0.7，各3GiB/directCo
 过程边界：最初误把全部 86 个命名空间组合，其中包括要求精确隔离环境的 nonore 审计和独立 JVM 的 restart 阶段；触发隔离断言后停止，未完成、不计作正式验收。第一次三项原生复测的模板过滤配置也在执行用例前停止，随后将原模板复制到独立命名空间并完成 3/3。Forge 首次定向运行另包含共享资源 JAR 打包和 3576 个原版资源补下载。所有尝试、选择范围、失败清单及日志/XML/源码哈希见 [structure-tracking-special-families-20261025.json](verification/structure-tracking-special-families-20261025.json)。
 
 默认测试改写的 23 份根目录审计 JSON 已备份到忽略的 `work/` 并恢复，未混入本卡修改。客户端手动玩法、独立存档重启和历史存档未验；本卡不改变保存格式。本批提交并创建 PR；默认套件剩余失败后续专项处理，整体移植仍未完成。
+
+## 2026-10-25 / 卡55后续：Neo材料启动基准专项
+
+卡55已按用户决定关闭，提交 `216cb6f9c`、PR #125；本批在独立分支 `codex/targeted-default-regressions` 处理默认 Neo 套件的三项失败，不混入卡55提交。三项根因是运行时夹具仍使用早期移植目录且将附属样例的变更计入原版固定总数，没有发现材料运行时代码需要回退。
+
+`SharedMaterialBootstrapGameTests` 对内置项使用既有 `MaterialBehaviorContracts` 的已采纳目录：1160材料对象、1105正ID、1523名称、132前缀；附属项不计入内置总数，但仍遍历全部材料/别名验证ID唯一性、对象身份和组成有效性。角色检查保留独立原始 SHA-256 `734a7fee39e9326dbfae519c34f3b9a0cb510d7d7a5535858cd04ab0aea99ccb`：只排除源码恢复的 Cinnamonwood/Limewood/Magicwood/Ashwood 四行，并只归一化 PetrifiedWood 的 STONE 标记，就严格重现原始指纹；这五项已采纳差异在归一化前另行断言，内置角色总数为210/415/82。依据仍是既有 normal-wood 差异回执及 tools-power 源码修正记录，不用本次运行输出重铸金样。
+
+反应夹具精确支持纯核心与仓库附属样例两个配置：46条源码显式反应不变；纯核心137条，样例精确删除指定输入组合的1条 StainlessSteel 反应并新增2条附属反应，因此运行表为136条内置、138条总计。保留铜锡、退火铜、赤铁矿/碳/方解石的温度门槛及物质量守恒断言。
+
+历史1156/109夹具从 `216cb6f9c` 冻结到 `core/src/test/fixtures/original-material-roles/`，原源码验证模式使用该文件；当前模式改用多版本目录、同时编译拆分后的api/main源码并绑定gt6ce，使用javac参数文件避免Windows命令行过长。当前模式4项夹具及jdeps仅java.base检查通过。原源码模式需要的 `import/saltnya-snapshot` ref在当前checkout不存在，本次未重新执行，不声称获得新的原源码运行证据。
+
+精确命令、日志/XML/源码哈希及最终结果见 [material-bootstrap-regressions-20261025.json](verification/material-bootstrap-regressions-20261025.json)。本批不重跑Forge默认1045项，也不据此宣称剩余Forge失败已修复；客户端、存档重启和历史存档未验证，整体移植仍未完成。
+
+本批最终结果：核心材料契约7959条断言通过（另含110行源码木材夹具、1212条断言）；最终夹具在纯核心和真实Neo附属样例配置下快速预检各4/4；Neo `gregtech_bootstrap` 带样例游戏复测 **7/7通过**。本批两次游戏运行均仅同一7项：第一次6/7，目录测试暴露仍残留的“附属ID也必须小于10000”旧断言；修正为按内置/附属身份检查10000边界后第二次7/7。首次8分23秒含源码重新生成/编译，第二次2分34秒。两次XML均保留在回执中，不隐藏中间失败。没有执行Forge全套。
+
+## 2026-10-25 / Forge默认失败专项：通用扩展器控制与物流显示
+
+从卡55默认Forge 1045项/93失败的原XML选择7项相关失败，另重放4项控制/保存/红石路由护栏。本批在 `codex/targeted-default-regressions`、材料修复提交 `5dfb01dfe` 后单独实施；不重跑默认全套，不改变卡55 PR #125。
+
+实际运行时缺陷在共享 `ExtenderBlockEntity.machineControl()`：代理的 `available()` 只看扩展器自身，`supportsProgress()`/`supportsMode()` 恒真，`supportsSwitch()` 使用默认真值，导致目标拆除仍报可用、空目标工具交互被处理并消耗耐久、发电机被误报有配方进度，以及循环链被误报支持模式。四项能力查询现与命令共用 `controlOperation`，逐次解析当前目标，复用既有区块可用性和访问集合保护；无目标或循环返回false，不缓存目标。原有五项失败覆盖这些触发场景；六面通用/桥接测试增加目标拆除、替换、循环时的三项能力断言。
+
+另两项物流CPU显示属于夹具方向错误：Minecraft的红石查询方向与发出信号的实际方块面相反。共享方块实现原已调用 `query.getOpposite()`；测试现按盖板面的反方向查询弱/强信号，保留四种CPU的0/15信号、0/10帧数、上一周期用量、空闲清零和NBT/同步断言，并检查物流线上未安装盖板的反面为0。此约定也与已有 `PanelCoverTests.emitterStrongWeakAllFacesAndPersistence` 的六面Level信号断言一致，未改运行时红石输出方向。
+
+`ForgeControlRegressionTests` 在独立 `gt6ce_forge_control_regressions` 命名空间直接重放原夹具；两个NBT模板从原命名空间逐字复制，避免Forge按模板命名空间过滤时误跑默认套件。保存格式、配方与能源结算未改。最终结果、准确命令与日志/XML/源码哈希见 [forge-control-regressions-20261025.json](verification/forge-control-regressions-20261025.json)。其他默认失败未据此标为通过，Neo本批只做共享实现编译，客户端、独立存档重启及旧存档未验，整体移植仍未完成。
+
+首轮11项定向运行中10项通过，五项扩展器旧失败及物流线显示均通过；CPU上一周期显示在校正方向后进入更晚的空闲清零断言，暴露夹具只注入1024EU而未预算最小核心24EU/tick待机消耗，第二周期可能低于192EU扫描门槛。按原行为，缺电时显示不更新，不能为了通过夹具改运行时规则。该夹具现注入4×512EU，覆盖最多40tick待机与扫描门槛，并在空闲检查时另断言仍有足够扫描电量；保留原清零及控制CPU显示断言。随后仅用独立 `gt6ce_forge_cpu_idle` 命名空间复测这一项，前次已通过的10项不重复启动。两次结果分别记录，不宣称来自单次11/11运行。
+
+最终验证：共享实现Forge/Neo `compileJava` 均通过，Forge游戏夹具编译通过。首轮11项为10通过/1失败；仅CPU显示夹具补足待机供电后单项复测1/1通过。两次合并覆盖原记录中的7项失败和4项其他护栏，未重新运行已通过的10项，亦未运行默认1045项。运行时修复五项旧失败；物流显示两项属于方向/供电前提的夹具修正。耗时首轮10分38秒（双端共享源码生成与编译）、单项4分13秒；每次各一个游戏JVM，后者只有一项测试。
+
+## 2026-10-25 / Forge默认失败专项：检索筛选与转发堆叠所有权
+
+在 `db264a1ff` 后独立处理七项旧失败：两个机器检索夹具、两种迷你传送门的缓存接口、旧物品长途管线、旧管道别名合同和库存扩展器朝向夹具。前两组涉及运行时修复；后三项按已采纳目录校正旧夹具。目标命名空间 `gt6ce_forge_transfer_regressions` 重放这些场景及同族护栏，另加真实桶库存上的空模板/NBT/元数据/反转/通配筛选检查，不运行默认1045项。
+
+检索器误用了物流模板的完整NBT比较。`setItemFilter` 保留元数据时，模板可带 `Damage:0`，导致与未带该标签的普通物品错配，出现白名单不取、黑名单取错的原记录失败。按既有FILTER_RETRIEVER_COVER_AUDIT的ALIGN-104及原版CoverRetrieverItem→ST.move→ItemStackSet/Map/Container，只修 `tickRetriever` 的筛选：空模板在两种模式均允许；有模板按物品/元数据比较、支持32767模板通配、忽略额外NBT。物流匹配器与普通过滤器逻辑不变。五份本地只读参考源码LF归一化后严格重现既有审计哈希，原作者及LGPL证据沿用并在回执重记。安装范围、扫描流向、pending和模板交互仍有原审计所列差异，不据筛选修复宣称检索器完整还原。
+
+`CapabilityRelayBlockEntity.ItemRelay.insertItem` 原把调用方堆叠直接交给接收库存。当前Forge依赖InvWrapper源码显示，空槽接收整堆时直接保存该实例；后来远端抽取便可能改变调用方仍持有的原输入对象，使迷你传送门用例关闭后的“退回3个”检查读成“退回1个”。转发插入现传入 `stack.copy()`，目标拥有独立堆叠，保留逐次解析目标、模拟不写、缓存接口失效与循环保护。两种传送门用例在抽取后新增原输入仍为3的断言，不删除关闭远端后的拒收检查。
+
+旧蓝图物品管线改用明确的 `long_dist_pipe_item`；`GTMiscBlocks.LONG_DIST_PIPE` 是已采纳目录中的流体管别名，不能强行让其通两网。旧别名用例改名并检查同一流体管身份、可通流体且拒绝物品。旧库存扩展器用例使用SourceExtenderBlock六向主/次面属性，明确北面输入转向南面库存，保留目标拆除及替换后的缓存接口断言。未改管线类型、注册名或存档格式。命令、各项结果、源码/模板和原记录哈希见 [forge-transfer-regressions-20261025.json](verification/forge-transfer-regressions-20261025.json)。Neo本批只验证共享实现编译；客户端、独立存档重启和历史存档未验，整体移植仍未完成。
+
+最终结果：Forge/Neo共享实现 `compileJava` 与Forge夹具编译通过；单个游戏JVM的 `gt6ce_forge_transfer_regressions` **14/14通过**，对应七项原记录失败及七项相关/新增检查，没有游戏重试，也没有默认套件重跑。原记录中的旧别名用例与改名后的新合同通过显式名称映射对应，未隐藏名称变化。总耗时11分21秒，包含双端源码生成、编译与服务器启动。根目录既有审计JSON未改，旧1045项XML保留；不能把这组结果当作新测得的默认全套剩余数。
+
+## 2026-10-25 / Forge集中清单与配方目录合并排查
+
+在 `41f272edf` 后先为原1045项/93失败中尚余的76条原记录建立源码索引：每条都有测试方法、基线行号、原消息及方法快照哈希；分组是排查主题，不把主题当作已证明根因。本批选择21项原失败，合并网络往返护栏与运行时目录快照，总计24项。完整资源重载放在独立GameTest batch，其他方法不与它交叠，仍共用一个游戏JVM。索引见 [forge-default-failure-index-20261025.json](verification/forge-default-failure-index-20261025.json)；准确结果、命令和哈希见 [forge-catalog-regressions-20261025.json](verification/forge-catalog-regressions-20261025.json)。
+
+运行时修复：`CraftingTools.expand` 对口袋/电动工具按物品身份去重，重复扩展保持相同候选；Forge `ToolShapedRecipe.fromNetwork` 使用已解析的服务器候选，不能把被网络扁平化的标签材料再次当作源JSON重新扩展。公开构造器和JSON装载仍执行原扩展，包格式/字段顺序不变。完整资源重载、临时数据包覆盖和全部配方网络往返保留；该夹具清理自己创建的临时目录时，补正旧 `data/gregtech` 为实际 `data/gt6ce`。
+
+目录类校正均依据已有定义，不以本次观察值替换金样：两个旧清单只迁移已采纳的gregtech→gt6ce命名空间，JSON其余内容不变；钥匙使用原生 `<material>_key` 与实际randomtools纹理路径；十二种轴向机壳的注册名与静态配方路径分开，由固定源JSON映射验证，保持原材料/电池等级/工具返还/结构与无廉价路线断言；172xx注册名就是原数字部件的同一物品，不能要求虚构的1×1自转换。聚变和物质线圈检查使用现有MultiblockRecipePack路径，物质机的静态matter目录保持。原生基础机器检查排除附属自己负责制造的规范，缺配方异常明确输出ID、类型和等级。
+
+其他已确认前提：镍镉LV电池源容量128000，原来写入100000不是满电，改用已存在ChemicalBatteryItem.setCharge和源容量；电动工具化学电池检查按工具自身等级覆盖全部14种设备，四种原LV图样仍单独完整验证，材质头层为1、覆盖层为2；ULV列表包含用户已要求接入的两种T0晶体充能器；恢复的A:9 Vindicator Flower使来源目录为10A+8B，保留原17种逐项材料/元数据检查并另核对恢复项；三种草捆夹具去掉重复的bale前缀。
+
+开发验证可诊断性：Forge和Neo的可选GameTest报告器保留原日志/XML，并在失败时输出异常对象完整堆栈；不再只依赖默认的简短message。另导出已加载物品/配方ID和基础机器规范到忽略的work目录，后续目录问题可离线核对。新增诊断不是玩法验收。未运行默认全套；Neo本批编译主代码及测试代码，未启动Neo游戏；客户端、历史存档和独立重启未验，整体移植仍未完成。
+
+首轮24项中20通过/4失败；四项在前置问题校正后进一步暴露：语言检查只读到附属同路径的局部翻译文件（现合并所有片段并避免缺键NPE）；板材压块源构造替换已把旧plain recipe替换成 `form_conversion/plate_to_blockplate/<material>_9`（现检查实际9板输入和同一产物）；旧通用电池ID已不再注册（现保留全部化学电池/等级正检查并拒绝不存在的通用身份）；源Drill通用使用消耗为200EU（校正原100EU断言，能量上下界/不对外放电/存档检查保留）。四项单独复测 **4/4通过**，已通过20项未重复执行，完整重载和网络往返也未重复。
+
+本批共验证21条原失败记录（另2项护栏与1项目录诊断）；双端主代码及测试代码编译通过。两次游戏运行分别11分51秒与3分44秒，未跑默认1045项。索引中按原记录剩55条候选待排查，该数是清单余额而非新测得的全套失败数。目录快照含78032物品、55275配方和264基础机器规范，其中3个附属规范不属于原生制造表。两个测试生成的根目录报告已备份到忽略的work并恢复，两个命名空间清单的有意修改保留。工具同步修复不修改网络字节格式；完整临时数据包覆盖、原版配方覆盖、熔炉镜像与禁用后的清理均已通过。
+
+## 2026-10-25 / Forge 覆盖板边界定向验证
+
+基线849c89202。专用namespace `gt6ce_forge_cover_boundaries` 共4项，**4/4通过**：pressureValveMovesAFullTankIntoTheTankInFront、theFilterCoversFilterThePipesOnTheirOwnFace、theFilterOnTheSendingFaceGatesOutgoingItems，以及新增emptyValveDisconnectsAndRejectsLaterPipeConnections。前三项对应原默认失败记录；最后一项检查本次压力阀生产修复。输送检查整罐精确守恒，过滤检查匹配/不匹配的输入输出及被拒物品仍留管内。
+
+首次启动脚本在Neo javac弃用警告处以NativeCommandError退出，未捕获Gradle完整终态；该启动不计通过。改用PowerShell7并修正原生命令警告处理后重试，两端compileJava和Forge compileBootstrapGameTestJava均命中已完成缓存，Forge运行最终BUILD SUCCESSFUL（3分39秒）。最终XML四项均无failure/error，完整日志保留在work；回执记录源文件及修复文件哈希。没有默认全套重跑，没有Neo游戏/客户端/历史存档重启验证。索引累计本轮再消除3条原失败，剩52条待排查；整体移植仍未完成。
+
+## 2026-10-25 / Forge 采掘与控制生命周期集中复核
+
+基线4942694f5。专用gt6ce_forge_harvest_regressions一次运行13项原失败，10通过/3失败（4分4秒）；gt6ce_forge_harvest_followup仅复测3失败和新增更严格停机断言的自动开关，4/4通过（8分14秒，含共享生产修复后的双端源码生成/编译）。最终13个原记录均已定向通过；其余9个首轮通过的方法未重跑。唯一生产修改是CoverDrops采掘白名单加入能源节点原生gt.battery_cover_*，完整能量/运行状态仍排除。
+
+四项原生destroyBlock掉落检查有专用大模板、无旧物品、已加载/ticking实体区块前置条件，验证宿主恰好一个、盖板不单独重复掉落，实际物品NBT恢复正确盖板及配置；电池盒/变压器首轮在最终恢复断言失败，修复白名单后通过，不把它们归咎为实体查询问题。排气测试验证真实热气整罐释放和原生查询造成的准确伤害，不再调用伤害helper替代阀门行为。待交付工作/涡轮流体/激光停止以进程内世界NBT保存读取和普通物品丢弃运行数据分别检查；不是独立JVM重启或实际玩家重新放置验收。
+
+两端compileJava及Forge compileBootstrapGameTestJava通过；没有Neo游戏、客户端、完整生存链或历史存档迁移验证，没有默认全套重跑。索引76条起始候选已验证21+3+13，剩39条；这是原记录余额，不是最新全套失败数。来源作者/许可证/原始和LF哈希、测试结果/日志哈希见verification/forge-harvest-regressions-20261025.json；整体移植仍未完成。
+
+## 2026-10-25 / Forge 配方加工集中回归
+
+专用gt6ce_forge_processing_regressions一次执行16条原失败，15通过/1失败（4分53秒）；首次粉碎回收失败已列出六个无颜色标签旧建筑输入，而非逐个失败。实际原因是提供的旧色板物品未规范化到固定颜色ID；RecipeInputs复用既有canonical入口修复。gt6ce_forge_processing_followup仅运行该粉碎回收与新增边界，2/2通过，随后同一Gradle编译Neo主代码（合计9分54秒）。先行为验证再补另一端编译；15个已通过方法未重复。
+
+最终16条原记录均通过，另1项护栏明确走完六家族/96色的旧与固定身份消耗、显式跨色拒绝、BlockEntityTag库存拒收和输入不变；原粉碎回收还验证每种材料守恒与损坏工具/库存拒收。其他用例保留原概率/时长/流量/物品数量、配方网格冲突、导线材料守恒和数据盘/模具返还要求，校正的数量依据是源码维度和声明表，不是本轮观察值。
+
+双端compileJava及Forge compileBootstrapGameTestJava通过；Neo未运行游戏。未默认全套、客户端、完整生存链或历史存档独立重启验收。索引76条起始候选已验证21+3+13+16，剩23条；此为原失败余额，不是新全套测量。证据见verification/forge-processing-regressions-20261025.json；整体移植仍未完成。
+
+## 2026-10-25 / Forge 工具与结构边界集中验证
+
+专用gt6ce_forge_tool_boundaries运行14条原失败，13通过/1失败（4分24秒）；gt6ce_forge_attachment_followup只复测附件，1/1通过（4分4秒）。之前一次47秒夹具编译失败因不存在的Wood便捷字段，已纠正并保留日志，未算游戏通过。14个原记录最终均通过；没有生产代码修改，13个首轮通过的方法未重复。Forge测试代码编译通过，Neo未新运行。
+
+本轮实际走完建造棒三种场景、原生口袋工具八身份转换、工具兼容/不兼容把手和早期配方、真实服务端扫描器/末地眼消耗、Drill200EU埋炸药、24种附件的气液/方向/模拟/执行数量、四档四向发电机边界、粉碎机50%效率与中断工作、锅炉形成/世界NBT/普通掉落和蒸汽输出，以及青铜泵末整包与17RU非整除输入。未据此声称客户端、全生存链或独立旧存档重启通过；泵其它来源差异保留。详见verification/forge-tool-boundaries-20261025.json。
+
+工具目录测试生成报告单独保存work/tool-boundary-assembly-coverage-result.json，docs/tool-assembly-coverage.json已和运行前备份逐字节相等。索引76条候选累计验证21+3+13+16+14，剩9条；没有默认全套重跑，整体移植仍未完成。
+
+## 2026-10-25 / 默认套件剩余九条集中修复
+
+基线5b1ae2a20。gt6ce_forge_remaining使用原九个方法的独立包装，基线重放0/9通过，九条失败消息均与原索引一致（5分59秒）。来源校正及一处共享配方修复后，同一九条9/9通过；Forge主代码、测试夹具和NeoForge主代码编译通过，最终Gradle BUILD SUCCESSFUL（11分2秒，含两端共享源码生成）。辐射阈值、服药剂量与物品数量、精确镜像集合、地牢物品/颜色及蜂后完整后代守恒均保留或增强。
+
+随后不带gameTestNamespaces参数，实际启用gt6ce,gregtech_repair默认命名空间，1045/1045 required tests全部通过，零失败，含最后单独安排的天气及运行时配方重载检查。Gradle最终BUILD SUCCESSFUL（19分39秒）；原九个方法在默认套件中也均通过。原76条索引的待排查余额已清零，并另记本次1045项全套实测结果，不再只用定向余额推算默认套件状态。
+
+日志/XML/命令、修复文件与来源作者/许可及原始/LF哈希见[forge-remaining-default-regressions-20261025.json](verification/forge-remaining-default-regressions-20261025.json)。23份根目录审计JSON生成结果留存work/remaining-generated/final并与运行前备份逐字节恢复。此处默认套件不含全部可选回归命名空间；客户端、完整生存链、Neo游戏及独立旧存档重启未验，整体移植仍未完成。

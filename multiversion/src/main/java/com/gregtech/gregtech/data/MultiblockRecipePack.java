@@ -57,6 +57,13 @@ public final class MultiblockRecipePack extends AbstractPackResources {
     /** Material used when a recipe is not bound to a machine spec. */
     private static final String DEFAULT_MATERIAL = "StainlessSteel";
 
+    // Loader_MultiTileEntities' Umber/Livingrock/Holystone/Betweenstone utilities use external
+    // OP.stone entries. Without those mods the original ore ingredient cannot match anything;
+    // omit that unavailable row instead of letting the machine-ingredient fallback use iron.
+    private static final Set<String> OPTIONAL_STONE_INPUTS = Set.of(
+            "gt6ce:stone_umber_stone", "gt6ce:stone_livingrock_stone",
+            "gt6ce:stone_holystone_stone", "gt6ce:stone_betweenstone_stone");
+
     private Map<ResourceLocation, byte[]> resources;
     private static final Set<String> EMITTED = new HashSet<>();
 
@@ -137,6 +144,7 @@ public final class MultiblockRecipePack extends AbstractPackResources {
 //?}
             if (item == null || item == net.minecraft.world.item.Items.AIR)
                 throw new IllegalStateException("Unregistered original recipe output " + row.id());
+            if (!concreteInputsAvailable(row)) continue;
             var recipe = buildRecipe(row.entry(), row.material(), item);
             if (recipe == null) throw new IllegalStateException("Unresolved original recipe " + row.id());
 //? if >=1.21.1 {
@@ -153,6 +161,20 @@ public final class MultiblockRecipePack extends AbstractPackResources {
         addClayUtilityRecipes(generated);
         resources = Collections.unmodifiableMap(generated);
         return resources;
+    }
+
+    private static boolean concreteInputsAvailable(OriginalSurvivalRecipes.Row row) {
+        boolean available = true;
+        for (String spec : row.keys().values()) {
+            if (!spec.startsWith("item:")) continue;
+            String id = spec.substring(5);
+            Item input = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(ResourceLocation.parse(id));
+            if (input != null && input != net.minecraft.world.item.Items.AIR) continue;
+            if (!OPTIONAL_STONE_INPUTS.contains(id))
+                throw new IllegalStateException("Unregistered original recipe input " + id + " for " + row.id());
+            available = false;
+        }
+        return available;
     }
 
     /** Original raw utilities return their clay before firing; only firing produces ceramic parts. */

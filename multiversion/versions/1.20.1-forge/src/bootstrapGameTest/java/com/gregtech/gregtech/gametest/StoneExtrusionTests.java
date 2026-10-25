@@ -172,7 +172,8 @@ public final class StoneExtrusionTests {
                 inspected++;
                 boolean hasInput = recipe.mFluidInputs.length > 0;
                 for (ItemStack in : recipe.mInputs) if (in != null && !in.isEmpty()) hasInput = true;
-                boolean hasOutput = recipe.mFluidOutputs.length > 0;
+                boolean hasOutput = recipe.mFluidOutputs.length > 0
+                        || com.gregtech.gregtech.data.FuelRecipeMaps.isFuelMap(map.mNameInternal)&&recipe.mEUt<0&&recipe.mDuration>0;
                 for (ItemStack out : recipe.mOutputs) if (out != null && !out.isEmpty()) hasOutput = true;
                 if (!hasInput || !hasOutput) {
                     offenders.add(map.mNameInternal + " " + java.util.Arrays.toString(recipe.mInputs)

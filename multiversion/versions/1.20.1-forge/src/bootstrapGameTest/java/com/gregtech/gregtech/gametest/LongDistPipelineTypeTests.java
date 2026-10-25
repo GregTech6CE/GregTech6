@@ -84,17 +84,25 @@ public final class LongDistPipelineTypeTests {
     }
 
     @GameTest(template = "test_blueprint_empty")
-    public static void legacySharedPipeStillCarriesBothNetworks(GameTestHelper helper) {
-        helper.assertTrue(GTMiscBlocks.LONG_DIST_PIPE.get().acceptsPipeline(false)
+    public static void legacyPipeAliasRetainsSourceFluidIdentity(GameTestHelper helper) {
+        helper.assertTrue(GTMiscBlocks.LONG_DIST_PIPE.get() == pipe("long_dist_pipe_fluid")
+                        && !GTMiscBlocks.LONG_DIST_PIPE.get().acceptsPipeline(false)
                         && GTMiscBlocks.LONG_DIST_PIPE.get().acceptsPipeline(true),
-                "existing generic long-distance pipe remains valid for both endpoint types");
+                "legacy field aliases the source fluid pipe and cannot impersonate an item line");
         build(helper, true, GTMiscBlocks.LONG_DIST_PIPE.get());
         helper.setBlock(TARGET, GTTanks.DRUM_STEEL.get());
         var sender = helper.getLevel().getBlockEntity(helper.absolutePos(SENDER));
         var relay = sender.getCapability(ForgeCapabilities.FLUID_HANDLER, Direction.WEST)
                 .orElseThrow(IllegalStateException::new);
         helper.assertTrue(relay.getTanks() > 0,
-                "the existing generic pipe still connects a fluid line");
+                "the legacy field still connects its source fluid line");
+        build(helper, false, GTMiscBlocks.LONG_DIST_PIPE.get());
+        helper.setBlock(TARGET, Blocks.CHEST);
+        var itemSender = helper.getLevel().getBlockEntity(helper.absolutePos(SENDER));
+        var items = itemSender.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.WEST).orElseThrow(IllegalStateException::new);
+        var offered = new ItemStack(Items.APPLE, 3);
+        helper.assertTrue(items.getSlots() == 0 && items.insertItem(0, offered, false).getCount() == 3,
+                "fluid alias refuses item routing without consuming the offered stack");
         helper.succeed();
     }
 }
