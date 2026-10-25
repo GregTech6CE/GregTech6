@@ -56,6 +56,8 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
     }
 
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();
+    private final gregtech.internal.multiblock.tracking.StructureDefinition definition =
+            gregtech.internal.multiblock.tracking.FixedStructures.declarative(this, this::structureCells, List.of());
     private final FluidTank fuel = new FluidTank(grade().inputMaximum() * 4, stack -> FuelRecipeMaps.Gas.containsInput(stack)) {
 
         @Override
@@ -112,7 +114,37 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
     }
 
     @Override public gregtech.internal.multiblock.tracking.StructureDefinition structureDefinition() {
-        return gregtech.internal.multiblock.tracking.CustomStructures.gasTurbine(this);
+        return definition;
+    }
+    private java.util.List<gregtech.internal.multiblock.tracking.CompiledPattern.FixedCell> structureCells(Direction front) {
+        var cells = new java.util.ArrayList<gregtech.internal.multiblock.tracking.CompiledPattern.FixedCell>(
+                gregtech.content.multiblock.TurbineStructure.LAYOUT.cells().size());
+        for (var cell : gregtech.content.multiblock.TurbineStructure.LAYOUT.cells()) {
+            var role = AxialStructureTransform.role(front, cell.right(), cell.up(), cell.back(), true);
+            var spec = new gregtech.content.multiblock.LargeMachineLayouts.Cell(
+                    cell.right(), cell.up(), cell.back(), grade().wallId(), role);
+            var offset = AxialStructureTransform.at(BlockPos.ZERO, front, cell.right(), cell.up(), cell.back());
+            cells.add(new gregtech.internal.multiblock.tracking.CompiledPattern.FixedCell(
+                    offset.getX(), offset.getY(), offset.getZ(), spec));
+        }
+        return cells;
+    }
+    @Override public boolean applyStructure(gregtech.internal.multiblock.tracking.PatternMatch match) {
+        if (level == null || isRemoved()) return false;
+        var parts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
+        for (var fixed : match.fixedCells()) {
+            var cell = fixed.cell();
+            if (cell.role() != MultiblockLayout.Role.AIR) parts.put(fixed.pos(), cell.role());
+        }
+        return gregtech.internal.multiblock.tracking.StructureClaims.update(this, true, bindings, parts, 0,
+                position -> level.getBlockEntity(position) instanceof MultiblockPortBlockEntity port
+                        && port.canBind(worldPosition),
+                (position, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(position)).bind(worldPosition, role),
+                this::release) != gregtech.internal.multiblock.tracking.StructureClaims.Result.FAILED;
+    }
+    @Override public void releaseStructureClaims() {
+        bindings.clear(this::release);
+        gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
     }
     @Override public boolean isStructureOk() {
         return gregtech.internal.multiblock.tracking.StructureTracking.query(this);

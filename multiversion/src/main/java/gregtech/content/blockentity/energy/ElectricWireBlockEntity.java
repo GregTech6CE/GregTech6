@@ -26,7 +26,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /** GT6 electric wire block entity (EU cable, pipe-style connection grid). */
-public class ElectricWireBlockEntity extends BlockEntity implements IEnergyConductor, IEnergyBlock {
+public class ElectricWireBlockEntity extends BlockEntity implements IEnergyConductor, IEnergyBlock, gregtech.api.sensor.ProgressSensorSource {
+    // Sample the existing transfer accumulator between entity ticks; never substitute energy.
+    @Override public long progressValue(int side) { return transferredAmperes(); }
+    @Override public long progressMaximum(int side) { return amperage(); }
     private boolean initialized;
     // GT6 runtime-only wire counters: aggregate transfers between entity ticks.
     private long lastWattage;

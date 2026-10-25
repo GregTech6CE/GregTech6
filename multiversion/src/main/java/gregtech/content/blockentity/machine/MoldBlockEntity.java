@@ -42,7 +42,7 @@ import org.jetbrains.annotations.Nullable;
  * Supports: chisel shape selection (5x5 grid), auto-input from crucibles, redstone control,
  * soft hammer reset, and pincers item pickup.
  */
-public class MoldBlockEntity extends BlockEntity implements ITileEntityMold {
+public class MoldBlockEntity extends BlockEntity implements ITileEntityMold, gregtech.api.sensor.TemperatureSource {
 
     private final CrucibleSpec spec;
 
@@ -730,6 +730,8 @@ public class MoldBlockEntity extends BlockEntity implements ITileEntityMold {
     public boolean isContentSolidified() { return contentSolidified; }
     public boolean isUseRedstone() { return useRedstone; }
     public byte getAutoPullDirections() { return autoPullDirections; }
+    @Override public long temperatureK(int side) { return getTemperature(); }
+    @Override public long maximumK(int side) { return getMoldMaxTemperature(); }
     public long getTemperature() { return temperature; }
     public CrucibleSpec spec() { return spec; }
 //? if >=1.21.1 {

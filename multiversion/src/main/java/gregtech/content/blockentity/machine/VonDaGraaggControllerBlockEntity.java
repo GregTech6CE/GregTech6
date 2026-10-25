@@ -32,6 +32,8 @@ public final class VonDaGraaggControllerBlockEntity extends GTEnergyBlockEntity 
         gregtech.internal.multiblock.tracking.TrackedMultiblock {
     public static final long CAPACITY = VonDaGraaggRules.CAPACITY;
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();
+    private final gregtech.internal.multiblock.tracking.StructureDefinition definition =
+            gregtech.internal.multiblock.tracking.FixedStructures.declarative(this, this::structureCells, List.of());
     private long energy;
     private int range;
 
@@ -68,7 +70,36 @@ public final class VonDaGraaggControllerBlockEntity extends GTEnergyBlockEntity 
     }
 
     @Override public gregtech.internal.multiblock.tracking.StructureDefinition structureDefinition() {
-        return gregtech.internal.multiblock.tracking.CustomStructures.tower(this);
+        return definition;
+    }
+    private List<gregtech.internal.multiblock.tracking.CompiledPattern.FixedCell> structureCells(Direction front) {
+        var defs = VonDaGraaggRules.layout();
+        var cells = new java.util.ArrayList<gregtech.internal.multiblock.tracking.CompiledPattern.FixedCell>(defs.size());
+        for (var cell : defs) {
+            var role = cell.energyInput() ? MultiblockLayout.Role.ENERGY_INPUT : MultiblockLayout.Role.CASING;
+            var spec = new gregtech.content.multiblock.LargeMachineLayouts.Cell(
+                    cell.x(), cell.y(), cell.z(), cell.partId(), role);
+            cells.add(new gregtech.internal.multiblock.tracking.CompiledPattern.FixedCell(
+                    cell.x(), cell.y(), cell.z(), spec));
+        }
+        return cells;
+    }
+    @Override public boolean applyStructure(gregtech.internal.multiblock.tracking.PatternMatch match) {
+        if (level == null || isRemoved()) return false;
+        var parts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
+        for (var fixed : match.fixedCells()) {
+            var cell = fixed.cell();
+            if (cell.role() != MultiblockLayout.Role.AIR) parts.put(fixed.pos(), cell.role());
+        }
+        return gregtech.internal.multiblock.tracking.StructureClaims.update(this, true, bindings, parts, 0,
+                position -> level.getBlockEntity(position) instanceof MultiblockPortBlockEntity port
+                        && port.canBind(worldPosition),
+                (position, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(position)).bind(worldPosition, role),
+                this::release) != gregtech.internal.multiblock.tracking.StructureClaims.Result.FAILED;
+    }
+    @Override public void releaseStructureClaims() {
+        bindings.clear(this::release);
+        gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
     }
     @Override public boolean isStructureOk() {
         return gregtech.internal.multiblock.tracking.StructureTracking.query(this);

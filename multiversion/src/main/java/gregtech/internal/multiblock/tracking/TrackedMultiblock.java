@@ -30,6 +30,11 @@ public interface TrackedMultiblock {
     /** A failed incremental match: release what the controller bound for the previous one. */
     default void releaseStructureClaims() {}
 
+    /** An incomplete match. Families with partial tool bindings can retain the matched cells. */
+    default void applyIncompleteStructure(PatternMatch match) {
+        releaseStructureClaims();
+    }
+
     /** Controller-specific checks that read the world once per evaluation, such as part counts. */
     default boolean structurePartsValid() {
         return true;

@@ -2,6 +2,7 @@ package gregtech.gametest;
 
 import gregtech.api.addon.MachineTuning;
 import gregtech.internal.addon.MachineTuningRules;
+import gregtech.internal.machine.BasicMachineParameters;
 import gregtech.content.machine.BasicMachineCatalog;
 import gregtech.content.machine.BasicMachineDefinitions;
 import net.minecraft.gametest.framework.GameTest;
@@ -52,5 +53,93 @@ public final class MachineTuningTests {
                         && again.processingEfficiency() == baseline.processingEfficiency(),
                 "an untuned build stays at baseline");
         h.succeed();
+    }
+
+    @GameTest(template = "test_empty")
+    public static void partialTuningChecksInheritedEnergyRange(GameTestHelper h) {
+        var p = BasicMachineCatalog.specifications().stream()
+                .filter(row -> row.machineName().equals("crusher") && row.tier() == 1)
+                .findFirst().orElseThrow();
+        // Each partial declaration is valid alone. The contradiction appears only
+        // after from() fills its missing fields from the built-in specification.
+        reject(h, p, tuning(p, p.energyInMax() + 1, null, null));
+        reject(h, p, tuning(p, p.energyInMin() - 1, null, null));
+        reject(h, p, tuning(p, null, p.energyIn() + 1, null));
+        reject(h, p, tuning(p, null, null, p.energyIn() - 1));
+        reject(h, p, tuning(p, null, p.energyIn() + 1, p.energyInMax() + 1));
+        var key = new MachineTuningRules.Key(p.machineName(), p.tier());
+        var partialFromTwoAddons = MachineTuningRules.merge(List.of(
+                new MachineTuningRules.Declared("first", tuning(p, p.energyInMax() + 1, null, null)),
+                new MachineTuningRules.Declared("second", tuning(p, null, p.energyInMin(), null))));
+        reject(h, p, partialFromTwoAddons.get(key));
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty")
+    public static void tuningEnergyBoundariesAndUntouchedValuesRemainValid(GameTestHelper h) {
+        var p = BasicMachineCatalog.specifications().stream()
+                .filter(row -> row.machineName().equals("crusher") && row.tier() == 1)
+                .findFirst().orElseThrow();
+        for (long boundary : new long[]{p.energyInMin(), p.energyInMax()}) {
+            var result = BasicMachineDefinitions.from(p, merged(tuning(p, boundary, null, null)));
+            h.assertTrue(result.energyIn() == boundary && result.energyInMin() == p.energyInMin()
+                            && result.energyInMax() == p.energyInMax(),
+                    "inclusive boundary passes with inherited min/max");
+        }
+        var result = BasicMachineDefinitions.from(p, merged(tuning(p, null, p.energyIn(), p.energyIn())));
+        h.assertTrue(result.energyInMin() == result.energyIn() && result.energyInMax() == result.energyIn(),
+                "explicit singleton range containing inherited nominal passes");
+        var parallelOnly = new MachineTuning(p.machineName(), p.tier(), 4, null, null, null, null, null, null);
+        result = BasicMachineDefinitions.from(p, merged(parallelOnly));
+        h.assertTrue(result.parallelLimit() == 4 && result.energyIn() == p.energyIn()
+                        && result.energyInMin() == p.energyInMin() && result.energyInMax() == p.energyInMax(),
+                "non-energy tuning keeps the valid built-in energy fields");
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty")
+    public static void allBuiltinsAndTuTuningsUseValidEffectiveRanges(GameTestHelper h) {
+        int timed = 0;
+        for (var p : BasicMachineCatalog.specifications()) {
+            var baseline = BasicMachineDefinitions.from(p);
+            h.assertTrue(baseline.energyIn() >= baseline.energyInMin()
+                            && baseline.energyIn() <= baseline.energyInMax(),
+                    "untuned built-in energy sits in range: " + p.id());
+            if (!p.energyType().equals("TU")) continue;
+            timed++;
+            h.assertTrue(baseline.energyInMin() == 1 && baseline.energyInMax() == 16,
+                    "TU baseline retains 1..16 packet window");
+            reject(h, p, tuning(p, 17L, null, null));
+            var tuned = BasicMachineDefinitions.from(p, merged(tuning(p, 16L, null, null)));
+            h.assertTrue(tuned.energyIn() == 16 && tuned.energyInMin() == 1 && tuned.energyInMax() == 16,
+                    "TU upper boundary remains accepted");
+        }
+        h.assertTrue(timed > 0, "TU machines were audited");
+        h.succeed();
+    }
+
+    private static MachineTuning tuning(BasicMachineParameters p, Long energy, Long min, Long max) {
+        return new MachineTuning(p.machineName(), p.tier(), null, energy, min, max, null, null, null);
+    }
+
+    private static MachineTuningRules.Merged merged(MachineTuning tuning) {
+        return MachineTuningRules.merge(List.of(new MachineTuningRules.Declared("tuning_test", tuning)))
+                .get(new MachineTuningRules.Key(tuning.machineName(), tuning.tier()));
+    }
+
+    private static void reject(GameTestHelper h, BasicMachineParameters p, MachineTuning tuning) {
+        reject(h, p, merged(tuning));
+    }
+
+    private static void reject(GameTestHelper h, BasicMachineParameters p, MachineTuningRules.Merged patch) {
+        try {
+            BasicMachineDefinitions.from(p, patch);
+        } catch (IllegalStateException failure) {
+            h.assertTrue(failure.getMessage().contains(p.machineName() + "/T" + p.tier())
+                            && failure.getMessage().contains("outside"),
+                    "effective-range failure identifies the machine and cause");
+            return;
+        }
+        throw new AssertionError("Accepted an out-of-range partial tuning: " + patch.tuning());
     }
 }

@@ -40,6 +40,8 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
     private HeatExchangerRules.Settings settings = HeatExchangerRules.DEFAULTS;
     private Recipe lastRecipe;
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();
+    private final gregtech.internal.multiblock.tracking.StructureDefinition definition =
+            gregtech.internal.multiblock.tracking.FixedStructures.declarative(this, this::structureCells, List.of());
     private final FluidTankGT hot = new FluidTankGT(settings.inputCapacity()).setOnChanged(this::setChanged);
     private final FluidTankGT cold = new FluidTankGT().setOnChanged(this::setChanged);
     private final IFluidHandler input = new FluidPort(this, true, false);
@@ -203,7 +205,54 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
     }
 
     @Override public gregtech.internal.multiblock.tracking.StructureDefinition structureDefinition() {
-        return gregtech.internal.multiblock.tracking.CustomStructures.exchanger(this);
+        return definition;
+    }
+    private List<gregtech.internal.multiblock.tracking.CompiledPattern.FixedCell> structureCells(Direction front) {
+        // The exchanger shell is world-axis aligned; its facing is fixed to DOWN.
+        var defs = gregtech.content.multiblock.SharedHeatExchangerStructure.CELLS;
+        var cells = new ArrayList<gregtech.internal.multiblock.tracking.CompiledPattern.FixedCell>(defs.size());
+        for (var cell : defs) {
+            var role = MultiblockLayout.Role.valueOf(cell.role().name());
+            var spec = new gregtech.content.multiblock.LargeMachineLayouts.Cell(
+                    cell.right(), cell.up(), cell.back(), cell.part(), role);
+            cells.add(new gregtech.internal.multiblock.tracking.CompiledPattern.FixedCell(
+                    cell.right(), cell.up(), cell.back(), spec));
+        }
+        return cells;
+    }
+    @Override public boolean applyStructure(gregtech.internal.multiblock.tracking.PatternMatch match) {
+        return updateStructureBindings(match, true);
+    }
+    @Override public void applyIncompleteStructure(gregtech.internal.multiblock.tracking.PatternMatch match) {
+        updateStructureBindings(match, false);
+    }
+    private boolean updateStructureBindings(gregtech.internal.multiblock.tracking.PatternMatch match, boolean complete) {
+        if (level == null || isRemoved()) return false;
+        var parts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
+        for (var fixed : match.fixedCells()) {
+            var cell = fixed.cell();
+            // A competing owner excludes this cell, as in the legacy scan; keep other valid tool ports.
+            if (cell.role() != MultiblockLayout.Role.AIR
+                    && level.getBlockEntity(fixed.pos()) instanceof MultiblockPortBlockEntity port
+                    && port.canBind(worldPosition)) parts.put(fixed.pos(), cell.role());
+            else if (cell.role() != MultiblockLayout.Role.AIR) complete = false;
+        }
+        var claimed = gregtech.internal.multiblock.tracking.StructureClaims.update(this, complete, bindings, parts, 0,
+                position -> level.getBlockEntity(position) instanceof MultiblockPortBlockEntity port
+                        && port.canBind(worldPosition),
+                (position, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(position)).bind(worldPosition, role),
+                this::release) != gregtech.internal.multiblock.tracking.StructureClaims.Result.FAILED;
+        return complete && claimed;
+    }
+    @Override public void releaseStructureClaims() {
+        bindings.clear(this::release);
+        gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
+    }
+    @Override public void structureFormedChanged(boolean formed) {
+        if (structureOkay != formed) {
+            structureOkay = formed;
+            syncToClient();
+        }
     }
     @Override public boolean isStructureOk() {
         return gregtech.internal.multiblock.tracking.StructureTracking.query(this);

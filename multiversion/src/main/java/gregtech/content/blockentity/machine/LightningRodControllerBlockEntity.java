@@ -50,8 +50,13 @@ public class LightningRodControllerBlockEntity extends GTEnergyBlockEntity imple
     }
 
     @Override public gregtech.internal.multiblock.tracking.StructureDefinition structureDefinition() {
-        return gregtech.internal.multiblock.tracking.CustomStructures.lightning(this);
+        return gregtech.content.multiblock.SpecialStructures.lightning(this);
     }
+    @Override public boolean applyStructure(gregtech.internal.multiblock.tracking.PatternMatch match) {
+        rodLength = match.counts().getOrDefault("rod", 0);
+        return true;
+    }
+    @Override public void releaseStructureClaims() { rodLength = 0; }
     @Override public boolean isStructureOk() {
         return gregtech.internal.multiblock.tracking.StructureTracking.query(this);
     }

@@ -133,6 +133,7 @@ public final class TankValveRepairTests {
         helper.assertTrue(restored.fluidHandler().getTankCapacity(0) == adamantium.capacity()
                 && restored.fluidHandler().getFluidInTank(0).getAmount() == 1000,
                 "valve retains material capacity and fluid after drop and placement");
+        helper.assertTrue(StructureTestSupport.ok(restored), "replaced valve rechecks its existing shell before fluid I/O");
         restored.fluidHandler().drain(1000, IFluidHandler.FluidAction.EXECUTE);
         helper.assertTrue(restored.fluidHandler().fill(water, IFluidHandler.FluidAction.EXECUTE) == 1000,
                 "restored controller can refill");

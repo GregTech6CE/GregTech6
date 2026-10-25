@@ -1,6 +1,9 @@
 package gregtech.content.blockentity.machine;
 
 import gregtech.internal.multiblock.*;
+import gregtech.internal.multiblock.tracking.StructureTrackingMode;
+import gregtech.internal.multiblock.tracking.WorldStructureClaims;
+import net.minecraft.server.level.ServerLevel;
 import gregtech.content.blockentity.GTEnergyBlockEntity;
 import gregtech.content.data.GregTechTags;
 import net.minecraft.core.*;
@@ -28,6 +31,7 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
             new gregtech.content.logistics.LogisticsCovers(this, this);
     private BlockPos controller;
     private MultiblockLayout.Role role;
+    private boolean chunkUnloading;
     /** Original {@code gt.design}. Zero is the default texture and is omitted from NBT. */
     private int design;
 //? if >=1.21.1 {
@@ -50,11 +54,17 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
                                         BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
-    protected BlockPos controllerPos() { return controller; }
+    protected BlockPos controllerPos() {
+        return level instanceof ServerLevel server && !StructureTrackingMode.legacy()
+                ? WorldStructureClaims.owner(server, worldPosition) : controller;
+    }
     protected MultiblockLayout.Role boundRole() { return role; }
     private MultiblockPortOwner owner() {
-        if(isRemoved() || level==null || controller==null || !level.hasChunkAt(controller)) return null;
-        return level.getBlockEntity(controller) instanceof MultiblockPortOwner owner?owner:null;
+        BlockPos ownerPos = controllerPos();
+        if(isRemoved() || level==null || ownerPos==null || !level.hasChunkAt(ownerPos)) return null;
+        var entity = level.getBlockEntity(ownerPos);
+        return entity instanceof MultiblockPortOwner owner
+                && (StructureTrackingMode.legacy() || !entity.isRemoved()) ? owner : null;
     }
     /** Original SensorTE reads the cached controller directly, preserving the measured side.
      * This does not expose an item/fluid transport capability or bypass its role restrictions. */
@@ -92,12 +102,20 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
         }
         if(host instanceof MultiblockToolTarget tools) {
             if(tools.containsToolPosition(worldPosition)) return tools.useMultiblockTool(context,messages);
-            release(controller); // A stale cache must not route a click outside the owner's shell.
+            release(controllerPos()); // A stale binding must not route a click outside the owner's shell.
         }
         return 0;
     }
-    public boolean isBoundTo(BlockPos owner) {return owner.equals(controller);}
-    public boolean canBind(BlockPos owner) { return controller==null || controller.equals(owner) || owner()==null; }
+    public boolean isBoundTo(BlockPos owner) { return owner != null && owner.equals(controllerPos()); }
+    /** ClaimMemory must check the derived cache too after a part BE was recreated. */
+    public boolean hasBindingCache(BlockPos owner, MultiblockLayout.Role role) {
+        return isBoundTo(owner) && owner.equals(controller) && this.role == role;
+    }
+    public boolean canBind(BlockPos owner) {
+        if (level instanceof ServerLevel server && !StructureTrackingMode.legacy())
+            return WorldStructureClaims.canClaim(server, worldPosition, owner);
+        return controller==null || controller.equals(owner) || owner()==null;
+    }
     public int structureDesign() { return design; }
 
     /** Remembers the previous index, then writes {@code gt.design}. A second call keeps the first remembered value. */
@@ -136,6 +154,8 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
         gregtech.internal.multiblock.tracking.StructureScanProbe.onBind();
         gregtech.internal.multiblock.tracking.StructureScanProbe.pause();
         try {
+            if (level instanceof ServerLevel server && !StructureTrackingMode.legacy()
+                    && !WorldStructureClaims.claim(server, worldPosition, owner)) return;
             this.controller=owner.immutable(); this.role=role;
 //? if >=1.21.1 {
             /*updateCrucibleVisual(owner() instanceof gregtech.internal.multiblock.CrucibleStructureOwner);
@@ -148,8 +168,20 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
     }
     @Override public void onLoad() {
         super.onLoad();
+        chunkUnloading = false;
         // Bindings are rebuilt by the controller; never keep a saved invisible orphan wall.
         updateCrucibleVisual(false);
+    }
+    @Override public void onChunkUnloaded() {
+        chunkUnloading = true;
+        if (level instanceof ServerLevel server && !StructureTrackingMode.legacy())
+            WorldStructureClaims.partUnloaded(server, worldPosition);
+        super.onChunkUnloaded();
+    }
+    @Override public void setRemoved() {
+        if (!chunkUnloading && level instanceof ServerLevel server && !StructureTrackingMode.legacy())
+            WorldStructureClaims.partRemoved(server, worldPosition);
+        super.setRemoved();
     }
     private void updateCrucibleVisual(boolean formed) {
         if (level == null || level.isClientSide) return;
@@ -159,7 +191,9 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
             level.setBlock(worldPosition, state.setValue(property, formed), 3);
     }
     public void release(BlockPos owner) {
-        if (owner.equals(controller)) {
+        if (isBoundTo(owner)) {
+            if (level instanceof ServerLevel server && !StructureTrackingMode.legacy())
+                WorldStructureClaims.release(server, worldPosition, owner);
             gregtech.internal.multiblock.tracking.StructureScanProbe.onRelease();
             gregtech.internal.multiblock.tracking.StructureScanProbe.pause();
             try {
@@ -170,7 +204,7 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
             } finally {
                 gregtech.internal.multiblock.tracking.StructureScanProbe.resume();
             }
-            if (level instanceof net.minecraft.server.level.ServerLevel server)
+            if (StructureTrackingMode.legacy() && level instanceof net.minecraft.server.level.ServerLevel server)
                 gregtech.internal.multiblock.tracking.StructureWatchIndex.onPortReleased(server, worldPosition, owner);
         }
     }

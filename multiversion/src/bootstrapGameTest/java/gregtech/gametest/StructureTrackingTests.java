@@ -99,6 +99,38 @@ public final class StructureTrackingTests {
 
     private StructureTrackingTests() {}
 
+    @GameTest(template = "test_empty", batch = "st-claim-table")
+    public static void claimTableIsWorldOwnedAndRestoresNegativeChunk(GameTestHelper h) {
+        var level = h.getLevel();
+        var other = level.getServer().getLevel(net.minecraft.world.level.Level.NETHER);
+        h.assertTrue(other != null, "second server world exists");
+        var table = gregtech.internal.multiblock.tracking.WorldStructureClaims.table(level);
+        var otherTable = gregtech.internal.multiblock.tracking.WorldStructureClaims.table(other);
+        h.assertTrue(table == gregtech.internal.multiblock.tracking.WorldStructureClaims.table(level),
+                "repeated access uses the ServerLevel field");
+        h.assertTrue(table != otherTable, "dimensions have independent claim tables");
+        // Data-only positions: do not place blocks or load chunks at these coordinates.
+        long part = new BlockPos(-29_000_001, 80, -29_000_001).asLong();
+        long owner = new BlockPos(-29_000_032, 80, -29_000_032).asLong();
+        long competitor = new BlockPos(-29_000_048, 80, -29_000_048).asLong();
+        long chunk = ChunkPos.asLong(BlockPos.of(part));
+        try {
+            h.assertTrue(table.claim(part, owner) && otherTable.claim(part, competitor),
+                    "the same packed position can have different owners in different dimensions");
+            table.chunkUnloaded(chunk, at -> at == owner);
+            h.assertTrue(table.owner(part) == null && Long.valueOf(owner).equals(table.reservedOwner(part)),
+                    "Minecraft negative coordinates map to the correct reservation chunk");
+            table.chunkLoaded(chunk);
+            h.assertTrue(Long.valueOf(owner).equals(table.owner(part)) && !table.claim(part, competitor),
+                    "restored ownership excludes the competitor before any controller evaluation");
+            h.assertTrue(Long.valueOf(competitor).equals(otherTable.owner(part)), "other world stays independent");
+        } finally {
+            table.releaseController(owner);
+            otherTable.releaseController(competitor);
+        }
+        h.succeed();
+    }
+
     @GameTest(template = "test_empty", timeoutTicks = 400, batch = "st-phase0")
     public static void idleAndPortQueriesScanOnlyInLegacy(GameTestHelper h) {
         StructureScanProbe.enable(true);
@@ -313,6 +345,260 @@ public final class StructureTrackingTests {
             clear(h.getLevel(), cells);
         }
         h.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = "st-claim-unloaded-owner")
+    public static void unloadedOwnerCannotBeRobbedUntilPartChunkUnloads(GameTestHelper h) {
+        try (var fixture = new ClaimFixture(h, 1)) {
+            var port = fixture.port();
+            port.applyStructureDesign(13);
+            BlockState before = port.getBlockState();
+            fixture.unloadOwner();
+            h.assertTrue(port.isBoundTo(fixture.owner.getBlockPos()) && port.getBlockState() == before
+                    && port.structureDesign() == 13, "controller unload keeps the loaded remote part and its visuals");
+            StructureTracking.evaluateForTests(fixture.competitor);
+            var waiting = StructureTracking.tracker(fixture.competitor);
+            h.assertTrue(waiting.state() == StructureTracker.State.BROKEN && waiting.claimError() != null
+                    && waiting.claimError().contains(fixture.owner.getBlockPos().toShortString()),
+                    "an absent owner still excludes the competitor and reports its coordinate");
+            StructureScheduler.chunkUnloadedForTests(h.getLevel(), new ChunkPos(fixture.shared));
+            StructureScheduler.chunkLoadedForTests(h.getLevel(), new ChunkPos(fixture.shared));
+            StructureTracking.evaluateForTests(fixture.competitor);
+            h.assertTrue(fixture.competitor.isStructureOk() && port.isBoundTo(fixture.competitor.getBlockPos()),
+                    "the absent owner's claim expires after the part chunk unloads once");
+        }
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = "st-claim-reservation")
+    public static void restoredReservationBlocksCompetitorBeforeOwnerEvaluation(GameTestHelper h) {
+        try (var fixture = new ClaimFixture(h, 2)) {
+            var level = h.getLevel();
+            var table = gregtech.internal.multiblock.tracking.WorldStructureClaims.table(level);
+            StructureScheduler.chunkUnloadedForTests(level, new ChunkPos(fixture.shared));
+            h.assertTrue(table.owner(fixture.shared.asLong()) == null
+                    && Long.valueOf(fixture.owner.getBlockPos().asLong()).equals(table.reservedOwner(fixture.shared.asLong())),
+                    "a surviving controller holds its unloaded part through the reservation table");
+            StructureScheduler.chunkLoadedForTests(level, new ChunkPos(fixture.shared));
+            // Deliberately run only the competitor. The owner's queued scan receives no budget.
+            for (int delayedEvaluations = 0; delayedEvaluations < 5; delayedEvaluations++) {
+                StructureTracking.evaluateForTests(fixture.competitor);
+                h.assertTrue(!fixture.competitor.isStructureOk() && fixture.port().isBoundTo(fixture.owner.getBlockPos()),
+                        "synchronous restoration protects the part before any owner evaluation");
+            }
+            h.assertTrue(StructureTracking.tracker(fixture.owner).state() == StructureTracker.State.SUSPENDED,
+                    "the original controller has not evaluated during the competing attempts");
+            StructureTracking.evaluateForTests(fixture.owner);
+            h.assertTrue(fixture.owner.isStructureOk(), "the original controller subsequently resumes");
+        }
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = "st-claim-incremental-reload")
+    public static void partReloadRebindsFreshCacheAndOnlyEvaluatesItsChunk(GameTestHelper h) {
+        try (var fixture = new ClaimFixture(h, 3)) {
+            var level = h.getLevel();
+            var oldPort = fixture.port();
+            StructureScheduler.chunkUnloadedForTests(level, new ChunkPos(fixture.shared));
+            oldPort.onChunkUnloaded();
+            oldPort.setRemoved();
+            BlockEntity fresh = oldPort.getType().create(fixture.shared, oldPort.getBlockState());
+            h.assertTrue(fresh instanceof MultiblockPortBlockEntity, "native part type recreates its block entity");
+            level.getChunkAt(fixture.shared).setBlockEntity(fresh);
+            StructureScheduler.chunkLoadedForTests(level, new ChunkPos(fixture.shared));
+            StructureScanProbe.enable(true);
+            StructureScanProbe.reset();
+            StructureTracking.evaluateForTests(fixture.owner);
+            h.assertTrue(fixture.owner.isStructureOk() && StructureScanProbe.matchers() == 1,
+                    "only the single cell in the reloaded negative chunk is rematched; matchers=" + StructureScanProbe.matchers());
+            h.assertTrue(fixture.port() != oldPort && fixture.port().hasBindingCache(fixture.owner.getBlockPos(),
+                    MultiblockLayout.Role.ITEM_FLUID_INPUT), "restored ownership rebuilds the fresh BE's derived role cache");
+        } finally {
+            StructureScanProbe.enable(false);
+        }
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 100, batch = "st-claim-orphan-load")
+    public static void missingControllerWithoutSetRemovedReleasesAfterChunkLoad(GameTestHelper h) {
+        orphanClaim(h, true, 4);
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 100, batch = "st-claim-orphan-safety")
+    public static void safetyNetReleasesOrphanWithoutAChunkLoadEvent(GameTestHelper h) {
+        orphanClaim(h, false, 5);
+    }
+
+    private static void orphanClaim(GameTestHelper h, boolean loadEvent, int index) {
+        var fixture = new ClaimFixture(h, index);
+        try {
+            fixture.port().applyStructureDesign(17);
+            h.getLevel().getChunkAt(fixture.owner.getBlockPos()).getBlockEntities().remove(fixture.owner.getBlockPos());
+            h.assertTrue(!fixture.owner.isRemoved(), "fixture bypasses setRemoved as an external chunk editor can");
+            if (loadEvent) StructureScheduler.chunkLoadedForTests(h.getLevel(), new ChunkPos(fixture.owner.getBlockPos()));
+            h.assertTrue(fixture.port().isBoundTo(fixture.owner.getBlockPos()), "orphan cleanup does not run in ChunkEvent.Load");
+            h.runAfterDelay(2, () -> {
+                try (fixture) {
+                    h.assertTrue(h.getLevel().hasChunkAt(fixture.owner.getBlockPos()) && h.getLevel().hasChunkAt(fixture.shared),
+                            "orphan assertions keep both native chunks loaded");
+                    StructureScheduler.runSafetyNow(h.getLevel());
+                    h.assertTrue(!fixture.port().isBoundTo(fixture.owner.getBlockPos())
+                            && fixture.port().structureDesign() == 0, "deferred or safety cleanup restores design and releases the orphan");
+                    h.assertTrue(StructureTracking.tracker(fixture.owner) == null, "the stale tracker cannot reclaim orphan parts");
+                    StructureTracking.evaluateForTests(fixture.competitor);
+                    h.assertTrue(fixture.competitor.isStructureOk() && fixture.port().isBoundTo(fixture.competitor.getBlockPos()),
+                            "the subscribed competitor can claim the released orphan part");
+                }
+                h.succeed();
+            });
+        } catch (RuntimeException | Error failure) {
+            fixture.close();
+            throw failure;
+        }
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 100, batch = "st-claim-delayed-onload")
+    public static void chunkLoadDoesNotTreatControllerBeforeOnLoadAsOrphan(GameTestHelper h) {
+        var fixture = new ClaimFixture(h, 6);
+        try {
+            fixture.unloadOwner();
+            BlockEntity fresh = fixture.owner.getType().create(fixture.owner.getBlockPos(), fixture.owner.getBlockState());
+            h.assertTrue(fresh instanceof BehaviorMachineBlockEntity, "controller can be recreated from its native type");
+            fresh.setLevel(h.getLevel());
+            // Install the actual BE identity, deliberately deferring its onLoad/tracker attach.
+            h.getLevel().getChunkAt(fresh.getBlockPos()).getBlockEntities().put(fresh.getBlockPos(), fresh);
+            StructureScheduler.chunkLoadedForTests(h.getLevel(), new ChunkPos(fresh.getBlockPos()));
+            StructureScheduler.chunkLoadedForTests(h.getLevel(), new ChunkPos(fixture.shared));
+            h.runAfterDelay(2, () -> {
+                try (fixture) {
+                    h.assertTrue(h.getLevel().hasChunkAt(fresh.getBlockPos()) && h.getLevel().hasChunkAt(fixture.shared),
+                            "delayed onLoad assertions keep both native chunks loaded");
+                    StructureScheduler.runSafetyNow(h.getLevel());
+                    h.assertTrue(StructureTracking.tracker(fresh) == null && fixture.port().isBoundTo(fresh.getBlockPos()),
+                            "a corresponding native BE keeps its claim without a tracker or onLoad");
+                    fresh.onLoad();
+                    StructureTracking.evaluateForTests(fresh);
+                    h.assertTrue(((BehaviorMachineBlockEntity) fresh).isStructureOk(), "the new tracker recognizes its own retained claims");
+                }
+                h.succeed();
+            });
+        } catch (RuntimeException | Error failure) {
+            fixture.close();
+            throw failure;
+        }
+    }
+
+    @GameTest(template = "test_empty", batch = "st-claim-legacy")
+    public static void legacyBindingIgnoresTheTrackedOwnershipTable(GameTestHelper h) {
+        try (var fixture = new ClaimFixture(h, 7)) {
+            fixture.unloadOwner();
+            StructureTrackingMode.overrideForTests("legacy");
+            // Leaving a removed BE's controller block in a physically loaded chunk lets vanilla
+            // recreate it on lookup. Actually remove that block in legacy mode to model an absent owner.
+            h.getLevel().setBlock(fixture.owner.getBlockPos(), Blocks.AIR.defaultBlockState(), FLAGS);
+            h.assertTrue(fixture.port().canBind(fixture.competitor.getBlockPos()), "legacy preserves its old missing-owner takeover rule");
+            h.assertTrue(fixture.competitor.isStructureOk(), "legacy's scan claims the available part without consulting tracked ownership");
+            Long trackedOwner = gregtech.internal.multiblock.tracking.WorldStructureClaims.table(h.getLevel())
+                    .owner(fixture.shared.asLong());
+            h.assertTrue(Long.valueOf(fixture.owner.getBlockPos().asLong()).equals(trackedOwner),
+                    "legacy binding does not read or overwrite tracked ownership");
+        }
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = "st-claim-addon-parts")
+    public static void addonFunctionalAndEnergyPartsUseStrictClaimAuthority(GameTestHelper h) {
+        try (var fixture = new ClaimFixture(h, 8)) {
+            var addonParts = new ArrayList<MultiblockPortBlockEntity>();
+            for (String name : List.of("sample_compute", "sample_emitter")) {
+                BlockPos pos = fixture.shared.north(addonParts.size() + 2);
+                put(h.getLevel(), pos, block("addon_sample", name).defaultBlockState(), fixture.cells);
+                var port = port(h, pos);
+                port.bind(fixture.owner.getBlockPos(), MultiblockLayout.Role.CASING);
+                h.assertTrue(port.isBoundTo(fixture.owner.getBlockPos()), "addon part binds through the table: " + name);
+                addonParts.add(port);
+            }
+            fixture.unloadOwner();
+            for (var port : addonParts) {
+                h.assertTrue(!port.canBind(fixture.competitor.getBlockPos()), "addon canBind excludes an absent owner's part");
+                port.bind(fixture.competitor.getBlockPos(), MultiblockLayout.Role.ITEM_FLUID_INPUT);
+                h.assertTrue(port.isBoundTo(fixture.owner.getBlockPos()), "direct addon bind also preserves the strict owner");
+            }
+        }
+        h.succeed();
+    }
+
+    private static final class ClaimFixture implements AutoCloseable {
+        final GameTestHelper h;
+        final List<BlockPos> cells = new ArrayList<>();
+        final BlockPos shared;
+        final BehaviorMachineBlockEntity owner;
+        final BehaviorMachineBlockEntity competitor;
+        final java.util.Set<ChunkPos> chunks;
+        private boolean closed;
+        final Map<String, LargeMachineLayouts.Layout> previous = new LinkedHashMap<>();
+        final boolean previousLegacy = StructureTrackingMode.legacy();
+        final boolean previousConsistency = StructureTracking.consistencyCheck();
+
+        ClaimFixture(GameTestHelper h, int index) {
+            this.h = h;
+            StructureTrackingMode.overrideForTests("tracked");
+            StructureTracking.consistencyCheck(false);
+            var east = new LargeMachineLayouts.Layout(List.of(
+                    new LargeMachineLayouts.Cell(1, 0, 0, 18100, MultiblockLayout.Role.ITEM_FLUID_INPUT),
+                    new LargeMachineLayouts.Cell(0, 0, 1, 18100, MultiblockLayout.Role.CASING)), List.of());
+            var west = new LargeMachineLayouts.Layout(List.of(
+                    new LargeMachineLayouts.Cell(-1, 0, 0, 18100, MultiblockLayout.Role.ITEM_FLUID_INPUT)), List.of());
+            previous.put("irrigator", layouts().put("irrigator", east));
+            previous.put("sampleminer", layouts().put("sampleminer", west));
+            shared = new BlockPos(-16_000_000, 100, -16_000_008 - index * 64);
+            chunks = java.util.Set.of(new ChunkPos(shared), new ChunkPos(shared.west()));
+            // UNKNOWN tickets from setBlock expire after a tick. The delayed orphan/onLoad
+            // fixtures need actual loaded controller and part chunks throughout the assertion.
+            for (ChunkPos chunk : chunks)
+                h.getLevel().getChunkSource().addRegionTicket(net.minecraft.server.level.TicketType.PLAYER, chunk, 0, chunk);
+            put(h.getLevel(), shared, part(18100), cells);
+            put(h.getLevel(), shared.west().south(), part(18100), cells);
+            owner = behavior(h.getLevel(), shared.west(), "irrigator", cells);
+            competitor = behavior(h.getLevel(), shared.east(), "sampleminer", cells);
+            cleanupOnCompletion(h, this::close);
+            // NeoForge can defer onLoad until after setBlock returns.
+            StructureTracking.attach(owner);
+            StructureTracking.attach(competitor);
+            StructureTracking.evaluateForTests(owner);
+            StructureTracking.evaluateForTests(competitor);
+            h.assertTrue(owner.isStructureOk() && !competitor.isStructureOk(), "first controller owns the shared boundary part"
+                    + "; owner=" + claimState(owner) + "; competitor=" + claimState(competitor)
+                    + "; chunks=" + h.getLevel().hasChunkAt(owner.getBlockPos()) + "/" + h.getLevel().hasChunkAt(shared));
+        }
+
+        MultiblockPortBlockEntity port() { return StructureTrackingTests.port(h, shared); }
+
+        private static String claimState(BlockEntity entity) {
+            StructureTracker tracker = StructureTracking.tracker(entity);
+            return tracker == null ? "no tracker" : tracker.state() + ":" + tracker.claimError();
+        }
+
+        void unloadOwner() {
+            owner.onChunkUnloaded();
+            owner.setRemoved();
+        }
+
+        @Override public void close() {
+            if (closed) return;
+            closed = true;
+            StructureTrackingMode.overrideForTests("tracked");
+            clear(h.getLevel(), cells);
+            owner.setRemoved(); // Also detach an identity removed directly by an orphan fixture.
+            for (ChunkPos chunk : chunks)
+                h.getLevel().getChunkSource().removeRegionTicket(net.minecraft.server.level.TicketType.PLAYER, chunk, 0, chunk);
+            for (var entry : previous.entrySet()) {
+                if (entry.getValue() == null) layouts().remove(entry.getKey());
+                else layouts().put(entry.getKey(), entry.getValue());
+            }
+            StructureTracking.consistencyCheck(previousConsistency);
+            StructureTrackingMode.overrideForTests(previousLegacy ? "legacy" : "tracked");
+        }
     }
 
     @GameTest(template = "test_empty", timeoutTicks = 200, batch = "st-epoch")

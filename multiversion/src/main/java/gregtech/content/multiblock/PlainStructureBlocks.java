@@ -39,6 +39,13 @@ public final class PlainStructureBlocks {
     }
 
     public static boolean matches(Level level, BlockPos pos, String plain, BlockState state) {
+        if (plain.equals(SpecialStructures.BEDROCK_FLOOR))
+            return state.is(Blocks.BEDROCK) || state.getBlock() instanceof gregtech.content.block.OreBlock
+                    && gregtech.content.block.OreBlock.isBedrockOre(state);
+        if (plain.startsWith(SpecialStructures.FIXED_BLOCK)) {
+            var id = location(plain.substring(SpecialStructures.FIXED_BLOCK.length()));
+            return BuiltInRegistries.BLOCK.containsKey(id) && state.is(BuiltInRegistries.BLOCK.get(id));
+        }
         if (plain.equals("anyopaque")) return state.isSolidRender(level, pos);
         if (plain.startsWith("anyfluid")) {
             var fluid = state.getFluidState();

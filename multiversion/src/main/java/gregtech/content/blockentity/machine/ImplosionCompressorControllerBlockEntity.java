@@ -23,6 +23,8 @@ import java.util.*;
 public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockEntity implements MultiblockPortOwner,
         gregtech.internal.multiblock.tracking.TrackedMultiblock {
     private final PartBindings<BlockPos,MultiblockLayout.Role> bindings=new PartBindings<>();
+    private final gregtech.internal.multiblock.tracking.StructureDefinition definition=
+            gregtech.internal.multiblock.tracking.FixedStructures.declarative(this,this::structureCells,List.of());
     public static final MultiblockLayout LAYOUT=MultiblockLayout.fromShared(gregtech.content.multiblock.SharedImplosionStructure.LAYOUT);
 //? if >=1.21.1 {
     /*public ImplosionCompressorControllerBlockEntity(net.minecraft.world.level.block.entity.BlockEntityType<?> type,BlockPos pos,BlockState state) {
@@ -38,7 +40,34 @@ public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockE
     }
     @Override protected boolean structureComplete() { return isStructureOk(); }
     @Override public gregtech.internal.multiblock.tracking.StructureDefinition structureDefinition() {
-        return gregtech.internal.multiblock.tracking.CustomStructures.implosion(this);
+        return definition;
+    }
+    private List<gregtech.internal.multiblock.tracking.CompiledPattern.FixedCell> structureCells(Direction front) {
+        var cells=new ArrayList<gregtech.internal.multiblock.tracking.CompiledPattern.FixedCell>(LAYOUT.cells().size());
+        for(var cell:LAYOUT.cells()) {
+            int part=cell.role()==MultiblockLayout.Role.AIR?0:18023;
+            var spec=new gregtech.content.multiblock.LargeMachineLayouts.Cell(cell.right(),cell.up(),cell.back(),part,cell.role());
+            var offset=spec.at(BlockPos.ZERO,front);
+            cells.add(new gregtech.internal.multiblock.tracking.CompiledPattern.FixedCell(
+                    offset.getX(),offset.getY(),offset.getZ(),spec));
+        }
+        return cells;
+    }
+    @Override public boolean applyStructure(gregtech.internal.multiblock.tracking.PatternMatch match) {
+        if(level==null||isRemoved())return false;
+        var candidates=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
+        for(var fixed:match.fixedCells()) {
+            var cell=fixed.cell();
+            if(cell.role()!=MultiblockLayout.Role.AIR)candidates.put(fixed.pos(),cell.role());
+        }
+        return gregtech.internal.multiblock.tracking.StructureClaims.update(this,true,bindings,candidates,0,
+                pos->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).canBind(worldPosition),
+                (pos,role)->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).bind(worldPosition,role),this::release)
+                !=gregtech.internal.multiblock.tracking.StructureClaims.Result.FAILED;
+    }
+    @Override public void releaseStructureClaims() {
+        bindings.clear(this::release);
+        gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
     }
     @Override public boolean isStructureOk() {
         return gregtech.internal.multiblock.tracking.StructureTracking.query(this);

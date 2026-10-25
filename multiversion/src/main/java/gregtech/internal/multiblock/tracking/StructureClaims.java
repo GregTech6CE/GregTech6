@@ -34,6 +34,8 @@ public final class StructureClaims {
         } finally {
             StructureScanProbe.resume();
         }
+        if (!StructureTrackingMode.legacy() && controller.getLevel() instanceof net.minecraft.server.level.ServerLevel server)
+            WorldStructureClaims.retain(server, controller.getBlockPos(), claimed ? parts.keySet() : java.util.Set.of());
         if (tracker != null) {
             if (claimed && expectFormed) tracker.rememberClaims(parts, designHash);
             else tracker.forgetClaims();
@@ -42,6 +44,8 @@ public final class StructureClaims {
     }
 
     public static void cleared(BlockEntity controller) {
+        if (!StructureTrackingMode.legacy() && controller.getLevel() instanceof net.minecraft.server.level.ServerLevel server)
+            WorldStructureClaims.releaseController(server, controller.getBlockPos());
         StructureTracker tracker = StructureTracking.tracker(controller);
         if (tracker != null) tracker.forgetClaims();
     }
@@ -73,7 +77,7 @@ public final class StructureClaims {
             BlockPos pos = entry.getKey();
             if (!level.hasChunkAt(pos)) return false;
             if (!(level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port)) return false;
-            if (!port.isBoundTo(controller)) return false;
+            if (!port.hasBindingCache(controller, entry.getValue())) return false;
         }
         return true;
     }

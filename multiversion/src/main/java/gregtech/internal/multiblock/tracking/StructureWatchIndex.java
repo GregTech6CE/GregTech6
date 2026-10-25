@@ -80,6 +80,7 @@ public final class StructureWatchIndex {
         data.sections.clear();
         data.chunks.clear();
         data.safety.clear();
+        data.claims.clear();
         ((StructureLevelData) (Object) level).gt$structureData(null);
     }
 
@@ -111,6 +112,7 @@ public final class StructureWatchIndex {
 
     static void chunkLoaded(ServerLevel level, ChunkPos pos) {
         WorldData data = data(level);
+        if (!StructureTrackingMode.legacy()) WorldStructureClaims.chunkLoaded(level, pos);
         long key = pos.toLong();
         BlockPos probe = new BlockPos(pos.getMinBlockX(), level.getMinBuildHeight(), pos.getMinBlockZ());
         if (!level.hasChunkAt(probe)) {
@@ -132,6 +134,7 @@ public final class StructureWatchIndex {
     static void chunkUnloaded(ServerLevel level, ChunkPos pos) {
         WorldData data = existing(level);
         if (data == null) return;
+        if (!StructureTrackingMode.legacy()) WorldStructureClaims.chunkUnloaded(level, pos);
         long key = pos.toLong();
         data.pending.remove(key);
         List<StructureTracker> trackers = data.chunks.get(key);
@@ -228,6 +231,7 @@ public final class StructureWatchIndex {
         WorldData data = existing(server);
         if (data == null) return;
         data.entities.remove(entity);
+        WorldStructureClaims.removed(tracker);
         data.all.remove(tracker);
         removeDirty(data, tracker);
         Set<StructureTracker> bucket = data.safety.get(tracker.safetyBucket());
@@ -349,6 +353,7 @@ public final class StructureWatchIndex {
     }
 
     public static final class WorldData {
+        final WorldStructureClaims claims = WorldStructureClaims.createWorldData();
         final Map<Long, List<StructureTracker>> sections = new HashMap<>();
         final Map<Long, List<StructureTracker>> chunks = new HashMap<>();
         final Map<BlockEntity, StructureTracker> entities = new IdentityHashMap<>();

@@ -39,7 +39,6 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
             WORK_ENERGY = gregtech.content.multiblock.AdvancedControllerRules.DRILL_WORK;
     private long energy;
     private int stoneType = java.util.concurrent.ThreadLocalRandom.current().nextInt(StoneType.values().length + 2);
-    private final List<GTMaterial> deposit = new ArrayList<>();
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();
     private final ItemStackHandler output = new ItemStackHandler(1) {
 
@@ -76,7 +75,29 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
     }
 
     @Override public gregtech.internal.multiblock.tracking.StructureDefinition structureDefinition() {
-        return gregtech.internal.multiblock.tracking.CustomStructures.drill(this);
+        return gregtech.content.multiblock.SpecialStructures.drill(this);
+    }
+    @Override public boolean acceptsTrackedPart(gregtech.content.multiblock.LargeMachineLayouts.Cell cell,
+            net.minecraft.world.level.block.Block expected, net.minecraft.world.level.block.Block actual) {
+        if (cell.part() == 18103 && !(getBlockState().getBlock() instanceof OriginalBedrockDrillControllerBlock))
+            return actual == GTMultiblocks.DENSE_TITANIUM_WALL.get();
+        return actual == expected;
+    }
+    @Override public boolean structurePartsValid() {
+        return level != null && worldPosition.getY() - 5 >= level.getMinBuildHeight();
+    }
+    @Override public boolean applyStructure(gregtech.internal.multiblock.tracking.PatternMatch match) {
+        var candidates = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
+        for (var cell : match.fixedCells())
+            if (!cell.cell().plainBlock()) candidates.put(cell.pos(), cell.cell().role());
+        return gregtech.internal.multiblock.tracking.StructureClaims.update(this, true, bindings, candidates, 0,
+                pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port && port.canBind(worldPosition),
+                (pos, partRole) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, partRole), this::release)
+                != gregtech.internal.multiblock.tracking.StructureClaims.Result.FAILED;
+    }
+    @Override public void releaseStructureClaims() {
+        bindings.clear(this::release);
+        gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
     }
     @Override public boolean isStructureOk() {
         return gregtech.internal.multiblock.tracking.StructureTracking.query(this);
@@ -86,7 +107,6 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
         if (level == null || isRemoved() || worldPosition.getY() - 5 < level.getMinBuildHeight()) return false;
         boolean usesOriginalController = getBlockState().getBlock() instanceof OriginalBedrockDrillControllerBlock;
         var candidateParts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
-        deposit.clear();
         for (int x = -1; x <= 1; x++)
             for (int z = -1; z <= 1; z++) {
                 var depositPos = worldPosition.offset(x, -5, z);
@@ -97,10 +117,8 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
                 }
                 // §103.B: bedrock deposits are ore blocks whose host rock (block state) is bedrock.
                 BlockState floorState = level.getBlockState(depositPos);
-                if (floorState.getBlock() instanceof OreBlock ore && OreBlock.isBedrockOre(floorState)) {
-                    deposit.add(ore.material());
-                    if (!ore.prefix().getName().equals("oreSmall")) deposit.add(ore.material());
-                } else if (!floorState.is(Blocks.BEDROCK)) {
+                if (!(floorState.getBlock() instanceof OreBlock && OreBlock.isBedrockOre(floorState))
+                        && !floorState.is(Blocks.BEDROCK)) {
                     bindings.clear(this::release);
                     gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
                     return false;
@@ -168,6 +186,8 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
     }
 
     private ItemStack nextProduct() {
+        List<GTMaterial> deposit = drillingCandidates();
+        if (deposit == null) return ItemStack.EMPTY;
         if (level.random.nextInt(1000) == 0) stoneType = level.random.nextInt(StoneType.values().length + 2);
         int selector = level.random.nextInt(128);
         if (selector < deposit.size()) {
@@ -196,6 +216,23 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
             if (block != null) return new ItemStack(block);
         }
         return new ItemStack(stoneType % 2 == 0 ? Blocks.COBBLED_DEEPSLATE : Blocks.COBBLESTONE);
+    }
+
+    /** Fresh weighted candidates for one cycle; null means a floor chunk is unavailable. */
+    public List<GTMaterial> drillingCandidates() {
+        if (level == null) return null;
+        var deposit = new ArrayList<GTMaterial>();
+        for (int x = -1; x <= 1; x++)
+            for (int z = -1; z <= 1; z++) {
+                BlockPos pos = worldPosition.offset(x, -5, z);
+                if (!level.hasChunkAt(pos)) return null;
+                BlockState state = level.getBlockState(pos);
+                if (state.getBlock() instanceof OreBlock ore && OreBlock.isBedrockOre(state)) {
+                    deposit.add(ore.material());
+                    if (!ore.prefix().getName().equals("oreSmall")) deposit.add(ore.material());
+                }
+            }
+        return List.copyOf(deposit);
     }
 //? if >=1.21.1 {
     /*public IItemHandler itemCapability(Direction side) {

@@ -36,9 +36,9 @@ import java.util.List;
  * retain their separate saved mode bits.
  */
 //? if >=1.21.1 {
-/*public class MassStorageBlockEntity extends BlockEntity implements gregtech.content.item.behavior.BehaviorDuctTape.Tapeable {
+/*public class MassStorageBlockEntity extends BlockEntity implements gregtech.content.item.behavior.BehaviorDuctTape.Tapeable, gregtech.api.sensor.ProgressSensorSource, gregtech.api.sensor.WeightSensorSource {
 *///?} else {
-public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctTape.Tapeable {
+public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctTape.Tapeable, gregtech.api.sensor.ProgressSensorSource, gregtech.api.sensor.WeightSensorSource {
 //?}
     public static final long CAPACITY = gregtech.content.storage.OriginalStorageTooltipData.MASS_CAPACITY;
     private final gregtech.internal.inventory.BulkStorageState<ItemStack> storage =
@@ -80,6 +80,17 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
 
     public long stored() {
         return storage.count();
+    }
+
+    @Override public long progressValue(int side) { return stored(); }
+    @Override public long progressMaximum(int side) { return baseCapacity(); }
+
+    @Override public double weightKilograms(int side) {
+        // Original weightometer reads the full storage slot even while taped shut.
+        // Partial material units are not an inventory stack in the original either.
+        var item = template();
+        return item.isEmpty() ? 0 : gregtech.internal.sensor.PhysicalItemMass.kilograms(
+                item.copyWithCount(1)) * stored();
     }
 
     public long partialUnits() {

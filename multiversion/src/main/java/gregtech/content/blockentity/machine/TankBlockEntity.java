@@ -66,9 +66,9 @@ import org.jetbrains.annotations.Nullable;
 
 /** GT6 fluid container tile entity. Handles wood barrels, plastic canisters, and metal drums. */
 //? if >=1.21.1 {
-/*public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregtech.content.cover.PanelCoverHost {
+/*public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregtech.content.cover.PanelCoverHost, gregtech.api.sensor.ProgressSensorSource {
 *///?} else {
-public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregtech.content.cover.PanelCoverHost {    private final java.util.Map<Direction, LazyOptional<IFluidHandler>> componentFaceCaps = new java.util.EnumMap<>(Direction.class);
+public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregtech.content.cover.PanelCoverHost, gregtech.api.sensor.ProgressSensorSource {    private final java.util.Map<Direction, LazyOptional<IFluidHandler>> componentFaceCaps = new java.util.EnumMap<>(Direction.class);
 
 //?}
     private final gregtech.content.cover.ComponentCoverStorage componentCovers = new gregtech.content.cover.ComponentCoverStorage(this);
@@ -233,9 +233,14 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
         if (fermentRecipe == null) {
             fermentRecipe = findFermentationRecipe(fluid);
             fermentInput = fermentRecipe == null ? null : fluid.getFluid();
-            sealedTime = 0;
+            // GT6 preserves saved work while rebuilding its transient recipe cache.
+            // Recompute the maximum from the current valid recipe and fluid amount instead
+            // of trusting persisted maximums. Explicit resealing/fluid changes still reset.
             maxSealedTime = 0;
-            if (fermentRecipe == null) return;
+            if (fermentRecipe == null) {
+                resetSeal();
+                return;
+            }
         }
         if (maxSealedTime <= 0) {
             maxSealedTime = sealedDuration(fermentRecipe, tank.getAmount());
@@ -308,6 +313,8 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
         fermentInput = null;
     }
 
+    @Override public long progressValue(int side) { return sealedTime; }
+    @Override public long progressMaximum(int side) { return maxSealedTime; }
     public long getSealedTime() { return sealedTime; }
     public long getMaxSealedTime() { return maxSealedTime; }
     public FluidStack getFermentationOutput() {

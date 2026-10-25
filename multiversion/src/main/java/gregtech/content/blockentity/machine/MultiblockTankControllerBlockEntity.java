@@ -104,7 +104,21 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
 
     public int trackedSize() { return size; }
     @Override public gregtech.internal.multiblock.tracking.StructureDefinition structureDefinition() {
-        return gregtech.internal.multiblock.tracking.CustomStructures.tank(this);
+        return gregtech.content.multiblock.SpecialStructures.tank(this);
+    }
+    @Override public boolean applyStructure(gregtech.internal.multiblock.tracking.PatternMatch match) {
+        var candidates = new java.util.LinkedHashMap<BlockPos, gregtech.internal.multiblock.MultiblockLayout.Role>();
+        for (var cell : match.fixedCells())
+            if (cell.cell().role() != gregtech.internal.multiblock.MultiblockLayout.Role.AIR)
+                candidates.put(cell.pos(), cell.cell().role());
+        return gregtech.internal.multiblock.tracking.StructureClaims.update(this, true, bindings, candidates, 0,
+                pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port && port.canBind(worldPosition),
+                (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role), this::release)
+                != gregtech.internal.multiblock.tracking.StructureClaims.Result.FAILED;
+    }
+    @Override public void releaseStructureClaims() {
+        bindings.clear(this::release);
+        gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
     }
     @Override public boolean isStructureOk() {
         return gregtech.internal.multiblock.tracking.StructureTracking.query(this);

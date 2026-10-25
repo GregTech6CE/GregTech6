@@ -51,6 +51,8 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
     private static final long MB_UNIT = GTValues.U / 144L;
     private final LargeCrucibleSpecs.Variant variant;
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();
+    private final gregtech.internal.multiblock.tracking.StructureDefinition definition =
+            gregtech.internal.multiblock.tracking.FixedStructures.declarative(this, this::structureCells, List.of());
     private final IFluidHandler fluids = new MoltenPort();
     private final IItemHandler itemInput = new IItemHandler() {
         @Override public int getSlots() { return 1; }
@@ -119,7 +121,50 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
     }
 
     @Override public gregtech.internal.multiblock.tracking.StructureDefinition structureDefinition() {
-        return gregtech.internal.multiblock.tracking.CustomStructures.crucible(this);
+        return definition;
+    }
+    private List<gregtech.internal.multiblock.tracking.CompiledPattern.FixedCell> structureCells(Direction front) {
+        var defs = gregtech.content.multiblock.SharedLargeCrucibleStructure.CELLS;
+        int wall = variant.wallId() < 0 ? 18000 : variant.wallId();
+        var cells = new java.util.ArrayList<gregtech.internal.multiblock.tracking.CompiledPattern.FixedCell>(defs.size());
+        for (var cell : defs) {
+            // The source flags these cells air without changing their role; the pattern must declare AIR.
+            var role = cell.air() ? MultiblockLayout.Role.AIR : MultiblockLayout.Role.valueOf(cell.role().name());
+            var spec = new gregtech.content.multiblock.LargeMachineLayouts.Cell(
+                    cell.x(), cell.y(), cell.z(), cell.air() ? 0 : wall, role);
+            cells.add(new gregtech.internal.multiblock.tracking.CompiledPattern.FixedCell(
+                    cell.x(), cell.y(), cell.z(), spec));
+        }
+        return cells;
+    }
+    @Override public boolean applyStructure(gregtech.internal.multiblock.tracking.PatternMatch match) {
+        if (level == null || isRemoved()) return false;
+        var parts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
+        for (var fixed : match.fixedCells()) {
+            var cell = fixed.cell();
+            if (cell.role() != MultiblockLayout.Role.AIR) parts.put(fixed.pos(), cell.role());
+        }
+        return gregtech.internal.multiblock.tracking.StructureClaims.update(this, true, bindings, parts, 0,
+                position -> level.getBlockEntity(position) instanceof MultiblockPortBlockEntity port
+                        && port.canBind(worldPosition),
+                (position, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(position)).bind(worldPosition, role),
+                this::release) != gregtech.internal.multiblock.tracking.StructureClaims.Result.FAILED;
+    }
+    @Override public void releaseStructureClaims() {
+        bindings.clear(this::release);
+        gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
+    }
+    @Override public void structureFormedChanged(boolean formed) {
+        if (level == null || level.isClientSide || isRemoved()) return;
+        gregtech.internal.multiblock.tracking.StructureScanProbe.pause();
+        try {
+            var property = gregtech.content.block.machine.MultiblockPortBlock.CRUCIBLE_FORMED;
+            var state = level.getBlockState(worldPosition);
+            if (state.hasProperty(property) && state.getValue(property) != formed)
+                level.setBlock(worldPosition, state.setValue(property, formed), 3);
+        } finally {
+            gregtech.internal.multiblock.tracking.StructureScanProbe.resume();
+        }
     }
     @Override public boolean isStructureOk() {
         return gregtech.internal.multiblock.tracking.StructureTracking.query(this);

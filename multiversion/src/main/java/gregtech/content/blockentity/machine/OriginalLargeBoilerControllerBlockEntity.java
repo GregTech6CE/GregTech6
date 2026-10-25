@@ -58,6 +58,8 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
 
     private final OriginalLargeBoilerSpecs.Variant variant;
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();
+    private final gregtech.internal.multiblock.tracking.StructureDefinition definition =
+            gregtech.internal.multiblock.tracking.FixedStructures.declarative(this, this::structureCells, List.of());
     private final FluidTankGT water = new FluidTankGT(WATER_CAPACITY).setOnChanged(this::setChanged);
     private final FluidTankGT steam;
     private long heat;
@@ -130,7 +132,57 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
     private BlockPos bodyCentre() { return worldPosition.relative(front().getOpposite()); }
 
     @Override public gregtech.internal.multiblock.tracking.StructureDefinition structureDefinition() {
-        return gregtech.internal.multiblock.tracking.CustomStructures.boiler(this);
+        return definition;
+    }
+    private List<gregtech.internal.multiblock.tracking.CompiledPattern.FixedCell> structureCells(Direction front) {
+        var cells = new java.util.ArrayList<gregtech.internal.multiblock.tracking.CompiledPattern.FixedCell>(
+                OriginalLargeBoilerSpecs.LAYOUT.cells().size());
+        for (var cell : OriginalLargeBoilerSpecs.LAYOUT.cells()) {
+            // The controller occupies its own cell in the source layout and is skipped by the full scan.
+            if (cell.right() == 0 && cell.up() == 0 && cell.back() == 0) continue;
+            int part = cell.role() == MultiblockLayout.Role.AIR ? 0
+                    : cell.role() == MultiblockLayout.Role.HEAT_INPUT ? 18101 : variant.denseWallId();
+            var spec = new gregtech.content.multiblock.LargeMachineLayouts.Cell(
+                    cell.right(), cell.up(), cell.back(), part, cell.role());
+            var offset = spec.at(BlockPos.ZERO, front);
+            cells.add(new gregtech.internal.multiblock.tracking.CompiledPattern.FixedCell(
+                    offset.getX(), offset.getY(), offset.getZ(), spec));
+        }
+        return cells;
+    }
+    @Override public boolean applyStructure(gregtech.internal.multiblock.tracking.PatternMatch match) {
+        return updateStructureBindings(match, true);
+    }
+    @Override public void applyIncompleteStructure(gregtech.internal.multiblock.tracking.PatternMatch match) {
+        updateStructureBindings(match, false);
+    }
+    private boolean updateStructureBindings(gregtech.internal.multiblock.tracking.PatternMatch match, boolean complete) {
+        if (level == null || isRemoved()) return false;
+        var parts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
+        for (var fixed : match.fixedCells()) {
+            var cell = fixed.cell();
+            // A competing owner excludes this cell, as in the legacy scan; keep other valid tool ports.
+            if (cell.role() != MultiblockLayout.Role.AIR
+                    && level.getBlockEntity(fixed.pos()) instanceof MultiblockPortBlockEntity port
+                    && port.canBind(worldPosition)) parts.put(fixed.pos(), cell.role());
+            else if (cell.role() != MultiblockLayout.Role.AIR) complete = false;
+        }
+        var claimed = gregtech.internal.multiblock.tracking.StructureClaims.update(this, complete, bindings, parts, 0,
+                position -> level.getBlockEntity(position) instanceof MultiblockPortBlockEntity port
+                        && port.canBind(worldPosition),
+                (position, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(position)).bind(worldPosition, role),
+                this::release) != gregtech.internal.multiblock.tracking.StructureClaims.Result.FAILED;
+        return complete && claimed;
+    }
+    @Override public void releaseStructureClaims() {
+        bindings.clear(this::release);
+        gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
+    }
+    @Override public void structureFormedChanged(boolean formed) {
+        if (structureOkay != formed) {
+            structureOkay = formed;
+            syncToClient();
+        }
     }
     @Override public boolean isStructureOk() {
         return gregtech.internal.multiblock.tracking.StructureTracking.query(this);

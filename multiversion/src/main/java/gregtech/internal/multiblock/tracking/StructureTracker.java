@@ -29,6 +29,15 @@ public final class StructureTracker {
     private Direction patternFront;
     private int patternEpoch = -1;
     private boolean fullEval;
+    private String claimError;
+
+    public String claimError() { return claimError; }
+
+    void clearClaimConflict() { claimError = null; }
+
+    void claimConflict(BlockPos part, BlockPos owner) {
+        claimError = "Part " + part.toShortString() + " is occupied by controller " + owner.toShortString();
+    }
     private final Set<Long> changedCells = new HashSet<>();
     private final Set<Long> reloadedChunks = new HashSet<>();
 

@@ -60,14 +60,19 @@ public final class BasicMachineDefinitions {
   var base = raw(p);
   var tuning = applied.tuning();
   long energyIn = tuning.energyIn() != null ? tuning.energyIn() : base.energyIn();
+  long energyInMin = tuning.energyInMin() != null ? tuning.energyInMin() : base.energyInMin();
+  long energyInMax = tuning.energyInMax() != null ? tuning.energyInMax() : base.energyInMax();
   int parallel = tuning.parallelLimit() != null ? tuning.parallelLimit() : base.parallelLimit();
-  MachineTuningRules.checkEffectiveValues(new MachineTuningRules.Key(p.machineName(), p.tier()), energyIn, parallel);
+  var key = new MachineTuningRules.Key(p.machineName(), p.tier());
+  MachineTuningRules.checkEffectiveValues(key, energyIn, parallel);
+  if (energyIn < energyInMin || energyIn > energyInMax)
+   throw new IllegalStateException("Tuned energy for " + key + " sits outside its effective range: "
+           + energyIn + " not in " + energyInMin + ".." + energyInMax);
   var tuned = new BasicMachineSpec(
           base.id(), base.material(), base.machineName(), base.energyType(), base.tier(),
           energyIn, base.energyOut(), base.hardness(), base.blastResistance(), base.faceConfig(),
           base.constructionMaterials(), base.recipeMap(), parallel,
-          tuning.energyInMin() != null ? tuning.energyInMin() : base.energyInMin(),
-          tuning.energyInMax() != null ? tuning.energyInMax() : base.energyInMax(),
+          energyInMin, energyInMax,
           base.namespace(), base.controllerKind(),
           tuning.processingEfficiency() != null ? tuning.processingEfficiency() : base.processingEfficiency(),
           tuning.constantEnergy() != null ? tuning.constantEnergy() : base.constantEnergy(),

@@ -14,6 +14,8 @@ import net.neoforged.neoforge.fluids.FluidStack;
 
 @Mod("addon_sample")
 public final class AddonSampleMod {
+    public static boolean ORE_FORM_STARTUP_WINNER_ACCEPTED;
+    public static int ORE_FORM_STARTUP_CALLBACKS;
     private static final net.neoforged.neoforge.registries.DeferredRegister.Items TAG_PROBE_ITEMS =
             net.neoforged.neoforge.registries.DeferredRegister.createItems("addon_sample");
     static {
@@ -37,6 +39,20 @@ public final class AddonSampleMod {
                             new ItemStack[]{input},new ItemStack[]{new ItemStack(Items.EMERALD)},null,null,37,16,0));
                     // Baseline collision is expected RED, not a startup crash; native test checks real acceptance.
                     System.out.println("[nonore-startup-winner] Rubber accepted="+(accepted!=null));
+                }
+
+                if (AddonSampleMaterials.oreFormStartupRequested()) {
+                    ORE_FORM_STARTUP_CALLBACKS++;
+                    var input = AddonItems.stack("crushed", "Dolamide");
+                    var water = AddonFluids.still("Water", 900);
+                    var slurry = AddonFluids.still("Sluice", 37);
+                    if (input.isEmpty() || water.isEmpty() || slurry.isEmpty())
+                        throw new IllegalStateException("ore-form startup witness missing");
+                    var accepted = AddonRecipes.map("gt.recipe.sluice").add(new AddonRecipes.Line(
+                            new ItemStack[]{input}, new ItemStack[]{new ItemStack(Items.EMERALD)},
+                            new FluidStack[]{water}, new FluidStack[]{slurry}, 53, 16, 0));
+                    ORE_FORM_STARTUP_WINNER_ACCEPTED = accepted != null;
+                    System.out.println("[ore-form-startup-winner] accepted=" + ORE_FORM_STARTUP_WINNER_ACCEPTED);
                 }
 
                 // Separate tiny-winner profile: never masks the literal Ice whole/tiny oracle case.

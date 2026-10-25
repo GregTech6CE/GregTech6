@@ -79,27 +79,10 @@ import java.util.Set;
  * way {@code BasicMachineBlockEntity} is one, with three differences, each of them deliberate:</p>
  *
  * <ul>
- *   <li><b>No {@code MachineControl}.</b> {@code coverControl} is not overridden, so
- *       {@link PanelCoverHost#coverPossible} and {@link PanelCoverHost#coverSupportsPossible} keep
- *       their interface defaults ({@code false}; {@code PanelCoverHost:16-17}) and
- *       {@code MachineControl.find} answers {@code null} for a block entity that is not a
- *       {@code Provider} ({@code MachineControl:25-27}). The two consequences, both of them correct
- *       for a pipe:
- *       <ul>
- *         <li>the panels that <em>read</em> machine state are refused at attach rather than left
- *             broken — {@code PanelCoverRuntime.canAttach:33-41} rejects the status display, the
- *             progress sensor, both energy displays and the three mode selectors because there is no
- *             control and no energy buffer to read, so the player is told the panel is unsupported
- *             instead of getting a dead plate. A stack that a save carries anyway stays inert:
- *             {@code afterTick:95-100} answers 0 for it;</li>
- *         <li>the panels that only <em>emit</em> — the redstone emitter, the conductor pair, the
- *             cover controller and the shutter — work, because {@code afterTick} drives them from the
- *             face's own redstone input and needs no control either.</li>
- *       </ul>
- *       None of the fluid-side covers consults a control: {@link CoverUtilityBehaviors#tickPressureValve}
- *       reads a tank, {@link CoverAttachmentBehaviors#tickDrain} and
- *       {@link CoverAttachmentBehaviors#tickVent} read the world, and the fluid filter reads its own
- *       stack.</li>
+ *   <li><b>No switch/mode control.</b> The pipe is not a {@code MachineControl.Provider}.
+ *       Its separate {@code ProgressSensorSource} reports the native transferred-volume
+ *       counter, so progress covers work without inventing machine on/off or running state.
+ *       Fluid attachments continue using the host's tank and world interfaces.</li>
  *   <li><b>No inventory.</b> The item retriever moves items into the host's own slots
  *       ({@code CoverUtilityBehaviors.tickRetriever}'s {@code target}); a pipe has no slots, so a
  *       retriever attached to one never acts.</li>
@@ -119,7 +102,7 @@ import java.util.Set;
  * ({@code CoverPressureValve:51}) and can only be attached when the pipe has a single tank, so
  * {@code tanks[0]} and "the pipe" coincide there.</p>
  */
-public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, PanelCoverHost, gregtech.api.sensor.CompressionSensorSource {
+public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, PanelCoverHost, gregtech.api.sensor.CompressionSensorSource, gregtech.api.sensor.TemperatureSource, gregtech.api.sensor.ProgressSensorSource {
     @Override public long gibblValue(int side) {
         long total = 0;
         for (var tank : tanks) total += tank.getAmount();
@@ -1223,7 +1206,12 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
 //?}
     }
 
+    // Counter lifetime is the existing native pipe tick interval, not tank occupancy.
+    @Override public long progressValue(int side) { return transferredAmount; }
+    @Override public long progressMaximum(int side) { return spec.capacity() * tanks.length; }
     public long getTransferredAmount() { return transferredAmount; }
+    @Override public long temperatureK(int side) { return temperature; }
+    @Override public long maximumK(int side) { return spec.maxTemperature(); }
     public long getTemperature() { return temperature; }
 
     /** Container transactions use the clicked face, including its connection, filter and backflow rules. */

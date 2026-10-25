@@ -1,0 +1,677 @@
+{
+  "external_types": {
+    "Block": "Minecraft, Java, loader, KubeJS or sample-owned type; outside the SDK source roots",
+    "Direction": "Minecraft, Java, loader, KubeJS or sample-owned type; outside the SDK source roots",
+    "Fluid": "Minecraft, Java, loader, KubeJS or sample-owned type; outside the SDK source roots",
+    "FluidStack": "Minecraft, Java, loader, KubeJS or sample-owned type; outside the SDK source roots",
+    "ItemStack": "Minecraft, Java, loader, KubeJS or sample-owned type; outside the SDK source roots",
+    "Level": "Minecraft, Java, loader, KubeJS or sample-owned type; outside the SDK source roots",
+    "Screen": "Minecraft, Java, loader, KubeJS or sample-owned type; outside the SDK source roots",
+    "CompoundTag": "Minecraft, Java, loader, KubeJS or sample-owned type; outside the SDK source roots",
+    "Integer": "Minecraft, Java, loader, KubeJS or sample-owned type; outside the SDK source roots",
+    "List": "Minecraft, Java, loader, KubeJS or sample-owned type; outside the SDK source roots",
+    "ServiceLoader": "Minecraft, Java, loader, KubeJS or sample-owned type; outside the SDK source roots",
+    "Error": "Minecraft, Java, loader, KubeJS or sample-owned type; outside the SDK source roots",
+    "IllegalArgumentException": "Minecraft, Java, loader, KubeJS or sample-owned type; outside the SDK source roots",
+    "IllegalStateException": "Minecraft, Java, loader, KubeJS or sample-owned type; outside the SDK source roots",
+    "NullPointerException": "Minecraft, Java, loader, KubeJS or sample-owned type; outside the SDK source roots",
+    "RuntimeException": "Minecraft, Java, loader, KubeJS or sample-owned type; outside the SDK source roots",
+    "DeferredRegister": "Minecraft, Java, loader, KubeJS or sample-owned type; outside the SDK source roots",
+    "FMLCommonSetupEvent": "Minecraft, Java, loader, KubeJS or sample-owned type; outside the SDK source roots",
+    "ServerEvents": "Minecraft, Java, loader, KubeJS or sample-owned type; outside the SDK source roots",
+    "GT6CE": "Minecraft, Java, loader, KubeJS or sample-owned type; outside the SDK source roots",
+    "GT6CEStartupEvents": "Minecraft, Java, loader, KubeJS or sample-owned type; outside the SDK source roots",
+    "MyItems": "Minecraft, Java, loader, KubeJS or sample-owned type; outside the SDK source roots",
+    "AddonSampleMachines": "Minecraft, Java, loader, KubeJS or sample-owned type; outside the SDK source roots"
+  },
+  "internal_types": {
+    "AddonMaterials": "Implementation/legacy type discussed as context, not an SDK extension point",
+    "AddonMachineRuntime": "Implementation/legacy type discussed as context, not an SDK extension point",
+    "BasicMachineBlockEntity": "Implementation/legacy type discussed as context, not an SDK extension point",
+    "BasicMachineBlock": "Implementation/legacy type discussed as context, not an SDK extension point",
+    "BasicMachineSpec": "Implementation/legacy type discussed as context, not an SDK extension point",
+    "EnergyBlockViews": "Implementation/legacy type discussed as context, not an SDK extension point",
+    "GTMaterial": "Implementation/legacy type discussed as context, not an SDK extension point",
+    "GTMaterialRegistry": "Implementation/legacy type discussed as context, not an SDK extension point",
+    "GregTechTags": "Implementation/legacy type discussed as context, not an SDK extension point",
+    "IEnergyBlock": "Implementation/legacy type discussed as context, not an SDK extension point",
+    "MachineOverload": "Implementation/legacy type discussed as context, not an SDK extension point",
+    "MachineRecipeMaps": "Implementation/legacy type discussed as context, not an SDK extension point",
+    "MaterialFormItem": "Implementation/legacy type discussed as context, not an SDK extension point",
+    "MaterialItemDefinitions": "Implementation/legacy type discussed as context, not an SDK extension point",
+    "MaterialPrefix": "Implementation/legacy type discussed as context, not an SDK extension point",
+    "Recipe": "Implementation/legacy type discussed as context, not an SDK extension point",
+    "RecipeMap": "Implementation/legacy type discussed as context, not an SDK extension point",
+    "SharedLargeMachineParts": "Implementation/legacy type discussed as context, not an SDK extension point",
+    "SignalWireBlockEntity": "Implementation/legacy type discussed as context, not an SDK extension point",
+    "MachineWorkCost": "Implementation helper moved out of SDK into gregtech.internal; not an addon extension point",
+    "BasicMachineEnergy": "Implementation helper moved out of SDK into gregtech.internal; not an addon extension point",
+    "AddonOverclock": "Implementation helper moved out of SDK into gregtech.internal; not an addon extension point",
+    "BehaviorEnergyRules": "Implementation helper moved out of SDK into gregtech.internal; not an addon extension point",
+    "BehaviorRecipeCatalysts": "Implementation helper moved out of SDK into gregtech.internal; not an addon extension point",
+    "PartEnergyRules": "Implementation helper moved out of SDK into gregtech.internal; not an addon extension point"
+  },
+  "non_api_tokens": {
+    "FAILED": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "BOTTOM": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "TOP": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "RIGHT": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "FRONT": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "LEFT": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "BACK": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "MAX_COPIES": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "MAX_CAPACITY": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "MAX_TANK": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "MAX": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "MAX_AMPERES": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "MAX_FIELDS": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "MAX_SLOTS": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "MAX_STACK": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "MAX_TANKS": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "ADDON_ID_MAX": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "ORES": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "DIRTY_DUSTS": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "U": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "PVC": "Material/energy name or generic bootstrap label, not a Java type",
+    "U2": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "U3": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "U4": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "U9": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "U72": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "HAS_TOOL_STATS": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "SMITHABLE": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "NOT_WOOD": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "NOT_COAL": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "NOT_STONE": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "NOT_FOOD": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "NOT_MEAT": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "METAL": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "MOLTEN": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "ALLOY": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "MELTING": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "EU": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "RU": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "KU": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "HU": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "CU": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "LU": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "MU": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "NU": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "QU": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "TU": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "AU": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "RF": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "MJ": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "STEAM": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "VOLTAGES": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "NAMES": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "VOLTAGES.length": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "BEHIND": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "AIR": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "CASING": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "LOGISTICS": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "HEAT_INPUT": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "CRUCIBLE": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "FLUID_INPUT": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "FLUID_OUTPUT": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "FLUID_IO": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "ITEM_IO": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "ITEM_FLUID_IO": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "ITEM_FLUID_INPUT": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "ITEM_FLUID_OUTPUT": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "ENERGY_INPUT": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "ITEM_FLUID_ENERGY_INPUT": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "ITEM_FLUID_ENERGY": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "ENERGY_OUTPUT": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "UV_SLOT_U": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "UV_SLOT_V": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "UV_ENERGY_U": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "UV_ENERGY_V": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "UV_ENERGY_FULL_U": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "UV_TANK_U": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "UV_TANK_V": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "UV_TANK_MARKS_U": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "UV_ARROW_U": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "UV_ARROW_V": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "UV_ARROW_FULL_V": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "UV_TOGGLE_OFF_U": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "UV_TOGGLE_ON_U": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "UV_TOGGLE_V": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "PLAYER_INVENTORY_GAP": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "INPUT": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "OUTPUT": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "ANY": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "UNIT": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "SPADE": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "UNIVERSAL_SPADE": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "MAGNIFYING_GLASS": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "SCREWDRIVER": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "SOFT_HAMMER": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "WRENCH": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "MONKEY_WRENCH": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "HARD_HAMMER": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "WIRE_CUTTER": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "SAW": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "M": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "LICENSE": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "COPYING": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "NOTICE": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",
+    "Aer": "Material/energy name or generic bootstrap label, not a Java type",
+    "AnnealedCopper": "Material/energy name or generic bootstrap label, not a Java type",
+    "Aqua": "Material/energy name or generic bootstrap label, not a Java type",
+    "Bronze": "Material/energy name or generic bootstrap label, not a Java type",
+    "Chromium": "Material/energy name or generic bootstrap label, not a Java type",
+    "Copper": "Material/energy name or generic bootstrap label, not a Java type",
+    "Cr": "Material/energy name or generic bootstrap label, not a Java type",
+    "DistW": "Material/energy name or generic bootstrap label, not a Java type",
+    "Ignis": "Material/energy name or generic bootstrap label, not a Java type",
+    "Iron": "Material/energy name or generic bootstrap label, not a Java type",
+    "Ordo": "Material/energy name or generic bootstrap label, not a Java type",
+    "Perditio": "Material/energy name or generic bootstrap label, not a Java type",
+    "Soil": "Material/energy name or generic bootstrap label, not a Java type",
+    "StainlessSteel": "Material/energy name or generic bootstrap label, not a Java type",
+    "Steam": "Material/energy name or generic bootstrap label, not a Java type",
+    "Steel": "Material/energy name or generic bootstrap label, not a Java type",
+    "Teflon": "Material/energy name or generic bootstrap label, not a Java type",
+    "Terra": "Material/energy name or generic bootstrap label, not a Java type",
+    "Tin": "Material/energy name or generic bootstrap label, not a Java type",
+    "Services": "Material/energy name or generic bootstrap label, not a Java type"
+  },
+  "call_contexts": {
+    "emit": "MachineBehaviorContext",
+    "pushToPart": "MachineBehaviorContext",
+    "capacity": "MachineBehaviorContext",
+    "tankCapacity": "MachineBehaviorContext",
+    "energy": "MachineBehaviorContext",
+    "auxiliaryEnergy": "MachineBehaviorContext",
+    "emitTo": "MachineBehaviorContext",
+    "recipeMaps": "BehaviorMachine.Builder"
+  },
+  "headings": {
+    "Addon API": "Addon 接口",
+    "Overview": "概述",
+    "Contents": "目录",
+    "Getting started": "快速上手",
+    "Building against the SDK": "基于 SDK 构建",
+    "Registering an addon": "注册附属",
+    "Adding recipes from `onRecipesReady`": "在 `onRecipesReady` 里添加配方",
+    "Conventions": "约定",
+    "Absent values": "找不到时返回什么",
+    "Null arguments": "null 参数",
+    "Units on `MachineBehaviorContext`": "`MachineBehaviorContext` 的单位",
+    "Boolean direction": "布尔参数的方向",
+    "Faces and sides": "面与方向",
+    "Machine templates": "机器模板",
+    "Builders": "Builder",
+    "Limits": "上限",
+    "Shared limits": "共用上限",
+    "Names": "名字",
+    "Per type": "各类型",
+    "Recipes": "配方",
+    "Recipe construction": "配方构造",
+    "Machine recipe datapacks": "机器配方数据包",
+    "KubeJS": "KubeJS",
+    "Viewer rows": "展示行",
+    "Multiple dynamic providers": "多个动态配方 provider",
+    "Materials": "材料",
+    "Materials and forms": "材料与形态",
+    "Prefixes": "前缀",
+    "World generation": "世界生成",
+    "Crucible": "坩埚",
+    "Machines": "机器",
+    "Registering machines": "注册机器",
+    "Casings": "外壳",
+    "Items and fluids": "物品和流体",
+    "Recipe tables": "配方表",
+    "Recipe machines": "配方机器",
+    "Machine controls": "机器控制",
+    "Heat": "热量",
+    "Machine tuning": "内置机器调参",
+    "Fuel generators": "燃料机",
+    "Pipes": "管子",
+    "Compressed gas tanks": "压缩气罐",
+    "Behavior machines": "行为机器",
+    "Unified storage access": "统一的存储访问",
+    "Explicit energy accounting": "明确的能源数量与扣除规则",
+    "Existing callbacks and declarations": "原有回调与声明",
+    "Structures": "结构",
+    "Structure layout datapacks": "结构布局数据包",
+    "Energy": "能量",
+    "Sensors and signals": "传感器与信号",
+    "Sensor sources": "传感器源",
+    "Signal wires": "信号线",
+    "Reference": "参考",
+    "Internal types": "内部类型",
+    "SDK packages": "SDK 包",
+    "Scope": "范围",
+    "Versioning and compatibility": "版本与兼容性",
+    "Version policy": "版本策略",
+    "API changes": "变更",
+    "Deprecation and removal": "弃用与移除",
+    "Appendix": "附录",
+    "Upstream history": "上游历史",
+    "License": "许可",
+    "test branch package migration": "test 分支包名迁移"
+  },
+  "limits": [
+    {
+      "id": "per-tick",
+      "cell": 2,
+      "values": [
+        1,
+        "AddonLimits.MAX_PER_TICK"
+      ]
+    },
+    {
+      "id": "capacity",
+      "cell": 2,
+      "values": [
+        1,
+        "AddonLimits.MAX_CAPACITY"
+      ]
+    },
+    {
+      "id": "efficiency",
+      "cell": 2,
+      "values": [
+        1,
+        "AddonLimits.MAX_EFFICIENCY",
+        10000,
+        "AddonLimits.DEFAULT_EFFICIENCY",
+        100
+      ]
+    },
+    {
+      "id": "chance",
+      "cell": 2,
+      "values": [
+        1,
+        "RecipeOutputChances.CERTAIN"
+      ]
+    },
+    {
+      "id": "selector",
+      "cell": 2,
+      "values": [
+        "SelectorTags.MIN",
+        "SelectorTags.MAX"
+      ]
+    },
+    {
+      "id": "gui",
+      "cell": 3,
+      "values": [
+        {
+          "source": "BehaviorMachine",
+          "pattern": "guiWidth < (\\d+)",
+          "group": 1
+        },
+        {
+          "source": "BehaviorMachine",
+          "pattern": "guiWidth > (\\d+)",
+          "group": 1
+        },
+        {
+          "source": "BehaviorMachine",
+          "pattern": "guiHeight < (\\d+)",
+          "group": 1
+        },
+        {
+          "source": "BehaviorMachine",
+          "pattern": "guiHeight > (\\d+)",
+          "group": 1
+        }
+      ]
+    },
+    {
+      "id": "slots",
+      "cell": 3,
+      "values": [
+        {
+          "source": "BehaviorMachine",
+          "pattern": "items.size\\(\\) > (\\d+)",
+          "group": 1
+        },
+        {
+          "source": "BehaviorMachine",
+          "pattern": "fluids.size\\(\\) > (\\d+)",
+          "group": 1
+        },
+        {
+          "source": "BehaviorMachine",
+          "pattern": "toggles.size\\(\\) > (\\d+)",
+          "group": 1
+        }
+      ]
+    },
+    {
+      "id": "client-keys",
+      "cell": 3,
+      "values": [
+        {
+          "source": "BehaviorMachine",
+          "pattern": "clientKeys.size\\(\\) > (\\d+)",
+          "group": 1
+        }
+      ]
+    },
+    {
+      "id": "range",
+      "cell": 3,
+      "values": [
+        0,
+        "BehaviorRangeRules.LIMIT",
+        0
+      ]
+    },
+    {
+      "id": "recipe-parallel",
+      "cell": 3,
+      "values": [
+        {
+          "source": "RecipeMachine",
+          "pattern": "parallel < (\\d+)",
+          "group": 1
+        }
+      ]
+    },
+    {
+      "id": "light",
+      "cell": 3,
+      "values": [
+        {
+          "source": "RecipeMachine",
+          "pattern": "minimumLightAbove < (\\d+)",
+          "group": 1
+        },
+        {
+          "source": "RecipeMachine",
+          "pattern": "minimumLightAbove > (\\d+)",
+          "group": 1
+        }
+      ]
+    },
+    {
+      "id": "amperes",
+      "cell": 3,
+      "values": [
+        1,
+        "FuelGenerator.MAX_AMPERES",
+        {
+          "source": "FuelGenerator",
+          "pattern": "int amperes = (\\d+)",
+          "group": 1
+        }
+      ]
+    },
+    {
+      "id": "fuel-tank",
+      "cell": 3,
+      "values": [
+        {
+          "source": "FuelGenerator",
+          "pattern": "int tankCapacity = ([\\d_]+)",
+          "group": 1
+        }
+      ]
+    },
+    {
+      "id": "behind",
+      "cell": 3,
+      "values": [
+        1,
+        "FuelGenerator.MAX_BEHIND"
+      ]
+    },
+    {
+      "id": "io-coordinate",
+      "cell": 3,
+      "values": [
+        {
+          "source": "IoTarget",
+          "pattern": "right < -(\\d+)",
+          "group": 1,
+          "factor": -1
+        },
+        {
+          "source": "IoTarget",
+          "pattern": "right > (\\d+)",
+          "group": 1
+        }
+      ]
+    },
+    {
+      "id": "design",
+      "cell": 3,
+      "values": [
+        0,
+        {
+          "source": "LayoutCell",
+          "pattern": "design > (\\d+)",
+          "group": 1
+        }
+      ]
+    },
+    {
+      "id": "repeat",
+      "cell": 3,
+      "values": [
+        1,
+        "LayoutRepeat.MAX_COPIES",
+        -1
+      ]
+    },
+    {
+      "id": "fields",
+      "cell": 3,
+      "values": [
+        "LayoutPart.MAX_FIELDS"
+      ]
+    },
+    {
+      "id": "part-slots",
+      "cell": 3,
+      "values": [
+        1,
+        "PartSlots.MAX_SLOTS",
+        1,
+        "PartSlots.MAX_STACK"
+      ]
+    },
+    {
+      "id": "part-tanks",
+      "cell": 3,
+      "values": [
+        1,
+        "PartTanks.MAX_TANKS"
+      ]
+    },
+    {
+      "id": "pipe",
+      "cell": 3,
+      "values": [
+        {
+          "source": "ItemPipeDeclaration",
+          "pattern": "stepSize < (\\d+)",
+          "group": 1
+        },
+        {
+          "source": "ItemPipeDeclaration",
+          "pattern": "invSize < (\\d+)",
+          "group": 1
+        }
+      ]
+    },
+    {
+      "id": "ore-height",
+      "cell": 3,
+      "values": [
+        {
+          "source": "WorldgenNames",
+          "pattern": "minY < (\\d+)",
+          "group": 1
+        },
+        {
+          "source": "WorldgenNames",
+          "pattern": "maxY > (\\d+)",
+          "group": 1
+        }
+      ]
+    },
+    {
+      "id": "tuning",
+      "cell": 3,
+      "values": [
+        {
+          "source": "MachineTuning",
+          "pattern": "tier < (\\d+)",
+          "group": 1
+        },
+        {
+          "source": "MachineTuning",
+          "pattern": "parallelLimit < (\\d+)",
+          "group": 1
+        }
+      ]
+    },
+    {
+      "id": "table-inputs",
+      "cell": 3,
+      "values": []
+    },
+    {
+      "id": "prefix-text",
+      "cell": 2,
+      "values": [
+        {
+          "source": "PrefixDeclaration",
+          "pattern": "displayPrefix.length\\(\\) > (\\d+)"
+        }
+      ]
+    },
+    {
+      "id": "state-string",
+      "cell": 2,
+      "values": [
+        {
+          "source": "BehaviorMachineBlockEntity",
+          "pattern": "value.length\\(\\) > (\\d+)"
+        }
+      ]
+    },
+    {
+      "id": "behavior-tier",
+      "cell": 3,
+      "values": [
+        {
+          "source": "BehaviorMachine",
+          "pattern": "tier < (\\d+)"
+        },
+        {
+          "source": "BehaviorMachine",
+          "pattern": "tier > (\\d+)"
+        },
+        1
+      ]
+    }
+  ],
+  "internal_members": {
+    "EnergyTransfer.emitEnergyToSide": "Internal energy.EnergyTransfer, not addon.EnergyTransfer; explains host implementation"
+  },
+  "limit_notes": {
+    "literal_0_1": "Zero/default, positivity and sentinel semantics are retained as literals; focused source predicates cover nontrivial bounds.",
+    "negative_bounds": "ASCII minus and Unicode minus are both checked as signed values.",
+    "efficiency_scale": "10,000 = 100% is a unit convention, not a separately adjustable bound.",
+    "item_pipe_overflow": "Long.MAX_VALUE / 100 and Integer.MAX_VALUE / 4 are described, not expanded as decimal table limits.",
+    "recipe_table_relations": "Cross-field comparisons, not numeric constants; source predicates are covered separately.",
+    "name_patterns_and_runtime_strings": "Pattern and runtime-only checks have explicit source checks in the checker."
+  },
+  "patterns": [
+    {
+      "id": "addon-id",
+      "source": "AddonNames.ADDON_ID",
+      "cell": 2
+    },
+    {
+      "id": "material",
+      "source": "AddonNames.MATERIAL",
+      "cell": 2
+    },
+    {
+      "id": "prefix",
+      "source": "AddonNames.PREFIX_NAME",
+      "cell": 2
+    },
+    {
+      "id": "recipe-map",
+      "source": "AddonNames.RECIPE_MAP",
+      "cell": 2
+    },
+    {
+      "id": "machine-type",
+      "source": "AddonNames.MACHINE_TYPE",
+      "cell": 2
+    },
+    {
+      "id": "machine-id",
+      "source": "AddonNames.RESOURCE_PATH",
+      "cell": 2
+    },
+    {
+      "id": "part-name",
+      "source": "AddonNames.LOWER_PATH",
+      "cell": 2
+    },
+    {
+      "id": "energy-type",
+      "source": "EnergyType.NAME",
+      "cell": 2
+    },
+    {
+      "id": "state-key",
+      "source": "BehaviorMachine.STATE_KEY",
+      "cell": 2
+    },
+    {
+      "id": "block-entity",
+      "source": "BehaviorMachine.BLOCK_ENTITY_PATH",
+      "cell": 2
+    }
+  ],
+  "source_files": {
+    "BehaviorMachineBlockEntity": "multiversion/src/main/java/gregtech/content/blockentity/machine/BehaviorMachineBlockEntity.java",
+    "FunctionalPartRuntime": "multiversion/src/main/java/gregtech/content/blockentity/machine/FunctionalPartRuntime.java"
+  },
+  "source_assertions": [
+    {
+      "source": "RecipeTable",
+      "pattern": "minimalInputItems > inputItems",
+      "reason": "recipe table minimal item inputs are bounded by total inputs"
+    },
+    {
+      "source": "RecipeTable",
+      "pattern": "minimalInputFluids > inputFluids",
+      "reason": "recipe table minimal fluid inputs are bounded by total inputs"
+    },
+    {
+      "source": "ItemPipeDeclaration",
+      "pattern": "Long.MAX_VALUE / 100",
+      "reason": "item pipe step overflow guard"
+    },
+    {
+      "source": "ItemPipeDeclaration",
+      "pattern": "Integer.MAX_VALUE / 4",
+      "reason": "item pipe inventory overflow guard"
+    },
+    {
+      "source": "FunctionalPartRuntime",
+      "pattern": "value.length\\(\\) > 256",
+      "reason": "part state strings share the 256-character cap"
+    },
+    {
+      "source": "LayoutPart",
+      "pattern": "\\[a-z0-9_\\.\\]\\{1,64\\}",
+      "reason": "part field names share the state-key pattern"
+    }
+  ]
+}

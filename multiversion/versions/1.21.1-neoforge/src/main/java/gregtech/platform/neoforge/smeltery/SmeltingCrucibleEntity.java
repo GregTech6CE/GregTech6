@@ -37,7 +37,18 @@ import net.minecraft.world.InteractionResult;
 
 /** Neo world/cache/storage adapter for the shared real crucible engine. */
 public class SmeltingCrucibleEntity extends gregtech.content.blockentity.GTEnergyBlockEntity implements gregtech.internal.energy.HeatEnergyBlock, gregtech.internal.machine.ITileEntityCrucible, gregtech.internal.fluid.MoltenMaterialStorage,
-        gregtech.api.machine.HeatHandler {
+        gregtech.api.machine.HeatHandler,
+        gregtech.api.sensor.WeightSensorSource, gregtech.api.sensor.CompressionSensorSource {
+    @Override public double weightKilograms(int side) { return CrucibleMaterialStack.weight(content); }
+    @Override public long gibblValue(int side) {
+        return gregtech.internal.machine.crucible.CrucibleMath.units(
+                CrucibleMaterialStack.total(content), GTValues.U9, 1000, true);
+    }
+    @Override public long gibblMaximum(int side) {
+        return gregtech.internal.machine.crucible.CrucibleMath.units(
+                maxMaterialAmount(), GTValues.U9, 1000, true);
+    }
+
     public static final long MAX_AMOUNT = 16L * GTValues.U;
     private final List<CrucibleMaterialStack> content = new ArrayList<>();
     private final ItemStackHandler cache = new ItemStackHandler(1) {

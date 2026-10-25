@@ -3,6 +3,7 @@ package gregtech.content.recipe;
 import gregtech.api.material.*;
 import gregtech.internal.material.*;
 import gregtech.internal.material.*;
+import gregtech.internal.material.*;
 import gregtech.internal.recipe.RecipeMap;
 import gregtech.content.data.*;
 import gregtech.bootstrap.InitializationStep;
@@ -87,6 +88,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         processByproductList();
         processRecycling();
         NonOreMacerationRows.seal();
+        SourceOreOutputRows.seal();
     }
 
     // ========================================================================
@@ -437,8 +439,11 @@ public class OreProcessingRecipeLoader implements InitializationStep {
 
             List<GTMaterial> byProds = material.getByProducts();
 
-            // ── Bath: crushed + water → crushedPurified + first byproduct ──
-            if (MaterialPrefix.crushedPurified.isValidFor(material)) {
+            // The reviewed Cinnabar source has reagent-specific Bath routes, not this legacy
+            // water-only shortcut. Skip only this producer; external forms/profiles still defer
+            // and independent startup/datapack recipes are never searched for or removed.
+            if (!ReviewedCinnabarFacts.supports(material)
+                    && MaterialPrefix.crushedPurified.isValidFor(material)) {
                 ItemStack crushed = mat(MaterialPrefix.crushed, material, 1);
                 ItemStack crushedPurified = mat(MaterialPrefix.crushedPurified, material, 1);
                 if (!crushed.isEmpty() && !crushedPurified.isEmpty()) {
@@ -456,7 +461,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
 
             if (ReviewedCinnabarFacts.supports(material)) {
                 SourceOreFollowonRows.centrifuge(material,ReviewedCinnabarFacts.INSTANCE);
-                continue; // original Bath branch above remains unchanged; replace only owned generic centrifuge
+                continue; // source Cinnabar washing is handled by explicit reagent routes; replace owned centrifuge
             }
             if (ReviewedOreCentrifugeFacts.supports(material)) {
                 SourceOreFollowonRows.centrifuge(material, ReviewedOreCentrifugeFacts.INSTANCE);
@@ -591,6 +596,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
 
         // Deduplicate captured definitions only; UNKNOWN and externally owned direct admissions
         // retain their existing order and collision behavior, including repeated aliases.
+        var outputDefined = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<GTMaterial, Boolean>());
         var defined = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<GTMaterial, Boolean>());
         for (GTMaterial mat : GTMaterialRegistry.allMaterials()) {
             GTMaterial material = mat.resolve();
@@ -607,6 +613,19 @@ public class OreProcessingRecipeLoader implements InitializationStep {
             // GT6 takes the first eight byproducts in registration order and falls back to the
             // material itself when there are fewer (Loader_Recipes_Ores:416).
             List<GTMaterial> byProds = material.getByProducts();
+            var selected=new ArrayList<GTMaterial>();
+            for(int i=0;i<8;i++) selected.add(i<byProds.size()&&byProds.get(i)!=null&&byProds.get(i).isValid()
+                    ? byProds.get(i) : material);
+            if (!NonOreMacerationRows.reviewed(material) && SourceOreOutputRows.affects(selected)) {
+                if (!outputDefined.add(material)) continue;
+                for(var water:water900) defineSluiceOutputRow(material,"sluice/whole/"+
+                        net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(water.getFluid()),
+                        crushed,purified,selected,9,water,sluice900,144);
+                for(var water:water100) defineSluiceOutputRow(material,"sluice/tiny/"+
+                        net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(water.getFluid()),
+                        crushedTiny,purifiedTiny,selected,1,water,sluice100,16);
+                continue;
+            }
             ItemStack[] fines9 = new ItemStack[8];
             ItemStack[] fines1 = new ItemStack[8];
             boolean complete = true;
@@ -642,6 +661,20 @@ public class OreProcessingRecipeLoader implements InitializationStep {
                         SLUICE_CHANCES, new FluidStack[]{water}, new FluidStack[]{sluice100.copy()}, 16, EU_TIER);
             }
         }
+    }
+
+    /** Capture immutable source facts; only the fine-output form is rebound after current tags. */
+    private static void defineSluiceOutputRow(GTMaterial material,String producer,ItemStack input,ItemStack main,
+                                              List<GTMaterial> products,int count,FluidStack water,FluidStack output,long duration) {
+        var sourceInput=input.copy();var sourceMain=main.copy();var selected=List.copyOf(products);
+        var sourceWater=water.copy();var sourceOutput=output.copy();
+        SourceOreOutputRows.define(material,producer,MachineRecipeMaps.Sluice,()-> {
+            var outputs=new ItemStack[9];outputs[0]=sourceMain.copy();
+            // Original OM may yield an empty fine slot; retain the valid main row and slot chance.
+            for(int i=0;i<8;i++) outputs[i+1]=purifiedTinyOrDust(selected.get(i),count);
+            return MachineRecipeMaps.Sluice.addRecipe(true,new ItemStack[]{sourceInput.copy()},outputs,null,
+                    SLUICE_CHANCES.clone(),new FluidStack[]{sourceWater.copy()},new FluidStack[]{sourceOutput.copy()},duration,EU_TIER,0);
+        });
     }
 
     /** Bounded reviewed source profile; shared row algorithms; unknown inputs retain legacy routes. */
