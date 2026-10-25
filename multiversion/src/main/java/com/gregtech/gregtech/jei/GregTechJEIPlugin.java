@@ -90,8 +90,8 @@ public final class GregTechJEIPlugin implements IModPlugin {
         for(var table:net.minecraft.core.registries.BuiltInRegistries.BLOCK)
             if(table instanceof com.gregtech.gregtech.block.misc.AdvancedCraftingTableBlock)
                 registration.addRecipeCatalyst(new ItemStack(table),mezz.jei.api.constants.RecipeTypes.CRAFTING);
-        for (var info : MultiblockInfoCategory.recipes())
-            registration.addRecipeCatalyst(info.controller(), MultiblockInfoCategory.TYPE);
+        // Assembly controllers are recipe outputs, not catalysts for every structure in the category.
+        // JEI indexes each controller and its construction parts in MultiblockInfoCategory.setRecipe.
         machines.forEach((map, stacks) -> {
             if (!categories.containsKey(map)) return;
             for (var stack : stacks) registration.addRecipeCatalyst(stack, RecipeMapCategory.recipeType(map));

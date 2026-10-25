@@ -56,6 +56,8 @@ public final class MultiblockInfoCategory extends MultiblockInfoData implements 
         });
     }
     @Override public void setRecipe(IRecipeLayoutBuilder builder,Info info,IFocusGroup focuses) {
+        // Keep JEI's uses shortcut scoped to this controller's assembly recipe.
+        builder.addInvisibleIngredients(RecipeIngredientRole.CATALYST).addItemStack(info.controller());
         builder.addSlot(RecipeIngredientRole.OUTPUT,1,1).setBackground(slot,-1,-1).addItemStack(info.controller());
         var parts=MultiblockInfoData.parts(info);
         for(int i=0;i<parts.size();i++) builder.addSlot(RecipeIngredientRole.INPUT,21+i*19,1).setBackground(slot,-1,-1).addItemStack(parts.get(i));
