@@ -289,34 +289,28 @@ public class SensorBlockEntity extends BlockEntity {
                 }
                 case WEIGHTOMETRIC, WEIGHTOMETRIC_LIGHT, WEIGHTOMETRIC_MEDIUM,
                      WEIGHTOMETRIC_SUPER_HEAVY -> {
+                    double kilograms = 0;
+                    if (target instanceof com.gregtech.gregtech.api.sensor.WeightSensorSource source) {
+                        // The host owns the physical contents; a crucible's cache is not its contents.
+                        kilograms = source.weightKilograms(facing.ordinal());
+                    } else {
 //? if >=1.21.1 {
-                    /*IItemHandler items = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,target.getBlockPos(),facing);
+                        /*IItemHandler items = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,target.getBlockPos(),facing);
 *///?} else {
-                    IItemHandler items = target.getCapability(ForgeCapabilities.ITEM_HANDLER, facing)
-                            .resolve().orElse(null);
+                        IItemHandler items = target.getCapability(ForgeCapabilities.ITEM_HANDLER, facing)
+                                .resolve().orElse(null);
 //?}
-                    if (items != null) {
-                        // This is currently a recoverable crucible payload, not OM.weight or
-                        // the original host-provided weight. Bulk handler views may be capped.
-                        double kilograms = 0;
-                        for (int i = 0; i < items.getSlots(); i++) {
-                            var stack = items.getStackInSlot(i);
-                            for (var material : com.gregtech.gregtech.api.machine.crucible.CrucibleItemInput.parse(stack))
-                                kilograms += material.weightKg() * stack.getCount();
+                        if (items != null) {
+                            for (int i = 0; i < items.getSlots(); i++)
+                                kilograms += com.gregtech.gregtech.api.sensor.PhysicalItemMass.kilograms(items.getStackInSlot(i));
                         }
-                        // The four GT6 weight-o-meters are the same measurement with a different
-                        // scale (SensorMeasurements): gramm / kilogramme / tons / kilotons.
-                        newValue = switch (be.kind) {
-                            case WEIGHTOMETRIC_LIGHT ->
-                                    com.gregtech.gregtech.api.sensor.SensorMeasurements.grams(kilograms);
-                            case WEIGHTOMETRIC_MEDIUM ->
-                                    com.gregtech.gregtech.api.sensor.SensorMeasurements.kilograms(kilograms);
-                            case WEIGHTOMETRIC_SUPER_HEAVY ->
-                                    com.gregtech.gregtech.api.sensor.SensorMeasurements.kilotonnes(kilograms);
-                            default -> com.gregtech.gregtech.api.sensor.SensorMeasurements.tonnes(kilograms);
-                        };
-                        maximum = com.gregtech.gregtech.api.sensor.SensorMeasurements.MAX_COUNT;
                     }
+                    newValue = switch (be.kind) {
+                        case WEIGHTOMETRIC_LIGHT -> com.gregtech.gregtech.api.sensor.SensorMeasurements.grams(kilograms);
+                        case WEIGHTOMETRIC_MEDIUM -> com.gregtech.gregtech.api.sensor.SensorMeasurements.kilograms(kilograms);
+                        case WEIGHTOMETRIC_SUPER_HEAVY -> com.gregtech.gregtech.api.sensor.SensorMeasurements.kilotonnes(kilograms);
+                        default -> com.gregtech.gregtech.api.sensor.SensorMeasurements.tonnes(kilograms);
+                    };
                 }
                 case TPS -> {
                     // Handled before the target lookup: the TPS meter measures the whole server.
@@ -358,7 +352,7 @@ public class SensorBlockEntity extends BlockEntity {
                     }
                 }
                 case STACKOMETER -> {
-                    // Current count / 64 differs from GT6's occupied-slot count.
+                    // GT6 counts occupied inventory slots, regardless of item stack size.
 //? if >=1.21.1 {
                     /*IItemHandler items = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,target.getBlockPos(),facing);
 *///?} else {
@@ -366,13 +360,11 @@ public class SensorBlockEntity extends BlockEntity {
                             .resolve().orElse(null);
 //?}
                     if (items != null) {
-                        int stacks = 0, maxStacks = 0;
-                        for (int i = 0; i < items.getSlots(); i++) {
-                            stacks += items.getStackInSlot(i).getCount();
-                            maxStacks += items.getSlotLimit(i);
-                        }
-                        newValue = stacks / 64;
-                        maximum = maxStacks / 64;
+                        int stacks = 0;
+                        for (int i = 0; i < items.getSlots(); i++)
+                            if (!items.getStackInSlot(i).isEmpty()) stacks++;
+                        newValue = stacks;
+                        maximum = items.getSlots();
                     }
                 }
                 case LUMINOMETER, PLAYERCOUNTER, CHRONOMETER -> { /* sampled without a block entity below */ }
@@ -400,6 +392,8 @@ public class SensorBlockEntity extends BlockEntity {
                 newValue = storage.stored(); maximum = storage.baseCapacity();
             }
             switch (be.kind) {
+                case WEIGHTOMETRIC, WEIGHTOMETRIC_LIGHT, WEIGHTOMETRIC_MEDIUM,
+                     WEIGHTOMETRIC_SUPER_HEAVY -> maximum = com.gregtech.gregtech.api.sensor.SensorMeasurements.MAX_COUNT;
                 case LUMINOMETER -> {
                     newValue = level.getMaxLocalRawBrightness(pos.relative(facing.getOpposite())); maximum = 15;
                 }

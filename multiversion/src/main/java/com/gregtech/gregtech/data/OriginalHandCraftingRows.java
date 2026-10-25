@@ -31,6 +31,7 @@ public final class OriginalHandCraftingRows {
         legacyEnergyDevices(data);
         crystalChargersAndItemBarrels(data);
         rods(data);
+        machineCasings(data);
         woodenBuckets(data);
         addAxles(data);
         int gearboxes = customGearboxes(data), transformers = transformerGearboxes(data);
@@ -121,6 +122,31 @@ public final class OriginalHandCraftingRows {
                         new String[]{"X ", " f"},
                         Map.of('X', com.gregtech.gregtech.recipe.CraftingMaterialForms.ingredient(input),
                                 'f', requiredTool(GTToolType.FILE)), output);
+            }
+        }
+    }
+
+    /** GT6 Loader_OreProcessing:152-155. Hand crafting is not restricted by Welder flags. */
+    private static void machineCasings(Map<ResourceLocation, byte[]> recipes) {
+        MaterialPrefix[] plates = {MaterialPrefix.plate, MaterialPrefix.plateDouble,
+                MaterialPrefix.plateQuadruple, MaterialPrefix.plateDense};
+        BlockMaterialPrefix[] casings = {BlockMaterialPrefix.casingMachine, BlockMaterialPrefix.casingMachineDouble,
+                BlockMaterialPrefix.casingMachineQuadruple, BlockMaterialPrefix.casingMachineDense};
+        for (GTMaterial material : com.gregtech.gregtech.api.material.GTMaterialRegistry.allMaterials()) {
+            if (!material.isValid() || material.resolve() != material
+                    || material.has(com.gregtech.gregtech.api.material.MaterialProperty.ANTIMATTER)) continue;
+            ItemStack rod = GTItems.getStack(MaterialPrefix.stickLong, material, 1);
+            if (rod.isEmpty()) continue;
+            for (int grade = 0; grade < plates.length; grade++) {
+                ItemStack plate = GTItems.getStack(plates[grade], material, 1);
+                ItemStack output = GTBlocks.getStack(casings[grade], material);
+                if (plate.isEmpty() || output.isEmpty()) continue;
+                register(recipes, "machine_casing/" + casings[grade].getRegistryName() + "/"
+                                + MaterialEquivalence.materialName(material),
+                        new String[]{"YXX", "XwX", "XXY"},
+                        Map.of('X', com.gregtech.gregtech.recipe.CraftingMaterialForms.ingredient(plate),
+                                'Y', com.gregtech.gregtech.recipe.CraftingMaterialForms.ingredient(rod),
+                                'w', requiredTool(GTToolType.WRENCH)), output);
             }
         }
     }
