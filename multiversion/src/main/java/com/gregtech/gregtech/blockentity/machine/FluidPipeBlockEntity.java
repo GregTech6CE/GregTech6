@@ -387,8 +387,11 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
             switch (id) {
                 case CoverItems.PUMP, CoverItems.CONVEYOR, CoverItems.ROBOT_ARM ->
                         com.gregtech.gregtech.content.cover.ComponentCoverRuntime.tick(this,side,level.getGameTime());
-                case CoverUtilityBehaviors.PRESSURE_VALVE ->
-                        CoverUtilityBehaviors.tickPressureValve(level, worldPosition, side, tanks[0], coverTicks);
+                case CoverUtilityBehaviors.PRESSURE_VALVE -> {
+                    // CoverPressureValve.onTickPost disconnects even an empty tank before release.
+                    if (coverTicks > 2) com.gregtech.gregtech.content.cover.CoverConnections.update(this, side, false);
+                    CoverUtilityBehaviors.tickPressureValve(level, worldPosition, side, tanks[0], coverTicks);
+                }
                 case CoverAttachmentBehaviors.DRAIN ->
                         CoverAttachmentBehaviors.tickDrain(level, worldPosition, side, this, coverTicks);
                 case CoverAttachmentBehaviors.AIR_VENT ->

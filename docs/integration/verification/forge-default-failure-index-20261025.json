@@ -202,7 +202,7 @@
       "name": "pressurevalvemovesafulltankintothetankinfront",
       "original_failure": "the source machine face accepts the pressure valve",
       "family": "covers_controls_and_energy_boundaries",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "pressurevalvemovesafulltankintothetankinfront",
       "sources": [
         {
@@ -211,7 +211,8 @@
           "method_at_baseline": "pressureValveMovesAFullTankIntoTheTankInFront",
           "method_snapshot_sha256": "702a86dc0e91f73b8bfaa21fe638a79705db4827a8fcf97a999017cb4da87e48"
         }
-      ]
+      ],
+      "verification": "forge-cover-boundaries-20261025.json"
     },
     {
       "name": "noregisteredrecipeisdegenerate",
@@ -354,7 +355,7 @@
       "name": "thefiltercoversfilterthepipesontheirownface",
       "original_failure": "and lets a pipe extract",
       "family": "covers_controls_and_energy_boundaries",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "thefiltercoversfilterthepipesontheirownface",
       "sources": [
         {
@@ -363,7 +364,8 @@
           "method_at_baseline": "theFilterCoversFilterThePipesOnTheirOwnFace",
           "method_snapshot_sha256": "6e076a08bb768fa191d765ad7afaa4d3920d6ca1c1411f87c87126a1cf955d6f"
         }
-      ]
+      ],
+      "verification": "forge-cover-boundaries-20261025.json"
     },
     {
       "name": "shredderoutputsneverexceeddeclaredmaterial",
@@ -568,7 +570,7 @@
       "name": "thefilteronthesendingfacegatesoutgoingitems",
       "original_failure": "the sender takes an item filter on the face it pushes through",
       "family": "covers_controls_and_energy_boundaries",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "thefilteronthesendingfacegatesoutgoingitems",
       "sources": [
         {
@@ -577,7 +579,8 @@
           "method_at_baseline": "theFilterOnTheSendingFaceGatesOutgoingItems",
           "method_snapshot_sha256": "ee42c0593839f4d5506481e0e3061155f51c45c119928a78cbcd95836b264726"
         }
-      ]
+      ],
+      "verification": "forge-cover-boundaries-20261025.json"
     },
     {
       "name": "funnelandbothapiariesrestoreautomation",
@@ -1177,7 +1180,8 @@
   "ledger": {
     "indexed_before_batch": 76,
     "verified_this_batch": 21,
-    "pending_original_candidates": 55,
-    "not_a_new_full_suite_measurement": true
+    "pending_original_candidates": 52,
+    "not_a_new_full_suite_measurement": true,
+    "subsequent_cover_boundary_verified": 3
   }
 }

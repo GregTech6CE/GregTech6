@@ -533,25 +533,29 @@ public final class CoverBehaviorTests {
     public static void pressureValveMovesAFullTankIntoTheTankInFront(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
         BlockPos pos = site(48, 0);
-        // Both machines sit inside one prepared patch; a second prepare() would wipe the first.
+        // The pipe and target share a patch; a second prepare() would wipe the first.
         prepare(level, pos, 2);
-        var source = placeMachine(level, pos);
+        var block = net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(
+                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "pipe_medium_steel"));
+        level.setBlockAndUpdate(pos, block.defaultBlockState());
+        var source = (com.gregtech.gregtech.blockentity.machine.FluidPipeBlockEntity) level.getBlockEntity(pos);
         var target = placeMachine(level, pos.east());
 
         helper.assertTrue(source.attachCover(Direction.EAST, cover(CoverUtilityBehaviors.PRESSURE_VALVE)),
-                "the source machine face accepts the pressure valve");
-        var sourceTank = source.getTanksOutput()[0];
-        sourceTank.setFluid(new FluidStack(Fluids.WATER, (int) sourceTank.capacity()));
+                "the single-channel pipe accepts the pressure valve");
+        // Finish placement auto-connection and the valve's startup delay before filling.
+        for (int i = 0; i < 4; i++)
+            com.gregtech.gregtech.blockentity.machine.FluidPipeBlockEntity.serverTick(level, pos, source.getBlockState(), source);
+        int full = source.getTankCapacity(0);
+        helper.assertTrue(source.fill(new FluidStack(Fluids.WATER, full),
+                net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE) == full, "pipe filled");
         helper.assertTrue(target.getTanksInput()[0].isEmpty(),
                 "the target machine's input tank starts empty, got "
                         + target.getTanksInput()[0].getAmount());
 
-        helper.assertTrue(CoverUtilityBehaviors.tickPressureValve(level, pos, Direction.EAST, sourceTank, 5),
-                "the valve acted with a machine tank in front");
-        helper.assertTrue(sourceTank.isEmpty(),
-                "the full tank was emptied into the neighbour (CoverPressureValve:56), got "
-                        + sourceTank.getAmount());
-        helper.assertTrue(target.getTanksInput()[0].getAmount() > 0
+        com.gregtech.gregtech.blockentity.machine.FluidPipeBlockEntity.serverTick(level, pos, source.getBlockState(), source);
+        helper.assertTrue(source.getFluidInTank(0).isEmpty(), "the valve emptied the full pipe into its neighbour");
+        helper.assertTrue(target.getTanksInput()[0].getAmount() == full
                         && target.getTanksInput()[0].getFluid().getFluid() == Fluids.WATER,
                 "the neighbour received the water, got " + target.getTanksInput()[0].getFluid());
         helper.succeed();
@@ -805,12 +809,12 @@ public final class CoverBehaviorTests {
         // 88 and 96, and placeMachine keys its RecipeMap by block position - two tests on the same
         // site throw "Duplicate RecipeMap key" at construction time.
         BasicMachineBlockEntity bareMachine = machine(level, site(104, 0));
-        bareMachine.inventory().setStackInSlot(0, new ItemStack(Items.APPLE));
+        bareMachine.inventory().setStackInSlot(bareMachine.inputSlots(), new ItemStack(Items.APPLE));
         IItemHandler bare = bareMachine.getCapability(ForgeCapabilities.ITEM_HANDLER, side).resolve().orElse(null);
         helper.assertTrue(bare != null, "a machine face exposes its item handler");
         helper.assertTrue(bare.insertItem(0, new ItemStack(Items.APPLE), true).isEmpty(),
                 "a face without a cover lets a pipe insert");
-        helper.assertTrue(bare.extractItem(0, 1, true).getCount() == 1,
+        helper.assertTrue(bare.extractItem(bareMachine.inputSlots(), 1, true).getCount() == 1,
                 "and lets a pipe extract");
 
         // The item filter: an apple goes on the whitelist and only apples may pass afterwards.
@@ -827,9 +831,12 @@ public final class CoverBehaviorTests {
         helper.assertTrue(filtered.insertItem(0, new ItemStack(Items.DIAMOND), true).getCount() == 1,
                 "a diamond is refused (CoverFilterItem:115), got "
                         + filtered.insertItem(0, new ItemStack(Items.DIAMOND), true));
-        filteredMachine.inventory().setStackInSlot(0, new ItemStack(Items.DIAMOND));
-        helper.assertTrue(filtered.extractItem(0, 1, true).isEmpty(),
+        filteredMachine.inventory().setStackInSlot(filteredMachine.inputSlots(), new ItemStack(Items.DIAMOND));
+        helper.assertTrue(filtered.extractItem(filteredMachine.inputSlots(), 1, true).isEmpty(),
                 "and a pipe cannot pull the refused item out either (CoverFilterItem:122)");
+        filteredMachine.inventory().setStackInSlot(filteredMachine.inputSlots(), new ItemStack(Items.APPLE));
+        helper.assertTrue(filtered.extractItem(filteredMachine.inputSlots(), 1, true).getCount() == 1,
+                "a matching output can be extracted through the same filter");
 
         // The fluid filter: lava on the whitelist refuses water.
         BasicMachineBlockEntity fluidMachine = machine(level, site(112, 0));
@@ -850,13 +857,13 @@ public final class CoverBehaviorTests {
         BasicMachineBlockEntity retrieverMachine = machine(level, site(116, 0));
         helper.assertTrue(retrieverMachine.attachCover(side, cover(CoverUtilityBehaviors.RETRIEVER_ITEM)),
                 "the item retriever attaches to a machine face");
-        retrieverMachine.inventory().setStackInSlot(0, new ItemStack(Items.APPLE));
+        retrieverMachine.inventory().setStackInSlot(retrieverMachine.inputSlots(), new ItemStack(Items.APPLE));
         IItemHandler blocked = retrieverMachine.getCapability(ForgeCapabilities.ITEM_HANDLER, side)
                 .resolve().orElse(null);
         helper.assertTrue(blocked != null, "the retriever face still exposes its item handler");
         helper.assertTrue(blocked.insertItem(0, new ItemStack(Items.APPLE), true).getCount() == 1,
                 "the retriever refuses pipe inserts on its own face (CoverRetrieverItem:138)");
-        helper.assertTrue(blocked.extractItem(0, 1, true).isEmpty(),
+        helper.assertTrue(blocked.extractItem(retrieverMachine.inputSlots(), 1, true).isEmpty(),
                 "and pipe extracts too (CoverRetrieverItem:139)");
         helper.succeed();
     }

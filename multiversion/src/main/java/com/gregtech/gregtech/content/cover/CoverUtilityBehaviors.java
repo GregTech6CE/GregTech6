@@ -531,8 +531,8 @@ public final class CoverUtilityBehaviors {
      * the host's cover counter, not its full entity lifetime.</p>
      *
      * <p>GT6 disconnects the covered side on each eligible tick, even before testing
-     * fullness. Neither this helper nor its current caller performs that disconnect.
-     * Keep this connection-state difference separate from the release decision.</p>
+     * fullness. The fluid-pipe caller performs that disconnect before invoking this
+     * release decision, including when its tank is empty.</p>
      *
      * @param tank        the tank that is released when full
      * @param tickCounter the owner's cover tick counter, standing in for GT6's {@code aTimer}

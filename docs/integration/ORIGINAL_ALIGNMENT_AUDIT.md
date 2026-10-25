@@ -186,7 +186,7 @@
 | ALIGN-103 | 确认检索器恢复后失败持续逐 tick 重试。 | 原版通过容量等门控后，在尝试前清除 pending。 | 当前两类宿主仅成功搬运后清除，恢复失败保留；停止门控仍在，重载未验，见 [报告](FILTER_RETRIEVER_COVER_AUDIT.md)。 |
 | ALIGN-104 | 确认检索器空模板与数据匹配合同不同。 | 原版无模板两模式均不筛选，有模板按物品／元数据集合匹配。 | 当前空白名单阻断，带数据模板用完整 NBT／components 比较；重复点击设置的通配字段又未读取。普通过滤器不可据此全局改规则，见 [报告](FILTER_RETRIEVER_COVER_AUDIT.md)。 |
 | ALIGN-105 | 确认电池盒侧面物品能力未应用过滤器。 | 原版 final canInsertItem／canExtractItem 先问覆盖板，再问电池准入。 | 当前仅挡板和组件方向，后备 Mixin 排除原生 getCover 重写；两版 provider 均进入此路径。电池种类限制仍在，见 [报告](COVER_CAPABILITY_AUDIT.md)。 |
-| ALIGN-106 | 确认压力阀未断开阀面，也未接入管道连接拦截。 | 原版每次合格 tick 先 disconnect，再看满罐；前方管道 interceptConnect=true。 | 当前 helper／宿主均不改连接，CoverConnections 无阀门分支；原错误命名谓词仅被测试调用，安装检查则已有实现。见 [报告](PRESSURE_VALVE_AUDIT.md)。 |
+| ALIGN-106 | 确认压力阀未断开阀面，也未接入管道连接拦截。 | 原版每次合格 tick 先 disconnect，再看满罐；前方管道 interceptConnect=true。 | 历史核查确认缺失；2026-10-25后续修复宿主合格调度的断连及共用门控拦截，Forge空罐/暂停/后放相邻管/双向门控/双方连接位与真实排液通过。ALIGN-100时钟差异仍在，Neo仅编译。见 [报告](PRESSURE_VALVE_AUDIT.md)与[回执](verification/forge-cover-boundaries-20261025.json)。 |
 | ALIGN-107 | 确认固定编号选择标签错误受停止门控，安装也未立即设模式。 | 原版 placed／loaded／tickPre 强制指定模式，不检查 stopped。 | 当前 beforeTick 要求 !stopped，attached 不处理固定标签；不能据此删除其他选择器的正确暂停门控，见 [报告](SELECTOR_PANEL_AUDIT.md)。 |
 | ALIGN-108 | 确认手动／按钮选择器停止加载时丢失面板恢复机会。 | 原版 onCoverLoaded 无条件用保存值恢复模式。 | 当前 stopped 跳过循环但仍清 restore，恢复后读宿主模式覆盖面板；宿主独立保存可能掩盖，未实测重启，见 [报告](SELECTOR_PANEL_AUDIT.md)。 |
 | ALIGN-109 | 确认按钮复位比原版提前一个机器工作阶段。 | 原版 post-work tick 将倒计时 2 变 1 并清零模式。 | 当前 beforeTick 清零，电动机随后执行转换器；末轮机器采用模式不同，不是 10→1 数量规则错误，见 [报告](SELECTOR_PANEL_AUDIT.md)。 |

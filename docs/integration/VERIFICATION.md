@@ -1899,3 +1899,9 @@ Forge开发47.4.20/Java17.0.10，Neo开发21.1.243/Java21.0.7，各3GiB/directCo
 首轮24项中20通过/4失败；四项在前置问题校正后进一步暴露：语言检查只读到附属同路径的局部翻译文件（现合并所有片段并避免缺键NPE）；板材压块源构造替换已把旧plain recipe替换成 `form_conversion/plate_to_blockplate/<material>_9`（现检查实际9板输入和同一产物）；旧通用电池ID已不再注册（现保留全部化学电池/等级正检查并拒绝不存在的通用身份）；源Drill通用使用消耗为200EU（校正原100EU断言，能量上下界/不对外放电/存档检查保留）。四项单独复测 **4/4通过**，已通过20项未重复执行，完整重载和网络往返也未重复。
 
 本批共验证21条原失败记录（另2项护栏与1项目录诊断）；双端主代码及测试代码编译通过。两次游戏运行分别11分51秒与3分44秒，未跑默认1045项。索引中按原记录剩55条候选待排查，该数是清单余额而非新测得的全套失败数。目录快照含78032物品、55275配方和264基础机器规范，其中3个附属规范不属于原生制造表。两个测试生成的根目录报告已备份到忽略的work并恢复，两个命名空间清单的有意修改保留。工具同步修复不修改网络字节格式；完整临时数据包覆盖、原版配方覆盖、熔炉镜像与禁用后的清理均已通过。
+
+## 2026-10-25 / Forge 覆盖板边界定向验证
+
+基线849c89202。专用namespace `gt6ce_forge_cover_boundaries` 共4项，**4/4通过**：pressureValveMovesAFullTankIntoTheTankInFront、theFilterCoversFilterThePipesOnTheirOwnFace、theFilterOnTheSendingFaceGatesOutgoingItems，以及新增emptyValveDisconnectsAndRejectsLaterPipeConnections。前三项对应原默认失败记录；最后一项检查本次压力阀生产修复。输送检查整罐精确守恒，过滤检查匹配/不匹配的输入输出及被拒物品仍留管内。
+
+首次启动脚本在Neo javac弃用警告处以NativeCommandError退出，未捕获Gradle完整终态；该启动不计通过。改用PowerShell7并修正原生命令警告处理后重试，两端compileJava和Forge compileBootstrapGameTestJava均命中已完成缓存，Forge运行最终BUILD SUCCESSFUL（3分39秒）。最终XML四项均无failure/error，完整日志保留在work；回执记录源文件及修复文件哈希。没有默认全套重跑，没有Neo游戏/客户端/历史存档重启验证。索引累计本轮再消除3条原失败，剩52条待排查；整体移植仍未完成。
