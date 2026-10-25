@@ -68,8 +68,29 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, com.gregtech.
     }
 
     @Override public com.gregtech.gregtech.api.multiblock.tracking.StructureDefinition structureDefinition() {
-        return com.gregtech.gregtech.api.multiblock.tracking.CustomStructures.logistics(this);
+        return com.gregtech.gregtech.content.multiblock.SpecialStructures.logistics(this);
     }
+    @Override public boolean applyStructure(com.gregtech.gregtech.api.multiblock.tracking.PatternMatch match) {
+        var candidates = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
+        int logic = 0, control = 0, storage = 0, conversion = 0;
+        for (var cell : match.fixedCells()) {
+            candidates.put(cell.pos(), cell.cell().role());
+            if (cell.cell().role() != MultiblockLayout.Role.CASING) continue;
+            var contribution = com.gregtech.gregtech.content.logistics.LogisticsCoreLayout.contribution(cell.cell().part());
+            if (contribution == null) continue;
+            logic += contribution.logic(); control += contribution.control();
+            storage += contribution.storage(); conversion += contribution.conversion();
+        }
+        // PER_CELL is declarative metadata only until card 58; preserve today's atomic binding behavior.
+        var claimed = com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, candidates, 0,
+                pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part && part.canBind(worldPosition),
+                (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role), this::releasePart);
+        if (claimed == com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED) return unbind();
+        processors = new LogisticsCoreStructure.Counts(logic, control,
+                Math.min(LogisticsCoreStructure.MAX_STORAGE_CPU_COUNT, storage), conversion);
+        return true;
+    }
+    @Override public void releaseStructureClaims() { unbind(); }
     @Override public boolean isStructureOk() {
         return com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.query(this);
     }

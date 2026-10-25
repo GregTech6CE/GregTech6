@@ -46,9 +46,9 @@ public interface Projection {
                         == PlainStructureBlocks.matches(level, pos, name, newState);
     }
 
-    /** Bedrock floor: host rock and the ore identity the drill records into its deposit. */
+    /** Only floor membership is structural; the drill reads ore identity at the start of each cycle. */
     static Projection bedrockFloor() {
-        return (level, pos, oldState, newState) -> bedrockKey(oldState).equals(bedrockKey(newState));
+        return (level, pos, oldState, newState) -> bedrock(oldState) == bedrock(newState);
     }
 
     static Projection and(Projection left, Projection right) {
@@ -73,11 +73,7 @@ public interface Projection {
         return null;
     }
 
-    private static String bedrockKey(BlockState state) {
-        Block block = state.getBlock();
-        if (block instanceof OreBlock ore && OreBlock.isBedrockOre(state))
-            return "ore:" + ore.material().getName() + "/" + ore.prefix().getName() + "/" + OreBlock.stoneOf(state);
-        if (state.is(Blocks.BEDROCK)) return "bedrock";
-        return "other:" + block;
+    private static boolean bedrock(BlockState state) {
+        return state.is(Blocks.BEDROCK) || state.getBlock() instanceof OreBlock && OreBlock.isBedrockOre(state);
     }
 }
