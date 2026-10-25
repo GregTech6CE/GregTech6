@@ -1,5 +1,12 @@
 # 实现选择记录
 
+## 2026-10-25 / 附属 API 文档参考与校验（卡 61）
+
+- 跨类型约定与声明上限以 `ADDON_API.md` / `ADDON_API.zh-CN.md` 的顶层约定、上限章节为准；方法细节以 SDK Javadoc 为准。主题正文引用参考表，历史上游 minor 1–8 放入附录，不能当作 CE API 0 的功能门槛。
+- 卡 50 的 null 约定须按必填/可选及具体类型理解：builder / 工厂通常用 IAE，但现有 `BehaviorMachine.Builder.progress(null)` 在 `build()` 中仍抛 `NullPointerException("progress")`。本卡修正文档，不改变 SDK 行为。
+- `tools/check_addon_api_docs.py` 通过显式清单检查公开引用、签名参数名、bootstrap 入口误用、中英逐节结构、目录和站内链接、数字上限与名字模式。源码的数字字面量、常量别名、`AddonLimits.live(...)` 可静态核对；单位/默认哨兵与溢出公式的限制在清单中注明。独立 Gradle 任务和回归测试接入 `:core:check`。
+- 示例使用 `screen(String machineType, ...)`；旧签名兼容性由 `examples/addon-contracts` 的双平台 SDK-only 编译夹具验证。
+
 ## 2026-10-24 / 附属声明类型的一致性与关系校验（卡 50）
 
 共享上限收进包内 `AddonLimits`：能量 1e12、容量 1,024,000,000 mB、效率上限 100,000、默认 10,000（万分之一）。正则统一为 `AddonNames` 的预编译模式（纹理、段路径、资源路径、命名空间、前缀名），类内专用模式改为私有 `Pattern`；`LayoutRepeat.absoluteUp` 改用 `Math.addExact` / `Math.multiplyExact`。null 约定按位置划分：record canonical 构造器 NPE，builder/工厂/`build()` IAE，varargs 里的 null 元素走 `MachineFace.distinct` 的 Missing 消息。
