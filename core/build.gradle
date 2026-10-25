@@ -20,7 +20,7 @@ apply from: rootProject.file('gradle/incremental-resources.gradle')
 tasks.named('processResources').configure { filteringCharset = 'UTF-8' }
 
 // The root task also runs for NeoForge-only builds via :core:check.
-tasks.named('check').configure { dependsOn ':sourcePolicyCheck' }
+tasks.named('check').configure { dependsOn ':sourcePolicyCheck', ':addonApiDocsCheck', ':addonApiDocsTest' }
 
 // Optional development launch path: these shared resources are static and need no expansion.
 // Keep normal CI/release behavior; local launches can avoid copying the entire asset catalog.
