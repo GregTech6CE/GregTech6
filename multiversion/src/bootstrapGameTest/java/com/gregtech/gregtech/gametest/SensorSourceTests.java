@@ -18,6 +18,31 @@ import net.minecraft.world.level.block.Blocks;
 //?}
 public final class SensorSourceTests {
     @GameTest(template="test_empty",timeoutTicks=300)
+    public static void boiler_builder_without_reference_scans(GameTestHelper h) {
+        withoutReferenceScans(() -> original_boiler_builder_and_diagnostics(h));
+    }
+
+    @GameTest(template="test_empty",timeoutTicks=160)
+    public static void heat_exchanger_builder_without_reference_scans(GameTestHelper h) {
+        withoutReferenceScans(() -> heat_exchanger_builder_and_magnifier(h));
+    }
+
+    private static void withoutReferenceScans(Runnable test) {
+        // Initialize the support class before disabling its default consistency check.
+        StructureTestSupport.ok(null);
+        boolean consistency = com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.consistencyCheck();
+        boolean audit = com.gregtech.gregtech.api.multiblock.tracking.StructureScanProbe.auditing();
+        com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.consistencyCheck(false);
+        com.gregtech.gregtech.api.multiblock.tracking.StructureScanProbe.audit(false);
+        try {
+            test.run();
+        } finally {
+            com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.consistencyCheck(consistency);
+            com.gregtech.gregtech.api.multiblock.tracking.StructureScanProbe.audit(audit);
+        }
+    }
+
+    @GameTest(template="test_empty",timeoutTicks=300)
     public static void original_boiler_builder_and_diagnostics(GameTestHelper h) {
         var world=h.getLevel();var pos=h.absolutePos(new BlockPos(7,3,7));
 //? if >=1.21.1 {
@@ -44,7 +69,9 @@ public final class SensorSourceTests {
             h.assertTrue(part!=null&&part.isBoundTo(pos)&&part.fluidToolHandler(Direction.DOWN,false).getTanks()==0,
                     "Incomplete boiler keeps part tool access without opening storage");
             useHeatTool(player,centre);
+            h.assertTrue(!StructureTestSupport.ok(boiler), "Second local click is evaluated before the next player click");
             useHeatTool(player,centre.east().above());
+            h.assertTrue(!StructureTestSupport.ok(boiler), "Third local click is evaluated before the next player click");
             useHeatTool(player,centre.above(2));
             h.assertTrue(StructureTestSupport.ok(boiler)&&wand.getDamageValue()==4,"Four local clicks complete the source structure at one wear each");
             h.assertTrue(world.getBlockState(pos).is(block)&&world.getBlockState(centre.above()).isAir()
@@ -152,6 +179,7 @@ public final class SensorSourceTests {
         h.assertTrue(world.getBlockState(near).isAir()&&player.getInventory().getItem(35).getCount()==1,"Denied placement neither consumes material nor creates a block");
         player.gameMode.changeGameModeForPlayer(net.minecraft.world.level.GameType.SURVIVAL);
         world.setBlockAndUpdate(near,wall.defaultBlockState());
+        h.assertTrue(StructureTestSupport.ok(machine), "Repaired shell is evaluated before loading the diagnostic mirror");
         var data=new net.minecraft.nbt.CompoundTag();data.putBoolean("gt.state.str",false);
 //? if >=1.21.1 {
         /*machine.loadWithComponents(data,world.registryAccess());

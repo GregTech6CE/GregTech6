@@ -1,0 +1,65 @@
+{
+  "date": "2026-10-25",
+  "baseline": "7f75798e7cabb978b1afea149260eb28765dc05d",
+  "scope": "Restore partial boiler and heat exchanger bindings for builder-wand, magnifier and sensor access after card 54",
+  "dependencies": {
+    "requires_cards_55_to_59": false,
+    "follow_up": "Cards 58 and 59 must preserve incomplete-shell tool access when changing claims or removing reference scans"
+  },
+  "implementation": [
+    "Incomplete incremental matches call applyIncompleteStructure; default behavior releases all claims",
+    "Boiler and heat exchanger reconcile matching, claimable cells from PatternMatch, including initially incomplete structures",
+    "Conflicting parts are excluded without discarding other valid tool bindings; transport still requires a formed structure",
+    "Two tests disable reference scans so legacy scan side effects cannot repair the incremental result",
+    "SensorSourceTests are enabled in issue CI and both new test identities are mandatory in the report checker"
+  ],
+  "reproduction": {
+    "platform": "1.20.1-forge",
+    "report": "multiversion/versions/1.20.1-forge/build/reports/gametest/builder-before.xml",
+    "sha256": "424A735EDEEDEE4C11FE8D5D186A0E8181EE2FB92540CCE652336E675181E9E1",
+    "observed_regressions": {
+      "boiler_builder_without_reference_scans": "Incomplete boiler keeps part tool access without opening storage",
+      "heat_exchanger_builder_without_reference_scans": "Valid part retains tool ownership while incomplete shell cannot transport fluids"
+    },
+    "other_failures": [
+      "addon_sensor_reads_signal: sample addon was not enabled in this initial run",
+      "original_boiler_builder_and_diagnostics: fixture needed scheduler evaluation between successive synthetic player clicks",
+      "heat_exchanger_builder_and_magnifier: fixture needed scheduler evaluation after repair before loading the diagnostic mirror"
+    ]
+  },
+  "verification": {
+    "namespaces": ["gregtech_sensor_source", "gt6ce_structure_tracking", "gt6ce_structure_incremental"],
+    "addonSample": true,
+    "gameTestHeap": "6g",
+    "forge": {
+      "required_passed": 50,
+      "failures": 0,
+      "sensor_source": 11,
+      "structure_tracking": 26,
+      "structure_incremental": 13,
+      "gradle_exit": 0,
+      "addonApiClosureCheck": "passed",
+      "log": "work/builder-forge-after.log",
+      "closure_log": "work/builder-forge-closure.log",
+      "report": "multiversion/versions/1.20.1-forge/build/reports/gametest/builder-after.xml",
+      "sha256": "7374027C9FA97CBE503A8028BA276BCD5F760186891F1B659E33C1D32DC3C86B"
+    },
+    "neoforge": {
+      "required_passed": 50,
+      "failures": 0,
+      "sensor_source": 11,
+      "structure_tracking": 26,
+      "structure_incremental": 13,
+      "gradle_exit": 0,
+      "addonApiClosureCheck": "passed",
+      "log": "work/builder-neo-after.log",
+      "report": "multiversion/versions/1.21.1-neoforge/build/reports/gametest/builder-after.xml",
+      "sha256": "5CDA11A1724723FA1416E9DE5C08FA22D1C2EAD7C61E28A3E18D5EF550FD373B"
+    },
+    "report_checker_unit_tests": {"command": "python -m unittest discover -s tools/tests -p test_issue_ci_evidence.py", "passed": 42},
+    "actual_builder_report_checks": "2/2 mandatory builder cases passed in each platform report; the complete issue namespace selection was not run",
+    "diff_check": "passed"
+  },
+  "limitations": ["No manual client gameplay or production packaging performed", "No complete runGameTestServer suite or complete issue CI namespace selection performed"],
+  "build_environment": "Gradle launcher used installed Java 21; Forge GameTest used installed Java 17. Default Java 25 was incompatible with this Gradle/plugin setup."
+}

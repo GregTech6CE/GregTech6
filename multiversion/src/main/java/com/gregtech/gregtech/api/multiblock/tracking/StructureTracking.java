@@ -226,7 +226,7 @@ public final class StructureTracking {
             matched = state.complete() && machine.structurePartsValid();
             // Claims can write part visuals (the crucible does); those are not external changes.
             if (matched) matched = machine.applyStructure(state.match(entity.getBlockPos()));
-            else machine.releaseStructureClaims();
+            else machine.applyIncompleteStructure(state.match(entity.getBlockPos()));
         } finally {
             StructureScanProbe.close();
         }

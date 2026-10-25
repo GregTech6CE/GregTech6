@@ -2209,3 +2209,11 @@ Sensors null-NBT源登记可合法携带REV，生成器只为这组解析，避�
 - 足迹与缓存：固定格家族不收紧足迹；`FixedStructures.Definition` 按 `Direction` 缓存 cells 和 `Footprint`，避免每次评估重建 886 格的聚变足迹。固定格家族没有 tag 格，`usesTags()` 为假。
 - 旧扫描：九个家族的 `scanStructure()` 全部保留，作为一致性检查的对照，删除在卡 59。
 - 验证：`gt6ce_structure_tracking` 双平台 26/26，`gt6ce_structure_incremental` 双平台 13/13，`gregtech_issue_audit` Forge 226/226、NeoForge 217/217。`gt6ce_structure_tracking` 的 140 次查询计数从轴向 legacy 4900 次方块读取、聚变 124040 次降到 tracked 0。证据见 [structure-tracking-fixed-families-20261025.json](verification/structure-tracking-fixed-families-20261025.json)。
+
+## 2026-10-25 / 卡 54 回归：残缺锅炉与换热器的建造杖绑定
+
+- 更正上面的“解体即释放全部”决定：锅炉与换热器的有效残缺部件需要保留绑定，供建造杖、放大镜和传感器找到控制器。运输仍由成型状态禁止。固定格迁移释放全部绑定会使锅炉从第二次局部建造起无法继续、换热器无法从残缺外壳补建。
+- 增量失败路径调用 `TrackedMultiblock.applyIncompleteStructure(PatternMatch)`；默认实现仍释放全部。只有锅炉、换热器按缓存里已匹配且可认领的格子更新绑定，不重新整段扫描，也不抢占其他控制器的部件。不存在的格子及旋转后不再属于结构的旧格子由原 `PartBindings.update` 释放。
+- 这个补丁可以独立于 55–59 落地。卡 58 整理认领策略、卡 59 删除旧扫描时，必须保留这里的玩家交互合同；不能只比较 `formed` 布尔值。
+- 测试一致性检查本身会调用旧扫描，旧扫描会补回合法格子的绑定，因此只验证两条路径的成型结果不足以捕获此回归。新增两项 `SensorSourceTests` 在关闭一致性检查和投影对照的情况下执行建造场景，并加入 issue CI 必跑清单；旧夹具在两次模拟玩家点击之间显式调度评估。
+- 验证：Forge 与 NeoForge 均 50/50 required tests passed（sensor source 11、结构跟踪 26、增量结构 13），双平台 `addonApiClosureCheck` 通过；报告校验器 42 项单测通过，两端实际报告中的新增两项均通过必跑检查。修复前复现、夹具修正和验证边界见 [回执](verification/builder-partial-bindings-20261025.json)。
