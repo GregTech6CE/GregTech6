@@ -49,7 +49,9 @@ public final class MachineTuningRules {
             builder.put("cheapOverclocking", tuning.cheapOverclocking(), addon, key);
         }
         var merged = new LinkedHashMap<Key, Merged>();
-        // Builder.build() constructs a canonical MachineTuning, so a merged row is range-checked there.
+        // The canonical MachineTuning checks a complete energy/min/max triplet supplied by addons.
+        // Built-in defaults are not available here; BasicMachineDefinitions.from checks the
+        // effective nominal input against the range after filling all omitted fields.
         for (var entry : builders.entrySet()) merged.put(entry.getKey(), entry.getValue().build(entry.getKey()));
         return Collections.unmodifiableMap(merged);
     }
