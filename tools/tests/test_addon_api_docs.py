@@ -74,9 +74,9 @@ class AddonApiDocsTests(unittest.TestCase):
         self.assertTrue(any('contents' in error for error in errors))
 
     def test_broken_cross_file_anchor_is_detected(self):
-        target = 'integration/JAVA_PACKAGE_BOUNDARIES.md'
+        target = 'ADDON_API.zh-CN.md'
         # The live guide links this file; first prove a real heading is accepted.
-        self.assertEqual([], self.mutate(0, target, target + '#如何选择目录'))
+        self.assertEqual([], self.mutate(0, target, target + '#概述'))
         errors = self.mutate(0, target, target + '#missing-boundary')
         self.assertTrue(any('cross-file anchor' in error for error in errors))
 
