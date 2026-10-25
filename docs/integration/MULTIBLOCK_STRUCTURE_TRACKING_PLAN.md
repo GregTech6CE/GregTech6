@@ -326,9 +326,22 @@ tracker 在创建时按相位放进 600 个桶中的一个，每 tick 只取当�
 - 更新 [ADDON_API](../ADDON_API.md) 的 Structures 一节：结构检查时机、附属部件何时调用 `touch`、认领争用语义的变化。
 - 在 [DECISIONS](DECISIONS.md) 记录区块卸载语义、认领表寿命规则和预算数值。
 
+### 阶段 4 进度（2026-10-25，卡 59）
+
+| 项 | 状态 | 落地 |
+|---|---|---|
+| `legacy` 开关与配置 | 删除 | `StructureTrackingMode`、`multiblock.structureTracking` 配置项和全部回退分支删除；查询、认领、卸载、`/reload`、安全网只有一条路径 |
+| 已迁移家族的旧整段扫描 | 删除 | 轴向主控、基岩钻机、行为机、燃料涡轮、聚变、内爆、大坩埚、燃气涡轮、换热器、避雷针、物流核心、储罐、大型锅炉、VonDaGraagg 的 `scanStructure()` 删除。`LargeRecipeMachineBlockEntity` 的扫描保留：未迁移的普通大型配方家族仍走它，蒸馏塔、低温蒸馏、焦炉、物质制造机、大型烤炉走增量 |
+| 一致性检查的对照 | 改为同源全量评估 | 测试构建不再调用旧扫描，改为用同一份 `CompiledPattern` 新建 `PatternState` 全量评估并比较；未迁移家族仍用保留的扫描 |
+| 探针 mixin | 零开销门控 | 正式构建保留探针，所有入口先读 `activeScans` 再访问线程状态；足迹与投影审计仍只在测试构建打开。结论记录在 [DECISIONS](DECISIONS.md) |
+| 诊断与预览同源 | 完成 | `StructureDiagnostic` 从结构定义编译图样并列出全部错误格（不提前停止）；放大镜接在锅炉与换热器入口；JEI/EMI 预览对储罐、避雷针、基岩钻机、物流核心、换热器、坩埚直接复用定义使用的格子常量 |
+| `PER_CELL` | 未启用 | 用户已决定全部家族保持 `ATOMIC`；物流核心只保留声明，没有运行时消费者 |
+
+阶段 0–4 的实现到此完成。仍未做的事项：客户端冒烟、双平台全量 GameTest、独立存档重启；`LargeRecipeMachineBlockEntity` 及其未迁移的普通大型配方家族仍走整段扫描（本阶段只删已迁移家族的旧扫描）；`PER_CELL` 不启用。
+
 ## 测试
 
-已有的回归测试：`MultiblockNativeChunkLifecycleTests`、`MachineChunkBoundaryTests`、`MultiblockAlternativeBindingTests`、`BehaviorStructureSafetyTests`、`LargeRecipeControllerSourceTests`、`MultiblockTankTooltipStateTests`、`BedrockDrillOutputLifecycleTests`、`FusionCoverLifecycleTests`、`ControllerOutputLifecycleTests`。每个阶段都要在两个版本上跑完 `gradlew runGameTestServer` 全量。
+已有的回归测试：`MultiblockNativeChunkLifecycleTests`、`MachineChunkBoundaryTests`、`MultiblockAlternativeBindingTests`、`BehaviorStructureSafetyTests`、`LargeRecipeControllerSourceTests`、`MultiblockTankTooltipStateTests`、`BedrockDrillOutputLifecycleTests`、`FusionCoverLifecycleTests`、`ControllerOutputLifecycleTests`。验证只在实现收敛后跑与改动相关的一次定向测试；默认单平台，只有平台专用代码或具体跨平台风险才跑另一端，不按阶段重复两端全量。
 
 需要新增的场景：
 
@@ -400,7 +413,7 @@ tracker 在创建时按相位放进 600 个桶中的一个，每 tick 只取当�
 
 1. **基岩钻机的矿物候选**：对照原版 `checkStructure2` 后选移到运行逻辑。地面 9 格在结构里只要求基岩类方块，矿物列表不是成型条件，改在每个钻井周期读取；成型判定、矿物分支概率和绑定都不变。依据见 [BEDROCK_DRILL_AUDIT](BEDROCK_DRILL_AUDIT.md) 末节和 [DECISIONS](DECISIONS.md)（2026-10-24）。迁移随阶段 2 的家族迁移一起做。
 2. **逐格认领**：已定（2026-10-25，用户决定）：全部家族保持 `ATOMIC`，不启用 `PER_CELL`。物流核心保留声明但 `claimPolicy()` 没有运行时消费者；对比与理由见 [DECISIONS](DECISIONS.md) 卡 58 条目。
-3. **预算数值**：初始每个世界每 tick 20 000 格估算，用场景 12 调整。
+3. **预算数值**：已定（2026-10-25，卡 59）：保持 `StructureScheduler.CELLS_PER_TICK = 20 000`。场景 12 的 200 台机器在预算内分 tick 完成，没有需要调整的依据；安全网周期 600 tick 与相位分桶不变。
 
 已定：区块卸载期间 `formed` 为 false、停机、保留认领；认领表条目寿命跟随部件区块，控制器卸载期间不可抢占，主人已加载时用预留表保住认领；相关变化同步失效（合同 3 的严格语义），接受"合法替换也停机到 tick 末"的代价；安全网 600 tick、按位置错开相位、两种状态都兜。
 

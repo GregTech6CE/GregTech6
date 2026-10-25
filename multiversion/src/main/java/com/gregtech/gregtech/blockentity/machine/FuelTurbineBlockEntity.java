@@ -34,7 +34,7 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
 
     @Override
     protected boolean refreshStructure() {
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode.legacy() ? isStructureOk() : formed;
+        return formed;
     }
 
     @Override
@@ -86,63 +86,6 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
         return com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.query(this);
     }
     @Override public void structureFormedChanged(boolean now) { formed = now; }
-    @Override
-    public boolean scanStructure() {
-        if (level == null || isRemoved()) {
-            formed = false;
-            return false;
-        }
-        var layout = LargeMachineLayouts.cells(declaration().casing().machineType());
-        if (layout == null) {
-            bindings.clear(this::release);
-            com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
-            formed = false;
-            return false;
-        }
-        var front = front();
-        var parts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
-        for (var cell : layout) {
-            BlockPos pos = cell.at(worldPosition, front);
-            if (!level.hasChunkAt(pos)) {
-                bindings.clear(this::release);
-                com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
-                formed = false;
-                return false;
-            }
-            if (cell.role() == MultiblockLayout.Role.AIR) {
-                if (level.isEmptyBlock(pos)) continue;
-                bindings.clear(this::release);
-                com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
-                formed = false;
-                return false;
-            }
-            if (cell.plainBlock()) {
-                if (!cell.matches(level, pos, level.getBlockState(pos))) {
-                    bindings.clear(this::release);
-                    com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
-                    formed = false;
-                    return false;
-                }
-                continue;
-            }
-            if (level.getBlockState(pos).getBlock() != cell.block()
-                    || !(level.getBlockEntity(pos) instanceof com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity)) {
-                bindings.clear(this::release);
-                com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
-                formed = false;
-                return false;
-            }
-            parts.put(pos, cell.role());
-        }
-        var claimed = com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, parts,
-                pos -> ((com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity) level.getBlockEntity(pos)).canBind(worldPosition),
-                (pos, role) -> ((com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
-                this::release);
-        formed = claimed != com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
-        if (claimed == com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.APPLIED)
-            com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front, layout);
-        return formed;
-    }
 
     private void release(BlockPos pos) {
         if (level != null && level.hasChunkAt(pos)

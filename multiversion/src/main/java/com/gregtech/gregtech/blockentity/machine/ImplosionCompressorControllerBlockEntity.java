@@ -40,7 +40,7 @@ public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockE
     }
     private boolean structureFormed;
     @Override protected boolean structureComplete() {
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode.legacy() ? isStructureOk() : structureFormed;
+        return structureFormed;
     }
     @Override public void structureFormedChanged(boolean formed) { structureFormed = formed; }
     @Override public com.gregtech.gregtech.api.multiblock.tracking.StructureDefinition structureDefinition() {
@@ -75,21 +75,6 @@ public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockE
     }
     @Override public boolean isStructureOk() {
         return com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.query(this);
-    }
-    @Override public boolean scanStructure() {
-        if(level==null || isRemoved()) return false;
-        var facing=getBlockState().getValue(HorizontalDirectionalBlock.FACING);
-        var candidates=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
-        boolean valid=LAYOUT.matches(worldPosition,facing,level::hasChunkAt,(pos,role)->{
-            if(role==MultiblockLayout.Role.AIR) return level.isEmptyBlock(pos);
-            if(!level.getBlockState(pos).is(GTMultiblocks.IMPLOSION_COMPRESSOR_WALL.get()) || !(level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity)) return false;
-            candidates.put(pos,role);return true;
-        });
-        if(!valid) { bindings.clear(this::release); com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this); return false; }
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, candidates,
-                pos->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).canBind(worldPosition),
-                (pos,role)->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).bind(worldPosition,role),this::release)
-                != com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
     }
     private void release(BlockPos pos) { if(level!=null&&level.hasChunkAt(pos)&&level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part) part.release(worldPosition); }
     @Override public void onLoad() {

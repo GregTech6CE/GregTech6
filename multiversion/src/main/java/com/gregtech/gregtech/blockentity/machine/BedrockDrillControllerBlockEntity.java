@@ -105,50 +105,8 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
     private boolean structureFormed;
     @Override public void structureFormedChanged(boolean formed) { structureFormed = formed; }
     private boolean structureOk() {
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode.legacy() ? isStructureOk() : structureFormed;
+        return structureFormed;
     }
-    @Override
-    public boolean scanStructure() {
-        if (level == null || isRemoved() || worldPosition.getY() - 5 < level.getMinBuildHeight()) return false;
-        boolean usesOriginalController = getBlockState().getBlock() instanceof OriginalBedrockDrillControllerBlock;
-        var candidateParts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
-        for (int x = -1; x <= 1; x++)
-            for (int z = -1; z <= 1; z++) {
-                var depositPos = worldPosition.offset(x, -5, z);
-                if (!level.hasChunkAt(depositPos)) {
-                    bindings.clear(this::release);
-                    com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
-                    return false;
-                }
-                // §103.B: bedrock deposits are ore blocks whose host rock (block state) is bedrock.
-                BlockState floorState = level.getBlockState(depositPos);
-                if (!(floorState.getBlock() instanceof OreBlock && OreBlock.isBedrockOre(floorState))
-                        && !floorState.is(Blocks.BEDROCK)) {
-                    bindings.clear(this::release);
-                    com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
-                    return false;
-                }
-                for (int y = -4; y <= 0; y++) {
-                    if (x == 0 && y == 0 && z == 0) continue;
-                    var partPos = worldPosition.offset(x, y, z);
-                    var expectedBlock = y == -4
-                            ? usesOriginalController ? LargeMachineParts.block(18103) : GTMultiblocks.DENSE_TITANIUM_WALL.get()
-                            : LargeMachineParts.block(18026);
-                    if (!(level.getBlockState(partPos).getBlock() == expectedBlock)
-                            || !(level.getBlockEntity(partPos) instanceof MultiblockPortBlockEntity)) {
-                        bindings.clear(this::release);
-                        com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
-                        return false;
-                    }
-                    candidateParts.put(partPos, role(x, y, z));
-                }
-            }
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, candidateParts,
-                partPosition -> ((MultiblockPortBlockEntity) level.getBlockEntity(partPosition)).canBind(worldPosition),
-                (partPosition, partRole) -> ((MultiblockPortBlockEntity) level.getBlockEntity(partPosition)).bind(worldPosition, partRole),
-                this::release) != com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
-    }
-
     private void release(BlockPos pos) {
         if (level != null && level.hasChunkAt(pos)
                 && level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part) part.release(worldPosition);

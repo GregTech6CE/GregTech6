@@ -2268,6 +2268,21 @@ Sensors null-NBT源登记可合法携带REV，生成器只为这组解析，避�
 - 验证结果另见 VERIFICATION 和本卡 JSON 回执；实现接入不代表全量游戏测试已通过。
 - 卡 55 的原生旧夹具校正：原版钻机底层使用 18103 钻头；重放阀门后先通过 StructureTestSupport 等待结构重评估再执行有成型门控的流体操作；碎矿产物测试放置九格实际基岩矿，取消对已移除 deposit 字段的反射注入。三项在独立命名空间复测 3/3，通过不代表默认 1045 项套件已全绿。
 
+## 2026-10-25 / 结构跟踪阶段 4 卡 59：收尾
+
+- 旧模式删除：`StructureTrackingMode`、`multiblock.structureTracking` 配置项和 `legacy` 回退分支全部删除。查询、认领、区块加载/卸载、`/reload` 和安全网只有一条跟踪路径，`isStructureOk()` 在服务端读 tracker 的 `formed()`，客户端读同步位。
+- 旧扫描删除范围：轴向主控（大型涡轮/发电机）、基岩钻机、行为机、燃料涡轮、聚变、内爆压缩机、大坩埚、燃气涡轮、换热器、避雷针、物流核心、储罐、大型锅炉、VonDaGraagg 的 `scanStructure()` 删除。`LargeRecipeMachineBlockEntity.scanStructure()` 保留，因为普通大型配方家族（蒸馏塔、低温蒸馏、焦炉、物质制造机、大型烤炉之外的机器）还没迁到增量路径；它不再作为已迁移家族的对照。
+- 一致性检查：测试构建对已迁移家族不再调用旧扫描，改为用同一份 `CompiledPattern` 新建 `PatternState` 做全量评估，再调用控制器的 `applyStructure` 校验认领结果；未迁移家族仍用保留的扫描。投影审计（“等价变化”判定）走同一个入口。这样卡 54 的“残缺部件保留绑定”合同仍由 `applyIncompleteStructure` 维护，不依赖旧扫描补绑定。
+- 探针 mixin 收口：选择保留在正式构建里，维持卡 52 批次的零开销门控。`noteBlock`/`noteEntity`/`noteChunkQuery`/`pause`/`resume` 的第一行都是 `activeScans == 0` 早退，不读线程状态；审计数据只在 `StructureScanProbe.auditing()` 打开时记录，测试构建打开、正式构建关闭。没有把两个探针移进单独的 gametest mixin 配置：那需要额外 source set 和独立 refmap，收益只是省掉每次方块读取的一次静态 int 判断，维护成本大于收益。
+- 诊断来源：`StructureDiagnostic.inspect(machine)` 用 `structureDefinition()` 编译的同一份 `CompiledPattern` 逐格检查，不提前停止；固定格全部检查，重复段检查到第一个不完整层并列出该层的全部错误格，未加载区块、层数不足和聚合约束分别报告。放大镜在锅炉和换热器的 `magnifyingGlassMessages()` 里接入，`MultiblockToolRules.structureMessage` 的原文案保留；成型时仍显示原有细节，不成型时追加全部错误格。
+- 预览同源：储罐、物流核心、基岩钻机、避雷针的格子构造从 `SpecialStructures.tankCells/logisticsCells/drillCells/lightningLayout` 导出，运行时定义和 JEI/EMI 预览都调用同一方法；换热器、坩埚的预览改为直接读 `SharedHeatExchangerStructure.CELLS`、`SharedLargeCrucibleStructure.CELLS`；物流核心加入预览列表。`Layout` 家族和固定格家族原本就共用 `LargeMachineLayouts`/`GasTurbineDefinitions` 等常量。
+- 附属触点：新增 `StructureWatchIndex.touch(ServerLevel, BlockPos)`，供“匹配数据不经过方块状态变化”的部件（内部储罐、容器内容）在改动后标脏所属控制器。现有内置家族的所有判定输入都来自方块状态或增量聚合，不需要调用它。
+- 区块卸载语义（回填）：控制器区块卸载时 tracker 进入 `SUSPENDED`，`formed` 为 false 并同步客户端，认领表条目保留；部件区块卸载时条目移入预留表，主人已加载则保留、未加载则静默删除；控制器卸载期间其部件不能被别的控制器抢占；区块恢复后在 `ChunkEvent.Load` 的同 tick 写回预留。真实卸载顺序在 1.20.1 与 1.21.1 上都是 `ChunkEvent.Unload → onChunkUnloaded → setRemoved`，由场景 26 固定。
+- 认领表寿命（回填）：每个 `ServerLevel` 一张，正向 `部件 → 控制器`、反向 `控制器 → 部件集合`，完全瞬态；条目只为已加载的部件存在，寿命跟随部件所在区块而不是控制器；控制器真正被拆除时释放全部条目，孤儿条目由延迟一 tick 的检查和安全网清理。
+- 预算数值（回填）：`StructureScheduler.CELLS_PER_TICK = 20 000`，`SAFETY_PERIOD = 600`。场景 12 的 200 台机器在预算内分 tick 完成，没有调整依据；预算队列先进先出，每 tick 至少处理队首一个，已成型且脏的 tracker 不受预算限制。
+- `PER_CELL` 保持不启用：全部家族 `ATOMIC`，物流核心保留声明但没有运行时消费者。
+- 未做：客户端冒烟、双平台全量 GameTest、独立存档重启。卡 59 的验证只覆盖编译、共享断言、相关命名空间和诊断/预览的数据一致性，不把 GameTest 当成客户端验证。
+
 ## 2026-10-25 / 通用扩展器控制能力随目标解析
 
 控制代理的可用性与支持的开关/进度/模式不能由扩展器自身的存在或固定true决定。`ExtenderBlockEntity` 的四项查询复用实际命令已有的目标解析和循环保护；目标拆除/区块不可用/循环返回false，保留的接口可解析替换后的目标；不缓存控制实例，不改变保存格式或打开状态写入。Forge默认失败中的五项及相关护栏定向重放，物流显示夹具另校正Minecraft红石查询方向，结果和边界见本日VERIFICATION专项回执。

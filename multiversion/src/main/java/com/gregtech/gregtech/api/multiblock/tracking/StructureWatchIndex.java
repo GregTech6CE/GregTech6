@@ -54,22 +54,6 @@ public final class StructureWatchIndex {
         return data != null && data.pending.contains(chunk);
     }
 
-    public static void onPortReleased(ServerLevel level, BlockPos pos, BlockPos owner) {
-        if (level == null || pos == null) return;
-        WorldData data = existing(level);
-        if (data == null) return;
-        List<StructureTracker> trackers = data.sections.get(sectionKey(pos));
-        if (trackers == null) return;
-        for (StructureTracker tracker : List.copyOf(trackers)) {
-            if (tracker.unloading() || tracker.dirty() || tracker.entity().isRemoved()) continue;
-            if (owner != null && owner.equals(tracker.pos())) continue;
-            Footprint watch = tracker.watch();
-            if (watch == null || watch.indexOf(pos) < 0) continue;
-            tracker.enqueue(false);
-            addDirty(data, tracker);
-        }
-    }
-
     static void unloadWorld(ServerLevel level) {
         WorldData data = existing(level);
         if (data == null) return;
@@ -110,9 +94,31 @@ public final class StructureWatchIndex {
         }
     }
 
+    /**
+     * A part changed matching-relevant data without a block-state change (an internal tank level or
+     * a container). Every tracker watching that cell is re-evaluated at the end of this tick.
+     */
+    public static void touch(ServerLevel level, BlockPos pos) {
+        WorldData data = existing(level);
+        if (data == null) return;
+        List<StructureTracker> trackers = data.sections.get(sectionKey(pos));
+        if (trackers == null) return;
+        for (StructureTracker tracker : List.copyOf(trackers)) {
+            if (tracker.unloading() || tracker.entity().isRemoved()) continue;
+            Footprint watch = tracker.watch();
+            if (watch == null || watch.indexOf(pos) < 0) continue;
+            boolean fell = tracker.invalidateCell(pos);
+            addDirty(data, tracker);
+            if (fell) {
+                StructureTracking.formedChanged(tracker.machine(), false);
+                ClientFormedSync.send(tracker.entity());
+            }
+        }
+    }
+
     static void chunkLoaded(ServerLevel level, ChunkPos pos) {
         WorldData data = data(level);
-        if (!StructureTrackingMode.legacy()) WorldStructureClaims.chunkLoaded(level, pos);
+        WorldStructureClaims.chunkLoaded(level, pos);
         long key = pos.toLong();
         BlockPos probe = new BlockPos(pos.getMinBlockX(), level.getMinBuildHeight(), pos.getMinBlockZ());
         if (!level.hasChunkAt(probe)) {
@@ -134,7 +140,7 @@ public final class StructureWatchIndex {
     static void chunkUnloaded(ServerLevel level, ChunkPos pos) {
         WorldData data = existing(level);
         if (data == null) return;
-        if (!StructureTrackingMode.legacy()) WorldStructureClaims.chunkUnloaded(level, pos);
+        WorldStructureClaims.chunkUnloaded(level, pos);
         long key = pos.toLong();
         data.pending.remove(key);
         List<StructureTracker> trackers = data.chunks.get(key);

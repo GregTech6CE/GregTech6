@@ -43,7 +43,8 @@
     "Recipe": "Implementation/legacy type discussed as context, not an SDK extension point",
     "RecipeMap": "Implementation/legacy type discussed as context, not an SDK extension point",
     "SharedLargeMachineParts": "Implementation/legacy type discussed as context, not an SDK extension point",
-    "SignalWireBlockEntity": "Implementation/legacy type discussed as context, not an SDK extension point"
+    "SignalWireBlockEntity": "Implementation/legacy type discussed as context, not an SDK extension point",
+    "StructureWatchIndex": "Implementation/legacy type discussed as context, not an SDK extension point"
   },
   "non_api_tokens": {
     "FAILED": "Unqualified constant, enum value, energy/material tag or file label; not a type reference",

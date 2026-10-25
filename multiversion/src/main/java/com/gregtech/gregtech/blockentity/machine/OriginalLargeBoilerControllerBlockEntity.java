@@ -187,43 +187,10 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
         }
     }
     private boolean structureOk() {
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode.legacy() ? isStructureOk() : structureFormed;
+        return structureFormed;
     }
     @Override public boolean isStructureOk() {
         return com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.query(this);
-    }
-    /** Source claims each correct cell even when the shell has missing or obstructed cells. */
-    @Override public boolean scanStructure() {
-        if(level==null||isRemoved())return false;
-        if(level.isClientSide)return structureOkay;
-        // GT6 checkStructure2 retains its saved result until every shell chunk is available.
-        // Missing chunks must neither invalidate a sound boiler nor interrupt its loaded outlets.
-        if(!shellLoaded())return structureOkay;
-        var centre=bodyCentre();
-        var parts=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
-        boolean complete=true;
-        for(var cell:com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerParameters.CHECK_ORDER) {
-            var position=centre.offset(cell.x(),cell.y(),cell.z());
-            if(!level.hasChunkAt(position)){complete=false;continue;}
-            if(position.equals(worldPosition))continue;
-            if(cell.role()==com.gregtech.gregtech.api.multiblock.StructureGrid.Role.AIR) {
-                if(!level.getBlockState(position).isAir())complete=false;
-                continue;
-            }
-            var required=cell.role()==com.gregtech.gregtech.api.multiblock.StructureGrid.Role.HEAT_INPUT
-                    ?GTMultiblocks.HEAT_TRANSMITTER.get():variant.wall();
-            if(!(level.getBlockState(position).getBlock() == required)
-                    ||!(level.getBlockEntity(position) instanceof MultiblockPortBlockEntity port)||!port.canBind(worldPosition)) {
-                complete=false;continue;
-            }
-            parts.put(position,MultiblockLayout.Role.valueOf(cell.role().name()));
-        }
-        var claimed = com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, parts,
-                position->level.getBlockEntity(position) instanceof MultiblockPortBlockEntity port&&port.canBind(worldPosition),
-                (position,role)->((MultiblockPortBlockEntity)level.getBlockEntity(position)).bind(worldPosition,role),this::release);
-        boolean formed=complete&&claimed!=com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
-        if(structureOkay!=formed){structureOkay=formed;syncToClient();}
-        return formed;
     }
     @Override public boolean containsToolPosition(BlockPos pos) {
         var centre=bodyCentre();
@@ -252,8 +219,13 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
     }
     public List<Component> magnifyingGlassMessages() {
         boolean previous=structureOkay,formed=isStructureOk();
-        if(!previous||!formed)return List.of(Component.literal(
-                com.gregtech.gregtech.api.multiblock.MultiblockToolRules.structureMessage(previous,formed)));
+        if(!previous||!formed) {
+            var messages = new java.util.ArrayList<Component>();
+            messages.add(Component.literal(
+                    com.gregtech.gregtech.api.multiblock.MultiblockToolRules.structureMessage(previous,formed)));
+            if (!formed) com.gregtech.gregtech.api.multiblock.MultiblockTools.appendDiagnosis(this, messages);
+            return List.copyOf(messages);
+        }
         // This source override replaces the generic "formed already" line with boiler details.
         return List.of(Component.literal(com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerParameters.calcificationMessage(efficiency)),
                 com.gregtech.gregtech.api.multiblock.MultiblockTools.tankContent(water,"WARNING: NO WATER!!!"));

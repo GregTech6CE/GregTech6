@@ -6,7 +6,13 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 
 /** A controller that can answer {@code isStructureOk} from a tracker instead of scanning. */
 public interface TrackedMultiblock {
-    boolean scanStructure();
+    /**
+     * One full scan of the structure. Only families still on the scan path implement this; migrated
+     * families claim through {@link #applyStructure(PatternMatch)} and never call it.
+     */
+    default boolean scanStructure() {
+        throw new UnsupportedOperationException(getClass().getName() + " has no full structure scan");
+    }
 
     StructureDefinition structureDefinition();
 

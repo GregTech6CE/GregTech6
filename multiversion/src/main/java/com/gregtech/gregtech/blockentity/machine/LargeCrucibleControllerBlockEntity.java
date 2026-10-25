@@ -156,7 +156,7 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
     }
     private boolean structureFormed;
     private boolean structureOk() {
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode.legacy() ? isStructureOk() : structureFormed;
+        return structureFormed;
     }
     @Override public void structureFormedChanged(boolean formed) {
         structureFormed = formed;
@@ -174,23 +174,6 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
     @Override public boolean isStructureOk() {
         return com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.query(this);
     }
-    @Override public boolean scanStructure() {
-        if (level != null && level.isClientSide) return isFormedForRendering();
-        boolean formed = checkStructure();
-        if (level != null && !isRemoved()) {
-            com.gregtech.gregtech.api.multiblock.tracking.StructureScanProbe.pause();
-            try {
-                var property = com.gregtech.gregtech.block.machine.MultiblockPortBlock.CRUCIBLE_FORMED;
-                var state = level.getBlockState(worldPosition);
-                if (state.hasProperty(property) && state.getValue(property) != formed)
-                    level.setBlock(worldPosition, state.setValue(property, formed), 3);
-            } finally {
-                com.gregtech.gregtech.api.multiblock.tracking.StructureScanProbe.resume();
-            }
-        }
-        return formed;
-    }
-
 //? if >=1.21.1 {
     /*public AABB getRenderBoundingBox() {
         return new AABB(worldPosition.getX()-1,worldPosition.getY(),worldPosition.getZ()-1,worldPosition.getX()+2,worldPosition.getY()+3,worldPosition.getZ()+2);
@@ -198,23 +181,6 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
     @Override public AABB getRenderBoundingBox() {
         return new AABB(worldPosition.offset(-1, 0, -1), worldPosition.offset(2, 3, 2));
 //?}
-    }
-
-    private boolean checkStructure() {
-        if (level == null || isRemoved() || !level.hasChunkAt(worldPosition)) return false;
-        Block wall = variant.wall();
-        Map<BlockPos, MultiblockLayout.Role> candidates = new LinkedHashMap<>(24);
-        for(var cell:com.gregtech.gregtech.content.multiblock.SharedLargeCrucibleStructure.CELLS){
-            BlockPos pos=worldPosition.offset(cell.x(),cell.y(),cell.z());
-            if(!level.hasChunkAt(pos)){bindings.clear(this::release);com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);return false;}
-            if(cell.air()){if(!level.getBlockState(pos).isAir()){bindings.clear(this::release);com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);return false;}continue;}
-            if(!(level.getBlockState(pos).getBlock() == wall)){bindings.clear(this::release);com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);return false;}
-            candidates.put(pos,MultiblockLayout.Role.valueOf(cell.role().name()));
-        }
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, candidates,
-                pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port && port.canBind(worldPosition),
-                (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
-                this::release) != com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, LargeCrucibleControllerBlockEntity be) {

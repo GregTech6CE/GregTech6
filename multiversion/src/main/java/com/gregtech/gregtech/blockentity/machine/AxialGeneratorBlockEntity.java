@@ -45,7 +45,7 @@ public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity impl
     private boolean structureFormed;
     @Override public void structureFormedChanged(boolean formed) { structureFormed = formed; }
     protected boolean structureOk() {
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode.legacy() ? isStructureOk() : structureFormed;
+        return structureFormed;
     }
     private final com.gregtech.gregtech.api.multiblock.tracking.StructureDefinition definition =
             com.gregtech.gregtech.api.multiblock.tracking.FixedStructures.declarative(this, this::structureCells, List.of());
@@ -155,25 +155,6 @@ public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity impl
     }
     @Override public boolean isStructureOk() {
         return com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.query(this);
-    }
-    @Override
-    public boolean scanStructure() {
-        if (level == null || isRemoved()) return false;
-        var parts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
-        for (var cell : grade().cells().keySet()) {
-            var pos = AxialStructureTransform.at(worldPosition, front(), cell.getX(), cell.getY(), cell.getZ());
-            if (!level.hasChunkAt(pos) || !grade().accepts(cell,
-                    level.getBlockState(pos).getBlock()) || !(level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity)) {
-                bindings.clear(this::release);
-                com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
-                return false;
-            }
-            parts.put(pos, role(cell, front(), grade().steam()));
-        }
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, parts,
-                p -> ((MultiblockPortBlockEntity) level.getBlockEntity(p)).canBind(worldPosition),
-                (p, r) -> ((MultiblockPortBlockEntity) level.getBlockEntity(p)).bind(worldPosition, r), this::release)
-                != com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
     }
 
     private void release(BlockPos pos) {

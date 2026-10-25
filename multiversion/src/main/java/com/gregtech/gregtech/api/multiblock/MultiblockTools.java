@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
+import java.util.List;
 
 public final class MultiblockTools {
     private MultiblockTools() {}
@@ -41,6 +42,13 @@ public final class MultiblockTools {
         level.playSound(null, context.getClickedPos(), builder ? SoundEvents.EXPERIENCE_ORB_PICKUP : SoundEvents.VILLAGER_YES,
                 SoundSource.PLAYERS, 1, 1);
         return InteractionResult.SUCCESS;
+    }
+
+    /** The diagnostic scan behind the magnifier: every cell the definition rejects, not just the first. */
+    public static void appendDiagnosis(com.gregtech.gregtech.api.multiblock.tracking.TrackedMultiblock machine,
+                                       List<Component> messages) {
+        for (var problem : com.gregtech.gregtech.api.multiblock.tracking.StructureDiagnostic.inspect(machine))
+            messages.add(Component.literal(problem.describe()));
     }
 
     /** Original FluidTankGT.content; preserve full long amounts and translatable native names. */

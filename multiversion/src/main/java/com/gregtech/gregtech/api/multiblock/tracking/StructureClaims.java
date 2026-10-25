@@ -35,7 +35,7 @@ public final class StructureClaims {
         } finally {
             StructureScanProbe.resume();
         }
-        if (!StructureTrackingMode.legacy() && controller.getLevel() instanceof ServerLevel server)
+        if (controller.getLevel() instanceof ServerLevel server)
             WorldStructureClaims.retain(server, controller.getBlockPos(),
                     outcome == PartBindings.Outcome.FAILED ? java.util.Set.of() : parts.keySet());
         return switch (outcome) {
@@ -46,7 +46,7 @@ public final class StructureClaims {
     }
 
     public static void cleared(BlockEntity controller) {
-        if (!StructureTrackingMode.legacy() && controller.getLevel() instanceof ServerLevel server)
+        if (controller.getLevel() instanceof ServerLevel server)
             WorldStructureClaims.releaseController(server, controller.getBlockPos());
     }
 

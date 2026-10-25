@@ -74,27 +74,18 @@ public final class ControllerStructureLayouts {
         for(var cell:SharedHollowControllerGeometry.cells(radius,minY,maxY))cells.put(new BlockPos(cell.x(),cell.y(),cell.z()),wall);
         return Map.copyOf(cells);
     }
-    /** Exact GT6 170xx hollow vessel: the valve is the centre of its front wall. */
+    /** Exact GT6 170xx hollow vessel: the same cells its runtime definition compiles. */
     private static Map<BlockPos,Block> tank(TankValveSpec valve) {
-        int radius = valve.size() / 2;
         var cells = new LinkedHashMap<BlockPos,Block>();
-        for (int x = -radius; x <= radius; x++) for (int y = -radius; y <= radius; y++)
-            for (int z = -radius; z <= radius; z++) {
-                BlockPos local = new BlockPos(x, y, z + radius);
-                if (local.equals(BlockPos.ZERO)) continue;
-                boolean shell = Math.abs(x) == radius || Math.abs(y) == radius || Math.abs(z) == radius;
-                cells.put(local, shell ? valve.wall() : Blocks.AIR);
-            }
+        for (var cell : SpecialStructures.tankCells(valve.size(), valve.wall(), Direction.NORTH))
+            cells.put(new BlockPos(cell.dx(), cell.dy(), cell.dz()), SpecialStructures.previewBlock(cell.cell()));
         return Map.copyOf(cells);
     }
-    /** GT6 MultiTileEntityCrucible: main at bottom centre, 24 wall cells, two open inner cells. */
+    /** GT6 MultiTileEntityCrucible: the same cells its runtime definition compiles. */
     private static Map<BlockPos,Block> crucible(Block wall) {
         var cells = new LinkedHashMap<BlockPos,Block>();
-        for (int y = 0; y < 3; y++) for (int x = -1; x <= 1; x++) for (int z = -1; z <= 1; z++) {
-            if (x == 0 && z == 0) {
-                if (y != 0) cells.put(new BlockPos(0, y, 0), Blocks.AIR);
-            } else cells.put(new BlockPos(x, y, z), wall);
-        }
+        for (var cell : SharedLargeCrucibleStructure.CELLS)
+            cells.put(new BlockPos(cell.x(), cell.y(), cell.z()), cell.air() ? Blocks.AIR : wall);
         return Map.copyOf(cells);
     }
 
