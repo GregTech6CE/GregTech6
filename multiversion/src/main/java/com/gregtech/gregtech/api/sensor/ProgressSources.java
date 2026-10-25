@@ -15,6 +15,11 @@ public final class ProgressSources {
         long maximum();
     }
 
+    /** Sided read-only sources, independent of switch/mode capability availability. */
+    public interface Provider {
+        @Nullable Access progressSource(Direction side);
+    }
+
     @Nullable
     public static Access find(BlockEntity entity, Direction side) {
         if (entity == null || entity.isRemoved()) return null;
@@ -25,6 +30,7 @@ public final class ProgressSources {
                 @Override public long maximum() { return source.progressMaximum(face); }
             };
         }
+        if (entity instanceof Provider provider) return provider.progressSource(side);
         var control = MachineControl.find(entity, side);
         if (control == null || !control.available() || !control.supportsProgress()) return null;
         return new Access() {

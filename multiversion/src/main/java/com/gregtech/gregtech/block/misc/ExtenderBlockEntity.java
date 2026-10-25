@@ -7,6 +7,7 @@ import net.minecraft.world.level.block.state.BlockState;
 /** Extender/bridge state for covers, routed capabilities, machine controls and signals. */
 public class ExtenderBlockEntity extends com.gregtech.gregtech.blockentity.EnergyRelayBlockEntity
         implements com.gregtech.gregtech.api.machine.MachineControl.Provider,
+        com.gregtech.gregtech.api.sensor.ProgressSources.Provider,
         com.gregtech.gregtech.content.cover.PanelCoverHost, com.gregtech.gregtech.api.inventory.BlockContents {
     private static final com.gregtech.gregtech.content.logistics.RelayVisitSet<ExtenderBlockEntity> CONTROLS =
             new com.gregtech.gregtech.content.logistics.RelayVisitSet<>();
@@ -226,6 +227,17 @@ public class ExtenderBlockEntity extends com.gregtech.gregtech.blockentity.Energ
             visited.remove(this);
             if (visited.isEmpty()) CONTROLS.remove();
         }
+    }
+
+    @Override
+    public com.gregtech.gregtech.api.sensor.ProgressSources.Access progressSource(Direction side) {
+        if (!universal() || (((SourceExtenderBlock) getBlockState().getBlock()).spec().bridge && side == null)) return null;
+        // Advertise the read-only face, not a cached endpoint or live machine-control feature.
+        // Each observation retains progressOperation's cycle, removal and unloaded guards.
+        return new com.gregtech.gregtech.api.sensor.ProgressSources.Access() {
+            @Override public long value() { return progressOperation(side, false); }
+            @Override public long maximum() { return progressOperation(side, true); }
+        };
     }
 
     @Override

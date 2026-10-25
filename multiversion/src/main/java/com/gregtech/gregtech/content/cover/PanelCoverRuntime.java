@@ -30,6 +30,19 @@ public final class PanelCoverRuntime {
         return level!=null&&level.hasChunkAt(pos)?level.getSignal(pos,side):0;
     }
     private MachineControl control(Direction side){var c=host.coverControl(side);return c!=null&&c.available()?c:null;}
+    private com.gregtech.gregtech.api.sensor.ProgressSources.Access progress(Direction side){
+        if(host.coverOwner() instanceof com.gregtech.gregtech.api.sensor.ProgressSources.Provider){
+            var source=com.gregtech.gregtech.api.sensor.ProgressSources.find(host.coverOwner(),side);
+            if(source!=null)return source;
+        }
+        // Preserve existing direct/custom-host and generic contents fallback, only for progress panels.
+        var c=control(side);
+        if(c==null||!c.supportsProgress())return null;
+        return new com.gregtech.gregtech.api.sensor.ProgressSources.Access(){
+            @Override public long value(){return c.progress();}
+            @Override public long maximum(){return c.progressMax();}
+        };
+    }
     private long[] energy(Direction side){
         if(host.coverOwner() instanceof IEnergyBlock energy){
             var types=energy.getEnergyCapacitorTypes(side);
@@ -46,6 +59,7 @@ public final class PanelCoverRuntime {
             return host.coverOwner() instanceof com.gregtech.gregtech.content.logistics.LogisticsHost logistics
                     && logistics.canLogistics(null);
         var id=CoverItems.behavior(stack);
+        if(PanelCover.of(stack)==PanelCover.PROGRESS)return progress(side)!=null;
         var candidateControl=control(side);
         if(CoverItems.TAG_SELECTOR.equals(id))return candidateControl!=null&&candidateControl.supportsMode();
         // Original bare redstone wire inherits the insulated host class too; both accept these attachments.
@@ -61,7 +75,6 @@ public final class PanelCoverRuntime {
         var panel=PanelCover.of(stack);if(panel==null)return CoverItems.isCover(stack);
         var c=control(side);
         if(panel.selector())return c!=null&&c.supportsMode();
-        if(panel==PanelCover.PROGRESS)return c!=null&&c.supportsProgress();
         if(panel==PanelCover.STATUS)return c!=null&&c.supportsSwitch();
         if(panel.energy())return energy(side)!=null;
         return true;
@@ -198,9 +211,12 @@ public final class PanelCoverRuntime {
         for(var side:Direction.values()){
             var stack=host.getCover(side);var panel=PanelCover.of(stack);int signal=0;boolean power=false;
             if(panel!=null){
-                var c=control(side);int value=value(stack);
+                var c=panel==PanelCover.PROGRESS?null:control(side);int value=value(stack);
                 switch(panel){
-                    case PROGRESS -> value=c!=null&&c.supportsProgress()?scale(c.progress(),c.progressMax(),15):0;
+                    case PROGRESS -> {
+                        var source=progress(side);
+                        value=source==null?0:scale(source.value(),source.maximum(),15);
+                    }
                     case ENERGY,ENERGY_DISPLAY -> {var energy=energy(side);value=energy==null?0:scale(energy[0],energy[1],panel==PanelCover.ENERGY?15:10);}
                     case STATUS -> {
                         value=0;

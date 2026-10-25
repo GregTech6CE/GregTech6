@@ -517,12 +517,51 @@ public final class SensorProgressRegressionTests {
         h.assertTrue(access != null && access.value() == value && access.maximum() == maximum, label);
         System.out.println("SENSOR_PROGRESS_OBSERVATION " + label + " value=" + value + " maximum=" + maximum);
     }
+    private static final class CountingProgressRelay extends com.gregtech.gregtech.block.misc.ExtenderBlockEntity {
+        int sourceLookups,controlLookups;
+        CountingProgressRelay(BlockPos pos,BlockState state){super(pos,state);}
+        @Override public ProgressSources.Access progressSource(Direction side){sourceLookups++;return super.progressSource(side);}
+        @Override public MachineControl machineControl(Direction side){controlLookups++;return super.machineControl(side);}
+    }
+    private static void noRelayControls(GameTestHelper h,
+            com.gregtech.gregtech.block.misc.ExtenderBlockEntity relay, Direction side, String label) {
+        var c=MachineControl.find(relay,side);
+        h.assertTrue(c!=null&&!c.available()&&!c.supportsProgress()&&!c.supportsSwitch()&&!c.supportsMode(),label);
+    }
     private static void extenderAndBridgeProgressBody(GameTestHelper h, BlockPos pos) {
         var drum = (com.gregtech.gregtech.blockentity.machine.TankBlockEntity) place(h, pos.east(), block("drum_steel"));
         seedSealedProgress(h, drum, 123, 456);
         var relay = progressRelay(h, pos, "universal_extender", Direction.WEST, Direction.EAST);
         relayProgress(h, relay, Direction.WEST, 123, 456, "extender_real_barrel");
         check(h, meter(h, pos, Direction.WEST, "sensor_progressmeter"), 123, 456, "extender_actual_meter");
+        noRelayControls(h,relay,Direction.WEST,"passive progress relay does not invent live controls");
+        for(var path:java.util.List.of("machine_status_display_cover","manual_selector","redstone_machine_switch"))
+            h.assertTrue(!relay.panels().canAttach(Direction.WEST,progressCoverItem(path)),"relay rejects unrelated control cover "+path);
+        var retained=ProgressSources.find(relay,Direction.WEST);
+        seedSealedProgress(h,drum,120,240);
+        h.assertTrue(relay.attachCover(Direction.WEST,progressCoverItem("progress_sensor")),"passive relay accepts actual progress cover");
+        relay.panels().afterTick();
+        h.assertTrue(relay.panels().signal(Direction.WEST)==7,"relay cover uses half fermentation not tank fill");
+        h.assertTrue(relay.panels().configure(Direction.WEST,false,false)&&relay.panels().signal(Direction.WEST)==8,"relay cover inverted half progress");
+        h.getLevel().setBlockAndUpdate(pos.east(),Blocks.AIR.defaultBlockState());
+        h.assertTrue(retained.value()==0&&retained.maximum()==0,"retained source does not cache removed endpoint");
+        noRelayControls(h,relay,Direction.WEST,"absent target retains no control capabilities");
+        relay.panels().afterTick();
+        h.assertTrue(relay.panels().signal(Direction.WEST)==15,"original absent progress is zero, inverted signal fifteen");
+        h.assertTrue(relay.panels().configure(Direction.WEST,false,false)&&relay.panels().signal(Direction.WEST)==0,"uninverted absent signal zero");
+        var replacement=sideProgressTank(h,pos.east(),300);
+        replacement.resetCalls();
+        h.assertTrue(retained.value()==304&&retained.maximum()==1304&&replacement.valueCalls==1&&replacement.maximumCalls==1,
+                "retained source resolves replacement side once per observation");
+        replacement.setRemoved();
+        h.assertTrue(retained.value()==0&&retained.maximum()==0,"removed endpoint is not observed");
+        replacement.clearRemoved();
+        // Chunk lookup evicts a removed BE; clearing this detached reference cannot restore its world binding.
+        h.getLevel().setBlockEntity(replacement);
+        h.assertTrue(h.getLevel().getBlockEntity(pos.east())==replacement&&!replacement.isRemoved(),
+                "recovered endpoint explicitly rebound through native world API");
+        h.assertTrue(retained.value()==304&&retained.maximum()==1304,"removed endpoint guard recovers");
+        relay.removeCover(Direction.WEST);
         // Restore the west meter cell before constructing the longer chain.
         h.getLevel().setBlockAndUpdate(pos.west(), net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());
         var bridge = progressRelay(h, pos, "universal_bridge", Direction.NORTH, Direction.SOUTH);
@@ -537,14 +576,23 @@ public final class SensorProgressRegressionTests {
                 "independent bridge input resolves its own destination");
         h.assertTrue(com.gregtech.gregtech.api.machine.MachineControl.find(bridge, null) == null,
                 "bridge null-side control remains unsupported");
+        h.assertTrue(ProgressSources.find(bridge,null)==null,"bridge null-side progress remains unsupported");
         // Four actual relay blocks fit x=2..5, and their side-sensitive endpoint at x=6.
         var endpoint = sideProgressTank(h, pos.east(2), 100);
         com.gregtech.gregtech.block.misc.ExtenderBlockEntity first = null;
+        var countedRelays=new java.util.ArrayList<CountingProgressRelay>();
         for (int offset = -2; offset <= 1; offset++) {
             var current = progressRelay(h, pos.offset(offset, 0, 0), "universal_extender", Direction.WEST, Direction.EAST);
-            if (offset == -2) first = current;
+            var counted=new CountingProgressRelay(current.getBlockPos(),current.getBlockState());
+            h.getLevel().removeBlockEntity(current.getBlockPos());
+            h.getLevel().setBlockEntity(counted);
+            h.assertTrue(h.getLevel().getBlockEntity(counted.getBlockPos())==counted&&counted.getType().isValid(counted.getBlockState()),
+                    "registered relay-typed counting fixture installed");
+            countedRelays.add(counted);
+            if (offset == -2) first = counted;
         }
         endpoint.resetCalls();
+        for(var counted:countedRelays){counted.sourceLookups=0;counted.controlLookups=0;}
         var chain = com.gregtech.gregtech.api.sensor.ProgressSources.find(first, Direction.WEST);
         h.assertTrue(chain != null && endpoint.valueCalls == 0 && endpoint.maximumCalls == 0,
                 "resolving a chain does not eagerly read endpoint measurements");
@@ -552,14 +600,20 @@ public final class SensorProgressRegressionTests {
                 "four-hop value traversal is lazy and linear, not eager value/max recursion");
         h.assertTrue(chain.maximum() == 1104 && endpoint.valueCalls == 1 && endpoint.maximumCalls == 1,
                 "four-hop maximum traversal calls the endpoint once");
+        h.assertTrue(countedRelays.stream().mapToInt(r->r.sourceLookups).sum()==7
+                        &&countedRelays.stream().mapToInt(r->r.controlLookups).sum()==0,
+                "four-hop read-only routing performs seven lazy source lookups and no recursive feature queries");
         // Both facing properties are independently writable in native SourceExtenderBlock.
         var loopA = progressRelay(h, pos, "universal_extender", Direction.EAST, Direction.EAST);
         progressRelay(h, pos.east(), "universal_extender", Direction.WEST, Direction.WEST);
         relayProgress(h, loopA, Direction.WEST, 0, 0, "extender_cycle_returns_zero");
+        var cycleAccess=ProgressSources.find(loopA,Direction.WEST);
+        noRelayControls(h,loopA,Direction.WEST,"cycle advertises no live control features");
         // Leaving a cycle must also release the thread-local visited set for the next normal read.
         drum = (com.gregtech.gregtech.blockentity.machine.TankBlockEntity) place(h, pos.east(), block("drum_steel"));
         seedSealedProgress(h, drum, 12, 24);
         relayProgress(h, loopA, Direction.WEST, 12, 24, "extender_cycle_guard_recovers");
+        h.assertTrue(cycleAccess.value()==12&&cycleAccess.maximum()==24,"retained cyclic source recovers without cached endpoint");
         for (var id : java.util.List.of("inventory_extender", "tank_extender", "inventory_tank_bridge")) {
             var passive = progressRelay(h, pos, id, Direction.WEST, Direction.EAST);
             h.assertTrue(com.gregtech.gregtech.api.machine.MachineControl.find(passive, Direction.WEST) == null
@@ -590,6 +644,7 @@ public final class SensorProgressRegressionTests {
         detached.setLevel(h.getLevel());
         try {
             relayProgress(h, detached, Direction.SOUTH, 0, 0, "detached_native_unloaded_guard");
+            noRelayControls(h,detached,Direction.SOUTH,"unloaded target has no live control features");
             h.assertTrue(!h.getLevel().hasChunkAt(remotePos) && !h.getLevel().hasChunkAt(remoteTarget),
                     "progress lookup does not force-load the absent endpoint or owner");
         } finally { detached.setRemoved(); }
