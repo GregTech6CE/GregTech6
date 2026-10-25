@@ -200,7 +200,7 @@ public final class BlueprintRegressionTests {
         var pos=new BlockPos(3,6,3);helper.setBlock(pos,GTMultiblocks.findPart(17999).get());
         for(int x=-1;x<=1;x++)for(int z=-1;z<=1;z++)for(int y=-5;y<=0;y++) {
             if(x==0&&y==0&&z==0)continue;
-            helper.setBlock(pos.offset(x,y,z),y==-5?Blocks.BEDROCK:y==-4?GTMultiblocks.DENSE_TITANIUM_WALL.get():com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(18026));
+            helper.setBlock(pos.offset(x,y,z),y==-5?Blocks.BEDROCK:com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(y==-4?18103:18026));
         }
         var machine=(com.gregtech.gregtech.blockentity.machine.BedrockDrillControllerBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos));
         helper.assertTrue(StructureTestSupport.ok(machine),"drill heads and four dense titanium layers form above bedrock");

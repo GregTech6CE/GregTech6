@@ -2225,3 +2225,15 @@ Sensors null-NBT源登记可合法携带REV，生成器只为这组解析，避�
 - 这个补丁可以独立于 55–59 落地。卡 58 整理认领策略、卡 59 删除旧扫描时，必须保留这里的玩家交互合同；不能只比较 `formed` 布尔值。
 - 测试一致性检查本身会调用旧扫描，旧扫描会补回合法格子的绑定，因此只验证两条路径的成型结果不足以捕获此回归。新增两项 `SensorSourceTests` 在关闭一致性检查和投影对照的情况下执行建造场景，并加入 issue CI 必跑清单；旧夹具在两次模拟玩家点击之间显式调度评估。
 - 验证：Forge 与 NeoForge 均 50/50 required tests passed（sensor source 11、结构跟踪 26、增量结构 13），双平台 `addonApiClosureCheck` 通过；报告校验器 42 项单测通过，两端实际报告中的新增两项均通过必跑检查。修复前复现、夹具修正和验证边界见 [回执](verification/builder-partial-bindings-20261025.json)。
+
+## 2026-10-25 / 结构跟踪阶段 2 卡 55：特殊家族图样与运行数据
+
+- 图样入口：`content.multiblock.SpecialStructures` 复用卡 53/54 的 `CompiledPattern`、重复组和聚合约束，不扩展增量调度器。储罐、物流核心、基岩钻机通过显式世界偏移编译固定格；避雷针使用 Layout 的固定底座加 `rod` 重复组；大型烤炉包装现有 Layout 定义。每个家族的足迹均由同一组图样格生成。
+- 储罐投影校正：旧 `HollowTankStructure.validate` 的内部谓词是 `BlockState.isAir()`，没有读取世界流体，也不允许水方块。因此本卡保留 AIR 投影，未照卡片中“内部流体格用 FLUID”的描述改变成型条件。液体保存在控制器 tank 中，罐内液量不属于结构判定；外壳只比方块身份。
+- 固定方块匹配：`PlainStructureBlocks` 增加内部 `fixedblock#<registry id>` 匹配器，供储罐和避雷针保留旧扫描只比方块身份的语义。它直接使用注册表，不依赖附属布局的 RESOLVED 缓存，不改变普通附属 plain 名称的解析。储罐仍在认领时要求可绑定的部件实体；避雷针继续不认领。
+- 避雷针：底座 44 格，杆柱无上限（受世界高度限制），最小杆长为 0；零杆柱仍可成型。足迹由匹配杆长加下一段生成，`applyStructure` 将匹配计数写回运行时 `rodLength`，用于天气概率和捕雷高度检查。
+- 物流核心：CPU 格接受万能 CPU、四种专用 CPU 或墙。每个计数聚合要求至少一个万能 CPU 或对应专用 CPU；数值从已匹配候选推导，万能各加 1、专用加 4，存储上限 108。声明 `PER_CELL`，运行时继续调用既有整组 `StructureClaims.update`，真正逐格认领仍留给卡 58。
+- 大型烤炉：匹配器接受 18042/18043，`Aggregate.SameBlock` 每次从缓存检查整组线圈的身份。保留的整段扫描改用显式组检查，移除 `ovenCoil[0]`，不再让候选匹配依赖扫描内的可变状态；旧扫描没有删除。
+- 基岩钻机：44 个支撑格和 9 个地面格。`bedrockfloor` 匹配原版基岩或宿主岩为基岩的 OreBlock；地面投影仅比较“是否基岩类”，不比较矿种或大小。对应的 `Projection.bedrockFloor()` 做此局部语义调整，其余 tracking 公共机制不改。矿物候选从扫描状态移出，`nextProduct()` 每个周期调用带 `hasChunkAt` 保护的 `drillingCandidates()`，大矿权重 2、小矿权重 1；任一地面区块不可用则不消耗本周期能量和润滑油。认领策略保持 ATOMIC。
+- 验证结果另见 VERIFICATION 和本卡 JSON 回执；实现接入不代表全量游戏测试已通过。
+- 卡 55 的原生旧夹具校正：原版钻机底层使用 18103 钻头；重放阀门后先通过 StructureTestSupport 等待结构重评估再执行有成型门控的流体操作；碎矿产物测试放置九格实际基岩矿，取消对已移除 deposit 字段的反射注入。三项在独立命名空间复测 3/3，通过不代表默认 1045 项套件已全绿。
