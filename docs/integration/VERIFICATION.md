@@ -1843,3 +1843,17 @@ Forge开发47.4.20/Java17.0.10，Neo开发21.1.243/Java21.0.7，各3GiB/directCo
 过程边界：最初误把全部 86 个命名空间组合，其中包括要求精确隔离环境的 nonore 审计和独立 JVM 的 restart 阶段；触发隔离断言后停止，未完成、不计作正式验收。第一次三项原生复测的模板过滤配置也在执行用例前停止，随后将原模板复制到独立命名空间并完成 3/3。Forge 首次定向运行另包含共享资源 JAR 打包和 3576 个原版资源补下载。所有尝试、选择范围、失败清单及日志/XML/源码哈希见 [structure-tracking-special-families-20261025.json](verification/structure-tracking-special-families-20261025.json)。
 
 默认测试改写的 23 份根目录审计 JSON 已备份到忽略的 `work/` 并恢复，未混入本卡修改。客户端手动玩法、独立存档重启和历史存档未验；本卡不改变保存格式。本批提交并创建 PR；默认套件剩余失败后续专项处理，整体移植仍未完成。
+
+## 2026-10-25 / 卡55后续：Neo材料启动基准专项
+
+卡55已按用户决定关闭，提交 `216cb6f9c`、PR #125；本批在独立分支 `codex/targeted-default-regressions` 处理默认 Neo 套件的三项失败，不混入卡55提交。三项根因是运行时夹具仍使用早期移植目录且将附属样例的变更计入原版固定总数，没有发现材料运行时代码需要回退。
+
+`SharedMaterialBootstrapGameTests` 对内置项使用既有 `MaterialBehaviorContracts` 的已采纳目录：1160材料对象、1105正ID、1523名称、132前缀；附属项不计入内置总数，但仍遍历全部材料/别名验证ID唯一性、对象身份和组成有效性。角色检查保留独立原始 SHA-256 `734a7fee39e9326dbfae519c34f3b9a0cb510d7d7a5535858cd04ab0aea99ccb`：只排除源码恢复的 Cinnamonwood/Limewood/Magicwood/Ashwood 四行，并只归一化 PetrifiedWood 的 STONE 标记，就严格重现原始指纹；这五项已采纳差异在归一化前另行断言，内置角色总数为210/415/82。依据仍是既有 normal-wood 差异回执及 tools-power 源码修正记录，不用本次运行输出重铸金样。
+
+反应夹具精确支持纯核心与仓库附属样例两个配置：46条源码显式反应不变；纯核心137条，样例精确删除指定输入组合的1条 StainlessSteel 反应并新增2条附属反应，因此运行表为136条内置、138条总计。保留铜锡、退火铜、赤铁矿/碳/方解石的温度门槛及物质量守恒断言。
+
+历史1156/109夹具从 `216cb6f9c` 冻结到 `core/src/test/fixtures/original-material-roles/`，原源码验证模式使用该文件；当前模式改用多版本目录、同时编译拆分后的api/main源码并绑定gt6ce，使用javac参数文件避免Windows命令行过长。当前模式4项夹具及jdeps仅java.base检查通过。原源码模式需要的 `import/saltnya-snapshot` ref在当前checkout不存在，本次未重新执行，不声称获得新的原源码运行证据。
+
+精确命令、日志/XML/源码哈希及最终结果见 [material-bootstrap-regressions-20261025.json](verification/material-bootstrap-regressions-20261025.json)。本批不重跑Forge默认1045项，也不据此宣称剩余Forge失败已修复；客户端、存档重启和历史存档未验证，整体移植仍未完成。
+
+本批最终结果：核心材料契约7959条断言通过（另含110行源码木材夹具、1212条断言）；最终夹具在纯核心和真实Neo附属样例配置下快速预检各4/4；Neo `gregtech_bootstrap` 带样例游戏复测 **7/7通过**。本批两次游戏运行均仅同一7项：第一次6/7，目录测试暴露仍残留的“附属ID也必须小于10000”旧断言；修正为按内置/附属身份检查10000边界后第二次7/7。首次8分23秒含源码重新生成/编译，第二次2分34秒。两次XML均保留在回执中，不隐藏中间失败。没有执行Forge全套。
