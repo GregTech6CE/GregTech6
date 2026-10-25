@@ -6,6 +6,18 @@
 
 Minecraft 1.20.1 · Forge | Minecraft 1.21.1 · NeoForge
 
+## ⚠️ Development Build Notice
+
+**GT6CE is undergoing rapid development and has not reached a stable stage. Updates may include major changes to the underlying architecture, alongside new content and fixes.**
+
+Item and block IDs, save data formats, material and recipe systems, machine behavior, world generation, the addon API, and scripting interfaces may all change or be reworked. **Compatibility between builds is not guaranteed for existing worlds, addons, or modpacks, and automatic migration may not be available for all older data.**
+
+After an update, production lines may need adjustments, and addons or scripts may need changes. Existing worlds may also encounter missing items or blocks, invalid machine data, or other compatibility issues. Some updates may require starting a new world.
+
+- Use a separate instance for testing, and exercise caution with long-term worlds or production servers.
+- **Back up your worlds, configuration, and scripts before updating, and keep the matching previous mod files.** Do not rely on downgrading the mod to restore a world that a newer build has already modified.
+- When developing a modpack or addon, pin the build you use and check compatibility again before upgrading.
+
 ## Welcome to GT6CE
 
 **GregTech 6 Community Edition**, or **GT6CE**, is a community port of GregTech 6 to modern Minecraft. Our goal is to bring GT6's material processing, hands-on metallurgy, and industrial progression to **1.20.1 Forge** and **1.21.1 NeoForge**.
