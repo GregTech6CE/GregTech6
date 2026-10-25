@@ -31,7 +31,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /** GT6 rotational axle block entity — RU conductor, pipe-style connection grid. */
-public class AxleBlockEntity extends BlockEntity implements IEnergyConductor, IEnergyBlock {
+public class AxleBlockEntity extends BlockEntity implements IEnergyConductor, IEnergyBlock, com.gregtech.gregtech.api.sensor.ProgressSensorSource {
+    // Sample the existing transfer accumulator between entity ticks; never substitute energy.
+    @Override public long progressValue(int side) { return transferredPower(); }
+    @Override public long progressMaximum(int side) { return maxPower(); }
     private boolean initialized;
 //? if >=1.21.1 {
     /*public static final net.neoforged.neoforge.client.model.data.ModelProperty<Integer> ROTATION = new net.neoforged.neoforge.client.model.data.ModelProperty<>();

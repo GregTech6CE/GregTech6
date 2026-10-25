@@ -66,9 +66,9 @@ import org.jetbrains.annotations.Nullable;
 
 /** GT6 fluid container tile entity. Handles wood barrels, plastic canisters, and metal drums. */
 //? if >=1.21.1 {
-/*public class TankBlockEntity extends BlockEntity implements IFluidHandler, com.gregtech.gregtech.content.cover.PanelCoverHost {
+/*public class TankBlockEntity extends BlockEntity implements IFluidHandler, com.gregtech.gregtech.content.cover.PanelCoverHost, com.gregtech.gregtech.api.sensor.ProgressSensorSource {
 *///?} else {
-public class TankBlockEntity extends BlockEntity implements IFluidHandler, com.gregtech.gregtech.content.cover.PanelCoverHost {    private final java.util.Map<Direction, LazyOptional<IFluidHandler>> componentFaceCaps = new java.util.EnumMap<>(Direction.class);
+public class TankBlockEntity extends BlockEntity implements IFluidHandler, com.gregtech.gregtech.content.cover.PanelCoverHost, com.gregtech.gregtech.api.sensor.ProgressSensorSource {    private final java.util.Map<Direction, LazyOptional<IFluidHandler>> componentFaceCaps = new java.util.EnumMap<>(Direction.class);
 
 //?}
     private final com.gregtech.gregtech.content.cover.ComponentCoverStorage componentCovers = new com.gregtech.gregtech.content.cover.ComponentCoverStorage(this);
@@ -308,6 +308,8 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, com.g
         fermentInput = null;
     }
 
+    @Override public long progressValue(int side) { return sealedTime; }
+    @Override public long progressMaximum(int side) { return maxSealedTime; }
     public long getSealedTime() { return sealedTime; }
     public long getMaxSealedTime() { return maxSealedTime; }
     public FluidStack getFermentationOutput() {

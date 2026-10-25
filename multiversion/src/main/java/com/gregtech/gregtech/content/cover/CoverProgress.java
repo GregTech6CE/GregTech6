@@ -11,6 +11,26 @@ public final class CoverProgress {
     private CoverProgress() {}
 
     public static MachineControl control(PanelCoverHost host, Direction side) {
+        // Exact source progress takes precedence over generic contents. This adapter is
+        // local to covers and does not turn a passive host into a MachineControl.Provider.
+        if (com.gregtech.gregtech.api.sensor.ProgressSources.find(host.coverOwner(), side) != null) {
+            return new MachineControl() {
+                @Override public boolean available() { return !host.coverOwner().isRemoved(); }
+                @Override public boolean supportsSwitch() { return false; }
+                @Override public boolean enabled() { return available(); }
+                @Override public boolean setEnabled(boolean value) { return enabled(); }
+                @Override public boolean running() { return false; }
+                @Override public boolean active() { return false; }
+                @Override public long progress() {
+                    var value = com.gregtech.gregtech.api.sensor.ProgressSources.find(host.coverOwner(), side);
+                    return value == null ? 0 : value.value();
+                }
+                @Override public long progressMax() {
+                    var value = com.gregtech.gregtech.api.sensor.ProgressSources.find(host.coverOwner(), side);
+                    return value == null ? 0 : value.maximum();
+                }
+            };
+        }
         var items = host.componentItems(side);
         var fluids = host.componentFluids(side);
         var energy = host.coverOwner() instanceof com.gregtech.gregtech.api.energy.IEnergyBlock block ? block : null;
