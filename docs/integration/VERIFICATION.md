@@ -1831,3 +1831,15 @@ Forge开发47.4.20/Java17.0.10，Neo开发21.1.243/Java21.0.7，各3GiB/directCo
 分支基于 PR105（`9f4f066bb`）；`origin/main` 期间前进到 `4b3db53b7`，分支快进到该提交后重跑。上游 `d894b5899` 修复了控制器自身区块保存前的重载问题，旧基线上 `registeredMultiblockSurvivesRealUnloadAndStagedReload` 因此失败；快进后该用例通过。重编译后双平台结果：Forge `gregtech_issue_audit` **226/226**、`gt6ce_structure_tracking` **26/26**、`gt6ce_structure_incremental` **13/13**；NeoForge **217/217**、**26/26**、**13/13**；`addonApiClosureCheck` 两端通过。九个家族的新场景各含拆补，模糊测试 100–300 步；一致性检查与投影审计全程打开，零不一致。
 
 `gt6ce_structure_tracking` 的 140 次查询计数：轴向主控 legacy 140 次扫描 / 4900 次方块读取、聚变 124040 次，迁移后 tracked 均为 **0 / 0**。坩埚部件 `CRUCIBLE_FORMED` 翻转不标脏的场景 19 断言已补。过程中一致性检查抓到两处：坩埚空气格必须按 `air` 标志声明 `AIR`；认领时写部件 `CRUCIBLE_FORMED` 需放在增量探针帧内，否则投影审计把它当成外部变化。未跑 CI 的完整命名空间选择（`issue-regressions.yml` 里那串）、客户端/专服、玩法实测、存档重启。证据与日志哈希见 [structure-tracking-fixed-families-20261025.json](verification/structure-tracking-fixed-families-20261025.json)。仅本地，未提交、未推送。
+
+## 2026-10-25 / 结构跟踪阶段 2 卡 55：五个特殊家族
+
+`SpecialStructures` 将储罐、避雷针、物流核心、大型烤炉和基岩钻机接入 `Declarative`，复用卡 53/54 的编译图样、重复组和聚合约束。足迹从图样格生成，对应的 `CustomStructures` 登记删除；整段扫描保留作对照。储罐内部按实际旧扫描保持 AIR 投影；避雷针允许零杆柱且随匹配杆长更新前沿；物流核心声明 PER_CELL，运行时仍整组认领；大型烤炉用 SameBlock 检查整组线圈，并移除旧匹配器的 `ovenCoil[0]`；钻机只按基岩类地面匹配，每个产出周期重新读取矿物候选，大矿 2、小矿 1。
+
+双平台 `compileJava`、`compileBootstrapGameTestJava`、`addonApiClosureCheck` 通过（API 闭包每端 165 类）。定向测试 Forge **273/273**、NeoForge **264/264**：其中结构跟踪两端 **26/26**、增量两端 **18/18**（含本卡五项）、issue audit **226/226** 与 **217/217**、大型配方机各 **2/2**、储罐保存提示各 **1/1**。本卡固定种子模糊测试每个家族 300 步，储罐 3³/5³ 各 300 步，每端总计 1800 步；一致性检查和投影审计零不一致。另在关闭整段扫描对照时验证避雷针运行杆长和物流核心 CPU 数量确由增量路径写入。
+
+按卡片命令不带 `gameTestNamespaces` 跑默认套件：Forge 的 `gt6ce,gregtech_repair` 共 **1045 项，93 项失败**；NeoForge 默认仅 `gregtech_bootstrap`，共 **7 项，3 项失败**（原始材料目录、角色/组成金样、替代反应数量）。默认 NeoForge 套件不是整个项目的全量覆盖，不能用它替代上面的显式结构回归。Forge 失败中本卡相关的三项已修正，并在独立命名空间 **3/3** 复测通过：旧蓝图把 18103 钻头放成普通致密钛墙、阀门重新放置后未先重评估就做流体 I/O、碎矿产物测试反射读取已移除的 deposit 缓存（现放置真实九格基岩矿）。这三个源修正在默认套件 JVM 编译完成后进行；原 XML 仍保留原始失败，不从 93 中直接扣除，也未重跑 1045 项。物流显示 `previouspassdrivesallfourmetersandemitsredstone` 在卡 52 回执里已明确记录；其余默认失败没有逐项做未修改 checkout 的基线运行，不能全部宣称为既有问题。**默认套件全量门槛尚未满足。2026-10-25 用户同意先按实现与双平台定向验证关闭卡 55，剩余失败转后续专项排查，不据此宣称全量通过。**
+
+过程边界：最初误把全部 86 个命名空间组合，其中包括要求精确隔离环境的 nonore 审计和独立 JVM 的 restart 阶段；触发隔离断言后停止，未完成、不计作正式验收。第一次三项原生复测的模板过滤配置也在执行用例前停止，随后将原模板复制到独立命名空间并完成 3/3。Forge 首次定向运行另包含共享资源 JAR 打包和 3576 个原版资源补下载。所有尝试、选择范围、失败清单及日志/XML/源码哈希见 [structure-tracking-special-families-20261025.json](verification/structure-tracking-special-families-20261025.json)。
+
+默认测试改写的 23 份根目录审计 JSON 已备份到忽略的 `work/` 并恢复，未混入本卡修改。客户端手动玩法、独立存档重启和历史存档未验；本卡不改变保存格式。本批提交并创建 PR；默认套件剩余失败后续专项处理，整体移植仍未完成。
