@@ -1905,3 +1905,11 @@ Forge开发47.4.20/Java17.0.10，Neo开发21.1.243/Java21.0.7，各3GiB/directCo
 基线849c89202。专用namespace `gt6ce_forge_cover_boundaries` 共4项，**4/4通过**：pressureValveMovesAFullTankIntoTheTankInFront、theFilterCoversFilterThePipesOnTheirOwnFace、theFilterOnTheSendingFaceGatesOutgoingItems，以及新增emptyValveDisconnectsAndRejectsLaterPipeConnections。前三项对应原默认失败记录；最后一项检查本次压力阀生产修复。输送检查整罐精确守恒，过滤检查匹配/不匹配的输入输出及被拒物品仍留管内。
 
 首次启动脚本在Neo javac弃用警告处以NativeCommandError退出，未捕获Gradle完整终态；该启动不计通过。改用PowerShell7并修正原生命令警告处理后重试，两端compileJava和Forge compileBootstrapGameTestJava均命中已完成缓存，Forge运行最终BUILD SUCCESSFUL（3分39秒）。最终XML四项均无failure/error，完整日志保留在work；回执记录源文件及修复文件哈希。没有默认全套重跑，没有Neo游戏/客户端/历史存档重启验证。索引累计本轮再消除3条原失败，剩52条待排查；整体移植仍未完成。
+
+## 2026-10-25 / Forge 采掘与控制生命周期集中复核
+
+基线4942694f5。专用gt6ce_forge_harvest_regressions一次运行13项原失败，10通过/3失败（4分4秒）；gt6ce_forge_harvest_followup仅复测3失败和新增更严格停机断言的自动开关，4/4通过（8分14秒，含共享生产修复后的双端源码生成/编译）。最终13个原记录均已定向通过；其余9个首轮通过的方法未重跑。唯一生产修改是CoverDrops采掘白名单加入能源节点原生gt.battery_cover_*，完整能量/运行状态仍排除。
+
+四项原生destroyBlock掉落检查有专用大模板、无旧物品、已加载/ticking实体区块前置条件，验证宿主恰好一个、盖板不单独重复掉落，实际物品NBT恢复正确盖板及配置；电池盒/变压器首轮在最终恢复断言失败，修复白名单后通过，不把它们归咎为实体查询问题。排气测试验证真实热气整罐释放和原生查询造成的准确伤害，不再调用伤害helper替代阀门行为。待交付工作/涡轮流体/激光停止以进程内世界NBT保存读取和普通物品丢弃运行数据分别检查；不是独立JVM重启或实际玩家重新放置验收。
+
+两端compileJava及Forge compileBootstrapGameTestJava通过；没有Neo游戏、客户端、完整生存链或历史存档迁移验证，没有默认全套重跑。索引76条起始候选已验证21+3+13，剩39条；这是原记录余额，不是最新全套失败数。来源作者/许可证/原始和LF哈希、测试结果/日志哈希见verification/forge-harvest-regressions-20261025.json；整体移植仍未完成。

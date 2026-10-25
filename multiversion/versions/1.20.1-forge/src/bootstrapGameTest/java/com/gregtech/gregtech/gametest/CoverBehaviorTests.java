@@ -470,11 +470,17 @@ public final class CoverBehaviorTests {
      * is trashed — asserted on a real machine with the cover attached and on an iron golem, whose
      * 100 HP makes the damage readable to the tenth.
      */
-    @GameTest(template = "test_empty", timeoutTicks = 300)
+    @GameTest(template = "harvest_empty", timeoutTicks = 300)
     public static void pressureValveVentsAGasAndHeatsWhatStandsInFront(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
-        BlockPos pos = site(32, 0);
-        var machine = machine(level, pos);
+        BlockPos pos = helper.absolutePos(new BlockPos(4,4,4));
+        prepare(level,pos,2);
+        helper.assertTrue(level.areEntitiesLoaded(net.minecraft.world.level.ChunkPos.asLong(pos))
+                &&level.isPositionEntityTicking(pos),"vent entity chunk is loaded and ticking");
+        var block=net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(
+                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","pipe_medium_steel"));
+        level.setBlockAndUpdate(pos,block.defaultBlockState());
+        var pipe=(com.gregtech.gregtech.blockentity.machine.FluidPipeBlockEntity)level.getBlockEntity(pos);
         var air = com.gregtech.gregtech.registry.GTFluids.still("Air_Nether");
         helper.assertTrue(air != null && air.isPresent(),
                 "gt6ce:netherair is registered, got " + air);
@@ -486,45 +492,28 @@ public final class CoverBehaviorTests {
                 "nether air is hotter than the 320 K heat threshold of UT.java:2984, got "
                         + temperature + " K");
 
-        helper.assertTrue(!machine.attachCover(Direction.EAST, cover(CoverUtilityBehaviors.PRESSURE_VALVE)),
-                "a pressure valve accepts only a single-channel fluid pipe");
-        helper.assertTrue(!machine.getCover(Direction.EAST).isEmpty(),
-                "the valve is attached, got " + machine.getCover(Direction.EAST));
-
-        var tank = machine.getTanksOutput()[0];
-        tank.setFluid(new FluidStack(fluid, (int) tank.capacity()));
-        helper.assertTrue(tank.getAmount() >= tank.capacity(),
-                "the output tank starts full, got " + tank.getAmount() + " of " + tank.capacity());
+        helper.assertTrue(pipe.attachCover(Direction.EAST,cover(CoverUtilityBehaviors.PRESSURE_VALVE)),"single-channel pipe accepts valve");
+        for(int i=0;i<4;i++) com.gregtech.gregtech.blockentity.machine.FluidPipeBlockEntity.serverTick(level,pos,pipe.getBlockState(),pipe);
+        int full=pipe.getTankCapacity(0);
+        helper.assertTrue(pipe.fill(new FluidStack(fluid,full),net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE)==full,"pipe starts full of hot gas");
 
         IronGolem golem = golem(level, pos.east());
         float before = golem.getHealth();
         helper.assertTrue(before == golem.getMaxHealth(),
                 "the iron golem starts at full health, got " + before);
 
-        helper.assertTrue(CoverUtilityBehaviors.tickPressureValve(level, pos, Direction.EAST, tank, 5),
-                "the valve acted on a full tank of gas with open air in front");
+        helper.assertTrue(level.getEntitiesOfClass(IronGolem.class,new net.minecraft.world.phys.AABB(pos).inflate(2)).contains(golem),"golem visible to native vent query");
+        com.gregtech.gregtech.blockentity.machine.FluidPipeBlockEntity.serverTick(level,pos,pipe.getBlockState(),pipe);
         float expected = before - Math.max(1.0F, Math.min(
                 com.gregtech.gregtech.api.fluid.FluidHazards.PIPE_TEMPERATURE_CAP,
                 (com.gregtech.gregtech.api.fluid.FluidHazards.PIPE_TEMPERATURE_MULTIPLIER
                         * (temperature - 300L)) / 50.0F));
-        // The valve's entity half is a Level.getEntitiesOfClass query, and a chunk this test only
-        // setBlock()ed into is invisible to it: a test chunk's entity sections keep the default HIDDEN
-        // visibility until a queued ticket is applied by the next ServerChunkCache.tick
-        // (PersistentEntitySectionManager:47, EntitySectionStorage:55 - the trap PileBlockTests:643-651
-        // documents). In a running game the chunk is visible and the golem below is hit; here the
-        // damage half is asserted through the very function the valve calls, with the very temperature
-        // and the very two constants it feeds it, on a golem standing in front of the valve.
-        helper.assertTrue(com.gregtech.gregtech.util.GTEntityHelper.applyTemperatureDamage(golem,
-                        temperature,
-                        com.gregtech.gregtech.api.fluid.FluidHazards.PIPE_TEMPERATURE_MULTIPLIER,
-                        com.gregtech.gregtech.api.fluid.FluidHazards.PIPE_TEMPERATURE_CAP),
-                "the valve's damage call reaches a golem standing in front of it");
         helper.assertTrue(Math.abs(golem.getHealth() - expected) < 0.001F,
                 "the escaping " + temperature + " K gas deals " + (before - expected)
                         + " damage (CoverPressureValve:59 with UT.java:2984), got "
                         + golem.getHealth() + " of " + before);
-        helper.assertTrue(tank.isEmpty(),
-                "GarbageGT.trash empties the tank (CoverPressureValve:60), got " + tank.getAmount());
+        helper.assertTrue(pipe.getFluidInTank(0).isEmpty(),"native valve empties full gas tank");
+        golem.discard();
         helper.succeed();
     }
 

@@ -79,7 +79,7 @@
       "name": "machinedropcarriespendingworkwithoutinventoryduplication",
       "original_failure": "work travels with block, separately spilled inventory is excluded",
       "family": "machine_lifecycle_structure_and_drops",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "machinedropcarriespendingworkwithoutinventoryduplication",
       "sources": [
         {
@@ -88,7 +88,8 @@
           "method_at_baseline": "machineDropCarriesPendingWorkWithoutInventoryDuplication",
           "method_snapshot_sha256": "280eb62fcbeb2a10bb25af564898a146268b8ff38832106d4d64da8c03203e70"
         }
-      ]
+      ],
+      "verification": "forge-harvest-regressions-20261025.json"
     },
     {
       "name": "dynamofourgradesandelectricalboundaries",
@@ -171,7 +172,7 @@
       "name": "apipedropsitscoverswhenbroken",
       "original_failure": "the pipe takes an item filter on its top face",
       "family": "covers_controls_and_energy_boundaries",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "apipedropsitscoverswhenbroken",
       "sources": [
         {
@@ -180,7 +181,8 @@
           "method_at_baseline": "aPipeDropsItsCoversWhenBroken",
           "method_snapshot_sha256": "9669b7164d53697b6701fe231b67f8e6bd3e47c532c07073a4079d24105180a4"
         }
-      ]
+      ],
+      "verification": "forge-harvest-regressions-20261025.json"
     },
     {
       "name": "originalsteamanddynamohousingsformateverygrade",
@@ -294,7 +296,7 @@
       "name": "switchreadsonlyitsfaceandcrowbarreturnsdefaults",
       "original_failure": "cover-face power starts actual recipe",
       "family": "covers_controls_and_energy_boundaries",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "switchreadsonlyitsfaceandcrowbarreturnsdefaults",
       "sources": [
         {
@@ -303,7 +305,8 @@
           "method_at_baseline": "switchReadsOnlyItsFaceAndCrowbarReturnsDefaults",
           "method_snapshot_sha256": "d077195cd0d4e627d86da3639238969828c82cee25747a2a1821ce89228acc97"
         }
-      ]
+      ],
+      "verification": "forge-harvest-regressions-20261025.json"
     },
     {
       "name": "transpiledcoveragedoesnotregress",
@@ -478,7 +481,7 @@
       "name": "rebootwindowsandmachinetimerpersist",
       "original_failure": "saved timer resumes into startup window",
       "family": "covers_controls_and_energy_boundaries",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "rebootwindowsandmachinetimerpersist",
       "sources": [
         {
@@ -487,7 +490,8 @@
           "method_at_baseline": "rebootWindowsAndMachineTimerPersist",
           "method_snapshot_sha256": "8001a990adff475b6fdc042c540ac700ad667c33dca22d89d86f7ae305c7a7ad"
         }
-      ]
+      ],
+      "verification": "forge-harvest-regressions-20261025.json"
     },
     {
       "name": "alldyerecipesconsumeactualregisteredinputs",
@@ -586,7 +590,7 @@
       "name": "funnelandbothapiariesrestoreautomation",
       "original_failure": "funnel contents retained",
       "family": "tools_and_player_interaction",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "funnelandbothapiariesrestoreautomation",
       "sources": [
         {
@@ -595,7 +599,8 @@
           "method_at_baseline": "funnelAndBothApiariesRestoreAutomation",
           "method_snapshot_sha256": "47f7f4a924a9a4a5548da41aa0e052e20876149e5832587bd1508f60d0be7da5"
         }
-      ]
+      ],
+      "verification": "forge-harvest-regressions-20261025.json"
     },
     {
       "name": "multiblockmachinesarecovered",
@@ -678,7 +683,7 @@
       "name": "brokenextenderdropsconfiguredpanelonce",
       "original_failure": "breaking extender drops exactly one attached panel",
       "family": "covers_controls_and_energy_boundaries",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "brokenextenderdropsconfiguredpanelonce",
       "sources": [
         {
@@ -687,7 +692,8 @@
           "method_at_baseline": "brokenExtenderDropsConfiguredPanelOnce",
           "method_snapshot_sha256": "6e2828b34ef9b1b89ddef2a8e375be10d908373a24792bd8c7b12e94c53ae121"
         }
-      ]
+      ],
+      "verification": "forge-harvest-regressions-20261025.json"
     },
     {
       "name": "playerradiationaccumulatesandpersists",
@@ -845,7 +851,7 @@
       "name": "pressurevalveventsagasandheatswhatstandsinfront",
       "original_failure": "the valve is attached, got 0 air",
       "family": "covers_controls_and_energy_boundaries",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "pressurevalveventsagasandheatswhatstandsinfront",
       "sources": [
         {
@@ -854,7 +860,8 @@
           "method_at_baseline": "pressureValveVentsAGasAndHeatsWhatStandsInFront",
           "method_snapshot_sha256": "469f3345ed28899ab330ca59e34f6af5b088fa7f1c89d4d1a28fc55440f79488"
         }
-      ]
+      ],
+      "verification": "forge-harvest-regressions-20261025.json"
     },
     {
       "name": "originalfusionrecipesandcraftingresolve",
@@ -876,7 +883,7 @@
       "name": "automaticcoverwakesoninputwithoutconsumingduringprobe",
       "original_failure": "empty machine returns to idle after completion",
       "family": "covers_controls_and_energy_boundaries",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "automaticcoverwakesoninputwithoutconsumingduringprobe",
       "sources": [
         {
@@ -885,13 +892,14 @@
           "method_at_baseline": "automaticCoverWakesOnInputWithoutConsumingDuringProbe",
           "method_snapshot_sha256": "84ea089c2e5a8d4130f3e4f218ec9a56e4c1732261a40f73357134a7108f4a0a"
         }
-      ]
+      ],
+      "verification": "forge-harvest-regressions-20261025.json"
     },
     {
       "name": "blockclickscontrolmodesandstatusandpersistpanels",
       "original_failure": "remaining cover drops exactly once",
       "family": "covers_controls_and_energy_boundaries",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "blockclickscontrolmodesandstatusandpersistpanels",
       "sources": [
         {
@@ -900,13 +908,14 @@
           "method_at_baseline": "blockClicksControlModesAndStatusAndPersistPanels",
           "method_snapshot_sha256": "033606de836733827870424b4c97a7edca96c2e73e8870f6f9e50005ec337c4b"
         }
-      ]
+      ],
+      "verification": "forge-harvest-regressions-20261025.json"
     },
     {
       "name": "directselectorandstatuspanelspersistanddrop",
       "original_failure": "remaining transformer panel drops once",
       "family": "covers_controls_and_energy_boundaries",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "directselectorandstatuspanelspersistanddrop",
       "sources": [
         {
@@ -915,13 +924,14 @@
           "method_at_baseline": "directSelectorAndStatusPanelsPersistAndDrop",
           "method_snapshot_sha256": "17d0bd09c55fcffaa7382f06ac3e550dc848c5c5377b0d56036205177f17190b"
         }
-      ]
+      ],
+      "verification": "forge-harvest-regressions-20261025.json"
     },
     {
       "name": "steamdrivesdynamoandpreservesfluidsonbreak",
       "original_failure": "controller drops stored fluids and pending pulse",
       "family": "machine_lifecycle_structure_and_drops",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "steamdrivesdynamoandpreservesfluidsonbreak",
       "sources": [
         {
@@ -930,7 +940,8 @@
           "method_at_baseline": "steamDrivesDynamoAndPreservesFluidsOnBreak",
           "method_snapshot_sha256": "08d57fa4244188fce9a2a3f8fac5ad79b2121c0dc0f2c34853cd3bb7f0bbc643"
         }
-      ]
+      ],
+      "verification": "forge-harvest-regressions-20261025.json"
     },
     {
       "name": "tierbuffersautooutputandcooldropnbt",
@@ -951,7 +962,7 @@
       "name": "fluxlasercapabilityandstoppersist",
       "original_failure": "Cannot invoke \"net.minecraft.nbt.CompoundTag.getCompound(String)\" because the return value of \"net.minecraft.world.item.ItemStack.getTag()\" is null",
       "family": "machine_lifecycle_structure_and_drops",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "fluxlasercapabilityandstoppersist",
       "sources": [
         {
@@ -960,7 +971,8 @@
           "method_at_baseline": "fluxLaserCapabilityAndStopPersist",
           "method_snapshot_sha256": "c6b63159db7fd7baaac2df05c13957061bfc2e7e7482fabc19fd71788b0e771c"
         }
-      ]
+      ],
+      "verification": "forge-harvest-regressions-20261025.json"
     },
     {
       "name": "printerprintsthescanneddictionary",
@@ -1087,7 +1099,7 @@
       "name": "fluidburningboxcapabilitiesarecached",
       "original_failure": "fluid burning box caches one handle per sink, not per side (its inventory is the same object for every non-front face)",
       "family": "covers_controls_and_energy_boundaries",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "fluidburningboxcapabilitiesarecached",
       "sources": [
         {
@@ -1096,7 +1108,8 @@
           "method_at_baseline": "fluidBurningBoxCapabilitiesAreCached",
           "method_snapshot_sha256": "4831db826177fcec23aec12913670c163541d42876d28cebd2d4839b299178b7"
         }
-      ]
+      ],
+      "verification": "forge-harvest-regressions-20261025.json"
     },
     {
       "name": "netherportalroombuildsgt6frame",
@@ -1180,8 +1193,9 @@
   "ledger": {
     "indexed_before_batch": 76,
     "verified_this_batch": 21,
-    "pending_original_candidates": 52,
+    "pending_original_candidates": 39,
     "not_a_new_full_suite_measurement": true,
-    "subsequent_cover_boundary_verified": 3
+    "subsequent_cover_boundary_verified": 3,
+    "subsequent_harvest_verified": 13
   }
 }

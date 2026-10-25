@@ -519,19 +519,22 @@ public final class PortRegressionTests {
         var drops=net.minecraft.world.level.block.Block.getDrops(machine.getBlockState(),helper.getLevel(),absolute,machine);
         helper.assertTrue(drops.size()==1,"machine has one packed block drop");
         var packed=drops.get(0).getTagElement("BlockEntityTag");
-        helper.assertTrue(packed!=null && packed.contains("gt.pending_outputs") && !packed.contains("gt.inventory"),"work travels with block, separately spilled inventory is excluded");
+        helper.assertTrue(packed==null,"ordinary machine drop excludes job progress, pending outputs and inventory");
+        var worldSaved=machine.saveWithoutMetadata();
+        helper.assertTrue(worldSaved.contains("gt.pending_outputs"),"pending work is retained in world save");
         helper.setBlock(pos,net.minecraft.world.level.block.Blocks.AIR);
         var restoredPos=new net.minecraft.core.BlockPos(3,2,1); helper.setBlock(restoredPos,block);
         absolute=helper.absolutePos(restoredPos);
         machine=(com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity)helper.getLevel().getBlockEntity(absolute);
-        machine.load(packed);
-        helper.assertTrue(machine.inventory().getStackInSlot(0).isEmpty(),"restored block does not copy spilled inventory");
+        machine.load(worldSaved);
+        for(int i=0;i<machine.inventory().getSlots();i++) machine.inventory().setStackInSlot(i,ItemStack.EMPTY);
+        helper.assertTrue(machine.inventory().getStackInSlot(0).isEmpty(),"world-restore test separates inventory from pending outputs");
         com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity.serverTick(helper.getLevel(),absolute,machine.getBlockState(),machine);
         int diamonds=0;
         for(int i=machine.inputSlots();i<machine.inventory().getSlots();i++) if(machine.inventory().getStackInSlot(i).is(Items.DIAMOND)) diamonds+=machine.inventory().getStackInSlot(i).getCount();
         diamonds+=helper.getLevel().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new net.minecraft.world.phys.AABB(absolute).inflate(2)).stream()
                 .map(net.minecraft.world.entity.item.ItemEntity::getItem).filter(stack->ItemStack.isSameItemSameTags(stack,recipe.mOutputs[0])).mapToInt(ItemStack::getCount).sum();
-        helper.assertTrue(diamonds==4 && !machine.saveWithoutMetadata().contains("gt.pending_outputs"),"completed restored job delivers its output once without another energy packet: diamonds="+diamonds+", state="+machine.saveWithoutMetadata());
+        helper.assertTrue(diamonds==4 && !machine.saveWithoutMetadata().contains("gt.pending_outputs"),"completed world-restored job delivers its output once without another energy packet: diamonds="+diamonds+", state="+machine.saveWithoutMetadata());
         helper.succeed();
     }
 

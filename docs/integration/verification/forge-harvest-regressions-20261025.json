@@ -1,0 +1,260 @@
+{
+  "date": "2026-10-25",
+  "base_commit": "4942694f5",
+  "scope": "Thirteen original Forge failures; preserve native energy-node cover keys during harvest and correct stale fixtures.",
+  "production_fix": "CoverDrops.coverData now retains gt.battery_cover_* alongside other native cover storage keys. EnergyNodeBlockEntity uses these keys for its covers; full energy/runtime NBT remains excluded.",
+  "source_author": "GregTech-6 Team / Gregorius Techneticies",
+  "source_license": "LGPL-3.0-or-later",
+  "sources": [
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregapi\\tileentity\\machines\\MultiTileEntityBasicMachine.java",
+      "sha256": "3a4dbefbe2a0fd185fdb03e8e54d4cf3905b16b02a1225773823f06340a19d91",
+      "lf_sha256": "1798706545c33c801735ac5fb56b0ae37a8b6e3b7819f40f41183a2057b0c860"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase04MultiTileEntities.java",
+      "sha256": "f1bf3334282a9264f31697ad2a379b82e584e89c8725e9e16788d39a3122aa0d",
+      "lf_sha256": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase06Covers.java",
+      "sha256": "287415117da7ed52f4f3982342dbfad2c147a942c39841ca01d69c90178cfba7",
+      "lf_sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase10EnergyConverter.java",
+      "sha256": "fde26465acf5abf7da0b635fb0b221748bc53c9e9f36123160b1dc664780e449",
+      "lf_sha256": "52cb409c7d35a8731338527301e09c8b779548e1851d5fe7fe91242fd25b9c44"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\TileEntityBase11MultiBlockConverter.java",
+      "sha256": "ec6bc750fe7cdc5341b6746bc25521c659fa3282ff125a9382f39f54a0a3fb88",
+      "lf_sha256": "38b9df583b72f6ab97ae23f8533b54a8d82fead147c026053230e2cc59533afc"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeTurbine.java",
+      "sha256": "33268dfa46c94e736767c5de84fdab6db043d246c07937d4c043612012ae036e",
+      "lf_sha256": "7de79e0daf4eb4e6e3d3f272f3ac2f9230bbca9c51a8b6614935e8c54fb23019"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeTurbineSteam.java",
+      "sha256": "9beadae8a422f857a0d2918b7afded455990741571b805e381b37cac76746dce",
+      "lf_sha256": "47d7aa9648009c7b72eb42121ca3a955d58d1c556075ce60483b4a7c096bf83c"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityLaserFlux.java",
+      "sha256": "3c219ff9b03035cc49b6e365012dfe3b3e9f90bd15b26d1a0953d84c3e76c538",
+      "lf_sha256": "3e84cae436a50c134059d7f8d76606eb79ec840212808b8eec36e0fee861e1a2"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityDustFunnel.java",
+      "sha256": "be2b5263c6bf9820a36e7feef2147ce014d5fe62aabb507561acd36d71416f85",
+      "lf_sha256": "62406bd934a0c67a0338b4c3afa17dda74fd5d4699b446604f9f4de91311372d"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregapi\\cover\\covers\\CoverPressureValve.java",
+      "sha256": "5e17f2d3ce9c216746b74ecd1edae64b19ab24a15a63d4bda653bfb1ef019372",
+      "lf_sha256": "b686320794365c0c6f49cdd486b73ad331706aa3158f25df711f80678a9bf025"
+    }
+  ],
+  "basis": [
+    "Base06.writeItemNBT preserves covers on host; Base04.getDrops uses item data rather than full world save. Native destruction must produce one packed host and zero duplicate loose cover items.",
+    "BasicMachine.writeItemNBT2:250-256 writes mode/IO flags, not pending work. Current tests separately check world-save pending output delivery and exclude progress/inventory from ordinary block drop. Existing unimplemented mode/IO settings are not certified by this batch.",
+    "LargeTurbine and converter chains save fluids/energy/stopped to world NBT, not item NBT. World-save checks and existing cover-only harvest sanitizer are tested separately.",
+    "DustFunnel.canExtractItem2 only permits output slot 1. Input remains present across invalidation/revive and is manually retrievable exactly once; automated input extraction stays forbidden.",
+    "Forge ComponentCoverCapabilitiesMixin and ForgeCoverCapabilityCache add per-face cached views over shared burning-box sinks. All issued item/fluid views must invalidate; front item refusal remains.",
+    "Controller fixtures inject before ticking. Previously stopped machines reject pre-tick energy; waking/timer tests allow next injection after control refresh. Processing and standby running are distinct states.",
+    "Pressure valve vent uses a real single-channel pipe and actual server tick, loaded/ticking dedicated template and an entity visible to the native vent query. No direct damage helper substitutes for the vent."
+  ],
+  "attempts": [
+    {
+      "report": "work\\forge-harvest-regressions.xml",
+      "sha256": "35c650d88d856323c42773aa5b7219d284a961f1c6922830ec3936a8f404fa25",
+      "passed": 10,
+      "total": 13,
+      "log_sha256": "3fb641851f4ba440e753cfb44237e4702acf1de3cc63cc8b3cde5d4f306740d7"
+    },
+    {
+      "report": "work\\forge-harvest-followup.xml",
+      "sha256": "65348ab0b68af30a8dff7d4ece47035d79494d608ce5e58b0fb2de60fcb5f6f1",
+      "passed": 4,
+      "total": 4,
+      "log_sha256": "711990f94e0a37d5daecea04198d4138488ba13ba24a619beff1ba44ca243747"
+    }
+  ],
+  "latest": [
+    {
+      "classname": "gt6ce_forge_harvest_followup:test_blueprint_empty",
+      "name": "automaticcoverwakesoninputwithoutconsumingduringprobe",
+      "time": "0.193",
+      "passed": true,
+      "failure": null
+    },
+    {
+      "classname": "gt6ce_forge_harvest_regressions:test_empty",
+      "name": "fluidburningboxcapabilitiesarecached",
+      "time": "1.463",
+      "passed": true,
+      "failure": null
+    },
+    {
+      "classname": "gt6ce_forge_harvest_regressions:test_blueprint_empty",
+      "name": "steamdrivesdynamoandpreservesfluidsonbreak",
+      "time": "1.653",
+      "passed": true,
+      "failure": null
+    },
+    {
+      "classname": "gt6ce_forge_harvest_followup:test_blueprint_empty",
+      "name": "switchreadsonlyitsfaceandcrowbarreturnsdefaults",
+      "time": "0.208",
+      "passed": true,
+      "failure": null
+    },
+    {
+      "classname": "gt6ce_forge_harvest_regressions:test_empty",
+      "name": "fluxlasercapabilityandstoppersist",
+      "time": "1.648",
+      "passed": true,
+      "failure": null
+    },
+    {
+      "classname": "gt6ce_forge_harvest_regressions:harvest_empty",
+      "name": "pressurevalveventsagasandheatswhatstandsinfront",
+      "time": "1.693",
+      "passed": true,
+      "failure": null
+    },
+    {
+      "classname": "gt6ce_forge_harvest_regressions:test_blueprint_empty",
+      "name": "machinedropcarriespendingworkwithoutinventoryduplication",
+      "time": "1.69",
+      "passed": true,
+      "failure": null
+    },
+    {
+      "classname": "gt6ce_forge_harvest_regressions:coin_pile_space",
+      "name": "funnelandbothapiariesrestoreautomation",
+      "time": "1.706",
+      "passed": true,
+      "failure": null
+    },
+    {
+      "classname": "gt6ce_forge_harvest_regressions:test_blueprint_empty",
+      "name": "rebootwindowsandmachinetimerpersist",
+      "time": "1.692",
+      "passed": true,
+      "failure": null
+    },
+    {
+      "classname": "gt6ce_forge_harvest_regressions:harvest_empty",
+      "name": "brokenextenderdropsconfiguredpanelonce",
+      "time": "1.899",
+      "passed": true,
+      "failure": null
+    },
+    {
+      "classname": "gt6ce_forge_harvest_regressions:harvest_empty",
+      "name": "apipedropsitscoverswhenbroken",
+      "time": "1.855",
+      "passed": true,
+      "failure": null
+    },
+    {
+      "classname": "gt6ce_forge_harvest_followup:harvest_empty",
+      "name": "blockclickscontrolmodesandstatusandpersistpanels",
+      "time": "0.294",
+      "passed": true,
+      "failure": null
+    },
+    {
+      "classname": "gt6ce_forge_harvest_followup:harvest_empty",
+      "name": "directselectorandstatuspanelspersistanddrop",
+      "time": "0.265",
+      "passed": true,
+      "failure": null
+    }
+  ],
+  "files": [
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "sha256": "dbaeb34303f0063696d04736816d43c4b156c1404869209ea6f2e9c0802be13b"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/AxialGeneratorTests.java",
+      "sha256": "0fdf15f612325ab2823fae858d8035850573fec5902b1be0eddf611f9e839efc"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BatteryBoxPanelTests.java",
+      "sha256": "5e5e44bb85fb9c6d7b5be9b744e5f3856dafdf0523a7f69c518b5944d89d34c8"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CapabilityHandleTests.java",
+      "sha256": "273b0499382df01641dbdca9dd79d462c374afe0a327fa2db066e1c913021515"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ControlCoverTests.java",
+      "sha256": "96f47cfd19e2255d7a318dfab03779e0ae3e58fb1f07b82aada20f29ccd83b8f"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CoverBehaviorTests.java",
+      "sha256": "b86d58fd2bb98e3caa9e68bd314f7edbea44042b3fd12d8539b20eb1d1e64878"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ElectricTransformerControlTests.java",
+      "sha256": "da3f1c2abadf44908fc7604452052bc65fac4dec81edb7bd584596646aa399cb"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ForgeHarvestFollowupTests.java",
+      "sha256": "7e5a6421c1879bd67d1cd09849ef787733d29bc638b4400026b229d2ef32abd5"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ForgeHarvestRegressionTests.java",
+      "sha256": "7925dddb35dfabae14536ad764aafc70a40d0b37ba593875bd1e3de3cd6d4b1a"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/HarvestFixtureAssertions.java",
+      "sha256": "0d6c274ac046f790338d09b9da075e9fbc72166b731a653062e97c5454f66469"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/OpticalEnergyRegressionTests.java",
+      "sha256": "dbbb52ba0fae899edb666e031627c71151cf24ff3e70bcad432a09321f48c024"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/PanelCoverTests.java",
+      "sha256": "14e93a2b0ee9a6d67e18c52446f6ef0ab0854ed431a2ec9817f9b7de0eb8ee5a"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/PipeCoverTests.java",
+      "sha256": "586530a30a07483e676523fca4934c4c0eac44fd561a94857a2b88331d14246d"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/PortRegressionTests.java",
+      "sha256": "82c1d73202f82a1bdd77d38050696f2ffbb9505c411e8a3658c2e1fdb735e84f"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ToolCapabilityLifecycleTests.java",
+      "sha256": "874c77df665932a6ef246ecb3bed9b9a4e147d51319c754efc123193482e5509"
+    }
+  ],
+  "followup_reason": "First run passed 10/13. Two failures exposed a real missing energy-node cover key whitelist. The switch fixture now explicitly disables constant-energy progress reset to isolate pause/resume across pre-tick injection. Followup runs only these three plus the automatic-controller case with a stronger full stopped-state assertion after its settling tick.",
+  "limits": [
+    "No default/full suite rerun.",
+    "Both production sources compiled; Forge native games only, no new NeoForge game run.",
+    "World NBT in-process save/load is not independent JVM/world restart.",
+    "Client, survival chain and old saves remain unverified; overall migration remains incomplete.",
+    "Four native harvest cases restore a new block entity from the actual dropped item NBT, rather than performing player BlockItem placement. Historical test method names are retained; item/world-save expectations are explicitly separated in assertions."
+  ],
+  "commands": [
+    {
+      "runner": "work/run-forge-harvest-regressions.ps1",
+      "sha256": "ea2fa7460437a7899fe913f2d0463f71420e672aad37c5bef0e9474ed73c82f5",
+      "gradle_command": "& ./gradlew.bat --console=plain '-PaddonSample=true' '-PgameTestNamespaces=gt6ce_forge_harvest_regressions' '-PgameTestHeap=6g' '-PgameTestJvmArgs=-XX:+UseSerialGC' '-PgameTestDirectory=../../../work/forge-harvest-regressions' '-PgameTestReport=../../../work/forge-harvest-regressions.xml' :multiversion:1.20.1-forge:runGameTestServer *> work/forge-harvest-regressions.log"
+    },
+    {
+      "runner": "work/run-forge-harvest-followup.ps1",
+      "sha256": "2ca539b5045fcf0bef455de37f5eabe825c3d3bf400d99eaf1cd7f0dd87e9e93",
+      "gradle_command": "& ./gradlew.bat --console=plain '-PaddonSample=true' '-PgameTestNamespaces=gt6ce_forge_harvest_followup' '-PgameTestHeap=6g' '-PgameTestJvmArgs=-XX:+UseSerialGC' '-PgameTestDirectory=../../../work/forge-harvest-followup' '-PgameTestReport=../../../work/forge-harvest-followup.xml' :multiversion:1.21.1-neoforge:compileJava :multiversion:1.20.1-forge:runGameTestServer *> work/forge-harvest-followup.log"
+    }
+  ]
+}

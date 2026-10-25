@@ -105,9 +105,11 @@ public final class AxialGeneratorTests {
             steam.fill(new FluidStack(GTFluids.still("Steam").get(),steam.grade().input()*2),FluidAction.EXECUTE);
             steam.tick();dynamo.tick();h.assertTrue(sink.getEnergyTick()==dynamo.grade().output(),"working steam -> RU -> EU chain at grade "+i);
             var absolute=h.absolutePos(pos);var drops=Block.getDrops(steam.getBlockState(),h.getLevel(),absolute,steam);
-            h.assertTrue(drops.size()==1&&drops.get(0).getOrCreateTag().contains("BlockEntityTag"),"controller drops stored fluids and pending pulse");
-            var tag=drops.get(0).getTag().getCompound("BlockEntityTag");
-            h.assertTrue(tag.getLong("gt.pending")>0&&tag.getCompound("gt.water").getInt("Amount")>0,"pending energy and distilled water included");
+            var saved=steam.saveWithoutMetadata();
+            h.assertTrue(saved.getLong("gt.pending")>0&&saved.getCompound("gt.water").getInt("Amount")>0,"world save retains pending energy and condensed water");
+            steam.load(saved);
+            h.assertTrue(steam.saveWithoutMetadata().getLong("gt.pending")==saved.getLong("gt.pending"),"world reload preserves pending pulse");
+            h.assertTrue(drops.size()==1&&drops.get(0).getTagElement("BlockEntityTag")==null,"ordinary harvested turbine carries neither internal fluids nor pending energy");
             h.setBlock(pos,Blocks.AIR);h.setBlock(dynamoPos,Blocks.AIR);
         }
         h.succeed();
