@@ -157,6 +157,15 @@ STRUCTURE_TRACKING_CASES = (
     'structuretrackingtests.probedoesnotlookupthreadstateoutsidescans',
     'structuretrackingtests.realshellchunkunloadsuspendsandreloads',
     'structuretrackingtests.realcontrollerchunkunloadreattaches',
+    'structuretrackingtests.claimtableisworldownedandrestoresnegativechunk',
+    'structuretrackingtests.unloadedownercannotberobbeduntilpartchunkunloads',
+    'structuretrackingtests.restoredreservationblockscompetitorbeforeownerevaluation',
+    'structuretrackingtests.partreloadrebindsfreshcacheandonlyevaluatesitschunk',
+    'structuretrackingtests.missingcontrollerwithoutsetremovedreleasesafterchunkload',
+    'structuretrackingtests.safetynetreleasesorphanwithoutachunkloadevent',
+    'structuretrackingtests.chunkloaddoesnottreatcontrollerbeforeonloadasorphan',
+    'structuretrackingtests.legacybindingignoresthetrackedownershiptable',
+    'structuretrackingtests.addonfunctionalandenergypartsusestrictclaimauthority',
 )
 
 
@@ -222,7 +231,7 @@ class IssueEvidenceTests(unittest.TestCase):
     def test_structure_tracking_exact_identities_and_native_template(self):
         expected = STRUCTURE_TRACKING_CASES
         self.assertEqual(set(expected), set(STRUCTURE_TRACKING_CASE_NAMESPACES))
-        self.assertEqual(len(expected), 26)
+        self.assertEqual(len(expected), 35)
         for platform in EXPECTED:
             self.assertTrue(set(expected) <= EXPECTED[platform])
             self.verify(self.report(platform), platform)

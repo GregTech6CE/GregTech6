@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-25",
+  "scope": "Card 57: shared ownership/reservation model, port authority, lifecycle events, contention wakeups and orphan cleanup",
+  "branch": "feat/structure-claim-table",
+  "base_head": "33444eacb96b69fed879cc5bb16d6ca9c840a0a6",
+  "card_status": "closed_by_user_request",
+  "batch_1_status": "complete",
+  "source": "New implementation against the local card contract; no third-party source, assets or dependencies imported",
+  "implementation": [
+    "StructureClaimTable: strict exclusion, atomic batch validation, per-cell claims, reverse controller/chunk indexes",
+    "Separate reservation index, synchronous explicit restoration, bounded absent-controller ownership",
+    "WorldStructureClaims accesses the existing StructureLevelData mixin field via WorldData; no static world map",
+    "World teardown clears the table as well as scheduler state",
+    "Ports and addon energy parts read claim-table authority; legacy mode retains the old path",
+    "Chunk unload/load, controller unload, part removal, waiter wakeup and delayed orphan checks are wired into tracking",
+    "CoreBehaviorContracts runs 43 new lifecycle assertions through :core:check",
+    "Native GameTest verifies per-ServerLevel table identity, dimension isolation and negative packed-coordinate projection"
+  ],
+  "production_behavior_changed": true,
+  "existing_contention_assertions_changed": [],
+  "compile": {
+    "status": "passed",
+    "log": "work/card57-final-compile.log",
+    "log_sha256": "cafab935bf4faa27236fba8db246a0b2e4aded6c85adc06f7678dfb4bc6f8693",
+    "core_check_log": "work/card57-final-compile.log",
+    "core_check_log_sha256": "cafab935bf4faa27236fba8db246a0b2e4aded6c85adc06f7678dfb4bc6f8693",
+    "tasks": [
+      ":core:check",
+      ":multiversion:1.20.1-forge:compileJava",
+      ":multiversion:1.21.1-neoforge:compileJava",
+      ":multiversion:1.20.1-forge:addonApiClosureCheck",
+      ":multiversion:1.21.1-neoforge:addonApiClosureCheck",
+      ":multiversion:1.20.1-forge:compileBootstrapGameTestJava",
+      ":multiversion:1.21.1-neoforge:compileBootstrapGameTestJava"
+    ],
+    "core_behavior_assertions": 8212,
+    "claim_table_assertions": 43,
+    "api_closure_classes_per_platform": 165
+  },
+  "gametests": {
+    "forge": {
+      "focused": {
+        "status": "passed",
+        "tests": 279,
+        "namespace_counts": {
+          "gt6ce_structure_incremental": 18,
+          "gt6ce_structure_tracking": 35,
+          "gregtech_issue_audit": 226
+        },
+        "failures": [],
+        "skipped": [],
+        "log": "work/card57-closure-forge-focused.log",
+        "report": "work/card57-closure-forge-focused.xml",
+        "log_sha256": "92681dbcb0f882672d70028d752831ad87105901c76f4150904cc49bfeffd019",
+        "report_sha256": "66f22da24e279186556c0b73dd0745b9d3880dc9f66cb42fc88acf56f3de0711"
+      },
+      "default": {
+        "status": "interrupted_at_user_closure_request",
+        "log": "work/card57-closure-forge-default.log",
+        "log_sha256": "ba2516ab71cf7bb43ee71ec2c97e3eb655bb4161279655688d54dc2e5d453dd4",
+        "observed_failures": [
+          {
+            "name": "craftingtagscontainoriginalingredients",
+            "message": "Existing source ingredient: gregtech:plate_graphene"
+          },
+          {
+            "name": "allaxialrecipesaccepteverychemistryatonlytheoriginaltier",
+            "message": "No value present"
+          },
+          {
+            "name": "dungeonkeyandportalassetsexist",
+            "message": "missing models/item/key_brass.json; missing models/item/key_bronze.json; missing models/item/key_copper.json; missing models/item/key_gold.json; missing models/item/key_iron.json; missing models/item/key_lead.json; missing models/item/key_plastic.json; missing models/item/key_platinum.json; missing models/item/key_silver.json; missing models/item/key_tin.json"
+          },
+          {
+            "name": "substitutionsarereported",
+            "message": "machine crafting ingredient substitutions changed (see docs/machine-crafting-substitutions.json): {block casingMachine of Livingrock=machine casing block, block casingMachine of Betweenstone=machine casing block, item gt6ce:stone_livingrock_stone=machine casing block, item gt6ce:stone_betweenstone_stone=machine casing block, item gt6ce:stone_umber_stone=machine casing block, block casingMachine of Umber=machine casing block, item gt6ce:stone_holystone_stone=machine casing block, block casingMachine of Holystone=machine casing block}"
+          },
+          {
+            "name": "machinedropcarriespendingworkwithoutinventoryduplication",
+            "message": "work travels with block, separately spilled inventory is excluded"
+          },
+          {
+            "name": "dynamofourgradesandelectricalboundaries",
+            "message": "legacy generic dynamo wall cannot replace GT6 18040 copper coil"
+          },
+          {
+            "name": "builderwandisfreeincreative",
+            "message": "a creative player still builds"
+          },
+          {
+            "name": "redstoneselectorreadsonlyinstalledface",
+            "message": "missing target is safe"
+          },
+          {
+            "name": "rejectedpacketsneverenergizewireandacceptedpoweraccumulates",
+            "message": "full receiver refuses input"
+          },
+          {
+            "name": "everybalehasoriginalfireharvestmodelandsurvivalrecipe",
+            "message": "bale_bale_grass_dry and its input crop are registered"
+          },
+          {
+            "name": "siftingyieldsgemsfrompurifiedore",
+            "message": "rare grades are scaled 8x/4x/2x like GT6: 1/1/1"
+          },
+          {
+            "name": "apipedropsitscoverswhenbroken",
+            "message": "the pipe takes an item filter on its top face"
+          },
+          {
+            "name": "originalsteamanddynamohousingsformateverygrade",
+            "message": "17211 is the canonical survival recipe output"
+          },
+          {
+            "name": "pressurevalvemovesafulltankintothetankinfront",
+            "message": "the source machine face accepts the pressure valve"
+          },
+          {
+            "name": "noregisteredrecipeisdegenerate",
+            "message": "degenerate recipes (1): [gt.recipe.fuels.hot [] -> []]"
+          },
+          {
+            "name": "basicmachineshavesurvivalrecipes",
+            "message": "No value present"
+          },
+          {
+            "name": "printerprintstheprintermanual",
+            "message": "the printer prints 'Scanner & Printer Manual' from a book plus dye fluid; rows: 1135"
+          },
+          {
+            "name": "everytoolhasgt6srecipefamily",
+            "message": "every port tool has a GT6 manual recipe family, missing: [pocket_knife, pocket_saw, pocket_file, pocket_screwdriver, pocket_wire_cutter, pocket_scissors, pocket_chisel]"
+          },
+          {
+            "name": "reddyechainkeepsoriginalamountsandresiduechance",
+            "message": "Index 0 out of bounds for length 0"
+          },
+          {
+            "name": "switchreadsonlyitsfaceandcrowbarreturnsdefaults",
+            "message": "cover-face power starts actual recipe"
+          },
+          {
+            "name": "transpiledcoveragedoesnotregress",
+            "message": "transpiled sets: [SetStats[set=chem, added=322, skipped=36], SetStats[set=other, added=182, skipped=83], SetStats[set=potions, added=491, skipped=9], SetStats[set=food, added=217, skipped=26], SetStats[set=extruder, added=278, skipped=44], SetStats[set=vanilla, added=56, skipped=172], SetStats[set=temporary, added=12, skipped=22], SetStats[set=ores, added=109, skipped=35], SetStats[set=combs, added=20, skipped=0], SetStats[set=technology, added=1115, skipped=0]]"
+          },
+          {
+            "name": "mininetherportalrelaysoppositeneighbour",
+            "message": "cached handler refuses a closed counterpart without consuming items"
+          },
+          {
+            "name": "realchargerandtoolassemblyusechemicalcapacity",
+            "message": "all five LV chemistries accepted"
+          },
+          {
+            "name": "craftinggridconversions",
+            "message": "9 copper ingots craft into a block of copper ingots, got 1 copper_block"
+          },
+          {
+            "name": "thefiltercoversfilterthepipesontheirownface",
+            "message": "and lets a pipe extract"
+          },
+          {
+            "name": "shredderoutputsneverexceeddeclaredmaterial",
+            "message": "Fresh recipe executes"
+          },
+          {
+            "name": "earlytoolscomefromrocksandflint",
+            "message": "three rocks and a stick craft a stone pickaxe"
+          },
+          {
+            "name": "dispatcherrouteseachfamily",
+            "message": "the dispatcher reaches the portable scanner (Behavior_Scanner:54)"
+          },
+          {
+            "name": "survivaldrilluseslastchargeandbindsfirstavailablehotbarremote",
+            "message": "drilling consumes 100 EU"
+          },
+          {
+            "name": "originalgasturbinehousingsformanduseoriginalsteamhousing",
+            "message": "17231 is the canonical survival recipe output"
+          },
+          {
+            "name": "originalmatterrulesandmanufacturingexist",
+            "message": "matter manufacturing recipe loaded: large_osmium_coil"
+          },
+          {
+            "name": "largecrusherusesoriginalefficiencyandretainsinterruptedwork",
+            "message": "6144 GU recipe costs 12288 RU at original 50 percent efficiency"
+          },
+          {
+            "name": "livecontrolssixsidesandcycles",
+            "message": "retained interface cannot control removed machine"
+          },
+          {
+            "name": "rebootwindowsandmachinetimerpersist",
+            "message": "saved timer resumes into startup window"
+          },
+          {
+            "name": "alldyerecipesconsumeactualregisteredinputs",
+            "message": "304 dye mixers, 26 flowers, and 18 oil/foam precursors"
+          },
+          {
+            "name": "builderwandcopiesthesurfaceonelayerup",
+            "message": "the wand reports the click as handled (Behavior_Builderwand:130)"
+          },
+          {
+            "name": "originallvpatternsmaterialsandtoolremainders",
+            "message": "source nickel-cadmium LV capacity retained even for wrench/screwdriver"
+          },
+          {
+            "name": "oldaxialcontrollerscannotbypass172xxmanufacturing",
+            "message": "Missing recipe gt6ce:machines/multiblock/adamantium_dynamo_main_housing"
+          }
+        ],
+        "observed_failure_count": 38,
+        "observed_names_outside_historical_baseline": [],
+        "baseline_source": "docs/integration/verification/structure-tracking-special-families-20261025.json",
+        "limitation": "Incomplete run; observed overlap is not a complete baseline comparison or a full-suite pass"
+      }
+    },
+    "neoforge": {
+      "focused": {
+        "status": "passed",
+        "tests": 270,
+        "namespace_counts": {
+          "gt6ce_structure_incremental": 18,
+          "gt6ce_structure_tracking": 35,
+          "gregtech_issue_audit": 217
+        },
+        "failures": [],
+        "skipped": [],
+        "log": "work/card57-closure-neoforge-focused.log",
+        "report": "work/card57-closure-neoforge-focused.xml",
+        "log_sha256": "235484a1c80a4b8aac90bc4eba93be779ac23fe1c597ff35217dbbee53abe5f6",
+        "report_sha256": "a87f32a2094d13c535002f269c962bfa74a8a15cf3065dcad295f2386d7aa34f"
+      },
+      "default": {
+        "status": "not_run_at_user_closure_request"
+      }
+    }
+  },
+  "not_completed": [
+    "Complete default dual-platform GameTest acceptance; Forge interrupted and NeoForge not started at the explicit user closure request."
+  ],
+  "validation_limits": [
+    "Focused regressions passed on both loaders; default full-suite acceptance remains unmet.",
+    "No client launch or saved-world restart; transient ownership does not change saved-data format."
+  ],
+  "environment_notes": [
+    "Gradle uses the existing C:/Users/Jeune/.gradle cache; sandbox cache-lock access required elevated execution",
+    "Direct standalone Java 17 contract also passed; :core:check subsequently passed the integrated contracts",
+    "An initial Forge GameTest command was rejected before execution because PowerShell split unquoted -P path arguments; rerun uses quoted property arguments"
+  ],
+  "report_checker": {
+    "command": "python -m unittest discover -s tools/tests -p test_issue_ci_evidence.py",
+    "tests": 42,
+    "status": "passed"
+  },
+  "acceptance_scenarios": {
+    "6": [
+      "removingonecontrollerletstheotherform"
+    ],
+    "7": [
+      "shellunloadstopsandreloadkeepscontents",
+      "partreloadrebindsfreshcacheandonlyevaluatesitschunk",
+      "registeredmultiblocksurvivesrealunloadandstagedreload"
+    ],
+    "14": [
+      "unloadedownercannotberobbeduntilpartchunkunloads"
+    ],
+    "15": [
+      "unloadedownercannotberobbeduntilpartchunkunloads"
+    ],
+    "16": [
+      "restoredreservationblockscompetitorbeforeownerevaluation"
+    ],
+    "21": [
+      "missingcontrollerwithoutsetremovedreleasesafterchunkload",
+      "safetynetreleasesorphanwithoutachunkloadevent"
+    ],
+    "24": [
+      "chunkloaddoesnottreatcontrollerbeforeonloadasorphan"
+    ],
+    "legacy": [
+      "legacybindingignoresthetrackedownershiptable"
+    ],
+    "addon": [
+      "addonfunctionalandenergypartsusestrictclaimauthority"
+    ]
+  },
+  "source_sha256": {
+    "core/src/main/java/com/gregtech/gregtech/api/multiblock/StructureClaimTable.java": "f76f18e853b2244e138ed5e6f7e3d44d62f4a826e2eedb5097dbe01c2368b0fd",
+    "core/src/test/java/com/gregtech/gregtech/core/StructureClaimTableContracts.java": "9e3afa5a2a7dc0679759bc0a7d344d6bb8980fd768351ab6fb066333ff85154d",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/tracking/WorldStructureClaims.java": "a5e6f78889a1f1f0a2aee7f70ed8ccf40d54b5e8e627d209f1cd09809fc65f71",
+    "multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/StructureTrackingTests.java": "79edce4c37924b64f9aa207c5ce324e0c5de096d225b2a3d89560a1cc99ff285"
+  },
+  "closure": {
+    "date": "2026-10-25",
+    "authorization": "User explicitly requested closing card 57, committing and creating a PR; subsequently requested closing and committing now during the default full-suite run.",
+    "implementation": "Complete; all dedicated acceptance scenarios and required existing lifecycle regressions passed on both platforms.",
+    "full_suite_acceptance": "Not met. Forge default suite interrupted at user request; NeoForge default suite not started. No failures waived or reported as passing.",
+    "follow_up": "Complete default suites and diagnose their recorded historical failures separately."
+  },
+  "runtime": {
+    "forge": "Minecraft 1.20.1 / Forge 47.4.20 / Java 17.0.20.1",
+    "neoforge": "Minecraft 1.21.1 / NeoForge 21.1.243 / Java 21 toolchain",
+    "addon_sample": true,
+    "heap": "6g",
+    "commands": "work/card57-verify.ps1 (focused; default interrupted)"
+  }
+}

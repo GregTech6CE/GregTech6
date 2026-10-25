@@ -520,6 +520,15 @@ STRUCTURE_TRACKING_CASE_NAMESPACES = {
     'structuretrackingtests.probedoesnotlookupthreadstateoutsidescans': 'gt6ce_structure_tracking:test_empty',
     'structuretrackingtests.realshellchunkunloadsuspendsandreloads': 'gt6ce_structure_tracking:test_empty',
     'structuretrackingtests.realcontrollerchunkunloadreattaches': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.claimtableisworldownedandrestoresnegativechunk': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.unloadedownercannotberobbeduntilpartchunkunloads': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.restoredreservationblockscompetitorbeforeownerevaluation': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.partreloadrebindsfreshcacheandonlyevaluatesitschunk': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.missingcontrollerwithoutsetremovedreleasesafterchunkload': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.safetynetreleasesorphanwithoutachunkloadevent': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.chunkloaddoesnottreatcontrollerbeforeonloadasorphan': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.legacybindingignoresthetrackedownershiptable': 'gt6ce_structure_tracking:test_empty',
+    'structuretrackingtests.addonfunctionalandenergypartsusestrictclaimauthority': 'gt6ce_structure_tracking:test_empty',
 }
 FUNCTIONAL_CASES |= set(STRUCTURE_TRACKING_CASE_NAMESPACES)
 
