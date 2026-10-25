@@ -62,6 +62,8 @@ public final class ComponentCoverFallback {
         if(!ownClass(owner)||owner.getLevel()==null||owner.isRemoved())return false;
         // Loose material piles use plates as contents, not as machine covers.
         if(owner instanceof com.gregtech.gregtech.blockentity.misc.PileBlockEntity)return false;
+        // Original bowls, bathing pots and juicers forbid covers on every face.
+        if(owner instanceof com.gregtech.gregtech.blockentity.tool.ProcessingToolBlockEntity)return false;
         // The active fallback service provides cover ticks even for otherwise passive GT storage.
         return owner.getBlockState().getBlock() instanceof net.minecraft.world.level.block.EntityBlock;
     }

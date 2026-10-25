@@ -62,6 +62,11 @@ public final class PilePlacementHandler {
         if (held.isEmpty() || held.getItem() instanceof BlockItem
                 || PileBlockEntity.materialOf(held) == null) return InteractionResult.PASS;
 
+        // Manual vessel ingredients belong in the clicked host, even when the same plate
+        // could normally be placed as a loose pile while sneaking.
+        if (level.getBlockEntity(hit.getBlockPos()) instanceof com.gregtech.gregtech.blockentity.tool.ProcessingToolBlockEntity tool
+                && tool.isRecipeInput(held)) return InteractionResult.PASS;
+
         var rockResult = com.gregtech.gregtech.item.RockItemPlacement.place(
                 new net.minecraft.world.item.context.UseOnContext(player, hand, hit));
         if (rockResult != InteractionResult.PASS) return rockResult;
