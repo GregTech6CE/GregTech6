@@ -217,9 +217,11 @@ public final class HandCraftingTests {
      * {@code DEF_MIR = DEF|MIR}); 1.20.1 mirrors shaped recipes by default. Every
      * {@code gregtech:tool_shaped} recipe therefore has to carry the original's answer
      * ({@code tools/apply_recipe_mirror_flags.py} writes it from
-     * {@code docs/gt6-crafting-mirror-flags.json}); the census found no port row that opts in
-     * (93 of GT6's 1188 rows do; this port registers the Blue Spruce slab from
-     * {@code Loader_Recipes_Woods.java:270}, which uses {@code CR.DEF_NCC_MIR}).
+     * {@code docs/gt6-crafting-mirror-flags.json}). Source opt-ins include the Blue Spruce slab
+     * ({@code Loader_Recipes_Woods:270}), both wooden fire starters
+     * ({@code MultiItemRandomTools:395,398}), and decorative panels
+     * ({@code Loader_MultiTileEntities:2046-2078}). Runtime vanilla wood-saw replacements also
+     * expose a mirror flag, though their one-column patterns are identical when reflected.
      *
      * <p>The pattern itself is reported per row ({@code docs/tool-shaped-mirror-report.json}, read
      * back by {@code tools/report_tool_shaped_mirror.py}) so the flag can be audited against the
@@ -231,13 +233,21 @@ public final class HandCraftingTests {
         int checked = 0;
         int asymmetric = 0;
         int unresolvedIngredients = 0;
-        java.util.List<String> mirroring = new java.util.ArrayList<>();
+        Set<String> expectedMirroring = new TreeSet<>(List.of("gt6ce:wood/slab_bluespruce",
+                "gt6ce:technology/fire_starter", "gt6ce:technology/fire_starter_2"));
+        var panels = com.gregtech.gregtech.content.transport.PanelCatalog.CANONICAL;
+        h.assertTrue(panels.size() == 78, "78 source/dictionary panel recipes");
+        for (var panel : panels) expectedMirroring.add("gt6ce:decorative_panels/" + panel.id());
+        for (String wood : List.of("oak", "spruce", "birch", "jungle", "acacia", "dark_oak",
+                "mangrove", "cherry", "crimson", "warped"))
+            expectedMirroring.add("gt6ce:vanilla/" + wood + "_planks_saw");
+        expectedMirroring.add("gt6ce:vanilla/stick_saw");
+        Set<String> mirroring = new TreeSet<>();
         for (Recipe<?> recipe : h.getLevel().getRecipeManager().getRecipes()) {
             if (!recipe.getId().getNamespace().equals("gt6ce")) continue;
             if (!(recipe instanceof com.gregtech.gregtech.recipe.ToolShapedRecipe tool)) continue;
             // Rows injected at runtime (hand recipes, the GT6 masonry patterns) state their own flag in
-            // code and are audited by their own tests; this rule is about the data-pack rows the
-            // mirror-flag tool writes.
+            // code and are audited by their own tests. The remaining source opt-ins are pinned below.
             if (com.gregtech.gregtech.content.recipe.StoneCraftingRecipeInjector.registeredIds()
                     .contains(tool.getId().toString())) continue;
             if (com.gregtech.gregtech.content.recipe.HandToolCraftingRecipeInjector.registeredIds()
@@ -248,6 +258,8 @@ public final class HandCraftingTests {
             if (tool.allowMirror()) mirroring.add(tool.getId().toString());
             int width = tool.getWidth();
             int height = tool.getHeight();
+            if (tool.getId().getPath().startsWith("vanilla/") && tool.allowMirror())
+                h.assertTrue(width == 1, "wood-saw mirror is identical to its original: " + tool.getId());
             boolean symmetric = true;
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
@@ -259,11 +271,11 @@ public final class HandCraftingTests {
             }
             if (!symmetric) asymmetric++;
         }
-        // 668 data-pack rows (the runtime hand/stone rows state their flag in code and are audited by
-        // their own tests, so they are excluded above).
+        // Runtime hand/stone/tool imports are audited by their own tests and excluded above.
         h.assertTrue(checked >= 600, "tool_shaped recipes checked: " + checked);
-        h.assertTrue(mirroring.equals(java.util.List.of("gt6ce:wood/slab_bluespruce")),
-                "only the GT6 CR.DEF_NCC_MIR Blue Spruce slab row mirrors: " + mirroring);
+        h.assertTrue(mirroring.equals(expectedMirroring),
+                "mirrored recipes match explicit source opt-ins and identical wood-saw rows; missing="
+                        + difference(expectedMirroring, mirroring) + ", unexpected=" + difference(mirroring, expectedMirroring));
         // 113 of those 668 data-pack rows have a pattern that is not mirror-symmetric, i.e. exactly the
         // rows where the flag is observable at all (183 counting the runtime hand/stone rows, which
         // state their own flag in code).
@@ -271,6 +283,12 @@ public final class HandCraftingTests {
         h.assertTrue(unresolvedIngredients == 0,
                 "ingredients that match no item: " + unresolvedIngredients);
         h.succeed();
+    }
+
+    private static Set<String> difference(Set<String> left, Set<String> right) {
+        Set<String> difference = new TreeSet<>(left);
+        difference.removeAll(right);
+        return difference;
     }
 
     /** Shape report for the mirror rule: written so the pattern of every row can be inspected. */

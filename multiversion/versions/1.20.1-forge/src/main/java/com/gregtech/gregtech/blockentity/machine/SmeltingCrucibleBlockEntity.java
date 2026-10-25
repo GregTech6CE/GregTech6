@@ -67,7 +67,18 @@ import java.util.List;
  * 16 material units of internal storage, one top cache slot, HU input on the bottom face.
  */
 public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements ITileEntityCrucible, com.gregtech.gregtech.api.fluid.MoltenMaterialStorage,
-        com.gregtech.gregtech.api.machine.HeatHandler {
+        com.gregtech.gregtech.api.machine.HeatHandler,
+        com.gregtech.gregtech.api.sensor.WeightSensorSource, com.gregtech.gregtech.api.sensor.CompressionSensorSource {
+    @Override public double weightKilograms(int side) { return CrucibleMaterialStack.weight(content); }
+    @Override public long gibblValue(int side) {
+        return com.gregtech.gregtech.api.machine.crucible.CrucibleMath.units(
+                CrucibleMaterialStack.total(content), GTValues.U9, 1000, true);
+    }
+    @Override public long gibblMaximum(int side) {
+        return com.gregtech.gregtech.api.machine.crucible.CrucibleMath.units(
+                maxMaterialAmount(), GTValues.U9, 1000, true);
+    }
+
     public static final long MAX_AMOUNT = 16L * GTValues.U;
     public static final int CACHE_SLOT = 0;
     public static final int CACHE_SLOT_LIMIT = 64;

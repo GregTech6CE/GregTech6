@@ -91,7 +91,8 @@ public final class AxialGeneratorTests {
             var middle=pos.relative(front.getOpposite());h.setBlock(middle,grade.wall());
             h.assertTrue(!StructureTestSupport.ok(machine),"solid metal cannot replace a copper coil");
             h.setBlock(middle,GTMultiblocks.LARGE_COPPER_COIL.get());
-            h.assertTrue(!StructureTestSupport.ok(machine),"legacy generic dynamo wall cannot replace GT6 18040 copper coil");
+            h.assertTrue(GTMultiblocks.LARGE_COPPER_COIL.get()==LargeMachineParts.block(18040),"named copper coil is the original 18040 identity");
+            h.assertTrue(StructureTestSupport.ok(machine),"restoring the original coil reforms the complete structure");
         }
         h.succeed();
     }
@@ -105,9 +106,11 @@ public final class AxialGeneratorTests {
             steam.fill(new FluidStack(GTFluids.still("Steam").get(),steam.grade().input()*2),FluidAction.EXECUTE);
             steam.tick();dynamo.tick();h.assertTrue(sink.getEnergyTick()==dynamo.grade().output(),"working steam -> RU -> EU chain at grade "+i);
             var absolute=h.absolutePos(pos);var drops=Block.getDrops(steam.getBlockState(),h.getLevel(),absolute,steam);
-            h.assertTrue(drops.size()==1&&drops.get(0).getOrCreateTag().contains("BlockEntityTag"),"controller drops stored fluids and pending pulse");
-            var tag=drops.get(0).getTag().getCompound("BlockEntityTag");
-            h.assertTrue(tag.getLong("gt.pending")>0&&tag.getCompound("gt.water").getInt("Amount")>0,"pending energy and distilled water included");
+            var saved=steam.saveWithoutMetadata();
+            h.assertTrue(saved.getLong("gt.pending")>0&&saved.getCompound("gt.water").getInt("Amount")>0,"world save retains pending energy and condensed water");
+            steam.load(saved);
+            h.assertTrue(steam.saveWithoutMetadata().getLong("gt.pending")==saved.getLong("gt.pending"),"world reload preserves pending pulse");
+            h.assertTrue(drops.size()==1&&drops.get(0).getTagElement("BlockEntityTag")==null,"ordinary harvested turbine carries neither internal fluids nor pending energy");
             h.setBlock(pos,Blocks.AIR);h.setBlock(dynamoPos,Blocks.AIR);
         }
         h.succeed();
@@ -144,18 +147,22 @@ public final class AxialGeneratorTests {
     public static void axialRecipesLoadAndToolsRemain(GameTestHelper h) {
         var manager=h.getLevel().getRecipeManager();
         for(boolean steam:new boolean[]{true,false})for(var entry:AxialGeneratorDefinitions.blocks(steam)) {
-            var recipe=manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","axial/"+entry.getId().getPath()));
+            var recipe=manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce",CraftingFixtureIds.axialPath(entry.getId().getPath())));
             h.assertTrue(recipe.isPresent(),"manufacturing recipe loads: "+entry.getId());
             var wall=AxialGeneratorDefinitions.grade(entry.get()).wall().asItem();
             h.assertTrue(com.gregtech.gregtech.data.MachineRecipeMaps.Welder.mRecipeList.stream().anyMatch(r->r.mOutputs.length==1&&r.mOutputs[0].is(wall)),"JEI's canonical wall has a welding route");
             h.assertTrue(recipe.get().getIngredients().stream().allMatch(ingredient->ingredient.isEmpty()||ingredient.getItems().length>0),"all ingredients resolve");
         }
-        for(var entry:GasTurbineDefinitions.blocks())h.assertTrue(manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","axial/"+entry.getId().getPath())).isPresent(),"gas turbine upgrade route");
+        for(var entry:GasTurbineDefinitions.blocks())h.assertTrue(manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce",CraftingFixtureIds.axialPath(entry.getId().getPath()))).isPresent(),"gas turbine upgrade route");
         var copperCoil = manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","axial/large_dynamo_wall"));
         h.assertTrue(copperCoil.isPresent()&&copperCoil.get().getResultItem(h.getLevel().registryAccess()).is(LargeMachineParts.block(18040).asItem()),
                 "GT6 annealed copper coil recipe crafts original 18040 part");
         for(String material:new String[]{"magnalium","trinitanium","graphene","vibramantium"}) {
-            h.assertTrue(manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","axial/block_plate_"+material)).isPresent(),"rotor plate packing loads");
+            var packId=ResourceLocation.fromNamespaceAndPath("gt6ce","form_conversion/plate_to_blockplate/"+material+"_9");
+            var pack=manager.byKey(packId).orElseThrow(()->new AssertionError("Missing source form conversion "+packId));
+            h.assertTrue(pack.getIngredients().size()==9&&pack.getResultItem(h.getLevel().registryAccess()).is(
+                    net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce","block_plate_"+material))),
+                    "source constructor replacement packs nine plates into the rotor block");
             h.assertTrue(manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","axial/unpack_"+material+"_plates")).isPresent(),"rotor plate unpacking loads");
         }
         var recipe=(com.gregtech.gregtech.recipe.ToolShapedRecipe)manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","axial/large_dynamo_main")).orElseThrow();

@@ -32,7 +32,7 @@ public final class BedrockFlowerRepairTests {
     private BedrockFlowerRepairTests() {}
 
     @GameTest(template = "coin_pile_space")
-    public static void allSeventeenIndicatorsHaveOriginalMetaAndMaterials(GameTestHelper h) {
+    public static void allEighteenIndicatorsHaveOriginalMetaAndMaterials(GameTestHelper h) {
         String[] ids = {
                 "altered_andesite_buckwheat", "crosby_buckwheat", "alpine_catchfly",
                 "viola_calaminaria", "thlaspi_lereschianum", "tufted_evening_primrose",
@@ -49,7 +49,17 @@ public final class BedrockFlowerRepairTests {
                 "Wheat", "Wheat", null, null, null, null, null, null, null,
                 "Acacia", "Acacia", null, null, null, null, "Palm", null
         };
-        h.assertTrue(BedrockFlowers.ALL.size() == 17, "GT6 has nine A and eight B indicator flowers");
+        h.assertTrue(BedrockFlowers.ALL.size() == 18
+                        && BedrockFlowers.ALL.stream().filter(f -> f.family() == 'A').count() == 10
+                        && BedrockFlowers.ALL.stream().filter(f -> f.family() == 'B').count() == 8,
+                "GT6 has ten A indicators including restored A:9, and eight B indicators");
+        var restored = BedrockFlowers.byId("flower_vindicator_flower");
+        var restoredBlock = block("flower_vindicator_flower");
+        h.assertTrue(restored != null && restored.family() == 'A' && restored.meta() == 9
+                        && restored.indicator().equals("rare_earth") && restored.material() == null
+                        && restoredBlock instanceof BedrockFlowerBlock
+                        && ItemMaterialRegistry.get(new ItemStack(restoredBlock)).isEmpty(),
+                "restored Vindicator Flower keeps source A:9 and indicates rare earth without inventing ore material");
         for (int i = 0; i < ids.length; i++) {
             String id = "flower_" + ids[i];
             var spec = BedrockFlowers.byId(id);

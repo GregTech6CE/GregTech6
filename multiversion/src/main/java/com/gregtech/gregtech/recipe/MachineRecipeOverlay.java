@@ -89,6 +89,7 @@ public final class MachineRecipeOverlay {
         long restoreMillis = (System.nanoTime() - started) / 1_000_000L;
         ExternalOreProcessing.rebuild();
         com.gregtech.gregtech.content.recipe.NonOreMacerationRows.rebuild();
+        com.gregtech.gregtech.content.recipe.SourceOreOutputRows.rebuild();
         CompatRecipes.rebuild();
         MaterialDisplayBinding.invalidate();
         logged = 0;
@@ -158,6 +159,7 @@ public final class MachineRecipeOverlay {
         exclude.addAll(CompatRecipes.owned());
         exclude.addAll(ExternalOreProcessing.owned());
         exclude.addAll(com.gregtech.gregtech.content.recipe.NonOreMacerationRows.owned());
+        exclude.addAll(com.gregtech.gregtech.content.recipe.SourceOreOutputRows.owned());
         // Maps created after the first reload still get one baseline. A captured map keeps its first snapshot.
         for (var map : RecipeMap.RECIPE_MAP_LIST) map.captureBaseline(exclude);
     }

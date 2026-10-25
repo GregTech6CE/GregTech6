@@ -507,11 +507,12 @@ public final class WoodRecipeTests {
         }
         h.assertTrue(collisions.isEmpty(), "generated wood rows collide: " + collisions);
         h.assertTrue(mirroring.isEmpty(), "GT6's CR.DEF_NCC rows do not mirror: " + mirroring);
-        // A full species has six shaped rows (3 log/beam saw rows, 2 beam/plank rows, 2 plank rows)
-        // and two shapeless ones (log and beam by hand); cinnamon contributes only its two plank rows
-        // shaped and its two by-hand rows shapeless: 8 x 6 + 2 = 50 and 8 x 2 + 2 = 18.
-        h.assertTrue(shaped == 50, "shaped wood rows checked: " + shaped);
-        h.assertTrue(shapeless == 18, "shapeless wood rows checked: " + shapeless);
+        var sourceRows=java.util.Arrays.asList(com.gregtech.gregtech.content.recipe.GTWoodRecipes.CRAFT_ROWS);
+        long sourceShaped=sourceRows.stream().filter(r->r.split("\\|",-1)[1].equals("shaped")).count();
+        long sourceShapeless=sourceRows.stream().filter(r->r.split("\\|",-1)[1].equals("shapeless")).count();
+        h.assertTrue(shaped==sourceShaped,"all source shaped wood rows checked: "+shaped+" / "+sourceShaped);
+        h.assertTrue(shapeless==sourceShapeless,"all source shapeless wood rows checked: "+shapeless+" / "+sourceShapeless);
+        h.assertTrue(batch.size()==sourceRows.size(),"no source wood row missing");
         h.succeed();
     }
 

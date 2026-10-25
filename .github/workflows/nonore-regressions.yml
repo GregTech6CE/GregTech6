@@ -49,6 +49,12 @@ jobs:
           - loader: neoforge
             group: completion
             timeout: 45
+          - loader: forge
+            group: outputs
+            timeout: 45
+          - loader: neoforge
+            group: outputs
+            timeout: 45
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -68,7 +74,7 @@ jobs:
       - run: echo "JAVA17_HOME=$JAVA_HOME" >> "$GITHUB_ENV"
       - uses: gradle/actions/setup-gradle@v4
       - name: Check isolated evidence gates
-        run: python -X utf8 -m unittest tools.tests.test_nonore_cohort_checker tools.tests.test_nonore_stop_checker tools.tests.test_nonore_dust_comparator tools.tests.test_nonore_restoring_checker tools.tests.test_nonore_ci_contract tools.tests.test_nonore_sifting_checker tools.tests.test_nonore_ice_checker tools.tests.test_nonore_ice_winner_checker tools.tests.test_nonore_startup_grade_checker tools.tests.test_nonore_batch_checker tools.tests.test_nonore_raw_restoring_checker tools.tests.test_nonore_raw_winner_checker tools.tests.test_nonore_completion_checker tools.tests.test_slurry_recycling_migration
+        run: python -X utf8 -m unittest tools.tests.test_nonore_cohort_checker tools.tests.test_nonore_stop_checker tools.tests.test_nonore_dust_comparator tools.tests.test_nonore_restoring_checker tools.tests.test_nonore_ci_contract tools.tests.test_nonore_sifting_checker tools.tests.test_nonore_ice_checker tools.tests.test_nonore_ice_winner_checker tools.tests.test_nonore_startup_grade_checker tools.tests.test_nonore_batch_checker tools.tests.test_nonore_raw_restoring_checker tools.tests.test_nonore_raw_winner_checker tools.tests.test_nonore_completion_checker tools.tests.test_slurry_recycling_migration tools.tests.test_nonore_ore_form_startup_checker
       - name: Run fixed isolated profiles sequentially
         # Development GameTestServer only. No dedicated-server EULA acceptance.
         run: |
@@ -91,3 +97,5 @@ jobs:
             work/nonore-ci/**/.nonore-*.json
             work/nonore-ci/**/.nonore-*-used
             work/nonore-ci/**/.nonore-stop-used
+            work/nonore-ci/**/.ore-form-startup-*.json
+            work/nonore-ci/**/.ore-form-startup-used

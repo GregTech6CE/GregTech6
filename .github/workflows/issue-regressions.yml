@@ -48,7 +48,7 @@ jobs:
       - run: echo "JAVA17_HOME=$JAVA_HOME" >> "$GITHUB_ENV"
       - uses: gradle/actions/setup-gradle@v4
       - name: Check asset and CI evidence regressions
-        run: python -X utf8 -m unittest tools.tests.test_issue76_sapling_assets tools.tests.test_issue_ci_evidence tools.tests.test_selector_cover_admission tools.tests.test_instrument_translations tools.tests.test_recipe_translations tools.tests.test_restart_phase_evidence tools.tests.test_stone_layer_slab_fixture
+        run: python -X utf8 -m unittest tools.tests.test_issue76_sapling_assets tools.tests.test_issue_ci_evidence tools.tests.test_casing_sensor_ci_evidence tools.tests.test_upstream_extra_admission tools.tests.test_sensor_progress_ci_evidence tools.tests.test_cinnabar_barrel_ci_evidence tools.tests.test_ore_form_output_ci_evidence tools.tests.test_selector_cover_admission tools.tests.test_instrument_translations tools.tests.test_recipe_translations tools.tests.test_restart_phase_evidence tools.tests.test_stone_layer_slab_fixture
       - name: Check original sediment worldgen registration
         run: python -X utf8 tools/integration/check_sediment_worldgen_registration.py
       - name: Run isolated development GameTests
@@ -62,7 +62,7 @@ jobs:
             -Dorg.gradle.java.installations.fromEnv=JAVA17_HOME,JAVA21_HOME \
             -Dorg.gradle.java.installations.auto-download=false \
             -PaddonSample=true \
-            -PgameTestNamespaces=gregtech_issue_audit,gregtech_cover_issues,gregtech_pipe_auto,gt6ce_api_contracts,gt6ce_crystal_barrel,gt6ce_diesel_repair,gt6ce_legacy_energy,gt6ce_machine_performance,gregtech_ore_source_audit,gregtech_ore_thermal_audit,gt6ce_barracks_door,gt6ce_structure_tracking,gt6ce_structure_incremental,gregtech_sensor_source,gregtech_tuning \
+            -PgameTestNamespaces=gregtech_issue_audit,gregtech_cover_issues,gregtech_pipe_auto,gt6ce_api_contracts,gt6ce_crystal_barrel,gt6ce_diesel_repair,gt6ce_legacy_energy,gt6ce_machine_performance,gregtech_ore_source_audit,gregtech_ore_thermal_audit,gt6ce_barracks_door,gt6ce_structure_tracking,gt6ce_structure_incremental,gregtech_sensor_source,gregtech_tuning,gregtech_machine_casing,gregtech_sensor_interfaces,gregtech_sensor_progress,gregtech_barrel_resume,gregtech_ore_form_outputs \
             -PgameTestHeap=3g \
             -PgameTestDirectory=build/issues-64-81-gametest \
             -PneoforgeGameTestDirectory=build/issues-64-81-gametest \

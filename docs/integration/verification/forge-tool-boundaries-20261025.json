@@ -1,0 +1,340 @@
+{
+  "date": "2026-10-25",
+  "base_commit": "d3fd494fe",
+  "scope": "Fourteen original Forge tool/structure failures; fixture corrections only.",
+  "production_changes": false,
+  "source_author": "GregTech-6 Team / Gregorius Techneticies",
+  "source_license": "LGPL-3.0-or-later",
+  "sources": [
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Builderwand.java",
+      "sha256": "8951d843c5d13e780606677338253312c52a90efe74b09651c88b65c35add6d4",
+      "lf_sha256": "fcc75ee16df4dddb1a6d576ccc7ca0db14d84fa17ab15de24f8ee83da40adf3d"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregapi\\recipes\\AdvancedCraftingTool.java",
+      "sha256": "6d3916de801d8cd1586b0244679f7f281f3675adfc2dcfa0c83503cd085c55f5",
+      "lf_sha256": "ecd7fc3950083344fa9ee66c19623aaab9dd508ea52c100b9ffc722d0628e105"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregtech\\loaders\\a\\Loader_Tools.java",
+      "sha256": "b2f2faa05b3468e8b9392d616e3d9e452b14f3a4bfa7caf75fb11575909d7d9e",
+      "lf_sha256": "e791f2cd6972bfa10767663f78557d2722cac2b7c80f29595815b4a520577b6e"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Place_Dynamite.java",
+      "sha256": "78e686eedf3d3c639a6ea8c9c87834d0243e1bbd053f86b17c6d9fc68e8151d9",
+      "lf_sha256": "ef246bd643c458bd2c53e2d2b3d0bc710d2e1a6d6147d26950a89ac8b0378c2b"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregtech\\tileentity\\tanks\\MultiTileEntityPump.java",
+      "sha256": "a78e9fc5006e6520cafaa1460d30e35f5bbb83e003db10151002e41866f8e1b6",
+      "lf_sha256": "57155753835fefabf1b7b6d4387885fbbed6a391280dad74b73f47f92fc23a01"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityFluidTap.java",
+      "sha256": "c15c9d237cdd3b0915ba59e8d698e591fbdb5eb6a3060a980792608e8749a2fb",
+      "lf_sha256": "ff88e9dd2e8d8d98d8f8a919feee268769408250dfba454635b4bc0eff861b6f"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityFluidFunnel.java",
+      "sha256": "a10b1e7d89a5e131178a6ba4d957478d84b553190b6bb4a500172d26efe57abf",
+      "lf_sha256": "17bdef3e48e49f10448ebb10231d115cf0a7aa19cbf96a60021251a0bde8ed28"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityFluidNozzle.java",
+      "sha256": "1d14ad8200b8392b10c8a0c1d6c8ebfd5a6ea9679283d37c034e5f7bbc5e6155",
+      "lf_sha256": "f081e3ca88a30f4ee4c8d0771ef07571c8f9853f1097441716d611758cfaf09e"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityFluidCapNozzle.java",
+      "sha256": "b8000daf8257661d04f4d271df87c1b85aea64864308c0f10752e5e1e578ae67",
+      "lf_sha256": "61580b99c8d1a8bcaf4b2302221e89c0369d741aaec54222974b7fc319ab5ee0"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeBoiler.java",
+      "sha256": "dbbd82146d38e242440e7fb46fdcb55c73c526289c545c43308a02077428426f",
+      "lf_sha256": "38d82c11fc57094c9ba8db5c88325b65d847cff40726e084dce87c8b7935ffb6"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalEnd.java",
+      "sha256": "027545de6054ffbc96dbadd51fc53557b76613e449cac1a8cb8eead131042018",
+      "lf_sha256": "d37486d4aadb065f2f6784498324655ef73083d405d4427106fe35de4acc8cd9"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregapi\\item\\multiitem\\MultiItemTool.java",
+      "sha256": "059afbe88d8df4a1abe9e1dd6745c7d3cc529e5e952f7af0b0c774a7e3c91202",
+      "lf_sha256": "d9f1417dc1e13538b89470445fd83d1bccd6a61e19aaacb9b03d0ee48b4cb0ac"
+    }
+  ],
+  "native_basis": [
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorBuilderWand.java",
+      "sha256": "14c83cf460c070e58746fe5e0198a1ad96fa0c59b93828f09bcb5243c631efcd"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/PocketToolItem.java",
+      "sha256": "b9a93ac26d77f1ba22e39cc8c18671f24213bfeac0f133426606fe8fecc40b6c"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/tool/OriginalToolMaterials.java",
+      "sha256": "58b8d3af74fe312d98e7ff467492dae3214a46ecd7321b276d2947ffc1ba7844"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/PumpWorkRules.java",
+      "sha256": "70efd71da851cd0a8b8a84e38a319d4f448f57e846507da882f4c5fa766c536b"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/tool/FluidAttachmentSpec.java",
+      "sha256": "fce367915329b55992c6cda1a36e53aa94c8daf3e77004b9f411465e189cf712"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/FluidAttachmentBlock.java",
+      "sha256": "a01fc8fad82cac99fb5cd3ea444c9bfa791c0ad8edc3ef7f1f845dfbaeeae1c6"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "sha256": "dbaeb34303f0063696d04736816d43c4b156c1404869209ea6f2e9c0802be13b"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "sha256": "1300c2a06611f54caee1f13666ad5117edc2c69802aa9bcd77b8bf6f531d1bb3"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/DungeonPortalBlock.java",
+      "sha256": "214ee6fa12e22edf5011f51dd20b495768f4ad6f32dc91bd441179940e4ad984"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/tool/ScannerEnergyRules.java",
+      "sha256": "c2e9069d3c91336dc18e39ca81a182ed25bde14c360d52541a9da2ba9581bd0e"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "sha256": "d1ae55de0127374670e0e8aaa47ec2b7f7295251c65f0ab2b60973e11098ac3a"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/ElectricToolItem.java",
+      "sha256": "722eb747f2d28ced5f065fbc93263ea78515bac73872bc6c6c5dac8c758054c5"
+    }
+  ],
+  "basis": [
+    "Builder fixtures require real materialized Steel/Wood tool stats, a real server survival/creative game mode, and the actual held wand. Original block-copy, blocked-cell, stock and wear checks remain.",
+    "Every-tool acquisition includes seven pocket modes obtained by native switching from the craftable multitool. A full eight-mode cycle verifies identity, Steel head and wear=7 are retained. No seven invented manual crafting recipes are required.",
+    "Head/handle assembly chooses a source-compatible material pair and rejects an incompatible stick. Early rock/flint/obsidian fixtures use an allowed Wood handle rather than the first arbitrary registry stick.",
+    "Scanner dispatch uses ServerPlayer as required by its native entrypoint; free plain-block scan and other dispatch families remain. Foam hardening checks the fixed output identity for the original color.",
+    "Generic Drill placement uses the source 200-EU action cost; charge count, metadata, reverse inventory priority and remote binding remain.",
+    "All 24 attachment variants use the four source roles: tap drains liquid, funnel fills liquid, nozzle drains gas, cap nozzle fills gas. Simulation is read-only, executed gas transfers conserve exact quantity, other directions/phases are rejected.",
+    "Named LARGE_COPPER_COIL is the same object as original part 18040. Wrong dense wall still invalidates; restoring the real coil reforms every tested dynamo grade/direction. All electrical boundary checks remain.",
+    "Crusher and boiler fixtures wait for tracked structure validation before working or filling. Crusher retains original 50-percent cost and interrupted-work checks. Boiler world NBT retains water while ordinary harvest excludes runtime fluid NBT; source boiler has world writeToNBT2 but no item override for tanks.",
+    "PumpWorkRules already adopts original final whole-packet ceiling. Bronze 8191+32=8223 is permitted; 17-RU packets accept482 and reach8194, then refuse more. Simulations, wrong energy and wrong face checks remain. Other pump source differences remain outside scope.",
+    "Mini portal actor has an actual survival game mode: toggling abilities on a creative mock does not change isCreative. End-eye activation consumes exactly one; source ignition hooks and saved activity/key checks remain."
+  ],
+  "attempts": [
+    {
+      "xml": "work\\forge-tool-boundaries.xml",
+      "xml_sha256": "d91b45888d6a9a2e2e0509b5a23439953aca7f650383b7fc2519a0e7161ee2d7",
+      "log": "work\\forge-tool-boundaries.log",
+      "log_sha256": "b13ee9ed7ec9f498b4e3e514611e2306849e2ab0c6916b159b88410dd9eb439c",
+      "total": 14,
+      "passed": 13,
+      "gradle_summary": [
+        "BUILD FAILED in 4m 24s"
+      ]
+    },
+    {
+      "xml": "work\\forge-attachment-followup.xml",
+      "xml_sha256": "f45e3e49fdaa09d678bcff25b41bd21cfde9d608106aff33d62cff61fcf3a3d8",
+      "log": "work\\forge-attachment-followup.log",
+      "log_sha256": "210d07bb15fa3272cbf7565598f80dfdce91abc96363d82aca216e844a1b231c",
+      "total": 1,
+      "passed": 1,
+      "gradle_summary": [
+        "BUILD SUCCESSFUL in 4m 4s"
+      ]
+    }
+  ],
+  "compile_attempt": {
+    "log": "work/forge-tool-boundaries-compile-attempt.log",
+    "sha256": "04174c66e49b2cfdece7a278b26a7f396b62196e3528b275c0f393d4cf9d54bb",
+    "outcome": "Failed before game startup: test used nonexistent Materials.Wood convenience field. Corrected to GTMaterialRegistry.get(Wood), then compiled and ran. No production compile failure."
+  },
+  "latest": [
+    {
+      "classname": "gt6ce_forge_tool_boundaries:test_blueprint_large",
+      "name": "dispatcherrouteseachfamily",
+      "time": "1.911",
+      "passed": true,
+      "failure": null
+    },
+    {
+      "classname": "gt6ce_forge_tool_boundaries:test_blueprint_large",
+      "name": "largecrusherusesoriginalefficiencyandretainsinterruptedwork",
+      "time": "1.964",
+      "passed": true,
+      "failure": null
+    },
+    {
+      "classname": "gt6ce_forge_tool_boundaries:test_blueprint_large",
+      "name": "earlytoolscomefromrocksandflint",
+      "time": "1.953",
+      "passed": true,
+      "failure": null
+    },
+    {
+      "classname": "gt6ce_forge_tool_boundaries:test_blueprint_large",
+      "name": "builderwandskipsblockedpositions",
+      "time": "4.392",
+      "passed": true,
+      "failure": null
+    },
+    {
+      "classname": "gt6ce_forge_tool_boundaries:test_blueprint_large",
+      "name": "everytoolhasgt6srecipefamily",
+      "time": "17.557",
+      "passed": true,
+      "failure": null
+    },
+    {
+      "classname": "gt6ce_forge_tool_boundaries:test_blueprint_large",
+      "name": "bronzepumpcanaccumulateoriginalbufferwithoutsimulationmutation",
+      "time": "17.54",
+      "passed": true,
+      "failure": null
+    },
+    {
+      "classname": "gt6ce_forge_tool_boundaries:test_blueprint_large",
+      "name": "miniportalsourceactivation",
+      "time": "26.029",
+      "passed": true,
+      "failure": null
+    },
+    {
+      "classname": "gt6ce_forge_attachment_followup:test_blueprint_large",
+      "name": "attachmentphaseandflowrules",
+      "time": "0.656",
+      "passed": true,
+      "failure": null
+    },
+    {
+      "classname": "gt6ce_forge_tool_boundaries:test_blueprint_large",
+      "name": "survivaldrilluseslastchargeandbindsfirstavailablehotbarremote",
+      "time": "26.015",
+      "passed": true,
+      "failure": null
+    },
+    {
+      "classname": "gt6ce_forge_tool_boundaries:test_blueprint_large",
+      "name": "builderwandcopiesthesurfaceonelayerup",
+      "time": "26.246",
+      "passed": true,
+      "failure": null
+    },
+    {
+      "classname": "gt6ce_forge_tool_boundaries:test_blueprint_large",
+      "name": "dynamofourgradesandelectricalboundaries",
+      "time": "26.582",
+      "passed": true,
+      "failure": null
+    },
+    {
+      "classname": "gt6ce_forge_tool_boundaries:test_blueprint_large",
+      "name": "builderwandisfreeincreative",
+      "time": "27.044",
+      "passed": true,
+      "failure": null
+    },
+    {
+      "classname": "gt6ce_forge_tool_boundaries:test_blueprint_large",
+      "name": "tierbuffersautooutputandcooldropnbt",
+      "time": "27.071",
+      "passed": true,
+      "failure": null
+    },
+    {
+      "classname": "gt6ce_forge_tool_boundaries:test_blueprint_large",
+      "name": "headandhandlerowsstayshapeless",
+      "time": "27.068",
+      "passed": true,
+      "failure": null
+    }
+  ],
+  "files": [
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/AxialGeneratorTests.java",
+      "sha256": "371df77fb78292125330de15f3598d8b5c1849fbad5bd3110d1dfa06fea032f7"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BlueprintRegressionTests.java",
+      "sha256": "65258db2c4c7a0505b92888135a146bd421c6d37368a1ed8a77f0acecbb9d0e7"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DebugToolBehaviorTests.java",
+      "sha256": "0774914c2728d3b6d46e974588e11f00c97b01332bf9452e70cc55013b97ac9d"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DrillDynamiteTests.java",
+      "sha256": "bb99fff07182c144c646be9fc1ce04e4f6f790db3ab29cc22b277675fd486588"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DungeonKeysAndPortalsTests.java",
+      "sha256": "1d7b03562b7a897b655b546a53d8ac1178d4cf168e6db5b2cf301b8fe054b848"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/FluidToolVariantTests.java",
+      "sha256": "24e48c5c996d3deeb08f9ad3cfd39aa139ebde366277330432b7bca6cec926f0"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ForgeAttachmentFollowupTests.java",
+      "sha256": "74a7dba52f0076b453315a17fee34311f3f0829760f6b74148f5f8965261744b"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ForgeToolBoundaryRegressionTests.java",
+      "sha256": "cf605872cb100b61521de34e76f57d67882f0d7dc654a6e7b13f2533f05a47ae"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ItemBehaviorTests.java",
+      "sha256": "b9c343b8794f5ea166e627f9f77fd6161cd7bd5421498f8bb9d5fccec2f20bb8"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/OriginalLargeBoilerRepairTests.java",
+      "sha256": "056e3a124d015cbf4b2ac7ded7b6bf70a723cdd1cee7373c92cf9519d110bb8e"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/PumpTransferRepairTests.java",
+      "sha256": "376baf490fffea2b0c4ab1cf64df493d72995af9ce1abba4571b6498e7953cb1"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ToolAssemblyTests.java",
+      "sha256": "ef4dfb2cea12f9a9884a94678b574372fa25d3ce48985f69917d3c85a0a307aa"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ToolInteractionActors.java",
+      "sha256": "e1604eb30889335e199c68526a68065100db90f17e632b5cbeeaf58fefd2d7ca"
+    }
+  ],
+  "commands": [
+    {
+      "runner": "work\\run-forge-tool-boundaries.ps1",
+      "sha256": "1e3fb00c7497ff76742a849bbeea8e505978b498ede025e834a0ec6bb89a49f4",
+      "gradle_command": "& ./gradlew.bat --console=plain '-PaddonSample=true' '-PgameTestNamespaces=gt6ce_forge_tool_boundaries' '-PgameTestHeap=6g' '-PgameTestJvmArgs=-XX:+UseSerialGC' '-PgameTestDirectory=../../../work/forge-tool-boundaries' '-PgameTestReport=../../../work/forge-tool-boundaries.xml' :multiversion:1.20.1-forge:runGameTestServer *> work/forge-tool-boundaries.log"
+    },
+    {
+      "runner": "work\\run-forge-attachment-followup.ps1",
+      "sha256": "27eb9269368ac79c12a79d25aa7c079cd622d2f541aeb47ea1c3cf3a05393561",
+      "gradle_command": "& ./gradlew.bat --console=plain '-PaddonSample=true' '-PgameTestNamespaces=gt6ce_forge_attachment_followup' '-PgameTestHeap=6g' '-PgameTestJvmArgs=-XX:+UseSerialGC' '-PgameTestDirectory=../../../work/forge-attachment-followup' '-PgameTestReport=../../../work/forge-attachment-followup.xml' :multiversion:1.20.1-forge:runGameTestServer *> work/forge-attachment-followup.log"
+    }
+  ],
+  "generated_report": {
+    "path": "docs/tool-assembly-coverage.json",
+    "backup": "work/tool-boundary-report-backup/tool-assembly-coverage.json",
+    "result": "work/tool-boundary-assembly-coverage-result.json",
+    "restored": true
+  },
+  "limits": [
+    "No default/full suite rerun.",
+    "Forge fixture compilation/native tests only. Shared production source unchanged; Neo production compilation inherited from prior verified commit, no new Neo game run.",
+    "In-process world NBT restore is not an independent saved-world restart or actual player placement.",
+    "Source pump input-range/search differences remain; no claim of full pump fidelity.",
+    "Client and full survival chain remain unverified; overall migration remains incomplete."
+  ]
+}

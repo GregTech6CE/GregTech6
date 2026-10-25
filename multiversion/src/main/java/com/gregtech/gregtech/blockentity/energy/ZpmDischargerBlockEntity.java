@@ -21,8 +21,17 @@ public final class ZpmDischargerBlockEntity extends GTEnergyBlockEntity implemen
     private long buffer;
     private boolean stopped;
     private boolean emitted;
-    private final com.gregtech.gregtech.api.machine.MachineControl control=com.gregtech.gregtech.api.machine.MachineControls.switchable(this,
+    private final com.gregtech.gregtech.api.machine.MachineControl switchControl=com.gregtech.gregtech.api.machine.MachineControls.switchable(this,
             ()->!this.stopped,value->{this.stopped=!value;setChanged();},()->getBlockState().getValue(ZpmDischargerBlock.ACTIVE),()->emitted);
+    private final com.gregtech.gregtech.api.machine.MachineControl control = new com.gregtech.gregtech.api.machine.MachineControl() {
+        @Override public boolean available() { return switchControl.available(); }
+        @Override public boolean enabled() { return switchControl.enabled(); }
+        @Override public boolean setEnabled(boolean value) { return switchControl.setEnabled(value); }
+        @Override public boolean running() { return switchControl.running(); }
+        @Override public boolean active() { return switchControl.active(); }
+        @Override public long progress() { return available() ? buffer : 0; }
+        @Override public long progressMax() { return available() ? ZpmEnergy.PACKET * 320 : 0; }
+    };
     @Override public com.gregtech.gregtech.api.machine.MachineControl machineControl(Direction side){return control;}
     private int tick;
     private final ItemStackHandler inventory=new ItemStackHandler(1){

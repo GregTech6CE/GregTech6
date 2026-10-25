@@ -78,7 +78,8 @@ public final class DebugToolBehaviorTests {
 
     /** The wand item of {@code GTToolType.BUILDER_WAND} ({@code GTToolItems:24}, id {@code tool_…}). */
     private static ItemStack wand() {
-        return ItemBehaviors.stack("gt6ce:tool_builder_wand");
+        return com.gregtech.gregtech.item.GTToolItem.create(com.gregtech.gregtech.api.tool.GTToolType.BUILDER_WAND,
+                com.gregtech.gregtech.content.material.Materials.Steel,com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Wood"));
     }
 
     /** A dynamite block — GT6 {@code MultiTileEntityDynamite}, the port's one {@code RemoteActivatable}. */
@@ -102,7 +103,7 @@ public final class DebugToolBehaviorTests {
     @GameTest(template = "test_empty", timeoutTicks = 200)
     public static void builderWandCopiesTheSurfaceOneLayerUp(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
-        Player player = survival(helper);
+        Player player = ToolInteractionActors.survival(helper,site(0,0));
         BlockPos centre = site(0, 0);
         clearSite(level, centre, 6);
 
@@ -121,6 +122,9 @@ public final class DebugToolBehaviorTests {
         }
         player.getInventory().setItem(9, new ItemStack(Blocks.STONE, 64));
         ItemStack wand = wand();
+        player.setPos(centre.getX()+.5,centre.getY()+1,centre.getZ()-4.5);
+        player.setItemInHand(InteractionHand.MAIN_HAND,wand);
+        helper.assertTrue(com.gregtech.gregtech.api.tool.GTToolHelper.isUsable(wand),"materialized builder wand is usable");
 
         ItemBehaviors.Outcome outcome = BehaviorBuilderWand.useOn(level, centre, Direction.UP, player,
                 wand, 0.5F, 0.25F, 0.5F);
@@ -152,7 +156,7 @@ public final class DebugToolBehaviorTests {
     @GameTest(template = "test_empty", timeoutTicks = 200)
     public static void builderWandSkipsBlockedPositions(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
-        Player player = survival(helper);
+        Player player = ToolInteractionActors.survival(helper,site(0,0));
         BlockPos centre = site(16, 0);
         clearSite(level, centre, 6);
 
@@ -166,6 +170,9 @@ public final class DebugToolBehaviorTests {
         level.setBlock(blocked.above(), Blocks.DIRT.defaultBlockState(), 3);
         player.getInventory().setItem(9, new ItemStack(Blocks.STONE, 64));
         ItemStack wand = wand();
+        player.setPos(centre.getX()+.5,centre.getY()+1,centre.getZ()-4.5);
+        player.setItemInHand(InteractionHand.MAIN_HAND,wand);
+        helper.assertTrue(com.gregtech.gregtech.api.tool.GTToolHelper.isUsable(wand),"materialized builder wand is usable");
 
         helper.assertTrue(BehaviorBuilderWand.useOn(level, centre, Direction.UP, player, wand,
                         0.5F, 0.25F, 0.5F).acted(),
@@ -208,13 +215,16 @@ public final class DebugToolBehaviorTests {
     @GameTest(template = "test_empty", timeoutTicks = 200)
     public static void builderWandIsFreeInCreative(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
-        Player player = survival(helper);
+        Player player = ToolInteractionActors.survival(helper,site(0,0));
         BlockPos centre = site(48, 0);
         clearSite(level, centre, 6);
         level.setBlock(centre, Blocks.STONE.defaultBlockState(), 3);
         player.getInventory().setItem(9, new ItemStack(Blocks.STONE, 1));
-        player.getAbilities().instabuild = true;
+        ((net.minecraft.server.level.ServerPlayer)player).setGameMode(net.minecraft.world.level.GameType.CREATIVE);
         ItemStack wand = wand();
+        player.setPos(centre.getX()+.5,centre.getY()+1,centre.getZ()-4.5);
+        player.setItemInHand(InteractionHand.MAIN_HAND,wand);
+        helper.assertTrue(com.gregtech.gregtech.api.tool.GTToolHelper.isUsable(wand),"materialized builder wand is usable");
 
         helper.assertTrue(BehaviorBuilderWand.useOn(level, centre, Direction.UP, player, wand,
                         0.5F, 0.25F, 0.5F).acted(), "a creative player still builds");

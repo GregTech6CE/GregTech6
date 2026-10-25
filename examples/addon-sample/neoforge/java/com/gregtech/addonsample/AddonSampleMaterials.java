@@ -52,6 +52,17 @@ public final class AddonSampleMaterials implements AddonMaterialContributor {
         return List.copyOf(materials);
     }
 
+    static boolean oreFormStartupRequested() {
+        String ns=System.getProperty("neoforge.enabledGameTestNamespaces",System.getProperty("forge.enabledGameTestNamespaces",""));
+        if(!ns.equals("gregtech_ore_form_startup_audit"))return false;
+        String directory=System.getenv("GT6_NONORE_ORE_FORM_STARTUP_DIRECTORY"), nonce=System.getenv("GT6_NONORE_ORE_FORM_STARTUP_NONCE");
+        if(directory==null||nonce==null||!nonce.matches("[0-9a-f]{32}"))throw new IllegalStateException("isolated ore startup directory/nonce required");
+        var path=java.nio.file.Path.of(directory);
+        if(!path.isAbsolute()||!java.nio.file.Files.isDirectory(path)||!path.getFileName().toString().startsWith("gt6-ore-form-startup-"))
+            throw new IllegalStateException("isolated ore startup disposable directory required");
+        return true;
+    }
+
     @Override public List<MaterialFormRequest> forms() {
         var requests=new java.util.ArrayList<>(List.of(new MaterialFormRequest("SampleRubber", "plate"), new MaterialFormRequest("SampleRubber", "foil"),
                 new MaterialFormRequest("Bakelite", "crushed")));
@@ -61,6 +72,7 @@ public final class AddonSampleMaterials implements AddonMaterialContributor {
             requests.add(new MaterialFormRequest("Ice","gemExquisite"));
             requests.add(new MaterialFormRequest("Ice","gemFlawless"));
         }
+        if(oreFormStartupRequested()) requests.add(new MaterialFormRequest("Dilithium","crushedPurifiedTiny"));
         if(namespaces.equals("gregtech_ore_alignment_batch")) requests.add(new MaterialFormRequest("Bakelite","oreRaw"));
         return List.copyOf(requests);
     }

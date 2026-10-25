@@ -1,0 +1,95 @@
+{
+  "date": "2026-10-25",
+  "base_commit": "849c89202",
+  "scope": "Pressure valve connection boundary and three original Forge failures",
+  "source": {
+    "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregapi\\cover\\covers\\CoverPressureValve.java",
+    "sha256": "5e17f2d3ce9c216746b74ecd1edae64b19ab24a15a63d4bda653bfb1ef019372",
+    "lf_sha256": "b686320794365c0c6f49cdd486b73ad331706aa3158f25df711f80678a9bf025",
+    "author": "GregTech-6 Team / Gregorius Techneticies",
+    "license": "LGPL-3.0-or-later",
+    "evidence": "interceptCoverPlacement/interceptConnect/onTickPost:44-63"
+  },
+  "production_fix": [
+    "Eligible, unpaused fluid-pipe valve dispatch disconnects its face before release, even when empty.",
+    "Connection gates reject a valve face facing another fluid pipe from either direction."
+  ],
+  "fixture_basis": [
+    "Valve transfer uses a real single-channel pipe and actual server ticks; exact fluid conservation replaces a positive-only target check.",
+    "Machine extraction uses output slots; filter and retriever checks can no longer pass solely because input extraction is forbidden. Matching filtered output is also asserted.",
+    "Outgoing item filtering uses the allowed pipe-to-chest outlet, retaining unfiltered, rejected-item, retained-count and matching-item phases. Pipe-to-pipe filter placement is source-forbidden."
+  ],
+  "attempts": [
+    "First Windows PowerShell 5 launcher aborted at a NeoForge javac deprecation warning under NativeCommandError/Stop; Gradle completion was not captured and this attempt is not counted as passed. Retry used PowerShell 7 and corrected native stderr handling; both production compilations and Forge test compilation were up-to-date; final four native tests passed."
+  ],
+  "results": {
+    "passed": 4,
+    "failed": 0,
+    "cases": [
+      {
+        "classname": "gt6ce_forge_cover_boundaries:test_empty",
+        "name": "thefiltercoversfilterthepipesontheirownface",
+        "time": "0.561"
+      },
+      {
+        "classname": "gt6ce_forge_cover_boundaries:test_empty",
+        "name": "pressurevalvemovesafulltankintothetankinfront",
+        "time": "0.888"
+      },
+      {
+        "classname": "gt6ce_forge_cover_boundaries:test_empty",
+        "name": "emptyvalvedisconnectsandrejectslaterpipeconnections",
+        "time": "1.128"
+      },
+      {
+        "classname": "gt6ce_forge_cover_boundaries:test_empty",
+        "name": "thefilteronthesendingfacegatesoutgoingitems",
+        "time": "4.284"
+      }
+    ],
+    "gradle_elapsed": "3m 39s"
+  },
+  "evidence": [
+    {
+      "path": "work\\forge-cover-boundaries.xml",
+      "sha256": "c439009f6ed868fc6a441dc08d9df0dad9f2341dedf410bd6e93f582c0332511"
+    },
+    {
+      "path": "work/forge-cover-boundaries.log",
+      "sha256": "41a9c4442109f133cece118c7e43b781b27e288b954040f4d1ae9a50f1ef79a3"
+    }
+  ],
+  "files": [
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/FluidPipeBlockEntity.java",
+      "sha256": "43344d4b630575061a65780746d02265a9a18423a2dbff26130f76408c9a2834"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverConnections.java",
+      "sha256": "43086a57b8b739c80e11ea982b276d4765a0d7475316010576844430a0ff8566"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverUtilityBehaviors.java",
+      "sha256": "12111b9ac8add18a72b5e9ddc0e1dfdca21a52402ae5a4ff259ab2bf88c4e659"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CoverBehaviorTests.java",
+      "sha256": "713df41cfaa2304d68dc767489d8950de0d547671d7f971e57f6b69eff14e584"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ItemPipeCoverTests.java",
+      "sha256": "92ae9caf8982a5e1b54587bc3fc294e855009974a381ac13f78d01f4a7786c1a"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ForgeCoverBoundaryRegressionTests.java",
+      "sha256": "cc2ac8b88070ad8ddbbd1d8a3823f2f341e523791d0ced1f921f98d9b8c2a223"
+    }
+  ],
+  "limits": [
+    "No default/full suite rerun.",
+    "NeoForge compile only; no NeoForge game run.",
+    "Cover counter still differs from original entity age (ALIGN-100).",
+    "Client, full survival chain and old-save restart not validated; overall migration remains incomplete.",
+    "First launcher completion unknown; final retry is the verification evidence."
+  ]
+}

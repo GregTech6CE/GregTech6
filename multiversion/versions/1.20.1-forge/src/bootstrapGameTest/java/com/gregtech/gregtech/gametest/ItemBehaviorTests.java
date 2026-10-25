@@ -205,7 +205,7 @@ public final class ItemBehaviorTests {
     @GameTest(template = "test_empty", timeoutTicks = 300)
     public static void dispatcherRoutesEachFamily(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
-        Player player = survival(helper);
+        Player player = ToolInteractionActors.survival(helper,site(192,0));
 
         BlockPos pos = floorAndAir(level, site(192, 0));
         helper.assertFalse(ItemBehaviors.useOn(level, pos, Direction.UP, player,
@@ -244,10 +244,11 @@ public final class ItemBehaviorTests {
         clearSite(level, wet, 3);
         level.setBlock(wet.below(), Blocks.STONE.defaultBlockState(), 3);
         level.setBlock(wet, GTDecorBlocks.CFOAM_FRESH.get().defaultBlockState(), 3);
+        var wetColor=com.gregtech.gregtech.block.misc.FixedConstructionColor.colorOf(level.getBlockState(wet));
         helper.assertTrue(ItemBehaviors.useOn(level, wet, Direction.UP, player,
                         ItemBehaviors.stack("gt6ce:hardening_spray"), 0.5F, 0.5F, 0.5F).acted(),
                 "the dispatcher reaches the hardening spray");
-        helper.assertTrue(level.getBlockState(wet).is(GTDecorBlocks.CFOAM.get()),
+        helper.assertTrue(level.getBlockState(wet).getBlock()==com.gregtech.gregtech.registry.GTConstructionVariants.coloredBlock(GTDecorBlocks.CFOAM.get(),wetColor),
                 "and the foam dried, got " + level.getBlockState(wet));
         helper.succeed();
     }

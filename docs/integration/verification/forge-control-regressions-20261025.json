@@ -1,0 +1,295 @@
+{
+  "date": "2026-10-25",
+  "base_commit": "5dfb01dfe",
+  "branch": "codex/targeted-default-regressions",
+  "scope": "Forge control/CPU meter failure family; one shared runtime defect (five assertions) and two fixture corrections (redstone direction; CPU meter standby budget).",
+  "runtime_fix": {
+    "file": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/ExtenderBlockEntity.java",
+    "before": "Proxy reported its own removal state and hardcoded feature flags independently of the target.",
+    "after": "available/supportsSwitch/supportsProgress/supportsMode resolve current target via existing controlOperation and cycle guard; absent/unloaded/cyclic target returns false.",
+    "persistence_changed": false,
+    "recipe_or_energy_accounting_changed": false,
+    "target_not_cached": true
+  },
+  "fixture_fix": {
+    "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/LogisticsCpuDisplayTests.java",
+    "change": "Weak/direct signal queries use the opposite of installed cover face, matching Minecraft query convention and existing PanelCoverTests. Check uncovered opposite face is zero. Supply four 512-EU packets for two periods (40 ticks * 24 EU plus a 192-EU scan threshold) and explicitly assert late scan energy. Retain CPU usage, visual, idle-clear and NBT/sync assertions.",
+    "runtime_redstone_output_changed": false
+  },
+  "original_default_receipt": {
+    "base_commit": "0585ad4e5",
+    "total": 1045,
+    "failures": 93,
+    "evidence": {
+      "path": "work/card55-forge-defaultfull.xml",
+      "sha256": "9972cf8c12469548950b8285122519a3e3b00db2bc506de0226c05ebe66e15df"
+    },
+    "runtime_files_unchanged_to_current_base": [
+      "ExtenderBlockEntity.java",
+      "LogisticsCoreControllerBlock.java",
+      "LogisticsWireBlock.java"
+    ],
+    "comparison": "git diff --stat 0585ad4e5 5dfb01dfe -- <the three runtime files> returned empty",
+    "selected_prior_failures": [
+      {
+        "name": "generatorfamiliescontrolandsave",
+        "template": "gt6ce:test_blueprint_empty",
+        "failures": [
+          "generators do not fabricate a recipe progress bar: Block{gt6ce:engine_electric_galvanized_steel}"
+        ]
+      },
+      {
+        "name": "playertoolsoperatecontrolsandunsupportedtargetsdonotwear",
+        "template": "gt6ce:test_blueprint_empty",
+        "failures": [
+          "absent target neither reports success nor consumes durability"
+        ]
+      },
+      {
+        "name": "pistonmodesmaptooriginaloddpowersteps",
+        "template": "gt6ce:test_blueprint_empty",
+        "failures": [
+          "cyclic mode forwarding terminates"
+        ]
+      },
+      {
+        "name": "wiredisplaypersistsandsynchronizesitsvisual",
+        "template": "gregtech_repair:test_fusion_empty",
+        "failures": [
+          "partial load has distinct original redstone and visual levels"
+        ]
+      },
+      {
+        "name": "livecontrolssixsidesandcycles",
+        "template": "gt6ce:test_blueprint_empty",
+        "failures": [
+          "retained interface cannot control removed machine"
+        ]
+      },
+      {
+        "name": "redstoneselectorreadsonlyinstalledface",
+        "template": "gt6ce:test_blueprint_empty",
+        "failures": [
+          "missing target is safe"
+        ]
+      },
+      {
+        "name": "previouspassdrivesallfourmetersandemitsredstone",
+        "template": "gregtech_repair:test_fusion_empty",
+        "failures": [
+          "CPU_STORAGE shows the previous pass and emits equal weak/direct power"
+        ]
+      }
+    ]
+  },
+  "final": {
+    "namespaces": [
+      "gt6ce_forge_control_regressions",
+      "gt6ce_forge_cpu_idle"
+    ],
+    "tests": 11,
+    "failures": 0,
+    "prior_failures_replayed": 7,
+    "additional_related_guards": 4,
+    "cases": [
+      {
+        "name": "generatorfamiliescontrolandsave",
+        "template": "gt6ce_forge_control_regressions:test_blueprint_empty",
+        "failures": []
+      },
+      {
+        "name": "playertoolsoperatecontrolsandunsupportedtargetsdonotwear",
+        "template": "gt6ce_forge_control_regressions:test_blueprint_empty",
+        "failures": []
+      },
+      {
+        "name": "pistonmodesmaptooriginaloddpowersteps",
+        "template": "gt6ce_forge_control_regressions:test_blueprint_empty",
+        "failures": []
+      },
+      {
+        "name": "wiredisplaypersistsandsynchronizesitsvisual",
+        "template": "gt6ce_forge_control_regressions:test_fusion_empty",
+        "failures": []
+      },
+      {
+        "name": "sourceredstoneandcomparatorrouting",
+        "template": "gt6ce_forge_control_regressions:test_blueprint_empty",
+        "failures": []
+      },
+      {
+        "name": "remoteenablecannotclearaxialoverload",
+        "template": "gt6ce_forge_control_regressions:test_blueprint_empty",
+        "failures": []
+      },
+      {
+        "name": "stopsaveresumependingoutput",
+        "template": "gt6ce_forge_control_regressions:test_blueprint_empty",
+        "failures": []
+      },
+      {
+        "name": "reactormodemasksandshutdownneutrons",
+        "template": "gt6ce_forge_control_regressions:test_blueprint_empty",
+        "failures": []
+      },
+      {
+        "name": "livecontrolssixsidesandcycles",
+        "template": "gt6ce_forge_control_regressions:test_blueprint_empty",
+        "failures": []
+      },
+      {
+        "name": "redstoneselectorreadsonlyinstalledface",
+        "template": "gt6ce_forge_control_regressions:test_blueprint_empty",
+        "failures": []
+      },
+      {
+        "name": "previouspassdrivesallfourmetersandemitsredstone",
+        "template": "gt6ce_forge_cpu_idle:test_fusion_empty",
+        "failures": []
+      }
+    ],
+    "aggregation": "Ten successful cases from the first 11-case run, plus the corrected CPU idle case from a one-case rerun; not a single 11/11 run."
+  },
+  "build_checks": {
+    "forge_compileJava": "passed in same invocation",
+    "forge_compileBootstrapGameTestJava": "passed in same invocation",
+    "neoforge_compileJava": "passed; shared runtime source compatibility only, no new Neo game runtime run"
+  },
+  "attempts": {
+    "game_jvms": 2,
+    "full_default_suite_reruns": 0,
+    "note": "First run 10/11; CPU idle check exposed insufficient fixture power after direction fix. Reran only that case after adding standby budget; 1/1. No default-suite rerun or broad namespace combination."
+  },
+  "first_command_script": "$ErrorActionPreference = 'Stop'\n$env:JAVA_HOME = 'C:/Users/T14/.gradle/jdks/eclipse_adoptium-17-amd64-windows/jdk-17.0.20.1+1'\n$env:JAVA17_HOME = $env:JAVA_HOME\n$env:JAVA21_HOME = 'C:/Program Files/Eclipse Adoptium/jdk-21.0.12.8-hotspot'\n$env:GRADLE_USER_HOME = 'C:/Users/T14/.gradle'\nSet-Location (Split-Path -Parent $PSScriptRoot)\n& ./gradlew.bat --console=plain :multiversion:1.21.1-neoforge:compileJava '-PaddonSample=true' '-PgameTestNamespaces=gt6ce_forge_control_regressions' '-PgameTestHeap=6g' '-PgameTestJvmArgs=-XX:+UseSerialGC' '-PgameTestDirectory=../../../work/forge-control-regressions' '-PgameTestReport=../../../work/forge-control-regressions.xml' :multiversion:1.20.1-forge:runGameTestServer *> work/forge-control-regressions.log\n$result = $LASTEXITCODE\nGet-Content work/forge-control-regressions.log -Tail 45\nexit $result\n",
+  "second_command_script": "$ErrorActionPreference = 'Stop'\n$env:JAVA_HOME = 'C:/Users/T14/.gradle/jdks/eclipse_adoptium-17-amd64-windows/jdk-17.0.20.1+1'\n$env:JAVA17_HOME = $env:JAVA_HOME\n$env:JAVA21_HOME = 'C:/Program Files/Eclipse Adoptium/jdk-21.0.12.8-hotspot'\n$env:GRADLE_USER_HOME = 'C:/Users/T14/.gradle'\nSet-Location (Split-Path -Parent $PSScriptRoot)\n& ./gradlew.bat --console=plain '-PaddonSample=true' '-PgameTestNamespaces=gt6ce_forge_cpu_idle' '-PgameTestHeap=6g' '-PgameTestJvmArgs=-XX:+UseSerialGC' '-PgameTestDirectory=../../../work/forge-cpu-idle' '-PgameTestReport=../../../work/forge-cpu-idle.xml' :multiversion:1.20.1-forge:runGameTestServer *> work/forge-cpu-idle.log\n$result = $LASTEXITCODE\nGet-Content work/forge-cpu-idle.log -Tail 45\nexit $result\n",
+  "first_run_cases": [
+    {
+      "name": "generatorfamiliescontrolandsave",
+      "template": "gt6ce_forge_control_regressions:test_blueprint_empty",
+      "failures": []
+    },
+    {
+      "name": "playertoolsoperatecontrolsandunsupportedtargetsdonotwear",
+      "template": "gt6ce_forge_control_regressions:test_blueprint_empty",
+      "failures": []
+    },
+    {
+      "name": "pistonmodesmaptooriginaloddpowersteps",
+      "template": "gt6ce_forge_control_regressions:test_blueprint_empty",
+      "failures": []
+    },
+    {
+      "name": "wiredisplaypersistsandsynchronizesitsvisual",
+      "template": "gt6ce_forge_control_regressions:test_fusion_empty",
+      "failures": []
+    },
+    {
+      "name": "sourceredstoneandcomparatorrouting",
+      "template": "gt6ce_forge_control_regressions:test_blueprint_empty",
+      "failures": []
+    },
+    {
+      "name": "remoteenablecannotclearaxialoverload",
+      "template": "gt6ce_forge_control_regressions:test_blueprint_empty",
+      "failures": []
+    },
+    {
+      "name": "stopsaveresumependingoutput",
+      "template": "gt6ce_forge_control_regressions:test_blueprint_empty",
+      "failures": []
+    },
+    {
+      "name": "reactormodemasksandshutdownneutrons",
+      "template": "gt6ce_forge_control_regressions:test_blueprint_empty",
+      "failures": []
+    },
+    {
+      "name": "livecontrolssixsidesandcycles",
+      "template": "gt6ce_forge_control_regressions:test_blueprint_empty",
+      "failures": []
+    },
+    {
+      "name": "redstoneselectorreadsonlyinstalledface",
+      "template": "gt6ce_forge_control_regressions:test_blueprint_empty",
+      "failures": []
+    },
+    {
+      "name": "previouspassdrivesallfourmetersandemitsredstone",
+      "template": "gt6ce_forge_control_regressions:test_fusion_empty",
+      "failures": [
+        "idle logic/conversion meters clear next second while scanned control remains active"
+      ]
+    }
+  ],
+  "second_run_cases": [
+    {
+      "name": "previouspassdrivesallfourmetersandemitsredstone",
+      "template": "gt6ce_forge_cpu_idle:test_fusion_empty",
+      "failures": []
+    }
+  ],
+  "evidence": [
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/ExtenderBlockEntity.java",
+      "sha256": "4a7a88275cb9aee1923e65f1cdbe16aaea8ee41430b070d46e277d3765ad3665"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/UniversalExtenderTests.java",
+      "sha256": "8cf6a5f29fe7b8cbf7474f7bdfff070e6f003f571ca7a992b1d166d134835572"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/LogisticsCpuDisplayTests.java",
+      "sha256": "d0c41e4df02826deebd4a20156419606768054df1f79fbf720371ec079f6df13"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ForgeControlRegressionTests.java",
+      "sha256": "c7c23a68c50addae03f400bbfbab09390893f40c27627f0223701647163ae1e8"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MachineControlTests.java",
+      "sha256": "c78b7d007bdc02b41c1bf5d08b03bc7ad0ade4510b973b931b95628efec8fa98"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/PanelCoverTests.java",
+      "sha256": "b7a77c31e07b4de56819bfbbbc9f2608031793222d0fe435700d682bf43e3944"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/resources/data/gt6ce_forge_control_regressions/structures/test_blueprint_empty.nbt",
+      "sha256": "6c01f87bfc554e3e1ede220e784470c02b04ad9ada25cf366d4b1b9e157d8f0e"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/resources/data/gt6ce_forge_control_regressions/structures/test_fusion_empty.nbt",
+      "sha256": "94c8cd07dee7c52f9bdfbe9b3ab8a425f43b4b681fd86846b44d5663c06cdbd3"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ForgeCpuIdleRegressionTests.java",
+      "sha256": "d0e0fe8e8100a4b5179cbab40940f07b8fb4466320b2ceb699e0b470ab985a59"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/resources/data/gt6ce_forge_cpu_idle/structures/test_fusion_empty.nbt",
+      "sha256": "94c8cd07dee7c52f9bdfbe9b3ab8a425f43b4b681fd86846b44d5663c06cdbd3"
+    },
+    {
+      "path": "work/forge-control-regressions-attempt1.log",
+      "sha256": "0dd3db360d4de9f5fbaee3aa6ec95f695c65fb5c3b336bd4a643a33e5ec3af62"
+    },
+    {
+      "path": "work/forge-control-regressions-attempt1.xml",
+      "sha256": "1928b6654ac103f4a9041342f4992325db44e70798cb798a6bd1efc5563942b3"
+    },
+    {
+      "path": "work/forge-cpu-idle.log",
+      "sha256": "2276900d92ea9f343c98b5c6f2b882c722c15f0bc0df6b190df4724801f07828"
+    },
+    {
+      "path": "work/forge-cpu-idle.xml",
+      "sha256": "2b9d8ff1a71b1b6c9f3a30edb436996940b81a634494d111c56a2c7225226208"
+    }
+  ],
+  "limits": [
+    "Do not subtract these seven from the original default report and claim a newly measured remaining failure count.",
+    "Other default Forge failures are still pending targeted investigation.",
+    "No client gameplay, independent saved-world restart or historical-save validation. Overall port unfinished.",
+    "Card55 PR #125 remains unchanged; this fix is separate from its implementation commit."
+  ]
+}

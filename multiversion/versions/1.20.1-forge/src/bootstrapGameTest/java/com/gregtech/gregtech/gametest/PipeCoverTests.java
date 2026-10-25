@@ -404,27 +404,16 @@ public final class PipeCoverTests {
      * drops a machine's covers. Counted one tick later through the whole entity table: a freshly
      * spawned item entity is not visible to a same-tick query (§110).
      */
-    @GameTest(template = "test_empty", timeoutTicks = 100)
+    @GameTest(template = "harvest_empty", timeoutTicks = 100)
     public static void aPipeDropsItsCoversWhenBroken(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
-        BlockPos pos = site(128, 0);
+        BlockPos pos = helper.absolutePos(new BlockPos(4,4,4));
         FluidPipeBlockEntity pipe = pipe(helper, pos, PIPE);
-        helper.assertTrue(pipe.attachCover(Direction.UP, cover(CoverUtilityBehaviors.FILTER_ITEM)),
-                "the pipe takes an item filter on its top face");
+        helper.assertTrue(pipe.attachCover(Direction.UP, cover(CoverUtilityBehaviors.FILTER_FLUID)),
+                "the pipe takes an fluid filter on its top face");
         ItemStack expected = pipe.getCover(Direction.UP).copy();
         helper.assertTrue(!expected.isEmpty(), "the cover was stored, got " + expected);
 
-        level.removeBlock(pos, false);
-        AABB area = box(pos, 2);
-        helper.runAfterDelay(1, () -> {
-            int found = 0;
-            for (Entity entity : level.getAllEntities()) {
-                if (!(entity instanceof ItemEntity item)) continue;
-                if (!area.contains(item.position())) continue;
-                if (ItemStack.isSameItemSameTags(item.getItem(), expected)) found += item.getItem().getCount();
-            }
-            helper.assertTrue(found == 1, "the cover drops when the pipe is broken, found " + found);
-            helper.succeed();
-        });
+        HarvestFixtureAssertions.destroyWithCover(helper,pipe,Direction.UP,0);
     }
 }

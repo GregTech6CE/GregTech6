@@ -212,21 +212,42 @@ public class ExtenderBlockEntity extends com.gregtech.gregtech.blockentity.Energ
         }
     }
 
+    private long progressOperation(Direction side, boolean maximum) {
+        if (!universal() || level == null || isRemoved()) return 0;
+        var visited = CONTROLS.get();
+        if (!visited.add(this)) return 0;
+        try {
+            var destination = target(side);
+            if (destination == null || !level.hasChunkAt(destination.position())) return 0;
+            var progress = com.gregtech.gregtech.api.sensor.ProgressSources.find(
+                    level.getBlockEntity(destination.position()), destination.side());
+            return progress == null ? 0 : maximum ? progress.maximum() : progress.value();
+        } finally {
+            visited.remove(this);
+            if (visited.isEmpty()) CONTROLS.remove();
+        }
+    }
+
     @Override
     public com.gregtech.gregtech.api.machine.MachineControl machineControl(Direction side) {
         if (!universal() || (((SourceExtenderBlock) getBlockState().getBlock()).spec().bridge && side == null)) return null;
         return new com.gregtech.gregtech.api.machine.MachineControl() {
 
+            // Resolve feature queries just like commands: targets can disappear, change or form a cycle.
             public boolean available() {
-                return !isRemoved();
+                return controlOperation(side, false, control -> control.available());
+            }
+
+            public boolean supportsSwitch() {
+                return controlOperation(side, false, control -> control.supportsSwitch());
             }
 
             public boolean supportsProgress() {
-                return true;
+                return controlOperation(side, false, control -> control.supportsProgress());
             }
 
             public boolean supportsMode() {
-                return true;
+                return controlOperation(side, false, control -> control.supportsMode());
             }
 
             public int mode() {
@@ -254,11 +275,11 @@ public class ExtenderBlockEntity extends com.gregtech.gregtech.blockentity.Energ
             }
 
             public long progress() {
-                return controlOperation(side, 0L, control -> control.progress());
+                return progressOperation(side, false);
             }
 
             public long progressMax() {
-                return controlOperation(side, 0L, control -> control.progressMax());
+                return progressOperation(side, true);
             }
         };
     }
