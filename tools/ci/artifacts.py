@@ -47,11 +47,13 @@ def package(loader):
     target.with_suffix('.jar.sha256').write_text(f'{checksum}  {target.name}\n', encoding='utf-8')
 
     core_sdk = only((ROOT / 'core/build/libs').glob('gt6ce-addon-api-*.jar'), 'core addon SDK')
-    check_script('verify_addon_api.py', '--jar', core_sdk)
+    check_script('verify_addon_api.py', '--jar', core_sdk,
+                 '--output', output / 'addon-api-core.json')
     shutil.copyfile(core_sdk, output / core_sdk.name)
     sdk = only((p for p in (build / 'addon-sdk').glob(f'gt6ce-addon-sdk-{node}-*.jar')
                 if not p.stem.endswith(('-sources', '-javadoc'))), 'platform addon SDK')
-    check_script('verify_addon_api.py', '--jar', sdk, '--loader', loader)
+    check_script('verify_addon_api.py', '--jar', sdk, '--loader', loader,
+                 '--output', output / f'addon-api-{loader}.json')
     shutil.copyfile(sdk, output / sdk.name)
     for classifier in ('sources', 'javadoc'):
         extra = sdk.with_name(f'{sdk.stem}-{classifier}.jar')
