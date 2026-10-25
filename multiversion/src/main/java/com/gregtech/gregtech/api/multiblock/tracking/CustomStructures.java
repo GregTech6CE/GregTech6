@@ -27,22 +27,6 @@ public final class CustomStructures {
         return fixed(entity, CustomStructures::fusionFootprint);
     }
 
-    public static StructureDefinition implosion(BlockEntity entity) {
-        return fixed(entity, CustomStructures::implosionFootprint);
-    }
-
-    public static StructureDefinition boiler(BlockEntity entity) {
-        return fixed(entity, CustomStructures::boilerFootprint);
-    }
-
-    public static StructureDefinition gasTurbine(LargeGasTurbineControllerBlockEntity entity) {
-        return fixed(entity, machine -> axialShell(entity, TurbineStructure.LAYOUT.cells()));
-    }
-
-    public static StructureDefinition axial(AxialGeneratorBlockEntity entity) {
-        return fixed(entity, machine -> axialPositions(entity, entity.trackedCells()));
-    }
-
     public static StructureDefinition tank(MultiblockTankControllerBlockEntity entity) {
         return fixed(entity, machine -> tankFootprint(entity));
     }
@@ -51,25 +35,10 @@ public final class CustomStructures {
         return fixed(entity, CustomStructures::logisticsFootprint);
     }
 
-    public static StructureDefinition exchanger(BlockEntity entity) {
-        return fixed(entity, CustomStructures::exchangerFootprint);
-    }
-
     public static StructureDefinition drill(BlockEntity entity) {
         return fixed(entity, CustomStructures::drillFootprint);
     }
 
-    public static StructureDefinition crucible(BlockEntity entity) {
-        return fixed(entity, CustomStructures::crucibleFootprint);
-    }
-
-    public static StructureDefinition tower(BlockEntity entity) {
-        return fixed(entity, CustomStructures::towerFootprint);
-    }
-
-    public static StructureDefinition fuel(FuelTurbineBlockEntity entity) {
-        return fixed(entity, machine -> fuelFootprint(entity));
-    }
 
     public static StructureDefinition lightning(LightningRodControllerBlockEntity entity) {
         return new Lightning(entity);
@@ -95,44 +64,11 @@ public final class CustomStructures {
         return builder.build();
     }
 
-    private static Footprint implosionFootprint(TrackedMultiblock machine) {
-        BlockEntity entity = machine.trackedEntity();
-        Direction front = LayoutStructures.facing(entity);
-        Footprint.Builder builder = new Footprint.Builder().addController(entity.getBlockPos());
-        for (var cell : com.gregtech.gregtech.blockentity.machine.ImplosionCompressorControllerBlockEntity.LAYOUT.cells()) {
-            builder.add(cell.at(entity.getBlockPos(), front),
-                    cell.role() == MultiblockLayout.Role.AIR ? Projection.AIR : Projection.BLOCK);
-        }
-        return builder.build();
-    }
-
-    private static Footprint boilerFootprint(TrackedMultiblock machine) {
-        BlockEntity entity = machine.trackedEntity();
-        Direction front = LayoutStructures.facing(entity);
-        BlockPos centre = entity.getBlockPos().relative(front.getOpposite());
-        Footprint.Builder builder = new Footprint.Builder().addController(entity.getBlockPos());
-        for (var cell : com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerParameters.CHECK_ORDER) {
-            Projection projection = cell.role() == com.gregtech.gregtech.api.multiblock.StructureGrid.Role.AIR
-                    ? Projection.AIR : Projection.BLOCK;
-            builder.add(centre.offset(cell.x(), cell.y(), cell.z()), projection);
-        }
-        for (var cell : OriginalLargeBoilerSpecs.LAYOUT.cells()) builder.add(cell.at(entity.getBlockPos(), front), Projection.BLOCK);
-        return builder.build();
-    }
-
     private static Footprint logisticsFootprint(TrackedMultiblock machine) {
         BlockEntity entity = machine.trackedEntity();
         Direction front = LayoutStructures.facing(entity);
         Footprint.Builder builder = new Footprint.Builder().addController(entity.getBlockPos());
         for (var cell : LogisticsCoreStructure.cells()) builder.add(cell.at(entity.getBlockPos(), front), Projection.BLOCK);
-        return builder.build();
-    }
-
-    private static Footprint exchangerFootprint(TrackedMultiblock machine) {
-        BlockEntity entity = machine.trackedEntity();
-        Footprint.Builder builder = new Footprint.Builder().addController(entity.getBlockPos());
-        for (var cell : com.gregtech.gregtech.content.multiblock.SharedHeatExchangerStructure.CELLS)
-            builder.add(entity.getBlockPos().offset(cell.right(), cell.up(), cell.back()), Projection.BLOCK);
         return builder.build();
     }
 
@@ -151,33 +87,6 @@ public final class CustomStructures {
         return builder.build();
     }
 
-    private static Footprint crucibleFootprint(TrackedMultiblock machine) {
-        BlockEntity entity = machine.trackedEntity();
-        Footprint.Builder builder = new Footprint.Builder().addController(entity.getBlockPos());
-        for (var cell : com.gregtech.gregtech.content.multiblock.SharedLargeCrucibleStructure.CELLS) {
-            builder.add(entity.getBlockPos().offset(cell.x(), cell.y(), cell.z()),
-                    cell.air() ? Projection.AIR : Projection.BLOCK);
-        }
-        return builder.build();
-    }
-
-    private static Footprint towerFootprint(TrackedMultiblock machine) {
-        BlockEntity entity = machine.trackedEntity();
-        Footprint.Builder builder = new Footprint.Builder().addController(entity.getBlockPos());
-        for (var cell : VonDaGraaggRules.layout())
-            builder.add(entity.getBlockPos().offset(cell.x(), cell.y(), cell.z()), Projection.BLOCK);
-        return builder.build();
-    }
-
-    private static Footprint fuelFootprint(FuelTurbineBlockEntity entity) {
-        var cells = entity.trackedCells();
-        Footprint.Builder builder = new Footprint.Builder().addController(entity.getBlockPos());
-        if (cells == null) return builder.build();
-        Direction front = LayoutStructures.facing(entity);
-        for (var cell : cells) builder.add(cell.at(entity.getBlockPos(), front), LayoutStructures.projection(cell));
-        return builder.build();
-    }
-
     private static Footprint tankFootprint(MultiblockTankControllerBlockEntity entity) {
         int size = entity.trackedSize();
         Direction front = LayoutStructures.facing(entity);
@@ -193,22 +102,6 @@ public final class CustomStructures {
                     boolean shell = Math.abs(x) == radius || Math.abs(y) == radius || Math.abs(z) == radius;
                     builder.add(pos, shell ? Projection.BLOCK : Projection.AIR);
                 }
-        return builder.build();
-    }
-
-    private static Footprint axialShell(BlockEntity entity, Iterable<MultiblockLayout.Cell> cells) {
-        Direction front = LayoutStructures.facing(entity);
-        Footprint.Builder builder = new Footprint.Builder().addController(entity.getBlockPos());
-        for (var cell : cells)
-            builder.add(AxialStructureTransform.at(entity.getBlockPos(), front, cell.right(), cell.up(), cell.back()), Projection.BLOCK);
-        return builder.build();
-    }
-
-    private static Footprint axialPositions(BlockEntity entity, Iterable<BlockPos> cells) {
-        Direction front = LayoutStructures.facing(entity);
-        Footprint.Builder builder = new Footprint.Builder().addController(entity.getBlockPos());
-        for (BlockPos cell : cells)
-            builder.add(AxialStructureTransform.at(entity.getBlockPos(), front, cell.getX(), cell.getY(), cell.getZ()), Projection.BLOCK);
         return builder.build();
     }
 

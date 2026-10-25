@@ -2190,3 +2190,15 @@ Sensors null-NBT源登记可合法携带REV，生成器只为这组解析，避�
 - 迁移要求：地面格用一个“基岩类”匹配器，投影只比“是不是基岩类”；`nextProduct()` 在周期开始时读 9 格，带 `hasChunkAt` 保护，大矿放材料两次、小矿一次，与现在一致；44 个支撑是固定格；认领策略声明 `ATOMIC`。
 - 逐格认领：原版是逐格认领（ALIGN-036），列入 `PER_CELL` 的对比（卡 58 批次 3），建议保持 `ATOMIC`：这台钻机的能量入口要求已成型，未建完时的认领差异几乎没有出口。
 - 验证：只读对照，没有改代码，没有跑 Gradle，没有进游戏。
+
+## 2026-10-25 / 结构跟踪阶段 2 卡 54：固定格家族迁移
+
+- 固定格编译入口：`CompiledPattern` 新增 `FixedCell(dx,dy,dz,Cell)` 和 `compileFixed(...)`；`FixedStructures` 用 `Function<Direction, List<FixedCell>>` 声明一族固定格，按朝向缓存图样和足迹。既有 `LargeMachineLayouts.Layout` 路径不变。需要这个入口的有三类：轴向主控（六轴 `StructureGrid.offset`）、换热器（朝向固定 DOWN，但几何是世界轴）、坩埚和禁刷怪塔（几何是世界轴，不随朝向旋转）。
+- 聚变处理器：每个 CPU 格编译成“主选 18200 + 候选 18201/18202”，实际计数由 `Aggregate.Count.exactly(part(...), 3/12/12)` 判定。换位不破坏成型，改类型破坏成型。认领仍用 `fusionBindings`，`designHash` 传 0，不写设计号。
+- 投影声明：九个家族的结构格只比方块身份（`Projection.BLOCK`），AIR 格比 `isAir`（`Projection.AIR`），控制器格沿用 `Projection.FACING`。这些家族没有流体格或按属性判定的格子。坩埚源数据的两个空气格 role 是 CASING，图样必须按 `air` 标志显式声明 AIR，不能照搬 role。
+- 认领时机：`applyStructure` 只在整段匹配成功时调用，失败由 `releaseStructureClaims` 全部释放。锅炉和换热器的旧扫描在结构残缺时会保留仍合法格子的认领；迁移后改为“解体即释放全部”，与聚变、内爆及卡 53 的家族一致，接受附近控制器在此期间争用这些端口。设计号写入保持原样：只有 `FuelTurbineBlockEntity` 写（`fuelDesignHash` + `StructureDesigns.apply`），其余固定格家族 `designHash=0`。
+- 边沿同步：锅炉和换热器用 `structureFormedChanged` 维护 `structureOkay` 与客户端同步；坩埚用同一钩子写控制器上的 `CRUCIBLE_FORMED`（探针暂停内），部件上的该属性继续由 `MultiblockPortBlockEntity.bind/release` 维护。
+- 探针帧：`StructureTracking.evaluateDeclarative` 现在把 `applyStructure`/`releaseStructureClaims` 也放进 `openIncremental` 帧。认领会通过 `bind` 写部件的 `CRUCIBLE_FORMED`，这是评估自身产生的写入，不应被投影审计当成外部变化；此前它们在帧外，审计会看到“缓存 false、整段扫描 true”而误报。
+- 足迹与缓存：固定格家族不收紧足迹；`FixedStructures.Definition` 按 `Direction` 缓存 cells 和 `Footprint`，避免每次评估重建 886 格的聚变足迹。固定格家族没有 tag 格，`usesTags()` 为假。
+- 旧扫描：九个家族的 `scanStructure()` 全部保留，作为一致性检查的对照，删除在卡 59。
+- 验证：`gt6ce_structure_tracking` 双平台 26/26，`gt6ce_structure_incremental` 双平台 13/13，`gregtech_issue_audit` Forge 226/226、NeoForge 217/217。`gt6ce_structure_tracking` 的 140 次查询计数从轴向 legacy 4900 次方块读取、聚变 124040 次降到 tracked 0。证据见 [structure-tracking-fixed-families-20261025.json](verification/structure-tracking-fixed-families-20261025.json)。
