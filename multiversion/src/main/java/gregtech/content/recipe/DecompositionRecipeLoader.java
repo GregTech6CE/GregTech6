@@ -26,6 +26,7 @@ import net.minecraftforge.fluids.FluidStack;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static gregtech.api.material.GTValues.U;
@@ -133,8 +134,12 @@ public class DecompositionRecipeLoader implements InitializationStep {
                         List<ItemStack> dustOutputs, List<FluidStack> fluidOutputs, long eut, long duration) {
         ItemStack[] items = itemInput == null ? RecipeMap.ZL_IS : new ItemStack[]{itemInput};
         FluidStack[] fluids = fluidInput == null ? RecipeMap.ZL_FS : new FluidStack[]{fluidInput};
-        Recipe recipe = RecipeMap.make(true, items, dustOutputs.toArray(RecipeMap.ZL_IS),
-                null, RecipeMap.ZL_LONG, fluids, fluidOutputs.toArray(RecipeMap.ZL_FS), duration, eut, 0);
+        // Original GT6 uses map-sized arrays: preserve the ordered prefix and truncate the tail.
+        // Apply this before make() optimization, for both decomposition maps and all input forms.
+        ItemStack[] outputs = Arrays.copyOf(dustOutputs.toArray(RecipeMap.ZL_IS), map.mOutputItemsCount);
+        FluidStack[] fluidResults = Arrays.copyOf(fluidOutputs.toArray(RecipeMap.ZL_FS), map.mOutputFluidCount);
+        Recipe recipe = RecipeMap.make(true, items, outputs,
+                null, RecipeMap.ZL_LONG, fluids, fluidResults, duration, eut, 0);
         if (recipe == null) return false;
 
         if (map == MachineRecipeMaps.Electrolyzer) {
