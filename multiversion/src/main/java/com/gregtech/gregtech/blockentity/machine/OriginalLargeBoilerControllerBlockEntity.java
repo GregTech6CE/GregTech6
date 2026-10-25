@@ -151,17 +151,28 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
         return cells;
     }
     @Override public boolean applyStructure(com.gregtech.gregtech.api.multiblock.tracking.PatternMatch match) {
+        return updateStructureBindings(match, true);
+    }
+    @Override public void applyIncompleteStructure(com.gregtech.gregtech.api.multiblock.tracking.PatternMatch match) {
+        updateStructureBindings(match, false);
+    }
+    private boolean updateStructureBindings(com.gregtech.gregtech.api.multiblock.tracking.PatternMatch match, boolean complete) {
         if (level == null || isRemoved()) return false;
         var parts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
         for (var fixed : match.fixedCells()) {
             var cell = fixed.cell();
-            if (cell.role() != MultiblockLayout.Role.AIR) parts.put(fixed.pos(), cell.role());
+            // A competing owner excludes this cell, as in the legacy scan; keep other valid tool ports.
+            if (cell.role() != MultiblockLayout.Role.AIR
+                    && level.getBlockEntity(fixed.pos()) instanceof MultiblockPortBlockEntity port
+                    && port.canBind(worldPosition)) parts.put(fixed.pos(), cell.role());
+            else if (cell.role() != MultiblockLayout.Role.AIR) complete = false;
         }
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, parts, 0,
+        var claimed = com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, complete, bindings, parts, 0,
                 position -> level.getBlockEntity(position) instanceof MultiblockPortBlockEntity port
                         && port.canBind(worldPosition),
                 (position, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(position)).bind(worldPosition, role),
                 this::release) != com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
+        return complete && claimed;
     }
     @Override public void releaseStructureClaims() {
         bindings.clear(this::release);
