@@ -6,7 +6,6 @@ package gregtech.client.gui;
 import gregtech.GregTech;
 //?}
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -17,7 +16,7 @@ import java.util.Set;
  * GT6 hopper / queuehopper screen ({@code ContainerClientDefault}).
  * Picks the GUI texture matching the slot count from {@code textures/gui/chests/}.
  */
-public class HopperScreen extends AbstractContainerScreen<HopperContainerMenu> {
+public class HopperScreen extends MachineContainerScreen<HopperContainerMenu> {
     private static final Set<Integer> TEXTURE_SIZES = Set.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 14, 15, 16, 18, 27, 36, 54);
     private static final int TEX_WIDTH = 176;
 
@@ -42,14 +41,15 @@ public class HopperScreen extends AbstractContainerScreen<HopperContainerMenu> {
 
     @Override
     protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
+        super.renderLabels(graphics, mouseX, mouseY);
         int n = menu.slotCount();
-        // Title at Y=6 overlaps first row for layouts with slots starting at Y=8 or tight spacing.
-        // 36 and 27 use compact layouts — omit title and inventory label to avoid crowding.
+        // Compact layouts have no free row for the inventory caption.
         if (n < 27 && n != 16) {
-            graphics.drawString(font, title, titleLabelX, titleLabelY, 0x404040, false);
             graphics.drawString(font, playerInventoryTitle, inventoryLabelX, inventoryLabelY, 0x404040, false);
         }
     }
+
+    @Override protected ResourceLocation brandingTexture() { return texture; }
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {

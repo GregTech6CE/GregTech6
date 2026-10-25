@@ -39,6 +39,18 @@ public final class GregTechJEIPlugin implements IModPlugin {
         runtime.getIngredientManager().removeIngredientsAtRuntime(mezz.jei.api.constants.VanillaTypes.ITEM_STACK, legacy);
     }
 
+    @Override
+    public void registerGuiHandlers(mezz.jei.api.registration.IGuiHandlerRegistration registration) {
+        registration.addGenericGuiContainerHandler(gregtech.client.gui.MachineContainerScreen.class,
+                new mezz.jei.api.gui.handlers.IGuiContainerHandler<gregtech.client.gui.MachineContainerScreen<?>>() {
+                    @Override public java.util.List<net.minecraft.client.renderer.Rect2i> getGuiExtraAreas(
+                            gregtech.client.gui.MachineContainerScreen<?> screen) {
+                        var tab = screen.titleBounds();
+                        return tab.getWidth() > 0 ? java.util.List.of(tab) : java.util.List.of();
+                    }
+                });
+    }
+
     @Override public void registerVanillaCategoryExtensions(mezz.jei.api.registration.IVanillaCategoryExtensionRegistration registration) {
         ToolCraftingDisplay.register(registration);
     }

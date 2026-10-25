@@ -5,12 +5,11 @@ package gregtech.client.gui;
 import gregtech.GregTech;
 //?}
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
 /** Uses the original GT6 texture, including its 16-slot store and five tool slots. */
-public final class AdvancedCraftingScreen extends AbstractContainerScreen<AdvancedCraftingMenu> {
+public final class AdvancedCraftingScreen extends MachineContainerScreen<AdvancedCraftingMenu> {
 
     public AdvancedCraftingScreen(AdvancedCraftingMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
@@ -19,7 +18,10 @@ public final class AdvancedCraftingScreen extends AbstractContainerScreen<Advanc
     }
 
     @Override
-    protected void renderLabels(GuiGraphics graphics, int x, int y) {
+    protected net.minecraft.resources.ResourceLocation brandingTexture() {
+        return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", (menu.modes() & 32) != 0
+                ? "textures/gui/machines/advanced_crafting_table_charging.png"
+                : "textures/gui/machines/advanced_crafting_table.png");
     }
 
     @Override

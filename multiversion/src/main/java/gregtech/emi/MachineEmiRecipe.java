@@ -96,12 +96,14 @@ public final class MachineEmiRecipe implements EmiRecipe {
         // EMI may clamp the requested height. Fit drawing and slot hitboxes together.
         float scale=Math.min(1f,Math.min(widgets.getWidth()/176f,widgets.getHeight()/146f));
         float offset=(widgets.getWidth()-176*scale)/2;
-        var texture=new dev.emi.emi.api.widget.TextureWidget(MachineGuiLayout.texture(map),3,3,170,79,3,3);
+        // The new rounded frame still has a white corner at x=3: omit one more column.
+        var texture=new dev.emi.emi.api.widget.TextureWidget(MachineGuiLayout.texture(map),4,3,169,79,4,3);
         widgets.addDrawable(0,0,widgets.getWidth(),widgets.getHeight(),(graphics,mouseX,mouseY,delta)->{
             graphics.pose().pushPose();
             try {
                 graphics.pose().translate(offset,0,0);graphics.pose().scale(scale,scale,1);
                 texture.render(graphics,(int)((mouseX-offset)/scale),(int)(mouseY/scale),delta);
+                gregtech.client.gui.MachineGuiChrome.brand(graphics,MachineGuiLayout.texture(map));
                 gregtech.client.RecipeDisplayCaptions.draw(graphics,map,recipe);
             } finally {graphics.pose().popPose();}
         });

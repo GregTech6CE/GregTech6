@@ -6,7 +6,6 @@ package gregtech.client.gui;
 import gregtech.GregTech;
 //?}
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -15,14 +14,12 @@ import net.minecraft.world.entity.player.Inventory;
  * GT6's bumbliary screen ({@code ContainerClient}, {@code MultiTileEntityBumbliary:497-509}): GT6's own
  * GUI sheet, drawn as it is.
  *
- * <p>GT6's {@code ContainerClient.drawGuiContainerForegroundLayer:57-60} is empty - the machine has no
- * title and no "Inventory" label inside the GUI, the texture already carries both - so this screen
- * draws no labels either. The standard machine uses
+ * <p>The title tab stays outside the bee slots. The standard machine uses
  * {@code textures/gui/machines/Bumbliary.png}, the advanced one
  * {@code textures/gui/machines/BumbliaryAdvanced.png} ({@code MultiTileEntityBumbliaryAdvanced:469,476});
  * the port ships both under lower-case names.</p>
  */
-public class BumbliaryScreen extends AbstractContainerScreen<BumbliaryContainerMenu> {
+public class BumbliaryScreen extends MachineContainerScreen<BumbliaryContainerMenu> {
 
     private static final ResourceLocation STANDARD =
 //? if >=1.21.1 {
@@ -53,9 +50,7 @@ public class BumbliaryScreen extends AbstractContainerScreen<BumbliaryContainerM
     }
 
     @Override
-    protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
-        // GT6 draws nothing here (ContainerClient:57-60): the sheet has the titles baked in.
-    }
+    protected ResourceLocation brandingTexture() { return texture; }
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {

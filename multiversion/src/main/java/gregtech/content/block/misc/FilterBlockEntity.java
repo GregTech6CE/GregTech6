@@ -144,7 +144,7 @@ public class FilterBlockEntity extends CapabilityRelayBlockEntity implements Men
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable(prefixMode() ? "gt6ce.filter.prefix_title" : "gt6ce.filter.title");
+        return getBlockState().getBlock().getName();
     }
 
     @Override

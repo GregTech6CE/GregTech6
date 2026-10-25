@@ -24,6 +24,13 @@ public final class GregTechEMIPlugin implements EmiPlugin {
 
     @Override
     public void register(EmiRegistry registry) {
+        registry.addGenericExclusionArea((screen, areas) -> {
+            if (screen instanceof gregtech.client.gui.MachineContainerScreen<?> machine) {
+                var tab = machine.titleBounds();
+                if (tab.getWidth() > 0)
+                    areas.accept(new dev.emi.emi.api.widget.Bounds(tab.getX(), tab.getY(), tab.getWidth(), tab.getHeight()));
+            }
+        });
         gregtech.internal.fluid.FluidContainerDisplayBinding.invalidate();
         FluidScreenStackProvider.register(registry);
         WoodenBucketLookupRecipe.register(registry);

@@ -113,8 +113,9 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
         }
     }
     @Override public void draw(Recipe recipe,IRecipeSlotsView slots,GuiGraphics graphics,double mouseX,double mouseY) {
-        // Keep the machine slot coordinates, but omit the outer three-pixel GUI frame.
-        graphics.blit(texture,3,3,3,3,170,79,256,256);
+        // Crop the rounded frame without moving any item/fluid slot coordinates.
+        graphics.blit(texture,4,3,4,3,169,79,256,256);
+        gregtech.client.gui.MachineGuiChrome.brand(graphics,texture);
         var client=net.minecraft.client.Minecraft.getInstance();
         long tick=client.level==null?0:client.level.getGameTime();
         graphics.blit(texture,78,24,176,0,(int)(tick%40)*20/40,18,256,256);

@@ -13,7 +13,6 @@ import gregtech.content.registry.GTFluids;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -38,7 +37,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class BasicMachineScreen extends AbstractContainerScreen<BasicMachineContainerMenu> implements FluidRecipeScreen {
+public class BasicMachineScreen extends MachineContainerScreen<BasicMachineContainerMenu> implements FluidRecipeScreen {
     private final ResourceLocation texture;
 
     @Override public FluidStack fluidAt(int mouseX, int mouseY) {
@@ -142,11 +141,7 @@ public class BasicMachineScreen extends AbstractContainerScreen<BasicMachineCont
     }
 
     @Override
-    protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
-        // Legacy machine layouts use the top row for input slots (for example the mixer).
-        // Keep the title above the panel instead of drawing it through the inventory.
-        graphics.drawString(font, title, titleLabelX, -font.lineHeight - 3, 0xFFFFFF, true);
-    }
+    protected ResourceLocation brandingTexture() { return texture; }
 
     @Override
     protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {

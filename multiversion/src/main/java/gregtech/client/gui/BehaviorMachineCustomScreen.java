@@ -26,6 +26,13 @@ public final class BehaviorMachineCustomScreen extends BehaviorMachineHostScreen
     @Override
     protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {}
 
+    // The addon owns the entire custom screen, including its title and decoration.
+    @Override protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {}
+
+    @Override public net.minecraft.client.renderer.Rect2i titleBounds() {
+        return new net.minecraft.client.renderer.Rect2i(0, 0, 0, 0);
+    }
+
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.render(graphics, mouseX, mouseY, partialTick);

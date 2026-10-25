@@ -5,7 +5,6 @@ import gregtech.api.addon.LayoutPart;
 import gregtech.api.addon.platform.BehaviorState;
 import gregtech.api.addon.platform.PartContext;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -27,10 +26,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** A part menu: its own slots, tanks and fields, using the behavior-machine widget sheet. */
-public class PartScreen extends AbstractContainerScreen<PartMenu> {
+public class PartScreen extends MachineContainerScreen<PartMenu> {
     private final ResourceLocation texture;
     private final LayoutPart part;
     private final List<Hover> hovers = new ArrayList<>();
+
+    @Override protected ItemStack titleIcon() {
+        var context = menu.runtime().context();
+        return new ItemStack(context.level().getBlockState(context.pos()).getBlock());
+    }
 
     public PartScreen(PartMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
