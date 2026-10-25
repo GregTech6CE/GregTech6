@@ -72,8 +72,10 @@ public final class LogisticsCpuDisplayTests {
                 .findFirst().orElseThrow();
         var port = (com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity)
                 helper.getLevel().getBlockEntity(wallCell.at(core.getBlockPos(), Direction.NORTH));
-        helper.assertTrue(port.doEnergyInjection(GregTechTags.Energy.EU, Direction.UP, 512, 2, true) == 2,
-                "galvanized wall powers CPU meter test");
+        // Two meter boundaries can take 40 ticks: standby alone costs 40 * 24 EU.
+        // Keep enough charge above the 192-EU scan threshold at both boundaries.
+        helper.assertTrue(port.doEnergyInjection(GregTechTags.Energy.EU, Direction.UP, 512, 4, true) == 4,
+                "galvanized wall powers both CPU meter periods including per-tick standby");
         var result = core.routeNetworkOnce();
         helper.assertTrue(result.itemsMoved() == 1 && result.usedLogic() == 1
                         && result.usedConversion() == 1
@@ -91,10 +93,10 @@ public final class LogisticsCpuDisplayTests {
                 helper.assertTrue(testedCore.logisticsCovers().displaySignal(faces[i]) == expected
                                 && testedCore.logisticsCovers().displayVisual(faces[i]) == frame
                                 && testedCore.getBlockState().getBlock().getSignal(
-                                testedCore.getBlockState(), helper.getLevel(), testedCore.getBlockPos(), faces[i])
+                                testedCore.getBlockState(), helper.getLevel(), testedCore.getBlockPos(), faces[i].getOpposite())
                                 == expected
                                 && testedCore.getBlockState().getBlock().getDirectSignal(
-                                testedCore.getBlockState(), helper.getLevel(), testedCore.getBlockPos(), faces[i])
+                                testedCore.getBlockState(), helper.getLevel(), testedCore.getBlockPos(), faces[i].getOpposite())
                                 == expected,
                         types[i] + " shows the previous pass and emits equal weak/direct power");
             }
@@ -107,6 +109,8 @@ public final class LogisticsCpuDisplayTests {
                             && restored.usedProcessorCounts().storage() == 0,
                     "CPU cover status and used counters survive a block-entity NBT round trip");
             helper.runAfterDelay(20, () -> {
+                helper.assertTrue(testedCore.storedEU() >= testedCore.processorCounts().routingThreshold(),
+                        "idle meter check still has enough energy to scan and update displays");
                 helper.assertTrue(testedCore.logisticsCovers().displaySignal(Direction.UP) == 0
                                 && testedCore.logisticsCovers().displayVisual(Direction.EAST) == 0
                                 && testedCore.logisticsCovers().displaySignal(Direction.DOWN) == 15,
@@ -128,7 +132,9 @@ public final class LogisticsCpuDisplayTests {
         int power = LogisticsCpuDisplay.signal(2, 4);
         int visual = LogisticsCpuDisplay.visual(2, 4);
         helper.assertTrue(power > 0 && power < 15 && visual > 0 && visual < 10
-                        && wire.getSignal(entity.getBlockState(), helper.getLevel(), pos, Direction.NORTH) == power,
+                        && wire.getSignal(entity.getBlockState(), helper.getLevel(), pos, Direction.SOUTH) == power
+                        && wire.getDirectSignal(entity.getBlockState(), helper.getLevel(), pos, Direction.SOUTH) == power
+                        && wire.getSignal(entity.getBlockState(), helper.getLevel(), pos, Direction.NORTH) == 0,
                 "partial load has distinct original redstone and visual levels");
         var reloaded = new LogisticsWireBlockEntity(pos, entity.getBlockState());
         reloaded.load(entity.saveWithoutMetadata());

@@ -217,16 +217,21 @@ public class ExtenderBlockEntity extends com.gregtech.gregtech.blockentity.Energ
         if (!universal() || (((SourceExtenderBlock) getBlockState().getBlock()).spec().bridge && side == null)) return null;
         return new com.gregtech.gregtech.api.machine.MachineControl() {
 
+            // Resolve feature queries just like commands: targets can disappear, change or form a cycle.
             public boolean available() {
-                return !isRemoved();
+                return controlOperation(side, false, control -> control.available());
+            }
+
+            public boolean supportsSwitch() {
+                return controlOperation(side, false, control -> control.supportsSwitch());
             }
 
             public boolean supportsProgress() {
-                return true;
+                return controlOperation(side, false, control -> control.supportsProgress());
             }
 
             public boolean supportsMode() {
-                return true;
+                return controlOperation(side, false, control -> control.supportsMode());
             }
 
             public int mode() {
