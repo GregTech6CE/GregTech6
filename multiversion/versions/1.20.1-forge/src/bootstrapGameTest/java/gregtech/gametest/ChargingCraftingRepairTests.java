@@ -83,7 +83,7 @@ public final class ChargingCraftingRepairTests {
         h.assertTrue(root.doEnergyInjection(GregTechTags.Energy.EU,Direction.WEST,32,8,true)==8,"cycle terminates and two branches accept eight packets total");
         int charged=0;long total=0;for(var table:new ChargingCraftingTableBlockEntity[]{first,second})for(int i=16;i<=20;i++){long amount=charge(table.items().getStackInSlot(i));if(amount>0)charged++;total+=amount;h.assertTrue(amount<32,"lossy route never amplifies packet voltage");}
         h.assertTrue(charged==8&&total>0&&total<256,"each accepted packet charged one tool once, including cycle");
-        for(var table:new ChargingCraftingTableBlockEntity[]{first,second})for(int i=16;i<=20;i++){var stack=table.items().getStackInSlot(i).copy();stack.getOrCreateTag().putLong("gt.charge",100000);table.items().setStackInSlot(i,stack);}
+        for(var table:new ChargingCraftingTableBlockEntity[]{first,second})for(int i=16;i<=20;i++){var stack=table.items().getStackInSlot(i).copy();((gregtech.content.item.ChemicalBatteryItem)stack.getItem()).setCharge(stack,((gregtech.content.item.ChemicalBatteryItem)stack.getItem()).spec().capacity());table.items().setStackInSlot(i,stack);}
         h.assertTrue(root.doEnergyInjection(GregTechTags.Energy.EU,Direction.WEST,32,8,true)==0,"saturated receivers report no consumption");h.succeed();
     }
     @GameTest(template="test_empty")

@@ -14,7 +14,9 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
@@ -22,6 +24,7 @@ import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /** GT6's eight optional mob-farm platforms, clipped to one 16x16 target chunk per feature call. */
 @GameTestHolder("gregtech_repair")
@@ -96,18 +99,31 @@ public final class DungeonMobFarmOuterTests {
         helper.succeed();
     }
 
-    private static Map<BlockPos, BlockState> recordOrder(byte[][] cells, int[][] order) {
+    private record PlatformRecord(Map<BlockPos, BlockState> blocks, Set<BlockPos> waterTicks) {}
+
+    private static PlatformRecord recordOrder(byte[][] cells, int[][] order) {
         var footprint = GTDungeonChunkRoomFarmMobs.footprint(cells, 2, 2);
         Map<BlockPos, BlockState> writes = new HashMap<>();
+        Set<BlockPos> waterTicks = new HashSet<>();
         int[] owner = new int[2];
         WorldGenLevel recorder = (WorldGenLevel) Proxy.newProxyInstance(
                 WorldGenLevel.class.getClassLoader(), new Class<?>[]{WorldGenLevel.class},
                 (proxy, method, args) -> {
-                    if (!method.getName().equals("setBlock"))
+                    String name = method.getName();
+                    if (!name.equals("setBlock") && !name.equals("scheduleTick"))
                         throw new AssertionError("mob-farm platform unexpectedly read " + method.getName());
                     BlockPos pos = (BlockPos) args[0];
                     if (pos.getX() >> 4 != owner[0] || pos.getZ() >> 4 != owner[1])
                         throw new AssertionError("mob-farm wrote outside target chunk: " + pos);
+                    if (name.equals("scheduleTick")) {
+                        // GTDungeonData starts each water source after the platform has been built.
+                        if (args.length != 3 || args[1] != Fluids.WATER || !Integer.valueOf(5).equals(args[2])
+                                || !writes.getOrDefault(pos, Blocks.AIR.defaultBlockState()).is(Blocks.WATER))
+                            throw new AssertionError("unexpected mob-farm fluid tick at " + pos);
+                        if (!waterTicks.add(pos.immutable()))
+                            throw new AssertionError("duplicate mob-farm water tick at " + pos);
+                        return null;
+                    }
                     writes.put(pos.immutable(), (BlockState) args[1]);
                     return true;
                 });
@@ -124,7 +140,7 @@ public final class DungeonMobFarmOuterTests {
             GTDungeonChunkRoomFarmMobs.generateOuterPlatform(data);
             GTDungeonChunkRoomFarmMobs.addPipeFragments(data, footprint, i, j);
         }
-        return writes;
+        return new PlatformRecord(writes, waterTicks);
     }
 
     @GameTest(template = "test_empty", timeoutTicks = 200)
@@ -132,10 +148,13 @@ public final class DungeonMobFarmOuterTests {
         byte[][] cells = northWestOnly();
         int[][] forward = {{2, 2}, {1, 2}, {2, 1}, {1, 1}};
         int[][] reverse = {{1, 1}, {2, 1}, {1, 2}, {2, 2}};
-        Map<BlockPos, BlockState> first = recordOrder(cells, forward);
-        Map<BlockPos, BlockState> second = recordOrder(cells, reverse);
-        helper.assertTrue(first.equals(second) && first.size() > 20000,
+        PlatformRecord firstRecord = recordOrder(cells, forward);
+        PlatformRecord secondRecord = recordOrder(cells, reverse);
+        Map<BlockPos, BlockState> first = firstRecord.blocks();
+        helper.assertTrue(firstRecord.equals(secondRecord) && first.size() > 20000,
                 "all four GT6 platform shells and pipe fragments are chunk-order independent");
+        helper.assertTrue(firstRecord.waterTicks().size() == 16,
+                "each of the four platforms starts exactly its four local water sources in either order");
         BlockState centreWest = first.get(new BlockPos(7, 47, 8));
         BlockState westEast = first.get(new BlockPos(-1, 47, 8));
         BlockState centreNorth = first.get(new BlockPos(8, 47, 7));

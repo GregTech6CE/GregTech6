@@ -19,25 +19,29 @@ import net.minecraftforge.gametest.*;
 public final class ControlCoverTests {
     private static final BlockPos POS=new BlockPos(4,3,4);
     private static BasicMachineBlockEntity machine(GameTestHelper h){
+        return machine(h,true);
+    }
+    private static BasicMachineBlockEntity machine(GameTestHelper h,boolean constantEnergy){
         var block=MachineRegistry.basicMachines().get(0).get();h.setBlock(POS,Blocks.AIR);h.setBlock(POS,block);
         var m=(BasicMachineBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(POS));
         var map=new RecipeMap(null,"control_cover_test_"+Long.toUnsignedString(m.getBlockPos().asLong()),"Test","test",1,1,1,0,0,0,1,false,false,false,false);
         map.addRecipe(new Recipe(new ItemStack[]{new ItemStack(Items.APPLE)},new ItemStack[]{new ItemStack(Items.DIAMOND)},null,null,null,null,4,32,0));
-        m.setSpec(BasicMachineSpec.builder("control_cover_test",block.basicSpec().material()).machineType("test").energy(GregTechTags.Energy.EU,32).recipes(map).faces(gregtech.internal.energy.FaceConfig.ALL_SIDES).build());return m;
+        m.setSpec(BasicMachineSpec.builder("control_cover_test",block.basicSpec().material()).machineType("test").energy(GregTechTags.Energy.EU,32).constantEnergy(constantEnergy).recipes(map).faces(gregtech.internal.energy.FaceConfig.ALL_SIDES).build());return m;
     }
     private static void tick(BasicMachineBlockEntity m){m.doEnergyInjection(GregTechTags.Energy.EU,null,32,1,true);BasicMachineBlockEntity.serverTick(m.getLevel(),m.getBlockPos(),m.getBlockState(),m);}
     private static void attach(BasicMachineBlockEntity m,Direction side,MachineCoverSpec spec){m.attachCover(side,new ItemStack(GTTechnological.get(spec.id)));}
     @GameTest(template="test_blueprint_empty") public static void switchReadsOnlyItsFaceAndCrowbarReturnsDefaults(GameTestHelper h){
-        var m=machine(h);attach(m,Direction.NORTH,MachineCoverSpec.REDSTONE);m.inventory().setStackInSlot(0,new ItemStack(Items.APPLE));
+        // This fixture isolates switch pause/resume from constant-energy progress loss.
+        var m=machine(h,false);attach(m,Direction.NORTH,MachineCoverSpec.REDSTONE);m.inventory().setStackInSlot(0,new ItemStack(Items.APPLE));
         h.setBlock(POS.east(),Blocks.REDSTONE_BLOCK);tick(m);
         h.assertTrue(m.inventory().getStackInSlot(0).getCount()==1&&m.machineControl(null).progress()==0,"wrong-face power cannot start a machine");
-        h.setBlock(POS.north(),Blocks.REDSTONE_BLOCK);tick(m);long progress=m.machineControl(null).progress();
+        h.setBlock(POS.north(),Blocks.REDSTONE_BLOCK);tick(m);tick(m);long progress=m.machineControl(null).progress();
         h.assertTrue(progress>0&&m.inventory().getStackInSlot(0).isEmpty(),"cover-face power starts actual recipe");
         h.setBlock(POS.north(),Blocks.AIR);tick(m);h.assertTrue(m.machineControl(null).progress()==progress,"switch pauses existing work");
         h.assertTrue(m.configureControlCover(Direction.NORTH,false),"screwdriver inversion supported");
         var saved=m.saveWithoutMetadata();m.load(saved);
         h.assertTrue(MachineCoverSpec.inverted(m.getCover(Direction.NORTH)),"inversion persists in attached cover NBT");
-        tick(m);h.assertTrue(m.machineControl(null).progress()>progress,"inverted cover runs without its face powered");
+        tick(m);tick(m);h.assertTrue(m.machineControl(null).progress()>progress,"inverted cover runs without its face powered");
         var removed=m.removeCover(Direction.NORTH);h.assertTrue(!MachineCoverSpec.inverted(removed),"crowbar returns default stackable cover");h.succeed();
     }
     @GameTest(template="test_blueprint_empty") public static void autoRedstoneFinishesOneJobAfterSignalStops(GameTestHelper h){
@@ -54,7 +58,8 @@ public final class ControlCoverTests {
         m.inventory().setStackInSlot(0,new ItemStack(Items.APPLE));
         for(int i=0;i<6;i++)tick(m);
         h.assertTrue(m.inventory().getStackInSlot(1).is(Items.DIAMOND)&&m.inventory().getStackInSlot(1).getCount()==1,"readiness probe does not consume or duplicate input");
-        h.assertTrue(!m.isRunning(),"empty machine returns to idle after completion");h.succeed();
+        tick(m);h.assertTrue(!m.isRunning()&&!m.machineControl(null).active(),"empty automatic machine stops after its control settling tick");
+        h.assertTrue(m.inventory().getStackInSlot(1).getCount()==1,"settling control tick cannot duplicate output");h.succeed();
     }
     @GameTest(template="test_blueprint_empty") public static void rebootWindowsAndMachineTimerPersist(GameTestHelper h){
         var idle=new MachineCoverSpec.State(false,false,false,false);var processing=new MachineCoverSpec.State(false,true,true,false);
@@ -65,7 +70,7 @@ public final class ControlCoverTests {
         var m=machine(h);attach(m,Direction.NORTH,MachineCoverSpec.TIMER_1);m.inventory().setStackInSlot(0,new ItemStack(Items.APPLE));
         var saved=m.saveWithoutMetadata();saved.putLong("gt.cover_ticks",1188);m.load(saved);tick(m);
         h.assertTrue(m.inventory().getStackInSlot(0).getCount()==1,"does not start before timer window");
-        saved=m.saveWithoutMetadata();m.load(saved);m.machineControl(null).setEnabled(false);tick(m);
+        saved=m.saveWithoutMetadata();m.load(saved);m.machineControl(null).setEnabled(false);tick(m);tick(m);
         h.assertTrue(m.inventory().getStackInSlot(0).isEmpty()&&m.machineControl(null).progress()>0,"saved timer resumes into startup window");h.succeed();
     }
     @GameTest(template="test_blueprint_empty") public static void detectorOutputsAreSidedAndSeparateSuccessFromProcessing(GameTestHelper h){

@@ -116,10 +116,14 @@ public final class OrePurificationRoutesTests {
         // The ladder must start at a legendary gem and end at the material's own dust.
         helper.assertTrue(!recipe.mOutputs[0].isEmpty() && !recipe.mOutputs[5].isEmpty(),
                 "gem grades present");
-        helper.assertTrue(recipe.mOutputs[0].getCount() == 8 && recipe.mOutputs[1].getCount() == 4
-                        && recipe.mOutputs[2].getCount() == 2,
-                "rare grades are scaled 8x/4x/2x like GT6: " + recipe.mOutputs[0].getCount() + "/"
-                        + recipe.mOutputs[1].getCount() + "/" + recipe.mOutputs[2].getCount());
+        MaterialPrefix[] grades={MaterialPrefix.gemLegendary,MaterialPrefix.gemExquisite,MaterialPrefix.gemFlawless};
+        int[] fallback={8,4,2};
+        for(int i=0;i<grades.length;i++) {
+            var grade=gregtech.content.registry.GTItems.getStack(grades[i],form.material(),1);
+            var expected=grade.isEmpty()?gregtech.content.registry.GTItems.getStack(MaterialPrefix.gem,form.material(),fallback[i]):grade;
+            helper.assertTrue(ItemStack.isSameItemSameTags(recipe.mOutputs[i],expected)
+                    &&recipe.mOutputs[i].getCount()==expected.getCount(),"one source rare grade, or its ordinary-gem fallback: "+grades[i]);
+        }
 
         // The tiny purified form uses the same ladder at a tenth of the chances.
         helper.assertTrue(withChances(recipes, 1, 10, 40, 150, 200, 400, 500) != null,
@@ -129,7 +133,7 @@ public final class OrePurificationRoutesTests {
 
     /**
      * GT6's sluice route ({@code Loader_Recipes_Ores:415-420}): crushed ore + water → one
-     * purified ore plus seven byproduct fines, with the water variants of {@code FL.waters}.
+     * purified ore plus eight byproduct fines, with the water variants of {@code FL.waters}.
      * <p>
      * Regression: the four Sluice tiers and the Large Sluice had an empty recipe map.
      * </p>
@@ -143,10 +147,10 @@ public final class OrePurificationRoutesTests {
         Recipe recipe = forMaterial(recipes, MaterialPrefix.crushed, bauxite);
         helper.assertTrue(recipe != null, "the sluice route is registered for crushed bauxite");
 
-        helper.assertTrue(hasChances(recipe, 10000, 300, 300, 300, 300, 300, 300, 300),
+        helper.assertTrue(hasChances(recipe, 10000, 300, 300, 300, 300, 300, 300, 300, 300),
                 "GT6 tSluice chances: " + java.util.Arrays.toString(recipe.mChances));
-        helper.assertTrue(recipe.mOutputs.length == 8,
-                "purified ore plus seven byproduct fines, got " + recipe.mOutputs.length);
+        helper.assertTrue(recipe.mOutputs.length == 9,
+                "purified ore plus eight byproduct fines, got " + recipe.mOutputs.length);
         helper.assertTrue(recipe.mDuration == 144, "GT6 duration 144, got " + recipe.mDuration);
         helper.assertTrue(recipe.mEUt == 16, "GT6 EU/t 16, got " + recipe.mEUt);
         helper.assertTrue(outputIs(recipe, MaterialPrefix.crushedPurified, bauxite),

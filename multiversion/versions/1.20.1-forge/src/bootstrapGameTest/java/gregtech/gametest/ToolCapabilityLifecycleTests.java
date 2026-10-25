@@ -72,7 +72,9 @@ public final class ToolCapabilityLifecycleTests {
                 var dust=GTItems.getStack(MaterialPrefix.dust,Materials.Iron,3);
                 h.assertTrue(funnel.insert(dust)==3,"funnel has three iron dust");
                 var restored=cycle(h,be,ForgeCapabilities.ITEM_HANDLER);
-                h.assertTrue(restored.extractItem(0,64,false).getCount()==3,"funnel contents retained");
+                h.assertTrue(restored.getStackInSlot(0).getCount()==3&&restored.getStackInSlot(0).is(dust.getItem()),"input contents retained across capability lifecycle");
+                h.assertTrue(restored.extractItem(0,64,false).isEmpty(),"input slot remains protected from automated extraction");
+                h.assertTrue(funnel.retrieve().getCount()==3&&funnel.retrieve().isEmpty(),"manual retrieval returns retained input exactly once");
             } else {
                 var apiary=(BumbliaryBlockEntity)be;
                 apiary.inventory().setStackInSlot(apiary.layout().combs()[0],new ItemStack(Items.HONEYCOMB,3));

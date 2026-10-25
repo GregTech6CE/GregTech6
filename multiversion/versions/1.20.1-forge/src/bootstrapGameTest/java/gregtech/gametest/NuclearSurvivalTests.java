@@ -33,7 +33,8 @@ public final class NuclearSurvivalTests {
         h.succeed();
     }
     @GameTest(template="test_empty") public static void playerRadiationAccumulatesAndPersists(GameTestHelper h){
-        var player=h.makeMockPlayer();
+        // Creative players are deliberately immune to reactor exposure.
+        var player=h.makeMockSurvivalPlayer();
         ReactorRadiation.apply(player,3,8);PlayerRadiation.applySymptoms(player);
         h.assertTrue(PlayerRadiation.dose(player)==24&&!player.hasEffect(MobEffects.POISON),"below 25 has no radiation symptom");
         ReactorRadiation.apply(player,1,1);PlayerRadiation.applySymptoms(player);
@@ -45,15 +46,17 @@ public final class NuclearSurvivalTests {
         PlayerRadiation.change(player,Long.MAX_VALUE);PlayerRadiation.applySymptoms(player);
         h.assertTrue(PlayerRadiation.dose(player)==127&&player.hasEffect(MobEffects.WITHER)&&player.getEffect(MobEffects.WEAKNESS).getAmplifier()==2,"100+ causes severe radiation, no dose overflow");
         var saved=new net.minecraft.nbt.CompoundTag();player.saveWithoutId(saved);
-        var restored=h.makeMockPlayer();restored.load(saved);h.assertTrue(PlayerRadiation.dose(restored)==127,"dose survives player NBT save/load");
-        var clone=h.makeMockPlayer();PlayerRadiation.clonePlayer(new net.minecraftforge.event.entity.player.PlayerEvent.Clone(clone,player,false));
+        var restored=h.makeMockSurvivalPlayer();restored.load(saved);h.assertTrue(PlayerRadiation.dose(restored)==127,"dose survives player NBT save/load");
+        var clone=h.makeMockSurvivalPlayer();PlayerRadiation.clonePlayer(new net.minecraftforge.event.entity.player.PlayerEvent.Clone(clone,player,false));
         h.assertTrue(PlayerRadiation.dose(clone)==127,"non-death player replacement preserves dose");
         PlayerRadiation.clonePlayer(new net.minecraftforge.event.entity.player.PlayerEvent.Clone(clone,player,true));
         h.assertTrue(PlayerRadiation.dose(clone)==0,"death clears accumulated dose");
         PlayerRadiation.change(player,Long.MIN_VALUE);h.assertTrue(PlayerRadiation.dose(player)==0,"negative dose clamps without overflow");h.succeed();
     }
     @GameTest(template="test_empty") public static void radiationSuitAndMedicine(GameTestHelper h){
-        var player=h.makeMockPlayer();
+        // Keep real consumption ticks separate from the independent symptom tick handler.
+        if(h.getLevel().getGameTime()%50==0){h.runAfterDelay(1,()->radiationSuitAndMedicine(h));return;}
+        var player=h.makeMockSurvivalPlayer();
         for(var entry:GTRadiationProtection.SUIT.entrySet()){
             var stack=new ItemStack(entry.getValue().get());player.setItemSlot(entry.getKey().getSlot(),stack);
             h.assertTrue(stack.getMaxDamage()==128,"each original suit piece has 128 durability");
@@ -62,16 +65,30 @@ public final class NuclearSurvivalTests {
         player.setItemSlot(net.minecraft.world.entity.EquipmentSlot.HEAD,ItemStack.EMPTY);
         h.assertTrue(ReactorRadiation.apply(player,1,100)&&PlayerRadiation.dose(player)==100,"missing one piece removes protection");
         var medicine=net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","radaway"));
-        var stack=new ItemStack(medicine,2);player.getAbilities().instabuild=false;
+        var stack=new ItemStack(medicine,2);player.getFoodData().setFoodLevel(20);
         h.assertTrue(medicine.getFoodProperties().canAlwaysEat()&&medicine.getFoodProperties().getNutrition()==0,"medicine can be taken at full hunger without adding food");
-        stack=medicine.finishUsingItem(stack,h.getLevel(),player);
+        stack=consumeMedicine(h,player,stack);
         h.assertTrue(PlayerRadiation.dose(player)==50&&stack.getCount()==1,"one pill removes exactly 50 dose and is consumed");
-        medicine.finishUsingItem(stack,h.getLevel(),player);h.assertTrue(PlayerRadiation.dose(player)==0,"second pill completes treatment");
+        stack=consumeMedicine(h,player,stack);
+        h.assertTrue(PlayerRadiation.dose(player)==0&&stack.isEmpty(),"second pill completes treatment and is consumed");
         for(var entry:GTRadiationProtection.SUIT.values()){
             var id=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","nuclear/"+entry.getId().getPath());
             h.assertTrue(h.getLevel().getRecipeManager().byKey(id).isPresent(),"suit crafting route loaded: "+id);
         }
         h.succeed();
+    }
+    private static ItemStack consumeMedicine(GameTestHelper h,net.minecraft.world.entity.player.Player player,ItemStack stack){
+        var pos=h.absolutePos(new BlockPos(1,2,1));
+        player.setPos(pos.getX()+.5,pos.getY(),pos.getZ()+.5);
+        player.setNoGravity(true);
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,stack);
+        stack.getItem().use(h.getLevel(),player,net.minecraft.world.InteractionHand.MAIN_HAND);
+        h.assertTrue(player.isUsingItem(),"medicine starts native consumption at full hunger");
+        // The helper does not insert its player into the world. Real player ticks complete use
+        // and let Forge emit Finish, where the shared food table applies the dose once.
+        for(int ticks=0;ticks<100&&player.isUsingItem();ticks++)player.tick();
+        h.assertTrue(!player.isUsingItem(),"medicine completes the native item-use lifecycle");
+        return player.getMainHandItem();
     }
     @GameTest(template="test_empty") public static void radiationMedicineManufacturingAndGeiger(GameTestHelper h){
         var items=net.minecraftforge.registries.ForgeRegistries.ITEMS;

@@ -81,8 +81,9 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, gregtech.inte
             logic += contribution.logic(); control += contribution.control();
             storage += contribution.storage(); conversion += contribution.conversion();
         }
-        // PER_CELL is declarative metadata only until card 58; preserve today's atomic binding behavior.
-        var claimed = gregtech.internal.multiblock.tracking.StructureClaims.update(this, true, bindings, candidates, 0,
+        // PER_CELL stays declarative metadata until the user decides which families enable it; the
+        // runtime binding below remains atomic.
+        var claimed = gregtech.internal.multiblock.tracking.StructureClaims.update(this, bindings, candidates,
                 pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part && part.canBind(worldPosition),
                 (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role), this::releasePart);
         if (claimed == gregtech.internal.multiblock.tracking.StructureClaims.Result.FAILED) return unbind();
@@ -100,35 +101,6 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, gregtech.inte
             network = LogisticsNetwork.Snapshot.empty();
         }
     }
-    @Override
-    public boolean scanStructure() {
-        if (level == null || isRemoved()) return false;
-        Direction front = getBlockState().getValue(LogisticsCoreControllerBlock.FACING);
-        LogisticsCoreStructure.Counts found = LogisticsCoreStructure.counts(level, worldPosition, front);
-        if (found == null || !found.valid()) return unbind();
-
-        var candidates = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
-        for (var cell : LogisticsCoreStructure.cells()) {
-            BlockPos pos = cell.at(worldPosition, front);
-            if (!(level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity)) return unbind();
-            candidates.put(pos, switch (cell.kind()) {
-                case WALL -> MultiblockLayout.Role.ENERGY_INPUT;
-                case VENT -> MultiblockLayout.Role.LOGISTICS;
-                case CPU -> MultiblockLayout.Role.CASING;
-            });
-        }
-        if (!level.isClientSide) {
-            var claimed = gregtech.internal.multiblock.tracking.StructureClaims.update(this, true, bindings, candidates, 0,
-                    pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part
-                    && part.canBind(worldPosition),
-                    (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
-                    this::releasePart);
-            if (claimed == gregtech.internal.multiblock.tracking.StructureClaims.Result.FAILED) return unbind();
-        }
-        processors = found;
-        return true;
-    }
-
     private boolean unbind() {
         gregtech.internal.multiblock.tracking.StructureClaims.runQuiet(() -> bindings.clear(this::releasePart));
         gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
@@ -164,7 +136,6 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, gregtech.inte
 
     public static void serverTick(Level level, BlockPos pos, BlockState state,
             LogisticsCoreControllerBlockEntity controller) {
-        controller.isStructureOk();
         // GT6 routes once per second, but charges standby power on every server tick (:504).
         if (level.getGameTime() % 20 == 0) {
             LogisticsCpuDisplay.Usage previous = controller.usedProcessors;
@@ -191,7 +162,7 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, gregtech.inte
 
     /** Refresh discovery after validating and binding the structure; also called by the per-second tick. */
     public LogisticsNetwork.Snapshot scanNetwork() {
-        if (!isStructureOk()) return network;
+        if (processors == null) return network;
         network = LogisticsNetwork.scan(level, worldPosition,
                 getBlockState().getValue(LogisticsCoreControllerBlock.FACING),
                 LogisticsCoreStructure.range(processors));
@@ -204,7 +175,7 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, gregtech.inte
     }
 
     private LogisticsRoutingPass.Result routeNetworkOnce(boolean networkReady) {
-        if (level == null || level.isClientSide || !isStructureOk()
+        if (level == null || level.isClientSide || processors == null
                 || energy < processors.routingThreshold()) return new LogisticsRoutingPass.Result(0, 0, 0, 0);
         if (!networkReady) scanNetwork();
         var result = LogisticsRoutingPass.route(level, network, processors.logic(), processors.conversion());

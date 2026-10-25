@@ -185,7 +185,8 @@
     "energy": "MachineBehaviorContext",
     "auxiliaryEnergy": "MachineBehaviorContext",
     "emitTo": "MachineBehaviorContext",
-    "recipeMaps": "BehaviorMachine.Builder"
+    "recipeMaps": "BehaviorMachine.Builder",
+    "notifyChanged": "AddonStructures"
   },
   "headings": {
     "Addon API": "Addon 接口",

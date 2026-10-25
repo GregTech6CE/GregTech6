@@ -35,6 +35,7 @@ public final class NeoForgeGameTestReports {
                 @Override
                 public void onTestFailed(GameTestInfo info) {
                     log.onTestFailed(info);
+                    LogUtils.getLogger().error("GT6_GAMETEST_FAILURE {}", info.getTestName(), info.getError());
                     xml.onTestFailed(info);
                 }
 

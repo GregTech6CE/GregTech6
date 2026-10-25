@@ -1,7 +1,6 @@
 package gregtech.gametest;
 
 import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.api.recipe.*;
 import gregtech.internal.recipe.*;
 import gregtech.internal.recipe.*;
 import gregtech.content.recipe.DormantOreRows;

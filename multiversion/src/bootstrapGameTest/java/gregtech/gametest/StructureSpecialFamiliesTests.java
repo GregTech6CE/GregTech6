@@ -1,5 +1,6 @@
 package gregtech.gametest;
 
+import gregtech.internal.multiblock.MultiblockLayout;
 import gregtech.internal.multiblock.tracking.*;
 import gregtech.content.block.OreBlock;
 import gregtech.content.block.OreHostStone;
@@ -7,6 +8,7 @@ import gregtech.content.block.machine.*;
 import gregtech.content.blockentity.machine.*;
 import gregtech.content.logistics.LogisticsCoreStructure;
 import gregtech.content.multiblock.*;
+import gregtech.jei.MultiblockInfoData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -102,26 +104,35 @@ public final class StructureSpecialFamiliesTests {
         return BuiltInRegistries.BLOCK.stream().filter(predicate).findFirst().orElseThrow();
     }
     private static BlockState part(int id) { return LargeMachineParts.block(id).defaultBlockState(); }
+    private static Block tankBlock(int size) {
+        return find(b -> b instanceof TankControllerBlock tank && tank.size() == size);
+    }
+    private static void buildTank(Fixture f, int size, Direction facing) {
+        var machine = (MultiblockTankControllerBlockEntity) f.entity;
+        Block wall = machine.valveSpec() == null ? (size == 3
+                ? gregtech.content.registry.GTMultiblocks.TANK_WALL.get()
+                : gregtech.content.registry.GTMultiblocks.TANK_WALL_DENSE.get())
+                : LargeMachineParts.block(machine.valveSpec().wallId());
+        int r = size / 2;
+        BlockPos centre = f.origin.relative(facing.getOpposite(), r);
+        for (int x = -r; x <= r; x++) for (int y = -r; y <= r; y++) for (int z = -r; z <= r; z++) {
+            BlockPos pos = centre.offset(x, y, z);
+            if (pos.equals(f.origin)) continue;
+            boolean shell = Math.abs(x) == r || Math.abs(y) == r || Math.abs(z) == r;
+            f.cell(pos, (shell ? wall : Blocks.AIR).defaultBlockState());
+        }
+    }
+    private static BlockPos tankCentre(Fixture f, int size, Direction facing) {
+        return f.origin.relative(facing.getOpposite(), size / 2);
+    }
 
     @GameTest(template = "test_empty", timeoutTicks = 400, batch = "st-special-tank")
     public static void tanksBothSizesAndSixFacings(GameTestHelper h) {
         int index = 0;
         for (int size : new int[]{3, 5}) for (Direction facing : Direction.values()) {
-            Block block = find(b -> b instanceof TankControllerBlock tank && tank.size() == size);
-            try (var f = new Fixture(h, index++, block, facing)) {
-                var machine = (MultiblockTankControllerBlockEntity) f.entity;
-                Block wall = machine.valveSpec() == null ? (size == 3
-                        ? gregtech.content.registry.GTMultiblocks.TANK_WALL.get()
-                        : gregtech.content.registry.GTMultiblocks.TANK_WALL_DENSE.get())
-                        : LargeMachineParts.block(machine.valveSpec().wallId());
-                int r = size / 2;
-                BlockPos centre = f.origin.relative(facing.getOpposite(), r);
-                for (int x = -r; x <= r; x++) for (int y = -r; y <= r; y++) for (int z = -r; z <= r; z++) {
-                    BlockPos pos = centre.offset(x, y, z);
-                    if (pos.equals(f.origin)) continue;
-                    boolean shell = Math.abs(x) == r || Math.abs(y) == r || Math.abs(z) == r;
-                    f.cell(pos, (shell ? wall : Blocks.AIR).defaultBlockState());
-                }
+            try (var f = new Fixture(h, index++, tankBlock(size), facing)) {
+                buildTank(f, size, facing);
+                BlockPos centre = tankCentre(f, size, facing);
                 f.formed("tank forms size=" + size + " facing=" + facing);
                 f.put(centre, Blocks.WATER.defaultBlockState());
                 h.assertTrue(!f.ok(), "world fluid is not an empty tank interior");
@@ -166,6 +177,119 @@ public final class StructureSpecialFamiliesTests {
                     == h.getLevel().getMaxBuildHeight() - f.origin.getY() - 5, "height cap matches full scan");
         }
         h.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 400, batch = "st-special-diagnostic")
+    public static void diagnosticListsEveryWrongCellFromTheDefinition(GameTestHelper h) {
+        try (var f = new Fixture(h, 40, tankBlock(3), Direction.NORTH)) {
+            buildTank(f, 3, Direction.NORTH);
+            f.formed("tank forms");
+            h.assertTrue(StructureDiagnostic.inspect(f.machine()).isEmpty(), "formed tank has no problems");
+            BlockPos broken = tankCentre(f, 3, Direction.NORTH).offset(1, 1, 0);
+            f.put(broken, Blocks.AIR.defaultBlockState());
+            var problems = StructureDiagnostic.inspect(f.machine());
+            h.assertTrue(problems.size() == 1 && problems.get(0).pos().equals(broken),
+                    "tank diagnostic lists the broken shell cell: " + problems);
+            h.assertTrue(!f.ok(), "the same cell unforms the tank");
+            var tank = (TankControllerBlock) f.entity.getBlockState().getBlock();
+            f.put(broken, (tank.valveSpec() == null
+                    ? gregtech.content.registry.GTMultiblocks.TANK_WALL.get()
+                    : LargeMachineParts.block(tank.valveSpec().wallId())).defaultBlockState());
+            f.formed("tank repair restores the definition");
+            h.assertTrue(StructureDiagnostic.inspect(f.machine()).isEmpty(), "repaired tank has no problems");
+        }
+        try (var f = new Fixture(h, 41, find(b -> b instanceof OriginalLightningRodControllerBlock), Direction.NORTH)) {
+            f.relative(OriginalHighTechControllerLayouts.lightningRod());
+            f.formed("lightning rod forms");
+            BlockPos base = f.origin.offset(1, 0, 0);
+            f.put(base, Blocks.AIR.defaultBlockState());
+            var problems = StructureDiagnostic.inspect(f.machine());
+            h.assertTrue(problems.stream().anyMatch(problem -> problem.pos().equals(base)),
+                    "lightning diagnostic lists the broken base cell: " + problems);
+            f.put(base, part(18004));
+            BlockPos rod = f.origin.above(5);
+            f.put(rod, Blocks.AIR.defaultBlockState());
+            h.assertTrue(StructureDiagnostic.inspect(f.machine()).isEmpty(),
+                    "an optional rod segment above the minimum is not an error");
+            f.formed("a zero-length rod still matches the definition");
+            f.put(rod, part(18104));
+            f.formed("rod repair restores the definition");
+            h.assertTrue(StructureDiagnostic.inspect(f.machine()).isEmpty(), "repaired rod has no problems");
+        }
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = "st-special-preview")
+    public static void previewAndJeiDrawTheDefinitionCells(GameTestHelper h) {
+        var tankController = find(b -> b instanceof TankControllerBlock tank && tank.size() == 3);
+        var tankInfo = infoFor(tankController);
+        var tank = (TankControllerBlock) tankController;
+        Block tankWall = tank.valveSpec() == null ? gregtech.content.registry.GTMultiblocks.TANK_WALL.get()
+                : LargeMachineParts.block(tank.valveSpec().wallId());
+        previewMatches(h, tankInfo, SpecialStructures.tankCells(tank.size(), tankWall, Direction.NORTH), "tank");
+
+        var exchanger = find(b -> b instanceof LargeHeatExchangerControllerBlock);
+        var exchangerCells = new ArrayList<CompiledPattern.FixedCell>();
+        for (var cell : SharedHeatExchangerStructure.CELLS)
+            exchangerCells.add(new CompiledPattern.FixedCell(cell.right(), cell.up(), cell.back(),
+                    new LargeMachineLayouts.Cell(cell.right(), cell.up(), cell.back(), cell.part(),
+                            MultiblockLayout.Role.valueOf(cell.role().name()))));
+        previewMatches(h, infoFor(exchanger), exchangerCells, "exchanger");
+
+        var rod = find(b -> b instanceof OriginalLightningRodControllerBlock);
+        var rodInfo = infoFor(rod);
+        var rodLayout = SpecialStructures.lightningLayout(true);
+        var rodCells = new ArrayList<CompiledPattern.FixedCell>();
+        for (var cell : rodLayout.cells()) {
+            BlockPos offset = cell.at(BlockPos.ZERO, Direction.NORTH);
+            rodCells.add(new CompiledPattern.FixedCell(offset.getX(), offset.getY(), offset.getZ(),
+                    new LargeMachineLayouts.Cell(cell.right(), cell.up(), cell.back(), cell.part(), cell.role(),
+                            cell.plain(), cell.design(), cell.alternatives())));
+        }
+        rodCells.add(new CompiledPattern.FixedCell(0, 5, 0, new LargeMachineLayouts.Cell(0, 5, 0, 18104,
+                MultiblockLayout.Role.CASING)));
+        previewMatches(h, rodInfo, rodCells, "lightning");
+        var rodPreview = MultiblockInfoData.previewBlocks(rodInfo);
+        h.assertTrue(rodPreview.get(new BlockPos(0, 5, 0)).is(LargeMachineParts.block(18104).asItem()),
+                "the preview shows the same rod segment the definition repeats");
+
+        var crusher = BuiltInRegistries.BLOCK.stream()
+                .filter(b -> b instanceof BasicMachineBlock machine && machine.basicSpec().machineName().equals("largecrusher"))
+                .findFirst().orElseThrow();
+        var crusherCells = new ArrayList<CompiledPattern.FixedCell>();
+        for (var cell : LargeMachineLayouts.cells("largecrusher")) {
+            BlockPos offset = cell.at(BlockPos.ZERO, Direction.NORTH);
+            crusherCells.add(new CompiledPattern.FixedCell(offset.getX(), offset.getY(), offset.getZ(), cell));
+        }
+        previewMatches(h, infoFor(crusher), crusherCells, "large-recipe layout");
+        h.succeed();
+    }
+
+    private static MultiblockInfoData.Info infoFor(Block block) {
+        return MultiblockInfoData.recipes().stream()
+                .filter(info -> info.controller().getItem() instanceof net.minecraft.world.item.BlockItem item
+                        && item.getBlock() == block)
+                .findFirst().orElseThrow(() -> new AssertionError("no preview entry for " + block));
+    }
+
+    private static void previewMatches(GameTestHelper h, MultiblockInfoData.Info info,
+                                       List<CompiledPattern.FixedCell> cells, String label) {
+        var preview = MultiblockInfoData.previewBlocks(info);
+        var expected = new LinkedHashMap<BlockPos, Block>();
+        for (var cell : cells) {
+            Block block = SpecialStructures.previewBlock(cell.cell());
+            if (block != Blocks.AIR) expected.put(new BlockPos(cell.dx(), cell.dy(), cell.dz()), block);
+        }
+        for (var entry : expected.entrySet()) {
+            var stack = preview.get(entry.getKey());
+            h.assertTrue(stack != null && stack.getItem() instanceof net.minecraft.world.item.BlockItem item
+                            && item.getBlock() == entry.getValue(),
+                    label + " preview matches the definition at " + entry.getKey() + ": " + stack
+                            + " vs " + entry.getValue());
+        }
+        h.assertTrue(preview.size() == expected.size() + 1,
+                label + " preview shows the definition cells plus the controller: " + preview.size()
+                        + " vs " + (expected.size() + 1));
     }
 
     @GameTest(template = "test_empty", timeoutTicks = 400, batch = "st-special-logistics")

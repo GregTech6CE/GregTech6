@@ -43,14 +43,17 @@ public final class UniversalExtenderTests {
             h.setBlock(CENTER.above(),Blocks.AIR);
             h.assertTrue(!removedControl.available()&&!removedControl.setEnabled(true),"retained direct control of removed machine cannot affect its replacement");
             h.assertTrue(!retained.available()&&!retained.setEnabled(true)&&retained.progressMax()==0,"retained interface cannot control removed machine");
+            h.assertTrue(!retained.supportsSwitch()&&!retained.supportsProgress()&&!retained.supportsMode(),"missing target advertises no machine control features");
             var replacement=machine(h,CENTER.above());
             h.assertTrue(retained.available(),"same interface resolves replacement");retained.setEnabled(false);
+            h.assertTrue(retained.supportsSwitch()&&retained.supportsProgress(),"replacement restores its actual control features on the retained interface");
             h.assertTrue(!replacement.machineControl(null).enabled(),"replacement receives command");
         }
         var a=relay(h,CENTER,ExtenderSpec.UNIVERSAL,Direction.EAST,Direction.EAST);
         relay(h,CENTER.east(),ExtenderSpec.UNIVERSAL,Direction.WEST,Direction.WEST);
         var cycle=a.machineControl(Direction.WEST);
         h.assertTrue(!cycle.available()&&!cycle.setEnabled(true)&&!cycle.running()&&cycle.progress()==0,"control cycle terminates");
+        h.assertTrue(!cycle.supportsSwitch()&&!cycle.supportsProgress()&&!cycle.supportsMode(),"control cycle advertises no machine control features");
         var ordinary=relay(h,CENTER,ExtenderSpec.COMBINED,Direction.NORTH,Direction.SOUTH);
         h.assertTrue(ordinary.machineControl(Direction.NORTH)==null,"ordinary extenders do not gain universal control");h.succeed();
     }

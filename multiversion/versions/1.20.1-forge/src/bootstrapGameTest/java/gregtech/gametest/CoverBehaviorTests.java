@@ -470,11 +470,17 @@ public final class CoverBehaviorTests {
      * is trashed — asserted on a real machine with the cover attached and on an iron golem, whose
      * 100 HP makes the damage readable to the tenth.
      */
-    @GameTest(template = "test_empty", timeoutTicks = 300)
+    @GameTest(template = "harvest_empty", timeoutTicks = 300)
     public static void pressureValveVentsAGasAndHeatsWhatStandsInFront(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
-        BlockPos pos = site(32, 0);
-        var machine = machine(level, pos);
+        BlockPos pos = helper.absolutePos(new BlockPos(4,4,4));
+        prepare(level,pos,2);
+        helper.assertTrue(level.areEntitiesLoaded(net.minecraft.world.level.ChunkPos.asLong(pos))
+                &&level.isPositionEntityTicking(pos),"vent entity chunk is loaded and ticking");
+        var block=net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(
+                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","pipe_medium_steel"));
+        level.setBlockAndUpdate(pos,block.defaultBlockState());
+        var pipe=(gregtech.content.blockentity.machine.FluidPipeBlockEntity)level.getBlockEntity(pos);
         var air = gregtech.content.registry.GTFluids.still("Air_Nether");
         helper.assertTrue(air != null && air.isPresent(),
                 "gt6ce:netherair is registered, got " + air);
@@ -486,45 +492,28 @@ public final class CoverBehaviorTests {
                 "nether air is hotter than the 320 K heat threshold of UT.java:2984, got "
                         + temperature + " K");
 
-        helper.assertTrue(!machine.attachCover(Direction.EAST, cover(CoverUtilityBehaviors.PRESSURE_VALVE)),
-                "a pressure valve accepts only a single-channel fluid pipe");
-        helper.assertTrue(!machine.getCover(Direction.EAST).isEmpty(),
-                "the valve is attached, got " + machine.getCover(Direction.EAST));
-
-        var tank = machine.getTanksOutput()[0];
-        tank.setFluid(new FluidStack(fluid, (int) tank.capacity()));
-        helper.assertTrue(tank.getAmount() >= tank.capacity(),
-                "the output tank starts full, got " + tank.getAmount() + " of " + tank.capacity());
+        helper.assertTrue(pipe.attachCover(Direction.EAST,cover(CoverUtilityBehaviors.PRESSURE_VALVE)),"single-channel pipe accepts valve");
+        for(int i=0;i<4;i++) gregtech.content.blockentity.machine.FluidPipeBlockEntity.serverTick(level,pos,pipe.getBlockState(),pipe);
+        int full=pipe.getTankCapacity(0);
+        helper.assertTrue(pipe.fill(new FluidStack(fluid,full),net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE)==full,"pipe starts full of hot gas");
 
         IronGolem golem = golem(level, pos.east());
         float before = golem.getHealth();
         helper.assertTrue(before == golem.getMaxHealth(),
                 "the iron golem starts at full health, got " + before);
 
-        helper.assertTrue(CoverUtilityBehaviors.tickPressureValve(level, pos, Direction.EAST, tank, 5),
-                "the valve acted on a full tank of gas with open air in front");
+        helper.assertTrue(level.getEntitiesOfClass(IronGolem.class,new net.minecraft.world.phys.AABB(pos).inflate(2)).contains(golem),"golem visible to native vent query");
+        gregtech.content.blockentity.machine.FluidPipeBlockEntity.serverTick(level,pos,pipe.getBlockState(),pipe);
         float expected = before - Math.max(1.0F, Math.min(
                 gregtech.internal.fluid.FluidHazards.PIPE_TEMPERATURE_CAP,
                 (gregtech.internal.fluid.FluidHazards.PIPE_TEMPERATURE_MULTIPLIER
                         * (temperature - 300L)) / 50.0F));
-        // The valve's entity half is a Level.getEntitiesOfClass query, and a chunk this test only
-        // setBlock()ed into is invisible to it: a test chunk's entity sections keep the default HIDDEN
-        // visibility until a queued ticket is applied by the next ServerChunkCache.tick
-        // (PersistentEntitySectionManager:47, EntitySectionStorage:55 - the trap PileBlockTests:643-651
-        // documents). In a running game the chunk is visible and the golem below is hit; here the
-        // damage half is asserted through the very function the valve calls, with the very temperature
-        // and the very two constants it feeds it, on a golem standing in front of the valve.
-        helper.assertTrue(gregtech.util.GTEntityHelper.applyTemperatureDamage(golem,
-                        temperature,
-                        gregtech.internal.fluid.FluidHazards.PIPE_TEMPERATURE_MULTIPLIER,
-                        gregtech.internal.fluid.FluidHazards.PIPE_TEMPERATURE_CAP),
-                "the valve's damage call reaches a golem standing in front of it");
         helper.assertTrue(Math.abs(golem.getHealth() - expected) < 0.001F,
                 "the escaping " + temperature + " K gas deals " + (before - expected)
                         + " damage (CoverPressureValve:59 with UT.java:2984), got "
                         + golem.getHealth() + " of " + before);
-        helper.assertTrue(tank.isEmpty(),
-                "GarbageGT.trash empties the tank (CoverPressureValve:60), got " + tank.getAmount());
+        helper.assertTrue(pipe.getFluidInTank(0).isEmpty(),"native valve empties full gas tank");
+        golem.discard();
         helper.succeed();
     }
 
@@ -533,25 +522,29 @@ public final class CoverBehaviorTests {
     public static void pressureValveMovesAFullTankIntoTheTankInFront(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
         BlockPos pos = site(48, 0);
-        // Both machines sit inside one prepared patch; a second prepare() would wipe the first.
+        // The pipe and target share a patch; a second prepare() would wipe the first.
         prepare(level, pos, 2);
-        var source = placeMachine(level, pos);
+        var block = net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(
+                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "pipe_medium_steel"));
+        level.setBlockAndUpdate(pos, block.defaultBlockState());
+        var source = (gregtech.content.blockentity.machine.FluidPipeBlockEntity) level.getBlockEntity(pos);
         var target = placeMachine(level, pos.east());
 
         helper.assertTrue(source.attachCover(Direction.EAST, cover(CoverUtilityBehaviors.PRESSURE_VALVE)),
-                "the source machine face accepts the pressure valve");
-        var sourceTank = source.getTanksOutput()[0];
-        sourceTank.setFluid(new FluidStack(Fluids.WATER, (int) sourceTank.capacity()));
+                "the single-channel pipe accepts the pressure valve");
+        // Finish placement auto-connection and the valve's startup delay before filling.
+        for (int i = 0; i < 4; i++)
+            gregtech.content.blockentity.machine.FluidPipeBlockEntity.serverTick(level, pos, source.getBlockState(), source);
+        int full = source.getTankCapacity(0);
+        helper.assertTrue(source.fill(new FluidStack(Fluids.WATER, full),
+                net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE) == full, "pipe filled");
         helper.assertTrue(target.getTanksInput()[0].isEmpty(),
                 "the target machine's input tank starts empty, got "
                         + target.getTanksInput()[0].getAmount());
 
-        helper.assertTrue(CoverUtilityBehaviors.tickPressureValve(level, pos, Direction.EAST, sourceTank, 5),
-                "the valve acted with a machine tank in front");
-        helper.assertTrue(sourceTank.isEmpty(),
-                "the full tank was emptied into the neighbour (CoverPressureValve:56), got "
-                        + sourceTank.getAmount());
-        helper.assertTrue(target.getTanksInput()[0].getAmount() > 0
+        gregtech.content.blockentity.machine.FluidPipeBlockEntity.serverTick(level, pos, source.getBlockState(), source);
+        helper.assertTrue(source.getFluidInTank(0).isEmpty(), "the valve emptied the full pipe into its neighbour");
+        helper.assertTrue(target.getTanksInput()[0].getAmount() == full
                         && target.getTanksInput()[0].getFluid().getFluid() == Fluids.WATER,
                 "the neighbour received the water, got " + target.getTanksInput()[0].getFluid());
         helper.succeed();
@@ -805,12 +798,12 @@ public final class CoverBehaviorTests {
         // 88 and 96, and placeMachine keys its RecipeMap by block position - two tests on the same
         // site throw "Duplicate RecipeMap key" at construction time.
         BasicMachineBlockEntity bareMachine = machine(level, site(104, 0));
-        bareMachine.inventory().setStackInSlot(0, new ItemStack(Items.APPLE));
+        bareMachine.inventory().setStackInSlot(bareMachine.inputSlots(), new ItemStack(Items.APPLE));
         IItemHandler bare = bareMachine.getCapability(ForgeCapabilities.ITEM_HANDLER, side).resolve().orElse(null);
         helper.assertTrue(bare != null, "a machine face exposes its item handler");
         helper.assertTrue(bare.insertItem(0, new ItemStack(Items.APPLE), true).isEmpty(),
                 "a face without a cover lets a pipe insert");
-        helper.assertTrue(bare.extractItem(0, 1, true).getCount() == 1,
+        helper.assertTrue(bare.extractItem(bareMachine.inputSlots(), 1, true).getCount() == 1,
                 "and lets a pipe extract");
 
         // The item filter: an apple goes on the whitelist and only apples may pass afterwards.
@@ -827,9 +820,12 @@ public final class CoverBehaviorTests {
         helper.assertTrue(filtered.insertItem(0, new ItemStack(Items.DIAMOND), true).getCount() == 1,
                 "a diamond is refused (CoverFilterItem:115), got "
                         + filtered.insertItem(0, new ItemStack(Items.DIAMOND), true));
-        filteredMachine.inventory().setStackInSlot(0, new ItemStack(Items.DIAMOND));
-        helper.assertTrue(filtered.extractItem(0, 1, true).isEmpty(),
+        filteredMachine.inventory().setStackInSlot(filteredMachine.inputSlots(), new ItemStack(Items.DIAMOND));
+        helper.assertTrue(filtered.extractItem(filteredMachine.inputSlots(), 1, true).isEmpty(),
                 "and a pipe cannot pull the refused item out either (CoverFilterItem:122)");
+        filteredMachine.inventory().setStackInSlot(filteredMachine.inputSlots(), new ItemStack(Items.APPLE));
+        helper.assertTrue(filtered.extractItem(filteredMachine.inputSlots(), 1, true).getCount() == 1,
+                "a matching output can be extracted through the same filter");
 
         // The fluid filter: lava on the whitelist refuses water.
         BasicMachineBlockEntity fluidMachine = machine(level, site(112, 0));
@@ -850,13 +846,13 @@ public final class CoverBehaviorTests {
         BasicMachineBlockEntity retrieverMachine = machine(level, site(116, 0));
         helper.assertTrue(retrieverMachine.attachCover(side, cover(CoverUtilityBehaviors.RETRIEVER_ITEM)),
                 "the item retriever attaches to a machine face");
-        retrieverMachine.inventory().setStackInSlot(0, new ItemStack(Items.APPLE));
+        retrieverMachine.inventory().setStackInSlot(retrieverMachine.inputSlots(), new ItemStack(Items.APPLE));
         IItemHandler blocked = retrieverMachine.getCapability(ForgeCapabilities.ITEM_HANDLER, side)
                 .resolve().orElse(null);
         helper.assertTrue(blocked != null, "the retriever face still exposes its item handler");
         helper.assertTrue(blocked.insertItem(0, new ItemStack(Items.APPLE), true).getCount() == 1,
                 "the retriever refuses pipe inserts on its own face (CoverRetrieverItem:138)");
-        helper.assertTrue(blocked.extractItem(0, 1, true).isEmpty(),
+        helper.assertTrue(blocked.extractItem(retrieverMachine.inputSlots(), 1, true).isEmpty(),
                 "and pipe extracts too (CoverRetrieverItem:139)");
         helper.succeed();
     }

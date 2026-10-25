@@ -126,14 +126,14 @@ public final class ChemicalBatteryTests {
         charger.items().setStackInSlot(16,new ItemStack(item));
         h.assertTrue(charger.doEnergyInjection(GregTechTags.Energy.EU,Direction.DOWN,32,1,true)==1&&item.stored(charger.items().getStackInSlot(16))==32,"existing charger accepts the real LV chemical battery");
         for(var chemistry:ChemicalBatterySpec.Chemistry.values())for(var tool:ElectricToolAssembly.values()) {
-            var battery=item(chemistry,1);var input=new ItemStack(battery);battery.setCharge(input,1234);
+            int tier=tool.definition().tier();var battery=item(chemistry,tier);var input=new ItemStack(battery);battery.setCharge(input,1234);
             var recipe=tool.recipe(Materials.Steel,input,"/test");
             h.assertTrue(recipe!=null,"all five LV chemistries accepted");
             var output=recipe.getResultItem(h.getLevel().registryAccess());
             h.assertTrue(tool.item().getEnergyCapacity(output,GregTechTags.Energy.EU)==battery.spec().capacity(),"correct chemistry capacity inherited");
             h.assertTrue(tool.item().getEnergyStored(output,GregTechTags.Energy.EU)==0,"GT6 assembly starts empty even with charged input");
-            h.assertTrue(input.is(net.minecraft.tags.ItemTags.create(GregTech.id("rechargeable_batteries/lv"))),"machine recipe rechargeable tag");
-            h.assertTrue(tool.recipe(Materials.Steel,new ItemStack(item(chemistry,2)),"/invalid")==null,"wrong voltage does not assemble LV tool");
+            h.assertTrue(input.is(net.minecraft.tags.ItemTags.create(GregTech.id("rechargeable_batteries/"+tool.definition().tierName()))),"machine recipe rechargeable tag");
+            h.assertTrue(tool.recipe(Materials.Steel,new ItemStack(item(chemistry,tier==1?2:1)),"/invalid")==null,"wrong voltage does not assemble LV tool");
         }
         h.succeed();
     }

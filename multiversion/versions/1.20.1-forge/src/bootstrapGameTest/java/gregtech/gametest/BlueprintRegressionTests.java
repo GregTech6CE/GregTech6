@@ -52,7 +52,9 @@ public final class BlueprintRegressionTests {
         var pos=new BlockPos(1,2,1);var receiver=new BlockPos(5,2,1);var chest=new BlockPos(6,2,1);
         helper.setBlock(pos,GTMiscBlocks.LONG_DIST_ENDPOINT_ITEM.get().defaultBlockState().setValue(LongDistEndpointBlock.FACING,Direction.WEST));
         helper.setBlock(receiver,GTMiscBlocks.LONG_DIST_ENDPOINT_ITEM.get().defaultBlockState().setValue(LongDistEndpointBlock.FACING,Direction.WEST));
-        for(int x=2;x<=4;x++) helper.setBlock(new BlockPos(x,2,1),GTMiscBlocks.LONG_DIST_PIPE.get());
+        var itemPipe=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","long_dist_pipe_item"));
+        helper.assertTrue(itemPipe instanceof LongDistPipeBlock pipe && pipe.acceptsPipeline(false),"source item line is registered");
+        for(int x=2;x<=4;x++) helper.setBlock(new BlockPos(x,2,1),itemPipe);
         helper.setBlock(chest,Blocks.CHEST);
         var sender=helper.getLevel().getBlockEntity(helper.absolutePos(pos));
         var capability=sender.getCapability(ForgeCapabilities.ITEM_HANDLER,Direction.WEST).orElseThrow(IllegalStateException::new);
@@ -68,7 +70,7 @@ public final class BlueprintRegressionTests {
     @GameTest(template="test_blueprint_empty")
     public static void extenderResolvesReplacedInventory(GameTestHelper helper) {
         var pos=new BlockPos(1,2,1);var chest=pos.south();
-        helper.setBlock(pos,GTMiscBlocks.EXTENDER_BASIC.get().defaultBlockState().setValue(ExtenderBlock.FACING,Direction.NORTH));helper.setBlock(chest,Blocks.CHEST);
+        helper.setBlock(pos,GTMiscBlocks.EXTENDER_BASIC.get().defaultBlockState().setValue(SourceExtenderBlock.FACING,Direction.NORTH).setValue(SourceExtenderBlock.SECONDARY,Direction.SOUTH));helper.setBlock(chest,Blocks.CHEST);
         var entity=helper.getLevel().getBlockEntity(helper.absolutePos(pos));
         var cap=entity.getCapability(ForgeCapabilities.ITEM_HANDLER,Direction.NORTH).orElseThrow(IllegalStateException::new);
         helper.assertTrue(cap.insertItem(0,new ItemStack(Items.APPLE,7),false).isEmpty(),"extender forwards to opposite side");
@@ -229,9 +231,10 @@ public final class BlueprintRegressionTests {
         var recipes=new gregtech.internal.recipe.RecipeMap(null,"blueprint_crusher_test","Test","test",1,1,1,0,0,0,1,false,false,false,false);
         recipes.addRecipe(new gregtech.internal.recipe.Recipe(new ItemStack[]{new ItemStack(Items.APPLE)},new ItemStack[]{new ItemStack(Items.DIAMOND)},null,null,null,null,192,32,0));
         machine.setSpec(gregtech.internal.machine.BasicMachineSpec.builder("blueprint_crusher_test",block.basicSpec().material()).machineType("largecrusher").energy(GregTechTags.Energy.RU,512).recipes(recipes).faces(block.basicSpec().faceConfig()).build());
+        helper.assertTrue(StructureTestSupport.ok(machine),"crusher structure settled before work");
         machine.inventory().setStackInSlot(0,new ItemStack(Items.APPLE));
         for(int i=0;i<12;i++) {machine.doEnergyInjection(GregTechTags.Energy.RU,null,512,1,true);gregtech.content.blockentity.machine.BasicMachineBlockEntity.serverTick(helper.getLevel(),helper.absolutePos(pos),machine.getBlockState(),machine);}
-        helper.assertTrue(machine.getProgressPercent()==50,"6144 GU recipe costs 12288 RU at original 50 percent efficiency");
+        helper.assertTrue(machine.getProgressPercent()==50,"6144 GU recipe costs 12288 RU at original 50 percent efficiency: "+machine.getProgressPercent()+" / "+machine.saveWithoutMetadata());
         gregtech.content.blockentity.machine.BasicMachineBlockEntity.serverTick(helper.getLevel(),helper.absolutePos(pos),machine.getBlockState(),machine);
         helper.assertTrue(machine.getProgressPercent()==50,"crusher retains work on a missing power tick");
         for(int i=0;i<12;i++) {machine.doEnergyInjection(GregTechTags.Energy.RU,null,512,1,true);gregtech.content.blockentity.machine.BasicMachineBlockEntity.serverTick(helper.getLevel(),helper.absolutePos(pos),machine.getBlockState(),machine);}

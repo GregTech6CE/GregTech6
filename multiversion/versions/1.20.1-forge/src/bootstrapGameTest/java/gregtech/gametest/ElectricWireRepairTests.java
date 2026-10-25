@@ -46,7 +46,7 @@ public final class ElectricWireRepairTests {
         h.assertTrue(wire.lastWattage()==0&&wire.transferredAmperes()==3,"power is published on tick, amperage accumulates across calls");
         wire.serverTick();h.assertTrue(wire.lastWattage()==3*(32-wire.lossPerBlock())&&wire.isConducting(),"previous-tick wattage is post-loss and cumulative");
         h.assertTrue(wire.transferredAmperes()==0,"tick clears amperage budget");
-        var full=table.items().getStackInSlot(16).copy();full.getOrCreateTag().putLong("gt.charge",100000);table.items().setStackInSlot(16,full);
+        var full=table.items().getStackInSlot(16).copy();((gregtech.content.item.ChemicalBatteryItem)full.getItem()).setCharge(full,((gregtech.content.item.ChemicalBatteryItem)full.getItem()).spec().capacity());table.items().setStackInSlot(16,full);
         h.assertTrue(send(wire,32,1)==0,"full receiver refuses input");wire.serverTick();
         h.assertTrue(!wire.isConducting()&&wire.lastWattage()==0,"no invented twenty-tick shock after current ceases");h.succeed();
     }

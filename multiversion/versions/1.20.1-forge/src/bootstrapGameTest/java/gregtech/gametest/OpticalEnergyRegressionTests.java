@@ -64,7 +64,7 @@ public final class OpticalEnergyRegressionTests {
         laser.invalidateCaps();laser.reviveCaps();
         helper.assertTrue(laser.getCapability(ForgeCapabilities.ENERGY,Direction.SOUTH).isPresent(),"FE capability revives");
         var drops=net.minecraft.world.level.block.Block.getDrops(laser.getBlockState(),helper.getLevel(),helper.absolutePos(pos),laser);
-        helper.assertTrue(drops.size()==1&&drops.get(0).getTag().getCompound("BlockEntityTag").getBoolean("gt.stopped"),"dropped converter retains settings");
+        helper.assertTrue(drops.size()==1&&drops.get(0).getTagElement("BlockEntityTag")==null,"ordinary converter drop excludes runtime buffer and stop state");
         helper.succeed();
     }
     @GameTest(template="test_blueprint_empty")

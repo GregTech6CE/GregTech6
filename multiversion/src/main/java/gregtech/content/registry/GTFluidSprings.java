@@ -35,7 +35,8 @@ public final class GTFluidSprings {
     private static RegistryObject<FluidSpringBlock> register(String path, FluidSpringRules.Spring spring) {
 //?}
         var block = GTBlocks.BLOCKS.register(path, () -> new FluidSpringBlock(spring, BlockBehaviour.Properties.of()
-                .mapColor(MapColor.WATER).strength(3, 3).requiresCorrectToolForDrops().sound(SoundType.STONE)));
+                .mapColor(MapColor.WATER).strength(-1.0F, Blocks.BEDROCK.getExplosionResistance())
+                .requiresCorrectToolForDrops().sound(SoundType.STONE)));
         VARIANTS.put(path, block);
         GTBlocks.BLOCK_ITEMS.register(path, () -> new BlockItem(block.get(), new Item.Properties()) {
 

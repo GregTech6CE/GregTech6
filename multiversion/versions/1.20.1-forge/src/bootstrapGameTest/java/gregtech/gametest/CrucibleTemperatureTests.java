@@ -99,16 +99,15 @@ public final class CrucibleTemperatureTests {
         ItemStack ironDust = GTItems.getStack(MaterialPrefix.dust, Materials.Iron, 1);
         helper.assertTrue(!ironIngot.isEmpty() || !ironDust.isEmpty(), "iron has an ingot or dust form");
 
-        boolean melts = false;
-        for (Recipe recipe : MachineRecipeMaps.Melter.mRecipeList) {
-            if (recipe.mFluidOutputs.length == 0) continue;
-            String out = recipe.mFluidOutputs[0].getFluid().builtInRegistryHolder().key().location().getPath();
-            if (!out.contains("iron")) continue;
-            for (ItemStack in : recipe.mInputs) {
-                if (!in.isEmpty() && (in.is(ironIngot.getItem()) || in.is(ironDust.getItem()))) melts = true;
-            }
-        }
-        helper.assertTrue(melts, "the Melter turns iron into molten iron");
+        var molten= gregtech.content.registry.GTFluids.stack("GenMolten_Iron",144);
+        Recipe melting=MachineRecipeMaps.Smelter.mRecipeList.stream().filter(r->r.mInputs.length==1
+                &&r.mInputs[0].is(ironDust.getItem())&&r.mFluidOutputs.length==1
+                &&r.mFluidOutputs[0].isFluidEqual(molten)).findFirst().orElse(null);
+        helper.assertTrue(melting!=null&&melting.mFluidOutputs[0].getAmount()==144
+                &&melting.mEUt==16&&melting.mDuration==830,"source Fe dust Smelter yields 144 mB at 16 EU/t for 830 ticks");
+        helper.assertTrue(MachineRecipeMaps.Melter.mRecipeList.stream().noneMatch(r->r.mInputs.length==1
+                &&r.mInputs[0].is(ironDust.getItem())&&r.mFluidOutputs.length>0&&r.mFluidOutputs[0].isFluidEqual(molten)),
+                "source Fe target lacks FURNACE; no invented generic Melter row");
 
         Recipe conversion = null;
         for (Recipe recipe : MachineRecipeMaps.Smelter.mRecipeList) {

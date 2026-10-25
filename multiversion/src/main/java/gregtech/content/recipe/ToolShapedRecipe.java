@@ -116,9 +116,14 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.internal.
 
     public ToolShapedRecipe(ShapedRecipe base, boolean allowMirror, boolean requireEmptyFluidContainers, boolean autocraftable,
             String constructionColor) {
+        this(base, allowMirror, requireEmptyFluidContainers, autocraftable, constructionColor, true);
+    }
+
+    private ToolShapedRecipe(ShapedRecipe base, boolean allowMirror, boolean requireEmptyFluidContainers, boolean autocraftable,
+            String constructionColor, boolean expandTools) {
         super(base.getId(), base.getGroup(), base.category(), base.getWidth(), base.getHeight(), base.getIngredients(),
                 base.getResultItem(RegistryAccess.EMPTY));
-        getIngredients().replaceAll(CraftingTools::expand);
+        if (expandTools) getIngredients().replaceAll(CraftingTools::expand);
         this.allowMirror = allowMirror;
         this.requireEmptyFluidContainers = requireEmptyFluidContainers;
         this.autocraftable = autocraftable;
@@ -440,7 +445,7 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.internal.
         @Override
         public ToolShapedRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
             return new ToolShapedRecipe(vanilla.fromNetwork(id, buffer), buffer.readBoolean(), buffer.readBoolean(), buffer.readBoolean(),
-                    buffer.readUtf());
+                    buffer.readUtf(), false); // The packet already contains the authoritative resolved ingredients.
         }
 
         @Override

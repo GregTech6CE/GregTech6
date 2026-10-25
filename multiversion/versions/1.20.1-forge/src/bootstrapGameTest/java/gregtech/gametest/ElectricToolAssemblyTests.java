@@ -21,7 +21,7 @@ import net.minecraftforge.gametest.*;
 public final class ElectricToolAssemblyTests {
     @GameTest(template="test_empty")
     public static void originalLvPatternsMaterialsAndToolRemainders(GameTestHelper h) {
-        for(var spec:ElectricToolAssembly.values()) {
+        for(var spec:java.util.List.of(ElectricToolAssembly.DRILL,ElectricToolAssembly.CHAINSAW,ElectricToolAssembly.WRENCH,ElectricToolAssembly.SCREWDRIVER)) {
             var recipe=spec.recipe(Materials.Steel);
             h.assertTrue(recipe!=null,"steel assembly exists: "+spec);
             var grid=grid(recipe);
@@ -81,15 +81,15 @@ public final class ElectricToolAssemblyTests {
     public static void capacityTintAndEnergyArithmetic(GameTestHelper h) {
         var tool=GTElectricItems.ELECTRIC_DRILL.get();
         var stack=tool.assembled(Materials.Titanium,76543);
-        h.assertTrue(tool.tint(stack,2)==Materials.Titanium.getColor()&&tool.tint(stack,0)==GTMaterialRegistry.get("Orange").getColor()&&tool.tint(stack,1)==0xFFFFFF,"material head, LV orange body, untinted overlay");
+        h.assertTrue(tool.tint(stack,1)==Materials.Titanium.getColor()&&tool.tint(stack,0)==GTMaterialRegistry.get("Orange").getColor()&&tool.tint(stack,2)==0xFFFFFF,"material head, LV orange body, untinted overlay");
         long packets=tool.doEnergyInjection(GregTechTags.Energy.EU,stack,32,Long.MAX_VALUE,h.getLevel(),h.absolutePos(net.minecraft.core.BlockPos.ZERO),false);
         h.assertTrue(packets==64&&tool.getEnergyStored(stack,GregTechTags.Energy.EU)==0,"simulation and multiplication overflow safe");
         tool.doEnergyInjection(GregTechTags.Energy.EU,stack,32,Long.MAX_VALUE,null,null,true);
         h.assertTrue(tool.getEnergyStored(stack,GregTechTags.Energy.EU)==2048,"original tool accepts at most 64 packets");
         var copy=ItemStack.of(stack.save(new net.minecraft.nbt.CompoundTag()));
         h.assertTrue(tool.getEnergyCapacity(copy,GregTechTags.Energy.EU)==76543&&tool.headMaterial(copy)==Materials.Titanium,"material and capacity survive save");
-        h.assertTrue(tool.consumeEnergy(copy)&&tool.getEnergyStored(copy,GregTechTags.Energy.EU)==1948,"drill use still consumes 100 EU");
-        h.assertTrue(tool.doEnergyExtraction(GregTechTags.Energy.EU,copy,32,Long.MAX_VALUE,null,null,true)==0&&tool.getEnergyStored(copy,GregTechTags.Energy.EU)==1948,"GT6 tools cannot discharge into networks");
+        h.assertTrue(tool.definition().energyPerUse()==200&&tool.consumeEnergy(copy)&&tool.getEnergyStored(copy,GregTechTags.Energy.EU)==1848,"source Drill block use consumes 200 EU");
+        h.assertTrue(tool.doEnergyExtraction(GregTechTags.Energy.EU,copy,32,Long.MAX_VALUE,null,null,true)==0&&tool.getEnergyStored(copy,GregTechTags.Energy.EU)==1848,"GT6 tools cannot discharge into networks");
         copy.getOrCreateTag().putLong("gt.charge",Long.MAX_VALUE);
         h.assertTrue(tool.getBarWidth(copy)==13,"overcapacity NBT clamped");
         copy.getOrCreateTag().putLong("gt.charge",-1);

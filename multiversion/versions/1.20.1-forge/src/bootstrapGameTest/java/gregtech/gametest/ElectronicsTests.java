@@ -54,7 +54,17 @@ public final class ElectronicsTests {
     }
     @GameTest(template="test_blueprint_empty")
     public static void electronicsInputsExecuteAndSolderLimitsTier(GameTestHelper h) {
-        h.assertTrue(ElectronicsRecipes.recipes().size()==173,"173 source-backed electronics recipes");
+        int crystalRows=0;
+        var groups=java.util.List.of(gregtech.content.data.MaterialGroups.Diamond,gregtech.content.data.MaterialGroups.Emerald,gregtech.content.data.MaterialGroups.Sapphire);
+        String[][] names={{"Diamond"},{"Emerald"},{"Sapphire","GreenSapphire"}};
+        for(int i=0;i<groups.size();i++) {
+            var gems=new java.util.LinkedHashSet<gregtech.internal.material.GTMaterial>();
+            for(var name:names[i]) gems.add(gregtech.internal.material.GTMaterialRegistry.get(name).resolve());
+            gems.add(groups.get(i).resolve());gems.addAll(groups.get(i).getReRegistrations());
+            for(var gem:gems) if(gem!=null&&gem.isValid()&&!GTItems.getStack(MaterialPrefix.plateGem,gem,1).isEmpty())crystalRows++;
+        }
+        crystalRows++; // Source Ruby is a single plateGem row, without ANY-group expansion.
+        h.assertTrue(ElectronicsRecipes.recipes().size()==168+crystalRows,"fixed source electronics families plus registered gem-group engravings: "+ElectronicsRecipes.recipes().size()+" / "+(168+crystalRows));
         for(var recipe:ElectronicsRecipes.recipes()) {
             var items=Arrays.stream(recipe.mInputs).map(ItemStack::copy).toList();
             var fluids=Arrays.stream(recipe.mFluidInputs).map(net.minecraftforge.fluids.FluidStack::copy).toList();

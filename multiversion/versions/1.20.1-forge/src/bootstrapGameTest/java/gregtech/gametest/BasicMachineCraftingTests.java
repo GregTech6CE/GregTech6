@@ -167,6 +167,24 @@ public final class BasicMachineCraftingTests {
         helper.assertTrue(substitutions.equals(allowed),
                 "machine crafting ingredient substitutions changed (see "
                         + "docs/machine-crafting-substitutions.json): " + substitutions);
+        // Four external stones have four utility rows each. Missing source stones must never
+        // produce an iron-block recipe; native stone utilities must remain available.
+        for (String family : List.of("crucible_faucet", "mold", "mold_basin", "crucible_crossing")) {
+            for (String stone : List.of("umber", "livingrock", "holystone", "betweenstone")) {
+                var inputId = net.minecraft.resources.ResourceLocation.parse("gt6ce:stone_" + stone + "_stone");
+                boolean present = net.minecraftforge.registries.ForgeRegistries.ITEMS.containsKey(inputId);
+                var recipeId = net.minecraft.resources.ResourceLocation.parse(
+                        "gt6ce:survival_repairs/" + family + "_" + stone);
+                helper.assertTrue(helper.getLevel().getRecipeManager().byKey(recipeId).isPresent() == present,
+                        "optional stone recipe requires its exact source input: " + recipeId);
+            }
+            var nativeId = net.minecraft.resources.ResourceLocation.parse(
+                    "gt6ce:survival_repairs/" + family + "_stone");
+            var nativeRecipe = helper.getLevel().getRecipeManager().byKey(nativeId).orElseThrow();
+            helper.assertTrue(nativeRecipe.getIngredients().stream().anyMatch(
+                            ingredient -> ingredient.test(new ItemStack(net.minecraft.world.item.Items.STONE))),
+                    "native stone utility keeps its actual stone ingredient: " + nativeId);
+        }
         helper.succeed();
     }
 

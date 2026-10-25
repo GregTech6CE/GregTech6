@@ -36,6 +36,14 @@ class AddonApiDocsTests(unittest.TestCase):
         self.assertIn('AddonPlatform.Services.inject', errors)
         self.assertIn('bootstrap', errors)
 
+    def test_structure_notification_is_a_public_facade_not_a_bootstrap_entry(self):
+        self.assertEqual([], self.references('`AddonStructures.notifyChanged(Level level, BlockPos pos)`'))
+        self.assertTrue(self.references('`AddonPlatform.Services.structureChanged`'))
+        self.assertTrue(self.references('`StructureWatchIndex.touch(level, pos)`'))
+        for guide in self.texts:
+            self.assertIn('`AddonStructures.notifyChanged(level, pos)`', guide)
+            self.assertNotIn('`StructureWatchIndex.touch(level, pos)`', guide)
+
     def test_arbitrary_wrong_parameter_names_are_not_special_cased(self):
         self.assertTrue(self.references('`emit(String destination, long size, long amount)`'))
         self.assertEqual([], self.references('`emit(String part, long size, long amount)`'))
@@ -65,9 +73,11 @@ class AddonApiDocsTests(unittest.TestCase):
         self.assertTrue(any('broken anchor' in error for error in errors))
         self.assertTrue(any('contents' in error for error in errors))
 
-    def test_broken_decision_link_is_detected(self):
-        errors = self.mutate(0, 'integration/DECISIONS.md#2026-10-24--附属-api-契约修复卡-49',
-                             'integration/DECISIONS.md#missing-decision')
+    def test_broken_cross_file_anchor_is_detected(self):
+        target = 'integration/JAVA_PACKAGE_BOUNDARIES.md'
+        # The live guide links this file; first prove a real heading is accepted.
+        self.assertEqual([], self.mutate(0, target, target + '#如何选择目录'))
+        errors = self.mutate(0, target, target + '#missing-boundary')
         self.assertTrue(any('cross-file anchor' in error for error in errors))
 
     def test_equal_heading_counts_do_not_hide_section_mismatch(self):

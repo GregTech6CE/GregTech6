@@ -68,14 +68,7 @@ public final class CapabilityHandleTests {
         level.setBlock(pos, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), 2);
     }
 
-    /**
-     * The §97 contract for a machine whose sinks are <em>side-independent</em>: one cached
-     * {@link LazyOptional} per sink instead of one per side. The same handle must come back for repeated
-     * queries, two different sides must get the <em>same</em> one — the opposite of
-     * {@link #checkStableHandles}'s per-side assertion, because the inventory and the tank are one object
-     * for every face — the front face must refuse the item handler, and {@code invalidateCaps()} must
-     * invalidate every issued handle and reset the fields so the next query rebuilds a working one.
-     */
+    /** Native sinks are shared, but cover-gated views are cached per queried face. */
     private static void checkSideIndependentHandles(GameTestHelper helper, Block block, int dx, String what) {
         ServerLevel level = helper.getLevel();
         BlockPos pos = new BlockPos(BASE_X + dx, BASE_Y, BASE_Z);
@@ -98,11 +91,17 @@ public final class CapabilityHandleTests {
         helper.assertTrue(item == itemAgain,
                 what + " returns the same LazyOptional for side " + Direction.UP + " (was: a new handle per query)");
         helper.assertTrue(item.isPresent(), what + " offers an item handler on " + Direction.UP);
-        helper.assertTrue(be.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN) == item,
-                what + " caches one handle per sink, not per side (its inventory is the same object for"
-                        + " every non-front face)");
-        helper.assertTrue(be.getCapability(ForgeCapabilities.ITEM_HANDLER, null) == item,
-                what + " answers the unsided query with the same cached item handle");
+        var issuedItems = new java.util.ArrayList<LazyOptional<IItemHandler>>();
+        for (Direction side : Direction.values()) if (side != front) {
+            var handle = be.getCapability(ForgeCapabilities.ITEM_HANDLER, side);
+            helper.assertTrue(handle.isPresent() && handle == be.getCapability(ForgeCapabilities.ITEM_HANDLER, side),
+                    what + " stable cover-gated item view on " + side);
+            issuedItems.add(handle);
+        }
+        var unsided = be.getCapability(ForgeCapabilities.ITEM_HANDLER);
+        helper.assertTrue(unsided.isPresent() && unsided == be.getCapability(ForgeCapabilities.ITEM_HANDLER),
+                what + " stable unsided native sink");
+        issuedItems.add(unsided);
         if (front != null) {
             helper.assertTrue(!be.getCapability(ForgeCapabilities.ITEM_HANDLER, front).isPresent(),
                     what + " refuses the item handler on its front face " + front);
@@ -114,10 +113,18 @@ public final class CapabilityHandleTests {
                 what + " returns the same fluid LazyOptional for side " + Direction.UP
                         + " (was: a new handle per query)");
         helper.assertTrue(fluid.isPresent(), what + " offers a fluid handler on " + Direction.UP);
-        helper.assertTrue(be.getCapability(ForgeCapabilities.FLUID_HANDLER, Direction.DOWN) == fluid,
-                what + " caches one fluid handle for all sides");
+        var issuedFluids = new java.util.ArrayList<LazyOptional<IFluidHandler>>();
+        for (Direction side : Direction.values()) {
+            var handle=be.getCapability(ForgeCapabilities.FLUID_HANDLER,side);
+            helper.assertTrue(handle.isPresent() && handle==be.getCapability(ForgeCapabilities.FLUID_HANDLER,side),
+                    what + " stable cover-gated fluid view on " + side);
+            issuedFluids.add(handle);
+        }
 
         be.invalidateCaps();
+        helper.assertTrue(issuedItems.stream().noneMatch(LazyOptional::isPresent)
+                        && issuedFluids.stream().noneMatch(LazyOptional::isPresent),
+                what + " invalidates every issued face view and unsided sink");
         helper.assertTrue(!item.isPresent(), what + " invalidates an issued item handle in invalidateCaps()");
         helper.assertTrue(!fluid.isPresent(), what + " invalidates an issued fluid handle in invalidateCaps()");
         helper.assertTrue(be.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.UP).isPresent(),
@@ -173,23 +180,7 @@ public final class CapabilityHandleTests {
         helper.succeed();
     }
 
-    /**
-     * §97's fourth site, and the one the three tests above leave uncovered: the liquid, gas and
-     * fluidized-bed burning boxes ({@code MachineRegistry.burningBoxes()}), whose {@code itemCap} and
-     * {@code fluidCap} replaced a fresh {@code LazyOptional} per query.
-     *
-     * <p>They cache <em>one</em> handle per sink rather than one per side, so the per-side identity
-     * assertion of {@link #checkStableHandles} does not apply here: the fuel inventory and the tank are
-     * one object for every face and two different sides have to return the same handle — exactly what
-     * {@link #checkSideIndependentHandles} asserts instead. Every fluid tier has both sinks
-     * ({@code initInventoryAndTank} builds an inventory for all four fuel types and a tank for
-     * LIQUID/GAS/FLUIDIZED_BED), so both handlers exist on every non-front side.
-     *
-     * <p>The solid variant stays out of this test on purpose — see
-     * {@link #burningBoxCapabilitiesAreCached}: {@code SolidBurningBoxBlockEntity} inherits the plain
-     * {@code BlockEntity#getCapability}, which is {@code LazyOptional.empty()} on every side, so there is
-     * no handle to compare and no caching change to guard.
-     */
+    /** Fluid burning boxes expose stable per-face cover views over shared native sinks. */
     @GameTest(template = "test_empty", timeoutTicks = 300)
     public static void fluidBurningBoxCapabilitiesAreCached(GameTestHelper helper) {
         var boxes = MachineRegistry.burningBoxes();

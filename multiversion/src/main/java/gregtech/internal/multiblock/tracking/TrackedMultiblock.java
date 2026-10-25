@@ -6,7 +6,13 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 
 /** A controller that can answer {@code isStructureOk} from a tracker instead of scanning. */
 public interface TrackedMultiblock {
-    boolean scanStructure();
+    /**
+     * One full scan of the structure. Only families still on the scan path implement this; migrated
+     * families claim through {@link #applyStructure(PatternMatch)} and never call it.
+     */
+    default boolean scanStructure() {
+        throw new UnsupportedOperationException(getClass().getName() + " has no full structure scan");
+    }
 
     StructureDefinition structureDefinition();
 
@@ -16,6 +22,12 @@ public interface TrackedMultiblock {
 
     /** Server-only mirror of the tracker bit for fields the machine already stored itself. */
     default void structureFormedChanged(boolean formed) {}
+
+    /** The structure just became formed: build caches here instead of walking them every tick. */
+    default void onStructureFormed() {}
+
+    /** The formed bit just fell: drop the caches built in {@link #onStructureFormed()}. */
+    default void onStructureBroken() {}
 
     /** Part acceptance beyond block identity, as the full scan body applies it. */
     default boolean acceptsTrackedPart(LargeMachineLayouts.Cell cell, Block expected, Block actual) {

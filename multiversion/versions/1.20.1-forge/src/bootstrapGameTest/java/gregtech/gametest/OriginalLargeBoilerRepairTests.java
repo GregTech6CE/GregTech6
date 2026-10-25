@@ -129,21 +129,23 @@ public final class OriginalLargeBoilerRepairTests {
         var spec = OriginalLargeBoilerSpecs.byOriginalId(17201);
         var boiler = place(helper, spec);
         build(helper, spec);
+        helper.assertTrue(StructureTestSupport.ok(boiler),"boiler structure settled before fill");
         var input = boiler.directFluidHandler();
         helper.assertTrue(input.fill(new FluidStack(Fluids.WATER, 1_000),
                 IFluidHandler.FluidAction.EXECUTE) == 1_000, "formed controller receives water");
         var drops = Block.getDrops(boiler.getBlockState(), helper.getLevel(),
                 helper.absolutePos(CONTROL), boiler);
         helper.assertTrue(drops.size() == 1 && drops.get(0).is(LargeMachineParts.block(17201).asItem())
-                        && drops.get(0).getTagElement("BlockEntityTag") != null,
-                "cool boiler drops its own item with fluid NBT");
-        var restoredTag = drops.get(0).getTagElement("BlockEntityTag");
+                        && drops.get(0).getTagElement("BlockEntityTag") == null,
+                "ordinary cool boiler drop excludes internal fluid data");
+        var restoredTag = boiler.saveWithoutMetadata();
         helper.setBlock(CONTROL, Blocks.AIR);
         boiler = place(helper, spec);
         build(helper, spec);
         boiler.load(restoredTag);
+        helper.assertTrue(StructureTestSupport.ok(boiler),"restored world state reforms structure");
         helper.assertTrue(boiler.waterAmount() == 1_000,
-                "original water storage survives a safe pick-up and replacement");
+                "world NBT restores water independently of ordinary item harvest");
 
         CompoundTag saved = boiler.saveWithoutMetadata();
         CompoundTag steamTag = saved.getCompound("gt.steam");

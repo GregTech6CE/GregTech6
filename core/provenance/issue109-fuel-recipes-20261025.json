@@ -1,0 +1,83 @@
+{
+  "date": "2026-10-25",
+  "issue": "https://github.com/GregTech6CE/GregTech6/issues/109",
+  "scope": "Restore omitted original fluidized-bed, Burn and Gas fuel declarations",
+  "reference_root": "D:/Projects/java/gt6_source_code/gregtech6/src/main/java",
+  "authors": "GregTech-6 Team / Gregorius Techneticies",
+  "license": "LGPL-3.0-or-later",
+  "sources": [
+    {
+      "path": "gregtech/loaders/b/Loader_Fuels.java",
+      "sha256": "5ffdc49cde921c1e54d1aa2db36193af76ddb86a1a0b7cb5d94c7f3d24c31305",
+      "lines": "37-189",
+      "role": "11 material fuels, five forms, calcite doses, heat/ash scaling and Burn/Gas charges"
+    },
+    {
+      "path": "gregapi/data/MT.java",
+      "sha256": "926ac79117433c88f94db1793396fa7a6ced7e4247947a4e8e55dca8bce040b7",
+      "lines": "1228-1229, 1521-1531",
+      "role": "Original material identities, furnace times and burning targets"
+    },
+    {
+      "path": "gregapi/data/CS.java",
+      "sha256": "947391068b8078c35cc126ebd1513fa348aa81a98964227f20dbb3574a124e26",
+      "lines": "210-212",
+      "role": "200 ticks per smelt and 25 heat units per furnace tick"
+    },
+    {
+      "path": "gregapi/data/FL.java",
+      "sha256": "e88eef96311e93a08dbdb04f06cfb46c2b6e32aa9f4b00c35ea71171ae4c561a",
+      "lines": "223, 380, 390-435",
+      "role": "Exact FL.list registry names and aliases"
+    },
+    {
+      "path": "gregapi/util/OM.java",
+      "sha256": "a252062e2a604f32ca00e63d4575396719ec917191a9176933433af868f1d390",
+      "lines": "460-466",
+      "role": "Representable ash dust form selection and sub-U72 suppression"
+    },
+    {
+      "path": "gregtech/tileentity/energy/generators/MultiTileEntityGeneratorLiquid.java",
+      "sha256": "1e57e8d2b403eb49d29d10125c9beac0d208b616bba191b9a926d36fd38e6ee5",
+      "lines": "116-166",
+      "role": "Multiple liquid/gas charges per refill and two-rate heat reserve"
+    },
+    {
+      "path": "gregtech/tileentity/energy/generators/MultiTileEntityGeneratorFluidBed.java",
+      "sha256": "32c209ea1abd6382749e5ba6ce0c0dbe7bea0c6fd5dba00cb2c4a41d288c231a",
+      "lines": "74-87, 119-141",
+      "role": "Recipe-sized calcite tank, one solid charge per tick and residual heat output"
+    }
+  ],
+  "implementation": [
+    "core/src/main/java/gregtech/content/recipe/OriginalFluidBedFuelRows.java",
+    "core/src/main/java/gregtech/content/recipe/OriginalSupplementalFuelRows.java",
+    "multiversion/src/main/java/gregtech/content/recipe/OriginalFluidBedRecipes.java",
+    "multiversion/src/main/java/gregtech/content/recipe/OriginalSupplementalFuelRecipes.java",
+    "multiversion/src/main/java/gregtech/content/recipe/FuelRecipeLoader.java",
+    "multiversion/src/main/java/gregtech/content/blockentity/machine/BurningBoxBlockEntity.java"
+  ],
+  "adaptation": {
+    "fluidbed_forms": [
+      "blockDust",
+      "dust",
+      "dustSmall",
+      "dustTiny",
+      "dustDiv72"
+    ],
+    "calcite_millibuckets": [
+      648,
+      72,
+      18,
+      8,
+      1
+    ],
+    "fluidbed_material_count": 11,
+    "native_boundaries": "Only available actual item forms and registered fluids are imported; absent optional source fluids are skipped",
+    "fluid_identity": "Prepared catalog registry names and original category memberships, deduplicated by native identity within each fuel map",
+    "material_metadata": "Source furnace times and ash targets are local to these recipes; no changes to global furnace metadata",
+    "ash": "PeatBituminous retains the original zero burning target; quantities below U72 yield no representable ash",
+    "engine": "Existing Engine recipes and their distinct source energy values remain unchanged"
+  },
+  "verification_boundary": "Both core catalogs independently compiled with javac; core:check and Forge/NeoForge eight-case native regressions passed. Runtime evidence and limits are recorded in docs/integration/verification/issue109-burning-box-fuels-20261025.json. No client or real saved-world restart acceptance."
+}

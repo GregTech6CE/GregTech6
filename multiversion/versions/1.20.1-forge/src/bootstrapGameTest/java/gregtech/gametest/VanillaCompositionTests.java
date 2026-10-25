@@ -45,8 +45,12 @@ public final class VanillaCompositionTests {
     @GameTest(template="test_empty") public static void shredderOutputsNeverExceedDeclaredMaterial(GameTestHelper h) {
         var recipes=gregtech.content.recipe.VanillaRecoveryRecipes.recipes();
         h.assertTrue(recipes.size()>100,"Broad vanilla recovery coverage");
+        var rejected=new ArrayList<String>();
+        for(var r:recipes)if(gregtech.internal.recipe.RecipeInputs.consume(r,Arrays.asList(r.mInputs),List.of(),1)==null)
+            rejected.add(java.util.Arrays.toString(r.mInputs)+" composition="+ItemMaterialRegistry.get(r.mInputs[0])+" tags="+r.mInputs[0].getTag());
+        h.assertTrue(rejected.isEmpty(),"Fresh recovery inputs rejected ("+rejected.size()+"): "+rejected);
         for(var r:recipes){
-            h.assertTrue(gregtech.internal.recipe.RecipeInputs.consume(r,Arrays.asList(r.mInputs),List.of(),1)!=null,"Fresh recipe executes");
+            h.assertTrue(gregtech.internal.recipe.RecipeInputs.consume(r,Arrays.asList(r.mInputs),List.of(),1)!=null,"Fresh recipe executes: "+java.util.Arrays.toString(r.mInputs)+" / "+ItemMaterialRegistry.get(r.mInputs[0])+" / tags="+r.mInputs[0].getTag());
             var available=new HashMap<GTMaterial,Long>();
             for(var c:ItemMaterialRegistry.get(r.mInputs[0]).orElseThrow().components()){
                 var target=c.material().getTargetPulverMaterial();
@@ -57,7 +61,7 @@ public final class VanillaCompositionTests {
                 var form=gregtech.internal.material.MaterialEquivalence.form(out);
                 h.assertTrue(form!=null,"Output retains a known material composition, including vanilla targets");
                 long remaining=available.getOrDefault(form.material(),0L)-form.prefix().getMaterialWeight()*out.getCount();
-                h.assertTrue(remaining>=0,"Recovery conserves each material");available.put(form.material(),remaining);
+                h.assertTrue(remaining>=0,"Recovery conserves each material: "+Arrays.toString(r.mInputs)+" -> "+out+", material="+form.material()+", available="+available);available.put(form.material(),remaining);
             }
             var unsafe=r.mInputs[0].copy();unsafe.getOrCreateTag().put("BlockEntityTag",new net.minecraft.nbt.CompoundTag());
             h.assertTrue(gregtech.internal.recipe.RecipeInputs.consume(r,List.of(unsafe),List.of(),1)==null,"No NBT inventory shredded");

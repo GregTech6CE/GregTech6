@@ -6,6 +6,8 @@ import gregtech.api.addon.GregTechMaterials;
 import gregtech.api.addon.InstalledService;
 
 import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -31,6 +33,9 @@ public final class AddonPlatform {
 
     /** GT implementation contract; addon consumers use the items, tools and energy facades. */
     public interface Services {
+        /** Host bridge for AddonStructures; addons must not implement or call Services. */
+        void structureChanged(Level level, BlockPos pos);
+
         ItemStack stack(String prefix, String material, int count);
 
         /** Integrated circuit {@code configuration}, or an empty stack when that item is not registered yet. */

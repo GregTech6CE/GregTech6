@@ -51,9 +51,16 @@ public final class FluidToolVariantTests {
             h.assertTrue(raw instanceof FluidAttachmentBlock,"registered material attachment "+spec.id());var b=(FluidAttachmentBlock)raw;var port=b.access(tank);
             tank.setFluid(water);boolean nozzle=spec.shape().equals("cap_nozzle"),funnel=spec.shape().equals("fluid_funnel");
             h.assertTrue(port.fill(water,FluidAction.SIMULATE)==(funnel?1000:0)&&tank.getAmount()==1000,"fill direction and simulation "+spec.id());
-            h.assertTrue(port.drain(100,FluidAction.SIMULATE).getAmount()==(!nozzle&&!funnel?100:0),"liquid drain rule "+spec.id());
+            h.assertTrue(port.drain(100,FluidAction.SIMULATE).getAmount()==(spec.shape().equals("tap")?100:0)
+                    &&tank.getAmount()==1000,"only the liquid tap drains water; simulation leaves tank unchanged "+spec.id());
             tank.setFluid(new FluidStack(GTFluids.still("Steam").get(),1000));
-            h.assertTrue(port.drain(100,FluidAction.EXECUTE).getAmount()==(nozzle?100:0),"gas drain rule "+spec.id());
+            boolean gasOut=spec.shape().equals("nozzle");
+            h.assertTrue(port.drain(100,FluidAction.EXECUTE).getAmount()==(gasOut?100:0),"gas outlet direction "+spec.id());
+            h.assertTrue(tank.getAmount()==(gasOut?900:1000),"gas extraction conserves tank contents "+spec.id());
+            var gas=new FluidStack(GTFluids.still("Steam").get(),100);
+            long before=tank.getAmount();
+            h.assertTrue(port.fill(gas,FluidAction.SIMULATE)==(nozzle?100:0)&&tank.getAmount()==before,"cap nozzle injects gas, simulation leaves tank unchanged "+spec.id());
+            h.assertTrue(port.fill(gas,FluidAction.EXECUTE)==(nozzle?100:0)&&tank.getAmount()==before+(nozzle?100:0),"gas injection direction and exact quantity "+spec.id());
         }
         var preferred=ResourceLocation.fromNamespaceAndPath("gt6ce","block/fluids/arbitrary");
         h.assertTrue(FluidTexturePolicy.select(preferred,FluidTexturePolicy.Kind.GAS,x->true).equals(preferred),"existing dedicated gas texture wins; only missing textures use the solid standard");

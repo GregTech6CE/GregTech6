@@ -134,14 +134,6 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity
     }
 
     @Override public boolean canBind(BlockPos owner) {
-        if (!gregtech.internal.multiblock.tracking.StructureTrackingMode.legacy()) return super.canBind(owner);
-        BlockPos held = controllerPos();
-        if (held == null || owner.equals(held)) return true;
-        if (level == null || !level.hasChunkAt(held)) return true;
-        var occupant = level.getBlockEntity(held);
-        if (occupant == null || occupant.isRemoved()) return true;
-        if (occupant instanceof BehaviorMachineBlockEntity) return false;
-        if (occupant instanceof LargeRecipeMachineBlockEntity) return false;
         return super.canBind(owner);
     }
 
@@ -212,12 +204,8 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity
         if (owner == null || level == null || !level.hasChunkAt(owner)) return false;
         var occupant = level.getBlockEntity(owner);
         if (occupant == null || occupant.isRemoved()) return false;
-        if (!gregtech.internal.multiblock.tracking.StructureTrackingMode.legacy()) {
-            var tracker = gregtech.internal.multiblock.tracking.StructureTracking.tracker(occupant);
-            return tracker != null && tracker.formed();
-        }
-        if (occupant instanceof BehaviorMachineBlockEntity machine) return machine.structureFormed();
-        return occupant instanceof LargeRecipeMachineBlockEntity;
+        var tracker = gregtech.internal.multiblock.tracking.StructureTracking.tracker(occupant);
+        return tracker != null && tracker.formed();
     }
 
     private AddonEnergyPartBlock block() {

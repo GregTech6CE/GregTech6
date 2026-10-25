@@ -25,7 +25,8 @@ public final class AxialBatteryRecipeTests {
         String[] chemistries = {"lead_acid", "alkaline", "nickel_cadmium", "lithium_cobalt", "lithium_manganese"};
         for (int index = 0; index < recipes.length; index++) {
             int expectedTier = index < 4 ? 1 : index - 3;
-            var recipe = helper.getLevel().getRecipeManager().byKey(GregTech.id("axial/" + recipes[index])).orElseThrow();
+            var recipeId = GregTech.id(CraftingFixtureIds.axialPath(recipes[index]));
+            var recipe = helper.getLevel().getRecipeManager().byKey(recipeId).orElseThrow(()->new AssertionError("Missing source axial manufacturing recipe " + recipeId));
             var battery = recipe.getIngredients().get(index < 4 ? 7 : 3);
             for (int tier = 0; tier < tiers.length; tier++) {
                 for (String chemistry : chemistries) {
@@ -35,8 +36,8 @@ public final class AxialBatteryRecipeTests {
                             recipes[index] + " accepts exact voltage only: " + chemistry + " " + tiers[tier]);
                 }
             }
-            helper.assertTrue(battery.test(item("battery_" + tiers[expectedTier])), "legacy battery remains usable");
-            helper.assertTrue(battery.test(item("battery_eu_" + (8L << (expectedTier * 2)))), "retained placed battery remains usable");
+            helper.assertTrue(item("battery_" + tiers[expectedTier]).isEmpty() && !battery.test(item("battery_" + tiers[expectedTier])), "retired generic battery ID cannot bypass source chemistry and tier requirements");
+            helper.assertTrue(item("battery_eu_" + (8L << (expectedTier * 2))).isEmpty() && !battery.test(item("battery_eu_" + (8L << (expectedTier * 2)))), "retired generic placed battery is not a second registered battery identity");
             helper.assertTrue(!battery.test(item("lead_acid_cell_filled")), "chemical cell is not a complete battery");
             var circuit = recipe.getIngredients().get(index < 4 ? 3 : 5);
             helper.assertTrue(circuit.test(item("circuit_ultimate")) && !circuit.test(item("circuit_master")),

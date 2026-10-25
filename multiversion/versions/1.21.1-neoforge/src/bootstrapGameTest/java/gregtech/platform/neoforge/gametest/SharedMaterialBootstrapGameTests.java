@@ -2,6 +2,7 @@ package gregtech.platform.neoforge.gametest;
 
 import gregtech.internal.machine.crucible.CrucibleMaterialStack;
 import gregtech.internal.machine.crucible.CrucibleReactions;
+import gregtech.internal.addon.AddonMaterials;
 import gregtech.internal.material.GTMaterial;
 import gregtech.internal.material.GTMaterialRegistry;
 import gregtech.internal.material.MaterialProperty;
@@ -20,29 +21,37 @@ import java.util.HashSet;
 import java.util.HexFormat;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
-/** Full shared-domain checks in game bootstrap, with original numeric fixtures; no item/worldgen claim. */
+/** Shared-domain checks against the adopted core catalog, with optional addon-sample fixtures. */
 @GameTestHolder("gregtech_bootstrap")
 @PrefixGameTestTemplate(false)
 public final class SharedMaterialBootstrapGameTests {
     // Recorded from original Git blobs and original Loader_Materials order, not this port's output.
     private static final String ROLE_SHA256 = "734a7fee39e9326dbfae519c34f3b9a0cb510d7d7a5535858cd04ab0aea99ccb";
+    // Source restorations already audited by MaterialBehaviorContracts; not runtime-derived goldens.
+    private static final Map<Integer, String> RESTORED_WOODS = Map.of(
+            9317, "Cinnamonwood", 9354, "Limewood", 9374, "Magicwood", 9376, "Ashwood");
     private SharedMaterialBootstrapGameTests() {}
 
     @GameTest(template = "test_empty", timeoutTicks = 20)
     public static void completeMaterialDirectory(GameTestHelper helper) throws ReflectiveOperationException {
         helper.assertTrue(GTMaterialRegistry.registrationPhase() == GTMaterialRegistry.RegistrationPhase.READY,
                 "Material linking must finish before game bootstrap");
-        helper.assertTrue(GTMaterialRegistry.allMaterials().size() == 1156, "Original 1156 objects must remain");
+        var core = coreMaterials();
+        helper.assertTrue(core.size() == 1160, "Original 1156 objects plus four restored source woods must remain");
         var ids = new HashSet<Integer>();
         for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
             if (material.getId() > 0) {
-                helper.assertTrue(material.getId() < 10000 && ids.add(material.getId()),
-                        "Positive material IDs must be unique and in the original range: " + material);
+                helper.assertTrue(ids.add(material.getId()), "Positive material IDs must be unique: " + material);
+                helper.assertTrue(GTMaterialRegistry.isCoreMaterial(material)
+                                ? material.getId() < GTMaterialRegistry.ADDON_ID_START
+                                : material.getId() >= GTMaterialRegistry.ADDON_ID_START && AddonMaterials.owns(material),
+                        "Core IDs must stay below the automatically allocated addon range: " + material);
                 helper.assertTrue(GTMaterialRegistry.get(material.getId()) == material.resolve(),
                         "Numeric ID must retain canonical object identity: " + material);
             }
@@ -53,20 +62,22 @@ public final class SharedMaterialBootstrapGameTests {
                         "Composition links must retain valid positive material inputs: " + material);
             }
         }
-        helper.assertTrue(ids.size() == 1101, "Original 1101 positive IDs must remain");
+        helper.assertTrue(core.stream().filter(m -> m.getId() > 0).count() == 1105,
+                "Original 1101 positive IDs plus four restored wood IDs must remain");
         // Test-only observation of the entire alias map; no second runtime material directory.
         var field = GTMaterialRegistry.class.getDeclaredField("BY_NAME");
         field.setAccessible(true);
         @SuppressWarnings("unchecked")
         var aliases = (Map<String, GTMaterial>) field.get(null);
-        helper.assertTrue(aliases.size() == 1519, "Original 1519 name entries must remain");
+        helper.assertTrue(aliases.values().stream().filter(GTMaterialRegistry::isCoreMaterial).count() == 1523,
+                "Original 1519 core names plus four restored wood names must remain");
         for (var alias : aliases.entrySet()) {
             helper.assertTrue(GTMaterialRegistry.get(alias.getKey()) == alias.getValue().resolve(),
                     "Alias must retain canonical identity: " + alias.getKey());
         }
-        helper.assertTrue(PrefixRegistry.all().size() == 109
+        helper.assertTrue(PrefixRegistry.all().stream().filter(p -> !p.isAddon()).count() == 132
                         && PrefixRegistry.byName("casingSmall") == MaterialPrefix.itemCasing,
-                "Original 109 prefixes and identical-form alias must remain");
+                "The adopted 132 core prefixes and identical-form alias must remain");
         helper.assertTrue(ModReferences.MC.isLoaded() && ModReferences.GT.isLoaded()
                         && !ModReferences.UNKNOWN.isLoaded(), "Neo loader presence must precede metadata initialization");
         helper.assertTrue(Materials.Copper == GT6Materials.Elements.Cu && Materials.Copper == GTMaterialRegistry.get("Cu")
@@ -82,12 +93,23 @@ public final class SharedMaterialBootstrapGameTests {
         for (StoneType stone : StoneType.values()) {
             helper.assertTrue(stone.material().has(MaterialProperty.STONE), "Original stone role must be applied: " + stone);
         }
-        helper.assertTrue(ROLE_SHA256.equals(roleSnapshotSha256()),
-                "Every material's three catalog roles and all 27 stone descriptors must match the original goldens");
-        helper.assertTrue(GTMaterialRegistry.allMaterials().stream().filter(m -> m.has(MaterialProperty.GENERATE_ORE)).count() == 210
-                        && GTMaterialRegistry.allMaterials().stream().filter(m -> m.has(MaterialProperty.GENERATE_ORE_PROCESSING)).count() == 415
-                        && GTMaterialRegistry.allMaterials().stream().filter(m -> m.has(MaterialProperty.STONE)).count() == 81,
-                "Original counts of ore/ore-processing/stone roles must remain210/415/81");
+        for (var wood : RESTORED_WOODS.entrySet()) {
+            var material = GTMaterialRegistry.get(wood.getKey());
+            helper.assertTrue(material.getName().equals(wood.getValue()) && material.has(MaterialProperty.WOOD)
+                            && !material.has(MaterialProperty.GENERATE_ORE)
+                            && !material.has(MaterialProperty.GENERATE_ORE_PROCESSING) && !material.has(MaterialProperty.STONE),
+                    "Restored source wood must keep its ID, name and roles: " + wood);
+        }
+        var petrified = GTMaterialRegistry.get(8277);
+        helper.assertTrue(petrified.getName().equals("PetrifiedWood") && petrified.has(MaterialProperty.STONE)
+                        && petrified.has(MaterialProperty.WOOD), "Adopted source PetrifiedWood stone/wood correction must remain");
+        helper.assertTrue(ROLE_SHA256.equals(roleSnapshotSha256(true)),
+                "Normalizing only four restored woods and PetrifiedWood STONE must reproduce the original role golden");
+        var core = coreMaterials();
+        helper.assertTrue(core.stream().filter(m -> m.has(MaterialProperty.GENERATE_ORE)).count() == 210
+                        && core.stream().filter(m -> m.has(MaterialProperty.GENERATE_ORE_PROCESSING)).count() == 415
+                        && core.stream().filter(m -> m.has(MaterialProperty.STONE)).count() == 82,
+                "Core roles must remain 210/415/82, including the restored PetrifiedWood stone role");
         for (GTMaterial material : List.of(Materials.Iron, Materials.WroughtIron, Materials.Steel,
                 Materials.Titanium, Materials.Tungsten)) {
             helper.assertTrue(material.has(MaterialProperty.NEVER_FURNACE), "Original domain post-init must run: " + material);
@@ -132,8 +154,18 @@ public final class SharedMaterialBootstrapGameTests {
 
     @GameTest(template = "test_empty", timeoutTicks = 20)
     public static void originalAlternateReactions(GameTestHelper helper) {
-        helper.assertTrue(CrucibleReactions.recipes().size() == 46 && CrucibleReactions.allRecipes().size() == 137,
-                "All 46 explicit and 137 total original reactions must remain");
+        // addon_sample deliberately removes one built-in StainlessSteel row and contributes two rows.
+        // This bootstrap fixture supports the bare core and the repository's optional sample profile.
+        boolean sample = AddonMaterials.owners(GTMaterialRegistry.get("SampleAlloy")).contains("addon_sample");
+        var reactions = CrucibleReactions.allRecipes();
+        helper.assertTrue(CrucibleReactions.recipes().size() == 46
+                        && reactions.stream().filter(r -> GTMaterialRegistry.isCoreMaterial(r.output())).count() == (sample ? 136 : 137)
+                        && reactions.size() == (sample ? 138 : 137),
+                "Keep 46 source explicit rows and 137 core rows, adjusted only for the sample's -1 core/+2 addon rows");
+        var removedInputs = Set.of("WroughtIron", "Nichrome", "Chromium", "Manganese");
+        boolean stainlessRow = reactions.stream().anyMatch(r -> r.output().getName().equals("StainlessSteel")
+                && r.parts().stream().map(p -> p.material().getName()).collect(java.util.stream.Collectors.toSet()).equals(removedInputs));
+        helper.assertTrue(stainlessRow != sample, "Only the declared StainlessSteel input row is removed by addon_sample");
         var annealed = stacks(Materials.AnnealedCopper, 1_945_944_000L, Materials.Tin, 648_648_000L);
         helper.assertTrue(Materials.AnnealedCopper.getMeltingPoint() == 2800 && CrucibleReactions.react(annealed, 1357)
                         && annealed.size() == 1 && amountOf(annealed, Materials.Bronze) == 2_594_592_000L,
@@ -153,12 +185,22 @@ public final class SharedMaterialBootstrapGameTests {
 
     /** Test-only observation, also used with original Git blobs to capture an independent golden. */
     public static String roleSnapshotSha256() throws Exception {
+        return roleSnapshotSha256(false);
+    }
+
+    private static List<GTMaterial> coreMaterials() {
+        return GTMaterialRegistry.allMaterials().stream().filter(GTMaterialRegistry::isCoreMaterial).toList();
+    }
+
+    private static String roleSnapshotSha256(boolean normalizeAdoptedChanges) throws Exception {
         var rows = new ArrayList<String>();
         for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
+            if (normalizeAdoptedChanges && (!GTMaterialRegistry.isCoreMaterial(material)
+                    || RESTORED_WOODS.containsKey(material.getId()))) continue;
             rows.add("M|" + material.getId() + ':' + material.getName() + '|'
                     + material.has(MaterialProperty.GENERATE_ORE) + '|'
                     + material.has(MaterialProperty.GENERATE_ORE_PROCESSING) + '|'
-                    + material.has(MaterialProperty.STONE));
+                    + (material.has(MaterialProperty.STONE) && !(normalizeAdoptedChanges && material.getId() == 8277)));
         }
         for (StoneType stone : StoneType.values()) {
             rows.add("S|" + stone.ordinal() + '|' + stone.name() + '|' + stone.registryId() + '|' + stone.textureFolder()

@@ -17,6 +17,9 @@ import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTTechnological;
 import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
@@ -41,6 +44,17 @@ public final class AddonPlatformServices {
     }
 
     private static final class Services implements AddonPlatform.Services {
+        @Override public void structureChanged(Level level, BlockPos pos) {
+            java.util.Objects.requireNonNull(level, "level");
+            java.util.Objects.requireNonNull(pos, "pos");
+            if (level.isClientSide) return;
+            if (!(level instanceof ServerLevel server))
+                throw new IllegalArgumentException("Structure notifications require a server level");
+            if (!server.getServer().isSameThread())
+                throw new IllegalStateException("Structure notifications require the server thread");
+            gregtech.internal.multiblock.tracking.StructureWatchIndex.touch(server, pos);
+        }
+
         @Override public ItemStack stack(String prefix, String material, int count) {
             if (prefix == null || material == null || count <= 0) return ItemStack.EMPTY;
             MaterialPrefix form = PrefixRegistry.byName(prefix);

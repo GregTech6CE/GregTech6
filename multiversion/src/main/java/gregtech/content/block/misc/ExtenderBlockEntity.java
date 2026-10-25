@@ -7,6 +7,7 @@ import net.minecraft.world.level.block.state.BlockState;
 /** Extender/bridge state for covers, routed capabilities, machine controls and signals. */
 public class ExtenderBlockEntity extends gregtech.content.blockentity.EnergyRelayBlockEntity
         implements gregtech.api.machine.MachineControl.Provider,
+        gregtech.internal.sensor.ProgressSources.Provider,
         gregtech.content.cover.PanelCoverHost, gregtech.internal.inventory.BlockContents {
     private static final gregtech.content.logistics.RelayVisitSet<ExtenderBlockEntity> CONTROLS =
             new gregtech.content.logistics.RelayVisitSet<>();
@@ -229,20 +230,36 @@ public class ExtenderBlockEntity extends gregtech.content.blockentity.EnergyRela
     }
 
     @Override
+    public gregtech.internal.sensor.ProgressSources.Access progressSource(Direction side) {
+        if (!universal() || (((SourceExtenderBlock) getBlockState().getBlock()).spec().bridge && side == null)) return null;
+        // Advertise the read-only face, not a cached endpoint or live machine-control feature.
+        // Each observation retains progressOperation's cycle, removal and unloaded guards.
+        return new gregtech.internal.sensor.ProgressSources.Access() {
+            @Override public long value() { return progressOperation(side, false); }
+            @Override public long maximum() { return progressOperation(side, true); }
+        };
+    }
+
+    @Override
     public gregtech.api.machine.MachineControl machineControl(Direction side) {
         if (!universal() || (((SourceExtenderBlock) getBlockState().getBlock()).spec().bridge && side == null)) return null;
         return new gregtech.api.machine.MachineControl() {
 
+            // Resolve feature queries just like commands: targets can disappear, change or form a cycle.
             public boolean available() {
-                return !isRemoved();
+                return controlOperation(side, false, control -> control.available());
+            }
+
+            public boolean supportsSwitch() {
+                return controlOperation(side, false, control -> control.supportsSwitch());
             }
 
             public boolean supportsProgress() {
-                return true;
+                return controlOperation(side, false, control -> control.supportsProgress());
             }
 
             public boolean supportsMode() {
-                return true;
+                return controlOperation(side, false, control -> control.supportsMode());
             }
 
             public int mode() {

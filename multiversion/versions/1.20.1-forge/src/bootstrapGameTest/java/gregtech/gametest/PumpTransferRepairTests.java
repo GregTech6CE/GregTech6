@@ -132,10 +132,17 @@ public final class PumpTransferRepairTests {
         var nearlyFull = pump.saveWithoutMetadata();
         nearlyFull.putLong("energyBuffer", 8191);
         pump.load(nearlyFull);
-        h.assertTrue(pump.getEnergyDemanded(GregTechTags.Energy.RU, Direction.SOUTH, 32) == 0
-                        && pump.doEnergyInjection(GregTechTags.Energy.RU, Direction.SOUTH, 32, 1, true) == 0
-                        && pump.saveWithoutMetadata().getLong("energyBuffer") == 8191,
-                "a whole RU packet cannot overflow the 8192-RU buffer");
+        h.assertTrue(pump.getEnergyDemanded(GregTechTags.Energy.RU,Direction.SOUTH,32)==1
+                &&pump.doEnergyInjection(GregTechTags.Energy.RU,Direction.SOUTH,32,1,false)==1
+                &&pump.saveWithoutMetadata().getLong("energyBuffer")==8191,"source final whole packet is requested without simulation mutation");
+        h.assertTrue(pump.doEnergyInjection(GregTechTags.Energy.RU,Direction.SOUTH,32,1,true)==1
+                &&pump.saveWithoutMetadata().getLong("energyBuffer")==8223,"one final packet crosses the source work threshold");
+        var empty=pump.saveWithoutMetadata();empty.putLong("energyBuffer",0);pump.load(empty);
+        h.assertTrue(pump.doEnergyInjection(GregTechTags.Energy.RU,Direction.SOUTH,17,Long.MAX_VALUE,false)==482
+                &&pump.saveWithoutMetadata().getLong("energyBuffer")==0,"non-divisor packet simulation remains bounded and read-only");
+        h.assertTrue(pump.doEnergyInjection(GregTechTags.Energy.RU,Direction.SOUTH,17,Long.MAX_VALUE,true)==482
+                &&pump.saveWithoutMetadata().getLong("energyBuffer")==8194
+                &&pump.doEnergyInjection(GregTechTags.Energy.RU,Direction.SOUTH,17,1,true)==0,"17-RU stream reaches threshold and then refuses extra packets");
         h.succeed();
     }
 }

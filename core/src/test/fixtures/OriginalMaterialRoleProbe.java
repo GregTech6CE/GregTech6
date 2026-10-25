@@ -1,8 +1,8 @@
-import gregtech.internal.material.GTMaterialRegistry;
-import gregtech.internal.material.MaterialProperty;
-import gregtech.internal.prefix.PrefixRegistry;
-import gregtech.content.block.stone.StoneType;
-import gregtech.platform.neoforge.gametest.SharedMaterialBootstrapGameTests;
+import com.gregtech.gregtech.api.material.GTMaterialRegistry;
+import com.gregtech.gregtech.api.material.MaterialProperty;
+import com.gregtech.gregtech.api.prefix.PrefixRegistry;
+import com.gregtech.gregtech.block.stone.StoneType;
+import com.gregtech.gregtech.platform.neoforge.gametest.SharedMaterialBootstrapGameTests;
 import java.util.Locale;
 
 /** Runs ORIGINAL imported material/role rules under inert game stubs, never a game startup test. */
@@ -11,11 +11,11 @@ public final class OriginalMaterialRoleProbe {
     public static void main(String[] args) throws Exception {
         Locale.setDefault(Locale.ROOT);
         PrefixRegistry.ensurePrefixesLoaded();
-        gregtech.content.data.ModReferences.UNKNOWN.getClass();
-        gregtech.content.data.MaterialGroups.Glowstone.getClass();
+        com.gregtech.gregtech.data.ModReferences.UNKNOWN.getClass();
+        com.gregtech.gregtech.data.MaterialGroups.Glowstone.getClass();
         GTMaterialRegistry.init();
         // Exactly the original Loader_Materials order, without calling the extracted helper.
-        gregtech.content.worldgen.GTWorldgenMaterials.flagOreMaterials();
+        com.gregtech.gregtech.worldgen.GTWorldgenMaterials.flagOreMaterials();
         for (StoneType stone : StoneType.values()) stone.material().put(MaterialProperty.STONE);
         GTMaterialRegistry.postInit();
         System.out.println("role_sha256=" + SharedMaterialBootstrapGameTests.roleSnapshotSha256());

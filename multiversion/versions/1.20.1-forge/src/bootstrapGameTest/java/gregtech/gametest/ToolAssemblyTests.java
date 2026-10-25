@@ -45,7 +45,7 @@ import java.util.TreeMap;
 @PrefixGameTestTemplate(false)
 public final class ToolAssemblyTests {
 
-    @GameTest(template = "test_empty", timeoutTicks = 400)
+    @GameTest(template = "test_blueprint_empty", timeoutTicks = 400)
     public static void everyToolHasGt6sRecipeFamily(GameTestHelper helper) {
         List<ToolAssemblyCatalog.ToolAssemblyInfo> catalog = ToolAssemblyCatalog.build();
         int headTools = 0;
@@ -54,7 +54,9 @@ public final class ToolAssemblyTests {
         for (GTToolType type : GTToolType.values()) {
             boolean shaped = !GTToolRecipes.shaped(type).isEmpty();
             boolean assembly = GTToolRecipes.isHeadAssembly(type) || type == GTToolType.MAGNIFYING_GLASS;
-            if (!shaped && !assembly) withoutRecipe.add(type.id());
+            boolean pocket=java.util.Arrays.asList(gregtech.content.item.PocketToolItem.MODES).contains(type)
+                    &&!GTToolRecipes.shaped(GTToolType.POCKET_MULTITOOL).isEmpty();
+            if (!shaped && !assembly && !pocket) withoutRecipe.add(type.id());
         }
         for (ToolAssemblyCatalog.ToolAssemblyInfo info : catalog) {
             if (info.headAssembly()) headTools++;
@@ -63,6 +65,19 @@ public final class ToolAssemblyTests {
                 helper.fail("catalog entry has no output: " + info.type().id());
                 return;
             }
+        }
+        var at=new net.minecraft.core.BlockPos(4,3,4);helper.setBlock(at,net.minecraft.world.level.block.Blocks.STONE);
+        var player=ToolInteractionActors.survival(helper,helper.absolutePos(at));player.setShiftKeyDown(true);
+        var pocket=gregtech.content.item.GTToolItem.create(GTToolType.POCKET_MULTITOOL,Materials.Steel,GTMaterialRegistry.get("Blue"));
+        pocket.setDamageValue(7);player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,pocket);
+        var absolute=helper.absolutePos(at);
+        var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(absolute),net.minecraft.core.Direction.UP,absolute,false);
+        for(int i=1;i<=gregtech.content.item.PocketToolItem.MODES.length;i++) {
+            var held=player.getMainHandItem();
+            helper.assertTrue(held.getItem().onItemUseFirst(held,new net.minecraft.world.item.context.UseOnContext(helper.getLevel(),player,net.minecraft.world.InteractionHand.MAIN_HAND,held,hit)).consumesAction(),"source pocket mode switch handles click");
+            var switched=player.getMainHandItem();
+            helper.assertTrue(((gregtech.content.item.GTToolItem)switched.getItem()).toolType()==gregtech.content.item.PocketToolItem.MODES[i%8]
+                    &&GTToolHelper.getHead(switched)==Materials.Steel&&switched.getDamageValue()==7,"all pocket identities are obtainable by switching without changing head or wear");
         }
         var json = new TreeMap<String, Object>();
         json.put("tools", catalog.size());
@@ -190,10 +205,18 @@ public final class ToolAssemblyTests {
         List<ItemStack> head = ToolAssemblyCatalog.stacksOf(GTToolType.PICKAXE.headPrefix(), GTToolType.PICKAXE);
         List<ItemStack> sticks = ToolAssemblyCatalog.sticks();
         helper.assertTrue(!head.isEmpty() && !sticks.isEmpty(), "pickaxe head and handle exist");
+        var chosenHead=head.stream().filter(stack->gregtech.content.tool.OriginalToolMaterials.defaultHandle(
+                gregtech.internal.material.MaterialEquivalence.form(stack).material())!=null).findFirst().orElseThrow();
+        var headMaterial=gregtech.internal.material.MaterialEquivalence.form(chosenHead).material();
+        var compatibleHandle=GTItems.getStack(MaterialPrefix.stick,gregtech.content.tool.OriginalToolMaterials.defaultHandle(headMaterial),1);
+        head=List.of(chosenHead);sticks=List.of(compatibleHandle);
         helper.assertTrue(pickaxe.matches(container(List.of(head.get(0), sticks.get(0))), helper.getLevel()),
                 "head then handle matches");
         ItemStack tool = pickaxe.assemble(container(List.of(sticks.get(0), head.get(0))), helper.getLevel().registryAccess());
         helper.assertTrue(!tool.isEmpty(), "handle then head matches too");
+        var wrongHandle=ToolAssemblyCatalog.sticks().stream().filter(stack->!gregtech.content.tool.OriginalToolMaterials.acceptsHandle(
+                headMaterial,gregtech.internal.material.MaterialEquivalence.form(stack).material())).findFirst();
+        helper.assertTrue(wrongHandle.isPresent()&&!pickaxe.matches(container(List.of(chosenHead,wrongHandle.get())),helper.getLevel()),"source handle-family gate rejects incompatible stick");
         // three items do not
         helper.assertTrue(!pickaxe.matches(container(List.of(head.get(0), sticks.get(0), sticks.get(0))),
                 helper.getLevel()), "three items do not match");
@@ -248,7 +271,7 @@ public final class ToolAssemblyTests {
     /** GT6's hand-written early tools: flint, bone, obsidian, petrified wood and stone. */
     @GameTest(template = "test_empty", timeoutTicks = 400)
     public static void earlyToolsComeFromRocksAndFlint(GameTestHelper helper) {
-        ItemStack stick = GTItems.getStack(MaterialPrefix.stick, GTToolHelper.firstHandleMaterial(), 1);
+        ItemStack stick = GTItems.getStack(MaterialPrefix.stick, GTMaterialRegistry.get("Wood"), 1);
         helper.assertTrue(!stick.isEmpty(), "a handle stick exists");
         // A rock that carries GT6's STONE property (ANY.Stone, Loader_Tools:272).
         GTMaterial granite = null;

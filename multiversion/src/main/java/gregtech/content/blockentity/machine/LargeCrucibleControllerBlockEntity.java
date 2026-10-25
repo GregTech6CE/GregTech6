@@ -144,7 +144,7 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
             var cell = fixed.cell();
             if (cell.role() != MultiblockLayout.Role.AIR) parts.put(fixed.pos(), cell.role());
         }
-        return gregtech.internal.multiblock.tracking.StructureClaims.update(this, true, bindings, parts, 0,
+        return gregtech.internal.multiblock.tracking.StructureClaims.update(this, bindings, parts,
                 position -> level.getBlockEntity(position) instanceof MultiblockPortBlockEntity port
                         && port.canBind(worldPosition),
                 (position, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(position)).bind(worldPosition, role),
@@ -154,7 +154,12 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
         bindings.clear(this::release);
         gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
     }
+    private boolean structureFormed;
+    private boolean structureOk() {
+        return structureFormed;
+    }
     @Override public void structureFormedChanged(boolean formed) {
+        structureFormed = formed;
         if (level == null || level.isClientSide || isRemoved()) return;
         gregtech.internal.multiblock.tracking.StructureScanProbe.pause();
         try {
@@ -169,23 +174,6 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
     @Override public boolean isStructureOk() {
         return gregtech.internal.multiblock.tracking.StructureTracking.query(this);
     }
-    @Override public boolean scanStructure() {
-        if (level != null && level.isClientSide) return isFormedForRendering();
-        boolean formed = checkStructure();
-        if (level != null && !isRemoved()) {
-            gregtech.internal.multiblock.tracking.StructureScanProbe.pause();
-            try {
-                var property = gregtech.content.block.machine.MultiblockPortBlock.CRUCIBLE_FORMED;
-                var state = level.getBlockState(worldPosition);
-                if (state.hasProperty(property) && state.getValue(property) != formed)
-                    level.setBlock(worldPosition, state.setValue(property, formed), 3);
-            } finally {
-                gregtech.internal.multiblock.tracking.StructureScanProbe.resume();
-            }
-        }
-        return formed;
-    }
-
 //? if >=1.21.1 {
     /*public AABB getRenderBoundingBox() {
         return new AABB(worldPosition.getX()-1,worldPosition.getY(),worldPosition.getZ()-1,worldPosition.getX()+2,worldPosition.getY()+3,worldPosition.getZ()+2);
@@ -195,26 +183,9 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
 //?}
     }
 
-    private boolean checkStructure() {
-        if (level == null || isRemoved() || !level.hasChunkAt(worldPosition)) return false;
-        Block wall = variant.wall();
-        Map<BlockPos, MultiblockLayout.Role> candidates = new LinkedHashMap<>(24);
-        for(var cell:gregtech.content.multiblock.SharedLargeCrucibleStructure.CELLS){
-            BlockPos pos=worldPosition.offset(cell.x(),cell.y(),cell.z());
-            if(!level.hasChunkAt(pos)){bindings.clear(this::release);gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);return false;}
-            if(cell.air()){if(!level.getBlockState(pos).isAir()){bindings.clear(this::release);gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);return false;}continue;}
-            if(!(level.getBlockState(pos).getBlock() == wall)){bindings.clear(this::release);gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);return false;}
-            candidates.put(pos,MultiblockLayout.Role.valueOf(cell.role().name()));
-        }
-        return gregtech.internal.multiblock.tracking.StructureClaims.update(this, true, bindings, candidates, 0,
-                pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port && port.canBind(worldPosition),
-                (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
-                this::release) != gregtech.internal.multiblock.tracking.StructureClaims.Result.FAILED;
-    }
-
     public static void serverTick(Level level, BlockPos pos, BlockState state, LargeCrucibleControllerBlockEntity be) {
         if (level.isClientSide) return;
-        if (be.isStructureOk()) {
+        if (be.structureOk()) {
             be.collectRainwater();
             be.tickServer();
         }

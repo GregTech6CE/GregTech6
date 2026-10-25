@@ -22,6 +22,8 @@ public final class StructureScanProbe {
     private static int matchers;
     private static int binds;
     private static int releases;
+    private static int designs;
+    private static int queries;
     private static final ThreadLocal<Frame> CURRENT = new ThreadLocal<>();
     private static final ThreadLocal<java.util.ArrayDeque<Integer>> PAUSES =
             ThreadLocal.withInitial(java.util.ArrayDeque::new);
@@ -56,6 +58,8 @@ public final class StructureScanProbe {
         matchers = 0;
         binds = 0;
         releases = 0;
+        designs = 0;
+        queries = 0;
     }
 
     public static int scans() { return scans; }
@@ -66,8 +70,11 @@ public final class StructureScanProbe {
     public static int matchers() { return matchers; }
     public static int binds() { return binds; }
     public static int releases() { return releases; }
+    public static int designs() { return designs; }
+    public static int queries() { return queries; }
 
     public static boolean inScan() {
+        if (activeScans == 0) return false;
         Frame frame = CURRENT.get();
         return frame != null && frame.depth > 0;
     }
@@ -157,6 +164,15 @@ public final class StructureScanProbe {
 
     public static void onRelease() {
         if (enabled) releases++;
+    }
+
+    public static void onDesignWrite() {
+        if (enabled) designs++;
+    }
+
+    /** A controller tick query. Tests assert this stays at zero once edges drive the machine. */
+    public static void onQuery() {
+        if (enabled) queries++;
     }
 
     public static void noteBlock(BlockPos pos) { note(pos, Kind.BLOCK); }

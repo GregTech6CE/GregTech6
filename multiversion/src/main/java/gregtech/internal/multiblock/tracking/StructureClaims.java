@@ -4,6 +4,7 @@ import gregtech.internal.multiblock.MultiblockLayout;
 import gregtech.internal.multiblock.PartBindings;
 import gregtech.content.blockentity.machine.MultiblockPortBlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
@@ -12,42 +13,41 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-/** Skips bind and design writes when a formed structure's cells have not changed. */
+/**
+ * Applies one evaluation's cells as a per-cell delta: cells whose role is unchanged and whose part
+ * still carries this controller's binding are left alone, so a rescan binds and writes nothing.
+ */
 public final class StructureClaims {
     public enum Result { APPLIED, UNCHANGED, FAILED }
 
     private StructureClaims() {}
 
-    public static Result update(BlockEntity controller, boolean expectFormed,
+    public static Result update(BlockEntity controller,
                                 PartBindings<BlockPos, MultiblockLayout.Role> bindings,
-                                Map<BlockPos, MultiblockLayout.Role> parts, int designHash,
+                                Map<BlockPos, MultiblockLayout.Role> parts,
                                 Predicate<BlockPos> canClaim, BiConsumer<BlockPos, MultiblockLayout.Role> claim,
                                 Consumer<BlockPos> release) {
-        StructureTracker tracker = StructureTracking.tracker(controller);
-        if (expectFormed && tracker != null && tracker.claimsMatch(parts, designHash)
-                && stillBound(controller.getLevel(), controller.getBlockPos(), parts))
-            return Result.UNCHANGED;
         StructureScanProbe.pause();
-        boolean claimed;
+        PartBindings.Outcome outcome;
         try {
-            claimed = bindings.update(parts, canClaim, claim, release);
+            outcome = bindings.update(parts, canClaim,
+                    (pos, role) -> stillBound(controller, pos, role), claim, release);
         } finally {
             StructureScanProbe.resume();
         }
-        if (!StructureTrackingMode.legacy() && controller.getLevel() instanceof net.minecraft.server.level.ServerLevel server)
-            WorldStructureClaims.retain(server, controller.getBlockPos(), claimed ? parts.keySet() : java.util.Set.of());
-        if (tracker != null) {
-            if (claimed && expectFormed) tracker.rememberClaims(parts, designHash);
-            else tracker.forgetClaims();
-        }
-        return claimed ? Result.APPLIED : Result.FAILED;
+        if (controller.getLevel() instanceof ServerLevel server)
+            WorldStructureClaims.retain(server, controller.getBlockPos(),
+                    outcome == PartBindings.Outcome.FAILED ? java.util.Set.of() : parts.keySet());
+        return switch (outcome) {
+            case APPLIED -> Result.APPLIED;
+            case UNCHANGED -> Result.UNCHANGED;
+            case FAILED -> Result.FAILED;
+        };
     }
 
     public static void cleared(BlockEntity controller) {
-        if (!StructureTrackingMode.legacy() && controller.getLevel() instanceof net.minecraft.server.level.ServerLevel server)
+        if (controller.getLevel() instanceof ServerLevel server)
             WorldStructureClaims.releaseController(server, controller.getBlockPos());
-        StructureTracker tracker = StructureTracking.tracker(controller);
-        if (tracker != null) tracker.forgetClaims();
     }
 
     public static void runQuiet(Runnable work) {
@@ -59,26 +59,11 @@ public final class StructureClaims {
         }
     }
 
-    public static int designHash(int seed, Iterable<Integer> designs) {
-        int hash = 31 * seed + 1;
-        int count = 0;
-        if (designs != null) {
-            for (int design : designs) {
-                hash = 31 * hash + design;
-                count++;
-            }
-        }
-        return hash * 31 + count;
-    }
-
-    private static boolean stillBound(Level level, BlockPos controller, Map<BlockPos, MultiblockLayout.Role> parts) {
+    /** The part entity can be recreated by a chunk reload; its derived cache must agree too. */
+    private static boolean stillBound(BlockEntity controller, BlockPos pos, MultiblockLayout.Role role) {
+        Level level = controller.getLevel();
         if (level == null) return false;
-        for (var entry : parts.entrySet()) {
-            BlockPos pos = entry.getKey();
-            if (!level.hasChunkAt(pos)) return false;
-            if (!(level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port)) return false;
-            if (!port.hasBindingCache(controller, entry.getValue())) return false;
-        }
-        return true;
+        return level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port
+                && port.hasBindingCache(controller.getBlockPos(), role);
     }
 }

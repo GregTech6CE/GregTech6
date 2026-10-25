@@ -38,7 +38,11 @@ public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockE
     public static void serverTick(Level level,BlockPos pos,BlockState state,ImplosionCompressorControllerBlockEntity machine) {
         BasicMachineBlockEntity.serverTick(level,pos,state,machine);
     }
-    @Override protected boolean structureComplete() { return isStructureOk(); }
+    private boolean structureFormed;
+    @Override protected boolean structureComplete() {
+        return structureFormed;
+    }
+    @Override public void structureFormedChanged(boolean formed) { structureFormed = formed; }
     @Override public gregtech.internal.multiblock.tracking.StructureDefinition structureDefinition() {
         return definition;
     }
@@ -60,7 +64,7 @@ public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockE
             var cell=fixed.cell();
             if(cell.role()!=MultiblockLayout.Role.AIR)candidates.put(fixed.pos(),cell.role());
         }
-        return gregtech.internal.multiblock.tracking.StructureClaims.update(this,true,bindings,candidates,0,
+        return gregtech.internal.multiblock.tracking.StructureClaims.update(this,bindings,candidates,
                 pos->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).canBind(worldPosition),
                 (pos,role)->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).bind(worldPosition,role),this::release)
                 !=gregtech.internal.multiblock.tracking.StructureClaims.Result.FAILED;
@@ -71,21 +75,6 @@ public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockE
     }
     @Override public boolean isStructureOk() {
         return gregtech.internal.multiblock.tracking.StructureTracking.query(this);
-    }
-    @Override public boolean scanStructure() {
-        if(level==null || isRemoved()) return false;
-        var facing=getBlockState().getValue(HorizontalDirectionalBlock.FACING);
-        var candidates=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
-        boolean valid=LAYOUT.matches(worldPosition,facing,level::hasChunkAt,(pos,role)->{
-            if(role==MultiblockLayout.Role.AIR) return level.isEmptyBlock(pos);
-            if(!level.getBlockState(pos).is(GTMultiblocks.IMPLOSION_COMPRESSOR_WALL.get()) || !(level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity)) return false;
-            candidates.put(pos,role);return true;
-        });
-        if(!valid) { bindings.clear(this::release); gregtech.internal.multiblock.tracking.StructureClaims.cleared(this); return false; }
-        return gregtech.internal.multiblock.tracking.StructureClaims.update(this, true, bindings, candidates, 0,
-                pos->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).canBind(worldPosition),
-                (pos,role)->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).bind(worldPosition,role),this::release)
-                != gregtech.internal.multiblock.tracking.StructureClaims.Result.FAILED;
     }
     private void release(BlockPos pos) { if(level!=null&&level.hasChunkAt(pos)&&level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part) part.release(worldPosition); }
     @Override public void onLoad() {

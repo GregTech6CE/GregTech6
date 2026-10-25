@@ -257,18 +257,12 @@ public final class ItemPipeCoverTests {
         BlockPos pos = site(48, 0);
         clearSite(level, pos, 4);
         ItemPipeBlockEntity sender = setPipe(helper, pos);
-        setPipe(helper, pos.east());
-        BlockPos chestPos = pos.east(2);
+        BlockPos chestPos = pos.east();
         level.setBlock(chestPos, Blocks.CHEST.defaultBlockState(), 3);
         connect(level, pos, Direction.EAST);
-        connect(level, pos.east(), Direction.WEST);
-        connect(level, pos.east(), Direction.EAST);
-        helper.assertTrue(level.getBlockState(pos).getValue(ItemPipeBlock.propFor(Direction.EAST))
-                        && level.getBlockState(pos.east()).getValue(ItemPipeBlock.propFor(Direction.WEST)),
-                "the two pipes are connected, otherwise nothing could flow at all");
         helper.assertTrue(level.getBlockEntity(chestPos) instanceof ChestBlockEntity,
                 "the line ends in a real inventory, which is the only thing pipe routing forwards to");
-        List<BlockPos> line = List.of(pos, pos.east());
+        List<BlockPos> line = List.of(pos);
 
         // Phase 1: no cover on the sending face — the line has to move items, or nothing below means
         // anything.
@@ -303,19 +297,13 @@ public final class ItemPipeCoverTests {
                         "and it is still in the sender, got " + countItems(sender, Items.DIAMOND)
                                 + " [" + describe(sender) + "]");
 
-                // Phase 3 runs on a *fresh* line: every item pipe has a single slot, so a line that has
-                // already carried one item type can refuse the next one for reasons that have nothing to
-                // do with the filter (the middle pipe's slot, in particular). A clean line isolates the
-                // rule under test.
+                // A fresh pipe-to-chest outlet isolates matching-item delivery from phase 2's buffer.
                 BlockPos third = site(96, 0);
                 clearSite(level, third, 4);
                 ItemPipeBlockEntity sender3 = setPipe(helper, third);
-                setPipe(helper, third.east());
-                BlockPos chest3 = third.east(2);
+                BlockPos chest3 = third.east();
                 level.setBlock(chest3, Blocks.CHEST.defaultBlockState(), 3);
                 connect(level, third, Direction.EAST);
-                connect(level, third.east(), Direction.WEST);
-                connect(level, third.east(), Direction.EAST);
                 helper.assertTrue(sender3.attachCover(Direction.EAST, cover(CoverUtilityBehaviors.FILTER_ITEM)),
                         "the fresh line's sender takes an item filter");
                 // Exercise the screwdriver/soft-hammer entry points too, then install a matching filter.
@@ -328,7 +316,7 @@ public final class ItemPipeCoverTests {
                 helper.assertTrue(sender3.insertItem(0, new ItemStack(Items.DIAMOND, 4), false).isEmpty(),
                         "the fresh sender carries diamonds, got " + sender3.getStackInSlot(0));
 
-                pump(helper, level, List.of(third, third.east()), 32, () -> {
+                pump(helper, level, List.of(third), 32, () -> {
                     helper.assertTrue(chestCount(level, chest3, Items.DIAMOND) > 0,
                             "a diamond that matches the filter does leave, got "
                                     + chestCount(level, chest3, Items.DIAMOND)

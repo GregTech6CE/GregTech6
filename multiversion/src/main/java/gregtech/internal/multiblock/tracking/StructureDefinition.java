@@ -32,10 +32,6 @@ public sealed interface StructureDefinition permits StructureDefinition.Declarat
 
     Footprint declaredFootprint(TrackedMultiblock machine);
 
-    default void onFormed(TrackedMultiblock machine) {}
-
-    default void onBroken(TrackedMultiblock machine) {}
-
     enum ClaimPolicy { ATOMIC, PER_CELL }
 
     non-sealed interface Declarative extends StructureDefinition {

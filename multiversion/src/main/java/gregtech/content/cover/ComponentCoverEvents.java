@@ -48,6 +48,23 @@ public final class ComponentCoverEvents {
         var hit = event.getHitVec();
         if (CoverItems.isCover(held) || crowbar)
             hit = hit.withDirection(gregtech.internal.tool.ToolInteractions.selectedFace(hit));
+        boolean recoverStoredCover = (host.coverOwner() instanceof gregtech.content.blockentity.misc.PileBlockEntity
+                || host.coverOwner() instanceof gregtech.content.blockentity.tool.ProcessingToolBlockEntity)
+                && crowbar && !host.getCover(hit.getDirection()).isEmpty();
+        if (event.getHand() == net.minecraft.world.InteractionHand.MAIN_HAND
+                && host.coverOwner() instanceof gregtech.content.blockentity.tool.ProcessingToolBlockEntity tool
+                && tool.handlesHandInput(held) && !recoverStoredCover) {
+            // Manual storage accepts items without recipes too. In particular, sneaking
+            // with a BlockItem must use the vessel instead of placing an adjacent block.
+//? if >=1.21.1 {
+            /*if (event.getUseBlock() == net.neoforged.neoforge.common.util.TriState.FALSE) return;
+            event.setUseBlock(net.neoforged.neoforge.common.util.TriState.TRUE);
+*///?} else {
+            if (event.getUseBlock() == net.minecraftforge.eventbus.api.Event.Result.DENY) return;
+            event.setUseBlock(net.minecraftforge.eventbus.api.Event.Result.ALLOW);
+//?}
+            return;
+        }
         if (host.coverOwner() instanceof gregtech.content.blockentity.misc.PileBlockEntity pile
                 && pile.canAccept(held)) {
             // Allow the normal pile callback while sneaking, without bypassing protection events.
@@ -58,10 +75,8 @@ public final class ComponentCoverEvents {
 //?}
             return;
         }
-        boolean recoverPileCover = host.coverOwner() instanceof gregtech.content.blockentity.misc.PileBlockEntity
-                && crowbar && !host.getCover(hit.getDirection()).isEmpty();
         if (ComponentCoverFallback.fallbackClass(host.coverOwner())
-                && !ComponentCoverFallback.eligible(host.coverOwner()) && !recoverPileCover) return;
+                && !ComponentCoverFallback.eligible(host.coverOwner()) && !recoverStoredCover) return;
         var result = host instanceof gregtech.content.logistics.LogisticsCoverHost logistics
                 ? gregtech.content.logistics.LogisticsCoverInteraction.use(logistics,
                         event.getLevel(), event.getEntity(), event.getHand(), hit.getDirection())

@@ -318,14 +318,17 @@ public final class DungeonTests {
         server.setBlock(new BlockPos(minX + 7, y + 5, minZ + 7), Blocks.WATER.defaultBlockState(), 2);
         helper.assertTrue(GTDungeonFeature.generateCell(level, ANCHOR, cells, 2, 2, offsetY, 3, rocks, 77L),
                 "the corridor can rebuild beneath liquid");
+        // GT6 dye metadata 3 is brown; the port represents that color in the block identity.
+        BlockState themedGlass = gregtech.content.block.misc.FixedConstructionColor.recolor(
+                GTDecorBlocks.GLASS_GLOW.get().defaultBlockState(), net.minecraft.world.item.DyeColor.BROWN);
         helper.assertTrue(server.getBlockState(new BlockPos(minX + 6, y + 4, minZ + 6))
-                        .is(GTDecorBlocks.GLASS_GLOW.get()),
-                "liquid above an ordinary ceiling column selects glowing glass");
+                        .equals(themedGlass),
+                "liquid above an ordinary ceiling column selects the theme's brown glowing glass");
         for (int x = 7; x <= 8; x++) {
             for (int z = 7; z <= 8; z++) {
                 helper.assertTrue(server.getBlockState(new BlockPos(minX + x, y + 4, minZ + z))
-                                .is(GTDecorBlocks.GLASS_GLOW.get()),
-                        "liquid above the centre selects four glowing glass blocks");
+                                .equals(themedGlass),
+                        "liquid above the centre selects four brown glowing glass blocks");
             }
         }
         helper.succeed();

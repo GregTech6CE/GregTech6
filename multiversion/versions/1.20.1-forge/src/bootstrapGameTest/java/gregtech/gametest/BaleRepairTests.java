@@ -29,8 +29,8 @@ public final class BaleRepairTests {
     private BaleRepairTests() {}
 
     private static final String[][] BALES = {
-            {"grass", "grass_2"}, {"bale_grass_dry", "dry_grass"},
-            {"bale_grass_moldy", "moldy_grass"}, {"bale_grass_rotten", "rotten_grass"},
+            {"grass", "grass_2"}, {"grass_dry", "dry_grass"},
+            {"grass_moldy", "moldy_grass"}, {"grass_rotten", "rotten_grass"},
             {"barley", "barley"}, {"oat", "oats"}, {"rice", "rice"}, {"rye", "rye"}
     };
 

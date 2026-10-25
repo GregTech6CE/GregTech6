@@ -86,7 +86,7 @@ public final class OriginalTankAndAxialRecipeTests {
     }
 
     @GameTest(template = "test_empty")
-    public static void oldAxialControllersCannotBypass172xxManufacturing(GameTestHelper h) {
+    public static void axialControllersHaveOneOriginalManufacturingRoute(GameTestHelper h) {
         Map<String, Integer> originals = Map.ofEntries(
                 Map.entry("magnalium_steam_turbine_main_housing", 17211),
                 Map.entry("trinitanium_steam_turbine_main_housing", 17212),
@@ -105,20 +105,19 @@ public final class OriginalTankAndAxialRecipeTests {
                     "gt6ce", conversion.getKey()));
             Item original = LargeMachineParts.block(conversion.getValue()).asItem();
             h.assertTrue(legacy != null, "legacy axial controller registered: " + conversion.getKey());
-            ShapedRecipe recipe = recipe(h, "machines/multiblock/" + conversion.getKey());
-            h.assertTrue(recipe.getWidth() == 1 && recipe.getHeight() == 1
-                            && recipe.getIngredients().get(0).test(new ItemStack(original)),
-                    "legacy " + conversion.getKey() + " converts only from 172xx original");
+            h.assertTrue(legacy == original, "registry name and original numeric ID identify one controller: " + conversion.getKey());
+            ShapedRecipe recipe = recipe(h, CraftingFixtureIds.axialPath(conversion.getKey()));
+            h.assertTrue(recipe.getResultItem(h.getLevel().registryAccess()).is(original)
+                            && recipe.getWidth() == 3 && recipe.getHeight() == 3,
+                    "source 172xx manufacturing pattern is retained: " + conversion.getKey());
             int routes = 0;
             for (var candidate : h.getLevel().getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING)) {
-                if (!candidate.getResultItem(h.getLevel().registryAccess()).is(legacy)) continue;
+                if (!candidate.getResultItem(h.getLevel().registryAccess()).is(original)) continue;
                 routes++;
-                h.assertTrue(candidate instanceof ShapedRecipe shaped
-                                && shaped.getWidth() == 1 && shaped.getHeight() == 1
-                                && shaped.getIngredients().get(0).test(new ItemStack(original)),
-                        "no alternate cheaper crafting route for " + conversion.getKey());
+                h.assertTrue(candidate.getId().equals(recipe.getId()),
+                        "no alternate cheaper or self-conversion route for " + conversion.getKey());
             }
-            h.assertTrue(routes == 1, "exactly one legacy conversion route for " + conversion.getKey());
+            h.assertTrue(routes == 1, "one source manufacturing route for " + conversion.getKey());
         }
         for (int i = 0; i < 4; i++) {
             int gasId = 17231 + i;
@@ -130,7 +129,7 @@ public final class OriginalTankAndAxialRecipeTests {
                 case 2 -> "graphene_gas_turbine_main_housing";
                 default -> "vibramantium_gas_turbine_main_housing";
             };
-            ShapedRecipe originalRecipe = recipe(h, "axial/" + axialId);
+            ShapedRecipe originalRecipe = recipe(h, CraftingFixtureIds.axialPath(axialId));
             h.assertTrue(originalRecipe.getResultItem(h.getLevel().registryAccess()).is(gas)
                             && originalRecipe.getIngredients().get(4).test(new ItemStack(steam)),
                     "GT6 gas " + gasId + " requires steam turbine " + (17211 + i));

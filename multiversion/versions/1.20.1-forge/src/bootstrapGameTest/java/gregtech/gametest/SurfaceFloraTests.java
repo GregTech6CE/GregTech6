@@ -224,9 +224,9 @@ public final class SurfaceFloraTests {
         helper.assertTrue(GTSurfaceFlora.twigMultiplier(id("ice_spikes")) == 0, "frozen biomes have no twigs in GT6");
         helper.assertTrue(GTSurfaceFlora.glowtusBiome(id("jungle")) && !GTSurfaceFlora.glowtusBiome(id("desert")),
                 "glowtus is GT6's jungle plant");
-        helper.assertTrue(GTSurfaceFlora.LOGS.get(3).biomes().contains(id("snowy_plains")),
+        helper.assertTrue(GTSurfaceFlora.LOGS.get(3).biomes().contains("minecraft:snowy_plains"),
                 "the frozen log is GT6's BIOMES_FROZEN entry");
-        helper.assertTrue(GTSurfaceFlora.LOGS.get(1).biomes().contains(id("jungle")),
+        helper.assertTrue(GTSurfaceFlora.LOGS.get(1).biomes().contains("minecraft:jungle"),
                 "the rotten log is GT6's BIOMES_SWAMP/JUNGLE entry");
         helper.succeed();
     }

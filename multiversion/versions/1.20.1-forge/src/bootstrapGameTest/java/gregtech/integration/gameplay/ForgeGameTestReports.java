@@ -34,6 +34,7 @@ public final class ForgeGameTestReports {
                 @Override
                 public void onTestFailed(GameTestInfo info) {
                     log.onTestFailed(info);
+                    GregTech.LOGGER.error("GT6_GAMETEST_FAILURE {}", info.getTestName(), info.getError());
                     xml.onTestFailed(info);
                 }
 

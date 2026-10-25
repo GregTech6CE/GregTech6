@@ -113,6 +113,10 @@ public final class RecipeInputs {
 
     public static boolean matches(ItemStack required, ItemStack available) {
         if(available.isEmpty())return false;
+        // Legacy palette items and their fixed-color replacements denote the same input.
+        // Normalize the offered identity too; expanding only the requirement rejects its bare alias.
+        var canonical = gregtech.content.block.misc.LegacyConstructionBlockItem.canonical(available);
+        if (canonical != available) return matches(required, canonical);
         var colors = gregtech.content.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(required);
         if (!colors.isEmpty()) return colors.stream().anyMatch(color -> matches(color, available));
         if(!required.is(available.getItem())) return gregtech.internal.material.MaterialEquivalence.matches(required,available);

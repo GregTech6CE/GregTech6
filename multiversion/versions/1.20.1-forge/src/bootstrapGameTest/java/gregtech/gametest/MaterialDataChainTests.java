@@ -99,12 +99,12 @@ public final class MaterialDataChainTests {
                 List.of(new ItemStack(Items.PAPER, 3), scanned), List.of(dye), false, 2, 1);
         h.assertTrue(printed != null, "a scanned stick plus three paper and dye prints something");
         ItemStack page = printed.getOutput(0);
-        h.assertTrue(page.getItem() instanceof gregtech.content.item.ColoredBookItem, "the printer prints a source dictionary cover: " + page);
+        h.assertTrue(gregtech.content.data.VisualDocumentData.isPages(page), "the printer produces source dictionary pages for binding: " + page);
         h.assertTrue(GTMaterialDictionary.materialOf(page) == material,
                 "the printed book is the scanned material's dictionary");
         h.assertTrue(page.getTag().getList("pages", 8).size() == GTMaterialDictionary.pages(material).size(),
                 "every dictionary page is printed");
-        h.assertTrue(printed.mEUt == 512 && printed.mDuration == 16,
+        h.assertTrue(printed.mEUt == 16 && printed.mDuration == 512,
                 "GT6's printer power and duration: " + printed.mEUt + " EU/t for " + printed.mDuration);
         h.assertTrue(printed.mFluidInputs.length == 1 && printed.mFluidInputs[0].getAmount() == 72,
                 "GT6's half dye unit (72 mB) of black dye is required");
@@ -212,8 +212,11 @@ public final class MaterialDataChainTests {
         Recipe replicated = MachineRecipeMaps.Replicator.findRecipe(
                 List.of(scanned), List.of(neutral, charged), false, 3, 3);
         h.assertTrue(replicated != null, "a scanned stick plus its matter replicates the material");
-        h.assertTrue(!replicated.getOutput(0).isEmpty(),
+        h.assertTrue(!replicated.getOutput(0).isEmpty()||replicated.mFluidOutputs.length>0&&!replicated.mFluidOutputs[0].isEmpty(),
                 "the replicator hands out " + material.getName() + ": " + replicated.getOutput(0));
+        if(material.getName().equals("Hydrogen")) h.assertTrue(replicated.mOutputs.length==0
+                &&replicated.mFluidOutputs.length==1&&replicated.mFluidOutputs[0].getAmount()==1000
+                &&replicated.mFluidOutputs[0].getFluid()==GTFluids.still("GenGas_Hydrogen").get(),"ambient hydrogen replicates one unit of gas, not an invented solid item");
         h.assertTrue(replicated.mEUt == 1 && replicated.mDuration == (material.getProtons() + material.getNeutrons()) * 256L,
                 "GT6's 256 ticks per nucleon, at one QU/t");
         h.assertTrue(replicated.isCatalystInput(0), "the replicator retains its data stick");

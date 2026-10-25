@@ -47,7 +47,7 @@ public final class GTMainRecipesTests {
                 if (fluid != null && fluid.getAmount() > 0) dye = true;
             }
             for (ItemStack out : recipe.mOutputs) {
-                if (out == null || !out.is(Items.WRITTEN_BOOK)) continue;
+                if (out == null || !gregtech.content.data.VisualDocumentData.isBook(out)) continue;
                 String title = out.getTag() == null ? null : out.getTag().getString("title");
                 if (title != null && title.equals(GTBooks.titleOf("Manual_Printer")) && book && dye) {
                     found = true;

@@ -33,8 +33,8 @@ public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity impl
                         this.stopped = !value || this.overloaded;
                         setChanged();
                     },
-                    () -> this.converting && !this.overloaded && isStructureOk(),
-                    () -> this.emitted && !this.overloaded && isStructureOk());
+                    () -> this.converting && !this.overloaded && structureOk(),
+                    () -> this.emitted && !this.overloaded && structureOk());
 
     @Override
     public gregtech.api.machine.MachineControl machineControl(Direction side) {
@@ -42,6 +42,11 @@ public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity impl
     }
 
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();
+    private boolean structureFormed;
+    @Override public void structureFormedChanged(boolean formed) { structureFormed = formed; }
+    protected boolean structureOk() {
+        return structureFormed;
+    }
     private final gregtech.internal.multiblock.tracking.StructureDefinition definition =
             gregtech.internal.multiblock.tracking.FixedStructures.declarative(this, this::structureCells, List.of());
 
@@ -138,7 +143,7 @@ public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity impl
             var cell = fixed.cell();
             if (cell.role() != MultiblockLayout.Role.AIR) parts.put(fixed.pos(), cell.role());
         }
-        return gregtech.internal.multiblock.tracking.StructureClaims.update(this, true, bindings, parts, 0,
+        return gregtech.internal.multiblock.tracking.StructureClaims.update(this, bindings, parts,
                 position -> level.getBlockEntity(position) instanceof MultiblockPortBlockEntity port
                         && port.canBind(worldPosition),
                 (position, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(position)).bind(worldPosition, role),
@@ -150,25 +155,6 @@ public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity impl
     }
     @Override public boolean isStructureOk() {
         return gregtech.internal.multiblock.tracking.StructureTracking.query(this);
-    }
-    @Override
-    public boolean scanStructure() {
-        if (level == null || isRemoved()) return false;
-        var parts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
-        for (var cell : grade().cells().keySet()) {
-            var pos = AxialStructureTransform.at(worldPosition, front(), cell.getX(), cell.getY(), cell.getZ());
-            if (!level.hasChunkAt(pos) || !grade().accepts(cell,
-                    level.getBlockState(pos).getBlock()) || !(level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity)) {
-                bindings.clear(this::release);
-                gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
-                return false;
-            }
-            parts.put(pos, role(cell, front(), grade().steam()));
-        }
-        return gregtech.internal.multiblock.tracking.StructureClaims.update(this, true, bindings, parts, 0,
-                p -> ((MultiblockPortBlockEntity) level.getBlockEntity(p)).canBind(worldPosition),
-                (p, r) -> ((MultiblockPortBlockEntity) level.getBlockEntity(p)).bind(worldPosition, r), this::release)
-                != gregtech.internal.multiblock.tracking.StructureClaims.Result.FAILED;
     }
 
     private void release(BlockPos pos) {

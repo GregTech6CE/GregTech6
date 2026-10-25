@@ -33,7 +33,9 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
     }
 
     @Override
-    protected boolean refreshStructure() { return isStructureOk(); }
+    protected boolean refreshStructure() {
+        return formed;
+    }
 
     @Override
     protected boolean acceptsFluid(@Nullable Direction side) { return side == null || side == front(); }
@@ -68,8 +70,7 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
             if (cell.role() != MultiblockLayout.Role.AIR && !cell.plainBlock())
                 parts.put(fixed.pos(), cell.role());
         }
-        var claimed = gregtech.internal.multiblock.tracking.StructureClaims.update(this, true, bindings, parts,
-                fuelDesignHash(layout),
+        var claimed = gregtech.internal.multiblock.tracking.StructureClaims.update(this, bindings, parts,
                 pos -> ((gregtech.content.blockentity.machine.MultiblockPortBlockEntity) level.getBlockEntity(pos)).canBind(worldPosition),
                 (pos, role) -> ((gregtech.content.blockentity.machine.MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
                 this::release);
@@ -85,70 +86,6 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
         return gregtech.internal.multiblock.tracking.StructureTracking.query(this);
     }
     @Override public void structureFormedChanged(boolean now) { formed = now; }
-    @Override
-    public boolean scanStructure() {
-        if (level == null || isRemoved()) {
-            formed = false;
-            return false;
-        }
-        var layout = LargeMachineLayouts.cells(declaration().casing().machineType());
-        if (layout == null) {
-            bindings.clear(this::release);
-            gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
-            formed = false;
-            return false;
-        }
-        var front = front();
-        var parts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
-        for (var cell : layout) {
-            BlockPos pos = cell.at(worldPosition, front);
-            if (!level.hasChunkAt(pos)) {
-                bindings.clear(this::release);
-                gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
-                formed = false;
-                return false;
-            }
-            if (cell.role() == MultiblockLayout.Role.AIR) {
-                if (level.isEmptyBlock(pos)) continue;
-                bindings.clear(this::release);
-                gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
-                formed = false;
-                return false;
-            }
-            if (cell.plainBlock()) {
-                if (!cell.matches(level, pos, level.getBlockState(pos))) {
-                    bindings.clear(this::release);
-                    gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
-                    formed = false;
-                    return false;
-                }
-                continue;
-            }
-            if (level.getBlockState(pos).getBlock() != cell.block()
-                    || !(level.getBlockEntity(pos) instanceof gregtech.content.blockentity.machine.MultiblockPortBlockEntity)) {
-                bindings.clear(this::release);
-                gregtech.internal.multiblock.tracking.StructureClaims.cleared(this);
-                formed = false;
-                return false;
-            }
-            parts.put(pos, cell.role());
-        }
-        var claimed = gregtech.internal.multiblock.tracking.StructureClaims.update(this, true, bindings, parts,
-                fuelDesignHash(layout),
-                pos -> ((gregtech.content.blockentity.machine.MultiblockPortBlockEntity) level.getBlockEntity(pos)).canBind(worldPosition),
-                (pos, role) -> ((gregtech.content.blockentity.machine.MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
-                this::release);
-        formed = claimed != gregtech.internal.multiblock.tracking.StructureClaims.Result.FAILED;
-        if (claimed == gregtech.internal.multiblock.tracking.StructureClaims.Result.APPLIED)
-            gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front, layout);
-        return formed;
-    }
-
-    private static int fuelDesignHash(java.util.List<LargeMachineLayouts.Cell> cells) {
-        int hash = 1;
-        for (var cell : cells) hash = 31 * hash + cell.design();
-        return hash;
-    }
 
     private void release(BlockPos pos) {
         if (level != null && level.hasChunkAt(pos)

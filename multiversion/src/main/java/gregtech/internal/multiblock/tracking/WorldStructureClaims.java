@@ -143,7 +143,7 @@ public final class WorldStructureClaims {
             boolean fell = tracker.invalidateCell(part);
             StructureWatchIndex.enqueue(tracker);
             if (fell) {
-                machine.structureFormedChanged(false);
+                StructureTracking.formedChanged(machine, false);
                 ClientFormedSync.send(controller);
             }
         }

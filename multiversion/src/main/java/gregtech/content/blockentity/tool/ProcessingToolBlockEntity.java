@@ -53,7 +53,7 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
 
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
-                return slot < recipes.mInputItemsCount && recipes.containsInput(stack);
+                return slot >= 0 && slot < recipes.mInputItemsCount && !stack.isEmpty();
             }
 
             @Override
@@ -78,11 +78,11 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
             }
 
             public boolean isItemValid(int slot, ItemStack stack) {
-                return items.isItemValid(slot, stack);
+                return items.isItemValid(slot, stack) && isRecipeInput(stack);
             }
 
             public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-                return items.insertItem(slot, stack, simulate);
+                return isItemValid(slot, stack) ? items.insertItem(slot, stack, simulate) : stack;
             }
 
             public ItemStack extractItem(int slot, int amount, boolean simulate) {
@@ -150,6 +150,16 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
 
     public RecipeMap recipes() {
         return recipes;
+    }
+
+    /** Automatic insertion remains restricted to the device's recipe inputs. */
+    public boolean isRecipeInput(ItemStack stack) {
+        return recipes.containsInput(stack);
+    }
+
+    /** Manual storage accepts arbitrary items, even when every input slot is already full. */
+    public boolean handlesHandInput(ItemStack stack) {
+        return !juicer && !stack.isEmpty();
     }
 
     public IItemHandlerModifiable inventory() {

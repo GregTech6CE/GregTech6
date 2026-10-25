@@ -66,7 +66,7 @@ public final class GeneratedChemistryTests {
         helper.assertTrue(added >= 1000, "transpiled recipes registered: " + added);
 
         var stats = GeneratedRecipeResolver.setStats();
-        helper.assertTrue(stats.size() == 9, "transpiled sets: " + stats);
+        helper.assertTrue(stats.size() == 10, "transpiled sets: " + stats);
         TreeMap<String, GeneratedRecipeResolver.SetStats> bySet = new TreeMap<>();
         for (var stat : stats) bySet.put(stat.set(), stat);
         for (String set : new String[]{"chem", "other", "potions", "food", "temporary", "ores"}) {
@@ -74,6 +74,8 @@ public final class GeneratedChemistryTests {
             helper.assertTrue(stat != null && stat.added() > 0,
                     "set '" + set + "' translated nothing: " + stat);
         }
+        helper.assertTrue(bySet.keySet().equals(java.util.Set.of("chem","other","potions","food","extruder","vanilla","temporary","ores","combs","technology")),"exact source loader identities: "+bySet.keySet());
+        helper.assertTrue(bySet.get("technology").added()>0&&bySet.get("technology").skipped()==0,"source technology rows resolve");
         // The comb set is GT6's twenty centrifuge rows from MultiItemFood (§73); all of them have to
         // register, because a comb without a row is an item with no use.
         var combs = bySet.get("combs");

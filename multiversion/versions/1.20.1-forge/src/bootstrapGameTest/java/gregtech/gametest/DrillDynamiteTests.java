@@ -64,7 +64,7 @@ public final class DrillDynamiteTests {
                 && state.getValue(DynamiteBlock.FACING)==Direction.EAST,"reverse inventory priority and embedded facing");
         h.assertTrue(charge.getCount()==2 && charge.getTag().getString("test").equals("preserved")
                 && !charge.getTag().contains("BlockStateTag"),"consume one without leaking temporary placement NBT");
-        h.assertTrue(player.getMainHandItem().getTag().getLong("gt.charge")==900,"drilling consumes 100 EU");
+        h.assertTrue(player.getMainHandItem().getTag().getLong("gt.charge")==800,"source generic Drill consumes 200 EU");
         h.assertTrue(BehaviorRemote.getCoords(remote.getTag(),h.getLevel()).equals(java.util.List.of(target)),"full remote skipped for next hotbar remote");
         ((DynamiteBlock)state.getBlock()).refreshSupport(h.getLevel(),target);
         h.assertTrue(h.getLevel().getBlockState(target).getValue(DynamiteBlock.SUNK),"soil remains valid after support refresh");

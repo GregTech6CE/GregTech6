@@ -153,7 +153,8 @@ public final class VoltageTierAlignmentTests {
         TreeSet<String> offenders = new TreeSet<>();
         for (String id : energyNodes().keySet()) {
             if (!id.endsWith("_ulv")) continue;
-            if (id.equals("battery_box_ulv") || id.equals("energy_storage_ulv")) continue;
+            if (id.equals("battery_box_ulv") || id.equals("energy_storage_ulv")
+                    || id.equals("crystal_charger_ulv") || id.equals("large_crystal_charger_ulv")) continue; // Adopted source T0 crystal chargers.
             // GT6's first transformer is named "Transformer (ULV-LV)" — id transformer_ulv_lv.
             if (id.startsWith("transformer_")) continue;
             offenders.add(id);

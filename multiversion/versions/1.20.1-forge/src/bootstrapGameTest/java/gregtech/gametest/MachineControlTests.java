@@ -41,7 +41,25 @@ public final class MachineControlTests {
             var saved=target.saveWithoutMetadata();target.load(saved);
             h.assertTrue(!external.enabled(),"stopped state survives reload: "+block);
             h.assertTrue(external.setEnabled(true),"remote restart reaches original switch: "+block);
-            h.assertTrue(!external.supportsProgress(),"generators do not fabricate a recipe progress bar: "+block);
+            if(target instanceof ZpmDischargerBlockEntity){
+                // ZPM reports its real QU working buffer, not recipe completion.
+                var direct=MachineControl.find(target,null);
+                h.assertTrue(direct.supportsProgress()&&external.supportsProgress(),"ZPM buffer capability survives live relay: "+block);
+                h.assertTrue(direct.progress()==0&&external.progress()==0
+                        &&direct.progressMax()==41_943_040L&&external.progressMax()==41_943_040L,
+                        "empty ZPM reports the exact working-buffer range: "+block);
+                var buffered=target.saveWithoutMetadata();buffered.putLong("gt.zpm.buffer",12345L);target.load(buffered);
+                var source=gregtech.internal.sensor.ProgressSources.find(target,null);
+                var relayed=gregtech.internal.sensor.ProgressSources.find(relay,null);
+                h.assertTrue(direct.progress()==12345L&&external.progress()==12345L
+                        &&direct.progressMax()==41_943_040L&&external.progressMax()==41_943_040L,
+                        "retained controls read the restored ZPM working buffer: "+block);
+                h.assertTrue(source!=null&&relayed!=null&&source.value()==12345L&&relayed.value()==12345L
+                        &&source.maximum()==41_943_040L&&relayed.maximum()==41_943_040L,
+                        "direct and relayed sensors retain the exact ZPM buffer: "+block);
+            }else{
+                h.assertTrue(!external.supportsProgress(),"generators do not fabricate a recipe progress bar: "+block);
+            }
         }
         h.succeed();
     }
