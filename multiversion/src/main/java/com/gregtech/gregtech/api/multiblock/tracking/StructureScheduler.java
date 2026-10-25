@@ -54,9 +54,8 @@ public final class StructureScheduler {
     }
 
     public static void runSafetyNow(Level level) {
-        if (StructureTrackingMode.legacy()) return;
         if (!(level instanceof ServerLevel server)) return;
-        if (!StructureTrackingMode.legacy()) WorldStructureClaims.checkOrphans(server, true);
+        WorldStructureClaims.checkOrphans(server, true);
         for (StructureTracker tracker : StructureWatchIndex.all(server)) {
             if (tracker.unloading() || tracker.entity().isRemoved()) continue;
             if (WorldStructureClaims.waiting(tracker)) continue;
@@ -182,9 +181,8 @@ public final class StructureScheduler {
     //?}
 
     private static void end(Level level) {
-        if (StructureTrackingMode.legacy()) return;
         if (!(level instanceof ServerLevel server) || level.isClientSide) return;
-        if (!StructureTrackingMode.legacy()) WorldStructureClaims.checkOrphans(server, false);
+        WorldStructureClaims.checkOrphans(server, false);
         StructureWatchIndex.promotePending(server);
         safetyVisited = 0;
         enqueueSafety(server, level.getGameTime());

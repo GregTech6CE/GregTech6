@@ -152,27 +152,8 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
     private boolean structureFormed;
     @Override public void structureFormedChanged(boolean formed) { structureFormed = formed; }
     private boolean structureOk() {
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode.legacy() ? isStructureOk() : structureFormed;
+        return structureFormed;
     }
-    @Override public boolean scanStructure() {
-        if (level == null || isRemoved()) return false;
-        var parts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
-        for (var cell : com.gregtech.gregtech.content.multiblock.TurbineStructure.LAYOUT.cells()) {
-            var pos = AxialStructureTransform.at(worldPosition, front(), cell.right(), cell.up(), cell.back());
-            if (!level.hasChunkAt(pos) || !grade().accepts(level.getBlockState(pos).getBlock())
-                    || !(level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity)) {
-                bindings.clear(this::release);
-                com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
-                return false;
-            }
-            parts.put(pos, AxialStructureTransform.role(front(), cell.right(), cell.up(), cell.back(), true));
-        }
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, parts,
-                p -> ((MultiblockPortBlockEntity) level.getBlockEntity(p)).canBind(worldPosition),
-                (p, r) -> ((MultiblockPortBlockEntity) level.getBlockEntity(p)).bind(worldPosition, r), this::release)
-                != com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
-    }
-
     private void release(BlockPos pos) {
         if (level != null && level.hasChunkAt(pos)
                 && level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part) part.release(worldPosition);

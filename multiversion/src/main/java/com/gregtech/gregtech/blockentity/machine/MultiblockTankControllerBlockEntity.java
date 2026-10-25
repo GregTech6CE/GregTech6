@@ -126,30 +126,8 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
     private boolean structureFormed;
     @Override public void structureFormedChanged(boolean formed) { structureFormed = formed; }
     private boolean structureOk() {
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode.legacy() ? isStructureOk() : structureFormed;
+        return structureFormed;
     }
-    public boolean scanStructure() {
-        if (level == null || isRemoved()) return false;
-        var wall = valveSpec == null ? (size == 5 ? GTMultiblocks.TANK_WALL_DENSE.get() : GTMultiblocks.TANK_WALL.get())
-                : LargeMachineParts.block(valveSpec.wallId());
-        var candidates = new java.util.LinkedHashMap<BlockPos, com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role>();
-        boolean valid = com.gregtech.gregtech.api.multiblock.HollowTankStructure.validate(worldPosition, facing(), size,
-                level::hasChunkAt, pos -> {
-                    if (!(level.getBlockState(pos).getBlock() == wall)) return false;
-                    candidates.put(pos, com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role.FLUID_IO);
-                    return true;
-                }, pos -> level.getBlockState(pos).isAir());
-        if (!valid) {
-            com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.runQuiet(() -> bindings.clear(this::release));
-            com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
-            return false;
-        }
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, candidates,
-                pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port && port.canBind(worldPosition),
-                (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role), this::release)
-                != com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
-    }
-
     @Override
     public IFluidHandler portFluids(com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role role) {
         return role == com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role.FLUID_IO ? tankHandler : null;

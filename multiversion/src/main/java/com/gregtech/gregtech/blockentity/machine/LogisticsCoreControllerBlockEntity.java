@@ -101,35 +101,6 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, com.gregtech.
             network = LogisticsNetwork.Snapshot.empty();
         }
     }
-    @Override
-    public boolean scanStructure() {
-        if (level == null || isRemoved()) return false;
-        Direction front = getBlockState().getValue(LogisticsCoreControllerBlock.FACING);
-        LogisticsCoreStructure.Counts found = LogisticsCoreStructure.counts(level, worldPosition, front);
-        if (found == null || !found.valid()) return unbind();
-
-        var candidates = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
-        for (var cell : LogisticsCoreStructure.cells()) {
-            BlockPos pos = cell.at(worldPosition, front);
-            if (!(level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity)) return unbind();
-            candidates.put(pos, switch (cell.kind()) {
-                case WALL -> MultiblockLayout.Role.ENERGY_INPUT;
-                case VENT -> MultiblockLayout.Role.LOGISTICS;
-                case CPU -> MultiblockLayout.Role.CASING;
-            });
-        }
-        if (!level.isClientSide) {
-            var claimed = com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, candidates,
-                    pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part
-                    && part.canBind(worldPosition),
-                    (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
-                    this::releasePart);
-            if (claimed == com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED) return unbind();
-        }
-        processors = found;
-        return true;
-    }
-
     private boolean unbind() {
         com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.runQuiet(() -> bindings.clear(this::releasePart));
         com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
@@ -165,8 +136,6 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, com.gregtech.
 
     public static void serverTick(Level level, BlockPos pos, BlockState state,
             LogisticsCoreControllerBlockEntity controller) {
-        // Tracked mode is driven by structure edges; only the rollback rescans on each tick.
-        if (com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode.legacy()) controller.isStructureOk();
         // GT6 routes once per second, but charges standby power on every server tick (:504).
         if (level.getGameTime() % 20 == 0) {
             LogisticsCpuDisplay.Usage previous = controller.usedProcessors;

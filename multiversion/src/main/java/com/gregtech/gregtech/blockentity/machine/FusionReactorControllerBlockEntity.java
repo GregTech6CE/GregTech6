@@ -76,30 +76,6 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
         fusionBindings.clear(this::releaseFusionPart);
         StructureClaims.cleared(this);
     }
-    @Override public boolean scanStructure() {
-        if(level==null||isRemoved())return false;
-        var front=getBlockState().getValue(BasicMachineBlock.FACING);
-        var candidates=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
-        int[] processors=new int[3];
-        for(var cell:FusionStructure.CELLS) {
-            var pos=cell.at(worldPosition,front);
-            if(!level.hasChunkAt(pos)||!(level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity))return broken();
-            var actual=level.getBlockState(pos).getBlock();
-            if(cell.part()>=18200&&cell.part()<=18202) {
-                int kind=-1;
-                for(int i=0;i<3;i++)if(actual==LargeMachineParts.block(18200+i))kind=i;
-                if(kind<0)return broken();
-                processors[kind]++;
-            } else if(actual!=cell.block())return broken();
-            candidates.put(pos,cell.role());
-        }
-        if(processors[0]!=3||processors[1]!=12||processors[2]!=12)return broken();
-        return StructureClaims.update(this, fusionBindings, candidates,
-                p->((MultiblockPortBlockEntity)level.getBlockEntity(p)).canBind(worldPosition),
-                (p,r)->((MultiblockPortBlockEntity)level.getBlockEntity(p)).bind(worldPosition,r),this::releaseFusionPart)
-                != StructureClaims.Result.FAILED;
-    }
-    private boolean broken(){fusionBindings.clear(this::releaseFusionPart);StructureClaims.cleared(this);return false;}
     private void releaseFusionPart(BlockPos pos){if(level!=null&&level.hasChunkAt(pos)&&level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part)part.release(worldPosition);}
     @Override public void setRemoved(){
         if (!StructureTracking.unloading(this)) fusionBindings.clear(this::releaseFusionPart);

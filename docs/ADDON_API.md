@@ -1142,6 +1142,14 @@ A part name that is not a block id or a tag is a `SharedLargeMachineParts` name,
 
 A repeat group is declared with `LayoutRepeat.builder(key, up, min, max)` and added with `StructureLayout.Builder.repeat(...)`. `step(-1)` repeats downward (for a drill that reaches bedrock); the default is upward. A cell's `up` is its distance from the anchor. `max` `-1` repeats until one layer fails, bounded by the world height (at most 1024 copies per check). A structure check reads the fixed cells first, then each repeat copy: a copy counts only when all its cells match, the first failing copy stops the walk, fewer than `min` copies leave the structure unformed, and layers past the last match are ignored. `MachineBehaviorContext.structureRepeats(key)` returns the matched copy count for this tick, or 0 when the structure is unformed or the key is unknown.
 
+Structure checks do not run on every query. A controller attaches a tracker in `onLoad` and checks once; afterwards it rechecks at the end of a tick that changed a watched cell, after `/reload`, or on the 600-tick safety pass. `isStructureOk()` and port capability queries read the cached bit. A change that can alter the verdict clears the bit immediately, so a broken machine stops within the same tick. If any chunk of the shell is unloaded, the machine is unformed and keeps its claims until that chunk returns.
+
+A part belongs to one controller at a time. The per-world claim table is the only authority, and a part owned by another controller cannot be claimed even while that controller is unloaded. A part that changed (placed, removed, replaced) is released and marks its owner dirty.
+
+Addon machines whose matching-relevant data changes without a block state change (an internal tank level, a container's contents) must call `StructureWatchIndex.touch(level, pos)` after the change. A cell that only depends on the block state is detected automatically.
+
+Where a controller has a magnifier entry (the large boiler and the heat exchanger today), the magnifier and the JEI/EMI assembly view use the same structure definition as the runtime check. The magnifier lists every rejected cell, not only the first, and the preview draws the same cells the check compiles.
+
 ### Structure layout datapacks
 
 `data/<namespace>/gt6ce_layouts/<machineType>.json` replaces the cells of an addon or KubeJS machine that is already registered. It does not add a block or a machine. Built-in controllers cannot be replaced. A file that names a built-in controller, an unknown machine, an unknown part, an unknown block, or that fails to parse is skipped with one warning, and the reload continues.

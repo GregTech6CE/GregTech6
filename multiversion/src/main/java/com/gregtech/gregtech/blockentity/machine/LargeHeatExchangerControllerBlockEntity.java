@@ -258,34 +258,6 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
         return com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.query(this);
     }
     @Override
-    public boolean scanStructure() {
-        if (level == null || isRemoved()) return false;
-        if (level.isClientSide) return structureOkay;
-        var candidateParts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
-        boolean completeStructure = true;
-        for (var cell : com.gregtech.gregtech.content.multiblock.SharedHeatExchangerStructure.CELLS) {
-            var partPos = worldPosition.offset(cell.right(), cell.up(), cell.back());
-            var expectedBlock = LargeMachineParts.block(cell.part());
-            if (!level.hasChunkAt(partPos) || !(level.getBlockState(partPos).getBlock() == expectedBlock)
-                    || !(level.getBlockEntity(partPos) instanceof MultiblockPortBlockEntity part) || !part.canBind(worldPosition)) {
-                completeStructure = false;
-                continue;
-            }
-            candidateParts.put(partPos, MultiblockLayout.Role.valueOf(cell.role().name()));
-        }
-        // Source checkAndSetTarget binds each valid cell even when another cell is missing.
-        var claimedParts = com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, candidateParts,
-                partPosition -> level.getBlockEntity(partPosition) instanceof MultiblockPortBlockEntity part && part.canBind(worldPosition),
-                (partPosition, partRole) -> ((MultiblockPortBlockEntity) level.getBlockEntity(partPosition)).bind(worldPosition, partRole), this::release);
-        boolean formed = completeStructure && claimedParts != com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
-        if (structureOkay != formed) {
-            structureOkay = formed;
-            syncToClient();
-        }
-        return formed;
-    }
-
-    @Override
     public boolean containsToolPosition(BlockPos pos) {
         return com.gregtech.gregtech.content.multiblock.SharedHeatExchangerStructure.contains(
                 pos.getX() - worldPosition.getX(), pos.getY() - worldPosition.getY(), pos.getZ() - worldPosition.getZ());
@@ -314,6 +286,7 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
         boolean previous = structureOkay, formed = isStructureOk();
         var messages = new ArrayList<net.minecraft.network.chat.Component>();
         messages.add(net.minecraft.network.chat.Component.literal(MultiblockToolRules.structureMessage(previous, formed)));
+        if (!formed) MultiblockTools.appendDiagnosis(this, messages);
         if (previous && formed) {
             messages.add(tankMessage("Input: ", hot));
             messages.add(tankMessage("Output: ", cold));
@@ -350,8 +323,6 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
         long previousHeat = heat, previousHistory = activityHistory;
         boolean previousActive = active;
         // The source checks/binds its shell but does not gate buffered heat or fuel on the result.
-        // Tracked mode binds at the formed edge and in changed cells; only the rollback scans here.
-        if (com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode.legacy()) isStructureOk();
         long perOutlet = HeatExchangerRules.perOutlet(settings.rate(), heat);
         if (perOutlet > 0) {
             heat -= perOutlet * 8;

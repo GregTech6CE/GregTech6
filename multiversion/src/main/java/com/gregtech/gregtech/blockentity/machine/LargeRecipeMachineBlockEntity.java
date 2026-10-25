@@ -258,9 +258,8 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
     @Override public long getEnergySizeInputMin(GregTechTags.Tag type,Direction side) { return inputMinimum(); }
     @Override public long getEnergySizeInputMax(GregTechTags.Tag type,Direction side) { return inputMaximum(); }
     @Override protected boolean structureComplete() { return structureOk() && conditionPartsMet(); }
-    /** Tracked controllers read the edge bit; the legacy rollback still scans on every query. */
     protected boolean structureOk() {
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode.legacy() ? isStructureOk() : structureFormed;
+        return structureFormed;
     }
     @Override public void structureFormedChanged(boolean formed) { structureFormed = formed; }
     /** Only the edge rebuilds this list; a formed tick never walks the shell. */
@@ -415,12 +414,6 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
     /** Bound condition parts must all be satisfied. A structure with none works as before. */
     private boolean conditionPartsMet() {
         if (level == null) return true;
-        if (com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode.legacy()) {
-            for (BlockPos pos : bindings.positions())
-                if (level.getBlockEntity(pos) instanceof AddonEnergyPartBlockEntity part && part.condition() && !part.satisfied())
-                    return false;
-            return true;
-        }
         for (AddonEnergyPartBlockEntity part : conditionParts) if (!part.satisfied()) return false;
         return true;
     }

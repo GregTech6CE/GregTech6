@@ -14,7 +14,7 @@ public final class StructureTracking {
 
     private StructureTracking() {}
 
-    /** Test builds only: after every incremental evaluation, a full scan must agree with it. */
+    /** Test builds only: after every incremental evaluation, a fresh full evaluation must agree. */
     public static void consistencyCheck(boolean on) {
         consistency = on;
     }
@@ -25,7 +25,6 @@ public final class StructureTracking {
 
     public static boolean query(TrackedMultiblock machine) {
         if (StructureScanProbe.inScan()) return false;
-        if (StructureTrackingMode.legacy()) return scan(machine);
         StructureScanProbe.onQuery();
         BlockEntity entity = machine.trackedEntity();
         Level level = entity.getLevel();
@@ -44,10 +43,6 @@ public final class StructureTracking {
 
     public static void invalidate(TrackedMultiblock machine) {
         if (StructureScanProbe.inScan()) return;
-        if (StructureTrackingMode.legacy()) {
-            scan(machine);
-            return;
-        }
         BlockEntity entity = machine.trackedEntity();
         if (entity.getLevel() == null || entity.getLevel().isClientSide || entity.isRemoved()) return;
         StructureTracker tracker = attach(machine);
@@ -61,7 +56,6 @@ public final class StructureTracking {
     }
 
     public static void onChunkUnloaded(TrackedMultiblock machine) {
-        if (StructureTrackingMode.legacy()) return;
         BlockEntity entity = machine.trackedEntity();
         Level level = entity.getLevel();
         if (!(level instanceof ServerLevel server) || entity.isRemoved()) return;
@@ -86,7 +80,7 @@ public final class StructureTracking {
         BlockEntity entity = machine.trackedEntity();
         if (entity.getLevel() == null || entity.getLevel().isClientSide) return;
         StructureTracker tracker = StructureWatchIndex.tracker(entity);
-        if (!StructureTrackingMode.legacy() && entity.getLevel() instanceof ServerLevel server
+        if (entity.getLevel() instanceof ServerLevel server
                 && (tracker == null || !tracker.unloading()))
             WorldStructureClaims.releaseController(server, entity.getBlockPos());
         if (tracker != null) {
@@ -106,7 +100,6 @@ public final class StructureTracking {
     }
 
     public static StructureTracker attach(TrackedMultiblock machine) {
-        if (StructureTrackingMode.legacy()) return null;
         BlockEntity entity = machine.trackedEntity();
         Level level = entity.getLevel();
         if (level == null || level.isClientSide || entity.isRemoved()) return null;
@@ -278,7 +271,7 @@ public final class StructureTracking {
             ClientFormedSync.send(entity);
         }
         if (consistency) {
-            boolean scanned = scan(machine);
+            boolean scanned = fullEvaluate(machine);
             if (scanned != matched) {
                 throw new IllegalStateException("incremental structure evaluation disagrees with a full scan: incremental="
                         + matched + " full=" + scanned + " at " + entity.getBlockPos()
@@ -291,7 +284,7 @@ public final class StructureTracking {
     static void auditEquivalent(StructureTracker tracker) {
         if (tracker.unloading() || tracker.entity().isRemoved()) return;
         if (!(tracker.entity().getLevel() instanceof ServerLevel server) || !isCurrentEntity(server, tracker.entity())) return;
-        auditProjection(tracker.watch(), tracker.formed(), () -> scan(tracker.machine()));
+        auditProjection(tracker.watch(), tracker.formed(), () -> fullEvaluate(tracker.machine()));
     }
 
     public static void auditProjection(Footprint watch, boolean cachedFormed, java.util.function.BooleanSupplier fullScan) {
@@ -309,6 +302,30 @@ public final class StructureTracking {
         } finally {
             StructureScanProbe.close();
         }
+    }
+
+    /**
+     * Full reference for the incremental path. Migrated definitions are re-evaluated from a fresh
+     * pattern state because their scan bodies are gone; families still on a full scan keep it.
+     */
+    static boolean fullEvaluate(TrackedMultiblock machine) {
+        BlockEntity entity = machine.trackedEntity();
+        Level level = entity.getLevel();
+        StructureDefinition definition = machine.structureDefinition();
+        if (level == null || !(definition instanceof StructureDefinition.Declarative declarative)
+                || !declarative.incremental())
+            return scan(machine);
+        CompiledPattern pattern = declarative.compile(LayoutStructures.facing(entity));
+        if (pattern == null) return false;
+        PatternState state = new PatternState(pattern, level.getHeight());
+        StructureScanProbe.openIncremental();
+        try {
+            state.evaluate(level, entity.getBlockPos());
+        } finally {
+            StructureScanProbe.close();
+        }
+        if (!state.complete() || !machine.structurePartsValid()) return false;
+        return machine.applyStructure(state.match(entity.getBlockPos()));
     }
 
     private static void install(ServerLevel level, StructureTracker tracker, Footprint footprint) {

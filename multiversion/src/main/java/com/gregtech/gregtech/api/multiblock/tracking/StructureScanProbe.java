@@ -74,6 +74,7 @@ public final class StructureScanProbe {
     public static int queries() { return queries; }
 
     public static boolean inScan() {
+        if (activeScans == 0) return false;
         Frame frame = CURRENT.get();
         return frame != null && frame.depth > 0;
     }

@@ -107,38 +107,8 @@ public final class VonDaGraaggControllerBlockEntity extends GTEnergyBlockEntity 
     private boolean structureFormed;
     @Override public void structureFormedChanged(boolean formed) { structureFormed = formed; }
     private boolean structureOk() {
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode.legacy() ? isStructureOk() : structureFormed;
+        return structureFormed;
     }
-    @Override
-    public boolean scanStructure() {
-        if (level == null || isRemoved() || worldPosition.getY() + 7 >= level.getMaxBuildHeight())
-            return invalid();
-        var candidateParts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
-        for (var cell : VonDaGraaggRules.layout())
-            if (!collectPart(candidateParts, cell.x(), cell.y(), cell.z(), cell.partId(),
-                    cell.energyInput() ? MultiblockLayout.Role.ENERGY_INPUT : MultiblockLayout.Role.CASING)) return invalid();
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, candidateParts,
-                pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port
-                        && port.canBind(worldPosition),
-                (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
-                this::release) != com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
-    }
-
-    private boolean collectPart(LinkedHashMap<BlockPos, MultiblockLayout.Role> candidateParts,
-            int x, int y, int z, int originalId, MultiblockLayout.Role role) {
-        BlockPos partPos = worldPosition.offset(x, y, z);
-        if (!level.hasChunkAt(partPos) || !level.getBlockState(partPos).is(LargeMachineParts.block(originalId))
-                || !(level.getBlockEntity(partPos) instanceof MultiblockPortBlockEntity)) return false;
-        candidateParts.put(partPos, role);
-        return true;
-    }
-
-    private boolean invalid() {
-        bindings.clear(this::release);
-        com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
-        return false;
-    }
-
     private void release(BlockPos pos) {
         if (level != null && level.hasChunkAt(pos)
                 && level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port)
