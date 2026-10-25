@@ -34,6 +34,6 @@ public final class GeneratorSourceTooltips {
         lines.add(Component.translatable(key).withStyle(labelColor).append(": ")
                 .append(Component.literal(rec+" ").withStyle(ChatFormatting.WHITE))
                 .append(Component.translatable(unit).withStyle(unitColor))
-                .append(Component.literal("/t ("+(min>1?min+" to ":"up to ")+max+")").withStyle(ChatFormatting.WHITE)));
+                .append(Component.literal("/t (").append(TooltipHelper.range(min, max)).append(")").withStyle(ChatFormatting.WHITE)));
     }
 }

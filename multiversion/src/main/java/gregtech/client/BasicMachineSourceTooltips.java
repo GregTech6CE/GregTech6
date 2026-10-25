@@ -17,7 +17,7 @@ public final class BasicMachineSourceTooltips {
         var map=spec.recipeMap();var fc=spec.faceConfig();
         add(lines,"gt.lang.recipes",ChatFormatting.AQUA).append(": ")
             .append(Component.translatable(map.mNameInternal).withStyle(ChatFormatting.WHITE))
-            .append(Component.literal(spec.parallelLimit()>1?" (up to "+spec.parallelLimit()+"x processed per run)":"").withStyle(ChatFormatting.WHITE));
+            .append(TooltipHelper.parallel(spec.parallelLimit()).withStyle(ChatFormatting.WHITE));
         if(cheap)add(lines,"gt.lang.cheap.overclocking",ChatFormatting.YELLOW);
         if(efficiency!=10000)add(lines,"gt.lang.efficiency",ChatFormatting.YELLOW).append(": ")
             .append(Component.literal(MachineTooltips.formatEfficiencyPercent(efficiency)+"%").withStyle(ChatFormatting.WHITE));
@@ -28,7 +28,7 @@ public final class BasicMachineSourceTooltips {
                 .append(Component.translatable(OriginalBasicMachineRules.unitKey(energy)).withStyle(energyColor(energy)))
                 .append(Component.literal("/t").withStyle(ChatFormatting.WHITE));
             if(spec.energyIn()!=spec.energyInMin()||spec.energyIn()!=spec.energyInMax()) {
-                line.append(Component.literal(" ("+(spec.energyInMin()<=1?"up to ":spec.energyInMin()+" to ")+spec.energyInMax()).withStyle(ChatFormatting.WHITE));
+                line.append(Component.literal(" (").append(TooltipHelper.range(spec.energyInMin(), spec.energyInMax())).withStyle(ChatFormatting.WHITE));
                 if((fc.energyInputs()&63)!=63)for(int side:OriginalBasicMachineRules.FACE_ORDER)if((fc.energyInputs()&(1<<side))!=0)
                     line.append(", ").append(Component.translatable(OriginalBasicMachineRules.faceKey(side)).withStyle(ChatFormatting.WHITE));
                 line.append(")");
@@ -59,11 +59,11 @@ public final class BasicMachineSourceTooltips {
         var line=add(lines,key,color).append(": ");
         if(row.any()) {
             line.append(Component.translatable(row.faces().isEmpty()?"gt.lang.face.any":OriginalBasicMachineRules.faceKey(row.faces().get(0).side())).withStyle(ChatFormatting.WHITE))
-                .append(Component.literal(row.faces().isEmpty()?" (no auto)":" (auto, otherwise any)").withStyle(ChatFormatting.WHITE));
+                .append(Component.translatable(row.faces().isEmpty()?"tooltip.gt6ce.ui.no_auto":"tooltip.gt6ce.ui.auto_any").withStyle(ChatFormatting.WHITE));
         } else for(int i=0;i<row.faces().size();i++) {
             if(i>0)line.append(Component.literal(", ").withStyle(ChatFormatting.WHITE));
             var face=row.faces().get(i);line.append(Component.translatable(OriginalBasicMachineRules.faceKey(face.side())).withStyle(ChatFormatting.WHITE));
-            if(face.automatic())line.append(Component.literal(" (auto)").withStyle(ChatFormatting.WHITE));
+            if(face.automatic())line.append(Component.translatable("tooltip.gt6ce.ui.auto").withStyle(ChatFormatting.WHITE));
         }
     }
     private static MutableComponent add(List<Component> lines,String key,ChatFormatting color) {

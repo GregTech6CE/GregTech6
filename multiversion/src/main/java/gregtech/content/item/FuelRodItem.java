@@ -180,10 +180,10 @@ public class FuelRodItem extends net.minecraft.world.item.BlockItem {
         super.appendHoverText(stack, level, tooltip, flag);
 //?}
         if(definition!=null) {
-            tooltip.add(Component.literal(definition.kind().name()).withStyle(ChatFormatting.GRAY));
-            if(definition.life()>0) tooltip.add(Component.literal("Remaining: "+gregtech.content.nuclear.RodPhysics.life(stack)).withStyle(ChatFormatting.GREEN));
+            tooltip.add(Component.translatable("tooltip.gt6ce.ui.rod.kind." + definition.kind().name().toLowerCase(java.util.Locale.ROOT)).withStyle(ChatFormatting.GRAY));
+            if(definition.life()>0) tooltip.add(Component.translatable("tooltip.gt6ce.ui.rod.remaining", gregtech.content.nuclear.RodPhysics.life(stack)).withStyle(ChatFormatting.GREEN));
             if(definition.kind()==gregtech.content.nuclear.ReactorRodCatalog.Kind.NUCLEAR)
-                tooltip.add(Component.literal("Self: "+definition.self()+" | Emission: "+definition.emission()+" | Max: "+definition.maximum()+" | Factor: 1/"+definition.divisor()));
+                tooltip.add(Component.translatable("tooltip.gt6ce.ui.rod.neutrons", definition.self(), definition.emission(), definition.maximum(), definition.divisor()));
             return;
         }
 //? if >=1.21.1 {
@@ -196,19 +196,19 @@ public class FuelRodItem extends net.minecraft.world.item.BlockItem {
         int max = tag.getInt(TAG_MAX_HEALTH);
         boolean depleted = tag.getBoolean(TAG_DEPLETED);
 
-        tooltip.add(Component.literal("Fuel: " + fuelType.displayName)
+        tooltip.add(Component.translatable("tooltip.gt6ce.ui.rod.fuel", Component.translatable("tooltip.gt6ce.ui.rod.fuel_type." + fuelType.name().toLowerCase(java.util.Locale.ROOT)))
                 .withStyle(ChatFormatting.YELLOW));
-        tooltip.add(Component.literal("Tier: " + (tier + 1))
+        tooltip.add(Component.translatable("tooltip.gt6ce.ui.rod.tier", tier + 1)
                 .withStyle(ChatFormatting.GRAY));
 
         if (depleted || health <= 0) {
-            tooltip.add(Component.literal("Depleted")
+            tooltip.add(Component.translatable("tooltip.gt6ce.ui.rod.depleted")
                     .withStyle(ChatFormatting.RED));
         } else if (max > 0) {
             int pct = health * 100 / max;
             ChatFormatting color = pct > 50 ? ChatFormatting.GREEN
                     : pct > 25 ? ChatFormatting.YELLOW : ChatFormatting.RED;
-            tooltip.add(Component.literal("Durability: " + health + "/" + max + " (" + pct + "%)")
+            tooltip.add(Component.translatable("tooltip.gt6ce.ui.rod.durability", health, max, pct)
                     .withStyle(color));
         }
     }

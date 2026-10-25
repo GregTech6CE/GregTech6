@@ -20,7 +20,7 @@ public final class SmelteryCompanionTooltips {
             String prefix = MoldShapes.sourcePrefixName(recipe);
             tooltip.add(Component.translatable("gt.lang.recipes.mold").append(" ")
                     .append(Component.translatable("oredict.prefix." + prefix))
-                    .append(Component.literal(MaterialTooltips.displayUnits(MoldShapes.requiredMaterialUnits(shape)) + " Units")
+                    .append(Component.translatable("tooltip.gt6ce.ui.units", MaterialTooltips.displayUnits(MoldShapes.requiredMaterialUnits(shape)))
                             .withStyle(ChatFormatting.WHITE)).withStyle(ChatFormatting.AQUA));
         }
         appendInteract(tooltip, true);

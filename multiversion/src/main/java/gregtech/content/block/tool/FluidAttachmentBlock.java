@@ -87,6 +87,24 @@ public class FluidAttachmentBlock extends net.minecraft.world.level.block.Block 
         return spec;
     }
 
+    @Override
+//? if >=1.21.1 {
+    /*public void appendHoverText(net.minecraft.world.item.ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
+*///?} else {
+    public void appendHoverText(net.minecraft.world.item.ItemStack stack, @org.jetbrains.annotations.Nullable BlockGetter level,
+//?}
+            java.util.List<net.minecraft.network.chat.Component> lines, net.minecraft.world.item.TooltipFlag flag) {
+        String key = spec.fillsTarget()
+                ? (spec.acceptsGas() ? "tooltip.gt6ce.ui.attachment.fill_gas" : "tooltip.gt6ce.ui.attachment.fill_liquid")
+                : (spec.acceptsGas() ? "gt.tooltip.nozzle.1" : "gt.tooltip.tap.1");
+        lines.add(net.minecraft.network.chat.Component.translatable(key));
+        if (spec.shape().equals("tap"))
+            lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.ui.attachment.pour"));
+        if (spec.acidProof())
+            lines.add(net.minecraft.network.chat.Component.translatable("gt.lang.proof.acid"));
+        lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.machine.tool.wrench_facing"));
+    }
+
     public int tintRgb() {
         return spec.material().getColor();
     }

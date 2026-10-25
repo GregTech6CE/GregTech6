@@ -68,7 +68,7 @@ public final class BehaviorDataStorage {
         GTMaterial material = gregtech.internal.material.StoredMaterial
                 .read(data, GTMaterialDataRecipes.NBT_REPLICATOR_DATA);
         if (!material.isValid()) return;
-        String name = material.getLocalName();
+        Component name = gregtech.internal.material.MaterialPresentation.name(material);
         if (!material.has(gregtech.internal.material.MaterialProperty.UUM)) {
             lines.add(Component.translatable("gt.tooltip.usb.material_data", name)
                     .withStyle(ChatFormatting.AQUA)

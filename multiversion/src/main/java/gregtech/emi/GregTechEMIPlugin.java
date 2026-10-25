@@ -24,6 +24,17 @@ public final class GregTechEMIPlugin implements EmiPlugin {
 
     @Override
     public void register(EmiRegistry registry) {
+        gregtech.client.gui.RecipeViewerNavigation.registerEmi(map -> {
+            var id = ResourceLocation.fromNamespaceAndPath("gt6ce", map.mNameInternal.toLowerCase(Locale.ROOT));
+            var manager = dev.emi.emi.api.EmiApi.getRecipeManager();
+            for (var category : manager.getCategories()) {
+                if (id.equals(category.getId()) && !manager.getRecipes(category).isEmpty()) {
+                    dev.emi.emi.api.EmiApi.displayRecipeCategory(category);
+                    return true;
+                }
+            }
+            return false;
+        });
         registry.addGenericExclusionArea((screen, areas) -> {
             if (screen instanceof gregtech.client.gui.MachineContainerScreen<?> machine) {
                 var tab = machine.titleBounds();
@@ -58,7 +69,7 @@ public final class GregTechEMIPlugin implements EmiPlugin {
             ItemStack icon = workstations.isEmpty() ? new ItemStack(Items.ANVIL) : workstations.get(0);
             var id = ResourceLocation.fromNamespaceAndPath("gt6ce", map.mNameInternal.toLowerCase(Locale.ROOT));
             var category = new EmiRecipeCategory(id, EmiStack.of(icon)) {
-                @Override public Component getName() { return Component.literal(map.mNameLocal); }
+                @Override public Component getName() { return Component.translatableWithFallback(map.mNameInternal, map.mNameLocal); }
             };
             registry.addCategory(category);
             for (var station : workstations) registry.addWorkstation(category, EmiStack.of(station));

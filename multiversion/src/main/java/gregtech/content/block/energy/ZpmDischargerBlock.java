@@ -34,7 +34,7 @@ public final class ZpmDischargerBlock extends AutoToolBlock {
             if(held.isEmpty()&&player.isShiftKeyDown())z.toggleStopped();
             else if(ZpmEnergy.isModule(held))player.setItemInHand(hand,z.inventory().insertItem(0,held,false));
             else if(held.isEmpty()){var extracted=z.inventory().extractItem(0,1,false);if(!player.addItem(extracted))player.drop(extracted,false);}
-            player.displayClientMessage(net.minecraft.network.chat.Component.translatable("gt6ce.zpm.status",z.totalEnergy(),z.stopped()?"OFF":"ON",z.outputType().getShortName()),true);
+            player.displayClientMessage(net.minecraft.network.chat.Component.translatable("gt6ce.zpm.status",z.totalEnergy(),net.minecraft.network.chat.Component.translatable(z.stopped()?"gui.gt6ce.behavior.off":"gui.gt6ce.behavior.on"),z.outputType().getShortName()),true);
         }
         return InteractionResult.sidedSuccess(l.isClientSide);
     }

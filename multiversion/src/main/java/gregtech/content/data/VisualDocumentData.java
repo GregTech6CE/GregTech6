@@ -102,7 +102,7 @@ public final class VisualDocumentData {
         CompoundTag data = stack.getTag();
 //?}
         String title = title(data);
-        if (title.isBlank()) lines.add(Component.literal("These Pages are Empty").withStyle(ChatFormatting.AQUA));
+        if (title.isBlank()) lines.add(Component.translatable("tooltip.gt6ce.ui.empty_pages").withStyle(ChatFormatting.AQUA));
         else {
             lines.add(Component.literal(title).withStyle(ChatFormatting.AQUA));
             lines.add(Component.literal("by "+data.getString("author")).withStyle(ChatFormatting.AQUA));

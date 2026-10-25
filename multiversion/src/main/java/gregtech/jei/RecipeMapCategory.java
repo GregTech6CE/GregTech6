@@ -50,7 +50,7 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
 //?}
     }
     @Override public RecipeType<Recipe> getRecipeType() {return recipeType(map);}
-    @Override public Component getTitle() {return Component.literal(map.mNameLocal);}
+    @Override public Component getTitle() {return Component.translatableWithFallback(map.mNameInternal, map.mNameLocal);}
     @Override public IDrawable getBackground() {return background;}
     @Override public IDrawable getIcon() {return icon;}
     @Override public void setRecipe(IRecipeLayoutBuilder builder,Recipe recipe,IFocusGroup focuses) {

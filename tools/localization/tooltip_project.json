@@ -1,0 +1,1527 @@
+{
+  "scope": "Reviewed modern machine/tool UI and original hard-coded tooltip gaps; never overrides GregTech.lang.",
+  "authorization": "2026-10-26: user requested machine/tool Chinese, upstream issue #118 improvements and USB material data; existing lang translations take priority, new translations only where absent.",
+  "reference": "https://github.com/GregTech6/gregtech6/issues/118",
+  "values": {
+    "gt.jei.fluid.boiling_point": {
+      "english": "Boiling: %s",
+      "value": "沸点：%s"
+    },
+    "gt.jei.fluid.combustible": {
+      "english": "Combustible",
+      "value": "可燃"
+    },
+    "gt.jei.fluid.density": {
+      "english": "Density: %s",
+      "value": "密度：%s"
+    },
+    "gt.jei.fluid.flammable": {
+      "english": "Flammable",
+      "value": "易燃"
+    },
+    "gt.jei.fluid.luminous": {
+      "english": "Glowing",
+      "value": "发光"
+    },
+    "gt.jei.fluid.melting_point": {
+      "english": "Melting: %s",
+      "value": "熔点：%s"
+    },
+    "gt.jei.fluid.viscosity": {
+      "english": "Viscosity: %s (%s mPas)",
+      "value": "黏度：%s（%s mPas）"
+    },
+    "gt.tooltip.crank.1": {
+      "english": "Right-click to turn it by hand; it turns anywhere, machine or not",
+      "value": "右键用手转动；无论是否连接机器都可以转动"
+    },
+    "gt.tooltip.crank.2": {
+      "english": "Feeds -16 RU per turn into the block it is mounted on, and powers redstone in front of the handle",
+      "value": "每次转动向安装面后的方块输入 -16 RU，并向把手前方输出红石信号"
+    },
+    "gt.tooltip.dynamite.1": {
+      "english": "Mining explosive - keep away from the face",
+      "value": "采矿炸药——请远离面部"
+    },
+    "gt.tooltip.dynamite.2": {
+      "english": "Ignite with Flint & Steel or a Redstone Signal",
+      "value": "用打火石或红石信号点燃"
+    },
+    "gt.tooltip.hdd_switch": {
+      "english": "Stores one HDD with 16 data slots. A selector cover chooses the active slot (defaults to 0). Right-click with a stick to write or clear its data; empty hand opens the inventory.",
+      "value": "存放一个具有 16 个数据槽的 HDD。选择器覆盖板选择当前槽位（默认为 0）。手持数据棒右键写入或清除数据；空手打开物品栏。"
+    },
+    "gt.tooltip.locker.1": {
+      "english": "Right-click swaps your armor with the stored set",
+      "value": "右键交换身上的盔甲与柜内存放的盔甲"
+    },
+    "gt.tooltip.nozzle.1": {
+      "english": "Mount on a Tank to manually drain Gases (Cells, ...)",
+      "value": "安装在储罐上，手动向流体单元等容器排出气体"
+    },
+    "gt.tooltip.reactor.legacy_rod": {
+      "english": "Legacy experimental rod: retained for old saves; no verified GT6 reactor definition.",
+      "value": "旧版实验燃料棒：仅为旧存档保留，没有经核对的 GT6 反应堆定义。"
+    },
+    "gt.tooltip.reactor.updated": {
+      "english": "Load rods from above; pincers remove the selected rod. Loading stops the reactor. Soft hammer: on/off. Wrench: hot outlet; monkey wrench: excess coolant outlet.",
+      "value": "从上方装入燃料棒；用钳子取出选中的燃料棒。装填会使反应堆停机。软锤：启停；扳手：高温冷却液出口；活动扳手：多余冷却液出口。"
+    },
+    "gt.tooltip.tap.1": {
+      "english": "Mount on a Tank to manually drain Liquids (Buckets, Cells, ...)",
+      "value": "安装在储罐上，手动向桶、流体单元等容器排出液体"
+    },
+    "gt.tooltip.usb.charged_antimatter": {
+      "english": "Charged Antimatter: ",
+      "value": "带电反物质："
+    },
+    "gt.tooltip.usb.charged_matter": {
+      "english": "Charged Matter: ",
+      "value": "带电物质："
+    },
+    "gt.tooltip.usb.empty": {
+      "english": "This Stick is Empty",
+      "value": "这根存储棒是空的"
+    },
+    "gt.tooltip.usb.energy": {
+      "english": "Energy: ",
+      "value": "能量："
+    },
+    "gt.tooltip.usb.formatted": {
+      "english": "Perfectly Formatted",
+      "value": "格式完好"
+    },
+    "gt.tooltip.usb.material_data": {
+      "english": "Material Data: %s",
+      "value": "材料数据：%s"
+    },
+    "gt.tooltip.usb.material_short": {
+      "english": "Mat Data: %s (%s/%s/%s)",
+      "value": "材料数据：%s（%s/%s/%s）"
+    },
+    "gt.tooltip.usb.neutral_antimatter": {
+      "english": "Neutral Antimatter: ",
+      "value": "中性反物质："
+    },
+    "gt.tooltip.usb.neutral_matter": {
+      "english": "Neutral Matter: ",
+      "value": "中性物质："
+    },
+    "gt.tooltip.usb.not_replicable": {
+      "english": " (Not Replicatable)",
+      "value": " （不可复制）"
+    },
+    "gt.tooltip.usb.replicable_hint": {
+      "english": "Can be Replicated using",
+      "value": "可用以下物质复制"
+    },
+    "gt.tooltip.usb.slot_empty": {
+      "english": "Data Slot %s is Empty",
+      "value": "数据槽 %s 为空"
+    },
+    "gt.tooltip.usb.tier": {
+      "english": "Data: USB %s.0",
+      "value": "数据：USB %s.0"
+    },
+    "gt.tooltip.usb.unclean": {
+      "english": "Uncleanly Formatted",
+      "value": "格式不干净"
+    },
+    "gt.tooltip.usb_switch": {
+      "english": "Stores 16 USB sticks. A selector cover chooses the active slot (defaults to 0). Right-click with a stick to write or clear its data; empty hand opens the inventory.",
+      "value": "存放 16 个 USB 数据棒。选择器覆盖板选择当前槽位（默认为 0）。手持数据棒右键写入或清除数据；空手打开物品栏。"
+    },
+    "gt6ce.filter.blacklist": {
+      "english": "Blacklist",
+      "value": "黑名单"
+    },
+    "gt6ce.filter.prefix_title": {
+      "english": "Material Prefix Filter",
+      "value": "材料形态过滤器"
+    },
+    "gt6ce.filter.title": {
+      "english": "Filter",
+      "value": "过滤器"
+    },
+    "gt6ce.filter.whitelist": {
+      "english": "Whitelist",
+      "value": "白名单"
+    },
+    "gt6ce.fluid_display.acid": {
+      "english": "Acidic! Handle with Care!",
+      "value": "酸性！请小心处理！"
+    },
+    "gt6ce.fluid_display.amount": {
+      "english": "Amount: %s L",
+      "value": "数量：%s L"
+    },
+    "gt6ce.fluid_display.castable": {
+      "english": " (Might able to cast into Molds)",
+      "value": "（可能可以浇铸到模具中）"
+    },
+    "gt6ce.fluid_display.conducting": {
+      "english": "This is a Power Conducting Fluid",
+      "value": "这种流体可以传导能量"
+    },
+    "gt6ce.fluid_display.cooking_oil": {
+      "english": "Usable as Cooking Oil in a GT Oven to duplicate Meat and Fish",
+      "value": "可在 GT 烤箱中用作食用油，使肉和鱼的产量翻倍"
+    },
+    "gt6ce.fluid_display.creative_fill": {
+      "english": "Rightclick Blocks to fill their Tanks with this Fluid!",
+      "value": "右键方块，将其储罐填满这种流体！"
+    },
+    "gt6ce.fluid_display.density_equal": {
+      "english": "Density: %s ; As dense as Air (typically still moves down)",
+      "value": "密度：%s；与空气相同（通常仍然向下流动）"
+    },
+    "gt6ce.fluid_display.density_heavier": {
+      "english": "Density: %s ; Heavier than Air (typically moves down)",
+      "value": "密度：%s；比空气重（通常向下流动）"
+    },
+    "gt6ce.fluid_display.density_lighter": {
+      "english": "Density: %s ; Lighter than Air (typically moves up)",
+      "value": "密度：%s；比空气轻（通常向上流动）"
+    },
+    "gt6ce.fluid_display.gas": {
+      "english": "Gas",
+      "value": "气态"
+    },
+    "gt6ce.fluid_display.gu_per_liter": {
+      "english": " GU/L",
+      "value": " GU/L"
+    },
+    "gt6ce.fluid_display.gu_total": {
+      "english": " GU total",
+      "value": " GU 总量"
+    },
+    "gt6ce.fluid_display.industrial": {
+      "english": "Industrial Use ONLY!",
+      "value": "仅限工业用途！"
+    },
+    "gt6ce.fluid_display.liquid": {
+      "english": "Liquid",
+      "value": "液态"
+    },
+    "gt6ce.fluid_display.luminosity": {
+      "english": "Luminosity: %s",
+      "value": "亮度：%s"
+    },
+    "gt6ce.fluid_display.magic": {
+      "english": "Magical! Handle with Care!",
+      "value": "魔法性质！请小心处理！"
+    },
+    "gt6ce.fluid_display.missing": {
+      "english": "CLIENTSIDE FLUID IS NULL!!!",
+      "value": "客户端流体缺失！"
+    },
+    "gt6ce.fluid_display.native_gas_note": {
+      "english": " (Note: Considered a Gas by Mods other than GT!)",
+      "value": "（注意：其他模组将其视为气体！）"
+    },
+    "gt6ce.fluid_display.native_gas_warning": {
+      "english": " (Warning: Considered a Gas by Mods other than GT!)",
+      "value": "（警告：其他模组将其视为气体！）"
+    },
+    "gt6ce.fluid_display.native_liquid": {
+      "english": " (Warning: Considered a Liquid by Mods other than GT!)",
+      "value": "（警告：其他模组将其视为液体！）"
+    },
+    "gt6ce.fluid_display.no_tanks": {
+      "english": "Cannot be stored in any normal GT6 Storage Tanks!",
+      "value": "无法存入任何普通 GT6 储罐！"
+    },
+    "gt6ce.fluid_display.nonstandard": {
+      "english": "NON-STANDARD FLUID!",
+      "value": "非标准流体！"
+    },
+    "gt6ce.fluid_display.not_flammable": {
+      "english": "Not Flammable!",
+      "value": "不可燃！"
+    },
+    "gt6ce.fluid_display.owner_gt6": {
+      "english": "Fluid owned by GT6",
+      "value": "流体来自 GT6"
+    },
+    "gt6ce.fluid_display.owner_other": {
+      "english": "Fluid NOT owned by GT6",
+      "value": "流体并非来自 GT6"
+    },
+    "gt6ce.fluid_display.owner_vanilla": {
+      "english": "Fluid owned by vanilla Minecraft",
+      "value": "流体来自原版 Minecraft"
+    },
+    "gt6ce.fluid_display.plasma": {
+      "english": "Plasma",
+      "value": "等离子态"
+    },
+    "gt6ce.fluid_display.registry": {
+      "english": "Registry: %s",
+      "value": "注册名：%s"
+    },
+    "gt6ce.fluid_display.simple": {
+      "english": "This is a simple Fluid that is easy to handle",
+      "value": "容易处理的普通流体"
+    },
+    "gt6ce.fluid_display.state": {
+      "english": "State: ",
+      "value": "状态："
+    },
+    "gt6ce.fluid_display.temperature": {
+      "english": "Temperature: %s K (%s°C)",
+      "value": "温度：%s K（%s°C）"
+    },
+    "gt6ce.fluid_display.viscosity": {
+      "english": "Viscosity: %s",
+      "value": "黏度：%s"
+    },
+    "gt6ce.jei.catalyst": {
+      "english": "Not consumed",
+      "value": "不消耗"
+    },
+    "gt6ce.zpm.charge": {
+      "english": "Charge: %s / %s QU",
+      "value": "电量：%s / %s QU"
+    },
+    "gt6ce.zpm.controls": {
+      "english": "Use ZPM to insert; empty hand to remove; sneak empty hand to switch",
+      "value": "手持零点模块装入；空手取出；潜行空手切换模式"
+    },
+    "gt6ce.zpm.non_rechargeable": {
+      "english": "Ancient artifact; cannot be recharged",
+      "value": "古代遗物；无法充电"
+    },
+    "gt6ce.zpm.output": {
+      "english": "Front output: %s %s/t",
+      "value": "正面输出：%s %s/t"
+    },
+    "gt6ce.zpm.status": {
+      "english": "Stored: %s QU | %s | Output: %s",
+      "value": "储能：%s QU | %s | 输出：%s"
+    },
+    "gui.gt6ce.behavior.off": {
+      "english": "Off",
+      "value": "关闭"
+    },
+    "gui.gt6ce.behavior.on": {
+      "english": "On",
+      "value": "开启"
+    },
+    "gui.gt6ce.data_switch.slot": {
+      "english": "Slot %s",
+      "value": "槽位 %s"
+    },
+    "item.gt6ce.abyssal_dough.food": {
+      "english": "Food: 1 - Saturation: 1",
+      "value": "饥饿值：1 - 饱和度：1"
+    },
+    "item.gt6ce.ananas.food": {
+      "english": "Food: 4 - Saturation: 0.3",
+      "value": "饥饿值：4 - 饱和度：0.3"
+    },
+    "item.gt6ce.ananas_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.ananas_slice.food": {
+      "english": "Food: 1 - Saturation: 0.3",
+      "value": "饥饿值：1 - 饱和度：0.3"
+    },
+    "item.gt6ce.apple.food": {
+      "english": "Food: 4 - Saturation: 0.4",
+      "value": "饥饿值：4 - 饱和度：0.4"
+    },
+    "item.gt6ce.apple_2.food": {
+      "english": "Food: 5 - Saturation: 0.3",
+      "value": "饥饿值：5 - 饱和度：0.3"
+    },
+    "item.gt6ce.apple_3.food": {
+      "english": "Food: 5 - Saturation: 0.4",
+      "value": "饥饿值：5 - 饱和度：0.4"
+    },
+    "item.gt6ce.apple_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.apple_slice.food": {
+      "english": "Food: 1 - Saturation: 0.4",
+      "value": "饥饿值：1 - 饱和度：0.4"
+    },
+    "item.gt6ce.apple_slice_2.food": {
+      "english": "Food: 1 - Saturation: 0.3",
+      "value": "饥饿值：1 - 饱和度：0.3"
+    },
+    "item.gt6ce.apple_slice_3.food": {
+      "english": "Food: 1 - Saturation: 0.3",
+      "value": "饥饿值：1 - 饱和度：0.3"
+    },
+    "item.gt6ce.apple_slice_4.food": {
+      "english": "Food: 1 - Saturation: 0.4",
+      "value": "饥饿值：1 - 饱和度：0.4"
+    },
+    "item.gt6ce.bacon_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.bacon_sandwich.food": {
+      "english": "Food: 10 - Saturation: 1.8",
+      "value": "饥饿值：10 - 饱和度：1.8"
+    },
+    "item.gt6ce.bag_of_chili_chips.food": {
+      "english": "Food: 7 - Saturation: 1.2",
+      "value": "饥饿值：7 - 饱和度：1.2"
+    },
+    "item.gt6ce.bag_of_potato_chips.food": {
+      "english": "Food: 7 - Saturation: 1.2",
+      "value": "饥饿值：7 - 饱和度：1.2"
+    },
+    "item.gt6ce.baguette.food": {
+      "english": "Food: 8 - Saturation: 1.2",
+      "value": "饥饿值：8 - 饱和度：1.2"
+    },
+    "item.gt6ce.baguettes.food": {
+      "english": "Food: 8 - Saturation: 1.2",
+      "value": "饥饿值：8 - 饱和度：1.2"
+    },
+    "item.gt6ce.banana.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.banana_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.banana_slice.food": {
+      "english": "Food: 0 - Saturation: 0.15",
+      "value": "饥饿值：0 - 饱和度：0.15"
+    },
+    "item.gt6ce.barbecue_ribs.food": {
+      "english": "Food: 10 - Saturation: 1.6",
+      "value": "饥饿值：10 - 饱和度：1.6"
+    },
+    "item.gt6ce.bear_ice_cream.food": {
+      "english": "Food: 2 - Saturation: 1.2",
+      "value": "饥饿值：2 - 饱和度：1.2"
+    },
+    "item.gt6ce.black_currants.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.blackberry.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.blackberry_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.blueberry.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.blueberry_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.boiled_egg.food": {
+      "english": "Food: 2 - Saturation: 1.2",
+      "value": "饥饿值：2 - 饱和度：1.2"
+    },
+    "item.gt6ce.boiled_egg_2.food": {
+      "english": "Food: 2 - Saturation: 1.2",
+      "value": "饥饿值：2 - 饱和度：1.2"
+    },
+    "item.gt6ce.breads.food": {
+      "english": "Food: 5 - Saturation: 1.2",
+      "value": "饥饿值：5 - 饱和度：1.2"
+    },
+    "item.gt6ce.bun.food": {
+      "english": "Food: 2 - Saturation: 1.2",
+      "value": "饥饿值：2 - 饱和度：1.2"
+    },
+    "item.gt6ce.buns.food": {
+      "english": "Food: 2 - Saturation: 1.2",
+      "value": "饥饿值：2 - 饱和度：1.2"
+    },
+    "item.gt6ce.butter.food": {
+      "english": "Food: 1 - Saturation: 4",
+      "value": "饥饿值：1 - 饱和度：4"
+    },
+    "item.gt6ce.cake_bottom.food": {
+      "english": "Food: 3 - Saturation: 0.2",
+      "value": "饥饿值：3 - 饱和度：0.2"
+    },
+    "item.gt6ce.candleberry.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.caramel_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.carrot_slice.food": {
+      "english": "Food: 0 - Saturation: 0.3",
+      "value": "饥饿值：0 - 饱和度：0.3"
+    },
+    "item.gt6ce.cheese.food": {
+      "english": "Food: 2 - Saturation: 1.2",
+      "value": "饥饿值：2 - 饱和度：1.2"
+    },
+    "item.gt6ce.cheese_bar.food": {
+      "english": "Food: 2 - Saturation: 1.2",
+      "value": "饥饿值：2 - 饱和度：1.2"
+    },
+    "item.gt6ce.cheese_burger.food": {
+      "english": "Food: 4 - Saturation: 1.4",
+      "value": "饥饿值：4 - 饱和度：1.4"
+    },
+    "item.gt6ce.cheese_sandwich.food": {
+      "english": "Food: 7 - Saturation: 1.4",
+      "value": "饥饿值：7 - 饱和度：1.4"
+    },
+    "item.gt6ce.cheese_slice.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.cherry_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.chili_chips.food": {
+      "english": "Food: 7 - Saturation: 1.2",
+      "value": "饥饿值：7 - 饱和度：1.2"
+    },
+    "item.gt6ce.chili_pepper.food": {
+      "english": "Food: 1 - Saturation: 1.2",
+      "value": "饥饿值：1 - 饱和度：1.2"
+    },
+    "item.gt6ce.chocolate_bar.food": {
+      "english": "Food: 4 - Saturation: 0.8",
+      "value": "饥饿值：4 - 饱和度：0.8"
+    },
+    "item.gt6ce.chocolate_dough.food": {
+      "english": "Food: 1 - Saturation: 1",
+      "value": "饥饿值：1 - 饱和度：1"
+    },
+    "item.gt6ce.chocolate_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.chocolate_raisins.food": {
+      "english": "Food: 3 - Saturation: 1.2",
+      "value": "饥饿值：3 - 饱和度：1.2"
+    },
+    "item.gt6ce.chum.food": {
+      "english": "Food: 5 - Saturation: 1.6",
+      "value": "饥饿值：5 - 饱和度：1.6"
+    },
+    "item.gt6ce.chum_burger.food": {
+      "english": "Food: 6 - Saturation: 1.6",
+      "value": "饥饿值：6 - 饱和度：1.6"
+    },
+    "item.gt6ce.chum_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.chum_on_a_stick.food": {
+      "english": "Food: 5 - Saturation: 1.6",
+      "value": "饥饿值：5 - 饱和度：1.6"
+    },
+    "item.gt6ce.cinnamon_bark.food": {
+      "english": "Food: 2 - Saturation: 0.3",
+      "value": "饥饿值：2 - 饱和度：0.3"
+    },
+    "item.gt6ce.coconut.food": {
+      "english": "Food: 2 - Saturation: 0.3",
+      "value": "饥饿值：2 - 饱和度：0.3"
+    },
+    "item.gt6ce.cooked_fish_bar.food": {
+      "english": "Food: 2 - Saturation: 1.6",
+      "value": "饥饿值：2 - 饱和度：1.6"
+    },
+    "item.gt6ce.cooked_ham.food": {
+      "english": "Food: 10 - Saturation: 1.6",
+      "value": "饥饿值：10 - 饱和度：1.6"
+    },
+    "item.gt6ce.cooked_ham_slice.food": {
+      "english": "Food: 3 - Saturation: 1.6",
+      "value": "饥饿值：3 - 饱和度：1.6"
+    },
+    "item.gt6ce.cooked_meat_bar.food": {
+      "english": "Food: 2 - Saturation: 1.6",
+      "value": "饥饿值：2 - 饱和度：1.6"
+    },
+    "item.gt6ce.cookie.food": {
+      "english": "Food: 2 - Saturation: 0.2",
+      "value": "饥饿值：2 - 饱和度：0.2"
+    },
+    "item.gt6ce.cookie_shaped_abyssal_dough.food": {
+      "english": "Food: 1 - Saturation: 0.2",
+      "value": "饥饿值：1 - 饱和度：0.2"
+    },
+    "item.gt6ce.cookie_shaped_chocolate_raisin_dough.food": {
+      "english": "Food: 1 - Saturation: 0.2",
+      "value": "饥饿值：1 - 饱和度：0.2"
+    },
+    "item.gt6ce.cookie_shaped_dough.food": {
+      "english": "Food: 1 - Saturation: 0.2",
+      "value": "饥饿值：1 - 饱和度：0.2"
+    },
+    "item.gt6ce.cookie_shaped_raisin_dough.food": {
+      "english": "Food: 1 - Saturation: 0.2",
+      "value": "饥饿值：1 - 饱和度：0.2"
+    },
+    "item.gt6ce.cranberry.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.cranberry_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.cucumber.food": {
+      "english": "Food: 1 - Saturation: 1.2",
+      "value": "饥饿值：1 - 饱和度：1.2"
+    },
+    "item.gt6ce.cucumber_slice.food": {
+      "english": "Food: 0 - Saturation: 0.3",
+      "value": "饥饿值：0 - 饱和度：0.3"
+    },
+    "item.gt6ce.currant_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.dogmeat.food": {
+      "english": "Food: 2 - Saturation: 0.6",
+      "value": "饥饿值：2 - 饱和度：0.6"
+    },
+    "item.gt6ce.donkey_meat.food": {
+      "english": "Food: 2 - Saturation: 0.6",
+      "value": "饥饿值：2 - 饱和度：0.6"
+    },
+    "item.gt6ce.dough.food": {
+      "english": "Food: 1 - Saturation: 1",
+      "value": "饥饿值：1 - 饱和度：1"
+    },
+    "item.gt6ce.dough_baguette.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.dough_bread.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.dough_bun.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.dough_toast_loaf.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.egg_dough.food": {
+      "english": "Food: 1 - Saturation: 1",
+      "value": "饥饿值：1 - 饱和度：1"
+    },
+    "item.gt6ce.egg_white.food": {
+      "english": "Food: 1 - Saturation: 1.2",
+      "value": "饥饿值：1 - 饱和度：1.2"
+    },
+    "item.gt6ce.egg_yolk.food": {
+      "english": "Food: 1 - Saturation: 1.2",
+      "value": "饥饿值：1 - 饱和度：1.2"
+    },
+    "item.gt6ce.emerald_green_bar.food": {
+      "english": "Food: 3 - Saturation: 1.4",
+      "value": "饥饿值：3 - 饱和度：1.4"
+    },
+    "item.gt6ce.fish_burger.food": {
+      "english": "Food: 6 - Saturation: 1.6",
+      "value": "饥饿值：6 - 饱和度：1.6"
+    },
+    "item.gt6ce.flat_dough_with_ketchup.food": {
+      "english": "Food: 2 - Saturation: 0.2",
+      "value": "饥饿值：2 - 饱和度：0.2"
+    },
+    "item.gt6ce.flattened_dough.food": {
+      "english": "Food: 1 - Saturation: 0.2",
+      "value": "饥饿值：1 - 饱和度：0.2"
+    },
+    "item.gt6ce.flattened_egg_dough.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.fried_egg.food": {
+      "english": "Food: 2 - Saturation: 1.2",
+      "value": "饥饿值：2 - 饱和度：1.2"
+    },
+    "item.gt6ce.fries.food": {
+      "english": "Food: 7 - Saturation: 1.2",
+      "value": "饥饿值：7 - 饱和度：1.2"
+    },
+    "item.gt6ce.fries_2.food": {
+      "english": "Food: 7 - Saturation: 1.2",
+      "value": "饥饿值：7 - 饱和度：1.2"
+    },
+    "item.gt6ce.gooseberry.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.gooseberry_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.grape_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.green_grapes.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.green_raisins.food": {
+      "english": "Food: 2 - Saturation: 0.6",
+      "value": "饥饿值：2 - 饱和度：0.6"
+    },
+    "item.gt6ce.grilled_bacon.food": {
+      "english": "Food: 3 - Saturation: 1.8",
+      "value": "饥饿值：3 - 饱和度：1.8"
+    },
+    "item.gt6ce.grilled_dogmeat.food": {
+      "english": "Food: 8 - Saturation: 1.6",
+      "value": "饥饿值：8 - 饱和度：1.6"
+    },
+    "item.gt6ce.grilled_donkey_meat.food": {
+      "english": "Food: 8 - Saturation: 1.6",
+      "value": "饥饿值：8 - 饱和度：1.6"
+    },
+    "item.gt6ce.grilled_horse_meat.food": {
+      "english": "Food: 8 - Saturation: 1.6",
+      "value": "饥饿值：8 - 饱和度：1.6"
+    },
+    "item.gt6ce.grilled_mule_meat.food": {
+      "english": "Food: 10 - Saturation: 1.8",
+      "value": "饥饿值：10 - 饱和度：1.8"
+    },
+    "item.gt6ce.grilled_mutton.food": {
+      "english": "Food: 7 - Saturation: 2",
+      "value": "饥饿值：7 - 饱和度：2"
+    },
+    "item.gt6ce.grilled_rib_eye_steak.food": {
+      "english": "Food: 10 - Saturation: 1.6",
+      "value": "饥饿值：10 - 饱和度：1.6"
+    },
+    "item.gt6ce.grilled_ribs.food": {
+      "english": "Food: 10 - Saturation: 1.6",
+      "value": "饥饿值：10 - 饱和度：1.6"
+    },
+    "item.gt6ce.hamburger.food": {
+      "english": "Food: 6 - Saturation: 1.6",
+      "value": "饥饿值：6 - 饱和度：1.6"
+    },
+    "item.gt6ce.hazelnut.food": {
+      "english": "Food: 2 - Saturation: 0.3",
+      "value": "饥饿值：2 - 饱和度：0.3"
+    },
+    "item.gt6ce.honey_comb.food": {
+      "english": "Food: 1 - Saturation: 0.1",
+      "value": "饥饿值：1 - 饱和度：0.1"
+    },
+    "item.gt6ce.honey_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.horse_meat.food": {
+      "english": "Food: 2 - Saturation: 0.6",
+      "value": "饥饿值：2 - 饱和度：0.6"
+    },
+    "item.gt6ce.ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.jungle_comb.food": {
+      "english": "Food: 1 - Saturation: 0.1",
+      "value": "饥饿值：1 - 饱和度：0.1"
+    },
+    "item.gt6ce.kiwi_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.large_bacon_sandwich.food": {
+      "english": "Food: 20 - Saturation: 2.8",
+      "value": "饥饿值：20 - 饱和度：2.8"
+    },
+    "item.gt6ce.large_cheese_sandwich.food": {
+      "english": "Food: 15 - Saturation: 2.4",
+      "value": "饥饿值：15 - 饱和度：2.4"
+    },
+    "item.gt6ce.large_steak_sandwich.food": {
+      "english": "Food: 20 - Saturation: 2.6",
+      "value": "饥饿值：20 - 饱和度：2.6"
+    },
+    "item.gt6ce.large_veggie_sandwich.food": {
+      "english": "Food: 15 - Saturation: 2.2",
+      "value": "饥饿值：15 - 饱和度：2.2"
+    },
+    "item.gt6ce.lemon.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.lemon_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.lemon_slice.food": {
+      "english": "Food: 0 - Saturation: 0.15",
+      "value": "饥饿值：0 - 饱和度：0.15"
+    },
+    "item.gt6ce.loaf_of_toast.food": {
+      "english": "Food: 8 - Saturation: 1.2",
+      "value": "饥饿值：8 - 饱和度：1.2"
+    },
+    "item.gt6ce.maple_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.maxim_tomato.food": {
+      "english": "Food: 9 - Saturation: 1",
+      "value": "饥饿值：9 - 饱和度：1"
+    },
+    "item.gt6ce.melon_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.mince_meat_pizza.food": {
+      "english": "Food: 7 - Saturation: 1.2",
+      "value": "饥饿值：7 - 饱和度：1.2"
+    },
+    "item.gt6ce.mint_chocolate_chip_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.mint_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.mocha_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.mule_meat.food": {
+      "english": "Food: 3 - Saturation: 0.8",
+      "value": "饥饿值：3 - 饱和度：0.8"
+    },
+    "item.gt6ce.mutton.food": {
+      "english": "Food: 2 - Saturation: 0.6",
+      "value": "饥饿值：2 - 饱和度：0.6"
+    },
+    "item.gt6ce.neapolitan_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.nutella_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.onion.food": {
+      "english": "Food: 1 - Saturation: 1.2",
+      "value": "饥饿值：1 - 饱和度：1.2"
+    },
+    "item.gt6ce.onion_slice.food": {
+      "english": "Food: 0 - Saturation: 0.3",
+      "value": "饥饿值：0 - 饱和度：0.3"
+    },
+    "item.gt6ce.peanut.food": {
+      "english": "Food: 2 - Saturation: 0.3",
+      "value": "饥饿值：2 - 饱和度：0.3"
+    },
+    "item.gt6ce.peanut_butter_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.pickle.food": {
+      "english": "Food: 1 - Saturation: 1.2",
+      "value": "饥饿值：1 - 饱和度：1.2"
+    },
+    "item.gt6ce.pickle_slice.food": {
+      "english": "Food: 0 - Saturation: 0.3",
+      "value": "饥饿值：0 - 饱和度：0.3"
+    },
+    "item.gt6ce.pistachio_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.pizza_hawaii.food": {
+      "english": "Food: 7 - Saturation: 1.2",
+      "value": "饥饿值：7 - 饱和度：1.2"
+    },
+    "item.gt6ce.pizza_margherita.food": {
+      "english": "Food: 6 - Saturation: 1.2",
+      "value": "饥饿值：6 - 饱和度：1.2"
+    },
+    "item.gt6ce.pomegranate.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.pomeraisins.food": {
+      "english": "Food: 2 - Saturation: 0.6",
+      "value": "饥饿值：2 - 饱和度：0.6"
+    },
+    "item.gt6ce.potato_chips.food": {
+      "english": "Food: 7 - Saturation: 1.2",
+      "value": "饥饿值：7 - 饱和度：1.2"
+    },
+    "item.gt6ce.potato_chips_raw.food": {
+      "english": "Food: 1 - Saturation: 1.2",
+      "value": "饥饿值：1 - 饱和度：1.2"
+    },
+    "item.gt6ce.potato_on_a_stick.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.potato_strips.food": {
+      "english": "Food: 1 - Saturation: 1.2",
+      "value": "饥饿值：1 - 饱和度：1.2"
+    },
+    "item.gt6ce.purple_grapes.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.purple_raisins.food": {
+      "english": "Food: 2 - Saturation: 0.6",
+      "value": "饥饿值：2 - 饱和度：0.6"
+    },
+    "item.gt6ce.rainbow_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.raisin_cookie.food": {
+      "english": "Food: 2 - Saturation: 0.2",
+      "value": "饥饿值：2 - 饱和度：0.2"
+    },
+    "item.gt6ce.raisin_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.raspberry.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.raspberry_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.raw_bacon.food": {
+      "english": "Food: 1 - Saturation: 0.9",
+      "value": "饥饿值：1 - 饱和度：0.9"
+    },
+    "item.gt6ce.raw_cake_bottom.food": {
+      "english": "Food: 2 - Saturation: 0.2",
+      "value": "饥饿值：2 - 饱和度：0.2"
+    },
+    "item.gt6ce.raw_fish_bar.food": {
+      "english": "Food: 2 - Saturation: 0.6",
+      "value": "饥饿值：2 - 饱和度：0.6"
+    },
+    "item.gt6ce.raw_ham.food": {
+      "english": "Food: 3 - Saturation: 0.6",
+      "value": "饥饿值：3 - 饱和度：0.6"
+    },
+    "item.gt6ce.raw_ham_slice.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.raw_meat_bar.food": {
+      "english": "Food: 2 - Saturation: 0.6",
+      "value": "饥饿值：2 - 饱和度：0.6"
+    },
+    "item.gt6ce.raw_mince_meat_pizza.food": {
+      "english": "Food: 2 - Saturation: 0.3",
+      "value": "饥饿值：2 - 饱和度：0.3"
+    },
+    "item.gt6ce.raw_pizza_hawaii.food": {
+      "english": "Food: 2 - Saturation: 0.3",
+      "value": "饥饿值：2 - 饱和度：0.3"
+    },
+    "item.gt6ce.raw_pizza_margherita.food": {
+      "english": "Food: 2 - Saturation: 0.3",
+      "value": "饥饿值：2 - 饱和度：0.3"
+    },
+    "item.gt6ce.raw_rib_eye_steak.food": {
+      "english": "Food: 3 - Saturation: 0.6",
+      "value": "饥饿值：3 - 饱和度：0.6"
+    },
+    "item.gt6ce.raw_ribs.food": {
+      "english": "Food: 3 - Saturation: 0.6",
+      "value": "饥饿值：3 - 饱和度：0.6"
+    },
+    "item.gt6ce.raw_veggie_pizza.food": {
+      "english": "Food: 1 - Saturation: 0.3",
+      "value": "饥饿值：1 - 饱和度：0.3"
+    },
+    "item.gt6ce.red_currants.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.red_grapes.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.red_raisins.food": {
+      "english": "Food: 2 - Saturation: 0.6",
+      "value": "饥饿值：2 - 饱和度：0.6"
+    },
+    "item.gt6ce.roasted_potato_on_a_stick.food": {
+      "english": "Food: 5 - Saturation: 1.2",
+      "value": "饥饿值：5 - 饱和度：1.2"
+    },
+    "item.gt6ce.royal_comb.food": {
+      "english": "Food: 1 - Saturation: 0.1",
+      "value": "饥饿值：1 - 饱和度：0.1"
+    },
+    "item.gt6ce.salted_butter.food": {
+      "english": "Food: 1 - Saturation: 4",
+      "value": "饥饿值：1 - 饱和度：4"
+    },
+    "item.gt6ce.scrambled_egg.food": {
+      "english": "Food: 2 - Saturation: 1.2",
+      "value": "饥饿值：2 - 饱和度：1.2"
+    },
+    "item.gt6ce.scrap_meat.food": {
+      "english": "Food: 2 - Saturation: 0.6",
+      "value": "饥饿值：2 - 饱和度：0.6"
+    },
+    "item.gt6ce.shroomy_comb.food": {
+      "english": "Food: 1 - Saturation: 0.1",
+      "value": "饥饿值：1 - 饱和度：0.1"
+    },
+    "item.gt6ce.sliced_baguette.food": {
+      "english": "Food: 4 - Saturation: 1.2",
+      "value": "饥饿值：4 - 饱和度：1.2"
+    },
+    "item.gt6ce.sliced_bread.food": {
+      "english": "Food: 2 - Saturation: 1.2",
+      "value": "饥饿值：2 - 饱和度：1.2"
+    },
+    "item.gt6ce.sliced_bun.food": {
+      "english": "Food: 1 - Saturation: 1.2",
+      "value": "饥饿值：1 - 饱和度：1.2"
+    },
+    "item.gt6ce.sliced_egg.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.soylent_burger.food": {
+      "english": "Food: 5 - Saturation: 1.4",
+      "value": "饥饿值：5 - 饱和度：1.4"
+    },
+    "item.gt6ce.spumoni_chocolate_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.spumoni_vanilla_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.steak_sandwich.food": {
+      "english": "Food: 10 - Saturation: 1.6",
+      "value": "饥饿值：10 - 饱和度：1.6"
+    },
+    "item.gt6ce.stracciatella_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.strawberry.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.strawberry_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.sugary_chocolate_raisin_dough.food": {
+      "english": "Food: 1 - Saturation: 1",
+      "value": "饥饿值：1 - 饱和度：1"
+    },
+    "item.gt6ce.sugary_dough.food": {
+      "english": "Food: 1 - Saturation: 1",
+      "value": "饥饿值：1 - 饱和度：1"
+    },
+    "item.gt6ce.sugary_raisin_dough.food": {
+      "english": "Food: 1 - Saturation: 1",
+      "value": "饥饿值：1 - 饱和度：1"
+    },
+    "item.gt6ce.superman_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.toast.food": {
+      "english": "Food: 1 - Saturation: 1.2",
+      "value": "饥饿值：1 - 饱和度：1.2"
+    },
+    "item.gt6ce.toasted_toast.food": {
+      "english": "Food: 1 - Saturation: 1.2",
+      "value": "饥饿值：1 - 饱和度：1.2"
+    },
+    "item.gt6ce.tofu_bar.food": {
+      "english": "Food: 2 - Saturation: 1.4",
+      "value": "饥饿值：2 - 饱和度：1.4"
+    },
+    "item.gt6ce.tofu_burger.food": {
+      "english": "Food: 4 - Saturation: 1.4",
+      "value": "饥饿值：4 - 饱和度：1.4"
+    },
+    "item.gt6ce.tomato.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.tomato_slice.food": {
+      "english": "Food: 0 - Saturation: 0.15",
+      "value": "饥饿值：0 - 饱和度：0.15"
+    },
+    "item.gt6ce.vanilla_ice_cream.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.veggie_burger.food": {
+      "english": "Food: 4 - Saturation: 1.2",
+      "value": "饥饿值：4 - 饱和度：1.2"
+    },
+    "item.gt6ce.veggie_pizza.food": {
+      "english": "Food: 5 - Saturation: 1.2",
+      "value": "饥饿值：5 - 饱和度：1.2"
+    },
+    "item.gt6ce.veggie_sandwich.food": {
+      "english": "Food: 7 - Saturation: 1.2",
+      "value": "饥饿值：7 - 饱和度：1.2"
+    },
+    "item.gt6ce.water_comb.food": {
+      "english": "Food: 1 - Saturation: 0.1",
+      "value": "饥饿值：1 - 饱和度：0.1"
+    },
+    "item.gt6ce.white_currants.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.white_grapes.food": {
+      "english": "Food: 1 - Saturation: 0.6",
+      "value": "饥饿值：1 - 饱和度：0.6"
+    },
+    "item.gt6ce.white_raisins.food": {
+      "english": "Food: 2 - Saturation: 0.6",
+      "value": "饥饿值：2 - 饱和度：0.6"
+    },
+    "message.gt6ce.crafting.filter": {
+      "english": "%s diversity filter: %s",
+      "value": "%s 多样性过滤器：%s"
+    },
+    "message.gt6ce.engine.piston.status": {
+      "english": "Power %1$s/32; input %2$s %3$s/t; output %4$s KU/t; %5$s",
+      "value": "功率档位 %1$s/32；输入 %2$s %3$s/t；输出 %4$s KU/t；%5$s"
+    },
+    "message.gt6ce.engine.piston.stopped": {
+      "english": "Input stopped",
+      "value": "已停止输入"
+    },
+    "message.gt6ce.portable_fluid.limit": {
+      "english": "Limit: %s L",
+      "value": "传输上限：%s L"
+    },
+    "message.gt6ce.reactor.status": {
+      "english": "Reactor rods: %s/4",
+      "value": "反应堆燃料棒：%s/4"
+    },
+    "message.gt6ce.storage.filter_keep": {
+      "english": "Keep filter when empty",
+      "value": "清空后保留过滤设置"
+    },
+    "message.gt6ce.storage.filter_reset": {
+      "english": "Clear filter when empty",
+      "value": "清空后重置过滤设置"
+    },
+    "tooltip.gt6ce.coin_mold.1": {
+      "english": "Place a tiny metal plate on top, strike it with a hammer, and take the coin",
+      "value": "在顶部放置一块小型金属板，用锤敲击后取出硬币"
+    },
+    "tooltip.gt6ce.coin_mold.2": {
+      "english": "No GUI; click to interact (top or sides)",
+      "value": "没有 GUI；点击顶部或侧面进行交互"
+    },
+    "tooltip.gt6ce.dynamite.fortune": {
+      "english": "Blast fortune: %s",
+      "value": "爆破时运等级：%s"
+    },
+    "tooltip.gt6ce.dynamite.range": {
+      "english": "Blast range: 3x3x3",
+      "value": "爆破范围：3×3×3"
+    },
+    "tooltip.gt6ce.dynamite.resistance": {
+      "english": "Blast resistance limit: %s",
+      "value": "可破坏方块的爆炸抗性上限：%s"
+    },
+    "tooltip.gt6ce.electric_tool.energy": {
+      "english": "Energy: %s / %s EU",
+      "value": "电量：%s / %s EU"
+    },
+    "tooltip.gt6ce.electric_tool.tier": {
+      "english": "%s · %s EU per packet",
+      "value": "%s · 每包 %s EU"
+    },
+    "tooltip.gt6ce.electric_tool.use.buzzsaw": {
+      "english": "Reusable crafting saw; specialized for metal bars, not ordinary wood harvesting.",
+      "value": "可重复用于合成的锯；适合切割金属栏杆，不适合普通伐木。"
+    },
+    "tooltip.gt6ce.electric_tool.use.chainsaw": {
+      "english": "Cuts wood and shears leaves. Right-click to place saplings or a workbench.",
+      "value": "砍伐木头并剪取树叶；右键放置树苗或工作台。"
+    },
+    "tooltip.gt6ce.electric_tool.use.drill": {
+      "english": "Drills holes and installs dynamite from your inventory.",
+      "value": "钻孔并安装物品栏中的炸药。"
+    },
+    "tooltip.gt6ce.electric_tool.use.mining_drill": {
+      "english": "Mines stone and soil; right-click plugs nearby liquids with expendable inventory blocks, or places a torch.",
+      "value": "挖掘石头和土壤；右键消耗物品栏中的方块堵住附近流体，或放置火把。"
+    },
+    "tooltip.gt6ce.electric_tool.use.mixer": {
+      "english": "Operates mixing bowls using EU instead of player exhaustion.",
+      "value": "消耗 EU 操作搅拌盆，不消耗玩家体力。"
+    },
+    "tooltip.gt6ce.electric_tool.use.screwdriver": {
+      "english": "Adjusts machines and covers; reusable crafting screwdriver.",
+      "value": "调整机器和覆盖板；可重复用于螺丝刀合成。"
+    },
+    "tooltip.gt6ce.electric_tool.use.trimmer": {
+      "english": "Cuts saplings out of leaves and harvests vines.",
+      "value": "从树叶中剪取树苗，并收获藤蔓。"
+    },
+    "tooltip.gt6ce.electric_tool.use.wrench": {
+      "english": "Rotates and dismantles machines. Sneak-right-click switches wrench mode.",
+      "value": "旋转和拆卸机器；潜行右键切换扳手模式。"
+    },
+    "tooltip.gt6ce.electric_wrench.switch": {
+      "english": "Sneak-right-click a block without a block entity to switch wrench mode",
+      "value": "潜行右键没有方块实体的方块以切换扳手模式"
+    },
+    "tooltip.gt6ce.engine.desc.electric": {
+      "english": "Converts EU into Kinetic Energy (KU)",
+      "value": "将 EU 转换为动能（KU）"
+    },
+    "tooltip.gt6ce.engine.desc.flux": {
+      "english": "Converts RF into Kinetic Energy (KU)",
+      "value": "将 RF 转换为动能（KU）"
+    },
+    "tooltip.gt6ce.engine.desc.rotation": {
+      "english": "Converts RU into Kinetic Energy (KU)",
+      "value": "将 RU 转换为动能（KU）"
+    },
+    "tooltip.gt6ce.engine.desc.steam": {
+      "english": "Converts 200 L Steam into 100 KU",
+      "value": "将 200 L 蒸汽转换为 100 KU"
+    },
+    "tooltip.gt6ce.engine.diesel.faces": {
+      "english": "RU output at the front; automatic fluid output at the rear, venting gases into non-colliding space",
+      "value": "正面输出 RU；背面自动排出流体，气体可排放到无碰撞的空间"
+    },
+    "tooltip.gt6ce.engine.emit_eu": {
+      "english": "Can emit EU with a Loss of %1$s%%",
+      "value": "可以输出 EU，损耗为 %1$s%%"
+    },
+    "tooltip.gt6ce.engine.emit_rf": {
+      "english": "Can emit Redstone Flux (RF) with a Loss of %1$s%%",
+      "value": "可以输出红石通量（RF），损耗为 %1$s%%"
+    },
+    "tooltip.gt6ce.engine.fluid_in_steam": {
+      "english": "Fluid IN: Steam",
+      "value": "流体输入：蒸汽"
+    },
+    "tooltip.gt6ce.engine.flux.emit_eu": {
+      "english": "Can emit EU with a Loss of %1$s%%",
+      "value": "可以输出 EU，损耗为 %1$s%%"
+    },
+    "tooltip.gt6ce.engine.hint.screwdriver": {
+      "english": "Use Screwdriver to cycle Energy/Fluid I/O face",
+      "value": "用螺丝刀切换能量／流体输入输出面"
+    },
+    "tooltip.gt6ce.engine.hint.soft_hammer": {
+      "english": "Use Soft Hammer to reset I/O configuration",
+      "value": "用软锤重置输入输出设置"
+    },
+    "tooltip.gt6ce.engine.hint.wrench": {
+      "english": "Use Wrench to set Facing",
+      "value": "用扳手设置朝向"
+    },
+    "tooltip.gt6ce.engine.piston.faces": {
+      "english": "Input: back; output: front (alternating KU sign)",
+      "value": "背面输入，正面输出（KU 正负交替）"
+    },
+    "tooltip.gt6ce.engine.piston.modes": {
+      "english": "32 settings: %1$s–%2$s %3$s/t → %4$s–%5$s KU/t",
+      "value": "32 个档位：%1$s–%2$s %3$s/t → %4$s–%5$s KU/t"
+    },
+    "tooltip.gt6ce.engine.piston.rates": {
+      "english": "Rated input: %1$s %2$s/t; output: %3$s KU/t",
+      "value": "额定输入：%1$s %2$s/t；输出：%3$s KU/t"
+    },
+    "tooltip.gt6ce.engine.piston.tools": {
+      "english": "Screwdriver: power setting; soft hammer: stop/resume input",
+      "value": "螺丝刀：设置功率；软锤：停止／恢复输入"
+    },
+    "tooltip.gt6ce.engine.steam.emits_water": {
+      "english": "Emits Distilled Water",
+      "value": "排出蒸馏水"
+    },
+    "tooltip.gt6ce.engine.steam_capacity": {
+      "english": "Steam Capacity: ",
+      "value": "蒸汽容量："
+    },
+    "tooltip.gt6ce.extender.bridge": {
+      "english": "Each face accesses its opposite neighbor; no automatic transfer",
+      "value": "每个面访问其对面的相邻方块；不会自动传输"
+    },
+    "tooltip.gt6ce.extender.control": {
+      "english": "Soft hammer: switch target. Screwdriver: target mode (if supported). Relays GT energy and FE.",
+      "value": "软锤：切换目标启停；螺丝刀：切换目标模式（如果支持）。可转接 GT 能量和 FE。"
+    },
+    "tooltip.gt6ce.extender.routing": {
+      "english": "Main face accesses the secondary neighbor; other faces access the main neighbor",
+      "value": "主面访问副面相邻方块；其他面访问主面相邻方块"
+    },
+    "tooltip.gt6ce.extender.tools": {
+      "english": "Wrench sets main face; monkey wrench sets secondary face (six directions)",
+      "value": "扳手设置主面；活动扳手设置副面（六个方向）"
+    },
+    "tooltip.gt6ce.filter.prefix": {
+      "english": "Select one material form; fluids always pass",
+      "value": "选择一种材料形态；流体始终放行"
+    },
+    "tooltip.gt6ce.filter.routing": {
+      "english": "Main face accesses secondary neighbor without filtering; other faces access main neighbor with filtering",
+      "value": "主面访问副面相邻方块且不执行过滤；其他面访问主面相邻方块并执行过滤"
+    },
+    "tooltip.gt6ce.filter.tools": {
+      "english": "Wrench: main; monkey wrench: secondary; screwdriver: invert; soft hammer: clear",
+      "value": "扳手：主面；活动扳手：副面；螺丝刀：反转；软锤：清除"
+    },
+    "tooltip.gt6ce.large_crucible.capacity": {
+      "english": "Capacity: 432 material units",
+      "value": "容量：432 材料单位"
+    },
+    "tooltip.gt6ce.machine.io.fluids_in": {
+      "english": "Fluids IN: ",
+      "value": "流体输入："
+    },
+    "tooltip.gt6ce.machine.io.fluids_out": {
+      "english": "Fluids OUT: ",
+      "value": "流体输出："
+    },
+    "tooltip.gt6ce.pipe.capacity": {
+      "english": "Capacity:",
+      "value": "容量："
+    },
+    "tooltip.gt6ce.portable_fluid.contents": {
+      "english": "%1$s: %2$s/%3$s mB",
+      "value": "%1$s：%2$s/%3$s mB"
+    },
+    "tooltip.gt6ce.portable_fluid.limit_use": {
+      "english": "Place and click its side with an empty hand: upper bands increase the limit, lower bands decrease it. Sneak for fine adjustments.",
+      "value": "放置后空手点击侧面：上部区域增加传输上限，下部区域减少；潜行时精细调整。"
+    },
+    "tooltip.gt6ce.portable_fluid.temperature": {
+      "english": "Fluid temperature must be below %s K",
+      "value": "流体温度必须低于 %s K"
+    },
+    "tooltip.gt6ce.portable_fluid.use": {
+      "english": "Use on a fluid tank to transfer fluid.",
+      "value": "对流体储罐使用以传输流体。"
+    },
+    "tooltip.gt6ce.smeltery.mold.produces": {
+      "english": "This Mold produces %1$s",
+      "value": "此模具产出 %1$s"
+    },
+    "tooltip.gt6ce.tank.capacity": {
+      "english": "Capacity:",
+      "value": "容量："
+    },
+    "tooltip.gt6ce.ui.attachment.fill_gas": {
+      "english": "Mount on a tank to fill it with gas from a held container.",
+      "value": "安装在储罐上，将手持容器中的气体灌入储罐。"
+    },
+    "tooltip.gt6ce.ui.attachment.fill_liquid": {
+      "english": "Mount on a tank to fill it with liquid from a held container.",
+      "value": "安装在储罐上，将手持容器中的液体灌入储罐。"
+    },
+    "tooltip.gt6ce.ui.attachment.pour": {
+      "english": "Empty-hand click pours liquid into the container directly below.",
+      "value": "空手点击，将液体倒入正下方的容器。"
+    },
+    "tooltip.gt6ce.ui.auto": {
+      "english": " (auto)",
+      "value": "（自动）"
+    },
+    "tooltip.gt6ce.ui.auto_any": {
+      "english": " (auto, otherwise any)",
+      "value": "（此面自动，其他面也可交互）"
+    },
+    "tooltip.gt6ce.ui.crucible_minimum": {
+      "english": "(at least %s Units per Tick required!)",
+      "value": "（每刻至少需要 %s 单位！）"
+    },
+    "tooltip.gt6ce.ui.empty_pages": {
+      "english": "These Pages are Empty",
+      "value": "这些书页是空白的"
+    },
+    "tooltip.gt6ce.ui.fermenting": {
+      "english": "Fermenting into %s",
+      "value": "正在发酵为 %s"
+    },
+    "tooltip.gt6ce.ui.food": {
+      "english": "Food: %s - Saturation: %s",
+      "value": "饥饿值：%s - 饱和度：%s"
+    },
+    "tooltip.gt6ce.ui.hand_harvest": {
+      "english": "Hand-Harvestable",
+      "value": "可徒手采集"
+    },
+    "tooltip.gt6ce.ui.heat_transmitters": {
+      "english": "Heat Transmitters",
+      "value": "热传导器"
+    },
+    "tooltip.gt6ce.ui.level": {
+      "english": " Level: %s",
+      "value": " 等级：%s"
+    },
+    "tooltip.gt6ce.ui.liters_of": {
+      "english": "%s L of ",
+      "value": "%s L "
+    },
+    "tooltip.gt6ce.ui.loot": {
+      "english": "Contains Loot of %s",
+      "value": "包含 %s 的战利品"
+    },
+    "tooltip.gt6ce.ui.max_fluid": {
+      "english": "; Max: %s L",
+      "value": "；最大容量：%s L"
+    },
+    "tooltip.gt6ce.ui.no_auto": {
+      "english": " (no auto)",
+      "value": "（不自动）"
+    },
+    "tooltip.gt6ce.ui.normal": {
+      "english": "Normal",
+      "value": "普通"
+    },
+    "tooltip.gt6ce.ui.not_fermenting": {
+      "english": "Not fermenting",
+      "value": "未在发酵"
+    },
+    "tooltip.gt6ce.ui.parallel": {
+      "english": " (up to %s x processed per run)",
+      "value": "（每次最多处理 %s 份）"
+    },
+    "tooltip.gt6ce.ui.pipe_holes": {
+      "english": "Pipe Holes",
+      "value": "管道孔"
+    },
+    "tooltip.gt6ce.ui.range": {
+      "english": "%s to %s",
+      "value": "%s 至 %s"
+    },
+    "tooltip.gt6ce.ui.rod.depleted": {
+      "english": "Depleted",
+      "value": "已枯竭"
+    },
+    "tooltip.gt6ce.ui.rod.durability": {
+      "english": "Durability: %s/%s (%s%%)",
+      "value": "耐久：%s/%s（%s%%）"
+    },
+    "tooltip.gt6ce.ui.rod.fuel": {
+      "english": "Fuel: %s",
+      "value": "燃料：%s"
+    },
+    "tooltip.gt6ce.ui.rod.fuel_type.am_243": {
+      "english": "Americium-243",
+      "value": "镅-243"
+    },
+    "tooltip.gt6ce.ui.rod.fuel_type.mox": {
+      "english": "MOX",
+      "value": "混合氧化物燃料"
+    },
+    "tooltip.gt6ce.ui.rod.kind.absorber": {
+      "english": "Neutron absorber",
+      "value": "中子吸收棒"
+    },
+    "tooltip.gt6ce.ui.rod.kind.base": {
+      "english": "Empty reactor rod",
+      "value": "空反应堆棒"
+    },
+    "tooltip.gt6ce.ui.rod.kind.breeder": {
+      "english": "Breeder rod",
+      "value": "增殖棒"
+    },
+    "tooltip.gt6ce.ui.rod.kind.depleted": {
+      "english": "Depleted rod",
+      "value": "枯竭燃料棒"
+    },
+    "tooltip.gt6ce.ui.rod.kind.moderator": {
+      "english": "Neutron moderator",
+      "value": "中子减速棒"
+    },
+    "tooltip.gt6ce.ui.rod.kind.nuclear": {
+      "english": "Nuclear fuel rod",
+      "value": "核燃料棒"
+    },
+    "tooltip.gt6ce.ui.rod.kind.product": {
+      "english": "Breeder product rod",
+      "value": "增殖产物棒"
+    },
+    "tooltip.gt6ce.ui.rod.kind.reflector": {
+      "english": "Neutron reflector",
+      "value": "中子反射棒"
+    },
+    "tooltip.gt6ce.ui.rod.neutrons": {
+      "english": "Self: %s | Emission: %s | Max: %s | Factor: 1/%s",
+      "value": "自生中子：%s | 发射中子：%s | 最大中子：%s | 系数：1/%s"
+    },
+    "tooltip.gt6ce.ui.rod.remaining": {
+      "english": "Remaining: %s",
+      "value": "剩余寿命：%s"
+    },
+    "tooltip.gt6ce.ui.rod.tier": {
+      "english": "Tier: %s",
+      "value": "等级：%s"
+    },
+    "tooltip.gt6ce.ui.sealed": {
+      "english": "Sealed",
+      "value": "已密封"
+    },
+    "tooltip.gt6ce.ui.sealed_progress": {
+      "english": "Sealed (%s / %s)",
+      "value": "已密封（%s / %s）"
+    },
+    "tooltip.gt6ce.ui.sealed_time": {
+      "english": "Sealed (%s)",
+      "value": "已密封（%s）"
+    },
+    "tooltip.gt6ce.ui.spring": {
+      "english": "Generates fluid above when the outlet is clear; use a pump to collect it.",
+      "value": "上方出口通畅时生成流体；使用泵收集。"
+    },
+    "tooltip.gt6ce.ui.total_per_tick": {
+      "english": "/t total)",
+      "value": "/t 总计）"
+    },
+    "tooltip.gt6ce.ui.units": {
+      "english": "%s Units",
+      "value": "%s 单位"
+    },
+    "tooltip.gt6ce.ui.unknown": {
+      "english": "Unknown",
+      "value": "未知"
+    },
+    "tooltip.gt6ce.ui.up_to": {
+      "english": "up to %s",
+      "value": "最多 %s"
+    }
+  }
+}

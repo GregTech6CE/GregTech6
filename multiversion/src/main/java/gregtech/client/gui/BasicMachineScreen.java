@@ -40,6 +40,18 @@ import java.util.Optional;
 public class BasicMachineScreen extends MachineContainerScreen<BasicMachineContainerMenu> implements FluidRecipeScreen {
     private final ResourceLocation texture;
 
+    private boolean overRecipeArrow(double mouseX, double mouseY) {
+        return mouseX >= leftPos + 78 && mouseX < leftPos + 98
+                && mouseY >= topPos + 24 && mouseY < topPos + 42;
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (button == 0 && overRecipeArrow(mouseX, mouseY)
+                && RecipeViewerNavigation.open(menu.recipeMap())) return true;
+        return super.mouseClicked(mouseX, mouseY, button);
+    }
+
     @Override public FluidStack fluidAt(int mouseX, int mouseY) {
         for (Slot slot : menu.slots) if (slot instanceof SlotFluid fluid
                 && mouseX >= leftPos + slot.x && mouseX < leftPos + slot.x + 16
@@ -71,6 +83,9 @@ public class BasicMachineScreen extends MachineContainerScreen<BasicMachineConta
         renderFluidSlots(graphics);
         renderFluidTooltip(graphics, mouseX, mouseY);
         renderTooltip(graphics, mouseX, mouseY);
+        if (overRecipeArrow(mouseX, mouseY) && menu.recipeMap() != null
+                && menu.recipeMap().mViewerAllowed)
+            graphics.renderTooltip(font, Component.translatable("gt.lang.recipes"), mouseX, mouseY);
         if (hoveredSlot != null && !hoveredSlot.hasItem() && menu.programSlot() >= 0
                 && hoveredSlot.index == menu.programSlot())
             graphics.renderTooltip(font, Component.translatable("gt.autocrafting.insert.blueprint"), mouseX, mouseY);

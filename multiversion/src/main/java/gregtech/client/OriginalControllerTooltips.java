@@ -25,7 +25,7 @@ public final class OriginalControllerTooltips {
         boolean cryo=OriginalControllerTooltipData.basicFamily(spec.machineName())==Family.CRYO_DISTILLATION_TOWER;
         add(lines,"gt.lang.recipes",ChatFormatting.AQUA).append(": ")
                 .append(Component.translatable(coke ? "gt.recipe.cokeoven" : cryo ? "gt.recipe.cryodistillationtower" : "gt.recipe.distillationtower").withStyle(ChatFormatting.WHITE))
-                .append(Component.literal(spec.parallelLimit()>1 ? " (up to "+spec.parallelLimit()+"x processed per run)" : "")
+                .append(TooltipHelper.parallel(spec.parallelLimit())
                         .withStyle(ChatFormatting.WHITE));
         if(!coke) add(lines,"gt.lang.cheap.overclocking",ChatFormatting.YELLOW);
         if(coke) {
@@ -38,7 +38,7 @@ public final class OriginalControllerTooltips {
             var line=add(lines,"gt.lang.energy.input",ChatFormatting.GREEN).append(": ")
                     .append(Component.literal(spec.energyIn()+" ").withStyle(ChatFormatting.WHITE))
                     .append(Component.translatable(cryo ? "gt.td.short.energy.cryo" : "gt.td.short.energy.heat").withStyle(cryo ? ChatFormatting.AQUA : ChatFormatting.RED))
-                    .append(Component.literal("/t (up to "+spec.energyInMax()+", ").withStyle(ChatFormatting.WHITE));
+                    .append(Component.literal("/t (").append(TooltipHelper.range(0, spec.energyInMax())).append(", ").withStyle(ChatFormatting.WHITE));
             int index=0;
             for(var key:List.of("gt.lang.face.bottom","gt.lang.face.top","gt.lang.face.left","gt.lang.face.front",
                     "gt.lang.face.right","gt.lang.face.back")) {
@@ -65,14 +65,14 @@ public final class OriginalControllerTooltips {
         boolean drill=family==Family.BEDROCK_DRILL;
         var energy=gregtech.content.multiblock.OriginalControllerTooltipData.standaloneEnergy(family);
         add(lines,"gt.lang.energy.input",ChatFormatting.GREEN).append(": ")
-                .append(Component.literal(energy.minimum()+" to "+energy.maximum()+" ").withStyle(ChatFormatting.WHITE))
+                .append(TooltipHelper.range(energy.minimum(), energy.maximum()).append(" ").withStyle(ChatFormatting.WHITE))
                 .append(Component.translatable(energy.unitKey())
                         .withStyle(drill?ChatFormatting.GREEN:ChatFormatting.BLUE))
-                .append(Component.literal(drill?"/t (up to "+energy.totalPerTick()+" ":"/t").withStyle(ChatFormatting.WHITE));
+                .append((drill ? Component.literal("/t (").append(TooltipHelper.range(0, energy.totalPerTick())).append(" ") : Component.literal("/t")).withStyle(ChatFormatting.WHITE));
         if(drill) {
             var line=(MutableComponent)lines.get(lines.size()-1);
             line.append(Component.translatable("gt.td.short.energy.kinetic_rotation").withStyle(ChatFormatting.GREEN))
-                    .append(Component.literal("/t total)").withStyle(ChatFormatting.WHITE));
+                    .append(Component.translatable("tooltip.gt6ce.ui.total_per_tick").withStyle(ChatFormatting.WHITE));
         }
         inherited(lines);
     }
@@ -87,7 +87,7 @@ public final class OriginalControllerTooltips {
         for(int i=0;i<faces.size();i++) {
             if(i>0) line.append(Component.literal(", ").withStyle(ChatFormatting.WHITE));
             line.append(Component.translatable(faces.get(i)).withStyle(ChatFormatting.WHITE));
-            if(i==auto) line.append(Component.literal(" (auto)").withStyle(ChatFormatting.WHITE));
+            if(i==auto) line.append(Component.translatable("tooltip.gt6ce.ui.auto").withStyle(ChatFormatting.WHITE));
         }
     }
     private static MutableComponent add(List<Component> lines,String key,ChatFormatting color) {

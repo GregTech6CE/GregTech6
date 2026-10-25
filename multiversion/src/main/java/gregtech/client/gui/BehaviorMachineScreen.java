@@ -93,6 +93,12 @@ public class BehaviorMachineScreen extends BehaviorMachineHostScreen implements 
                     return true;
                 }
             }
+            var arrow = declaration.progress();
+            if (mouseX >= leftPos + arrow.x() && mouseX < leftPos + arrow.x() + BehaviorMachine.PROGRESS_WIDTH
+                    && mouseY >= topPos + arrow.y() && mouseY < topPos + arrow.y() + BehaviorMachine.PROGRESS_HEIGHT) {
+                for (String key : declaration.recipeMaps())
+                    if (RecipeViewerNavigation.open(gregtech.internal.recipe.RecipeMap.RECIPE_MAPS.get(key))) return true;
+            }
         }
         return super.mouseClicked(mouseX, mouseY, button);
     }

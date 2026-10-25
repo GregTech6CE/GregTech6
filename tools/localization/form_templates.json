@@ -1,0 +1,586 @@
+{
+  "scope": "Material form templates derived from two original whole-name entries; original full names retain priority.",
+  "values": {
+    "block.gt6ce.block_dust": {
+      "english": "Block of %s Dust",
+      "source_key": "oredict.blockDustIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.blockDustSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "block.gt6ce.block_ingot": {
+      "english": "Block of %s Ingot",
+      "source_key": "oredict.blockIngotIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.blockIngotSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "block.gt6ce.block_plate": {
+      "english": "Block of %s Plate",
+      "source_key": "oredict.blockPlateIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.blockPlateSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "block.gt6ce.block_raw": {
+      "english": "Block of %s Ore",
+      "source_key": "oredict.blockRawIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.blockRawSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "block.gt6ce.block_solid": {
+      "english": "Block of solid %s",
+      "source_key": "oredict.blockSolidIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.blockSolidSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "block.gt6ce.casing_machine_dense": {
+      "english": "Dense %s Machine Casing",
+      "source_key": "oredict.casingMachineDenseIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.casingMachineDenseSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "block.gt6ce.casing_machine_double": {
+      "english": "Robust %s Machine Casing",
+      "source_key": "oredict.casingMachineDoubleIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.casingMachineDoubleSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "block.gt6ce.casing_machine_quadruple": {
+      "english": "Reinforced %s Machine Casing",
+      "source_key": "oredict.casingMachineQuadrupleIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.casingMachineQuadrupleSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "block.gt6ce.crate_gt64_dust": {
+      "english": "Crate of %s Dust",
+      "source_key": "oredict.crateGt64DustIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.crateGt64DustSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "block.gt6ce.crate_gt64_ingot": {
+      "english": "Crate of %s Ingot",
+      "source_key": "oredict.crateGt64IngotIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.crateGt64IngotSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "block.gt6ce.crate_gt64_plate": {
+      "english": "Crate of %s Plate",
+      "source_key": "oredict.crateGt64PlateIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.crateGt64PlateSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "block.gt6ce.crate_gt64_raw": {
+      "english": "Crate of %s Ore",
+      "source_key": "oredict.crateGt64RawIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.crateGt64RawSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "block.gt6ce.crate_gt_dust": {
+      "english": "Partial Crate of %s Dust",
+      "source_key": "oredict.crateGt64DustIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.crateGt64DustSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "block.gt6ce.crate_gt_ingot": {
+      "english": "Partial Crate of %s Ingot",
+      "source_key": "oredict.crateGt64IngotIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.crateGt64IngotSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "block.gt6ce.crate_gt_plate": {
+      "english": "Partial Crate of %s Plate",
+      "source_key": "oredict.crateGt64PlateIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.crateGt64PlateSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "block.gt6ce.crate_gt_raw": {
+      "english": "Partial Crate of %s Ore",
+      "source_key": "oredict.crateGt64RawIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.crateGt64RawSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.arrow_gt_plastic": {
+      "english": "Light %s Arrow",
+      "source_key": "oredict.arrowGtPlasticIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.arrowGtPlasticSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.arrow_gt_wood": {
+      "english": "%s Arrow",
+      "source_key": "oredict.arrowGtWoodIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.arrowGtWoodSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.billet": {
+      "english": "%s Billet",
+      "source_key": "oredict.billetIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.billetSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.bullet_gt_large": {
+      "english": "Large %s Bullet",
+      "source_key": "oredict.bulletGtLargeIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.bulletGtLargeSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.bullet_gt_medium": {
+      "english": "Medium %s Bullet",
+      "source_key": "oredict.bulletGtMediumIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.bulletGtMediumSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.bullet_gt_small": {
+      "english": "Small %s Bullet",
+      "source_key": "oredict.bulletGtSmallIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.bulletGtSmallSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.chain": {
+      "english": "%s Chain",
+      "source_key": "oredict.chainIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.chainSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.chunk_gt": {
+      "english": "%s Chunk",
+      "source_key": "oredict.chunkGtIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.chunkGtSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.dust_div72": {
+      "english": "1/72nd of a Pile of %s Dust",
+      "source_key": "oredict.dustDiv72Iron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.dustDiv72Steel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.dust_small": {
+      "english": "Small Pile of %s Dust",
+      "source_key": "oredict.dustSmallIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.dustSmallSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.dust_tiny": {
+      "english": "Tiny Pile of %s Dust",
+      "source_key": "oredict.dustTinyIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.dustTinySteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.gear_gt_small": {
+      "english": "Small %s Gear",
+      "source_key": "oredict.gearGtSmallIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.gearGtSmallSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.glasstube": {
+      "english": "%s Glass Tube",
+      "source_key": "oredict.chemtubeIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.chemtubeSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.ingot_double": {
+      "english": "Double %s Ingot",
+      "source_key": "oredict.ingotDoubleIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.ingotDoubleSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.ingot_quadruple": {
+      "english": "Quadruple %s Ingot",
+      "source_key": "oredict.ingotQuadrupleIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.ingotQuadrupleSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.ingot_quintuple": {
+      "english": "Quintuple %s Ingot",
+      "source_key": "oredict.ingotQuintupleIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.ingotQuintupleSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.ingot_triple": {
+      "english": "Triple %s Ingot",
+      "source_key": "oredict.ingotTripleIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.ingotTripleSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.item_casing": {
+      "english": "%s Item Casing",
+      "source_key": "oredict.casingSmallIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.casingSmallSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.minecart_wheels": {
+      "english": "%s Cart Wheels",
+      "source_key": "oredict.minecartWheelsIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.minecartWheelsSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.ore_raw": {
+      "english": "Raw %s Ore",
+      "source_key": "oredict.oreRawIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.oreRawSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.plate_curved": {
+      "english": "Curved %s Plate",
+      "source_key": "oredict.plateCurvedIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.plateCurvedSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.plate_dense": {
+      "english": "Dense %s Plate",
+      "source_key": "oredict.plateDenseIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.plateDenseSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.plate_double": {
+      "english": "Double %s Plate",
+      "source_key": "oredict.plateDoubleIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.plateDoubleSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.plate_quadruple": {
+      "english": "Quadruple %s Plate",
+      "source_key": "oredict.plateQuadrupleIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.plateQuadrupleSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.plate_quintuple": {
+      "english": "Quintuple %s Plate",
+      "source_key": "oredict.plateQuintupleIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.plateQuintupleSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.plate_tiny": {
+      "english": "Tiny %s Plate",
+      "source_key": "oredict.plateTinyIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.plateTinySteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.plate_triple": {
+      "english": "Triple %s Plate",
+      "source_key": "oredict.plateTripleIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.plateTripleSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.rail_gt": {
+      "english": "%s Rail",
+      "source_key": "oredict.railGtIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.railGtSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.rock_gt": {
+      "english": "%s bearing Rock",
+      "source_key": "oredict.rockGtIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.rockGtSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.spring_small": {
+      "english": "Small %s Spring",
+      "source_key": "oredict.springSmallIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.springSmallSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.stick_long": {
+      "english": "Long %s Rod",
+      "source_key": "oredict.stickLongIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.stickLongSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_arrow": {
+      "english": "%s Arrow Head",
+      "source_key": "oredict.toolHeadArrowIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadArrowSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_axe": {
+      "english": "%s Axe Head",
+      "source_key": "oredict.toolHeadAxeIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadAxeSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_axe_double": {
+      "english": "%s Double Axe Head",
+      "source_key": "oredict.toolHeadAxeDoubleIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadAxeDoubleSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_builderwand": {
+      "english": "%s Builder's Wand Cap",
+      "source_key": "oredict.toolHeadBuilderwandIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadBuilderwandSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_buzz_saw": {
+      "english": "%s Buzzsaw Blade",
+      "source_key": "oredict.toolHeadBuzzSawIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadBuzzSawSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_chainsaw": {
+      "english": "%s Chainsaw Tip",
+      "source_key": "oredict.toolHeadChainsawIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadChainsawSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_chisel": {
+      "english": "%s Chisel Head",
+      "source_key": "oredict.toolHeadChiselIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadChiselSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_construction_pickaxe": {
+      "english": "%s Construction Pickaxe Head",
+      "source_key": "oredict.toolHeadConstructionPickaxeIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadConstructionPickaxeSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_drill": {
+      "english": "%s Drill Tip",
+      "source_key": "oredict.toolHeadDrillIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadDrillSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_file": {
+      "english": "%s File Head",
+      "source_key": "oredict.toolHeadFileIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadFileSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_hammer": {
+      "english": "%s Hammer Head",
+      "source_key": "oredict.toolHeadHammerIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadHammerSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_hoe": {
+      "english": "%s Hoe Head",
+      "source_key": "oredict.toolHeadHoeIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadHoeSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_pickaxe": {
+      "english": "%s Pickaxe Head",
+      "source_key": "oredict.toolHeadPickaxeIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadPickaxeSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_plow": {
+      "english": "%s Plow Head",
+      "source_key": "oredict.toolHeadPlowIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadPlowSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_raw_arrow": {
+      "english": "Raw %s Arrow Head",
+      "source_key": "oredict.toolHeadRawArrowIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadRawArrowSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_raw_axe": {
+      "english": "Raw %s Axe Head",
+      "source_key": "oredict.toolHeadRawAxeIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadRawAxeSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_raw_axe_double": {
+      "english": "Raw %s Double Axe Head",
+      "source_key": "oredict.toolHeadRawAxeDoubleIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadRawAxeDoubleSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_raw_chisel": {
+      "english": "Raw %s Chisel Head",
+      "source_key": "oredict.toolHeadRawChiselIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadRawChiselSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_raw_hoe": {
+      "english": "Raw %s Hoe Head",
+      "source_key": "oredict.toolHeadRawHoeIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadRawHoeSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_raw_pickaxe": {
+      "english": "Raw %s Pickaxe Head",
+      "source_key": "oredict.toolHeadRawPickaxeIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadRawPickaxeSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_raw_plow": {
+      "english": "Raw %s Plow Head",
+      "source_key": "oredict.toolHeadRawPlowIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadRawPlowSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_raw_saw": {
+      "english": "Raw %s Saw Blade",
+      "source_key": "oredict.toolHeadRawSawIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadRawSawSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_raw_sense": {
+      "english": "Raw %s Sense Blade",
+      "source_key": "oredict.toolHeadRawSenseIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadRawSenseSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_raw_shovel": {
+      "english": "Raw %s Shovel Head",
+      "source_key": "oredict.toolHeadRawShovelIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadRawShovelSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_raw_spade": {
+      "english": "Raw %s Spade Head",
+      "source_key": "oredict.toolHeadRawSpadeIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadRawSpadeSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_raw_sword": {
+      "english": "Raw %s Sword Blade",
+      "source_key": "oredict.toolHeadRawSwordIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadRawSwordSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_raw_universal_spade": {
+      "english": "Raw %s Universal Spade Head",
+      "source_key": "oredict.toolHeadRawUniversalSpadeIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadRawUniversalSpadeSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_saw": {
+      "english": "%s Saw Blade",
+      "source_key": "oredict.toolHeadSawIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadSawSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_screwdriver": {
+      "english": "%s Screwdriver Tip",
+      "source_key": "oredict.toolHeadScrewdriverIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadScrewdriverSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_sense": {
+      "english": "%s Sense Blade",
+      "source_key": "oredict.toolHeadSenseIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadSenseSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_shovel": {
+      "english": "%s Shovel Head",
+      "source_key": "oredict.toolHeadShovelIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadShovelSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_spade": {
+      "english": "%s Spade Head",
+      "source_key": "oredict.toolHeadSpadeIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadSpadeSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_sword": {
+      "english": "%s Sword Blade",
+      "source_key": "oredict.toolHeadSwordIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadSwordSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_universal_spade": {
+      "english": "%s Universal Spade Head",
+      "source_key": "oredict.toolHeadUniversalSpadeIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadUniversalSpadeSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.tool_head_wrench": {
+      "english": "%s Wrench Tip",
+      "source_key": "oredict.toolHeadWrenchIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.toolHeadWrenchSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    },
+    "item.gt6ce.wire_fine": {
+      "english": "Fine %s Wire",
+      "source_key": "oredict.wireFineIron",
+      "material_key": "gt.material.Iron",
+      "cross_check_source_key": "oredict.wireFineSteel",
+      "cross_check_material_key": "gt.material.Steel"
+    }
+  }
+}

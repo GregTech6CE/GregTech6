@@ -16,6 +16,16 @@ import java.util.Locale;
 
 /** Shared tooltip formatting utilities for GT6 machines. */
 public final class TooltipHelper {
+    /** Source GT6 phrases become translatable while keeping their numeric limits. */
+    public static net.minecraft.network.chat.MutableComponent parallel(int limit) {
+        return limit > 1 ? Component.translatable("tooltip.gt6ce.ui.parallel", limit) : Component.empty();
+    }
+
+    public static net.minecraft.network.chat.MutableComponent range(long min, long max) {
+        return min <= 1 ? Component.translatable("tooltip.gt6ce.ui.up_to", max)
+                : Component.translatable("tooltip.gt6ce.ui.range", min, max);
+    }
+
     private TooltipHelper() {}
 
 //? if >=1.21.1 {
@@ -52,7 +62,8 @@ public final class TooltipHelper {
 
     /** Returns "(auto)" if the auto-direction matches, "(no auto)" otherwise. */
     public static String autoLabel(int autoDir, int dir) {
-        return FaceConfig.autoValid(autoDir) && autoDir == dir ? "(auto)" : "(no auto)";
+        return Component.translatable(FaceConfig.autoValid(autoDir) && autoDir == dir
+                ? "tooltip.gt6ce.ui.auto" : "tooltip.gt6ce.ui.no_auto").getString().strip();
     }
 
     // ── Energy formatting ──────────────────────────────────────────────────
@@ -64,7 +75,7 @@ public final class TooltipHelper {
                         .withStyle(ChatFormatting.GREEN))
                 .append(Component.literal(formatLong(nominal)).withStyle(ChatFormatting.WHITE))
                 .append(Component.literal(" " + unit + "/t").withStyle(ChatFormatting.GREEN))
-                .append(Component.literal(" (" + formatLong(min) + " to " + formatLong(max) + ", " + dirLabel + ")")
+                .append(Component.literal(" (").append(Component.translatable("tooltip.gt6ce.ui.range", formatLong(min), formatLong(max))).append(", " + dirLabel + ")")
                         .withStyle(ChatFormatting.WHITE));
     }
 

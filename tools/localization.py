@@ -123,11 +123,23 @@ def check_english(repo, english, chinese, aliases, source, *, pinned=None):
         raise ValueError('English differs from original source declarations: ' + ', '.join(changed[:12]))
     changed_bindings = []
     english_only = 0
+    tooltip_project = load_tooltip_project(repo)
+    form_templates = material_form_templates(english, source, aliases, repo)
     for key, row in pinned.items():
         if row.get('chinese_source_missing'):
             copied = adopted[key]['value'] if key in adopted and adopted[key]['english'] == english.get(key) else None
             if copied is not None:
                 if chinese.get(key) != copied:
+                    changed_bindings.append(key)
+            elif key in form_templates:
+                if (row['chinese_source_missing'] is not True or key in aliases or key in source
+                        or row['source_key'] in source or chinese.get(key) != form_templates[key]):
+                    changed_bindings.append(key)
+            elif key in tooltip_project:
+                project = tooltip_project[key]
+                if (row['chinese_source_missing'] is not True or key in aliases or key in source
+                        or row['source_key'] in source or english.get(key) != project['english']
+                        or chinese.get(key) != project['value']):
                     changed_bindings.append(key)
             elif (row['chinese_source_missing'] is not True or key in aliases or key in source
                     or row['source_key'] in source or chinese.get(key) != english.get(key)):
@@ -371,6 +383,61 @@ def load_ore_host_project(repo=ROOT):
     return rows
 
 
+def material_form_templates(english, source, aliases, repo=ROOT):
+    """Derive missing generic form names from two matching original item names."""
+    path = repo / CONFIG_PATH / 'form_templates.json'
+    if not path.exists():
+        return {}
+    result = {}
+    for key, row in read_json(path)['values'].items():
+        if not key.startswith(('item.gt6ce.', 'block.gt6ce.')) or key in source or key in aliases:
+            raise ValueError('Material form template overrides original identity: ' + key)
+        if english.get(key) != row['english'] or row['english'].count('%s') != 1:
+            raise ValueError('Material form English template drifted: ' + key)
+        group = aliases.get('itemGroup.gt6ce.' + key.split('.', 2)[2], '')
+        if not group.startswith('itemGroup.'):
+            raise ValueError('Material form lacks original prefix identity: ' + key)
+        patterns = []
+        for prefix in ('', 'cross_check_'):
+            material_key = row[prefix + 'material_key']
+            source_key = row[prefix + 'source_key']
+            if (not material_key.startswith('gt.material.') or
+                    source_key != 'oredict.' + group.removeprefix('itemGroup.') + material_key.removeprefix('gt.material.')):
+                raise ValueError('Material form source identity differs: ' + key)
+            name, material = source[source_key], source[material_key]
+            if not material or name.count(material) != 1 or '%' in name:
+                raise ValueError('Material form cannot isolate material name: ' + key)
+            patterns.append(name.replace(material, '%s'))
+        if patterns[0] != patterns[1]:
+            raise ValueError('Material form source samples disagree: ' + key)
+        result[key] = patterns[0]
+    return result
+
+
+def load_tooltip_project(repo=ROOT):
+    """Reviewed UI gaps requested on 2026-10-26, including upstream issue #118.
+
+    These are project translations, never asserted to be GregTech.lang copies.
+    Original Chinese bindings always take precedence and may not be overridden.
+    """
+    path = repo / CONFIG_PATH / 'tooltip_project.json'
+    if not path.exists():
+        return {}
+    rows = read_json(path)['values']
+    prefixes = ('tooltip.gt6ce.', 'gt.tooltip.', 'gt6ce.fluid_display.',
+                'gt6ce.filter.', 'gt6ce.zpm.', 'message.gt6ce.', 'gui.gt6ce.', 'gt.jei.fluid.')
+    for key, row in rows.items():
+        food = key.startswith('item.gt6ce.') and key.endswith('.food')
+        if not (key.startswith(prefixes) or food or key == 'gt6ce.jei.catalyst'):
+            raise ValueError('Project tooltip translation outside reviewed UI scope: ' + key)
+        if not isinstance(row, dict) or any(not isinstance(row.get(field), str) or not row[field]
+                                           for field in ('english', 'value')):
+            raise ValueError('Incomplete project tooltip translation: ' + key)
+        if format_arguments(row['english']) != format_arguments(row['value']):
+            raise ValueError('Project tooltip format arguments differ: ' + key)
+    return rows
+
+
 def expected_chinese(english, source, aliases, *, repo=ROOT):
     for label, mapping in [('English', english), ('source', source), ('aliases', aliases)]:
         if not isinstance(mapping, dict) or any(not isinstance(k, str) or not isinstance(v, str)
@@ -388,6 +455,7 @@ def expected_chinese(english, source, aliases, *, repo=ROOT):
             raise ValueError(f'Alias must not override an original key: {native}')
         result[native] = source[original]
     result.update(stone_rock_heading(english, source))
+    result.update(material_form_templates(english, source, aliases, repo))
     for key, row in load_adopted(repo).items():
         if key not in english:
             continue
@@ -432,6 +500,13 @@ def expected_chinese(english, source, aliases, *, repo=ROOT):
         if (key in aliases or key in source or key in adopted_keys or key in jade_keys
                 or key in instrument_keys or key in recipe_keys or key in load_ore_host_project(repo)):
             raise ValueError('Project config translation overrides an existing binding: ' + key)
+        result[key] = row['value']
+    protected = set(source) | set(aliases) | set(adopted_keys) | set(jade_keys) | set(instrument_keys) | set(recipe_keys) | set(load_ore_host_project(repo)) | set(load_config_project(repo))
+    for key, row in load_tooltip_project(repo).items():
+        if english.get(key) != row['english']:
+            raise ValueError('Project tooltip English drifted or key missing: ' + key)
+        if key in protected:
+            raise ValueError('Project tooltip translation overrides existing source/UI binding: ' + key)
         result[key] = row['value']
     if any(k.startswith('emi.group.gt6ce.') for k in english):
         from integration.remi_group_titles import headings
@@ -478,13 +553,16 @@ def synchronize(repo=ROOT, *, write=False, external=None):
         raise ValueError('Adopted key is not in English: ' + ', '.join(missing_adopted[:8]))
     rock_heading = stone_rock_heading(english, source)
     fallback = sorted(english.keys() - source.keys() - aliases.keys() - derived_titles.keys()
-                      - rock_heading.keys() - adopted.keys() - load_jade_project(repo).keys()
+                      - rock_heading.keys() - material_form_templates(english, source, aliases, repo).keys() - adopted.keys() - load_jade_project(repo).keys()
                       - load_instrument_project(repo).keys() - load_recipe_project(repo).keys()
-                      - load_ore_host_project(repo).keys() - load_config_project(repo).keys())
+                      - load_ore_host_project(repo).keys() - load_config_project(repo).keys()
+                      - load_tooltip_project(repo).keys())
     return {'source_sha256': meta['sha256'], 'source_keys': len(source), 'english': english_report,
             'native_aliases': len(aliases), 'chinese_keys': len(expected), 'derived_emi_headings': len(derived_titles),
-            'derived_stone_rock_templates': len(rock_heading), 'adopted_cruciblecraft_copies': len(adopted),
+            'derived_stone_rock_templates': len(rock_heading),
+            'derived_material_form_templates': len(material_form_templates(english, source, aliases, repo)), 'adopted_cruciblecraft_copies': len(adopted),
             'project_jade_translations': len(load_jade_project(repo)),
+            'project_tooltip_translations': len(load_tooltip_project(repo)),
             'project_instrument_translations': len(load_instrument_project(repo)),
             'project_recipe_translations': len(load_recipe_project(repo)),
             'project_ore_host_translations': len(load_ore_host_project(repo)),

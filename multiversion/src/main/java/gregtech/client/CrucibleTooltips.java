@@ -34,8 +34,8 @@ public final class CrucibleTooltips {
                 .append(Component.translatable("gt.td.short.energy.heat")).append(" ")
                 .append(Component.translatable("gt.lang.energy.convert.to")).append(" +1 K ")
                 .append(Component.translatable("gt.lang.energy.convert.per"))
-                .append(" " + CrucibleSpec.KG_PER_ENERGY + "kg (at least " + CrucibleSpec.MIN_HU_PER_TICK
-                        + " Units per Tick required!)").withStyle(ChatFormatting.AQUA));
+                .append(" " + CrucibleSpec.KG_PER_ENERGY + "kg ")
+                .append(Component.translatable("tooltip.gt6ce.ui.crucible_minimum", CrucibleSpec.MIN_HU_PER_TICK)).withStyle(ChatFormatting.AQUA));
         tooltip.add(Component.translatable("gt.lang.thermal.mass")
                 .append(" " + spec.smeltingThermalMassKg() + " kg").withStyle(ChatFormatting.YELLOW));
         tooltip.add(Component.translatable("gt.lang.hazard.meltdown")

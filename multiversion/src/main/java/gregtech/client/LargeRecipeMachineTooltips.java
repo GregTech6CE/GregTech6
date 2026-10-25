@@ -17,7 +17,7 @@ public final class LargeRecipeMachineTooltips {
                 : Component.literal(spec.recipeMap().mNameLocal);
         add(lines,"gt.lang.recipes",ChatFormatting.AQUA).append(": ")
                 .append(recipeName.withStyle(ChatFormatting.WHITE))
-                .append(Component.literal(spec.parallelLimit()>1?" (up to "+spec.parallelLimit()+"x processed per run)":"").withStyle(ChatFormatting.WHITE));
+                .append(TooltipHelper.parallel(spec.parallelLimit()).withStyle(ChatFormatting.WHITE));
         boolean timed=spec.energyType().equals("TU");
         boolean cheap=spec.cheapOverclocking();
         if(cheap)add(lines,"gt.lang.cheap.overclocking",ChatFormatting.YELLOW);
@@ -31,7 +31,7 @@ public final class LargeRecipeMachineTooltips {
             add(lines,"gt.lang.energy.input",ChatFormatting.GREEN).append(": ")
                     .append(Component.literal(spec.energyIn()+" ").withStyle(ChatFormatting.WHITE))
                     .append(Component.translatable(unit).withStyle(color))
-                    .append(Component.literal("/t ("+(spec.energyInMin()<=1?"up to ":spec.energyInMin()+" to ")+spec.energyInMax()+")").withStyle(ChatFormatting.WHITE));
+                    .append(Component.literal("/t (").append(TooltipHelper.range(spec.energyInMin(), spec.energyInMax())).append(")").withStyle(ChatFormatting.WHITE));
         }
         var map=spec.recipeMap();
         if(map.mInputItemsCount>0)io(lines,"gt.lang.item.input",false,null,ChatFormatting.GREEN);
@@ -50,7 +50,7 @@ public final class LargeRecipeMachineTooltips {
         // A rear cell faces the machine, so its receiver is FRONT. The line names the rear of the structure.
         String face=output?(target!=null&&target.back()!=0?"gt.lang.face.back":"gt.lang.face.bottom"):"gt.lang.face.any";
         line.append(Component.translatable(face).withStyle(ChatFormatting.WHITE))
-                .append(Component.literal(output?" (auto, otherwise any)":" (no auto)").withStyle(ChatFormatting.WHITE));
+                .append(Component.translatable(output?"tooltip.gt6ce.ui.auto_any":"tooltip.gt6ce.ui.no_auto").withStyle(ChatFormatting.WHITE));
     }
     private static MutableComponent add(List<Component> lines,String key,ChatFormatting color) {
         var line=Component.translatable(key).withStyle(color);lines.add(line);return line;

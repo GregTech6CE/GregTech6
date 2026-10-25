@@ -50,6 +50,16 @@ public class FluidSpringBlock extends Block implements EntityBlock {
     }
 
     @Override
+//? if >=1.21.1 {
+    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
+*///?} else {
+    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level,
+//?}
+            List<net.minecraft.network.chat.Component> lines, net.minecraft.world.item.TooltipFlag flag) {
+        lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.ui.spring"));
+    }
+
+    @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new FluidSpringBlockEntity(pos, state);
     }

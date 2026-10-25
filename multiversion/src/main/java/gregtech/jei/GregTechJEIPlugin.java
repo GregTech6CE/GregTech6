@@ -33,10 +33,19 @@ import java.util.Map;
 @JeiPlugin
 public final class GregTechJEIPlugin implements IModPlugin {
     @Override public void onRuntimeAvailable(mezz.jei.api.runtime.IJeiRuntime runtime) {
+        gregtech.client.gui.RecipeViewerNavigation.registerJei(map -> {
+            if (!categories.containsKey(map)) return false;
+            runtime.getRecipesGui().showTypes(java.util.List.of(RecipeMapCategory.recipeType(map)));
+            return true;
+        });
         var legacy = net.minecraft.core.registries.BuiltInRegistries.ITEM.stream()
                 .filter(item -> item instanceof gregtech.content.block.misc.LegacyConstructionBlockItem)
                 .map(ItemStack::new).toList();
         runtime.getIngredientManager().removeIngredientsAtRuntime(mezz.jei.api.constants.VanillaTypes.ITEM_STACK, legacy);
+    }
+
+    @Override public void onRuntimeUnavailable() {
+        gregtech.client.gui.RecipeViewerNavigation.clearJei();
     }
 
     @Override

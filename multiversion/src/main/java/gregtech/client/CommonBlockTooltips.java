@@ -31,7 +31,7 @@ public final class CommonBlockTooltips {
     private static final String FLAMMABLE = "gt.lang.flammable";
     private static final String UNCOVER = "gt.lang.use.crowbar.to.uncover";
     private static final String ENCHANT = "gt.lang.enchantment.bonus";
-    private static final Component HAND_HARVEST = Component.literal("Hand-Harvestable").withStyle(ChatFormatting.DARK_GRAY);
+    private static final Component HAND_HARVEST = Component.translatable("tooltip.gt6ce.ui.hand_harvest").withStyle(ChatFormatting.DARK_GRAY);
     private static final Set<String> OLD_HARVEST = Set.of(HARVEST, "tooltip.gt6ce.ore.hand_harvest_preferred",
             "tooltip.gt6ce.machine.harvest_wrench", "tooltip.gt6ce.machine.harvest_wrench_short",
             "tooltip.gt6ce.machine.harvest_axe", "tooltip.gt6ce.machine.harvest_shears",
@@ -87,14 +87,13 @@ public final class CommonBlockTooltips {
     private static Component harvestLine(BlockHarvestPolicy.Tool tool, boolean hand, int level) {
         String toolKey = OriginalBlockTooltipRules.harvestToolKey(tool.name());
         if (hand) {
-            // LH hardcodes these two English phrases; the source patch has no translation keys.
-            MutableComponent row = HAND_HARVEST.copy();
-            if (toolKey != null) row.append(", but ").append(Component.translatable(toolKey).withStyle(ChatFormatting.WHITE))
-                    .append(Component.literal(" is faster").withStyle(ChatFormatting.DARK_GRAY));
-            return row;
+            return toolKey == null ? HAND_HARVEST.copy()
+                    : Component.translatable("tooltip.gt6ce.ore.hand_harvest_preferred",
+                            Component.translatable(toolKey).withStyle(ChatFormatting.WHITE))
+                            .withStyle(ChatFormatting.DARK_GRAY);
         }
         MutableComponent row = Component.translatable(HARVEST).withStyle(ChatFormatting.DARK_GRAY)
-                .append(": ").append(toolKey == null ? Component.literal("Unknown").withStyle(ChatFormatting.WHITE)
+                .append(": ").append(toolKey == null ? Component.translatable("tooltip.gt6ce.ui.unknown").withStyle(ChatFormatting.WHITE)
                         : Component.translatable(toolKey).withStyle(ChatFormatting.WHITE));
         if (toolKey != null && OriginalBlockTooltipRules.showHarvestLevel(level)) {
             var tier = Component.literal(" (" + level).withStyle(ChatFormatting.WHITE);

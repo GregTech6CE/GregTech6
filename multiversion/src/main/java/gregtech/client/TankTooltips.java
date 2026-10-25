@@ -61,7 +61,7 @@ public final class TankTooltips {
                             ? "Gaseous" : "Liquid") + "); Max: " + formatLargeNumber(tank.capacity()) + " L)"))
                     .withStyle(ChatFormatting.AQUA));
         }
-        if (tank.getAmount() > 0 && sealed) tooltip.add(Component.literal("Sealed (" + sealedTime + ")")
+        if (tank.getAmount() > 0 && sealed) tooltip.add(Component.translatable("tooltip.gt6ce.ui.sealed_time", sealedTime)
                 .withStyle(ChatFormatting.AQUA));
 
         // TileEntityBase08Barrel includes these for wooden barrels as well.
@@ -218,7 +218,7 @@ public final class TankTooltips {
                             .withStyle(ChatFormatting.GRAY))
                     .append(Component.translatable(toolKey)
                             .withStyle(ChatFormatting.WHITE))
-                    .append(Component.literal(" (" + mat.getToolQuality() + ", " + mat.getLocalName() + ")")
+                    .append(Component.literal(" (" + mat.getToolQuality() + ", ").append(gregtech.internal.material.MaterialPresentation.name(mat)).append(")")
                             .withStyle(ChatFormatting.GRAY)));
         } else {
             tooltip.add(Component.empty()
@@ -293,21 +293,19 @@ public final class TankTooltips {
 
         // Soft hammer state — GT6 calls this "Sealed" and uses it for barrel fermentation.
         if (!someState) {
-            player.sendSystemMessage(Component.literal("Normal")
+            player.sendSystemMessage(Component.translatable("tooltip.gt6ce.ui.normal")
                     .withStyle(ChatFormatting.GRAY));
         } else if (tank.getMaxSealedTime() > 0) {
-            player.sendSystemMessage(Component.literal("Sealed (" + tank.getSealedTime() + " / "
-                            + tank.getMaxSealedTime() + ")")
+            player.sendSystemMessage(Component.translatable("tooltip.gt6ce.ui.sealed_progress", tank.getSealedTime(), tank.getMaxSealedTime())
                     .withStyle(ChatFormatting.GREEN));
         } else {
-            player.sendSystemMessage(Component.literal("Sealed")
+            player.sendSystemMessage(Component.translatable("tooltip.gt6ce.ui.sealed")
                     .withStyle(ChatFormatting.GREEN));
         }
         if (someState && !fluid.isEmpty()) {
             var output = tank.getFermentationOutput();
-            player.sendSystemMessage(Component.literal(output.isEmpty()
-                            ? "Not fermenting"
-                            : "Fermenting into " + output.getDisplayName().getString())
+            player.sendSystemMessage((output.isEmpty() ? Component.translatable("tooltip.gt6ce.ui.not_fermenting")
+                            : Component.translatable("tooltip.gt6ce.ui.fermenting", output.getDisplayName()))
                     .withStyle(output.isEmpty() ? ChatFormatting.GRAY : ChatFormatting.AQUA));
         }
 
@@ -323,10 +321,10 @@ public final class TankTooltips {
                             .withStyle(ChatFormatting.AQUA)));
         } else {
             player.sendSystemMessage(Component.empty()
-                    .append(Component.literal(formatLargeNumber(fluid.getAmount()) + " L of ")
+                    .append(Component.translatable("tooltip.gt6ce.ui.liters_of", formatLargeNumber(fluid.getAmount()))
                             .withStyle(ChatFormatting.WHITE))
                     .append(fluid.getDisplayName())
-                    .append(Component.literal("; Max: " + formatLargeNumber(spec.capacity()) + " L")
+                    .append(Component.translatable("tooltip.gt6ce.ui.max_fluid", formatLargeNumber(spec.capacity()))
                             .withStyle(ChatFormatting.AQUA)));
         }
     }

@@ -45,7 +45,7 @@ public final class FunctionalBlockTooltips {
             add(lines, key, ChatFormatting.WHITE);
         // The original addToolTips uses these two literal side descriptions.
         appendBoilerStats(OriginalFunctionalTooltipData.largeBoiler(originalId, savedEfficiency),
-                Component.literal("Heat Transmitters"), Component.literal("Pipe Holes"), lines);
+                Component.translatable("tooltip.gt6ce.ui.heat_transmitters"), Component.translatable("tooltip.gt6ce.ui.pipe_holes"), lines);
         add(lines, "gt.lang.requirement.water.pure", ChatFormatting.GOLD);
         appendBoilerHazards(lines);
         add(lines, "gt.lang.use.builder.wand.to.ease.building", ChatFormatting.DARK_GRAY);

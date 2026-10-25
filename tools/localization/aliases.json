@@ -13286,6 +13286,14 @@
   "tooltip.gt6ce.tool_hint.spade": "gt.metatool.01.68.tooltip",
   "tooltip.gt6ce.tool_hint.wrench": "gt.metatool.01.16.tooltip",
   "tooltip.gt6ce.tool_penetrate_armor": "gt.lang.armorpenetrating",
+  "tooltip.gt6ce.ui.rod.fuel_type.am_241": "gt.material.Americium241",
+  "tooltip.gt6ce.ui.rod.fuel_type.co_60": "gt.material.Cobalt60",
+  "tooltip.gt6ce.ui.rod.fuel_type.naquadah": "gt.material.Naquadah",
+  "tooltip.gt6ce.ui.rod.fuel_type.none": "gt.lang.face.none",
+  "tooltip.gt6ce.ui.rod.fuel_type.pu_239": "gt.material.Plutonium239",
+  "tooltip.gt6ce.ui.rod.fuel_type.th_232": "gt.material.Thorium232",
+  "tooltip.gt6ce.ui.rod.fuel_type.u_235": "gt.material.Uranium235",
+  "tooltip.gt6ce.ui.rod.fuel_type.u_238": "gt.material.Uranium238",
   "tooltip.gt6ce.wire.contained_materials": "gt.lang.contained.materials",
   "tooltip.gt6ce.wire.damage_warning": "gt.lang.hazard.contact"
 }

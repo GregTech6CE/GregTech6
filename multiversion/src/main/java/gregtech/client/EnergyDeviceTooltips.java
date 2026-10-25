@@ -89,9 +89,7 @@ public final class EnergyDeviceTooltips {
                 .append(Component.literal("/t").withStyle(ChatFormatting.WHITE));
         // LH omits both the range and face on fixed packets; the converter stats always include them.
         if (alwaysShowRange || stats.minimum() != stats.recommended() || stats.maximum() != stats.recommended()) {
-            line.append(Component.literal(stats.minimum() <= 1 ? " (up to " : " (" + stats.minimum() + " to ")
-                    .withStyle(ChatFormatting.WHITE))
-                    .append(Component.literal(Long.toString(stats.maximum())).withStyle(ChatFormatting.WHITE))
+            line.append(Component.literal(" (").append(TooltipHelper.range(stats.minimum(), stats.maximum())).withStyle(ChatFormatting.WHITE))
                     .append(Component.literal(", ").withStyle(ChatFormatting.WHITE))
                     .append(Component.translatable(faceKey).withStyle(ChatFormatting.WHITE))
                     .append(Component.literal(")").withStyle(ChatFormatting.WHITE));

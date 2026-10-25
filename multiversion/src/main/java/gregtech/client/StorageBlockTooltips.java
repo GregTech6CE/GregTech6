@@ -64,9 +64,9 @@ public final class StorageBlockTooltips {
         if (table.isEmpty()) table = defaultTable;
         if (table == null || table.isEmpty()) return;
         String key = OriginalStorageTooltipData.lootKey(table);
-        lines.add(Component.literal("Contains Loot of ").withStyle(ChatFormatting.AQUA)
-                .append((key == null ? Component.literal(table) : Component.translatable(key))
-                        .withStyle(ChatFormatting.WHITE)));
+        lines.add(Component.translatable("tooltip.gt6ce.ui.loot",
+                (key == null ? Component.literal(table) : Component.translatable(key)).withStyle(ChatFormatting.WHITE))
+                .withStyle(ChatFormatting.AQUA));
     }
     public static void tools(List<Component> lines, List<String> keys) {
         for (var key : keys) add(lines, key, ChatFormatting.DARK_GRAY);

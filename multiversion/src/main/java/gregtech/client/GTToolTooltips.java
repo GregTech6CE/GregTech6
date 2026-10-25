@@ -48,7 +48,7 @@ public final class GTToolTooltips {
         int level = statsType.baseQuality() + head.getToolQuality();
         tooltip.add(Component.empty()
                 .append(MaterialPresentation.name(head))
-                .append(Component.literal(" Level: " + level).withStyle(ChatFormatting.YELLOW)));
+                .append(Component.translatable("tooltip.gt6ce.ui.level", level).withStyle(ChatFormatting.YELLOW)));
 
         float combat = statsType.baseDamage() + head.getToolQuality();
         float hearts = (combat + 1.0F) / 2.0F;
