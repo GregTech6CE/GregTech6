@@ -244,18 +244,13 @@ public class SensorBlockEntity extends BlockEntity {
                     }
                 }
                 case PROGRESS -> {
-                    if (target instanceof com.gregtech.gregtech.api.sensor.ProgressSensorSource progress) {
-                        newValue = progress.progressValue(facing.ordinal());
-                        maximum = progress.progressMaximum(facing.ordinal());
+                    var progress = com.gregtech.gregtech.api.sensor.ProgressSources.find(target, facing);
+                    if (progress != null) {
+                        newValue = progress.value();
+                        maximum = progress.maximum();
                     } else if (target instanceof net.minecraft.world.level.block.entity.SpawnerBlockEntity spawner) {
                         newValue = ((com.gregtech.gregtech.mixin.BaseSpawnerAccessor)spawner.getSpawner()).gregtech$spawnDelay();
                         maximum = Integer.MAX_VALUE; // Original sensor binds Long.MAX_VALUE to a signed int.
-                    } else {
-                        var machine=com.gregtech.gregtech.api.machine.MachineControl.find(target,facing);
-                        if (machine!=null&&machine.available()&&machine.supportsProgress()) {
-                            newValue = machine.progress();
-                            maximum = machine.progressMax();
-                        }
                     }
                     newValue = Math.max(Integer.MIN_VALUE,Math.min(Integer.MAX_VALUE,newValue));
                     maximum = Math.max(Integer.MIN_VALUE,Math.min(Integer.MAX_VALUE,maximum));

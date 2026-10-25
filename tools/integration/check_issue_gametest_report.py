@@ -544,7 +544,51 @@ SENSOR_INTERFACE_CASE_NAMESPACES = {
 }
 FUNCTIONAL_CASES |= set(SENSOR_INTERFACE_CASE_NAMESPACES)
 
+UPSTREAM_EXTRA_CASE_NAMESPACES = {
+    'addonsensortests.addon_sensor_reads_signal': 'gregtech_sensor_source:test_empty',
+    'sensorsourcetests.heat_exchanger_builder_and_magnifier': 'gregtech_sensor_source:test_empty',
+    'sensorsourcetests.heat_exchanger_long_state_and_real_fuel': 'gregtech_sensor_source:test_empty',
+    'sensorsourcetests.heat_exchanger_tool_ports_and_fixed_front': 'gregtech_sensor_source:test_empty',
+    'sensorsourcetests.original_boiler_builder_and_diagnostics': 'gregtech_sensor_source:test_empty',
+    'sensorsourcetests.original_factories_input_and_pressure': 'gregtech_sensor_source:test_empty',
+    'sensorsourcetests.original_parts_delegate_sensor_measurements': 'gregtech_sensor_source:test_empty',
+    'sensorsourcetests.original_raw_progress_and_spawner': 'gregtech_sensor_source:test_empty',
+    'sensorsourcetests.thermometer_reads_temperature_source': 'gregtech_sensor_source:test_empty',
+    'structureincrementaltests.axialgeneratorfixedpatterntracksshellandverticalfacing': 'gt6ce_structure_incremental:test_empty',
+    'structureincrementaltests.boilerfixedpatterntrackswallsandair': 'gt6ce_structure_incremental:test_empty',
+    'structureincrementaltests.cruciblefixedpatterntracksshellairandvisual': 'gt6ce_structure_incremental:test_empty',
+    'structureincrementaltests.fuelturbinefixedpatternfollowsitslayout': 'gt6ce_structure_incremental:test_empty',
+    'structureincrementaltests.fusionfixedpatterntracksprocessorcountsandshelledits': 'gt6ce_structure_incremental:test_empty',
+    'structureincrementaltests.gasturbinefixedpatterntracksshelledits': 'gt6ce_structure_incremental:test_empty',
+    'structureincrementaltests.heatexchangerfixedpatterntracksitsshell': 'gt6ce_structure_incremental:test_empty',
+    'structureincrementaltests.implosionfixedpatterntracksairandshelledits': 'gt6ce_structure_incremental:test_empty',
+    'structureincrementaltests.vondagraaggfixedpatterntracksitsshell': 'gt6ce_structure_incremental:test_empty',
+    'structurespecialfamiliestests.drillfloormembershipandcyclecandidates': 'gt6ce_structure_incremental:test_empty',
+    'structurespecialfamiliestests.lightningrodfrontierandheight': 'gt6ce_structure_incremental:test_empty',
+    'structurespecialfamiliestests.logisticscpuboundariesandcounts': 'gt6ce_structure_incremental:test_empty',
+    'structurespecialfamiliestests.ovencoilsmixandrecover': 'gt6ce_structure_incremental:test_empty',
+    'structurespecialfamiliestests.tanksbothsizesandsixfacings': 'gt6ce_structure_incremental:test_empty',
+}
+FUNCTIONAL_CASES |= set(UPSTREAM_EXTRA_CASE_NAMESPACES)
+
+SENSOR_PROGRESS_CASE_NAMESPACES = {
+    'sensorprogressregressiontests.bulkstorageprogressusesfullnominalcapacity': 'gregtech_sensor_progress:test_empty',
+    'sensorprogressregressiontests.sealedbarrelprogressusesfermentationnotfill': 'gregtech_sensor_progress:test_empty',
+    'sensorprogressregressiontests.zpmprogressusesworkingbufferandpreservescontrols': 'gregtech_sensor_progress:test_empty',
+    'sensorprogressregressiontests.bulkweightreadsallstoreditemsevenwhenpacked': 'gregtech_sensor_progress:test_empty',
+    'sensorprogressregressiontests.fluidpipeprogresstracksactualoutgoingvolume': 'gregtech_sensor_progress:test_empty',
+    'sensorprogressregressiontests.electricwireprogressreportsamperesnotenergy': 'gregtech_sensor_progress:test_empty',
+    'sensorprogressregressiontests.axleprogressreportspowernotenergy': 'gregtech_sensor_progress:test_empty',
+    'sensorprogressregressiontests.progresscoverusessourcewithoutfakemachinecontrols': 'gregtech_sensor_progress:test_empty',
+    'sensorprogressregressiontests.extenderandbridgerelayprogresswithoriginalguards': 'gregtech_sensor_progress:test_empty',
+}
+FUNCTIONAL_CASES |= set(SENSOR_PROGRESS_CASE_NAMESPACES)
+
 def expected_namespace(identity):
+    if identity in SENSOR_PROGRESS_CASE_NAMESPACES:
+        return SENSOR_PROGRESS_CASE_NAMESPACES[identity]
+    if identity in UPSTREAM_EXTRA_CASE_NAMESPACES:
+        return UPSTREAM_EXTRA_CASE_NAMESPACES[identity]
     if identity in SENSOR_INTERFACE_CASE_NAMESPACES:
         return SENSOR_INTERFACE_CASE_NAMESPACES[identity]
     if identity in CASING_CRAFTING_CASE_NAMESPACES:
@@ -639,6 +683,14 @@ def check(path, platform='forge'):
                 continue
             if identity in SENSOR_INTERFACE_CASE_NAMESPACES:
                 if name == method and classname == SENSOR_INTERFACE_CASE_NAMESPACES[identity]:
+                    found.add(identity)
+                continue
+            if identity in UPSTREAM_EXTRA_CASE_NAMESPACES:
+                if name == method and classname == UPSTREAM_EXTRA_CASE_NAMESPACES[identity]:
+                    found.add(identity)
+                continue
+            if identity in SENSOR_PROGRESS_CASE_NAMESPACES:
+                if name == method and classname == SENSOR_PROGRESS_CASE_NAMESPACES[identity]:
                     found.add(identity)
                 continue
             if identity in TUNING_CASE_NAMESPACES:
