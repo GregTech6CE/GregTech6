@@ -176,7 +176,9 @@ public abstract class CapabilityRelayBlockEntity extends BlockEntity {
         public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
             return forwardItems(side, stack,
                     targetHandler -> slot >= 0 && slot < targetHandler.getSlots() && permitsItem(side, stack)
-                            ? targetHandler.insertItem(slot, stack, simulate) : stack);
+                            // Vanilla InvWrapper can retain the offered instance in an empty slot.
+                            // The receiver must own its stack; later extraction must not mutate the caller's offer.
+                            ? targetHandler.insertItem(slot, stack.copy(), simulate) : stack);
         }
 
         @Override

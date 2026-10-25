@@ -1,0 +1,300 @@
+{
+  "date": "2026-10-25",
+  "base_commit": "db264a1ff",
+  "branch": "codex/targeted-default-regressions",
+  "scope": "Retriever item/metadata matching and capability relay input ownership, plus three outdated transfer fixtures. No pipeline registry/storage change.",
+  "runtime_fixes": [
+    {
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverUtilityBehaviors.java",
+      "change": "Retriever without template accepts both modes; installed template compares item and damage metadata (32767 template wildcard), ignores extra NBT. Ordinary item-filter empty whitelist and logistics NBT matching are unchanged.",
+      "prior_failures": 2,
+      "source_issue": "Partial ALIGN-104 matching repair only."
+    },
+    {
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java",
+      "change": "Insert a copy into the receiver so a Vanilla InvWrapper storing a complete stack cannot alias and later mutate the caller offer. Preserve live target lookup, simulation semantics, invalidation and cycle guards.",
+      "prior_failures": 2,
+      "observation": "Original portal fixture inserted 3 and extracted 2; an aliased caller offer could become 1 before the closed-portal rejection check. Added a caller count==3 assertion before closure."
+    }
+  ],
+  "fixture_corrections": [
+    {
+      "prior_case": "longdistanceitempipelinedisconnectsimmediately",
+      "change": "Use registered long_dist_pipe_item instead of the legacy field now aliasing the fluid pipe. Preserve simulation, NBT, insertion and cached disconnect checks."
+    },
+    {
+      "prior_case": "extenderresolvesreplacedinventory",
+      "change": "Use the adopted six-direction SourceExtenderBlock main/secondary properties; explicitly route north input to south inventory. Keep removal/replacement checks."
+    },
+    {
+      "prior_case": "legacysharedpipestillcarriesbothnetworks",
+      "current_case": "legacypipealiasretainssourcefluididentity",
+      "change": "Assert legacy field identity equals source fluid pipe; fluid line works, item route refuses all without consuming the offer. Do not make the original fluid pipe carry both types."
+    }
+  ],
+  "source_proof": {
+    "author_license": "GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later, source files read-only",
+    "source_matching": [
+      {
+        "path": "D:\\Projects\\java\\gt6_source_code\\gregtech6\\src\\main\\java\\gregapi\\cover\\covers\\CoverRetrieverItem.java",
+        "raw_sha256": "1ae18e8eaefc95945ad385364fdc53d47471a503a157f6d532b34924ee815d7f",
+        "lf_normalized_sha256": "ae7fdb0f52ae54e03edfc76ddc4ddca9b6ebb6ba54fe4b0bcc82d7019d696047",
+        "prior_audit_sha256": "ae7fdb0f52ae54e03edfc76ddc4ddca9b6ebb6ba54fe4b0bcc82d7019d696047"
+      },
+      {
+        "path": "D:\\Projects\\java\\gt6_source_code\\gregtech6\\src\\main\\java\\gregapi\\code\\ItemStackSet.java",
+        "raw_sha256": "ce3fb20747ca0d6011e1410d92abe4a390e51a59ef01f3c92b49fd44dc665af9",
+        "lf_normalized_sha256": "a0e1823031096a9a6887d6fcc26d0485bcd3d3ed73b727cfc3f0855f760ff70b",
+        "prior_audit_sha256": "a0e1823031096a9a6887d6fcc26d0485bcd3d3ed73b727cfc3f0855f760ff70b"
+      },
+      {
+        "path": "D:\\Projects\\java\\gt6_source_code\\gregtech6\\src\\main\\java\\gregapi\\code\\ItemStackMap.java",
+        "raw_sha256": "63cfba48db84c9a9a2d3939567b8276fd1f6e4eb1fdc3dd0f689810d75f95d3b",
+        "lf_normalized_sha256": "837535ebdbe64212236cd29119858627f12c4f1ac27cc9af41630bb876d56d42",
+        "prior_audit_sha256": "837535ebdbe64212236cd29119858627f12c4f1ac27cc9af41630bb876d56d42"
+      },
+      {
+        "path": "D:\\Projects\\java\\gt6_source_code\\gregtech6\\src\\main\\java\\gregapi\\code\\ItemStackContainer.java",
+        "raw_sha256": "1356077199228ab9751c9c857648e15c05d17aeece5e194f29c5b2fde4cf095b",
+        "lf_normalized_sha256": "8cbd4d2af37f82cd3839e2aec4591517656fa673e022e7e74ae5c31b7c1e6ee1",
+        "prior_audit_sha256": "8cbd4d2af37f82cd3839e2aec4591517656fa673e022e7e74ae5c31b7c1e6ee1"
+      },
+      {
+        "path": "D:\\Projects\\java\\gt6_source_code\\gregtech6\\src\\main\\java\\gregapi\\util\\ST.java",
+        "raw_sha256": "cbabea3e862fd57e50550813e7d4386c831bda75de6812efff035729513e14d9",
+        "lf_normalized_sha256": "5ff16d9051e2744a66c711bd5f2581785ba8af7b2272fb1023a6d2f4ddb783a8",
+        "prior_audit_sha256": "5ff16d9051e2744a66c711bd5f2581785ba8af7b2272fb1023a6d2f4ddb783a8"
+      }
+    ],
+    "forge_wrapper": {
+      "jar": "C:\\Users\\T14\\.gradle\\caches\\forge_gradle\\maven_downloader\\net\\minecraftforge\\forge\\1.20.1-47.4.20\\forge-1.20.1-47.4.20-sources.jar",
+      "entry": "net/minecraftforge/items/wrapper/InvWrapper.java",
+      "entry_sha256": "edb520b13fb6565c6b41af814f4d98307bd94c7e66ac8f0720c8d077aba4ae8c",
+      "finding": "When an empty slot accepts the complete stack, InvWrapper stores the offered instance; a relay must provide a copy to retain caller ownership."
+    }
+  },
+  "checks": {
+    "forge_compileJava": "passed",
+    "forge_compileBootstrapGameTestJava": "passed",
+    "neoforge_compileJava": "passed; no new Neo runtime run",
+    "namespace": "gt6ce_forge_transfer_regressions",
+    "tests": 14,
+    "failures": 0,
+    "previous_failed_cases": [
+      {
+        "previous": {
+          "name": "miniendportalrelaysoppositeneighbour",
+          "template": "gt6ce:test_empty",
+          "failures": [
+            "cached handler refuses a closed counterpart without consuming items"
+          ]
+        },
+        "current_name": "miniendportalrelaysoppositeneighbour"
+      },
+      {
+        "previous": {
+          "name": "legacysharedpipestillcarriesbothnetworks",
+          "template": "gregtech_repair:test_blueprint_empty",
+          "failures": [
+            "existing generic long-distance pipe remains valid for both endpoint types"
+          ]
+        },
+        "current_name": "legacypipealiasretainssourcefluididentity"
+      },
+      {
+        "previous": {
+          "name": "mininetherportalrelaysoppositeneighbour",
+          "template": "gt6ce:test_empty",
+          "failures": [
+            "cached handler refuses a closed counterpart without consuming items"
+          ]
+        },
+        "current_name": "mininetherportalrelaysoppositeneighbour"
+      },
+      {
+        "previous": {
+          "name": "retrieverpullsfiltereditemsintothemachine",
+          "template": "gt6ce:test_empty",
+          "failures": [
+            "the retriever moved the three filtered apples into the machine, got 0 air"
+          ]
+        },
+        "current_name": "retrieverpullsfiltereditemsintothemachine"
+      },
+      {
+        "previous": {
+          "name": "longdistanceitempipelinedisconnectsimmediately",
+          "template": "gt6ce:test_blueprint_empty",
+          "failures": [
+            "pipeline simulates receiver capacity"
+          ]
+        },
+        "current_name": "longdistanceitempipelinedisconnectsimmediately"
+      },
+      {
+        "previous": {
+          "name": "extenderresolvesreplacedinventory",
+          "template": "gt6ce:test_blueprint_empty",
+          "failures": [
+            "Cannot set property DirectionProperty{name=facing, clazz=class net.minecraft.core.Direction, values=[north, south, west, east]} as it does not exist in Block{gt6ce:inventory_tank_extender}"
+          ]
+        },
+        "current_name": "extenderresolvesreplacedinventory"
+      },
+      {
+        "previous": {
+          "name": "retrieverblacklistmodekeepsthefiltereditemout",
+          "template": "gt6ce:test_empty",
+          "failures": [
+            "an inverted retriever takes everything but the filtered item, got 4 apple"
+          ]
+        },
+        "current_name": "retrieverblacklistmodekeepsthefiltereditemout"
+      }
+    ],
+    "other_guards": 7,
+    "cases": [
+      {
+        "name": "fluidlineusesfluidpipeandrejectsitempipe",
+        "template": "gt6ce_forge_transfer_regressions:test_blueprint_empty",
+        "failures": []
+      },
+      {
+        "name": "miniendportalrelaysoppositeneighbour",
+        "template": "gt6ce_forge_transfer_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "retrieverusesmetadatawithoutrelaxinglogisticsnbt",
+        "template": "gt6ce_forge_transfer_regressions:test_blueprint_empty",
+        "failures": []
+      },
+      {
+        "name": "sourcefluidroutingandlivereplacement",
+        "template": "gt6ce_forge_transfer_regressions:test_blueprint_empty",
+        "failures": []
+      },
+      {
+        "name": "sourceitemroutingandcapabilityseparation",
+        "template": "gt6ce_forge_transfer_regressions:test_blueprint_empty",
+        "failures": []
+      },
+      {
+        "name": "legacypipealiasretainssourcefluididentity",
+        "template": "gt6ce_forge_transfer_regressions:test_blueprint_empty",
+        "failures": []
+      },
+      {
+        "name": "itemlineusesitempipeandrejectsfluidpipe",
+        "template": "gt6ce_forge_transfer_regressions:test_blueprint_empty",
+        "failures": []
+      },
+      {
+        "name": "mininetherportalrelaysoppositeneighbour",
+        "template": "gt6ce_forge_transfer_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "retrieverpullsfiltereditemsintothemachine",
+        "template": "gt6ce_forge_transfer_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "longdistanceitempipelinedisconnectsimmediately",
+        "template": "gt6ce_forge_transfer_regressions:test_blueprint_empty",
+        "failures": []
+      },
+      {
+        "name": "sourcerelaycyclesterminate",
+        "template": "gt6ce_forge_transfer_regressions:test_blueprint_empty",
+        "failures": []
+      },
+      {
+        "name": "extenderresolvesreplacedinventory",
+        "template": "gt6ce_forge_transfer_regressions:test_blueprint_empty",
+        "failures": []
+      },
+      {
+        "name": "retrieverblacklistmodekeepsthefiltereditemout",
+        "template": "gt6ce_forge_transfer_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "emptyretrievertemplateallowsbothmodes",
+        "template": "gt6ce_forge_transfer_regressions:test_blueprint_empty",
+        "failures": []
+      }
+    ]
+  },
+  "new_boundary_cases": [
+    "Empty template permits both inversion modes; two real barrel inventories transfer all five items exactly once.",
+    "Damage 5 candidate with additional NBT matches retriever template and retains full data; logistics template still rejects unequal nonempty NBT; damage 6 refuses without mutation; inversion excludes matching damage; template damage32767 accepts other damage."
+  ],
+  "attempts": {
+    "game_jvms": 1,
+    "default_suite_reruns": 0
+  },
+  "original_default_xml": {
+    "path": "work/card55-forge-defaultfull.xml",
+    "sha256": "9972cf8c12469548950b8285122519a3e3b00db2bc506de0226c05ebe66e15df"
+  },
+  "baseline_runtime_comparison": "git diff --stat 0585ad4e5 db264a1ff -- CapabilityRelayBlockEntity.java CoverUtilityBehaviors.java returned empty for the full repository paths.",
+  "command_script": "$ErrorActionPreference = 'Stop'\n$env:JAVA_HOME = 'C:/Users/T14/.gradle/jdks/eclipse_adoptium-17-amd64-windows/jdk-17.0.20.1+1'\n$env:JAVA17_HOME = $env:JAVA_HOME\n$env:JAVA21_HOME = 'C:/Program Files/Eclipse Adoptium/jdk-21.0.12.8-hotspot'\n$env:GRADLE_USER_HOME = 'C:/Users/T14/.gradle'\nSet-Location (Split-Path -Parent $PSScriptRoot)\n& ./gradlew.bat --console=plain :multiversion:1.20.1-forge:compileBootstrapGameTestJava :multiversion:1.21.1-neoforge:compileJava '-PaddonSample=true' '-PgameTestNamespaces=gt6ce_forge_transfer_regressions' '-PgameTestHeap=6g' '-PgameTestJvmArgs=-XX:+UseSerialGC' '-PgameTestDirectory=../../../work/forge-transfer-regressions' '-PgameTestReport=../../../work/forge-transfer-regressions.xml' :multiversion:1.20.1-forge:runGameTestServer *> work/forge-transfer-regressions.log\n$result = $LASTEXITCODE\nGet-Content work/forge-transfer-regressions.log -Tail 35\nexit $result\n",
+  "evidence": [
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverUtilityBehaviors.java",
+      "sha256": "99dfb8ebbabfcfadc70e534aaba75eb2e66d94cf411837b975d6051709067887"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java",
+      "sha256": "f7e67d3f320fc29b8eb5f55c4c94e80ce66eb5ca509af1fce0692c4af58c6f06"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BlueprintRegressionTests.java",
+      "sha256": "0b514020766e6b502d62a46631a0dc260ea63f1278105c21946d6c632fba0c38"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/LongDistPipelineTypeTests.java",
+      "sha256": "22640aa700a8a92270d47bd56ce3ad67060285c002f4c8f82c10a11a64cbf695"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DungeonKeysAndPortalsTests.java",
+      "sha256": "3597b46491db6310822e930eb2959641d1bae0bb83cee3020b0a186849e04f40"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CoverBehaviorTests.java",
+      "sha256": "66fb8cd5c0c2509644e2087d9d41bddcaadfa6d7894eab9315ed25185de7a5ee"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/SourceExtenderTests.java",
+      "sha256": "4007a23d8a1290f017dc375ddd96d1781b260a31fa200fae569793d2d3f34fd9"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ForgeTransferRegressionTests.java",
+      "sha256": "64ef28c34926f35c9ad2291f8bed6d0969b7631b36569e02d0f48201ecf1da4e"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/resources/data/gt6ce_forge_transfer_regressions/structures/test_empty.nbt",
+      "sha256": "147ef3e2c39e8d261ff2287395af00d734ccd13b196abdea0c0334e11fdde075"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/resources/data/gt6ce_forge_transfer_regressions/structures/test_blueprint_empty.nbt",
+      "sha256": "6c01f87bfc554e3e1ede220e784470c02b04ad9ada25cf366d4b1b9e157d8f0e"
+    },
+    {
+      "path": "work/forge-transfer-regressions.log",
+      "sha256": "53c72fd08df3e9932445555d29a057974845428d06692bbb1785fd79c3cc8145"
+    },
+    {
+      "path": "work/forge-transfer-regressions.xml",
+      "sha256": "681f5639ad224e9f011b242ad44f20642a095ac0abe903a6930bbe9f12627f85"
+    }
+  ],
+  "limits": [
+    "ALIGN-104 is only partially repaired: original pipe-only placement, network scan/direction, pending timing and right-click template behavior remain documented differences. Existing machine fixtures verify the retained current caller path, not original placement/direction fidelity.",
+    "Forge metadata wildcard is exercised on the Forge runtime; this is not a claim that all legacy metadata is representable identically by modern components.",
+    "Other default failures are pending; no newly measured full-suite remaining count.",
+    "Client gameplay, independent saved-world restart and historical saves unverified; overall port unfinished.",
+    "Local followup fix; card55 PR #125 unchanged."
+  ]
+}

@@ -562,6 +562,7 @@ public final class DungeonKeysAndPortalsTests {
         helper.assertTrue(handler.insertItem(0, diamond, true).isEmpty() && handler.getStackInSlot(0).isEmpty(), "simulation does not mutate remote inventory");
         helper.assertTrue(handler.insertItem(0, diamond, false).isEmpty() && handler.getStackInSlot(0).getCount() == 3, "real insertion reaches the remote inventory");
         helper.assertTrue(handler.extractItem(0, 2, false).getCount() == 2 && handler.getStackInSlot(0).getCount() == 1, "remote extraction preserves counts");
+        helper.assertTrue(diamond.getCount() == 3, "remote storage owns its copy: later extraction cannot mutate the caller's offered stack");
         BlockPos localChest = origin.east();
         world.getChunkAt(localChest);
         world.setBlock(localChest, Blocks.CHEST.defaultBlockState(), 3);
