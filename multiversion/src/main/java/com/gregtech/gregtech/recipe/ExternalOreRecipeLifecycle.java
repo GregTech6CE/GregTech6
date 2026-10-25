@@ -27,6 +27,7 @@ public final class ExternalOreRecipeLifecycle {
     public static void stopped(ServerStoppedEvent event) {
         ExternalOreProcessing.clear();
         com.gregtech.gregtech.content.recipe.NonOreMacerationRows.clear();
+        com.gregtech.gregtech.content.recipe.SourceOreOutputRows.clear();
         com.gregtech.gregtech.api.material.MaterialDisplayBinding.invalidate();
     }
 }
