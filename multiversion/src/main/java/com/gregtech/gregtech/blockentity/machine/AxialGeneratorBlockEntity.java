@@ -42,6 +42,8 @@ public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity impl
     }
 
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();
+    private final com.gregtech.gregtech.api.multiblock.tracking.StructureDefinition definition =
+            com.gregtech.gregtech.api.multiblock.tracking.FixedStructures.declarative(this, this::structureCells, List.of());
 
     protected AxialGeneratorBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -111,7 +113,40 @@ public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity impl
     public java.util.Set<BlockPos> trackedCells() { return grade().cells().keySet(); }
 
     @Override public com.gregtech.gregtech.api.multiblock.tracking.StructureDefinition structureDefinition() {
-        return com.gregtech.gregtech.api.multiblock.tracking.CustomStructures.axial(this);
+        return definition;
+    }
+    private List<com.gregtech.gregtech.api.multiblock.tracking.CompiledPattern.FixedCell> structureCells(Direction front) {
+        var cells = new java.util.ArrayList<com.gregtech.gregtech.api.multiblock.tracking.CompiledPattern.FixedCell>(
+                grade().cells().size());
+        for (var cell : grade().cells().keySet()) {
+            boolean coil = com.gregtech.gregtech.content.multiblock.OriginalGeneratorParameters.usesCopperCoil(
+                    grade().steam(), cell.getZ());
+            int part = coil ? 18040 : grade().materials().wallId();
+            var role = AxialStructureTransform.role(front, cell.getX(), cell.getY(), cell.getZ(), grade().steam());
+            var spec = new com.gregtech.gregtech.content.multiblock.LargeMachineLayouts.Cell(
+                    cell.getX(), cell.getY(), cell.getZ(), part, role);
+            var offset = AxialStructureTransform.at(BlockPos.ZERO, front, cell.getX(), cell.getY(), cell.getZ());
+            cells.add(new com.gregtech.gregtech.api.multiblock.tracking.CompiledPattern.FixedCell(
+                    offset.getX(), offset.getY(), offset.getZ(), spec));
+        }
+        return cells;
+    }
+    @Override public boolean applyStructure(com.gregtech.gregtech.api.multiblock.tracking.PatternMatch match) {
+        if (level == null || isRemoved()) return false;
+        var parts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
+        for (var fixed : match.fixedCells()) {
+            var cell = fixed.cell();
+            if (cell.role() != MultiblockLayout.Role.AIR) parts.put(fixed.pos(), cell.role());
+        }
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, parts, 0,
+                position -> level.getBlockEntity(position) instanceof MultiblockPortBlockEntity port
+                        && port.canBind(worldPosition),
+                (position, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(position)).bind(worldPosition, role),
+                this::release) != com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
+    }
+    @Override public void releaseStructureClaims() {
+        bindings.clear(this::release);
+        com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
     }
     @Override public boolean isStructureOk() {
         return com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.query(this);
