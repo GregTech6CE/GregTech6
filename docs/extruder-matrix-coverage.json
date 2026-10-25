@@ -1,5 +1,5 @@
 {
-  "extruderRecipes": 59147,
+  "extruderRecipes": 59421,
   "skippedGt6Outputs": [
     "wireGt01 (wires are physical blocks in this port: registry/GTWires)",
     "casingSmall (no MaterialPrefix.casingSmall)",

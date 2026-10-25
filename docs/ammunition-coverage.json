@@ -1,9 +1,6 @@
 {
-  "ammunitionRoutes": 5661,
-  "pressRecipes": 3606,
-  "skippedGt6Rows": [
-    "toolHeadArrow 1 -\u003e arrowGtWood / arrowGtPlastic 1 (Loader_Recipes_Handlers:252-253): the port has no arrow template items (OP.arrowGt*.mat(MT.Empty, 1))",
-    "gemFlawed 2 + toolHeadRawPickaxe -\u003e toolHeadPickaxeGem 1 (:250-251): gated on GT6 ANY.Iron.mToThis, which the port does not model"
-  ],
-  "unboxinatorRecipes": 10884
+  "ammunitionRoutes": 8565,
+  "pressRecipes": 5070,
+  "skippedGt6Rows": [],
+  "unboxinatorRecipes": 18235
 }

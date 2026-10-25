@@ -1,19 +1,7 @@
 {
-  "furnaceTable": 2548,
-  "rows": 214,
-  "skipped": [
-    "dustPure: the port registers no such prefix",
-    "dustRefined: the port registers no such prefix",
-    "rawOreChunk: the port registers no such prefix",
-    "chunk: the port registers no such prefix",
-    "rubble: the port registers no such prefix",
-    "pebbles: the port registers no such prefix",
-    "cluster: the port registers no such prefix",
-    "cleanGravel: the port registers no such prefix",
-    "dirtyGravel: the port registers no such prefix",
-    "crystalline: the port registers no such prefix",
-    "reduced: the port registers no such prefix"
-  ],
-  "vanillaRows": 2548,
-  "vanillaSmeltingRecipes": 2548
+  "furnaceTable": 3038,
+  "rows": 988,
+  "skipped": [],
+  "vanillaRows": 3014,
+  "vanillaSmeltingRecipes": 3016
 }

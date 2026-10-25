@@ -11,8 +11,8 @@
     "Hematite melting 1207 K → Hematite",
     "Magnetite melting 1811 K → Magnetite"
   ],
-  "crucibleAlloyingRecipes": 159,
-  "crucibleSmeltingRecipes": 1911,
-  "furnaceRecipes": 2548,
+  "crucibleAlloyingRecipes": 140,
+  "crucibleSmeltingRecipes": 2035,
+  "furnaceRecipes": 3038,
   "specialValueLabel": "Temperature: %s K"
 }
