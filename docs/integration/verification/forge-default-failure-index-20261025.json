@@ -1,0 +1,1183 @@
+{
+  "date": "2026-10-25",
+  "index_baseline": "41f272edf",
+  "origin": "Original 1045-test/93-failure XML; prior 17 individually verified/corrected cases excluded. No new default-suite run.",
+  "scope": "76 remaining original records indexed before the catalog batch. Families are triage topics, not proven root causes. Method positions refer to the stated baseline.",
+  "families": {
+    "catalog_recipes_and_network_batch": 21,
+    "recipes_processing_and_source_expectations": 16,
+    "machine_lifecycle_structure_and_drops": 8,
+    "tools_and_player_interaction": 10,
+    "covers_controls_and_energy_boundaries": 13,
+    "world_generation_radiation_and_bees": 8
+  },
+  "cases": [
+    {
+      "name": "craftingtagscontainoriginalingredients",
+      "original_failure": "Existing source ingredient: gregtech:plate_graphene",
+      "family": "catalog_recipes_and_network_batch",
+      "status": "verified_in_targeted_replay",
+      "current_name": "craftingtagscontainoriginalingredients",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/SurvivalStandardizationTests.java",
+          "line_at_baseline": 46,
+          "method_at_baseline": "craftingTagsContainOriginalIngredients",
+          "method_snapshot_sha256": "32536af8b294855820403f9e225294a1b9a44f30f34611ce369f0a2d2c96462b"
+        }
+      ],
+      "verification": "forge-catalog-regressions-20261025.json"
+    },
+    {
+      "name": "allaxialrecipesaccepteverychemistryatonlytheoriginaltier",
+      "original_failure": "No value present",
+      "family": "catalog_recipes_and_network_batch",
+      "status": "verified_in_targeted_replay",
+      "current_name": "allaxialrecipesaccepteverychemistryatonlytheoriginaltier",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/AxialBatteryRecipeTests.java",
+          "line_at_baseline": 20,
+          "method_at_baseline": "allAxialRecipesAcceptEveryChemistryAtOnlyTheOriginalTier",
+          "method_snapshot_sha256": "ec1e2de7b439c2303df141bb8022d46b36c6bdc999d4008935a65e8ab16ca9eb"
+        }
+      ],
+      "verification": "forge-catalog-regressions-20261025.json"
+    },
+    {
+      "name": "dungeonkeyandportalassetsexist",
+      "original_failure": "missing models/item/key_brass.json; missing models/item/key_bronze.json; missing models/item/key_copper.json; missing models/item/key_gold.json; missing models/item/key_iron.json; missing models/item/key_lead.json; missing models/item/key_plastic.json; missing models/item/key_platinum.json; missing models/item/key_silver.json; missing models/item/key_tin.json",
+      "family": "catalog_recipes_and_network_batch",
+      "status": "verified_in_targeted_replay",
+      "current_name": "dungeonkeyandportalassetsexist",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DungeonKeysAndPortalsTests.java",
+          "line_at_baseline": 250,
+          "method_at_baseline": "dungeonKeyAndPortalAssetsExist",
+          "method_snapshot_sha256": "b956e74ddc43b2ecd9a6530e2afe01abb0bcac832c44ee892abfb3243471f269"
+        }
+      ],
+      "verification": "forge-catalog-regressions-20261025.json"
+    },
+    {
+      "name": "substitutionsarereported",
+      "original_failure": "machine crafting ingredient substitutions changed (see docs/machine-crafting-substitutions.json): {item gt6ce:stone_holystone_stone=machine casing block, block casingMachine of Holystone=machine casing block, block casingMachine of Livingrock=machine casing block, block casingMachine of Betweenstone=machine casing block, item gt6ce:stone_livingrock_stone=machine casing block, item gt6ce:stone_betweenstone_stone=machine casing block, item gt6ce:stone_umber_stone=machine casing block, block casingMachine of Umber=machine casing block}",
+      "family": "recipes_processing_and_source_expectations",
+      "status": "pending",
+      "current_name": "substitutionsarereported",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BasicMachineCraftingTests.java",
+          "line_at_baseline": 148,
+          "method_at_baseline": "substitutionsAreReported",
+          "method_snapshot_sha256": "27d32b4c12343f44ab7712556cc44045595c54a7e2c7002fa0e8e02c41683812"
+        }
+      ]
+    },
+    {
+      "name": "machinedropcarriespendingworkwithoutinventoryduplication",
+      "original_failure": "work travels with block, separately spilled inventory is excluded",
+      "family": "machine_lifecycle_structure_and_drops",
+      "status": "pending",
+      "current_name": "machinedropcarriespendingworkwithoutinventoryduplication",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/PortRegressionTests.java",
+          "line_at_baseline": 502,
+          "method_at_baseline": "machineDropCarriesPendingWorkWithoutInventoryDuplication",
+          "method_snapshot_sha256": "280eb62fcbeb2a10bb25af564898a146268b8ff38832106d4d64da8c03203e70"
+        }
+      ]
+    },
+    {
+      "name": "dynamofourgradesandelectricalboundaries",
+      "original_failure": "legacy generic dynamo wall cannot replace GT6 18040 copper coil",
+      "family": "machine_lifecycle_structure_and_drops",
+      "status": "pending",
+      "current_name": "dynamofourgradesandelectricalboundaries",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/AxialGeneratorTests.java",
+          "line_at_baseline": 67,
+          "method_at_baseline": "dynamoFourGradesAndElectricalBoundaries",
+          "method_snapshot_sha256": "ee71ae81f7000a17b9b22dce160da28c59a2c19bb1d8c5038322aca2ffb051c3"
+        }
+      ]
+    },
+    {
+      "name": "builderwandisfreeincreative",
+      "original_failure": "a creative player still builds",
+      "family": "tools_and_player_interaction",
+      "status": "pending",
+      "current_name": "builderwandisfreeincreative",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DebugToolBehaviorTests.java",
+          "line_at_baseline": 209,
+          "method_at_baseline": "builderWandIsFreeInCreative",
+          "method_snapshot_sha256": "c6e79d9fb50c97a2538912752dc78bcf54815b4f4f654a52bb43ddc507537c53"
+        }
+      ]
+    },
+    {
+      "name": "rejectedpacketsneverenergizewireandacceptedpoweraccumulates",
+      "original_failure": "full receiver refuses input",
+      "family": "catalog_recipes_and_network_batch",
+      "status": "verified_in_targeted_replay",
+      "current_name": "rejectedpacketsneverenergizewireandacceptedpoweraccumulates",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ElectricWireRepairTests.java",
+          "line_at_baseline": 39,
+          "method_at_baseline": "rejectedPacketsNeverEnergizeWireAndAcceptedPowerAccumulates",
+          "method_snapshot_sha256": "deaaefcabd495d3e0da8748fbc3c528d3200836011b09b2e8975a6fd5a8d9000"
+        }
+      ],
+      "verification": "forge-catalog-regressions-20261025.json"
+    },
+    {
+      "name": "everybalehasoriginalfireharvestmodelandsurvivalrecipe",
+      "original_failure": "bale_bale_grass_dry and its input crop are registered",
+      "family": "catalog_recipes_and_network_batch",
+      "status": "verified_in_targeted_replay",
+      "current_name": "everybalehasoriginalfireharvestmodelandsurvivalrecipe",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BaleRepairTests.java",
+          "line_at_baseline": 51,
+          "method_at_baseline": "everyBaleHasOriginalFireHarvestModelAndSurvivalRecipe",
+          "method_snapshot_sha256": "290ae3207e51810147bd0aa889651ad8b980d1e6f7eb41d00fea5c75d8407a86"
+        }
+      ],
+      "verification": "forge-catalog-regressions-20261025.json"
+    },
+    {
+      "name": "siftingyieldsgemsfrompurifiedore",
+      "original_failure": "rare grades are scaled 8x/4x/2x like GT6: 1/1/1",
+      "family": "recipes_processing_and_source_expectations",
+      "status": "pending",
+      "current_name": "siftingyieldsgemsfrompurifiedore",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/OrePurificationRoutesTests.java",
+          "line_at_baseline": 99,
+          "method_at_baseline": "siftingYieldsGemsFromPurifiedOre",
+          "method_snapshot_sha256": "6a31b87a0a1a72553175201b4972dd3c8ab79049bc0374076379d7c6d2619cf6"
+        }
+      ]
+    },
+    {
+      "name": "apipedropsitscoverswhenbroken",
+      "original_failure": "the pipe takes an item filter on its top face",
+      "family": "covers_controls_and_energy_boundaries",
+      "status": "pending",
+      "current_name": "apipedropsitscoverswhenbroken",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/PipeCoverTests.java",
+          "line_at_baseline": 408,
+          "method_at_baseline": "aPipeDropsItsCoversWhenBroken",
+          "method_snapshot_sha256": "9669b7164d53697b6701fe231b67f8e6bd3e47c532c07073a4079d24105180a4"
+        }
+      ]
+    },
+    {
+      "name": "originalsteamanddynamohousingsformateverygrade",
+      "original_failure": "17211 is the canonical survival recipe output",
+      "family": "catalog_recipes_and_network_batch",
+      "status": "verified_in_targeted_replay",
+      "current_name": "originalsteamanddynamohousingsformateverygrade",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/OriginalAxialControllerTests.java",
+          "line_at_baseline": 39,
+          "method_at_baseline": "originalSteamAndDynamoHousingsFormAtEveryGrade",
+          "method_snapshot_sha256": "f20cc56e855ada85c9731bc61de4f901218d8470118cc0aa13bcf341b95fc2d8"
+        }
+      ],
+      "verification": "forge-catalog-regressions-20261025.json"
+    },
+    {
+      "name": "pressurevalvemovesafulltankintothetankinfront",
+      "original_failure": "the source machine face accepts the pressure valve",
+      "family": "covers_controls_and_energy_boundaries",
+      "status": "pending",
+      "current_name": "pressurevalvemovesafulltankintothetankinfront",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CoverBehaviorTests.java",
+          "line_at_baseline": 533,
+          "method_at_baseline": "pressureValveMovesAFullTankIntoTheTankInFront",
+          "method_snapshot_sha256": "702a86dc0e91f73b8bfaa21fe638a79705db4827a8fcf97a999017cb4da87e48"
+        }
+      ]
+    },
+    {
+      "name": "noregisteredrecipeisdegenerate",
+      "original_failure": "degenerate recipes (1): [gt.recipe.fuels.hot [] -> []]",
+      "family": "machine_lifecycle_structure_and_drops",
+      "status": "pending",
+      "current_name": "noregisteredrecipeisdegenerate",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/StoneExtrusionTests.java",
+          "line_at_baseline": 166,
+          "method_at_baseline": "noRegisteredRecipeIsDegenerate",
+          "method_snapshot_sha256": "3b4c1869c29677134923051fa45e3494bf80e731ac58a7a972c7f90dfe10a9f6"
+        }
+      ]
+    },
+    {
+      "name": "basicmachineshavesurvivalrecipes",
+      "original_failure": "No value present",
+      "family": "catalog_recipes_and_network_batch",
+      "status": "verified_in_targeted_replay",
+      "current_name": "basicmachineshavesurvivalrecipes",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MaterialCompatibilityTests.java",
+          "line_at_baseline": 154,
+          "method_at_baseline": "basicMachinesHaveSurvivalRecipes",
+          "method_snapshot_sha256": "d763bf11a30ca502ae7810e5d95c06a3c7262b2afde529325a261e4693b51e1e"
+        }
+      ],
+      "verification": "forge-catalog-regressions-20261025.json"
+    },
+    {
+      "name": "printerprintstheprintermanual",
+      "original_failure": "the printer prints 'Scanner & Printer Manual' from a book plus dye fluid; rows: 1135",
+      "family": "recipes_processing_and_source_expectations",
+      "status": "pending",
+      "current_name": "printerprintstheprintermanual",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/GTMainRecipesTests.java",
+          "line_at_baseline": 39,
+          "method_at_baseline": "printerPrintsThePrinterManual",
+          "method_snapshot_sha256": "0778ddd08219085ea8e9c8711e9af8b9798a1c16a8f6aaa844b201386520353a"
+        }
+      ]
+    },
+    {
+      "name": "everytoolhasgt6srecipefamily",
+      "original_failure": "every port tool has a GT6 manual recipe family, missing: [pocket_knife, pocket_saw, pocket_file, pocket_screwdriver, pocket_wire_cutter, pocket_scissors, pocket_chisel]",
+      "family": "tools_and_player_interaction",
+      "status": "pending",
+      "current_name": "everytoolhasgt6srecipefamily",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ToolAssemblyTests.java",
+          "line_at_baseline": 49,
+          "method_at_baseline": "everyToolHasGt6sRecipeFamily",
+          "method_snapshot_sha256": "da11f4d79d5a9018544ccb34d1d9892e6b8bc1635ebce859e2e1220a8ed9e361"
+        }
+      ]
+    },
+    {
+      "name": "reddyechainkeepsoriginalamountsandresiduechance",
+      "original_failure": "Index 0 out of bounds for length 0",
+      "family": "recipes_processing_and_source_expectations",
+      "status": "pending",
+      "current_name": "reddyechainkeepsoriginalamountsandresiduechance",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DyeProcessingTests.java",
+          "line_at_baseline": 29,
+          "method_at_baseline": "redDyeChainKeepsOriginalAmountsAndResidueChance",
+          "method_snapshot_sha256": "1c961e86cb918218cc9fe584b5f29f72e2c689eab5d53cd73750f5dae0bd87a0"
+        }
+      ]
+    },
+    {
+      "name": "switchreadsonlyitsfaceandcrowbarreturnsdefaults",
+      "original_failure": "cover-face power starts actual recipe",
+      "family": "covers_controls_and_energy_boundaries",
+      "status": "pending",
+      "current_name": "switchreadsonlyitsfaceandcrowbarreturnsdefaults",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ControlCoverTests.java",
+          "line_at_baseline": 27,
+          "method_at_baseline": "switchReadsOnlyItsFaceAndCrowbarReturnsDefaults",
+          "method_snapshot_sha256": "d077195cd0d4e627d86da3639238969828c82cee25747a2a1821ce89228acc97"
+        }
+      ]
+    },
+    {
+      "name": "transpiledcoveragedoesnotregress",
+      "original_failure": "transpiled sets: [SetStats[set=chem, added=322, skipped=36], SetStats[set=other, added=182, skipped=83], SetStats[set=potions, added=491, skipped=9], SetStats[set=food, added=217, skipped=26], SetStats[set=extruder, added=278, skipped=44], SetStats[set=vanilla, added=56, skipped=172], SetStats[set=temporary, added=12, skipped=22], SetStats[set=ores, added=109, skipped=35], SetStats[set=combs, added=20, skipped=0], SetStats[set=technology, added=1115, skipped=0]]",
+      "family": "recipes_processing_and_source_expectations",
+      "status": "pending",
+      "current_name": "transpiledcoveragedoesnotregress",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/GeneratedChemistryTests.java",
+          "line_at_baseline": 63,
+          "method_at_baseline": "transpiledCoverageDoesNotRegress",
+          "method_snapshot_sha256": "929fd6b8d67d09575a14622530ffd1f25ca1413e39c94383e906813c20a9f51a"
+        }
+      ]
+    },
+    {
+      "name": "realchargerandtoolassemblyusechemicalcapacity",
+      "original_failure": "all five LV chemistries accepted",
+      "family": "catalog_recipes_and_network_batch",
+      "status": "verified_in_targeted_replay",
+      "current_name": "realchargerandtoolassemblyusechemicalcapacity",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ChemicalBatteryTests.java",
+          "line_at_baseline": 122,
+          "method_at_baseline": "realChargerAndToolAssemblyUseChemicalCapacity",
+          "method_snapshot_sha256": "c71b1e5e7092b984be4c273a66f354f3d02e1ef91f9d3df3b865c55c5f223463"
+        }
+      ],
+      "verification": "forge-catalog-regressions-20261025.json"
+    },
+    {
+      "name": "craftinggridconversions",
+      "original_failure": "9 copper ingots craft into a block of copper ingots, got 1 copper_block",
+      "family": "machine_lifecycle_structure_and_drops",
+      "status": "pending",
+      "current_name": "craftinggridconversions",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MaterialFormConversionTests.java",
+          "line_at_baseline": 220,
+          "method_at_baseline": "craftingGridConversions",
+          "method_snapshot_sha256": "5153b02fc014f319d12fd6eead500c66da53e5eb4ad53e59925f8d03aebdecd2"
+        }
+      ]
+    },
+    {
+      "name": "thefiltercoversfilterthepipesontheirownface",
+      "original_failure": "and lets a pipe extract",
+      "family": "covers_controls_and_energy_boundaries",
+      "status": "pending",
+      "current_name": "thefiltercoversfilterthepipesontheirownface",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CoverBehaviorTests.java",
+          "line_at_baseline": 799,
+          "method_at_baseline": "theFilterCoversFilterThePipesOnTheirOwnFace",
+          "method_snapshot_sha256": "6e076a08bb768fa191d765ad7afaa4d3920d6ca1c1411f87c87126a1cf955d6f"
+        }
+      ]
+    },
+    {
+      "name": "shredderoutputsneverexceeddeclaredmaterial",
+      "original_failure": "Fresh recipe executes",
+      "family": "recipes_processing_and_source_expectations",
+      "status": "pending",
+      "current_name": "shredderoutputsneverexceeddeclaredmaterial",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/VanillaCompositionTests.java",
+          "line_at_baseline": 44,
+          "method_at_baseline": "shredderOutputsNeverExceedDeclaredMaterial",
+          "method_snapshot_sha256": "14978213f8671983cf9a30d0a5b8442b0e9bc33fc9702965e4f055e9b3a9d9e8"
+        }
+      ]
+    },
+    {
+      "name": "earlytoolscomefromrocksandflint",
+      "original_failure": "three rocks and a stick craft a stone pickaxe",
+      "family": "tools_and_player_interaction",
+      "status": "pending",
+      "current_name": "earlytoolscomefromrocksandflint",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ToolAssemblyTests.java",
+          "line_at_baseline": 250,
+          "method_at_baseline": "earlyToolsComeFromRocksAndFlint",
+          "method_snapshot_sha256": "425a40c13b61b24579f364b307e66b2c725e0f9efbd3c9cdfab6b14cefd3eaa8"
+        }
+      ]
+    },
+    {
+      "name": "dispatcherrouteseachfamily",
+      "original_failure": "the dispatcher reaches the portable scanner (Behavior_Scanner:54)",
+      "family": "tools_and_player_interaction",
+      "status": "pending",
+      "current_name": "dispatcherrouteseachfamily",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ItemBehaviorTests.java",
+          "line_at_baseline": 206,
+          "method_at_baseline": "dispatcherRoutesEachFamily",
+          "method_snapshot_sha256": "94bb218b01e3c19892c14e09324cf310614f9d7d56f77f55b4b5a4999b75ec56"
+        }
+      ]
+    },
+    {
+      "name": "survivaldrilluseslastchargeandbindsfirstavailablehotbarremote",
+      "original_failure": "drilling consumes 100 EU",
+      "family": "tools_and_player_interaction",
+      "status": "pending",
+      "current_name": "survivaldrilluseslastchargeandbindsfirstavailablehotbarremote",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DrillDynamiteTests.java",
+          "line_at_baseline": 49,
+          "method_at_baseline": "survivalDrillUsesLastChargeAndBindsFirstAvailableHotbarRemote",
+          "method_snapshot_sha256": "280be187450176bc4bb0594ef5854127c601a40109466c75dab8d74adc84c509"
+        }
+      ]
+    },
+    {
+      "name": "originalgasturbinehousingsformanduseoriginalsteamhousing",
+      "original_failure": "17231 is the canonical survival recipe output",
+      "family": "catalog_recipes_and_network_batch",
+      "status": "verified_in_targeted_replay",
+      "current_name": "originalgasturbinehousingsformanduseoriginalsteamhousing",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/OriginalAxialControllerTests.java",
+          "line_at_baseline": 70,
+          "method_at_baseline": "originalGasTurbineHousingsFormAndUseOriginalSteamHousing",
+          "method_snapshot_sha256": "bbd3f923b3ddad4b12c0b69afa62456c307f8d0da103467b308b0afe0e8c1e99"
+        }
+      ],
+      "verification": "forge-catalog-regressions-20261025.json"
+    },
+    {
+      "name": "originalmatterrulesandmanufacturingexist",
+      "original_failure": "matter manufacturing recipe loaded: large_osmium_coil",
+      "family": "catalog_recipes_and_network_batch",
+      "status": "verified_in_targeted_replay",
+      "current_name": "originalmatterrulesandmanufacturingexist",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MatterFabricatorRegressionTests.java",
+          "line_at_baseline": 89,
+          "method_at_baseline": "originalMatterRulesAndManufacturingExist",
+          "method_snapshot_sha256": "b91dde3eeaa84b2fdb1036fd5aad93e4733286179056e6ee77160c648db45a7f"
+        }
+      ],
+      "verification": "forge-catalog-regressions-20261025.json"
+    },
+    {
+      "name": "largecrusherusesoriginalefficiencyandretainsinterruptedwork",
+      "original_failure": "6144 GU recipe costs 12288 RU at original 50 percent efficiency",
+      "family": "machine_lifecycle_structure_and_drops",
+      "status": "pending",
+      "current_name": "largecrusherusesoriginalefficiencyandretainsinterruptedwork",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BlueprintRegressionTests.java",
+          "line_at_baseline": 226,
+          "method_at_baseline": "largeCrusherUsesOriginalEfficiencyAndRetainsInterruptedWork",
+          "method_snapshot_sha256": "898dcfedfc3f4ae1995abb3b0b8e326baf1cf0ff09ee1d5e66f7cba9972e477f"
+        }
+      ]
+    },
+    {
+      "name": "rebootwindowsandmachinetimerpersist",
+      "original_failure": "saved timer resumes into startup window",
+      "family": "covers_controls_and_energy_boundaries",
+      "status": "pending",
+      "current_name": "rebootwindowsandmachinetimerpersist",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ControlCoverTests.java",
+          "line_at_baseline": 56,
+          "method_at_baseline": "rebootWindowsAndMachineTimerPersist",
+          "method_snapshot_sha256": "8001a990adff475b6fdc042c540ac700ad667c33dca22d89d86f7ae305c7a7ad"
+        }
+      ]
+    },
+    {
+      "name": "alldyerecipesconsumeactualregisteredinputs",
+      "original_failure": "304 dye mixers, 26 flowers, and 18 oil/foam precursors",
+      "family": "recipes_processing_and_source_expectations",
+      "status": "pending",
+      "current_name": "alldyerecipesconsumeactualregisteredinputs",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DyeProcessingTests.java",
+          "line_at_baseline": 13,
+          "method_at_baseline": "allDyeRecipesConsumeActualRegisteredInputs",
+          "method_snapshot_sha256": "36c07cca4fa92cc426810bd7033a892329fbe4e222b645dd11fa904ff0242ecf"
+        }
+      ]
+    },
+    {
+      "name": "builderwandcopiesthesurfaceonelayerup",
+      "original_failure": "the wand reports the click as handled (Behavior_Builderwand:130)",
+      "family": "tools_and_player_interaction",
+      "status": "pending",
+      "current_name": "builderwandcopiesthesurfaceonelayerup",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DebugToolBehaviorTests.java",
+          "line_at_baseline": 103,
+          "method_at_baseline": "builderWandCopiesTheSurfaceOneLayerUp",
+          "method_snapshot_sha256": "2eef92913893a15d9491ec617b1b9abc0b80da5c864ecc4fb30497ae94df0b8d"
+        }
+      ]
+    },
+    {
+      "name": "originallvpatternsmaterialsandtoolremainders",
+      "original_failure": "source nickel-cadmium LV capacity retained even for wrench/screwdriver",
+      "family": "catalog_recipes_and_network_batch",
+      "status": "verified_in_targeted_replay",
+      "current_name": "originallvpatternsmaterialsandtoolremainders",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ElectricToolAssemblyTests.java",
+          "line_at_baseline": 22,
+          "method_at_baseline": "originalLvPatternsMaterialsAndToolRemainders",
+          "method_snapshot_sha256": "d8303521c36f8e14933aed738001db2874cb44589133a8607977d29747650650"
+        }
+      ],
+      "verification": "forge-catalog-regressions-20261025.json"
+    },
+    {
+      "name": "oldaxialcontrollerscannotbypass172xxmanufacturing",
+      "original_failure": "java.lang.AssertionError: Missing recipe gt6ce:machines/multiblock/adamantium_dynamo_main_housing",
+      "family": "catalog_recipes_and_network_batch",
+      "status": "verified_in_targeted_replay",
+      "current_name": "axialcontrollershaveoneoriginalmanufacturingroute",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/OriginalTankAndAxialRecipeTests.java",
+          "line_at_baseline": 89,
+          "method_at_baseline": "oldAxialControllersCannotBypass172xxManufacturing",
+          "method_snapshot_sha256": "270364a62e01366507b337317d47525aa7c9c6c1b99744d11be9146fa1f22c38"
+        }
+      ],
+      "verification": "forge-catalog-regressions-20261025.json"
+    },
+    {
+      "name": "miniportalsourceactivation",
+      "original_failure": "Ender Eye activates and consumes one eye",
+      "family": "world_generation_radiation_and_bees",
+      "status": "pending",
+      "current_name": "miniportalsourceactivation",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DungeonKeysAndPortalsTests.java",
+          "line_at_baseline": 504,
+          "method_at_baseline": "miniPortalSourceActivation",
+          "method_snapshot_sha256": "aaad1c1d5a4e260a4f461d6ce331c993e5ced34e2ec296c6a27db094a2a84afc"
+        }
+      ]
+    },
+    {
+      "name": "thefilteronthesendingfacegatesoutgoingitems",
+      "original_failure": "the sender takes an item filter on the face it pushes through",
+      "family": "covers_controls_and_energy_boundaries",
+      "status": "pending",
+      "current_name": "thefilteronthesendingfacegatesoutgoingitems",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ItemPipeCoverTests.java",
+          "line_at_baseline": 255,
+          "method_at_baseline": "theFilterOnTheSendingFaceGatesOutgoingItems",
+          "method_snapshot_sha256": "ee42c0593839f4d5506481e0e3061155f51c45c119928a78cbcd95836b264726"
+        }
+      ]
+    },
+    {
+      "name": "funnelandbothapiariesrestoreautomation",
+      "original_failure": "funnel contents retained",
+      "family": "tools_and_player_interaction",
+      "status": "pending",
+      "current_name": "funnelandbothapiariesrestoreautomation",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ToolCapabilityLifecycleTests.java",
+          "line_at_baseline": 67,
+          "method_at_baseline": "funnelAndBothApiariesRestoreAutomation",
+          "method_snapshot_sha256": "47f7f4a924a9a4a5548da41aa0e052e20876149e5832587bd1508f60d0be7da5"
+        }
+      ]
+    },
+    {
+      "name": "multiblockmachinesarecovered",
+      "original_failure": "controller has an original GT6 crafting recipe: stainless_steel_boiler_main_barometer",
+      "family": "recipes_processing_and_source_expectations",
+      "status": "pending",
+      "current_name": "multiblockmachinesarecovered",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MultiblockCraftingTests.java",
+          "line_at_baseline": 97,
+          "method_at_baseline": "multiblockMachinesAreCovered",
+          "method_snapshot_sha256": "613fc2d4e39a8658fbd7f3b0d9ca6c6ded9e45959a694b933430407dbc7b08fe"
+        }
+      ]
+    },
+    {
+      "name": "toolshapedrecipesdonotmirrorunlesstheoriginaldid",
+      "original_failure": "only the GT6 CR.DEF_NCC_MIR Blue Spruce slab row mirrors: [gt6ce:decorative_panels/panel_cfoam_brown, gt6ce:decorative_panels/panel_concrete_magenta, gt6ce:decorative_panels/panel_cfoam_magenta, gt6ce:decorative_panels/panel_wood_maple, gt6ce:decorative_panels/panel_wood_spruce, gt6ce:decorative_panels/panel_cfoam_blue, gt6ce:technology/fire_starter, gt6ce:decorative_panels/panel_asphalt_orange, gt6ce:decorative_panels/panel_wood_wood, gt6ce:decorative_panels/panel_wood_birch, gt6ce:decorative_panels/panel_wood_bamboo, gt6ce:decorative_panels/panel_wood_treated, gt6ce:decorative_panels/panel_asphalt_black, gt6ce:decorative_panels/panel_cfoam_light_gray, gt6ce:decorative_panels/panel_asphalt_brown, gt6ce:vanilla/mangrove_planks_saw, gt6ce:decorative_panels/panel_concrete_green, gt6ce:vanilla/birch_planks_saw, gt6ce:decorative_panels/panel_wood_bluespruce, gt6ce:decorative_panels/panel_asphalt_pink, gt6ce:technology/fire_starter_2, gt6ce:decorative_panels/panel_cfoam_light_blue, gt6ce:vanilla/stick_saw, gt6ce:decorative_panels/panel_cfoam_red, gt6ce:vanilla/warped_planks_saw, gt6ce:decorative_panels/panel_wood_rainbowood, gt6ce:decorative_panels/panel_cfoam_lime, gt6ce:decorative_panels/panel_asphalt_light_gray, gt6ce:decorative_panels/panel_concrete_red, gt6ce:decorative_panels/panel_wood_cherry, gt6ce:decorative_panels/panel_concrete_yellow, gt6ce:decorative_panels/panel_concrete_light_gray, gt6ce:decorative_panels/panel_wood_warped, gt6ce:decorative_panels/panel_wood_acacia, gt6ce:decorative_panels/panel_wood_crimson, gt6ce:vanilla/dark_oak_planks_saw, gt6ce:decorative_panels/panel_wood_coconut, gt6ce:decorative_panels/panel_asphalt_green, gt6ce:vanilla/spruce_planks_saw, gt6ce:decorative_panels/panel_wood_dark_oak, gt6ce:decorative_panels/panel_cfoam_pink, gt6ce:decorative_panels/panel_concrete_lime, gt6ce:decorative_panels/panel_wood_ebony, gt6ce:decorative_panels/panel_concrete_blue, gt6ce:decorative_panels/panel_wood_willow, gt6ce:decorative_panels/panel_asphalt_yellow, gt6ce:decorative_panels/panel_wood_blue_mahoe, gt6ce:decorative_panels/panel_wood_compressed, gt6ce:vanilla/cherry_planks_saw, gt6ce:decorative_panels/panel_wood_cinnamon, gt6ce:decorative_panels/panel_asphalt_cyan, gt6ce:decorative_panels/panel_wood_hazel, gt6ce:decorative_panels/panel_concrete_pink, gt6ce:decorative_panels/panel_asphalt_gray, gt6ce:decorative_panels/panel_cfoam_white, gt6ce:decorative_panels/panel_concrete_orange, gt6ce:decorative_panels/panel_asphalt_blue, gt6ce:decorative_panels/panel_concrete_gray, gt6ce:decorative_panels/panel_asphalt_lime, gt6ce:decorative_panels/panel_cfoam_orange, gt6ce:decorative_panels/panel_cfoam_purple, gt6ce:decorative_panels/panel_cfoam_gray, gt6ce:decorative_panels/panel_asphalt_light_blue, gt6ce:decorative_panels/panel_wood_rotten, gt6ce:decorative_panels/panel_wood_white_mahoe, gt6ce:decorative_panels/panel_wood_pine, gt6ce:decorative_panels/panel_wood_mangrove, gt6ce:decorative_panels/panel_cfoam_cyan, gt6ce:vanilla/acacia_planks_saw, gt6ce:decorative_panels/panel_wood_dry, gt6ce:vanilla/crimson_planks_saw, gt6ce:decorative_panels/panel_cfoam_green, gt6ce:decorative_panels/panel_cfoam_yellow, gt6ce:decorative_panels/panel_asphalt_red, gt6ce:decorative_panels/panel_wood_mossy, gt6ce:decorative_panels/panel_concrete_purple, gt6ce:decorative_panels/panel_asphalt_purple, gt6ce:decorative_panels/panel_wood_jungle, gt6ce:decorative_panels/panel_wood, gt6ce:decorative_panels/panel_asphalt_magenta, gt6ce:decorative_panels/panel_concrete_light_blue, gt6ce:decorative_panels/panel_concrete_brown, gt6ce:decorative_panels/panel_cfoam_black, gt6ce:vanilla/jungle_planks_saw, gt6ce:decorative_panels/panel_concrete_black, gt6ce:wood/slab_bluespruce, gt6ce:decorative_panels/panel_asphalt_white, gt6ce:decorative_panels/panel_wood_frozen, gt6ce:vanilla/oak_planks_saw, gt6ce:decorative_panels/panel_concrete_white, gt6ce:decorative_panels/panel_concrete_cyan, gt6ce:decorative_panels/panel_wood_rubber]",
+      "family": "recipes_processing_and_source_expectations",
+      "status": "pending",
+      "current_name": "toolshapedrecipesdonotmirrorunlesstheoriginaldid",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/HandCraftingTests.java",
+          "line_at_baseline": 230,
+          "method_at_baseline": "toolShapedRecipesDoNotMirrorUnlessTheOriginalDid",
+          "method_snapshot_sha256": "b2aa670c9d5a081d58a0a50a3ce1deb18fa6e5fb146fe00d0524670176b0435a"
+        }
+      ]
+    },
+    {
+      "name": "bronzepumpcanaccumulateoriginalbufferwithoutsimulationmutation",
+      "original_failure": "a whole RU packet cannot overflow the 8192-RU buffer",
+      "family": "covers_controls_and_energy_boundaries",
+      "status": "pending",
+      "current_name": "bronzepumpcanaccumulateoriginalbufferwithoutsimulationmutation",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/PumpTransferRepairTests.java",
+          "line_at_baseline": 116,
+          "method_at_baseline": "bronzePumpCanAccumulateOriginalBufferWithoutSimulationMutation",
+          "method_snapshot_sha256": "8b4e827953a7bef8355ae5f8d51e526e1e96cbf913189334629e0c0eeeac43b5"
+        }
+      ]
+    },
+    {
+      "name": "allmanufacturingingredientsareregistered",
+      "original_failure": "Manufacturing missing ingredients: [gregtech:smeltery_survival/smelting_crucible_stone missing recipe, gregtech:smeltery_survival/smelting_crucible_basalt missing recipe, gregtech:smeltery_survival/smelting_crucible_granite_black missing recipe, gregtech:smeltery_survival/smelting_crucible_granite_red missing recipe, gregtech:smeltery_survival/smelting_crucible_nether_brick missing recipe, gregtech:smeltery_survival/smelting_crucible_quartz missing recipe, gregtech:smeltery_survival/smelting_crucible_carbon missing recipe, gregtech:smeltery_survival/smelting_crucible_bronze missing recipe, gregtech:smeltery_survival/smelting_crucible_invar missing recipe, gregtech:smeltery_survival/smelting_crucible_steel missing recipe, gregtech:smeltery_survival/smelting_crucible_hsla missing recipe, gregtech:smeltery_survival/smelting_crucible_stainless_steel missing recipe, gregtech:smeltery_survival/smelting_crucible_dark_iron missing recipe, gregtech:smeltery_survival/smelting_crucible_meteoric_iron missing recipe, gregtech:smeltery_survival/smelting_crucible_meteoric_steel missing recipe, gregtech:smeltery_survival/smelting_crucible_netherite missing recipe, gregtech:smeltery_survival/smelting_crucible_knightmetal missing recipe, gregtech:smeltery_survival/smelting_crucible_fiery_steel missing recipe, gregtech:smeltery_survival/smelting_crucible_octine missing recipe, gregtech:smeltery_survival/smelting_crucible_thaumium missing recipe, gregtech:smeltery_survival/smelting_crucible_titanium missing recipe, gregtech:smeltery_survival/smelting_crucible_chromium missing recipe, gregtech:smeltery_survival/smelting_crucible_molybdenum missing recipe, gregtech:smeltery_survival/smelting_crucible_niobium missing recipe, gregtech:smeltery_survival/smelting_crucible_tantalum missing recipe, gregtech:smeltery_survival/smelting_crucible_osmium missing recipe, gregtech:smeltery_survival/smelting_crucible_iridium missing recipe, gregtech:smeltery_survival/smelting_crucible_niobium_titanium missing recipe, gregtech:smeltery_survival/smelting_crucible_vanadium missing recipe, gregtech:smeltery_survival/smelting_crucible_tungsten missing recipe, gregtech:smeltery_survival/smelting_crucible_ta4hfc5 missing recipe, gregtech:smeltery_survival/smelting_crucible_void_metal missing recipe, gregtech:smeltery_survival/smelting_crucible_bedrock_hsla_alloy missing recipe, gregtech:smeltery_survival/smelting_crucible_ad missing recipe, gregtech:smeltery_survival/burning_box_solid_brick missing recipe, gregtech:smeltery_survival/burning_box_solid_lead missing recipe, gregtech:smeltery_survival/burning_box_solid_bismuth missing recipe, gregtech:smeltery_survival/burning_box_solid_bronze missing recipe, gregtech:smeltery_survival/burning_box_solid_arsenic_copper missing recipe, gregtech:smeltery_survival/burning_box_solid_arsenic_bronze missing recipe, gregtech:smeltery_survival/burning_box_solid_invar missing recipe, gregtech:smeltery_survival/burning_box_solid_steel missing recipe, gregtech:smeltery_survival/burning_box_solid_chromium missing recipe, gregtech:smeltery_survival/burning_box_solid_titanium missing recipe, gregtech:smeltery_survival/burning_box_solid_netherite missing recipe, gregtech:smeltery_survival/burning_box_solid_tungsten missing recipe, gregtech:smeltery_survival/burning_box_solid_tungsten_steel missing recipe, gregtech:smeltery_survival/burning_box_solid_ta4hfc5 missing recipe, gregtech:smeltery_survival/burning_box_solid_dense_lead missing recipe, gregtech:smeltery_survival/burning_box_solid_dense_bismuth missing recipe, gregtech:smeltery_survival/burning_box_solid_dense_bronze missing recipe, gregtech:smeltery_survival/burning_box_solid_dense_arsenic_copper missing recipe, gregtech:smeltery_survival/burning_box_solid_dense_arsenic_bronze missing recipe, gregtech:smeltery_survival/burning_box_solid_dense_invar missing recipe, gregtech:smeltery_survival/burning_box_solid_dense_steel missing recipe, gregtech:smeltery_survival/burning_box_solid_dense_chromium missing recipe, gregtech:smeltery_survival/burning_box_solid_dense_titanium missing recipe, gregtech:smeltery_survival/burning_box_solid_dense_netherite missing recipe, gregtech:smeltery_survival/burning_box_solid_dense_tungsten missing recipe, gregtech:smeltery_survival/burning_box_solid_dense_tungsten_steel missing recipe, gregtech:smeltery_survival/burning_box_solid_dense_ta4hfc5 missing recipe, gregtech:smeltery_survival/steam_boiler_lead missing recipe, gregtech:smeltery_survival/steam_boiler_bismuth missing recipe, gregtech:smeltery_survival/steam_boiler_bronze missing recipe, gregtech:smeltery_survival/steam_boiler_arsenic_copper missing recipe, gregtech:smeltery_survival/steam_boiler_arsenic_bronze missing recipe, gregtech:smeltery_survival/steam_boiler_invar missing recipe, gregtech:smeltery_survival/steam_boiler_steel missing recipe, gregtech:smeltery_survival/steam_boiler_chromium missing recipe, gregtech:smeltery_survival/steam_boiler_titanium missing recipe, gregtech:smeltery_survival/steam_boiler_netherite missing recipe, gregtech:smeltery_survival/steam_boiler_tungsten missing recipe, gregtech:smeltery_survival/steam_boiler_tungsten_steel missing recipe, gregtech:smeltery_survival/steam_boiler_ultimet missing recipe, gregtech:smeltery_survival/strong_steam_boiler_lead missing recipe, gregtech:smeltery_survival/strong_steam_boiler_bismuth missing recipe, gregtech:smeltery_survival/strong_steam_boiler_bronze missing recipe, gregtech:smeltery_survival/strong_steam_boiler_arsenic_copper missing recipe, gregtech:smeltery_survival/strong_steam_boiler_arsenic_bronze missing recipe, gregtech:smeltery_survival/strong_steam_boiler_invar missing recipe, gregtech:smeltery_survival/strong_steam_boiler_steel missing recipe, gregtech:smeltery_survival/strong_steam_boiler_chromium missing recipe, gregtech:smeltery_survival/strong_steam_boiler_titanium missing recipe, gregtech:smeltery_survival/strong_steam_boiler_netherite missing recipe, gregtech:smeltery_survival/strong_steam_boiler_tungsten missing recipe, gregtech:smeltery_survival/strong_steam_boiler_tungsten_steel missing recipe, gregtech:smeltery_survival/strong_steam_boiler_ultimet missing recipe, gregtech:smeltery_survival/burning_box_liquid_bronze missing recipe, gregtech:smeltery_survival/burning_box_liquid_arsenic_copper missing recipe, gregtech:smeltery_survival/burning_box_liquid_arsenic_bronze missing recipe, gregtech:smeltery_survival/burning_box_liquid_invar missing recipe, gregtech:smeltery_survival/burning_box_liquid_steel missing recipe, gregtech:smeltery_survival/burning_box_liquid_chromium missing recipe, gregtech:smeltery_survival/burning_box_liquid_titanium missing recipe, gregtech:smeltery_survival/burning_box_liquid_netherite missing recipe, gregtech:smeltery_survival/burning_box_liquid_tungsten missing recipe, gregtech:smeltery_survival/burning_box_liquid_tungsten_steel missing recipe, gregtech:smeltery_survival/burning_box_liquid_ta4hfc5 missing recipe, gregtech:smeltery_survival/burning_box_liquid_dense_bronze missing recipe, gregtech:smeltery_survival/burning_box_liquid_dense_arsenic_copper missing recipe, gregtech:smeltery_survival/burning_box_liquid_dense_arsenic_bronze missing recipe, gregtech:smeltery_survival/burning_box_liquid_dense_invar missing recipe, gregtech:smeltery_survival/burning_box_liquid_dense_steel missing recipe, gregtech:smeltery_survival/burning_box_liquid_dense_chromium missing recipe, gregtech:smeltery_survival/burning_box_liquid_dense_titanium missing recipe, gregtech:smeltery_survival/burning_box_liquid_dense_netherite missing recipe, gregtech:smeltery_survival/burning_box_liquid_dense_tungsten missing recipe, gregtech:smeltery_survival/burning_box_liquid_dense_tungsten_steel missing recipe, gregtech:smeltery_survival/burning_box_liquid_dense_ta4hfc5 missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_lead missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_bismuth missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_bronze missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_arsenic_copper missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_arsenic_bronze missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_invar missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_steel missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_chromium missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_titanium missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_netherite missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_tungsten missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_tungsten_steel missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_ta4hfc5 missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_dense_lead missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_dense_bismuth missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_dense_bronze missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_dense_arsenic_copper missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_dense_arsenic_bronze missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_dense_invar missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_dense_steel missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_dense_chromium missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_dense_titanium missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_dense_netherite missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_dense_tungsten missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_dense_tungsten_steel missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_dense_ta4hfc5 missing recipe, gregtech:smeltery_survival/clay_crucible missing recipe, gregtech:smeltery_survival/ceramic_crucible_firing missing recipe, gregtech:smeltery_survival/clay_crucible_reclaim missing recipe]",
+      "family": "catalog_recipes_and_network_batch",
+      "status": "verified_in_targeted_replay",
+      "current_name": "allmanufacturingingredientsareregistered",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CrucibleSurvivalTests.java",
+          "line_at_baseline": 35,
+          "method_at_baseline": "allManufacturingIngredientsAreRegistered",
+          "method_snapshot_sha256": "ce2e906aec8453807e98d626d1357deb9472d363e43513303f9c7ee29fae7ceb"
+        }
+      ],
+      "verification": "forge-catalog-regressions-20261025.json"
+    },
+    {
+      "name": "allseventeenindicatorshaveoriginalmetaandmaterials",
+      "original_failure": "GT6 has nine A and eight B indicator flowers",
+      "family": "catalog_recipes_and_network_batch",
+      "status": "verified_in_targeted_replay",
+      "current_name": "alleighteenindicatorshaveoriginalmetaandmaterials",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BedrockFlowerRepairTests.java",
+          "line_at_baseline": 35,
+          "method_at_baseline": "allSeventeenIndicatorsHaveOriginalMetaAndMaterials",
+          "method_snapshot_sha256": "91d76bf8579c8a061975e8513205119c818aa95714595d3b76e0d0df9fdf89e6"
+        }
+      ],
+      "verification": "forge-catalog-regressions-20261025.json"
+    },
+    {
+      "name": "brokenextenderdropsconfiguredpanelonce",
+      "original_failure": "breaking extender drops exactly one attached panel",
+      "family": "covers_controls_and_energy_boundaries",
+      "status": "pending",
+      "current_name": "brokenextenderdropsconfiguredpanelonce",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/PanelCoverTests.java",
+          "line_at_baseline": 189,
+          "method_at_baseline": "brokenExtenderDropsConfiguredPanelOnce",
+          "method_snapshot_sha256": "6e2828b34ef9b1b89ddef2a8e375be10d908373a24792bd8c7b12e94c53ae121"
+        }
+      ]
+    },
+    {
+      "name": "playerradiationaccumulatesandpersists",
+      "original_failure": "below 25 has no radiation symptom",
+      "family": "world_generation_radiation_and_bees",
+      "status": "pending",
+      "current_name": "playerradiationaccumulatesandpersists",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/NuclearSurvivalTests.java",
+          "line_at_baseline": 35,
+          "method_at_baseline": "playerRadiationAccumulatesAndPersists",
+          "method_snapshot_sha256": "10d0eb9e3c5ff7ea4dde024c50d4f0a8590e81baf3097b4f236a4f7af21c67a3"
+        }
+      ]
+    },
+    {
+      "name": "headandhandlerowsstayshapeless",
+      "original_failure": "head then handle matches",
+      "family": "tools_and_player_interaction",
+      "status": "pending",
+      "current_name": "headandhandlerowsstayshapeless",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ToolAssemblyTests.java",
+          "line_at_baseline": 184,
+          "method_at_baseline": "headAndHandleRowsStayShapeless",
+          "method_snapshot_sha256": "cf03e2e463670ac151903d39a4a559bb2e7420dc2e067445938b0275b9a8f993"
+        }
+      ]
+    },
+    {
+      "name": "attachmentphaseandflowrules",
+      "original_failure": "gas drain rule cap_nozzle_steel",
+      "family": "tools_and_player_interaction",
+      "status": "pending",
+      "current_name": "attachmentphaseandflowrules",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/FluidToolVariantTests.java",
+          "line_at_baseline": 47,
+          "method_at_baseline": "attachmentPhaseAndFlowRules",
+          "method_snapshot_sha256": "ab6e692336436d94fc7874ca87cd4b748fe354cc3ca4d5c9d4ca5eb2ab952217"
+        }
+      ]
+    },
+    {
+      "name": "dungeonkeysareregisteredinbothlanguages",
+      "original_failure": "the item key_brass is not registered; the item key_bronze is not registered; the item key_copper is not registered; the item key_gold is not registered; the item key_iron is not registered; the item key_lead is not registered; the item key_plastic is not registered; the item key_platinum is not registered; the item key_silver is not registered; the item key_tin is not registered; en_us has no name for dungeon_portal_nether; zh_cn has no name for dungeon_portal_nether; en_us has no name for dungeon_portal_end; zh_cn has no name for dungeon_portal_end",
+      "family": "catalog_recipes_and_network_batch",
+      "status": "verified_in_targeted_replay",
+      "current_name": "dungeonkeysareregisteredinbothlanguages",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DungeonKeysAndPortalsTests.java",
+          "line_at_baseline": 203,
+          "method_at_baseline": "dungeonKeysAreRegisteredInBothLanguages",
+          "method_snapshot_sha256": "604991b453f8ac3e3b1d0e9304a60ebc9c248897b63805507d897b0080ea157c"
+        }
+      ],
+      "verification": "forge-catalog-regressions-20261025.json"
+    },
+    {
+      "name": "cablecycleandbranchconserveacceptedpackets",
+      "original_failure": "saturated receivers report no consumption",
+      "family": "catalog_recipes_and_network_batch",
+      "status": "verified_in_targeted_replay",
+      "current_name": "cablecycleandbranchconserveacceptedpackets",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ChargingCraftingRepairTests.java",
+          "line_at_baseline": 79,
+          "method_at_baseline": "cableCycleAndBranchConserveAcceptedPackets",
+          "method_snapshot_sha256": "09b71c7a51c5e08f0a0eb577e3cf2ba041213a4a7366c8aef65135b7f2f282cc"
+        }
+      ],
+      "verification": "forge-catalog-regressions-20261025.json"
+    },
+    {
+      "name": "electronicsinputsexecuteandsolderlimitstier",
+      "original_failure": "173 source-backed electronics recipes",
+      "family": "recipes_processing_and_source_expectations",
+      "status": "pending",
+      "current_name": "electronicsinputsexecuteandsolderlimitstier",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ElectronicsTests.java",
+          "line_at_baseline": 55,
+          "method_at_baseline": "electronicsInputsExecuteAndSolderLimitsTier",
+          "method_snapshot_sha256": "570be3a7153863615c215c70391f892149885599ff99f97ac7a896dd679bca08"
+        }
+      ]
+    },
+    {
+      "name": "woodrowgridsmatchexactlytheirownrow",
+      "original_failure": "shaped wood rows checked: 54",
+      "family": "recipes_processing_and_source_expectations",
+      "status": "pending",
+      "current_name": "woodrowgridsmatchexactlytheirownrow",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/WoodRecipeTests.java",
+          "line_at_baseline": 466,
+          "method_at_baseline": "woodRowGridsMatchExactlyTheirOwnRow",
+          "method_snapshot_sha256": "9feab20bbc7d2180e2a4354d5d4052b8431a3674fa611a52a58a3baca31907c9"
+        }
+      ]
+    },
+    {
+      "name": "replicatorrebuildsthescannedmaterial",
+      "original_failure": "the replicator hands out Hydrogen: 0 air",
+      "family": "recipes_processing_and_source_expectations",
+      "status": "pending",
+      "current_name": "replicatorrebuildsthescannedmaterial",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MaterialDataChainTests.java",
+          "line_at_baseline": 205,
+          "method_at_baseline": "replicatorRebuildsTheScannedMaterial",
+          "method_snapshot_sha256": "fc0305d21904064c4b146d6d140bd7919dd64d1131eb407eff25b298970ba93e"
+        }
+      ]
+    },
+    {
+      "name": "wroughtironisreachablethroughthesmelter",
+      "original_failure": "the Melter turns iron into molten iron",
+      "family": "recipes_processing_and_source_expectations",
+      "status": "pending",
+      "current_name": "wroughtironisreachablethroughthesmelter",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CrucibleTemperatureTests.java",
+          "line_at_baseline": 97,
+          "method_at_baseline": "wroughtIronIsReachableThroughTheSmelter",
+          "method_snapshot_sha256": "e94dc45087e6cba5e7be5dfc5e230025d3c25f8cd5ade239606e97846c5f9803"
+        }
+      ]
+    },
+    {
+      "name": "targetchunkownseveryplatformandpipewriteineitherorder",
+      "original_failure": "java.lang.AssertionError: mob-farm platform unexpectedly read scheduleTick",
+      "family": "world_generation_radiation_and_bees",
+      "status": "pending",
+      "current_name": "targetchunkownseveryplatformandpipewriteineitherorder",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DungeonMobFarmOuterTests.java",
+          "line_at_baseline": 131,
+          "method_at_baseline": "targetChunkOwnsEveryPlatformAndPipeWriteInEitherOrder",
+          "method_snapshot_sha256": "65f328ab7601cf2a3f87ea002a9fbe35f8948c7fd8cca88f87df7b2a934ac2d6"
+        }
+      ]
+    },
+    {
+      "name": "pressurevalveventsagasandheatswhatstandsinfront",
+      "original_failure": "the valve is attached, got 0 air",
+      "family": "covers_controls_and_energy_boundaries",
+      "status": "pending",
+      "current_name": "pressurevalveventsagasandheatswhatstandsinfront",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CoverBehaviorTests.java",
+          "line_at_baseline": 474,
+          "method_at_baseline": "pressureValveVentsAGasAndHeatsWhatStandsInFront",
+          "method_snapshot_sha256": "469f3345ed28899ab330ca59e34f6af5b088fa7f1c89d4d1a28fc55440f79488"
+        }
+      ]
+    },
+    {
+      "name": "originalfusionrecipesandcraftingresolve",
+      "original_failure": "fusion crafting resolves: fusion_reactor_main",
+      "family": "catalog_recipes_and_network_batch",
+      "status": "verified_in_targeted_replay",
+      "current_name": "originalfusionrecipesandcraftingresolve",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/FusionRegressionTests.java",
+          "line_at_baseline": 112,
+          "method_at_baseline": "originalFusionRecipesAndCraftingResolve",
+          "method_snapshot_sha256": "0e0f91b9f671a32bbb8095016025d5d214013ab13110194acb2f644fb24cb388"
+        }
+      ],
+      "verification": "forge-catalog-regressions-20261025.json"
+    },
+    {
+      "name": "automaticcoverwakesoninputwithoutconsumingduringprobe",
+      "original_failure": "empty machine returns to idle after completion",
+      "family": "covers_controls_and_energy_boundaries",
+      "status": "pending",
+      "current_name": "automaticcoverwakesoninputwithoutconsumingduringprobe",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ControlCoverTests.java",
+          "line_at_baseline": 48,
+          "method_at_baseline": "automaticCoverWakesOnInputWithoutConsumingDuringProbe",
+          "method_snapshot_sha256": "84ea089c2e5a8d4130f3e4f218ec9a56e4c1732261a40f73357134a7108f4a0a"
+        }
+      ]
+    },
+    {
+      "name": "blockclickscontrolmodesandstatusandpersistpanels",
+      "original_failure": "remaining cover drops exactly once",
+      "family": "covers_controls_and_energy_boundaries",
+      "status": "pending",
+      "current_name": "blockclickscontrolmodesandstatusandpersistpanels",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BatteryBoxPanelTests.java",
+          "line_at_baseline": 35,
+          "method_at_baseline": "blockClicksControlModesAndStatusAndPersistPanels",
+          "method_snapshot_sha256": "033606de836733827870424b4c97a7edca96c2e73e8870f6f9e50005ec337c4b"
+        }
+      ]
+    },
+    {
+      "name": "directselectorandstatuspanelspersistanddrop",
+      "original_failure": "remaining transformer panel drops once",
+      "family": "covers_controls_and_energy_boundaries",
+      "status": "pending",
+      "current_name": "directselectorandstatuspanelspersistanddrop",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ElectricTransformerControlTests.java",
+          "line_at_baseline": 63,
+          "method_at_baseline": "directSelectorAndStatusPanelsPersistAndDrop",
+          "method_snapshot_sha256": "17d0bd09c55fcffaa7382f06ac3e550dc848c5c5377b0d56036205177f17190b"
+        }
+      ]
+    },
+    {
+      "name": "steamdrivesdynamoandpreservesfluidsonbreak",
+      "original_failure": "controller drops stored fluids and pending pulse",
+      "family": "machine_lifecycle_structure_and_drops",
+      "status": "pending",
+      "current_name": "steamdrivesdynamoandpreservesfluidsonbreak",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/AxialGeneratorTests.java",
+          "line_at_baseline": 99,
+          "method_at_baseline": "steamDrivesDynamoAndPreservesFluidsOnBreak",
+          "method_snapshot_sha256": "08d57fa4244188fce9a2a3f8fac5ad79b2121c0dc0f2c34853cd3bb7f0bbc643"
+        }
+      ]
+    },
+    {
+      "name": "tierbuffersautooutputandcooldropnbt",
+      "original_failure": "formed controller receives water",
+      "family": "machine_lifecycle_structure_and_drops",
+      "status": "pending",
+      "current_name": "tierbuffersautooutputandcooldropnbt",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/OriginalLargeBoilerRepairTests.java",
+          "line_at_baseline": 123,
+          "method_at_baseline": "tierBuffersAutoOutputAndCoolDropNbt",
+          "method_snapshot_sha256": "ee5f47b50e157e66d1935753b79fe7f50b9e5be4ec9800e1856033cbd0b8db6a"
+        }
+      ]
+    },
+    {
+      "name": "fluxlasercapabilityandstoppersist",
+      "original_failure": "Cannot invoke \"net.minecraft.nbt.CompoundTag.getCompound(String)\" because the return value of \"net.minecraft.world.item.ItemStack.getTag()\" is null",
+      "family": "machine_lifecycle_structure_and_drops",
+      "status": "pending",
+      "current_name": "fluxlasercapabilityandstoppersist",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/OpticalEnergyRegressionTests.java",
+          "line_at_baseline": 55,
+          "method_at_baseline": "fluxLaserCapabilityAndStopPersist",
+          "method_snapshot_sha256": "c6b63159db7fd7baaac2df05c13957061bfc2e7e7482fabc19fd71788b0e771c"
+        }
+      ]
+    },
+    {
+      "name": "printerprintsthescanneddictionary",
+      "original_failure": "the printer prints a source dictionary cover: 1 printed_pages",
+      "family": "recipes_processing_and_source_expectations",
+      "status": "pending",
+      "current_name": "printerprintsthescanneddictionary",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MaterialDataChainTests.java",
+          "line_at_baseline": 90,
+          "method_at_baseline": "printerPrintsTheScannedDictionary",
+          "method_snapshot_sha256": "d698d01da9c0619260cea3d23a09941ce402f07835c67378007403dae47fce3f"
+        }
+      ]
+    },
+    {
+      "name": "sluicewashescrushedoreintopurifiedore",
+      "original_failure": "GT6 tSluice chances: [10000, 300, 300, 300, 300, 300, 300, 300, 300]",
+      "family": "recipes_processing_and_source_expectations",
+      "status": "pending",
+      "current_name": "sluicewashescrushedoreintopurifiedore",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/OrePurificationRoutesTests.java",
+          "line_at_baseline": 138,
+          "method_at_baseline": "sluiceWashesCrushedOreIntoPurifiedOre",
+          "method_snapshot_sha256": "6f182fbe3576fb9a63440a8ee5c6cf060f22381f9e81080db35d2a6f5ecefba8"
+        }
+      ]
+    },
+    {
+      "name": "tablesmatchgt6",
+      "original_failure": "the frozen log is GT6's BIOMES_FROZEN entry",
+      "family": "world_generation_radiation_and_bees",
+      "status": "pending",
+      "current_name": "tablesmatchgt6",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/SurfaceFloraTests.java",
+          "line_at_baseline": 197,
+          "method_at_baseline": "tablesMatchGt6",
+          "method_snapshot_sha256": "430d3412ad2f0a24542ba8d43a697a0a92af0c40f629ac15f0ba21da485d40b7"
+        }
+      ]
+    },
+    {
+      "name": "dungeoncelldispatchmatchesgt6",
+      "original_failure": "liquid above an ordinary ceiling column selects glowing glass",
+      "family": "world_generation_radiation_and_bees",
+      "status": "pending",
+      "current_name": "dungeoncelldispatchmatchesgt6",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DungeonTests.java",
+          "line_at_baseline": 246,
+          "method_at_baseline": "dungeonCellDispatchMatchesGt6",
+          "method_snapshot_sha256": "91dfa5e08c01a8f725092fc818b93e1033805e70cee7ab4b34cb015eeb7db54e"
+        }
+      ]
+    },
+    {
+      "name": "wirecraftingpreservesconductoramount",
+      "original_failure": "all 1316 wire recipes loaded; got 506",
+      "family": "recipes_processing_and_source_expectations",
+      "status": "pending",
+      "current_name": "wirecraftingpreservesconductoramount",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ManufacturingTests.java",
+          "line_at_baseline": 34,
+          "method_at_baseline": "wireCraftingPreservesConductorAmount",
+          "method_snapshot_sha256": "cdb852edd7f686caaa99576e66b0c71613f5e061dd9fec7ebd990c866c161ac8"
+        }
+      ]
+    },
+    {
+      "name": "radiationsuitandmedicine",
+      "original_failure": "missing one piece removes protection",
+      "family": "world_generation_radiation_and_bees",
+      "status": "pending",
+      "current_name": "radiationsuitandmedicine",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/NuclearSurvivalTests.java",
+          "line_at_baseline": 55,
+          "method_at_baseline": "radiationSuitAndMedicine",
+          "method_snapshot_sha256": "f2c71d768d9638f4938ef12d3b3993233d684246bce2759b58f21d742c12048a"
+        }
+      ]
+    },
+    {
+      "name": "onlytransformersandbatteryboxesexistatuln",
+      "original_failure": "GT6 has no ULV variant of these devices: [crystal_charger_ulv, large_crystal_charger_ulv]",
+      "family": "catalog_recipes_and_network_batch",
+      "status": "verified_in_targeted_replay",
+      "current_name": "onlytransformersandbatteryboxesexistatuln",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/VoltageTierAlignmentTests.java",
+          "line_at_baseline": 152,
+          "method_at_baseline": "onlyTransformersAndBatteryBoxesExistAtUln",
+          "method_snapshot_sha256": "6e78bb710f156384ad1972cc2f050add975b3da66ff95473c13343ae563eff82"
+        }
+      ],
+      "verification": "forge-catalog-regressions-20261025.json"
+    },
+    {
+      "name": "builderwandskipsblockedpositions",
+      "original_failure": "the other eight placements still happen",
+      "family": "tools_and_player_interaction",
+      "status": "pending",
+      "current_name": "builderwandskipsblockedpositions",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DebugToolBehaviorTests.java",
+          "line_at_baseline": 153,
+          "method_at_baseline": "builderWandSkipsBlockedPositions",
+          "method_snapshot_sha256": "cc0c3617e0ecbec46bd11b8c0af575ac4fe24a8ed2525f9ad8b794b245acfb61"
+        }
+      ]
+    },
+    {
+      "name": "fluidburningboxcapabilitiesarecached",
+      "original_failure": "fluid burning box caches one handle per sink, not per side (its inventory is the same object for every non-front face)",
+      "family": "covers_controls_and_energy_boundaries",
+      "status": "pending",
+      "current_name": "fluidburningboxcapabilitiesarecached",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CapabilityHandleTests.java",
+          "line_at_baseline": 194,
+          "method_at_baseline": "fluidBurningBoxCapabilitiesAreCached",
+          "method_snapshot_sha256": "4831db826177fcec23aec12913670c163541d42876d28cebd2d4839b299178b7"
+        }
+      ]
+    },
+    {
+      "name": "netherportalroombuildsgt6frame",
+      "original_failure": "slot 22 holds GT6's hunting guide",
+      "family": "world_generation_radiation_and_bees",
+      "status": "pending",
+      "current_name": "netherportalroombuildsgt6frame",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DungeonKeysAndPortalsTests.java",
+          "line_at_baseline": 343,
+          "method_at_baseline": "netherPortalRoomBuildsGt6Frame",
+          "method_snapshot_sha256": "48441b344506f027a828b7604251e3593414fb31d465ce4c6326584fe1b52e2c"
+        }
+      ]
+    },
+    {
+      "name": "queendeathhandsoutthebroodandpromotesaprincess",
+      "original_failure": "the main drone slot is filled first (:137)",
+      "family": "world_generation_radiation_and_bees",
+      "status": "pending",
+      "current_name": "queendeathhandsoutthebroodandpromotesaprincess",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BumbliaryTests.java",
+          "line_at_baseline": 420,
+          "method_at_baseline": "queenDeathHandsOutTheBroodAndPromotesAPrincess",
+          "method_snapshot_sha256": "85491221a3b7941adcedd41a9b06b49af852463df0c6eea66dab568c0f90271a"
+        }
+      ]
+    },
+    {
+      "name": "capacitytintandenergyarithmetic",
+      "original_failure": "material head, LV orange body, untinted overlay",
+      "family": "catalog_recipes_and_network_batch",
+      "status": "verified_in_targeted_replay",
+      "current_name": "capacitytintandenergyarithmetic",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ElectricToolAssemblyTests.java",
+          "line_at_baseline": 80,
+          "method_at_baseline": "capacityTintAndEnergyArithmetic",
+          "method_snapshot_sha256": "8dd727cf23fa9a3854665e1479202a90690a264f997bd7c4189be9f9cb37f2d1"
+        }
+      ],
+      "verification": "forge-catalog-regressions-20261025.json"
+    },
+    {
+      "name": "axialrecipesloadandtoolsremain",
+      "original_failure": "manufacturing recipe loads: gt6ce:magnalium_steam_turbine_main_housing",
+      "family": "catalog_recipes_and_network_batch",
+      "status": "verified_in_targeted_replay",
+      "current_name": "axialrecipesloadandtoolsremain",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/AxialGeneratorTests.java",
+          "line_at_baseline": 144,
+          "method_at_baseline": "axialRecipesLoadAndToolsRemain",
+          "method_snapshot_sha256": "896680849df12e68c7485915f709e3c1fad696e61f2d481bbd05d831354cdac2"
+        }
+      ],
+      "verification": "forge-catalog-regressions-20261025.json"
+    },
+    {
+      "name": "realreloadspreservegeneratedrecipesoverridesandfurnacemirrors",
+      "original_failure": "client packet round trip: recipe content changed: [gt6ce:ammunition/plastic_shaft_plastic_feather, gt6ce:ammunition/wood_shaft_plastic_feather, gt6ce:axial/large_dynamo_adamantium, gt6ce:axial/large_dynamo_main, gt6ce:axial/large_dynamo_titanium] (15500 IDs)",
+      "family": "catalog_recipes_and_network_batch",
+      "status": "verified_in_targeted_replay",
+      "current_name": "realreloadspreservegeneratedrecipesoverridesandfurnacemirrors",
+      "sources": [
+        {
+          "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/RuntimeRecipeReloadTests.java",
+          "line_at_baseline": 35,
+          "method_at_baseline": "realReloadsPreserveGeneratedRecipesOverridesAndFurnaceMirrors",
+          "method_snapshot_sha256": "d3b5ddcb69dff01756a02ece83baac54a64e93368b16c104a386567177104078"
+        }
+      ],
+      "verification": "forge-catalog-regressions-20261025.json"
+    }
+  ],
+  "ledger": {
+    "indexed_before_batch": 76,
+    "verified_this_batch": 21,
+    "pending_original_candidates": 55,
+    "not_a_new_full_suite_measurement": true
+  }
+}

@@ -80,7 +80,7 @@ public final class RuntimeRecipeReloadTests {
             if(!new HashSet<>(server.getPackRepository().getSelectedIds()).equals(new HashSet<>(ids))) server.reloadResources(ids).join();
             // Only files/directories created above; never recursively remove a computed user path.
             for(Path path:List.of(override,probe,never,rail,metadata,rail.getParent(),root.resolve("data/minecraft"),override.getParent(),override.getParent().getParent(),
-                    override.getParent().getParent().getParent(),root.resolve("data/gregtech"),probe.getParent(),root.resolve("data/gregtech_repair"),root.resolve("data"),root))
+                    override.getParent().getParent().getParent(),root.resolve("data/gt6ce"),probe.getParent(),root.resolve("data/gregtech_repair"),root.resolve("data"),root))
                 Files.deleteIfExists(path);
         }
         h.succeed();

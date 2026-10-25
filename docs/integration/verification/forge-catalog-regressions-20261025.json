@@ -1,0 +1,950 @@
+{
+  "date": "2026-10-25",
+  "base_commit": "41f272edf",
+  "branch": "codex/targeted-default-regressions",
+  "scope": "Concentrated source index for all 76 pending original Forge failures, with a merged 21-failure repair/fixture batch and recipe-network regression guards.",
+  "runtime_fix": {
+    "files": [
+      "CraftingTools.java",
+      "ToolShapedRecipe.java"
+    ],
+    "cause": "Repeat expansion appended pocket/electric choices; Forge wire ingredients are flattened resolved choices and must not be expanded again after decoding.",
+    "changes": [
+      "Deduplicate pocket/electric item choices during repeat source expansion.",
+      "Use an internal no-expansion constructor for Forge fromNetwork; public source/JSON construction retains expansion.",
+      "Keep protocol fields and ordering unchanged."
+    ],
+    "validation": "Repeated expansion guard plus full real resource reloads, temporary datapack and vanilla overrides, furnace mirrors, disabled-pack cleanup and complete recipe packet round trips passed.",
+    "old_failure_report": "Original snapshot reported 15500 recipe IDs changing during network round trip."
+  },
+  "reporting": {
+    "forge_and_neo_compile": "passed",
+    "change": "Optional reports preserve LogTestReporter and JUnit XML; additionally log full throwable stack on failure.",
+    "observed": "First-run four failures included exact test files and lines; original concise reports retained."
+  },
+  "namespace_only_changes": [
+    "standardized-ingredients.json",
+    "smeltery-survival-recipes.json"
+  ],
+  "fixture_basis": [
+    "Canonical <material>_key item/model/randomtools IDs; merge classloader language fragments so addon language additions do not hide base keys.",
+    "Twelve fixed axial recipe/output mappings verified against source JSON; canonical 172xx controller identity and exactly one real manufacturing route, no invented 1x1 self conversion.",
+    "Real source constructor conversion plate_to_blockplate/<material>_9 replaces plain packing recipe; retain unpack recipes.",
+    "MultiblockRecipePack owns fusion/coils/processor IDs; static matter machines stay under matter/.",
+    "Exclude addon machine specifications from built-in manufacturing contract; report missing built-in ID/type/tier explicitly.",
+    "Saturate source 128000-EU NiCd LV batteries with existing setCharge and declared capacity, not obsolete 100000 literal.",
+    "Match all 14 electric tool families to their declared battery tier; retain four original LV grid/wear tests and full generated-row network guard.",
+    "Head tint layer1, overlay layer2; source Drill generic block-use cost200 EU, not100.",
+    "Retired generic battery IDs are absent; only source chemistry/tier battery items can satisfy the recipe. Old-save migration is not asserted.",
+    "Adopted T0 small/large crystal chargers are valid ULV devices.",
+    "Source-restored Vindicator Flower A:9 raises catalog to10A+8B; original17 per-item fixtures remain and restored row is checked.",
+    "Remove duplicate bale_ prefix in three grass bale fixture IDs."
+  ],
+  "first_run": {
+    "tests": 24,
+    "passed": 20,
+    "failed": 4,
+    "cases": [
+      {
+        "name": "rejectedpacketsneverenergizewireandacceptedpoweraccumulates",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "alleighteenindicatorshaveoriginalmetaandmaterials",
+        "template": "gt6ce_forge_catalog_regressions:coin_pile_space",
+        "failures": []
+      },
+      {
+        "name": "dungeonkeysareregisteredinbothlanguages",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": [
+          "Cannot invoke \"com.google.gson.JsonElement.getAsString()\" because the return value of \"com.google.gson.JsonObject.get(String)\" is null"
+        ]
+      },
+      {
+        "name": "allmanufacturingingredientsareregistered",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "onlytransformersandbatteryboxesexistatuln",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "originalmatterrulesandmanufacturingexist",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "originalfusionrecipesandcraftingresolve",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "repeatedtoolexpansionandnetworkroundtriparestable",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "originallvpatternsmaterialsandtoolremainders",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "axialrecipesloadandtoolsremain",
+        "template": "gt6ce_forge_catalog_regressions:test_blueprint_empty",
+        "failures": [
+          "rotor plate packing loads"
+        ]
+      },
+      {
+        "name": "everybalehasoriginalfireharvestmodelandsurvivalrecipe",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "originalsteamanddynamohousingsformateverygrade",
+        "template": "gt6ce_forge_catalog_regressions:test_blueprint_empty",
+        "failures": []
+      },
+      {
+        "name": "generatedelectricrowsreachserverandnetwork",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "cablecycleandbranchconserveacceptedpackets",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "dungeonkeyandportalassetsexist",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "capacitytintandenergyarithmetic",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": [
+          "drill use still consumes 100 EU"
+        ]
+      },
+      {
+        "name": "originalgasturbinehousingsformanduseoriginalsteamhousing",
+        "template": "gt6ce_forge_catalog_regressions:test_blueprint_empty",
+        "failures": []
+      },
+      {
+        "name": "axialcontrollershaveoneoriginalmanufacturingroute",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "captureruntimecatalogforremainingfailurediagnosis",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "realchargerandtoolassemblyusechemicalcapacity",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "basicmachineshavesurvivalrecipes",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "allaxialrecipesaccepteverychemistryatonlytheoriginaltier",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": [
+          "legacy battery remains usable"
+        ]
+      },
+      {
+        "name": "craftingtagscontainoriginalingredients",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "realreloadspreservegeneratedrecipesoverridesandfurnacemirrors",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      }
+    ],
+    "duration": "11m51s",
+    "reload_batch": "recipe_reload_only; no other GameTests overlap the global reload",
+    "source_note": "Implementation and reporting code were already final. Four fixture methods were updated after this run; source hashes below describe the final fixture revision, and first-run stack line numbers refer to pre-followup fixtures."
+  },
+  "followup": {
+    "tests": 4,
+    "passed": 4,
+    "failed": 0,
+    "cases": [
+      {
+        "name": "dungeonkeysareregisteredinbothlanguages",
+        "template": "gt6ce_forge_catalog_followup:test_empty",
+        "failures": []
+      },
+      {
+        "name": "axialrecipesloadandtoolsremain",
+        "template": "gt6ce_forge_catalog_followup:test_blueprint_empty",
+        "failures": []
+      },
+      {
+        "name": "capacitytintandenergyarithmetic",
+        "template": "gt6ce_forge_catalog_followup:test_empty",
+        "failures": []
+      },
+      {
+        "name": "allaxialrecipesaccepteverychemistryatonlytheoriginaltier",
+        "template": "gt6ce_forge_catalog_followup:test_empty",
+        "failures": []
+      }
+    ],
+    "duration": "3m44s",
+    "scope": "Only the four first-run failures; the twenty successes including full reload were not rerun.",
+    "corrections": [
+      "Merge all base/addon language fragments instead of opening only the first classloader resource; report absent keys without NPE.",
+      "Validate the source-authoritative nine-plate form conversion replacing the plain axial packing ID.",
+      "Reject absent retired generic battery identities while preserving every exact-tier source chemistry check.",
+      "Use adopted source Drill generic block-use energy200 EU; keep bounds, persistence and no network discharge checks."
+    ]
+  },
+  "combined_latest": {
+    "unique_cases": 24,
+    "prior_failure_records_verified": 21,
+    "guards": 2,
+    "diagnostic_catalog": 1,
+    "cases": [
+      {
+        "name": "rejectedpacketsneverenergizewireandacceptedpoweraccumulates",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "alleighteenindicatorshaveoriginalmetaandmaterials",
+        "template": "gt6ce_forge_catalog_regressions:coin_pile_space",
+        "failures": []
+      },
+      {
+        "name": "allmanufacturingingredientsareregistered",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "onlytransformersandbatteryboxesexistatuln",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "originalmatterrulesandmanufacturingexist",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "originalfusionrecipesandcraftingresolve",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "repeatedtoolexpansionandnetworkroundtriparestable",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "originallvpatternsmaterialsandtoolremainders",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "everybalehasoriginalfireharvestmodelandsurvivalrecipe",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "originalsteamanddynamohousingsformateverygrade",
+        "template": "gt6ce_forge_catalog_regressions:test_blueprint_empty",
+        "failures": []
+      },
+      {
+        "name": "generatedelectricrowsreachserverandnetwork",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "cablecycleandbranchconserveacceptedpackets",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "dungeonkeyandportalassetsexist",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "originalgasturbinehousingsformanduseoriginalsteamhousing",
+        "template": "gt6ce_forge_catalog_regressions:test_blueprint_empty",
+        "failures": []
+      },
+      {
+        "name": "axialcontrollershaveoneoriginalmanufacturingroute",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "captureruntimecatalogforremainingfailurediagnosis",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "realchargerandtoolassemblyusechemicalcapacity",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "basicmachineshavesurvivalrecipes",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "craftingtagscontainoriginalingredients",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "realreloadspreservegeneratedrecipesoverridesandfurnacemirrors",
+        "template": "gt6ce_forge_catalog_regressions:test_empty",
+        "failures": []
+      },
+      {
+        "name": "dungeonkeysareregisteredinbothlanguages",
+        "template": "gt6ce_forge_catalog_followup:test_empty",
+        "failures": []
+      },
+      {
+        "name": "axialrecipesloadandtoolsremain",
+        "template": "gt6ce_forge_catalog_followup:test_blueprint_empty",
+        "failures": []
+      },
+      {
+        "name": "capacitytintandenergyarithmetic",
+        "template": "gt6ce_forge_catalog_followup:test_empty",
+        "failures": []
+      },
+      {
+        "name": "allaxialrecipesaccepteverychemistryatonlytheoriginaltier",
+        "template": "gt6ce_forge_catalog_followup:test_empty",
+        "failures": []
+      }
+    ],
+    "prior_records": [
+      {
+        "previous": {
+          "name": "craftingtagscontainoriginalingredients",
+          "template": "gt6ce:test_empty",
+          "failures": [
+            "Existing source ingredient: gregtech:plate_graphene"
+          ]
+        },
+        "current": {
+          "name": "craftingtagscontainoriginalingredients",
+          "template": "gt6ce_forge_catalog_regressions:test_empty",
+          "failures": []
+        }
+      },
+      {
+        "previous": {
+          "name": "dungeonkeysareregisteredinbothlanguages",
+          "template": "gt6ce:test_empty",
+          "failures": [
+            "the item key_brass is not registered; the item key_bronze is not registered; the item key_copper is not registered; the item key_gold is not registered; the item key_iron is not registered; the item key_lead is not registered; the item key_plastic is not registered; the item key_platinum is not registered; the item key_silver is not registered; the item key_tin is not registered; en_us has no name for dungeon_portal_nether; zh_cn has no name for dungeon_portal_nether; en_us has no name for dungeon_portal_end; zh_cn has no name for dungeon_portal_end"
+          ]
+        },
+        "current": {
+          "name": "dungeonkeysareregisteredinbothlanguages",
+          "template": "gt6ce_forge_catalog_followup:test_empty",
+          "failures": []
+        }
+      },
+      {
+        "previous": {
+          "name": "dungeonkeyandportalassetsexist",
+          "template": "gt6ce:test_empty",
+          "failures": [
+            "missing models/item/key_brass.json; missing models/item/key_bronze.json; missing models/item/key_copper.json; missing models/item/key_gold.json; missing models/item/key_iron.json; missing models/item/key_lead.json; missing models/item/key_plastic.json; missing models/item/key_platinum.json; missing models/item/key_silver.json; missing models/item/key_tin.json"
+          ]
+        },
+        "current": {
+          "name": "dungeonkeyandportalassetsexist",
+          "template": "gt6ce_forge_catalog_regressions:test_empty",
+          "failures": []
+        }
+      },
+      {
+        "previous": {
+          "name": "allmanufacturingingredientsareregistered",
+          "template": "gt6ce:test_empty",
+          "failures": [
+            "Manufacturing missing ingredients: [gregtech:smeltery_survival/smelting_crucible_stone missing recipe, gregtech:smeltery_survival/smelting_crucible_basalt missing recipe, gregtech:smeltery_survival/smelting_crucible_granite_black missing recipe, gregtech:smeltery_survival/smelting_crucible_granite_red missing recipe, gregtech:smeltery_survival/smelting_crucible_nether_brick missing recipe, gregtech:smeltery_survival/smelting_crucible_quartz missing recipe, gregtech:smeltery_survival/smelting_crucible_carbon missing recipe, gregtech:smeltery_survival/smelting_crucible_bronze missing recipe, gregtech:smeltery_survival/smelting_crucible_invar missing recipe, gregtech:smeltery_survival/smelting_crucible_steel missing recipe, gregtech:smeltery_survival/smelting_crucible_hsla missing recipe, gregtech:smeltery_survival/smelting_crucible_stainless_steel missing recipe, gregtech:smeltery_survival/smelting_crucible_dark_iron missing recipe, gregtech:smeltery_survival/smelting_crucible_meteoric_iron missing recipe, gregtech:smeltery_survival/smelting_crucible_meteoric_steel missing recipe, gregtech:smeltery_survival/smelting_crucible_netherite missing recipe, gregtech:smeltery_survival/smelting_crucible_knightmetal missing recipe, gregtech:smeltery_survival/smelting_crucible_fiery_steel missing recipe, gregtech:smeltery_survival/smelting_crucible_octine missing recipe, gregtech:smeltery_survival/smelting_crucible_thaumium missing recipe, gregtech:smeltery_survival/smelting_crucible_titanium missing recipe, gregtech:smeltery_survival/smelting_crucible_chromium missing recipe, gregtech:smeltery_survival/smelting_crucible_molybdenum missing recipe, gregtech:smeltery_survival/smelting_crucible_niobium missing recipe, gregtech:smeltery_survival/smelting_crucible_tantalum missing recipe, gregtech:smeltery_survival/smelting_crucible_osmium missing recipe, gregtech:smeltery_survival/smelting_crucible_iridium missing recipe, gregtech:smeltery_survival/smelting_crucible_niobium_titanium missing recipe, gregtech:smeltery_survival/smelting_crucible_vanadium missing recipe, gregtech:smeltery_survival/smelting_crucible_tungsten missing recipe, gregtech:smeltery_survival/smelting_crucible_ta4hfc5 missing recipe, gregtech:smeltery_survival/smelting_crucible_void_metal missing recipe, gregtech:smeltery_survival/smelting_crucible_bedrock_hsla_alloy missing recipe, gregtech:smeltery_survival/smelting_crucible_ad missing recipe, gregtech:smeltery_survival/burning_box_solid_brick missing recipe, gregtech:smeltery_survival/burning_box_solid_lead missing recipe, gregtech:smeltery_survival/burning_box_solid_bismuth missing recipe, gregtech:smeltery_survival/burning_box_solid_bronze missing recipe, gregtech:smeltery_survival/burning_box_solid_arsenic_copper missing recipe, gregtech:smeltery_survival/burning_box_solid_arsenic_bronze missing recipe, gregtech:smeltery_survival/burning_box_solid_invar missing recipe, gregtech:smeltery_survival/burning_box_solid_steel missing recipe, gregtech:smeltery_survival/burning_box_solid_chromium missing recipe, gregtech:smeltery_survival/burning_box_solid_titanium missing recipe, gregtech:smeltery_survival/burning_box_solid_netherite missing recipe, gregtech:smeltery_survival/burning_box_solid_tungsten missing recipe, gregtech:smeltery_survival/burning_box_solid_tungsten_steel missing recipe, gregtech:smeltery_survival/burning_box_solid_ta4hfc5 missing recipe, gregtech:smeltery_survival/burning_box_solid_dense_lead missing recipe, gregtech:smeltery_survival/burning_box_solid_dense_bismuth missing recipe, gregtech:smeltery_survival/burning_box_solid_dense_bronze missing recipe, gregtech:smeltery_survival/burning_box_solid_dense_arsenic_copper missing recipe, gregtech:smeltery_survival/burning_box_solid_dense_arsenic_bronze missing recipe, gregtech:smeltery_survival/burning_box_solid_dense_invar missing recipe, gregtech:smeltery_survival/burning_box_solid_dense_steel missing recipe, gregtech:smeltery_survival/burning_box_solid_dense_chromium missing recipe, gregtech:smeltery_survival/burning_box_solid_dense_titanium missing recipe, gregtech:smeltery_survival/burning_box_solid_dense_netherite missing recipe, gregtech:smeltery_survival/burning_box_solid_dense_tungsten missing recipe, gregtech:smeltery_survival/burning_box_solid_dense_tungsten_steel missing recipe, gregtech:smeltery_survival/burning_box_solid_dense_ta4hfc5 missing recipe, gregtech:smeltery_survival/steam_boiler_lead missing recipe, gregtech:smeltery_survival/steam_boiler_bismuth missing recipe, gregtech:smeltery_survival/steam_boiler_bronze missing recipe, gregtech:smeltery_survival/steam_boiler_arsenic_copper missing recipe, gregtech:smeltery_survival/steam_boiler_arsenic_bronze missing recipe, gregtech:smeltery_survival/steam_boiler_invar missing recipe, gregtech:smeltery_survival/steam_boiler_steel missing recipe, gregtech:smeltery_survival/steam_boiler_chromium missing recipe, gregtech:smeltery_survival/steam_boiler_titanium missing recipe, gregtech:smeltery_survival/steam_boiler_netherite missing recipe, gregtech:smeltery_survival/steam_boiler_tungsten missing recipe, gregtech:smeltery_survival/steam_boiler_tungsten_steel missing recipe, gregtech:smeltery_survival/steam_boiler_ultimet missing recipe, gregtech:smeltery_survival/strong_steam_boiler_lead missing recipe, gregtech:smeltery_survival/strong_steam_boiler_bismuth missing recipe, gregtech:smeltery_survival/strong_steam_boiler_bronze missing recipe, gregtech:smeltery_survival/strong_steam_boiler_arsenic_copper missing recipe, gregtech:smeltery_survival/strong_steam_boiler_arsenic_bronze missing recipe, gregtech:smeltery_survival/strong_steam_boiler_invar missing recipe, gregtech:smeltery_survival/strong_steam_boiler_steel missing recipe, gregtech:smeltery_survival/strong_steam_boiler_chromium missing recipe, gregtech:smeltery_survival/strong_steam_boiler_titanium missing recipe, gregtech:smeltery_survival/strong_steam_boiler_netherite missing recipe, gregtech:smeltery_survival/strong_steam_boiler_tungsten missing recipe, gregtech:smeltery_survival/strong_steam_boiler_tungsten_steel missing recipe, gregtech:smeltery_survival/strong_steam_boiler_ultimet missing recipe, gregtech:smeltery_survival/burning_box_liquid_bronze missing recipe, gregtech:smeltery_survival/burning_box_liquid_arsenic_copper missing recipe, gregtech:smeltery_survival/burning_box_liquid_arsenic_bronze missing recipe, gregtech:smeltery_survival/burning_box_liquid_invar missing recipe, gregtech:smeltery_survival/burning_box_liquid_steel missing recipe, gregtech:smeltery_survival/burning_box_liquid_chromium missing recipe, gregtech:smeltery_survival/burning_box_liquid_titanium missing recipe, gregtech:smeltery_survival/burning_box_liquid_netherite missing recipe, gregtech:smeltery_survival/burning_box_liquid_tungsten missing recipe, gregtech:smeltery_survival/burning_box_liquid_tungsten_steel missing recipe, gregtech:smeltery_survival/burning_box_liquid_ta4hfc5 missing recipe, gregtech:smeltery_survival/burning_box_liquid_dense_bronze missing recipe, gregtech:smeltery_survival/burning_box_liquid_dense_arsenic_copper missing recipe, gregtech:smeltery_survival/burning_box_liquid_dense_arsenic_bronze missing recipe, gregtech:smeltery_survival/burning_box_liquid_dense_invar missing recipe, gregtech:smeltery_survival/burning_box_liquid_dense_steel missing recipe, gregtech:smeltery_survival/burning_box_liquid_dense_chromium missing recipe, gregtech:smeltery_survival/burning_box_liquid_dense_titanium missing recipe, gregtech:smeltery_survival/burning_box_liquid_dense_netherite missing recipe, gregtech:smeltery_survival/burning_box_liquid_dense_tungsten missing recipe, gregtech:smeltery_survival/burning_box_liquid_dense_tungsten_steel missing recipe, gregtech:smeltery_survival/burning_box_liquid_dense_ta4hfc5 missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_lead missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_bismuth missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_bronze missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_arsenic_copper missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_arsenic_bronze missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_invar missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_steel missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_chromium missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_titanium missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_netherite missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_tungsten missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_tungsten_steel missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_ta4hfc5 missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_dense_lead missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_dense_bismuth missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_dense_bronze missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_dense_arsenic_copper missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_dense_arsenic_bronze missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_dense_invar missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_dense_steel missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_dense_chromium missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_dense_titanium missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_dense_netherite missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_dense_tungsten missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_dense_tungsten_steel missing recipe, gregtech:smeltery_survival/burning_box_fluidbed_dense_ta4hfc5 missing recipe, gregtech:smeltery_survival/clay_crucible missing recipe, gregtech:smeltery_survival/ceramic_crucible_firing missing recipe, gregtech:smeltery_survival/clay_crucible_reclaim missing recipe]"
+          ]
+        },
+        "current": {
+          "name": "allmanufacturingingredientsareregistered",
+          "template": "gt6ce_forge_catalog_regressions:test_empty",
+          "failures": []
+        }
+      },
+      {
+        "previous": {
+          "name": "basicmachineshavesurvivalrecipes",
+          "template": "gt6ce:test_empty",
+          "failures": [
+            "No value present"
+          ]
+        },
+        "current": {
+          "name": "basicmachineshavesurvivalrecipes",
+          "template": "gt6ce_forge_catalog_regressions:test_empty",
+          "failures": []
+        }
+      },
+      {
+        "previous": {
+          "name": "allaxialrecipesaccepteverychemistryatonlytheoriginaltier",
+          "template": "gregtech_repair:test_empty",
+          "failures": [
+            "No value present"
+          ]
+        },
+        "current": {
+          "name": "allaxialrecipesaccepteverychemistryatonlytheoriginaltier",
+          "template": "gt6ce_forge_catalog_followup:test_empty",
+          "failures": []
+        }
+      },
+      {
+        "previous": {
+          "name": "axialrecipesloadandtoolsremain",
+          "template": "gt6ce:test_blueprint_empty",
+          "failures": [
+            "manufacturing recipe loads: gt6ce:magnalium_steam_turbine_main_housing"
+          ]
+        },
+        "current": {
+          "name": "axialrecipesloadandtoolsremain",
+          "template": "gt6ce_forge_catalog_followup:test_blueprint_empty",
+          "failures": []
+        }
+      },
+      {
+        "previous": {
+          "name": "originalsteamanddynamohousingsformateverygrade",
+          "template": "gregtech_repair:test_blueprint_empty",
+          "failures": [
+            "17211 is the canonical survival recipe output"
+          ]
+        },
+        "current": {
+          "name": "originalsteamanddynamohousingsformateverygrade",
+          "template": "gt6ce_forge_catalog_regressions:test_blueprint_empty",
+          "failures": []
+        }
+      },
+      {
+        "previous": {
+          "name": "originalgasturbinehousingsformanduseoriginalsteamhousing",
+          "template": "gregtech_repair:test_blueprint_empty",
+          "failures": [
+            "17231 is the canonical survival recipe output"
+          ]
+        },
+        "current": {
+          "name": "originalgasturbinehousingsformanduseoriginalsteamhousing",
+          "template": "gt6ce_forge_catalog_regressions:test_blueprint_empty",
+          "failures": []
+        }
+      },
+      {
+        "previous": {
+          "name": "oldaxialcontrollerscannotbypass172xxmanufacturing",
+          "template": "gregtech_repair:test_empty",
+          "failures": [
+            "java.lang.AssertionError: Missing recipe gt6ce:machines/multiblock/adamantium_dynamo_main_housing"
+          ]
+        },
+        "current": {
+          "name": "axialcontrollershaveoneoriginalmanufacturingroute",
+          "template": "gt6ce_forge_catalog_regressions:test_empty",
+          "failures": []
+        }
+      },
+      {
+        "previous": {
+          "name": "originalfusionrecipesandcraftingresolve",
+          "template": "gt6ce:test_empty",
+          "failures": [
+            "fusion crafting resolves: fusion_reactor_main"
+          ]
+        },
+        "current": {
+          "name": "originalfusionrecipesandcraftingresolve",
+          "template": "gt6ce_forge_catalog_regressions:test_empty",
+          "failures": []
+        }
+      },
+      {
+        "previous": {
+          "name": "originalmatterrulesandmanufacturingexist",
+          "template": "gt6ce:test_empty",
+          "failures": [
+            "matter manufacturing recipe loaded: large_osmium_coil"
+          ]
+        },
+        "current": {
+          "name": "originalmatterrulesandmanufacturingexist",
+          "template": "gt6ce_forge_catalog_regressions:test_empty",
+          "failures": []
+        }
+      },
+      {
+        "previous": {
+          "name": "everybalehasoriginalfireharvestmodelandsurvivalrecipe",
+          "template": "gregtech_repair:test_empty",
+          "failures": [
+            "bale_bale_grass_dry and its input crop are registered"
+          ]
+        },
+        "current": {
+          "name": "everybalehasoriginalfireharvestmodelandsurvivalrecipe",
+          "template": "gt6ce_forge_catalog_regressions:test_empty",
+          "failures": []
+        }
+      },
+      {
+        "previous": {
+          "name": "rejectedpacketsneverenergizewireandacceptedpoweraccumulates",
+          "template": "gregtech_repair:test_empty",
+          "failures": [
+            "full receiver refuses input"
+          ]
+        },
+        "current": {
+          "name": "rejectedpacketsneverenergizewireandacceptedpoweraccumulates",
+          "template": "gt6ce_forge_catalog_regressions:test_empty",
+          "failures": []
+        }
+      },
+      {
+        "previous": {
+          "name": "cablecycleandbranchconserveacceptedpackets",
+          "template": "gregtech_repair:test_empty",
+          "failures": [
+            "saturated receivers report no consumption"
+          ]
+        },
+        "current": {
+          "name": "cablecycleandbranchconserveacceptedpackets",
+          "template": "gt6ce_forge_catalog_regressions:test_empty",
+          "failures": []
+        }
+      },
+      {
+        "previous": {
+          "name": "realchargerandtoolassemblyusechemicalcapacity",
+          "template": "gregtech_repair:test_empty",
+          "failures": [
+            "all five LV chemistries accepted"
+          ]
+        },
+        "current": {
+          "name": "realchargerandtoolassemblyusechemicalcapacity",
+          "template": "gt6ce_forge_catalog_regressions:test_empty",
+          "failures": []
+        }
+      },
+      {
+        "previous": {
+          "name": "originallvpatternsmaterialsandtoolremainders",
+          "template": "gregtech_repair:test_empty",
+          "failures": [
+            "source nickel-cadmium LV capacity retained even for wrench/screwdriver"
+          ]
+        },
+        "current": {
+          "name": "originallvpatternsmaterialsandtoolremainders",
+          "template": "gt6ce_forge_catalog_regressions:test_empty",
+          "failures": []
+        }
+      },
+      {
+        "previous": {
+          "name": "capacitytintandenergyarithmetic",
+          "template": "gregtech_repair:test_empty",
+          "failures": [
+            "material head, LV orange body, untinted overlay"
+          ]
+        },
+        "current": {
+          "name": "capacitytintandenergyarithmetic",
+          "template": "gt6ce_forge_catalog_followup:test_empty",
+          "failures": []
+        }
+      },
+      {
+        "previous": {
+          "name": "allseventeenindicatorshaveoriginalmetaandmaterials",
+          "template": "gregtech_repair:coin_pile_space",
+          "failures": [
+            "GT6 has nine A and eight B indicator flowers"
+          ]
+        },
+        "current": {
+          "name": "alleighteenindicatorshaveoriginalmetaandmaterials",
+          "template": "gt6ce_forge_catalog_regressions:coin_pile_space",
+          "failures": []
+        }
+      },
+      {
+        "previous": {
+          "name": "onlytransformersandbatteryboxesexistatuln",
+          "template": "gt6ce:test_empty",
+          "failures": [
+            "GT6 has no ULV variant of these devices: [crystal_charger_ulv, large_crystal_charger_ulv]"
+          ]
+        },
+        "current": {
+          "name": "onlytransformersandbatteryboxesexistatuln",
+          "template": "gt6ce_forge_catalog_regressions:test_empty",
+          "failures": []
+        }
+      },
+      {
+        "previous": {
+          "name": "realreloadspreservegeneratedrecipesoverridesandfurnacemirrors",
+          "template": "gregtech_repair:test_empty",
+          "failures": [
+            "client packet round trip: recipe content changed: [gt6ce:ammunition/plastic_shaft_plastic_feather, gt6ce:ammunition/wood_shaft_plastic_feather, gt6ce:axial/large_dynamo_adamantium, gt6ce:axial/large_dynamo_main, gt6ce:axial/large_dynamo_titanium] (15500 IDs)"
+          ]
+        },
+        "current": {
+          "name": "realreloadspreservegeneratedrecipesoverridesandfurnacemirrors",
+          "template": "gt6ce_forge_catalog_regressions:test_empty",
+          "failures": []
+        }
+      }
+    ],
+    "not_one_24_of_24_run": true
+  },
+  "runtime_catalog": {
+    "items": 78032,
+    "recipes": 55275,
+    "basic_machine_specs": 264,
+    "addon_specs": [
+      {
+        "sourceTable": false,
+        "machine": "samplepress",
+        "tier": 1,
+        "id": "sample_press",
+        "namespace": "addon_sample"
+      },
+      {
+        "sourceTable": false,
+        "machine": "sampledetector",
+        "tier": 1,
+        "id": "sample_detector",
+        "namespace": "addon_sample"
+      },
+      {
+        "sourceTable": false,
+        "machine": "largesamplepress",
+        "tier": 1,
+        "id": "large_sample_press",
+        "namespace": "addon_sample"
+      }
+    ],
+    "evidence": {
+      "path": "work/forge-batch-runtime-catalog.json",
+      "sha256": "f46a4b23f6a93ba63fbb5d01fb3da3fb3216add640b6cb4ddef8e2b380cf4f12"
+    }
+  },
+  "ledger": {
+    "indexed_before_batch": 76,
+    "verified_this_batch": 21,
+    "pending_original_candidates": 55,
+    "not_a_new_full_suite_measurement": true
+  },
+  "attempts": {
+    "game_jvms": 2,
+    "default_suite_reruns": 0,
+    "no_passing_cases_repeated": true
+  },
+  "commands": [
+    "$ErrorActionPreference = 'Stop'\n$env:JAVA_HOME = 'C:/Users/T14/.gradle/jdks/eclipse_adoptium-17-amd64-windows/jdk-17.0.20.1+1'\n$env:JAVA17_HOME = $env:JAVA_HOME\n$env:JAVA21_HOME = 'C:/Program Files/Eclipse Adoptium/jdk-21.0.12.8-hotspot'\n$env:GRADLE_USER_HOME = 'C:/Users/T14/.gradle'\nSet-Location (Split-Path -Parent $PSScriptRoot)\n& ./gradlew.bat --console=plain :multiversion:1.20.1-forge:compileBootstrapGameTestJava :multiversion:1.21.1-neoforge:compileBootstrapGameTestJava '-PaddonSample=true' '-PgameTestNamespaces=gt6ce_forge_catalog_regressions' '-PgameTestHeap=6g' '-PgameTestJvmArgs=-XX:+UseSerialGC' '-PgameTestDirectory=../../../work/forge-catalog-regressions' '-PgameTestReport=../../../work/forge-catalog-regressions.xml' :multiversion:1.20.1-forge:runGameTestServer *> work/forge-catalog-regressions.log\n$result = $LASTEXITCODE\nGet-Content work/forge-catalog-regressions.log -Tail 35\nexit $result\n",
+    "$ErrorActionPreference = 'Stop'\n$env:JAVA_HOME = 'C:/Users/T14/.gradle/jdks/eclipse_adoptium-17-amd64-windows/jdk-17.0.20.1+1'\n$env:JAVA17_HOME = $env:JAVA_HOME\n$env:JAVA21_HOME = 'C:/Program Files/Eclipse Adoptium/jdk-21.0.12.8-hotspot'\n$env:GRADLE_USER_HOME = 'C:/Users/T14/.gradle'\nSet-Location (Split-Path -Parent $PSScriptRoot)\n& ./gradlew.bat --console=plain '-PaddonSample=true' '-PgameTestNamespaces=gt6ce_forge_catalog_followup' '-PgameTestHeap=6g' '-PgameTestJvmArgs=-XX:+UseSerialGC' '-PgameTestDirectory=../../../work/forge-catalog-followup' '-PgameTestReport=../../../work/forge-catalog-followup.xml' :multiversion:1.20.1-forge:runGameTestServer *> work/forge-catalog-followup.log\n$result = $LASTEXITCODE\nGet-Content work/forge-catalog-followup.log -Tail 35\nexit $result\n"
+  ],
+  "evidence": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/ChemicalBatterySpec.java",
+      "sha256": "5774e39b8793b969dad3dce401dcbdd1e6393769833e7d77cef95784b9cb5da2"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/CrystalChargerDefinitions.java",
+      "sha256": "6790a2b80c5f9aabf4b88eac99cba1ae159b3475108c3c08c3e259c1d3b6ca62"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/plant/BedrockFlowers.java",
+      "sha256": "f6212b7a5dcee9e46d392883be7708995161006bcc8ee4688e147e21ab3cc0ad"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/tool/ElectricToolCatalog.java",
+      "sha256": "7874e423f6c2d36816627c116c4ee1cda40328f703c2020e5676d697598dbf22"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/data/MultiblockCraftingRecipes.java",
+      "sha256": "9892ddbb14b26cba85c787c281e5efd916fde92fabab993a3a629dc3a83d429b"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/axial/block_plate_graphene.json",
+      "sha256": "fbeb5641de6277a3c85dfd4798482299a569141e87cd1f15d94cce865fd0aaf6"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/axial/block_plate_magnalium.json",
+      "sha256": "4fc7e7e8a1bea4166862bf5dca8e0c4b32cd9b882e51947b95137705d1b63bae"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/axial/block_plate_trinitanium.json",
+      "sha256": "adebed2af141a409a723641fc2cb944ee9cf837503a11a471847b6801195f101"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/axial/block_plate_vibramantium.json",
+      "sha256": "b1b9db4b8025e90c684aba89d9a9db54232bfa2bf49824a56664ae54be2a3393"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/axial/large_dynamo_adamantium.json",
+      "sha256": "5762483d3dbf775996620f0f7a36a912bbe2edae6a495ea1fdfc4c3bc7af5722"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/axial/large_dynamo_main.json",
+      "sha256": "07c6d94beb97b289e71d6911b426b93e2b3b41ab9490270ea2b7389b13201771"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/axial/large_dynamo_titanium.json",
+      "sha256": "cec1ca074b6ea18e88f9b627114e6dccf188aa70bba3f4b5b59ea9790aa0d24e"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/axial/large_dynamo_tungstensteel.json",
+      "sha256": "e3e1742b44407da636556ea3097853f8b05776b9dd2b9295939e27ef53ca6012"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/axial/large_dynamo_wall.json",
+      "sha256": "6d6075549e75d3217c482d108b2bc902c284d7d221471ca29a4865d053b82340"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/axial/large_gas_turbine_graphene.json",
+      "sha256": "83c7253f97a5e69b98aa2bd6c7d01fb876d3521a613c86be91c4c6f6c56bf1a0"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/axial/large_gas_turbine_main.json",
+      "sha256": "9d2ea511782527688b35fe11be3f77085ccc76b0ffead462a9989ca7f5ee4d05"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/axial/large_gas_turbine_trinitanium.json",
+      "sha256": "05458cdca84c306a92edd18d246a33783ce89c75d2e6014be1855908619e1df3"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/axial/large_gas_turbine_vibramantium.json",
+      "sha256": "9b632f71410830320b1095a30a7807c3d41e4f68d9e1a9d31c0a13ebf7a90628"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/axial/large_steam_turbine_graphene.json",
+      "sha256": "744ffa86c4ec57db6f0ed3a9d90f402383b134680646cf0cab008ef0cbb9f2bd"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/axial/large_steam_turbine_trinitanium.json",
+      "sha256": "f4844c0a978301d81169d5b61ed0923547ff633d6464b486d27d01e546698894"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/axial/large_steam_turbine_vibramantium.json",
+      "sha256": "1fb4d0b90bb26c5da4e94115ff9188c3b1b89e46b57220d2793c22c7412029a9"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/axial/large_turbine_main.json",
+      "sha256": "6980de7e71e09c2224eb35e94c0ed326bd33aafbf1be73cd7ddd2481124eb128"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/axial/unpack_graphene_plates.json",
+      "sha256": "cff6750303b6f65d2f7e04cb0c7e387c9c9355c229f07801b45f4e828eff5b03"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/axial/unpack_magnalium_plates.json",
+      "sha256": "02595f9c4dd77564e01f544e1d7dd60881593a8cdba26b552394737fee52eefe"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/axial/unpack_trinitanium_plates.json",
+      "sha256": "47cb27e5eddba0b856156439e23018993604788c81a080ec440039f6a98a2124"
+    },
+    {
+      "path": "core/src/main/resources/data/gt6ce/recipes/axial/unpack_vibramantium_plates.json",
+      "sha256": "8befbf229c550d063b29657380c585abfd1e4e5eb9286331f0123cc5af0285cc"
+    },
+    {
+      "path": "docs/integration/CRYSTAL_BARREL_COMPLETION.md",
+      "sha256": "ce4c7ce587ce14eb58962cfbac633a07ae00c3afa179f6913597fa25a171bbc0"
+    },
+    {
+      "path": "docs/integration/LEGACY_ENERGY_DEVICES.md",
+      "sha256": "a5246134841636042ee090b7687401cb6512117cb1f6cb09ce891b2a52343c89"
+    },
+    {
+      "path": "docs/smeltery-survival-recipes.json",
+      "sha256": "4934899f850367cec29b322b7df77f0037e898dd17f57364464727b36fe35349"
+    },
+    {
+      "path": "docs/standardized-ingredients.json",
+      "sha256": "08864747e579f3c385669cedcf9b10e37d16b78736d2d784a7bd80607ed98400"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/recipe/CraftingTools.java",
+      "sha256": "812a5501ef8afb1bdd15d83219c3f0391db29fdcccece196eff81399ed355352"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/recipe/ToolShapedRecipe.java",
+      "sha256": "136635aae8d364249b771065062f2efc14ae7eb80cf9a20a61537c4f6847252f"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/AxialBatteryRecipeTests.java",
+      "sha256": "84b83ffa2a9c28ce40d148b5dcd775bf84d4475753615d7bcad6794f58c2248f"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/AxialGeneratorTests.java",
+      "sha256": "2f96299ac0dbe18ad4114a6fbfda86e848be1a352ea00e402b7be2661080957d"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BaleRepairTests.java",
+      "sha256": "870e622fb8492437ad2a80de1e22e52efca71a453604bc41c367e6a8434f83f8"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BedrockFlowerRepairTests.java",
+      "sha256": "db03a84e6267bea42089c9679854035835b9be1e7039392d9c27f65189775e91"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ChargingCraftingRepairTests.java",
+      "sha256": "013b10e0d686b463c51623389ed9a07cfca489e9b3f0557e5718a5b24bced205"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ChemicalBatteryTests.java",
+      "sha256": "1d2e01c2ace3ef23fc2ef69d248773ec93788dc3dbf74c607a33516a03f8c535"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CraftingFixtureIds.java",
+      "sha256": "634fb99ee2c93e097a7c837078b2c4420596d4b6ce6fc9cebc5822b92cd0d092"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DungeonKeysAndPortalsTests.java",
+      "sha256": "79ffc9fa25bb0354a3c88f1758c4d83706a9359f573cd5a7b5cf8dddf46d41ff"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ElectricToolAssemblyTests.java",
+      "sha256": "ebf7b6f3f0ca9b2947fcb8c06ad0bf2fa1331a7094a23791b96ea197fa75f75d"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ElectricWireRepairTests.java",
+      "sha256": "f705f821c5ac6bf73bbdfb19c1ba17bf3795e167608b1e1fb01dae00efec59f0"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ForgeCatalogFollowupTests.java",
+      "sha256": "1a2893c73c0618f52d9e0bc24cc1c6605f05097b763f3a5935e6f69c9d62226b"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ForgeCatalogRegressionTests.java",
+      "sha256": "8683a59440366004439727748c5cc4b9ec0b669ea6880df1c79c8b0edbdab33f"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/FusionRegressionTests.java",
+      "sha256": "3c55e951365b710d7a38891fb26de8b830ec936cf8aa81850c506f1214467856"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MaterialCompatibilityTests.java",
+      "sha256": "fb5e5201caf1ef72c091900026f9c66702f5fd314d9982a997fc6daa73b0cfa8"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MatterFabricatorRegressionTests.java",
+      "sha256": "687ee482f86dbc1048c0f5f5322ee3d149960e2cb73cc21885aef002da715450"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/OriginalAxialControllerTests.java",
+      "sha256": "af978c7209c049d4c18a3ce9e9dd12a200c8d519ec17f5a2f422be2f80b016ae"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/OriginalTankAndAxialRecipeTests.java",
+      "sha256": "c364bb7359fab189e6b2ae84822f4539b29e28fd498ed5635f311d9282c5a457"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/RuntimeRecipeReloadTests.java",
+      "sha256": "ffa2d1f869b147e1d0776106f7bf4440c0534fab319c4a9511d33f4a365e8999"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/VoltageTierAlignmentTests.java",
+      "sha256": "88a6b17ac9ad7e75f321fdd30cd6858c41bbfe7258e67b9a01049b5d0830e57b"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/gameplay/ForgeGameTestReports.java",
+      "sha256": "4bfdd5ad551144899d40bdfb71503c8c40a226108157b6857f39c270723d4492"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/resources/data/gt6ce_forge_catalog_followup/structures/test_blueprint_empty.nbt",
+      "sha256": "6c01f87bfc554e3e1ede220e784470c02b04ad9ada25cf366d4b1b9e157d8f0e"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/resources/data/gt6ce_forge_catalog_followup/structures/test_empty.nbt",
+      "sha256": "147ef3e2c39e8d261ff2287395af00d734ccd13b196abdea0c0334e11fdde075"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/resources/data/gt6ce_forge_catalog_regressions/structures/coin_pile_space.nbt",
+      "sha256": "f8c8068e4fe0431b808fea3fea5bad9520b450fcfea2e7a4896d388f45da4287"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/resources/data/gt6ce_forge_catalog_regressions/structures/test_blueprint_empty.nbt",
+      "sha256": "6c01f87bfc554e3e1ede220e784470c02b04ad9ada25cf366d4b1b9e157d8f0e"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/resources/data/gt6ce_forge_catalog_regressions/structures/test_empty.nbt",
+      "sha256": "147ef3e2c39e8d261ff2287395af00d734ccd13b196abdea0c0334e11fdde075"
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/gameplay/NeoForgeGameTestReports.java",
+      "sha256": "46c6b5e294aaaf450d730326ffa1f72b98079483e27a54743ffe1a02577b05b4"
+    },
+    {
+      "path": "work/card55-forge-defaultfull.xml",
+      "sha256": "9972cf8c12469548950b8285122519a3e3b00db2bc506de0226c05ebe66e15df"
+    },
+    {
+      "path": "work/forge-catalog-regressions.log",
+      "sha256": "79fae18a026b216e3e5c96f2e52e92ae927e2caa57498070717a902a09430941"
+    },
+    {
+      "path": "work/forge-catalog-regressions.xml",
+      "sha256": "2141614cfa5a821fa4b235f3c36c313fc75872ff1fc82aeb70ab0aa10c3cab2a"
+    },
+    {
+      "path": "work/forge-catalog-followup.log",
+      "sha256": "5f7199736ae3990d6487e83ea009f5ea57811e48bd31d01964d8a98f65aa354d"
+    },
+    {
+      "path": "work/forge-catalog-followup.xml",
+      "sha256": "c636ab43321c44c0c9e5c8d122b352be5a078f74e69143db26fb30b1414a917d"
+    }
+  ],
+  "generated_report_handling": "Backed up two generated root JSON reports, copied test outputs to ignored work/catalog-report-results and restored pre-run bytes. Intentional namespace manifest edits retained.",
+  "limits": [
+    "Pending55 is a ledger of original candidates, not a newly measured full-suite failure count.",
+    "Topic groups are not proof that every remaining record shares a cause.",
+    "Neo main and test compilation passed; no new Neo game runtime run.",
+    "Client gameplay, historical saves and independent saved-world restart unverified; overall port unfinished.",
+    "Local followup work; card55 PR #125 unchanged."
+  ]
+}

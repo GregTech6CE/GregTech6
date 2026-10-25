@@ -144,18 +144,22 @@ public final class AxialGeneratorTests {
     public static void axialRecipesLoadAndToolsRemain(GameTestHelper h) {
         var manager=h.getLevel().getRecipeManager();
         for(boolean steam:new boolean[]{true,false})for(var entry:AxialGeneratorDefinitions.blocks(steam)) {
-            var recipe=manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","axial/"+entry.getId().getPath()));
+            var recipe=manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce",CraftingFixtureIds.axialPath(entry.getId().getPath())));
             h.assertTrue(recipe.isPresent(),"manufacturing recipe loads: "+entry.getId());
             var wall=AxialGeneratorDefinitions.grade(entry.get()).wall().asItem();
             h.assertTrue(com.gregtech.gregtech.data.MachineRecipeMaps.Welder.mRecipeList.stream().anyMatch(r->r.mOutputs.length==1&&r.mOutputs[0].is(wall)),"JEI's canonical wall has a welding route");
             h.assertTrue(recipe.get().getIngredients().stream().allMatch(ingredient->ingredient.isEmpty()||ingredient.getItems().length>0),"all ingredients resolve");
         }
-        for(var entry:GasTurbineDefinitions.blocks())h.assertTrue(manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","axial/"+entry.getId().getPath())).isPresent(),"gas turbine upgrade route");
+        for(var entry:GasTurbineDefinitions.blocks())h.assertTrue(manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce",CraftingFixtureIds.axialPath(entry.getId().getPath()))).isPresent(),"gas turbine upgrade route");
         var copperCoil = manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","axial/large_dynamo_wall"));
         h.assertTrue(copperCoil.isPresent()&&copperCoil.get().getResultItem(h.getLevel().registryAccess()).is(LargeMachineParts.block(18040).asItem()),
                 "GT6 annealed copper coil recipe crafts original 18040 part");
         for(String material:new String[]{"magnalium","trinitanium","graphene","vibramantium"}) {
-            h.assertTrue(manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","axial/block_plate_"+material)).isPresent(),"rotor plate packing loads");
+            var packId=ResourceLocation.fromNamespaceAndPath("gt6ce","form_conversion/plate_to_blockplate/"+material+"_9");
+            var pack=manager.byKey(packId).orElseThrow(()->new AssertionError("Missing source form conversion "+packId));
+            h.assertTrue(pack.getIngredients().size()==9&&pack.getResultItem(h.getLevel().registryAccess()).is(
+                    net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce","block_plate_"+material))),
+                    "source constructor replacement packs nine plates into the rotor block");
             h.assertTrue(manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","axial/unpack_"+material+"_plates")).isPresent(),"rotor plate unpacking loads");
         }
         var recipe=(com.gregtech.gregtech.recipe.ToolShapedRecipe)manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","axial/large_dynamo_main")).orElseThrow();

@@ -114,7 +114,7 @@ public final class FusionRegressionTests {
         var dt=MachineRecipeMaps.Fusion.mRecipeList.stream().filter(r->r.mDuration==1760).findFirst().orElseThrow();
         h.assertTrue(dt.mSpecialValue==230686720&&dt.mEUt==-8192&&dt.mFluidInputs.length==2&&dt.mFluidOutputs[0].getAmount()==1000,"original D/T fusion balance and startup retained");
         for(String id:java.util.List.of("fusion_reactor_main","versatile_processor_unit","logic_processor_unit","control_processor_unit","large_iridium_coil","fusion_ventilation_unit"))
-            h.assertTrue(h.getLevel().getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","fusion/"+id)).isPresent(),"fusion crafting resolves: "+id);
+            h.assertTrue(h.getLevel().getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","machines/multiblock/"+id)).isPresent(),"fusion crafting resolves: "+id);
         h.succeed();
     }
 }

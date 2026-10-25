@@ -89,11 +89,20 @@ public final class DungeonKeysAndPortalsTests {
             "Iron Key", "Lead Key", "Plastic Key", "Platinum Key", "Silver Key", "Tin Key"};
 
     private static JsonObject lang(String language) throws Exception {
-        try (InputStream stream = DungeonKeysAndPortalsTests.class.getClassLoader()
-                .getResourceAsStream("assets/gt6ce/lang/" + language + ".json")) {
-            if (stream == null) throw new IllegalStateException("missing " + language + " language file");
-            return GsonHelper.parse(new InputStreamReader(stream, StandardCharsets.UTF_8));
+        // An addon may contribute another fragment at the same language path.
+        var resources = DungeonKeysAndPortalsTests.class.getClassLoader()
+                .getResources("assets/gt6ce/lang/" + language + ".json");
+        JsonObject merged = new JsonObject();
+        boolean found = false;
+        while (resources.hasMoreElements()) {
+            found = true;
+            try (InputStream stream = resources.nextElement().openStream()) {
+                GsonHelper.parse(new InputStreamReader(stream, StandardCharsets.UTF_8))
+                        .entrySet().forEach(entry -> merged.add(entry.getKey(), entry.getValue()));
+            }
         }
+        if (!found) throw new IllegalStateException("missing " + language + " language resources");
+        return merged;
     }
 
     /** One of the suite's own sites, 32 blocks apart inside the reserved area (class javadoc). */
@@ -205,7 +214,7 @@ public final class DungeonKeysAndPortalsTests {
         JsonObject english = lang("en_us");
         JsonObject chinese = lang("zh_cn");
         for (int index = 0; index < KEY_MATERIALS.length; index++) {
-            String id = "key_" + KEY_MATERIALS[index];
+            String id = KEY_MATERIALS[index] + "_key";
             String name = KEY_NAMES[index];
             var item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
             if (item == null || item == Items.AIR) {
@@ -215,7 +224,7 @@ public final class DungeonKeysAndPortalsTests {
             check(problems, item instanceof GTDungeonKeyItem, id + " is not a dungeon key item");
             check(problems, english.has("item.gt6ce." + id), "en_us has no name for " + id);
             check(problems, chinese.has("item.gt6ce." + id), "zh_cn has no name for " + id);
-            check(problems, name.equals(english.get("item.gt6ce." + id).getAsString()),
+            if (english.has("item.gt6ce." + id)) check(problems, name.equals(english.get("item.gt6ce." + id).getAsString()),
                     id + " is not GT6's " + name);
             check(problems, new ItemStack(item).getHoverName().getString().equals(name),
                     id + " does not name itself " + name);
@@ -251,8 +260,8 @@ public final class DungeonKeysAndPortalsTests {
         List<String> problems = new ArrayList<>();
         ClassLoader loader = DungeonKeysAndPortalsTests.class.getClassLoader();
         for (String material : KEY_MATERIALS) {
-            for (String asset : new String[]{"models/item/key_" + material + ".json",
-                    "textures/item/key_" + material + ".png"}) {
+            for (String asset : new String[]{"models/item/" + material + "_key.json",
+                    "textures/item/randomtools/" + material + "_key.png"}) {
                 if (loader.getResource("assets/gt6ce/" + asset) == null) problems.add("missing " + asset);
             }
         }
