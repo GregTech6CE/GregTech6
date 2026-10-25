@@ -608,7 +608,21 @@ ORE_FORM_OUTPUT_CASE_NAMESPACES = {
 }
 FUNCTIONAL_CASES |= set(ORE_FORM_OUTPUT_CASE_NAMESPACES)
 
+BURNING_BOX_FUEL_CASE_NAMESPACES = {
+    'burningboxfuelregressiontests.weakliquidandgasfuelssustainratednativeheatoutput': 'gt6ce_burning_box_fuels:test_empty',
+    'burningboxfuelregressiontests.originalengineliquidsarealsoavailabletoregisteredliquidburningboxes': 'gt6ce_burning_box_fuels:test_empty',
+    'burningboxfuelregressiontests.finalreservekeepsburninguntilanotherratedpacketcannotbeemitted': 'gt6ce_burning_box_fuels:test_empty',
+    'burningboxfuelregressiontests.roundedzeroheatrecipecannotconsumefuelorspinrefillloop': 'gt6ce_burning_box_fuels:test_empty',
+    'burningboxfuelregressiontests.originalcoalformsconsumeexactcalciteandretainheatandash': 'gt6ce_burning_box_fuels:test_empty',
+    'burningboxfuelregressiontests.legacyfluidbedtankcapacityrestoreswithoutlosingsavedcalcite': 'gt6ce_burning_box_fuels:test_empty',
+    'burningboxfuelregressiontests.fullashoutputblocksbothinputsuntilnativeextractionfreesspace': 'gt6ce_burning_box_fuels:test_empty',
+    'burningboxfuelregressiontests.fuelchargespreservestoredfluidamountsbeyondnativeintviews': 'gt6ce_burning_box_fuels:test_empty',
+}
+FUNCTIONAL_CASES |= set(BURNING_BOX_FUEL_CASE_NAMESPACES)
+
 def expected_namespace(identity):
+    if identity in BURNING_BOX_FUEL_CASE_NAMESPACES:
+        return BURNING_BOX_FUEL_CASE_NAMESPACES[identity]
     if identity in ORE_FORM_OUTPUT_CASE_NAMESPACES:
         return ORE_FORM_OUTPUT_CASE_NAMESPACES[identity]
     if identity in CINNABAR_BARREL_CASE_NAMESPACES:
@@ -705,6 +719,10 @@ def check(path, platform='forge'):
         classname = case.get('classname', '').lower()
         for identity in candidates_by_tail.get(name.rsplit('.', 1)[-1], ()):
             test_class, method = identity.split('.', 1)
+            if identity in BURNING_BOX_FUEL_CASE_NAMESPACES:
+                if name == method and classname == BURNING_BOX_FUEL_CASE_NAMESPACES[identity]:
+                    found.add(identity)
+                continue
             if identity in CASING_CRAFTING_CASE_NAMESPACES:
                 if name == method and classname == CASING_CRAFTING_CASE_NAMESPACES[identity]:
                     found.add(identity)

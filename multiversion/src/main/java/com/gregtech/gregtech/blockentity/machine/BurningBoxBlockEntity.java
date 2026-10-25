@@ -5,6 +5,8 @@ import com.gregtech.gregtech.api.machine.*;
 import com.gregtech.gregtech.api.fluid.FluidTankGT;
 import com.gregtech.gregtech.api.recipe.Recipe;
 import com.gregtech.gregtech.api.recipe.RecipeMap;
+import com.gregtech.gregtech.api.recipe.RecipeInputs;
+import com.gregtech.gregtech.api.recipe.FluidFuelChargeMath;
 import com.gregtech.gregtech.api.tool.GTToolHelper;
 import com.gregtech.gregtech.api.tool.GTToolType;
 import com.gregtech.gregtech.block.machine.BurningBoxBlock;
@@ -120,7 +122,8 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
             case SOLID -> inventory = new ItemStackHandler(0);
         }
         if (fuelType == BurningBoxFuelType.LIQUID || fuelType == BurningBoxFuelType.GAS || fuelType == BurningBoxFuelType.FLUIDIZED_BED) {
-            fuelTank = new FluidTankGT(spec.outputRate() * 10);
+            fuelTank = new FluidTankGT(fuelType == BurningBoxFuelType.FLUIDIZED_BED
+                    ? Math.max(spec.outputRate(), recipeMap.mMaxFluidInputSize) : spec.outputRate() * 10);
         }
     }
 
@@ -144,7 +147,14 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
             }
             flushPendingAsh();
             if (energy < rate * 2) {
-                burning = tryConsumeFuel();
+                if (fuelType == BurningBoxFuelType.FLUIDIZED_BED) {
+                    // GT6 burns at most one solid charge per tick.
+                    if (tryConsumeFuel()) cooldown = 100;
+                } else {
+                    // Liquid/gas charges can be smaller than one output packet.
+                    // Each success consumes fluid and credits positive heat before retrying.
+                    while (energy < rate * 2 && tryConsumeFuel()) cooldown = 100;
+                }
             }
             if (energy < rate) {
                 burning = false;
@@ -183,13 +193,14 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
         List<FluidStack> fluids = List.of(tankFluid);
         Recipe recipe = recipeMap.findRecipe(Collections.emptyList(), fluids, false, 0, 0);
         if (recipe == null) return false;
-        long eut = Math.abs(recipe.mEUt);
-        if (eut == 0) return false;
-        // Consume input fluids
-        for (FluidStack fluidIn : recipe.mFluidInputs) {
-            fuelTank.remove(fluidIn.getAmount());
-        }
-        energy += BurningBoxFuelRules.recipeHeat(eut, recipe.mDuration, spec.efficiency());
+        long heat = FluidFuelChargeMath.energy(recipe.mEUt, recipe.mDuration, spec.efficiency());
+        if (heat <= 0 || energy > Long.MAX_VALUE - heat) return false;
+        var remaining = RecipeInputs.consume(recipe, Collections.emptyList(), fluids, 1);
+        // A kept-only or malformed extension row must not generate free heat or loop forever.
+        if (remaining == null || remaining.fluids().get(0).getAmount() >= tankFluid.getAmount()) return false;
+        // The recipe sees an int-sized view; debit the real long tank without replacing it.
+        if (!fuelTank.drainAll(tankFluid.getAmount() - remaining.fluids().get(0).getAmount())) return false;
+        energy += heat;
         return true;
     }
 
@@ -205,14 +216,14 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
         Recipe recipe = recipeMap.findRecipe(items, fluids, false, 1, 1);
         if (recipe == null) return false;
         if (recipe.mOutputs.length > 0 && !canStoreAsh(recipe.mOutputs[0])) return false;
-        long eut = Math.abs(recipe.mEUt);
-        if (eut == 0) return false;
-        // Consume inputs
-        for (FluidStack fluidIn : recipe.mFluidInputs) {
-            fuelTank.remove(fluidIn.getAmount());
-        }
-        inventory.extractItem(0, recipe.mInputs[0].getCount(), false);
-        energy += BurningBoxFuelRules.recipeHeat(eut, recipe.mDuration, spec.efficiency());
+        long heat = FluidFuelChargeMath.energy(recipe.mEUt, recipe.mDuration, spec.efficiency());
+        if (heat <= 0 || energy > Long.MAX_VALUE - heat) return false;
+        var remaining = RecipeInputs.consume(recipe, items, fluids, 1);
+        if (remaining == null || remaining.items().get(0).getCount() >= fuel.getCount()
+                && remaining.fluids().get(0).getAmount() >= tankFluid.getAmount()) return false;
+        if (!fuelTank.drainAll(tankFluid.getAmount() - remaining.fluids().get(0).getAmount())) return false;
+        inventory.setStackInSlot(0, remaining.items().get(0));
+        energy += heat;
         // Queue ash from first output
         ItemStack[] outputs = recipe.mOutputs;
         if (outputs.length > 0 && outputs[0] != null && !outputs[0].isEmpty())
@@ -537,6 +548,12 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
 *///?} else {
             fuelTank.readFromNBT(tag.getCompound("gt.tank"));
 //?}
+        if (fuelType == BurningBoxFuelType.FLUIDIZED_BED && fuelTank != null) {
+            // Old saves persist the undersized rate*10 capacity. Raise its floor without
+            // shrinking an existing tank or discarding any saved fluid above that floor.
+            fuelTank.setCapacity(Math.max(Math.max(fuelTank.baseCapacity(), fuelTank.getAmount()),
+                    Math.max(spec.outputRate(), recipeMap.mMaxFluidInputSize)));
+        }
         if (inventory != null && tag.contains("gt.inv"))
 //? if >=1.21.1 {
             /*inventory.deserializeNBT(lookup, tag.getCompound("gt.inv"));

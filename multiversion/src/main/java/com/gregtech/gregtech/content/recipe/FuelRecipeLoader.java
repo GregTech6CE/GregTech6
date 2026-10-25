@@ -28,6 +28,7 @@ public class FuelRecipeLoader implements InitializationStep {
 
     @Override
     public void run() {
+        OriginalFluidBedRecipes.register();
         registerEngineFuels();
         for(var row:com.gregtech.gregtech.content.recipe.OriginalFuelRecipeRows.ROWS)switch(row.kind()){
             case "burn"->burn(row.eut(),row.duration(),row.input());
@@ -35,6 +36,8 @@ public class FuelRecipeLoader implements InitializationStep {
             case "hot"->hot(row);
             default->throw new IllegalStateException("Unknown original fuel kind "+row.kind());
         }
+
+        OriginalSupplementalFuelRecipes.register();
 
         LOGGER.info("[gregtech] Fuel tables: {} added, {} skipped (missing fluids), {} rejected", added, skipped, rejected);
     }
