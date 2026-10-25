@@ -40,7 +40,25 @@ public final class BasicMachineSourceContracts {
         check(mixer.minimumPower()==32&&mixer.totalWork()==320,"source half efficiency plus normal overclock");
         var roaster=MachineWorkCost.calculate(8,10,1,false,10000,16,64,OriginalBasicMachineRules.cheapOverclocking("roaster",1));
         check(roaster.minimumPower()==8&&roaster.totalWork()==80,"source cheap overclock preserves total work");
+        builtinNominalEnergyRanges();
         return assertions;
+    }
+
+    private static void builtinNominalEnergyRanges() {
+        var catalog = com.gregtech.gregtech.content.machine.BasicMachineCatalog.specifications();
+        int timed = 0;
+        for (var row : catalog) {
+            check(row.energyIn() >= row.energyInMin() && row.energyIn() <= row.energyInMax(),
+                    "built-in nominal energy outside range: " + row.id() + " " + row.energyType()
+                            + " " + row.energyIn() + " not in " + row.energyInMin() + ".." + row.energyInMax());
+            if (row.energyType().equals("TU")) {
+                timed++;
+                check(row.energyInMin() == 1 && row.energyInMax() == 16,
+                        "built-in TU packet window: " + row.id());
+            }
+        }
+        check(!catalog.isEmpty() && timed > 0, "catalog energy audit includes TU machines");
+        System.out.println("Built-in tuning energy audit: " + catalog.size() + " rows, " + timed + " TU, no outliers");
     }
     private static void check(boolean ok,String label){assertions++;if(!ok)throw new AssertionError(label);}
 }
