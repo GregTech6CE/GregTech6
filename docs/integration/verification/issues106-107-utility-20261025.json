@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-25",
+  "issues": [
+    106,
+    107
+  ],
+  "base_commit": "9bdd17034",
+  "branch": "codex/fix-utility-interactions",
+  "platform": "NeoForge 1.21.1 / 21.1.243",
+  "java": "Temurin 21.0.12 (Gradle launcher 17.0.20.1)",
+  "namespace": "gt6ce_utility_fixes",
+  "passed": 7,
+  "failed": 0,
+  "skipped": 0,
+  "cases": [
+    "actualtntblastpreservesspringswhiledestroyingstone",
+    "allfourbathsreceivematerialandordinaryrecipeinputsthroughnativeclicks",
+    "allregisteredspringsrejectsurvivalmining",
+    "creativecloningremovalandemissionremainavailable",
+    "manualvesselsrejectnewcoversandcrowbarsrecoverlegacycoversnapshots",
+    "nativebathclickstreatwoodwithexactoilandoutputaccounting",
+    "protectioneventsstilldenyrecipeinputsafternativepriority"
+  ],
+  "report": "multiversion/versions/1.21.1-neoforge/build/reports/utility-fixes.xml",
+  "report_sha256": "581bbbb0a27a9cdb00b4c79688bc1cd9d43b39d4fe1766f32e4022a2a8fd3e9c",
+  "command": "./gradlew.bat --offline -Dnet.minecraftforge.gradle.check.certs=false --console=plain -PdirectCoreClasspath=true -PgameTestNamespaces=gt6ce_utility_fixes -PgameTestHeap=3g -PneoforgeGameTestDirectory=../../../work/neoforge-utility-fixes -PgameTestReport=build/reports/utility-fixes.xml :multiversion:1.21.1-neoforge:runGameTestServer",
+  "log": "work/neoforge-utility-fixes.log",
+  "initial_attempt": {
+    "failed": 2,
+    "passed": 5,
+    "reason": "Sneaking ingredient placement was still intercepted by PilePlacementHandler; it also cancelled before later protection listeners. Fixed by sharing the real recipe-input predicate with this placement path.",
+    "log": "work/neoforge-utility-fixes-initial.log"
+  },
+  "not_run": [
+    "Forge",
+    "dual-platform full validation",
+    "full core check",
+    "packaged JAR startup",
+    "real saved-world disk restart",
+    "client visual acceptance"
+  ],
+  "environment": "Offline cache and direct core output; external Forge certificate preflight skipped during project configuration, without running Forge verification tasks or changing build configuration."
+}

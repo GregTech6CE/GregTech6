@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-25",
+  "issues": [
+    "https://github.com/GregTech6CE/GregTech6/issues/106",
+    "https://github.com/GregTech6CE/GregTech6/issues/107"
+  ],
+  "base_commit": "9bdd17034",
+  "authors": "GregTech-6 Team / Gregorius Techneticies",
+  "license": "LGPL-3.0-or-later",
+  "sources": [
+    {
+      "path": "gregtech/tileentity/misc/MultiTileEntityFluidSpring.java",
+      "lines": "154-155",
+      "sha256": "ea4fde6552de198404036545cdfe80ad22422a156e3dcc59adc56cebc80bceea"
+    },
+    {
+      "path": "gregtech/tileentity/tools/MultiTileEntityBathingPot.java",
+      "lines": "186-259, 416-431",
+      "sha256": "56f7f5bea1ddc7d5e94b3ec72ae124f8c12ac6dc6c41a3826e25e6154913cd1c"
+    },
+    {
+      "path": "gregtech/tileentity/tools/MultiTileEntityMixingBowl.java",
+      "lines": "437-438",
+      "sha256": "5db080d201cdc35c29c99a529dcb2685044f788c42fe4746ea417dfea9a6ca02"
+    },
+    {
+      "path": "gregtech/tileentity/tools/MultiTileEntityJuicer.java",
+      "lines": "296-297",
+      "sha256": "3526fa4e8775e47609e2ce55c115503db021bd46fb9bd9d656de40b3e08e43d1"
+    }
+  ],
+  "restored_contracts": [
+    "Fluid springs: negative mining hardness and vanilla bedrock explosion resistance",
+    "All seven registered manual processing vessels: no new covers on any face",
+    "Valid hand recipe inputs retain native ordinary/sneaking interaction and later protection-event cancellation",
+    "Erroneous covers already in saved data remain serialized and recoverable with the crowbar"
+  ],
+  "verification": "NeoForge seven-case native regression passed; exact scope and limits: docs/integration/verification/issues106-107-utility-20261025.json"
+}

@@ -52,7 +52,7 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
 
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
-                return slot < recipes.mInputItemsCount && recipes.containsInput(stack);
+                return slot < recipes.mInputItemsCount && isRecipeInput(stack);
             }
 
             @Override
@@ -149,6 +149,11 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
 
     public RecipeMap recipes() {
         return recipes;
+    }
+
+    /** Recipe ingredients must reach the native hand interaction before cover installation. */
+    public boolean isRecipeInput(ItemStack stack) {
+        return recipes.containsInput(stack);
     }
 
     public IItemHandlerModifiable inventory() {

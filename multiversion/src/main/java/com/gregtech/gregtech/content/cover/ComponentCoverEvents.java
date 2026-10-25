@@ -43,6 +43,20 @@ public final class ComponentCoverEvents {
     public static void use(PlayerInteractEvent.RightClickBlock event) {
         if (!(event.getLevel().getBlockEntity(event.getPos()) instanceof PanelCoverHost host)) return;
         var held = event.getEntity().getItemInHand(event.getHand());
+        if (event.getHand() == net.minecraft.world.InteractionHand.MAIN_HAND && CoverItems.isCover(held)
+                && host.coverOwner() instanceof com.gregtech.gregtech.blockentity.tool.ProcessingToolBlockEntity tool
+                && tool.isRecipeInput(held)) {
+            // A plate can be both an ingredient and a cover. Preserve native insertion,
+            // including while sneaking; other protection handlers can still cancel the event.
+//? if >=1.21.1 {
+            /*if (event.getUseBlock() == net.neoforged.neoforge.common.util.TriState.FALSE) return;
+            event.setUseBlock(net.neoforged.neoforge.common.util.TriState.TRUE);
+*///?} else {
+            if (event.getUseBlock() == net.minecraftforge.eventbus.api.Event.Result.DENY) return;
+            event.setUseBlock(net.minecraftforge.eventbus.api.Event.Result.ALLOW);
+//?}
+            return;
+        }
         boolean crowbar = com.gregtech.gregtech.api.tool.GTToolHelper.matchesTool(held,
                 com.gregtech.gregtech.api.tool.GTToolType.CROWBAR);
         var hit = event.getHitVec();
@@ -58,10 +72,11 @@ public final class ComponentCoverEvents {
 //?}
             return;
         }
-        boolean recoverPileCover = host.coverOwner() instanceof com.gregtech.gregtech.blockentity.misc.PileBlockEntity
+        boolean recoverStoredCover = (host.coverOwner() instanceof com.gregtech.gregtech.blockentity.misc.PileBlockEntity
+                || host.coverOwner() instanceof com.gregtech.gregtech.blockentity.tool.ProcessingToolBlockEntity)
                 && crowbar && !host.getCover(hit.getDirection()).isEmpty();
         if (ComponentCoverFallback.fallbackClass(host.coverOwner())
-                && !ComponentCoverFallback.eligible(host.coverOwner()) && !recoverPileCover) return;
+                && !ComponentCoverFallback.eligible(host.coverOwner()) && !recoverStoredCover) return;
         var result = host instanceof com.gregtech.gregtech.content.logistics.LogisticsCoverHost logistics
                 ? com.gregtech.gregtech.content.logistics.LogisticsCoverInteraction.use(logistics,
                         event.getLevel(), event.getEntity(), event.getHand(), hit.getDirection())
