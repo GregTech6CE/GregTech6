@@ -237,7 +237,7 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
                     && port.canBind(worldPosition)) parts.put(fixed.pos(), cell.role());
             else if (cell.role() != MultiblockLayout.Role.AIR) complete = false;
         }
-        var claimed = com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, complete, bindings, parts, 0,
+        var claimed = com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, parts,
                 position -> level.getBlockEntity(position) instanceof MultiblockPortBlockEntity port
                         && port.canBind(worldPosition),
                 (position, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(position)).bind(worldPosition, role),
@@ -274,7 +274,7 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
             candidateParts.put(partPos, MultiblockLayout.Role.valueOf(cell.role().name()));
         }
         // Source checkAndSetTarget binds each valid cell even when another cell is missing.
-        var claimedParts = com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, completeStructure, bindings, candidateParts, 0,
+        var claimedParts = com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, candidateParts,
                 partPosition -> level.getBlockEntity(partPosition) instanceof MultiblockPortBlockEntity part && part.canBind(worldPosition),
                 (partPosition, partRole) -> ((MultiblockPortBlockEntity) level.getBlockEntity(partPosition)).bind(worldPosition, partRole), this::release);
         boolean formed = completeStructure && claimedParts != com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
@@ -350,7 +350,8 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
         long previousHeat = heat, previousHistory = activityHistory;
         boolean previousActive = active;
         // The source checks/binds its shell but does not gate buffered heat or fuel on the result.
-        isStructureOk();
+        // Tracked mode binds at the formed edge and in changed cells; only the rollback scans here.
+        if (com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode.legacy()) isStructureOk();
         long perOutlet = HeatExchangerRules.perOutlet(settings.rate(), heat);
         if (perOutlet > 0) {
             heat -= perOutlet * 8;

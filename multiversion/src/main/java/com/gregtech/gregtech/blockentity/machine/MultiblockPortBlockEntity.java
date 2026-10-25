@@ -107,7 +107,7 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
         return 0;
     }
     public boolean isBoundTo(BlockPos owner) { return owner != null && owner.equals(controllerPos()); }
-    /** ClaimMemory must check the derived cache too after a part BE was recreated. */
+    /** Per-cell claim diffing checks the derived cache too after a part BE was recreated. */
     public boolean hasBindingCache(BlockPos owner, MultiblockLayout.Role role) {
         return isBoundTo(owner) && owner.equals(controller) && this.role == role;
     }
@@ -144,6 +144,7 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
             return;
         }
         design = clamped;
+        com.gregtech.gregtech.api.multiblock.tracking.StructureScanProbe.onDesignWrite();
         setChanged();
         if (level != null && !level.isClientSide)
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);

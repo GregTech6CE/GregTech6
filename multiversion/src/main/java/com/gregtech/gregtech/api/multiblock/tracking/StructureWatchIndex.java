@@ -104,7 +104,7 @@ public final class StructureWatchIndex {
             boolean fell = tracker.invalidateCell(pos);
             addDirty(data, tracker);
             if (fell) {
-                tracker.machine().structureFormedChanged(false);
+                StructureTracking.formedChanged(tracker.machine(), false);
                 ClientFormedSync.send(tracker.entity());
             }
         }
@@ -144,7 +144,7 @@ public final class StructureWatchIndex {
             boolean fell = tracker.suspend();
             removeDirty(data, tracker);
             if (fell) {
-                tracker.machine().structureFormedChanged(false);
+                StructureTracking.formedChanged(tracker.machine(), false);
                 // The unload event runs before this chunk is saved. sendBlockUpdated evaluates
                 // collision shapes, whose cover hooks look up the BE and can reload an absent
                 // controller before its saved data exists. Only notify a surviving live controller.

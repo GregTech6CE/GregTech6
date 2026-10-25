@@ -34,6 +34,7 @@ import com.gregtech.gregtech.block.machine.TankControllerBlock;
 import com.gregtech.gregtech.block.machine.VonDaGraaggControllerBlock;
 import com.gregtech.gregtech.blockentity.machine.BehaviorMachineBlockEntity;
 import com.gregtech.gregtech.blockentity.machine.ImplosionCompressorControllerBlockEntity;
+import com.gregtech.gregtech.blockentity.machine.LargeGasTurbineControllerBlockEntity;
 import com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity;
 import com.gregtech.gregtech.blockentity.machine.MultiblockTankControllerBlockEntity;
 import com.gregtech.gregtech.blockentity.machine.OriginalLargeBoilerControllerBlockEntity;
@@ -984,15 +985,115 @@ public final class StructureTrackingTests {
             StructureScanProbe.reset();
             StructureTracking.evaluateForTests(machine);
             h.assertTrue(machine.isStructureOk(), "the safety scan leaves a good structure formed");
-            h.assertTrue(StructureScanProbe.binds() == 0 && StructureScanProbe.releases() == 0,
-                    "the safety scan does not bind or release, binds=" + StructureScanProbe.binds()
-                            + " releases=" + StructureScanProbe.releases());
+            h.assertTrue(StructureScanProbe.binds() == 0 && StructureScanProbe.releases() == 0
+                            && StructureScanProbe.designs() == 0,
+                    "the safety scan does not bind, release or write a design, binds=" + StructureScanProbe.binds()
+                            + " releases=" + StructureScanProbe.releases() + " designs=" + StructureScanProbe.designs());
             h.assertTrue(port.isBoundTo(origin) && port.structureDesign() == design, "design number is not written again");
             h.assertTrue(!chunk.isUnsaved(), "the part chunk is not marked for save");
         } finally {
             StructureScanProbe.enable(false);
             clear(h.getLevel(), cells);
         }
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 200, batch = "st-edge-designs")
+    public static void designWritesFollowTheEdgeAndTheReplacedCell(GameTestHelper h) {
+        var layout = new LargeMachineLayouts.Layout(List.of(
+                new LargeMachineLayouts.Cell(1, 0, 0, 18100, MultiblockLayout.Role.CASING, null, 5),
+                new LargeMachineLayouts.Cell(0, 0, 1, 18101, MultiblockLayout.Role.CASING, null, 6)), List.of());
+        withLayouts(Map.of("irrigator", layout), () -> {
+            var cells = new ArrayList<BlockPos>();
+            try {
+                BlockPos at = h.absolutePos(new BlockPos(3, 3, 3));
+                BlockPos first = at.east();
+                BlockPos second = at.south();
+                var machine = behavior(h.getLevel(), at, "irrigator", cells);
+                put(h.getLevel(), first, part(18100), cells);
+                put(h.getLevel(), second, part(18101), cells);
+                h.assertTrue(StructureTestSupport.ok(machine), "design layout forms");
+                h.assertTrue(port(h, first).structureDesign() == 5 && port(h, second).structureDesign() == 6,
+                        "the forming edge writes every design number");
+//? if >=1.21.1 {
+                /*var savedBefore = port(h, second).saveWithId(h.getLevel().registryAccess());
+*///?} else {
+                var savedBefore = port(h, second).saveWithFullMetadata();
+//?}
+                StructureScanProbe.enable(true);
+                StructureScanProbe.reset();
+                StructureTracking.evaluateForTests(machine);
+                h.assertTrue(machine.isStructureOk(), "an idle rescan keeps the structure formed");
+                h.assertTrue(StructureScanProbe.binds() == 0 && StructureScanProbe.releases() == 0
+                                && StructureScanProbe.designs() == 0,
+                        "an idle rescan neither binds nor writes a design, binds=" + StructureScanProbe.binds()
+                                + " releases=" + StructureScanProbe.releases() + " designs=" + StructureScanProbe.designs());
+//? if >=1.21.1 {
+                /*var savedAfter = port(h, second).saveWithId(h.getLevel().registryAccess());
+*///?} else {
+                var savedAfter = port(h, second).saveWithFullMetadata();
+//?}
+                h.assertTrue(savedBefore.equals(savedAfter),
+                        "gt.design, gt.design_held and gt.design_saved are unchanged by an idle rescan");
+                // Replace one cell inside the same tick: the other claim survives, so only this cell is rebound.
+                h.getLevel().setBlock(first, Blocks.AIR.defaultBlockState(), FLAGS);
+                h.getLevel().setBlock(first, part(18100), FLAGS);
+                StructureScanProbe.reset();
+                StructureScheduler.flush(h.getLevel());
+                h.assertTrue(machine.isStructureOk(), "the replaced cell forms again");
+                h.assertTrue(StructureScanProbe.designs() == 1,
+                        "only the replaced cell gets a design write, designs=" + StructureScanProbe.designs());
+                h.assertTrue(port(h, first).structureDesign() == 5 && port(h, second).structureDesign() == 6,
+                        "both cells carry their design number");
+                // A break releases the claims and restores the remembered index.
+                h.getLevel().setBlock(first, Blocks.AIR.defaultBlockState(), FLAGS);
+                StructureScheduler.flush(h.getLevel());
+                h.assertTrue(!machine.isStructureOk(), "the broken shell is unformed");
+                h.assertTrue(port(h, second).structureDesign() == 0, "breaking restores the claimed design");
+            } finally {
+                StructureScanProbe.enable(false);
+                clear(h.getLevel(), cells);
+            }
+        });
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 200, batch = "st-edge-ticks")
+    public static void formedControllersTickWithoutStructureQueries(GameTestHelper h) {
+        var cells = new ArrayList<BlockPos>();
+        withLayouts(Map.of("irrigator", stoneLayout()), () -> {
+            try {
+                BlockPos origin = h.absolutePos(new BlockPos(4, 4, 4));
+                var implosion = (ImplosionCompressorControllerBlockEntity) implosion(h.getLevel(), origin, cells);
+                h.assertTrue(StructureTestSupport.ok(implosion), "implosion forms");
+                var turbine = (LargeGasTurbineControllerBlockEntity) gasTurbine(h.getLevel(),
+                        h.absolutePos(new BlockPos(12, 4, 12)), cells);
+                h.assertTrue(StructureTestSupport.ok(turbine), "gas turbine forms");
+                BlockPos behaviorAt = h.absolutePos(new BlockPos(20, 4, 4));
+                var behavior = behavior(h.getLevel(), behaviorAt, "irrigator", cells);
+                put(h.getLevel(), behaviorAt.east(), Blocks.STONE.defaultBlockState(), cells);
+                h.assertTrue(StructureTestSupport.ok(behavior), "behavior machine forms");
+                StructureScanProbe.enable(true);
+                StructureScanProbe.reset();
+                for (int i = 0; i < 100; i++) {
+                    ImplosionCompressorControllerBlockEntity.serverTick(h.getLevel(), implosion.getBlockPos(),
+                            implosion.getBlockState(), implosion);
+                    LargeGasTurbineControllerBlockEntity.serverTick(h.getLevel(), turbine.getBlockPos(),
+                            turbine.getBlockState(), turbine);
+                    BehaviorMachineBlockEntity.serverTick(h.getLevel(), behavior.getBlockPos(),
+                            behavior.getBlockState(), behavior);
+                }
+                h.assertTrue(StructureScanProbe.queries() == 0,
+                        "formed ticks do not query the structure, queries=" + StructureScanProbe.queries());
+                h.assertTrue(StructureScanProbe.scans() == 0,
+                        "formed ticks do not scan, scans=" + StructureScanProbe.scans());
+                h.assertTrue(implosion.isStructureOk() && turbine.isStructureOk() && behavior.isStructureOk(),
+                        "the machines stay formed after idle ticks");
+            } finally {
+                StructureScanProbe.enable(false);
+                clear(h.getLevel(), cells);
+            }
+        });
         h.succeed();
     }
 

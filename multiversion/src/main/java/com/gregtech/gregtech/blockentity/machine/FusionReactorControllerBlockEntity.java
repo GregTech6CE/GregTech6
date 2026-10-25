@@ -67,7 +67,7 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
             var cell=fixed.cell();
             if(cell.role()!=MultiblockLayout.Role.AIR)candidates.put(fixed.pos(),cell.role());
         }
-        return StructureClaims.update(this,true,fusionBindings,candidates,0,
+        return StructureClaims.update(this,fusionBindings,candidates,
                 p->((MultiblockPortBlockEntity)level.getBlockEntity(p)).canBind(worldPosition),
                 (p,r)->((MultiblockPortBlockEntity)level.getBlockEntity(p)).bind(worldPosition,r),
                 this::releaseFusionPart)!=StructureClaims.Result.FAILED;
@@ -94,7 +94,7 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
             candidates.put(pos,cell.role());
         }
         if(processors[0]!=3||processors[1]!=12||processors[2]!=12)return broken();
-        return StructureClaims.update(this, true, fusionBindings, candidates, 0,
+        return StructureClaims.update(this, fusionBindings, candidates,
                 p->((MultiblockPortBlockEntity)level.getBlockEntity(p)).canBind(worldPosition),
                 (p,r)->((MultiblockPortBlockEntity)level.getBlockEntity(p)).bind(worldPosition,r),this::releaseFusionPart)
                 != StructureClaims.Result.FAILED;
@@ -111,7 +111,7 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
         if (level == null || level.isClientSide || isRemoved()) return;
         boolean wasPassive = passive, wasProcessing = processing;
         beginCoverTick();
-        boolean formed = isStructureOk();
+        boolean formed = structureOk();
         // Switches inspect the previous processing state, including blocked completed work.
         boolean allowed = formed && switchesAllowRunning();
         running = passive = processing = completed = false;

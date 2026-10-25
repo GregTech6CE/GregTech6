@@ -1,5 +1,25 @@
 # 实现选择记录
 
+## 2026-10-25 / 卡 58：边沿认领、边沿副作用与去轮询
+
+- 认领、设计号和端口缓存只在状态边沿或相关改动格发生。进入 `FORMED` 时整批认领并写设计号，离开 `FORMED` 时释放并恢复设计号；已成型且本轮没有任何改动格的评估完全不调用 `applyStructure` / `applyIncompleteStructure`。`ClaimMemory` 已删除，替代它的是 `PartBindings` 的逐格差量。
+- `PartBindings` 现在记录坐标到角色：候选格角色未变且部件的派生缓存仍指向本控制器时跳过 bind；新格、角色变化或缓存丢失（区块重载后重建的方块实体）才 bind；不再出现在候选里的格 release 并恢复设计号。失败的候选集合仍先整体校验，再释放全部并失败。
+- `StructureDesigns` 逐格比较当前 `gt.design` 后再写。因此静置重扫既不 bind、也不调用 `setStructureDesign`，部件区块不会因 `setChanged()` 被标记为需要保存。
+- 边沿回调改为 `TrackedMultiblock.onStructureFormed()` / `onStructureBroken()`，与既有 `structureFormedChanged` 一起由 `StructureTracking.formedChanged` 统一派发；`StructureDefinition.onFormed/onBroken` 的空默认方法删除，避免两套边沿接口。区块卸载导致的 `SUSPENDED` 也走 `onStructureBroken`，但按卡 57 的规则保留认领。
+- 各控制器 tick 不再查询结构：内置大型配方机、聚变、内爆、行为机、燃料电池、轴向发电机、基岩钻机、燃气轮机、储罐、坩埚、物流核心、VonDaGraagg、避雷针和锅炉都读边沿维护的 formed 位。`legacy` 回退仍按查询扫描。端口侧的 `isStructureOk()` 查询不变，仍是 O(1) 读 tracker。大型配方机的条件能量部件改为在 `onStructureFormed` 缓存，不再每 tick 遍历绑定集合（legacy 保留原遍历）。
+- 释放顺序保持卡 57 之后的现状：先释放认领，再清控制器/角色，复位坩埚外观，最后恢复设计号。没有改动这一顺序。
+- `StructureScanProbe` 新增 `designs()`（真实设计号写入次数）和 `queries()`（tracked 结构查询次数），供静置验收断言为 0。
+- `PER_CELL` 未启用。2026-10-25 用户决定：全部家族保持 `ATOMIC`。物流核心保留 `PER_CELL` 声明，但 `claimPolicy()` 目前没有任何运行时消费者，声明只是元数据；焦炉、基岩钻机同样按 `ATOMIC` 运行。对比见下。
+
+### `PER_CELL` 对比（部分成型时的玩家可见行为）
+
+| 家族 | 当前运行时 | `ATOMIC`（现在） | `PER_CELL` 的差异 | 代价与风险 | 建议 |
+| --- | --- | --- | --- | --- | --- |
+| 焦炉 | `ATOMIC`（LargeRecipe 布局家族） | 缺一格即全部不认领；未成型部件没有主控，放大镜/传感器不能沿端口读到控制器；相邻机器可以占用这些墙 | 每格合法部件立即归属本控制器（原版 `checkStructure2` 的逐格认领），补全后直接成型 | 严格认领表下，部分认领会阻止相邻结构共用同一面墙，直到本机补完或拆除；区块卸载期间归属保留，共享墙争用更明显 | 保持 `ATOMIC`；需要原版逐块诊断行为时再单独开启 |
+| 物流核心 | 已声明 `PER_CELL`，运行时 `ATOMIC` | 未成型时 CPU/通风口/墙无归属；路由和能量都要求成型 | 已放置的 CPU 提前归属，但能量、路由仍以成型为前提，玩法收益接近 0 | 核心常与墙面共用格子，争用风险大于收益 | 保持 `ATOMIC` |
+| 基岩钻机 | `ATOMIC` | 缺一格时 44 个支撑件都不认领；`injectPortEnergy` / `doInject` 先要求成型，未建完没有可用能量入口 | 少数已放置支撑件提前归属 | 56 的审计结论：能量入口要求成型，几乎无可观察收益 | 保持 `ATOMIC` |
+| 锅炉 / 换热器（参考） | 已按原版逐格绑定（`applyIncompleteStructure`，不是 `PER_CELL` 声明） | 未成型也绑定合法部件，供建造杖和传感器使用 | — | 这是卡 57 之前就保留的既有行为，本卡只把它改成差量写入 | 不改 |
+
 ## 2026-10-25 / 卡 57：认领表与严格争用接线
 
 - 新增纯 Java 17 的 `StructureClaimTable`；坐标和区块键由平台投影，支持严格排他、原子批量认领、逐格认领、按控制器释放，以及按部件区块转移/恢复预留。没有新增第三方来源、资产或依赖。

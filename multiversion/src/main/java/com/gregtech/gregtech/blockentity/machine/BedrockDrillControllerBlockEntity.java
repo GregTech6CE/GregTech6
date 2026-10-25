@@ -90,7 +90,7 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
         var candidates = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
         for (var cell : match.fixedCells())
             if (!cell.cell().plainBlock()) candidates.put(cell.pos(), cell.cell().role());
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, candidates, 0,
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, candidates,
                 pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port && port.canBind(worldPosition),
                 (pos, partRole) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, partRole), this::release)
                 != com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
@@ -101,6 +101,11 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
     }
     @Override public boolean isStructureOk() {
         return com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.query(this);
+    }
+    private boolean structureFormed;
+    @Override public void structureFormedChanged(boolean formed) { structureFormed = formed; }
+    private boolean structureOk() {
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode.legacy() ? isStructureOk() : structureFormed;
     }
     @Override
     public boolean scanStructure() {
@@ -138,7 +143,7 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
                     candidateParts.put(partPos, role(x, y, z));
                 }
             }
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, candidateParts, 0,
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, candidateParts,
                 partPosition -> ((MultiblockPortBlockEntity) level.getBlockEntity(partPosition)).canBind(worldPosition),
                 (partPosition, partRole) -> ((MultiblockPortBlockEntity) level.getBlockEntity(partPosition)).bind(worldPosition, partRole),
                 this::release) != com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
@@ -157,7 +162,7 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
         if (level == null || level.isClientSide || isRemoved() || !level.hasChunkAt(worldPosition)
                 || level.getBlockEntity(worldPosition) != this) return;
         // Keep discovering/rebinding new shells even before they receive their first energy packet.
-        boolean formed = isStructureOk();
+        boolean formed = structureOk();
         // GT6 exports already-mined stock before checking the shell for another drilling cycle.
         if (!output.getStackInSlot(0).isEmpty() && level.hasChunkAt(worldPosition.above())) {
 //? if >=1.21.1 {

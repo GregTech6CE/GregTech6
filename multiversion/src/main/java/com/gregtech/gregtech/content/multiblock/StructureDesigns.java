@@ -19,9 +19,7 @@ public final class StructureDesigns {
         if (level == null || cells == null || origin == null || front == null) return;
         for (LargeMachineLayouts.Cell cell : cells) {
             if (cell.design() < 0 || cell.plainBlock()) continue;
-            BlockPos pos = cell.at(origin, front);
-            if (level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part)
-                part.applyStructureDesign(cell.design());
+            write(level, cell.at(origin, front), cell.design());
         }
     }
 
@@ -34,8 +32,13 @@ public final class StructureDesigns {
         if (level == null || placed == null) return;
         for (LargeMachineLayouts.Placed cell : placed) {
             if (cell.cell().design() < 0 || cell.cell().plainBlock()) continue;
-            if (level.getBlockEntity(cell.pos()) instanceof MultiblockPortBlockEntity part)
-                part.applyStructureDesign(cell.cell().design());
+            write(level, cell.pos(), cell.cell().design());
         }
+    }
+
+    /** Only the cells whose index actually differs are written, so an unchanged match saves nothing. */
+    private static void write(Level level, BlockPos pos, int design) {
+        if (level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part && part.structureDesign() != design)
+            part.applyStructureDesign(design);
     }
 }

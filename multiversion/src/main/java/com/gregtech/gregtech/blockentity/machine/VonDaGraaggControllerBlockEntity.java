@@ -91,7 +91,7 @@ public final class VonDaGraaggControllerBlockEntity extends GTEnergyBlockEntity 
             var cell = fixed.cell();
             if (cell.role() != MultiblockLayout.Role.AIR) parts.put(fixed.pos(), cell.role());
         }
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, parts, 0,
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, parts,
                 position -> level.getBlockEntity(position) instanceof MultiblockPortBlockEntity port
                         && port.canBind(worldPosition),
                 (position, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(position)).bind(worldPosition, role),
@@ -104,6 +104,11 @@ public final class VonDaGraaggControllerBlockEntity extends GTEnergyBlockEntity 
     @Override public boolean isStructureOk() {
         return com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.query(this);
     }
+    private boolean structureFormed;
+    @Override public void structureFormedChanged(boolean formed) { structureFormed = formed; }
+    private boolean structureOk() {
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode.legacy() ? isStructureOk() : structureFormed;
+    }
     @Override
     public boolean scanStructure() {
         if (level == null || isRemoved() || worldPosition.getY() + 7 >= level.getMaxBuildHeight())
@@ -112,7 +117,7 @@ public final class VonDaGraaggControllerBlockEntity extends GTEnergyBlockEntity 
         for (var cell : VonDaGraaggRules.layout())
             if (!collectPart(candidateParts, cell.x(), cell.y(), cell.z(), cell.partId(),
                     cell.energyInput() ? MultiblockLayout.Role.ENERGY_INPUT : MultiblockLayout.Role.CASING)) return invalid();
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, candidateParts, 0,
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, candidateParts,
                 pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port
                         && port.canBind(worldPosition),
                 (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
@@ -143,7 +148,7 @@ public final class VonDaGraaggControllerBlockEntity extends GTEnergyBlockEntity 
     public static void serverTick(Level level, BlockPos pos, BlockState state,
             VonDaGraaggControllerBlockEntity machine) {
         if (!(level instanceof ServerLevel server)) return;
-        boolean formed = machine.isStructureOk();
+        boolean formed = machine.structureOk();
         int nextRange = VonDaGraaggRules.range(machine.energy, formed);
         long nextEnergy = VonDaGraaggRules.afterDrain(machine.energy);
         boolean changed = nextRange != machine.range || nextEnergy != machine.energy;
