@@ -523,7 +523,32 @@ STRUCTURE_TRACKING_CASE_NAMESPACES = {
 }
 FUNCTIONAL_CASES |= set(STRUCTURE_TRACKING_CASE_NAMESPACES)
 
+CASING_CRAFTING_CASE_NAMESPACES = {
+    'machinecasingcraftingtests.basiccasingworkbench': 'gregtech_machine_casing:test_empty',
+    'machinecasingcraftingtests.robustcasingworkbench': 'gregtech_machine_casing:test_empty',
+    'machinecasingcraftingtests.reinforcedcasingworkbench': 'gregtech_machine_casing:test_empty',
+    'machinecasingcraftingtests.densecasingworkbench': 'gregtech_machine_casing:test_empty',
+    'machinecasingcraftingtests.allregisteredcasinggradeshaveavailablepartsrecipes': 'gregtech_machine_casing:test_empty',
+    'machinecasingcraftingtests.aluminiumwelderroutesremainunchanged': 'gregtech_machine_casing:test_empty',
+}
+FUNCTIONAL_CASES |= set(CASING_CRAFTING_CASE_NAMESPACES)
+
+SENSOR_INTERFACE_CASE_NAMESPACES = {
+    'sensorinterfaceregressiontests.smallcruciblecontentweightandscales': 'gregtech_sensor_interfaces:test_empty',
+    'sensorinterfaceregressiontests.largecrucibleweightthroughboundpart': 'gregtech_sensor_interfaces:test_empty',
+    'sensorinterfaceregressiontests.inventoryweightusesphysicalcomposition': 'gregtech_sensor_interfaces:test_empty',
+    'sensorinterfaceregressiontests.cruciblecompressionreportscontentunits': 'gregtech_sensor_interfaces:test_empty',
+    'sensorinterfaceregressiontests.moldexposesnativetemperature': 'gregtech_sensor_interfaces:test_empty',
+    'sensorinterfaceregressiontests.pipeexposesnativetemperature': 'gregtech_sensor_interfaces:test_empty',
+    'sensorinterfaceregressiontests.stackometercountsoccupiedslots': 'gregtech_sensor_interfaces:test_empty',
+}
+FUNCTIONAL_CASES |= set(SENSOR_INTERFACE_CASE_NAMESPACES)
+
 def expected_namespace(identity):
+    if identity in SENSOR_INTERFACE_CASE_NAMESPACES:
+        return SENSOR_INTERFACE_CASE_NAMESPACES[identity]
+    if identity in CASING_CRAFTING_CASE_NAMESPACES:
+        return CASING_CRAFTING_CASE_NAMESPACES[identity]
     if identity in TUNING_CASE_NAMESPACES:
         return TUNING_CASE_NAMESPACES[identity]
     if identity in BUILDER_CASE_NAMESPACES:
@@ -608,6 +633,14 @@ def check(path, platform='forge'):
         classname = case.get('classname', '').lower()
         for identity in candidates_by_tail.get(name.rsplit('.', 1)[-1], ()):
             test_class, method = identity.split('.', 1)
+            if identity in CASING_CRAFTING_CASE_NAMESPACES:
+                if name == method and classname == CASING_CRAFTING_CASE_NAMESPACES[identity]:
+                    found.add(identity)
+                continue
+            if identity in SENSOR_INTERFACE_CASE_NAMESPACES:
+                if name == method and classname == SENSOR_INTERFACE_CASE_NAMESPACES[identity]:
+                    found.add(identity)
+                continue
             if identity in TUNING_CASE_NAMESPACES:
                 if name == method and classname == TUNING_CASE_NAMESPACES[identity]:
                     found.add(identity)
