@@ -23,6 +23,7 @@ public final class CoreBehaviorContracts {
 
     public static void main(String[] args) {
         assertions += OriginalFluidDisplayChecks.run();
+        assertions += StructureClaimTableContracts.verify();
         workCostGoldens();
         machineEnergyGoldens();
         sourceSteamConversion();
@@ -57,7 +58,7 @@ public final class CoreBehaviorContracts {
         assertions += CanvasSourceContracts.verify();
         coverAttachmentBounds();
         assertions += CoverRenderGeometryContracts.verify();
-        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 34 groups (Java 17; no game dependencies)");
+        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 35 groups (Java 17; no game dependencies)");
     }
 
     private static void coverAttachmentBounds() {
