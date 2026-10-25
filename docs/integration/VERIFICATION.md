@@ -1,5 +1,7 @@
 # 验证账本
 
+2026-10-25 / 卡 57 按用户明确指示关闭：每世界认领/预留表、端口唯一归属来源、严格争用删除唤醒、卸载/恢复及延迟孤儿清理完成，legacy 路径保留。`:core:check`、双平台生产与 GameTest 编译、API 闭包及报告校验器 42 项测试通过；集中回归 Forge 279/279、NeoForge 270/270（结构跟踪各 35、增量各 18，问题回归各 226/217），场景 6/7/14/15/16/21/24 与既有替代绑定、原生区块生命周期、区块边界测试全部通过。默认全量验收未满足：Forge 运行中按用户关卡指示停止，NeoForge 未启动；已观察失败与限制保留在[回执](verification/structure-claim-table-20261025.json)，不记为全量通过。
+
 2026-10-24 / 物品桶与水晶：双版生产源码编译通过，NeoForge / Forge 各三项集中 GameTest 通过；实际验证 12 个材料水晶身份、20 台充能器、33 个可解析手工配方、LU 充放能守恒及 13 种桶的容量与保存。125 模型、46 贴图引用、45 个原版中文名称及双版掉落表、4 个 EMI 分类通过静态核对。无客户端视觉／存档重启／交付 JAR／推送。见[说明](CRYSTAL_BARREL_COMPLETION.md)和[来源回执](verification/crystal-barrel-20261024.json)。
 
 2026-10-24 / 机器 tick 优化：双版主代码编译通过；最终 Forge／NeoForge 各七项原生 GameTest 通过（Gradle 合计 3m25s），覆盖配方顺序／数量／动态上下文、缓存失效、锅炉产汽与数据加载、邻接旋转拆换、流体回调、自动输入恢复与连续产量。完整 Forge 测试源码编译曾被旧电池测试的两处 chemistry() 调用阻塞；最终使用临时 init 只编译本批测试，不修改生产配置。未客户端仪表／真实存档重启／用户产线复测／新 JAR／推送；见[本批说明](MACHINE_TICK_OPTIMIZATION.md)及[回执](verification/machine-tick-optimization-20261024.json)。

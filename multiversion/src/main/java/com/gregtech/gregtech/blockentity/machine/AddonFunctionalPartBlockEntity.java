@@ -64,6 +64,7 @@ public class AddonFunctionalPartBlockEntity extends MultiblockPortBlockEntity
     }
 
     @Override public boolean canBind(BlockPos owner) {
+        if (!com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode.legacy()) return super.canBind(owner);
         BlockPos held = controllerPos();
         if (held == null || owner.equals(held)) return true;
         if (level == null || !level.hasChunkAt(held)) return true;

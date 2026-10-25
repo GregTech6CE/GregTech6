@@ -1,5 +1,15 @@
 # 实现选择记录
 
+## 2026-10-25 / 卡 57：认领表与严格争用接线
+
+- 新增纯 Java 17 的 `StructureClaimTable`；坐标和区块键由平台投影，支持严格排他、原子批量认领、逐格认领、按控制器释放，以及按部件区块转移/恢复预留。没有新增第三方来源、资产或依赖。
+- `WorldStructureClaims` 通过已有 `StructureLevelData` mixin 字段所持有的 `WorldData` 访问每个 ServerLevel 独立的表，随世界清理。`StructureClaims` 继续只是 `PartBindings` 的写入短路包装，`ClaimMemory` 继续只是扫描缓存。
+- core 保持无 Minecraft/fastutil 依赖；Forge/NeoForge 世界适配在 `WorldStructureClaims` 供应 fastutil primitive long map。端口派生缓存、真实区块事件、删除订阅、孤儿清理和 legacy 分流已接入。
+- 卡 57 的玩家语义已落到生产路径：控制器区块卸载后，仍加载的部件不可被竞争者抢走；控制器未加载且部件区块也卸载后，归属失效。控制器仍加载时，部件卸载转预留，区块加载事件同步恢复，早于 `hasChunkAt`、控制器扫描及调度预算。争用失败的 tracker 记录占用坐标并在条目删除后重新入队。
+- 双平台全部专门场景已通过：集中回归 Forge 279/279、NeoForge 270/270，结构跟踪各 35/35，覆盖严格争用、有界归属、负坐标预留恢复、重建部件缓存、孤儿清理、延迟 onLoad、legacy 与附属部件。既有测试断言未改写；旧抢占行为仅在 legacy 专门测试中保留，新 tracked 语义由新增测试明确验证。
+- 用户在默认全量运行期间明确要求现在关卡提交，卡 57 据此关闭。Forge 默认全量中止、NeoForge 默认全量未启动，全量验收仍未满足；不将部分运行或历史失败重写为通过。
+- 验证及未完成项见 [回执](verification/structure-claim-table-20261025.json)。
+
 ## 2026-10-25 / 内置机器调参的有效能量范围补查
 
 - `MachineTuning` canonical 构造器只验证声明中同时存在的 `energyIn`、`energyInMin`、`energyInMax`；`MachineTuningRules.merge` 只合并附属声明，不会填内置值。原先把这一步等同最终合并检查的理由不成立，卡 50 及调参 API 的记录已更正。
