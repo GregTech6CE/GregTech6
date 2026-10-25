@@ -1,49 +1,43 @@
 {
   "byKind": {
-    "boxinator": 13110,
-    "compressor": 1303,
-    "unboxinator": 8187
+    "boxinator": 13199,
+    "compressor": 1311,
+    "unboxinator": 8241
   },
   "byMap": {
-    "gt.recipe.boxinator": 13110,
-    "gt.recipe.compressor": 1303,
-    "gt.recipe.unboxinator": 8187
+    "gt.recipe.boxinator": 13199,
+    "gt.recipe.compressor": 1311,
+    "gt.recipe.unboxinator": 8241
   },
-  "craftingGridRecipes": 26226,
+  "craftingGridRecipes": 30720,
   "craftingGridSkipped": [
-    "oreRaw 1 -\u003e rawOreChunk 3 (:553): no rawOreChunk prefix",
-    "ingot 1 -\u003e chunkGt 4 (:561): competes with ingot 1 -\u003e nugget 9 (:560)",
-    "dust 1 -\u003e dustSmall 4 (:564): competes with dust 1 -\u003e dustTiny 9 (:563)",
-    "blockDust 1 -\u003e dustSmall 36 (:569): competes with blockDust 1 -\u003e dust 9 (:568)",
-    "blockIngot 1 -\u003e chunkGt 36 (:571): competes with blockIngot 1 -\u003e ingot 9 (:570)",
-    "plateTiny 5/9 -\u003e casingSmall 1/2 (:609-612): no casingSmall prefix",
-    "wire size conversions (:624-625): registered per wire size instead, see registerWireSizes()"
+    "rawOreChunk (:553/:576): no external tagged item; GT6 registers no item for this Harder Ores prefix"
   ],
   "recipeMapTotals": {
-    "gt.recipe.anvil": 8958,
-    "gt.recipe.anvil.bend.big": 903,
-    "gt.recipe.anvil.bend.small": 301,
+    "gt.recipe.anvil": 9507,
+    "gt.recipe.anvil.bend.big": 909,
+    "gt.recipe.anvil.bend.small": 303,
     "gt.recipe.autoclave": 456,
-    "gt.recipe.boxinator": 13172,
-    "gt.recipe.clustermill": 301,
-    "gt.recipe.compressor": 1336,
-    "gt.recipe.crusher": 6622,
-    "gt.recipe.cutter": 9847,
-    "gt.recipe.extruder": 59147,
-    "gt.recipe.lathe": 2784,
+    "gt.recipe.boxinator": 16194,
+    "gt.recipe.clustermill": 303,
+    "gt.recipe.compressor": 1347,
+    "gt.recipe.crusher": 6770,
+    "gt.recipe.cutter": 10313,
+    "gt.recipe.extruder": 59421,
+    "gt.recipe.lathe": 2828,
     "gt.recipe.loom": 1057,
-    "gt.recipe.mortar": 1912,
-    "gt.recipe.press": 3606,
-    "gt.recipe.rollbender": 1205,
+    "gt.recipe.mortar": 4195,
+    "gt.recipe.press": 5070,
+    "gt.recipe.rollbender": 1214,
     "gt.recipe.rollformer": 300,
-    "gt.recipe.rollingmill": 2113,
-    "gt.recipe.sharpener": 8988,
-    "gt.recipe.shredder": 42744,
+    "gt.recipe.rollingmill": 2127,
+    "gt.recipe.sharpener": 8999,
+    "gt.recipe.shredder": 46241,
     "gt.recipe.sifter": 380,
-    "gt.recipe.sluice": 4288,
-    "gt.recipe.unboxinator": 10884,
-    "gt.recipe.welder": 5370,
-    "gt.recipe.wiremill": 631
+    "gt.recipe.sluice": 4314,
+    "gt.recipe.unboxinator": 18235,
+    "gt.recipe.welder": 5404,
+    "gt.recipe.wiremill": 635
   },
   "skipped": [
     "compressor: ingot 1 -\u003e compressed 1 (MaterialPrefix.compressed is missing)",

@@ -1,35 +1,35 @@
 {
   "anvilNotes": [
-    "chunk / rubble / pebbles / clump / reduced / crystalline / cleanGravel / cluster rows (:158-165): the port has no such prefixes"
+    "eight external-prefix rows (:158-165) bind actual external items through ExternalOreProcessing after tags"
   ],
-  "anvilShreddingRoutes": 832,
-  "anvilTable": 8958,
+  "anvilShreddingRoutes": 1377,
+  "anvilTable": 9507,
   "autoclaveNotes": [
     "GT6\u0027s COATED.NOT / EXPLODES_IN_NONVANILLA_CRAFTING_GRID.NOT conditions have no port counterpart; ANTIMATTER.NOT and CRYSTALLISABLE are applied"
   ],
   "autoclaveRoutes": 444,
   "autoclaveTable": 456,
   "crusherNotes": [
-    "rawOreChunk 1 -\u003e crushedTiny 3 (:147), chunk 1 -\u003e rubble 1 (:148), rubble 1 -\u003e pebbles 1 (:149), pebbles 1 -\u003e dust 3 in the Sifter (:146): the port has no such prefixes",
-    "RecipeMapHandlerCrushing() (:157) is the generic crushing handler, already covered by Loader_Recipes_OreProcessing#pulverizeMulti"
+    "Optional rawOreChunk/chunk/rubble/pebbles routes (:62/:65-67) bind actual external items after tag loading",
+    "RecipeMapHandlerCrushing() (:77) is the generic crushing handler, already covered by Loader_Recipes_OreProcessing#pulverizeMulti"
   ],
-  "crusherRows": 1257,
-  "crusherTable": 6622,
+  "crusherRows": 1258,
+  "crusherTable": 6770,
   "sharpeningNotes": [
     "GT6\u0027s COATED.NOT condition on the grinding rows (:113-127) has no port counterpart; ANTIMATTER.NOT is applied"
   ],
-  "sharpeningRoutes": 2098,
-  "sharpeningTable": 8988,
+  "sharpeningRoutes": 2105,
+  "sharpeningTable": 8999,
   "shredderNotes": [
-    "prefixes the port does not have: [armorBoots, armorChestplate, armorHelmet, armorLeggings, blockGem, blockIngot, blockPlate, blockPlateGem, blockSolid, capcellcon, casingMachine, casingMachineDense, casingMachineDouble, casingMachineQuadruple, compressed, crystal, crystalPure, frameGt, oreberry, plateSteamcraft, sheetGt, toolAxe, toolHoe, toolPickaxe, toolShears, toolShovel, toolSword]"
+    "prefixes the port does not have: [armorBoots, armorChestplate, armorHelmet, armorLeggings, blockGem, blockIngot, blockPlate, blockPlateGem, blockSolid, capcellcon, casingMachine, casingMachineDense, casingMachineDouble, casingMachineQuadruple, compressed, crystalPure, frameGt, oreberry, plateSteamcraft, sheetGt, toolAxe, toolHoe, toolPickaxe, toolShears, toolShovel, toolSword]"
   ],
-  "shredderRecyclingRoutes": 38044,
-  "shredderTable": 42744,
+  "shredderRecyclingRoutes": 38479,
+  "shredderTable": 46241,
   "welderNotes": [
     "plateCurved 1/3/6/12 -\u003e pipeTiny/Small/Medium/Large/Huge (:324-328, :339-343): the port has no per-size pipe forms (registry/GTFluidPipes only models medium pipes)",
     "casingSmall 2 -\u003e plate 1 (:329): the port has no MaterialPrefix.casingSmall",
     "GT6\u0027s COATED.NOT condition has no port counterpart; SMITHABLE and FLAMMABLE.NOT are applied"
   ],
-  "welderRows": 2709,
-  "welderTable": 5370
+  "welderRows": 2727,
+  "welderTable": 5404
 }

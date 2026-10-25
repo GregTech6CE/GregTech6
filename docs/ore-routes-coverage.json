@@ -1,6 +1,6 @@
 {
-  "bathRecipes": 1154,
-  "centrifugeRecipes": 834,
+  "bathRecipes": 1213,
+  "centrifugeRecipes": 838,
   "machinesUnblocked": [
     "sifter (4 tiers)",
     "electricsifter (5 tiers)",
@@ -8,7 +8,7 @@
     "sluice (4 tiers)",
     "largesluice"
   ],
-  "magneticSeparatorRecipes": 609,
+  "magneticSeparatorRecipes": 79,
   "siftingRecipes": 380,
-  "sluiceRecipes": 4288
+  "sluiceRecipes": 4314
 }

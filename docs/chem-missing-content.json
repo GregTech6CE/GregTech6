@@ -1,9 +1,6 @@
 {
-  "added": 1662,
+  "added": 2796,
   "missingContent": [
-    "i:bulletGtLarge:Empty",
-    "i:bulletGtMedium:Empty",
-    "i:bulletGtSmall:Empty",
     "i:gearGt:Basalt",
     "i:gearGt:Blackstone",
     "i:gearGt:Stone",
@@ -51,5 +48,5 @@
     "tech:wimo_infected_meat",
     "tech:wimo_thick_bone"
   ],
-  "skipped": 446
+  "skipped": 427
 }

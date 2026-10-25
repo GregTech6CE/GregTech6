@@ -19,6 +19,22 @@ tasks.register('sourcePolicyCheck', Exec) {
     commandLine (findProperty('pythonExecutable') ?: 'python'), '-X', 'utf8',
             'tools/integration/check_source.py', '--output', 'build/reports/source-policy.json'
 }
+
+tasks.register('addonApiDocsCheck', Exec) {
+    description = 'Checks SDK documentation references, bilingual structure, anchors and limit sources.'
+    group = 'verification'
+    workingDir rootDir
+    commandLine (findProperty('pythonExecutable') ?: 'python'), '-X', 'utf8',
+            'tools/check_addon_api_docs.py'
+}
+
+tasks.register('addonApiDocsTest', Exec) {
+    description = 'Runs regression tests for the SDK documentation checker.'
+    group = 'verification'
+    workingDir rootDir
+    commandLine (findProperty('pythonExecutable') ?: 'python'), '-X', 'utf8',
+            '-m', 'unittest', 'discover', '-s', 'tools/tests', '-p', 'test_addon_api_docs.py'
+}
 tasks.named('check').configure {
     dependsOn ':core:check', ':multiversion:1.20.1-forge:check', ':multiversion:1.21.1-neoforge:check'
 }

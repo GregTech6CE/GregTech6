@@ -1,10 +1,10 @@
 {
   "baggedItems": {
-    "dusty_guide_book": "gt.books",
-    "loot_pouch": "gt.misc",
-    "gem_pouch": "gt.flawless, gt.gems, gt.gems",
+    "bagged_sapling": "gt.saplings",
     "seed_pouch": "gt.seeds",
-    "bagged_sapling": "gt.saplings"
+    "gem_pouch": "gt.flawless, gt.gems, gt.gems",
+    "loot_pouch": "gt.misc",
+    "dusty_guide_book": "gt.books"
   },
   "chestTables": [
     "minecraft:chests/abandoned_mineshaft",
@@ -24,7 +24,7 @@
     "gt.bottles": 13,
     "gt.flawless": 20,
     "gt.gems": 13,
-    "gt.matdicts": 1101,
+    "gt.matdicts": 1112,
     "gt.misc": 38,
     "gt.saplings": 12,
     "gt.seeds": 7,

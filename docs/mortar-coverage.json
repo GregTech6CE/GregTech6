@@ -1,5 +1,5 @@
 {
-  "gt6GrindingRoutes": 1831,
+  "gt6GrindingRoutes": 4096,
   "inputPrefixes": [
     "billet",
     "bolt",
@@ -30,8 +30,8 @@
     "toolHeadRawArrow",
     "wireFine"
   ],
-  "mortarRecipes": 1912,
+  "mortarRecipes": 4195,
   "skippedGt6Rows": [
-    "cleanGravel / dirtyGravel / crystalline / reduced / crystal / clump (Loader_Recipes_Handlers:84-89): the port has no such prefixes"
+    "six external-form rows (:84-89) bind actual items through ExternalOreProcessing after tags"
   ]
 }

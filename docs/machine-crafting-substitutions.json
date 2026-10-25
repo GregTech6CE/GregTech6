@@ -1,1 +1,10 @@
-{}
+{
+  "block casingMachine of Umber": "machine casing block",
+  "item gt6ce:stone_umber_stone": "machine casing block",
+  "item gt6ce:stone_betweenstone_stone": "machine casing block",
+  "item gt6ce:stone_livingrock_stone": "machine casing block",
+  "block casingMachine of Betweenstone": "machine casing block",
+  "block casingMachine of Livingrock": "machine casing block",
+  "block casingMachine of Holystone": "machine casing block",
+  "item gt6ce:stone_holystone_stone": "machine casing block"
+}

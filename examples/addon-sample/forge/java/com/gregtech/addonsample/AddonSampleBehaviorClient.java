@@ -25,7 +25,7 @@ public final class AddonSampleBehaviorClient implements BehaviorMachineClient {
     @Override public Set<String> machineTypes() { return Set.of("sample_switch"); }
 
     @Nullable
-    @Override public Screen screen(BehaviorMachineMenuView menu, Inventory inventory, Component title) {
+    @Override public Screen screen(String machineType, BehaviorMachineMenuView menu, Inventory inventory, Component title) {
         return null;
     }
 

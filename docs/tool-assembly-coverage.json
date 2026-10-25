@@ -21,7 +21,7 @@
     "sword",
     "universal_spade"
   ],
-  "headAndHandle": 20,
+  "headAndHandle": 4839,
   "headPatterns": 35,
   "heads": {
     "axe": [
@@ -58,9 +58,9 @@
         "mirror": false,
         "normalHandle": true,
         "rows": [
-          "CG ",
-          "C  ",
-          "f  "
+          "CG",
+          "C ",
+          "f "
         ],
         "tools": {
           "f": "file"
@@ -269,8 +269,8 @@
         "mirror": false,
         "normalHandle": true,
         "rows": [
-          " P ",
-          " Pk"
+          "P ",
+          "Pk"
         ],
         "tools": {
           "k": "knife"
@@ -350,8 +350,8 @@
         "mirror": false,
         "normalHandle": true,
         "rows": [
-          "CG ",
-          "f  "
+          "CG",
+          "f "
         ],
         "tools": {
           "f": "file"
@@ -571,7 +571,7 @@
         "mirror": false,
         "normalHandle": true,
         "rows": [
-          "fC "
+          "fC"
         ],
         "tools": {
           "f": "file"
@@ -650,8 +650,8 @@
         "mirror": false,
         "normalHandle": true,
         "rows": [
-          "fC ",
-          " s "
+          "fC",
+          " s"
         ],
         "tools": {
           "f": "file",
@@ -690,8 +690,8 @@
         "mirror": false,
         "normalHandle": true,
         "rows": [
-          " C ",
-          "fC "
+          " C",
+          "fC"
         ],
         "tools": {
           "f": "file"
@@ -702,8 +702,8 @@
       {
         "forms": {
           "P": "plate",
-          "V": "plate",
-          "W": "plate"
+          "V": "ring",
+          "W": "screw"
         },
         "gate": {
           "items": {},
@@ -724,8 +724,8 @@
       {
         "forms": {
           "C": "plateGem",
-          "V": "plateGem",
-          "W": "plateGem"
+          "V": "ring",
+          "W": "screw"
         },
         "gate": {
           "items": {},
@@ -927,6 +927,31 @@
         }
       }
     ],
+    "carbine": [
+      {
+        "forms": {
+          "T": "screw",
+          "X": "plateCurved"
+        },
+        "gate": {
+          "items": {
+            "V": "minecraft:flint"
+          },
+          "onlyStone": false
+        },
+        "mirror": false,
+        "normalHandle": true,
+        "rows": [
+          "XXV",
+          "THH",
+          "d h"
+        ],
+        "tools": {
+          "d": "screwdriver",
+          "h": "hammer"
+        }
+      }
+    ],
     "club": [
       {
         "forms": {
@@ -1116,8 +1141,8 @@
     "hand_drill": [
       {
         "forms": {
-          "X": "plate",
-          "Y": "plate"
+          "X": "toolHeadArrow",
+          "Y": "bolt"
         },
         "gate": {
           "items": {},
@@ -1362,7 +1387,7 @@
         "forms": {
           "S": "stick",
           "T": "screw",
-          "X": "plate"
+          "X": "plateCurved"
         },
         "gate": {
           "items": {},
@@ -1374,6 +1399,31 @@
           "XhX",
           " T ",
           "SdS"
+        ],
+        "tools": {
+          "d": "screwdriver",
+          "h": "hammer"
+        }
+      }
+    ],
+    "pistol": [
+      {
+        "forms": {
+          "T": "screw",
+          "X": "plateCurved"
+        },
+        "gate": {
+          "items": {
+            "V": "minecraft:flint"
+          },
+          "onlyStone": false
+        },
+        "mirror": false,
+        "normalHandle": true,
+        "rows": [
+          "XXV",
+          " TH",
+          "d h"
         ],
         "tools": {
           "d": "screwdriver",
@@ -1404,6 +1454,57 @@
         }
       }
     ],
+    "pocket_multitool": [
+      {
+        "forms": {
+          "A": "toolHeadScrewdriver",
+          "O": "ring",
+          "P": "plate",
+          "V": "toolHeadSword",
+          "W": "toolHeadSword",
+          "X": "toolHeadSaw",
+          "Y": "toolHeadChisel",
+          "Z": "toolHeadFile"
+        },
+        "gate": {
+          "items": {},
+          "onlyStone": false
+        },
+        "mirror": false,
+        "normalHandle": false,
+        "rows": [
+          "AXO",
+          "ZPV",
+          "OWY"
+        ],
+        "tools": {}
+      }
+    ],
+    "rifle": [
+      {
+        "forms": {
+          "T": "screw",
+          "X": "plateCurved"
+        },
+        "gate": {
+          "items": {
+            "V": "minecraft:flint"
+          },
+          "onlyStone": false
+        },
+        "mirror": false,
+        "normalHandle": true,
+        "rows": [
+          "XXX",
+          "HHV",
+          "dTh"
+        ],
+        "tools": {
+          "d": "screwdriver",
+          "h": "hammer"
+        }
+      }
+    ],
     "rolling_pin": [
       {
         "forms": {
@@ -1423,6 +1524,46 @@
         ],
         "tools": {
           "f": "file"
+        }
+      },
+      {
+        "forms": {
+          "P": "plate",
+          "S": "stick"
+        },
+        "gate": {
+          "items": {},
+          "onlyStone": false
+        },
+        "mirror": true,
+        "normalHandle": false,
+        "rows": [
+          "  S",
+          " P ",
+          "S f"
+        ],
+        "tools": {
+          "f": "file"
+        }
+      },
+      {
+        "forms": {
+          "P": "plate",
+          "S": "stick"
+        },
+        "gate": {
+          "items": {},
+          "onlyStone": false
+        },
+        "mirror": true,
+        "normalHandle": false,
+        "rows": [
+          "  S",
+          " P ",
+          "S k"
+        ],
+        "tools": {
+          "k": "knife"
         }
       }
     ],
@@ -1591,7 +1732,8 @@
     "universal_spade": [
       {
         "forms": {
-          "S": "stick"
+          "S": "stick",
+          "T": "screw"
         },
         "gate": {
           "items": {},
@@ -1697,9 +1839,17 @@
       }
     ]
   },
-  "shapedOrForms": 17,
-  "shapedPatterns": 48,
-  "toolTypes": 37,
-  "tools": 37,
-  "toolsWithoutManualRecipe": []
+  "shapedOrForms": 5473,
+  "shapedPatterns": 54,
+  "toolTypes": 48,
+  "tools": 10312,
+  "toolsWithoutManualRecipe": [
+    "pocket_knife",
+    "pocket_saw",
+    "pocket_file",
+    "pocket_screwdriver",
+    "pocket_wire_cutter",
+    "pocket_scissors",
+    "pocket_chisel"
+  ]
 }

@@ -1,6 +1,5 @@
 {
   "coveredMachines": [
-    "Adamantium Dynamo Main Housing (legacy conversion)",
     "Adamantium Wall",
     "Bedrock Mining Drill Controller",
     "Centrifuge Part",
@@ -13,8 +12,6 @@
     "Distillation Tower Part",
     "Electrolyzer Part",
     "Fusion Reactor",
-    "Graphene Gas Turbine Main Housing (legacy conversion)",
-    "Graphene Steam Turbine Main Housing (legacy conversion)",
     "Heat Transmitter",
     "Implosion Compressor",
     "Large Adamantium Tank Main Valve",
@@ -44,7 +41,6 @@
     "Large Shredder",
     "Large Sluice",
     "Large Squeezer",
-    "Large Stainless Steel Crucible",
     "Large Stainless Steel Tank Main Valve",
     "Large Titanium Tank Main Valve",
     "Large Tungsten Tank Main Valve",
@@ -53,8 +49,6 @@
     "Logic Quadcore Processor Unit",
     "Logistics Core",
     "Logistics Wire",
-    "Magnalium Gas Turbine Main Housing (legacy conversion)",
-    "Magnalium Steam Turbine Main Housing (legacy conversion)",
     "Shredder Blades",
     "Sluice Part",
     "Small Adamantium Tank Main Valve",
@@ -69,20 +63,12 @@
     "Small Titanium Tank Main Valve",
     "Small Tungsten Tank Main Valve",
     "Small Tungstensteel Tank Main Valve",
-    "Stainless Steel Boiler Main Barometer",
-    "Stainless Steel Dynamo Main Housing (legacy conversion)",
-    "Titanium Dynamo Main Housing (legacy conversion)",
-    "Trinitanium Gas Turbine Main Housing (legacy conversion)",
-    "Trinitanium Steam Turbine Main Housing (legacy conversion)",
     "Tungsten Wall",
-    "Tungstensteel Dynamo Main Housing (legacy conversion)",
     "Ventilation Unit",
     "Versatile Quadcore Processor Unit",
-    "Vibramantium Gas Turbine Main Housing (legacy conversion)",
-    "Vibramantium Steam Turbine Main Housing (legacy conversion)",
     "Von da Graagg Generator",
     "Wood Tank Main Valve"
   ],
-  "emittedRecipes": 84,
-  "tableEntries": 84
+  "emittedRecipes": 371,
+  "tableEntries": 68
 }
