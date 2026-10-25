@@ -38,7 +38,11 @@ public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockE
     public static void serverTick(Level level,BlockPos pos,BlockState state,ImplosionCompressorControllerBlockEntity machine) {
         BasicMachineBlockEntity.serverTick(level,pos,state,machine);
     }
-    @Override protected boolean structureComplete() { return isStructureOk(); }
+    private boolean structureFormed;
+    @Override protected boolean structureComplete() {
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode.legacy() ? isStructureOk() : structureFormed;
+    }
+    @Override public void structureFormedChanged(boolean formed) { structureFormed = formed; }
     @Override public com.gregtech.gregtech.api.multiblock.tracking.StructureDefinition structureDefinition() {
         return definition;
     }
@@ -60,7 +64,7 @@ public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockE
             var cell=fixed.cell();
             if(cell.role()!=MultiblockLayout.Role.AIR)candidates.put(fixed.pos(),cell.role());
         }
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this,true,bindings,candidates,0,
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this,bindings,candidates,
                 pos->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).canBind(worldPosition),
                 (pos,role)->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).bind(worldPosition,role),this::release)
                 !=com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
@@ -82,7 +86,7 @@ public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockE
             candidates.put(pos,role);return true;
         });
         if(!valid) { bindings.clear(this::release); com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this); return false; }
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, candidates, 0,
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, candidates,
                 pos->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).canBind(worldPosition),
                 (pos,role)->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).bind(worldPosition,role),this::release)
                 != com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;

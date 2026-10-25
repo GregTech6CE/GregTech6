@@ -330,8 +330,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     }
 
     public boolean structureFormed() {
-        if (com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode.legacy()) return formed;
-        return isStructureOk();
+        return formed;
     }
 
     private void tickServer(Level level, BlockPos pos) {
@@ -339,8 +338,8 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         itemsLeft = BehaviorRangeRules.ITEMS_PER_TICK;
         pollEnergy(level, pos);
         pollAuxiliary(level, pos);
+        // The tracked formed bit is maintained at structure edges; only the legacy rollback rescans here.
         if (com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode.legacy()) refreshStructure();
-        else formed = isStructureOk();
         powered = stored > 0;
         working = false;
         behavior.tick(context);
@@ -1428,8 +1427,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             if (matched.role() != MultiblockLayout.Role.AIR && !matched.plainBlock())
                 parts.put(placed.pos(), matched.role());
         }
-        var claimed = com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, structureBindings, parts,
-                behaviorDesignHash(cells, repeatPlaced),
+        var claimed = com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, structureBindings, parts,
                 pos -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).canBind(worldPosition),
                 (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
                 this::releaseStructure);
@@ -1459,13 +1457,6 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         structureBindings.clear(this::releaseStructure);
         com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
         clearStructureCaches();
-    }
-
-    private static int behaviorDesignHash(List<LargeMachineLayouts.Cell> cells, List<LargeMachineLayouts.Placed> placed) {
-        int hash = 1;
-        for (var cell : cells) hash = 31 * hash + cell.design();
-        for (var cell : placed) hash = 31 * hash + cell.cell().design();
-        return hash;
     }
 
     private LargeMachineLayouts.Cell matchingCell(LargeMachineLayouts.Cell cell, BlockPos cellPos) {

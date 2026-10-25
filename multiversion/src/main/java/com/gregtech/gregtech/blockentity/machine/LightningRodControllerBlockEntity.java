@@ -60,6 +60,11 @@ public class LightningRodControllerBlockEntity extends GTEnergyBlockEntity imple
     @Override public boolean isStructureOk() {
         return com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.query(this);
     }
+    private boolean structureFormed;
+    @Override public void structureFormedChanged(boolean formed) { structureFormed = formed; }
+    private boolean structureOk() {
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode.legacy() ? isStructureOk() : structureFormed;
+    }
     @Override
     public boolean scanStructure() {
         rodLength = 0;
@@ -90,7 +95,7 @@ public class LightningRodControllerBlockEntity extends GTEnergyBlockEntity imple
 
     /** Called by the weather roll; also a deterministic seam for structure/energy regression tests. */
     public boolean captureStrike() {
-        if (level == null || level.isClientSide || energy >= PACKET || !isStructureOk() || rodLength == 0
+        if (level == null || level.isClientSide || energy >= PACKET || !structureOk() || rodLength == 0
                 || worldPosition.getY() + rodLength < 100) return false;
         var tip = worldPosition.above(4 + rodLength);
         if (!level.canSeeSky(tip.above())) return false;
@@ -106,7 +111,7 @@ public class LightningRodControllerBlockEntity extends GTEnergyBlockEntity imple
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, LightningRodControllerBlockEntity machine) {
-        if (!machine.isStructureOk()) {
+        if (!machine.structureOk()) {
             if (machine.energy != 0) {
                 machine.energy = 0;
                 machine.setChanged();

@@ -144,7 +144,7 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
             var cell = fixed.cell();
             if (cell.role() != MultiblockLayout.Role.AIR) parts.put(fixed.pos(), cell.role());
         }
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, parts, 0,
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, parts,
                 position -> level.getBlockEntity(position) instanceof MultiblockPortBlockEntity port
                         && port.canBind(worldPosition),
                 (position, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(position)).bind(worldPosition, role),
@@ -154,7 +154,12 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
         bindings.clear(this::release);
         com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
     }
+    private boolean structureFormed;
+    private boolean structureOk() {
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode.legacy() ? isStructureOk() : structureFormed;
+    }
     @Override public void structureFormedChanged(boolean formed) {
+        structureFormed = formed;
         if (level == null || level.isClientSide || isRemoved()) return;
         com.gregtech.gregtech.api.multiblock.tracking.StructureScanProbe.pause();
         try {
@@ -206,7 +211,7 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
             if(!(level.getBlockState(pos).getBlock() == wall)){bindings.clear(this::release);com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);return false;}
             candidates.put(pos,MultiblockLayout.Role.valueOf(cell.role().name()));
         }
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, candidates, 0,
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, candidates,
                 pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port && port.canBind(worldPosition),
                 (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
                 this::release) != com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
@@ -214,7 +219,7 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, LargeCrucibleControllerBlockEntity be) {
         if (level.isClientSide) return;
-        if (be.isStructureOk()) {
+        if (be.structureOk()) {
             be.collectRainwater();
             be.tickServer();
         }

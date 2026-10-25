@@ -26,12 +26,20 @@ public final class StructureTracking {
     public static boolean query(TrackedMultiblock machine) {
         if (StructureScanProbe.inScan()) return false;
         if (StructureTrackingMode.legacy()) return scan(machine);
+        StructureScanProbe.onQuery();
         BlockEntity entity = machine.trackedEntity();
         Level level = entity.getLevel();
         if (level == null || entity.isRemoved()) return false;
         if (level.isClientSide) return ClientFormedSync.get(entity);
         StructureTracker tracker = attach(machine);
         return tracker != null && tracker.formed();
+    }
+
+    /** One edge notification: the stored mirror plus the controller's formed/broken hooks. */
+    static void formedChanged(TrackedMultiblock machine, boolean formed) {
+        machine.structureFormedChanged(formed);
+        if (formed) machine.onStructureFormed();
+        else machine.onStructureBroken();
     }
 
     public static void invalidate(TrackedMultiblock machine) {
@@ -47,7 +55,7 @@ public final class StructureTracking {
         boolean fell = tracker.invalidate();
         StructureWatchIndex.enqueue(tracker);
         if (fell) {
-            machine.structureFormedChanged(false);
+            formedChanged(machine, false);
             ClientFormedSync.send(entity);
         }
     }
@@ -64,7 +72,7 @@ public final class StructureTracking {
         tracker.markUnloading();
         boolean fell = tracker.suspend();
         StructureWatchIndex.clearWatch(server, tracker);
-        if (fell) machine.structureFormedChanged(false);
+        if (fell) formedChanged(machine, false);
     }
 
     public static boolean unloading(TrackedMultiblock machine) {
@@ -110,7 +118,7 @@ public final class StructureTracking {
         StructureTrackingEvents.record("tracker.attach " + entity.getBlockPos().asLong());
         StructureDefinition definition = machine.structureDefinition();
         if (definition.formsImmediately()) {
-            if (tracker.markFormed(StructureEpoch.get())) machine.structureFormedChanged(true);
+            if (tracker.markFormed(StructureEpoch.get())) formedChanged(machine, true);
             return tracker;
         }
         install(server, tracker, definition.watchFootprint(machine));
@@ -132,7 +140,7 @@ public final class StructureTracking {
         if (controllerChunk == null) {
             // Losing FULL availability precedes native onChunkUnloaded/setRemoved. Keep the
             // tracker until those callbacks so they can still distinguish unload from removal.
-            if (tracker.suspend()) machine.structureFormedChanged(false);
+            if (tracker.suspend()) formedChanged(machine, false);
             return;
         }
         if (controllerChunk.getBlockEntities().get(controllerPos) != entity) {
@@ -148,7 +156,7 @@ public final class StructureTracking {
             StructureWatchIndex.clearWatch(server, tracker);
             boolean rose = tracker.markFormed(StructureEpoch.get());
             if (rose) {
-                machine.structureFormedChanged(true);
+                formedChanged(machine, true);
                 ClientFormedSync.send(entity);
             }
             return;
@@ -165,7 +173,7 @@ public final class StructureTracking {
         if (!chunksLoaded(server, tracker.watch())) {
             boolean fell = tracker.suspend();
             if (fell) {
-                machine.structureFormedChanged(false);
+                formedChanged(machine, false);
                 ClientFormedSync.send(entity);
             }
             return;
@@ -181,7 +189,7 @@ public final class StructureTracking {
         if (formed) edge = tracker.markFormed(StructureEpoch.get());
         else edge = tracker.markBroken(StructureEpoch.get());
         if (edge) {
-            machine.structureFormedChanged(formed);
+            formedChanged(machine, formed);
             ClientFormedSync.send(entity);
         }
     }
@@ -198,6 +206,7 @@ public final class StructureTracking {
         BlockEntity entity = tracker.entity();
         Level level = entity.getLevel();
         int epoch = StructureEpoch.get();
+        boolean wasFormed = tracker.formed();
         Direction front = LayoutStructures.facing(entity);
         CompiledPattern pattern = tracker.pattern();
         if (pattern == null || tracker.patternFront() != front || tracker.patternEpoch() != epoch) {
@@ -211,7 +220,7 @@ public final class StructureTracking {
             machine.releaseStructureClaims();
             boolean edge = tracker.markBroken(epoch);
             if (edge) {
-                machine.structureFormedChanged(false);
+                formedChanged(machine, false);
                 ClientFormedSync.send(entity);
             }
             return;
@@ -222,7 +231,7 @@ public final class StructureTracking {
             tracker.takeReloadedChunks();
             boolean fell = tracker.suspend();
             if (fell) {
-                machine.structureFormedChanged(false);
+                formedChanged(machine, false);
                 ClientFormedSync.send(entity);
             }
             return;
@@ -234,21 +243,30 @@ public final class StructureTracking {
             tracker.patternState(state);
             full = true;
         }
+        java.util.Set<Long> changedCells;
+        java.util.Set<Long> reloadedChunks;
         if (full) {
             state.reset();
-            tracker.takeChangedCells();
-            tracker.takeReloadedChunks();
+            changedCells = tracker.takeChangedCells();
+            reloadedChunks = tracker.takeReloadedChunks();
         } else {
-            state.applyChanges(entity.getBlockPos(), tracker.takeChangedCells(), tracker.takeReloadedChunks());
+            changedCells = tracker.takeChangedCells();
+            reloadedChunks = tracker.takeReloadedChunks();
+            state.applyChanges(entity.getBlockPos(), changedCells, reloadedChunks);
         }
+        boolean touched = full || facingChanged || epochChanged
+                || !changedCells.isEmpty() || !reloadedChunks.isEmpty();
         boolean matched;
         StructureScanProbe.openIncremental();
         try {
             state.evaluate(level, entity.getBlockPos());
             matched = state.complete() && machine.structurePartsValid();
-            // Claims can write part visuals (the crucible does); those are not external changes.
-            if (matched) matched = machine.applyStructure(state.match(entity.getBlockPos()));
-            else machine.applyIncompleteStructure(state.match(entity.getBlockPos()));
+            // Claims and design writes only happen on an edge or for the cells that changed.
+            if (matched) {
+                if (!wasFormed || touched) matched = machine.applyStructure(state.match(entity.getBlockPos()));
+            } else if (wasFormed || touched) {
+                machine.applyIncompleteStructure(state.match(entity.getBlockPos()));
+            }
         } finally {
             StructureScanProbe.close();
         }
@@ -256,7 +274,7 @@ public final class StructureTracking {
         install(server, tracker, definition.watchFootprint(machine));
         boolean edge = matched ? tracker.markFormed(epoch) : tracker.markBroken(epoch);
         if (edge) {
-            machine.structureFormedChanged(matched);
+            formedChanged(machine, matched);
             ClientFormedSync.send(entity);
         }
         if (consistency) {

@@ -136,7 +136,7 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
             var cell = fixed.cell();
             if (cell.role() != MultiblockLayout.Role.AIR) parts.put(fixed.pos(), cell.role());
         }
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, parts, 0,
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, parts,
                 position -> level.getBlockEntity(position) instanceof MultiblockPortBlockEntity port
                         && port.canBind(worldPosition),
                 (position, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(position)).bind(worldPosition, role),
@@ -148,6 +148,11 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
     }
     @Override public boolean isStructureOk() {
         return com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.query(this);
+    }
+    private boolean structureFormed;
+    @Override public void structureFormedChanged(boolean formed) { structureFormed = formed; }
+    private boolean structureOk() {
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode.legacy() ? isStructureOk() : structureFormed;
     }
     @Override public boolean scanStructure() {
         if (level == null || isRemoved()) return false;
@@ -162,7 +167,7 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
             }
             parts.put(pos, AxialStructureTransform.role(front(), cell.right(), cell.up(), cell.back(), true));
         }
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, parts, 0,
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, parts,
                 p -> ((MultiblockPortBlockEntity) level.getBlockEntity(p)).canBind(worldPosition),
                 (p, r) -> ((MultiblockPortBlockEntity) level.getBlockEntity(p)).bind(worldPosition, r), this::release)
                 != com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
@@ -196,7 +201,7 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
         converting = false;
         emitted = false;
         if (level == null || level.isClientSide) return;
-        boolean formed = isStructureOk();
+        boolean formed = structureOk();
         if (!formed) {
             updateRotorVisual(false, false);
             return;

@@ -167,7 +167,7 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
                     && port.canBind(worldPosition)) parts.put(fixed.pos(), cell.role());
             else if (cell.role() != MultiblockLayout.Role.AIR) complete = false;
         }
-        var claimed = com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, complete, bindings, parts, 0,
+        var claimed = com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, parts,
                 position -> level.getBlockEntity(position) instanceof MultiblockPortBlockEntity port
                         && port.canBind(worldPosition),
                 (position, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(position)).bind(worldPosition, role),
@@ -178,11 +178,16 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
         bindings.clear(this::release);
         com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
     }
+    private boolean structureFormed;
     @Override public void structureFormedChanged(boolean formed) {
+        structureFormed = formed;
         if (structureOkay != formed) {
             structureOkay = formed;
             syncToClient();
         }
+    }
+    private boolean structureOk() {
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode.legacy() ? isStructureOk() : structureFormed;
     }
     @Override public boolean isStructureOk() {
         return com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.query(this);
@@ -213,7 +218,7 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
             }
             parts.put(position,MultiblockLayout.Role.valueOf(cell.role().name()));
         }
-        var claimed = com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, complete, bindings, parts, 0,
+        var claimed = com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, parts,
                 position->level.getBlockEntity(position) instanceof MultiblockPortBlockEntity port&&port.canBind(worldPosition),
                 (position,role)->((MultiblockPortBlockEntity)level.getBlockEntity(position)).bind(worldPosition,role),this::release);
         boolean formed=complete&&claimed!=com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
@@ -282,7 +287,7 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
     public static void serverTick(Level level, BlockPos pos, BlockState state,
                                   OriginalLargeBoilerControllerBlockEntity boiler) {
         if (level.isClientSide || boiler.isRemoved() || level.getBlockEntity(pos) != boiler) return;
-        boolean formed = boiler.isStructureOk();
+        boolean formed = boiler.structureOk();
         boiler.boil();
         // GT6 cools its heat and steam buffers even after a wall is removed.
         boiler.coolDown();

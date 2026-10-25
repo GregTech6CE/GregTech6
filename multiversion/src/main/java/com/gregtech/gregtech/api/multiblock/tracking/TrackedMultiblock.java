@@ -17,6 +17,12 @@ public interface TrackedMultiblock {
     /** Server-only mirror of the tracker bit for fields the machine already stored itself. */
     default void structureFormedChanged(boolean formed) {}
 
+    /** The structure just became formed: build caches here instead of walking them every tick. */
+    default void onStructureFormed() {}
+
+    /** The formed bit just fell: drop the caches built in {@link #onStructureFormed()}. */
+    default void onStructureBroken() {}
+
     /** Part acceptance beyond block identity, as the full scan body applies it. */
     default boolean acceptsTrackedPart(LargeMachineLayouts.Cell cell, Block expected, Block actual) {
         return expected == actual;

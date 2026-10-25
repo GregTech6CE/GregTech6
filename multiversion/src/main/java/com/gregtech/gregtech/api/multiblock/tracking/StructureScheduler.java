@@ -95,7 +95,7 @@ public final class StructureScheduler {
                     boolean fell = tracker.invalidate();
                     StructureWatchIndex.enqueue(tracker);
                     if (fell) {
-                        tracker.machine().structureFormedChanged(false);
+                        StructureTracking.formedChanged(tracker.machine(), false);
                         ClientFormedSync.send(tracker.entity());
                     }
                 } else {

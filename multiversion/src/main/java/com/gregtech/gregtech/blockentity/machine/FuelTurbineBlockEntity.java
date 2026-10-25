@@ -33,7 +33,9 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
     }
 
     @Override
-    protected boolean refreshStructure() { return isStructureOk(); }
+    protected boolean refreshStructure() {
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode.legacy() ? isStructureOk() : formed;
+    }
 
     @Override
     protected boolean acceptsFluid(@Nullable Direction side) { return side == null || side == front(); }
@@ -68,8 +70,7 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
             if (cell.role() != MultiblockLayout.Role.AIR && !cell.plainBlock())
                 parts.put(fixed.pos(), cell.role());
         }
-        var claimed = com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, parts,
-                fuelDesignHash(layout),
+        var claimed = com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, parts,
                 pos -> ((com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity) level.getBlockEntity(pos)).canBind(worldPosition),
                 (pos, role) -> ((com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
                 this::release);
@@ -133,8 +134,7 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
             }
             parts.put(pos, cell.role());
         }
-        var claimed = com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, parts,
-                fuelDesignHash(layout),
+        var claimed = com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, parts,
                 pos -> ((com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity) level.getBlockEntity(pos)).canBind(worldPosition),
                 (pos, role) -> ((com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
                 this::release);
@@ -142,12 +142,6 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
         if (claimed == com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.APPLIED)
             com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front, layout);
         return formed;
-    }
-
-    private static int fuelDesignHash(java.util.List<LargeMachineLayouts.Cell> cells) {
-        int hash = 1;
-        for (var cell : cells) hash = 31 * hash + cell.design();
-        return hash;
     }
 
     private void release(BlockPos pos) {

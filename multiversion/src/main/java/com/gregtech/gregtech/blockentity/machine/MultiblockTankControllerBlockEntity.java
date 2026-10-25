@@ -111,7 +111,7 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
         for (var cell : match.fixedCells())
             if (cell.cell().role() != com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role.AIR)
                 candidates.put(cell.pos(), cell.cell().role());
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, candidates, 0,
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, candidates,
                 pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port && port.canBind(worldPosition),
                 (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role), this::release)
                 != com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
@@ -122,6 +122,11 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
     }
     @Override public boolean isStructureOk() {
         return com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.query(this);
+    }
+    private boolean structureFormed;
+    @Override public void structureFormedChanged(boolean formed) { structureFormed = formed; }
+    private boolean structureOk() {
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode.legacy() ? isStructureOk() : structureFormed;
     }
     public boolean scanStructure() {
         if (level == null || isRemoved()) return false;
@@ -139,7 +144,7 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
             com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
             return false;
         }
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, candidates, 0,
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, candidates,
                 pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port && port.canBind(worldPosition),
                 (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role), this::release)
                 != com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
@@ -154,7 +159,7 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
 
     public static void serverTick(Level level, BlockPos pos, BlockState state,
             MultiblockTankControllerBlockEntity controller) {
-        if (!controller.isStructureOk() || controller.tank.isEmpty()) return;
+        if (!controller.structureOk() || controller.tank.isEmpty()) return;
         if (controller.valveSpec != null && controller.processHazard(controller.tank.getFluid())) return;
         controller.pushFluid();
     }
