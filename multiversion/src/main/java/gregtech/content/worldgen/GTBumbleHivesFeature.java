@@ -143,6 +143,7 @@ public class GTBumbleHivesFeature extends Feature<NoneFeatureConfiguration> {
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+        if (!gregtech.GregTechConfig.Worldgen.HIVES.enabled()) return false;
         WorldGenLevel level = context.level();
         RandomSource random = context.random();
         // GT6 points one column per chunk at (minX + rnd(16), minZ + rnd(16)).

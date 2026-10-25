@@ -35,6 +35,7 @@ public class GTBedrockOreFeature extends Feature<NoneFeatureConfiguration> {
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+        if (!gregtech.GregTechConfig.Worldgen.BEDROCK_ORES.enabled()) return false;
         WorldGenLevel level = context.level();
         ChunkPos chunkPos = new ChunkPos(context.origin());
         // One candidate origin per 16x16-chunk cell.
@@ -120,7 +121,7 @@ public class GTBedrockOreFeature extends Feature<NoneFeatureConfiguration> {
 
     public static boolean placeVein(WorldGenLevel level, RandomSource random, int minX, int minZ,
             GTMaterial material) {
-        if (material == null) return false;
+        if (!gregtech.GregTechConfig.Worldgen.BEDROCK_ORES.enabled() || material == null) return false;
         return MineralWorldgenRules.bedrockVein(minX, minZ, level.getMinBuildHeight(), level.getSeaLevel(), random::nextInt,
                 new MineralWorldgenRules.VeinSink() {
 

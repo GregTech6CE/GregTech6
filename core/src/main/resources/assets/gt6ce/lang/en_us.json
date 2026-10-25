@@ -1,4 +1,10 @@
 {
+  "gt6ce.configuration.tooltips": "Tooltips",
+  "gt6ce.configuration.tooltips.chemical_formulas": "Chemical formulas",
+  "gt6ce.configuration.tooltips.chemical_formulas.tooltip": "Show chemical formulas in item and fluid tooltips.",
+  "gt6ce.configuration.tooltips.material_details": "Material details",
+  "gt6ce.configuration.tooltips.material_details.tooltip": "Show material amounts and properties with F3+H. Disabling also hides the corresponding hint.",
+
   "tooltip.gt6ce.ore.hand_harvest_preferred": "Hand-harvestable; %s is faster",
   "block.gt6ce.adamantium_boiler_main_barometer": "Adamantium Boiler Main Barometer",
   "block.gt6ce.adamantium_dynamo_main_housing": "Adamantium Dynamo Main Housing",

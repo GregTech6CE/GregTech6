@@ -31,7 +31,9 @@ public final class GregTechNeoForge {
         gregtech.internal.addon.AddonCoreServices.bind();
         gregtech.internal.addon.AddonPlatformServices.bind();
         gregtech.internal.addon.AddonLoaderServices.bind();
-        modContainer.registerConfig(net.neoforged.fml.config.ModConfig.Type.COMMON,gregtech.GregTechConfig.SPEC);
+        gregtech.GregTechConfig.prepareDirectory(net.neoforged.fml.loading.FMLPaths.CONFIGDIR.get());
+        modContainer.registerConfig(net.neoforged.fml.config.ModConfig.Type.COMMON, gregtech.GregTechConfig.SPEC, gregtech.GregTechConfig.COMMON_FILE);
+        modContainer.registerConfig(net.neoforged.fml.config.ModConfig.Type.CLIENT, gregtech.GregTechConfig.CLIENT_SPEC, gregtech.GregTechConfig.CLIENT_FILE);
         // No material/metadata holder may initialize before this platform binding.
         ModData.bindPresence(id -> ModList.get().isLoaded(NAMESPACE.equals(id) ? MOD_ID : id));
         GTMaterialRegistry.setLogSink((warning, message) -> {

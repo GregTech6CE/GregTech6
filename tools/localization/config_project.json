@@ -1,0 +1,25 @@
+{
+  "scope": "Project-owned client configuration labels and descriptions; not original GT6 text.",
+  "values": {
+    "gt6ce.configuration.tooltips": {
+      "english": "Tooltips",
+      "value": "悬浮提示"
+    },
+    "gt6ce.configuration.tooltips.chemical_formulas": {
+      "english": "Chemical formulas",
+      "value": "化学式"
+    },
+    "gt6ce.configuration.tooltips.chemical_formulas.tooltip": {
+      "english": "Show chemical formulas in item and fluid tooltips.",
+      "value": "显示物品和流体的化学式。"
+    },
+    "gt6ce.configuration.tooltips.material_details": {
+      "english": "Material details",
+      "value": "材料详情"
+    },
+    "gt6ce.configuration.tooltips.material_details.tooltip": {
+      "english": "Show material amounts and properties with F3+H. Disabling also hides the corresponding hint.",
+      "value": "按 F3+H 显示材料含量和物性；关闭时也隐藏对应提示。"
+    }
+  }
+}

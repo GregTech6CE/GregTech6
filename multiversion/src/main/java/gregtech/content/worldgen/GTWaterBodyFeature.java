@@ -79,6 +79,7 @@ public class GTWaterBodyFeature extends Feature<NoneFeatureConfiguration> {
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+        if (!gregtech.GregTechConfig.Worldgen.WATER_BODIES.enabled()) return false;
         WorldGenLevel level = context.level();
         if (level.getLevel().dimension() != Level.OVERWORLD) return false;
         int minX = context.origin().getX() & ~15;

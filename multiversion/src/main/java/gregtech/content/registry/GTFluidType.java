@@ -56,7 +56,7 @@ public final class GTFluidType {
                 || fluid == net.minecraft.world.level.material.Fluids.LAVA
                 || fluid == net.minecraft.world.level.material.Fluids.FLOWING_LAVA ? Owner.VANILLA : Owner.OTHER;
         var facts = new Facts(registry, advanced, (flags & RegisteredFluids.FluidFlags.NONSTANDARD) != 0,
-                amount, material.isValid() ? material.getResolvedTooltipChemical() : "",
+                amount, gregtech.GregTechConfig.chemicalFormulas() && material.isValid() ? material.getResolvedTooltipChemical() : "",
                 type.getTemperature(stack), GTFluids.isGas(stack), FluidHazards.isPlasma(fluid), type.isLighterThanAir(),
                 material.isValid() && !MaterialStackItemHelper.mat(MaterialPrefix.ingot, material, 1).isEmpty(),
                 type.getDensity(stack), type.getLightLevel(stack), type.getViscosity(stack), flags,

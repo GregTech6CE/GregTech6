@@ -39,6 +39,7 @@ public class GTOreVeinFeature extends Feature<NoneFeatureConfiguration> {
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+        if (!gregtech.GregTechConfig.Worldgen.GEOLOGY.enabled()) return false;
         WorldGenLevel level = context.level();
 
         // Per-dimension vein tables (GT6 ORE_OVERWORLD / ORE_END; the Nether had no large veins).

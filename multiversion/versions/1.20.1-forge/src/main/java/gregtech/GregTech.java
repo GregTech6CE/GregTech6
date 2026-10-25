@@ -57,7 +57,9 @@ public class GregTech {
 
         modEventBus.addListener(this::commonSetup);
 
-        context.registerConfig(ModConfig.Type.COMMON, GregTechConfig.SPEC);
+        GregTechConfig.prepareDirectory(net.minecraftforge.fml.loading.FMLPaths.CONFIGDIR.get());
+        context.registerConfig(ModConfig.Type.COMMON, GregTechConfig.SPEC, GregTechConfig.COMMON_FILE);
+        context.registerConfig(ModConfig.Type.CLIENT, GregTechConfig.CLIENT_SPEC, GregTechConfig.CLIENT_FILE);
     }
 
     private static void initialize(String phase, InitializationStep... steps) {

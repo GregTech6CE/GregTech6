@@ -75,6 +75,7 @@ public class GTTreesFeature extends Feature<NoneFeatureConfiguration> {
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+        if (!gregtech.GregTechConfig.Worldgen.VEGETATION.enabled()) return false;
         WorldGenLevel level = context.level();
         RandomSource random = context.random();
         if (level.getLevel().dimension() != Level.OVERWORLD) return false;

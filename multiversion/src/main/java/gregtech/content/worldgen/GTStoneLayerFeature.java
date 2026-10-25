@@ -72,6 +72,7 @@ public class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration> {
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+        if (!gregtech.GregTechConfig.Worldgen.GEOLOGY.enabled()) return false;
         if (!GTWorldgenDefaults.STONE_LAYERS) return false;
         WorldGenLevel level = context.level();
         RandomSource random = context.random();
@@ -174,7 +175,7 @@ public class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration> {
                 }
 
                 // GT6 ground pebbles: ~1/128 columns get a rock of the local surface layer.
-                if (random.nextInt(128) == 0) {
+                if (gregtech.GregTechConfig.Worldgen.SURFACE_ROCKS.enabled() && random.nextInt(128) == 0) {
                     GTMaterial rockMaterial = GTMaterialRegistry.get(scan[3].material());
                     if (rockMaterial != null && rockMaterial.resolve().isValid()) {
                         GTRockPlacement.placeRock(level, x, z, rockMaterial.resolve());

@@ -95,6 +95,7 @@ public class GTDungeonFeature extends Feature<NoneFeatureConfiguration> {
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+        if (!gregtech.GregTechConfig.Worldgen.DUNGEONS.enabled()) return false;
         WorldGenLevel level = context.level();
         ServerLevel server = level.getLevel();
         if (server.dimension() != Level.OVERWORLD) return false;

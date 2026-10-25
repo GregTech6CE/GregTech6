@@ -14,7 +14,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import java.util.HashSet;
 import java.util.Random;
 
-/** Original GT6 Nexus and axis roads; enabled by user request, configuration is deferred to finalisation. */
+/** Original GT6 Nexus and axis roads; controlled as one optional spawn complex by the Nexus setting. */
 public final class GTOriginFeature extends Feature<NoneFeatureConfiguration> {
 
     public GTOriginFeature() {
@@ -23,6 +23,7 @@ public final class GTOriginFeature extends Feature<NoneFeatureConfiguration> {
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+        if (!gregtech.GregTechConfig.Worldgen.NEXUS.enabled()) return false;
         var level = context.level();
         if (level.getLevel().dimension() != Level.OVERWORLD) return false;
         ChunkPos chunk = new ChunkPos(context.origin());

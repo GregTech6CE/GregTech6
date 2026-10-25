@@ -78,7 +78,7 @@ public final class MaterialTooltips {
         appendFlammableTooltip(mat, tooltip);
 
         String chemical = mat.getResolvedTooltipChemical();
-        if (chemical != null && !chemical.isEmpty()) {
+        if (gregtech.GregTechConfig.chemicalFormulas() && chemical != null && !chemical.isEmpty()) {
             tooltip.add(Component.literal(chemical).withStyle(ChatFormatting.YELLOW));
         }
 
@@ -97,7 +97,7 @@ public final class MaterialTooltips {
             }
         }
 
-        if (flag.isAdvanced()) {
+        if (gregtech.GregTechConfig.materialDetails() && flag.isAdvanced()) {
 
 //? if >=1.21.1 {
 /*            tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".contained_materials")
@@ -111,7 +111,7 @@ public final class MaterialTooltips {
                     tooltip.add(containedMaterialLine(weighted.material(), weighted.amount()));
                 }
             }
-        } else {
+        } else if (gregtech.GregTechConfig.materialDetails()) {
 
 //? if >=1.21.1 {
 /*            tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".f3h_hint")
@@ -227,7 +227,7 @@ public final class MaterialTooltips {
         }
 
         String chemical = data.components().size() == 1 ? mat.getResolvedTooltipChemical() : "";
-        if (chemical != null && !chemical.isEmpty()) {
+        if (gregtech.GregTechConfig.chemicalFormulas() && chemical != null && !chemical.isEmpty()) {
             tooltip.add(Component.literal(chemical).withStyle(ChatFormatting.YELLOW));
         }
 
@@ -237,7 +237,7 @@ public final class MaterialTooltips {
         }
         if (!data.recoverable()) tooltip.add(Component.translatable("tooltip.gt6ce.composition_descriptive").withStyle(ChatFormatting.GRAY));
 
-        if (flag.isAdvanced()) {
+        if (gregtech.GregTechConfig.materialDetails() && flag.isAdvanced()) {
 
 //? if >=1.21.1 {
 /*            tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".contained_materials")
@@ -251,7 +251,7 @@ public final class MaterialTooltips {
                     tooltip.add(containedMaterialLine(weighted.material(), weighted.amount()));
                 }
             }
-        } else {
+        } else if (gregtech.GregTechConfig.materialDetails()) {
 
 //? if >=1.21.1 {
 /*            tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".f3h_hint")

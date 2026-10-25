@@ -77,6 +77,7 @@ public class GTDungeonStructure extends Structure {
      */
     @Override
     protected Optional<Structure.GenerationStub> findGenerationPoint(Structure.GenerationContext context) {
+        if (!gregtech.GregTechConfig.Worldgen.DUNGEONS.enabled()) return Optional.empty();
         ChunkPos chunk = context.chunkPos();
         if (!GTDungeonLayout.passesAnchorClearance(chunk)
                 || !GTDungeonLayout.passesProbability(GTDungeonLayout.seedFor(context.seed(), chunk))) {

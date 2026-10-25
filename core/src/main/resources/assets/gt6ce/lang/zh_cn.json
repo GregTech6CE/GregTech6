@@ -1,4 +1,10 @@
 {
+  "gt6ce.configuration.tooltips": "悬浮提示",
+  "gt6ce.configuration.tooltips.chemical_formulas": "化学式",
+  "gt6ce.configuration.tooltips.chemical_formulas.tooltip": "显示物品和流体的化学式。",
+  "gt6ce.configuration.tooltips.material_details": "材料详情",
+  "gt6ce.configuration.tooltips.material_details.tooltip": "按 F3+H 显示材料含量和物性；关闭时也隐藏对应提示。",
+
   "tooltip.gt6ce.ore.hand_harvest_preferred": "可徒手采集；使用%s更快",
   "bc.trigger.gregapi.energy.air.capacity.empty": "空的 (ENERGY.AIR)",
   "bc.trigger.gregapi.energy.air.capacity.full": "满的 (ENERGY.AIR)",
