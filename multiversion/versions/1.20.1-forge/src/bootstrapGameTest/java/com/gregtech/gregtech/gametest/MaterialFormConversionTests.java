@@ -236,12 +236,12 @@ public final class MaterialFormConversionTests {
         CraftingRecipe packed = manager.getRecipeFor(RecipeType.CRAFTING, grid, helper.getLevel()).orElse(null);
         helper.assertTrue(packed != null, "the crafting grid has a recipe for 9 copper ingots");
         ItemStack packedResult = packed.assemble(grid, helper.getLevel().registryAccess());
-        helper.assertTrue(ItemStack.isSameItemSameTags(packedResult, block(BlockMaterialPrefix.blockIngot, copper)),
+        helper.assertTrue(ItemStack.isSameItemSameTags(packedResult, com.gregtech.gregtech.recipe.CraftingMaterialForms.canonical(block(BlockMaterialPrefix.blockIngot, copper))),
                 "9 copper ingots craft into a block of copper ingots, got " + packedResult);
 
         // 1 block -> 9 ingots.
         var unpackGrid = grid();
-        unpackGrid.setItem(0, block(BlockMaterialPrefix.blockIngot, copper));
+        unpackGrid.setItem(0, packedResult.copy());
         CraftingRecipe unpacked = manager.getRecipeFor(RecipeType.CRAFTING, unpackGrid, helper.getLevel()).orElse(null);
         helper.assertTrue(unpacked != null, "the crafting grid has a recipe for a copper ingot block");
         ItemStack unpackedResult = unpacked.assemble(unpackGrid, helper.getLevel().registryAccess());

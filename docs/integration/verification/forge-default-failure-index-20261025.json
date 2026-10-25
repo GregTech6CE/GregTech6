@@ -157,7 +157,7 @@
       "name": "siftingyieldsgemsfrompurifiedore",
       "original_failure": "rare grades are scaled 8x/4x/2x like GT6: 1/1/1",
       "family": "recipes_processing_and_source_expectations",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "siftingyieldsgemsfrompurifiedore",
       "sources": [
         {
@@ -166,7 +166,8 @@
           "method_at_baseline": "siftingYieldsGemsFromPurifiedOre",
           "method_snapshot_sha256": "6a31b87a0a1a72553175201b4972dd3c8ab79049bc0374076379d7c6d2619cf6"
         }
-      ]
+      ],
+      "verification": "forge-processing-regressions-20261025.json"
     },
     {
       "name": "apipedropsitscoverswhenbroken",
@@ -220,7 +221,7 @@
       "name": "noregisteredrecipeisdegenerate",
       "original_failure": "degenerate recipes (1): [gt.recipe.fuels.hot [] -> []]",
       "family": "machine_lifecycle_structure_and_drops",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "noregisteredrecipeisdegenerate",
       "sources": [
         {
@@ -229,7 +230,8 @@
           "method_at_baseline": "noRegisteredRecipeIsDegenerate",
           "method_snapshot_sha256": "3b4c1869c29677134923051fa45e3494bf80e731ac58a7a972c7f90dfe10a9f6"
         }
-      ]
+      ],
+      "verification": "forge-processing-regressions-20261025.json"
     },
     {
       "name": "basicmachineshavesurvivalrecipes",
@@ -251,7 +253,7 @@
       "name": "printerprintstheprintermanual",
       "original_failure": "the printer prints 'Scanner & Printer Manual' from a book plus dye fluid; rows: 1135",
       "family": "recipes_processing_and_source_expectations",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "printerprintstheprintermanual",
       "sources": [
         {
@@ -260,7 +262,8 @@
           "method_at_baseline": "printerPrintsThePrinterManual",
           "method_snapshot_sha256": "0778ddd08219085ea8e9c8711e9af8b9798a1c16a8f6aaa844b201386520353a"
         }
-      ]
+      ],
+      "verification": "forge-processing-regressions-20261025.json"
     },
     {
       "name": "everytoolhasgt6srecipefamily",
@@ -281,7 +284,7 @@
       "name": "reddyechainkeepsoriginalamountsandresiduechance",
       "original_failure": "Index 0 out of bounds for length 0",
       "family": "recipes_processing_and_source_expectations",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "reddyechainkeepsoriginalamountsandresiduechance",
       "sources": [
         {
@@ -290,7 +293,8 @@
           "method_at_baseline": "redDyeChainKeepsOriginalAmountsAndResidueChance",
           "method_snapshot_sha256": "1c961e86cb918218cc9fe584b5f29f72e2c689eab5d53cd73750f5dae0bd87a0"
         }
-      ]
+      ],
+      "verification": "forge-processing-regressions-20261025.json"
     },
     {
       "name": "switchreadsonlyitsfaceandcrowbarreturnsdefaults",
@@ -312,7 +316,7 @@
       "name": "transpiledcoveragedoesnotregress",
       "original_failure": "transpiled sets: [SetStats[set=chem, added=322, skipped=36], SetStats[set=other, added=182, skipped=83], SetStats[set=potions, added=491, skipped=9], SetStats[set=food, added=217, skipped=26], SetStats[set=extruder, added=278, skipped=44], SetStats[set=vanilla, added=56, skipped=172], SetStats[set=temporary, added=12, skipped=22], SetStats[set=ores, added=109, skipped=35], SetStats[set=combs, added=20, skipped=0], SetStats[set=technology, added=1115, skipped=0]]",
       "family": "recipes_processing_and_source_expectations",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "transpiledcoveragedoesnotregress",
       "sources": [
         {
@@ -321,7 +325,8 @@
           "method_at_baseline": "transpiledCoverageDoesNotRegress",
           "method_snapshot_sha256": "929fd6b8d67d09575a14622530ffd1f25ca1413e39c94383e906813c20a9f51a"
         }
-      ]
+      ],
+      "verification": "forge-processing-regressions-20261025.json"
     },
     {
       "name": "realchargerandtoolassemblyusechemicalcapacity",
@@ -343,7 +348,7 @@
       "name": "craftinggridconversions",
       "original_failure": "9 copper ingots craft into a block of copper ingots, got 1 copper_block",
       "family": "machine_lifecycle_structure_and_drops",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "craftinggridconversions",
       "sources": [
         {
@@ -352,7 +357,8 @@
           "method_at_baseline": "craftingGridConversions",
           "method_snapshot_sha256": "5153b02fc014f319d12fd6eead500c66da53e5eb4ad53e59925f8d03aebdecd2"
         }
-      ]
+      ],
+      "verification": "forge-processing-regressions-20261025.json"
     },
     {
       "name": "thefiltercoversfilterthepipesontheirownface",
@@ -374,7 +380,7 @@
       "name": "shredderoutputsneverexceeddeclaredmaterial",
       "original_failure": "Fresh recipe executes",
       "family": "recipes_processing_and_source_expectations",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "shredderoutputsneverexceeddeclaredmaterial",
       "sources": [
         {
@@ -383,7 +389,8 @@
           "method_at_baseline": "shredderOutputsNeverExceedDeclaredMaterial",
           "method_snapshot_sha256": "14978213f8671983cf9a30d0a5b8442b0e9bc33fc9702965e4f055e9b3a9d9e8"
         }
-      ]
+      ],
+      "verification": "forge-processing-regressions-20261025.json"
     },
     {
       "name": "earlytoolscomefromrocksandflint",
@@ -497,7 +504,7 @@
       "name": "alldyerecipesconsumeactualregisteredinputs",
       "original_failure": "304 dye mixers, 26 flowers, and 18 oil/foam precursors",
       "family": "recipes_processing_and_source_expectations",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "alldyerecipesconsumeactualregisteredinputs",
       "sources": [
         {
@@ -506,7 +513,8 @@
           "method_at_baseline": "allDyeRecipesConsumeActualRegisteredInputs",
           "method_snapshot_sha256": "36c07cca4fa92cc426810bd7033a892329fbe4e222b645dd11fa904ff0242ecf"
         }
-      ]
+      ],
+      "verification": "forge-processing-regressions-20261025.json"
     },
     {
       "name": "builderwandcopiesthesurfaceonelayerup",
@@ -606,7 +614,7 @@
       "name": "multiblockmachinesarecovered",
       "original_failure": "controller has an original GT6 crafting recipe: stainless_steel_boiler_main_barometer",
       "family": "recipes_processing_and_source_expectations",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "multiblockmachinesarecovered",
       "sources": [
         {
@@ -615,7 +623,8 @@
           "method_at_baseline": "multiblockMachinesAreCovered",
           "method_snapshot_sha256": "613fc2d4e39a8658fbd7f3b0d9ca6c6ded9e45959a694b933430407dbc7b08fe"
         }
-      ]
+      ],
+      "verification": "forge-processing-regressions-20261025.json"
     },
     {
       "name": "toolshapedrecipesdonotmirrorunlesstheoriginaldid",
@@ -776,7 +785,7 @@
       "name": "electronicsinputsexecuteandsolderlimitstier",
       "original_failure": "173 source-backed electronics recipes",
       "family": "recipes_processing_and_source_expectations",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "electronicsinputsexecuteandsolderlimitstier",
       "sources": [
         {
@@ -785,13 +794,14 @@
           "method_at_baseline": "electronicsInputsExecuteAndSolderLimitsTier",
           "method_snapshot_sha256": "570be3a7153863615c215c70391f892149885599ff99f97ac7a896dd679bca08"
         }
-      ]
+      ],
+      "verification": "forge-processing-regressions-20261025.json"
     },
     {
       "name": "woodrowgridsmatchexactlytheirownrow",
       "original_failure": "shaped wood rows checked: 54",
       "family": "recipes_processing_and_source_expectations",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "woodrowgridsmatchexactlytheirownrow",
       "sources": [
         {
@@ -800,13 +810,14 @@
           "method_at_baseline": "woodRowGridsMatchExactlyTheirOwnRow",
           "method_snapshot_sha256": "9feab20bbc7d2180e2a4354d5d4052b8431a3674fa611a52a58a3baca31907c9"
         }
-      ]
+      ],
+      "verification": "forge-processing-regressions-20261025.json"
     },
     {
       "name": "replicatorrebuildsthescannedmaterial",
       "original_failure": "the replicator hands out Hydrogen: 0 air",
       "family": "recipes_processing_and_source_expectations",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "replicatorrebuildsthescannedmaterial",
       "sources": [
         {
@@ -815,13 +826,14 @@
           "method_at_baseline": "replicatorRebuildsTheScannedMaterial",
           "method_snapshot_sha256": "fc0305d21904064c4b146d6d140bd7919dd64d1131eb407eff25b298970ba93e"
         }
-      ]
+      ],
+      "verification": "forge-processing-regressions-20261025.json"
     },
     {
       "name": "wroughtironisreachablethroughthesmelter",
       "original_failure": "the Melter turns iron into molten iron",
       "family": "recipes_processing_and_source_expectations",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "wroughtironisreachablethroughthesmelter",
       "sources": [
         {
@@ -830,7 +842,8 @@
           "method_at_baseline": "wroughtIronIsReachableThroughTheSmelter",
           "method_snapshot_sha256": "e94dc45087e6cba5e7be5dfc5e230025d3c25f8cd5ade239606e97846c5f9803"
         }
-      ]
+      ],
+      "verification": "forge-processing-regressions-20261025.json"
     },
     {
       "name": "targetchunkownseveryplatformandpipewriteineitherorder",
@@ -978,7 +991,7 @@
       "name": "printerprintsthescanneddictionary",
       "original_failure": "the printer prints a source dictionary cover: 1 printed_pages",
       "family": "recipes_processing_and_source_expectations",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "printerprintsthescanneddictionary",
       "sources": [
         {
@@ -987,13 +1000,14 @@
           "method_at_baseline": "printerPrintsTheScannedDictionary",
           "method_snapshot_sha256": "d698d01da9c0619260cea3d23a09941ce402f07835c67378007403dae47fce3f"
         }
-      ]
+      ],
+      "verification": "forge-processing-regressions-20261025.json"
     },
     {
       "name": "sluicewashescrushedoreintopurifiedore",
       "original_failure": "GT6 tSluice chances: [10000, 300, 300, 300, 300, 300, 300, 300, 300]",
       "family": "recipes_processing_and_source_expectations",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "sluicewashescrushedoreintopurifiedore",
       "sources": [
         {
@@ -1002,7 +1016,8 @@
           "method_at_baseline": "sluiceWashesCrushedOreIntoPurifiedOre",
           "method_snapshot_sha256": "6f182fbe3576fb9a63440a8ee5c6cf060f22381f9e81080db35d2a6f5ecefba8"
         }
-      ]
+      ],
+      "verification": "forge-processing-regressions-20261025.json"
     },
     {
       "name": "tablesmatchgt6",
@@ -1038,7 +1053,7 @@
       "name": "wirecraftingpreservesconductoramount",
       "original_failure": "all 1316 wire recipes loaded; got 506",
       "family": "recipes_processing_and_source_expectations",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "wirecraftingpreservesconductoramount",
       "sources": [
         {
@@ -1047,7 +1062,8 @@
           "method_at_baseline": "wireCraftingPreservesConductorAmount",
           "method_snapshot_sha256": "cdb852edd7f686caaa99576e66b0c71613f5e061dd9fec7ebd990c866c161ac8"
         }
-      ]
+      ],
+      "verification": "forge-processing-regressions-20261025.json"
     },
     {
       "name": "radiationsuitandmedicine",
@@ -1193,9 +1209,10 @@
   "ledger": {
     "indexed_before_batch": 76,
     "verified_this_batch": 21,
-    "pending_original_candidates": 39,
+    "pending_original_candidates": 23,
     "not_a_new_full_suite_measurement": true,
     "subsequent_cover_boundary_verified": 3,
-    "subsequent_harvest_verified": 13
+    "subsequent_harvest_verified": 13,
+    "subsequent_processing_verified": 16
   }
 }

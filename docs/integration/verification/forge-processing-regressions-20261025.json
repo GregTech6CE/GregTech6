@@ -1,0 +1,373 @@
+{
+  "date": "2026-10-25",
+  "base_commit": "64c7153a4",
+  "scope": "Sixteen original processing/catalog failures plus legacy palette guard",
+  "production_fix": "RecipeInputs.matches canonicalizes the offered legacy construction palette alias before expanding requirements. A bare legacy recipe previously expanded to fixed-color item identities and rejected its own bare input. Original offered stacks/tags/counts remain unchanged; exact-input and stored-content rejection policies stay in Matcher.",
+  "source_author": "GregTech-6 Team / Gregorius Techneticies",
+  "source_license": "LGPL-3.0-or-later",
+  "sources": [
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregtech\\loaders\\c\\Loader_Recipes_Ores.java",
+      "sha256": "2db42421d8b01067dbfadef2bc9a994e16c10d86a44b95150c8638cfb5a427ee",
+      "lf_sha256": "b94dc194c7557f341ebacd895cc18c2fada8c5e4cd33b45784c971f921db4aa3"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregtech\\loaders\\c\\Loader_Recipes_Woods.java",
+      "sha256": "dfeac755d0f9dee083529a994d51fbf4d292e8d505f8285ea39cf01154fc5a18",
+      "lf_sha256": "c91d081abaad62fdda8774873473516d269c7b6da9e8c0cb0fdb1270bd51aa68"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregtech\\loaders\\c\\Loader_Recipes_Alloys.java",
+      "sha256": "cb6cae88e69a084a7e19e8639db7748bca492bb995994a3272d33c7967722bc9",
+      "lf_sha256": "a2f6e4a94b41125fc5bde313ab764e88174df29ac4c460b8d69ff7658c8b54c6"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregtech\\loaders\\c\\Loader_Recipes_Other.java",
+      "sha256": "9030a3485d1e3046bbfd1e2a50e847d8e6162acc84d20720d67e360f31d75192",
+      "lf_sha256": "60d8832d969461869f1b224a9cc28578515fcd60c591cd0992f4e26b8951a1a3"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregtech\\items\\MultiItemTechnological.java",
+      "sha256": "8f3c8022ac4c0d018db6e7628208b0467efd920e26e984e9060d08f9c3a782f1",
+      "lf_sha256": "7367922c4938318dd50b1320e7fc7a7453c33cffa46f75a437325314d2536ddc"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapPrinter.java",
+      "sha256": "8ee39f4fad4b0eddfb5005f53710c3fb71cb797af4e65214d7dc8c24473284fe",
+      "lf_sha256": "84a1536f4865fa03c9670c529078fdbfaf273a531be331d1919e8f856d67508c"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapReplicator.java",
+      "sha256": "7c44104974c794b0b9c3d91ce5384c699eae274a0e5e4d3c2b0e77bc8cab02f5",
+      "lf_sha256": "27842d2b10e83052f10a0985b5a289600185df5092a8fe4bafa2c18eee8d6bd3"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapShredder.java",
+      "sha256": "672a2a060e69e4dbe75b2f7cd95054449ce2bbf4bc9b0b179038dac54772e701",
+      "lf_sha256": "b963307f82df8cb595f4d0927d969b603f57a792596ec642bb31f6aaee01d1f4"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregapi\\recipes\\AdvancedCrafting1ToY.java",
+      "sha256": "f459f64750aa210a7997cf28d9fbe81f475381f7147e83fc16482637906b0553",
+      "lf_sha256": "68a7214943a807922d57e84416d9225cba95f713aebed026c166f17aeba8f3ec"
+    },
+    {
+      "path": "..\\gt6_source_code\\gregtech6\\src\\main\\java\\gregapi\\recipes\\AdvancedCraftingXToY.java",
+      "sha256": "ff66752ffd0a7e6b7b5d1ee93e3cbaf1d071b7559bd58618fb8cc4d93ee828af",
+      "lf_sha256": "b9ab5927eba96d1b00855e781d918c18dfd87af4542bc4587d7d316e48d13ec0"
+    }
+  ],
+  "fixture_basis": [
+    "Loader_Recipes_Ores:460-461 emits one legendary/exquisite/flawless gem when that form exists; ordinary 8/4/2 gem stacks are fallback arguments. Exact grade identity/count and existing chance arrays remain checked.",
+    "Loader_Recipes_Ores:383,415-420 has purified ore plus eight fines: nine outputs and nine chances, not eight. Timing, EU, water amounts and four water variants remain checked.",
+    "RecipeMapPrinter:135-149 produces printed pages, 512 ticks at 16 EU/t for ordinary books, 72 mB black dye and a retained data medium. Metadata/pages/material identity and no-dye/no-data/short-paper checks remain. GTMain manuals use source colored bound books rather than vanilla WRITTEN_BOOK only.",
+    "Replicator admits ambient fluid outputs. Hydrogen produces 1000 mB registered gas with no item output; nucleon counts, QU duration and exact retained USB checks remain.",
+    "DyeProcessingRecipes source dimensions: colors*(27+3*industrialCoolants)+26 flower rows+18 precursors+9 finishing rows. Only explicitly declared catalysts survive consumption. Heterogeneous fluid-output arrays are checked before indexing.",
+    "Electronics source family dimensions are 168 fixed rows plus registered valid gem-group engravings (Ruby is one non-group row). Exact consumption, simulation immutability and three solder tier caps remain.",
+    "Wood rows are checked one by one against GTWoodRecipes.CRAFT_ROWS (54 shaped/18 shapeless). Earlier 50 assumed cinnamon lacked four current source-backed log/beam rows; collision and non-mirror checks remain.",
+    "Wire coverage includes old unpack/insulation plus wire_sizes source conversion recipes. Expected rows derive from registered family sizes/divisor guards, not observed count. Every row must match a permitted source selector slot and conserve conductor material/family.",
+    "Standalone multiblock controllers use several source crafting providers; loaded crafting output identity is required, rather than membership in just MultiblockCraftingRecipes. Canonical copper packing/unpacking uses current material unification identity.",
+    "Valid fuel recipes may have no item/fluid output: recognized fuel map plus negative EU/t and positive duration denotes energy output. Real input and ordinary processing output requirements remain.",
+    "Reviewed Fe thermal source branch has no FURNACE target; preserve dust->144 mB molten iron in Smelter at 16 EU/t/830 ticks and existing 1:1 molten iron->wrought iron 16/16 route; reject invented generic Fe dust Melter route.",
+    "Recovery first pass reported all six failing legacy inputs together: asphalt,cfoam,cfoam_fresh,cfoam_slab,concrete,concrete_reinforced. Followup checks fresh recovery, per-material conservation, unsafe inventory/worn-tool rejection and all 96 legacy/fixed color pairs with explicit cross-color rejection."
+  ],
+  "native_basis": [
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/LegacyConstructionBlockItem.java",
+      "sha256": "88ff2c7aba155aa42486a81200c68f6ed24a94f5e31053106b11087579da9edf"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/OreProcessingRecipeLoader.java",
+      "sha256": "0a2b11106d5f79687e5626510ea867a9825e7ceacb1eb63b4b036b4cca22bb9d"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/DyeProcessingRecipes.java",
+      "sha256": "a55f7039368da994cb750b563c0f62c7408af89ea48e8c51af4aedcde76dd62c"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/ElectronicsRecipes.java",
+      "sha256": "a2ed196af20e8a01eacd236087cb00b5a5cb556bd1a57eb7026ec895335bb11e"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/GTMaterialDataRecipes.java",
+      "sha256": "9a64eabdc3dd8b246244744c3e7b54b06cc43d98fea8ab9e92e8320737f0cb74"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/ReviewedCinnabarThermalRecipes.java",
+      "sha256": "b568ebbf2ef88cf69c844e872f83b4d444408226e5e23d95a6aba60538184e1f"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/FormConversionCraftingRecipeInjector.java",
+      "sha256": "b51c2a06ded8603318e1615267254ee0e3b1a25003b407cb4f08b82123d12a56"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/recipe/GTWoodRecipes.java",
+      "sha256": "01e47dc0bb5fd51f3c9302e462a9cf5dc281630f38378e54280d84f39c875238"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/recipe/SawingCoolants.java",
+      "sha256": "1807efdc3fac8663cad3d3d1a59b8843c109a0907c5b8a94e21dfcf956e207e8"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/WireCatalog.java",
+      "sha256": "4ef2b706b1e17de88a4e886e78aa7cfd304d28fcedc00544b7e85e83496a76a0"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/book/GTBooks.java",
+      "sha256": "5bd3eea043254259f2ac96b73c7bf1dd4cb1865883cace95b4e7cf1ec117eec4"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/generated/GeneratedRecipeResolver.java",
+      "sha256": "b73cc5e9834099e84cbc306e2e5af3f05642db8df79d3ee92f23347cc1beef22"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/data/FuelRecipeMaps.java",
+      "sha256": "0b63c8247c0928ead240a8fbe9e0e020b40a67cfe1c9f323180c628c81710bac"
+    }
+  ],
+  "attempts": [
+    {
+      "xml": "work\\forge-processing-regressions.xml",
+      "xml_sha256": "5d80a38900bdb025ca281a05e892dae0f723f8788075b06145c303442585fe71",
+      "log": "work\\forge-processing-regressions.log",
+      "log_sha256": "3ba37930bcca79b77d2caadadcfe73281a5c706aeb6ed8b0c5ca981a3c0357b3",
+      "passed": 15,
+      "total": 16,
+      "gradle_summary": [
+        "BUILD FAILED in 4m 53s"
+      ]
+    },
+    {
+      "xml": "work\\forge-processing-followup.xml",
+      "xml_sha256": "b6d36d44a66357a62b5c6b25cdfded6051fe1490f736fddbfe32ae68efa11ce4",
+      "log": "work\\forge-processing-followup.log",
+      "log_sha256": "66dfcc6a1e8f2665496c7edfa6fbf5ee1e6db8624e3c335acd15a52ae4c3f3d7",
+      "passed": 2,
+      "total": 2,
+      "gradle_summary": [
+        "BUILD SUCCESSFUL in 9m 54s"
+      ]
+    }
+  ],
+  "latest": [
+    {
+      "classname": "gt6ce_forge_processing_regressions:test_blueprint_empty",
+      "name": "replicatorrebuildsthescannedmaterial",
+      "time": "0.673",
+      "passed": true,
+      "failure": null,
+      "error": null
+    },
+    {
+      "classname": "gt6ce_forge_processing_regressions:test_blueprint_empty",
+      "name": "printerprintstheprintermanual",
+      "time": "0.67",
+      "passed": true,
+      "failure": null,
+      "error": null
+    },
+    {
+      "classname": "gt6ce_forge_processing_regressions:test_blueprint_empty",
+      "name": "siftingyieldsgemsfrompurifiedore",
+      "time": "0.661",
+      "passed": true,
+      "failure": null,
+      "error": null
+    },
+    {
+      "classname": "gt6ce_forge_processing_regressions:test_blueprint_empty",
+      "name": "wroughtironisreachablethroughthesmelter",
+      "time": "0.651",
+      "passed": true,
+      "failure": null,
+      "error": null
+    },
+    {
+      "classname": "gt6ce_forge_processing_followup:test_blueprint_empty",
+      "name": "shredderoutputsneverexceeddeclaredmaterial",
+      "time": "0.21",
+      "passed": true,
+      "failure": null,
+      "error": null
+    },
+    {
+      "classname": "gt6ce_forge_processing_regressions:test_blueprint_empty",
+      "name": "craftinggridconversions",
+      "time": "0.93",
+      "passed": true,
+      "failure": null,
+      "error": null
+    },
+    {
+      "classname": "gt6ce_forge_processing_regressions:test_blueprint_empty",
+      "name": "printerprintsthescanneddictionary",
+      "time": "0.934",
+      "passed": true,
+      "failure": null,
+      "error": null
+    },
+    {
+      "classname": "gt6ce_forge_processing_regressions:test_blueprint_empty",
+      "name": "multiblockmachinesarecovered",
+      "time": "1.208",
+      "passed": true,
+      "failure": null,
+      "error": null
+    },
+    {
+      "classname": "gt6ce_forge_processing_regressions:test_blueprint_empty",
+      "name": "transpiledcoveragedoesnotregress",
+      "time": "1.2",
+      "passed": true,
+      "failure": null,
+      "error": null
+    },
+    {
+      "classname": "gt6ce_forge_processing_regressions:test_blueprint_empty",
+      "name": "alldyerecipesconsumeactualregisteredinputs",
+      "time": "1.23",
+      "passed": true,
+      "failure": null,
+      "error": null
+    },
+    {
+      "classname": "gt6ce_forge_processing_regressions:test_blueprint_empty",
+      "name": "electronicsinputsexecuteandsolderlimitstier",
+      "time": "1.224",
+      "passed": true,
+      "failure": null,
+      "error": null
+    },
+    {
+      "classname": "gt6ce_forge_processing_regressions:test_blueprint_empty",
+      "name": "noregisteredrecipeisdegenerate",
+      "time": "1.319",
+      "passed": true,
+      "failure": null,
+      "error": null
+    },
+    {
+      "classname": "gt6ce_forge_processing_regressions:test_blueprint_empty",
+      "name": "sluicewashescrushedoreintopurifiedore",
+      "time": "1.316",
+      "passed": true,
+      "failure": null,
+      "error": null
+    },
+    {
+      "classname": "gt6ce_forge_processing_regressions:test_blueprint_empty",
+      "name": "wirecraftingpreservesconductoramount",
+      "time": "1.43",
+      "passed": true,
+      "failure": null,
+      "error": null
+    },
+    {
+      "classname": "gt6ce_forge_processing_regressions:test_blueprint_empty",
+      "name": "woodrowgridsmatchexactlytheirownrow",
+      "time": "3.139",
+      "passed": true,
+      "failure": null,
+      "error": null
+    },
+    {
+      "classname": "gt6ce_forge_processing_regressions:test_blueprint_empty",
+      "name": "reddyechainkeepsoriginalamountsandresiduechance",
+      "time": "3.132",
+      "passed": true,
+      "failure": null,
+      "error": null
+    },
+    {
+      "classname": "gt6ce_forge_processing_followup:test_blueprint_empty",
+      "name": "legacypalettealiasesrecoverwithoutlosingstoredcontents",
+      "time": "1.29",
+      "passed": true,
+      "failure": null,
+      "error": null
+    }
+  ],
+  "files": [
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeInputs.java",
+      "sha256": "f6b453f989676528a4721ffbf688ec1f03fcb72105b56303265bdeefde544cc5"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CrucibleTemperatureTests.java",
+      "sha256": "2c1528c17e02b361c7bd21d6e2154f59b8852c264f3ead1073185ae754eb58e8"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DyeProcessingTests.java",
+      "sha256": "df14717635340cea55920255fc44f7d19eec246f8ab40c404f6345600c4e4b81"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ElectronicsTests.java",
+      "sha256": "83c79829424081566fd34e19150ec1e929e527696837e6bab663dc9767ccde02"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ForgeProcessingFollowupTests.java",
+      "sha256": "2205dab2c326bb1ec73e83987406c2e473593bcf1b630823f047dd8143c63e0b"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ForgeProcessingRegressionTests.java",
+      "sha256": "90e301f2fc98610dbaf1538932892d49733026cb8886d216c2a42feb9799c114"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/GTMainRecipesTests.java",
+      "sha256": "8ad7a72d2b32315ab5cfcbb64cc0fd27ace17828c0fb414ae336bffd51aabb54"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/GeneratedChemistryTests.java",
+      "sha256": "4e8a8bc170450db9c00626e0e1f08bebdc8b3c57985902eb667624eb908eca84"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ManufacturingTests.java",
+      "sha256": "70830c80721dd3913ac86ade98a784a7b740e5dfd85e87c3061ed8159aad854f"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MaterialDataChainTests.java",
+      "sha256": "0ec679f6bd82a8864de09d98b55ec8cd148aef7252d4c3abe94600c426907906"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MaterialFormConversionTests.java",
+      "sha256": "2519a0cae2f7e70c34d40e1ec19840c062edfa0fcd74ae779bb75c685d38f1c1"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MultiblockCraftingTests.java",
+      "sha256": "34c69fc83d1ed5cb2f5819c07bf1d37e4f9a959a9fca684ad475c112a52bbbf8"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/OrePurificationRoutesTests.java",
+      "sha256": "9e3c3e3ca156104e7d8d507e1a73faef5beff8c5d2e89bceae7a90d7684fa80e"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/StoneExtrusionTests.java",
+      "sha256": "6db1056d9c159b2cbb5cc4e821827c44bea3179cde9f08e1936132ad82e071cf"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/VanillaCompositionTests.java",
+      "sha256": "cd442e46a586be566cf29cc7a05ad787dc39e483b8821be298dcd734e1d223c4"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/WoodRecipeTests.java",
+      "sha256": "b4f05dd2653c237f94f5efbe3fc96e03be25efe3030aa982c39e13a05cd22aca"
+    }
+  ],
+  "commands": [
+    {
+      "runner": "work\\run-forge-processing-regressions.ps1",
+      "sha256": "d61d7e32016b4c8687e06bf5e4dbb244965beac3c14b11ff1b507c008ee5746e",
+      "gradle_command": "& ./gradlew.bat --console=plain '-PaddonSample=true' '-PgameTestNamespaces=gt6ce_forge_processing_regressions' '-PgameTestHeap=6g' '-PgameTestJvmArgs=-XX:+UseSerialGC' '-PgameTestDirectory=../../../work/forge-processing-regressions' '-PgameTestReport=../../../work/forge-processing-regressions.xml' :multiversion:1.20.1-forge:runGameTestServer *> work/forge-processing-regressions.log"
+    },
+    {
+      "runner": "work\\run-forge-processing-followup.ps1",
+      "sha256": "891a50313ba8eaadf070263168756c9e9c27c8103e8c7ecd323578c2916d8e9c",
+      "gradle_command": "& ./gradlew.bat --console=plain '-PaddonSample=true' '-PgameTestNamespaces=gt6ce_forge_processing_followup' '-PgameTestHeap=6g' '-PgameTestJvmArgs=-XX:+UseSerialGC' '-PgameTestDirectory=../../../work/forge-processing-followup' '-PgameTestReport=../../../work/forge-processing-followup.xml' :multiversion:1.20.1-forge:runGameTestServer :multiversion:1.21.1-neoforge:compileJava *> work/forge-processing-followup.log"
+    }
+  ],
+  "limits": [
+    "No default/full suite rerun.",
+    "Forge native tests; NeoForge production compilation only, no NeoForge game run.",
+    "Client, full survival chain and actual saved-world restart remain unverified; overall migration remains incomplete."
+  ]
+}
