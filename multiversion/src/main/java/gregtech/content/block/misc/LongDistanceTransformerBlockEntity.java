@@ -42,9 +42,8 @@ public class LongDistanceTransformerBlockEntity extends gregtech.content.blocken
         return getBlockState().getValue(LongDistanceTransformerBlock.FACING);
     }
 
-    private final Map<BlockPos, BlockState> watched = new HashMap<>();
+    private final LongDistanceRouteWatch routeWatch = new LongDistanceRouteWatch();
     private boolean stopped;
-    private long observedVersion = Long.MIN_VALUE;
     private final gregtech.content.logistics.LongDistanceLink<BlockPos, LongDistanceTransformerBlockEntity> link;
     private final gregtech.api.machine.MachineControl control = gregtech.internal.machine.MachineControls.switchable(this,
             () -> !stopped, value -> setStopped(!value), () -> active, () -> active);
@@ -65,40 +64,26 @@ public class LongDistanceTransformerBlockEntity extends gregtech.content.blocken
 
     public void invalidateRoute() {
         link.reset();
-        watched.clear();
-        observedVersion = Long.MIN_VALUE;
+        routeWatch.clear();
     }
 
     private BlockState observe(BlockPos pos) {
-        var state = level.getBlockState(pos);
-        watched.put(pos, state);
-        return state;
+        return routeWatch.observe(level, pos);
     }
 
     private boolean changed() {
-        long version = LongDistanceTopology.version(level);
-        if (version == observedVersion) return false;
-        observedVersion = version;
-        return watched.entrySet().stream().anyMatch(observedEntry -> {
-            if (!level.hasChunkAt(observedEntry.getKey())) return false;
-            // Cached paths do not keep chunks loaded.
-            var currentState = level.getBlockState(observedEntry.getKey());
-            var previousState = observedEntry.getValue();
-            if (currentState == previousState) return false;
-            return !(currentState.getBlock() == previousState.getBlock() && currentState.getBlock() instanceof LongDistanceTransformerBlock
-                    && currentState.getValue(LongDistanceTransformerBlock.FACING) == previousState.getValue(LongDistanceTransformerBlock.FACING));
-        });
+        return routeWatch.changed(level);
     }
 
     private LongDistanceTransformerBlockEntity receiver() {
         if (level == null || level.isClientSide || stopped) return null;
-        if (changed()) invalidateRoute();
+        if ((link.known() && !routeWatch.validated()) || changed()) invalidateRoute();
         if (link.known() && !worldPosition.equals(link.targetPosition()) && (distance <= 0 || maximumVoltage <= 0)) invalidateRoute();
         if (!link.known()) scan();
         var receiver = link.targetOwner();
         var position = link.targetPosition();
-        if (receiver == null && position != null && !position.equals(worldPosition) && level.hasChunkAt(position)) {
-            var entity = level.getBlockEntity(position);
+        if (receiver == null && position != null && !position.equals(worldPosition) && LongDistanceRouteWatch.ready(level, position)) {
+            var entity = LongDistanceRouteWatch.entity(level, position);
             if (entity instanceof LongDistanceTransformerBlockEntity peer) {
                 link.bind(peer.link);
                 receiver = peer;
@@ -121,7 +106,8 @@ public class LongDistanceTransformerBlockEntity extends gregtech.content.blocken
         distance = 0;
         maximumVoltage = 0;
         wires = Set.of();
-        watched.clear();
+        routeWatch.begin(level);
+        if (!routeWatch.loaded(level, worldPosition)) return;
         observe(worldPosition);
         var start = worldPosition.relative(front().getOpposite());
         if (!(observe(start).getBlock() instanceof LongDistPipeBlock line) || !line.isWire()) return;
@@ -138,16 +124,16 @@ public class LongDistanceTransformerBlockEntity extends gregtech.content.blocken
             }
 
             public LongDistanceTransformerBlockEntity endpoint(BlockPos pos) {
-                return level.getBlockEntity(pos) instanceof LongDistanceTransformerBlockEntity peer ? peer : null;
+                return routeWatch.loaded(level, pos) && LongDistanceRouteWatch.entity(level, pos) instanceof LongDistanceTransformerBlockEntity peer ? peer : null;
             }
 
             public BlockPos front(LongDistanceTransformerBlockEntity peer) {
                 return peer.worldPosition.relative(peer.front());
             }
         });
-        observedVersion = LongDistanceTopology.version(level);
         if (result != null) {
             link.bind(result.receiver().link);
+            routeWatch.resolved();
             distance = result.distance();
             maximumVoltage = line.maximumVoltage();
             wires = result.lines();
@@ -302,7 +288,7 @@ public class LongDistanceTransformerBlockEntity extends gregtech.content.blocken
         super.loadAdditional(tag, lookup);
         stopped = tag.getBoolean("gt.stopped");
         link.restore(tag.contains("gt.target") ? BlockPos.of(tag.getLong("gt.target")) : null);
-        watched.clear();
+        routeWatch.clear();
         distance = tag.getLong("gt.distance");
         maximumVoltage = tag.getLong("gt.throughput");
         history = tag.getLong("gt.activity.history");
@@ -327,7 +313,7 @@ public class LongDistanceTransformerBlockEntity extends gregtech.content.blocken
         super.load(tag);
         stopped = tag.getBoolean("gt.stopped");
         link.restore(tag.contains("gt.target") ? BlockPos.of(tag.getLong("gt.target")) : null);
-        watched.clear();
+        routeWatch.clear();
         distance = tag.getLong("gt.distance");
         maximumVoltage = tag.getLong("gt.throughput");
         history = tag.getLong("gt.activity.history");

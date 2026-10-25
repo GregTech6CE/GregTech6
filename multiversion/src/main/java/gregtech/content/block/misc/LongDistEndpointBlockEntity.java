@@ -39,9 +39,8 @@ public class LongDistEndpointBlockEntity extends gregtech.content.blockentity.Ca
         return getBlockState().getValue(LongDistEndpointBlock.FACING);
     }
 
-    private final Map<BlockPos, BlockState> watched = new HashMap<>();
+    private final LongDistanceRouteWatch routeWatch = new LongDistanceRouteWatch();
     private boolean stopped;
-    private long observedVersion = Long.MIN_VALUE;
     private final gregtech.content.logistics.LongDistanceLink<BlockPos, LongDistEndpointBlockEntity> link;
     private final gregtech.api.machine.MachineControl control = gregtech.internal.machine.MachineControls.switchable(this,
             () -> !stopped, value -> setStopped(!value), () -> false, () -> false);
@@ -62,40 +61,26 @@ public class LongDistEndpointBlockEntity extends gregtech.content.blockentity.Ca
 
     public void invalidateRoute() {
         link.reset();
-        watched.clear();
-        observedVersion = Long.MIN_VALUE;
+        routeWatch.clear();
     }
 
     private BlockState observe(BlockPos pos) {
-        var state = level.getBlockState(pos);
-        watched.put(pos, state);
-        return state;
+        return routeWatch.observe(level, pos);
     }
 
     private boolean changed() {
-        long version = LongDistanceTopology.version(level);
-        if (version == observedVersion) return false;
-        observedVersion = version;
-        return watched.entrySet().stream().anyMatch(observedEntry -> {
-            if (!level.hasChunkAt(observedEntry.getKey())) return false;
-            // Cached paths do not keep chunks loaded.
-            var currentState = level.getBlockState(observedEntry.getKey());
-            var previousState = observedEntry.getValue();
-            if (currentState == previousState) return false;
-            return !(currentState.getBlock() == previousState.getBlock() && currentState.getBlock() instanceof LongDistanceTransformerBlock
-                    && currentState.getValue(LongDistanceTransformerBlock.FACING) == previousState.getValue(LongDistanceTransformerBlock.FACING));
-        });
+        return routeWatch.changed(level);
     }
 
     private LongDistEndpointBlockEntity receiver() {
         if (level == null || level.isClientSide || stopped) return null;
-        if (changed()) invalidateRoute();
+        if ((link.known() && !routeWatch.validated()) || changed()) invalidateRoute();
         if (fluid() && link.known() && !worldPosition.equals(link.targetPosition()) && temperature <= 0) invalidateRoute();
         if (!link.known()) scan();
         var receiver = link.targetOwner();
         var position = link.targetPosition();
-        if (receiver == null && position != null && !position.equals(worldPosition) && level.hasChunkAt(position)) {
-            var entity = level.getBlockEntity(position);
+        if (receiver == null && position != null && !position.equals(worldPosition) && LongDistanceRouteWatch.ready(level, position)) {
+            var entity = LongDistanceRouteWatch.entity(level, position);
             if (entity instanceof LongDistEndpointBlockEntity peer && peer.fluid() == fluid()) {
                 link.bind(peer.link);
                 receiver = peer;
@@ -116,7 +101,8 @@ public class LongDistEndpointBlockEntity extends gregtech.content.blockentity.Ca
     private void scan() {
         if (level == null || level.isClientSide || !link.beginScan()) return;
         temperature = 0;
-        watched.clear();
+        routeWatch.begin(level);
+        if (!routeWatch.loaded(level, worldPosition)) return;
         observe(worldPosition);
         var start = worldPosition.relative(front().getOpposite());
         if (!(observe(start).getBlock() instanceof LongDistPipeBlock line) || !line.acceptsPipeline(fluid())) return;
@@ -134,16 +120,16 @@ public class LongDistEndpointBlockEntity extends gregtech.content.blockentity.Ca
             }
 
             public LongDistEndpointBlockEntity endpoint(BlockPos pos) {
-                return level.getBlockEntity(pos) instanceof LongDistEndpointBlockEntity peer && peer.fluid() == fluid() ? peer : null;
+                return routeWatch.loaded(level, pos) && LongDistanceRouteWatch.entity(level, pos) instanceof LongDistEndpointBlockEntity peer && peer.fluid() == fluid() ? peer : null;
             }
 
             public BlockPos front(LongDistEndpointBlockEntity peer) {
                 return peer.worldPosition.relative(peer.front());
             }
         });
-        observedVersion = LongDistanceTopology.version(level);
         if (result != null) {
             link.bind(result.receiver().link);
+            routeWatch.resolved();
             temperature = line.maximumTemperature();
             setChanged();
         }
@@ -218,7 +204,7 @@ public class LongDistEndpointBlockEntity extends gregtech.content.blockentity.Ca
         super.loadAdditional(tag, lookup);
         stopped = tag.getBoolean("gt.stopped");
         link.restore(tag.contains("gt.target") ? BlockPos.of(tag.getLong("gt.target")) : null);
-        watched.clear();
+        routeWatch.clear();
         temperature = tag.getLong("gt.temperature");
     }
 *///?} else {
@@ -236,7 +222,7 @@ public class LongDistEndpointBlockEntity extends gregtech.content.blockentity.Ca
         super.load(tag);
         stopped = tag.getBoolean("gt.stopped");
         link.restore(tag.contains("gt.target") ? BlockPos.of(tag.getLong("gt.target")) : null);
-        watched.clear();
+        routeWatch.clear();
         temperature = tag.getLong("gt.temperature");
     }
 //?}

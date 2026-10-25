@@ -54,7 +54,67 @@ final class LongDistanceSourceContracts {
         require(LongDistanceNetwork.activity(0,false,true)==3,"remembered unloaded target");
         require(LongDistanceNetwork.nextHistory(-1,false,true,false)==-1,"stopped display preserves 64 active source ticks");
         require(LongDistanceNetwork.nextHistory(9,false,false,true)==9,"unavailable target preserves recent activity");
+        pendingRouteFrontier();
         return checks;
+    }
+    private static void pendingRouteFrontier() {
+        var pending = new PendingRouteFrontier<Integer>();
+        var visited = new ArrayList<Integer>();
+        for (int i = 0; i < 40; i++) pending.addWatchedChunk(i);
+        require(pending.pollReady(p -> { visited.add(p); return p == 39; }) == null
+                && visited.equals(java.util.stream.IntStream.range(0, 16).boxed().toList()),
+                "first poll checks exactly16 of40, no scan work is performed by frontier");
+        // Re-adding head, tail and future entries must neither reset nor move the cursor.
+        for (int i = 0; i < 40; i++) pending.addWatchedChunk(i);
+        pending.addScanBoundary(39);
+        int before = visited.size();
+        require(pending.pollReady(p -> { visited.add(p); return p == 39; }) == null
+                && visited.size() - before == 16 && visited.subList(16, 32).equals(
+                java.util.stream.IntStream.range(16, 32).boxed().toList()),
+                "duplicate adds do not restart polling or starve later entries");
+        before = visited.size();
+        var ready = pending.pollReady(p -> { visited.add(p); return p == 39; });
+        require(ready != null && ready.position() == 39 && ready.rescan()
+                && visited.size() - before == 8 && new HashSet<>(visited).size() == 40,
+                "entry beyond16 eventually reported; watched-to-scan promotion retains fair position");
+        var rest = new HashSet<Integer>();
+        while ((ready = pending.pollReady(p -> true)) != null) {
+            require(rest.add(ready.position()) && ready.position() != 39, "ready entries removed exactly once");
+        }
+        require(rest.size() == 39, "duplicate add never duplicates queue membership");
+
+        pending.addScanBoundary(1);
+        pending.addWatchedChunk(1);
+        ready = pending.pollReady(p -> true);
+        require(ready != null && ready.rescan(), "watched add cannot downgrade pending scan boundary");
+        require(pending.pollReady(p -> { throw new AssertionError("empty queue must not probe"); }) == null,
+                "empty frontier performs zero checks");
+        pending.addWatchedChunk(2);
+        var readable = new AtomicBoolean(false);
+        var calls = new java.util.concurrent.atomic.AtomicInteger();
+        require(pending.pollReady(p -> { calls.incrementAndGet(); return readable.get(); }) == null && calls.get() == 1,
+                "one unavailable watched chunk checked only once per poll");
+        readable.set(true);
+        ready = pending.pollReady(p -> readable.get());
+        require(ready != null && ready.position() == 2 && !ready.rescan(),
+                "readiness false-to-true without epoch change requests comparison, not BFS");
+        pending.addScanBoundary(3);
+        readable.set(false);
+        require(pending.pollReady(p -> readable.get()) == null, "scan frontier waits without consuming request");
+        readable.set(true);
+        ready = pending.pollReady(p -> readable.get());
+        require(ready != null && ready.position() == 3 && ready.rescan(),
+                "readiness false-to-true without epoch change retries failed scan");
+        pending.addScanBoundary(4);
+        pending.addWatchedChunk(5);
+        pending.clear(); // Native successful resolution / reset uses this exact operation.
+        pending.clear();
+        require(pending.pollReady(p -> { throw new AssertionError("cleared queue must not probe"); }) == null,
+                "successful resolution/reset removes both pending reasons and cursor");
+        pending.addWatchedChunk(6);
+        ready = pending.pollReady(p -> true);
+        require(ready != null && ready.position() == 6 && !ready.rescan(),
+                "new route after clear does not inherit old rescan reason");
     }
     private static void require(boolean condition,String message){checks++;if(!condition)throw new AssertionError(message);}
 }
