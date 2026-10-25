@@ -62,7 +62,7 @@ public class LargeTurbineControllerBlockEntity extends AxialGeneratorBlockEntity
 
     public void tick() {
         if (level == null || level.isClientSide) return;
-        boolean formed = isStructureOk();
+        boolean formed = structureOk();
         if (!formed || overloaded) {
             updateRotorVisual(formed, false);
             return;

@@ -7,13 +7,13 @@ import com.gregtech.gregtech.api.multiblock.tracking.Footprint;
 import com.gregtech.gregtech.api.multiblock.tracking.Projection;
 import com.gregtech.gregtech.api.multiblock.tracking.SectionWatchMask;
 import com.gregtech.gregtech.api.multiblock.tracking.StructureChunkWatch;
+import com.gregtech.gregtech.api.multiblock.tracking.StructureDiagnostic;
 import com.gregtech.gregtech.api.multiblock.tracking.StructureEpoch;
 import com.gregtech.gregtech.api.multiblock.tracking.StructureScanProbe;
 import com.gregtech.gregtech.api.multiblock.tracking.StructureScheduler;
 import com.gregtech.gregtech.api.multiblock.tracking.StructureTracker;
 import com.gregtech.gregtech.api.multiblock.tracking.StructureTracking;
 import com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingEvents;
-import com.gregtech.gregtech.api.multiblock.tracking.StructureTrackingMode;
 import com.gregtech.gregtech.api.multiblock.tracking.StructureWatchIndex;
 import com.gregtech.gregtech.api.multiblock.tracking.TrackedMultiblock;
 import com.gregtech.gregtech.block.machine.AddonEnergyPartBlock;
@@ -34,6 +34,8 @@ import com.gregtech.gregtech.block.machine.TankControllerBlock;
 import com.gregtech.gregtech.block.machine.VonDaGraaggControllerBlock;
 import com.gregtech.gregtech.blockentity.machine.BehaviorMachineBlockEntity;
 import com.gregtech.gregtech.blockentity.machine.ImplosionCompressorControllerBlockEntity;
+import com.gregtech.gregtech.blockentity.machine.LargeGasTurbineControllerBlockEntity;
+import com.gregtech.gregtech.blockentity.machine.LargeHeatExchangerControllerBlockEntity;
 import com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity;
 import com.gregtech.gregtech.blockentity.machine.MultiblockTankControllerBlockEntity;
 import com.gregtech.gregtech.blockentity.machine.OriginalLargeBoilerControllerBlockEntity;
@@ -132,7 +134,7 @@ public final class StructureTrackingTests {
     }
 
     @GameTest(template = "test_empty", timeoutTicks = 400, batch = "st-phase0")
-    public static void idleAndPortQueriesScanOnlyInLegacy(GameTestHelper h) {
+    public static void idleAndPortQueriesDoNotScan(GameTestHelper h) {
         StructureScanProbe.enable(true);
         try {
             // A 1x1 template only reserves a few blocks. Fusion reaches about 20 blocks
@@ -170,7 +172,33 @@ public final class StructureTrackingTests {
         } finally {
             StructureScanProbe.enable(false);
             StructureScanProbe.reset();
-            StructureTrackingMode.overrideForTests(null);
+        }
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 200, batch = "st-diagnostic")
+    public static void diagnosticListsEveryWrongCellFromTheDefinition(GameTestHelper h) {
+        var cells = new ArrayList<BlockPos>();
+        try {
+            BlockPos origin = h.absolutePos(new BlockPos(4, 4, 4));
+            var machine = (LargeHeatExchangerControllerBlockEntity) exchanger(h.getLevel(), origin, cells);
+            h.assertTrue(StructureTestSupport.ok(machine), "exchanger forms");
+            h.assertTrue(StructureDiagnostic.inspect(machine).isEmpty(), "a formed structure has no problems");
+            BlockPos broken = origin.offset(1, 0, 0);
+            h.getLevel().setBlock(broken, Blocks.AIR.defaultBlockState(), FLAGS);
+            var problems = StructureDiagnostic.inspect(machine);
+            h.assertTrue(problems.stream().anyMatch(problem -> problem.pos().equals(broken)),
+                    "the diagnostic names the broken cell: " + problems);
+            h.assertTrue(problems.stream().allMatch(problem -> problem.reason().equals("block")),
+                    "one broken cell reports no unrelated failure");
+            StructureScheduler.flush(h.getLevel());
+            h.assertTrue(!machine.isStructureOk(), "the same break unforms the machine");
+            h.getLevel().setBlock(broken, part(18024).getBlock().defaultBlockState(), FLAGS);
+            StructureScheduler.flush(h.getLevel());
+            h.assertTrue(machine.isStructureOk(), "the repair restores formation");
+            h.assertTrue(StructureDiagnostic.inspect(machine).isEmpty(), "the repaired structure has no problems");
+        } finally {
+            clear(h.getLevel(), cells);
         }
         h.succeed();
     }
@@ -216,8 +244,9 @@ public final class StructureTrackingTests {
                 for (var machine : machines)
                     h.getLevel().setBlock(machine.getBlockPos().east(), Blocks.AIR.defaultBlockState(), FLAGS);
                 StructureScheduler.flush(h.getLevel());
-                int scans = StructureScanProbe.scans();
-                h.assertTrue(scans >= 50 && scans < 100, "fifty broken machines are evaluated once, scans=" + scans);
+                int matchers = StructureScanProbe.matchers();
+                h.assertTrue(matchers >= 50 && matchers < 200,
+                        "fifty broken machines are evaluated, matchers=" + matchers);
                 for (var machine : machines) h.assertTrue(!machine.isStructureOk(), "every edited machine is unformed");
             } finally {
                 StructureScanProbe.enable(false);
@@ -488,24 +517,6 @@ public final class StructureTrackingTests {
         }
     }
 
-    @GameTest(template = "test_empty", batch = "st-claim-legacy")
-    public static void legacyBindingIgnoresTheTrackedOwnershipTable(GameTestHelper h) {
-        try (var fixture = new ClaimFixture(h, 7)) {
-            fixture.unloadOwner();
-            StructureTrackingMode.overrideForTests("legacy");
-            // Leaving a removed BE's controller block in a physically loaded chunk lets vanilla
-            // recreate it on lookup. Actually remove that block in legacy mode to model an absent owner.
-            h.getLevel().setBlock(fixture.owner.getBlockPos(), Blocks.AIR.defaultBlockState(), FLAGS);
-            h.assertTrue(fixture.port().canBind(fixture.competitor.getBlockPos()), "legacy preserves its old missing-owner takeover rule");
-            h.assertTrue(fixture.competitor.isStructureOk(), "legacy's scan claims the available part without consulting tracked ownership");
-            Long trackedOwner = com.gregtech.gregtech.api.multiblock.tracking.WorldStructureClaims.table(h.getLevel())
-                    .owner(fixture.shared.asLong());
-            h.assertTrue(Long.valueOf(fixture.owner.getBlockPos().asLong()).equals(trackedOwner),
-                    "legacy binding does not read or overwrite tracked ownership");
-        }
-        h.succeed();
-    }
-
     @GameTest(template = "test_empty", batch = "st-claim-addon-parts")
     public static void addonFunctionalAndEnergyPartsUseStrictClaimAuthority(GameTestHelper h) {
         try (var fixture = new ClaimFixture(h, 8)) {
@@ -537,12 +548,10 @@ public final class StructureTrackingTests {
         final java.util.Set<ChunkPos> chunks;
         private boolean closed;
         final Map<String, LargeMachineLayouts.Layout> previous = new LinkedHashMap<>();
-        final boolean previousLegacy = StructureTrackingMode.legacy();
         final boolean previousConsistency = StructureTracking.consistencyCheck();
 
         ClaimFixture(GameTestHelper h, int index) {
             this.h = h;
-            StructureTrackingMode.overrideForTests("tracked");
             StructureTracking.consistencyCheck(false);
             var east = new LargeMachineLayouts.Layout(List.of(
                     new LargeMachineLayouts.Cell(1, 0, 0, 18100, MultiblockLayout.Role.ITEM_FLUID_INPUT),
@@ -587,7 +596,6 @@ public final class StructureTrackingTests {
         @Override public void close() {
             if (closed) return;
             closed = true;
-            StructureTrackingMode.overrideForTests("tracked");
             clear(h.getLevel(), cells);
             owner.setRemoved(); // Also detach an identity removed directly by an orphan fixture.
             for (ChunkPos chunk : chunks)
@@ -597,7 +605,6 @@ public final class StructureTrackingTests {
                 else layouts().put(entry.getKey(), entry.getValue());
             }
             StructureTracking.consistencyCheck(previousConsistency);
-            StructureTrackingMode.overrideForTests(previousLegacy ? "legacy" : "tracked");
         }
     }
 
@@ -845,7 +852,7 @@ public final class StructureTrackingTests {
             StructureScheduler.chunkLoadedForTests(h.getLevel(), chunk);
             h.assertTrue(tracker.dirty(), "chunk load queues a normal scan");
             StructureScheduler.flush(h.getLevel());
-            h.assertTrue(machine.isStructureOk() && StructureScanProbe.scans() >= 1, "the machine recovers on that tick");
+            h.assertTrue(machine.isStructureOk() && StructureScanProbe.matchers() >= 1, "the machine recovers on that tick");
         } finally {
             StructureScanProbe.enable(false);
             clear(h.getLevel(), cells);
@@ -984,15 +991,115 @@ public final class StructureTrackingTests {
             StructureScanProbe.reset();
             StructureTracking.evaluateForTests(machine);
             h.assertTrue(machine.isStructureOk(), "the safety scan leaves a good structure formed");
-            h.assertTrue(StructureScanProbe.binds() == 0 && StructureScanProbe.releases() == 0,
-                    "the safety scan does not bind or release, binds=" + StructureScanProbe.binds()
-                            + " releases=" + StructureScanProbe.releases());
+            h.assertTrue(StructureScanProbe.binds() == 0 && StructureScanProbe.releases() == 0
+                            && StructureScanProbe.designs() == 0,
+                    "the safety scan does not bind, release or write a design, binds=" + StructureScanProbe.binds()
+                            + " releases=" + StructureScanProbe.releases() + " designs=" + StructureScanProbe.designs());
             h.assertTrue(port.isBoundTo(origin) && port.structureDesign() == design, "design number is not written again");
             h.assertTrue(!chunk.isUnsaved(), "the part chunk is not marked for save");
         } finally {
             StructureScanProbe.enable(false);
             clear(h.getLevel(), cells);
         }
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 200, batch = "st-edge-designs")
+    public static void designWritesFollowTheEdgeAndTheReplacedCell(GameTestHelper h) {
+        var layout = new LargeMachineLayouts.Layout(List.of(
+                new LargeMachineLayouts.Cell(1, 0, 0, 18100, MultiblockLayout.Role.CASING, null, 5),
+                new LargeMachineLayouts.Cell(0, 0, 1, 18101, MultiblockLayout.Role.CASING, null, 6)), List.of());
+        withLayouts(Map.of("irrigator", layout), () -> {
+            var cells = new ArrayList<BlockPos>();
+            try {
+                BlockPos at = h.absolutePos(new BlockPos(3, 3, 3));
+                BlockPos first = at.east();
+                BlockPos second = at.south();
+                var machine = behavior(h.getLevel(), at, "irrigator", cells);
+                put(h.getLevel(), first, part(18100), cells);
+                put(h.getLevel(), second, part(18101), cells);
+                h.assertTrue(StructureTestSupport.ok(machine), "design layout forms");
+                h.assertTrue(port(h, first).structureDesign() == 5 && port(h, second).structureDesign() == 6,
+                        "the forming edge writes every design number");
+//? if >=1.21.1 {
+                /*var savedBefore = port(h, second).saveWithId(h.getLevel().registryAccess());
+*///?} else {
+                var savedBefore = port(h, second).saveWithFullMetadata();
+//?}
+                StructureScanProbe.enable(true);
+                StructureScanProbe.reset();
+                StructureTracking.evaluateForTests(machine);
+                h.assertTrue(machine.isStructureOk(), "an idle rescan keeps the structure formed");
+                h.assertTrue(StructureScanProbe.binds() == 0 && StructureScanProbe.releases() == 0
+                                && StructureScanProbe.designs() == 0,
+                        "an idle rescan neither binds nor writes a design, binds=" + StructureScanProbe.binds()
+                                + " releases=" + StructureScanProbe.releases() + " designs=" + StructureScanProbe.designs());
+//? if >=1.21.1 {
+                /*var savedAfter = port(h, second).saveWithId(h.getLevel().registryAccess());
+*///?} else {
+                var savedAfter = port(h, second).saveWithFullMetadata();
+//?}
+                h.assertTrue(savedBefore.equals(savedAfter),
+                        "gt.design, gt.design_held and gt.design_saved are unchanged by an idle rescan");
+                // Replace one cell inside the same tick: the other claim survives, so only this cell is rebound.
+                h.getLevel().setBlock(first, Blocks.AIR.defaultBlockState(), FLAGS);
+                h.getLevel().setBlock(first, part(18100), FLAGS);
+                StructureScanProbe.reset();
+                StructureScheduler.flush(h.getLevel());
+                h.assertTrue(machine.isStructureOk(), "the replaced cell forms again");
+                h.assertTrue(StructureScanProbe.designs() == 1,
+                        "only the replaced cell gets a design write, designs=" + StructureScanProbe.designs());
+                h.assertTrue(port(h, first).structureDesign() == 5 && port(h, second).structureDesign() == 6,
+                        "both cells carry their design number");
+                // A break releases the claims and restores the remembered index.
+                h.getLevel().setBlock(first, Blocks.AIR.defaultBlockState(), FLAGS);
+                StructureScheduler.flush(h.getLevel());
+                h.assertTrue(!machine.isStructureOk(), "the broken shell is unformed");
+                h.assertTrue(port(h, second).structureDesign() == 0, "breaking restores the claimed design");
+            } finally {
+                StructureScanProbe.enable(false);
+                clear(h.getLevel(), cells);
+            }
+        });
+        h.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 200, batch = "st-edge-ticks")
+    public static void formedControllersTickWithoutStructureQueries(GameTestHelper h) {
+        var cells = new ArrayList<BlockPos>();
+        withLayouts(Map.of("irrigator", stoneLayout()), () -> {
+            try {
+                BlockPos origin = h.absolutePos(new BlockPos(4, 4, 4));
+                var implosion = (ImplosionCompressorControllerBlockEntity) implosion(h.getLevel(), origin, cells);
+                h.assertTrue(StructureTestSupport.ok(implosion), "implosion forms");
+                var turbine = (LargeGasTurbineControllerBlockEntity) gasTurbine(h.getLevel(),
+                        h.absolutePos(new BlockPos(12, 4, 12)), cells);
+                h.assertTrue(StructureTestSupport.ok(turbine), "gas turbine forms");
+                BlockPos behaviorAt = h.absolutePos(new BlockPos(20, 4, 4));
+                var behavior = behavior(h.getLevel(), behaviorAt, "irrigator", cells);
+                put(h.getLevel(), behaviorAt.east(), Blocks.STONE.defaultBlockState(), cells);
+                h.assertTrue(StructureTestSupport.ok(behavior), "behavior machine forms");
+                StructureScanProbe.enable(true);
+                StructureScanProbe.reset();
+                for (int i = 0; i < 100; i++) {
+                    ImplosionCompressorControllerBlockEntity.serverTick(h.getLevel(), implosion.getBlockPos(),
+                            implosion.getBlockState(), implosion);
+                    LargeGasTurbineControllerBlockEntity.serverTick(h.getLevel(), turbine.getBlockPos(),
+                            turbine.getBlockState(), turbine);
+                    BehaviorMachineBlockEntity.serverTick(h.getLevel(), behavior.getBlockPos(),
+                            behavior.getBlockState(), behavior);
+                }
+                h.assertTrue(StructureScanProbe.queries() == 0,
+                        "formed ticks do not query the structure, queries=" + StructureScanProbe.queries());
+                h.assertTrue(StructureScanProbe.scans() == 0,
+                        "formed ticks do not scan, scans=" + StructureScanProbe.scans());
+                h.assertTrue(implosion.isStructureOk() && turbine.isStructureOk() && behavior.isStructureOk(),
+                        "the machines stay formed after idle ticks");
+            } finally {
+                StructureScanProbe.enable(false);
+                clear(h.getLevel(), cells);
+            }
+        });
         h.succeed();
     }
 
@@ -1393,7 +1500,6 @@ public final class StructureTrackingTests {
 
     private static void measure(GameTestHelper h, String family, BlockPos origin, Placer placer) {
         var cells = new ArrayList<BlockPos>();
-        StructureTrackingMode.overrideForTests(null);
         try {
             BlockEntity entity = placer.place(h.getLevel(), origin, cells);
             h.assertTrue(entity instanceof TrackedMultiblock, family + " controller");
@@ -1402,22 +1508,14 @@ public final class StructureTrackingTests {
             for (int i = 0; i < 100; i++) StructureTracking.query((TrackedMultiblock) entity);
             for (int i = 0; i < 20; i++) StructureTracking.query((TrackedMultiblock) entity);
             for (int i = 0; i < 20; i++) StructureTracking.query((TrackedMultiblock) entity);
-            int trackedReads = StructureScanProbe.blockReads();
-            h.assertTrue(StructureScanProbe.scans() == 0, family + " tracked idle and port queries do not scan");
-            StructureTrackingMode.overrideForTests("legacy");
-            StructureScanProbe.reset();
-            for (int i = 0; i < 140; i++) StructureTracking.query((TrackedMultiblock) entity);
-            h.assertTrue(StructureScanProbe.scans() > 0, family + " legacy queries scan");
+            h.assertTrue(StructureScanProbe.scans() == 0, family + " idle and port queries do not scan");
             System.out.println("[structure-tracking] family=" + family
-                    + " legacyScans=" + StructureScanProbe.scans()
-                    + " legacyBlockReads=" + StructureScanProbe.blockReads()
-                    + " legacyEntityReads=" + StructureScanProbe.entityReads()
-                    + " legacyChunkChecks=" + StructureScanProbe.chunkChecks()
-                    + " legacyBinds=" + StructureScanProbe.binds()
-                    + " legacyReleases=" + StructureScanProbe.releases()
-                    + " trackedScans=0 trackedBlockReads=" + trackedReads);
+                    + " scans=0 blockReads=" + StructureScanProbe.blockReads()
+                    + " entityReads=" + StructureScanProbe.entityReads()
+                    + " chunkChecks=" + StructureScanProbe.chunkChecks()
+                    + " binds=" + StructureScanProbe.binds()
+                    + " releases=" + StructureScanProbe.releases());
         } finally {
-            StructureTrackingMode.overrideForTests(null);
             clear(h.getLevel(), cells);
         }
     }

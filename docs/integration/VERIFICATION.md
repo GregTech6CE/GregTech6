@@ -2,6 +2,9 @@
 
 2026-10-25 / Issue #106／#107：只运行 NeoForge `gt6ce_utility_fixes` 七项原生 GameTest，最终 7／7 通过，XML 逐项核对无缺失、重复或跳过。覆盖八种泉的挖掘与真实爆炸保护、创造取样／移除及出液，四种浸洗设备的原料／产物守恒，七种手工设备的旧覆盖板回收与前后保护事件。首轮 5／7 及潜行堆放置拦截修复见[说明](ISSUES_106_107_UTILITY_FIXES.md)和[回执](verification/issues106-107-utility-20261025.json)。未运行 Forge、全量检查、成品包或实际存档重启。
 
+2026-10-25 / 卡 59 结构跟踪阶段 4 收尾：`legacy` 开关与配置、14 个已迁移家族的旧整段扫描删除，一致性检查改为同源全量 `PatternState` 评估；探针保留零开销门控；新增定义推导的诊断扫描（放大镜）和同源 JEI/EMI 预览数据；文档对齐。`:core:check`、双平台主源码与 GameTest 编译、双平台 `addonApiClosureCheck` 通过；集中回归 Forge **57/57**、NeoForge **57/57**（`gt6ce_structure_tracking` + `gt6ce_structure_incremental`，含新增的三项诊断/预览测试）。客户端启动冒烟尝试过一次 Forge（240 秒预算），在标题画面前因无关的 gametest 探针方块 `pipe_probe_fluid` / `pipe_probe_item` 模型 sprite 校验失败，不计客户端通过；放大镜与 JEI/EMI 预览仍无客户端画面验收。玩法实测、双平台全量 GameTest 和独立存档重启未做；`PER_CELL` 继续不启用。首次 Forge 回归的两处失败均在测试/辅助层（旧扫描计数断言、预览辅助的 part id 0），修复后复跑全绿。见[回执](verification/structure-tracking-closeout-20261025.json)。
+2026-10-25 / Issue #109：`:core:check` 通过；Forge／NeoForge 各 8 项实际注册燃烧室／锅炉 GameTest 通过，XML 逐项核对无缺失、失败或跳过；两端各恢复 55 条流化床、48 条补充 Burn／Gas 配方，0 拒绝。59 项检查器单测通过，新用例已进入现有问题回归 CI。旧容量及超过 int 上限的保存量经内存 NBT 加载验证，未实际磁盘存档重启或成品包启动。离线缓存及 Forge 外部证书预检限制见[说明](ISSUE_109_BURNING_BOX_FUELS.md)和[回执](verification/issue109-burning-box-fuels-20261025.json)。
+
 2026-10-25 / 卡 57 按用户明确指示关闭：每世界认领/预留表、端口唯一归属来源、严格争用删除唤醒、卸载/恢复及延迟孤儿清理完成，legacy 路径保留。`:core:check`、双平台生产与 GameTest 编译、API 闭包及报告校验器 42 项测试通过；集中回归 Forge 279/279、NeoForge 270/270（结构跟踪各 35、增量各 18，问题回归各 226/217），场景 6/7/14/15/16/21/24 与既有替代绑定、原生区块生命周期、区块边界测试全部通过。默认全量验收未满足：Forge 运行中按用户关卡指示停止，NeoForge 未启动；已观察失败与限制保留在[回执](verification/structure-claim-table-20261025.json)，不记为全量通过。
 
 2026-10-24 / 物品桶与水晶：双版生产源码编译通过，NeoForge / Forge 各三项集中 GameTest 通过；实际验证 12 个材料水晶身份、20 台充能器、33 个可解析手工配方、LU 充放能守恒及 13 种桶的容量与保存。125 模型、46 贴图引用、45 个原版中文名称及双版掉落表、4 个 EMI 分类通过静态核对。无客户端视觉／存档重启／交付 JAR／推送。见[说明](CRYSTAL_BARREL_COMPLETION.md)和[来源回执](verification/crystal-barrel-20261024.json)。

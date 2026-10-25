@@ -33,6 +33,22 @@ public final class SpecialStructures {
         cells.add(new CompiledPattern.FixedCell(offset.getX(), offset.getY(), offset.getZ(), spec));
     }
 
+    /** Shared by the tank definition and the JEI/EMI preview. */
+    public static List<CompiledPattern.FixedCell> tankCells(int size, Block wall, Direction front) {
+        int radius = size / 2;
+        BlockPos centre = BlockPos.ZERO.relative(front.getOpposite(), radius);
+        var cells = new ArrayList<CompiledPattern.FixedCell>();
+        for (int x = -radius; x <= radius; x++)
+            for (int y = -radius; y <= radius; y++)
+                for (int z = -radius; z <= radius; z++) {
+                    BlockPos offset = centre.offset(x, y, z);
+                    if (offset.equals(BlockPos.ZERO)) continue;
+                    boolean shell = Math.abs(x) == radius || Math.abs(y) == radius || Math.abs(z) == radius;
+                    add(cells, offset, shell ? literal(wall, Role.FLUID_IO) : part(0, Role.AIR));
+                }
+        return cells;
+    }
+
     public static StructureDefinition.Declarative tank(MultiblockTankControllerBlockEntity tank) {
         return new Fixed(tank, StructureDefinition.ClaimPolicy.ATOMIC) {
             @Override List<CompiledPattern.FixedCell> cells(Direction front) {
@@ -40,40 +56,35 @@ public final class SpecialStructures {
                 Block wall = tank.valveSpec() == null
                         ? (radius == 2 ? GTMultiblocks.TANK_WALL_DENSE.get() : GTMultiblocks.TANK_WALL.get())
                         : LargeMachineParts.block(tank.valveSpec().wallId());
-                BlockPos centre = BlockPos.ZERO.relative(front.getOpposite(), radius);
-                var cells = new ArrayList<CompiledPattern.FixedCell>();
-                for (int x = -radius; x <= radius; x++)
-                    for (int y = -radius; y <= radius; y++)
-                        for (int z = -radius; z <= radius; z++) {
-                            BlockPos offset = centre.offset(x, y, z);
-                            if (offset.equals(BlockPos.ZERO)) continue;
-                            boolean shell = Math.abs(x) == radius || Math.abs(y) == radius || Math.abs(z) == radius;
-                            add(cells, offset, shell ? literal(wall, Role.FLUID_IO) : part(0, Role.AIR));
-                        }
-                return cells;
+                return tankCells(tank.trackedSize(), wall, front);
             }
         };
+    }
+
+    /** Shared by the logistics definition and the JEI/EMI preview. */
+    public static List<CompiledPattern.FixedCell> logisticsCells(Direction front) {
+        var cells = new ArrayList<CompiledPattern.FixedCell>();
+        for (var cell : LogisticsCoreStructure.cells()) {
+            var spec = switch (cell.kind()) {
+                case WALL -> part(LogisticsCoreStructure.WALL, Role.ENERGY_INPUT);
+                case VENT -> part(LogisticsCoreStructure.VENT, Role.LOGISTICS);
+                case CPU -> new LargeMachineLayouts.Cell(0, 0, 0, LogisticsCoreStructure.VERSATILE,
+                        Role.CASING, null, -1, List.of(
+                        new SharedLargeMachineLayouts.Choice(LogisticsCoreStructure.LOGIC, null),
+                        new SharedLargeMachineLayouts.Choice(LogisticsCoreStructure.CONTROL, null),
+                        new SharedLargeMachineLayouts.Choice(LogisticsCoreStructure.STORAGE, null),
+                        new SharedLargeMachineLayouts.Choice(LogisticsCoreStructure.CONVERSION, null),
+                        new SharedLargeMachineLayouts.Choice(LogisticsCoreStructure.WALL, null)));
+            };
+            add(cells, cell.at(BlockPos.ZERO, front), spec);
+        }
+        return cells;
     }
 
     public static StructureDefinition.Declarative logistics(LogisticsCoreControllerBlockEntity machine) {
         return new Fixed(machine, StructureDefinition.ClaimPolicy.PER_CELL) {
             @Override List<CompiledPattern.FixedCell> cells(Direction front) {
-                var cells = new ArrayList<CompiledPattern.FixedCell>();
-                for (var cell : LogisticsCoreStructure.cells()) {
-                    var spec = switch (cell.kind()) {
-                        case WALL -> part(LogisticsCoreStructure.WALL, Role.ENERGY_INPUT);
-                        case VENT -> part(LogisticsCoreStructure.VENT, Role.LOGISTICS);
-                        case CPU -> new LargeMachineLayouts.Cell(0, 0, 0, LogisticsCoreStructure.VERSATILE,
-                                Role.CASING, null, -1, List.of(
-                                new SharedLargeMachineLayouts.Choice(LogisticsCoreStructure.LOGIC, null),
-                                new SharedLargeMachineLayouts.Choice(LogisticsCoreStructure.CONTROL, null),
-                                new SharedLargeMachineLayouts.Choice(LogisticsCoreStructure.STORAGE, null),
-                                new SharedLargeMachineLayouts.Choice(LogisticsCoreStructure.CONVERSION, null),
-                                new SharedLargeMachineLayouts.Choice(LogisticsCoreStructure.WALL, null)));
-                    };
-                    add(cells, cell.at(BlockPos.ZERO, front), spec);
-                }
-                return cells;
+                return logisticsCells(front);
             }
 
             @Override public List<Aggregate> aggregates() {
@@ -88,45 +99,54 @@ public final class SpecialStructures {
         };
     }
 
+    /** Shared by the drill definition and the JEI/EMI preview. */
+    public static List<CompiledPattern.FixedCell> drillCells() {
+        var cells = new ArrayList<CompiledPattern.FixedCell>();
+        for (int x = -1; x <= 1; x++)
+            for (int z = -1; z <= 1; z++) {
+                add(cells, new BlockPos(x, -5, z),
+                        new LargeMachineLayouts.Cell(0, 0, 0, 0, Role.CASING, BEDROCK_FLOOR));
+                for (int y = -4; y <= 0; y++) {
+                    if (x == 0 && y == 0 && z == 0) continue;
+                    // Part matchers additionally require the native port entity, just like the full scan.
+                    add(cells, new BlockPos(x, y, z), part(y == -4 ? 18103 : 18026,
+                            BedrockDrillControllerBlockEntity.role(x, y, z)));
+                }
+            }
+        return cells;
+    }
+
     public static StructureDefinition.Declarative drill(BedrockDrillControllerBlockEntity machine) {
         return new Fixed(machine, StructureDefinition.ClaimPolicy.ATOMIC) {
             @Override List<CompiledPattern.FixedCell> cells(Direction front) {
-                var cells = new ArrayList<CompiledPattern.FixedCell>();
-                for (int x = -1; x <= 1; x++)
-                    for (int z = -1; z <= 1; z++) {
-                        add(cells, new BlockPos(x, -5, z),
-                                new LargeMachineLayouts.Cell(0, 0, 0, 0, Role.CASING, BEDROCK_FLOOR));
-                        for (int y = -4; y <= 0; y++) {
-                            if (x == 0 && y == 0 && z == 0) continue;
-                            // Part matchers additionally require the native port entity, just like the full scan.
-                            add(cells, new BlockPos(x, y, z), part(y == -4 ? 18103 : 18026,
-                                    BedrockDrillControllerBlockEntity.role(x, y, z)));
-                        }
-                    }
-                return cells;
+                return drillCells();
             }
         };
+    }
+
+    /** Shared by the lightning-rod definition and the JEI/EMI preview. */
+    public static LargeMachineLayouts.Layout lightningLayout(boolean original) {
+        var cells = new ArrayList<LargeMachineLayouts.Cell>();
+        for (int y = 0; y < 5; y++)
+            for (int x = -1; x <= 1; x++)
+                for (int z = -1; z <= 1; z++) {
+                    if (x == 0 && y == 0 && z == 0) continue;
+                    Block block = original ? LargeMachineParts.block(y % 2 == 0 ? 18004 : 18041)
+                            : y % 2 == 0 ? GTMultiblocks.TUNGSTEN_WALL.get()
+                            : GTMultiblocks.LARGE_NIOBIUM_TITANIUM_COIL.get();
+                    // Symmetric base: local right/back coordinates give the same world cube.
+                    cells.add(new LargeMachineLayouts.Cell(x, y, z, 0, Role.CASING,
+                            FIXED_BLOCK + BuiltInRegistries.BLOCK.getKey(block)));
+                }
+        Block rod = original ? LargeMachineParts.block(18104) : GTMultiblocks.LIGHTNING_ROD.get();
+        return new LargeMachineLayouts.Layout(List.copyOf(cells), List.of(
+                new LargeMachineLayouts.Repeat("rod", 5, 0, -1, 1, 1, List.of(literal(rod, Role.CASING)))));
     }
 
     public static StructureDefinition.Declarative lightning(LightningRodControllerBlockEntity machine) {
         return new StructureDefinition.Declarative() {
             private LargeMachineLayouts.Layout layout() {
-                boolean original = machine.getBlockState().getBlock() instanceof OriginalLightningRodControllerBlock;
-                var cells = new ArrayList<LargeMachineLayouts.Cell>();
-                for (int y = 0; y < 5; y++)
-                    for (int x = -1; x <= 1; x++)
-                        for (int z = -1; z <= 1; z++) {
-                            if (x == 0 && y == 0 && z == 0) continue;
-                            Block block = original ? LargeMachineParts.block(y % 2 == 0 ? 18004 : 18041)
-                                    : y % 2 == 0 ? GTMultiblocks.TUNGSTEN_WALL.get()
-                                    : GTMultiblocks.LARGE_NIOBIUM_TITANIUM_COIL.get();
-                            // Symmetric base: local right/back coordinates give the same world cube.
-                            cells.add(new LargeMachineLayouts.Cell(x, y, z, 0, Role.CASING,
-                                    FIXED_BLOCK + BuiltInRegistries.BLOCK.getKey(block)));
-                        }
-                Block rod = original ? LargeMachineParts.block(18104) : GTMultiblocks.LIGHTNING_ROD.get();
-                return new LargeMachineLayouts.Layout(List.copyOf(cells), List.of(
-                        new LargeMachineLayouts.Repeat("rod", 5, 0, -1, 1, 1, List.of(literal(rod, Role.CASING)))));
+                return lightningLayout(machine.getBlockState().getBlock() instanceof OriginalLightningRodControllerBlock);
             }
             @Override public StructureDefinition.ClaimPolicy claimPolicy() { return StructureDefinition.ClaimPolicy.ATOMIC; }
             @Override public boolean tightenWatch() { return true; }
@@ -142,6 +162,19 @@ public final class SpecialStructures {
                 return LayoutStructures.declared(layout(), machine);
             }
         };
+    }
+
+    /** The block a compiled cell shows in a preview; the definition's own matcher input. */
+    public static Block previewBlock(LargeMachineLayouts.Cell cell) {
+        String plain = cell.plain();
+        if (plain != null) {
+            if (BEDROCK_FLOOR.equals(plain)) return net.minecraft.world.level.block.Blocks.BEDROCK;
+            if (plain.startsWith(FIXED_BLOCK))
+                return BuiltInRegistries.BLOCK.getOptional(net.minecraft.resources.ResourceLocation.tryParse(
+                        plain.substring(FIXED_BLOCK.length()))).orElse(net.minecraft.world.level.block.Blocks.AIR);
+        }
+        if (cell.role() == Role.AIR || cell.part() <= 0) return net.minecraft.world.level.block.Blocks.AIR;
+        return LargeMachineParts.block(cell.part());
     }
 
     /** Wrap the existing layout footprint while enabling oven candidates and their same-block constraint. */

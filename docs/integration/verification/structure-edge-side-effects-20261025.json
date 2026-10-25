@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-25",
+  "scope": "Card 58: edge-only claims, design writes and controller caches; per-tick structure polling removed; PER_CELL comparison recorded but not enabled",
+  "branch": "feat/structure-edge-side-effects",
+  "base_head": "327df3807",
+  "card_status": "active_edge_refactor_complete_atomic_decision_recorded",
+  "batch_1_status": "complete",
+  "batch_2_status": "complete",
+  "batch_3_status": "decided_all_families_keep_atomic",
+  "source": "New implementation against the local card contract; no third-party source, assets or dependencies imported",
+  "implementation": [
+    "PartBindings stores position-to-role and updates per cell: unchanged role plus a live derived part cache skips bind; new, changed or recreated parts bind; removed cells release and restore their design",
+    "ClaimMemory deleted; StructureClaims.update now returns APPLIED only when a cell was bound or released, UNCHANGED otherwise",
+    "StructureDesigns compares the current gt.design per cell and writes only when it differs",
+    "Incremental evaluation skips applyStructure/applyIncompleteStructure when already formed and the evaluation touched no cell",
+    "Edge callbacks moved to TrackedMultiblock.onStructureFormed/onStructureBroken, dispatched together with structureFormedChanged by StructureTracking.formedChanged; the unused StructureDefinition hooks were removed",
+    "Fifteen controller families read an edge-maintained formed bit in their tick; the legacy rollback still scans on query",
+    "Large recipe machines cache condition energy parts on the formed edge instead of walking bindings every tick",
+    "StructureScanProbe counts real design writes and tracked structure queries for the idle assertions"
+  ],
+  "player_visible_behavior_changed": false,
+  "release_order_unchanged": "claim release, controller/role clear, crucible visual reset, design restore",
+  "compile": {
+    "status": "passed",
+    "forge_core_check_log": "work/card58-compile-forge.log",
+    "forge_core_check_log_sha256": "be57eb8907b329d704c4238b8d2c286748f055da3465b6808447836789532b69",
+    "neoforge_compile_log": "work/card58-compile-neoforge.log",
+    "neoforge_compile_log_sha256": "daf646798fca59ac41f001d83a336fdb64e9009d8e5d3ffb6b87428fb61862c9",
+    "gametest_compile_log": "work/card58-compile-gametest.log",
+    "gametest_compile_log_sha256": "d5a97d88a1dce66230b0e7fcb927a29b0fd3bdf475fbedb59bfde5dd8f90b60a",
+    "api_closure_log": "work/card58-api-closure.log",
+    "api_closure_log_sha256": "82dd4ebc06b754e9e0257f36deaadc56fcc87940107595745ae436cf307f371c",
+    "core_contracts_log": "work/card58-core-contracts.log",
+    "core_contracts_log_sha256": "f85c56c620ba87a7cb02a455030576d959339a4fbe844961da70ffd51e4a32b8",
+    "tasks": [
+      ":core:check",
+      ":multiversion:1.20.1-forge:compileJava",
+      ":multiversion:1.21.1-neoforge:compileJava",
+      ":multiversion:1.20.1-forge:addonApiClosureCheck",
+      ":multiversion:1.21.1-neoforge:addonApiClosureCheck",
+      ":multiversion:1.20.1-forge:compileBootstrapGameTestJava",
+      ":multiversion:1.21.1-neoforge:compileBootstrapGameTestJava"
+    ],
+    "core_behavior_assertions": 8218,
+    "api_closure_classes_per_platform": 165
+  },
+  "gametests": {
+    "forge": {
+      "focused": {
+        "status": "passed",
+        "tests": 37,
+        "namespaces": ["gt6ce_structure_tracking"],
+        "failures": [],
+        "log": "work/card58-gametest-forge-focused.log",
+        "log_sha256": "539706d91634040a855bdba94d4653ccb68e80a7eb0b6a3cf6544d6c314a7eb2"
+      },
+      "merged": {
+        "status": "passed",
+        "tests": 284,
+        "namespace_counts": {
+          "gt6ce_structure_tracking": 37,
+          "gt6ce_structure_incremental": 18,
+          "gregtech_issue_audit": 226,
+          "gregtech_multiblock_tanks": 1,
+          "gregtech_large_recipe": 2
+        },
+        "failures": [],
+        "log": "work/card58-gametest-forge-merged.log",
+        "log_sha256": "312dc00cdb19349d64cbc430cf2a9c3b457d7dd061643e9bbac9b79dc8a56420"
+      }
+    },
+    "neoforge": {
+      "merged": {
+        "status": "passed",
+        "tests": 275,
+        "namespace_counts": {
+          "gt6ce_structure_tracking": 37,
+          "gt6ce_structure_incremental": 18,
+          "gregtech_issue_audit": 217,
+          "gregtech_multiblock_tanks": 1,
+          "gregtech_large_recipe": 2
+        },
+        "failures": [],
+        "log": "work/card58-gametest-neoforge-merged.log",
+        "log_sha256": "c6443fd2c42c2846f523b50f8309972b7cc92e6a2cd3423eff1749af0fbdf5b0"
+      }
+    },
+    "heap": "6g, -XX:+UseSerialGC",
+    "commands": [
+      "./gradlew :multiversion:1.20.1-forge:runGameTestServer -PaddonSample=true -PgameTestNamespaces=gt6ce_structure_tracking,gt6ce_structure_incremental,gregtech_issue_audit,gregtech_multiblock_tanks,gregtech_large_recipe -PgameTestHeap=6g \"-PgameTestJvmArgs=-XX:+UseSerialGC\" -PgameTestDirectory=build/gametest-st-edge --console=plain",
+      "./gradlew :multiversion:1.21.1-neoforge:runGameTestServer -PaddonSample=true -PgameTestNamespaces=gt6ce_structure_tracking,gt6ce_structure_incremental,gregtech_issue_audit,gregtech_multiblock_tanks,gregtech_large_recipe -PgameTestHeap=6g -PneoforgeGameTestDirectory=build/bootstrap-gametest-st-edge --console=plain"
+    ]
+  },
+  "scenarios": {
+    "safety_rescan": "safetyRescanDoesNotBindOrMarkChunks now also asserts zero design writes and an unsaved part chunk",
+    "design_edges": "designWritesFollowTheEdgeAndTheReplacedCell: forming edge writes 5/6; idle rescan binds, releases and writes nothing; NBT saved before and after an idle rescan compares equal; replacing one cell rebinds and rewrites only that cell; a break restores the design",
+    "tick_queries": "formedControllersTickWithoutStructureQueries: 100 ticks of implosion, gas turbine and behavior machine with zero structure queries and zero scans"
+  },
+  "not_done": [
+    "PER_CELL runtime enabling was not implemented by user decision: every family keeps ATOMIC; logistics core keeps its declaration but claimPolicy() has no runtime consumer",
+    "No client launch or manual play test; verification is the merged GameTest run plus the existing controller regressions",
+    "No saved-world restart test; the acceptance relies on the unchanged gt.design NBT keys and the before/after save comparison",
+    "Full default GameTest suites were not run on either platform; the card did not require them"
+  ],
+  "decisions_recorded": "docs/integration/DECISIONS.md, 2026-10-25 card 58 entry with the PER_CELL comparison",
+  "plan_updated": "docs/integration/MULTIBLOCK_STRUCTURE_TRACKING_PLAN.md, phase 3 progress and pending decision 2"
+}

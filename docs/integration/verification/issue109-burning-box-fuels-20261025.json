@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-25",
+  "issue": "https://github.com/GregTech6CE/GregTech6/issues/109",
+  "base_commit": "9bdd17034",
+  "core_check": "passed on base 9bdd17034 plus issue109 changes",
+  "native_results": {
+    "forge": {
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0,
+      "cases": [
+        "finalreservekeepsburninguntilanotherratedpacketcannotbeemitted",
+        "fuelchargespreservestoredfluidamountsbeyondnativeintviews",
+        "fullashoutputblocksbothinputsuntilnativeextractionfreesspace",
+        "legacyfluidbedtankcapacityrestoreswithoutlosingsavedcalcite",
+        "originalcoalformsconsumeexactcalciteandretainheatandash",
+        "originalengineliquidsarealsoavailabletoregisteredliquidburningboxes",
+        "roundedzeroheatrecipecannotconsumefuelorspinrefillloop",
+        "weakliquidandgasfuelssustainratednativeheatoutput"
+      ],
+      "report": "multiversion/versions/1.20.1-forge/build/reports/issue109-fuels.xml",
+      "sha256": "61aa86d36a005e687d98b434d0f63f506841bfee123fc42496bd47aaba663089"
+    },
+    "neoforge": {
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0,
+      "cases": [
+        "finalreservekeepsburninguntilanotherratedpacketcannotbeemitted",
+        "fuelchargespreservestoredfluidamountsbeyondnativeintviews",
+        "fullashoutputblocksbothinputsuntilnativeextractionfreesspace",
+        "legacyfluidbedtankcapacityrestoreswithoutlosingsavedcalcite",
+        "originalcoalformsconsumeexactcalciteandretainheatandash",
+        "originalengineliquidsarealsoavailabletoregisteredliquidburningboxes",
+        "roundedzeroheatrecipecannotconsumefuelorspinrefillloop",
+        "weakliquidandgasfuelssustainratednativeheatoutput"
+      ],
+      "report": "multiversion/versions/1.21.1-neoforge/build/reports/issue109-fuels.xml",
+      "sha256": "1284c0675c0ad8caa62cda90d55a9b5bad1ef0c040ea86ac65e96930603aeb9b"
+    }
+  },
+  "registered_recipes_per_platform": {
+    "fluidized_bed": 55,
+    "supplemental_burn_gas": 48,
+    "skipped_unavailable_optional_fluid_rules": 5,
+    "rejected": 0
+  },
+  "checker_unit_tests": {
+    "passed": 59,
+    "command": "python -X utf8 -m unittest tools.tests.test_burning_box_fuel_ci_evidence tools.tests.test_issue_ci_evidence tools.tests.test_ore_form_output_ci_evidence tools.tests.test_cinnabar_barrel_ci_evidence"
+  },
+  "runtime": {
+    "launcher_and_forge": "Temurin 17.0.20.1",
+    "neoforge": "Temurin 21.0.12",
+    "forge": "47.4.20",
+    "neoforge_loader": "21.1.243",
+    "heap": "3g"
+  },
+  "native_command_common": "./gradlew.bat --offline --console=plain -PdirectCoreClasspath=true -PgameTestNamespaces=gt6ce_burning_box_fuels -PgameTestHeap=3g -PgameTestJvmArgs=-XX:+UseSerialGC -PgameTestReport=build/reports/issue109-fuels.xml",
+  "logs": [
+    "work/burning-box-fuels.log",
+    "work/burning-box-fuels-final.log",
+    "work/burning-box-fuels-forge-verified.log"
+  ],
+  "initial_failure": "Forge initial 5/6: simulation snapshot preceded lazy cover initialization; fixture now initializes cover storage before snapshots.",
+  "environment": "Online Forge certificate preflight failed. Verification used cached dependencies offline; the final Forge-only invocation also set -Dnet.minecraftforge.gradle.check.certs=false for the external preflight, without changing repository build configuration.",
+  "boundaries": [
+    "Development native GameTests, not packaged JAR launches",
+    "NBT loading tested in memory, not a real disk saved-world restart",
+    "No client visual acceptance or complete survival chain run",
+    "Afterfire reignition, contact hazards, environmental fire and gas redstone parity remain outside this fix"
+  ]
+}

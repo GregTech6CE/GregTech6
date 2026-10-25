@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-25",
+  "scope": "Card 59: phase 4 closeout — legacy switch and migrated-family full scans removed, probe gating decided, diagnostics and assembly preview derived from the structure definition, docs aligned",
+  "branch": "chore/structure-tracking-closeout",
+  "base_head": "1012831e0",
+  "stacked_on": "feat/structure-edge-side-effects (PR #129, open at the time of this run)",
+  "card_status": "closed_2026-10-25",
+  "batch_1_status": "complete",
+  "batch_2_status": "complete_zero_overhead_gate_retained",
+  "batch_3_status": "complete_gametest_preview_and_diagnostic",
+  "batch_4_status": "complete",
+  "source": "New implementation against the local card contract; no third-party source, assets or dependencies imported",
+  "implementation": [
+    "StructureTrackingMode and the multiblock.structureTracking config value deleted; all legacy branches removed from query, invalidate, chunk unload, removal, claims, scheduler and parts",
+    "scanStructure deleted from fourteen migrated families; LargeRecipeMachineBlockEntity keeps its scan for the large-recipe families that are still not incremental",
+    "The test-build consistency oracle now builds a fresh PatternState from the same CompiledPattern and applies the resulting match instead of calling the removed scan bodies",
+    "Probe mixins stay in the production config; every probe entry returns on activeScans == 0 before touching thread state, and inScan() gained the same fast path",
+    "StructureDiagnostic.inspect compiles the machine's own definition and lists every rejected cell without early stop; optional repeat layers above the minimum are not reported",
+    "Boiler and heat-exchanger magnifier messages append the diagnostic problems when the structure is not formed",
+    "Tank, logistics, drill and lightning-rod cells moved into SpecialStructures builders used by both the runtime definitions and the JEI/EMI preview; exchanger and crucible preview read the shared CELLS; logistics core added to the preview list",
+    "StructureWatchIndex.touch(level, pos) added for addon parts whose matching data changes without a block-state change",
+    "ADDON_API.md, ADDON_API.zh-CN.md, DECISIONS.md and the tracking plan updated; the docs contract classifies StructureWatchIndex"
+  ],
+  "player_visible_behavior_changed": false,
+  "compile": {
+    "status": "passed",
+    "log": "work/card59-verify-compile.log",
+    "log_sha256": "fdf4c5ae5d82a6ccda197d0ad1e5e8810351022a0c3aa7a83fad9cae7e47802f",
+    "forge_gametest_compile_log": "work/card59-forge-compile3.log",
+    "forge_gametest_compile_log_sha256": "28314e4b718a415c168f581213f92e134e4c89c39030b85c2959cba6edf137f3",
+    "tasks": [
+      ":core:check",
+      ":multiversion:1.20.1-forge:compileBootstrapGameTestJava",
+      ":multiversion:1.21.1-neoforge:compileJava",
+      ":multiversion:1.21.1-neoforge:compileBootstrapGameTestJava",
+      ":multiversion:1.20.1-forge:addonApiClosureCheck",
+      ":multiversion:1.21.1-neoforge:addonApiClosureCheck"
+    ]
+  },
+  "gametests": {
+    "namespaces": ["gt6ce_structure_tracking", "gt6ce_structure_incremental"],
+    "new_tests": [
+      "diagnosticListsEveryWrongCellFromTheDefinition (fixed family: heat exchanger)",
+      "diagnosticListsEveryWrongCellFromTheDefinition (tank and lightning rod)",
+      "previewAndJeiDrawTheDefinitionCells (tank, exchanger, lightning rod, large-recipe layout)"
+    ],
+    "forge": {
+      "status": "passed",
+      "tests": 57,
+      "failures": [],
+      "log": "work/card59-forge-gametest3.log",
+      "log_sha256": "c17b917db65d64cf5d429e841af8173c8944893694bdec5d45e2b47752b7a812"
+    },
+    "neoforge": {
+      "status": "passed",
+      "tests": 57,
+      "failures": [],
+      "log": "work/card59-neo-gametest.log",
+      "log_sha256": "ac4c823299d4329b890a3345770d67e2a13ade11260c13284a62f61c48945b10"
+    },
+    "heap": "3g, -XX:+UseSerialGC (Forge)",
+    "commands": [
+      "./gradlew :multiversion:1.20.1-forge:runGameTestServer -PaddonSample=true -PgameTestNamespaces=gt6ce_structure_tracking,gt6ce_structure_incremental -PgameTestHeap=3g \"-PgameTestJvmArgs=-XX:+UseSerialGC\" -PgameTestDirectory=build/gametest-st-closeout --console=plain",
+      "./gradlew :multiversion:1.21.1-neoforge:runGameTestServer -PaddonSample=true -PgameTestNamespaces=gt6ce_structure_tracking,gt6ce_structure_incremental -PgameTestHeap=3g -PneoforgeGameTestDirectory=build/bootstrap-gametest-st-closeout --console=plain"
+    ]
+  },
+  "client_smoke": {
+    "status": "failed_unrelated",
+    "platform": "forge",
+    "command": "./gradlew :multiversion:1.20.1-forge:runClient -PclientSmoke=true -PclientSmokeTimeout=240 -PclientSmokeHeap=3g --console=plain",
+    "log": "work/card59-client-smoke.log",
+    "log_sha256": "9c780f6ee365b6d3317de8ab1cc0d1a3d292d47283a9f199449f23f7a83eb1a2",
+    "failure": "CLIENT_SMOKE_FAILED phase=render_or_capture: Machine model/color failures for gt6ce:pipe_probe_fluid and gt6ce:pipe_probe_item sprites",
+    "cause": "The probe blocks are registered by the gametest source set (SignalProbes) that the client smoke includes; card 59 did not modify SignalProbes, MachineModelSmoke, pipe models or their sprites",
+    "conclusion": "Client startup was not accepted; the magnifier and JEI/EMI preview still have no client visual verification"
+  },
+  "iteration_notes": [
+    "First Forge run exposed two test-harness assumptions that the old scan oracle had been satisfying: two tests counted scans that no longer happen, and ControllerStructureLayouts initialization hit part id 0 through the new preview helper. Both were fixed in the test/helper layer; the production checks were unchanged.",
+    "The preview consistency test uses largecrusher because distillation tower geometry is not registered in LargeMachineLayouts"
+  ],
+  "not_done": [
+    "Client startup smoke was attempted on Forge and failed before the title screen on an unrelated gametest probe model (pipe_probe_fluid/pipe_probe_item); it is not counted as a client pass, and the magnifier and JEI/EMI preview still have no client visual verification",
+    "No full default GameTest suite on either platform; only the two structure namespaces were run, per the task-level verification rule",
+    "No saved-world restart test; storage format is unchanged",
+    "PER_CELL stays disabled; every family runs ATOMIC",
+    "LargeRecipeMachineBlockEntity and the large-recipe families that are still not incremental keep their full scan"
+  ],
+  "pre_existing_worktree_change": "multiversion/versions/1.20.1-forge/src/test/java/com/gregtech/gregtech/registration/RebuildStateContracts.java was already modified before this card started and was left untouched",
+  "decisions_recorded": "docs/integration/DECISIONS.md, 2026-10-25 card 59 entry",
+  "plan_updated": "docs/integration/MULTIBLOCK_STRUCTURE_TRACKING_PLAN.md, phase 4 progress and pending decision 3"
+}

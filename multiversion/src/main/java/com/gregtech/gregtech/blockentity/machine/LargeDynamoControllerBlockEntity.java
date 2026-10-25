@@ -20,7 +20,7 @@ public class LargeDynamoControllerBlockEntity extends AxialGeneratorBlockEntity 
     }
 
     public void tick() {
-        if (level != null && !level.isClientSide && isStructureOk() && !overloaded) convertAndEmit();
+        if (level != null && !level.isClientSide && structureOk() && !overloaded) convertAndEmit();
     }
 
     @Override

@@ -31,6 +31,8 @@ import java.util.*;
 /** Shared execution and atomic part ownership for original large recipe-machine layouts. */
 public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity implements MultiblockPortOwner, TrackedMultiblock {
     private final PartBindings<BlockPos,MultiblockLayout.Role> bindings=new PartBindings<>();
+    private boolean structureFormed;
+    private java.util.List<AddonEnergyPartBlockEntity> conditionParts = java.util.List.of();
     public LargeRecipeMachineBlockEntity(BlockEntityType<?> type,BlockPos pos,BlockState state) { super(type,pos,state); }
     private boolean originalProcessingController() {return spec()!=null && spec().suppressSideAutoInput();}
     private boolean sourceUnlimitedOutputs() {return spec()!=null && spec().unlimitedOutputTanks();}
@@ -255,7 +257,19 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
     @Override public long getEnergySizeInputRecommended(GregTechTags.Tag type,Direction side) { return usesTimeEnergy()?1:512; }
     @Override public long getEnergySizeInputMin(GregTechTags.Tag type,Direction side) { return inputMinimum(); }
     @Override public long getEnergySizeInputMax(GregTechTags.Tag type,Direction side) { return inputMaximum(); }
-    @Override protected boolean structureComplete() { return isStructureOk() && conditionPartsMet(); }
+    @Override protected boolean structureComplete() { return structureOk() && conditionPartsMet(); }
+    protected boolean structureOk() {
+        return structureFormed;
+    }
+    @Override public void structureFormedChanged(boolean formed) { structureFormed = formed; }
+    /** Only the edge rebuilds this list; a formed tick never walks the shell. */
+    @Override public void onStructureFormed() {
+        java.util.ArrayList<AddonEnergyPartBlockEntity> found = new java.util.ArrayList<>();
+        if (level != null) for (BlockPos pos : bindings.positions())
+            if (level.getBlockEntity(pos) instanceof AddonEnergyPartBlockEntity part && part.condition()) found.add(part);
+        conditionParts = java.util.List.copyOf(found);
+    }
+    @Override public void onStructureBroken() { conditionParts = java.util.List.of(); }
     /** The layout a structure check reads. Controllers with hand-built cells override {@link #structureCells()}. */
     protected LargeMachineLayouts.Layout structureLayout() {
         var layout=LargeMachineLayouts.layout(spec().machineName());
@@ -320,8 +334,7 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
             if ("largeoven".equals(spec().machineName()) && !ovenCoilsAgree(front, matchedCells, repeatPlaced)) {
                 bindings.clear(this::release); StructureClaims.cleared(this); return false;
             }
-            var claimed = StructureClaims.update(this, true, bindings, parts,
-                    designHash(matchedCells, repeatPlaced),
+            var claimed = StructureClaims.update(this, bindings, parts,
                     pos->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).canBind(worldPosition),
                     (pos,role)->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).bind(worldPosition,role),this::release);
             if (claimed == StructureClaims.Result.FAILED) return false;
@@ -351,8 +364,7 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
             if (cell.role() != MultiblockLayout.Role.AIR && !cell.plainBlock())
                 parts.put(placed.pos(), cell.role());
         }
-        var claimed = StructureClaims.update(this, true, bindings, parts,
-                designHash(matchedCells, repeatPlaced),
+        var claimed = StructureClaims.update(this, bindings, parts,
                 pos -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).canBind(worldPosition),
                 (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
                 this::release);
@@ -369,12 +381,6 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         StructureClaims.cleared(this);
     }
 
-    private static int designHash(List<LargeMachineLayouts.Cell> cells, List<LargeMachineLayouts.Placed> placed) {
-        int hash = 1;
-        for (var cell : cells) hash = 31 * hash + cell.design();
-        for (var cell : placed) hash = 31 * hash + cell.cell().design();
-        return hash;
-    }
     private boolean ovenCoilsAgree(Direction front, List<LargeMachineLayouts.Cell> fixed, List<LargeMachineLayouts.Placed> repeated) {
         return java.util.stream.Stream.concat(
                 fixed.stream().filter(cell -> cell.part() == 18042).map(cell -> cell.at(worldPosition, front)),
@@ -408,10 +414,7 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
     /** Bound condition parts must all be satisfied. A structure with none works as before. */
     private boolean conditionPartsMet() {
         if (level == null) return true;
-        for (BlockPos pos : bindings.positions()) {
-            if (level.getBlockEntity(pos) instanceof AddonEnergyPartBlockEntity part && part.condition() && !part.satisfied())
-                return false;
-        }
+        for (AddonEnergyPartBlockEntity part : conditionParts) if (!part.satisfied()) return false;
         return true;
     }
     private void release(BlockPos pos) { if(level!=null&&level.hasChunkAt(pos)&&level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part) part.release(worldPosition); }

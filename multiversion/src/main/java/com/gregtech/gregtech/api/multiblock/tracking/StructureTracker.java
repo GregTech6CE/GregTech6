@@ -23,7 +23,6 @@ public final class StructureTracker {
     private int epoch = -1;
     private int[] matchedLayers;
     private Footprint watch = Footprint.EMPTY;
-    private final ClaimMemory claims = new ClaimMemory();
     private CompiledPattern pattern;
     private PatternState patternState;
     private Direction patternFront;
@@ -88,16 +87,6 @@ public final class StructureTracker {
     }
 
     void markUnloading() { unloading = true; }
-
-    boolean claimsMatch(java.util.Map<BlockPos, com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role> parts, int designHash) {
-        return claims.matches(parts, designHash);
-    }
-
-    void rememberClaims(java.util.Map<BlockPos, com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role> parts, int designHash) {
-        claims.remember(parts, designHash);
-    }
-
-    void forgetClaims() { claims.forget(); }
 
     /** A relevant change. Formed controllers are rescanned before the budget queue. Returns true when the formed bit fell. */
     boolean invalidate() {

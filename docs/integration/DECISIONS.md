@@ -1,5 +1,25 @@
 # 实现选择记录
 
+## 2026-10-25 / 卡 58：边沿认领、边沿副作用与去轮询
+
+- 认领、设计号和端口缓存只在状态边沿或相关改动格发生。进入 `FORMED` 时整批认领并写设计号，离开 `FORMED` 时释放并恢复设计号；已成型且本轮没有任何改动格的评估完全不调用 `applyStructure` / `applyIncompleteStructure`。`ClaimMemory` 已删除，替代它的是 `PartBindings` 的逐格差量。
+- `PartBindings` 现在记录坐标到角色：候选格角色未变且部件的派生缓存仍指向本控制器时跳过 bind；新格、角色变化或缓存丢失（区块重载后重建的方块实体）才 bind；不再出现在候选里的格 release 并恢复设计号。失败的候选集合仍先整体校验，再释放全部并失败。
+- `StructureDesigns` 逐格比较当前 `gt.design` 后再写。因此静置重扫既不 bind、也不调用 `setStructureDesign`，部件区块不会因 `setChanged()` 被标记为需要保存。
+- 边沿回调改为 `TrackedMultiblock.onStructureFormed()` / `onStructureBroken()`，与既有 `structureFormedChanged` 一起由 `StructureTracking.formedChanged` 统一派发；`StructureDefinition.onFormed/onBroken` 的空默认方法删除，避免两套边沿接口。区块卸载导致的 `SUSPENDED` 也走 `onStructureBroken`，但按卡 57 的规则保留认领。
+- 各控制器 tick 不再查询结构：内置大型配方机、聚变、内爆、行为机、燃料电池、轴向发电机、基岩钻机、燃气轮机、储罐、坩埚、物流核心、VonDaGraagg、避雷针和锅炉都读边沿维护的 formed 位。`legacy` 回退仍按查询扫描。端口侧的 `isStructureOk()` 查询不变，仍是 O(1) 读 tracker。大型配方机的条件能量部件改为在 `onStructureFormed` 缓存，不再每 tick 遍历绑定集合（legacy 保留原遍历）。
+- 释放顺序保持卡 57 之后的现状：先释放认领，再清控制器/角色，复位坩埚外观，最后恢复设计号。没有改动这一顺序。
+- `StructureScanProbe` 新增 `designs()`（真实设计号写入次数）和 `queries()`（tracked 结构查询次数），供静置验收断言为 0。
+- `PER_CELL` 未启用。2026-10-25 用户决定：全部家族保持 `ATOMIC`。物流核心保留 `PER_CELL` 声明，但 `claimPolicy()` 目前没有任何运行时消费者，声明只是元数据；焦炉、基岩钻机同样按 `ATOMIC` 运行。对比见下。
+
+### `PER_CELL` 对比（部分成型时的玩家可见行为）
+
+| 家族 | 当前运行时 | `ATOMIC`（现在） | `PER_CELL` 的差异 | 代价与风险 | 建议 |
+| --- | --- | --- | --- | --- | --- |
+| 焦炉 | `ATOMIC`（LargeRecipe 布局家族） | 缺一格即全部不认领；未成型部件没有主控，放大镜/传感器不能沿端口读到控制器；相邻机器可以占用这些墙 | 每格合法部件立即归属本控制器（原版 `checkStructure2` 的逐格认领），补全后直接成型 | 严格认领表下，部分认领会阻止相邻结构共用同一面墙，直到本机补完或拆除；区块卸载期间归属保留，共享墙争用更明显 | 保持 `ATOMIC`；需要原版逐块诊断行为时再单独开启 |
+| 物流核心 | 已声明 `PER_CELL`，运行时 `ATOMIC` | 未成型时 CPU/通风口/墙无归属；路由和能量都要求成型 | 已放置的 CPU 提前归属，但能量、路由仍以成型为前提，玩法收益接近 0 | 核心常与墙面共用格子，争用风险大于收益 | 保持 `ATOMIC` |
+| 基岩钻机 | `ATOMIC` | 缺一格时 44 个支撑件都不认领；`injectPortEnergy` / `doInject` 先要求成型，未建完没有可用能量入口 | 少数已放置支撑件提前归属 | 56 的审计结论：能量入口要求成型，几乎无可观察收益 | 保持 `ATOMIC` |
+| 锅炉 / 换热器（参考） | 已按原版逐格绑定（`applyIncompleteStructure`，不是 `PER_CELL` 声明） | 未成型也绑定合法部件，供建造杖和传感器使用 | — | 这是卡 57 之前就保留的既有行为，本卡只把它改成差量写入 | 不改 |
+
 ## 2026-10-25 / 卡 57：认领表与严格争用接线
 
 - 新增纯 Java 17 的 `StructureClaimTable`；坐标和区块键由平台投影，支持严格排他、原子批量认领、逐格认领、按控制器释放，以及按部件区块转移/恢复预留。没有新增第三方来源、资产或依赖。
@@ -2247,6 +2267,21 @@ Sensors null-NBT源登记可合法携带REV，生成器只为这组解析，避�
 - 基岩钻机：44 个支撑格和 9 个地面格。`bedrockfloor` 匹配原版基岩或宿主岩为基岩的 OreBlock；地面投影仅比较“是否基岩类”，不比较矿种或大小。对应的 `Projection.bedrockFloor()` 做此局部语义调整，其余 tracking 公共机制不改。矿物候选从扫描状态移出，`nextProduct()` 每个周期调用带 `hasChunkAt` 保护的 `drillingCandidates()`，大矿权重 2、小矿权重 1；任一地面区块不可用则不消耗本周期能量和润滑油。认领策略保持 ATOMIC。
 - 验证结果另见 VERIFICATION 和本卡 JSON 回执；实现接入不代表全量游戏测试已通过。
 - 卡 55 的原生旧夹具校正：原版钻机底层使用 18103 钻头；重放阀门后先通过 StructureTestSupport 等待结构重评估再执行有成型门控的流体操作；碎矿产物测试放置九格实际基岩矿，取消对已移除 deposit 字段的反射注入。三项在独立命名空间复测 3/3，通过不代表默认 1045 项套件已全绿。
+
+## 2026-10-25 / 结构跟踪阶段 4 卡 59：收尾
+
+- 旧模式删除：`StructureTrackingMode`、`multiblock.structureTracking` 配置项和 `legacy` 回退分支全部删除。查询、认领、区块加载/卸载、`/reload` 和安全网只有一条跟踪路径，`isStructureOk()` 在服务端读 tracker 的 `formed()`，客户端读同步位。
+- 旧扫描删除范围：轴向主控（大型涡轮/发电机）、基岩钻机、行为机、燃料涡轮、聚变、内爆压缩机、大坩埚、燃气涡轮、换热器、避雷针、物流核心、储罐、大型锅炉、VonDaGraagg 的 `scanStructure()` 删除。`LargeRecipeMachineBlockEntity.scanStructure()` 保留，因为普通大型配方家族（蒸馏塔、低温蒸馏、焦炉、物质制造机、大型烤炉之外的机器）还没迁到增量路径；它不再作为已迁移家族的对照。
+- 一致性检查：测试构建对已迁移家族不再调用旧扫描，改为用同一份 `CompiledPattern` 新建 `PatternState` 做全量评估，再调用控制器的 `applyStructure` 校验认领结果；未迁移家族仍用保留的扫描。投影审计（“等价变化”判定）走同一个入口。这样卡 54 的“残缺部件保留绑定”合同仍由 `applyIncompleteStructure` 维护，不依赖旧扫描补绑定。
+- 探针 mixin 收口：选择保留在正式构建里，维持卡 52 批次的零开销门控。`noteBlock`/`noteEntity`/`noteChunkQuery`/`pause`/`resume` 的第一行都是 `activeScans == 0` 早退，不读线程状态；审计数据只在 `StructureScanProbe.auditing()` 打开时记录，测试构建打开、正式构建关闭。没有把两个探针移进单独的 gametest mixin 配置：那需要额外 source set 和独立 refmap，收益只是省掉每次方块读取的一次静态 int 判断，维护成本大于收益。
+- 诊断来源：`StructureDiagnostic.inspect(machine)` 用 `structureDefinition()` 编译的同一份 `CompiledPattern` 逐格检查，不提前停止；固定格全部检查，重复段检查到第一个不完整层并列出该层的全部错误格，未加载区块、层数不足和聚合约束分别报告。放大镜在锅炉和换热器的 `magnifyingGlassMessages()` 里接入，`MultiblockToolRules.structureMessage` 的原文案保留；成型时仍显示原有细节，不成型时追加全部错误格。
+- 预览同源：储罐、物流核心、基岩钻机、避雷针的格子构造从 `SpecialStructures.tankCells/logisticsCells/drillCells/lightningLayout` 导出，运行时定义和 JEI/EMI 预览都调用同一方法；换热器、坩埚的预览改为直接读 `SharedHeatExchangerStructure.CELLS`、`SharedLargeCrucibleStructure.CELLS`；物流核心加入预览列表。`Layout` 家族和固定格家族原本就共用 `LargeMachineLayouts`/`GasTurbineDefinitions` 等常量。
+- 附属触点：新增 `StructureWatchIndex.touch(ServerLevel, BlockPos)`，供“匹配数据不经过方块状态变化”的部件（内部储罐、容器内容）在改动后标脏所属控制器。现有内置家族的所有判定输入都来自方块状态或增量聚合，不需要调用它。
+- 区块卸载语义（回填）：控制器区块卸载时 tracker 进入 `SUSPENDED`，`formed` 为 false 并同步客户端，认领表条目保留；部件区块卸载时条目移入预留表，主人已加载则保留、未加载则静默删除；控制器卸载期间其部件不能被别的控制器抢占；区块恢复后在 `ChunkEvent.Load` 的同 tick 写回预留。真实卸载顺序在 1.20.1 与 1.21.1 上都是 `ChunkEvent.Unload → onChunkUnloaded → setRemoved`，由场景 26 固定。
+- 认领表寿命（回填）：每个 `ServerLevel` 一张，正向 `部件 → 控制器`、反向 `控制器 → 部件集合`，完全瞬态；条目只为已加载的部件存在，寿命跟随部件所在区块而不是控制器；控制器真正被拆除时释放全部条目，孤儿条目由延迟一 tick 的检查和安全网清理。
+- 预算数值（回填）：`StructureScheduler.CELLS_PER_TICK = 20 000`，`SAFETY_PERIOD = 600`。场景 12 的 200 台机器在预算内分 tick 完成，没有调整依据；预算队列先进先出，每 tick 至少处理队首一个，已成型且脏的 tracker 不受预算限制。
+- `PER_CELL` 保持不启用：全部家族 `ATOMIC`，物流核心保留声明但没有运行时消费者。
+- 未做：客户端冒烟、双平台全量 GameTest、独立存档重启。卡 59 的验证只覆盖编译、共享断言、相关命名空间和诊断/预览的数据一致性，不把 GameTest 当成客户端验证。
 
 ## 2026-10-25 / 通用扩展器控制能力随目标解析
 

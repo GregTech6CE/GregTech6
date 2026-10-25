@@ -90,7 +90,7 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
         var candidates = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
         for (var cell : match.fixedCells())
             if (!cell.cell().plainBlock()) candidates.put(cell.pos(), cell.cell().role());
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, candidates, 0,
+        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, bindings, candidates,
                 pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port && port.canBind(worldPosition),
                 (pos, partRole) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, partRole), this::release)
                 != com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
@@ -102,48 +102,11 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
     @Override public boolean isStructureOk() {
         return com.gregtech.gregtech.api.multiblock.tracking.StructureTracking.query(this);
     }
-    @Override
-    public boolean scanStructure() {
-        if (level == null || isRemoved() || worldPosition.getY() - 5 < level.getMinBuildHeight()) return false;
-        boolean usesOriginalController = getBlockState().getBlock() instanceof OriginalBedrockDrillControllerBlock;
-        var candidateParts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
-        for (int x = -1; x <= 1; x++)
-            for (int z = -1; z <= 1; z++) {
-                var depositPos = worldPosition.offset(x, -5, z);
-                if (!level.hasChunkAt(depositPos)) {
-                    bindings.clear(this::release);
-                    com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
-                    return false;
-                }
-                // §103.B: bedrock deposits are ore blocks whose host rock (block state) is bedrock.
-                BlockState floorState = level.getBlockState(depositPos);
-                if (!(floorState.getBlock() instanceof OreBlock && OreBlock.isBedrockOre(floorState))
-                        && !floorState.is(Blocks.BEDROCK)) {
-                    bindings.clear(this::release);
-                    com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
-                    return false;
-                }
-                for (int y = -4; y <= 0; y++) {
-                    if (x == 0 && y == 0 && z == 0) continue;
-                    var partPos = worldPosition.offset(x, y, z);
-                    var expectedBlock = y == -4
-                            ? usesOriginalController ? LargeMachineParts.block(18103) : GTMultiblocks.DENSE_TITANIUM_WALL.get()
-                            : LargeMachineParts.block(18026);
-                    if (!(level.getBlockState(partPos).getBlock() == expectedBlock)
-                            || !(level.getBlockEntity(partPos) instanceof MultiblockPortBlockEntity)) {
-                        bindings.clear(this::release);
-                        com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.cleared(this);
-                        return false;
-                    }
-                    candidateParts.put(partPos, role(x, y, z));
-                }
-            }
-        return com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.update(this, true, bindings, candidateParts, 0,
-                partPosition -> ((MultiblockPortBlockEntity) level.getBlockEntity(partPosition)).canBind(worldPosition),
-                (partPosition, partRole) -> ((MultiblockPortBlockEntity) level.getBlockEntity(partPosition)).bind(worldPosition, partRole),
-                this::release) != com.gregtech.gregtech.api.multiblock.tracking.StructureClaims.Result.FAILED;
+    private boolean structureFormed;
+    @Override public void structureFormedChanged(boolean formed) { structureFormed = formed; }
+    private boolean structureOk() {
+        return structureFormed;
     }
-
     private void release(BlockPos pos) {
         if (level != null && level.hasChunkAt(pos)
                 && level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part) part.release(worldPosition);
@@ -157,7 +120,7 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
         if (level == null || level.isClientSide || isRemoved() || !level.hasChunkAt(worldPosition)
                 || level.getBlockEntity(worldPosition) != this) return;
         // Keep discovering/rebinding new shells even before they receive their first energy packet.
-        boolean formed = isStructureOk();
+        boolean formed = structureOk();
         // GT6 exports already-mined stock before checking the shell for another drilling cycle.
         if (!output.getStackInSlot(0).isEmpty() && level.hasChunkAt(worldPosition.above())) {
 //? if >=1.21.1 {

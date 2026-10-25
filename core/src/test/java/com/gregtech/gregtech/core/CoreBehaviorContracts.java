@@ -937,12 +937,28 @@ public final class CoreBehaviorContracts {
         var bindings = new PartBindings<String, String>();
         var claimed = new HashSet<String>();
         var released = new HashSet<String>();
-        check(bindings.update(Map.of("wall", "ENERGY_INPUT", "vent", "NONE"), p -> true,
-                (p, role) -> claimed.add(p), released::add), "first valid structure claims parts");
+        check(bindings.update(Map.of("wall", "ENERGY_INPUT", "vent", "NONE"), p -> true, (p, role) -> true,
+                (p, role) -> claimed.add(p), released::add) == PartBindings.Outcome.APPLIED,
+                "first valid structure claims parts");
         check(bindings.contains("wall") && bindings.contains("vent"), "structure keeps ownership for both parts");
         claimed.clear();
-        check(!bindings.update(Map.of("wall", "ENERGY_INPUT", "foreign", "NONE"), p -> !p.equals("foreign"),
-                (p, role) -> claimed.add(p), released::add), "foreign ownership invalidates structure");
+        check(bindings.update(Map.of("wall", "ENERGY_INPUT", "vent", "NONE"), p -> true, (p, role) -> true,
+                (p, role) -> claimed.add(p), released::add) == PartBindings.Outcome.UNCHANGED,
+                "a repeated structure claims nothing");
+        check(claimed.isEmpty(), "an unchanged structure does not rebind its parts");
+        check(bindings.update(Map.of("wall", "ENERGY_OUTPUT", "vent", "NONE"), p -> true, (p, role) -> true,
+                (p, role) -> claimed.add(p), released::add) == PartBindings.Outcome.APPLIED,
+                "a changed role rebinds only that cell");
+        check(claimed.equals(Set.of("wall")), "only the cell whose role changed is claimed again");
+        claimed.clear();
+        check(bindings.update(Map.of("wall", "ENERGY_OUTPUT", "vent", "NONE"), p -> true, (p, role) -> false,
+                (p, role) -> claimed.add(p), released::add) == PartBindings.Outcome.APPLIED,
+                "a lost derived binding is claimed again");
+        check(claimed.equals(Set.of("wall", "vent")), "a recreated part entity is rebound");
+        claimed.clear();
+        check(bindings.update(Map.of("wall", "ENERGY_INPUT", "foreign", "NONE"), p -> !p.equals("foreign"),
+                (p, role) -> true, (p, role) -> claimed.add(p), released::add) == PartBindings.Outcome.FAILED,
+                "foreign ownership invalidates structure");
         check(claimed.isEmpty(), "a failed structure cannot partially claim new parts");
         check(released.equals(Set.of("wall", "vent")), "invalidating a structure releases all its previous parts");
         check(!bindings.contains("wall") && !bindings.contains("vent"), "no stale claims after invalidation");
