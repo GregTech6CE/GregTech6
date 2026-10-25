@@ -86,6 +86,14 @@ public final class MachineWorkOutputs {
 
     /** How many fluid outputs are still waiting for space. */
     public int pendingFluids() { return (int) fluids.stream().filter(fluid -> !fluid.isEmpty()).count(); }
+
+    /** Copies of already rolled outputs; inspection must never roll recipes or flush inventories. */
+    public List<ItemStack> inspectionItems(int limit) {
+        return items.stream().filter(stack -> !stack.isEmpty()).limit(Math.max(0, limit)).map(ItemStack::copy).toList();
+    }
+    public List<FluidStack> inspectionFluids(int limit) {
+        return fluids.stream().filter(stack -> !stack.isEmpty()).limit(Math.max(0, limit)).map(FluidStack::copy).toList();
+    }
 //? if >=1.21.1 {
     /*public CompoundTag save(net.minecraft.core.HolderLookup.Provider lookup) {
 *///?} else {

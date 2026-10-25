@@ -35,6 +35,8 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
     private final boolean bowl;
     private final ItemStackHandler items;
     private final FluidTankGT[] inputs, outputs;
+    public FluidTankGT[] inputTanksForInspection() { return inputs.clone(); }
+    public FluidTankGT[] outputTanksForInspection() { return outputs.clone(); }
     private final IItemHandler itemHandler;
 //? if >=1.21.1 {
 //?} else {

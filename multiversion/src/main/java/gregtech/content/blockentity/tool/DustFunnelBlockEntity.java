@@ -108,6 +108,9 @@ public class DustFunnelBlockEntity extends BlockEntity {
                 : gregtech.content.registry.GTItems.getStack(outputPrefix(), mat, 1);
     }
     public ItemStack modeIcon() { return output(gregtech.content.material.Materials.Iron); }
+    public ItemStack inputForInspection() { return buffer.getStackInSlot(0).copy(); }
+    public ItemStack outputForInspection() { return buffer.getStackInSlot(1).copy(); }
+    public ItemStack preparedForInspection() { return material == null ? ItemStack.EMPTY : output(material); }
 
     private boolean accepts(ItemStack stack) {
         if (!isDust(stack)) return false;

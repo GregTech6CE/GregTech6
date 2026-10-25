@@ -71,7 +71,13 @@ public enum MultiblockJadeProvider implements IBlockComponentProvider, IServerDa
 *///?} else {
                     row.put("fluid", fluid.writeToNBT(new CompoundTag()));
 //?}
-                    row.putInt("capacity", handler.getTankCapacity(i));
+                    if (entity instanceof gregtech.content.blockentity.machine.MultiblockTankControllerBlockEntity vessel) {
+                        row.putLong("amount", vessel.fluidAmountForInspection());
+                        row.putLong("capacity", vessel.fluidCapacityForInspection());
+                    } else {
+                        row.putLong("amount", fluid.getAmount());
+                        row.putLong("capacity", handler.getTankCapacity(i));
+                    }
                     fluids.add(row);
                 }
 //? if >=1.21.1 {
@@ -118,7 +124,8 @@ public enum MultiblockJadeProvider implements IBlockComponentProvider, IServerDa
 *///?} else {
             var fluid = net.minecraftforge.fluids.FluidStack.loadFluidStackFromNBT(row.getCompound("fluid"));
 //?}
-            tooltip.add(Component.translatable("jade.gt6ce.multiblock.fluid", fluid.getDisplayName(), fluid.getAmount(), row.getInt("capacity")));
+            tooltip.add(Component.translatable("jade.gt6ce.multiblock.fluid", fluid.getDisplayName(),
+                    row.contains("amount") ? row.getLong("amount") : fluid.getAmount(), row.getLong("capacity")));
         }
         tooltip.add(Component.translatable("jade.gt6ce.multiblock.jei"));
     }

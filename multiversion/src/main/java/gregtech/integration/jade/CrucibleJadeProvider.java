@@ -69,6 +69,13 @@ public enum CrucibleJadeProvider implements IBlockComponentProvider, IServerData
             contents.add(row);
         }
         tag.put(NBT_CONTENT, contents);
+        tag.putInt("gt_crucible_species", contents.size());
+        long temperature = crucible.getTemperature();
+        if (temperature > gregtech.util.GTEntityHelper.HEAT_THRESHOLD) {
+            float damage = (temperature - gregtech.util.GTEntityHelper.ENV_TEMP) / 50.0F;
+            boolean large = crucible instanceof gregtech.content.blockentity.machine.LargeCrucibleControllerBlockEntity;
+            tag.putFloat("gt_crucible_contact", large ? damage : Math.max(1, Math.min(10, damage)));
+        }
         tag.putInt(NBT_FILL, crucible.getDisplayFillPercent());
         tag.putBoolean(NBT_MOLTEN, crucible.isDisplayedMolten());
         tag.putBoolean(NBT_WARNING, crucible.isMeltDownWarning());
@@ -94,6 +101,10 @@ public enum CrucibleJadeProvider implements IBlockComponentProvider, IServerData
             return;
         }
         tooltip.add(Component.translatable("jade.gt6ce.crucible.temperature", data.getLong(NBT_TEMPERATURE)));
+        tooltip.add(Component.translatable("jade.gt6ce.omni.material_species", data.getInt("gt_crucible_species")));
+        if (data.getFloat("gt_crucible_contact") > 0)
+            tooltip.add(Component.translatable("jade.gt6ce.omni.hot_surface", data.getFloat("gt_crucible_contact"))
+                    .withStyle(net.minecraft.ChatFormatting.RED));
         tooltip.add(Component.translatable("jade.gt6ce.crucible.buffer", format(data.getLong(NBT_BUFFER))));
         if (data.contains(NBT_MELT_LIMIT)) {
             tooltip.add(Component.translatable("jade.gt6ce.crucible.melt_limit", data.getLong(NBT_MELT_LIMIT)));

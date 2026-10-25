@@ -45,6 +45,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 public class CokeOvenControllerBlockEntity extends LargeRecipeMachineBlockEntity implements ItemBehaviors.Ignitable {
 //?}
     private int ignitionTicks;
+    public boolean ignitionReady() { return ignitionTicks > 0; }
     private BlockPos fluidOutputTarget;
     public CokeOvenControllerBlockEntity(BlockPos pos,BlockState state) {
         super(gregtech.content.registry.GTBlockEntities.COKE_OVEN.get(),pos,state);

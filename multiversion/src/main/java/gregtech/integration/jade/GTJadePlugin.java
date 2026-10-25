@@ -29,6 +29,9 @@ public class GTJadePlugin implements IWailaPlugin {
 
     @Override
     public void register(IWailaCommonRegistration registration) {
+        registration.registerBlockDataProvider(OmniJadeProvider.INSTANCE, net.minecraft.world.level.block.entity.BlockEntity.class);
+        registration.registerBlockDataProvider(FluidVesselJadeProvider.INSTANCE, gregtech.content.blockentity.machine.TankBlockEntity.class);
+        registration.registerBlockDataProvider(FluidVesselJadeProvider.INSTANCE, gregtech.content.blockentity.machine.FluidPipeBlockEntity.class);
         registration.registerBlockDataProvider(MagicFieldAbsorberJadeProvider.INSTANCE, gregtech.content.blockentity.energy.MagicFieldAbsorberBlockEntity.class);
         registration.registerBlockDataProvider(EnergyBufferJadeProvider.INSTANCE, gregtech.content.blockentity.energy.PowerCellBlockEntity.class);
         registration.registerBlockDataProvider(DustFunnelJadeProvider.INSTANCE,
@@ -50,10 +53,14 @@ public class GTJadePlugin implements IWailaPlugin {
         registration.registerBlockDataProvider(BasicMachineJadeProvider.INSTANCE, BasicMachineBlockEntity.class);
         registration.registerBlockDataProvider(EngineJadeProvider.INSTANCE, EngineBaseBlockEntity.class);
         registration.registerBlockDataProvider(BoilerJadeProvider.INSTANCE, BoilerTankBlockEntity.class);
+        registration.registerBlockDataProvider(BoilerJadeProvider.INSTANCE, gregtech.content.blockentity.machine.OriginalLargeBoilerControllerBlockEntity.class);
     }
 
     @Override
     public void registerClient(IWailaClientRegistration registration) {
+        registration.registerBlockComponent(OmniJadeProvider.INSTANCE, net.minecraft.world.level.block.Block.class);
+        registration.registerBlockComponent(FluidVesselJadeProvider.INSTANCE, gregtech.content.block.machine.TankBlock.class);
+        registration.registerBlockComponent(FluidVesselJadeProvider.INSTANCE, gregtech.content.block.machine.FluidPipeBlock.class);
         registration.registerBlockComponent(MagicFieldAbsorberJadeProvider.INSTANCE, gregtech.content.block.energy.MagicFieldAbsorberBlock.class);
         registration.registerBlockComponent(EnergyBufferJadeProvider.INSTANCE, gregtech.content.block.energy.PowerCellBlock.class);
         registration.registerBlockComponent(DustFunnelJadeProvider.INSTANCE,
@@ -77,6 +84,7 @@ public class GTJadePlugin implements IWailaPlugin {
         registration.registerBlockComponent(BasicMachineJadeProvider.INSTANCE, BasicMachineBlock.class);
         registration.registerBlockComponent(EngineJadeProvider.INSTANCE, EngineBlock.class);
         registration.registerBlockComponent(BoilerJadeProvider.INSTANCE, BoilerTankBlock.class);
+        registration.registerBlockComponent(BoilerJadeProvider.INSTANCE, gregtech.content.block.machine.OriginalLargeBoilerControllerBlock.class);
         registration.registerBlockComponent(RockTwigJadeProvider.INSTANCE, gregtech.content.block.RockBlock.class);
         registration.registerBlockComponent(RockTwigJadeProvider.INSTANCE, gregtech.content.block.TwigBlock.class);
     }

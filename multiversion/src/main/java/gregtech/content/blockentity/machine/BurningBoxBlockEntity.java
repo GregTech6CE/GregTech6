@@ -77,6 +77,11 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
     protected ItemStackHandler inventory;
     protected FluidTankGT fuelTank;
     @Nullable protected ItemStack pendingAsh;
+    public long remainingFuelEnergy() { return energy; }
+    public FluidTankGT fuelTankForInspection() { return fuelTank; }
+    public ItemStack fuelForInspection() { return inventory.getSlots() > 0 ? inventory.getStackInSlot(0).copy() : ItemStack.EMPTY; }
+    public ItemStack ashForInspection() { return inventory.getSlots() > 1 ? inventory.getStackInSlot(1).copy() : ItemStack.EMPTY; }
+    public ItemStack pendingAshForInspection() { return pendingAsh == null ? ItemStack.EMPTY : pendingAsh.copy(); }
 //? if >=1.21.1 {
     /*private final net.neoforged.neoforge.items.IItemHandler automation = new net.neoforged.neoforge.items.IItemHandler() {
 *///?} else {

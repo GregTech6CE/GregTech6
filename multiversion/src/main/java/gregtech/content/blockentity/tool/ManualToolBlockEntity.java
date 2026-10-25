@@ -54,6 +54,8 @@ public class ManualToolBlockEntity extends BlockEntity {
     private final Kind kind;
     private ItemStack work = ItemStack.EMPTY;
     private int progress;
+    public int workProgress() { return progress; }
+    public java.util.List<ItemStack> outputSnapshot() { return outputs.stream().map(ItemStack::copy).toList(); }
 
     public ManualToolBlockEntity(BlockPos pos, BlockState state) {
         super(gregtech.content.registry.GTBlockEntities.MANUAL_TOOL.get(), pos, state);

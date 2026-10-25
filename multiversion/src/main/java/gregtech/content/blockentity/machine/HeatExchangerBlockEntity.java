@@ -41,6 +41,7 @@ public final class HeatExchangerBlockEntity extends GTEnergyBlockEntity implemen
         cold = new FluidTankGT().setOnChanged(this::setChanged);
     }
     public long tankAmount(int tank) { return tank == 0 ? hot.getAmount() : cold.getAmount(); }
+    public boolean isConverting() { return active; }
     public HeatExchangerRules.Settings settings() { return settings; }
 
     // ── HeatHandler: the exchanger buffers HU for its upward outlets ────────────────────────

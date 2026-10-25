@@ -117,7 +117,7 @@ public class RockBlock extends Block implements EntityBlock {
     }
 
     /** rockGt of the material, plus a raw ore chunk when the rock marks a bedrock deposit. */
-    private static List<ItemStack> yields(@Nullable BlockEntity be) {
+    public static List<ItemStack> yields(@Nullable BlockEntity be) {
         // GT6's item-on-the-ground mode: the rock carries the exact item it hands out.
         if (be instanceof RockBlockEntity rock && !rock.itemId().isEmpty()) {
             ItemStack explicit=rock.itemStack();

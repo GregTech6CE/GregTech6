@@ -84,7 +84,7 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
 *///?} else {
                     ft.put("stack", fs.writeToNBT(new CompoundTag()));
 //?}
-                    ft.putInt("amount", fs.getAmount());
+                    ft.putLong("amount", tanksIn[i].getAmount());
                     ft.putLong("cap", tanksIn[i].getCapacity());
                     tag.put(NBT_FLUID_PREFIX_IN + i, ft);
                 }
@@ -102,7 +102,7 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
 *///?} else {
                     ft.put("stack", fs.writeToNBT(new CompoundTag()));
 //?}
-                    ft.putInt("amount", fs.getAmount());
+                    ft.putLong("amount", tanksOut[i].getAmount());
                     ft.putLong("cap", tanksOut[i].getCapacity());
                     tag.put(NBT_FLUID_PREFIX_OUT + i, ft);
                 }
@@ -148,6 +148,8 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
             tooltip.add(Component.translatable("jade.gt6ce.basic_machine.items", occupied, total));
         }
 
+        // Omni displays the same tanks with icons and explicit input/output sections.
+        if (data.getBoolean("gt_omni_inventory") && config.get(OmniJadeProvider.INSTANCE.getUid())) return;
         int fluidCount = data.getInt(NBT_FLUID_COUNT);
         for (int i = 0; i < fluidCount; i++) {
             for (boolean isInput : new boolean[]{true, false}) {
@@ -162,9 +164,9 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
 //?}
                     if (!fluid.isEmpty()) fName = fluid.getDisplayName();
                 }
-                int amount = ft.getInt("amount");
+                long amount = ft.getLong("amount");
                 long cap = ft.getLong("cap");
-                int pct = cap > 0 ? (int) Math.min(100, amount * 100L / cap) : 0;
+                int pct = gregtech.content.energy.BoilerGauge.percent(amount, cap);
                 Component type = Component.translatable(isInput ? "jade.gt6ce.basic_machine.fluid_in"
                         : "jade.gt6ce.basic_machine.fluid_out");
                 tooltip.add(Component.translatable("jade.gt6ce.basic_machine.fluid",

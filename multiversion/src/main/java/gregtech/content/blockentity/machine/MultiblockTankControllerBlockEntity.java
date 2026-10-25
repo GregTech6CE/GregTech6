@@ -77,6 +77,8 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
     public IFluidHandler fluidHandler() {
         return tankHandler;
     }
+    public long fluidAmountForInspection() { return tank.getAmount(); }
+    public long fluidCapacityForInspection() { return tank.capacity(); }
 
     private Direction facing() {
         return getBlockState().getValue(DirectionalBlock.FACING);

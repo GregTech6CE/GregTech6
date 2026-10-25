@@ -21,6 +21,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import java.util.*;
+//? if >=1.21.1 {
+/*import net.neoforged.neoforge.fluids.FluidStack;
+*///?} else {
+import net.minecraftforge.fluids.FluidStack;
+//?}
 
 /** Dedicated GT6 fusion executor: input reservation, LU startup, timed EU output and retained products. */
 public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockEntity {
@@ -32,6 +37,13 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
     private final StructureDefinition definition=FixedStructures.declarative(this,this::structureCells,AGGREGATES);
     private long chargeRemaining,chargeTotal,progress,duration,outputEU;
     private MachineWorkOutputs products;
+    @Override public java.util.List<ItemStack> inspectionPendingItems() {
+        return products == null ? java.util.List.of() : products.inspectionItems(24);
+    }
+    @Override public java.util.List<FluidStack> inspectionPendingFluids() {
+        return products == null ? java.util.List.of() : products.inspectionFluids(16);
+    }
+    @Override public int inspectionPendingItemCount() { return products == null ? 0 : products.pendingItemStacks(); }
     private Recipe continuousRecipe;
     private boolean running, passive, processing, completed;
 

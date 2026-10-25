@@ -20,10 +20,8 @@ public enum RockTwigJadeProvider implements IBlockComponentProvider {
     @Override
     public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
         if (accessor.getBlockEntity() instanceof RockBlockEntity rock) {
-            GTMaterial material = GTMaterialRegistry.get(rock.getMaterial());
-            Component display = material != null && material.resolve().isValid()
-                    ? MaterialPresentation.name(material.resolve()) : Component.literal(rock.getMaterial());
-            tooltip.add(Component.translatable("gt6ce.jade.rock_content", display));
+            for (var item : gregtech.content.block.RockBlock.yields(rock))
+                tooltip.add(Component.translatable("jade.gt6ce.omni.rock_contents", item.getHoverName(), item.getCount()));
         } else if (accessor.getBlock() instanceof gregtech.content.block.TwigBlock) {
             tooltip.add(Component.translatable("gt6ce.jade.twig_content"));
         }

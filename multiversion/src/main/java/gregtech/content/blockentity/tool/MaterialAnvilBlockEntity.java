@@ -18,6 +18,7 @@ import net.minecraft.world.phys.BlockHitResult;
 public final class MaterialAnvilBlockEntity extends BlockEntity implements gregtech.internal.inventory.BlockContents, PoweredToolTarget {
     private final ItemStack[] work = {ItemStack.EMPTY, ItemStack.EMPTY};
     private long durability;
+    public long remainingDurability() { return durability; }
 //? if >=1.21.1 {
     /*private final net.neoforged.neoforge.items.IItemHandler input = new net.neoforged.neoforge.items.IItemHandler() {
 *///?} else {

@@ -32,6 +32,8 @@ public class PumpBlockEntity extends GTEnergyBlockEntity {
     private int scanCooldown;
     private int pumpX, pumpZ;
     private final FluidTankGT tank;
+    public long storedPumpEnergy() { return energyBuffer; }
+    public FluidTankGT tankForInspection() { return tank; }
 
 //? if >=1.21.1 {
 //?} else {

@@ -755,6 +755,14 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     private gregtech.internal.recipe.MachineWorkOutputs pendingOutputs;
 
+    public java.util.List<ItemStack> inspectionPendingItems() {
+        return pendingOutputs == null ? java.util.List.of() : pendingOutputs.inspectionItems(24);
+    }
+    public java.util.List<FluidStack> inspectionPendingFluids() {
+        return pendingOutputs == null ? java.util.List.of() : pendingOutputs.inspectionFluids(16);
+    }
+    public int inspectionPendingItemCount() { return pendingOutputs == null ? 0 : pendingOutputs.pendingItemStacks(); }
+
     protected void beforeMachineTick() {}
     protected boolean recipeStartAllowed() { return !sourceRequiresIgnition()||sourceIgnitionTicks>0||mActive; }
     protected void onProcessFinished() {if(sourceRequiresIgnition())sourceIgnitionTicks=gregtech.content.machine.OriginalBasicMachineRules.IGNITION_TICKS;}

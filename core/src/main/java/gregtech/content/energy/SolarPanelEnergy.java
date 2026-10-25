@@ -47,6 +47,8 @@ public final class SolarPanelEnergy {
     public long energy() { return energy; }
     public boolean active() { return active; }
     public boolean emitting() { return emitting; }
+    /** Last sky result used by generation; querying it does not trigger a world scan. */
+    public boolean skyVisible() { return sky; }
 
     /** Exact all-or-nothing source extraction, with safe bounds for invalid external requests. */
     public long extract(long size, long amount, boolean execute) {

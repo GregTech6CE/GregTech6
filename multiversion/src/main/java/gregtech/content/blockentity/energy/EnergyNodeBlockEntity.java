@@ -148,6 +148,9 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
     public long turbineSteamCapacity() { return steamTank == null ? 0 : steamTank.capacity(); }
     public boolean converterStopped() { return converterStopped; }
     public boolean converterEmitted() { return rotaryConverter != null && rotaryConverter.emitted(); }
+    public boolean converterFast() { return rotaryConverter != null && rotaryConverter.fast(); }
+    public boolean solarSkyVisible() { return solarEnergy != null && solarEnergy.skyVisible(); }
+    public boolean transformerInverted() { return inverted; }
     public long stored() { return isSolar() ? solarEnergy.energy() : isBatteryBox() ? batteryEnergy.buffer() : buffer; }
     public gregtech.content.energy.BatteryBoxEnergy batteryEnergy() { return batteryEnergy; }
 
