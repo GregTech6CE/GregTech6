@@ -38,10 +38,13 @@ public final class RebuildStateContracts {
     private static void partBindings() {
         var bindings=new com.gregtech.gregtech.api.multiblock.PartBindings<Integer,String>();
         var claimed=new java.util.HashMap<Integer,String>();
-        check(bindings.update(java.util.Map.of(1,"water",2,"water"),p->true,claimed::put,claimed::remove),"initial binding");
-        check(!bindings.update(java.util.Map.of(3,"steam",4,"steam"),p->p!=4,claimed::put,claimed::remove)&&claimed.isEmpty(),"failed claim is atomic and releases old structure");
-        bindings.update(java.util.Map.of(1,"water",2,"water"),p->true,claimed::put,claimed::remove);
-        bindings.update(java.util.Map.of(2,"steam",3,"steam"),p->true,claimed::put,claimed::remove);
+        check(bindings.update(java.util.Map.of(1,"water",2,"water"),p->true,(p,r)->true,claimed::put,claimed::remove)
+                == com.gregtech.gregtech.api.multiblock.PartBindings.Outcome.APPLIED,"initial binding");
+        check(bindings.update(java.util.Map.of(3,"steam",4,"steam"),p->p!=4,(p,r)->true,claimed::put,claimed::remove)
+                == com.gregtech.gregtech.api.multiblock.PartBindings.Outcome.FAILED&&claimed.isEmpty(),
+                "failed claim is atomic and releases old structure");
+        bindings.update(java.util.Map.of(1,"water",2,"water"),p->true,(p,r)->true,claimed::put,claimed::remove);
+        bindings.update(java.util.Map.of(2,"steam",3,"steam"),p->true,(p,r)->true,claimed::put,claimed::remove);
         check(!claimed.containsKey(1)&&claimed.get(2).equals("steam")&&claimed.size()==2,"rotation releases obsolete parts");
         bindings.clear(claimed::remove);
         check(claimed.isEmpty()&&!bindings.contains(2),"removal clears binding");
