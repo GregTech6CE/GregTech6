@@ -233,9 +233,14 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, com.g
         if (fermentRecipe == null) {
             fermentRecipe = findFermentationRecipe(fluid);
             fermentInput = fermentRecipe == null ? null : fluid.getFluid();
-            sealedTime = 0;
+            // GT6 preserves saved work while rebuilding its transient recipe cache.
+            // Recompute the maximum from the current valid recipe and fluid amount instead
+            // of trusting persisted maximums. Explicit resealing/fluid changes still reset.
             maxSealedTime = 0;
-            if (fermentRecipe == null) return;
+            if (fermentRecipe == null) {
+                resetSeal();
+                return;
+            }
         }
         if (maxSealedTime <= 0) {
             maxSealedTime = sealedDuration(fermentRecipe, tank.getAmount());

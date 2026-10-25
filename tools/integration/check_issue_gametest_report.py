@@ -584,7 +584,12 @@ SENSOR_PROGRESS_CASE_NAMESPACES = {
 }
 FUNCTIONAL_CASES |= set(SENSOR_PROGRESS_CASE_NAMESPACES)
 
+CINNABAR_BARREL_CASE_NAMESPACES = {'cinnabarbathparitytests.cinnabarwatershortcutabsentwhilesourcebathandsluiceremain': 'gregtech_ore_source_audit:test_empty', 'cinnabarbathparitytests.explicitcinnabarwateroverridewinsandremovalrestoresabsence': 'gregtech_ore_source_audit:test_empty', 'barrelresumeregressiontests.serializedsealedbarrelresumesthroughcompletion': 'gregtech_barrel_resume:test_empty', 'barrelresumeregressiontests.savedworkwithoutcachedmaximumresumes': 'gregtech_barrel_resume:test_empty', 'barrelresumeregressiontests.invalidemptyandgasoutputdonotresumesavedwork': 'gregtech_barrel_resume:test_empty', 'barrelresumeregressiontests.changedfluidandexplicitresealstillresetwork': 'gregtech_barrel_resume:test_empty'}
+FUNCTIONAL_CASES |= set(CINNABAR_BARREL_CASE_NAMESPACES)
+
 def expected_namespace(identity):
+    if identity in CINNABAR_BARREL_CASE_NAMESPACES:
+        return CINNABAR_BARREL_CASE_NAMESPACES[identity]
     if identity in SENSOR_PROGRESS_CASE_NAMESPACES:
         return SENSOR_PROGRESS_CASE_NAMESPACES[identity]
     if identity in UPSTREAM_EXTRA_CASE_NAMESPACES:
@@ -687,6 +692,10 @@ def check(path, platform='forge'):
                 continue
             if identity in UPSTREAM_EXTRA_CASE_NAMESPACES:
                 if name == method and classname == UPSTREAM_EXTRA_CASE_NAMESPACES[identity]:
+                    found.add(identity)
+                continue
+            if identity in CINNABAR_BARREL_CASE_NAMESPACES:
+                if name == method and classname == CINNABAR_BARREL_CASE_NAMESPACES[identity]:
                     found.add(identity)
                 continue
             if identity in SENSOR_PROGRESS_CASE_NAMESPACES:
