@@ -24,7 +24,7 @@ public abstract class MachineContainerScreen<T extends AbstractContainerMenu> ex
 
     public net.minecraft.client.renderer.Rect2i titleBounds() {
         return new net.minecraft.client.renderer.Rect2i(leftPos, topPos - 10,
-                MachineGuiChrome.titleWidth(font, title, titleIcon()), 14);
+                MachineGuiChrome.titleWidth(font, title, titleIcon(), imageWidth), 14);
     }
 
     @Override
@@ -38,6 +38,17 @@ public abstract class MachineContainerScreen<T extends AbstractContainerMenu> ex
     @Override
     protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
         MachineGuiChrome.brand(graphics, brandingTexture(), menu.slots);
-        MachineGuiChrome.title(graphics, font, title, titleIcon());
+        MachineGuiChrome.title(graphics, font, title, titleIcon(), imageWidth);
+    }
+
+    @Override
+    protected void renderTooltip(GuiGraphics graphics, int mouseX, int mouseY) {
+        super.renderTooltip(graphics, mouseX, mouseY);
+        var tab = titleBounds();
+        if (tab.getWidth() > 0 && mouseX >= tab.getX() && mouseX < tab.getX() + tab.getWidth()
+                && mouseY >= tab.getY() && mouseY < tab.getY() + tab.getHeight()
+                && font.width(title) > MachineGuiChrome.titleTextWidth(tab.getWidth(), titleIcon())) {
+            graphics.renderTooltip(font, title, mouseX, mouseY);
+        }
     }
 }

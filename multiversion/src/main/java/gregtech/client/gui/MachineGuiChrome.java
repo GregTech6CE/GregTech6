@@ -7,7 +7,9 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.contents.TranslatableContents;
+import net.minecraft.locale.Language;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 import net.minecraft.world.inventory.Slot;
@@ -67,13 +69,21 @@ public final class MachineGuiChrome {
                 for (var item : BuiltInRegistries.ITEM)
                     if (item.getDescriptionId().equals(key)) return new ItemStack(item);
             }
+            // Paged containers wrap their item name in a translated title with a page number.
+            for (Object argument : translated.getArgs()) {
+                if (argument instanceof Component name) {
+                    ItemStack icon = iconForTitle(name);
+                    if (!icon.isEmpty()) return icon;
+                }
+            }
         }
         return ItemStack.EMPTY;
     }
 
-    public static void title(GuiGraphics graphics, Font font, Component title, ItemStack icon) {
+    public static void title(GuiGraphics graphics, Font font, Component title, ItemStack icon, int maxWidth) {
         int textX = icon.isEmpty() ? 4 : 17;
-        int middleWidth = titleWidth(font, title, icon) - 7;
+        int tabWidth = titleWidth(font, title, icon, maxWidth);
+        int middleWidth = tabWidth - 7;
         RenderSystem.enableBlend();
         graphics.setColor(1, 1, 1, 1);
         // The PSD tab overlaps the top four rows of the panel. Its right cap starts one row lower.
@@ -88,12 +98,25 @@ public final class MachineGuiChrome {
             graphics.renderItem(icon, 0, 0);
             graphics.pose().popPose();
         }
-        graphics.drawString(font, title, textX, -7, 0x404040, false);
+        int textWidth = titleTextWidth(tabWidth, icon);
+        if (font.width(title) > textWidth) {
+            FormattedText shortened = font.substrByWidth(title, Math.max(0, textWidth - font.width("...")));
+            var display = Language.getInstance().getVisualOrder(
+                    FormattedText.composite(shortened, FormattedText.of("...")));
+            graphics.drawString(font, display, textX, -7, 0x404040, false);
+        } else {
+            graphics.drawString(font, title, textX, -7, 0x404040, false);
+        }
     }
 
-    public static int titleWidth(Font font, Component title, ItemStack icon) {
+    public static int titleWidth(Font font, Component title, ItemStack icon, int maxWidth) {
         int contentWidth = font.width(title) + (icon.isEmpty() ? 0 : 13) + 2;
-        return 4 + ((contentWidth + 3) / 4) * 4 + 3;
+        int middleWidth = Math.min(((contentWidth + 3) / 4) * 4, Math.max(0, (maxWidth - 7) / 4 * 4));
+        return 4 + middleWidth + 3;
+    }
+
+    public static int titleTextWidth(int tabWidth, ItemStack icon) {
+        return Math.max(0, tabWidth - 3 - (icon.isEmpty() ? 4 : 17) - 2);
     }
 
     public static void brand(GuiGraphics graphics, ResourceLocation texture, List<Slot> slots) {

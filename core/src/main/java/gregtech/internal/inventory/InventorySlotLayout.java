@@ -124,7 +124,7 @@ public final class InventorySlotLayout {
                 positions.add(new Position(80, 53));
                 positions.add(new Position(98, 53));
                 positions.add(new Position(116, 53));
-                return new Layout(java.util.List.copyOf(positions), 96);
+                return new Layout(java.util.List.copyOf(positions), 84);
             case 16:
                 positions.add(new Position(53, 8));
                 positions.add(new Position(71, 8));
