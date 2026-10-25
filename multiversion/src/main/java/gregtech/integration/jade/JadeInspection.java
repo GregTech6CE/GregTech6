@@ -151,7 +151,8 @@ final class JadeInspection {
                     var item = readItem(accessor, arg);
                     if (item.isEmpty()) continue;
                     var icon = IElementHelper.get().item(item);
-                    icon.message(item.getHoverName().getString() + " 脳 " + item.getCount());
+                    icon.message(Component.translatable("jade.gt6ce.omni.item_count",
+                            item.getHoverName(), item.getCount()).getString());
                     if (count++ % 8 == 0) tooltip.add(icon); else tooltip.append(icon);
                 }
             }

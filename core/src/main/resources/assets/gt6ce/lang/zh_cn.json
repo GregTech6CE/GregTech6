@@ -142459,6 +142459,7 @@
   "jade.gt6ce.omni.sap_waiting": "等待树液／树脂再生",
   "jade.gt6ce.omni.draining": "等待排出流体",
   "jade.gt6ce.omni.searching": "已储能，等待搜索流体源",
+  "jade.gt6ce.omni.item_count": "%s × %s",
   "jade.gt6ce.omni.item": "%s #%s：%s × %s",
   "jade.gt6ce.omni.fluid": "%s #%s：%s — %s / %s L",
   "jade.gt6ce.omni.state": "状态：%s",

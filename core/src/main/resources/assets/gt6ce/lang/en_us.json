@@ -16664,6 +16664,7 @@
   "jade.gt6ce.omni.sap_waiting": "Waiting for sap / resin",
   "jade.gt6ce.omni.draining": "Waiting for fluid output",
   "jade.gt6ce.omni.searching": "Ready to search for fluid sources",
+  "jade.gt6ce.omni.item_count": "%s × %s",
   "jade.gt6ce.omni.item": "%s #%s: %s × %s",
   "jade.gt6ce.omni.fluid": "%s #%s: %s — %s / %s L",
   "jade.gt6ce.omni.state": "State: %s",

@@ -120,20 +120,20 @@
       "value": "钙化后效率：%s%%"
     },
     "jade.gt6ce.boiler.contact_damage": {
-      "english": "Contact heat damage: %.2f",
-      "value": "接触热伤害：%.2f"
+      "english": "Contact heat damage: %s",
+      "value": "接触热伤害：%s"
     },
     "jade.gt6ce.boiler.descaling_damage": {
-      "english": "Descaling heat damage: %.2f",
-      "value": "除垢热伤害：%.2f"
+      "english": "Descaling heat damage: %s",
+      "value": "除垢热伤害：%s"
     },
     "jade.gt6ce.boiler.descaling_explosion": {
       "english": "Descaling at this pressure causes an explosion",
       "value": "在此压力下除垢会引发爆炸"
     },
     "jade.gt6ce.boiler.dismantle_danger": {
-      "english": "Breaking explodes: strength %.2f; entity radius %.2f blocks",
-      "value": "拆除会爆炸：强度 %.2f；实体影响半径 %.2f 格"
+      "english": "Breaking explodes: strength %s; entity radius %s blocks",
+      "value": "拆除会爆炸：强度 %s；实体影响半径 %s 格"
     },
     "jade.gt6ce.boiler.dismantle_safe": {
       "english": "Current pressure is safe to dismantle",
@@ -470,6 +470,430 @@
     "jade.gt6ce.magic_field_absorber.output": {
       "english": "Output: %s %s/t (%s)",
       "value": "输出：%s %s/t（%s）"
+    },
+    "config.jade.plugin_gt6ce.fluid_vessel": {
+      "english": "GT6 fluid vessel details",
+      "value": "GT6 流体容器详细信息"
+    },
+    "config.jade.plugin_gt6ce.omni_details": {
+      "english": "GT6 OmniOcular details",
+      "value": "GT6 OmniOcular 详细信息"
+    },
+    "jade.gt6ce.boiler.state.dry": {
+      "english": "Dry heating",
+      "value": "干烧"
+    },
+    "jade.gt6ce.boiler.state.incomplete": {
+      "english": "Incomplete structure",
+      "value": "结构不完整"
+    },
+    "jade.gt6ce.boiler.state.preheating": {
+      "english": "Preheating",
+      "value": "预热中"
+    },
+    "jade.gt6ce.boiler.state.running": {
+      "english": "Running",
+      "value": "运行中"
+    },
+    "jade.gt6ce.boiler.state.stopped": {
+      "english": "Stopped",
+      "value": "停机"
+    },
+    "jade.gt6ce.boiler.warn_high_pressure": {
+      "english": "High pressure: steam storage at 90% or above. Check the steam outlet!",
+      "value": "高压警告：蒸汽储量达到 90%，请检查排汽！"
+    },
+    "jade.gt6ce.engine.output_accepted": {
+      "english": "accepted",
+      "value": "接收方已接受"
+    },
+    "jade.gt6ce.engine.output_unaccepted": {
+      "english": "none",
+      "value": "无接收记录"
+    },
+    "jade.gt6ce.engine.steam_batch": {
+      "english": "Per batch: %s L steam → 1 L distilled water",
+      "value": "每批转化：%s L 蒸汽 → 1 L 蒸馏水"
+    },
+    "jade.gt6ce.engine.steam_shutdown_rule": {
+      "english": "Excess stored energy can trigger protective shutdown",
+      "value": "动能缓冲过满会触发保护停机"
+    },
+    "jade.gt6ce.engine.steam_stroke": {
+      "english": "Stroke setting: %s KU; latest delivery: %s",
+      "value": "冲程设定：%s KU；最近输出：%s"
+    },
+    "jade.gt6ce.omni.abrasive": {
+      "english": "Abrasive uses remaining: %s",
+      "value": "磨料剩余使用次数：%s"
+    },
+    "jade.gt6ce.omni.anvil_big": {
+      "english": "Big end (bending)",
+      "value": "大端（弯曲）"
+    },
+    "jade.gt6ce.omni.anvil_hint": {
+      "english": "Place workpieces, then use a hammer",
+      "value": "放入工件后使用锤子加工"
+    },
+    "jade.gt6ce.omni.anvil_small": {
+      "english": "Small end (bending)",
+      "value": "小端（弯曲）"
+    },
+    "jade.gt6ce.omni.anvil_surface": {
+      "english": "Targeted anvil surface: %s",
+      "value": "瞄准砧面：%s"
+    },
+    "jade.gt6ce.omni.anvil_top": {
+      "english": "Top (forging)",
+      "value": "顶面（锻造）"
+    },
+    "jade.gt6ce.omni.ash": {
+      "english": "Ash",
+      "value": "灰烬"
+    },
+    "jade.gt6ce.omni.auto_output": {
+      "english": "Automatic pouring enabled (requires redstone): %s",
+      "value": "自动浇筑已启用（需要红石信号）：%s"
+    },
+    "jade.gt6ce.omni.automatic": {
+      "english": "Automatic input",
+      "value": "自动输入"
+    },
+    "jade.gt6ce.omni.axle_rating": {
+      "english": "Maximum packet size: %s RU; maximum packets/tick: %s",
+      "value": "最大包大小：%s RU；每 tick 最大包数：%s"
+    },
+    "jade.gt6ce.omni.battery": {
+      "english": "Battery",
+      "value": "电池"
+    },
+    "jade.gt6ce.omni.battery_output": {
+      "english": "Discharge-capable batteries: %s; available packets: %s",
+      "value": "可放电电池：%s；当前可提供能量包：%s"
+    },
+    "jade.gt6ce.omni.battery_total": {
+      "english": "Installed batteries: %s / %s %s (excludes working buffer)",
+      "value": "已安装电池储量：%s / %s %s（不含工作缓存）"
+    },
+    "jade.gt6ce.omni.battery_unavailable": {
+      "english": "Installed batteries currently unable to discharge: %s",
+      "value": "当前无法放电的已安装电池：%s"
+    },
+    "jade.gt6ce.omni.buffer": {
+      "english": "Working buffer: %s / %s %s",
+      "value": "工作缓存：%s / %s %s"
+    },
+    "jade.gt6ce.omni.bush_growth": {
+      "english": "Berry growth: %s%%",
+      "value": "浆果生长进度：%s%%"
+    },
+    "jade.gt6ce.omni.clockwise": {
+      "english": "Clockwise",
+      "value": "顺时针"
+    },
+    "jade.gt6ce.omni.coke_recipe_hint": {
+      "english": "If ignition does not start work, check the recipe and output space",
+      "value": "点火后仍未加工时，请检查配方和输出空间"
+    },
+    "jade.gt6ce.omni.collect_outputs": {
+      "english": "Collect outputs before continuing",
+      "value": "请先取出产物"
+    },
+    "jade.gt6ce.omni.collected": {
+      "english": "Collected",
+      "value": "收集物"
+    },
+    "jade.gt6ce.omni.contact_damage": {
+      "english": "Contact heat damage while operating: %s",
+      "value": "工作时接触烫伤：%s"
+    },
+    "jade.gt6ce.omni.contents": {
+      "english": "Contents",
+      "value": "内容物"
+    },
+    "jade.gt6ce.omni.counterclockwise": {
+      "english": "Counterclockwise",
+      "value": "逆时针"
+    },
+    "jade.gt6ce.omni.delivering": {
+      "english": "Latest output accepted: %s",
+      "value": "最近输出被接收：%s"
+    },
+    "jade.gt6ce.omni.disabled": {
+      "english": "Switched off",
+      "value": "已关闭"
+    },
+    "jade.gt6ce.omni.draining": {
+      "english": "Waiting for fluid output",
+      "value": "等待排出流体"
+    },
+    "jade.gt6ce.omni.durability": {
+      "english": "Remaining durability: %s",
+      "value": "剩余耐久：%s"
+    },
+    "jade.gt6ce.omni.entity_rotation": {
+      "english": "Entity rotation: %s°/tick",
+      "value": "实体旋转速度：%s°/tick"
+    },
+    "jade.gt6ce.omni.fluid": {
+      "english": "%s #%s: %s — %s / %s L",
+      "value": "%s #%s：%s — %s / %s L"
+    },
+    "jade.gt6ce.omni.fuel": {
+      "english": "Fuel",
+      "value": "燃料"
+    },
+    "jade.gt6ce.omni.fuel_energy": {
+      "english": "Remaining fuel energy: %s HU",
+      "value": "剩余燃料能量：%s HU"
+    },
+    "jade.gt6ce.omni.fuel_ticks": {
+      "english": "Buffered fuel lasts %s ticks at rated output",
+      "value": "按额定输出，已缓存燃料能量可持续 %s tick"
+    },
+    "jade.gt6ce.omni.group_fluids": {
+      "english": "%s fluids",
+      "value": "%s流体"
+    },
+    "jade.gt6ce.omni.group_items": {
+      "english": "%s items",
+      "value": "%s物品"
+    },
+    "jade.gt6ce.omni.growth_light": {
+      "english": "Growth light condition satisfied: %s",
+      "value": "生长光照条件满足：%s"
+    },
+    "jade.gt6ce.omni.growth_rain": {
+      "english": "Rain growth bonus active: %s",
+      "value": "雨水生长加成生效：%s"
+    },
+    "jade.gt6ce.omni.harvest": {
+      "english": "Harvest: %s × %s–%s",
+      "value": "收获：%s × %s–%s"
+    },
+    "jade.gt6ce.omni.hot_surface": {
+      "english": "Unprotected contact heat damage: %s",
+      "value": "未防护时接触烫伤：%s"
+    },
+    "jade.gt6ce.omni.input": {
+      "english": "Input",
+      "value": "输入"
+    },
+    "jade.gt6ce.omni.item": {
+      "english": "%s #%s: %s × %s",
+      "value": "%s #%s：%s × %s"
+    },
+    "jade.gt6ce.omni.manual": {
+      "english": "Manual input",
+      "value": "手动输入"
+    },
+    "jade.gt6ce.omni.manual_progress": {
+      "english": "Manual work progress: %s",
+      "value": "手动加工进度：%s"
+    },
+    "jade.gt6ce.omni.manual_work": {
+      "english": "Awaiting manual operation",
+      "value": "等待手动操作"
+    },
+    "jade.gt6ce.omni.material_species": {
+      "english": "Material types: %s",
+      "value": "材料种类：%s"
+    },
+    "jade.gt6ce.omni.mode": {
+      "english": "Mode: %s",
+      "value": "模式：%s"
+    },
+    "jade.gt6ce.omni.mold_side": {
+      "english": "Input face %s: %s",
+      "value": "输入面 %s：%s"
+    },
+    "jade.gt6ce.omni.more_pending": {
+      "english": "Another %s pending stacks (display limit)",
+      "value": "另有 %s 堆待输出物品（已达显示上限）"
+    },
+    "jade.gt6ce.omni.needs_ignition": {
+      "english": "Ignition required before starting another recipe",
+      "value": "开始下一次加工前需要点火"
+    },
+    "jade.gt6ce.omni.no": {
+      "english": "No",
+      "value": "否"
+    },
+    "jade.gt6ce.omni.output": {
+      "english": "Output",
+      "value": "输出"
+    },
+    "jade.gt6ce.omni.packet_range": {
+      "english": "%s packet size range: %s–%s %s",
+      "value": "%s包大小范围：%s–%s %s"
+    },
+    "jade.gt6ce.omni.pending": {
+      "english": "In progress / pending output",
+      "value": "加工中／待输出"
+    },
+    "jade.gt6ce.omni.pending_fluid": {
+      "english": "Pending fluid #%s: %s — %s L",
+      "value": "待输出流体 #%s：%s — %s L"
+    },
+    "jade.gt6ce.omni.prepared": {
+      "english": "Selected output form",
+      "value": "目标输出形态"
+    },
+    "jade.gt6ce.omni.program": {
+      "english": "Blueprint",
+      "value": "蓝图"
+    },
+    "jade.gt6ce.omni.progress": {
+      "english": "Work: %s / %s (%s%%)",
+      "value": "加工进度：%s / %s（%s%%）"
+    },
+    "jade.gt6ce.omni.rated_input": {
+      "english": "Rated input: %s %s/t",
+      "value": "额定输入：%s %s/t"
+    },
+    "jade.gt6ce.omni.rated_output": {
+      "english": "Rated output: %s %s/t",
+      "value": "额定输出：%s %s/t"
+    },
+    "jade.gt6ce.omni.recipe_energy": {
+      "english": "Current recipe: %s %s/t; parallel: %s",
+      "value": "当前配方：%s %s/t；并行数：%s"
+    },
+    "jade.gt6ce.omni.redstone_required": {
+      "english": "Requires redstone for automatic input: %s",
+      "value": "自动输入需要红石信号：%s"
+    },
+    "jade.gt6ce.omni.reversed": {
+      "english": "Reverse transmission: %s",
+      "value": "反向传输：%s"
+    },
+    "jade.gt6ce.omni.ripe": {
+      "english": "Ripe — ready to harvest",
+      "value": "已成熟，可以收获"
+    },
+    "jade.gt6ce.omni.rock_contents": {
+      "english": "Contains: %s × %s",
+      "value": "内容物：%s × %s"
+    },
+    "jade.gt6ce.omni.rod": {
+      "english": "Reactor rod",
+      "value": "反应堆棒"
+    },
+    "jade.gt6ce.omni.rod_neutrons": {
+      "english": "Rod #%s neutrons: %s",
+      "value": "反应堆棒 #%s 中子数：%s"
+    },
+    "jade.gt6ce.omni.rotation": {
+      "english": "Rotation: %s",
+      "value": "旋转方向：%s"
+    },
+    "jade.gt6ce.omni.rotation_warning": {
+      "english": "Upward output can rotate entities above it",
+      "value": "朝上的输出面会使上方实体旋转"
+    },
+    "jade.gt6ce.omni.sap_ready": {
+      "english": "Sap / resin ready",
+      "value": "树液／树脂可采集"
+    },
+    "jade.gt6ce.omni.sap_waiting": {
+      "english": "Waiting for sap / resin",
+      "value": "等待树液／树脂再生"
+    },
+    "jade.gt6ce.omni.searching": {
+      "english": "Ready to search for fluid sources",
+      "value": "已储能，等待搜索流体源"
+    },
+    "jade.gt6ce.omni.sky": {
+      "english": "Cached sky visibility: %s",
+      "value": "最近检测到天空可见：%s"
+    },
+    "jade.gt6ce.omni.solar_remaining": {
+      "english": "Unspent energy from the latest solar tick: %s EU",
+      "value": "最近太阳能发电 tick 未输出的能量：%s EU"
+    },
+    "jade.gt6ce.omni.spring_active": {
+      "english": "Spring activated: %s",
+      "value": "液体泉已激活：%s"
+    },
+    "jade.gt6ce.omni.spring_fluid": {
+      "english": "Spring fluid: %s",
+      "value": "泉水种类：%s"
+    },
+    "jade.gt6ce.omni.spring_interval": {
+      "english": "Mean source-placement attempt interval: %s ticks",
+      "value": "平均尝试生成流体源的间隔：%s tick"
+    },
+    "jade.gt6ce.omni.state": {
+      "english": "State: %s",
+      "value": "状态：%s"
+    },
+    "jade.gt6ce.omni.stored": {
+      "english": "Stored: %s %s",
+      "value": "储量：%s %s"
+    },
+    "jade.gt6ce.omni.transferred": {
+      "english": "Previous tick transfer: %s %s/t",
+      "value": "上一 tick 传输：%s %s/t"
+    },
+    "jade.gt6ce.omni.waiting": {
+      "english": "Waiting",
+      "value": "待机"
+    },
+    "jade.gt6ce.omni.wire_overloads": {
+      "english": "Overload heat counter: %s / 16",
+      "value": "过载积热计数：%s / 16"
+    },
+    "jade.gt6ce.omni.wire_rating": {
+      "english": "Rated: %s EU/packet × %s A; loss: %s EU/block",
+      "value": "额定：%s EU/包 × %s A；损耗：%s EU/格"
+    },
+    "jade.gt6ce.omni.working": {
+      "english": "Working",
+      "value": "工作中"
+    },
+    "jade.gt6ce.omni.yes": {
+      "english": "Yes",
+      "value": "是"
+    },
+    "jade.gt6ce.vessel.amount": {
+      "english": "Fluid storage: %s / %s L",
+      "value": "流体存量：%s / %s L"
+    },
+    "jade.gt6ce.vessel.auto": {
+      "english": "Automatic output: %s",
+      "value": "自动输出：%s"
+    },
+    "jade.gt6ce.vessel.channel": {
+      "english": "Channel %s: %s, %s / %s L",
+      "value": "通道 %s：%s，%s / %s L"
+    },
+    "jade.gt6ce.vessel.channels": {
+      "english": "%s channels; %s L each, rated %s L/t each",
+      "value": "%s 通道；每通道 %s L，额定 %s L/t"
+    },
+    "jade.gt6ce.vessel.disabled": {
+      "english": "disabled",
+      "value": "关闭"
+    },
+    "jade.gt6ce.vessel.enabled": {
+      "english": "enabled",
+      "value": "开启"
+    },
+    "jade.gt6ce.vessel.fermentation": {
+      "english": "Fermentation: %s / %s s (%s%%)",
+      "value": "发酵：%s / %s 秒（%s%%）"
+    },
+    "jade.gt6ce.vessel.sealed": {
+      "english": "Container mode: sealed fermentation",
+      "value": "容器模式：密封发酵"
+    },
+    "jade.gt6ce.vessel.temperature_limit": {
+      "english": "Temperature limit: %s K",
+      "value": "耐温上限：%s K"
+    },
+    "jade.gt6ce.vessel.unsealed": {
+      "english": "Container mode: unsealed",
+      "value": "容器模式：未密封"
     }
   },
   "reference_asset": "https://github.com/TeamNED/GregTech6-Translation-Groupware/releases/download/6.17.06-alpha.5/GregTech.lang",
