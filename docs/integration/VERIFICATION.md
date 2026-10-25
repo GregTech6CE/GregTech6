@@ -1929,3 +1929,11 @@ Forge开发47.4.20/Java17.0.10，Neo开发21.1.243/Java21.0.7，各3GiB/directCo
 本轮实际走完建造棒三种场景、原生口袋工具八身份转换、工具兼容/不兼容把手和早期配方、真实服务端扫描器/末地眼消耗、Drill200EU埋炸药、24种附件的气液/方向/模拟/执行数量、四档四向发电机边界、粉碎机50%效率与中断工作、锅炉形成/世界NBT/普通掉落和蒸汽输出，以及青铜泵末整包与17RU非整除输入。未据此声称客户端、全生存链或独立旧存档重启通过；泵其它来源差异保留。详见verification/forge-tool-boundaries-20261025.json。
 
 工具目录测试生成报告单独保存work/tool-boundary-assembly-coverage-result.json，docs/tool-assembly-coverage.json已和运行前备份逐字节相等。索引76条候选累计验证21+3+13+16+14，剩9条；没有默认全套重跑，整体移植仍未完成。
+
+## 2026-10-25 / 默认套件剩余九条集中修复
+
+基线5b1ae2a20。gt6ce_forge_remaining使用原九个方法的独立包装，基线重放0/9通过，九条失败消息均与原索引一致（5分59秒）。来源校正及一处共享配方修复后，同一九条9/9通过；Forge主代码、测试夹具和NeoForge主代码编译通过，最终Gradle BUILD SUCCESSFUL（11分2秒，含两端共享源码生成）。辐射阈值、服药剂量与物品数量、精确镜像集合、地牢物品/颜色及蜂后完整后代守恒均保留或增强。
+
+随后不带gameTestNamespaces参数，实际启用gt6ce,gregtech_repair默认命名空间，1045/1045 required tests全部通过，零失败，含最后单独安排的天气及运行时配方重载检查。Gradle最终BUILD SUCCESSFUL（19分39秒）；原九个方法在默认套件中也均通过。原76条索引的待排查余额已清零，并另记本次1045项全套实测结果，不再只用定向余额推算默认套件状态。
+
+日志/XML/命令、修复文件与来源作者/许可及原始/LF哈希见[forge-remaining-default-regressions-20261025.json](verification/forge-remaining-default-regressions-20261025.json)。23份根目录审计JSON生成结果留存work/remaining-generated/final并与运行前备份逐字节恢复。此处默认套件不含全部可选回归命名空间；客户端、完整生存链、Neo游戏及独立旧存档重启未验，整体移植仍未完成。

@@ -419,8 +419,13 @@ public final class DungeonKeysAndPortalsTests {
             check(problems, inventory.getStackInSlot(15).is(Blocks.GLOWSTONE.asItem())
                             && inventory.getStackInSlot(15).getCount() == 16,
                     "slot 15 holds GT6's 16 glowstone");
-            check(problems, inventory.getStackInSlot(22).is(Items.WRITTEN_BOOK),
-                    "slot 22 holds GT6's hunting guide");
+            ItemStack guide = inventory.getStackInSlot(22);
+            ItemStack expectedGuide = com.gregtech.gregtech.content.book.GTBooks.bookStack("Manual_Hunting_Blaze");
+            // Loader_Books creates this manual on ItemsGT.BOOKS meta 3, the small green cover.
+            check(problems, guide.is(ForgeRegistries.ITEMS.getValue(
+                            ResourceLocation.fromNamespaceAndPath("gt6ce", "book_green")))
+                            && guide.getCount() == 1 && ItemStack.isSameItemSameTags(guide, expectedGuide),
+                    "slot 22 holds one GT6 Blaze/Ghast hunting guide with its source cover and full written content");
             check(problems, inventory.getStackInSlot(29).is(Items.GHAST_TEAR)
                             && inventory.getStackInSlot(29).getCount() == 4,
                     "slot 29 holds GT6's four ghast tears");

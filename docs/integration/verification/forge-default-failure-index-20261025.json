@@ -1,7 +1,7 @@
 {
   "date": "2026-10-25",
   "index_baseline": "41f272edf",
-  "origin": "Original 1045-test/93-failure XML; prior 17 individually verified/corrected cases excluded. No new default-suite run.",
+  "origin": "Original 1045-test/93-failure XML; prior 17 individually verified/corrected cases excluded from this 76-record ledger. A fresh complete default-suite measurement is recorded in latest_default_suite.",
   "scope": "76 remaining original records indexed before the catalog batch. Families are triage topics, not proven root causes. Method positions refer to the stated baseline.",
   "families": {
     "catalog_recipes_and_network_batch": 21,
@@ -64,7 +64,7 @@
       "name": "substitutionsarereported",
       "original_failure": "machine crafting ingredient substitutions changed (see docs/machine-crafting-substitutions.json): {item gt6ce:stone_holystone_stone=machine casing block, block casingMachine of Holystone=machine casing block, block casingMachine of Livingrock=machine casing block, block casingMachine of Betweenstone=machine casing block, item gt6ce:stone_livingrock_stone=machine casing block, item gt6ce:stone_betweenstone_stone=machine casing block, item gt6ce:stone_umber_stone=machine casing block, block casingMachine of Umber=machine casing block}",
       "family": "recipes_processing_and_source_expectations",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "substitutionsarereported",
       "sources": [
         {
@@ -73,7 +73,8 @@
           "method_at_baseline": "substitutionsAreReported",
           "method_snapshot_sha256": "27d32b4c12343f44ab7712556cc44045595c54a7e2c7002fa0e8e02c41683812"
         }
-      ]
+      ],
+      "verification": "forge-remaining-default-regressions-20261025.json"
     },
     {
       "name": "machinedropcarriespendingworkwithoutinventoryduplication",
@@ -639,7 +640,7 @@
       "name": "toolshapedrecipesdonotmirrorunlesstheoriginaldid",
       "original_failure": "only the GT6 CR.DEF_NCC_MIR Blue Spruce slab row mirrors: [gt6ce:decorative_panels/panel_cfoam_brown, gt6ce:decorative_panels/panel_concrete_magenta, gt6ce:decorative_panels/panel_cfoam_magenta, gt6ce:decorative_panels/panel_wood_maple, gt6ce:decorative_panels/panel_wood_spruce, gt6ce:decorative_panels/panel_cfoam_blue, gt6ce:technology/fire_starter, gt6ce:decorative_panels/panel_asphalt_orange, gt6ce:decorative_panels/panel_wood_wood, gt6ce:decorative_panels/panel_wood_birch, gt6ce:decorative_panels/panel_wood_bamboo, gt6ce:decorative_panels/panel_wood_treated, gt6ce:decorative_panels/panel_asphalt_black, gt6ce:decorative_panels/panel_cfoam_light_gray, gt6ce:decorative_panels/panel_asphalt_brown, gt6ce:vanilla/mangrove_planks_saw, gt6ce:decorative_panels/panel_concrete_green, gt6ce:vanilla/birch_planks_saw, gt6ce:decorative_panels/panel_wood_bluespruce, gt6ce:decorative_panels/panel_asphalt_pink, gt6ce:technology/fire_starter_2, gt6ce:decorative_panels/panel_cfoam_light_blue, gt6ce:vanilla/stick_saw, gt6ce:decorative_panels/panel_cfoam_red, gt6ce:vanilla/warped_planks_saw, gt6ce:decorative_panels/panel_wood_rainbowood, gt6ce:decorative_panels/panel_cfoam_lime, gt6ce:decorative_panels/panel_asphalt_light_gray, gt6ce:decorative_panels/panel_concrete_red, gt6ce:decorative_panels/panel_wood_cherry, gt6ce:decorative_panels/panel_concrete_yellow, gt6ce:decorative_panels/panel_concrete_light_gray, gt6ce:decorative_panels/panel_wood_warped, gt6ce:decorative_panels/panel_wood_acacia, gt6ce:decorative_panels/panel_wood_crimson, gt6ce:vanilla/dark_oak_planks_saw, gt6ce:decorative_panels/panel_wood_coconut, gt6ce:decorative_panels/panel_asphalt_green, gt6ce:vanilla/spruce_planks_saw, gt6ce:decorative_panels/panel_wood_dark_oak, gt6ce:decorative_panels/panel_cfoam_pink, gt6ce:decorative_panels/panel_concrete_lime, gt6ce:decorative_panels/panel_wood_ebony, gt6ce:decorative_panels/panel_concrete_blue, gt6ce:decorative_panels/panel_wood_willow, gt6ce:decorative_panels/panel_asphalt_yellow, gt6ce:decorative_panels/panel_wood_blue_mahoe, gt6ce:decorative_panels/panel_wood_compressed, gt6ce:vanilla/cherry_planks_saw, gt6ce:decorative_panels/panel_wood_cinnamon, gt6ce:decorative_panels/panel_asphalt_cyan, gt6ce:decorative_panels/panel_wood_hazel, gt6ce:decorative_panels/panel_concrete_pink, gt6ce:decorative_panels/panel_asphalt_gray, gt6ce:decorative_panels/panel_cfoam_white, gt6ce:decorative_panels/panel_concrete_orange, gt6ce:decorative_panels/panel_asphalt_blue, gt6ce:decorative_panels/panel_concrete_gray, gt6ce:decorative_panels/panel_asphalt_lime, gt6ce:decorative_panels/panel_cfoam_orange, gt6ce:decorative_panels/panel_cfoam_purple, gt6ce:decorative_panels/panel_cfoam_gray, gt6ce:decorative_panels/panel_asphalt_light_blue, gt6ce:decorative_panels/panel_wood_rotten, gt6ce:decorative_panels/panel_wood_white_mahoe, gt6ce:decorative_panels/panel_wood_pine, gt6ce:decorative_panels/panel_wood_mangrove, gt6ce:decorative_panels/panel_cfoam_cyan, gt6ce:vanilla/acacia_planks_saw, gt6ce:decorative_panels/panel_wood_dry, gt6ce:vanilla/crimson_planks_saw, gt6ce:decorative_panels/panel_cfoam_green, gt6ce:decorative_panels/panel_cfoam_yellow, gt6ce:decorative_panels/panel_asphalt_red, gt6ce:decorative_panels/panel_wood_mossy, gt6ce:decorative_panels/panel_concrete_purple, gt6ce:decorative_panels/panel_asphalt_purple, gt6ce:decorative_panels/panel_wood_jungle, gt6ce:decorative_panels/panel_wood, gt6ce:decorative_panels/panel_asphalt_magenta, gt6ce:decorative_panels/panel_concrete_light_blue, gt6ce:decorative_panels/panel_concrete_brown, gt6ce:decorative_panels/panel_cfoam_black, gt6ce:vanilla/jungle_planks_saw, gt6ce:decorative_panels/panel_concrete_black, gt6ce:wood/slab_bluespruce, gt6ce:decorative_panels/panel_asphalt_white, gt6ce:decorative_panels/panel_wood_frozen, gt6ce:vanilla/oak_planks_saw, gt6ce:decorative_panels/panel_concrete_white, gt6ce:decorative_panels/panel_concrete_cyan, gt6ce:decorative_panels/panel_wood_rubber]",
       "family": "recipes_processing_and_source_expectations",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "toolshapedrecipesdonotmirrorunlesstheoriginaldid",
       "sources": [
         {
@@ -648,7 +649,8 @@
           "method_at_baseline": "toolShapedRecipesDoNotMirrorUnlessTheOriginalDid",
           "method_snapshot_sha256": "b2aa670c9d5a081d58a0a50a3ce1deb18fa6e5fb146fe00d0524670176b0435a"
         }
-      ]
+      ],
+      "verification": "forge-remaining-default-regressions-20261025.json"
     },
     {
       "name": "bronzepumpcanaccumulateoriginalbufferwithoutsimulationmutation",
@@ -718,7 +720,7 @@
       "name": "playerradiationaccumulatesandpersists",
       "original_failure": "below 25 has no radiation symptom",
       "family": "world_generation_radiation_and_bees",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "playerradiationaccumulatesandpersists",
       "sources": [
         {
@@ -727,7 +729,8 @@
           "method_at_baseline": "playerRadiationAccumulatesAndPersists",
           "method_snapshot_sha256": "10d0eb9e3c5ff7ea4dde024c50d4f0a8590e81baf3097b4f236a4f7af21c67a3"
         }
-      ]
+      ],
+      "verification": "forge-remaining-default-regressions-20261025.json"
     },
     {
       "name": "headandhandlerowsstayshapeless",
@@ -861,7 +864,7 @@
       "name": "targetchunkownseveryplatformandpipewriteineitherorder",
       "original_failure": "java.lang.AssertionError: mob-farm platform unexpectedly read scheduleTick",
       "family": "world_generation_radiation_and_bees",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "targetchunkownseveryplatformandpipewriteineitherorder",
       "sources": [
         {
@@ -870,7 +873,8 @@
           "method_at_baseline": "targetChunkOwnsEveryPlatformAndPipeWriteInEitherOrder",
           "method_snapshot_sha256": "65f328ab7601cf2a3f87ea002a9fbe35f8948c7fd8cca88f87df7b2a934ac2d6"
         }
-      ]
+      ],
+      "verification": "forge-remaining-default-regressions-20261025.json"
     },
     {
       "name": "pressurevalveventsagasandheatswhatstandsinfront",
@@ -1036,7 +1040,7 @@
       "name": "tablesmatchgt6",
       "original_failure": "the frozen log is GT6's BIOMES_FROZEN entry",
       "family": "world_generation_radiation_and_bees",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "tablesmatchgt6",
       "sources": [
         {
@@ -1045,13 +1049,14 @@
           "method_at_baseline": "tablesMatchGt6",
           "method_snapshot_sha256": "430d3412ad2f0a24542ba8d43a697a0a92af0c40f629ac15f0ba21da485d40b7"
         }
-      ]
+      ],
+      "verification": "forge-remaining-default-regressions-20261025.json"
     },
     {
       "name": "dungeoncelldispatchmatchesgt6",
       "original_failure": "liquid above an ordinary ceiling column selects glowing glass",
       "family": "world_generation_radiation_and_bees",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "dungeoncelldispatchmatchesgt6",
       "sources": [
         {
@@ -1060,7 +1065,8 @@
           "method_at_baseline": "dungeonCellDispatchMatchesGt6",
           "method_snapshot_sha256": "91dfa5e08c01a8f725092fc818b93e1033805e70cee7ab4b34cb015eeb7db54e"
         }
-      ]
+      ],
+      "verification": "forge-remaining-default-regressions-20261025.json"
     },
     {
       "name": "wirecraftingpreservesconductoramount",
@@ -1082,7 +1088,7 @@
       "name": "radiationsuitandmedicine",
       "original_failure": "missing one piece removes protection",
       "family": "world_generation_radiation_and_bees",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "radiationsuitandmedicine",
       "sources": [
         {
@@ -1091,7 +1097,8 @@
           "method_at_baseline": "radiationSuitAndMedicine",
           "method_snapshot_sha256": "f2c71d768d9638f4938ef12d3b3993233d684246bce2759b58f21d742c12048a"
         }
-      ]
+      ],
+      "verification": "forge-remaining-default-regressions-20261025.json"
     },
     {
       "name": "onlytransformersandbatteryboxesexistatuln",
@@ -1145,7 +1152,7 @@
       "name": "netherportalroombuildsgt6frame",
       "original_failure": "slot 22 holds GT6's hunting guide",
       "family": "world_generation_radiation_and_bees",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "netherportalroombuildsgt6frame",
       "sources": [
         {
@@ -1154,13 +1161,14 @@
           "method_at_baseline": "netherPortalRoomBuildsGt6Frame",
           "method_snapshot_sha256": "48441b344506f027a828b7604251e3593414fb31d465ce4c6326584fe1b52e2c"
         }
-      ]
+      ],
+      "verification": "forge-remaining-default-regressions-20261025.json"
     },
     {
       "name": "queendeathhandsoutthebroodandpromotesaprincess",
       "original_failure": "the main drone slot is filled first (:137)",
       "family": "world_generation_radiation_and_bees",
-      "status": "pending",
+      "status": "verified_in_targeted_replay",
       "current_name": "queendeathhandsoutthebroodandpromotesaprincess",
       "sources": [
         {
@@ -1169,7 +1177,8 @@
           "method_at_baseline": "queenDeathHandsOutTheBroodAndPromotesAPrincess",
           "method_snapshot_sha256": "85491221a3b7941adcedd41a9b06b49af852463df0c6eea66dab568c0f90271a"
         }
-      ]
+      ],
+      "verification": "forge-remaining-default-regressions-20261025.json"
     },
     {
       "name": "capacitytintandenergyarithmetic",
@@ -1223,11 +1232,19 @@
   "ledger": {
     "indexed_before_batch": 76,
     "verified_this_batch": 21,
-    "pending_original_candidates": 9,
-    "not_a_new_full_suite_measurement": true,
+    "pending_original_candidates": 0,
+    "not_a_new_full_suite_measurement": false,
     "subsequent_cover_boundary_verified": 3,
     "subsequent_harvest_verified": 13,
     "subsequent_processing_verified": 16,
-    "subsequent_tool_boundary_verified": 14
+    "subsequent_tool_boundary_verified": 14,
+    "subsequent_remaining_verified": 9
+  },
+  "latest_default_suite": {
+    "date": "2026-10-25",
+    "base_commit": "5b1ae2a20 plus this batch",
+    "total": 1045,
+    "failures": 0,
+    "verification": "forge-remaining-default-regressions-20261025.json"
   }
 }
