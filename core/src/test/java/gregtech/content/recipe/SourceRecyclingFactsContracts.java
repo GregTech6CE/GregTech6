@@ -6,6 +6,7 @@ import gregtech.content.fluid.FluidDefinitions;
 import gregtech.engine.material.GTMaterialRegistry;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static gregtech.api.material.GTValues.U;
 import static gregtech.content.recipe.SourceRecyclingFacts.*;
@@ -14,6 +15,20 @@ import static gregtech.content.recipe.generated.CentrifugeAssertions.*;
 /** Finite source/default provenance contracts; this does not assert native recipe registration counts. */
 public final class SourceRecyclingFactsContracts {
     private SourceRecyclingFactsContracts() {}
+    // New source-positive phase admission does not rewrite the frozen legacy artifact fingerprint.
+    private static final Set<Identity> RESTORED_MOLTEN_PHASES = Set.of(
+            new Identity(62, "Carbon14"), new Identity(1250, "TritaniumElemental"),
+            new Identity(1260, "Trinium"), new Identity(1450, "DuraniumElemental"),
+            new Identity(1740, "Naquadah"), new Identity(1741, "NaquadahEnriched"),
+            new Identity(1742, "Naquadria"), new Identity(1850, "Abyssalnite"),
+            new Identity(1860, "Coralium"), new Identity(1870, "Dreadium"),
+            new Identity(1880, "Ethaxium"), new Identity(2210, "Atlarus"),
+            new Identity(8020, "PotassiumCarbonate"), new Identity(8026, "TungstenTrioxide"),
+            new Identity(8030, "FerrousChloride"), new Identity(8034, "LithiumPerchlorate"),
+            new Identity(8244, "Tallow"), new Identity(8266, "Asphalt"),
+            new Identity(8500, "Stone"), new Identity(8512, "SpaceStone"),
+            new Identity(8513, "MoonStone"), new Identity(8515, "MarsStone"),
+            new Identity(9120, "Ilmenite"), new Identity(9192, "Rutile"));
     public static void main(String[] args) {
         gregtech.api.mod.ModData.bindPresence(id -> id.equals("minecraft") || id.equals("gt6ce"));
         run();
@@ -156,6 +171,7 @@ public final class SourceRecyclingFactsContracts {
         // setup adds MELTING to two cokes without changing their source thermal eligibility.
         GTMaterialRegistry.postInit();
         FluidDefinitions.prepare();
+        Set<Identity> addedPhases = new HashSet<>();
         for (Facts f : all()) {
             var material = GTMaterialRegistry.get(f.identity().id()).resolve();
             check(f.identity().matches(material.getId(), material.getName()), "current exact identity " + f.identity());
@@ -164,8 +180,20 @@ public final class SourceRecyclingFactsContracts {
             check(defaults.matches(material.has(MaterialProperty.MELTING), target.getId(), target.getName(),
                     material.getTargetSmeltingAmount()), "shipped metadata profile " + f.identity());
             String field = "GenMolten_" + material.getName();
-            equal(defaults.generatedMolten(), FluidCatalog.isGeneratedMoltenDefinition(field, FluidCatalog.get(field)),
-                    "known port artifact evidence is independent of source phase " + f.identity());
+            var entry = FluidCatalog.get(field);
+            boolean generated = FluidCatalog.isGeneratedMoltenDefinition(field, entry);
+            boolean restored = RESTORED_MOLTEN_PHASES.contains(f.identity());
+            equal(defaults.generatedMolten() || restored, generated,
+                    "retain exact old artifacts plus only reviewed source-positive phases " + f.identity());
+            if (generated && !defaults.generatedMolten()) {
+                addedPhases.add(f.identity());
+                equal(PhaseKind.DEFAULT_BINDING, f.phase().kind(), "new molten has positive source proof");
+                equal(f.phase().binding().sourceRegistryPath(), entry.registryName(), "new molten exact source path");
+            }
+            if (f.phase().kind() == PhaseKind.NO_DEFAULT_PHASE && !defaults.generatedMolten())
+                check(!generated, "source-negative absence cannot acquire a new phase " + f.identity());
         }
+        equal(24, RESTORED_MOLTEN_PHASES.size(), "finite missing-phase correction");
+        equal(RESTORED_MOLTEN_PHASES, addedPhases, "all and only 24 source-positive new phases");
     }
 }

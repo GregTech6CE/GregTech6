@@ -907,7 +907,47 @@ public class FluidCatalog {
         return Map.copyOf(REGISTRY);
     }
 
-    /** GT6 Loader_Fluids: auto-register {@code molten.{material}} for metals/alloys. */
+    /**
+     * Missing imported MOLTEN declarations, not new general material properties.
+     * GT6 3703e40308c8c030763fd6297dea8b210d2a77b1 MT:394,695-696,715,744-746,757-760,
+     * 793,1077,1086,1095,1123,1156,1311-1312,1631,3748,3798-3801;
+     * Loader_Fluids:659 creates these phases through FL.createMolten:1074-1077.
+     * Keep this finite ID/name proof local to fluid generation: MELTING, METAL, item forms,
+     * targets and compatibility overrides must not be inferred or mutated from it.
+     */
+    private static boolean hasReviewedSourceMoltenPhase(GTMaterial material) {
+        if (!gregtech.engine.material.GTMaterialRegistry.isCoreMaterial(material)) return false;
+        String name = switch (material.getId()) {
+            case 62 -> "Carbon14";
+            case 1250 -> "TritaniumElemental";
+            case 1260 -> "Trinium";
+            case 1450 -> "DuraniumElemental";
+            case 1740 -> "Naquadah";
+            case 1741 -> "NaquadahEnriched";
+            case 1742 -> "Naquadria";
+            case 1850 -> "Abyssalnite";
+            case 1860 -> "Coralium";
+            case 1870 -> "Dreadium";
+            case 1880 -> "Ethaxium";
+            case 2210 -> "Atlarus";
+            case 8020 -> "PotassiumCarbonate";
+            case 8026 -> "TungstenTrioxide";
+            case 8030 -> "FerrousChloride";
+            case 8034 -> "LithiumPerchlorate";
+            case 8244 -> "Tallow";
+            case 8266 -> "Asphalt";
+            case 8500 -> "Stone";
+            case 8512 -> "SpaceStone";
+            case 8513 -> "MoonStone";
+            case 8515 -> "MarsStone";
+            case 9120 -> "Ilmenite";
+            case 9192 -> "Rutile";
+            default -> null;
+        };
+        return material.getName().equals(name);
+    }
+
+    /** GT6 Loader_Fluids: auto-register {@code molten.{material}} using existing or reviewed phase evidence. */
     public static void registerGeneratedMoltenFluids(Collection<GTMaterial> materials) {
         for (GTMaterial raw : materials) {
             GTMaterial material = raw.resolve();
@@ -916,7 +956,8 @@ public class FluidCatalog {
             }
             if (!material.has(MaterialProperty.MOLTEN)
                     && !material.has(MaterialProperty.METAL)
-                    && !material.has(MaterialProperty.ALLOY)) {
+                    && !material.has(MaterialProperty.ALLOY)
+                    && !hasReviewedSourceMoltenPhase(material)) {
                 continue;
             }
             String field = "GenMolten_" + material.getName();

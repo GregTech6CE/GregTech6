@@ -81,12 +81,7 @@ public final class ThermalRegressionTests {
         noDefaultRow("Scandium", Action.SOURCE_NO_ROW, Reason.SOURCE_NO_DEFAULT_PHASE);
         require(!fluid("GenMolten_Graphene", 1).isEmpty() && !fluid("GenMolten_Scandium", 1).isEmpty(),
                 "native generated fluids do not establish source eligibility or a source phase");
-        for (String missing : List.of("TungstenTrioxide", "Carbon14")) {
-            noDefaultRow(missing, Action.DEFERRED_NO_ROW, Reason.REQUIRED_NATIVE_FLUID_ABSENT);
-            require(SourceThermalNativeAdapter.diagnostics().stream().anyMatch(d -> d.material().equals(missing)
-                    && d.action() == Action.DEFERRED_NO_ROW && d.reason() == Reason.REQUIRED_NATIVE_FLUID_ABSENT),
-                    missing + " startup producer records deferral, never revives legacy144mB");
-        }
+        restoredMoltenPhases();
         reviewedRows();
         helper.succeed();
     }
@@ -104,6 +99,13 @@ public final class ThermalRegressionTests {
         outcome(inspect(nickel, input, new Snapshot(FluidCatalog.all(),
                 (field, amount) -> field.equals("GenMolten_Nickel") ? FluidStack.EMPTY : GTFluids.stack(field, amount))),
                 Action.DEFERRED_NO_ROW, Reason.REQUIRED_NATIVE_FLUID_ABSENT);
+        // These formerly missing default phases are now real; missing-holder behavior stays fail-closed.
+        for (String name : List.of("Carbon14", "TungstenTrioxide")) {
+            String field = "GenMolten_" + name;
+            outcome(inspect(material(name), selected(name), new Snapshot(FluidCatalog.all(),
+                    (key, amount) -> key.equals(field) ? FluidStack.EMPTY : GTFluids.stack(key, amount))),
+                    Action.DEFERRED_NO_ROW, Reason.REQUIRED_NATIVE_FLUID_ABSENT);
+        }
         // Equal values are not proof of the live canonical catalog definition.
         outcome(inspect(nickel, input, new Snapshot() {
             @Override FluidCatalog.FluidEntry definition(String field) {
@@ -192,8 +194,85 @@ public final class ThermalRegressionTests {
                 + ", unsupported=" + unsupported + "; excludes reviewed Cinnabar/Ti/Fe and output-only Water/Lava");
         require(unexpected.isEmpty(), "unexpected default compatibility fallthrough: " + unexpected);
         require(actions.getOrDefault(Action.ROWS, 0) > 0 && actions.getOrDefault(Action.SOURCE_NO_ROW, 0) > 0
-                && reasons.getOrDefault(Reason.REQUIRED_NATIVE_FLUID_ABSENT, 0) > 0,
-                "dispatch inventory must observe positive, source-negative and missing-native decisions");
+                && reasons.getOrDefault(Reason.REQUIRED_NATIVE_FLUID_ABSENT, 0) == 0,
+                "default dispatch has positive/source-negative decisions and no remaining proven missing phase");
+    }
+
+    private record RestoredPhase(String material, int temperature, long ticks, boolean melter) {}
+    // Literal current-default expectations from the audited MT/FL targets and runtime input statistics.
+    // This is the bounded24 phase slice, not a claim of universal original density/tick precision.
+    private static final List<RestoredPhase> RESTORED_PHASES = List.of(
+            new RestoredPhase("Carbon14", 3800, 552, false),
+            new RestoredPhase("TritaniumElemental", 2000, 2963, false),
+            new RestoredPhase("Trinium", 2645, 174, false),
+            new RestoredPhase("DuraniumElemental", 1200, 1259, false),
+            new RestoredPhase("Naquadah", 1500, 1760, false),
+            new RestoredPhase("NaquadahEnriched", 1500, 1844, false),
+            new RestoredPhase("Naquadria", 1500, 1676, false),
+            new RestoredPhase("Abyssalnite", 1500, 1257, false),
+            new RestoredPhase("Coralium", 2000, 2370, false),
+            new RestoredPhase("Dreadium", 2500, 3831, false),
+            new RestoredPhase("Ethaxium", 3000, 5639, false),
+            new RestoredPhase("Atlarus", 3276, 4401, false),
+            new RestoredPhase("PotassiumCarbonate", 1164, 40, false),
+            new RestoredPhase("TungstenTrioxide", 1746, 485, false),
+            new RestoredPhase("FerrousChloride", 950, 119, false),
+            new RestoredPhase("LithiumPerchlorate", 509, 16, false),
+            new RestoredPhase("Tallow", 350, 16, false),
+            new RestoredPhase("Asphalt", 1000, 49, true),
+            new RestoredPhase("Stone", 1100, 56, true),
+            new RestoredPhase("SpaceStone", 1000, 49, true),
+            new RestoredPhase("MoonStone", 1000, 49, true),
+            new RestoredPhase("MarsStone", 1000, 49, true),
+            new RestoredPhase("Ilmenite", 782, 84, false),
+            new RestoredPhase("Rutile", 2041, 183, false));
+
+    private static void restoredMoltenPhases() {
+        var ids = new HashSet<ResourceLocation>();
+        int smelter = 0, melter = 0;
+        for (var phase : RESTORED_PHASES) {
+            String field = "GenMolten_" + phase.material();
+            String path = "molten_" + phase.material().toLowerCase(java.util.Locale.ROOT);
+            var entry = FluidCatalog.get(field);
+            require(entry != null && entry.materialKey().equals(phase.material())
+                    && FluidCatalog.isGeneratedMoltenDefinition(field, entry), phase.material() + " exact molten factory provenance");
+            var stack = fluid(field, 1);
+            require(ids.add(BuiltInRegistries.FLUID.getKey(stack.getFluid())), "24 distinct restored still-fluid holders");
+            fluidProperties(field, path, phase.temperature());
+            var material = material(phase.material());
+            require(!material.has(MaterialProperty.MOLTEN) && !material.has(MaterialProperty.METAL)
+                    && !material.has(MaterialProperty.ALLOY), phase.material() + " phase restoration must not change material flags");
+            positive(phase.material(), field, 144, phase.ticks(), phase.melter());
+            smelter += rows(MachineRecipeMaps.Smelter, selected(phase.material())).size();
+            melter += rows(MachineRecipeMaps.Melter, selected(phase.material())).size();
+            require(SourceThermalNativeAdapter.diagnostics().stream().noneMatch(d -> d.material().equals(phase.material())
+                    && d.reason() == Reason.REQUIRED_NATIVE_FLUID_ABSENT), phase.material() + " startup has no stale missing-phase deferral");
+        }
+        positive("TungsticAcid", "GenMolten_TungstenTrioxide", 82, 277, false); // floor(144*4/7), not144.
+        positive("Concrete", "GenMolten_Stone", 144, 56, true);
+        for (String name : List.of("TungsticAcid", "Concrete")) {
+            smelter += rows(MachineRecipeMaps.Smelter, selected(name)).size();
+            melter += rows(MachineRecipeMaps.Melter, selected(name)).size();
+        }
+        require(ids.size() == 24 && smelter == 26 && melter == 6, "actual accepted bounded phase routes, not just potential plans");
+        fluidProperties("GenLiquid_Cryolite", "cryolite", 1285);
+        require(FluidCatalog.isGeneratedGasLiquidDefinition("GenLiquid_Cryolite", FluidCatalog.get("GenLiquid_Cryolite")),
+                "Cryolite retains its existing generated liquid identity, not a duplicate molten path");
+        System.out.println("[thermal-regression] restored native phases=" + ids.size()
+                + ", actual selected Smelter rows=" + smelter + ", Melter rows=" + melter + "; Cryolite1285K/light10 retained");
+    }
+    private static void fluidProperties(String field, String path, int temperature) {
+        var entry = FluidCatalog.get(field); var still = fluid(field, 1);
+        require(BuiltInRegistries.FLUID.getKey(still.getFluid()).equals(new ResourceLocation("gt6ce", path))
+                && GTFluids.still(field).isPresent() && GTFluids.still(field).get() == still.getFluid(), field + " exact current registry holder");
+        require(GTFluids.flowing(field) != null && GTFluids.flowing(field).isPresent(), field + " flowing holder exists");
+        for (var fluid : List.of(still, new FluidStack(GTFluids.flowing(field).get(), 1))) {
+            int actualTemperature = fluid.getFluid().getFluidType().getTemperature(fluid);
+            int actualLight = fluid.getFluid().getFluidType().getLightLevel(fluid);
+            require(GTFluids.entryForFluid(fluid.getFluid()) == entry && entry.temperature() == temperature && entry.luminosity() == 10
+                    && actualTemperature == temperature && actualLight == 10, field + " actual still/flowing temperature/light: "
+                            + BuiltInRegistries.FLUID.getKey(fluid.getFluid()) + " expected=" + temperature + "/10, actual=" + actualTemperature + "/" + actualLight);
+        }
     }
 
     private static Snapshot stats(double density, long melting) {
