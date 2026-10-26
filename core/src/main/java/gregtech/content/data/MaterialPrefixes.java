@@ -748,7 +748,7 @@ public class MaterialPrefixes {
         blockDust = registerBlock(block("blockDust")
                 .display("Blocks of Dusts", "Block of ", " Dust")
                 .condition(m -> MaterialPrefix.dust.isValidFor(m)
-                        && !m.has(MaterialProperty.STONE)
+                        && !"Stone".equals(m.getName())
                         && !"Sand".equals(m.getName())
                         && !"RedSand".equals(m.getName()))
                 .materialWeight(GTValues.U * 9)

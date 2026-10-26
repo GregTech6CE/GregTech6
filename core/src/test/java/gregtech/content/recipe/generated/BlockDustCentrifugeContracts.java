@@ -1,5 +1,12 @@
 package gregtech.content.recipe.generated;
 
+import gregtech.api.material.GTValues;
+import gregtech.api.material.MaterialProperty;
+import gregtech.content.data.MaterialPrefixes;
+import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.material.MaterialBlockDefinitions;
+import gregtech.engine.prefix.BlockMaterialPrefix;
+
 import java.util.List;
 
 import static gregtech.content.recipe.SourceCentrifugeBlockDustInputs.*;
@@ -17,7 +24,8 @@ final class BlockDustCentrifugeContracts {
                 new Binding("EndSandWhite", "WhiteEndSand", 8105),
                 new Binding("EndSandBlack", "BlackEndSand", 8106),
                 new Binding("SpaceRock", "SpaceStone", 8512),
-                new Binding("MoonTurf", "MoonTurf", 8514));
+                new Binding("MoonTurf", "MoonTurf", 8514),
+                new Binding("MoonRock", "MoonStone", 8513));
         equal(expectedBindings, bindings(), "finite source identities and material IDs");
         for (Binding binding : expectedBindings) {
             equal(binding, binding(binding.sourceField()), "exact field lookup");
@@ -32,10 +40,11 @@ final class BlockDustCentrifugeContracts {
                 equal(Decision.UNREVIEWED, decide(binding, facts), "reject mismatched native fact " + bad);
             }
         }
-        equal(null, binding("MoonRock"), "do not invent an eighth block family");
+        equal(null, binding("MoonStone"), "native material spelling is not a source field");
         equal(Decision.UNRESOLVED, decide(new Binding("foreign", "other", 123),
                 new Facts(true, true, true, true, true, "other", 123)), "caller cannot invent a binding");
         sourceRows();
+        physicalDefinitions();
     }
 
     private static void sourceRows() {
@@ -56,10 +65,13 @@ final class BlockDustCentrifugeContracts {
                         "i:dust:Sand:9", "i:dustTiny:Pt:9", "i:dustTiny:MeteoricIron:9"),
                 centrifuge("cbd:MoonTurf:1", 64, 288, List.of(8000L, 1000L, 1000L, 1000L, 1000L, 100L),
                         gases, "i:dust:Sand:9", "i:dustTiny:Basalt:9", "i:dustTiny:Al2O3:9",
-                        "i:dustTiny:Ilmenite:9", "i:dustTiny:MnO2:9", "i:dustTiny:MeteoricIron:9"));
+                        "i:dustTiny:Ilmenite:9", "i:dustTiny:MnO2:9", "i:dustTiny:MeteoricIron:9"),
+                centrifuge("cbd:MoonRock:1", 64, 144, List.of(8000L, 500L, 400L, 300L, 100L, 50L),
+                        List.of(), "i:dust:Basalt:9", "i:dustTiny:SiO2:9", "i:dustTiny:Al2O3:9",
+                        "i:dustTiny:Ilmenite:9", "i:dustTiny:RareEarth:9", "i:dustTiny:Pt:9"));
         List<Row> rows = collect(GTOresGen::load);
         equal(expected, rows.stream().filter(r -> r.inputs().stream().anyMatch(s -> s.startsWith("cbd:"))).toList(),
-                "seven source-exact ordered block rows, including chance/fluid slots");
+                "eight source-exact ordered block rows, including chance/fluid slots");
         for (Row row : rows) {
             for (List<String> slots : List.of(row.outputs(), row.fluidInputs(), row.fluidOutputs())) {
                 check(slots.stream().noneMatch(s -> s.startsWith("cbd:")), "physical-block token is input-only");
@@ -69,6 +81,42 @@ final class BlockDustCentrifugeContracts {
                         "no legacy blockDust token may normalize to dust9");
             }
         }
+    }
+
+    private static void physicalDefinitions() {
+        GTMaterialRegistry.init();
+        MaterialPrefixes.bootstrap();
+        var prefix = BlockMaterialPrefix.blockDust;
+        var definitions = MaterialBlockDefinitions.all().stream()
+                .filter(d -> d.prefix() == prefix).toList();
+        equal(1000, definitions.size(), "restored blockDust directory");
+        equal(71L, definitions.stream().filter(d -> d.material().has(MaterialProperty.STONE)).count(),
+                "71 stone-family additions; the original 929 non-stone IDs remain");
+        for (Binding binding : bindings()) {
+            var material = GTMaterialRegistry.get(binding.sourceField()).resolve();
+            equal(binding.materialName(), material.getName(), "source alias resolves to exact material");
+            equal(binding.materialId(), material.getId(), "source numeric material identity");
+            var matches = definitions.stream().filter(d -> d.material() == material).toList();
+            equal(1, matches.size(), "one physical block holder per strict binding");
+            equal("block_dust_" + material.getName().toLowerCase(java.util.Locale.ROOT),
+                    matches.get(0).blockId(), "unchanged native block registry convention");
+        }
+        for (String name : List.of("Stone", "Sand", "RedSand")) {
+            check(!prefix.isValidFor(GTMaterialRegistry.get(name)), "retain exact source exclusion " + name);
+        }
+        // These three port IDs already exist in saves, even though original special sand
+        // blocks use their own recipe identities. Do not remove the legacy holders.
+        for (String name : List.of("Magnetite", "BasalticMineralSand", "GraniticMineralSand")) {
+            check(definitions.stream().anyMatch(d -> d.blockId().equals("block_dust_"
+                    + name.toLowerCase(java.util.Locale.ROOT))), "preserve legacy blockDust ID " + name);
+        }
+        equal(GTValues.U * 9, prefix.getMaterialWeight(), "one physical block is nine material units");
+        equal(0.5F, prefix.baseHardness(), "dust block base hardness");
+        equal(4.5F, prefix.baseResistance(), "dust block base resistance");
+        equal(-2, prefix.harvestLevelOffset(), "dust block harvest offset");
+        equal(BlockMaterialPrefix.MapColor.SAND, prefix.mapColor(), "dust block map color");
+        equal(BlockMaterialPrefix.SoundType.SAND, prefix.soundType(), "dust block sound");
+        check(prefix.falling(), "dust blocks retain their falling behavior");
     }
 
     private static Row endStone(String field, List<String> gases) {

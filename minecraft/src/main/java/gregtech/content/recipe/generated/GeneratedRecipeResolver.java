@@ -309,7 +309,7 @@ public final class GeneratedRecipeResolver {
         return new CentrifugeOutputs(out, false);
     }
 
-    /** Only the seven named source calls use cbd; all legacy i:blockDust semantics stay untouched.
+    /** Only the eight named source calls use cbd; all legacy i:blockDust semantics stay untouched.
      * No table sweep/removal: an unavailable exact block simply prevents this producer's submission.
      */
     private static List<ItemStack> resolveCentrifugeInputs(String[] specs) {

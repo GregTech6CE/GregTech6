@@ -185,7 +185,8 @@ final class GTOresGen {
                 sp("omdu:DarkAsh:1297296000"), NONE, NONE, sp("omdu:Ash:648648000", "copt:darkash_second:1"));
 
         // Pinned Loader_Recipes_Ores:105 / W:109. MoonRock is the existing MoonStone/8513 field.
-        // The separate source blockDust call remains unresolved; never synthesize it from dust9.
+        // Keep the separate physical block input strict; it is never synthesized from dust9.
+        GeneratedRecipeSink.registerSource(true, "Centrifuge", 64, 144, ch(8000, 500, 400, 300, 100, 50), sp("cbd:MoonRock:1"), NONE, NONE, sp("i:dust:Basalt:9", "i:dustTiny:SiO2:9", "i:dustTiny:Al2O3:9", "i:dustTiny:Ilmenite:9", "i:dustTiny:RareEarth:9", "i:dustTiny:Pt:9"));
         GeneratedRecipeSink.registerSource(true, "Centrifuge", 64, 16, ch(8000, 500, 400, 300, 100, 50), sp("i:dust:MoonRock:1"), NONE, NONE, sp("i:dust:Basalt:1", "i:dustTiny:SiO2:1", "i:dustTiny:Al2O3:1", "i:dustTiny:Ilmenite:1", "i:dustTiny:RareEarth:1", "i:dustTiny:Pt:1"));
     }
 }
