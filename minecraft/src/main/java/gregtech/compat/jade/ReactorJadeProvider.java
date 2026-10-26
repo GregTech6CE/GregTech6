@@ -13,7 +13,7 @@ public enum ReactorJadeProvider implements IBlockComponentProvider,IServerDataPr
         tag.putString("gt_reactor_hot_side",c.outputSide().getSerializedName());tag.putString("gt_reactor_cold_side",c.coldOutputSide().getSerializedName());
         tag.putInt("gt_reactor_rods",c.rodCount());tag.putInt("gt_reactor_slots",c.rods.length);tag.putLong("gt_reactor_neutrons",c.neutronTotal());tag.putLong("gt_reactor_heat",c.lastHeat);tag.putLong("gt_reactor_stored",c.storedHeat);tag.putBoolean("gt_reactor_stopped",c.stopped);tag.putInt("gt_reactor_overflow",c.overflowCount());
 //? if >=1.21.1 {
-        /*tag.put("gt_reactor_in",c.input.getFluid().save(accessor.getLevel().registryAccess()));tag.put("gt_reactor_out",c.output.getFluid().save(accessor.getLevel().registryAccess()));
+        /*var in=c.input.getFluid();var out=c.output.getFluid();if(!in.isEmpty())tag.put("gt_reactor_in",in.save(accessor.getLevel().registryAccess()));if(!out.isEmpty())tag.put("gt_reactor_out",out.save(accessor.getLevel().registryAccess()));
 *///?} else {
         tag.put("gt_reactor_in",c.input.getFluid().writeToNBT(new CompoundTag()));tag.put("gt_reactor_out",c.output.getFluid().writeToNBT(new CompoundTag()));
 //?}
