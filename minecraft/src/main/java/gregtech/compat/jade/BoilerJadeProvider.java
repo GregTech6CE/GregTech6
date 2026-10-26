@@ -108,9 +108,6 @@ public enum BoilerJadeProvider implements IBlockComponentProvider, IServerDataPr
         if (data.contains("gt_steam_offer")) JadeText.add(tooltip, Component.translatable("gt.lang.energy.output").append(": " + data.getLong("gt_steam_offer") + " L/t"));
 
         long waterAmt = data.getLong(WATER_AMT);
-        long waterCap = data.getLong(WATER_CAP);
-        int waterPct = waterCap > 0 ? (int) (waterAmt * 100 / waterCap) : 0;
-        JadeText.detail(tooltip, "jade.gt6ce.boiler.water", waterAmt, waterCap, waterPct);
 
         long heat = data.getLong(HEAT);
         long maxHeat = data.contains(MAX_HEAT) ? data.getLong(MAX_HEAT) : 0;
