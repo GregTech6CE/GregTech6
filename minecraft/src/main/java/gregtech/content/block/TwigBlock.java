@@ -51,6 +51,17 @@ public class TwigBlock extends Block {
         String biome = level.getBiome(pos).unwrapKey().map(key -> key.location().toString()).orElse("");
         String name = gregtech.content.worldgen.SurfaceTwigRules.material(
                 level.dimension().location().toString(), biome, level.random::nextInt);
+        return stick(name, count);
+    }
+
+    /** Candidate pickup items for inspection, without consuming random numbers or changing the block. */
+    public static List<ItemStack> possibleSticks(net.minecraft.world.level.Level level, BlockPos pos) {
+        String biome = level.getBiome(pos).unwrapKey().map(key -> key.location().toString()).orElse("");
+        return gregtech.content.worldgen.SurfaceTwigRules.possibleMaterials(
+                level.dimension().location().toString(), biome).stream().map(name -> stick(name, 1)).toList();
+    }
+
+    private static ItemStack stick(String name, int count) {
         if (name == null) return new ItemStack(Items.STICK, count);
         var material = gregtech.engine.material.GTMaterialRegistry.get(name);
         // Old source WOODS field spelling vs canonical species name in the port.

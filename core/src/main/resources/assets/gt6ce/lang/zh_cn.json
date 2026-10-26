@@ -26337,6 +26337,7 @@
   "gt6ce.fusion.startup": "剩余启动能量：%s LU",
   "gt6ce.jade.rock_content": "含有：%s",
   "gt6ce.jade.twig_content": "含有：木棍",
+  "gt6ce.jade.twig_possible_contents": "可能获得：",
   "gt6ce.jei.assembly": "Multiblock Assembly",
   "gt6ce.jei.assembly_boiler": "Top-down layers, bottom to top. C faces the top edge. Orange: heat base. Blue: water in. Green: steam out. Gray: keep empty.",
   "gt6ce.jei.assembly_drill": "Top-center controller outputs upwards. Bedrock or bedrock ore beneath drill heads. Orange ports accept RU; titanium walls accept lubricant. Each cycle: 32768 RU + 100 mB.",
