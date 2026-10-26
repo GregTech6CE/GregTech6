@@ -7,6 +7,8 @@ import gregtech.content.block.machine.MoldBasinBlock;
 import gregtech.content.block.machine.MoldBlock;
 import gregtech.content.block.machine.SmeltingCrucibleBlock;
 import gregtech.content.block.machine.SolidBurningBoxBlock;
+import gregtech.content.block.misc.DungeonPortalBlock;
+import gregtech.content.block.misc.DungeonPortalBlockEntity;
 import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.blockentity.machine.BoilerTankBlockEntity;
 import gregtech.content.blockentity.machine.EngineBaseBlockEntity;
@@ -40,6 +42,7 @@ public class GTJadePlugin implements IWailaPlugin {
         registration.registerBlockDataProvider(EnergyBufferJadeProvider.INSTANCE,gregtech.content.blockentity.energy.ChemicalBatteryBlockEntity.class);
         registration.registerBlockDataProvider(ExtenderJadeProvider.INSTANCE,gregtech.content.block.misc.ExtenderBlockEntity.class);
         registration.registerBlockDataProvider(ReactorJadeProvider.INSTANCE,gregtech.content.blockentity.energy.ReactorCoreBlockEntity.class);
+        registration.registerBlockDataProvider(PortalJadeProvider.INSTANCE, DungeonPortalBlockEntity.class);
         registration.registerBlockDataProvider(MultiblockJadeProvider.INSTANCE, net.minecraft.world.level.block.entity.BlockEntity.class);
         registration.registerBlockDataProvider(BurningBoxJadeProvider.INSTANCE, SolidBurningBoxBlockEntity.class);
 //? if >=1.21.1 {
@@ -74,6 +77,7 @@ public class GTJadePlugin implements IWailaPlugin {
         registration.registerBlockComponent(ExtenderJadeProvider.INSTANCE,gregtech.content.block.misc.SourceExtenderBlock.class);
         registration.registerBlockComponent(ReactorJadeProvider.INSTANCE,gregtech.content.block.energy.ReactorCoreBlock.class);
         registration.registerBlockComponent(ReactorJadeProvider.INSTANCE,gregtech.content.block.energy.ReactorCore2x2Block.class);
+        registration.registerBlockComponent(PortalJadeProvider.INSTANCE, DungeonPortalBlock.class);
         registration.registerBlockComponent(MultiblockJadeProvider.INSTANCE, net.minecraft.world.level.block.Block.class);
         registration.registerBlockComponent(BurningBoxJadeProvider.INSTANCE, SolidBurningBoxBlock.class);
         registration.registerBlockComponent(CrucibleJadeProvider.INSTANCE, SmeltingCrucibleBlock.class);
