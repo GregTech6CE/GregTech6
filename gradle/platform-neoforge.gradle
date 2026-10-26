@@ -3,6 +3,9 @@ apply plugin: 'java-library'
 apply plugin: 'net.neoforged.moddev'
 
 evaluationDependsOn(':core')
+evaluationDependsOn(':api')
+evaluationDependsOn(":api-platform:${project.name}")
+def platformApi = project(":api-platform:${project.name}")
 
 group = rootProject.property('mod_group_id')
 version = rootProject.property('mod_version')
@@ -23,6 +26,8 @@ repositories {
 }
 
 dependencies {
+    implementation project(':api')
+    implementation project(platformApi.path)
     compileOnly "dev.emi:emi-neoforge:1.1.24+1.21.1:api"
     if (rootProject.findProperty('emiSmoke') == 'true') {
         runtimeOnly "dev.emi:emi-neoforge:1.1.24+1.21.1"
@@ -71,7 +76,6 @@ dependencies {
 
 neoForge {
     version = '21.1.243'
-    addModdingDependenciesTo sourceSets.api
 
     runs {
         client {
@@ -96,8 +100,9 @@ neoForge {
     mods {
         "${rootProject.property('mod_id')}" {
             sourceSet sourceSets.main
-            sourceSet sourceSets.api
+            sourceSet platformApi.sourceSets.main
             sourceSet project(':core').sourceSets.main
+            sourceSet project(':api').sourceSets.main
         }
     }
 }
@@ -127,7 +132,8 @@ tasks.named('jar', Jar).configure {
     zip64 = true
     // The same Java 17 output used by Forge is embedded exactly once.
     from project(':core').sourceSets.main.output
-    from sourceSets.api.output
+    from project(':api').sourceSets.main.output
+    from platformApi.sourceSets.main.output
     duplicatesStrategy = DuplicatesStrategy.FAIL
     preserveFileTimestamps = false
     reproducibleFileOrder = true

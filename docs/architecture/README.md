@@ -6,7 +6,9 @@
 
 | 源码层 | 职责 | 允许的方向 |
 | --- | --- | --- |
-| `core` | 纯 Java 契约、定义、规则、状态与共享资源 | 不依赖 Minecraft 层 |
+| `api/common`（独立仓库子模块） | Java 17 公共协议、模型、声明与宿主服务接口 | 仅依赖 JDK；主库接为 `:api` |
+| `core` | 纯 Java 内容定义、规则、状态与共享资源 | 依赖 api，不依赖 Minecraft 层 |
+| `api/minecraft`（独立仓库子模块） | 含 Minecraft/加载器类型的公开协议 | `:api-platform:<node>` 依赖公共 API 及平台类型，不依赖 core 或模组 main |
 | `minecraft/src` | 游戏对象、共享运行时与跨版本输入 | 可调用 core；版本差异由 Stonecutter/适配承接 |
 | `minecraft/versions/*/src` | 原生加载器入口与版本差异 | 组合共享输入及 core，不引用另一节点专属实现 |
 
@@ -24,7 +26,7 @@
 | `client` / `network` / `event` / `mixin` / `compat` | 如何展示、同步、接入事件与外部生态？ | 绕过服务端权威规则 |
 | `util` | 哪些小工具确实跨领域通用？ | 暂时不知道放哪的业务代码 |
 
-新代码的约定是 API 不依赖实现，core 不依赖 Minecraft；content 定义与 engine 执行通过明确类型协作。已有历史交叉引用需按任务逐步收敛，不能把这里理解成当前仓库已经是严格无环的包依赖图。
+API 独立编译，不依赖实现；core 不依赖 Minecraft。content 定义与 engine 执行通过明确类型协作，二者仍有历史交叉引用，不能把整个仓库理解成严格无环的包依赖图。API 独立版本与迁移方式见[附属 API](../ADDON_API.zh-CN.md)。
 
 ## 第三层：按领域追踪
 

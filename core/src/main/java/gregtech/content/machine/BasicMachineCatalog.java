@@ -264,7 +264,7 @@ public final class BasicMachineCatalog {
                 BasicMachineParameters spec = BasicMachineParameters.builder(id, mat)
                         .machineType(def.name())
 
-                        .energy(energyType, energyIn).tier(tierNumber)
+                        .energy(energyType.getShortName(), energyIn).tier(tierNumber)
                         // GT6 NBT_INPUT_MIN/MAX; without an explicit range GT6 itself uses
                         // input/2..input*2 (MultiTileEntityBasicMachine.readFromNBT2).
                         .energyRange(original != null ? original.energyInputMin()
@@ -291,7 +291,7 @@ public final class BasicMachineCatalog {
                         gregtech.engine.material.GTMaterialRegistry.get("Osmiridium"))
                         .machineType(name)
 
-                        .energy(energyType, energyIn).tier(tier)
+                        .energy(energyType.getShortName(), energyIn).tier(tier)
                         .parallel(original != null ? original.parallel() : 1)
                         .energyRange(original != null ? original.energyInputMin() : energyIn,
                                 original != null ? original.energyInputMax() : energyIn)

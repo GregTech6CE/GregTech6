@@ -11,6 +11,7 @@ import gregtech.content.energy.OriginalAdjacentEnergyRules;
 import gregtech.content.machine.OriginalBasicMachineRules;
 import gregtech.engine.multiblock.LargeMachineProcessingRules;
 import gregtech.content.multiblock.OriginalLargeRecipeMachineData;
+import gregtech.content.multiblock.SharedLargeMachineLayouts;
 import gregtech.content.data.BasicMachineOriginalParams;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.data.MachineRecipeMaps;
@@ -81,6 +82,17 @@ public record BasicMachineSpec(
         /** Charge a recipe's special value from the auxiliary buffer before progress starts. */
         boolean startupEnergy
 ) {
+    /** Special built-in controllers take precedence over a layout with the same name. */
+    private static MachineControllerKind builtInController(String machineName) {
+        return switch (machineName) {
+            case "massfab" -> MachineControllerKind.COMPACT_MATTER;
+            case "largemassfab" -> MachineControllerKind.MATTER;
+            case "distillationtower" -> MachineControllerKind.DISTILLATION;
+            default -> SharedLargeMachineLayouts.cells(machineName) != null
+                    ? MachineControllerKind.LARGE_RECIPE : MachineControllerKind.BASIC;
+        };
+    }
+
     public BasicMachineSpec {
         if (id == null || !id.matches("[a-z0-9/._-]+"))
             throw new IllegalArgumentException("Invalid machine ID: " + id);
@@ -140,7 +152,7 @@ public record BasicMachineSpec(
                             RecipeMap recipeMap, int parallelLimit, long energyInMin, long energyInMax) {
         this(id, material, machineName, energyType, tier, energyIn, energyOut, hardness, blastResistance,
                 faceConfig, constructionMaterials, recipeMap, parallelLimit, energyInMin, energyInMax,
-                "gt6ce", MachineControllerKind.builtIn(machineName),
+                "gt6ce", builtInController(machineName),
                 builtInProcessingEfficiency(machineName, tier),
                 builtInConstantEnergy(machineName, tier),
                 OriginalLargeRecipeMachineData.structureKeys(machineName),
@@ -183,7 +195,7 @@ public record BasicMachineSpec(
      * use the original name table. Large controllers keep {@link LargeMachineProcessingRules}.
      */
     public static int builtInProcessingEfficiency(String machineName, int tier) {
-        var kind = MachineControllerKind.builtIn(machineName);
+        var kind = builtInController(machineName);
         if (kind == MachineControllerKind.BASIC || kind == MachineControllerKind.COMPACT_MATTER)
             return OriginalBasicMachineRules.efficiency(machineName, tier);
         return LargeMachineProcessingRules.efficiency(machineName);
@@ -191,7 +203,7 @@ public record BasicMachineSpec(
 
     /** Constant while the machine is not using TU. The TU exclusion stays in the block entity. */
     public static boolean builtInConstantEnergy(String machineName, int tier) {
-        var kind = MachineControllerKind.builtIn(machineName);
+        var kind = builtInController(machineName);
         if (kind == MachineControllerKind.MATTER) return false;
         if (kind == MachineControllerKind.BASIC || kind == MachineControllerKind.COMPACT_MATTER)
             return !OriginalBasicMachineRules.noConstantPower(machineName, tier);
@@ -200,7 +212,7 @@ public record BasicMachineSpec(
 
     /** Cheap overclocking without marking the value as an addon declaration. */
     public static boolean builtInCheapOverclocking(String machineName, int tier, String energyType) {
-        var kind = MachineControllerKind.builtIn(machineName);
+        var kind = builtInController(machineName);
         if (kind == MachineControllerKind.COMPACT_MATTER) return true;
         if (usesLargeBuiltinProcessing(machineName, kind)) return !"TU".equals(energyType);
         return OriginalBasicMachineRules.cheapOverclocking(machineName, tier);
@@ -211,7 +223,7 @@ public record BasicMachineSpec(
      * tower, follow “not TU”. A single block uses its original row, or true when it has none.
      */
     public static boolean builtInParallelScalesDuration(String machineName, int tier, String energyType) {
-        var kind = MachineControllerKind.builtIn(machineName);
+        var kind = builtInController(machineName);
         if (usesLargeBuiltinProcessing(machineName, kind)) return !"TU".equals(energyType);
         var row = BasicMachineOriginalParams.find(machineName, tier);
         return row == null || row.parallelDuration();
@@ -388,7 +400,7 @@ public record BasicMachineSpec(
         public Builder fluidInputSource(IoTarget value) { fluidInputSource = value; return this; }
         public BasicMachineSpec build() {
             Objects.requireNonNull(energy, "Choose the machine energy type explicitly");
-            var resolvedKind = kind != null ? kind : MachineControllerKind.builtIn(machineType);
+            var resolvedKind = kind != null ? kind : builtInController(machineType);
             boolean gt6ce = "gt6ce".equals(namespace);
             String energyName = energy.getShortName();
             long resolvedMin;

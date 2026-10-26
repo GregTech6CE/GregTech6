@@ -5,15 +5,18 @@
 | 修改范围 | 最小合理验证 | 还需关注 |
 | --- | --- | --- |
 | 文档、AGENTS、忽略规则 | 链接、引用、命令来源、`git check-ignore` | 是否误忽略文档/资源/Wrapper |
-| core 规则或 API | `./gradlew :core:check`；针对性回归 | API 变更还需双平台编译 |
-| 共享 Minecraft 实现、Stonecutter 条件 | `./gradlew compileBothPlatforms` | 两节点生成结果、专用服务端类加载 |
-| 资源、元数据、构建打包 | `./gradlew assembleBothPlatforms`，检查两份最终 JAR 内容 | 重复类、缺资源、错误版本路径、混入临时文件 |
-| 平台专属修改 | 对应节点 `build` | 若牵涉共享契约，扩大到两节点 |
+| 公共 API | `./gradlew -p api/common check assemble`，仅依赖 JAR 的消费者回归 | 公开签名闭包、版本与兼容迁移；按需选一个宿主平台 |
+| core 规则 | 针对性回归；按需执行 `./gradlew :core:check` | API 调用方、能源及材料规则 |
+| 游戏 API、共享 Minecraft 实现、Stonecutter 条件 | 一个相关 `:api-platform:<node>:compileJava` 或模组节点 `compileJava` | 子模块版本、该节点生成结果、专用服务端类加载 |
+| 资源、元数据、构建打包 | 一个相关节点的 Forge `distributionJar` 或 NeoForge `jar`，按需检查 SDK | API 类恰好一份、缺资源、错误版本路径、混入临时文件 |
+| 平台专属修改 | 对应节点必要的编译或定向检查 | 跨平台差异通过源码核对，未验证平台明确说明 |
 | 机器、配方、流体、能源、存储 | 上述构建加游戏内复现 | tick、边界数量、模拟/实际转移、重载与存档 |
 | 客户端、GUI、网络、Mixin | 客户端与专用服务端验证 | 同步、交互权限、类加载、Mixin 目标 |
 | 可选集成 | 无该模组与安装目标模组两组启动 | 依赖版本、配方显示/行为、未安装时加载隔离 |
 
-CI 位于 [build.yml](../../.github/workflows/build.yml)，使用 Java 17/21 工具链，对两个节点分别运行 `build` 并收集模组/SDK JAR。根 `check` 依赖 core 与两个节点的 `check`。当前没有现成 `src/test/` 套件，任务成功不能自动证明有单元测试执行。
+CI 位于 [build.yml](../../.github/workflows/build.yml)，使用 Java 17/21 工具链，对两个节点分别运行 `build` 并收集模组、公共 API 和平台 SDK JAR。根 `check` 依赖 api、core 与两个节点的 `check`，不作为默认定向检查；未经明确要求，不运行双平台全量验证。
+
+公共库的 `apiContracts` 从 API JAR 编译并运行测试，不借用 main 输出或 core；core 的 `centrifugeContracts` 检查已有离心配方场景。两者接入各自 `check`，平台 `check` 依赖这两项。它们不能替代附属 SPI 发现、客户端与专用服务端启动验证。
 
 ## 游戏内验证记录
 

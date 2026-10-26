@@ -1,126 +1,26 @@
-// Public source sets compile independently of the mod implementation. This file
-// adapts the SDK to the existing Stonecutter nodes, not a second platform tree.
-def loader = project.name.endsWith('neoforge') ? 'neoforge' : 'forge'
-def minecraftVersion = loader == 'forge' ? '1.20.1' : '1.21.1'
-def coreOutput = project(':core').sourceSets.main.output
-
-// Remove implementation dependencies before Gradle traverses producer tasks.
-// FileCollection.filter hides files but retains their compile/classes task edges.
-// Resolve lazily so loader plugins can finish installing their Minecraft inputs.
-def externalCompileConfiguration
-def externalCompile = files(providers.provider {
-    if (externalCompileConfiguration == null) {
-        def corePath = project(':core').projectDir.absolutePath.replace('\\', '/') + '/'
-        externalCompileConfiguration = configurations.compileClasspath.copyRecursive { dependency ->
-            if (dependency instanceof org.gradle.api.artifacts.ProjectDependency) return false
-            if (dependency instanceof org.gradle.api.artifacts.FileCollectionDependency) {
-                return !dependency.files.any { file ->
-                    file.absolutePath.replace('\\', '/').startsWith(corePath)
-                }
-            }
-            return true
-        }
+// Compatibility entry points: SDKs are built by the independent API repository.
+def platformApi = project(":api-platform:${project.name}")
+def exports = [addonSdkJar: 'jar', addonSdkSourcesJar: 'sourcesJar', addonSdkJavadocJar: 'javadocJar']
+exports.each { localName, producerName ->
+    def producer = platformApi.tasks.named(producerName, Jar)
+    tasks.register(localName, Copy) {
+        description = "Export ${producerName} from the independent ${project.name} API project."
+        group = 'build'
+        from producer.flatMap { it.archiveFile }
+        into layout.buildDirectory.dir('addon-sdk')
     }
-    externalCompileConfiguration
-})
-sourceSets.api.compileClasspath += coreOutput + externalCompile
-
-def apiOutputs = files(sourceSets.api.output, coreOutput)
-sourceSets.main.compileClasspath += apiOutputs
-sourceSets.main.runtimeClasspath += apiOutputs
-
-def addonSdkJar = tasks.register('addonSdkJar', Jar) {
-    description = "Compile-only ${loader} addon SDK: public core and native API, Mojang names."
-    group = 'build'
-    dependsOn tasks.named('compileApiJava'), project(':core').tasks.named('classes')
-    archiveBaseName = "${rootProject.property('mod_id')}-addon-sdk-${minecraftVersion}-${loader}"
-    archiveVersion = project.version.toString()
-    destinationDirectory = layout.buildDirectory.dir('addon-sdk')
-    from(coreOutput.classesDirs) { include 'gregtech/api/**' }
-    from sourceSets.api.output.classesDirs
-    from(project(':core').file('src/main/resources/META-INF/gregtech6')) { into 'META-INF/gregtech6' }
-    duplicatesStrategy = DuplicatesStrategy.FAIL
-    preserveFileTimestamps = false
-    reproducibleFileOrder = true
 }
-
-// Publish the target node's processed sources, not the shared Stonecutter input:
-// loader imports and version branches must match the compiled SDK exactly.
-def apiSources = project(':core').fileTree('src/main/java/gregtech/api') { include '**/*.java' } +
-        sourceSets.api.allJava
-def addonSdkSourcesJar = tasks.register('addonSdkSourcesJar', Jar) {
-    description = "Public ${loader} addon API sources matching this node's SDK."
-    group = 'build'
-    dependsOn tasks.named('stonecutterGenerateApi')
-    archiveBaseName = addonSdkJar.flatMap { it.archiveBaseName }
-    archiveVersion = project.version.toString()
-    archiveClassifier = 'sources'
-    destinationDirectory = layout.buildDirectory.dir('addon-sdk')
-    from apiSources
-    from(project(':core').file('src/main/resources/META-INF/gregtech6')) { into 'META-INF/gregtech6' }
-    duplicatesStrategy = DuplicatesStrategy.FAIL
-    preserveFileTimestamps = false
-    reproducibleFileOrder = true
-}
-
-def addonSdkJavadoc = tasks.register('addonSdkJavadoc', Javadoc) {
-    description = "Generate documentation using only the public ${loader} addon API sources."
+tasks.register('addonSdkJavadoc') {
     group = 'documentation'
-    dependsOn tasks.named('stonecutterGenerateApi'), project(':core').tasks.named('compileJava')
-    source = apiSources
-    // This is the same isolated classpath used to compile the native public API;
-    // main output, runtime dependencies and mod assets are never doc inputs.
-    classpath = sourceSets.api.compileClasspath
-    destinationDir = layout.buildDirectory.dir('docs/addon-sdk').get().asFile
-    javadocTool = javaToolchains.javadocToolFor {
-        languageVersion = JavaLanguageVersion.of(loader == 'forge' ? 17 : 21)
-    }
-    title = "GregTech 6 Community Edition ${project.version} Addon API (${minecraftVersion} ${loader})"
-    options.encoding = 'UTF-8'
-    options.docEncoding = 'UTF-8'
-    options.charSet = 'UTF-8'
-    options.noTimestamp = true
-    // Missing prose is not a build failure; malformed links and HTML still are.
-    options.addBooleanOption('Xdoclint:all,-missing', true)
+    dependsOn platformApi.tasks.named('javadoc')
 }
-
-def addonSdkJavadocJar = tasks.register('addonSdkJavadocJar', Jar) {
-    description = "Public ${loader} addon API Javadoc matching this node's SDK."
-    group = 'documentation'
-    dependsOn addonSdkJavadoc
-    archiveBaseName = addonSdkJar.flatMap { it.archiveBaseName }
-    archiveVersion = project.version.toString()
-    archiveClassifier = 'javadoc'
-    destinationDirectory = layout.buildDirectory.dir('addon-sdk')
-    from addonSdkJavadoc.map { it.destinationDir }
-    from(project(':core').file('src/main/resources/META-INF/gregtech6')) { into 'META-INF/gregtech6' }
-    duplicatesStrategy = DuplicatesStrategy.FAIL
-    preserveFileTimestamps = false
-    reproducibleFileOrder = true
+tasks.register('generatePomFileForAddonApiPublication') {
+    group = 'publishing'
+    dependsOn platformApi.tasks.named('generatePomFileForAddonApiPublication')
 }
-
 tasks.register('addonSdk') {
-    description = "Build the ${loader} addon SDK with its matching source and Javadoc attachments."
+    description = 'Build the common library and export the platform SDK with source and Javadoc attachments.'
     group = 'build'
-    dependsOn addonSdkJar, addonSdkSourcesJar, addonSdkJavadocJar
+    dependsOn 'addonSdkJar', 'addonSdkSourcesJar', 'addonSdkJavadocJar', ':api:assemble'
 }
-
-if (loader == 'forge') {
-    // MixinGradle 0.7 attaches the production refmap and main compilation to every
-    // Jar task. SDK artifacts have no mixins. Remove only their injected helper
-    // edges after the plugin configures them, leaving the mod's own Jar unchanged.
-    afterEvaluate {
-        [addonSdkJar, addonSdkSourcesJar, addonSdkJavadocJar].each { provider ->
-            provider.configure { sdkTask ->
-                def helperName = 'addMixinsTo' + sdkTask.name.capitalize()
-                sdkTask.setDependsOn(sdkTask.dependsOn.findAll { dependency ->
-                    !(dependency instanceof Task && dependency.name == helperName)
-                })
-            }
-        }
-    }
-}
-
-// Sources are cheap and useful with every build. Generate Javadoc explicitly
-// with addonSdk or addonSdkJavadocJar rather than on every mod assembly.
-tasks.named('assemble').configure { dependsOn addonSdkJar, addonSdkSourcesJar }
+tasks.named('assemble').configure { dependsOn 'addonSdkJar', 'addonSdkSourcesJar', ':api:sourcesJar' }

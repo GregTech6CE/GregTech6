@@ -12,9 +12,10 @@ subprojects {
 apply from: 'gradle/stonecutter-native.gradle'
 
 tasks.named('check').configure {
-    dependsOn ':core:check', ':minecraft:1.20.1-forge:check', ':minecraft:1.21.1-neoforge:check'
+    dependsOn ':api:check', ':core:check', ':minecraft:1.20.1-forge:check', ':minecraft:1.21.1-neoforge:check'
 }
 tasks.named('assemble').configure { dependsOn 'assembleBothPlatforms' }
 tasks.named('clean').configure {
-    dependsOn ':core:clean', ':minecraft:1.20.1-forge:clean', ':minecraft:1.21.1-neoforge:clean'
+    dependsOn ':api:clean', ':core:clean', ':minecraft:1.20.1-forge:clean', ':minecraft:1.21.1-neoforge:clean'
+    dependsOn ':api-platform:1.20.1-forge:clean', ':api-platform:1.21.1-neoforge:clean'
 }

@@ -17,4 +17,10 @@ runs:
       run: |
         echo "JAVA17_HOME=$JAVA_HOME" >> "$GITHUB_ENV"
         chmod +x gradlew
+    - name: Use direct network access on the hosted runner
+      shell: bash
+      run: |
+        sed -i \
+          -e '/^systemProp\.\(http\|https\)\.proxy\(Host\|Port\)=/d' \
+          -e '/^systemProp\.socksProxy\(Host\|Port\)=/d' gradle.properties
     - uses: gradle/actions/setup-gradle@v4

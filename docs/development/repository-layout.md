@@ -4,9 +4,13 @@
 
 | 目录 | 应当放什么 | 不应放什么 |
 | --- | --- | --- |
-| `core/src/main/java/` | 平台无关契约、定义、运行规则 | 游戏 API、加载器适配、任务报告 |
+| `api/` | GregTech6API 独立仓库的子模块检出；主库只记录提交指针 | 再次将其源码作为主库普通文件提交 |
+| `api/common/src/main/java/` | Java 17 公共协议、模型、声明与宿主服务接口 | core 实现、内容目录、游戏类型、任务报告 |
+| `api/common/src/test/` | 仅依赖公共 API JAR 的消费者与契约回归 | 主模组实现和资源 |
+| `core/src/main/java/` | 平台无关内容定义、运行规则 | 游戏 API、加载器适配、任务报告 |
 | `core/src/main/resources/` | 共用贴图、模型、声音、数据与分发许可 | 下载包、调试日志、文档草稿 |
 | `minecraft/src/main/` | 共享游戏实现及资源输入 | 构建生成副本、部署笔记 |
+| `api/minecraft/src/main/` | 独立 API 仓库中经 Stonecutter 编译的游戏侧公开 API | core 或模组 main 实现依赖 |
 | `minecraft/versions/*/src/main/` | 版本专属实现、加载器元数据及资源 | 测试实例、原始证据 |
 | `gradle/`、各 `*.gradle*` | 构建定义、Wrapper 与平台任务配置 | 个人安装路径、凭据 |
 | `docs/` | 经整理的长期指南、验证结论和记录 | 完整日志、随手计划、下载 |

@@ -1,5 +1,7 @@
 package gregtech.engine.addon;
 
+import gregtech.api.energy.EnergyType;
+
 import gregtech.api.addon.*;
 
 import gregtech.api.addon.AddonFailures;
@@ -162,7 +164,7 @@ public final class AddonMachines {
         var input = machine.energy();
         var parameters = BasicMachineParameters.builder(casing.id(), GTMaterialRegistry.get(casing.material()))
                 .machineType(casing.machineType())
-                .energy(energy(input.type()), input.perTick())
+                .energy(input.type(), input.perTick())
                 .tier(casing.tier())
                 .parallel(machine.parallel())
                 .faces(faces(machine))
@@ -547,7 +549,7 @@ public final class AddonMachines {
                 if (previousOwner != null && !previousOwner.equals(submission.addonId))
                     throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName
                             + "' uses the same machine name as addon '" + previousOwner + "'");
-                if (parameters.energyTag() == GregTechTags.Energy.TU && parameters.energyRangeSpecified())
+                if (EnergyType.time(parameters.energyType()) && parameters.energyRangeSpecified())
                     throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName
                             + "' cannot declare an energy range for TU");
                 var signature = new Signature(definition.recipeMapName(), definition.kind(), definition.efficiency(),

@@ -4,7 +4,7 @@
 
 ## 输入与生成结果
 
-共享输入是 `minecraft/src/<sourceSet>/`，节点输入是 `minecraft/versions/<node>/src/<sourceSet>/`。当前 [minecraft/build.gradle](../../minecraft/build.gradle)将节点编译/资源处理接到 `stonecutterGenerate*`，使用节点 `build/generated/stonecutter/<sourceSet>/` 与节点自身源码。core 独立编译并由平台打包嵌入。
+主模组共享输入是 `minecraft/src/<sourceSet>/`，节点输入是 `minecraft/versions/<node>/src/<sourceSet>/`。当前 [minecraft/build.gradle](../../minecraft/build.gradle)将节点编译/资源处理接到 `stonecutterGenerate*`，使用节点 `build/generated/stonecutter/<sourceSet>/` 与节点自身源码。游戏侧协议来自独立子模块 `api/minecraft/src/main/`，由 `:api-platform:<node>` 编译；公共 `:api` 来自 `api/common/`。主模组依赖这些项目和 core，并将它们各自的输出嵌入最终包。
 
 要修复生成结果中的错误，回到共享输入、条件分支或节点输入。新增类之前检查同全限定名是否已在另一输入出现，不假定节点代码会自动覆盖共享同名类。
 
@@ -24,6 +24,6 @@
 - 物品 NBT 与数据组件、资源标识构造、注册与能力 API 存在差异，沿已有适配处理。
 - 两版本数据包目录命名不同，不能把一边 JSON 路径直接拷给另一边。
 - 共享构建对完整 JSON 文档中的 composite loader 名称进行转换；这不是所有资源格式都会自动迁移的保证。
-- Forge 发行包经 `distributionJar` 合并 core；NeoForge 在 `jar` 合并。SDK 与模组产物分开。
+- Forge 发行包经 `distributionJar` 合并纯 Java API 和 core；NeoForge 在 `jar` 合并。游戏侧 API 在平台编译/重映射阶段接入。SDK 与模组产物分开。
 
 版本支持、依赖版本和任务入口以仓库配置为事实来源。升级工具或加载器属于单独任务，不能因文档示例而顺手修改。
