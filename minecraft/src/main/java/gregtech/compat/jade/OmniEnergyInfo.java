@@ -43,6 +43,8 @@ final class OmniEnergyInfo {
             }
             if (node.isElectricTransformer() || node.isRotationTransformer()) info.flag("reversed", node.transformerInverted());
             if (node.isBatteryBox()) {
+                // The full battery grid below replaces Jade's threshold-collapsed generic inventory.
+                info.groupedInventory();
                 var battery = node.batteryEnergy();
                 info.line("battery_total", battery.stored(), battery.capacity(), spec.outType().getShortName());
                 info.line("battery_output", battery.providers(), battery.offered());
