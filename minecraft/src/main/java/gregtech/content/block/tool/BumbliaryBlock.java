@@ -183,9 +183,10 @@ public class BumbliaryBlock extends ShapedToolBlock implements EntityBlock {
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip,
 //?}
                                 TooltipFlag flag) {
-        tooltip.add(Component.translatable("tooltip.gt6ce.machine.range", advanced ? "3x3x3" : "7x7x7"));
-        tooltip.add(Component.translatable("tooltip.gt6ce.machine.tool.scoop"));
-        tooltip.add(Component.translatable("tooltip.gt6ce.crucible.thermometer"));
+        tooltip.add(gregtech.client.TooltipHelper.stat("tooltip.gt6ce.machine.range", net.minecraft.ChatFormatting.AQUA,
+                advanced ? "3x3x3" : "7x7x7"));
+        tooltip.add(Component.translatable("tooltip.gt6ce.machine.tool.scoop").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
+        tooltip.add(Component.translatable("tooltip.gt6ce.crucible.thermometer").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
 //? if >=1.21.1 {
         /*super.appendHoverText(stack, context, tooltip, flag);
 *///?} else {

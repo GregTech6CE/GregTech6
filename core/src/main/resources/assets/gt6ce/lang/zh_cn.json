@@ -142573,5 +142573,9 @@
   "written.book.Manual_Tools.page.6": "Double Axes¶===================¶Still good for chopping on Trees, but also very effective as a Weapon and has 50% more Durability than the normal Axe, while requiring 66.666% more Material to create.",
   "written.book.Manual_Tools.page.7": "Saws¶===================¶Bad for chopping Trees, but can easily cut wooden things like Planks.",
   "written.book.Manual_Tools.page.8": "Chainsaws¶===================¶Good for pretty much all purposes, can chop Trees, saw Planks and is a very nice Weapon. It can specifically be used to spam click Creepers to death easily.",
-  "written.book.Manual_Tools.page.9": "Buzzsaws¶===================¶This Type of Saw is dedicated to Hand Crafting and cannot harvest any Blocks. It is cheaper to use this than a Chainsaw for crafting purposes."
+  "written.book.Manual_Tools.page.9": "Buzzsaws¶===================¶This Type of Saw is dedicated to Hand Crafting and cannot harvest any Blocks. It is cheaper to use this than a Chainsaw for crafting purposes.",
+  "item.gt6ce.material_panel": "%s（%s）",
+  "tooltip.gt6ce.portable_battery.packet": "能量包大小：%s–%s %s",
+  "tooltip.gt6ce.auto_tool.toggle": "潜行空手右击启用或停用",
+  "tooltip.gt6ce.ui.except_front": "正面以外的任意面"
 }

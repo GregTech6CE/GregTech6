@@ -233,6 +233,6 @@ public final class AdvancedButtonBlock extends DirectionalBlock implements Entit
             "screwdriver", "cutter", "monkey_wrench",
             "soft_hammer", "magnifying_glass", "sneak"
         })
-        tooltip.add(Component.translatable("tooltip.gt6ce.advanced_button." + operation));
+        tooltip.add(Component.translatable("tooltip.gt6ce.advanced_button." + operation).withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
     }
 }

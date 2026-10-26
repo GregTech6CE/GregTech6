@@ -28,6 +28,24 @@ public final class TooltipHelper {
 
     private TooltipHelper() {}
 
+    /** Keep localized labels colored and their substituted values white, as machine stat rows do. */
+    public static MutableComponent stat(String key, ChatFormatting color, Object... values) {
+        Object[] arguments = new Object[values.length];
+        for (int i = 0; i < values.length; i++) {
+            Object value = values[i];
+            arguments[i] = value instanceof Component component ? component.copy().withStyle(ChatFormatting.WHITE)
+                    : Component.literal(value instanceof Long || value instanceof Integer
+                            ? formatLong(((Number) value).longValue()) : String.valueOf(value)).withStyle(ChatFormatting.WHITE);
+        }
+        return Component.translatable(key, arguments).withStyle(color);
+    }
+
+    public static void appendPortableBattery(long stored, long capacity, long min, long max,
+                                              String unit, List<Component> lines) {
+        lines.add(stat("tooltip.gt6ce.portable_battery.energy", ChatFormatting.GREEN, stored, capacity, unit));
+        lines.add(stat("tooltip.gt6ce.portable_battery.packet", ChatFormatting.AQUA, min, max, unit));
+    }
+
 //? if >=1.21.1 {
     /*private static final String MOD = "gt6ce";
 *///?} else {

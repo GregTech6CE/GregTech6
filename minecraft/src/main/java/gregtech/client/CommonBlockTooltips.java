@@ -57,6 +57,13 @@ public final class CommonBlockTooltips {
                 || containsAnyKey(line, Set.of("gt.lang.blastresistance"))
                 || line.getContents().equals(HAND_HARVEST.getContents()) && line.getStyle().equals(HAND_HARVEST.getStyle())));
         var rows = new ArrayList<Component>();
+        var track = gregtech.content.registry.GTTrackBlocks.get(BuiltInRegistries.BLOCK.getKey(block).getPath());
+        if (track != null || block instanceof gregtech.content.block.misc.RoadStripeRailBlock) {
+            float speed = track == null ? 0.5F : track.speed();
+            if (!containsKey(lines, "gt.lang.railspeed"))
+                rows.add(Component.translatable("gt.lang.railspeed").withStyle(ChatFormatting.AQUA)
+                        .append(Component.literal(Float.toString(Math.min(10, speed / 0.4F)) + "x").withStyle(ChatFormatting.GREEN)));
+        }
         if (flammable) rows.add(Component.translatable(FLAMMABLE).withStyle(ChatFormatting.RED));
         if (block instanceof BookShelfBlock && !containsKey(lines, ENCHANT))
             rows.add(Component.translatable(ENCHANT).withStyle(ChatFormatting.DARK_GRAY));

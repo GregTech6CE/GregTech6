@@ -28,7 +28,22 @@ public final class EnergyTextContracts {
         checkSpan(EnergyText.format(Component.literal("RUST").withStyle(ChatFormatting.GRAY)), "RUST", ChatFormatting.GRAY);
         checkSpan(EnergyText.format(Component.translatableWithFallback("gt.td.short.energy.vis_ignis", "火")), "火", ChatFormatting.RED);
         checkSpan(EnergyText.format(Component.translatableWithFallback("gt.td.long.energy.quantum", "Quantum Energy")), "Quantum Energy", ChatFormatting.DARK_PURPLE);
+        var battery = new java.util.ArrayList<Component>();
+        TooltipHelper.appendPortableBattery(1234, 10000, 16, 64, "LU", battery);
+        var stored = withFallback(battery.get(0), "%s / %s %s");
+        var packet = withFallback(battery.get(1), "Energy packet: %s–%s %s");
+        if (!stored.getString().equals("1,234 / 10,000 LU") || !packet.getString().endsWith("16–64 LU"))
+            throw new AssertionError("Crystal tooltips must keep the LU unit and formatted values");
+        checkSpan(EnergyText.format(stored), "1,234", ChatFormatting.WHITE);
+        checkSpan(EnergyText.format(packet), "Energy packet: ", ChatFormatting.AQUA);
+        checkSpan(EnergyText.format(packet), "LU", ChatFormatting.YELLOW);
         System.out.println("Energy text contracts passed: 19 colours, translated arguments/names and inherited styles.");
+    }
+
+    private static Component withFallback(Component line, String fallback) {
+        var translated = (net.minecraft.network.chat.contents.TranslatableContents) line.getContents();
+        return Component.translatableWithFallback("test.gt6ce." + translated.getKey(), fallback, translated.getArgs())
+                .setStyle(line.getStyle());
     }
 
     private static void checkSpan(Component text, String expected, ChatFormatting color) {

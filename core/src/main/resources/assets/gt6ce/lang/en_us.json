@@ -16779,5 +16779,13 @@
   "tooltip.gt6ce.ui.total_per_tick": "/t total)",
   "tooltip.gt6ce.ui.attachment.fill_gas": "Mount on a tank to fill it with gas from a held container.",
   "tooltip.gt6ce.ui.attachment.fill_liquid": "Mount on a tank to fill it with liquid from a held container.",
-  "tooltip.gt6ce.ui.attachment.pour": "Empty-hand click pours liquid into the container directly below."
+  "tooltip.gt6ce.ui.attachment.pour": "Empty-hand click pours liquid into the container directly below.",
+  "item.gt6ce.material_panel": "%s (%s)",
+  "tooltip.gt6ce.portable_battery.packet": "Energy packet: %s–%s %s",
+  "tooltip.gt6ce.auto_tool.toggle": "Sneak with an empty hand to enable or disable",
+  "tooltip.gt6ce.ui.except_front": "Any side except the front",
+  "gt.lang.recipes.autohammer": "Performs Hammer Rightclicks and crushes Blocks",
+  "gt.lang.recipes.igniter": "Performs Ignition Rightclicks and incinerates Blocks",
+  "gt.lang.recipes.quality": "This has a Tool Quality of",
+  "gt.lang.railspeed": "Rail Speed: "
 }

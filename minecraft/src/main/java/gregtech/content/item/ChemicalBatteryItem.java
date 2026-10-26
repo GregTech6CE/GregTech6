@@ -80,8 +80,8 @@ public class ChemicalBatteryItem extends BlockItem implements IItemEnergy {
     @Override public void appendHoverText(ItemStack stack,@javax.annotation.Nullable Level level,List<Component> tip,TooltipFlag flags){
         super.appendHoverText(stack,level,tip,flags);
 //?}
-        tip.add(Component.translatable("tooltip.gt6ce.portable_battery.energy",stored(stack),spec().capacity(),spec().energyType().getShortName()));
-        tip.add(Component.translatable("tooltip.gt6ce.chemical_battery.packet",spec().minimumPacket(),spec().maximumPacket()));
-        tip.add(Component.translatable("tooltip.gt6ce.chemical_battery.place"));
+        gregtech.client.TooltipHelper.appendPortableBattery(stored(stack), spec().capacity(),
+                spec().minimumPacket(), spec().maximumPacket(), spec().energyType().getShortName(), tip);
+        tip.add(Component.translatable("tooltip.gt6ce.chemical_battery.place").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
     }
 }

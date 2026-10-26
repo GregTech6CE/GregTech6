@@ -52,7 +52,10 @@ public final class ZpmDischargerBlock extends AutoToolBlock {
 *///?} else {
     @Override public void appendHoverText(net.minecraft.world.item.ItemStack s,net.minecraft.world.level.BlockGetter w,java.util.List<net.minecraft.network.chat.Component> lines,net.minecraft.world.item.TooltipFlag f){
 //?}
-        lines.add(net.minecraft.network.chat.Component.translatable("gt6ce.zpm.output",ZpmEnergy.PACKET,electric?"EU":"QU"));
-        lines.add(net.minecraft.network.chat.Component.translatable("gt6ce.zpm.controls"));
+        lines.add(gregtech.client.TooltipHelper.energyOutLine(ZpmEnergy.PACKET,electric?"EU":"QU")
+                .append(net.minecraft.network.chat.Component.literal(" (").withStyle(net.minecraft.ChatFormatting.WHITE))
+                .append(net.minecraft.network.chat.Component.translatable("gt.lang.face.front").withStyle(net.minecraft.ChatFormatting.WHITE)).append(")"));
+        lines.add(net.minecraft.network.chat.Component.translatable("gt6ce.zpm.controls").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
+        lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.machine.tool.wrench_facing").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
     }
 }

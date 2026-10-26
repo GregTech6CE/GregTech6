@@ -114,12 +114,12 @@ public final class PortableFluidContainerItem extends BlockItem implements gregt
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
 //?}
         var fluid = FluidUtil.getFluidContained(stack).orElse(FluidStack.EMPTY);
-        tooltip.add(Component.translatable("tooltip.gt6ce.portable_fluid.contents",
+        tooltip.add(gregtech.client.TooltipHelper.stat("tooltip.gt6ce.portable_fluid.contents", net.minecraft.ChatFormatting.AQUA,
                 fluid.isEmpty() ? Component.translatable("tooltip.gt6ce.portable_fluid.empty") : fluid.getDisplayName(),
                 fluid.getAmount(), gregtech.content.tool.PortableContainerLimits.capacity(stack, spec)));
         if (gregtech.content.tool.PortableContainerLimits.adjustable(spec))
-            tooltip.add(Component.translatable("tooltip.gt6ce.portable_fluid.limit_use"));
-        tooltip.add(Component.translatable("tooltip.gt6ce.portable_fluid.temperature", spec.maxTemperature()));
-        tooltip.add(Component.translatable("tooltip.gt6ce.portable_fluid.use"));
+            tooltip.add(Component.translatable("tooltip.gt6ce.portable_fluid.limit_use").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
+        tooltip.add(gregtech.client.TooltipHelper.stat("tooltip.gt6ce.portable_fluid.temperature", net.minecraft.ChatFormatting.GOLD, spec.maxTemperature()));
+        tooltip.add(Component.translatable("tooltip.gt6ce.portable_fluid.use").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
     }
 }
