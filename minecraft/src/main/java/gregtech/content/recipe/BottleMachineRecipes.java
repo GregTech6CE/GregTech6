@@ -30,7 +30,30 @@ public final class BottleMachineRecipes {
             if(MachineRecipeMaps.Canner.addRecipe1(false,16,16,empty,liquid,FluidStack.EMPTY,filled)!=null)count++;
             if(MachineRecipeMaps.Canner.addRecipe1(false,16,16,filled,FluidStack.EMPTY,liquid,empty)!=null)count++;
         }
+        count += registerPotions();
         com.mojang.logging.LogUtils.getLogger().info("GT6 bottle filling/draining: {} rows, unresolved {}",count,MISSING);
+        return count;
+    }
+
+    private static int registerPotions() {
+        int count = 0;
+        for (var entry : gregtech.content.data.RegisteredFluids.all().values()) {
+            if (gregtech.content.fluid.VanillaPotionBottling.bottle(entry.registryName()) == null) continue;
+            var fluid = gregtech.content.food.GTDrinks.fluidOf(entry);
+            if (fluid == null) { MISSING.add(entry.registryName()); continue; }
+            var liquid = new FluidStack(fluid, gregtech.content.fluid.VanillaPotionBottling.AMOUNT);
+            var filled = gregtech.engine.fluid.PotionBottleHandler.filled(liquid);
+            if (filled.isEmpty()) { MISSING.add(entry.registryName()); continue; }
+            var empty = new ItemStack(net.minecraft.world.item.Items.GLASS_BOTTLE);
+            if (MachineRecipeMaps.Canner.addRecipe1(false, 16, 16, empty, liquid, FluidStack.EMPTY, filled) != null) count++;
+            var gtEmpty = BottleItem.emptyBottle();
+            if (!gtEmpty.is(empty.getItem()) && MachineRecipeMaps.Canner.addRecipe1(false, 16, 16,
+                    gtEmpty, liquid, FluidStack.EMPTY, filled) != null) count++;
+            var drain = new gregtech.engine.recipe.Recipe(new ItemStack[]{filled}, new ItemStack[]{empty},
+                    null, null, null, new FluidStack[]{liquid}, 16, 16, 0);
+            drain.mExactItemInputs = true;
+            if (MachineRecipeMaps.Canner.addRecipe(drain) != null) count++;
+        }
         return count;
     }
 }

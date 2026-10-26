@@ -16,6 +16,11 @@ public final class FluidCapabilities {
     @SubscribeEvent
     public static void register(RegisterCapabilitiesEvent event) {
         event.registerItem(Capabilities.FluidHandler.ITEM,
+                (stack, context) -> new gregtech.engine.fluid.PotionBottleHandler(stack),
+                net.minecraft.core.registries.BuiltInRegistries.ITEM.stream()
+                        .filter(gregtech.engine.fluid.PotionBottleHandler::acceptsItem)
+                        .toArray(net.minecraft.world.item.Item[]::new));
+        event.registerItem(Capabilities.FluidHandler.ITEM,
                 (stack, context) -> ((gregtech.content.item.WoodenBucketItem) stack.getItem()).handler(stack),
                 gregtech.content.registry.GTMultiItems.all().stream().map(holder -> holder.get())
                         .filter(item -> item instanceof gregtech.content.item.WoodenBucketItem)
