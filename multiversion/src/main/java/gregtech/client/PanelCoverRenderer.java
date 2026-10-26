@@ -68,6 +68,14 @@ public final class PanelCoverRenderer {
                     ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce",path+"front")),fallbackLight);
             return true;
         }
+        if(CoverUtilityBehaviors.PRESSURE_VALVE.equals(behavior)){
+            // Original CoverPressureValve renders a recessed knob, not the item icon as a face decal.
+            String base="block/machines/covers/pressurevalve/";
+            CoverSurfaceRenderer.valve(pose,buffers.getBuffer(RenderType.cutout()),side,
+                    ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce",base+"front")),
+                    ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce",base+"side")),fallbackLight);
+            return true;
+        }
         if(CanvasData.isCanvas(stack)) {
             var owner=host.coverOwner();var level=owner.getLevel();
             int light=level==null?fallbackLight:LevelRenderer.getLightColor(level,owner.getBlockPos().relative(side));
