@@ -25,6 +25,7 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
 
     static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath("gt6ce", "basic_machine");
     private static final String NBT_NAME = "gt_bm_name";
+    private static final String DETAILS = "gt_bm_details";
     private static final String NBT_TIER = "gt_bm_tier";
     private static final String NBT_UNIT = "gt_bm_unit";
     private static final String NBT_STORED = "gt_bm_stored";
@@ -45,6 +46,12 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
 
         BasicMachineSpec spec = be.spec();
         if (spec == null) return;
+
+        // Keep recipe state and item/fluid sections with the machine provider. They must not
+        // disappear when the separately configurable Omni provider is switched off in Jade.
+        var inspection = new JadeInspection(accessor, DETAILS);
+        OmniMachineInfo.append(inspection, be, accessor);
+        inspection.write(tag);
 
         tag.putString(NBT_NAME, spec.id());
         tag.putString(NBT_NAME + "_key", accessor.getBlock().getDescriptionId());
@@ -115,16 +122,12 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
         CompoundTag data = accessor.getServerData();
         if (!data.contains(NBT_NAME, CompoundTag.TAG_STRING)) return;
 
-        Component name = JadeText.translated(data, NBT_NAME + "_key", NBT_NAME);
-        int tier = data.getInt(NBT_TIER);
-        JadeText.add(tooltip, Component.translatable("jade.gt6ce.basic_machine.label", name, tier));
-
+        // Jade already owns the translated block name, including any material/tier suffix.
         if (data.contains(NBT_ENERGY_IN, CompoundTag.TAG_LONG)) {
             long energyIn = data.getLong(NBT_ENERGY_IN);
             long energyMin = data.getLong(NBT_ENERGY_MIN);
             long energyMax = data.getLong(NBT_ENERGY_MAX);
             double average = data.getDouble(NBT_ENERGY_AVERAGE);
-            boolean running = data.getBoolean(NBT_RUNNING);
             String unit = data.getString(NBT_UNIT);
             JadeText.add(tooltip, Component.translatable("jade.gt6ce.energy.in",
                     format(energyIn), unit));
@@ -134,12 +137,6 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
                     String.format(Locale.US, "%.2f", average), unit));
             if (energyIn > 0) JadeText.add(tooltip, Component.translatable("jade.gt6ce.energy.multiplier",
                     String.format(Locale.US, "%.2f", average / energyIn), format(energyIn), unit));
-            if (running) {
-                JadeText.add(tooltip, Component.translatable("jade.gt6ce.energy.active",
-                        String.format(Locale.US, "%.2f", average), unit));
-            } else {
-                JadeText.add(tooltip, Component.translatable("jade.gt6ce.energy.idle"));
-            }
         }
 
         if (data.contains(NBT_ITEMS_TOTAL, CompoundTag.TAG_INT)) {
@@ -148,7 +145,11 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
             JadeText.add(tooltip, Component.translatable("jade.gt6ce.basic_machine.items", occupied, total));
         }
 
-        // Omni displays the same tanks with icons and explicit input/output sections.
+        if (data.contains(DETAILS)) {
+            JadeInspection.render(tooltip, accessor, DETAILS);
+            return;
+        }
+        // Compatibility with servers still supplying the previous Omni snapshot.
         if (data.getBoolean("gt_omni_inventory") && config.get(OmniJadeProvider.INSTANCE.getUid())) return;
         int fluidCount = data.getInt(NBT_FLUID_COUNT);
         for (int i = 0; i < fluidCount; i++) {
@@ -180,6 +181,8 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
     public ResourceLocation getUid() {
         return UID;
     }
+
+    @Override public int getDefaultPriority() { return 1002; }
 
     private static String format(long value) {
         return String.format(Locale.US, "%,d", value);

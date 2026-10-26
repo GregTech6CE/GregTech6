@@ -133,7 +133,7 @@ public final class PanelCoverRuntime {
         refreshStopped();changed();afterTick();
         CoverWorldInteraction.removalSound(host.coverOwner(),stack);
         CoverWorldInteraction.removed(host.coverOwner());
-        return stack.isEmpty()?ItemStack.EMPTY:new ItemStack(stack.getItem());
+        return CoverStackData.detached(stack);
     }
     /** Original CoverTextureSimple uses its wood/stone dig sound on placement. */
     private void decorativeSound(ItemStack stack) {

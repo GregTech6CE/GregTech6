@@ -26,21 +26,28 @@ import net.minecraftforge.items.IItemHandler;
 final class JadeInspection {
     private static final int MAX_ROWS = 96;
     private final BlockAccessor accessor;
+    private final String dataKey;
     private final ListTag rows = new ListTag();
     private boolean groupedInventory;
     record Label(String key) {}
 
-    JadeInspection(BlockAccessor accessor) { this.accessor = accessor; }
+    JadeInspection(BlockAccessor accessor) { this(accessor, "gt_omni"); }
+    JadeInspection(BlockAccessor accessor, String dataKey) { this.accessor = accessor; this.dataKey = dataKey; }
     static Label label(String suffix) { return new Label("jade.gt6ce.omni." + suffix); }
 
     CompoundTag line(String suffix, Object... arguments) {
+        return translated("jade.gt6ce.omni." + suffix, arguments);
+    }
+
+    CompoundTag translated(String key, Object... arguments) {
         if (rows.size() >= MAX_ROWS) return null;
         var row = new CompoundTag();
-        row.putString("key", "jade.gt6ce.omni." + suffix);
+        row.putString("key", key);
         var args = new ListTag();
         for (Object argument : arguments) {
             var arg = new CompoundTag();
             if (argument instanceof Label label) arg.putString("key", label.key());
+            else if (argument instanceof gregtech.content.cover.CoverDisplayInfo.Text text) arg.putString("key", text.key());
             else if (argument instanceof ItemStack item) {
 //? if >=1.21.1 {
                 /*if (!item.isEmpty()) arg.put("item", item.save(accessor.getLevel().registryAccess()));
@@ -105,12 +112,25 @@ final class JadeInspection {
     void state(boolean enabled, boolean active) { line("state", label(!enabled ? "disabled" : active ? "working" : "waiting")); }
     void flag(String suffix, boolean value) { line(suffix, label(value ? "yes" : "no")); }
     void write(CompoundTag tag) {
-        if (!rows.isEmpty()) tag.put("gt_omni", rows);
-        if (groupedInventory) tag.putBoolean("gt_omni_inventory", true);
+        if (!rows.isEmpty()) tag.put(dataKey, rows);
+        if (groupedInventory) tag.putBoolean(dataKey + "_inventory", true);
     }
 
     static void render(ITooltip tooltip, BlockAccessor accessor) {
-        var rows = accessor.getServerData().getList("gt_omni", 10);
+        render(tooltip, accessor, "gt_omni");
+    }
+
+    static void render(ITooltip tooltip, BlockAccessor accessor, String dataKey) {
+        if (accessor.getServerData().getBoolean(dataKey + "_inventory")) {
+//? if >=1.21.1 {
+            /*tooltip.remove(snownee.jade.api.JadeIds.UNIVERSAL_ITEM_STORAGE);
+            tooltip.remove(snownee.jade.api.JadeIds.UNIVERSAL_FLUID_STORAGE);
+*///?} else {
+            tooltip.remove(snownee.jade.api.Identifiers.UNIVERSAL_ITEM_STORAGE);
+            tooltip.remove(snownee.jade.api.Identifiers.UNIVERSAL_FLUID_STORAGE);
+//?}
+        }
+        var rows = accessor.getServerData().getList(dataKey, 10);
         var groups = new LinkedHashMap<String, List<CompoundTag>>();
         for (int i = 0; i < Math.min(MAX_ROWS, rows.size()); i++) {
             var row = rows.getCompound(i);

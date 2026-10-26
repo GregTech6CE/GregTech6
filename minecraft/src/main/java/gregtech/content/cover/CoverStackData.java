@@ -13,6 +13,19 @@ import net.minecraft.world.item.ItemStack;
 //?}
 public final class CoverStackData {
     private CoverStackData() {}
+
+    /** GT6 AbstractCoverDefault.getCoverItem retains cover NBT (including filter templates).
+     * Face visuals/values belong to the host and reset on removal, not to the dropped item. */
+    public static ItemStack detached(ItemStack stack) {
+        if (stack.isEmpty()) return ItemStack.EMPTY;
+        var result = stack.copyWithCount(1);
+        var tag = readOrEmpty(result);
+        for (String key : new String[]{ComponentCoverRuntime.VISUAL, ComponentCoverRuntime.SLOT,
+                "gt.cover.inverted", "gt.cover.strong", "gt.logistics.value", PanelCoverRuntime.VALUE,
+                PanelCoverRuntime.STYLE, PanelCoverRuntime.RESET, PanelCoverRuntime.COUNTDOWN}) tag.remove(key);
+        write(result, tag);
+        return result;
+    }
 //? if >=1.21.1 {
     /*public static boolean has(ItemStack stack){return stack.has(DataComponents.CUSTOM_DATA);}
     public static CompoundTag read(ItemStack stack){return has(stack)?gregtech.platform.neoforge.StackCustomData.read(stack):null;}

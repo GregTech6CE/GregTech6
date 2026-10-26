@@ -70,6 +70,20 @@ final class OmniEnergyInfo {
                 else if (node.getBlockState().getValue(gregtech.content.block.energy.RotaryConverterBlock.ACTIVITY) > 0)
                     info.line("contact_damage", OriginalThermalConverter.contactDamage(spec));
             }
+        } else if (entity instanceof LaserConverterBlockEntity converter) {
+            var spec = converter.spec();
+            var control = converter.machineControl(null);
+            info.state(control.enabled(), control.running());
+            info.flag("delivering", control.active());
+            info.line("rated_input", spec.input(), spec.inputType().getShortName());
+            info.line("packet_range", JadeInspection.label("input"), converter.getEnergySizeInputMin(spec.inputType(), null),
+                    converter.getEnergySizeInputMax(spec.inputType(), null), spec.inputType().getShortName());
+            info.line("rated_output", spec.output(), spec.outputType().getShortName());
+            info.line("converter_input", converter.lastInput(), spec.inputType().getShortName());
+            info.line("transferred", converter.lastOutput(), spec.outputType().getShortName());
+            info.line("converter_input_face", spec.backInputOnly() ? OmniTransportInfo.side(converter.front().getOpposite())
+                    : JadeInspection.label("except_output"));
+            info.line("converter_output_face", OmniTransportInfo.side(converter.front()));
         } else if (entity instanceof PumpBlockEntity pump) {
             info.line("stored", pump.storedPumpEnergy(), "RU");
             var tank = pump.tankForInspection();

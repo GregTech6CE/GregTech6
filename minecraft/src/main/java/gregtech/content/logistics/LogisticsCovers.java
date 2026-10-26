@@ -115,7 +115,7 @@ public final class LogisticsCovers {
         changed();
         gregtech.content.cover.CoverWorldInteraction.removed(owner);
         gregtech.content.cover.CoverWorldInteraction.removalSound(owner, result);
-        return new ItemStack(result.getItem());
+        return gregtech.content.cover.CoverStackData.detached(result);
     }
 
     public void changed() {
