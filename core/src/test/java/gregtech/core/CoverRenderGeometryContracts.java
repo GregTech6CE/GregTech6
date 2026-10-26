@@ -42,6 +42,14 @@ final class CoverRenderGeometryContracts {
                 "two-pixel physical plate bounds unchanged");
         require(CoverPlateGeometry.holder(2).minX() == .4375 && CoverPlateGeometry.holder(2).maxX() == .5625,
                 "physical torch bounds retain their exact width");
+        for (int side = 0; side < 6; side++) {
+            int axis = axis(side);
+            double[] v = bounds(CoverPlateGeometry.valve(side));
+            require(v[axis] == (side % 2 == 0 ? 0.0 : .5) && v[axis + 3] == (side % 2 == 0 ? .5 : 1.0),
+                    "pressure valve recessed eight pixels");
+            for (int i = 0; i < 3; i++) if (i != axis)
+                require(v[i] == .375 && v[i + 3] == .625, "pressure valve four-pixel knob");
+        }
 
         int adjacentPairs = 0, rawAdjacentOverlap = 0;
         for (int mask = 0; mask < 64; mask++) {

@@ -8,6 +8,8 @@ public final class CoverPlateGeometry {
     public record Box(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {}
     public static Box plate(int side) { return bounds(side, 0, 1, THICKNESS); }
     public static Box holder(int side) { return bounds(side, 7.0 / 16, 9.0 / 16, .5); }
+    /** Original GT6 {@code CoverPressureValve.BOXES_VALVES}: a 4x4 px knob recessed 8 px into the face. */
+    public static Box valve(int side) { return bounds(side, 6.0 / 16, 10.0 / 16, .5); }
     private static Box bounds(int side, double min, double max, double depth) {
         return switch (side) {
             case 0 -> new Box(min, 0, min, max, depth, max);

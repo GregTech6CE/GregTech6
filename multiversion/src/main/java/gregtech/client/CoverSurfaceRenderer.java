@@ -62,6 +62,54 @@ final class CoverSurfaceRenderer {
         cuboid(pose,vertices,gregtech.content.cover.CoverPlateGeometry.holder(side.ordinal()),body,light,-1,null);
         drawAt(pose,vertices,side,front,light,distance(0),-1,7.0/16,9.0/16);
     }
+    /** Original GT6 {@code CoverPressureValve}: a recessed 4x4 px knob, front art on the outward
+     *  face and the side texture on the lateral faces. The face toward the host interior stays open. */
+    static void valve(PoseStack pose, VertexConsumer vertices, Direction side,
+                      TextureAtlasSprite front, TextureAtlasSprite body, int light) {
+        var box = gregtech.content.cover.CoverPlateGeometry.valve(side.ordinal());
+        for (Direction face : Direction.values()) {
+            if (face == side.getOpposite()) continue;
+            boolean outward = face == side;
+            double texMin = outward ? 6.0 / 16 : 0.0, texMax = outward ? 10.0 / 16 : 1.0;
+            face(pose, vertices, outward ? front : body, light, face, box, texMin, texMax);
+        }
+    }
+    private static void face(PoseStack pose, VertexConsumer vertices, TextureAtlasSprite sprite, int light,
+                             Direction face, gregtech.content.cover.CoverPlateGeometry.Box b,
+                             double texMin, double texMax) {
+        float x0 = (float) b.minX(), y0 = (float) b.minY(), z0 = (float) b.minZ();
+        float x1 = (float) b.maxX(), y1 = (float) b.maxY(), z1 = (float) b.maxZ();
+        float[][] corners = switch (face) {
+            case DOWN -> new float[][]{{x0,y0,z0},{x1,y0,z0},{x1,y0,z1},{x0,y0,z1}};
+            case UP -> new float[][]{{x0,y1,z0},{x0,y1,z1},{x1,y1,z1},{x1,y1,z0}};
+            case NORTH -> new float[][]{{x0,y0,z0},{x0,y1,z0},{x1,y1,z0},{x1,y0,z0}};
+            case SOUTH -> new float[][]{{x0,y0,z1},{x1,y0,z1},{x1,y1,z1},{x0,y1,z1}};
+            case WEST -> new float[][]{{x0,y0,z0},{x0,y0,z1},{x0,y1,z1},{x0,y1,z0}};
+            case EAST -> new float[][]{{x1,y0,z0},{x1,y1,z0},{x1,y1,z1},{x1,y0,z1}};
+        };
+//? if >=1.21.1 {
+        /*float su0 = sprite.getU((float) texMin), su1 = sprite.getU((float) texMax);
+        float sv0 = sprite.getV((float) texMin), sv1 = sprite.getV((float) texMax);
+*///?} else {
+        float su0 = sprite.getU((float) (texMin * 16)), su1 = sprite.getU((float) (texMax * 16));
+        float sv0 = sprite.getV((float) (texMin * 16)), sv1 = sprite.getV((float) (texMax * 16));
+//?}
+        float[][] uv = {{su0, sv0}, {su1, sv0}, {su1, sv1}, {su0, sv1}};
+        var mat = pose.last().pose();
+        for (int i = 0; i < 4; i++) {
+//? if >=1.21.1 {
+            /*vertices.addVertex(mat, corners[i][0], corners[i][1], corners[i][2])
+                    .setColor(1f, 1f, 1f, 1f).setUv(uv[i][0], uv[i][1])
+                    .setOverlay(OverlayTexture.NO_OVERLAY).setLight(light)
+                    .setNormal(face.getStepX(), face.getStepY(), face.getStepZ());
+*///?} else {
+            vertices.vertex(mat, corners[i][0], corners[i][1], corners[i][2])
+                    .color(1f, 1f, 1f, 1f).uv(uv[i][0], uv[i][1])
+                    .overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light)
+                    .normal(face.getStepX(), face.getStepY(), face.getStepZ()).endVertex();
+//?}
+        }
+    }
     static void drawBack(PoseStack pose, VertexConsumer vertices, Direction side,
                          TextureAtlasSprite sprite, int light, int layer, int color) {
         drawAt(pose, vertices, side.getOpposite(), sprite, light,
