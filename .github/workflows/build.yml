@@ -2,10 +2,10 @@ name: Dual-platform build
 
 on:
   push:
-    branches: [main]
+    branches: [main, master]
     paths-ignore: ['README*']
   pull_request:
-    branches: [main]
+    branches: [main, master]
     paths-ignore: ['README*']
   workflow_dispatch:
 
@@ -37,6 +37,8 @@ jobs:
             node: '1.21.1-neoforge'
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
       - uses: ./.github/actions/setup-build
       - name: Build platform
         run: ./gradlew --no-daemon --stacktrace ":minecraft:${{ matrix.node }}:build"
@@ -45,6 +47,7 @@ jobs:
         with:
           name: gt6ce-${{ matrix.minecraft }}-${{ matrix.loader }}
           path: |
+            api/common/build/libs/*.jar
             minecraft/versions/${{ matrix.node }}/build/libs/*.jar
             minecraft/versions/${{ matrix.node }}/build/addon-sdk/*.jar
           if-no-files-found: error

@@ -5,6 +5,7 @@
 ## 环境与首次检查
 
 1. 阅读[根工作规则](../../AGENTS.md)，运行 `git status --short`，确认已有变更。
+   初次克隆使用 `git clone --recurse-submodules`；已有检出运行 `git submodule update --init --recursive`，取得 `api/` 中锁定版本的独立 API 仓库。
 2. 准备 JDK 17 与 21。`core` 和 Forge 节点使用 17，NeoForge 节点使用 21；`JAVA_HOME` 决定启动 Gradle 的 JVM，`JAVA17_HOME`、`JAVA21_HOME` 被项目配置用于发现工具链。
 3. 使用仓库 Wrapper：Linux/macOS 为 `./gradlew`，Windows PowerShell 为 `.\gradlew.bat`。当前 Wrapper 指向 Gradle 8.8，Stonecutter 为 0.7.11，以配置文件为准。
 4. 初次运行需要下载 Gradle、插件及游戏依赖。先执行 `./gradlew --version`，再按需查询 `./gradlew projects` 和目标节点的 `tasks --all`。
@@ -17,6 +18,7 @@
 
 | 目的 | 命令 |
 | --- | --- |
+| 独立 API 检查与库产物（不配置 Minecraft） | `./gradlew -p api/common check assemble` |
 | core 检查 | `./gradlew :core:check` |
 | 两个平台编译 | `./gradlew compileBothPlatforms` |
 | Forge 发行 JAR | `./gradlew :minecraft:1.20.1-forge:distributionJar` |
@@ -25,7 +27,7 @@
 | 全仓检查 | `./gradlew check` |
 | 单节点完整构建，与 CI 一致 | `./gradlew :minecraft:1.20.1-forge:build` 或 `./gradlew :minecraft:1.21.1-neoforge:build` |
 
-发行文件在 `minecraft/versions/<version-loader>/build/libs/`。Forge `jar` 输出到 `build/forge-intermediates/`，最终交付使用 `distributionJar`；NeoForge `jar` 已嵌入 core。不要把 SDK、sources 或 javadoc JAR 当模组安装。
+发行文件在 `minecraft/versions/<version-loader>/build/libs/`。Forge `jar` 输出到 `build/forge-intermediates/`，最终交付使用 `distributionJar`；两平台发行包均携带 core、公共 API 和游戏 API。独立公共库位于 `api/common/build/libs/`，平台 SDK 位于节点 `build/addon-sdk/`，使用方式见[附属 API](../ADDON_API.zh-CN.md)。不要把 API 库、SDK、sources 或 javadoc JAR 当模组安装。
 
 根 `compileJava`、`runClient`、`runServer` 等兼容入口委托给 Forge 节点，并不表示同时处理两个平台。任务关系见 [stonecutter-native.gradle](../../gradle/stonecutter-native.gradle)。
 
@@ -45,4 +47,4 @@ Forge 默认实例在节点内 `run/`，NeoForge 客户端/服务端在 `run-cli
 
 ## 常见排错顺序
 
-先看首个实际失败原因：工具链、代理、依赖解析、源码编译、Mixin 或运行期异常。保留失败命令及必要输出于 `work/<任务名>/`，修复共享输入后重跑受影响检查。不要先删全部缓存、反复全量 clean，或从生成副本修复问题。项目当前没有现成的 `src/test/` 测试套件，不能把空的测试任务当覆盖证明。
+先看首个实际失败原因：工具链、代理、依赖解析、源码编译、Mixin 或运行期异常。保留失败命令及必要输出于 `work/<任务名>/`，修复共享输入后重跑受影响检查。不要先删全部缓存、反复全量 clean，或从生成副本修复问题。API 的 `apiContracts` 与 core 的 `centrifugeContracts` 使用 `src/test/` 中的定向回归并接入各自 `check`；不能把其他空测试任务当覆盖证明。

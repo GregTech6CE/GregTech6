@@ -7,6 +7,9 @@ apply plugin: 'org.spongepowered.mixin'
 
 // Forge development runs access the shared source set while this project is configuring.
 evaluationDependsOn(':core')
+evaluationDependsOn(':api')
+evaluationDependsOn(":api-platform:${project.name}")
+def platformApi = project(":api-platform:${project.name}")
 
 
 version = mod_version
@@ -81,8 +84,9 @@ minecraft {
             mods {
                 "${mod_id}" {
                     source sourceSets.main
-                    source sourceSets.api
+                    source platformApi.sourceSets.main
                     source project(':core').sourceSets.main
+                    source project(':api').sourceSets.main
                 }
             }
         }
@@ -143,6 +147,8 @@ repositories {
 }
 
 dependencies {
+    implementation project(':api')
+    implementation project(platformApi.path)
     if (project.findProperty('directCoreClasspath')?.toString() == 'true') {
         // Optional local development path, matching NeoForge; production builds keep the core archive.
         implementation files(project(':core').sourceSets.main.output)
@@ -257,7 +263,7 @@ tasks.named('processResources', ProcessResources).configure {
 tasks.named('jar', Jar).configure {
     // ForgeGradle rewrites every class in this jar, including pure Java constant pools.
     // Keep core out of that pass and add its untouched output in distributionJar below.
-    from sourceSets.api.output
+    from platformApi.sourceSets.main.output
     destinationDirectory = layout.buildDirectory.dir('forge-intermediates')
     duplicatesStrategy = DuplicatesStrategy.FAIL
     preserveFileTimestamps = false
@@ -287,12 +293,13 @@ tasks.named('jar', Jar).configure {
 // RenameJarInPlace replaces jar.archiveFile. Its output must be consumed only after
 // reobfJar finishes, while the shared Java 17 classes remain byte-identical on both loaders.
 def distributionJar = tasks.register('distributionJar', Jar) {
-    dependsOn 'reobfJar', ':core:classes'
+    dependsOn 'reobfJar', ':core:classes', ':api:classes'
     destinationDirectory = layout.buildDirectory.dir('libs')
     from({ zipTree(tasks.named('jar', Jar).get().archiveFile.get().asFile) }) {
         exclude 'META-INF/MANIFEST.MF'
     }
     from(project(':core').sourceSets.main.output)
+    from(project(':api').sourceSets.main.output)
     duplicatesStrategy = DuplicatesStrategy.FAIL
     preserveFileTimestamps = false
     reproducibleFileOrder = true

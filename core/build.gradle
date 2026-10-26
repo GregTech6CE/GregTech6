@@ -2,6 +2,10 @@ plugins {
     id 'java-library'
 }
 
+dependencies {
+    api project(':api')
+}
+
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(17)
 }

@@ -64,7 +64,7 @@ public final class AddonMachineRuntime {
         var spec = BasicMachineSpec.builder(parameters.id(), parameters.material())
                 .machineType(parameters.machineName())
                 .recipes(recipes)
-                .energy(parameters.energyTag(), parameters.energyIn())
+                .energy(AddonPlatformServices.tag(parameters.energyType()), parameters.energyIn())
                 .energyOutput(parameters.energyOut())
                 .tier(parameters.tier())
                 .parallel(parameters.parallelLimit())

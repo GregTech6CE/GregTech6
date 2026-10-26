@@ -18,11 +18,22 @@ plugins {
 }
 
 rootProject.name = 'gt6ce'
-include 'core'
+if (!file('api/common/build.gradle').isFile()) {
+    throw new GradleException('API submodule is missing. Run: git submodule update --init --recursive')
+}
+include 'api', 'core'
+project(':api').projectDir = file('api/common')
+include 'api-platform'
+project(':api-platform').projectDir = file('api/minecraft')
 
 // All native Java source sets are managed by Stonecutter version nodes.
 include 'minecraft'
 stonecutter {
+    create(project(':api-platform')) {
+        version('1.20.1-forge', '1.20.1')
+        version('1.21.1-neoforge', '1.21.1')
+        vcsVersion = '1.20.1-forge'
+    }
     create(project(':minecraft')) {
         version('1.20.1-forge', '1.20.1')
         version('1.21.1-neoforge', '1.21.1')
