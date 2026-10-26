@@ -29,6 +29,13 @@ public final class SourceOreOutputRows {
     }
     public static void seal() { sealed=true; }
     static boolean resolving() { return RESOLVING.get(); }
+    /** Scoped original OM output selection, shared with the native washing producer. */
+    static <T> T resolvingOutputs(Supplier<T> resolver) {
+        boolean previous=RESOLVING.get();
+        RESOLVING.set(true);
+        try { return resolver.get(); }
+        finally { if(previous) RESOLVING.set(true); else RESOLVING.remove(); }
+    }
     public static Set<Recipe> owned() {
         Set<Recipe> result=Collections.newSetFromMap(new IdentityHashMap<>());
         ACCEPTED.values().forEach(result::addAll);

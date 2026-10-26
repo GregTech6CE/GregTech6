@@ -13,6 +13,9 @@ public final class CentrifugeContracts {
         BlockDustCentrifugeContracts.run();
         gregtech.content.recipe.BuiltinEventCentrifugeContracts.run();
         MoonStoneCentrifugeContracts.run();
+        gregtech.content.recipe.SourceOreWashingContracts.run();
+        gregtech.content.recipe.SourceOreCryotheumContracts.run();
+        OreWashingGeneratedContracts.run();
         System.out.println("Centrifuge core contracts passed (no native runtime coverage).");
     }
 }

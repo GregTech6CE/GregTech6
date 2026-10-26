@@ -11,7 +11,6 @@ import gregtech.content.registry.GTFluids;
 import gregtech.util.OM;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.Fluids;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
 
@@ -57,14 +56,6 @@ public class OreProcessingRecipeLoader implements InitializationStep {
     /** Same route from the tiny purified form (GT6 divides every chance by ten). */
     private static final long[] SIFT_GEM_CHANCES_TINY = {1, 10, 40, 150, 200, 400, 500};
 
-    /**
-     * GT6 {@code Loader_Recipes_Ores:383} {@code tSluice = {10000, 300, 300, 300, 300, 300, 300,
-     * 300, 300}} for nine outputs: one purified primary and eight independent 3% byproduct slots.
-     */
-    private static final long[] SLUICE_CHANCES = {CHANCE_100, 300, 300, 300, 300, 300, 300, 300, 300};
-
-    private static final FluidStack WATER_MB = new FluidStack(Fluids.WATER, 1000);
-
     /** Tracks materials already added to the ByProductList (avoids duplicates). */
     private final List<GTMaterial> mByProductListed = new ArrayList<>();
     /** Deduplicate only immutable builtin raw descriptors, never independent recipe rows. */
@@ -81,10 +72,9 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         processVanillaIconOres();
         processVanillaOres();
         processMaceration();
-        processWashing();
+        SharedOreWashingRows.initialize();
         SharedPurifiedCentrifugeRows.initialize();
         processPurifiedRoutes();
-        processSluiceRoutes();
         processReviewedFollowonRoutes();
         processByproductList();
         processRecycling();
@@ -421,51 +411,6 @@ public class OreProcessingRecipeLoader implements InitializationStep {
     }
 
     // ========================================================================
-    //  3.  Washing Chain (Bath + Centrifuge)
-    // ========================================================================
-
-    /**
-     * After crushing, materials can be washed:
-     * <ul>
-     *   <li>crushed + water → Bath → crushedPurified + first byproduct dustTiny (50 %)</li>
-     *   <li>crushedPurified → Centrifuge → crushedCentrifuged + second byproduct dustTiny (50 %)</li>
-     * </ul>
-     */
-    private void processWashing() {
-        var reviewedSeen = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<GTMaterial, Boolean>());
-        for (GTMaterial mat : GTMaterialRegistry.allMaterials()) {
-            GTMaterial material = mat.resolve();
-            if (NonOreMacerationRows.reviewed(material) && !reviewedSeen.add(material)) continue;
-            if (!material.isValid() || !MaterialPrefix.crushed.isValidFor(material)) continue;
-
-            List<GTMaterial> byProds = material.getByProducts();
-
-            // The reviewed Cinnabar source has reagent-specific Bath routes, not this legacy
-            // water-only shortcut. Skip only this producer; external forms/profiles still defer
-            // and independent startup/datapack recipes are never searched for or removed.
-            if (!ReviewedCinnabarFacts.supports(material)
-                    && MaterialPrefix.crushedPurified.isValidFor(material)) {
-                ItemStack crushed = mat(MaterialPrefix.crushed, material, 1);
-                ItemStack crushedPurified = mat(MaterialPrefix.crushedPurified, material, 1);
-                if (!crushed.isEmpty() && !crushedPurified.isEmpty()) {
-                    ItemStack bypTiny = byProductTiny(byProds, 0, material);
-                    if (NonOreMacerationRows.reviewed(material))
-                        NonOreMacerationRows.register(material,MaterialPrefix.crushed,"washing/crushed",MachineRecipeMaps.Bath,
-                                true,crushed,new ItemStack[]{crushedPurified,bypTiny},new long[]{CHANCE_100,CHANCE_50},
-                                new FluidStack[]{WATER_MB},120,EU_TIER);
-                    else MachineRecipeMaps.Bath.addRecipe1(true, EU_TIER, 120,
-                            new long[]{CHANCE_100, CHANCE_50},
-                            crushed, WATER_MB, (FluidStack) null,
-                            crushedPurified, bypTiny);
-                }
-            }
-
-            // Centrifuge is a separate registered-form loop; Bath above is unchanged.
-
-        }
-    }
-
-    // ========================================================================
     //  3b. Purified routes: Magnetic Separator + Sifting  (GT6 Loader_Recipes_Ores)
     // ========================================================================
 
@@ -553,109 +498,8 @@ public class OreProcessingRecipeLoader implements InitializationStep {
     }
 
     // ========================================================================
-    //  3c. Sluice  (GT6 Loader_Recipes_Ores:415-420)
+    //  3c. Reviewed Cinnabar cracking
     // ========================================================================
-
-    /**
-     * GT6's sluice route, which the port was missing entirely — leaving the four Sluice tiers
-     * and the Large Sluice with an empty recipe map.
-     * <p>
-     * {@code Loader_Recipes_Ores:415-420}: a crushed ore plus 900 mB of any water variant
-     * (water, mineral water, distilled water, spectral dew) yields one purified ore plus eight
-     * byproduct fines of 9 each, in 144 ticks; the tiny crushed ore form takes 100 mB and 16
-     * ticks and yields the same set at 1 each. Both are registered for every water variant, and
-     * left-over water leaves the machine as GT6's {@code FL.Sluice} fluid.
-     * </p>
-     */
-    private void processSluiceRoutes() {
-        FluidStack[] water900 = waterVariants(900);
-        FluidStack[] water100 = waterVariants(100);
-        FluidStack sluice900 = fluidStack("Sluice", 900);
-        FluidStack sluice100 = fluidStack("Sluice", 100);
-        if (water900.length == 0 || sluice900 == null || sluice100 == null) return;
-
-        // Deduplicate captured definitions only; UNKNOWN and externally owned direct admissions
-        // retain their existing order and collision behavior, including repeated aliases.
-        var outputDefined = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<GTMaterial, Boolean>());
-        var defined = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<GTMaterial, Boolean>());
-        for (GTMaterial mat : GTMaterialRegistry.allMaterials()) {
-            GTMaterial material = mat.resolve();
-            if (!material.isValid() || !MaterialPrefix.crushed.isValidFor(material)) continue;
-
-            ItemStack crushed = mat(MaterialPrefix.crushed, material, 1);
-            ItemStack crushedTiny = mat(MaterialPrefix.crushedTiny, material, 1);
-            ItemStack purified = mat(MaterialPrefix.crushedPurified, material, 1);
-            ItemStack purifiedTiny = mat(MaterialPrefix.crushedPurifiedTiny, material, 1);
-            if (crushed.isEmpty() || crushedTiny.isEmpty() || purified.isEmpty() || purifiedTiny.isEmpty()) {
-                continue;
-            }
-
-            // GT6 takes the first eight byproducts in registration order and falls back to the
-            // material itself when there are fewer (Loader_Recipes_Ores:416).
-            List<GTMaterial> byProds = material.getByProducts();
-            var selected=new ArrayList<GTMaterial>();
-            for(int i=0;i<8;i++) selected.add(i<byProds.size()&&byProds.get(i)!=null&&byProds.get(i).isValid()
-                    ? byProds.get(i) : material);
-            if (!NonOreMacerationRows.reviewed(material) && SourceOreOutputRows.affects(selected)) {
-                if (!outputDefined.add(material)) continue;
-                for(var water:water900) defineSluiceOutputRow(material,"sluice/whole/"+
-                        net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(water.getFluid()),
-                        crushed,purified,selected,9,water,sluice900,144);
-                for(var water:water100) defineSluiceOutputRow(material,"sluice/tiny/"+
-                        net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(water.getFluid()),
-                        crushedTiny,purifiedTiny,selected,1,water,sluice100,16);
-                continue;
-            }
-            ItemStack[] fines9 = new ItemStack[8];
-            ItemStack[] fines1 = new ItemStack[8];
-            boolean complete = true;
-            for (int i = 0; i < 8; i++) {
-                GTMaterial product = i < byProds.size() && byProds.get(i) != null && byProds.get(i).isValid()
-                        ? byProds.get(i) : material;
-                fines9[i] = purifiedTinyOrDust(product, 9);
-                fines1[i] = purifiedTinyOrDust(product, 1);
-                complete &= !fines9[i].isEmpty() && !fines1[i].isEmpty();
-            }
-            if (!complete) continue;
-
-            boolean captured = NonOreMacerationRows.reviewed(material)
-                    && (!SourceOreInputForms.allowGeneratedInput(material, MaterialPrefix.crushed, crushed,
-                            SourceOreInputForms.Evidence.NO)
-                    || !SourceOreInputForms.allowGeneratedInput(material, MaterialPrefix.crushedTiny, crushedTiny,
-                            SourceOreInputForms.Evidence.NO));
-            if (captured && !defined.add(material)) continue;
-            for (FluidStack water : water900) {
-                NonOreMacerationRows.register(material, MaterialPrefix.crushed,
-                        "sluice/whole/" + net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(water.getFluid()),
-                        MachineRecipeMaps.Sluice, true, crushed,
-                        new ItemStack[]{purified, fines9[0].copy(), fines9[1].copy(), fines9[2].copy(), fines9[3].copy(),
-                                fines9[4].copy(), fines9[5].copy(), fines9[6].copy(), fines9[7].copy()},
-                        SLUICE_CHANCES, new FluidStack[]{water}, new FluidStack[]{sluice900.copy()}, 144, EU_TIER);
-            }
-            for (FluidStack water : water100) {
-                NonOreMacerationRows.register(material, MaterialPrefix.crushedTiny,
-                        "sluice/tiny/" + net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(water.getFluid()),
-                        MachineRecipeMaps.Sluice, true, crushedTiny,
-                        new ItemStack[]{purifiedTiny, fines1[0].copy(), fines1[1].copy(), fines1[2].copy(), fines1[3].copy(),
-                                fines1[4].copy(), fines1[5].copy(), fines1[6].copy(), fines1[7].copy()},
-                        SLUICE_CHANCES, new FluidStack[]{water}, new FluidStack[]{sluice100.copy()}, 16, EU_TIER);
-            }
-        }
-    }
-
-    /** Capture immutable source facts; only the fine-output form is rebound after current tags. */
-    private static void defineSluiceOutputRow(GTMaterial material,String producer,ItemStack input,ItemStack main,
-                                              List<GTMaterial> products,int count,FluidStack water,FluidStack output,long duration) {
-        var sourceInput=input.copy();var sourceMain=main.copy();var selected=List.copyOf(products);
-        var sourceWater=water.copy();var sourceOutput=output.copy();
-        SourceOreOutputRows.define(material,producer,MachineRecipeMaps.Sluice,()-> {
-            var outputs=new ItemStack[9];outputs[0]=sourceMain.copy();
-            // Original OM may yield an empty fine slot; retain the valid main row and slot chance.
-            for(int i=0;i<8;i++) outputs[i+1]=purifiedTinyOrDust(selected.get(i),count);
-            return MachineRecipeMaps.Sluice.addRecipe(true,new ItemStack[]{sourceInput.copy()},outputs,null,
-                    SLUICE_CHANCES.clone(),new FluidStack[]{sourceWater.copy()},new FluidStack[]{sourceOutput.copy()},duration,EU_TIER,0);
-        });
-    }
 
     /** Bounded reviewed source profile; shared row algorithms; unknown inputs retain legacy routes. */
     private void processReviewedFollowonRoutes() {
@@ -664,26 +508,8 @@ public class OreProcessingRecipeLoader implements InitializationStep {
             var material=alias.resolve();
             if(!seen.add(material)||!ReviewedCinnabarFacts.supports(material))continue;
             var facts=ReviewedCinnabarFacts.INSTANCE;
-            SourceOreFollowonRows.petrotheum(material,facts);
             SourceOreFollowonRows.cracking(material,ReviewedCinnabarFacts.sourceWaxes(),facts);
-            // Explicit source Ores184-187 identity is carried by this reviewed profile, not every gemstone.
-            SourceOreFollowonRows.cryotheumBath(material,facts);
         }
-    }
-
-    /** GT6 {@code FL.waters(mB)}: water, mineral water, distilled water, spectral dew. */
-    private static FluidStack[] waterVariants(int mb) {
-        List<FluidStack> result = new ArrayList<>();
-        for (String name : new String[]{"Water", "MnWtr", "DistW", "SpDew"}) {
-            FluidStack stack = fluidStack(name, mb);
-            if (stack != null) result.add(stack);
-        }
-        return result.toArray(new FluidStack[0]);
-    }
-
-    /** A registered GT6 fluid as a {@link FluidStack}, or {@code null} when it is not registered. */
-    private static FluidStack fluidStack(String field, int mb) {
-        return GTFluids.stack(field, mb);
     }
 
     /** OreDictPrefix.mat(material,replacement,count): fallback count is not multiplied. */
@@ -697,11 +523,6 @@ public class OreProcessingRecipeLoader implements InitializationStep {
                                                      GTMaterial fallback) {
         GTMaterial product = index < byProds.size() ? byProds.get(index) : fallback;
         return refinedTinyOrDust(product, count);
-    }
-    /** Original OM343-353: purifiedTiny -> refinedTiny -> dustTiny, same material/count. */
-    private static ItemStack purifiedTinyOrDust(GTMaterial material, int count) {
-        ItemStack result = SourceOreInputForms.reviewedOreOutput(MaterialPrefix.crushedPurifiedTiny, material, count);
-        return result.isEmpty() ? refinedTinyOrDust(material, count) : result;
     }
     private static ItemStack refinedTinyOrDust(GTMaterial material, int count) {
         ItemStack result = SourceOreInputForms.reviewedOreOutput(MaterialPrefix.crushedCentrifugedTiny, material, count);

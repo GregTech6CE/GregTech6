@@ -29,6 +29,7 @@ public final class ExternalOreRecipeLifecycle {
         gregtech.content.recipe.NonOreMacerationRows.clear();
         gregtech.content.recipe.SourceOreOutputRows.clear();
         SharedPurifiedCentrifugeRows.clear();
+        SharedOreWashingRows.clear();
         gregtech.engine.material.MaterialDisplayBinding.invalidate();
     }
 }

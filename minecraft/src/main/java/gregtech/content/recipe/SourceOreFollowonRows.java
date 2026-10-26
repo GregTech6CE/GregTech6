@@ -96,20 +96,6 @@ public final class SourceOreFollowonRows {
   }
   return List.copyOf(accepted);
  }
- /** Source Handlers672-673: fixed durations, flat Petrotheum fluid cost. */
- public static List<Recipe> petrotheum(GTMaterial m,Facts f) {
-  if(!admitted(m,f))return List.of();var accepted=new ArrayList<Recipe>();
-  var sand=GTMaterialRegistry.get("SluiceSand");
-  if(sand==null||!sand.isValid())return List.of();
-  for(int scale:new int[]{9,1}) {
-   var fluid=OreFluidBindingAdapter.sourceLiquid(8245,"Petrotheum",scale*(U/50),true);if(fluid.isEmpty())continue;
-   var in=f.direct(scale==9?MaterialPrefix.crushed:MaterialPrefix.crushedTiny,m,1);
-   var out=new ItemStack[]{f.direct(scale==9?MaterialPrefix.crushedPurified:MaterialPrefix.crushedPurifiedTiny,m,2),
-    f.direct(MaterialPrefix.crushedPurifiedTiny,m,scale),f.direct(scale==9?MaterialPrefix.dust:MaterialPrefix.dustTiny,sand,1)};
-   var r=emit(MachineRecipeMaps.Sluice,in,out,new long[]{10000,5000,10000},new FluidStack[]{fluid},new FluidStack[0],scale*16L,16);
-   if(r!=null)accepted.add(r);
-  }return List.copyOf(accepted);
- }
  /** Source Ores464-470. Handles solid and fluid byproducts without changing slot probabilities. */
  public static List<Recipe> centrifuge(GTMaterial m,Facts f) {
   if(!admitted(m,f))return List.of();var accepted=new ArrayList<Recipe>();
@@ -144,17 +130,6 @@ public final class SourceOreFollowonRows {
    }
    var r=emit(MachineRecipeMaps.SteamCracking,f.direct(scale==9?MaterialPrefix.crushedCentrifuged:MaterialPrefix.crushedCentrifugedTiny,m,1),out.toArray(ItemStack[]::new),
     chances.stream().mapToLong(Long::longValue).toArray(),new FluidStack[]{steam,liquid},fluids.toArray(FluidStack[]::new),scale*16L,16);
-   if(r!=null)accepted.add(r);
-  }return List.copyOf(accepted);
- }
- /** Source Ores184-187; explicit source list/ANY.Glowstone supplied by reviewed caller, not all gems. */
- public static List<Recipe> cryotheumBath(GTMaterial m,Facts f) {
-  if(!admitted(m,f))return List.of();var cryo=GTMaterialRegistry.get("Cryotheum");if(cryo==null)return List.of();
-  var accepted=new ArrayList<Recipe>();MaterialPrefix[] inputs={null,MaterialPrefix.crushed,MaterialPrefix.crushedTiny};
-  for(int i=0;i<3;i++) {
-   var fluid=OreFluidBindingAdapter.liquid(cryo,i==0?U/10:U/20,true);if(fluid.isEmpty())continue;
-   var out=f.direct(i==0?MaterialPrefix.gemExquisite:MaterialPrefix.gemFlawless,m,1);
-   var r=emit(MachineRecipeMaps.Bath,(i==0?f.blockDust(m,1):f.direct(inputs[i],m,i==2?9:1)),new ItemStack[]{out},new long[0],new FluidStack[]{fluid},new FluidStack[0],256,0);
    if(r!=null)accepted.add(r);
   }return List.copyOf(accepted);
  }
