@@ -99,6 +99,7 @@ public final class GregTechJEIPlugin implements IModPlugin {
         registration.addRecipeCategories(new LootInfoCategories.Category(guiHelper, false), new LootInfoCategories.Category(guiHelper, true));
         registration.addRecipeCategories(new MultiblockInfoCategory(guiHelper));
         registration.addRecipeCategories(new ToolAssemblyCategory.Category(guiHelper));
+        registration.addRecipeCategories(new MoldChiselCategory(guiHelper));
         registration.addRecipeCategories(
                 new WorldgenInfoCategories.VeinCategory(guiHelper),
                 new WorldgenInfoCategories.SmallOreCategory(guiHelper),
@@ -108,6 +109,8 @@ public final class GregTechJEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(mezz.jei.api.registration.IRecipeCatalystRegistration registration) {
+        for (var mold : gregtech.compat.common.MoldChiselDisplay.molds())
+            registration.addRecipeCatalyst(mold, MoldChiselCategory.TYPE);
         for(var table:net.minecraft.core.registries.BuiltInRegistries.BLOCK)
             if(table instanceof gregtech.content.block.misc.AdvancedCraftingTableBlock)
                 registration.addRecipeCatalyst(new ItemStack(table),mezz.jei.api.constants.RecipeTypes.CRAFTING);
@@ -184,6 +187,7 @@ public final class GregTechJEIPlugin implements IModPlugin {
         if (net.minecraftforge.fml.ModList.get().isLoaded("emi")) return;
 //?}
 
+        registration.addRecipes(MoldChiselCategory.TYPE, gregtech.compat.common.MoldChiselDisplay.recipes());
         for (Map.Entry<RecipeMap, RecipeMapCategory> entry : categories.entrySet()) {
             List<Recipe> recipes = new ArrayList<>();
             for (Recipe recipe : entry.getKey().mRecipeList) {

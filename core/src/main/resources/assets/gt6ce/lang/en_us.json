@@ -1,4 +1,9 @@
 {
+  "gt6ce.jei.category.mold_chisel": "Mold Chiseling",
+  "gt6ce.jei.mold_chisel.note": "Dark cells are chiseled out",
+  "gt6ce.jei.mold_chisel.carved": "Chisel this cell",
+  "gt6ce.jei.mold_chisel.retained": "Leave this cell intact",
+  "gt6ce.jei.mold_chisel.instructions": "Top view. Carve this pattern, then pour molten material into the mold.",
   "gt6ce.configuration.tooltips": "Tooltips",
   "gt6ce.configuration.tooltips.chemical_formulas": "Chemical formulas",
   "gt6ce.configuration.tooltips.chemical_formulas.tooltip": "Show chemical formulas in item and fluid tooltips.",

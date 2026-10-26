@@ -54,6 +54,7 @@ public final class GregTechEMIPlugin implements EmiPlugin {
             registry.setDefaultComparison(item,dev.emi.emi.api.stack.Comparison.compareData(
                     stack->gregtech.engine.recipe.UsbRecipeDisplayBinding.subtype(stack.getItemStack())));
         ToolAssemblyEmiRecipe.register(registry);
+        MoldChiselEmiRecipe.register(registry);
         LootEmiRecipe.register(registry);
         StructureEmiRecipe.register(registry);
         WorldgenEmiRecipe.register(registry);

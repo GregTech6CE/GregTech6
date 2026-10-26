@@ -1,4 +1,9 @@
 {
+  "gt6ce.jei.category.mold_chisel": "模具凿刻",
+  "gt6ce.jei.mold_chisel.note": "深灰色格子为凿除部分",
+  "gt6ce.jei.mold_chisel.carved": "凿除这个格子",
+  "gt6ce.jei.mold_chisel.retained": "保留这个格子",
+  "gt6ce.jei.mold_chisel.instructions": "俯视图：按图凿刻，再向模具中浇入熔融材料。",
   "bc.trigger.gregapi.energy.air.capacity.empty": "空的 (ENERGY.AIR)",
   "bc.trigger.gregapi.energy.air.capacity.full": "满的 (ENERGY.AIR)",
   "bc.trigger.gregapi.energy.air.capacity.notfull": "不满的 (ENERGY.AIR)",
