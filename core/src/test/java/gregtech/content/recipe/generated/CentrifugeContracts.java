@@ -18,6 +18,8 @@ public final class CentrifugeContracts {
         OreWashingGeneratedContracts.run();
         gregtech.content.recipe.SourceOreMagneticContracts.run();
         OreMagneticGeneratedContracts.run();
+        gregtech.content.recipe.SourceOreSiftingContracts.run();
+        OreSiftingGeneratedContracts.run();
         System.out.println("Centrifuge core contracts passed (no native runtime coverage).");
     }
 }

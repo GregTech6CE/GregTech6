@@ -45,11 +45,6 @@ public class OreProcessingRecipeLoader implements InitializationStep {
     /** Default EU/t for the ore processing tier. */
     private static final long EU_TIER = 16;
 
-    /** GT6 sifting chances for purified ore: legendary → dust, per 10 000. */
-    private static final long[] SIFT_GEM_CHANCES = {9, 90, 360, 1_350, 1_800, 3_600, 4_500};
-    /** Same route from the tiny purified form (GT6 divides every chance by ten). */
-    private static final long[] SIFT_GEM_CHANCES_TINY = {1, 10, 40, 150, 200, 400, 500};
-
     /** Tracks materials already added to the ByProductList (avoids duplicates). */
     private final List<GTMaterial> mByProductListed = new ArrayList<>();
     /** Deduplicate only immutable builtin raw descriptors, never independent recipe rows. */
@@ -69,7 +64,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         SharedOreWashingRows.initialize();
         SharedPurifiedCentrifugeRows.initialize();
         SharedOreMagneticRows.initialize();
-        processPurifiedRoutes();
+        SharedOreSiftingRows.initialize();
         processReviewedFollowonRoutes();
         processByproductList();
         processRecycling();
@@ -406,59 +401,6 @@ public class OreProcessingRecipeLoader implements InitializationStep {
     }
 
     // ========================================================================
-    //  3b. Purified routes: Magnetic Separator + Sifting  (GT6 Loader_Recipes_Ores)
-    // ========================================================================
-
-    /** Existing purified Sifter producer; Magnetic rows now have their own reload lifecycle. */
-    private void processPurifiedRoutes() {
-        // Deduplicate only reviewed dormant Sifting definitions, never other producers or UNKNOWN rows.
-        var reviewedSiftingSeen=java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<GTMaterial,Boolean>());
-        for (GTMaterial mat : GTMaterialRegistry.allMaterials()) {
-            GTMaterial material = mat.resolve();
-            if (!material.isValid()) continue;
-
-            ItemStack purified = mat(MaterialPrefix.crushedPurified, material, 1);
-            ItemStack purifiedTiny = mat(MaterialPrefix.crushedPurifiedTiny, material, 1);
-            if (purified.isEmpty() || purifiedTiny.isEmpty()) continue;
-
-            // ── Sifting (gem route) ───────────────────────────────────────────
-            if (!MaterialPrefix.gem.isValidFor(material)) continue;
-            ItemStack[] outputs = gemRouteOutputs(material);
-            if (outputs == null) continue;
-            if(NonOreMacerationRows.reviewed(material)) {
-                if(!reviewedSiftingSeen.add(material))continue;
-                NonOreMacerationRows.register(material,MaterialPrefix.crushedPurified,"sifting/purified",MachineRecipeMaps.Sifting,
-                        true,purified,outputs,SIFT_GEM_CHANCES,null,144,EU_TIER);
-                NonOreMacerationRows.register(material,MaterialPrefix.crushedPurifiedTiny,"sifting/purifiedTiny",MachineRecipeMaps.Sifting,
-                        true,purifiedTiny,outputs,SIFT_GEM_CHANCES_TINY,null,16,EU_TIER);
-            } else {
-                // Supported startup/material overrides retain original direct admission order.
-                MachineRecipeMaps.Sifting.addRecipe1(true, EU_TIER, 144, SIFT_GEM_CHANCES,
-                        purified, outputs[0], outputs[1], outputs[2], outputs[3], outputs[4], outputs[5], outputs[6]);
-                MachineRecipeMaps.Sifting.addRecipe1(true, EU_TIER, 16, SIFT_GEM_CHANCES_TINY,
-                        purifiedTiny, outputs[0].copy(), outputs[1].copy(), outputs[2].copy(),
-                        outputs[3].copy(), outputs[4].copy(), outputs[5].copy(), outputs[6].copy());
-            }
-        }
-    }
-
-    /** Gem grade ladder of GT6's sifting route, or {@code null} when the gem form is missing. */
-    private static ItemStack[] gemRouteOutputs(GTMaterial material) {
-        ItemStack gem = mat(MaterialPrefix.gem, material, 1);
-        ItemStack dust = mat(MaterialPrefix.dust, material, 1);
-        if (gem.isEmpty() || dust.isEmpty()) return null;
-        // Source overload uses one rare grade; 8/4/2 ordinary gems are only missing-grade fallbacks.
-        ItemStack legendary = gradeOrGem(MaterialPrefix.gemLegendary, material, 1, gem, 8);
-        ItemStack exquisite = gradeOrGem(MaterialPrefix.gemExquisite, material, 1, gem, 4);
-        ItemStack flawless = gradeOrGem(MaterialPrefix.gemFlawless, material, 1, gem, 2);
-        ItemStack flawed = gradeOrGem(MaterialPrefix.gemFlawed, material, 2, gem, 1);
-        ItemStack chipped = gradeOrGem(MaterialPrefix.gemChipped, material, 4, gem, 1);
-        if (legendary.isEmpty() || exquisite.isEmpty() || flawless.isEmpty()
-                || flawed.isEmpty() || chipped.isEmpty()) return null;
-        return new ItemStack[]{legendary, exquisite, flawless, gem, flawed, chipped, dust};
-    }
-
-    // ========================================================================
     //  3c. Reviewed Cinnabar cracking
     // ========================================================================
 
@@ -471,12 +413,6 @@ public class OreProcessingRecipeLoader implements InitializationStep {
             var facts=ReviewedCinnabarFacts.INSTANCE;
             SourceOreFollowonRows.cracking(material,ReviewedCinnabarFacts.sourceWaxes(),facts);
         }
-    }
-
-    /** OreDictPrefix.mat(material,replacement,count): fallback count is not multiplied. */
-    private static ItemStack gradeOrGem(MaterialPrefix prefix, GTMaterial material, int count,
-                                       ItemStack gem, int fallbackCount) {
-        return SourceGemGradeResolver.gradeOrGem(prefix, material, count, gem, fallbackCount);
     }
 
     // ========================================================================

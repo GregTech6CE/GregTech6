@@ -23,10 +23,6 @@ final class OreMagneticGeneratedContracts {
         equal(8L, rows.stream().filter(row -> row.map().equals("Centrifuge")
                 && row.inputs().stream().anyMatch(input -> input.startsWith("cbd:"))).count(),
                 "eight Centrifuge physical rows unaffected");
-        equal(12L, rows.stream().filter(row -> row.map().equals("Sifting") && row.inputs().stream().anyMatch(input ->
-                List.of("ChargedCertusQuartz", "CertusQuartz", "NetherQuartz", "VoidQuartz", "MilkyQuartz", "Fluix")
-                        .stream().anyMatch(material -> input.equals("i:crushedPurified:" + material + ":1")
-                                || input.equals("i:crushedPurifiedTiny:" + material + ":1")))).count(),
-                "twelve Sifter special rows remain unchanged for their separate batch");
+
     }
 }
