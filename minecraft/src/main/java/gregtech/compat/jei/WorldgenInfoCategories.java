@@ -59,7 +59,8 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
         private final IDrawable background, icon, slot;
 
         public VeinCategory(IGuiHelper gui) {
-            this.background = gui.createBlankDrawable(176, 84);
+            int maxOres = buildVeins().stream().mapToInt(vein -> veinMaterials(vein).size()).max().orElse(4);
+            this.background = gui.createBlankDrawable(176, 66 + ((maxOres + 7) / 8) * 18);
             this.slot = gui.getSlotDrawable();
             this.icon = gui.createDrawableItemStack(gregtech.compat.common.RecipeViewerIcons.item("ore_iridium"));
         }
@@ -71,14 +72,17 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
 
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, VeinInfo vein, IFocusGroup focuses) {
+            builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addItemStacks(veinAliases(vein));
             if (vein.layer() != null) {
-                var captions = stratumCaptions(vein);
-                builder.addSlot(RecipeIngredientRole.OUTPUT, 1, 1).setBackground(slot, -1, -1)
-                        .addItemStack(oreStack(vein.top()))
-                        .addTooltipCallback((view, tooltip) -> tooltip.addAll(captions));
-                builder.addSlot(RecipeIngredientRole.OUTPUT, 19, 1).setBackground(slot, -1, -1)
-                        .addItemStack(smallOreStack(vein.top()))
-                        .addTooltipCallback((view, tooltip) -> tooltip.addAll(captions));
+                var materials = veinMaterials(vein);
+                for (int i = 0; i < materials.size(); i++) {
+                    GTMaterial material = materials.get(i);
+                    var captions = new ArrayList<>(stratumOreCaptions(vein, material));
+                    captions.addAll(stratumCaptions(vein));
+                    builder.addSlot(RecipeIngredientRole.OUTPUT, 1 + (i % 8) * 18, 1 + (i / 8) * 18)
+                            .setBackground(slot, -1, -1).addItemStack(oreStack(material))
+                            .addTooltipCallback((view, tooltip) -> tooltip.addAll(captions));
+                }
                 return;
             }
             GTMaterial[] mats = {vein.top(), vein.bottom(), vein.between(), vein.spread()};
@@ -93,7 +97,7 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
         public void draw(VeinInfo vein, IRecipeSlotsView view, GuiGraphics g, double mx, double my) {
             var font = net.minecraft.client.Minecraft.getInstance().font;
             if (vein.layer() != null) {
-                int y = 22;
+                int y = 4 + ((veinMaterials(vein).size() + 7) / 8) * 18;
                 for (Component caption : stratumCaptions(vein)) {
                     g.drawString(font, font.plainSubstrByWidth(caption.getString(), 174), 1, y, 0xFF404040, false);
                     y += 10;
@@ -129,6 +133,7 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
 
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, SmallOreInfo ore, IFocusGroup focuses) {
+            builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addItemStacks(oreAliases(ore.material(), true));
             builder.addSlot(RecipeIngredientRole.OUTPUT, 1, 1)
                     .setBackground(slot, -1, -1)
                     .addItemStack(smallOreStack(ore.material()));
@@ -163,6 +168,8 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
 
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, LayerInfo layer, IFocusGroup focuses) {
+            builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addItemStacks(layer.ores().stream()
+                    .flatMap(material -> oreAliases(material, false).stream()).toList());
             builder.addSlot(RecipeIngredientRole.CATALYST, 1, 1)
                     .setBackground(slot, -1, -1)
                     .addItemStack(layer.stone());
@@ -217,6 +224,7 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
 
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, BedrockInfo info, IFocusGroup focuses) {
+            builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addItemStacks(oreAliases(info.material(), false));
             builder.addSlot(RecipeIngredientRole.OUTPUT, 1, 1)
                     .setBackground(slot, -1, -1)
                     .addItemStack(oreStack(info.material()));

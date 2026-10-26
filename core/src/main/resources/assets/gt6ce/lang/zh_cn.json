@@ -142688,5 +142688,6 @@
   "gt6ce.jei.info.stratum_roll": "矿物判定：1/%1$s（%2$s%%）",
   "gt6ce.jei.info.stratum_conditional": "满足位置条件且前序矿物未命中时判定；不是世界占比。",
   "gt6ce.jei.info.stratum_contact": "岩层交界处；命中后普通矿石与贫矿各占 50%。",
-  "gt6ce.jei.info.stratum_interior": "在对应岩层内部；中心生成普通矿石，边缘生成贫矿。"
+  "gt6ce.jei.info.stratum_interior": "在对应岩层内部；中心生成普通矿石，边缘生成贫矿。",
+  "gt6ce.jei.info.stratum_hover": "悬停各矿物查看对应高度与判定概率。"
 }

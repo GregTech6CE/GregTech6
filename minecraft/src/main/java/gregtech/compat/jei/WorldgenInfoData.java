@@ -82,14 +82,20 @@ public class WorldgenInfoData {
             for (GTStoneLayersGen.LayerDef layer : GTStoneLayersGen.LAYERS) {
                 appendStratumOres(out, seen, layer.material(), null, false, layer.noDeep(), layer.ores());
             }
+            // The generator concatenates all rules for the same directional contact.
+            record Contact(String above, String below) {}
+            var contacts = new java.util.LinkedHashMap<Contact, List<GTStoneLayersGen.OreDef>>();
             for (GTStoneLayersGen.ContactDef contact : GTStoneLayersGen.CONTACTS) {
-                appendStratumOres(out, seen, contact.materialA(), contact.materialB(), contact.bothSides(), false, contact.ores());
+                contacts.computeIfAbsent(new Contact(contact.materialA(), contact.materialB()), key -> new ArrayList<>()).addAll(contact.ores());
+                if (contact.bothSides()) contacts.computeIfAbsent(new Contact(contact.materialB(), contact.materialA()), key -> new ArrayList<>()).addAll(contact.ores());
             }
+            contacts.forEach((contact, ores) -> appendStratumOres(out, seen, contact.above(), contact.below(), false, false, ores));
         }
         return out;
     }
 
-    public record StratumInfo(Component host, boolean contact, int chanceDiv) {}
+    public record StratumOre(GTMaterial material, int minY, int maxY, int chanceDiv) {}
+    public record StratumInfo(Component host, boolean contact, List<StratumOre> ores) {}
 
     private static Component materialName(String name) {
         GTMaterial material = gregtech.engine.material.GTMaterialRegistry.get(name);
@@ -103,6 +109,7 @@ public class WorldgenInfoData {
         Component host = below == null ? materialName(above)
                 : Component.translatable("gt6ce.jei.info.contact_" + (bothSides ? "both" : "ordered"),
                         materialName(above), materialName(below));
+        List<StratumOre> ores = new ArrayList<>();
         for (GTStoneLayersGen.OreDef def : definitions) {
             GTMaterial material = gregtech.engine.material.GTMaterialRegistry.get(def.material());
             if (material == null || !material.resolve().isValid()) continue;
@@ -112,22 +119,62 @@ public class WorldgenInfoData {
             int max = Math.min(GTWorldgenScale.BAND_TOP - 1, GTWorldgenScale.remapY(def.maxY()));
             if (min > max) continue;
             int chance = Math.max(1, def.chanceDiv());
-            String key = above + "/" + below + "/" + bothSides + "/" + material.getName() + "/" + min + "/" + max + "/" + chance;
-            if (!seen.add(key)) continue;
-            out.add(new VeinInfo(material.getName(), "minecraft:overworld", min, max, 1, chance,
-                    material, null, null, null, false, new StratumInfo(host, below != null, chance)));
+            ores.add(new StratumOre(material, min, max, chance));
         }
+        if (ores.isEmpty()) return;
+        // Preserve the entire ordered combination, including separate height bands for one mineral.
+        String key = above + "/" + below + "/" + bothSides + "/" + ores;
+        if (!seen.add(key)) return;
+        int min = ores.stream().mapToInt(StratumOre::minY).min().orElseThrow();
+        int max = ores.stream().mapToInt(StratumOre::maxY).max().orElseThrow();
+        out.add(new VeinInfo(above, "minecraft:overworld", min, max, 0, 0,
+                null, null, null, null, false, new StratumInfo(host, below != null, List.copyOf(ores))));
     }
 
-    /** Captions shared by JEI and EMI for the conditional, per-position stratum ore roll. */
+    public static List<GTMaterial> veinMaterials(VeinInfo vein) {
+        return vein.layer() == null ? List.of(vein.top(), vein.bottom(), vein.between(), vein.spread())
+                : vein.layer().ores().stream().map(StratumOre::material).distinct().toList();
+    }
+
+    /** Search aliases, not additional guaranteed products. Small ores use the actual crushing target. */
+    public static List<ItemStack> oreAliases(GTMaterial material, boolean small) {
+        var prefix = small ? gregtech.content.data.MaterialPrefix.crushed : gregtech.content.data.MaterialPrefix.oreRaw;
+        GTMaterial target = small ? material.getTargetCrushingMaterial().resolve() : material.resolve();
+        ItemStack stack = gregtech.content.registry.GTItems.getStack(prefix, target);
+        return stack.isEmpty() ? List.of() : List.of(stack);
+    }
+
+    public static List<ItemStack> veinAliases(VeinInfo vein) {
+        List<ItemStack> aliases = new ArrayList<>();
+        for (GTMaterial material : veinMaterials(vein)) {
+            aliases.addAll(oreAliases(material, false));
+            if (vein.layer() != null) {
+                aliases.add(smallOreStack(material));
+                aliases.addAll(oreAliases(material, true));
+            }
+        }
+        return aliases;
+    }
+
+    public static List<Component> stratumOreCaptions(VeinInfo vein, GTMaterial material) {
+        List<Component> lines = new ArrayList<>();
+        for (StratumOre ore : vein.layer().ores()) {
+            if (ore.material() != material) continue;
+            lines.add(Component.translatable("gt6ce.jei.info.height", ore.minY(), ore.maxY()));
+            lines.add(Component.translatable("gt6ce.jei.info.stratum_roll", ore.chanceDiv(),
+                    String.format(java.util.Locale.ROOT, "%.2f", 100d / ore.chanceDiv())));
+        }
+        return lines;
+    }
+
+    /** Captions shared by JEI and EMI; individual ore heights and rolls belong to their slots. */
     public static List<Component> stratumCaptions(VeinInfo vein) {
         StratumInfo info = vein.layer();
         return List.of(
                 Component.translatable("gt6ce.jei.info.layer_stone", info.host()),
                 Component.translatable("gt6ce.jei.info.dimension", vein.dimension()),
                 Component.translatable("gt6ce.jei.info.height", vein.minY(), vein.maxY()),
-                Component.translatable("gt6ce.jei.info.stratum_roll", info.chanceDiv(),
-                        String.format(java.util.Locale.ROOT, "%.2f", 100d / info.chanceDiv())),
+                Component.translatable("gt6ce.jei.info.stratum_hover"),
                 Component.translatable("gt6ce.jei.info.stratum_conditional"),
                 Component.translatable("gt6ce.jei.info." + (info.contact() ? "stratum_contact" : "stratum_interior")));
     }

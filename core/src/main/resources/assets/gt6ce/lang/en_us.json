@@ -16899,5 +16899,6 @@
   "gt6ce.jei.info.stratum_roll": "Ore roll: 1/%1$s (%2$s%%)",
   "gt6ce.jei.info.stratum_conditional": "Per eligible position, after earlier ore rolls fail; not world abundance.",
   "gt6ce.jei.info.stratum_contact": "At layer contacts; normal/small ore each 50% after a successful roll.",
-  "gt6ce.jei.info.stratum_interior": "Inside the host layer; normal ore in the core, small ore near its fringe."
+  "gt6ce.jei.info.stratum_interior": "Inside the host layer; normal ore in the core, small ore near its fringe.",
+  "gt6ce.jei.info.stratum_hover": "Hover each mineral for its height and ore roll."
 }
