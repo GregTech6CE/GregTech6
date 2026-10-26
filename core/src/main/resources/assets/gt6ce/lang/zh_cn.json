@@ -142582,5 +142582,6 @@
   "item.gt6ce.material_panel": "%s（%s）",
   "tooltip.gt6ce.portable_battery.packet": "能量包大小：%s–%s %s",
   "tooltip.gt6ce.auto_tool.toggle": "潜行空手右击启用或停用",
-  "tooltip.gt6ce.ui.except_front": "正面以外的任意面"
+  "tooltip.gt6ce.ui.except_front": "正面以外的任意面",
+  "jade.gt6ce.omni.stored_count": "内容物：%s × %s"
 }

@@ -16792,5 +16792,6 @@
   "gt.lang.recipes.autohammer": "Performs Hammer Rightclicks and crushes Blocks",
   "gt.lang.recipes.igniter": "Performs Ignition Rightclicks and incinerates Blocks",
   "gt.lang.recipes.quality": "This has a Tool Quality of",
-  "gt.lang.railspeed": "Rail Speed: "
+  "gt.lang.railspeed": "Rail Speed: ",
+  "jade.gt6ce.omni.stored_count": "Contents: %s × %s"
 }
