@@ -27,7 +27,8 @@ public final class ReactorInteraction {
         else if (GTToolHelper.matchesTool(held, GTToolType.PINCERS) && hit.getDirection() == net.minecraft.core.Direction.UP) {
             var removedRod = core.overflowCount() > 0 ? core.removeRod() : core.removeRod(topSlot(core, hit));
             if (!removedRod.isEmpty()) {
-                if (!player.addItem(removedRod)) player.drop(removedRod, false);
+                // Inventory.add silently deletes rejected stacks in creative mode, including rod progress.
+                player.getInventory().placeItemBackInInventory(removedRod);
                 if (!held.isEmpty()) GTToolHelper.damageForUse(held, 1, player);
             }
         } else if (ReactorCoreBlockEntity.isFuelRod(held) && hit.getDirection() == net.minecraft.core.Direction.UP) {

@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-26",
+  "issues": [
+    "https://github.com/GregTech6CE/GregTech6/issues/120",
+    "https://github.com/GregTech6CE/GregTech6/issues/121"
+  ],
+  "base_commit": "9f15a6e14",
+  "changes": [
+    "Render the original fixed cold-coolant volume in both reactor core sizes using native fluid sprites, tint and light",
+    "Synchronize cold-coolant identity and empty transitions without extra packets for amount-only changes",
+    "Return extracted rods through Inventory.placeItemBackInInventory so full creative inventories cannot silently delete breeding progress"
+  ],
+  "verification": {
+    "platform": "NeoForge 1.21.1",
+    "task": ":multiversion:1.21.1-neoforge:runGameTestServer",
+    "namespace": "gt6ce_nuclear_fixes",
+    "result": "4 required tests passed",
+    "coverage": [
+      "11 coolants and both core sizes: native capability simulation, fill, hand recovery and BE packet round trips",
+      "Final cold litre consumed by real cooling clears an existing packet receiver while preserving the separate hot output",
+      "32 native pincers/reinsertion combinations: four breeders, both core sizes, survival/creative and full/free inventory",
+      "Full creative inventory reproduces the old Inventory.add deletion as a control",
+      "Eight breeder/core combinations preserve exact long life and components through automation and native core/item serialization"
+    ],
+    "diff_check": "passed"
+  },
+  "deferred": [
+    "Client was not launched at the user's request. Native atlas/BER smoke compiled but was not executed; actual appearance awaits the user's runClient check on another computer",
+    "Forge runtime and full-platform checks were not run"
+  ],
+  "issue_handling": "Keep both issues open for the user's manual client verification"
+}

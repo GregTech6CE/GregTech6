@@ -27,7 +27,7 @@ public class ReactorCoreBlockEntity extends BlockEntity implements BlockContents
     public final ItemStack[] rods;
     public final int[] neutrons;
     private final List<ItemStack> legacyOverflow = new ArrayList<>();
-    public final FluidTankGT input = new FluidTankGT(64000).setGasProof(true).setAcidProof(true).setOnChanged(this::setChanged);
+    public final FluidTankGT input = new FluidTankGT(64000).setGasProof(true).setAcidProof(true).setOnChanged(this::coolantChanged);
     public final FluidTankGT output = new FluidTankGT(64000) {
 
         @Override
@@ -43,6 +43,7 @@ public class ReactorCoreBlockEntity extends BlockEntity implements BlockContents
     }.setGasProof(true).setAcidProof(true).setOnChanged(this::setChanged);
     public long storedHeat, lastHeat;
     public boolean stopped = true, failed;
+    private FluidStack displayedCoolant = FluidStack.EMPTY;
 //? if >=1.21.1 {
 //?} else {
     private LazyOptional<IFluidHandler> fluidCap;
@@ -148,6 +149,21 @@ public class ReactorCoreBlockEntity extends BlockEntity implements BlockContents
 
     public ReactorCoolants coolant() {
         return ReactorCoolants.of(input.getFluid());
+    }
+
+    /** The original coolant surface has a fixed height: only identity/empty transitions need a visual update. */
+    private void coolantChanged() {
+        setChanged();
+        var current = input.getFluid();
+//? if >=1.21.1 {
+        /*boolean same = FluidStack.isSameFluidSameComponents(current, displayedCoolant);
+*///?} else {
+        boolean same = current.isFluidEqual(displayedCoolant);
+//?}
+        if (current.isEmpty() && displayedCoolant.isEmpty() || !current.isEmpty() && !displayedCoolant.isEmpty() && same) return;
+        displayedCoolant = current.copy();
+        if (!displayedCoolant.isEmpty()) displayedCoolant.setAmount(1);
+        changed();
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, ReactorCoreBlockEntity be) {
