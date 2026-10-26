@@ -35,10 +35,7 @@ public enum MultiblockJadeProvider implements IBlockComponentProvider, IServerDa
             data.putInt("axialInput", axial.grade().input());
             data.putInt("axialOutput", axial.grade().output());
         }
-        if (entity instanceof BasicMachineBlockEntity machine) {
-            data.putInt("progress", machine.getProgressPercent());
-            data.putBoolean("running", machine.isRunning());
-        } else {
+        if (!(entity instanceof BasicMachineBlockEntity)) {
             var energies = new ListTag();
             if (entity instanceof IEnergyBlock machine) {
                 // Include fuel heat and rear-port RU buffers even when the controller itself has no energy port.
@@ -102,7 +99,6 @@ public enum MultiblockJadeProvider implements IBlockComponentProvider, IServerDa
         var data = accessor.getServerData().getCompound("gt_structure");
         JadeText.add(tooltip, Component.translatable("jade.gt6ce.multiblock." + (data.getBoolean("formed") ? "formed" : "incomplete"))
                 .withStyle(data.getBoolean("formed") ? net.minecraft.ChatFormatting.GREEN : net.minecraft.ChatFormatting.RED));
-        if (data.contains("progress")) JadeText.add(tooltip, Component.translatable("jade.gt6ce.multiblock.progress", data.getInt("progress")));
         if (data.contains("fusionCharge")) {
             JadeText.add(tooltip, Component.translatable("gt6ce.fusion.startup", data.getLong("fusionCharge")));
             JadeText.add(tooltip, Component.translatable("gt6ce.fusion.output", data.getLong("fusionOutput")));

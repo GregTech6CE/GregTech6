@@ -12,33 +12,7 @@ final class OmniMachineInfo {
     private OmniMachineInfo() {}
 
     static void append(JadeInspection info, BlockEntity entity, snownee.jade.api.BlockAccessor accessor) {
-        if (entity instanceof BasicMachineBlockEntity machine) {
-            info.groupedInventory();
-            var control = machine.machineControl(null);
-            info.state(control.enabled(), control.active());
-            if (control.progressMax() > 0) info.line("progress", control.progress(), control.progressMax(),
-                    gregtech.content.energy.BoilerGauge.percent(control.progress(), control.progressMax()));
-            if (machine.minimumEnergy() > 0 && machine.spec() != null)
-                info.line("recipe_energy", machine.minimumEnergy(), machine.spec().energyType(), machine.parallelCount());
-            var pending = machine.inspectionPendingItems();
-            for (int i = 0; i < pending.size(); i++) info.item("pending", i, pending.get(i));
-            int remaining = machine.inspectionPendingItemCount() - pending.size();
-            if (remaining > 0) info.line("more_pending", remaining);
-            var fluids = machine.inspectionPendingFluids();
-            for (int i = 0; i < fluids.size(); i++) {
-                var fluid = fluids.get(i);
-                info.fluid("pending", i, fluid, fluid.getAmount(), fluid.getAmount());
-            }
-            info.inventory("input", machine.inventory(), 0, machine.inputSlots());
-            info.inventory("output", machine.inventory(), machine.inputSlots(), machine.outputSlots());
-            info.inventory("program", machine.autocraftingProgram(), 0, 1);
-            info.tanks("input", machine.getTanksInput());
-            info.tanks("output", machine.getTanksOutput());
-            if (machine instanceof CokeOvenControllerBlockEntity coke && !control.active() && control.progressMax() == 0) {
-                if (!coke.ignitionReady()) info.line("needs_ignition");
-                info.line("coke_recipe_hint");
-            }
-        } else if (entity instanceof MaterialAnvilBlockEntity anvil) {
+        if (entity instanceof MaterialAnvilBlockEntity anvil) {
             info.line("anvil_hint");
             info.line("durability", anvil.remainingDurability());
             var facing = entity.getBlockState().getValue(gregtech.content.block.tool.MaterialAnvilBlock.FACING);

@@ -91,9 +91,9 @@ public final class JadeCoverRegressionTests {
             var machine = (BasicMachineBlockEntity) helper.getLevel().getBlockEntity(pos);
             machine.inventory().setStackInSlot(0, new ItemStack(Items.IRON_INGOT, 7));
             var data = inspect(machine, false);
-            helper.assertTrue(has(data, "gt_bm_details", "jade.gt6ce.omni.state"), id + " requires state without Omni");
-            helper.assertTrue(has(data, "gt_bm_details", "jade.gt6ce.omni.item"), id + " requires grouped inventory without Omni");
-            helper.assertTrue(data.getBoolean("gt_bm_details_inventory"), "Machine must replace Jade's generic inventory");
+            var machineData = data.getCompound(BasicMachineJadeProvider.DATA_KEY);
+            helper.assertTrue(machineData.contains("enabled"), id + " requires state without Omni");
+            helper.assertTrue(machineData.getList("inputItems", 10).size() == 1, id + " requires grouped inventory without Omni");
             var extra = inspect(machine, true);
             helper.assertTrue(!has(extra, "gt_omni", "jade.gt6ce.omni.state"), "State must not be duplicated");
         }

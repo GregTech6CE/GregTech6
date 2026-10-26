@@ -27,10 +27,8 @@ public enum OmniJadeProvider implements IServerDataProvider<BlockAccessor>, IBlo
         // Reading an already-bound controller never scans or rebuilds the structure.
         if (entity instanceof gregtech.content.blockentity.machine.MultiblockPortBlockEntity port)
             entity = port.sensorTarget();
-        // BasicMachine's own provider owns its entire recipe/inventory section, even when
-        // the optional Omni section is disabled. Bound structural ports still show it here.
-        if (!(accessor.getBlockEntity() instanceof gregtech.content.blockentity.machine.BasicMachineBlockEntity))
-            OmniMachineInfo.append(info, entity, accessor);
+        // Recipe machines and their bound ports are exclusively handled by BasicMachineJadeProvider.
+        OmniMachineInfo.append(info, entity, accessor);
         OmniWorldInfo.append(info, entity);
         OmniEnergyInfo.append(info, entity);
         info.write(tag);

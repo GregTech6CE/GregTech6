@@ -55,6 +55,7 @@ public class GTJadePlugin implements IWailaPlugin {
         registration.registerBlockDataProvider(MoldJadeProvider.INSTANCE, MoldBlockEntity.class);
         registration.registerBlockDataProvider(MoldJadeProvider.INSTANCE, MoldBasinBlockEntity.class);
         registration.registerBlockDataProvider(BasicMachineJadeProvider.INSTANCE, BasicMachineBlockEntity.class);
+        registration.registerBlockDataProvider(BasicMachineJadeProvider.INSTANCE, gregtech.content.blockentity.machine.MultiblockPortBlockEntity.class);
         registration.registerBlockDataProvider(EngineJadeProvider.INSTANCE, EngineBaseBlockEntity.class);
         registration.registerBlockDataProvider(BoilerJadeProvider.INSTANCE, BoilerTankBlockEntity.class);
         registration.registerBlockDataProvider(BoilerJadeProvider.INSTANCE, gregtech.content.blockentity.machine.OriginalLargeBoilerControllerBlockEntity.class);
@@ -90,6 +91,7 @@ public class GTJadePlugin implements IWailaPlugin {
         registration.registerBlockComponent(MoldJadeProvider.INSTANCE, MoldBlock.class);
         registration.registerBlockComponent(MoldJadeProvider.INSTANCE, MoldBasinBlock.class);
         registration.registerBlockComponent(BasicMachineJadeProvider.INSTANCE, BasicMachineBlock.class);
+        registration.registerBlockComponent(BasicMachineJadeProvider.INSTANCE, gregtech.content.block.machine.MultiblockPortBlock.class);
         registration.registerBlockComponent(EngineJadeProvider.INSTANCE, EngineBlock.class);
         registration.registerBlockComponent(BoilerJadeProvider.INSTANCE, BoilerTankBlock.class);
         registration.registerBlockComponent(BoilerJadeProvider.INSTANCE, gregtech.content.block.machine.OriginalLargeBoilerControllerBlock.class);
