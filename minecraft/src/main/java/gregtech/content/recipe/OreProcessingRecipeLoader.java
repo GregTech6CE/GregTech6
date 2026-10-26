@@ -464,25 +464,33 @@ public class OreProcessingRecipeLoader implements InitializationStep {
      * Generate Melter + Smelter recipes for materials with composition data
      * and a valid smelting target.
      *
-     * <p>This is a simplified port of {@code RecyclingProcessing}: instead of
-     * iterating every registered item, we iterate all materials and generate
-     * recipes that convert the dust/ingot form into the material's molten
-     * fluid (when available) or smelting output.</p>
+     * <p>Keep one OM-selected dust-or-ingot unit, not the original all-recyclable-item listener.
+     * Reviewed source facts choose the output target's phase and amount. Unknown identities and
+     * explicit overrides retain the old compatibility branch; a known missing native phase does not.</p>
      */
     private void processRecycling() {
+        SourceThermalNativeAdapter.begin();
+        var thermalSnapshot = new SourceThermalNativeAdapter.Snapshot();
         for (GTMaterial mat : GTMaterialRegistry.allMaterials()) {
             GTMaterial material = mat.resolve();
             if (!material.isValid()) continue;
             if (material.has(MaterialProperty.ANTIMATTER)) continue;
             if (ReviewedCinnabarThermalRecipes.emitIfSupported(material)) continue;
 
+            ItemStack recyclableInput = OM.dustOrIngot(material, U);
+            var thermal = SourceThermalNativeAdapter.inspect(material, recyclableInput, thermalSnapshot);
+            SourceThermalNativeAdapter.note(material, thermal);
+            if (thermal.action() != SourceThermalNativeAdapter.Action.LEGACY_UNSUPPORTED) {
+                for (var row : thermal.rows()) row.admit();
+                continue; // Known missing native resources never revive the old input-fluid/144mB row.
+            }
+
+            // Explicitly unresolved/overridden environments keep this producer's old compatibility boundary.
             GTMaterial smeltTarget = material.getTargetSmeltingMaterial();
             long smeltAmount = material.getTargetSmeltingAmount();
             if (smeltTarget == null || !smeltTarget.isValid() || smeltAmount <= 0) continue;
             if (!material.has(MaterialProperty.MELTING)) continue;
 
-            // Use dust form as the recyclable input
-            ItemStack recyclableInput = OM.dustOrIngot(material, U);
             if (recyclableInput.isEmpty()) continue;
 
             // Try to get the molten fluid for this material
@@ -522,10 +530,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         return new FluidStack(fluidRO.get(), 144);
     }
 
-    /**
-     * Duration for recycling: scaled by material melting point (original uses
-     * {@code (weight * (max(melting, fluidTemp) - 300)) / 1600}).
-     */
+    /** Legacy unsupported-context duration, intentionally not the reviewed source calculation. */
     private long computeRecycleDuration(GTMaterial material, FluidStack moltenFluid) {
         int fluidTemp = RegisteredFluids.get("GenMolten_" + material.getName()) != null
                 ? RegisteredFluids.get("GenMolten_" + material.getName()).temperature()
