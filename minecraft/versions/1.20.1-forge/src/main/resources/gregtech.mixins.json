@@ -50,6 +50,7 @@
     "ColoredBookOpenPacketMixin",
     "ColoredBookLecternScreenMixin",
     "GasFluidRenderMixin",
+    "EmiStructureFocusMixin",
     "ReliableEmiNamespaceMixin"
   ]
 }

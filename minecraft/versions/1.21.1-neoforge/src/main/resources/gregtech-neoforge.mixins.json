@@ -45,6 +45,7 @@
     "BlockPaintColorMixin",
     "ItemPaintColorMixin",
     "GasFluidRenderMixin",
+    "EmiStructureFocusMixin",
     "ReliableEmiNamespaceMixin"
   ]
 }
