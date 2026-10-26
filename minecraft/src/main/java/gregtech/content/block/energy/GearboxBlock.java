@@ -1,6 +1,10 @@
 package gregtech.content.block.energy;
 
 import gregtech.engine.energy.GearboxSpec;
+import gregtech.engine.tool.ToolInteractionTarget;
+import gregtech.engine.tool.ToolInteractionSpec;
+import gregtech.engine.tool.ToolInteractions;
+import gregtech.content.block.machine.MachineRotationType;
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.NeoToolBindings;
 *///?} else {
@@ -15,7 +19,6 @@ import gregtech.content.item.MaterialItem;
 import gregtech.content.registry.GTBlockEntities;
 //?}
 import gregtech.content.registry.GTItems;
-import gregtech.util.GTPlacementCode;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -39,13 +42,12 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 /** GT6 custom gearbox: wrench mounts physical gears; monkey wrench selects axle axis. */
-public class GearboxBlock extends Block implements EntityBlock {
+public class GearboxBlock extends Block implements EntityBlock, ToolInteractionTarget {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
     private final GearboxSpec spec;
 
@@ -94,24 +96,25 @@ public class GearboxBlock extends Block implements EntityBlock {
         return (l, pos, s, be) -> GearboxBlockEntity.serverTick(l, pos, s, (GearboxBlockEntity) be);
     }
 
-    /** As in GT6 writeItemNBT2, a dismantled gearbox keeps its mounted gears. */
+    /** Drop the housing and its installed gears separately; old item NBT remains readable. */
     @Override
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
-        ItemStack stack = new ItemStack(this);
+        var drops = new java.util.ArrayList<ItemStack>();
+        drops.add(new ItemStack(this));
         if (builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof GearboxBlockEntity gearbox) {
-//? if >=1.21.1 {
-            /*var data=gearbox.saveForItem();data.putString("id","gt6ce:gearbox");stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(data));
-*///?} else {
-            stack.addTagElement("BlockEntityTag", gearbox.saveForItem());
-//?}
+            if (gearbox.gearCount() > 0) {
+                ItemStack gears = GTItems.getStack(MaterialPrefix.gearGt, spec.material(), gearbox.gearCount());
+                if (!gears.isEmpty()) drops.add(gears);
+            }
         }
-        return List.of(stack);
+        return drops;
     }
 
-    private static Direction wrenchSide(BlockPos pos, BlockHitResult hit) {
-        Vec3 local = hit.getLocation().subtract(Vec3.atLowerCornerOf(pos));
-        return GTPlacementCode.getSideWrenching(hit.getDirection(),
-                (float) local.x, (float) local.y, (float) local.z);
+    @Override
+    public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+        return gregtech.engine.tool.GTToolHelper.isMachineWrench(tool)
+                || gregtech.engine.tool.GTToolHelper.isMonkeyWrench(tool)
+                ? ToolInteractionSpec.facing(FACING, MachineRotationType.ALL) : null;
     }
 
     private static int matchingGearSlot(Player player, GearboxSpec spec) {
@@ -142,10 +145,12 @@ public class GearboxBlock extends Block implements EntityBlock {
         boolean glass = GTToolHelper.isMagnifyingGlass(held);
 //?}
         if (!monkey && !wrench && !hammer && !glass) return InteractionResult.PASS;
+        Direction side = ToolInteractions.selectedFace(hit);
+        if ((wrench || monkey) && !ToolInteractions.canApply(toolInteraction(state, held),
+                state, level, pos, player, held, side)) return InteractionResult.FAIL;
         if (level.isClientSide) return InteractionResult.SUCCESS;
         if (!(level.getBlockEntity(pos) instanceof GearboxBlockEntity gearbox)) return InteractionResult.PASS;
 
-        Direction side = wrenchSide(pos, hit);
         if (wrench) {
             if (gearbox.hasGear(side)) {
                 ItemStack gear = gearbox.unmountGear(side);
