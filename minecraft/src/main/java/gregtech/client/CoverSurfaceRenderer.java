@@ -9,6 +9,26 @@ import net.minecraft.core.Direction;
 /** Full host faces stay flush; non-full hosts have the original two-pixel attachment and holder. */
 final class CoverSurfaceRenderer {
     private CoverSurfaceRenderer() {}
+    static int light(net.minecraft.world.level.block.entity.BlockEntity owner, Direction side, int fallback) {
+        var level = owner.getLevel();
+        if (level == null) return fallback;
+        var adjacent = owner.getBlockPos().relative(side);
+        int face = net.minecraft.client.renderer.LevelRenderer.getLightColor(level, adjacent);
+        if (!level.getBlockState(adjacent).isSolidRender(level, adjacent)) return face;
+        int host = net.minecraft.client.renderer.LevelRenderer.getLightColor(level, owner.getBlockPos());
+        for (Direction exposed : Direction.values()) {
+            var sample = owner.getBlockPos().relative(exposed);
+            if (level.getBlockState(sample).isSolidRender(level, sample)) continue;
+            int value = net.minecraft.client.renderer.LevelRenderer.getLightColor(level, sample);
+            host = net.minecraft.client.renderer.LightTexture.pack(
+                    Math.max(net.minecraft.client.renderer.LightTexture.block(host), net.minecraft.client.renderer.LightTexture.block(value)),
+                    Math.max(net.minecraft.client.renderer.LightTexture.sky(host), net.minecraft.client.renderer.LightTexture.sky(value)));
+        }
+        // Preserve sky and block channels independently, without making the cover emissive.
+        return net.minecraft.client.renderer.LightTexture.pack(
+                Math.max(net.minecraft.client.renderer.LightTexture.block(face), net.minecraft.client.renderer.LightTexture.block(host)),
+                Math.max(net.minecraft.client.renderer.LightTexture.sky(face), net.minecraft.client.renderer.LightTexture.sky(host)));
+    }
     static boolean needsAttachment(net.minecraft.world.level.block.entity.BlockEntity owner, Direction side) {
         return owner.getLevel()!=null && !gregtech.content.cover.CoverWorldInteraction.isCoverSurface(owner,side);
     }

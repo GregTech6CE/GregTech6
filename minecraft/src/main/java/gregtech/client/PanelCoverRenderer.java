@@ -56,7 +56,7 @@ public final class PanelCoverRenderer {
     public static boolean renderFace(PanelCoverHost host,Direction side,PoseStack pose,MultiBufferSource buffers,int fallbackLight){
         var stack=host.getCover(side);if(!CoverItems.isCover(stack))return false;
         var owner=host.coverOwner();var level=owner.getLevel();
-        int light=level==null?fallbackLight:LevelRenderer.getLightColor(level,owner.getBlockPos().relative(side));
+        int light=CoverSurfaceRenderer.light(owner,side,fallbackLight);
         var behavior=CoverItems.behavior(stack);
         if((CoverItems.REDSTONE_TORCH.equals(behavior)||CoverItems.REDSTONE_REPEATER.equals(behavior))
                 &&host.coverOwner() instanceof gregtech.content.blockentity.energy.SignalWireBlockEntity wire) {

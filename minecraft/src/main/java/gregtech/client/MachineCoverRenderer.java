@@ -24,7 +24,7 @@ public final class MachineCoverRenderer implements BlockEntityRenderer<BasicMach
 *///?} else {
             var sprite = model.getParticleIcon();
 //?}
-            int light = level == null ? packedLight : LevelRenderer.getLightColor(level, be.getBlockPos().relative(side));
+            int light = CoverSurfaceRenderer.light(be, side, packedLight);
             var vertices = buffers.getBuffer(RenderType.cutout());
             boolean layered = gregtech.content.cover.MachineCoverSpec.of(cover) != null;
             if (layered) CoverSurfaceRenderer.draw(pose, vertices, side, ArmRenderHelper.getSprite(

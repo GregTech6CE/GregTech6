@@ -35,8 +35,7 @@ public final class LogisticsCoverRenderer<T extends BlockEntity & LogisticsCover
             if (stack.isEmpty()) continue;
             var type = LogisticsCoverType.of(stack);
             if (type == null) continue;
-            int light = blockEntity.getLevel() == null ? packedLight
-                    : LevelRenderer.getLightColor(blockEntity.getLevel(), blockEntity.getBlockPos().relative(side));
+            int light = CoverSurfaceRenderer.light(blockEntity, side, packedLight);
             var vertices = buffers.getBuffer(RenderType.cutout());
             double surfaceOffset = 0;
             var base = ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath(
