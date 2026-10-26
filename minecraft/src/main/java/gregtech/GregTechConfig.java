@@ -127,6 +127,8 @@ public final class GregTechConfig {
         OVERDOSE_DEATH("general.DeathByOverdosingCertainFoods", true),
         ALWAYS_DRINK("general.drinks_always_drinkable", false),
         DISABLE_VANILLA_ORES("general.DisableVanillaOres", true),
+        GENERATE_NETHER_GOLD_ORE("worldgen.GenerateNetherGoldOre", true),
+        GENERATE_ANCIENT_DEBRIS("worldgen.GenerateAncientDebris", true),
         INCREASE_DUNGEON_LOOT("general.IncreaseDungeonLoot", true),
         REPLACE_VANILLA_RECIPES("recipes.recipereplacements.minecraft", true),
         REPLACE_MOD_RECIPES("recipes.recipereplacements.other_mods", true),
@@ -209,7 +211,13 @@ public final class GregTechConfig {
         for (Rule rule : Rule.values()) {
             var builder = rule.client ? CLIENT : COMMON;
             if (rule.client || rule.key.startsWith("worldgen.") || rule.key.startsWith("recipes.")) builder.worldRestart();
-            settings.put(rule, option(builder, rule.key, rule.initial, rule.key.substring(rule.key.lastIndexOf('.') + 1)));
+            String description = switch (rule) {
+                case DISABLE_VANILLA_ORES -> "Disable vanilla ore generation. Nether gold ore and ancient debris have independent settings.";
+                case GENERATE_NETHER_GOLD_ORE -> "Generate vanilla Nether gold ore, independently of DisableVanillaOres.";
+                case GENERATE_ANCIENT_DEBRIS -> "Generate vanilla ancient debris, independently of DisableVanillaOres.";
+                default -> rule.key.substring(rule.key.lastIndexOf('.') + 1);
+            };
+            settings.put(rule, option(builder, rule.key, rule.initial, description));
         }
         return settings;
     }

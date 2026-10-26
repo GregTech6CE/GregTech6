@@ -14,10 +14,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class VanillaOreConfigMixin {
     @Inject(method = "place", at = @At("HEAD"), cancellable = true, require = 1)
     private void gt6ce$vanillaOres(FeaturePlaceContext<OreConfiguration> context, CallbackInfoReturnable<Boolean> result) {
-        if (!gregtech.GregTechConfig.Rule.DISABLE_VANILLA_ORES.enabled()) return;
         for (var target : context.config().targetStates) {
             var id = BuiltInRegistries.BLOCK.getKey(target.state.getBlock());
-            if (id.getNamespace().equals("minecraft") && (id.getPath().endsWith("_ore") || id.getPath().equals("ancient_debris"))) {
+            if (!id.getNamespace().equals("minecraft")) continue;
+            // These two resources have independent switches, even when other vanilla ores are disabled.
+            boolean disabled = switch (id.getPath()) {
+                case "nether_gold_ore" -> !gregtech.GregTechConfig.Rule.GENERATE_NETHER_GOLD_ORE.enabled();
+                case "ancient_debris" -> !gregtech.GregTechConfig.Rule.GENERATE_ANCIENT_DEBRIS.enabled();
+                default -> id.getPath().endsWith("_ore") && gregtech.GregTechConfig.Rule.DISABLE_VANILLA_ORES.enabled();
+            };
+            if (disabled) {
                 result.setReturnValue(false);
                 return;
             }
