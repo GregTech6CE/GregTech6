@@ -29,3 +29,19 @@ tasks.named('jar', Jar).configure {
     preserveFileTimestamps = false
     reproducibleFileOrder = true
 }
+
+// Pure core contracts do not need the shared Minecraft texture/model catalog.
+sourceSets.test {
+    compileClasspath = sourceSets.main.output.classesDirs + configurations.testCompileClasspath
+    runtimeClasspath = output + sourceSets.main.output.classesDirs + configurations.testRuntimeClasspath
+}
+
+def centrifugeContracts = tasks.register('centrifugeContracts', JavaExec) {
+    description = 'Runs the focused, dependency-free Centrifuge core regressions.'
+    group = 'verification'
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'gregtech.content.recipe.generated.CentrifugeContracts'
+    javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
+}
+tasks.named('check').configure { dependsOn centrifugeContracts }

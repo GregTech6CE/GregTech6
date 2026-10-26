@@ -134,7 +134,11 @@ public final class GeneratedRecipeResolver {
         List<ItemStack> inputs = resolveItems(itemIn);
         List<FluidStack> fIn = resolveFluids(fluidIn);
         List<FluidStack> fOut = resolveFluids(fluidOut);
-        List<ItemStack> outputs = resolveItems(itemOut);
+        CentrifugeOutputs cOutputs = mapName.equals("Centrifuge") ? resolveCentrifugeOutputs(itemOut) : null;
+        List<ItemStack> outputs = cOutputs == null ? resolveItems(itemOut) : cOutputs.items();
+        // RecipeMap.make trims chances to output length. An unresolved Sticky tail must keep
+        // the exact pre-existing one-output/two-chance raw row, not normalize it accidentally.
+        boolean sourceOptimize = cOutputs == null ? optimize : cOutputs.useSourceOptimize(optimize);
         if (inputs == null || fIn == null || fOut == null || outputs == null) {
             skipped++;
             LOGGER.debug("[gregtech] chem skip ({}): in={} fIn={} fOut={} out={}", mapName,
@@ -145,7 +149,7 @@ public final class GeneratedRecipeResolver {
             return;
         }
 
-        var candidate = optimize
+        var candidate = sourceOptimize
                 ? RecipeMap.make(true, inputs.toArray(RecipeMap.ZL_IS), outputs.toArray(RecipeMap.ZL_IS),
                     null, chances, fIn.toArray(RecipeMap.ZL_FS), fOut.toArray(RecipeMap.ZL_FS), dur, eut, 0)
                 : new gregtech.engine.recipe.Recipe(inputs.toArray(RecipeMap.ZL_IS), outputs.toArray(RecipeMap.ZL_IS),
@@ -261,6 +265,47 @@ public final class GeneratedRecipeResolver {
      */
     public static FluidStack resolveFluidSpec(String spec) {
         return resolveFluid(spec);
+    }
+
+    /** Only the two named C optional tails use this path. Every pre-existing descriptor and
+     * every non-C resolver retains the old all-or-nothing output resolution. No tag inference. */
+    record CentrifugeOutputs(List<ItemStack> items, boolean preserveLegacyPrefix) {
+        boolean useSourceOptimize(boolean requested) { return requested && !preserveLegacyPrefix; }
+    }
+    private static CentrifugeOutputs resolveCentrifugeOutputs(String[] specs) {
+        return resolveCentrifugeOutputs(specs, SourceCentrifugeOptionalItemOutputs::resolve,
+                GeneratedRecipeResolver::recordMissing);
+    }
+    /** Package-local isolated test seam; supplied policy/diagnostics do not mutate global tables. */
+    static CentrifugeOutputs resolveCentrifugeOutputs(String[] specs,
+            java.util.function.Function<gregtech.content.recipe.SourceCentrifugeOptionalBindings.Plan,
+                    SourceCentrifugeOptionalItemOutputs.Result> optionalResolution,
+            java.util.function.Consumer<String> missing) {
+        if (java.util.Arrays.stream(specs).noneMatch(s -> s.startsWith("copt:"))) return new CentrifugeOutputs(resolveItems(specs), false);
+        List<ItemStack> out = new ArrayList<>();
+        for (int index = 0; index < specs.length; index++) {
+            String spec = specs[index];
+            if (!spec.startsWith("copt:")) {
+                ItemStack stack = resolveItem(spec);
+                if (stack == null || stack.isEmpty()) { missing.accept(spec); return new CentrifugeOutputs(null, false); }
+                out.add(stack);
+                continue;
+            }
+            String[] parts = spec.split(":", -1);
+            // Both pinned source calls have one known output followed by one optional amount1 tail.
+            if (parts.length != 3 || !parts[2].equals("1") || index != specs.length - 1 || out.size() != 1) {
+                missing.accept(spec); return new CentrifugeOutputs(null, false);
+            }
+            var plan = gregtech.content.recipe.SourceCentrifugeOptionalBindings.Plan.fromToken(parts[1]);
+            if (plan == null) { missing.accept(spec); return new CentrifugeOutputs(null, false); }
+            var resolved = optionalResolution.apply(plan);
+            switch (resolved.action()) {
+                case DEFER_ROW -> { missing.accept(spec); return new CentrifugeOutputs(null, false); }
+                case OMIT_OPTIONAL_TAIL -> { missing.accept(spec); return new CentrifugeOutputs(out, true); }
+                case APPEND -> out.add(resolved.stack());
+            }
+        }
+        return new CentrifugeOutputs(out, false);
     }
 
     private static List<ItemStack> resolveItems(String[] specs) {

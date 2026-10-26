@@ -173,5 +173,9 @@ final class GTOresGen {
         GeneratedRecipeSink.registerSource(true, "Centrifuge", 16, 288, ch(7500, 5000, 2500, 2500, 2500), sp("tech:sand_magnetite:1"), NONE, NONE, sp("i:dust:Deepslate:6", "i:dust:RedSand:3", "i:dustTiny:V2O5:12", "i:dustTiny:Sn:6", "i:dustTiny:Zn:3"));
         GeneratedRecipeSink.registerSource(true, "Centrifuge", 16, 288, ch(7500, 5000, 2500, 2500, 2500), sp("tech:sand_basalt_magnetite:1"), NONE, NONE, sp("i:dust:Gabbro:6", "i:dust:RedSand:3", "i:dustTiny:V2O5:12", "i:dustTiny:Cu:6", "i:dustTiny:Ni:3"));
         GeneratedRecipeSink.registerSource(true, "Centrifuge", 16, 288, ch(7500, 5000, 2500, 2500, 2500), sp("tech:sand_granite_magnetite:1"), NONE, NONE, sp("i:dust:GraniteBlack:6", "i:dust:RedSand:3", "i:dustTiny:V2O5:12", "i:dustTiny:Pb:6", "i:dustTiny:Co:3"));
+
+        // Loader_Recipes_Ores:43 / W:47: two output slots; named TE > IE > FZ > Ash.
+        GeneratedRecipeSink.registerSource(true, "Centrifuge", 64, 144, null,
+                sp("omdu:DarkAsh:1297296000"), NONE, NONE, sp("omdu:Ash:648648000", "copt:darkash_second:1"));
     }
 }

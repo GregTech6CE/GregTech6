@@ -39,8 +39,10 @@ final class GTCombGen {
         r(16, 64, ch(6000, 6000), sp("tech:shroomy_comb:1"), NONE, sp("f:Soup_Mushroom:1000"), sp("v:red_mushroom_block:1", "v:brown_mushroom_block:1"));
         r(16, 64, ch(10000, 1000), sp("tech:sandy_comb:1"), NONE, sp("f:Juice_Cactus:100"), sp("v:sand:1"));
         r(16, 64, ch(2000, 2000, 2000, 2000, 2000, 2000), sp("tech:clay_comb:1"), NONE, sp("f:Concrete:144"), sp("i:dust:Clay:1", "i:dust:ClayBrown:1", "i:dust:ClayRed:1", "i:dust:Bentonite:1", "i:dust:Palygorskite:1", "i:dust:Kaolinite:1"));
-        // GT6 also yields IL.FR_Propolis_Sticky.get(1, IL.IC2_Resin.get(1, IL.Resin.get(1))) (another mod's item); dropped here.
-        r(16, 64, ch(10000, 3000), sp("tech:sticky_comb:1"), NONE, sp("f:Latex:144"), sp("i:dust:WaxBee:1"));
+        // MultiItemFood:262 / W:270: named Forestry sticky > IC2 resin > own resin.
+        // Unresolved earlier binding preserves the prior wax/latex row, including both chance entries.
+        GeneratedRecipeSink.registerSource(true, "Centrifuge", 16, 64, ch(10000, 3000),
+                sp("tech:sticky_comb:1"), NONE, sp("f:Latex:144"), sp("i:dust:WaxBee:1", "copt:sticky_resin:1"));
         r(16, 64, ch(10000), sp("tech:royal_comb:1"), NONE, sp("f:Honey:50", "f:RoyalJelly:10"), sp("i:dust:WaxBee:1"));
         r(16, 64, ch(10000, 9000), sp("tech:soul_comb:1"), NONE, sp("f:Oil_Soulsand:50"), sp("i:dust:WaxSoulful:1", "i:dust:SoulSand:1"));
         r(16, 64, ch(10000, 1000), sp("tech:amnesic_comb:1"), NONE, sp("f:Lubricant:1000"), sp("i:dust:WaxAmnesic:1"));

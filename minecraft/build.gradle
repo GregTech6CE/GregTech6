@@ -34,3 +34,6 @@ sourceSets.matching { it.name != 'addonSample' }.configureEach { sources ->
             layout.buildDirectory.dir("generated/stonecutter/${sources.name}/resources"),
             layout.projectDirectory.dir("src/${sources.name}/resources")).builtBy(generate))
 }
+
+// CI builds each loader node directly; those checks must execute the shared core contracts.
+tasks.named('check').configure { dependsOn ':core:check' }
