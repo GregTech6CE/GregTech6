@@ -130,10 +130,11 @@ public final class FurnaceSmeltingRecipes {
 
     /** One {@code <form> -> <metal>} row for one material (GT6 {@code Listener_Furnace_Smelting}). */
     private static void form(GTMaterial material, MaterialPrefix prefix, Row row) {
-        // GT6: only materials flagged FURNACE, and never the placeholder materials
-        if (!FurnaceSmeltingRules.allows(material)) return;
+        if (material == null || !material.isValid()) return;
         ItemStack input = GTItems.getStack(prefix, material, 1);
         if (input.isEmpty()) return;
+        // Source permission applies to native forms; foreign canonical bindings keep the old listener policy.
+        if (!SourceFurnaceNativeAdapter.listenerAllows(prefix, material, input)) return;
 
         GTMaterial smelting = material.getTargetSmeltingMaterial();
         if (smelting == null || !smelting.isValid()) return;

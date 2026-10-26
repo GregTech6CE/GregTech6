@@ -119,7 +119,7 @@ public final class ExternalOreProcessing {
         for (var row : FurnaceSmeltingRules.EXTERNAL) for (var entry : forms.entrySet()) {
             if (!entry.getKey().prefix().equals(row.input().getName())) continue;
             var material = GTMaterialRegistry.get(entry.getKey().material()).resolve();
-            if (!FurnaceSmeltingRules.allows(material)) continue;
+            if (!FurnaceSmeltingRules.legacyAllows(material)) continue;
             var target = material.getTargetSmeltingMaterial();
             if (target == null || !target.isValid()) continue;
             long amount = FurnaceSmeltingRules.amount(row.amount(), material.getTargetSmeltingAmount());

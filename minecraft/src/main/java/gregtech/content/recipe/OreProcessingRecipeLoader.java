@@ -81,7 +81,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
      * <ul>
      *   <li>Crusher / Hammer / Sifting on {@code oreRaw} (if it exists)</li>
      *   <li>rockGt → crushed for stone-type materials</li>
-     *   <li>Furnace smelting if the material has melting data</li>
+     *   <li>Furnace form ownership is deferred to the source listener when reviewed</li>
      *   <li>Oilsands centrifuge special case</li>
      * </ul>
      */
@@ -138,12 +138,26 @@ public class OreProcessingRecipeLoader implements InitializationStep {
                 new FluidStack(oil.get(),500),sand);
     }
 
-    /** Add furnace smelting for materials with melting data. */
-    private void registerSmelting(GTMaterial material, ItemStack... possibleInputs) {
+    /** Keep raw-form ownership separate from the ordinary block's crushing-target permission. */
+    private void registerSmelting(GTMaterial material, GTMaterial crushing, ItemStack input, boolean builtinRaw) {
+        if (input.isEmpty()) return;
+        if (builtinRaw) {
+            if (!SourceFurnaceNativeAdapter.earlyFormAllowed(MaterialPrefix.oreRaw, material, input)) return;
+        } else {
+            var source = SourceFurnaceNativeAdapter.block(material, crushing, input,
+                    new SourceFurnaceNativeAdapter.Snapshot());
+            if (source.action() != SourceFurnaceNativeAdapter.Action.LEGACY_UNSUPPORTED) {
+                source.admit();
+                return;
+            }
+        }
+        // Unknown/overridden contexts and vanilla/external inputs retain the former producer.
+        // This is intentionally not the expanded native-only source permission above.
         long smeltAmount = material.getTargetSmeltingAmount();
         GTMaterial smeltTarget = material.getTargetSmeltingMaterial();
         if (smeltTarget == null || !smeltTarget.isValid() || smeltAmount <= 0) return;
-        if (!OreSourcePolicy.furnaceInput(material)) return;
+        if (!ReviewedOreSourceProfile.decision(material, ReviewedOreSourceProfile.Rule.FURNACE)
+                .orLegacy(material.has(MaterialProperty.MELTING))) return;
 
         ItemStack smeltOutput = OM.dustOrIngot(smeltTarget, smeltAmount);
         if (smeltOutput.isEmpty()) {
@@ -151,15 +165,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         }
         if (smeltOutput.isEmpty()) return;
 
-        for (ItemStack input : possibleInputs) {
-            if (!input.isEmpty()) {
-                // Only the native oreRaw form is covered by the later source listener.
-                // Shared block/vanilla ore callers keep their existing fallback behavior.
-                if (OreSourcePolicy.usesReviewedFurnaceListener(material)
-                        && input.getItem() == mat(MaterialPrefix.oreRaw, material, 1).getItem()) continue;
-                MachineRecipeMaps.add_smelting(input, smeltOutput.copy(), 0.0f, true, false, false);
-            }
-        }
+        MachineRecipeMaps.add_smelting(input, smeltOutput.copy(), 0.0f, true, false, false);
     }
 
     // ========================================================================
@@ -273,7 +279,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         registerOreEntryRecipes(material, oreInput, multiplier, false);
     }
 
-    /** Only processOreToCrushed supplies builtinRaw; shared block/vanilla callers remain unchanged. */
+    /** Only processOreToCrushed supplies builtinRaw; block and vanilla ownership remain distinct. */
     private void registerOreEntryRecipes(GTMaterial material, ItemStack oreInput, int multiplier, boolean builtinRaw) {
         if (isOilsands(material)) { registerOilsandsInput(oreInput); return; }
 
@@ -305,7 +311,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         }
         // Furnace ownership/eligibility is separate, even when the two machine rows are dormant.
         // Sifting is for DUST_ORE prefixes, not ordinary raw/stone ores.
-        registerSmelting(material, oreInput);
+        registerSmelting(material, target, oreInput, builtinRaw);
     }
 
     /** ItemStack of the registered ore block ({@code ore_<material>} / {@code ore_small_<material>}), or EMPTY. */
