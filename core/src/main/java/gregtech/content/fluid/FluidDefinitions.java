@@ -32,6 +32,16 @@ public final class FluidDefinitions {
                 gregtech.content.material.generated.ElementMaterials.Adamantium))
             material.put(gregtech.api.material.MaterialProperty.MOLTEN);
 
+        // Original MT declares these nine molten phases without MELTING. Restore only
+        // the missing state flag; the existing factory retains source temperature/density
+        // and FL.createMolten's final light level 10 (including the glowstone family).
+        for (var material : java.util.List.of(
+                Materials.Nikolite, Materials.Glowstone, Materials.GlowstoneCeres,
+                Materials.GlowstoneIo, Materials.GlowstoneEnceladus, Materials.GlowstoneProteus,
+                Materials.GlowstonePluto, Materials.Gloomstone,
+                gregtech.content.material.generated.OreMaterials.VanadiumMagnetite))
+            material.put(gregtech.api.material.MaterialProperty.MOLTEN);
+
         // chemistry acids/salts the transpiled recipes use as fluids; the
         // generated material data lost their state flags, so restore them
         // before the molten/gas/liquid fluid generation below

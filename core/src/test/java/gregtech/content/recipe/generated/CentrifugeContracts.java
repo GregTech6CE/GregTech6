@@ -9,6 +9,7 @@ public final class CentrifugeContracts {
         OptionalCentrifugeContracts.run();
         U235CentrifugeContracts.run();
         gregtech.content.recipe.SourceAlloyContracts.run();
+        gregtech.content.fluid.SourceMoltenFluidContracts.run();
         BlockDustCentrifugeContracts.run();
         gregtech.content.recipe.BuiltinEventCentrifugeContracts.run();
         MoonStoneCentrifugeContracts.run();
