@@ -10,8 +10,12 @@ import gregtech.engine.multiblock.tracking.StructureScanProbe;
 import gregtech.engine.multiblock.tracking.TrackedMultiblock;
 import gregtech.content.multiblock.LargeMachineLayouts;
 import gregtech.content.data.GregTechTags;
+import gregtech.engine.tool.GTToolHelper;
+import gregtech.engine.tool.GTToolType;
 import net.minecraft.core.*;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -28,8 +32,8 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import java.util.*;
 
-/** Shared execution and atomic part ownership for original large recipe-machine layouts. */
-public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity implements MultiblockPortOwner, TrackedMultiblock {
+/** Shared execution, part ownership and tool routing for original large recipe-machine layouts. */
+public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity implements MultiblockPortOwner, TrackedMultiblock, MultiblockToolTarget {
     private final PartBindings<BlockPos,MultiblockLayout.Role> bindings=new PartBindings<>();
     private boolean structureFormed;
     private java.util.List<AddonEnergyPartBlockEntity> conditionParts = java.util.List.of();
@@ -294,21 +298,54 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
                 ? gregtech.content.multiblock.SpecialStructures.oven(this) : LayoutStructures.recipe(this);
     }
     @Override public boolean isStructureOk() { return StructureTracking.query(this); }
+    @Override public boolean containsToolPosition(BlockPos pos) {
+        return worldPosition.equals(pos) || structureDefinition().declaredFootprint(this).contains(pos);
+    }
+    @Override public long useMultiblockTool(UseOnContext context, List<Component> messages) {
+        if (level == null || level.isClientSide || isRemoved() || spec() == null
+                || !containsToolPosition(context.getClickedPos())) return 0;
+        if (GTToolHelper.matchesTool(context.getItemInHand(), GTToolType.BUILDER_WAND)) {
+            var layout = structureLayout();
+            if (layout == null) return 0;
+            var front = LayoutStructures.facing(this);
+            for (var cell : layout.cells()) buildCell(context, cell, cell.at(worldPosition, front));
+            // Repeat layouts build their minimum valid size, as shown in the structure preview.
+            for (var repeat : layout.repeats()) for (int copy = 0; copy < repeat.min(); copy++)
+                for (var cell : repeat.cells())
+                    buildCell(context, cell, cell.at(worldPosition, front, repeat.absoluteUp(cell, copy)));
+            StructureTracking.invalidate(this);
+            return MultiblockToolRules.BUILDER_COST;
+        }
+        if (GTToolHelper.matchesTool(context.getItemInHand(), GTToolType.MAGNIFYING_GLASS)) {
+            messages.add(Component.literal(MultiblockToolRules.structureMessage(structureFormed, isStructureOk())));
+            if (!structureFormed) MultiblockTools.appendDiagnosis(this, messages);
+            return MultiblockToolRules.MAGNIFIER_COST;
+        }
+        return 0;
+    }
+    private void buildCell(UseOnContext context, LargeMachineLayouts.Cell cell, BlockPos pos) {
+        // GT6 builds registered structure parts, not required air, fluids or arbitrary terrain.
+        if (pos.equals(worldPosition) || cell.role() == MultiblockLayout.Role.AIR || cell.plainBlock()) return;
+        if (MultiblockTools.build(context, pos, cell.block())) return;
+        for (var alternative : cell.alternatives())
+            if (alternative.plain() == null && alternative.part() > 0
+                    && MultiblockTools.build(context, pos, gregtech.content.multiblock.LargeMachineParts.block(alternative.part()))) return;
+    }
     @Override public boolean scanStructure() {
         if(level==null||spec()==null||isRemoved()) return false;
         var layout=structureLayout();if(layout==null)return false;
         int[] matchedLayers=new int[layout.repeats().size()];
         try {
-            if(!validStructureParts()){bindings.clear(this::release);StructureClaims.cleared(this);return false;}
+            boolean complete = validStructureParts();
             var front=getBlockState().getValue(HorizontalDirectionalBlock.FACING);
-            var parts=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
             var matchedCells=new java.util.ArrayList<LargeMachineLayouts.Cell>();
+            var matchedParts=new java.util.ArrayList<LargeMachineLayouts.Placed>();
             for(var cell:layout.cells()) {
                 var pos=cell.at(worldPosition,front);
                 var matched=matchingCell(cell,pos);
-                if(matched==null) {bindings.clear(this::release);StructureClaims.cleared(this);return false;}
+                if(matched==null) {complete=false;continue;}
                 matchedCells.add(matched);
-                if(matched.role()!=MultiblockLayout.Role.AIR&&!matched.plainBlock())parts.put(pos,matched.role());
+                matchedParts.add(new LargeMachineLayouts.Placed(matched,pos));
             }
             var repeatPlaced=new java.util.ArrayList<LargeMachineLayouts.Placed>();
             for(int group=0;group<layout.repeats().size();group++) {
@@ -322,58 +359,58 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
                     return true;
                 },found);
                 matchedLayers[group]=found[0];
-                if(placed==null){bindings.clear(this::release);StructureClaims.cleared(this);return false;}
+                if(placed==null){complete=false;continue;}
                 // Only complete repeat copies are committed, not the matched prefix of a failed copy.
                 for(var cell:placed) {
                     var matched=matches.get(cell.pos());
                     repeatPlaced.add(new LargeMachineLayouts.Placed(matched,cell.pos()));
-                    if(matched.role()!=MultiblockLayout.Role.AIR&&!matched.plainBlock())parts.put(cell.pos(),matched.role());
                 }
             }
             // The retained full scan checks the whole coil group explicitly; matchers have no scan-local state.
             if ("largeoven".equals(spec().machineName()) && !ovenCoilsAgree(front, matchedCells, repeatPlaced)) {
-                bindings.clear(this::release); StructureClaims.cleared(this); return false;
+                complete = false;
             }
-            var claimed = StructureClaims.update(this, bindings, parts,
-                    pos->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).canBind(worldPosition),
-                    (pos,role)->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).bind(worldPosition,role),this::release);
-            if (claimed == StructureClaims.Result.FAILED) return false;
-            if (claimed == StructureClaims.Result.APPLIED) {
-                gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front, matchedCells);
-                gregtech.content.multiblock.StructureDesigns.apply(level, repeatPlaced);
-            }
-            return true;
+            matchedParts.addAll(repeatPlaced);
+            return updateStructureBindings(matchedParts, complete);
         } finally {
             StructureTracking.noteMatchedLayers(this, matchedLayers);
         }
     }
     /** Claims a match the incremental evaluator already built, without reading the layout again. */
     @Override public boolean applyStructure(PatternMatch match) {
+        return updateStructureBindings(matchedParts(match), true);
+    }
+    @Override public void applyIncompleteStructure(PatternMatch match) {
+        // Custom subclasses with their own claim table retain their existing release policy.
+        if (structureLayout() == null) { releaseStructureClaims(); return; }
+        updateStructureBindings(matchedParts(match), false);
+    }
+    private List<LargeMachineLayouts.Placed> matchedParts(PatternMatch match) {
+        var parts = new ArrayList<LargeMachineLayouts.Placed>();
+        for (var fixed : match.fixedCells()) parts.add(new LargeMachineLayouts.Placed(fixed.cell(), fixed.pos()));
+        parts.addAll(match.repeatPlaced());
+        return parts;
+    }
+    /** Incomplete shells keep tool routing; port capabilities still require a formed controller. */
+    private boolean updateStructureBindings(List<LargeMachineLayouts.Placed> matched, boolean complete) {
         if (level == null || spec() == null || isRemoved()) return false;
-        var front = getBlockState().getValue(HorizontalDirectionalBlock.FACING);
         var parts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
-        var matchedCells = new java.util.ArrayList<LargeMachineLayouts.Cell>(match.fixedCells().size());
-        for (var fixed : match.fixedCells()) {
-            matchedCells.add(fixed.cell());
-            if (fixed.cell().role() != MultiblockLayout.Role.AIR && !fixed.cell().plainBlock())
-                parts.put(fixed.pos(), fixed.cell().role());
-        }
-        var repeatPlaced = match.repeatPlaced();
-        for (var placed : repeatPlaced) {
+        var designs = new ArrayList<LargeMachineLayouts.Placed>();
+        for (var placed : matched) {
             var cell = placed.cell();
-            if (cell.role() != MultiblockLayout.Role.AIR && !cell.plainBlock())
+            if (cell.role() == MultiblockLayout.Role.AIR || cell.plainBlock()) continue;
+            if (level.getBlockEntity(placed.pos()) instanceof MultiblockPortBlockEntity port && port.canBind(worldPosition)) {
                 parts.put(placed.pos(), cell.role());
+                designs.add(placed);
+            } else complete = false;
         }
         var claimed = StructureClaims.update(this, bindings, parts,
                 pos -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).canBind(worldPosition),
                 (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
                 this::release);
         if (claimed == StructureClaims.Result.FAILED) return false;
-        if (claimed == StructureClaims.Result.APPLIED) {
-            gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front, matchedCells);
-            gregtech.content.multiblock.StructureDesigns.apply(level, repeatPlaced);
-        }
-        return true;
+        if (claimed == StructureClaims.Result.APPLIED) gregtech.content.multiblock.StructureDesigns.apply(level, designs);
+        return complete;
     }
 
     @Override public void releaseStructureClaims() {
