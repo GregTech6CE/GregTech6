@@ -51,6 +51,7 @@ def centrifugeContracts = tasks.register('centrifugeContracts', JavaExec) {
 tasks.named('check').configure { dependsOn centrifugeContracts }
 
 ['coverContracts': 'gregtech.content.cover.CoverGeometryContracts',
+ 'pipeGeometryContracts': 'gregtech.engine.machine.PipeGeometryContracts',
  'sensorContracts': 'gregtech.engine.sensor.SensorContracts'].each { taskName, entryPoint ->
     def contracts = tasks.register(taskName, JavaExec) {
         group = 'verification'

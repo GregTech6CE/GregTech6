@@ -18,8 +18,8 @@ import javax.annotation.Nullable;
 
 /**
  * Shared connection-arm geometry for pipes/wires (GT6 rules), in 1/16 px units.
- * Drives both the VoxelShapes and the dynamic baked model so the selection box
- * always matches the rendered geometry.
+ * Rendered extensions retain the thin pipe's material. Physical and selection
+ * shapes divide the same connection at the cell boundary via {@link #localArmBox}.
  *
  * <p>GT6 sizing rules per connected side:</p>
  * <ul>
@@ -33,7 +33,7 @@ import javax.annotation.Nullable;
 public final class PipeGeometry {
 
     /** Sentinel for "connected to something that is not a pipe/wire". */
-    public static final double NONE = -1.0;
+    public static final double NONE = PipeConnectionGeometry.NONE;
 
     private PipeGeometry() {}
 
@@ -46,12 +46,12 @@ public final class PipeGeometry {
     // Encoded below NONE so the value still travels through one double/float.
 
     /** Encode a virtual connector size (px half-thickness). */
-    public static double virtual(double half) { return -2.0 - half; }
+    public static double virtual(double half) { return PipeConnectionGeometry.virtual(half); }
 
-    public static boolean isVirtual(double n) { return n <= -2.0; }
+    public static boolean isVirtual(double n) { return PipeConnectionGeometry.isVirtual(n); }
 
     /** Decode {@link #virtual}. */
-    public static double virtualSize(double n) { return -2.0 - n; }
+    public static double virtualSize(double n) { return PipeConnectionGeometry.virtualSize(n); }
 
     /**
      * Arm cuboid toward {@code dir}: {x0, y0, z0, x1, y1, z1} in px (may extend
@@ -60,30 +60,15 @@ public final class PipeGeometry {
      */
     @Nullable
     public static double[] armBox(Direction dir, double half, double neighborHalf) {
-        double reach; // px past the block boundary
-        if (neighborHalf == NONE) {
-            reach = 0.0;
-        } else if (isVirtual(neighborHalf)) {
-            // virtual connector: thinner → stub instead (see stubBox); else flush arm
-            if (virtualSize(neighborHalf) < half) return null;
-            reach = 0.0;
-        } else if (neighborHalf < half) {
-            return null;
-        } else if (neighborHalf > half) {
-            reach = Math.max(0.0, 8.0 - neighborHalf);
-        } else {
-            reach = 0.0;
-        }
-        double lo = 8.0 - half, hi = 8.0 + half;
-        boolean positive = dir.getAxisDirection() == Direction.AxisDirection.POSITIVE;
-        double from = positive ? hi : -reach;
-        double to = positive ? 16.0 + reach : lo;
-        if (from >= to) return null;
-        return switch (dir.getAxis()) {
-            case X -> new double[]{from, lo, lo, to, hi, hi};
-            case Y -> new double[]{lo, from, lo, hi, to, hi};
-            case Z -> new double[]{lo, lo, from, hi, hi, to};
-        };
+        return PipeConnectionGeometry.renderArm(dir.getAxis().ordinal(),
+                dir.getAxisDirection() == Direction.AxisDirection.POSITIVE, half, neighborHalf);
+    }
+
+    /** One cell's part of a connection; used by both collision and selection queries. */
+    @Nullable
+    public static double[] localArmBox(Direction dir, double half, double neighborHalf) {
+        return PipeConnectionGeometry.localArm(dir.getAxis().ordinal(),
+                dir.getAxisDirection() == Direction.AxisDirection.POSITIVE, half, neighborHalf);
     }
 
     /** Whether the arm toward this neighbor carries an end cap at the boundary. */
@@ -99,19 +84,8 @@ public final class PipeGeometry {
      */
     @Nullable
     public static double[] stubBox(Direction dir, double half, double neighborHalf) {
-        if (!isVirtual(neighborHalf)) return null;
-        double v = virtualSize(neighborHalf);
-        if (v >= half) return null;
-        double lo = 8.0 - v, hi = 8.0 + v;
-        boolean positive = dir.getAxisDirection() == Direction.AxisDirection.POSITIVE;
-        double from = positive ? 8.0 + half : 0.0;
-        double to = positive ? 16.0 : 8.0 - half;
-        if (from >= to) return null;
-        return switch (dir.getAxis()) {
-            case X -> new double[]{from, lo, lo, to, hi, hi};
-            case Y -> new double[]{lo, from, lo, hi, to, hi};
-            case Z -> new double[]{lo, lo, from, hi, hi, to};
-        };
+        return PipeConnectionGeometry.virtualStub(dir.getAxis().ordinal(),
+                dir.getAxisDirection() == Direction.AxisDirection.POSITIVE, half, neighborHalf);
     }
 
     /**

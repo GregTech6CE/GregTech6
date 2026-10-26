@@ -1,6 +1,7 @@
 package gregtech.client;
 
 import gregtech.engine.machine.PipeGeometry;
+import gregtech.engine.machine.PipeConnectionGeometry;
 import gregtech.engine.machine.PipeModelData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
@@ -163,14 +164,19 @@ public final class PipeWireBakedModel implements IDynamicBakedModel {
     private void tube(List<BakedQuad> quads, Direction dir, double[] box, boolean cap,
                       @Nullable Direction side, boolean overlayPass) {
         if (side == null) {
-            for (Direction f : Direction.values()) {
-                if (f.getAxis() == dir.getAxis()) continue;
-                if (!overlayPass) {
-                    face(quads, f, box, sideTex, sideTint);
-                } else {
-                    double g = OVERLAY_OFFSET;
-                    face(quads, f, new double[]{box[0] - g, box[1] - g, box[2] - g,
-                            box[3] + g, box[4] + g, box[5] + g}, overlayTex, -1);
+            for (double[] segment : PipeConnectionGeometry.textureSegments(box, dir.getAxis().ordinal())) {
+                for (Direction f : Direction.values()) {
+                    if (f.getAxis() == dir.getAxis()) continue;
+                    if (!overlayPass) {
+                        face(quads, f, segment, sideTex, sideTint);
+                    } else {
+                        // Offset only the face normal: adjacent texture tiles must not overlap.
+                        double[] overlay = segment.clone();
+                        int axis = f.getAxis().ordinal();
+                        if (f.getAxisDirection() == Direction.AxisDirection.POSITIVE) overlay[axis + 3] += OVERLAY_OFFSET;
+                        else overlay[axis] -= OVERLAY_OFFSET;
+                        face(quads, f, overlay, overlayTex, -1);
+                    }
                 }
             }
         }
@@ -240,7 +246,7 @@ public final class PipeWireBakedModel implements IDynamicBakedModel {
 
     // ── Quad emission ────────────────────────────────────────────────────────
 
-    /** Emit one face of the px-coordinate box, position-mapped UVs (clamped to 0..16).
+    /** Emit one texture-tile segment with position-mapped UVs at a constant pixel density.
      *  Vertex order/UV mapping mirrors {@link ArmRenderHelper#drawCuboid}. */
     private void face(List<BakedQuad> out, Direction face,
                       double x0, double y0, double z0, double x1, double y1, double z1,
@@ -249,26 +255,29 @@ public final class PipeWireBakedModel implements IDynamicBakedModel {
         // vertex positions (block units) + uv source coords, CCW from outside
         float ax = (float) (x0 / 16.0), ay = (float) (y0 / 16.0), az = (float) (z0 / 16.0);
         float bx = (float) (x1 / 16.0), by = (float) (y1 / 16.0), bz = (float) (z1 / 16.0);
+        double ox = PipeConnectionGeometry.textureOrigin(x0, x1);
+        double oy = PipeConnectionGeometry.textureOrigin(y0, y1);
+        double oz = PipeConnectionGeometry.textureOrigin(z0, z1);
         float[][] v;   // {x, y, z, uSrc(0..16), vSrc(0..16)}
         switch (face) {
             case DOWN -> v = new float[][]{
-                    {ax, ay, az, p(x0), q(z0)}, {bx, ay, az, p(x1), q(z0)},
-                    {bx, ay, bz, p(x1), q(z1)}, {ax, ay, bz, p(x0), q(z1)}};
+                    {ax, ay, az, p(x0, ox), q(z0, oz)}, {bx, ay, az, p(x1, ox), q(z0, oz)},
+                    {bx, ay, bz, p(x1, ox), q(z1, oz)}, {ax, ay, bz, p(x0, ox), q(z1, oz)}};
             case UP -> v = new float[][]{
-                    {ax, by, az, p(x0), p(z0)}, {ax, by, bz, p(x0), p(z1)},
-                    {bx, by, bz, p(x1), p(z1)}, {bx, by, az, p(x1), p(z0)}};
+                    {ax, by, az, p(x0, ox), p(z0, oz)}, {ax, by, bz, p(x0, ox), p(z1, oz)},
+                    {bx, by, bz, p(x1, ox), p(z1, oz)}, {bx, by, az, p(x1, ox), p(z0, oz)}};
             case NORTH -> v = new float[][]{
-                    {ax, ay, az, p(x0), q(y0)}, {ax, by, az, p(x0), q(y1)},
-                    {bx, by, az, p(x1), q(y1)}, {bx, ay, az, p(x1), q(y0)}};
+                    {ax, ay, az, p(x0, ox), q(y0, oy)}, {ax, by, az, p(x0, ox), q(y1, oy)},
+                    {bx, by, az, p(x1, ox), q(y1, oy)}, {bx, ay, az, p(x1, ox), q(y0, oy)}};
             case SOUTH -> v = new float[][]{
-                    {ax, ay, bz, q(x0), q(y0)}, {bx, ay, bz, q(x1), q(y0)},
-                    {bx, by, bz, q(x1), q(y1)}, {ax, by, bz, q(x0), q(y1)}};
+                    {ax, ay, bz, q(x0, ox), q(y0, oy)}, {bx, ay, bz, q(x1, ox), q(y0, oy)},
+                    {bx, by, bz, q(x1, ox), q(y1, oy)}, {ax, by, bz, q(x0, ox), q(y1, oy)}};
             case WEST -> v = new float[][]{
-                    {ax, ay, az, p(z0), q(y0)}, {ax, ay, bz, p(z1), q(y0)},
-                    {ax, by, bz, p(z1), q(y1)}, {ax, by, az, p(z0), q(y1)}};
+                    {ax, ay, az, p(z0, oz), q(y0, oy)}, {ax, ay, bz, p(z1, oz), q(y0, oy)},
+                    {ax, by, bz, p(z1, oz), q(y1, oy)}, {ax, by, az, p(z0, oz), q(y1, oy)}};
             default -> v = new float[][]{ // EAST
-                    {bx, ay, az, q(z0), q(y0)}, {bx, by, az, q(z0), q(y1)},
-                    {bx, by, bz, q(z1), q(y1)}, {bx, ay, bz, q(z1), q(y0)}};
+                    {bx, ay, az, q(z0, oz), q(y0, oy)}, {bx, by, az, q(z0, oz), q(y1, oy)},
+                    {bx, by, bz, q(z1, oz), q(y1, oy)}, {bx, ay, bz, q(z1, oz), q(y0, oy)}};
         }
 //? if >=1.21.1 {
         /*QuadBakingVertexConsumer qb = new QuadBakingVertexConsumer();
@@ -309,14 +318,13 @@ public final class PipeWireBakedModel implements IDynamicBakedModel {
 //?}
     }
 
-    /** Clamp px coord into 0..16 (extended arms repeat the edge texels). */
-    private static float p(double c) {
-        return (float) Math.max(0.0, Math.min(16.0, c));
+    private static float p(double c, double origin) {
+        return PipeConnectionGeometry.textureCoordinate(c, origin);
     }
 
     /** Inverted texture axis (Minecraft auto-UV mirrors some faces). */
-    private static float q(double c) {
-        return 16.0f - p(c);
+    private static float q(double c, double origin) {
+        return 16.0f - p(c, origin);
     }
 
     private TextureAtlasSprite sprite(ResourceLocation id) {

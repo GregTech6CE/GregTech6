@@ -168,7 +168,7 @@ public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBl
             if (!state.getValue(propFor(dir))) continue;
             double n = gregtech.engine.machine.PipeGeometry.axleHalfOf(
                     level.getBlockState(pos.relative(dir)));
-            double[] box = gregtech.engine.machine.PipeGeometry.armBox(dir, half, n);
+            double[] box = gregtech.engine.machine.PipeGeometry.localArmBox(dir, half, n);
             if (box != null) shape = Shapes.or(shape, gregtech.engine.machine.PipeGeometry.boxShape(box));
         }
         return shape;

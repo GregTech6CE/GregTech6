@@ -130,7 +130,7 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
         return shapeFor(state, level, pos);
     }
 
-    /** Core + GT6 connection arms (thin side extends into a strictly thicker neighbor). */
+    /** Core plus this cell's share of each connection, including incoming thinner pipes. */
     private VoxelShape shapeFor(BlockState state, BlockGetter level, BlockPos pos) {
         double half = Math.max(1.0, spec.diameter() * 8.0);
         double min = (8.0 - half) / 16.0;
@@ -140,7 +140,7 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
             if (!state.getValue(propFor(dir))) continue;
             double n = gregtech.engine.machine.PipeGeometry.pipeHalfOf(
                     level.getBlockState(pos.relative(dir)));
-            double[] box = gregtech.engine.machine.PipeGeometry.armBox(dir, half, n);
+            double[] box = gregtech.engine.machine.PipeGeometry.localArmBox(dir, half, n);
             if (box != null) shape = Shapes.or(shape, gregtech.engine.machine.PipeGeometry.boxShape(box));
         }
         return shape;
