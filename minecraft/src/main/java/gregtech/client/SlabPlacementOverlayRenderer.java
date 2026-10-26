@@ -108,7 +108,11 @@ public final class SlabPlacementOverlayRenderer {
         GTRenderHelper.beginWrenchOverlayLines();
         var bufferSource = mc.renderBuffers().bufferSource();
         var consumer = bufferSource.getBuffer(RenderType.lines());
-        if (holdingSlab || holdingCover) {
+        if (holdingCover && gregtech.engine.tool.GTToolHelper.matchesTool(
+                gregtech.content.cover.CoverPlacement.held(player), gregtech.engine.tool.GTToolType.CROWBAR)) {
+            GTRenderHelper.drawPipeWrenchOverlay(poseStack, consumer, target.getDirection(),
+                    gregtech.content.cover.CoverPlacement.attachedFaces(mc.level, blockPos), shade);
+        } else if (holdingSlab || holdingCover) {
             GTRenderHelper.drawWrenchOverlay(poseStack, consumer, target.getDirection(), shade);
         } else {
             GTRenderHelper.drawPipeWrenchOverlay(poseStack, consumer, target.getDirection(), interaction.activeFaces(state), shade);

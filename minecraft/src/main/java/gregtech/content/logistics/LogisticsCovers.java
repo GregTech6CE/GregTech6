@@ -114,6 +114,7 @@ public final class LogisticsCovers {
         displayVisuals[face.ordinal()] = 0;
         changed();
         gregtech.content.cover.CoverWorldInteraction.removed(owner);
+        gregtech.content.cover.CoverWorldInteraction.removalSound(owner, result);
         return new ItemStack(result.getItem());
     }
 

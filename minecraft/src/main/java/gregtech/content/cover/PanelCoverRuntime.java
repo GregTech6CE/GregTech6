@@ -130,11 +130,12 @@ public final class PanelCoverRuntime {
             if(spec!=null&&!spec.detector()||panel==PanelCover.STATUS)c.setEnabled(true);
             if(panel!=null&&panel.selector()||CoverItems.TAG_SELECTOR.equals(CoverItems.behavior(stack)))c.setMode(0);
         }
-        refreshStopped();changed();afterTick();decorativeSound(stack);
+        refreshStopped();changed();afterTick();
+        CoverWorldInteraction.removalSound(host.coverOwner(),stack);
         CoverWorldInteraction.removed(host.coverOwner());
         return stack.isEmpty()?ItemStack.EMPTY:new ItemStack(stack.getItem());
     }
-    /** Original CoverTextureSimple uses its wood/stone dig sound for both actions. */
+    /** Original CoverTextureSimple uses its wood/stone dig sound on placement. */
     private void decorativeSound(ItemStack stack) {
         if(server()&&stack.getItem() instanceof gregtech.content.item.PanelItemView panel) {
             var owner=host.coverOwner();owner.getLevel().playSound(null,owner.getBlockPos(),

@@ -27,4 +27,15 @@ public final class CoverPlacement {
     public static boolean fullSelection(BlockGetter level, BlockPos pos, BlockState state, Player player) {
         return coverGrid(level, pos, player) || ToolInteractions.describe(state, held(player)) != null;
     }
+    public static int attachedFaces(BlockGetter level, BlockPos pos) {
+        if (!(level.getBlockEntity(pos) instanceof PanelCoverHost host)) return 0;
+        int faces = 0;
+        for (var side : net.minecraft.core.Direction.values()) {
+            boolean attached = !host.getCover(side).isEmpty();
+            if (host.coverOwner() instanceof gregtech.content.logistics.LogisticsCoverHost logistics)
+                attached |= !logistics.logisticsCovers().get(side).isEmpty();
+            if (attached) faces |= 1 << side.ordinal();
+        }
+        return faces;
+    }
 }

@@ -10,6 +10,13 @@ public final class CoverPlateGeometry {
     public static Box holder(int side) { return bounds(side, 7.0 / 16, 9.0 / 16, .5); }
     /** Original GT6 {@code CoverPressureValve.BOXES_VALVES}: a 4x4 px knob recessed 8 px into the face. */
     public static Box valve(int side) { return bounds(side, 6.0 / 16, 10.0 / 16, .5); }
+    /** Physical bounds shared by the collision and selection paths. */
+    public static Box attachment(String behavior, int side) {
+        if ("pressure_value".equals(behavior)) return valve(side);
+        if ("cover_redstone_torch".equals(behavior) || "cover_redstone_repeater".equals(behavior))
+            return holder(side);
+        return plate(side);
+    }
     private static Box bounds(int side, double min, double max, double depth) {
         return switch (side) {
             case 0 -> new Box(min, 0, min, max, depth, max);

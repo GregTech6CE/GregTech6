@@ -55,6 +55,18 @@ public final class CoverWorldInteraction {
         state.updateNeighbourShapes(level, pos, net.minecraft.world.level.block.Block.UPDATE_ALL);
         level.updateNeighborsAt(pos, state.getBlock());
     }
+    /** GT6 onAfterCrowbar: item break, except decorative panels with their own dig sound. */
+    public static void removalSound(net.minecraft.world.level.block.entity.BlockEntity owner,
+                                    net.minecraft.world.item.ItemStack stack) {
+        var level = owner.getLevel();
+        if (level == null || level.isClientSide || stack.isEmpty()) return;
+        var sound = net.minecraft.sounds.SoundEvents.ITEM_BREAK;
+        if (stack.getItem() instanceof gregtech.content.item.PanelItemView panel)
+            sound = panel.panelSpec().kind().equals("wood")
+                    ? net.minecraft.sounds.SoundEvents.WOOD_BREAK : net.minecraft.sounds.SoundEvents.STONE_BREAK;
+        level.playSound(null, owner.getBlockPos(), sound, net.minecraft.sounds.SoundSource.BLOCKS,
+                1F, .9F + level.random.nextFloat() * .2F);
+    }
     public static void walk(Level level,BlockPos pos,Entity entity){
         if(!(level.getBlockEntity(pos) instanceof PanelCoverHost host)||!ComponentCoverFallback.ownClass(host.coverOwner()))return;
         var id=CoverItems.behavior(host.getCover(Direction.UP));
@@ -69,8 +81,7 @@ public final class CoverWorldInteraction {
             if(stack.isEmpty()&&host.coverOwner() instanceof gregtech.content.logistics.LogisticsCoverHost logistics)stack=logistics.logisticsCovers().get(side);
             if(stack.isEmpty())continue;
             var id=CoverItems.behavior(stack);
-            boolean torch=CoverItems.REDSTONE_TORCH.equals(id)||CoverItems.REDSTONE_REPEATER.equals(id);
-            var box=torch?CoverPlateGeometry.holder(side.ordinal()):CoverPlateGeometry.plate(side.ordinal());
+            var box=CoverPlateGeometry.attachment(id,side.ordinal());
             shape=Shapes.or(shape,Shapes.box(box.minX(),box.minY(),box.minZ(),box.maxX(),box.maxY(),box.maxZ()));
         }
         return shape;
