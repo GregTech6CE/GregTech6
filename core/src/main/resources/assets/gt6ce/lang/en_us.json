@@ -4939,6 +4939,7 @@
   "block.gt6ce.zpm_discharger_advanced": "ZPM Decharger (Electric)",
   "block.gt6ce.zpm_discharger_basic": "ZPM Decharger (Quantum)",
   "config.jade.plugin_gt6ce.basic_machine": "GT Basic Machine",
+  "config.jade.plugin_gt6ce.battery_box": "GT Battery Box",
   "config.jade.plugin_gt6ce.burning_box": "GT Burning Box",
   "config.jade.plugin_gt6ce.construction_name": "GT Construction Names",
   "config.jade.plugin_gt6ce.crucible": "GT Crucible",

@@ -5064,6 +5064,7 @@
   "block.gt6ce.zpm_discharger_advanced": "零点模块放能器 (电能)",
   "block.gt6ce.zpm_discharger_basic": "零点模块放能器 (量子能)",
   "config.jade.plugin_gt6ce.basic_machine": "GT 基础机器",
+  "config.jade.plugin_gt6ce.battery_box": "GT 电池盒",
   "config.jade.plugin_gt6ce.burning_box": "GT 燃烧室",
   "config.jade.plugin_gt6ce.construction_name": "GT 建筑方块名称",
   "config.jade.plugin_gt6ce.crucible": "GT 坩埚",
