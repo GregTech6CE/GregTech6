@@ -73,6 +73,8 @@ public class GTJadePlugin implements IWailaPlugin {
                 gregtech.content.block.misc.ColoredConstructionBlock.class);
         registration.registerBlockComponent(ConstructionNameJadeProvider.INSTANCE,
                 gregtech.content.block.misc.ConcreteBlock.class);
+        registration.registerBlockComponent(WorldFluidNameJadeProvider.INSTANCE,
+                gregtech.content.block.GTWorldFluidBlock.class);
         registration.registerBlockComponent(EnergyBufferJadeProvider.INSTANCE,gregtech.content.block.energy.ChemicalBatteryBlock.class);
         registration.registerBlockComponent(ExtenderJadeProvider.INSTANCE,gregtech.content.block.misc.SourceExtenderBlock.class);
         registration.registerBlockComponent(ReactorJadeProvider.INSTANCE,gregtech.content.block.energy.ReactorCoreBlock.class);

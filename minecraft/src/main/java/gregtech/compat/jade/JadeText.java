@@ -3,14 +3,19 @@ package gregtech.compat.jade;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.ChatFormatting;
-import net.minecraft.locale.Language;
 import snownee.jade.api.ITooltip;
 import snownee.jade.api.ui.IElement;
 import snownee.jade.api.ui.IElementHelper;
 
+import java.util.Optional;
+import java.util.regex.Pattern;
+
 /** Resolve names on the viewing client, never using the dedicated server's language. */
 final class JadeText {
+    private static final Pattern NUMBER = Pattern.compile("(?<![\\p{L}\\p{N}_])[+-]?\\d+(?:[.,]\\d+)*(?:[%％])?");
+
     private JadeText() {}
 
     /** Extra translation-key fields are optional so old server data retains its literal fallback. */
@@ -29,20 +34,9 @@ final class JadeText {
         return String.format(java.util.Locale.ROOT, "%." + places + "f", value);
     }
 
-    /** Omni's DISPLAYNAME + TAB + ALIGNRIGHT, expressed through Jade's layout API. */
+    /** Resolve the whole translation before splitting, including arguments in the label. */
     static void detail(ITooltip tooltip, String key, Object... args) {
-        String pattern = Language.getInstance().getOrDefault(key);
-        int colon = pattern.indexOf('：');
-        if (colon < 0) colon = pattern.indexOf(':');
-        if (colon <= 0 || pattern.substring(0, colon).contains("%")) {
-            add(tooltip, Component.translatable(key, args));
-            return;
-        }
-        var helper = IElementHelper.get();
-        tooltip.add(Component.literal(pattern.substring(0, colon)).withStyle(ChatFormatting.GRAY));
-        tooltip.append(helper.spacer(8, 0));
-        tooltip.append(helper.text(gregtech.client.EnergyText.format(Component.translatableWithFallback(key + ".value", pattern.substring(colon + 1).strip(), args)
-                .withStyle(ChatFormatting.WHITE))).align(IElement.Align.RIGHT));
+        add(tooltip, Component.translatable(key, args));
     }
 
     static MutableComponent status(String key) {
@@ -57,8 +51,84 @@ final class JadeText {
         };
     }
 
+    static MutableComponent phase(String phase) {
+        return switch (phase) {
+            case "gas" -> Component.translatable("gt6ce.fluid_display.gas").withStyle(ChatFormatting.AQUA);
+            case "molten", "liquid" -> Component.translatable("gt6ce.fluid_display.liquid").withStyle(ChatFormatting.BLUE);
+            case "solidified" -> Component.translatable("jade.gt6ce.mold.state.solidified").withStyle(ChatFormatting.GREEN);
+            default -> Component.translatable("jade.gt6ce.crucible.state.solid").withStyle(ChatFormatting.GREEN);
+        };
+    }
+
     static void add(ITooltip tooltip, Component text) {
-        tooltip.add(gregtech.client.EnergyText.format(text));
+        add(tooltip, null, text);
+    }
+
+    /** The same left-label/right-value layout for ordinary lines and rows with an item/fluid icon. */
+    static void add(ITooltip tooltip, IElement icon, Component text) {
+        Component formatted = format(text);
+        Detail detail = split(formatted);
+        Component first = detail == null ? formatted : detail.label();
+        if (icon == null) tooltip.add(first);
+        else {
+            tooltip.add(icon);
+            tooltip.append(first);
+        }
+        if (detail != null) {
+            var helper = IElementHelper.get();
+            tooltip.append(helper.spacer(8, 0));
+            tooltip.append(helper.text(detail.value()).align(IElement.Align.RIGHT));
+        }
+    }
+
+    record Detail(Component label, Component value) {}
+
+    static Detail split(Component text) {
+        String plain = text.getString();
+        int ascii = plain.indexOf(':'), wide = plain.indexOf('：');
+        int colon = ascii < 0 ? wide : wide < 0 ? ascii : Math.min(ascii, wide);
+        if (colon <= 0) return null;
+        int valueStart = colon + 1;
+        while (valueStart < plain.length() && Character.isWhitespace(plain.charAt(valueStart))) valueStart++;
+        if (valueStart == plain.length()) return null; // A heading, not a key/value row.
+        return new Detail(slice(text, 0, colon, ChatFormatting.GRAY),
+                slice(text, valueStart, plain.length(), ChatFormatting.WHITE));
+    }
+
+    /** Preserve styles of translated arguments and coloured units while extracting a text range. */
+    private static Component slice(Component text, int from, int to, ChatFormatting fallback) {
+        MutableComponent result = Component.empty();
+        int[] offset = {0};
+        text.visit((style, part) -> {
+            int start = Math.max(0, from - offset[0]);
+            int end = Math.min(part.length(), to - offset[0]);
+            if (start < end) result.append(Component.literal(part.substring(start, end))
+                    .setStyle(style.getColor() == null ? style.withColor(fallback) : style));
+            offset[0] += part.length();
+            return Optional.empty();
+        }, Style.EMPTY);
+        return result;
+    }
+
+    /** Neutral numbers are white even in free-form lines; explicit status/warning colours survive. */
+    static Component format(Component source) {
+        MutableComponent result = Component.empty();
+        gregtech.client.EnergyText.format(source).visit((style, part) -> {
+            if (style.getColor() != null && style.getColor().getValue() != ChatFormatting.GRAY.getColor()) {
+                result.append(Component.literal(part).setStyle(style));
+                return Optional.empty();
+            }
+            var numbers = NUMBER.matcher(part);
+            int start = 0;
+            while (numbers.find()) {
+                if (start < numbers.start()) result.append(Component.literal(part.substring(start, numbers.start())).setStyle(style));
+                result.append(Component.literal(numbers.group()).setStyle(style.withColor(ChatFormatting.WHITE)));
+                start = numbers.end();
+            }
+            if (start < part.length()) result.append(Component.literal(part.substring(start)).setStyle(style));
+            return Optional.empty();
+        }, Style.EMPTY);
+        return result;
     }
 
     static Component unit(String unit) {

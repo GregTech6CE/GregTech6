@@ -37,18 +37,18 @@ public enum PortalJadeProvider implements IBlockComponentProvider, IServerDataPr
         var data = accessor.getServerData();
         if (!data.contains("gt_portal_active")) return;
         boolean active = data.getBoolean("gt_portal_active");
-        tooltip.add(Component.translatable(active ? "jade.gt6ce.portal.active" : "jade.gt6ce.portal.inactive"));
+        JadeText.add(tooltip, Component.translatable(active ? "jade.gt6ce.portal.active" : "jade.gt6ce.portal.inactive"));
         if (!data.getBoolean("gt_portal_supported")) {
-            tooltip.add(Component.translatable("jade.gt6ce.portal.wrong_dimension"));
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.portal.wrong_dimension"));
             return;
         }
         if (!active) return;
         if (data.contains("gt_portal_x")) {
-            tooltip.add(Component.translatable("jade.gt6ce.portal.linked",
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.portal.linked",
                     DungeonPortalBlockEntity.dimensionName(data.getString("gt_portal_dimension")),
                     data.getInt("gt_portal_x"), data.getInt("gt_portal_y"), data.getInt("gt_portal_z")));
         } else {
-            tooltip.add(Component.translatable("jade.gt6ce.portal.unlinked"));
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.portal.unlinked"));
         }
     }
 

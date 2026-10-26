@@ -198,9 +198,6 @@ final class JadeInspection {
         }
         var text = Component.translatable(row.getString("key"), values);
         if (icon == null) JadeText.detail(tooltip, row.getString("key"), values);
-        else {
-            tooltip.add(icon);
-            tooltip.append(text);
-        }
+        else JadeText.add(tooltip, icon, text);
     }
 }

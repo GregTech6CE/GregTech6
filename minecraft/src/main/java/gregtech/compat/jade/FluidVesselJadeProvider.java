@@ -54,16 +54,16 @@ public enum FluidVesselJadeProvider implements IBlockComponentProvider, IServerD
         if (!accessor.getServerData().contains("gt_vessel")) return;
         var data = accessor.getServerData().getCompound("gt_vessel");
         if (data.getString("kind").equals("tank")) {
-            tooltip.add(Component.translatable("jade.gt6ce.vessel.amount", data.getLong("amount"), data.getLong("capacity")));
-            tooltip.add(Component.translatable("jade.gt6ce.vessel.auto", Component.translatable(
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel.amount", data.getLong("amount"), data.getLong("capacity")));
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel.auto", Component.translatable(
                     "jade.gt6ce.vessel." + (data.getBoolean("auto") ? "enabled" : "disabled"))));
-            tooltip.add(Component.translatable("jade.gt6ce.vessel." + (data.getBoolean("sealed") ? "sealed" : "unsealed")));
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel." + (data.getBoolean("sealed") ? "sealed" : "unsealed")));
             if (data.getBoolean("sealed") && data.getLong("duration") > 0) {
-                tooltip.add(Component.translatable("jade.gt6ce.vessel.fermentation", data.getLong("time") / 20,
+                JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel.fermentation", data.getLong("time") / 20,
                         data.getLong("duration") / 20, gregtech.content.energy.BoilerGauge.percent(data.getLong("time"), data.getLong("duration"))));
             }
         } else {
-            tooltip.add(Component.translatable("jade.gt6ce.vessel.channels", data.getInt("channels"), data.getLong("capacity"), data.getLong("bandwidth")));
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel.channels", data.getInt("channels"), data.getLong("capacity"), data.getLong("bandwidth")));
             var contents = data.getList("contents", CompoundTag.TAG_COMPOUND);
             for (int i = 0; i < contents.size(); i++) {
                 var row = contents.getCompound(i);
@@ -72,10 +72,10 @@ public enum FluidVesselJadeProvider implements IBlockComponentProvider, IServerD
 *///?} else {
                 var fluid = net.minecraftforge.fluids.FluidStack.loadFluidStackFromNBT(row.getCompound("fluid"));
 //?}
-                if (!fluid.isEmpty()) tooltip.add(Component.translatable("jade.gt6ce.vessel.channel", row.getInt("channel"),
+                if (!fluid.isEmpty()) JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel.channel", row.getInt("channel"),
                         fluid.getDisplayName(), fluid.getAmount(), data.getLong("capacity")));
             }
         }
-        tooltip.add(Component.translatable("jade.gt6ce.vessel.temperature_limit", data.getLong("limit")));
+        JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel.temperature_limit", data.getLong("limit")));
     }
 }

@@ -100,7 +100,9 @@ public enum CrucibleJadeProvider implements IBlockComponentProvider, IServerData
         if (!data.contains(NBT_TEMPERATURE, CompoundTag.TAG_LONG)) {
             return;
         }
-        JadeText.add(tooltip, Component.translatable("jade.gt6ce.crucible.temperature", data.getLong(NBT_TEMPERATURE)));
+        long temperature = data.getLong(NBT_TEMPERATURE);
+        JadeText.add(tooltip, Component.translatable("jade.gt6ce.crucible.temperature", temperature)
+                .append(" (" + (temperature - 273) + "°C)"));
         JadeText.add(tooltip, Component.translatable("jade.gt6ce.omni.material_species", data.getInt("gt_crucible_species")));
         if (data.getFloat("gt_crucible_contact") > 0)
             JadeText.add(tooltip, Component.translatable("jade.gt6ce.omni.hot_surface", data.getFloat("gt_crucible_contact"))
@@ -118,10 +120,10 @@ public enum CrucibleJadeProvider implements IBlockComponentProvider, IServerData
         for (var entry : data.getList(NBT_CONTENT, net.minecraft.nbt.Tag.TAG_COMPOUND)) {
             var row = (CompoundTag) entry;
             var material = gregtech.engine.material.GTMaterialRegistry.get(row.getString("material"));
+            String phase = temperature >= material.getBoilingPoint() ? "gas" : row.getBoolean("molten") ? "molten" : "solid";
             var line = Component.literal(gregtech.client.MaterialTooltips.displayUnits(row.getLong("amount")) + " ")
                     .append(gregtech.engine.material.MaterialPresentation.name(material))
-                    .append(" (").append(Component.translatable("jade.gt6ce.crucible.state."
-                            + (row.getBoolean("molten") ? "molten" : "solid"))).append(")");
+                    .append(" (").append(JadeText.phase(phase)).append(")");
             JadeText.add(tooltip, Component.translatable("jade.gt6ce.crucible.content", line));
         }
         if (data.contains(NBT_CACHE, CompoundTag.TAG_COMPOUND)) {

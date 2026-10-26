@@ -34,8 +34,8 @@ public enum RockTwigJadeProvider implements IBlockComponentProvider {
 
     private static void content(ITooltip tooltip, ItemStack item, String key) {
         if (item.isEmpty()) return;
-        tooltip.add(IElementHelper.get().item(item));
-        tooltip.append(Component.translatable(key, item.getHoverName(), item.getCount()));
+        JadeText.add(tooltip, IElementHelper.get().item(item),
+                Component.translatable(key, item.getHoverName(), item.getCount()));
     }
 
     @Override
