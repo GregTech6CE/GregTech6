@@ -148,6 +148,20 @@ public final class RecipeMachines {
                     RecipeMap.RECIPE_MAPS::get, RecipeMachines::sameStack);
 
 
+//? if >=1.21.1 {
+        /*for (var entry : gregtech.platform.neoforge.smeltery.SmelteryRegistries.fuelBoxes()) {
+*///?} else {
+        for (var entry : MachineRegistry.burningBoxes()) {
+//?}
+            var map = switch (entry.get().fuelType()) {
+                case LIQUID -> gregtech.content.data.FuelRecipeMaps.Burn;
+                case GAS -> gregtech.content.data.FuelRecipeMaps.Gas;
+                case FLUIDIZED_BED -> gregtech.content.data.FuelRecipeMaps.FluidBed;
+                default -> null;
+            };
+            add(result, map, new ItemStack(entry.get()));
+        }
+
         for(var entry:gregtech.content.multiblock.GasTurbineDefinitions.blocks())
 
             add(result,gregtech.content.data.FuelRecipeMaps.Gas,new ItemStack(entry.get()));
