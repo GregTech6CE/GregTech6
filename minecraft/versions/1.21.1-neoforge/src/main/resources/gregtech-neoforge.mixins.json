@@ -4,6 +4,7 @@
   "package": "gregtech.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "DungeonRedstoneInitializationMixin",
     "OreHostHardnessMixin",
     "OreHostToolSpeedMixin",
     "GasImmersionMixin",

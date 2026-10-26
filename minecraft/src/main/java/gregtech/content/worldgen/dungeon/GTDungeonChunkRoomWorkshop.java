@@ -456,6 +456,11 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
         data.tank(x, y, z, container(stainless
                 ? "fluid_barometer_gas_cylinder_stainless_steel"
                 : "fluid_barometer_gas_cylinder"), GTFluids.stack(fluid, 8000));
+        var entity = data.level.getBlockEntity(new net.minecraft.core.BlockPos(data.x+x, data.y+y, data.z+z));
+        if (entity instanceof gregtech.engine.tool.Paintable paint) {
+            int dye = fluid.equals(PROPANE) ? 1 : fluid.equals(OXYGEN) ? 12 : 11;
+            paint.paint(gregtech.content.tool.PaintingRules.DYES.get(dye).rgb());
+        }
     }
 
     /**
