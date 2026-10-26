@@ -42,6 +42,8 @@ import java.util.TreeSet;
 
 /** Addon material queue, in its own JVM so a submission cannot change the core fingerprint process. */
 public final class AddonMaterialContracts {
+    // Reviewed 56075 built-in rows after removing ten placeholder Unit entries;
+    // docs/integration/verification/placeholder-matter-removal-20261026.json.
     private static final String ITEM_ID_SHA256 = "a3bdd7e67e2b168f3982d2f2494216fec92a8b0596b07244402edbe586e8aa73";
     /** Core block ids in definition order, taken before addon ore blocks were appended. */
     private static final String BLOCK_ID_SHA256 = "2bf589f634a16f450fb0295757b342d7208793881c05d3315c36bde52c035735";
