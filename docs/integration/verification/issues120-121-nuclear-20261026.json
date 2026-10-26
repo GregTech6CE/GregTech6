@@ -24,6 +24,17 @@
     ],
     "diff_check": "passed"
   },
+  "ci_follow_up": {
+    "failed_run": "https://github.com/GregTech6CE/GregTech6/actions/runs/40264663173",
+    "cause": "AddonMaterialContracts retained the pre-removal built-in item fingerprint after base commit 35fe84502 removed ten placeholder Unit entries",
+    "change": "Use the already-reviewed 56075-row fingerprint from placeholder-matter-removal-20261026.json; retain complete ID/order/field assertions",
+    "before": ":core:addonMaterialContracts_late reproduced the same assertion failure locally",
+    "after": [
+      ":core:addonMaterialContracts_late passed 12 assertions",
+      ":core:addonMaterialContracts_service passed 29 assertions",
+      ":core:materialBehaviorContracts passed 7929 assertions and the 110-row source wood fixtures"
+    ]
+  },
   "deferred": [
     "Client was not launched at the user's request. Native atlas/BER smoke compiled but was not executed; actual appearance awaits the user's runClient check on another computer",
     "Forge runtime and full-platform checks were not run"
