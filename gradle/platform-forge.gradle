@@ -23,6 +23,11 @@ base {
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
+// Forge's native GameTests use the normal test source set and never enter either release JAR.
+sourceSets.test {
+    compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+    runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+}
 minecraft {
     // The mappings can be changed at any time and must be in the following format.
     // Channel:   Version:
@@ -103,6 +108,16 @@ minecraft {
             }
             jvmArgs '-Xmx4g', '-XX:+UseSerialGC'
             args '--nogui'
+        }
+
+        // ./gradlew :minecraft:1.20.1-forge:runGameTestServer
+        gameTestServer {
+            workingDirectory project.file(project.findProperty('gameTestDirectory') ?: 'build/gametest-run')
+            jvmArgs "-Xmx${project.findProperty('gameTestHeap') ?: '3g'}"
+            property 'forge.enabledGameTestNamespaces', 'gt6ce'
+            property 'gregtech.test.expectedEasyU235Extraction',
+                    (project.findProperty('centrifugeExpectedU235') ?: 'false').toString()
+            mods { "${mod_id}" { source sourceSets.test } }
         }
 
         data {
