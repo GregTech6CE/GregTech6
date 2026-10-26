@@ -13,6 +13,7 @@
     "LegacyConstructionStackMixin",
     "BaseSpawnerAccessor",
     "WaterFluidMixin",
+    "WorldWaterBucketPickupMixin",
     "AbstractMinecartSpeedCapMixin",
     "EntityFallingOreDropMixin",
     "BlockEntityPaintMixin",

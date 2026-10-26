@@ -16,6 +16,7 @@
     "BlockEntityPaintMixin",
     "WolfCollarAccessor",
     "WaterFluidMixin",
+    "WorldWaterBucketPickupMixin",
     "EntityFallingOreDropMixin",
     "WaterPlacementMixin",
     "WaterSurfaceMixin",
